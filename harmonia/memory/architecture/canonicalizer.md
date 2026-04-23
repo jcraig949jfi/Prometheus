@@ -1,8 +1,12 @@
 # CANONICALIZER — substrate primitive
 
-**Status:** substrate-primitive spec, v0.1 (2026-04-23).
+**Status:** substrate-primitive spec, v0.1.1 (2026-04-23).
 **Architectural slot:** first-class primitive, alongside the symbol registry, the tensor, Definition DAG, and signals.specimens. Not a generator.
 **Audience:** gen_12 (tensor decomposition), gen_11 (coordinate invention), Definition DAG authors, symbol-registry curators, any module that dedup's structured objects.
+
+---
+
+*In one sentence:* **a canonicalizer maps a representation to a canonical representative under a declared equivalence group, producing a stable, hashable identity.**
 
 ---
 
@@ -36,12 +40,14 @@ A **canonicalizer instance** is a tuple
 
 where:
 
-- `G` is the equivalence group the instance quotients, specified as a list of generator types (e.g., `scale_gauge`, `sign_gauge`, `permutation(S_r)`, `T_stabilizer_GL_n^3`).
+- `G` is the equivalence group the instance quotients, specified as a list of generator types (e.g., `scale_gauge`, `sign_gauge`, `permutation(S_r)`, `T_stabilizer_GL_n^3`). **Generator types in `G` must have executable semantics within the instance.** If a subgroup is known to be part of the object's symmetry but is not computationally realized by this instance (e.g., a stabilizer that only exists on paper), it must appear in `declared_limitations`, not in `G`. The line between `G` and `declared_limitations` is implementation, not intent.
 - `C : Representation → CanonicalRepresentative` is a deterministic map satisfying, for all `x, y` in the representation space:
   - **Invariance.** `x ~_G y ⟹ C(x) = C(y)`.
   - **Separation (probabilistic).** `x ~_G y is false ⟹ C(x) ≠ C(y)` with probability close to 1. Collisions are permitted; instance must declare the collision model.
+  - **Asymmetry warning (load-bearing).** Canonical inequality does **NOT** imply non-equivalence. Under partial quotienting — which is the default, per `declared_limitations` — two inputs may be equivalent under the object's full symmetry group but hash differently because the canonicalizer did not quotient the un-declared subgroup. Consumers MUST treat `H(C(x)) ≠ H(C(y))` as *"not the same under THIS canonicalizer's declared group"*, never as *"not the same object."* This is the single most common misuse and must be caught at the call site.
   - **Tolerance.** For numerical representations, `‖x − y‖ < ε_tol ⟹ C(x) = C(y)` via pinned rounding before hashing.
   - **Complexity.** `C` runs in `O(poly(|x|))`.
+  - **Failure behavior.** If `C` cannot produce a stable representative within declared tolerance or resource bounds, it must return `(failure, reason)`. Consumers MUST treat failures as non-canonicalized inputs — not as canonical-class members, and not comparable by hash. "Best-effort on failure" is explicitly forbidden; silent best-effort produces cross-instance hash divergence that is indistinguishable from real non-equivalence.
 - `H : CanonicalRepresentative → bytes` is a hash function. Different canonicalizer instances live in disjoint hash namespaces (namespaced by `(name, canonicalizer_version)`).
 - `declared_limitations` is an **explicit list of equivalences NOT removed.** Mandatory. Without this declaration the instance is rejected from the primitive registry. The declaration is the guardrail against false-confidence: downstream consumers must know what the canonicalizer does not quotient, so they don't assume equivalences it didn't touch.
 - `calibration_anchors` are test cases with known equivalence-class structure — at least one "same-class → same hash" anchor and one "different-class → different hash" anchor. Anchors are run on every version bump.
@@ -182,4 +188,14 @@ The risk being guarded against is primitive-bloat through ambitious generalizati
 
 ## Version history
 
+- **v0.1.1** — 2026-04-23 (later same day) — three surgical edits to the
+  contract per James crispness pass on v0.1 first ~90 lines: (1)
+  one-line definition added under the header for instant legibility;
+  (2) asymmetry warning added as a load-bearing bullet — canonical
+  inequality does NOT imply non-equivalence under partial quotienting,
+  must be caught at call site; (3) generator-executability clause
+  added to `G` — paper-group vs real-group must go into
+  `declared_limitations`, not `G`; (4) failure behavior defined —
+  `(failure, reason)` return required, best-effort-on-failure
+  explicitly forbidden. No structural changes; only tightening.
 - **v0.1** — 2026-04-23 — initial spec. Written after the 2026-04-23 tensor-decomposition pilot exposed canonicalization as a substrate-level (not gen_12-level) primitive. James directive: primitive status, narrow scope, explicit limitations mandatory, one instance active (`tensor_decomp@v1` with known insufficiency) and one pending (`tensor_decomp@v2`). Paired with `orbit_vs_representative.md` (the tensor-decomposition empirical anchor) and a v0.2 reframe of the gen_12 spec to depend on this primitive rather than embed it.
