@@ -43,7 +43,7 @@ def _load_domain(domain):
     if domain == "elliptic_curves":
         import psycopg2
         try:
-            from prometheus_data.config import get_pg_dsn
+            from thesauros.prometheus_data.config import get_pg_dsn
             con = psycopg2.connect(**get_pg_dsn("lmfdb"))
         except Exception:
             con = psycopg2.connect(host='localhost', port=5432, dbname='lmfdb', user='lmfdb', password='lmfdb')
@@ -61,7 +61,7 @@ def _load_domain(domain):
     elif domain == "modular_forms":
         import psycopg2
         try:
-            from prometheus_data.config import get_pg_dsn
+            from thesauros.prometheus_data.config import get_pg_dsn
             con = psycopg2.connect(**get_pg_dsn("lmfdb"))
         except Exception:
             con = psycopg2.connect(host='localhost', port=5432, dbname='lmfdb', user='lmfdb', password='lmfdb')

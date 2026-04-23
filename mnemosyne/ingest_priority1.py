@@ -19,7 +19,7 @@ from pathlib import Path
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from prometheus_data.pool import get_sci
+from thesauros.prometheus_data.pool import get_sci
 
 
 # ============================================================

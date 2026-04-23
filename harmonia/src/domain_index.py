@@ -22,7 +22,7 @@ def _pg_fire():
     """Get a psycopg2 connection to prometheus_fire (zeros, atlas, objects, bridges)."""
     import psycopg2
     try:
-        from prometheus_data.config import get_pg_dsn
+        from thesauros.prometheus_data.config import get_pg_dsn
         dsn = get_pg_dsn("fire")
     except Exception:
         dsn = dict(host='localhost', port=5432, dbname='prometheus_fire',
@@ -34,7 +34,7 @@ def _pg_lmfdb():
     """Get a psycopg2 connection to lmfdb (EC, MF, lfunc — the big tables)."""
     import psycopg2
     try:
-        from prometheus_data.config import get_pg_dsn
+        from thesauros.prometheus_data.config import get_pg_dsn
         dsn = get_pg_dsn("lmfdb")
     except Exception:
         dsn = dict(host='localhost', port=5432, dbname='lmfdb',
@@ -1124,7 +1124,7 @@ def load_charon_landscape(db_path: Optional[Path] = None, limit: int = 100000) -
     import redis as _redis
     import json as _json
     try:
-        from prometheus_data.config import get_redis_config
+        from thesauros.prometheus_data.config import get_redis_config
         r = _redis.Redis(**get_redis_config(), decode_responses=True)
     except Exception:
         r = _redis.Redis(host='localhost', port=6379, password='prometheus', decode_responses=True)
@@ -1948,7 +1948,7 @@ def load_knowledge_graph(db_path: Optional[Path] = None) -> DomainIndex:
     """
     import redis as _redis
     try:
-        from prometheus_data.config import get_redis_config
+        from thesauros.prometheus_data.config import get_redis_config
         r = _redis.Redis(**get_redis_config(), decode_responses=True)
     except Exception:
         r = _redis.Redis(host='localhost', port=6379, password='prometheus', decode_responses=True)

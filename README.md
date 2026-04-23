@@ -14,7 +14,7 @@ The ejection mechanism doesn't just suppress correct answers — it suppresses *
 
 A 135M model with 0.36% of its weights perturbed scores **75% on metacognition** — 6x higher than a 1.5B model with the mechanism intact. Not because it's smarter. Because it's unblocked.
 
-**[Full results and data tables](RESULTS.md)** | **[Forge pipeline documentation](docs/forge_pipeline.md)** | **[Whitepapers](whitepapers/)**
+**[Whitepapers](whitepapers/)** | **[Forge pipeline documentation](docs/forge_pipeline.md)**
 
 ## The Architecture
 
@@ -92,19 +92,15 @@ Full list of top-level directories. **(active)** = commits in the last 3 weeks; 
 | `journal/` | (active) | Daily research journal |
 | `koios/` | (active) | Titan-of-inquiry tooling |
 | `mnemosyne/` | (active) | DBA & data-steward workspace |
-| `prometheus_data/` | (active) | Shared database configuration |
 | `roles/` | (active) | Agent role definitions |
 | `scripts/` | (active) | Operational scripts |
 | `stoa/` | (active) | Multi-agent meeting place |
-| `techne/` | (active) | Craft / tooling |
-| `tensor_decomp_qd/` | (active) | Quality-diversity archive for low-rank tensor decompositions (sibling project) |
+| `techne/` | (active) | Master catalog of forged tools |
 | `tests/` | (active) | Tests |
-| `thesauros/` | (active) | Prometheus data treasury |
-| `zoo/` | (active) | High-dim function approximation playground |
+| `thesauros/` | (active) | Data treasury (includes shared DB config under `prometheus_data/`) |
+| `exploratory/` | (active) | Pilot / MVP projects: `zoo`, `tensor_decomp_qd`, `reproductions`, `grammata` |
 | `aethon/` | (complete) | Autonomous reasoning archaeology (backburnered) |
 | `arcanum/` | (complete) | Museum of misfit ideas discovered in LLMs |
-| `grammata/` | (complete) | Taxonomy & cartography (planned) |
-| `reproductions/` | (complete) | Reproduced external work |
 | `rhea/` | (complete) | Forge for growing models without ejection (WSL2) |
 
 ## The Journey
