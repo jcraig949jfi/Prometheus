@@ -164,11 +164,196 @@ not insightful.
 - **Composes with:** MDL_SCORER (generalization), gen_10 composition
   enumeration (enumerated compositions as the candidate mixture).
 
+### 7. `GINI_COEFFICIENT@v1` — distribution inequality
+
+- **Frame:** Economics (Corrado Gini, 1912). Measures inequality / concentration of a
+  distribution; widely used in income economics. Ratio of the area between
+  the Lorenz curve and the equality line to the total area under the
+  equality line.
+- **Scorer:** for any non-negative real-valued distribution (list of values
+  OR a value-count dict), compute
+  `Gini = (sum_{i,j} n_i n_j |v_i - v_j|) / (2 N² mean)`.
+  ~10 lines of Python; sorted-cumulative-sum analytic form is faster than
+  the naive double-sum at >10K rows.
+- **Resolves:** distribution-inequality measurement on any non-negative
+  real-valued list. Distinct from CHANNEL_CAPACITY (Shannon mutual-information
+  on object-projection pairs; not inequality of a single distribution) and
+  from KOLMOGOROV_HAT (compressibility of the object's raw fingerprint, not
+  inequality of a derived statistic). Useful when the question is "how
+  concentrated is X across the population?" Range [0, 1] where 0 = perfectly
+  equal, 1 = maximally unequal.
+- **Effort:** TRIVIAL (per gpt-4o-mini scorer-tractability probe 2026-04-23,
+  cartography/docs/probe_gemini_scorer_tractability_results.md). One of the
+  smallest scorers on this shelf.
+- **Status:** v1 candidate (this entry, Harmonia_M2_auditor 2026-04-23).
+- **Calibration anchors (auditor 2026-04-23):** three measurements on
+  rank-0 EC (n=1,404,510 across LMFDB):
+  1. Gini on `class_size` distribution = **0.295** (Mazur-bounded support
+     {1,2,3,4,6,8}; mean 1.79; 53% at cs=1, 33% at cs=2). Reference frame:
+     0.30 ≈ Scandinavian-income-distribution inequality.
+  2. Gini on `sha` distribution = **0.564** (mean 2.67; max 5625; 79.6% have
+     sha=1; heavy tail). Reference frame: 0.56 ≈ low-income-country inequality.
+     **Side observation:** 100% of the 1,404,510 curves have sha = perfect
+     square — validates the BSD prediction (sha is conjecturally a perfect
+     square integer) at full LMFDB rank-0 sample.
+  3. Gini on `sqrt(sha)` distribution = **0.221** (mean 1.35; sqrt-transform
+     compresses the tail). Useful when comparing rank cohorts via Sha-
+     rank-Mordell-Weil parity arguments.
+  These three anchors span moderate-to-high inequality with the same dataset;
+  any future GINI measurement on Prometheus arithmetic data can be compared.
+  **Discipline:** descriptive Gini (this kind of measurement) is fine;
+  inferential Gini (correlation with conductor or another BSD ingredient)
+  requires Pattern-30 audit first.
+- **Composes with:** PATTERN_30 (mandatory before any Gini-based correlation
+  claim — see F043 lesson; Tamagawa products and Sha distributions are
+  BSD-ingredients and can produce algebraically-induced "inequality"),
+  CRITICAL_EXPONENT (Gini-as-a-function-of-conductor-decade is a candidate
+  scaling), CHANNEL_CAPACITY (Gini and MI capture different structure on
+  the same data — disagreement between them is informative).
+- **First production targets** (none yet measured beyond the calibration anchor):
+  (a) Sha distribution across rank-0 cohort — Sha is heavy-tailed; Gini
+  expected ≫ 0.5; any structure that compresses the inequality is a
+  candidate signal.
+  (b) Tamagawa product distribution across rank-2 cohort — **REQUIRES**
+  Pattern-30 BSD-tautology audit before any inferential use; Tamagawa is
+  in the BSD-ingredient family.
+  (c) Number-field discriminant distribution across degree-d strata —
+  calibration target since the distribution is well-studied.
+
+### 8. `CONTROLLABILITY_RANK@v1` — dynamic agency under linear dynamics
+
+- **Frame:** Control theory (Kalman, 1960). A linear system `ẋ = Ax + Bu`
+  is *controllable* iff the controllability matrix
+  `[B | AB | A²B | ... | A^(n-1)B]` has full row rank `n` — i.e., the
+  inputs `u` can steer the state vector `x` to any direction in
+  n-dimensional space.
+- **Scorer:** given `(A ∈ ℝ^(n×n), B ∈ ℝ^(n×m))`, compute
+  `rank(np.hstack([B, A@B, (A@A)@B, ..., np.linalg.matrix_power(A, n-1)@B]))`
+  via SVD-based rank with explicit `rcond` tolerance. Output: integer in
+  `[0, n]`. Report both the rank and the ratio `σ_k / σ_1` (the smallest
+  retained singular value over the largest) as a condition-number proxy.
+  ~30 LOC once `(A, B)` are specified.
+- **Resolves:** **dynamic agency** — degrees of freedom an input
+  operator can influence in a state space evolving under a linear
+  dynamics operator. Distinct from CHANNEL_CAPACITY (static MI between
+  object and verdict), KOLMOGOROV_HAT (compressibility of a single
+  fingerprint), CRITICAL_EXPONENT (scaling of a single quantity). Reads
+  *temporal / iterative* structure rather than static structure — a
+  genuinely new axis class for the shelf.
+- **Effort:** TRIVIAL (per gpt-4o-mini tractability probe 2026-04-23,
+  `probe_gemini_scorer_tractability_results.md`, FEASIBILITY=EASY;
+  `numpy.linalg.matrix_rank` does the work once `(A, B)` are pinned).
+- **Status:** v1 candidate (this entry, Harmonia_M2_sessionA 2026-04-23,
+  per axis-4 shelf decision on 3 STRONG lens candidates — see
+  `agora:harmonia_sync` DECISION entry). Self-drafted; NETWORK_MODULARITY
+  delegated to auditor (MODERATE effort, auditor offered);
+  CLADISTIC_PARSIMONY deferred pending arithmetic-phylogeny mapping.
+- **Candidate (A, B) pairs on arithmetic data:**
+  1. **Hecke controllability of modular forms** (calibration-first).
+     `A` = matrix of first-m Hecke operators `T_p` acting on
+     `S_k(Γ_0(N))`; `B` = identity on span of the first few `a_p`.
+     Rank quantifies: "how many independent cusp-form directions are
+     reachable from low-prime Hecke input?" Calibration target: rank
+     should equal `dim(S_k(Γ_0(N)))` for small `(k, N)` — reproduces
+     the Hecke-ring faithfulness theorem. Non-trivial deviation is
+     instrument error, not a finding.
+  2. **Isogeny controllability** (first novel target). `A` = isogeny-
+     graph adjacency matrix on rank-0 EC at bounded conductor;
+     `B` = indicator column on CM seeds. Rank probes: "how many
+     isogeny classes are reachable from a CM-seed subset under
+     iterated isogeny?" Rank ≪ cohort size → fragmented; rank ≈
+     cohort size → well-connected. No existing shelf tool reports
+     this quantity.
+  3. **Zero-dynamics controllability.** `A` = coefficient-recurrence
+     matrix built from consecutive differences of `γ_i` (L-function
+     zero heights, stacked); `B` = conductor-perturbation column.
+     Rank probes whether conductor variation injects structure into
+     the zero distribution — natural compound with F011's rank-0
+     residual.
+- **Composes with:** FREE_ENERGY (controllability across mixture-
+  temperature — how agency varies with decisiveness regime),
+  CHANNEL_CAPACITY (input→state MI vs rank on the same `(A, B)` —
+  disagreement is informative), RG_FLOW (how controllability flows
+  under coarse-graining; candidate fixed point = structurally stable
+  rank deficit), PATTERN_30 (matrices may be algebraically coupled —
+  see hazards).
+- **Pattern 30 / frame-hazard notes:**
+  1. **Definition-forcing hazard.** If `A` is defined in terms of the
+     same atomic quantities as the columns of `B`, rank is partially
+     forced. Example: if `A` encodes a linear recurrence in `a_p` and
+     `B` seeds from the first few `a_p`, the controllability rank
+     equals the recurrence order by construction, not by arithmetic
+     structure. Run PATTERN_30 lineage check on the
+     `(A-definition, B-definition)` pair before promoting any
+     controllability-dependent claim.
+  2. **Numerical-rank discipline.** Use SVD rank with explicit
+     `rcond`; report both the rank and `σ_k / σ_1`. A rank-dependent
+     claim without explicit tolerance is a Pattern 17 (missing
+     schema) symptom.
+  3. **BSD-ingredient composition.** On `(A, B)` matrices derived
+     from BSD-ingredient-family quantities (Sha, Ω, Reg, ∏c_p, Tor,
+     L-value), `PATTERN_BSD_TAUTOLOGY` (`null_protocol_v1.1`) applies
+     — the rank statement becomes a Class-5 claim about the identity
+     structure, not about arithmetic structure. Pattern 30 skip to
+     "write the identity" step before running.
+- **Discipline:** descriptive controllability on non-overlapping
+  `(A, B)` is fine; inferential claims (controllability correlates
+  with another BSD-ingredient, or with a live-specimen verdict)
+  require Pattern 30 + PATTERN_BSD_TAUTOLOGY audit first.
+- **First production targets** (none measured yet):
+  (a) Hecke controllability on a (k=2, N≤100) LMFDB cohort —
+      calibration anchor against `dim(S_k(Γ_0(N)))`.
+  (b) Isogeny controllability on rank-0 EC bounded conductor —
+      first novel measurement.
+  (c) Zero-dynamics controllability on F011 rank-0 cohort — probes
+      conductor as a controllability axis for first-gap variance
+      deficit.
+- **Open question:** PATTERN_18 (uniform visibility) says "deficit
+  visible through every projection"; full controllability says "state
+  reachable from every input direction." These are structurally
+  analogous. If the correspondence holds, CONTROLLABILITY_RANK may be
+  a quantitative instance of PATTERN_18-adjacent structure, and
+  rank-deficit measurements may map to VACUUM candidates. To be
+  checked on the first production target.
+
+---
+
+### Auditor note: 4 STRONG candidates → 2 shipped, 1 delegated, 1 deferred (2026-04-23)
+
+The auditor's 2026-04-23 cross-disciplinary lens probe (Gemini-2.5-flash;
+`cartography/docs/probe_gemini_lens_candidates_results.md`) surfaced four
+STRONG candidates beyond the original six tools: CLADISTIC_PARSIMONY
+(evolutionary biology), CONTROLLABILITY_RANK (Kalman, control theory),
+GINI_COEFFICIENT (economics), NETWORK_MODULARITY (Newman). Tractability
+probe (gpt-4o-mini, 2026-04-23) rated all four implementable: GINI TRIVIAL,
+CONTROLLABILITY_RANK EASY, CLADISTIC_PARSIMONY MODERATE (Fitch O(n) for
+binary chars), NETWORK_MODULARITY MODERATE (Newman algorithm).
+
+**Axis-4 shelf-ownership decision (sessionA 2026-04-23):**
+- **GINI_COEFFICIENT@v1** — shipped as entry 7 (auditor 2026-04-23).
+- **CONTROLLABILITY_RANK@v1** — shipped as entry 8 (sessionA 2026-04-23,
+  self-drafted; EASY tractability + calibration-first Hecke target).
+- **NETWORK_MODULARITY@v1** — accepted for shelf, drafting delegated to
+  auditor per 2026-04-23 offer. MODERATE effort (Newman algorithm).
+  Distinct from existing tools because it measures community-structure
+  quality on a graph — orthogonal to static compression and dynamic
+  controllability. First target candidates: isogeny graphs,
+  Hecke-eigenvalue correlation networks, Galois-representation
+  connectivity.
+- **CLADISTIC_PARSIMONY** — DEFERRED (not rejected). Reason: the Fitch
+  scorer is cheap, but arithmetic data has no canonical phylogeny. A
+  shelf entry requires a pinned tree-source (candidates: isogeny
+  graphs reduced to rooted trees; Galois-representation lineage;
+  modular-form degeneration trees) AND a concrete feature matrix per
+  object. Re-open when a live specimen or a team-proposed arithmetic-
+  phylogeny hypothesis supplies both ingredients. Held in the
+  Ideas-queue per the "How to add a new tool" template.
+
 ---
 
 ## How these compose into a single lens
 
-All six measure different faces of one underlying quantity: *how much
+All eight measure different faces of one underlying quantity: *how much
 structure is in this arithmetic data under a compression lens?*
 
 - `KOLMOGOROV_HAT` — compressibility of the object's raw fingerprint
@@ -179,6 +364,13 @@ structure is in this arithmetic data under a compression lens?*
 - `RG_FLOW` — compressibility of a trajectory (fixed-point description
   vs full history)
 - `FREE_ENERGY` — compressibility of a mixture distribution
+- `GINI_COEFFICIENT` — compressibility of "concentration" as a
+  one-number summary of a distribution (low Gini = compressible-as-uniform;
+  high Gini = compressible-as-Pareto-style-tail)
+- `CONTROLLABILITY_RANK` — compressibility of *dynamic agency*: a full
+  n-dimensional state reachable from m ≪ n inputs is a compression of
+  the reachable set; rank-deficit is a compression failure (reachable
+  set is a proper subspace)
 
 A good projection *is* one that achieves maximal lossy compression while
 retaining the structure we care about. A good F-ID *is* one that has a
@@ -255,6 +447,15 @@ arithmetic coordinate. The tools here are the shelf.
 
 ## Version history
 
+- **v1.1** — 2026-04-23 — two shelf entries added from the auditor's
+  cross-disciplinary lens probe (Gemini 2.5 + gpt-4o-mini tractability
+  follow-up): GINI_COEFFICIENT@v1 (auditor-drafted, entry 7) and
+  CONTROLLABILITY_RANK@v1 (sessionA-drafted, entry 8). Axis-4 shelf
+  ownership decision (sessionA) accepts NETWORK_MODULARITY for
+  auditor-led drafting and defers CLADISTIC_PARSIMONY to the
+  Ideas-queue pending an arithmetic-phylogeny ingredient. "How these
+  compose into a single lens" updated to eight entries. No earlier
+  entries modified.
 - **v1.0** — 2026-04-20 — initial catalog, six entries, derived from
   James's conductor-framing conversation ("how could we leverage these
   at Prometheus"). First three entries (K̂, critical exponent, channel
