@@ -1,0 +1,58 @@
+"""Prometheus Math — unified API over the mathematical-software arsenal.
+
+A single import for Prometheus researchers. Every supported mathematical
+operation has one canonical entry point, with backend dispatch to the
+fastest available implementation.
+
+Usage:
+
+    import prometheus_math as pm
+
+    pm.number_theory.class_number('x^2+5')              # 2
+    pm.elliptic_curves.analytic_sha([0,-1,1,-10,-20])    # {'rounded': 1, ...}
+    pm.topology.hyperbolic_volume('4_1')                 # 2.0298832...
+    pm.optimization.solve_mip(c, A_ub, b_ub)             # via SCIP/OR-Tools/HiGHS
+    pm.numerics.zeta(0.5 + 14.13j, prec=50)              # mpmath
+
+    pm.registry.installed()    # capability matrix
+    pm.doc.arsenal()           # write/refresh ARSENAL.md
+
+Design:
+- Categorical modules expose the API surface ("number_theory.class_number").
+- Backends in prometheus_math.backends/ are thin adapters around each tool.
+- registry.py scans for installed backends at import; capability matrix
+  is available at runtime.
+- ARSENAL.md is auto-generated from the registry.
+
+See also:
+- techne/ARSENAL_ROADMAP.md for the long-term target list.
+- prometheus_math/ARSENAL.md for the researcher-facing API reference.
+"""
+
+__version__ = "0.1.0"
+
+from . import registry  # noqa: F401 — populates capability matrix at import
+from . import (  # noqa: F401
+    number_theory,
+    elliptic_curves,
+    number_fields,
+    topology,
+    combinatorics,
+    optimization,
+    numerics,
+    symbolic,
+)
+from . import doc  # noqa: F401
+
+__all__ = [
+    "registry",
+    "doc",
+    "number_theory",
+    "elliptic_curves",
+    "number_fields",
+    "topology",
+    "combinatorics",
+    "optimization",
+    "numerics",
+    "symbolic",
+]
