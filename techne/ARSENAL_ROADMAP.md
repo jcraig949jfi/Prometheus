@@ -116,8 +116,8 @@ Living public APIs. Wrappers to make queries first-class within
 
 | Service | Category | Why we want it | Priority | Status |
 |---|---|---|---|---|
-| **LMFDB Postgres mirror** | DB | Direct SQL to L-functions, modular forms, EC, NF; already used heavily in Prometheus | Highest | 🟡 WIP (used directly today; needs API wrapper) |
-| **OEIS** | DB | Integer-sequence lookup; conjecture seeding | Highest | 🟠 GAP (has `pip install oeis` candidates) |
+| **LMFDB Postgres mirror** | DB | Direct SQL to L-functions, modular forms, EC, NF; already used heavily in Prometheus | Highest | 🟢 OP (`prometheus_math.databases.lmfdb`; 10/10 tests, 3.8M EC accessible) |
+| **OEIS** | DB | Integer-sequence lookup; conjecture seeding | Highest | 🟡 WIP (`prometheus_math.databases.oeis`; b-file endpoint works, JSON search Cloudflare-gated from this network — uses normalization + offline path; live tests skip cleanly) |
 | **KnotInfo / LinkInfo** | DB | Knot/link census tables with invariants | High | 🟠 GAP |
 | **ATLAS of Finite Groups** | DB | Finite simple group representations | Medium | 🟠 GAP |
 | **arXiv** | literature | Preprint search and download | Medium | 🟠 GAP (`arxiv` pip pkg available) |

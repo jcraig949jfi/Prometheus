@@ -21,7 +21,7 @@ from typing import Optional
 @dataclass
 class Backend:
     name: str
-    kind: str  # "python", "binary"
+    kind: str  # "python", "binary", "service"
     category: str
     import_name: Optional[str] = None  # for python backends
     binary_name: Optional[str] = None  # for native binaries
@@ -102,6 +102,11 @@ _BACKENDS: list[Backend] = [
             description="Lean 4 theorem prover"),
     Backend("R", "binary", "stats", binary_name="Rscript",
             description="R statistics environment"),
+    # External database services
+    Backend("lmfdb", "service", "DB",
+            description="LMFDB Postgres mirror at devmirror.lmfdb.xyz"),
+    Backend("oeis", "service", "DB",
+            description="OEIS - Online Encyclopedia of Integer Sequences"),
 ]
 
 
@@ -141,6 +146,37 @@ def _probe_binary(b: Backend) -> None:
         b.version = "installed"
 
 
+def _probe_service(b: Backend) -> None:
+    """Probe an external network/database service.
+
+    Dispatches by backend name to a probe function inside the matching
+    `prometheus_math.databases` submodule (which exposes `probe(timeout)`).
+    Failures are non-fatal: the backend is just marked unavailable.
+    """
+    try:
+        import importlib as _il
+        mod = _il.import_module(f"prometheus_math.databases.{b.name}")
+    except Exception as e:
+        b.available = False
+        b.error = f"wrapper not importable: {type(e).__name__}: {e}"
+        return
+    probe = getattr(mod, "probe", None)
+    if probe is None:
+        b.available = False
+        b.error = "wrapper has no probe()"
+        return
+    try:
+        ok = bool(probe(timeout=3.0))
+    except Exception as e:
+        b.available = False
+        b.error = f"probe raised: {type(e).__name__}: {e}"
+        return
+    b.available = ok
+    b.version = "online" if ok else None
+    if not ok:
+        b.error = "service unreachable"
+
+
 def _probe_all() -> None:
     for b in _BACKENDS:
         try:
@@ -148,6 +184,8 @@ def _probe_all() -> None:
                 _probe_python(b)
             elif b.kind == "binary":
                 _probe_binary(b)
+            elif b.kind == "service":
+                _probe_service(b)
         except Exception as e:
             b.available = False
             b.error = f"probe error: {e}"

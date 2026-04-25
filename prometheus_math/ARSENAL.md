@@ -2,7 +2,7 @@
 
 **Single-page researcher reference for the unified mathematical-software API.**
 
-Generated: 2026-04-25 02:35 · Status: 23/30 backends available across 8 categories: AI, CAS, COMB, NT, NUM, OPT, SAT, TOP
+Generated: 2026-04-25 02:46 · Status: 24/32 backends available across 9 categories: AI, CAS, COMB, DB, NT, NUM, OPT, SAT, TOP
 
 ---
 
@@ -33,7 +33,7 @@ pm.registry.installed()
 
 ## Backend capability matrix
 
-**23/30 backends available** as of generation.
+**24/32 backends available** as of generation.
 
 | Backend | Status | Version | Kind | Category | Description |
 |---|---|---|---|---|---|
@@ -67,6 +67,8 @@ pm.registry.installed()
 | `julia` | ❌ | — | binary | lang | Julia (gateway to OSCAR/Hecke/Nemo) |
 | `lean` | ❌ | — | binary | PA | Lean 4 theorem prover |
 | `R` | ❌ | — | binary | stats | R statistics environment |
+| `lmfdb` | ✅ | online | service | DB | LMFDB Postgres mirror at devmirror.lmfdb.xyz |
+| `oeis` | ❌ | — | service | DB | OEIS - Online Encyclopedia of Integer Sequences |
 
 ---
 
