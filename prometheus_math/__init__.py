@@ -47,6 +47,15 @@ from . import (  # noqa: F401
 )
 from . import doc  # noqa: F401
 
+# viz: notebook-ready knot/link diagram rendering. Optional in the
+# sense that it depends on matplotlib + snappy; protect the rest of pm
+# from import errors if either is missing.
+try:
+    from . import viz  # noqa: F401
+    _HAS_VIZ = True
+except Exception:  # pragma: no cover
+    _HAS_VIZ = False
+
 # Optional research-thread subpackage (may fail to import if a sibling
 # module is being edited; don't crash the rest of pm if so).
 try:
@@ -90,3 +99,5 @@ if _HAS_HECKE:
     __all__.append("hecke")
 if _HAS_MODULAR:
     __all__.append("modular")
+if _HAS_VIZ:
+    __all__.append("viz")

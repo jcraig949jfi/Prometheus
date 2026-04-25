@@ -13,6 +13,10 @@ capability reference).
 | Date | Operation | Auth | Prop | Edge | Comp | Commit |
 |---|---|---|---|---|---|---|
 | 2026-04-25 | (audit pending — backfill from existing techne/lib/) | — | — | — | — | — |
+| 2026-04-25 | pm.number_fields.p_hilbert_class_field | A:5 | P:5 | E:6 | C:3 | (project #29 phase 1) |
+| 2026-04-25 | pm.number_fields.p_class_field_tower | A:5 | P:5 | E:6 | C:3 | (project #29 phase 1) |
+| 2026-04-25 | pm.number_fields.tower_terminates_p | A:1 | P:1 | E:1 | C:1 | (project #29 phase 1) |
+| 2026-04-25 | pm.number_fields.p_tower_signature | A:1 | P:1 | E:1 | C:1 | (project #29 phase 1) |
 | 2026-04-25 | project_42.composition_test_gallery | — | — | — | C:40 | (uncommitted) |
 | 2026-04-22 | pm.number_theory.mahler_measure | A:1 | P:6 | E:3 | C:0 | (project #6) |
 | 2026-04-22 | pm.number_theory.log_mahler_measure | A:0 | P:2 | E:1 | C:0 | (project #6) |
@@ -156,6 +160,151 @@ capability reference).
 | 2026-04-25 | pm.hecke.lmfdb_eigenvalue | A:2 | P:0 | E:1 | C:1 | (project #28) |
 | 2026-04-25 | pm.hecke.cross_check_lmfdb | A:2 | P:0 | E:1 | C:2 | (project #28) |
 | 2026-04-25 | pm.hecke.hecke_polynomial | A:1 | P:0 | E:0 | C:1 | (project #28) |
+| 2026-04-25 | pm.viz.draw_knot | A:4 | P:4 | E:6 | C:5 | (project #36) |
+| 2026-04-25 | pm.viz.knot_diagram_data | A:4 | P:4 | E:6 | C:5 | (project #36) |
+| 2026-04-25 | pm.viz.save_knot | A:0 | P:0 | E:3 | C:2 | (project #36) |
+| 2026-04-25 | pm.viz.draw_link | A:1 | P:0 | E:0 | C:1 | (project #36) |
+| 2026-04-25 | pm.viz.knot_layout_canonical | A:0 | P:1 | E:0 | C:1 | (project #36) |
+| 2026-04-25 | pm.numerics.flint_factor | A:2 | P:1 | E:2 | C:1 | (project #31) |
+| 2026-04-25 | pm.numerics.flint_polmodp | A:0 | P:0 | E:1 | C:1 | (project #31) |
+| 2026-04-25 | pm.numerics.flint_polmodp_factor | A:1 | P:0 | E:1 | C:1 | (project #31) |
+| 2026-04-25 | pm.numerics.flint_matmul_modp | A:0 | P:1 | E:1 | C:1 | (project #31) |
+| 2026-04-25 | pm.numerics.flint_matrix_rank_modp | A:1 | P:1 | E:1 | C:1 | (project #31) |
+| 2026-04-25 | pm.numerics.flint_matrix_det_modp | A:1 | P:1 | E:1 | C:1 | (project #31) |
+| 2026-04-25 | pm.numerics.flint_polmul | A:0 | P:1 | E:1 | C:1 | (project #31) |
+| 2026-04-25 | pm.numerics.flint_gcd_poly | A:0 | P:0 | E:1 | C:1 | (project #31) |
+| 2026-04-25 | pm.topology.alexander_polynomial | A:3 | P:6 | E:2 | C:3 | (project #32) |
+| 2026-04-25 | pm.topology.hyperbolic_volume | A:4 | P:5 | E:2 | C:2 | (project #32) |
+| 2026-04-25 | pm.topology.knot_shape_field | A:3 | P:5 | E:2 | C:1 | (project #32) |
+| 2026-04-25 | pm.topology.polredabs | A:1 | P:1 | E:1 | C:1 | (project #32) |
+
+### Project #31 — pyflint advanced operations exposure — summary
+
+17 tests, all green (17/17 pass on 2026-04-25), runtime ~15s.
+
+Module: `prometheus_math/numerics.py` (+~330 LOC, 8 public ops:
+`flint_factor`, `flint_polmodp`, `flint_polmodp_factor`,
+`flint_matmul_modp`, `flint_matrix_rank_modp`, `flint_matrix_det_modp`,
+`flint_polmul`, `flint_gcd_poly`). Tests:
+`prometheus_math/tests/test_flint_advanced.py` (~310 LOC).
+
+Aggregate rubric scores (math-tdd skill, ≥ 2 in every category):
+
+| Category | Count | Notes |
+|---|---|---|
+| Authority   | 4 | x^4-1 cyclotomic factorisation Φ_1·Φ_2·Φ_4 over Z; x^4-1 splits as 4 linear factors mod 5 (since 5 ≡ 1 mod 4); Phi_5 irreducible over Q (Gauss); det/rank of [[1,2],[3,4]] mod 5 hand-verified (det=−2≡3, rank=2). |
+| Property    | 5 | Hypothesis: factor(p·q) reconstructs to p·q; rank ≤ min(rows,cols); det(I_n)=1; A·I=A mod p; flint_polmul matches naive Cauchy product. |
+| Edge        | 4 | zero-poly factor → ValueError; constant nonzero poly → reconstructable single entry; matmul shape mismatch → ValueError; non-prime modulus → ValueError with "prime" message (avoids FLINT "Impossible inverse" crash). |
+| Composition | 3 | factor → polmul round-trip on x^4−1; det_modp = 0 iff rank_modp < n on singular vs full-rank pair; polmodp + polmodp_factor agree with direct polmodp_factor. |
+
+Subtleties surfaced during TDD:
+- FLINT's `nmod_poly([..], n)` raises a `flint_exceptions.FlintException`
+  (Impossible inverse) when n is composite — and this exception is
+  raised at C-level and crashed the Python process in one exploration
+  run. Pre-checking primality with sympy.isprime (or a trial-division
+  fallback) and raising a clean ValueError BEFORE constructing the
+  FLINT object is the safe pattern.
+- `fmpz_poly.factor()` returns `(content, [(factor, mult), ...])`
+  where `content` is `±1` for primitive polynomials. The leading −1
+  sign IS information — it must be emitted as a degree-0 factor so
+  callers can round-trip via `flint_polmul` of the factor list. We
+  emit content as a `[c]` factor whenever it is ≠ 1.
+- Coefficient convention: FLINT uses ASCENDING coefficient order
+  (constant first), matching sympy/PARI but opposite to mpmath /
+  numpy.poly1d. All wrappers are documented as ascending.
+- Zero-polynomial conventions: `_strip_trailing_zero_coeffs` collapses
+  `[0, 0, 0]` to `[0]`; `flint_polmul` returns `[]` for the zero
+  product (FLINT's convention), and the property test canonicalises
+  `[0]` and `[]` to be equivalent.
+
+Speed claims (documented in docstrings, not asserted in tests):
+- `fmpz_poly_factor`: 5x-50x faster than PARI's `factor` on integer
+  polynomials of degree 50-1000 (Hensel lifting + Zassenhaus + LLL).
+- `nmod_poly_factor`: 10x-100x faster than PARI's `factormod` for
+  degrees > 50 (Cantor-Zassenhaus + Berlekamp on small p).
+- `nmod_mat_mul / rank / det`: 5x-30x faster than `numpy @ ... % p`
+  + sympy's `Matrix(...).rank()` for word-sized primes.
+- `fmpz_poly_mul`: automatic Karatsuba/Toom-Cook/Schönhage-Strassen
+  selection by FLINT, 5x-50x speedup on degree > 1000.
+
+Skip behaviour: `pytest.importorskip("flint")` cleanly skips the
+entire test file if `python-flint` is not installed; the public ops
+themselves raise a clear `ImportError` with installation hint
+(`pip install python-flint`) at call time, so missing-flint never
+fails import for the rest of `prometheus_math`.
+
+File: `prometheus_math/numerics.py`
+Tests: `prometheus_math/tests/test_flint_advanced.py`
+
+### Project #32 — Property-based tests for pm.topology — summary
+
+35 tests, **34 passed + 1 xfail** (Hypothesis-discovered bug
+B-TOPO-001 captured as xfail), runtime ~15s.
+
+Module: `prometheus_math/topology.py` (existing, no implementation
+changes — tests-only project). Tests: `prometheus_math/tests/test_topology_properties.py` (~530 LOC).
+
+Aggregate rubric scores (math-tdd skill, ≥ 2 in every category):
+
+| Category | Count | Notes |
+|---|---|---|
+| Authority   | 6 | vol(4_1) = 2.029883212819307... (Cao-Meyerhoff minimal-vol theorem + Cohn closed form, 1e-12 tolerance); vol(4_1) hp 30 digits via SnapPy `snap`; vol(5_2)/vol(6_1)/vol(K11n34) pinned to SnapPy m-census; shape field 4_1 = Q(sqrt(-3)) disc -3 (Neumann-Reid Topology '90 Table 1); shape field 5_2 = LMFDB 3.1.23.1 disc -23; polredabs anchors against PARI docs §3.6.30. |
+| Property    | 18 | Alexander palindromic (Lickorish 6.10), Δ(1)=±1, det(K)=|Δ(-1)|, det odd, integer coeffs, non-zero (6 properties); Hypothesis over `small_knot` strategy of 7 Rolfsen knots. Volume invariants: vol > 0 iff hyperbolic (Mostow), vol exactly 0 on torus knots (Thurston), reproducibility across recomputations, table consistency at 1e-6, vol/is_hyperbolic agreement (5 properties). Shape-field: deg ≥ 1, disc ≠ 0, deg ≤ max_deg, |disc| < 10^9 (xfail 7_5), polredabs idempotent (5 properties). Cross-tool palindrome over full ALL_KNOTS table. All Hypothesis settings: derandomize=True with FAST/MEDIUM/SLOW profiles (max_examples 30/20/12, deadlines 5s/10s/15s — knot computations are slow). |
+| Edge        | 7 | torus knot shape_field raises ValueError with 'not hyperbolic'; torus knot Alexander still non-zero; unknown-knot-name input raises; alexander on int input raises TypeError; polredabs on canonical poly is identity; non-hyperbolic vol returns 0 (no error); too-low max_deg in shape_field either raises or returns small-disc poly. |
+| Composition | 5 | Alexander × HFK seifert_genus consistency (deg(Δ) ≤ 2g); fibered ⇒ leading Alex coeff = ±1 (Stallings); anchor genera (3_1=1, 4_1=1, 5_1=2, 8_19=3); 4_1 vs m004 SnapPy two-path identity at 1e-12; volume invariance under name-vs-PD-code construction at 1e-4. |
+
+Bug found:
+- **B-TOPO-001**: `knot_shape_field('7_5', bits_prec=300)` returns a
+  spurious deg-6 polynomial with coefficient height ~10^140 and
+  discriminant ~10^5300. The `_shape_from_poly_verify` two-guard
+  logic (max_coeff_bits = bits_prec/4, tol_exp = -bits_prec*0.15)
+  fails to reject this fit; raising bits_prec to 500 reproduces it.
+  Property test `test_property_shape_field_disc_bounded` xfails the
+  7_5 case while the bug is tracked. See BUGS.md for the suggested
+  fix and PROJECT_BACKLOG_1000.md project #32f.
+
+Subtleties surfaced during TDD:
+- snappy.Manifold('K_name').volume() at install time gives slightly
+  different values from knotinfo's published rounding. The KNOT_TABLE
+  in tests pins to SnapPy values (the actual source of truth for
+  this codepath), with 1e-6 regression tolerance. Knotinfo's rounded
+  values stay in `test_authority_volume_5_2_4_anchors`.
+- knot_floer_homology rejects unknot diagrams (raises
+  "PD code does not describe a knot projection" for empty PD,
+  "reducing R1 move" for single-curl PD), so unknot cases are
+  excluded from the strategy and tested only via TORUS_KNOTS for
+  Alexander non-zero behavior.
+- snappy.Link's `alexander_polynomial()` and `jones_polynomial()`
+  require Sage. Our env doesn't have Sage, so Jones-polynomial
+  properties from the spec were not implemented. Alexander goes
+  through `prometheus_math.topology.alexander_polynomial` (kfh-backed)
+  instead, which works without Sage.
+- The "shape field disc divides actual discriminant of iTrF" property
+  from the spec was reformulated as "|disc(shape field)| below
+  numerical-artifact threshold" because (a) the actual iTrF disc isn't
+  available without Sage's `find_field()`, and (b) the divisibility
+  condition is not strictly correct — shape-field disc can equal,
+  divide, or be a quadratic-extension multiple of iTrF disc. The
+  numerical-bound formulation catches the same algdep failures.
+- Caches `_alex_cache`, `_vol_cache`, `_shape_cache` keyed by knot
+  name avoid recomputing across Hypothesis examples (each knot can
+  be visited 5-15 times across the property suite).
+
+Hypothesis discovered the 7_5 bug on the first non-derandomized
+run; derandomized on subsequent runs to keep CI deterministic. The
+@example decorators on each property test ensure the curated
+anchor set (4_1, 5_2, 6_1) is always exercised regardless of
+strategy draw.
+
+File: `prometheus_math/tests/test_topology_properties.py`
+
+### Project #36 — Visualization: knot diagrams via SnapPy — summary
+
+33 tests, all green (33/33 pass on 2026-04-25), runtime ~14s.
+SnapPy + matplotlib (Agg) headless. Authority refs: Rolfsen knot
+table / KnotInfo (3_1, 4_1, 8_19, L2a1). Layout: regular n-gon +
+cubic-Bezier strands (v1, notebook-readable). Skip cleanly when SnapPy
+is missing.
 
 ### Project #28 — Hecke eigenvalue computation for arbitrary primes — summary
 

@@ -99,3 +99,54 @@ to positive convention). Equivalent fix: coerce single-column to
 `prometheus_math/tests/test_edge_cases.py` currently asserts the
 PariError as documented behavior. Flip the assertion to compare the
 reduced single vector when fixed.
+
+---
+
+## techne/lib/knot_shape_field.py
+
+### B-TOPO-001: 7_5 algdep false-fit slips past coefficient-height guard
+
+**File:** `techne/lib/knot_shape_field.py`
+**Reporter:** Techne property test suite (project #32)
+**Date:** 2026-04-25
+
+`knot_shape_field('7_5', bits_prec=300)` returns a degree-6 polynomial
+with coefficient heights of ~10^140 and a discriminant of ~10^5300.
+The published invariant trace field of 7_5 has degree 4 with much
+smaller coefficients (Neumann-Reid table).
+
+The two-guard logic in `_shape_from_poly_verify` (max-coefficient
+height capped at `bits_prec/4` bits, plus tightened tolerance
+`10^(-bits_prec*0.15)`) does NOT reject this fit because at
+bits_prec=300 the cap is ~75 bits ≈ 10^22, but PARI's algdep returns
+a polynomial whose first verified coefficient happens to fall just
+below the threshold or the algdep call iterates through a sequence
+that hits a candidate before our checks fire.
+
+Raising bits_prec to 500 reproduces the bug at the same degree,
+suggesting the issue is structural rather than a precision shortfall.
+
+**Repro:**
+```python
+from prometheus_math.topology import knot_shape_field
+r = knot_shape_field('7_5', bits_prec=300, max_deg=8)
+print(r['degree'], abs(r['disc']))  # 6, ~5300-digit number
+```
+
+**Expected:** Either the documented iTrF (degree ~4 per Neumann-Reid)
+or a clean ValueError.
+
+**Suggested fix:** Tighten the coefficient-height cap (try
+`max_coeff_bits = bits_prec // 8`) and re-survey the small-knot
+table to confirm correct fields are still recovered. Alternatively,
+ensure low degrees are tried first (they already are) but reject
+even the first low-degree fit if its coefficient growth pattern
+exceeds a multiplicative-factor bound between successive coefficients.
+
+**Test:** `test_property_shape_field_disc_bounded` in
+`prometheus_math/tests/test_topology_properties.py`. The test xfails
+the 7_5 case explicitly; it remains a regression check for every
+other knot in the table.
+
+**Tracking:** Added to PROJECT_BACKLOG_1000.md as project #32f
+(7_5 algdep fix).

@@ -498,6 +498,7 @@ immediately by parallel TDD agents.
   tower (p-Hilbert class field iterated). Tests against published
   Greenberg-conjecture-related results.
 - **Deliverable:** `pm.number_fields.p_class_field_tower(K, p, max_depth)`.
+- ✓ Phase 1 COMPLETED 2026-04-25
 
 ### #30 — Lehmer-degree-profile binner
 
@@ -519,6 +520,7 @@ immediately by parallel TDD agents.
   surface: `fmpz_poly` factoring, modular polynomial computation,
   fast linear algebra modulo primes.
 - **Deliverable:** `pm.numerics.flint_factor`, `pm.numerics.flint_polmodp`.
+- ✓ COMPLETED 2026-04-25
 
 ### #32 — Property-based tests for topology module
 
@@ -530,6 +532,27 @@ immediately by parallel TDD agents.
   > 0 for hyperbolic, knot_shape_field discriminant divides the
   field's actual discriminant. ~30 properties.
 - **Deliverable:** Topology Hypothesis suite green.
+- ✓ COMPLETED 2026-04-25
+- **Result:** 35 tests in `prometheus_math/tests/test_topology_properties.py`,
+  all green (1 xfail documenting Hypothesis-discovered bug B-TOPO-001).
+  Coverage: 6 Alexander invariants + 3 Alexander×HFK composition + 5
+  hyperbolic-volume invariants + 3 volume authority pins + 5
+  shape-field invariants + 3 shape-field authority pins + 3 cross-tool
+  consistency + 7 edge-case = 35 total.
+- **Bug found:** B-TOPO-001 (BUGS.md). See follow-up #32f below.
+
+### #32f — Fix knot_shape_field algdep false-fit on 7_5
+
+- **Category:** B
+- **Priority:** 32.5
+- **Effort:** 0.5 days · Phases: 1
+- Tighten `_shape_from_poly_verify` in `techne/lib/knot_shape_field.py`
+  so it rejects the spurious deg-6 polynomial currently returned for
+  7_5 at bits_prec=300. Try `max_coeff_bits = bits_prec // 8`,
+  re-survey the SMALL_HYPERBOLIC table to confirm 4_1, 5_2, 6_1, ...
+  still recover correctly, and re-enable the 7_5 case in
+  `test_property_shape_field_disc_bounded` (currently xfail).
+- **Deliverable:** xfail removed, 7_5 returns correct iTrF or ValueError.
 
 ### #33 — Persistent-homology recipe gallery
 
@@ -577,6 +600,7 @@ immediately by parallel TDD agents.
 - Render knot diagrams as Matplotlib / SVG via SnapPy's plink. Helper
   `pm.viz.draw_knot('4_1')`.
 - **Deliverable:** Notebook-ready knot rendering.
+- ✓ COMPLETED 2026-04-25
 
 ### #37 — Visualization: L-function zeros plot
 
