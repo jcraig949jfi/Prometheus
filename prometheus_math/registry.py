@@ -111,6 +111,10 @@ _BACKENDS: list[Backend] = [
             description="arXiv preprint server (literature search)"),
     Backend("knotinfo", "service", "DB",
             description="KnotInfo + LinkInfo knot/link census"),
+    Backend("zbmath", "service", "DB",
+            description="zbMATH Open API (mathematical literature)"),
+    Backend("mossinghoff", "data", "DB",
+            description="Mossinghoff small-Mahler-measure tables (local + online)"),
 ]
 
 
@@ -181,6 +185,44 @@ def _probe_service(b: Backend) -> None:
         b.error = "service unreachable"
 
 
+def _probe_data(b: Backend) -> None:
+    """Probe an embedded data-file backend.
+
+    These wrappers ship a curated snapshot of an external table and
+    are always available even offline.  The registry name ``b.name``
+    may differ from the submodule name (e.g. registry ``mossinghoff``
+    -> ``prometheus_math.databases.mahler``); we dispatch via an
+    explicit name -> submodule map.
+    """
+    submodule_map = {
+        "mossinghoff": "mahler",
+    }
+    sub = submodule_map.get(b.name, b.name)
+    try:
+        import importlib as _il
+        mod = _il.import_module(f"prometheus_math.databases.{sub}")
+    except Exception as e:
+        b.available = False
+        b.error = f"wrapper not importable: {type(e).__name__}: {e}"
+        return
+    probe = getattr(mod, "probe", None)
+    if probe is None:
+        # No probe defined: assume the embedded snapshot is fine.
+        b.available = True
+        b.version = "embedded"
+        return
+    try:
+        ok = bool(probe(timeout=3.0))
+    except Exception as e:
+        b.available = False
+        b.error = f"probe raised: {type(e).__name__}: {e}"
+        return
+    b.available = ok
+    b.version = "embedded" if ok else None
+    if not ok:
+        b.error = "embedded snapshot failed self-check"
+
+
 def _probe_all() -> None:
     for b in _BACKENDS:
         try:
@@ -190,6 +232,8 @@ def _probe_all() -> None:
                 _probe_binary(b)
             elif b.kind == "service":
                 _probe_service(b)
+            elif b.kind == "data":
+                _probe_data(b)
         except Exception as e:
             b.available = False
             b.error = f"probe error: {e}"

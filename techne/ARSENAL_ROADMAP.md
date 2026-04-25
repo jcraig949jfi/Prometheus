@@ -84,7 +84,7 @@ Native binaries on Windows; may install via installer or WSL2.
 | **Macaulay2** | algebra/AG | Native Windows binary (~200 MB) | Commutative algebra, Gröbner bases, syzygies, sheaf cohomology | High | 🟠 GAP |
 | **Lean 4 + Mathlib** | proof assistant | `elan` installer + `lake build` (~5 GB; first build slow) | Formal verification of research results; AI-prover integration; future-proof | High | 🟠 GAP |
 | **Julia 1.10+** | language | Native Windows installer (~300 MB) | Modern numerical computing; gateway to OSCAR, Hecke, Nemo, HomotopyContinuation.jl | High | 🟠 GAP |
-| **Singular** | algebra | Bundle with SageMath, or MSYS2 standalone | Polynomial-ring computation, fastest Gröbner basis | Medium | 🟠 GAP |
+| **Singular** | algebra | Bundle with SageMath, or MSYS2 standalone | Polynomial-ring computation, fastest Gröbner basis | Medium | 🟡 WIP (subprocess wrapper shipped at `prometheus_math.algebraic_geometry`; gates on `_singular.is_installed()`; auto-activates when Singular reaches PATH/Cygwin/Sage-bundle) |
 | **SageMath** | meta-CAS | Conda-forge `sagemath` or WSL2 (~3 GB) | Unified CAS; many specialized algorithms; backup for tools we'd otherwise miss | Medium | 🟠 GAP |
 | **OSCAR.jl** | meta-CAS | Julia Pkg.add (after Julia installed; ~1 GB) | Modern Julia successor to Magma; closing Magma gap | Medium | 🟠 GAP |
 | **PARI/GP standalone** | NT | Native Windows installer (~50 MB) | We have cypari already; standalone GP useful for `gp -q` scripts | Low | 🟠 GAP |
@@ -117,11 +117,11 @@ Living public APIs. Wrappers to make queries first-class within
 | Service | Category | Why we want it | Priority | Status |
 |---|---|---|---|---|
 | **LMFDB Postgres mirror** | DB | Direct SQL to L-functions, modular forms, EC, NF; already used heavily in Prometheus | Highest | 🟢 OP (`prometheus_math.databases.lmfdb`; 10/10 tests, 3.8M EC accessible) |
-| **OEIS** | DB | Integer-sequence lookup; conjecture seeding | Highest | 🟡 WIP (`prometheus_math.databases.oeis`; b-file endpoint works, JSON search Cloudflare-gated from this network — uses normalization + offline path; live tests skip cleanly) |
+| **OEIS** | DB | Integer-sequence lookup; conjecture seeding | Highest | 🟢 OP (local mirror: 395K sequences, ~37 MB at `prometheus_data/oeis/`; resolves Cloudflare blocker via local-first dispatch; live API used as fallback when reachable) |
 | **KnotInfo / LinkInfo** | DB | Knot/link census tables with invariants | High | 🟢 OP (`prometheus_math.databases.knotinfo`; via database_knotinfo pip; 12,966 knots + 4,188 links cached) |
 | **ATLAS of Finite Groups** | DB | Finite simple group representations | Medium | 🟠 GAP (couples with GAP install) |
 | **arXiv** | literature | Preprint search and download | Medium | 🟢 OP (`prometheus_math.databases.arxiv`; live API via arxiv pip pkg) |
-| **zbMATH Open** | literature | Open-access math literature | Medium | 🟠 GAP |
+| **zbMATH Open** | literature | Open-access math literature | Medium | 🟢 OP (`prometheus_math.databases.zbmath`; live API verified at api.zbmath.org/v1/document/_search; 8/8 tests pass) |
 | **NumberFields.org / EC.org** | DB (Cremona) | Cremona's number-field and EC tables | Low | 🟠 GAP (LMFDB covers most; local mirror CSV optional — see whitepapers/local_dataset_strategy.md) |
 
 ---
@@ -182,9 +182,9 @@ impact mirrors:
 
 | Dataset | Size | Why we want it | Status |
 |---|---|---|---|
-| **OEIS stripped + names** | ~50 MB | Resolves Cloudflare blocker for `oeis.lookup()` | 🟠 GAP |
+| **OEIS stripped + names** | ~50 MB | Resolves Cloudflare blocker for `oeis.lookup()` | 🟢 OP (downloaded 2026-04-25 to `prometheus_data/oeis/`; 395,310 sequences; auto-loads on `prometheus_math` import) |
 | **OEIS full dump (b-files, formulas, programs)** | ~1.5 GB | Full offline OEIS | 🟠 GAP |
-| **Mossinghoff Mahler-measure tables** | ~5 MB | Lehmer/Salem cross-checks (Charon work) | 🟠 GAP |
+| **Mossinghoff Mahler-measure tables** | ~5 MB | Lehmer/Salem cross-checks (Charon work) | 🟢 OP (`prometheus_math.databases.mahler`; 21 polynomials embedded; all M values cross-checked vs `techne.mahler_measure` to <1e-9; `lehmer_witness()`, `smallest_known(degree)`, `all_below(M)` etc.) |
 | **Mathlib4 source + AST corpus** | 1.5–20 GB | Coupled with Lean 4 install; AI prover training | 🟠 GAP (depends Tier 3 Lean) |
 | **ATLAS of Finite Groups (JSON export)** | ~50 MB | Finite group reference data | 🟠 GAP (depends Tier 3 GAP) |
 | **Cremona EC CSV** | ~600 MB | Faster-than-SQL bulk EC scans; LMFDB live is sufficient meanwhile | 🟠 GAP (low priority) |

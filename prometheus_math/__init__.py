@@ -41,6 +41,7 @@ from . import (  # noqa: F401
     optimization,
     numerics,
     symbolic,
+    algebraic_geometry,
 )
 from . import doc  # noqa: F401
 
@@ -55,4 +56,5 @@ __all__ = [
     "optimization",
     "numerics",
     "symbolic",
+    "algebraic_geometry",
 ]
