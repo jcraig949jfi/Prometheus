@@ -118,11 +118,11 @@ Living public APIs. Wrappers to make queries first-class within
 |---|---|---|---|---|
 | **LMFDB Postgres mirror** | DB | Direct SQL to L-functions, modular forms, EC, NF; already used heavily in Prometheus | Highest | 🟢 OP (`prometheus_math.databases.lmfdb`; 10/10 tests, 3.8M EC accessible) |
 | **OEIS** | DB | Integer-sequence lookup; conjecture seeding | Highest | 🟡 WIP (`prometheus_math.databases.oeis`; b-file endpoint works, JSON search Cloudflare-gated from this network — uses normalization + offline path; live tests skip cleanly) |
-| **KnotInfo / LinkInfo** | DB | Knot/link census tables with invariants | High | 🟠 GAP |
-| **ATLAS of Finite Groups** | DB | Finite simple group representations | Medium | 🟠 GAP |
-| **arXiv** | literature | Preprint search and download | Medium | 🟠 GAP (`arxiv` pip pkg available) |
+| **KnotInfo / LinkInfo** | DB | Knot/link census tables with invariants | High | 🟢 OP (`prometheus_math.databases.knotinfo`; via database_knotinfo pip; 12,966 knots + 4,188 links cached) |
+| **ATLAS of Finite Groups** | DB | Finite simple group representations | Medium | 🟠 GAP (couples with GAP install) |
+| **arXiv** | literature | Preprint search and download | Medium | 🟢 OP (`prometheus_math.databases.arxiv`; live API via arxiv pip pkg) |
 | **zbMATH Open** | literature | Open-access math literature | Medium | 🟠 GAP |
-| **NumberFields.org / EC.org** | DB (Cremona) | Cremona's number-field and EC tables | Low | 🟠 GAP |
+| **NumberFields.org / EC.org** | DB (Cremona) | Cremona's number-field and EC tables | Low | 🟠 GAP (LMFDB covers most; local mirror CSV optional — see whitepapers/local_dataset_strategy.md) |
 
 ---
 
@@ -171,6 +171,28 @@ they emerge from agora streams or roadmap reviews.
 | **Lehmer-degree-profile binner** | Charon's Mahler-measure scans need standard binning | Low | ⚫ NOVEL |
 | **BSD audit batch** | Compose existing BSD chain over arbitrary curve set | Medium | ⚫ NOVEL |
 | **CM-order × torsion stratifier** | F011-style cross-stratification helper | Low | ⚫ NOVEL |
+
+---
+
+## Tier 5b — Local dataset mirrors (complement to Tier 5 wrappers)
+
+Each Tier-5 wrapper benefits from a local-mirror complement. See
+`whitepapers/local_dataset_strategy.md` for the full strategy. Highest-
+impact mirrors:
+
+| Dataset | Size | Why we want it | Status |
+|---|---|---|---|
+| **OEIS stripped + names** | ~50 MB | Resolves Cloudflare blocker for `oeis.lookup()` | 🟠 GAP |
+| **OEIS full dump (b-files, formulas, programs)** | ~1.5 GB | Full offline OEIS | 🟠 GAP |
+| **Mossinghoff Mahler-measure tables** | ~5 MB | Lehmer/Salem cross-checks (Charon work) | 🟠 GAP |
+| **Mathlib4 source + AST corpus** | 1.5–20 GB | Coupled with Lean 4 install; AI prover training | 🟠 GAP (depends Tier 3 Lean) |
+| **ATLAS of Finite Groups (JSON export)** | ~50 MB | Finite group reference data | 🟠 GAP (depends Tier 3 GAP) |
+| **Cremona EC CSV** | ~600 MB | Faster-than-SQL bulk EC scans; LMFDB live is sufficient meanwhile | 🟠 GAP (low priority) |
+| **arXiv metadata snapshot** | ~2 GB | Bulk literature mining / ML training | 🟠 GAP (low priority) |
+
+Architecture: `prometheus_math.databases._local` (planned) provides a
+mirror-first lookup pattern with fallback to live API. New env var
+`PROMETHEUS_DATA_DIR` configures the mirror root.
 
 ---
 

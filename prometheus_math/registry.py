@@ -107,6 +107,10 @@ _BACKENDS: list[Backend] = [
             description="LMFDB Postgres mirror at devmirror.lmfdb.xyz"),
     Backend("oeis", "service", "DB",
             description="OEIS - Online Encyclopedia of Integer Sequences"),
+    Backend("arxiv", "service", "DB",
+            description="arXiv preprint server (literature search)"),
+    Backend("knotinfo", "service", "DB",
+            description="KnotInfo + LinkInfo knot/link census"),
 ]
 
 
