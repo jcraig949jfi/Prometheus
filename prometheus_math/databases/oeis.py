@@ -52,12 +52,20 @@ The dict shape returned by `lookup()` and items in `search()`/
 """
 from __future__ import annotations
 
+import datetime as _dt
+import gzip
+import logging
+import pathlib
 import re
 import threading
 import time
 from typing import Any, Iterable, Optional
 
 import requests
+
+from . import _local
+
+_log = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -78,6 +86,35 @@ _last_request_ts: float = 0.0
 #   _bfile_cache:  key="bfile:<A-number>"        ->  str (raw text) | None
 _json_cache: dict[str, Any] = {}
 _bfile_cache: dict[str, Any] = {}
+
+# ---------------------------------------------------------------------------
+# Local mirror state
+# ---------------------------------------------------------------------------
+#
+# OEIS publishes two bulk dump files that are NOT Cloudflare-gated:
+#   * https://oeis.org/stripped.gz  — A-num + 30-50 leading terms per sequence
+#   * https://oeis.org/names.gz     — A-num<TAB>name
+#
+# Once mirrored locally these resolve `lookup()`, `find_sequence()`, and
+# `is_known()` calls without ever touching the network.  Other fields
+# (formula, program, keywords, references, cross_refs, offset, author)
+# are NOT in the bulk dumps; for those callers must fall through to the
+# live API or accept the partial record.
+
+_OEIS_DATASET = "oeis"
+_OEIS_FILES = {
+    "stripped.gz": "https://oeis.org/stripped.gz",
+    "names.gz":    "https://oeis.org/names.gz",
+}
+
+# A-NUM -> {"data": [int, ...], "name": str}
+_OEIS_LOCAL_CACHE: dict[str, dict] = {}
+# Reverse index: tuple of leading values -> A-NUM (built lazily for
+# find_sequence / is_known).
+_OEIS_PREFIX_INDEX: dict[tuple, str] = {}
+_OEIS_LOCAL_LOADED = False
+_OEIS_LOCAL_LOCK = threading.Lock()
+_OEIS_USE_LOCAL_FIRST: Optional[bool] = None  # None = auto-detect
 
 
 # ---------------------------------------------------------------------------
@@ -229,8 +266,21 @@ def lookup(a_number) -> Optional[dict]:
 
     Accepts: 'A000045', 'a45', 45 (int).  Returns the normalized dict
     described in the module docstring, or None if not found / network error.
+
+    Resolution priority:
+      1. Local mirror (stripped.gz + names.gz) when present and
+         use_local_first() is True.  Returns a partial dict — only
+         `number`, `name`, and `data` are populated; other fields are
+         empty/None because they are not in the bulk dumps.
+      2. Live OEIS HTTPS API.
     """
     a_id = _normalize_a_number(a_number)
+
+    if has_local_mirror() and use_local_first():
+        local = _local_lookup(a_id)
+        if local is not None:
+            return local
+
     results = _do_search(f"id:{a_id}")
     if not results:
         return None
@@ -283,8 +333,20 @@ def search(terms: Optional[str] = None,
 
 
 def find_sequence(values: Iterable[int], max_results: int = 10) -> list[dict]:
-    """Convenience: 'I have these N integers — what sequences match?'."""
-    return search(sequence=values, max_results=max_results)
+    """Convenience: 'I have these N integers — what sequences match?'.
+
+    Resolution priority:
+      1. Local mirror prefix index (when present and use_local_first()).
+      2. Live OEIS sequence search.
+    """
+    seq = [int(v) for v in values]
+    if not seq:
+        return []
+    if has_local_mirror() and use_local_first():
+        local_hits = _local_find_sequence(seq, max_results=max_results)
+        if local_hits:
+            return local_hits
+    return search(sequence=seq, max_results=max_results)
 
 
 def get_data(a_number) -> list[int]:
@@ -346,13 +408,23 @@ def b_file(a_number, max_terms: Optional[int] = None) -> list[tuple[int, int]]:
 def is_known(values: Iterable[int]) -> Optional[str]:
     """Quick 'is this prefix in OEIS?' — returns best-match A-number or None.
 
-    The "best match" is OEIS's own ranking: the first result of the
-    sequence-search call. Useful for one-line conjecture checks:
+    Resolution priority:
+      1. Local mirror prefix lookup.
+      2. Live OEIS search (delegated through `find_sequence`).
+
+    Useful for one-line conjecture checks:
 
         >>> is_known([1, 1, 2, 3, 5, 8, 13])
         'A000045'
     """
-    hits = find_sequence(values, max_results=1)
+    seq = [int(v) for v in values]
+    if not seq:
+        return None
+    if has_local_mirror() and use_local_first():
+        a = _local_is_known(seq)
+        if a is not None:
+            return a
+    hits = find_sequence(seq, max_results=1)
     if not hits:
         return None
     return hits[0]["number"] or None
@@ -385,10 +457,13 @@ def cache_info() -> dict:
 def probe(timeout: float = 3.0) -> bool:
     """Cheap availability check used by prometheus_math.registry.
 
-    Hits the search endpoint with a tiny query and a tight timeout. Does
-    not respect the 1-req/sec throttle — registry probes run once at
-    import time.
+    Returns True if EITHER a local mirror is present OR the live
+    HTTPS endpoint responds.  Cloudflare-blocked networks therefore
+    still report OEIS as available so long as `update_mirror()` has
+    been run at least once.
     """
+    if has_local_mirror():
+        return True
     try:
         r = requests.get(
             f"{_BASE}/search",
@@ -399,3 +474,269 @@ def probe(timeout: float = 3.0) -> bool:
     except requests.RequestException:
         return False
     return r.status_code == 200
+
+
+# ---------------------------------------------------------------------------
+# Local mirror — public API
+# ---------------------------------------------------------------------------
+
+def _parse_stripped_line(line: str) -> Optional[tuple[str, list[int]]]:
+    """Parse one line of stripped.gz: ``A000045 ,0,1,1,2,3,5,...,``.
+
+    Returns (a_number, [int, ...]) or None on malformed lines.
+    Lines beginning with '#' are comments.
+    """
+    line = line.strip()
+    if not line or line.startswith("#"):
+        return None
+    # Split on first whitespace to separate the A-num from the data.
+    parts = line.split(None, 1)
+    if len(parts) != 2:
+        return None
+    a_id, body = parts
+    if not (a_id.startswith("A") and a_id[1:].isdigit()):
+        return None
+    body = body.strip().strip(",")
+    if not body:
+        return (a_id, [])
+    out: list[int] = []
+    for tok in body.split(","):
+        tok = tok.strip()
+        if not tok:
+            continue
+        try:
+            out.append(int(tok))
+        except ValueError:
+            # Some sequences carry signs or unparseable cells; skip silently.
+            continue
+    return (a_id, out)
+
+
+def _parse_names_line(line: str) -> Optional[tuple[str, str]]:
+    """Parse one line of names.gz: ``A000045\tFibonacci numbers: ...``."""
+    line = line.rstrip("\n").rstrip("\r")
+    if not line or line.startswith("#"):
+        return None
+    # Names file is TAB-delimited.
+    if "\t" in line:
+        a_id, name = line.split("\t", 1)
+    else:
+        # Fallback: first token + rest.
+        parts = line.split(None, 1)
+        if len(parts) != 2:
+            return None
+        a_id, name = parts
+    a_id = a_id.strip()
+    if not (a_id.startswith("A") and a_id[1:].isdigit()):
+        return None
+    return (a_id, name.strip())
+
+
+def _load_local_cache(stripped: pathlib.Path,
+                      names: pathlib.Path) -> int:
+    """Populate _OEIS_LOCAL_CACHE from the gz dumps.  Returns N loaded."""
+    _OEIS_LOCAL_CACHE.clear()
+    _OEIS_PREFIX_INDEX.clear()
+    with gzip.open(stripped, "rt", encoding="utf-8", errors="replace") as fh:
+        for line in fh:
+            parsed = _parse_stripped_line(line)
+            if parsed is None:
+                continue
+            a_id, data = parsed
+            _OEIS_LOCAL_CACHE[a_id] = {"data": data, "name": ""}
+    if names.exists():
+        with gzip.open(names, "rt", encoding="utf-8", errors="replace") as fh:
+            for line in fh:
+                parsed = _parse_names_line(line)
+                if parsed is None:
+                    continue
+                a_id, name = parsed
+                if a_id in _OEIS_LOCAL_CACHE:
+                    _OEIS_LOCAL_CACHE[a_id]["name"] = name
+                else:
+                    _OEIS_LOCAL_CACHE[a_id] = {"data": [], "name": name}
+    return len(_OEIS_LOCAL_CACHE)
+
+
+def _ensure_local_mirror(force: bool = False) -> bool:
+    """Download stripped.gz + names.gz if absent; parse into the cache.
+
+    Returns True iff the cache is loaded and non-empty after the call.
+    Network failures are logged, not raised.
+    """
+    global _OEIS_LOCAL_LOADED
+    with _OEIS_LOCAL_LOCK:
+        if _OEIS_LOCAL_LOADED and not force and _OEIS_LOCAL_CACHE:
+            return True
+        try:
+            base = _local.fetch_dataset(_OEIS_DATASET, _OEIS_FILES, force=force)
+        except Exception as e:
+            _log.warning("OEIS mirror download failed: %s", e)
+            return False
+        stripped = base / "stripped.gz"
+        names = base / "names.gz"
+        if not stripped.exists():
+            _log.warning("OEIS mirror missing stripped.gz at %s", stripped)
+            return False
+        try:
+            n = _load_local_cache(stripped, names)
+        except Exception as e:
+            _log.warning("OEIS mirror parse failed: %s", e)
+            return False
+        _OEIS_LOCAL_LOADED = n > 0
+        return _OEIS_LOCAL_LOADED
+
+
+def _autoload_if_present() -> None:
+    """If the dump files are already on disk, parse them lazily — no network."""
+    global _OEIS_LOCAL_LOADED
+    if _OEIS_LOCAL_LOADED:
+        return
+    with _OEIS_LOCAL_LOCK:
+        if _OEIS_LOCAL_LOADED:
+            return
+        if not _local.has_mirror(_OEIS_DATASET, "stripped.gz"):
+            return
+        base = _local.dataset_path(_OEIS_DATASET)
+        try:
+            n = _load_local_cache(base / "stripped.gz", base / "names.gz")
+        except Exception as e:
+            _log.warning("OEIS mirror auto-load failed: %s", e)
+            return
+        _OEIS_LOCAL_LOADED = n > 0
+
+
+def has_local_mirror() -> bool:
+    """True iff the OEIS local mirror is parsed and ready to serve lookups."""
+    if _OEIS_LOCAL_LOADED and _OEIS_LOCAL_CACHE:
+        return True
+    # Lazy: auto-load if the files exist on disk.
+    _autoload_if_present()
+    return _OEIS_LOCAL_LOADED and bool(_OEIS_LOCAL_CACHE)
+
+
+def use_local_first(value: Optional[bool] = None) -> bool:
+    """Get or set the global local-first flag.
+
+    With no argument, returns the current effective value (auto-detected
+    from `has_local_mirror()` if never explicitly set).  With an argument,
+    sets and returns the new value.
+    """
+    global _OEIS_USE_LOCAL_FIRST
+    if value is not None:
+        _OEIS_USE_LOCAL_FIRST = bool(value)
+        return _OEIS_USE_LOCAL_FIRST
+    if _OEIS_USE_LOCAL_FIRST is None:
+        # Don't trigger autoload here — has_local_mirror handles that.
+        return has_local_mirror()
+    return _OEIS_USE_LOCAL_FIRST
+
+
+def _local_record(a_id: str) -> Optional[dict]:
+    """Shape a local-mirror entry into the same dict layout as `lookup()`."""
+    rec = _OEIS_LOCAL_CACHE.get(a_id)
+    if rec is None:
+        return None
+    return {
+        "number":     a_id,
+        "name":       rec.get("name", ""),
+        "data":       list(rec.get("data", []) or []),
+        "formula":    [],
+        "program":    [],
+        "keywords":   [],
+        "references": [],
+        "cross_refs": [],
+        "offset":     (),
+        "author":     "",
+    }
+
+
+def _local_lookup(a_number) -> Optional[dict]:
+    """Look up one A-number in the local mirror."""
+    if not has_local_mirror():
+        return None
+    a_id = _normalize_a_number(a_number)
+    return _local_record(a_id)
+
+
+def _local_find_sequence(values: list[int],
+                         max_results: int = 10,
+                         min_match: int = 4) -> list[dict]:
+    """Brute-force scan of the local mirror for sequences whose `data`
+    field contains `values` as a contiguous prefix or substring.
+
+    The OEIS bulk dumps include only 30-50 leading terms per sequence,
+    so we scan for occurrences anywhere in those terms (covers offset
+    differences).  Sequences whose own first values match are ranked
+    above those matching mid-stream.
+    """
+    if not has_local_mirror():
+        return []
+    if len(values) < min_match:
+        # Don't return everything for tiny prefixes — too noisy.
+        min_match = max(1, len(values))
+    target = tuple(values)
+    L = len(target)
+    prefix_hits: list[str] = []
+    sub_hits: list[str] = []
+    for a_id, rec in _OEIS_LOCAL_CACHE.items():
+        data = rec.get("data") or []
+        if len(data) < L:
+            continue
+        if tuple(data[:L]) == target:
+            prefix_hits.append(a_id)
+            continue
+        # Substring scan (cheap; data is short).
+        for i in range(1, len(data) - L + 1):
+            if tuple(data[i:i + L]) == target:
+                sub_hits.append(a_id)
+                break
+    # Sort each tier by A-number ascending so the canonical (older) entry
+    # wins ties — matches the spirit of OEIS's own ranking.
+    prefix_hits.sort()
+    sub_hits.sort()
+    ordered = prefix_hits + sub_hits
+    out: list[dict] = []
+    for a_id in ordered[:max_results]:
+        rec = _local_record(a_id)
+        if rec is not None:
+            out.append(rec)
+    return out
+
+
+def _local_is_known(values: list[int]) -> Optional[str]:
+    hits = _local_find_sequence(values, max_results=1)
+    if not hits:
+        return None
+    return hits[0]["number"]
+
+
+def update_mirror(force: bool = False) -> dict:
+    """Refresh the OEIS local mirror.
+
+    Downloads `stripped.gz` and `names.gz` (if missing or `force=True`)
+    and reparses them into memory.  Returns a small status dict suitable
+    for printing or logging:
+
+        {"sequences_loaded": 372031,
+         "files":            ["stripped.gz", "names.gz"],
+         "size_bytes":       57_344_120,
+         "refreshed_at":     "2026-04-22T18:33:09+00:00"}
+
+    Network failures populate the dict with `error` and leave any
+    previously-loaded cache intact.
+    """
+    started = _dt.datetime.now(_dt.timezone.utc).isoformat()
+    ok = _ensure_local_mirror(force=force)
+    files = sorted(_OEIS_FILES.keys())
+    out: dict = {
+        "sequences_loaded": len(_OEIS_LOCAL_CACHE),
+        "files":            files,
+        "size_bytes":       _local.mirror_size(_OEIS_DATASET),
+        "refreshed_at":     started,
+    }
+    if not ok:
+        out["error"] = "mirror not loaded (see warnings)"
+    return out
+
+
