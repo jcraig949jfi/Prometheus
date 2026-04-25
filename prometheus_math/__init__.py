@@ -71,6 +71,14 @@ try:
 except Exception:  # pragma: no cover
     _HAS_HECKE = False
 
+# recipes: end-to-end recipe galleries (persistent homology, ...).  Optional
+# because some galleries depend on heavy backends (gudhi, ripser, ...).
+try:
+    from . import recipes  # noqa: F401
+    _HAS_RECIPES = True
+except Exception:  # pragma: no cover
+    _HAS_RECIPES = False
+
 # modular imports cypari + LMFDB; protect the rest of pm from import errors.
 try:
     from . import modular  # noqa: F401
@@ -101,3 +109,5 @@ if _HAS_MODULAR:
     __all__.append("modular")
 if _HAS_VIZ:
     __all__.append("viz")
+if _HAS_RECIPES:
+    __all__.append("recipes")

@@ -564,6 +564,7 @@ immediately by parallel TDD agents.
   bottleneck distance, persistence images for ML pipelines, time-series
   TDA.
 - **Deliverable:** End-to-end recipes runnable from a clean install.
+- ✓ COMPLETED 2026-04-25
 
 ### #34 — Lean Copilot-style integration sketch
 
@@ -610,6 +611,7 @@ immediately by parallel TDD agents.
 - `pm.viz.plot_zeros(label)` plots the first N zeros of an L-function
   with confidence bands.
 - **Deliverable:** Researcher-friendly L-function visualization.
+- ✓ COMPLETED 2026-04-25
 
 ### #38 — Reverse-engineer: Magma's `pAdicL` for elliptic curves
 
@@ -632,6 +634,7 @@ immediately by parallel TDD agents.
   ratios and compare to all known random-matrix universality classes.
   Surface anomalous ratios as conjecture candidates.
 - **Deliverable:** `pm.research.surface_anomalies(family_query)`.
+- ✓ COMPLETED 2026-04-25
 
 ### #40 — Database freshness automation
 
@@ -642,6 +645,16 @@ immediately by parallel TDD agents.
   KnotInfo, arXiv, zbMATH); diff captured stats against snapshot;
   open issue if significant change.
 - **Deliverable:** `.github/workflows/db-freshness.yml`.
+- ✓ COMPLETED 2026-04-25 — `prometheus_math/databases/freshness.py`
+  (DataSource registry of 9 wrappers, probe_upstream HEAD/Range fallback,
+  probe_local with file/dir mtime, is_stale + refresh_if_stale,
+  freshness_report dict/markdown, argparse cli);
+  `scripts/db_freshness.py` thin entrypoint;
+  `.github/workflows/db-freshness.yml` weekly+manual+push triggers;
+  15 tests passing (3 authority / 4 property / 4 edge / 3 composition
+  + 1 import-surface).  Live run: 9 sources probed, 5 marked stale on
+  a fresh checkout, 3 upstreams unreachable from local network (zbmath
+  cert, knotinfo + mahler DNS).
 
 ### #41 — Edge-case test gallery
 

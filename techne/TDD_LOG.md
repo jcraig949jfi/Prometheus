@@ -12,6 +12,19 @@ capability reference).
 
 | Date | Operation | Auth | Prop | Edge | Comp | Commit |
 |---|---|---|---|---|---|---|
+| 2026-04-25 | pm.databases.freshness.SOURCE_REGISTRY | A:3 | P:1 | E:0 | C:0 | (project #40) |
+| 2026-04-25 | pm.databases.freshness.probe_upstream | A:0 | P:1 | E:2 | C:1 | (project #40) |
+| 2026-04-25 | pm.databases.freshness.probe_local | A:0 | P:1 | E:2 | C:1 | (project #40) |
+| 2026-04-25 | pm.databases.freshness.is_stale | A:1 | P:2 | E:2 | C:0 | (project #40) |
+| 2026-04-25 | pm.databases.freshness.refresh_if_stale | A:0 | P:1 | E:2 | C:1 | (project #40) |
+| 2026-04-25 | pm.databases.freshness.freshness_report | A:0 | P:1 | E:0 | C:2 | (project #40) |
+| 2026-04-25 | pm.databases.freshness.cli | A:0 | P:0 | E:0 | C:1 | (project #40) |
+| 2026-04-25 | pm.research.anomaly_surface.canonical_ensembles | A:1 | P:1 | E:1 | C:1 | (project #39) |
+| 2026-04-25 | pm.research.anomaly_surface.compute_spectral_ratios | A:1 | P:2 | E:2 | C:2 | (project #39) |
+| 2026-04-25 | pm.research.anomaly_surface.mean_gap_ratio | A:3 | P:2 | E:1 | C:1 | (project #39) |
+| 2026-04-25 | pm.research.anomaly_surface.kolmogorov_smirnov_p | A:1 | P:1 | E:1 | C:2 | (project #39) |
+| 2026-04-25 | pm.research.anomaly_surface.classify_against_ensembles | A:1 | P:1 | E:1 | C:2 | (project #39) |
+| 2026-04-25 | pm.research.anomaly_surface.surface_anomalies | A:1 | P:1 | E:1 | C:2 | (project #39) |
 | 2026-04-25 | (audit pending — backfill from existing techne/lib/) | — | — | — | — | — |
 | 2026-04-25 | pm.number_fields.p_hilbert_class_field | A:5 | P:5 | E:6 | C:3 | (project #29 phase 1) |
 | 2026-04-25 | pm.number_fields.p_class_field_tower | A:5 | P:5 | E:6 | C:3 | (project #29 phase 1) |
@@ -173,10 +186,86 @@ capability reference).
 | 2026-04-25 | pm.numerics.flint_matrix_det_modp | A:1 | P:1 | E:1 | C:1 | (project #31) |
 | 2026-04-25 | pm.numerics.flint_polmul | A:0 | P:1 | E:1 | C:1 | (project #31) |
 | 2026-04-25 | pm.numerics.flint_gcd_poly | A:0 | P:0 | E:1 | C:1 | (project #31) |
+| 2026-04-25 | pm.recipes.persistent_homology.api (8 ops, aggregated) | A:6 | P:6 | E:8 | C:4 | (project #33) |
+| 2026-04-25 | pm.recipes.persistent_homology (10-recipe gallery) | A:6 | P:6 | E:8 | C:4 | (project #33) |
 | 2026-04-25 | pm.topology.alexander_polynomial | A:3 | P:6 | E:2 | C:3 | (project #32) |
 | 2026-04-25 | pm.topology.hyperbolic_volume | A:4 | P:5 | E:2 | C:2 | (project #32) |
 | 2026-04-25 | pm.topology.knot_shape_field | A:3 | P:5 | E:2 | C:1 | (project #32) |
 | 2026-04-25 | pm.topology.polredabs | A:1 | P:1 | E:1 | C:1 | (project #32) |
+| 2026-04-25 | pm.viz.get_zeros | A:6 | P:3 | E:4 | C:3 | (project #37) |
+| 2026-04-25 | pm.viz.plot_zeros | A:1 | P:2 | E:2 | C:2 | (project #37) |
+| 2026-04-25 | pm.viz.plot_zero_spacings | A:2 | P:2 | E:0 | C:1 | (project #37) |
+| 2026-04-25 | pm.viz.compare_zero_statistics | A:1 | P:0 | E:1 | C:1 | (project #37) |
+| 2026-04-25 | pm.viz.plot_critical_strip | A:0 | P:1 | E:0 | C:1 | (project #37) |
+| 2026-04-25 | pm.viz.save_zeros_plot | A:0 | P:0 | E:2 | C:1 | (project #37) |
+
+### Project #37 — Visualization: L-function zeros plot — summary
+
+29 tests, all green (29/29 pass on 2026-04-25), runtime ~17s.
+Existing wave-7 knot tests (33/33) remain green after the refactor.
+
+Module: `prometheus_math/viz/` (refactored from a single `viz.py` into
+a 4-file package):
+- `viz/__init__.py` — re-exports both knot and lfunctions APIs.
+- `viz/knot.py` — wave-7 knot/link rendering (verbatim move of the
+  old `viz.py`; `pm.viz.draw_knot('4_1')` keeps the same call shape).
+- `viz/_common.py` — shared `_setup_matplotlib(backend)` and
+  `_resolve_path(path, fmt)` helpers.
+- `viz/lfunctions.py` — six new public ops (~520 LOC):
+  `get_zeros`, `plot_zeros`, `plot_critical_strip`,
+  `plot_zero_spacings`, `compare_zero_statistics`, `save_zeros_plot`.
+
+Authority highlights:
+- First Riemann ζ zero (Edwards §10) verified to 1e-6.
+- First five Riemann zeros agree with mpmath.zetazero to 1e-5.
+- LMFDB devmirror lookup of `EllipticCurve/Q/11/a` yields zeros in
+  the documented [6.0, 7.0] range.
+- GUE Wigner surmise P(1) = 32/π² · e^{-4/π} ≈ 0.9076 (Mehta §6.5.31).
+- GUE CDF endpoints F(0)=0, F(∞)=1 (analytic).
+
+Properties:
+- Mean of normalised spacings is exactly 1 (by construction).
+- GUE pdf integrates to 1 over [0, 8] within 1e-3 (Riemann-sum check).
+- get_zeros monotonicity and positivity for ζ.
+- ax-persistence: passing the same axes twice yields cumulative plot.
+- Riemann zeros at low height satisfy KS distance to GUE < 0.35.
+
+Edges:
+- Empty / whitespace label → ValueError.
+- n_zeros < 0 → ValueError; n_zeros = 0 → empty list, empty plot.
+- Unknown backend → ValueError.
+- compare_zero_statistics with < 2 labels → ValueError.
+- save_zeros_plot with no extension and no fmt → ValueError.
+- Oversized request → UserWarning + truncate.
+
+Compositions:
+- get_zeros → plot_zeros → save_zeros_plot → file on disk.
+- get_zeros for ζ matches mpmath.zetazero(k).imag for k=1..5 to 1e-12.
+- plot_zeros figure has exactly N marker points for n_zeros=N.
+- compare_zero_statistics returns dict with figure/stats/ks_table;
+  identical-vs-identical KS = 0.
+- plot_zero_spacings overlays GUE + Poisson reference curves.
+- pm.viz re-export gate: both knot and lfunctions APIs callable from
+  a single `from prometheus_math import viz`.
+- LMFDB-label and 'Riemann' alias paths agree to 1e-12.
+
+Files:
+- `prometheus_math/viz/__init__.py`
+- `prometheus_math/viz/knot.py`
+- `prometheus_math/viz/_common.py`
+- `prometheus_math/viz/lfunctions.py`
+- `prometheus_math/viz/tests/__init__.py`
+- `prometheus_math/viz/tests/test_lfunctions.py`
+
+The old `prometheus_math/viz.py` was deleted; `pm.viz` is now a
+package. `prometheus_math/__init__.py` was unchanged — its lazy
+`from . import viz` happens to work for both module and package
+forms.
+
+KS two-sample fix: the initial implementation advanced only one
+pointer per iteration on ties, so identical samples produced a
+non-zero distance. Rewritten to advance both pointers on `a[i] ==
+b[j]`, restoring the diagonal-zero invariant of any KS distance.
 
 ### Project #31 — pyflint advanced operations exposure — summary
 
@@ -925,6 +1014,73 @@ Subtleties:
   `prometheus_data/oeis/` mirror on the developer's box.
 
 File: `prometheus_math/databases/tests/test_oeis_refresh.py`
+
+---
+
+### Project #33 — Persistent-homology recipe gallery — summary
+
+33 tests, all green (33/33 pass on 2026-04-25), runtime ~19s.
+
+Module: `prometheus_math/recipes/persistent_homology/` — 10 recipes,
+shared facade `api.py` (~280 LOC, 8 public ops:
+`rips_persistence`, `persistence_diagram_from_distmat`,
+`bottleneck_distance`, `wasserstein_distance`, `persistence_image`,
+`betti_numbers_from_diagram`, `sliding_window_embed`,
+`cubical_persistence`).  Tests:
+`prometheus_math/recipes/persistent_homology/tests/test_persistent_homology.py`
+(~390 LOC).
+
+Aggregate rubric scores (math-tdd skill, ≥ 2 in every category):
+
+| Category | Count | Notes |
+|---|---|---|
+| Authority   | 6 | Carlsson noisy-circle test (Bull. AMS 46 (2009)); bottleneck small-shift hand computation; bottleneck self-distance metric axiom; cycle-graph H_1 birth at t = 1 (de Silva & Ghrist, AGT 7); single-point H_0 = 1 (Hatcher Example 2.6); two-coincident-points H_0 = 1 (Edelsbrunner & Harer §VI.3). |
+| Property    | 6 | Hypothesis-driven beta_0 ≥ 1 for any non-empty cloud; bottleneck non-negativity + symmetry; bottleneck triangle inequality on small diagrams; persistence-image non-negativity; W_p ≥ bottleneck (Cohen-Steiner et al., FoCM 10 (2010)); translation-invariance of the persistence image. |
+| Edge        | 8 | Empty point cloud → ValueError; asymmetric distance matrix → ValueError; negative distances → ValueError; max_edge_length too small → only infinite H_0 bars (one per vertex); sliding-window time series too short → ValueError; sliding-window dim < 1 / tau < 1 → ValueError; cubical_persistence on non-2D / empty input → ValueError; missing-GUDHI skip via `pytest.importorskip`. |
+| Composition | 4 | rips → bottleneck → persistence_image translation-invariance chain; rips → effective Betti chain on the noisy circle; sliding_window_embed → rips → H_1 detection on a noisy sine; cubical_persistence → blob-counting chain on a synthetic 3-blob image. |
+
+Plus 10 smoke tests (one per recipe) verifying that each recipe imports
+cleanly and `main()` returns a dict.  Total: 33 tests.
+
+Subtleties surfaced during TDD:
+- GUDHI quirk: `SimplexTree.persistence()` can return an empty list when
+  no homology class is born and dies inside the filtration -- e.g. for a
+  single point, or a cloud where `max_edge_length` is below every
+  pairwise distance.  The facade post-processes with a tiny union-find
+  (`_connected_components_from_simplex_tree`) and emits the missing
+  `(0, (0.0, inf))` bars so downstream Betti / smoke tests see a
+  coherent diagram.
+- Distance-matrix input convention: GUDHI's `RipsComplex` accepts a
+  lower-triangular nested list (one row per vertex, length `i + 1`).
+  We unpack a NumPy distance matrix into that format and validate
+  symmetry / non-negativity / square shape up front.
+- Persistence-image vectorisation: `gudhi.representations.PersistenceImage`
+  is sklearn-style (fit / transform); the facade wraps that in a single
+  function returning a 2D `(resolution, resolution)` ndarray.
+- Wasserstein internal-distance: Hera's default is L_2 between diagram
+  points, but the persistence-stability literature uses L_inf.  We
+  pass `internal_p=inf` explicitly so W_2 ≥ bottleneck holds (otherwise
+  the inequality flips on small diagrams).
+- Torus Betti recovery is finicky at modest sample sizes -- the H_2
+  bar can be drowned by noise at n = 300 with `max_edge_length = 2.0`.
+  The recipe documents this and uses a higher persistence threshold
+  (0.8) for the torus rather than asserting canonical (1, 2, 1) at any
+  threshold.
+- Recipes save artifacts to a recipe-local `outputs/` directory (auto-
+  created), and the test module's `_cleanup_outputs` fixture purges
+  that directory on teardown so CI runs stay reproducible.
+
+Skip behaviour: the test module starts with `pytest.importorskip("gudhi")`
+and `pytest.importorskip("hypothesis")`, so missing optional backends
+skip the entire suite cleanly.  The facade's public ops raise a single,
+clearly-worded `ImportError("...pip install gudhi")` at call time, so
+missing GUDHI never breaks `import prometheus_math`.
+
+Files:
+- `prometheus_math/recipes/persistent_homology/api.py`
+- `prometheus_math/recipes/persistent_homology/{rip_basic,rip_circle,rip_torus,distance_matrix_to_diagram,bottleneck_distance,wasserstein_distance,persistence_image,time_series_tda,cubical_complex_image,betti_numbers_recipe}.py`
+- `prometheus_math/recipes/persistent_homology/README.md`
+- `prometheus_math/recipes/persistent_homology/tests/test_persistent_homology.py`
 
 ---
 

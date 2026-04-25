@@ -54,3 +54,6 @@ try:  # always-available: embedded ATLAS-of-Finite-Groups snapshot
     from . import atlas  # noqa: F401
 except ImportError:
     pass
+
+# Freshness is always available — it only depends on the stdlib + _local.
+from . import freshness  # noqa: F401

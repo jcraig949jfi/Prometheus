@@ -73,3 +73,10 @@ except Exception:  # pragma: no cover — defensive against concurrent agents
     pass
 else:
     __all__.append("lehmer")
+
+try:
+    from . import anomaly_surface  # noqa: F401
+except Exception:  # pragma: no cover — defensive against concurrent agents
+    pass
+else:
+    __all__.append("anomaly_surface")

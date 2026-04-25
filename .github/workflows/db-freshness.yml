@@ -1,0 +1,78 @@
+name: Database freshness audit (weekly)
+
+# Probes every upstream that prometheus_math.databases.* wraps and
+# emits a freshness report as the job's GitHub-Actions step summary.
+# Does NOT auto-refresh in CI — that would need credentials + bandwidth
+# beyond a free runner. Use `python scripts/db_freshness.py
+# --refresh-stale` locally or in a privileged workflow for that.
+
+on:
+  schedule:
+    - cron: '0 5 * * 1'   # Monday 05:00 UTC
+  workflow_dispatch:
+  push:
+    paths:
+      - 'prometheus_math/databases/freshness.py'
+      - 'scripts/db_freshness.py'
+      - '.github/workflows/db-freshness.yml'
+
+permissions:
+  contents: read
+  issues: write   # for future "open issue if X stale" gating
+
+concurrency:
+  group: db-freshness-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    name: Probe upstream + local for every database wrapper
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install minimal deps
+        run: |
+          python -m pip install --upgrade pip
+          # The freshness module itself only needs the stdlib, but the
+          # SOURCE_REGISTRY may import wrappers that pull in requests etc.
+          pip install requests
+
+      - name: Run freshness audit (markdown summary)
+        id: audit
+        env:
+          PROMETHEUS_DATA_DIR: ${{ github.workspace }}/prometheus_data
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          set +e
+          python scripts/db_freshness.py --report-only --format markdown \
+              | tee freshness.md
+          echo "rc=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Post report to job summary
+        if: always()
+        run: |
+          if [ -f freshness.md ]; then
+            cat freshness.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "## Database freshness report" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "_no report produced — see job log_" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: db-freshness-report
+          path: freshness.md
+          if-no-files-found: ignore
+          retention-days: 30

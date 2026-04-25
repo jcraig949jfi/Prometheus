@@ -1,4 +1,4 @@
-"""prometheus_math.viz — knot/link diagram rendering for notebooks.
+"""prometheus_math.viz.knot — knot/link diagram rendering for notebooks.
 
 Renders knot and link diagrams from SnapPy PD-codes into Matplotlib
 figures or SVG strings, suitable for headless export and notebook
@@ -50,7 +50,7 @@ from __future__ import annotations
 import io
 import math
 import os
-from typing import Any, Iterable, List, Optional, Sequence, Tuple, Union
+from typing import Any, List, Optional, Sequence, Tuple, Union
 
 # Matplotlib is a hard dependency for the viz module; importing here
 # means a missing matplotlib raises a clean ImportError at call time
