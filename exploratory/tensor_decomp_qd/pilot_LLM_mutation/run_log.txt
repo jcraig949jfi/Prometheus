@@ -1,0 +1,108 @@
+========================================================================
+  Unit tests (polymul-n3 gauge canonicalization)
+========================================================================
+========================================================================
+Canonicalizer unit tests for polymul n=3 over F_2
+========================================================================
+
+[1] Gauge group size = 12 (D_3 x Z_2 from <SUB, REV, SWAP>)
+  ok:   |G| = 12 (got 12)
+
+[2] All 12 gauge elements preserve POLYMUL_T
+  ok:   Karatsuba rank-6 reconstructs POLYMUL_T
+  ok:   all 12 gauge actions preserve polymul reconstruction
+
+[3] canonicalize is idempotent
+  ok:   canonicalize(canonicalize(x)) == canonicalize(x)
+
+[4] gauge-equivalent decompositions canonicalize to same bytes
+  ok:   20 random (gauge + S_r) transforms collapse to Karatsuba canonical
+
+[5] near-miss decompositions distinct from Karatsuba canonical
+  ok:   10 single-bit-flip variants distinct from Karatsuba canonical (0 collisions)
+
+[6] orbit-stabilizer: orbit * stab = |G| = 12
+       orbit_size = 3, stabilizer = 4, product = 12
+  ok:   orbit (3) * stab (4) = 12 == |G| = 12
+
+[7] naive rank-9 decomp validates and effective-rank=9
+  ok:   naive rank-9 reconstructs POLYMUL_T
+  ok:   naive effective rank = 9 (got 9)
+
+[8] Karatsuba rank-6 decomp validates and effective-rank=6
+  ok:   Karatsuba rank-6 reconstructs POLYMUL_T
+  ok:   Karatsuba effective rank = 6 (got 6)
+
+========================================================================
+ALL CANONICALIZER TESTS PASSED
+========================================================================
+
+========================================================================
+  BASELINE: local-only mutation, 1500 gens, seed=0
+========================================================================
+  seed naive_decomp: + cell=(9, 3, 3)
+  seed karatsuba6_decomp: + cell=(6, 2, 3)
+  gen   250: cells=3, orbits=3, valid=12, llm_used=0/0, elapsed=0.0s
+  gen   500: cells=3, orbits=3, valid=19, llm_used=0/0, elapsed=0.0s
+  gen   750: cells=3, orbits=3, valid=26, llm_used=0/0, elapsed=0.1s
+  gen  1000: cells=3, orbits=3, valid=32, llm_used=0/0, elapsed=0.1s
+  gen  1250: cells=3, orbits=3, valid=37, llm_used=0/0, elapsed=0.1s
+  gen  1500: cells=3, orbits=3, valid=44, llm_used=0/0, elapsed=0.1s
+  baseline elapsed: 0.1s
+
+========================================================================
+  LLM-AUG: local + LLM (budget=150), 1500 gens, seed=0
+========================================================================
+  seed naive_decomp: + cell=(9, 3, 3)
+  seed karatsuba6_decomp: + cell=(6, 2, 3)
+  gen   250: cells=2, orbits=2, valid=14, llm_used=24/150, elapsed=28.9s
+  gen   500: cells=3, orbits=3, valid=21, llm_used=43/150, elapsed=51.6s
+  gen   750: cells=3, orbits=3, valid=29, llm_used=72/150, elapsed=88.3s
+  gen  1000: cells=3, orbits=3, valid=36, llm_used=101/150, elapsed=124.9s
+  gen  1250: cells=3, orbits=3, valid=40, llm_used=122/150, elapsed=150.5s
+  gen  1500: cells=3, orbits=3, valid=47, llm_used=139/150, elapsed=171.1s
+  LLM-AUG elapsed: 171.6s
+
+  Budget summary: {'api_attempts': 139, 'api_successes': 139, 'api_failures': 0, 'parse_successes': 139, 'parse_failures': 0, 'valid_decomps': 0, 'invalid_decomps': 139, 'novel_orbits_found': 0, 'budget_remaining': 11}
+  Budget cap respected: 139 <= 150
+
+========================================================================
+  LLM-MUTATION PILOT REPORT
+========================================================================
+
+[BASELINE (local only)] archive summary:
+  Archive: 3 cells, 3 distinct orbits
+    submissions: 1552, valid: 44, rate: 0.02835
+    rank  6:  1 cells,   1 orbits,     30 hits
+    rank  9:  2 cells,   2 orbits,     14 hits
+  LLM-attributed: 0 valid candidates, 0 new cells, 0 new orbits
+
+[LLM-AUG (local + LLM)] archive summary:
+  Archive: 3 cells, 3 distinct orbits
+    submissions: 1552, valid: 47, rate: 0.03028
+    rank  6:  1 cells,   1 orbits,     36 hits
+    rank  9:  2 cells,   2 orbits,     11 hits
+  LLM-attributed: 0 valid candidates, 0 new cells, 0 new orbits
+
+[Comparative orbit counts per rank]
+  rank  6: baseline=  1, llm-aug=  1, delta=+0
+  rank  9: baseline=  2, llm-aug=  2, delta=+0
+
+[Orbits unique to each run]
+  rank 9: only-baseline=1, only-llm=1, shared=1
+
+[LLM-attributed orbits in LLM-AUG run]
+  total LLM-attributed orbits: 0
+
+[Cross-run novelty]
+  LLM-AUG found 1 orbit(s) at rank 9 not present in baseline at the same compute budget.
+
+[Sanity: known seeds in both archives]
+  BASELINE: Karatsuba=True, naive=True
+  LLM-AUG: Karatsuba=True, naive=True
+
+[Outcome diagnosis]
+  baseline total orbits across all ranks: 3
+  llm-aug  total orbits across all ranks: 3
+  llm-only orbits (in llm-aug but not baseline at matched budget): 1
+  OUTCOME A: LLM mutation discovered 1 orbits absent from the matched-budget baseline.
