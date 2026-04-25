@@ -134,6 +134,162 @@ capability reference).
 | 2026-04-25 | pm.research.conjecture_engine.bulk_scan | A:1 | P:0 | E:1 | C:1 | (project #19 phase 1) |
 | 2026-04-25 | pm.research.conjecture_engine.rank_by_surprise | A:0 | P:1 | E:1 | C:1 | (project #19 phase 1) |
 | 2026-04-25 | pm.research.conjecture_engine.generate_report | A:0 | P:0 | E:1 | C:2 | (project #19 phase 1) |
+| 2026-04-25 | pm.research.lehmer.degree_profile | A:2 | P:2 | E:3 | C:2 | (project #30) |
+| 2026-04-25 | pm.research.lehmer.filter_below_M | A:0 | P:1 | E:0 | C:2 | (project #30) |
+| 2026-04-25 | pm.research.lehmer.identify_salem_class | A:1 | P:1 | E:1 | C:1 | (project #30) |
+| 2026-04-25 | pm.research.lehmer.identify_smyth_extremal | A:1 | P:0 | E:0 | C:0 | (project #30) |
+| 2026-04-25 | pm.research.lehmer.to_csv / to_markdown | A:0 | P:0 | E:1 | C:1 | (project #30) |
+| 2026-04-25 | pm.iwasawa.lambda_mu | A:2 | P:2 | E:2 | C:2 | (project #26 phase 1) |
+| 2026-04-25 | pm.iwasawa.cyclotomic_zp_extension | A:1 | P:1 | E:1 | C:1 | (project #26 phase 1) |
+| 2026-04-25 | pm.iwasawa.p_class_group_part | A:2 | P:2 | E:2 | C:1 | (project #26 phase 1) |
+| 2026-04-25 | pm.iwasawa.p_class_number | A:1 | P:2 | E:1 | C:2 | (project #26 phase 1) |
+| 2026-04-25 | pm.iwasawa.greenberg_test | A:0 | P:1 | E:1 | C:1 | (project #26 phase 1) |
+| 2026-04-25 | pm.modular.qexp | A:2 | P:4 | E:3 | C:3 | (project #27) |
+| 2026-04-25 | pm.modular.q_coefficient | A:1 | P:1 | E:2 | C:2 | (project #27) |
+| 2026-04-25 | pm.modular.hecke_recursion | A:1 | P:2 | E:2 | C:1 | (project #27) |
+| 2026-04-25 | pm.modular.is_eigenform | A:0 | P:0 | E:1 | C:1 | (project #27) |
+| 2026-04-25 | pm.modular.character_value | A:1 | P:0 | E:1 | C:1 | (project #27) |
+| 2026-04-25 | pm.modular.hecke_eigenvalue | A:0 | P:0 | E:1 | C:1 | (project #27) |
+| 2026-04-25 | pm.hecke.eigenvalue_at_prime | A:3 | P:5 | E:7 | C:5 | (project #28) |
+| 2026-04-25 | pm.hecke.eigenvalues_table | A:1 | P:5 | E:1 | C:5 | (project #28) |
+| 2026-04-25 | pm.hecke.bulk_eigenvalues | A:0 | P:1 | E:0 | C:1 | (project #28) |
+| 2026-04-25 | pm.hecke.lmfdb_eigenvalue | A:2 | P:0 | E:1 | C:1 | (project #28) |
+| 2026-04-25 | pm.hecke.cross_check_lmfdb | A:2 | P:0 | E:1 | C:2 | (project #28) |
+| 2026-04-25 | pm.hecke.hecke_polynomial | A:1 | P:0 | E:0 | C:1 | (project #28) |
+
+### Project #28 — Hecke eigenvalue computation for arbitrary primes — summary
+
+21 tests, all green (21/21 pass on 2026-04-25), runtime ~128s
+(LMFDB-bound; 4 tests skip cleanly when the Postgres mirror is unreachable).
+
+Module: `prometheus_math/hecke.py` (~410 LOC, 7 public ops + cache helpers).
+Tests: `prometheus_math/tests/test_hecke.py` (~330 LOC).
+
+Coordination with project #27 (`pm.modular`): pm.modular shipped concurrently
+with a single-prime `hecke_eigenvalue(label, p)`. pm.hecke layers
+**bulk operations + LMFDB authority cross-check + bad-prime / dim>1 handling**
+on top, and uses a (level, weight) -> mfinit cache to keep
+`bulk_eigenvalues` ~5-50x faster than calling pm.modular per-label.
+
+Test rubric (math-tdd skill, >= 2 in every category):
+
+| Category | Count | Notes |
+|---|---|---|
+| Authority   | 4 | LMFDB 11.2.a.a a_2=-2; Δ tau(2,3,5)=-24/252/4830 (Serre VII.4 / OEIS A000594); cross_check_lmfdb 11.2.a.a p<=100 -> 25/25 agreed; 23.2.a.a dim-2 power-basis [0,-1] matches LMFDB |
+| Property    | 5 | Ramanujan-Petersson |a_p|<=2*sqrt(p) on 11.2.a.a + 37.2.a.a; bad-prime |a_11|<=11 (and = +/-1 for split mult red); table-vs-single hypothesis sweep; bulk-vs-individual roundtrip |
+| Edge        | 7 | non-prime p (composite/unit/zero/negative); malformed labels (7 variants); non-string label types; non-trivial char raises NotImplementedError; p_max<2; out-of-range letter; non-existent LMFDB label returns None |
+| Composition | 5 | table[p]==single(p) chain; hecke_polynomial=[-a_p,1] composition; bulk + post-cache-clear consistency; LMFDB <-> PARI agreement on 15 primes for 11.2.a.a; cross_check_lmfdb full-chain on Δ for p<=50 |
+
+Cross-check sweeps (live LMFDB, primes < 1000):
+
+```
+11.2.a.a  p_max=1000:  agreed=168/168  disagreed=0  missing=0   (113s)
+1.12.a.a  p_max=200:   agreed=46/46    disagreed=0  missing=0   (32s)
+23.2.a.a  p_max=200:   agreed=46/46    disagreed=0  missing=0   (32s)
+```
+
+PARI's mfinit + mfeigenbasis + mfcoef agrees with LMFDB's stored
+`mf_hecke_nf.ap` on every single prime in the range, for both rational
+(11.2.a.a, 1.12.a.a) and irrational (23.2.a.a, dim-2 over Q(sqrt(5)))
+Hecke fields. Zero disagreements across 260 prime checks total —
+this is the strongest authority cross-check the arsenal currently has
+for modular-form eigenvalues.
+
+Subtleties documented in module:
+- LMFDB stores `ap[i]` indexed by prime-index (i=0 is p=2, i=1 is p=3,
+  ...). Our `lmfdb_eigenvalue(p)` translates by counting primes via
+  `sympy.sieve`. (Easy-to-miss bug: indexing by p rather than by
+  prime-rank gives wrong column.)
+- Dim>1 newforms: a_p lives in a number field. PARI returns `Mod(poly, defpoly)`;
+  we extract via `pari.lift -> pari.Vecrev` to get **ascending** power-basis
+  coefficients matching LMFDB's storage convention. (PARI's default `Vec`
+  is descending — using it gives reversed coefficients and false
+  disagreements.)
+- Newform letter <-> PARI eigenform-list ordering: PARI's `mfeigenbasis`
+  orders by Hecke-poly disc, which usually matches LMFDB's letter
+  ordering for small conductors but is not guaranteed. We cross-match
+  by computing PARI's a_2/a_3/a_5 against LMFDB's stored `ap[0..2]`,
+  falling back to natural-order indexing only when LMFDB is unreachable.
+- Char_orbit != 'a' (non-trivial nebentypus, Gamma_1 / general Gamma_0+chi)
+  raises NotImplementedError. Supporting it requires PARI's
+  `mfinit([N, k, chi], 1)` with `chi` = Conrey character — deferred
+  to a future project (it is non-trivial but mostly mechanical).
+
+File: `prometheus_math/hecke.py`
+Tests: `prometheus_math/tests/test_hecke.py`
+
+### Project #27 — Modular forms q-expansion at depth — summary
+
+18 tests, all green (18/18 pass on 2026-04-25), runtime ~16s.
+
+Module: `prometheus_math/modular.py` (~430 LOC, 6 public ops:
+`qexp`, `q_coefficient`, `hecke_recursion`, `is_eigenform`,
+`character_value`, `hecke_eigenvalue`). Tests:
+`prometheus_math/tests/test_modular.py` (~260 LOC).
+
+Authority: 11.2.a.a a_1..a_12 vs Cremona table 1 / LMFDB / PARI
+ellan agreement; Δ(τ) coefficients τ(1)..τ(15) vs OEIS A000594.
+
+Property: |a_p| ≤ 2√p Ramanujan–Petersson bound on n=200 sweep;
+multiplicativity a_{mn} = a_m a_n on coprime pairs; Hecke recursion
+a_{p^{k+1}} = a_p a_{p^k} − χ(p) p^{k−1} a_{p^{k−1}} verified at
+p ∈ {2,3,5,7} for k=1..3; Hypothesis sweep on internal recurrence.
+
+Composition: qexp matches PARI ellan for elliptic curve 11.a on a
+50-prime sweep (Wiles modularity); q_coefficient agrees with bulk
+qexp; hecke_eigenvalue agrees with qexp; is_eigenform consistent
+with multiplicativity.
+
+Strategy stack: in-memory cache → LMFDB stored traces (1000 a_n for
+dim-1 forms) → PARI mfinit/mfcoefs for depth → Hecke recursion +
+multiplicativity for composite n. Verified: qexp("11.2.a.a", 1500)
+returns in 0.4s and Ramanujan bound holds for primes up to 1500.
+
+Honest scope: dim-1 newforms over Q work end-to-end; dim>1 returns
+PARI Gens (number-field elements) and uses LMFDB `traces` for the
+trace-down-to-Q view. Non-trivial Dirichlet character orbits are
+best-effort via PARI mfchargalois and may raise LookupError if PARI
+declines the construction.
+
+
+
+18 tests, all green (18/18 pass on 2026-04-25), runtime ~14s.
+
+Module: `prometheus_math/iwasawa.py` (~390 LOC, 5 public ops:
+`lambda_mu`, `cyclotomic_zp_extension`, `p_class_group_part`,
+`p_class_number`, `greenberg_test`). Tests:
+`prometheus_math/tests/test_iwasawa.py` (~210 LOC).
+
+Authority: Q(sqrt(-23)) at p=3 has λ_3 = 1, μ_3 = 0 (Washington Ch.13;
+hand-verified depth chain |Cl(K_n)[3^∞]| = 3, 9, 27 for n = 0, 1, 2).
+Cohen Table 1.1 / LMFDB nf_fields cross-checks for Q(sqrt(-5)) and
+Q(sqrt(-23)) class group structures.
+
+Composition: `p_class_number = product(p_class_group_part)`,
+layer-0 of Iwasawa tower equals the bare K, and `greenberg_test`
+agrees with `lambda_mu` on the underlying invariants.
+
+Honest computation: large p / pathological scale triggers the
+`max_layer_degree` cap and returns `fits_well=False, capped=True`
+without inventing a fit.
+
+Phase 2 deferred: bulk-mode systematic LMFDB scan with cross-check
+against `ec_iwasawa`.
+
+### Project #30 — Lehmer-degree-profile binner — summary
+
+16 tests, all green (16/16 pass on 2026-04-25), runtime ~14s.
+
+Module: `prometheus_math/research/lehmer.py` (~290 LOC, 6 public ops:
+`degree_profile`, `filter_below_M`, `identify_salem_class`,
+`identify_smyth_extremal`, `to_csv`, `to_markdown`). Tests:
+`prometheus_math/research/tests/test_lehmer.py` (~270 LOC).
+
+Authority: 178-entry Mossinghoff snapshot (`pm.databases.mahler.smallest_known`),
+Lehmer-deg-10 floor (M=1.17628081826...), Smyth bound (M=1.32471957...,
+plastic-number poly x^3 - x - 1).
+
+A:2 P:2 E:3 C:2 — meets the math-tdd ≥2-in-every-category bar.
 
 ### Project #19 — Conjecture engine (OEIS x LMFDB) — Phase 1 summary
 

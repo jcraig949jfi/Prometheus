@@ -43,6 +43,7 @@ from . import (  # noqa: F401
     symbolic,
     algebraic_geometry,
     galois,
+    iwasawa,
 )
 from . import doc  # noqa: F401
 
@@ -53,6 +54,20 @@ try:
     _HAS_RESEARCH = True
 except Exception:  # pragma: no cover
     _HAS_RESEARCH = False
+
+# hecke imports cypari + LMFDB; protect the rest of pm from import errors.
+try:
+    from . import hecke  # noqa: F401
+    _HAS_HECKE = True
+except Exception:  # pragma: no cover
+    _HAS_HECKE = False
+
+# modular imports cypari + LMFDB; protect the rest of pm from import errors.
+try:
+    from . import modular  # noqa: F401
+    _HAS_MODULAR = True
+except Exception:  # pragma: no cover
+    _HAS_MODULAR = False
 
 __all__ = [
     "registry",
@@ -67,6 +82,11 @@ __all__ = [
     "symbolic",
     "algebraic_geometry",
     "galois",
+    "iwasawa",
 ]
 if _HAS_RESEARCH:
     __all__.append("research")
+if _HAS_HECKE:
+    __all__.append("hecke")
+if _HAS_MODULAR:
+    __all__.append("modular")

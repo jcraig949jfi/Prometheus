@@ -461,7 +461,7 @@ immediately by parallel TDD agents.
 - **Priority:** 26
 - **Effort:** 7 days · Phases: 2
 - **Phase 1 (3 days):** Implement λ_p, μ_p invariants via Iwasawa class
-  group towers using PARI bnfinit + ZpL extensions.
+  group towers using PARI bnfinit + ZpL extensions. ✓ Phase 1 COMPLETED 2026-04-25
 - **Phase 2 (4 days):** Bulk-mode for systematic scan over Iwasawa-relevant
   curves; cross-check with LMFDB ec_iwasawa table.
 - **Deliverable:** `pm.number_theory.iwasawa_invariants(K, p)` returns
@@ -476,6 +476,7 @@ immediately by parallel TDD agents.
   for any LMFDB modular form via Hecke action, beyond what's in the
   current LMFDB stored coefficients.
 - **Deliverable:** Extended q-expansions on demand.
+- ✓ COMPLETED 2026-04-25
 
 ### #28 — Hecke eigenvalue computation for arbitrary primes
 
@@ -484,7 +485,9 @@ immediately by parallel TDD agents.
 - **Effort:** 5 days · Phases: 1
 - For a modular form, compute Hecke eigenvalue at any prime via PARI's
   modsymbols. Cross-check with LMFDB stored eigenvalues for primes < 1000.
-- **Deliverable:** `pm.modular.hecke_eigenvalue(form_label, p)`.
+- **Deliverable:** `pm.modular.hecke_eigenvalue(form_label, p)` (project
+  #27) + `pm.hecke` for bulk + LMFDB authority sweeps.
+- ✓ COMPLETED 2026-04-25
 
 ### #29 — Class field tower with Iwasawa-style p-extension
 
@@ -505,6 +508,7 @@ immediately by parallel TDD agents.
   M(P), bin by degree and report (count, min M, max M, median M, Salem
   count) per bin. Standardized binning across scans.
 - **Deliverable:** `pm.research.lehmer.degree_profile(scan_output)`.
+- ✓ COMPLETED 2026-04-25
 
 ### #31 — pyflint advanced operations exposure
 

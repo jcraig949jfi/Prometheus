@@ -66,3 +66,10 @@ except Exception:  # pragma: no cover — defensive against concurrent agents
     pass
 else:
     __all__.append("conjecture_engine")
+
+try:
+    from . import lehmer  # noqa: F401
+except Exception:  # pragma: no cover — defensive against concurrent agents
+    pass
+else:
+    __all__.append("lehmer")
