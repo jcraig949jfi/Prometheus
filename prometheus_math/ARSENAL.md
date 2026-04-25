@@ -2,7 +2,7 @@
 
 **Single-page researcher reference for the unified mathematical-software API.**
 
-Generated: 2026-04-25 17:19 · Status: 30/37 backends available across 9 categories: AI, CAS, COMB, DB, NT, NUM, OPT, SAT, TOP
+Generated: 2026-04-25 17:32 · Status: 31/38 backends available across 9 categories: AI, CAS, COMB, DB, NT, NUM, OPT, SAT, TOP
 
 ---
 
@@ -33,7 +33,7 @@ pm.registry.installed()
 
 ## Backend capability matrix
 
-**30/37 backends available** as of generation.
+**31/38 backends available** as of generation.
 
 | Backend | Status | Version | Kind | Category | Description |
 |---|---|---|---|---|---|
@@ -74,6 +74,7 @@ pm.registry.installed()
 | `zbmath` | ✅ | online | service | DB | zbMATH Open API (mathematical literature) |
 | `mossinghoff` | ✅ | embedded | data | DB | Mossinghoff small-Mahler-measure tables (local + online) |
 | `atlas` | ✅ | embedded | data | DB | ATLAS of Finite Groups (embedded snapshot) |
+| `cremona` | ✅ | embedded | data | DB | Cremona ecdata local CSV mirror (opt-in 88 MB) |
 
 ---
 
@@ -222,6 +223,60 @@ pm.registry.installed()
 | `simplify(expr: 'ExprLike') -> 'sympy.Expr'` | Simplify an expression (sympy.simplify). |
 | `solve(expr_or_eqs, vars=None)` | Solve equation(s) for given variable(s). |
 | `solve_ode(eq, func) -> 'sympy.Expr'` | Solve an ODE. |
+
+---
+
+## Dependency graph
+
+Inter-module dependency edges, auto-discovered by walking each categorical module's source via Python's `ast` (catches lazy imports that runtime introspection misses). Cycles in this graph would indicate a refactor blocker.
+
+_Edges discovered: 1; cycles: 0._
+
+```mermaid
+graph LR
+  algebraic_geometry[algebraic_geometry]
+  combinatorics[combinatorics]
+  elliptic_curves[elliptic_curves]
+  number_fields[number_fields]
+  number_theory[number_theory]
+  numerics[numerics]
+  optimization[optimization]
+  symbolic[symbolic]
+  topology[topology]
+  number_fields --> number_theory
+```
+
+## Composition opportunities
+
+Pairs of categorical modules that don't yet compose. Each is a candidate target for a future composition test or research recipe spanning the two areas.
+
+| Module A | Module B |
+|---|---|
+| `algebraic_geometry` | `elliptic_curves` |
+| `algebraic_geometry` | `number_fields` |
+| `algebraic_geometry` | `number_theory` |
+| `algebraic_geometry` | `topology` |
+| `combinatorics` | `elliptic_curves` |
+| `combinatorics` | `number_fields` |
+| `combinatorics` | `number_theory` |
+| `combinatorics` | `topology` |
+| `elliptic_curves` | `number_fields` |
+| `elliptic_curves` | `number_theory` |
+| `elliptic_curves` | `numerics` |
+| `elliptic_curves` | `optimization` |
+| `elliptic_curves` | `symbolic` |
+| `elliptic_curves` | `topology` |
+| `number_fields` | `numerics` |
+| `number_fields` | `optimization` |
+| `number_fields` | `symbolic` |
+| `number_fields` | `topology` |
+| `number_theory` | `numerics` |
+| `number_theory` | `optimization` |
+| `number_theory` | `symbolic` |
+| `number_theory` | `topology` |
+| `numerics` | `topology` |
+| `optimization` | `topology` |
+| `symbolic` | `topology` |
 
 ---
 

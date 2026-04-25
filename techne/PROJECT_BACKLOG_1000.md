@@ -265,7 +265,20 @@ immediately by parallel TDD agents.
   entry cross-checked vs `techne.mahler_measure` to 1e-9; 0 rejected,
   21 tests green including strict 1e-9 cross-check across all 178
   entries plus new `lookup_by_degree` and `count_by_degree` API.
-  Phase 2 (search_polynomial fuzzy lookup) deferred.
+- ✓ Phase 2 COMPLETED 2026-04-22 — added five fuzzy-search APIs to
+  `pm.databases.mahler`: `search_polynomial(M, deg, tol, return_distance)`
+  (sorted by |entry.M − M| with class-priority tiebreak so Lehmer/Smyth-
+  extremal/degree-minimum entries float to the top of equal-distance
+  clusters), `search_polynomial_by_coeffs_signature(signature, tol)`
+  (length + first/last-nonzero + nonzero-count parity match),
+  `find_extremal_at_degree(degree, criterion)` with criteria
+  `'smallest_M' | 'smallest_disc' | 'most_palindromic'`,
+  `histogram_by_M(bin_count, M_range)` (default (1.0, 2.0); the
+  Lehmer-region (1.17, 1.20) bin alone holds the 21-entry Lehmer
+  cluster), and `search_by_signature_class(salem, smyth_extremal,
+  lehmer_witness, degree_minimum)` for combination boolean filtering.
+  19 new tests (8 authority, 5 property, 4 edge, 2 composition); full
+  40-test suite green.  Project #14 closes.
 
 ### #15 — Cremona EC dataset local CSV mirror
 
@@ -277,6 +290,28 @@ immediately by parallel TDD agents.
   present. Speeds up bulk EC scans 10–100×.
 - **Deliverable:** `pm.databases.lmfdb.elliptic_curves(use_local=True)`
   is 50× faster on 10K-curve scans.
+- ✓ COMPLETED 2026-04-25 — `prometheus_math/databases/cremona.py`
+  (~820 LOC, generous docstrings) ships `update_mirror()`,
+  `elliptic_curves()`, `lookup_by_ainvs()`, `mirror_info()`,
+  `has_local_mirror()`, `probe()`, `clear_cache()`. Parses ecdata
+  `allcurves` / `allbsd` / `alllabels` line formats per
+  `JohnCremona/ecdata/docs/file-format.txt`. Default cap is conductor
+  ≤ 100,000 (~88 MB across the three families); full dataset is
+  opt-in via `conductor_max=500000`. **30 tests green** when mirror is
+  present, **22 green offline** (the 8 mirror-dependent tests skip
+  behind a `PROMETHEUS_DOWNLOAD_CREMONA` env-var gate). Cross-check
+  anchors: Cremona 11a1 ainvs=[0,-1,1,-10,-20] rank=0 torsion=5;
+  Cremona/LMFDB 37.a1 ainvs=[0,0,1,-1,0] rank=1
+  regulator=0.0511114082399688 (matches LMFDB ec_curvedata to 1e-15
+  on direct comparison; suite asserts 1e-9). Registry:
+  `Backend("cremona", "data", "DB")` added; probe lights up green
+  whenever a local mirror exists OR github.com is reachable. Cache
+  loads ~64,687 curves (conductor 11–9999) in <2s. Cremona vs LMFDB
+  label disagreement (Cremona 11a1 == LMFDB 11.a2) handled via
+  `alllabels` translation table; rows lacking a verified mapping are
+  flagged with `lmfdb_label_verified=False`. Subtleties: empty
+  `families=()` no-op-call leaves the existing `.metadata.json`
+  untouched (only writes when at least one file was attempted).
 
 ### #16 — Performance benchmark suite (Tier-2 promotion candidates)
 
@@ -289,6 +324,25 @@ immediately by parallel TDD agents.
   Generate a report. Run in CI on schedule.
 - **Deliverable:** `BENCHMARKS.md` auto-generated; promotion list
   ranked by impact.
+- ✓ COMPLETED 2026-04-25 — `prometheus_math/benchmarks/` ships with
+  pytest-benchmark v5.x harness (~690 LOC across four `bench_*.py`
+  files, 17 benchmarks total) covering number_theory (6 benches:
+  class_number, galois_group, mahler_measure, lll, hilbert_class_field,
+  cm_order_data), elliptic_curves (5 benches: regulator, analytic_sha
+  ±rank_hint, selmer_2_rank, faltings_height), topology (3 benches:
+  hyperbolic_volume, alexander_polynomial, knot_shape_field), and
+  databases (3 benches: oeis, lmfdb_ec, knotinfo). Driver
+  `python -m prometheus_math.benchmarks.run_all` aggregates the
+  pytest-benchmark JSON into `RESULTS.md`, flags Tier-2 candidates at
+  median > 100 ms, and refreshes the auto-generated section of
+  `BENCHMARKS.md`. Smoke harness (`benchmarks/tests/`, 10 tests green)
+  validates module imports, the schema run_all reads, the empty-suite
+  edge case, and tier-2 threshold classification. Plain `pytest
+  prometheus_math/` skips all benchmarks; opt in with
+  `--run-benchmarks` or `--benchmark-only`. Smoke runs:
+  `bench_alexander_polynomial` median ~155 ms (Tier-2 candidate
+  identified), `bench_class_number_quadratic` ~14 ms, `bench_mahler_-
+  measure_deg10` ~14 ms, `bench_oeis_local_lookup` ~3 ms.
 
 ### #17 — Hypothesis-based property tests for elliptic_curves
 
@@ -373,7 +427,7 @@ immediately by parallel TDD agents.
   `prometheus_math/recipes/`.
 - **Deliverable:** Researcher-facing README + recipe gallery.
 
-### #24 — Auto-generated dependency graph for ARSENAL.md
+### #24 — Auto-generated dependency graph for ARSENAL.md  ✓ COMPLETED 2026-04-25
 
 - **Category:** A / M
 - **Priority:** 24

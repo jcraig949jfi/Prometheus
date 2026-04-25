@@ -32,6 +32,17 @@ convention, so we reverse before passing through.  The ``lookup_*``
 helpers are tolerant of the ``x -> -x`` substitution (which preserves
 M).
 
+Coverage
+--------
+The Phase-1 + Phase-2 snapshot covers:
+
+* **178 catalog entries** (after the Phase-1 expansion from 21).
+* **Degrees** 2..30 plus 36 (every degree in [2, 30] populated).
+* **Mahler measures** in the range [1.0, 1.84].  Cyclotomic Phi_n
+  contribute the M = 1 baseline; Lehmer's polynomial sits at
+  1.176280818... and the densely populated Salem cluster runs
+  through 1.18..1.30.
+
 Public API
 ----------
 * ``smallest_known(degree=None, limit=20)`` -- ascending by M
@@ -43,6 +54,21 @@ Public API
 * ``all_below(M, degree=None)`` -- everything strictly below M
 * ``degree_minima()`` -- map degree -> smallest-known entry at that
   degree
+* ``lookup_by_degree(degree, limit=50)`` -- top-K at a single degree
+* ``count_by_degree()`` -- ``{degree: count}`` across the catalog
+* ``search_polynomial(M, deg=None, tol=1e-3, return_distance=True)``
+  -- Phase-2 fuzzy lookup sorted by ``|entry.M - M|`` ascending
+* ``search_polynomial_by_coeffs_signature(signature, tol=1e-9)``
+  -- structural signature match (length + first/last nonzero +
+  parity of nonzero count)
+* ``find_extremal_at_degree(degree, criterion='smallest_M')`` -- best
+  entry at a degree by smallest M / smallest disc proxy / palindrome
+* ``histogram_by_M(bin_count=20, M_range=(1.0, 2.0))`` -- distribution
+  of M values across the catalog (default range covers the full
+  catalog)
+* ``search_by_signature_class(salem=None, smyth_extremal=None,
+  lehmer_witness=None, degree_minimum=None)`` -- combination boolean
+  filter
 * ``update_mirror()`` -- best-effort upstream refresh (returns whether
   it succeeded; the embedded snapshot is always usable)
 * ``probe(timeout=3.0)`` -- always True (embedded data)
@@ -260,6 +286,284 @@ def count_by_degree() -> dict[int, int]:
     return dict(sorted(out.items()))
 
 
+def search_polynomial(M: float,
+                      deg: Optional[int] = None,
+                      tol: Optional[float] = 1e-3,
+                      return_distance: bool = True) -> list[dict]:
+    """Fuzzy lookup: catalog entries whose Mahler measure is near ``M``.
+
+    Parameters
+    ----------
+    M : float
+        Target Mahler measure.
+    deg : int, optional
+        If supplied, restrict to entries of exactly this degree.
+    tol : float or None, default 1e-3
+        Maximum allowed ``|entry.M - M|``.  Entries beyond ``tol`` are
+        omitted.  Pass ``None`` to disable the radius cap (returns the
+        full catalog, sorted by distance to ``M``).
+    return_distance : bool, default True
+        If True, every returned dict includes a ``"distance"`` field
+        equal to ``abs(entry.mahler_measure - M)``.
+
+    Returns
+    -------
+    list[dict]
+        Catalog entries (deep-copied), sorted ascending by distance to
+        ``M``.  Empty list if nothing falls within ``tol``.
+
+    Notes
+    -----
+    The catalog covers M in [1.0, 1.84] and degrees [2..30, 36].
+    Search is O(N) over the 178-entry catalog (no index needed).
+    """
+    M = float(M)
+    out: list[tuple] = []
+    for e in MAHLER_TABLE:
+        if deg is not None and e["degree"] != int(deg):
+            continue
+        d = abs(e["mahler_measure"] - M)
+        if tol is not None and d > float(tol):
+            continue
+        entry = copy.deepcopy(e)
+        if return_distance:
+            entry["distance"] = d
+        # Tiebreak: cluster distances within 1e-9 to avoid spurious
+        # ordering by floating-point noise, then prefer (a) the Lehmer
+        # witness (b) Smyth-extremal (c) other named degree-minima
+        # (d) lower degree.  Booleans inverted because we sort ascending.
+        d_bucket = round(d / 1e-9)
+        out.append((
+            d_bucket,
+            0 if e.get("lehmer_witness") else 1,
+            0 if e.get("is_smyth_extremal") else 1,
+            0 if e.get("degree_minimum") else 1,
+            e["degree"],
+            d,  # final continuous tiebreak
+            entry,
+        ))
+    out.sort(key=lambda t: (t[0], t[1], t[2], t[3], t[4], t[5]))
+    return [t[-1] for t in out]
+
+
+def search_polynomial_by_coeffs_signature(
+    signature: list[int],
+    tol: float = 1e-9,
+) -> list[dict]:
+    """Find entries whose coefficient vectors match a structural signature.
+
+    A "signature" match means the entry's ascending-coeffs list has
+    the same length as ``signature``, the same first-nonzero and
+    last-nonzero coefficient values, and the same parity (even/odd) of
+    the number of nonzero coefficients.  Useful for locating "is this
+    Lehmer's polynomial up to substitution / cyclotomic factor swap?".
+
+    Parameters
+    ----------
+    signature : list[int]
+        Reference ascending coefficient list.
+    tol : float, default 1e-9
+        Reserved for future float-coefficient signatures; integer
+        coefficients are compared exactly.
+
+    Returns
+    -------
+    list[dict]
+        Catalog entries (deep-copied) whose coefficient signature
+        matches.  Sorted ascending by Mahler measure.
+    """
+    sig = _normalize(list(signature))
+    if not sig:
+        return []
+    sig_len = len(sig)
+    sig_first = next((c for c in sig if c != 0), 0)
+    sig_last = next((c for c in reversed(sig) if c != 0), 0)
+    sig_nz_parity = sum(1 for c in sig if c != 0) % 2
+    out: list[dict] = []
+    for e in MAHLER_TABLE:
+        c = _normalize(list(e["coeffs"]))
+        if len(c) != sig_len:
+            continue
+        first = next((x for x in c if x != 0), 0)
+        last = next((x for x in reversed(c) if x != 0), 0)
+        nz_parity = sum(1 for x in c if x != 0) % 2
+        if (first == sig_first and last == sig_last
+                and nz_parity == sig_nz_parity):
+            out.append(copy.deepcopy(e))
+    out.sort(key=lambda r: r["mahler_measure"])
+    return out
+
+
+def _coeff_disc_proxy(coeffs: list[int]) -> int:
+    """Cheap O(n^2) proxy for |discriminant| of a coefficient vector.
+
+    Real polynomial discriminants need numerical root-finding; this
+    proxy is sum_{i!=j} |a_i - a_j|^2 + sum |a_i|, which is monotone
+    in the "spread" of the coefficient vector and usable as an
+    ordering key when ranking entries by structural simplicity.
+    """
+    cs = list(coeffs)
+    n = len(cs)
+    s = sum(abs(c) for c in cs)
+    for i in range(n):
+        for j in range(i + 1, n):
+            s += (cs[i] - cs[j]) ** 2
+    return s
+
+
+def _palindromic_score(coeffs: list[int]) -> float:
+    """Return 1.0 for a perfect palindrome (Salem candidate), 0.0 for
+    a fully non-palindromic vector.  Linear interpolation: fraction
+    of index pairs (i, n-1-i) with c_i == c_{n-1-i}.
+    """
+    cs = list(coeffs)
+    n = len(cs)
+    if n == 0:
+        return 0.0
+    pairs = n // 2
+    if pairs == 0:
+        return 1.0  # singleton: trivially palindromic
+    matches = sum(1 for i in range(pairs) if cs[i] == cs[n - 1 - i])
+    return matches / pairs
+
+
+def find_extremal_at_degree(degree: int,
+                            criterion: str = "smallest_M") -> Optional[dict]:
+    """Return the "extremal" catalog entry at a given degree.
+
+    Parameters
+    ----------
+    degree : int
+        Degree to search.
+    criterion : str, default 'smallest_M'
+        One of:
+
+        * ``'smallest_M'``  -- entry with the smallest Mahler measure
+        * ``'smallest_disc'`` -- entry minimizing the cheap coefficient
+          discriminant proxy (a structural simplicity score)
+        * ``'most_palindromic'`` -- entry whose coefficients are most
+          palindromic (Salem-class indicator)
+
+    Returns
+    -------
+    dict or None
+        Best entry under the criterion, deep-copied; ``None`` if no
+        catalog entry exists at that degree.
+    """
+    rows = [e for e in MAHLER_TABLE if e["degree"] == int(degree)]
+    if not rows:
+        return None
+    if criterion == "smallest_M":
+        best = min(rows, key=lambda r: r["mahler_measure"])
+    elif criterion == "smallest_disc":
+        best = min(rows, key=lambda r: _coeff_disc_proxy(r["coeffs"]))
+    elif criterion == "most_palindromic":
+        # Tie-break by smaller M for determinism.
+        best = max(
+            rows,
+            key=lambda r: (_palindromic_score(r["coeffs"]),
+                           -r["mahler_measure"]),
+        )
+    else:
+        raise ValueError(
+            f"unknown criterion {criterion!r}; expected one of "
+            "'smallest_M', 'smallest_disc', 'most_palindromic'"
+        )
+    return copy.deepcopy(best)
+
+
+def histogram_by_M(bin_count: int = 20,
+                   M_range: tuple[float, float] = (1.0, 2.0)) -> list[tuple]:
+    """Distribution of Mahler measures across the catalog.
+
+    Parameters
+    ----------
+    bin_count : int, default 20
+        Number of equal-width bins between ``M_range[0]`` and
+        ``M_range[1]``.
+    M_range : (float, float), default (1.0, 2.0)
+        Inclusive lower bound, exclusive upper bound (the topmost bin
+        includes its right edge to catch boundary entries).
+
+    Returns
+    -------
+    list[(float, float, int)]
+        ``[(M_lo, M_hi, count), ...]`` for each bin in ascending order.
+        Counts include only entries with ``M_lo <= M < M_hi`` (or
+        ``<= M_hi`` for the final bin).
+
+    Examples
+    --------
+    >>> bins = histogram_by_M(bin_count=10, M_range=(1.0, 2.0))
+    >>> sum(c for _, _, c in bins) <= len(smallest_known(limit=10000))
+    True
+    """
+    if int(bin_count) <= 0:
+        raise ValueError(f"bin_count must be positive, got {bin_count}")
+    lo, hi = float(M_range[0]), float(M_range[1])
+    if hi <= lo:
+        raise ValueError(
+            f"M_range must satisfy lo < hi; got ({lo}, {hi})"
+        )
+    width = (hi - lo) / int(bin_count)
+    bins = [(lo + i * width, lo + (i + 1) * width, 0)
+            for i in range(int(bin_count))]
+    bins_mut = [list(b) for b in bins]
+    for e in MAHLER_TABLE:
+        m = e["mahler_measure"]
+        if m < lo or m > hi:
+            continue
+        idx = int((m - lo) / width)
+        if idx == int(bin_count):  # right edge of final bin
+            idx -= 1
+        if 0 <= idx < int(bin_count):
+            bins_mut[idx][2] += 1
+    return [(b[0], b[1], b[2]) for b in bins_mut]
+
+
+def search_by_signature_class(salem: Optional[bool] = None,
+                              smyth_extremal: Optional[bool] = None,
+                              lehmer_witness: Optional[bool] = None,
+                              degree_minimum: Optional[bool] = None,
+                              ) -> list[dict]:
+    """Filter the catalog by combination of class booleans.
+
+    Each parameter is tri-valued:
+
+    * ``True``  -- entry must have the flag set
+    * ``False`` -- entry must NOT have the flag set
+    * ``None``  -- don't filter on this flag
+
+    Returns
+    -------
+    list[dict]
+        Matching entries (deep-copied), sorted ascending by Mahler
+        measure.
+
+    Examples
+    --------
+    Salem-class entries that are also degree minima:
+
+    >>> rows = search_by_signature_class(salem=True, degree_minimum=True)
+    """
+    out: list[dict] = []
+    for e in MAHLER_TABLE:
+        if salem is not None and bool(e.get("salem_class")) != bool(salem):
+            continue
+        if smyth_extremal is not None \
+                and bool(e.get("is_smyth_extremal")) != bool(smyth_extremal):
+            continue
+        if lehmer_witness is not None \
+                and bool(e.get("lehmer_witness")) != bool(lehmer_witness):
+            continue
+        if degree_minimum is not None \
+                and bool(e.get("degree_minimum")) != bool(degree_minimum):
+            continue
+        out.append(copy.deepcopy(e))
+    out.sort(key=lambda r: (r["mahler_measure"], r["degree"]))
+    return out
+
+
 def degree_minima() -> dict[int, dict]:
     """Map ``degree -> smallest-known Mahler-measure entry`` at each
     degree present in the catalog.
@@ -403,4 +707,10 @@ __all__ = [
     "degree_minima",
     "update_mirror",
     "probe",
+    # Phase-2 fuzzy search additions:
+    "search_polynomial",
+    "search_polynomial_by_coeffs_signature",
+    "find_extremal_at_degree",
+    "histogram_by_M",
+    "search_by_signature_class",
 ]

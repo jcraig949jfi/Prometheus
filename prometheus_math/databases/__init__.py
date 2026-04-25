@@ -2,6 +2,7 @@
 
 Submodules:
     lmfdb     — LMFDB Postgres mirror (devmirror.lmfdb.xyz)
+    cremona   — Cremona ecdata local CSV mirror (LMFDB fallback)
     oeis      — OEIS API wrapper (when present)
     arxiv     — arXiv preprint server (when the `arxiv` pip package is present)
     knotinfo  — KnotInfo + LinkInfo census (via `database_knotinfo` pkg)
@@ -15,6 +16,11 @@ from . import oeis  # noqa: F401
 
 try:  # optional, depends on psycopg2 + network
     from . import lmfdb  # noqa: F401
+except ImportError:
+    pass
+
+try:  # always-available: pure-Python parser, opt-in CSV mirror
+    from . import cremona  # noqa: F401
 except ImportError:
     pass
 

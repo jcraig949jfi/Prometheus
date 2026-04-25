@@ -117,6 +117,8 @@ _BACKENDS: list[Backend] = [
             description="Mossinghoff small-Mahler-measure tables (local + online)"),
     Backend("atlas", "data", "DB",
             description="ATLAS of Finite Groups (embedded snapshot)"),
+    Backend("cremona", "data", "DB",
+            description="Cremona ecdata local CSV mirror (opt-in 88 MB)"),
 ]
 
 

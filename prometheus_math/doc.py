@@ -138,6 +138,50 @@ def arsenal(out_path: str | Path | None = None) -> str:
             lines.append(f"| `{sig}` | {cell_summary} |")
         lines.append("")
 
+    # Dependency graph (project #24)
+    lines.append("---")
+    lines.append("")
+    lines.append("## Dependency graph")
+    lines.append("")
+    lines.append("Inter-module dependency edges, auto-discovered by walking each "
+                 "categorical module's source via Python's `ast` (catches lazy "
+                 "imports that runtime introspection misses). Cycles in this "
+                 "graph would indicate a refactor blocker.")
+    lines.append("")
+    try:
+        from . import dependency_graph as _dg
+        graph = _dg.build_dependency_graph()
+        cycles = _dg.cycle_detection(graph)
+        edge_count = sum(len(d) for d in graph.values())
+        lines.append(f"_Edges discovered: {edge_count}; cycles: {len(cycles)}._")
+        lines.append("")
+        lines.append(_dg.to_mermaid(graph, layout="LR"))
+        lines.append("")
+        if cycles:
+            lines.append(f"**WARNING**: dependency cycles detected: {cycles}. "
+                         f"Refactor needed.")
+            lines.append("")
+
+        # Composition opportunities
+        lines.append("## Composition opportunities")
+        lines.append("")
+        lines.append("Pairs of categorical modules that don't yet compose. Each "
+                     "is a candidate target for a future composition test or "
+                     "research recipe spanning the two areas.")
+        lines.append("")
+        opps = _dg.composition_opportunities(graph)
+        if opps:
+            lines.append("| Module A | Module B |")
+            lines.append("|---|---|")
+            for a, b in opps:
+                lines.append(f"| `{a}` | `{b}` |")
+        else:
+            lines.append("(none — every categorical module pair is connected)")
+        lines.append("")
+    except Exception as e:  # pragma: no cover
+        lines.append(f"_Dependency graph generation failed: {e}_")
+        lines.append("")
+
     # Roadmap pointer
     lines.append("---")
     lines.append("")

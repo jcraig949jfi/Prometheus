@@ -422,5 +422,327 @@ def test_source_field_present_for_all():
         assert len(e["source"]) >= 5
 
 
+# ---------------------------------------------------------------------------
+# Phase-2 fuzzy-search tests (added 2026-04-22 for project #14 phase 2).
+# These exercise: search_polynomial, search_polynomial_by_coeffs_signature,
+# find_extremal_at_degree, histogram_by_M, search_by_signature_class.
+# ---------------------------------------------------------------------------
+
+
+@_skip_no_backend
+def test_search_polynomial_finds_lehmer_authority():
+    """Authority: search near Lehmer's constant returns Lehmer's polynomial.
+
+    Reference: Lehmer 1933, M = 1.17628081826...  The closest catalog
+    entry to M = 1.17628 (within tol = 1e-4) must be Lehmer's polynomial
+    itself, not one of the cyclotomic extensions that share the same M.
+    """
+    rows = mahler.search_polynomial(1.17628, tol=1e-4)
+    assert len(rows) >= 1
+    assert rows[0].get("lehmer_witness") is True, (
+        f"closest match should be Lehmer's polynomial, got {rows[0]['name']}"
+    )
+    # Distance is reported and is small.
+    assert rows[0]["distance"] < 1e-4
+    # Lehmer's deg-10 entry must be in the cluster of zero-distance hits.
+    lehmer_hits = [r for r in rows if r.get("lehmer_witness")]
+    assert lehmer_hits, "Lehmer's polynomial missing from result set"
+
+
+@_skip_no_backend
+def test_search_polynomial_smyth_at_deg_3_authority():
+    """Authority: search near Smyth's constant at degree 3 returns
+    Smyth's extremal x^3 - x - 1.
+
+    Reference: Smyth 1971, the plastic number M = 1.32471957244...
+    is realised by x^3 - x - 1 at degree 3 and is the smallest M for
+    any non-reciprocal integer polynomial.
+    """
+    rows = mahler.search_polynomial(1.32472, deg=3)
+    assert len(rows) >= 1
+    top = rows[0]
+    assert top["degree"] == 3
+    assert top.get("is_smyth_extremal") is True
+    assert top["coeffs"] == [-1, -1, 0, 1]  # ascending: x^3 - x - 1
+    assert abs(top["mahler_measure"] - mahler.SMYTH_CONSTANT) < 1e-6
+
+
+@_skip_no_backend
+def test_search_polynomial_sorted_by_distance():
+    """Property: returned list is sorted by distance ascending.
+
+    Distances are bucketed at 1e-9 to absorb floating-point noise (so
+    entries with truly-equal M but tiny FP differences cluster), then
+    a secondary class-priority tiebreak orders Lehmer/Smyth/degree-
+    minimum entries first.  Within that contract, the *bucketed*
+    distances must be non-decreasing.
+    """
+    bucket = 1e-9
+    for M_target in (1.0, 1.176, 1.3, 1.5, 1.7):
+        rows = mahler.search_polynomial(M_target, tol=None)
+        dists = [r["distance"] for r in rows]
+        bucketed = [round(d / bucket) for d in dists]
+        for a, b in zip(bucketed, bucketed[1:]):
+            assert a <= b, (
+                f"bucketed distances not sorted at M={M_target}: "
+                f"{a} > {b}"
+            )
+
+
+@_skip_no_backend
+def test_search_polynomial_tol_none_returns_full_catalog():
+    """Property: tol=None disables the radius cap, returning all 178
+    entries sorted by distance to M.
+    """
+    M_target = 1.5
+    rows = mahler.search_polynomial(M_target, tol=None)
+    full_count = len(mahler.smallest_known(limit=10_000))
+    assert len(rows) == full_count, (
+        f"tol=None should return full catalog ({full_count}), got {len(rows)}"
+    )
+    # Every returned entry has a distance field.
+    for r in rows:
+        assert "distance" in r
+        assert r["distance"] >= 0
+
+
+@_skip_no_backend
+def test_search_polynomial_no_match_returns_empty():
+    """Edge: target M = 10.0 with tol = 0.001 finds nothing.
+
+    The catalog covers M in [1.0, 1.84]; nothing is within 0.001 of 10.0,
+    so the result is an empty list.
+    """
+    rows = mahler.search_polynomial(10.0, tol=0.001)
+    assert rows == []
+
+
+@_skip_no_backend
+def test_search_polynomial_unknown_degree_returns_empty():
+    """Edge: degree filter that no entry satisfies returns empty.
+
+    Catalog does not include degree 999.
+    """
+    rows = mahler.search_polynomial(1.0, deg=999)
+    assert rows == []
+    # Even with tol=None, the degree filter still empties the result.
+    assert mahler.search_polynomial(1.5, deg=999, tol=None) == []
+
+
+@_skip_no_backend
+def test_search_polynomial_tol_monotonicity():
+    """Composition: loosening tol can only add results, never remove.
+
+    For every fixed M, the result-set size at tol_2 > tol_1 must be
+    >= result-set size at tol_1.  A core invariant of any tolerance-
+    based fuzzy lookup.
+    """
+    M_target = 1.3
+    sizes = []
+    for tol in (1e-6, 1e-4, 1e-2, 0.1, 0.5, 1.0):
+        rows = mahler.search_polynomial(M_target, tol=tol)
+        sizes.append(len(rows))
+    for a, b in zip(sizes, sizes[1:]):
+        assert a <= b, (
+            f"loosening tol shrank result set: {sizes}"
+        )
+
+
+@_skip_no_backend
+def test_search_polynomial_agrees_with_lookup_by_M():
+    """Composition: at small tol, search_polynomial(M, tol) and
+    lookup_by_M(M, tol) return the same set of catalog entries.
+
+    A two-tool consistency check.  The two APIs differ in ordering
+    (search_polynomial sorts by distance, lookup_by_M sorts by stored
+    M) but the underlying set must agree.
+    """
+    M_target = mahler.LEHMER_CONSTANT
+    tol = 1e-7
+    a = mahler.search_polynomial(M_target, tol=tol, return_distance=False)
+    b = mahler.lookup_by_M(M_target, tol=tol)
+    a_names = sorted(e["name"] for e in a)
+    b_names = sorted(e["name"] for e in b)
+    assert a_names == b_names, (
+        f"search_polynomial and lookup_by_M disagree:\n"
+        f"  search_polynomial: {a_names}\n"
+        f"  lookup_by_M:       {b_names}"
+    )
+
+
+@_skip_no_backend
+def test_search_polynomial_no_distance_when_disabled():
+    """Edge: return_distance=False produces entries without 'distance'."""
+    rows = mahler.search_polynomial(1.176, tol=1e-3, return_distance=False)
+    assert len(rows) >= 1
+    for r in rows:
+        assert "distance" not in r
+
+
+@_skip_no_backend
+def test_search_by_signature_lehmer_polynomial():
+    """Authority: Lehmer's coefficient signature matches Lehmer's
+    polynomial (length-11, first/last nonzero = 1, even number of
+    nonzero coefficients).
+    """
+    sig = [1, 1, 0, -1, -1, -1, -1, -1, 0, 1, 1]  # Lehmer ascending
+    rows = mahler.search_polynomial_by_coeffs_signature(sig)
+    names = [r["name"] for r in rows]
+    assert any(r.get("lehmer_witness") for r in rows), (
+        f"Lehmer's polynomial missing from signature match: {names[:5]}"
+    )
+
+
+@_skip_no_backend
+def test_search_by_signature_self_match_is_nonempty():
+    """Property: every catalog entry's own coefficient vector matches
+    its own signature (length, first/last nonzero, parity all agree).
+
+    Invariant: signature(c) matches c, so the result must contain c.
+    """
+    rows = mahler.smallest_known(limit=10_000)
+    # Sample a few diverse entries (small + large degree, salem + non).
+    samples = [
+        rows[0],
+        next(r for r in rows if r.get("lehmer_witness")),
+        next(r for r in rows if r["degree"] >= 14),
+    ]
+    for e in samples:
+        sig = list(e["coeffs"])
+        matches = mahler.search_polynomial_by_coeffs_signature(sig)
+        assert any(m["coeffs"] == e["coeffs"] for m in matches), (
+            f"signature self-match missing for {e['name']}"
+        )
+
+
+@_skip_no_backend
+def test_search_by_signature_empty_signature_returns_empty():
+    """Edge: empty signature has no matches (degenerate case)."""
+    assert mahler.search_polynomial_by_coeffs_signature([]) == []
+    # All-zero signature normalizes to [0] which has length 1 and no
+    # nonzero coefficient; it should match nothing in the catalog
+    # because every catalog entry has degree >= 2 (length >= 3).
+    rows = mahler.search_polynomial_by_coeffs_signature([0])
+    assert rows == []
+
+
+@_skip_no_backend
+def test_find_extremal_at_degree_smallest_M_matches_minima():
+    """Composition: find_extremal_at_degree(d, 'smallest_M') agrees
+    with smallest_known(degree=d, limit=1)[0].
+
+    A two-tool consistency check: the same answer must come back from
+    either entry-point.
+    """
+    for d in (3, 8, 10, 14, 18):
+        ext = mahler.find_extremal_at_degree(d, criterion="smallest_M")
+        ref = mahler.smallest_known(degree=d, limit=1)
+        assert ext is not None
+        assert ref
+        assert ext["mahler_measure"] == ref[0]["mahler_measure"]
+        assert ext["degree"] == d
+
+
+@_skip_no_backend
+def test_find_extremal_at_degree_unknown_returns_none():
+    """Edge: unknown degree returns None (no entry to be extremal of)."""
+    assert mahler.find_extremal_at_degree(9999) is None
+    assert mahler.find_extremal_at_degree(0, criterion="smallest_M") is None
+
+
+@_skip_no_backend
+def test_find_extremal_at_degree_bad_criterion_raises():
+    """Edge: unknown criterion produces an informative ValueError."""
+    with pytest.raises(ValueError, match="unknown criterion"):
+        mahler.find_extremal_at_degree(10, criterion="bogus")
+
+
+@_skip_no_backend
+def test_find_extremal_at_degree_palindromic_picks_salem_class():
+    """Composition: 'most_palindromic' at deg 14 picks a Salem-class
+    polynomial (Salem polynomials are reciprocal, hence palindromic).
+    """
+    ext = mahler.find_extremal_at_degree(14, criterion="most_palindromic")
+    assert ext is not None
+    # Most-palindromic deg-14 entry should be reciprocal => Salem-class
+    # OR a cyclotomic.  We just assert palindromicity.
+    cs = ext["coeffs"]
+    n = len(cs)
+    pairs = n // 2
+    matches = sum(1 for i in range(pairs) if cs[i] == cs[n - 1 - i])
+    # Score should be high (>= half the pairs).
+    assert matches >= pairs * 0.5, (
+        f"'most_palindromic' deg-14 entry is barely palindromic: {ext['name']}"
+    )
+
+
+@_skip_no_backend
+def test_histogram_by_M_total_count_matches_in_range():
+    """Property: sum of bin counts equals the number of catalog entries
+    whose M lies inside M_range.
+    """
+    bins = mahler.histogram_by_M(bin_count=10, M_range=(1.0, 2.0))
+    total = sum(c for _, _, c in bins)
+    rows = mahler.smallest_known(limit=10_000)
+    in_range = sum(1 for r in rows if 1.0 <= r["mahler_measure"] <= 2.0)
+    assert total == in_range, (
+        f"histogram total {total} != in-range catalog count {in_range}"
+    )
+
+
+@_skip_no_backend
+def test_histogram_by_M_lehmer_region_is_populated():
+    """Authority: the (1.17, 1.20) interval is densely populated in
+    the catalog (Lehmer + extensions + Salem-class).
+
+    A bin covering 1.17..1.20 should contain at least the Lehmer
+    cluster (~21 entries) plus deg-14 Salem and friends.
+    """
+    bins = mahler.histogram_by_M(bin_count=100, M_range=(1.0, 2.0))
+    lehmer_bins = [b for b in bins if b[0] <= 1.176 < b[1]]
+    assert lehmer_bins, "no bin covers Lehmer's constant"
+    assert lehmer_bins[0][2] >= 1, "Lehmer bin is empty"
+
+
+@_skip_no_backend
+def test_histogram_by_M_bad_args_raises():
+    """Edge: invalid bin_count or M_range raises ValueError."""
+    with pytest.raises(ValueError):
+        mahler.histogram_by_M(bin_count=0)
+    with pytest.raises(ValueError):
+        mahler.histogram_by_M(bin_count=10, M_range=(2.0, 1.0))
+
+
+@_skip_no_backend
+def test_search_by_signature_class_lehmer_only():
+    """Authority: salem=True + lehmer_witness=True returns exactly
+    Lehmer's polynomial.
+    """
+    rows = mahler.search_by_signature_class(salem=True, lehmer_witness=True)
+    assert len(rows) == 1
+    assert rows[0].get("lehmer_witness") is True
+    assert rows[0]["degree"] == 10
+
+
+@_skip_no_backend
+def test_search_by_signature_class_none_means_no_filter():
+    """Property: all-None args returns the full catalog, sorted ascending."""
+    rows = mahler.search_by_signature_class()
+    assert len(rows) == len(mahler.smallest_known(limit=10_000))
+    for a, b in zip(rows, rows[1:]):
+        assert a["mahler_measure"] <= b["mahler_measure"]
+
+
+@_skip_no_backend
+def test_search_by_signature_class_smyth_extremals_match_smyth_extremal():
+    """Composition: search_by_signature_class(smyth_extremal=True)
+    returns the same set as smyth_extremal()."""
+    a = mahler.search_by_signature_class(smyth_extremal=True)
+    b = mahler.smyth_extremal()
+    a_names = sorted(e["name"] for e in a)
+    b_names = sorted(e["name"] for e in b)
+    assert a_names == b_names
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

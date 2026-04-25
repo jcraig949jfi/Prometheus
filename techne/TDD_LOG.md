@@ -61,6 +61,11 @@ capability reference).
 | 2026-04-25 | pm.databases.mahler (Phase-1 ext, 21->178 entries) | A:178 | P:6 | E:3 | C:2 | (project #14 phase 1) |
 | 2026-04-25 | pm.databases.mahler.lookup_by_degree | A:0 | P:2 | E:2 | C:1 | (project #14 phase 1) |
 | 2026-04-25 | pm.databases.mahler.count_by_degree | A:0 | P:2 | E:0 | C:1 | (project #14 phase 1) |
+| 2026-04-22 | pm.databases.mahler.search_polynomial | A:2 | P:2 | E:3 | C:2 | (project #14 phase 2) |
+| 2026-04-22 | pm.databases.mahler.search_polynomial_by_coeffs_signature | A:1 | P:1 | E:1 | C:0 | (project #14 phase 2) |
+| 2026-04-22 | pm.databases.mahler.find_extremal_at_degree | A:1 | P:0 | E:2 | C:1 | (project #14 phase 2) |
+| 2026-04-22 | pm.databases.mahler.histogram_by_M | A:1 | P:1 | E:1 | C:0 | (project #14 phase 2) |
+| 2026-04-22 | pm.databases.mahler.search_by_signature_class | A:1 | P:1 | E:0 | C:1 | (project #14 phase 2) |
 | 2026-04-25 | pm.research.vcm_scaling.fetch_cm_curves | A:0 | P:0 | E:2 | C:0 | (project #10) |
 | 2026-04-25 | pm.research.vcm_scaling.per_curve_compression | A:0 | P:0 | E:0 | C:1 | (project #10) |
 | 2026-04-25 | pm.research.vcm_scaling.per_disc_summary | A:1 | P:0 | E:1 | C:1 | (project #10) |
@@ -86,6 +91,70 @@ capability reference).
 | 2026-04-25 | pm.research.identity_join.knots_matching_nf | A:1 | P:0 | E:0 | C:1 | (project #13) |
 | 2026-04-25 | pm.research.identity_join.bulk_scan | A:0 | P:0 | E:1 | C:1 | (project #13) |
 | 2026-04-25 | pm.research.identity_join.generate_match_report | A:0 | P:0 | E:2 | C:0 | (project #13) |
+| 2026-04-25 | pm.dependency_graph.module_imports | A:4 | P:4 | E:3 | C:2 | (project #24) |
+| 2026-04-25 | pm.dependency_graph.operation_dependencies | A:1 | P:1 | E:2 | C:1 | (project #24) |
+| 2026-04-25 | pm.dependency_graph.build_dependency_graph | A:1 | P:3 | E:0 | C:2 | (project #24) |
+| 2026-04-25 | pm.dependency_graph.to_mermaid | A:0 | P:1 | E:1 | C:1 | (project #24) |
+| 2026-04-25 | pm.dependency_graph.to_dot | A:0 | P:1 | E:0 | C:1 | (project #24) |
+| 2026-04-25 | pm.dependency_graph.cycle_detection | A:0 | P:1 | E:0 | C:3 | (project #24) |
+| 2026-04-25 | pm.dependency_graph.composition_opportunities | A:0 | P:2 | E:0 | C:1 | (project #24) |
+| 2026-04-25 | pm.databases.cremona.update_mirror | A:1 | P:2 | E:3 | C:1 | (project #15) |
+| 2026-04-25 | pm.databases.cremona.elliptic_curves | A:1 | P:2 | E:2 | C:2 | (project #15) |
+| 2026-04-25 | pm.databases.cremona.lookup_by_ainvs | A:2 | P:1 | E:2 | C:2 | (project #15) |
+| 2026-04-25 | pm.databases.cremona.mirror_info | A:1 | P:1 | E:1 | C:1 | (project #15) |
+| 2026-04-25 | pm.databases.cremona.has_local_mirror | A:0 | P:1 | E:1 | C:1 | (project #15) |
+| 2026-04-25 | pm.databases.cremona.probe | A:0 | P:1 | E:1 | C:0 | (project #15) |
+| 2026-04-25 | pm.databases.cremona._parse_allcurves_line | A:1 | P:0 | E:1 | C:0 | (project #15) |
+| 2026-04-25 | pm.databases.cremona._parse_allbsd_line | A:1 | P:0 | E:1 | C:0 | (project #15) |
+| 2026-04-25 | pm.databases.cremona._parse_alllabels_line | A:1 | P:0 | E:1 | C:0 | (project #15) |
+| 2026-04-25 | pm.databases.cremona._normalize_label | A:0 | P:3 | E:1 | C:1 | (project #15) |
+| 2026-04-25 | pm.databases.cremona._range_tag | A:2 | P:2 | E:0 | C:0 | (project #15) |
+| 2026-04-25 | pm.benchmarks.run_all (harness) | A:2 | P:2 | E:2 | C:1 | (project #16) |
+| 2026-04-25 | pm.benchmarks.bench_number_theory (6 benches) | A:2 | P:6 | E:2 | C:0 | (project #16) |
+| 2026-04-25 | pm.benchmarks.bench_elliptic_curves (5 benches) | A:2 | P:5 | E:2 | C:0 | (project #16) |
+| 2026-04-25 | pm.benchmarks.bench_topology (3 benches) | A:2 | P:3 | E:2 | C:0 | (project #16) |
+| 2026-04-25 | pm.benchmarks.bench_databases (3 benches) | A:2 | P:3 | E:2 | C:0 | (project #16) |
+
+### Project #16 — Performance benchmark suite — summary
+
+Performance benchmark harness, 17 benchmarks across 4 modules,
+~690 LOC of bench code + 237 LOC driver + 201 LOC smoke harness.
+
+A — pytest-benchmark v5.x is the authoritative harness; LMFDB rank-0
+    EC labels and KnotInfo crossing-13 census provide authoritative
+    inputs. The smoke test exercises the public schema fields (median,
+    mean, min, max, rounds, fullname).
+P — Each benchmark asserts cardinality of output equals input
+    (catches a benchmark falling silent into an exception); tier-2
+    threshold flag is verified for fast/slow synthetic stats.
+E — Empty-benchmark JSON yields a valid (but near-empty) RESULTS.md;
+    missing local mirrors cleanly skip individual benches; ortools 9.15
+    cvxpy import warning does not break the harness.
+C — Composition: invoking `run_all.main(["--no-run", ...])` against a
+    fixture JSON produces a Markdown file with rows for every
+    benchmark in the JSON, with Tier-2 flagged correctly.
+
+Smoke run results:
+- bench_alexander_polynomial median ~155.83 ms → flagged Tier-2.
+- bench_class_number_quadratic ~14 ms (under threshold).
+- bench_mahler_measure_deg10 ~14 ms (numpy roots is fast enough).
+- bench_oeis_local_lookup ~3.3 ms (local mirror dominates).
+
+Plain `pytest prometheus_math/` skips all benchmarks. Opt in via
+`--run-benchmarks`, `--benchmark-only`, or
+`PROMETHEUS_RUN_BENCHMARKS=1`.
+
+Tier-2 candidates surfaced so far (single-bench smoke, not full sweep):
+1. `bench_alexander_polynomial` (median 155 ms over 100 knots).
+   Suspected cause: per-knot cypari poly parsing + numpy.roots() in a
+   tight Python loop.
+
+Next-pass candidates (not yet timed but expected slow): hilbert_class_-
+field_h_le_10 (per-disc PARI bnrclassfield), knot_shape_field_max_-
+deg_8 (snappy.shape_field at bits_prec=200 + polredabs round-trip),
+analytic_sha_without_hint (rank determination cost).
+
+File: `prometheus_math/benchmarks/`
 
 ### Project #5 — ATLAS of Finite Groups wrapper — summary
 
