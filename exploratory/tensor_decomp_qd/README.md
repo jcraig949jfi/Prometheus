@@ -13,13 +13,18 @@ other cells are the unclaimed territory.
 
 ---
 
-## Status (2026-04-23)
+## Status (2026-04-25, after parallel A/B/C pilots)
 
 | Pilot | Outcome | Key finding |
 |---|---|---|
 | `pilot_F2_2x2/` | B1 | Strassen isolated at Hamming ≥ 6; rank-7 effectively unique over F_2 |
 | `pilot_F2_3x3/` | B | Laderman verified + seeded; flip-graph 3-to-2 and 2-to-2 moves don't fire (all 1771 triples have tensor rank 3; 0/253 pair-swaps give new orbit) |
-| `pilot_F3_2x2/` | B1 | 100× better fitness rate than F_2, local connectivity within Strassen orbit, but still single rank-7 orbit → **rejects "char-2 is primary cause"** hypothesis |
+| `pilot_F2_3x3_v2/` | B1 (stronger) | 4-to-3 flip-graph: 0/8855 Laderman quadruples have tensor rank ≤ 3. Higher-arity doesn't help. |
+| `pilot_F3_2x2/` | B1 | 100× better fitness rate than F_2, but still single rank-7 orbit → **rejects "char-2 is primary cause"** hypothesis |
+| `pilot_F3_3x3/` | B (canonicalization solved) | Invariant-tuple canonicalization works (50/50 gauge invariance). Single rank-23 orbit. **"Mutation geometry is now the proven bottleneck."** |
+| `pilot_polymul_n3/` | B1 (with caveat) | Polymul has structural slack matmul lacks: 46 valid 2-flip neighbors of naive rank-9, hitting 12 distinct non-naive orbits. Rank-min still isolated. |
+
+See `META_REPORT_PARALLEL_PILOTS.md` for the integrated synthesis. See each pilot's `PILOT_REPORT.md` for the per-pilot detail.
 
 See each pilot's `PILOT_REPORT.md` for the full diagnostic picture.
 
