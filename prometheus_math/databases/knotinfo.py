@@ -750,3 +750,238 @@ def probe(timeout: float = 3.0) -> bool:
         if r.status_code == 200:
             return True
     return False
+
+
+# ---------------------------------------------------------------------------
+# Mirror refresh & inventory
+# ---------------------------------------------------------------------------
+
+# PyPI JSON endpoint for `database_knotinfo` upstream-version checks.
+_PYPI_JSON_URL = "https://pypi.org/pypi/database_knotinfo/json"
+
+
+def _pip_version() -> Optional[str]:
+    """Currently installed `database_knotinfo` version, or None if not installed.
+
+    Uses importlib.metadata which is part of Python 3.8+ stdlib; no
+    network access. Returns None rather than raising when the package
+    is absent so the caller can degrade gracefully.
+    """
+    try:
+        import importlib.metadata as _md
+        return _md.version("database_knotinfo")
+    except Exception:
+        return None
+
+
+def _latest_pypi_version(timeout: float = 5.0) -> Optional[str]:
+    """Latest released `database_knotinfo` version on PyPI, or None if PyPI
+    is unreachable / response is malformed. Network call.
+
+    The caller is responsible for any retry / caching policy; this fn
+    issues a single GET with the supplied timeout and returns None on
+    any failure (no exception escapes).
+    """
+    try:
+        r = requests.get(_PYPI_JSON_URL,
+                         headers={"User-Agent": _USER_AGENT,
+                                  "Accept": "application/json"},
+                         timeout=timeout)
+    except requests.RequestException:
+        return None
+    if r.status_code != 200:
+        return None
+    try:
+        info = r.json().get("info") or {}
+        v = info.get("version")
+        if isinstance(v, str) and v:
+            return v
+    except Exception:
+        return None
+    return None
+
+
+def _semver_lt(a: str, b: str) -> bool:
+    """Best-effort 'is version a strictly older than b?' comparator.
+
+    `database_knotinfo` uses calendar-style versions (e.g. '2026.4.1');
+    naïve lexicographic comparison would fail at digit boundaries
+    ('2026.10.1' < '2026.2.1'). We fall back to packaging.version when
+    available and to a tuple-of-ints split on '.' otherwise. Unknown
+    forms compare equal (no upgrade signaled).
+    """
+    if not a or not b or a == b:
+        return False
+    try:
+        from packaging.version import Version  # type: ignore
+        return Version(a) < Version(b)
+    except Exception:
+        pass
+    try:
+        ta = tuple(int(x) for x in a.split(".") if x.isdigit())
+        tb = tuple(int(x) for x in b.split(".") if x.isdigit())
+        if ta and tb:
+            return ta < tb
+    except Exception:
+        pass
+    return False
+
+
+def mirror_info() -> dict:
+    """Inventory of the current KnotInfo mirror.
+
+    Returns a dict with:
+      * n_knots     : int — knot rows currently shaped & cached
+                            (12966 for database_knotinfo 2026.4.1)
+      * n_links     : int — link rows currently cached
+      * pip_version : str | None — installed `database_knotinfo` version
+      * latest_pypi : str | None — latest version on PyPI; None if
+                                  the lookup is offline / PyPI unreachable
+      * has_newer   : bool | None — True iff a strictly newer release
+                                   exists on PyPI; None if undetermined
+      * source      : str | None — the active backend ('database_knotinfo'
+                                  or 'csv-network')
+    """
+    _ensure_loaded()
+    pip_v = _pip_version()
+    latest = _latest_pypi_version(timeout=5.0)
+    has_newer: Optional[bool]
+    if latest is None or pip_v is None:
+        has_newer = None
+    else:
+        has_newer = _semver_lt(pip_v, latest)
+    return {
+        "n_knots":     len(_cache["knots_list"] or []),
+        "n_links":     len(_cache["links_list"] or []),
+        "pip_version": pip_v,
+        "latest_pypi": latest,
+        "has_newer":   has_newer,
+        "source":      _cache["source"],
+    }
+
+
+def update_mirror(force: bool = False, timeout: float = 5.0) -> dict:
+    """Check whether a fresher KnotInfo mirror is available; optionally upgrade.
+
+    Strategy (no side effects unless force=True):
+
+      1. Read the installed `database_knotinfo` version from
+         importlib.metadata.
+      2. Query PyPI's JSON endpoint for the latest release.
+      3. If a newer release exists, REPORT it but do not auto-install
+         (pip-install is a side effect on the user's environment and
+         requires explicit consent).
+      4. If `force=True`, run `pip install --upgrade database_knotinfo`
+         in a subprocess, capture output, and if the upgrade succeeds
+         clear the in-memory cache so subsequent lookups load fresh data.
+
+    Backfill note: the current pip release tracks 13-crossing knots;
+    14-crossing data, if/when KnotInfo publishes it, will arrive via a
+    new pip release and this fn will surface the upgrade.
+
+    Returns a dict with:
+      * refreshed   : bool — True iff any state on disk changed
+                            (only possible with force=True)
+      * source      : str  — same shape as cache_info()['source']
+      * n_knots     : int  — knots in the current mirror
+      * n_links     : int  — links in the current mirror
+      * message     : str  — human-readable summary (always set)
+      * pip_version : str | None
+      * latest_pypi : str | None
+      * has_newer   : bool | None
+      * upgrade_cmd : str  — the exact shell command to run for a
+                            manual upgrade (always present, even when
+                            force=True ran it for you)
+    """
+    info = mirror_info()
+    pip_v = info["pip_version"]
+    latest = info["latest_pypi"]
+    has_newer = info["has_newer"]
+
+    upgrade_cmd = "pip install --upgrade database_knotinfo"
+
+    refreshed = False
+    if has_newer is True and force:
+        try:
+            import subprocess
+            import sys
+            proc = subprocess.run(
+                [sys.executable, "-m", "pip", "install", "--upgrade",
+                 "database_knotinfo"],
+                capture_output=True, text=True, timeout=180.0,
+            )
+            if proc.returncode == 0:
+                refreshed = True
+                clear_cache()
+                _ensure_loaded()
+                # Re-query metadata after upgrade (the new version is
+                # only visible to importlib.metadata in a fresh
+                # interpreter, but record what pip reported anyway).
+                new_pip_v = _pip_version()
+                msg = (f"upgraded database_knotinfo "
+                       f"{pip_v} -> {new_pip_v or latest}; cache reloaded")
+                pip_v = new_pip_v or pip_v
+            else:
+                msg = (f"pip upgrade failed (exit {proc.returncode}); "
+                       f"stderr: {proc.stderr.strip()[:200]}")
+        except Exception as e:
+            msg = f"pip upgrade raised {type(e).__name__}: {e}"
+    elif has_newer is True:
+        msg = (f"newer database_knotinfo available on PyPI: "
+               f"{pip_v} -> {latest}. Run `{upgrade_cmd}` to upgrade, "
+               f"or call update_mirror(force=True).")
+    elif has_newer is False:
+        msg = f"database_knotinfo {pip_v} is up to date with PyPI ({latest})."
+    elif pip_v is None:
+        msg = ("database_knotinfo is not installed via pip; running on "
+               f"{info['source'] or 'no'} backend. "
+               f"Install with `{upgrade_cmd}`.")
+    else:
+        msg = (f"database_knotinfo {pip_v} installed; "
+               "PyPI unreachable, upstream version unknown.")
+
+    # Re-read counts post-(possible-)refresh.
+    final = cache_info()
+    return {
+        "refreshed":   refreshed,
+        "source":      final["source"],
+        "n_knots":     final["knots_loaded"],
+        "n_links":     final["links_loaded"],
+        "message":     msg,
+        "pip_version": pip_v,
+        "latest_pypi": latest,
+        "has_newer":   has_newer,
+        "upgrade_cmd": upgrade_cmd,
+    }
+
+
+def probe_extended(timeout: float = 3.0) -> dict:
+    """Check whether knotinfo.math.indiana.edu is serving a fresh CSV.
+
+    Unlike `probe()` (which returns a single bool for registry purposes),
+    this probes each candidate URL individually and returns per-URL
+    status, so we can tell when the upstream live mirror has gone dark
+    (every URL 404 / timeout) vs. is just slow.
+
+    Returns a dict with:
+      * any_reachable : bool — True iff at least one CSV URL responded 200
+      * urls          : list[dict] — one entry per URL with keys
+                                   {url, ok, status_code, error}
+    """
+    out_urls: list[dict] = []
+    any_ok = False
+    for url in _KNOT_CSV_URLS + _LINK_CSV_URLS:
+        entry: dict[str, Any] = {"url": url, "ok": False,
+                                 "status_code": None, "error": None}
+        try:
+            r = requests.head(url,
+                              headers={"User-Agent": _USER_AGENT},
+                              timeout=timeout, allow_redirects=True)
+            entry["status_code"] = r.status_code
+            if r.status_code == 200:
+                entry["ok"] = True
+                any_ok = True
+        except requests.RequestException as e:
+            entry["error"] = f"{type(e).__name__}: {e}"
+        out_urls.append(entry)
+    return {"any_reachable": any_ok, "urls": out_urls}

@@ -68,18 +68,29 @@ def test_lehmer_witness():
 @_skip_no_backend
 def test_smallest_known_by_degree():
     """Each of degrees 8, 10, 12 must have at least one catalog entry,
-    sorted ascending by Mahler measure."""
+    sorted ascending by Mahler measure.
+
+    After the Phase-1 extension, degrees that admit cyclotomic Phi_n
+    of that degree will have M = 1 entries (Phi_n is cyclotomic for any
+    n with phi(n) = degree).  Among non-cyclotomic entries, Lehmer's
+    polynomial remains the smallest known at degree 10.
+    """
     for d in (8, 10, 12):
-        rows = mahler.smallest_known(degree=d, limit=10)
+        rows = mahler.smallest_known(degree=d, limit=20)
         assert len(rows) >= 1, f"no entries at degree {d}"
         # Ascending order.
         for a, b in zip(rows, rows[1:]):
             assert a["mahler_measure"] <= b["mahler_measure"]
         # All filtered to the requested degree.
         assert all(r["degree"] == d for r in rows)
-    # Smallest at degree 10 should be Lehmer's polynomial.
-    top10 = mahler.smallest_known(degree=10, limit=1)
-    assert top10[0]["lehmer_witness"] is True
+    # Smallest non-cyclotomic at degree 10 must be Lehmer's polynomial.
+    top10 = mahler.smallest_known(degree=10, limit=20)
+    non_cyclo_10 = [r for r in top10 if r["mahler_measure"] > 1.0 + 1e-7]
+    assert non_cyclo_10, "no non-cyclotomic deg-10 entries"
+    assert non_cyclo_10[0]["lehmer_witness"] is True, (
+        f"smallest non-cyclotomic deg-10 should be Lehmer, got "
+        f"{non_cyclo_10[0]['name']}"
+    )
 
 
 @_skip_no_backend
@@ -95,8 +106,16 @@ def test_lookup_polynomial():
 
 @_skip_no_backend
 def test_all_below_smyth():
-    """Every entry strictly below Smyth's constant must be Salem-class
-    (the Smyth bound is the infimum for non-reciprocal polynomials)."""
+    """Every entry strictly below Smyth's constant must be either
+    Salem-class, cyclotomic (M = 1), or a Smyth-extremal at the
+    floating-point boundary.
+
+    Smyth's bound is the infimum for *non-reciprocal* integer
+    polynomials, so any entry below it must either be reciprocal
+    (Salem-class), cyclotomic (M = 1), or a Smyth-extremal sitting
+    exactly at the bound (where round-off can place it nominally
+    below by 1e-15 or so).
+    """
     rows = mahler.all_below(mahler.SMYTH_CONSTANT)
     assert len(rows) >= 3, "expected several catalog entries below Smyth"
     for r in rows:
@@ -104,8 +123,14 @@ def test_all_below_smyth():
         # (no off-circle roots at all).  Allow them through.
         if r["mahler_measure"] <= 1.0 + 1e-9:
             continue
+        # Smyth-extremals have M = SMYTH_CONSTANT exactly; round-off
+        # places some of them just below it.  Accept these.
+        if r.get("is_smyth_extremal"):
+            assert abs(r["mahler_measure"] - mahler.SMYTH_CONSTANT) < 1e-9
+            continue
         assert r["salem_class"] is True, (
-            f"entry below Smyth must be Salem-class: {r['name']}"
+            f"entry below Smyth must be Salem-class: {r['name']} "
+            f"(M = {r['mahler_measure']})"
         )
 
 
@@ -175,6 +200,226 @@ def test_lookup_by_M():
     rows = mahler.lookup_by_M(mahler.LEHMER_CONSTANT, tol=1e-6)
     assert len(rows) >= 1
     assert any(r.get("lehmer_witness") for r in rows)
+
+
+# ---------------------------------------------------------------------------
+# Phase-1 extension tests (added 2026-04-25 for the ~178-entry catalog).
+# ---------------------------------------------------------------------------
+
+@_skip_no_backend
+def test_catalog_size_after_extension():
+    """The Phase-1 extension brings the catalog from 21 -> ~178 entries.
+
+    Authority: Phase-1 commit ledger (project #14 phase 1).  Lower bound
+    of 100 is a defensive floor; the real expected value at extension
+    time is 178.
+    """
+    rows = mahler.smallest_known(limit=10_000)
+    assert len(rows) >= 100, (
+        f"catalog appears truncated: {len(rows)} entries "
+        "(expected >= 100 after Phase-1 extension)"
+    )
+
+
+@_skip_no_backend
+def test_M_cross_check_strict_1e9():
+    """Every entry's stored M matches a fresh recomputation to 1e-9.
+
+    This is the strict authority cross-check required for shipping the
+    Phase-1 extension: any entry whose recomputed M deviated by more than
+    1e-9 from the cited literature value was rejected at build time, so
+    every shipped entry must round-trip cleanly here.
+
+    Reference: techne.lib.mahler_measure, the same tool used for build-
+    time verification.  The strict 1e-9 threshold is the project #14
+    contractual tolerance.
+    """
+    from techne.lib.mahler_measure import mahler_measure
+    rows = mahler.smallest_known(limit=10_000)
+    failures = []
+    for e in rows:
+        desc = list(reversed(e["coeffs"]))
+        M_fresh = mahler_measure(desc)
+        if abs(M_fresh - e["mahler_measure"]) > 1e-9:
+            failures.append((e["name"], e["mahler_measure"], float(M_fresh)))
+    assert not failures, (
+        f"strict 1e-9 cross-check failed for {len(failures)} entries: "
+        f"{failures[:5]}"
+    )
+
+
+@_skip_no_backend
+def test_lookup_by_degree_returns_entries():
+    """lookup_by_degree(N) returns at least one entry for every degree
+    in [2, 30] that the Phase-1 extension covers.
+
+    Property: monotone non-empty coverage across degrees 2..18 at
+    minimum; the extension's Smyth Pisot family alone covers degrees
+    3..30.
+    """
+    # Degrees with guaranteed coverage from the Phase-1 build:
+    # - 2 (golden, cyclotomics)
+    # - 3..30 (Smyth x^n - x - 1 family)
+    # - 10, 14, 18 (Salem-class genuine minima)
+    for d in (2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20):
+        rows = mahler.lookup_by_degree(d)
+        assert len(rows) >= 1, f"no entries at degree {d}"
+        assert all(r["degree"] == d for r in rows), (
+            f"lookup_by_degree({d}) returned wrong-degree entry"
+        )
+        # Sorted ascending by M.
+        for a, b in zip(rows, rows[1:]):
+            assert a["mahler_measure"] <= b["mahler_measure"]
+
+
+@_skip_no_backend
+def test_lookup_by_degree_empty_for_unknown_degree():
+    """Edge: an extreme degree with no entries returns an empty list."""
+    # Degree 9999 is far beyond any Phase-1 coverage and beyond any
+    # plausible future extension; this should always be empty.
+    rows = mahler.lookup_by_degree(9999)
+    assert rows == []
+    # Negative or zero degree: no polynomial of that degree in catalog.
+    assert mahler.lookup_by_degree(0) == []
+    assert mahler.lookup_by_degree(-3) == []
+
+
+@_skip_no_backend
+def test_count_by_degree_consistent():
+    """count_by_degree() agrees with smallest_known() per-degree counts.
+
+    Property: the sum of counts equals the total catalog size, and each
+    per-degree count matches a direct filter.
+    """
+    counts = mahler.count_by_degree()
+    total = sum(counts.values())
+    all_rows = mahler.smallest_known(limit=10_000)
+    assert total == len(all_rows), (
+        f"count_by_degree total {total} != catalog size {len(all_rows)}"
+    )
+    # Spot-check a few degrees.
+    for d in (3, 10, 14):
+        if d in counts:
+            assert counts[d] == len(mahler.lookup_by_degree(d))
+
+
+@_skip_no_backend
+def test_smyth_family_realises_smyth_constant():
+    """Every Smyth-extremal entry has M = SMYTH_CONSTANT to 1e-9.
+
+    Authority: Smyth 1971 — the plastic number is the smallest Mahler
+    measure among non-reciprocal integer polynomials.  Smyth-extremal
+    catalog entries (x^3-x-1 and its cyclotomic multiples, plus x^5-x^4-1)
+    must all report exactly the plastic number.
+    """
+    extremals = mahler.smyth_extremal()
+    assert len(extremals) >= 2, (
+        f"expected several Smyth-extremal entries, got {len(extremals)}"
+    )
+    for e in extremals:
+        assert e["is_smyth_extremal"] is True
+        assert abs(e["mahler_measure"] - mahler.SMYTH_CONSTANT) < 1e-9, (
+            f"Smyth-extremal entry {e['name']} has M = "
+            f"{e['mahler_measure']}, deviates from "
+            f"SMYTH_CONSTANT = {mahler.SMYTH_CONSTANT}"
+        )
+
+
+@_skip_no_backend
+def test_lehmer_x_cyclotomic_preserves_M():
+    """Every "Lehmer x Phi_k" extension entry has M = LEHMER_CONSTANT.
+
+    Composition: Mahler measure is multiplicative, M(Phi_k) = 1 for
+    cyclotomic Phi_k, so M(Lehmer * Phi_k) = M(Lehmer) = LEHMER_CONSTANT.
+    Catches any encoding error in the Lehmer-extension family.
+    """
+    rows = mahler.smallest_known(limit=10_000)
+    lehmer_extensions = [
+        e for e in rows
+        if e["name"].startswith("Lehmer x Phi_")
+        or e["name"] == "Lehmer-extension (deg 12)"
+        or e["name"] == "Lehmer-extension (deg 14)"
+    ]
+    assert len(lehmer_extensions) >= 5, (
+        f"expected many Lehmer-extension entries, got {len(lehmer_extensions)}"
+    )
+    for e in lehmer_extensions:
+        assert abs(e["mahler_measure"] - mahler.LEHMER_CONSTANT) < 1e-9, (
+            f"Lehmer-extension entry {e['name']} has M = "
+            f"{e['mahler_measure']}, deviates from LEHMER_CONSTANT"
+        )
+
+
+@_skip_no_backend
+def test_no_entry_below_lehmer_constant_except_cyclotomic():
+    """Property: no catalog entry has M strictly between 1.0 and LEHMER.
+
+    Lehmer's conjecture asserts the gap (1, LEHMER_CONSTANT) is empty
+    in the integer-polynomial spectrum.  Any catalog entry violating
+    this would be a counterexample to Lehmer's conjecture (which would
+    be world-shaking).
+    """
+    rows = mahler.smallest_known(limit=10_000)
+    violators = [
+        e for e in rows
+        if 1.0 + 1e-7 < e["mahler_measure"] < mahler.LEHMER_CONSTANT - 1e-9
+    ]
+    assert not violators, (
+        f"catalog claims to violate Lehmer's conjecture for "
+        f"{len(violators)} entries — almost certainly a data error: "
+        f"{[(v['name'], v['mahler_measure']) for v in violators[:3]]}"
+    )
+
+
+@_skip_no_backend
+def test_all_M_values_at_least_one():
+    """Property: every catalog entry has M >= 1.
+
+    M(p) >= 1 for any non-zero integer polynomial (Kronecker's theorem
+    + the standard definition).  An entry with M < 1 would indicate
+    either a coefficient transcription error or a non-integer-poly leak.
+    """
+    rows = mahler.smallest_known(limit=10_000)
+    for e in rows:
+        assert e["mahler_measure"] >= 1.0 - 1e-9, (
+            f"entry {e['name']} has M = {e['mahler_measure']} < 1: "
+            f"violates Kronecker's theorem"
+        )
+
+
+@_skip_no_backend
+def test_degree_coverage_extends_to_30():
+    """Property: catalog covers degrees 2..20 with >=1 entry each, and
+    has at least some coverage past degree 22.
+
+    Phase-1 deliverable: ~150-200 verified entries covering degrees
+    2-44.  We ship coverage up to degree 30 from Smyth's Pisot family
+    plus higher degrees from cyclotomic Phi_n.
+    """
+    counts = mahler.count_by_degree()
+    for d in range(2, 21):
+        assert d in counts and counts[d] >= 1, (
+            f"degree {d} has no catalog entries"
+        )
+    # At least some entries at degree >= 22.
+    assert any(d >= 22 for d in counts), (
+        "catalog has no entries at degree >= 22"
+    )
+
+
+@_skip_no_backend
+def test_source_field_present_for_all():
+    """Every catalog entry has a non-empty source citation.
+
+    Phase-1 contract: each entry must cite its bibliographic source
+    (Lehmer 1933, Smyth 1971, Boyd 1980, Mossinghoff 1998, or the
+    construction family it was derived from).
+    """
+    rows = mahler.smallest_known(limit=10_000)
+    for e in rows:
+        assert e.get("source"), f"entry {e['name']} missing source"
+        assert isinstance(e["source"], str)
+        assert len(e["source"]) >= 5
 
 
 if __name__ == "__main__":

@@ -221,6 +221,45 @@ def all_below(M: float, degree: Optional[int] = None) -> list[dict]:
     return rows
 
 
+def lookup_by_degree(degree: int, limit: int = 50) -> list[dict]:
+    """Return all entries of a given degree, ascending by Mahler measure.
+
+    Parameters
+    ----------
+    degree : int
+        Degree to filter on.
+    limit : int, default 50
+        Maximum number of entries to return.
+
+    Returns
+    -------
+    list[dict]
+        Catalog entries (deep-copied) of exactly this degree, sorted by
+        ``mahler_measure`` ascending.  Empty list if no entries match.
+
+    Notes
+    -----
+    Convenience wrapper over ``smallest_known(degree=degree, limit=limit)``
+    with a less-overloaded name.  Use this when you want a top-K
+    smallest-Mahler list at a specific degree (e.g. for Charon's
+    Lehmer/Salem cross-checks).
+    """
+    return smallest_known(degree=int(degree), limit=int(limit))
+
+
+def count_by_degree() -> dict[int, int]:
+    """Return ``{degree: number_of_entries}`` across the whole catalog.
+
+    Useful for stats reporting and quick coverage audits (e.g. "do we
+    have any deg-22 entries?").
+    """
+    out: dict[int, int] = {}
+    for e in MAHLER_TABLE:
+        d = e["degree"]
+        out[d] = out.get(d, 0) + 1
+    return dict(sorted(out.items()))
+
+
 def degree_minima() -> dict[int, dict]:
     """Map ``degree -> smallest-known Mahler-measure entry`` at each
     degree present in the catalog.
@@ -356,6 +395,8 @@ __all__ = [
     "smallest_known",
     "lookup_polynomial",
     "lookup_by_M",
+    "lookup_by_degree",
+    "count_by_degree",
     "lehmer_witness",
     "smyth_extremal",
     "all_below",

@@ -58,6 +58,9 @@ capability reference).
 | 2026-04-25 | pm.research.bsd_audit.summary | A:0 | P:0 | E:1 | C:1 | (project #8) |
 | 2026-04-25 | pm.research.bsd_audit.filter_inconsistent | A:0 | P:0 | E:0 | C:1 | (project #8) |
 | 2026-04-25 | pm.research.bsd_audit.rank_consistency_check | A:1 | P:0 | E:1 | C:1 | (project #8) |
+| 2026-04-25 | pm.databases.mahler (Phase-1 ext, 21->178 entries) | A:178 | P:6 | E:3 | C:2 | (project #14 phase 1) |
+| 2026-04-25 | pm.databases.mahler.lookup_by_degree | A:0 | P:2 | E:2 | C:1 | (project #14 phase 1) |
+| 2026-04-25 | pm.databases.mahler.count_by_degree | A:0 | P:2 | E:0 | C:1 | (project #14 phase 1) |
 | 2026-04-25 | pm.research.vcm_scaling.fetch_cm_curves | A:0 | P:0 | E:2 | C:0 | (project #10) |
 | 2026-04-25 | pm.research.vcm_scaling.per_curve_compression | A:0 | P:0 | E:0 | C:1 | (project #10) |
 | 2026-04-25 | pm.research.vcm_scaling.per_disc_summary | A:1 | P:0 | E:1 | C:1 | (project #10) |
@@ -72,6 +75,17 @@ capability reference).
 | 2026-04-25 | pm.databases.atlas.by_order | A:1 | P:1 | E:2 | C:1 | (project #5) |
 | 2026-04-25 | pm.databases.atlas.all_simple | A:1 | P:2 | E:2 | C:1 | (project #5) |
 | 2026-04-25 | pm.databases.atlas.sporadic_groups | A:2 | P:2 | E:0 | C:1 | (project #5) |
+| 2026-04-25 | pm.databases.oeis.mirror_metadata | A:2 | P:2 | E:2 | C:2 | (project #11) |
+| 2026-04-25 | pm.databases.oeis.update_mirror (metadata write) | A:2 | P:2 | E:2 | C:2 | (project #11) |
+| 2026-04-25 | pm.databases.knotinfo.mirror_info | A:2 | P:1 | E:1 | C:2 | (project #12) |
+| 2026-04-25 | pm.databases.knotinfo.update_mirror | A:1 | P:2 | E:1 | C:1 | (project #12) |
+| 2026-04-25 | pm.databases.knotinfo.probe_extended | A:0 | P:0 | E:1 | C:0 | (project #12) |
+| 2026-04-25 | pm.databases.knotinfo._semver_lt | A:0 | P:1 | E:1 | C:0 | (project #12) |
+| 2026-04-25 | pm.research.identity_join.score_match | A:3 | P:3 | E:1 | C:2 | (project #13) |
+| 2026-04-25 | pm.research.identity_join.knot_to_nf | A:3 | P:1 | E:3 | C:3 | (project #13) |
+| 2026-04-25 | pm.research.identity_join.knots_matching_nf | A:1 | P:0 | E:0 | C:1 | (project #13) |
+| 2026-04-25 | pm.research.identity_join.bulk_scan | A:0 | P:0 | E:1 | C:1 | (project #13) |
+| 2026-04-25 | pm.research.identity_join.generate_match_report | A:0 | P:0 | E:2 | C:0 | (project #13) |
 
 ### Project #5 — ATLAS of Finite Groups wrapper — summary
 
@@ -373,6 +387,57 @@ Random-matrix recipes:
 
 File: `prometheus_math/research/spectral_gaps.py`
 Tests: `prometheus_math/research/tests/test_spectral_gaps.py`
+
+### Project #11 — OEIS local mirror weekly refresh CI job — summary
+
+8 tests, all green (8/8 pass on 2026-04-25), runtime 11.17s.
+
+Files:
+- `.github/workflows/oeis-refresh.yml` (~115 LOC YAML; 8 steps, weekly
+  Sunday 04:30 UTC + workflow_dispatch + push triggers)
+- `prometheus_math/databases/oeis.py` (extended +~75 LOC: `mirror_metadata()`,
+  `_metadata_path()`, `_empty_metadata()`, `_write_metadata()`, plus
+  `update_mirror()` now persists `.metadata.json`)
+- `scripts/oeis_refresh.py` (~60 LOC CLI wrapper, exit 0 on success / 2 on
+  download failure, prints structured `KEY=value` lines for the YAML to parse)
+- `prometheus_math/databases/tests/test_oeis_refresh.py` (~225 LOC, 8 tests)
+
+Test rubric (≥ 2 in every category):
+
+| Category | Count | Notes |
+|---|---|---|
+| Authority | 2 | sidecar shape (sequences/last_refresh_iso/files/size_bytes); on-disk JSON round-trip with UTC ISO-8601 timestamp |
+| Property  | 2 | persisted sequences == len(_OEIS_LOCAL_CACHE); reported size_bytes ≤ os.walk-summed inventory |
+| Edge      | 2 | no mirror -> empty default (no raise); corrupt sidecar -> graceful synthesis fallback |
+| Composition | 2 | full lifecycle (seed/refresh/delete/re-refresh, ISO timestamp moves forward); CI delta arithmetic (no-op delta=0, simulated +1 sequence delta=1) |
+
+CI design choices:
+- Trigger: schedule '30 4 * * 0' (Sunday 04:30 UTC), workflow_dispatch,
+  push on changes to `oeis.py` / `oeis_refresh.py` / the workflow itself.
+- Permissions scoped to `contents: write` on this workflow only.
+- Commit gate: only commits when delta > 0 (Sloane added sequences),
+  silently no-ops when delta ≤ 0 — keeps main-branch history clean of
+  weekly noise.
+- Double-gate: even when delta > 0, the byte-level `git diff --cached`
+  check stops empty commits (e.g. if only the timestamp changed but the
+  sequence count was synthesized identically).
+- Only `prometheus_data/oeis/.metadata.json` is committed — the 30+ MB
+  `stripped.gz` / `names.gz` files stay out of git (they're produced
+  fresh on every CI run).
+
+Subtleties:
+- YAML 1.1 quirk: pyyaml parses bare `on:` as Python `True`. Validation
+  command needs to look for either key. Workflow itself works correctly
+  on GitHub Actions (which uses a different YAML parser).
+- The metadata sidecar's `size_bytes` is recorded BEFORE the sidecar
+  itself is written, so `meta.size_bytes <= mirror_size()` is the
+  invariant (not strict equality). This is asserted in the property test.
+- Test isolation uses `monkeypatch.setenv("PROMETHEUS_DATA_DIR", tmp_path)`
+  + `_local._DATA_DIR = None` reset + `importlib.reload(oeis)` to give
+  every test its own sandbox without contaminating the real
+  `prometheus_data/oeis/` mirror on the developer's box.
+
+File: `prometheus_math/databases/tests/test_oeis_refresh.py`
 
 ---
 

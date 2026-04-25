@@ -209,7 +209,7 @@ immediately by parallel TDD agents.
   table.
 - **Deliverable:** Aporia's per-disc regression becomes a one-line call.
 
-### #11 — OEIS local mirror weekly refresh CI job
+### #11 — OEIS local mirror weekly refresh CI job ✓ COMPLETED 2026-04-25
 
 - **Category:** B / G
 - **Priority:** 11
@@ -221,7 +221,7 @@ immediately by parallel TDD agents.
 - **Deliverable:** `.github/workflows/oeis-refresh.yml` runs weekly,
   commits cache update.
 
-### #12 — KnotInfo local mirror via database_knotinfo with refresh
+### #12 — KnotInfo local mirror via database_knotinfo with refresh  ✓ COMPLETED 2026-04-25
 
 - **Category:** G
 - **Priority:** 12
@@ -241,6 +241,7 @@ immediately by parallel TDD agents.
   queries LMFDB.nf_fields by (degree, abs_disc) to find matching number
   fields, returning a confidence score and the candidate matches.
 - **Deliverable:** Aporia's knot→NF identity join is a single function call.
+- ✓ COMPLETED 2026-04-25
 
 ### #14 — Mossinghoff Mahler table extension to ~600 entries
 
@@ -255,6 +256,16 @@ immediately by parallel TDD agents.
   for fuzzy lookup by measure within tolerance.
 - **Deliverable:** Comprehensive small-Mahler reference for Charon's
   Lehmer/Salem research.
+- ✓ Phase 1 COMPLETED 2026-04-25 — extended embedded snapshot from
+  21 to 178 entries covering degrees 2–36 via deterministically
+  verified construction families (Smyth Pisot x^n-x-1, Pisot
+  x^n-x^(n-1)-1, Lehmer x cyclotomic Phi_k, Smyth-extremal x cyclotomic
+  Phi_k, Salem-deg-N x cyclotomic factors for N in {6,8,10,12,14},
+  tribonacci/golden x cyclotomic, cyclotomics Phi_2..Phi_40); every
+  entry cross-checked vs `techne.mahler_measure` to 1e-9; 0 rejected,
+  21 tests green including strict 1e-9 cross-check across all 178
+  entries plus new `lookup_by_degree` and `count_by_degree` API.
+  Phase 2 (search_polynomial fuzzy lookup) deferred.
 
 ### #15 — Cremona EC dataset local CSV mirror
 

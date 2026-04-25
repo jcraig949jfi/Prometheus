@@ -2,7 +2,7 @@
 
 **Single-page researcher reference for the unified mathematical-software API.**
 
-Generated: 2026-04-25 17:01 · Status: 30/37 backends available across 9 categories: AI, CAS, COMB, DB, NT, NUM, OPT, SAT, TOP
+Generated: 2026-04-25 17:19 · Status: 30/37 backends available across 9 categories: AI, CAS, COMB, DB, NT, NUM, OPT, SAT, TOP
 
 ---
 

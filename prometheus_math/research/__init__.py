@@ -52,3 +52,10 @@ except Exception:  # pragma: no cover — defensive against concurrent agents
     pass
 else:
     __all__.append("vcm_scaling")
+
+try:
+    from . import identity_join  # noqa: F401
+except Exception:  # pragma: no cover — defensive against concurrent agents
+    pass
+else:
+    __all__.append("identity_join")

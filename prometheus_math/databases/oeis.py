@@ -54,6 +54,7 @@ from __future__ import annotations
 
 import datetime as _dt
 import gzip
+import json
 import logging
 import pathlib
 import re
@@ -711,6 +712,76 @@ def _local_is_known(values: list[int]) -> Optional[str]:
     return hits[0]["number"]
 
 
+_METADATA_FILE = ".metadata.json"
+
+
+def _metadata_path() -> pathlib.Path:
+    """Absolute path to the on-disk metadata sidecar."""
+    return _local.dataset_path(_OEIS_DATASET) / _METADATA_FILE
+
+
+def _empty_metadata() -> dict:
+    """Default skeleton when no mirror exists yet."""
+    return {
+        "sequences":        0,
+        "last_refresh_iso": None,
+        "files":            [],
+        "size_bytes":       0,
+    }
+
+
+def mirror_metadata() -> dict:
+    """Read (or synthesize) the OEIS mirror metadata sidecar.
+
+    Returns a dict with stable keys:
+
+        {"sequences":        int,                # count of A-numbers loaded
+         "last_refresh_iso": str | None,         # ISO 8601 UTC timestamp
+         "files":            [str, ...],         # filenames present
+         "size_bytes":       int}                # bytes on disk
+
+    When the on-disk ``.metadata.json`` is missing, returns the in-memory
+    state if a mirror is loaded (so CI can still produce a delta), or
+    the empty default otherwise.  Never raises on a corrupt file — falls
+    back to the empty default and logs a warning.
+    """
+    path = _metadata_path()
+    if path.is_file():
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as e:
+            _log.warning("OEIS metadata read failed: %s", e)
+        else:
+            # Be defensive about partial / future-format files.
+            out = _empty_metadata()
+            out.update({k: data.get(k, out[k]) for k in out})
+            return out
+
+    # No sidecar: synthesize from in-memory + on-disk size.
+    base = _local.dataset_path(_OEIS_DATASET)
+    files: list[str] = []
+    if base.is_dir():
+        for fn in sorted(_OEIS_FILES.keys()):
+            if (base / fn).is_file():
+                files.append(fn)
+    out = _empty_metadata()
+    out["sequences"] = len(_OEIS_LOCAL_CACHE)
+    out["files"] = files
+    out["size_bytes"] = _local.mirror_size(_OEIS_DATASET)
+    return out
+
+
+def _write_metadata(meta: dict) -> None:
+    """Atomic write of the metadata sidecar."""
+    path = _metadata_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    tmp.write_text(json.dumps(meta, indent=2, sort_keys=True) + "\n",
+                   encoding="utf-8")
+    import os as _os
+    _os.replace(tmp, path)
+
+
 def update_mirror(force: bool = False) -> dict:
     """Refresh the OEIS local mirror.
 
@@ -723,20 +794,36 @@ def update_mirror(force: bool = False) -> dict:
          "size_bytes":       57_344_120,
          "refreshed_at":     "2026-04-22T18:33:09+00:00"}
 
+    On success the on-disk ``.metadata.json`` is rewritten with the
+    new sequence count, refresh timestamp, file list, and size.
     Network failures populate the dict with `error` and leave any
-    previously-loaded cache intact.
+    previously-loaded cache (and prior metadata) intact.
     """
     started = _dt.datetime.now(_dt.timezone.utc).isoformat()
     ok = _ensure_local_mirror(force=force)
     files = sorted(_OEIS_FILES.keys())
+    base = _local.dataset_path(_OEIS_DATASET)
+    present = [fn for fn in files if (base / fn).is_file()] if base.is_dir() else []
+    size = _local.mirror_size(_OEIS_DATASET)
     out: dict = {
         "sequences_loaded": len(_OEIS_LOCAL_CACHE),
         "files":            files,
-        "size_bytes":       _local.mirror_size(_OEIS_DATASET),
+        "size_bytes":       size,
         "refreshed_at":     started,
     }
     if not ok:
         out["error"] = "mirror not loaded (see warnings)"
+        return out
+    # Persist the metadata sidecar so the CI job can compute deltas.
+    try:
+        _write_metadata({
+            "sequences":        len(_OEIS_LOCAL_CACHE),
+            "last_refresh_iso": started,
+            "files":            present,
+            "size_bytes":       size,
+        })
+    except OSError as e:
+        _log.warning("OEIS metadata write failed: %s", e)
     return out
 
 
