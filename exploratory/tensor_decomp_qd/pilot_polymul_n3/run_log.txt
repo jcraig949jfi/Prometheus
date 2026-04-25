@@ -1,0 +1,168 @@
+========================================================================
+Canonicalizer unit tests for polymul n=3 over F_2
+========================================================================
+
+[1] Gauge group size = 12 (D_3 x Z_2 from <SUB, REV, SWAP>)
+  ok:   |G| = 12 (got 12)
+
+[2] All 12 gauge elements preserve POLYMUL_T
+  ok:   Karatsuba rank-6 reconstructs POLYMUL_T
+  ok:   all 12 gauge actions preserve polymul reconstruction
+
+[3] canonicalize is idempotent
+  ok:   canonicalize(canonicalize(x)) == canonicalize(x)
+
+[4] gauge-equivalent decompositions canonicalize to same bytes
+  ok:   20 random (gauge + S_r) transforms collapse to Karatsuba canonical
+
+[5] near-miss decompositions distinct from Karatsuba canonical
+  ok:   10 single-bit-flip variants distinct from Karatsuba canonical (0 collisions)
+
+[6] orbit-stabilizer: orbit * stab = |G| = 12
+       orbit_size = 3, stabilizer = 4, product = 12
+  ok:   orbit (3) * stab (4) = 12 == |G| = 12
+
+[7] naive rank-9 decomp validates and effective-rank=9
+  ok:   naive rank-9 reconstructs POLYMUL_T
+  ok:   naive effective rank = 9 (got 9)
+
+[8] Karatsuba rank-6 decomp validates and effective-rank=6
+  ok:   Karatsuba rank-6 reconstructs POLYMUL_T
+  ok:   Karatsuba effective rank = 6 (got 6)
+
+========================================================================
+ALL CANONICALIZER TESTS PASSED
+========================================================================
+
+========================================================================
+  MAP-Elites reseeded runs (3 reseeds x 5000 generations each)
+========================================================================
+
+--- Reseed 1/3 (seed=0) ---
+  seed naive_decomp: + cell=(9, 3, 3)
+  seed karatsuba6_decomp: + cell=(6, 2, 3)
+  gen   250: cells=2, orbits=2, valid=25, elapsed=0.0s
+  gen   500: cells=3, orbits=3, valid=29, elapsed=0.0s
+  gen   750: cells=3, orbits=3, valid=37, elapsed=0.1s
+  gen  1000: cells=3, orbits=3, valid=44, elapsed=0.1s
+  gen  1250: cells=3, orbits=3, valid=51, elapsed=0.1s
+  gen  1500: cells=3, orbits=4, valid=56, elapsed=0.1s
+  gen  1750: cells=3, orbits=4, valid=59, elapsed=0.1s
+  gen  2000: cells=3, orbits=4, valid=65, elapsed=0.2s
+  gen  2250: cells=3, orbits=5, valid=72, elapsed=0.2s
+  gen  2500: cells=3, orbits=5, valid=79, elapsed=0.2s
+  gen  2750: cells=3, orbits=5, valid=85, elapsed=0.2s
+  gen  3000: cells=3, orbits=5, valid=95, elapsed=0.3s
+  gen  3250: cells=3, orbits=5, valid=98, elapsed=0.3s
+  gen  3500: cells=3, orbits=5, valid=106, elapsed=0.3s
+  gen  3750: cells=3, orbits=5, valid=117, elapsed=0.3s
+  gen  4000: cells=3, orbits=5, valid=127, elapsed=0.3s
+  gen  4250: cells=3, orbits=5, valid=133, elapsed=0.4s
+  gen  4500: cells=3, orbits=5, valid=141, elapsed=0.4s
+  gen  4750: cells=3, orbits=5, valid=146, elapsed=0.4s
+  gen  5000: cells=3, orbits=5, valid=152, elapsed=0.4s
+  total time: 0.4s
+
+--- Reseed 2/3 (seed=1) ---
+  seed naive_decomp: + cell=(9, 3, 3)
+  seed karatsuba6_decomp: + cell=(6, 2, 3)
+  gen   250: cells=2, orbits=2, valid=20, elapsed=0.0s
+  gen   500: cells=2, orbits=2, valid=29, elapsed=0.0s
+  gen   750: cells=2, orbits=2, valid=37, elapsed=0.1s
+  gen  1000: cells=2, orbits=2, valid=42, elapsed=0.1s
+  gen  1250: cells=2, orbits=2, valid=49, elapsed=0.1s
+  gen  1500: cells=2, orbits=2, valid=54, elapsed=0.1s
+  gen  1750: cells=2, orbits=2, valid=61, elapsed=0.1s
+  gen  2000: cells=2, orbits=2, valid=75, elapsed=0.2s
+  gen  2250: cells=2, orbits=2, valid=86, elapsed=0.2s
+  gen  2500: cells=2, orbits=2, valid=94, elapsed=0.2s
+  gen  2750: cells=2, orbits=2, valid=102, elapsed=0.2s
+  gen  3000: cells=2, orbits=2, valid=109, elapsed=0.3s
+  gen  3250: cells=2, orbits=2, valid=112, elapsed=0.3s
+  gen  3500: cells=2, orbits=2, valid=116, elapsed=0.3s
+  gen  3750: cells=3, orbits=3, valid=125, elapsed=0.3s
+  gen  4000: cells=3, orbits=3, valid=130, elapsed=0.3s
+  gen  4250: cells=3, orbits=3, valid=137, elapsed=0.4s
+  gen  4500: cells=3, orbits=3, valid=141, elapsed=0.4s
+  gen  4750: cells=3, orbits=3, valid=146, elapsed=0.4s
+  gen  5000: cells=3, orbits=3, valid=150, elapsed=0.4s
+  total time: 0.4s
+
+--- Reseed 3/3 (seed=2) ---
+  seed naive_decomp: + cell=(9, 3, 3)
+  seed karatsuba6_decomp: + cell=(6, 2, 3)
+  gen   250: cells=2, orbits=2, valid=22, elapsed=0.0s
+  gen   500: cells=2, orbits=2, valid=26, elapsed=0.0s
+  gen   750: cells=2, orbits=2, valid=36, elapsed=0.1s
+  gen  1000: cells=3, orbits=3, valid=43, elapsed=0.1s
+  gen  1250: cells=3, orbits=3, valid=51, elapsed=0.1s
+  gen  1500: cells=3, orbits=3, valid=56, elapsed=0.1s
+  gen  1750: cells=3, orbits=3, valid=62, elapsed=0.1s
+  gen  2000: cells=3, orbits=3, valid=65, elapsed=0.2s
+  gen  2250: cells=3, orbits=3, valid=71, elapsed=0.2s
+  gen  2500: cells=3, orbits=3, valid=81, elapsed=0.2s
+  gen  2750: cells=3, orbits=4, valid=91, elapsed=0.2s
+  gen  3000: cells=3, orbits=4, valid=97, elapsed=0.3s
+  gen  3250: cells=3, orbits=4, valid=106, elapsed=0.3s
+  gen  3500: cells=3, orbits=4, valid=108, elapsed=0.3s
+  gen  3750: cells=3, orbits=4, valid=115, elapsed=0.3s
+  gen  4000: cells=3, orbits=5, valid=121, elapsed=0.3s
+  gen  4250: cells=3, orbits=5, valid=124, elapsed=0.4s
+  gen  4500: cells=3, orbits=5, valid=131, elapsed=0.4s
+  gen  4750: cells=3, orbits=5, valid=138, elapsed=0.4s
+  gen  5000: cells=3, orbits=5, valid=144, elapsed=0.4s
+  total time: 0.4s
+
+Total evolution time: 1.3s
+
+========================================================================
+  PILOT REPORT
+========================================================================
+
+[Archive 1]
+  Archive: 3 cells, 5 distinct orbits
+    submissions: 5082, valid: 152, rate: 0.02991
+    rank  6:  1 cells,   1 orbits,    112 hits
+    rank  9:  2 cells,   4 orbits,     40 hits
+
+[Archive 2]
+  Archive: 3 cells, 3 distinct orbits
+    submissions: 5082, valid: 150, rate: 0.02952
+    rank  6:  1 cells,   1 orbits,    125 hits
+    rank  9:  2 cells,   2 orbits,     25 hits
+
+[Archive 3]
+  Archive: 3 cells, 5 distinct orbits
+    submissions: 5082, valid: 144, rate: 0.02834
+    rank  6:  1 cells,   1 orbits,    103 hits
+    rank  9:  2 cells,   4 orbits,     41 hits
+
+[Check 1] Forbidden rank cells (rank < 6)
+  OK: all archives respect rank >= 6
+
+[Check 2] Known seeds present in archives
+  archive 1: Karatsuba found = True, naive found = True
+  archive 2: Karatsuba found = True, naive found = True
+  archive 3: Karatsuba found = True, naive found = True
+
+[Check 3] Distinct orbits per rank (union across reseeds)
+  rank 6: 1 orbits
+  rank 9: 8 orbits
+
+[Check 4] Pairwise Jaccard between archives' canonical sets
+  archives 1,2: |inter|=2, |union|=4, Jaccard=0.500
+  archives 1,3: |inter|=2, |union|=4, Jaccard=0.500
+  archives 2,3: |inter|=2, |union|=4, Jaccard=0.500
+  avg Jaccard = 0.500
+
+[Check 5] Rank-6 sparsity values (per archive)
+  archive 1: rank-6 distinct sparsity = [0.5455]
+  archive 2: rank-6 distinct sparsity = [0.5455]
+  archive 3: rank-6 distinct sparsity = [0.5455]
+
+[Check 6] Neighborhood probe (Karatsuba and naive, distance 1 and 2)
+  Karatsuba seed: {1: (0, 0, 66, 66), 2: (0, 0, 2145, 2145)}
+  Naive seed:     {1: (0, 0, 99, 99), 2: (46, 12, 4851, 4851)}
+
+[Diagnosis]
+  OUTCOME B1 — single rank-6 orbit reproduced across all reseeds. Canonicalization stable; the rank-6 layer is essentially unique under our gauge and mutation repertoire. Tensor smaller / less saturated than 2x2 matmul (orbit space at the optimum is still trivial).
