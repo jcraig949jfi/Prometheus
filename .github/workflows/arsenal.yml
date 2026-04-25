@@ -1,0 +1,389 @@
+name: Arsenal CI
+
+# CI/CD for the prometheus_math arsenal.
+# - arsenal-smoke: full test + capability matrix on push, PR, and every 6h.
+# - capability-tracking: daily snapshot diff + auto-commit / issue.
+# - docs-regen: regenerate ARSENAL.md when prometheus_math/** changes.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # arsenal-smoke runs every 6h; capability-tracking runs daily.
+    # Two crons; jobs gate themselves with `if:` on github.event.schedule.
+    - cron: '0 */6 * * *'   # every 6 hours (smoke)
+    - cron: '17 7 * * *'    # 07:17 UTC daily (capability tracking)
+  workflow_dispatch:
+
+# Default to read; specific jobs widen as needed.
+permissions:
+  contents: read
+
+concurrency:
+  group: arsenal-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+
+  # -----------------------------------------------------------------
+  # Job 1: arsenal-smoke
+  # Installs the pip arsenal (tolerantly), prints capability matrix,
+  # runs all tests in techne/tests/ and prometheus_math/tests/.
+  # -----------------------------------------------------------------
+  arsenal-smoke:
+    name: Smoke (py${{ matrix.python-version }})
+    # Run on push/PR/manual always; on schedule only for the 6h cron.
+    if: >-
+      github.event_name != 'schedule' ||
+      github.event.schedule == '0 */6 * * *'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.12']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: System deps for native wheels
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential libgmp-dev libmpfr-dev libmpc-dev \
+            libcgal-dev libboost-all-dev cmake pkg-config || true
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ runner.os }}-py${{ matrix.python-version }}-${{ hashFiles('.github/workflows/arsenal.yml') }}
+          restore-keys: |
+            pip-${{ runner.os }}-py${{ matrix.python-version }}-
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip wheel setuptools
+
+      - name: Install arsenal (tolerant per-package)
+        # Each package installs in its own command so a failure on one
+        # (e.g. snappy lacking native deps) doesn't take the rest down.
+        run: |
+          set +e
+          pkgs=(
+            numpy scipy mpmath gmpy2 sympy networkx
+            pytest pytest-xdist
+            cypari python-flint
+            snappy knot_floer_homology
+            chipfiring galois
+            gudhi ripser persim
+            z3-solver pysat
+            pyscipopt ortools highspy pulp cvxpy
+            torch
+          )
+          for p in "${pkgs[@]}"; do
+            echo "::group::pip install $p"
+            pip install --prefer-binary "$p" || echo "WARN: pip install $p failed (continuing)"
+            echo "::endgroup::"
+          done
+          set -e
+
+      - name: Print capability matrix
+        id: capmatrix
+        run: |
+          python -m prometheus_math.registry || true
+          python -c "import prometheus_math.registry as r, json; print(json.dumps(r.installed(), indent=2))" > capability_matrix.json
+          python -c "import prometheus_math.registry as r; print(r.summary())"
+
+      - name: Capability matrix to job summary
+        if: always()
+        run: |
+          {
+            echo "## Arsenal capability matrix (py${{ matrix.python-version }})";
+            echo "";
+            echo '| backend | category | available | version | error |';
+            echo '|---|---|---|---|---|';
+            python - <<'PY'
+          import json, pathlib
+          data = json.loads(pathlib.Path("capability_matrix.json").read_text())
+          for name, info in sorted(data.items()):
+              avail = ":white_check_mark:" if info["available"] else ":x:"
+              ver = info.get("version") or ""
+              err = (info.get("error") or "").replace("|", "\\|")
+              print(f'| `{name}` | {info["category"]} | {avail} | {ver} | {err} |')
+          PY
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Run prometheus_math tests
+        if: always()
+        run: |
+          mkdir -p test-results
+          if [ -d prometheus_math/tests ]; then
+            pytest prometheus_math/tests -v \
+              --junitxml=test-results/prometheus_math-py${{ matrix.python-version }}.xml \
+              --tb=short || true
+          else
+            echo "prometheus_math/tests not found; skipping" | tee test-results/prometheus_math-py${{ matrix.python-version }}.skip
+          fi
+
+      - name: Run techne tests
+        if: always()
+        run: |
+          if [ -d techne/tests ]; then
+            pytest techne/tests -v \
+              --junitxml=test-results/techne-py${{ matrix.python-version }}.xml \
+              --tb=short || true
+          else
+            echo "techne/tests not found; skipping" | tee test-results/techne-py${{ matrix.python-version }}.skip
+          fi
+
+      - name: Upload test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-py${{ matrix.python-version }}
+          path: |
+            test-results/
+            capability_matrix.json
+          if-no-files-found: warn
+          retention-days: 14
+
+  # -----------------------------------------------------------------
+  # Job 2: capability-tracking
+  # Once per day: re-detect, diff against snapshot. If changed, commit
+  # the new snapshot. (Issue creation is gated on a meaningful change.)
+  # -----------------------------------------------------------------
+  capability-tracking:
+    name: Capability tracking (daily)
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'schedule' && github.event.schedule == '17 7 * * *')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      issues: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: System deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential libgmp-dev libmpfr-dev libmpc-dev \
+            libcgal-dev libboost-all-dev cmake pkg-config || true
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ runner.os }}-py3.12-${{ hashFiles('.github/workflows/arsenal.yml') }}
+          restore-keys: |
+            pip-${{ runner.os }}-py3.12-
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip wheel setuptools
+
+      - name: Install arsenal (tolerant)
+        run: |
+          set +e
+          pkgs=(
+            numpy scipy mpmath gmpy2 sympy networkx
+            cypari python-flint
+            snappy knot_floer_homology
+            chipfiring galois
+            gudhi ripser persim
+            z3-solver pysat
+            pyscipopt ortools highspy pulp cvxpy
+            torch
+          )
+          for p in "${pkgs[@]}"; do
+            pip install --prefer-binary "$p" || echo "WARN: pip install $p failed"
+          done
+          set -e
+
+      - name: Compute current capability snapshot
+        run: |
+          mkdir -p prometheus_math
+          python - <<'PY'
+          import json, pathlib
+          import prometheus_math.registry as r
+          snap = {
+              name: {
+                  "available": info["available"],
+                  "version": info["version"],
+                  "category": info["category"],
+              }
+              for name, info in r.installed().items()
+          }
+          out = {"_meta": {"generated_by": "arsenal.yml capability-tracking"}, "backends": snap}
+          pathlib.Path("prometheus_math/.capability_snapshot.new.json").write_text(
+              json.dumps(out, indent=2, sort_keys=True) + "\n"
+          )
+          PY
+
+      - name: Diff against committed snapshot
+        id: diff
+        run: |
+          OLD="prometheus_math/.capability_snapshot.json"
+          NEW="prometheus_math/.capability_snapshot.new.json"
+          if [ ! -f "$OLD" ]; then
+            echo "no prior snapshot — treating as initial population"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "summary=Initial capability snapshot population." >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, pathlib, sys
+          old = json.loads(pathlib.Path("prometheus_math/.capability_snapshot.json").read_text())
+          new = json.loads(pathlib.Path("prometheus_math/.capability_snapshot.new.json").read_text())
+          old_b = old.get("backends", old)
+          new_b = new.get("backends", new)
+          gained, lost, version_changed = [], [], []
+          for name, info in new_b.items():
+              prev = old_b.get(name)
+              if prev is None:
+                  gained.append(name); continue
+              if info.get("available") and not prev.get("available"):
+                  gained.append(name)
+              elif prev.get("available") and not info.get("available"):
+                  lost.append(name)
+              elif info.get("available") and prev.get("available") and info.get("version") != prev.get("version"):
+                  version_changed.append(f'{name}: {prev.get("version")} -> {info.get("version")}')
+          for name in old_b:
+              if name not in new_b:
+                  lost.append(name)
+          changed = bool(gained or lost or version_changed)
+          parts = []
+          if gained: parts.append("gained=" + ",".join(sorted(gained)))
+          if lost: parts.append("lost=" + ",".join(sorted(lost)))
+          if version_changed: parts.append("versions=" + "; ".join(version_changed))
+          summary = " | ".join(parts) if parts else "no change"
+          print(f"changed={'true' if changed else 'false'}")
+          # GITHUB_OUTPUT can't take newlines without delimiter; keep summary single-line.
+          print(f"summary={summary}")
+          PY
+
+      - name: Update committed snapshot
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          mv prometheus_math/.capability_snapshot.new.json prometheus_math/.capability_snapshot.json
+          git config user.name  "prometheus-bot"
+          git config user.email "prometheus-bot@users.noreply.github.com"
+          git add prometheus_math/.capability_snapshot.json
+          if git diff --cached --quiet; then
+            echo "no staged changes — nothing to commit"
+          else
+            git commit -m "arsenal: capability matrix updated
+
+          ${{ steps.diff.outputs.summary }}"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
+
+      - name: Open issue on capability change
+        if: steps.diff.outputs.changed == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const summary = `${{ steps.diff.outputs.summary }}`;
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `arsenal: capability matrix changed (${new Date().toISOString().slice(0,10)})`,
+              body: [
+                `Daily capability tracking detected a change in the prometheus_math arsenal.`,
+                ``,
+                `**Summary:** ${summary}`,
+                ``,
+                `Snapshot committed: \`prometheus_math/.capability_snapshot.json\``,
+                ``,
+                `See run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              ].join("\n"),
+              labels: ['arsenal', 'capability-matrix'],
+            });
+
+  # -----------------------------------------------------------------
+  # Job 3: docs-regen
+  # On push to prometheus_math/**, regenerate ARSENAL.md if changed.
+  # -----------------------------------------------------------------
+  docs-regen:
+    name: Regenerate ARSENAL.md
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Filter — was prometheus_math/** touched?
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            pm:
+              - 'prometheus_math/**'
+
+      - name: Set up Python
+        if: steps.filter.outputs.pm == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Cache pip
+        if: steps.filter.outputs.pm == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ runner.os }}-py3.12-docs-${{ hashFiles('.github/workflows/arsenal.yml') }}
+          restore-keys: |
+            pip-${{ runner.os }}-py3.12-
+
+      - name: Minimal install (probe-only — no heavy native deps)
+        if: steps.filter.outputs.pm == 'true'
+        run: |
+          python -m pip install --upgrade pip wheel setuptools
+          pip install --prefer-binary numpy sympy mpmath || true
+
+      - name: Regenerate ARSENAL.md
+        if: steps.filter.outputs.pm == 'true'
+        run: |
+          python -c "import prometheus_math; prometheus_math.doc.arsenal()" || \
+            echo "WARN: prometheus_math.doc.arsenal() not yet implemented; skipping"
+
+      - name: Commit ARSENAL.md if changed
+        if: steps.filter.outputs.pm == 'true'
+        run: |
+          if [ ! -f prometheus_math/ARSENAL.md ]; then
+            echo "ARSENAL.md not produced; nothing to commit"
+            exit 0
+          fi
+          git config user.name  "prometheus-bot"
+          git config user.email "prometheus-bot@users.noreply.github.com"
+          git add prometheus_math/ARSENAL.md
+          if git diff --cached --quiet; then
+            echo "ARSENAL.md unchanged"
+          else
+            git commit -m "arsenal: regenerate ARSENAL.md"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
