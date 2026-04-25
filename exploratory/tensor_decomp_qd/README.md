@@ -13,18 +13,22 @@ other cells are the unclaimed territory.
 
 ---
 
-## Status (2026-04-25, after parallel A/B/C pilots)
+## Status (2026-04-25, after Direction 1 + Direction 2 pilots)
 
 | Pilot | Outcome | Key finding |
 |---|---|---|
 | `pilot_F2_2x2/` | B1 | Strassen isolated at Hamming ≥ 6; rank-7 effectively unique over F_2 |
-| `pilot_F2_3x3/` | B | Laderman verified + seeded; flip-graph 3-to-2 and 2-to-2 moves don't fire (all 1771 triples have tensor rank 3; 0/253 pair-swaps give new orbit) |
+| `pilot_F2_3x3/` | B | Laderman verified + seeded; flip-graph 3-to-2 and 2-to-2 moves don't fire (0/1771 triples reducible) |
 | `pilot_F2_3x3_v2/` | B1 (stronger) | 4-to-3 flip-graph: 0/8855 Laderman quadruples have tensor rank ≤ 3. Higher-arity doesn't help. |
-| `pilot_F3_2x2/` | B1 | 100× better fitness rate than F_2, but still single rank-7 orbit → **rejects "char-2 is primary cause"** hypothesis |
-| `pilot_F3_3x3/` | B (canonicalization solved) | Invariant-tuple canonicalization works (50/50 gauge invariance). Single rank-23 orbit. **"Mutation geometry is now the proven bottleneck."** |
-| `pilot_polymul_n3/` | B1 (with caveat) | Polymul has structural slack matmul lacks: 46 valid 2-flip neighbors of naive rank-9, hitting 12 distinct non-naive orbits. Rank-min still isolated. |
+| `pilot_F3_2x2/` | B1 | 100× higher fitness rate than F_2, single rank-7 orbit → **rejects "char-2 is primary cause"** |
+| `pilot_F3_3x3/` | B (canonicalization solved) | Invariant tuples work (50/50 gauge invariance). **"Mutation geometry is the proven bottleneck."** |
+| `pilot_polymul_n3/` | B1 + sub-optimal richness | 12 distinct non-naive orbits at rank-9 — substrate-richness benchmark |
+| `pilot_polymul_n4/` | B1 + richer | 34 distinct non-naive orbits at rank-16; gauge generic D_3×Z_2 across n |
+| `pilot_polymul_n3_F3/` | B1 / B2-leaning | 16 sub-optimal orbits, 4 rank-9 orbits across reseeds — first reseed-disagreement |
+| `pilot_Q_3x3/` | **A (formal) with caveat** | 3 distinct rank-23 invariant tuples found; all symmetry-related under matmul Z_3 not in GL_3³ |
+| `pilot_LLM_mutation/` | B (clean negative) | 0/139 Haiku-proposed mutations valid; entry-edit LLM hits same Hamming wall as bit-flip |
 
-See `META_REPORT_PARALLEL_PILOTS.md` for the integrated synthesis. See each pilot's `PILOT_REPORT.md` for the per-pilot detail.
+See `META_REPORT_PARALLEL_PILOTS.md` (Direction 1) and `META_REPORT_DIRECTION_2.md` (Direction 2) for synthesis. Per-pilot detail in each `PILOT_REPORT.md`.
 
 See each pilot's `PILOT_REPORT.md` for the full diagnostic picture.
 
