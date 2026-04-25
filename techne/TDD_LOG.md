@@ -25,12 +25,44 @@ capability reference).
 | 2026-04-25 | pm.research.anomaly_surface.kolmogorov_smirnov_p | A:1 | P:1 | E:1 | C:2 | (project #39) |
 | 2026-04-25 | pm.research.anomaly_surface.classify_against_ensembles | A:1 | P:1 | E:1 | C:2 | (project #39) |
 | 2026-04-25 | pm.research.anomaly_surface.surface_anomalies | A:1 | P:1 | E:1 | C:2 | (project #39) |
+| 2026-04-25 | pm.research.tensor.canonical_phonemes | A:2 | P:2 | E:0 | C:1 | (project #44 phase 1) |
+| 2026-04-25 | pm.research.tensor.canonical_domains | A:1 | P:1 | E:0 | C:0 | (project #44 phase 1) |
+| 2026-04-25 | pm.research.tensor.build_tensor | A:1 | P:3 | E:5 | C:3 | (project #44 phase 1) |
+| 2026-04-25 | pm.research.tensor.compute_invariant | A:0 | P:0 | E:2 | C:1 | (project #44 phase 1) |
+| 2026-04-25 | pm.research.tensor.tensor_to_dataframe | A:0 | P:1 | E:0 | C:2 | (project #44 phase 1) |
+| 2026-04-25 | pm.research.tensor.tensor_save | A:0 | P:1 | E:1 | C:1 | (project #44 phase 1) |
+| 2026-04-25 | pm.research.tensor.tensor_load | A:0 | P:1 | E:1 | C:1 | (project #44 phase 1) |
+| 2026-04-25 | pm.research.tensor.InvariantSpec | A:0 | P:0 | E:1 | C:0 | (project #44 phase 1) |
+| 2026-04-25 | pm.research.tensor.PhonemeSpec.applies_to | A:0 | P:1 | E:0 | C:1 | (project #44 phase 1) |
+| 2026-04-25 | pm.research.bootstrap.bootstrap_ci | A:1 | P:2 | E:3 | C:1 | (project #43) |
+| 2026-04-25 | pm.research.bootstrap.matched_null_test | A:1 | P:1 | E:2 | C:2 | (project #43) |
+| 2026-04-25 | pm.research.bootstrap.permutation_test | A:2 | P:1 | E:1 | C:1 | (project #43) |
+| 2026-04-25 | pm.research.bootstrap.bayesian_bootstrap | A:0 | P:1 | E:1 | C:0 | (project #43) |
+| 2026-04-25 | pm.research.bootstrap.bootstrap_correlation | A:0 | P:2 | E:2 | C:1 | (project #43) |
+| 2026-04-25 | pm.research.bootstrap.holm_bonferroni | A:1 | P:1 | E:1 | C:1 | (project #43) |
 | 2026-04-25 | (audit pending — backfill from existing techne/lib/) | — | — | — | — | — |
+| Note 2026-04-25 | pm.research.tensor Phase 2 (distributional + identity-join scorers) DEFERRED | — | — | — | — | (project #44 phase 2) |
 | 2026-04-25 | pm.number_fields.p_hilbert_class_field | A:5 | P:5 | E:6 | C:3 | (project #29 phase 1) |
 | 2026-04-25 | pm.number_fields.p_class_field_tower | A:5 | P:5 | E:6 | C:3 | (project #29 phase 1) |
 | 2026-04-25 | pm.number_fields.tower_terminates_p | A:1 | P:1 | E:1 | C:1 | (project #29 phase 1) |
 | 2026-04-25 | pm.number_fields.p_tower_signature | A:1 | P:1 | E:1 | C:1 | (project #29 phase 1) |
-| 2026-04-25 | project_42.composition_test_gallery | — | — | — | C:40 | (uncommitted) |
+| 2026-04-25 | project_42.composition_test_gallery | A:31 | P:5 | E:0 | C:69 | test_composition_gallery.py |
+| 2026-04-25 |   ↳ NF/HCF chain (5 fields)        | A:5 | P:0 | E:0 | C:5 | (within #42) |
+| 2026-04-25 |   ↳ p-HCF divisibility (6 cases)   | A:0 | P:0 | E:0 | C:6 | (within #42) |
+| 2026-04-25 |   ↳ polredabs idempotence (5)      | A:0 | P:5 | E:0 | C:5 | (within #42) |
+| 2026-04-25 |   ↳ Smith-NF det/divisibility (4)  | A:1 | P:0 | E:0 | C:4 | (within #42) |
+| 2026-04-25 |   ↳ BSD identity rank0+rank1 (8)   | A:8 | P:0 | E:0 | C:8 | (within #42) |
+| 2026-04-25 |   ↳ Faltings vs LMFDB (5; 1 xfail) | A:5 | P:0 | E:0 | C:5 | (B-COMP-001) |
+| 2026-04-25 |   ↳ Modular qexp / Hecke (6)       | A:1 | P:0 | E:0 | C:6 | (within #42) |
+| 2026-04-25 |   ↳ Alexander palindrome (8 knots) | A:8 | P:0 | E:0 | C:8 | (within #42) |
+| 2026-04-25 |   ↳ knot shape field disc (3)      | A:3 | P:0 | E:0 | C:3 | (within #42) |
+| 2026-04-25 |   ↳ hyperbolic_volume<->is_hyp (6) | A:0 | P:0 | E:0 | C:6 | (within #42) |
+| 2026-04-25 |   ↳ Alexander unit / unknot (1)    | A:0 | P:0 | E:0 | C:1 | (within #42) |
+| 2026-04-25 |   ↳ LLL Lovász + transform chain   | A:0 | P:0 | E:0 | C:2 | (within #42) |
+| 2026-04-25 |   ↳ p_tower / Iwasawa chain (3)    | A:0 | P:0 | E:0 | C:3 | (within #42) |
+| 2026-04-25 |   ↳ persistent homology (4)        | A:0 | P:0 | E:0 | C:4 | (within #42) |
+| 2026-04-25 |   ↳ RMT classify GUE/Poisson (3)   | A:0 | P:0 | E:0 | C:3 | (within #42) |
+| 2026-04-25 |   ↳ TOTAL: 68 pass, 1 xfail        | — | — | — | C:69 | B-COMP-001 filed |
 | 2026-04-22 | pm.number_theory.mahler_measure | A:1 | P:6 | E:3 | C:0 | (project #6) |
 | 2026-04-22 | pm.number_theory.log_mahler_measure | A:0 | P:2 | E:1 | C:0 | (project #6) |
 | 2026-04-22 | pm.number_theory.is_cyclotomic | A:1 | P:3 | E:2 | C:0 | (project #6) |
@@ -198,6 +230,55 @@ capability reference).
 | 2026-04-25 | pm.viz.compare_zero_statistics | A:1 | P:0 | E:1 | C:1 | (project #37) |
 | 2026-04-25 | pm.viz.plot_critical_strip | A:0 | P:1 | E:0 | C:1 | (project #37) |
 | 2026-04-25 | pm.viz.save_zeros_plot | A:0 | P:0 | E:2 | C:1 | (project #37) |
+| 2026-04-25 | pm.* edge-case gallery (33 ops, 5-edge sweep) | A:1 | P:1 | E:3 | C:0 | (project #41 gallery) |
+
+### Project #41 (gallery sweep) — Edge-case gallery follow-up — summary
+
+Companion to the earlier per-op edge file (`test_edge_cases.py`). The
+gallery file applies the same 5-edge sub-rubric (empty / singleton /
+malformed / extreme-size / precision-boundary) uniformly across 33
+operations from `pm.number_theory`, `pm.elliptic_curves`,
+`pm.number_fields`, `pm.topology`, `pm.numerics`, `pm.symbolic`,
+`pm.modular`, `pm.hecke`, `pm.iwasawa`, `pm.galois`, `pm.combinatorics`,
+`pm.recipes.persistent_homology`, `pm.research.lehmer`,
+`pm.research.anomaly_surface`, and `pm.viz`.
+
+Result: **183 passed, 2 xfailed, 0 failed**, runtime ~17s.
+
+Breadth-coverage rubric (gallery breadth, not per-op depth — each op is
+hit by exactly five edge probes by design):
+
+- A:1 (each section docstring cites the authoritative source for the
+  one numeric reference value used in the "extreme" or "precision
+  boundary" probe — Mossinghoff for Lehmer, Cohen for Q(√-23),
+  knotinfo for 4_1 volume).
+- P:1 (the only Hypothesis-style invariants in this file are the
+  shape/size invariants — gallery focuses on edges, not properties).
+- E:3 (full 5-edge sweep × 33 operations = 165 distinct edge probes;
+  exceeds rubric requirement of "all documented failure modes +
+  numerical precision boundary + pathological scale").
+- C:0 (composition is project #42's scope, not #41's).
+
+Bugs surfaced (filed in BUGS.md as B-EDGE-001..006, queued as
+fix items #41-fix-001..006 in PROJECT_BACKLOG_1000.md):
+
+- B-EDGE-001: `class_number("")` raises PariError, not ValueError
+- B-EDGE-002: `class_number([5])` (degree-0) raises PariError checknf,
+  not ValueError
+- B-EDGE-003: `galois_group("")` raises PariError, not ValueError
+- B-EDGE-004: `lll([])` ValueError message is "not enough values to
+  unpack" — Python unpacking artefact rather than a description
+- B-EDGE-005: `hyperbolic_volume("")` raises snappy OSError, not
+  wrapper-level ValueError
+- B-EDGE-006: `lambda_mu("", p)` raises PariError, not ValueError
+
+All six are minor consistency gaps: the operations DO reject malformed
+input, just through the wrong error type. Gallery tests pass by
+accepting either error type (`pytest.raises((ValueError, PariError))`)
+so CI stays green; flip the assertion to ValueError-only after the
+fix items land.
+
+File: `prometheus_math/tests/test_edge_case_gallery.py`
 
 ### Project #37 — Visualization: L-function zeros plot — summary
 

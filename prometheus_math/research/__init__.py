@@ -80,3 +80,17 @@ except Exception:  # pragma: no cover — defensive against concurrent agents
     pass
 else:
     __all__.append("anomaly_surface")
+
+try:
+    from . import bootstrap  # noqa: F401
+except Exception:  # pragma: no cover — defensive against concurrent agents
+    pass
+else:
+    __all__.append("bootstrap")
+
+try:
+    from . import tensor  # noqa: F401
+except Exception:  # pragma: no cover — defensive against concurrent agents
+    pass
+else:
+    __all__.append("tensor")

@@ -150,3 +150,211 @@ other knot in the table.
 
 **Tracking:** Added to PROJECT_BACKLOG_1000.md as project #32f
 (7_5 algdep fix).
+
+---
+
+## prometheus_math/elliptic_curves.py
+
+### B-COMP-001: faltings_height drifts from LMFDB on disc<0 curves
+
+**File:** `techne/lib/faltings_height.py` (re-exported via `pm.elliptic_curves.faltings_height`)
+**Reporter:** Composition test gallery (project #42)
+**Date:** 2026-04-25
+
+For 11.a1 ([0,-1,1,-10,-20], disc = -161051 < 0) our `faltings_height`
+returns -0.30801, but LMFDB ec_curvedata.faltings_height stores
++0.49671. The discrepancy is exactly 0.80472 = log(2*pi)/2 - 0.115
+or consistent with a missing real-period doubling that applies only
+when disc < 0 (E(R) has 2 components vs 1 for disc>0).
+
+**Repro:**
+```python
+from prometheus_math.elliptic_curves import faltings_height
+from prometheus_math.databases import lmfdb
+our = faltings_height([0,-1,1,-10,-20])  # -0.30801
+lmfdb_h = lmfdb.elliptic_curves(label="11.a1", limit=1)[0]["faltings_height"]
+print(our - lmfdb_h)  # -0.80472
+```
+
+Four other curves with disc>0 (37.a1, 43.a1, 53.a1, 389.a1) match
+LMFDB to 10+ decimals, isolating the bug to the disc<0 case. This is
+exactly the "Off-by-2 from real-period convention" failure documented
+in `techne/skills/math-tdd.md` Failure Modes #2.
+
+**Expected:** match LMFDB on disc<0 curves to 1e-3 (the same tolerance
+that passes for disc>0 curves).
+
+**Suggested fix:** in `faltings_height`, after computing `o1, o2 = ellperiods(E)`,
+check `disc = E[11]`. If `disc < 0`, the standard "real period"
+convention uses `Omega = 2*Re(o1)` (or equivalently `o2`) rather than
+`|o1|`. The Faltings height formula needs to reference Omega, not the
+first raw period.
+
+**Test:** `test_faltings_height_matches_lmfdb_authority[11.a1-ainvs0]`
+in `prometheus_math/tests/test_composition_gallery.py` is xfailed
+with B-COMP-001 reference. The other four curves remain green.
+
+**Tracking:** queued as fix item under #42 in PROJECT_BACKLOG_1000.md.
+
+---
+
+## prometheus_math edge-case consistency gaps (Project #41 gallery)
+
+The following bugs were surfaced by the systematic 5-edge sweep in
+`prometheus_math/tests/test_edge_case_gallery.py`. They are minor
+consistency issues — the operations DO reject malformed input, but
+through the wrong error type and/or with misleading messages. The
+gallery tests pass by accepting either error type.
+
+### B-EDGE-001: class_number(empty-string) raises PariError, not ValueError
+
+**File:** `techne/lib/class_number.py`
+**Reporter:** Project #41 gallery
+**Date:** 2026-04-25
+
+`class_number([])` correctly raises `ValueError("empty polynomial")`,
+but `class_number("")` (empty string) falls through to PARI and
+raises `PariError("too few arguments")`. The wrapper should validate
+empty strings the same way it validates empty lists.
+
+**Repro:**
+```python
+import prometheus_math as pm
+pm.number_theory.class_number("")  # PariError: too few arguments
+```
+
+**Expected:** `ValueError("empty polynomial string")` matching the
+list-form behaviour.
+
+**Suggested fix:** add `if isinstance(p, str) and not p.strip(): raise
+ValueError("empty polynomial string")` at the top of `class_number()`
+before the PARI call.
+
+**Test:** `TestClassNumberGallery::test_empty_string_raises` in
+`prometheus_math/tests/test_edge_case_gallery.py` (currently passes by
+accepting both ValueError and PariError).
+
+---
+
+### B-EDGE-002: class_number(constant-poly) raises PariError, not ValueError
+
+**File:** `techne/lib/class_number.py`
+**Reporter:** Project #41 gallery
+**Date:** 2026-04-25
+
+`class_number([5])` (degree-0 polynomial = constant 5) raises
+`PariError("bnfinit: incorrect type in checknf [please apply nfinit()]
+(t_INT)")`. The wrapper should reject degree-0 inputs explicitly.
+
+**Repro:**
+```python
+import prometheus_math as pm
+pm.number_theory.class_number([5])  # PariError checknf
+```
+
+**Expected:** `ValueError("polynomial must have degree >= 1")`.
+
+**Suggested fix:** check `len(coeffs) < 2` before constructing the
+PARI polynomial.
+
+**Test:** `TestClassNumberGallery::test_singleton_constant_polynomial_raises`.
+
+---
+
+### B-EDGE-003: galois_group(empty-string) raises PariError, not ValueError
+
+**File:** `techne/lib/galois_group.py`
+**Reporter:** Project #41 gallery
+**Date:** 2026-04-25
+
+Mirror of B-EDGE-001 in galois_group. `galois_group([])` raises
+ValueError correctly, but `galois_group("")` falls through to PARI.
+
+**Repro:**
+```python
+import prometheus_math as pm
+pm.number_theory.galois_group("")  # PariError
+```
+
+**Expected:** `ValueError("empty polynomial string")`.
+
+**Suggested fix:** mirror the list-form check at string-input parse
+time.
+
+**Test:** `TestGaloisGroupGallery::test_empty_string_raises`.
+
+---
+
+### B-EDGE-004: lll(empty-list) error message is misleading
+
+**File:** `techne/lib/lll_reduction.py`
+**Reporter:** Project #41 gallery
+**Date:** 2026-04-25
+
+`lll([])` raises `ValueError("not enough values to unpack (expected 2,
+got 1)")`. The error type is correct but the message is a Python
+unpacking artefact, not a description of the error.
+
+**Repro:**
+```python
+import prometheus_math as pm
+pm.number_theory.lll([])  # ValueError with confusing message
+```
+
+**Expected:** `ValueError("lll: empty basis (need at least one row)")`.
+
+**Suggested fix:** add an explicit `if not basis: raise ValueError(...)`
+guard before the shape unpacking line.
+
+**Test:** `TestLLLGallery::test_empty_raises`.
+
+---
+
+### B-EDGE-005: hyperbolic_volume(empty-string) raises OSError, not ValueError
+
+**File:** `techne/lib/hyperbolic_volume.py`
+**Reporter:** Project #41 gallery
+**Date:** 2026-04-25
+
+`hyperbolic_volume("")` raises `OSError("The manifold file  was not
+found.")` (a snappy IOError). Empty input should be a wrapper-level
+ValueError, not a downstream file-system error.
+
+**Repro:**
+```python
+import prometheus_math as pm
+pm.topology.hyperbolic_volume("")  # OSError from snappy
+```
+
+**Expected:** `ValueError("hyperbolic_volume: empty knot identifier")`.
+
+**Suggested fix:** validate the input string before constructing the
+snappy manifold.
+
+**Test:** `TestHyperbolicVolumeGallery::test_empty_raises`.
+
+---
+
+### B-EDGE-006: iwasawa.lambda_mu(empty-string) raises PariError, not ValueError
+
+**File:** `techne/lib/` (iwasawa wrapper)
+**Reporter:** Project #41 gallery
+**Date:** 2026-04-25
+
+`lambda_mu("", p)` raises `PariError("too few arguments")` rather
+than a clean `ValueError`. The p-validation path correctly rejects
+non-prime / negative p with ValueError; the polynomial-validation
+path is missing.
+
+**Repro:**
+```python
+import prometheus_math as pm
+pm.iwasawa.lambda_mu("", 5)  # PariError
+```
+
+**Expected:** `ValueError("lambda_mu: empty polynomial string")`.
+
+**Test:** `TestLambdaMuGallery::test_empty_string_raises`.
+
+---
+

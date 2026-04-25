@@ -665,6 +665,72 @@ immediately by parallel TDD agents.
   malformed input, (d) extreme size (e.g., 10^6 coefficient polynomial),
   (e) numerical precision boundary. ~150 edge-case tests.
 - **Deliverable:** Edge-case suite green; bugs surfaced and filed.
+- ✓ COMPLETED 2026-04-25
+- Built `prometheus_math/tests/test_edge_case_gallery.py` — 33
+  per-operation sections, 185 tests across the 5 edge sub-categories.
+  Run: 183 passed, 2 xfailed (B-GAL-001 recurrence + LMFDB-zeros
+  cache miss).  Bugs surfaced: 6 new B-EDGE-### consistency gaps
+  filed in BUGS.md (PariError vs ValueError on empty-string inputs
+  across class_number, galois_group, lambda_mu; OSError vs ValueError
+  on hyperbolic_volume; misleading message on lll empty input;
+  degree-0 polynomial in class_number).  Fix items #41-fix-001
+  through #41-fix-006 queued below.
+
+### #41-fix-001 — class_number(empty-string) ValueError consistency
+
+- **Category:** B (bug fix)
+- **Priority:** post-#41
+- **Effort:** 0.5 days · Phases: 1
+- B-EDGE-001: `class_number("")` raises PariError; should raise
+  ValueError matching list-form path.
+- **Deliverable:** explicit ValueError; gallery test no longer
+  needs to accept PariError.
+
+### #41-fix-002 — class_number(constant-poly) reject degree-0
+
+- **Category:** B (bug fix)
+- **Priority:** post-#41
+- **Effort:** 0.5 days · Phases: 1
+- B-EDGE-002: `class_number([5])` raises PariError checknf; should
+  raise ValueError("polynomial must have degree >= 1").
+- **Deliverable:** explicit ValueError on degree-0 input.
+
+### #41-fix-003 — galois_group(empty-string) ValueError consistency
+
+- **Category:** B (bug fix)
+- **Priority:** post-#41
+- **Effort:** 0.5 days · Phases: 1
+- B-EDGE-003: mirror of #41-fix-001 in galois_group.
+- **Deliverable:** ValueError on empty-string polynomial.
+
+### #41-fix-004 — lll(empty) error message clarity
+
+- **Category:** B (bug fix)
+- **Priority:** post-#41
+- **Effort:** 0.5 days · Phases: 1
+- B-EDGE-004: `lll([])` raises ValueError but with message
+  "not enough values to unpack" — unpacking artefact, not
+  a description.
+- **Deliverable:** explicit "lll: empty basis" message.
+
+### #41-fix-005 — hyperbolic_volume(empty) ValueError consistency
+
+- **Category:** B (bug fix)
+- **Priority:** post-#41
+- **Effort:** 0.5 days · Phases: 1
+- B-EDGE-005: `hyperbolic_volume("")` raises snappy OSError; should
+  raise wrapper-level ValueError.
+- **Deliverable:** ValueError("empty knot identifier") before snappy
+  call.
+
+### #41-fix-006 — iwasawa.lambda_mu(empty-string) ValueError consistency
+
+- **Category:** B (bug fix)
+- **Priority:** post-#41
+- **Effort:** 0.5 days · Phases: 1
+- B-EDGE-006: `lambda_mu("", p)` raises PariError; should raise
+  ValueError on empty polynomial input.
+- **Deliverable:** explicit ValueError before PARI dispatch.
 
 ### #42 — Composition test gallery
 
@@ -675,6 +741,27 @@ immediately by parallel TDD agents.
   (BSD identity); `class_number(K) = degree(hilbert_class_field(K))`;
   knot Alexander roots inside knot trace field. ~40 composition tests.
 - **Deliverable:** Composition suite catches BSD inconsistencies.
+- ✓ COMPLETED 2026-04-25 — `prometheus_math/tests/test_composition_gallery.py`
+  forged with 69 composition tests across 8 themes (NF/HCF chain, BSD,
+  Hecke / modular triple-cross, knot Alexander+shape+volume, LLL,
+  Iwasawa towers, persistent homology, RMT classify).  Result:
+  68 passed, 1 xfailed.  Composition caught **B-COMP-001**: faltings_height
+  drifts from LMFDB on disc<0 curves (11.a1: ours -0.30801 vs LMFDB
+  +0.49671; four other curves match to 10 decimals).  The drift is
+  the canonical "off-by-real-period-convention" failure mode #2 from
+  the math-tdd skill -- never surfaced via per-tool unit tests, only
+  via the BSD-style cross-check.
+
+#### #42a — Fix faltings_height disc<0 real-period convention drift
+
+- **Category:** B (bug)
+- **Priority:** 42a (follow-up of #42)
+- **Effort:** ~1 day
+- For curves with disc(E) < 0 (E(R) has 1 component), `faltings_height`
+  uses |omega_1| where the LMFDB / Cremona convention uses 2*Re(omega_1)
+  (the 'real period' Omega).  See B-COMP-001 in BUGS.md.
+- **Deliverable:** test_faltings_height_matches_lmfdb_authority[11.a1]
+  passes; xfail removed.
 
 ### #43 — pm.research.bootstrap helper
 
@@ -684,6 +771,7 @@ immediately by parallel TDD agents.
 - Reusable bootstrap-CI helper for the bootstrap operations Charon and
   Aporia run repeatedly. Wraps numpy/scipy + matched-null generation.
 - **Deliverable:** `pm.research.bootstrap.matched_null_test(observation, null_fn, n=10000)`.
+- ✓ COMPLETED 2026-04-25
 
 ### #44 — pm.research.tensor cross-domain helpers
 
@@ -695,6 +783,7 @@ immediately by parallel TDD agents.
 - Phase 2 (4 days): Distributional and identity-join scorers as named
   operations.
 - **Deliverable:** Tensor research becomes a first-class API.
+- ✓ Phase 1 COMPLETED 2026-04-25
 
 ### #45 — Symbolic computation: integration engine improvements
 
