@@ -119,6 +119,8 @@ _BACKENDS: list[Backend] = [
             description="ATLAS of Finite Groups (embedded snapshot)"),
     Backend("cremona", "data", "DB",
             description="Cremona ecdata local CSV mirror (opt-in 88 MB)"),
+    Backend("arxiv_corpus", "data", "DB",
+            description="arXiv local cache of curated formal-verification papers"),
 ]
 
 

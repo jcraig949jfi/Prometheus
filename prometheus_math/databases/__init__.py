@@ -5,6 +5,7 @@ Submodules:
     cremona   — Cremona ecdata local CSV mirror (LMFDB fallback)
     oeis      — OEIS API wrapper (when present)
     arxiv     — arXiv preprint server (when the `arxiv` pip package is present)
+    arxiv_corpus — local on-disk cache + search index of curated FV arXiv papers
     knotinfo  — KnotInfo + LinkInfo census (via `database_knotinfo` pkg)
     zbmath    — zbMATH Open API (mathematical literature, reviews, MSC tags)
     mahler    — Mossinghoff small-Mahler-measure tables (embedded snapshot)
@@ -26,6 +27,11 @@ except ImportError:
 
 try:  # optional, depends on the `arxiv` pip package
     from . import arxiv  # noqa: F401
+except ImportError:
+    pass
+
+try:  # always-available: pure-Python local corpus over arxiv metadata
+    from . import arxiv_corpus  # noqa: F401
 except ImportError:
     pass
 

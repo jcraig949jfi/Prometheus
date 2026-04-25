@@ -114,6 +114,119 @@ capability reference).
 | 2026-04-25 | pm.benchmarks.bench_elliptic_curves (5 benches) | A:2 | P:5 | E:2 | C:0 | (project #16) |
 | 2026-04-25 | pm.benchmarks.bench_topology (3 benches) | A:2 | P:3 | E:2 | C:0 | (project #16) |
 | 2026-04-25 | pm.benchmarks.bench_databases (3 benches) | A:2 | P:3 | E:2 | C:0 | (project #16) |
+| 2026-04-25 | pm.databases.arxiv_corpus.corpus_stats | A:2 | P:2 | E:2 | C:2 | (project #18) |
+| 2026-04-25 | pm.databases.arxiv_corpus.search | A:2 | P:3 | E:3 | C:2 | (project #18) |
+| 2026-04-25 | pm.databases.arxiv_corpus.get_by_id | A:2 | P:2 | E:2 | C:2 | (project #18) |
+| 2026-04-25 | pm.databases.arxiv_corpus.tags_index | A:2 | P:2 | E:2 | C:2 | (project #18) |
+| 2026-04-25 | pm.databases.arxiv_corpus.update_corpus | A:1 | P:2 | E:2 | C:1 | (project #18) |
+| 2026-04-25 | pm.databases.arxiv_corpus.probe | A:1 | P:2 | E:2 | C:2 | (project #18) |
+| 2026-04-25 | pm.galois.artin_rep_from_polynomial | A:3 | P:3 | E:3 | C:2 | (project #25 phase 1) |
+| 2026-04-25 | pm.galois.frobenius_traces | A:3 | P:3 | E:2 | C:3 | (project #25 phase 1) |
+| 2026-04-25 | pm.galois.frobenius_class | A:1 | P:2 | E:1 | C:1 | (project #25 phase 1) |
+| 2026-04-25 | pm.galois.cycle_type | A:2 | P:2 | E:1 | C:1 | (project #25 phase 1) |
+| 2026-04-25 | pm.galois.artin_l_function_at_s | A:1 | P:1 | E:1 | C:1 | (project #25 phase 1) |
+| 2026-04-25 | pm.galois.rep_from_lmfdb (Phase-1 stub) | A:0 | P:0 | E:1 | C:0 | (project #25 phase 1) |
+| 2026-04-25 | prometheus_math.USER_GUIDE.md (examples test) | A:1 | P:0 | E:1 | C:1 | (project #23 phase 1) |
+| 2026-04-25 | pm.research.conjecture_engine.generate_ec_signature | A:2 | P:2 | E:3 | C:1 | (project #19 phase 1) |
+| 2026-04-25 | pm.research.conjecture_engine.generate_nf_signature | A:0 | P:1 | E:2 | C:0 | (project #19 phase 1) |
+| 2026-04-25 | pm.research.conjecture_engine.surprise_score | A:0 | P:2 | E:1 | C:1 | (project #19 phase 1) |
+| 2026-04-25 | pm.research.conjecture_engine.cross_join_ec_oeis | A:2 | P:0 | E:1 | C:2 | (project #19 phase 1) |
+| 2026-04-25 | pm.research.conjecture_engine.bulk_scan | A:1 | P:0 | E:1 | C:1 | (project #19 phase 1) |
+| 2026-04-25 | pm.research.conjecture_engine.rank_by_surprise | A:0 | P:1 | E:1 | C:1 | (project #19 phase 1) |
+| 2026-04-25 | pm.research.conjecture_engine.generate_report | A:0 | P:0 | E:1 | C:2 | (project #19 phase 1) |
+
+### Project #19 — Conjecture engine (OEIS x LMFDB) — Phase 1 summary
+
+19 tests, all green (19/19 pass on 2026-04-25), runtime ~21s.
+
+Module: `prometheus_math/research/conjecture_engine.py` (~470 LOC, 7 public
+ops + helpers). Tests: `prometheus_math/research/tests/test_conjecture_engine.py`
+(~470 LOC).
+
+Test rubric (per math-tdd skill, >= 2 in every category):
+
+| Category | Count | Notes |
+|---|---|---|
+| Authority | 2 | LMFDB 11.a1 -> OEIS A006571 (eta-product expansion); LMFDB 37.a1 -> OEIS A007653 (L-series for 37a1). Both verified live on the local OEIS mirror. |
+| Property  | 5 | surprise_score in [0,1] hand + Hypothesis (random name length / data); rank_by_surprise output is descending; signature length == n_terms across all kinds; torsion_growth = p+1-a_p identity. |
+| Edge      | 8 | n_terms <= 0; malformed ainvs; bad signature kind; ap_mod modulus < 2; cross_join over empty iterable; rank_by_surprise empty / negative top_n; first_n_primes boundary at the Rosser-bound switch (n=6); surprise_score with missing keys / non-dict input. |
+| Composition | 3 | cross_join -> rank_by_surprise -> generate_report chain (with synthetic high-surprise hit ranking #1); ap_sequence/ap_only/torsion_growth mutual consistency on 11a1 across 8 primes; generate_report -> file roundtrip. Plus one live integration test (LMFDB+OEIS+PARI). |
+
+Authority anchors verified:
+- LMFDB 11.a1 ainvs=[0,-1,1,-7820,-263580], q-expansion = [1,-2,-1,2,1,2,-2,0,-2,-2,1,-2,4,4,-1,...]; OEIS A006571 ("Expansion of q*Product_{k>=1} (1-q^k)^2*(1-q^(11*k))^2.").
+- LMFDB 37.a1 ainvs=[0,0,1,-1,0], q-expansion = [1,-2,-3,2,-2,6,-1,0,6,4,-5,-6,-2,2,6,...]; OEIS A007653 ("Coefficients of L-series for elliptic curve \"37a1\": y^2 + y = x^3 - x.").
+
+Surprise-scoring calibration on a 54-EC pilot scan (small-conductor
+range 11..39, top-3 per conductor):
+- 37 / 54 ECs hit OEIS via ap_sequence with min_match_terms=8.
+- 0 high-surprise hits (all matched OEIS rows are eta-product or
+  "L-series for ..." names — correctly classified as low-surprise
+  after the eta(q^k) regex was added to the EC vocabulary).
+- Conductor-11 isogeny class (3 curves) all hit A006571.
+- Conductor-14 / 15 / 24 isogeny classes all hit eta-products
+  A030187, A030184, A276847 respectively.
+
+This is the calibration result Phase 1 needed: the engine correctly
+identifies that small-conductor ECs are *all already in OEIS*, and the
+surprise scores stay LOW (around 0.20). Phase 2 will scale to 10K
+curves where the long tail of conductor 100..50000 is more likely to
+surface genuine cross-domain coincidences.
+
+Subtleties surfaced during TDD:
+- OEIS row A006571's name is "Expansion of q*Product_{k>=1} (1-q^k)^2*(1-q^(11*k))^2." -- contains NO direct EC vocabulary. The first version of `_name_signals_ec` flagged it as HIGH-surprise. Fixed by adding (a) a `Product_{...}` + `(1-q^...)^k` regex pair, and (b) a direct `eta(q^k)` regex that catches A030187-style names. Both regexes test for "this OEIS row is itself a modular form".
+- LMFDB "11.a1" has ainvs [0,-1,1,-7820,-263580] (the LMFDB canonical isogeny class rep), distinct from Cremona's [0,-1,1,-10,-20]. Both are in the same isogeny class so they share the same q-expansion -- A006571 matches both. Tests use the Cremona ainvs so they don't depend on LMFDB at all.
+- bnfinit / nfinit lazy import: `cypari` is required for signature generation but tests skip cleanly when it's unavailable.
+
+Phase 2 deferred (4 days estimated): scale to 10K curves; dedupe per
+isogeny class; persist hit log to disk; literature-cross-reference
+high-surprise hits; auto-flag candidates for human review.
+
+File: `prometheus_math/research/conjecture_engine.py`
+Tests: `prometheus_math/research/tests/test_conjecture_engine.py`
+
+### Project #25 — Galois representation tools — Phase 1 summary
+
+13 tests, all green (13/13 pass on 2026-04-25), runtime ~13s.
+
+Module: `prometheus_math/galois.py` (~365 LOC, 6 public ops + 4 internal
+helpers). Tests: `prometheus_math/tests/test_galois.py` (~330 LOC).
+
+Test rubric (per math-tdd skill, ≥ 2 in every category):
+
+| Category | Count | Notes |
+|---|---|---|
+| Authority   | 3 | Q(sqrt(-23)) Kronecker on 15 primes (Neukirch I.8); Q(zeta_5) split/inert (Washington Thm 2.13); x^3-2 cycle types (Lang VI.6 + hand-check) |
+| Property    | 3 | Perm-rep |tr| ≤ dim across 5 polys × 10 primes; cycle-type sum equals base degree across 5 polys × 12 primes; trivial rep tr=1 always |
+| Edge        | 3 | Ramified prime returns None (p=23 in Q(sqrt(-23))); 4 bad-poly inputs raise ValueError; 4 non-prime inputs raise ValueError |
+| Composition | 4 | quadratic-character vs sympy.kronecker_symbol on 50 primes; cycle_type ↔ frobenius_class round-trip; trivial-rep L(2) → zeta(2)=π²/6 to 5%; rep dimension ↔ techne.lib.galois_group order |
+
+Cross-tool consistency: Kronecker symbol agreement on a 50-prime sweep
+provides the strongest-grade authority check (independent number-theory
+implementation, not a re-derivation of the same code path).
+
+Subtleties documented in module docstring:
+- Used **x^2+x+6** (nfdisc=-23) instead of x^2+23 (poldisc=-92) for
+  Q(sqrt(-23)) tests — avoids index-2 ramification at p=2 that the
+  raw poldisc check would flag as ramified.
+- For non-normal polynomials like x^3-2 (only Q(2^(1/3)), not splitting
+  field), Dedekind's theorem still gives the cycle type of Frob_p in
+  S_n, which determines the conjugacy class in Gal of the splitting
+  field. The implementation works without needing to construct the
+  Galois closure first.
+- 4 rep kinds shipped: 'permutation' (default for n≥3), 'standard'
+  (= permutation - trivial), 'sign' (default for n=2; recovers
+  Kronecker for quadratic fields), 'trivial' (sanity check, gives
+  zeta).
+- L-function uses **leading-order Euler factor** L_p ≈ 1/(1 - tr · p^{-s})
+  rather than the full det(1 - p^{-s} ρ(Frob_p)) — that's deferred
+  to Phase 2 along with the functional-equation residual.
+
+Phases 2 and 3 deferred per spec:
+- Phase 2: full L-function determinant + functional equation check
+- Phase 3: is_modular(rep) heuristic via LMFDB modular form q-coeffs
+
+File: `prometheus_math/galois.py`
+Tests: `prometheus_math/tests/test_galois.py`
 
 ### Project #16 — Performance benchmark suite — summary
 

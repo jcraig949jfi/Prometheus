@@ -59,3 +59,10 @@ except Exception:  # pragma: no cover — defensive against concurrent agents
     pass
 else:
     __all__.append("identity_join")
+
+try:
+    from . import conjecture_engine  # noqa: F401
+except Exception:  # pragma: no cover — defensive against concurrent agents
+    pass
+else:
+    __all__.append("conjecture_engine")

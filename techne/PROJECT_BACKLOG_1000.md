@@ -366,6 +366,7 @@ immediately by parallel TDD agents.
   retrieval base for AI tactic suggestion.
 - **Deliverable:** `pm.databases.arxiv.local_search(query)` over the
   curated corpus.
+- ✓ COMPLETED 2026-04-25
 
 ### #19 — Conjecture engine: OEIS×LMFDB cross-join
 
@@ -375,6 +376,7 @@ immediately by parallel TDD agents.
 - **Phase 1 (3 days):** Define a "join schema": for each LMFDB EC,
   generate sequences (e.g., a_p coefficients), search OEIS for matches.
   Surface unexpected hits (a_p sequence matches a non-EC OEIS sequence).
+  ✓ Phase 1 COMPLETED 2026-04-25
 - **Phase 2 (4 days):** Run at scale on 10K curves; dedupe; rank by
   surprise.
 - **Deliverable:** `pm.research.conjecture_engine.cross_join(lmfdb_query, oeis)`
@@ -422,6 +424,7 @@ immediately by parallel TDD agents.
 - **Phase 1 (3 days):** Write `prometheus_math/USER_GUIDE.md` covering
   installation, first import, capability check, basic usage in each
   category, the local-mirror pattern, when to override backend.
+  ✓ Phase 1 COMPLETED 2026-04-25
 - **Phase 2 (4 days):** Write 10 cookbook recipes (BSD audit, knot-NF
   match, Galois group census, OEIS conjecture check, etc.) at
   `prometheus_math/recipes/`.
@@ -444,7 +447,7 @@ immediately by parallel TDD agents.
 - **Priority:** 25
 - **Effort:** 14 days · Phases: 3
 - **Phase 1 (4 days):** `pm.galois.frobenius_traces(rep, primes)` for
-  Artin reps via PARI.
+  Artin reps via PARI. ✓ Phase 1 COMPLETED 2026-04-25
 - **Phase 2 (5 days):** `pm.galois.l_function(rep)` building the L-function
   from rep + applying functional equation check.
 - **Phase 3 (5 days):** `pm.galois.is_modular(rep)` heuristic check via

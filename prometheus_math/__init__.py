@@ -42,6 +42,7 @@ from . import (  # noqa: F401
     numerics,
     symbolic,
     algebraic_geometry,
+    galois,
 )
 from . import doc  # noqa: F401
 
@@ -65,6 +66,7 @@ __all__ = [
     "numerics",
     "symbolic",
     "algebraic_geometry",
+    "galois",
 ]
 if _HAS_RESEARCH:
     __all__.append("research")
