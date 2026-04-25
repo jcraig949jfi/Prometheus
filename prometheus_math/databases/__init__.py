@@ -7,6 +7,7 @@ Submodules:
     knotinfo  — KnotInfo + LinkInfo census (via `database_knotinfo` pkg)
     zbmath    — zbMATH Open API (mathematical literature, reviews, MSC tags)
     mahler    — Mossinghoff small-Mahler-measure tables (embedded snapshot)
+    atlas     — ATLAS of Finite Groups (embedded snapshot; auto-upgrades to GAP)
 """
 from __future__ import annotations
 
@@ -34,5 +35,10 @@ except ImportError:
 
 try:  # always-available: embedded Mossinghoff snapshot
     from . import mahler  # noqa: F401
+except ImportError:
+    pass
+
+try:  # always-available: embedded ATLAS-of-Finite-Groups snapshot
+    from . import atlas  # noqa: F401
 except ImportError:
     pass

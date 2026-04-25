@@ -131,7 +131,7 @@ immediately by parallel TDD agents.
 - **Deliverable:** `pm.registry` shows `julia` + `oscar` available;
   cross-engine consistency tests pass.
 
-### #5 — ATLAS of Finite Groups data acquisition + wrapper
+### #5 — ATLAS of Finite Groups data acquisition + wrapper  ✓ COMPLETED 2026-04-25
 
 - **Category:** G / J
 - **Priority:** 5
@@ -170,7 +170,7 @@ immediately by parallel TDD agents.
 - **Deliverable:** `prometheus_math/tests/audit/lmfdb_ec_audit.py`
   green on 1000-curve sample; CI runs nightly on a 100-curve subset.
 
-### #8 — BSD-audit batch composer
+### #8 — BSD-audit batch composer  ✓ COMPLETED 2026-04-25
 
 - **Category:** N (Charon)
 - **Priority:** 8
@@ -184,7 +184,7 @@ immediately by parallel TDD agents.
 - **Deliverable:** `pm.research.bsd_audit.run(label_list)` produces a
   CSV of consistency results; documented rerun pattern.
 
-### #9 — F011 follow-up: gap-k extended scan infrastructure
+### #9 — F011 follow-up: gap-k extended scan infrastructure ✓ COMPLETED 2026-04-25
 
 - **Category:** N (Aporia, Ergon)
 - **Priority:** 9
@@ -197,7 +197,7 @@ immediately by parallel TDD agents.
 - **Deliverable:** `pm.research.spectral_gaps.scan(family_query, k_max=24)`
   produces a JSON + 4-panel figure.
 
-### #10 — V-CM-scaling stratifier
+### #10 — V-CM-scaling stratifier ✓ COMPLETED 2026-04-25
 
 - **Category:** N (Aporia)
 - **Priority:** 10

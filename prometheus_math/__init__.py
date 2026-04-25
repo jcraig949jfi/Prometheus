@@ -45,6 +45,14 @@ from . import (  # noqa: F401
 )
 from . import doc  # noqa: F401
 
+# Optional research-thread subpackage (may fail to import if a sibling
+# module is being edited; don't crash the rest of pm if so).
+try:
+    from . import research  # noqa: F401
+    _HAS_RESEARCH = True
+except Exception:  # pragma: no cover
+    _HAS_RESEARCH = False
+
 __all__ = [
     "registry",
     "doc",
@@ -58,3 +66,5 @@ __all__ = [
     "symbolic",
     "algebraic_geometry",
 ]
+if _HAS_RESEARCH:
+    __all__.append("research")

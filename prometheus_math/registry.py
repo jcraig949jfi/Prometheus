@@ -115,6 +115,8 @@ _BACKENDS: list[Backend] = [
             description="zbMATH Open API (mathematical literature)"),
     Backend("mossinghoff", "data", "DB",
             description="Mossinghoff small-Mahler-measure tables (local + online)"),
+    Backend("atlas", "data", "DB",
+            description="ATLAS of Finite Groups (embedded snapshot)"),
 ]
 
 

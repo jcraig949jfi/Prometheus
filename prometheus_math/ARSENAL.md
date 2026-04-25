@@ -2,7 +2,7 @@
 
 **Single-page researcher reference for the unified mathematical-software API.**
 
-Generated: 2026-04-25 03:49 · Status: 29/36 backends available across 9 categories: AI, CAS, COMB, DB, NT, NUM, OPT, SAT, TOP
+Generated: 2026-04-25 17:01 · Status: 30/37 backends available across 9 categories: AI, CAS, COMB, DB, NT, NUM, OPT, SAT, TOP
 
 ---
 
@@ -33,7 +33,7 @@ pm.registry.installed()
 
 ## Backend capability matrix
 
-**29/36 backends available** as of generation.
+**30/37 backends available** as of generation.
 
 | Backend | Status | Version | Kind | Category | Description |
 |---|---|---|---|---|---|
@@ -73,6 +73,7 @@ pm.registry.installed()
 | `knotinfo` | ✅ | online | service | DB | KnotInfo + LinkInfo knot/link census |
 | `zbmath` | ✅ | online | service | DB | zbMATH Open API (mathematical literature) |
 | `mossinghoff` | ✅ | embedded | data | DB | Mossinghoff small-Mahler-measure tables (local + online) |
+| `atlas` | ✅ | embedded | data | DB | ATLAS of Finite Groups (embedded snapshot) |
 
 ---
 
