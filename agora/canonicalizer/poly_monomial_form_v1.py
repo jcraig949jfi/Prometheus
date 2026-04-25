@@ -154,6 +154,44 @@ def canonical_hash(poly: Polynomial) -> str:
     return hashlib.sha256(payload).hexdigest()[:16]
 
 
+# ---------- instance metadata (added v0.3 stratification 2026-04-25) ----------
+
+INSTANCE_METADATA = {
+    "name": "poly_monomial_form",
+    "version": 1,
+    "type": "A",
+    "subclass": "group_quotient",
+    "equivalence_E": "polynomial up to variable permutation S_n + sign gauge",
+    "declared_limitations": [
+        {
+            "name": "no_affine_change_of_variable",
+            "severity": "total",
+            "workaround": "Instance does not handle x -> ax + b. Consumers needing affine equivalence require a separate instance.",
+        },
+        {
+            "name": "no_GL_action_on_polynomial_ring",
+            "severity": "total",
+            "workaround": "Instance does not handle non-trivial GL actions (e.g., SL(2) on binary forms). Consumers requiring such must use a separate instance.",
+        },
+        {
+            "name": "symmetric_polynomial_signature_ties",
+            "severity": "partial",
+            "workaround": "Variable-signature tie-breaking falls back to lex on unordered variables; for fully symmetric polynomials (e.g., x^2 + y^2) the canonical form is determined by the original index ordering. Practical workaround: use a smaller toy instance for symmetric forms specifically.",
+        },
+    ],
+    "calibration_anchors": {
+        "variable_relabel_equivalence": {"description": "x^2 - 1 == y^2 - 1 (under S_2)", "passed": True},
+        "sign_gauge_equivalence": {"description": "x^2 - 1 == -(x^2 - 1)", "passed": True},
+        "constant_sign_discrimination": {"description": "x^2 - 1 != x^2 + 1", "passed": True},
+        "var_swap_equivalence": {"description": "x^2 + y == x + y^2 (under x<->y)", "passed": True},
+        "coefficient_discrimination": {"description": "x + y != x + 2y", "passed": True},
+        "trivial_reorder_equivalence": {"description": "x^2 + y^2 == y^2 + x^2 (insertion order)", "passed": True},
+    },
+    "implementation_path": "agora/canonicalizer/poly_monomial_form_v1.py::canonical_hash",
+    "first_shipped": "2026-04-23",
+}
+
+
 # ---------- calibration anchors ----------
 
 def _poly(*terms) -> Polynomial:

@@ -1,6 +1,6 @@
 # CANONICALIZER — substrate primitive
 
-**Status:** substrate-primitive spec, v0.2 (2026-04-23, Phase 2).
+**Status:** substrate-primitive spec, v0.3 (2026-04-25, Phase 2 continuation).
 **Architectural slot:** first-class primitive, alongside the symbol registry, the tensor, Definition DAG, and signals.specimens. Not a generator.
 **Audience:** gen_12 (tensor decomposition), gen_11 (coordinate invention), Definition DAG authors, symbol-registry curators, any module that dedup's or displays structured objects.
 
@@ -22,6 +22,24 @@ The v0.1.1 spec conflated two distinct operations. v0.2 splits them:
 **Why split.** Mixing the two produces silent drift: an optimization-for-integers layer that looks like a quotient map will return different outputs for the same orbit under small perturbations, breaking hash invariance at Type-A consumer sites. Downstream consumers that dedup against hash equality will then count orbit-duplicates as distinct. The Type A / Type B distinction is the architectural guardrail; the `type:` field in every instance's frontmatter is mandatory and checked at registration.
 
 Every instance declares exactly one type. Instance names conventionally carry a suffix for readability: `<name>_identity@vN` for Type A, `<name>_<objective>@vN` for Type B (e.g., `tensor_decomp_identity@v2`, `tensor_decomp_integer_rep@v1`).
+
+---
+
+## Four subclasses (load-bearing, added v0.3)
+
+The contract is shaped by what kind of structure the equivalence has. Each subclass carries its own verification story. v0.3 adds the fourth subclass (`variety_fingerprint`) after the v2 → v3 cycle stress-tested it into existence.
+
+- **`group_quotient`** — equivalence `E = G·x` for an executable group `G` with named generators. Verification: per-generator invariance check on `C`. Examples: `tensor_decomp_identity@v1` (declared `G` = scale × sign × permutation; declared limitation: T-stabilizer not quotiented), `poly_monomial_form@v1` (declared `G` = variable-permutation × sign), `dag_node_identity@v1` (basis change on input atoms).
+
+- **`partition_refinement`** — equivalence by an algorithm that terminates at a unique-by-construction representative, not necessarily expressible as a group quotient. Verification: algorithm-correctness proof or appeal to a published canonical-form algorithm. Examples: `graph_iso@v1` (nauty/Bliss partition refinement + lex labeling).
+
+- **`ideal_reduction`** — equivalence by ideal membership in a declared ring. Verification: reduction-to-normal-form correctness against a Gröbner basis (or equivalent). Examples: `pattern_30_rearrangement@v1` (algebraic expressions over a declared ring).
+
+- **`variety_fingerprint`** (added v0.3) — equivalence induced by **algebraic constraints defining a variety**, NOT by an explicit group action. The instance computes class-functions of the variety: scalars constant across the variety by algebraic construction. Verification: invariance under the variety's defining equations + empirical separation across distinct varieties (different `(T, rank)`, different parent objects). Output is a fingerprint of *which variety the input lies on*, not which orbit-component within the variety. Examples: `tensor_decomp_identity@v2` (every rank-r decomp of T has algebraically-determined `(inv1, inv2)` multiset; the hash identifies `(T, rank)`, not orbit-component).
+
+The fourth subclass is the architectural lesson the v2 → v3 cycle taught. v2 attempted to ship a `group_quotient` instance and instead shipped what we now recognize as a `variety_fingerprint`. Naming the subclass without forcing the instance into the wrong subclass is the contract's value: it admits an instance is *weaker than originally intended* without collapsing the architecture.
+
+Cross-subclass hash comparisons are forbidden. An instance registered under one subclass produces hashes in a namespace separated from instances under other subclasses; consumers must filter by subclass before comparing.
 
 ---
 
@@ -49,14 +67,26 @@ Across all of these, the common question is: *given two representations of a str
 A **canonicalizer instance** is a tuple
 
 ```
-(name, type, equivalence_group G, procedure C, hash H (Type A only),
+(name, type, subclass, equivalence E, procedure C, hash H (Type A only),
  secondary_objective (Type B only),
- declared_limitations, calibration_anchors, canonicalizer_version)
+ declared_limitations, calibration_anchors, canonicalizer_version,
+ pre_canonical_storage)
 ```
+
+The `subclass` field is mandatory and constrains which other fields apply
+(see §"Four subclasses" below). The `pre_canonical_storage` field is the
+storage strategy for the input alongside the canonical hash, so re-
+canonicalization on version bump is `O(N)` rather than recompute-from-source.
+
+For `group_quotient` instances, `equivalence E = G·x` for an executable
+group `G`. For other subclasses, `E` is described differently per the
+subclass's verification story.
 
 where:
 
-- `type` ∈ {`A`, `B`}. Mandatory. Determines which of the other fields are required and which invariants apply. Type A instances require `G` + `C` + `H` + `declared_limitations` + `calibration_anchors`. Type B instances require `G` (the orbit their input is Type-A-canonicalized under) + `C` (the optimization procedure) + `secondary_objective` + `declared_limitations` + `calibration_anchors`. Type B does NOT have a hash; Type B output is for display, not identity.
+- `type` ∈ {`A`, `B`}. Mandatory. Determines which of the other fields are required and which invariants apply. Type A instances require `subclass` + `E` + `C` + `H` + `declared_limitations` + `calibration_anchors` + `pre_canonical_storage`. Type B instances require `subclass` + `E` (the equivalence class their input is Type-A-canonicalized under) + `C` (the optimization procedure) + `secondary_objective` + `declared_limitations` + `calibration_anchors`. Type B does NOT have a hash; Type B output is for display, not identity.
+
+- `subclass` ∈ {`group_quotient`, `partition_refinement`, `ideal_reduction`, `variety_fingerprint`}. Mandatory. Each subclass carries its own verification story — see §"Four subclasses" below. Cross-subclass hash comparisons are forbidden; namespacing by `(subclass, name, canonicalizer_version)` enforces this.
 
 - `G` is the equivalence group the instance quotients, specified as a list of generator types (e.g., `scale_gauge`, `sign_gauge`, `permutation(S_r)`, `T_stabilizer_GL_n^3`). **Generator types in `G` must have executable semantics within the instance.** If a subgroup is known to be part of the object's symmetry but is not computationally realized by this instance (e.g., a stabilizer that only exists on paper), it must appear in `declared_limitations`, not in `G`. The line between `G` and `declared_limitations` is implementation, not intent.
 - `C : Representation → CanonicalRepresentative` is a deterministic map satisfying, for all `x, y` in the representation space:
@@ -123,29 +153,36 @@ The canonicalizer primitive is a registry of named instances. At v0.1, one insta
 - **Hash:** see Implementation notes.
 - **Declared limitations:**
   - `T_stabilizer_basis_change` (total). For structured target tensors (matmul, Pfaffian, etc.) this is where most of the orbit's size lives. Consumers must NOT treat same-hash-under-v1 as same-orbit-under-full-symmetry-group.
+  - `sign_gauge_boundary_oscillation` (partial, ADDED v0.3). The sign-gauge rule "first entry above tolerance" flips sign discontinuously when a perturbation moves the first qualifying entry across the tolerance threshold. Adjacent inputs can hash differently by a single sign flip propagated through a column. Workaround: pin tolerance based on observed dynamic range, or migrate to a smoother sign convention (e.g., sign of largest-magnitude entry).
+  - `pinned_decimal_dynamic_range` (partial, ADDED v0.3). Default precision-4 rounding zeros entries below `5e-5` while leaving large entries unrounded. v1's column-norming pushes magnitude into the third factor, inducing wide dynamic range; rounding becomes effectively non-uniform. Workaround: declare per-instance `decimal_pinning` based on observed range, or use log-scale / relative rounding.
+  - These two are *v1-specific* and do NOT carry over to v2 (v2 hashes invariants rather than raw factor entries; per discipline, each version declares its own numerical story).
 - **Calibration anchors:**
   - Same-class: FAILS by construction (see Empirical anchor). v1 is retained in the registry *only because* the failure is declared, reproducible, and used as the regression target for v2 development — not because anchor-failing instances are generally admissible. The license for retention is narrow and single-instance.
   - Different-class: rank-7 Strassen hash ≠ rank-8 naive decomposition hash (trivially holds).
 - **Empirical anchor:** 2026-04-23, `harmonia/tmp/canonicalize_test.py`. 4 ALS-converged rank-7 decompositions of 2×2 matmul, understood to lie in the same equivalence class under the natural symmetry action (see `orbit_vs_representative.md` §"On theorem claims"), hashed to 4 distinct v1 canonical forms; none matched Strassen's v1 hash.
 
-### Active: `CANONICALIZER:tensor_decomp_identity@v2` (Type A) — SHIPPED 2026-04-23
+### Active: `CANONICALIZER:tensor_decomp_identity@v2` (Type A, **subclass: `variety_fingerprint`** — reclassified v0.3)
+
+**Reclassification note (2026-04-25, v0.3):** v2 was originally registered as a `group_quotient` instance under `GL(2,ℝ)³ × scale × permutation × discrete-Aut`. Empirical follow-up (DE orbit-membership test 2026-04-25, residual ~5 across all 6 pairs) showed no `GL(2,ℝ)³` connection between the calibration seeds. Diagnostic test confirmed `(inv1, inv2)` is a class-function of `(T, rank)` by algebraic construction (every rank-7 decomp of 2×2 matmul has exactly one full-rank rank-1 term plus six rank-deficient terms; the `(inv1, inv2)` multiset is determined by the variety's defining equations). The honest classification is `variety_fingerprint`, not `group_quotient`. The instance is retained as Active under the corrected subclass; downstream consumers are notified via the `subclass` field that the equivalence is variety-level, not orbit-level. See `whitepaper_orbit_canonicalization_v3.md` and `_v4.md` for the full reclassification narrative.
 
 - **Type:** A.
-- **Equivalence group:** `scale_gauge × sign_gauge × permutation(S_r) × GL(2)³ matmul-covariant action × discrete Aut(T)` (transpose + factor-role permutation).
+- **Equivalence E (variety_fingerprint):** "decomposes the same target tensor T at the same rank r" — class-function on the variety `V_T(r)` of rank-r decompositions of T. Two inputs in the same variety hash identically; inputs from different varieties (different T or different rank) hash differently with high probability. NOT an orbit equivalence — does not separate within-V_T(r) orbit components.
 - **Procedure:** multi-invariant numerical canonical form using two provably `Aut(T)`-invariant per-term scalars:
   - `inv1_r = det(U_r) · det(V_r) · det(W_r)`
   - `inv2_r = tr(U_r V_r W_r^T)`
   where `U_r, V_r, W_r` are the 2×2 reshapes of the r-th rank-1 term's factor columns. Both scalars verified invariant under the matmul-covariant action `(A → PAQ⁻¹, B → QBR⁻¹, C → P⁻ᵀCRᵀ)`. Both also invariant under the discrete `Aut(T)` symmetries (det preserved by transpose; trace-UVW is cyclic-invariant). The sorted tuples `(sorted(inv1_1..r), sorted(inv2_1..r))` form the canonical fingerprint; SHA-256 hash of their JSON serialization (with `-0.0 → 0.0` normalization) is the canonical hash. Implementation: `agora/canonicalizer/tensor_decomp_identity_v2.py`.
 - **Hash:** SHA-256 of `{inv1_det_prod: [...], inv2_trace_uvw: [...]}` (deterministic JSON, ordered keys, `-0.0` normalized to `0.0`).
-- **Declared limitations:**
-  - `orbit_completeness_not_proven` (partial) — invariants pass the 2×2 calibration but are not proven orbit-complete in general; separation is probabilistic. Workaround: consumers needing separation on other tensors add per-target calibration anchors.
+- **Declared limitations (revised v0.3):**
+  - `not_a_group_quotient` (total, ADDED v0.3) — does not quotient `GL(2,ℝ)³` or any subgroup. Computes class-functions on the variety. Consumers needing within-`V_T(r)` orbit identity must use a different instance (none yet shipped; Strategy 4 is the candidate, not yet attempted).
   - `fixed_to_2x2_matmul_shape` (total) — factors must reshape into 2×2 matrices; `n × n` matmul requires a separate instance.
-  - `probabilistic_separation` (partial) — distinct orbits sharing `(inv1, inv2)` tuples collide; not exhaustively tested. 2-dim invariant is a low-dim fingerprint.
-- **Calibration anchors:**
-  - Same-class: **PASS**. 4 ALS-converged rank-7 decompositions + Strassen's integer rep all hash identically. 6/6 pair-agreements.
-  - GL invariance: **PASS**. 10/10 random `GL(2)³` actions on Strassen preserve the hash.
-  - Different-class: **PASS**. Rank-8 naive decomposition hashes distinctly from rank-7 Strassen.
-  - Evidence: `harmonia/tmp/tensor_gl2_invariants_minimal_results.json`.
+  - `requires_target_tensor_disclosure` (partial, ADDED v0.3) — two rank-r decompositions of *different* tensors hash differently because the invariants encode T. Consumers looking up "have we seen this decomposition before?" must specify the target tensor in the query context.
+  - `probabilistic_separation` (partial) — distinct varieties sharing `(inv1, inv2)` tuples would collide; not exhaustively tested. 2-dim invariant is a low-dim fingerprint.
+- **Calibration anchors (re-interpreted v0.3):**
+  - Same-variety on `V_T(7)`: **PASS** by algebraic construction (not earned by quotient discipline). 4 ALS seeds + Strassen all hash to `3965f86125ddf26f`. 6/6 pair-agreements.
+  - GL invariance: **PASS**. 10/10 random `GL(2,ℝ)³` actions on Strassen preserve the hash (consistent with variety being closed under the action).
+  - Different-variety: **PASS**. Rank-8 of T, rank-9 of T, rank-7 of a random tensor T' all hash distinctly from rank-7 of T. Evidence: `harmonia/tmp/v2_invariants_diagnostic_results.json`.
+  - Within-`V_T(7)` orbit-component separation: **NOT TESTED**. The instance is not designed to provide this — see `not_a_group_quotient` declared limitation.
+  - Pilot evidence: `harmonia/tmp/tensor_gl2_invariants_minimal_results.json` (initial PASS); `harmonia/tmp/orbit_membership_de_results.json` (DE failure to connect orbits, prompting reclassification); `harmonia/tmp/v2_invariants_diagnostic_results.json` (variety-fingerprint behavior confirmed).
 - **Path to v2:** three prior strategies were falsified before this one succeeded. The falsifications are retained as data.
   - *Falsified — Strategy 1 (multi-invariant SV / Gramian / Frobenius).* Root cause: these are *orthogonal*-invariants, not GL-invariants. The T-stabilizer for matmul acts as GL, not O, so orthogonal invariants don't collapse it. Mode-unfolding SVs are tensor-of-T invariants (same across all rank-r decomps of T), so they don't discriminate orbits either.
   - *Falsified — Strategy 2 (QR reduction of first rank-1 term).* Canonicalizing only the first term leaves the remaining GL freedom uncollapsed. 0/6 pair-agreements.
@@ -267,6 +304,7 @@ The risk being guarded against is primitive-bloat through ambitious generalizati
 
 ## Version history
 
+- **v0.3** — 2026-04-25 (Phase 2 continuation; reviewer-feedback cycle on whitepaper v3) — major: (a) Four-subclass stratification (`group_quotient` / `partition_refinement` / `ideal_reduction` / `variety_fingerprint`) — each subclass carries its own verification story; the fourth subclass formalizes the equivalence-by-algebraic-variety case that the v2 → v3 cycle stress-tested into existence. (b) `tensor_decomp_identity@v2` reclassified from `group_quotient` to `variety_fingerprint` after empirical evidence (DE orbit-membership test + invariant-class-function diagnostic) showed the instance computes a class-function of `(T, rank)`, not a GL-orbit quotient. The instance remains Active under the corrected subclass; revised declared_limitations include `not_a_group_quotient` (total) and `requires_target_tensor_disclosure` (partial). (c) v1's declared_limitations expanded with `sign_gauge_boundary_oscillation` and `pinned_decimal_dynamic_range` — v1-specific numerical-fragility entries that do NOT carry over to v2 (per discipline: each version declares its own story). (d) Tuple gains `subclass` and `pre_canonical_storage` fields; cross-subclass hash comparisons forbidden. (e) Hash-collision metric renamed (was "collision budget"; the load-bearing metric is "declared-limitation false-dedup rate" — C-collisions where non-equivalent inputs map to the same canonical form because C is incomplete, not cryptographic hash collisions). Operationalization deferred to v0.4.
 - **v0.2.1** — 2026-04-23 (Phase 2 continuation) — `CANONICALIZER:tensor_decomp_identity@v2` SHIPPED after third-strategy success. Two GL(2)³-invariant per-term scalars (det product + tr UVW^T) plus `-0.0 → 0.0` normalization produce a hash that passes all three calibration anchors (same-class 4/4 + 6/6 pairs; GL invariance 10/10; different-class rank-7 vs rank-8 separation). Two prior strategies (SV/Frobenius multi-invariant; first-term QR) were falsified before this one succeeded; falsifications retained in the registry as data. Implementation landed at `agora/canonicalizer/tensor_decomp_identity_v2.py`. v1 is now superseded but retained as historical record.
 - **v0.2** — 2026-04-23 (Phase 2) — major: Type A / Type B split added as the primary architectural move in response to James's 2026-04-23 whitepaper review. Every instance now declares `type` in its tuple. Type A = deterministic quotient + hash (identity). Type B = optimization inside an already-identified orbit (display). Composition rule: Type B always consumes Type A output. Supporting changes: (a) tensor_decomp@v1 renamed tensor_decomp_identity@v1 with narrowed justification for retention despite anchor-failure (admissible *only* because failure is declared + reproducible + regression-targeted, not because failing anchors is generally OK); (b) tensor_decomp_identity@v2 and tensor_decomp_integer_rep@v1 registered as pending, split correctly between Type A and Type B; (c) failure-stability clause added to procedure contract — failure must be stable under tolerance; (d) hash primitive (SHA-256) moved to Implementation notes; contract requires determinism + namespacing + tolerance pinning, not a specific cryptographic choice; (e) Pattern 30 integration clarified — pattern_30_rearrangement@v1 is a *separate instance of the same contract*, not a second name for tensor canonicalizer; (f) "orbit discipline" formalized as a named doctrine with cross-reference to pattern_library.md Pattern 31.
 - **v0.1.1** — 2026-04-23 (later same day) — three surgical edits to the

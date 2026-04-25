@@ -103,22 +103,26 @@ INSTANCE_METADATA = {
     "name": "tensor_decomp_identity",
     "version": 2,
     "type": "A",
-    "equivalence_group": [
-        "scale_gauge",
-        "sign_gauge",
-        "permutation(S_r)",
-        "GL(2)^3 matmul-covariant action",
-        "discrete Aut(T): transpose, factor-role permutation",
-    ],
+    "subclass": "variety_fingerprint",  # reclassified 2026-04-25 v0.3
+    "equivalence_E": (
+        "decomposes the same target tensor T at the same rank r — "
+        "class-function on the variety V_T(r) of rank-r decompositions of T. "
+        "Two inputs in the same variety hash identically; inputs from "
+        "different varieties hash differently with high probability. "
+        "NOT an orbit equivalence — does not separate within-V_T(r) "
+        "orbit components."
+    ),
     "declared_limitations": [
         {
-            "name": "orbit_completeness_not_proven",
-            "severity": "partial",
+            "name": "not_a_group_quotient",
+            "severity": "total",
+            "added": "v0.3 (2026-04-25)",
             "workaround": (
-                "Invariants pass the 2x2 calibration but are not proven "
-                "orbit-complete in general. Consumers needing separation "
-                "on other tensors should add calibration anchors per tensor "
-                "target before relying on identity claims."
+                "Does not quotient GL(2,R)^3 or any subgroup. Computes "
+                "class-functions on the variety. Consumers needing within-"
+                "V_T(r) orbit identity must use a different instance "
+                "(none yet shipped; Strategy 4 explicit-stabilizer is the "
+                "candidate, not yet attempted)."
             ),
         },
         {
@@ -126,38 +130,74 @@ INSTANCE_METADATA = {
             "severity": "total",
             "workaround": (
                 "Factors must reshape into 2x2 matrices. For n x n matmul "
-                "with n > 2, a separate instance (tensor_decomp_identity_nxn@v1) "
-                "is required with the appropriate GL(n)^3 action."
+                "with n > 2, a separate instance is required with the "
+                "appropriate GL(n)^3 action."
+            ),
+        },
+        {
+            "name": "requires_target_tensor_disclosure",
+            "severity": "partial",
+            "added": "v0.3 (2026-04-25)",
+            "workaround": (
+                "Two rank-r decompositions of different tensors hash "
+                "differently because the invariants encode T. Consumers "
+                "looking up 'have we seen this decomposition before?' must "
+                "specify the target tensor in the query context."
             ),
         },
         {
             "name": "probabilistic_separation",
             "severity": "partial",
             "workaround": (
-                "Distinct orbits producing identical (inv1, inv2) tuples "
-                "would collide. Not exhaustively tested; treat as standard "
-                "hash collision risk with the added risk that 2 invariants "
-                "is a low-dimensional fingerprint."
+                "Distinct varieties sharing (inv1, inv2) tuples would "
+                "collide. Not exhaustively tested; 2-dim invariant is a "
+                "low-dim fingerprint."
             ),
         },
     ],
     "calibration_anchors": {
-        "same_class": {
-            "description": "4 ALS-converged rank-7 decomps + Strassen all hash identically",
+        "same_variety_on_V_T_7": {
+            "description": (
+                "4 ALS-converged rank-7 decomps + Strassen all hash "
+                "identically. PASS by algebraic construction (every rank-7 "
+                "decomp of 2x2 matmul has exactly one full-rank rank-1 term "
+                "+ six rank-deficient terms; multiset structure determined "
+                "by the variety's defining equations). Not earned by "
+                "quotient discipline."
+            ),
             "passed": True,
             "evidence": "harmonia/tmp/tensor_gl2_invariants_minimal_results.json",
         },
-        "different_class": {
-            "description": "rank-8 naive decomp hashes differently from rank-7 Strassen",
+        "different_variety": {
+            "description": (
+                "rank-8 of T, rank-9 of T, and rank-7 of a random tensor T' "
+                "all hash distinctly from rank-7 of T."
+            ),
             "passed": True,
+            "evidence": "harmonia/tmp/v2_invariants_diagnostic_results.json",
         },
         "gl_invariance": {
-            "description": "10/10 random GL(2)^3 actions on Strassen preserve hash",
+            "description": (
+                "10/10 random GL(2,R)^3 actions on Strassen preserve hash "
+                "(consistent with the variety being closed under the action)."
+            ),
             "passed": True,
+        },
+        "within_V_T_orbit_component_separation": {
+            "description": (
+                "DE optimizer fails to connect 4 ALS seeds to Strassen via "
+                "GL(2,R)^3. Suggests V_T(7) over R may have multiple "
+                "disconnected GL-orbit components. The instance is NOT "
+                "designed to provide within-variety orbit separation; this "
+                "is the not_a_group_quotient declared limitation."
+            ),
+            "passed": "not_applicable",
+            "evidence": "harmonia/tmp/orbit_membership_de_results.json",
         },
     },
     "implementation_path": "agora/canonicalizer/tensor_decomp_identity_v2.py::canonical_hash",
     "first_shipped": "2026-04-23",
+    "reclassified": "2026-04-25 v0.3 (group_quotient -> variety_fingerprint)",
 }
 
 
