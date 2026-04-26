@@ -274,15 +274,28 @@
       "fulfilled_request": "REQ-023",
       "forged_date": "2026-04-22",
       "known_issues": ["D must be negative and ≡ 0 or 1 mod 4; other inputs raise ValueError.", "polclass can be expensive for h > 20; consider class-number cap in bulk scans.", "ring_class_polynomial string uses PARI default; wrap in polredabs if canonical matching needed."]
+    },
+    {
+      "name": "TOOL_SAT_SOLVER",
+      "file": "techne/lib/sat_solver.py",
+      "tier": 1,
+      "interface": "solve_cnf(clauses: list[list[int]], solver: str = 'kissat', timeout: float | None = None) -> dict",
+      "dependencies": ["python-sat"],
+      "tested": true,
+      "test_source": "3-SAT satisfiable model verification, 3-SAT UNSAT, Caccetta-Haggkvist small certificate n=5/outdegree>=2/no cycles<=3 UNSAT, timeout behavior. 4/4 tests pass.",
+      "fulfilled_request": "REQ-026",
+      "fulfilled_date": "2026-04-26",
+      "forged_date": "2026-04-26",
+      "known_issues": ["PySAT's bundled kissat404 backend is present, but on this Windows harness it segfaulted on the Caccetta-Haggkvist UNSAT certificate; solver='kissat' records requested_solver='kissat' and uses Glucose3 fallback on Windows.", "Timeout returns satisfiable=None with stats.timed_out=True because SAT truth is unknown after interruption."]
     }
   ],
   "stats": {
-    "total": 21,
-    "tier1_python": 21,
+    "total": 22,
+    "tier1_python": 22,
     "tier2_optimized": 0,
     "tier3_cpp": 0,
-    "requests_open": 1,
-    "requests_fulfilled": 22,
-    "notes": "Cycle 29: TOOL_CM_ORDER_DATA shipped (REQ-023, Aporia's per-disc residual predictor). Ring-class-field conductor f exposed alongside h(O_D) and H_D."
+    "requests_open": 6,
+    "requests_fulfilled": 23,
+    "notes": "Cycle 30: TOOL_SAT_SOLVER shipped (REQ-026). PySAT wrapper exposes stable CNF IO, Kissat alias, Glucose fallback, stats, timeout interrupt semantics, and Caccetta-Haggkvist SAT-certificate calibration."
   }
 }
