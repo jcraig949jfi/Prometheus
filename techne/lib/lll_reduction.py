@@ -73,7 +73,13 @@ def lll(basis) -> np.ndarray:
     >>> R[0].tolist()
     [1, 0, 0]
     """
+    if basis is None or (hasattr(basis, '__len__') and len(basis) == 0):
+        raise ValueError("lll_reduction: empty basis (need at least one row)")
     arr = np.asarray(basis, dtype=object)
+    if arr.ndim != 2:
+        raise ValueError(
+            f"lll_reduction: expected 2D basis matrix, got shape {arr.shape}"
+        )
     n, d = arr.shape
     M = _to_pari_mat_cols(arr)
     T = _pari.qflll(M)       # transformation matrix (n x n)
@@ -90,7 +96,13 @@ def lll_with_transform(basis):
         Both row-convention. R has shape (n, d), T has shape (n, n) and is
         unimodular (det = +/-1).
     """
+    if basis is None or (hasattr(basis, '__len__') and len(basis) == 0):
+        raise ValueError("lll_reduction: empty basis (need at least one row)")
     arr = np.asarray(basis, dtype=object)
+    if arr.ndim != 2:
+        raise ValueError(
+            f"lll_reduction: expected 2D basis matrix, got shape {arr.shape}"
+        )
     n, d = arr.shape
     M = _to_pari_mat_cols(arr)
     T_pari = _pari.qflll(M)

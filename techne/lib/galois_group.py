@@ -24,10 +24,17 @@ _pari = cypari.pari
 
 def _coerce_poly(polynomial) -> str:
     if isinstance(polynomial, str):
+        if not polynomial.strip():
+            raise ValueError("galois_group: empty polynomial input")
         return polynomial
     coeffs = list(polynomial)
     if not coeffs:
-        raise ValueError("empty polynomial")
+        raise ValueError("galois_group: empty polynomial input")
+    if len(coeffs) < 2:
+        raise ValueError(
+            "galois_group: input is not a number-field polynomial "
+            "(degree must be >= 1)"
+        )
     deg = len(coeffs) - 1
     terms = []
     for i, c in enumerate(coeffs):

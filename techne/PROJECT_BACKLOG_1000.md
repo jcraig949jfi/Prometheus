@@ -624,6 +624,14 @@ immediately by parallel TDD agents.
 - **Phase 3 (5 days):** Extend to supersingular case.
 - **Phase 4 (4 days):** Cross-check vs LMFDB's ec_padic table.
 - **Deliverable:** `pm.elliptic_curves.padic_l_function(ainvs, p)`.
+- ✓ Phase 1 COMPLETED 2026-04-25 — survey at whitepapers/padic_l_survey.md
+  (841 lines, 20 references covering Mazur-Tate-Teitelbaum, Pollack,
+  Stevens, Pollack-Stevens, Greenberg-Stevens, Iovita-Pollack, Cremona,
+  Skinner-Urban, Kato; stub at `pm.elliptic_curves.padic_l_function`
+  with full input validation; 21 tests passing in
+  `prometheus_math/tests/test_padic_l_stub.py`). Phase-2 implementation
+  target: Pollack-Stevens overconvergent modular symbols for ordinary
+  EC, blueprinted from Sage's `padic_lseries_ordinary._basic_integral`.
 
 ### #39 — Conjecture-from-data tool: random-matrix-ratio surfacing
 
@@ -685,6 +693,7 @@ immediately by parallel TDD agents.
   ValueError matching list-form path.
 - **Deliverable:** explicit ValueError; gallery test no longer
   needs to accept PariError.
+- ✓ COMPLETED 2026-04-25
 
 ### #41-fix-002 — class_number(constant-poly) reject degree-0
 
@@ -694,6 +703,7 @@ immediately by parallel TDD agents.
 - B-EDGE-002: `class_number([5])` raises PariError checknf; should
   raise ValueError("polynomial must have degree >= 1").
 - **Deliverable:** explicit ValueError on degree-0 input.
+- ✓ COMPLETED 2026-04-25
 
 ### #41-fix-003 — galois_group(empty-string) ValueError consistency
 
@@ -702,6 +712,7 @@ immediately by parallel TDD agents.
 - **Effort:** 0.5 days · Phases: 1
 - B-EDGE-003: mirror of #41-fix-001 in galois_group.
 - **Deliverable:** ValueError on empty-string polynomial.
+- ✓ COMPLETED 2026-04-25
 
 ### #41-fix-004 — lll(empty) error message clarity
 
@@ -712,6 +723,7 @@ immediately by parallel TDD agents.
   "not enough values to unpack" — unpacking artefact, not
   a description.
 - **Deliverable:** explicit "lll: empty basis" message.
+- ✓ COMPLETED 2026-04-25
 
 ### #41-fix-005 — hyperbolic_volume(empty) ValueError consistency
 
@@ -722,6 +734,7 @@ immediately by parallel TDD agents.
   raise wrapper-level ValueError.
 - **Deliverable:** ValueError("empty knot identifier") before snappy
   call.
+- ✓ COMPLETED 2026-04-25
 
 ### #41-fix-006 — iwasawa.lambda_mu(empty-string) ValueError consistency
 
@@ -731,6 +744,7 @@ immediately by parallel TDD agents.
 - B-EDGE-006: `lambda_mu("", p)` raises PariError; should raise
   ValueError on empty polynomial input.
 - **Deliverable:** explicit ValueError before PARI dispatch.
+- ✓ COMPLETED 2026-04-25
 
 ### #42 — Composition test gallery
 
@@ -762,6 +776,16 @@ immediately by parallel TDD agents.
   (the 'real period' Omega).  See B-COMP-001 in BUGS.md.
 - **Deliverable:** test_faltings_height_matches_lmfdb_authority[11.a1]
   passes; xfail removed.
+- ✓ COMPLETED 2026-04-25 — Root cause re-investigated: `faltings_height`
+  is mathematically correct.  The mismatch was a Cremona/LMFDB
+  label-convention confusion in the test data (Cremona's `11a1` =
+  `[0,-1,1,-10,-20]` is LMFDB's `11.a2`; LMFDB's `11.a1` is
+  `[0,-1,1,-7820,-263580]`, related by a 5-isogeny — exactly the
+  log(5)/2 = 0.805 discrepancy observed).  Fix: composition test now
+  queries LMFDB for the ainvs by label rather than relying on a
+  hard-coded Cremona-style table.  All 5 parametrized curves
+  (11.a1, 37.a1, 43.a1, 53.a1, 389.a1) match LMFDB to 10+ decimals;
+  xfail removed.
 
 ### #43 — pm.research.bootstrap helper
 
@@ -784,6 +808,7 @@ immediately by parallel TDD agents.
   operations.
 - **Deliverable:** Tensor research becomes a first-class API.
 - ✓ Phase 1 COMPLETED 2026-04-25
+- ✓ Phase 2 COMPLETED 2026-04-25 — tensor scorers (distributional, identity-join, cross-domain correlation, silent-islands, phoneme-score, anomaly-surface)
 
 ### #45 — Symbolic computation: integration engine improvements
 
@@ -877,6 +902,11 @@ immediately by parallel TDD agents.
   Hosted at `pm.viz.dashboard()`; refreshes from registry.
 - **Deliverable:** Live capability dashboard accessible from local
   Jupyter or browser.
+- ✓ COMPLETED 2026-04-25 — `prometheus_math/viz/dashboard.py` plus
+  24 tests across the four math-tdd categories
+  (5 authority, 6 property, 8 edge, 5 composition). HTML / PNG /
+  Jupyter surfaces, optional background HTTP server with clean
+  shutdown.
 
 ---
 

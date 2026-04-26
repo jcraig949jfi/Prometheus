@@ -27,12 +27,25 @@ def _coerce_poly(polynomial) -> str:
     Accepts:
       - list/tuple of coefficients in descending order [a_n, ..., a_0] (numpy convention)
       - str (passed through to PARI as-is, e.g. 'x^2+5')
+
+    Raises ValueError on:
+      - empty string
+      - empty list
+      - degree-0 input (constant polynomial)
+      - identically-zero polynomial
     """
     if isinstance(polynomial, str):
+        if not polynomial.strip():
+            raise ValueError("class_number: empty polynomial input")
         return polynomial
     coeffs = list(polynomial)
     if not coeffs:
-        raise ValueError("polynomial coefficient list is empty")
+        raise ValueError("class_number: empty polynomial input")
+    if len(coeffs) < 2:
+        raise ValueError(
+            "class_number: input is not a number-field polynomial "
+            "(degree must be >= 1)"
+        )
     deg = len(coeffs) - 1
     terms = []
     for i, c in enumerate(coeffs):

@@ -48,6 +48,13 @@ capability reference).
 | 2026-04-25 | pm.research.lehmer.lehmer_landscape_plot | A:0 | P:0 | E:0 | C:0 | (project #46, viz only) |
 | 2026-04-25 | (audit pending — backfill from existing techne/lib/) | — | — | — | — | — |
 | Note 2026-04-25 | pm.research.tensor Phase 2 (distributional + identity-join scorers) DEFERRED | — | — | — | — | (project #44 phase 2) |
+| 2026-04-25 | pm.research.tensor.distributional_distance | A:3 | P:3 | E:3 | C:1 | (project #44 phase 2) |
+| 2026-04-25 | pm.research.tensor.distributional_matrix | A:0 | P:2 | E:1 | C:1 | (project #44 phase 2) |
+| 2026-04-25 | pm.research.tensor.identity_join | A:1 | P:1 | E:1 | C:0 | (project #44 phase 2) |
+| 2026-04-25 | pm.research.tensor.cross_domain_correlation | A:1 | P:0 | E:1 | C:0 | (project #44 phase 2) |
+| 2026-04-25 | pm.research.tensor.tensor_silent_islands | A:0 | P:0 | E:0 | C:1 | (project #44 phase 2) |
+| 2026-04-25 | pm.research.tensor.tensor_phoneme_score | A:0 | P:0 | E:0 | C:1 | (project #44 phase 2) |
+| 2026-04-25 | pm.research.tensor.tensor_anomaly_surface | A:0 | P:0 | E:0 | C:1 | (project #44 phase 2) |
 | 2026-04-25 | pm.number_fields.p_hilbert_class_field | A:5 | P:5 | E:6 | C:3 | (project #29 phase 1) |
 | 2026-04-25 | pm.number_fields.p_class_field_tower | A:5 | P:5 | E:6 | C:3 | (project #29 phase 1) |
 | 2026-04-25 | pm.number_fields.tower_terminates_p | A:1 | P:1 | E:1 | C:1 | (project #29 phase 1) |
@@ -1404,3 +1411,243 @@ Notes:
 - `mf_newspaces.dim` stores cusp-form newform-space dimension;
   `mf_dim` stores the full M_k^new dim. `newform_dim_data` exposes
   both via `cusp_only` flag.
+
+## 2026-04-25 — project #50: pm.viz.dashboard
+
+Capability-matrix dashboard rendering `pm.registry.installed()` as
+HTML / PNG / Jupyter surfaces. Pure-stdlib HTTP server (no flask).
+
+| Date | Operation | Auth | Prop | Edge | Comp | Commit |
+|---|---|---|---|---|---|---|
+| 2026-04-25 | pm.viz.dashboard.capability_matrix | A:3 | P:3 | E:3 | C:2 | (project #50) |
+| 2026-04-25 | pm.viz.dashboard.render_html         | A:2 | P:2 | E:1 | C:2 | (project #50) |
+| 2026-04-25 | pm.viz.dashboard.render_png          | A:1 | P:1 | E:1 | C:1 | (project #50) |
+| 2026-04-25 | pm.viz.dashboard.dashboard           | A:1 | P:1 | E:1 | C:1 | (project #50) |
+| 2026-04-25 | pm.viz.dashboard.save_dashboard      | A:0 | P:0 | E:2 | C:1 | (project #50) |
+| 2026-04-25 | pm.viz.dashboard.serve_dashboard     | A:0 | P:0 | E:2 | C:1 | (project #50) |
+| 2026-04-25 | pm.viz.dashboard.stop_dashboard      | A:0 | P:0 | E:0 | C:1 | (project #50) |
+
+Test totals across `prometheus_math/viz/tests/test_dashboard.py`
+(24 tests, all green in ~12 s on the Agg backend):
+
+- 5 authority tests: total >=30 backends, >=4 distinct kinds, 'cypari'
+  present, verbatim title string, summary.kinds counts agree with
+  entry kinds.
+- 6 property tests: HTML5 valid via stdlib parser, every backend name
+  embedded in the rendered HTML, render_png returns a
+  matplotlib.figure.Figure, summary.available <= summary.total,
+  sort_by='name' is lex-sorted, sort_by='available' groups available
+  first.
+- 8 edge tests: format='unknown' raises, sort_by='nope' raises, empty
+  registry renders gracefully (No backends registered.), unknown
+  filter_kind yields zero entries, save_dashboard to non-existent dir
+  raises IOError, save_dashboard with unknown suffix raises ValueError,
+  privileged port (<1024) raises ValueError, port out-of-range
+  (>65535) raises ValueError.
+- 5 composition tests: render_html(matrix) deterministic across
+  repeated calls, save_dashboard round-trip preserves all backend
+  names, capability_matrix totals match
+  pm.registry.installed() length and available count, viz namespace
+  exposes dashboard / save_dashboard / capability_matrix,
+  serve_dashboard -> urllib.urlopen -> stop_dashboard end-to-end on a
+  free OS-assigned port.
+
+Notes:
+
+- The submodule attribute `prometheus_math.viz.dashboard` is shadowed
+  by the re-exported function of the same name; the package exposes
+  an explicit alias `dashboard_module` so introspective callers (and
+  the test suite) can reach the module object cleanly.
+- The HTML page is fully self-contained: dark-theme CSS and a 30-line
+  vanilla-JS filter/sort handler are inlined. No external CDN
+  dependencies.
+- `serve_dashboard()` uses `http.server.ThreadingHTTPServer` on a
+  daemon thread; `stop_dashboard()` calls `shutdown()` and
+  `server_close()` and joins the thread (timeout 2 s).
+- `render_png()` produces a vertical heat-map with three states
+  (gray = unknown, red = unavailable-with-error, green = available)
+  via `matplotlib.colors.ListedColormap`, kept Agg-safe for headless
+  CI.
+
+## 2026-04-25 — project #38 phase 1: pm.elliptic_curves.padic_l_function (stub + survey)
+
+| Date | Operation | Auth | Prop | Edge | Comp | Commit |
+|---|---|---|---|---|---|---|
+| 2026-04-25 | pm.elliptic_curves.padic_l_function (Phase-1 stub) | A:3 | P:4 | E:10 | C:4 | (project #38 phase 1) |
+
+Survey-phase deliverable, **not** an algorithm implementation. The
+A/P/E/C scoring covers the stub's API contract and the survey
+whitepaper's completeness, per the Phase-1 brief.
+
+`techne/whitepapers/padic_l_survey.md` — 841-line literature survey
+covering:
+
+- **§1 Mathematical background:** definition of `L_p(E, T)` via the
+  Mazur-Tate-Teitelbaum interpolation property, ordinary vs
+  supersingular dispatch, the Iwasawa algebra `Lambda = Z_p[[T]]`,
+  Mazur-Tate-Teitelbaum p-adic BSD, exceptional-zero conjecture
+  (Greenberg-Stevens 1993).
+- **§2 Algorithm survey:** Manin/Mazur-Tate-Teitelbaum modular symbols
+  (2.1-2.2), Pollack's Riemann-sum algorithm for ordinary case (2.3),
+  Stevens' overconvergent symbols and the Control Theorem (2.4),
+  Greenberg-Stevens base-change for supersingular (2.5), the
+  Pollack-Stevens **plus/minus splitting** (2.6 — what Magma actually
+  uses for supersingular), Iovita-Pollack rigorous precision bounds
+  (2.7), and a comparison table (2.8).
+- **§3 Implementation analysis:** Magma's `pAdicLseries` API surface
+  documented from the V2.27 Handbook, Sage's
+  `padic_lseries_ordinary._basic_integral` blueprint reproduced as
+  pseudocode, Pollack's PARI scripts referenced, LMFDB `ec_padic`
+  schema documented, test data for 11.a3, 14.a4, 17.a4, 37.a1, 389.a1.
+- **§4 Implementation plan:** Phase 2 (7 days, ordinary case via
+  Pollack-Stevens overconvergent) day-by-day, Phase 3 (5 days,
+  Pollack plus/minus), Phase 4 (4 days, LMFDB ec_padic cross-check),
+  with a risk table covering precision underflow, modular-symbol
+  space size, alpha root computation at the ordinary/supersingular
+  boundary, the Manin-constant ambiguity, and sign conventions on T.
+- **§5 References:** 20 citations including Mazur-Tate-Teitelbaum
+  1986, Greenberg-Stevens 1993, Pollack 2003, Stevens 1994,
+  Pollack-Stevens 2011/2013, Iovita-Pollack 2006, Cremona 1997,
+  Stein 2007, Skinner-Urban 2014, Kato 2004, plus Magma/Sage/LMFDB
+  documentation.
+- **Appendices:** convention summary table (T = gamma - 1, gamma =
+  1+p; Omega^+ = 2|omega|; Manin's c) and the Phase-2 contract for
+  the stub return-shape.
+
+`prometheus_math/elliptic_curves.py` — added `padic_l_function(ainvs,
+p, T_precision=10, M_precision=20, prec='auto')` stub (~80 LOC) that
+validates inputs aggressively then raises NotImplementedError with a
+message pointing back to the survey whitepaper. Validation gate (runs
+**before** NotImplementedError):
+
+- `ainvs` must be a length-5 list/tuple of integers (not 4, not 6, no
+  floats).
+- `p` must be a prime >= 2 (trial-division check; `p=4` and `p=9`
+  reject).
+- `T_precision` must be a non-negative integer (T_precision = 0 is
+  the degenerate-but-valid case and reaches NotImplementedError).
+- `M_precision` must be a positive integer.
+- `prec` must be one of `{'ordinary', 'supersingular', 'auto'}`.
+
+`prometheus_math/tests/test_padic_l_stub.py` — 21 tests (all green in
+13.4 s):
+
+- 3 authority tests: NotImplementedError message contains
+  `"padic_l_survey.md"` and `"Phase"`; docstring cites the survey
+  path; the survey file exists on disk and has >= 400 lines.
+- 4 property tests: importable from `pm.elliptic_curves`, present in
+  `__all__`, accepts the canonical 5-integer ainvs (11.a3, 14.a4,
+  17.a4, 37.a1), signature matches survey Appendix B verbatim
+  `(ainvs, p, T_precision=10, M_precision=20, prec='auto')`.
+- 10 edge tests: 4-entry ainvs -> ValueError, 6-entry ainvs ->
+  ValueError, float in ainvs -> ValueError, p=4 (composite) ->
+  ValueError, p=9 (prime power not prime) -> ValueError, p in {1, 0,
+  -3} -> ValueError, T_precision in {-1, -100} -> ValueError,
+  M_precision in {0, -5} -> ValueError, prec='multiplicative' ->
+  ValueError, T_precision=0 reaches NotImplementedError (validation
+  passes).
+- 4 composition tests: stub coexists with `faltings_height` (still
+  works on 11.a3), `conductor` (returns 11 for 11.a3), `root_number`
+  (returns +/-1), and `__all__` retains every legacy operation.
+
+Phase-2 implementation target precisely identified: **the
+Pollack-Stevens overconvergent modular-symbol algorithm restricted to
+good ordinary primes**, blueprinted from the Sage source
+`sage/schemes/elliptic_curves/padic_lseries.py::pAdicLseriesOrdinary._basic_integral`
+and validated against Sage + LMFDB `ec_padic` for the test battery
+{11.a3 / p=5, 14.a4 / p=3, 17.a4 / p=3, 37.a1 / p=5, 389.a1 / p=5}.
+Phase-3 target: Pollack plus/minus splitting `(L_p^+, L_p^-) in
+Z_p[[T]]^2` for good supersingular reduction. Phase-4 target: sweep
+validation against LMFDB `ec_padic` for all (curve, p) with conductor
+< 1000.
+
+Notes:
+
+- Magma's algorithm choice for supersingular reduction is the Pollack
+  plus/minus splitting (§2.6), **not** the Greenberg-Stevens
+  base-change (§2.5). The base-change route is documented for
+  theoretical completeness but is not what either Magma or Sage
+  implements.
+- The Manin constant `c_E` is the chief implementation risk and is
+  flagged in §4.4: Phase 2 will require optimal curves (c_E = 1) and
+  emit a clear error otherwise; the LMFDB optimal-isogeny-class flag
+  drives the gating.
+- Sign convention on T differs across Magma/Sage/LMFDB sources;
+  Phase 4 will test both (`gamma = 1+p` vs `gamma = (1+p)^{-1}`) and
+  document the agreement.
+
+| 2026-04-25 | bugfix-batch (#41-fix-001..006 + #42a) | A:0 | P:0 | E:6 | C:1 | (no commit yet) |
+
+### Bug-fix batch 2026-04-25 — 7 fixes shipped
+
+Surgical batch resolving the six ValueError consistency gaps surfaced
+by the edge-case gallery (project #41) plus the Faltings-height
+discrepancy surfaced by the composition gallery (project #42).
+
+Fixes:
+
+1. **#41-fix-001 (B-EDGE-001)** `class_number("")` — added empty-string
+   guard in `techne/lib/class_number.py::_coerce_poly`; raises
+   `ValueError("class_number: empty polynomial input")` before PARI.
+2. **#41-fix-002 (B-EDGE-002)** `class_number([5])` — added degree-0
+   guard in same function; raises
+   `ValueError("class_number: input is not a number-field polynomial
+   (degree must be >= 1)")`.
+3. **#41-fix-003 (B-EDGE-003)** `galois_group("")` — mirrored guards
+   in `techne/lib/galois_group.py::_coerce_poly`; both empty-string
+   and degree-0 list rejected with descriptive ValueError.
+4. **#41-fix-004 (B-EDGE-004)** `lll([])` — added explicit empty/shape
+   guards in `techne/lib/lll_reduction.py::lll` and `lll_with_transform`;
+   raises `ValueError("lll_reduction: empty basis (need at least one
+   row)")` instead of the cryptic "not enough values to unpack" artefact.
+5. **#41-fix-005 (B-EDGE-005)** `hyperbolic_volume("")` — added
+   empty-knot-id guard in `techne/lib/hyperbolic_volume.py::_load_manifold`
+   before snappy is invoked; covers both empty string and empty PD-code list.
+6. **#41-fix-006 (B-EDGE-006)** `lambda_mu("", p)` — added empty-string +
+   degree-0 guards in `prometheus_math/iwasawa.py::_coerce_poly`
+   (shared by `lambda_mu`, `cyclotomic_zp_extension`,
+   `p_class_group_part`, etc.); raises
+   `ValueError("lambda_mu: empty polynomial input")`.
+7. **#42a (B-COMP-001)** Faltings-height drift on 11.a1 — root cause
+   re-investigated and traced to a **Cremona/LMFDB label-convention
+   confusion in the test data**, not a bug in `faltings_height`.
+   Cremona's `11a1` ainvs `[0,-1,1,-10,-20]` is LMFDB's `11.a2`;
+   LMFDB's `11.a1` is `[0,-1,1,-7820,-263580]` (Cremona's `11a3`),
+   related by a 5-isogeny. The 0.8047 discrepancy is exactly
+   log(5)/2 + small correction. The function returns the correct
+   Faltings height for whichever curve it is given. Fix: composition
+   test `test_faltings_height_matches_lmfdb_authority` now queries
+   LMFDB by label for the ainvs (self-consistent); xfail removed.
+
+Verification:
+
+- `prometheus_math/tests/test_edge_case_gallery.py`: 183 passed,
+  2 xfailed (unrelated to this batch); the 6 affected gallery tests
+  now use tightened `pytest.raises(ValueError, match=...)` instead of
+  the loose `(ValueError, PariError)` pair.
+- `prometheus_math/tests/test_composition_gallery.py`: 69 passed
+  (was 68 passed + 1 xfailed); the 5-curve Faltings-height
+  parametrization is fully green.
+- Regression sweep over `test_iwasawa.py`, `test_topology_properties.py`,
+  `test_elliptic_curves_properties.py`, `test_number_theory_properties.py`,
+  `test_edge_cases.py`, `test_class_number.py`, `test_galois_group.py`,
+  `test_lll_reduction.py`, `test_faltings_height.py`,
+  `test_composition.py`: 581 + 40 = 621 passed, 2 xfailed (pre-existing).
+
+Unexpected discovery: #42a was misdiagnosed in BUGS.md / B-COMP-001 as
+a real-period convention bug (the canonical "off-by-2" failure mode
+from `math-tdd.md` §Failure Modes). The actual culprit was a
+Cremona-vs-LMFDB labeling convention mismatch — same isogeny class,
+different curves. Honest math, dishonest test data. The test's new
+shape (query LMFDB by label, use the LMFDB-stored ainvs) is the
+correct authoritative pattern and prevents this class of bug for
+future Faltings-height authority tests.
+
+Total LOC: ~70 LOC of validation in 5 source files + ~25 LOC of test
+updates across the two galleries.
+
+A/P/E/C accounting: this batch is dominated by Edge-case fixes (6
+tightened edge tests), one Composition-test re-architecture (Faltings).
+No new authority/property tests; the existing test scaffold IS the
+test scaffold.
+

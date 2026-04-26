@@ -126,6 +126,14 @@ __all__ = [
     "tensor_save",
     "tensor_load",
     "SCHEMA_VERSION",
+    # Phase 2 scorers (project #44 phase 2)
+    "distributional_distance",
+    "distributional_matrix",
+    "identity_join",
+    "cross_domain_correlation",
+    "tensor_silent_islands",
+    "tensor_phoneme_score",
+    "tensor_anomaly_surface",
 ]
 
 _log = _logging.getLogger(__name__)
@@ -661,6 +669,690 @@ def tensor_save(tensor: dict, path: Union[str, Path]) -> None:
     }
     with open(sidecar_path, "w", encoding="utf-8") as f:
         _json.dump(sidecar, f, indent=2, sort_keys=True, default=str)
+
+
+# ---------------------------------------------------------------------------
+# Phase 2: helper resolvers (axis lookups)
+# ---------------------------------------------------------------------------
+
+
+def _axis_index(tensor: dict, axis: str, name: str) -> int:
+    """Resolve ``name`` to its integer index along ``axis``.
+
+    Raises
+    ------
+    KeyError
+        If ``name`` does not appear in ``tensor['axes'][axis]``. The error
+        message lists the legal names for that axis.
+    """
+    names = tensor["axes"][axis]
+    if name not in names:
+        raise KeyError(
+            f"{axis}={name!r} not found; legal {axis} names: {list(names)}"
+        )
+    return list(names).index(name)
+
+
+def _domain_invariant_values(
+    tensor: dict,
+    domain: str,
+    phoneme: str,
+    invariant: str,
+) -> np.ndarray:
+    """Return finite, masked-True values for one (domain, phoneme, invariant) cell.
+
+    Strips NaN and uses the mask to drop padded / failed cells. Returns
+    a 1-D float array (possibly empty).
+    """
+    di = _axis_index(tensor, "domain", domain)
+    pi = _axis_index(tensor, "phoneme", phoneme)
+    ii = _axis_index(tensor, "invariant", invariant)
+    data = tensor["data"][di, :, pi, ii]
+    masks = tensor["masks"][di, :, pi, ii]
+    valid = masks & np.isfinite(data)
+    return np.asarray(data[valid], dtype=float)
+
+
+# ---------------------------------------------------------------------------
+# Phase 2: distributional distances
+# ---------------------------------------------------------------------------
+
+
+_DIST_METRICS = ("js", "ks", "wass", "mmd")
+
+
+def _hist_probs(a: np.ndarray, b: np.ndarray, n_bins: int = 32):
+    """Pair-binned probability histograms for js/mmd over a shared support.
+
+    The support is ``[min(min(a), min(b)), max(max(a), max(b))]`` so that
+    the two histograms live on the same axis. Returns ``(p, q)`` 1-D
+    probability vectors that sum to 1 and are aligned bin-for-bin.
+    """
+    lo = float(min(a.min(), b.min()))
+    hi = float(max(a.max(), b.max()))
+    if hi <= lo:
+        # degenerate (constant or near-constant) — return identical
+        # one-bin histograms so JS = 0.
+        return np.array([1.0]), np.array([1.0])
+    edges = np.linspace(lo, hi, n_bins + 1)
+    pa, _ = np.histogram(a, bins=edges)
+    pb, _ = np.histogram(b, bins=edges)
+    pa = pa.astype(float)
+    pb = pb.astype(float)
+    sa = pa.sum()
+    sb = pb.sum()
+    if sa > 0:
+        pa /= sa
+    if sb > 0:
+        pb /= sb
+    return pa, pb
+
+
+def _mmd_rbf(a: np.ndarray, b: np.ndarray, sigma: Optional[float] = None) -> float:
+    """RBF-kernel Maximum Mean Discrepancy (squared, biased estimator).
+
+    MMD^2 = E[k(x,x')] + E[k(y,y')] - 2 E[k(x,y)] with
+    ``k(u,v) = exp(-||u-v||^2 / (2 sigma^2))``. Uses the median heuristic
+    for ``sigma`` when not supplied.
+    """
+    a = a.reshape(-1, 1)
+    b = b.reshape(-1, 1)
+    if sigma is None:
+        # median heuristic on the pooled pairwise distances
+        xy = np.concatenate([a, b], axis=0)
+        diffs = xy[:, None, 0] - xy[None, :, 0]
+        med = float(np.median(np.abs(diffs[diffs != 0]))) if np.any(diffs != 0) else 1.0
+        sigma = max(med, 1e-12)
+
+    def K(x, y):
+        d = (x[:, None, 0] - y[None, :, 0]) ** 2
+        return np.exp(-d / (2.0 * sigma * sigma))
+
+    kxx = float(np.mean(K(a, a)))
+    kyy = float(np.mean(K(b, b)))
+    kxy = float(np.mean(K(a, b)))
+    val = kxx + kyy - 2.0 * kxy
+    # numerical zero floor (biased estimator can produce tiny negatives)
+    return max(val, 0.0)
+
+
+def distributional_distance(
+    tensor: dict,
+    domain_a: str,
+    domain_b: str,
+    phoneme: str,
+    invariant: str,
+    metric: str = "js",
+) -> float:
+    """Distance between two domains' invariant distributions.
+
+    Parameters
+    ----------
+    tensor
+        Output of :func:`build_tensor`.
+    domain_a, domain_b
+        Domain names (must be present in ``tensor['axes']['domain']``).
+    phoneme, invariant
+        The fixed (phoneme, invariant) cell whose distribution is
+        compared across the two domains.
+    metric
+        One of:
+
+        - ``'js'``: Jensen-Shannon distance on shared-support histograms
+          (scipy.spatial.distance.jensenshannon).
+        - ``'ks'``: Kolmogorov-Smirnov statistic (scipy.stats.ks_2samp).
+        - ``'wass'``: Wasserstein-1 distance (scipy.stats.wasserstein_distance).
+        - ``'mmd'``: RBF-kernel MMD^2, biased estimator with median
+          bandwidth.
+
+    Returns
+    -------
+    float
+        Non-negative distance (0 = identical distributions). Returns
+        NaN if either domain has zero finite values for the cell.
+
+    Raises
+    ------
+    ValueError
+        If ``metric`` is not in ``{'js','ks','wass','mmd'}``.
+    KeyError
+        If any of ``domain_a/domain_b/phoneme/invariant`` is unknown.
+    """
+    if metric not in _DIST_METRICS:
+        raise ValueError(
+            f"unknown metric {metric!r}; choose from {list(_DIST_METRICS)}"
+        )
+
+    a = _domain_invariant_values(tensor, domain_a, phoneme, invariant)
+    b = _domain_invariant_values(tensor, domain_b, phoneme, invariant)
+    if a.size == 0 or b.size == 0:
+        return float("nan")
+    if domain_a == domain_b:
+        # Trivially zero by construction (same finite sample on both sides).
+        return 0.0
+
+    if metric == "js":
+        from scipy.spatial.distance import jensenshannon
+
+        p, q = _hist_probs(a, b)
+        d = float(jensenshannon(p, q, base=2))
+        return 0.0 if not np.isfinite(d) else d
+    if metric == "ks":
+        from scipy.stats import ks_2samp
+
+        return float(ks_2samp(a, b).statistic)
+    if metric == "wass":
+        from scipy.stats import wasserstein_distance
+
+        return float(wasserstein_distance(a, b))
+    # mmd
+    return float(_mmd_rbf(a, b))
+
+
+def distributional_matrix(
+    tensor: dict,
+    phoneme: str,
+    invariant: str,
+    metric: str = "js",
+) -> np.ndarray:
+    """Pairwise distance matrix between all domains for one (phoneme, invariant).
+
+    Parameters
+    ----------
+    tensor, phoneme, invariant, metric
+        See :func:`distributional_distance`.
+
+    Returns
+    -------
+    np.ndarray, shape (n_domain, n_domain)
+        Symmetric, zero-diagonal. Off-diagonal NaN when either domain is
+        empty for the cell.
+    """
+    domains = list(tensor["axes"]["domain"])
+    n = len(domains)
+    M = np.zeros((n, n), dtype=float)
+    for i in range(n):
+        for j in range(i + 1, n):
+            d = distributional_distance(
+                tensor, domains[i], domains[j], phoneme, invariant, metric=metric
+            )
+            M[i, j] = d
+            M[j, i] = d
+    return M
+
+
+# ---------------------------------------------------------------------------
+# Phase 2: identity_join
+# ---------------------------------------------------------------------------
+
+
+def identity_join(
+    tensor: dict,
+    key_invariant: str,
+    value_invariants: Optional[Sequence[str]] = None,
+):
+    """Join records across domains that share a key invariant value.
+
+    Treats one invariant as a "key" (e.g. an LMFDB-label hash, a
+    discriminant, a torsion order) and finds records across domains
+    where this key matches. The output is a wide-format DataFrame: one
+    row per matched key, columns per (domain, value_invariant).
+
+    Parameters
+    ----------
+    tensor
+        Output of :func:`build_tensor`. The ``key_invariant`` MUST be
+        a numeric invariant whose equality is meaningful.
+    key_invariant
+        Invariant name to use as the join key.
+    value_invariants
+        Optional list of invariant names to carry as columns. If
+        ``None``, all non-key invariants are carried.
+
+    Returns
+    -------
+    pandas.DataFrame
+        Columns: ``key`` plus one ``{domain}__{invariant}`` column per
+        (domain, value_invariant). One row per distinct key value that
+        appears in 2+ domains (i.e. a real cross-domain join). May be
+        empty if no key collides.
+
+    Raises
+    ------
+    KeyError
+        If ``key_invariant`` is not in ``tensor['axes']['invariant']``.
+    ImportError
+        If pandas is unavailable.
+    """
+    if pd is None:  # pragma: no cover
+        raise ImportError("identity_join requires pandas")
+    invariants = list(tensor["axes"]["invariant"])
+    if key_invariant not in invariants:
+        raise KeyError(
+            f"key_invariant={key_invariant!r} not in invariants {invariants}"
+        )
+    if value_invariants is None:
+        value_invariants = [iv for iv in invariants if iv != key_invariant]
+    else:
+        for iv in value_invariants:
+            if iv not in invariants:
+                raise KeyError(
+                    f"value invariant {iv!r} not in invariants {invariants}"
+                )
+
+    domains = list(tensor["axes"]["domain"])
+    phonemes = list(tensor["axes"]["phoneme"])
+    data = tensor["data"]
+    masks = tensor["masks"]
+    key_ii = invariants.index(key_invariant)
+
+    # Reduce key axis: a record "has key K" if ANY (phoneme, invariant=key)
+    # cell is a finite K and mask True. We collapse phonemes by taking
+    # the first finite value (keys are phoneme-independent in the
+    # canonical Harmonia setup).
+    rows = []  # list of (key_value, domain, value_dict)
+    for di, dname in enumerate(domains):
+        for oi in range(data.shape[1]):
+            key_val = float("nan")
+            for pi in range(len(phonemes)):
+                if masks[di, oi, pi, key_ii] and np.isfinite(data[di, oi, pi, key_ii]):
+                    key_val = float(data[di, oi, pi, key_ii])
+                    break
+            if not np.isfinite(key_val):
+                continue
+            value_dict = {}
+            for iv in value_invariants:
+                ii = invariants.index(iv)
+                v = float("nan")
+                for pi in range(len(phonemes)):
+                    if masks[di, oi, pi, ii] and np.isfinite(data[di, oi, pi, ii]):
+                        v = float(data[di, oi, pi, ii])
+                        break
+                value_dict[f"{dname}__{iv}"] = v
+            rows.append((key_val, dname, value_dict))
+
+    # Group by key, keep only keys appearing in 2+ domains.
+    by_key: dict = {}
+    for key_val, dname, vdict in rows:
+        bucket = by_key.setdefault(key_val, {"domains": set(), "values": {}})
+        bucket["domains"].add(dname)
+        bucket["values"].update(vdict)
+
+    cols = ["key"] + [f"{d}__{iv}" for d in domains for iv in value_invariants]
+    out_rows = []
+    for key_val, bucket in by_key.items():
+        if len(bucket["domains"]) < 2:
+            continue
+        row = {"key": key_val}
+        for c in cols[1:]:
+            row[c] = bucket["values"].get(c, float("nan"))
+        out_rows.append(row)
+    return pd.DataFrame(out_rows, columns=cols)
+
+
+# ---------------------------------------------------------------------------
+# Phase 2: cross_domain_correlation
+# ---------------------------------------------------------------------------
+
+
+def cross_domain_correlation(
+    tensor: dict,
+    phoneme_a: str,
+    invariant_a: str,
+    phoneme_b: str,
+    invariant_b: str,
+    n_bootstrap: int = 1000,
+    seed: int | None = None,
+) -> dict:
+    """Pearson correlation between two tensor cells across domains+objects.
+
+    Flattens the two (phoneme, invariant) cells across all (domain,
+    object) pairs and computes Pearson r between the surviving paired
+    finite values. Bootstraps the CI via
+    :func:`prometheus_math.research.bootstrap.bootstrap_correlation`.
+
+    Parameters
+    ----------
+    tensor
+        Output of :func:`build_tensor`.
+    phoneme_a, invariant_a, phoneme_b, invariant_b
+        The two cells to correlate. May share phoneme or invariant.
+    n_bootstrap : int, default 1000
+        Number of bootstrap resamples for the CI.
+    seed : int or None
+        Seed for the bootstrap.
+
+    Returns
+    -------
+    dict
+        ``{pearson_r, ci_lower, ci_upper, p_value, n_observations,
+        phoneme_a, invariant_a, phoneme_b, invariant_b}``. ``pearson_r``
+        is NaN with explicit warning when n_observations < 3 or either
+        side is constant.
+    """
+    import warnings
+
+    pi_a = _axis_index(tensor, "phoneme", phoneme_a)
+    ii_a = _axis_index(tensor, "invariant", invariant_a)
+    pi_b = _axis_index(tensor, "phoneme", phoneme_b)
+    ii_b = _axis_index(tensor, "invariant", invariant_b)
+    data = tensor["data"]
+    masks = tensor["masks"]
+    a = data[:, :, pi_a, ii_a].ravel()
+    b = data[:, :, pi_b, ii_b].ravel()
+    ma = masks[:, :, pi_a, ii_a].ravel()
+    mb = masks[:, :, pi_b, ii_b].ravel()
+    valid = ma & mb & np.isfinite(a) & np.isfinite(b)
+    a = a[valid]
+    b = b[valid]
+    n = int(a.size)
+
+    base = {
+        "pearson_r": float("nan"),
+        "ci_lower": float("nan"),
+        "ci_upper": float("nan"),
+        "p_value": float("nan"),
+        "n_observations": n,
+        "phoneme_a": phoneme_a,
+        "invariant_a": invariant_a,
+        "phoneme_b": phoneme_b,
+        "invariant_b": invariant_b,
+    }
+    if n < 3:
+        warnings.warn(
+            f"cross_domain_correlation: n_observations={n} (<3); returning NaN",
+            stacklevel=2,
+        )
+        return base
+    if a.std() == 0 or b.std() == 0:
+        warnings.warn(
+            "cross_domain_correlation: one side is constant; r undefined",
+            stacklevel=2,
+        )
+        return base
+
+    from scipy.stats import pearsonr
+
+    r, p = pearsonr(a, b)
+    base["pearson_r"] = float(r)
+    base["p_value"] = float(p)
+
+    # Bootstrap CI
+    try:
+        from prometheus_math.research.bootstrap import bootstrap_correlation
+
+        bc = bootstrap_correlation(a, b, n=int(n_bootstrap), seed=seed)
+        base["ci_lower"] = float(bc["ci_lower"])
+        base["ci_upper"] = float(bc["ci_upper"])
+    except Exception:  # pragma: no cover — defensive
+        base["ci_lower"] = float("nan")
+        base["ci_upper"] = float("nan")
+    return base
+
+
+# ---------------------------------------------------------------------------
+# Phase 2: tensor_silent_islands
+# ---------------------------------------------------------------------------
+
+
+def tensor_silent_islands(
+    tensor: dict,
+    threshold: float = 0.5,
+    metric: str = "js",
+    phoneme: Optional[str] = None,
+    invariant: Optional[str] = None,
+):
+    """Identify domain-pairs whose distributions are nearly disjoint.
+
+    Implements the "silent islands" finding from
+    project_silent_islands.md: pairs (A, B) of domains whose
+    distributional distance for a fixed (phoneme, invariant) is at or
+    above ``threshold`` are silent — they speak different mathematical
+    languages.
+
+    Parameters
+    ----------
+    tensor
+        Output of :func:`build_tensor`.
+    threshold : float, default 0.5
+        Pairs with ``distributional_matrix[i, j] >= threshold`` are
+        flagged.
+    metric : str, default 'js'
+        Distance metric, see :func:`distributional_distance`.
+    phoneme, invariant : str or None
+        If both supplied, restricts attention to that single cell. If
+        either is None, scans across all (phoneme, invariant) pairs and
+        averages distance across them per domain-pair.
+
+    Returns
+    -------
+    list of ((domain_a, domain_b), score)
+        Sorted by descending score. Empty list when nothing is silent.
+    """
+    domains = list(tensor["axes"]["domain"])
+    phonemes = list(tensor["axes"]["phoneme"])
+    invariants = list(tensor["axes"]["invariant"])
+
+    if phoneme is not None and invariant is not None:
+        M = distributional_matrix(tensor, phoneme, invariant, metric=metric)
+    else:
+        # Average across all cells; ignore NaN.
+        n = len(domains)
+        accum = np.full((n, n), 0.0)
+        cnt = np.zeros((n, n), dtype=int)
+        for ph in phonemes:
+            for iv in invariants:
+                M = distributional_matrix(tensor, ph, iv, metric=metric)
+                finite = np.isfinite(M)
+                accum[finite] += M[finite]
+                cnt[finite] += 1
+        with np.errstate(invalid="ignore", divide="ignore"):
+            M = np.where(cnt > 0, accum / np.maximum(cnt, 1), np.nan)
+
+    out: list = []
+    n = len(domains)
+    for i in range(n):
+        for j in range(i + 1, n):
+            v = M[i, j]
+            if np.isfinite(v) and v >= threshold:
+                out.append(((domains[i], domains[j]), float(v)))
+    out.sort(key=lambda x: -x[1])
+    return out
+
+
+# ---------------------------------------------------------------------------
+# Phase 2: tensor_phoneme_score
+# ---------------------------------------------------------------------------
+
+
+def tensor_phoneme_score(tensor: dict, phoneme: str) -> dict:
+    """Score how strongly a phoneme links domains.
+
+    For the given phoneme, scans every invariant, computes inter-domain
+    distributional matrix and pairwise correlations on the (domain,
+    object) flattened series, and produces a summary.
+
+    Parameters
+    ----------
+    tensor
+        Output of :func:`build_tensor`.
+    phoneme
+        Phoneme name; must be in ``tensor['axes']['phoneme']``.
+
+    Returns
+    -------
+    dict
+        ``{
+            'applicable_domains': list[str],
+            'mean_correlation': float,
+            'max_correlation': float,
+            'min_distributional_distance': float,
+            'summary': 'strong link' | 'partial' | 'weak'
+        }``
+    """
+    pi = _axis_index(tensor, "phoneme", phoneme)
+    domains = list(tensor["axes"]["domain"])
+    invariants = list(tensor["axes"]["invariant"])
+    data = tensor["data"]
+    masks = tensor["masks"]
+
+    applicable = []
+    for di, d in enumerate(domains):
+        if np.any(masks[di, :, pi, :]):
+            applicable.append(d)
+
+    # Pairwise correlations across invariants (within phoneme).
+    corrs: list = []
+    for ia in range(len(invariants)):
+        for ib in range(ia + 1, len(invariants)):
+            a = data[:, :, pi, ia].ravel()
+            b = data[:, :, pi, ib].ravel()
+            ma = masks[:, :, pi, ia].ravel()
+            mb = masks[:, :, pi, ib].ravel()
+            v = ma & mb & np.isfinite(a) & np.isfinite(b)
+            if v.sum() < 3:
+                continue
+            aa = a[v]
+            bb = b[v]
+            if aa.std() == 0 or bb.std() == 0:
+                continue
+            corrs.append(float(np.corrcoef(aa, bb)[0, 1]))
+
+    if corrs:
+        mean_corr = float(np.mean(np.abs(corrs)))
+        max_corr = float(np.max(np.abs(corrs)))
+    else:
+        mean_corr = float("nan")
+        max_corr = float("nan")
+
+    # Min distributional distance across (invariant, domain-pair).
+    min_d = float("inf")
+    for iv in invariants:
+        try:
+            M = distributional_matrix(tensor, phoneme, iv, metric="js")
+        except Exception:
+            continue
+        # Off-diagonal only
+        n = M.shape[0]
+        for i in range(n):
+            for j in range(i + 1, n):
+                v = M[i, j]
+                if np.isfinite(v) and v < min_d:
+                    min_d = float(v)
+    if min_d == float("inf"):
+        min_d = float("nan")
+
+    # Summary heuristic on mean |correlation|: monotone in mean_corr.
+    if not np.isfinite(mean_corr):
+        summary = "weak"
+    elif mean_corr >= 0.5:
+        summary = "strong link"
+    elif mean_corr >= 0.2:
+        summary = "partial"
+    else:
+        summary = "weak"
+
+    return {
+        "applicable_domains": applicable,
+        "mean_correlation": mean_corr,
+        "max_correlation": max_corr,
+        "min_distributional_distance": min_d,
+        "summary": summary,
+    }
+
+
+# ---------------------------------------------------------------------------
+# Phase 2: tensor_anomaly_surface
+# ---------------------------------------------------------------------------
+
+
+def tensor_anomaly_surface(
+    tensor: dict,
+    ensemble: str = "auto",
+    p_threshold: float = 0.05,
+    n_skip: int = 0,
+) -> list:
+    """Surface (phoneme, invariant) cells whose flattened values look anomalous.
+
+    Composes :func:`build_tensor` output with
+    :func:`prometheus_math.research.anomaly_surface.surface_anomalies`.
+    For each (phoneme, invariant) cell, treats the flattened finite
+    values across all (domain, object) as a pseudo-spectral series and
+    runs the anomaly surface. Cells that fail KS against every canonical
+    RMT class are returned.
+
+    Parameters
+    ----------
+    tensor
+        Output of :func:`build_tensor`.
+    ensemble : 'auto'
+        Reserved for future per-cell ensemble selection. Currently
+        passed through to surface_anomalies as the canonical class set.
+    p_threshold : float, default 0.05
+        Surfaced when KS-p < threshold against ALL canonical classes.
+    n_skip : int, default 0
+        Forwarded to surface_anomalies.
+
+    Returns
+    -------
+    list of dict
+        Each anomalous cell carries
+        ``{'phoneme', 'invariant', 'label', 'anomaly_score',
+        'candidate_classes_failed', 'ks_pvalues', 'ratios_summary'}``.
+    """
+    from prometheus_math.research.anomaly_surface import surface_anomalies
+
+    phonemes = list(tensor["axes"]["phoneme"])
+    invariants = list(tensor["axes"]["invariant"])
+    data = tensor["data"]
+    masks = tensor["masks"]
+
+    out: list = []
+    records = []
+    for pi, ph in enumerate(phonemes):
+        for ii, iv in enumerate(invariants):
+            a = data[:, :, pi, ii].ravel()
+            m = masks[:, :, pi, ii].ravel()
+            valid = m & np.isfinite(a)
+            zeros = a[valid].astype(float)
+            if zeros.size < 10:
+                continue
+            # surface_anomalies needs sorted "zeros" to compute ratios
+            zeros = np.sort(zeros)
+            records.append({
+                "label": f"{ph}/{iv}",
+                "zeros": zeros.tolist(),
+                "phoneme": ph,
+                "invariant": iv,
+            })
+
+    if not records:
+        return out
+
+    try:
+        anomalies = surface_anomalies(
+            family_query={},
+            n_zeros=max(10, max(len(r["zeros"]) for r in records)),
+            p_threshold=p_threshold,
+            n_skip=n_skip,
+            zeros_records=[{"label": r["label"], "zeros": r["zeros"]} for r in records],
+        )
+    except Exception:  # pragma: no cover — defensive
+        return out
+
+    label_to_meta = {r["label"]: (r["phoneme"], r["invariant"]) for r in records}
+    for a in anomalies:
+        ph, iv = label_to_meta.get(a.get("label"), (None, None))
+        out.append({
+            "phoneme": ph,
+            "invariant": iv,
+            "label": a.get("label"),
+            "anomaly_score": a.get("anomaly_score"),
+            "candidate_classes_failed": a.get("candidate_classes_failed"),
+            "ks_pvalues": a.get("ks_pvalues"),
+            "ratios_summary": a.get("ratios_summary"),
+        })
+    return out
 
 
 def tensor_load(path: Union[str, Path]) -> dict:

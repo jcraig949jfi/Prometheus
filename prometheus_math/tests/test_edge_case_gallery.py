@@ -135,9 +135,8 @@ class TestMahlerMeasureGallery:
 class TestClassNumberGallery:
     """5-edge sweep for pm.number_theory.class_number.
 
-    Note: empty STRING input '' currently raises PariError instead of
-    ValueError (B-EDGE-001). Empty LIST input [] raises ValueError
-    correctly. Bug filed.
+    B-EDGE-001 / B-EDGE-002 fixed 2026-04-25: empty string and degree-0
+    inputs now raise ValueError at the wrapper layer before reaching PARI.
     """
 
     def test_empty_list_raises(self):
@@ -145,10 +144,8 @@ class TestClassNumberGallery:
             pm.number_theory.class_number([])
 
     def test_empty_string_raises(self):
-        # B-EDGE-001: should be ValueError, currently PariError. Marked xfail
-        # to keep the gallery green while the fix is pending.
-        from cypari._pari import PariError
-        with pytest.raises((ValueError, PariError)):
+        # B-EDGE-001 (fixed): wrapper-level ValueError before PARI dispatch.
+        with pytest.raises(ValueError, match="empty polynomial"):
             pm.number_theory.class_number("")
 
     def test_singleton_linear_polynomial(self):
@@ -156,10 +153,8 @@ class TestClassNumberGallery:
         assert pm.number_theory.class_number([1, 1]) == 1
 
     def test_singleton_constant_polynomial_raises(self):
-        # B-EDGE-002: PARI raises a checknf error rather than the wrapper
-        # raising a clean ValueError on degree-0 input.
-        from cypari._pari import PariError
-        with pytest.raises((ValueError, PariError)):
+        # B-EDGE-002 (fixed): degree-0 input rejected with clean ValueError.
+        with pytest.raises(ValueError, match="degree must be"):
             pm.number_theory.class_number([5])
 
     def test_malformed_reducible_polynomial(self):
@@ -268,8 +263,8 @@ class TestSmithNormalFormGallery:
 class TestGaloisGroupGallery:
     """5-edge sweep for pm.number_theory.galois_group.
 
-    Note: empty STRING input '' currently raises PariError instead of
-    ValueError (B-EDGE-003). Empty LIST [] raises ValueError correctly.
+    B-EDGE-003 fixed 2026-04-25: empty STRING input now raises ValueError
+    at the wrapper layer before reaching PARI.
     """
 
     def test_empty_list_raises(self):
@@ -277,8 +272,8 @@ class TestGaloisGroupGallery:
             pm.number_theory.galois_group([])
 
     def test_empty_string_raises(self):
-        from cypari._pari import PariError
-        with pytest.raises((ValueError, PariError)):
+        # B-EDGE-003 (fixed): wrapper-level ValueError before PARI dispatch.
+        with pytest.raises(ValueError, match="empty polynomial"):
             pm.number_theory.galois_group("")
 
     def test_singleton_linear_polynomial(self):
@@ -317,13 +312,13 @@ class TestGaloisGroupGallery:
 class TestLLLGallery:
     """5-edge sweep for pm.number_theory.lll.
 
-    Note: empty input raises ValueError but with the misleading message
-    'not enough values to unpack' (B-EDGE-004). The error type is
-    correct; the message is a maintenance gap.
+    B-EDGE-004 fixed 2026-04-25: empty input now raises a descriptive
+    ValueError ('lll_reduction: empty basis...') instead of the cryptic
+    'not enough values to unpack' artefact.
     """
 
     def test_empty_raises(self):
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError, match="empty basis"):
             pm.number_theory.lll([])
 
     def test_singleton_1d_basis(self):
@@ -416,12 +411,13 @@ class TestPolredabsGallery:
 class TestHyperbolicVolumeGallery:
     """5-edge sweep for pm.topology.hyperbolic_volume.
 
-    Note: empty/bogus knot-name input raises OSError (snappy IOError),
-    not ValueError (B-EDGE-005). Filed.
+    B-EDGE-005 fixed 2026-04-25: empty knot identifier now raises a
+    wrapper-level ValueError before snappy is invoked. Bogus *non-empty*
+    names still surface as OSError from snappy itself (out of scope).
     """
 
     def test_empty_raises(self):
-        with pytest.raises((OSError, ValueError, IOError)):
+        with pytest.raises(ValueError, match="empty knot identifier"):
             pm.topology.hyperbolic_volume("")
 
     def test_singleton_smallest_hyperbolic(self):
@@ -776,13 +772,12 @@ class TestSelmer2RankGallery:
 class TestLambdaMuGallery:
     """5-edge sweep for pm.iwasawa.lambda_mu.
 
-    Note: empty STRING input raises PariError, not ValueError
-    (B-EDGE-006). Filed.
+    B-EDGE-006 fixed 2026-04-25: empty STRING input now raises
+    ValueError at the wrapper layer before PARI is invoked.
     """
 
     def test_empty_string_raises(self):
-        from cypari._pari import PariError
-        with pytest.raises((ValueError, PariError)):
+        with pytest.raises(ValueError, match="empty polynomial"):
             pm.iwasawa.lambda_mu("", 5)
 
     def test_singleton_minimal_field(self):

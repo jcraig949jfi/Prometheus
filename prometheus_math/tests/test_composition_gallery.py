@@ -281,45 +281,39 @@ def test_rank0_regulator_is_exactly_one():
         assert pm.elliptic_curves.regulator(ainvs) == 1.0
 
 
-_FALTINGS_XFAIL_LABELS = {
-    # 11.a1: ours -0.30801, LMFDB +0.49671. Difference 0.8047 -- consistent
-    # with the disc<0 ('non-rectangular lattice') convention drift documented
-    # in BUGS.md / B-COMP-001. Fix is in the elliptic_curves.faltings_height
-    # backlog as a follow-up.
-    "11.a1",
-}
-
-
 @pytest.mark.skipif(not _LMFDB_OK, reason="LMFDB mirror unreachable")
 @pytest.mark.parametrize(
-    "label,ainvs",
+    "label",
     [
-        pytest.param("11.a1",   _EC_11A1,
-                     marks=pytest.mark.xfail(reason="B-COMP-001: disc<0 Faltings drift")),
-        ("37.a1",   _EC_37A1),
-        ("43.a1",   _EC_43A1),
-        ("53.a1",   _EC_53A1),
-        ("389.a1",  _EC_389A1),
+        "11.a1",   # disc<0; previously xfailed under B-COMP-001
+        "37.a1",
+        "43.a1",
+        "53.a1",
+        "389.a1",
     ],
 )
-def test_faltings_height_matches_lmfdb_authority(label, ainvs):
+def test_faltings_height_matches_lmfdb_authority(label):
     """Our faltings_height matches LMFDB ec_curvedata.faltings_height to 1e-3.
 
     Composition: pm.elliptic_curves.faltings_height + LMFDB live lookup.
     The LMFDB column was independently computed by Magma; a numerical
     drift in our period / minimal-model pipeline would surface here.
 
-    NOTE: 11.a1 is xfailed because of the disc<0 real-period convention
-    drift documented as B-COMP-001 in BUGS.md.  The other four curves
-    (37.a1, 43.a1, 53.a1, 389.a1) all match LMFDB to 10+ decimals.
+    Authority: LMFDB ec_curvedata.faltings_height. We query the row by
+    LMFDB label and use the *LMFDB-stored ainvs* as the input — the
+    earlier B-COMP-001 mismatch on 11.a1 was traced to a Cremona/LMFDB
+    label-convention confusion (Cremona's 11a1 = LMFDB 11.a2 and vice
+    versa), not a bug in faltings_height itself. Fixed by querying
+    LMFDB authoritatively for both ainvs and the reference value.
     """
     rows = pm.databases.lmfdb.elliptic_curves(label=label, limit=1)
     if not rows:
         pytest.skip(f"LMFDB has no row for {label}")
     lmfdb_h = float(rows[0]["faltings_height"])
+    ainvs = list(rows[0]["ainvs"])
     our_h = pm.elliptic_curves.faltings_height(ainvs)
     assert abs(our_h - lmfdb_h) < 1e-3, (
-        f"{label}: ours={our_h:.6f}, lmfdb={lmfdb_h:.6f}")
+        f"{label}: ainvs={ainvs}, ours={our_h:.6f}, lmfdb={lmfdb_h:.6f}")
 
 
 # ---------------------------------------------------------------------------

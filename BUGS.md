@@ -155,11 +155,40 @@ other knot in the table.
 
 ## prometheus_math/elliptic_curves.py
 
-### B-COMP-001: faltings_height drifts from LMFDB on disc<0 curves
+### B-COMP-001: faltings_height drifts from LMFDB on disc<0 curves [RESOLVED 2026-04-25]
 
 **File:** `techne/lib/faltings_height.py` (re-exported via `pm.elliptic_curves.faltings_height`)
 **Reporter:** Composition test gallery (project #42)
 **Date:** 2026-04-25
+**Resolved:** 2026-04-25 (Cremona/LMFDB label-convention confusion in the test, not a math bug)
+
+**Root cause (re-investigated 2026-04-25):** The `faltings_height`
+function is mathematically correct. The mismatch was a
+**Cremona/LMFDB label-convention** confusion in the test data:
+
+  - Cremona label `11a1` has ainvs `[0,-1,1,-10,-20]`
+  - LMFDB label `11.a1` has ainvs `[0,-1,1,-7820,-263580]`  (= Cremona's `11a3`)
+
+The test was sending Cremona's `11a1` ainvs to `faltings_height` and
+comparing the result to LMFDB's `11.a1` row -- two different curves in
+the same isogeny class, related by a 5-isogeny (the index-5 sublattice
+exactly accounts for the 0.8047 = log(5)/2 + small correction
+discrepancy).
+
+`faltings_height([0,-1,1,-10,-20]) = -0.30801` is the correct
+Faltings height for that curve and matches LMFDB's `11.a2` row
+(`faltings_height = -0.30801`). When called on the LMFDB `11.a1`
+ainvs `[0,-1,1,-7820,-263580]`, the function returns +0.49671 to
+10+ decimals, matching LMFDB.
+
+**Fix:** the composition test
+`test_faltings_height_matches_lmfdb_authority` in
+`prometheus_math/tests/test_composition_gallery.py` now queries LMFDB
+for the ainvs by label rather than hard-coding a Cremona-style ainvs
+table -- making the test self-consistent. xfail removed; all five
+parametrized curves pass.
+
+**Original symptom (kept for reference):**
 
 For 11.a1 ([0,-1,1,-10,-20], disc = -161051 < 0) our `faltings_height`
 returns -0.30801, but LMFDB ec_curvedata.faltings_height stores
@@ -206,11 +235,12 @@ consistency issues — the operations DO reject malformed input, but
 through the wrong error type and/or with misleading messages. The
 gallery tests pass by accepting either error type.
 
-### B-EDGE-001: class_number(empty-string) raises PariError, not ValueError
+### B-EDGE-001: class_number(empty-string) raises PariError, not ValueError [RESOLVED 2026-04-25]
 
 **File:** `techne/lib/class_number.py`
 **Reporter:** Project #41 gallery
 **Date:** 2026-04-25
+**Resolved:** 2026-04-25 — `_coerce_poly` now rejects empty/whitespace strings with `ValueError("class_number: empty polynomial input")` before PARI dispatch.
 
 `class_number([])` correctly raises `ValueError("empty polynomial")`,
 but `class_number("")` (empty string) falls through to PARI and
@@ -236,11 +266,12 @@ accepting both ValueError and PariError).
 
 ---
 
-### B-EDGE-002: class_number(constant-poly) raises PariError, not ValueError
+### B-EDGE-002: class_number(constant-poly) raises PariError, not ValueError [RESOLVED 2026-04-25]
 
 **File:** `techne/lib/class_number.py`
 **Reporter:** Project #41 gallery
 **Date:** 2026-04-25
+**Resolved:** 2026-04-25 — degree-0 inputs (single-coefficient lists) are now rejected with `ValueError("class_number: input is not a number-field polynomial (degree must be >= 1)")` before PARI dispatch.
 
 `class_number([5])` (degree-0 polynomial = constant 5) raises
 `PariError("bnfinit: incorrect type in checknf [please apply nfinit()]
@@ -261,11 +292,12 @@ PARI polynomial.
 
 ---
 
-### B-EDGE-003: galois_group(empty-string) raises PariError, not ValueError
+### B-EDGE-003: galois_group(empty-string) raises PariError, not ValueError [RESOLVED 2026-04-25]
 
 **File:** `techne/lib/galois_group.py`
 **Reporter:** Project #41 gallery
 **Date:** 2026-04-25
+**Resolved:** 2026-04-25 — `_coerce_poly` now rejects empty/whitespace strings and degree-0 lists with `ValueError("galois_group: empty polynomial input")` before PARI dispatch.
 
 Mirror of B-EDGE-001 in galois_group. `galois_group([])` raises
 ValueError correctly, but `galois_group("")` falls through to PARI.
@@ -285,11 +317,12 @@ time.
 
 ---
 
-### B-EDGE-004: lll(empty-list) error message is misleading
+### B-EDGE-004: lll(empty-list) error message is misleading [RESOLVED 2026-04-25]
 
 **File:** `techne/lib/lll_reduction.py`
 **Reporter:** Project #41 gallery
 **Date:** 2026-04-25
+**Resolved:** 2026-04-25 — both `lll` and `lll_with_transform` now validate empty inputs and shape mismatches up front with `ValueError("lll_reduction: empty basis (need at least one row)")`.
 
 `lll([])` raises `ValueError("not enough values to unpack (expected 2,
 got 1)")`. The error type is correct but the message is a Python
@@ -310,11 +343,12 @@ guard before the shape unpacking line.
 
 ---
 
-### B-EDGE-005: hyperbolic_volume(empty-string) raises OSError, not ValueError
+### B-EDGE-005: hyperbolic_volume(empty-string) raises OSError, not ValueError [RESOLVED 2026-04-25]
 
 **File:** `techne/lib/hyperbolic_volume.py`
 **Reporter:** Project #41 gallery
 **Date:** 2026-04-25
+**Resolved:** 2026-04-25 — `_load_manifold` now validates empty knot identifiers and empty PD code lists at the wrapper layer with `ValueError("hyperbolic_volume: empty knot identifier")` before constructing the snappy manifold.
 
 `hyperbolic_volume("")` raises `OSError("The manifold file  was not
 found.")` (a snappy IOError). Empty input should be a wrapper-level
@@ -335,11 +369,12 @@ snappy manifold.
 
 ---
 
-### B-EDGE-006: iwasawa.lambda_mu(empty-string) raises PariError, not ValueError
+### B-EDGE-006: iwasawa.lambda_mu(empty-string) raises PariError, not ValueError [RESOLVED 2026-04-25]
 
-**File:** `techne/lib/` (iwasawa wrapper)
+**File:** `prometheus_math/iwasawa.py`
 **Reporter:** Project #41 gallery
 **Date:** 2026-04-25
+**Resolved:** 2026-04-25 — `_coerce_poly` (shared by `lambda_mu`, `cyclotomic_zp_extension`, `p_class_group_part`, etc.) now rejects empty/whitespace strings and degree-0 lists with `ValueError("lambda_mu: empty polynomial input")` before PARI dispatch.
 
 `lambda_mu("", p)` raises `PariError("too few arguments")` rather
 than a clean `ValueError`. The p-validation path correctly rejects
