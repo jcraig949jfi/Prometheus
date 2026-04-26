@@ -49,7 +49,13 @@ Public surface:
     by_author(author_name, max_results)             -> list[dict]
     by_msc(msc_code, year_range, max_results)       -> list[dict]
     reviews(zbmath_id)                              -> dict | None
-    msc_codes()                                     -> list[(code, desc)]
+    msc_codes(level='leaf'|'subject'|'top')         -> list[str]
+    msc_descriptions(level=...)                     -> dict[str, str]
+    msc_lookup(code)                                -> dict
+    msc_subtree(parent_code)                        -> list[str]
+    msc_path(code)                                  -> list[(code, desc)]
+    msc_search(query, max_results=20)               -> list[dict]
+    msc_anchors()                                   -> list[(code, desc)]   # legacy
     probe(timeout)                                  -> bool
 
 Result dict shape:
@@ -74,10 +80,11 @@ Coverage / known limitations:
   * Only a subset of zbMATH is "open"; closed records may return less
     detail. The 422 / "field required" errors that appear on URL play
     are surfaced here as empty results.
-  * Full MSC2020 has ~6500 leaf codes; ``msc_codes()`` ships only the
-    top-level (XX) and second-level (XX-XX) entries — about 200. A
-    full-tree expansion is left for a future task (the upstream JSON is
-    on https://msc2020.org/).
+  * Full MSC2020 has ~6000 leaf codes; the leveled ``msc_codes()`` /
+    ``msc_lookup()`` / ``msc_search()`` API ships an embedded snapshot
+    of all of them (built from https://msc2020.org/MSC_2020.csv). The
+    legacy curated ~200-entry anchor list is still available via
+    ``msc_anchors()``.
   * No authentication is required for this open subset, but the API is
     polite-rate-limited; this wrapper enforces 1 request/second.
 """
@@ -449,14 +456,267 @@ def reviews(zbmath_id) -> Optional[dict]:
 
 
 # ---------------------------------------------------------------------------
-# MSC2020 — top-level + section codes
+# MSC2020 — full hierarchy (project #48)
 #
-# This is a hard-coded snapshot of the MSC2020 top-level (00..97, ~64 codes)
-# plus the most-requested section anchors. Full leaf-level MSC2020 has ~6500
-# entries; expanding to that would either ship a 200KB JSON or pull from
-# https://msc2020.org/ at import-time. For now we keep it ergonomic.
+# The full ~6000-leaf hierarchy lives in ``_msc2020_data.py`` (built from
+# https://msc2020.org/MSC_2020.csv on 2026-04-25). This file exposes the
+# public lookup / search / traversal API.
+#
+# Three normalized levels:
+#
+#     top      — 2-character (e.g. "11" = "Number theory")
+#     subject  — 3-character (e.g. "11G" = "Arithmetic algebraic geometry")
+#     leaf     — 5-character (e.g. "11G05" = "Elliptic curves over global
+#                fields"; also "00-01" form for general-section leaves)
+#
+# Reference: https://mathscinet.ams.org/msnhtml/msc2020.pdf and the AMS /
+# zbMATH joint CSV at https://msc2020.org/.
 # ---------------------------------------------------------------------------
 
+from . import _msc2020_data as _msc
+
+_VALID_LEVELS = ("leaf", "subject", "top")
+
+
+def _normalize_code(raw) -> str:
+    """Canonicalize a user-supplied code.
+
+    Accepts: "11G05", "11g05", " 11G05 ", "11" / "11-XX" (top), "11G" /
+    "11Gxx" (subject), "00-01" (5-char leaf). Strips whitespace,
+    upper-cases the letter, and rewrites the redundant suffix forms
+    (-XX, xx) so they match the keys in ``_msc.TOP/SUBJECT/LEAF``.
+    """
+    if raw is None:
+        raise ValueError("MSC code must not be None")
+    s = str(raw).strip()
+    if not s:
+        raise ValueError("MSC code must not be empty")
+    # Drop the redundant 'XX' / 'xx' / '-XX' suffixes upstream callers
+    # sometimes pass through from the AMS notation.
+    upper = s.upper()
+    if upper.endswith("-XX") and len(upper) == 5:
+        return upper[:2]                # "11-XX" -> "11"
+    if upper.endswith("XX") and len(upper) == 5 and upper[2].isalpha():
+        return upper[:3]                # "11GXX" -> "11G"
+    # Generic shape preservation: digits + letter + digits or digits + dash + digits.
+    # 5-char leaf "11G05" -> "11G05" ; "11-01" stays as is.
+    return upper
+
+
+def _classify_code(canonical: str) -> str:
+    """Return the level of a *canonical* code, or raise KeyError if unknown."""
+    if canonical in _msc.TOP:
+        return "top"
+    if canonical in _msc.SUBJECT:
+        return "subject"
+    if canonical in _msc.LEAF:
+        return "leaf"
+    raise KeyError(f"unknown MSC2020 code: {canonical!r}")
+
+
+def _description_for(canonical: str, level: str) -> str:
+    if level == "top":
+        return _msc.TOP[canonical]
+    if level == "subject":
+        return _msc.SUBJECT[canonical]
+    return _msc.LEAF[canonical]
+
+
+def msc_codes(level: str = "leaf") -> list[str]:
+    """Return all MSC2020 codes at the requested level, sorted.
+
+    Parameters
+    ----------
+    level : {'leaf', 'subject', 'top'}
+        - ``'leaf'``    -> 5-character codes (e.g. ``"11G05"``); ~6000 entries.
+        - ``'subject'`` -> 3-character codes (e.g. ``"11G"``); ~530 entries.
+        - ``'top'``     -> 2-character codes (e.g. ``"11"``); 63 entries.
+
+    Raises
+    ------
+    ValueError
+        If ``level`` is not one of the three valid values.
+    """
+    if level not in _VALID_LEVELS:
+        raise ValueError(
+            f"unknown level {level!r}; must be one of "
+            f"{', '.join(_VALID_LEVELS)}"
+        )
+    if level == "leaf":
+        return sorted(_msc.LEAF.keys())
+    if level == "subject":
+        return sorted(_msc.SUBJECT.keys())
+    return sorted(_msc.TOP.keys())
+
+
+def msc_descriptions(level: str = "leaf") -> dict[str, str]:
+    """Return ``code -> description`` for every MSC2020 code at ``level``.
+
+    The dict is a fresh copy; mutating it does not affect the embedded
+    snapshot.
+    """
+    if level not in _VALID_LEVELS:
+        raise ValueError(
+            f"unknown level {level!r}; must be one of "
+            f"{', '.join(_VALID_LEVELS)}"
+        )
+    if level == "leaf":
+        return dict(_msc.LEAF)
+    if level == "subject":
+        return dict(_msc.SUBJECT)
+    return dict(_msc.TOP)
+
+
+def msc_lookup(code) -> dict:
+    """Resolve a single MSC code to its full ancestry record.
+
+    Returns a dict::
+
+        {
+            'code':                   canonical code,
+            'level':                  'top' | 'subject' | 'leaf',
+            'description':            string,
+            'parent_code':            str | None,
+            'parent_description':     str | None,
+            'top_level_code':         str,
+            'top_level_description':  str,
+        }
+
+    The lookup is robust to case and surrounding whitespace
+    (``"11g05"``, ``" 11G05 "``, ``"11Gxx"`` all resolve as expected).
+
+    Raises
+    ------
+    ValueError
+        If ``code`` is empty, whitespace, or ``None``.
+    KeyError
+        If the (normalized) code is not in the MSC2020 spec.
+    """
+    canonical = _normalize_code(code)
+    level = _classify_code(canonical)
+    desc = _description_for(canonical, level)
+
+    if level == "top":
+        parent_code: str | None = None
+        parent_desc: str | None = None
+        top_code = canonical
+    elif level == "subject":
+        parent_code = canonical[:2]
+        parent_desc = _msc.TOP.get(parent_code)
+        top_code = parent_code
+    else:  # leaf
+        # Two leaf shapes: "11G05" -> parent "11G"; "00-01" -> parent "00".
+        if canonical[2] == "-":
+            parent_code = canonical[:2]
+            parent_desc = _msc.TOP.get(parent_code)
+        else:
+            parent_code = canonical[:3]
+            parent_desc = _msc.SUBJECT.get(parent_code)
+        top_code = canonical[:2]
+
+    return {
+        "code":                  canonical,
+        "level":                 level,
+        "description":           desc,
+        "parent_code":           parent_code,
+        "parent_description":    parent_desc,
+        "top_level_code":        top_code,
+        "top_level_description": _msc.TOP.get(top_code),
+    }
+
+
+def msc_subtree(parent_code) -> list[str]:
+    """All leaf codes that descend from a given top or subject node.
+
+    Parameters
+    ----------
+    parent_code : str
+        A top-level (``"11"``) or subject (``"11G"``) code. Leaves are
+        returned in sorted order. Unknown / malformed parents return ``[]``
+        (this is intentional; callers can ``msc_lookup`` first if they
+        want a hard error).
+
+    Examples
+    --------
+    >>> '11G05' in msc_subtree('11')
+    True
+    >>> set(msc_subtree('11G')).issubset(set(msc_subtree('11')))
+    True
+    """
+    try:
+        canonical = _normalize_code(parent_code)
+    except ValueError:
+        return []
+    if canonical not in _msc.TOP and canonical not in _msc.SUBJECT:
+        return []
+    n = len(canonical)
+    return sorted(c for c in _msc.LEAF if c.startswith(canonical) and len(c) > n)
+
+
+def msc_path(code) -> list[tuple[str, str]]:
+    """Walk the ancestry chain top -> subject -> leaf for ``code``.
+
+    Returns ``[(top_code, top_desc), (subject_code, subject_desc),
+    (leaf_code, leaf_desc)]`` for a leaf; shorter for higher-level
+    queries (``[(top_code, top_desc)]`` for a top-level code).
+    """
+    info = msc_lookup(code)
+    path: list[tuple[str, str]] = []
+    if info["top_level_code"]:
+        path.append((info["top_level_code"], info["top_level_description"]))
+    if info["level"] == "subject":
+        path.append((info["code"], info["description"]))
+    elif info["level"] == "leaf":
+        # Insert subject if any.
+        if info["parent_code"] and info["parent_code"] != info["top_level_code"]:
+            path.append((info["parent_code"], info["parent_description"]))
+        path.append((info["code"], info["description"]))
+    return path
+
+
+def msc_search(query: str, max_results: int = 20) -> list[dict]:
+    """Substring-match ``query`` against descriptions at every level.
+
+    Returns a list of ``msc_lookup``-shaped dicts, sorted by (level
+    priority [leaf, subject, top], code) so the most specific hits come
+    first. The match is case-insensitive.
+
+    Raises
+    ------
+    ValueError
+        If ``query`` is empty or whitespace.
+    """
+    if query is None:
+        raise ValueError("msc_search query must not be None")
+    needle = str(query).strip().lower()
+    if not needle:
+        raise ValueError("msc_search query must not be empty")
+
+    out: list[dict] = []
+    # Search leaves first (most specific), then subjects, then top.
+    for code, desc in _msc.LEAF.items():
+        if needle in desc.lower():
+            out.append(msc_lookup(code))
+            if len(out) >= max_results:
+                return out
+    for code, desc in _msc.SUBJECT.items():
+        if needle in desc.lower():
+            out.append(msc_lookup(code))
+            if len(out) >= max_results:
+                return out
+    for code, desc in _msc.TOP.items():
+        if needle in desc.lower():
+            out.append(msc_lookup(code))
+            if len(out) >= max_results:
+                return out
+    return out
+
+
+# Legacy compatibility: the pre-#48 msc_codes() returned ``[(code, desc), ...]``
+# anchored at top-level + a curated section list, with codes in their
+# AMS-suffixed form ("11-XX", "11G"). The leveled msc_codes(level=...) API
+# above is the new canonical entry point; ``msc_anchors()`` below preserves
+# the legacy shape so existing callers keep working unchanged.
 _MSC_TOP: list[tuple[str, str]] = [
     ("00-XX", "General and overarching topics; collections"),
     ("01-XX", "History and biography"),
@@ -628,13 +888,15 @@ _MSC_SECOND: list[tuple[str, str]] = [
 ]
 
 
-def msc_codes() -> list[tuple[str, str]]:
-    """MSC2020 classification anchors as ``[(code, description), ...]``.
+def msc_anchors() -> list[tuple[str, str]]:
+    """Legacy curated anchor list as ``[(code, description), ...]``.
 
-    Returns ~200 entries: every top-level XX-XX section plus a curated set
-    of the most-requested second-level XX-YY anchors. Note this is a
-    hard-coded snapshot, not a live fetch — full leaf-level MSC2020 has
-    ~6500 entries and is left for a future task.
+    Pre-#48 callers used ``msc_codes()`` (no args) to fetch ~200
+    AMS-suffixed entries (top-level "11-XX" + section "11G" anchors).
+    The new canonical entry point is ``msc_codes(level=...)`` over the
+    full ~6000-leaf snapshot in ``_msc2020_data.py``; this function is
+    kept for backward compatibility with cartography pipelines that
+    still consume the (code, desc) tuple form.
     """
     return list(_MSC_TOP) + list(_MSC_SECOND)
 

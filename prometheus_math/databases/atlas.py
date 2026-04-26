@@ -301,7 +301,243 @@ def probe(timeout: float = 3.0) -> bool:  # noqa: ARG001 -- interface uniformity
     return True
 
 
+# ---------------------------------------------------------------------------
+# Project #47 -- expanded spec API
+# ---------------------------------------------------------------------------
+#
+# The originally-shipped wrapper (project #5) above exposes ``lookup``,
+# ``all_simple``, ``by_order``, etc.  The spec for project #47 (the
+# without-GAP atlas) requests a sibling API that names operations more
+# explicitly and adds error semantics tailored for downstream callers
+# that prefer raises over None-sentinels.
+#
+# These functions delegate into the same embedded snapshot.
+
+# Names of sporadic simples in canonical (ascending |G|) order.  These
+# are the 26 simples in the classification's exceptional family.  Used
+# by all_sporadic and (transitively) by largest_in_atlas.
+_SPORADIC_NAMES_ORDERED: list[str] = [
+    "M11", "M12", "J1", "M22", "J2", "M23", "HS", "J3", "M24", "McL",
+    "He", "Ru", "Suz", "ON", "Co3", "Co2", "Fi22", "HN", "Ly", "Th",
+    "Fi23", "Co1", "J4", "Fi24'", "B", "M",
+]
+
+# Names considered "classical" and shipped in the snapshot.  Listed in
+# the order the spec expects (small-to-large, then PSL families).
+_CLASSICAL_NAMES_ORDERED: list[str] = [
+    # alternating
+    "A5", "A6", "A7", "A8", "A9", "A10", "A11", "A12",
+    # symmetric
+    "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10",
+    # PSL_2(p)
+    "PSL(2,5)", "PSL(2,7)", "PSL(2,11)", "PSL(2,13)",
+    "PSL(2,17)", "PSL(2,19)", "PSL(2,23)",
+    # PSL_n(q) higher rank (small)
+    "PSL(3,2)", "PSL(3,3)", "PSL(3,4)",
+]
+
+
+def normalize_name(name: str) -> str:
+    """Canonicalise a user-supplied group name to its ATLAS-table key.
+
+    Robust to whitespace, case, underscores, hyphens, and several
+    well-known long-form spellings:
+        normalize_name("monster")     == "M"
+        normalize_name("Monster")     == "M"
+        normalize_name("MATHIEU 11")  == "M11"
+        normalize_name("fi24'")       == "Fi24'"
+        normalize_name("FI24bar")     == "Fi24'"
+        normalize_name("fi24p")       == "Fi24'"
+        normalize_name("baby monster") == "B"
+        normalize_name("PSL_2(7)")    == "PSL(2,7)"
+
+    Raises:
+        ValueError: if ``name`` is None, empty, or whitespace.
+        KeyError:   if no entry matches.
+    """
+    if name is None:
+        raise ValueError("normalize_name: name must be a string, got None")
+    s = str(name).strip()
+    if not s:
+        raise ValueError("normalize_name: empty name")
+    # First try the index directly.
+    nk = _norm_key(s)
+    if nk in _NAME_INDEX:
+        return _NAME_INDEX[nk]["name"]
+    # A handful of natural-language synonyms not stored as aliases.
+    synonyms = {
+        "monster": "M",
+        "thefriendlygiant": "M",
+        "friendlygiant": "M",
+        "fischer-griessmonster": "M",
+        "babymonster": "B",
+        # Fi24 is conventionally the simple group Fi24' in atlas usage when
+        # bare; the non-simple Fi24 = Fi24'.2 is not in our snapshot.
+        "fi24": "Fi24'",
+        "fi24bar": "Fi24'",
+        "fi24p": "Fi24'",
+        "fischer24": "Fi24'",
+        "fischer24bar": "Fi24'",
+        "fischer24p": "Fi24'",
+    }
+    s2 = synonyms.get(nk)
+    if s2 is not None:
+        return s2
+    raise KeyError(f"normalize_name: no ATLAS entry matches {name!r}")
+
+
+def get_group(name: str) -> dict:
+    """Look up a group entry by canonical name or alias.
+
+    Compared to ``lookup``: raises rather than returning ``None``.
+
+    Raises:
+        ValueError: if ``name`` is empty / blank / None.
+        KeyError:   if no entry matches.
+    """
+    if name is None:
+        raise ValueError("get_group: name must be a string, got None")
+    s = str(name).strip()
+    if not s:
+        raise ValueError("get_group: empty name")
+    canonical = normalize_name(s)  # raises KeyError if unknown
+    e = _NAME_INDEX.get(_norm_key(canonical))
+    if e is None:  # pragma: no cover - normalize_name guarantees presence
+        raise KeyError(f"get_group: {name!r} resolved to "
+                       f"{canonical!r} but is not in ATLAS_TABLE")
+    return copy.deepcopy(e)
+
+
+def all_sporadic() -> list[str]:
+    """Canonical names of the 26 sporadic simple groups, ascending |G|.
+
+    Reference: ATLAS introduction; Conway-Sloane SPLAG Ch.29.
+    The list is exhaustive: every sporadic simple appears.
+    """
+    return list(_SPORADIC_NAMES_ORDERED)
+
+
+def all_classical_in_atlas() -> list[str]:
+    """Canonical names of the classical groups bundled in the snapshot.
+
+    Includes the alternating A_n (n=5..12), symmetric S_n (n=3..10),
+    PSL_2(p) for p in {5,7,11,13,17,19,23}, and PSL_n(q) for the small
+    cases PSL(3,2), PSL(3,3), PSL(3,4).
+    """
+    return list(_CLASSICAL_NAMES_ORDERED)
+
+
+def search_by_order(order: int, tolerance: float = 0.0) -> list[dict]:
+    """Find all snapshot entries with a given order (or within ratio bound).
+
+    Parameters
+    ----------
+    order : int
+        Group order to look for.  Must be >= 0.
+    tolerance : float, default 0.0
+        If > 0, returns entries whose order falls in
+        ``[order/(1+tolerance), order*(1+tolerance)]``.  If 0, an exact
+        match is required.
+
+    Returns
+    -------
+    list[dict]
+        Deep-copied entries; sorted ascending by order then name.
+
+    Raises
+    ------
+    ValueError
+        If ``tolerance < 0`` or ``order < 0``.
+    """
+    if tolerance < 0:
+        raise ValueError(f"search_by_order: tolerance must be >= 0, "
+                         f"got {tolerance}")
+    o = int(order)
+    if o < 0:
+        raise ValueError(f"search_by_order: order must be >= 0, got {o}")
+    if o == 0:
+        return []
+    if tolerance == 0:
+        rows = [copy.deepcopy(e) for e in ATLAS_TABLE
+                if e.get("order") == o]
+    else:
+        lo = o / (1 + tolerance)
+        hi = o * (1 + tolerance)
+        rows = [copy.deepcopy(e) for e in ATLAS_TABLE
+                if lo <= e.get("order", -1) <= hi]
+    rows.sort(key=lambda r: (r["order"], r["name"]))
+    return rows
+
+
+def largest_in_atlas() -> dict:
+    """Return the snapshot entry with the largest |G| (the Monster M).
+
+    The Monster has order 8.08 * 10^53 and is the largest of the 26
+    sporadic simples.  Reference: Griess 1982; ATLAS p.220.
+    """
+    e = max(ATLAS_TABLE, key=lambda r: r.get("order", 0))
+    return copy.deepcopy(e)
+
+
+def is_simple(name: str) -> bool:
+    """Predicate: is the group simple?
+
+    Returns False (not raise) for unknown names.  This matches the
+    intuition that "Z/4 is simple" is a well-formed query with answer
+    False, not a malformed query.
+    """
+    if name is None:
+        return False
+    s = str(name).strip()
+    if not s:
+        return False
+    e = lookup(s)
+    if e is None:
+        # Unknown -- can we still answer for canonical cyclic forms?
+        # A name like "Z/p" for p prime should answer True even if not
+        # in the snapshot; but we don't extend, we just say False.
+        return False
+    return bool(e.get("is_simple"))
+
+
+def outer_aut_order(name: str) -> int:
+    """Return |Out(G)| as an int.  Raises KeyError if unknown."""
+    e = get_group(name)
+    out = e.get("out_order")
+    if out is None:
+        raise KeyError(f"outer_aut_order: no out_order for {name!r}")
+    return int(out)
+
+
+def character_table_dim(name: str) -> int:
+    """Number of irreducible complex characters (= conjugacy classes).
+
+    Raises KeyError if unknown or if the entry lacks the field.
+    """
+    e = get_group(name)
+    n = e.get("num_conjugacy_classes")
+    if n is None:
+        raise KeyError(f"character_table_dim: not recorded for {name!r}")
+    return int(n)
+
+
+def max_subgroups(name: str) -> list[str]:
+    """Return the list of maximal subgroup classes (by name).
+
+    May be empty for entries whose maximal subgroups aren't curated.
+    Raises KeyError if the group itself isn't in the snapshot.
+    """
+    e = get_group(name)
+    return list(e.get("max_subgroups", []))
+
+
+# Friendly aliases for naming-uniformity with the rest of the wrapper:
+# the first generation of the API uses ``schur_multiplier`` and
+# ``outer_automorphism_group``.  We keep those.  ``schur_multiplier``
+# already returns a string, so no shim needed.
+
 __all__ = [
+    # Original (project #5) API
     "lookup",
     "all_simple",
     "character_table",
@@ -314,4 +550,15 @@ __all__ = [
     "gap_backend_available",
     "probe",
     "SNAPSHOT_META",
+    # Project #47 expanded API
+    "get_group",
+    "all_sporadic",
+    "all_classical_in_atlas",
+    "search_by_order",
+    "largest_in_atlas",
+    "is_simple",
+    "outer_aut_order",
+    "character_table_dim",
+    "max_subgroups",
+    "normalize_name",
 ]

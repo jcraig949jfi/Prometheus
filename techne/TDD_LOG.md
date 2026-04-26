@@ -40,6 +40,12 @@ capability reference).
 | 2026-04-25 | pm.research.bootstrap.bayesian_bootstrap | A:0 | P:1 | E:1 | C:0 | (project #43) |
 | 2026-04-25 | pm.research.bootstrap.bootstrap_correlation | A:0 | P:2 | E:2 | C:1 | (project #43) |
 | 2026-04-25 | pm.research.bootstrap.holm_bonferroni | A:1 | P:1 | E:1 | C:1 | (project #43) |
+| 2026-04-25 | pm.research.lehmer.is_reciprocal | A:1 | P:2 | E:1 | C:1 | (project #46) |
+| 2026-04-25 | pm.research.lehmer.sample_reciprocal_polynomial | A:0 | P:1 | E:2 | C:1 | (project #46) |
+| 2026-04-25 | pm.research.lehmer.random_scan | A:2 | P:3 | E:3 | C:2 | (project #46) |
+| 2026-04-25 | pm.research.lehmer.sub_lehmer_witnesses | A:1 | P:1 | E:0 | C:1 | (project #46) |
+| 2026-04-25 | pm.research.lehmer.random_scan_to_dataframe | A:0 | P:0 | E:0 | C:1 | (project #46) |
+| 2026-04-25 | pm.research.lehmer.lehmer_landscape_plot | A:0 | P:0 | E:0 | C:0 | (project #46, viz only) |
 | 2026-04-25 | (audit pending — backfill from existing techne/lib/) | — | — | — | — | — |
 | Note 2026-04-25 | pm.research.tensor Phase 2 (distributional + identity-join scorers) DEFERRED | — | — | — | — | (project #44 phase 2) |
 | 2026-04-25 | pm.number_fields.p_hilbert_class_field | A:5 | P:5 | E:6 | C:3 | (project #29 phase 1) |
@@ -231,6 +237,12 @@ capability reference).
 | 2026-04-25 | pm.viz.plot_critical_strip | A:0 | P:1 | E:0 | C:1 | (project #37) |
 | 2026-04-25 | pm.viz.save_zeros_plot | A:0 | P:0 | E:2 | C:1 | (project #37) |
 | 2026-04-25 | pm.* edge-case gallery (33 ops, 5-edge sweep) | A:1 | P:1 | E:3 | C:0 | (project #41 gallery) |
+| 2026-04-25 | pm.databases.zbmath.msc_codes | A:2 | P:3 | E:1 | C:0 | (project #48) |
+| 2026-04-25 | pm.databases.zbmath.msc_descriptions | A:1 | P:1 | E:1 | C:0 | (project #48) |
+| 2026-04-25 | pm.databases.zbmath.msc_lookup | A:3 | P:2 | E:3 | C:1 | (project #48) |
+| 2026-04-25 | pm.databases.zbmath.msc_subtree | A:0 | P:1 | E:1 | C:2 | (project #48) |
+| 2026-04-25 | pm.databases.zbmath.msc_path | A:0 | P:0 | E:0 | C:1 | (project #48) |
+| 2026-04-25 | pm.databases.zbmath.msc_search | A:1 | P:0 | E:1 | C:1 | (project #48) |
 
 ### Project #41 (gallery sweep) — Edge-case gallery follow-up — summary
 
@@ -1181,3 +1193,214 @@ This backfill is itself a project (project #6 in the 1000 backlog:
 A tool is "TDD-quality" iff it scores ≥ 2 in every category. The bar
 for shipping new operations is TDD-quality. Existing operations may
 fall below until backfilled.
+
+### Project #47 — `pm.databases.atlas` ATLAS without GAP — summary
+
+22 new tests (project #47 spec API), all green. Combined with the 30
+project-#5 tests already in the file: 52/52 pass on 2026-04-25,
+runtime ~10s. Embedded snapshot grew from 80 to 86 entries after
+adding the PSL(2,17), PSL(2,19), PSL(2,23), PSL(3,2), PSL(3,3),
+PSL(3,4) classical groups; max-subgroup-class lists curated for 73
+of 86 entries.
+
+Module: `prometheus_math/databases/atlas.py` (~570 LOC, original API
+plus 10 new public ops: `get_group`, `all_sporadic`,
+`all_classical_in_atlas`, `search_by_order`, `largest_in_atlas`,
+`is_simple`, `outer_aut_order`, `character_table_dim`,
+`max_subgroups`, `normalize_name`).
+Data: `prometheus_math/databases/_atlas_data.py` (~1090 LOC, 86 group
+records).
+Tests: `prometheus_math/databases/tests/test_atlas.py` (~770 LOC).
+
+Authority anchors verified (project #47 block):
+- |M| = 808017424794512875886459904961710757005754368000000000 (54
+  digits) — Conway et al. 1985 ATLAS p.220, Griess 1982.
+- Out(Co_1) = 1 — ATLAS p.180.
+- |PSL(2,7)| = 168 = 2^3 * 3 * 7 — ATLAS p.3 (~= GL_3(2) ~= PSL(3,2)).
+- |M_11| = 7920 = 2^4 * 3^2 * 5 * 11 — ATLAS p.18.
+- Exactly 26 sporadic simple groups — Aschbacher-Smith 2004.
+
+Test rubric (per math-tdd skill, >= 2 in every category) — project
+#47 spec block only:
+
+| Category | Count | Notes |
+|---|---|---|
+| Authority   | 5 | Monster 54-digit order, Co1 outer aut = 1, PSL(2,7) order 168, exact-26 sporadic count, M11 order 7920. |
+| Property    | 6 | all_sporadic count is 26; all orders >= 1 across sporadics + classicals; schur_multiplier always non-empty string; normalize_name idempotent; normalize_name strips whitespace + case; outer_aut_order always positive int. |
+| Edge        | 6 | get_group("XXX") -> KeyError; get_group("") / "   " / None -> ValueError; search_by_order(0) -> []; tolerance < 0 -> ValueError; is_simple("Z/4") -> False (cyclic composite); normalize_name unknown / empty / None error split. |
+| Composition | 5 | search_by_order(120) returns S5 with consistent character_table_dim; all_sporadic ordered ascending so last == largest_in_atlas; get_group(normalize_name(x)) round-trip across 6 spelling variants; max_subgroups("M11") chain back to get_group; all_classical_in_atlas() / is_simple agreement. |
+
+Original project-#5 tests above this block contribute another 7 / 6
+/ 6 / 7 across the four categories, so the file as a whole scores
+12 / 12 / 12 / 12 — well clear of the >=2 bar.
+
+A:5 P:6 E:6 C:5 — meets the math-tdd >=2-in-every-category bar
+comfortably (project #47 spec API alone).
+
+Subtleties surfaced during TDD:
+- "Fi24" without a prime suffix is ambiguous in ATLAS literature
+  (could mean Fi24' or Fi24 = Fi24'.2). The synonyms table maps
+  bare "Fi24" to the simple group Fi24', matching ATLAS p.207
+  convention; the non-simple Fi24 = Fi24'.2 is not in the snapshot.
+- PSL(3,2) has the same order (168) as PSL(2,7) and is in fact
+  isomorphic to it (and to GL_3(2)); search_by_order(168) returns
+  both names so callers can pick the convention. Same for PSL(3,4)
+  vs A_8 at order 20160 — same order, NON-isomorphic groups (this
+  is the famous Schottenfels accident of 1900).
+- Out(PSL(3,4)) = D_12 (order 12), the largest outer automorphism
+  group of any simple group of order < 1 million; the snapshot
+  records this as `"D_12"` since the structure name is more
+  informative than the order.
+- Mutation safety: `get_group` returns a deep copy, so caller-side
+  mutation of the returned dict cannot corrupt the snapshot. Tested.
+
+### Project #48 — `pm.databases.zbmath` MSC2020 full leaf-code expansion — summary
+
+Pre-#48: `msc_codes()` returned ~200 hand-curated `(code, desc)` tuples
+spanning the 63 top-level subjects + a curated set of section anchors.
+
+Post-#48: full embedded snapshot of MSC2020 lives in
+`prometheus_math/databases/_msc2020_data.py` (6,604 lines, three flat
+dicts: TOP=63, SUBJECT=534, LEAF=6006). Built from the AMS / zbMATH
+joint CSV at https://msc2020.org/MSC_2020.csv (downloaded 2026-04-25)
+with descriptions trimmed of LaTeX-y `[See also ...]` and
+`\{For X, see Y\}` cross-reference annotations.
+
+New public API in `zbmath.py` (~210 LOC added):
+
+  - `msc_codes(level)`        — sorted list of bare codes at the chosen level
+  - `msc_descriptions(level)` — `code -> description` dict
+  - `msc_lookup(code)`        — full ancestry record for one code
+  - `msc_subtree(parent)`     — all leaves under a top or subject
+  - `msc_path(code)`          — top -> subject -> leaf walk
+  - `msc_search(query)`       — case-insensitive substring search
+
+Legacy `msc_codes()` (no-arg, returning `(code, desc)` tuples) became
+`msc_anchors()` to free the canonical name for the new leveled API.
+The one in-tree caller (`tests/test_zbmath.py::test_msc_codes`) was
+updated and renamed to `test_msc_anchors_legacy_shape` plus a new
+`test_msc_codes_full_hierarchy_levels`.
+
+Authority anchors (project #48 block):
+- 11G05 = "Elliptic curves over global fields" — AMS MSC2020,
+  cross-checked against `https://msc2020.org/MSC_2020.csv` row
+  "11G05" (bracketed `[See also 14H52]` cross-reference stripped).
+- 11 = "Number theory" — AMS MSC2020 top-level list.
+- Top-level count = 63, NOT 64 — AMS allocates 63 of the 64 numeric
+  slots in 00..97 (the spec text occasionally cites 64, but only 63
+  are populated; the test docstring records the discrepancy).
+- 00A35 = "Methodology of mathematics" — AMS MSC2020 Section 00A.
+- 11G = "Arithmetic algebraic geometry (Diophantine geometry)" —
+  Section 11G header.
+- Total leaf count = 6006 (>= the 5500 lower bound the spec demanded).
+
+Test rubric (per math-tdd skill, >= 2 in every category) — project #48
+block, file `prometheus_math/databases/tests/test_zbmath_msc.py`:
+
+| Category | Count | Notes |
+|---|---|---|
+| Authority   | 6 | 11G05 description, 11 = Number theory, top count = 63, 5500-leaf lower bound, 00A35 = Methodology of mathematics, 11G = Arithmetic algebraic geometry. |
+| Property    | 6 | Leaves all 5-char; subjects all 3-char NN[A-Z]; tops all 2-digit; descriptions non-empty at every level; `msc_lookup` is case- and whitespace-insensitive (Hypothesis, 40 examples); every leaf's two-digit prefix is an allocated top. |
+| Edge        | 6 | Unknown code -> KeyError; empty/whitespace -> ValueError; subtree of nonexistent -> []; empty search query -> ValueError; `level='unknown'` -> ValueError; unallocated subject (11W) -> KeyError. |
+| Composition | 4 | `msc_path(c)[-1]` agrees with `msc_lookup(c)`; `msc_search('elliptic curves')` surfaces 11G05; every top has a non-empty subtree containing only descendants; subject-level subtree is a subset of its parent top-level subtree. |
+
+A:6 P:6 E:6 C:4 — meets the math-tdd >=2-in-every-category bar with
+margin. 23 tests in `test_zbmath_msc.py` plus 1 updated test in
+`test_zbmath.py`; full zbmath suite (32 tests) green in 18.9s.
+
+Performance: substring search over the full 6006-leaf corpus
+finishes in <0.1s (gate is <1s); the embedded dict is loaded once
+at import time and never touched after that.
+
+Subtleties surfaced during TDD:
+- The CSV emits two leaf shapes: `NNAdd` (e.g. "11G05") and `NN-dd`
+  (e.g. "00-01"). Both are 5-character codes; the latter sits as a
+  direct child of the top-level subject (no intermediate 3-char
+  subject), so `msc_lookup("00-01").parent_code == "00"` instead of a
+  subject-level parent. `msc_path("00-01")` returns 2 levels, not 3.
+- The advertised 64 top-level subjects in the AMS prose is a
+  numbering convention; only 63 are allocated. The authority test
+  asserts the actual 63 and the docstring records the discrepancy.
+- Description normalization strips `\{For X, see Y\}` and
+  `[See also ...]` cross-references; the canonical "Elliptic curves
+  over global fields" description matches the test exactly without
+  the `[See also 14H52]` tail the CSV ships.
+- `msc_anchors()` (legacy) is preserved unchanged, so cartography
+  pipelines that consume the old (code, desc) tuple shape keep
+  working. New code should use the leveled API instead.
+
+| 2026-04-25 | pm.databases.lmfdb.newform_full | A:3 | P:3 | E:2 | C:3 | (project #49) |
+| 2026-04-25 | pm.databases.lmfdb.newform_hecke_eigenvalues_full | A:1 | P:1 | E:2 | C:1 | (project #49) |
+| 2026-04-25 | pm.databases.lmfdb.newform_character_orbit | A:1 | P:1 | E:1 | C:1 | (project #49) |
+| 2026-04-25 | pm.databases.lmfdb.newform_inner_twists | A:1 | P:0 | E:1 | C:0 | (project #49) |
+| 2026-04-25 | pm.databases.lmfdb.newform_galois_representations | A:0 | P:0 | E:1 | C:0 | (project #49) |
+| 2026-04-25 | pm.databases.lmfdb.newforms_by_level_weight | A:1 | P:2 | E:1 | C:1 | (project #49) |
+| 2026-04-25 | pm.databases.lmfdb.newforms_by_dim | A:1 | P:1 | E:1 | C:1 | (project #49) |
+| 2026-04-25 | pm.databases.lmfdb.newform_dim_data | A:1 | P:1 | E:1 | C:0 | (project #49) |
+| 2026-04-25 | pm.databases.lmfdb.dirichlet_character_orbit | A:1 | P:0 | E:2 | C:1 | (project #49) |
+
+### Project #49 — `pm.databases.lmfdb` modular forms full extraction — summary
+
+Forged 9 new typed accessors in `prometheus_math/databases/lmfdb.py`
+(~600 LOC) covering the LMFDB classical-modular-form ecosystem:
+
+- `newform_full(label)` — joins `mf_newforms` + `mf_hecke_nf` +
+  `mf_newform_portraits`, exposes Atkin-Lehner as a dict, structures
+  `hecke_ring`, computes `nontrivial_character` flag.
+- `newform_hecke_eigenvalues_full(label, p_max)` — pulls full
+  power-basis ap arrays from `mf_hecke_nf`, with a built-in sieve
+  capped at `min(p_max, maxp)`.
+- `newform_character_orbit(label)` — composes newform lookup with
+  `char_dirichlet` orbit lookup at `<level>.<orbit_label>`.
+- `newform_inner_twists(label)` — sweeps `mf_twists_nf` with
+  `source_label = label`.
+- `newform_galois_representations(label)` — searches
+  `modlgal_reps.related_objects` via JSONB containment for
+  `["MF", label]` (LMFDB's only forward-pointer from MF to mod-l).
+- `newforms_by_level_weight(N, k)` — sweep on `mf_newforms`.
+- `newforms_by_dim(d, level_max)` — label-list query.
+- `newform_dim_data(level_max, weight_max)` — aggregated table over
+  `mf_newspaces`, summed across character orbits.
+- `dirichlet_character_orbit(orbit_label)` — exact-label lookup in
+  `char_dirichlet`.
+
+Also added `_validate_newform_label` (parses `N.k.x.y` with strict
+ValueError on malformed input), `_atkin_lehner_to_dict`, a lazy
+`_MF_SCHEMA_CACHE`, and a `_primes_up_to` sieve for ap indexing.
+
+50/50 tests in `prometheus_math/databases/tests/test_lmfdb_mf.py`
+pass against the live mirror (~54s):
+
+- 7 authority tests (LMFDB-keyed: 11.2.a.a, 23.2.a.a, char 23.b,
+  Atkin-Lehner at p=11, Sato-Tate group `1.2.3.c1`, etc.)
+- 27 property tests: 10 parametrized over a known-label set + 17
+  Hypothesis-driven (label parsing, level/weight/dim positivity,
+  AL prime keys divide level, dim_data nonnegativity, sweep
+  consistency, dim-table consistency).
+- 6 edge tests: nonexistent (returns None), malformed labels (5
+  variants raise ValueError), level=0 / weight=0 / negative
+  (ValueError), dim=0 / dim<0 (`[]`), p_max<2 (`{}`), empty char
+  orbit string (ValueError).
+- 4 composition tests: full vs sweep agree, traces[1..] vs ap
+  cross-table, dim-1 newforms appear in level/weight sweep,
+  character orbit consistency at level=11.
+
+Live `newform_full("11.2.a.a")` exercise (selected fields):
+`level=11, weight=2, dim=1, hecke_ring={poly:[0,1], rank:1,
+power_basis:True, maxp:997}, atkin_lehner={11:-1}, fricke_eigenval=-1,
+sato_tate_group="1.2.3.c1", analytic_rank=0, traces[:5]=[1,-2,-1,2,1],
+related_objects=["EllipticCurve/Q/11/a"], nf_label="1.1.1.1",
+inner_twist_count=1, char_orbit_label="a"`.
+
+Notes:
+
+- Spec called for Sato-Tate group `"1.2.3.1.1a"` for 11.2.a.a but the
+  live mirror returns `"1.2.3.c1"`. Authority test updated to match
+  the live LMFDB convention.
+- `modlmf_forms` table uses `base_label` like `3.5.0.1` (mod-l form
+  index, not classical newform label) — the bridge MF -> mod-l is
+  through `modlgal_reps.related_objects` JSONB, indexed via `@>`
+  containment.
+- `mf_newspaces.dim` stores cusp-form newform-space dimension;
+  `mf_dim` stores the full M_k^new dim. `newform_dim_data` exposes
+  both via `cusp_only` flag.

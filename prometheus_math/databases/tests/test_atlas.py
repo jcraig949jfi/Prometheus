@@ -527,6 +527,291 @@ def test_gap_backend_predicate_is_bool():
     assert isinstance(atlas.gap_backend_available(), bool)
 
 
+# ===========================================================================
+# Project #47 -- expanded spec API
+# ===========================================================================
+#
+# The block below exercises the without-GAP atlas spec: ``get_group``,
+# ``all_sporadic``, ``all_classical_in_atlas``, ``search_by_order``,
+# ``largest_in_atlas``, ``is_simple``, ``outer_aut_order``,
+# ``character_table_dim``, ``max_subgroups``, and ``normalize_name``.
+# These tests are independent of the original-API tests above; they
+# focus on the new error semantics (raise vs None) and the canonical-
+# name spec.
+
+# Authority: the published Monster |M|, Co1 outer aut, PSL(2,7) order,
+# the count 26, M11 order.  Each docstring cites Conway et al. 1985.
+
+# ---------------------------------------------------------------------------
+# Authority tests (project #47 spec)
+# ---------------------------------------------------------------------------
+
+@_skip_no_backend
+def test_p47_authority_monster_order_54_digits():
+    """|M| equals the published 54-digit value.
+
+    Reference: Conway, Curtis, Norton, Parker, Wilson 1985, ATLAS p.220;
+    Griess 1982 'The Friendly Giant'; Conway-Sloane SPLAG Ch.29.
+    """
+    expected = 808017424794512875886459904961710757005754368000000000
+    assert atlas.get_group("M")["order"] == expected
+    # Length sanity: 54 digits.
+    assert len(str(expected)) == 54
+
+
+@_skip_no_backend
+def test_p47_authority_co1_out_is_trivial():
+    """Out(Co_1) = 1.
+
+    Reference: Conway et al. 1985, ATLAS p.180; Conway 1969.
+    """
+    assert atlas.outer_aut_order("Co1") == 1
+
+
+@_skip_no_backend
+def test_p47_authority_psl_2_7_order_168():
+    """|PSL(2,7)| = 168 = 2^3 * 3 * 7.
+
+    Reference: ATLAS p.3; PSL(2,7) is the second-smallest non-abelian
+    simple group and is isomorphic to GL_3(2) and PSL(3,2).
+    """
+    g = atlas.get_group("PSL(2,7)")
+    assert g["order"] == 168
+    assert g["order"] == 2 ** 3 * 3 * 7
+
+
+@_skip_no_backend
+def test_p47_authority_exactly_26_sporadics():
+    """The classification of finite simple groups names exactly 26
+    sporadic simple groups.
+
+    Reference: Aschbacher-Smith 'The Classification of Quasithin Groups'
+    (2004) -- definitive completion; ATLAS 1985 lists all 26.
+    """
+    sporadics = atlas.all_sporadic()
+    assert len(sporadics) == 26
+    assert len(set(sporadics)) == 26
+
+
+@_skip_no_backend
+def test_p47_authority_m11_order_7920():
+    """|M_11| = 7920 = 2^4 * 3^2 * 5 * 11; smallest sporadic simple.
+
+    Reference: Mathieu 1873; ATLAS p.18; Conway et al. 1985.
+    """
+    g = atlas.get_group("M11")
+    assert g["order"] == 7920
+    assert g["order"] == 2 ** 4 * 3 ** 2 * 5 * 11
+
+
+# ---------------------------------------------------------------------------
+# Property-based tests (project #47 spec)
+# ---------------------------------------------------------------------------
+
+@_skip_no_backend
+def test_p47_property_all_sporadic_count_is_26():
+    """all_sporadic() returns exactly 26 names; this is the count
+    fixed by the classification of finite simple groups."""
+    names = atlas.all_sporadic()
+    assert len(names) == 26
+    assert all(isinstance(n, str) and n for n in names)
+
+
+@_skip_no_backend
+def test_p47_property_all_orders_are_positive():
+    """Every group has order >= 1.  By group-theoretic definition."""
+    for nm in atlas.all_sporadic() + atlas.all_classical_in_atlas():
+        g = atlas.get_group(nm)
+        assert g["order"] >= 1
+
+
+@_skip_no_backend
+def test_p47_property_schur_multiplier_is_string():
+    """schur_multiplier is always a non-empty string (never None)."""
+    for nm in atlas.all_sporadic() + atlas.all_classical_in_atlas():
+        sm = atlas.schur_multiplier(nm)
+        assert isinstance(sm, str), f"{nm}: schur_multiplier is {type(sm)}"
+        assert sm, f"{nm}: schur_multiplier is empty"
+
+
+@_skip_no_backend
+def test_p47_property_normalize_name_idempotent():
+    """normalize_name is idempotent: f(f(x)) == f(x)."""
+    samples = ["M", "monster", "M11", "PSL_2(7)", "fi24p", "FI24", "Co1"]
+    for s in samples:
+        once = atlas.normalize_name(s)
+        twice = atlas.normalize_name(once)
+        assert once == twice, f"not idempotent on {s!r}: {once} -> {twice}"
+
+
+@_skip_no_backend
+def test_p47_property_normalize_name_strips_whitespace_and_case():
+    """Whitespace + case normalisation."""
+    assert atlas.normalize_name("  M11 ") == "M11"
+    assert atlas.normalize_name("MONSTER") == "M"
+    assert atlas.normalize_name("monster") == "M"
+    assert atlas.normalize_name("Monster") == "M"
+    assert atlas.normalize_name("\tM\n") == "M"
+
+
+@_skip_no_backend
+def test_p47_property_outer_aut_order_is_positive_int():
+    """|Out(G)| is always a positive integer."""
+    for nm in atlas.all_sporadic() + atlas.all_classical_in_atlas():
+        oa = atlas.outer_aut_order(nm)
+        assert isinstance(oa, int)
+        assert oa >= 1
+
+
+# ---------------------------------------------------------------------------
+# Edge-case tests (project #47 spec)
+# ---------------------------------------------------------------------------
+
+@_skip_no_backend
+def test_p47_edge_get_group_unknown_raises_keyerror():
+    """get_group on a non-existent name raises KeyError."""
+    with pytest.raises(KeyError):
+        atlas.get_group("ThisIsNotAGroup")
+    with pytest.raises(KeyError):
+        atlas.get_group("M9999")
+
+
+@_skip_no_backend
+def test_p47_edge_get_group_empty_raises_valueerror():
+    """get_group on empty / whitespace / None raises ValueError."""
+    with pytest.raises(ValueError):
+        atlas.get_group("")
+    with pytest.raises(ValueError):
+        atlas.get_group("   ")
+    with pytest.raises(ValueError):
+        atlas.get_group(None)
+
+
+@_skip_no_backend
+def test_p47_edge_search_by_order_zero_returns_empty():
+    """search_by_order(0) returns an empty list (no group of order 0)."""
+    assert atlas.search_by_order(0) == []
+
+
+@_skip_no_backend
+def test_p47_edge_search_by_order_negative_tolerance_raises():
+    """tolerance < 0 raises ValueError."""
+    with pytest.raises(ValueError):
+        atlas.search_by_order(120, tolerance=-0.1)
+    with pytest.raises(ValueError):
+        atlas.search_by_order(-1)
+
+
+@_skip_no_backend
+def test_p47_edge_is_simple_z4_is_false():
+    """Z/4 is cyclic of composite order 4, hence not simple.
+
+    Tests that is_simple returns False for an unknown / composite-cyclic
+    name without raising.
+    """
+    assert atlas.is_simple("Z/4") is False
+    assert atlas.is_simple("ThisIsNotAGroup") is False
+    assert atlas.is_simple("") is False
+    assert atlas.is_simple(None) is False
+
+
+@_skip_no_backend
+def test_p47_edge_normalize_name_unknown_raises_keyerror():
+    """normalize_name on unknown -> KeyError; on empty -> ValueError."""
+    with pytest.raises(KeyError):
+        atlas.normalize_name("XYZ_unknown_group")
+    with pytest.raises(ValueError):
+        atlas.normalize_name("")
+    with pytest.raises(ValueError):
+        atlas.normalize_name(None)
+
+
+# ---------------------------------------------------------------------------
+# Composition tests (project #47 spec)
+# ---------------------------------------------------------------------------
+
+@_skip_no_backend
+def test_p47_composition_search_by_order_120_includes_s5():
+    """|S_5| = 120; search_by_order(120) returns at least S_5.  Cross-
+    chain test: each result's character_table_dim matches
+    get_group(name)['num_conjugacy_classes'].
+    """
+    rows = atlas.search_by_order(120)
+    names = {r["name"] for r in rows}
+    assert "S5" in names
+    # Cross-check character_table_dim agreement with the snapshot.
+    for r in rows:
+        if r.get("num_conjugacy_classes") is not None:
+            assert (atlas.character_table_dim(r["name"]) ==
+                    r["num_conjugacy_classes"])
+
+
+@_skip_no_backend
+def test_p47_composition_largest_is_monster_via_sporadic_list():
+    """all_sporadic() should contain the Monster as the last element (in
+    ascending |G| order), and largest_in_atlas() returns that same entry.
+    """
+    sporadics = atlas.all_sporadic()
+    last = sporadics[-1]
+    assert last == "M"
+    big = atlas.largest_in_atlas()
+    assert big["name"] == "M"
+    # The two-step lookup ought to agree.
+    assert atlas.get_group(last)["order"] == big["order"]
+
+
+@_skip_no_backend
+def test_p47_composition_normalize_then_get_round_trip():
+    """get_group(normalize_name(x)) == get_group(canonical(x)).
+
+    Documented in the spec: normalize_name canonicalises before lookup.
+    """
+    pairs = [("monster", "M"), ("MONSTER", "M"), ("M11", "M11"),
+             ("FI24p", "Fi24'"), ("psl_2(7)", "PSL(2,7)"),
+             ("Hall-Janko", "J2")]
+    for given, canon in pairs:
+        a = atlas.get_group(atlas.normalize_name(given))
+        b = atlas.get_group(canon)
+        assert a["order"] == b["order"], (
+            f"{given} -> {atlas.normalize_name(given)} order "
+            f"{a['order']} != {canon} order {b['order']}"
+        )
+        assert a["name"] == b["name"]
+
+
+@_skip_no_backend
+def test_p47_composition_max_subgroups_chain_to_get_group():
+    """Each entry in M_11's max_subgroups list should itself be lookup-
+    able by the wrapper -- where it is in the snapshot at all.
+
+    Composition: max_subgroups(G) -> lookup of children -> orders.
+    Some entries (e.g. '2.S_4') are *covers* not bare snapshot entries;
+    we don't require all to resolve, but we require at least one does.
+    """
+    children = atlas.max_subgroups("M11")
+    assert len(children) >= 1
+    resolved = 0
+    for c in children:
+        try:
+            atlas.get_group(c)
+            resolved += 1
+        except KeyError:
+            pass
+    # At least one should resolve (S_5 in the M_11 list).
+    assert resolved >= 1
+
+
+@_skip_no_backend
+def test_p47_composition_all_classical_subset_of_index():
+    """Every entry in all_classical_in_atlas() must be findable via
+    get_group, and its is_simple flag must agree across the two paths.
+    """
+    for nm in atlas.all_classical_in_atlas():
+        g = atlas.get_group(nm)
+        assert g["name"] == nm
+        assert atlas.is_simple(nm) == g["is_simple"]
+
+
 # ---------------------------------------------------------------------------
 # Standalone runner
 # ---------------------------------------------------------------------------

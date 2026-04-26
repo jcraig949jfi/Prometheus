@@ -606,6 +606,592 @@ def list_tables(
     return [r[0] for r in rows]
 
 
+# ---------------------------------------------------------------------------
+# Modular form full extraction (project #49)
+# ---------------------------------------------------------------------------
+#
+# These accessors give comprehensive access to LMFDB classical-modular-form
+# data without writing SQL. Each newform combines fields from
+# ``mf_newforms`` (master record), ``mf_hecke_nf`` (Hecke eigenvalues over
+# the coefficient field), ``mf_newform_portraits`` (portrait metadata),
+# ``mf_twists_nf`` (twists / inner twists), ``modlgal_reps`` (mod-l Galois
+# representations), ``mf_newspaces`` (dimension data), and ``char_dirichlet``
+# (Dirichlet character orbits).
+#
+# Newform labels follow ``N.k.x.y``: level, weight, char-orbit-letter,
+# hecke-orbit-letter (e.g. ``11.2.a.a`` is the rational newform on Gamma_0(11)).
+
+
+# Cached schema column sets (lazy; populated on first use of newform_full).
+# The cache avoids round-tripping ``information_schema`` for column lists
+# every call.
+_MF_SCHEMA_CACHE: dict[str, list[str]] = {}
+
+
+def _cached_columns(
+    table: str,
+    conn: Optional[psycopg2.extensions.connection] = None,
+    timeout: int = 10,
+) -> list[str]:
+    """Return cached column names for ``table`` (lazy schema discovery)."""
+    if table in _MF_SCHEMA_CACHE:
+        return _MF_SCHEMA_CACHE[table]
+    cols = [c for c, _ in schema(table, conn=conn, timeout=timeout)]
+    _MF_SCHEMA_CACHE[table] = cols
+    return cols
+
+
+def _validate_newform_label(label: str) -> tuple[int, int, str, str]:
+    """Parse and validate an LMFDB newform label ``N.k.x.y``.
+
+    Returns ``(level, weight, char_orbit_letter, hecke_orbit_letter)``.
+    Raises ``ValueError`` on malformed input.
+    """
+    if not isinstance(label, str) or not label:
+        raise ValueError(f"invalid newform label: {label!r} (must be non-empty string)")
+    parts = label.split(".")
+    if len(parts) != 4:
+        raise ValueError(
+            f"invalid newform label: {label!r} (expected 'N.k.x.y' with 4 dot-separated parts)"
+        )
+    try:
+        level = int(parts[0])
+        weight = int(parts[1])
+    except ValueError as e:
+        raise ValueError(
+            f"invalid newform label: {label!r} (level and weight must be integers)"
+        ) from e
+    if level <= 0 or weight < 1:
+        raise ValueError(
+            f"invalid newform label: {label!r} (level must be positive, weight >= 1)"
+        )
+    if not parts[2] or not parts[3]:
+        raise ValueError(f"invalid newform label: {label!r} (empty char/hecke orbit)")
+    return level, weight, parts[2], parts[3]
+
+
+# Default columns for newform_full. Pulled from mf_newforms; the heavy
+# trace array is requested explicitly (we truncate at the call site).
+_MF_NEWFORM_FULL_COLS = [
+    "label",
+    "level",
+    "weight",
+    "dim",
+    "relative_dim",
+    "char_orbit_index",
+    "char_orbit_label",
+    "char_conductor",
+    "char_order",
+    "char_parity",
+    "char_is_real",
+    "conrey_index",
+    "analytic_rank",
+    "analytic_rank_proved",
+    "is_self_dual",
+    "is_cm",
+    "is_rm",
+    "is_self_twist",
+    "self_twist_type",
+    "self_twist_discs",
+    "cm_discs",
+    "rm_discs",
+    "sato_tate_group",
+    "atkin_lehner_eigenvals",
+    "atkin_lehner_string",
+    "fricke_eigenval",
+    "inner_twist_count",
+    "inner_twists",
+    "field_poly",
+    "field_disc",
+    "field_disc_factorization",
+    "hecke_ring_index",
+    "hecke_ring_index_proved",
+    "trace_zratio",
+    "trace_moments",
+    "traces",
+    "projective_image",
+    "projective_image_type",
+    "artin_image",
+    "artin_degree",
+    "related_objects",
+    "level_radical",
+    "level_primes",
+    "level_is_prime",
+    "level_is_prime_power",
+    "level_is_squarefree",
+    "nf_label",
+    "Nk2",
+    "weight_parity",
+    "minimal_twist",
+    "char_is_minimal",
+]
+
+
+def _atkin_lehner_to_dict(eigenvals: Optional[list]) -> dict[int, int]:
+    """Convert LMFDB ``atkin_lehner_eigenvals`` list-of-pairs to a dict.
+
+    LMFDB stores Atkin-Lehner data as a list of ``[prime, eigenvalue]``
+    pairs (e.g. ``[[11, -1]]``). We convert to a normal Python dict
+    ``{prime: ±1}``. Returns ``{}`` if the input is None or empty.
+    """
+    out: dict[int, int] = {}
+    if not eigenvals:
+        return out
+    for entry in eigenvals:
+        if entry is None or len(entry) < 2:
+            continue
+        try:
+            p = int(entry[0])
+            v = int(entry[1])
+        except (TypeError, ValueError):
+            continue
+        out[p] = v
+    return out
+
+
+def newform_full(
+    label: str,
+    traces_truncate: int = 30,
+    conn: Optional[psycopg2.extensions.connection] = None,
+    timeout: int = 10,
+) -> Optional[dict]:
+    """Comprehensive newform record for an LMFDB modular-form label.
+
+    Pulls from ``mf_newforms`` and ``mf_newform_portraits`` and joins
+    ``mf_hecke_nf`` summary fields when present.
+
+    Parameters
+    ----------
+    label : LMFDB newform label, e.g. ``"11.2.a.a"``.
+    traces_truncate : Number of leading entries of the ``traces`` array to
+        return (default 30). Pass ``None`` to return the full trace list.
+
+    Returns
+    -------
+    dict with the following canonical keys (subset of LMFDB schema, plus
+    a few derived fields):
+
+    - ``label``, ``level``, ``weight``, ``dim``, ``relative_dim``
+    - ``char_orbit_label``, ``char_orbit_index``, ``char_conductor``,
+      ``char_order``, ``char_parity``, ``conrey_index``
+    - ``traces`` (first ``traces_truncate`` entries of a_1, a_2, ...)
+    - ``hecke_ring`` (dict: ``{poly, index, index_proved, rank, power_basis}``)
+    - ``nontrivial_character`` (bool: True iff char_orbit_index > 1)
+    - ``is_self_dual``, ``is_cm``, ``is_rm``, ``is_self_twist``
+    - ``inner_twist_count``, ``inner_twists`` (raw list)
+    - ``atkin_lehner`` (dict ``{prime: ±1}``), ``atkin_lehner_string``,
+      ``fricke_eigenval``
+    - ``sato_tate_group``
+    - ``analytic_rank``, ``analytic_rank_proved``
+    - ``projective_image``, ``projective_image_type``, ``artin_image``,
+      ``artin_degree``
+    - ``related_objects``, ``nf_label``
+    - ``portrait_hecke_orbit`` (from ``mf_newform_portraits`` if present)
+
+    Returns ``None`` if the label is not in ``mf_newforms``.
+
+    Raises
+    ------
+    ValueError if the label is malformed.
+    """
+    _validate_newform_label(label)
+
+    with _maybe_conn(conn, timeout) as c:
+        # Single query against mf_newforms with the curated columns.
+        cols = list(_MF_NEWFORM_FULL_COLS)
+        col_sql = ", ".join(f'"{x}"' for x in cols)
+        sql = f'SELECT {col_sql} FROM "mf_newforms" WHERE "label" = %s LIMIT 1'
+        rows = query_dicts(sql, (label,), timeout=timeout, conn=c)
+        if not rows:
+            return None
+        rec = rows[0]
+
+        # Pull the matching mf_hecke_nf row (summary; not the full ap list)
+        hecke_sql = (
+            'SELECT "hecke_orbit_code", "hecke_ring_rank", "hecke_ring_power_basis", '
+            '"hecke_ring_cyclotomic_generator", "maxp", "field_poly" '
+            'FROM "mf_hecke_nf" WHERE "label" = %s LIMIT 1'
+        )
+        hecke_rows = query_dicts(hecke_sql, (label,), timeout=timeout, conn=c)
+        hecke = hecke_rows[0] if hecke_rows else {}
+
+        # Portrait (one row per (label, hecke_orbit) at most)
+        portrait_sql = (
+            'SELECT "hecke_orbit" FROM "mf_newform_portraits" '
+            'WHERE "label" = %s LIMIT 1'
+        )
+        portrait_rows = query(portrait_sql, (label,), timeout=timeout, conn=c)
+        portrait_hecke_orbit = (
+            int(portrait_rows[0][0]) if portrait_rows else None
+        )
+
+    # Truncate traces (note: a_1 is implicit = 1; the LMFDB ``traces`` array
+    # stores tr(a_1), tr(a_2), tr(a_3), ... starting at n=1).
+    traces = rec.get("traces") or []
+    if traces_truncate is not None and traces is not None:
+        traces = list(traces)[: int(traces_truncate)]
+
+    out = {
+        "label": rec.get("label"),
+        "level": rec.get("level"),
+        "weight": rec.get("weight"),
+        "dim": rec.get("dim"),
+        "relative_dim": rec.get("relative_dim"),
+        "char_orbit_index": rec.get("char_orbit_index"),
+        "char_orbit_label": rec.get("char_orbit_label"),
+        "char_conductor": rec.get("char_conductor"),
+        "char_order": rec.get("char_order"),
+        "char_parity": rec.get("char_parity"),
+        "char_is_real": rec.get("char_is_real"),
+        "conrey_index": rec.get("conrey_index"),
+        "nontrivial_character": (rec.get("char_orbit_index") or 1) != 1,
+        "traces": traces,
+        "hecke_ring": {
+            "poly": hecke.get("field_poly") or rec.get("field_poly"),
+            "index": rec.get("hecke_ring_index"),
+            "index_proved": rec.get("hecke_ring_index_proved"),
+            "rank": hecke.get("hecke_ring_rank"),
+            "power_basis": hecke.get("hecke_ring_power_basis"),
+            "cyclotomic_generator": hecke.get("hecke_ring_cyclotomic_generator"),
+            "maxp": hecke.get("maxp"),
+            "orbit_code": hecke.get("hecke_orbit_code"),
+        },
+        "is_self_dual": rec.get("is_self_dual"),
+        "is_cm": rec.get("is_cm"),
+        "is_rm": rec.get("is_rm"),
+        "is_self_twist": rec.get("is_self_twist"),
+        "self_twist_type": rec.get("self_twist_type"),
+        "self_twist_discs": rec.get("self_twist_discs"),
+        "cm_discs": rec.get("cm_discs"),
+        "rm_discs": rec.get("rm_discs"),
+        "inner_twist_count": rec.get("inner_twist_count"),
+        "inner_twists": rec.get("inner_twists"),
+        "atkin_lehner": _atkin_lehner_to_dict(rec.get("atkin_lehner_eigenvals")),
+        "atkin_lehner_eigenvals": rec.get("atkin_lehner_eigenvals"),
+        "atkin_lehner_string": rec.get("atkin_lehner_string"),
+        "fricke_eigenval": rec.get("fricke_eigenval"),
+        "sato_tate_group": rec.get("sato_tate_group"),
+        "analytic_rank": rec.get("analytic_rank"),
+        "analytic_rank_proved": rec.get("analytic_rank_proved"),
+        "projective_image": rec.get("projective_image"),
+        "projective_image_type": rec.get("projective_image_type"),
+        "artin_image": rec.get("artin_image"),
+        "artin_degree": rec.get("artin_degree"),
+        "related_objects": rec.get("related_objects"),
+        "nf_label": rec.get("nf_label"),
+        "field_disc": rec.get("field_disc"),
+        "level_primes": rec.get("level_primes"),
+        "level_radical": rec.get("level_radical"),
+        "level_is_prime": rec.get("level_is_prime"),
+        "level_is_squarefree": rec.get("level_is_squarefree"),
+        "trace_zratio": rec.get("trace_zratio"),
+        "minimal_twist": rec.get("minimal_twist"),
+        "char_is_minimal": rec.get("char_is_minimal"),
+        "portrait_hecke_orbit": portrait_hecke_orbit,
+    }
+    return out
+
+
+# Cached prime list (first 1000 primes is enough; mf_hecke_nf stores ap
+# up to maxp <= 997 typically).
+def _primes_up_to(n: int) -> list[int]:
+    """Return all primes <= n via a simple sieve. Cheap, no deps."""
+    if n < 2:
+        return []
+    sieve = bytearray(b"\x01") * (n + 1)
+    sieve[0] = sieve[1] = 0
+    for i in range(2, int(n ** 0.5) + 1):
+        if sieve[i]:
+            sieve[i * i :: i] = bytes(len(sieve[i * i :: i]))
+    return [i for i in range(2, n + 1) if sieve[i]]
+
+
+def newform_hecke_eigenvalues_full(
+    label: str,
+    p_max: int = 1000,
+    conn: Optional[psycopg2.extensions.connection] = None,
+    timeout: int = 10,
+) -> dict[int, list[int]]:
+    """All stored Hecke eigenvalues a_p for primes p <= p_max.
+
+    For dimension-1 newforms each value is a single Python int; for
+    dim > 1 each value is a list of integers (power-basis coefficients
+    in the Hecke ring's chosen basis).
+
+    Parameters
+    ----------
+    label : LMFDB newform label.
+    p_max : Inclusive upper bound on primes to return (default 1000).
+
+    Returns
+    -------
+    dict mapping prime ``p`` -> ``a_p`` (int for dim=1, list[int] for dim>1).
+    Empty dict if the newform is not in ``mf_hecke_nf`` or stores fewer ap.
+    """
+    _validate_newform_label(label)
+    if p_max < 2:
+        return {}
+
+    sql = (
+        'SELECT "ap", "maxp", "hecke_ring_rank" FROM "mf_hecke_nf" '
+        'WHERE "label" = %s LIMIT 1'
+    )
+    rows = query(sql, (label,), timeout=timeout, conn=conn)
+    if not rows:
+        return {}
+    ap, maxp, _rank = rows[0]
+    if ap is None:
+        return {}
+    primes = _primes_up_to(min(int(p_max), int(maxp) if maxp else int(p_max)))
+    out: dict[int, list[int]] = {}
+    for i, p in enumerate(primes):
+        if i >= len(ap):
+            break
+        v = ap[i]
+        if isinstance(v, list) and len(v) == 1:
+            out[p] = int(v[0])
+        elif isinstance(v, list):
+            out[p] = [int(x) for x in v]
+        else:
+            out[p] = v
+    return out
+
+
+def newform_character_orbit(
+    label: str,
+    conn: Optional[psycopg2.extensions.connection] = None,
+    timeout: int = 10,
+) -> Optional[dict]:
+    """Galois orbit of the Dirichlet character attached to a newform.
+
+    Looks up the character orbit by ``"<level>.<char_orbit_label>"`` in
+    ``char_dirichlet``. Returns ``None`` if the newform or character orbit
+    isn't present.
+    """
+    _validate_newform_label(label)
+    nf = newform_full(label, traces_truncate=0, conn=conn, timeout=timeout)
+    if nf is None:
+        return None
+    level = nf["level"]
+    orbit_label = nf.get("char_orbit_label")
+    if orbit_label is None:
+        return None
+    full_orbit_label = f"{level}.{orbit_label}"
+    return dirichlet_character_orbit(
+        full_orbit_label, conn=conn, timeout=timeout
+    )
+
+
+def newform_inner_twists(
+    label: str,
+    conn: Optional[psycopg2.extensions.connection] = None,
+    timeout: int = 10,
+) -> list[dict]:
+    """Inner-twist (CM/self-twist) data for a newform.
+
+    Returns the rows of ``mf_twists_nf`` whose ``source_label`` equals
+    ``label``, plus the parsed ``inner_twists`` array from ``mf_newforms``.
+    Each returned dict includes ``twisting_char_label``, ``target_label``,
+    ``source_is_minimal``, ``self_twist_disc``, etc.
+    """
+    _validate_newform_label(label)
+    sql = (
+        'SELECT "source_label", "target_label", "twisting_char_label", '
+        '"twist_class_label", "multiplicity", "parity", "weight", '
+        '"source_char_orbit", "target_char_orbit", "twisting_char_orbit", '
+        '"source_is_minimal", "target_is_minimal", "conductor", "order", '
+        '"degree", "self_twist_disc" '
+        'FROM "mf_twists_nf" WHERE "source_label" = %s'
+    )
+    return query_dicts(sql, (label,), timeout=timeout, conn=conn)
+
+
+def newform_galois_representations(
+    label: str,
+    conn: Optional[psycopg2.extensions.connection] = None,
+    timeout: int = 10,
+) -> list[dict]:
+    """Mod-l Galois representations referencing this newform.
+
+    LMFDB does not store a direct (newform_label -> modlgal_rep) join;
+    instead each ``modlgal_reps`` row carries a JSON ``related_objects``
+    array that may include ``["MF", <newform_label>]``. We search by JSON
+    containment and return the matching rep records.
+
+    Returns a list of dicts (possibly empty) with keys ``label``,
+    ``base_ring_characteristic``, ``dimension``, ``conductor``,
+    ``image_type``, ``image_label``, ``is_irreducible``,
+    ``is_absolutely_irreducible``, ``is_surjective``, ``related_objects``.
+    """
+    _validate_newform_label(label)
+    cols = [
+        "label",
+        "base_ring_characteristic",
+        "base_ring_order",
+        "dimension",
+        "conductor",
+        "image_type",
+        "image_label",
+        "image_order",
+        "is_irreducible",
+        "is_absolutely_irreducible",
+        "is_surjective",
+        "is_solvable",
+        "projective_type",
+        "related_objects",
+        "weight",
+    ]
+    col_sql = ", ".join(f'"{c}"' for c in cols)
+    # Use JSONB containment ``@>`` for an indexable exact-match search.
+    # related_objects in modlgal_reps is JSONB.
+    sql = (
+        f'SELECT {col_sql} FROM "modlgal_reps" '
+        f'WHERE "related_objects" @> %s::jsonb'
+    )
+    # JSON literal: array containing the pair ["MF", label]
+    import json as _json
+
+    needle = _json.dumps([["MF", label]])
+    return query_dicts(sql, (needle,), timeout=timeout, conn=conn)
+
+
+def newforms_by_level_weight(
+    level: int,
+    weight: int,
+    char_orbit: Optional[int] = None,
+    columns: Optional[list[str]] = None,
+    limit: int = 1000,
+    conn: Optional[psycopg2.extensions.connection] = None,
+    timeout: int = 10,
+) -> list[dict]:
+    """Sweep query: all newforms at a fixed (level, weight).
+
+    Parameters
+    ----------
+    level, weight : Positive integers; level >= 1, weight >= 1.
+    char_orbit : Optional ``char_orbit_index`` filter (1 = trivial).
+    columns : Optional column override; defaults to the curated
+        ``_MF_NEWFORMS_COLS`` plus a few fields useful for filtering.
+
+    Raises
+    ------
+    ValueError if level < 1 or weight < 1.
+    """
+    if level < 1:
+        raise ValueError(f"level must be >= 1, got {level}")
+    if weight < 1:
+        raise ValueError(f"weight must be >= 1, got {weight}")
+
+    cols = (
+        None
+        if columns == ["*"]
+        else (
+            columns
+            or _MF_NEWFORMS_COLS
+            + ["analytic_rank", "atkin_lehner_eigenvals", "inner_twist_count"]
+        )
+    )
+    sql, params = _build_select(
+        "mf_newforms",
+        cols,
+        {"level": level, "weight": weight, "char_orbit_index": char_orbit},
+        limit=limit,
+    )
+    return query_dicts(sql, params, timeout=timeout, conn=conn)
+
+
+def newforms_by_dim(
+    dim: int,
+    level_max: int = 1000,
+    weight: Optional[int] = None,
+    limit: int = 1000,
+    conn: Optional[psycopg2.extensions.connection] = None,
+    timeout: int = 10,
+) -> list[str]:
+    """List labels of newforms with a given absolute dimension.
+
+    Parameters
+    ----------
+    dim : Required dimension. Returns ``[]`` if dim < 1.
+    level_max : Skip newforms with level > level_max (default 1000).
+    weight : Optional weight filter.
+    """
+    if dim is None or dim < 1:
+        return []
+    extra: list[tuple[str, Any]] = []
+    if level_max is not None:
+        extra.append(('"level" <= %s', int(level_max)))
+    sql, params = _build_select(
+        "mf_newforms",
+        ["label"],
+        {"dim": int(dim), "weight": weight},
+        extra_clauses=extra,
+        limit=limit,
+    )
+    sql += ' ORDER BY "level", "weight", "char_orbit_index", "label"' if False else ""
+    rows = query(sql, params, timeout=timeout, conn=conn)
+    return [r[0] for r in rows]
+
+
+def newform_dim_data(
+    level_max: int = 100,
+    weight_max: int = 12,
+    cusp_only: bool = True,
+    conn: Optional[psycopg2.extensions.connection] = None,
+    timeout: int = 10,
+) -> dict[tuple[int, int], int]:
+    """Full dimension table for low (level, weight).
+
+    Aggregates ``dim`` (newform-space dimension) over all character orbits
+    in ``mf_newspaces``: the returned ``dict[(N, k)]`` is the total
+    newform-cusp-form dimension for that level and weight, summed over
+    Dirichlet character orbits.
+
+    Parameters
+    ----------
+    level_max : Inclusive level cap (default 100).
+    weight_max : Inclusive weight cap (default 12).
+    cusp_only : If True (default), use the ``dim`` (newform-cusp) field;
+        if False, use ``mf_dim`` (full M_k newform space dim).
+    """
+    field = "dim" if cusp_only else "mf_dim"
+    sql = (
+        f'SELECT "level", "weight", SUM("{field}")::bigint AS d '
+        f'FROM "mf_newspaces" '
+        f'WHERE "level" <= %s AND "weight" <= %s '
+        f'GROUP BY "level", "weight" ORDER BY "level", "weight"'
+    )
+    rows = query(
+        sql,
+        (int(level_max), int(weight_max)),
+        timeout=timeout,
+        conn=conn,
+    )
+    return {(int(r[0]), int(r[1])): int(r[2] or 0) for r in rows}
+
+
+def dirichlet_character_orbit(
+    orbit_label: str,
+    conn: Optional[psycopg2.extensions.connection] = None,
+    timeout: int = 10,
+) -> Optional[dict]:
+    """Dirichlet-character Galois orbit by orbit label, e.g. ``"23.b"``.
+
+    Returns ``None`` if the orbit is not in ``char_dirichlet``.
+    Raises ``ValueError`` for an empty input.
+    """
+    if not orbit_label:
+        raise ValueError("orbit_label must be a non-empty string")
+    sql = 'SELECT * FROM "char_dirichlet" WHERE "label" = %s LIMIT 1'
+    rows = query_dicts(sql, (orbit_label,), timeout=timeout, conn=conn)
+    return rows[0] if rows else None
+
+
+# ---------------------------------------------------------------------------
+# Generic helpers (continued)
+# ---------------------------------------------------------------------------
+
+
 def count(
     table_name: str,
     where: Optional[str] = None,
@@ -655,4 +1241,14 @@ __all__ = [
     "schema",
     "list_tables",
     "count",
+    # Modular form full extraction (project #49)
+    "newform_full",
+    "newform_hecke_eigenvalues_full",
+    "newform_character_orbit",
+    "newform_inner_twists",
+    "newform_galois_representations",
+    "newforms_by_level_weight",
+    "newforms_by_dim",
+    "newform_dim_data",
+    "dirichlet_character_orbit",
 ]

@@ -807,8 +807,9 @@ immediately by parallel TDD agents.
   by degree and compute M(P) via TOOL_MAHLER_MEASURE. Look for
   sub-Lehmer specimens. Pure exploration.
 - **Deliverable:** `pm.research.lehmer.random_scan(degrees, samples)`.
+- ✓ COMPLETED 2026-04-25
 
-### #47 — `pm.databases.atlas` ATLAS of finite groups (without GAP)
+### #47 — `pm.databases.atlas` ATLAS of finite groups (without GAP)  ✓ COMPLETED 2026-04-25
 
 - **Category:** G
 - **Priority:** 47
@@ -818,6 +819,15 @@ immediately by parallel TDD agents.
   the GAP wrapper lands.
 - **Deliverable:** Atlas data accessible in pm.databases.atlas before
   GAP install.
+- **Status:** Embedded snapshot expanded to 86 entries (all 26
+  sporadics + 30 cyclic + 10 alternating + 10 symmetric + 7 PSL_2(p)
+  + 3 PSL_n(q) classical). Wrapper exposes both the original API
+  (`lookup`, `all_simple`, `character_table`, `by_order`, ...) and
+  the project #47 spec API (`get_group`, `all_sporadic`,
+  `all_classical_in_atlas`, `search_by_order`, `largest_in_atlas`,
+  `is_simple`, `outer_aut_order`, `character_table_dim`,
+  `max_subgroups`, `normalize_name`). 52/52 tests pass (5 authority,
+  6 property, 6 edge, 5 composition for #47 alone).
 
 ### #48 — pm.databases.zbmath MSC2020 full leaf-code expansion
 
@@ -827,6 +837,14 @@ immediately by parallel TDD agents.
 - Expand from ~200 anchor codes to full ~6500-leaf MSC2020 hierarchy.
 - **Deliverable:** `pm.databases.zbmath.msc_codes()` returns all leaf
   codes with descriptions.
+- ✓ COMPLETED 2026-04-25 — embedded `_msc2020_data.py` (63 top + 534
+  subject + 6006 leaf; source https://msc2020.org/MSC_2020.csv);
+  added `msc_codes(level)`, `msc_descriptions(level)`, `msc_lookup`,
+  `msc_subtree`, `msc_path`, `msc_search`; legacy curated anchor list
+  preserved as `msc_anchors()`. 23 tests in
+  `prometheus_math/databases/tests/test_zbmath_msc.py` + 1 updated
+  test in `test_zbmath.py`; full suite (32 zbmath tests) green.
+  Search benchmark <0.1s on the full 6000-leaf corpus.
 
 ### #49 — pm.databases.lmfdb modular forms full extraction
 
@@ -837,6 +855,18 @@ immediately by parallel TDD agents.
   Add Hecke eigenvalue tables, character orbits, dimension data,
   inner-twist info, mod-l Galois rep info.
 - **Deliverable:** Full MF research accessible without writing SQL.
+- ✓ COMPLETED 2026-04-25 — added 9 new operations to
+  `prometheus_math/databases/lmfdb.py` (~600 LOC): `newform_full`,
+  `newform_hecke_eigenvalues_full`, `newform_character_orbit`,
+  `newform_inner_twists`, `newform_galois_representations`,
+  `newforms_by_level_weight`, `newforms_by_dim`, `newform_dim_data`,
+  `dirichlet_character_orbit`. Joins across `mf_newforms`,
+  `mf_hecke_nf`, `mf_newform_portraits`, `mf_twists_nf`,
+  `mf_newspaces`, `modlgal_reps` (via JSONB containment on
+  `related_objects`), and `char_dirichlet`. Schema cache to avoid
+  round-trips. 50/50 tests in `tests/test_lmfdb_mf.py` green
+  (7 authority, 27 property [10 sample-driven + 17 Hypothesis],
+  6 edge, 4 composition).
 
 ### #50 — Visualization: capability matrix dashboard
 

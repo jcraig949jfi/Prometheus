@@ -36,9 +36,14 @@ _skip_no_net = pytest.mark.skipif(
 # Pure-Python tests (no network)
 # ---------------------------------------------------------------------------
 
-def test_msc_codes():
-    """msc_codes() returns ~200 (code, description) pairs."""
-    codes = zb.msc_codes()
+def test_msc_anchors_legacy_shape():
+    """msc_anchors() (legacy) returns ~200 (code, description) pairs.
+
+    The post-#48 canonical entry point is ``msc_codes(level=...)`` over
+    the full embedded MSC2020 hierarchy; this test pins down the
+    backward-compat shape that pre-#48 cartography callers depend on.
+    """
+    codes = zb.msc_anchors()
     assert isinstance(codes, list)
     assert len(codes) >= 100, f"expected >=100 MSC codes, got {len(codes)}"
     # Spot-check format and content.
@@ -53,6 +58,23 @@ def test_msc_codes():
     assert "14-XX" in code_index
     assert "11G" in code_index  # arithmetic algebraic geometry section
     assert "number theory" in code_index["11-XX"].lower()
+
+
+def test_msc_codes_full_hierarchy_levels():
+    """msc_codes(level=...) reports the full embedded snapshot.
+
+    Authority: https://msc2020.org/MSC_2020.csv (snapshot 2026-04-25)
+    has 63 top-level subjects, ~530 subject-level codes, and ~6000 leaf
+    codes. This test asserts the lower bounds.
+    """
+    tops = zb.msc_codes(level="top")
+    subs = zb.msc_codes(level="subject")
+    leaves = zb.msc_codes(level="leaf")
+    assert len(tops) == 63
+    assert len(subs) >= 500
+    assert len(leaves) >= 5500
+    # Default level is "leaf".
+    assert zb.msc_codes() == leaves
 
 
 def test_build_search_string_combinations():

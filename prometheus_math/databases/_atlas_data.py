@@ -555,6 +555,85 @@ PSL2_TABLE: list[dict] = [
         "character_table": None,
         "source": "ATLAS p.8",
     },
+    {
+        "name": "PSL(2,17)", "aliases": ["PSL2(17)", "L2(17)", "L_2(17)"],
+        "order": 2448,
+        "order_factored": "2^4 * 3^2 * 17",
+        "order_prime_decomp": [(2, 4), (3, 2), (17, 1)],
+        "family": "psl2", "is_simple": True,
+        "schur_multiplier": "Z/2", "schur_multiplier_order": 2,
+        "out_group": "Z/2", "out_order": 2,
+        "num_conjugacy_classes": 11, "exponent": 1224,
+        "min_generators": 2,
+        "character_table": None,
+        "source": "ATLAS p.9 (Conway et al. 1985)",
+    },
+    {
+        "name": "PSL(2,19)", "aliases": ["PSL2(19)", "L2(19)", "L_2(19)"],
+        "order": 3420,
+        "order_factored": "2^2 * 3^2 * 5 * 19",
+        "order_prime_decomp": [(2, 2), (3, 2), (5, 1), (19, 1)],
+        "family": "psl2", "is_simple": True,
+        "schur_multiplier": "Z/2", "schur_multiplier_order": 2,
+        "out_group": "Z/2", "out_order": 2,
+        "num_conjugacy_classes": 12, "exponent": 1710,
+        "min_generators": 2,
+        "character_table": None,
+        "source": "ATLAS p.10 (Conway et al. 1985)",
+    },
+    {
+        "name": "PSL(2,23)", "aliases": ["PSL2(23)", "L2(23)", "L_2(23)"],
+        "order": 6072,
+        "order_factored": "2^3 * 3 * 11 * 23",
+        "order_prime_decomp": [(2, 3), (3, 1), (11, 1), (23, 1)],
+        "family": "psl2", "is_simple": True,
+        "schur_multiplier": "Z/2", "schur_multiplier_order": 2,
+        "out_group": "Z/2", "out_order": 2,
+        "num_conjugacy_classes": 14, "exponent": 3036,
+        "min_generators": 2,
+        "character_table": None,
+        "source": "ATLAS p.12 (Conway et al. 1985)",
+    },
+    # PSL(3,q) family - selected small cases
+    {
+        "name": "PSL(3,2)", "aliases": ["PSL3(2)", "L3(2)", "L_3(2)"],
+        "order": 168,
+        "order_factored": "2^3 * 3 * 7",
+        "order_prime_decomp": [(2, 3), (3, 1), (7, 1)],
+        "family": "psl_n", "is_simple": True,
+        "schur_multiplier": "Z/2", "schur_multiplier_order": 2,
+        "out_group": "Z/2", "out_order": 2,
+        "num_conjugacy_classes": 6, "exponent": 84,
+        "min_generators": 2,
+        "character_table": PSL2_7_CHAR_TABLE,  # PSL(3,2) ~= PSL(2,7)
+        "source": "ATLAS p.3; PSL(3,2) ~= PSL(2,7) ~= GL_3(2)",
+    },
+    {
+        "name": "PSL(3,3)", "aliases": ["PSL3(3)", "L3(3)", "L_3(3)"],
+        "order": 5616,
+        "order_factored": "2^4 * 3^3 * 13",
+        "order_prime_decomp": [(2, 4), (3, 3), (13, 1)],
+        "family": "psl_n", "is_simple": True,
+        "schur_multiplier": "trivial", "schur_multiplier_order": 1,
+        "out_group": "Z/2", "out_order": 2,
+        "num_conjugacy_classes": 12, "exponent": 936,
+        "min_generators": 2,
+        "character_table": None,
+        "source": "ATLAS p.13 (Conway et al. 1985)",
+    },
+    {
+        "name": "PSL(3,4)", "aliases": ["PSL3(4)", "L3(4)", "L_3(4)", "M21"],
+        "order": 20160,
+        "order_factored": "2^6 * 3^2 * 5 * 7",
+        "order_prime_decomp": [(2, 6), (3, 2), (5, 1), (7, 1)],
+        "family": "psl_n", "is_simple": True,
+        "schur_multiplier": "Z/4 x Z/4 x Z/3", "schur_multiplier_order": 48,
+        "out_group": "D_12", "out_order": 12,
+        "num_conjugacy_classes": 10, "exponent": 420,
+        "min_generators": 2,
+        "character_table": None,
+        "source": "ATLAS p.23 (PSL(3,4) ~= M_21 stabilizer); has same order as A_8 but is non-isomorphic",
+    },
 ]
 
 
@@ -826,6 +905,170 @@ SPORADIC_TABLE: list[dict] = [
         "source": "ATLAS p.220 (Griess 1982); SPLAG Ch.29",
     },
 ]
+
+
+# ---------------------------------------------------------------------------
+# Maximal-subgroup data (curated from ATLAS pages + Wilson online v3)
+# ---------------------------------------------------------------------------
+#
+# For each entry we list the maximal subgroup *classes* by their ATLAS-style
+# structural names.  Counts are per ATLAS; some entries (J_4, B, M) ship
+# only the count of maximal classes since the structural names are very
+# long.  These are *names*, not orders -- a downstream user can call
+# ``lookup`` on each to chain queries.
+
+_MAX_SUBGROUPS: dict[str, list[str]] = {
+    # Mathieu groups (ATLAS pp. 18, 31, 39, 71, 94)
+    "M11":   ["M_10", "L_2(11)", "M_9.2", "S_5", "2.S_4"],
+    "M12":   ["M_11", "M_11", "A_6.2^2", "L_2(11)", "3^2:2.S_4", "2 x S_5",
+              "M_8.S_4", "4^2:D_12", "A_4 x S_3"],
+    "M22":   ["L_3(4)", "2^4:A_6", "A_7", "2^4:S_5", "2^3:L_3(2)",
+              "M_10", "L_2(11)"],
+    "M23":   ["M_22", "L_3(4):2", "2^4:A_7", "A_8", "M_11", "2^4:(3 x A_5):2",
+              "23:11"],
+    "M24":   ["M_23", "M_22.2", "2^4:A_8", "M_12.2", "2^6:3.S_6", "L_3(4):S_3",
+              "2^6:(L_3(2) x S_3)", "L_2(23)", "L_2(7)"],
+    # Janko groups (ATLAS pp. 36, 42, 82, 190)
+    "J1":    ["L_2(11)", "2^3:7:3", "2 x A_5", "19:6", "11:10",
+              "D_6 x D_10", "7:6"],
+    "J2":    ["U_3(3)", "3.A_6.2", "2^{1+4}:A_5", "2^{2+4}:(3 x S_3)",
+              "A_4 x A_5", "A_5 x D_10", "L_3(2):2", "5^2:D_12", "A_5"],
+    "J3":    ["L_2(16):2", "L_2(19)", "L_2(19)", "2^4:(3 x A_5)",
+              "L_2(17)", "(3 x A_6):2_2", "3^{2+1+2}:8", "2^{1+4}:A_5",
+              "2^{2+4}:(3 x S_3)"],
+    "J4":    ["2^{11}:M_24", "2^{1+12}.3.M_22:2", "2^{10}:L_5(2)",
+              "U_3(11):2", "M_22:2", "11^{1+2}:(5 x 2S_4)",
+              "L_2(32):5", "L_2(23):2", "U_3(3)", "29:28", "43:14",
+              "37:12", "(3 x M_22):2"],
+    # Other sporadics (ATLAS pages cited inline)
+    "He":    ["S_4(4):2", "2^2.L_3(4).S_3", "2^6:3.S_6", "2^6:3.S_6",
+              "2^{1+6}.L_3(2)", "7^{2}:2L_2(7)", "3.S_7", "7^{1+2}:(3 x S_3)",
+              "S_4 x L_3(2)", "7:3 x L_3(2)", "5^2:4A_4"],
+    "McL":   ["U_4(3)", "M_22", "M_22", "U_3(5)", "3^{1+4}:2S_5",
+              "3^4:M_10", "L_3(4):2_2", "2.A_8", "2^4:A_7", "M_11"],
+    "HS":    ["M_22", "U_3(5):2", "U_3(5):2", "L_3(4):2_1", "S_8",
+              "2^4.S_6", "4^3:L_3(2)", "M_11", "M_11", "4.2^4:S_5",
+              "2 x A_6.2^2", "5:4 x A_5"],
+    "Suz":   ["G_2(4)", "3_2.U_4(3):2", "U_5(2)", "2^{1+6}:U_4(2)",
+              "3^5:M_11", "J_2:2", "2^{4+6}:3A_6", "(A_4 x L_3(4)):2",
+              "2^{2+8}:(A_5 x S_3)", "M_12:2", "3^{2+4}:2(S_4 x 2)",
+              "(A_6 x A_5).2", "(3^2:4 x A_6).2", "L_3(3):2", "L_2(25)", "A_7"],
+    "Ru":    ["2F_4(2)", "(2^6.U_3(3)).2", "(2^2 x Sz(8)):3", "2^{3+8}:L_3(2)",
+              "U_3(5):2", "2^{1+4+6}.S_5", "L_2(29)", "5^2:4S_5",
+              "3.A_6.2^2", "5^{1+2}:[2^5]", "L_2(13):2", "A_8", "5:4 x A_5"],
+    "Ly":    ["G_2(5)", "3.McL:2", "5^{3+}.L_3(5)", "2.A_{11}", "5^{1+4}:4S_6",
+              "5^{3+}.L_3(5)", "67:22", "37:18"],
+    "ON":    ["L_3(7):2", "L_3(7):2", "J_1", "4_2.L_3(4):2_1", "(3^2:4 x A_6).2",
+              "3^4:2^{1+4}D_{10}", "L_2(31)", "4^3.L_3(2)", "M_11", "M_11", "A_7", "A_7"],
+    "HN":    ["A_12", "2.HS.2", "U_3(8):3", "2^{1+8}.(A_5 x A_5).2", "(A_6 x A_6).D_8",
+              "2^3.2^2.2^6.(3 x L_3(2))", "5^{1+4}:2^{1+4}.5.4", "2^6.U_4(2)",
+              "(A_5 x A_5).2^2", "M_12:2", "M_12:2", "3^4:2(A_4 x A_4).4",
+              "3^{1+4}:4A_5"],
+    "Th":    ["3D_4(2):3", "2^5.L_5(2)", "2^{1+8}.A_9", "U_3(8):6", "(3 x G_2(3)):2",
+              "3.[3^8].2S_4", "3^2.[3^7].2S_4", "3^5:L_2(3)", "5^{1+2}:4S_4",
+              "5^2:GL_2(5)", "7^2:(3 x 2S_4)", "L_2(19):2", "L_3(3)", "M_10",
+              "31:15", "S_5"],
+    # Conway groups (ATLAS pp. 134, 154, 180; SPLAG Ch.29)
+    "Co3":   ["McL:2", "HS", "U_4(3).2_2", "M_23", "3^5:(2 x M_11)", "2.S_6(2)",
+              "U_3(5):S_3", "3^{1+4}:4S_6", "2^4.A_8", "L_3(4).D_12",
+              "2 x M_12", "[2^{10}.3^3]", "S_3 x L_2(8):3", "A_4 x S_5"],
+    "Co2":   ["U_6(2):2", "2^{10}:M_22:2", "McL", "2^{1+8}:S_6(2)", "HS:2",
+              "(2^4 x 2^{1+6}).A_8", "U_4(3):D_8", "2^{4+10}.(S_5 x S_3)",
+              "M_23", "3^{1+4}:2^{1+4}.S_5", "5^{1+2}:4S_4"],
+    "Co1":   ["Co_2", "3.Suz:2", "2^{11}:M_24", "Co_3", "2^{1+8}.O_8^+(2)",
+              "U_6(2):S_3", "(A_4 x G_2(4)):2", "2^{2+12}:(A_8 x S_3)",
+              "2^{4+12}.(S_3 x 3S_6)", "3^2.U_4(3).D_8", "3^6:2M_12",
+              "(A_5 x J_2):2", "3^{1+4}:Sp_4(3).2", "(A_6 x U_3(3)).2",
+              "3^{3+4}:2(S_4 x S_4)", "A_9 x S_3", "(A_7 x L_2(7)):2",
+              "(D_{10} x (A_5 x A_5).2).2", "5^{1+2}:GL_2(5)",
+              "5^3:(4 x A_5).2", "7^2:(3 x 2A_4)", "5^2:2A_5"],
+    "Fi22":  ["2.U_6(2)", "O_7(3)", "O_7(3)", "O_8^+(2):S_3", "2^{10}:M_22",
+              "2^6:S_6(2)", "(2 x 2^{1+8}):(U_4(2):2)", "U_4(3):2_2",
+              "^2F_4(2)'", "2^{5+8}:(S_3 x A_6)", "3^{1+6}:2^{3+4}:3^2:2",
+              "S_{10}", "M_12"],
+    "Fi23":  ["2.Fi_22", "O_8^+(3):S_3", "2^2.U_6(2).2", "S_8(2)", "S_3 x O_7(3)",
+              "2^{11}.M_23", "3^{1+8}.2^{1+6}.3^{1+2}.2S_4", "[3^{10}].(L_3(3) x 2)",
+              "S_4 x S_6(2)", "S_4(4):4", "L_2(23)", "(3 x O_7(3)):2"],
+    "Fi24'": ["Fi_23", "2.Fi_22:2", "(3 x O_8^+(3):3):2", "O_{10}^-(2)",
+              "3^{7}.O_7(3)", "3^{1+10}:U_5(2):2", "2^{11}.M_24",
+              "2^{2}.U_6(2).S_3", "2^{1+12}.3U_4(3).2", "(3 x 2.U_6(2):2).S_3",
+              "2^{3+12}.(L_3(2) x A_6)", "S_3 x ^2F_4(2)'", "3^{2+4+8}.(S_5 x 2S_4)",
+              "(A_4 x O_8^+(2):3):2", "He:2", "2^{3+12}.(S_3 x L_3(2))",
+              "29:14", "L_2(13):2"],
+    # Baby Monster: ATLAS p.208
+    "B":     ["2.^{2}E_6(2):2", "2^{1+22}.Co_2", "Fi_23", "2^{9+16}.S_8(2)",
+              "Th", "(2^2 x F_4(2)):2", "2^{2+10+20}.(M_22:2 x S_3)",
+              "[2^{30}].L_5(2)", "S_3 x Fi_22:2", "[2^{35}].(S_5 x L_3(2))",
+              "HN:2", "O_8^+(3):S_4", "3^{1+8}.2^{1+6}.U_4(2).2",
+              "(3^2:D_8 x U_4(3).2_2).2", "5:4 x HS:2", "S_4 x ^2F_4(2)",
+              "[3^{11}].(S_4 x 2S_4)", "S_5 x M_22:2", "(S_6 x L_3(4):2).2",
+              "5^3.L_3(5)", "5^{1+4}.2^{1+4}.A_5.4", "(S_6 x S_6).4",
+              "5^2:4S_4 x S_5", "L_2(49).2", "L_2(31)", "M_11",
+              "L_3(3)", "L_2(17):2", "L_2(11):2", "47:23"],
+    # Monster: ATLAS p.220 (currently 44 known max subgroup classes)
+    "M":     ["2.B (Baby Monster centralizer)", "2^{1+24}.Co_1", "3.Fi_24'",
+              "2^2.^{2}E_6(2):S_3", "2^{10+16}.O_{10}^+(2)", "2^{2+11+22}.(M_24 x S_3)",
+              "3^{1+12}.2.Suz:2", "2^{5+10+20}.(S_3 x L_5(2))",
+              "S_3 x Th", "2^{3+6+12+18}.(L_3(2) x 3S_6)", "3^8.O_8^-(3).2_3",
+              "(D_{10} x HN).2", "(3^2:2 x O_8^+(3)).S_4",
+              "3^{2+5+10}.(M_{11} x 2S_4)", "3^{3+2+6+6}:(L_3(3) x SD_{16})",
+              "5^{1+6}:2J_2:4", "(7:3 x He):2", "(A_5 x A_{12}):2",
+              "5^{3+3}.(2 x L_3(5))", "(A_6 x A_6 x A_6).(2 x S_4)",
+              "(A_5 x U_3(8):3_1):2", "5^{2+2+4}:(S_3 x GL_2(5))",
+              "(L_3(2) x S_4(4):2).2", "7^{1+4}:(3 x 2S_7)",
+              "(5^2:[2^4] x U_3(5)).S_3", "(L_2(11) x M_{12}):2",
+              "(A_7 x (A_5 x A_5):2^2):2", "5^4:(3 x 2L_2(25)):2",
+              "7^{2+1+2}:GL_2(7)", "M_{11} x A_6.2^2", "(S_5 x S_5 x S_5):S_3",
+              "(L_2(11) x L_2(11)):4", "13^2:2L_2(13).4",
+              "(7^2:(3 x 2A_4) x L_2(7)).2", "(13:6 x L_3(3)).2",
+              "13^{1+2}:(3 x 4S_4)", "L_2(71)", "L_2(59)", "11^2:(5 x 2A_5)",
+              "L_2(41)", "L_2(29):2", "7^2:SL_2(7)", "L_2(19):2", "41:40"],
+    # PSL(2,p) families - typical max subgroup pattern: borel B = (Z/p):(Z/(p-1)/2),
+    # dihedrals, A_4/S_4/A_5 sporadic for small p.
+    "PSL(2,5)":  ["A_4", "S_3", "D_10"],
+    "PSL(2,7)":  ["S_4", "S_4", "7:3"],
+    "PSL(2,11)": ["A_5", "A_5", "11:5", "D_12", "D_10"],
+    "PSL(2,13)": ["13:6", "D_14", "D_12", "A_4"],
+    "PSL(2,17)": ["S_4", "S_4", "17:8", "D_18", "D_16"],
+    "PSL(2,19)": ["A_5", "A_5", "19:9", "D_20", "D_18"],
+    "PSL(2,23)": ["S_4", "S_4", "23:11", "D_24", "D_22"],
+    "PSL(3,2)":  ["S_4", "S_4", "7:3"],
+    "PSL(3,3)":  ["3^2:2S_4", "3^2:2S_4", "13:3", "S_4 x 2", "L_3(2) wreath product?"],
+    "PSL(3,4)":  ["A_6", "A_6", "L_3(2)", "L_3(2)", "L_3(2)", "M_10",
+                  "M_10", "M_10", "2^4:A_5"],
+    # Symmetric / alternating: well-known max subgroup structure
+    "S5": ["A_5", "S_4", "S_3 x S_2", "F_{20}=5:4"],
+    "A5": ["A_4", "A_4", "A_4", "A_4", "A_4", "S_3", "D_10", "D_10", "D_10"],
+    "A6": ["A_5", "A_5", "A_5", "A_5", "A_5", "A_5", "S_4", "S_4",
+           "S_4", "S_4", "S_4", "S_4", "3^2:4"],
+    "S6": ["A_6", "S_5", "S_5", "S_4 x S_2", "S_3 wreath S_2", "S_3 x S_3"],
+    "A7": ["A_6", "A_6", "S_5", "S_5", "L_2(7)", "L_2(7)", "(A_4 x 3):2"],
+    "S7": ["A_7", "S_6", "S_5 x S_2", "S_4 x S_3"],
+    "A8": ["A_7", "S_6 x S_2", "(S_5 x S_3) cap A_8", "L_3(2)", "2^3:L_3(2)",
+           "2^3:L_3(2)", "(A_4 x A_4):2_2", "(A_5 x A_3):2"],
+    "S8": ["A_8", "S_7", "S_6 x S_2", "S_5 x S_3", "S_4 wreath S_2"],
+}
+
+
+def _attach_max_subgroups() -> None:
+    """Annotate every ATLAS_TABLE entry with a max_subgroups list (may be empty)."""
+    for entry in CYCLIC_TABLE + SYMMETRIC_TABLE + ALTERNATING_TABLE \
+                  + MATHIEU_TABLE + PSL2_TABLE + SPORADIC_TABLE:
+        nm = entry["name"]
+        # Cyclic groups: subgroup lattice = divisor lattice of n; "max" = C_{n/p} for primes p | n.
+        if entry.get("family") == "cyclic":
+            n = entry["order"]
+            if n <= 1:
+                entry.setdefault("max_subgroups", [])
+            else:
+                primes = [p for p, _ in entry["order_prime_decomp"]]
+                entry.setdefault("max_subgroups",
+                                 [f"C{n//p}" for p in primes])
+            continue
+        entry.setdefault("max_subgroups", _MAX_SUBGROUPS.get(nm, []))
+
+
+_attach_max_subgroups()
 
 
 # ---------------------------------------------------------------------------
