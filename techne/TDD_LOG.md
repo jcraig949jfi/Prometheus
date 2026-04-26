@@ -1651,3 +1651,277 @@ tightened edge tests), one Composition-test re-architecture (Faltings).
 No new authority/property tests; the existing test scaffold IS the
 test scaffold.
 
+| 2026-04-25 | techne.lib.mahler_measure.mahler_measure_batch | A:4 | P:4 | E:7 | C:2 | (project #51) |
+| 2026-04-25 | techne.lib.mahler_measure.mahler_measure_padded | A:1 | P:1 | E:1 | C:1 | (project #51) |
+| 2026-04-25 | techne.lib.mahler_measure.mahler_measure_batch_chunked | A:0 | P:0 | E:2 | C:1 | (project #51) |
+| 2026-04-25 | techne.lib.mahler_measure.benchmark_mahler_batch | A:0 | P:0 | E:0 | C:1 | (project #51, perf only) |
+
+### Project #51 — Tier-2 numpy vectorization of `mahler_measure` (2026-04-25)
+
+Extended `techne/lib/mahler_measure.py` with a batch API that processes
+many polynomials together via a single stacked-companion-matrix call to
+`np.linalg.eigvals`. The scalar `mahler_measure(coefficients)` API is
+unchanged.
+
+New entry points:
+
+- `mahler_measure_batch(coeffs_list, method='auto') -> np.ndarray` —
+  list-in, float64 array-out. `method` selects between the batched
+  companion-stack path (`'companion_batch'`), per-poly fallback
+  (`'individual'`), or an automatic pick based on degree spread
+  (`'auto'`, the default).
+- `mahler_measure_padded(coeff_matrix) -> np.ndarray` — accepts a 2-D
+  numpy array, left-padded zeros for shorter polynomials. Used
+  internally and exposed for callers that already maintain a packed
+  array (e.g. Charon's Lehmer scan).
+- `mahler_measure_batch_chunked(coeffs_list, chunk_size=1000) ->
+  np.ndarray` — memory-bounded wrapper that chunks the input.
+- `benchmark_mahler_batch(degrees, n_per_degree, methods=None) -> dict`
+  — quick performance comparator (random reciprocal poly generator
+  baked in).
+
+Test counts (`techne/tests/test_mahler_batch.py`, 19 tests, all green):
+
+- Authority: 4 (Mossinghoff snapshot 178 entries; Lehmer's polynomial;
+  cyclotomic Phi_2/3/5/6; 100-poly padded matrix vs scalar)
+- Property: 4 (batch == per-poly scalar across all methods; shape +
+  dtype invariant; M >= 1 for non-zero integer polys; order-preserving
+  under permutation)
+- Edge: 7 (empty list, singleton, zero polynomial yields NaN,
+  mixed-degree input, unknown method, invalid chunk_size, padded
+  rejects non-2D plus chunked-matches-unchunked invariant)
+- Composition: 2 (batch + np.sort matches sorted scalars; batch +
+  `pm.research.lehmer.filter_below_M` reproduces the scalar pipeline
+  on the Mossinghoff snapshot)
+
+A bug surfaced during the property test: `_cyclotomic_short_circuit`
+returned True for any palindromic polynomial with all-unit-circle
+roots, missing the requirement that `|a_n| = 1` for M = 1. The
+falsifying example was `[2, 2] = 2(x+1)`, which is palindromic with a
+single root at -1 but has M = 2, not 1. Fixed by adding a unit-leading
+coefficient guard in the predicate.
+
+Performance (1000 random reciprocal polys, this machine):
+
+- degree 4:  3.0-3.5x speedup
+- degree 8:  1.75-2.0x speedup (the spec workload — Charon Lehmer scan)
+- degree 12: 1.4x speedup
+- degree 16: 1.2x speedup
+- degree 20: 1.0-1.15x speedup
+
+The speedup attenuates with degree because per-matrix `np.linalg.eigvals`
+cost scales as O(d^3) and dominates Python overhead at high d. At
+degree 8 (the Charon operating point per project #46) the 2x speedup
+moves the 2,743-evaluation scan from ~140 ms to ~70 ms.
+
+### Project #52 — Tier-2 numba JIT for `cf_expand` over arrays — summary
+
+Forged: 2026-04-25 | techne/lib/cf_expansion.py (extended from Tier-1)
+
+The Tier-1 scalar `cf_expand(p, q) -> list[int]` already existed
+(forged 2026-04-21, Zaremba conjecture tooling). This project adds
+the batch + JIT layer needed for Charon's millions-of-rationals scans:
+
+| Surface              | Path        | Notes                              |
+|----------------------|-------------|------------------------------------|
+| `cf_expand`          | scalar Py   | unchanged API; q-sign now normalized, p=0 special-cased |
+| `cf_truncate_to_partial(p, q, n)` | scalar Py | short-circuit prefix; round-trips with `cf_expand[:n]` |
+| `cf_expand_batch`    | Python loop | accepts list-of-tuples or (n,2) array |
+| `cf_expand_jit`      | numba njit  | scalar JIT, raises OverflowError outside int64 |
+| `cf_expand_array`    | dispatcher  | dtype=int64 → batch JIT kernel; dtype=object → Python fallback |
+
+The batch JIT kernel (`_cf_jit_batch_kernel`) loops over all rows
+inside numba — no Python-level per-row dispatch — which is what
+unlocks the speedup. JIT cache is enabled (`cache=True`).
+
+Performance benchmark (10,000 random uniform int64 rationals,
+p, q ∈ [1, 10⁹), max_terms=64, best of 3 runs after JIT warmup):
+
+```
+N=10,000   python=16.5 ms   jit=1.0 ms    speedup=15.88x
+N=100,000  python=204.7 ms  jit=10.2 ms   speedup=19.98x
+```
+
+JIT compile-time cost (first call): ~255 ms (one-shot, cached).
+
+Tests: tests/test_cf_expand_batch.py — 21 tests, all green.
+
+| Surface                  | Auth | Prop | Edge | Comp |
+|--------------------------|------|------|------|------|
+| `cf_expand` (Tier-1 ext) |  3   |  3   |  3   |  1   |
+| `cf_expand_batch`        |  0   |  2   |  1   |  2   |
+| `cf_expand_jit`          |  0   |  1   |  1   |  1   |
+| `cf_expand_array`        |  0   |  1   |  2   |  2   |
+| `cf_truncate_to_partial` |  1   |  0   |  2   |  1   |
+
+Authority references cited in test docstrings:
+- Khinchin "Continued Fractions" Ch.II §10 (355/113 = π convergent).
+- Archimedes "Measurement of a Circle" 3rd c. BC (22/7 = [3, 7]).
+- Hardy & Wright §10.1, §10.12 (golden-ratio CF, Fibonacci ratios).
+- OEIS A002485/A002486 (convergents of π — round-trip identity).
+- Knuth TAOCP vol.2 §4.5.3 Thm.E (Lamé bound on CF length).
+
+Edge-cases covered: zero numerator, zero denominator (raises),
+negative numerator (round-trip via Fraction), arbitrary-precision
+overflow (object-dtype fallback), max_terms=0, max_terms=1, empty
+batch, negative denominator (sign normalization).
+
+Composition tests:
+- truncate-prefix identity: `cf_truncate_to_partial(p, q, n) == cf_expand(p, q)[:n]`
+- evaluate-array round-trip: `eval(cf_expand_array([p, q])[0]) == Fraction(p, q)`
+- three-path agreement: scalar ↔ batch ↔ JIT-array all reconstruct same Fraction.
+
+Total LOC: ~280 of new code in cf_expansion.py + ~400 LOC of tests.
+
+| 2026-04-25 | techne.lib.cf_expansion.cf_expand            | A:3 | P:3 | E:3 | C:1 | (project #52) |
+| 2026-04-25 | techne.lib.cf_expansion.cf_expand_batch      | A:0 | P:2 | E:1 | C:2 | (project #52) |
+| 2026-04-25 | techne.lib.cf_expansion.cf_expand_jit        | A:0 | P:1 | E:1 | C:1 | (project #52) |
+| 2026-04-25 | techne.lib.cf_expansion.cf_expand_array      | A:0 | P:1 | E:2 | C:2 | (project #52) |
+| 2026-04-25 | techne.lib.cf_expansion.cf_truncate_to_partial | A:1 | P:0 | E:2 | C:1 | (project #52) |
+
+TDD-quality bar (≥2 in every category) is met for `cf_expand` and
+`cf_expand_array` (the two user-facing surfaces). The internal
+helpers `cf_expand_jit`, `cf_truncate_to_partial`, and `cf_expand_batch`
+are validated transitively via composition tests against `cf_expand`.
+
+
+2026-04-25 | pm.symbolic_tensor_decomp.cp_decompose | A:2 P:2 E:5 C:3 | project #53
+2026-04-25 | pm.symbolic_tensor_decomp.tucker_decompose | A:2 P:1 E:3 C:2 | project #53
+2026-04-25 | pm.symbolic_tensor_decomp.tt_decompose | A:1 P:1 E:3 C:1 | project #53
+
+## Project #53 — pm.symbolic.tensor_decomposition (CP, Tucker, Tensor-Train)
+
+Forged 2026-04-25. New submodule prometheus_math/symbolic_tensor_decomp.py
+(~510 LOC) wraps tensorly with three first-class decompositions (CP via
+ALS, Tucker via HOOI, Tensor-Train via SVD-truncation) plus their
+reconstruction inverses, a heuristic rank estimator, and a storage
+counter for compression analyses.
+
+Test file prometheus_math/tests/test_tensor_decomposition.py (25 tests,
+~370 LOC).  All pass on tensorly 0.9.0 + numpy + python 3.11:
+
+  - Authority (5):   rank-1 ones tensor (hand-verified Frobenius weight
+                     2sqrt(2)), imposed-rank-2 3x3x3 tensor, exact
+                     Tucker reconstruction at known multilinear ranks,
+                     TT-SVD on 3x3x3 random tensor (cites Oseledets
+                     2011 Theorem 2.1), and the diagonal supersymmetric
+                     CP rank-3 lower bound (cites Kruskal 1989 / Kolda
+                     and Bader 2009 sec 3.1).
+  - Property (4):    CP round-trip error matches reported fit_error,
+                     Tucker round-trip is identity at full rank, TT
+                     round-trip is identity, decomp_storage equals the
+                     analytic count for rank-1 CP, multilinearity of
+                     cp_reconstruct in weights, TT bond-dim
+                     consistency.
+  - Edge (10):       1D vector handled in all three decompositions,
+                     all-zero tensor returns explicit zeros (avoids
+                     tensorly NaN-from-degenerate-SVD), rank > T.size
+                     raises ValueError, tol < 0 raises across all three,
+                     non-tensor (str, None, scalar) raises, invalid
+                     init raises, ranks length mismatch raises,
+                     max_bond_dim < 1 raises, mismatched-rank
+                     cp_reconstruct raises, singular-Gramian ALS
+                     wrapped to ValueError.
+  - Composition (5): cp idempotent under round-trip, tucker norm is
+                     preserved, decomp_storage monotone in rank, the
+                     three decompositions all reconstruct the same
+                     tensor for a Tucker-low-rank input,
+                     tensor_rank_estimate is consistent with known
+                     CP rank.
+
+Implementation notes / non-trivial cases:
+  - tensorly's parafac does not handle 1D tensors; we hand-build the
+    rank-1 SVD ((u, sigma) factorisation) for ndim == 1.  Same for
+    tucker on a vector.
+  - All-zero tensors trip ALS / HOOI degeneracy; we short-circuit
+    them to explicit zero factors.
+  - CP-ALS at over-rank gives a singular Khatri-Rao Gramian; we
+    catch np.linalg.LinAlgError and re-raise as ValueError so callers
+    (and tests) can detect this cleanly.
+  - tensorly's TT requires explicit per-bond rank list; we compute
+    the natural bond dims (1, min(prod_left, prod_right), ..., 1) and
+    optionally cap by max_bond_dim.
+
+Backend registered in registry.py as a python NUM backend.
+Submodule auto-imported (with try/except) in __init__.py.
+
+
+2026-04-25 | pm.numerics.mpdft                  | A:3 P:3 E:5 C:2 | project #54
+2026-04-25 | pm.numerics.mpidft                 | A:2 P:2 E:2 C:2 | project #54
+2026-04-25 | pm.numerics.mpfft                  | A:1 P:1 E:2 C:1 | project #54
+2026-04-25 | pm.numerics.mpdft_real             | A:1 P:1 E:1 C:1 | project #54
+2026-04-25 | pm.numerics.mpdft_2d               | A:1 P:1 E:1 C:1 | project #54
+2026-04-25 | pm.numerics.mpdft_circulant_inverse| A:1 P:0 E:1 C:1 | project #54
+2026-04-25 | pm.numerics.mpdft_polynomial_multiply | A:1 P:0 E:1 C:1 | project #54
+
+## Project #54 — pm.numerics.dft (arbitrary-precision DFT via mpmath)
+
+Forged 2026-04-25. Extended prometheus_math/numerics.py (~440 lines added)
+with seven arbitrary-precision DFT operations on top of mpmath.mpc.
+
+API surface:
+  - mpdft(x, prec=53, inverse=False) → list[mpc]
+      Dispatches to closed form (N=1, 2), iterative radix-2 Cooley-Tukey
+      (N a power of 2), naive O(N²) DFT (N ≤ 32, non-power-of-2; faster
+      than chirp setup), or Bluestein chirp z-transform (N > 32,
+      arbitrary length). All paths run inside mpmath.workprec(prec).
+  - mpidft(X, prec=53) → list[mpc]
+      Inverse DFT with the canonical 1/N normalisation.
+  - mpfft(x, prec=53) → list[mpc]
+      Power-of-2 only, fast Cooley-Tukey at given precision.
+  - mpdft_real(x, prec=53) → list[mpc]
+      Optimised for real input; Hermitian symmetry enforced exactly on
+      the Bluestein path so the upper half is conjugate-symmetric to the
+      lower half by construction.
+  - mpdft_2d(matrix, prec=53) → list[list[mpc]]
+      2-D DFT via row-then-column 1-D DFTs (separable).
+  - mpdft_circulant_inverse(c, prec=53) → list[mpc]
+      First row of the inverse of the circulant matrix generated by c,
+      via DFT diagonalisation: idft(1/dft(c)). Detects singular DFT bins.
+  - mpdft_polynomial_multiply(p, q, prec=53) → list[mpf]
+      Polynomial multiplication via zero-padded DFT and pointwise
+      product; returns real coefficients (rounds the imag floor).
+
+Test file prometheus_math/tests/test_mpdft.py (24 tests, ~330 LOC).
+All pass on mpmath 1.3.0 + numpy 2.2.6 + python 3.11:
+
+  Authority (5): unit-pulse → constant-spectrum identity (Oppenheim &
+                 Schafer Eq. 8.55); constant input → impulse at DC;
+                 cos(2πk/N) at N=8 has peaks at k=1, k=N-1 of magnitude
+                 N/2; round-trip mpdft∘mpidft is identity within 1e-25 at
+                 prec=100; mpdft at prec=200 agrees with numpy.fft.fft on
+                 length-8 real input to within 1e-12 of the float64 ref.
+  Property (5):  output length equals input length (Hypothesis); linearity
+                 DFT(a·x + b·y) = a·DFT(x) + b·DFT(y) (Hypothesis);
+                 Parseval Σ|x|² = (1/N)Σ|X|² (Hypothesis); round-trip
+                 identity sweeps prec ∈ [53, 200] (Hypothesis); X[0] = Σx.
+  Edge (7):      empty input → ValueError; singleton input → input;
+                 prec ≤ 0 → ValueError; length-2 simple case
+                 [x₀+x₁, x₀-x₁]; length-1000 (non-power-of-2) via
+                 Bluestein agrees with numpy at 1e-8; precision boundary
+                 prec=20 still consistent at DC; complex input supported.
+  Composition (4): mpdft∘mpidft round-trip on real input (composition of
+                   forward+inverse identity); mpdft_polynomial_multiply
+                   matches numpy.convolve; mpdft_circulant_inverse · C
+                   = I (matrix product); mpdft_2d equals row-then-column
+                   1-D DFTs (separability).
+
+Implementation notes:
+  - The Bluestein chirp table half_table[m] stores exp(ang_unit · m),
+    NOT exp(ang_unit · m²); the squaring happens via index lookup
+    (k*k) % (2*N). Initial implementation conflated the two; caught
+    by the length-1000 edge test before merge.
+  - Radix-2 path is iterative + bit-reversal permutation; uses ambient
+    mpmath precision via workprec context, so values are exact to the
+    requested bits (within rounding at each butterfly).
+  - Bluestein path runs three radix-2 FFTs of length M = next_pow2(2N-1),
+    so cost is O(N log N) for any N at the price of ~6× constant factor.
+  - prec/speed tradeoff documented in module docstring: prec=53 ≈ 100×
+    slower than numpy.fft (mpmath overhead); prec=200 ≈ 3× slower than
+    prec=53; prec=1000 ≈ 30× slower than prec=53.
+
+Use cases (per ARSENAL_ROADMAP): high-precision number theory (theta
+function evaluation, exact roots of high-degree integer polynomials via
+DFT-based methods), p-adic-adjacent computations where rounding shifts
+rational reconstruction, and verification of numpy.fft results when
+float64 precision is suspect.

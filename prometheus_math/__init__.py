@@ -47,6 +47,13 @@ from . import (  # noqa: F401
 )
 from . import doc  # noqa: F401
 
+# Optional submodule: tensor decompositions (CP, Tucker, TT) via tensorly.
+try:
+    from . import symbolic_tensor_decomp  # noqa: F401
+    _HAS_SYMBOLIC_TENSOR_DECOMP = True
+except Exception:  # pragma: no cover
+    _HAS_SYMBOLIC_TENSOR_DECOMP = False
+
 # viz: notebook-ready knot/link diagram rendering. Optional in the
 # sense that it depends on matplotlib + snappy; protect the rest of pm
 # from import errors if either is missing.
@@ -111,3 +118,5 @@ if _HAS_VIZ:
     __all__.append("viz")
 if _HAS_RECIPES:
     __all__.append("recipes")
+if _HAS_SYMBOLIC_TENSOR_DECOMP:
+    __all__.append("symbolic_tensor_decomp")

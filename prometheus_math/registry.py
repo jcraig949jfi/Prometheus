@@ -89,6 +89,8 @@ _BACKENDS: list[Backend] = [
     # ML
     Backend("torch", "python", "AI", import_name="torch",
             description="PyTorch"),
+    Backend("tensorly", "python", "NUM", import_name="tensorly",
+            description="Multilinear algebra / tensor decompositions"),
     # Native binaries we'd dispatch to via subprocess
     Backend("gap", "binary", "GT", binary_name="gap",
             description="GAP (groups, representations)"),
