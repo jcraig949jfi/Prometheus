@@ -45,6 +45,8 @@ from . import (  # noqa: F401
     galois,
     iwasawa,
 )
+from . import numerics_special_hurwitz  # noqa: F401
+from . import numerics_special  # noqa: F401  -- facade namespace
 from . import doc  # noqa: F401
 
 # Optional submodule: tensor decompositions (CP, Tucker, TT) via tensorly.
@@ -103,6 +105,8 @@ __all__ = [
     "combinatorics",
     "optimization",
     "numerics",
+    "numerics_special",
+    "numerics_special_hurwitz",
     "symbolic",
     "algebraic_geometry",
     "galois",

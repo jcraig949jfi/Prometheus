@@ -921,10 +921,10 @@ detail spec lives in commit messages when work begins.
 52. **A** — Tier-2 numba JIT for `cf_expand` over arrays of rationals · 2d ✓ COMPLETED 2026-04-25
 53. **A** — Add `pm.symbolic.tensor_decomposition` (CP, Tucker, Tensor-Train) · 5d ✓ COMPLETED 2026-04-25
 54. **A** — Add `pm.numerics.dft` arbitrary-precision FFT via mpmath · 4d ✓ COMPLETED 2026-04-25
-55. **A** — Add `pm.numerics.special.hurwitz_zeta` · 2d
-56. **A** — Add `pm.numerics.special.dilogarithm` · 2d
-57. **A** — Add `pm.numerics.special.q_pochhammer` · 3d
-58. **A** — Add `pm.numerics.special.theta_functions` · 5d
+55. **A** — Add `pm.numerics.special.hurwitz_zeta` · 2d ✓ COMPLETED 2026-04-25
+56. **A** — Add `pm.numerics.special.dilogarithm` · 2d ✓ COMPLETED 2026-04-25
+57. **A** — Add `pm.numerics.special.q_pochhammer` · 3d ✓ COMPLETED 2026-04-25
+58. **A** — Add `pm.numerics.special.theta_functions` · 5d ✓ COMPLETED 2026-04-25
 59. **A** — Add `pm.numerics.special.eta_function` arbitrary tau · 3d
 60. **A** — Lazy import refactor across all categorical modules · 4d
 61. **A** — Add `pm.algebraic_geometry.hilbert_polynomial` (Singular-backend) · 3d
