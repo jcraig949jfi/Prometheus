@@ -1,0 +1,122 @@
+name: OEIS mirror weekly refresh
+
+# Refreshes prometheus_data/oeis/{stripped.gz,names.gz} by re-downloading
+# from oeis.org, then commits the new metadata sidecar IFF the sequence
+# count changed (Sloane added or retired sequences). The .gz files
+# themselves are intentionally NOT committed — they're 30+ MB and live
+# in prometheus_data/, which is gitignored. We only commit
+# prometheus_data/oeis/.metadata.json so downstream code can read the
+# canonical "last refreshed N sequences on YYYY-MM-DD" sidecar.
+
+on:
+  schedule:
+    - cron: '30 4 * * 0'   # Sunday 04:30 UTC
+  workflow_dispatch:
+  push:
+    paths:
+      - 'prometheus_math/databases/oeis.py'
+      - 'scripts/oeis_refresh.py'
+      - '.github/workflows/oeis-refresh.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: oeis-refresh-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    name: Download OEIS bulk dumps and update metadata
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install minimal deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Show prior metadata (if any)
+        id: prior
+        run: |
+          if [ -f prometheus_data/oeis/.metadata.json ]; then
+            echo "Prior metadata:"
+            cat prometheus_data/oeis/.metadata.json
+            prev=$(python -c "import json; print(json.load(open('prometheus_data/oeis/.metadata.json'))['sequences'])")
+          else
+            echo "No prior metadata sidecar."
+            prev=0
+          fi
+          echo "prev=$prev" >> "$GITHUB_OUTPUT"
+
+      - name: Run OEIS refresh script
+        id: refresh
+        env:
+          PROMETHEUS_DATA_DIR: ${{ github.workspace }}/prometheus_data
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          set -eo pipefail
+          python scripts/oeis_refresh.py | tee refresh.out
+          # Parse out the structured lines for downstream steps.
+          cur=$(grep '^SEQUENCES_CUR=' refresh.out | cut -d= -f2)
+          prev=$(grep '^SEQUENCES_PREV=' refresh.out | cut -d= -f2)
+          delta=$(grep '^DELTA=' refresh.out | cut -d= -f2)
+          echo "cur=$cur" >> "$GITHUB_OUTPUT"
+          echo "prev=$prev" >> "$GITHUB_OUTPUT"
+          echo "delta=$delta" >> "$GITHUB_OUTPUT"
+
+      - name: Decide whether to commit
+        id: gate
+        run: |
+          delta="${{ steps.refresh.outputs.delta }}"
+          if [ -z "$delta" ]; then delta=0; fi
+          # Commit only when the delta is strictly positive (Sloane added
+          # sequences). Negative or zero deltas do nothing — keeps the
+          # main-branch history clean of weekly noise.
+          if [ "$delta" -gt 0 ]; then
+            echo "should_commit=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_commit=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit metadata sidecar
+        if: steps.gate.outputs.should_commit == 'true'
+        run: |
+          git config user.name  "prometheus-bot"
+          git config user.email "prometheus-bot@users.noreply.github.com"
+          mkdir -p prometheus_data/oeis
+          git add -f prometheus_data/oeis/.metadata.json
+          # If the sidecar's bytes are unchanged, git diff --cached
+          # returns clean and we exit without an empty commit.
+          if git diff --cached --quiet; then
+            echo "metadata sidecar unchanged on disk; skipping commit"
+            exit 0
+          fi
+          cur="${{ steps.refresh.outputs.cur }}"
+          prev="${{ steps.refresh.outputs.prev }}"
+          delta="${{ steps.refresh.outputs.delta }}"
+          git commit -m "oeis: weekly refresh — ${cur} sequences (prev ${prev}, delta +${delta})"
+          git push origin HEAD:${{ github.ref_name }}
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "## OEIS mirror refresh"
+            echo ""
+            echo "- Prior sequences: ${{ steps.refresh.outputs.prev }}"
+            echo "- Current sequences: ${{ steps.refresh.outputs.cur }}"
+            echo "- Delta: ${{ steps.refresh.outputs.delta }}"
+            echo "- Committed: ${{ steps.gate.outputs.should_commit }}"
+          } >> "$GITHUB_STEP_SUMMARY"

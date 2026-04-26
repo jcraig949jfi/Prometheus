@@ -25,8 +25,12 @@ def _load_manifold(knot):
     if isinstance(knot, snappy.Link):
         return knot.exterior()
     if isinstance(knot, str):
+        if not knot.strip():
+            raise ValueError("hyperbolic_volume: empty knot identifier")
         return snappy.Manifold(knot)
     if isinstance(knot, list):
+        if not knot:
+            raise ValueError("hyperbolic_volume: empty PD code")
         return snappy.Link(knot).exterior()
     raise TypeError(f"Unsupported knot input: {type(knot).__name__}")
 
