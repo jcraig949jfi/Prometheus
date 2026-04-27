@@ -287,15 +287,29 @@
       "fulfilled_date": "2026-04-26",
       "forged_date": "2026-04-26",
       "known_issues": ["PySAT's bundled kissat404 backend is present, but on this Windows harness it segfaulted on the Caccetta-Haggkvist UNSAT certificate; solver='kissat' records requested_solver='kissat' and uses Glucose3 fallback on Windows.", "Timeout returns satisfiable=None with stats.timed_out=True because SAT truth is unknown after interruption."]
+    },
+    {
+      "name": "TOOL_TT_SPLICE",
+      "file": "techne/lib/tt_splice.py",
+      "tier": 1,
+      "interface": "tt_splice_compatibility(region_a_npz: Path, region_b_npz: Path, prime_detrend: bool = True, null_perms: int = 300, seed: int = 20260417) -> dict",
+      "dependencies": ["numpy", "scipy"],
+      "optional": ["tensorly"],
+      "tested": true,
+      "test_source": "Synthetic low-rank shared factor scores high, random Gaussian pair scores low with non-significant null p-value, self-splice scores 1.0, PATTERN_PRIME_GRAVITATIONAL_OVERFIT warning on prime_detrend=False, same seed gives identical bond_ranks. ergon/tensor.npz schema inspected and skipped as full object-feature matrix requiring extracted per-region slices. 5 passed, 1 skipped.",
+      "fulfilled_request": "REQ-027",
+      "fulfilled_date": "2026-04-26",
+      "forged_date": "2026-04-26",
+      "known_issues": ["Tier 1 implementation uses dense SVD unfoldings, so callers should pass per-region tensor slices rather than full multi-million-row object-feature matrices.", "Compatibility score combines TT rank compression with leading-subspace alignment; audit exposes independent ranks, joint ranks, null p-value, and prime-detrend magnitudes for calibration.", "When prime_detrend=False the API emits a PATTERN_PRIME_GRAVITATIONAL_OVERFIT warning and records prime_detrend_applied=false."]
     }
   ],
   "stats": {
-    "total": 22,
-    "tier1_python": 22,
+    "total": 23,
+    "tier1_python": 23,
     "tier2_optimized": 0,
     "tier3_cpp": 0,
-    "requests_open": 6,
-    "requests_fulfilled": 23,
-    "notes": "Cycle 30: TOOL_SAT_SOLVER shipped (REQ-026). PySAT wrapper exposes stable CNF IO, Kissat alias, Glucose fallback, stats, timeout interrupt semantics, and Caccetta-Haggkvist SAT-certificate calibration."
+    "requests_open": 5,
+    "requests_fulfilled": 24,
+    "notes": "Cycle 31: TOOL_TT_SPLICE shipped (REQ-027). Dense SVD TT-splice analyzer with mandatory prime-detrend audit, permutation null, deterministic seed behavior, and synthetic shared-factor calibration."
   }
 }

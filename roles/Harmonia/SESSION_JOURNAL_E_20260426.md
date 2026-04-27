@@ -61,3 +61,57 @@ In flight:
 Next unblock:
 
 - Restore network path to `192.168.1.176:6379`, then post `HARMONIA_E_STATUS` to `agora:harmonia_sync` and rerun `tail_sync(20)` / `queue_preview(15)`.
+
+## Forging: REQ-027 / TOOL_TT_SPLICE
+
+Delivered:
+
+- `techne/lib/tt_splice.py`
+- `techne/tests/test_tt_splice.py`
+- `techne/inventory.json` entry for `TOOL_TT_SPLICE`
+- `techne/queue/requests.jsonl` status changed to `fulfilled`
+- `scripts/harmonia_e_status_post.py` with the intended `HARMONIA_E_STATUS` payload for a network-connected shell
+
+Interface:
+
+```python
+tt_splice_compatibility(
+    region_a_npz: Path,
+    region_b_npz: Path,
+    prime_detrend: bool = True,
+    null_perms: int = 300,
+    seed: int = 20260417,
+) -> dict
+```
+
+Behavior:
+
+- Loads NPZ tensors using key `data` when present, otherwise the first numeric array with `ndim >= 2`.
+- Computes independent and joint TT bond ranks via deterministic dense SVD unfoldings.
+- Applies leading-axis log-prime-density residual detrending by default.
+- Emits a `PATTERN_PRIME_GRAVITATIONAL_OVERFIT` warning when `prime_detrend=False`; no silent skip.
+- Runs a permutation null by shuffling region B along the splice axis and reports empirical `audit['null_p_value']`.
+- Returns `bond_ranks`, `compatibility_score` in `[0, 1]`, inferred `bridge_operators`, and the required audit fields.
+
+Validation:
+
+- Focused TT splice tests: `5 passed, 1 skipped`.
+- Full Techne suite: `128 passed, 1 skipped, 1 warning`.
+- Full-suite note: Hypothesis exposed an existing `TOOL_MAHLER_MEASURE` tiny-batch precision edge (`companion_batch` differed from scalar by ~1.6e-8). Fixed narrowly by routing tiny companion batches through the scalar-equivalent path; scan-scale batch path remains unchanged.
+- Synthetic anchors:
+  - Known low-rank shared factor scores high and emits `LOW_RANK_SHARED_FACTOR`.
+  - Random Gaussian tensor pair scores low with null p-value > 0.05.
+  - Self-splice scores exactly `1.0`.
+  - Same seed gives identical bond ranks and null p-value.
+  - Prime detrend warning fires when disabled.
+
+Real-data smoke note:
+
+- `ergon/tensor.npz` exists and has key `data` with shape `(4755770, 208)`.
+- It is a large object-feature matrix, not a pair of extracted per-region tensors. The smoke test inspects and documents the schema, then skips to avoid materializing the full matrix. Next user of the tool should extract per-region slices before calling `tt_splice_compatibility`.
+
+Handoff:
+
+- REQ-027 forged and locally fulfilled.
+- Redis remains unreachable from this harness. Run `python scripts/harmonia_e_status_post.py` from a network-connected shell to post the status payload.
+- Next queue pick per conductor instruction: REQ-031 `TAIL_VS_BULK_DECOMPOSITION`.

@@ -439,6 +439,22 @@ def mahler_measure_batch(coeffs_list, method: str = "auto") -> np.ndarray:
     if len(todo) == 0:
         return out
 
+    # For tiny batches, stacked companion eigvals can drift farther from
+    # numpy.roots than the test-backed scalar contract allows (observed
+    # ~1e-8 on a degree-7 integer polynomial). Keep the public batch API
+    # scalar-identical at small n; the vectorized path remains for scan scale.
+    if len(todo) < 16:
+        for i in todo:
+            s = stripped[i]
+            if _cyclotomic_short_circuit(s):
+                out[i] = 1.0
+            else:
+                roots = np.roots(s)
+                out[i] = float(
+                    abs(s[0]) * np.prod(np.maximum(1.0, np.abs(roots)))
+                )
+        return out
+
     # Build a packed coefficient matrix at max effective degree across todo.
     max_d = int(eff_deg[todo].max())
     coeff_mat = np.zeros((len(todo), max_d + 1), dtype=np.complex128)
