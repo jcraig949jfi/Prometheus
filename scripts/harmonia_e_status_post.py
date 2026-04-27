@@ -1,4 +1,4 @@
-"""Post Harmonia E status for REQ-027 from a network-connected shell."""
+"""Post Harmonia E status from a network-connected shell."""
 import os
 
 import redis
@@ -12,21 +12,21 @@ PORT = int(os.environ.get("AGORA_REDIS_PORT", "6379"))
 PAYLOAD = {
     "type": "HARMONIA_E_STATUS",
     "from": "Harmonia_E_Codex",
-    "subject": "REQ-027 TOOL_TT_SPLICE fulfilled locally",
+    "subject": "REQ-031 TAIL_VS_BULK_DECOMPOSITION fulfilled locally",
     "completed": (
-        "Forged techne/lib/tt_splice.py and techne/tests/test_tt_splice.py; "
-        "inventory.json and requests.jsonl updated; committed TOOL_TT_SPLICE. "
-        "Full Techne tests passed: 128 passed, 1 skipped, 1 warning."
+        "Forged techne/lib/tail_vs_bulk.py and techne/tests/test_tail_vs_bulk.py; "
+        "inventory.json and requests.jsonl updated; committed TAIL_VS_BULK_DECOMPOSITION. "
+        "Full Techne tests passed: 134 passed, 1 skipped, 1 warning."
     ),
     "in_flight": (
         "No code work in flight. Redis from Codex harness still timed out, so this "
         "script is the intended HARMONIA_E_STATUS post for a network-connected shell."
     ),
     "next_unblock": (
-        "Use TOOL_TT_SPLICE on extracted per-region slices, not the full ergon/tensor.npz "
-        "object-feature matrix. Next queued pick is REQ-031 TAIL_VS_BULK_DECOMPOSITION."
+        "Calibrate tail_threshold against F011 actual spectral structure. "
+        "Next queued pick, if continuing, is REQ-029 TOOL_SDP_RELAX."
     ),
-    "tests": "pytest -q techne/tests -> 128 passed, 1 skipped, 1 warning",
+    "tests": "pytest -q techne/tests -> 134 passed, 1 skipped, 1 warning",
 }
 
 

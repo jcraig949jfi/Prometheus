@@ -115,3 +115,53 @@ Handoff:
 - REQ-027 forged and locally fulfilled.
 - Redis remains unreachable from this harness. Run `python scripts/harmonia_e_status_post.py` from a network-connected shell to post the status payload.
 - Next queue pick per conductor instruction: REQ-031 `TAIL_VS_BULK_DECOMPOSITION`.
+
+## Forging: REQ-031 / TAIL_VS_BULK_DECOMPOSITION
+
+Delivered:
+
+- `techne/lib/tail_vs_bulk.py`
+- `techne/tests/test_tail_vs_bulk.py`
+- `techne/inventory.json` entry for `TAIL_VS_BULK_DECOMPOSITION`
+- `techne/queue/requests.jsonl` status changed to `fulfilled`
+- `scripts/harmonia_e_status_post.py` updated with the REQ-031 status payload
+
+Interface:
+
+```python
+decompose_spectral(
+    spectral_signal: np.ndarray,
+    tail_threshold: float | str = "auto",
+    null_model: callable | None = None,
+    n_perms: int = 300,
+    seed: int = 20260417,
+) -> dict
+```
+
+Behavior:
+
+- Splits by spectral coordinate tail, not magnitude tail. Default `"auto"` uses threshold `0.95`.
+- Returns `tail_signal`, `bulk_signal`, independent `tail_battery_scores` / `bulk_battery_scores`, `agreement_score`, and provenance audit fields.
+- Built-in battery is a documented placeholder until a substrate `battery_apply` callable exists. It returns `effect_size`, `p_value`, and `pattern_flags`.
+- `null_model` callable hook is supported with contract `callable(signal, mask, rng, n_perms) -> {effect_size, p_value, pattern_flags}`.
+
+Validation:
+
+- Focused tail-vs-bulk tests: `6 passed`.
+- Full Techne suite: `134 passed, 1 skipped, 1 warning`.
+- Synthetic anchors:
+  - Strong tail / flat bulk: low agreement, tail promotes, bulk fails.
+  - Strong bulk / flat tail: low agreement, bulk promotes, tail fails.
+  - Strong tail and bulk: high agreement, both promote.
+  - Pure noise: both fail.
+  - Same seed: bit-identical decomposition and scores.
+
+Known issue:
+
+- The tail/bulk threshold is a calibration parameter. It still needs calibration against F011's actual spectral structure before being treated as a durable battery threshold.
+
+Handoff:
+
+- REQ-031 forged and locally fulfilled.
+- Redis remains unreachable from this harness; run `python scripts/harmonia_e_status_post.py` from a network-connected shell to post the REQ-031 status payload.
+- Next queue pick if continuing: REQ-029 `TOOL_SDP_RELAX`.

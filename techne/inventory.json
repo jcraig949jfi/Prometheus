@@ -301,15 +301,28 @@
       "fulfilled_date": "2026-04-26",
       "forged_date": "2026-04-26",
       "known_issues": ["Tier 1 implementation uses dense SVD unfoldings, so callers should pass per-region tensor slices rather than full multi-million-row object-feature matrices.", "Compatibility score combines TT rank compression with leading-subspace alignment; audit exposes independent ranks, joint ranks, null p-value, and prime-detrend magnitudes for calibration.", "When prime_detrend=False the API emits a PATTERN_PRIME_GRAVITATIONAL_OVERFIT warning and records prime_detrend_applied=false."]
+    },
+    {
+      "name": "TAIL_VS_BULK_DECOMPOSITION",
+      "file": "techne/lib/tail_vs_bulk.py",
+      "tier": 1,
+      "interface": "decompose_spectral(spectral_signal: np.ndarray, tail_threshold: float | str = 'auto', null_model: callable | None = None, n_perms: int = 300, seed: int = 20260417) -> dict",
+      "dependencies": ["numpy"],
+      "tested": true,
+      "test_source": "Synthetic tail-only, bulk-only, tail+bulk, pure-noise, deterministic-seed, and custom battery-contract tests. 6/6 focused tests pass; full Techne suite 134 passed, 1 skipped, 1 warning.",
+      "fulfilled_request": "REQ-031",
+      "fulfilled_date": "2026-04-26",
+      "forged_date": "2026-04-26",
+      "known_issues": ["The tail/bulk threshold is itself a calibration parameter; future work needs calibration against F011's actual spectral structure.", "The built-in battery is a placeholder until substrate battery_apply is exposed; callers may provide null_model callable(signal, mask, rng, n_perms) returning effect_size, p_value, and pattern_flags.", "Default tail split is coordinate-tail at the 95th percentile, not magnitude-tail."]
     }
   ],
   "stats": {
-    "total": 23,
-    "tier1_python": 23,
+    "total": 24,
+    "tier1_python": 24,
     "tier2_optimized": 0,
     "tier3_cpp": 0,
-    "requests_open": 5,
-    "requests_fulfilled": 24,
-    "notes": "Cycle 31: TOOL_TT_SPLICE shipped (REQ-027). Dense SVD TT-splice analyzer with mandatory prime-detrend audit, permutation null, deterministic seed behavior, and synthetic shared-factor calibration."
+    "requests_open": 4,
+    "requests_fulfilled": 25,
+    "notes": "Cycle 32: TAIL_VS_BULK_DECOMPOSITION shipped (REQ-031). Spectral coordinate-tail split, independent placeholder battery scores, agreement score, provenance audit, deterministic null behavior."
   }
 }
