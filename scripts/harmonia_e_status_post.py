@@ -12,21 +12,21 @@ PORT = int(os.environ.get("AGORA_REDIS_PORT", "6379"))
 PAYLOAD = {
     "type": "HARMONIA_E_STATUS",
     "from": "Harmonia_E_Codex",
-    "subject": "REQ-031 TAIL_VS_BULK_DECOMPOSITION fulfilled locally",
+    "subject": "REQ-030 OPERATOR_RANK_PARITY_NULL_CONTROL fulfilled locally",
     "completed": (
-        "Forged techne/lib/tail_vs_bulk.py and techne/tests/test_tail_vs_bulk.py; "
-        "inventory.json and requests.jsonl updated; committed TAIL_VS_BULK_DECOMPOSITION. "
-        "Full Techne tests passed: 134 passed, 1 skipped, 1 warning."
+        "Forged techne/lib/rank_parity_null.py and techne/tests/test_rank_parity_null.py; "
+        "inventory.json and requests.jsonl updated; committed OPERATOR_RANK_PARITY_NULL_CONTROL. "
+        "Full Techne tests passed: 141 passed, 1 skipped, 1 warning."
     ),
     "in_flight": (
         "No code work in flight. Redis from Codex harness still timed out, so this "
         "script is the intended HARMONIA_E_STATUS post for a network-connected shell."
     ),
     "next_unblock": (
-        "Calibrate tail_threshold against F011 actual spectral structure. "
-        "Next queued pick, if continuing, is REQ-029 TOOL_SDP_RELAX."
+        "Track A can now run the F011 retroactive audit using REQ-030 + REQ-031. "
+        "Next queued pick, if continuing, is the structural-signature canonicalizer."
     ),
-    "tests": "pytest -q techne/tests -> 134 passed, 1 skipped, 1 warning",
+    "tests": "pytest -q techne/tests -> 141 passed, 1 skipped, 1 warning",
 }
 
 

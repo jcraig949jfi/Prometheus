@@ -165,3 +165,63 @@ Handoff:
 - REQ-031 forged and locally fulfilled.
 - Redis remains unreachable from this harness; run `python scripts/harmonia_e_status_post.py` from a network-connected shell to post the REQ-031 status payload.
 - Next queue pick if continuing: REQ-029 `TOOL_SDP_RELAX`.
+
+## Forging: REQ-030 / OPERATOR_RANK_PARITY_NULL_CONTROL
+
+Read first:
+
+- `harmonia/memory/symbols/NULL_BSWCD.md`
+
+Interpretation:
+
+- `NULL_BSWCD@v2` preserves conductor-decile marginals via seeded block shuffle and emits degeneracy warnings.
+- REQ-030 extends this to preserve `(conductor_decile, rank_parity)` joint marginals for BSD-adjacent and F011-retroactive audit work.
+- This session forged only the operator, not the F011 Track A audit.
+
+Delivered:
+
+- `techne/lib/rank_parity_null.py`
+- `techne/tests/test_rank_parity_null.py`
+- `techne/inventory.json` entry for `OPERATOR_RANK_PARITY_NULL_CONTROL`
+- `techne/queue/requests.jsonl` status changed to `fulfilled`
+- `scripts/harmonia_e_status_post.py` updated with the REQ-030 status payload
+
+Interface:
+
+```python
+rank_parity_null_control(
+    population: np.ndarray | str | list[np.ndarray | str],
+    rank_field: str = "analytic_rank",
+    conductor_field: str = "conductor",
+    n_perms: int = 300,
+    seed: int = 20260417,
+) -> dict
+```
+
+Behavior:
+
+- Accepts structured arrays, NPZ paths, or a list of populations.
+- Computes conductor deciles, rank distribution, parity distribution, conductor-decile distribution, and joint `(decile, parity)` strata.
+- Generates seeded within-joint-stratum permutation indices.
+- Reports `null_distribution`, `matched_population_indices`, and `rank_parity_audit`.
+- For multi-population input, reports pairwise rank/parity L1 distances and `PATTERN_RANK_PARITY_LEAK_RISK` flags.
+- Canonical multi-population use is documented as F011 non-CM EC vs CM EC vs G2C USp(4), without running that audit.
+
+Validation:
+
+- Focused rank-parity null tests: `7 passed`.
+- Full Techne suite: `141 passed, 1 skipped, 1 warning`.
+- Synthetic anchors:
+  - Rank distribution `{0: 60, 1: 30, 2: 10}` preserved under null.
+  - Two populations with different rank distributions report difference.
+  - Three F011-shaped populations flag rank-parity asymmetry.
+  - Same seed gives bit-identical null.
+  - Single-rank population has trivial preservation.
+  - Underdetermined conductor decile degrades gracefully and flags the audit.
+  - NPZ path input works.
+
+Handoff:
+
+- REQ-030 forged and locally fulfilled.
+- Redis remains unreachable from this harness; run `python scripts/harmonia_e_status_post.py` from a network-connected shell to post the REQ-030 status payload.
+- Next queue pick if continuing: structural-signature canonicalizer from `stoa/proposals/2026-04-26-aporia-structural-signature-v1.md`.

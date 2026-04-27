@@ -314,15 +314,28 @@
       "fulfilled_date": "2026-04-26",
       "forged_date": "2026-04-26",
       "known_issues": ["The tail/bulk threshold is itself a calibration parameter; future work needs calibration against F011's actual spectral structure.", "The built-in battery is a placeholder until substrate battery_apply is exposed; callers may provide null_model callable(signal, mask, rng, n_perms) returning effect_size, p_value, and pattern_flags.", "Default tail split is coordinate-tail at the 95th percentile, not magnitude-tail."]
+    },
+    {
+      "name": "OPERATOR_RANK_PARITY_NULL_CONTROL",
+      "file": "techne/lib/rank_parity_null.py",
+      "tier": 1,
+      "interface": "rank_parity_null_control(population: np.ndarray | str | list, rank_field: str = 'analytic_rank', conductor_field: str = 'conductor', n_perms: int = 300, seed: int = 20260417) -> dict",
+      "dependencies": ["numpy"],
+      "tested": true,
+      "test_source": "Synthetic {0:60,1:30,2:10} marginal preservation, two-population rank-distribution difference, F011-shaped non-CM/CM/G2C rank-parity asymmetry, determinism, single-rank trivial null, underdetermined conductor decile flag, and NPZ path input. 7/7 focused tests pass; full Techne suite 141 passed, 1 skipped, 1 warning.",
+      "fulfilled_request": "REQ-030",
+      "fulfilled_date": "2026-04-26",
+      "forged_date": "2026-04-26",
+      "known_issues": ["This operator does not run the F011 audit; it only provides the joint-marginal-preserving null needed by Track A.", "Pairwise population comparison currently reports L1 distances over rank and parity distributions; downstream audits must choose claim-specific statistics.", "Conductor deciles degrade gracefully for small or low-unique-conductor populations and set conductor_decile_audit.underdetermined=true."]
     }
   ],
   "stats": {
-    "total": 24,
-    "tier1_python": 24,
+    "total": 25,
+    "tier1_python": 25,
     "tier2_optimized": 0,
     "tier3_cpp": 0,
-    "requests_open": 4,
-    "requests_fulfilled": 25,
-    "notes": "Cycle 32: TAIL_VS_BULK_DECOMPOSITION shipped (REQ-031). Spectral coordinate-tail split, independent placeholder battery scores, agreement score, provenance audit, deterministic null behavior."
+    "requests_open": 3,
+    "requests_fulfilled": 26,
+    "notes": "Cycle 33: OPERATOR_RANK_PARITY_NULL_CONTROL shipped (REQ-030). Extends NULL_BSWCD@v2 to preserve (conductor decile, rank parity) joint marginals and reports multi-population rank-parity asymmetry."
   }
 }
