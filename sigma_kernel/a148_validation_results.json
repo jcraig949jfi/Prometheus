@@ -1,0 +1,67 @@
+{
+  "experiment": "a148_cross_family_validation",
+  "signature": {
+    "n_steps": 5,
+    "neg_x": 4,
+    "pos_x": 1,
+    "has_diag_neg": true
+  },
+  "verdict": "INCONCLUSIVE",
+  "reading": "No A148* sequences match the strict signature AND have battery-sweep\nverdicts. Cannot evaluate transfer at this n. Either the signature\nreally is A149*-specific, or the A148* corpus in battery_sweep_v2.jsonl\ndoesn't include enough sequences with parseable step-sets matching the\nsignature to test.",
+  "a149_report": {
+    "prefix": "A149",
+    "n_family": 500,
+    "n_matches_strict": 5,
+    "n_matches_relaxed": 45,
+    "strict": {
+      "kills_in_group": 5,
+      "evaluated": 5,
+      "rate": 1.0
+    },
+    "non_matches": {
+      "kills_in_group": 1,
+      "evaluated": 54,
+      "rate": 0.018518518518518517
+    },
+    "relaxed": {
+      "kills_in_group": 6,
+      "evaluated": 15,
+      "rate": 0.4
+    },
+    "lift_strict_vs_nonmatch": 53.99999713800016,
+    "matches_strict_seq_ids": [
+      "A149074",
+      "A149081",
+      "A149082",
+      "A149089",
+      "A149090"
+    ],
+    "anti_anchors": [
+      "A149499"
+    ]
+  },
+  "a148_report": {
+    "prefix": "A148",
+    "n_family": 201,
+    "n_matches_strict": 0,
+    "n_matches_relaxed": 23,
+    "strict": {
+      "kills_in_group": 0,
+      "evaluated": 0,
+      "rate": 0.0
+    },
+    "non_matches": {
+      "kills_in_group": 0,
+      "evaluated": 38,
+      "rate": 0.0
+    },
+    "relaxed": {
+      "kills_in_group": 0,
+      "evaluated": 9,
+      "rate": 0.0
+    },
+    "lift_strict_vs_nonmatch": 1.0,
+    "matches_strict_seq_ids": [],
+    "anti_anchors": []
+  }
+}

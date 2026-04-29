@@ -1,0 +1,124 @@
+{
+  "experiment": "a150_a151_cross_family_validation",
+  "signature_strict": {
+    "n_steps": 5,
+    "neg_x": 4,
+    "pos_x": 1,
+    "has_diag_neg": true
+  },
+  "signature_symmetric_sister": {
+    "n_steps": 5,
+    "neg_x": 3,
+    "pos_x": 2,
+    "has_diag_neg": true,
+    "has_diag_pos": true
+  },
+  "verdicts": {
+    "A150": "INCONCLUSIVE",
+    "A151": "INCONCLUSIVE"
+  },
+  "families_supporting_strict_transfer": 1,
+  "reports": {
+    "A149": {
+      "prefix": "A149",
+      "n_family": 500,
+      "n_matches_strict": 5,
+      "n_matches_relaxed": 45,
+      "n_matches_symmetric": 3,
+      "strict": {
+        "kills_in_group": 5,
+        "evaluated": 5,
+        "rate": 1.0
+      },
+      "non_matches": {
+        "kills_in_group": 1,
+        "evaluated": 54,
+        "rate": 0.018518518518518517
+      },
+      "relaxed": {
+        "kills_in_group": 6,
+        "evaluated": 15,
+        "rate": 0.4
+      },
+      "symmetric": {
+        "kills_in_group": 1,
+        "evaluated": 1,
+        "rate": 1.0
+      },
+      "matches_strict_seq_ids": [
+        "A149074",
+        "A149081",
+        "A149082",
+        "A149089",
+        "A149090"
+      ],
+      "matches_symmetric_seq_ids": [
+        "A149497",
+        "A149498",
+        "A149499"
+      ]
+    },
+    "A150": {
+      "prefix": "A150",
+      "n_family": 501,
+      "n_matches_strict": 0,
+      "n_matches_relaxed": 31,
+      "n_matches_symmetric": 3,
+      "strict": {
+        "kills_in_group": 0,
+        "evaluated": 0,
+        "rate": 0.0
+      },
+      "non_matches": {
+        "kills_in_group": 0,
+        "evaluated": 0,
+        "rate": 0.0
+      },
+      "relaxed": {
+        "kills_in_group": 0,
+        "evaluated": 0,
+        "rate": 0.0
+      },
+      "symmetric": {
+        "kills_in_group": 0,
+        "evaluated": 0,
+        "rate": 0.0
+      },
+      "matches_strict_seq_ids": [],
+      "matches_symmetric_seq_ids": [
+        "A150349",
+        "A150350",
+        "A150351"
+      ]
+    },
+    "A151": {
+      "prefix": "A151",
+      "n_family": 255,
+      "n_matches_strict": 0,
+      "n_matches_relaxed": 0,
+      "n_matches_symmetric": 0,
+      "strict": {
+        "kills_in_group": 0,
+        "evaluated": 0,
+        "rate": 0.0
+      },
+      "non_matches": {
+        "kills_in_group": 0,
+        "evaluated": 0,
+        "rate": 0.0
+      },
+      "relaxed": {
+        "kills_in_group": 0,
+        "evaluated": 0,
+        "rate": 0.0
+      },
+      "symmetric": {
+        "kills_in_group": 0,
+        "evaluated": 0,
+        "rate": 0.0
+      },
+      "matches_strict_seq_ids": [],
+      "matches_symmetric_seq_ids": []
+    }
+  }
+}
