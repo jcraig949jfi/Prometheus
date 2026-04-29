@@ -75,7 +75,7 @@ Each entry below uses this structure:
 **Status:** RETRACTED. Re-classified as algebraic-identity rearrangement (Pattern 30 Level 4 — IDENTITY).
 **Mechanism:** The "anticorrelation" was a tautological consequence of how the BSD ingredients are defined (algebraic identity). Cross-checking against PATTERN_BSD_TAUTOLOGY precondition surfaced this.
 **What survives:** F043 became the load-bearing anchor for Pattern 30 (graded algebraic-identity coupling, 0–4 levels). The finding-as-finding is gone; the example-as-pedagogy is permanent.
-**Anchor:** sessionA handoff `project_harmonia_sessionA_20260419.md`; `harmonia/memory/symbols/PATTERN_30.md`; `null_protocol_v1.md` v1.1 amendment.
+**Anchor:** sessionA handoff `project_harmonia_sessionA_20260419.md`; `harmonia/memory/symbols/PATTERN_30.md`; `harmonia/memory/symbols/protocols/null_protocol_v1.md` v1.1 amendment.
 **Lesson:** Always run PATTERN_BSD_TAUTOLOGY precondition for any BSD-ingredient family. Algebraic identities can masquerade as anticorrelations.
 
 ### 2026-04-19 — Geometry 1 (tensor latent-rank claims)
@@ -111,7 +111,7 @@ Each entry below uses this structure:
 **Status:** FALSIFIED for cross-family. Survives as A149*-family-specific.
 **Mechanism:** After Mnemosyne corpus extension (commit `d660e0e4`, 2026-04-29) raised battery_sweep_v2 coverage on A148 (38→91), A150 (0→142), A151 (3→52): A148 has 0 strict matches in 91 covered seqs; A150 has 0 in 142; A151 has 0 strict matches and 1 unanimous-kill in 34 non-matches. Auditor self-dissented on prior cross-family claim.
 **What survives:** Family-specific obstruction within A149* (5/5 vs 1/54, 54x predictive lift). Promotion remains blocked but the narrower scope is defensible.
-**Anchor:** `1777461811710-0` (auditor SIGMA_KERNEL_ASK2_AND_ASK3_FALSIFICATION_UPDATE); `D:/Prometheus/sigma_kernel/a150_a151_validation_results.json`.
+**Anchor:** `1777461811710-0` (auditor SIGMA_KERNEL_ASK2_AND_ASK3_FALSIFICATION_UPDATE); `sigma_kernel/a150_a151_validation_results.json`.
 **Lesson:** Family-specific findings should be promoted with family-specific scope, not aspirational cross-family scope. The pre-extension corpus was empty in the cross-family region; you cannot claim cross-family on uncovered corpus.
 
 ### 2026-04-29 — Loose sister-obstruction signature (sigma-kernel Ask 2)
@@ -120,7 +120,7 @@ Each entry below uses this structure:
 **Status:** FALSIFIED.
 **Mechanism:** A150349/350/351 now have battery coverage with empty kill_tests (0/3 unanimous-killed). The looser signature does not predict unanimous-kill cross-family.
 **What survives:** Tighter signature `{n_steps=5, n_full_diag=5, has_diag_neg AND has_diag_pos}` — diagonal-saturated. Currently single-anchor (A149499); needs 2 more anchors for Tier-3 promotion. Cross-family scan finds no other matches in available corpus (UNTESTABLE cross-family at present).
-**Anchor:** auditor `SELF_DISSENT` and `SIGMA_KERNEL_ASKS_SYNTHESIS` posts (2026-04-29).
+**Anchor:** auditor SELF_DISSENT post `1777461671081-0` and SIGMA_KERNEL_ASKS_SYNTHESIS post `1777461934001-0` (both 2026-04-29).
 **Lesson:** Two consecutive auditor self-dissents this session (Ask 4 schema + Ask 2/3 cross-family). The pattern: an aspirational generalization gets corpus-extended, the data refutes the aspirational form, the tighter form survives but at narrower scope.
 
 ---
@@ -150,4 +150,4 @@ Some kills are data-hygiene problems rather than doctrinal retractions. They liv
 
 ---
 
-*Registry v0.1 — Harmonia_M2_sessionB, 2026-04-29 :03 tick. Append-only. Open to corrections via sync stream `RETRACTION_REGISTRY_CORRECTION` posts. v0.1.1 patch — Harmonia_M2_sessionB, 2026-04-29 :13 tick: added 2026-04-23 Zaremba entry (per auditor `1777464120369-0`), added 4th cross-cutting pattern (Specification mismatch), added Pattern-19 see-also note for F012 (per auditor `1777464242945-0`). Now 9 entries + 4 patterns.*
+*Registry v0.1 — Harmonia_M2_sessionB, 2026-04-29 :03 tick. Append-only. Open to corrections via sync stream `RETRACTION_REGISTRY_CORRECTION` posts. v0.1.1 patch — Harmonia_M2_sessionB, 2026-04-29 :13 tick: added 2026-04-23 Zaremba entry (per auditor `1777464120369-0`), added 4th cross-cutting pattern (Specification mismatch), added Pattern-19 see-also note for F012 (per auditor `1777464242945-0`). v0.1.2 patch — sessionB :53 tick: validator at `harmonia/memory/diagnostics/validate_retraction_registry.py` caught two stale paths (F043 null_protocol_v1.md location; OBSTRUCTION_SHAPE Prometheus/ prefix) and one anchor missing sync IDs (Loose sister); all three corrected. Off-by-one fixed: 10 entries (was claimed as 9) + 4 patterns + see-also.*
