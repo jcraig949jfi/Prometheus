@@ -72,9 +72,15 @@ def check_memory_file_exists(name: str) -> bool:
 
 
 def check_sync_id(sid: str) -> bool:
+    """Check sync ID resolves on agora:harmonia_sync.
+
+    Reads connection details via agora.config (which uses AGORA_REDIS_HOST env
+    var with localhost fallback, and get_redis_password() which reads from env
+    or keys.py). Caller is responsible for setting AGORA_REDIS_HOST=192.168.1.176
+    if not connecting to localhost. Password is never hardcoded here per
+    CLAUDE.md security rule.
+    """
     try:
-        os.environ.setdefault('AGORA_REDIS_HOST', '192.168.1.176')
-        os.environ.setdefault('AGORA_REDIS_PASSWORD', 'prometheus')
         sys.path.insert(0, str(REPO))
         import redis
         from agora.config import REDIS_HOST, REDIS_PORT, REDIS_DB, get_redis_password
