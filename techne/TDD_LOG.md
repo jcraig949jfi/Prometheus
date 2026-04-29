@@ -12,6 +12,36 @@ capability reference).
 
 | Date | Operation | Auth | Prop | Edge | Comp | Commit |
 |---|---|---|---|---|---|---|
+| 2026-04-25 | pm.optimization_metaheuristics.cma_es_minimize | A:2 | P:3 | E:3 | C:2 | (project #70) |
+| 2026-04-25 | pm.optimization_metaheuristics.genetic_algorithm_minimize | A:2 | P:2 | E:2 | C:2 | (project #70) |
+| 2026-04-25 | pm.optimization_metaheuristics.genetic_algorithm_minimize_binary | A:1 | P:1 | E:2 | C:1 | (project #70) |
+| 2026-04-25 | pm.optimization_metaheuristics.simulated_annealing_minimize | A:2 | P:2 | E:2 | C:2 | (project #70) |
+| 2026-04-25 | pm.optimization_metaheuristics.particle_swarm_minimize | A:1 | P:2 | E:2 | C:2 | (project #70) |
+| 2026-04-25 | pm.optimization_metaheuristics.benchmark_metaheuristics | A:1 | P:1 | E:1 | C:2 | (project #70) |
+| 2026-04-25 | pm.geometry.delaunay_triangulation | A:3 | P:2 | E:3 | C:2 | (project #72) |
+| 2026-04-25 | pm.geometry.find_simplex | A:1 | P:2 | E:2 | C:1 | (project #72) |
+| 2026-04-25 | pm.geometry.circumcenter | A:2 | P:1 | E:1 | C:1 | (project #72) |
+| 2026-04-25 | pm.geometry.circumradius | A:2 | P:2 | E:1 | C:2 | (project #72) |
+| 2026-04-25 | pm.geometry.voronoi_neighbors | A:1 | P:2 | E:1 | C:2 | (project #72) |
+| 2026-04-25 | pm.geometry.delaunay_alpha_complex | A:1 | P:1 | E:1 | C:2 | (project #72) |
+| 2026-04-25 | pm.geometry.mesh_quality | A:1 | P:2 | E:1 | C:1 | (project #72) |
+| 2026-04-25 | pm.geometry.barycentric_interpolate | A:2 | P:1 | E:1 | C:2 | (project #72) |
+| 2026-04-25 | pm.geometry.delaunay_2d_to_image | A:1 | P:1 | E:1 | C:2 | (project #72) |
+| 2026-04-25 | pm.optimization.solve_socp | A:2 | P:2 | E:3 | C:2 | (project #69) |
+| 2026-04-25 | pm.optimization.solve_robust_lp | A:2 | P:1 | E:2 | C:1 | (project #69) |
+| 2026-04-25 | pm.optimization.chebyshev_center | A:3 | P:2 | E:2 | C:2 | (project #69) |
+| 2026-04-25 | pm.optimization.min_volume_ellipsoid | A:2 | P:2 | E:1 | C:1 | (project #69) |
+| 2026-04-25 | pm.optimization.portfolio_socp | A:2 | P:2 | E:1 | C:2 | (project #69) |
+| 2026-04-25 | pm.optimization.facility_location_socp | A:0 | P:1 | E:1 | C:1 | (project #69) |
+| 2026-04-25 | pm.geometry.convex_hull | A:3 | P:3 | E:3 | C:3 | (project #71) |
+| 2026-04-25 | pm.geometry.convex_hull_volume | A:2 | P:2 | E:2 | C:2 | (project #71) |
+| 2026-04-25 | pm.geometry.convex_hull_area | A:2 | P:1 | E:2 | C:2 | (project #71) |
+| 2026-04-25 | pm.geometry.is_in_convex_hull | A:1 | P:2 | E:2 | C:2 | (project #71) |
+| 2026-04-25 | pm.geometry.extreme_points | A:2 | P:2 | E:2 | C:2 | (project #71) |
+| 2026-04-25 | pm.geometry.convex_hull_facets | A:1 | P:1 | E:1 | C:2 | (project #71) |
+| 2026-04-25 | pm.geometry.convex_hull_2d_polygon | A:2 | P:1 | E:1 | C:2 | (project #71) |
+| 2026-04-25 | pm.geometry.delaunay_triangulation_count | A:1 | P:1 | E:2 | C:2 | (project #71) |
+| 2026-04-25 | pm.geometry.convex_hull_diameter | A:1 | P:2 | E:2 | C:2 | (project #71) |
 | 2026-04-29 | pm.combinatorics.Poset | A:3 | P:3 | E:3 | C:2 | (project #65 phase 1) |
 | 2026-04-29 | pm.combinatorics.chain_poset | A:2 | P:2 | E:2 | C:2 | (project #65 phase 1) |
 | 2026-04-29 | pm.combinatorics.antichain_poset | A:1 | P:1 | E:1 | C:1 | (project #65 phase 1) |

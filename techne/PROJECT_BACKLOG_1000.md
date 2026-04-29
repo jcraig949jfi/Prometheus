@@ -935,10 +935,10 @@ detail spec lives in commit messages when work begins.
 66. **A** — Add `pm.combinatorics.species` (combinatorial species algebra) · 14d (3 phases)
 67. **A** — Add `pm.optimization.solve_sdp` (semidefinite programming via cvxpy) · 4d ✓ COMPLETED 2026-04-25
 68. **A** — Add `pm.optimization.solve_qp` (quadratic programming) · 3d ✓ COMPLETED 2026-04-25
-69. **A** — Add `pm.optimization.solve_socp` (second-order cone) · 3d
-70. **A** — Add `pm.optimization.metaheuristics` (CMA-ES, GA via DEAP wrapper) · 5d
-71. **A** — Add `pm.geometry.convex_hull` (qhull bindings) · 3d
-72. **A** — Add `pm.geometry.delaunay` triangulation · 3d
+69. **A** — Add `pm.optimization.solve_socp` (second-order cone) · 3d ✓ COMPLETED 2026-04-25
+70. **A** — Add `pm.optimization.metaheuristics` (CMA-ES, GA via DEAP wrapper) · 5d ✓ COMPLETED 2026-04-25
+71. **A** — Add `pm.geometry.convex_hull` (qhull bindings) · 3d ✓ COMPLETED 2026-04-25
+72. **A** — Add `pm.geometry.delaunay` triangulation · 3d ✓ COMPLETED 2026-04-25
 73. **A** — Add `pm.geometry.voronoi` · 3d
 74. **A** — Add `pm.statistics.distributions` (rich CDF/PDF/quantile) · 7d (2 phases)
 75. **A** — Add `pm.statistics.bayesian` (PyMC integration) · 14d (3 phases)

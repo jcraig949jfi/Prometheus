@@ -51,6 +51,8 @@ from . import numerics_special  # noqa: F401  -- facade namespace
 from . import combinatorics_partitions  # noqa: F401  -- partitions / Young tableaux
 from . import combinatorics_permutations  # noqa: F401  -- permutations / Bruhat
 from . import combinatorics_posets  # noqa: F401  -- finite posets / lattices
+from . import geometry_convex_hull  # noqa: F401  -- convex hulls (qhull)
+from . import geometry_delaunay  # noqa: F401  -- Delaunay triangulation (qhull)
 from . import doc  # noqa: F401
 
 # Optional SDP module (cvxpy-backed). Skip silently if cvxpy missing.
@@ -66,6 +68,22 @@ try:
     _HAS_OPT_QP = True
 except Exception:  # pragma: no cover
     _HAS_OPT_QP = False
+
+# Optional SOCP module (cvxpy-backed). Skip silently if cvxpy missing.
+try:
+    from . import optimization_socp  # noqa: F401
+    _HAS_OPT_SOCP = True
+except Exception:  # pragma: no cover
+    _HAS_OPT_SOCP = False
+
+# Optional metaheuristics module (CMA-ES via cma, GA via deap, simulated
+# annealing via scipy, PSO native). Module imports cleanly even without the
+# optional backends; individual entry points raise ImportError on call.
+try:
+    from . import optimization_metaheuristics  # noqa: F401
+    _HAS_OPT_METAHEURISTICS = True
+except Exception:  # pragma: no cover
+    _HAS_OPT_METAHEURISTICS = False
 
 # Optional submodule: tensor decompositions (CP, Tucker, TT) via tensorly.
 try:
@@ -130,6 +148,8 @@ __all__ = [
     "algebraic_geometry_normal_form",
     "galois",
     "iwasawa",
+    "geometry_convex_hull",
+    "geometry_delaunay",
 ]
 if _HAS_RESEARCH:
     __all__.append("research")
@@ -147,3 +167,7 @@ if _HAS_OPT_SDP:
     __all__.append("optimization_sdp")
 if _HAS_OPT_QP:
     __all__.append("optimization_qp")
+if _HAS_OPT_SOCP:
+    __all__.append("optimization_socp")
+if _HAS_OPT_METAHEURISTICS:
+    __all__.append("optimization_metaheuristics")
