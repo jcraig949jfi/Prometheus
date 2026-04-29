@@ -56,7 +56,11 @@ from . import geometry_delaunay  # noqa: F401  -- Delaunay triangulation (qhull)
 from . import geometry_voronoi  # noqa: F401  -- Voronoi diagrams (qhull + shapely)
 from . import statistics_distributions  # noqa: F401  -- distribution families (#74)
 from . import crypto_primitives  # noqa: F401  -- educational classical crypto (#81)
+from . import crypto_signature_schemes  # noqa: F401  -- ECDSA/Schnorr/Ed25519 (#84 phase 1)
+from . import coding_linear  # noqa: F401  -- linear ECCs: RS, BCH, RM (#85)
 from . import dynamics_iterated_maps  # noqa: F401  -- 1-D / 2-D iterated maps (#76)
+from . import dynamics_ode_solvers  # noqa: F401  -- ODE integrators / mpmath (#77)
+from . import algebra_lie_algebras  # noqa: F401  -- root systems & Weyl groups (#88 phase 1)
 from . import doc  # noqa: F401
 
 # Optional SDP module (cvxpy-backed). Skip silently if cvxpy missing.
@@ -157,7 +161,11 @@ __all__ = [
     "geometry_voronoi",
     "statistics_distributions",
     "crypto_primitives",
+    "crypto_signature_schemes",
+    "coding_linear",
     "dynamics_iterated_maps",
+    "dynamics_ode_solvers",
+    "algebra_lie_algebras",
 ]
 if _HAS_RESEARCH:
     __all__.append("research")

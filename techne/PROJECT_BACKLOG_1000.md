@@ -943,18 +943,18 @@ detail spec lives in commit messages when work begins.
 74. **A** — Add `pm.statistics.distributions` (rich CDF/PDF/quantile) · 7d (2 phases) ✓ Phase 1 COMPLETED 2026-04-25
 75. **A** — Add `pm.statistics.bayesian` (PyMC integration) · 14d (3 phases)
 76. **A** — Add `pm.dynamics.iterated_maps` (logistic, tent, etc.) · 3d ✓ COMPLETED 2026-04-25
-77. **A** — Add `pm.dynamics.ode_solvers` (high-order via mpmath) · 7d
+77. **A** — Add `pm.dynamics.ode_solvers` (high-order via mpmath) · 7d ✓ COMPLETED 2026-04-25
 78. **A** — Add `pm.physics.quantum.density_matrix` ops · 14d (3 phases)
 79. **A** — Add `pm.physics.path_integral` numerical quadrature · 14d (3 phases)
 80. **A** — Add `pm.physics.lie_groups` (matrix groups, Lie algebras) · 14d (3 phases)
 81. **A** — Add `pm.crypto.primitives` (modular exp, RSA, ECDH) · 5d ✓ COMPLETED 2026-04-25
 82. **A** — Add `pm.crypto.lattice_based` (LWE/RLWE primitives) · 14d (3 phases)
 83. **A** — Add `pm.crypto.isogeny_based` (CSIDH primitives) · 14d (3 phases)
-84. **A** — Add `pm.crypto.signature_schemes` (ECDSA, Schnorr, Falcon) · 7d (2 phases)
-85. **A** — Add `pm.coding.linear` (BCH, Reed-Solomon, Reed-Muller) · 7d
+84. **A** — Add `pm.crypto.signature_schemes` (ECDSA, Schnorr, Falcon) · 7d (2 phases) ✓ Phase 1 COMPLETED 2026-04-25 — Falcon (post-quantum) deferred to phase 2
+85. **A** — Add `pm.coding.linear` (BCH, Reed-Solomon, Reed-Muller) · 7d ✓ COMPLETED 2026-04-25
 86. **A** — Add `pm.coding.lattice_codes` · 7d (2 phases)
 87. **A** — Add `pm.coding.quantum_codes` · 14d (3 phases)
-88. **A** — Add `pm.algebra.lie_algebras` (root systems, weights) · 14d (3 phases)
+88. **A** — Add `pm.algebra.lie_algebras` (root systems, weights) · 14d (3 phases) ✓ Phase 1 COMPLETED 2026-04-25 — representations + characters (phase 2) and real forms (phase 3) deferred
 89. **A** — Add `pm.algebra.hopf_algebras` (combinatorial Hopf algebras) · 14d (3 phases)
 90. **A** — Add `pm.algebra.cluster_algebras` (cluster mutation) · 14d (3 phases)
 91. **A** — Add `pm.algebra.quantum_groups` (Uq(sl_n), R-matrices) · 21d (4 phases)

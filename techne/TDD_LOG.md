@@ -2746,3 +2746,243 @@ Test counts (>= 2 in every category per math-tdd):
 Sibling: geometry_delaunay (#72), geometry_convex_hull (#71). Adds
 ~430 LOC to the geometry namespace.
 
+
+| 2026-04-25 | pm.coding_linear.reed_solomon_encode | A:2 | P:2 | E:3 | C:2 | (project #85) |
+| 2026-04-25 | pm.coding_linear.reed_solomon_decode | A:2 | P:2 | E:1 | C:1 | (project #85) |
+| 2026-04-25 | pm.coding_linear.reed_solomon_distance | A:1 | P:1 | E:1 | C:1 | (project #85) |
+| 2026-04-25 | pm.coding_linear.bch_encode | A:2 | P:1 | E:2 | C:1 | (project #85) |
+| 2026-04-25 | pm.coding_linear.bch_decode | A:1 | P:1 | E:1 | C:1 | (project #85) |
+| 2026-04-25 | pm.coding_linear.reed_muller_encode | A:1 | P:1 | E:2 | C:1 | (project #85) |
+| 2026-04-25 | pm.coding_linear.reed_muller_decode | A:1 | P:1 | E:1 | C:1 | (project #85) |
+| 2026-04-25 | pm.coding_linear.syndrome_decode | A:1 | P:1 | E:1 | C:1 | (project #85) |
+| 2026-04-25 | pm.coding_linear.hamming_distance | A:1 | P:2 | E:1 | C:1 | (project #85) |
+| 2026-04-25 | pm.coding_linear.minimum_distance | A:3 | P:1 | E:1 | C:1 | (project #85) |
+| 2026-04-25 | pm.coding_linear.generator_matrix | A:3 | P:1 | E:1 | C:1 | (project #85) |
+| 2026-04-25 | pm.coding_linear.parity_check_matrix | A:1 | P:1 | E:1 | C:2 | (project #85) |
+
+### Project #85 — pm.coding.linear (Reed-Solomon, BCH, Reed-Muller)
+
+galois (0.4.10) backend for primitive Reed-Solomon and BCH codes;
+custom NumPy implementation of the Reed-Muller(r, m) generator matrix
+and Reed (1954) majority-logic decoder. Module:
+prometheus_math/coding_linear.py (~700 LOC), test suite:
+prometheus_math/tests/test_coding_linear.py (26 tests, all passing
+in ~30 s).
+
+Test counts (>= 2 in every category per math-tdd):
+- Authority:   5  (RS(7,3) over GF(8) d=5 Singleton, BCH(7,4) is
+                   Hamming, RM(1,3) is [8,4,4] extended Hamming,
+                   RS(15,11) corrects 2 errors, Hamming(7,4)
+                   parameters)
+- Property:    5  (RS encode/decode round trip parametrized,
+                   BCH corrupt-within-capacity recovers, hamming
+                   distance symmetry/triangle inequality, minimum
+                   distance <= n, RM round trip)
+- Edge:        5  (empty message, k>n raises, wrong-length
+                   received, RM r>m raises, symbol out of GF(q),
+                   hamming_distance length mismatch)
+- Composition: 5  (syndrome of valid codeword == 0, BCH parity
+                   check H*c=0, RS minimum_distance == Singleton,
+                   RM(0,m) is repetition code distance 2^m, RS
+                   encode->corrupt->decode within capacity)
+
+Notable design decisions:
+- Reed-Solomon encode/decode delegates to galois.ReedSolomon
+  (Berlekamp-Massey + Forney). RS distance returned by closed form
+  n - k + 1 (Singleton bound, saturated).
+- BCH encode/decode delegates to galois.BCH(n, d=2t+1). The user
+  passes (n, k, t); we cross-check that galois's k matches the
+  user's request.
+- Reed-Muller is implemented natively. Generator matrix built by
+  evaluating monomials of degree <= r in m Boolean variables at all
+  2^m points. Decoder uses Reed (1954) majority-logic, peeling off
+  highest-degree coefficients first by majority vote over disjoint
+  cosets.
+- minimum_distance brute-force enumerates the codebook. q=2 path
+  uses NumPy mod-2; q>2 path delegates to galois.GF(q).
+- parity_check_matrix requires G in systematic form [I_k | P] and
+  returns H = [P^T | I_{n-k}] (the standard textbook construction
+  over GF(2)).
+
+Sibling modules: crypto_primitives (#81). Linear-codes namespace
+unblocks future projects #86 (lattice codes) and #87 (quantum CSS
+codes).
+
+## Project #88 phase 1 — pm.algebra_lie_algebras (root systems, Weyl groups)
+
+| Date | Operation | Auth | Prop | Edge | Comp | Commit |
+|---|---|---|---|---|---|---|
+| 2026-04-25 | pm.algebra_lie_algebras.cartan_matrix | A:3 | P:2 | E:3 | C:1 | (project #88 phase 1) |
+| 2026-04-25 | pm.algebra_lie_algebras.simple_roots | A:2 | P:2 | E:1 | C:2 | (project #88 phase 1) |
+| 2026-04-25 | pm.algebra_lie_algebras.positive_roots | A:3 | P:2 | E:1 | C:2 | (project #88 phase 1) |
+| 2026-04-25 | pm.algebra_lie_algebras.all_roots | A:1 | P:2 | E:1 | C:1 | (project #88 phase 1) |
+| 2026-04-25 | pm.algebra_lie_algebras.fundamental_weights | A:2 | P:2 | E:1 | C:2 | (project #88 phase 1) |
+| 2026-04-25 | pm.algebra_lie_algebras.weyl_group_order | A:3 | P:2 | E:3 | C:1 | (project #88 phase 1) |
+| 2026-04-25 | pm.algebra_lie_algebras.weyl_group_generators | A:1 | P:2 | E:1 | C:1 | (project #88 phase 1) |
+| 2026-04-25 | pm.algebra_lie_algebras.weyl_dim_formula | A:2 | P:1 | E:2 | C:2 | (project #88 phase 1) |
+| 2026-04-25 | pm.algebra_lie_algebras.dynkin_diagram_string | A:1 | P:1 | E:0 | C:1 | (project #88 phase 1) |
+| 2026-04-25 | pm.algebra_lie_algebras.is_dominant_weight | A:1 | P:1 | E:2 | C:1 | (project #88 phase 1) |
+| 2026-04-25 | pm.algebra_lie_algebras.longest_weyl_element | A:1 | P:2 | E:1 | C:2 | (project #88 phase 1) |
+| 2026-04-25 | pm.algebra_lie_algebras.root_height | A:2 | P:1 | E:1 | C:2 | (project #88 phase 1) |
+
+Notes for #88 phase 1:
+- Reference: Humphreys, "Introduction to Lie Algebras and Representation
+  Theory" (GTM 9), Chapters 9-13, 24. Bourbaki "Groupes et Algebres de
+  Lie" Chapitres IV-VI (Plates I-IX list every irreducible root system
+  with simple roots, positive roots, Cartan matrix, and Weyl group
+  order).
+- Authority counts:
+  * Cartan matrices for A_2, B_2, G_2 hand-checked against Humphreys
+    and Bourbaki (3 distinct corners).
+  * Weyl group orders cross-checked: classical from closed-form
+    ((n+1)!, 2^n n!, 2^{n-1} n!) and exceptional (51840, 2903040,
+    696729600, 1152, 12) from Bourbaki Plates V-IX.
+  * Positive root counts verified for all 18 (type, rank) pairs in
+    the parametric authority test against Bourbaki Plates.
+  * E_8 adjoint dimension (248) and E_7 adjoint dimension (133)
+    composed via 2|Phi^+| + rank.
+- Property counts: 7 distinct invariant tests run across all 18
+  (type, rank) pairs (Cartan diagonal, off-diag sign, root doubling,
+  reflection involutivity, |W(A_n)| = (n+1)!, 2*rho identity, weight
+  / simple-root duality). Properties include compositional invariants
+  (rho identity, duality), so score >= 2 across the suite.
+- Edge counts: invalid type, rank < 1, E rank not in {6,7,8}, F rank
+  != 4, G rank != 2, B/C rank == 1, D rank <= 2, malformed weight
+  inputs to is_dominant_weight and weyl_dim_formula. Score >= 2 across
+  the suite (>= 7 documented edges).
+- Composition counts: weyl_dim trivial-rep == 1; weyl_dim adjoint of
+  A_n equals n^2 + 2n; root_height(highest_root) == h - 1 (Coxeter
+  number); 2*sum(fundamental_weights) == sum(positive_roots);
+  is_dominant_weight chains with fundamental_weights basis;
+  longest_weyl_element involution chains with weyl_group_generators.
+  Score >= 2 across the suite (>= 4 distinct composition chains).
+
+Phase 2 (irrep characters, Kostant multiplicity, branching) and
+Phase 3 (real forms, Cartan involutions, Vogan diagrams) DEFERRED.
+
+Sibling modules: combinatorics_permutations (#62 — Bruhat order on
+S_n = W(A_{n-1})), combinatorics_posets (#65). The Lie-algebraic
+namespace unblocks future projects #89 (Hopf algebras), #90 (cluster
+algebras), and #91 (quantum groups).
+
+| 2026-04-25 | pm.crypto_signature_schemes.ecdsa_keygen / sign / verify | A:2 | P:3 | E:3 | C:2 | (project #84 phase 1) |
+| 2026-04-25 | pm.crypto_signature_schemes.schnorr_keygen / sign / verify | A:2 | P:3 | E:3 | C:2 | (project #84 phase 1) |
+| 2026-04-25 | pm.crypto_signature_schemes.ed25519_keygen / sign / verify | A:2 | P:3 | E:3 | C:2 | (project #84 phase 1) |
+| 2026-04-25 | pm.crypto_signature_schemes.hmac_sign | A:2 | P:1 | E:1 | C:2 | (project #84 phase 1) |
+| 2026-04-25 | pm.crypto_signature_schemes.signature_compare_schemes | A:0 | P:0 | E:0 | C:2 | (project #84 phase 1) |
+| 2026-04-25 | pm.crypto_signature_schemes.is_valid_signature_format | A:0 | P:1 | E:1 | C:0 | (project #84 phase 1) |
+
+LOC: ~600 module (crypto_signature_schemes.py) + ~430 tests
+(test_signature_schemes.py). 25/25 tests pass (~15 s).
+Categories met overall:
+- Authority 5: NIST FIPS 186-4 / RFC 6979 ECDSA P-256 sample vector
+  (sample message "sample"); BIP-340 Schnorr test vector 1
+  (sk=B7E1..CFEF, msg=243F..6C89, aux=00..01); RFC 8032 Ed25519
+  Test 1 (empty message, sk=9d61..7f60); RFC 4231 §4.2 / §4.3
+  HMAC-SHA-256 test cases 1 and 2.
+- Property 6: sign+verify round-trip (Hypothesis sweep on bytes)
+  for ECDSA / Schnorr / Ed25519; tampered-message rejection;
+  tampered-signature rejection; Schnorr determinism with fixed
+  aux_rand; Ed25519 determinism (RFC 8032 deterministic EdDSA);
+  unseeded keygen distinct pubkeys.
+- Edge 7: empty message (b"") signs and verifies for all three
+  schemes; empty key bytes raise ValueError; unknown curve raises
+  (Schnorr only on secp256k1, ECDSA rejects 'not-a-curve');
+  wrong-length keys raise (Schnorr 32-byte sk, Ed25519 32-byte
+  seed, Ed25519 32-byte pubkey on verify); non-bytes message
+  auto-encoded for str / TypeError for int; unknown hash_alg raises
+  (ECDSA + HMAC); is_valid_signature_format rejects malformed.
+- Composition 4: full keygen → sign → verify cycle for all three
+  schemes; HMAC-SHA-256 + ECDSA composition (long-message digest
+  signing); cross-curve compatibility (secp256k1 sig fails to
+  verify under secp256r1 pubkey-bytes parse); signature_compare_schemes
+  exercises all three sign+verify chains in one call.
+
+Module covers project #84 phase 1 spec: ECDSA on secp256k1/P-256/
+P-384, BIP-340 Schnorr on secp256k1 (pure-Python reference port for
+spec inspectability), RFC 8032 Ed25519 (PyCA cryptography backend),
+HMAC-SHA-{256,384,512,1}. Phase 2 (Falcon post-quantum) DEFERRED.
+
+Educational only: Schnorr in particular is a textbook reference port
+without timing-side-channel hardening. For production use, route
+through `pyca/cryptography`, `pynacl`, or `coincurve`.
+
+### Project #77 — pm.dynamics.ode_solvers (high-order via mpmath)
+
+ODE integration at arbitrary precision and with structure-preserving
+(symplectic) options.  Module: prometheus_math/dynamics_ode_solvers.py
+(~470 LOC), test suite: prometheus_math/tests/test_ode_solvers.py
+(21 tests, all passing in ~13 s).
+
+Public API:
+
+  Core integrators
+    - solve_ivp(rhs, t_span, y0, method='RK45', rtol, atol, max_step,
+                prec=None)                — scipy facade, mpmath when
+                                             prec is set
+    - rk4(rhs, t_span, y0, h, prec=None)  — classical fixed-step RK4
+                                             (mpmath path for prec > 0)
+    - dop853(rhs, t_span, y0, rtol, atol, prec=None)
+                                           — 8th-order Dormand-Prince
+    - bdf(rhs, t_span, y0, order=2)       — backward differentiation
+                                             for stiff systems
+    - mpmath_odefun(rhs, t_span, y0, prec=53)
+                                           — arbitrary-precision oracle
+                                             (Taylor / Bulirsch-Stoer
+                                             via mpmath.odefun)
+
+  Structure-preserving / Hamiltonian
+    - hamiltonian_system(H, t_span, q0, p0,
+                          method='symplectic_euler' | 'leapfrog'
+                                  | 'verlet', h)
+
+  Diagnostics
+    - first_passage_time(rhs, y0, threshold_fn, t_max=10.0)
+    - liapunov_exponent_continuous(rhs, y0, t_max=100.0, n_renorm=10)
+
+| 2026-04-25 | pm.dynamics_ode_solvers.solve_ivp | A:6 | P:5 | E:6 | C:4 | (project #77) |
+| 2026-04-25 | pm.dynamics_ode_solvers.rk4 | A:1 | P:1 | E:1 | C:0 | (project #77) |
+| 2026-04-25 | pm.dynamics_ode_solvers.dop853 | A:1 | P:1 | E:0 | C:0 | (project #77) |
+| 2026-04-25 | pm.dynamics_ode_solvers.bdf | A:0 | P:0 | E:0 | C:0 | (project #77 — exposed, not deeply exercised) |
+| 2026-04-25 | pm.dynamics_ode_solvers.mpmath_odefun | A:1 | P:0 | E:2 | C:1 | (project #77) |
+| 2026-04-25 | pm.dynamics_ode_solvers.hamiltonian_system | A:1 | P:1 | E:1 | C:1 | (project #77) |
+| 2026-04-25 | pm.dynamics_ode_solvers.first_passage_time | A:0 | P:1 | E:0 | C:0 | (project #77) |
+| 2026-04-25 | pm.dynamics_ode_solvers.liapunov_exponent_continuous | A:0 | P:0 | E:0 | C:1 | (project #77) |
+
+Test counts (>= 2 in every category per math-tdd):
+- Authority:   6  (linear decay matches e^{-t}; harmonic-oscillator
+                   energy & period; Lorenz bounded absorbing set;
+                   pendulum symplectic energy drift; Van der Pol
+                   limit-cycle amplitude ≈ 2; DOP853 Kepler period
+                   2π).
+- Property:    5  (RK45 ↔ DOP853 cross-check on linear decay;
+                   forward/backward time-reversal round-trip;
+                   RK4 4th-order convergence h → h/2; symplectic
+                   energy drift bounded over 4000 steps; first-
+                   passage monotone in y0).
+- Edge:        6  (empty / reversed t_span; unknown solver method;
+                   prec ≤ 0; rhs returns wrong shape; rk4 step
+                   h ≤ 0; unknown Hamiltonian method).
+- Composition: 4  (high-prec solve_ivp ↔ mpmath_odefun on the same
+                   problem; leapfrog ≈ verlet on harmonic oscillator;
+                   linear y' = A y ↔ scipy.linalg.expm(tA) y0;
+                   Lorenz largest Lyapunov exponent ≈ 0.9 vs Sprott
+                   2003 / Wolf et al. 1985).
+
+Sibling: dynamics_iterated_maps (#76).  Together they form
+prometheus_math's discrete- and continuous-time dynamical-systems
+namespace.  Backends: scipy.integrate.solve_ivp (default), mpmath
+(arbitrary-precision Taylor IVP solver), scipy.linalg.expm for the
+matrix-exponential composition test.
+
+Key design notes:
+- mpmath_odefun tries to call rhs natively on mpf inputs first
+  (preserves precision for duck-typed expressions like ``-y``);
+  falls back to float64 if rhs requires numpy.  This was load-bearing
+  for the high-prec composition test — float64 truncation made
+  mpmath's Taylor coefficients diverge.
+- Symplectic methods (leapfrog / Verlet) computed directly via
+  central-difference gradients of H; ~30 LOC each, no autograd
+  dependency.
+- DOP853 / BDF are scipy facades; thin wrappers maintain a uniform
+  return-dict shape across the namespace.
