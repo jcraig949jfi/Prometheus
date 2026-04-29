@@ -376,6 +376,7 @@ class SigmaKernel:
             )
             self.conn.commit()
         except self.conn.IntegrityError as e:
+            self.conn.rollback()  # required for Postgres; harmless for SQLite
             raise ImmutabilityError(f"{name}@v{version} already in substrate") from e
         return Symbol(name, version, def_hash, def_blob, prov, tier)
 
@@ -575,14 +576,18 @@ class SigmaKernel:
             (cap.cap_id,),
         ).fetchone()
         if cap_row is None:
+            self.conn.rollback()  # close the SELECT's implicit txn (Postgres)
             raise CapabilityError(f"capability {cap.cap_id} not registered (mint via mint_capability)")
         if cap_row[0]:
+            self.conn.rollback()
             raise CapabilityError(f"capability {cap.cap_id} already consumed (double-spend rejected)")
 
         # 2. Defense-in-depth verdict check (caller may have skipped GATE).
         if claim.verdict is None:
+            self.conn.rollback()
             raise FalsificationError(f"claim {claim.id} has no verdict; FALSIFY first")
         if claim.verdict.status == Verdict.BLOCK:
+            self.conn.rollback()
             raise FalsificationError(f"claim {claim.id} has BLOCK verdict; cannot promote")
 
         # 3. Compute the new symbol.
@@ -681,8 +686,10 @@ class SigmaKernel:
             (cap.cap_id,),
         ).fetchone()
         if cap_row is None:
+            self.conn.rollback()
             raise CapabilityError(f"capability {cap.cap_id} not registered")
         if cap_row[0]:
+            self.conn.rollback()
             raise CapabilityError(f"capability {cap.cap_id} already consumed")
 
         new_version = prior.version + 1
@@ -692,6 +699,7 @@ class SigmaKernel:
             (prior_name, new_version),
         ).fetchone()
         if existing:
+            self.conn.rollback()
             raise ImmutabilityError(
                 f"{prior_name}@v{new_version} already exists; cannot errata over it"
             )

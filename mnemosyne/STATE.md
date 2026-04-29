@@ -1,7 +1,7 @@
-# Mnemosyne State — 2026-04-16 (Session 3 Update)
+# Mnemosyne State — 2026-04-16 (Session 3) + 2026-04-29 addendum
 
 ## NOTE TO MNEMOSYNE
-Much has changed since 2026-04-15. This file reflects reality as of 2026-04-16. Trust this, not your session-2 memory.
+Body of this file reflects reality as of 2026-04-16. **2026-04-29 addendum at the bottom**: sigma_kernel schema added in `prometheus_fire` by a Claude fill-in session while you were out sick. Read both, trust the addendum for anything sigma-related.
 
 ---
 
@@ -188,3 +188,65 @@ Much has changed since 2026-04-15. This file reflects reality as of 2026-04-16. 
 - `thesauros/bsd_joined_view.md` — bsd_joined column reference
 - `thesauros/duckdb_legacy.md` — migration record
 - `docs/Prometheus_v2/0_Prometheus_v2_Base_Paper.md` — local-only v2 vision paper
+
+---
+
+# 2026-04-29 ADDENDUM — sigma_kernel schema in prometheus_fire
+
+Added during a fill-in session (actual-Mnemosyne out sick). Author: Claude session
+acting under @roles/Mnemosyne per HITL. Revert to normal Mnemosyne attribution
+when she's back.
+
+## What landed
+
+Schema `sigma` in `prometheus_fire` (host 192.168.1.176, port 5432):
+
+| Table | PK | Purpose |
+|---|---|---|
+| `sigma.symbols` | `(name, version)` | Append-only substrate of promoted symbols. Indexed on `def_hash`. |
+| `sigma.claims` | `id` | Provisional claim lifecycle (replayable; not part of immutable substrate). |
+| `sigma.capabilities` | `cap_id` | Linear capability tokens; `consumed` flag flips once on PROMOTE / ERRATA. |
+
+Migration: `sigma_kernel/migrations/001_create_sigma_schema.sql` (idempotent;
+`CREATE ... IF NOT EXISTS` everywhere; safe to re-apply).
+
+GRANTs: `ergon` has `USAGE` on schema `sigma` + `SELECT/INSERT/UPDATE` on all three
+tables. `DEFAULT PRIVILEGES` set so future tables in the schema auto-grant the
+same to ergon. **No DELETE granted** — kernel discipline is append-only;
+substrate cleanup needs superuser.
+
+## Verification done in-session
+
+- `sigma_kernel/demo_postgres.py` passes 5/5 scenarios end-to-end against the
+  live schema (CLEAR / WARN / BLOCK / double-spend / overwrite / ERRATA).
+- Smoke test data swept post-run; `sigma.symbols` at 0 rows on disk.
+- Connection path: `thesauros.prometheus_data.pool.get_fire()` →
+  `_PostgresAdapter` in `sigma_kernel/sigma_kernel.py`.
+
+## Bug fix bundled in same session
+
+Three internal imports in `thesauros/prometheus_data/{__init__.py, pool.py}`
+were referring to the pre-rename `prometheus_data.*` paths and silently
+broken. Fixed to relative imports (`from .pool import ...`). Anything else
+that was depending on `from prometheus_data import ...` should now resolve
+through `thesauros.prometheus_data.*` cleanly.
+
+## Open Mnemosyne items that did NOT change
+
+The fill-in session did not pick up these (out of scope without actual-Mnemosyne
+context). Logged here so they're visible:
+
+- `lfunc_lfunctions` conductor index — was building 2026-04-15, status unknown
+  on 2026-04-29. If still building or stalled, that blocks `bsd_joined` view +
+  EC ↔ lfunc join key discovery (per SESSION_JOURNAL_20260415.md).
+- Agent user passwords (harmonia, ergon, charon, ingestor) — still using
+  `postgres/prometheus` superuser per the 2026-04-16 note. Hygiene cleanup.
+- 6 DuckDB tables waiting on Agora schema design (677K rows; per
+  SESSION_JOURNAL_20260415.md, request was posted to agora:tasks).
+
+## Agora announcements posted
+
+Three messages on `agora:harmonia_sync` 2026-04-29:
+- `SCHEMA_LIVE: sigma in prometheus_fire (sigma_kernel MVP)` (id 1777460358274-0)
+- `MNEMOSYNE_FILLIN: Claude session covering roles/Mnemosyne today` (heartbeat, id 1777460358283-0)
+- `MNEMOSYNE_ASK: what else can I help with today?` (id 1777460358284-0)
