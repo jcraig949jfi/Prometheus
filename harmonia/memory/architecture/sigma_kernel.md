@@ -65,13 +65,29 @@ Note: per the synthesis Round 18, `Φ` (search policy capability) is *not* in th
 
 ## Storage
 
-SQLite, three tables:
+Dual-backend behind a unified adapter API:
 
-- `symbols(name, version, def_hash, def_blob, provenance, tier, created_at)` — PRIMARY KEY `(name, version)`; INDEX on `def_hash`. Append-only by SQLite UNIQUE constraint.
+| Backend | When | How |
+|---|---|---|
+| `"sqlite"` (default) | Zero-infra demos, per-script isolated state, outside readers cloning the repo | Local SQLite file via `sqlite3` |
+| `"postgres"` | Cross-session symbol visibility, Mnemosyne-managed substrate, multi-process linearity | `prometheus_fire`'s `sigma` schema via `thesauros.prometheus_data.pool.get_fire()` |
+
+Three tables, identical structure across both backends:
+
+- `symbols(name, version, def_hash, def_blob, provenance, tier, created_at)` — PRIMARY KEY `(name, version)`; INDEX on `def_hash`. Append-only by UNIQUE constraint.
 - `claims(id, target_name, hypothesis, evidence, kill_path, target_tier, status, verdict_*)` — claim lifecycle persisted for replay/audit.
 - `capabilities(cap_id, cap_type, consumed)` — `spent_caps` semantics; double-spend rejected by reading `consumed=1` before update.
 
-Migration path to the harmonia Redis substrate: each `(name, version)` row maps to `symbols:<NAME>:v<N>:def`; capabilities map to `symbols:caps:<cap_id>`. The kernel API is storage-agnostic — only `_promote_raw`, `RESOLVE`, and `PROMOTE`'s atomic transaction touch SQLite directly. Redis swap is mechanical.
+The kernel writes SQL with `?` placeholders and unqualified table names. The Postgres adapter rewrites `?` -> `%s` and prepends `sigma.` at execute time. SQL stays single-source.
+
+**Postgres provisioning:** Mnemosyne applies [`sigma_kernel/migrations/001_create_sigma_schema.sql`](../../../sigma_kernel/migrations/001_create_sigma_schema.sql) to `prometheus_fire`. The migration is idempotent (`CREATE SCHEMA IF NOT EXISTS`, `CREATE TABLE IF NOT EXISTS`).
+
+**Failure modes** (Postgres backend, all caught at adapter `__init__`):
+- DB unreachable → `ConnectionError` mentioning `~/.prometheus/db.toml`
+- Schema not provisioned → `ConnectionError` naming the migration file
+- User lacks privileges → `ConnectionError` listing the required GRANTs
+
+**Future migration to harmonia Redis substrate:** each `(name, version)` row maps to `symbols:<NAME>:v<N>:def`; capabilities map to `symbols:caps:<cap_id>`. The kernel API is storage-agnostic by design — adding a third adapter is the same shape of work as the Postgres one.
 
 ## What v0.1 demonstrates
 

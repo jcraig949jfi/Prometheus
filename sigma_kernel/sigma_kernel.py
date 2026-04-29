@@ -16,6 +16,7 @@ from __future__ import annotations
 import enum
 import hashlib
 import json
+import re
 import sqlite3
 import subprocess
 import sys
@@ -167,6 +168,138 @@ CREATE TABLE IF NOT EXISTS capabilities (
 
 
 # ---------------------------------------------------------------------------
+# Storage adapters
+# ---------------------------------------------------------------------------
+#
+# Two backends. Identical API surface (execute/fetchone/fetchall/commit/rollback);
+# the adapter rewrites SQL where backends differ.
+#
+# The kernel writes SQL using ``?`` placeholders and unqualified table names
+# (e.g. ``INSERT INTO symbols ...``). The Postgres adapter rewrites ``?`` to
+# ``%s`` and prepends ``sigma.`` to known table names at execute time.
+
+_TABLES = ("symbols", "claims", "capabilities")
+
+
+class _SqliteAdapter:
+    placeholder = "?"
+    schema = ""
+
+    def __init__(self, db_path):
+        self.IntegrityError = sqlite3.IntegrityError
+        self.conn = sqlite3.connect(str(db_path))
+        self.conn.executescript(SCHEMA)
+        self.conn.commit()
+
+    def _translate(self, sql: str) -> str:
+        return sql
+
+    def execute(self, sql: str, params: tuple = ()):
+        return self.conn.execute(self._translate(sql), params)
+
+    def commit(self):
+        self.conn.commit()
+
+    def rollback(self):
+        self.conn.rollback()
+
+    def close(self):
+        self.conn.close()
+
+
+class _PostgresAdapter:
+    placeholder = "%s"
+    schema = "sigma."
+
+    def __init__(self):
+        try:
+            import psycopg2
+        except ImportError as e:
+            raise RuntimeError(
+                "psycopg2 not installed. Postgres backend requires psycopg2-binary."
+            ) from e
+        # If running from sigma_kernel/ directly, the repo root isn't on sys.path.
+        # Add it transiently so the thesauros package can be located.
+        _repo_root = Path(__file__).resolve().parent.parent
+        if str(_repo_root) not in sys.path:
+            sys.path.insert(0, str(_repo_root))
+        try:
+            from thesauros.prometheus_data.pool import _get_pool
+        except ImportError as e:
+            raise RuntimeError(
+                "thesauros.prometheus_data unavailable. "
+                f"Repo root tried: {_repo_root}. "
+                "Confirm package is on PYTHONPATH or run from repo root."
+            ) from e
+
+        self.IntegrityError = psycopg2.IntegrityError
+        self._pool = _get_pool("fire")
+        if self._pool is None:
+            raise ConnectionError(
+                "Cannot connect to prometheus_fire. "
+                "Check ~/.prometheus/db.toml and credentials.toml. "
+                "Mnemosyne must apply sigma_kernel/migrations/001_create_sigma_schema.sql first."
+            )
+        self.conn = self._pool.getconn()
+        self.conn.autocommit = False
+
+        # Schema probe: fail at __init__ time rather than at first DML if
+        # Mnemosyne hasn't applied the migration yet.
+        try:
+            cur = self.conn.cursor()
+            cur.execute("SELECT 1 FROM sigma.symbols LIMIT 0")
+            cur.close()
+            self.conn.commit()
+        except psycopg2.errors.UndefinedTable:
+            self.conn.rollback()
+            self._pool.putconn(self.conn)
+            raise ConnectionError(
+                "Schema `sigma` not present in prometheus_fire. "
+                "Mnemosyne must apply sigma_kernel/migrations/001_create_sigma_schema.sql "
+                "(creates schema `sigma` with three tables: symbols, claims, capabilities)."
+            ) from None
+        except psycopg2.errors.InsufficientPrivilege as e:
+            self.conn.rollback()
+            self._pool.putconn(self.conn)
+            raise ConnectionError(
+                f"Connecting user lacks privileges on schema `sigma`. "
+                f"Mnemosyne should GRANT USAGE/SELECT/INSERT/UPDATE on sigma to the user. "
+                f"Underlying error: {e}"
+            ) from None
+
+    _RE_CACHE: dict[str, str] = {}
+
+    def _translate(self, sql: str) -> str:
+        cached = self._RE_CACHE.get(sql)
+        if cached is not None:
+            return cached
+        out = sql.replace("?", "%s")
+        for t in _TABLES:
+            out = re.sub(rf"\b{t}\b", f"sigma.{t}", out)
+        # Strip CREATE TABLE statements -- schema is managed by Mnemosyne via migration.
+        # (Defensive: if anything calls executescript on this adapter, do nothing.)
+        self._RE_CACHE[sql] = out
+        return out
+
+    def execute(self, sql: str, params: tuple = ()):
+        cur = self.conn.cursor()
+        cur.execute(self._translate(sql), params)
+        return cur
+
+    def commit(self):
+        self.conn.commit()
+
+    def rollback(self):
+        self.conn.rollback()
+
+    def close(self):
+        try:
+            self._pool.putconn(self.conn)
+        except Exception:
+            pass
+
+
+# ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
 
@@ -184,20 +317,37 @@ def _new_id(prefix: str) -> str:
 
 class SigmaKernel:
     """
-    The substrate kernel. Wraps a SQLite connection.
+    The substrate kernel. Wraps a storage adapter (SQLite default; Postgres
+    available when the harmonia substrate has been provisioned).
 
-    Five real opcodes (RESOLVE, CLAIM, FALSIFY, GATE, PROMOTE) plus TRACE
-    as a read-only provenance walk. mint_capability and bootstrap_symbol
-    are MVP scaffolding — flagged as such, not opcodes.
+    Seven opcodes (RESOLVE, CLAIM, FALSIFY, GATE, PROMOTE, ERRATA, TRACE).
+    mint_capability and bootstrap_symbol are MVP scaffolding -- flagged as
+    such, not opcodes.
+
+    Backends:
+        "sqlite"   -- local SQLite file (default; zero-infra demos)
+        "postgres" -- connects to prometheus_fire via thesauros.prometheus_data;
+                      uses the `sigma` schema (Mnemosyne provisions via
+                      sigma_kernel/migrations/001_create_sigma_schema.sql)
     """
 
     ORACLE_PATH = Path(__file__).parent / "omega_oracle.py"
 
-    def __init__(self, db_path: str | Path = ":memory:"):
+    def __init__(
+        self,
+        db_path: str | Path = ":memory:",
+        backend: str = "sqlite",
+    ):
         self.db_path = str(db_path)
-        self.conn = sqlite3.connect(self.db_path)
-        self.conn.executescript(SCHEMA)
-        self.conn.commit()
+        self.backend = backend
+        if backend == "sqlite":
+            self.conn = _SqliteAdapter(db_path)
+        elif backend == "postgres":
+            self.conn = _PostgresAdapter()
+        else:
+            raise ValueError(
+                f"unknown backend: {backend!r} (expected 'sqlite' or 'postgres')"
+            )
 
     # ------------------------------------------------------------------
     # MVP scaffolding (not opcodes; flagged for the eventual GENESIS spec)
@@ -225,7 +375,7 @@ class SigmaKernel:
                 (name, version, def_hash, def_blob, json.dumps(prov), tier.value, time.time()),
             )
             self.conn.commit()
-        except sqlite3.IntegrityError as e:
+        except self.conn.IntegrityError as e:
             raise ImmutabilityError(f"{name}@v{version} already in substrate") from e
         return Symbol(name, version, def_hash, def_blob, prov, tier)
 
@@ -467,7 +617,6 @@ class SigmaKernel:
 
         # 4. Atomic: consume cap + insert symbol.
         try:
-            self.conn.execute("BEGIN")
             self.conn.execute(
                 "UPDATE capabilities SET consumed=1 WHERE cap_id=?",
                 (cap.cap_id,),
@@ -484,7 +633,7 @@ class SigmaKernel:
                 (claim.id,),
             )
             self.conn.commit()
-        except sqlite3.IntegrityError as e:
+        except self.conn.IntegrityError as e:
             self.conn.rollback()
             raise ImmutabilityError(
                 f"{target_name}@v{new_version} collision: {e}"
@@ -561,7 +710,6 @@ class SigmaKernel:
         provenance = [prior.def_hash]
 
         try:
-            self.conn.execute("BEGIN")
             self.conn.execute(
                 "UPDATE capabilities SET consumed=1 WHERE cap_id=?",
                 (cap.cap_id,),

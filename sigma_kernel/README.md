@@ -32,14 +32,66 @@ subprocess, dataclasses, enum). Python 3.10+.
 
 ```bash
 cd sigma_kernel/
-python demo.py                  # six-scenario discipline walkthrough
+python demo.py                  # six-scenario discipline walkthrough (SQLite)
 python curvature_experiment.py  # representation-defect signal on real data
 python a149_obstruction.py      # promotes the first concrete OBSTRUCTION_SHAPE
+python demo_postgres.py         # same as demo.py but against Postgres `sigma` schema
 ```
 
-Each script writes its own SQLite database (`demo_substrate.db`,
-`curvature_experiment.db`, `a149_obstruction.db`) and resets it on each run
-so output is deterministic.
+The first three scripts write their own SQLite databases
+(`demo_substrate.db`, `curvature_experiment.db`, `a149_obstruction.db`) and
+reset them on each run so output is deterministic.
+
+`demo_postgres.py` connects to `prometheus_fire`'s `sigma` schema instead
+(see "Backends" below). If the schema isn't provisioned it fails closed
+with a clear message pointing at the migration.
+
+## Backends
+
+The kernel supports two storage backends behind a unified API:
+
+| Backend | Constructor | When to use |
+|---|---|---|
+| `"sqlite"` (default) | `SigmaKernel(db_path)` | Zero-infra demos; outside readers cloning the repo; per-script isolated state |
+| `"postgres"` | `SigmaKernel(backend="postgres")` | Cross-session symbol visibility; integration with Mnemosyne-managed substrate; multi-process linearity |
+
+The kernel writes SQL using `?` placeholders and unqualified table names.
+The Postgres adapter rewrites `?` -> `%s` and prepends `sigma.` at execute
+time. SQL stays single-source; the kernel doesn't care which backend is live.
+
+### Postgres setup
+
+One-time, by Mnemosyne:
+
+```bash
+psql -h <host> -U <admin> -d prometheus_fire \
+     -f sigma_kernel/migrations/001_create_sigma_schema.sql
+```
+
+This creates the `sigma` schema with three tables (`symbols`, `claims`,
+`capabilities`). Connecting users need `USAGE` on the schema and
+`SELECT/INSERT/UPDATE` on the tables (see comments at the bottom of the
+migration SQL).
+
+The kernel uses `thesauros.prometheus_data.pool.get_fire()` for connections.
+That helper reads `~/.prometheus/db.toml` and `~/.prometheus/credentials.toml`.
+
+### Verifying the Postgres backend
+
+```bash
+python demo_postgres.py
+```
+
+Three failure modes, each with a specific error message:
+- **No `db.toml`** -> ConnectionError mentioning the config file
+- **Schema missing** -> ConnectionError naming the migration to apply
+- **Insufficient privileges** -> ConnectionError naming the GRANTs needed
+
+The schema probe runs at adapter `__init__` time (before any DML), so
+problems surface immediately rather than mid-transaction.
+
+By default `demo_postgres.py` cleans up its test-promoted symbols at exit.
+Pass `--keep` to leave them for inspection.
 
 ## What each script demonstrates
 

@@ -11,7 +11,7 @@ Three tiers:
     Files    = archive  (static reference, model weights, backups)
 
 Usage:
-    from prometheus_data import get_lmfdb, get_sci, get_fire, get_redis
+    from thesauros.prometheus_data import get_lmfdb, get_sci, get_fire, get_redis
 
     # Postgres connections (context managers, pooled)
     with get_lmfdb() as conn:
@@ -30,6 +30,6 @@ Usage:
     r.zrevrange("landscape:by_curvature", 0, 50)
 """
 
-from prometheus_data.pool import get_lmfdb, get_sci, get_fire, get_redis, get_duckdb
+from .pool import get_lmfdb, get_sci, get_fire, get_redis, get_duckdb
 
 __all__ = ["get_lmfdb", "get_sci", "get_fire", "get_redis", "get_duckdb"]

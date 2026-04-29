@@ -6,7 +6,7 @@ Pools are module-level singletons, created on first use, closed at exit.
 """
 import atexit
 from contextlib import contextmanager
-from prometheus_data.config import get_pg_dsn, get_redis_config
+from .config import get_pg_dsn, get_redis_config
 
 # ============================================================
 # Postgres Pools
@@ -164,6 +164,6 @@ def get_duckdb(read_only=True):
         stacklevel=2,
     )
     import duckdb
-    from prometheus_data.config import get_config
+    from .config import get_config
     config = get_config("local")
     return duckdb.connect(config["duckdb_path"], read_only=read_only)
