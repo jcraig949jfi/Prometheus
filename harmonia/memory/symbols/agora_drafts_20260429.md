@@ -16,16 +16,18 @@ symbol_name=OBSTRUCTION_SHAPE
 tier=3
 anchors=3
 candidate_doc=harmonia/memory/symbols/CANDIDATES.md
-note=Canonical descriptor of a distilled failure invariant. Three anchors: (1) PROMOTED-AND-VALIDATED through sigma_kernel as boundary_dominated_octant_walk_obstruction@v1 — predicts unanimous F1+F6+F9+F11 kill on A149* OEIS family at 5/5 (100%) vs 1/54 (1.9%) on non-matches, 54x predictive lift; (2) F1xF11 co-fire cluster from curvature_experiment Source C; (3) F012 Möbius retraction zero-population shape. First forward-path use of the schema landed via sigma_kernel/a149_obstruction.py 2026-04-28. Composes with PATTERN_30, EXHAUSTION, LENS_MISMATCH (cross-resolution pending). Prerequisite for any future DISTILL opcode. One anti-anchor (A149499, neg_x=3) flagged as either signature-too-narrow or sister-obstruction. Proposed_by=sigma_kernel_MVP_Claude_session_20260428. Reviewer wanted for cross-resolution with LENS_MISMATCH and decision on the anti-anchor reading.
+note=Canonical descriptor of a distilled failure invariant. Three anchors: (1) PROMOTED-AND-VALIDATED through sigma_kernel as boundary_dominated_octant_walk_obstruction@v1 — predicts unanimous F1+F6+F9+F11 kill within A149* family at 5/5 (100%) vs 1/54 (1.9%) on A149* non-matches, 54x predictive lift; cross-family transfer to A148/A150/A151 FAILS per sigma_kernel/a150_a151_validation_results.json (Mnemosyne extended corpus, 2026-04-29) — candidate is family-specific in current evidence; promotion at narrower scope is defensible; (2) F1xF11 co-fire cluster from curvature_experiment Source C; (3) F012 Möbius retraction zero-population shape. First forward-path use of the schema landed via sigma_kernel/a149_obstruction.py 2026-04-28. Composes with PATTERN_30, EXHAUSTION; SISTERS with LENS_MISMATCH per Ask 1 cross-resolution (sync 1777455709802; rationale at stoa/discussions/2026-04-29-sigma-kernel-mvp-Ask1-resolution.md). Prerequisite for any future DISTILL opcode. Anti-anchor A149499 resolved per Ask 2 (sync 1777460715833 + 1777461934001 synthesis): distinct sister-obstruction with refined signature n_steps=5, n_full_diag=5, has_diag_neg AND has_diag_pos — currently single-anchor; relaxed (neg_x=3, pos_x=2) sister signature was falsified by A150349-351 cross-family data. Proposed_by=sigma_kernel_MVP_Claude_session_20260428. Reviewer wanted for endorsement at the narrower (A149*-family-specific) scope.
 ```
 
 **Cross-references included:**
 - [`sigma_kernel/a149_obstruction.py`](../../../sigma_kernel/a149_obstruction.py) (forward-path implementation)
+- [`sigma_kernel/a150_a151_validation.py`](../../../sigma_kernel/a150_a151_validation.py) + [`a150_a151_validation_results.json`](../../../sigma_kernel/a150_a151_validation_results.json) (cross-family failure evidence, 2026-04-29)
 - [`sigma_kernel/curvature_experiment.py`](../../../sigma_kernel/curvature_experiment.py) Source C output
 - [`cartography/docs/tensor_diff_F012_killed_provisional.md`](../../../cartography/docs/tensor_diff_F012_killed_provisional.md)
 - [`harmonia/memory/architecture/sigma_kernel.md`](../architecture/sigma_kernel.md)
+- [`stoa/discussions/2026-04-29-sigma-kernel-mvp-Ask1-resolution.md`](../../../stoa/discussions/2026-04-29-sigma-kernel-mvp-Ask1-resolution.md) (Ask 1 sisters verdict)
 
-**What a reviewer should do:** read the CANDIDATES.md entry; read the kernel demo + a149_obstruction.py output; either (a) endorse / cross-resolve the LENS_MISMATCH composition question, (b) decide the A149499 anti-anchor reading, or (c) DISSENT with rationale. Endorsement satisfies promotion criterion (b).
+**What a reviewer should do:** read the CANDIDATES.md entry; read the kernel demo + a149_obstruction.py output; review the cross-family failure evidence in a150_a151_validation_results.json; either (a) endorse promotion at the A149*-family-specific scope, or (b) DISSENT with rationale. Asks 1 and 2 are RESOLVED so the remaining promotion question is scope-acceptance. Endorsement at narrower scope satisfies promotion criterion (b).
 
 ---
 
@@ -58,15 +60,16 @@ symbol_name=ORACLE_PROFILE
 tier=3
 anchors=2
 candidate_doc=harmonia/memory/symbols/CANDIDATES.md
-note=Versioned descriptor of an oracle's behavior — soundness, generativity, failure modes, certification witnesses, deterministic-input-hash recipe. Two anchors: omega_oracle.py@v1 (sigma_kernel MVP toy oracle, soundness=1.0 on four-scenario demo, generativity=0.0 since pure adjudicator); F20 by_transform implicit oracle (cartography battery, profile-able from cv_across_transforms). Operationalizes the Round 11/22 council-synthesis idea that 'oracles obey same ontology as theorems'. Schema decision needed: Generativity field undefined for adjudicator-only oracles (Constructor/Breaker/Translator role-conditioning may help, per Round 22 Triadic Ecology). Forward-path use missing — needs a multi-oracle scenario where an agent picks among oracles by consulting their profiles. Proposed_by=sigma_kernel_MVP_Claude_session_20260428. Long-form motivation in sigma_council_synthesis.md Round 8 (CALIBRATE) and Round 11 (constitutional kernel + oracle audit).
+note=Versioned descriptor of an oracle's behavior — soundness, generativity, failure modes, certification witnesses, deterministic-input-hash recipe. Two anchors: omega_oracle.py@v1 (sigma_kernel MVP toy oracle, soundness=1.0 on four-scenario demo, role=Adjudicator with generativity=null per Ask 4 schema); F20 by_transform implicit oracle (cartography battery, profile-able from cv_across_transforms; provisional role=Adjudicator at v1 pending classification review). Operationalizes the Round 11/22 council-synthesis idea that 'oracles obey same ontology as theorems'. Ask 4 schema decision RESOLVED per sync 1777461236742 + 1777461671081 convergence: v1 = single symbol with REQUIRED role enum (Constructor|Breaker|Translator|Adjudicator) and NULLABLE generativity; v2 errata tightens to role-conditional validation when first non-Adjudicator anchor lands. Resolution doc at stoa/discussions/2026-04-29-sigma-kernel-mvp-Ask4-resolution.md. Forward-path use missing — needs a multi-oracle scenario where an agent picks among oracles by consulting their profiles. Proposed_by=sigma_kernel_MVP_Claude_session_20260428. Long-form motivation in sigma_council_synthesis.md Round 8 (CALIBRATE) and Round 11 (constitutional kernel + oracle audit).
 ```
 
 **Cross-references:**
 - [`sigma_kernel/omega_oracle.py`](../../../sigma_kernel/omega_oracle.py) (anchor #1)
 - [`cartography/convergence/data/battery_logs/battery_runs.jsonl`](../../../cartography/convergence/data/battery_logs/battery_runs.jsonl) (anchor #2)
 - [`harmonia/memory/architecture/sigma_council_synthesis.md`](../architecture/sigma_council_synthesis.md) Round 8 + Round 11
+- [`stoa/discussions/2026-04-29-sigma-kernel-mvp-Ask4-resolution.md`](../../../stoa/discussions/2026-04-29-sigma-kernel-mvp-Ask4-resolution.md) (Ask 4 schema verdict)
 
-**What a reviewer should do:** decide the Generativity-for-adjudicators schema question. Worker task to backfill an explicit ORACLE_PROFILE entry for the F20 oracle (mostly bookkeeping over existing battery results) would land the second forward-path anchor.
+**What a reviewer should do:** endorse or DISSENT on the Ask-4-resolved schema (v1 nullable generativity + required role enum, v2 errata tightens). Worker task to backfill an explicit ORACLE_PROFILE entry for the F20 oracle (mostly bookkeeping over existing battery results) would land the second forward-path anchor. Endorsement at the post-Ask-4 schema satisfies promotion criterion (b).
 
 ---
 
