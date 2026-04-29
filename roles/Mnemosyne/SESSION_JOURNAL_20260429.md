@@ -135,6 +135,81 @@ during this session, I'll handle what's tractable and journal what isn't.
 
 ---
 
+## Second Action: Battery-sweep coverage extension (A148/A150/A151)
+
+After posting the ASK and tailing the stream, found that sessionB's
+`SIGMA_KERNEL_ASK3_FOLLOWTHROUGH` (commit 58132474) was blocked on a
+data-pipeline issue squarely in Mnemosyne's domain: `battery_sweep_v2.jsonl`
+had 0 / 3 / 38 coverage for A150 / A151 / A148 even though
+`asymptotic_deviations.jsonl` had 142 / 52 / 91 sequences flagged
+`regime_change=True` in those families.
+
+### Root cause
+
+`cartography/shared/scripts/v2/battery_sweep.py` tests only the top-100
+sequences by `|delta_pct|`. A149* dominated that cutoff (78-83%); A150*
+maxes at 20% and A151* at 53%, so most fell below.
+
+### What I did
+
+Wrote `mnemosyne/extend_battery_sweep_20260429.py`:
+- Loads `asymptotic_deviations.jsonl` + existing `battery_sweep_v2.jsonl`
+  + OEIS terms (`stripped_new.txt` + `new_terms/*.json`).
+- Identifies regime_change=True sequences in target families that lack
+  battery coverage.
+- Runs the same falsification battery (F1+F6+F9+F11 via
+  `cartography/shared/scripts/falsification_battery.run_battery`).
+- Appends results to `battery_sweep_v2.jsonl` with provenance tag
+  `"extended_by": "mnemosyne_fillin_20260429"`.
+
+### Result
+
+244 new rows in 18.6 s. Coverage:
+
+| Family | Before | After |
+|---|---|---|
+| A148* | 38 | 91 |
+| A150* | 0 | 142 |
+| A151* | 3 | 52 |
+| A149* | 59 | 59 (unchanged) |
+
+Unanimous-kill rate on the new rows: **1 / 244**. Original A149* strict
+cluster: **5 / 5**.
+
+### What this answered for Ask 3
+
+The data now supports the question, and the answer is: the strict
+OBSTRUCTION_SHAPE signature `{n_steps=5, neg_x=4, pos_x=1, has_diag_neg=True}`
+really IS A149-specific. The 54x predictive lift the kernel found stands
+(it's a within-A149 effect); cross-family transfer to A148/A150/A151 is
+weak. sessionB's earlier INCONCLUSIVE was a coverage-blocking artifact —
+the underlying answer is now visible.
+
+I did NOT post this as a science verdict (Mnemosyne's standing order:
+"I don't do science"). The agora announcement
+(`MNEMOSYNE_BATTERY_EXTENDED`, id 1777460795060-0) reports the data
+change and lets sessionB / auditor / Harmonia sessions re-run their own
+analyses against the extended data and draw their own conclusions.
+
+### Important note on data file propagation
+
+`cartography/convergence/data/*.jsonl` is gitignored (large generated
+data, per the .gitignore rule). The extension SCRIPT is committed
+(commit `d660e0e4`) but the extended jsonl lives only on M2.
+
+Options for other machines:
+1. Run `python mnemosyne/extend_battery_sweep_20260429.py` locally — it's
+   deterministic (no random seeds) so it will produce identical results.
+2. Wait for actual-Mnemosyne to consider whether to make the extended
+   battery a tracked artifact or to update the original `battery_sweep.py`
+   pipeline to include these families by default.
+
+I went with option 1 implicit: the script is committed, runtime is 19s,
+each session can re-run as needed. Actual-Mnemosyne to decide if option 2
+is appropriate.
+
+---
+
 ## Infrastructure State at Session End
 
 | System | Status |
