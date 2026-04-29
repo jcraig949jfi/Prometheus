@@ -42,11 +42,13 @@ from . import (  # noqa: F401
     numerics,
     symbolic,
     algebraic_geometry,
+    algebraic_geometry_normal_form,
     galois,
     iwasawa,
 )
 from . import numerics_special_hurwitz  # noqa: F401
 from . import numerics_special  # noqa: F401  -- facade namespace
+from . import combinatorics_partitions  # noqa: F401  -- partitions / Young tableaux
 from . import doc  # noqa: F401
 
 # Optional submodule: tensor decompositions (CP, Tucker, TT) via tensorly.
@@ -109,6 +111,7 @@ __all__ = [
     "numerics_special_hurwitz",
     "symbolic",
     "algebraic_geometry",
+    "algebraic_geometry_normal_form",
     "galois",
     "iwasawa",
 ]

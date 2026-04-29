@@ -21,9 +21,30 @@ from techne.lib.singularity_classifier import (
     classify_singularity,
     estimate_radius,
 )
+from prometheus_math.combinatorics_partitions import (
+    partitions_of,
+    num_partitions,
+    conjugate,
+    hook_length,
+    hook_length_array,
+    num_standard_young_tableaux,
+    num_ssyt,
+    all_standard_young_tableaux,
+    all_semi_standard_young_tableaux,
+    rsk,
+    inverse_rsk,
+    schur_polynomial,
+    bulgey,
+)
 
 __all__ = [
     "smith_normal_form", "invariant_factors", "abelian_group_structure",
     "tropical_rank", "tropical_rank_graph", "is_winnable",
     "classify_singularity", "estimate_radius",
+    # Young tableaux / partitions:
+    "partitions_of", "num_partitions",
+    "conjugate", "hook_length", "hook_length_array",
+    "num_standard_young_tableaux", "num_ssyt",
+    "all_standard_young_tableaux", "all_semi_standard_young_tableaux",
+    "rsk", "inverse_rsk", "schur_polynomial", "bulgey",
 ]

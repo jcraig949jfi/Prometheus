@@ -12,6 +12,18 @@ capability reference).
 
 | Date | Operation | Auth | Prop | Edge | Comp | Commit |
 |---|---|---|---|---|---|---|
+| 2026-04-25 | pm.combinatorics.partitions_of | A:2 | P:2 | E:3 | C:1 | (project #63) |
+| 2026-04-25 | pm.combinatorics.num_partitions | A:3 | P:2 | E:1 | C:1 | (project #63) |
+| 2026-04-25 | pm.combinatorics.conjugate | A:1 | P:2 | E:1 | C:1 | (project #63) |
+| 2026-04-25 | pm.combinatorics.hook_length | A:1 | P:2 | E:3 | C:2 | (project #63) |
+| 2026-04-25 | pm.combinatorics.num_standard_young_tableaux | A:3 | P:2 | E:2 | C:2 | (project #63) |
+| 2026-04-25 | pm.combinatorics.num_ssyt | A:2 | P:1 | E:2 | C:2 | (project #63) |
+| 2026-04-25 | pm.combinatorics.all_standard_young_tableaux | A:1 | P:1 | E:2 | C:2 | (project #63) |
+| 2026-04-25 | pm.combinatorics.all_semi_standard_young_tableaux | A:1 | P:1 | E:1 | C:2 | (project #63) |
+| 2026-04-25 | pm.combinatorics.rsk | A:2 | P:2 | E:2 | C:2 | (project #63) |
+| 2026-04-25 | pm.combinatorics.inverse_rsk | A:1 | P:2 | E:2 | C:2 | (project #63) |
+| 2026-04-25 | pm.combinatorics.schur_polynomial | A:3 | P:1 | E:2 | C:2 | (project #63) |
+| 2026-04-25 | pm.combinatorics.bulgey | A:0 | P:1 | E:0 | C:1 | (project #63) |
 | 2026-04-25 | pm.numerics.special.q_pochhammer | A:3 | P:3 | E:3 | C:3 | (project #57) |
 | 2026-04-25 | pm.numerics.special.euler_function | A:2 | P:2 | E:2 | C:2 | (project #57) |
 | 2026-04-25 | pm.numerics.special.dedekind_eta | A:2 | P:2 | E:2 | C:1 | (project #57) |
@@ -2000,6 +2012,34 @@ Backend dispatch:
 | 2026-04-25 | pm.numerics_special.dilog_inversion | A:0 | P:1 | E:1 | C:1 | (project #56) |
 | 2026-04-25 | pm.numerics_special.dilog_reflection | A:0 | P:1 | E:1 | C:1 | (project #56) |
 | 2026-04-25 | pm.numerics_special.clausen | A:2 | P:0 | E:0 | C:2 | (project #56) |
+| 2026-04-25 | pm.algebraic_geometry_normal_form.normal_form | A:3 | P:3 | E:3 | C:3 | (project #62) |
+| 2026-04-25 | pm.algebraic_geometry_normal_form.canonical_form | A:1 | P:1 | E:1 | C:2 | (project #62) |
+| 2026-04-25 | pm.algebraic_geometry_normal_form.is_in_ideal | A:2 | P:2 | E:2 | C:2 | (project #62) |
+| 2026-04-25 | pm.algebraic_geometry_normal_form.ideal_membership_certificate | A:1 | P:1 | E:2 | C:2 | (project #62) |
+| 2026-04-25 | pm.algebraic_geometry_normal_form.reduced_groebner | A:2 | P:2 | E:1 | C:2 | (project #62) |
+| 2026-04-25 | pm.algebraic_geometry_normal_form.reduce_polynomial_step | A:1 | P:1 | E:2 | C:1 | (project #62) |
+
+Test counts (test_normal_form.py, 23 cases, all green; ~13s wall):
+  authority:    5 — NF(xy,[x,y])=0; unit-circle NF(x²+y²)=1, NF(x²)=1-y²;
+                    NF(x³+2x²+1, [x²+1])=-x-1 (hand-derived); CLO Ex 2.7.2
+                    lex Groebner basis cross-checked vs sympy.groebner.
+  property:     6 — idempotence, linearity in quotient, basis ⊂ ideal,
+                    multiplicative compatibility k[x] → k[x]/I, NF
+                    independent of basis ordering, hypothesis random
+                    polynomials.
+  edge:         7 — NF(0)=0, NF(f, [])=f, constant ideal (5)/(7) units,
+                    empty ring_vars → ValueError, vars outside ring →
+                    ValueError, certificate-for-non-member → ValueError,
+                    reduce_step with no applicable term returns (f, 0).
+  composition:  5 — is_in_ideal ↔ NF==0, certificate reconstruction
+                    Σ h_i g_i = f, Groebner-then-NF canonicality (f and
+                    f + h(x²-y) reduce identically), zero-dim quotient
+                    k[x,y]/(x²-1, y²-1) basis-of-4 representation,
+                    canonical_form ≡ normal_form alias.
+
+Backend: SymPy.polys (`sympy.reduced` for Buchberger NF; `sympy.groebner`
+for the Buchberger algorithm). Cox–Little–O'Shea Ch. 2 §3, §6, §7 cited
+in module docstring.
 
 Test counts (test_dilogarithm.py, 27 cases, all green; ~14s wall):
   authority: 8 — Li_2(1)=ζ(2), Li_2(-1)=-π²/12, Li_2(0)=0, Li_2(1/2)
@@ -2226,3 +2266,121 @@ Use cases (per ARSENAL_ROADMAP): partition-function generating series
 and quasi-modular form numerics; Dedekind eta products for weight-1/2
 forms; CFT character functions on the torus; q-deformed special
 functions (q-binomial coefficients arise in quantum-group reps).
+
+---
+
+## Project #59 — pm.numerics.special.eta_function (arbitrary τ) · 2026-04-25
+
+| Date | Operation | Auth | Prop | Edge | Comp | Commit |
+|---|---|---|---|---|---|---|
+| 2026-04-25 | pm.numerics.special.eta | A:3 | P:2 | E:3 | C:2 | (project #59) |
+| 2026-04-25 | pm.numerics.special.eta_quotient | A:1 | P:1 | E:2 | C:1 | (project #59) |
+| 2026-04-25 | pm.numerics.special.delta_function | A:2 | P:2 | E:2 | C:2 | (project #59) |
+| 2026-04-25 | pm.numerics.special.j_invariant | A:3 | P:2 | E:1 | C:2 | (project #59) |
+| 2026-04-25 | pm.numerics.special.eisenstein_e2 | A:1 | P:1 | E:2 | C:1 | (project #59) |
+| 2026-04-25 | pm.numerics.special.eisenstein_e4 | A:2 | P:2 | E:1 | C:2 | (project #59) |
+| 2026-04-25 | pm.numerics.special.eisenstein_e6 | A:2 | P:1 | E:1 | C:1 | (project #59) |
+| 2026-04-25 | pm.numerics.special.eta_modular_t_action | A:1 | P:2 | E:1 | C:1 | (project #59) |
+| 2026-04-25 | pm.numerics.special.eta_modular_s_action | A:1 | P:2 | E:1 | C:1 | (project #59) |
+| 2026-04-25 | pm.numerics.special.q_expansion | A:1 | P:0 | E:1 | C:1 | (project #59) |
+
+### Test breakdown
+
+All 27 pass on mpmath 1.3.0 + python 3.11 in ~11 s:
+
+  Authority (8):  η(i) = Γ(1/4)/(2π^{3/4}) (Whittaker & Watson §21.41,
+                  Apostol Thm 3.1); η(i·∞) → 0 (cusp value);
+                  j(i) = 1728 (Cox Thm 11.1, Klein 1879);
+                  j(ρ) = 0 at ρ = e^{2πi/3} (CM by ℤ[ρ], disc -3);
+                  j((1+i√163)/2) = -640320^3 (Heegner -163, Cohen
+                  §7.3, Ramanujan's near-integer); E_4(i∞) = 1
+                  (definition); E_6(i∞) = 1 (definition);
+                  Δ(i) = (2π)^{12} η(i)^{24} ≈ 6.759e6.
+  Property (4):   η(τ+1) = e^{πi/12} η(τ) over 4 τ (T-action,
+                  Apostol Thm 3.1); η(-1/τ) = √(-iτ) η(τ) over 5 τ
+                  (S-action, principal branch); η(τ) ≠ 0 on the open
+                  upper half-plane (6 sample points spanning τ
+                  geometry); Δ(τ+1) = Δ(τ) (T-modular); j(τ+1) = j(τ);
+                  j(-1/τ) = j(τ) (S-modular).
+  Edge (4):       Im(τ) ≤ 0 → ValueError across 4 functions × 4 bad
+                  inputs (real, zero, negative-imag, mixed); τ = 0
+                  specifically; prec < 1 → ValueError; empty
+                  η-quotient → 1 (empty product convention);
+                  invalid η-quotient keys (d ≤ 0, non-int r_d) →
+                  ValueError; n_terms < 1 in q_expansion → ValueError;
+                  E_2 quasi-modular law (NOT modular under S):
+                  E_2(-1/τ) - τ^2 E_2(τ) = 6τ/(πi) (Apostol Thm 3.4) —
+                  the documented "edge case" the user must respect.
+  Composition (5): Δ = (2π)^{12} η^{24} (definition chain); j =
+                  (2π)^{12} E_4^3 / Δ (chains j_invariant, e4,
+                  delta_function); j = 1728 E_4^3 / (E_4^3 - E_6^2)
+                  (chains j_invariant, e4, e6 — Apostol §1.5);
+                  η-quotient {1: 24} recovers Δ / (2π)^{12} (chains
+                  eta_quotient and delta_function);
+                  η_S(τ)/√(-iτ) = η(τ) (recovery via S-action);
+                  q_expansion matches Euler-pentagon coefficients
+                  1, -1, -1, 0, 0, 1, 0, 1, 0, 0, 0, 0, -1, 0, 0, -1
+                  (Apostol §3.4).
+
+### Implementation notes
+
+- ``mpmath.eta`` provides direct evaluation; we wrap it with
+  upper-half-plane validation and precision context.
+- ``mpmath.kleinj`` returns J(τ) (with J(i) = 1, not 1728), so
+  ``j_invariant`` returns ``1728 * mpmath.kleinj(tau)`` to match the
+  conventional j(i) = 1728 normalization.
+- Eisenstein E_2/E_4/E_6 are NOT in mpmath; we sum their q-series
+  with a precision-driven term count: N ≈ ⌈dps / -log10|q|⌉ + 50.
+- The S-transformation η(-1/τ) = √(-iτ) η(τ) uses mpmath's
+  *principal-branch* sqrt; for τ in the upper half-plane, -iτ has
+  positive real part and the principal branch is the correct choice.
+  Verified at 5 diverse τ.
+- Conventions: ``delta_function`` returns the *classical* cusp form
+  (2π)^{12} η^{24}, NOT the normalized q-leading-1 cusp form. The
+  composition test ``j = (2π)^{12} E_4^3 / Δ`` chooses the prefactor
+  consistent with this convention; the alternate composition test
+  ``j = 1728 E_4^3 / (E_4^3 - E_6^2)`` uses Eisenstein only.
+- The Heegner -163 test required computing the input τ at
+  ``mpmath.workprec(400)`` BEFORE calling ``j_invariant`` — otherwise
+  the τ has only ~15 decimal digits and j inherits that limit
+  regardless of the function-internal prec arg. This is a useful
+  caveat for any high-precision modular-forms work.
+- ``q_expansion`` factors out q^{1/24} and returns the coefficients of
+  ∏(1 - q^k); these are the Euler-pentagonal sequence with non-zero
+  entries at the generalized pentagonal numbers k(3k±1)/2.
+
+Aggregate rubric scores (math-tdd skill, ≥2 in every category): A:3 P:2 E:3 C:2.
+
+LOC: 502 module + 456 tests (958 total). Single-session forge — three-day
+estimate held because (a) mpmath provides eta and kleinj directly, and
+(b) the Eisenstein q-series is a 4-line loop. The hard part was getting
+the convention chain right (Δ vs Δ_normalized vs E_4^3/Δ vs 1728 J).
+
+Use cases (per ARSENAL_ROADMAP): modular forms numerics; CM theory and
+Heegner points; Ramanujan-style q-identities; η-quotient cusp forms
+of small level (Δ = η^{24}, η(τ)η(2τ), η(τ)^4η(2τ)^2η(4τ)^4 etc.);
+Monstrous Moonshine / McKay-Thompson series; mock-modular form
+numerics; weight-1/2 forms via η-products.
+
+
+---
+
+2026-04-25 | Project #61 — pm.algebraic_geometry.hilbert_polynomial (SymPy fallback)
+
+7 ops shipped: hilbert_polynomial, hilbert_series, krull_dimension,
+degree_of_variety, arithmetic_genus, is_zero_dimensional, groebner_basis.
+Backend strategy: try Singular first (not installed in this environment),
+fall back to SymPy.polys.groebnertools + degree-by-degree standard-monomial
+counting with polynomial fitting.
+
+Tests at prometheus_math/tests/test_hilbert_polynomial.py (410 LOC).
+Authority anchors: (x,y) -> HP=1, (x²+y²-1) projective conic HP=2t+1,
+(x², xy, y²) -> HP=3, 5 general points -> HP=5, empty ideal -> binomial
+(n+t choose n).
+
+Aggregate rubric (math-tdd skill, ≥2 in every category): A:5 P:4 E:4 C:3.
+
+LOC: 631 module + 410 tests (1041 total). 121 passed + 1 skipped on
+combined wave-14 suite; the single skip is a Singular-only test that
+becomes active once the Singular backend gate (#20) lands.
+

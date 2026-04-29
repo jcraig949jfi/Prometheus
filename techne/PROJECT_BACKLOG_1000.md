@@ -925,11 +925,11 @@ detail spec lives in commit messages when work begins.
 56. **A** — Add `pm.numerics.special.dilogarithm` · 2d ✓ COMPLETED 2026-04-25
 57. **A** — Add `pm.numerics.special.q_pochhammer` · 3d ✓ COMPLETED 2026-04-25
 58. **A** — Add `pm.numerics.special.theta_functions` · 5d ✓ COMPLETED 2026-04-25
-59. **A** — Add `pm.numerics.special.eta_function` arbitrary tau · 3d
+59. **A** — Add `pm.numerics.special.eta_function` arbitrary tau · 3d ✓ COMPLETED 2026-04-25
 60. **A** — Lazy import refactor across all categorical modules · 4d
-61. **A** — Add `pm.algebraic_geometry.hilbert_polynomial` (Singular-backend) · 3d
-62. **A** — Add `pm.algebraic_geometry.normal_form` (Buchberger normal form) · 3d
-63. **A** — Add `pm.combinatorics.partitions` (Young tableaux ops) · 5d
+61. **A** — Add `pm.algebraic_geometry.hilbert_polynomial` (Singular-backend) · 3d ✓ COMPLETED 2026-04-25 (SymPy fallback)
+62. **A** — Add `pm.algebraic_geometry.normal_form` (Buchberger normal form) · 3d ✓ COMPLETED 2026-04-25
+63. **A** — Add `pm.combinatorics.partitions` (Young tableaux ops) · 5d ✓ COMPLETED 2026-04-25
 64. **A** — Add `pm.combinatorics.permutations` (Bruhat order, etc.) · 5d
 65. **A** — Add `pm.combinatorics.posets` library · 7d (2 phases)
 66. **A** — Add `pm.combinatorics.species` (combinatorial species algebra) · 14d (3 phases)

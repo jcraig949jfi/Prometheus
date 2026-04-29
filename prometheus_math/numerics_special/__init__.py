@@ -41,6 +41,19 @@ from ..numerics_special_theta import (  # noqa: F401
     theta_modular_transformation,
 )
 
+from ..numerics_special_eta import (  # noqa: F401
+    eta,
+    eta_quotient,
+    delta_function,
+    j_invariant,
+    eisenstein_e2,
+    eisenstein_e4,
+    eisenstein_e6,
+    eta_modular_t_action,
+    eta_modular_s_action,
+    q_expansion,
+)
+
 __all__ = [
     "hurwitz_zeta",
     "hurwitz_zeta_derivative",
@@ -67,4 +80,14 @@ __all__ = [
     "lattice_theta_series",
     "jacobi_triple_to_theta",
     "theta_modular_transformation",
+    "eta",
+    "eta_quotient",
+    "delta_function",
+    "j_invariant",
+    "eisenstein_e2",
+    "eisenstein_e4",
+    "eisenstein_e6",
+    "eta_modular_t_action",
+    "eta_modular_s_action",
+    "q_expansion",
 ]
