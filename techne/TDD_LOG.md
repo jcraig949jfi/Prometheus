@@ -12,6 +12,13 @@ capability reference).
 
 | Date | Operation | Auth | Prop | Edge | Comp | Commit |
 |---|---|---|---|---|---|---|
+| 2026-04-29 | pm.combinatorics.Poset | A:3 | P:3 | E:3 | C:2 | (project #65 phase 1) |
+| 2026-04-29 | pm.combinatorics.chain_poset | A:2 | P:2 | E:2 | C:2 | (project #65 phase 1) |
+| 2026-04-29 | pm.combinatorics.antichain_poset | A:1 | P:1 | E:1 | C:1 | (project #65 phase 1) |
+| 2026-04-29 | pm.combinatorics.boolean_lattice | A:3 | P:2 | E:1 | C:2 | (project #65 phase 1) |
+| 2026-04-29 | pm.combinatorics.divisor_poset | A:2 | P:1 | E:1 | C:1 | (project #65 phase 1) |
+| 2026-04-29 | pm.combinatorics.product_poset | A:1 | P:2 | E:0 | C:2 | (project #65 phase 1) |
+| 2026-04-29 | pm.combinatorics.dual_poset | A:0 | P:2 | E:0 | C:1 | (project #65 phase 1) |
 | 2026-04-25 | pm.combinatorics.partitions_of | A:2 | P:2 | E:3 | C:1 | (project #63) |
 | 2026-04-25 | pm.combinatorics.num_partitions | A:3 | P:2 | E:1 | C:1 | (project #63) |
 | 2026-04-25 | pm.combinatorics.conjugate | A:1 | P:2 | E:1 | C:1 | (project #63) |
@@ -2383,4 +2390,162 @@ Aggregate rubric (math-tdd skill, ≥2 in every category): A:5 P:4 E:4 C:3.
 LOC: 631 module + 410 tests (1041 total). 121 passed + 1 skipped on
 combined wave-14 suite; the single skip is a Singular-only test that
 becomes active once the Singular backend gate (#20) lands.
+
+| 2026-04-25 | pm.optimization_sdp.solve_sdp | A:1 | P:3 | E:3 | C:1 | (project #67) |
+| 2026-04-25 | pm.optimization_sdp.solve_sdp_dual | A:0 | P:1 | E:1 | C:1 | (project #67) |
+| 2026-04-25 | pm.optimization_sdp.sdp_relaxation_max_cut | A:2 | P:1 | E:1 | C:1 | (project #67) |
+| 2026-04-25 | pm.optimization_sdp.lovasz_theta | A:3 | P:1 | E:1 | C:1 | (project #67) |
+| 2026-04-25 | pm.optimization_sdp.matrix_completion_sdp | A:0 | P:0 | E:0 | C:1 | (project #67) |
+| 2026-04-25 | pm.optimization_sdp.solve_lmi | A:0 | P:0 | E:1 | C:1 | (project #67) |
+
+### Project #67 — pm.optimization_sdp (cvxpy-backed SDP) — 2026-04-25
+
+Add `pm.optimization_sdp` covering 6 entry points:
+solve_sdp (primal standard-form), solve_sdp_dual, sdp_relaxation_max_cut
+(Goemans-Williamson), lovasz_theta, matrix_completion_sdp,
+solve_lmi (generic linear matrix inequality).
+
+Backend: cvxpy 1.8.2 with SCS (open-source default).  cvxpy emits
+GLOP/PDLP import warnings on this machine because of the ortools 9.15
+mismatch; SCS, CLARABEL, and the rest of the SDP-capable solvers
+import cleanly and SDP problems solve correctly.  The module
+suppresses GLOP/PDLP UserWarnings on each entry to keep test output
+clean.
+
+Authority anchors:
+- theta(K_5) = 1 (Lovasz 1979 Thm 8 / Knuth 1994 eq. 24)
+- theta(C_5) = sqrt(5) (Lovasz 1979 Thm 13 — Shannon capacity of pentagon)
+- theta(empty graph on n) = n (sandwich collapses, Knuth 1994 eq. 3)
+- MAX-CUT SDP on K_3 = 9/4 = 2.25 (Goemans-Williamson 1995)
+- MAX-CUT SDP on K_5 >= 6 (combinatorial MAX-CUT lower bound)
+- Hand-computed 2x2 SDP: min Tr(diag(1,2) X) s.t. Tr(I X) = 2, X >> 0 -> 2
+
+Composition tests cover the Lovasz sandwich theorem, primal-dual
+strong duality (Slater) on a strictly feasible 2x2 SDP, full-observation
+matrix completion recovery, and solve_lmi via solve_sdp on a hand-set
+scalar LMI.
+
+Aggregate rubric (math-tdd skill, ≥2 in every category): A:3 P:3 E:3 C:3.
+(6 authority cases + 5 property + 5 edge + 4 composition; counts in the
+table above are per-operation primary anchors.)
+
+LOC: 405 module + 290 tests (695 total).  20 tests pass on this run
+(cvxpy 1.8.2 + SCS 3.x).
+
+---
+
+2026-04-25 | Project #64 — pm.combinatorics.permutations (Bruhat order et al.)
+
+14 ops shipped: inversions, num_inversions, reduced_words,
+any_reduced_word, bruhat_le, weak_left_le, weak_right_le,
+bruhat_interval, cover_relations, longest_element,
+permutation_pattern_count, is_pattern_avoiding, rsk_shape,
+bruhat_distance.
+
+Implementation strategy:
+- Length / inversions: direct O(n^2) inversion-pair enumeration.
+- Reduced words: descent recursion (Bjorner-Brenti, Section 1.5)
+  enumerating all reduced expressions via right-descent peel.
+- Bruhat order: Ehresmann tableau criterion (Bjorner-Brenti, Theorem
+  2.1.5) — sort prefixes and componentwise compare. O(n^2 log n).
+- Weak right order: inversion-set inclusion. Weak left order: same on
+  inverses (Bjorner-Brenti, Section 3.1).
+- Cover relations: transposition-with-no-intermediate criterion
+  (Bjorner-Brenti, Lemma 2.1.4).
+- RSK shape: delegates to pm.combinatorics_partitions.rsk from #63.
+- Bruhat distance: l(v) - l(w) when comparable (Bjorner-Brenti
+  Theorem 2.2.6: graded poset, rank = length).
+- Pattern count / avoidance: itertools.combinations + rank-relabeling.
+
+Test taxonomy (prometheus_math/tests/test_permutations_bruhat.py, 27
+tests, 27 pass):
+
+  Authority (7):
+   - inversions((2, 1)) = [(0, 1)]                  | Bjorner-Brenti 1.5
+   - num_inversions(w_0 in S_4) = 6 = 4*3/2          | BB Prop 2.3.1
+   - reduced_words((3,2,1)) = {[1,2,1],[2,1,2]}      | BB Example 1.5.2
+   - bruhat_le(e, w_0) in S_3 = True                 | BB Prop 2.3.1
+   - bruhat_le((2,1,3),(1,3,2)) = False both ways    | BB Section 2.1
+   - permutation_pattern_count((3,1,4,2),(1,3,2))=1  | Bona 4.2
+   - rsk_shape((3,1,4,2)) = (2, 2)                   | Sagan 3.5
+
+  Property (7, hypothesis-driven):
+   - num_inversions(w) == len(any_reduced_word(w))
+   - bruhat_le(identity, w) for any w
+   - bruhat_le(w, longest_element(n)) for any w in S_n
+   - bruhat_le reflexive
+   - bruhat_le antisymmetric
+   - weak_right_le(w, v) implies bruhat_le(w, v)
+   - all reduced words of w have length l(w)
+
+  Edge (8):
+   - inversions(()) = []
+   - inversions((1,)) = []
+   - reduced_words(identity) = [[]]
+   - longest_element(1) = (1,); longest_element(0) = ()
+   - bruhat_le with size mismatch raises ValueError
+   - permutation_pattern_count with malformed pattern raises ValueError
+   - inversions on duplicates raises ValueError
+
+  Composition (5):
+   - cover_relations(w) ⊂ {u : bruhat_le(w, u) and l(u) = l(w)+1}
+   - |bruhat_interval(e, w_0)| = n! and equals all of S_n (n=2..4)
+   - |Av_n(123)| = C_n for n=1..5 (Knuth bijection / Catalan)
+   - rsk_shape on n-perm gives partition of n
+   - bruhat_distance(w, v) = |l(v) - l(w)| when comparable, else None
+
+Aggregate rubric (math-tdd skill, >=2 in every category):
+  A:3 P:3 E:3 C:3.
+
+Per-operation entries:
+
+| Date | Operation | Auth | Prop | Edge | Comp | Commit |
+|---|---|---|---|---|---|---|
+| 2026-04-25 | pm.combinatorics.inversions | A:1 | P:1 | E:3 | C:1 | (project #64) |
+| 2026-04-25 | pm.combinatorics.num_inversions | A:1 | P:2 | E:1 | C:2 | (project #64) |
+| 2026-04-25 | pm.combinatorics.reduced_words | A:1 | P:2 | E:1 | C:1 | (project #64) |
+| 2026-04-25 | pm.combinatorics.any_reduced_word | A:1 | P:1 | E:1 | C:1 | (project #64) |
+| 2026-04-25 | pm.combinatorics.bruhat_le | A:2 | P:3 | E:1 | C:2 | (project #64) |
+| 2026-04-25 | pm.combinatorics.weak_left_le | A:0 | P:1 | E:0 | C:1 | (project #64) |
+| 2026-04-25 | pm.combinatorics.weak_right_le | A:0 | P:1 | E:0 | C:1 | (project #64) |
+| 2026-04-25 | pm.combinatorics.bruhat_interval | A:0 | P:0 | E:0 | C:1 | (project #64) |
+| 2026-04-25 | pm.combinatorics.cover_relations | A:0 | P:0 | E:0 | C:1 | (project #64) |
+| 2026-04-25 | pm.combinatorics.longest_element | A:1 | P:1 | E:2 | C:1 | (project #64) |
+| 2026-04-25 | pm.combinatorics.permutation_pattern_count | A:1 | P:0 | E:1 | C:1 | (project #64) |
+| 2026-04-25 | pm.combinatorics.is_pattern_avoiding | A:0 | P:0 | E:0 | C:1 | (project #64) |
+| 2026-04-25 | pm.combinatorics.rsk_shape | A:1 | P:0 | E:0 | C:1 | (project #64) |
+| 2026-04-25 | pm.combinatorics.bruhat_distance | A:0 | P:0 | E:0 | C:1 | (project #64) |
+
+LOC: ~420 module (combinatorics_permutations.py) + ~290 tests
+(test_permutations_bruhat.py). 27/27 tests pass.
+
+Use cases (per ARSENAL_ROADMAP): representation theory of S_n;
+Schubert calculus (the Bruhat order indexes Schubert cells / classes);
+Coxeter group theory and Kazhdan-Lusztig polynomials (will need
+bruhat_interval as input); pattern-avoidance enumeration.
+
+| 2026-04-25 | pm.optimization_qp.solve_qp | A:5 | P:5 | E:8 | C:2 | (project #68) |
+| 2026-04-25 | pm.optimization_qp.solve_box_qp | A:0 | P:1 | E:0 | C:1 | (project #68) |
+| 2026-04-25 | pm.optimization_qp.solve_constrained_least_squares | A:0 | P:0 | E:0 | C:1 | (project #68) |
+| 2026-04-25 | pm.optimization_qp.solve_quantile_regression | A:0 | P:0 | E:1 | C:1 | (project #68) |
+| 2026-04-25 | pm.optimization_qp.solve_lasso_qp | A:0 | P:1 | E:0 | C:1 | (project #68) |
+
+LOC: ~470 module (optimization_qp.py) + ~330 tests (test_qp.py).
+25/25 tests pass on cvxpy + scipy. Categories met: Authority 5
+(trivial QP, linear-term, constrained, 2-D separable, hard-margin SVM
+primal); Property 5 (constraint satisfaction over random PSD QPs,
+local==global on convex, deterministic re-solve, box-vs-unconstrained
+equivalence, lasso shrinkage monotonicity); Edge 8 (empty
+constraints, non-symmetric P warns, non-PSD raises, infeasible →
+status, lb>ub raises, inconsistent equalities, n=0 trivial, unknown
+solver, shape mismatch, invalid tau); Composition 5
+(constrained_lstsq vs np.linalg.lstsq, quantile-0.5 vs np.median,
+lasso recovers planted sparsity, box_qp vs solve_qp(lb,ub),
+scipy fallback parity).
+
+Use cases: SVM duals, portfolio optimisation (Markowitz),
+MPC step-quadratic costs, constrained least squares, quantile
+regression, lasso. Backend tradeoffs documented in module
+docstring (cvxpy/OSQP ~1e-6, polish to ~1e-9; scipy SLSQP
+~1e-5, fragile on rank-deficient P).
 

@@ -36,6 +36,15 @@ from prometheus_math.combinatorics_partitions import (
     schur_polynomial,
     bulgey,
 )
+from prometheus_math.combinatorics_posets import (
+    Poset,
+    chain_poset,
+    antichain_poset,
+    boolean_lattice,
+    divisor_poset,
+    product_poset,
+    dual_poset,
+)
 
 __all__ = [
     "smith_normal_form", "invariant_factors", "abelian_group_structure",
@@ -47,4 +56,8 @@ __all__ = [
     "num_standard_young_tableaux", "num_ssyt",
     "all_standard_young_tableaux", "all_semi_standard_young_tableaux",
     "rsk", "inverse_rsk", "schur_polynomial", "bulgey",
+    # Posets:
+    "Poset",
+    "chain_poset", "antichain_poset", "boolean_lattice",
+    "divisor_poset", "product_poset", "dual_poset",
 ]

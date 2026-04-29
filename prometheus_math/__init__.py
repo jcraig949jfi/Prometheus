@@ -49,7 +49,23 @@ from . import (  # noqa: F401
 from . import numerics_special_hurwitz  # noqa: F401
 from . import numerics_special  # noqa: F401  -- facade namespace
 from . import combinatorics_partitions  # noqa: F401  -- partitions / Young tableaux
+from . import combinatorics_permutations  # noqa: F401  -- permutations / Bruhat
+from . import combinatorics_posets  # noqa: F401  -- finite posets / lattices
 from . import doc  # noqa: F401
+
+# Optional SDP module (cvxpy-backed). Skip silently if cvxpy missing.
+try:
+    from . import optimization_sdp  # noqa: F401
+    _HAS_OPT_SDP = True
+except Exception:  # pragma: no cover
+    _HAS_OPT_SDP = False
+
+# Optional QP module (cvxpy- or scipy-backed). Skip silently if both missing.
+try:
+    from . import optimization_qp  # noqa: F401
+    _HAS_OPT_QP = True
+except Exception:  # pragma: no cover
+    _HAS_OPT_QP = False
 
 # Optional submodule: tensor decompositions (CP, Tucker, TT) via tensorly.
 try:
@@ -127,3 +143,7 @@ if _HAS_RECIPES:
     __all__.append("recipes")
 if _HAS_SYMBOLIC_TENSOR_DECOMP:
     __all__.append("symbolic_tensor_decomp")
+if _HAS_OPT_SDP:
+    __all__.append("optimization_sdp")
+if _HAS_OPT_QP:
+    __all__.append("optimization_qp")

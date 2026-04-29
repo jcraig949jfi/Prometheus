@@ -930,11 +930,11 @@ detail spec lives in commit messages when work begins.
 61. **A** — Add `pm.algebraic_geometry.hilbert_polynomial` (Singular-backend) · 3d ✓ COMPLETED 2026-04-25 (SymPy fallback)
 62. **A** — Add `pm.algebraic_geometry.normal_form` (Buchberger normal form) · 3d ✓ COMPLETED 2026-04-25
 63. **A** — Add `pm.combinatorics.partitions` (Young tableaux ops) · 5d ✓ COMPLETED 2026-04-25
-64. **A** — Add `pm.combinatorics.permutations` (Bruhat order, etc.) · 5d
-65. **A** — Add `pm.combinatorics.posets` library · 7d (2 phases)
+64. **A** — Add `pm.combinatorics.permutations` (Bruhat order, etc.) · 5d ✓ COMPLETED 2026-04-25
+65. **A** — Add `pm.combinatorics.posets` library · 7d (2 phases) ✓ Phase 1 COMPLETED 2026-04-25 (Phase 2 lattice operations + topological invariants deferred)
 66. **A** — Add `pm.combinatorics.species` (combinatorial species algebra) · 14d (3 phases)
-67. **A** — Add `pm.optimization.solve_sdp` (semidefinite programming via cvxpy) · 4d
-68. **A** — Add `pm.optimization.solve_qp` (quadratic programming) · 3d
+67. **A** — Add `pm.optimization.solve_sdp` (semidefinite programming via cvxpy) · 4d ✓ COMPLETED 2026-04-25
+68. **A** — Add `pm.optimization.solve_qp` (quadratic programming) · 3d ✓ COMPLETED 2026-04-25
 69. **A** — Add `pm.optimization.solve_socp` (second-order cone) · 3d
 70. **A** — Add `pm.optimization.metaheuristics` (CMA-ES, GA via DEAP wrapper) · 5d
 71. **A** — Add `pm.geometry.convex_hull` (qhull bindings) · 3d
