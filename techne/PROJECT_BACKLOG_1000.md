@@ -939,15 +939,15 @@ detail spec lives in commit messages when work begins.
 70. **A** — Add `pm.optimization.metaheuristics` (CMA-ES, GA via DEAP wrapper) · 5d ✓ COMPLETED 2026-04-25
 71. **A** — Add `pm.geometry.convex_hull` (qhull bindings) · 3d ✓ COMPLETED 2026-04-25
 72. **A** — Add `pm.geometry.delaunay` triangulation · 3d ✓ COMPLETED 2026-04-25
-73. **A** — Add `pm.geometry.voronoi` · 3d
-74. **A** — Add `pm.statistics.distributions` (rich CDF/PDF/quantile) · 7d (2 phases)
+73. **A** — Add `pm.geometry.voronoi` · 3d ✓ COMPLETED 2026-04-25
+74. **A** — Add `pm.statistics.distributions` (rich CDF/PDF/quantile) · 7d (2 phases) ✓ Phase 1 COMPLETED 2026-04-25
 75. **A** — Add `pm.statistics.bayesian` (PyMC integration) · 14d (3 phases)
-76. **A** — Add `pm.dynamics.iterated_maps` (logistic, tent, etc.) · 3d
+76. **A** — Add `pm.dynamics.iterated_maps` (logistic, tent, etc.) · 3d ✓ COMPLETED 2026-04-25
 77. **A** — Add `pm.dynamics.ode_solvers` (high-order via mpmath) · 7d
 78. **A** — Add `pm.physics.quantum.density_matrix` ops · 14d (3 phases)
 79. **A** — Add `pm.physics.path_integral` numerical quadrature · 14d (3 phases)
 80. **A** — Add `pm.physics.lie_groups` (matrix groups, Lie algebras) · 14d (3 phases)
-81. **A** — Add `pm.crypto.primitives` (modular exp, RSA, ECDH) · 5d
+81. **A** — Add `pm.crypto.primitives` (modular exp, RSA, ECDH) · 5d ✓ COMPLETED 2026-04-25
 82. **A** — Add `pm.crypto.lattice_based` (LWE/RLWE primitives) · 14d (3 phases)
 83. **A** — Add `pm.crypto.isogeny_based` (CSIDH primitives) · 14d (3 phases)
 84. **A** — Add `pm.crypto.signature_schemes` (ECDSA, Schnorr, Falcon) · 7d (2 phases)

@@ -2579,3 +2579,170 @@ regression, lasso. Backend tradeoffs documented in module
 docstring (cvxpy/OSQP ~1e-6, polish to ~1e-9; scipy SLSQP
 ~1e-5, fragile on rank-deficient P).
 
+| 2026-04-25 | pm.crypto_primitives.miller_rabin | A:2 | P:1 | E:1 | C:1 | (project #81) |
+| 2026-04-25 | pm.crypto_primitives.tonelli_shanks | A:2 | P:1 | E:1 | C:1 | (project #81) |
+| 2026-04-25 | pm.crypto_primitives.extended_gcd | A:1 | P:1 | E:0 | C:0 | (project #81) |
+| 2026-04-25 | pm.crypto_primitives.mod_inverse | A:1 | P:1 | E:1 | C:0 | (project #81) |
+| 2026-04-25 | pm.crypto_primitives.modular_exp | A:1 | P:0 | E:1 | C:0 | (project #81) |
+| 2026-04-25 | pm.crypto_primitives.chinese_remainder_theorem | A:1 | P:0 | E:1 | C:1 | (project #81) |
+| 2026-04-25 | pm.crypto_primitives.quadratic_residues | A:1 | P:0 | E:0 | C:0 | (project #81) |
+| 2026-04-25 | pm.crypto_primitives.rsa_keygen | A:1 | P:1 | E:1 | C:1 | (project #81) |
+| 2026-04-25 | pm.crypto_primitives.rsa_encrypt / rsa_decrypt | A:0 | P:1 | E:0 | C:1 | (project #81) |
+| 2026-04-25 | pm.crypto_primitives.rsa_sign / rsa_verify | A:0 | P:1 | E:0 | C:1 | (project #81) |
+| 2026-04-25 | pm.crypto_primitives.dh_keygen / dh_shared_secret | A:0 | P:1 | E:2 | C:1 | (project #81) |
+| 2026-04-25 | pm.crypto_primitives.ecdh_keygen / ecdh_shared_secret | A:0 | P:0 | E:1 | C:2 | (project #81) |
+| 2026-04-25 | pm.crypto_primitives.generate_prime | A:0 | P:0 | E:0 | C:1 | (project #81) |
+
+LOC: ~520 module (crypto_primitives.py) + ~370 tests
+(test_crypto_primitives.py). 71/71 tests pass (15.2 s, includes
+~70 hypothesis examples across RSA round-trip, RSA sign/verify, DH
+agreement, mod_inverse, extended_gcd; deterministic Carmichael
+parametrize sweep; ECDH two-party agreement). Categories met
+overall: Authority 10 (7919 prime, 8051=79*101 composite,
+sqrt(2) mod 7, non-residue mod 7, ext-gcd(35,15), 3^-1=5 mod 7,
+CRT 23, QRs mod 7, RSA totient relation, modular_exp known values);
+Property 6 (RSA round-trip, RSA sign/verify, DH agreement,
+mod_inverse identity, ext-gcd divides, MR rejects 25+ composites
+including Carmichael); Edge 9 (MR(0/1/2/3/4/-7), tonelli on 0,
+mod_inverse on non-coprime, modulus<1, RSA bits<16, DH non-prime,
+DH bad generator, CRT empty/mismatch/non-coprime, ECDH unknown
+curve); Composition 7 (encrypt-decrypt, sign-verify, two-party DH,
+two-party ECDH, ECDH from serialized bytes, tonelli^2 == n,
+generate_prime + miller_rabin certify, CRT inverts mod-reduction).
+
+EDUCATIONAL ONLY — module docstring carries an explicit
+"DO NOT USE FOR PRODUCTION" warning. ECDH delegates to PyCA
+`cryptography` for curve arithmetic (skip-with-message if missing).
+Use cases: teaching number theory, exploring side-channel-free
+crypto fundamentals, RSA homomorphic-property research, group-
+theoretic structure of DH, Tonelli-Shanks for square-root-mod-p in
+algebraic number theory.
+
+| 2026-04-25 | pm.dynamics_iterated_maps.logistic_map | A:2 | P:2 | E:3 | C:2 | (project #76) |
+| 2026-04-25 | pm.dynamics_iterated_maps.tent_map | A:2 | P:2 | E:2 | C:2 | (project #76) |
+| 2026-04-25 | pm.dynamics_iterated_maps.sine_map | A:1 | P:1 | E:2 | C:1 | (project #76) |
+| 2026-04-25 | pm.dynamics_iterated_maps.henon_map | A:1 | P:1 | E:2 | C:1 | (project #76) |
+| 2026-04-25 | pm.dynamics_iterated_maps.lyapunov_exponent | A:2 | P:2 | E:2 | C:2 | (project #76) |
+| 2026-04-25 | pm.dynamics_iterated_maps.bifurcation_diagram | A:1 | P:2 | E:1 | C:2 | (project #76) |
+| 2026-04-25 | pm.dynamics_iterated_maps.find_periodic_orbits | A:2 | P:2 | E:1 | C:2 | (project #76) |
+| 2026-04-25 | pm.dynamics_iterated_maps.feigenbaum_constant_estimate | A:2 | P:1 | E:1 | C:2 | (project #76) |
+
+LOC: ~570 module (dynamics_iterated_maps.py) + ~330 tests
+(test_dynamics_iterated_maps.py). 20/20 tests pass in ~16 s.
+Categories met overall: Authority 6 (logistic r=2 → x*=1/2 from
+Strogatz §10.1; logistic r=4 Lyapunov = ln 2 from Devaney §1.7;
+tent_map(0.3, 5) hand-computed sequence; Hénon (a=1.4, b=0.3)
+attractor bounded per Hénon 1976 Fig.1; logistic period-2 orbit
+at r=3.2 vs analytic Strogatz 10.3.6; Feigenbaum δ ≈ 4.669 from
+Feigenbaum 1978); Property 5 (logistic invariance of [0,1] under
+Hypothesis sweep; tent invariance of [0,1]; Lyapunov(r=2) << 0
+from superstability; bifurcation_diagram shape and range;
+find_periodic_orbits sorted-unique); Edge 6 (n_iter=0 across all
+maps; r out of [0,4]; x_init out of unit interval; r=0 collapses
+to 0; b=0 degenerates Hénon to 1-D; Lyapunov on critical-point
+constant orbit returns -∞); Composition 3 (bifurcation_diagram
+× find_periodic_orbits at r=3.2; logistic-tent conjugacy of
+Lyapunov exponents at r=4; period-doubling cascade × Feigenbaum
+estimator).
+
+Module covers project #76 spec: classical iterated maps with
+bifurcation, Lyapunov exponent, periodic-orbit detection, plus
+the Feigenbaum δ estimator. Authoritative references: Strogatz
+(2014), Devaney (1989), Hénon (1976), Feigenbaum (1978).
+
+| 2026-04-25 | pm.statistics_distributions.normal | A:3 | P:3 | E:3 | C:2 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.exponential | A:2 | P:2 | E:2 | C:2 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.beta | A:1 | P:2 | E:2 | C:1 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.gamma | A:1 | P:2 | E:2 | C:1 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.chi2 | A:2 | P:1 | E:2 | C:1 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.t | A:1 | P:1 | E:1 | C:1 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.f | A:1 | P:1 | E:1 | C:1 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.binomial | A:1 | P:1 | E:2 | C:1 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.poisson | A:3 | P:2 | E:2 | C:2 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.geometric | A:1 | P:1 | E:1 | C:1 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.negative_binomial | A:1 | P:1 | E:1 | C:1 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.uniform | A:2 | P:2 | E:2 | C:1 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.lognormal | A:1 | P:2 | E:1 | C:1 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.weibull | A:1 | P:1 | E:1 | C:1 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.cauchy | A:1 | P:1 | E:1 | C:1 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.laplace | A:1 | P:1 | E:1 | C:1 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.pareto | A:1 | P:1 | E:1 | C:1 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.multivariate_normal | A:2 | P:1 | E:1 | C:2 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.kl_divergence | A:3 | P:2 | E:2 | C:2 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.moment_estimator | A:1 | P:2 | E:2 | C:2 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.mle_estimator | A:1 | P:2 | E:2 | C:2 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.empirical_cdf | A:1 | P:1 | E:1 | C:2 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.rejection_sample | A:1 | P:1 | E:1 | C:2 | (project #74 phase 1) |
+| 2026-04-25 | pm.statistics_distributions.kde | A:1 | P:1 | E:1 | C:2 | (project #74 phase 1) |
+
+### Project #74 Phase 1 — pm.statistics_distributions
+
+Wrapped scipy.stats with a uniform, named-keyword-argument distribution
+API. Each of 18 named families (normal, exponential, beta, gamma, chi2,
+t, f, binomial, poisson, geometric, negative_binomial, uniform,
+lognormal/log_normal alias, weibull, cauchy, laplace, pareto,
+multivariate_normal) exposes the same 7 primitives: pdf, cdf, quantile,
+sample, mean, var, entropy. Plus higher-level helpers:
+kl_divergence (closed form for normal/exponential/poisson, numerical
+quad/sum elsewhere), moment_estimator and mle_estimator (closed-form
+for tractable families and scipy.stats.fit fallback for gamma/beta),
+empirical_cdf, rejection_sample (with envelope guard against biased
+M), kde (Gaussian KDE), bootstrap_ci re-export from research.bootstrap.
+
+LOC: ~620 module (statistics_distributions.py) + ~410 tests
+(test_statistics_distributions.py). 48/48 tests pass (~15 s, includes
+hypothesis property tests for cdf monotonicity, quantile inversion,
+sample-mean SE).
+
+Categories met overall: Authority 11 (z-table 1.95996398, Casella-
+Berger N(0,1) pdf at 0, hand-formula Poisson(2) at k=3, closed-form
+KL(N||N), closed-form KL(Exp||Exp), uniform pdf height, MVN pdf at
+mean, chi2 mean=k, exponential mean=1/rate); Property 8 (cdf
+monotonicity, quantile-cdf inversion across 7 parametrized families,
+Hypothesis sample-mean SE, KL self-zero across 3 families, Gibbs
+nonneg, pdf integrates to 1 across 4 continuous families, MVN
+shape, discrete cdf == cumsum(pmf)); Edge 8 (sigma=0/<0, beta
+alpha=0, gamma rate<0, binomial p>1, poisson mu=0, chi2 k<0,
+n_samples=0/<0, quantile p<0/>1, uniform b<=a, kl across families,
+empty samples in ec/mle/kde, unknown family); Composition 6 (MLE
+recovers N(3,2), MoM recovers N(0,1), MLE Exp recovers rate,
+Glivenko-Cantelli sup-error <0.05, proposal=target rejection accepts
+all, KDE close to true pdf, sample-quantile inverse round-trip,
+bootstrap_ci covers true mean, discrete cdf == cumsum pmf).
+
+Phase 2 (multivariate continuous beyond MVN, copulas, mixture
+models) deferred.
+
+| 2026-04-25 | pm.geometry.voronoi_diagram | A:3 | P:2 | E:3 | C:2 | (project #73) |
+| 2026-04-25 | pm.geometry.voronoi_cell | A:2 | P:1 | E:2 | C:2 | (project #73) |
+| 2026-04-25 | pm.geometry.voronoi_cell_bounded | A:2 | P:2 | E:2 | C:2 | (project #73) |
+| 2026-04-25 | pm.geometry.is_unbounded_cell | A:1 | P:1 | E:2 | C:1 | (project #73) |
+| 2026-04-25 | pm.geometry.voronoi_neighbors | A:1 | P:2 | E:1 | C:2 | (project #73) |
+| 2026-04-25 | pm.geometry.voronoi_cell_area | A:2 | P:2 | E:2 | C:2 | (project #73) |
+| 2026-04-25 | pm.geometry.lloyd_relaxation | A:1 | P:2 | E:1 | C:2 | (project #73) |
+| 2026-04-25 | pm.geometry.centroidal_voronoi_tessellation | A:1 | P:1 | E:2 | C:2 | (project #73) |
+| 2026-04-25 | pm.geometry.delaunay_dual_voronoi | A:1 | P:1 | E:1 | C:3 | (project #73) |
+
+### Project #73 — pm.geometry.voronoi (Voronoi diagrams)
+
+scipy.spatial.Voronoi (qhull) backend with shapely-based bounded-cell
+clipping. Module: prometheus_math/geometry_voronoi.py (~430 LOC),
+test suite: prometheus_math/tests/test_geometry_voronoi.py (20 tests,
+all passing).
+
+Test counts (>= 2 in every category per math-tdd):
+- Authority:   5  (collinear bisectors, square center vertex, 5-point
+                   diamond cell, quarter-bbox clipping, equilateral
+                   centroid)
+- Property:    5  (cell-count, Delaunay-edge agreement, clipped area
+                   sums to bbox, Lloyd energy non-increasing,
+                   neighbor symmetry)
+- Edge:        6  (empty input, single point, two points, all
+                   collinear, bbox excludes generator, invalid bbox)
+- Composition: 4  (neighbor subset of Delaunay, Lloyd -> CVT
+                   fixpoint, clipped area sum = bbox, dual delaunay
+                   simplex circumcenter == voronoi vertex)
+
+Sibling: geometry_delaunay (#72), geometry_convex_hull (#71). Adds
+~430 LOC to the geometry namespace.
+
