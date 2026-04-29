@@ -121,6 +121,7 @@ Full list of top-level directories. **(active)** = commits in the last 3 weeks; 
 | `techne/` | (active) | Master catalog of forged tools |
 | `tests/` | (active) | Tests |
 | `thesauros/` | (active) | Data treasury (includes shared DB config under `prometheus_data/`) |
+| `sigma_kernel/` | (active) | Σ-substrate runtime MVP — mechanically-enforced epistemic discipline (append-only, linear capabilities, three-valued GATE, falsification-first PROMOTE). See [`harmonia/memory/architecture/sigma_kernel.md`](harmonia/memory/architecture/sigma_kernel.md) |
 | `whitepapers/` | (active) | Technical writeups of findings and architectures |
 | `exploratory/` | (active) | Pilot / MVP projects: `zoo`, `tensor_decomp_qd`, `reproductions`, `grammata` |
 | `aethon/` | (complete) | Autonomous reasoning archaeology (backburnered) |
@@ -135,6 +136,7 @@ This is a multi-project research program; there's no single entry point.
 
 - Read [`CONSTITUTION.md`](CONSTITUTION.md) for the philosophy — Three Pillars, Seven Laws, and how projects connect.
 - Read [`whitepapers/`](whitepapers/) for current technical findings.
+- For the Σ-substrate runtime: start with [`harmonia/memory/architecture/sigma_kernel.md`](harmonia/memory/architecture/sigma_kernel.md), then [`sigma_kernel/README.md`](sigma_kernel/README.md). Long-form 25-round design history at [`harmonia/memory/architecture/sigma_council_synthesis.md`](harmonia/memory/architecture/sigma_council_synthesis.md).
 - Browse [`harmonia/README.md`](harmonia/README.md) and [`cartography/README.md`](cartography/README.md) for the active mathematics work.
 - Browse [`ignis/README.md`](ignis/README.md) and [`rhea/README.md`](rhea/README.md) for the reasoning-circuit work; see [`ignis/RESULTS.md`](ignis/RESULTS.md) for detailed findings from that line.
 - Project-specific quick-starts live in each project's README.

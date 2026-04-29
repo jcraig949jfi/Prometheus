@@ -280,6 +280,103 @@ For visibility; these have been on the gaps list since the registry was first pr
 
 ---
 
+## Tier 3 (continued) — substrate-mechanics candidates surfaced by Σ-kernel MVP work
+
+The three candidates below were surfaced during the Σ-kernel MVP build (2026-04-28) as load-bearing for the kernel's epistemic discipline once it scales beyond the toy demo. Each is anchored to a concrete kernel artifact (`sigma_kernel/`) and to one or more cartography findings ingested by the curvature-experiment pipeline (`cartography_F1_ENDO@v1`, `cartography_F2_SG_TC@v1`, `cartography_F3_FIBER@v1`).
+
+### `OBSTRUCTION_SHAPE` (pattern) — first anchor 2026-04-28
+
+- **Definition:** A canonical descriptor of a *distilled failure invariant* — the structural feature shared across many BLOCKed traces that explains why they all failed the same way. Not a single failure record; the *shape* that re-occurs across many failures and could compress them into a single named obstruction symbol.
+- **Fields:** `failure_class, kill_path_signature, anchor_traces (list of trace-hashes), shared_invariant, severity (PATTERN_30-graded 0-4), proposed_dual_coordinate, n_traces_compressed`
+- **Anchor cases (three; one promoted-and-validated, two retrospective):**
+  1. **`BOUNDARY_DOMINATED_OCTANT_WALK_OBSTRUCTION`** (sigma_kernel/a149_obstruction.py output, **PROMOTED through kernel 2026-04-28** as `boundary_dominated_octant_walk_obstruction@v1`). 5-step lattice walks confined to N³ (first octant of Z³) with structural signature {n_steps=5, neg_x=4, pos_x=1, has_diag_neg=True} produce sequences whose short_rate vs long_rate divergence (~80% delta_pct) LOOKS like a regime change but is an artifact of boundary geometry. Predicts unanimous-kill on the F1+F6+F9+F11 battery at 5/5 = 100% within the A149* OEIS sub-family vs 1/54 = 1.9% on non-matches (54x predictive lift). Compresses 5 KILLED verdicts (A149074, A149081, A149082, A149089, A149090) into one named obstruction. **First forward-path use of the OBSTRUCTION_SHAPE schema.**
+  2. **F1_permutation_null × F11_cross_validation co-fire cluster** (curvature_experiment.py Source C output, 2026-04-28). Across 100 OEIS sequences in `battery_sweep_v2.jsonl`, the pair `F1_permutation_null <-> F11_cross_validation` fires together more often than chance (defect ≈ 0.74). The shared invariant: sequences whose growth rate destabilizes under both random-permutation null AND held-out cross-validation. The 5 highest-curvature sequences in Source B (A149090, A149089, A149082, A149081, A149074) are killed by exactly this kill-test pair — these are the same sequences that became anchor #1's structural signature.
+  3. **F012 Möbius bias retraction** (`cartography/docs/tensor_diff_F012_killed_provisional.md`, 2026-04-17). Provisional kill of |z|=6.15 claim was driven by a substrate-level shape: μ-population zero-ratio (62.6% non-squarefree). The shape "high-zero-ratio destroys S/N" is reusable across other Möbius/Liouville claims. Candidate name: `ZERO_POPULATION_OBSTRUCTION`.
+- **Composes with:**
+  - `PATTERN_30@v1`: PATTERN_30 grades algebraic-coupling severity per finding; OBSTRUCTION_SHAPE generalizes — a PATTERN_30 Level-3+ event is one *kind* of obstruction shape, the same way `LADDER` is one kind of structural shape. PATTERN_30 is to algebraic-rearrangement as OBSTRUCTION_SHAPE is to general failure compression.
+  - `EXHAUSTION@v1`: EXHAUSTION names a regional kill cluster within an axis class; OBSTRUCTION_SHAPE names the *invariant* that makes that cluster a cluster. EXHAUSTION is the diagnostic; OBSTRUCTION_SHAPE is the explanation.
+  - `LENS_MISMATCH` (Tier 3): a lens-mismatch is one specific source of an obstruction shape (the obstruction is "wrong instrument category"). OBSTRUCTION_SHAPE is broader — covers lens-mismatch, algebraic-coupling, zero-population, fragility-under-perturbation, etc.
+- **Why this matters (meta):** Without explicit obstruction objects, BLOCKed traces evaporate into the substrate's cold tier with no compression. OBSTRUCTION_SHAPE is the prerequisite for any future DISTILL operation — you cannot compress N failures into 1 symbol if "failure" isn't itself a typed substrate citizen. Naming the shape lets the substrate accumulate negative knowledge as efficiently as it accumulates positive knowledge.
+- **Why not promoted yet:**
+  1. ~~**Two anchors but no live consumer.**~~ **Resolved 2026-04-28** by `sigma_kernel/a149_obstruction.py`: a third concrete obstruction (`BOUNDARY_DOMINATED_OCTANT_WALK_OBSTRUCTION`) was discovered, validated, and promoted through the kernel as a forward-path use. The structural signature {n_steps=5, neg_x=4, pos_x=1, has_diag_neg=True} predicts unanimous-kill on the F1+F6+F9+F11 battery at 5/5 = 100% within the A149* OEIS sub-family vs 1/54 = 1.9% on non-matches (54x predictive lift, p ≈ 2.5e-9). The kernel ran CLAIM → FALSIFY → GATE → PROMOTE end-to-end and produced an immutable substrate symbol `boundary_dominated_octant_walk_obstruction@v1` that compresses 5 individual KILLED verdicts into one named obstruction.
+  2. **Severity-grading discipline pending.** PATTERN_30 grades algebraic-coupling on a 0-4 scale; OBSTRUCTION_SHAPE inherits the grading concept but the cross-class grading needs at least one more anchor to validate (different obstruction kinds may not grade comparably).
+  3. **Composition with `LENS_MISMATCH` needs cross-resolution.** OBSTRUCTION_SHAPE may subsume LENS_MISMATCH; or LENS_MISMATCH may be a horizontal sister. The relationship is currently unclear.
+  4. **One anti-anchor (`A149499`) flagged.** Unanimously killed despite not matching the strict signature (`neg_x=3, pos_x=2, has_diag_neg=True`). Two readings worth resolving before promotion: (a) the strict signature is too narrow and the real threshold is `neg_x ≥ 3` — but the relaxed signature only achieves 40% kill-rate, so this seems unlikely; (b) `A149499` is killed for a different structural reason that produces the same surface symptoms — making it an anchor for a *sister* OBSTRUCTION_SHAPE rather than a counterexample to the current one.
+- **Promotion path:**
+  - **Step 1 (done 2026-04-28):** Add to CANDIDATES.md with two anchors.
+  - **Step 2:** Forward-path use — a sweep or worker proposes OBSTRUCTION_SHAPE before promoting a finding, citing it as the obstruction the new finding survives.
+  - **Step 3:** Cross-resolution with LENS_MISMATCH (sister vs subsumes).
+  - **Step 4:** Joint promotion with the (eventual) `DISTILL` opcode in the Σ-ISA — DISTILL's output type is a `PROMOTED Symbol of kind OBSTRUCTION_SHAPE`.
+- **Proposed by:** Σ-kernel MVP build, 2026-04-28. Source: `sigma_kernel/curvature_experiment.py` Source C kill-test agreement matrix.
+- **Source documents:**
+  - `sigma_kernel/curvature_experiment.py` (Source C output, kill-test pair defect table)
+  - `cartography/convergence/data/battery_sweep_v2.jsonl` (raw kill-test data, 103 sequences)
+  - `cartography/docs/tensor_diff_F012_killed_provisional.md` (second anchor)
+
+---
+
+### `ORACLE_PROFILE` (meta-symbol) — first anchor 2026-04-28
+
+- **Definition:** A versioned descriptor of an *oracle's* behavior — soundness score, generativity score, failure modes, certification witnesses, deterministic-input-hash recipe. Treats the oracle itself as a substrate citizen subject to the same falsification-first discipline as ordinary claims. Without ORACLE_PROFILE, oracles are trusted-by-default; with it, oracles can be promoted, demoted, errata'd, and audited like any other symbol.
+- **Fields:** `oracle_name, version, soundness_score, generativity_score, failure_modes (list), certification_witnesses (list of (anchor_dataset, expected_verdict, observed_verdict, agreement)), deterministic_seed_recipe, sandbox_image_hash, implementation_pointer, runtime_envelope`
+- **Anchor cases (two):**
+  1. **`omega_oracle.py@v1`** (Σ-kernel MVP, 2026-04-28). The MVP's deterministic toy oracle. Soundness: 1.0 on the four-scenario demo (CLEAR/WARN/BLOCK/promotion-rejected all behaved as designed). Generativity: 0.0 (oracle does not propose new claims, only adjudicates them). Failure modes: parses only `mean OP value` form; fails closed on malformed input. Certification witnesses: the four demo scenarios (`prop_mean_gt4@v1`, `prop_mean_gt5p5@v1`/`v2`, `prop_mean_lt2`, `prop_mean_eq5`).
+  2. **`F20_by_transform` implicit oracle** (cartography battery, 2026-04-12-onward). Each F20 verdict (`STABLE / DEVIATES_FROM_LOGNORMAL / REPRESENTATION_DEPENDENT / CONFOUND_ROBUST`) is produced by an oracle that the existing substrate trusts implicitly. Profile-able: soundness inferable from `cv_across_transforms`; failure mode: silent on transforms that don't apply to a given finding.
+- **Composes with:**
+  - `NULL_BSWCD@v2`: a specific operator instance that an ORACLE_PROFILE entry could describe — NULL_BSWCD is the canonical "promote-by-anchor" example; ORACLE_PROFILE is the promote-by-anchor for the *evaluator* of that operator.
+  - `GATE_VERDICT@v1`: oracles emit GATE_VERDICTs; ORACLE_PROFILE describes the distribution of verdicts an oracle produces over a benchmark suite.
+  - `ANCHOR_PROGRESS_LEDGER@v2` (mutable sidecar): ORACLE_PROFILE evolves over time as new certification witnesses accumulate. The mutable-sidecar pattern from ANCHOR_PROGRESS_LEDGER applies — `oracle_profile@vN:def` is immutable per Rule 3, but a parallel `oracle_profile:performance_log` can append witnesses.
+  - **Round-11 council synthesis:** the entire concept of "oracles must earn legitimacy under adversarial calibration" (`docs/symbol_language_council_synthesis.md` Round 11 + Round 8's CALIBRATE protocol) presupposes ORACLE_PROFILE as the data structure recording each oracle's accumulated certification.
+- **Why this matters (meta):** Treating oracles as substrate objects was identified as one of the deepest moves in the council synthesis. Without ORACLE_PROFILE, the substrate has a category error — claims are first-class falsifiable, but the falsifiers themselves are uncatalogued and unaudited. A biased-but-stable oracle (Round 11's "Theorem VI candidate") is exactly the failure mode ORACLE_PROFILE prevents: a versioned profile makes oracle bias detectable as a drift in the certification-witness distribution.
+- **Why not promoted yet:**
+  1. **Generativity score is undefined for adjudicator-only oracles.** Round 22's oracle ecology splits into Constructors / Breakers / Translators with different reward functions; the Generativity field is well-defined for Constructors but not for pure adjudicators. Schema needs decision: optional field, role-conditioned field, or split-by-role symbols.
+  2. **Anchor #2 is implicit, not explicit.** The F20 oracle is real and implicit in cartography; an explicit ORACLE_PROFILE entry for it would require backfilling certification witnesses from the existing battery.
+  3. **Forward-path use missing.** No agent has yet *consulted* an ORACLE_PROFILE before deciding which oracle to dispatch a FALSIFY against.
+- **Promotion path:**
+  - **Step 1 (done 2026-04-28):** Add to CANDIDATES.md with two anchors.
+  - **Step 2:** Backfill explicit ORACLE_PROFILE entry for F20 oracle (worker task; mostly bookkeeping over existing battery results).
+  - **Step 3:** Forward-path use — a multi-oracle scenario where an agent picks among oracles by consulting their profiles.
+  - **Step 4:** Schema decision on Generativity-for-adjudicators.
+- **Proposed by:** Σ-kernel MVP build, 2026-04-28. Surfaces a Round-11 council-synthesis idea ("oracles obey same ontology as theorems") as a concrete schema.
+- **Source documents:**
+  - `sigma_kernel/omega_oracle.py` (anchor #1)
+  - `cartography/convergence/data/battery_logs/battery_runs.jsonl` (F20 verdicts, anchor #2)
+  - `docs/symbol_language_council_synthesis.md` Round 8 (CALIBRATE), Round 11 (constitutional kernel + oracle audit)
+
+---
+
+### `NULL_MODEL_FAMILY` (operator family) — first anchor 2026-04-28
+
+- **Definition:** A typed family of null models, where each instance is a specific stratifier × shuffle-column × statistic combination, but the *family* abstracts the common structure: "produce a null distribution of the test statistic under a specified invariance-preserving randomization." `NULL_BSWCD@v2` is one instance of this family; `permutation_null` (used by F1 in `battery_sweep_v2`), `block_shuffle`, `rank_preserving_randomization`, and the F20 transform-based controls (`raw / log / rank / z-score / sqrt`) are others. The family symbol lets callers express *which family* they want without committing to one operator instance.
+- **Fields:** `family_name, instances (list of operator-symbol references), invariance_preserved (what each instance preserves: marginal distribution, rank-order, stratum-mean, etc.), composability_matrix (which instances commute under composition, per Round-23/24 holonomy work), fallback_chain (when the preferred instance fails, what to try next)`
+- **Anchor cases (three):**
+  1. **F1_permutation_null + F13_growth_rate_filter + F14_phase_shift** (battery_sweep_v2, 100+ sequences). Three falsifiers used in battery sweep. Their kill-test agreement matrix (Source C of `curvature_experiment.py`) shows non-zero pairwise defect (e.g., F13 ↔ F14 = 1.00, F1 ↔ F11 = 0.74). Currently each is an independent kill_test string with no family relationship; a NULL_MODEL_FAMILY symbol would make them queryable as "which member of the permutation-null family fired."
+  2. **F20 by_transform set: {raw, log, rank, z-score, sqrt}** (battery_runs.jsonl). Five transformations of the same finding's test statistic. Currently labels in a string-keyed dict; a NULL_MODEL_FAMILY symbol promotes them to a typed family with explicit invariance properties (rank preserves order; z-score normalizes mean and variance; log preserves multiplicative structure; sqrt preserves nothing canonical; raw preserves everything).
+  3. **`NULL_BSWCD@v2[stratifier=conductor|torsion|rank]`** (already-promoted operator, multiple stratifier instances). NULL_BSWCD@v2 already takes `stratifier` as a parameter — it *is* a family, just unnamed. NULL_MODEL_FAMILY would be the type that NULL_BSWCD@v2 inhabits.
+- **Composes with:**
+  - `NULL_BSWCD@v2`: NULL_BSWCD@v2 is one family instance. Promotion of NULL_MODEL_FAMILY would NOT errata NULL_BSWCD; instead, NULL_BSWCD@v3 might add a `family: NULL_MODEL_FAMILY@v1` reference field. Same forward-compatible additive pattern as NULL_BSWCD's v1→v2 promotion.
+  - `PATTERN_21@v1`: PATTERN_21 explicitly compares two null-model variants (plain-permute vs block-shuffle) and grades the gap. PATTERN_21 *uses* NULL_MODEL_FAMILY's composability_matrix as its substrate — PATTERN_21 fires on family pairs whose pairwise defect exceeds 3σ.
+  - `AXIS_CLASS@v1`: NULL_MODEL_FAMILY instances are tagged with `null_model` per AXIS_CLASS@v1; the family symbol formalizes which `null_model` axis a given family member occupies.
+  - **Curvature experiment (forward consumer):** `sigma_kernel/curvature_experiment.py` would replace its current ad-hoc `{raw, log, rank, z-score, sqrt}` string keys with `NULL_MODEL_FAMILY@v1.instances[*]` references. The commutator-defect matrix becomes the family's `composability_matrix` field — a substrate-level artifact, not an experiment-local computation.
+- **Why this matters (meta):** Right now the substrate has *one* promoted null operator (`NULL_BSWCD@v2`), but the substrate's *behavior* implicitly relies on multiple null variants every time a test like F20 is evaluated. The family abstraction makes that implicit dependency explicit — agents can reason "which member of the family commutes with which other member" rather than "which strings happen to appear in this script." This is the prerequisite for the Round-23/24 holonomy-defect protocol becoming a substrate operation rather than an experiment-local hack.
+- **Why not promoted yet:**
+  1. **`composability_matrix` is per-corpus, not per-family.** Whether two null variants commute depends on the data they're applied to, not just on their definitions. Decision pending: does the family symbol carry a *generic* composability_matrix, or only a per-corpus computed one (substrate-level cache)?
+  2. **`fallback_chain` semantics undefined.** When NULL_BSWCD fails its degeneracy guard (Pattern-26), what's the canonical next thing to try? The existing PATTERN_STRATIFIER_INVARIANCE candidate (Tier 3 above) hints at this but doesn't specify a chain.
+  3. **Forward-path use missing.** No code currently treats null models as a typed family; the curvature experiment uses string keys.
+- **Promotion path:**
+  - **Step 1 (done 2026-04-28):** Add to CANDIDATES.md with three anchors.
+  - **Step 2:** Schema decision on `composability_matrix` (generic vs per-corpus).
+  - **Step 3:** Refactor `sigma_kernel/curvature_experiment.py` to use NULL_MODEL_FAMILY@v0 (as a candidate-tier substrate object) for its transform set — first forward-path consumer.
+  - **Step 4:** When a second consumer surfaces (likely a generator hooking PATTERN_21 to family composability), joint promotion of NULL_MODEL_FAMILY@v1.
+- **Proposed by:** Σ-kernel MVP build, 2026-04-28. Surfaces during curvature experiment construction when {raw, log, rank, z-score, sqrt} were treated as ad-hoc strings rather than a typed family.
+- **Source documents:**
+  - `sigma_kernel/curvature_experiment.py` (anchors #1 and #2 — kill-test family + by_transform family)
+  - `harmonia/memory/symbols/NULL_BSWCD.md` (anchor #3 — already-promoted family instance, just unnamed as such)
+  - `cartography/convergence/data/battery_sweep_v2.jsonl` (raw data for anchor #1)
+  - `cartography/convergence/data/battery_logs/battery_runs.jsonl` (raw data for anchor #2)
+
+---
+
 ## Cross-disciplinary candidates from `methodology_toolkit.md`
 
 The toolkit catalogs six tools (`KOLMOGOROV_HAT`, `CRITICAL_EXPONENT`, `CHANNEL_CAPACITY`, `MDL_SCORER`, `RG_FLOW`, `FREE_ENERGY`) that are not yet promoted symbols but are scoped into `gen_09_cross_disciplinary_transplants`. Their promotion path is *through* gen_09 implementation: when a tool ships, it promotes as a symbol and migrates from the toolkit to `INDEX.md`. The toolkit is the staging area for those; this file is the staging area for substrate-internal candidates.
