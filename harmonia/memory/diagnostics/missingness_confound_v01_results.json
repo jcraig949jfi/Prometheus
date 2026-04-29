@@ -1,0 +1,277 @@
+{
+  "version": "missingness_confound_diagnostic_v0.1",
+  "generated_at_utc": "2026-04-29T11:28:14Z",
+  "tensor": {
+    "path": "harmonia/memory/landscape_tensor.npz",
+    "shape": [
+      31,
+      37
+    ],
+    "n_observed": 104,
+    "density": 0.0907
+  },
+  "parameters": {
+    "n_perms_per_null_per_seed": 1000,
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "min_overlap_for_correlation": 5,
+    "phi": "effective_rank_via_psd_clamped_pairwise_pearson",
+    "pass_thresholds": {
+      "ratio_random_over_marginal_min": 2.0,
+      "ratio_marginal_over_strictest_min": 1.5,
+      "reproducibility_sd_across_seeds_max": 0.2
+    }
+  },
+  "per_seed_results": [
+    {
+      "phi_observed": 36.278163089786794,
+      "nulls": {
+        "null_random": {
+          "mean": 36.99924919383625,
+          "sd": 0.016904231890059063,
+          "gap_sigma": -42.65713513274193
+        },
+        "null_marginal": {
+          "mean": 36.6528828813204,
+          "sd": 0.43172807542559577,
+          "gap_sigma": -0.8679532623960351
+        },
+        "null_3a_within_rows": {
+          "mean": 36.352000494729175,
+          "sd": 0.4353638127239836,
+          "gap_sigma": -0.1695993162141689
+        },
+        "null_3b_within_cols": {
+          "mean": 36.52122492395371,
+          "sd": 0.4470632643237115,
+          "gap_sigma": -0.5436855442251651
+        }
+      },
+      "seed": 0,
+      "wall_clock_sec": 32.09,
+      "pass_criterion": {
+        "raw_phi_gap_random": 0.721086104049455,
+        "raw_phi_gap_marginal": 0.37471979153360735,
+        "raw_phi_gap_3a": 0.07383740494238111,
+        "raw_phi_gap_3b": 0.24306183416691596,
+        "sigma_gap_random": 42.65713513274193,
+        "sigma_gap_marginal": 0.8679532623960351,
+        "sigma_gap_3a": 0.1695993162141689,
+        "sigma_gap_3b": 0.5436855442251651,
+        "ratio_random_over_marginal_raw": 1.9243341834128427,
+        "ratio_marginal_over_strictest_raw": 1.5416644608889067,
+        "pass_random_over_marginal": false,
+        "pass_marginal_over_strictest": true,
+        "pass_overall": false,
+        "note": "pass_overall uses raw-phi gaps not sigma gaps. null_random sigma is unstable because its phi distribution collapses near full rank P; use raw-phi-units for cross-null comparison."
+      }
+    },
+    {
+      "phi_observed": 36.278163089786794,
+      "nulls": {
+        "null_random": {
+          "mean": 36.99877085908715,
+          "sd": 0.023700888202592942,
+          "gap_sigma": -30.404251652540236
+        },
+        "null_marginal": {
+          "mean": 36.65007495722486,
+          "sd": 0.40757154425091086,
+          "gap_sigma": -0.9125069516852907
+        },
+        "null_3a_within_rows": {
+          "mean": 36.32301627470458,
+          "sd": 0.43509934178906556,
+          "gap_sigma": -0.10308722769690755
+        },
+        "null_3b_within_cols": {
+          "mean": 36.549831097612675,
+          "sd": 0.4255156640710237,
+          "gap_sigma": -0.6384442002128874
+        }
+      },
+      "seed": 1,
+      "wall_clock_sec": 31.77,
+      "pass_criterion": {
+        "raw_phi_gap_random": 0.7206077693003579,
+        "raw_phi_gap_marginal": 0.37191186743806526,
+        "raw_phi_gap_3a": 0.044853184917784006,
+        "raw_phi_gap_3b": 0.2716680078258804,
+        "sigma_gap_random": 30.404251652540236,
+        "sigma_gap_marginal": 0.9125069516852907,
+        "sigma_gap_3a": 0.10308722769690755,
+        "sigma_gap_3b": 0.6384442002128874,
+        "ratio_random_over_marginal_raw": 1.9375767013413767,
+        "ratio_marginal_over_strictest_raw": 1.3689939806104587,
+        "pass_random_over_marginal": false,
+        "pass_marginal_over_strictest": false,
+        "pass_overall": false,
+        "note": "pass_overall uses raw-phi gaps not sigma gaps. null_random sigma is unstable because its phi distribution collapses near full rank P; use raw-phi-units for cross-null comparison."
+      }
+    },
+    {
+      "phi_observed": 36.278163089786794,
+      "nulls": {
+        "null_random": {
+          "mean": 36.9989711340073,
+          "sd": 0.032455731378073005,
+          "gap_sigma": -22.208960131691263
+        },
+        "null_marginal": {
+          "mean": 36.659830239381755,
+          "sd": 0.4004966336963282,
+          "gap_sigma": -0.9529846632477694
+        },
+        "null_3a_within_rows": {
+          "mean": 36.34971801187725,
+          "sd": 0.422735670086659,
+          "gap_sigma": -0.1692663457422173
+        },
+        "null_3b_within_cols": {
+          "mean": 36.49146117033517,
+          "sd": 0.46391858788507145,
+          "gap_sigma": -0.4597748098880187
+        }
+      },
+      "seed": 2,
+      "wall_clock_sec": 31.99,
+      "pass_criterion": {
+        "raw_phi_gap_random": 0.7208080442205045,
+        "raw_phi_gap_marginal": 0.3816671495949606,
+        "raw_phi_gap_3a": 0.07155492209045633,
+        "raw_phi_gap_3b": 0.21329808054837684,
+        "sigma_gap_random": 22.208960131691263,
+        "sigma_gap_marginal": 0.9529846632477694,
+        "sigma_gap_3a": 0.1692663457422173,
+        "sigma_gap_3b": 0.4597748098880187,
+        "ratio_random_over_marginal_raw": 1.8885776388810323,
+        "ratio_marginal_over_strictest_raw": 1.7893604509413155,
+        "pass_random_over_marginal": false,
+        "pass_marginal_over_strictest": true,
+        "pass_overall": false,
+        "note": "pass_overall uses raw-phi gaps not sigma gaps. null_random sigma is unstable because its phi distribution collapses near full rank P; use raw-phi-units for cross-null comparison."
+      }
+    },
+    {
+      "phi_observed": 36.278163089786794,
+      "nulls": {
+        "null_random": {
+          "mean": 36.99902040920527,
+          "sd": 0.021029677270693922,
+          "gap_sigma": -34.27809709771602
+        },
+        "null_marginal": {
+          "mean": 36.657653034873704,
+          "sd": 0.41207243660272397,
+          "gap_sigma": -0.9209301845461046
+        },
+        "null_3a_within_rows": {
+          "mean": 36.390959592265204,
+          "sd": 0.42349706153226097,
+          "gap_sigma": -0.26634541942345397
+        },
+        "null_3b_within_cols": {
+          "mean": 36.48934735189619,
+          "sd": 0.46196867517491397,
+          "gap_sigma": -0.45713978773439196
+        }
+      },
+      "seed": 3,
+      "wall_clock_sec": 31.94,
+      "pass_criterion": {
+        "raw_phi_gap_random": 0.720857319418478,
+        "raw_phi_gap_marginal": 0.3794899450869096,
+        "raw_phi_gap_3a": 0.11279650247841033,
+        "raw_phi_gap_3b": 0.21118426210939845,
+        "sigma_gap_random": 34.27809709771602,
+        "sigma_gap_marginal": 0.9209301845461046,
+        "sigma_gap_3a": 0.26634541942345397,
+        "sigma_gap_3b": 0.45713978773439196,
+        "ratio_random_over_marginal_raw": 1.8995426064671872,
+        "ratio_marginal_over_strictest_raw": 1.7969612948256761,
+        "pass_random_over_marginal": false,
+        "pass_marginal_over_strictest": true,
+        "pass_overall": false,
+        "note": "pass_overall uses raw-phi gaps not sigma gaps. null_random sigma is unstable because its phi distribution collapses near full rank P; use raw-phi-units for cross-null comparison."
+      }
+    },
+    {
+      "phi_observed": 36.278163089786794,
+      "nulls": {
+        "null_random": {
+          "mean": 36.999997806280355,
+          "sd": 6.937150653467655e-05,
+          "gap_sigma": -10405.348716662787
+        },
+        "null_marginal": {
+          "mean": 36.64605855523152,
+          "sd": 0.42143429734268484,
+          "gap_sigma": -0.8729604300467624
+        },
+        "null_3a_within_rows": {
+          "mean": 36.35123911536881,
+          "sd": 0.4453926689181854,
+          "gap_sigma": -0.1640710112259213
+        },
+        "null_3b_within_cols": {
+          "mean": 36.51009763801265,
+          "sd": 0.4545973474833126,
+          "gap_sigma": -0.5101977596434881
+        }
+      },
+      "seed": 4,
+      "wall_clock_sec": 31.82,
+      "pass_criterion": {
+        "raw_phi_gap_random": 0.7218347164935608,
+        "raw_phi_gap_marginal": 0.3678954654447253,
+        "raw_phi_gap_3a": 0.07307602558201864,
+        "raw_phi_gap_3b": 0.23193454822585835,
+        "sigma_gap_random": 10405.348716662787,
+        "sigma_gap_marginal": 0.8729604300467624,
+        "sigma_gap_3a": 0.1640710112259213,
+        "sigma_gap_3b": 0.5101977596434881,
+        "ratio_random_over_marginal_raw": 1.9620647284167556,
+        "ratio_marginal_over_strictest_raw": 1.5862038159423664,
+        "pass_random_over_marginal": false,
+        "pass_marginal_over_strictest": true,
+        "pass_overall": false,
+        "note": "pass_overall uses raw-phi gaps not sigma gaps. null_random sigma is unstable because its phi distribution collapses near full rank P; use raw-phi-units for cross-null comparison."
+      }
+    }
+  ],
+  "reproducibility_across_seeds": {
+    "null_random": {
+      "mean_gap": -2106.9794321354957,
+      "sd_gap_across_seeds": 4638.935291467561,
+      "within_0p2_sigma": false
+    },
+    "null_marginal": {
+      "mean_gap": -0.9054670983843925,
+      "sd_gap_across_seeds": 0.03539264371187181,
+      "within_0p2_sigma": true
+    },
+    "null_3a_within_rows": {
+      "mean_gap": -0.17447386406053378,
+      "sd_gap_across_seeds": 0.058513958477775664,
+      "within_0p2_sigma": true
+    },
+    "null_3b_within_cols": {
+      "mean_gap": -0.5218484203407903,
+      "sd_gap_across_seeds": 0.07457800280015547,
+      "within_0p2_sigma": true
+    }
+  },
+  "caveats": [
+    "Effective-rank is a diagnostic number, NOT a latent-rank estimator.",
+    "0 in tensor encodes \"not observed\", not \"observed-as-zero\".",
+    "Pairwise-complete correlation matrices are not guaranteed PSD; eigenvalues clamped to >= 0.",
+    "The four nulls are not exhaustive. New nulls may detect structure these miss.",
+    "Pass on this diagnostic does NOT mean \"the tensor has rank N.\" It means an effective-rank claim about this tensor survives these specific four nulls.",
+    "Promotion of any structural rank claim requires controlled (F,P) sampling per the Geometry-1 retraction branch (b); this tool does NOT remediate that retraction."
+  ]
+}
