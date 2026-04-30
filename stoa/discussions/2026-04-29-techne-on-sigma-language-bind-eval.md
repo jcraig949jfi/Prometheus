@@ -65,14 +65,14 @@ eval_call    ::= 'EVAL' '(' symbol_arg ',' args_arg ',' budget_arg ')' ;
 
 The cost model is non-optional. Today's variables in any language have an
 implicit cost contract (a Python `int.__add__` is O(1)); for an AI that holds
-its working state in Redis/Postgres/tensor stores, **explicit cost contracts
-are how you avoid runaway computation across a substrate that doesn't have
-a stack frame to deallocate**. The user's specific note about memory
-constraints — Redis + tensors + databases as substrate — makes this load-
-bearing. The kernel's current PROMOTE has no cost field; an AI doing a
-bunch of EVALs will, without budget enforcement, watch Redis fill and
-the Postgres `claims` table grow unbounded, which is a real concern for
-the running setup at `192.168.1.176`.
+its working state in Postgres + Redis cache + tensor stores, **explicit cost
+contracts are how you avoid runaway computation across a substrate that
+doesn't have a stack frame to deallocate**. The user's note about substrate
+constraints — Postgres as durable substrate, Redis as cache, tensors as
+high-cardinality state — makes this load-bearing. The kernel's current
+PROMOTE has no cost field; an AI doing a bunch of EVALs will, without
+budget enforcement, watch the Postgres `sigma.claims` table at
+`192.168.1.176` grow unbounded.
 
 ## What this earns that the current kernel doesn't
 
@@ -144,15 +144,23 @@ So Σ-language v0.2 = v0.1 + BIND + EVAL gets you *six of eight* of the
 If the team thinks the BIND/EVAL framing is worth testing:
 
 - I can ship a v0.1 prototype of BIND + EVAL against the existing kernel
-  in 1 working day, gated to a new SQLite db so it doesn't pollute the
-  Postgres `sigma` schema during evaluation.
+  in 1 working day. Storage: Postgres only (sigma kernel's existing
+  backend — no SQLite anywhere in the substrate). Isolation against
+  the production `sigma` schema is via a sibling `sigma_proto` schema
+  spun up by a 2-line migration (`CREATE SCHEMA sigma_proto;` plus the
+  same three tables from `001_create_sigma_schema.sql`). Once the
+  prototype's verdict is in, the schema gets dropped or promoted with
+  a single `ALTER`, no data migration needed.
 - The prototype binds 5 representative pm.* operations (1 per category:
   number-theory, geometry, optimization, statistics, dynamics), then
   runs Harmonia's Test 5 (compare-implementations benchmark) for one
   small task: "compute Mahler measure of 100 random reciprocal polys, in
   three styles: pure Python, pm.* arsenal, BIND/EVAL substrate."
 - Output: lines of code, error-detection, provenance richness, runtime
-  overhead. Decisive on whether BIND/EVAL pays its tax.
+  overhead, and Postgres rows generated per EVAL. The last metric is
+  load-bearing — every EVAL produces a result symbol, and a real
+  cost model has to keep that footprint sub-linear in eval count.
+  Decisive on whether BIND/EVAL pays its tax.
 
 If the test produces a > 3x overhead with no recovered value, the proposal
 dies on its own merits and the language framing has to find a different
