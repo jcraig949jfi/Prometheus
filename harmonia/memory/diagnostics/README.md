@@ -6,6 +6,89 @@ The distinction is load-bearing: every tool in this directory is a falsifier. Th
 
 ## Files
 
+### `descriptor_collapse_audit.py`
+
+**Purpose:** detect whether a set of named descriptors is collapsing onto a lower-dimensional manifold, with built-in null discipline and conditioning. Substrate-tier primitive callable from any session — the lift-and-generalize of the Zoo project's descriptor-collapse audit (Zoo closed at v3.4, 2026-04-26).
+
+**Why this exists:** every Harmonia session that touches MAP-Elites, archive search, or any descriptor-pair structure should get this audit as an importable function rather than re-deriving it. Per `pivot/harmoniaD.md` §6 Move 1: industrialize what is already proven. The Zoo modules (`exploratory/zoo/diagnostics/{correlation,nonlinear}.py` + `exploratory/zoo/experiments/analyze_conditional_mi.py`) remain unchanged; this is the substrate-tier copy with generic API.
+
+**What it does — five layers, in order:**
+
+1. **Pearson correlation matrix** — pairwise; flags |r| ≥ `pearson_threshold` (default 0.9). Catches linear collapse only.
+2. **Distance correlation** — Szekely-Rizzo-Bakirov; pairwise; flags dCor ≥ `dcor_threshold` (default 0.5). Zero iff independent (under finite-moment assumptions); positive under any dependence.
+3. **KSG mutual information** — Kraskov-Stogbauer-Grassberger k-NN estimator; in nats; flags MI ≥ `mi_threshold_nats` (default 0.5 nats ~ 0.72 bits). Distribution-free.
+4. **Shuffled null per pair** — empirical null distribution of MI and dCor by permuting one variable against the other; reports z-score and one-sided p-value. Auto-runs on any pair flagged at the shallow tier.
+5. **Within-band conditional MI** — partitions by quantiles of one variable (or an explicit `condition_on` array) and recomputes MI within each band. If the global coupling collapses to baseline within bands, the dependence is boundary-explained; if it persists, the coupling is structural.
+
+**Composite verdict (audit_summary):**
+
+| Condition | Verdict |
+|---|---|
+| No shallow flags | `CLEAR` |
+| Shallow flags exist but `deep_on_flagged=False` and no `deep_pairs` covered them | `SHALLOW_FLAGGED_DEEP_NOT_RUN` |
+| Shallow flags exist; all deep-evaluated pairs not-above-null OR boundary-explained | `BOUNDARY_EXPLAINED` |
+| ≥1 deep pair above-null AND not boundary-explained | `STRUCTURAL_COUPLING_SUSPECTED` |
+
+**Run:**
+
+```python
+from harmonia.memory.diagnostics.descriptor_collapse_audit import descriptor_collapse_audit
+import numpy as np
+
+descs = {
+    "log_params": np.array([...]),
+    "log_error":  np.array([...]),
+    "rank":       np.array([...]),
+}
+result = descriptor_collapse_audit(descs, rng_seed=0)
+print(result["audit_summary"]["verdict"])
+```
+
+Validator (per discipline):
+
+```bash
+PYTHONPATH=. PYTHONIOENCODING=utf-8 \
+python harmonia/memory/diagnostics/validate_descriptor_collapse_audit.py
+```
+
+Tests (23 cases — AC1 through AC4 plus per-layer unit tests):
+
+```bash
+PYTHONPATH=. PYTHONIOENCODING=utf-8 \
+python -m pytest harmonia/memory/diagnostics/test_descriptor_collapse_audit.py -v
+```
+
+**Pass/fail interpretation:**
+
+| Output | Meaning |
+|---|---|
+| `audit_summary.verdict == "CLEAR"` | No shallow flags. No evidence of collapse on any pair. Note this is a falsifier, not proof of independence. |
+| `audit_summary.verdict == "BOUNDARY_EXPLAINED"` | ≥1 pair flagged shallow, but the within-band conditional MI dropped below the threshold-half heuristic. Coupling is consistent with a geometric/boundary effect. |
+| `audit_summary.verdict == "STRUCTURAL_COUPLING_SUSPECTED"` | ≥1 pair has coupling above the shuffled null AND coupling persists within bands. NOT a positive finding — a flag for follow-up under proper null discipline (`NULL_BSWCD@v2`, `null_protocol_v1.md`) and Pattern 30. |
+| `audit_summary.verdict == "SHALLOW_FLAGGED_DEEP_NOT_RUN"` | Shallow flags exist but no deep-tier evidence was collected for them (caller passed `deep_on_flagged=False` and no `deep_pairs`). The audit is refusing to assert boundary-explained without data; rerun with deep tier enabled or supply `deep_pairs`. |
+| Any layer's `flagged` list non-empty alongside CLEAR verdict | Should never happen; would be a verdict-logic bug — file an issue. |
+
+**What this tool does NOT do:**
+
+- Does NOT prove independence. Even MI ≈ 0 has finite-sample noise; KSG can give small positive values for genuinely independent variables.
+- Does NOT replace block-shuffle null discipline (`NULL_BSWCD@v2`) for any structural finding. This is a fast pre-flight check, not a final verdict.
+- Does NOT detect Pattern 30 algebraic-identity coupling. Algebraically-coupled descriptors register as collapsed here (correct shallow signal), but the lineage diagnosis must come from `harmonia/sweeps/pattern_30.py`.
+- Does NOT generalize to vector-valued descriptors. Each entry in the input dict must be 1-D. Multi-D extension is future work.
+
+**Provenance:**
+
+- Source: lifted from `exploratory/zoo/diagnostics/{correlation,nonlinear}.py` + `exploratory/zoo/experiments/analyze_conditional_mi.py` (Zoo project closed at v3.4, see `project_zoo_closed_at_v34.md`).
+- Pivot directive: `pivot/harmoniaD.md` §6 Move 1.
+- Proposal: `harmonia/memory/protocols/descriptor_collapse_audit_proposal.md` (sessionB, 2026-05-01).
+- Tests: `harmonia/memory/diagnostics/test_descriptor_collapse_audit.py` (23 cases — AC1-AC4 plus per-layer units; all pass).
+- Validator: `harmonia/memory/diagnostics/validate_descriptor_collapse_audit.py`.
+
+**Known issues:**
+
+- Within-band conditional MI uses KSG; KSG is biased on small n, so bands with `n < min_n_per_band` (default 20) are skipped. With small total n (< 80) and `n_bands=4`, the conditional layer may report `n_bands_valid=0` and `mean_within_band_mi=None`; in that case verdict falls through to whatever shallow flags exist with no boundary-explained downgrade available. Mitigation: bump n or reduce `n_bands`.
+- The boundary-explained heuristic is `mean_within_band_mi < mi_threshold_nats / 2`. Inherited from the Zoo `analyze_conditional_mi.py` rule (`< 0.3` against threshold 0.5). Sound for moderate sample sizes; may need recalibration if used at very large n with very weak coupling.
+- KSG MI threshold of 0.5 nats is moderate-tight; for descriptor pairs that are weakly but genuinely dependent (e.g. correlation ~ 0.3), Pearson and dCor may both fall below threshold while KSG also does — the audit will return CLEAR. This is the right behavior for collapse detection but means the tool is conservative on weak dependence.
+
 ### `missingness_confound_v01.py`
 
 **Purpose:** quantify how much of any rank-flavored claim about the tensor is attributable to the MNAR observation pattern alone.
