@@ -78,14 +78,16 @@ jobs:
         run: |
           set +e
           pkgs=(
-            numpy scipy mpmath gmpy2 sympy networkx
-            pytest pytest-xdist
+            numpy scipy mpmath gmpy2 sympy networkx shapely tensorly
+            pytest pytest-xdist hypothesis
             cypari python-flint
             snappy knot_floer_homology
             chipfiring galois
             gudhi ripser persim
             z3-solver pysat
             pyscipopt ortools highspy pulp cvxpy
+            cma deap
+            cryptography
             torch
           )
           for p in "${pkgs[@]}"; do
@@ -106,19 +108,9 @@ jobs:
         if: always()
         run: |
           {
-            echo "## Arsenal capability matrix (py${{ matrix.python-version }})";
-            echo "";
-            echo '| backend | category | available | version | error |';
-            echo '|---|---|---|---|---|';
-            python - <<'PY'
-          import json, pathlib
-          data = json.loads(pathlib.Path("capability_matrix.json").read_text())
-          for name, info in sorted(data.items()):
-              avail = ":white_check_mark:" if info["available"] else ":x:"
-              ver = info.get("version") or ""
-              err = (info.get("error") or "").replace("|", "\\|")
-              print(f'| `{name}` | {info["category"]} | {avail} | {ver} | {err} |')
-          PY
+            echo "## Arsenal capability matrix (py${{ matrix.python-version }})"
+            echo ""
+            python .github/scripts/capability_matrix_md.py capability_matrix.json
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Run prometheus_math tests
@@ -204,13 +196,15 @@ jobs:
         run: |
           set +e
           pkgs=(
-            numpy scipy mpmath gmpy2 sympy networkx
+            numpy scipy mpmath gmpy2 sympy networkx shapely tensorly
             cypari python-flint
             snappy knot_floer_homology
             chipfiring galois
             gudhi ripser persim
             z3-solver pysat
             pyscipopt ortools highspy pulp cvxpy
+            cma deap
+            cryptography
             torch
           )
           for p in "${pkgs[@]}"; do
@@ -221,64 +215,16 @@ jobs:
       - name: Compute current capability snapshot
         run: |
           mkdir -p prometheus_math
-          python - <<'PY'
-          import json, pathlib
-          import prometheus_math.registry as r
-          snap = {
-              name: {
-                  "available": info["available"],
-                  "version": info["version"],
-                  "category": info["category"],
-              }
-              for name, info in r.installed().items()
-          }
-          out = {"_meta": {"generated_by": "arsenal.yml capability-tracking"}, "backends": snap}
-          pathlib.Path("prometheus_math/.capability_snapshot.new.json").write_text(
-              json.dumps(out, indent=2, sort_keys=True) + "\n"
-          )
-          PY
+          python .github/scripts/snapshot_capabilities.py \
+              prometheus_math/.capability_snapshot.new.json
 
       - name: Diff against committed snapshot
         id: diff
         run: |
-          OLD="prometheus_math/.capability_snapshot.json"
-          NEW="prometheus_math/.capability_snapshot.new.json"
-          if [ ! -f "$OLD" ]; then
-            echo "no prior snapshot — treating as initial population"
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-            echo "summary=Initial capability snapshot population." >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          python - <<'PY' >> "$GITHUB_OUTPUT"
-          import json, pathlib, sys
-          old = json.loads(pathlib.Path("prometheus_math/.capability_snapshot.json").read_text())
-          new = json.loads(pathlib.Path("prometheus_math/.capability_snapshot.new.json").read_text())
-          old_b = old.get("backends", old)
-          new_b = new.get("backends", new)
-          gained, lost, version_changed = [], [], []
-          for name, info in new_b.items():
-              prev = old_b.get(name)
-              if prev is None:
-                  gained.append(name); continue
-              if info.get("available") and not prev.get("available"):
-                  gained.append(name)
-              elif prev.get("available") and not info.get("available"):
-                  lost.append(name)
-              elif info.get("available") and prev.get("available") and info.get("version") != prev.get("version"):
-                  version_changed.append(f'{name}: {prev.get("version")} -> {info.get("version")}')
-          for name in old_b:
-              if name not in new_b:
-                  lost.append(name)
-          changed = bool(gained or lost or version_changed)
-          parts = []
-          if gained: parts.append("gained=" + ",".join(sorted(gained)))
-          if lost: parts.append("lost=" + ",".join(sorted(lost)))
-          if version_changed: parts.append("versions=" + "; ".join(version_changed))
-          summary = " | ".join(parts) if parts else "no change"
-          print(f"changed={'true' if changed else 'false'}")
-          # GITHUB_OUTPUT can't take newlines without delimiter; keep summary single-line.
-          print(f"summary={summary}")
-          PY
+          python .github/scripts/diff_capabilities.py \
+              prometheus_math/.capability_snapshot.json \
+              prometheus_math/.capability_snapshot.new.json \
+              >> "$GITHUB_OUTPUT"
 
       - name: Update committed snapshot
         if: steps.diff.outputs.changed == 'true'

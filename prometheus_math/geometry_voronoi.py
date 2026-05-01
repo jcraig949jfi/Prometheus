@@ -54,10 +54,25 @@ except Exception as exc:  # pragma: no cover
 
 try:
     from shapely.geometry import Polygon as _ShapelyPolygon
-except Exception as exc:  # pragma: no cover
-    raise ImportError(
-        "prometheus_math.geometry_voronoi requires shapely>=2.0"
-    ) from exc
+    _HAS_SHAPELY = True
+except Exception:  # pragma: no cover
+    # shapely is only needed for bbox-clipping ops (voronoi_cell_bounded,
+    # lloyd_relaxation, voronoi_cell_area with bbox, centroidal_voronoi_tessellation,
+    # delaunay_dual_voronoi when bbox supplied). The bare voronoi_diagram +
+    # voronoi_neighbors + voronoi_cell + is_unbounded_cell paths don't need it.
+    # Defer the import error to first call of a shapely-requiring op so that
+    # `import prometheus_math.geometry_voronoi` succeeds in environments without
+    # shapely (notably the CI smoke job, which doesn't install shapely).
+    _ShapelyPolygon = None  # type: ignore[assignment]
+    _HAS_SHAPELY = False
+
+
+def _require_shapely(op: str) -> None:
+    if not _HAS_SHAPELY:
+        raise ImportError(
+            f"prometheus_math.geometry_voronoi.{op} requires shapely>=2.0; "
+            f"install with `pip install shapely`."
+        )
 
 
 __all__ = [
@@ -102,7 +117,8 @@ def _check_bbox(bbox) -> Tuple[float, float, float, float]:
     return xmin, ymin, xmax, ymax
 
 
-def _bbox_polygon(bbox) -> _ShapelyPolygon:
+def _bbox_polygon(bbox):
+    _require_shapely("_bbox_polygon")
     xmin, ymin, xmax, ymax = _check_bbox(bbox)
     return _ShapelyPolygon(
         [(xmin, ymin), (xmax, ymin), (xmax, ymax), (xmin, ymax)]
@@ -279,6 +295,7 @@ def voronoi_cell_bounded(
         If bbox is required but not supplied; if bbox does not contain
         all generators.
     """
+    _require_shapely("voronoi_cell_bounded")
     pts = _as_2d_array(points)
     vd = voronoi_diagram(pts)
 
@@ -348,10 +365,10 @@ def _polygon_to_vertices(poly) -> List[Tuple[float, ...]]:
 
 
 def _clip_halfplane(
-    poly: _ShapelyPolygon,
+    poly,
     point: np.ndarray,
     normal: np.ndarray,
-) -> _ShapelyPolygon:
+):
     """Clip ``poly`` to the half-plane ``{x : (x - point) . normal <= 0}``.
 
     Implemented as the intersection of ``poly`` with a large rectangle
