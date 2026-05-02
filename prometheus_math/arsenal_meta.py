@@ -141,119 +141,23 @@ def registry_summary() -> Dict[str, Any]:
 
 
 def _bootstrap_registry() -> None:
-    """Decorate a starter set of representative arsenal operations.
+    """Populate ``ARSENAL_REGISTRY`` from the central metadata table.
 
-    Tagged via a side-call (rather than editing each module) so that the
-    MVP demo can exercise the BIND/EVAL → registry → Gym env loop without
-    waiting on the full enrichment pass.
+    The registration is non-invasive: source files in ``prometheus_math/``
+    and ``techne/lib/`` are not decorated. Instead, the side-effect-only
+    module ``prometheus_math._metadata_table`` imports each callable's
+    home module and registers an :class:`ArsenalMeta` directly. This
+    avoids decorator-based merge conflicts with parallel-running agents
+    that touch arsenal modules.
+
+    On failure the registry stays empty; tests catch the regression.
     """
     try:
-        from . import numerics_special_dilogarithm as _ns_dilog
-
-        ARSENAL_REGISTRY[
-            f"prometheus_math.numerics_special_dilogarithm:dilogarithm"
-        ] = ArsenalMeta(
-            callable_ref="prometheus_math.numerics_special_dilogarithm:dilogarithm",
-            cost={"max_seconds": 1.0, "max_memory_mb": 32, "max_oracle_calls": 0},
-            postconditions=[
-                "output is real-valued for z in (-inf, 1]",
-                "Li_2(0) == 0",
-                "Li_2(1) ≈ pi^2/6",
-            ],
-            authority_refs=[
-                "Lewin 1981 (dilogarithm identities)",
-                "Li_2(1)=zeta(2)=pi^2/6 (Basel)",
-            ],
-            equivalence_class="ideal_reduction",
-            category="numerics_special",
-            notes="Bootstrapped via arsenal_meta._bootstrap_registry; dilogarithm Li_2(z).",
-        )
+        from . import _metadata_table  # noqa: F401  -- side effect: populates ARSENAL_REGISTRY
     except Exception:
-        pass
-
-    try:
-        from . import numerics_special_theta as _ns_theta
-
-        ARSENAL_REGISTRY[
-            f"prometheus_math.numerics_special_theta:theta_null_value"
-        ] = ArsenalMeta(
-            callable_ref="prometheus_math.numerics_special_theta:theta_null_value",
-            cost={"max_seconds": 0.5, "max_memory_mb": 32, "max_oracle_calls": 0},
-            postconditions=[
-                "theta_3(0,q)^4 == theta_2(0,q)^4 + theta_4(0,q)^4 (Jacobi)",
-                "theta_2(0,0) == 0",
-            ],
-            authority_refs=["Whittaker & Watson §21.41"],
-            equivalence_class="ideal_reduction",
-            category="numerics_special",
-            notes="Jacobi nullwert.",
-        )
-    except Exception:
-        pass
-
-    try:
-        from techne.lib import mahler_measure as _mm
-
-        ARSENAL_REGISTRY[
-            f"techne.lib.mahler_measure:mahler_measure"
-        ] = ArsenalMeta(
-            callable_ref="techne.lib.mahler_measure:mahler_measure",
-            cost={"max_seconds": 0.5, "max_memory_mb": 64, "max_oracle_calls": 0},
-            postconditions=[
-                "M(P) >= 1 for any non-zero integer polynomial",
-                "M(cyclotomic) == 1",
-                "M(Lehmer's polynomial) ≈ 1.17628081826",
-            ],
-            authority_refs=[
-                "Mossinghoff Mahler tables",
-                "Lehmer 1933",
-            ],
-            equivalence_class="variety_fingerprint",
-            category="research_lehmer",
-            notes="Mahler measure of an integer polynomial; central to Lehmer's conjecture.",
-        )
-    except Exception:
-        pass
-
-    try:
-        from . import combinatorics_partitions as _cp
-
-        ARSENAL_REGISTRY[
-            f"prometheus_math.combinatorics_partitions:num_partitions"
-        ] = ArsenalMeta(
-            callable_ref="prometheus_math.combinatorics_partitions:num_partitions",
-            cost={"max_seconds": 0.5, "max_memory_mb": 32, "max_oracle_calls": 0},
-            postconditions=[
-                "num_partitions(0) == 1",
-                "num_partitions(n) > 0 for n >= 0",
-                "p(100) == 190569292 (Hardy-Ramanujan)",
-            ],
-            authority_refs=["OEIS A000041", "Hardy & Ramanujan 1918"],
-            equivalence_class="partition_refinement",
-            category="combinatorics",
-            notes="Integer partition counting via Euler pentagonal recurrence.",
-        )
-    except Exception:
-        pass
-
-    try:
-        from . import numerics_special_q_pochhammer as _qp
-
-        ARSENAL_REGISTRY[
-            f"prometheus_math.numerics_special_q_pochhammer:euler_function"
-        ] = ArsenalMeta(
-            callable_ref="prometheus_math.numerics_special_q_pochhammer:euler_function",
-            cost={"max_seconds": 1.0, "max_memory_mb": 32, "max_oracle_calls": 0},
-            postconditions=[
-                "euler_function(0) == 1",
-                "|q| < 1 required",
-            ],
-            authority_refs=["Whittaker & Watson §22"],
-            equivalence_class="ideal_reduction",
-            category="numerics_special",
-            notes="Euler function phi(q) = (q;q)_inf; cusp form Δ(τ) = (2π)^12 η^24 builds on this.",
-        )
-    except Exception:
+        # If the metadata table itself is broken, the registry remains
+        # empty. ``test_arsenal_metadata.py::test_authority_registry_size``
+        # will fail loudly — by design.
         pass
 
 

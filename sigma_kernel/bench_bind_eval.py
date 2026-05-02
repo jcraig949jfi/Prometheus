@@ -159,26 +159,25 @@ def _bench_substrate_growth(n: int = 200) -> dict:
 
 
 def _bench_cost_accuracy() -> dict:
-    """Run each bootstrapped arsenal op once. Compare declared cost_model
-    max_seconds against actual elapsed."""
+    """Run each registered arsenal op once with curated representative
+    args. Compare declared ``cost_model.max_seconds`` against actual
+    elapsed; aggregate ratio statistics so we can see how many ops sit
+    inside the 2x-50x calibration band.
+
+    Ops without curated args are skipped (not counted as overshoots).
+    """
     from prometheus_math.arsenal_meta import ARSENAL_REGISTRY
+    # Reuse the test-suite's representative-args dict so the bench and
+    # the calibration test agree on inputs.
+    from prometheus_math.tests.test_arsenal_metadata import REPRESENTATIVE_ARGS
 
     kernel = SigmaKernel(":memory:")
     ext = BindEvalExtension(kernel)
     rows = []
-    test_args = {
-        "techne.lib.mahler_measure:mahler_measure": [
-            [1, 1, 0, -1, -1, -1, -1, -1, 0, 1, 1]
-        ],
-        "prometheus_math.numerics_special_dilogarithm:dilogarithm": [1.0],
-        "prometheus_math.numerics_special_theta:theta_null_value": [3, 0.5],
-        "prometheus_math.combinatorics_partitions:num_partitions": [50],
-        "prometheus_math.numerics_special_q_pochhammer:euler_function": [0.5],
-    }
     for ref, meta in ARSENAL_REGISTRY.items():
-        if ref not in test_args:
+        if ref not in REPRESENTATIVE_ARGS:
             continue
-        args = test_args[ref]
+        args, kwargs = REPRESENTATIVE_ARGS[ref]
         cm = CostModel(**meta.cost) if meta.cost else CostModel()
         try:
             cap = kernel.mint_capability("BindCap")
@@ -186,25 +185,29 @@ def _bench_cost_accuracy() -> dict:
                 callable_ref=ref,
                 cost_model=cm,
                 cap=cap,
-                name=f"bench_{ref.split(':')[-1]}",
+                name=f"bench_{ref.split(':')[-1].replace('.', '_')}",
                 version=1,
             )
             cap2 = kernel.mint_capability("EvalCap")
             ev = ext.EVAL(
                 binding_name=b.symbol.name,
                 binding_version=b.symbol.version,
-                args=args,
+                args=list(args),
+                kwargs=dict(kwargs),
                 cap=cap2,
             )
             actual = ev.actual_cost["elapsed_seconds"]
             declared = cm.max_seconds
-            ratio = actual / declared if declared > 0 else float("nan")
+            ratio_declared_over_actual = (
+                declared / max(actual, 1e-7) if declared > 0 else float("nan")
+            )
             rows.append(
                 {
                     "ref": ref.split(":")[-1],
+                    "category": meta.category or "unknown",
                     "declared_max_s": declared,
                     "actual_s": actual,
-                    "ratio_actual_over_declared": ratio,
+                    "ratio_declared_over_actual": ratio_declared_over_actual,
                     "success": ev.success,
                 }
             )
@@ -212,14 +215,44 @@ def _bench_cost_accuracy() -> dict:
             rows.append(
                 {
                     "ref": ref.split(":")[-1],
+                    "category": meta.category or "unknown",
                     "declared_max_s": cm.max_seconds,
                     "actual_s": float("nan"),
-                    "ratio_actual_over_declared": float("nan"),
+                    "ratio_declared_over_actual": float("nan"),
                     "success": False,
-                    "error": str(e)[:80],
+                    "error": str(e)[:120],
                 }
             )
-    return {"per_op": rows}
+
+    n_ops = len(rows)
+    n_success = sum(1 for r in rows if r["success"])
+    n_within_2x = sum(
+        1 for r in rows
+        if r["success"] and 2.0 <= r["ratio_declared_over_actual"] <= 50.0
+    )
+    n_within_10x = sum(
+        1 for r in rows
+        if r["success"] and 1.0 <= r["ratio_declared_over_actual"] <= 100.0
+    )
+    n_overshoots = sum(
+        1 for r in rows
+        if r["success"] and r["ratio_declared_over_actual"] < 1.0
+    )
+    n_too_loose = sum(
+        1 for r in rows
+        if r["success"] and r["ratio_declared_over_actual"] > 50.0
+    )
+    return {
+        "per_op": rows,
+        "summary": {
+            "n_ops": n_ops,
+            "n_success": n_success,
+            "n_within_2x_50x_band": n_within_2x,
+            "n_within_1x_100x_band": n_within_10x,
+            "n_overshoots": n_overshoots,
+            "n_too_loose_over_50x": n_too_loose,
+        },
+    }
 
 
 def main() -> int:
@@ -254,21 +287,25 @@ def main() -> int:
     pass3 = r["rows_per_eval"] < 5.0
     print(f"  claim <5/eval:       {'PASS' if pass3 else 'FAIL'}")
 
-    print("\n[4] Cost-model accuracy (5 bootstrapped ops)")
+    print("\n[4] Cost-model accuracy across all registered ops with curated args")
     r = _bench_cost_accuracy()
-    print(f"  {'op':<28} {'declared':>10} {'actual':>10} {'ratio':>8} {'ok':>5}")
-    overshoot = 0
-    for row in r["per_op"]:
+    print(
+        f"  {'op':<48} {'category':<18} "
+        f"{'declared(ms)':>12} {'actual(ms)':>12} {'D/A':>8} {'ok':>5}"
+    )
+    for row in sorted(r["per_op"], key=lambda x: x.get("category", "")):
         ok = row["success"]
-        if not ok:
-            overshoot += 1
-        ratio = row.get("ratio_actual_over_declared", float("nan"))
-        ratio_str = f"{ratio:7.4f}" if ratio == ratio else "    nan"
+        ratio = row.get("ratio_declared_over_actual", float("nan"))
+        ratio_str = f"{ratio:7.2f}x" if ratio == ratio else "    nan"
         print(
-            f"  {row['ref']:<28} {row['declared_max_s']:>10.3f} "
-            f"{row['actual_s']:>10.6f} {ratio_str:>8} "
+            f"  {row['ref'][:47]:<48} {row['category'][:17]:<18} "
+            f"{row['declared_max_s']*1000:>12.3f} "
+            f"{row['actual_s']*1000:>12.4f} {ratio_str:>8} "
             f"{'PASS' if ok else 'FAIL':>5}"
         )
+    s = r["summary"]
+    print(f"\n  summary: {s}")
+    overshoot = s["n_overshoots"]
     pass4 = overshoot == 0
     print(f"  no overshoots:       {'PASS' if pass4 else f'FAIL ({overshoot})'}")
 
