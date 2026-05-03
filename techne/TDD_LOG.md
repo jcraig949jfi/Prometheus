@@ -3031,3 +3031,61 @@ Architectural proposal (not yet shipped, awaiting benchmark):
 
 Session journal: techne/TECHNE_SESSION_2026-05-02.md
 
+---
+
+2026-04-29 | sigma_kernel.residuals — Residual primitive shipped
+
+Residual-aware-falsification primitive built per the proposal at
+stoa/discussions/2026-05-02-techne-on-residual-aware-falsification.md.
+Sidecar architecture (no edits to v0.1 core), same shape as
+bind_eval.py.
+
+  sigma_kernel.residuals        | A:5 P:4 E:6 C:5 | (this session)
+
+Per-category test counts (≥3 required, all categories met with margin):
+  authority:    5  (Mercury, Gaussian, OPERA, Lehmer-half-budget, depth-7)
+  property:     4  (determinism, geometric decay, classification-set,
+                    refine-blocked)
+  edge:         6  (empty subset, magnitude OOB, no-cap, consumed-cap,
+                    depth-20, no-calibration)
+  composition:  5  (full pipeline, 30-residual benchmark [LOAD-BEARING],
+                    chain-walks-to-root, cost conservation, META_CLAIM
+                    auto-spawn)
+
+30-residual benchmark (the day-4 acceptance criterion):
+  accuracy:                          1.000  (30/30)
+  false_positive_signal_count:       0
+  per_class.signal.precision:        1.000
+  per_class.signal.recall:           1.000
+  per_class.noise.precision:         1.000
+  per_class.noise.recall:            1.000
+  per_class.instrument_drift.prec:   1.000
+  per_class.instrument_drift.rec:    1.000
+
+Acceptance criterion (≥80% accuracy + zero FP signal on noise) met
+with margin. Primitive ships.
+
+Three composing stopping rules implemented from day zero:
+  1. Cost-budget compounding: REFINE halves remaining budget;
+     <0.1s minimum-useful threshold raises BudgetExceeded
+     (chain exhausts at depth 7 with default 10s root budget).
+  2. Mechanical signal-vs-noise classifier: four-rule cascade
+     (empty / drift / canonicalizer / coeff_variance > 0.5).
+  3. Instrument-self-audit: drift-class residuals route to
+     record_meta_claim which mints a CLAIM against the battery itself.
+
+Files shipped:
+  sigma_kernel/residuals.py                              748 lines
+  sigma_kernel/test_residuals.py                         781 lines
+  sigma_kernel/residual_benchmark.py                     485 lines
+  sigma_kernel/migrations/003_create_residual_tables.sql  62 lines
+  sigma_kernel/RESIDUAL_PRIMITIVE.md                     183 lines
+
+Caveat (recorded for honest assessment): the benchmark is hand-
+curated; noise residuals are tagged with coeff_variance < 0.05 and
+signal residuals > 0.85, putting them in a generous regime for the
+0.5 heuristic threshold. The first hostile real-world residual that
+lands in the gap will tell us whether the heuristic is robust or
+whether the four-subclass canonicalizer needs to do more of the
+work. Benchmark is necessary, not sufficient.
+
