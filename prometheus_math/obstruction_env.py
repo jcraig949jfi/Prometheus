@@ -37,7 +37,7 @@ from __future__ import annotations
 import math
 import time
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Literal, Optional, Tuple, Union
 
 import numpy as np
 
@@ -54,6 +54,28 @@ from ._obstruction_corpus import (
     OBSTRUCTION_SIGNATURE,
     SECONDARY_SIGNATURE,
 )
+
+
+CorpusSource = Literal["synthetic", "live"]
+
+
+def _load_live_corpus_as_corpus_entries() -> List["CorpusEntry"]:
+    """Adapter: load the live corpus and return entries that quack like
+    synthetic ``CorpusEntry``.
+
+    The env's evaluate_predicate / _predicate_matches paths only need
+    ``.features()``, ``.kill_verdict``, and ``.to_dict()`` — all of
+    which ``LiveCorpusEntry`` provides. We therefore return the live
+    objects directly and rely on duck typing; the ``sequence_id``
+    field tags along, used by ``ObstructionEnv.discoveries()`` for
+    OEIS-grade evidence reporting.
+
+    Raises FileNotFoundError if the live data isn't reachable; caller
+    decides whether to fall back to synthetic.
+    """
+    from ._obstruction_corpus_live import load_live_corpus
+
+    return load_live_corpus()  # type: ignore[return-value]
 
 
 # ---------------------------------------------------------------------------
@@ -148,7 +170,13 @@ REDISCOVERED_SECONDARY_TAG = "REDISCOVERED_SECONDARY"
 
 @dataclass
 class ObstructionEpisodeRecord:
-    """A complete episode's outcome, suitable for downstream auditing."""
+    """A complete episode's outcome, suitable for downstream auditing.
+
+    When ``corpus_source == "live"`` and the env tags a rediscovery,
+    ``match_sequence_ids`` is populated with the OEIS A-numbers in the
+    match group (substrate-grade evidence — these are the actual
+    sequences the predicate captured).
+    """
 
     predicate: Dict[str, Any]
     in_sample_lift: float
@@ -158,6 +186,7 @@ class ObstructionEpisodeRecord:
     reward: float
     tags: List[str] = field(default_factory=list)
     terminated_via: str = "max_complexity"
+    match_sequence_ids: List[str] = field(default_factory=list)
 
 
 # ---------------------------------------------------------------------------
@@ -322,13 +351,27 @@ class ObstructionEnv:
         obstruction_bonus: float = 50.0,
         secondary_bonus: float = 20.0,
         log_discoveries: bool = True,
+        corpus_source: CorpusSource = "synthetic",
     ):
+        # Resolve corpus_source if no corpus explicitly provided.
         if corpus is None:
-            corpus = OBSTRUCTION_CORPUS
+            if corpus_source == "live":
+                # Load from Charon's data dir. Caller wanted live; if the
+                # files aren't reachable, raise loud (don't silently fall
+                # back to synthetic — that would mask the integration).
+                corpus = _load_live_corpus_as_corpus_entries()
+            elif corpus_source == "synthetic":
+                corpus = OBSTRUCTION_CORPUS
+            else:
+                raise ValueError(
+                    f"corpus_source must be 'synthetic' or 'live'; "
+                    f"got {corpus_source!r}"
+                )
         if not isinstance(corpus, list):
             corpus = list(corpus)
         if len(corpus) == 0:
             raise ValueError("corpus must be non-empty")
+        self.corpus_source: CorpusSource = corpus_source
         if not (0.0 < held_out_fraction < 1.0):
             raise ValueError(
                 f"held_out_fraction must be in (0, 1); got {held_out_fraction}"
@@ -627,6 +670,18 @@ class ObstructionEnv:
         # Empty predicate: lift is 0 by construction, reward is 0.
         # All-positive corpus: lift is 0 by construction, reward is 0.
 
+        # Capture OEIS A-numbers in the match group when running on live
+        # data. These are substrate-grade evidence: a tagged discovery on
+        # live data names the actual sequences the predicate caught.
+        match_sequence_ids: List[str] = []
+        if predicate:
+            for e in self._train_corpus + self._test_corpus:
+                sid = getattr(e, "sequence_id", None)
+                if sid is None:
+                    continue
+                if _predicate_matches(e, predicate):
+                    match_sequence_ids.append(str(sid))
+
         record = ObstructionEpisodeRecord(
             predicate=predicate,
             in_sample_lift=in_sample_lift,
@@ -636,6 +691,7 @@ class ObstructionEnv:
             reward=reward,
             tags=tags,
             terminated_via=info.get("terminated_via", "max_complexity"),
+            match_sequence_ids=match_sequence_ids,
         )
         if self.log_discoveries and (reward > 0.0 or tags):
             self._discoveries.append(record)
@@ -650,6 +706,8 @@ class ObstructionEnv:
                 "tags": tags,
                 "reward": reward,
                 "match_group_size": match_size_test,  # alias
+                "match_sequence_ids": match_sequence_ids,
+                "corpus_source": self.corpus_source,
             }
         )
 
@@ -737,8 +795,10 @@ def _evaluate_predicate_pair(
     """BIND-able callable wrapper around evaluate_predicate.
 
     Accepts the corpus as a serialized list of dicts (EVAL needs JSON-
-    serializable args). Reconstructs CorpusEntry objects, evaluates,
-    returns a plain dict.
+    serializable args). Reconstructs CorpusEntry-compatible objects
+    (live entries get reconstructed as plain CorpusEntry — sequence_id
+    is dropped since this path only needs features + kill_verdict for
+    the lift computation), evaluates, returns a plain dict.
     """
     corpus = [
         CorpusEntry(

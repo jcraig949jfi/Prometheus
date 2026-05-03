@@ -30,6 +30,7 @@ if str(_REPO) not in sys.path:
 
 from sigma_kernel.sigma_kernel import SigmaKernel
 from sigma_kernel.bind_eval import BindEvalExtension, CostModel
+from sigma_kernel.bind_eval_v2 import BindEvalKernelV2
 
 
 def _percentile(xs, p):
@@ -40,10 +41,14 @@ def _percentile(xs, p):
     return xs[min(k, len(xs) - 1)]
 
 
-def _bench_bind(n: int = 200) -> dict:
-    """How long does BIND take per call? Compares against raw import+call."""
+def _bench_bind(n: int = 200, ext_factory=BindEvalExtension) -> dict:
+    """How long does BIND take per call? Compares against raw import+call.
+
+    ``ext_factory`` selects v1 (BindEvalExtension) or v2 (BindEvalKernelV2)
+    so the same harness can be reused for both implementations.
+    """
     kernel = SigmaKernel(":memory:")
-    ext = BindEvalExtension(kernel)
+    ext = ext_factory(kernel)
     ref = "techne.lib.mahler_measure:mahler_measure"
 
     bind_times = []
@@ -76,10 +81,13 @@ def _bench_bind(n: int = 200) -> dict:
     }
 
 
-def _bench_eval(n: int = 200) -> dict:
-    """How long does EVAL take per call vs raw callable invocation?"""
+def _bench_eval(n: int = 200, ext_factory=BindEvalExtension) -> dict:
+    """How long does EVAL take per call vs raw callable invocation?
+
+    ``ext_factory`` selects v1 vs v2 (see ``_bench_bind``).
+    """
     kernel = SigmaKernel(":memory:")
-    ext = BindEvalExtension(kernel)
+    ext = ext_factory(kernel)
     ref = "techne.lib.mahler_measure:mahler_measure"
     cap = kernel.mint_capability("BindCap")
     binding = ext.BIND(
@@ -257,26 +265,44 @@ def _bench_cost_accuracy() -> dict:
 
 def main() -> int:
     print("=" * 72)
-    print("BIND/EVAL benchmarks — sigma_kernel MVP perf check")
+    print("BIND/EVAL benchmarks — sigma_kernel MVP perf check (v1 vs v2)")
     print("=" * 72)
 
-    print("\n[1] BIND overhead (n=200)")
-    r = _bench_bind(200)
-    print(f"  bind p50:       {r['bind_p50_ms']:7.3f} ms")
-    print(f"  bind p95:       {r['bind_p95_ms']:7.3f} ms")
-    print(f"  raw import p50: {r['raw_p50_ms']:7.3f} ms")
-    print(f"  overhead p50:   {r['overhead_p50_ms']:7.3f} ms")
-    pass1 = r["bind_p50_ms"] < 50.0
-    print(f"  claim <50ms:    {'PASS' if pass1 else 'FAIL'}")
+    print("\n[1] BIND overhead (n=200) -- v1 (BindEvalExtension)")
+    r1 = _bench_bind(200, ext_factory=BindEvalExtension)
+    print(f"  v1 bind p50:    {r1['bind_p50_ms']:7.3f} ms")
+    print(f"  v1 bind p95:    {r1['bind_p95_ms']:7.3f} ms")
+    print(f"  raw import p50: {r1['raw_p50_ms']:7.3f} ms")
+    print(f"  overhead p50:   {r1['overhead_p50_ms']:7.3f} ms")
 
-    print("\n[2] EVAL overhead per call (n=200)")
-    r = _bench_eval(200)
-    print(f"  eval p50:       {r['eval_p50_ms']:7.3f} ms")
-    print(f"  eval p95:       {r['eval_p95_ms']:7.3f} ms")
-    print(f"  raw call p50:   {r['raw_p50_ms']:7.3f} ms")
-    print(f"  overhead p50:   {r['overhead_p50_ms']:7.3f} ms")
-    pass2 = r["eval_p50_ms"] < 50.0
-    print(f"  claim <50ms:    {'PASS' if pass2 else 'FAIL'}")
+    print("\n[1b] BIND overhead (n=200) -- v2 (BindEvalKernelV2)")
+    r1v2 = _bench_bind(200, ext_factory=BindEvalKernelV2)
+    print(f"  v2 bind p50:    {r1v2['bind_p50_ms']:7.3f} ms")
+    print(f"  v2 bind p95:    {r1v2['bind_p95_ms']:7.3f} ms")
+    print(f"  v2 overhead p50:{r1v2['overhead_p50_ms']:7.3f} ms")
+    pass1 = r1["bind_p50_ms"] < 50.0 and r1v2["bind_p50_ms"] < 50.0
+    print(f"  claim v1+v2 < 50ms p50:  {'PASS' if pass1 else 'FAIL'}")
+    print(
+        f"  v2/v1 ratio: {r1v2['bind_p50_ms'] / max(r1['bind_p50_ms'], 1e-6):.2f}x"
+    )
+
+    print("\n[2] EVAL overhead per call (n=200) -- v1")
+    r2 = _bench_eval(200, ext_factory=BindEvalExtension)
+    print(f"  v1 eval p50:    {r2['eval_p50_ms']:7.3f} ms")
+    print(f"  v1 eval p95:    {r2['eval_p95_ms']:7.3f} ms")
+    print(f"  raw call p50:   {r2['raw_p50_ms']:7.3f} ms")
+    print(f"  overhead p50:   {r2['overhead_p50_ms']:7.3f} ms")
+
+    print("\n[2b] EVAL overhead per call (n=200) -- v2")
+    r2v2 = _bench_eval(200, ext_factory=BindEvalKernelV2)
+    print(f"  v2 eval p50:    {r2v2['eval_p50_ms']:7.3f} ms")
+    print(f"  v2 eval p95:    {r2v2['eval_p95_ms']:7.3f} ms")
+    print(f"  v2 overhead p50:{r2v2['overhead_p50_ms']:7.3f} ms")
+    pass2 = r2["eval_p50_ms"] < 50.0 and r2v2["eval_p50_ms"] < 50.0
+    print(f"  claim v1+v2 < 50ms p50:  {'PASS' if pass2 else 'FAIL'}")
+    print(
+        f"  v2/v1 ratio: {r2v2['eval_p50_ms'] / max(r2['eval_p50_ms'], 1e-6):.2f}x"
+    )
 
     print("\n[3] Substrate growth (n=200 evals)")
     r = _bench_substrate_growth(200)

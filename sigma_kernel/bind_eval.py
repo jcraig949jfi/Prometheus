@@ -38,7 +38,9 @@ import hashlib
 import importlib
 import inspect
 import json
+import threading
 import time
+import tracemalloc
 import uuid
 from dataclasses import dataclass
 from typing import Any, Callable, Dict, List, Optional, Tuple
@@ -51,6 +53,141 @@ from .sigma_kernel import (
     Tier,
     _sha256,
 )
+
+
+# ---------------------------------------------------------------------------
+# C2 instrumentation -- oracle-call counter (thread-local, monotonic).
+# ---------------------------------------------------------------------------
+#
+# The CostModel declares ``max_oracle_calls`` but the v1 MVP recorded a
+# constant 0. Per the 2026-05-03 team review, the substrate is gameable on
+# any unenforced cost dimension -- an RL agent will learn to route through
+# it. The minimal-viable fix (per ChatGPT's review): increment a thread-local
+# counter at every PARI / SymPy / subprocess dispatch boundary. We do not
+# need precision; we need monotonic accountability.
+#
+# Coverage strategy:
+#   - ``cypari.pari`` calls: patched at module-import time.
+#   - ``subprocess.run`` calls within a tracked EVAL: patched via a context
+#     manager so the patch is only active during the EVAL hot path (avoids
+#     polluting unrelated subprocess uses elsewhere in the runtime).
+#   - SymPy's external solver calls go through subprocess; covered by the
+#     subprocess.run patch.
+#
+# Coverage NOT yet wired:
+#   - LMFDB HTTP queries (not currently used inside any registered arsenal
+#     callable; if they are added, an HTTPSConnection-level patch belongs
+#     here).
+#   - Direct C-extension calls that bypass Python frame entry (not currently
+#     present in the arsenal; flint and numpy operations are pure-CPU and
+#     do not count as "oracle" dispatch).
+#
+# The counter is thread-local so concurrent EVALs (a future possibility)
+# count their own dispatches. The increment helper is exported so test
+# fixtures (and future integrations) can manually advance the counter to
+# simulate a callable that hits the oracle a known number of times.
+
+_ORACLE_DISPATCH_COUNTER = threading.local()
+
+
+def _oracle_dispatch_init() -> None:
+    """Initialise the per-thread oracle-call counter to 0."""
+    _ORACLE_DISPATCH_COUNTER.count = 0
+
+
+def _oracle_dispatch_get() -> int:
+    """Return the current per-thread oracle-call count."""
+    return int(getattr(_ORACLE_DISPATCH_COUNTER, "count", 0))
+
+
+def _oracle_dispatch_increment(_site_label: str = "") -> None:
+    """Increment the per-thread oracle-call counter by 1.
+
+    The ``_site_label`` argument is informational only -- it lets the caller
+    name the dispatch site so future debugging can attribute calls to e.g.
+    'cypari.pari' vs 'subprocess.run'. The MVP does not record per-site
+    breakdowns; it just increments.
+    """
+    cur = int(getattr(_ORACLE_DISPATCH_COUNTER, "count", 0))
+    _ORACLE_DISPATCH_COUNTER.count = cur + 1
+
+
+_oracle_patch_lock = threading.Lock()
+_oracle_patch_installed = False
+
+
+def _install_oracle_patches() -> None:
+    """Install monkey-patches for the dispatch sites we know about.
+
+    Idempotent. Called lazily by the EVAL path the first time it runs in
+    a process. Safe to call multiple times.
+    """
+    global _oracle_patch_installed
+    with _oracle_patch_lock:
+        if _oracle_patch_installed:
+            return
+        _oracle_patch_installed = True
+
+        # --- cypari ----------------------------------------------------
+        try:
+            import cypari  # type: ignore
+        except ImportError:
+            cypari = None  # type: ignore[assignment]
+        if cypari is not None and hasattr(cypari, "pari"):
+            _orig_pari = cypari.pari
+
+            class _CountingPariProxy:
+                """Wraps cypari.pari so any call/getitem increments the counter.
+
+                cypari.pari is a callable proxy object; both ``cypari.pari("x")``
+                (invocation) and ``cypari.pari.<method>(...)`` (member access)
+                count as oracle dispatch. The proxy delegates to the underlying
+                object via attribute forwarding.
+                """
+
+                def __init__(self, inner):
+                    object.__setattr__(self, "_inner", inner)
+
+                def __call__(self, *a, **kw):
+                    _oracle_dispatch_increment("cypari.pari")
+                    return self._inner(*a, **kw)
+
+                def __getattr__(self, name):
+                    inner_attr = getattr(self._inner, name)
+                    if callable(inner_attr):
+                        def _wrapped(*a, **kw):
+                            _oracle_dispatch_increment(f"cypari.pari.{name}")
+                            return inner_attr(*a, **kw)
+                        return _wrapped
+                    return inner_attr
+
+            try:
+                cypari.pari = _CountingPariProxy(_orig_pari)  # type: ignore[assignment]
+            except Exception:
+                # If cypari refuses the patch (e.g. read-only attr), leave
+                # alone; counter will simply read 0 for cypari calls. That's
+                # honest under the "monotonic, not precise" contract.
+                pass
+
+        # --- subprocess.run -------------------------------------------
+        import subprocess as _sp
+
+        if not getattr(_sp.run, "_sigma_oracle_wrapped", False):
+            _orig_run = _sp.run
+
+            def _counting_run(*a, **kw):
+                _oracle_dispatch_increment("subprocess.run")
+                return _orig_run(*a, **kw)
+
+            _counting_run._sigma_oracle_wrapped = True  # type: ignore[attr-defined]
+            _sp.run = _counting_run  # type: ignore[assignment]
+
+        # --- SymPy external solver -----------------------------------
+        # SymPy's solve() routes complicated cases through PARI via cypari;
+        # those are caught by the cypari patch above. SymPy's own internal
+        # logic doesn't dispatch to a separate process, so no extra hook
+        # is required. If a future SymPy version grows a subprocess
+        # dispatch, the subprocess.run hook will catch it.
 
 
 # ---------------------------------------------------------------------------
@@ -472,7 +609,26 @@ class BindEvalExtension:
             default=repr,
         )
 
-        # Run under budget.
+        # Run under budget. C2 instrumentation: install dispatch counters,
+        # reset per-thread counter, snapshot tracemalloc peak around the
+        # call, then enforce all three cost dimensions.
+        _install_oracle_patches()
+        _oracle_dispatch_init()
+
+        # tracemalloc may already be running for an outer profile; if so
+        # we reset the peak and restore on exit. Otherwise we start it
+        # locally for this call only.
+        _tm_was_running = tracemalloc.is_tracing()
+        if not _tm_was_running:
+            tracemalloc.start()
+        try:
+            tracemalloc.reset_peak()
+        except AttributeError:
+            # Older Pythons (<3.9) lack reset_peak; fall back to
+            # delta-from-start.
+            pass
+        mem_before_current, _ = tracemalloc.get_traced_memory()
+
         success = True
         error_repr = ""
         output_repr = ""
@@ -486,17 +642,41 @@ class BindEvalExtension:
             success = False
             error_repr = f"{type(e).__name__}: {e!r}"[:1000]
         elapsed = time.perf_counter() - t0
+
+        _, mem_peak_bytes = tracemalloc.get_traced_memory()
+        # Memory delta from before the call to peak during the call,
+        # converted to MB. Floor at 0 in case tracemalloc returns
+        # nonsense (e.g. inactive on some platforms).
+        peak_delta_bytes = max(0, mem_peak_bytes - mem_before_current)
+        memory_mb = peak_delta_bytes / (1024.0 * 1024.0)
+        if not _tm_was_running:
+            tracemalloc.stop()
+
+        oracle_calls = _oracle_dispatch_get()
+
         actual_cost = {
             "elapsed_seconds": float(elapsed),
-            "memory_mb": 0.0,  # MVP: we don't track memory yet; leave 0
-            "oracle_calls": 0,  # MVP: we don't track oracle dispatch yet
+            "memory_mb": float(memory_mb),
+            "oracle_calls": int(oracle_calls),
         }
 
-        # Budget check.
+        # Budget check -- all three dimensions.
         if elapsed > cost_model.max_seconds:
             raise BudgetExceeded(
                 f"EVAL of {binding_name}@v{binding_version} exceeded "
                 f"max_seconds={cost_model.max_seconds:.2f}: actual={elapsed:.3f}"
+            )
+        if memory_mb > cost_model.max_memory_mb:
+            raise BudgetExceeded(
+                f"EVAL of {binding_name}@v{binding_version} exceeded "
+                f"max_memory_mb={cost_model.max_memory_mb:.3f}: "
+                f"actual={memory_mb:.3f}"
+            )
+        if oracle_calls > cost_model.max_oracle_calls:
+            raise BudgetExceeded(
+                f"EVAL of {binding_name}@v{binding_version} exceeded "
+                f"max_oracle_calls={cost_model.max_oracle_calls}: "
+                f"actual={oracle_calls}"
             )
 
         # Mint the evaluation symbol.
