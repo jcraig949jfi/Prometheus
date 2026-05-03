@@ -744,5 +744,117 @@ def test_search_by_signature_class_smyth_extremals_match_smyth_extremal():
     assert a_names == b_names
 
 
+# ---------------------------------------------------------------------------
+# Phase-3 refresh tests (added 2026-04-29 for the Known180 ingest +
+# arxiv-corpus promotion).  See prometheus_math/MOSSINGHOFF_REFRESH_NOTES.md.
+# ---------------------------------------------------------------------------
+
+
+@_skip_no_backend
+def test_known180_ingest_min_count():
+    """Regression: the post-refresh catalog must contain at least 8500
+    entries.
+
+    Composition of the catalog at refresh time (2026-04-29):
+        178 phase-1 curated rows
+      + 8431 Known180.gz rows (after deduping 7 overlap with phase-1)
+      +   16 arxiv-promoted rows (Sac-Epee 2024 + Idris/Sac-Epee 2026)
+      = 8625 total
+
+    The floor of 8500 is the new count minus a small margin
+    (~125 entries) for any future parse-failure attrition.  If the
+    catalog ever drops below this, either the bundled
+    ``_known180_raw.gz`` was lost / corrupted, the parser regressed,
+    or the dedup logic became too aggressive.
+    """
+    rows = mahler.smallest_known(limit=20_000)
+    assert len(rows) >= 8500, (
+        f"snapshot regressed: only {len(rows)} entries "
+        f"(expected >= 8500 after the 2026-04-29 Known180 refresh).  "
+        f"Check prometheus_math/databases/_known180_raw.gz is present "
+        f"and prometheus_math/databases/_mahler_data.py loads it on "
+        f"import."
+    )
+
+
+@_skip_no_backend
+def test_known180_provenance_metadata_recorded():
+    """Refresh metadata is recorded on SNAPSHOT_META and is internally
+    consistent.
+
+    Cross-checks:
+      * ``refresh_2026_04_29_total_after`` equals ``len(MAHLER_TABLE)``.
+      * ``known180_appended + known180_dup_skipped >= 8400``
+        (every Known180 row was either appended or deduped).
+      * ``arxiv_promoted_appended <= 16`` (we only have 16 corpus rows
+        to promote).
+      * The source URL is the Wayback Machine snapshot we documented.
+    """
+    meta = mahler.SNAPSHOT_META
+    assert "refresh_2026_04_29_source_url" in meta
+    assert meta["refresh_2026_04_29_source_url"].startswith(
+        "https://web.archive.org/"
+    )
+    assert "Known180.gz" in meta["refresh_2026_04_29_source_url"]
+    appended = meta["refresh_2026_04_29_known180_appended"]
+    dup = meta["refresh_2026_04_29_known180_dup_skipped"]
+    assert appended + dup >= 8400, (
+        f"Known180 appended={appended} + dup={dup} < 8400 "
+        f"(file should contain 8438 entries)"
+    )
+    assert meta["refresh_2026_04_29_arxiv_promoted_appended"] <= 16
+    assert meta["refresh_2026_04_29_total_after"] == len(mahler.MAHLER_TABLE)
+
+
+@_skip_no_backend
+def test_known180_arxiv_corpus_now_caught():
+    """The 16 arxiv-corpus rows we promoted are catalog hits via
+    ``lookup_by_M`` at tol=1e-5.
+
+    This is the regression test that prevents silent breakage of the
+    refresh-2026-04-29 calibration.  If any of these stop being caught
+    by the snapshot, the refresh has been undone.
+
+    Reference: prometheus_math/_arxiv_polynomial_corpus.py
+    (Sac-Epee 2024 deg-12..44 + Idris/Sac-Epee 2026 deg-6..12).
+    """
+    target_Ms = [
+        # Sac-Epee 2024 reciprocal Salem
+        1.3022688051, 1.308409006213, 1.318197504432, 1.323198173512,
+        1.304697625411, 1.324231319862, 1.303385419369, 1.302721444014,
+        1.306473537533, 1.308071085577, 1.316069252718,
+        # Idris/Sac-Epee 2026 Newman divisors
+        1.419404632, 1.436632261, 1.448290492, 1.489581321, 1.556014485,
+    ]
+    misses = []
+    for M in target_Ms:
+        rows = mahler.lookup_by_M(M, tol=1e-5)
+        if not rows:
+            misses.append(M)
+    assert not misses, (
+        f"{len(misses)}/{len(target_Ms)} arxiv-corpus M-values are no "
+        f"longer caught by the snapshot: {misses}"
+    )
+
+
+@_skip_no_backend
+def test_known180_phase1_provenance_marked():
+    """Every phase-1 curated entry carries ``provenance_tier ==
+    'phase1_curated'``.  This is the marker the module-load
+    cross-check uses to scope itself to the hand-verified rows.
+
+    Authority: 2026-04-29 refresh contract — the existing 178-entry
+    subset must continue to be re-verified at module load (fast),
+    while the new 8400+ Known180 rows are trusted from upstream and
+    only spot-checked in this test file.
+    """
+    rows = mahler.smallest_known(limit=20_000)
+    phase1 = [r for r in rows if r.get("provenance_tier") == "phase1_curated"]
+    assert len(phase1) >= 178, (
+        f"only {len(phase1)} phase-1 curated entries found "
+        f"(expected >= 178)"
+    )
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

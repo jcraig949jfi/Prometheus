@@ -587,17 +587,29 @@ def degree_minima() -> dict[int, dict]:
 # Cross-check (used by tests and as a sanity guard)
 # ---------------------------------------------------------------------------
 
-def _cross_check(tol: float = 1e-9) -> list[dict]:
-    """Recompute Mahler measure for every embedded entry and return
-    the list of mismatches (each with stored vs recomputed values).
+def _cross_check(tol: float = 1e-9,
+                 tier: Optional[str] = "phase1_curated") -> list[dict]:
+    """Recompute Mahler measure for embedded entries; return mismatches.
 
-    If the Techne tool is unavailable, returns an empty list (we
-    can't cross-check, but we also don't fail).
+    Parameters
+    ----------
+    tol : float
+        Tolerance for accepting an entry as agreeing with recomputation.
+    tier : str or None, default "phase1_curated"
+        If set, only entries whose ``provenance_tier`` matches are
+        re-verified.  This keeps the module-load check fast (~178
+        entries) instead of recomputing M for all 8000+ Known180
+        rows on every import.  Pass ``None`` to verify the entire
+        catalog (used by the strict regression test).
+
+    If the Techne tool is unavailable, returns an empty list.
     """
     if not _HAS_MAHLER_TOOL:
         return []
     out = []
     for i, e in enumerate(MAHLER_TABLE):
+        if tier is not None and e.get("provenance_tier") != tier:
+            continue
         desc = list(reversed(e["coeffs"]))
         M_actual = float(_mahler_measure(desc))
         diff = abs(M_actual - e["mahler_measure"])

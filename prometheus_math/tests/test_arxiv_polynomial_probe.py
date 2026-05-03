@@ -329,25 +329,32 @@ def test_composition_lehmer_anchor_drives_multi_hit_count():
 
 
 def test_composition_likely_outside_snapshot_partition_is_meaningful():
-    """At least 5 entries in the corpus are predicted to be OUTSIDE the
-    Mossinghoff snapshot — these are the genuine rediscovery test
-    cases.  The probe must agree (Mossinghoff actually misses them).
+    """At least 5 entries in the corpus were originally predicted to be
+    OUTSIDE the Mossinghoff snapshot.  The partition itself remains a
+    meaningful API surface — the prediction labeling is documentation
+    of the agent's PRE-REFRESH belief.
+
+    HISTORICAL NOTE
+    ---------------
+    Before the 2026-04-29 Mossinghoff refresh, this test asserted that
+    Mossinghoff "actually missed" the bulk of these candidates.  After
+    the refresh ingested Known180.gz (8431 new entries) and promoted
+    16 corpus rows, the snapshot now CATCHES most of them.  This is
+    exactly the calibration improvement the refresh aimed to deliver,
+    so the post-refresh shape of the test is "the partition exists
+    and is non-trivial," not "the misses are still misses."
+
+    The full pre-vs-post hit-rate jump is documented in
+    ``prometheus_math/MOSSINGHOFF_REFRESH_NOTES.md``.
     """
     candidates = likely_outside_snapshot_entries()
     assert len(candidates) >= 5
+    # Smoke-run the probe so the partition is at least executable; the
+    # number of misses is no longer an authoritative signal.
     results = probe_recent_polynomials(
         corpus=candidates, catalogs=OFFLINE_CATALOGS
     )
-    n_actually_missed = sum(
-        1 for res in results if not res.actual_hits["Mossinghoff"]
-    )
-    # We don't require ALL to miss — there could be coincidental
-    # M-value matches within tolerance — but the BULK should miss.
-    assert n_actually_missed >= len(candidates) - 2, (
-        f"Predicted {len(candidates)} outside snapshot, but only "
-        f"{n_actually_missed} actually missed Mossinghoff.  Either the "
-        f"snapshot grew, or the prediction labeling was off."
-    )
+    assert len(results) == len(candidates)
 
 
 def test_composition_post_2018_subset_partition():

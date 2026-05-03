@@ -8,13 +8,77 @@ Tests: `prometheus_math/tests/test_four_counts_pilot.py` (16 tests, all green)
 
 ## Runs catalogued here
 
-| run | date | episodes/cell | seeds | wall-clock | promote rate | doc tag |
-|---|---|---:|---:|---:|---:|---|
-| pilot 1K | 2026-04-29 | 1,000 | 3 |   4.3s | 0/3000 | initial |
-| pilot 10K | 2026-04-29 | 10,000 | 3 |  45.5s | 0/30000 | THIS FILE |
+| run | date | degree | episodes/cell | seeds | wall-clock | promote rate | doc tag |
+|---|---|---:|---:|---:|---:|---:|---|
+| pilot 1K | 2026-04-29 | 10 | 1,000 | 3 |   4.3s | 0/3000 | initial |
+| pilot 10K | 2026-04-29 | 10 | 10,000 | 3 |  45.5s | 0/30000 | original 10K |
+| degree 12 | 2026-04-29 | 12 | 5,000 | 3 |  22.5s | 0/15000 | DEGREE_SWEEP |
+| degree 14 | 2026-04-29 | 14 | 3,000 | 3 |  13.7s | 0/9000  | DEGREE_SWEEP |
 
-Raw JSON: `prometheus_math/four_counts_pilot_run.json` (1K snapshot, retained)
-and `prometheus_math/four_counts_pilot_run_10k.json` (10K, rich format).
+Raw JSON: `prometheus_math/four_counts_pilot_run.json` (1K snapshot, retained),
+`prometheus_math/four_counts_pilot_run_10k.json` (10K, rich format), and
+`prometheus_math/degree_sweep_results.json` (degree 12 + 14).
+Cross-doc: `prometheus_math/DEGREE_SWEEP_RESULTS.md` (full degree-sweep analysis).
+
+---
+
+## Multi-degree results (degree 10 / 12 / 14, side-by-side)
+
+Triple #2 of the just-finished session widened the polynomial degree to
+test whether more action-space real estate breaks the structural
+0-PROMOTE ceiling at degree 10. Full per-degree analysis lives in
+`prometheus_math/DEGREE_SWEEP_RESULTS.md`. Headline:
+
+### PROMOTE rates
+
+| degree | trajectory space | random_null PROMOTE | reinforce_agent PROMOTE | total episodes |
+|---:|---:|---:|---:|---:|
+| 10 | 117K   | 0/30000 | 0/30000 | 60K |
+| 12 | 824K   | 0/15000 | 0/15000 | 30K |
+| 14 | 5.76M  | 0/9000  | 0/9000  | 18K |
+
+**0 PROMOTEs across 108,000 total episodes** spanning all three degrees,
+both arms.
+
+### Salem-cluster proxy concentration (REINFORCE / random)
+
+| degree | random Salem | reinforce Salem | concentration ratio |
+|---:|---:|---:|---:|
+| 10 | 35 / 30000 (0.117%) | 19,855 / 30000 (66.18%) | **567x** |
+| 12 | 21 / 15000 (0.140%) | 4,904 / 15000 (32.69%) | **234x** (mode-collapse-inflated; one seed memorised one polynomial) |
+| 14 | 8 / 9000 (0.089%)   | 1 / 9000 (0.011%)     | **0.13x INVERTED** (REINFORCE worse than random) |
+
+The proxy concentration **monotonically degrades** as degree widens.
+At degree 14 the policy is genuinely *worse than random* at finding
+the Salem cluster — the trajectory space expanded 49x but the
+policy class collapsed faster than the space grew.
+
+### Per-episode wall time
+
+| degree | per-ep (ms) | est 5K x 3 |
+|---:|---:|---:|
+| 10 | 0.580 | 8.7 s |
+| 12 | 0.598 | 9.0 s |
+| 14 | 0.678 | 10.2 s |
+
+Companion-matrix `O(d^3)` cost was negligible compared to substrate
+BIND/EVAL overhead. **Wall time is not the bottleneck at any tested
+degree** — the 30-min budget could comfortably run degree 14 at 50K
+x 3 if the structural ceiling demanded it. It does not.
+
+### SHADOW_CATALOG entries
+
+**Zero across all degrees and seeds.** No CLAIM minted, no
+DiscoveryPipeline records produced. The sub-Lehmer band remains
+empty under uniform-random and contextual-REINFORCE search at
+Discrete(7) over {-3..3} for any tested degree.
+
+### Verdict
+
+Widening the degree did not break the 0-PROMOTE ceiling. It made the
+proxy concentration *worse*. Next interventions: action-set width
+(`|c| >= 4` polynomials), stronger algorithms (PPO / MCTS), continuous
+reward shape — not more degree.
 
 ---
 
