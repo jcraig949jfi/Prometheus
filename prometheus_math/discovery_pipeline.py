@@ -134,31 +134,65 @@ def _check_catalog_miss(
 ) -> Tuple[bool, str, List[str]]:
     """Confirm the polynomial is NOT in any consulted catalog.
 
-    Returns (catalog_miss, rationale, catalogs_checked). Today checks
-    Mossinghoff only; §6.3 will extend to LMFDB / OEIS / arXiv.
-    """
-    catalogs_checked: List[str] = []
-    try:
-        from prometheus_math.databases import mahler as _mahler_db
+    Returns ``(catalog_miss, rationale, catalogs_checked)``.
 
-        catalogs_checked.append("Mossinghoff")
-        snapshot = getattr(_mahler_db, "MAHLER_TABLE", None)
-        if snapshot is not None:
-            for entry in snapshot:
-                try:
-                    entry_m = float(entry.get("mahler_measure", float("inf")))
-                except (TypeError, ValueError):
-                    continue
-                if abs(entry_m - mahler_measure) < tol:
-                    label = entry.get("label") or entry.get("name") or "?"
-                    return (
-                        False,
-                        f"matches Mossinghoff entry {label} (M={entry_m:.6f})",
-                        catalogs_checked,
-                    )
-    except Exception:
-        pass
-    return True, "missing from all consulted catalogs", catalogs_checked
+    Per §6.3 (forged 2026-04-29): consults the multi-catalog
+    consistency check at ``prometheus_math.catalog_consistency``.
+    Today's catalog set:
+
+      * Mossinghoff (embedded snapshot, always live)
+      * lehmer_literature (embedded Boyd/Smyth/Borwein-Mossinghoff
+        snapshot, always live)
+      * LMFDB nf_fields (skip-cleanly when mirror unreachable)
+      * OEIS coefficient sequence (skip-cleanly when API unreachable)
+      * arXiv title fuzzy (skip-cleanly when API unreachable)
+
+    ``catalog_miss = True`` iff EVERY consulted catalog reported a miss.
+    Catalogs that emit a typed error (e.g. LMFDB unreachable) DO count
+    toward miss for this aggregation, but the rationale string surfaces
+    them so downstream consumers can distinguish "actual miss" from
+    "skipped due to network".
+    """
+    from prometheus_math.catalog_consistency import (
+        run_consistency_check,
+    )
+
+    try:
+        agg = run_consistency_check(coeffs, mahler_measure, tol=tol)
+    except Exception as e:
+        # Defensive: the orchestrator should never raise (it wraps
+        # adapter exceptions internally), but if something pathological
+        # happens we degrade to "all catalogs missed".
+        return (
+            True,
+            f"consistency-check failed ({type(e).__name__}); "
+            f"treating as miss",
+            [],
+        )
+
+    catalogs_checked: List[str] = list(agg["catalogs_checked"])
+    if agg["any_hit"]:
+        first_hit = agg["hits"][0]
+        rationale = (
+            f"matches {first_hit.catalog_name} entry "
+            f"{first_hit.match_label} (query={first_hit.query_kind})"
+        )
+        return False, rationale, catalogs_checked
+
+    # Unanimous miss.  Surface error / skip information so downstream
+    # can see which catalogs were "real misses" vs "skipped".
+    skipped = [
+        f"{r.catalog_name}({r.error.split(':', 1)[0]})"
+        for r in agg["errors"]
+    ]
+    if skipped:
+        rationale = (
+            "missing from all consulted catalogs; "
+            f"skipped/errored: {','.join(skipped)}"
+        )
+    else:
+        rationale = "missing from all consulted catalogs"
+    return True, rationale, catalogs_checked
 
 
 def _f1_permutation_null(coeffs: List[int], m_value: float) -> Tuple[bool, str]:

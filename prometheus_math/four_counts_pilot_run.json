@@ -1,0 +1,38 @@
+{
+  "n_episodes": 1000,
+  "n_seeds": 3,
+  "annotation": null,
+  "per_condition": {
+    "random_null": {
+      "promote_rate_mean": 0.0,
+      "promote_rate_std": 0.0,
+      "promote_rates": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "catalog_hit_rate_mean": 0.0016666666666666668,
+      "claim_rate_mean": 0.0
+    },
+    "reinforce_agent": {
+      "promote_rate_mean": 0.0,
+      "promote_rate_std": 0.0,
+      "promote_rates": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "catalog_hit_rate_mean": 0.0,
+      "claim_rate_mean": 0.0
+    }
+  },
+  "pairwise": {
+    "random_null__vs__reinforce_agent": {
+      "p_value": 1.0,
+      "lift": 0.0,
+      "winner": null,
+      "mean_a": 0.0,
+      "mean_b": 0.0
+    }
+  }
+}

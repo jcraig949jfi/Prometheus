@@ -3108,3 +3108,41 @@ work. Benchmark is necessary, not sufficient.
   Tests (23 total): A:4 P:5 E:8 C:6 — all four math-tdd categories
   >= 2.
 
+2026-04-29 | pm.withheld_benchmark | A:4 P:5 E:5 C:4 | uncommitted
+
+  §6.2.5 of `harmonia/memory/architecture/discovery_via_rediscovery.md`:
+  withheld-rediscovery benchmark. Mossinghoff snapshot (178 entries) is
+  partitioned 142 visible / 36 withheld; the agent runs against a
+  WithheldDiscoveryPipeline whose catalog-check is monkey-patched on
+  the instance (NOT module-globally) so withheld entries look like
+  catalog-misses. Result: REINFORCE in 1000 episodes × 3 seeds
+  rediscovers 0 of 36 withheld entries; calibration estimate for §6.2
+  open-discovery rate is < 1/3000 episodes.
+
+  Tests (18 total): A:4 P:5 E:5 C:4 — all four math-tdd categories
+  >= 2.
+
+| 2026-04-29 | pm.catalog_consistency.run_consistency_check | A:3 | P:3 | E:3 | C:3 | §6.3 multi-catalog gate |
+
+  Multi-catalog cross-check forged in service of §6.3 of
+  `harmonia/memory/architecture/discovery_via_rediscovery.md`.
+
+  Five typed catalog adapters share a `(coeffs, m_value, tol) ->
+  CatalogResult` signature: `mossinghoff_check`, `lehmer_literature_check`
+  (always live; embedded snapshots) plus `lmfdb_check`, `oeis_check`,
+  `arxiv_title_fuzzy_check` (skip-cleanly when network unreachable).
+  `run_consistency_check` aggregates them.
+
+  Lehmer-literature snapshot at `_lehmer_literature_data.py` embeds 24
+  entries spanning Lehmer 1933, Smyth 1971, Boyd 1980/1981/1989,
+  Mossinghoff 1998, and Borwein-Mossinghoff 2007.  Every M-value
+  cross-checked via `techne.lib.mahler_measure` to <1e-6 at table-build
+  time.
+
+  `discovery_pipeline._check_catalog_miss` refactored to call the new
+  orchestrator; backwards-compatible (existing 16 tests still green).
+  `check_results["catalogs_checked"]` now lists all 5 catalogs.
+
+  Tests (22 total): A:5 P:5 E:7 C:5 — all four math-tdd categories
+  >= 3.
+
