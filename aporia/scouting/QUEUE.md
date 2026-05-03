@@ -15,14 +15,19 @@
 
 | # | Test case | Front | Tier | Status | Disposition |
 |---|---|---|---|---|---|
-| 1 | Scale §6.2 pilot to 10K episodes | Rediscovery (calibration) | T2 | Drafted | Self-authored doc; recommend Techne fires this immediately |
-| 2 | Live arXiv polynomial ingestion | Rediscovery (fresh ground truth) | T1 | Subagent in flight | Bridge between rediscovery and discovery; load-bearing |
-| 3 | Withheld benchmark at proper scale (10K × 5 seeds) | Validation ladder bridge | T2 | Drafted | Pairs directly with the three-tier ladder doctrine |
-| 4 | OBSTRUCTION_SHAPE on broader OEIS (A150*, A151*) | Mutator / cross-domain generalization | T1 | Subagent in flight | Tests architectural generalization beyond Lehmer |
-| 5 | HITL SHADOW_CATALOG triage | Bridge layer (system output → human eval) | T2 | Drafted | Pairs with (1); ongoing review process |
-| 6 | Adversarial red-team | Defense / cold-fusion prevention | T1 | Subagent in flight | Stress-tests the very failure mode the architecture exists to prevent |
-| 7 | Stronger algorithm than REINFORCE | Algorithm front | T2 | Drafted | Wants (1)+(5) data first to motivate choice |
+| 1 | Scale §6.2 pilot to 10K episodes | Rediscovery (calibration) | T2 | Drafted | Self-authored doc; recommend Techne fires this immediately. Note: triple #3 confirmed structural ceiling — fixes priority list |
+| 2 | Live arXiv polynomial ingestion | Rediscovery (fresh ground truth) | T1 | Done | Scout returned; Scout #11 deep-parser updates the v1/v2/v3 strategy |
+| 3 | Withheld benchmark at proper scale (10K × 5 seeds) | Validation ladder bridge | T2 | Drafted | Pairs directly with the three-tier ladder doctrine. Gated on Scout #9's null-world pattern (a) shipping |
+| 4 | OBSTRUCTION_SHAPE on broader OEIS (A150*, A151*) | Mutator / cross-domain generalization | T1 | Done | SCOPE-CORRECTED: real test is N³→N² transition at A151320; 833 unscored entries already in repo |
+| 5 | HITL SHADOW_CATALOG triage | Bridge layer (system output → human eval) | T2 | Drafted | Typology operationalized by Scout #12 with reward differentiation |
+| 6 | Adversarial red-team | Defense / cold-fusion prevention | T1 | Done | Scout returned; recommended owner = Kairos. f(x^k) invariance gap is highest priority |
+| 7 | Stronger algorithm than REINFORCE | Algorithm front | T2 | Drafted | Triple #3 confirmed ceiling; Scout #13 specifies MCTS+BIND/EVAL as the next-strongest move |
 | 8 | External collaborator replication | External validation | T3 | Stub | Deferred per Techne's framing; revisit conditions documented |
+| **9** | **Null-world generator (deep)** | **Bottleneck primitive** | **T1** | **Done** | **Scout #9: K=10 publishable / K=5 interesting; pattern (a) gating for Scout #3** |
+| **10** | **Cross-catalog absence-verifier (deep)** | **Bottleneck primitive** | **T1** | **Done** | **Scout #10: 3-catalog quorum rule for NOVEL label; W1 Mossinghoff+OEIS local mirror** |
+| **11** | **arXiv:2405.08281 deep parser** | **Implementation depth** | **T1** | **Done** | **Scout #11: paper has zero (coeff, M) pairs; redirect to KLM23 + CECM catalog scrape for v2/v3** |
+| **12** | **Reward + triage typology (deep)** | **Bridge layer (operationalized)** | **T1** | **Done** | **Scout #12: 6-class typology with per-class reward {-1.0, +0.2, +0.4, +1.0, +10.0} + unclassifiable @ 0** |
+| **13** | **MCTS + BIND/EVAL design** | **Algorithm extension** | **T1** | **Done** | **Scout #13: tree node = BIND/EVAL record; legal-action mask is load-bearing; W1 hand-coded value, W3-4 PPO benchmark** |
 
 ## Techne's recommended trio (start here)
 
@@ -85,10 +90,23 @@ Each of those is its own scout-doc-and-Techne-test cycle. Months of queue, all p
 
 ---
 
+## The discovery-claim discipline gate (consolidated from all 13 scouts)
+
+A candidate is **not** a defensible discovery claim until ALL of the following hold:
+
+1. **Survives null-world comparison at K ≥ 10** (Scout #9, K=10 publishable / K=5 interesting)
+2. **Passes three-catalog absence quorum** (Scout #10, three-catalog quorum rule for NOVEL label)
+3. **Classifies as `genuine_novelty` under the 6-class typology** with mechanical decision rules (Scout #12, base rate <5% expected)
+4. **Operates within type-compatibility-masked action space** if the agent uses tree search (Scout #13, load-bearing for any tree-search algorithm)
+5. **CECM-Mossinghoff catalog scrape (not arXiv paper parsing) is the actual ingestion target** for the Lehmer domain (Scout #11)
+
+These five thresholds together form the operational discipline gate. Any agent or future session proposing a discovery candidate must verify all five before the claim travels.
+
 ## Update log
 
 - **2026-05-03 (initial):** queue created from Techne's 8-option list. Tiered. Subagents fired on T1. Self-authored T2 docs in parallel. T3 stubbed.
-- *(future updates land here as scouts return and Techne's tests produce signal)*
+- **2026-05-03 (extension batch):** Scouts #9-13 fired in parallel after Techne's "structural ceiling confirmed" commit (`f76d3974`). All 5 returned and self-saved. Operational discipline gate consolidated above. Token usage today: 8/20 (3 initial Tier-1 + 5 extension).
+- *(future updates land here as Techne's tests produce signal)*
 
 ---
 
