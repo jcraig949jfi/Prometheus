@@ -1,0 +1,131 @@
+{
+  "n_episodes_per_cell": 10000,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "arm_wall_clock_seconds": {
+    "random_null": 18.757757099810988,
+    "reinforce_agent": 26.698389700381085
+  },
+  "per_condition": {
+    "random_null": {
+      "promote_rate_mean": 0.0,
+      "promote_rate_std": 0.0,
+      "promote_rates": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "catalog_hit_rate_mean": 0.0010666666666666665,
+      "catalog_hit_rates": [
+        0.0008,
+        0.0012,
+        0.0012
+      ],
+      "claim_rate_mean": 0.0,
+      "claim_rates": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "by_kill_pattern": {
+        "upstream:functional": 26027,
+        "upstream:cyclotomic_or_large": 3325,
+        "upstream:low_m": 581,
+        "upstream:salem_cluster": 35
+      },
+      "per_seed_counts": [
+        {
+          "seed": 0,
+          "catalog_hit": 8,
+          "claim_into_kernel": 0,
+          "promote": 0,
+          "shadow_catalog": 0,
+          "rejected": 9992,
+          "elapsed_s": 6.536042799940333
+        },
+        {
+          "seed": 1,
+          "catalog_hit": 12,
+          "claim_into_kernel": 0,
+          "promote": 0,
+          "shadow_catalog": 0,
+          "rejected": 9988,
+          "elapsed_s": 6.2667612000368536
+        },
+        {
+          "seed": 2,
+          "catalog_hit": 12,
+          "claim_into_kernel": 0,
+          "promote": 0,
+          "shadow_catalog": 0,
+          "rejected": 9988,
+          "elapsed_s": 5.954953099833801
+        }
+      ]
+    },
+    "reinforce_agent": {
+      "promote_rate_mean": 0.0,
+      "promote_rate_std": 0.0,
+      "promote_rates": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "catalog_hit_rate_mean": 0.0,
+      "catalog_hit_rates": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "claim_rate_mean": 0.0,
+      "claim_rates": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "by_kill_pattern": {
+        "upstream:functional": 182,
+        "upstream:low_m": 9943,
+        "upstream:cyclotomic_or_large": 20,
+        "upstream:salem_cluster": 19855
+      },
+      "per_seed_counts": [
+        {
+          "seed": 0,
+          "catalog_hit": 0,
+          "claim_into_kernel": 0,
+          "promote": 0,
+          "shadow_catalog": 0,
+          "rejected": 10000,
+          "elapsed_s": 10.374529200140387
+        },
+        {
+          "seed": 1,
+          "catalog_hit": 0,
+          "claim_into_kernel": 0,
+          "promote": 0,
+          "shadow_catalog": 0,
+          "rejected": 10000,
+          "elapsed_s": 8.315294000087306
+        },
+        {
+          "seed": 2,
+          "catalog_hit": 0,
+          "claim_into_kernel": 0,
+          "promote": 0,
+          "shadow_catalog": 0,
+          "rejected": 10000,
+          "elapsed_s": 8.008566500153393
+        }
+      ]
+    }
+  },
+  "welch_p_two_sided": 1.0,
+  "provenance_check": {
+    "expected_total_episodes": 60000,
+    "actual_total_pipeline_records": 0
+  }
+}

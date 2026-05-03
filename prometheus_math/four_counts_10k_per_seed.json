@@ -1,0 +1,118 @@
+{
+  "n_episodes_per_cell": 10000,
+  "runs": [
+    {
+      "label": "random_null",
+      "seed": 0,
+      "elapsed_s": 6.536042799940333,
+      "counts": {
+        "catalog_hit": 8,
+        "claim_into_kernel": 0,
+        "promote": 0,
+        "shadow_catalog": 0,
+        "rejected": 9992
+      },
+      "by_kill_pattern": {
+        "upstream:functional": 8680,
+        "upstream:cyclotomic_or_large": 1079,
+        "upstream:low_m": 216,
+        "upstream:salem_cluster": 17
+      },
+      "n_pipeline_records": 0
+    },
+    {
+      "label": "random_null",
+      "seed": 1,
+      "elapsed_s": 6.2667612000368536,
+      "counts": {
+        "catalog_hit": 12,
+        "claim_into_kernel": 0,
+        "promote": 0,
+        "shadow_catalog": 0,
+        "rejected": 9988
+      },
+      "by_kill_pattern": {
+        "upstream:functional": 8663,
+        "upstream:cyclotomic_or_large": 1142,
+        "upstream:low_m": 174,
+        "upstream:salem_cluster": 9
+      },
+      "n_pipeline_records": 0
+    },
+    {
+      "label": "random_null",
+      "seed": 2,
+      "elapsed_s": 5.954953099833801,
+      "counts": {
+        "catalog_hit": 12,
+        "claim_into_kernel": 0,
+        "promote": 0,
+        "shadow_catalog": 0,
+        "rejected": 9988
+      },
+      "by_kill_pattern": {
+        "upstream:functional": 8684,
+        "upstream:cyclotomic_or_large": 1104,
+        "upstream:low_m": 191,
+        "upstream:salem_cluster": 9
+      },
+      "n_pipeline_records": 0
+    },
+    {
+      "label": "reinforce_agent",
+      "seed": 0,
+      "elapsed_s": 10.374529200140387,
+      "counts": {
+        "catalog_hit": 0,
+        "claim_into_kernel": 0,
+        "promote": 0,
+        "shadow_catalog": 0,
+        "rejected": 10000
+      },
+      "by_kill_pattern": {
+        "upstream:functional": 66,
+        "upstream:low_m": 13,
+        "upstream:cyclotomic_or_large": 7,
+        "upstream:salem_cluster": 9914
+      },
+      "n_pipeline_records": 0
+    },
+    {
+      "label": "reinforce_agent",
+      "seed": 1,
+      "elapsed_s": 8.315294000087306,
+      "counts": {
+        "catalog_hit": 0,
+        "claim_into_kernel": 0,
+        "promote": 0,
+        "shadow_catalog": 0,
+        "rejected": 10000
+      },
+      "by_kill_pattern": {
+        "upstream:functional": 64,
+        "upstream:cyclotomic_or_large": 7,
+        "upstream:low_m": 9929
+      },
+      "n_pipeline_records": 0
+    },
+    {
+      "label": "reinforce_agent",
+      "seed": 2,
+      "elapsed_s": 8.008566500153393,
+      "counts": {
+        "catalog_hit": 0,
+        "claim_into_kernel": 0,
+        "promote": 0,
+        "shadow_catalog": 0,
+        "rejected": 10000
+      },
+      "by_kill_pattern": {
+        "upstream:functional": 52,
+        "upstream:low_m": 1,
+        "upstream:cyclotomic_or_large": 6,
+        "upstream:salem_cluster": 9941
+      },
+      "n_pipeline_records": 0
+    }
+  ]
+}
