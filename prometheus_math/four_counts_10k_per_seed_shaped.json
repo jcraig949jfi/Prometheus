@@ -1,0 +1,116 @@
+{
+  "n_episodes_per_cell": 10000,
+  "reward_shape": "shaped",
+  "runs": [
+    {
+      "label": "random_null",
+      "seed": 0,
+      "elapsed_s": 15.007519399980083,
+      "counts": {
+        "catalog_hit": 0,
+        "claim_into_kernel": 0,
+        "promote": 0,
+        "shadow_catalog": 0,
+        "rejected": 10000
+      },
+      "by_kill_pattern": {
+        "upstream:shaped_continuous": 8921,
+        "upstream:large_m": 1031,
+        "upstream:cyclotomic": 48
+      },
+      "n_pipeline_records": 0,
+      "mean_episode_reward": null
+    },
+    {
+      "label": "random_null",
+      "seed": 1,
+      "elapsed_s": 15.03189260000363,
+      "counts": {
+        "catalog_hit": 1,
+        "claim_into_kernel": 0,
+        "promote": 0,
+        "shadow_catalog": 0,
+        "rejected": 9999
+      },
+      "by_kill_pattern": {
+        "upstream:shaped_continuous": 8857,
+        "upstream:large_m": 1088,
+        "upstream:cyclotomic": 54
+      },
+      "n_pipeline_records": 0,
+      "mean_episode_reward": null
+    },
+    {
+      "label": "random_null",
+      "seed": 2,
+      "elapsed_s": 15.123534300131723,
+      "counts": {
+        "catalog_hit": 0,
+        "claim_into_kernel": 0,
+        "promote": 0,
+        "shadow_catalog": 0,
+        "rejected": 10000
+      },
+      "by_kill_pattern": {
+        "upstream:shaped_continuous": 8896,
+        "upstream:large_m": 1053,
+        "upstream:cyclotomic": 51
+      },
+      "n_pipeline_records": 0,
+      "mean_episode_reward": null
+    },
+    {
+      "label": "reinforce_agent",
+      "seed": 0,
+      "elapsed_s": 18.91018670005724,
+      "counts": {
+        "catalog_hit": 0,
+        "claim_into_kernel": 0,
+        "promote": 0,
+        "shadow_catalog": 0,
+        "rejected": 10000
+      },
+      "by_kill_pattern": {
+        "upstream:shaped_continuous": 9999,
+        "upstream:large_m": 1
+      },
+      "n_pipeline_records": 0,
+      "mean_episode_reward": 26.01644427045997
+    },
+    {
+      "label": "reinforce_agent",
+      "seed": 1,
+      "elapsed_s": 19.61725959996693,
+      "counts": {
+        "catalog_hit": 0,
+        "claim_into_kernel": 0,
+        "promote": 0,
+        "shadow_catalog": 0,
+        "rejected": 10000
+      },
+      "by_kill_pattern": {
+        "upstream:shaped_continuous": 10000
+      },
+      "n_pipeline_records": 0,
+      "mean_episode_reward": 2.7139245436126984
+    },
+    {
+      "label": "reinforce_agent",
+      "seed": 2,
+      "elapsed_s": 23.91399609996006,
+      "counts": {
+        "catalog_hit": 0,
+        "claim_into_kernel": 0,
+        "promote": 0,
+        "shadow_catalog": 0,
+        "rejected": 10000
+      },
+      "by_kill_pattern": {
+        "upstream:shaped_continuous": 9999,
+        "upstream:large_m": 1
+      },
+      "n_pipeline_records": 0,
+      "mean_episode_reward": 34.73831377926488
+    }
+  ]
+}

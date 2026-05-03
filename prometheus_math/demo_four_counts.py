@@ -45,7 +45,7 @@ from .four_counts_pilot import (
 )
 
 
-def _build_env_factory(degree: int, cost_seconds: float):
+def _build_env_factory(degree: int, cost_seconds: float, reward_shape: str = "step"):
     def _factory():
         return DiscoveryEnv(
             degree=degree,
@@ -53,6 +53,7 @@ def _build_env_factory(degree: int, cost_seconds: float):
             cost_seconds=cost_seconds,
             log_discoveries=True,
             enable_pipeline=True,
+            reward_shape=reward_shape,
         )
 
     return _factory
@@ -80,6 +81,15 @@ def main(argv: List[str] | None = None) -> int:
         "--cost-seconds", type=float, default=0.5, help="Per-EVAL budget"
     )
     parser.add_argument(
+        "--reward-shape",
+        type=str,
+        default="step",
+        choices=("step", "shaped"),
+        help="Reward shape passed to DiscoveryEnv. 'step' (default) uses "
+        "discrete band rewards (+1/+5/+20/+100); 'shaped' uses the "
+        "continuous M-gradient with sub-Lehmer +50 bonus.",
+    )
+    parser.add_argument(
         "--json-out",
         type=str,
         default=None,
@@ -87,7 +97,7 @@ def main(argv: List[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
 
-    env_factory = _build_env_factory(args.degree, args.cost_seconds)
+    env_factory = _build_env_factory(args.degree, args.cost_seconds, args.reward_shape)
     seeds = list(range(args.seeds))
     lr = args.lr
     entropy_coef = args.entropy_coef
@@ -112,7 +122,7 @@ def main(argv: List[str] | None = None) -> int:
     print("=" * 78)
     print(
         f"FOUR-COUNTS PILOT  degree={args.degree}  episodes={args.episodes}"
-        f"  seeds={seeds}"
+        f"  seeds={seeds}  reward_shape={args.reward_shape}"
     )
     print("=" * 78)
     t0 = time.perf_counter()

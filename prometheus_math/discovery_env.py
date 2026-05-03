@@ -245,6 +245,7 @@ class DiscoveryEnv:
         log_discoveries: bool = True,
         reward_shape: str = "step",
         enable_pipeline: bool = True,
+        coefficient_choices: Optional[Tuple[int, ...]] = None,
     ):
         if reward_shape not in ("step", "shaped"):
             raise ValueError(
@@ -263,6 +264,26 @@ class DiscoveryEnv:
         self.cost_seconds = float(cost_seconds)
         self.seed = seed
         self.log_discoveries = bool(log_discoveries)
+
+        # Coefficient action set.  When None, fall back to the module-level
+        # default (-3..3); when a tuple is supplied, it overrides the
+        # default for *this instance only* (the module-level constant is
+        # never mutated, preserving backward compatibility for every
+        # downstream that imports COEFFICIENT_CHOICES / N_COEFFICIENT_ACTIONS).
+        if coefficient_choices is None:
+            self.coefficient_choices: Tuple[int, ...] = COEFFICIENT_CHOICES
+        else:
+            cc = tuple(int(c) for c in coefficient_choices)
+            if len(cc) == 0:
+                raise ValueError(
+                    "coefficient_choices must be a non-empty tuple of ints"
+                )
+            if len(set(cc)) != len(cc):
+                raise ValueError(
+                    f"coefficient_choices must contain unique values; got {cc}"
+                )
+            self.coefficient_choices = cc
+        self.n_coefficient_actions: int = len(self.coefficient_choices)
 
         self._kernel: Optional[SigmaKernel] = None
         self._ext: Optional[BindEvalExtension] = None
@@ -294,13 +315,13 @@ class DiscoveryEnv:
                 shape=(7 + self.degree,),
                 dtype=np.float64,
             )
-            self.action_space = spaces.Discrete(N_COEFFICIENT_ACTIONS)
+            self.action_space = spaces.Discrete(self.n_coefficient_actions)
             self._gym_spaces = spaces
         except ImportError:
             from .sigma_env import _BoxStub, _DiscreteStub  # local fallback
 
             self.observation_space = _BoxStub((7 + self.degree,))
-            self.action_space = _DiscreteStub(N_COEFFICIENT_ACTIONS)
+            self.action_space = _DiscreteStub(self.n_coefficient_actions)
             self._gym_spaces = None
 
     # ------------------------------------------------------------------
@@ -336,7 +357,8 @@ class DiscoveryEnv:
             "episode": self._episode_count,
             "degree": self.degree,
             "half_len": self.half_len,
-            "n_actions": N_COEFFICIENT_ACTIONS,
+            "n_actions": self.n_coefficient_actions,
+            "coefficient_choices": self.coefficient_choices,
         }
         return self._obs(), info
 
@@ -345,13 +367,13 @@ class DiscoveryEnv:
     ) -> Tuple[np.ndarray, float, bool, bool, Dict[str, Any]]:
         if self._kernel is None or self._ext is None:
             raise RuntimeError("env.step() called before env.reset()")
-        if action < 0 or action >= N_COEFFICIENT_ACTIONS:
+        if action < 0 or action >= self.n_coefficient_actions:
             raise ValueError(
-                f"action {action} out of [0, {N_COEFFICIENT_ACTIONS})"
+                f"action {action} out of [0, {self.n_coefficient_actions})"
             )
 
         # Append the chosen coefficient.
-        coef = COEFFICIENT_CHOICES[action]
+        coef = self.coefficient_choices[action]
         self._partial.append(coef)
         self._step_count += 1
 

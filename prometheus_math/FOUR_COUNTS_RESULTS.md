@@ -14,11 +14,104 @@ Tests: `prometheus_math/tests/test_four_counts_pilot.py` (16 tests, all green)
 | pilot 10K | 2026-04-29 | 10 | 10,000 | 3 |  45.5s | 0/30000 | original 10K |
 | degree 12 | 2026-04-29 | 12 | 5,000 | 3 |  22.5s | 0/15000 | DEGREE_SWEEP |
 | degree 14 | 2026-04-29 | 14 | 3,000 | 3 |  13.7s | 0/9000  | DEGREE_SWEEP |
+| pilot 10K shaped | 2026-04-29 | 10 | 10,000 | 3 | 107.6s | 0/30000 | SHAPED_REWARD |
+| width ±5  | 2026-05-03 | 10 |  5,000 | 3 |  59.8s | 0/30000 | COEFFICIENT_WIDTH |
+| width ±7  | 2026-05-03 | 10 |  3,000 | 3 |  35.3s | 0/18000 | COEFFICIENT_WIDTH |
 
 Raw JSON: `prometheus_math/four_counts_pilot_run.json` (1K snapshot, retained),
-`prometheus_math/four_counts_pilot_run_10k.json` (10K, rich format), and
-`prometheus_math/degree_sweep_results.json` (degree 12 + 14).
-Cross-doc: `prometheus_math/DEGREE_SWEEP_RESULTS.md` (full degree-sweep analysis).
+`prometheus_math/four_counts_pilot_run_10k.json` (10K step-reward, rich format),
+`prometheus_math/four_counts_pilot_run_10k_shaped.json` (10K shaped-reward, rich format),
+`prometheus_math/four_counts_width_{5,7}.json` (coefficient-set width ablation),
+and `prometheus_math/degree_sweep_results.json` (degree 12 + 14).
+Cross-docs: `prometheus_math/DEGREE_SWEEP_RESULTS.md` (full degree-sweep analysis),
+`prometheus_math/SHAPED_REWARD_RESULTS.md` (full reward-shape ablation),
+`prometheus_math/COEFFICIENT_WIDTH_RESULTS.md` (full coefficient-set width ablation).
+
+---
+
+## Reward shape ablation (2026-05-03)
+
+Re-ran the §6.2 four-counts pilot at 10K × 3 with `reward_shape='shaped'`
+(continuous M-gradient + sub-Lehmer +50 bonus) instead of the default
+`step` reward. Same harness, same seeds {0, 1, 2}, same 10K budget;
+only the reward fn differs. Full analysis lives in
+`prometheus_math/SHAPED_REWARD_RESULTS.md`. Headline:
+
+| metric | step (10K × 3) | shaped (10K × 3) |
+|---|---:|---:|
+| total wall time | 45.5s | 107.6s |
+| random_null PROMOTE | 0/30000 | 0/30000 |
+| reinforce_agent PROMOTE | 0/30000 | 0/30000 |
+| SHADOW_CATALOG entries | 0 | 0 |
+| random_null Salem-band hits | 35 | 66 |
+| reinforce Salem-band hits | 19,855 | 1 |
+| Salem proxy concentration (REINFORCE/random) | **567×** | **0.015× (INVERTED)** |
+| reinforce dominant band | salem_cluster (66.18%) | functional (99.94%) |
+| reinforce mean episode reward | n/a (sparse) | 21.16 (avg of 3 seeds) |
+
+**The shaped reward did not break the 0-PROMOTE ceiling.** It also did
+not sharpen the proxy concentration — it *inverted* it. REINFORCE
+under shaped reward slid down the continuous gradient `50·(5-M)/4` to
+the M ≈ 2-3 plateau (functional band, where trajectory volume is
+largest) and abandoned the Salem cluster entirely. The +50 sub-Lehmer
+bonus was insufficient to pull a linear contextual policy past the
+local optimum.
+
+**Verdict:** reward shape isn't the bottleneck — the algorithm /
+action-set is. Step reward's discontinuities at the band boundaries
+were doing useful work for this policy class. Next intervention:
+widen the action set (currently Discrete(7) over {-3..3}), then
+consider stronger algorithms (PPO / MCTS).
+
+See `prometheus_math/SHAPED_REWARD_RESULTS.md` for full details,
+side-by-side tables, M-band distributions, and per-seed reward stats.
+
+---
+
+## Coefficient-set width ablation (2026-05-03)
+
+Tested whether the `{-3..3}` per-step coefficient alphabet (7 actions)
+is structurally too narrow to reach the sub-Lehmer band by widening
+to `{-5..5}` (11 actions, 1.77M trajectories at deg 10) and `{-7..7}`
+(15 actions, 11.4M trajectories). Same step-reward harness, same
+seeds {0, 1, 2}; only the env's `coefficient_choices` changes. Full
+analysis in `prometheus_math/COEFFICIENT_WIDTH_RESULTS.md`. Headline:
+
+| metric | ±3 (10K) | ±5 (5K) | ±7 (3K) |
+|---|---:|---:|---:|
+| n_actions | 7 | 11 | 15 |
+| trajectory space | 117K | 1.77M | 11.4M |
+| total wall time | 45.5s | 59.8s | 35.3s |
+| random_null PROMOTE | 0/30000 | 0/15000 | 0/9000 |
+| reinforce_agent PROMOTE | 0/30000 | 0/15000 | 0/9000 |
+| SHADOW_CATALOG entries | 0 | 0 | 0 |
+| random catalog-hits | 32 (0.107%) | 1 (0.007%) | 0 |
+| catalog hits with max\|c\| ≥ 4 | n/a | **0** | **0** |
+| reinforce Salem-band hits | 19,855 | 0 | 0 |
+
+**Pre-flight from Known180 (8625 entries):** entries with at least
+one |c| ≥ 4 = 112; ≥ 5 = 60; ≥ 6 = 29; ≥ 7 = 26. **At degree 10
+specifically, every catalog entry has max|c| = 1.** The wider-alphabet
+hypothesis is structurally weak at degree 10 by construction; it
+would only bite at degree ≥ 14.
+
+**Verdict:** alphabet is **not the bottleneck** at degree 10. The
+0-PROMOTE ceiling held across {-3..3, -5..5, -7..7}. Catalog-hit
+density *dropped* with width (dilution) — the opposite of what an
+alphabet bottleneck would produce. The single ±5 catalog hit was a
+deg-10 polynomial with max|c| = 3, which {-3..3} could already reach.
+**Zero catalog hits at any width came from polynomials that {-3..3}
+was structurally excluding.**
+
+Next intervention to try: pair widening alphabet with raising degree
+(e.g., degree 14 × {-5..5}), since that is where Known180 has entries
+with max|c| ≥ 4. Or change the algorithm class (PPO / MCTS) — the
+linear contextual REINFORCE policy is also showing dilution failure
+in this sweep, completely losing the Salem-cluster signal at ±5/±7.
+
+See `prometheus_math/COEFFICIENT_WIDTH_RESULTS.md` for the full
+pre-flight magnitude distribution, per-seed breakdowns, kill-pattern
+shifts across widths, and the 1-line summary of the lone ±5 catalog hit.
 
 ---
 

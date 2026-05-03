@@ -354,6 +354,38 @@ def test_composition_shaped_reward_env_runs_end_to_end():
     assert reward >= 90.0
 
 
+def test_authority_widened_coefficient_choices_action_space():
+    """AUTHORITY (audit-add 2026-05-03): the optional coefficient_choices
+    constructor parameter widens the per-step action set without
+    mutating the module-level COEFFICIENT_CHOICES constant. With
+    coefficient_choices=(-5..5), action_space.n == 11; the module
+    constant remains (-3..3) of length 7. Distinct from the default
+    case (which uses module-level COEFFICIENT_CHOICES) and from
+    invalid_degree (different parameter branch).
+
+    Reference: discovery_via_rediscovery.md §6.2 width-ablation pilot.
+    """
+    cc = (-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5)
+    env = DiscoveryEnv(degree=10, coefficient_choices=cc)
+    assert env.action_space.n == 11
+    assert env.coefficient_choices == cc
+    assert env.n_coefficient_actions == 11
+    # The module-level constants must NOT have been mutated.
+    assert COEFFICIENT_CHOICES == (-3, -2, -1, 0, 1, 2, 3)
+    assert N_COEFFICIENT_ACTIONS == 7
+    # Smoke: stepping with the widest action (= coef +5) reaches a
+    # palindromic polynomial whose leading and trailing coefficients
+    # are both +5.
+    env.reset()
+    for _ in range(env.half_len):
+        _, _, terminated, _, info = env.step(env.n_coefficient_actions - 1)
+    assert terminated is True
+    full = info["coeffs_full"]
+    assert full[0] == 5
+    assert full[-1] == 5
+    env.close()
+
+
 def test_composition_sub_lehmer_candidates_list_starts_empty():
     """COMPOSITION (audit-add): a fresh DiscoveryEnv has
     sub_lehmer_candidates() == [] and known_salem_hits() == 0; after
