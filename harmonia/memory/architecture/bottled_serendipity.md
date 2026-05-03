@@ -243,6 +243,21 @@ That's what this thesis names.
 - [`/stoa/discussions/2026-04-29-sigma-kernel-mvp.md`](../../../stoa/discussions/2026-04-29-sigma-kernel-mvp.md) — the kernel MVP onboarding that surfaced the OBSTRUCTION_SHAPE example
 - The whitepaper sequence in `/charon/playground/tt_proof_skeletons/` — `whitepaper.md`, `whitepaper_v2.md`, `whitepaper_v3.md`, `whitepaper_v4.md`, `whitepaper_v5.md`, `whitepaper_v6_design.md` — concrete instances of mad-scientist byproducts (eight kills, each substrate-eligible).
 
+## Appendix B.1: Sharper falsifiability test (2026-05-03)
+
+The "wrong in ways that turn out to be true outside the training distribution" claim was previously rhetorical. James's discovery-via-rediscovery epiphany of 2026-05-03 (full treatment in [`discovery_via_rediscovery.md`](discovery_via_rediscovery.md)) gives it an empirical test.
+
+**Concrete test:** run a generative env (Techne's `discovery_env.py` is the prototype) for N episodes. For each agent action that produces a candidate object, check the object against existing catalogs. Four outcomes possible:
+
+1. **Catalog hit** — rediscovery; the agent re-produced known structure. Reward fires; nothing further.
+2. **Catalog miss → PROMOTE** — agent produced something not in the catalog that survives the falsification battery as signal-class. This is a discovery candidate.
+3. **Catalog miss → battery kill (artifact)** — survived the catalog check but the battery classified the residual as noise or instrument-drift. Substrate-eligible kill-pattern.
+4. **Catalog miss → battery kill (other)** — survived the catalog check but failed F1+F6+F9+F11 unanimously. Different substrate-eligible kill-pattern.
+
+The bottled-serendipity thesis predicts outcome 2 has positive rate. The four-counts pilot (rate-2 / rate-1 / rate-3 / rate-4 over 10K episodes) is the empirical anchor. If outcome 2 is zero across many domains and many model generations, the thesis is wrong. If outcome 2 is non-zero and stable, the thesis is supported.
+
+This is substantially stronger than "we expect this to work because of how LLMs are structured." It's a measurable consequence of the architecture, achievable with current infrastructure pending the engineering step in §6.1 of `discovery_via_rediscovery.md`.
+
 ## Appendix C: Open questions
 
 1. **What's the empirical survival rate?** Currently unmeasured. Needed: a dashboard that tracks `(claims_issued, claims_falsified, claims_promoted)` over time, broken down by agent / prompt-class / domain. Until this is measured, the thesis is qualitatively correct but quantitatively unanchored.

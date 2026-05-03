@@ -129,6 +129,16 @@ That is the program.
 
 ---
 
+## Rediscovery as calibration for discovery (operational corollary, 2026-05-03)
+
+Articulated by James after Techne's `discovery_env` reached M=1.458 in the Salem cluster band on 2026-05-02. Full treatment in [`harmonia/memory/architecture/discovery_via_rediscovery.md`](../harmonia/memory/architecture/discovery_via_rediscovery.md).
+
+The recognition: rediscovery and discovery are the same loop with different oracle states. A discovery candidate is a rediscovery target whose catalog entry doesn't exist yet. The architectural difference is one additional gate (catalog miss → CLAIM → battery → classify). Every component exists or is being built; the pipeline becomes operational pending one engineering step (promote `DISCOVERY_CANDIDATE` from a log line to a substrate CLAIM in `prometheus_math/discovery_env.py`) and one architectural completion (Techne's residual primitive 5-day MVP).
+
+This sharpens the bottled-serendipity thesis from rhetorical to empirical. The thesis previously claimed "a vanishingly small fraction of LLM hallucinations turn out to be true outside the training distribution"; the rate was unspecified. The discovery-via-rediscovery framing converts this to a measurable quantity: the rate of (signal-class catalog-miss survivor) per (total agent episode). A four-counts pilot (catalog-hit / catalog-miss / PROMOTE / battery-kill) on `discovery_env` for 10K episodes gives the empirical anchor the thesis previously lacked. Either the rate is zero across many domains and the thesis is wrong, or the rate is non-zero and stable and the thesis is positively supported. Both outcomes are substrate-grade.
+
+The unification also collapses what looked like two engineering programs (rediscovery validation + discovery research) into one. Same compute pays for both outputs. The substrate's compounding rate roughly doubles.
+
 ## Empirical maturity caveats
 
 Multiple claims in this thesis are architectural commitments rather than validated facts. V2 marks them explicitly:
