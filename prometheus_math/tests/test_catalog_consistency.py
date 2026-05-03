@@ -251,6 +251,56 @@ def test_edge_lmfdb_unreachable_emits_typed_error():
     assert "unreachable" in r.error
 
 
+# ---------------------------------------------------------------------------
+# Authority — LMFDB cast regression (live-network; skip-clean if unreachable)
+# ---------------------------------------------------------------------------
+
+
+def test_authority_lmfdb_cast_handles_array_binding():
+    """Regression for the nf_fields.coeffs ``%s::numeric[]`` cast.
+
+    Bug history: psycopg2's default adaptation of ``list[int]`` produces
+    a Postgres ``integer[]``, which does NOT unify with the
+    ``nf_fields.coeffs`` column's declared ``numeric[]`` type. Without
+    the explicit cast, queries raise
+    ``psycopg2.errors.DatatypeMismatch: operator does not exist:
+    numeric[] = integer[]``.
+
+    This test exercises the live ``lmfdb_check`` adapter with two known
+    polynomials at different degrees:
+
+      * Q(i) = ``[1, 0, 1]`` (degree 2)        → label ``2.0.4.1``
+      * Q(zeta_5) = ``[1, -1, 1, -1, 1]`` (degree 4) → label ``4.0.125.1``
+
+    Both must return ``hit=True`` with the expected label. We test two
+    degrees specifically because the original bug report only covered
+    degree 2; the cast must work uniformly across array sizes.
+
+    Skips cleanly if LMFDB is unreachable (CI without network access).
+    See ``prometheus_math/BUGS_FIXED.md`` entry #1.
+    """
+    from prometheus_math.databases import lmfdb as _lmfdb
+    if not _lmfdb.probe(timeout=5.0):
+        pytest.skip("LMFDB mirror unreachable; cast regression cannot be exercised")
+
+    # Degree-2 case: the original bug report.
+    r2 = lmfdb_check([1, 0, 1], 1.0)
+    assert r2.error is None, f"degree-2 cast regressed: {r2.error}"
+    assert r2.hit is True, "expected hit for Q(i), got miss"
+    assert r2.match_label == "2.0.4.1", (
+        f"expected label 2.0.4.1, got {r2.match_label}"
+    )
+
+    # Degree-4 case: confirm cast works across coefficient-array sizes.
+    # Q(zeta_5), the 5th cyclotomic field.
+    r4 = lmfdb_check([1, -1, 1, -1, 1], 1.0)
+    assert r4.error is None, f"degree-4 cast regressed: {r4.error}"
+    assert r4.hit is True, "expected hit for Q(zeta_5), got miss"
+    assert r4.match_label == "4.0.125.1", (
+        f"expected label 4.0.125.1, got {r4.match_label}"
+    )
+
+
 def test_edge_oeis_short_sequence_skip():
     """OEIS adapter skips when the coefficient list has < 3 nonzero
     entries (trivial sequence not worth searching)."""

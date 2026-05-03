@@ -369,6 +369,185 @@ snappy manifold.
 
 ---
 
+### B-BUGHUNT-001: bind_eval.BIND raises TypeError on callable_ref=None instead of BindingError
+
+**File:** `sigma_kernel/bind_eval.py` :: `_resolve_callable`
+**Reporter:** Techne pivot-stack bug-hunt (test_bughunt)
+**Date:** 2026-04-29
+**Category:** 2 (Equivalence class partitioning)
+
+When `BIND(callable_ref=None, ...)` is invoked, `_resolve_callable` runs
+the membership test ``":" not in callable_ref`` first, which raises
+``TypeError: argument of type 'NoneType' is not iterable`` rather than
+the typed `BindingError` callers depend on.
+
+**Repro:**
+```python
+from sigma_kernel.sigma_kernel import SigmaKernel
+from sigma_kernel.bind_eval import BindEvalExtension, CostModel
+
+k = SigmaKernel(":memory:")
+ext = BindEvalExtension(k)
+cap = k.mint_capability("BindCap")
+ext.BIND(callable_ref=None, cost_model=CostModel(), cap=cap)  # TypeError, not BindingError
+```
+
+**Expected:** `BindingError("callable_ref must be 'module.path:qualname', got None")`.
+
+**Suggested fix:** add a `if not isinstance(callable_ref, str): raise
+BindingError(...)` guard at the top of `_resolve_callable`. Same fix
+applies to empty/whitespace-only strings (the latter already produces
+BindingError but only because `:` is absent).
+
+**Test:** `test_callable_ref_none_raises_BindingError` in
+`sigma_kernel/test_bughunt.py` (xfailed pending fix).
+
+**Status:** filed; not fixed in this session — small but the BIND
+public contract needs an explicit `Optional[str] = None` rejection.
+
+---
+
+### B-BUGHUNT-002: SigmaMathEnv silently swaps action_table=[] for default [RESOLVED 2026-04-29]
+
+**File:** `prometheus_math/sigma_env.py` :: `SigmaMathEnv.__init__`
+**Reporter:** Techne pivot-stack bug-hunt
+**Date:** 2026-04-29
+**Category:** 4 (Adversarial inputs)
+**Resolved:** 2026-04-29 — `__init__` now uses an explicit
+`if action_table is None` branch and defensive-copies the caller's
+list of dicts. Regression test:
+`test_empty_action_table_is_honored` in
+`prometheus_math/tests/test_pivot_bughunt.py`.
+
+The constructor uses
+```python
+self._action_table_raw = action_table or _default_action_table_for_lehmer()
+```
+which evaluates `[] or default_table` → default_table, swapping in 13
+default actions when the caller explicitly passed an empty list. This
+masks intent (a downstream training harness that passes a programmatic
+empty list to disable actions gets the default Lehmer suite instead).
+
+**Repro:**
+```python
+from prometheus_math.sigma_env import SigmaMathEnv
+env = SigmaMathEnv(action_table=[])
+env.reset()
+assert env.action_space.n == 0  # FAILS — n == 13
+```
+
+**Expected:** treat `None` as "use default" and `[]` as "user-empty".
+Use the explicit `if action_table is None:` guard.
+
+**Suggested fix:** replace the `or` with `... if action_table is None
+else action_table`. If the empty case should be rejected outright,
+add `if not action_table: raise ValueError(...)` instead.
+
+**Test:** `test_empty_action_table_is_honored` in
+`prometheus_math/tests/test_pivot_bughunt.py` (xfailed pending fix).
+
+**Status:** filed; not fixed in this session — fix is one-line but the
+semantic choice (accept-empty vs reject-empty) is a design decision.
+
+---
+
+### B-BUGHUNT-003: bind_eval._patch_postgres_tables mutates module-global state
+
+**File:** `sigma_kernel/bind_eval.py` :: `_patch_postgres_tables`
+**Also in:** `sigma_kernel/residuals.py` :: `_patch_postgres_tables`
+**Reporter:** Techne pivot-stack bug-hunt
+**Date:** 2026-04-29
+**Category:** 7 (Error injection / global state mutation)
+
+When a kernel's backend is `"postgres"`, the extension permanently
+extends the module-level `core._TABLES` tuple to include `"bindings"`,
+`"evaluations"`, etc. The mutation persists for the lifetime of the
+process and affects all subsequent `SigmaKernel` instances — even ones
+that never use `BindEvalExtension`. There is no rollback.
+
+**Repro:**
+```python
+from sigma_kernel import sigma_kernel as core
+print(core._TABLES)               # baseline
+# Now imagine: BindEvalExtension(k_postgres) somewhere in the process.
+# core._TABLES is now permanently extended.
+```
+
+**Expected:** patch state should be scoped to the extension instance
+(or at minimum reversible on `__del__`/explicit teardown).
+
+**Suggested fix:** maintain the table list inside `BindEvalExtension`
+itself, or wrap the postgres SQL rewriter in a thread-local /
+context-manager scope so unrelated kernels are not affected.
+
+**Status:** filed; FIX REQUIRES DESIGN DECISION (the SQL rewriter is in
+the kernel core, so refactoring requires touching `sigma_kernel.py`'s
+table-list lookup; out of scope for this session).
+
+---
+
+### B-BUGHUNT-004: cap.consumed dataclass attribute is vestigial defense-in-depth
+
+**File:** `sigma_kernel/bind_eval.py` :: `BIND`/`EVAL`; `residuals.py` :: `REFINE`
+**Reporter:** Techne pivot-stack bug-hunt
+**Date:** 2026-04-29
+**Category:** 5 (State-machine testing / soft-defense)
+
+Each opcode begins with `if cap.consumed: raise CapabilityError(...)`,
+intending defense-in-depth before the DB-level UPDATE. But `Capability`
+is a frozen dataclass and `cap.consumed` is never mutated by any code
+path (the consume happens by setting `consumed=1` in the `capabilities`
+table; the Python object's `consumed` attribute remains False forever).
+The early-exit check therefore only fires when a caller manually
+constructs a `Capability(consumed=True)` — which never happens in
+practice.
+
+**Impact:** soft-defense doesn't fire; the only real protection is the
+DB UPDATE returning rowcount==0. That protection IS sound, so this is a
+documentation/design-clarity bug, not a security bug.
+
+**Suggested fix (one of):**
+* Remove the dead `if cap.consumed:` checks.
+* Make `Capability` non-frozen and mutate it in `_consume_cap`.
+* Document the intent in a docstring.
+
+**Status:** filed; NOT FIXED — needs design call. The current behavior
+is safe; the fix is cosmetic.
+
+---
+
+### B-BUGHUNT-005: action_table reference shared with caller (mutation bleed) [RESOLVED 2026-04-29]
+
+**File:** `prometheus_math/sigma_env.py` :: `SigmaMathEnv.__init__`
+**Reporter:** Techne pivot-stack bug-hunt
+**Date:** 2026-04-29
+**Category:** 4 (Adversarial inputs)
+**Resolved:** 2026-04-29 — defensive copy `[dict(row) for row in action_table]`
+applied. Regression test:
+`test_caller_action_table_mutation_isolated` in
+`prometheus_math/tests/test_pivot_bughunt.py`.
+
+The constructor stashes the caller-supplied `action_table` by reference
+(`self._action_table_raw = action_table`). If the caller mutates the
+list afterwards, the env's internal table changes too — including
+shrinking to length 0. This is a Python aliasing footgun.
+
+**Repro:**
+```python
+table = [{"callable_ref": "math:sqrt", "arg_label": "x", "args": [4], "kwargs": {}}]
+env = SigmaMathEnv(action_table=table)
+table.clear()  # caller cleans up
+# env._action_table_raw is now [] -- env breaks at reset().
+```
+
+**Suggested fix:** `self._action_table_raw = list(action_table)` (or
+deepcopy if the rows themselves contain shared mutable state).
+
+**Status:** filed; trivial fix but defer to design call (deepcopy vs
+shallow vs no-copy).
+
+---
+
 ### B-EDGE-006: iwasawa.lambda_mu(empty-string) raises PariError, not ValueError [RESOLVED 2026-04-25]
 
 **File:** `prometheus_math/iwasawa.py`

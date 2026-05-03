@@ -206,7 +206,14 @@ class SigmaMathEnv:
             )
         self.objective_name = objective
         self._objective_fn = OBJECTIVES[objective]
-        self._action_table_raw = action_table or _default_action_table_for_lehmer()
+        # Defensive copy: caller's list must not bleed into the env's
+        # internal table (B-BUGHUNT-005). Each row dict is also copied
+        # because `args` / `kwargs` are read into ActionRow at reset
+        # but downstream mutation could still surprise.
+        if action_table is None:
+            self._action_table_raw = _default_action_table_for_lehmer()
+        else:
+            self._action_table_raw = [dict(row) for row in action_table]
         self.max_steps = int(max_steps)
         self._kernel_db_path = kernel_db_path
         self._rng = random.Random(seed)
