@@ -17,6 +17,7 @@ Tests: `prometheus_math/tests/test_four_counts_pilot.py` (16 tests, all green)
 | pilot 10K shaped | 2026-04-29 | 10 | 10,000 | 3 | 107.6s | 0/30000 | SHAPED_REWARD |
 | width ±5  | 2026-05-03 | 10 |  5,000 | 3 |  59.8s | 0/30000 | COEFFICIENT_WIDTH |
 | width ±7  | 2026-05-03 | 10 |  3,000 | 3 |  35.3s | 0/18000 | COEFFICIENT_WIDTH |
+| deg14×±5  | 2026-05-03 | 14 |  5,000 | 3 |  50.4s | 0/30000 | D14_W5 (path A) |
 
 Raw JSON: `prometheus_math/four_counts_pilot_run.json` (1K snapshot, retained),
 `prometheus_math/four_counts_pilot_run_10k.json` (10K step-reward, rich format),
@@ -25,7 +26,8 @@ Raw JSON: `prometheus_math/four_counts_pilot_run.json` (1K snapshot, retained),
 and `prometheus_math/degree_sweep_results.json` (degree 12 + 14).
 Cross-docs: `prometheus_math/DEGREE_SWEEP_RESULTS.md` (full degree-sweep analysis),
 `prometheus_math/SHAPED_REWARD_RESULTS.md` (full reward-shape ablation),
-`prometheus_math/COEFFICIENT_WIDTH_RESULTS.md` (full coefficient-set width ablation).
+`prometheus_math/COEFFICIENT_WIDTH_RESULTS.md` (full coefficient-set width ablation),
+`prometheus_math/D14_W5_RESULTS.md` (degree 14 + ±5 alphabet, path-A pilot).
 
 ---
 
@@ -112,6 +114,73 @@ in this sweep, completely losing the Salem-cluster signal at ±5/±7.
 See `prometheus_math/COEFFICIENT_WIDTH_RESULTS.md` for the full
 pre-flight magnitude distribution, per-seed breakdowns, kill-pattern
 shifts across widths, and the 1-line summary of the lone ±5 catalog hit.
+
+---
+
+## Degree 14 + ±5 alphabet ablation (2026-05-03) — path (A) pilot
+
+Triple #3 closed with a triple-#3 pause and three branching paths
+(A / B / C). Path (A): pilot DiscoveryEnv at **degree=14 +
+coefficient_choices=(-5..5)** — the single cell of the (degree,
+alphabet) grid where the curated Known180 + phase1 catalog has
+small-M Salem polynomials with max|c| ≥ 4. Full analysis lives in
+`prometheus_math/D14_W5_RESULTS.md`. Headline:
+
+| metric | deg10 ±3 (10K) | deg10 ±5 (5K) | deg14 ±3 (3K) | **deg14 ±5 (5K)** |
+|---|---:|---:|---:|---:|
+| n_actions | 7 | 11 | 7 | **11** |
+| trajectory space | 117K | 1.77M | 5.76M | **214M** |
+| total wall time | 45.5s | 59.8s | 13.7s | **50.4s** |
+| random_null PROMOTE | 0/30000 | 0/15000 | 0/9000 | **0/15000** |
+| reinforce_agent PROMOTE | 0/30000 | 0/15000 | 0/9000 | **0/15000** |
+| SHADOW_CATALOG entries | 0 | 0 | 0 | **0** |
+| random catalog-hits | 32 | 1 | 8 | **0** |
+| reinforce Salem-band hits | 19,855 | 0 | 1 | **0** |
+| Salem proxy concentration (RFC/rand) | **567×** | **0×** | **0.13×** | **n/a (both zero)** |
+| reinforce dominant kill-pattern | salem_cluster (66.18%) | functional/cyclo | cyclo | **cyclotomic_or_large (99.68%)** |
+
+**Pre-flight from combined catalog:** at degree 14 there is exactly
+**ONE** entry with max|c| ≥ 4 — the deg-14 representation of the
+Lehmer polynomial (M = 1.176281, max|c| = 5,
+`coeffs=[1,2,2,1,0,-2,-4,-5,-4,-2,0,1,2,2,1]`). The hypothesis
+"+100 band exists at degree ≥ 14 but our policy class hadn't
+reached it" is therefore testable but tight: the alphabet
+restriction was a real exclusion (the witness cannot be reached
+from {-3..3}), but the catalog target is small (one specific
+poly).
+
+**Verdict:** **degree 14 + ±5 did NOT break the 0-PROMOTE ceiling.**
+30K episodes, 0 PROMOTEs, 0 SHADOW_CATALOG, 0 catalog hits across
+both arms × 3 seeds. Hypothesis 2 specifically — that the +100 band
+is reachable at degree 14 once the alphabet widens to ±5 — does
+**not** survive this run; the agents failed even to rediscover the
+single deg-14 Lehmer rep that should now be in the trajectory space.
+Hypothesis 1 (Lehmer's conjecture / structural emptiness for this
+policy class) is now the parsimonious read. **REINFORCE collapsed
+onto the cyclotomic_or_large basin in 99.68% of its 15K episodes**,
+uniformly across all 3 seeds — a clean failure signature, not a
+single-seed pathology.
+
+**Cumulative score across all 4-counts ablations:**
+
+| sweep dimension | regimes tested | total episodes | PROMOTEs | SHADOW | catalog hits |
+|---|---|---:|---:|---:|---:|
+| degree (10/12/14, ±3, step) | 3 | 108,000 | 0 | 0 | 32 |
+| reward shape (shaped, deg10, ±3) | 1 | 30,000 | 0 | 0 | 32 |
+| alphabet (±5/±7, deg10, step) | 2 | 48,000 | 0 | 0 | 1 |
+| **deg14 ± alphabet (this run)** | **1** | **30,000** | **0** | **0** | **0** |
+| **TOTAL** | **7 cells** | **216,000** | **0** | **0** | **65** |
+
+**The configuration knobs are exhausted.** Next-interventions ranked:
+algorithm class change (MCTS / PPO with structured masks /
+heuristic warm-start) > generator change (drop reciprocity
+constraint, filter via kill-path) > more degree+alphabet sweep.
+
+See `prometheus_math/D14_W5_RESULTS.md` for the full pre-flight
+catalog distribution at degrees {10, 12, 14, 16, 18, 20}, the deg-14
+catalog entry list with max|c| in {2,3,4,5}, per-seed PROMOTE +
+SHADOW + catalog-hit + kill-pattern breakdown, the run log, and the
+ranked recommendation list.
 
 ---
 

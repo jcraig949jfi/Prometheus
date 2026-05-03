@@ -1,0 +1,2050 @@
+[
+  {
+    "sample_id": "A1_fp_quant_00",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "fp_quantization",
+      "coeff_variance": 6.405920704482398e-16,
+      "magnitude_log10": -15.46042657247226,
+      "canonicalizer_subclass": null
+    },
+    "rationale": "FP-quantization noise at IEEE-754 boundary; no structural signature"
+  },
+  {
+    "sample_id": "A1_fp_quant_01",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "fp_quantization",
+      "coeff_variance": 5.056378869683275e-17,
+      "magnitude_log10": -15.966944728942941,
+      "canonicalizer_subclass": null
+    },
+    "rationale": "FP-quantization noise at IEEE-754 boundary; no structural signature"
+  },
+  {
+    "sample_id": "A1_fp_quant_02",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "fp_quantization",
+      "coeff_variance": 8.151375368082698e-16,
+      "magnitude_log10": -14.174488845444557,
+      "canonicalizer_subclass": null
+    },
+    "rationale": "FP-quantization noise at IEEE-754 boundary; no structural signature"
+  },
+  {
+    "sample_id": "A1_fp_quant_03",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "fp_quantization",
+      "coeff_variance": 6.105694180095081e-16,
+      "magnitude_log10": -14.541006878032004,
+      "canonicalizer_subclass": null
+    },
+    "rationale": "FP-quantization noise at IEEE-754 boundary; no structural signature"
+  },
+  {
+    "sample_id": "A1_fp_quant_04",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "fp_quantization",
+      "coeff_variance": 5.481887415507687e-16,
+      "magnitude_log10": -14.129855152424463,
+      "canonicalizer_subclass": null
+    },
+    "rationale": "FP-quantization noise at IEEE-754 boundary; no structural signature"
+  },
+  {
+    "sample_id": "A1_fp_quant_05",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "fp_quantization",
+      "coeff_variance": 8.176950185803169e-16,
+      "magnitude_log10": -15.994522999659704,
+      "canonicalizer_subclass": null
+    },
+    "rationale": "FP-quantization noise at IEEE-754 boundary; no structural signature"
+  },
+  {
+    "sample_id": "A1_fp_quant_06",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "fp_quantization",
+      "coeff_variance": 8.588302338216937e-16,
+      "magnitude_log10": -15.932828849389072,
+      "canonicalizer_subclass": null
+    },
+    "rationale": "FP-quantization noise at IEEE-754 boundary; no structural signature"
+  },
+  {
+    "sample_id": "A1_fp_quant_07",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "fp_quantization",
+      "coeff_variance": 7.323588919656447e-16,
+      "magnitude_log10": -15.648688758794883,
+      "canonicalizer_subclass": null
+    },
+    "rationale": "FP-quantization noise at IEEE-754 boundary; no structural signature"
+  },
+  {
+    "sample_id": "A1_fp_quant_08",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "fp_quantization",
+      "coeff_variance": 8.645471331263877e-16,
+      "magnitude_log10": -14.917077559501816,
+      "canonicalizer_subclass": null
+    },
+    "rationale": "FP-quantization noise at IEEE-754 boundary; no structural signature"
+  },
+  {
+    "sample_id": "A1_fp_quant_09",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "fp_quantization",
+      "coeff_variance": 3.06714771632011e-16,
+      "magnitude_log10": -15.154625557604684,
+      "canonicalizer_subclass": null
+    },
+    "rationale": "FP-quantization noise at IEEE-754 boundary; no structural signature"
+  },
+  {
+    "sample_id": "A2_mc_seed_jitter_00",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "mc_seed_jitter",
+      "coeff_variance": 0.011132786845818518,
+      "magnitude_log10": -2.7514334470008723,
+      "canonicalizer_subclass": null,
+      "n_seeds_sampled": 53
+    },
+    "rationale": "MC-seed-to-seed variance at expected statistical floor"
+  },
+  {
+    "sample_id": "A2_mc_seed_jitter_01",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "mc_seed_jitter",
+      "coeff_variance": 0.035887580462970005,
+      "magnitude_log10": -1.7692297770374923,
+      "canonicalizer_subclass": null,
+      "n_seeds_sampled": 351
+    },
+    "rationale": "MC-seed-to-seed variance at expected statistical floor"
+  },
+  {
+    "sample_id": "A2_mc_seed_jitter_02",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "mc_seed_jitter",
+      "coeff_variance": 0.02534710217047534,
+      "magnitude_log10": -1.005580128421578,
+      "canonicalizer_subclass": null,
+      "n_seeds_sampled": 412
+    },
+    "rationale": "MC-seed-to-seed variance at expected statistical floor"
+  },
+  {
+    "sample_id": "A2_mc_seed_jitter_03",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "mc_seed_jitter",
+      "coeff_variance": 0.03742167937922779,
+      "magnitude_log10": -1.6990814474643674,
+      "canonicalizer_subclass": null,
+      "n_seeds_sampled": 491
+    },
+    "rationale": "MC-seed-to-seed variance at expected statistical floor"
+  },
+  {
+    "sample_id": "A2_mc_seed_jitter_04",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "mc_seed_jitter",
+      "coeff_variance": 0.037537869222837604,
+      "magnitude_log10": -2.2221571520417926,
+      "canonicalizer_subclass": null,
+      "n_seeds_sampled": 443
+    },
+    "rationale": "MC-seed-to-seed variance at expected statistical floor"
+  },
+  {
+    "sample_id": "A2_mc_seed_jitter_05",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "mc_seed_jitter",
+      "coeff_variance": 0.03885953360776327,
+      "magnitude_log10": -1.9492913550485482,
+      "canonicalizer_subclass": null,
+      "n_seeds_sampled": 110
+    },
+    "rationale": "MC-seed-to-seed variance at expected statistical floor"
+  },
+  {
+    "sample_id": "A2_mc_seed_jitter_06",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "mc_seed_jitter",
+      "coeff_variance": 0.022409675022358227,
+      "magnitude_log10": -2.028329282336422,
+      "canonicalizer_subclass": null,
+      "n_seeds_sampled": 373
+    },
+    "rationale": "MC-seed-to-seed variance at expected statistical floor"
+  },
+  {
+    "sample_id": "A2_mc_seed_jitter_07",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "mc_seed_jitter",
+      "coeff_variance": 0.04736174063824999,
+      "magnitude_log10": -2.2844096065818595,
+      "canonicalizer_subclass": null,
+      "n_seeds_sampled": 450
+    },
+    "rationale": "MC-seed-to-seed variance at expected statistical floor"
+  },
+  {
+    "sample_id": "A2_mc_seed_jitter_08",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "mc_seed_jitter",
+      "coeff_variance": 0.03286119322919044,
+      "magnitude_log10": -2.3562612178481155,
+      "canonicalizer_subclass": null,
+      "n_seeds_sampled": 373
+    },
+    "rationale": "MC-seed-to-seed variance at expected statistical floor"
+  },
+  {
+    "sample_id": "A2_mc_seed_jitter_09",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "mc_seed_jitter",
+      "coeff_variance": 0.02351644902028533,
+      "magnitude_log10": -2.2167619989436775,
+      "canonicalizer_subclass": null,
+      "n_seeds_sampled": 317
+    },
+    "rationale": "MC-seed-to-seed variance at expected statistical floor"
+  },
+  {
+    "sample_id": "A3_gaussian_noise_floor_00",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "gaussian_noise_floor",
+      "coeff_variance": 0.009012469168043134,
+      "magnitude_log10": -4.54568481293324,
+      "canonicalizer_subclass": null,
+      "skewness": 0.19602583164499648,
+      "kurtosis": 3.9008174349330624
+    },
+    "rationale": "Gaussian residual at noise floor; consistent with pure measurement noise"
+  },
+  {
+    "sample_id": "A3_gaussian_noise_floor_01",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "gaussian_noise_floor",
+      "coeff_variance": 0.00849379732888058,
+      "magnitude_log10": -3.4258033850226335,
+      "canonicalizer_subclass": null,
+      "skewness": -0.12083186322821715,
+      "kurtosis": 2.9977729334399585
+    },
+    "rationale": "Gaussian residual at noise floor; consistent with pure measurement noise"
+  },
+  {
+    "sample_id": "A3_gaussian_noise_floor_02",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "gaussian_noise_floor",
+      "coeff_variance": 0.0015271123132467492,
+      "magnitude_log10": -4.3277658789086795,
+      "canonicalizer_subclass": null,
+      "skewness": 0.039512206018200824,
+      "kurtosis": 3.214931847411115
+    },
+    "rationale": "Gaussian residual at noise floor; consistent with pure measurement noise"
+  },
+  {
+    "sample_id": "A3_gaussian_noise_floor_03",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "gaussian_noise_floor",
+      "coeff_variance": 0.00816691843258565,
+      "magnitude_log10": -4.538715582012506,
+      "canonicalizer_subclass": null,
+      "skewness": -0.0661702572039035,
+      "kurtosis": 2.7817823764283895
+    },
+    "rationale": "Gaussian residual at noise floor; consistent with pure measurement noise"
+  },
+  {
+    "sample_id": "A3_gaussian_noise_floor_04",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "gaussian_noise_floor",
+      "coeff_variance": 0.002786617400583298,
+      "magnitude_log10": -4.818493908761756,
+      "canonicalizer_subclass": null,
+      "skewness": -0.04959107284421519,
+      "kurtosis": 3.164484814730101
+    },
+    "rationale": "Gaussian residual at noise floor; consistent with pure measurement noise"
+  },
+  {
+    "sample_id": "A3_gaussian_noise_floor_05",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "gaussian_noise_floor",
+      "coeff_variance": 0.007047953901607235,
+      "magnitude_log10": -4.600969112063574,
+      "canonicalizer_subclass": null,
+      "skewness": 0.13203609870818392,
+      "kurtosis": 3.316676311412458
+    },
+    "rationale": "Gaussian residual at noise floor; consistent with pure measurement noise"
+  },
+  {
+    "sample_id": "A3_gaussian_noise_floor_06",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "gaussian_noise_floor",
+      "coeff_variance": 0.0019494575161320658,
+      "magnitude_log10": -3.7417836969205815,
+      "canonicalizer_subclass": null,
+      "skewness": 0.06836861907765344,
+      "kurtosis": 3.501980787921085
+    },
+    "rationale": "Gaussian residual at noise floor; consistent with pure measurement noise"
+  },
+  {
+    "sample_id": "A3_gaussian_noise_floor_07",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "gaussian_noise_floor",
+      "coeff_variance": 0.009591314443216637,
+      "magnitude_log10": -4.000208372624706,
+      "canonicalizer_subclass": null,
+      "skewness": 0.05737427748605178,
+      "kurtosis": 3.911005681664162
+    },
+    "rationale": "Gaussian residual at noise floor; consistent with pure measurement noise"
+  },
+  {
+    "sample_id": "A3_gaussian_noise_floor_08",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "gaussian_noise_floor",
+      "coeff_variance": 0.009955868547117917,
+      "magnitude_log10": -3.1021126501244694,
+      "canonicalizer_subclass": null,
+      "skewness": 0.09350499881140222,
+      "kurtosis": 3.0245273069126557
+    },
+    "rationale": "Gaussian residual at noise floor; consistent with pure measurement noise"
+  },
+  {
+    "sample_id": "A3_gaussian_noise_floor_09",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "gaussian_noise_floor",
+      "coeff_variance": 0.005476804259388571,
+      "magnitude_log10": -3.941375679606459,
+      "canonicalizer_subclass": null,
+      "skewness": -0.06331940901922267,
+      "kurtosis": 2.811218247383596
+    },
+    "rationale": "Gaussian residual at noise floor; consistent with pure measurement noise"
+  },
+  {
+    "sample_id": "A4_uniform_random_poly_00",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "uniform_random_poly",
+      "coeff_variance": 0.24689671435774588,
+      "magnitude_log10": 1.4222857559794997,
+      "canonicalizer_subclass": null,
+      "poly_degree": 11,
+      "n_distinct_factors": 3
+    },
+    "rationale": "Random polynomial residual; no structural pattern beyond uniform draws"
+  },
+  {
+    "sample_id": "A4_uniform_random_poly_01",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "uniform_random_poly",
+      "coeff_variance": 0.12298652665618104,
+      "magnitude_log10": 1.4580302341526188,
+      "canonicalizer_subclass": null,
+      "poly_degree": 11,
+      "n_distinct_factors": 3
+    },
+    "rationale": "Random polynomial residual; no structural pattern beyond uniform draws"
+  },
+  {
+    "sample_id": "A4_uniform_random_poly_02",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "uniform_random_poly",
+      "coeff_variance": 0.2935852379849293,
+      "magnitude_log10": 0.029412609930738576,
+      "canonicalizer_subclass": null,
+      "poly_degree": 4,
+      "n_distinct_factors": 3
+    },
+    "rationale": "Random polynomial residual; no structural pattern beyond uniform draws"
+  },
+  {
+    "sample_id": "A4_uniform_random_poly_03",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "uniform_random_poly",
+      "coeff_variance": 0.29623900801326886,
+      "magnitude_log10": 1.914420359221927,
+      "canonicalizer_subclass": null,
+      "poly_degree": 6,
+      "n_distinct_factors": 1
+    },
+    "rationale": "Random polynomial residual; no structural pattern beyond uniform draws"
+  },
+  {
+    "sample_id": "A4_uniform_random_poly_04",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "uniform_random_poly",
+      "coeff_variance": 0.29452576276459097,
+      "magnitude_log10": 1.7798711114410413,
+      "canonicalizer_subclass": null,
+      "poly_degree": 6,
+      "n_distinct_factors": 3
+    },
+    "rationale": "Random polynomial residual; no structural pattern beyond uniform draws"
+  },
+  {
+    "sample_id": "A4_uniform_random_poly_05",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "uniform_random_poly",
+      "coeff_variance": 0.19599758476156642,
+      "magnitude_log10": 0.4647458392786077,
+      "canonicalizer_subclass": null,
+      "poly_degree": 11,
+      "n_distinct_factors": 3
+    },
+    "rationale": "Random polynomial residual; no structural pattern beyond uniform draws"
+  },
+  {
+    "sample_id": "A4_uniform_random_poly_06",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "uniform_random_poly",
+      "coeff_variance": 0.28470603195669386,
+      "magnitude_log10": 0.5322605445845852,
+      "canonicalizer_subclass": null,
+      "poly_degree": 6,
+      "n_distinct_factors": 2
+    },
+    "rationale": "Random polynomial residual; no structural pattern beyond uniform draws"
+  },
+  {
+    "sample_id": "A4_uniform_random_poly_07",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "uniform_random_poly",
+      "coeff_variance": 0.1885505657949063,
+      "magnitude_log10": 1.86203463196231,
+      "canonicalizer_subclass": null,
+      "poly_degree": 9,
+      "n_distinct_factors": 1
+    },
+    "rationale": "Random polynomial residual; no structural pattern beyond uniform draws"
+  },
+  {
+    "sample_id": "A4_uniform_random_poly_08",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "uniform_random_poly",
+      "coeff_variance": 0.24640123913131215,
+      "magnitude_log10": 1.2287464938979933,
+      "canonicalizer_subclass": null,
+      "poly_degree": 7,
+      "n_distinct_factors": 1
+    },
+    "rationale": "Random polynomial residual; no structural pattern beyond uniform draws"
+  },
+  {
+    "sample_id": "A4_uniform_random_poly_09",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "uniform_random_poly",
+      "coeff_variance": 0.24384395456534805,
+      "magnitude_log10": 0.03198345904714395,
+      "canonicalizer_subclass": null,
+      "poly_degree": 3,
+      "n_distinct_factors": 3
+    },
+    "rationale": "Random polynomial residual; no structural pattern beyond uniform draws"
+  },
+  {
+    "sample_id": "A5_empty_zero_00",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "empty_zero",
+      "coeff_variance": 0.0,
+      "magnitude_log10": null,
+      "canonicalizer_subclass": null
+    },
+    "rationale": "Empty or near-zero residual; classifier should return noise via empty/zero rule"
+  },
+  {
+    "sample_id": "A5_empty_zero_01",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "empty_zero",
+      "coeff_variance": 0.0,
+      "magnitude_log10": -18.974482553475845,
+      "canonicalizer_subclass": null
+    },
+    "rationale": "Empty or near-zero residual; classifier should return noise via empty/zero rule"
+  },
+  {
+    "sample_id": "A5_empty_zero_02",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "empty_zero",
+      "coeff_variance": 0.0,
+      "magnitude_log10": null,
+      "canonicalizer_subclass": null
+    },
+    "rationale": "Empty or near-zero residual; classifier should return noise via empty/zero rule"
+  },
+  {
+    "sample_id": "A5_empty_zero_03",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "empty_zero",
+      "coeff_variance": 0.0,
+      "magnitude_log10": -18.141791558405988,
+      "canonicalizer_subclass": null
+    },
+    "rationale": "Empty or near-zero residual; classifier should return noise via empty/zero rule"
+  },
+  {
+    "sample_id": "A5_empty_zero_04",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "empty_zero",
+      "coeff_variance": 0.0,
+      "magnitude_log10": null,
+      "canonicalizer_subclass": null
+    },
+    "rationale": "Empty or near-zero residual; classifier should return noise via empty/zero rule"
+  },
+  {
+    "sample_id": "A5_empty_zero_05",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "empty_zero",
+      "coeff_variance": 0.0,
+      "magnitude_log10": -19.86783500655185,
+      "canonicalizer_subclass": null
+    },
+    "rationale": "Empty or near-zero residual; classifier should return noise via empty/zero rule"
+  },
+  {
+    "sample_id": "A5_empty_zero_06",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "empty_zero",
+      "coeff_variance": 0.0,
+      "magnitude_log10": null,
+      "canonicalizer_subclass": null
+    },
+    "rationale": "Empty or near-zero residual; classifier should return noise via empty/zero rule"
+  },
+  {
+    "sample_id": "A5_empty_zero_07",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "empty_zero",
+      "coeff_variance": 0.0,
+      "magnitude_log10": -18.317365440775234,
+      "canonicalizer_subclass": null
+    },
+    "rationale": "Empty or near-zero residual; classifier should return noise via empty/zero rule"
+  },
+  {
+    "sample_id": "A5_empty_zero_08",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "empty_zero",
+      "coeff_variance": 0.0,
+      "magnitude_log10": null,
+      "canonicalizer_subclass": null
+    },
+    "rationale": "Empty or near-zero residual; classifier should return noise via empty/zero rule"
+  },
+  {
+    "sample_id": "A5_empty_zero_09",
+    "sample_class": "obvious_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "empty_zero",
+      "coeff_variance": 0.0,
+      "magnitude_log10": -19.866619982465796,
+      "canonicalizer_subclass": null
+    },
+    "rationale": "Empty or near-zero residual; classifier should return noise via empty/zero rule"
+  },
+  {
+    "sample_id": "B1_mercury_perihelion_low_conf_01",
+    "sample_class": "borderline_signal",
+    "true_label": "signal",
+    "failure_shape": {
+      "kind": "physical_anomaly_residual",
+      "coeff_variance": 0.78,
+      "magnitude_log10": 1.6,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "physical_provenance": "Mercury_perihelion_pre_GR_residual",
+      "confidence_sigma": 2.8
+    },
+    "rationale": "Mercury perihelion residual at pre-GR low-confidence regime; ~3-sigma deviation"
+  },
+  {
+    "sample_id": "B1_mercury_perihelion_low_conf_02",
+    "sample_class": "borderline_signal",
+    "true_label": "signal",
+    "failure_shape": {
+      "kind": "physical_anomaly_residual",
+      "coeff_variance": 0.72,
+      "magnitude_log10": 1.55,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "physical_provenance": "Mercury_perihelion_alternate_regime",
+      "confidence_sigma": 2.5
+    },
+    "rationale": "Mercury perihelion residual under alternate measurement regime; near classifier boundary"
+  },
+  {
+    "sample_id": "C1_high_var_random_00",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 1.060639462230231,
+      "magnitude_log10": 3.801854785303741,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 2,
+      "poly_degree": 6
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_01",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 1.4537845024235194,
+      "magnitude_log10": 1.2473258080419418,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 5,
+      "poly_degree": 9
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_02",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 1.3449323344383974,
+      "magnitude_log10": 1.636796545476645,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 4,
+      "poly_degree": 10
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_03",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 0.6248032019187615,
+      "magnitude_log10": 3.0140524346992263,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 5,
+      "poly_degree": 10
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_04",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 0.8967585448491829,
+      "magnitude_log10": 3.1537148137136173,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 2,
+      "poly_degree": 8
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_05",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 1.0081481005325863,
+      "magnitude_log10": 0.536166788988659,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 3,
+      "poly_degree": 9
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_06",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 0.7831097166085347,
+      "magnitude_log10": 1.049253361767398,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 2,
+      "poly_degree": 12
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_07",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 0.8523678821874359,
+      "magnitude_log10": 1.9407638977265402,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 2,
+      "poly_degree": 14
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_08",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 1.4654914742974081,
+      "magnitude_log10": 2.8991597630941346,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 3,
+      "poly_degree": 10
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_09",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 0.8492020836408337,
+      "magnitude_log10": 0.6426080351005075,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 3,
+      "poly_degree": 14
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_10",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 1.0644617269930907,
+      "magnitude_log10": 0.4634624498830813,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 3,
+      "poly_degree": 11
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_11",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 1.2990148029080681,
+      "magnitude_log10": 2.452013204212162,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 5,
+      "poly_degree": 14
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_12",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 0.6356335889977826,
+      "magnitude_log10": 2.1143570530400866,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 5,
+      "poly_degree": 9
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_13",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 0.6561146212348881,
+      "magnitude_log10": 2.5653126765575,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 5,
+      "poly_degree": 13
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_14",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 1.1336469162938556,
+      "magnitude_log10": 1.0403897909488928,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 3,
+      "poly_degree": 13
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_15",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 1.0585462933693583,
+      "magnitude_log10": 2.043555537866132,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 5,
+      "poly_degree": 12
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_16",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 0.7331298322064609,
+      "magnitude_log10": 3.278506876477108,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 2,
+      "poly_degree": 11
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_17",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 1.3083872473993208,
+      "magnitude_log10": 0.766465036080541,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 4,
+      "poly_degree": 13
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_18",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 0.7721915334514802,
+      "magnitude_log10": 0.32621046945405086,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 2,
+      "poly_degree": 13
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_19",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 1.3751551465599015,
+      "magnitude_log10": 3.506148385666322,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 3,
+      "poly_degree": 9
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_20",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 0.8466435497523465,
+      "magnitude_log10": 0.028367314412665046,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 5,
+      "poly_degree": 11
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_21",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 1.2479184451578238,
+      "magnitude_log10": 3.3422768660010966,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 5,
+      "poly_degree": 7
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_22",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 0.7936963504466762,
+      "magnitude_log10": 2.5573255202663514,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 5,
+      "poly_degree": 13
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_23",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 1.4673037855604738,
+      "magnitude_log10": 0.6020993216847099,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 2,
+      "poly_degree": 9
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_24",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 1.405244275976556,
+      "magnitude_log10": 1.6908676277817491,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 4,
+      "poly_degree": 10
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_25",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 0.6220416097440269,
+      "magnitude_log10": 2.6938395486117557,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 3,
+      "poly_degree": 14
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_26",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 1.3441427966010489,
+      "magnitude_log10": 3.542081066839787,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 2,
+      "poly_degree": 11
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_27",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 0.8209970405188598,
+      "magnitude_log10": 3.0740679955850174,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 5,
+      "poly_degree": 7
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_28",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 1.348147351198015,
+      "magnitude_log10": 0.250871690283073,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 5,
+      "poly_degree": 13
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C1_high_var_random_29",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_high_variance",
+      "coeff_variance": 0.7480565398266912,
+      "magnitude_log10": 1.5005879859865674,
+      "canonicalizer_subclass": null,
+      "n_distinct_factors": 5,
+      "poly_degree": 8
+    },
+    "rationale": "High-variance random polynomial; coefficient variance triggers classifier but no real signal"
+  },
+  {
+    "sample_id": "C2_subclass_collision_00",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.11250015736103018,
+      "magnitude_log10": -0.01871918891506774,
+      "canonicalizer_subclass": "group_quotient",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_01",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.05203860828779333,
+      "magnitude_log10": -0.6875264362494926,
+      "canonicalizer_subclass": "ideal_reduction",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_02",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.08707243284756357,
+      "magnitude_log10": 1.1657997301827887,
+      "canonicalizer_subclass": "ideal_reduction",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_03",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.1831484944602863,
+      "magnitude_log10": 1.6264696903811942,
+      "canonicalizer_subclass": "partition_refinement",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_04",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.20092936207209217,
+      "magnitude_log10": 2.336602528210996,
+      "canonicalizer_subclass": "ideal_reduction",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_05",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.27124729112505847,
+      "magnitude_log10": 2.051371760531495,
+      "canonicalizer_subclass": "ideal_reduction",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_06",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.24028425138395948,
+      "magnitude_log10": -1.018515574426233,
+      "canonicalizer_subclass": "partition_refinement",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_07",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.3986494165415198,
+      "magnitude_log10": -0.7839226784683644,
+      "canonicalizer_subclass": "partition_refinement",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_08",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.0756165253368381,
+      "magnitude_log10": -0.7109844050163172,
+      "canonicalizer_subclass": "group_quotient",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_09",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.31709498639041866,
+      "magnitude_log10": 1.4894678534154067,
+      "canonicalizer_subclass": "partition_refinement",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_10",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.181683475499833,
+      "magnitude_log10": 0.1046069730873147,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_11",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.2827444862266863,
+      "magnitude_log10": 0.2796448152187443,
+      "canonicalizer_subclass": "group_quotient",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_12",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.34388961126312984,
+      "magnitude_log10": 1.6323680515618522,
+      "canonicalizer_subclass": "group_quotient",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_13",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.17775254222799564,
+      "magnitude_log10": 0.24198154672242111,
+      "canonicalizer_subclass": "ideal_reduction",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_14",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.08840713240234387,
+      "magnitude_log10": -0.983792279563017,
+      "canonicalizer_subclass": "ideal_reduction",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_15",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.1493322711304459,
+      "magnitude_log10": -0.4293305219884891,
+      "canonicalizer_subclass": "partition_refinement",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_16",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.2518449006885332,
+      "magnitude_log10": 2.8584498780987735,
+      "canonicalizer_subclass": "ideal_reduction",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_17",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.3211324472233062,
+      "magnitude_log10": 1.9556697408640265,
+      "canonicalizer_subclass": "partition_refinement",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_18",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.25894570568331476,
+      "magnitude_log10": 2.5884612858545637,
+      "canonicalizer_subclass": "ideal_reduction",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_19",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.29137055440647835,
+      "magnitude_log10": 0.501782153684355,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_20",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.22095722947993335,
+      "magnitude_log10": -0.9358450232983282,
+      "canonicalizer_subclass": "ideal_reduction",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_21",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.09644370414137554,
+      "magnitude_log10": 0.530324612646865,
+      "canonicalizer_subclass": "group_quotient",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_22",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.15325225498193185,
+      "magnitude_log10": 1.8438587995458322,
+      "canonicalizer_subclass": "partition_refinement",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_23",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.23397033310678894,
+      "magnitude_log10": -1.2547598831464373,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_24",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.19057267836098113,
+      "magnitude_log10": -0.5238287216865212,
+      "canonicalizer_subclass": "group_quotient",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_25",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.34644942972180537,
+      "magnitude_log10": -1.3776983374226008,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_26",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.11573865989791392,
+      "magnitude_log10": -0.03754111993708786,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_27",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.13116495746174847,
+      "magnitude_log10": 2.2061399634619345,
+      "canonicalizer_subclass": "ideal_reduction",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_28",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.39114248450880124,
+      "magnitude_log10": 1.1263074220755338,
+      "canonicalizer_subclass": "ideal_reduction",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C2_subclass_collision_29",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_subclass_collision",
+      "coeff_variance": 0.29276799214602034,
+      "magnitude_log10": 0.6076256106620876,
+      "canonicalizer_subclass": "partition_refinement",
+      "subclass_provenance": "hash_collision_random_assignment"
+    },
+    "rationale": "Subclass tag from hash collision, not real structural matching"
+  },
+  {
+    "sample_id": "C3_fake_drift_00",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_fake_drift",
+      "coeff_variance": 0.16179363981511824,
+      "magnitude_log10": -1.4177743157902851,
+      "canonicalizer_subclass": null,
+      "drift_fingerprint": "autocorrelated_noise_t10",
+      "calibration_anchor_correlations": 0
+    },
+    "rationale": "Time-correlated noise resembling instrument drift; no calibration-anchor signal"
+  },
+  {
+    "sample_id": "C3_fake_drift_01",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_fake_drift",
+      "coeff_variance": 0.28818683753238034,
+      "magnitude_log10": -2.195187197101342,
+      "canonicalizer_subclass": null,
+      "drift_fingerprint": "autocorrelated_noise_t10",
+      "calibration_anchor_correlations": 0
+    },
+    "rationale": "Time-correlated noise resembling instrument drift; no calibration-anchor signal"
+  },
+  {
+    "sample_id": "C3_fake_drift_02",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_fake_drift",
+      "coeff_variance": 0.2976437802440425,
+      "magnitude_log10": 0.03322344801527377,
+      "canonicalizer_subclass": null,
+      "drift_fingerprint": "autocorrelated_noise_t10",
+      "calibration_anchor_correlations": 0
+    },
+    "rationale": "Time-correlated noise resembling instrument drift; no calibration-anchor signal"
+  },
+  {
+    "sample_id": "C3_fake_drift_03",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_fake_drift",
+      "coeff_variance": 0.17195738529852206,
+      "magnitude_log10": -0.43394564197758667,
+      "canonicalizer_subclass": null,
+      "drift_fingerprint": "autocorrelated_noise_t10",
+      "calibration_anchor_correlations": 0
+    },
+    "rationale": "Time-correlated noise resembling instrument drift; no calibration-anchor signal"
+  },
+  {
+    "sample_id": "C3_fake_drift_04",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_fake_drift",
+      "coeff_variance": 0.1761963078586175,
+      "magnitude_log10": -1.47402826944032,
+      "canonicalizer_subclass": null,
+      "drift_fingerprint": "autocorrelated_noise_t10",
+      "calibration_anchor_correlations": 0
+    },
+    "rationale": "Time-correlated noise resembling instrument drift; no calibration-anchor signal"
+  },
+  {
+    "sample_id": "C3_fake_drift_05",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_fake_drift",
+      "coeff_variance": 0.2007605900389059,
+      "magnitude_log10": -2.9331087134584917,
+      "canonicalizer_subclass": null,
+      "drift_fingerprint": "autocorrelated_noise_t10",
+      "calibration_anchor_correlations": 0
+    },
+    "rationale": "Time-correlated noise resembling instrument drift; no calibration-anchor signal"
+  },
+  {
+    "sample_id": "C3_fake_drift_06",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_fake_drift",
+      "coeff_variance": 0.19871431198867923,
+      "magnitude_log10": 0.8863936537875521,
+      "canonicalizer_subclass": null,
+      "drift_fingerprint": "autocorrelated_noise_t10",
+      "calibration_anchor_correlations": 0
+    },
+    "rationale": "Time-correlated noise resembling instrument drift; no calibration-anchor signal"
+  },
+  {
+    "sample_id": "C3_fake_drift_07",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_fake_drift",
+      "coeff_variance": 0.1570930457571157,
+      "magnitude_log10": -0.007128163693551404,
+      "canonicalizer_subclass": null,
+      "drift_fingerprint": "autocorrelated_noise_t10",
+      "calibration_anchor_correlations": 0
+    },
+    "rationale": "Time-correlated noise resembling instrument drift; no calibration-anchor signal"
+  },
+  {
+    "sample_id": "C3_fake_drift_08",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_fake_drift",
+      "coeff_variance": 0.188557778014099,
+      "magnitude_log10": -2.162875829528858,
+      "canonicalizer_subclass": null,
+      "drift_fingerprint": "autocorrelated_noise_t10",
+      "calibration_anchor_correlations": 0
+    },
+    "rationale": "Time-correlated noise resembling instrument drift; no calibration-anchor signal"
+  },
+  {
+    "sample_id": "C3_fake_drift_09",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_fake_drift",
+      "coeff_variance": 0.2810005141636259,
+      "magnitude_log10": -2.932690861279148,
+      "canonicalizer_subclass": null,
+      "drift_fingerprint": "autocorrelated_noise_t10",
+      "calibration_anchor_correlations": 0
+    },
+    "rationale": "Time-correlated noise resembling instrument drift; no calibration-anchor signal"
+  },
+  {
+    "sample_id": "C3_fake_drift_10",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_fake_drift",
+      "coeff_variance": 0.16070178531990215,
+      "magnitude_log10": 0.9961035292957501,
+      "canonicalizer_subclass": null,
+      "drift_fingerprint": "autocorrelated_noise_t10",
+      "calibration_anchor_correlations": 0
+    },
+    "rationale": "Time-correlated noise resembling instrument drift; no calibration-anchor signal"
+  },
+  {
+    "sample_id": "C3_fake_drift_11",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_fake_drift",
+      "coeff_variance": 0.15242935923799789,
+      "magnitude_log10": 0.39617808743708816,
+      "canonicalizer_subclass": null,
+      "drift_fingerprint": "autocorrelated_noise_t10",
+      "calibration_anchor_correlations": 0
+    },
+    "rationale": "Time-correlated noise resembling instrument drift; no calibration-anchor signal"
+  },
+  {
+    "sample_id": "C3_fake_drift_12",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_fake_drift",
+      "coeff_variance": 0.22113662973114084,
+      "magnitude_log10": 0.22414283010849445,
+      "canonicalizer_subclass": null,
+      "drift_fingerprint": "autocorrelated_noise_t10",
+      "calibration_anchor_correlations": 0
+    },
+    "rationale": "Time-correlated noise resembling instrument drift; no calibration-anchor signal"
+  },
+  {
+    "sample_id": "C3_fake_drift_13",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_fake_drift",
+      "coeff_variance": 0.22606355108869564,
+      "magnitude_log10": -1.5492125717686065,
+      "canonicalizer_subclass": null,
+      "drift_fingerprint": "autocorrelated_noise_t10",
+      "calibration_anchor_correlations": 0
+    },
+    "rationale": "Time-correlated noise resembling instrument drift; no calibration-anchor signal"
+  },
+  {
+    "sample_id": "C3_fake_drift_14",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_fake_drift",
+      "coeff_variance": 0.2521577569166965,
+      "magnitude_log10": -2.8940618043841106,
+      "canonicalizer_subclass": null,
+      "drift_fingerprint": "autocorrelated_noise_t10",
+      "calibration_anchor_correlations": 0
+    },
+    "rationale": "Time-correlated noise resembling instrument drift; no calibration-anchor signal"
+  },
+  {
+    "sample_id": "C3_fake_drift_15",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_fake_drift",
+      "coeff_variance": 0.18936259034689037,
+      "magnitude_log10": -1.512581720519576,
+      "canonicalizer_subclass": null,
+      "drift_fingerprint": "autocorrelated_noise_t10",
+      "calibration_anchor_correlations": 0
+    },
+    "rationale": "Time-correlated noise resembling instrument drift; no calibration-anchor signal"
+  },
+  {
+    "sample_id": "C3_fake_drift_16",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_fake_drift",
+      "coeff_variance": 0.1954148011274699,
+      "magnitude_log10": -2.4895172540157215,
+      "canonicalizer_subclass": null,
+      "drift_fingerprint": "autocorrelated_noise_t10",
+      "calibration_anchor_correlations": 0
+    },
+    "rationale": "Time-correlated noise resembling instrument drift; no calibration-anchor signal"
+  },
+  {
+    "sample_id": "C3_fake_drift_17",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_fake_drift",
+      "coeff_variance": 0.1445013731892545,
+      "magnitude_log10": -0.7517936396011624,
+      "canonicalizer_subclass": null,
+      "drift_fingerprint": "autocorrelated_noise_t10",
+      "calibration_anchor_correlations": 0
+    },
+    "rationale": "Time-correlated noise resembling instrument drift; no calibration-anchor signal"
+  },
+  {
+    "sample_id": "C3_fake_drift_18",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_fake_drift",
+      "coeff_variance": 0.17755382313119078,
+      "magnitude_log10": 0.16662482236136222,
+      "canonicalizer_subclass": null,
+      "drift_fingerprint": "autocorrelated_noise_t10",
+      "calibration_anchor_correlations": 0
+    },
+    "rationale": "Time-correlated noise resembling instrument drift; no calibration-anchor signal"
+  },
+  {
+    "sample_id": "C3_fake_drift_19",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_fake_drift",
+      "coeff_variance": 0.2210273178555029,
+      "magnitude_log10": 0.44506673914797634,
+      "canonicalizer_subclass": null,
+      "drift_fingerprint": "autocorrelated_noise_t10",
+      "calibration_anchor_correlations": 0
+    },
+    "rationale": "Time-correlated noise resembling instrument drift; no calibration-anchor signal"
+  },
+  {
+    "sample_id": "C4_cyclotomic_near_miss_00",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_cyclotomic_near_miss",
+      "coeff_variance": 0.7197082511976813,
+      "magnitude_log10": 0.03009117238792825,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "mahler_measure_distance_from_unity": 0.00028832798659379977,
+      "poly_irreducible": false
+    },
+    "rationale": "Polynomial near cyclotomic manifold; reducible; computational artifact rather than discovery"
+  },
+  {
+    "sample_id": "C4_cyclotomic_near_miss_01",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_cyclotomic_near_miss",
+      "coeff_variance": 0.7348281403778506,
+      "magnitude_log10": 0.012563378908554091,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "mahler_measure_distance_from_unity": 7.613590070259003e-05,
+      "poly_irreducible": false
+    },
+    "rationale": "Polynomial near cyclotomic manifold; reducible; computational artifact rather than discovery"
+  },
+  {
+    "sample_id": "C4_cyclotomic_near_miss_02",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_cyclotomic_near_miss",
+      "coeff_variance": 0.7888593735329683,
+      "magnitude_log10": 0.02700056025482346,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "mahler_measure_distance_from_unity": 0.0007741204032522617,
+      "poly_irreducible": false
+    },
+    "rationale": "Polynomial near cyclotomic manifold; reducible; computational artifact rather than discovery"
+  },
+  {
+    "sample_id": "C4_cyclotomic_near_miss_03",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_cyclotomic_near_miss",
+      "coeff_variance": 0.6587668422891081,
+      "magnitude_log10": 0.030578986518591075,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "mahler_measure_distance_from_unity": 3.4858358265989735e-05,
+      "poly_irreducible": false
+    },
+    "rationale": "Polynomial near cyclotomic manifold; reducible; computational artifact rather than discovery"
+  },
+  {
+    "sample_id": "C4_cyclotomic_near_miss_04",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_cyclotomic_near_miss",
+      "coeff_variance": 0.5560381038061426,
+      "magnitude_log10": 0.03373446977173888,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "mahler_measure_distance_from_unity": 0.0005709940333545458,
+      "poly_irreducible": false
+    },
+    "rationale": "Polynomial near cyclotomic manifold; reducible; computational artifact rather than discovery"
+  },
+  {
+    "sample_id": "C4_cyclotomic_near_miss_05",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_cyclotomic_near_miss",
+      "coeff_variance": 0.5475665101960138,
+      "magnitude_log10": 0.04760146343630924,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "mahler_measure_distance_from_unity": 0.0001551992789148569,
+      "poly_irreducible": false
+    },
+    "rationale": "Polynomial near cyclotomic manifold; reducible; computational artifact rather than discovery"
+  },
+  {
+    "sample_id": "C4_cyclotomic_near_miss_06",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_cyclotomic_near_miss",
+      "coeff_variance": 0.6530909749216056,
+      "magnitude_log10": 0.007200143750962885,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "mahler_measure_distance_from_unity": 0.0007176543543801285,
+      "poly_irreducible": false
+    },
+    "rationale": "Polynomial near cyclotomic manifold; reducible; computational artifact rather than discovery"
+  },
+  {
+    "sample_id": "C4_cyclotomic_near_miss_07",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_cyclotomic_near_miss",
+      "coeff_variance": 0.5828939042285458,
+      "magnitude_log10": 0.006706698756089164,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "mahler_measure_distance_from_unity": 4.694119348984515e-05,
+      "poly_irreducible": false
+    },
+    "rationale": "Polynomial near cyclotomic manifold; reducible; computational artifact rather than discovery"
+  },
+  {
+    "sample_id": "C4_cyclotomic_near_miss_08",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_cyclotomic_near_miss",
+      "coeff_variance": 0.5524506613692871,
+      "magnitude_log10": 0.009589935836178322,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "mahler_measure_distance_from_unity": 0.0005374351074922209,
+      "poly_irreducible": false
+    },
+    "rationale": "Polynomial near cyclotomic manifold; reducible; computational artifact rather than discovery"
+  },
+  {
+    "sample_id": "C4_cyclotomic_near_miss_09",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_cyclotomic_near_miss",
+      "coeff_variance": 0.6353116658514174,
+      "magnitude_log10": 0.04786471836267687,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "mahler_measure_distance_from_unity": 0.000954197185529776,
+      "poly_irreducible": false
+    },
+    "rationale": "Polynomial near cyclotomic manifold; reducible; computational artifact rather than discovery"
+  },
+  {
+    "sample_id": "C4_cyclotomic_near_miss_10",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_cyclotomic_near_miss",
+      "coeff_variance": 0.7389638331405292,
+      "magnitude_log10": 0.03357938169903517,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "mahler_measure_distance_from_unity": 0.0008451780684767782,
+      "poly_irreducible": false
+    },
+    "rationale": "Polynomial near cyclotomic manifold; reducible; computational artifact rather than discovery"
+  },
+  {
+    "sample_id": "C4_cyclotomic_near_miss_11",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_cyclotomic_near_miss",
+      "coeff_variance": 0.7816255485439654,
+      "magnitude_log10": 0.0011308864443501376,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "mahler_measure_distance_from_unity": 0.00011898712192370784,
+      "poly_irreducible": false
+    },
+    "rationale": "Polynomial near cyclotomic manifold; reducible; computational artifact rather than discovery"
+  },
+  {
+    "sample_id": "C4_cyclotomic_near_miss_12",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_cyclotomic_near_miss",
+      "coeff_variance": 0.608079165405093,
+      "magnitude_log10": 0.004679342652129987,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "mahler_measure_distance_from_unity": 0.000599924948580224,
+      "poly_irreducible": false
+    },
+    "rationale": "Polynomial near cyclotomic manifold; reducible; computational artifact rather than discovery"
+  },
+  {
+    "sample_id": "C4_cyclotomic_near_miss_13",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_cyclotomic_near_miss",
+      "coeff_variance": 0.5781092667044326,
+      "magnitude_log10": 0.013216986456616276,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "mahler_measure_distance_from_unity": 0.00028903966065921776,
+      "poly_irreducible": false
+    },
+    "rationale": "Polynomial near cyclotomic manifold; reducible; computational artifact rather than discovery"
+  },
+  {
+    "sample_id": "C4_cyclotomic_near_miss_14",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_cyclotomic_near_miss",
+      "coeff_variance": 0.529314697275317,
+      "magnitude_log10": 0.03704722266190795,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "mahler_measure_distance_from_unity": 0.0006510217571700505,
+      "poly_irreducible": false
+    },
+    "rationale": "Polynomial near cyclotomic manifold; reducible; computational artifact rather than discovery"
+  },
+  {
+    "sample_id": "C4_cyclotomic_near_miss_15",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_cyclotomic_near_miss",
+      "coeff_variance": 0.6819524271923787,
+      "magnitude_log10": 0.0017022791138887718,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "mahler_measure_distance_from_unity": 0.0004300346804942387,
+      "poly_irreducible": false
+    },
+    "rationale": "Polynomial near cyclotomic manifold; reducible; computational artifact rather than discovery"
+  },
+  {
+    "sample_id": "C4_cyclotomic_near_miss_16",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_cyclotomic_near_miss",
+      "coeff_variance": 0.7055610769699528,
+      "magnitude_log10": 0.00781733249517932,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "mahler_measure_distance_from_unity": 0.00038627218681289334,
+      "poly_irreducible": false
+    },
+    "rationale": "Polynomial near cyclotomic manifold; reducible; computational artifact rather than discovery"
+  },
+  {
+    "sample_id": "C4_cyclotomic_near_miss_17",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_cyclotomic_near_miss",
+      "coeff_variance": 0.5059502436409811,
+      "magnitude_log10": 0.004092899853862103,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "mahler_measure_distance_from_unity": 0.00021723712641905487,
+      "poly_irreducible": false
+    },
+    "rationale": "Polynomial near cyclotomic manifold; reducible; computational artifact rather than discovery"
+  },
+  {
+    "sample_id": "C4_cyclotomic_near_miss_18",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_cyclotomic_near_miss",
+      "coeff_variance": 0.6243950483423746,
+      "magnitude_log10": 0.023162001814368994,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "mahler_measure_distance_from_unity": 0.000884637010086495,
+      "poly_irreducible": false
+    },
+    "rationale": "Polynomial near cyclotomic manifold; reducible; computational artifact rather than discovery"
+  },
+  {
+    "sample_id": "C4_cyclotomic_near_miss_19",
+    "sample_class": "synthetic_structured_noise",
+    "true_label": "noise",
+    "failure_shape": {
+      "kind": "synthetic_cyclotomic_near_miss",
+      "coeff_variance": 0.594997532652204,
+      "magnitude_log10": 0.0010731938138595688,
+      "canonicalizer_subclass": "variety_fingerprint",
+      "mahler_measure_distance_from_unity": 0.0008263971234243941,
+      "poly_irreducible": false
+    },
+    "rationale": "Polynomial near cyclotomic manifold; reducible; computational artifact rather than discovery"
+  }
+]

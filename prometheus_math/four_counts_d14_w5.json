@@ -1,0 +1,203 @@
+{
+  "config": {
+    "degree": 14,
+    "coefficient_choices": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "alphabet_size": 11,
+    "n_episodes_per_cell": 5000,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "reward_shape": "step"
+  },
+  "per_arm": {
+    "random_null": {
+      "promote_rate_mean": 0.0,
+      "promote_rate_std": 0.0,
+      "promote_rates": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "catalog_hit_rate_mean": 0.0,
+      "claim_rate_mean": 0.0,
+      "results": [
+        {
+          "condition_label": "random_null",
+          "total_episodes": 5000,
+          "catalog_hit_count": 0,
+          "claim_into_kernel_count": 0,
+          "promote_count": 0,
+          "shadow_catalog_count": 0,
+          "rejected_count": 5000,
+          "by_kill_pattern": {
+            "upstream:cyclotomic_or_large": 4294,
+            "upstream:functional": 706
+          },
+          "elapsed_seconds": 7.7719550000038,
+          "seed": 0
+        },
+        {
+          "condition_label": "random_null",
+          "total_episodes": 5000,
+          "catalog_hit_count": 0,
+          "claim_into_kernel_count": 0,
+          "promote_count": 0,
+          "shadow_catalog_count": 0,
+          "rejected_count": 5000,
+          "by_kill_pattern": {
+            "upstream:cyclotomic_or_large": 4355,
+            "upstream:functional": 645
+          },
+          "elapsed_seconds": 7.7361291002016515,
+          "seed": 1
+        },
+        {
+          "condition_label": "random_null",
+          "total_episodes": 5000,
+          "catalog_hit_count": 0,
+          "claim_into_kernel_count": 0,
+          "promote_count": 0,
+          "shadow_catalog_count": 0,
+          "rejected_count": 5000,
+          "by_kill_pattern": {
+            "upstream:cyclotomic_or_large": 4365,
+            "upstream:functional": 634,
+            "upstream:low_m": 1
+          },
+          "elapsed_seconds": 7.775652100099251,
+          "seed": 2
+        }
+      ],
+      "details": [
+        {
+          "catalog_hits": [],
+          "promotes": [],
+          "shadow_catalog": [],
+          "salem_cluster_proxy_hits": 0,
+          "low_m_proxy_hits": 0,
+          "seed": 0
+        },
+        {
+          "catalog_hits": [],
+          "promotes": [],
+          "shadow_catalog": [],
+          "salem_cluster_proxy_hits": 0,
+          "low_m_proxy_hits": 0,
+          "seed": 1
+        },
+        {
+          "catalog_hits": [],
+          "promotes": [],
+          "shadow_catalog": [],
+          "salem_cluster_proxy_hits": 0,
+          "low_m_proxy_hits": 1,
+          "seed": 2
+        }
+      ]
+    },
+    "reinforce_agent": {
+      "promote_rate_mean": 0.0,
+      "promote_rate_std": 0.0,
+      "promote_rates": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "catalog_hit_rate_mean": 0.0,
+      "claim_rate_mean": 0.0,
+      "results": [
+        {
+          "condition_label": "reinforce_agent",
+          "total_episodes": 5000,
+          "catalog_hit_count": 0,
+          "claim_into_kernel_count": 0,
+          "promote_count": 0,
+          "shadow_catalog_count": 0,
+          "rejected_count": 5000,
+          "by_kill_pattern": {
+            "upstream:cyclotomic_or_large": 4985,
+            "upstream:functional": 15
+          },
+          "elapsed_seconds": 8.940643300069496,
+          "seed": 0
+        },
+        {
+          "condition_label": "reinforce_agent",
+          "total_episodes": 5000,
+          "catalog_hit_count": 0,
+          "claim_into_kernel_count": 0,
+          "promote_count": 0,
+          "shadow_catalog_count": 0,
+          "rejected_count": 5000,
+          "by_kill_pattern": {
+            "upstream:cyclotomic_or_large": 4982,
+            "upstream:functional": 18
+          },
+          "elapsed_seconds": 9.093408700078726,
+          "seed": 1
+        },
+        {
+          "condition_label": "reinforce_agent",
+          "total_episodes": 5000,
+          "catalog_hit_count": 0,
+          "claim_into_kernel_count": 0,
+          "promote_count": 0,
+          "shadow_catalog_count": 0,
+          "rejected_count": 5000,
+          "by_kill_pattern": {
+            "upstream:cyclotomic_or_large": 4985,
+            "upstream:functional": 15
+          },
+          "elapsed_seconds": 9.127625999972224,
+          "seed": 2
+        }
+      ],
+      "details": [
+        {
+          "catalog_hits": [],
+          "promotes": [],
+          "shadow_catalog": [],
+          "salem_cluster_proxy_hits": 0,
+          "low_m_proxy_hits": 0,
+          "seed": 0
+        },
+        {
+          "catalog_hits": [],
+          "promotes": [],
+          "shadow_catalog": [],
+          "salem_cluster_proxy_hits": 0,
+          "low_m_proxy_hits": 0,
+          "seed": 1
+        },
+        {
+          "catalog_hits": [],
+          "promotes": [],
+          "shadow_catalog": [],
+          "salem_cluster_proxy_hits": 0,
+          "low_m_proxy_hits": 0,
+          "seed": 2
+        }
+      ]
+    }
+  },
+  "welch": {
+    "p_reinforce_gt_random": 1.0,
+    "p_random_gt_reinforce": 1.0,
+    "mean_reinforce": 0.0,
+    "mean_random": 0.0
+  }
+}
