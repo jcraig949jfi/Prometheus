@@ -244,6 +244,7 @@ class DiscoveryEnv:
         seed: Optional[int] = None,
         log_discoveries: bool = True,
         reward_shape: str = "step",
+        enable_pipeline: bool = True,
     ):
         if reward_shape not in ("step", "shaped"):
             raise ValueError(
@@ -278,6 +279,9 @@ class DiscoveryEnv:
         self._discoveries: List[EpisodeRecord] = []
         self._known_salem_hits: int = 0
         self._sub_lehmer_candidates: List[EpisodeRecord] = []
+        self._enable_pipeline: bool = bool(enable_pipeline)
+        self._pipeline = None  # lazy-init; type: ignore  # forward-ref to DiscoveryPipeline
+        self._pipeline_records: List[Any] = []
 
         # Spaces (Gymnasium if available, stubs otherwise).
         try:
@@ -421,9 +425,39 @@ class DiscoveryEnv:
             if is_known:
                 discovery_flag = f"known_salem:{mossinghoff_label}"
             else:
-                discovery_flag = "DISCOVERY_CANDIDATE"
-                # Log it loudly — almost certainly numerical artifact,
-                # but the discipline is to capture every candidate.
+                # §6.1 of discovery_via_rediscovery.md: route through the
+                # substrate-grade pipeline instead of just logging. The
+                # pipeline runs reciprocity / irreducibility / catalog-miss
+                # / F1+F6+F9+F11 + mints CLAIM + PROMOTEs to one of three
+                # terminal states (PROMOTED / SHADOW_CATALOG / REJECTED).
+                # Falls back to log-only if the pipeline can't initialize
+                # (e.g., sympy missing in CI).
+                pipeline_record = None
+                if self._enable_pipeline:
+                    try:
+                        from .discovery_pipeline import DiscoveryPipeline
+
+                        if self._pipeline is None:
+                            self._pipeline = DiscoveryPipeline(
+                                kernel=self._kernel, ext=self._ext
+                            )
+                        pipeline_record = self._pipeline.process_candidate(
+                            full, m_value
+                        )
+                        discovery_flag = (
+                            f"PIPELINE:{pipeline_record.terminal_state}"
+                            f":{pipeline_record.kill_pattern or 'survived'}"
+                        )
+                    except Exception as e:
+                        # Pipeline failure must not crash the env. Fall
+                        # back to log-only and surface the error.
+                        discovery_flag = (
+                            f"DISCOVERY_CANDIDATE_pipeline_error:"
+                            f"{type(e).__name__}"
+                        )
+                else:
+                    discovery_flag = "DISCOVERY_CANDIDATE"
+
                 self._sub_lehmer_candidates.append(
                     EpisodeRecord(
                         coeffs=full,
@@ -431,9 +465,11 @@ class DiscoveryEnv:
                         reward=reward,
                         is_reciprocal=_is_reciprocal(full),
                         is_known_in_mossinghoff=False,
-                        discovery_flag="DISCOVERY_CANDIDATE",
+                        discovery_flag=discovery_flag,
                     )
                 )
+                if pipeline_record is not None:
+                    self._pipeline_records.append(pipeline_record)
         elif label == "salem_cluster" and is_known:
             self._known_salem_hits += 1
 
@@ -503,6 +539,13 @@ class DiscoveryEnv:
     def discoveries(self) -> List[EpisodeRecord]:
         """Return all rewarded episodes (sub-Lehmer + Salem cluster)."""
         return list(self._discoveries)
+
+    def pipeline_records(self) -> List[Any]:
+        """Return all DiscoveryRecord results from the discovery pipeline.
+
+        Empty if enable_pipeline=False or no DISCOVERY_CANDIDATE fired.
+        """
+        return list(self._pipeline_records)
 
     def sub_lehmer_candidates(self) -> List[EpisodeRecord]:
         """Return only sub-Lehmer-candidate episodes that are NOT in the
