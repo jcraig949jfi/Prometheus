@@ -3089,3 +3089,22 @@ lands in the gap will tell us whether the heuristic is robust or
 whether the four-subclass canonicalizer needs to do more of the
 work. Benchmark is necessary, not sufficient.
 
+2026-04-29 | pm.obstruction_env (predicate-discovery RL on synthetic
+            OEIS battery — sequel to discovery_env)             | A:2 P:2 E:3 C:2
+  Files:
+    prometheus_math/obstruction_env.py                          ~595 lines
+    prometheus_math/_obstruction_corpus.py                      ~290 lines
+    prometheus_math/demo_obstruction.py                         ~265 lines
+    prometheus_math/tests/test_obstruction_env.py               ~430 lines
+    prometheus_math/OBSTRUCTION_RESULTS.md                      ~225 lines
+
+  Discovery-grade acceptance test (1000 episodes random vs REINFORCE,
+  5 seeds): REINFORCE consistently beats random by lift >= 13x with
+  p < 1e-15. OBSTRUCTION_SHAPE rediscovered structurally on at least
+  one seed (seed=3, episode 210). Architecture validated on simulated
+  data; live integration to Charon's battery_sweep_v2.jsonl is the
+  next step (per OBSTRUCTION_RESULTS.md §5).
+
+  Tests (23 total): A:4 P:5 E:8 C:6 — all four math-tdd categories
+  >= 2.
+

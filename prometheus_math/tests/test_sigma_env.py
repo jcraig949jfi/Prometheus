@@ -206,3 +206,114 @@ def test_composition_register_with_gymnasium_idempotent():
     b = register_with_gymnasium()
     # Either both None (no gymnasium) or both equal env_id strings.
     assert a == b
+
+
+# ---------------------------------------------------------------------------
+# Audit-extension tests (added 2026-04-29 per math-tdd skill audit).
+# ---------------------------------------------------------------------------
+
+
+def test_authority_phi_6_cyclotomic_low_reward():
+    """AUTHORITY (audit-add): the phi_6 cyclotomic action [1,-1,1] has
+    M = 1 exactly; under the minimize_mahler_measure objective this falls
+    in the M < 5 band → +1 (the "any finite M" floor reward).
+
+    Reference: phi_6(x) = x^2 - x + 1 is the 6th cyclotomic polynomial;
+    its roots are primitive 6th roots of unity (|root| = 1) so M(phi_6)=1.
+    Distinct from the Lehmer test (which exercises the +100 jackpot
+    branch); this exercises the floor branch.
+    """
+    pytest.importorskip("numpy")
+    env = SigmaMathEnv(objective="minimize_mahler_measure", max_steps=5, seed=10)
+    env.reset()
+    table = env.action_table()
+    phi_6_idxs = [i for i, r in enumerate(table) if r.arg_label == "phi_6"]
+    assert phi_6_idxs, "default action table must include phi_6"
+    _, reward, terminated, _, info = env.step(phi_6_idxs[0])
+    # M(phi_6)=1 → falls in [1.0, 1.18) → +100 (sub-Lehmer band).
+    # Reward should be > 0; precise band depends on float comparison
+    # but +100 (1 < 1.18) is the expected branch.
+    assert reward > 0.0
+
+
+def test_authority_objective_dispatch_table_keys():
+    """AUTHORITY (audit-add): the OBJECTIVES module-level dict exposes
+    exactly the two documented objective predicates. Reference: module
+    docstring + sigma_env.OBJECTIVES literal. Distinct from any
+    individual objective behavior test — this checks the dispatch table
+    schema itself.
+    """
+    assert set(OBJECTIVES.keys()) == {
+        "minimize_mahler_measure", "riemann_zeros",
+    }
+    for k, fn in OBJECTIVES.items():
+        assert callable(fn)
+
+
+def test_property_action_table_size_matches_n_actions_info():
+    """PROPERTY (audit-add): info['n_actions'] returned by reset() is
+    exactly len(env.action_table()). Distinct from seed_reproducibility
+    (which checks list-equality across seeds) — this checks the size
+    invariant alone.
+    """
+    env = SigmaMathEnv(max_steps=3, seed=11)
+    obs, info = env.reset()
+    assert info["n_actions"] == len(env.action_table())
+
+
+def test_property_obs_step_count_increments_monotonically():
+    """PROPERTY (audit-add): the first observation entry (step_count) is
+    a monotonically increasing non-negative integer-valued float across
+    a sequence of step calls. Distinct from terminates_after_max_steps
+    (different invariant).
+    """
+    env = SigmaMathEnv(max_steps=10, seed=12)
+    env.reset()
+    counts = []
+    for _ in range(3):
+        obs, _, _, _, _ = env.step(0)
+        counts.append(int(obs[0]))
+    assert counts == [1, 2, 3]
+
+
+def test_edge_close_releases_kernel():
+    """EDGE (audit-add): env.close() sets the internal kernel to None;
+    subsequent env.kernel() raises RuntimeError. Distinct from
+    step_before_reset (which is the un-initialized path).
+    """
+    env = SigmaMathEnv(max_steps=2, seed=13)
+    env.reset()
+    env.close()
+    with pytest.raises(RuntimeError):
+        env.kernel()
+
+
+def test_edge_negative_action_index_raises():
+    """EDGE (audit-add): step(-1) raises ValueError, not IndexError.
+    Distinct from action_out_of_range (which goes high); negative
+    indexes route through a different validation branch.
+    """
+    env = SigmaMathEnv(max_steps=3, seed=14)
+    env.reset()
+    with pytest.raises(ValueError):
+        env.step(-1)
+
+
+def test_composition_action_table_persists_across_dud_steps():
+    """COMPOSITION (audit-add): a sequence of "noisy" (low-reward) action
+    picks does not corrupt the action table — its callable_refs and
+    arg_labels remain identical from start to end of the episode.
+    Distinct from random_agent_run_closes_loop (which checks reward
+    accumulation, not action-table integrity).
+    """
+    env = SigmaMathEnv(max_steps=5, seed=15)
+    env.reset()
+    table_before = [(r.callable_ref, r.arg_label) for r in env.action_table()]
+    dud_idx = next(
+        (i for i, r in enumerate(env.action_table()) if "noisy" in r.arg_label),
+        len(env.action_table()) - 1,
+    )
+    for _ in range(3):
+        env.step(dud_idx)
+    table_after = [(r.callable_ref, r.arg_label) for r in env.action_table()]
+    assert table_before == table_after

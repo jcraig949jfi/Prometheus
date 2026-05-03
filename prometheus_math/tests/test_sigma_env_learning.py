@@ -303,3 +303,106 @@ def test_composition_skipped_run_passthrough():
     else:
         # SB3 is installed; result should look normal.
         assert "learned_mean" in result
+
+
+# ---------------------------------------------------------------------------
+# Audit-extension tests (added 2026-04-29 per math-tdd skill audit).
+# ---------------------------------------------------------------------------
+
+
+def test_authority_softmax_is_probability_distribution():
+    """AUTHORITY (audit-add): the _softmax helper used by REINFORCE
+    produces a valid probability distribution (positive entries summing
+    to 1). Reference: standard categorical-policy spec; if this is
+    wrong, REINFORCE updates are mathematically nonsensical. Distinct
+    from any existing test — _softmax has zero direct coverage.
+    """
+    from prometheus_math.sigma_env_ppo import _softmax
+    logits = np.array([0.0, 1.0, -2.0, 3.5, 0.5])
+    p = _softmax(logits)
+    assert p.shape == logits.shape
+    assert np.all(p >= 0.0)
+    assert math.isclose(float(p.sum()), 1.0, rel_tol=1e-12)
+    # Argmax of softmax matches argmax of logits.
+    assert int(np.argmax(p)) == int(np.argmax(logits))
+
+
+def test_property_reinforce_policy_probs_sum_to_one():
+    """PROPERTY (audit-add): regardless of how the training loop
+    proceeds, the final policy_probs returned by train_reinforce sum to
+    1 to numerical precision. Distinct from the concentration test
+    (which checks where mass goes, not whether it sums correctly).
+    """
+    result = train_reinforce(_env_factory, n_steps=200, seed=33, lr=0.05)
+    probs = np.asarray(result["policy_probs"])
+    assert math.isclose(float(probs.sum()), 1.0, rel_tol=1e-9)
+    assert np.all(probs >= 0.0)
+
+
+def test_property_random_baseline_rewards_within_action_table_range():
+    """PROPERTY (audit-add): every per-step reward in a random-baseline
+    run is one of the discrete reward values the action table can
+    produce: {0.0, 1.0, 5.0, 20.0, 50.0, 100.0, -1.0}. Property: the
+    env's reward signal is bounded and discrete. Distinct from the
+    mean-positive authority test (which checks aggregate behavior).
+    """
+    result = train_baseline_random(_env_factory, n_steps=200, seed=44)
+    valid = {-1.0, 0.0, 1.0, 5.0, 20.0, 50.0, 100.0}
+    rewards = result["rewards"]
+    unique = set(float(r) for r in rewards)
+    assert unique.issubset(valid), (
+        f"unexpected rewards {unique - valid} not in {valid}"
+    )
+
+
+def test_edge_compare_unknown_learner_raises():
+    """EDGE (audit-add): compare_random_vs_learned with an unknown
+    learner string raises ValueError. Distinct from
+    test_edge_unknown_env (which exercises the env_factory path).
+    """
+    with pytest.raises(ValueError, match="unknown learner"):
+        compare_random_vs_learned(
+            _env_factory, n_steps=100, n_seeds=1, learner="not_a_real_learner",
+        )
+
+
+def test_edge_welch_t_test_handles_tiny_samples():
+    """EDGE (audit-add): _welch_t_test on n<2 inputs returns NaN, not
+    raises. Distinct from any existing test — _welch_t_test has no
+    direct coverage; the comparison test exercises the n_seeds>=2 path.
+    """
+    from prometheus_math.sigma_env_ppo import _welch_t_test
+    p = _welch_t_test(np.array([1.0]), np.array([0.5]))
+    assert math.isnan(p)
+    p2 = _welch_t_test(np.array([]), np.array([0.5, 0.6]))
+    assert math.isnan(p2)
+
+
+def test_composition_reinforce_writes_substrate_evaluations():
+    """COMPOSITION (audit-add): each step in a REINFORCE run writes an
+    evaluation symbol to the substrate (visible in env.kernel() between
+    auto-resets). Composes train_reinforce + SigmaMathEnv + the kernel's
+    evaluations table.
+
+    Distinct from test_composition_substrate_grows_per_step (which only
+    checks per-step rewards stay finite); this one verifies the kernel
+    is actually receiving evaluation rows during training. We sample
+    via a manual driver instead of train_reinforce to keep observability
+    of the kernel state across steps (train_reinforce closes over a
+    factory that recreates the env on auto-reset).
+    """
+    env = SigmaMathEnv(objective="minimize_mahler_measure", max_steps=200, seed=55)
+    obs, info = env.reset(seed=55)
+    rng = np.random.default_rng(55)
+    n_actions = info["n_actions"]
+    n_steps = 0
+    terminated = False
+    while not terminated and n_steps < 5:
+        a = int(rng.integers(0, n_actions))
+        obs, r, terminated, _, _ = env.step(a)
+        n_steps += 1
+    k = env.kernel()
+    cur = k.conn.execute("SELECT COUNT(*) FROM evaluations")
+    n_evals = cur.fetchone()[0]
+    # One eval per step that hit BIND/EVAL successfully.
+    assert n_evals == n_steps

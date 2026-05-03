@@ -20,7 +20,13 @@ from typing import Any, Dict, List, Tuple
 
 import pytest
 
-from prometheus_math.arsenal_meta import ARSENAL_REGISTRY
+from prometheus_math.arsenal_meta import (
+    ARSENAL_REGISTRY,
+    ArsenalMeta,
+    arsenal_op,
+    get_meta,
+    registry_summary,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -391,3 +397,182 @@ def test_composition_bind_eval_round_trip_on_random_5():
         f"only {successes}/5 round-trips passed; errors:\n  " +
         "\n  ".join(f"{r}: {e}" for r, e in errors)
     )
+
+
+# ---------------------------------------------------------------------------
+# Audit-extension tests (added 2026-04-29 per math-tdd skill audit).
+# Skill guidance for this module: don't add 85 individual op tests; add
+# coverage for the *decorator API* and the *schema walker* — the per-op
+# behavior is already covered by test_property_every_entry_callable_resolves
+# and test_property_cost_models_within_2x_to_50x_of_actual.
+# ---------------------------------------------------------------------------
+
+
+def test_authority_at_least_85_ops_post_pivot():
+    """AUTHORITY (audit-add): pivot week-2 commitment is now 80+; the
+    registry should hold at least 85 entries on master after the
+    sigma_kernel pivot stack ships. Distinct from the >=50 floor test —
+    that one ratchets monotonically; this one anchors the post-pivot
+    target so a regression is loud.
+
+    Reference: pivot/techne.md §4.4 + 2026-04-29 inventory print
+    (`len(ARSENAL_REGISTRY) == 85`).
+    """
+    assert len(ARSENAL_REGISTRY) >= 85
+
+
+def test_authority_arsenal_meta_schema_walker():
+    """AUTHORITY (audit-add): walk every entry once and verify the
+    ArsenalMeta schema is well-formed. This is the ~50 LOC schema-walk
+    the audit guidance calls out as the right move (vs adding 85 tiny
+    per-op tests). Distinct from the existing per-field tests
+    (every_entry_has_callable_ref / has_cost_model / etc.) which each
+    test a single field; this one walks the *entire schema shape* in
+    one pass and catches structural drift (bad types, wrong dataclass
+    instances, etc.).
+
+    Reference: ArsenalMeta dataclass spec in arsenal_meta.py.
+    """
+    required_cost_keys = {"max_seconds", "max_memory_mb", "max_oracle_calls"}
+    valid_eq_classes = {
+        None,
+        "group_quotient",
+        "partition_refinement",
+        "ideal_reduction",
+        "variety_fingerprint",
+    }
+    failures: List[str] = []
+    for ref, meta in ARSENAL_REGISTRY.items():
+        if not isinstance(meta, ArsenalMeta):
+            failures.append(f"{ref}: not an ArsenalMeta instance ({type(meta)})")
+            continue
+        if not isinstance(meta.callable_ref, str) or not meta.callable_ref:
+            failures.append(f"{ref}: bad callable_ref {meta.callable_ref!r}")
+        if not isinstance(meta.cost, dict):
+            failures.append(f"{ref}: cost is {type(meta.cost)}, not dict")
+            continue
+        missing = required_cost_keys - set(meta.cost.keys())
+        if missing:
+            failures.append(f"{ref}: cost missing {missing}")
+        for k in required_cost_keys:
+            if k in meta.cost and not isinstance(meta.cost[k], (int, float)):
+                failures.append(f"{ref}: cost[{k}] is {type(meta.cost[k])}")
+        if not isinstance(meta.postconditions, list):
+            failures.append(f"{ref}: postconditions is {type(meta.postconditions)}")
+        if not isinstance(meta.authority_refs, list):
+            failures.append(f"{ref}: authority_refs is {type(meta.authority_refs)}")
+        if meta.equivalence_class not in valid_eq_classes:
+            failures.append(
+                f"{ref}: equivalence_class {meta.equivalence_class!r} "
+                f"not in {valid_eq_classes}"
+            )
+        if meta.category is not None and not isinstance(meta.category, str):
+            failures.append(f"{ref}: category is {type(meta.category)}")
+        if not isinstance(meta.notes, str):
+            failures.append(f"{ref}: notes is {type(meta.notes)}")
+    assert not failures, (
+        f"{len(failures)} schema failures across {len(ARSENAL_REGISTRY)} entries:\n  "
+        + "\n  ".join(failures[:10])
+    )
+
+
+def test_property_arsenal_op_decorator_registers_and_returns_fn():
+    """PROPERTY (audit-add): the @arsenal_op decorator is currently
+    untested. Property: it (1) returns the wrapped fn unchanged, and
+    (2) inserts an ArsenalMeta into ARSENAL_REGISTRY keyed by
+    f"{fn.__module__}:{fn.__qualname__}". Distinct from any existing
+    test — the registry is bootstrapped via _metadata_table elsewhere,
+    so the decorator path itself has zero coverage.
+    """
+    @arsenal_op(
+        cost={"max_seconds": 1.0, "max_memory_mb": 16, "max_oracle_calls": 0},
+        postconditions=["test postcondition"],
+        authority_refs=["test authority"],
+        equivalence_class="ideal_reduction",
+        category="test_category",
+        notes="audit-fixture",
+    )
+    def _audit_fixture_op(x):
+        return x + 1
+
+    # Returns the fn unchanged (callable, same name).
+    assert callable(_audit_fixture_op)
+    assert _audit_fixture_op(5) == 6
+    # Registry entry exists with the expected key shape.
+    expected_ref = f"{_audit_fixture_op.__module__}:{_audit_fixture_op.__qualname__}"
+    assert expected_ref in ARSENAL_REGISTRY
+    meta = ARSENAL_REGISTRY[expected_ref]
+    assert meta.cost["max_seconds"] == 1.0
+    assert meta.equivalence_class == "ideal_reduction"
+    # __arsenal_meta__ attribute attached.
+    assert getattr(_audit_fixture_op, "__arsenal_meta__", None) is meta
+    # Cleanup: don't leak fixture into other tests' counts.
+    del ARSENAL_REGISTRY[expected_ref]
+
+
+def test_property_arsenal_op_idempotent_re_decoration_overwrites():
+    """PROPERTY (audit-add): re-decorating the same fn replaces the
+    registry entry (most-recent wins). Property invariant: the
+    registry has at-most-one entry per (module:qualname) key.
+    Distinct from the duplicate-refs edge test — that scans the entire
+    registry; this exercises the overwrite path explicitly.
+    """
+    @arsenal_op(
+        cost={"max_seconds": 0.1, "max_memory_mb": 4, "max_oracle_calls": 0},
+        postconditions=["v1"],
+        authority_refs=["auth-v1"],
+    )
+    def _audit_fixture_op_v(x):
+        return x
+
+    ref = f"{_audit_fixture_op_v.__module__}:{_audit_fixture_op_v.__qualname__}"
+    assert ARSENAL_REGISTRY[ref].postconditions == ["v1"]
+
+    # Re-decorate with different metadata.
+    _audit_fixture_op_v = arsenal_op(
+        cost={"max_seconds": 0.2, "max_memory_mb": 8, "max_oracle_calls": 0},
+        postconditions=["v2"],
+        authority_refs=["auth-v2"],
+    )(_audit_fixture_op_v)
+    assert ARSENAL_REGISTRY[ref].postconditions == ["v2"]
+    # Cleanup.
+    del ARSENAL_REGISTRY[ref]
+
+
+def test_edge_get_meta_string_callable_and_unknown():
+    """EDGE (audit-add): get_meta accepts both a "module:qualname" str
+    and a callable, and returns None on unknown inputs (not raise).
+    Distinct from any existing test — get_meta has zero direct coverage.
+    """
+    # Pick any registered ref.
+    sample_ref = next(iter(ARSENAL_REGISTRY))
+    meta_by_str = get_meta(sample_ref)
+    assert meta_by_str is not None
+    assert meta_by_str.callable_ref == sample_ref
+    # Unknown string returns None.
+    assert get_meta("nonexistent.module:fn_xyz") is None
+    # Non-callable, non-string input returns None (not raises).
+    assert get_meta(42) is None
+    assert get_meta(None) is None
+
+
+def test_composition_registry_summary_aggregates_counts():
+    """COMPOSITION (audit-add): registry_summary() aggregates over
+    ARSENAL_REGISTRY; total + by_category + by_equivalence_class +
+    with_cost_model counts must compose consistently. Distinct from any
+    existing test — registry_summary has zero coverage.
+
+    Composes the ArsenalMeta dataclass + the registry dict + the
+    aggregator. If any of the three drifts, this test catches it.
+    """
+    summary = registry_summary()
+    assert summary["total"] == len(ARSENAL_REGISTRY)
+    # by_category counts sum to total.
+    assert sum(summary["by_category"].values()) == summary["total"]
+    # by_equivalence_class counts sum to total.
+    assert sum(summary["by_equivalence_class"].values()) == summary["total"]
+    # Every op in the registry has a cost model (per the existing
+    # property test), so with_cost_model == total.
+    assert summary["with_cost_model"] == summary["total"]
+    assert summary["with_postconditions"] == summary["total"]
+    assert summary["with_authority_refs"] == summary["total"]

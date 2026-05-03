@@ -50,6 +50,12 @@ def _raises():
     raise ValueError("test exception")
 
 
+def _big_list():
+    """Test fixture: returns a list whose repr exceeds 2000 chars.
+    Used to validate the EVAL output_repr truncation gate."""
+    return list(range(1000))
+
+
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
@@ -357,3 +363,186 @@ def test_composition_get_binding_recovers_meta():
     assert fetched.callable_ref == SQUARE_REF
     assert fetched.cost_model.max_seconds == 2.5
     assert "output >= 0 for real x" in fetched.postconditions
+
+
+# ---------------------------------------------------------------------------
+# Audit-extension tests (added 2026-04-29 per math-tdd skill audit).
+# ---------------------------------------------------------------------------
+
+
+def test_authority_partition_count_p20_against_oeis_a000041():
+    """AUTHORITY (audit-add): bind+eval p(20)=627 against OEIS A000041.
+
+    Reference: OEIS A000041 (number of partitions of n). p(20)=627 is the
+    canonical value; cross-checks the BIND/EVAL path on a non-numeric
+    arsenal callable that returns an int. Distinct from the dilogarithm
+    test (which exercises a float-returning special-function callable).
+    """
+    k, ext = _make_ext()
+    cap = k.mint_capability("BindCap")
+    binding = ext.BIND(
+        callable_ref="prometheus_math.combinatorics_partitions:num_partitions",
+        cost_model=CostModel(max_seconds=2.0),
+        cap=cap,
+    )
+    cap2 = k.mint_capability("EvalCap")
+    ev = ext.EVAL(
+        binding_name=binding.symbol.name,
+        binding_version=binding.symbol.version,
+        args=[20],
+        cap=cap2,
+    )
+    assert ev.success is True
+    # Output_repr is the str(int) form for an int.
+    assert int(ev.output_repr) == 627
+
+
+def test_property_callable_hash_stable_across_two_binds():
+    """PROPERTY (audit-add): same callable_ref ⇒ same callable_hash on
+    successive BINDs. Distinct from the existing provenance-link test
+    which checks the hash propagates to EVAL provenance — here we check
+    its computation is deterministic across BIND invocations.
+    """
+    k, ext = _make_ext()
+    cap1 = k.mint_capability("BindCap")
+    b1 = ext.BIND(
+        callable_ref=SQUARE_REF,
+        cost_model=CostModel(max_seconds=1.0),
+        cap=cap1,
+        name="hash_check_a",
+        version=1,
+    )
+    cap2 = k.mint_capability("BindCap")
+    b2 = ext.BIND(
+        callable_ref=SQUARE_REF,
+        cost_model=CostModel(max_seconds=1.0),
+        cap=cap2,
+        name="hash_check_b",
+        version=1,
+    )
+    assert b1.callable_hash == b2.callable_hash
+    # Hash is sha256-shaped (64 hex chars).
+    assert len(b1.callable_hash) == 64
+
+
+def test_property_args_hash_independent_of_binding():
+    """PROPERTY (audit-add): args_hash for the same args dict is identical
+    across two distinct EVAL invocations on different bindings. This
+    guarantees the args_hash side-table column is content-addressed by
+    the args alone — a precondition for cross-binding eval-cache lookups.
+    Distinct from the cost-bound test (different surface).
+    """
+    k, ext = _make_ext()
+    cap_b1 = k.mint_capability("BindCap")
+    b1 = ext.BIND(
+        callable_ref=SQUARE_REF,
+        cost_model=CostModel(max_seconds=1.0),
+        cap=cap_b1,
+        name="bind_a",
+        version=1,
+    )
+    cap_b2 = k.mint_capability("BindCap")
+    b2 = ext.BIND(
+        callable_ref=SQUARE_REF,
+        cost_model=CostModel(max_seconds=1.0),
+        cap=cap_b2,
+        name="bind_b",
+        version=1,
+    )
+    cap_e1 = k.mint_capability("EvalCap")
+    e1 = ext.EVAL(b1.symbol.name, b1.symbol.version, args=[42], cap=cap_e1)
+    cap_e2 = k.mint_capability("EvalCap")
+    e2 = ext.EVAL(b2.symbol.name, b2.symbol.version, args=[42], cap=cap_e2)
+    assert e1.args_hash == e2.args_hash
+
+
+def test_edge_eval_kwargs_unknown_keyword_records_failure():
+    """EDGE (audit-add): EVAL with a kwarg the callable doesn't accept
+    captures the TypeError as success=False (does not crash). Distinct
+    from test_edge_eval_callable_raises which uses an explicit raise
+    inside the callable; this exercises the call-site signature mismatch
+    path, which is a separate failure mode.
+    """
+    k, ext = _make_ext()
+    cap = k.mint_capability("BindCap")
+    binding = ext.BIND(
+        callable_ref=SQUARE_REF,
+        cost_model=CostModel(max_seconds=1.0),
+        cap=cap,
+    )
+    cap2 = k.mint_capability("EvalCap")
+    ev = ext.EVAL(
+        binding_name=binding.symbol.name,
+        binding_version=binding.symbol.version,
+        args=[5],
+        kwargs={"not_a_real_param": True},
+        cap=cap2,
+    )
+    assert ev.success is False
+    assert "TypeError" in ev.error_repr
+
+
+def test_edge_costmodel_to_dict_roundtrip():
+    """EDGE (audit-add): CostModel(...).to_dict() round-trips through
+    CostModel(**d) preserving all three ceilings exactly. Distinct from
+    test_composition_get_binding_recovers_meta — that test exercises
+    DB persistence; this test exercises the CostModel value-type itself.
+    """
+    cm = CostModel(max_seconds=3.5, max_memory_mb=256.0, max_oracle_calls=7)
+    d = cm.to_dict()
+    cm2 = CostModel(**d)
+    assert cm2 == cm
+    # to_dict yields the three documented keys, no extras.
+    assert set(d.keys()) == {"max_seconds", "max_memory_mb", "max_oracle_calls"}
+
+
+def test_composition_list_bindings_after_multiple_binds():
+    """COMPOSITION (audit-add): list_bindings returns rows in
+    insertion order across multiple distinct bindings. Distinct from
+    list_evaluations test (different table, different filter semantics).
+    """
+    k, ext = _make_ext()
+    refs = [SQUARE_REF, SLOW_REF, RAISES_REF]
+    expected_names = []
+    for i, r in enumerate(refs):
+        cap = k.mint_capability("BindCap")
+        b = ext.BIND(
+            callable_ref=r,
+            cost_model=CostModel(max_seconds=1.0),
+            cap=cap,
+            name=f"audit_b_{i}",
+            version=1,
+        )
+        expected_names.append(b.symbol.name)
+    listed = ext.list_bindings()
+    listed_names = [row[0] for row in listed]
+    # Every binding we made should be present in the list.
+    for n in expected_names:
+        assert n in listed_names
+
+
+def test_composition_eval_repr_truncation_gate():
+    """COMPOSITION (audit-add): EVAL truncates output_repr at 2000 chars.
+    This composes the EVAL pipeline with a callable that returns a large
+    object; the truncation rule is load-bearing for the substrate's
+    on-disk size budget. Distinct from any existing test — none exercise
+    the truncation branch.
+    """
+    k, ext = _make_ext()
+    # A fixture callable that produces a >2000-char repr.
+    cap = k.mint_capability("BindCap")
+    binding = ext.BIND(
+        callable_ref="sigma_kernel.test_bind_eval:_big_list",
+        cost_model=CostModel(max_seconds=1.0),
+        cap=cap,
+    )
+    cap2 = k.mint_capability("EvalCap")
+    ev = ext.EVAL(
+        binding_name=binding.symbol.name,
+        binding_version=binding.symbol.version,
+        args=[],
+        cap=cap2,
+    )
+    assert ev.success is True
+    assert len(ev.output_repr) <= 2100  # 2000 + truncation suffix
+    assert "truncated" in ev.output_repr

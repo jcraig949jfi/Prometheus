@@ -15,8 +15,10 @@ from prometheus_math.discovery_env import (
     COEFFICIENT_CHOICES,
     N_COEFFICIENT_ACTIONS,
     _compute_reward,
+    _compute_reward_shaped,
     _palindromic_from_half,
     _is_reciprocal,
+    _check_mossinghoff,
 )
 
 
@@ -231,3 +233,149 @@ def test_composition_known_salem_flagged_in_mossinghoff():
     # If the snapshot doesn't load, is_known is None — accept either
     # True or None (None means snapshot unavailable, not a failure).
     assert info["is_known_in_mossinghoff"] in (True, None)
+
+
+# ---------------------------------------------------------------------------
+# Audit-extension tests (added 2026-04-29 per math-tdd skill audit).
+# ---------------------------------------------------------------------------
+
+
+def test_authority_shaped_reward_sub_lehmer_above_floor():
+    """AUTHORITY (audit-add): the shaped-reward variant gives the
+    Lehmer-band M=1.176 a reward strictly above the floor (5,M)=4 case
+    (M=2 → ~37.5). The shaped reward is monotonic-decreasing in M for
+    M in [1.001, 5]; the +50 sub-Lehmer bonus is on top of the smooth
+    gradient. Distinct from the step-reward authority test (different
+    reward function entirely).
+    """
+    r_lehmer, label_lehmer = _compute_reward_shaped(1.17628)
+    r_low_m, _ = _compute_reward_shaped(1.5)
+    r_mid_m, _ = _compute_reward_shaped(2.0)
+    assert label_lehmer == "sub_lehmer"
+    # Sub-Lehmer reward = 50 + 50*(5-1.176)/4 ≈ 50 + 47.8 ≈ 97.8.
+    assert r_lehmer > 90.0
+    # Monotone-decreasing on [1.18, 5].
+    assert r_low_m > r_mid_m
+
+
+def test_authority_compute_reward_high_m_zero():
+    """AUTHORITY (audit-add): M=10 (well above the 5.0 cutoff) returns
+    reward 0 with label 'cyclotomic_or_large'. Distinct from the M=1
+    cyclotomic test (different branch — large-M path).
+
+    Reference: _compute_reward docstring branch table.
+    """
+    r, label = _compute_reward(10.0)
+    assert r == 0.0
+    assert label == "cyclotomic_or_large"
+
+
+def test_property_shaped_reward_continuous_in_m():
+    """PROPERTY (audit-add): _compute_reward_shaped is continuous
+    (modulo the +50 sub-Lehmer bonus jump at M=1.18) on [1.001, 5].
+    Distinct from the discrete _compute_reward path; here we verify
+    the smooth-gradient claim in the docstring numerically.
+    """
+    # Sample two close points within the 'shaped_continuous' band.
+    r1, _ = _compute_reward_shaped(2.0)
+    r2, _ = _compute_reward_shaped(2.001)
+    # Continuous: tiny step in M → tiny step in reward.
+    assert abs(r1 - r2) < 0.1
+    # And reward is non-negative everywhere.
+    assert r1 >= 0.0
+    assert r2 >= 0.0
+
+
+def test_property_palindromic_half_round_trip():
+    """PROPERTY (audit-add): for any half_len-length integer half-list,
+    _palindromic_from_half produces a degree+1-length list that is
+    self-reverse-equal AND its first half equals the input. Distinct
+    from action_picks_become_palindromic (which checks via the env);
+    this checks the helper directly across multiple inputs.
+    """
+    for half, deg in [
+        ([1, 2, 3], 4),
+        ([1, 0, -1, 2], 6),
+        ([1, 1, 0, -1, -1, -1], 10),
+    ]:
+        full = _palindromic_from_half(half, deg)
+        assert len(full) == deg + 1
+        assert full == full[::-1]
+        assert full[: len(half)] == half
+
+
+def test_edge_invalid_reward_shape_raises():
+    """EDGE (audit-add): DiscoveryEnv(reward_shape='garbage') raises
+    ValueError. Distinct from invalid_degree (different parameter
+    branch) and action_out_of_range (runtime).
+    """
+    with pytest.raises(ValueError, match="reward_shape"):
+        DiscoveryEnv(degree=6, reward_shape="not_a_real_shape")
+
+
+def test_edge_palindromic_short_half_raises():
+    """EDGE (audit-add): _palindromic_from_half with too few half-coeffs
+    raises ValueError. Distinct from invalid_degree (different layer);
+    this exercises the helper's own validation.
+    """
+    with pytest.raises(ValueError, match="half-coeffs"):
+        _palindromic_from_half([1, 2], 10)  # need 6, given 2
+    with pytest.raises(ValueError, match="degree"):
+        _palindromic_from_half([1], 1)  # degree<2 short-circuits
+
+
+def test_edge_check_mossinghoff_returns_none_for_unmatched_m():
+    """EDGE (audit-add): _check_mossinghoff with an M not in the
+    snapshot returns (False, None). If the snapshot is unavailable,
+    returns (None, None). Distinct from the known_salem composition
+    test (which exercises the matched path).
+    """
+    is_known, label = _check_mossinghoff([1, 0, 0, 0, 0, 1], 7.5)
+    # 7.5 isn't a Mossinghoff-table M value.
+    # is_known is False (snapshot loaded but no match) or None (no snapshot).
+    assert is_known in (False, None)
+
+
+def test_composition_shaped_reward_env_runs_end_to_end():
+    """COMPOSITION (audit-add): DiscoveryEnv(reward_shape='shaped')
+    runs end-to-end and produces non-negative rewards. Distinct from
+    test_composition_lehmer_action_path_yields_jackpot (which uses
+    the default 'step' shape); here we exercise the shaped-reward
+    branch through the full pipeline.
+    """
+    env = DiscoveryEnv(degree=10, seed=88, reward_shape="shaped")
+    env.reset()
+    actions = [4, 4, 3, 2, 2, 2]  # Lehmer
+    for a in actions:
+        _, reward, terminated, _, info = env.step(a)
+    assert terminated is True
+    # Lehmer in shaped reward → 97-98 (50 + smooth gradient at M=1.176).
+    assert info["reward_label"] == "sub_lehmer"
+    assert reward >= 90.0
+
+
+def test_composition_sub_lehmer_candidates_list_starts_empty():
+    """COMPOSITION (audit-add): a fresh DiscoveryEnv has
+    sub_lehmer_candidates() == [] and known_salem_hits() == 0; after
+    a Lehmer episode (which is in Mossinghoff), candidates remains
+    empty (Lehmer is *known*, not a discovery). Composes the
+    Mossinghoff cross-check with the candidates filter.
+
+    Distinct from test_composition_episode_record_logged_on_jackpot
+    (which checks the discoveries() list; sub_lehmer_candidates is a
+    distinct narrower filter).
+    """
+    env = DiscoveryEnv(degree=10, seed=99)
+    env.reset()
+    assert env.sub_lehmer_candidates() == []
+    assert env.known_salem_hits() == 0
+    actions = [4, 4, 3, 2, 2, 2]  # Lehmer
+    for a in actions:
+        env.step(a)
+    # Lehmer is in the snapshot, so sub_lehmer_candidates stays empty
+    # (or all entries have is_known_in_mossinghoff=False, but Lehmer's
+    # M=1.176 IS in the snapshot). Tolerate snapshot-unavailable case.
+    candidates = env.sub_lehmer_candidates()
+    for c in candidates:
+        # If any candidate exists, it must NOT be Lehmer's M.
+        assert not (1.17 < c.mahler_measure < 1.18)
