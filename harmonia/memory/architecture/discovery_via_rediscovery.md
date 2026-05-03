@@ -67,13 +67,20 @@ Component status:
 | Component | Status | Source |
 |---|---|---|
 | Generative env (action space, sparse reward) | shipped | `prometheus_math/discovery_env.py` |
-| BIND/EVAL primitives | shipped 2026-05-02 | `sigma_kernel/bind_eval.py` |
+| BIND/EVAL primitives | shipped 2026-05-02 | `sigma_kernel/bind_eval.py` (+ v2 in `sigma_kernel/bind_eval_v2.py`) |
 | Catalog cross-check | shipped (Mossinghoff only) | `prometheus_math/discovery_env.py` |
 | CLAIM into kernel | shipped (v0.1) | `sigma_kernel/sigma_kernel.py` |
 | Falsification battery (F1–F20) | shipped | `cartography/shared/scripts/falsification_battery.py` |
-| Residual classification | spec stage, 5-day MVP | `residual_primitive_spec.md` + Techne stoa response |
+| Residual classification | **shipped 2026-05-03** | `sigma_kernel/residuals.py` (~748 LOC, commit `4872bb4a`) |
+| ObstructionEnv (cross-domain validation) | **shipped 2026-05-03** | `prometheus_math/obstruction_env.py` (commit `d339dc45`) |
+| OEIS-data rediscovery validation | **shipped 2026-05-03** | `prometheus_math/_obstruction_corpus_live.py` + `OBSTRUCTION_LIVE_RESULTS.md` (commit `b0355b1d`) |
 | Cross-modality verification | proposed in residual spec | spec stage |
 | PROMOTE with provenance | shipped (v0.1) | `sigma_kernel/sigma_kernel.py` |
+| `DISCOVERY_CANDIDATE` → substrate CLAIM | partial integration | Ergon's `DISCOVERY_RESULTS.md` update (commit `aae30bf3`) |
+| Withheld-rediscovery benchmark (stage 2) | not yet built | per §6.2.5 |
+| Null-baseline comparator (stage 3) | not yet built | per §6.2 |
+
+**Status update note (2026-05-03 evening):** the table immediately above reflects shipping events that happened in the 24 hours after this doc's first version was written. Five of the first eleven rows transitioned from "spec stage" / "proposed" / "not yet attempted" to "shipped." This is itself an empirical observation about the architecture's compounding rate — the substrate produces convergent multi-agent action when foundational docs are sharp. Treated as data, not as celebration: convergence does not equal correctness, and the validation ladder (§3.5) still applies to the architecture's claims about itself.
 
 The pipeline is operational pending two pieces:
 
