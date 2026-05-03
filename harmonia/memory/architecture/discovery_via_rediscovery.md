@@ -276,6 +276,19 @@ Three reasons.
 
 **Third — it makes the architecture's discovery claims falsifiable.** The four-counts pilot gives a number. If the number is zero across many domains and many configurations, the thesis is wrong. If it's non-zero and stable, the thesis is supported. Either outcome is substrate-grade. The architecture can be wrong about itself in a recoverable way — which is, ultimately, what falsification machinery is for.
 
+## 9. The engine that populates the pipeline
+
+This document specifies the *gate* (catalog miss → CLAIM → battery → classify) and the *measurement* (four-counts pilot per mutation operator class). It does not specify the *engine* that produces the candidates flowing through that gate.
+
+That engine is the Ergon learner, designed in [`pivot/ergon_learner_proposal_v3.md`](../../../pivot/ergon_learner_proposal_v3.md) (design-freeze version, supersedes v1 and v2). The two documents are complementary:
+
+- **This doc** is the architectural skeleton — what the discovery pipeline is, why rediscovery and discovery are the same loop, how the four-counts pilot quantifies the bottled-serendipity thesis.
+- **The Ergon learner doc** is the engine design — a hybrid neural-plus-evolutionary mutation system with seven lineage-tagged operator classes contributing to a single MAP-Elites archive over typed compositions of the math arsenal, every CLAIM rewarded by an agreement-weighted combination of substrate-pass + cross-model + held-out-battery, plug-compatible with `BindEvalKernelV2` + `DiscoveryPipeline` + Residual primitive.
+
+The seven mutation operator classes the Ergon learner specifies (`structural` / `symbolic` / `neural` / `external_llm` / `anti_prior` / `uniform` / `structured_null`) are each a different shape of mutation feeding the same gate. The four-counts pilot reports per-class PROMOTE rates with statistical comparison; the substrate-grade discovery rate per class is the empirical anchor for the thesis.
+
+The architecture is operative once both docs ship: the gate (this doc, §6.1 + §6.2 already implemented as of commit 1666c4a4) and the engine (the Ergon learner, MVP build pending design freeze).
+
 ---
 
 *Rediscovery proves the loop closes. Discovery is the same loop run forward. The catalog is the discriminator, not the reward. The architecture finds candidates; the substrate filters; the pipeline produces either typed survivors or typed kill-patterns. Either is durable. Both compound.*
