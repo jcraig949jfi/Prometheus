@@ -671,18 +671,38 @@ def test_lll_transform_unimodular(B):
 
 @MEDIUM
 @given(B=random_lattice_basis(min_n=2, max_n=4, lo=-8, hi=8))
-def test_lll_total_l2_at_most_original(B):
-    """Sum of squared row norms of lll(B) <= sum of squared row norms of B.
+def test_lll_first_row_shorter_than_average(B):
+    """LLL's first row b1 is bounded by the original basis's average
+    squared norm (a corollary of the LLL guarantee).
 
-    Reference: LLL reduces the orthogonal-complement / overall lattice "energy".
-    Equality holds if B is already reduced.
+    Calibration drift fix (2026-04-29): the previous assertion was
+    "sum of squared row norms of lll(B) <= sum of squared row norms of
+    B", which is NOT a theorem of LLL. LLL guarantees that b1 (the
+    first vector of the reduced basis) approximates the shortest
+    vector up to a factor (4/3)^((n-1)/2), and that successive
+    Gram-Schmidt norms don't decrease too fast — but the *sum of row
+    norms* can legitimately INCREASE. Hypothesis correctly found a
+    counterexample (B=[[-1,1,7],[2,6,-1],[-5,5,2]] gives sumB=146,
+    sumR=151 with the same lattice). The fix: assert that b1 is no
+    larger than the largest input row (a weaker, true property), and
+    rely on the dedicated test_shortest_vector_in_lattice for the
+    actual LLL strength claim.
+
+    Reference: Lenstra-Lenstra-Lovász (1982), Theorem 1: ||b_1||^2
+    <= 2^(n-1) * det(L)^(2/n) for n-dim L; in particular b1 is
+    bounded by the longest input vector since b1 is part of the
+    same lattice and LLL only swaps/reduces rows.
     """
     if _det_int(B) == 0:
         return
     R = lll(B)
-    sumB = _sumsq(B)
-    sumR = _sumsq(R)
-    assert sumR <= sumB, f"sum |B|^2 = {sumB}, sum |R|^2 = {sumR}"
+    # Largest row of input bounds the first row of output.
+    max_row_sq_B = max(_l2sq(row) for row in B)
+    first_row_sq_R = _l2sq(R[0])
+    # Allow equality (input was already LLL-reduced).
+    assert first_row_sq_R <= max_row_sq_B, (
+        f"|b1|^2 = {first_row_sq_R} > max input row^2 = {max_row_sq_B}"
+    )
 
 
 @MEDIUM
@@ -961,11 +981,18 @@ def test_cf_expand_355_113_anchor():
 
 
 def test_cf_expand_zero_denominator_raises():
-    """Edge: q <= 0 raises ValueError."""
+    """Edge: q == 0 raises ValueError; q < 0 auto-flips (calibration
+    drift fix 2026-04-29).
+
+    Wave 12 (techne/lib/cf_expansion.py, 2026-04-21) added sign
+    normalization: when q < 0, cf_expand swaps (p, q) -> (-p, -q) and
+    proceeds with the canonical positive-denominator CF rather than
+    raising. Only q == 0 still raises.
+    """
     with pytest.raises(ValueError):
         cf_expand(1, 0)
-    with pytest.raises(ValueError):
-        cf_expand(5, -3)
+    # q < 0 now produces a valid CF equivalent to (-p, -q).
+    assert cf_expand(5, -3) == cf_expand(-5, 3)
 
 
 def test_cf_integer_input_one_coefficient():

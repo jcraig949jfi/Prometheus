@@ -32,21 +32,30 @@ from prometheus_math.withheld_benchmark import (
 
 def test_authority_default_partition_size_against_mossinghoff_snapshot():
     """With holdout_fraction=0.2 and seed=42 the partition produces
-    142 visible + 36 withheld (or floor/ceil-equivalent counts that
-    sum to len(MAHLER_TABLE)=178).
+    n_withheld = round(N * 0.2) and n_visible = N - n_withheld where
+    N = len(MAHLER_TABLE).
+
+    Calibration drift fix (2026-04-29): MAHLER_TABLE was extended from
+    178 entries to ~8625 entries (the full live snapshot). The
+    invariants here are the partition arithmetic itself, not the
+    historical 178/142/36 magic numbers — assert against the live
+    snapshot size so this test stays load-bearing as the snapshot
+    continues to grow.
 
     Reference: prometheus_math.databases._mahler_data.MAHLER_TABLE is
     the embedded snapshot of Michael Mossinghoff's small-Mahler tables
-    (178 entries; cross-checked against techne.lib.mahler_measure at
-    import time to better than 1e-9 per entry).
+    (cross-checked against techne.lib.mahler_measure at import time to
+    better than 1e-9 per entry).
     """
     n = len(MAHLER_TABLE)
-    assert n == 178, f"snapshot drifted: expected 178, got {n}"
+    assert n > 0, "MAHLER_TABLE is empty"
     p = partition_mossinghoff(holdout_fraction=0.2, seed=42)
-    # Round-to-nearest: 178 * 0.2 = 35.6 -> 36 withheld, 142 visible.
+    # Round-to-nearest: n_withheld = round(n * 0.2)
+    expected_withheld = int(round(n * 0.2))
+    expected_visible = n - expected_withheld
     assert p.n_withheld + p.n_visible == n
-    assert p.n_withheld == 36
-    assert p.n_visible == 142
+    assert p.n_withheld == expected_withheld
+    assert p.n_visible == expected_visible
 
 
 def test_authority_visible_and_withheld_disjoint_and_cover_full_snapshot():
@@ -259,8 +268,14 @@ def test_composition_end_to_end_pilot_returns_well_formed_result():
     )
     # Every field present and well-typed.
     assert isinstance(result, WithheldResult)
-    assert result.n_visible == 142
-    assert result.n_withheld == 36
+    # Calibration drift fix (2026-04-29): MAHLER_TABLE grew from 178 to
+    # ~8625 entries. Assert against the live partition arithmetic
+    # rather than the old hardcoded 142/36 counts.
+    n = len(MAHLER_TABLE)
+    expected_withheld = int(round(n * 0.2))
+    expected_visible = n - expected_withheld
+    assert result.n_visible == expected_visible
+    assert result.n_withheld == expected_withheld
     assert result.withheld_rediscovery_count >= 0
     assert result.withheld_PROMOTE_count >= 0
     # The by_seed dict carries one entry per seed.
