@@ -311,7 +311,10 @@ def train_ppo(
         return _AutoResetWrapper(Monitor(_GymCompatWrapper(env)))
 
     vec = DummyVecEnv([_make])
-    model = PPO("MlpPolicy", vec, seed=seed, verbose=0)
+    # device="cpu": the small MlpPolicy here trains faster on CPU than
+    # on GPU and avoids SB3's "you're trying to run PPO on the GPU"
+    # UserWarning at import time.
+    model = PPO("MlpPolicy", vec, seed=seed, verbose=0, device="cpu")
     t0 = time.time()
     model.learn(total_timesteps=n_steps)
     elapsed = time.time() - t0
@@ -339,8 +342,31 @@ def train_ppo(
     )
 
 
-class _GymCompatWrapper:
-    """Minimal adapter to force gymnasium-style 5-tuple step + dict info."""
+def _gym_env_base() -> Any:
+    """Resolve gymnasium.Env at import-or-call time so the wrappers can
+    inherit from it when SB3 / gymnasium are present, and fall back to
+    object when they are not.
+    """
+    try:
+        import gymnasium as gym  # noqa: F401
+
+        return gym.Env
+    except ImportError:
+        return object
+
+
+_GymBase = _gym_env_base()
+
+
+class _GymCompatWrapper(_GymBase):  # type: ignore[misc, valid-type]
+    """Minimal adapter to force gymnasium-style 5-tuple step + dict info.
+
+    Inherits from ``gymnasium.Env`` when available so SB3's
+    ``Monitor`` / ``DummyVecEnv`` ``isinstance(env, gymnasium.Env)``
+    checks pass. Falls back to plain object when gymnasium isn't
+    installed (in which case SB3 also won't be -- ``train_ppo`` will
+    skip-with-message before reaching this wrapper).
+    """
 
     def __init__(self, env: Any):
         self._env = env
@@ -363,8 +389,12 @@ class _GymCompatWrapper:
         return None
 
 
-class _AutoResetWrapper:
-    """Auto-reset on terminated/truncated so a continuous step budget works."""
+class _AutoResetWrapper(_GymBase):  # type: ignore[misc, valid-type]
+    """Auto-reset on terminated/truncated so a continuous step budget works.
+
+    Inherits from ``gymnasium.Env`` when available; see
+    ``_GymCompatWrapper`` rationale.
+    """
 
     def __init__(self, env: Any):
         self._env = env

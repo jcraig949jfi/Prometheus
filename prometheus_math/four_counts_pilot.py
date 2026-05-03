@@ -481,6 +481,222 @@ def run_reinforce_agent(
 
 
 # ---------------------------------------------------------------------------
+# PPO agent condition (path B — stronger algorithm than REINFORCE)
+# ---------------------------------------------------------------------------
+
+
+def run_ppo_agent(
+    env_factory: Callable[[], Any],
+    n_episodes: int,
+    seed: int,
+    n_steps_rollout: Optional[int] = None,
+    verbose: int = 0,
+) -> FourCountsResult:
+    """PPO agent over the same DiscoveryEnv action space (§6.2 path B).
+
+    Runs ``stable_baselines3.PPO`` with default hyperparameters
+    (Adam, GAE-lambda=0.95, clip_range=0.2, MlpPolicy 64-64) for
+    ``total_timesteps = n_episodes * episode_length`` on a single env
+    instance, tallying outcomes from each terminal step's info dict
+    via an SB3 callback. This is the live training run — we tally
+    discovery outcomes *during* training, not via post-hoc rollout, so
+    the count reflects the agent's policy as it learns.
+
+    If ``stable_baselines3`` is not installed, returns a
+    FourCountsResult flagged with ``condition_label='ppo_agent_skipped'``
+    so the comparison harness can surface the skip in the pairwise
+    table without crashing.
+
+    Args:
+        env_factory: zero-arg callable returning a fresh DiscoveryEnv.
+        n_episodes: number of full episodes to run (=> total_timesteps =
+            n_episodes * env.half_len).
+        seed: RNG seed for SB3 + env.
+        n_steps_rollout: PPO rollout buffer size (>= 4 * episode_length
+            recommended). Default: max(64, 4 * half_len).
+        verbose: SB3 verbosity (0 = silent, 1 = progress, 2 = debug).
+
+    Returns:
+        FourCountsResult with `condition_label = "ppo_agent"`.
+
+    Raises:
+        ValueError: if n_episodes < 0.
+    """
+    if n_episodes < 0:
+        raise ValueError(f"n_episodes must be >= 0, got {n_episodes}")
+    if n_episodes == 0:
+        return FourCountsResult(
+            condition_label="ppo_agent",
+            total_episodes=0,
+            catalog_hit_count=0,
+            claim_into_kernel_count=0,
+            promote_count=0,
+            shadow_catalog_count=0,
+            rejected_count=0,
+            by_kill_pattern={},
+            elapsed_seconds=0.0,
+            seed=seed,
+        )
+
+    try:
+        from stable_baselines3 import PPO
+        from stable_baselines3.common.callbacks import BaseCallback
+        from stable_baselines3.common.vec_env import DummyVecEnv
+    except ImportError as e:
+        # SB3 missing — skip with a flagged FourCountsResult so callers
+        # can detect and surface the skip in the comparison table.
+        return FourCountsResult(
+            condition_label="ppo_agent_skipped",
+            total_episodes=0,
+            catalog_hit_count=0,
+            claim_into_kernel_count=0,
+            promote_count=0,
+            shadow_catalog_count=0,
+            rejected_count=0,
+            by_kill_pattern={"sb3_missing": 1},
+            elapsed_seconds=0.0,
+            seed=seed,
+        )
+
+    # Build the env once and wrap it for SB3 (it auto-resets on
+    # termination, but we want to keep `_pipeline_records` accumulating
+    # so the four-counts tally is correct).
+    env = env_factory()
+    half_len = int(getattr(env, "half_len", 6))
+    if n_steps_rollout is None:
+        n_steps_rollout = max(64, 4 * half_len)
+
+    # Tally state — closed over by the callback below.
+    counts = {
+        "catalog_hit": 0,
+        "claim_into_kernel": 0,
+        "promote": 0,
+        "shadow_catalog": 0,
+        "rejected": 0,
+    }
+    by_kp: Dict[str, int] = {}
+    pipeline_len_holder = {"value": 0}
+    episodes_completed = {"value": 0}
+
+    # SB3-compatible Env wrapper. Inherit from gymnasium.Env so
+    # DummyVecEnv's isinstance checks pass.
+    try:
+        import gymnasium as gym
+
+        gym_base = gym.Env
+    except ImportError:
+        gym_base = object  # type: ignore[assignment]
+
+    class _DiscoveryGymWrapper(gym_base):  # type: ignore[misc, valid-type]
+        """Wrap DiscoveryEnv for SB3 PPO; tally outcomes on each terminal
+        step before the auto-reset clobbers them."""
+
+        metadata = {"render_modes": []}
+
+        def __init__(self, base: Any, n_max_episodes: int):
+            self._base = base
+            self.observation_space = base.observation_space
+            self.action_space = base.action_space
+            self.spec = None
+            self.render_mode = None
+            self._n_max = n_max_episodes
+            self._stop = False
+
+        def reset(self, *, seed: Optional[int] = None, options: Optional[Dict] = None):
+            obs, info = self._base.reset(seed=seed)
+            return np.asarray(obs, dtype=np.float32), info
+
+        def step(self, action):
+            obs, r, term, trunc, info = self._base.step(int(action))
+            obs = np.asarray(obs, dtype=np.float32)
+            # Tally on episode boundary.
+            if term or trunc:
+                if not self._stop:
+                    pipeline_len_holder["value"], _by_kp = _tally_episode_outcome(
+                        info,
+                        pipeline_len_holder["value"],
+                        self._base,
+                        counts,
+                        by_kp,
+                    )
+                    episodes_completed["value"] += 1
+                    if episodes_completed["value"] >= self._n_max:
+                        self._stop = True
+            return obs, float(r), bool(term), bool(trunc), info
+
+        def close(self):
+            return self._base.close()
+
+        def render(self):
+            return None
+
+    # Vec env with single underlying env so pipeline_records
+    # accumulates correctly.
+    wrapper_holder: Dict[str, Any] = {}
+
+    def _make() -> Any:
+        w = _DiscoveryGymWrapper(env, n_episodes)
+        wrapper_holder["env"] = w
+        return w
+
+    vec = DummyVecEnv([_make])
+
+    # n_steps must be a multiple of batch_size (default 64). Round up.
+    n_steps_rollout = ((n_steps_rollout + 63) // 64) * 64
+
+    model = PPO(
+        "MlpPolicy",
+        vec,
+        seed=int(seed),
+        n_steps=n_steps_rollout,
+        verbose=int(verbose),
+        device="cpu",  # avoid CUDA warning; tiny MLP, CPU is faster
+    )
+
+    class _StopAfterNEpisodes(BaseCallback):
+        """Halt training once the wrapped env has completed n_episodes."""
+
+        def __init__(self, n_episodes_target: int):
+            super().__init__()
+            self._target = n_episodes_target
+
+        def _on_step(self) -> bool:
+            return episodes_completed["value"] < self._target
+
+    # Generous timestep cap so the callback's stop signal is the actual
+    # terminator. Each episode is half_len steps; allow some slack for
+    # mid-rollout stop.
+    total_timesteps = int(n_episodes * half_len + n_steps_rollout * 2)
+
+    t0 = time.perf_counter()
+    model.learn(
+        total_timesteps=total_timesteps,
+        callback=_StopAfterNEpisodes(n_episodes),
+        progress_bar=False,
+    )
+    elapsed = time.perf_counter() - t0
+
+    try:
+        env.close()
+    except Exception:
+        pass
+
+    actual_episodes = episodes_completed["value"]
+    return FourCountsResult(
+        condition_label="ppo_agent",
+        total_episodes=actual_episodes,
+        catalog_hit_count=counts["catalog_hit"],
+        claim_into_kernel_count=counts["claim_into_kernel"],
+        promote_count=counts["promote"],
+        shadow_catalog_count=counts["shadow_catalog"],
+        rejected_count=counts["rejected"],
+        by_kill_pattern=by_kp,
+        elapsed_seconds=elapsed,
+        seed=seed,
+    )
+
+
+# ---------------------------------------------------------------------------
 # Comparison harness
 # ---------------------------------------------------------------------------
 
@@ -701,6 +917,7 @@ __all__ = [
     "run_random_null",
     "run_non_llm_mutation_source",
     "run_reinforce_agent",
+    "run_ppo_agent",
     "compare_conditions",
     "print_pilot_table",
 ]

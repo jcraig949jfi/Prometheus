@@ -18,6 +18,7 @@ Tests: `prometheus_math/tests/test_four_counts_pilot.py` (16 tests, all green)
 | width ±5  | 2026-05-03 | 10 |  5,000 | 3 |  59.8s | 0/30000 | COEFFICIENT_WIDTH |
 | width ±7  | 2026-05-03 | 10 |  3,000 | 3 |  35.3s | 0/18000 | COEFFICIENT_WIDTH |
 | deg14×±5  | 2026-05-03 | 14 |  5,000 | 3 |  50.4s | 0/30000 | D14_W5 (path A) |
+| PPO deg10 ±3 step | 2026-04-29 | 10 | 10,000 | 3 | 294.2s | 0/30000 (only ppo arm) | PPO (path B) |
 
 Raw JSON: `prometheus_math/four_counts_pilot_run.json` (1K snapshot, retained),
 `prometheus_math/four_counts_pilot_run_10k.json` (10K step-reward, rich format),
@@ -181,6 +182,74 @@ catalog distribution at degrees {10, 12, 14, 16, 18, 20}, the deg-14
 catalog entry list with max|c| in {2,3,4,5}, per-seed PROMOTE +
 SHADOW + catalog-hit + kill-pattern breakdown, the run log, and the
 ranked recommendation list.
+
+---
+
+## PPO ablation (path B, 2026-04-29)
+
+After paths A and the prior six ablations failed to break the
+0-PROMOTE ceiling at degree=10 ±3 step-reward, **path B** tested the
+remaining live hypothesis: REINFORCE+linear-policy is too weak even at
+the calibrated configuration. PPO with default SB3 hyperparameters
+(MlpPolicy 64-64, GAE-λ=0.95, clip-range=0.2, value function,
+trust-region updates) was run head-to-head against random_null and the
+existing REINFORCE arm, **at the same degree=10 ±3 step config that
+gave 0 PROMOTEs in the original 10K run** — to isolate the algorithm
+class as the variable. Full analysis lives in
+`prometheus_math/PPO_RESULTS.md`. Headline:
+
+| metric | random_null | reinforce_agent | **ppo_agent** |
+|---|---:|---:|---:|
+| PROMOTE rate | 0/30000 | 0/30000 | **0/30000** |
+| SHADOW_CATALOG | 0 | 0 | **0** |
+| catalog-hits | 36 | 9941 | **2336** |
+| salem-band proxy | 31 (0.10%) | 9914 (33.05%) | **2737 (9.12%)** |
+| salem proxy ratio vs random | 1.0× | 319.8× | **88.3×** |
+| dominant kill-pattern | upstream:functional (87%) | upstream:low_m + salem (33% each) | **upstream:cyclotomic_or_large (47%)** |
+| total wall time | 68s | 59s | **166s** |
+
+**PPO did NOT break the 0-PROMOTE ceiling.** 30K episodes, 0 PROMOTEs,
+0 SHADOW_CATALOG, 0 sub-Lehmer band hits. Same bound as 7 prior
+ablations + path A.
+
+**The ceiling is now joint over three structurally distinct exploration
+policies** (uniform random, contextual REINFORCE, PPO+MLP+value-fn) at
+the same configuration. PPO produced a *qualitatively different*
+policy from REINFORCE — REINFORCE collapsed onto the salem_cluster
+band (33% of episodes, 320× over random); PPO landed in the
+cyclotomic_or_large basin (47% of episodes) with weaker concentration
+on Salem (88× over random). Three distinct exploration strategies, all
+with PROMOTE rate < 1/30000.
+
+**Verdict on Hypothesis 1 vs Hypothesis 2:** path-B evidence is
+consistent with **Hypothesis 1 (Lehmer's conjecture / structural
+emptiness)** — the +100 sub-Lehmer band is empirically unreachable
+from this trajectory space because the band is genuinely sparse, not
+because REINFORCE is a weak optimizer. Path B does NOT decisively kill
+Hypothesis 2 (algorithm strength), but it does narrow it: "swap in a
+default-hyperparameter deep-RL policy with a value function and
+trust-region updates" is now ruled out as sufficient. Stronger forms
+of Hypothesis 2 — MCTS / AlphaZero-style search, MAP-Elites, PPO with
+a structured action mask seeded from the catalog — remain untested.
+
+**Updated cumulative cell tally (post path-B):**
+
+| sweep dimension | regimes tested | total episodes | PROMOTEs | SHADOW | catalog hits |
+|---|---|---:|---:|---:|---:|
+| degree (10/12/14, ±3, step) | 3 | 108,000 | 0 | 0 | 32 |
+| reward shape (shaped, deg10, ±3) | 1 | 30,000 | 0 | 0 | 32 |
+| alphabet (±5/±7, deg10, step) | 2 | 48,000 | 0 | 0 | 1 |
+| deg14 ± alphabet (path A) | 1 | 30,000 | 0 | 0 | 0 |
+| **PPO deg10 ±3 step (path B)** | **1** | **30,000** | **0** | **0** | **2336** |
+| **TOTAL (8 cells)** | **8** | **246,000** | **0** | **0** | **2401** |
+
+Next-interventions ranked: MCTS / AlphaZero-style > MAP-Elites > PPO
+with structured catalog-seeded action mask > drop reciprocity
+constraint and filter via DiscoveryPipeline.
+
+See `prometheus_math/PPO_RESULTS.md` for the full per-seed breakdown,
+kill-pattern shifts, Salem-cluster proxy concentration table, and
+honest framing on the Hypothesis 1 vs Hypothesis 2 split.
 
 ---
 

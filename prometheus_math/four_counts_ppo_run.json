@@ -1,0 +1,284 @@
+{
+  "n_episodes": 10000,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "total_elapsed_seconds": 294.21051410003565,
+  "env": {
+    "degree": 10,
+    "coefficient_choices": [
+      -3,
+      -2,
+      -1,
+      0,
+      1,
+      2,
+      3
+    ],
+    "reward_shape": "step"
+  },
+  "per_condition": {
+    "random_null": {
+      "promote_rate_mean": 0.0,
+      "promote_rate_std": 0.0,
+      "promote_rates": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "catalog_hit_rate_mean": 0.0012,
+      "claim_rate_mean": 0.0,
+      "results": [
+        {
+          "condition_label": "random_null",
+          "total_episodes": 10000,
+          "catalog_hit_count": 11,
+          "claim_into_kernel_count": 0,
+          "promote_count": 0,
+          "shadow_catalog_count": 0,
+          "rejected_count": 9989,
+          "by_kill_pattern": {
+            "upstream:functional": 8680,
+            "upstream:cyclotomic_or_large": 1079,
+            "upstream:low_m": 216,
+            "upstream:salem_cluster": 14
+          },
+          "elapsed_seconds": 22.31278989999555,
+          "seed": 0,
+          "promote_rate": 0.0,
+          "catalog_hit_rate": 0.0011,
+          "claim_rate": 0.0
+        },
+        {
+          "condition_label": "random_null",
+          "total_episodes": 10000,
+          "catalog_hit_count": 13,
+          "claim_into_kernel_count": 0,
+          "promote_count": 0,
+          "shadow_catalog_count": 0,
+          "rejected_count": 9987,
+          "by_kill_pattern": {
+            "upstream:functional": 8663,
+            "upstream:cyclotomic_or_large": 1142,
+            "upstream:low_m": 174,
+            "upstream:salem_cluster": 8
+          },
+          "elapsed_seconds": 22.711915399879217,
+          "seed": 1,
+          "promote_rate": 0.0,
+          "catalog_hit_rate": 0.0013,
+          "claim_rate": 0.0
+        },
+        {
+          "condition_label": "random_null",
+          "total_episodes": 10000,
+          "catalog_hit_count": 12,
+          "claim_into_kernel_count": 0,
+          "promote_count": 0,
+          "shadow_catalog_count": 0,
+          "rejected_count": 9988,
+          "by_kill_pattern": {
+            "upstream:functional": 8684,
+            "upstream:cyclotomic_or_large": 1104,
+            "upstream:low_m": 191,
+            "upstream:salem_cluster": 9
+          },
+          "elapsed_seconds": 23.109986300114542,
+          "seed": 2,
+          "promote_rate": 0.0,
+          "catalog_hit_rate": 0.0012,
+          "claim_rate": 0.0
+        }
+      ],
+      "salem_total": 31,
+      "salem_per_seed": [
+        14,
+        8,
+        9
+      ]
+    },
+    "reinforce_agent": {
+      "promote_rate_mean": 0.0,
+      "promote_rate_std": 0.0,
+      "promote_rates": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "catalog_hit_rate_mean": 0.33136666666666664,
+      "claim_rate_mean": 0.0,
+      "results": [
+        {
+          "condition_label": "reinforce_agent",
+          "total_episodes": 10000,
+          "catalog_hit_count": 0,
+          "claim_into_kernel_count": 0,
+          "promote_count": 0,
+          "shadow_catalog_count": 0,
+          "rejected_count": 10000,
+          "by_kill_pattern": {
+            "upstream:functional": 66,
+            "upstream:low_m": 13,
+            "upstream:cyclotomic_or_large": 7,
+            "upstream:salem_cluster": 9914
+          },
+          "elapsed_seconds": 24.661152799846604,
+          "seed": 0,
+          "promote_rate": 0.0,
+          "catalog_hit_rate": 0.0,
+          "claim_rate": 0.0
+        },
+        {
+          "condition_label": "reinforce_agent",
+          "total_episodes": 10000,
+          "catalog_hit_count": 0,
+          "claim_into_kernel_count": 0,
+          "promote_count": 0,
+          "shadow_catalog_count": 0,
+          "rejected_count": 10000,
+          "by_kill_pattern": {
+            "upstream:functional": 64,
+            "upstream:cyclotomic_or_large": 7,
+            "upstream:low_m": 9929
+          },
+          "elapsed_seconds": 23.156400799984112,
+          "seed": 1,
+          "promote_rate": 0.0,
+          "catalog_hit_rate": 0.0,
+          "claim_rate": 0.0
+        },
+        {
+          "condition_label": "reinforce_agent",
+          "total_episodes": 10000,
+          "catalog_hit_count": 9941,
+          "claim_into_kernel_count": 0,
+          "promote_count": 0,
+          "shadow_catalog_count": 0,
+          "rejected_count": 59,
+          "by_kill_pattern": {
+            "upstream:functional": 52,
+            "upstream:low_m": 1,
+            "upstream:cyclotomic_or_large": 6
+          },
+          "elapsed_seconds": 10.747103599831462,
+          "seed": 2,
+          "promote_rate": 0.0,
+          "catalog_hit_rate": 0.9941,
+          "claim_rate": 0.0
+        }
+      ],
+      "salem_total": 9914,
+      "salem_per_seed": [
+        9914,
+        0,
+        0
+      ]
+    },
+    "ppo_agent": {
+      "promote_rate_mean": 0.0,
+      "promote_rate_std": 0.0,
+      "promote_rates": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "catalog_hit_rate_mean": 0.07786666666666668,
+      "claim_rate_mean": 0.0,
+      "results": [
+        {
+          "condition_label": "ppo_agent",
+          "total_episodes": 10000,
+          "catalog_hit_count": 16,
+          "claim_into_kernel_count": 0,
+          "promote_count": 0,
+          "shadow_catalog_count": 0,
+          "rejected_count": 9984,
+          "by_kill_pattern": {
+            "upstream:functional": 3567,
+            "upstream:cyclotomic_or_large": 2875,
+            "upstream:low_m": 2826,
+            "upstream:salem_cluster": 716
+          },
+          "elapsed_seconds": 59.783779700053856,
+          "seed": 0,
+          "promote_rate": 0.0,
+          "catalog_hit_rate": 0.0016,
+          "claim_rate": 0.0
+        },
+        {
+          "condition_label": "ppo_agent",
+          "total_episodes": 10000,
+          "catalog_hit_count": 1087,
+          "claim_into_kernel_count": 0,
+          "promote_count": 0,
+          "shadow_catalog_count": 0,
+          "rejected_count": 8913,
+          "by_kill_pattern": {
+            "upstream:functional": 1255,
+            "upstream:low_m": 1396,
+            "upstream:cyclotomic_or_large": 5276,
+            "upstream:salem_cluster": 975,
+            "upstream:zero_polynomial": 11
+          },
+          "elapsed_seconds": 54.682605899870396,
+          "seed": 1,
+          "promote_rate": 0.0,
+          "catalog_hit_rate": 0.1087,
+          "claim_rate": 0.0
+        },
+        {
+          "condition_label": "ppo_agent",
+          "total_episodes": 10000,
+          "catalog_hit_count": 1233,
+          "claim_into_kernel_count": 0,
+          "promote_count": 0,
+          "shadow_catalog_count": 0,
+          "rejected_count": 8767,
+          "by_kill_pattern": {
+            "upstream:functional": 625,
+            "upstream:cyclotomic_or_large": 5849,
+            "upstream:low_m": 1226,
+            "upstream:salem_cluster": 1046,
+            "upstream:zero_polynomial": 21
+          },
+          "elapsed_seconds": 51.56129560014233,
+          "seed": 2,
+          "promote_rate": 0.0,
+          "catalog_hit_rate": 0.1233,
+          "claim_rate": 0.0
+        }
+      ],
+      "salem_total": 2737,
+      "salem_per_seed": [
+        716,
+        975,
+        1046
+      ]
+    }
+  },
+  "pairwise": {
+    "random_null__vs__reinforce_agent": {
+      "p_value": 1.0,
+      "lift": 0.0,
+      "winner": null,
+      "mean_a": 0.0,
+      "mean_b": 0.0
+    },
+    "random_null__vs__ppo_agent": {
+      "p_value": 1.0,
+      "lift": 0.0,
+      "winner": null,
+      "mean_a": 0.0,
+      "mean_b": 0.0
+    },
+    "reinforce_agent__vs__ppo_agent": {
+      "p_value": 1.0,
+      "lift": 0.0,
+      "winner": null,
+      "mean_a": 0.0,
+      "mean_b": 0.0
+    }
+  }
+}
