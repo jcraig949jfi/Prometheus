@@ -2986,3 +2986,48 @@ Key design notes:
   dependency.
 - DOP853 / BDF are scipy facades; thin wrappers maintain a uniform
   return-dict shape across the namespace.
+
+---
+
+2026-05-02 | Session — pivot from arsenal to RL action space
+
+Five deliverables across the BIND/EVAL stack; 53 new tests passing;
+metadata pass (85 ops calibrated within 2x-50x); REINFORCE baseline
+beats random at p=8.5e-7 on the SigmaMathEnv. Tier-2 backlog
+wave-runner explicitly paused.
+
+Per-module entries:
+
+  sigma_kernel.bind_eval        | A:2 P:3 E:5 C:3 | commit ac4176f0
+  prometheus_math.sigma_env     | A:2 P:4 E:4 C:4 | commit ac4176f0
+  prometheus_math.arsenal_meta  | A:3 P:3 E:2 C:2 | commit 4f5a8a22
+  prometheus_math._metadata_table | A:3 P:3 E:2 C:2 | commit 4f5a8a22
+  prometheus_math.sigma_env_ppo | A:3 P:4 E:5 C:4 | commit 4f5a8a22
+
+Aggregate session rubric: A:13 P:17 E:18 C:15 (53 tests; ≥2 in every
+category in every shipped module).
+
+Bench results (sigma_kernel/bench_bind_eval.py on dev box):
+  BIND p50:               0.270 ms
+  EVAL p50:               0.381 ms
+  rows-per-EVAL:          3.01
+  cost-accuracy band 2x-50x:  57 / 68 testable ops
+  cost overshoots:        0 / 68
+
+REINFORCE-vs-random comparison (SigmaMathEnv, 10K steps, 3 seeds):
+  random mean reward:     63.333
+  reinforce mean reward:  96.956
+  lift:                   +53.1%
+  p-value (Welch 1-sided): 8.5e-7
+  env ceiling reached:    96.96 / 100
+
+Architectural proposal (not yet shipped, awaiting benchmark):
+  Residual-aware falsification — typed Residual + SpectralVerdict +
+  REFINE opcode + three-rule mechanical stopping discipline. Posted
+  to stoa/discussions/2026-05-02-techne-on-residual-aware-
+  falsification.md. Acceptance: ≥80% classifier accuracy on a
+  curated 30-residual benchmark with zero false-positive 'signal'
+  calls on known-noise. If fails, primitive held in escrow.
+
+Session journal: techne/TECHNE_SESSION_2026-05-02.md
+
