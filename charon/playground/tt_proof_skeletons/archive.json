@@ -1,0 +1,1730 @@
+{
+  "meta": {
+    "D": 6,
+    "N": 8,
+    "true_rank": 3,
+    "seed": 42,
+    "target_norm": 90.68334619071301,
+    "rank_cap": 10
+  },
+  "history": [
+    {
+      "gen": 0,
+      "archive_size": 9,
+      "best_error": 1.0549129586188419e-14,
+      "best_rank": 3
+    },
+    {
+      "gen": 5,
+      "archive_size": 24,
+      "best_error": 1.0549129586188419e-14,
+      "best_rank": 3
+    },
+    {
+      "gen": 10,
+      "archive_size": 28,
+      "best_error": 1.0549129586188419e-14,
+      "best_rank": 3
+    },
+    {
+      "gen": 15,
+      "archive_size": 32,
+      "best_error": 1.0549129586188419e-14,
+      "best_rank": 3
+    },
+    {
+      "gen": 20,
+      "archive_size": 33,
+      "best_error": 1.0549129586188419e-14,
+      "best_rank": 3
+    },
+    {
+      "gen": 25,
+      "archive_size": 37,
+      "best_error": 1.0549129586188419e-14,
+      "best_rank": 3
+    },
+    {
+      "gen": 30,
+      "archive_size": 38,
+      "best_error": 1.0462879859625167e-14,
+      "best_rank": 3
+    },
+    {
+      "gen": 35,
+      "archive_size": 39,
+      "best_error": 1.0462879859625167e-14,
+      "best_rank": 3
+    },
+    {
+      "gen": 39,
+      "archive_size": 39,
+      "best_error": 1.0462879859625167e-14,
+      "best_rank": 3
+    }
+  ],
+  "cells": {
+    "r1_e0": {
+      "rank": 1,
+      "error": 0.7061268944453098,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 1
+          }
+        ]
+      ]
+    },
+    "r4_e13": {
+      "rank": 4,
+      "error": 1.3785820881458101e-14,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ]
+      ]
+    },
+    "r3_e13": {
+      "rank": 3,
+      "error": 1.0462879859625167e-14,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 1.9611127139903772e-10
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 4
+          }
+        ]
+      ]
+    },
+    "r3_e0": {
+      "rank": 3,
+      "error": 0.12684165733617483,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 1
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.011796850048193199
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 3
+          }
+        ]
+      ]
+    },
+    "r4_e0": {
+      "rank": 4,
+      "error": 0.18804156768808966,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.016781891210897015
+          }
+        ]
+      ]
+    },
+    "r5_e13": {
+      "rank": 5,
+      "error": 1.4938602737040462e-14,
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 3
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 2.7938860831667402e-05
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 2,
+            "amount": 2
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 5
+          }
+        ]
+      ]
+    },
+    "r2_e0": {
+      "rank": 2,
+      "error": 0.7061259515153184,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 1
+          }
+        ]
+      ]
+    },
+    "r6_e0": {
+      "rank": 6,
+      "error": 0.1748296051969505,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.004741449323438528
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 3.270264920761483e-05
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 1.1391829308796756e-05
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 2,
+            "amount": 2
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 6.60091352509057e-06
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 5,
+            "amount": 3
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.018553938283311904
+          }
+        ]
+      ]
+    },
+    "r4_e1": {
+      "rank": 4,
+      "error": 0.01944661050678461,
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 3
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 1.5091493142040864e-05
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 2.7938860831667402e-05
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 7
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 1.103777194074129e-08
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 7
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.017287087360389246
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 3
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.0019918091390256597
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 1
+          }
+        ]
+      ]
+    },
+    "r5_e2": {
+      "rank": 5,
+      "error": 0.001004065511586211,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 1
+          }
+        ]
+      ]
+    },
+    "r5_e0": {
+      "rank": 5,
+      "error": 0.3716174001196186,
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 1
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.0301162749514323
+          }
+        ]
+      ]
+    },
+    "r7_e13": {
+      "rank": 7,
+      "error": 1.4922183967092083e-14,
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 7
+          }
+        ]
+      ]
+    },
+    "r2_e2": {
+      "rank": 2,
+      "error": 0.007844668147875475,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.004741449323438528
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 2
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 7.130260265385018e-08
+          }
+        ]
+      ]
+    },
+    "r2_e1": {
+      "rank": 2,
+      "error": 0.013214350636666808,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.004741449323438528
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 2
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.0011296706108523504
+          }
+        ]
+      ]
+    },
+    "r7_e0": {
+      "rank": 7,
+      "error": 0.15989779865850148,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 1
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.011796850048193199
+          }
+        ]
+      ]
+    },
+    "r4_e2": {
+      "rank": 4,
+      "error": 0.00110927109430288,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 1.9611127139903772e-10
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 1
+          }
+        ]
+      ]
+    },
+    "r8_e13": {
+      "rank": 8,
+      "error": 1.4901180949631623e-14,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.004741449323438528
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.004741449323438528
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 6
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 1.9611127139903772e-10
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 8
+          }
+        ]
+      ]
+    },
+    "r8_e2": {
+      "rank": 8,
+      "error": 0.0010060714322655507,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.004741449323438528
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 1.1391829308796756e-05
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 2
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 0.0003226567735693493
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 1
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 3
+          }
+        ]
+      ]
+    },
+    "r8_e0": {
+      "rank": 8,
+      "error": 0.1839387998967125,
+      "genome": [
+        [
+          "perturb",
+          {
+            "sigma": 0.018553938283311904
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 1
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.011796850048193199
+          }
+        ]
+      ]
+    },
+    "r5_e1": {
+      "rank": 5,
+      "error": 0.02123516810152045,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.018553938283311904
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 5,
+            "amount": 2
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.004741449323438528
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 1.1391829308796756e-05
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 2
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.0019918091390256597
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 1
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.00011730025242697862
+          }
+        ]
+      ]
+    },
+    "r6_e1": {
+      "rank": 6,
+      "error": 0.010556581274972474,
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.0008028790482940032
+          }
+        ]
+      ]
+    },
+    "r6_e2": {
+      "rank": 6,
+      "error": 0.0011872889792881448,
+      "genome": [
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 1
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 0.0003226567735693493
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 1
+          }
+        ]
+      ]
+    },
+    "r3_e1": {
+      "rank": 3,
+      "error": 0.010097659355556296,
+      "genome": [
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "reseed",
+          {
+            "rank": 3
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 1.5091493142040864e-05
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 2.7938860831667402e-05
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 7
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 1.103777194074129e-08
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 7
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.017287087360389246
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 3
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.0011296706108523504
+          }
+        ]
+      ]
+    },
+    "r7_e2": {
+      "rank": 7,
+      "error": 0.0010031919904983167,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.018553938283311904
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 5,
+            "amount": 2
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "expand",
+          {
+            "bond": 2,
+            "amount": 1
+          }
+        ]
+      ]
+    },
+    "r3_e2": {
+      "rank": 3,
+      "error": 0.007863678235679378,
+      "genome": [
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "compress",
+          {
+            "target": 7
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 1.103777194074129e-08
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.017287087360389246
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 1
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 2
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 1
+          }
+        ]
+      ]
+    },
+    "r6_e13": {
+      "rank": 6,
+      "error": 1.492341037215833e-14,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 6
+          }
+        ]
+      ]
+    },
+    "r7_e1": {
+      "rank": 7,
+      "error": 0.021962524138486532,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 3
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.002374152414817664
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 2
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 2,
+            "amount": 3
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.0019918091390256597
+          }
+        ]
+      ]
+    },
+    "r6_e4": {
+      "rank": 6,
+      "error": 2.1458038204908116e-05,
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 2
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 5,
+            "amount": 2
+          }
+        ]
+      ]
+    },
+    "r9_e0": {
+      "rank": 9,
+      "error": 0.15607789318633392,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 1
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.011796850048193199
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 3,
+            "amount": 3
+          }
+        ]
+      ]
+    },
+    "r4_e3": {
+      "rank": 4,
+      "error": 0.00016901024701099562,
+      "genome": [
+        [
+          "perturb",
+          {
+            "sigma": 1.1391829308796756e-05
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.004741449323438528
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 1.5354931486491597e-05
+          }
+        ]
+      ]
+    },
+    "r5_e3": {
+      "rank": 5,
+      "error": 0.0003146767488168712,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 5,
+            "amount": 2
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 1
+          }
+        ]
+      ]
+    },
+    "r8_e4": {
+      "rank": 8,
+      "error": 1.6931527427689144e-05,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 1
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 7
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 1.103777194074129e-08
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.017287087360389246
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 2,
+            "amount": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 3.389651514165522e-05
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 5,
+            "amount": 2
+          }
+        ]
+      ]
+    },
+    "r9_e2": {
+      "rank": 9,
+      "error": 0.0031904016670190483,
+      "genome": [
+        [
+          "perturb",
+          {
+            "sigma": 1.7479455972881807e-05
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 1
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 0.0003226567735693493
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 3
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 1
+          }
+        ]
+      ]
+    },
+    "r6_e3": {
+      "rank": 6,
+      "error": 0.0008812764735623321,
+      "genome": [
+        [
+          "refine",
+          {
+            "eps": 0.0003226567735693493
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 1
+          }
+        ]
+      ]
+    },
+    "r8_e1": {
+      "rank": 8,
+      "error": 0.024749053988648975,
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 3
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 1.1391829308796756e-05
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 2
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 2,
+            "amount": 3
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.0019918091390256597
+          }
+        ]
+      ]
+    },
+    "r5_e4": {
+      "rank": 5,
+      "error": 1.9215956776942184e-05,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 5,
+            "amount": 2
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 5
+          }
+        ]
+      ]
+    },
+    "r10_e4": {
+      "rank": 10,
+      "error": 3.318847848976512e-05,
+      "genome": [
+        [
+          "expand",
+          {
+            "bond": 2,
+            "amount": 2
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 5,
+            "amount": 3
+          }
+        ]
+      ]
+    },
+    "r4_e4": {
+      "rank": 4,
+      "error": 1.99311945172057e-05,
+      "genome": [
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 5,
+            "amount": 2
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 4
+          }
+        ]
+      ]
+    },
+    "r7_e4": {
+      "rank": 7,
+      "error": 2.303769540286354e-05,
+      "genome": [
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "compress",
+          {
+            "target": 7
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 1.103777194074129e-08
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.017287087360389246
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 1
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "ansatz",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 5,
+            "amount": 3
+          }
+        ]
+      ]
+    }
+  }
+}

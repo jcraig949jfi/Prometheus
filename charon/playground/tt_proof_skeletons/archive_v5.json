@@ -1,0 +1,4103 @@
+{
+  "meta": {
+    "D": 6,
+    "N": 8,
+    "true_rank": 3,
+    "seed": 45,
+    "n_train": 8192,
+    "n_val": 4096,
+    "rank_cap": 10,
+    "sample_choices": [
+      128,
+      512,
+      2048,
+      8192
+    ],
+    "parsimony": 0.002,
+    "enable_cross": true,
+    "operators": [
+      "fit",
+      "grad",
+      "rerank",
+      "perturb",
+      "expand",
+      "compress",
+      "refine",
+      "symmetrize",
+      "reseed",
+      "cross"
+    ]
+  },
+  "history": [
+    {
+      "gen": 0,
+      "archive_size": 16,
+      "best_val": 0.8928140506629345,
+      "best_train": 0.5060966311598711,
+      "best_rank": 5,
+      "best_fgr": 0.6666666666666666,
+      "best_len": 6
+    },
+    {
+      "gen": 5,
+      "archive_size": 30,
+      "best_val": 0.008987256432077564,
+      "best_train": 0.005124152372086451,
+      "best_rank": 4,
+      "best_fgr": 1.0,
+      "best_len": 4
+    },
+    {
+      "gen": 10,
+      "archive_size": 37,
+      "best_val": 0.005193308426307037,
+      "best_train": 0.0011800757230962977,
+      "best_rank": 5,
+      "best_fgr": 0.5,
+      "best_len": 8
+    },
+    {
+      "gen": 15,
+      "archive_size": 45,
+      "best_val": 0.007765523991946341,
+      "best_train": 0.004395997138805674,
+      "best_rank": 6,
+      "best_fgr": 0.6666666666666666,
+      "best_len": 8
+    },
+    {
+      "gen": 20,
+      "archive_size": 48,
+      "best_val": 0.007765523991946341,
+      "best_train": 0.004395997138805674,
+      "best_rank": 6,
+      "best_fgr": 0.6666666666666666,
+      "best_len": 8
+    },
+    {
+      "gen": 25,
+      "archive_size": 53,
+      "best_val": 0.007765523991946341,
+      "best_train": 0.004395997138805674,
+      "best_rank": 6,
+      "best_fgr": 0.6666666666666666,
+      "best_len": 8
+    },
+    {
+      "gen": 30,
+      "archive_size": 57,
+      "best_val": 0.007765523991946341,
+      "best_train": 0.004395997138805674,
+      "best_rank": 6,
+      "best_fgr": 0.6666666666666666,
+      "best_len": 8
+    },
+    {
+      "gen": 34,
+      "archive_size": 64,
+      "best_val": 0.007765523991946341,
+      "best_train": 0.004395997138805674,
+      "best_rank": 6,
+      "best_fgr": 0.6666666666666666,
+      "best_len": 8
+    }
+  ],
+  "gates": {
+    "g1": true,
+    "g2": true,
+    "g3": true,
+    "g4": "True",
+    "g5": true
+  },
+  "ablations": [
+    {
+      "idx": 0,
+      "val": 0.007765523991946341,
+      "rows": [
+        {
+          "op": "compress",
+          "dval": 0.7296243863048328,
+          "rel": 93.9568774832876,
+          "label": "LOAD"
+        },
+        {
+          "op": "cross",
+          "dval": 1.1944600479937157,
+          "rel": 153.81576944871918,
+          "label": "LOAD"
+        },
+        {
+          "op": "reseed",
+          "dval": 0.8651637144526332,
+          "rel": 111.41086105070286,
+          "label": "LOAD"
+        },
+        {
+          "op": "reseed",
+          "dval": 0.8103210644119413,
+          "rel": 104.34853658971743,
+          "label": "LOAD"
+        },
+        {
+          "op": "fit",
+          "dval": 0.08217917644881612,
+          "rel": 10.582566808633198,
+          "label": "LOAD"
+        },
+        {
+          "op": "rerank",
+          "dval": 0.002022005826346063,
+          "rel": 0.26038240670469814,
+          "label": "LOAD"
+        },
+        {
+          "op": "expand",
+          "dval": 0.9516149142858157,
+          "rel": 122.54355472634425,
+          "label": "LOAD"
+        },
+        {
+          "op": "fit",
+          "dval": 0.7443874784621141,
+          "rel": 95.85798450099718,
+          "label": "LOAD"
+        }
+      ]
+    },
+    {
+      "idx": 1,
+      "val": 0.008191460344841759,
+      "rows": [
+        {
+          "op": "grad",
+          "dval": 1.1828188886768154,
+          "rel": 144.39658362280272,
+          "label": "LOAD"
+        },
+        {
+          "op": "refine",
+          "dval": 0.37272076844215,
+          "rel": 45.50113810620543,
+          "label": "LOAD"
+        },
+        {
+          "op": "symmetrize",
+          "dval": 0.8696179817564255,
+          "rel": 106.16153227232947,
+          "label": "LOAD"
+        },
+        {
+          "op": "refine",
+          "dval": 1.193048237445438,
+          "rel": 145.64536568826975,
+          "label": "LOAD"
+        },
+        {
+          "op": "refine",
+          "dval": 0.761552429481981,
+          "rel": 92.96906747055644,
+          "label": "LOAD"
+        },
+        {
+          "op": "reseed",
+          "dval": 0.8463539238831514,
+          "rel": 103.32149436774222,
+          "label": "LOAD"
+        },
+        {
+          "op": "cross",
+          "dval": 0.6860437047692949,
+          "rel": 83.75108660585816,
+          "label": "LOAD"
+        },
+        {
+          "op": "cross",
+          "dval": 0.6860437047692949,
+          "rel": 83.75108660585816,
+          "label": "LOAD"
+        },
+        {
+          "op": "reseed",
+          "dval": 0.8358696946807757,
+          "rel": 102.0415969183237,
+          "label": "LOAD"
+        },
+        {
+          "op": "fit",
+          "dval": 1.1120000595477189,
+          "rel": 135.7511374938116,
+          "label": "LOAD"
+        },
+        {
+          "op": "fit",
+          "dval": 1.1120000595477189,
+          "rel": 135.7511374938116,
+          "label": "LOAD"
+        }
+      ]
+    },
+    {
+      "idx": 2,
+      "val": 0.008987256432077564,
+      "rows": [
+        {
+          "op": "reseed",
+          "dval": 1.0106134807387621,
+          "rel": 112.44960999795806,
+          "label": "LOAD"
+        },
+        {
+          "op": "symmetrize",
+          "dval": 1.1301795846684561,
+          "rel": 125.7535704260744,
+          "label": "LOAD"
+        },
+        {
+          "op": "fit",
+          "dval": 1.0518772319500886,
+          "rel": 117.04097239238655,
+          "label": "LOAD"
+        },
+        {
+          "op": "fit",
+          "dval": 1.0518772319500886,
+          "rel": 117.04097239238655,
+          "label": "LOAD"
+        }
+      ]
+    }
+  ],
+  "minimal_probe": [
+    {
+      "orig_len": 8,
+      "min_len": 8,
+      "orig_val": 0.007765523991946341,
+      "min_val": 0.007765523991946341,
+      "orig_ops": [
+        "compress",
+        "cross",
+        "reseed",
+        "reseed",
+        "fit",
+        "rerank",
+        "expand",
+        "fit"
+      ],
+      "min_ops": [
+        "compress",
+        "cross",
+        "reseed",
+        "reseed",
+        "fit",
+        "rerank",
+        "expand",
+        "fit"
+      ]
+    },
+    {
+      "orig_len": 11,
+      "min_len": 11,
+      "orig_val": 0.008191460344841759,
+      "min_val": 0.008191460344841759,
+      "orig_ops": [
+        "grad",
+        "refine",
+        "symmetrize",
+        "refine",
+        "refine",
+        "reseed",
+        "cross",
+        "cross",
+        "reseed",
+        "fit",
+        "fit"
+      ],
+      "min_ops": [
+        "grad",
+        "refine",
+        "symmetrize",
+        "refine",
+        "refine",
+        "reseed",
+        "cross",
+        "cross",
+        "reseed",
+        "fit",
+        "fit"
+      ]
+    },
+    {
+      "orig_len": 4,
+      "min_len": 4,
+      "orig_val": 0.008987256432077564,
+      "min_val": 0.008987256432077564,
+      "orig_ops": [
+        "reseed",
+        "symmetrize",
+        "fit",
+        "fit"
+      ],
+      "min_ops": [
+        "reseed",
+        "symmetrize",
+        "fit",
+        "fit"
+      ]
+    }
+  ],
+  "cells": {
+    "r1_e0_fgr0": {
+      "genome": [
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 12,
+            "lr": 0.013561377371486315
+          }
+        ]
+      ],
+      "rank": 1,
+      "train_err": 0.9999999485212525,
+      "val_err": 0.9999998084035407,
+      "adj": 1.0019999485212525,
+      "length": 1,
+      "fit_grad_ratio": 0.0
+    },
+    "r2_e0_fgr3": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 2,
+      "train_err": 0.7066247332223975,
+      "val_err": 0.7261760195348095,
+      "adj": 0.7106247332223975,
+      "length": 2,
+      "fit_grad_ratio": 1.0
+    },
+    "r6_e0_fgr0": {
+      "genome": [
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.006195421999349154
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.348837307178373e-09
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 5,
+            "amount": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 5,
+            "amount": 2
+          }
+        ]
+      ],
+      "rank": 6,
+      "train_err": 0.6060138706864949,
+      "val_err": 0.6520298628198794,
+      "adj": 0.638013870686495,
+      "length": 16,
+      "fit_grad_ratio": 0.2
+    },
+    "r4_e0_fgr2": {
+      "genome": [
+        [
+          "refine",
+          {
+            "eps": 7.573188050506728e-08
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 4,
+      "train_err": 0.16373129144214668,
+      "val_err": 0.17273971948167308,
+      "adj": 0.1757312914421467,
+      "length": 6,
+      "fit_grad_ratio": 0.6666666666666666
+    },
+    "r1_e0_fgr2": {
+      "genome": [
+        [
+          "grad",
+          {
+            "n": 8192,
+            "steps": 5,
+            "lr": 0.017056684428598364
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 1,
+      "train_err": 0.9539170235966377,
+      "val_err": 0.98771866987454,
+      "adj": 0.9619170235966377,
+      "length": 4,
+      "fit_grad_ratio": 0.6666666666666666
+    },
+    "r6_e0_fgr3": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 3,
+            "amount": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 6,
+      "train_err": 0.5433248744290622,
+      "val_err": 0.8757808858534175,
+      "adj": 0.5513248744290622,
+      "length": 4,
+      "fit_grad_ratio": 1.0
+    },
+    "r3_e0_fgr2": {
+      "genome": [
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 2
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 3,
+            "amount": 1
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 3,
+      "train_err": 0.6371753396148245,
+      "val_err": 0.7803784130672725,
+      "adj": 0.6531753396148245,
+      "length": 8,
+      "fit_grad_ratio": 0.5
+    },
+    "r6_e0_fgr2": {
+      "genome": [
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 3
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 256,
+            "iters": 2
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 3,
+            "amount": 1
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 6,
+      "train_err": 0.10136996726185907,
+      "val_err": 0.14289035747847978,
+      "adj": 0.11736996726185907,
+      "length": 8,
+      "fit_grad_ratio": 0.5
+    },
+    "r1_e0_fgr3": {
+      "genome": [
+        [
+          "perturb",
+          {
+            "sigma": 0.000382945930601632
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 1,
+      "train_err": 0.6979337138041323,
+      "val_err": 0.6905920328534217,
+      "adj": 0.7059337138041323,
+      "length": 4,
+      "fit_grad_ratio": 1.0
+    },
+    "r2_e0_fgr0": {
+      "genome": [
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 15,
+            "lr": 0.003865890818249708
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 1
+          }
+        ]
+      ],
+      "rank": 2,
+      "train_err": 1.0000000267734916,
+      "val_err": 0.9999999575225366,
+      "adj": 1.0040000267734916,
+      "length": 2,
+      "fit_grad_ratio": 0.0
+    },
+    "r5_e0_fgr2": {
+      "genome": [
+        [
+          "perturb",
+          {
+            "sigma": 0.002331854794825805
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 5,
+      "train_err": 0.418860406499904,
+      "val_err": 0.6410233770534648,
+      "adj": 0.43286040649990404,
+      "length": 7,
+      "fit_grad_ratio": 0.5
+    },
+    "r4_e0_fgr3": {
+      "genome": [
+        [
+          "fit",
+          {
+            "n": 2048,
+            "iters": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.0015260976017901265
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 7.573188050506728e-08
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 4,
+      "train_err": 0.11008409406827196,
+      "val_err": 0.1268162516962397,
+      "adj": 0.12608409406827198,
+      "length": 8,
+      "fit_grad_ratio": 0.75
+    },
+    "r4_e0_fgr0": {
+      "genome": [
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 15,
+            "lr": 0.003865890818249708
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 256,
+            "iters": 2
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 14,
+            "lr": 0.06036884705956243
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 1.3223466057637686e-07
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 15,
+            "lr": 0.0054376685403771515
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 3.6107232263944486e-07
+          }
+        ]
+      ],
+      "rank": 4,
+      "train_err": 0.49487922874190143,
+      "val_err": 0.5283097643631564,
+      "adj": 0.5148792287419014,
+      "length": 10,
+      "fit_grad_ratio": 0.16666666666666666
+    },
+    "r2_e0_fgr2": {
+      "genome": [
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.006195421999349154
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 10,
+            "lr": 0.008019549808978172
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 2,
+      "train_err": 0.7077796522689279,
+      "val_err": 0.735473879194467,
+      "adj": 0.7217796522689279,
+      "length": 7,
+      "fit_grad_ratio": 0.5
+    },
+    "r7_e0_fgr2": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.348837307178373e-09
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 3
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 7,
+      "train_err": 0.21549730732369268,
+      "val_err": 0.33202759197141923,
+      "adj": 0.23349730732369267,
+      "length": 9,
+      "fit_grad_ratio": 0.6666666666666666
+    },
+    "r7_e0_fgr0": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.348837307178373e-09
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 256,
+            "iters": 2
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 14,
+            "lr": 0.06036884705956243
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 15,
+            "lr": 0.0054376685403771515
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 3,
+            "amount": 3
+          }
+        ]
+      ],
+      "rank": 7,
+      "train_err": 0.6866383147538424,
+      "val_err": 0.8668813655258357,
+      "adj": 0.7066383147538424,
+      "length": 10,
+      "fit_grad_ratio": 0.2
+    },
+    "r7_e0_fgr3": {
+      "genome": [
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 7,
+      "train_err": 0.3239229497916891,
+      "val_err": 1.0367486880904102,
+      "adj": 0.3299229497916891,
+      "length": 3,
+      "fit_grad_ratio": 1.0
+    },
+    "r8_e0_fgr2": {
+      "genome": [
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.348837307178373e-09
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.006195421999349154
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 5
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "grad",
+          {
+            "n": 128,
+            "steps": 4,
+            "lr": 0.05630577975562029
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 8,
+      "train_err": 0.23460716678008015,
+      "val_err": 0.7269080272060782,
+      "adj": 0.2666071667800801,
+      "length": 16,
+      "fit_grad_ratio": 0.5
+    },
+    "r4_e0_fgr1": {
+      "genome": [
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.348837307178373e-09
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 4,
+      "train_err": 0.5470909124203936,
+      "val_err": 0.8789915590166751,
+      "adj": 0.5690909124203937,
+      "length": 11,
+      "fit_grad_ratio": 0.4
+    },
+    "r8_e0_fgr0": {
+      "genome": [
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 256,
+            "iters": 2
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 14,
+            "lr": 0.06036884705956243
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 15,
+            "lr": 0.0054376685403771515
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ]
+      ],
+      "rank": 8,
+      "train_err": 0.7000886650535487,
+      "val_err": 0.6976690979683104,
+      "adj": 0.7160886650535487,
+      "length": 8,
+      "fit_grad_ratio": 0.2
+    },
+    "r5_e0_fgr3": {
+      "genome": [
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 3
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.00010206674810611565
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 5,
+      "train_err": 0.3114863022490706,
+      "val_err": 0.46234477884568226,
+      "adj": 0.3254863022490706,
+      "length": 7,
+      "fit_grad_ratio": 1.0
+    },
+    "r1_e0_fgr1": {
+      "genome": [
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 14,
+            "lr": 0.004332456422672965
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 1,
+      "train_err": 0.7175609310672961,
+      "val_err": 0.722020127018295,
+      "adj": 0.7235609310672961,
+      "length": 3,
+      "fit_grad_ratio": 0.3333333333333333
+    },
+    "r5_e0_fgr0": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 15,
+            "lr": 0.003865890818249708
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 1
+          }
+        ]
+      ],
+      "rank": 5,
+      "train_err": 0.9999985002335279,
+      "val_err": 1.0000009966388292,
+      "adj": 1.0059985002335279,
+      "length": 3,
+      "fit_grad_ratio": 0.0
+    },
+    "r3_e0_fgr0": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 3
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 15,
+            "lr": 0.0054376685403771515
+          }
+        ]
+      ],
+      "rank": 3,
+      "train_err": 1.000000033156617,
+      "val_err": 1.0000006988798669,
+      "adj": 1.004000033156617,
+      "length": 2,
+      "fit_grad_ratio": 0.0
+    },
+    "r4_e1_fgr2": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.348837307178373e-09
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 4,
+      "train_err": 0.013862917222156535,
+      "val_err": 0.021925745698960036,
+      "adj": 0.027862917222156537,
+      "length": 7,
+      "fit_grad_ratio": 0.6666666666666666
+    },
+    "r5_e0_fgr1": {
+      "genome": [
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 3
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 12,
+            "lr": 0.013561377371486315
+          }
+        ]
+      ],
+      "rank": 5,
+      "train_err": 0.16491293169217958,
+      "val_err": 0.1970691267630179,
+      "adj": 0.1769129316921796,
+      "length": 6,
+      "fit_grad_ratio": 0.3333333333333333
+    },
+    "r2_e0_fgr1": {
+      "genome": [
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.348837307178373e-09
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 10,
+            "lr": 0.008019549808978172
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 1
+          }
+        ]
+      ],
+      "rank": 2,
+      "train_err": 0.9720976948660469,
+      "val_err": 1.0238738923504715,
+      "adj": 0.9900976948660469,
+      "length": 9,
+      "fit_grad_ratio": 0.25
+    },
+    "r7_e0_fgr1": {
+      "genome": [
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 2
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.348837307178373e-09
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 128,
+            "iters": 2
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 3
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 3,
+            "amount": 2
+          }
+        ]
+      ],
+      "rank": 7,
+      "train_err": 0.661109094469008,
+      "val_err": 0.78222216597336,
+      "adj": 0.689109094469008,
+      "length": 14,
+      "fit_grad_ratio": 0.4
+    },
+    "r3_e0_fgr3": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 3,
+      "train_err": 0.5942294734644674,
+      "val_err": 0.6658451772601977,
+      "adj": 0.6002294734644674,
+      "length": 3,
+      "fit_grad_ratio": 1.0
+    },
+    "r4_e2_fgr3": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 4,
+      "train_err": 0.005124152372086451,
+      "val_err": 0.008987256432077564,
+      "adj": 0.013124152372086452,
+      "length": 4,
+      "fit_grad_ratio": 1.0
+    },
+    "r9_e0_fgr0": {
+      "genome": [
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 2
+          }
+        ]
+      ],
+      "rank": 9,
+      "train_err": 0.9999995614156183,
+      "val_err": 1.0000006089035252,
+      "adj": 1.0079995614156183,
+      "length": 4,
+      "fit_grad_ratio": 0.0
+    },
+    "r5_e2_fgr2": {
+      "genome": [
+        [
+          "compress",
+          {
+            "target": 4
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.006195421999349154
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 5,
+      "train_err": 0.0020457054101451944,
+      "val_err": 0.009208101950002507,
+      "adj": 0.016045705410145196,
+      "length": 7,
+      "fit_grad_ratio": 0.6666666666666666
+    },
+    "r5_e1_fgr2": {
+      "genome": [
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 128,
+            "iters": 3
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 5,
+      "train_err": 0.014713053520349724,
+      "val_err": 0.02228343481011914,
+      "adj": 0.030713053520349726,
+      "length": 8,
+      "fit_grad_ratio": 0.6
+    },
+    "r9_e0_fgr1": {
+      "genome": [
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.348837307178373e-09
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.006195421999349154
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 1
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ]
+      ],
+      "rank": 9,
+      "train_err": 0.7272884083874079,
+      "val_err": 0.7331276217999771,
+      "adj": 0.751288408387408,
+      "length": 12,
+      "fit_grad_ratio": 0.3333333333333333
+    },
+    "r8_e0_fgr3": {
+      "genome": [
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 8,
+      "train_err": 0.17200597121100458,
+      "val_err": 0.5901079345254554,
+      "adj": 0.1800059712110046,
+      "length": 4,
+      "fit_grad_ratio": 1.0
+    },
+    "r9_e0_fgr2": {
+      "genome": [
+        [
+          "grad",
+          {
+            "n": 8192,
+            "steps": 14,
+            "lr": 0.013187454417239283
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.006195421999349154
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 2
+          }
+        ]
+      ],
+      "rank": 9,
+      "train_err": 0.6594370411106724,
+      "val_err": 0.8064885455703457,
+      "adj": 0.6754370411106724,
+      "length": 8,
+      "fit_grad_ratio": 0.5
+    },
+    "r8_e0_fgr1": {
+      "genome": [
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.006195421999349154
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 10,
+            "lr": 0.03274176862436978
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ]
+      ],
+      "rank": 8,
+      "train_err": 0.10667326478962282,
+      "val_err": 0.14356048747733946,
+      "adj": 0.12467326478962282,
+      "length": 9,
+      "fit_grad_ratio": 0.25
+    },
+    "r4_e1_fgr3": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 128,
+            "iters": 3
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.00034645633894477245
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 7.573188050506728e-08
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 4,
+      "train_err": 0.028882513319969053,
+      "val_err": 0.04141118939272214,
+      "adj": 0.04688251331996905,
+      "length": 9,
+      "fit_grad_ratio": 0.75
+    },
+    "r4_e2_fgr2": {
+      "genome": [
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 2.8136174546378967e-06
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 4,
+      "train_err": 0.0061445948676231285,
+      "val_err": 0.012342867245172992,
+      "adj": 0.01814459486762313,
+      "length": 6,
+      "fit_grad_ratio": 0.6666666666666666
+    },
+    "r6_e2_fgr2": {
+      "genome": [
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 3
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 3,
+            "amount": 1
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 6,
+      "train_err": 0.004395997138805674,
+      "val_err": 0.007765523991946341,
+      "adj": 0.020395997138805674,
+      "length": 8,
+      "fit_grad_ratio": 0.6666666666666666
+    },
+    "r10_e0_fgr1": {
+      "genome": [
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.006195421999349154
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 2
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ]
+      ],
+      "rank": 10,
+      "train_err": 0.10376876623530278,
+      "val_err": 0.10927770010278512,
+      "adj": 0.12176876623530278,
+      "length": 9,
+      "fit_grad_ratio": 0.3333333333333333
+    },
+    "r10_e0_fgr3": {
+      "genome": [
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 5,
+            "amount": 3
+          }
+        ]
+      ],
+      "rank": 11,
+      "train_err": 0.420697002876309,
+      "val_err": 0.711689230273107,
+      "adj": 0.430697002876309,
+      "length": 5,
+      "fit_grad_ratio": 1.0
+    },
+    "r10_e0_fgr0": {
+      "genome": [
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.006195421999349154
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 2
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ]
+      ],
+      "rank": 10,
+      "train_err": 0.9999931367750958,
+      "val_err": 0.999998171111606,
+      "adj": 1.0159931367750958,
+      "length": 8,
+      "fit_grad_ratio": 0.0
+    },
+    "r8_e1_fgr3": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 3
+          }
+        ]
+      ],
+      "rank": 8,
+      "train_err": 0.07822327890513264,
+      "val_err": 0.08599524029847742,
+      "adj": 0.08422327890513265,
+      "length": 3,
+      "fit_grad_ratio": 1.0
+    },
+    "r3_e0_fgr1": {
+      "genome": [
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.348837307178373e-09
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 3
+          }
+        ]
+      ],
+      "rank": 3,
+      "train_err": 0.7126741753794069,
+      "val_err": 0.7324373314562285,
+      "adj": 0.7346741753794069,
+      "length": 11,
+      "fit_grad_ratio": 0.25
+    },
+    "r10_e1_fgr1": {
+      "genome": [
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.006195421999349154
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 2
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ]
+      ],
+      "rank": 10,
+      "train_err": 0.08269095072392013,
+      "val_err": 0.11108709691122183,
+      "adj": 0.10069095072392013,
+      "length": 9,
+      "fit_grad_ratio": 0.3333333333333333
+    },
+    "r6_e0_fgr1": {
+      "genome": [
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.348837307178373e-09
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 5,
+            "amount": 2
+          }
+        ]
+      ],
+      "rank": 6,
+      "train_err": 0.6531461867247792,
+      "val_err": 0.8022385685566409,
+      "adj": 0.6751461867247792,
+      "length": 11,
+      "fit_grad_ratio": 0.25
+    },
+    "r6_e1_fgr2": {
+      "genome": [
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 3
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 3,
+            "amount": 1
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 6,
+      "train_err": 0.02521135465808987,
+      "val_err": 0.09571366307801671,
+      "adj": 0.041211354658089866,
+      "length": 8,
+      "fit_grad_ratio": 0.6666666666666666
+    },
+    "r5_e1_fgr1": {
+      "genome": [
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 13,
+            "lr": 0.08084047356009906
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 5,
+      "train_err": 0.0502413795647555,
+      "val_err": 0.05852077415212816,
+      "adj": 0.060241379564755504,
+      "length": 5,
+      "fit_grad_ratio": 0.3333333333333333
+    },
+    "r8_e2_fgr2": {
+      "genome": [
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.006195421999349154
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 8,
+      "train_err": 0.004070788681808736,
+      "val_err": 0.012644146846196776,
+      "adj": 0.018070788681808735,
+      "length": 7,
+      "fit_grad_ratio": 0.6666666666666666
+    },
+    "r8_e1_fgr2": {
+      "genome": [
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.006195421999349154
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 8,
+      "train_err": 0.020081174819973596,
+      "val_err": 0.1273771948768275,
+      "adj": 0.0360811748199736,
+      "length": 8,
+      "fit_grad_ratio": 0.6666666666666666
+    },
+    "r4_e1_fgr1": {
+      "genome": [
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 2
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.348837307178373e-09
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 4,
+      "train_err": 0.01452198027084428,
+      "val_err": 0.022635877051021085,
+      "adj": 0.03852198027084428,
+      "length": 12,
+      "fit_grad_ratio": 0.4
+    },
+    "r4_e2_fgr1": {
+      "genome": [
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "refine",
+          {
+            "eps": 0.00013185078273758862
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.348837307178373e-09
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 4,
+      "train_err": 0.003427606998432241,
+      "val_err": 0.008191460344841759,
+      "adj": 0.025427606998432238,
+      "length": 11,
+      "fit_grad_ratio": 0.4
+    },
+    "r3_e2_fgr2": {
+      "genome": [
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 2
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 3,
+            "amount": 1
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 3,
+      "train_err": 0.006689300575222512,
+      "val_err": 0.011768222876639053,
+      "adj": 0.020689300575222513,
+      "length": 7,
+      "fit_grad_ratio": 0.6666666666666666
+    },
+    "r6_e1_fgr1": {
+      "genome": [
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 256,
+            "iters": 2
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 3
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 256,
+            "iters": 2
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 3,
+            "amount": 1
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 6,
+      "train_err": 0.011302751014421238,
+      "val_err": 0.01681059904942205,
+      "adj": 0.02930275101442124,
+      "length": 9,
+      "fit_grad_ratio": 0.4
+    },
+    "r8_e2_fgr1": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 1024,
+            "iters": 3
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.348837307178373e-09
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 8,
+      "train_err": 0.0035082841885929524,
+      "val_err": 0.010729549448094962,
+      "adj": 0.029508284188592956,
+      "length": 13,
+      "fit_grad_ratio": 0.4
+    },
+    "r5_e1_fgr3": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 5,
+      "train_err": 0.04729104848588386,
+      "val_err": 0.062308904328321785,
+      "adj": 0.05529104848588386,
+      "length": 4,
+      "fit_grad_ratio": 1.0
+    },
+    "r9_e1_fgr3": {
+      "genome": [
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.1250960018155884e-10
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.006195421999349154
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 2
+          }
+        ]
+      ],
+      "rank": 9,
+      "train_err": 0.018861261164491022,
+      "val_err": 0.02587611914233615,
+      "adj": 0.038861261164491026,
+      "length": 10,
+      "fit_grad_ratio": 1.0
+    },
+    "r7_e2_fgr3": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.348837307178373e-09
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 128,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 3
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 7,
+      "train_err": 0.007323771913286169,
+      "val_err": 0.013941942120766939,
+      "adj": 0.02532377191328617,
+      "length": 9,
+      "fit_grad_ratio": 1.0
+    },
+    "r10_e0_fgr2": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 2
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 9.854372734777761e-05
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 4,
+            "amount": 3
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 3,
+            "amount": 2
+          }
+        ]
+      ],
+      "rank": 10,
+      "train_err": 1.0000003129312267,
+      "val_err": 1.000000054149176,
+      "adj": 1.0100003129312267,
+      "length": 5,
+      "fit_grad_ratio": 0.5
+    },
+    "r9_e1_fgr2": {
+      "genome": [
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.006195421999349154
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 2
+          }
+        ]
+      ],
+      "rank": 9,
+      "train_err": 0.03911006737812985,
+      "val_err": 0.05566301540195258,
+      "adj": 0.05311006737812985,
+      "length": 7,
+      "fit_grad_ratio": 0.5
+    },
+    "r3_e1_fgr2": {
+      "genome": [
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 6.36244942753524e-10
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 3
+          }
+        ]
+      ],
+      "rank": 3,
+      "train_err": 0.06116949127865908,
+      "val_err": 0.06651538239399801,
+      "adj": 0.07916949127865908,
+      "length": 9,
+      "fit_grad_ratio": 0.5
+    },
+    "r8_e1_fgr1": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 256,
+            "iters": 2
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 14,
+            "lr": 0.06036884705956243
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 15,
+            "lr": 0.0054376685403771515
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ]
+      ],
+      "rank": 8,
+      "train_err": 0.041657275077572296,
+      "val_err": 0.0455115877315117,
+      "adj": 0.0596572750775723,
+      "length": 9,
+      "fit_grad_ratio": 0.25
+    },
+    "r6_e1_fgr0": {
+      "genome": [
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.006195421999349154
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 5,
+            "lr": 0.1151357559272031
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.23103669764723e-08
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "compress",
+          {
+            "target": 8
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 4.348837307178373e-09
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "cross",
+          {
+            "n_pivots": 64,
+            "iters": 2
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 5,
+            "amount": 2
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 3,
+            "amount": 1
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 5,
+            "amount": 2
+          }
+        ]
+      ],
+      "rank": 6,
+      "train_err": 0.014781357809084465,
+      "val_err": 0.018792343706142127,
+      "adj": 0.048781357809084464,
+      "length": 17,
+      "fit_grad_ratio": 0.2
+    }
+  }
+}
