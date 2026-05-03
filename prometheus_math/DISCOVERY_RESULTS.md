@@ -146,6 +146,32 @@ These are real findings, not failures to be hidden.
 
 ## What to do next
 
+> **2026-05-03 update — discovery-via-rediscovery integration takes priority over items 1–4 below.**
+> James's epiphany of 2026-05-03 names the M=1.458 result as the rediscovery
+> half of a unified loop: rediscovery and discovery are the same machinery
+> with one extra gate (catalog miss → CLAIM → battery → residual classify).
+> Full architectural treatment in
+> [`harmonia/memory/architecture/discovery_via_rediscovery.md`](../harmonia/memory/architecture/discovery_via_rediscovery.md).
+>
+> The single concrete engineering move (§6.1 of that doc) is to promote
+> the current `DISCOVERY_CANDIDATE` log-line in `discovery_env.py` from
+> a side-note into a substrate CLAIM whose kill_path runs F1+F6+F9+F11
+> + irreducibility + reciprocity + multi-catalog consistency. PROMOTE on
+> survival; archive with typed kill-pattern on failure. ~1 day of work.
+>
+> Run after that: the four-counts pilot (§6.2) — 10K episodes under both
+> the LLM-driven REINFORCE agent AND a uniform-random null over the same
+> coefficient space, both streaming through the unified pipeline. The
+> substrate-grade comparison is agent-PROMOTE-rate vs null-PROMOTE-rate
+> with significance. This is the empirical anchor for the bottled-
+> serendipity thesis the program previously lacked. Per ChatGPT's
+> stage-3 standard from the same doc's validation ladder, no smaller
+> test distinguishes discovery from sampling.
+>
+> Items 1–4 below remain useful but are subsidiary to that pipeline —
+> they sharpen the rediscovery half of a loop whose discovery half is
+> not yet wired.
+
 In order:
 
 1. **Wire the Mossinghoff exact-match into the env reward.** Right
