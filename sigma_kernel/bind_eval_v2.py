@@ -158,8 +158,11 @@ class BindEvalKernelV2(BindEvalExtension):
         """
         if cap is None:
             raise CapabilityError("BIND requires a capability")
-        if cap.consumed:
-            raise CapabilityError(f"capability {cap.cap_id} already consumed")
+        # B-BUGHUNT-004: linearity is enforced by the DB-level UPDATE in
+        # _consume_user_cap; the consumed=1 row check there rejects
+        # double-spend across processes. The frozen Capability dataclass
+        # means in-process state never drifts; we don't need an in-process
+        # check here.
 
         # 1. Compute the callable hash. The validator does not need the
         # callable itself; it imports + hashes via inspect.getsource.
@@ -298,8 +301,11 @@ class BindEvalKernelV2(BindEvalExtension):
         """
         if cap is None:
             raise CapabilityError("EVAL requires a capability")
-        if cap.consumed:
-            raise CapabilityError(f"capability {cap.cap_id} already consumed")
+        # B-BUGHUNT-004: linearity is enforced by the DB-level UPDATE in
+        # _consume_user_cap; the consumed=1 row check there rejects
+        # double-spend across processes. The frozen Capability dataclass
+        # means in-process state never drifts; we don't need an in-process
+        # check here.
 
         # Resolve the binding side-table row (mirrors v1).
         row = self.kernel.conn.execute(

@@ -206,6 +206,18 @@ class _SqliteAdapter:
     def close(self):
         self.conn.close()
 
+    def register_tables(self, *names: str) -> None:
+        """Register extra unqualified table names for the SQL rewriter.
+
+        SQLite has no schema-prefix rewriting, so this is a no-op. The
+        method exists so extensions (BindEvalExtension, ResidualExtension,
+        ...) can call ``conn.register_tables(...)`` uniformly across both
+        backends without branching on backend type. See
+        ``_PostgresAdapter.register_tables`` for the postgres semantics
+        (B-BUGHUNT-003: per-instance, never module-global).
+        """
+        return None
+
 
 class _PostgresAdapter:
     placeholder = "%s"
@@ -243,6 +255,15 @@ class _PostgresAdapter:
         self.conn = self._pool.getconn()
         self.conn.autocommit = False
 
+        # B-BUGHUNT-003: per-instance schema-translation state. Earlier
+        # versions mutated module-global ``_TABLES`` and a class-level
+        # ``_RE_CACHE``; that made cross-extension state leak across
+        # SigmaKernel instances and across test contexts. Both pieces of
+        # state are now bound to ``self`` so two extensions attached to
+        # different schemas never interfere.
+        self._extra_tables: tuple[str, ...] = ()
+        self._RE_CACHE: dict[str, str] = {}
+
         # Schema probe: fail at __init__ time rather than at first DML if
         # Mnemosyne hasn't applied the migration yet.
         try:
@@ -267,19 +288,41 @@ class _PostgresAdapter:
                 f"Underlying error: {e}"
             ) from None
 
-    _RE_CACHE: dict[str, str] = {}
-
     def _translate(self, sql: str) -> str:
+        # B-BUGHUNT-003: cache and table list are both per-instance. The
+        # union ``_TABLES + self._extra_tables`` lets extensions register
+        # extra unqualified table names without touching module-global
+        # state. ``_TABLES`` itself is never mutated.
         cached = self._RE_CACHE.get(sql)
         if cached is not None:
             return cached
         out = sql.replace("?", "%s")
-        for t in _TABLES:
+        for t in _TABLES + self._extra_tables:
             out = re.sub(rf"\b{t}\b", f"sigma.{t}", out)
         # Strip CREATE TABLE statements -- schema is managed by Mnemosyne via migration.
         # (Defensive: if anything calls executescript on this adapter, do nothing.)
         self._RE_CACHE[sql] = out
         return out
+
+    def register_tables(self, *names: str) -> None:
+        """Register additional unqualified table names for the SQL
+        rewriter. Called by extensions at attach time so their tables
+        (e.g. ``bindings`` -> ``sigma.bindings``) are translated.
+
+        B-BUGHUNT-003: state is bound to ``self``, never to the module.
+        Two extensions on two different schemas never interfere. Calling
+        with a name already registered is idempotent. Adding new names
+        invalidates the per-instance translation cache so previously
+        seen SQL gets retranslated against the new table set.
+        """
+        new_names = tuple(n for n in names if n not in self._extra_tables
+                          and n not in _TABLES)
+        if not new_names:
+            return
+        self._extra_tables = self._extra_tables + new_names
+        # Cache invalidation: the union changed, so any cached translation
+        # may now be missing a prefix on the newly-registered name.
+        self._RE_CACHE.clear()
 
     def execute(self, sql: str, params: tuple = ()):
         cur = self.conn.cursor()

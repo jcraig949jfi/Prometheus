@@ -352,8 +352,8 @@ class BindEvalExtension:
         self.kernel = kernel
         self._schema = schema or "sigma"
         self._ensure_schema()
-        # Patch the postgres adapter's _TABLES list so SQL rewriting
-        # also covers our new tables. SQLite needs no rewriting.
+        # B-BUGHUNT-003: registers tables on the adapter instance only
+        # (no module-level state). SQLite needs no rewriting.
         if kernel.backend == "postgres":
             self._patch_postgres_tables()
 
@@ -381,19 +381,13 @@ class BindEvalExtension:
                 ) from e
 
     def _patch_postgres_tables(self) -> None:
-        # The kernel's _TABLES tuple is module-level; we extend it for
-        # our tables so the regex rewrite catches "bindings" / "evaluations"
-        # too. This is safe because we only add names; existing rewrites
-        # are unchanged.
-        from sigma_kernel import sigma_kernel as core
-
-        new_tables = ("bindings", "evaluations")
-        if not all(t in core._TABLES for t in new_tables):
-            core._TABLES = tuple(core._TABLES) + tuple(
-                t for t in new_tables if t not in core._TABLES
-            )
-        # The adapter caches translated SQL — our cache write happens at
-        # first execute, so no invalidation is required here.
+        # B-BUGHUNT-003: registers tables on the adapter instance only
+        # (no module-level state). ``register_tables`` appends to the
+        # adapter's ``_extra_tables`` tuple and invalidates its per-
+        # instance translation cache. Two BindEvalExtensions attached to
+        # different kernels/schemas now have fully isolated rewrite
+        # state; nothing leaks through ``sigma_kernel._TABLES``.
+        self.kernel.conn.register_tables("bindings", "evaluations")
 
     # ------------------------------------------------------------------
     # Helpers
@@ -401,6 +395,24 @@ class BindEvalExtension:
 
     @staticmethod
     def _resolve_callable(callable_ref: str) -> Callable:
+        # B-BUGHUNT-001: explicit None / non-string / empty rejection. The
+        # later membership test (``":" not in callable_ref``) raises
+        # TypeError on None and silently accepts whitespace-only strings;
+        # callers depend on a typed BindingError for both edges.
+        if callable_ref is None:
+            raise BindingError(
+                "callable_ref must not be None (expected 'module.path:qualname')"
+            )
+        if not isinstance(callable_ref, str):
+            raise BindingError(
+                f"callable_ref must be a str 'module.path:qualname', "
+                f"got {type(callable_ref).__name__}: {callable_ref!r}"
+            )
+        if not callable_ref.strip():
+            raise BindingError(
+                "callable_ref must not be empty / whitespace-only "
+                "(expected 'module.path:qualname')"
+            )
         if ":" not in callable_ref:
             raise BindingError(
                 f"callable_ref must be 'module.path:qualname', got {callable_ref!r}"
@@ -480,8 +492,10 @@ class BindEvalExtension:
         """
         if cap is None:
             raise CapabilityError("BIND requires a capability")
-        if cap.consumed:
-            raise CapabilityError(f"capability {cap.cap_id} already consumed")
+        # B-BUGHUNT-004: linearity is enforced by the DB-level UPDATE in
+        # _consume_cap; the consumed=1 row check there rejects double-spend
+        # across processes. The frozen Capability dataclass means in-process
+        # state never drifts; we don't need an in-process check here.
 
         fn = self._resolve_callable(callable_ref)
         callable_hash = self._hash_callable(fn)
@@ -575,8 +589,10 @@ class BindEvalExtension:
         """
         if cap is None:
             raise CapabilityError("EVAL requires a capability")
-        if cap.consumed:
-            raise CapabilityError(f"capability {cap.cap_id} already consumed")
+        # B-BUGHUNT-004: linearity is enforced by the DB-level UPDATE in
+        # _consume_cap; the consumed=1 row check there rejects double-spend
+        # across processes. The frozen Capability dataclass means in-process
+        # state never drifts; we don't need an in-process check here.
 
         # Resolve the binding.
         row = self.kernel.conn.execute(

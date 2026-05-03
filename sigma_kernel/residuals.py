@@ -295,12 +295,10 @@ class ResidualExtension:
                 ) from e
 
     def _patch_postgres_tables(self) -> None:
-        from sigma_kernel import sigma_kernel as core
-        new_tables = ("residuals", "refinements")
-        if not all(t in core._TABLES for t in new_tables):
-            core._TABLES = tuple(core._TABLES) + tuple(
-                t for t in new_tables if t not in core._TABLES
-            )
+        # B-BUGHUNT-003: registers tables on the adapter instance only
+        # (no module-level state). See bind_eval._patch_postgres_tables
+        # for the rationale; the same per-instance pattern applies here.
+        self.kernel.conn.register_tables("residuals", "refinements")
 
     # ------------------------------------------------------------------
     # Classification — the load-bearing piece
@@ -514,10 +512,10 @@ class ResidualExtension:
         """
         if cap is None:
             raise CapabilityError("REFINE requires a capability")
-        if cap.consumed:
-            raise CapabilityError(
-                f"capability {cap.cap_id} already consumed"
-            )
+        # B-BUGHUNT-004: linearity is enforced by the DB-level UPDATE in
+        # _consume_cap; the consumed=1 row check there rejects double-spend
+        # across processes. The frozen Capability dataclass means in-process
+        # state never drifts; we don't need an in-process check here.
         if residual.classification != "signal":
             raise RefinementBlocked(
                 f"residual {residual.id} classified {residual.classification!r}; "

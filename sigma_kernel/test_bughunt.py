@@ -276,15 +276,39 @@ class TestEquivalenceClasses:
         with pytest.raises(BindingError):
             ext.BIND(callable_ref="math:pi", cost_model=CostModel(), cap=cap)
 
-    @pytest.mark.xfail(strict=True, reason="B-BUGHUNT-001: callable_ref=None raises TypeError instead of BindingError")
     def test_callable_ref_none_raises_BindingError(self):
         """bind_eval.BIND — Cat 2 — NEW. callable_ref=None should raise
         BindingError (typed input-validation error), not a generic
-        TypeError from string membership check."""
+        TypeError from string membership check.
+
+        Resolved 2026-05-03 (B-BUGHUNT-001): _resolve_callable now
+        rejects None, non-str, and empty/whitespace inputs with
+        BindingError before the ':' membership test fires.
+        """
         k, ext = _fresh_kernel_with_bind()
         cap = k.mint_capability("BindCap")
         with pytest.raises(BindingError):
             ext.BIND(callable_ref=None, cost_model=CostModel(), cap=cap)
+
+    def test_callable_ref_empty_string_raises_BindingError(self):
+        """bind_eval.BIND — Cat 2 — NEW (B-BUGHUNT-001 companion).
+
+        Empty string formerly hit the ``":" not in ""`` branch and
+        produced a misleading "got ''" error; treat it as the same
+        equivalence class as None (typed BindingError, explicit
+        empty-input rationale).
+        """
+        k, ext = _fresh_kernel_with_bind()
+        cap = k.mint_capability("BindCap")
+        with pytest.raises(BindingError):
+            ext.BIND(callable_ref="", cost_model=CostModel(), cap=cap)
+
+    def test_callable_ref_whitespace_only_raises_BindingError(self):
+        """bind_eval.BIND — Cat 2 — NEW (B-BUGHUNT-001 companion)."""
+        k, ext = _fresh_kernel_with_bind()
+        cap = k.mint_capability("BindCap")
+        with pytest.raises(BindingError):
+            ext.BIND(callable_ref="   ", cost_model=CostModel(), cap=cap)
 
     def test_residual_classification_signal_via_canonicalizer_signature(self):
         """residuals._classify_residual — Cat 2 — NEW. Equiv class:
@@ -665,6 +689,94 @@ class TestErrorInjection:
             f"_TABLES global mutated by sqlite extension: "
             f"{before} -> {after}"
         )
+
+    def test_bughunt_003_per_instance_table_isolation(self):
+        """sigma_kernel._PostgresAdapter / bind_eval / residuals — Cat 7 —
+        NEW (regression for B-BUGHUNT-003).
+
+        The postgres SQL rewriter's table list is now bound to the
+        adapter instance, never to the module. Two extensions attached
+        to two different adapters must end up with disjoint
+        ``_extra_tables`` and disjoint translation caches; the
+        module-global ``_TABLES`` must remain untouched.
+
+        We avoid spinning up a real Postgres connection by directly
+        constructing two stub adapters that mimic ``_PostgresAdapter``
+        and exercising ``register_tables`` + ``_translate``.
+        """
+        from sigma_kernel import sigma_kernel as core
+
+        # Snapshot the module-level _TABLES; assert it is unchanged after
+        # this test no matter what register_tables does.
+        baseline_tables = tuple(core._TABLES)
+
+        # Build a minimal adapter shaped like _PostgresAdapter without
+        # actually connecting. We reuse the real _translate /
+        # register_tables to prove they read from per-instance state.
+        adapter_cls = core._PostgresAdapter
+
+        def _stub_adapter():
+            inst = adapter_cls.__new__(adapter_cls)
+            inst._extra_tables = ()
+            inst._RE_CACHE = {}
+            return inst
+
+        a1 = _stub_adapter()
+        a2 = _stub_adapter()
+
+        # Different extensions register different sidecar tables.
+        a1.register_tables("bindings", "evaluations")
+        a2.register_tables("residuals", "refinements")
+
+        # Per-instance state is disjoint.
+        assert set(a1._extra_tables) == {"bindings", "evaluations"}
+        assert set(a2._extra_tables) == {"residuals", "refinements"}
+        assert a1._RE_CACHE is not a2._RE_CACHE  # different objects
+
+        # Translation pulls from baseline + own extras only.
+        sql = "INSERT INTO bindings VALUES (?)"
+        out1 = a1._translate(sql)
+        out2 = a2._translate(sql)
+        assert "sigma.bindings" in out1
+        # a2 doesn't know "bindings"; its translation leaves the name bare.
+        assert "sigma.bindings" not in out2
+
+        sql_r = "INSERT INTO refinements VALUES (?)"
+        assert "sigma.refinements" in a2._translate(sql_r)
+        assert "sigma.refinements" not in a1._translate(sql_r)
+
+        # Module-global _TABLES untouched.
+        assert tuple(core._TABLES) == baseline_tables
+
+    def test_bughunt_003_register_tables_is_idempotent(self):
+        """sigma_kernel._PostgresAdapter.register_tables — Cat 7 — NEW.
+
+        Re-registering a name does not duplicate it in ``_extra_tables``
+        and does not invalidate the cache unnecessarily.
+        """
+        from sigma_kernel import sigma_kernel as core
+
+        adapter_cls = core._PostgresAdapter
+        a = adapter_cls.__new__(adapter_cls)
+        a._extra_tables = ()
+        a._RE_CACHE = {}
+
+        a.register_tables("bindings")
+        # Prime the cache by translating once.
+        sql = "SELECT * FROM bindings"
+        a._translate(sql)
+        assert sql in a._RE_CACHE
+
+        # Re-registering the same name is a no-op (no cache invalidation,
+        # no duplicate in _extra_tables).
+        a.register_tables("bindings")
+        assert a._extra_tables == ("bindings",)
+        assert sql in a._RE_CACHE  # still cached
+
+        # Registering a NEW name invalidates the cache.
+        a.register_tables("evaluations")
+        assert set(a._extra_tables) == {"bindings", "evaluations"}
+        assert sql not in a._RE_CACHE  # cleared
 
     def test_callable_source_drift_detected_at_eval(self):
         """bind_eval.EVAL — Cat 7 — NEW. If the live source hash differs

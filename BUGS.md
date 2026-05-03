@@ -369,12 +369,18 @@ snappy manifold.
 
 ---
 
-### B-BUGHUNT-001: bind_eval.BIND raises TypeError on callable_ref=None instead of BindingError
+### B-BUGHUNT-001: bind_eval.BIND raises TypeError on callable_ref=None instead of BindingError [RESOLVED 2026-05-03]
 
 **File:** `sigma_kernel/bind_eval.py` :: `_resolve_callable`
 **Reporter:** Techne pivot-stack bug-hunt (test_bughunt)
 **Date:** 2026-04-29
 **Category:** 2 (Equivalence class partitioning)
+**Resolved:** 2026-05-03 — `_resolve_callable` now rejects `None`,
+non-`str` values, and empty/whitespace-only strings up front with
+typed `BindingError` before the `':' not in callable_ref` membership
+test fires. xfail removed from
+`test_callable_ref_none_raises_BindingError`; companion probes added
+for empty-string and whitespace-only inputs.
 
 When `BIND(callable_ref=None, ...)` is invoked, `_resolve_callable` runs
 the membership test ``":" not in callable_ref`` first, which raises
@@ -451,13 +457,27 @@ semantic choice (accept-empty vs reject-empty) is a design decision.
 
 ---
 
-### B-BUGHUNT-003: bind_eval._patch_postgres_tables mutates module-global state
+### B-BUGHUNT-003: bind_eval._patch_postgres_tables mutates module-global state [RESOLVED 2026-05-03]
 
 **File:** `sigma_kernel/bind_eval.py` :: `_patch_postgres_tables`
 **Also in:** `sigma_kernel/residuals.py` :: `_patch_postgres_tables`
 **Reporter:** Techne pivot-stack bug-hunt
 **Date:** 2026-04-29
 **Category:** 7 (Error injection / global state mutation)
+**Resolved:** 2026-05-03 — refactored to a per-instance pattern.
+`_PostgresAdapter` now carries an instance-local
+`_extra_tables: tuple[str, ...]` and instance-local `_RE_CACHE: dict`,
+with a public `register_tables(*names)` method that appends to the
+tuple and invalidates the cache. `_translate` reads from
+`_TABLES + self._extra_tables` so the module-global `_TABLES` is
+never mutated. `bind_eval._patch_postgres_tables` and
+`residuals._patch_postgres_tables` now call
+`self.kernel.conn.register_tables(...)` instead of poking module
+state. `_SqliteAdapter.register_tables` is a no-op so callers do
+not branch on backend. Regression probes:
+`test_bughunt_003_per_instance_table_isolation` and
+`test_bughunt_003_register_tables_is_idempotent` in
+`sigma_kernel/test_bughunt.py`.
 
 When a kernel's backend is `"postgres"`, the extension permanently
 extends the module-level `core._TABLES` tuple to include `"bindings"`,
@@ -486,12 +506,23 @@ table-list lookup; out of scope for this session).
 
 ---
 
-### B-BUGHUNT-004: cap.consumed dataclass attribute is vestigial defense-in-depth
+### B-BUGHUNT-004: cap.consumed dataclass attribute is vestigial defense-in-depth [RESOLVED 2026-05-03]
 
 **File:** `sigma_kernel/bind_eval.py` :: `BIND`/`EVAL`; `residuals.py` :: `REFINE`
 **Reporter:** Techne pivot-stack bug-hunt
 **Date:** 2026-04-29
 **Category:** 5 (State-machine testing / soft-defense)
+**Resolved:** 2026-05-03 — the dead `if cap.consumed: raise` early-exit
+blocks were removed from BIND and EVAL in `bind_eval.py`, BIND and EVAL
+in `bind_eval_v2.py`, and REFINE in `residuals.py`. Each removal site
+now carries a one-line code comment naming the actual integrity
+contract (the DB-level `UPDATE capabilities SET consumed=1 WHERE
+cap_id=? AND consumed=0` in `_consume_cap`/`_consume_user_cap` is what
+rejects double-spend; the frozen `Capability` dataclass means in-process
+state never drifts). The existing state-machine probes
+(`test_double_consume_cap_via_bind_then_eval_raises`,
+`test_bind_with_already_consumed_cap_via_db_path`) still pass — they
+exercise the DB-rowcount path, which is where the real defense lives.
 
 Each opcode begins with `if cap.consumed: raise CapabilityError(...)`,
 intending defense-in-depth before the DB-level UPDATE. But `Capability`
