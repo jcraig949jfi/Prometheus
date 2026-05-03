@@ -36,16 +36,30 @@ def test_synthetic_structured_noise_count():
     assert all(s.true_label == "noise" for s in samples)
 
 
-def test_full_day1_seed_assembly():
-    """Day 1 produces obvious + 2-sample borderline seed + synthetic = 152 samples."""
+def test_full_benchmark_assembly():
+    """Full benchmark: 50 obvious + 50 borderline + 100 synthetic = 200 samples."""
     samples = assemble_benchmark()
     n_obvious = sum(1 for s in samples if s.sample_class == "obvious_noise")
     n_borderline = sum(1 for s in samples if s.sample_class == "borderline_signal")
     n_synthetic = sum(1 for s in samples if s.sample_class == "synthetic_structured_noise")
     assert n_obvious == 50
-    assert n_borderline == 2  # Day 1 seed; Day 2 fills to 50
+    assert n_borderline == 50
     assert n_synthetic == 100
-    assert len(samples) == 152
+    assert len(samples) == 200
+
+
+def test_borderline_signal_distribution():
+    """Borderline_signal is mostly true_label=signal but includes instrument_drift cases."""
+    samples = assemble_benchmark()
+    bs = [s for s in samples if s.sample_class == "borderline_signal"]
+    assert len(bs) == 50
+    # B4 calibration drift events are mostly true_label=instrument_drift
+    # plus one B4 sample (B4_calibration_drift_F6_02) is intentionally true_label=signal
+    n_signal = sum(1 for s in bs if s.true_label == "signal")
+    n_drift = sum(1 for s in bs if s.true_label == "instrument_drift")
+    # B1+B2+B3+B5+B6 = 35 signal-labeled; B4 = 14 drift + 1 signal (the OEIS gap one)
+    assert n_signal == 36  # 5+5+5+10+10 + 1 from B4 special case
+    assert n_drift == 14   # 14 of 15 B4 calibration_drift entries
 
 
 # ---------------------------------------------------------------------------
@@ -124,7 +138,7 @@ def test_serialize_benchmark_roundtrip(tmp_path: Path):
     serialize_benchmark(samples, out_path)
     assert out_path.exists()
     data = json.loads(out_path.read_text())
-    assert len(data) == 152
+    assert len(data) == 200
     # Verify -inf magnitude encoded as None sentinel for empty/zero samples
     a5_entries = [d for d in data if d["sample_id"].startswith("A5_")]
     assert len(a5_entries) == 10
