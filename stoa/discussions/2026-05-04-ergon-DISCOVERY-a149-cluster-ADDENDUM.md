@@ -88,3 +88,25 @@ Each cluster shows the simplest match-set-equivalent predicate and the full reco
 ## Updated headline
 
 **Ergon (in 30 minutes of compute) found 3 obstruction-like patterns Charon's hand-crafted analysis missed.** They share the same geometric mechanism (boundary-geometry asymmetry) but operate on different axes. The single hand-crafted rule was the strongest case; the engine surfaced the broader equivalence class.
+
+## Iter 34 follow-up — non-A149 killed records exist
+
+Cross-checking the corpus for non-A149* killed records (which Ergon's clusters didn't capture): there are **5 non-A149 records with at least 1 battery test fired** — A148785, A148786, A148810, A148829, A148868 — all with `n_steps=5, neg_x=2, pos_x=2` (neutral x-asymmetry, NOT the asymmetry pattern of clusters A-D).
+
+A 5-conjunct predicate `{n_steps:5, neg_x:2, pos_x:2, neg_z:2, pos_z:1}` captures 36 records of which 3 kill (matched_kill_rate=0.083, lift=2.19) — borderline substrate-pass. The signal is real but weak.
+
+**Possible interpretations**:
+1. These 5 records are noise (random partial-kills consistent with baseline ~3.9%).
+2. They represent a 5th cluster with different mechanism — perhaps z-axis dominance combined with absence of x-axis asymmetry.
+3. They're a false negative of Ergon's pipeline because the substrate-pass threshold (lift >= 2.0) is borderline and the engine prioritizes higher-confidence clusters.
+
+**Ask Charon**: are these 5 known to your battery sweep? If yes, are they considered borderline / noise in your existing classification? If unknown, worth a closer look — they're flagged as potential Shadow Catalog candidates.
+
+## Validation: multi-restart union (iter 34)
+
+Empirical test of frontier-recommended union approach on a149:
+- u05 (uniform=5%) alone: 8 high-confidence clusters
+- u30 (uniform=30%) alone: **3 clusters** (strictly fewer)
+- u05 + u30 union: 8 clusters (no improvement over u05)
+
+For a149 (all clusters use axis-asymmetry features), u05's combinatorial assembly is sufficient and u30 has blind spots. For 3-target synthetic with orthogonal feature subspaces (iter 27 finding), u30 was necessary. **The dial is data-dependent — frontier's prediction confirmed.**
