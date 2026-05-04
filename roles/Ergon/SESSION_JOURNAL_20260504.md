@@ -664,3 +664,48 @@ This is a different mechanism from iter 13's exploration_rate dial:
 |---|---|---|---|
 | 94 | Stoa post — phase transition in mutation operator weights | Iter 26 finding | high |
 | 95 | Test uniform% sweep on OBSTRUCTION corpus (does 30% hurt 2-target perf?) | Iter 26 follow-up | medium |
+
+## Addendum 12 — iter 27: weight choice is corpus-dependent; union recovers both
+
+### Task #91 — does uniform=30% match iter 18 on OBSTRUCTION (2-target) corpus?
+
+5K x 3 seeds at uniform=30% on OBSTRUCTION corpus, comparing to iter 18 baseline (uniform=5%):
+
+| metric | iter 18 (u=5%) | iter 27 (u=30%) |
+|---|---|---|
+| obs_exact | 2/3 | **0/3** |
+| obs_disc | 3/3 | 3/3 |
+| sec_exact | 3/3 | 3/3 |
+| sec_disc | 3/3 | 3/3 |
+
+**uniform=30% loses OBSTRUCTION exact** (the 4-conjunct combinatorial assembly). It still finds the 2-conjunct discriminator and the 2-conjunct SECONDARY exact. Why: at u=30%, only 40% of episodes do structural-on-parent (vs 65% at u=5%). The 4-conjunct exact requires combinatorial assembly via structural mutation, and 40% < 65% means fewer assemblies happen.
+
+### Substrate-grade insight — three regimes
+
+1. **Single-target / shallow-conjunct**: uniform=5% (iter 18 baseline) — maximizes structural assembly depth
+2. **Multi-target with orthogonal feature subspaces**: uniform=30% (iter 26 finding) — maximizes feature subspace coverage
+3. **Mixed (need both deep assembly AND multi-subspace coverage)**: **multi-restart union** — run both, union the ledgers
+
+Verified the union approach: merging iter15+iter18+iter27 ledgers yields:
+- **3,041 unique predicates** (vs 1,906 from iter15+iter18 alone)
+- **iter27 added 1,135 new unique predicates** by exploring z-axis features that iter 18's structural-heavy weights missed
+- **57 OBSTRUCTION exact** (preserved from iter 18) + **71 SECONDARY exact** (49 iter18 + 22 iter27 = both deep assembly AND broader coverage)
+
+The multi-restart union is the substrate-grade answer: **don't pick one weight, run both weight regimes and union the ledgers**. The consumer reader's `--all` flag already does this automatically.
+
+### Cumulative status post-iter-27
+
+- ~9,400 LOC + 184 passing tests
+- 3 ledger files in trials/ledgers/ (iter15, iter18, iter27)
+- 8,178 cumulative substrate-PASS records
+- 3,041 unique predicates discovered
+- 3 substrate-grade Stoa posts
+- 12 journal addenda
+- 27 iterations completed
+
+### Tasks queued post-iter-27
+
+| # | Task | Source | Priority |
+|---|---|---|---|
+| 96 | Stoa post — multi-restart union as substrate-grade default | Iter 27 finding | high |
+| 97 | Build a "weight portfolio" config: define recommended weight regimes per corpus type | Iter 27 follow-up | medium |
