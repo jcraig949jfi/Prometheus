@@ -585,3 +585,45 @@ This is exactly the hypothesis-generator behavior the canonical pipeline post pr
 - Ledger consumer reader fully featured: single + multi-merge + --all + non-planted top-K
 - Two substrate-grade Stoa posts asking team for direction
 - One verified frontier hypothesis from the engine's output, ready to share with team
+
+## Addendum 10 — iter 25: 3-target generalization test refines iter 13 claim
+
+### Task #89 — does exploration_rate=0.15 enable 3-target coverage too?
+
+Built a 200-record synthetic corpus with 3 planted signatures:
+- TARGET_A `{n_steps:5, neg_x:4, pos_x:1, has_diag_neg:True}` (4-conjunct, x-axis)
+- TARGET_B `{n_steps:7, has_diag_pos:True}` (2-conjunct, n_steps + diag)
+- TARGET_C `{neg_z:4, pos_z:4}` (2-conjunct, z-axis — orthogonal)
+
+Ran canonical pipeline (10K eps × 3 seeds) at rate ∈ {0.00, 0.15, 0.25}.
+
+### Result — exploration_rate is a tradeoff, not a coverage-maximizer
+
+| rate | A_disc | B_disc | C_disc | total coverage |
+|---|---|---|---|---|
+| 0.00 | 3/3 | 3/3 | 1/3 | 7/9 |
+| 0.15 | 3/3 | 2/3 | 2/3 | 7/9 |
+| 0.25 | 3/3 | 3/3 | 0/3 | 6/9 |
+
+Acceptance criterion (3/3 seeds find ALL 3 targets at rate=0.15) FAILED. But the test PASSED its other criterion (rate=0 misses TARGET_C in 2/3 seeds, confirming mode-collapse).
+
+### Substrate-grade refinement of iter 13 claim
+
+iter 13's claim (rate=0.15 enables multi-target coverage) holds for **2-target corpora**. For **3-target corpora it doesn't** — different rates trade B coverage for C coverage, and total coverage stays ~7/9 across rates. **No single rate gives full coverage; the dial is a tradeoff.**
+
+Why: TARGET_C lives in z-axis features (`neg_z`, `pos_z`) while A and B don't constrain z. The structural operator extends existing genomes; once A or B descendants dominate, mutations add more x-axis / n_steps features. z-axis exploration gets attention only from uniform/anti_prior/structured_null operators (20% of episodes by iter 18 weights). **Mutation operators have a path-dependent exploration bias**: descendants concentrate around their parent's feature space.
+
+### Implication for cross-domain pipelines
+
+For domains with **>2 latent signatures across non-overlapping feature subspaces**, the canonical pipeline's structural operator alone can't guarantee coverage. Possible mitigations:
+1. Higher uniform/anti_prior weights (more random fresh-genome draws)
+2. Multi-restart exploration (run K seeds with different exploration_rates and union their ledgers)
+3. A meta-controller that detects "no novel substrate-PASSes for last X episodes" and ramps exploration_rate up dynamically
+
+### Tasks queued post-iter-25
+
+| # | Task | Source | Priority |
+|---|---|---|---|
+| 91 | Multi-restart union test — does combining rates 0+0.15+0.25 give 9/9? | Iter 25 finding | medium |
+| 92 | Higher uniform weight test — does 30% uniform recover TARGET_C without losing A/B? | Iter 25 finding | medium |
+| 93 | Stoa update — exploration_rate is a 2-target dial, 3+ needs other mechanisms | Iter 25 finding | low |
