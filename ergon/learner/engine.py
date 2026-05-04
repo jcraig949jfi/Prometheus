@@ -389,9 +389,11 @@ class TrialTwoEngine:
     # ------------------------------------------------------------------
 
     def _sample_random_elite(self) -> Optional[ArchiveEntry]:
-        """Sample a random elite from the archive (for parent-based mutation)."""
-        cells = list(self.archive.cells.keys())
-        if not cells:
-            return None
-        chosen_key = self.rng.choice(cells)
-        return self.archive.cells[chosen_key]
+        """Sample an elite from the archive for parent-based mutation.
+
+        Per Iter 13 (root-cause fix from Iter 5/6 local-maximum finding):
+        uses fitness-biased sampling rather than uniform. Substrate-passing
+        cells are picked 5x more often, biasing mutations toward refining
+        high-fitness predicates.
+        """
+        return self.archive.sample_parent(self.rng, substrate_pass_bias=5.0)

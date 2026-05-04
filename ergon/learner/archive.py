@@ -239,6 +239,53 @@ class MAPElitesArchive:
         """Return all occupied CellCoordinates."""
         return [self.cells[key].cell_coordinate for key in sorted(self.cells.keys())]
 
+    def sample_parent(
+        self,
+        rng: Any,  # random.Random
+        substrate_pass_bias: float = 5.0,
+    ) -> Optional["ArchiveEntry"]:
+        """Sample a parent for mutation, biased toward substrate-passing cells.
+
+        Per Iter 13 (queued from Iter 11 root-cause analysis): uniform parent-
+        sampling lets refinement-rate at productive cells stall because the
+        engine rarely re-samples the substrate-passing parents. Biased
+        sampling at substrate_pass_bias=5x makes the engine 5x more likely to
+        pick a parent from a substrate-passing cell, which gives mutation
+        operators more chances to refine high-fitness predicates.
+
+        Returns None if archive is empty.
+        """
+        if not self.cells:
+            return None
+
+        # Partition cells by substrate-pass status
+        substrate_passing = [
+            entry for entry in self.cells.values()
+            if entry.fitness.battery_survival_count > 0
+        ]
+        non_passing = [
+            entry for entry in self.cells.values()
+            if entry.fitness.battery_survival_count == 0
+        ]
+
+        if not substrate_passing:
+            # No substrate-passing parents yet; uniform random
+            return rng.choice(list(self.cells.values()))
+
+        if not non_passing:
+            # All cells are substrate-passing; uniform among them
+            return rng.choice(substrate_passing)
+
+        # Biased sampling: substrate_pass_bias x more likely to pick a passing parent
+        # P(passing) = bias * n_passing / (bias * n_passing + n_non_passing)
+        n_pass = len(substrate_passing)
+        n_non = len(non_passing)
+        p_pass = (substrate_pass_bias * n_pass) / (substrate_pass_bias * n_pass + n_non)
+
+        if rng.random() < p_pass:
+            return rng.choice(substrate_passing)
+        return rng.choice(non_passing)
+
     # ------------------------------------------------------------------
     # Per-operator-class metrics — the load-bearing diagnostics
     # ------------------------------------------------------------------

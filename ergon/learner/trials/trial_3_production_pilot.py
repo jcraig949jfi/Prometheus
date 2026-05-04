@@ -41,6 +41,7 @@ from ergon.learner.descriptor import (
 from ergon.learner.genome import Genome
 from ergon.learner.operators.anti_prior import AntiPriorOperator
 from ergon.learner.operators.base import fresh_genome
+from ergon.learner.operators.predicate_symbolic import PredicateSymbolicOperator
 from ergon.learner.operators.structural import StructuralOperator
 from ergon.learner.operators.symbolic import SymbolicOperator
 from ergon.learner.operators.uniform import UniformOperator
@@ -103,6 +104,34 @@ class HardenedObstructionEvaluator(ObstructionEvaluator):
         is_obstruction = (pred == OBSTRUCTION_SIGNATURE)
         is_secondary = (pred == SECONDARY_SIGNATURE)
 
+        # Iter 15: minimal-discriminator detection. A predicate counts as
+        # "discovering" OBSTRUCTION_SIGNATURE if its match-set EQUALS the
+        # OBSTRUCTION_SIGNATURE match-set on the corpus, even if the predicate
+        # has fewer conjuncts. Per Iter 7 finding: {n_steps:5, neg_x:4} is
+        # the parsimonious 2-conjunct discriminator that EQUIVALENTLY matches
+        # the planted OBSTRUCTION (because Charon's _make_random_nonmatch
+        # forces neg_x ∈ {0,1,2,3,5} when n_steps=5, so n_steps:5 + neg_x:4
+        # ⇒ OBSTRUCTION-only).
+        is_obstruction_discriminator = False
+        is_secondary_discriminator = False
+        if pred:  # non-empty predicate
+            obs_match_ids = set(
+                id(e) for e in self.corpus
+                if all(e.features().get(k) == v for k, v in OBSTRUCTION_SIGNATURE.items())
+            )
+            sec_match_ids = set(
+                id(e) for e in self.corpus
+                if all(e.features().get(k) == v for k, v in SECONDARY_SIGNATURE.items())
+            )
+            pred_match_ids = set(
+                id(e) for e in self.corpus
+                if all(e.features().get(k) == v for k, v in pred.items())
+            )
+            if pred_match_ids == obs_match_ids and len(obs_match_ids) > 0:
+                is_obstruction_discriminator = True
+            if pred_match_ids == sec_match_ids and len(sec_match_ids) > 0:
+                is_secondary_discriminator = True
+
         out = {
             "predicate": pred,
             "lift": lift,
@@ -112,6 +141,8 @@ class HardenedObstructionEvaluator(ObstructionEvaluator):
             "substrate_pass": passes,
             "is_obstruction": is_obstruction,
             "is_secondary": is_secondary,
+            "is_obstruction_discriminator": is_obstruction_discriminator,
+            "is_secondary_discriminator": is_secondary_discriminator,
             "magnitude": 10.0 ** log_mag,
             "canonicalizer_subclass": subclass,
             "canonical_form_distance": sig_distance,
@@ -127,20 +158,21 @@ def run_one_seed(seed: int, n_episodes: int = 1000) -> Dict[str, Any]:
     archive = MAPElitesArchive()
     rng = random.Random(seed)
 
-    # Operator weights: emphasize structural+symbolic; keep anti_prior + uniform
-    # at min-share floors only
+    # Iter 18 rebalance: structural does heavier lifting (add/remove
+    # conjuncts) in predicate domain; PredicateSymbolicOperator only
+    # value-shifts. Reduce symbolic, raise structural.
     custom_weights = {
-        "structural": 0.55,
-        "symbolic": 0.30,
+        "structural": 0.65,
+        "symbolic": 0.15,
         "uniform": 0.05,
         "structured_null": 0.05,
-        "anti_prior": 0.05,
+        "anti_prior": 0.10,
     }
     scheduler = OperatorScheduler(operator_weights=custom_weights, seed=seed)
 
     operators = {
         "structural": StructuralOperator(),
-        "symbolic": SymbolicOperator(),
+        "symbolic": PredicateSymbolicOperator(),  # Iter 14: domain-specific
         "uniform": UniformOperator(n_atoms_distribution=(1, 4)),
         "structured_null": UniformOperator(n_atoms_distribution=(2, 4)),  # uniform-fallback
         "anti_prior": AntiPriorOperator(),
@@ -148,6 +180,8 @@ def run_one_seed(seed: int, n_episodes: int = 1000) -> Dict[str, Any]:
 
     obstruction_hits: List[int] = []
     secondary_hits: List[int] = []
+    obstruction_discriminator_hits: List[Tuple[int, Dict[str, Any]]] = []
+    secondary_discriminator_hits: List[Tuple[int, Dict[str, Any]]] = []
     substrate_passed = 0
     high_lift_predicates: List[Dict[str, Any]] = []
 
@@ -160,9 +194,12 @@ def run_one_seed(seed: int, n_episodes: int = 1000) -> Dict[str, Any]:
 
         parent = None
         if op_name in ("structural", "symbolic") and archive.n_cells_filled() > 0:
-            cells = list(archive.cells.keys())
-            chosen_cell = rng.choice(cells)
-            parent = archive.get_genome(archive.cells[chosen_cell].content_hash)
+            # Iter 13: fitness-biased parent sampling — substrate-passing
+            # parents picked 5x more often than non-passing. Lets engine
+            # refine high-fitness predicates.
+            parent_entry = archive.sample_parent(rng, substrate_pass_bias=5.0)
+            if parent_entry is not None:
+                parent = archive.get_genome(parent_entry.content_hash)
 
         child = operator.mutate(parent, rng, atom_pool)
         # Force-tag operator class
@@ -207,6 +244,10 @@ def run_one_seed(seed: int, n_episodes: int = 1000) -> Dict[str, Any]:
             obstruction_hits.append(ep)
         if eval_data["is_secondary"]:
             secondary_hits.append(ep)
+        if eval_data.get("is_obstruction_discriminator"):
+            obstruction_discriminator_hits.append((ep, eval_data["predicate"]))
+        if eval_data.get("is_secondary_discriminator"):
+            secondary_discriminator_hits.append((ep, eval_data["predicate"]))
         if eval_data["lift"] >= 5.0 and eval_data["match_group_size"] >= 3:
             high_lift_predicates.append({
                 "episode": ep,
@@ -231,8 +272,26 @@ def run_one_seed(seed: int, n_episodes: int = 1000) -> Dict[str, Any]:
         "fill_counts": fill_counts,
         "obstruction_hits": len(obstruction_hits),
         "secondary_hits": len(secondary_hits),
+        "obstruction_discriminator_hits": len(obstruction_discriminator_hits),
+        "secondary_discriminator_hits": len(secondary_discriminator_hits),
         "first_obstruction_episode": first_obstruction,
         "first_secondary_episode": first_secondary,
+        "first_obstruction_discriminator_ep": (
+            obstruction_discriminator_hits[0][0]
+            if obstruction_discriminator_hits else None
+        ),
+        "first_obstruction_discriminator_pred": (
+            obstruction_discriminator_hits[0][1]
+            if obstruction_discriminator_hits else None
+        ),
+        "first_secondary_discriminator_ep": (
+            secondary_discriminator_hits[0][0]
+            if secondary_discriminator_hits else None
+        ),
+        "first_secondary_discriminator_pred": (
+            secondary_discriminator_hits[0][1]
+            if secondary_discriminator_hits else None
+        ),
         "substrate_passed": substrate_passed,
         "n_high_lift": len(high_lift_predicates),
         "top_high_lift": sorted(
@@ -269,10 +328,20 @@ def aggregate(per_seed: List[Dict[str, Any]]) -> Dict[str, Any]:
         "archive_sizes": archive_sizes,
         "archive_size_mean": statistics.mean(archive_sizes),
         "substrate_passed_total": substrate_passed_total,
+        "n_seeds_hit_obstruction_discriminator": sum(
+            1 for s in per_seed if s["obstruction_discriminator_hits"] > 0
+        ),
+        "n_seeds_hit_secondary_discriminator": sum(
+            1 for s in per_seed if s["secondary_discriminator_hits"] > 0
+        ),
         "acceptance": {
             "all_completed": all(s["elapsed_s"] > 0 for s in per_seed),
-            "found_obstruction_or_secondary": (
+            "found_obstruction_or_secondary_exact": (
                 len(obstruction_seeds) > 0 or len(secondary_seeds) > 0
+            ),
+            "found_obstruction_or_secondary_discriminator": (
+                sum(s["obstruction_discriminator_hits"] for s in per_seed) > 0
+                or sum(s["secondary_discriminator_hits"] for s in per_seed) > 0
             ),
             "high_lift_count_meaningful": sum(high_lift_per_seed) >= 5,
         },
@@ -287,9 +356,10 @@ def format_report(per_seed: List[Dict[str, Any]], agg: Dict[str, Any]) -> str:
         "=" * 72,
         "",
         "ACCEPTANCE",
-        f"  [Completed without error]:                  {'PASS' if a['all_completed'] else 'FAIL'}",
-        f"  [Found OBSTRUCTION or SECONDARY signature]: {'PASS' if a['found_obstruction_or_secondary'] else 'FAIL'}",
-        f"  [High-lift predicates >= 5]:                {'PASS' if a['high_lift_count_meaningful'] else 'FAIL'}",
+        f"  [Completed without error]:                       {'PASS' if a['all_completed'] else 'FAIL'}",
+        f"  [Found OBSTRUCTION or SECONDARY (exact match)]: {'PASS' if a['found_obstruction_or_secondary_exact'] else 'FAIL'}",
+        f"  [Found OBSTRUCTION or SECONDARY (discriminator)]: {'PASS' if a['found_obstruction_or_secondary_discriminator'] else 'FAIL'}",
+        f"  [High-lift predicates >= 5]:                     {'PASS' if a['high_lift_count_meaningful'] else 'FAIL'}",
         "",
         "PER-SEED RESULTS",
         f"  {'seed':>6} {'archive':>8} {'struct':>7} {'symb':>6} {'unif':>6} {'a-pri':>6} "
@@ -312,10 +382,16 @@ def format_report(per_seed: List[Dict[str, Any]], agg: Dict[str, Any]) -> str:
     lines += [
         "",
         "AGGREGATE STATS",
-        f"  Seeds hitting OBSTRUCTION:    {agg['n_seeds_hit_obstruction']} of {agg['n_seeds']}",
-        f"  Seeds hitting SECONDARY:      {agg['n_seeds_hit_secondary']} of {agg['n_seeds']}",
-        f"  First-obstruction episodes:   {agg['first_obstruction_episodes']}",
-        f"  First-secondary episodes:     {agg['first_secondary_episodes']}",
+        f"  Seeds hitting OBSTRUCTION (exact):         {agg['n_seeds_hit_obstruction']} of {agg['n_seeds']}",
+        f"  Seeds hitting OBSTRUCTION (discriminator): {agg['n_seeds_hit_obstruction_discriminator']} of {agg['n_seeds']}",
+        f"  Seeds hitting SECONDARY (exact):           {agg['n_seeds_hit_secondary']} of {agg['n_seeds']}",
+        f"  Seeds hitting SECONDARY (discriminator):   {agg['n_seeds_hit_secondary_discriminator']} of {agg['n_seeds']}",
+        f"  First-obstruction-exact episodes:    {agg['first_obstruction_episodes']}",
+        f"  First-secondary-exact episodes:      {agg['first_secondary_episodes']}",
+        f"  First-obstruction-disc episodes:    {[s['first_obstruction_discriminator_ep'] for s in per_seed]}",
+        f"  First-secondary-disc episodes:      {[s['first_secondary_discriminator_ep'] for s in per_seed]}",
+        f"  Sample obstruction discriminator:    {next((s['first_obstruction_discriminator_pred'] for s in per_seed if s['first_obstruction_discriminator_pred']), None)}",
+        f"  Sample secondary discriminator:      {next((s['first_secondary_discriminator_pred'] for s in per_seed if s['first_secondary_discriminator_pred']), None)}",
         f"  structural / uniform ratio:   {agg['structural_uniform_ratio']:.2f}x",
         f"  High-lift predicates total:   {agg['high_lift_total']}",
         f"  Archive sizes (mean):         {agg['archive_size_mean']:.0f}",

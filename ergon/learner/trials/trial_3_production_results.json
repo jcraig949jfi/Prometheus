@@ -3,226 +3,246 @@
     {
       "seed": 42,
       "n_episodes": 1000,
-      "elapsed_s": 0.08399748802185059,
+      "elapsed_s": 0.27099609375,
       "archive_n_cells": 46,
       "fill_counts": {
-        "symbolic": 1,
+        "uniform": 1,
+        "structured_null": 1,
         "structural": 39,
-        "uniform": 2,
-        "anti_prior": 2,
-        "structured_null": 2
+        "symbolic": 3,
+        "anti_prior": 2
       },
       "obstruction_hits": 0,
-      "secondary_hits": 0,
+      "secondary_hits": 1,
+      "obstruction_discriminator_hits": 19,
+      "secondary_discriminator_hits": 1,
       "first_obstruction_episode": null,
-      "first_secondary_episode": null,
-      "substrate_passed": 227,
-      "n_high_lift": 104,
+      "first_secondary_episode": 617,
+      "first_obstruction_discriminator_ep": 73,
+      "first_obstruction_discriminator_pred": {
+        "n_steps": 5,
+        "neg_x": 4
+      },
+      "first_secondary_discriminator_ep": 617,
+      "first_secondary_discriminator_pred": {
+        "has_diag_pos": true,
+        "n_steps": 7
+      },
+      "substrate_passed": 285,
+      "n_high_lift": 166,
       "top_high_lift": [
         {
-          "episode": 434,
+          "episode": 73,
           "lift": 28.4,
           "match_size": 8,
           "predicate": {
             "n_steps": 5,
-            "has_diag_neg": true,
             "neg_x": 4
           },
           "operator": "structural"
         },
         {
-          "episode": 450,
+          "episode": 78,
           "lift": 28.4,
           "match_size": 8,
           "predicate": {
             "n_steps": 5,
-            "has_diag_neg": true,
-            "neg_x": 4
-          },
-          "operator": "symbolic"
-        },
-        {
-          "episode": 519,
-          "lift": 28.4,
-          "match_size": 8,
-          "predicate": {
-            "n_steps": 5,
-            "has_diag_neg": true,
-            "neg_x": 4
-          },
-          "operator": "symbolic"
-        },
-        {
-          "episode": 530,
-          "lift": 28.4,
-          "match_size": 8,
-          "predicate": {
-            "n_steps": 5,
-            "has_diag_neg": true,
             "neg_x": 4
           },
           "operator": "structural"
         },
         {
-          "episode": 531,
+          "episode": 149,
+          "lift": 28.4,
+          "match_size": 8,
+          "predicate": {
+            "n_steps": 5,
+            "neg_x": 4
+          },
+          "operator": "structural"
+        },
+        {
+          "episode": 182,
           "lift": 28.4,
           "match_size": 8,
           "predicate": {
             "n_steps": 5,
             "has_diag_neg": true,
-            "neg_x": 4
+            "pos_x": 1
           },
-          "operator": "symbolic"
+          "operator": "structural"
+        },
+        {
+          "episode": 309,
+          "lift": 28.4,
+          "match_size": 8,
+          "predicate": {
+            "n_steps": 5,
+            "has_diag_neg": true,
+            "pos_x": 1
+          },
+          "operator": "structural"
         }
       ]
     },
     {
       "seed": 100,
       "n_episodes": 1000,
-      "elapsed_s": 0.08599853515625,
-      "archive_n_cells": 38,
+      "elapsed_s": 0.27199530601501465,
+      "archive_n_cells": 39,
       "fill_counts": {
-        "structural": 28,
-        "anti_prior": 4,
-        "structured_null": 4,
-        "uniform": 2
+        "symbolic": 3,
+        "structural": 27,
+        "anti_prior": 6,
+        "uniform": 2,
+        "structured_null": 1
       },
       "obstruction_hits": 0,
-      "secondary_hits": 0,
+      "secondary_hits": 4,
+      "obstruction_discriminator_hits": 1,
+      "secondary_discriminator_hits": 4,
       "first_obstruction_episode": null,
-      "first_secondary_episode": null,
-      "substrate_passed": 297,
-      "n_high_lift": 168,
+      "first_secondary_episode": 504,
+      "first_obstruction_discriminator_ep": 784,
+      "first_obstruction_discriminator_pred": {
+        "neg_x": 4,
+        "n_steps": 5
+      },
+      "first_secondary_discriminator_ep": 504,
+      "first_secondary_discriminator_pred": {
+        "has_diag_pos": true,
+        "n_steps": 7
+      },
+      "substrate_passed": 260,
+      "n_high_lift": 88,
       "top_high_lift": [
         {
-          "episode": 181,
-          "lift": 22.400000000000002,
-          "match_size": 10,
+          "episode": 784,
+          "lift": 28.4,
+          "match_size": 8,
           "predicate": {
-            "pos_x": 1,
-            "has_diag_neg": true,
-            "neg_x": 4
+            "neg_x": 4,
+            "n_steps": 5
           },
           "operator": "structural"
         },
         {
-          "episode": 207,
-          "lift": 22.400000000000002,
-          "match_size": 10,
+          "episode": 916,
+          "lift": 18.4,
+          "match_size": 12,
           "predicate": {
-            "pos_x": 1,
-            "has_diag_neg": true,
-            "neg_x": 4
-          },
-          "operator": "symbolic"
-        },
-        {
-          "episode": 208,
-          "lift": 22.400000000000002,
-          "match_size": 10,
-          "predicate": {
-            "pos_x": 1,
-            "has_diag_neg": true,
-            "neg_x": 4
+            "n_steps": 5,
+            "pos_x": 1
           },
           "operator": "structural"
         },
         {
-          "episode": 430,
-          "lift": 22.400000000000002,
-          "match_size": 10,
+          "episode": 955,
+          "lift": 18.4,
+          "match_size": 12,
           "predicate": {
-            "pos_x": 1,
-            "has_diag_neg": true,
-            "neg_x": 4
+            "n_steps": 5,
+            "pos_x": 1
           },
           "operator": "structural"
         },
         {
-          "episode": 570,
-          "lift": 22.400000000000002,
-          "match_size": 10,
+          "episode": 982,
+          "lift": 18.4,
+          "match_size": 12,
           "predicate": {
-            "pos_x": 1,
-            "has_diag_neg": true,
-            "neg_x": 4
+            "n_steps": 5,
+            "pos_x": 1
           },
-          "operator": "symbolic"
+          "operator": "structural"
+        },
+        {
+          "episode": 990,
+          "lift": 18.4,
+          "match_size": 12,
+          "predicate": {
+            "n_steps": 5,
+            "pos_x": 1
+          },
+          "operator": "structural"
         }
       ]
     },
     {
       "seed": 1234,
       "n_episodes": 1000,
-      "elapsed_s": 0.09601831436157227,
-      "archive_n_cells": 41,
+      "elapsed_s": 0.26999568939208984,
+      "archive_n_cells": 42,
       "fill_counts": {
-        "anti_prior": 1,
-        "structural": 35,
-        "structured_null": 3,
-        "uniform": 2
+        "symbolic": 8,
+        "structural": 31,
+        "anti_prior": 2,
+        "uniform": 1
       },
       "obstruction_hits": 0,
       "secondary_hits": 0,
+      "obstruction_discriminator_hits": 0,
+      "secondary_discriminator_hits": 0,
       "first_obstruction_episode": null,
       "first_secondary_episode": null,
-      "substrate_passed": 296,
-      "n_high_lift": 114,
+      "first_obstruction_discriminator_ep": null,
+      "first_obstruction_discriminator_pred": null,
+      "first_secondary_discriminator_ep": null,
+      "first_secondary_discriminator_pred": null,
+      "substrate_passed": 268,
+      "n_high_lift": 65,
       "top_high_lift": [
         {
-          "episode": 25,
-          "lift": 28.4,
-          "match_size": 8,
+          "episode": 746,
+          "lift": 22.400000000000002,
+          "match_size": 10,
           "predicate": {
+            "has_diag_neg": true,
             "neg_x": 4,
+            "pos_x": 1
+          },
+          "operator": "structural"
+        },
+        {
+          "episode": 656,
+          "lift": 18.4,
+          "match_size": 12,
+          "predicate": {
             "n_steps": 5,
             "has_diag_neg": true
           },
           "operator": "structural"
         },
         {
-          "episode": 26,
-          "lift": 28.4,
-          "match_size": 8,
+          "episode": 759,
+          "lift": 18.4,
+          "match_size": 12,
           "predicate": {
-            "neg_x": 4,
-            "n_steps": 5,
-            "has_diag_neg": true
-          },
-          "operator": "symbolic"
-        },
-        {
-          "episode": 198,
-          "lift": 28.4,
-          "match_size": 8,
-          "predicate": {
-            "neg_x": 4,
-            "n_steps": 5,
-            "has_diag_neg": true
-          },
-          "operator": "symbolic"
-        },
-        {
-          "episode": 362,
-          "lift": 28.4,
-          "match_size": 8,
-          "predicate": {
-            "neg_x": 4,
-            "n_steps": 5,
-            "has_diag_neg": true
-          },
-          "operator": "symbolic"
-        },
-        {
-          "episode": 383,
-          "lift": 28.4,
-          "match_size": 8,
-          "predicate": {
-            "neg_x": 4,
             "n_steps": 5,
             "has_diag_neg": true
           },
           "operator": "structural"
+        },
+        {
+          "episode": 943,
+          "lift": 14.7,
+          "match_size": 3,
+          "predicate": {
+            "n_steps": 5,
+            "neg_z": 3,
+            "pos_x": 1
+          },
+          "operator": "structural"
+        },
+        {
+          "episode": 33,
+          "lift": 14.4,
+          "match_size": 15,
+          "predicate": {
+            "has_diag_neg": true,
+            "neg_x": 4
+          },
+          "operator": "anti_prior"
         }
       ]
     }
@@ -230,36 +250,39 @@
   "aggregate": {
     "n_seeds": 3,
     "n_seeds_hit_obstruction": 0,
-    "n_seeds_hit_secondary": 0,
+    "n_seeds_hit_secondary": 2,
     "first_obstruction_episodes": [
       null,
       null,
       null
     ],
     "first_secondary_episodes": [
-      null,
-      null,
+      617,
+      504,
       null
     ],
-    "structural_fills_mean": 34,
-    "uniform_fills_mean": 2,
-    "structural_uniform_ratio": 17.0,
+    "structural_fills_mean": 32.333333333333336,
+    "uniform_fills_mean": 1.3333333333333333,
+    "structural_uniform_ratio": 24.250000000000004,
     "high_lift_per_seed": [
-      104,
-      168,
-      114
+      166,
+      88,
+      65
     ],
-    "high_lift_total": 386,
+    "high_lift_total": 319,
     "archive_sizes": [
       46,
-      38,
-      41
+      39,
+      42
     ],
-    "archive_size_mean": 41.666666666666664,
-    "substrate_passed_total": 820,
+    "archive_size_mean": 42.333333333333336,
+    "substrate_passed_total": 813,
+    "n_seeds_hit_obstruction_discriminator": 2,
+    "n_seeds_hit_secondary_discriminator": 2,
     "acceptance": {
       "all_completed": true,
-      "found_obstruction_or_secondary": false,
+      "found_obstruction_or_secondary_exact": true,
+      "found_obstruction_or_secondary_discriminator": true,
       "high_lift_count_meaningful": true
     }
   }
