@@ -54,21 +54,38 @@ def _matches(features: Dict[str, Any], pred: Dict[str, Any]) -> bool:
     return all(features.get(k) == v for k, v in pred.items())
 
 
+def _canonical_hash_fallback(predicate: Dict[str, Any]) -> str:
+    """Inline canonical hash (avoids importing from package for vanilla-Python use)."""
+    import hashlib
+    canonical = json.dumps(predicate, sort_keys=True, separators=(",", ":"), default=str)
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
 def analyze_stability(
     records: List[Dict[str, Any]],
     corpus: List[Any],
     min_lift: float = 5.0,
 ) -> Dict[str, Any]:
-    """Compute the three stability metrics from a ledger + corpus."""
+    """Compute the three stability metrics from a ledger + corpus.
+
+    Uses canonical_predicate_hash (predicate dict identity) for recurrence
+    measurement. Falls back to genome content_hash for legacy ledgers
+    without canonical hashes — but those are inflated by DAG diversity
+    and shouldn't be compared directly to canonical-hashed ledgers.
+    """
     seeds = sorted(set(r["seed"] for r in records))
 
-    # --- Metric 1: predicate recurrence by content_hash ---
+    # --- Metric 1: predicate recurrence by canonical predicate hash ---
+    # Newer ledgers have canonical_predicate_hash inline; older fall back
+    # to a fresh canonical hash computed from the predicate dict.
     seeds_per_hash: Dict[str, Set[int]] = defaultdict(set)
     pred_by_hash: Dict[str, Dict[str, Any]] = {}
     for r in records:
         if r["lift"] < min_lift:
             continue
-        ch = r["genome_content_hash"]
+        ch = r.get("canonical_predicate_hash")
+        if ch is None:
+            ch = _canonical_hash_fallback(r["predicate"])
         seeds_per_hash[ch].add(r["seed"])
         if ch not in pred_by_hash:
             pred_by_hash[ch] = r["predicate"]
