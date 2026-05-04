@@ -157,6 +157,54 @@ def test_composition_load_jsonl_round_trip():
         assert len(unique) == 2
 
 
+def test_authority_regime_manifest_persists_to_sidecar():
+    with tempfile.TemporaryDirectory() as tdir:
+        path = Path(tdir) / "ledger.jsonl"
+        manifest = {
+            "weights": {"structural": 0.65, "uniform": 0.05},
+            "exploration_rate": 0.15,
+            "n_episodes": 1000,
+            "corpus_id": "obstruction_v1",
+        }
+        ledger = PromotionLedger(path=path, trial_name="manifest_test", regime_manifest=manifest)
+        ledger.append(
+            seed=1, episode=10, genome_content_hash="h1",
+            operator_class="structural", predicate={}, lift=2.0,
+            match_size=5, kernel_binding_name="b",
+        )
+        # Sidecar should exist
+        meta_path = path.with_suffix(path.suffix + ".meta.json")
+        assert meta_path.exists()
+        loaded = json.loads(meta_path.read_text(encoding="utf-8"))
+        assert loaded["weights"]["structural"] == 0.65
+        assert loaded["exploration_rate"] == 0.15
+        assert loaded["corpus_id"] == "obstruction_v1"
+
+
+def test_composition_load_manifest_class_method():
+    with tempfile.TemporaryDirectory() as tdir:
+        path = Path(tdir) / "ledger.jsonl"
+        manifest = {"weights": {"structural": 0.40}, "exploration_rate": 0.0}
+        ledger = PromotionLedger(path=path, regime_manifest=manifest)
+        loaded = PromotionLedger.load_manifest(path)
+        assert loaded is not None
+        assert loaded["weights"]["structural"] == 0.40
+
+
+def test_edge_no_manifest_when_not_provided():
+    with tempfile.TemporaryDirectory() as tdir:
+        path = Path(tdir) / "ledger.jsonl"
+        ledger = PromotionLedger(path=path, trial_name="no_manifest_test")
+        ledger.append(
+            seed=1, episode=10, genome_content_hash="h1",
+            operator_class="structural", predicate={}, lift=2.0,
+            match_size=5, kernel_binding_name="b",
+        )
+        meta_path = path.with_suffix(path.suffix + ".meta.json")
+        assert not meta_path.exists()
+        assert PromotionLedger.load_manifest(path) is None
+
+
 def test_composition_multi_trial_merge():
     """Two ledgers from different trials can be merged manually for analysis."""
     with tempfile.TemporaryDirectory() as tdir:

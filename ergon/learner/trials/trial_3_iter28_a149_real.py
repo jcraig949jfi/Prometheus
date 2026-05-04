@@ -253,8 +253,20 @@ if __name__ == "__main__":
         ledger_path = ledger_dir / f"trial_3_iter28_a149_{cfg_name}_ledger.jsonl"
         if ledger_path.exists():
             ledger_path.unlink()
+        manifest = {
+            "weights": weights,
+            "exploration_rate": 0.15,
+            "n_episodes": n_episodes,
+            "n_seeds": len(seeds),
+            "evaluator": "in-process_predicate_eval",
+            "corpus_id": "a149_real_v1",
+            "lift_threshold": 2.0,
+            "min_match_size": 3,
+        }
         ledger = PromotionLedger(
-            path=ledger_path, trial_name=f"trial_3_iter28_a149_{cfg_name}"
+            path=ledger_path,
+            trial_name=f"trial_3_iter28_a149_{cfg_name}",
+            regime_manifest=manifest,
         )
         print(f"Config: {cfg_name}  weights={weights}")
         per_seed = []

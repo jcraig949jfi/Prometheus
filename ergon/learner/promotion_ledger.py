@@ -38,14 +38,50 @@ from typing import Any, Dict, List, Optional
 
 
 class PromotionLedger:
-    """Append-only JSONL ledger of substrate-PASS predicate-discovery events."""
+    """Append-only JSONL ledger of substrate-PASS predicate-discovery events.
 
-    def __init__(self, path: Optional[Path] = None, trial_name: str = "unknown"):
+    Optional regime manifest: a sidecar JSON file at `<ledger>.meta.json`
+    that records the regime parameters (weights, exploration_rate,
+    n_episodes, evaluator, corpus_id, etc.) for the run that produced
+    this ledger. Per frontier guidance (iter 27 review): the manifest
+    lets the union-reader know what regimes produced what records.
+    """
+
+    def __init__(
+        self,
+        path: Optional[Path] = None,
+        trial_name: str = "unknown",
+        regime_manifest: Optional[Dict[str, Any]] = None,
+    ):
         self.path = Path(path) if path is not None else None
         self.trial_name = trial_name
         self.records: List[Dict[str, Any]] = []
+        self.regime_manifest = dict(regime_manifest) if regime_manifest else None
         if self.path is not None:
             self.path.parent.mkdir(parents=True, exist_ok=True)
+            if self.regime_manifest is not None:
+                self._write_manifest()
+
+    def _manifest_path(self) -> Optional[Path]:
+        if self.path is None:
+            return None
+        return self.path.with_suffix(self.path.suffix + ".meta.json")
+
+    def _write_manifest(self) -> None:
+        mp = self._manifest_path()
+        if mp is None or self.regime_manifest is None:
+            return
+        manifest = dict(self.regime_manifest)
+        manifest.setdefault("trial_name", self.trial_name)
+        manifest.setdefault("created_iso", datetime.now(timezone.utc).isoformat())
+        mp.write_text(json.dumps(manifest, indent=2, default=str), encoding="utf-8")
+
+    @classmethod
+    def load_manifest(cls, ledger_path: Path) -> Optional[Dict[str, Any]]:
+        mp = Path(ledger_path).with_suffix(Path(ledger_path).suffix + ".meta.json")
+        if not mp.exists():
+            return None
+        return json.loads(mp.read_text(encoding="utf-8"))
 
     def append(
         self,

@@ -30,7 +30,7 @@ import json
 import sys
 from collections import Counter
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 
 def load_records(path: Path) -> List[Dict[str, Any]]:
@@ -47,6 +47,17 @@ def load_records(path: Path) -> List[Dict[str, Any]]:
             if line:
                 records.append(json.loads(line))
     return records
+
+
+def load_manifest(ledger_path: Path) -> Optional[Dict[str, Any]]:
+    """Load the optional sidecar manifest for a ledger.
+
+    Returns None if the .meta.json doesn't exist (older ledgers).
+    """
+    mp = ledger_path.with_suffix(ledger_path.suffix + ".meta.json")
+    if not mp.exists():
+        return None
+    return json.loads(mp.read_text(encoding="utf-8"))
 
 
 def load_and_merge_records(paths: List[Path]) -> List[Dict[str, Any]]:
@@ -169,12 +180,28 @@ def render_markdown(
     o = summary["operator_breakdown"]
     if isinstance(path_or_paths, list):
         title = f"Ergon promotion ledger merge: {len(path_or_paths)} files"
-        path_lines = [f"- Files merged:"] + [
-            f"  - `{p}`" for p in path_or_paths
-        ]
+        path_lines = [f"- Files merged:"]
+        for p in path_or_paths:
+            mani = load_manifest(p)
+            if mani is not None:
+                regime_str = (
+                    f"weights={mani.get('weights', {})}, "
+                    f"rate={mani.get('exploration_rate', 'n/a')}, "
+                    f"n_eps={mani.get('n_episodes', 'n/a')}, "
+                    f"corpus={mani.get('corpus_id', 'n/a')}"
+                )
+                path_lines.append(f"  - `{p.name}` — {regime_str}")
+            else:
+                path_lines.append(f"  - `{p.name}` (no manifest)")
     else:
         title = f"Ergon promotion ledger: {path_or_paths.name}"
         path_lines = [f"- Path: `{path_or_paths}`"]
+        mani = load_manifest(path_or_paths)
+        if mani is not None:
+            path_lines.append(f"- Regime: weights={mani.get('weights', {})}, "
+                              f"rate={mani.get('exploration_rate', 'n/a')}, "
+                              f"n_eps={mani.get('n_episodes', 'n/a')}, "
+                              f"corpus={mani.get('corpus_id', 'n/a')}")
 
     lines = [
         f"# {title}",
