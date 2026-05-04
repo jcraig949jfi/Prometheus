@@ -1,19 +1,26 @@
 """ergon.learner.tools.read_promotion_ledger — consumer-side ledger reader.
 
-Per Iter 17 / Task #81. The consumer of an Ergon promotion ledger (e.g.
-Charon checking what Ergon discovered) needs a minimal CLI to query the
-ledger without needing the full Ergon codebase. This script demonstrates
-the consumer interface.
+Per Iter 17 / Task #81 + Iter 20 / Task #84. The consumer of an Ergon
+promotion ledger (e.g. Charon checking what Ergon discovered) needs a
+minimal CLI to query the ledger without needing the full Ergon codebase.
+This script demonstrates the consumer interface.
 
-Usage:
+Single-ledger usage:
     python -m ergon.learner.tools.read_promotion_ledger <path_to_ledger.jsonl>
 
+Multi-ledger merge (across runs):
+    python -m ergon.learner.tools.read_promotion_ledger \\
+        path_a.jsonl path_b.jsonl ...
+
 Outputs a markdown summary covering:
-  - Total substrate-PASS records, span (first/last episodes), seeds
+  - Total substrate-PASS records, span (first/last episodes), seeds, trials
   - Classification breakdown (exact / discriminator / non-planted)
   - Top-5 most-frequent unique predicates
   - Top-5 highest-lift unique predicates
   - Per-operator-class contribution to substrate-PASS
+
+Multi-ledger merge dedupes by (content_hash, seed, episode, trial_name)
+to avoid double-counting records that may appear in multiple ledger files.
 
 This is the format Charon / Aporia / Harmonia would consume.
 """
@@ -42,11 +49,31 @@ def load_records(path: Path) -> List[Dict[str, Any]]:
     return records
 
 
+def load_and_merge_records(paths: List[Path]) -> List[Dict[str, Any]]:
+    """Merge records across multiple ledger files, deduping by
+    (content_hash, seed, episode, trial_name)."""
+    seen: set = set()
+    merged: List[Dict[str, Any]] = []
+    for path in paths:
+        for r in load_records(path):
+            key = (
+                r.get("genome_content_hash"),
+                r.get("seed"),
+                r.get("episode"),
+                r.get("trial_name"),
+            )
+            if key not in seen:
+                seen.add(key)
+                merged.append(r)
+    return merged
+
+
 def summarize(records: List[Dict[str, Any]]) -> Dict[str, Any]:
     if not records:
         return {"n_records": 0}
 
     seeds = sorted(set(r["seed"] for r in records))
+    trials = sorted(set(r.get("trial_name", "unknown") for r in records))
     episodes = [r["episode"] for r in records]
     classifications = Counter()
     for r in records:
@@ -90,6 +117,7 @@ def summarize(records: List[Dict[str, Any]]) -> Dict[str, Any]:
         "n_records": len(records),
         "n_unique_predicates": len(unique_preds),
         "seeds": seeds,
+        "trials": trials,
         "episode_min": min(episodes),
         "episode_max": max(episodes),
         "classifications": dict(classifications),
@@ -99,19 +127,35 @@ def summarize(records: List[Dict[str, Any]]) -> Dict[str, Any]:
     }
 
 
-def render_markdown(path: Path, summary: Dict[str, Any]) -> str:
+def render_markdown(
+    path_or_paths: Any, summary: Dict[str, Any]
+) -> str:
     if summary["n_records"] == 0:
-        return f"# {path.name}\n\nNo records.\n"
+        if isinstance(path_or_paths, list):
+            label = ", ".join(p.name for p in path_or_paths)
+        else:
+            label = path_or_paths.name
+        return f"# {label}\n\nNo records.\n"
 
     c = summary["classifications"]
     o = summary["operator_breakdown"]
+    if isinstance(path_or_paths, list):
+        title = f"Ergon promotion ledger merge: {len(path_or_paths)} files"
+        path_lines = [f"- Files merged:"] + [
+            f"  - `{p}`" for p in path_or_paths
+        ]
+    else:
+        title = f"Ergon promotion ledger: {path_or_paths.name}"
+        path_lines = [f"- Path: `{path_or_paths}`"]
+
     lines = [
-        f"# Ergon promotion ledger: {path.name}",
+        f"# {title}",
         "",
-        f"- Path: `{path}`",
+        *path_lines,
         f"- Total substrate-PASS records: **{summary['n_records']}**",
         f"- Unique predicates: **{summary['n_unique_predicates']}**",
         f"- Seeds: {summary['seeds']}",
+        f"- Trials: {summary.get('trials', ['unknown'])}",
         f"- Episode span: {summary['episode_min']}-{summary['episode_max']}",
         "",
         "## Classification",
@@ -158,18 +202,25 @@ def main(argv: List[str]) -> int:
     if len(argv) < 2:
         print(
             "Usage: python -m ergon.learner.tools.read_promotion_ledger "
-            "<path_to_ledger.jsonl>"
+            "<path_to_ledger.jsonl> [path2.jsonl ...]"
         )
         return 2
 
-    path = Path(argv[1])
-    if not path.exists():
-        print(f"Ledger not found: {path}")
+    paths = [Path(p) for p in argv[1:]]
+    missing = [p for p in paths if not p.exists()]
+    if missing:
+        for p in missing:
+            print(f"Ledger not found: {p}")
         return 1
 
-    records = load_records(path)
-    summary = summarize(records)
-    print(render_markdown(path, summary))
+    if len(paths) == 1:
+        records = load_records(paths[0])
+        summary = summarize(records)
+        print(render_markdown(paths[0], summary))
+    else:
+        records = load_and_merge_records(paths)
+        summary = summarize(records)
+        print(render_markdown(paths, summary))
     return 0
 
 
