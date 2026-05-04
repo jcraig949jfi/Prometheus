@@ -554,3 +554,34 @@ This 18-iteration loop took the Ergon learner from MVP scaffolding through:
 ~8,800 LOC, 184 passing tests, 12 trial files, 1 Stoa post, 8 journal addenda.
 
 The MVP is empirically validated, substrate-integrated, and consumer-ready. Future iterations should focus on cross-domain generalization (does the predicate-discovery pattern work for Lehmer-Mahler too?) and meta-controller for auto-tuning exploration_rate per-corpus.
+
+## Addendum 9 — iter 22+23: frontier hypothesis surfaced and verified
+
+### Iter 22 (Task #86) — non-planted top-K view
+
+Added "non-planted unique predicates" view to `read_promotion_ledger.py`. Of 1,906 unique predicates in the iter15+iter18 ledgers, **1,821 are non-planted** (don't match planted signatures or their match-set discriminators). The view ranks by lift and frequency.
+
+The substrate-grade payoff was immediate: top non-planted predicate by lift is `{has_diag_neg:True, neg_x:4, pos_x:1}` (3-conjunct) at lift=22.40, match=10. Found by all 3 seeds at multiple episodes.
+
+### Iter 23 (Task #87) — verified 3-conjunct OBSTRUCTION generalization
+
+Direct corpus inspection confirmed the matching set:
+- 8 records OBSTRUCTION-planted (all kill_verdict=True)
+- 2 EXTRA records:
+  - idx 42: n_steps=7, neg_x=4, pos_x=1, has_diag_neg=True, **kill_verdict=False**
+  - idx 46: n_steps=6, neg_x=4, pos_x=1, has_diag_neg=True, **kill_verdict=False**
+
+The engine discovered a **real 3-conjunct neighborhood** of OBSTRUCTION_SIGNATURE. The 2 extras share OBSTRUCTION's feature pattern except for n_steps. They don't kill (random noise), so adding the n_steps:5 conjunct (returning to OBSTRUCTION exact) increases matched_kill_rate from 0.80 → 1.00 and lift from 22.40 → 28.40.
+
+### Substrate-grade insight — the engine is a hypothesis-generator, not a classifier
+
+The 3-conjunct generalization is **suboptimal for kill_verdict prediction** but **statistically meaningful as a hypothesis**. It surfaces the corpus structure: there are records that "look like" OBSTRUCTION (3-of-4 features) but lie outside the planted set.
+
+This is exactly the hypothesis-generator behavior the canonical pipeline post promised. **The engine doesn't just confirm ground truth — it explores neighborhoods and surfaces near-misses that may reveal subtle structure**. For the OBSTRUCTION corpus the structure is artificial, but the same behavior on a real-domain corpus could surface previously-undocumented patterns.
+
+### Updated cumulative status post-iter-23
+
+- ~8,900 LOC + 184 passing tests
+- Ledger consumer reader fully featured: single + multi-merge + --all + non-planted top-K
+- Two substrate-grade Stoa posts asking team for direction
+- One verified frontier hypothesis from the engine's output, ready to share with team
