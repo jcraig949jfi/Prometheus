@@ -1,7 +1,8 @@
 # BIND/EVAL v2 — implementation notes
 
-Author: Techne (2026-05-03)
-Status: shipped alongside v1; v1 retained as reference for one cycle.
+Author: Techne (2026-05-03; downstream migration 2026-05-04)
+Status: **all named downstream consumers migrated 2026-05-04.** v1 retained as
+reference for one cycle; targeted for removal in the cycle after that.
 
 ## Why v2 exists
 
@@ -205,19 +206,50 @@ independently.
 ## Migration path
 
 v1 stays for one cycle as the reference implementation. Downstream
-consumers update to v2 in the next session:
+consumers update to v2 in the next session.
 
-- ``prometheus_math/sigma_env.py`` — currently constructs
-  ``BindEvalExtension``. After v2 acceptance, swap to
-  ``BindEvalKernelV2``. The composition test
-  ``test_composition_sigma_env_works_with_v2_extension`` already
-  validates this swap closes the loop.
-- ``prometheus_math/discovery_env.py`` — same swap.
-- ``prometheus_math/obstruction_env.py`` — same swap.
+### Status (2026-05-04)
 
-After all three envs migrate, v1 can be removed in the cycle after
-that. The two-cycle window gives any in-flight RL training runs time
-to checkpoint and restart.
+| Env | File | Status | Date |
+|-----|------|--------|------|
+| Gymnasium bandit | `prometheus_math/sigma_env.py` | migrated | 2026-05-04 |
+| Generative reciprocal-poly | `prometheus_math/discovery_env.py` | migrated | 2026-05-04 |
+| OBSTRUCTION_SHAPE predicate | `prometheus_math/obstruction_env.py` | migrated | 2026-05-04 |
+| Discovery pipeline | `prometheus_math/discovery_pipeline.py` | uses kernel.PROMOTE directly with PromoteCap; no v1 BIND/EVAL hot path; left as-is | 2026-05-03 |
+
+### Migration mechanics (per env, ~3 LOC each)
+
+1. Import swap: replace
+   `from sigma_kernel.bind_eval import BindEvalExtension`
+   with
+   `from sigma_kernel.bind_eval_v2 import BindEvalKernelV2`
+   (CostModel + BudgetExceeded still come from `bind_eval`).
+2. Type-hint swap: `Optional[BindEvalExtension]` -> `Optional[BindEvalKernelV2]`.
+3. Constructor swap: `BindEvalExtension(self._kernel)` ->
+   `BindEvalKernelV2(self._kernel)`.
+
+The user-supplied caps **stay as `BindCap`/`EvalCap`** at the env layer.
+v2's dual-cap pattern (see "Capability handling" above) consumes those
+internally and mints its own `PromoteCap` for `kernel.PROMOTE`.
+
+### Test deltas observed during migration
+
+`prometheus_math/tests/test_pivot_integration.py::test_integration_bind_eval_through_sigma_env_step`
+asserted `n_caps_after == n_caps_before + 1`. v2's dual-cap pattern mints
+2 caps per EVAL (user EvalCap + internal PromoteCap), so the assertion
+was updated to `+2`. This is a v2-correct intended consequence of the
+dual-cap pattern, not a regression. No other test deltas; the full pivot
+stack (2417 tests including the v1 reference suite at
+`sigma_kernel/test_bind_eval.py`) passes after the migration.
+
+### Deprecation notice
+
+> **v1 (`sigma_kernel/bind_eval.py::BindEvalExtension`) is deprecated.**
+> v1 retained as reference for one cycle; downstream consumers all
+> migrated 2026-05-04. New code MUST use `BindEvalKernelV2` from
+> `sigma_kernel/bind_eval_v2.py`. v1 will be removed in the cycle after
+> next once any in-flight RL training runs have checkpointed and
+> restarted.
 
 ## Test counts
 

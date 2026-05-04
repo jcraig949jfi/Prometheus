@@ -114,8 +114,11 @@ def test_integration_bind_eval_through_sigma_env_step():
     n_evals_after = k.conn.execute(
         "SELECT COUNT(*) FROM evaluations"
     ).fetchone()[0]
-    # One eval cap minted + consumed; one evaluation row written.
-    assert n_caps_after == n_caps_before + 1
+    # One eval cap minted by the env + one internal PromoteCap minted by
+    # BindEvalKernelV2 to drive kernel.PROMOTE (the dual-cap pattern
+    # documented in sigma_kernel/BIND_EVAL_V2_NOTES.md). One evaluation
+    # row written. Migration 2026-05-04 from v1 (n=+1) to v2 (n=+2).
+    assert n_caps_after == n_caps_before + 2
     assert n_evals_after == n_evals_before + 1
     assert r >= 100.0
 

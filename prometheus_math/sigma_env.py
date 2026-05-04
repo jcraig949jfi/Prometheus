@@ -35,10 +35,10 @@ import numpy as np
 
 from sigma_kernel.sigma_kernel import SigmaKernel
 from sigma_kernel.bind_eval import (
-    BindEvalExtension,
     CostModel,
     BudgetExceeded,
 )
+from sigma_kernel.bind_eval_v2 import BindEvalKernelV2
 from .arsenal_meta import ARSENAL_REGISTRY, ArsenalMeta
 
 
@@ -218,7 +218,7 @@ class SigmaMathEnv:
         self._kernel_db_path = kernel_db_path
         self._rng = random.Random(seed)
         self._kernel: Optional[SigmaKernel] = None
-        self._ext: Optional[BindEvalExtension] = None
+        self._ext: Optional[BindEvalKernelV2] = None
         self._actions: List[ActionRow] = []
         self._step_count = 0
         self._best_reward = 0.0
@@ -263,7 +263,7 @@ class SigmaMathEnv:
         # training in one process, callers can pass a persistent
         # kernel_db_path; the table state survives in that case.)
         self._kernel = SigmaKernel(self._kernel_db_path)
-        self._ext = BindEvalExtension(self._kernel)
+        self._ext = BindEvalKernelV2(self._kernel)
         self._actions = []
         self._step_count = 0
         self._best_reward = 0.0

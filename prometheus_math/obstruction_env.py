@@ -43,10 +43,10 @@ import numpy as np
 
 from sigma_kernel.sigma_kernel import SigmaKernel
 from sigma_kernel.bind_eval import (
-    BindEvalExtension,
     BudgetExceeded,
     CostModel,
 )
+from sigma_kernel.bind_eval_v2 import BindEvalKernelV2
 
 from ._obstruction_corpus import (
     CorpusEntry,
@@ -397,7 +397,7 @@ class ObstructionEnv:
 
         # Substrate state — created lazily in reset().
         self._kernel: Optional[SigmaKernel] = None
-        self._ext: Optional[BindEvalExtension] = None
+        self._ext: Optional[BindEvalKernelV2] = None
         self._binding_name: Optional[str] = None
         self._binding_version: Optional[int] = None
 
@@ -516,7 +516,7 @@ class ObstructionEnv:
 
         if self._kernel is None:
             self._kernel = SigmaKernel(self.kernel_db_path)
-            self._ext = BindEvalExtension(self._kernel)
+            self._ext = BindEvalKernelV2(self._kernel)
             cap = self._kernel.mint_capability("BindCap")
             binding = self._ext.BIND(
                 callable_ref="prometheus_math.obstruction_env:_evaluate_predicate_pair",
