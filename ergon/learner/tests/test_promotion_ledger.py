@@ -5,7 +5,7 @@ import json
 import tempfile
 from pathlib import Path
 
-from ergon.learner.promotion_ledger import PromotionLedger
+from ergon.learner.promotion_ledger import PromotionLedger, canonical_predicate_hash
 
 
 # =============================================================================
@@ -155,6 +155,41 @@ def test_composition_load_jsonl_round_trip():
         assert reader.records[1]["is_secondary_exact"] is True
         unique = reader.unique_predicates()
         assert len(unique) == 2
+
+
+def test_authority_canonical_predicate_hash_collapses_equivalent_orderings():
+    # Different dict orderings → same canonical hash
+    h1 = canonical_predicate_hash({"a": 1, "b": 2, "c": 3})
+    h2 = canonical_predicate_hash({"c": 3, "a": 1, "b": 2})
+    h3 = canonical_predicate_hash({"b": 2, "c": 3, "a": 1})
+    assert h1 == h2 == h3
+
+
+def test_authority_canonical_predicate_hash_distinguishes_different_predicates():
+    h1 = canonical_predicate_hash({"a": 1})
+    h2 = canonical_predicate_hash({"a": 2})
+    h3 = canonical_predicate_hash({"a": 1, "b": 2})
+    assert h1 != h2
+    assert h1 != h3
+    assert h2 != h3
+
+
+def test_property_canonical_predicate_hash_in_record():
+    ledger = PromotionLedger(trial_name="canonical_test")
+    record = ledger.append(
+        seed=1, episode=10, genome_content_hash="genome_hash_1",
+        operator_class="structural", predicate={"n_steps": 5, "neg_x": 4},
+        lift=27.92, match_size=5, kernel_binding_name="b",
+    )
+    assert "canonical_predicate_hash" in record
+    # Same predicate in different order → same canonical hash
+    record2 = ledger.append(
+        seed=2, episode=20, genome_content_hash="genome_hash_2",
+        operator_class="symbolic", predicate={"neg_x": 4, "n_steps": 5},
+        lift=27.92, match_size=5, kernel_binding_name="b",
+    )
+    assert record["canonical_predicate_hash"] == record2["canonical_predicate_hash"]
+    assert record["genome_content_hash"] != record2["genome_content_hash"]
 
 
 def test_authority_regime_manifest_persists_to_sidecar():

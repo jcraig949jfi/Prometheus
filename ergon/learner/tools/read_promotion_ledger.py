@@ -103,13 +103,16 @@ def summarize(records: List[Dict[str, Any]]) -> Dict[str, Any]:
     for r in records:
         operator_breakdown[r["operator_class"]] += 1
 
-    # Dedupe by content_hash → unique predicates
+    # Dedupe by canonical_predicate_hash (preferred) or content_hash (fallback).
+    # The canonical hash collapses semantically-equivalent predicates that the
+    # engine produced via different DAG paths into one unique entry.
     by_hash: Dict[str, Dict[str, Any]] = {}
+    use_canonical = any("canonical_predicate_hash" in r for r in records)
     for r in records:
-        ch = r["genome_content_hash"]
-        if ch not in by_hash:
-            by_hash[ch] = {
-                "content_hash": ch,
+        key = r.get("canonical_predicate_hash") or r["genome_content_hash"]
+        if key not in by_hash:
+            by_hash[key] = {
+                "content_hash": key,
                 "predicate": r["predicate"],
                 "lift": r["lift"],
                 "match_size": r["match_size"],
@@ -118,7 +121,7 @@ def summarize(records: List[Dict[str, Any]]) -> Dict[str, Any]:
                 "first_episode": r["episode"],
             }
         else:
-            by_hash[ch]["n_occurrences"] += 1
+            by_hash[key]["n_occurrences"] += 1
 
     unique_preds = list(by_hash.values())
     most_frequent = sorted(unique_preds, key=lambda u: -u["n_occurrences"])[:5]

@@ -31,10 +31,34 @@ needing the kernel.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
+
+
+def canonical_predicate_hash(predicate: Dict[str, Any]) -> str:
+    """Stable hash for predicate equivalence-class dedup.
+
+    Two predicates with the same key-value dict are equivalent regardless
+    of how the engine assembled them (different DAG paths, different atom
+    orderings, different operator lineages). The canonical hash ignores
+    those differences.
+
+    This is distinct from genome.content_hash() which fingerprints the
+    DAG structure — useful for engine-side caching but creates false
+    diversity in the ledger.
+
+    Per ChatGPT iter 36 review (priority D): "define canonical merge
+    semantics, dedup equivalence classes, normalize predicates.
+    Otherwise you'll just persist chaos at scale."
+    """
+    # Sort by key, serialize values deterministically.
+    canonical = json.dumps(
+        predicate, sort_keys=True, separators=(",", ":"), default=str
+    )
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
 
 class PromotionLedger:
@@ -106,6 +130,7 @@ class PromotionLedger:
             "seed": seed,
             "episode": episode,
             "genome_content_hash": genome_content_hash,
+            "canonical_predicate_hash": canonical_predicate_hash(predicate),
             "operator_class": operator_class,
             "predicate": dict(predicate),
             "lift": float(lift),
