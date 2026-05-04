@@ -41,7 +41,7 @@ try:
 
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics_special_dilogarithm:dilogarithm",
-        cost={"max_seconds": 0.0005, "max_memory_mb": 32, "max_oracle_calls": 0},
+        cost={"max_seconds": 5.1e-05, "max_memory_mb": 32, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 1.0772, "fit_r2": 0.75, "p95_seconds": 3e-06, "median_at_smallest_us": 1.0, "median_at_largest_us": 0.8, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "Li_2(0) == 0",
             "Li_2(1) == zeta(2) == pi^2/6",
@@ -59,7 +59,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics_special_dilogarithm:polylogarithm",
-        cost={"max_seconds": 0.005, "max_memory_mb": 32, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.003, "max_memory_mb": 32, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n^3)', "coefficient_us": 0.264, "fit_r2": 0.709, "p95_seconds": 0.000201, "median_at_smallest_us": 0.9, "median_at_largest_us": 65.7, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "Li_n(1) == zeta(n) for n >= 2",
             "Li_n(0) == 0",
@@ -72,7 +72,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics_special_dilogarithm:bloch_wigner_dilog",
-        cost={"max_seconds": 0.005, "max_memory_mb": 32, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0078, "max_memory_mb": 32, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 377.6146, "fit_r2": 0.722, "p95_seconds": 0.00052, "median_at_smallest_us": 395.6, "median_at_largest_us": 513.0, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "real-valued output (BWD is single-valued real)",
             "D(z) == -D(1/z) (5-term identity component)",
@@ -85,7 +85,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics_special_dilogarithm:clausen",
-        cost={"max_seconds": 0.005, "max_memory_mb": 32, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0059, "max_memory_mb": 32, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(log n)', "coefficient_us": 219.6768, "fit_r2": 0.964, "p95_seconds": 0.000391, "median_at_smallest_us": 213.8, "median_at_largest_us": 347.8, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "Cl_2(0) == 0",
             "Cl_2(pi) == 0",
@@ -104,7 +104,7 @@ try:
 
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics_special_hurwitz:hurwitz_zeta",
-        cost={"max_seconds": 0.0005, "max_memory_mb": 32, "max_oracle_calls": 0},
+        cost={"max_seconds": 6.2e-05, "max_memory_mb": 32, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 1.6126, "fit_r2": 1.0, "p95_seconds": 4e-06, "median_at_smallest_us": 1.5, "median_at_largest_us": 1.3, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "zeta(s, 1) == zeta(s) (Riemann zeta)",
             "zeta(s, 2) == zeta(s) - 1",
@@ -117,7 +117,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics_special_hurwitz:polygamma",
-        cost={"max_seconds": 0.001, "max_memory_mb": 32, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.002, "max_memory_mb": 32, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 111.8905, "fit_r2": 1.0, "p95_seconds": 0.000131, "median_at_smallest_us": 16.2, "median_at_largest_us": 95.0, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "psi^(0)(1) == -gamma_em (Euler-Mascheroni)",
             "psi^(1)(1) == pi^2/6 == zeta(2)",
@@ -136,7 +136,7 @@ try:
 
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics_special_theta:theta_null_value",
-        cost={"max_seconds": 0.0008, "max_memory_mb": 32, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.00036, "max_memory_mb": 32, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 13.0222, "fit_r2": 0.946, "p95_seconds": 2.4e-05, "median_at_smallest_us": 13.1, "median_at_largest_us": 11.7, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "theta_3(0,q)^4 == theta_2(0,q)^4 + theta_4(0,q)^4 (Jacobi identity)",
             "theta_2(0,0) == 0",
@@ -150,7 +150,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics_special_theta:jacobi_theta",
-        cost={"max_seconds": 0.0008, "max_memory_mb": 32, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.00024, "max_memory_mb": 32, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 11.6029, "fit_r2": 0.998, "p95_seconds": 1.6e-05, "median_at_smallest_us": 11.6, "median_at_largest_us": 11.9, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "theta_n(z + pi, q) follows quasi-periodicity formulas",
             "theta_2(0, q) == 2 q^(1/4) * sum_{k>=0} q^{k(k+1)}",
@@ -169,7 +169,7 @@ try:
 
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics_special_eta:eta",
-        cost={"max_seconds": 0.002, "max_memory_mb": 32, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.001, "max_memory_mb": 32, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 58.2386, "fit_r2": 0.979, "p95_seconds": 6.7e-05, "median_at_smallest_us": 59.5, "median_at_largest_us": 36.0, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "Im(tau) > 0 required",
             "eta(tau + 1) == exp(i*pi/12) * eta(tau) (T transformation)",
@@ -182,7 +182,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics_special_eta:j_invariant",
-        cost={"max_seconds": 0.003, "max_memory_mb": 32, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.001, "max_memory_mb": 32, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 59.3642, "fit_r2": 0.823, "p95_seconds": 6.9e-05, "median_at_smallest_us": 61.0, "median_at_largest_us": 49.8, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "j(i) == 1728",
             "j((-1+sqrt(-3))/2) == 0",
@@ -196,7 +196,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics_special_eta:eta_quotient",
-        cost={"max_seconds": 0.002, "max_memory_mb": 32, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0013, "max_memory_mb": 32, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 82.8602, "fit_r2": 0.99, "p95_seconds": 8.8e-05, "median_at_smallest_us": 83.4, "median_at_largest_us": 66.8, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "all coefficients are integers",
             "Im(tau) > 0 required",
@@ -215,7 +215,7 @@ try:
 
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics_special_q_pochhammer:euler_function",
-        cost={"max_seconds": 0.002, "max_memory_mb": 32, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.00056, "max_memory_mb": 32, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 31.165, "fit_r2": 0.814, "p95_seconds": 3.7e-05, "median_at_smallest_us": 31.8, "median_at_largest_us": 36.8, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "euler_function(0) == 1",
             "|q| < 1 required",
@@ -229,7 +229,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics_special_q_pochhammer:dedekind_eta",
-        cost={"max_seconds": 0.002, "max_memory_mb": 32, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.00076, "max_memory_mb": 32, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 48.261, "fit_r2": 0.982, "p95_seconds": 5.1e-05, "median_at_smallest_us": 49.2, "median_at_largest_us": 29.9, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "Im(tau) > 0 required",
             "eta(tau) == q^{1/24} * phi(q) where q = exp(2*pi*i*tau)",
@@ -242,7 +242,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics_special_q_pochhammer:q_pochhammer",
-        cost={"max_seconds": 0.001, "max_memory_mb": 32, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0025, "max_memory_mb": 32, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 172.027, "fit_r2": 0.62, "p95_seconds": 0.000169, "median_at_smallest_us": 129.9, "median_at_largest_us": 37.5, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "(a;q)_0 == 1",
             "(a;q)_n == prod_{k=0}^{n-1} (1 - a*q^k)",
@@ -266,7 +266,7 @@ try:
 
     _register(ArsenalMeta(
         callable_ref="prometheus_math.combinatorics_partitions:num_partitions",
-        cost={"max_seconds": 0.0005, "max_memory_mb": 32, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.00027, "max_memory_mb": 32, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 0.1001, "fit_r2": 1.0, "p95_seconds": 1.8e-05, "median_at_smallest_us": 0.1, "median_at_largest_us": 0.1, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "num_partitions(0) == 1",
             "num_partitions(n) > 0 for n >= 0",
@@ -280,7 +280,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.combinatorics_partitions:partitions_of",
-        cost={"max_seconds": 0.0008, "max_memory_mb": 32, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0011, "max_memory_mb": 32, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n^3)', "coefficient_us": 0.0287, "fit_r2": 0.995, "p95_seconds": 7.2e-05, "median_at_smallest_us": 4.6, "median_at_largest_us": 71.4, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "partitions_of(0) == [()]",
             "len(partitions_of(n)) == num_partitions(n)",
@@ -294,7 +294,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.combinatorics_partitions:conjugate",
-        cost={"max_seconds": 0.0002, "max_memory_mb": 16, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.00017, "max_memory_mb": 16, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n)', "coefficient_us": 0.2257, "fit_r2": 0.991, "p95_seconds": 1.1e-05, "median_at_smallest_us": 1.9, "median_at_largest_us": 11.4, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "conjugate(conjugate(p)) == p (involution)",
             "len(conjugate(p)) == p[0] for non-empty p",
@@ -307,7 +307,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.combinatorics_partitions:num_standard_young_tableaux",
-        cost={"max_seconds": 0.0003, "max_memory_mb": 16, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.00042, "max_memory_mb": 16, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n log n)', "coefficient_us": 0.7708, "fit_r2": 0.999, "p95_seconds": 2.8e-05, "median_at_smallest_us": 4.4, "median_at_largest_us": 20.6, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "f^{(n)} == 1 (single-row)",
             "f^{(1^n)} == 1 (single-column)",
@@ -320,7 +320,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.combinatorics_partitions:rsk",
-        cost={"max_seconds": 0.0002, "max_memory_mb": 16, "max_oracle_calls": 0},
+        cost={"max_seconds": 7.5e-05, "max_memory_mb": 16, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n)', "coefficient_us": 0.3745, "fit_r2": 0.944, "p95_seconds": 5e-06, "median_at_smallest_us": 1.4, "median_at_largest_us": 4.8, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "rsk yields shape(P) == shape(Q)",
             "P, Q are standard Young tableaux for permutations",
@@ -333,7 +333,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.combinatorics_partitions:hook_length_array",
-        cost={"max_seconds": 0.0003, "max_memory_mb": 16, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0021, "max_memory_mb": 16, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n^2)', "coefficient_us": 0.2353, "fit_r2": 0.998, "p95_seconds": 0.00014, "median_at_smallest_us": 7.2, "median_at_largest_us": 133.2, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "all hook lengths are positive integers",
             "hook lengths satisfy h(i,j) = (lambda_i - j) + (lambda'_j - i) + 1",
@@ -356,7 +356,7 @@ try:
 
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics:flint_factor",
-        cost={"max_seconds": 0.005, "max_memory_mb": 64, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0014, "max_memory_mb": 64, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n)', "coefficient_us": 5.1523, "fit_r2": 0.998, "p95_seconds": 9.6e-05, "median_at_smallest_us": 18.9, "median_at_largest_us": 68.1, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "factor product equals input polynomial (up to leading sign)",
             "each factor is irreducible over Z",
@@ -369,7 +369,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics:flint_polmodp",
-        cost={"max_seconds": 0.005, "max_memory_mb": 64, "max_oracle_calls": 0},
+        cost={"max_seconds": 9.9e-05, "max_memory_mb": 64, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(log n)', "coefficient_us": 0.912, "fit_r2": 0.994, "p95_seconds": 7e-06, "median_at_smallest_us": 1.8, "median_at_largest_us": 3.5, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "all coefficients are in [0, p)",
             "p must be prime",
@@ -382,7 +382,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics:flint_matmul_modp",
-        cost={"max_seconds": 0.05, "max_memory_mb": 128, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0014, "max_memory_mb": 128, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n log n)', "coefficient_us": 1.0119, "fit_r2": 0.996, "p95_seconds": 9.5e-05, "median_at_smallest_us": 9.6, "median_at_largest_us": 87.5, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "all entries are in [0, p)",
             "(A @ B) mod p == result",
@@ -395,7 +395,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics:mpdft",
-        cost={"max_seconds": 0.002, "max_memory_mb": 32, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0036, "max_memory_mb": 32, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n)', "coefficient_us": 17.0674, "fit_r2": 0.987, "p95_seconds": 0.000242, "median_at_smallest_us": 60.2, "median_at_largest_us": 203.9, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "len(output) == len(input)",
             "Parseval: sum |X_k|^2 == N * sum |x_n|^2",
@@ -408,7 +408,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics:mpfft",
-        cost={"max_seconds": 0.002, "max_memory_mb": 32, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0032, "max_memory_mb": 32, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n)', "coefficient_us": 11.6831, "fit_r2": 1.0, "p95_seconds": 0.000217, "median_at_smallest_us": 47.8, "median_at_largest_us": 194.0, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "len(output) == len(input)",
             "len(input) must be a power of 2",
@@ -421,7 +421,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics:bernoulli",
-        cost={"max_seconds": 0.005, "max_memory_mb": 32, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0073, "max_memory_mb": 32, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 1.1882, "fit_r2": 0.816, "p95_seconds": 0.000485, "median_at_smallest_us": 1.0, "median_at_largest_us": 0.8, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "B_0 == 1",
             "B_1 == -1/2 (or +1/2 by convention; this lib uses Bernoulli^- = -1/2)",
@@ -435,7 +435,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.numerics:zeta",
-        cost={"max_seconds": 0.0003, "max_memory_mb": 32, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.00032, "max_memory_mb": 32, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 5.1446, "fit_r2": 0.879, "p95_seconds": 2.1e-05, "median_at_smallest_us": 4.5, "median_at_largest_us": 3.2, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "zeta(2) == pi^2 / 6 (Basel)",
             "zeta(4) == pi^4 / 90",
@@ -460,7 +460,7 @@ try:
 
     _register(ArsenalMeta(
         callable_ref="prometheus_math.geometry_convex_hull:convex_hull",
-        cost={"max_seconds": 0.05, "max_memory_mb": 64, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0058, "max_memory_mb": 64, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 304.6393, "fit_r2": 0.946, "p95_seconds": 0.000388, "median_at_smallest_us": 327.6, "median_at_largest_us": 364.5, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "all hull vertices are extreme points of input",
             "vertices are returned in CCW order in 2D",
@@ -480,7 +480,7 @@ try:
 
     _register(ArsenalMeta(
         callable_ref="prometheus_math.geometry_voronoi:voronoi_diagram",
-        cost={"max_seconds": 0.01, "max_memory_mb": 64, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.011, "max_memory_mb": 64, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(log n)', "coefficient_us": 242.7407, "fit_r2": 0.914, "p95_seconds": 0.000759, "median_at_smallest_us": 395.3, "median_at_largest_us": 707.1, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "every input point is a Voronoi seed",
             "cells partition the plane (modulo unbounded cells)",
@@ -493,7 +493,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.geometry_voronoi:lloyd_relaxation",
-        cost={"max_seconds": 0.5, "max_memory_mb": 64, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.011, "max_memory_mb": 64, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(log n)', "coefficient_us": 242.7407, "fit_r2": 0.914, "p95_seconds": 0.000759, "median_at_smallest_us": 395.3, "median_at_largest_us": 707.1, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "len(output) == len(input)",
             "iterating to convergence yields a CVT (centroidal Voronoi tessellation)",
@@ -512,7 +512,7 @@ try:
 
     _register(ArsenalMeta(
         callable_ref="prometheus_math.geometry_delaunay:delaunay_triangulation",
-        cost={"max_seconds": 0.02, "max_memory_mb": 64, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.28, "max_memory_mb": 64, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n)', "coefficient_us": 136.4203, "fit_r2": 0.641, "p95_seconds": 0.01859, "median_at_smallest_us": 1488.2, "median_at_largest_us": 17668.1, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "every input point is a vertex",
             "triangulation has empty-circumcircle property",
@@ -525,7 +525,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.geometry_delaunay:circumcenter",
-        cost={"max_seconds": 0.0005, "max_memory_mb": 16, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.00027, "max_memory_mb": 16, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 9.8391, "fit_r2": 0.229, "p95_seconds": 1.8e-05, "median_at_smallest_us": 9.7, "median_at_largest_us": 9.5, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "all simplex points equidistant from circumcenter",
             "for triangle: lies at intersection of perpendicular bisectors",
@@ -548,7 +548,7 @@ try:
 
     _register(ArsenalMeta(
         callable_ref="prometheus_math.dynamics_iterated_maps:logistic_map",
-        cost={"max_seconds": 0.005, "max_memory_mb": 16, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.00075, "max_memory_mb": 16, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n)', "coefficient_us": 0.0978, "fit_r2": 0.999, "p95_seconds": 5e-05, "median_at_smallest_us": 3.8, "median_at_largest_us": 49.9, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "all orbit values in [0, 1] for r in [0, 4]",
             "r=4: chaotic, full unit interval coverage",
@@ -561,7 +561,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.dynamics_iterated_maps:lyapunov_exponent",
-        cost={"max_seconds": 0.05, "max_memory_mb": 16, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.00075, "max_memory_mb": 16, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n)', "coefficient_us": 0.0978, "fit_r2": 0.999, "p95_seconds": 5e-05, "median_at_smallest_us": 3.8, "median_at_largest_us": 49.9, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "lambda > 0 implies chaos",
             "lambda <= 0 implies regular (periodic or fixed)",
@@ -574,7 +574,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.dynamics_iterated_maps:tent_map",
-        cost={"max_seconds": 0.005, "max_memory_mb": 16, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.00071, "max_memory_mb": 16, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n)', "coefficient_us": 0.0947, "fit_r2": 0.998, "p95_seconds": 4.8e-05, "median_at_smallest_us": 3.5, "median_at_largest_us": 44.1, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "all orbit values in [0, 1]",
             "tent has lambda = ln 2 (always chaotic)",
@@ -597,7 +597,7 @@ try:
 
     _register(ArsenalMeta(
         callable_ref="techne.lib.hyperbolic_volume:hyperbolic_volume",
-        cost={"max_seconds": 0.02, "max_memory_mb": 64, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.00071, "max_memory_mb": 64, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n)', "coefficient_us": 0.0947, "fit_r2": 0.998, "p95_seconds": 4.8e-05, "median_at_smallest_us": 3.5, "median_at_largest_us": 44.1, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "hyperbolic_volume('4_1') ≈ 2.0298832128 (figure-eight)",
             "hyperbolic_volume('5_2') ≈ 2.8281220883",
@@ -841,7 +841,7 @@ try:
 
     _register(ArsenalMeta(
         callable_ref="techne.lib.lll_reduction:lll",
-        cost={"max_seconds": 0.005, "max_memory_mb": 64, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0018, "max_memory_mb": 64, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n)', "coefficient_us": 3.094, "fit_r2": 0.967, "p95_seconds": 0.000117, "median_at_smallest_us": 12.9, "median_at_largest_us": 43.9, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "output is LLL-reduced basis (Lovasz condition with delta=3/4)",
             "abs(det(output)) == abs(det(input))",
@@ -854,7 +854,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="techne.lib.lll_reduction:shortest_vector_lll",
-        cost={"max_seconds": 0.005, "max_memory_mb": 64, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0011, "max_memory_mb": 64, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n)', "coefficient_us": 12.0077, "fit_r2": 0.683, "p95_seconds": 7.6e-05, "median_at_smallest_us": 27.1, "median_at_largest_us": 51.0, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "output is in lattice",
             "norm of output is short (LLL-approximation, not exact)",
@@ -872,7 +872,7 @@ try:
 
     _register(ArsenalMeta(
         callable_ref="techne.lib.smith_normal_form:smith_normal_form",
-        cost={"max_seconds": 0.01, "max_memory_mb": 64, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0053, "max_memory_mb": 64, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n)', "coefficient_us": 47.2383, "fit_r2": 0.967, "p95_seconds": 0.000351, "median_at_smallest_us": 124.2, "median_at_largest_us": 284.6, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "output is diagonal",
             "diagonal entries d_1 | d_2 | ... | d_n (divisibility)",
@@ -885,7 +885,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="techne.lib.smith_normal_form:invariant_factors",
-        cost={"max_seconds": 0.01, "max_memory_mb": 64, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0046, "max_memory_mb": 64, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n)', "coefficient_us": 36.4783, "fit_r2": 0.987, "p95_seconds": 0.000309, "median_at_smallest_us": 107.7, "median_at_largest_us": 276.5, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "list of positive integers",
             "each divides the next",
@@ -898,7 +898,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="techne.lib.smith_normal_form:abelian_group_structure",
-        cost={"max_seconds": 0.01, "max_memory_mb": 64, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.004, "max_memory_mb": 64, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n)', "coefficient_us": 41.1556, "fit_r2": 0.996, "p95_seconds": 0.000265, "median_at_smallest_us": 109.2, "median_at_largest_us": 257.8, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "decomposes as Z^r x Z/d_1 x Z/d_2 x ... (d_i | d_{i+1})",
             "rank = number of zero invariant factors",
@@ -917,7 +917,7 @@ try:
 
     _register(ArsenalMeta(
         callable_ref="techne.lib.cm_order_data:cm_order_data",
-        cost={"max_seconds": 0.005, "max_memory_mb": 64, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.004, "max_memory_mb": 64, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n)', "coefficient_us": 41.1556, "fit_r2": 0.996, "p95_seconds": 0.000265, "median_at_smallest_us": 109.2, "median_at_largest_us": 257.8, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "D < 0 (negative discriminant)",
             "class_number is a positive integer",
@@ -936,7 +936,7 @@ try:
 
     _register(ArsenalMeta(
         callable_ref="techne.lib.mahler_measure:mahler_measure",
-        cost={"max_seconds": 0.002, "max_memory_mb": 64, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0061, "max_memory_mb": 64, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n log n)', "coefficient_us": 1.2675, "fit_r2": 0.984, "p95_seconds": 0.000408, "median_at_smallest_us": 47.4, "median_at_largest_us": 399.9, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "M(P) >= 1 for non-zero integer polynomial",
             "M(cyclotomic) == 1 (Kronecker)",
@@ -950,7 +950,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="techne.lib.mahler_measure:log_mahler_measure",
-        cost={"max_seconds": 0.002, "max_memory_mb": 64, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0061, "max_memory_mb": 64, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n log n)', "coefficient_us": 1.0706, "fit_r2": 0.989, "p95_seconds": 0.000405, "median_at_smallest_us": 44.3, "median_at_largest_us": 400.2, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "log_M(P) >= 0 for non-zero integer polynomial",
             "log_M(cyclotomic) == 0",
@@ -963,7 +963,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="techne.lib.mahler_measure:is_cyclotomic",
-        cost={"max_seconds": 0.002, "max_memory_mb": 64, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0012, "max_memory_mb": 64, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n)', "coefficient_us": 6.0199, "fit_r2": 0.976, "p95_seconds": 8.1e-05, "median_at_smallest_us": 22.6, "median_at_largest_us": 80.1, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "True iff M(P) == 1 (Kronecker theorem)",
             "False if any root has |root| != 1",
@@ -982,7 +982,7 @@ try:
 
     _register(ArsenalMeta(
         callable_ref="techne.lib.cf_expansion:cf_expand",
-        cost={"max_seconds": 0.00005, "max_memory_mb": 16, "max_oracle_calls": 0},
+        cost={"max_seconds": 2.4e-05, "max_memory_mb": 16, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 0.4197, "fit_r2": 0.75, "p95_seconds": 2e-06, "median_at_smallest_us": 0.4, "median_at_largest_us": 0.3, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "cf_expand(22, 7) == [3, 7] (pi approximant)",
             "cf_expand(355, 113) == [3, 7, 16] (closer pi approximant)",
@@ -995,7 +995,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="techne.lib.cf_expansion:cf_max_digit",
-        cost={"max_seconds": 0.00005, "max_memory_mb": 16, "max_oracle_calls": 0},
+        cost={"max_seconds": 1.4e-05, "max_memory_mb": 16, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 0.4309, "fit_r2": 0.0, "p95_seconds": 1e-06, "median_at_smallest_us": 0.4, "median_at_largest_us": 0.4, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "max digit >= 1",
             "matches max(cf_expand(p, q))",
@@ -1007,7 +1007,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="techne.lib.cf_expansion:zaremba_test",
-        cost={"max_seconds": 0.001, "max_memory_mb": 16, "max_oracle_calls": 0},
+        cost={"max_seconds": 5e-05, "max_memory_mb": 16, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 0.4309, "fit_r2": 0.0, "p95_seconds": 1e-06, "median_at_smallest_us": 0.4, "median_at_largest_us": 0.4, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "returns dict with 'max_digit', 'witnesses' fields",
             "for q with bounded-CF representative: max_digit <= bound",
@@ -1019,7 +1019,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="techne.lib.cf_expansion:sturm_bound",
-        cost={"max_seconds": 0.0001, "max_memory_mb": 16, "max_oracle_calls": 0},
+        cost={"max_seconds": 2.1e-05, "max_memory_mb": 16, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 1.4842, "fit_r2": 0.794, "p95_seconds": 1e-06, "median_at_smallest_us": 1.0, "median_at_largest_us": 0.5, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "sturm_bound(12, 11) == 12 (matches Stein 'Modular Forms: A Computational Approach' Th. 9.18)",
             "increases with weight and level",
@@ -1043,7 +1043,7 @@ try:
 
     _register(ArsenalMeta(
         callable_ref="techne.lib.regulator:regulator",
-        cost={"max_seconds": 0.1, "max_memory_mb": 256, "max_oracle_calls": 0},
+        cost={"max_seconds": 5e-05, "max_memory_mb": 256, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 1.4842, "fit_r2": 0.794, "p95_seconds": 1e-06, "median_at_smallest_us": 1.0, "median_at_largest_us": 0.5, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "Reg(E) >= 0",
             "Reg(E) > 0 iff rank(E) >= 1",
@@ -1070,7 +1070,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="techne.lib.conductor:conductor",
-        cost={"max_seconds": 0.005, "max_memory_mb": 256, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.00096, "max_memory_mb": 256, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n^2)', "coefficient_us": 5.7002, "fit_r2": 1.0, "p95_seconds": 6.4e-05, "median_at_smallest_us": 6.6, "median_at_largest_us": 21.9, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "N(E) is a positive integer",
             "primes dividing N == primes of bad reduction",
@@ -1084,7 +1084,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="techne.lib.conductor:bad_primes",
-        cost={"max_seconds": 0.005, "max_memory_mb": 256, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.00081, "max_memory_mb": 256, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n^2)', "coefficient_us": 6.8001, "fit_r2": 1.0, "p95_seconds": 5.4e-05, "median_at_smallest_us": 6.8, "median_at_largest_us": 22.9, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "list of primes",
             "each divides conductor N(E)",
@@ -1097,7 +1097,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="techne.lib.root_number:root_number",
-        cost={"max_seconds": 0.005, "max_memory_mb": 256, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.00042, "max_memory_mb": 256, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(n^2)', "coefficient_us": 5.0, "fit_r2": 1.0, "p95_seconds": 2.8e-05, "median_at_smallest_us": 5.3, "median_at_largest_us": 21.9, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "w(E) in {-1, +1}",
             "w(E) == (-1)^rank under BSD parity",
@@ -1111,7 +1111,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="techne.lib.faltings_height:faltings_height",
-        cost={"max_seconds": 0.005, "max_memory_mb": 256, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0019, "max_memory_mb": 256, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 74.3, "fit_r2": 1.0, "p95_seconds": 0.000128, "median_at_smallest_us": 88.6, "median_at_largest_us": 80.3, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "real-valued",
             "h_F(E) tracks log of arithmetic complexity of E",
@@ -1124,7 +1124,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="techne.lib.analytic_sha:analytic_sha",
-        cost={"max_seconds": 0.1, "max_memory_mb": 256, "max_oracle_calls": 0},
+        cost={"max_seconds": 0.0019, "max_memory_mb": 256, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(1)', "coefficient_us": 74.3, "fit_r2": 1.0, "p95_seconds": 0.000128, "median_at_smallest_us": 88.6, "median_at_largest_us": 80.3, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "returns dict with 'sha_an', 'sha_an_rounded' fields",
             "sha_an_rounded is a positive integer",
@@ -1175,7 +1175,7 @@ try:
 
     _register(ArsenalMeta(
         callable_ref="prometheus_math.research.lehmer:identify_salem_class",
-        cost={"max_seconds": 0.00005, "max_memory_mb": 16, "max_oracle_calls": 0},
+        cost={"max_seconds": 3.9e-05, "max_memory_mb": 16, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(log n)', "coefficient_us": 0.5208, "fit_r2": 0.984, "p95_seconds": 3e-06, "median_at_smallest_us": 0.8, "median_at_largest_us": 1.3, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "True iff polynomial is reciprocal with all roots on unit circle except one real > 1",
             "False for cyclotomic (all roots on circle)",
@@ -1188,7 +1188,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.research.lehmer:is_reciprocal",
-        cost={"max_seconds": 0.00005, "max_memory_mb": 16, "max_oracle_calls": 0},
+        cost={"max_seconds": 3e-05, "max_memory_mb": 16, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(log n)', "coefficient_us": 0.2794, "fit_r2": 0.985, "p95_seconds": 2e-06, "median_at_smallest_us": 0.5, "median_at_largest_us": 1.0, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "True iff polynomial is palindromic (or anti-palindromic)",
             "True for cyclotomic, Lehmer's, all Salem classes",
@@ -1200,7 +1200,7 @@ try:
     ))
     _register(ArsenalMeta(
         callable_ref="prometheus_math.research.lehmer:degree_profile",
-        cost={"max_seconds": 0.002, "max_memory_mb": 16, "max_oracle_calls": 0},
+        cost={"max_seconds": 5e-05, "max_memory_mb": 16, "max_oracle_calls": 0, "calibrated_cost": {"complexity": 'O(log n)', "coefficient_us": 0.2794, "fit_r2": 0.985, "p95_seconds": 2e-06, "median_at_smallest_us": 0.5, "median_at_largest_us": 1.0, "calibrated_2026_05_04": True, "host": "Skullport / Win11 / Py3.11.9 / Ryzen 7 5700X3D"}},
         postconditions=[
             "returns list of dicts keyed by degree",
             "each dict has 'count', 'min_M', 'examples'",
