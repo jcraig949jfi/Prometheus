@@ -1,13 +1,20 @@
 # Lehmer Brute-Force Settlement — Deg-14 Reciprocal Palindromic [-5, 5]
 
-**Status:** RESULTS PENDING (enumeration in progress).
+**Status:** COMPLETED 2026-05-04 12:09 — verdict **INCONCLUSIVE**. Detailed analysis in `LEHMER_BRUTE_FORCE_FULL_RUN_RESULTS.md`.
 **Forged:** 2026-05-04 by Techne (toolsmith).
 **Mission:** Resolve H1 / H2 / H5 for the deg-14 ±5 reciprocal palindromic
 subspace via complete brute-force enumeration. The Charon discovery loop
 returned 0 PROMOTEs over 350K+ episodes; the substrate alone cannot
 distinguish "the band is empty" (H1) from "the search is too weak" (H2)
 or "the catalog already contains every reachable specimen" (H5).
-This run **settles H1 as a lemma** for this specific finite slice.
+
+**Outcome:** Substrate refused to overclaim. 97,435,855 polys enumerated
+in 43.4 min on 4 workers; 43 verified band hits (26 in Mossinghoff +
+17 verification_failed); INCONCLUSIVE verdict because all 17 non-Moss
+entries failed mpmath verification at dps=30. Bug-fix verdict logic
+fired correctly. Full Lemma settlement requires Path A/B/C follow-up
+(higher-precision mpmath / symbolic factorization / tighter Mossinghoff
+lookup) to resolve the 17 entries — see full-run doc for details.
 
 ## TL;DR
 
@@ -17,9 +24,16 @@ This run **settles H1 as a lemma** for this specific finite slice.
 * **Pipeline:** numpy companion-matrix Mahler measure (batched at 5K) →
   filter to (1 + 1e-6, 1.18) → mpmath dps=30 recheck → cyclotomic and
   cyclotomic-factor classification → Mossinghoff catalog cross-check.
-* **Verdict (this run):** _filled in after enumeration_.
+* **Verdict (this run):** **INCONCLUSIVE** (43 verified band hits: 26 in
+  Mossinghoff, 17 verification_failed at mpmath dps=30; substrate
+  refused to overclaim H5_CONFIRMED with unverified non-Moss entries
+  present). Wall time 2,603.5s (43.4 min) on 4 workers.
 * **Lehmer's polynomial sanity check:** numpy err < 1e-9; mpmath err <
   1e-12. Pipeline correctness verified before enumeration.
+* **Detailed analysis:** see `LEHMER_BRUTE_FORCE_FULL_RUN_RESULTS.md`
+  (per-entry breakdown of the 17 verification_failed entries; two
+  structural classes; Path A/B/C routes to convert INCONCLUSIVE to
+  H5_CONFIRMED Lemma).
 
 ## Subspace specification
 
