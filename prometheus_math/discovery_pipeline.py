@@ -67,6 +67,13 @@ class DiscoveryRecord:
     candidate_hash) and references the kernel CLAIM and any minted
     symbols by id. Downstream consumers query the substrate, not this
     Python object, to reproduce the verdict.
+
+    Day-3 reframe: ``kill_pattern: str | None`` is now a *derived*
+    field — the canonical kill outcome is ``kill_vector``, a typed
+    multi-component falsifier vector (see ``prometheus_math.kill_vector``).
+    Old code reading ``record.kill_pattern`` continues to work; new
+    code should consume ``record.kill_vector`` for component-aware
+    navigation (Day 4-5 learner & greedy navigation).
     """
 
     candidate_hash: str  # sha256 over coeffs + mahler_measure
@@ -77,6 +84,9 @@ class DiscoveryRecord:
     claim_id: Optional[str]  # set unless we couldn't even mint a CLAIM
     symbol_ref: Optional[str]  # "name@v1" for PROMOTED / SHADOW_CATALOG entries
     check_results: Dict[str, Any] = field(default_factory=dict)
+    # Day-3: kill vector (default None for legacy callers / phase0 short-circuits
+    # that don't construct one explicitly).
+    kill_vector: Optional[Any] = None
 
     @property
     def is_signal_class(self) -> bool:
@@ -329,20 +339,48 @@ class DiscoveryPipeline:
 
         # Phase 0: cheap upfront filters that don't merit a CLAIM.
         if not (1.001 < mahler_measure < 1.18):
+            cand_hash = self._candidate_hash(coeffs, mahler_measure)
+            kill_pattern = (
+                f"out_of_band:M={mahler_measure:.4f}_outside_(1.001,1.18)"
+            )
+            check_results_phase0 = {"phase": "phase0_band_check"}
+            # Day-3: emit a kill_vector even for phase-0 kills (1 component).
+            from prometheus_math.kill_vector import (
+                kill_vector_from_pipeline_output,
+            )
+            kv = kill_vector_from_pipeline_output(
+                coeffs=list(coeffs),
+                mahler_measure=mahler_measure,
+                check_results=check_results_phase0,
+                candidate_hash=cand_hash,
+                phase0_kill=True,
+            )
             return DiscoveryRecord(
-                candidate_hash=self._candidate_hash(coeffs, mahler_measure),
+                candidate_hash=cand_hash,
                 coeffs=tuple(coeffs),
                 mahler_measure=mahler_measure,
                 terminal_state="REJECTED",
-                kill_pattern=f"out_of_band:M={mahler_measure:.4f}_outside_(1.001,1.18)",
+                kill_pattern=kill_pattern,
                 claim_id=None,
                 symbol_ref=None,
-                check_results={"phase": "phase0_band_check"},
+                check_results=check_results_phase0,
+                kill_vector=kv,
             )
 
         # Phase 1: cheap mechanical kill-path checks.
         recip_ok = _is_reciprocal(coeffs)
         irred_ok, irred_rat = _is_irreducible(coeffs)
+        # Day-3: also capture per-catalog results so the kill_vector can
+        # carry per-catalog distances.  We re-run the consistency check
+        # via the orchestrator (cached internally for in-band candidates),
+        # then derive the legacy aggregated tuple from the same data.
+        try:
+            from prometheus_math.catalog_consistency import (
+                run_consistency_check as _run_consistency_check,
+            )
+            _agg = _run_consistency_check(coeffs, mahler_measure)
+        except Exception:
+            _agg = None
         catalog_miss, cat_rat, catalogs = _check_catalog_miss(
             coeffs, mahler_measure
         )
@@ -361,6 +399,21 @@ class DiscoveryPipeline:
             "F9": (f9_ok, f9_rat),
             "F11": (f11_ok, f11_rat),
         }
+
+        # Build the kill_vector from the existing check results.  Re-used
+        # for both the early-kill REJECTED branch and the SHADOW_CATALOG
+        # success branch.
+        from prometheus_math.kill_vector import (
+            kill_vector_from_pipeline_output,
+        )
+        _cand_hash = self._candidate_hash(coeffs, mahler_measure)
+        _kv = kill_vector_from_pipeline_output(
+            coeffs=list(coeffs),
+            mahler_measure=mahler_measure,
+            check_results=check_results,
+            candidate_hash=_cand_hash,
+            catalog_results=_agg,
+        )
 
         # Phase 2: capture the kill_pattern of the FIRST failing check.
         # The order matters — we report the most informative kill.
@@ -387,7 +440,7 @@ class DiscoveryPipeline:
 
         if early_kill is not None:
             return DiscoveryRecord(
-                candidate_hash=self._candidate_hash(coeffs, mahler_measure),
+                candidate_hash=_cand_hash,
                 coeffs=tuple(coeffs),
                 mahler_measure=mahler_measure,
                 terminal_state="REJECTED",
@@ -395,11 +448,12 @@ class DiscoveryPipeline:
                 claim_id=None,
                 symbol_ref=None,
                 check_results=check_results,
+                kill_vector=_kv,
             )
 
         # Phase 3: all kill-path checks survived. Mint a CLAIM through
         # the kernel discipline.
-        candidate_hash = self._candidate_hash(coeffs, mahler_measure)
+        candidate_hash = _cand_hash
         cap = self.kernel.mint_capability("PromoteCap")
         hypothesis = (
             f"polynomial coeffs={coeffs} has Mahler measure "
@@ -476,6 +530,7 @@ class DiscoveryPipeline:
                 claim_id=claim.id,
                 symbol_ref=None,
                 check_results=check_results,
+                kill_vector=_kv,
             )
 
         # The symbol's def_blob carries the candidate's full provenance.
@@ -491,6 +546,7 @@ class DiscoveryPipeline:
             claim_id=claim.id,
             symbol_ref=symbol_ref,
             check_results=check_results,
+            kill_vector=_kv,
         )
 
     # ------------------------------------------------------------------

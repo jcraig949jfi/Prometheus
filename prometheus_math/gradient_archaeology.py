@@ -1110,6 +1110,515 @@ def gradient5_catalog_proximity(
 # ---------------------------------------------------------------------------
 
 
+# ---------------------------------------------------------------------------
+# Per-region disaggregation (Day 1-2 of Aporia + ChatGPT 5-day plan)
+# ---------------------------------------------------------------------------
+#
+# The aggregate kill_path x operator analysis (gradient 3 above) reports
+# 0.725 bits of mutual information across 13 arms x 7 falsifiers. That
+# lumps together many (degree, alphabet_width, reward_shape) cells.
+# Per-region disaggregation asks: does the gradient field structure
+# VARY by region, or is the operator signature the dominant signal?
+#
+# The arm string already encodes (file, condition); we still need the
+# environmental coordinates that distinguish, e.g.,
+#   four_counts::reinforce_agent (deg10, w5, step)
+#   four_counts::reinforce_agent (deg10, w5, shaped)
+#   four_counts::reinforce_agent (deg10, w7, step)
+# These three contribute to the SAME arm label in the global table but
+# probe DIFFERENT regions of search space. Per-region attribution
+# requires the (file -> region) registry below. Operator extraction
+# strips the prefix back out of the arm label.
+
+#: Region metadata per pilot file. Read-only; sourced from each pilot
+#: JSON's ``config`` block where present, or from the file header
+#: variable (``width``) where present, with fallbacks documented in
+#: PROVENANCE notes.
+PER_FILE_METADATA: Dict[str, Dict[str, Any]] = {
+    "_catalog_seeded_pilot.json": {
+        "degree": 14, "alphabet_width": 5, "reward_shape": "step",
+        "family": "lehmer", "env": "discovery_pipeline",
+    },
+    "four_counts_pilot_run_10k.json": {
+        "degree": 10, "alphabet_width": 5, "reward_shape": "step",
+        "family": "lehmer", "env": "four_counts",
+    },
+    "four_counts_pilot_run_10k_shaped.json": {
+        "degree": 10, "alphabet_width": 5, "reward_shape": "shaped",
+        "family": "lehmer", "env": "four_counts",
+    },
+    "four_counts_pilot_run.json": {
+        "degree": 10, "alphabet_width": 5, "reward_shape": "step",
+        "family": "lehmer", "env": "four_counts",
+    },
+    "four_counts_d14_w5.json": {
+        "degree": 14, "alphabet_width": 5, "reward_shape": "step",
+        "family": "lehmer", "env": "four_counts",
+    },
+    "four_counts_width_5.json": {
+        "degree": 10, "alphabet_width": 5, "reward_shape": "step",
+        "family": "lehmer", "env": "four_counts",
+    },
+    "four_counts_width_7.json": {
+        "degree": 10, "alphabet_width": 7, "reward_shape": "step",
+        "family": "lehmer", "env": "four_counts",
+    },
+    "degree_sweep_results.json": {
+        "degree": "split",  # the sweep file contains both deg12 and deg14;
+                            # per-deg region tag is derived from the arm.
+        "alphabet_width": 5, "reward_shape": "step",
+        "family": "lehmer", "env": "four_counts",
+    },
+}
+
+
+def _strip_arm_prefix(arm: str) -> Tuple[str, Optional[str]]:
+    """Return (operator, region_hint) from an arm label.
+
+    ``catalog_seeded::reinforce_uniform`` -> (``reinforce_uniform``, None)
+    ``degree_sweep::deg14::reinforce_agent``
+        -> (``reinforce_agent``, ``deg14``)
+    ``four_counts_per_arm::random_null`` -> (``random_null``, None)
+    """
+    parts = arm.split("::")
+    if len(parts) <= 1:
+        return arm, None
+    if len(parts) == 2:
+        return parts[1], None
+    # Three or more: the middle pieces are region hints (e.g. degN)
+    return parts[-1], "::".join(parts[1:-1])
+
+
+def _region_id(meta: Dict[str, Any], region_hint: Optional[str]) -> str:
+    """Compose a stable region id from file metadata + arm hint."""
+    deg = meta.get("degree")
+    if deg == "split" and region_hint and region_hint.startswith("deg"):
+        # degree_sweep pulls degree from the arm hint.
+        try:
+            deg = int(region_hint.replace("deg", ""))
+        except ValueError:
+            deg = region_hint
+    width = meta.get("alphabet_width")
+    shape = meta.get("reward_shape", "step")
+    env = meta.get("env", "unknown")
+    return f"{env}|deg{deg}|w{width}|{shape}"
+
+
+def _extract_region_kill_records(
+    sources: Sequence[Dict[str, Any]],
+) -> List[Dict[str, Any]]:
+    """Flatten every (file, arm) -> kill_pattern aggregation into
+    region-tagged records: ``{"region": str, "operator": str,
+    "kill_pattern": str, "count": int}``.
+
+    Region is derived from PER_FILE_METADATA + arm hint (so e.g. the
+    same arm label across two files gets two different region ids if
+    the underlying envs differ).
+    """
+    out: List[Dict[str, Any]] = []
+    for rec in sources:
+        meta = PER_FILE_METADATA.get(rec["file"])
+        if meta is None:
+            continue  # only Lehmer pilots tagged; cross-domain skipped here
+        agg = _extract_kill_pattern_aggregate(rec)
+        for arm, ctr in agg["per_arm_kill_patterns"].items():
+            operator, hint = _strip_arm_prefix(arm)
+            region = _region_id(meta, hint)
+            for kp, count in ctr.items():
+                if count <= 0:
+                    continue
+                out.append(
+                    {
+                        "region": region,
+                        "operator": operator,
+                        "kill_pattern": kp,
+                        "count": int(count),
+                        "file": rec["file"],
+                    }
+                )
+    return out
+
+
+def _shannon_entropy_bits(counts: Iterable[int]) -> float:
+    counts = [c for c in counts if c > 0]
+    n = sum(counts)
+    if n <= 0:
+        return 0.0
+    return -sum((c / n) * math.log2(c / n) for c in counts)
+
+
+def _kl_divergence_bits(p: Dict[str, float], q: Dict[str, float]) -> float:
+    """KL(p || q) in bits with eps smoothing.
+
+    Both arguments must already be normalized to probability dicts;
+    they may have different keys (we union them).
+    """
+    keys = set(p) | set(q)
+    eps = 1e-12
+    kl = 0.0
+    for k in keys:
+        pk = p.get(k, 0.0) + eps
+        qk = q.get(k, 0.0) + eps
+        kl += pk * math.log2(pk / qk)
+    # Numerical guard: KL >= 0 in theory; clip tiny negatives
+    return max(0.0, kl)
+
+
+def _jensen_shannon_bits(p: Dict[str, float], q: Dict[str, float]) -> float:
+    """Jensen-Shannon divergence in bits. Symmetric, in [0, 1]."""
+    keys = set(p) | set(q)
+    m: Dict[str, float] = {}
+    for k in keys:
+        m[k] = 0.5 * (p.get(k, 0.0) + q.get(k, 0.0))
+    return 0.5 * _kl_divergence_bits(p, m) + 0.5 * _kl_divergence_bits(q, m)
+
+
+def _normalize_counter(c: Counter) -> Dict[str, float]:
+    n = sum(c.values())
+    if n <= 0:
+        return {}
+    return {k: v / n for k, v in c.items()}
+
+
+def _mutual_information_bits(table: Dict[Tuple[str, str], int]) -> Tuple[
+    float, float, float, float
+]:
+    """Return (H(X), H(Y), H(X,Y), MI) in bits given a contingency table
+    keyed by (x, y) -> count.
+
+    All zeros table returns (0, 0, 0, 0).
+    """
+    if not table:
+        return 0.0, 0.0, 0.0, 0.0
+    x_marg: Counter = Counter()
+    y_marg: Counter = Counter()
+    for (x, y), v in table.items():
+        x_marg[x] += v
+        y_marg[y] += v
+    h_x = _shannon_entropy_bits(x_marg.values())
+    h_y = _shannon_entropy_bits(y_marg.values())
+    h_xy = _shannon_entropy_bits(table.values())
+    return h_x, h_y, h_xy, max(0.0, h_x + h_y - h_xy)
+
+
+def per_region_disaggregation(
+    sources: Sequence[Dict[str, Any]],
+) -> Dict[str, Any]:
+    """Compute per-region operator x kill_path contingency tables.
+
+    For every region that PER_FILE_METADATA covers, we report:
+      * the region's (operator, kill_pattern) contingency
+      * the marginal kill distribution
+      * mutual information of (operator, kill_pattern) WITHIN the region
+      * KL(region_kill || global_kill)
+
+    The global_kill distribution is computed over the SAME tagged
+    records (so untagged files don't leak in).
+    """
+    records = _extract_region_kill_records(sources)
+    if not records:
+        return {
+            "n_records": 0,
+            "n_regions": 0,
+            "regions": {},
+            "global_kill_distribution": {},
+            "verdict_dimension": "insufficient_data",
+        }
+
+    # Global kill distribution + global per-operator marginals
+    global_kill: Counter = Counter()
+    by_region: Dict[str, Dict[Tuple[str, str], int]] = defaultdict(
+        lambda: defaultdict(int)
+    )
+    by_region_kill: Dict[str, Counter] = defaultdict(Counter)
+    by_region_total: Dict[str, int] = defaultdict(int)
+
+    for r in records:
+        region = r["region"]
+        op = r["operator"]
+        kp = r["kill_pattern"]
+        c = r["count"]
+        global_kill[kp] += c
+        by_region[region][(op, kp)] += c
+        by_region_kill[region][kp] += c
+        by_region_total[region] += c
+
+    global_kill_norm = _normalize_counter(global_kill)
+
+    # Per-region MI + KL
+    region_summaries: Dict[str, Dict[str, Any]] = {}
+    weighted_mi_sum = 0.0
+    total_count = 0
+    for region, table in by_region.items():
+        h_op, h_kp, h_joint, mi = _mutual_information_bits(table)
+        kill_dist_norm = _normalize_counter(by_region_kill[region])
+        kl = _kl_divergence_bits(kill_dist_norm, global_kill_norm)
+        n_region = by_region_total[region]
+        weighted_mi_sum += mi * n_region
+        total_count += n_region
+        region_summaries[region] = {
+            "n_kills": n_region,
+            "n_operators": len({op for (op, _) in table}),
+            "n_kill_patterns": len({kp for (_, kp) in table}),
+            "operator_kill_table": {
+                f"{op}|{kp}": v for (op, kp), v in table.items()
+            },
+            "kill_distribution": dict(by_region_kill[region]),
+            "kill_distribution_normalized": kill_dist_norm,
+            "mutual_information_bits": mi,
+            "operator_entropy_bits": h_op,
+            "kill_entropy_bits": h_kp,
+            "joint_entropy_bits": h_joint,
+            "kl_divergence_vs_global_bits": kl,
+        }
+
+    weighted_mean_mi = (weighted_mi_sum / total_count) if total_count > 0 else 0.0
+
+    # Range
+    mi_values = [v["mutual_information_bits"] for v in region_summaries.values()]
+    kl_values = [v["kl_divergence_vs_global_bits"]
+                 for v in region_summaries.values()]
+    return {
+        "n_records": len(records),
+        "n_regions": len(region_summaries),
+        "regions": region_summaries,
+        "global_kill_distribution": dict(global_kill),
+        "global_kill_distribution_normalized": global_kill_norm,
+        "weighted_mean_per_region_mi_bits": weighted_mean_mi,
+        "per_region_mi_min": min(mi_values) if mi_values else 0.0,
+        "per_region_mi_median": (sorted(mi_values)[len(mi_values) // 2]
+                                  if mi_values else 0.0),
+        "per_region_mi_max": max(mi_values) if mi_values else 0.0,
+        "per_region_kl_min": min(kl_values) if kl_values else 0.0,
+        "per_region_kl_max": max(kl_values) if kl_values else 0.0,
+        "most_distinctive_region": (
+            max(region_summaries.items(),
+                key=lambda kv: kv[1]["kl_divergence_vs_global_bits"])[0]
+            if region_summaries else None
+        ),
+    }
+
+
+def operator_coordinate_charts(
+    sources: Sequence[Dict[str, Any]],
+) -> Dict[str, Any]:
+    """Compute each operator's mean kill-distribution (its emergent
+    coordinate chart on the search space) and pairwise distinctiveness.
+
+    Operator chart = aggregate kill_pattern distribution across ALL
+    regions where the operator was deployed, weighted by region count.
+
+    Pairwise distinctiveness uses Jensen-Shannon divergence (symmetric,
+    bounded). KL(op_a || op_b) is also reported for asymmetric inspection.
+    """
+    records = _extract_region_kill_records(sources)
+    if not records:
+        return {
+            "n_operators": 0,
+            "operator_charts": {},
+            "pairwise_jsd_bits": {},
+            "pairwise_kl_bits": {},
+        }
+
+    by_op: Dict[str, Counter] = defaultdict(Counter)
+    by_op_region: Dict[str, set] = defaultdict(set)
+    for r in records:
+        by_op[r["operator"]][r["kill_pattern"]] += r["count"]
+        by_op_region[r["operator"]].add(r["region"])
+
+    op_charts: Dict[str, Dict[str, Any]] = {}
+    for op, c in by_op.items():
+        norm = _normalize_counter(c)
+        op_charts[op] = {
+            "n_kills": int(sum(c.values())),
+            "n_regions_present": len(by_op_region[op]),
+            "kill_distribution": dict(c),
+            "kill_distribution_normalized": norm,
+            "kill_entropy_bits": _shannon_entropy_bits(c.values()),
+            "modal_kill": c.most_common(1)[0][0] if c else None,
+            "modal_share": (c.most_common(1)[0][1] / sum(c.values()))
+                           if c and sum(c.values()) > 0 else 0.0,
+        }
+
+    ops_sorted = sorted(op_charts.keys())
+    pairwise_jsd: Dict[str, float] = {}
+    pairwise_kl: Dict[str, float] = {}
+    for i, a in enumerate(ops_sorted):
+        for b in ops_sorted[i:]:
+            pa = op_charts[a]["kill_distribution_normalized"]
+            pb = op_charts[b]["kill_distribution_normalized"]
+            jsd = _jensen_shannon_bits(pa, pb)
+            kl_ab = _kl_divergence_bits(pa, pb)
+            kl_ba = _kl_divergence_bits(pb, pa)
+            key_pair = f"{a}||{b}"
+            pairwise_jsd[key_pair] = jsd
+            pairwise_kl[key_pair] = kl_ab
+            if a != b:
+                pairwise_kl[f"{b}||{a}"] = kl_ba
+
+    # Identify near-orthogonal pairs (high JSD) and collapsed pairs (low JSD).
+    pair_items = sorted(
+        (kv for kv in pairwise_jsd.items()
+         if "||" in kv[0]
+         and kv[0].split("||")[0] != kv[0].split("||")[1]),
+        key=lambda kv: -kv[1],
+    )
+    most_distinct = pair_items[:5]
+    most_collapsed = list(reversed(pair_items[-5:])) if pair_items else []
+
+    return {
+        "n_operators": len(op_charts),
+        "operator_charts": op_charts,
+        "pairwise_jsd_bits": pairwise_jsd,
+        "pairwise_kl_bits": pairwise_kl,
+        "most_distinct_pairs": most_distinct,
+        "most_collapsed_pairs": most_collapsed,
+        "median_pairwise_jsd": (
+            sorted(v for k, v in pairwise_jsd.items()
+                   if "||" in k and k.split("||")[0] != k.split("||")[1])
+            [len([k for k in pairwise_jsd
+                  if "||" in k and k.split("||")[0] != k.split("||")[1]]) // 2]
+            if pair_items else 0.0
+        ),
+    }
+
+
+def region_operator_interaction(
+    sources: Sequence[Dict[str, Any]],
+) -> Dict[str, Any]:
+    """Build the 3D contingency (region x operator x kill_pattern) and
+    measure interaction effects.
+
+    We compare:
+      * MI(operator; kill_pattern) under full aggregation (== g3 result)
+      * Conditional MI averaged over regions: E_R[ MI(op;kp | R=r) ]
+        (this is the per-region weighted mean returned by
+        per_region_disaggregation)
+      * MI(region; kill_pattern) — does the kill distribution shift
+        ACROSS regions independently of operator?
+
+    The verdict dispatch:
+      * If conditional MI ~= aggregate MI: operators are region-invariant
+        (verdict A).
+      * If aggregate MI is largely driven by region (region carries most
+        of the kill information): verdict B.
+      * If both per-region MI and MI(region; kp) are substantial:
+        verdict C.
+
+    The thresholds are documented; the verdict is dispatched purely
+    from the numbers and the function returns both the numbers and the
+    label so callers can re-derive.
+    """
+    records = _extract_region_kill_records(sources)
+    if not records:
+        return {
+            "n_records": 0,
+            "verdict": "INSUFFICIENT_DATA",
+            "rationale": "No region-tagged kill records on disk.",
+        }
+
+    # Aggregate (operator, kill_pattern) ignoring region
+    op_kp_table: Dict[Tuple[str, str], int] = defaultdict(int)
+    region_kp_table: Dict[Tuple[str, str], int] = defaultdict(int)
+    region_op_table: Dict[Tuple[str, str], int] = defaultdict(int)
+    triple_table: Dict[Tuple[str, str, str], int] = defaultdict(int)
+    for r in records:
+        op_kp_table[(r["operator"], r["kill_pattern"])] += r["count"]
+        region_kp_table[(r["region"], r["kill_pattern"])] += r["count"]
+        region_op_table[(r["region"], r["operator"])] += r["count"]
+        triple_table[(r["region"], r["operator"], r["kill_pattern"])] += r["count"]
+
+    h_op, h_kp, h_op_kp, mi_op_kp = _mutual_information_bits(op_kp_table)
+    h_r, h_kp2, h_r_kp, mi_r_kp = _mutual_information_bits(region_kp_table)
+    h_r2, h_op2, h_r_op, mi_r_op = _mutual_information_bits(region_op_table)
+
+    # Conditional MI: weighted-mean per-region MI(op; kp | R=r)
+    by_region_table: Dict[str, Dict[Tuple[str, str], int]] = defaultdict(
+        lambda: defaultdict(int)
+    )
+    by_region_total: Dict[str, int] = defaultdict(int)
+    for r in records:
+        by_region_table[r["region"]][(r["operator"], r["kill_pattern"])] += r["count"]
+        by_region_total[r["region"]] += r["count"]
+    total = sum(by_region_total.values())
+    cond_mi = 0.0
+    per_region_mi: Dict[str, float] = {}
+    for region, t in by_region_table.items():
+        _, _, _, mi = _mutual_information_bits(t)
+        per_region_mi[region] = mi
+        if total > 0:
+            cond_mi += (by_region_total[region] / total) * mi
+
+    # Interaction-effect heuristic:
+    #   delta := mi_op_kp_aggregate - cond_mi
+    #   delta > 0 ==> operator-kill association is partly EXPLAINED by
+    #     region (i.e. when you condition on region, the operator drops
+    #     in informativeness): operators are region-DEPENDENT.
+    #   delta ~ 0 ==> operator-kill association is region-INVARIANT.
+    delta = mi_op_kp - cond_mi
+
+    # Verdict thresholds (documented; tuned conservatively):
+    #   A: cond_mi >= 0.85 * mi_op_kp AND mi_r_kp < 0.5 * mi_op_kp
+    #     -> per-region structure tracks aggregate; region adds little
+    #   B: cond_mi < 0.5 * mi_op_kp OR mi_r_kp > mi_op_kp
+    #     -> region carries most of the kill information; operator
+    #        signal collapses when you slice by region
+    #   C: otherwise
+    #     -> both region and operator carry substantial information
+    if mi_op_kp <= 1e-9:
+        verdict = "INSUFFICIENT_DATA"
+        rationale = (
+            f"MI(operator; kill_pattern) = {mi_op_kp:.4f} bits is too "
+            "small to attribute structure."
+        )
+    elif cond_mi >= 0.85 * mi_op_kp and mi_r_kp < 0.5 * mi_op_kp:
+        verdict = "A_OPERATOR_INVARIANT"
+        rationale = (
+            f"Per-region weighted-mean MI = {cond_mi:.3f} bits closely "
+            f"tracks aggregate MI = {mi_op_kp:.3f} bits "
+            f"(delta = {delta:+.3f}); MI(region; kill_pattern) = "
+            f"{mi_r_kp:.3f} bits is small. The operator signature is "
+            "region-invariant: kill-vector design can focus on "
+            "operator-level features."
+        )
+    elif cond_mi < 0.5 * mi_op_kp or mi_r_kp > mi_op_kp:
+        verdict = "B_REGION_SPECIFIC"
+        rationale = (
+            f"Per-region MI = {cond_mi:.3f} bits is substantially "
+            f"below aggregate MI = {mi_op_kp:.3f} bits "
+            f"(delta = {delta:+.3f}); region carries "
+            f"MI(region; kp) = {mi_r_kp:.3f} bits in its own right. "
+            "Operator behavior is region-dependent: kill-vector "
+            "design must include region context (state, operator) -> "
+            "kill_vector."
+        )
+    else:
+        verdict = "C_BOTH_SIGNIFICANT"
+        rationale = (
+            f"Both axes carry information: cond_mi = {cond_mi:.3f}, "
+            f"aggregate_mi = {mi_op_kp:.3f}, MI(region; kp) = "
+            f"{mi_r_kp:.3f}. The kill-vector representation must factor "
+            "across both region and operator."
+        )
+
+    return {
+        "n_records": len(records),
+        "n_regions": len(by_region_total),
+        "n_operators": len({r["operator"] for r in records}),
+        "n_kill_patterns": len({r["kill_pattern"] for r in records}),
+        "aggregate_mi_op_kp_bits": mi_op_kp,
+        "conditional_mi_op_kp_given_region_bits": cond_mi,
+        "mi_region_kp_bits": mi_r_kp,
+        "mi_region_op_bits": mi_r_op,
+        "interaction_delta_bits": delta,
+        "per_region_mi_bits": per_region_mi,
+        "triple_table_n_cells": len(triple_table),
+        "triple_table_n_nonzero": sum(1 for v in triple_table.values() if v > 0),
+        "verdict": verdict,
+        "rationale": rationale,
+    }
+
+
 def gradient6_verification_depth() -> Dict[str, Any]:
     """The substrate doesn't track this gradient.
 
@@ -1159,6 +1668,9 @@ class ArchaeologyResult:
     gradient5: Dict[str, Any]
     gradient6: Dict[str, Any]
     cross_observations: Dict[str, Any] = field(default_factory=dict)
+    per_region: Dict[str, Any] = field(default_factory=dict)
+    operator_charts: Dict[str, Any] = field(default_factory=dict)
+    region_operator_interaction: Dict[str, Any] = field(default_factory=dict)
 
     def as_dict(self) -> Dict[str, Any]:
         return {
@@ -1171,6 +1683,9 @@ class ArchaeologyResult:
             "gradient5_catalog_proximity": self.gradient5,
             "gradient6_verification_depth": self.gradient6,
             "cross_gradient_observations": self.cross_observations,
+            "per_region_disaggregation": self.per_region,
+            "operator_coordinate_charts": self.operator_charts,
+            "region_operator_interaction": self.region_operator_interaction,
         }
 
 
@@ -1202,6 +1717,11 @@ def run_archaeology(
     g5 = gradient5_catalog_proximity(m_records, catalog)
     g6 = gradient6_verification_depth()
 
+    # Per-region disaggregation (Day 1-2 of the 5-day kill-vector plan)
+    per_region = per_region_disaggregation(sources)
+    op_charts = operator_coordinate_charts(sources)
+    interaction = region_operator_interaction(sources)
+
     # Cross-gradient observations
     cross: Dict[str, Any] = {}
     cross["g2_g4_consistent"] = (
@@ -1213,6 +1733,7 @@ def run_archaeology(
         and g4.get("verdict") == "SIGNAL_PRESENT"
     )
     cross["sparse_per_candidate"] = g1["n_records"] < 5000
+    cross["per_region_verdict"] = interaction.get("verdict")
 
     return ArchaeologyResult(
         sources_loaded=len(sources),
@@ -1224,6 +1745,9 @@ def run_archaeology(
         gradient5=g5,
         gradient6=g6,
         cross_observations=cross,
+        per_region=per_region,
+        operator_charts=op_charts,
+        region_operator_interaction=interaction,
     )
 
 
@@ -1433,6 +1957,166 @@ def render_report(res: ArchaeologyResult) -> str:
         parts.append(f"- {e}")
     parts.append("")
 
+    # ----- Per-region structure (Day 1-2 extension) -----
+    parts.append("## Per-region structure")
+    parts.append("")
+    parts.append(
+        "Day 1-2 of the 5-day kill-vector plan. The aggregate gradient 3 "
+        "result (0.725 bits MI across all kills) lumps together every "
+        "(degree, alphabet_width, reward_shape) cell. We disaggregate by "
+        "(env, degree, width, reward_shape) and compute per-region "
+        "MI(operator; kill_pattern), each operator's emergent kill "
+        "distribution (its 'coordinate chart'), and the region x operator "
+        "interaction. Read-only: only Lehmer-family pilots tagged in "
+        "`PER_FILE_METADATA` are included; cross-domain pilots have no "
+        "kill_pattern aggregation and are excluded from this section."
+    )
+    parts.append("")
+    pr = res.per_region
+    if pr.get("n_regions", 0) == 0:
+        parts.append(
+            "[INSUFFICIENT_DATA] No region-tagged kill records on disk."
+        )
+    else:
+        parts.append(
+            f"- Regions identified: **{pr['n_regions']}** "
+            f"(from {pr['n_records']:,} region-tagged kill records)"
+        )
+        parts.append(
+            f"- Per-region MI(operator; kill_pattern) range: "
+            f"min={pr['per_region_mi_min']:.3f}, "
+            f"median={pr['per_region_mi_median']:.3f}, "
+            f"max={pr['per_region_mi_max']:.3f} bits"
+        )
+        parts.append(
+            f"- Per-region KL(kill_dist || global_kill_dist) range: "
+            f"min={pr['per_region_kl_min']:.3f}, "
+            f"max={pr['per_region_kl_max']:.3f} bits"
+        )
+        parts.append(
+            f"- Most distinctive region: "
+            f"`{pr.get('most_distinctive_region')}`"
+        )
+        parts.append(
+            f"- Weighted-mean per-region MI: "
+            f"**{pr['weighted_mean_per_region_mi_bits']:.3f} bits**"
+        )
+        parts.append("")
+        parts.append("Per-region summary (sorted by KL vs global):")
+        parts.append("")
+        sorted_regions = sorted(
+            pr["regions"].items(),
+            key=lambda kv: -kv[1]["kl_divergence_vs_global_bits"],
+        )
+        for region, info in sorted_regions:
+            parts.append(
+                f"- `{region}`: n={info['n_kills']:,}, "
+                f"operators={info['n_operators']}, "
+                f"kill_patterns={info['n_kill_patterns']}, "
+                f"MI={info['mutual_information_bits']:.3f} bits, "
+                f"KL_vs_global={info['kl_divergence_vs_global_bits']:.3f} bits"
+            )
+    parts.append("")
+
+    parts.append("### Operator coordinate charts")
+    parts.append("")
+    parts.append(
+        "Each operator's emergent coordinate chart on the search "
+        "space — its mean kill distribution across all regions where "
+        "it was deployed. Pairs with high JSD have nearly orthogonal "
+        "charts (different views of the search space); pairs with low "
+        "JSD have collapsed to the same chart."
+    )
+    parts.append("")
+    oc = res.operator_charts
+    if oc.get("n_operators", 0) == 0:
+        parts.append("[INSUFFICIENT_DATA] No operator chart records.")
+    else:
+        parts.append(f"- Operators charted: **{oc['n_operators']}**")
+        parts.append(
+            f"- Median pairwise JSD: "
+            f"**{oc.get('median_pairwise_jsd', 0.0):.3f} bits**"
+        )
+        parts.append("")
+        parts.append("Per-operator chart summary (sorted by total kill mass):")
+        parts.append("")
+        op_sorted = sorted(
+            oc["operator_charts"].items(),
+            key=lambda kv: -kv[1]["n_kills"],
+        )
+        for op, info in op_sorted:
+            parts.append(
+                f"- `{op}`: n_kills={info['n_kills']:,}, "
+                f"regions_present={info['n_regions_present']}, "
+                f"H={info['kill_entropy_bits']:.3f} bits, "
+                f"modal=`{info['modal_kill']}` "
+                f"({info['modal_share']:.1%})"
+            )
+        parts.append("")
+        parts.append(
+            "Most orthogonal operator pairs (high JSD = different charts):"
+        )
+        parts.append("")
+        for pair, jsd in oc.get("most_distinct_pairs", []):
+            parts.append(f"- `{pair}`: JSD={jsd:.3f} bits")
+        parts.append("")
+        parts.append(
+            "Most collapsed operator pairs (low JSD = same chart):"
+        )
+        parts.append("")
+        for pair, jsd in oc.get("most_collapsed_pairs", []):
+            parts.append(f"- `{pair}`: JSD={jsd:.3f} bits")
+    parts.append("")
+
+    parts.append("### Region x operator interaction")
+    parts.append("")
+    rio = res.region_operator_interaction
+    if rio.get("verdict", "INSUFFICIENT_DATA") == "INSUFFICIENT_DATA":
+        parts.append(
+            f"[INSUFFICIENT_DATA] {rio.get('rationale', 'No data.')}"
+        )
+    else:
+        parts.append(
+            f"- Aggregate MI(operator; kill_pattern) = "
+            f"**{rio['aggregate_mi_op_kp_bits']:.3f} bits** "
+            "(operator-only marginalization over regions; differs from "
+            "gradient 3's 0.725 bits because g3 keeps the file/condition "
+            "prefix as part of the arm label, while here we strip it to "
+            "expose the underlying operator class)"
+        )
+        parts.append(
+            f"- Conditional MI(operator; kill_pattern | region) = "
+            f"**{rio['conditional_mi_op_kp_given_region_bits']:.3f} bits**"
+        )
+        parts.append(
+            f"- MI(region; kill_pattern) = "
+            f"**{rio['mi_region_kp_bits']:.3f} bits**"
+        )
+        parts.append(
+            f"- MI(region; operator) = "
+            f"**{rio['mi_region_op_bits']:.3f} bits** "
+            f"(measures how unevenly operators are allocated to regions)"
+        )
+        parts.append(
+            f"- Interaction delta = aggregate - conditional = "
+            f"**{rio['interaction_delta_bits']:+.3f} bits**"
+        )
+        parts.append(
+            f"- Triple table cells (region x operator x kill_pattern): "
+            f"{rio['triple_table_n_nonzero']} non-zero of "
+            f"{rio['triple_table_n_cells']} populated"
+        )
+        parts.append("")
+        verdict_label = {
+            "A_OPERATOR_INVARIANT": "**A — Operators are region-invariant**",
+            "B_REGION_SPECIFIC": "**B — Region-specific operator behavior**",
+            "C_BOTH_SIGNIFICANT": "**C — Both region and operator significant**",
+        }.get(rio["verdict"], rio["verdict"])
+        parts.append(f"### Verdict: {verdict_label}")
+        parts.append("")
+        parts.append(rio.get("rationale", ""))
+    parts.append("")
+
     # Cross-gradient
     parts.append("## Cross-Gradient Observations")
     parts.append("")
@@ -1454,6 +2138,30 @@ def render_report(res: ArchaeologyResult) -> str:
         "missing: we do not log verifier depth/precision anywhere."
     )
     parts.append("")
+    rio = res.region_operator_interaction
+    if rio.get("verdict") and rio["verdict"] != "INSUFFICIENT_DATA":
+        verdict_text = {
+            "A_OPERATOR_INVARIANT": (
+                "**Per-region verdict: A — operator-invariant.** The "
+                "operator signature dominates; kill-vector design can use "
+                "operator-level features (a single chart-per-operator)."
+            ),
+            "B_REGION_SPECIFIC": (
+                "**Per-region verdict: B — region-specific.** Region "
+                "carries more kill-pattern information than operator does; "
+                "kill-vector design MUST include region context. The "
+                "navigation policy is (state, operator) -> kill_vector, "
+                "not operator -> kill_vector."
+            ),
+            "C_BOTH_SIGNIFICANT": (
+                "**Per-region verdict: C — both significant.** Region "
+                "and operator each carry substantial information; "
+                "kill-vector representation must factor across both "
+                "(hierarchical: region -> operator -> kill_vector)."
+            ),
+        }.get(rio["verdict"], rio["verdict"])
+        parts.append(verdict_text)
+        parts.append("")
     parts.append("## Implications for Layer 2 Repair")
     parts.append("")
     parts.append(
@@ -1468,6 +2176,34 @@ def render_report(res: ArchaeologyResult) -> str:
         "the gradient field."
     )
     parts.append("")
+    if rio.get("verdict") == "B_REGION_SPECIFIC":
+        parts.append(
+            "**Implication for kill-vector design (verdict B):** The "
+            "feature set must concatenate (region_features, operator_id) "
+            "BEFORE the kill_pattern prediction head. A pure operator-only "
+            "encoder would lose the dominant axis (MI(region; kill_pattern) "
+            "= 0.95 bits vs MI(operator; kill_pattern | region) = 0.26 bits "
+            "in current data). Concretely: each region's training tuple "
+            "is (degree, alphabet_width, reward_shape, operator) -> "
+            "kill_vector. Existing data covers 6 regions; the unsampled "
+            "regions (e.g. degree-12 with shaped reward, alphabet width "
+            "9, cross-domain envs with kill_pattern aggregation) are "
+            "negative-space holes that the next round of pilots should "
+            "fill before kill-vector training is locked in."
+        )
+        parts.append("")
+        parts.append(
+            "**Honest sparseness note:** The 6 regions identified are "
+            "thinly populated in the operator dimension (most have only "
+            "2 operators: random_null and reinforce_agent). Only the "
+            "discovery_pipeline|deg14|w5|step region samples 5 operators. "
+            "Two regions (`four_counts|deg10|w5|shaped`, "
+            "`four_counts|deg14|w5|step`) have MI close to 0 because the "
+            "two operators in those regions converge to similar kill "
+            "distributions there — that may itself be a region-specific "
+            "operator-collapse finding worth investigating, not noise."
+        )
+        parts.append("")
     return "\n".join(parts)
 
 
@@ -1513,10 +2249,18 @@ if __name__ == "__main__":
         start=1,
     ):
         print(f"  Gradient {i}: {g.get('verdict')}")
+    rio = res.region_operator_interaction
+    if rio:
+        print(
+            f"  Per-region verdict: {rio.get('verdict')} "
+            f"(regions={rio.get('n_regions')}, "
+            f"operators={rio.get('n_operators')})"
+        )
 
 
 __all__ = [
     "ArchaeologyResult",
+    "PER_FILE_METADATA",
     "PILOT_SOURCES",
     "PROMETHEUS_MATH_DIR",
     "gradient1_m_distribution",
@@ -1528,6 +2272,9 @@ __all__ = [
     "load_all_sources",
     "load_mossinghoff_catalog",
     "nearest_catalog_entry",
+    "operator_coordinate_charts",
+    "per_region_disaggregation",
+    "region_operator_interaction",
     "render_report",
     "run_archaeology",
     "write_artifacts",

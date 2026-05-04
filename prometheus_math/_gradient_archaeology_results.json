@@ -377,15 +377,15 @@
       }
     },
     "per_arm_kl_vs_overall": {
-      "catalog_seeded::random_uniform": 0.7997675162467673,
+      "catalog_seeded::random_uniform": 0.7997675162467675,
       "catalog_seeded::random_seeded": 0.7721242843381291,
-      "catalog_seeded::reinforce_uniform": 1.2475873049226123,
-      "catalog_seeded::reinforce_seeded": 1.2235583903368612,
+      "catalog_seeded::reinforce_uniform": 1.247587304922612,
+      "catalog_seeded::reinforce_seeded": 1.223558390336861,
       "catalog_seeded::reinforce_frozen_bias": 0.5557862125978782,
       "four_counts::random_null": 0.3059828718803065,
       "four_counts::reinforce_agent": 0.5584246528379389,
-      "four_counts_per_arm::random_null": 0.7920928563612324,
-      "four_counts_per_arm::reinforce_agent": 1.2475873049226123,
+      "four_counts_per_arm::random_null": 0.7920928563612325,
+      "four_counts_per_arm::reinforce_agent": 1.247587304922612,
       "degree_sweep::deg12::random_null": 1.066552624928032,
       "degree_sweep::deg12::reinforce_agent": 1.673743780645221,
       "degree_sweep::deg14::random_null": 0.9077792497911303,
@@ -2668,6 +2668,517 @@
   "cross_gradient_observations": {
     "g2_g4_consistent": true,
     "g3_implies_g4": true,
-    "sparse_per_candidate": true
+    "sparse_per_candidate": true,
+    "per_region_verdict": "B_REGION_SPECIFIC"
+  },
+  "per_region_disaggregation": {
+    "n_records": 60,
+    "n_regions": 6,
+    "regions": {
+      "discovery_pipeline|deg14|w5|step": {
+        "n_kills": 73931,
+        "n_operators": 5,
+        "n_kill_patterns": 4,
+        "operator_kill_table": {
+          "random_uniform|upstream:cyclotomic_or_large": 13068,
+          "random_uniform|upstream:functional": 1931,
+          "random_uniform|upstream:low_m": 1,
+          "random_seeded|upstream:functional": 7387,
+          "random_seeded|upstream:cyclotomic_or_large": 2728,
+          "random_seeded|upstream:low_m": 3022,
+          "random_seeded|upstream:salem_cluster": 794,
+          "reinforce_uniform|upstream:cyclotomic_or_large": 14952,
+          "reinforce_uniform|upstream:functional": 48,
+          "reinforce_seeded|upstream:functional": 88,
+          "reinforce_seeded|upstream:cyclotomic_or_large": 14904,
+          "reinforce_seeded|upstream:low_m": 8,
+          "reinforce_frozen_bias|upstream:functional": 4966,
+          "reinforce_frozen_bias|upstream:cyclotomic_or_large": 10026,
+          "reinforce_frozen_bias|upstream:low_m": 7,
+          "reinforce_frozen_bias|upstream:salem_cluster": 1
+        },
+        "kill_distribution": {
+          "upstream:cyclotomic_or_large": 55678,
+          "upstream:functional": 14420,
+          "upstream:low_m": 3038,
+          "upstream:salem_cluster": 795
+        },
+        "kill_distribution_normalized": {
+          "upstream:cyclotomic_or_large": 0.7531076273822889,
+          "upstream:functional": 0.19504673276433432,
+          "upstream:low_m": 0.041092369912485965,
+          "upstream:salem_cluster": 0.01075326994089083
+        },
+        "mutual_information_bits": 0.3968443945136957,
+        "operator_entropy_bits": 2.321315825963438,
+        "kill_entropy_bits": 1.0275628587585781,
+        "joint_entropy_bits": 2.9520342902083203,
+        "kl_divergence_vs_global_bits": 0.5250551438304482
+      },
+      "four_counts|deg10|w5|step": {
+        "n_kills": 89967,
+        "n_operators": 2,
+        "n_kill_patterns": 4,
+        "operator_kill_table": {
+          "random_null|upstream:functional": 30178,
+          "random_null|upstream:cyclotomic_or_large": 14147,
+          "random_null|upstream:low_m": 607,
+          "random_null|upstream:salem_cluster": 35,
+          "reinforce_agent|upstream:functional": 5110,
+          "reinforce_agent|upstream:low_m": 9943,
+          "reinforce_agent|upstream:cyclotomic_or_large": 10092,
+          "reinforce_agent|upstream:salem_cluster": 19855
+        },
+        "kill_distribution": {
+          "upstream:functional": 35288,
+          "upstream:cyclotomic_or_large": 24239,
+          "upstream:low_m": 10550,
+          "upstream:salem_cluster": 19890
+        },
+        "kill_distribution_normalized": {
+          "upstream:functional": 0.3922327075483233,
+          "upstream:cyclotomic_or_large": 0.2694210099258617,
+          "upstream:low_m": 0.11726521946936098,
+          "upstream:salem_cluster": 0.22108106305645403
+        },
+        "mutual_information_bits": 0.460638537265174,
+        "operator_entropy_bits": 0.9999999029476726,
+        "kill_entropy_bits": 1.8833354484435807,
+        "joint_entropy_bits": 2.422696814126079,
+        "kl_divergence_vs_global_bits": 0.5274688473669022
+      },
+      "four_counts|deg10|w5|shaped": {
+        "n_kills": 59999,
+        "n_operators": 2,
+        "n_kill_patterns": 3,
+        "operator_kill_table": {
+          "random_null|upstream:shaped_continuous": 26674,
+          "random_null|upstream:large_m": 3172,
+          "random_null|upstream:cyclotomic": 153,
+          "reinforce_agent|upstream:shaped_continuous": 29998,
+          "reinforce_agent|upstream:large_m": 2
+        },
+        "kill_distribution": {
+          "upstream:shaped_continuous": 56672,
+          "upstream:large_m": 3174,
+          "upstream:cyclotomic": 153
+        },
+        "kill_distribution_normalized": {
+          "upstream:shaped_continuous": 0.9445490758179304,
+          "upstream:large_m": 0.05290088168136135,
+          "upstream:cyclotomic": 0.002550042500708345
+        },
+        "mutual_information_bits": 0.057393766178568395,
+        "operator_entropy_bits": 0.9999999997996191,
+        "kill_entropy_bits": 0.32403748122705994,
+        "joint_entropy_bits": 1.2666437148481107,
+        "kl_divergence_vs_global_bits": 2.392208642079366
+      },
+      "four_counts|deg14|w5|step": {
+        "n_kills": 48000,
+        "n_operators": 2,
+        "n_kill_patterns": 4,
+        "operator_kill_table": {
+          "random_null|upstream:cyclotomic_or_large": 15172,
+          "random_null|upstream:functional": 8784,
+          "random_null|upstream:low_m": 36,
+          "reinforce_agent|upstream:cyclotomic_or_large": 15028,
+          "reinforce_agent|upstream:functional": 8956,
+          "random_null|upstream:salem_cluster": 8,
+          "reinforce_agent|upstream:low_m": 15,
+          "reinforce_agent|upstream:salem_cluster": 1
+        },
+        "kill_distribution": {
+          "upstream:cyclotomic_or_large": 30200,
+          "upstream:functional": 17740,
+          "upstream:low_m": 51,
+          "upstream:salem_cluster": 9
+        },
+        "kill_distribution_normalized": {
+          "upstream:cyclotomic_or_large": 0.6291666666666667,
+          "upstream:functional": 0.3695833333333333,
+          "upstream:low_m": 0.0010625,
+          "upstream:salem_cluster": 0.0001875
+        },
+        "mutual_information_bits": 0.0002624147163752255,
+        "operator_entropy_bits": 1.0,
+        "kill_entropy_bits": 0.964138299956779,
+        "joint_entropy_bits": 1.963875885240404,
+        "kl_divergence_vs_global_bits": 0.5396747326420702
+      },
+      "four_counts|deg10|w7|step": {
+        "n_kills": 18000,
+        "n_operators": 2,
+        "n_kill_patterns": 3,
+        "operator_kill_table": {
+          "random_null|upstream:cyclotomic_or_large": 8410,
+          "random_null|upstream:functional": 589,
+          "random_null|upstream:low_m": 1,
+          "reinforce_agent|upstream:cyclotomic_or_large": 8943,
+          "reinforce_agent|upstream:functional": 57
+        },
+        "kill_distribution": {
+          "upstream:cyclotomic_or_large": 17353,
+          "upstream:functional": 646,
+          "upstream:low_m": 1
+        },
+        "kill_distribution_normalized": {
+          "upstream:cyclotomic_or_large": 0.9640555555555556,
+          "upstream:functional": 0.03588888888888889,
+          "upstream:low_m": 5.555555555555556e-05
+        },
+        "mutual_information_bits": 0.02114859210953135,
+        "operator_entropy_bits": 1.0,
+        "kill_entropy_bits": 0.22397694680602329,
+        "joint_entropy_bits": 1.202828354696492,
+        "kl_divergence_vs_global_bits": 1.0746573390610867
+      },
+      "four_counts|deg12|w5|step": {
+        "n_kills": 25074,
+        "n_operators": 2,
+        "n_kill_patterns": 4,
+        "operator_kill_table": {
+          "random_null|upstream:functional": 12328,
+          "random_null|upstream:cyclotomic_or_large": 2478,
+          "random_null|upstream:low_m": 162,
+          "random_null|upstream:salem_cluster": 21,
+          "reinforce_agent|upstream:functional": 5116,
+          "reinforce_agent|upstream:cyclotomic_or_large": 45,
+          "reinforce_agent|upstream:low_m": 20,
+          "reinforce_agent|upstream:salem_cluster": 4904
+        },
+        "kill_distribution": {
+          "upstream:functional": 17444,
+          "upstream:cyclotomic_or_large": 2523,
+          "upstream:low_m": 182,
+          "upstream:salem_cluster": 4925
+        },
+        "kill_distribution_normalized": {
+          "upstream:functional": 0.6957007258514796,
+          "upstream:cyclotomic_or_large": 0.10062215841110314,
+          "upstream:low_m": 0.0072585147962032385,
+          "upstream:salem_cluster": 0.196418600941214
+        },
+        "mutual_information_bits": 0.34051799379784864,
+        "operator_entropy_bits": 0.9722283820981237,
+        "kill_entropy_bits": 1.210301586747718,
+        "joint_entropy_bits": 1.8420119750479929,
+        "kl_divergence_vs_global_bits": 0.9702526579925663
+      }
+    },
+    "global_kill_distribution": {
+      "upstream:cyclotomic_or_large": 129993,
+      "upstream:functional": 85538,
+      "upstream:low_m": 13822,
+      "upstream:salem_cluster": 25619,
+      "upstream:shaped_continuous": 56672,
+      "upstream:large_m": 3174,
+      "upstream:cyclotomic": 153
+    },
+    "global_kill_distribution_normalized": {
+      "upstream:cyclotomic_or_large": 0.41271418638541324,
+      "upstream:functional": 0.2715742084191878,
+      "upstream:low_m": 0.0438834051388858,
+      "upstream:salem_cluster": 0.08133764695797391,
+      "upstream:shaped_continuous": 0.17992767588127162,
+      "upstream:large_m": 0.010077118210882906,
+      "upstream:cyclotomic": 0.0004857590063847148
+    },
+    "weighted_mean_per_region_mi_bits": 0.2640127425404901,
+    "per_region_mi_min": 0.0002624147163752255,
+    "per_region_mi_median": 0.34051799379784864,
+    "per_region_mi_max": 0.460638537265174,
+    "per_region_kl_min": 0.5250551438304482,
+    "per_region_kl_max": 2.392208642079366,
+    "most_distinctive_region": "four_counts|deg10|w5|shaped"
+  },
+  "operator_coordinate_charts": {
+    "n_operators": 7,
+    "operator_charts": {
+      "random_uniform": {
+        "n_kills": 15000,
+        "n_regions_present": 1,
+        "kill_distribution": {
+          "upstream:cyclotomic_or_large": 13068,
+          "upstream:functional": 1931,
+          "upstream:low_m": 1
+        },
+        "kill_distribution_normalized": {
+          "upstream:cyclotomic_or_large": 0.8712,
+          "upstream:functional": 0.12873333333333334,
+          "upstream:low_m": 6.666666666666667e-05
+        },
+        "kill_entropy_bits": 0.554961852143918,
+        "modal_kill": "upstream:cyclotomic_or_large",
+        "modal_share": 0.8712
+      },
+      "random_seeded": {
+        "n_kills": 13931,
+        "n_regions_present": 1,
+        "kill_distribution": {
+          "upstream:functional": 7387,
+          "upstream:cyclotomic_or_large": 2728,
+          "upstream:low_m": 3022,
+          "upstream:salem_cluster": 794
+        },
+        "kill_distribution_normalized": {
+          "upstream:functional": 0.530256263010552,
+          "upstream:cyclotomic_or_large": 0.1958222668867992,
+          "upstream:low_m": 0.21692627952049387,
+          "upstream:salem_cluster": 0.05699519058215491
+        },
+        "kill_entropy_bits": 1.6597843344749992,
+        "modal_kill": "upstream:functional",
+        "modal_share": 0.530256263010552
+      },
+      "reinforce_uniform": {
+        "n_kills": 15000,
+        "n_regions_present": 1,
+        "kill_distribution": {
+          "upstream:cyclotomic_or_large": 14952,
+          "upstream:functional": 48
+        },
+        "kill_distribution_normalized": {
+          "upstream:cyclotomic_or_large": 0.9968,
+          "upstream:functional": 0.0032
+        },
+        "kill_entropy_bits": 0.031129909255124304,
+        "modal_kill": "upstream:cyclotomic_or_large",
+        "modal_share": 0.9968
+      },
+      "reinforce_seeded": {
+        "n_kills": 15000,
+        "n_regions_present": 1,
+        "kill_distribution": {
+          "upstream:functional": 88,
+          "upstream:cyclotomic_or_large": 14904,
+          "upstream:low_m": 8
+        },
+        "kill_distribution_normalized": {
+          "upstream:functional": 0.005866666666666667,
+          "upstream:cyclotomic_or_large": 0.9936,
+          "upstream:low_m": 0.0005333333333333334
+        },
+        "kill_entropy_bits": 0.058493425703522256,
+        "modal_kill": "upstream:cyclotomic_or_large",
+        "modal_share": 0.9936
+      },
+      "reinforce_frozen_bias": {
+        "n_kills": 15000,
+        "n_regions_present": 1,
+        "kill_distribution": {
+          "upstream:functional": 4966,
+          "upstream:cyclotomic_or_large": 10026,
+          "upstream:low_m": 7,
+          "upstream:salem_cluster": 1
+        },
+        "kill_distribution_normalized": {
+          "upstream:functional": 0.3310666666666667,
+          "upstream:cyclotomic_or_large": 0.6684,
+          "upstream:low_m": 0.00046666666666666666,
+          "upstream:salem_cluster": 6.666666666666667e-05
+        },
+        "kill_entropy_bits": 0.9225608939985805,
+        "modal_kill": "upstream:cyclotomic_or_large",
+        "modal_share": 0.6684
+      },
+      "random_null": {
+        "n_kills": 122955,
+        "n_regions_present": 5,
+        "kill_distribution": {
+          "upstream:functional": 51879,
+          "upstream:cyclotomic_or_large": 40207,
+          "upstream:low_m": 806,
+          "upstream:salem_cluster": 64,
+          "upstream:shaped_continuous": 26674,
+          "upstream:large_m": 3172,
+          "upstream:cyclotomic": 153
+        },
+        "kill_distribution_normalized": {
+          "upstream:functional": 0.4219348542149567,
+          "upstream:cyclotomic_or_large": 0.3270058151356187,
+          "upstream:low_m": 0.006555243788377862,
+          "upstream:salem_cluster": 0.0005205156358017161,
+          "upstream:shaped_continuous": 0.21694115733398397,
+          "upstream:large_m": 0.025798056199422555,
+          "upstream:cyclotomic": 0.0012443576918384775
+        },
+        "kill_entropy_bits": 1.7322353147511798,
+        "modal_kill": "upstream:functional",
+        "modal_share": 0.4219348542149567
+      },
+      "reinforce_agent": {
+        "n_kills": 118085,
+        "n_regions_present": 5,
+        "kill_distribution": {
+          "upstream:functional": 19239,
+          "upstream:low_m": 9978,
+          "upstream:cyclotomic_or_large": 34108,
+          "upstream:salem_cluster": 24760,
+          "upstream:shaped_continuous": 29998,
+          "upstream:large_m": 2
+        },
+        "kill_distribution_normalized": {
+          "upstream:functional": 0.16292501164415463,
+          "upstream:low_m": 0.08449845450311216,
+          "upstream:cyclotomic_or_large": 0.2888427827412457,
+          "upstream:salem_cluster": 0.20967946817970107,
+          "upstream:shaped_continuous": 0.254037345979591,
+          "upstream:large_m": 1.693695219545243e-05
+        },
+        "kill_entropy_bits": 2.2202617990018063,
+        "modal_kill": "upstream:cyclotomic_or_large",
+        "modal_share": 0.2888427827412457
+      }
+    },
+    "pairwise_jsd_bits": {
+      "random_null||random_null": 0.0,
+      "random_null||random_seeded": 0.2554575559156472,
+      "random_null||random_uniform": 0.27711177447755264,
+      "random_null||reinforce_agent": 0.18918100613800232,
+      "random_null||reinforce_frozen_bias": 0.171473288457119,
+      "random_null||reinforce_seeded": 0.44309785264591306,
+      "random_null||reinforce_uniform": 0.45257664655905483,
+      "random_seeded||random_seeded": 0.0,
+      "random_seeded||random_uniform": 0.3978809942184176,
+      "random_seeded||reinforce_agent": 0.2626825846819021,
+      "random_seeded||reinforce_frozen_bias": 0.24973041978049126,
+      "random_seeded||reinforce_seeded": 0.590227981937024,
+      "random_seeded||reinforce_uniform": 0.6017148223147109,
+      "random_uniform||random_uniform": 0.0,
+      "random_uniform||reinforce_agent": 0.3855973127638681,
+      "random_uniform||reinforce_frozen_bias": 0.04305702924164242,
+      "random_uniform||reinforce_seeded": 0.05295179374251857,
+      "random_uniform||reinforce_uniform": 0.05818316969424938,
+      "reinforce_agent||reinforce_agent": 0.0,
+      "reinforce_agent||reinforce_frozen_bias": 0.34872075572976935,
+      "reinforce_agent||reinforce_seeded": 0.48580697776011905,
+      "reinforce_agent||reinforce_uniform": 0.49452466915688476,
+      "reinforce_frozen_bias||reinforce_frozen_bias": 0.0,
+      "reinforce_frozen_bias||reinforce_seeded": 0.1702638426713359,
+      "reinforce_frozen_bias||reinforce_uniform": 0.1778847524303545,
+      "reinforce_seeded||reinforce_seeded": 0.0,
+      "reinforce_seeded||reinforce_uniform": 0.0005556300783285039,
+      "reinforce_uniform||reinforce_uniform": 0.0
+    },
+    "pairwise_kl_bits": {
+      "random_null||random_null": 0.0,
+      "random_null||random_seeded": 9.165733007118403,
+      "random_seeded||random_null": 1.511207174485337,
+      "random_null||random_uniform": 9.418342982005726,
+      "random_uniform||random_null": 1.0106902276156604,
+      "random_null||reinforce_agent": 0.870049662679436,
+      "reinforce_agent||random_null": 1.9085166640612452,
+      "random_null||reinforce_frozen_bias": 8.936437566906152,
+      "reinforce_frozen_bias||random_null": 0.5715683011536015,
+      "random_null||reinforce_seeded": 11.216672409247364,
+      "reinforce_seeded||random_null": 1.5549694599846215,
+      "random_null||reinforce_uniform": 11.7741640110568,
+      "reinforce_uniform||random_null": 1.5803052413797007,
+      "random_seeded||random_seeded": 0.0,
+      "random_seeded||random_uniform": 5.228779681594968,
+      "random_uniform||random_seeded": 1.6124031182902434,
+      "random_seeded||reinforce_agent": 0.9809015618863193,
+      "reinforce_agent||random_seeded": 9.788627375151584,
+      "random_seeded||reinforce_frozen_bias": 2.490721254966277,
+      "reinforce_frozen_bias||random_seeded": 0.9540813964745726,
+      "random_seeded||reinforce_seeded": 6.903524228449185,
+      "reinforce_seeded||random_seeded": 2.285379844191397,
+      "random_seeded||reinforce_uniform": 13.655101675934429,
+      "reinforce_uniform||random_seeded": 2.3166544991058586,
+      "random_uniform||random_uniform": 0.0,
+      "random_uniform||reinforce_agent": 1.343143576978802,
+      "reinforce_agent||random_uniform": 17.977155340321957,
+      "random_uniform||reinforce_frozen_bias": 0.15743626536277575,
+      "reinforce_frozen_bias||random_uniform": 0.19867517343688665,
+      "random_uniform||reinforce_seeded": 0.4081643657633163,
+      "reinforce_seeded||random_uniform": 0.16390727615072276,
+      "random_uniform||reinforce_uniform": 0.5186289825444492,
+      "reinforce_uniform||random_uniform": 0.1766218100770504,
+      "reinforce_agent||reinforce_agent": 0.0,
+      "reinforce_agent||reinforce_frozen_bias": 12.178670435412183,
+      "reinforce_frozen_bias||reinforce_agent": 1.1434274380043568,
+      "reinforce_agent||reinforce_seeded": 18.39482281361787,
+      "reinforce_seeded||reinforce_agent": 1.7389422902459644,
+      "reinforce_agent||reinforce_uniform": 20.98560504994169,
+      "reinforce_uniform||reinforce_agent": 1.7631571830199335,
+      "reinforce_frozen_bias||reinforce_frozen_bias": 0.0,
+      "reinforce_frozen_bias||reinforce_seeded": 1.5456396358089732,
+      "reinforce_seeded||reinforce_frozen_bias": 0.5342608521784097,
+      "reinforce_frozen_bias||reinforce_uniform": 1.845575456844261,
+      "reinforce_uniform||reinforce_frozen_bias": 0.55332994008529,
+      "reinforce_seeded||reinforce_seeded": 0.0,
+      "reinforce_seeded||reinforce_uniform": 0.015982592849570317,
+      "reinforce_uniform||reinforce_seeded": 0.001825749133608253,
+      "reinforce_uniform||reinforce_uniform": 0.0
+    },
+    "most_distinct_pairs": [
+      [
+        "random_seeded||reinforce_uniform",
+        0.6017148223147109
+      ],
+      [
+        "random_seeded||reinforce_seeded",
+        0.590227981937024
+      ],
+      [
+        "reinforce_agent||reinforce_uniform",
+        0.49452466915688476
+      ],
+      [
+        "reinforce_agent||reinforce_seeded",
+        0.48580697776011905
+      ],
+      [
+        "random_null||reinforce_uniform",
+        0.45257664655905483
+      ]
+    ],
+    "most_collapsed_pairs": [
+      [
+        "reinforce_seeded||reinforce_uniform",
+        0.0005556300783285039
+      ],
+      [
+        "random_uniform||reinforce_frozen_bias",
+        0.04305702924164242
+      ],
+      [
+        "random_uniform||reinforce_seeded",
+        0.05295179374251857
+      ],
+      [
+        "random_uniform||reinforce_uniform",
+        0.05818316969424938
+      ],
+      [
+        "reinforce_frozen_bias||reinforce_seeded",
+        0.1702638426713359
+      ]
+    ],
+    "median_pairwise_jsd": 0.2626825846819021
+  },
+  "region_operator_interaction": {
+    "n_records": 60,
+    "n_regions": 6,
+    "n_operators": 7,
+    "n_kill_patterns": 7,
+    "aggregate_mi_op_kp_bits": 0.39079435320125544,
+    "conditional_mi_op_kp_given_region_bits": 0.26401274254049006,
+    "mi_region_kp_bits": 0.9504973549911191,
+    "mi_region_op_bits": 0.7881399565537635,
+    "interaction_delta_bits": 0.12678161066076538,
+    "per_region_mi_bits": {
+      "discovery_pipeline|deg14|w5|step": 0.3968443945136957,
+      "four_counts|deg10|w5|step": 0.460638537265174,
+      "four_counts|deg10|w5|shaped": 0.057393766178568395,
+      "four_counts|deg14|w5|step": 0.0002624147163752255,
+      "four_counts|deg10|w7|step": 0.02114859210953135,
+      "four_counts|deg12|w5|step": 0.34051799379784864
+    },
+    "triple_table_n_cells": 50,
+    "triple_table_n_nonzero": 50,
+    "verdict": "B_REGION_SPECIFIC",
+    "rationale": "Per-region MI = 0.264 bits is substantially below aggregate MI = 0.391 bits (delta = +0.127); region carries MI(region; kp) = 0.950 bits in its own right. Operator behavior is region-dependent: kill-vector design must include region context (state, operator) -> kill_vector."
   }
 }

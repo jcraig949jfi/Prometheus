@@ -193,16 +193,88 @@ Specific evidence:
 - Pilot JSONs aggregate by_kill_pattern with NO depth dimension.
 - Kernel verdict_runtime_ms is set to 0 in discovery_pipeline.py Phase 4 (synthetic verdict short-circuit).
 
+## Per-region structure
+
+Day 1-2 of the 5-day kill-vector plan. The aggregate gradient 3 result (0.725 bits MI across all kills) lumps together every (degree, alphabet_width, reward_shape) cell. We disaggregate by (env, degree, width, reward_shape) and compute per-region MI(operator; kill_pattern), each operator's emergent kill distribution (its 'coordinate chart'), and the region x operator interaction. Read-only: only Lehmer-family pilots tagged in `PER_FILE_METADATA` are included; cross-domain pilots have no kill_pattern aggregation and are excluded from this section.
+
+- Regions identified: **6** (from 60 region-tagged kill records)
+- Per-region MI(operator; kill_pattern) range: min=0.000, median=0.341, max=0.461 bits
+- Per-region KL(kill_dist || global_kill_dist) range: min=0.525, max=2.392 bits
+- Most distinctive region: `four_counts|deg10|w5|shaped`
+- Weighted-mean per-region MI: **0.264 bits**
+
+Per-region summary (sorted by KL vs global):
+
+- `four_counts|deg10|w5|shaped`: n=59,999, operators=2, kill_patterns=3, MI=0.057 bits, KL_vs_global=2.392 bits
+- `four_counts|deg10|w7|step`: n=18,000, operators=2, kill_patterns=3, MI=0.021 bits, KL_vs_global=1.075 bits
+- `four_counts|deg12|w5|step`: n=25,074, operators=2, kill_patterns=4, MI=0.341 bits, KL_vs_global=0.970 bits
+- `four_counts|deg14|w5|step`: n=48,000, operators=2, kill_patterns=4, MI=0.000 bits, KL_vs_global=0.540 bits
+- `four_counts|deg10|w5|step`: n=89,967, operators=2, kill_patterns=4, MI=0.461 bits, KL_vs_global=0.527 bits
+- `discovery_pipeline|deg14|w5|step`: n=73,931, operators=5, kill_patterns=4, MI=0.397 bits, KL_vs_global=0.525 bits
+
+### Operator coordinate charts
+
+Each operator's emergent coordinate chart on the search space — its mean kill distribution across all regions where it was deployed. Pairs with high JSD have nearly orthogonal charts (different views of the search space); pairs with low JSD have collapsed to the same chart.
+
+- Operators charted: **7**
+- Median pairwise JSD: **0.263 bits**
+
+Per-operator chart summary (sorted by total kill mass):
+
+- `random_null`: n_kills=122,955, regions_present=5, H=1.732 bits, modal=`upstream:functional` (42.2%)
+- `reinforce_agent`: n_kills=118,085, regions_present=5, H=2.220 bits, modal=`upstream:cyclotomic_or_large` (28.9%)
+- `random_uniform`: n_kills=15,000, regions_present=1, H=0.555 bits, modal=`upstream:cyclotomic_or_large` (87.1%)
+- `reinforce_uniform`: n_kills=15,000, regions_present=1, H=0.031 bits, modal=`upstream:cyclotomic_or_large` (99.7%)
+- `reinforce_seeded`: n_kills=15,000, regions_present=1, H=0.058 bits, modal=`upstream:cyclotomic_or_large` (99.4%)
+- `reinforce_frozen_bias`: n_kills=15,000, regions_present=1, H=0.923 bits, modal=`upstream:cyclotomic_or_large` (66.8%)
+- `random_seeded`: n_kills=13,931, regions_present=1, H=1.660 bits, modal=`upstream:functional` (53.0%)
+
+Most orthogonal operator pairs (high JSD = different charts):
+
+- `random_seeded||reinforce_uniform`: JSD=0.602 bits
+- `random_seeded||reinforce_seeded`: JSD=0.590 bits
+- `reinforce_agent||reinforce_uniform`: JSD=0.495 bits
+- `reinforce_agent||reinforce_seeded`: JSD=0.486 bits
+- `random_null||reinforce_uniform`: JSD=0.453 bits
+
+Most collapsed operator pairs (low JSD = same chart):
+
+- `reinforce_seeded||reinforce_uniform`: JSD=0.001 bits
+- `random_uniform||reinforce_frozen_bias`: JSD=0.043 bits
+- `random_uniform||reinforce_seeded`: JSD=0.053 bits
+- `random_uniform||reinforce_uniform`: JSD=0.058 bits
+- `reinforce_frozen_bias||reinforce_seeded`: JSD=0.170 bits
+
+### Region x operator interaction
+
+- Aggregate MI(operator; kill_pattern) = **0.391 bits** (operator-only marginalization over regions; differs from gradient 3's 0.725 bits because g3 keeps the file/condition prefix as part of the arm label, while here we strip it to expose the underlying operator class)
+- Conditional MI(operator; kill_pattern | region) = **0.264 bits**
+- MI(region; kill_pattern) = **0.950 bits**
+- MI(region; operator) = **0.788 bits** (measures how unevenly operators are allocated to regions)
+- Interaction delta = aggregate - conditional = **+0.127 bits**
+- Triple table cells (region x operator x kill_pattern): 50 non-zero of 50 populated
+
+### Verdict: **B — Region-specific operator behavior**
+
+Per-region MI = 0.264 bits is substantially below aggregate MI = 0.391 bits (delta = +0.127); region carries MI(region; kp) = 0.950 bits in its own right. Operator behavior is region-dependent: kill-vector design must include region context (state, operator) -> kill_vector.
+
 ## Cross-Gradient Observations
 
 - `g2_g4_consistent`: True
 - `g3_implies_g4`: True
 - `sparse_per_candidate`: True
+- `per_region_verdict`: B_REGION_SPECIFIC
 
 ## The Empirical Answer
 
 The substrate's existing ledger contains gradient signal on **axes 2, 3, and 4** (kill_path density, operator x falsifier contingency, method-utility per operator) and partial signal on **axis 1** (M distribution, but only for the catalog_seeded arm). **Axis 5** is borderline — the data exists for the catalog_seeded arm but not for cross-domain pilots (which log only summary accuracies, not per-episode predictions). **Axis 6** is fully missing: we do not log verifier depth/precision anywhere.
 
+**Per-region verdict: B — region-specific.** Region carries more kill-pattern information than operator does; kill-vector design MUST include region context. The navigation policy is (state, operator) -> kill_vector, not operator -> kill_vector.
+
 ## Implications for Layer 2 Repair
 
 Tomorrow's gradient field can be partly built from the existing ledger (axes 2-4 are immediately readable; axis 1 needs the per-episode M to be persisted in EVERY arm, not just catalog_seeded::random_seeded). Bridging the cross-domain axis (5) requires logging per-episode predictions in the BSD/genus-2/knot/modular-form/mock-theta/OEIS pilots. Axis 6 is the work the substrate hasn't yet been asked to do; adding verifier-depth instrumentation is a prerequisite for closing the gradient field.
+
+**Implication for kill-vector design (verdict B):** The feature set must concatenate (region_features, operator_id) BEFORE the kill_pattern prediction head. A pure operator-only encoder would lose the dominant axis (MI(region; kill_pattern) = 0.95 bits vs MI(operator; kill_pattern | region) = 0.26 bits in current data). Concretely: each region's training tuple is (degree, alphabet_width, reward_shape, operator) -> kill_vector. Existing data covers 6 regions; the unsampled regions (e.g. degree-12 with shaped reward, alphabet width 9, cross-domain envs with kill_pattern aggregation) are negative-space holes that the next round of pilots should fill before kill-vector training is locked in.
+
+**Honest sparseness note:** The 6 regions identified are thinly populated in the operator dimension (most have only 2 operators: random_null and reinforce_agent). Only the discovery_pipeline|deg14|w5|step region samples 5 operators. Two regions (`four_counts|deg10|w5|shaped`, `four_counts|deg14|w5|step`) have MI close to 0 because the two operators in those regions converge to similar kill distributions there — that may itself be a region-specific operator-collapse finding worth investigating, not noise.
