@@ -201,12 +201,29 @@ def render_markdown(
 def main(argv: List[str]) -> int:
     if len(argv) < 2:
         print(
-            "Usage: python -m ergon.learner.tools.read_promotion_ledger "
-            "<path_to_ledger.jsonl> [path2.jsonl ...]"
+            "Usage:\n"
+            "  python -m ergon.learner.tools.read_promotion_ledger "
+            "<path.jsonl> [path2.jsonl ...]\n"
+            "  python -m ergon.learner.tools.read_promotion_ledger --all "
+            "[<dir>]\n"
+            "    (--all: scan dir for *.jsonl; default dir is "
+            "ergon/learner/trials/ledgers/)"
         )
         return 2
 
-    paths = [Path(p) for p in argv[1:]]
+    if argv[1] == "--all":
+        scan_dir = Path(argv[2]) if len(argv) > 2 else Path(
+            "ergon/learner/trials/ledgers"
+        )
+        if not scan_dir.exists():
+            print(f"Directory not found: {scan_dir}")
+            return 1
+        paths = sorted(scan_dir.glob("*.jsonl"))
+        if not paths:
+            print(f"No *.jsonl ledgers found in {scan_dir}")
+            return 1
+    else:
+        paths = [Path(p) for p in argv[1:]]
     missing = [p for p in paths if not p.exists()]
     if missing:
         for p in missing:
