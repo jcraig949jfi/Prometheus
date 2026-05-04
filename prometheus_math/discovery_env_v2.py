@@ -8,6 +8,28 @@ applied to the population.  This is the GA-style generator Mossinghoff
 used to find his original Salem polynomials, lifted into the substrate-
 mediated RL framing.
 
+Selection strategies (anti-elitist additions, 2026-05-04)
+----------------------------------------------------------
+The original V2 selection rule was strict elitist replacement (child
+displaces worst iff child.M < worst.M).  The DISCOVERY_V2_RESULTS pilot
+showed this collapses to the cyclotomic basin (M=1 exactly) — by
+generation 50 ~87% of the population is cyclotomic and the search is
+stuck.  To explore the diversity-preservation question we now offer
+four selection strategies, switched via ``selection_strategy``:
+
+  * ``"elitist"`` — the original (regression baseline).
+  * ``"tournament_novelty"`` — child only displaces worst if it scores
+    higher on a (negative-fitness + novelty) composite.  Novelty is
+    Euclidean distance from the population centroid in half-coefficient
+    space; this rewards polys that explore *different* regions.
+  * ``"crowding"`` — NSGA-II crowding-distance penalty on dense regions.
+    The replacement target is whichever member has the smallest crowding
+    distance (most crowded), provided child improves the (M, novelty)
+    pareto frontier.
+  * ``"restart_collapse"`` — vanilla elitist by default, but if M-variance
+    drops below ``collapse_threshold`` for ``collapse_window`` consecutive
+    generations, half the population is randomly reinitialized.
+
 Why a different generator?
 --------------------------
 The v1 four-counts pilot ran 216K episodes across 7 ablation cells and
@@ -218,6 +240,57 @@ N_MUTATION_OPERATORS = len(MUTATION_OPERATORS)
 
 
 # ---------------------------------------------------------------------------
+# Selection-strategy registry (anti-elitist diversity preservation)
+# ---------------------------------------------------------------------------
+#
+# Each strategy is a free function with signature
+#   strategy(population, child, state, rng) -> (replaced_idx | None,
+#                                                strategy_info)
+# and operates on the population list IN PLACE if it decides to replace.
+# The returned ``replaced_idx`` is the slot that was overwritten (or
+# None if the child was rejected); the ``strategy_info`` dict is folded
+# into the env's step() info so callers can inspect strategy behavior.
+
+
+SELECTION_STRATEGIES: Tuple[str, ...] = (
+    "elitist",
+    "tournament_novelty",
+    "crowding",
+    "restart_collapse",
+)
+
+
+def _half_centroid(population: List["PopulationMember"]) -> np.ndarray:
+    """Centroid of the half-coefficient space (NaN-safe; returns zeros on empty)."""
+    if not population:
+        return np.zeros(0, dtype=np.float64)
+    arr = np.asarray([m.half for m in population], dtype=np.float64)
+    return arr.mean(axis=0)
+
+
+def _half_distance_to_centroid(
+    half: List[int], centroid: np.ndarray
+) -> float:
+    """Euclidean distance from a half-vector to a centroid; 0 if centroid empty."""
+    if centroid.size == 0:
+        return 0.0
+    v = np.asarray(half, dtype=np.float64)
+    if v.shape != centroid.shape:
+        return 0.0
+    return float(np.linalg.norm(v - centroid))
+
+
+def _population_m_variance(population: List["PopulationMember"]) -> float:
+    """Variance of finite M values in the population.  Inf if all members
+    are non-finite (degenerate case) so the collapse-trigger does NOT
+    treat all-inf as collapsed."""
+    ms = [m.m_value for m in population if math.isfinite(m.m_value)]
+    if len(ms) < 2:
+        return float("inf")
+    return float(np.var(ms))
+
+
+# ---------------------------------------------------------------------------
 # Polynomial helpers (same conventions as v1)
 # ---------------------------------------------------------------------------
 
@@ -417,6 +490,10 @@ class DiscoveryEnvV2:
         seed: Optional[int] = None,
         coefficient_choices: Optional[Tuple[int, ...]] = None,
         enable_pipeline: bool = True,
+        selection_strategy: str = "elitist",
+        novelty_weight: float = 1.0,
+        collapse_threshold: float = 1e-3,
+        collapse_window: int = 5,
     ):
         if degree < 2:
             raise ValueError(f"degree must be >= 2; got {degree}")
@@ -427,6 +504,17 @@ class DiscoveryEnvV2:
         if mutation_rate > 1.0:
             raise ValueError(
                 f"mutation_rate must be in [0, 1]; got {mutation_rate} (use clip-to-1 upstream if needed)"
+            )
+        if selection_strategy not in SELECTION_STRATEGIES:
+            raise ValueError(
+                f"selection_strategy must be one of {SELECTION_STRATEGIES}; "
+                f"got {selection_strategy!r}"
+            )
+        if novelty_weight < 0.0:
+            raise ValueError(f"novelty_weight must be >= 0; got {novelty_weight}")
+        if collapse_window < 1:
+            raise ValueError(
+                f"collapse_window must be >= 1; got {collapse_window}"
             )
 
         self.degree = int(degree)
@@ -455,6 +543,15 @@ class DiscoveryEnvV2:
             if len(set(cc)) != len(cc):
                 raise ValueError(f"coefficient_choices must be unique; got {cc}")
             self.coefficient_choices = cc
+
+        # Selection strategy state.
+        self.selection_strategy = str(selection_strategy)
+        self.novelty_weight = float(novelty_weight)
+        self.collapse_threshold = float(collapse_threshold)
+        self.collapse_window = int(collapse_window)
+        self._collapse_streak: int = 0
+        self._restart_count: int = 0
+        self._strategy_event_log: List[Dict[str, Any]] = []
 
         # Operator menu is fixed (module-level); referenced by index.
         self.n_actions = N_MUTATION_OPERATORS
@@ -590,17 +687,32 @@ class DiscoveryEnvV2:
         # → never mutate (population stays put; reward = 0 except band
         # bonus if a seeded member was already sub-Lehmer).
         if self._rng.random() < self.mutation_rate and op_name != "identity":
-            # Pick a random parent.  Mutate.  Evaluate child.  Replace
-            # worst if child is better than worst.
-            parent_idx = int(self._rng.integers(0, self.population_size))
+            # Pick a random parent.  Mutate.  Evaluate child.  Apply the
+            # configured selection strategy.
+            if not self._population:
+                # Defensive: empty population — re-seed with one random
+                # member so the env can keep running.  This is the
+                # "catastrophic event" edge case.
+                seed_half = [
+                    int(self.coefficient_choices[
+                        int(self._rng.integers(0, len(self.coefficient_choices)))
+                    ])
+                    for _ in range(self.half_len)
+                ]
+                seeded = PopulationMember(half=seed_half)
+                seeded.m_value = self._evaluate_m(seeded)
+                self._population.append(seeded)
+                info["empty_population_reseeded"] = True
+            parent_idx = int(self._rng.integers(0, len(self._population)))
             parent = self._population[parent_idx]
             child_half = op_fn(parent.half, self._rng, self.coefficient_choices)
             child = PopulationMember(half=child_half)
             child.m_value = self._evaluate_m(child)
-            self._maybe_replace_worst(child)
+            strat_info = self._maybe_replace_worst(child)
             self._sort_population()
             info["mutated"] = True
             info["child_m"] = child.m_value
+            info["strategy_info"] = strat_info
         else:
             info["mutated"] = False
 
@@ -727,11 +839,247 @@ class DiscoveryEnvV2:
         except (TypeError, ValueError):
             return float("inf")
 
-    def _maybe_replace_worst(self, child: PopulationMember) -> None:
-        """Elitist replacement: if child M < worst M, evict worst."""
+    def _maybe_replace_worst(self, child: PopulationMember) -> Dict[str, Any]:
+        """Strategy-dispatched replacement.  Returns a per-step diagnostic
+        dict (always populated) so callers can inspect the decision."""
+        strat = self.selection_strategy
+        if strat == "elitist":
+            return self._select_elitist(child)
+        if strat == "tournament_novelty":
+            return self._select_tournament_novelty(child)
+        if strat == "crowding":
+            return self._select_crowding(child)
+        if strat == "restart_collapse":
+            return self._select_restart_collapse(child)
+        # Defensive — constructor validated; reraising would be more
+        # informative than silently falling back.
+        raise RuntimeError(
+            f"unknown selection_strategy at runtime: {strat!r}"
+        )
+
+    # ------------------------------------------------------------------
+    # Strategy implementations
+    # ------------------------------------------------------------------
+
+    def _select_elitist(self, child: PopulationMember) -> Dict[str, Any]:
+        """Original V2 rule: child displaces worst iff child.M < worst.M."""
+        if not self._population:
+            self._population.append(child)
+            return {"strategy": "elitist", "replaced": True, "reason": "empty_pop"}
         worst = self._population[-1]
         if math.isfinite(child.m_value) and child.m_value < worst.m_value:
             self._population[-1] = child
+            return {
+                "strategy": "elitist",
+                "replaced": True,
+                "reason": "child_better_than_worst",
+            }
+        return {
+            "strategy": "elitist",
+            "replaced": False,
+            "reason": "child_not_better",
+        }
+
+    def _select_tournament_novelty(
+        self, child: PopulationMember
+    ) -> Dict[str, Any]:
+        """Tournament-with-novelty: child displaces a random tournament-loser
+        iff its (negative-fitness + novelty * weight) score exceeds the
+        loser's score.
+
+        Composite score = -M + novelty_weight * dist_to_centroid.
+        Higher is better.  This rewards both good fitness AND distance
+        from the population centroid in coefficient space — a partial
+        antidote to the elitist cyclotomic basin (cyclotomic members
+        cluster tightly so their novelty term is small)."""
+        if not self._population:
+            self._population.append(child)
+            return {
+                "strategy": "tournament_novelty",
+                "replaced": True,
+                "reason": "empty_pop",
+            }
+        if not math.isfinite(child.m_value):
+            return {
+                "strategy": "tournament_novelty",
+                "replaced": False,
+                "reason": "child_non_finite",
+            }
+        centroid = _half_centroid(self._population)
+        # Run a 3-way tournament for the *replacement target*; pick the
+        # worst-scoring of the three.  This is the diversity-preserving
+        # half of the rule (we don't always evict the M-worst).
+        n = len(self._population)
+        k = min(3, n)
+        idxs = self._rng.choice(n, size=k, replace=False).tolist()
+        scores = []
+        for i in idxs:
+            mem = self._population[int(i)]
+            d = _half_distance_to_centroid(mem.half, centroid)
+            m = mem.m_value if math.isfinite(mem.m_value) else 1e9
+            scores.append(-m + self.novelty_weight * d)
+        loser_local = int(np.argmin(scores))
+        loser_idx = int(idxs[loser_local])
+        loser = self._population[loser_idx]
+        loser_score = scores[loser_local]
+        child_d = _half_distance_to_centroid(child.half, centroid)
+        child_score = -child.m_value + self.novelty_weight * child_d
+        if child_score > loser_score:
+            self._population[loser_idx] = child
+            return {
+                "strategy": "tournament_novelty",
+                "replaced": True,
+                "reason": "child_score_higher",
+                "child_score": float(child_score),
+                "loser_score": float(loser_score),
+                "loser_idx": loser_idx,
+                "child_dist": float(child_d),
+            }
+        return {
+            "strategy": "tournament_novelty",
+            "replaced": False,
+            "reason": "child_score_lower",
+            "child_score": float(child_score),
+            "loser_score": float(loser_score),
+            "loser_idx": loser_idx,
+        }
+
+    def _select_crowding(self, child: PopulationMember) -> Dict[str, Any]:
+        """NSGA-II-style crowding-distance penalty.
+
+        For each member, compute crowding distance in the (M, novelty)
+        2D objective space (sum of normalized neighbour-gap distances
+        per objective).  Members in dense regions have small crowding
+        distance.  Replacement target = member with the smallest
+        crowding distance (the "most crowded").  Child accepts the
+        slot iff its M is finite and strictly less than the target's M
+        OR its novelty exceeds the target's novelty (preserves
+        Pareto-frontier additions)."""
+        if not self._population:
+            self._population.append(child)
+            return {
+                "strategy": "crowding",
+                "replaced": True,
+                "reason": "empty_pop",
+            }
+        if not math.isfinite(child.m_value):
+            return {
+                "strategy": "crowding",
+                "replaced": False,
+                "reason": "child_non_finite",
+            }
+        n = len(self._population)
+        if n == 1:
+            # Trivial; defer to elitist semantics.
+            return self._select_elitist(child)
+        centroid = _half_centroid(self._population)
+        ms = np.asarray(
+            [
+                m.m_value if math.isfinite(m.m_value) else 1e9
+                for m in self._population
+            ],
+            dtype=np.float64,
+        )
+        ds = np.asarray(
+            [_half_distance_to_centroid(m.half, centroid) for m in self._population],
+            dtype=np.float64,
+        )
+        # Per-objective crowding distance: sum over objectives of
+        # neighbour-gap normalized by objective range.
+        def _crowding(values: np.ndarray) -> np.ndarray:
+            order = np.argsort(values)
+            cd = np.zeros_like(values)
+            rng_v = float(values[order[-1]] - values[order[0]])
+            if rng_v <= 0.0:
+                return cd
+            cd[order[0]] = float("inf")
+            cd[order[-1]] = float("inf")
+            for k in range(1, len(values) - 1):
+                cd[order[k]] = (
+                    float(values[order[k + 1]] - values[order[k - 1]]) / rng_v
+                )
+            return cd
+
+        cd_total = _crowding(ms) + _crowding(ds)
+        target_idx = int(np.argmin(cd_total))
+        target = self._population[target_idx]
+        # Acceptance: child improves M OR novelty over the target.
+        child_d = _half_distance_to_centroid(child.half, centroid)
+        improves_m = child.m_value < target.m_value - 1e-12
+        improves_d = child_d > ds[target_idx] + 1e-12
+        if improves_m or improves_d:
+            self._population[target_idx] = child
+            return {
+                "strategy": "crowding",
+                "replaced": True,
+                "reason": "improves_m_or_d",
+                "target_idx": target_idx,
+                "improves_m": bool(improves_m),
+                "improves_d": bool(improves_d),
+                "child_dist": float(child_d),
+            }
+        return {
+            "strategy": "crowding",
+            "replaced": False,
+            "reason": "no_improvement",
+            "target_idx": target_idx,
+        }
+
+    def _select_restart_collapse(
+        self, child: PopulationMember
+    ) -> Dict[str, Any]:
+        """Vanilla elitist replacement, plus a collapse detector that
+        reinitializes half the population if M-variance has been below
+        ``collapse_threshold`` for ``collapse_window`` consecutive steps."""
+        info = self._select_elitist(child)
+        # Update collapse streak based on current variance.
+        var = _population_m_variance(self._population)
+        if math.isfinite(var) and var < self.collapse_threshold:
+            self._collapse_streak += 1
+        else:
+            self._collapse_streak = 0
+        info["m_variance"] = float(var) if math.isfinite(var) else None
+        info["collapse_streak"] = int(self._collapse_streak)
+        if self._collapse_streak >= self.collapse_window:
+            self._trigger_restart_half()
+            info["restart_triggered"] = True
+            info["restart_count"] = self._restart_count
+            self._collapse_streak = 0
+        else:
+            info["restart_triggered"] = False
+        info["strategy"] = "restart_collapse"
+        return info
+
+    def _trigger_restart_half(self) -> None:
+        """Randomly reinitialize half the population (rounded down).
+        The elite half is preserved (population is sorted ascending by
+        M), so the best polys we've found are kept while the bottom
+        half gets reseeded."""
+        if self._rng is None or not self._population:
+            return
+        n = len(self._population)
+        k = max(1, n // 2)
+        # Sort first so we keep the elite half.
+        self._sort_population()
+        for j in range(n - k, n):
+            new_half = [
+                int(self.coefficient_choices[
+                    int(self._rng.integers(0, len(self.coefficient_choices)))
+                ])
+                for _ in range(self.half_len)
+            ]
+            new_member = PopulationMember(half=new_half)
+            new_member.m_value = self._evaluate_m(new_member)
+            self._population[j] = new_member
+        self._restart_count += 1
+        self._strategy_event_log.append(
+            {
+                "event": "restart_half",
+                "step": self._step_count,
+                "restart_count": self._restart_count,
+                "members_replaced": k,
+            }
+        )
 
     def _sort_population(self) -> None:
         """Keep population sorted ascending by M (population[0] = elite)."""
@@ -803,6 +1151,55 @@ class DiscoveryEnvV2:
     def operator_call_counts(self) -> Dict[str, int]:
         return dict(self._operator_call_counts)
 
+    def population_diversity(self) -> Dict[str, float]:
+        """Diagnostic: variance of M values + mean pairwise half-vector
+        distance + cyclotomic fraction.  Used by the anti-elitist
+        comparison harness to monitor mode-collapse."""
+        if not self._population:
+            return {
+                "m_variance": float("inf"),
+                "mean_pairwise_dist": 0.0,
+                "cyclotomic_fraction": 0.0,
+                "n_members": 0,
+            }
+        ms = [m.m_value for m in self._population if math.isfinite(m.m_value)]
+        m_var = float(np.var(ms)) if len(ms) >= 2 else float("inf")
+        # Mean pairwise distance in half-coefficient space.
+        halves = np.asarray(
+            [m.half for m in self._population], dtype=np.float64
+        )
+        n = len(halves)
+        if n >= 2:
+            d = 0.0
+            cnt = 0
+            for i in range(n):
+                for j in range(i + 1, n):
+                    d += float(np.linalg.norm(halves[i] - halves[j]))
+                    cnt += 1
+            mean_d = d / cnt if cnt else 0.0
+        else:
+            mean_d = 0.0
+        # Cyclotomic fraction: members with M = 1.0 ± 1e-9.
+        cyclo = sum(
+            1
+            for m in self._population
+            if math.isfinite(m.m_value) and abs(m.m_value - 1.0) < 1e-9
+        )
+        return {
+            "m_variance": float(m_var) if math.isfinite(m_var) else float("inf"),
+            "mean_pairwise_dist": float(mean_d),
+            "cyclotomic_fraction": float(cyclo) / float(n),
+            "n_members": int(n),
+        }
+
+    def restart_count(self) -> int:
+        """How many times restart-on-collapse fired in this env's lifetime."""
+        return int(self._restart_count)
+
+    def strategy_event_log(self) -> List[Dict[str, Any]]:
+        """Copy of the strategy event log (restart events, etc.)."""
+        return list(self._strategy_event_log)
+
     def kernel(self) -> SigmaKernel:
         if self._kernel is None:
             raise RuntimeError("env not reset yet")
@@ -825,6 +1222,7 @@ __all__ = [
     "MUTATION_OPERATORS",
     "N_MUTATION_OPERATORS",
     "COEFFICIENT_CHOICES_V2",
+    "SELECTION_STRATEGIES",
     "KNOWN_SEEDS_DEG10",
     "LEHMER_HALF",
     "_palindromic_from_half",
@@ -837,4 +1235,7 @@ __all__ = [
     "_decrement_at_index",
     "_zero_at_index",
     "_identity",
+    "_half_centroid",
+    "_half_distance_to_centroid",
+    "_population_m_variance",
 ]
