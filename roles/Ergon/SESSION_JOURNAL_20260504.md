@@ -414,3 +414,52 @@ This is the second instance of the engine exposing a substrate-grade epistemic t
 - `archive.py`: `sample_parent` gains `exploration_rate: float = 0.0` parameter. Bypasses bias entirely when `rng.random() < exploration_rate`.
 - New trials: `trial_3_iter13_exploration.py` (5K sweep), `trial_3_iter13_extended.py` (10K confirmation at rate=0.15).
 - Backward compat preserved: existing trials (Trial 2, Trial 3 production pilot) continue to use rate=0.0.
+
+## Addendum 6 — iter 14+15: substrate integration via BindEvalKernelV2 + promotion ledger
+
+### Iter 14 (Task #64) — predicate trial through BindEvalKernelV2
+
+Built `ObstructionBindEvalIntegration` and `ObstructionBindEvalEvaluator` in `ergon/learner/genome_evaluator.py`. New domain-specific executor `execute_obstruction_genome_serialized` parses each genome as a predicate, evaluates against `OBSTRUCTION_CORPUS` via `evaluate_predicate`, and returns substrate-grade outputs. Every genome evaluation routes through the kernel's CLAIM/EVAL chain.
+
+1K x 3 seeds at rate=0.0:
+- 0/3000 kernel errors (perfect substrate-discipline)
+- 2/3 seeds find OBSTRUCTION discriminator
+- 2/3 seeds find SECONDARY exact
+- 2.1-2.4 ms/episode through kernel (vs ~0.1ms in-process)
+
+The ~20× substrate-discipline tax is acceptable. Predicate-discovery results match iter 11 in-process numbers exactly.
+
+### Iter 15 (Task #65) — promotion ledger persistence
+
+Built `ergon/learner/promotion_ledger.py` (~150 LOC) with `PromotionLedger` class — append-only JSONL with one record per substrate-PASS event. Every record carries: timestamp_iso, trial_name, seed, episode, genome_content_hash, operator_class, **predicate verbatim**, lift, match_size, kernel_binding_name, and four match-set classification flags.
+
+8 tests: Authority (record-shape, disk persistence), Property (count + dedup), Edge (empty + classification priority), Composition (load_jsonl round-trip + multi-trial merge). All green.
+
+1K x 3 seeds wired to ledger:
+- 813 substrate-PASS records persisted
+- 450 unique predicates seen
+- Round-trip via load_jsonl preserves all 813 records
+- 5 SECONDARY exact, 20 OBSTRUCTION discriminator, 788 non-planted substrate-PASS
+
+### Substrate-grade insight — non-planted substrate-PASSes are 97% of the discovery rate
+
+The 788 non-planted substrate-PASS predicates (lift ≥ 1.5 + match ≥ 3, but ≠ planted signatures) are not noise. They are partial-information predicates — single conjuncts like `{neg_z:3}`, `{has_diag_pos:True}`, `{n_steps:5}` — that correlate with kill-verdict because the corpus has feature-feature correlations beyond the planted structure.
+
+For consumer agents (Charon / Aporia / Harmonia) reading the ledger, these are the **ambient predicate space** — the hypothesis-generator output. The planted-signature matches (3% of records) are confirmation that the engine is finding the structure we know about; the non-planted 97% are the engine doing genuine hypothesis generation.
+
+The promotion ledger makes this visible to other agents for the first time. Before iter 15, every Ergon discovery vanished at trial end.
+
+### Cumulative MVP status post-iter-15
+
+- ~8,200 LOC + 184 passing tests (added promotion_ledger.py + 8 tests)
+- Two evaluators: HardenedObstructionEvaluator (in-process, fast) and ObstructionBindEvalEvaluator (kernel, substrate-grade)
+- One ledger: substrate-PASS events persisted as queryable JSONL
+- All five trial domains validated: Trial 1 (kill), Trial 2 (Lehmer-Mahler 4/4 PASS), Trial 3 production (1K predicate), Trial 3 5K (4-conjunct exact match), Trial 3 BindEval (substrate integration)
+
+### Tasks queued post-iter-15
+
+| # | Task | Source | Priority |
+|---|---|---|---|
+| 80 | Per-cell elite-genome inspection harness | Iter 5 (deferred) | medium |
+| 81 | 5K BindEval pilot — does substrate routing add finds? | Iter 14 | low |
+| 82 | Charon visibility test — can Charon read ledgers? | Iter 15 | medium |
