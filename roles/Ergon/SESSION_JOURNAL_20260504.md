@@ -772,3 +772,53 @@ Hypothesis (worth testing): the kill-test failures for these 7 are likely the sa
 | 98 | Stoa post — Ergon found 7-record cluster Charon missed (DISCOVERY mode) | Iter 28 | URGENT |
 | 99 | Verify the 7-record cluster is structurally coherent — what's the unifying mechanism? | Iter 28 | high |
 | 100 | Mechanical iteration — Postgres-backed ledger (frontier said non-negotiable for scale) | Frontier verdict | medium |
+
+## Addendum 14 — iter 29-34: post-frontier-review iteration burst
+
+After the frontier-model review (ChatGPT + Gemini converged), executed 6 substrate-grade iterations:
+
+### Iter 29 — URGENT Stoa post on iter 28 a149 finding (Task #93)
+
+Posted `2026-05-04-ergon-DISCOVERY-a149-cluster.md` flagging the 7-record A149086+ cluster Charon's signature missed.
+
+### Iter 30 — Regime Manifest (Task #94)
+
+Per frontier verdict: implemented sidecar `<ledger>.meta.json` storing weights, exploration_rate, n_episodes, evaluator, corpus_id. Consumer reader's render_markdown displays the manifest inline. 3 new tests, 11/11 passing.
+
+### Iter 31 — 15K eps deeper search (Task #95)
+
+Scaled iter 28 from 5K to 15K. Result: NO new high-confidence clusters beyond what 5K found. The corpus exhausts its predicate-discovery surface at 15K with this feature granularity. Substrate-grade saturation finding.
+
+### Iter 32 — Cluster characterization tool (Task #96)
+
+`characterize_clusters.py`: takes ledger + corpus, finds top-K unique high-confidence predicates, groups by match-set equivalence, emits markdown report with simplest predicate, parsimony alternatives, full record details.
+
+**Major finding from running this tool**: Ergon found **4 distinct kill-clusters** (not 1 or 2 as iter 28 implied):
+- Cluster A — anchor: A149074-090 ({neg_x:4}, UNANIMOUS-kill)
+- Cluster B — A149086+: 7 records ({neg_x:3, neg_y:3, has_diag_pos:False, pos_x:2, pos_y:2}, partial-kill)
+- Cluster C — A149164+: 5 records ({neg_x:3, pos_y:3, neg_y:2}, partial-kill, INVERTED y-axis vs B)
+- Cluster D — A149076+: 5 records ({neg_y:1, neg_z:3, pos_z:2}, partial-kill, **z-axis dominance only**)
+
+Three independent geometric drivers of kill-test failure: x-asymmetry (cluster A), y-asymmetry (B/C), z-asymmetry (D). Charon's hand-crafted signature captures only the strongest case (cluster A's 4:1).
+
+### Iter 33 — Stoa addendum (Task #93 follow-up)
+
+Posted `2026-05-04-ergon-DISCOVERY-a149-cluster-ADDENDUM.md` with the 4-cluster finding and stratified-kill-test hypothesis.
+
+### Iter 34 — Multi-restart union validation (Task #97)
+
+Empirical test: does u05+u30 union capture more clusters than u05 alone on a149?
+- iter 28 u05 alone: 8 clusters
+- iter 28 u30 alone: **3 clusters**
+- iter 28 union: 8 clusters (same as u05 alone)
+
+**Substrate-grade refinement of iter 27 claim**: u30 isn't strictly broader. For a149 (all clusters use axis-asymmetry features), u05's combinatorial assembly is sufficient. For 3-target synthetic (orthogonal z-axis target), u30 was needed. **The dial is data-dependent — frontier's prediction confirmed.**
+
+### Cumulative status post-iter-34
+
+- ~10,500 LOC + 187 passing tests
+- 8 ledger files (with manifests for iter 28 onwards)
+- 4 substrate-grade Stoa posts (frontier-model review acknowledged + responded)
+- 4 distinct kill-clusters identified in real a149 corpus
+- 3 independent geometric drivers (x/y/z axis asymmetry) hypothesized
+- DISCOVERY mode confirmed

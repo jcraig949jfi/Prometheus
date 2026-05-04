@@ -235,20 +235,30 @@ def main(argv: List[str]) -> int:
     if len(argv) < 2:
         print(
             "Usage: python -m ergon.learner.tools.characterize_clusters "
-            "<ledger.jsonl> [--corpus a149_real|obstruction_synthetic]"
+            "<ledger.jsonl> [<ledger2.jsonl> ...] "
+            "[--corpus a149_real|obstruction_synthetic]"
         )
         return 2
 
-    path = Path(argv[1])
-    if not path.exists():
-        print(f"Ledger not found: {path}")
-        return 1
-
+    # Collect ledger paths (everything before --corpus)
+    paths = []
     corpus_id = "a149_real"
-    if "--corpus" in argv:
-        i = argv.index("--corpus")
-        if i + 1 < len(argv):
-            corpus_id = argv[i + 1]
+    i = 1
+    while i < len(argv):
+        if argv[i] == "--corpus":
+            if i + 1 < len(argv):
+                corpus_id = argv[i + 1]
+                i += 2
+                continue
+        else:
+            paths.append(Path(argv[i]))
+            i += 1
+
+    missing = [p for p in paths if not p.exists()]
+    if missing:
+        for p in missing:
+            print(f"Ledger not found: {p}")
+        return 1
 
     if corpus_id not in CORPUS_LOADERS:
         print(f"Unknown corpus '{corpus_id}'. Known: {list(CORPUS_LOADERS.keys())}")
@@ -257,18 +267,33 @@ def main(argv: List[str]) -> int:
     print(f"Loading {corpus_id} corpus...", file=sys.stderr)
     corpus = CORPUS_LOADERS[corpus_id]()
 
-    print(f"Loading ledger {path}...", file=sys.stderr)
+    # Load and merge records (dedupe by content_hash + seed + episode + trial)
+    seen = set()
     records = []
-    with path.open("r", encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if line:
-                records.append(json.loads(line))
+    for p in paths:
+        print(f"Loading ledger {p}...", file=sys.stderr)
+        with p.open("r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    r = json.loads(line)
+                    key = (r.get("genome_content_hash"), r.get("seed"),
+                           r.get("episode"), r.get("trial_name"))
+                    if key not in seen:
+                        seen.add(key)
+                        records.append(r)
 
-    print(f"Finding top clusters from {len(records)} records...", file=sys.stderr)
+    print(f"Finding top clusters from {len(records)} records (merged from {len(paths)} ledgers)...",
+          file=sys.stderr)
     clusters = find_top_clusters(records, corpus)
 
-    report = render_cluster_report(clusters, corpus, path, corpus_id)
+    if len(paths) == 1:
+        path_label = paths[0]
+    else:
+        path_label = paths  # render_cluster_report will handle list case
+    # Compatibility: pass first path if list (existing renderer signature)
+    label = paths[0] if len(paths) == 1 else Path(f"merged_{len(paths)}_ledgers.jsonl")
+    report = render_cluster_report(clusters, corpus, label, corpus_id)
     print(report)
     return 0
 
