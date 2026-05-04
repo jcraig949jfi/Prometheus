@@ -26,9 +26,11 @@ from prometheus_math.lehmer_brute_force import (
     DEFAULT_BAND_UPPER,
     DEFAULT_COEF_RANGE,
     DEGREE,
+    INCONCLUSIVE_VERIFICATION_FAILURE_THRESHOLD,
     LEHMER_M,
     BATCH_SIZE,
     build_palindrome_descending,
+    classify_cyclotomic_noise,
     compute_mahler_batch_descending,
     descending_to_ascending,
     enumerate_subspace,
@@ -296,15 +298,15 @@ def test_composition_run_brute_force_tiny_smoke(tmp_path: Path):
     # Schema
     for k in [
         "subspace", "coef_range", "band_upper", "total_polynomials",
-        "polys_processed", "in_lehmer_band", "wall_time_seconds",
-        "verdict", "metadata",
+        "polys_processed", "in_lehmer_band", "cyclotomic_noise_filtered",
+        "wall_time_seconds", "verdict", "metadata",
     ]:
         assert k in res, f"missing key {k}"
     assert res["total_polynomials"] == 3 ** 7
     assert res["polys_processed"] == 3 ** 7
-    # Verdict is one of three.
+    # Verdict is one of four (post bug-fix 2026-05-04 added INCONCLUSIVE).
     assert res["verdict"] in (
-        "H1_LOCAL_LEMMA", "H2_BREAKS", "H5_CONFIRMED",
+        "H1_LOCAL_LEMMA", "H2_BREAKS", "H5_CONFIRMED", "INCONCLUSIVE",
     )
     # File on disk matches.
     assert out.exists()
@@ -332,7 +334,12 @@ def test_composition_band_count_consistent_with_filter():
 
 
 def test_composition_verdict_logic_is_consistent():
-    """verdict_from_band returns the documented label for each branch."""
+    """verdict_from_band returns the documented label for each branch.
+
+    Updated 2026-05-04 (post bug-fix): H5_CONFIRMED now strictly requires
+    every band entry to be in Mossinghoff. Cyclotomic-noise entries are
+    filtered upstream in ``run_brute_force`` and never reach this dispatch.
+    """
     # Empty band ⇒ H1_LOCAL_LEMMA.
     assert verdict_from_band([]) == "H1_LOCAL_LEMMA"
 
@@ -340,26 +347,154 @@ def test_composition_verdict_logic_is_consistent():
     fake = [
         {"is_cyclotomic": False, "is_irreducible": True,
          "in_mossinghoff": True, "mossinghoff_label": "x",
-         "has_cyclotomic_factor": False},
+         "has_cyclotomic_factor": False, "verification_failed": False},
     ]
     assert verdict_from_band(fake) == "H5_CONFIRMED"
-
-    # Cyclotomic-factored entries ⇒ H5_CONFIRMED (catalog ate via
-    # cyclotomic factors).
-    fake2 = [
-        {"is_cyclotomic": False, "is_irreducible": False,
-         "in_mossinghoff": False, "mossinghoff_label": None,
-         "has_cyclotomic_factor": True},
-    ]
-    assert verdict_from_band(fake2) == "H5_CONFIRMED"
 
     # Genuinely-novel entry ⇒ H2_BREAKS.
     fake3 = [
         {"is_cyclotomic": False, "is_irreducible": True,
          "in_mossinghoff": False, "mossinghoff_label": None,
-         "has_cyclotomic_factor": False},
+         "has_cyclotomic_factor": False, "verification_failed": False},
     ]
     assert verdict_from_band(fake3) == "H2_BREAKS"
+
+    # NEW (bug fix 2026-05-04): a cyclotomic-factored entry that is NOT
+    # in Mossinghoff and has NOT failed verification is a genuine non-Moss
+    # band hit. Verdict must be H2_BREAKS, NOT H5_CONFIRMED. (Pre-fix this
+    # incorrectly returned H5_CONFIRMED, which silently masked novel hits.)
+    fake_novel_cyc_factor = [
+        {"is_cyclotomic": False, "is_irreducible": False,
+         "in_mossinghoff": False, "mossinghoff_label": None,
+         "has_cyclotomic_factor": True, "verification_failed": False},
+    ]
+    assert verdict_from_band(fake_novel_cyc_factor) == "H2_BREAKS"
+
+    # Mixed in-Moss + novel ⇒ H2_BREAKS (one novel breaks the universal).
+    mixed = [
+        {"is_cyclotomic": False, "is_irreducible": True,
+         "in_mossinghoff": True, "mossinghoff_label": "x",
+         "has_cyclotomic_factor": False, "verification_failed": False},
+        {"is_cyclotomic": False, "is_irreducible": True,
+         "in_mossinghoff": False, "mossinghoff_label": None,
+         "has_cyclotomic_factor": False, "verification_failed": False},
+    ]
+    assert verdict_from_band(mixed) == "H2_BREAKS"
+
+
+def test_authority_phi15_cyclotomic_classified_as_noise(tmp_path: Path):
+    """Bug-fix 2026-05-04: cyclotomic Phi_15-class polys go to REJECTED.
+
+    Phi_15 has degree phi(15) = 8 (the 8 primitive 15th roots of unity).
+    A deg-14 polynomial of the form Phi_15 * Phi_d (with deg(Phi_d) = 6) is
+    a pure cyclotomic product — true M = 1 exactly. The numpy companion
+    matrix can drift these slightly above 1 + 1e-6, putting them inside
+    the band filter; the cyclotomic-noise classifier must catch them.
+
+    Concrete case: classify_cyclotomic_noise must return True when given
+    NaN mpmath, has_cyclotomic_factor=True, residual_M ~= 1.0.
+    """
+    # Direct unit test of the classifier.
+    assert classify_cyclotomic_noise(
+        M_numpy=1.00012,
+        M_mpmath=float("nan"),
+        has_cyclotomic_factor=True,
+        residual_M_after_cyclotomic_factor=1.00005,
+    ) is True
+    # Sanity: with no cyclotomic factor, NOT classified as noise.
+    assert classify_cyclotomic_noise(
+        M_numpy=1.176,
+        M_mpmath=1.176,
+        has_cyclotomic_factor=False,
+        residual_M_after_cyclotomic_factor=None,
+    ) is False
+    # Sanity: a true Lehmer-band entry (M ~ 1.176, residual ~ 1.176) is
+    # NOT classified as cyclotomic noise even with a cyclotomic factor.
+    assert classify_cyclotomic_noise(
+        M_numpy=1.176,
+        M_mpmath=1.176,
+        has_cyclotomic_factor=True,
+        residual_M_after_cyclotomic_factor=1.176,
+    ) is False
+
+
+def test_property_verdict_consistent_with_band_contents():
+    """Bug-fix 2026-05-04 invariant: verdict and band contents are coherent.
+
+    The H5_CONFIRMED verdict must imply every entry in_lehmer_band has
+    in_mossinghoff == True. (Pre-fix this could fire with non-Moss
+    entries because cyclotomic-noise entries leaked through.)
+
+    We test this on the (-1, 1) smoke run.
+    """
+    res = run_brute_force(
+        coef_range=(-1, 1),
+        band_upper=DEFAULT_BAND_UPPER,
+        num_workers=1,
+        c0_positive_only=True,
+        progress=False,
+    )
+    if res["verdict"] == "H5_CONFIRMED":
+        assert len(res["in_lehmer_band"]) > 0, (
+            "H5_CONFIRMED with empty band is inconsistent (should be H1)"
+        )
+        for entry in res["in_lehmer_band"]:
+            assert entry["in_mossinghoff"] is True, (
+                f"H5_CONFIRMED but entry not in Mossinghoff: {entry!r}"
+            )
+    elif res["verdict"] == "H1_LOCAL_LEMMA":
+        assert len(res["in_lehmer_band"]) == 0
+    elif res["verdict"] == "H2_BREAKS":
+        # At least one non-Moss, non-failed entry exists.
+        novel = [
+            e for e in res["in_lehmer_band"]
+            if (not e["in_mossinghoff"])
+            and (not e.get("verification_failed", False))
+        ]
+        assert len(novel) >= 1, (
+            "H2_BREAKS requires at least one verified non-Moss entry"
+        )
+    elif res["verdict"] == "INCONCLUSIVE":
+        n_total = len(res["in_lehmer_band"])
+        n_failed = sum(
+            1 for e in res["in_lehmer_band"]
+            if e.get("verification_failed", False)
+        )
+        assert n_total > 0
+        assert (n_failed / n_total) > INCONCLUSIVE_VERIFICATION_FAILURE_THRESHOLD
+
+
+def test_edge_nan_mpmath_marks_verification_failed_or_filters():
+    """Bug-fix 2026-05-04 edge: M_mpmath = NaN entries are either filtered
+    as cyclotomic noise OR marked verification_failed.
+
+    The substrate cannot certify M to high precision when mpmath returns
+    NaN; we either reclassify (if cyclotomic-factor evidence) or flag the
+    entry so the verdict logic can route to INCONCLUSIVE.
+    """
+    res = run_brute_force(
+        coef_range=(-1, 1),
+        band_upper=DEFAULT_BAND_UPPER,
+        num_workers=1,
+        c0_positive_only=True,
+        progress=False,
+    )
+    # Every entry in in_lehmer_band must have a verification_failed field.
+    for entry in res["in_lehmer_band"]:
+        assert "verification_failed" in entry, (
+            f"verification_failed key missing from entry: {entry!r}"
+        )
+        # If mpmath is NaN, the entry should either be filtered out (in
+        # cyclotomic_noise_filtered) or flagged with verification_failed.
+        if not (entry["M_mpmath"] == entry["M_mpmath"]):  # NaN-safe
+            assert entry["verification_failed"] is True, (
+                f"NaN M_mpmath but verification_failed not set: {entry!r}"
+            )
+    # cyclotomic_noise_filtered must be present in the result schema.
+    assert "cyclotomic_noise_filtered" in res
+    # Every filtered entry must have filter_reason == "cyclotomic_noise".
+    for entry in res["cyclotomic_noise_filtered"]:
+        assert entry.get("filter_reason") == "cyclotomic_noise"
 
 
 def test_composition_lehmer_extension_lookup_in_mossinghoff():

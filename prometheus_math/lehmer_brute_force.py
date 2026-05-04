@@ -119,8 +119,10 @@ __all__ = [
     "DEFAULT_BAND_UPPER",
     "DEFAULT_COEF_RANGE",
     "DEGREE",
+    "INCONCLUSIVE_VERIFICATION_FAILURE_THRESHOLD",
     "LEHMER_M",
     "build_palindrome_descending",
+    "classify_cyclotomic_noise",
     "compute_mahler_batch_descending",
     "enumerate_subspace",
     "filter_band_candidates",
@@ -569,6 +571,80 @@ def _check_cyclotomic_factor_via_sympy(
     return (found, factored_M)
 
 
+#: Numerical-noise tolerance for the cyclotomic-noise classifier.
+#: When mpmath fails (NaN) AND the polynomial has a cyclotomic factor AND
+#: the residual M (after dividing the cyclotomic out) is within this tol of
+#: 1.0, the entry is reclassified as "cyclotomic noise" — a polynomial whose
+#: true Mahler measure is 1 (purely cyclotomic up to numerical drift) but
+#: whose numpy-computed M happens to drift above the (1 + 1e-6) lower band
+#: cutoff. These entries should NOT count as Lehmer-band candidates.
+#:
+#: 5e-4 is the empirically-observed drift ceiling for high-multiplicity
+#: cyclotomic products at the (-1, 1) coefficient floor (smoke run 2026-05-04
+#: showed residual drifts up to ~1.2e-4 in this regime). Genuine Lehmer-band
+#: candidates have residual M >= 1.176, so the 1.0005 / 1.176 gap (3 orders
+#: of magnitude) makes false-negative filtering (i.e. discarding a genuine
+#: band hit) effectively impossible at this tolerance.
+CYCLOTOMIC_NOISE_RESIDUAL_TOL: float = 5e-4
+
+#: When mpmath gives a finite answer but very close to 1.0, treat as
+#: cyclotomic noise too. Tighter than CYCLOTOMIC_NOISE_RESIDUAL_TOL because
+#: mpmath's high-precision answer should already be near-exact.
+CYCLOTOMIC_NOISE_MPMATH_TOL: float = 1e-4
+
+
+def classify_cyclotomic_noise(
+    M_numpy: float,
+    M_mpmath: float,
+    has_cyclotomic_factor: bool,
+    residual_M_after_cyclotomic_factor: Optional[float],
+    residual_tol: float = CYCLOTOMIC_NOISE_RESIDUAL_TOL,
+    mpmath_tol: float = CYCLOTOMIC_NOISE_MPMATH_TOL,
+) -> bool:
+    """Return True iff a band candidate is cyclotomic-noise (true M = 1).
+
+    A cyclotomic-noise candidate satisfies ALL of:
+    * mpmath verification failed (NaN) OR mpmath gave a value within
+      ``mpmath_tol`` of 1.0;
+    * the polynomial factors through a cyclotomic Phi_n;
+    * the residual M (after dividing the cyclotomic factor out) is finite
+      and within ``residual_tol`` of 1.0.
+
+    Such candidates are products of cyclotomic factors with numerical
+    drift in the numpy companion-matrix path; their true Mahler measure
+    is 1 exactly. They must be filtered out of ``in_lehmer_band`` so the
+    band reflects only genuine sub-1.18 (non-cyclotomic) candidates.
+
+    See bug-fix addendum in ``LEHMER_BRUTE_FORCE_RESULTS.md`` 2026-05-04.
+    """
+    # Need a cyclotomic factor and a finite residual to be sure.
+    if not has_cyclotomic_factor:
+        return False
+    if residual_M_after_cyclotomic_factor is None:
+        return False
+    if not math.isfinite(float(residual_M_after_cyclotomic_factor)):
+        return False
+    if abs(float(residual_M_after_cyclotomic_factor) - 1.0) > residual_tol:
+        return False
+
+    # Either mpmath failed (NaN) — we can't certify, but cyclotomic
+    # factor + tiny residual is strong evidence — or mpmath gave a value
+    # very close to 1.
+    mpmath_is_nan = not (M_mpmath == M_mpmath)  # NaN-safe
+    mpmath_near_one = (
+        not mpmath_is_nan and abs(float(M_mpmath) - 1.0) < mpmath_tol
+    )
+    if not (mpmath_is_nan or mpmath_near_one):
+        return False
+    # numpy M must also be in the noise zone (close to 1) — high numpy
+    # M would mean a real band candidate, not noise.
+    if not math.isfinite(float(M_numpy)):
+        return False
+    if abs(float(M_numpy) - 1.0) > 10 * residual_tol:
+        return False
+    return True
+
+
 # ---------------------------------------------------------------------------
 # Mossinghoff cross-check
 # ---------------------------------------------------------------------------
@@ -757,41 +833,83 @@ def process_shard(
 # Verdict
 # ---------------------------------------------------------------------------
 
+#: Fraction of band entries with mpmath verification failure that triggers
+#: an INCONCLUSIVE verdict instead of H5/H2. mpmath returning NaN means we
+#: cannot certify M to high precision; if too many entries fail, the verdict
+#: is not trustworthy.
+INCONCLUSIVE_VERIFICATION_FAILURE_THRESHOLD: float = 0.5
+
+
 def verdict_from_band(verified_band_entries: list[dict]) -> str:
-    """Decide H1_LOCAL_LEMMA / H2_BREAKS / H5_CONFIRMED from the verified band.
+    """Decide H1_LOCAL_LEMMA / H2_BREAKS / H5_CONFIRMED / INCONCLUSIVE.
 
     Each entry in ``verified_band_entries`` should have keys:
       ``is_cyclotomic`` (bool), ``is_irreducible`` (bool|None),
       ``in_mossinghoff`` (bool), ``mossinghoff_label`` (str|None),
-      ``has_cyclotomic_factor`` (bool, optional).
+      ``has_cyclotomic_factor`` (bool, optional),
+      ``verification_failed`` (bool, optional).
 
     Logic
     -----
-    Filter the band to "non-cyclotomic, plausibly novel" entries: those
-    that are NOT in Mossinghoff and NOT cyclotomic AND not provably
-    reducible by a cyclotomic factor.
+    The four-state dispatch:
 
-    * If every band entry is in Mossinghoff (or is cyclotomic / reducible
-      to a known cyclotomic factor): H5_CONFIRMED — catalog ate the
-      reachable space.
-    * If at least one entry is genuinely novel (not in catalog, not
-      cyclotomic-reducible): H2_BREAKS — would be a discovery.
-    * If the band is empty AND the catalog itself has zero deg-14
-      palindromic +/-5 entries with M < 1.18: H1_LOCAL_LEMMA. (This
-      branch can't actually fire on this subspace — Mossinghoff has 4
-      deg-14 entries with M=1.176; we'll always rediscover them.)
+    * **H1_LOCAL_LEMMA** — band is empty (no entries survived the
+      cyclotomic-noise filter and reached this stage). The substrate
+      certifies the slice is empty modulo cyclotomic noise.
+    * **H5_CONFIRMED** — every band entry is in Mossinghoff. Strict
+      condition: catalog ate the reachable subspace exactly.
+    * **H2_BREAKS** — at least one band entry is NOT in Mossinghoff and
+      did NOT fail verification. This entry is a genuine candidate for a
+      novel sub-1.18 specimen.
+    * **INCONCLUSIVE** — more than ``INCONCLUSIVE_VERIFICATION_FAILURE_THRESHOLD``
+      of band entries failed mpmath verification (M_mpmath = NaN). Without
+      high-precision certification we cannot decide H5 vs H2 cleanly, so
+      we explicitly mark the run inconclusive rather than declaring a
+      false H5.
+
+    Bug-fix history
+    ---------------
+    Pre-2026-05-04 the H5 branch fired whenever no entry was *strictly*
+    novel (i.e. not-cyclotomic AND not-cyclotomic-factor AND not-in-Moss),
+    which over-counted cyclotomic-factor entries that were ALSO not in
+    Mossinghoff as "non-novel". Cyclotomic-noise entries are now filtered
+    upstream in ``run_brute_force`` and removed from the band before
+    verdict dispatch, so the H5 condition can be tightened to "every band
+    entry is in Mossinghoff".
     """
     if not verified_band_entries:
         return "H1_LOCAL_LEMMA"
+
+    n_total = len(verified_band_entries)
+    n_failed = sum(
+        1 for e in verified_band_entries
+        if e.get("verification_failed", False)
+    )
+    if n_total > 0 and (n_failed / n_total) > INCONCLUSIVE_VERIFICATION_FAILURE_THRESHOLD:
+        return "INCONCLUSIVE"
+
+    # An entry is a genuine novel candidate iff:
+    #   (a) it is NOT in Mossinghoff,
+    #   (b) it did NOT fail verification (mpmath gave a finite answer),
+    #   (c) it is NOT cyclotomic and NOT a cyclotomic-noise residual.
+    # Note: entries that are mpmath-NaN OR pure cyclotomic-noise should
+    # have already been filtered upstream; this is a defensive re-check.
     novel = [
         e for e in verified_band_entries
         if (not e.get("in_mossinghoff", False))
         and (not e.get("is_cyclotomic", False))
-        and (not e.get("has_cyclotomic_factor", False))
+        and (not e.get("verification_failed", False))
     ]
     if novel:
         return "H2_BREAKS"
-    return "H5_CONFIRMED"
+
+    # No verified novel entry. If every entry is in Mossinghoff, H5
+    # holds strictly. Otherwise we have non-Moss entries whose
+    # verification failed (mpmath NaN) — we cannot certify them either
+    # way, so the verdict is INCONCLUSIVE for this slice.
+    if all(e.get("in_mossinghoff", False) for e in verified_band_entries):
+        return "H5_CONFIRMED"
+    return "INCONCLUSIVE"
 
 
 # ---------------------------------------------------------------------------
@@ -901,6 +1019,7 @@ def run_brute_force(
     # Verify each band candidate at high precision, classify, cross-check.
     # ------------------------------------------------------------------
     verified: list[dict] = []
+    cyclotomic_noise_filtered: list[dict] = []
     for hc, M_np in band_raw:
         try:
             M_mp = mpmath_recheck(hc, dps=30)
@@ -932,8 +1051,11 @@ def run_brute_force(
         is_irred = is_irreducible_rational_root(hc)
         in_moss, moss_label = lookup_in_mossinghoff(hc, M_mp if M_mp == M_mp else M_np)
 
+        # mpmath verification status: NaN means we couldn't certify.
+        mpmath_failed = not (M_mp == M_mp)  # NaN-safe
+
         asc = descending_to_ascending(build_palindrome_descending(hc))
-        verified.append({
+        entry = {
             "half_coeffs": list(hc),
             "coeffs_ascending": asc,
             "M_numpy": float(M_np),
@@ -946,7 +1068,29 @@ def run_brute_force(
             "is_irreducible_rational_root": is_irred,  # bool|None
             "in_mossinghoff": bool(in_moss),
             "mossinghoff_label": moss_label,
-        })
+            "verification_failed": bool(mpmath_failed),
+        }
+
+        # Bug-fix 2026-05-04: cyclotomic-noise filter. A band candidate
+        # whose mpmath verification is NaN (or near 1.0) AND has a
+        # cyclotomic factor AND has residual M near 1.0 is a cyclotomic
+        # product with numerical drift, NOT a genuine band hit. Route
+        # these to a separate diagnostic bucket; do not include them in
+        # in_lehmer_band where they would corrupt the verdict logic.
+        is_cyc_noise = classify_cyclotomic_noise(
+            M_numpy=float(M_np),
+            M_mpmath=float(M_mp),
+            has_cyclotomic_factor=bool(has_cyc_factor),
+            residual_M_after_cyclotomic_factor=(
+                float(residual_M) if residual_M is not None else None
+            ),
+        )
+        if is_cyc_noise:
+            entry["filter_reason"] = "cyclotomic_noise"
+            cyclotomic_noise_filtered.append(entry)
+            continue
+
+        verified.append(entry)
 
     verdict = verdict_from_band(verified)
     wall_time = time.perf_counter() - t_start
@@ -962,6 +1106,7 @@ def run_brute_force(
         "polys_processed": int(polys_processed_total),
         "raw_band_count": int(len(band_raw)),
         "in_lehmer_band": verified,
+        "cyclotomic_noise_filtered": cyclotomic_noise_filtered,
         "wall_time_seconds": float(wall_time),
         "verdict": verdict,
         "metadata": {

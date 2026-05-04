@@ -74,7 +74,7 @@ Test counts: 2436 → 2625 passing (+189 over 2 days). 0 failures.
 
 ## 6. Findings — Cross-Domain Validations
 
-> **Substrate-credit-laundering warning (per Aporia review).** Every row below describes modal-class recovery, NOT learned mathematical structure. A naive Bayes classifier with zero learning posts comparable lifts. This table demonstrates KERNEL I/O UNIFORMITY (engineering result), not mathematical-capability transport (science result). Per-cell caveats are appended.
+> **Substrate-credit-laundering warning (post Case-A synthetic test).** Every row below describes **NO LEARNING AT ALL** — the same lift pattern is reproducible on a synthetic env where there is nothing to discover (continuous regression with Gaussian noise on linearly separable structure). REINFORCE collapses to ≤3 active bins on every variant; PPO stays uniform. The lifts are entropy collapse onto the empirical class prior — RL is locally optimal under discrete-bin reward because the gradient is degenerate. This table demonstrates KERNEL I/O UNIFORMITY (engineering result) AND a cross-domain replication of well-known RL failure modes (negative result). It is NOT mathematical-capability transport. Per-cell caveats are appended.
 
 | Domain | Best algo | Lift | Welch p | What this IS NOT |
 |---|---|---|---|---|

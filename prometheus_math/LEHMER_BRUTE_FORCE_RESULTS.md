@@ -199,8 +199,133 @@ test cases; runs in ~45 s).
 
 ## Files
 
-* `prometheus_math/lehmer_brute_force.py` — main module (~700 LOC).
-* `prometheus_math/tests/test_lehmer_brute_force.py` — 17 tests across
+* `prometheus_math/lehmer_brute_force.py` — main module (~770 LOC).
+* `prometheus_math/tests/test_lehmer_brute_force.py` — 20 tests across
   authority / property / edge / composition.
 * `prometheus_math/_lehmer_brute_force_results.json` — full results.
+* `prometheus_math/_lehmer_smoke_results.json` — smoke-run results.
 * `prometheus_math/LEHMER_BRUTE_FORCE_RESULTS.md` — this document.
+
+---
+
+## BUG FIX 2026-05-04 (post Aporia review)
+
+The 18-second smoke test (coef range [-1, 1], 2187 polys) surfaced two
+substrate bugs *before* the full 97M enumeration. Aporia caught them
+during the daily review; both are fixed in the same commit. The full
+enumeration is **NOT** re-run — the design pivot defers it indefinitely
+— so these fixes are validated only via the smoke test.
+
+This is exactly the substrate working as intended: small, cheap runs
+expose logic problems before expensive ones lock them in.
+
+### Bug 1 — Cyclotomic-noise false-positives in `in_lehmer_band`
+
+**Symptom.** Pre-fix smoke result had 11 band entries; 5 of them were
+products of cyclotomic factors with numerical drift in the numpy path,
+not genuine Lehmer-band candidates. They had M_numpy ≈ 1.0001 (tiny
+drift above the 1 + 1e-6 lower band cutoff), M_mpmath = NaN (mpmath
+couldn't converge on the high-multiplicity unit-circle roots), and
+residual_M ≈ 1.0000xxx (the cyclotomic-factor division left only noise
+behind). True Mahler measure of these polys is 1 exactly.
+
+**Root cause.** The pipeline's first-pass cyclotomic detection at
+`run_brute_force` (line ~910 pre-fix) only flagged entries with M_mpmath
+within 1e-10 of 1.0 OR (M_mpmath = NaN AND M_numpy within 1e-9 of 1.0).
+The 1e-9 cutoff was tighter than the actual numpy drift on these
+polys (~1e-4), so they slipped through.
+
+**Fix.** New helper `classify_cyclotomic_noise` and a post-mpmath filter
+that reclassifies entries satisfying ALL of:
+
+* `has_cyclotomic_factor == True`
+* `residual_M_after_cyclotomic_factor` finite and within 5e-4 of 1.0
+* `M_mpmath` is NaN OR within 1e-4 of 1.0
+* `M_numpy` finite and within 5e-3 of 1.0
+
+…as cyclotomic-noise. These entries are routed to a new
+`cyclotomic_noise_filtered` list (kept in the JSON output for diagnostic
+transparency) and excluded from `in_lehmer_band`.
+
+**Tolerance choice.** 5e-4 on the residual was selected because:
+(a) the largest observed drift in the smoke run was 1.17e-4;
+(b) genuine Lehmer-band candidates have residual M ≥ 1.176 (3 orders of
+magnitude above 1.0005), so false-negative filtering of real band hits
+is effectively impossible at this tolerance.
+
+### Bug 2 — Verdict-logic inconsistency
+
+**Symptom.** Pre-fix verdict was H5_CONFIRMED ("all band entries in
+Mossinghoff exactly") even though 5 of 11 entries had `in_mossinghoff:
+False`.
+
+**Root cause.** The pre-fix `verdict_from_band` flagged an entry as
+"non-novel" if it was either in Mossinghoff OR cyclotomic OR had a
+cyclotomic factor — meaning the 5 cyclotomic-noise entries (all
+non-Moss but with cyclotomic factors) were silently treated as
+non-novel and the verdict fell into the H5 branch.
+
+**Fix.** Rewritten dispatch with stricter semantics:
+
+* **H1_LOCAL_LEMMA** — `in_lehmer_band` empty.
+* **H5_CONFIRMED** — every band entry has `in_mossinghoff == True`.
+* **H2_BREAKS** — at least one band entry is NOT in Mossinghoff AND
+  NOT verification-failed (i.e. genuine non-Moss candidate).
+* **INCONCLUSIVE** — more than `INCONCLUSIVE_VERIFICATION_FAILURE_THRESHOLD`
+  (default 0.5) of band entries failed mpmath verification, OR there
+  are non-Moss entries that all failed verification (can't certify
+  novelty either way).
+
+The cyclotomic-noise filter from Bug 1 removes the 5 spurious entries
+upstream, so the H5 condition now correctly evaluates "every survivor
+in Moss" → H5_CONFIRMED.
+
+### Validation (smoke test only, 2026-05-04)
+
+| Metric | Pre-fix | Post-fix |
+|---|---|---|
+| `in_lehmer_band` count | 11 | 6 |
+| `cyclotomic_noise_filtered` count | (field absent) | 5 |
+| Entries with `in_mossinghoff: True` in band | 6 | 6 |
+| Verdict | `H5_CONFIRMED` (incorrect — non-Moss in band) | `H5_CONFIRMED` (correct) |
+| Wall time | 18.2 s | 17.9 s |
+| Tests passing | 17 | 20 |
+
+The 6 surviving band entries are all `Lehmer-extension (deg 14)`
+rediscoveries (M ≈ 1.17628081826 to 10+ decimal places) — six
+sign-symmetry-equivalent palindromes of the deg-14 Lehmer-extension.
+
+### Tests added
+
+* `test_authority_phi15_cyclotomic_classified_as_noise` — direct unit
+  test of `classify_cyclotomic_noise`. Cyclotomic-noise input → True;
+  no-cyclotomic-factor and genuine-band-entry inputs → False.
+* `test_property_verdict_consistent_with_band_contents` — invariant
+  test on the smoke run. H5_CONFIRMED implies every band entry is in
+  Mossinghoff; H1 implies empty band; H2 implies at least one verified
+  novel entry; INCONCLUSIVE implies majority verification failures.
+* `test_edge_nan_mpmath_marks_verification_failed_or_filters` — every
+  NaN-mpmath entry in the band is flagged with `verification_failed`,
+  and `cyclotomic_noise_filtered` entries carry
+  `filter_reason: cyclotomic_noise`.
+
+### What this does NOT change
+
+* The full 97M-poly enumeration is still **deferred per Aporia design
+  pivot**. Bug fixes are validated only on the 2187-poly smoke test.
+* The Mossinghoff snapshot, the band cutoff (1.18), the sign
+  canonicalisation (c_0 > 0), and the sharding remain unchanged.
+* Pre-fix and post-fix smoke runs both rediscover Lehmer-extension
+  polys identically (M ≈ 1.17628 to 10+ decimals); the bugs were in
+  classification, not in measurement.
+
+### Honest framing
+
+The substrate caught its own classification errors *before* a costly
+full enumeration baked them in. Both bugs are bookkeeping problems on
+top of mathematically-correct primitives — the numpy companion-matrix
+path and the mpmath rechecker were always producing the right values;
+the wrappers were misinterpreting them. This is the cheapest possible
+form of error recovery: kill the bug while it's still surfacing on a
+2-thousand-poly run, not a 97-million-poly one.
+
