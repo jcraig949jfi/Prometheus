@@ -562,13 +562,18 @@ class ResidualExtension:
         )
 
         # Persist a real claim row so existing kernel ops can reference it.
+        # Caveats column added by migration 004 — REFINE-minted claims
+        # default to empty caveats (refinement is a clean continuation of
+        # the parent's reasoning; if the parent had caveats, the user can
+        # later add them via FALSIFY's WARN path).
         try:
             self.kernel.conn.execute(
-                "INSERT INTO claims VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+                "INSERT INTO claims VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
                 (
                     new_claim_id, new_target, new_hypothesis, new_evidence,
                     new_kill, new_tier.value, "pending",
                     None, None, None, None, None,
+                    "[]",
                 ),
             )
             # Refinement edge.

@@ -26,6 +26,13 @@ from .sigma_kernel import (  # noqa: F401
     Verdict,
     VerdictResult,
 )
+from .caveats import (  # noqa: F401
+    KNOWN_CAVEATS,
+    MAX_CAVEAT_LENGTH,
+    describe as describe_caveat,
+    is_known as is_known_caveat,
+    validate_caveats,
+)
 
 __all__ = [
     "SigmaKernel",
@@ -36,4 +43,10 @@ __all__ = [
     "Tier",
     "Verdict",
     "VerdictResult",
+    # caveat-as-metadata-on-CLAIM (proposal 2026-05-04)
+    "KNOWN_CAVEATS",
+    "MAX_CAVEAT_LENGTH",
+    "validate_caveats",
+    "is_known_caveat",
+    "describe_caveat",
 ]

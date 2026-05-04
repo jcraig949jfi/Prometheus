@@ -220,18 +220,28 @@ class CostModel:
 
     All limits are inclusive ceilings; EVAL raises BudgetExceeded if the
     actual run exceeds any of them.
+
+    ``calibrated_cost`` is an optional structured estimate (complexity
+    class + n=1 coefficient in microseconds) used by the substrate's
+    cost-aware scheduler. It does not gate EVAL — only ``max_seconds``
+    et al do — but it lets the scheduler rank candidate ops by expected
+    runtime at a given input size.
     """
 
     max_seconds: float = 10.0
     max_memory_mb: float = 1024.0
     max_oracle_calls: int = 0  # external oracle invocations (LMFDB, PARI subprocess, etc.)
+    calibrated_cost: Optional[Dict[str, Any]] = None
 
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        out: Dict[str, Any] = {
             "max_seconds": float(self.max_seconds),
             "max_memory_mb": float(self.max_memory_mb),
             "max_oracle_calls": int(self.max_oracle_calls),
         }
+        if self.calibrated_cost is not None:
+            out["calibrated_cost"] = dict(self.calibrated_cost)
+        return out
 
 
 @dataclass(frozen=True)

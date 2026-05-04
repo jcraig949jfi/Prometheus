@@ -82,6 +82,13 @@ class Claim:
     target_tier: Tier
     status: str = "pending"
     verdict: VerdictResult | None = None
+    # Caveats — typed metadata that travels with the claim through
+    # FALSIFY/PROMOTE/TRACE. Operationalizes the C3 fix from the
+    # 2026-05-03 team review (caveat-as-metadata-on-CLAIM).
+    # See sigma_kernel/caveats.py for the canonical preset list and
+    # stoa/proposals/2026-05-04-techne-caveat-as-metadata-schema.md
+    # for the rationale + propagation rules.
+    caveats: list[str] = field(default_factory=list)
 
 
 @dataclass(frozen=True)
@@ -156,7 +163,13 @@ CREATE TABLE IF NOT EXISTS claims (
     verdict_rationale   TEXT,
     verdict_input_hash  TEXT,
     verdict_seed        INTEGER,
-    verdict_runtime_ms  INTEGER
+    verdict_runtime_ms  INTEGER,
+    -- Caveats: JSON array of strings. Operationalizes C3 fix from the
+    -- 2026-05-03 team review (caveat-as-metadata-on-CLAIM). Default empty
+    -- for backward compat: existing rows + old code see this as []. See
+    -- sigma_kernel/migrations/004_add_caveats_to_claims.sql for the
+    -- Postgres-side migration.
+    caveats             TEXT NOT NULL DEFAULT '[]'
 );
 
 CREATE TABLE IF NOT EXISTS capabilities (
@@ -265,12 +278,25 @@ class _PostgresAdapter:
         self._RE_CACHE: dict[str, str] = {}
 
         # Schema probe: fail at __init__ time rather than at first DML if
-        # Mnemosyne hasn't applied the migration yet.
+        # Mnemosyne hasn't applied the migration yet. We probe both for the
+        # base schema (migration 001) AND for the caveats column added by
+        # migration 004; the latter is now required by the kernel since it
+        # propagates caveats through CLAIM/FALSIFY/PROMOTE.
         try:
             cur = self.conn.cursor()
             cur.execute("SELECT 1 FROM sigma.symbols LIMIT 0")
+            cur.execute("SELECT caveats FROM sigma.claims LIMIT 0")
             cur.close()
             self.conn.commit()
+        except psycopg2.errors.UndefinedColumn:
+            self.conn.rollback()
+            self._pool.putconn(self.conn)
+            raise ConnectionError(
+                "sigma.claims is missing the `caveats` column. "
+                "Mnemosyne must apply sigma_kernel/migrations/004_add_caveats_to_claims.sql "
+                "(operationalizes caveat-as-metadata-on-CLAIM; see "
+                "stoa/proposals/2026-05-04-techne-caveat-as-metadata-schema.md)."
+            ) from None
         except psycopg2.errors.UndefinedTable:
             self.conn.rollback()
             self._pool.putconn(self.conn)
@@ -478,10 +504,33 @@ class SigmaKernel:
         evidence: dict,
         kill_path: str,
         target_tier: Tier = Tier.Conjecture,
+        caveats: list[str] | None = None,
     ) -> Claim:
-        """Allocate a provisional claim. Born at lowest tier unless overridden."""
+        """Allocate a provisional claim. Born at lowest tier unless overridden.
+
+        Caveats (optional) are typed metadata that travel with the claim
+        through FALSIFY / PROMOTE / TRACE. Use the canonical tokens from
+        ``sigma_kernel.caveats.KNOWN_CAVEATS`` where they apply (e.g.
+        ``"small_n"``, ``"rediscovery_not_discovery"``); arbitrary strings
+        are also accepted. See
+        ``stoa/proposals/2026-05-04-techne-caveat-as-metadata-schema.md``
+        for the rationale (operationalizes C3 from the 2026-05-03 team
+        review). Validation is permissive at write — see
+        ``caveats.validate_caveats`` for normalization rules.
+        """
+        # Local import to avoid circularity at module load time. Try the
+        # package-qualified path first; fall back to direct module import
+        # for callers that run sigma_kernel/*.py as a script (e.g. demo.py)
+        # where sys.path includes sigma_kernel/ but not its parent.
+        try:
+            from sigma_kernel.caveats import validate_caveats
+        except ModuleNotFoundError:
+            from caveats import validate_caveats  # type: ignore[no-redef]
+
         cid = _new_id("claim")
         evidence_str = json.dumps(evidence, sort_keys=True)
+        cleaned_caveats = validate_caveats(caveats)
+        caveats_json = json.dumps(cleaned_caveats)
         claim = Claim(
             id=cid,
             target_name=target_name,
@@ -489,13 +538,15 @@ class SigmaKernel:
             evidence=evidence_str,
             kill_path=kill_path,
             target_tier=target_tier,
+            caveats=cleaned_caveats,
         )
         self.conn.execute(
-            "INSERT INTO claims VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+            "INSERT INTO claims VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
             (
                 cid, target_name, hypothesis, evidence_str, kill_path,
                 target_tier.value, "pending",
                 None, None, None, None, None,
+                caveats_json,
             ),
         )
         self.conn.commit()
@@ -568,12 +619,26 @@ class SigmaKernel:
         # Bind to claim (in-memory and persisted).
         claim.verdict = verdict
         claim.status = "falsified"
+
+        # WARN-verdict caveat append (operationalizes C3 fix; see
+        # stoa/proposals/2026-05-04-techne-caveat-as-metadata-schema.md §4.2).
+        # The append is atomic with the verdict write so a downstream PROMOTE
+        # captures the warn-rationale in the symbol's def_blob. BLOCK gets no
+        # caveat (the claim is dead anyway); CLEAR gets none (kill_path
+        # passed cleanly).
+        if verdict.status == Verdict.WARN:
+            warn_token = f"falsify_warn:{verdict.rationale[:80]}"
+            if warn_token not in claim.caveats:
+                claim.caveats = list(claim.caveats) + [warn_token]
+        caveats_json = json.dumps(claim.caveats)
+
         self.conn.execute(
             "UPDATE claims SET status='falsified', verdict_status=?, verdict_rationale=?, "
-            "verdict_input_hash=?, verdict_seed=?, verdict_runtime_ms=? WHERE id=?",
+            "verdict_input_hash=?, verdict_seed=?, verdict_runtime_ms=?, caveats=? "
+            "WHERE id=?",
             (
                 verdict.status.value, verdict.rationale, verdict.input_hash,
-                verdict.seed, verdict.runtime_ms, claim.id,
+                verdict.seed, verdict.runtime_ms, caveats_json, claim.id,
             ),
         )
         self.conn.commit()
@@ -651,6 +716,14 @@ class SigmaKernel:
         if claim.verdict.input_hash:
             provenance.append(claim.verdict.input_hash)
 
+        # def_blob includes caveats as a top-level field. Because def_blob is
+        # sha256-content-addressed, caveats become hash-locked: a symbol
+        # cannot lose its caveats without changing its hash, breaking RESOLVE
+        # / TRACE for any downstream consumer. This is the load-bearing
+        # property of caveat-as-metadata (see proposal §2.3). De-dup is the
+        # caller's responsibility via validate_caveats; we sort here for a
+        # canonical content hash (caveat order should not affect hash).
+        promoted_caveats = sorted(set(claim.caveats))
         def_blob = json.dumps(
             {
                 "hypothesis": claim.hypothesis,
@@ -658,6 +731,7 @@ class SigmaKernel:
                 "kill_path": claim.kill_path,
                 "verdict": claim.verdict.status.value,
                 "verdict_rationale": claim.verdict.rationale,
+                "caveats": promoted_caveats,
             },
             sort_keys=True,
         )
@@ -795,6 +869,11 @@ class SigmaKernel:
         Recursive provenance walk from `symbol` outward through dependency hashes.
         Cycle-safe via a visited set. Hashes that don't resolve to a substrate
         symbol are tagged 'external' (e.g. verdict_input_hash, bootstrap roots).
+
+        Each node carries the symbol's caveats as a separate field. A consumer
+        that wants citation-grade caveats unions ``node['caveats']`` along the
+        path from the leaf to the roots. See ``collect_caveats`` for a
+        convenience helper that does exactly this.
         """
         visited: set[str] = set()
 
@@ -804,11 +883,24 @@ class SigmaKernel:
             visited.add(def_hash)
 
             row = self.conn.execute(
-                "SELECT name, version, provenance FROM symbols WHERE def_hash=?",
+                "SELECT name, version, provenance, def_blob FROM symbols WHERE def_hash=?",
                 (def_hash,),
             ).fetchone()
             if row is None:
                 return {"hash": def_hash[:12], "type": "external"}
+
+            # Parse caveats out of def_blob if present. Older symbols
+            # (pre-migration-004) won't have a caveats key in def_blob;
+            # default to empty list. This is the backward-compat seam.
+            caveats: list[str] = []
+            try:
+                blob = json.loads(row[3])
+                if isinstance(blob, dict) and "caveats" in blob:
+                    cv = blob["caveats"]
+                    if isinstance(cv, list):
+                        caveats = [str(c) for c in cv]
+            except (json.JSONDecodeError, TypeError):
+                pass  # bootstrap / errata blobs may have different shapes
 
             children = []
             for child_hash in json.loads(row[2]):
@@ -817,10 +909,33 @@ class SigmaKernel:
             return {
                 "ref": f"{row[0]}@v{row[1]}",
                 "hash": def_hash[:12],
+                "caveats": caveats,
                 "children": children,
             }
 
         return walk(symbol.def_hash)
+
+    def collect_caveats(self, symbol: Symbol) -> list[str]:
+        """Walk the TRACE graph and return the union of caveats across all
+        nodes, deduplicated, in stable (sorted) order.
+
+        This is the citation-grade helper: a document referencing ``symbol``
+        calls ``collect_caveats`` and renders the returned list as a
+        footnote. The substrate guarantees no caveat in the lineage is
+        dropped — that is the load-bearing property of
+        caveat-as-metadata-on-CLAIM (see proposal §6).
+        """
+        graph = self.TRACE(symbol)
+        out: set[str] = set()
+
+        def walk(node: dict[str, Any]) -> None:
+            for c in node.get("caveats", []):
+                out.add(c)
+            for child in node.get("children", []):
+                walk(child)
+
+        walk(graph)
+        return sorted(out)
 
     # ------------------------------------------------------------------
     # Inspection helpers (not opcodes)
