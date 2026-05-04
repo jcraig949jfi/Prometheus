@@ -75,7 +75,8 @@ def run_dry_run(n_episodes: int = 200, seed: int = 42) -> dict:
         "n_episodes": n_episodes,
         "seed": seed,
         "elapsed_seconds": report.elapsed_seconds,
-        "n_promoted": report.n_promoted,
+        "n_substrate_passed": report.n_substrate_passed,
+        "n_won_cell": report.n_won_cell,
         "n_trivial_rejects": report.n_trivial_rejects,
         "f_trivial_band_reject_rate": trivial_rate,
         "archive_n_cells_filled": report.archive_n_cells_filled,
@@ -142,7 +143,8 @@ def format_report(results: dict) -> str:
         lines.append(f"  {pair:35s}: {div:.3f}")
     lines += [
         "",
-        f"PROMOTED: {results['n_promoted']}",
+        f"SUBSTRATE-PASSED (kill battery CLEAR/WARN): {results['n_substrate_passed']}",
+        f"WON-CELL (archive elite claims): {results['n_won_cell']}",
         f"TRIVIAL REJECTS: {results['n_trivial_rejects']}",
         "",
         "Note: PROMOTE rate at MVP scope uses MVPSubstrateEvaluator stub",

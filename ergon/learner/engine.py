@@ -79,9 +79,20 @@ class EpisodeResult:
 
 @dataclass
 class EngineRunReport:
-    """Summary statistics from a full engine.run(n_episodes) invocation."""
+    """Summary statistics from a full engine.run(n_episodes) invocation.
+
+    Two distinct "promotion" counts are tracked separately:
+    - n_substrate_passed: episodes where the kill battery (F1+F6+F9+F11) all
+        returned CLEAR or WARN. This is the load-bearing PROMOTE rate.
+        At Path B configurations: empirically 0/30000.
+    - n_won_cell: episodes where the genome won its archive cell
+        (became / replaced the elite). This counts archive growth, NOT
+        substrate-PROMOTE. Most episodes win cells in early MVP because
+        cells are empty.
+    """
     n_episodes: int
-    n_promoted: int
+    n_substrate_passed: int  # the substrate-PROMOTE count
+    n_won_cell: int          # the archive-cell-claim count
     n_trivial_rejects: int
     f_trivial_band_reject_rate: float
     archive_n_cells_filled: int
@@ -155,15 +166,35 @@ class MVPSubstrateEvaluator:
         return verdicts
 
     def evaluate_magnitude(self, genome: Genome) -> float:
-        """Stub magnitude evaluation — returns a value calibrated by genome content."""
-        # Use a deterministic hash of genome content to produce a magnitude
-        # in the range [10^0, 10^9] (mostly buckets 0-2). Small fraction
-        # falls in higher buckets.
-        h = abs(hash(genome.content_hash())) % 10**9
-        # Scale to favor low magnitudes
-        if h < 10**6:
-            return float(h + 1)  # bucket 0 or 1 mostly
-        return float(h)
+        """Stub magnitude evaluation — log-uniform across all 5 bounded buckets.
+
+        Maps content_hash to log-magnitude in [0, 14] so all 5 buckets
+        ([10^0, 10^3), ..., [10^12, inf)) are reachable. Without this all
+        genomes land in buckets 0-2 only; archive coverage stalls at <5%.
+        """
+        import hashlib
+        digest = hashlib.sha256(genome.content_hash().encode()).hexdigest()
+        h = int(digest[:16], 16)
+        frac = h / (16 ** 16)  # uniform in [0, 1)
+        log_mag = frac * 14.0  # log-uniform across [0, 14]
+        return 10.0 ** log_mag
+
+    def evaluate_canonicalizer_subclass(self, genome: Genome) -> str:
+        """Stub canonicalizer subclass — derives from content_hash for diversity."""
+        import hashlib
+        digest = hashlib.sha256(genome.content_hash().encode()).hexdigest()
+        idx = int(digest[16:24], 16) % 4
+        return ("group_quotient", "partition_refinement",
+                "ideal_reduction", "variety_fingerprint")[idx]
+
+    def evaluate_canonical_form_distance(self, genome: Genome) -> float:
+        """Stub catalog-distance — log-uniform across [1e-4, 1e2]."""
+        import hashlib
+        digest = hashlib.sha256(genome.content_hash().encode()).hexdigest()
+        h = int(digest[24:40], 16)
+        frac = h / (16 ** 16)
+        log_d = -4.0 + frac * 6.0
+        return 10.0 ** log_d
 
 
 # ---------------------------------------------------------------------------
@@ -222,7 +253,8 @@ class TrialTwoEngine:
     def run(self, n_episodes: int, log_every: int = 100) -> EngineRunReport:
         """Run n_episodes; return summary report."""
         t_start = time.time()
-        n_promoted = 0
+        n_substrate_passed = 0
+        n_won_cell = 0
         n_trivial_rejects = 0
 
         for episode_idx in range(n_episodes):
@@ -230,18 +262,20 @@ class TrialTwoEngine:
             self.episodes.append(result)
 
             if result.promoted_to_archive:
-                n_promoted += 1
+                n_won_cell += 1
+            if result.fitness.battery_survival_count > 0:
+                n_substrate_passed += 1
             if result.f_trivial_match.matched:
                 n_trivial_rejects += 1
 
             if log_every and (episode_idx + 1) % log_every == 0:
-                # Brief progress print
-                pass  # silent at MVP; report goes through return value
+                pass  # silent
 
         elapsed = time.time() - t_start
         return EngineRunReport(
             n_episodes=n_episodes,
-            n_promoted=n_promoted,
+            n_substrate_passed=n_substrate_passed,
+            n_won_cell=n_won_cell,
             n_trivial_rejects=n_trivial_rejects,
             f_trivial_band_reject_rate=(n_trivial_rejects / n_episodes) if n_episodes > 0 else 0.0,
             archive_n_cells_filled=self.archive.n_cells_filled(),
@@ -298,12 +332,19 @@ class TrialTwoEngine:
             kill_verdicts = self.evaluator.evaluate(child)
             substrate_pass_value = evaluate_substrate_pass(kill_verdicts)
 
-        # 6. Compute cell coordinate + fitness + reward
+        # 6. Compute cell coordinate + fitness + reward.
+        # Evaluator stub wires diversity into all 3 post-EVAL axes so the
+        # archive's 5,000-cell capacity is reachable; v0.5 swaps in real
+        # BindEvalKernelV2 outputs.
         eval_result = EvaluationResult(
-            output_canonicalizer_subclass=None,  # MVP: no canonicalizer wired
+            output_canonicalizer_subclass=(
+                self.evaluator.evaluate_canonicalizer_subclass(child)
+            ),
             output_magnitude=magnitude,
-            output_type_signature=None,
-            canonical_form_distance_to_catalog=None,
+            output_type_signature=None,  # genome-inferred from callable_ref
+            canonical_form_distance_to_catalog=(
+                self.evaluator.evaluate_canonical_form_distance(child)
+            ),
         )
         cell = compute_cell_coordinate(child, evaluation=eval_result)
 

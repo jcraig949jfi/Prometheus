@@ -1,0 +1,839 @@
+{
+  "per_seed": [
+    {
+      "seed": 42,
+      "n_episodes": 1000,
+      "n_cells_filled": 688,
+      "operator_fill_counts": {
+        "symbolic": 221,
+        "structural": 306,
+        "structured_null": 48,
+        "uniform": 65,
+        "anti_prior": 48
+      },
+      "operator_eval_counts": {
+        "symbolic": 305,
+        "structural": 466,
+        "structured_null": 76,
+        "uniform": 81,
+        "anti_prior": 72
+      },
+      "operator_fill_efficiency": {
+        "symbolic": 0.7245901639344262,
+        "structural": 0.6566523605150214,
+        "structured_null": 0.631578947368421,
+        "uniform": 0.8024691358024691,
+        "anti_prior": 0.6666666666666666
+      },
+      "coverage_divergences": {
+        "structural_vs_uniform": 1.0,
+        "structural_vs_anti_prior": 1.0,
+        "symbolic_vs_uniform": 1.0,
+        "anti_prior_vs_uniform": 1.0,
+        "anti_prior_vs_structured_null": 1.0
+      },
+      "band_concentration_per_operator": {
+        "symbolic": {
+          "4": 0.14479638009049775,
+          "2": 0.2081447963800905,
+          "3": 0.2081447963800905,
+          "0": 0.19457013574660634,
+          "1": 0.24434389140271492
+        },
+        "structural": {
+          "1": 0.22549019607843138,
+          "3": 0.19934640522875818,
+          "2": 0.23202614379084968,
+          "4": 0.1568627450980392,
+          "0": 0.18627450980392157
+        },
+        "structured_null": {
+          "2": 0.1875,
+          "0": 0.16666666666666666,
+          "1": 0.16666666666666666,
+          "3": 0.22916666666666666,
+          "4": 0.25
+        },
+        "uniform": {
+          "1": 0.2153846153846154,
+          "2": 0.24615384615384617,
+          "0": 0.1076923076923077,
+          "4": 0.13846153846153847,
+          "3": 0.2923076923076923
+        },
+        "anti_prior": {
+          "0": 0.2916666666666667,
+          "2": 0.20833333333333334,
+          "3": 0.125,
+          "1": 0.1875,
+          "4": 0.1875
+        }
+      },
+      "n_substrate_passed": 0,
+      "n_won_cell": 727,
+      "n_trivial_rejects": 44,
+      "f_trivial_band_reject_rate": 0.044,
+      "saturation_curve": [
+        [
+          100,
+          94
+        ],
+        [
+          200,
+          174
+        ],
+        [
+          300,
+          255
+        ],
+        [
+          400,
+          326
+        ],
+        [
+          500,
+          393
+        ],
+        [
+          600,
+          456
+        ],
+        [
+          700,
+          516
+        ],
+        [
+          800,
+          580
+        ],
+        [
+          900,
+          629
+        ],
+        [
+          1000,
+          688
+        ]
+      ],
+      "scheduler_min_share_compliance": {
+        "uniform": {
+          "min_share": 0.05,
+          "actual_share": 0.081,
+          "compliant": true,
+          "source": "cumulative"
+        },
+        "anti_prior": {
+          "min_share": 0.05,
+          "actual_share": 0.072,
+          "compliant": true,
+          "source": "cumulative"
+        },
+        "structured_null": {
+          "min_share": 0.05,
+          "actual_share": 0.076,
+          "compliant": true,
+          "source": "cumulative"
+        }
+      },
+      "scheduler_cumulative_shares": {
+        "symbolic": 0.305,
+        "structural": 0.466,
+        "structured_null": 0.076,
+        "uniform": 0.081,
+        "anti_prior": 0.072
+      },
+      "quaternary_pass": true
+    },
+    {
+      "seed": 100,
+      "n_episodes": 1000,
+      "n_cells_filled": 672,
+      "operator_fill_counts": {
+        "structural": 307,
+        "symbolic": 228,
+        "uniform": 47,
+        "structured_null": 45,
+        "anti_prior": 45
+      },
+      "operator_eval_counts": {
+        "structural": 466,
+        "symbolic": 327,
+        "uniform": 71,
+        "structured_null": 70,
+        "anti_prior": 66
+      },
+      "operator_fill_efficiency": {
+        "structural": 0.6587982832618026,
+        "symbolic": 0.6972477064220184,
+        "uniform": 0.6619718309859155,
+        "structured_null": 0.6428571428571429,
+        "anti_prior": 0.6818181818181818
+      },
+      "coverage_divergences": {
+        "structural_vs_uniform": 1.0,
+        "structural_vs_anti_prior": 1.0,
+        "symbolic_vs_uniform": 1.0,
+        "anti_prior_vs_uniform": 1.0,
+        "anti_prior_vs_structured_null": 1.0
+      },
+      "band_concentration_per_operator": {
+        "structural": {
+          "1": 0.18566775244299674,
+          "2": 0.20521172638436483,
+          "3": 0.24429967426710097,
+          "4": 0.15960912052117263,
+          "0": 0.20521172638436483
+        },
+        "symbolic": {
+          "0": 0.22807017543859648,
+          "3": 0.18859649122807018,
+          "4": 0.13157894736842105,
+          "2": 0.24561403508771928,
+          "1": 0.20614035087719298
+        },
+        "uniform": {
+          "2": 0.23404255319148937,
+          "1": 0.2765957446808511,
+          "4": 0.1276595744680851,
+          "0": 0.10638297872340426,
+          "3": 0.2553191489361702
+        },
+        "structured_null": {
+          "2": 0.17777777777777778,
+          "0": 0.2,
+          "1": 0.2,
+          "4": 0.17777777777777778,
+          "3": 0.24444444444444444
+        },
+        "anti_prior": {
+          "4": 0.2222222222222222,
+          "0": 0.17777777777777778,
+          "3": 0.26666666666666666,
+          "2": 0.1111111111111111,
+          "1": 0.2222222222222222
+        }
+      },
+      "n_substrate_passed": 0,
+      "n_won_cell": 702,
+      "n_trivial_rejects": 38,
+      "f_trivial_band_reject_rate": 0.038,
+      "saturation_curve": [
+        [
+          100,
+          89
+        ],
+        [
+          200,
+          172
+        ],
+        [
+          300,
+          246
+        ],
+        [
+          400,
+          321
+        ],
+        [
+          500,
+          391
+        ],
+        [
+          600,
+          455
+        ],
+        [
+          700,
+          522
+        ],
+        [
+          800,
+          579
+        ],
+        [
+          900,
+          627
+        ],
+        [
+          1000,
+          672
+        ]
+      ],
+      "scheduler_min_share_compliance": {
+        "uniform": {
+          "min_share": 0.05,
+          "actual_share": 0.071,
+          "compliant": true,
+          "source": "cumulative"
+        },
+        "anti_prior": {
+          "min_share": 0.05,
+          "actual_share": 0.066,
+          "compliant": true,
+          "source": "cumulative"
+        },
+        "structured_null": {
+          "min_share": 0.05,
+          "actual_share": 0.07,
+          "compliant": true,
+          "source": "cumulative"
+        }
+      },
+      "scheduler_cumulative_shares": {
+        "structural": 0.466,
+        "symbolic": 0.327,
+        "uniform": 0.071,
+        "structured_null": 0.07,
+        "anti_prior": 0.066
+      },
+      "quaternary_pass": true
+    },
+    {
+      "seed": 1234,
+      "n_episodes": 1000,
+      "n_cells_filled": 680,
+      "operator_fill_counts": {
+        "anti_prior": 56,
+        "structural": 307,
+        "structured_null": 56,
+        "symbolic": 211,
+        "uniform": 50
+      },
+      "operator_eval_counts": {
+        "anti_prior": 71,
+        "structural": 473,
+        "structured_null": 78,
+        "symbolic": 301,
+        "uniform": 77
+      },
+      "operator_fill_efficiency": {
+        "anti_prior": 0.7887323943661971,
+        "structural": 0.6490486257928119,
+        "structured_null": 0.717948717948718,
+        "symbolic": 0.7009966777408638,
+        "uniform": 0.6493506493506493
+      },
+      "coverage_divergences": {
+        "structural_vs_uniform": 1.0,
+        "structural_vs_anti_prior": 1.0,
+        "symbolic_vs_uniform": 1.0,
+        "anti_prior_vs_uniform": 1.0,
+        "anti_prior_vs_structured_null": 1.0
+      },
+      "band_concentration_per_operator": {
+        "anti_prior": {
+          "4": 0.10714285714285714,
+          "2": 0.14285714285714285,
+          "3": 0.23214285714285715,
+          "1": 0.25,
+          "0": 0.26785714285714285
+        },
+        "structural": {
+          "4": 0.16612377850162866,
+          "3": 0.23452768729641693,
+          "2": 0.16612377850162866,
+          "1": 0.22149837133550487,
+          "0": 0.21172638436482086
+        },
+        "structured_null": {
+          "3": 0.26785714285714285,
+          "2": 0.25,
+          "1": 0.16071428571428573,
+          "0": 0.21428571428571427,
+          "4": 0.10714285714285714
+        },
+        "symbolic": {
+          "1": 0.2037914691943128,
+          "2": 0.22274881516587677,
+          "3": 0.1848341232227488,
+          "0": 0.2132701421800948,
+          "4": 0.17535545023696683
+        },
+        "uniform": {
+          "1": 0.22,
+          "2": 0.24,
+          "3": 0.16,
+          "4": 0.18,
+          "0": 0.2
+        }
+      },
+      "n_substrate_passed": 0,
+      "n_won_cell": 710,
+      "n_trivial_rejects": 44,
+      "f_trivial_band_reject_rate": 0.044,
+      "saturation_curve": [
+        [
+          100,
+          91
+        ],
+        [
+          200,
+          182
+        ],
+        [
+          300,
+          265
+        ],
+        [
+          400,
+          332
+        ],
+        [
+          500,
+          392
+        ],
+        [
+          600,
+          466
+        ],
+        [
+          700,
+          529
+        ],
+        [
+          800,
+          582
+        ],
+        [
+          900,
+          634
+        ],
+        [
+          1000,
+          680
+        ]
+      ],
+      "scheduler_min_share_compliance": {
+        "uniform": {
+          "min_share": 0.05,
+          "actual_share": 0.077,
+          "compliant": true,
+          "source": "cumulative"
+        },
+        "anti_prior": {
+          "min_share": 0.05,
+          "actual_share": 0.071,
+          "compliant": true,
+          "source": "cumulative"
+        },
+        "structured_null": {
+          "min_share": 0.05,
+          "actual_share": 0.078,
+          "compliant": true,
+          "source": "cumulative"
+        }
+      },
+      "scheduler_cumulative_shares": {
+        "anti_prior": 0.071,
+        "structural": 0.473,
+        "structured_null": 0.078,
+        "symbolic": 0.301,
+        "uniform": 0.077
+      },
+      "quaternary_pass": true
+    },
+    {
+      "seed": 31415,
+      "n_episodes": 1000,
+      "n_cells_filled": 672,
+      "operator_fill_counts": {
+        "symbolic": 201,
+        "structural": 331,
+        "structured_null": 50,
+        "uniform": 45,
+        "anti_prior": 45
+      },
+      "operator_eval_counts": {
+        "symbolic": 309,
+        "structural": 485,
+        "structured_null": 71,
+        "uniform": 72,
+        "anti_prior": 63
+      },
+      "operator_fill_efficiency": {
+        "symbolic": 0.6504854368932039,
+        "structural": 0.6824742268041237,
+        "structured_null": 0.704225352112676,
+        "uniform": 0.625,
+        "anti_prior": 0.7142857142857143
+      },
+      "coverage_divergences": {
+        "structural_vs_uniform": 1.0,
+        "structural_vs_anti_prior": 1.0,
+        "symbolic_vs_uniform": 1.0,
+        "anti_prior_vs_uniform": 1.0,
+        "anti_prior_vs_structured_null": 1.0
+      },
+      "band_concentration_per_operator": {
+        "symbolic": {
+          "3": 0.20398009950248755,
+          "1": 0.22388059701492538,
+          "0": 0.22885572139303484,
+          "4": 0.12935323383084577,
+          "2": 0.21393034825870647
+        },
+        "structural": {
+          "4": 0.1510574018126888,
+          "3": 0.21450151057401812,
+          "1": 0.24773413897280966,
+          "0": 0.2084592145015106,
+          "2": 0.1782477341389728
+        },
+        "structured_null": {
+          "2": 0.16,
+          "4": 0.08,
+          "1": 0.32,
+          "0": 0.26,
+          "3": 0.18
+        },
+        "uniform": {
+          "1": 0.2,
+          "2": 0.2,
+          "4": 0.17777777777777778,
+          "3": 0.2,
+          "0": 0.2222222222222222
+        },
+        "anti_prior": {
+          "0": 0.17777777777777778,
+          "3": 0.26666666666666666,
+          "4": 0.17777777777777778,
+          "2": 0.26666666666666666,
+          "1": 0.1111111111111111
+        }
+      },
+      "n_substrate_passed": 0,
+      "n_won_cell": 700,
+      "n_trivial_rejects": 37,
+      "f_trivial_band_reject_rate": 0.037,
+      "saturation_curve": [
+        [
+          100,
+          89
+        ],
+        [
+          200,
+          176
+        ],
+        [
+          300,
+          250
+        ],
+        [
+          400,
+          323
+        ],
+        [
+          500,
+          400
+        ],
+        [
+          600,
+          450
+        ],
+        [
+          700,
+          511
+        ],
+        [
+          800,
+          568
+        ],
+        [
+          900,
+          616
+        ],
+        [
+          1000,
+          672
+        ]
+      ],
+      "scheduler_min_share_compliance": {
+        "uniform": {
+          "min_share": 0.05,
+          "actual_share": 0.072,
+          "compliant": true,
+          "source": "cumulative"
+        },
+        "anti_prior": {
+          "min_share": 0.05,
+          "actual_share": 0.063,
+          "compliant": true,
+          "source": "cumulative"
+        },
+        "structured_null": {
+          "min_share": 0.05,
+          "actual_share": 0.071,
+          "compliant": true,
+          "source": "cumulative"
+        }
+      },
+      "scheduler_cumulative_shares": {
+        "symbolic": 0.309,
+        "structural": 0.485,
+        "structured_null": 0.071,
+        "uniform": 0.072,
+        "anti_prior": 0.063
+      },
+      "quaternary_pass": true
+    },
+    {
+      "seed": 271828,
+      "n_episodes": 1000,
+      "n_cells_filled": 707,
+      "operator_fill_counts": {
+        "symbolic": 211,
+        "anti_prior": 51,
+        "structured_null": 54,
+        "structural": 324,
+        "uniform": 67
+      },
+      "operator_eval_counts": {
+        "symbolic": 285,
+        "anti_prior": 69,
+        "structured_null": 79,
+        "structural": 475,
+        "uniform": 92
+      },
+      "operator_fill_efficiency": {
+        "symbolic": 0.7403508771929824,
+        "anti_prior": 0.7391304347826086,
+        "structured_null": 0.6835443037974683,
+        "structural": 0.6821052631578948,
+        "uniform": 0.7282608695652174
+      },
+      "coverage_divergences": {
+        "structural_vs_uniform": 1.0,
+        "structural_vs_anti_prior": 1.0,
+        "symbolic_vs_uniform": 1.0,
+        "anti_prior_vs_uniform": 1.0,
+        "anti_prior_vs_structured_null": 1.0
+      },
+      "band_concentration_per_operator": {
+        "symbolic": {
+          "3": 0.1848341232227488,
+          "2": 0.23696682464454977,
+          "0": 0.2132701421800948,
+          "1": 0.17061611374407584,
+          "4": 0.1943127962085308
+        },
+        "anti_prior": {
+          "4": 0.19607843137254902,
+          "0": 0.2549019607843137,
+          "1": 0.2549019607843137,
+          "2": 0.1568627450980392,
+          "3": 0.13725490196078433
+        },
+        "structured_null": {
+          "0": 0.3148148148148148,
+          "4": 0.12962962962962962,
+          "2": 0.25925925925925924,
+          "3": 0.12962962962962962,
+          "1": 0.16666666666666666
+        },
+        "structural": {
+          "2": 0.20679012345679013,
+          "1": 0.23765432098765432,
+          "0": 0.20679012345679013,
+          "3": 0.18518518518518517,
+          "4": 0.16358024691358025
+        },
+        "uniform": {
+          "0": 0.23880597014925373,
+          "1": 0.208955223880597,
+          "4": 0.11940298507462686,
+          "3": 0.22388059701492538,
+          "2": 0.208955223880597
+        }
+      },
+      "n_substrate_passed": 0,
+      "n_won_cell": 731,
+      "n_trivial_rejects": 47,
+      "f_trivial_band_reject_rate": 0.047,
+      "saturation_curve": [
+        [
+          100,
+          95
+        ],
+        [
+          200,
+          182
+        ],
+        [
+          300,
+          266
+        ],
+        [
+          400,
+          335
+        ],
+        [
+          500,
+          405
+        ],
+        [
+          600,
+          476
+        ],
+        [
+          700,
+          547
+        ],
+        [
+          800,
+          601
+        ],
+        [
+          900,
+          659
+        ],
+        [
+          1000,
+          707
+        ]
+      ],
+      "scheduler_min_share_compliance": {
+        "uniform": {
+          "min_share": 0.05,
+          "actual_share": 0.092,
+          "compliant": true,
+          "source": "cumulative"
+        },
+        "anti_prior": {
+          "min_share": 0.05,
+          "actual_share": 0.069,
+          "compliant": true,
+          "source": "cumulative"
+        },
+        "structured_null": {
+          "min_share": 0.05,
+          "actual_share": 0.079,
+          "compliant": true,
+          "source": "cumulative"
+        }
+      },
+      "scheduler_cumulative_shares": {
+        "symbolic": 0.285,
+        "anti_prior": 0.069,
+        "structured_null": 0.079,
+        "structural": 0.475,
+        "uniform": 0.092
+      },
+      "quaternary_pass": true
+    }
+  ],
+  "aggregate": {
+    "n_seeds": 5,
+    "n_episodes_per_seed": 1000,
+    "structural_fills": [
+      306,
+      307,
+      307,
+      331,
+      324
+    ],
+    "uniform_fills": [
+      65,
+      47,
+      50,
+      45,
+      67
+    ],
+    "symbolic_fills": [
+      221,
+      228,
+      211,
+      201,
+      211
+    ],
+    "anti_prior_fills": [
+      48,
+      45,
+      56,
+      45,
+      51
+    ],
+    "structured_null_fills": [
+      48,
+      45,
+      56,
+      50,
+      54
+    ],
+    "structural_vs_uniform_welch_t": 37.19420751049106,
+    "structural_vs_uniform_welch_p": 8.466194113299459e-303,
+    "ratio_structural_over_uniform_per_seed": [
+      4.707692307692308,
+      6.531914893617022,
+      6.14,
+      7.355555555555555,
+      4.835820895522388
+    ],
+    "ratio_mean": 5.914196730477454,
+    "ratio_stdev": 1.1323234378751144,
+    "archive_sizes": [
+      688,
+      672,
+      680,
+      672,
+      707
+    ],
+    "archive_size_mean": 683.8,
+    "archive_size_stdev": 14.567086187704115,
+    "trivial_rates": [
+      0.044,
+      0.038,
+      0.044,
+      0.037,
+      0.047
+    ],
+    "substrate_passes": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "substrate_passes_total": 0,
+    "substrate_pass_rate_avg": 0.0,
+    "won_cells_per_seed": [
+      727,
+      702,
+      710,
+      700,
+      731
+    ],
+    "won_cells_total": 3570,
+    "div_stability": {
+      "structural_vs_uniform": {
+        "mean": 1.0,
+        "stdev": 0.0
+      },
+      "structural_vs_anti_prior": {
+        "mean": 1.0,
+        "stdev": 0.0
+      },
+      "symbolic_vs_uniform": {
+        "mean": 1.0,
+        "stdev": 0.0
+      },
+      "anti_prior_vs_uniform": {
+        "mean": 1.0,
+        "stdev": 0.0
+      },
+      "anti_prior_vs_structured_null": {
+        "mean": 1.0,
+        "stdev": 0.0
+      }
+    },
+    "acceptance": {
+      "primary_structural_vs_uniform_significant": true,
+      "primary_ratio_mean": 5.914196730477454,
+      "primary_welch_p": 8.466194113299459e-303,
+      "secondary_archive_coverage_mean": true,
+      "secondary_target": 250,
+      "secondary_actual_mean": 683.8,
+      "tertiary_trivial_rate": true,
+      "quaternary_min_share_compliance": true
+    }
+  }
+}
