@@ -8,6 +8,33 @@
 
 ---
 
+## 0. Post-archaeology reframe (2026-05-04 evening)
+
+This doc was drafted before the gradient archaeology run. Empirical findings: 4/6 Aporia gradients already in ledger; 0.725-bit operator×kill_path MI. ChatGPT's pushback on the "continuous reward + 6 gradient axes" framing reframes the design at the substrate level:
+
+- **Kill_path is a VECTOR, not a category.** Currently logged as `kill_path = "F9_failed"` (one falsifier, terminal kill). Should be `k = (k_F1, k_F6, k_F9, k_F11, k_recip, k_irreduce, k_catalog, k_M_band, ...)` — multi-hot triggered/not, ideally with per-component margin-to-failure.
+- **Operators induce directional derivatives in kill-space:** `E[k | operator] = displacement vector`. That's the actual usable gradient.
+- **Search target is zero vector** (origin = no failures = PROMOTE). Search becomes: navigate kill-space toward origin. Continuous, multi-objective, falsification-native, even though object-space is discrete.
+- **Each algorithm is already a coordinate chart** that emerged from operator + falsification dynamics, not from design (REINFORCE → Salem chart, GA → cyclotomic chart, catalog-seeded → Mossinghoff-neighborhood chart). 0.725 bits of mutual information confirms this empirically.
+- **Ergon is the natural learner** for this. Feed Ergon (state, operator, kill_vector) tuples; let it discover which combinations reduce which failure modes. Unifies Techne's discovery loop with Ergon's Learner work without new ML machinery, AND the 2000-record corpus problem becomes irrelevant — we have ~315K (operator, kill) tuples already.
+
+**Scalar reward did not just under-specify the signal — it projected the gradient away.** Compressing rich multi-hot failure structure to binary pass/fail destroys the directional information at the reward boundary. Continuous regression reward (as drafted in §2.1 below) is necessary but not sufficient; the upgrade is multi-objective kill-vector navigation.
+
+**Sharpened 5-day plan (replaces Tier 1/2/3 for execution order):**
+- **Day 1-2** (mostly already done in gradient archaeology): per-operator kill distributions, conditional entropy / MI per region. Extend the existing aggregate to per-region resolution.
+- **Day 3 (highest-leverage):** kill-vector representation. Upgrade kill_path data structure from categorical to multi-hot vector with per-component margin (where computable from F1-F11 internals).
+- **Day 4:** simple learner. Input = (state, operator); output = predicted kill vector. Plain regression. No RL.
+- **Day 5:** greedy navigation. Choose operator minimizing expected kill magnitude. Validate on synthetic + at least one real domain.
+- RL re-enters AFTER kill-vector navigation demonstrably works.
+
+**Honest caveat (ChatGPT's subtle warning):** the observed gradient field is a PROJECTION induced by our current operators and tests. Missing operators = blind spots. Missing falsifiers = missing dimensions. The 0.725-bit MI is real but it's the gradient through our current lens, not THE gradient. Adding new operator classes / new falsifiers will reveal new structure and may invalidate current navigation paths.
+
+**Substrate-level claim that becomes available:** "Prometheus is a differential geometry engine over discrete mathematical spaces. Points = candidates, operators = moves, kill_vectors = local curvature." Sharper than "AI for math discovery" or "self-falsifying system."
+
+The Tier 1/2/3 structure below is preserved for reference but execution order follows the 5-day plan.
+
+---
+
 ## 1. Diagnosis
 
 The discovery substrate's measurement interface — not its search algorithm — is the load-bearing failure. Layer 1 (CLAIM / FALSIFY / PROMOTE terminal-state evaluation) is sound. Layer 3 (the search engine itself: REINFORCE, PPO, GA, MAP-Elites, brute force) is replaceable. **Layer 2 (signal extraction) is broken**: reward is discrete and bin-quantized, the gradient is zero almost everywhere on the proposal manifold, near-misses and disasters are aliased, and the only locally optimal policy is entropy collapse onto the empirical class prior. The Case-A synthetic test is the load-bearing evidence: on a V3 low-noise environment where `lstsq` solves at >=60% accuracy, REINFORCE collapses to <=3 active bins and matches random; PPO stays uniform. Per ChatGPT's framing, "plug any learner into the current measurement interface and you'll get the same pathology." Until Layer 2 is repaired, every cross-domain rediscovery lift in the corpus is class-prior recovery, not learned mathematical structure. Layer 2 must be redesigned domain-by-domain (a continuous distance-to-validity surrogate per env), then re-validated against the same synthetic stress test before any further RL or MAP-Elites investment.
