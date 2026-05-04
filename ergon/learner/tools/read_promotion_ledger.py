@@ -1,0 +1,177 @@
+"""ergon.learner.tools.read_promotion_ledger — consumer-side ledger reader.
+
+Per Iter 17 / Task #81. The consumer of an Ergon promotion ledger (e.g.
+Charon checking what Ergon discovered) needs a minimal CLI to query the
+ledger without needing the full Ergon codebase. This script demonstrates
+the consumer interface.
+
+Usage:
+    python -m ergon.learner.tools.read_promotion_ledger <path_to_ledger.jsonl>
+
+Outputs a markdown summary covering:
+  - Total substrate-PASS records, span (first/last episodes), seeds
+  - Classification breakdown (exact / discriminator / non-planted)
+  - Top-5 most-frequent unique predicates
+  - Top-5 highest-lift unique predicates
+  - Per-operator-class contribution to substrate-PASS
+
+This is the format Charon / Aporia / Harmonia would consume.
+"""
+from __future__ import annotations
+
+import json
+import sys
+from collections import Counter
+from pathlib import Path
+from typing import Any, Dict, List
+
+
+def load_records(path: Path) -> List[Dict[str, Any]]:
+    """Load all records from a promotion-ledger JSONL file.
+
+    Intentionally does NOT depend on ergon.learner.promotion_ledger to
+    prove the format is consumable from a vanilla Python script — what
+    Charon would actually do.
+    """
+    records: List[Dict[str, Any]] = []
+    with path.open("r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                records.append(json.loads(line))
+    return records
+
+
+def summarize(records: List[Dict[str, Any]]) -> Dict[str, Any]:
+    if not records:
+        return {"n_records": 0}
+
+    seeds = sorted(set(r["seed"] for r in records))
+    episodes = [r["episode"] for r in records]
+    classifications = Counter()
+    for r in records:
+        if r["is_obstruction_exact"]:
+            classifications["obstruction_exact"] += 1
+        elif r["is_secondary_exact"]:
+            classifications["secondary_exact"] += 1
+        elif r["is_obstruction_discriminator"]:
+            classifications["obstruction_discriminator_only"] += 1
+        elif r["is_secondary_discriminator"]:
+            classifications["secondary_discriminator_only"] += 1
+        else:
+            classifications["non_planted"] += 1
+
+    operator_breakdown = Counter()
+    for r in records:
+        operator_breakdown[r["operator_class"]] += 1
+
+    # Dedupe by content_hash → unique predicates
+    by_hash: Dict[str, Dict[str, Any]] = {}
+    for r in records:
+        ch = r["genome_content_hash"]
+        if ch not in by_hash:
+            by_hash[ch] = {
+                "content_hash": ch,
+                "predicate": r["predicate"],
+                "lift": r["lift"],
+                "match_size": r["match_size"],
+                "n_occurrences": 1,
+                "first_seed": r["seed"],
+                "first_episode": r["episode"],
+            }
+        else:
+            by_hash[ch]["n_occurrences"] += 1
+
+    unique_preds = list(by_hash.values())
+    most_frequent = sorted(unique_preds, key=lambda u: -u["n_occurrences"])[:5]
+    highest_lift = sorted(unique_preds, key=lambda u: -u["lift"])[:5]
+
+    return {
+        "n_records": len(records),
+        "n_unique_predicates": len(unique_preds),
+        "seeds": seeds,
+        "episode_min": min(episodes),
+        "episode_max": max(episodes),
+        "classifications": dict(classifications),
+        "operator_breakdown": dict(operator_breakdown),
+        "most_frequent": most_frequent,
+        "highest_lift": highest_lift,
+    }
+
+
+def render_markdown(path: Path, summary: Dict[str, Any]) -> str:
+    if summary["n_records"] == 0:
+        return f"# {path.name}\n\nNo records.\n"
+
+    c = summary["classifications"]
+    o = summary["operator_breakdown"]
+    lines = [
+        f"# Ergon promotion ledger: {path.name}",
+        "",
+        f"- Path: `{path}`",
+        f"- Total substrate-PASS records: **{summary['n_records']}**",
+        f"- Unique predicates: **{summary['n_unique_predicates']}**",
+        f"- Seeds: {summary['seeds']}",
+        f"- Episode span: {summary['episode_min']}-{summary['episode_max']}",
+        "",
+        "## Classification",
+        "",
+        f"| class | count |",
+        f"|---|---|",
+    ]
+    for cls in (
+        "obstruction_exact", "secondary_exact",
+        "obstruction_discriminator_only", "secondary_discriminator_only",
+        "non_planted",
+    ):
+        lines.append(f"| {cls} | {c.get(cls, 0)} |")
+
+    lines += [
+        "",
+        "## Substrate-PASS by operator class",
+        "",
+        "| operator_class | count |",
+        "|---|---|",
+    ]
+    for op, n in sorted(o.items(), key=lambda x: -x[1]):
+        lines.append(f"| {op} | {n} |")
+
+    lines += ["", "## Top-5 most-frequent unique predicates", ""]
+    for u in summary["most_frequent"]:
+        lines.append(
+            f"- n_occ={u['n_occurrences']:>3d}, lift={u['lift']:.2f}, "
+            f"match={u['match_size']}, predicate={u['predicate']}"
+        )
+
+    lines += ["", "## Top-5 highest-lift unique predicates", ""]
+    for u in summary["highest_lift"]:
+        lines.append(
+            f"- lift={u['lift']:>6.2f}, match={u['match_size']:>3d}, "
+            f"first seen seed={u['first_seed']} ep={u['first_episode']}, "
+            f"predicate={u['predicate']}"
+        )
+
+    return "\n".join(lines) + "\n"
+
+
+def main(argv: List[str]) -> int:
+    if len(argv) < 2:
+        print(
+            "Usage: python -m ergon.learner.tools.read_promotion_ledger "
+            "<path_to_ledger.jsonl>"
+        )
+        return 2
+
+    path = Path(argv[1])
+    if not path.exists():
+        print(f"Ledger not found: {path}")
+        return 1
+
+    records = load_records(path)
+    summary = summarize(records)
+    print(render_markdown(path, summary))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))
