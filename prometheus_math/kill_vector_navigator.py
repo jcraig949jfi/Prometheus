@@ -82,6 +82,11 @@ PROMETHEUS_MATH_DIR = os.path.dirname(os.path.abspath(__file__))
 
 NATIVE_PILOT_FILENAME = "_native_kill_vector_pilot.json"
 LEGACY_ARCHAEOLOGY_FILENAME = "_gradient_archaeology_results.json"
+# 2026-05-04 region-densification pilot adds margin coverage on 4 more
+# region cells (deg10 ±5, deg12 ±5, deg10 ±3, deg14 ±3).  Same JSON
+# shape as the native pilot; consumed identically by
+# ``_native_pilot_to_region_stats``.
+DENSIFICATION_PILOT_FILENAME = "_region_densification_pilot.json"
 
 
 # Number of bootstrap resamples for the 95% CI estimator. Kept modest
@@ -453,21 +458,33 @@ class KillVectorNavigator:
         sources: List[str] = []
         native_path = os.path.join(base_dir, NATIVE_PILOT_FILENAME)
         legacy_path = os.path.join(base_dir, LEGACY_ARCHAEOLOGY_FILENAME)
+        densif_path = os.path.join(base_dir, DENSIFICATION_PILOT_FILENAME)
 
         native_stats: Dict[str, _RegionStats] = {}
         legacy_stats: Dict[str, _RegionStats] = {}
+        densif_stats: Dict[str, _RegionStats] = {}
 
         native_blob = _load_json(native_path)
         if native_blob is not None and isinstance(native_blob.get("pilot"), dict):
             native_stats = _native_pilot_to_region_stats(native_blob["pilot"])
             sources.append(NATIVE_PILOT_FILENAME)
 
+        densif_blob = _load_json(densif_path)
+        if densif_blob is not None and isinstance(densif_blob.get("pilot"), dict):
+            densif_stats = _native_pilot_to_region_stats(densif_blob["pilot"])
+            sources.append(DENSIFICATION_PILOT_FILENAME)
+
         legacy_blob = _load_json(legacy_path)
         if legacy_blob is not None:
             legacy_stats = _legacy_archaeology_to_region_stats(legacy_blob)
             sources.append(LEGACY_ARCHAEOLOGY_FILENAME)
 
-        merged = _merge_region_stats(native_stats, legacy_stats)
+        # Native pilot regions take precedence over densification, but
+        # densification's regions extend the native region set (no
+        # overlap expected: native is deg14 ±5, densification covers the
+        # other 4 cells).  Categorical-only legacy data is merged last.
+        native_plus_densif = _merge_region_stats(native_stats, densif_stats)
+        merged = _merge_region_stats(native_plus_densif, legacy_stats)
         return cls(
             region_stats=merged,
             sources_loaded=tuple(sources),
@@ -762,6 +779,7 @@ __all__ = [
     "PROMETHEUS_MATH_DIR",
     "NATIVE_PILOT_FILENAME",
     "LEGACY_ARCHAEOLOGY_FILENAME",
+    "DENSIFICATION_PILOT_FILENAME",
     "DEFAULT_BOOTSTRAP_RESAMPLES",
     "DEFAULT_MIN_EPISODES",
     "_region_id_from_meta",
