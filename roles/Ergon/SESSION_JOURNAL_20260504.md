@@ -210,3 +210,59 @@ Three iterations executed in the same session.
 2. **Terminology bugs at scale.** `n_promoted` meaning "won-cell" was harmless at 200 episodes (~21 cells, ~21 substrate-passes by coincidence). At 1K scale: 3,538 vs 0. Naming discipline matters more than I'd weighted.
 3. **Cross-domain replication produces unanticipated signal.** Iteration 3 didn't hit the planted target but found an unannounced one. The engine's design as domain-agnostic was a v8 bet that paid off — same architecture works in predicate-discovery space without rework.
 4. **Loop replanning works.** Each iteration surfaced ~2 new tasks for the queue. Iter 1 → 5K saturation + elite inspection; Iter 2 → 1K BindEval pilot + substrate ledger; Iter 3 → investigation of the surprise predicate. Next-iteration backlog naturally prioritized by what each iteration revealed.
+
+---
+
+## Addendum 2 — Loop iterations 4, 5, 6 (added 2026-05-04 late evening)
+
+Continued autonomous loop. Per James "Loop, adding work to the queues after each iteration completes."
+
+### Iteration 4: Investigate the {neg_z:3, pos_x:4, neg_y:1} surprise predicate
+
+- Built `trial_3_investigate_surprise.py` (~210 LOC): walks OBSTRUCTION_CORPUS, finds matching records, computes lift on the non-overlap subset (after removing planted-signature matches).
+- **Verdict: LIKELY_ARTIFACT_PLANTED_OVERLAP.** The lift=12.42 came from a **single record** that's also a SECONDARY_SIGNATURE match. Engine partially-rediscovered the planted signal via a coarser conjunctive predicate. Useful for validating selection pressure works — NOT a separate discovery.
+- This kills the "stoa post to Charon about a discovery" thread. Saves a misleading post.
+- **Substrate-grade lesson**: predicate evaluators should require min_match_group_size ≥ 3 to prevent single-record-overlap inflation.
+
+### Iteration 5: 1K × 3 seeds Trial 3 production pilot with hardened evaluator
+
+- Built `trial_3_production_pilot.py` (~310 LOC) with `HardenedObstructionEvaluator` (min_match_group_size=3). Operator weights tilted toward structural+symbolic.
+- **3 seeds × 1000 episodes**: 0/3 hit OBSTRUCTION_SIGNATURE exactly. 358 high-lift predicates total.
+- **DEEP SUBSTRATE-GRADE FINDING**: Top high-lift predicate is `{pos_x:1, has_diag_neg:True, neg_x:4}` lift=22.40 match=10. **3 of 4 OBSTRUCTION_SIGNATURE conjuncts**, missing only `n_steps:5`. Rediscovered consistently across all 3 seeds AND multiple operators (structural, symbolic).
+- **The engine sits at a local fitness maximum**. Adding the 4th conjunct (n_steps=5) reduces match-size 10→8 without changing the binary substrate-pass criterion. With binary fitness only, no gradient drives refinement.
+
+### Iteration 6: Continuous-lift fitness component (architectural fix)
+
+- Updated `FitnessTuple` to four-tier: battery_survival, band_concentration_tier, **continuous_signal_score (NEW)**, cost_amortized_score. Defaults to 0.0 — backwards-compatible.
+- For Obstruction domain: `continuous_signal_score = log10(1 + lift)`. For 3-conjunct lift=22.40 → 1.369; for 4-conjunct OBSTRUCTION_SIGNATURE lift=28.4 → 1.468. **Strict gradient toward the full 4-conjunct match.**
+- 176 tests still green; FitnessTuple default-arg compatibility preserved.
+- Re-ran Trial 3 production pilot with continuous-lift fitness: STILL 0/3 hits on OBSTRUCTION_SIGNATURE.
+- **Root-cause discovered**: 3-conjunct and 4-conjunct predicates land in **DIFFERENT cells** of the descriptor space (different DAG-entropy bucket, different output-magnitude bucket). They never compete head-to-head. The continuous fitness gradient exists but doesn't trigger because the comparison never fires.
+- **Real fix is fitness-biased parent selection** (queued as Iter 13). Currently parents are sampled uniformly from archive cells; sampling instead from substrate-passing cells at higher rate would bias mutations toward refining the 3-conjunct.
+
+### Tasks queued post-iter-6
+
+| # | Task | Source | Priority |
+|---|---|---|---|
+| 68 | min_match_group_size=3 in evaluator | Iter 4 | **DONE in Iter 5** |
+| 69 | Continuous-lift fitness component | Iter 5 | **DONE in Iter 6** |
+| 70 | Stoa post to Charon (substrate-grade finding) | Iter 5 | medium (can wait until Iter 13 lands) |
+| 71 | Fitness-biased parent selection | Iter 11 | **HIGH** (root-cause for missing OBSTRUCTION hits) |
+| 72 | Predicate-domain symbolic operator | Iter 11 | medium |
+
+### Cumulative MVP status (post-iter-6)
+
+- **~6,800 LOC + 176 passing tests** (added ~800 LOC across iter 4-6)
+- **Three trial reports + one investigation report**:
+  - `TRIAL_1_REPORT.md` (negative on classifier)
+  - `TRIAL_2_REPORT.md` (4/4 PASS production pilot)
+  - `TRIAL_3_OBSTRUCTION_SMOKE_REPORT.md` (2/3 + surprise)
+  - `TRIAL_3_INVESTIGATION_REPORT.md` (artifact verdict)
+  - `TRIAL_3_PRODUCTION_REPORT.md` (deep insight: local-max + descriptor-cell separation)
+
+### Substrate-grade insights from iter 4-6
+
+1. **Negative results save substrate. The "12.42-lift discovery" investigation prevented filing a misleading stoa post; the calibrated negative is more useful than an unverified claim.
+2. **Fitness function design has more depth than v8 specified.** The MVP fitness (binary substrate-pass + band-tier + cost) plus the descriptor's cell separation jointly produce local-maxima. Continuous-lift alone doesn't fix it — descriptor-cell-collision and parent-selection-biasing are also load-bearing for refinement.
+3. **The engine consistently rediscovers planted signal at 3-of-4 conjunct level across seeds + operators.** That's a strong selection-pressure validation; the gap to the 4th conjunct is a fitness-landscape architecture issue, not a search-power issue.
+4. **Loop replanning continues to work.** Iter 4 → Iter 10. Iter 5 → Iter 11+12. Iter 6 (Iter 11 implemented) → Iter 13+14. Each iteration's findings produce ~2 new prioritized tasks.

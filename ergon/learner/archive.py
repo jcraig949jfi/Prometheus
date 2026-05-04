@@ -45,26 +45,44 @@ from ergon.learner.genome import Genome, MutationOperatorClass
 
 @dataclass(frozen=True)
 class FitnessTuple:
-    """Three-tier fitness for cell-elite competition (v8 §6.2 + Trial 1 adjustment).
+    """Four-tier fitness for cell-elite competition.
 
-    Higher is better at every tier. Tier comparison is lexicographic:
-      - Tier 0 (primary): battery_survival_count (PROMOTE = max value).
-      - Tier 1 (secondary): band_concentration_tier — at MVP this replaces
-        the v7 "residual signal-class flag" since Trial 1 showed the
-        classifier is untrustworthy. Higher tier = more-productive
-        magnitude bucket per descriptor §6.2 (buckets 1, 2 = full weight;
-        buckets 0, 3, 4 = downweighted).
-      - Tier 2 (tertiary): cost_amortized_score = 1 / (1 + cost_seconds)
-        — cheaper wins ties.
+    Original three-tier (v8 §6.2 + Trial 1 adjustment):
+      Tier 0 (primary): battery_survival_count (PROMOTE = max value).
+      Tier 1 (secondary): band_concentration_tier (replaces v7's residual
+        signal-class flag since Trial 1 escrowed the classifier).
+      Tier 2 (tertiary): cost_amortized_score (cheaper wins ties).
+
+    Iter 11 addition (continuous_signal_score):
+      Tier "1.5" — INSERTED between band_concentration_tier and
+      cost_amortized_score. Continuous score in [0, +inf) representing
+      signal-strength refinement above the substrate-pass threshold.
+
+      Trial 3 production pilot exposed a local-maximum problem in the
+      MVP fitness: a 3-conjunct predicate matching pos_x:1, has_diag_neg:
+      True, neg_x:4 substrate-PASSes with lift=22.40 and match-size=10.
+      Adding the 4th conjunct (n_steps:5) to complete OBSTRUCTION_
+      SIGNATURE REDUCES match-size 10→8 without changing the binary
+      battery_survival_count. The engine has no gradient to refine the
+      passing predicate.
+
+      continuous_signal_score is domain-specific; for Lehmer-Mahler:
+      log10(1 + 1/M_excess); for Obstruction: log10(1 + lift). Domains
+      that don't have a continuous signal can leave it at 0.0 — fitness
+      reduces to the original three-tier order.
+
+    Higher is better at every tier. Lexicographic comparison.
     """
     battery_survival_count: int
-    band_concentration_tier: int  # 0 = out_of_band/downweighted; 2 = full-weight
-    cost_amortized_score: float
+    band_concentration_tier: int
+    continuous_signal_score: float = 0.0  # NEW Iter 11 — replaces "tier 1.5"
+    cost_amortized_score: float = 0.0
 
-    def to_tuple(self) -> Tuple[int, int, float]:
+    def to_tuple(self) -> Tuple[int, int, float, float]:
         return (
             self.battery_survival_count,
             self.band_concentration_tier,
+            self.continuous_signal_score,
             self.cost_amortized_score,
         )
 

@@ -1,0 +1,52 @@
+{
+  "predicate": {
+    "neg_z": 3,
+    "pos_x": 4,
+    "neg_y": 1
+  },
+  "corpus_summary": {
+    "n_total": 150,
+    "n_kills": 13,
+    "baseline_kill_rate": 0.08666666666666667,
+    "obstruction_matches": 8,
+    "obstruction_killed": 8,
+    "secondary_matches": 4,
+    "secondary_killed": 4,
+    "noise_kills": 1
+  },
+  "surprise_eval": {
+    "match_group_size": 1,
+    "nonmatch_group_size": 149,
+    "matched_kill_rate": 1.0,
+    "baseline_kill_rate": 0.08053691275167785,
+    "lift": 12.416666666666668,
+    "lift_excess": 11.416666666666668,
+    "n_corpus": 150
+  },
+  "matched_records": [
+    {
+      "features": {
+        "n_steps": 7,
+        "neg_x": 2,
+        "pos_x": 4,
+        "neg_y": 1,
+        "pos_y": 0,
+        "neg_z": 3,
+        "pos_z": 3,
+        "has_diag_neg": false,
+        "has_diag_pos": true
+      },
+      "kill_verdict": true,
+      "also_matches_obstruction": false,
+      "also_matches_secondary": true
+    }
+  ],
+  "non_overlap_analysis": {
+    "non_overlap_match_size": 0,
+    "non_overlap_kills": 0,
+    "non_overlap_kill_rate": 0.0,
+    "baseline_kill_rate": 0.0,
+    "non_overlap_lift": 0.0
+  },
+  "verdict": "LIKELY_ARTIFACT_PLANTED_OVERLAP"
+}
