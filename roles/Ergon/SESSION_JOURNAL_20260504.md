@@ -709,3 +709,66 @@ The multi-restart union is the substrate-grade answer: **don't pick one weight, 
 |---|---|---|---|
 | 96 | Stoa post — multi-restart union as substrate-grade default | Iter 27 finding | high |
 | 97 | Build a "weight portfolio" config: define recommended weight regimes per corpus type | Iter 27 follow-up | medium |
+
+## Addendum 13 — iter 28: Ergon vs REAL a149_obstruction corpus (DISCOVERY MODE)
+
+### Task #92 — frontier verdict said run this immediately
+
+Loaded the real a149_obstruction corpus (1,457 lattice-walk records from `cartography/convergence/data/asymptotic_deviations.jsonl` cross-referenced with `battery_sweep_v2.jsonl`). 57 records killed by ≥1 battery test (3.9% baseline). Ran multi-restart pipeline (uniform=5% AND uniform=30%) at 5K eps × 3 seeds.
+
+### Result 1 — Ergon rediscovered Charon's signature
+
+3/3 seeds × both weight regimes found a predicate match-set-equivalent to Charon's hand-crafted `{n_steps:5, neg_x:4, pos_x:1, has_diag_neg:True}`. Independent rediscovery, not just confirmation.
+
+### Result 2 — Ergon found `{neg_x:4}` as 1-conjunct discriminator
+
+The simplest predicate match-set-equivalent to Charon's 4-conjunct signature on this corpus is **`{neg_x:4}` alone** (lift=27.92, match=5, kill_rate=100%). Charon's hand-crafted signature is *over-specified* — within this corpus, only the 5 anchor sequences have neg_x=4, so the single-conjunct identifies them uniquely.
+
+This is the parsimony finding: **the engine found a simpler rule than the human did** for the same match-set on this data.
+
+### Result 3 — Ergon found A149499 (the 6th unanimous-kill Charon's signature missed)
+
+Even before running, corpus inspection revealed a 6th unanimous-kill record: A149499 with `{neg_x:3, pos_x:2, has_diag_neg:True, has_diag_pos:True}`. Charon's signature requires `neg_x=4, has_diag_pos=False` — so A149499 was missed entirely. Ergon's predicates capture A149499 in 3/3 seeds × both regimes.
+
+### Result 4 — Ergon found a SECOND killed cluster
+
+Top-lift predicate from u05_canonical: `{neg_x:3, neg_y:3, has_diag_pos:False, pos_x:2, n_steps:5, pos_y:2}` at **lift=29.00, match=7, kill_rate=100%**.
+
+Direct corpus inspection identified the 7 matching records:
+- A149086, A149110, A149146, A149162, A149166, A149167, A149170
+- All 7 are killed by 1-3 battery tests (partial-kill, not unanimous)
+- Simpler form: `{neg_x:3, neg_y:3, has_diag_pos:False, pos_x:2, pos_y:2}` (5-conjunct, match-set equivalent)
+
+This is a **second obstruction-like cluster** — structurally adjacent to Charon's anchors but with different x-axis asymmetry (3+2 vs 4+1) and y-axis dominance (3 neg-y + 2 pos-y). Charon's hand-crafted signature misses these entirely.
+
+### Substrate-grade implication — Discovery Mode confirmed
+
+Per the frontier verdict: "If Ergon finds a 'simpler' rule for a complex mathematical kill-path than the humans did, the project is officially in 'Discovery' mode rather than 'Tooling' mode."
+
+Both happened:
+1. Ergon found a SIMPLER rule (`{neg_x:4}` 1-conjunct vs Charon's 4-conjunct)
+2. Ergon found a DIFFERENT cluster (the 7-record A149086+ family) Charon missed entirely
+
+**Ergon is in Discovery mode.**
+
+### What to do with the findings
+
+The 7-record cluster is a Shadow Catalog candidate. These records are partial-kill (1-3 of 4 battery tests fired) — i.e. "interesting but inconsistent" in Charon's existing classification. Ergon's predicate gives a structural reason WHY they cluster: same step-set asymmetry pattern as Charon's anchors but with x-axis ratio 3:2 instead of 4:1.
+
+Hypothesis (worth testing): the kill-test failures for these 7 are likely the same TYPE of failures Charon's anchors get — the boundary-geometry artifact identified in `pivot/...obstruction...`. The ratio 3:2 vs 4:1 should produce a milder version of the same effect.
+
+### Cumulative status post-iter-28
+
+- ~10,000 LOC + 184 passing tests
+- 5 ledger files: iter15, iter18, iter27 (synthetic), iter28 u05/u30 (real a149)
+- 4 Stoa posts ready for team review
+- One verified frontier hypothesis from synthetic corpus (iter 22)
+- Two NEW frontier hypotheses from real corpus (iter 28: simpler-rule + second-cluster)
+
+### Tasks queued post-iter-28
+
+| # | Task | Source | Priority |
+|---|---|---|---|
+| 98 | Stoa post — Ergon found 7-record cluster Charon missed (DISCOVERY mode) | Iter 28 | URGENT |
+| 99 | Verify the 7-record cluster is structurally coherent — what's the unifying mechanism? | Iter 28 | high |
+| 100 | Mechanical iteration — Postgres-backed ledger (frontier said non-negotiable for scale) | Frontier verdict | medium |
