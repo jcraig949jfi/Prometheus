@@ -463,3 +463,94 @@ The promotion ledger makes this visible to other agents for the first time. Befo
 | 80 | Per-cell elite-genome inspection harness | Iter 5 (deferred) | medium |
 | 81 | 5K BindEval pilot — does substrate routing add finds? | Iter 14 | low |
 | 82 | Charon visibility test — can Charon read ledgers? | Iter 15 | medium |
+
+## Addendum 7 — iter 16+17: ledger consumer + per-cell elite inspection
+
+### Iter 16 (Task #81) — consumer-side ledger reader
+
+`ergon/learner/tools/read_promotion_ledger.py` (~150 LOC, vanilla Python, no Ergon imports). Loads a ledger JSONL and renders a markdown summary: classification, per-operator breakdown, top-frequent + top-lift unique predicates. Validated on iter 15 ledger output.
+
+Substrate-grade observation from the consumer view:
+- 668/813 substrate-PASSes from structural operator (82%) — confirms iter 11 weight rebalancing
+- Top-lift unique predicates surface a 3-conjunct parsimony alternative `{n_steps:5, has_diag_neg:True, pos_x:1}` at lift=28.4 — same as the 2-conjunct discriminator. Multiple match-set equivalents exist for OBSTRUCTION.
+
+### Iter 17 (Task #80) — per-cell elite inspection harness
+
+`ergon/learner/tools/inspect_archive_elites.py`. Walks `archive.all_elites()` and emits a markdown table grouped by canonicalizer_subclass. Different from the ledger: ledger is "all substrate-PASS events"; inspection is "best per cell."
+
+Validated on seed=42 / 1K eps: 46 cells filled, 39 from structural (85%), variety_fingerprint dominates (24 cells) due to has_diag_neg/pos boolean features. SECONDARY exact match `{has_diag_pos:True, n_steps:7}` is present as a cell elite.
+
+### Substrate-grade finding — engine discovers strict-subset predicates
+
+The inspection surfaced a 4-conjunct `{n_steps:5, has_diag_neg:True, has_diag_pos:True, pos_x:1}` won a cell at fitness=(1,2,1.24,1.0). Re-evaluation:
+- match_size = 4 (substrate-PASS, since MIN_MATCH=3)
+- All 4 are OBSTRUCTION-planted records — which happen to have `has_diag_pos=True` randomly (4 of 8 OBSTRUCTION matches do)
+- lift = 16.22
+
+So this predicate identifies a **strict subset** of OBSTRUCTION matches by exploiting an accidental correlation in the corpus. The engine finds it because substrate-PASS criterion (lift ≥ 1.5 + match ≥ 3) doesn't penalize subset-predicates.
+
+This is correct engine behavior — substrate-PASS is the load-bearing criterion, not "maximum coverage." Future agents consuming the ledger should be aware that some discoveries are valid subset-predicates rather than parsimonious discriminators.
+
+### Cumulative MVP status post-iter-17
+
+- ~8,500 LOC + 184 passing tests
+- Three consumer-side tools: `read_promotion_ledger.py` (Charon-style consumer view), `inspect_archive_elites.py` (engineer view), and the trial reports themselves (substrate-grade summary)
+- Two output artifacts per trial run: ledger JSONL + archive inspection markdown
+- One Stoa post live: `2026-05-04-ergon-on-engine-tradeoffs-iter7-13.md`
+
+The MVP is empirically validated and substrate-integrated. Iter 18 will run the canonical production pipeline combining all learnings (BindEval routing + exploration_rate=0.15 + ledger persistence + archive inspection).
+
+## Addendum 8 — iter 18: canonical production pipeline
+
+### Task #82 — combine all iter 7-17 learnings into one pipeline
+
+`trial_3_iter18_canonical.py` runs 5K x 3 seeds with: ObstructionBindEvalEvaluator, exploration_rate=0.15, PromotionLedger persistence, end-of-run archive inspection. Single canonical pipeline.
+
+### Result — substrate-grade end-to-end validated
+
+```
+15,000 total kernel EVALs (3 seeds x 5K episodes)
+0 kernel errors (perfect substrate-discipline)
+19.2 seconds total runtime
+4,149 substrate-PASS records persisted to ledger
+1,583 unique predicates discovered
+```
+
+Discovery breakdown:
+- OBSTRUCTION exact: 2/3 seeds (57 records)
+- OBSTRUCTION discriminator: 3/3 seeds (149 records, distinct from exact)
+- SECONDARY exact: 3/3 seeds (49 records)
+- SECONDARY discriminator: 3/3 seeds (1 record distinct from exact)
+- Non-planted substrate-PASS: 3,893 records (the ambient predicate space)
+
+Per-operator substrate-PASS counts: structural 3,542 (85%), symbolic 367, anti_prior 97, uniform 85, structured_null 58 — confirms iter 11 weight tuning.
+
+Top-5 highest-lift unique predicates all have lift=28.40 and match=8, with multiple parsimony alternatives (`{neg_x:4, n_steps:5}` 2-conjunct + `{has_diag_neg:True, n_steps:5, neg_x:4}` 3-conjunct + others). The engine found multiple match-set-equivalent discriminators independently.
+
+### Substrate-grade insight — partial-information predicates dominate the discovery surface
+
+Top-5 most-frequent unique predicates are all **single-conjuncts**:
+- `{pos_x:1}` 102 occurrences, lift=8.64
+- `{n_steps:5}` 86 occurrences, lift=7.29
+- `{neg_x:4}` 69 occurrences, lift=7.63
+- `{has_diag_neg:True}` 65 occurrences, lift=3.40
+- `{has_diag_pos:True}` 55 occurrences, lift=4.72
+
+These are not parsimonious discriminators — they're **partial information**. Each one identifies a feature that correlates with kill_verdict but doesn't fully discriminate. They are nonetheless substrate-PASS (lift ≥ 1.5, match ≥ 3) and end up in the ledger as 387 of 4,149 records (9% of the discovery surface from just the top 5 single conjuncts).
+
+For consumer agents, this is hypothesis-generator output: "the engine sees correlation between feature X and kill_verdict." Aggregating across many such predicates is what lets a downstream agent reconstruct the full obstruction structure.
+
+### End of session journal — autonomous MVP build complete
+
+This 18-iteration loop took the Ergon learner from MVP scaffolding through:
+1. Multi-domain validation (Trial 2 Lehmer-Mahler + Trial 3 Obstruction)
+2. Local-maximum problem solved (fitness-biased parents + continuous-lift)
+3. Mode-collapse identified and dial-fixed (exploration_rate)
+4. Substrate integration validated (BindEvalKernelV2)
+5. Discovery persistence (PromotionLedger)
+6. Consumer-side tooling (read_promotion_ledger, inspect_archive_elites)
+7. Canonical production pipeline producing substrate-grade artifacts
+
+~8,800 LOC, 184 passing tests, 12 trial files, 1 Stoa post, 8 journal addenda.
+
+The MVP is empirically validated, substrate-integrated, and consumer-ready. Future iterations should focus on cross-domain generalization (does the predicate-discovery pattern work for Lehmer-Mahler too?) and meta-controller for auto-tuning exploration_rate per-corpus.
