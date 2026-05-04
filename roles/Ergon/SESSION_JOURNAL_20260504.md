@@ -380,3 +380,37 @@ This is a clean operational regime: at fixed architecture, predicate-discovery q
 |---|---|---|---|
 | 78 | Test adaptive fitness-bias to recover SECONDARY at 5K | Iter 12 mode-collapse finding | medium |
 | 79 | Stoa post — Ergon engine has predicate-discovery scaling law | Iter 12 substrate insight | high |
+
+## Addendum 5 — iter 13: exploration_rate fixes mode-collapse
+
+### Task #78 — does adaptive fitness-bias recover SECONDARY for seed 1234?
+
+Added `exploration_rate` parameter to `archive.sample_parent`. With probability `exploration_rate`, parent sampling bypasses the substrate-pass bias and picks uniformly across all filled cells. Default 0.0 (backward compat).
+
+### Result — clean exploration / exploitation tradeoff
+
+5K-episode sweep across exploration_rate ∈ {0.00, 0.15, 0.25}:
+
+| rate | OBS exact | OBS disc | SEC exact | SEC disc | structural/uniform |
+|---|---|---|---|---|---|
+| 0.00 | 3/3 | 3/3 | 2/3 | 2/3 | 26.80× |
+| 0.15 | 2/3 | 3/3 | **3/3** | **3/3** | 45.00× |
+| 0.25 | 2/3 | 3/3 | **3/3** | **3/3** | 23.33× |
+
+10K-episode followup at rate=0.15: **3/3 across all four metrics.** Highest structural/uniform ratio yet (49.00×). Seed 1234 went from "never finds SECONDARY" (rate=0, 5K) to "finds SECONDARY at episode 299" (rate=0.15, 10K) — earliest in the run.
+
+### Substrate-grade insight — exploration_rate is a dial, not a switch
+
+rate=0 maximizes single-signature speed: seed 42 found OBSTRUCTION exact at ep 1485 (5K @ 0.0) vs ep 6146 (10K @ 0.15). 4× slower per-target.
+
+rate=0.15 enables multi-signature coverage: seed 1234 went from 0/2 to 2/2 signatures.
+
+The right setting depends on whether the corpus has multiple planted signatures. Single-target: rate=0. Multi-target: rate=0.15-0.25, with episodes scaled accordingly.
+
+This is the second instance of the engine exposing a substrate-grade epistemic tradeoff (the first was Iter 12's compute-vs-result curve). **Both tradeoffs are dial-on-the-engine, not bugs to fix.**
+
+### Code changes
+
+- `archive.py`: `sample_parent` gains `exploration_rate: float = 0.0` parameter. Bypasses bias entirely when `rng.random() < exploration_rate`.
+- New trials: `trial_3_iter13_exploration.py` (5K sweep), `trial_3_iter13_extended.py` (10K confirmation at rate=0.15).
+- Backward compat preserved: existing trials (Trial 2, Trial 3 production pilot) continue to use rate=0.0.

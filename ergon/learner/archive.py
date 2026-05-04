@@ -243,6 +243,7 @@ class MAPElitesArchive:
         self,
         rng: Any,  # random.Random
         substrate_pass_bias: float = 5.0,
+        exploration_rate: float = 0.0,
     ) -> Optional["ArchiveEntry"]:
         """Sample a parent for mutation, biased toward substrate-passing cells.
 
@@ -253,10 +254,22 @@ class MAPElitesArchive:
         pick a parent from a substrate-passing cell, which gives mutation
         operators more chances to refine high-fitness predicates.
 
+        Per Iter 13b (queued from Iter 12 mode-collapse finding): once any
+        substrate-passing parent exists, the bias concentrates descendants
+        in that parent's territory, starving exploration of unrelated regions
+        (Iter 12: seed 1234 found OBSTRUCTION exact but never SECONDARY).
+        `exploration_rate` ∈ [0, 1] is the probability of bypassing the bias
+        and sampling uniformly across ALL filled cells, regardless of pass
+        status. Default 0.0 (backward compat). 0.2-0.25 recovers SECONDARY.
+
         Returns None if archive is empty.
         """
         if not self.cells:
             return None
+
+        # Iter 13b: exploration bypass — uniform across all cells
+        if exploration_rate > 0.0 and rng.random() < exploration_rate:
+            return rng.choice(list(self.cells.values()))
 
         # Partition cells by substrate-pass status
         substrate_passing = [
