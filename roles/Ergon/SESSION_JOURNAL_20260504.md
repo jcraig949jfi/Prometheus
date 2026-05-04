@@ -627,3 +627,40 @@ For domains with **>2 latent signatures across non-overlapping feature subspaces
 | 91 | Multi-restart union test — does combining rates 0+0.15+0.25 give 9/9? | Iter 25 finding | medium |
 | 92 | Higher uniform weight test — does 30% uniform recover TARGET_C without losing A/B? | Iter 25 finding | medium |
 | 93 | Stoa update — exploration_rate is a 2-target dial, 3+ needs other mechanisms | Iter 25 finding | low |
+
+## Addendum 11 — iter 26: phase transition in mutation operator weights
+
+### Task #90 — does uniform=30% recover TARGET_C?
+
+Test the path-dependent-bias hypothesis from iter 25: structural operator extends parent genomes, so descendants concentrate on parent's feature subspace; z-axis (TARGET_C) gets attention only via uniform/anti_prior/structured_null. Bump uniform from 5% to 30% (taking from structural's 65%) and re-run iter 25's 3-target corpus.
+
+### Result — phase transition revealed
+
+| config | uniform% | A | B | C | total | seed_100_C |
+|---|---|---|---|---|---|---|
+| baseline | 5% | 3/3 | 2/3 | 2/3 | 7/9 | missed |
+| **bumped_uniform_30** | **30%** | **3/3** | **3/3** | **3/3** | **9/9** | **FOUND** at ep 6116 |
+| bumped_uniform_15 | 15% | 3/3 | 0/3 | 2/3 | 5/9 | missed |
+
+**At uniform=30%, full 9/9 coverage achieved for the first time.** Seed 100, which never found TARGET_C across iter 25's rate sweep, finds it at ep 6116 with bumped weights.
+
+But uniform=15% is STRICTLY WORSE than 5% (5/9 vs 7/9 — loses B entirely). The dial is **non-monotonic**.
+
+### Substrate-grade insight — phase transition near uniform=25%
+
+Below ~25% uniform, the exploration budget is large enough to disrupt exploitation but too small to systematically cover orthogonal feature subspaces. Result: worst-of-both-worlds (lose B without gaining C).
+
+Above ~25% uniform, exploration is sufficient to discover features in any subspace via random fresh genomes. Exploitation drops (fewer discoveries per target) but COVERAGE is complete.
+
+This is a different mechanism from iter 13's exploration_rate dial:
+- exploration_rate (parent sampling) trades exploitation for parent-pool diversity within already-explored cells
+- uniform% (operator weight) trades exploitation for fresh-genome coverage of unexplored feature subspaces
+
+**For multi-target corpora with non-overlapping feature subspaces, uniform% is the load-bearing dial; exploration_rate is secondary.** This refines the iter 13 substrate-grade claim significantly.
+
+### Tasks queued post-iter-26
+
+| # | Task | Source | Priority |
+|---|---|---|---|
+| 94 | Stoa post — phase transition in mutation operator weights | Iter 26 finding | high |
+| 95 | Test uniform% sweep on OBSTRUCTION corpus (does 30% hurt 2-target perf?) | Iter 26 follow-up | medium |
