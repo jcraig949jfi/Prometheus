@@ -3146,3 +3146,30 @@ work. Benchmark is necessary, not sufficient.
   Tests (22 total): A:5 P:5 E:7 C:5 — all four math-tdd categories
   >= 3.
 
+| 2026-05-04 | pm.cost_model_profiler (calibration of top-50 hot-path arsenal ops) | A:6 | P:5 | E:5 | C:5 | (this session) |
+  Refs: math-tdd skill four-quadrant gate; substrate cost-aware
+  scheduler review #2 critique. Empirical recalibration on Skullport /
+  Win11 / Py3.11.9 / Ryzen 7 5700X3D collapsed the worst declared/p95
+  ratio from 757x (`flint_polmodp`) to ~31x (`bad_primes`); 33/50
+  in-band -> 50/50 in-band. Added structured `calibrated_cost`
+  (complexity class + n=1 coefficient) on every top-50 op.
+
+  New files:
+    prometheus_math/cost_model_profiler.py (~480 LOC)
+    prometheus_math/tests/test_cost_models.py (21 tests)
+    prometheus_math/COST_MODEL_CALIBRATION_2026-05-04.md
+
+  Modified:
+    prometheus_math/_metadata_table.py (50 cost dicts updated;
+      additive — no existing keys removed)
+    sigma_kernel/bind_eval.py (CostModel.calibrated_cost optional field)
+
+  Tests (21 total): A:6 (mahler_measure subquadratic, is_cyclotomic
+  poly-time, flint_factor subquadratic, logistic_map exactly O(n),
+  smith_normal_form polynomial, JSON round-trip well-formedness)
+  P:5 E:5 C:5 — all four math-tdd categories >= 3.
+
+  Honest framing in the report: this is one calibration on one
+  machine; cost models drift; recalibration cadence recommended
+  monthly or on perceived BudgetExceeded inflation.
+
