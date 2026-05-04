@@ -113,9 +113,35 @@ def summarize(records: List[Dict[str, Any]]) -> Dict[str, Any]:
     most_frequent = sorted(unique_preds, key=lambda u: -u["n_occurrences"])[:5]
     highest_lift = sorted(unique_preds, key=lambda u: -u["lift"])[:5]
 
+    # Augment unique preds with planted-status flags from any record
+    # carrying that content_hash (use the first matching record).
+    planted_flags: Dict[str, bool] = {}
+    for r in records:
+        ch = r["genome_content_hash"]
+        if ch in planted_flags:
+            continue
+        planted_flags[ch] = (
+            r.get("is_obstruction_exact", False)
+            or r.get("is_secondary_exact", False)
+            or r.get("is_obstruction_discriminator", False)
+            or r.get("is_secondary_discriminator", False)
+        )
+
+    non_planted_preds = [
+        u for u in unique_preds
+        if not planted_flags.get(u["content_hash"], False)
+    ]
+    top_non_planted_by_lift = sorted(
+        non_planted_preds, key=lambda u: -u["lift"]
+    )[:10]
+    top_non_planted_by_freq = sorted(
+        non_planted_preds, key=lambda u: -u["n_occurrences"]
+    )[:5]
+
     return {
         "n_records": len(records),
         "n_unique_predicates": len(unique_preds),
+        "n_unique_non_planted": len(non_planted_preds),
         "seeds": seeds,
         "trials": trials,
         "episode_min": min(episodes),
@@ -124,6 +150,8 @@ def summarize(records: List[Dict[str, Any]]) -> Dict[str, Any]:
         "operator_breakdown": dict(operator_breakdown),
         "most_frequent": most_frequent,
         "highest_lift": highest_lift,
+        "top_non_planted_by_lift": top_non_planted_by_lift,
+        "top_non_planted_by_freq": top_non_planted_by_freq,
     }
 
 
@@ -193,6 +221,33 @@ def render_markdown(
             f"- lift={u['lift']:>6.2f}, match={u['match_size']:>3d}, "
             f"first seen seed={u['first_seed']} ep={u['first_episode']}, "
             f"predicate={u['predicate']}"
+        )
+
+    n_non_planted_uniq = summary.get("n_unique_non_planted", 0)
+    lines += [
+        "",
+        "## Frontier hypotheses — non-planted unique predicates",
+        "",
+        f"Of {summary['n_unique_predicates']} unique predicates, "
+        f"**{n_non_planted_uniq}** are non-planted (don't match planted "
+        "signatures or their match-set discriminators). These are the "
+        "engine's hypothesis-generator output beyond confirming known "
+        "ground truth.",
+        "",
+        "### Top-10 non-planted by lift",
+        "",
+    ]
+    for u in summary.get("top_non_planted_by_lift", []):
+        lines.append(
+            f"- lift={u['lift']:>6.2f}, match={u['match_size']:>3d}, "
+            f"first seen seed={u['first_seed']} ep={u['first_episode']}, "
+            f"predicate={u['predicate']}"
+        )
+    lines += ["", "### Top-5 non-planted by frequency", ""]
+    for u in summary.get("top_non_planted_by_freq", []):
+        lines.append(
+            f"- n_occ={u['n_occurrences']:>3d}, lift={u['lift']:>6.2f}, "
+            f"match={u['match_size']:>3d}, predicate={u['predicate']}"
         )
 
     return "\n".join(lines) + "\n"
