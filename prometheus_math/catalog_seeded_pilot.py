@@ -31,9 +31,14 @@ Public API
 * ``seeded_reinforce_agent(env_factory, action_priors, n_episodes,
   seed, lr, entropy_coef)`` -- REINFORCE with logits warm-started to
   ``log(action_priors)`` at each step.
+* ``frozen_bias_reinforce_agent(env_factory, action_priors,
+  n_episodes, seed, lr, delta_lr, ...)`` -- REINFORCE where the bias
+  scaffold is frozen at ``log(action_priors)`` and only a small
+  additive residual ``delta`` is trained.  Cleanest H2 falsifier:
+  the gradient cannot erode the catalog warm start.
 * ``compare_seeded_vs_unseeded(env_factory, n_episodes, seeds)`` --
-  4-arm pilot (random uniform, random seeded, REINFORCE uniform,
-  REINFORCE seeded).
+  5-arm pilot (random uniform, random seeded, REINFORCE uniform,
+  REINFORCE seeded full-policy, REINFORCE frozen-bias).
 
 Honest framing
 --------------
@@ -635,7 +640,236 @@ def seeded_reinforce_agent(
 
 
 # ---------------------------------------------------------------------------
-# Unseeded baselines (for the 4-arm comparison)
+# Frozen-bias REINFORCE  (cleanest H2 falsifier)
+# ---------------------------------------------------------------------------
+
+
+def frozen_bias_reinforce_agent(
+    env_factory: Callable[[], Any],
+    action_priors: Dict[int, np.ndarray],
+    n_episodes: int,
+    seed: int,
+    lr: float = 0.05,
+    delta_lr: float = 0.005,
+    entropy_coef: float = 0.05,
+    reward_scale: float = 1.0 / 100.0,
+    baseline_decay: float = 0.95,
+    prior_strength: float = 1.0,
+) -> Dict[str, Any]:
+    """REINFORCE with FROZEN bias scaffold and a small additive residual.
+
+    The full-policy seeded REINFORCE eroded its catalog warm-start: in
+    the 4-arm pilot it ended with 0 catalog hits (vs ~1069 for seeded
+    random sampling) because policy-gradient + entropy regularization
+    drove ``b`` away from ``log(prior)`` before sparse rewards could
+    consolidate the bias.  This variant freezes the bias scaffold and
+    only trains a small additive residual ``delta``::
+
+        b      = prior_strength * log(action_priors)   # FROZEN
+        delta  = 0                                     # learnable
+        logits = W[s] @ obs + b[s] + delta[s]
+        probs  = softmax(logits)
+
+    Gradients flow through ``W`` and ``delta`` only; ``b`` is treated
+    as a constant scaffold the gradient cannot erode.  ``delta_lr`` is
+    typically smaller than ``lr`` so the bias dominates the early
+    distribution.
+
+    This is the cleanest H2 falsifier: if frozen-bias REINFORCE STILL
+    produces 0 catalog hits, gradient erosion was NOT the explanation
+    and the +100 band is structurally empty (H1).
+
+    Parameters
+    ----------
+    delta_lr : float, default 0.005
+        Learning rate for the additive residual.  Defaults to 1/10 of
+        ``lr`` so the bias dominates initially.  Set to ``0.0`` to
+        completely freeze the policy distribution at the warm start
+        (modulo the W head, which still trains on observations).
+    prior_strength : float, default 1.0
+        Multiplier on the log-prior bias.  Same semantics as the
+        seeded REINFORCE variant.
+    Other parameters
+        Identical semantics to ``seeded_reinforce_agent``.
+
+    Returns
+    -------
+    dict
+        Same shape as ``seeded_reinforce_agent``; ``condition_label``
+        is ``"reinforce_frozen_bias"``.
+    """
+    if n_episodes < 0:
+        raise ValueError(f"n_episodes must be >= 0; got {n_episodes}")
+    env = env_factory()
+    rng = np.random.default_rng(seed)
+
+    _, info0 = env.reset(seed=seed)
+    n_actions = int(info0.get("n_actions"))
+    half_len = int(info0.get("half_len", env.half_len))
+    degree = int(info0.get("degree", env.degree))
+    obs_dim = 7 + degree
+
+    # Linear policy: logits = W[s] @ obs + b[s] + delta[s].
+    W = np.zeros((half_len, n_actions, obs_dim), dtype=np.float64)
+    # Frozen bias scaffold: log(action_priors).  This is a CONSTANT
+    # array the gradient never touches.
+    b = np.zeros((half_len, n_actions), dtype=np.float64)
+    # Learnable additive residual; starts at 0.
+    delta = np.zeros((half_len, n_actions), dtype=np.float64)
+
+    eps = 1e-9
+    for s in range(half_len):
+        prior = action_priors.get(s)
+        if prior is None:
+            continue
+        prior = np.asarray(prior, dtype=np.float64)
+        if prior.shape != (n_actions,):
+            raise ValueError(
+                f"action_priors[{s}] has shape {prior.shape}; expected ({n_actions},)"
+            )
+        log_p = np.log(np.clip(prior, eps, None))
+        log_p = log_p - log_p.mean()
+        b[s] = prior_strength * log_p
+
+    # Snapshot of frozen scaffold for post-run identity verification
+    # (referenced by ``test_authority_frozen_bias_does_not_erode``).
+    b_frozen_snapshot = b.copy()
+
+    baseline = 0.0
+
+    counts = {
+        "catalog_hit": 0, "claim_into_kernel": 0,
+        "promote": 0, "shadow_catalog": 0, "rejected": 0,
+    }
+    by_kp: Dict[str, int] = {}
+    catalog_hits: List[Dict[str, Any]] = []
+    promotes: List[Dict[str, Any]] = []
+    shadow_catalog: List[Dict[str, Any]] = []
+    salem_cluster_hits = 0
+    low_m_hits = 0
+    pipeline_len = 0
+
+    t0 = time.perf_counter()
+    for ep in range(n_episodes):
+        obs, _ = env.reset()
+        actions: List[int] = []
+        observations: List[np.ndarray] = []
+        cum_reward = 0.0
+        terminated = False
+        step_idx = 0
+        last_info: Dict[str, Any] = {}
+        while not terminated:
+            l = W[step_idx] @ obs + b[step_idx] + delta[step_idx]
+            probs = np.exp(l - l.max())
+            probs /= probs.sum()
+            a = int(rng.choice(len(probs), p=probs))
+            actions.append(a)
+            observations.append(obs.copy())
+            obs, r, terminated, _, last_info = env.step(a)
+            cum_reward += r
+            step_idx += 1
+
+        r_scaled = cum_reward * reward_scale
+        advantage = r_scaled - baseline
+        baseline = baseline_decay * baseline + (1.0 - baseline_decay) * r_scaled
+
+        for s_idx, (a, o) in enumerate(zip(actions, observations)):
+            l = W[s_idx] @ o + b[s_idx] + delta[s_idx]
+            probs = np.exp(l - l.max())
+            probs /= probs.sum()
+            grad_a = -probs.copy()
+            grad_a[a] += 1.0
+            log_p = np.log(probs + 1e-12)
+            entropy_grad = probs * (log_p - (probs * log_p).sum())
+            total_grad = advantage * grad_a + entropy_coef * (-entropy_grad)
+            # Update W with the full lr; bias scaffold is frozen; only
+            # delta absorbs the bias-direction gradient.
+            W[s_idx] += lr * np.outer(total_grad, o)
+            delta[s_idx] += delta_lr * total_grad
+            # b[s_idx] is INTENTIONALLY not updated.
+
+        rl = last_info.get("reward_label")
+        if rl == "salem_cluster":
+            salem_cluster_hits += 1
+        elif rl == "low_m":
+            low_m_hits += 1
+
+        df = last_info.get("discovery_flag")
+        if df and isinstance(df, str) and df.startswith("known_salem:"):
+            catalog_hits.append({
+                "seed": seed, "episode": ep, "discovery_flag": df,
+                "coeffs": list(last_info.get("coeffs_full", []) or []),
+                "mahler_measure": float(last_info.get("mahler_measure", 0.0) or 0.0),
+                "reward_label": rl,
+            })
+        elif rl == "salem_cluster" and last_info.get("is_known_in_mossinghoff"):
+            catalog_hits.append({
+                "seed": seed, "episode": ep, "discovery_flag": df,
+                "coeffs": list(last_info.get("coeffs_full", []) or []),
+                "mahler_measure": float(last_info.get("mahler_measure", 0.0) or 0.0),
+                "reward_label": rl, "via": "salem_cluster_known",
+            })
+
+        new_len, by_kp = _tally_episode_outcome(
+            last_info, pipeline_len, env, counts, by_kp
+        )
+        if new_len > pipeline_len:
+            rec = env.pipeline_records()[-1]
+            if rec.terminal_state == "PROMOTED":
+                d = _serialize_record(rec)
+                d.update({"seed": seed, "episode": ep})
+                promotes.append(d)
+            elif rec.terminal_state == "SHADOW_CATALOG":
+                d = _serialize_record(rec)
+                d.update({"seed": seed, "episode": ep})
+                shadow_catalog.append(d)
+        pipeline_len = new_len
+
+    elapsed = time.perf_counter() - t0
+    try:
+        env.close()
+    except Exception:
+        pass
+
+    # Post-run invariant: frozen bias scaffold is BIT-IDENTICAL to its
+    # warm-start value.  Any deviation indicates a code regression.
+    if not np.array_equal(b, b_frozen_snapshot):
+        raise RuntimeError(
+            "frozen_bias_reinforce_agent: bias scaffold drifted during "
+            "training -- this is a code bug.  delta should absorb all "
+            "gradient updates."
+        )
+
+    res = FourCountsResult(
+        condition_label="reinforce_frozen_bias",
+        total_episodes=n_episodes,
+        catalog_hit_count=counts["catalog_hit"],
+        claim_into_kernel_count=counts["claim_into_kernel"],
+        promote_count=counts["promote"],
+        shadow_catalog_count=counts["shadow_catalog"],
+        rejected_count=counts["rejected"],
+        by_kill_pattern=by_kp,
+        elapsed_seconds=elapsed,
+        seed=seed,
+    )
+    return {
+        "result": res,
+        "details": {
+            "catalog_hits": catalog_hits,
+            "promotes": promotes,
+            "shadow_catalog": shadow_catalog,
+            "salem_cluster_proxy_hits": salem_cluster_hits,
+            "low_m_proxy_hits": low_m_hits,
+            "seed": seed,
+            "b_frozen": b_frozen_snapshot.tolist(),
+            "delta_final": delta.tolist(),
+            "delta_lr": float(delta_lr),
+        },
+    }
+
+
+# ---------------------------------------------------------------------------
+# Unseeded baselines (for the 5-arm comparison)
 # ---------------------------------------------------------------------------
 
 
@@ -658,9 +892,11 @@ def compare_seeded_vs_unseeded(
     lr: float = 0.05,
     entropy_coef: float = 0.05,
     prior_strength: float = 1.0,
+    delta_lr: float = 0.005,
 ) -> Dict[str, Any]:
-    """Run all four arms (random uniform / random seeded / REINFORCE
-    uniform / REINFORCE seeded) and tabulate results.
+    """Run all five arms (random uniform / random seeded / REINFORCE
+    uniform / REINFORCE seeded full-policy / REINFORCE frozen-bias)
+    and tabulate results.
 
     Parameters
     ----------
@@ -674,6 +910,8 @@ def compare_seeded_vs_unseeded(
         Pre-extracted seed pool.  If None, falls back to
         ``extract_seed_polynomials_broad`` with min_abs_coef=4
         keyed off the env-factory's degree.
+    delta_lr : float, default 0.005
+        Learning rate for the additive residual in the frozen-bias arm.
 
     Returns
     -------
@@ -708,10 +946,11 @@ def compare_seeded_vs_unseeded(
     uniform = _uniform_priors(degree, n_actions)
 
     arms = {
-        "random_uniform": ("random",   uniform),
-        "random_seeded":  ("random",   seeded_priors),
-        "reinforce_uniform": ("reinforce", uniform),
-        "reinforce_seeded":  ("reinforce", seeded_priors),
+        "random_uniform":        ("random",       uniform),
+        "random_seeded":         ("random",       seeded_priors),
+        "reinforce_uniform":     ("reinforce",    uniform),
+        "reinforce_seeded":      ("reinforce",    seeded_priors),
+        "reinforce_frozen_bias": ("frozen_bias",  seeded_priors),
     }
 
     per_arm: Dict[str, Any] = {}
@@ -721,12 +960,20 @@ def compare_seeded_vs_unseeded(
         for s in seeds:
             if kind == "random":
                 r = seeded_random_baseline(env_factory, priors, n_episodes, int(s))
-            else:
+            elif kind == "reinforce":
                 r = seeded_reinforce_agent(
                     env_factory, priors, n_episodes, int(s),
                     lr=lr, entropy_coef=entropy_coef,
                     prior_strength=prior_strength,
                 )
+            elif kind == "frozen_bias":
+                r = frozen_bias_reinforce_agent(
+                    env_factory, priors, n_episodes, int(s),
+                    lr=lr, delta_lr=delta_lr, entropy_coef=entropy_coef,
+                    prior_strength=prior_strength,
+                )
+            else:
+                raise ValueError(f"unknown arm kind: {kind}")
             results.append(r["result"])
             details.append(r["details"])
 
@@ -765,6 +1012,12 @@ def compare_seeded_vs_unseeded(
             _welch("reinforce_seeded", "random_seeded"),
         "p_random_seeded_gt_random_uniform":
             _welch("random_seeded", "random_uniform"),
+        "p_reinforce_frozen_bias_gt_reinforce_seeded":
+            _welch("reinforce_frozen_bias", "reinforce_seeded"),
+        "p_reinforce_frozen_bias_gt_random_seeded":
+            _welch("reinforce_frozen_bias", "random_seeded"),
+        "p_reinforce_frozen_bias_gt_reinforce_uniform":
+            _welch("reinforce_frozen_bias", "reinforce_uniform"),
     }
 
     # Salem-concentration contrast (the "did seeding bias the search"
@@ -779,6 +1032,10 @@ def compare_seeded_vs_unseeded(
             _welch_salem("reinforce_seeded", "reinforce_uniform"),
         "p_random_seeded_gt_random_uniform_on_salem":
             _welch_salem("random_seeded", "random_uniform"),
+        "p_reinforce_frozen_bias_gt_reinforce_seeded_on_salem":
+            _welch_salem("reinforce_frozen_bias", "reinforce_seeded"),
+        "p_reinforce_frozen_bias_gt_reinforce_uniform_on_salem":
+            _welch_salem("reinforce_frozen_bias", "reinforce_uniform"),
     }
 
     seed_pool_summary = _summarize_seed_pool(seed_polys)
@@ -794,6 +1051,7 @@ def compare_seeded_vs_unseeded(
             "lr": lr,
             "entropy_coef": entropy_coef,
             "prior_strength": prior_strength,
+            "delta_lr": delta_lr,
         },
         "seed_pool": seed_pool_summary,
         "priors": priors_summary,
@@ -862,8 +1120,8 @@ def main(degree: int = 14,
     """Run the catalog-seeded 4-arm pilot at the requested config."""
     print("=" * 78)
     print(f"CATALOG-SEEDED PILOT  degree={degree}  alphabet={coefficient_choices}")
-    print(f"  budget: {n_episodes} eps x {len(seeds)} seeds x 4 arms"
-          f" = {n_episodes * len(seeds) * 4}")
+    print(f"  budget: {n_episodes} eps x {len(seeds)} seeds x 5 arms"
+          f" = {n_episodes * len(seeds) * 5}")
     print("=" * 78)
 
     env_factory = lambda: DiscoveryEnv(
@@ -895,7 +1153,7 @@ def main(degree: int = 14,
 
     print()
     print("=" * 78)
-    print("4-ARM RESULTS SUMMARY")
+    print("5-ARM RESULTS SUMMARY")
     print("=" * 78)
     for label, info in summary["per_arm"].items():
         pr = info["promote_rate_mean"]
@@ -984,5 +1242,6 @@ __all__ = [
     "compute_action_priors",
     "seeded_random_baseline",
     "seeded_reinforce_agent",
+    "frozen_bias_reinforce_agent",
     "compare_seeded_vs_unseeded",
 ]

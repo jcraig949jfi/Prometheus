@@ -37,6 +37,7 @@ from prometheus_math.catalog_seeded_pilot import (  # noqa: E402
     compute_action_priors,
     seeded_random_baseline,
     seeded_reinforce_agent,
+    frozen_bias_reinforce_agent,
     compare_seeded_vs_unseeded,
 )
 from prometheus_math.discovery_env import DiscoveryEnv  # noqa: E402
@@ -286,12 +287,13 @@ def test_edge_mismatched_degree_projection() -> None:
 # ===========================================================================
 
 
-def test_composition_4arm_comparison_well_formed() -> None:
-    """4-arm pilot returns a dict with the expected keys + arm count.
+def test_composition_5arm_comparison_well_formed() -> None:
+    """5-arm pilot returns a dict with the expected keys + arm count.
 
     Smoke test: 100 episodes per arm at deg 4, smoothing on; the run
-    must complete and the summary must contain all four arms with
-    PROMOTE rates in [0, 1].
+    must complete and the summary must contain all five arms (the
+    original four PLUS the frozen-bias variant) with PROMOTE rates in
+    [0, 1].  Original 4 arms are checked as a regression.
     """
     seeds = extract_seed_polynomials_broad(
         env_degree=4,
@@ -311,7 +313,8 @@ def test_composition_4arm_comparison_well_formed() -> None:
     assert "seed_pool" in summary
     assert "priors" in summary
     expected = {"random_uniform", "random_seeded",
-                "reinforce_uniform", "reinforce_seeded"}
+                "reinforce_uniform", "reinforce_seeded",
+                "reinforce_frozen_bias"}
     assert set(summary["per_arm"].keys()) == expected
     for arm in expected:
         rate = summary["per_arm"][arm]["promote_rate_mean"]
@@ -403,4 +406,164 @@ def test_composition_pipeline_records_intact() -> None:
         f"partition fails: cat-hit={res.catalog_hit_count} + "
         f"claim={res.claim_into_kernel_count} + reject={res.rejected_count} "
         f"= {total}; expected {res.total_episodes}"
+    )
+
+
+# ===========================================================================
+# FROZEN-BIAS REINFORCE TESTS  (cleanest H2 falsifier)
+# ===========================================================================
+
+
+def _frozen_bias_priors_for_small_env() -> Dict[int, np.ndarray]:
+    """Build canonical seeded priors for the small (deg-4, +/-3) env."""
+    seed_polys = extract_seed_polynomials_broad(
+        env_degree=4,
+        coefficient_choices=tuple(range(-3, 4)),
+        min_abs_coef=4,
+    )
+    return compute_action_priors(
+        seed_polys=seed_polys,
+        degree=4,
+        coefficient_choices=tuple(range(-3, 4)),
+    )
+
+
+def test_authority_frozen_bias_does_not_erode() -> None:
+    """After many episodes, the FROZEN bias scaffold must be literally
+    identity-equal to its warm-start value.
+
+    The whole point of frozen-bias REINFORCE is that the gradient
+    cannot touch ``b``; only ``delta`` absorbs updates.  We verify
+    this by recomputing the warm-start scaffold from the priors and
+    comparing against the post-run snapshot the function returns in
+    its details dict.
+    """
+    priors = _frozen_bias_priors_for_small_env()
+    out = frozen_bias_reinforce_agent(
+        _small_env_factory, priors, n_episodes=300, seed=5,
+        lr=0.05, delta_lr=0.005,
+    )
+    b_post = np.array(out["details"]["b_frozen"])
+
+    # Recompute the warm-start scaffold and compare bit-for-bit.
+    half_len = 4 // 2 + 1
+    n_actions = 7
+    eps = 1e-9
+    expected = np.zeros((half_len, n_actions), dtype=np.float64)
+    for s in range(half_len):
+        log_p = np.log(np.clip(priors[s], eps, None))
+        expected[s] = log_p - log_p.mean()
+
+    assert b_post.shape == expected.shape
+    np.testing.assert_array_equal(b_post, expected), (
+        "frozen bias scaffold drifted from warm-start value -- gradient "
+        "is leaking into b instead of delta"
+    )
+
+
+def test_property_frozen_bias_action_distribution_close_to_warm_start() -> None:
+    """At observation = 0 vector, the frozen-bias policy's per-step
+    distribution stays close to the warm-start prior even after many
+    REINFORCE updates.  delta is small (zero init, lr 0.005) and W @ 0
+    contributes nothing, so logits = b + delta and probs ~= softmax(b).
+
+    We assert action 0 (coef=-3 in the +/-3 alphabet) has probability
+    within a wide envelope of its warm-start value -- the test is
+    qualitative; the point is the WARM-START SHAPE survives.
+    """
+    priors = _frozen_bias_priors_for_small_env()
+    # Snapshot warm-start probability for action 0 at step 0.
+    p0_warm = float(priors[0][0])
+
+    out = frozen_bias_reinforce_agent(
+        _small_env_factory, priors, n_episodes=500, seed=7,
+        lr=0.05, delta_lr=0.005,
+    )
+    half_len = 4 // 2 + 1
+    n_actions = 7
+    eps = 1e-9
+
+    b = np.zeros((half_len, n_actions), dtype=np.float64)
+    for s in range(half_len):
+        log_p = np.log(np.clip(priors[s], eps, None))
+        b[s] = log_p - log_p.mean()
+    delta = np.array(out["details"]["delta_final"])
+    logits = b[0] + delta[0]
+    probs = np.exp(logits - logits.max())
+    probs /= probs.sum()
+    p0_post = float(probs[0])
+
+    # The frozen scaffold pins the distribution within a moderate
+    # envelope; even with several hundred updates the warm-start
+    # imprint is intact.  We accept up to ~3x absolute drift.
+    assert abs(p0_post - p0_warm) < 0.3, (
+        f"action 0 probability moved too far: warm={p0_warm:.4f} "
+        f"-> post={p0_post:.4f}; frozen scaffold should pin distribution"
+    )
+
+
+def test_composition_frozen_bias_runs_through_5_arm_pilot() -> None:
+    """End-to-end: the 5-arm pilot must include reinforce_frozen_bias
+    with a well-formed promote_rate and the original 4 arms must still
+    be present (regression check on existing arms).
+    """
+    seed_polys = extract_seed_polynomials_broad(
+        env_degree=4,
+        coefficient_choices=tuple(range(-3, 4)),
+        min_abs_coef=4,
+    )
+    summary = compare_seeded_vs_unseeded(
+        env_factory=_small_env_factory,
+        n_episodes=80,
+        seeds=(0, 1),
+        seed_polys=seed_polys,
+    )
+    expected_arms = {
+        "random_uniform", "random_seeded",
+        "reinforce_uniform", "reinforce_seeded",
+        "reinforce_frozen_bias",
+    }
+    assert set(summary["per_arm"].keys()) == expected_arms
+    fb = summary["per_arm"]["reinforce_frozen_bias"]
+    assert 0.0 <= fb["promote_rate_mean"] <= 1.0
+    assert "salem_rate_mean" in fb
+    assert "catalog_hit_rate_mean" in fb
+    # New welch contrasts present.
+    assert "p_reinforce_frozen_bias_gt_reinforce_seeded" in summary["welch"]
+    assert "p_reinforce_frozen_bias_gt_reinforce_uniform" in summary["welch"]
+    # Config exposes delta_lr.
+    assert "delta_lr" in summary["config"]
+
+
+def test_edge_frozen_bias_with_zero_delta_lr() -> None:
+    """``delta_lr=0`` freezes delta entirely; combined with W starting
+    at zero, the policy distribution at obs=0 is exactly softmax(b) =
+    the warm-start prior throughout training.  delta_final must be
+    identically zero.
+
+    Because W still trains on observations and obs is generally not
+    zero, the run is not bit-identical to seeded_random; this test
+    only sanity-checks the no-update-on-delta branch.
+    """
+    priors = _frozen_bias_priors_for_small_env()
+    out = frozen_bias_reinforce_agent(
+        _small_env_factory, priors, n_episodes=200, seed=13,
+        lr=0.05, delta_lr=0.0,
+    )
+    delta_final = np.array(out["details"]["delta_final"])
+    np.testing.assert_array_equal(
+        delta_final, np.zeros_like(delta_final),
+    ), "delta_lr=0 must leave delta at exactly zero"
+
+    # Also verify the bias scaffold did not drift (already enforced by
+    # the runtime invariant inside the function, but assert here too).
+    half_len = 4 // 2 + 1
+    n_actions = 7
+    eps = 1e-9
+    expected = np.zeros((half_len, n_actions), dtype=np.float64)
+    for s in range(half_len):
+        log_p = np.log(np.clip(priors[s], eps, None))
+        expected[s] = log_p - log_p.mean()
+    np.testing.assert_array_equal(
+        np.array(out["details"]["b_frozen"]), expected,
     )
