@@ -1,6 +1,9 @@
 # Lehmer Brute-Force Settlement — Deg-14 Reciprocal Palindromic [-5, 5]
 
-**Status:** COMPLETED 2026-05-04 12:09 — verdict **INCONCLUSIVE**. Detailed analysis in `LEHMER_BRUTE_FORCE_FULL_RUN_RESULTS.md`.
+**Status:** COMPLETED 2026-05-04 12:09 — initial verdict **INCONCLUSIVE**, resolved 2026-05-04 (afternoon) to **H5_CONFIRMED-local-lemma** via three independent verification paths. Detailed analysis: `LEHMER_BRUTE_FORCE_FULL_RUN_RESULTS.md` (initial run); `LEHMER_BRUTE_FORCE_PATH_A_RESULTS.md` (high-precision mpmath); `LEHMER_BRUTE_FORCE_PATH_B_RESULTS.md` (symbolic factorization); `LEHMER_BRUTE_FORCE_PATH_C_RESULTS.md` (tighter catalog lookup with Lehmer × Φ_n pattern matching).
+**Triangulated outcome:** all 17 verification_failed entries resolve as catalog rediscoveries. 15 are pure cyclotomic-noise (true M=1, escaped 1.0001 filter by ~1-50 microunits float drift). 2 are Lehmer × Φ_1^4 and Lehmer × Φ_2^4 — Lehmer-product variants that Mossinghoff stores at deg-10 intrinsic but does not enumerate as named composite entries. Zero novel discoveries.
+
+**Honest caveat (per ChatGPT's framing):** "absence of discovery via methods deployed" is NOT "evidence for emptiness." The result is entangled with system limitations: dps=30 was insufficient for the boundary layer; the catalog has gaps for Lehmer × Φ_n^k k≥2 named entries. The 17 entries are resolution-dependent objects, not noise — they mark a boundary layer where verification depth becomes the discriminating axis. Verification depth is now established empirically as a first-class axis of truth (Aporia G6 confirmed concretely).
 **Forged:** 2026-05-04 by Techne (toolsmith).
 **Mission:** Resolve H1 / H2 / H5 for the deg-14 ±5 reciprocal palindromic
 subspace via complete brute-force enumeration. The Charon discovery loop
