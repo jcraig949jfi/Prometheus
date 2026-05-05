@@ -1,0 +1,78 @@
+{
+  "n_episodes": 200,
+  "seed": 42,
+  "elapsed_s": 0.013001441955566406,
+  "archive_n_cells": 25,
+  "substrate_passed": 38,
+  "obstructions_found": [],
+  "secondaries_found": [],
+  "n_high_lift": 9,
+  "top_high_lift": [
+    {
+      "episode": 120,
+      "lift": 12.416666666666668,
+      "predicate": {
+        "neg_z": 3,
+        "pos_x": 4,
+        "neg_y": 1
+      },
+      "operator": "structural"
+    },
+    {
+      "episode": 122,
+      "lift": 12.416666666666668,
+      "predicate": {
+        "neg_z": 3,
+        "pos_x": 4,
+        "neg_y": 1
+      },
+      "operator": "symbolic"
+    },
+    {
+      "episode": 164,
+      "lift": 12.416666666666668,
+      "predicate": {
+        "neg_z": 3,
+        "pos_x": 4,
+        "neg_y": 1
+      },
+      "operator": "symbolic"
+    },
+    {
+      "episode": 176,
+      "lift": 12.416666666666668,
+      "predicate": {
+        "neg_z": 3,
+        "pos_x": 4,
+        "neg_y": 1
+      },
+      "operator": "structural"
+    },
+    {
+      "episode": 89,
+      "lift": 7.288888888888889,
+      "predicate": {
+        "n_steps": 5
+      },
+      "operator": "structural"
+    }
+  ],
+  "fill_counts": {
+    "symbolic": 1,
+    "structural": 18,
+    "uniform": 6
+  },
+  "structural_uniform_ratio": 3.0,
+  "evaluator_cache_size": 145,
+  "obstruction_signature": {
+    "n_steps": 5,
+    "neg_x": 4,
+    "pos_x": 1,
+    "has_diag_neg": true
+  },
+  "acceptance": {
+    "completed_without_error": true,
+    "obstruction_found_at_least_once": false,
+    "structural_beats_uniform": true
+  }
+}

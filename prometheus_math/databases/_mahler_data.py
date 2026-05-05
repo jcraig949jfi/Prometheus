@@ -5,6 +5,26 @@ https://wayback.cecm.sfu.ca/~mjm/Lehmer/ together with the published
 literature on Salem and Pisot numbers (Lehmer 1933, Smyth 1971,
 Boyd 1980, Mossinghoff 1998).
 
+2026-04-29 refresh
+------------------
+Loaded ``Known180.gz`` (the canonical Mossinghoff "M < 1.3 through
+degree 180" list, 8438 polynomials) from the Wayback Machine snapshot
+of ``http://wayback.cecm.sfu.ca/~mjm/Lehmer/lists/Known180.gz`` taken
+on 20220430195519 (the most recent capture; live host
+``wayback.cecm.sfu.ca`` is currently DNS-unreachable from our network).
+The raw gzip is bundled at ``_known180_raw.gz`` and parsed at module
+import; new entries are appended to ``MAHLER_TABLE`` after the original
+178-entry Phase-1 curated section.
+
+Also promoted from the arxiv-probe test corpus
+(``prometheus_math._arxiv_polynomial_corpus``): the Sac-Épée 2024
+deg-12..44 reciprocal Salem entries with M in [1.302, 1.325] and the
+Idris/Sac-Épée 2026 non-reciprocal Newman-divisor entries with M in
+[1.42, 1.56].  These polynomials sit *just above* Known180's M < 1.3
+cutoff but below Mossinghoff's natural "small Mahler" threshold of
+~1.85, so they belong in the catalog.  Each is independently M-verified
+via ``techne.lib.mahler_measure``.
+
 Coefficient convention
 ----------------------
 Each entry's ``coeffs`` list is in **ascending** degree order,
@@ -2168,6 +2188,332 @@ MAHLER_TABLE[1]["name"] = "Salem deg 18 (Boyd-style)"
 MAHLER_TABLE[1]["degree_minimum"] = False
 
 
+# Mark every Phase-1 curated entry so downstream tooling can distinguish
+# the 178 hand-curated rows (which are independently re-verified at
+# module load) from the bulk Known180 / arxiv-promoted rows (which are
+# trusted from upstream and only spot-checked).
+for _e in MAHLER_TABLE:
+    _e.setdefault("provenance_tier", "phase1_curated")
+del _e
+
+_PHASE1_ENTRY_COUNT = len(MAHLER_TABLE)
+
+
+# ---------------------------------------------------------------------------
+# 2026-04-29 refresh: ingest Mossinghoff Known180.gz and arxiv-corpus rows.
+# ---------------------------------------------------------------------------
+#
+# Source provenance (reproducible):
+#   - Live host:   http://wayback.cecm.sfu.ca/~mjm/Lehmer/lists/Known180.gz
+#   - Wayback:     https://web.archive.org/web/20220430195519id_/<above>
+#   - Retrieved:   2026-04-29 by Techne (toolsmith) during the Stream-B
+#                  refresh task.  The live host's DNS was unreachable;
+#                  Wayback Machine snapshot 20220430195519 was used.
+#   - Bundled at:  prometheus_math/databases/_known180_raw.gz
+#   - File header (first 5 lines) verbatim:
+#       "All Known Polynomials Through Degree 180"
+#       (blank)
+#       "This table lists the known primitive, irreducible, noncyclotomic
+#        integer polynomials with degree at most 180 having Mahler measure
+#        less than 1.3."
+#       "This list is only known to be complete through degree 44."
+#       (blank)
+#
+# Format of each data line (one polynomial per line):
+#       <degree>  <mahler_measure>  <#roots_outside_unit_circle>  <coeffs...>
+#   where <coeffs...> are HALF-coefficients in DESCENDING order of a
+#   reciprocal polynomial: c_n c_{n-1} ... c_{n/2}.  Reciprocal symmetry
+#   c_i = c_{n-i} fills in the remaining n/2 coefficients.
+#
+# Known180 covers M < 1.30 only.  Polynomials in our arxiv probe corpus
+# at M >= 1.30 (Sac-Épée 2024 reciprocal, Idris/Sac-Épée 2026 Newman
+# divisors) are NOT in Known180; we promote them from
+# prometheus_math._arxiv_polynomial_corpus separately.
+
+import gzip as _gzip
+import os as _os
+import re as _re
+
+_KNOWN180_PATH = _os.path.join(
+    _os.path.dirname(__file__), "_known180_raw.gz"
+)
+_KNOWN180_LINE_RE = _re.compile(
+    r"^\s*(\d+)\s+(\d+\.\d+)\s+(\d+)\s+([-\d ]+)\s*$"
+)
+
+
+def _x_flip_tuple(coeffs):
+    """Apply x -> -x to an ascending coefficient tuple/list."""
+    return tuple(c if (i % 2 == 0) else -c for i, c in enumerate(coeffs))
+
+
+def _normalize_coeffs_key(coeffs):
+    """Canonical key for dedup: (length-stripped, min(self, x_flip))."""
+    out = list(coeffs)
+    while len(out) > 1 and out[-1] == 0:
+        out.pop()
+    a = tuple(out)
+    b = _x_flip_tuple(out)
+    return min(a, b)
+
+
+def _existing_keys(table):
+    out = set()
+    for e in table:
+        out.add((e["degree"], _normalize_coeffs_key(e["coeffs"])))
+    return out
+
+
+def _parse_known180(path):
+    """Yield ``(degree, M, k, coeffs_ascending)`` tuples from Known180.gz.
+
+    ``k`` is Mossinghoff's count of roots outside the unit circle.
+    ``coeffs_ascending`` is the full reciprocal polynomial, length
+    ``degree + 1``, in ascending order ``[a_0, ..., a_n]``.
+    """
+    with open(path, "rb") as fh:
+        text = _gzip.decompress(fh.read()).decode("utf-8", errors="replace")
+    parse_failures = 0
+    for line in text.splitlines():
+        m = _KNOWN180_LINE_RE.match(line)
+        if not m:
+            continue
+        try:
+            deg = int(m.group(1))
+            M = float(m.group(2))
+            k = int(m.group(3))
+            half_desc = [int(x) for x in m.group(4).split()]
+            expected_half = deg // 2 + 1
+            if len(half_desc) != expected_half:
+                parse_failures += 1
+                continue
+            full_desc = list(half_desc) + list(reversed(half_desc[:-1]))
+            coeffs_asc = list(reversed(full_desc))
+            yield deg, M, k, coeffs_asc
+        except Exception:  # pragma: no cover - any malformed line just skips
+            parse_failures += 1
+            continue
+    # Stash failure count on the generator's caller via module global.
+    global _KNOWN180_PARSE_FAILURES
+    _KNOWN180_PARSE_FAILURES = parse_failures
+
+
+_KNOWN180_PARSE_FAILURES: int = 0
+
+
+def _ingest_known180():
+    """Append Known180.gz entries to ``MAHLER_TABLE``.
+
+    Returns ``(n_appended, n_skipped_dup, n_parse_failures)``.
+    """
+    existing = _existing_keys(MAHLER_TABLE)
+    n_appended = 0
+    n_dup = 0
+    for deg, M, k, coeffs_asc in _parse_known180(_KNOWN180_PATH):
+        key = (deg, _normalize_coeffs_key(coeffs_asc))
+        if key in existing:
+            n_dup += 1
+            continue
+        existing.add(key)
+        # The rows are noncyclotomic primitive irreducible Salem-class
+        # (reciprocal) by file definition; M < 1.3 means we are well
+        # below Smyth's bound, so every entry is reciprocal Salem-type.
+        is_lehmer = (deg == 10 and abs(M - 1.176280818259918) < 1e-9
+                     and coeffs_asc == [1, 1, 0, -1, -1, -1, -1, -1, 0, 1, 1])
+        MAHLER_TABLE.append({
+            "degree": deg,
+            "coeffs": coeffs_asc,
+            "mahler_measure": M,
+            "name": f"Mossinghoff Known180 deg-{deg} M={M:.6f}",
+            "salem_class": True,
+            "is_smyth_extremal": False,
+            "lehmer_witness": bool(is_lehmer),
+            "degree_minimum": False,
+            "source": (
+                "Mossinghoff Known180.gz (Wayback 20220430195519); "
+                "k_outside_unit_circle="
+                f"{k}"
+            ),
+            "provenance_tier": "known180_2022",
+        })
+        n_appended += 1
+    return n_appended, n_dup, _KNOWN180_PARSE_FAILURES
+
+
+_KNOWN180_APPENDED, _KNOWN180_DUP, _KNOWN180_PARSE_FAIL = _ingest_known180()
+
+
+# ---------------------------------------------------------------------------
+# 2026-04-29 refresh: promote arxiv-corpus entries (M >= 1.3, outside
+# the Known180 file's coverage band).
+# ---------------------------------------------------------------------------
+
+# Hard-coded copy of the corpus rows we promote (avoids a circular import
+# and keeps this file self-contained).  Each row was independently
+# M-verified (see _arxiv_polynomial_corpus.py).  Coefficients are
+# ascending.
+
+_ARXIV_PROMOTED: list[dict] = [
+    # ----- Sac-Épée 2024 reciprocal Salem polynomials (arXiv:2409.11159).
+    # Coefficient vectors are taken VERBATIM from
+    # prometheus_math._arxiv_polynomial_corpus.RECENT_POLYNOMIAL_CORPUS
+    # (which expands the paper's half-coefficient table via
+    # _ascending_from_sacepee_table); each was independently M-verified
+    # to ~1e-9 by techne.lib.mahler_measure at corpus build time.
+    # Pre-2024 known (degree <= 24 on Mossinghoff's online list):
+    {
+        "degree": 12,
+        "coeffs": [1, -1, 0, 0, 0, -1, 1, -1, 0, 0, 0, -1, 1],
+        "mahler_measure": 1.3022688051,
+        "name": "Sac-Epee 2024 deg-12 (Boyd 1989 known)",
+        "source": "Sac-Epee arXiv:2409.11159 Table; rediscovers Mossinghoff online list",
+    },
+    {
+        "degree": 16,
+        "coeffs": [1, 1, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 1, 1],
+        "mahler_measure": 1.308409006213,
+        "name": "Sac-Epee 2024 deg-16 (pre-2024 known)",
+        "source": "Sac-Epee arXiv:2409.11159 Table; pre-2024 known",
+    },
+    {
+        "degree": 14,
+        "coeffs": [1, -1, 0, -1, 1, 0, 0, -1, 0, 0, 1, -1, 0, -1, 1],
+        "mahler_measure": 1.318197504432,
+        "name": "Sac-Epee 2024 deg-14 (pre-2024 known)",
+        "source": "Sac-Epee arXiv:2409.11159 Table; pre-2024 known",
+    },
+    {
+        "degree": 18,
+        "coeffs": [1, -1, -1, 1, 0, 0, 0, -1, 0, 1, 0, -1, 0, 0, 0, 1, -1, -1, 1],
+        "mahler_measure": 1.323198173512,
+        "name": "Sac-Epee 2024 deg-18 (pre-2024 known)",
+        "source": "Sac-Epee arXiv:2409.11159 Table; pre-2024 known",
+    },
+    # New per Sac-Epee 2024 (degree >= 26, NOT on Mossinghoff online list):
+    {
+        "degree": 26,
+        "coeffs": [1, 0, -1, -1, 0, 0, 0, 0, 0, 0, 0, 1, 0, -1, 0, 1, 0, 0, 0, 0, 0, 0, 0, -1, -1, 0, 1],
+        "mahler_measure": 1.304697625411,
+        "name": "Sac-Epee 2024 deg-26 NEW",
+        "source": "Sac-Epee arXiv:2409.11159 Table; NEW per author",
+    },
+    {
+        "degree": 28,
+        "coeffs": [1, 1, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 1, 1],
+        "mahler_measure": 1.324231319862,
+        "name": "Sac-Epee 2024 deg-28 NEW",
+        "source": "Sac-Epee arXiv:2409.11159 Table; NEW per author",
+    },
+    {
+        "degree": 30,
+        "coeffs": [1, -1, 0, 0, -1, 0, 0, 0, 1, 0, 0, 1, -1, 0, 0, -1, 0, 0, -1, 1, 0, 0, 1, 0, 0, 0, -1, 0, 0, -1, 1],
+        "mahler_measure": 1.303385419369,
+        "name": "Sac-Epee 2024 deg-30 NEW",
+        "source": "Sac-Epee arXiv:2409.11159 Table; NEW per author",
+    },
+    {
+        "degree": 32,
+        "coeffs": [1, -1, 0, -1, 0, 1, 0, 0, 0, -1, 1, -1, 1, 0, 0, 0, -1, 0, 0, 0, 1, -1, 1, -1, 0, 0, 0, 1, 0, -1, 0, -1, 1],
+        "mahler_measure": 1.302721444014,
+        "name": "Sac-Epee 2024 deg-32 NEW",
+        "source": "Sac-Epee arXiv:2409.11159 Table; NEW per author",
+    },
+    {
+        "degree": 38,
+        "coeffs": [1, -2, 1, 0, 0, 0, 0, 0, -1, 1, 0, -1, 1, 0, -1, 0, 1, 0, -1, 1, -1, 0, 1, 0, -1, 0, 1, -1, 0, 1, -1, 0, 0, 0, 0, 0, 1, -2, 1],
+        "mahler_measure": 1.306473537533,
+        "name": "Sac-Epee 2024 deg-38 NEW",
+        "source": "Sac-Epee arXiv:2409.11159 Table; NEW per author",
+    },
+    {
+        "degree": 44,
+        "coeffs": [1, 0, 1, -1, 0, -2, -1, -2, -1, -1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, -1, -1, -2, -1, -2, 0, -1, 1, 0, 1],
+        "mahler_measure": 1.308071085577,
+        "name": "Sac-Epee 2024 deg-44 NEW",
+        "source": "Sac-Epee arXiv:2409.11159 Table; NEW per author",
+    },
+    {
+        "degree": 40,
+        "coeffs": [1, -1, 0, 0, -1, 0, 1, -1, 1, 0, -1, 0, 0, -1, 1, 0, 0, 1, 0, -1, 1, -1, 0, 1, 0, 0, 1, -1, 0, 0, -1, 0, 1, -1, 1, 0, -1, 0, 0, -1, 1],
+        "mahler_measure": 1.316069252718,
+        "name": "Sac-Epee 2024 deg-40 NEW",
+        "source": "Sac-Epee arXiv:2409.11159 Table; NEW per author",
+    },
+    # ----- Idris/Sac-Epee 2026 non-reciprocal Newman divisors (arXiv:2601.11486).
+    # Degree-10 improved bound:
+    {
+        "degree": 10,
+        "coeffs": [1, 1, 0, 0, 0, -1, 0, 0, -1, 0, 1],
+        "mahler_measure": 1.419404632,
+        "name": "Idris/Sac-Epee 2026 deg-10 (improved bound)",
+        "source": "Idris/Sac-Epee arXiv:2601.11486 Table 1; improves Drungilas et al",
+        "salem_class": False,
+    },
+    {
+        "degree": 9,
+        "coeffs": [1, 1, 1, 0, -1, -1, -1, 0, 0, 1],
+        "mahler_measure": 1.436632261,
+        "name": "Drungilas-Jankauskas-Siurys deg-9 (prior bound)",
+        "source": "Cited in Idris/Sac-Epee arXiv:2601.11486 Table 1",
+        "salem_class": False,
+    },
+    {
+        "degree": 12,
+        "coeffs": [1, 0, 0, 0, 0, 1, -1, 0, 0, 0, 0, -1, 1],
+        "mahler_measure": 1.448290492,
+        "name": "Idris/Sac-Epee 2026 deg-12 Newman-divisor",
+        "source": "Idris/Sac-Epee arXiv:2601.11486 Table 1",
+        "salem_class": False,
+    },
+    {
+        "degree": 8,
+        "coeffs": [1, 0, 0, 1, -1, 0, 0, -1, 1],
+        "mahler_measure": 1.489581321,
+        "name": "Idris/Sac-Epee 2026 deg-8 Newman-divisor",
+        "source": "Idris/Sac-Epee arXiv:2601.11486 Table 1",
+        "salem_class": False,
+    },
+    {
+        "degree": 6,
+        "coeffs": [1, 0, 1, -1, 0, -1, 1],
+        "mahler_measure": 1.556014485,
+        "name": "Hare-Mossinghoff 2014 deg-6 Newman-divisor (historical)",
+        "source": "Cited in Idris/Sac-Epee arXiv:2601.11486 Table 1",
+        "salem_class": False,
+    },
+]
+
+
+def _ingest_arxiv_promoted():
+    """Append corpus-promoted entries (skipping any that already exist)."""
+    existing = _existing_keys(MAHLER_TABLE)
+    n_appended = 0
+    for raw in _ARXIV_PROMOTED:
+        coeffs = list(raw["coeffs"])
+        key = (raw["degree"], _normalize_coeffs_key(coeffs))
+        if key in existing:
+            continue
+        existing.add(key)
+        entry = {
+            "degree": raw["degree"],
+            "coeffs": coeffs,
+            "mahler_measure": float(raw["mahler_measure"]),
+            "name": raw["name"],
+            "salem_class": bool(raw.get("salem_class", True)),
+            "is_smyth_extremal": False,
+            "lehmer_witness": False,
+            "degree_minimum": False,
+            "source": raw["source"],
+            "provenance_tier": "arxiv_promoted_2026",
+        }
+        MAHLER_TABLE.append(entry)
+        n_appended += 1
+    return n_appended
+
+
+_ARXIV_APPENDED = _ingest_arxiv_promoted()
+
+
 # Provenance metadata accompanying the snapshot
 SNAPSHOT_META = {
     "source_url": "https://wayback.cecm.sfu.ca/~mjm/Lehmer/",
@@ -2194,5 +2540,26 @@ SNAPSHOT_META = {
         "techne.lib.mahler_measure.mahler_measure and cross-checked "
         "against the literature value (Lehmer constant, Smyth constant, "
         "Salem family M, or M = 1 for cyclotomics) to better than 1e-9."
+    ),
+    # 2026-04-29 refresh
+    "refresh_2026_04_29_source_url": (
+        "https://web.archive.org/web/20220430195519id_/"
+        "http://wayback.cecm.sfu.ca/~mjm/Lehmer/lists/Known180.gz"
+    ),
+    "refresh_2026_04_29_retrieved": "2026-04-29T00:00:00Z",
+    "refresh_2026_04_29_phase1_count": _PHASE1_ENTRY_COUNT,
+    "refresh_2026_04_29_known180_appended": _KNOWN180_APPENDED,
+    "refresh_2026_04_29_known180_dup_skipped": _KNOWN180_DUP,
+    "refresh_2026_04_29_known180_parse_failures": _KNOWN180_PARSE_FAIL,
+    "refresh_2026_04_29_arxiv_promoted_appended": _ARXIV_APPENDED,
+    "refresh_2026_04_29_total_after": len(MAHLER_TABLE),
+    "refresh_2026_04_29_note": (
+        "Calibration improvement, not a discovery.  We were claiming "
+        "'catalog miss' against a snapshot that covered only ~2% of "
+        "the published Mossinghoff universe; the refresh closes that "
+        "asymmetric error.  Known180.gz covers M < 1.3 only; corpus "
+        "promotions cover the M in [1.30, 1.56] band.  Polynomials "
+        "above M = 1.56 from recent literature remain a future ingestion "
+        "target."
     ),
 }

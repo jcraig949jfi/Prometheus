@@ -48,8 +48,17 @@ Thumbs.db
 __pycache__/
 *.pyc
 *.pyo
+
+# Frontier-model exploitation strategy (substrate secret weapon)
+private_strategy/
 .pytest_cache/
+.hypothesis/
 .ipynb_checkpoints/
+
+# Agent runtime state (machine-local, not for sync)
+**/loop_state.json
+**/charon_loop_state.json
+**/.tick_state.json
 
 # Virtual environments
 .venv/

@@ -1,0 +1,1096 @@
+{
+  "computed_date": "2026-05-05",
+  "computed_by": "Charon (substrate cartography suite, Task A)",
+  "data_sources": [
+    "cartography\\convergence\\data\\battery_sweep_v2.jsonl",
+    "cartography\\convergence\\data\\asymptotic_deviations.jsonl",
+    "cartography\\convergence\\data\\battery_logs\\battery_runs.jsonl",
+    "ergon\\learner\\diagnostics\\per_class_hit_rates.json"
+  ],
+  "n_claims_analyzed": 103,
+  "n_with_parseable_features": 97,
+  "scope_flag": "SINGLE_DOMAIN \u2014 battery_sweep_v2 is dominated by A149* lattice walks (100/103 from regime_change source). Cross-domain rich findings n=3 (battery_runs.jsonl) \u2014 case-study only.",
+  "outcome_distribution": {
+    "survives": 41,
+    "near_miss": 86,
+    "any_kill": 62,
+    "early_kill_F1": 56,
+    "late_kill_F11": 16,
+    "unanimous_kill": 9
+  },
+  "source_distribution": {
+    "regime_change": 100,
+    "ast_bridges": 1,
+    "root_probes": 2
+  },
+  "feature_extraction_decisions": [
+    "Walk-step-set geometry features (n_steps, neg/pos x/y/z, has_diag_*, n_axis_aligned, axis_asymmetry) extracted from sequence name via regex parsing of step-set notation. Same logic as ergon._a149_real_corpus.",
+    "Corpus features (delta_pct, regime_change, best_model, n_terms, known_count) read directly from asymptotic_deviations.jsonl.",
+    "Source field used as a proxy for record-template (regime_change vs ast_bridges vs root_probes). 100/103 are regime_change \u2192 effectively single-template; flagged in classification.",
+    "Outcome flags derived from kill_tests array: survives = empty array; near_miss = len <= 1; unanimous = len >= 4; F1/F11 by name match.",
+    "MISSING from this analysis (substrate hasn't measured them): cross_domain_count per claim (no per-claim cross-domain ledger), feature_family (collapses to single family for sweep data), descriptor_cell (MAP-Elites cells not persisted), claim_template (only 'asymptotic_growth_rate_anomaly' template in this data), uses_learned_embedding (no per-claim embedding metadata persisted), uses_mod_p_fingerprint (no mod_p data joined), uses_spectral_feature (no spectral feature in sweep+deviations join), uses_graph_feature (N/A for lattice-walk domain), uses_database_join (single-source).",
+    "Cross-seed CIs not available: battery_sweep_v2 records do not carry a seed field. Each record represents one battery run; reproducibility across seeds would require re-running, which isn't in scope. Wald CIs on within-data feature-outcome differences are reported instead."
+  ],
+  "feature_outcome_correlations": [
+    {
+      "feature": "has_diag_neg",
+      "outcome": "survives",
+      "n_total": 97,
+      "n_with_feature": 25,
+      "n_without_feature": 72,
+      "p_outcome_given_feature": 0.44,
+      "p_outcome_given_no_feature": 0.4027777777777778,
+      "difference": 0.03722222222222221,
+      "ci95": [
+        -0.18793854970428472,
+        0.2623829941487291
+      ],
+      "se": 0.11487794486046272,
+      "classification": "overfitting",
+      "classification_rationale": "single source dominates corpus (97.1%); feature signal may reflect template structure of that source"
+    },
+    {
+      "feature": "has_diag_neg",
+      "outcome": "near_miss",
+      "n_total": 97,
+      "n_with_feature": 25,
+      "n_without_feature": 72,
+      "p_outcome_given_feature": 0.6,
+      "p_outcome_given_no_feature": 0.9583333333333334,
+      "difference": -0.3583333333333334,
+      "ci95": [
+        -0.5558425153358637,
+        -0.1608241513308031
+      ],
+      "se": 0.10076999081761749,
+      "classification": "overfitting",
+      "classification_rationale": "single source dominates corpus (97.1%); feature signal may reflect template structure of that source"
+    },
+    {
+      "feature": "has_diag_neg",
+      "outcome": "early_kill_F1",
+      "n_total": 97,
+      "n_with_feature": 25,
+      "n_without_feature": 72,
+      "p_outcome_given_feature": 0.56,
+      "p_outcome_given_no_feature": 0.5277777777777778,
+      "difference": 0.03222222222222226,
+      "ci95": [
+        -0.19396471170354188,
+        0.25840915614798643
+      ],
+      "se": 0.11540149690090007,
+      "classification": "overfitting",
+      "classification_rationale": "single source dominates corpus (97.1%); feature signal may reflect template structure of that source"
+    },
+    {
+      "feature": "has_diag_neg",
+      "outcome": "late_kill_F11",
+      "n_total": 97,
+      "n_with_feature": 25,
+      "n_without_feature": 72,
+      "p_outcome_given_feature": 0.4,
+      "p_outcome_given_no_feature": 0.027777777777777776,
+      "difference": 0.37222222222222223,
+      "ci95": [
+        0.1764665342964784,
+        0.5679779101479661
+      ],
+      "se": 0.09987535098252236,
+      "classification": "overfitting",
+      "classification_rationale": "single source dominates corpus (97.1%); feature signal may reflect template structure of that source"
+    },
+    {
+      "feature": "has_diag_neg",
+      "outcome": "unanimous_kill",
+      "n_total": 97,
+      "n_with_feature": 25,
+      "n_without_feature": 72,
+      "p_outcome_given_feature": 0.24,
+      "p_outcome_given_no_feature": 0.0,
+      "difference": 0.24,
+      "ci95": [
+        0.07258341300814902,
+        0.40741658699185096
+      ],
+      "se": 0.0854166260162505,
+      "classification": "overfitting",
+      "classification_rationale": "single source dominates corpus (97.1%); feature signal may reflect template structure of that source"
+    },
+    {
+      "feature": "has_diag_pos",
+      "outcome": "survives",
+      "n_total": 97,
+      "n_with_feature": 1,
+      "n_without_feature": 96,
+      "p_outcome_given_feature": 0.0,
+      "p_outcome_given_no_feature": 0.4166666666666667,
+      "difference": -0.4166666666666667,
+      "ci95": [
+        -0.5152885361893448,
+        -0.3180447971439886
+      ],
+      "se": 0.05031728036871332,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=1 n_without=96; one cell <10"
+    },
+    {
+      "feature": "has_diag_pos",
+      "outcome": "near_miss",
+      "n_total": 97,
+      "n_with_feature": 1,
+      "n_without_feature": 96,
+      "p_outcome_given_feature": 0.0,
+      "p_outcome_given_no_feature": 0.875,
+      "difference": -0.875,
+      "ci95": [
+        -0.941157561296247,
+        -0.808842438703753
+      ],
+      "se": 0.03375385780420761,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=1 n_without=96; one cell <10"
+    },
+    {
+      "feature": "has_diag_pos",
+      "outcome": "early_kill_F1",
+      "n_total": 97,
+      "n_with_feature": 1,
+      "n_without_feature": 96,
+      "p_outcome_given_feature": 1.0,
+      "p_outcome_given_no_feature": 0.53125,
+      "difference": 0.46875,
+      "ci95": [
+        0.36892471317033443,
+        0.5685752868296655
+      ],
+      "se": 0.050931268790645697,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=1 n_without=96; one cell <10"
+    },
+    {
+      "feature": "has_diag_pos",
+      "outcome": "late_kill_F11",
+      "n_total": 97,
+      "n_with_feature": 1,
+      "n_without_feature": 96,
+      "p_outcome_given_feature": 1.0,
+      "p_outcome_given_no_feature": 0.11458333333333333,
+      "difference": 0.8854166666666666,
+      "ci95": [
+        0.8216997095664842,
+        0.9491336237668491
+      ],
+      "se": 0.0325086515817257,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=1 n_without=96; one cell <10"
+    },
+    {
+      "feature": "has_diag_pos",
+      "outcome": "unanimous_kill",
+      "n_total": 97,
+      "n_with_feature": 1,
+      "n_without_feature": 96,
+      "p_outcome_given_feature": 1.0,
+      "p_outcome_given_no_feature": 0.052083333333333336,
+      "difference": 0.9479166666666666,
+      "ci95": [
+        0.9034683907358997,
+        0.9923649425974336
+      ],
+      "se": 0.022677691801411687,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=1 n_without=96; one cell <10"
+    },
+    {
+      "feature": "any_axis_asymmetry_ge3",
+      "outcome": "survives",
+      "n_total": 97,
+      "n_with_feature": 5,
+      "n_without_feature": 92,
+      "p_outcome_given_feature": 0.0,
+      "p_outcome_given_no_feature": 0.43478260869565216,
+      "difference": -0.43478260869565216,
+      "ci95": [
+        -0.5360818045535158,
+        -0.3334834128377885
+      ],
+      "se": 0.051683263192787585,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=5 n_without=92; one cell <10"
+    },
+    {
+      "feature": "any_axis_asymmetry_ge3",
+      "outcome": "near_miss",
+      "n_total": 97,
+      "n_with_feature": 5,
+      "n_without_feature": 92,
+      "p_outcome_given_feature": 0.0,
+      "p_outcome_given_no_feature": 0.9130434782608695,
+      "difference": -0.9130434782608695,
+      "ci95": [
+        -0.9706217953215941,
+        -0.8554651612001449
+      ],
+      "se": 0.029376692377920715,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=5 n_without=92; one cell <10"
+    },
+    {
+      "feature": "any_axis_asymmetry_ge3",
+      "outcome": "early_kill_F1",
+      "n_total": 97,
+      "n_with_feature": 5,
+      "n_without_feature": 92,
+      "p_outcome_given_feature": 1.0,
+      "p_outcome_given_no_feature": 0.5108695652173914,
+      "difference": 0.48913043478260865,
+      "ci95": [
+        0.38698251748469625,
+        0.591278352080521
+      ],
+      "se": 0.052116284335669574,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=5 n_without=92; one cell <10"
+    },
+    {
+      "feature": "any_axis_asymmetry_ge3",
+      "outcome": "late_kill_F11",
+      "n_total": 97,
+      "n_with_feature": 5,
+      "n_without_feature": 92,
+      "p_outcome_given_feature": 1.0,
+      "p_outcome_given_no_feature": 0.07608695652173914,
+      "difference": 0.9239130434782609,
+      "ci95": [
+        0.8697338153878531,
+        0.9780922715686686
+      ],
+      "se": 0.027642463311432514,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=5 n_without=92; one cell <10"
+    },
+    {
+      "feature": "any_axis_asymmetry_ge3",
+      "outcome": "unanimous_kill",
+      "n_total": 97,
+      "n_with_feature": 5,
+      "n_without_feature": 92,
+      "p_outcome_given_feature": 1.0,
+      "p_outcome_given_no_feature": 0.010869565217391304,
+      "difference": 0.9891304347826086,
+      "ci95": [
+        0.9679421878090285,
+        1.0103186817561889
+      ],
+      "se": 0.010810330088561316,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=5 n_without=92; one cell <10"
+    },
+    {
+      "feature": "max_x_asymmetry_ge3",
+      "outcome": "survives",
+      "n_total": 97,
+      "n_with_feature": 5,
+      "n_without_feature": 92,
+      "p_outcome_given_feature": 0.0,
+      "p_outcome_given_no_feature": 0.43478260869565216,
+      "difference": -0.43478260869565216,
+      "ci95": [
+        -0.5360818045535158,
+        -0.3334834128377885
+      ],
+      "se": 0.051683263192787585,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=5 n_without=92; one cell <10"
+    },
+    {
+      "feature": "max_x_asymmetry_ge3",
+      "outcome": "near_miss",
+      "n_total": 97,
+      "n_with_feature": 5,
+      "n_without_feature": 92,
+      "p_outcome_given_feature": 0.0,
+      "p_outcome_given_no_feature": 0.9130434782608695,
+      "difference": -0.9130434782608695,
+      "ci95": [
+        -0.9706217953215941,
+        -0.8554651612001449
+      ],
+      "se": 0.029376692377920715,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=5 n_without=92; one cell <10"
+    },
+    {
+      "feature": "max_x_asymmetry_ge3",
+      "outcome": "early_kill_F1",
+      "n_total": 97,
+      "n_with_feature": 5,
+      "n_without_feature": 92,
+      "p_outcome_given_feature": 1.0,
+      "p_outcome_given_no_feature": 0.5108695652173914,
+      "difference": 0.48913043478260865,
+      "ci95": [
+        0.38698251748469625,
+        0.591278352080521
+      ],
+      "se": 0.052116284335669574,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=5 n_without=92; one cell <10"
+    },
+    {
+      "feature": "max_x_asymmetry_ge3",
+      "outcome": "late_kill_F11",
+      "n_total": 97,
+      "n_with_feature": 5,
+      "n_without_feature": 92,
+      "p_outcome_given_feature": 1.0,
+      "p_outcome_given_no_feature": 0.07608695652173914,
+      "difference": 0.9239130434782609,
+      "ci95": [
+        0.8697338153878531,
+        0.9780922715686686
+      ],
+      "se": 0.027642463311432514,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=5 n_without=92; one cell <10"
+    },
+    {
+      "feature": "max_x_asymmetry_ge3",
+      "outcome": "unanimous_kill",
+      "n_total": 97,
+      "n_with_feature": 5,
+      "n_without_feature": 92,
+      "p_outcome_given_feature": 1.0,
+      "p_outcome_given_no_feature": 0.010869565217391304,
+      "difference": 0.9891304347826086,
+      "ci95": [
+        0.9679421878090285,
+        1.0103186817561889
+      ],
+      "se": 0.010810330088561316,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=5 n_without=92; one cell <10"
+    },
+    {
+      "feature": "max_y_asymmetry_ge3",
+      "outcome": "survives",
+      "n_total": 97,
+      "n_with_feature": 0,
+      "n_without_feature": 97,
+      "p_outcome_given_feature": 0.0,
+      "p_outcome_given_no_feature": 0.41237113402061853,
+      "difference": -0.41237113402061853,
+      "ci95": [
+        -0.5103349950294283,
+        -0.3144072730118088
+      ],
+      "se": 0.04998156173918864,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=0 n_without=97; one cell <10"
+    },
+    {
+      "feature": "max_y_asymmetry_ge3",
+      "outcome": "near_miss",
+      "n_total": 97,
+      "n_with_feature": 0,
+      "n_without_feature": 97,
+      "p_outcome_given_feature": 0.0,
+      "p_outcome_given_no_feature": 0.865979381443299,
+      "difference": -0.865979381443299,
+      "ci95": [
+        -0.9337762740829115,
+        -0.7981824888036865
+      ],
+      "se": 0.0345902513467411,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=0 n_without=97; one cell <10"
+    },
+    {
+      "feature": "max_y_asymmetry_ge3",
+      "outcome": "early_kill_F1",
+      "n_total": 97,
+      "n_with_feature": 0,
+      "n_without_feature": 97,
+      "p_outcome_given_feature": 0.0,
+      "p_outcome_given_no_feature": 0.5360824742268041,
+      "difference": -0.5360824742268041,
+      "ci95": [
+        -0.6353269629358268,
+        -0.43683798551778147
+      ],
+      "se": 0.05063494321888911,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=0 n_without=97; one cell <10"
+    },
+    {
+      "feature": "max_y_asymmetry_ge3",
+      "outcome": "late_kill_F11",
+      "n_total": 97,
+      "n_with_feature": 0,
+      "n_without_feature": 97,
+      "p_outcome_given_feature": 0.0,
+      "p_outcome_given_no_feature": 0.12371134020618557,
+      "difference": -0.12371134020618557,
+      "ci95": [
+        -0.18923506172101434,
+        -0.058187618691356816
+      ],
+      "se": 0.03343047016062692,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=0 n_without=97; one cell <10"
+    },
+    {
+      "feature": "max_y_asymmetry_ge3",
+      "outcome": "unanimous_kill",
+      "n_total": 97,
+      "n_with_feature": 0,
+      "n_without_feature": 97,
+      "p_outcome_given_feature": 0.0,
+      "p_outcome_given_no_feature": 0.061855670103092786,
+      "difference": -0.061855670103092786,
+      "ci95": [
+        -0.10979531263193915,
+        -0.013916027574246419
+      ],
+      "se": 0.02445900129022774,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=0 n_without=97; one cell <10"
+    },
+    {
+      "feature": "max_z_asymmetry_ge3",
+      "outcome": "survives",
+      "n_total": 97,
+      "n_with_feature": 0,
+      "n_without_feature": 97,
+      "p_outcome_given_feature": 0.0,
+      "p_outcome_given_no_feature": 0.41237113402061853,
+      "difference": -0.41237113402061853,
+      "ci95": [
+        -0.5103349950294283,
+        -0.3144072730118088
+      ],
+      "se": 0.04998156173918864,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=0 n_without=97; one cell <10"
+    },
+    {
+      "feature": "max_z_asymmetry_ge3",
+      "outcome": "near_miss",
+      "n_total": 97,
+      "n_with_feature": 0,
+      "n_without_feature": 97,
+      "p_outcome_given_feature": 0.0,
+      "p_outcome_given_no_feature": 0.865979381443299,
+      "difference": -0.865979381443299,
+      "ci95": [
+        -0.9337762740829115,
+        -0.7981824888036865
+      ],
+      "se": 0.0345902513467411,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=0 n_without=97; one cell <10"
+    },
+    {
+      "feature": "max_z_asymmetry_ge3",
+      "outcome": "early_kill_F1",
+      "n_total": 97,
+      "n_with_feature": 0,
+      "n_without_feature": 97,
+      "p_outcome_given_feature": 0.0,
+      "p_outcome_given_no_feature": 0.5360824742268041,
+      "difference": -0.5360824742268041,
+      "ci95": [
+        -0.6353269629358268,
+        -0.43683798551778147
+      ],
+      "se": 0.05063494321888911,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=0 n_without=97; one cell <10"
+    },
+    {
+      "feature": "max_z_asymmetry_ge3",
+      "outcome": "late_kill_F11",
+      "n_total": 97,
+      "n_with_feature": 0,
+      "n_without_feature": 97,
+      "p_outcome_given_feature": 0.0,
+      "p_outcome_given_no_feature": 0.12371134020618557,
+      "difference": -0.12371134020618557,
+      "ci95": [
+        -0.18923506172101434,
+        -0.058187618691356816
+      ],
+      "se": 0.03343047016062692,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=0 n_without=97; one cell <10"
+    },
+    {
+      "feature": "max_z_asymmetry_ge3",
+      "outcome": "unanimous_kill",
+      "n_total": 97,
+      "n_with_feature": 0,
+      "n_without_feature": 97,
+      "p_outcome_given_feature": 0.0,
+      "p_outcome_given_no_feature": 0.061855670103092786,
+      "difference": -0.061855670103092786,
+      "ci95": [
+        -0.10979531263193915,
+        -0.013916027574246419
+      ],
+      "se": 0.02445900129022774,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=0 n_without=97; one cell <10"
+    },
+    {
+      "feature": "flagged",
+      "outcome": "survives",
+      "n_total": 100,
+      "n_with_feature": 100,
+      "n_without_feature": 0,
+      "p_outcome_given_feature": 0.41,
+      "p_outcome_given_no_feature": 0.0,
+      "difference": 0.41,
+      "ci95": [
+        0.3136006722015138,
+        0.5063993277984862
+      ],
+      "se": 0.04918333050943175,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=100 n_without=0; one cell <10"
+    },
+    {
+      "feature": "flagged",
+      "outcome": "near_miss",
+      "n_total": 100,
+      "n_with_feature": 100,
+      "n_without_feature": 0,
+      "p_outcome_given_feature": 0.85,
+      "p_outcome_given_no_feature": 0.0,
+      "difference": 0.85,
+      "ci95": [
+        0.7800140014002801,
+        0.9199859985997199
+      ],
+      "se": 0.035707142142714254,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=100 n_without=0; one cell <10"
+    },
+    {
+      "feature": "flagged",
+      "outcome": "early_kill_F1",
+      "n_total": 100,
+      "n_with_feature": 100,
+      "n_without_feature": 0,
+      "p_outcome_given_feature": 0.54,
+      "p_outcome_given_no_feature": 0.0,
+      "difference": 0.54,
+      "ci95": [
+        0.4423141033720835,
+        0.6376858966279166
+      ],
+      "se": 0.04983974317750845,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=100 n_without=0; one cell <10"
+    },
+    {
+      "feature": "flagged",
+      "outcome": "late_kill_F11",
+      "n_total": 100,
+      "n_with_feature": 100,
+      "n_without_feature": 0,
+      "p_outcome_given_feature": 0.14,
+      "p_outcome_given_no_feature": 0.0,
+      "difference": 0.14,
+      "ci95": [
+        0.07199054183424193,
+        0.2080094581657581
+      ],
+      "se": 0.03469870314579494,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=100 n_without=0; one cell <10"
+    },
+    {
+      "feature": "flagged",
+      "outcome": "unanimous_kill",
+      "n_total": 100,
+      "n_with_feature": 100,
+      "n_without_feature": 0,
+      "p_outcome_given_feature": 0.07,
+      "p_outcome_given_no_feature": 0.0,
+      "difference": 0.07,
+      "ci95": [
+        0.019991184777081554,
+        0.12000881522291845
+      ],
+      "se": 0.02551470164434615,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=100 n_without=0; one cell <10"
+    },
+    {
+      "feature": "regime_change",
+      "outcome": "survives",
+      "n_total": 100,
+      "n_with_feature": 100,
+      "n_without_feature": 0,
+      "p_outcome_given_feature": 0.41,
+      "p_outcome_given_no_feature": 0.0,
+      "difference": 0.41,
+      "ci95": [
+        0.3136006722015138,
+        0.5063993277984862
+      ],
+      "se": 0.04918333050943175,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=100 n_without=0; one cell <10"
+    },
+    {
+      "feature": "regime_change",
+      "outcome": "near_miss",
+      "n_total": 100,
+      "n_with_feature": 100,
+      "n_without_feature": 0,
+      "p_outcome_given_feature": 0.85,
+      "p_outcome_given_no_feature": 0.0,
+      "difference": 0.85,
+      "ci95": [
+        0.7800140014002801,
+        0.9199859985997199
+      ],
+      "se": 0.035707142142714254,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=100 n_without=0; one cell <10"
+    },
+    {
+      "feature": "regime_change",
+      "outcome": "early_kill_F1",
+      "n_total": 100,
+      "n_with_feature": 100,
+      "n_without_feature": 0,
+      "p_outcome_given_feature": 0.54,
+      "p_outcome_given_no_feature": 0.0,
+      "difference": 0.54,
+      "ci95": [
+        0.4423141033720835,
+        0.6376858966279166
+      ],
+      "se": 0.04983974317750845,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=100 n_without=0; one cell <10"
+    },
+    {
+      "feature": "regime_change",
+      "outcome": "late_kill_F11",
+      "n_total": 100,
+      "n_with_feature": 100,
+      "n_without_feature": 0,
+      "p_outcome_given_feature": 0.14,
+      "p_outcome_given_no_feature": 0.0,
+      "difference": 0.14,
+      "ci95": [
+        0.07199054183424193,
+        0.2080094581657581
+      ],
+      "se": 0.03469870314579494,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=100 n_without=0; one cell <10"
+    },
+    {
+      "feature": "regime_change",
+      "outcome": "unanimous_kill",
+      "n_total": 100,
+      "n_with_feature": 100,
+      "n_without_feature": 0,
+      "p_outcome_given_feature": 0.07,
+      "p_outcome_given_no_feature": 0.0,
+      "difference": 0.07,
+      "ci95": [
+        0.019991184777081554,
+        0.12000881522291845
+      ],
+      "se": 0.02551470164434615,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=100 n_without=0; one cell <10"
+    },
+    {
+      "feature": "delta_pct_high",
+      "outcome": "survives",
+      "n_total": 103,
+      "n_with_feature": 6,
+      "n_without_feature": 97,
+      "p_outcome_given_feature": 0.0,
+      "p_outcome_given_no_feature": 0.422680412371134,
+      "difference": -0.422680412371134,
+      "ci95": [
+        -0.5209874052922037,
+        -0.32437341945006437
+      ],
+      "se": 0.05015662904136207,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=6 n_without=97; one cell <10"
+    },
+    {
+      "feature": "delta_pct_high",
+      "outcome": "near_miss",
+      "n_total": 103,
+      "n_with_feature": 6,
+      "n_without_feature": 97,
+      "p_outcome_given_feature": 0.0,
+      "p_outcome_given_no_feature": 0.8865979381443299,
+      "difference": -0.8865979381443299,
+      "ci95": [
+        -0.9497000709255583,
+        -0.8234958053631014
+      ],
+      "se": 0.032194965704708395,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=6 n_without=97; one cell <10"
+    },
+    {
+      "feature": "delta_pct_high",
+      "outcome": "early_kill_F1",
+      "n_total": 103,
+      "n_with_feature": 6,
+      "n_without_feature": 97,
+      "p_outcome_given_feature": 1.0,
+      "p_outcome_given_no_feature": 0.5154639175257731,
+      "difference": 0.48453608247422686,
+      "ci95": [
+        0.38507975896984137,
+        0.5839924059786124
+      ],
+      "se": 0.05074302219611504,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=6 n_without=97; one cell <10"
+    },
+    {
+      "feature": "delta_pct_high",
+      "outcome": "late_kill_F11",
+      "n_total": 103,
+      "n_with_feature": 6,
+      "n_without_feature": 97,
+      "p_outcome_given_feature": 1.0,
+      "p_outcome_given_no_feature": 0.10309278350515463,
+      "difference": 0.8969072164948454,
+      "ci95": [
+        0.836392905024351,
+        0.9574215279653397
+      ],
+      "se": 0.030874648709435897,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=6 n_without=97; one cell <10"
+    },
+    {
+      "feature": "delta_pct_high",
+      "outcome": "unanimous_kill",
+      "n_total": 103,
+      "n_with_feature": 6,
+      "n_without_feature": 97,
+      "p_outcome_given_feature": 1.0,
+      "p_outcome_given_no_feature": 0.030927835051546393,
+      "difference": 0.9690721649484536,
+      "ci95": [
+        0.9346194838597331,
+        1.0035248460371742
+      ],
+      "se": 0.017577898514653304,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=6 n_without=97; one cell <10"
+    },
+    {
+      "feature": "n_steps_5",
+      "outcome": "survives",
+      "n_total": 97,
+      "n_with_feature": 97,
+      "n_without_feature": 0,
+      "p_outcome_given_feature": 0.41237113402061853,
+      "p_outcome_given_no_feature": 0.0,
+      "difference": 0.41237113402061853,
+      "ci95": [
+        0.3144072730118088,
+        0.5103349950294283
+      ],
+      "se": 0.04998156173918864,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=97 n_without=0; one cell <10"
+    },
+    {
+      "feature": "n_steps_5",
+      "outcome": "near_miss",
+      "n_total": 97,
+      "n_with_feature": 97,
+      "n_without_feature": 0,
+      "p_outcome_given_feature": 0.865979381443299,
+      "p_outcome_given_no_feature": 0.0,
+      "difference": 0.865979381443299,
+      "ci95": [
+        0.7981824888036865,
+        0.9337762740829115
+      ],
+      "se": 0.0345902513467411,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=97 n_without=0; one cell <10"
+    },
+    {
+      "feature": "n_steps_5",
+      "outcome": "early_kill_F1",
+      "n_total": 97,
+      "n_with_feature": 97,
+      "n_without_feature": 0,
+      "p_outcome_given_feature": 0.5360824742268041,
+      "p_outcome_given_no_feature": 0.0,
+      "difference": 0.5360824742268041,
+      "ci95": [
+        0.43683798551778147,
+        0.6353269629358268
+      ],
+      "se": 0.05063494321888911,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=97 n_without=0; one cell <10"
+    },
+    {
+      "feature": "n_steps_5",
+      "outcome": "late_kill_F11",
+      "n_total": 97,
+      "n_with_feature": 97,
+      "n_without_feature": 0,
+      "p_outcome_given_feature": 0.12371134020618557,
+      "p_outcome_given_no_feature": 0.0,
+      "difference": 0.12371134020618557,
+      "ci95": [
+        0.058187618691356816,
+        0.18923506172101434
+      ],
+      "se": 0.03343047016062692,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=97 n_without=0; one cell <10"
+    },
+    {
+      "feature": "n_steps_5",
+      "outcome": "unanimous_kill",
+      "n_total": 97,
+      "n_with_feature": 97,
+      "n_without_feature": 0,
+      "p_outcome_given_feature": 0.061855670103092786,
+      "p_outcome_given_no_feature": 0.0,
+      "difference": 0.061855670103092786,
+      "ci95": [
+        0.013916027574246419,
+        0.10979531263193915
+      ],
+      "se": 0.02445900129022774,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=97 n_without=0; one cell <10"
+    },
+    {
+      "feature": "known_count_low",
+      "outcome": "survives",
+      "n_total": 103,
+      "n_with_feature": 97,
+      "n_without_feature": 6,
+      "p_outcome_given_feature": 0.422680412371134,
+      "p_outcome_given_no_feature": 0.0,
+      "difference": 0.422680412371134,
+      "ci95": [
+        0.32437341945006437,
+        0.5209874052922037
+      ],
+      "se": 0.05015662904136207,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=97 n_without=6; one cell <10"
+    },
+    {
+      "feature": "known_count_low",
+      "outcome": "near_miss",
+      "n_total": 103,
+      "n_with_feature": 97,
+      "n_without_feature": 6,
+      "p_outcome_given_feature": 0.8762886597938144,
+      "p_outcome_given_no_feature": 0.16666666666666666,
+      "difference": 0.7096219931271478,
+      "ci95": [
+        0.4043036608785277,
+        1.0149403253757678
+      ],
+      "se": 0.15577465931052045,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=97 n_without=6; one cell <10"
+    },
+    {
+      "feature": "known_count_low",
+      "outcome": "early_kill_F1",
+      "n_total": 103,
+      "n_with_feature": 97,
+      "n_without_feature": 6,
+      "p_outcome_given_feature": 0.5257731958762887,
+      "p_outcome_given_no_feature": 0.8333333333333334,
+      "difference": -0.3075601374570447,
+      "ci95": [
+        -0.6218858435527719,
+        0.00676556863868244
+      ],
+      "se": 0.16037025821210568,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=97 n_without=6; one cell <10"
+    },
+    {
+      "feature": "known_count_low",
+      "outcome": "late_kill_F11",
+      "n_total": 103,
+      "n_with_feature": 97,
+      "n_without_feature": 6,
+      "p_outcome_given_feature": 0.1134020618556701,
+      "p_outcome_given_no_feature": 0.8333333333333334,
+      "difference": -0.7199312714776632,
+      "ci95": [
+        -1.024739088121964,
+        -0.41512345483336244
+      ],
+      "se": 0.15551419216545959,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=97 n_without=6; one cell <10"
+    },
+    {
+      "feature": "known_count_low",
+      "outcome": "unanimous_kill",
+      "n_total": 103,
+      "n_with_feature": 97,
+      "n_without_feature": 6,
+      "p_outcome_given_feature": 0.05154639175257732,
+      "p_outcome_given_no_feature": 0.6666666666666666,
+      "difference": -0.6151202749140893,
+      "ci95": [
+        -0.9948803330989774,
+        -0.23536021672920115
+      ],
+      "se": 0.19375513172698375,
+      "classification": "thin_data",
+      "classification_rationale": "n_with=97 n_without=6; one cell <10"
+    },
+    {
+      "feature": "best_model",
+      "outcome": "survives",
+      "n_total": 100,
+      "categorical_rows": [
+        {
+          "category": "poly_log_d5",
+          "n": 100,
+          "p_outcome": 0.41,
+          "n_outcome": 41
+        }
+      ],
+      "classification": "indeterminate",
+      "classification_rationale": "categorical breakdown \u2014 see per-category n"
+    },
+    {
+      "feature": "best_model",
+      "outcome": "near_miss",
+      "n_total": 100,
+      "categorical_rows": [
+        {
+          "category": "poly_log_d5",
+          "n": 100,
+          "p_outcome": 0.85,
+          "n_outcome": 85
+        }
+      ],
+      "classification": "indeterminate",
+      "classification_rationale": "categorical breakdown \u2014 see per-category n"
+    },
+    {
+      "feature": "best_model",
+      "outcome": "early_kill_F1",
+      "n_total": 100,
+      "categorical_rows": [
+        {
+          "category": "poly_log_d5",
+          "n": 100,
+          "p_outcome": 0.54,
+          "n_outcome": 54
+        }
+      ],
+      "classification": "indeterminate",
+      "classification_rationale": "categorical breakdown \u2014 see per-category n"
+    },
+    {
+      "feature": "best_model",
+      "outcome": "late_kill_F11",
+      "n_total": 100,
+      "categorical_rows": [
+        {
+          "category": "poly_log_d5",
+          "n": 100,
+          "p_outcome": 0.14,
+          "n_outcome": 14
+        }
+      ],
+      "classification": "indeterminate",
+      "classification_rationale": "categorical breakdown \u2014 see per-category n"
+    },
+    {
+      "feature": "best_model",
+      "outcome": "unanimous_kill",
+      "n_total": 100,
+      "categorical_rows": [
+        {
+          "category": "poly_log_d5",
+          "n": 100,
+          "p_outcome": 0.07,
+          "n_outcome": 7
+        }
+      ],
+      "classification": "indeterminate",
+      "classification_rationale": "categorical breakdown \u2014 see per-category n"
+    }
+  ],
+  "ergon_cross_reference": {
+    "source": "ergon/learner/diagnostics/per_class_hit_rates.json",
+    "computed_date": "2026-05-05",
+    "note": "Ergon's per-class hit rates show structural ~7x uniform on promote rate. That confirms predicate-template family matters WITHIN predicate-search. Does NOT confirm cross-domain morphology \u2014 different unit (predicate vs claim), different corpus (a149 only).",
+    "key_numbers": {
+      "structural_promote_rate": 0.33346939528184477,
+      "uniform_promote_rate": 0.04847942589032445,
+      "ratio": 6.878575584542943
+    }
+  },
+  "battery_runs_cross_domain_summary": {
+    "n": 3,
+    "findings": [
+      {
+        "finding_id": "F1_ENDO",
+        "claim": "ST group constrains conductor factorization",
+        "data_source": "genus2 3K sample",
+        "n_samples": 3000,
+        "overall_verdict": "CONSTRAINT",
+        "tier": "B+ (constraint, eta\u00b2=0.050)"
+      },
+      {
+        "finding_id": "F2_SG_TC",
+        "claim": "Space group predicts Tc",
+        "data_source": "3DSC_MP.csv (3995 records)",
+        "n_samples": 3995,
+        "overall_verdict": "LAW",
+        "tier": "B+ (law, eta\u00b2=0.457)"
+      },
+      {
+        "finding_id": "F3_FIBER",
+        "claim": "ST group determines fiber ratio",
+        "data_source": "genus2 66K curves",
+        "n_samples": 66158,
+        "overall_verdict": "TENDENCY",
+        "tier": "B+ (tendency, eta\u00b2=0.027)"
+      }
+    ],
+    "note": "n=3 cross-domain rich findings. Case studies only \u2014 too few for statistical morphology comparison. F2 (materials Tc) achieved 'LAW' tier with eta\u00b2=0.46; F1 + F3 (genus2) at B+ constraint/tendency. All 3 'CONFOUND_ROBUST' on F17 and 'STABLE' on F18 \u2014 but n=3 prevents inference about what feature distinguishes the LAW from the constraints."
+  },
+  "honesty_notes": [
+    "SCOPE FLAG: this morphology analysis is single-domain (A149* lattice walks, 100/103 records from regime_change source). The brief assumed a cross-domain unified kill ledger; survey 2026-05-05 found this does not exist at production scale. Cross-domain rich findings n=3 \u2014 case-study-only, statistically uninformative.",
+    "Productive vs blind-spot vs thin-data classification requires cross-domain replication. With only one substantial domain in the kill ledger, almost all features get flagged INDETERMINATE. This is the honest answer. Targeting the substrate's expansion at multi-domain kill-record collection is the next-step ask.",
+    "All correlations are within-domain (lattice walks). The '~7x lift on has_diag_neg for any_kill' style finding may reflect: (a) genuine boundary-geometry obstruction signal, (b) regime_change source template that systematically labels diag-neg walks as flagged, (c) corpus selection bias (the seed sequences were chosen because they showed asymptotic deviations).",
+    "Wald CIs are based on independence assumption that doesn't fully hold (sequences in a149 family share construction templates). Effective n is plausibly less than reported n; treat CIs as optimistic.",
+    "battery_runs.jsonl (3 cross-domain records: F1_ENDO genus2, F2_SG_TC materials, F3_FIBER genus2) is the only multi-domain rich-falsifier data. n=3 means even single-feature trends are case-study-only.",
+    "Ergon per-class hit rates from 2026-05-05 are cross-referenced as qualitative sanity check, not as cross-domain validation. Different unit (predicate vs claim), different corpus (a149 only), same domain \u2014 they tell us about predicate-template hierarchy, not about cross-domain morphology.",
+    "The 4 honesty classes (productive / blind_spot / thin_data / overfitting) collapse here because most signal is INDETERMINATE. When the substrate has BSD/modular/knot kill ledgers at >100 records each, this analysis can be re-run with productive vs blind-spot actually testable.",
+    "Empty 'kill_path' fields in some records: not all sweep records had kill_tests populated; those with empty arrays count as SURVIVES per the schema. Confirmed 41/103 = 0 kills; this is consistent with the verdict='SURVIVES' field count."
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "corpus": {
+    "n_total": 1000,
+    "rank_counts": {
+      "0": 500,
+      "1": 400,
+      "2": 100
+    },
+    "max_rank": 2
+  },
+  "train_size": 700,
+  "test_size": 300,
+  "n_episodes": 1000,
+  "n_seeds": 3,
+  "random_means": [
+    21.0,
+    20.2,
+    19.9
+  ],
+  "majority_means": [
+    55.2,
+    50.9,
+    50.6
+  ],
+  "reinforce_means": [
+    39.1,
+    51.7,
+    48.0
+  ],
+  "random_mean": 20.366666666666667,
+  "majority_mean": 52.23333333333333,
+  "reinforce_mean": 46.26666666666667,
+  "lift_learned_over_random": 1.2716857610474634,
+  "lift_learned_over_majority": -0.11423101467772792,
+  "p_value_learned_vs_random": 0.009779680564334314,
+  "p_value_learned_vs_majority": 0.8763094943144276,
+  "pred_count_history": [
+    [
+      4,
+      989,
+      2,
+      3,
+      2
+    ],
+    [
+      990,
+      2,
+      3,
+      3,
+      2
+    ],
+    [
+      980,
+      5,
+      9,
+      5,
+      1
+    ]
+  ],
+  "test_eval_random_means": [
+    20.1,
+    21.3,
+    18.5
+  ],
+  "test_eval_reinforce_means": [
+    44.6,
+    50.6,
+    46.6
+  ],
+  "test_lift": 1.3672787979966612,
+  "p_value_test_learned_vs_random": 0.0005452301494690559
+}

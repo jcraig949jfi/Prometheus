@@ -1,0 +1,2615 @@
+{
+  "subspace": "deg14_palindromic_coeffs_pm5_c0_positive",
+  "source_brute_force_results": "F:\\Prometheus\\prometheus_math\\_lehmer_brute_force_results.json",
+  "dps_ladder": [
+    30,
+    40,
+    50,
+    60,
+    80,
+    100
+  ],
+  "direct_maxsteps": 200,
+  "n_entries": 17,
+  "aggregate": {
+    "n_entries": 17,
+    "ladder": [
+      30,
+      40,
+      50,
+      60,
+      80,
+      100
+    ],
+    "by_strategy": {
+      "direct": {
+        "convergence_count_by_dps": {
+          "30": 0,
+          "40": 0,
+          "50": 0,
+          "60": 0,
+          "80": 0,
+          "100": 0
+        },
+        "convergence_rate_by_dps": {
+          "30": 0.0,
+          "40": 0.0,
+          "50": 0.0,
+          "60": 0.0,
+          "80": 0.0,
+          "100": 0.0
+        }
+      },
+      "factor_first": {
+        "convergence_count_by_dps": {
+          "30": 17,
+          "40": 17,
+          "50": 17,
+          "60": 17,
+          "80": 17,
+          "100": 17
+        },
+        "convergence_rate_by_dps": {
+          "30": 1.0,
+          "40": 1.0,
+          "50": 1.0,
+          "60": 1.0,
+          "80": 1.0,
+          "100": 1.0
+        }
+      }
+    },
+    "min_dps_distribution": {
+      "direct": {
+        "30": 0,
+        "40": 0,
+        "50": 0,
+        "60": 0,
+        "80": 0,
+        "100": 0,
+        "never": 17
+      },
+      "factor_first": {
+        "30": 17,
+        "40": 0,
+        "50": 0,
+        "60": 0,
+        "80": 0,
+        "100": 0,
+        "never": 0
+      }
+    },
+    "regime_counts": {
+      "PRECISION_REGIME_LOW": 0,
+      "PRECISION_REGIME_MID": 0,
+      "PRECISION_REGIME_HIGH": 0,
+      "PRECISION_REGIME_FACTOR_FIRST_ONLY": 17,
+      "PRECISION_REGIME_DIVERGENT": 0
+    },
+    "classification_counts": {
+      "cyclotomic_only": 15,
+      "confirmed_in_band": 2
+    },
+    "headline_dps_full_direct": null,
+    "headline_dps_full_factor_first": 30
+  },
+  "per_entry_results": [
+    {
+      "half_coeffs": [
+        1,
+        -4,
+        5,
+        0,
+        -5,
+        4,
+        -1,
+        0
+      ],
+      "coeffs_ascending": [
+        1,
+        -4,
+        5,
+        0,
+        -5,
+        4,
+        -1,
+        0,
+        -1,
+        4,
+        -5,
+        0,
+        5,
+        -4,
+        1
+      ],
+      "M_numpy": 1.0031432230024813,
+      "M_mpmath_original": NaN,
+      "measurements": [
+        {
+          "dps": 30,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 231.79690004326403,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 30,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 27.73369988426566,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 40,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 239.1109000891447,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 40,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 5.3171999752521515,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 50,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 237.7676998730749,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 50,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 5.874800030142069,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 60,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 239.49750000610948,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 60,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 5.449899937957525,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 80,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 247.97489983029664,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 80,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 5.744599970057607,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 100,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 258.41469992883503,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 100,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 6.035899976268411,
+          "converged": true,
+          "error": null
+        }
+      ],
+      "direct_min_dps_converged": null,
+      "factor_first_min_dps_converged": 30,
+      "M_at_factor_first_convergence": 1.0,
+      "M_at_direct_convergence": null,
+      "classification": "cyclotomic_only",
+      "path_a_bucket": "A1",
+      "regime": "PRECISION_REGIME_FACTOR_FIRST_ONLY"
+    },
+    {
+      "half_coeffs": [
+        1,
+        -3,
+        1,
+        5,
+        -5,
+        -1,
+        3,
+        -2
+      ],
+      "coeffs_ascending": [
+        1,
+        -3,
+        1,
+        5,
+        -5,
+        -1,
+        3,
+        -2,
+        3,
+        -1,
+        -5,
+        5,
+        1,
+        -3,
+        1
+      ],
+      "M_numpy": 1.0043708418422215,
+      "M_mpmath_original": NaN,
+      "measurements": [
+        {
+          "dps": 30,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 226.53350001201034,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 30,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 13.504800153896213,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 40,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 232.9130000434816,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 40,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 11.87110017053783,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 50,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 243.6094000004232,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 50,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 12.61289999820292,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 60,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 239.5973999518901,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 60,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 12.64390000142157,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 80,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 250.14259992167354,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 80,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 14.07430018298328,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 100,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 245.39560009725392,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 100,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 13.220999855548143,
+          "converged": true,
+          "error": null
+        }
+      ],
+      "direct_min_dps_converged": null,
+      "factor_first_min_dps_converged": 30,
+      "M_at_factor_first_convergence": 1.0,
+      "M_at_direct_convergence": null,
+      "classification": "cyclotomic_only",
+      "path_a_bucket": "A1",
+      "regime": "PRECISION_REGIME_FACTOR_FIRST_ONLY"
+    },
+    {
+      "half_coeffs": [
+        1,
+        -3,
+        2,
+        1,
+        0,
+        -2,
+        1,
+        0
+      ],
+      "coeffs_ascending": [
+        1,
+        -3,
+        2,
+        1,
+        0,
+        -2,
+        1,
+        0,
+        1,
+        -2,
+        0,
+        1,
+        2,
+        -3,
+        1
+      ],
+      "M_numpy": 1.176532796146304,
+      "M_mpmath_original": NaN,
+      "measurements": [
+        {
+          "dps": 30,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 228.92580018378794,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 30,
+          "strategy": "factor_first",
+          "M_value": 1.1762808182599176,
+          "status": "ok",
+          "wall_time_ms": 18.442299915477633,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 40,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 235.2218998130411,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 40,
+          "strategy": "factor_first",
+          "M_value": 1.1762808182599176,
+          "status": "ok",
+          "wall_time_ms": 19.150800071656704,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 50,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 234.06240018084645,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 50,
+          "strategy": "factor_first",
+          "M_value": 1.1762808182599176,
+          "status": "ok",
+          "wall_time_ms": 19.29640001617372,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 60,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 238.05649997666478,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 60,
+          "strategy": "factor_first",
+          "M_value": 1.1762808182599176,
+          "status": "ok",
+          "wall_time_ms": 20.250899950042367,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 80,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 257.0384999271482,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 80,
+          "strategy": "factor_first",
+          "M_value": 1.1762808182599176,
+          "status": "ok",
+          "wall_time_ms": 21.840799832716584,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 100,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 251.22469989582896,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 100,
+          "strategy": "factor_first",
+          "M_value": 1.1762808182599176,
+          "status": "ok",
+          "wall_time_ms": 22.918100003153086,
+          "converged": true,
+          "error": null
+        }
+      ],
+      "direct_min_dps_converged": null,
+      "factor_first_min_dps_converged": 30,
+      "M_at_factor_first_convergence": 1.1762808182599176,
+      "M_at_direct_convergence": null,
+      "classification": "confirmed_in_band",
+      "path_a_bucket": "A3",
+      "regime": "PRECISION_REGIME_FACTOR_FIRST_ONLY"
+    },
+    {
+      "half_coeffs": [
+        1,
+        -3,
+        2,
+        2,
+        -4,
+        3,
+        1,
+        -4
+      ],
+      "coeffs_ascending": [
+        1,
+        -3,
+        2,
+        2,
+        -4,
+        3,
+        1,
+        -4,
+        1,
+        3,
+        -4,
+        2,
+        2,
+        -3,
+        1
+      ],
+      "M_numpy": 1.0028435553932493,
+      "M_mpmath_original": NaN,
+      "measurements": [
+        {
+          "dps": 30,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 230.75040010735393,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 30,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 9.074500063434243,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 40,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 243.05379996076226,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 40,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 7.885499857366085,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 50,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 243.8793999608606,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 50,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 8.41420004144311,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 60,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 244.58539998158813,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 60,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 9.41860000602901,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 80,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 250.00740005634725,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 80,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 8.378899889066815,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 100,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 247.1586000174284,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 100,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 8.697000099346042,
+          "converged": true,
+          "error": null
+        }
+      ],
+      "direct_min_dps_converged": null,
+      "factor_first_min_dps_converged": 30,
+      "M_at_factor_first_convergence": 1.0,
+      "M_at_direct_convergence": null,
+      "classification": "cyclotomic_only",
+      "path_a_bucket": "A1",
+      "regime": "PRECISION_REGIME_FACTOR_FIRST_ONLY"
+    },
+    {
+      "half_coeffs": [
+        1,
+        -3,
+        3,
+        -2,
+        1,
+        3,
+        -5,
+        4
+      ],
+      "coeffs_ascending": [
+        1,
+        -3,
+        3,
+        -2,
+        1,
+        3,
+        -5,
+        4,
+        -5,
+        3,
+        1,
+        -2,
+        3,
+        -3,
+        1
+      ],
+      "M_numpy": 1.0042966068173567,
+      "M_mpmath_original": NaN,
+      "measurements": [
+        {
+          "dps": 30,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 233.65540010854602,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 30,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 5.767700029537082,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 40,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 243.9076998271048,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 40,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 4.17369999922812,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 50,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 230.96640012227,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 50,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 4.596199840307236,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 60,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 240.86409993469715,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 60,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 5.351400002837181,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 80,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 246.56619993038476,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 80,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 4.69970004633069,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 100,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 256.53369980864227,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 100,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 5.944899981841445,
+          "converged": true,
+          "error": null
+        }
+      ],
+      "direct_min_dps_converged": null,
+      "factor_first_min_dps_converged": 30,
+      "M_at_factor_first_convergence": 1.0,
+      "M_at_direct_convergence": null,
+      "classification": "cyclotomic_only",
+      "path_a_bucket": "A1",
+      "regime": "PRECISION_REGIME_FACTOR_FIRST_ONLY"
+    },
+    {
+      "half_coeffs": [
+        1,
+        -2,
+        -1,
+        3,
+        1,
+        -2,
+        -1,
+        2
+      ],
+      "coeffs_ascending": [
+        1,
+        -2,
+        -1,
+        3,
+        1,
+        -2,
+        -1,
+        2,
+        -1,
+        -2,
+        1,
+        3,
+        -1,
+        -2,
+        1
+      ],
+      "M_numpy": 1.0027074558450277,
+      "M_mpmath_original": NaN,
+      "measurements": [
+        {
+          "dps": 30,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 232.90900001302361,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 30,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 3.18430014885962,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 40,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 241.59909994341433,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 40,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.879099989309907,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 50,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 246.4715999085456,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 50,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.9360999576747417,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 60,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 244.41869999282062,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 60,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 2.0481001120060682,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 80,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 259.10399993881583,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 80,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 2.6112000923603773,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 100,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 256.0173000674695,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 100,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 2.1849998738616705,
+          "converged": true,
+          "error": null
+        }
+      ],
+      "direct_min_dps_converged": null,
+      "factor_first_min_dps_converged": 30,
+      "M_at_factor_first_convergence": 1.0,
+      "M_at_direct_convergence": null,
+      "classification": "cyclotomic_only",
+      "path_a_bucket": "A1",
+      "regime": "PRECISION_REGIME_FACTOR_FIRST_ONLY"
+    },
+    {
+      "half_coeffs": [
+        1,
+        -2,
+        0,
+        0,
+        2,
+        2,
+        -3,
+        0
+      ],
+      "coeffs_ascending": [
+        1,
+        -2,
+        0,
+        0,
+        2,
+        2,
+        -3,
+        0,
+        -3,
+        2,
+        2,
+        0,
+        0,
+        -2,
+        1
+      ],
+      "M_numpy": 1.0032492782631155,
+      "M_mpmath_original": NaN,
+      "measurements": [
+        {
+          "dps": 30,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 239.14220021106303,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 30,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 2.2607999853789806,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 40,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 250.40449993684888,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 40,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.214900054037571,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 50,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 244.99289994128048,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 50,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.2453000526875257,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 60,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 251.62999983876944,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 60,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.2827999889850616,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 80,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 260.3333001025021,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 80,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.3246999587863684,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 100,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 254.30729985237122,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 100,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.3364998158067465,
+          "converged": true,
+          "error": null
+        }
+      ],
+      "direct_min_dps_converged": null,
+      "factor_first_min_dps_converged": 30,
+      "M_at_factor_first_convergence": 1.0,
+      "M_at_direct_convergence": null,
+      "classification": "cyclotomic_only",
+      "path_a_bucket": "A1",
+      "regime": "PRECISION_REGIME_FACTOR_FIRST_ONLY"
+    },
+    {
+      "half_coeffs": [
+        1,
+        -1,
+        -3,
+        2,
+        3,
+        1,
+        -1,
+        -4
+      ],
+      "coeffs_ascending": [
+        1,
+        -1,
+        -3,
+        2,
+        3,
+        1,
+        -1,
+        -4,
+        -1,
+        1,
+        3,
+        2,
+        -3,
+        -1,
+        1
+      ],
+      "M_numpy": 1.003988958640861,
+      "M_mpmath_original": NaN,
+      "measurements": [
+        {
+          "dps": 30,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 228.06750005111098,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 30,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 2.46219988912344,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 40,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 243.8771000597626,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 40,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.3647000305354595,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 50,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 245.13990012928843,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 50,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.3017000164836645,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 60,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 253.51150007918477,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 60,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.3508000411093235,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 80,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 362.75559989735484,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 80,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.4144000597298145,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 100,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 261.154199950397,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 100,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.4351001009345055,
+          "converged": true,
+          "error": null
+        }
+      ],
+      "direct_min_dps_converged": null,
+      "factor_first_min_dps_converged": 30,
+      "M_at_factor_first_convergence": 1.0,
+      "M_at_direct_convergence": null,
+      "classification": "cyclotomic_only",
+      "path_a_bucket": "A1",
+      "regime": "PRECISION_REGIME_FACTOR_FIRST_ONLY"
+    },
+    {
+      "half_coeffs": [
+        1,
+        0,
+        3,
+        0,
+        1,
+        0,
+        -5,
+        0
+      ],
+      "coeffs_ascending": [
+        1,
+        0,
+        3,
+        0,
+        1,
+        0,
+        -5,
+        0,
+        -5,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1
+      ],
+      "M_numpy": 1.0011800875987642,
+      "M_mpmath_original": NaN,
+      "measurements": [
+        {
+          "dps": 30,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 251.3329000212252,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 30,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.6228999011218548,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 40,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 283.3052999339998,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 40,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.0240999981760979,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 50,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 273.98769999854267,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 50,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.2380999978631735,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 60,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 255.67699992097914,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 60,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.2648999691009521,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 80,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 256.8127999547869,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 80,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 0.9442002046853304,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 100,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 278.96300004795194,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 100,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.0661999695003033,
+          "converged": true,
+          "error": null
+        }
+      ],
+      "direct_min_dps_converged": null,
+      "factor_first_min_dps_converged": 30,
+      "M_at_factor_first_convergence": 1.0,
+      "M_at_direct_convergence": null,
+      "classification": "cyclotomic_only",
+      "path_a_bucket": "A1",
+      "regime": "PRECISION_REGIME_FACTOR_FIRST_ONLY"
+    },
+    {
+      "half_coeffs": [
+        1,
+        1,
+        -3,
+        -2,
+        3,
+        -1,
+        -1,
+        4
+      ],
+      "coeffs_ascending": [
+        1,
+        1,
+        -3,
+        -2,
+        3,
+        -1,
+        -1,
+        4,
+        -1,
+        -1,
+        3,
+        -2,
+        -3,
+        1,
+        1
+      ],
+      "M_numpy": 1.0039443751800874,
+      "M_mpmath_original": NaN,
+      "measurements": [
+        {
+          "dps": 30,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 226.9146000035107,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 30,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 2.2883000783622265,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 40,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 243.38739993982017,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 40,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.401000190526247,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 50,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 261.8800001218915,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 50,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.302800141274929,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 60,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 248.25140018947423,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 60,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.3281998690217733,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 80,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 249.43309999071062,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 80,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.4174999669194221,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 100,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 257.94260017573833,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 100,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.4248997904360294,
+          "converged": true,
+          "error": null
+        }
+      ],
+      "direct_min_dps_converged": null,
+      "factor_first_min_dps_converged": 30,
+      "M_at_factor_first_convergence": 1.0,
+      "M_at_direct_convergence": null,
+      "classification": "cyclotomic_only",
+      "path_a_bucket": "A1",
+      "regime": "PRECISION_REGIME_FACTOR_FIRST_ONLY"
+    },
+    {
+      "half_coeffs": [
+        1,
+        2,
+        -1,
+        -3,
+        1,
+        2,
+        -1,
+        -2
+      ],
+      "coeffs_ascending": [
+        1,
+        2,
+        -1,
+        -3,
+        1,
+        2,
+        -1,
+        -2,
+        -1,
+        2,
+        1,
+        -3,
+        -1,
+        2,
+        1
+      ],
+      "M_numpy": 1.0027074995494392,
+      "M_mpmath_original": NaN,
+      "measurements": [
+        {
+          "dps": 30,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 232.91769996285439,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 30,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 3.519199788570404,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 40,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 244.7363999672234,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 40,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 2.398099983111024,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 50,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 239.58789999596775,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 50,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 2.5291000492870808,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 60,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 245.42860011570156,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 60,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 2.406999934464693,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 80,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 271.1432999931276,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 80,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 3.0611997935920954,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 100,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 261.2815999891609,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 100,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 2.7418998070061207,
+          "converged": true,
+          "error": null
+        }
+      ],
+      "direct_min_dps_converged": null,
+      "factor_first_min_dps_converged": 30,
+      "M_at_factor_first_convergence": 1.0,
+      "M_at_direct_convergence": null,
+      "classification": "cyclotomic_only",
+      "path_a_bucket": "A1",
+      "regime": "PRECISION_REGIME_FACTOR_FIRST_ONLY"
+    },
+    {
+      "half_coeffs": [
+        1,
+        2,
+        0,
+        0,
+        2,
+        -2,
+        -3,
+        0
+      ],
+      "coeffs_ascending": [
+        1,
+        2,
+        0,
+        0,
+        2,
+        -2,
+        -3,
+        0,
+        -3,
+        -2,
+        2,
+        0,
+        0,
+        2,
+        1
+      ],
+      "M_numpy": 1.003249074808974,
+      "M_mpmath_original": NaN,
+      "measurements": [
+        {
+          "dps": 30,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 231.64130002260208,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 30,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.701700035482645,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 40,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 239.1778000164777,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 40,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.1726000811904669,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 50,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 237.50040004961193,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 50,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.7658998258411884,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 60,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 247.81400011852384,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 60,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.2455000542104244,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 80,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 246.80579989217222,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 80,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.2854000087827444,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 100,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 253.33689991384745,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 100,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.2962999753654003,
+          "converged": true,
+          "error": null
+        }
+      ],
+      "direct_min_dps_converged": null,
+      "factor_first_min_dps_converged": 30,
+      "M_at_factor_first_convergence": 1.0,
+      "M_at_direct_convergence": null,
+      "classification": "cyclotomic_only",
+      "path_a_bucket": "A1",
+      "regime": "PRECISION_REGIME_FACTOR_FIRST_ONLY"
+    },
+    {
+      "half_coeffs": [
+        1,
+        3,
+        1,
+        -5,
+        -5,
+        1,
+        3,
+        2
+      ],
+      "coeffs_ascending": [
+        1,
+        3,
+        1,
+        -5,
+        -5,
+        1,
+        3,
+        2,
+        3,
+        1,
+        -5,
+        -5,
+        1,
+        3,
+        1
+      ],
+      "M_numpy": 1.0043709499369031,
+      "M_mpmath_original": NaN,
+      "measurements": [
+        {
+          "dps": 30,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 245.16980000771582,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 30,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 5.978100001811981,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 40,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 239.42060000263155,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 40,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 5.658300127834082,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 50,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 245.28719997033477,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 50,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 4.556200001388788,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 60,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 246.37189996428788,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 60,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 4.731500055640936,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 80,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 269.3463999312371,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 80,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 6.923899985849857,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 100,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 347.2575000487268,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 100,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 8.278599940240383,
+          "converged": true,
+          "error": null
+        }
+      ],
+      "direct_min_dps_converged": null,
+      "factor_first_min_dps_converged": 30,
+      "M_at_factor_first_convergence": 1.0,
+      "M_at_direct_convergence": null,
+      "classification": "cyclotomic_only",
+      "path_a_bucket": "A1",
+      "regime": "PRECISION_REGIME_FACTOR_FIRST_ONLY"
+    },
+    {
+      "half_coeffs": [
+        1,
+        3,
+        2,
+        -2,
+        -4,
+        -3,
+        1,
+        4
+      ],
+      "coeffs_ascending": [
+        1,
+        3,
+        2,
+        -2,
+        -4,
+        -3,
+        1,
+        4,
+        1,
+        -3,
+        -4,
+        -2,
+        2,
+        3,
+        1
+      ],
+      "M_numpy": 1.0028422158098105,
+      "M_mpmath_original": NaN,
+      "measurements": [
+        {
+          "dps": 30,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 357.14350012131035,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 30,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 5.0079000648111105,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 40,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 401.0095000267029,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 40,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 2.8329999186098576,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 50,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 360.8423999976367,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 50,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 3.285099985077977,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 60,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 400.4436999093741,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 60,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 3.007099963724613,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 80,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 392.025199951604,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 80,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 3.2414000015705824,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 100,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 291.12090007402,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 100,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 2.217500004917383,
+          "converged": true,
+          "error": null
+        }
+      ],
+      "direct_min_dps_converged": null,
+      "factor_first_min_dps_converged": 30,
+      "M_at_factor_first_convergence": 1.0,
+      "M_at_direct_convergence": null,
+      "classification": "cyclotomic_only",
+      "path_a_bucket": "A1",
+      "regime": "PRECISION_REGIME_FACTOR_FIRST_ONLY"
+    },
+    {
+      "half_coeffs": [
+        1,
+        3,
+        2,
+        -1,
+        0,
+        2,
+        1,
+        0
+      ],
+      "coeffs_ascending": [
+        1,
+        3,
+        2,
+        -1,
+        0,
+        2,
+        1,
+        0,
+        1,
+        2,
+        0,
+        -1,
+        2,
+        3,
+        1
+      ],
+      "M_numpy": 1.1765327477345522,
+      "M_mpmath_original": NaN,
+      "measurements": [
+        {
+          "dps": 30,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 285.74390010908246,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 30,
+          "strategy": "factor_first",
+          "M_value": 1.1762808182599176,
+          "status": "ok",
+          "wall_time_ms": 9.330500150099397,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 40,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 370.52499991841614,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 40,
+          "strategy": "factor_first",
+          "M_value": 1.1762808182599176,
+          "status": "ok",
+          "wall_time_ms": 14.174300013110042,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 50,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 375.5866000428796,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 50,
+          "strategy": "factor_first",
+          "M_value": 1.1762808182599176,
+          "status": "ok",
+          "wall_time_ms": 12.539899908006191,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 60,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 325.75160008855164,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 60,
+          "strategy": "factor_first",
+          "M_value": 1.1762808182599176,
+          "status": "ok",
+          "wall_time_ms": 15.080800047144294,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 80,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 415.8310000784695,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 80,
+          "strategy": "factor_first",
+          "M_value": 1.1762808182599176,
+          "status": "ok",
+          "wall_time_ms": 9.495200123637915,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 100,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 382.51299993135035,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 100,
+          "strategy": "factor_first",
+          "M_value": 1.1762808182599176,
+          "status": "ok",
+          "wall_time_ms": 16.963300062343478,
+          "converged": true,
+          "error": null
+        }
+      ],
+      "direct_min_dps_converged": null,
+      "factor_first_min_dps_converged": 30,
+      "M_at_factor_first_convergence": 1.1762808182599176,
+      "M_at_direct_convergence": null,
+      "classification": "confirmed_in_band",
+      "path_a_bucket": "A3",
+      "regime": "PRECISION_REGIME_FACTOR_FIRST_ONLY"
+    },
+    {
+      "half_coeffs": [
+        1,
+        3,
+        3,
+        2,
+        1,
+        -3,
+        -5,
+        -4
+      ],
+      "coeffs_ascending": [
+        1,
+        3,
+        3,
+        2,
+        1,
+        -3,
+        -5,
+        -4,
+        -5,
+        -3,
+        1,
+        2,
+        3,
+        3,
+        1
+      ],
+      "M_numpy": 1.0042965711159693,
+      "M_mpmath_original": NaN,
+      "measurements": [
+        {
+          "dps": 30,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 298.3792000450194,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 30,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 2.487099962309003,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 40,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 383.00240016542375,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 40,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.785599859431386,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 50,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 356.100499862805,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 50,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.797500066459179,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 60,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 399.0611999761313,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 60,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.829399960115552,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 80,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 303.0521001201123,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 80,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.7603000160306692,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 100,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 338.8681998476386,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 100,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 1.8327999860048294,
+          "converged": true,
+          "error": null
+        }
+      ],
+      "direct_min_dps_converged": null,
+      "factor_first_min_dps_converged": 30,
+      "M_at_factor_first_convergence": 1.0,
+      "M_at_direct_convergence": null,
+      "classification": "cyclotomic_only",
+      "path_a_bucket": "A1",
+      "regime": "PRECISION_REGIME_FACTOR_FIRST_ONLY"
+    },
+    {
+      "half_coeffs": [
+        1,
+        4,
+        5,
+        0,
+        -5,
+        -4,
+        -1,
+        0
+      ],
+      "coeffs_ascending": [
+        1,
+        4,
+        5,
+        0,
+        -5,
+        -4,
+        -1,
+        0,
+        -1,
+        -4,
+        -5,
+        0,
+        5,
+        4,
+        1
+      ],
+      "M_numpy": 1.0031413054180098,
+      "M_mpmath_original": NaN,
+      "measurements": [
+        {
+          "dps": 30,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 373.86139994487166,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 30,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 2.9637999832630157,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 40,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 322.49470008537173,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 40,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 3.4256000071763992,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 50,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 337.14229986071587,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 50,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 3.4322000574320555,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 60,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 415.798099944368,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 60,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 3.3887000754475594,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 80,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 376.95379997603595,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 80,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 2.8823998291045427,
+          "converged": true,
+          "error": null
+        },
+        {
+          "dps": 100,
+          "strategy": "direct",
+          "M_value": null,
+          "status": "no_convergence",
+          "wall_time_ms": 343.9922998659313,
+          "converged": false,
+          "error": "NoConvergence: Didn't converge in maxsteps=200 steps."
+        },
+        {
+          "dps": 100,
+          "strategy": "factor_first",
+          "M_value": 1.0,
+          "status": "ok",
+          "wall_time_ms": 3.494800068438053,
+          "converged": true,
+          "error": null
+        }
+      ],
+      "direct_min_dps_converged": null,
+      "factor_first_min_dps_converged": 30,
+      "M_at_factor_first_convergence": 1.0,
+      "M_at_direct_convergence": null,
+      "classification": "cyclotomic_only",
+      "path_a_bucket": "A1",
+      "regime": "PRECISION_REGIME_FACTOR_FIRST_ONLY"
+    }
+  ],
+  "wall_time_seconds": 28.645003200042993
+}

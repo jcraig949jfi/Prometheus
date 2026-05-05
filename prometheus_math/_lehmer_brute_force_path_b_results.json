@@ -1,0 +1,2003 @@
+{
+  "input": "prometheus_math\\_lehmer_brute_force_results.json",
+  "n_entries": 17,
+  "classification_counts": {
+    "B1": 15,
+    "B2": 2,
+    "B3": 0,
+    "B4": 0
+  },
+  "path_b_verdict": "H5_CONFIRMED",
+  "verdict_reason": "All 17 verification_failed entries resolve to either all-cyclotomic (15) or Lehmer \u00d7 cyclotomic (2). INCONCLUSIVE lifted: every band hit reproduces a known catalog entry (modulo Mossinghoff label-match limitations).",
+  "wall_time_seconds": 0.034264564514160156,
+  "lehmer_M_reference_dps_60": "1.17628081825991750654407033847403505069341580656469320656763",
+  "results": [
+    {
+      "source_entry": {
+        "half_coeffs": [
+          1,
+          -4,
+          5,
+          0,
+          -5,
+          4,
+          -1,
+          0
+        ],
+        "coeffs_ascending": [
+          1,
+          -4,
+          5,
+          0,
+          -5,
+          4,
+          -1,
+          0,
+          -1,
+          4,
+          -5,
+          0,
+          5,
+          -4,
+          1
+        ],
+        "M_numpy": 1.0031432230024813,
+        "M_mpmath": NaN,
+        "is_cyclotomic": false,
+        "has_cyclotomic_factor": true,
+        "residual_M_after_cyclotomic_factor": 1.0009572253747703,
+        "is_irreducible_rational_root": false,
+        "in_mossinghoff": false,
+        "mossinghoff_label": null,
+        "verification_failed": true
+      },
+      "coeffs_ascending": [
+        1,
+        -4,
+        5,
+        0,
+        -5,
+        4,
+        -1,
+        0,
+        -1,
+        4,
+        -5,
+        0,
+        5,
+        -4,
+        1
+      ],
+      "content": 1,
+      "factor_list": [
+        {
+          "coeffs_descending": [
+            1,
+            1
+          ],
+          "degree": 1,
+          "multiplicity": 2,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 2,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            -1
+          ],
+          "degree": 1,
+          "multiplicity": 6,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 1,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            0,
+            1
+          ],
+          "degree": 2,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 4,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "degree": 4,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 8,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        }
+      ],
+      "n_factors": 4,
+      "n_non_cyclotomic_factors": 0,
+      "classification": "B1",
+      "classification_reason": "All factors are cyclotomic; M(P) = 1 exactly. Numpy noise put it in band.",
+      "M_non_cyclotomic_product": 1.0,
+      "mossinghoff_cross_check": {
+        "in_catalog": null,
+        "label": null,
+        "match_method": "no_non_cyclotomic_factor"
+      }
+    },
+    {
+      "source_entry": {
+        "half_coeffs": [
+          1,
+          -3,
+          1,
+          5,
+          -5,
+          -1,
+          3,
+          -2
+        ],
+        "coeffs_ascending": [
+          1,
+          -3,
+          1,
+          5,
+          -5,
+          -1,
+          3,
+          -2,
+          3,
+          -1,
+          -5,
+          5,
+          1,
+          -3,
+          1
+        ],
+        "M_numpy": 1.0043708418422215,
+        "M_mpmath": NaN,
+        "is_cyclotomic": false,
+        "has_cyclotomic_factor": true,
+        "residual_M_after_cyclotomic_factor": 1.000794230517782,
+        "is_irreducible_rational_root": false,
+        "in_mossinghoff": false,
+        "mossinghoff_label": null,
+        "verification_failed": true
+      },
+      "coeffs_ascending": [
+        1,
+        -3,
+        1,
+        5,
+        -5,
+        -1,
+        3,
+        -2,
+        3,
+        -1,
+        -5,
+        5,
+        1,
+        -3,
+        1
+      ],
+      "content": 1,
+      "factor_list": [
+        {
+          "coeffs_descending": [
+            1,
+            1
+          ],
+          "degree": 1,
+          "multiplicity": 2,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 2,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            -1
+          ],
+          "degree": 1,
+          "multiplicity": 6,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 1,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "degree": 6,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 7,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        }
+      ],
+      "n_factors": 3,
+      "n_non_cyclotomic_factors": 0,
+      "classification": "B1",
+      "classification_reason": "All factors are cyclotomic; M(P) = 1 exactly. Numpy noise put it in band.",
+      "M_non_cyclotomic_product": 1.0,
+      "mossinghoff_cross_check": {
+        "in_catalog": null,
+        "label": null,
+        "match_method": "no_non_cyclotomic_factor"
+      }
+    },
+    {
+      "source_entry": {
+        "half_coeffs": [
+          1,
+          -3,
+          2,
+          1,
+          0,
+          -2,
+          1,
+          0
+        ],
+        "coeffs_ascending": [
+          1,
+          -3,
+          2,
+          1,
+          0,
+          -2,
+          1,
+          0,
+          1,
+          -2,
+          0,
+          1,
+          2,
+          -3,
+          1
+        ],
+        "M_numpy": 1.176532796146304,
+        "M_mpmath": NaN,
+        "is_cyclotomic": false,
+        "has_cyclotomic_factor": true,
+        "residual_M_after_cyclotomic_factor": 1.1762994840287977,
+        "is_irreducible_rational_root": false,
+        "in_mossinghoff": false,
+        "mossinghoff_label": null,
+        "verification_failed": true
+      },
+      "coeffs_ascending": [
+        1,
+        -3,
+        2,
+        1,
+        0,
+        -2,
+        1,
+        0,
+        1,
+        -2,
+        0,
+        1,
+        2,
+        -3,
+        1
+      ],
+      "content": 1,
+      "factor_list": [
+        {
+          "coeffs_descending": [
+            1,
+            -1
+          ],
+          "degree": 1,
+          "multiplicity": 4,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 1,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            1,
+            0,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            0,
+            1,
+            1
+          ],
+          "degree": 10,
+          "multiplicity": 1,
+          "is_cyclotomic": false,
+          "cyclotomic_n": null,
+          "is_lehmer_polynomial": true,
+          "M_exact": 1.1762808182599176
+        }
+      ],
+      "n_factors": 2,
+      "n_non_cyclotomic_factors": 1,
+      "classification": "B2",
+      "classification_reason": "Lehmer (mult=1) \u00d7 cyclotomic factor(s) Phi_[1]. M(P) = Lehmer_M = 1.17628...",
+      "M_non_cyclotomic_product": 1.1762808182599176,
+      "mossinghoff_cross_check": {
+        "in_catalog": true,
+        "label": "Lehmer's polynomial",
+        "match_method": "coefficient_exact"
+      }
+    },
+    {
+      "source_entry": {
+        "half_coeffs": [
+          1,
+          -3,
+          2,
+          2,
+          -4,
+          3,
+          1,
+          -4
+        ],
+        "coeffs_ascending": [
+          1,
+          -3,
+          2,
+          2,
+          -4,
+          3,
+          1,
+          -4,
+          1,
+          3,
+          -4,
+          2,
+          2,
+          -3,
+          1
+        ],
+        "M_numpy": 1.0028435553932493,
+        "M_mpmath": NaN,
+        "is_cyclotomic": false,
+        "has_cyclotomic_factor": true,
+        "residual_M_after_cyclotomic_factor": 1.0007600784116943,
+        "is_irreducible_rational_root": false,
+        "in_mossinghoff": false,
+        "mossinghoff_label": null,
+        "verification_failed": true
+      },
+      "coeffs_ascending": [
+        1,
+        -3,
+        2,
+        2,
+        -4,
+        3,
+        1,
+        -4,
+        1,
+        3,
+        -4,
+        2,
+        2,
+        -3,
+        1
+      ],
+      "content": 1,
+      "factor_list": [
+        {
+          "coeffs_descending": [
+            1,
+            1
+          ],
+          "degree": 1,
+          "multiplicity": 2,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 2,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            -1
+          ],
+          "degree": 1,
+          "multiplicity": 6,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 1,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            0,
+            1
+          ],
+          "degree": 2,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 4,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "degree": 4,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 5,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        }
+      ],
+      "n_factors": 4,
+      "n_non_cyclotomic_factors": 0,
+      "classification": "B1",
+      "classification_reason": "All factors are cyclotomic; M(P) = 1 exactly. Numpy noise put it in band.",
+      "M_non_cyclotomic_product": 1.0,
+      "mossinghoff_cross_check": {
+        "in_catalog": null,
+        "label": null,
+        "match_method": "no_non_cyclotomic_factor"
+      }
+    },
+    {
+      "source_entry": {
+        "half_coeffs": [
+          1,
+          -3,
+          3,
+          -2,
+          1,
+          3,
+          -5,
+          4
+        ],
+        "coeffs_ascending": [
+          1,
+          -3,
+          3,
+          -2,
+          1,
+          3,
+          -5,
+          4,
+          -5,
+          3,
+          1,
+          -2,
+          3,
+          -3,
+          1
+        ],
+        "M_numpy": 1.0042966068173567,
+        "M_mpmath": NaN,
+        "is_cyclotomic": false,
+        "has_cyclotomic_factor": true,
+        "residual_M_after_cyclotomic_factor": 1.0007529355810139,
+        "is_irreducible_rational_root": false,
+        "in_mossinghoff": false,
+        "mossinghoff_label": null,
+        "verification_failed": true
+      },
+      "coeffs_ascending": [
+        1,
+        -3,
+        3,
+        -2,
+        1,
+        3,
+        -5,
+        4,
+        -5,
+        3,
+        1,
+        -2,
+        3,
+        -3,
+        1
+      ],
+      "content": 1,
+      "factor_list": [
+        {
+          "coeffs_descending": [
+            1,
+            1
+          ],
+          "degree": 1,
+          "multiplicity": 2,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 2,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            -1
+          ],
+          "degree": 1,
+          "multiplicity": 6,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 1,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            1,
+            1
+          ],
+          "degree": 2,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 3,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            0,
+            1
+          ],
+          "degree": 2,
+          "multiplicity": 2,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 4,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        }
+      ],
+      "n_factors": 4,
+      "n_non_cyclotomic_factors": 0,
+      "classification": "B1",
+      "classification_reason": "All factors are cyclotomic; M(P) = 1 exactly. Numpy noise put it in band.",
+      "M_non_cyclotomic_product": 1.0,
+      "mossinghoff_cross_check": {
+        "in_catalog": null,
+        "label": null,
+        "match_method": "no_non_cyclotomic_factor"
+      }
+    },
+    {
+      "source_entry": {
+        "half_coeffs": [
+          1,
+          -2,
+          -1,
+          3,
+          1,
+          -2,
+          -1,
+          2
+        ],
+        "coeffs_ascending": [
+          1,
+          -2,
+          -1,
+          3,
+          1,
+          -2,
+          -1,
+          2,
+          -1,
+          -2,
+          1,
+          3,
+          -1,
+          -2,
+          1
+        ],
+        "M_numpy": 1.0027074558450277,
+        "M_mpmath": NaN,
+        "is_cyclotomic": false,
+        "has_cyclotomic_factor": true,
+        "residual_M_after_cyclotomic_factor": 1.0009044860201894,
+        "is_irreducible_rational_root": false,
+        "in_mossinghoff": false,
+        "mossinghoff_label": null,
+        "verification_failed": true
+      },
+      "coeffs_ascending": [
+        1,
+        -2,
+        -1,
+        3,
+        1,
+        -2,
+        -1,
+        2,
+        -1,
+        -2,
+        1,
+        3,
+        -1,
+        -2,
+        1
+      ],
+      "content": 1,
+      "factor_list": [
+        {
+          "coeffs_descending": [
+            1,
+            1
+          ],
+          "degree": 1,
+          "multiplicity": 2,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 2,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            -1
+          ],
+          "degree": 1,
+          "multiplicity": 6,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 1,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            1,
+            1
+          ],
+          "degree": 2,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 3,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "degree": 4,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 5,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        }
+      ],
+      "n_factors": 4,
+      "n_non_cyclotomic_factors": 0,
+      "classification": "B1",
+      "classification_reason": "All factors are cyclotomic; M(P) = 1 exactly. Numpy noise put it in band.",
+      "M_non_cyclotomic_product": 1.0,
+      "mossinghoff_cross_check": {
+        "in_catalog": null,
+        "label": null,
+        "match_method": "no_non_cyclotomic_factor"
+      }
+    },
+    {
+      "source_entry": {
+        "half_coeffs": [
+          1,
+          -2,
+          0,
+          0,
+          2,
+          2,
+          -3,
+          0
+        ],
+        "coeffs_ascending": [
+          1,
+          -2,
+          0,
+          0,
+          2,
+          2,
+          -3,
+          0,
+          -3,
+          2,
+          2,
+          0,
+          0,
+          -2,
+          1
+        ],
+        "M_numpy": 1.0032492782631155,
+        "M_mpmath": NaN,
+        "is_cyclotomic": false,
+        "has_cyclotomic_factor": true,
+        "residual_M_after_cyclotomic_factor": 1.000787884285508,
+        "is_irreducible_rational_root": false,
+        "in_mossinghoff": false,
+        "mossinghoff_label": null,
+        "verification_failed": true
+      },
+      "coeffs_ascending": [
+        1,
+        -2,
+        0,
+        0,
+        2,
+        2,
+        -3,
+        0,
+        -3,
+        2,
+        2,
+        0,
+        0,
+        -2,
+        1
+      ],
+      "content": 1,
+      "factor_list": [
+        {
+          "coeffs_descending": [
+            1,
+            1
+          ],
+          "degree": 1,
+          "multiplicity": 2,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 2,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            -1
+          ],
+          "degree": 1,
+          "multiplicity": 6,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 1,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            0,
+            1
+          ],
+          "degree": 2,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 4,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            1,
+            1
+          ],
+          "degree": 2,
+          "multiplicity": 2,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 3,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        }
+      ],
+      "n_factors": 4,
+      "n_non_cyclotomic_factors": 0,
+      "classification": "B1",
+      "classification_reason": "All factors are cyclotomic; M(P) = 1 exactly. Numpy noise put it in band.",
+      "M_non_cyclotomic_product": 1.0,
+      "mossinghoff_cross_check": {
+        "in_catalog": null,
+        "label": null,
+        "match_method": "no_non_cyclotomic_factor"
+      }
+    },
+    {
+      "source_entry": {
+        "half_coeffs": [
+          1,
+          -1,
+          -3,
+          2,
+          3,
+          1,
+          -1,
+          -4
+        ],
+        "coeffs_ascending": [
+          1,
+          -1,
+          -3,
+          2,
+          3,
+          1,
+          -1,
+          -4,
+          -1,
+          1,
+          3,
+          2,
+          -3,
+          -1,
+          1
+        ],
+        "M_numpy": 1.003988958640861,
+        "M_mpmath": NaN,
+        "is_cyclotomic": false,
+        "has_cyclotomic_factor": true,
+        "residual_M_after_cyclotomic_factor": 1.0007610370287587,
+        "is_irreducible_rational_root": false,
+        "in_mossinghoff": false,
+        "mossinghoff_label": null,
+        "verification_failed": true
+      },
+      "coeffs_ascending": [
+        1,
+        -1,
+        -3,
+        2,
+        3,
+        1,
+        -1,
+        -4,
+        -1,
+        1,
+        3,
+        2,
+        -3,
+        -1,
+        1
+      ],
+      "content": 1,
+      "factor_list": [
+        {
+          "coeffs_descending": [
+            1,
+            1
+          ],
+          "degree": 1,
+          "multiplicity": 4,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 2,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            -1
+          ],
+          "degree": 1,
+          "multiplicity": 6,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 1,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            0,
+            1
+          ],
+          "degree": 2,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 4,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            1,
+            1
+          ],
+          "degree": 2,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 3,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        }
+      ],
+      "n_factors": 4,
+      "n_non_cyclotomic_factors": 0,
+      "classification": "B1",
+      "classification_reason": "All factors are cyclotomic; M(P) = 1 exactly. Numpy noise put it in band.",
+      "M_non_cyclotomic_product": 1.0,
+      "mossinghoff_cross_check": {
+        "in_catalog": null,
+        "label": null,
+        "match_method": "no_non_cyclotomic_factor"
+      }
+    },
+    {
+      "source_entry": {
+        "half_coeffs": [
+          1,
+          0,
+          3,
+          0,
+          1,
+          0,
+          -5,
+          0
+        ],
+        "coeffs_ascending": [
+          1,
+          0,
+          3,
+          0,
+          1,
+          0,
+          -5,
+          0,
+          -5,
+          0,
+          1,
+          0,
+          3,
+          0,
+          1
+        ],
+        "M_numpy": 1.0011800875987642,
+        "M_mpmath": NaN,
+        "is_cyclotomic": false,
+        "has_cyclotomic_factor": true,
+        "residual_M_after_cyclotomic_factor": 1.0015949936254822,
+        "is_irreducible_rational_root": false,
+        "in_mossinghoff": false,
+        "mossinghoff_label": null,
+        "verification_failed": true
+      },
+      "coeffs_ascending": [
+        1,
+        0,
+        3,
+        0,
+        1,
+        0,
+        -5,
+        0,
+        -5,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1
+      ],
+      "content": 1,
+      "factor_list": [
+        {
+          "coeffs_descending": [
+            1,
+            -1
+          ],
+          "degree": 1,
+          "multiplicity": 2,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 1,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            1
+          ],
+          "degree": 1,
+          "multiplicity": 2,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 2,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            0,
+            1
+          ],
+          "degree": 2,
+          "multiplicity": 5,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 4,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        }
+      ],
+      "n_factors": 3,
+      "n_non_cyclotomic_factors": 0,
+      "classification": "B1",
+      "classification_reason": "All factors are cyclotomic; M(P) = 1 exactly. Numpy noise put it in band.",
+      "M_non_cyclotomic_product": 1.0,
+      "mossinghoff_cross_check": {
+        "in_catalog": null,
+        "label": null,
+        "match_method": "no_non_cyclotomic_factor"
+      }
+    },
+    {
+      "source_entry": {
+        "half_coeffs": [
+          1,
+          1,
+          -3,
+          -2,
+          3,
+          -1,
+          -1,
+          4
+        ],
+        "coeffs_ascending": [
+          1,
+          1,
+          -3,
+          -2,
+          3,
+          -1,
+          -1,
+          4,
+          -1,
+          -1,
+          3,
+          -2,
+          -3,
+          1,
+          1
+        ],
+        "M_numpy": 1.0039443751800874,
+        "M_mpmath": NaN,
+        "is_cyclotomic": false,
+        "has_cyclotomic_factor": true,
+        "residual_M_after_cyclotomic_factor": 1.0033359417588903,
+        "is_irreducible_rational_root": false,
+        "in_mossinghoff": false,
+        "mossinghoff_label": null,
+        "verification_failed": true
+      },
+      "coeffs_ascending": [
+        1,
+        1,
+        -3,
+        -2,
+        3,
+        -1,
+        -1,
+        4,
+        -1,
+        -1,
+        3,
+        -2,
+        -3,
+        1,
+        1
+      ],
+      "content": 1,
+      "factor_list": [
+        {
+          "coeffs_descending": [
+            1,
+            -1
+          ],
+          "degree": 1,
+          "multiplicity": 4,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 1,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            1
+          ],
+          "degree": 1,
+          "multiplicity": 6,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 2,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            -1,
+            1
+          ],
+          "degree": 2,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 6,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            0,
+            1
+          ],
+          "degree": 2,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 4,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        }
+      ],
+      "n_factors": 4,
+      "n_non_cyclotomic_factors": 0,
+      "classification": "B1",
+      "classification_reason": "All factors are cyclotomic; M(P) = 1 exactly. Numpy noise put it in band.",
+      "M_non_cyclotomic_product": 1.0,
+      "mossinghoff_cross_check": {
+        "in_catalog": null,
+        "label": null,
+        "match_method": "no_non_cyclotomic_factor"
+      }
+    },
+    {
+      "source_entry": {
+        "half_coeffs": [
+          1,
+          2,
+          -1,
+          -3,
+          1,
+          2,
+          -1,
+          -2
+        ],
+        "coeffs_ascending": [
+          1,
+          2,
+          -1,
+          -3,
+          1,
+          2,
+          -1,
+          -2,
+          -1,
+          2,
+          1,
+          -3,
+          -1,
+          2,
+          1
+        ],
+        "M_numpy": 1.0027074995494392,
+        "M_mpmath": NaN,
+        "is_cyclotomic": false,
+        "has_cyclotomic_factor": true,
+        "residual_M_after_cyclotomic_factor": 1.0032131632993757,
+        "is_irreducible_rational_root": false,
+        "in_mossinghoff": false,
+        "mossinghoff_label": null,
+        "verification_failed": true
+      },
+      "coeffs_ascending": [
+        1,
+        2,
+        -1,
+        -3,
+        1,
+        2,
+        -1,
+        -2,
+        -1,
+        2,
+        1,
+        -3,
+        -1,
+        2,
+        1
+      ],
+      "content": 1,
+      "factor_list": [
+        {
+          "coeffs_descending": [
+            1,
+            -1
+          ],
+          "degree": 1,
+          "multiplicity": 2,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 1,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            1
+          ],
+          "degree": 1,
+          "multiplicity": 6,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 2,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            -1,
+            1
+          ],
+          "degree": 2,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 6,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            -1,
+            1,
+            -1,
+            1
+          ],
+          "degree": 4,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 10,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        }
+      ],
+      "n_factors": 4,
+      "n_non_cyclotomic_factors": 0,
+      "classification": "B1",
+      "classification_reason": "All factors are cyclotomic; M(P) = 1 exactly. Numpy noise put it in band.",
+      "M_non_cyclotomic_product": 1.0,
+      "mossinghoff_cross_check": {
+        "in_catalog": null,
+        "label": null,
+        "match_method": "no_non_cyclotomic_factor"
+      }
+    },
+    {
+      "source_entry": {
+        "half_coeffs": [
+          1,
+          2,
+          0,
+          0,
+          2,
+          -2,
+          -3,
+          0
+        ],
+        "coeffs_ascending": [
+          1,
+          2,
+          0,
+          0,
+          2,
+          -2,
+          -3,
+          0,
+          -3,
+          -2,
+          2,
+          0,
+          0,
+          2,
+          1
+        ],
+        "M_numpy": 1.003249074808974,
+        "M_mpmath": NaN,
+        "is_cyclotomic": false,
+        "has_cyclotomic_factor": true,
+        "residual_M_after_cyclotomic_factor": 1.0040899364566762,
+        "is_irreducible_rational_root": false,
+        "in_mossinghoff": false,
+        "mossinghoff_label": null,
+        "verification_failed": true
+      },
+      "coeffs_ascending": [
+        1,
+        2,
+        0,
+        0,
+        2,
+        -2,
+        -3,
+        0,
+        -3,
+        -2,
+        2,
+        0,
+        0,
+        2,
+        1
+      ],
+      "content": 1,
+      "factor_list": [
+        {
+          "coeffs_descending": [
+            1,
+            -1
+          ],
+          "degree": 1,
+          "multiplicity": 2,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 1,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            1
+          ],
+          "degree": 1,
+          "multiplicity": 6,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 2,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            0,
+            1
+          ],
+          "degree": 2,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 4,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            -1,
+            1
+          ],
+          "degree": 2,
+          "multiplicity": 2,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 6,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        }
+      ],
+      "n_factors": 4,
+      "n_non_cyclotomic_factors": 0,
+      "classification": "B1",
+      "classification_reason": "All factors are cyclotomic; M(P) = 1 exactly. Numpy noise put it in band.",
+      "M_non_cyclotomic_product": 1.0,
+      "mossinghoff_cross_check": {
+        "in_catalog": null,
+        "label": null,
+        "match_method": "no_non_cyclotomic_factor"
+      }
+    },
+    {
+      "source_entry": {
+        "half_coeffs": [
+          1,
+          3,
+          1,
+          -5,
+          -5,
+          1,
+          3,
+          2
+        ],
+        "coeffs_ascending": [
+          1,
+          3,
+          1,
+          -5,
+          -5,
+          1,
+          3,
+          2,
+          3,
+          1,
+          -5,
+          -5,
+          1,
+          3,
+          1
+        ],
+        "M_numpy": 1.0043709499369031,
+        "M_mpmath": NaN,
+        "is_cyclotomic": false,
+        "has_cyclotomic_factor": true,
+        "residual_M_after_cyclotomic_factor": 1.0034115630535974,
+        "is_irreducible_rational_root": false,
+        "in_mossinghoff": false,
+        "mossinghoff_label": null,
+        "verification_failed": true
+      },
+      "coeffs_ascending": [
+        1,
+        3,
+        1,
+        -5,
+        -5,
+        1,
+        3,
+        2,
+        3,
+        1,
+        -5,
+        -5,
+        1,
+        3,
+        1
+      ],
+      "content": 1,
+      "factor_list": [
+        {
+          "coeffs_descending": [
+            1,
+            -1
+          ],
+          "degree": 1,
+          "multiplicity": 2,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 1,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            1
+          ],
+          "degree": 1,
+          "multiplicity": 6,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 2,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            -1,
+            1,
+            -1,
+            1,
+            -1,
+            1
+          ],
+          "degree": 6,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 14,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        }
+      ],
+      "n_factors": 3,
+      "n_non_cyclotomic_factors": 0,
+      "classification": "B1",
+      "classification_reason": "All factors are cyclotomic; M(P) = 1 exactly. Numpy noise put it in band.",
+      "M_non_cyclotomic_product": 1.0,
+      "mossinghoff_cross_check": {
+        "in_catalog": null,
+        "label": null,
+        "match_method": "no_non_cyclotomic_factor"
+      }
+    },
+    {
+      "source_entry": {
+        "half_coeffs": [
+          1,
+          3,
+          2,
+          -2,
+          -4,
+          -3,
+          1,
+          4
+        ],
+        "coeffs_ascending": [
+          1,
+          3,
+          2,
+          -2,
+          -4,
+          -3,
+          1,
+          4,
+          1,
+          -3,
+          -4,
+          -2,
+          2,
+          3,
+          1
+        ],
+        "M_numpy": 1.0028422158098105,
+        "M_mpmath": NaN,
+        "is_cyclotomic": false,
+        "has_cyclotomic_factor": true,
+        "residual_M_after_cyclotomic_factor": 1.0042309235902218,
+        "is_irreducible_rational_root": false,
+        "in_mossinghoff": false,
+        "mossinghoff_label": null,
+        "verification_failed": true
+      },
+      "coeffs_ascending": [
+        1,
+        3,
+        2,
+        -2,
+        -4,
+        -3,
+        1,
+        4,
+        1,
+        -3,
+        -4,
+        -2,
+        2,
+        3,
+        1
+      ],
+      "content": 1,
+      "factor_list": [
+        {
+          "coeffs_descending": [
+            1,
+            -1
+          ],
+          "degree": 1,
+          "multiplicity": 2,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 1,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            1
+          ],
+          "degree": 1,
+          "multiplicity": 6,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 2,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            0,
+            1
+          ],
+          "degree": 2,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 4,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            -1,
+            1,
+            -1,
+            1
+          ],
+          "degree": 4,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 10,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        }
+      ],
+      "n_factors": 4,
+      "n_non_cyclotomic_factors": 0,
+      "classification": "B1",
+      "classification_reason": "All factors are cyclotomic; M(P) = 1 exactly. Numpy noise put it in band.",
+      "M_non_cyclotomic_product": 1.0,
+      "mossinghoff_cross_check": {
+        "in_catalog": null,
+        "label": null,
+        "match_method": "no_non_cyclotomic_factor"
+      }
+    },
+    {
+      "source_entry": {
+        "half_coeffs": [
+          1,
+          3,
+          2,
+          -1,
+          0,
+          2,
+          1,
+          0
+        ],
+        "coeffs_ascending": [
+          1,
+          3,
+          2,
+          -1,
+          0,
+          2,
+          1,
+          0,
+          1,
+          2,
+          0,
+          -1,
+          2,
+          3,
+          1
+        ],
+        "M_numpy": 1.1765327477345522,
+        "M_mpmath": NaN,
+        "is_cyclotomic": false,
+        "has_cyclotomic_factor": true,
+        "residual_M_after_cyclotomic_factor": 1.1762994737393082,
+        "is_irreducible_rational_root": false,
+        "in_mossinghoff": false,
+        "mossinghoff_label": null,
+        "verification_failed": true
+      },
+      "coeffs_ascending": [
+        1,
+        3,
+        2,
+        -1,
+        0,
+        2,
+        1,
+        0,
+        1,
+        2,
+        0,
+        -1,
+        2,
+        3,
+        1
+      ],
+      "content": 1,
+      "factor_list": [
+        {
+          "coeffs_descending": [
+            1,
+            1
+          ],
+          "degree": 1,
+          "multiplicity": 4,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 2,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            -1,
+            0,
+            1,
+            -1,
+            1,
+            -1,
+            1,
+            0,
+            -1,
+            1
+          ],
+          "degree": 10,
+          "multiplicity": 1,
+          "is_cyclotomic": false,
+          "cyclotomic_n": null,
+          "is_lehmer_polynomial": true,
+          "M_exact": 1.1762808182599176
+        }
+      ],
+      "n_factors": 2,
+      "n_non_cyclotomic_factors": 1,
+      "classification": "B2",
+      "classification_reason": "Lehmer (mult=1) \u00d7 cyclotomic factor(s) Phi_[2]. M(P) = Lehmer_M = 1.17628...",
+      "M_non_cyclotomic_product": 1.1762808182599176,
+      "mossinghoff_cross_check": {
+        "in_catalog": true,
+        "label": "Lehmer's polynomial",
+        "match_method": "coefficient_exact"
+      }
+    },
+    {
+      "source_entry": {
+        "half_coeffs": [
+          1,
+          3,
+          3,
+          2,
+          1,
+          -3,
+          -5,
+          -4
+        ],
+        "coeffs_ascending": [
+          1,
+          3,
+          3,
+          2,
+          1,
+          -3,
+          -5,
+          -4,
+          -5,
+          -3,
+          1,
+          2,
+          3,
+          3,
+          1
+        ],
+        "M_numpy": 1.0042965711159693,
+        "M_mpmath": NaN,
+        "is_cyclotomic": false,
+        "has_cyclotomic_factor": true,
+        "residual_M_after_cyclotomic_factor": 1.0031672803784761,
+        "is_irreducible_rational_root": false,
+        "in_mossinghoff": false,
+        "mossinghoff_label": null,
+        "verification_failed": true
+      },
+      "coeffs_ascending": [
+        1,
+        3,
+        3,
+        2,
+        1,
+        -3,
+        -5,
+        -4,
+        -5,
+        -3,
+        1,
+        2,
+        3,
+        3,
+        1
+      ],
+      "content": 1,
+      "factor_list": [
+        {
+          "coeffs_descending": [
+            1,
+            -1
+          ],
+          "degree": 1,
+          "multiplicity": 2,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 1,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            1
+          ],
+          "degree": 1,
+          "multiplicity": 6,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 2,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            -1,
+            1
+          ],
+          "degree": 2,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 6,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            0,
+            1
+          ],
+          "degree": 2,
+          "multiplicity": 2,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 4,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        }
+      ],
+      "n_factors": 4,
+      "n_non_cyclotomic_factors": 0,
+      "classification": "B1",
+      "classification_reason": "All factors are cyclotomic; M(P) = 1 exactly. Numpy noise put it in band.",
+      "M_non_cyclotomic_product": 1.0,
+      "mossinghoff_cross_check": {
+        "in_catalog": null,
+        "label": null,
+        "match_method": "no_non_cyclotomic_factor"
+      }
+    },
+    {
+      "source_entry": {
+        "half_coeffs": [
+          1,
+          4,
+          5,
+          0,
+          -5,
+          -4,
+          -1,
+          0
+        ],
+        "coeffs_ascending": [
+          1,
+          4,
+          5,
+          0,
+          -5,
+          -4,
+          -1,
+          0,
+          -1,
+          -4,
+          -5,
+          0,
+          5,
+          4,
+          1
+        ],
+        "M_numpy": 1.0031413054180098,
+        "M_mpmath": NaN,
+        "is_cyclotomic": false,
+        "has_cyclotomic_factor": true,
+        "residual_M_after_cyclotomic_factor": 1.0053046909405945,
+        "is_irreducible_rational_root": false,
+        "in_mossinghoff": false,
+        "mossinghoff_label": null,
+        "verification_failed": true
+      },
+      "coeffs_ascending": [
+        1,
+        4,
+        5,
+        0,
+        -5,
+        -4,
+        -1,
+        0,
+        -1,
+        -4,
+        -5,
+        0,
+        5,
+        4,
+        1
+      ],
+      "content": 1,
+      "factor_list": [
+        {
+          "coeffs_descending": [
+            1,
+            -1
+          ],
+          "degree": 1,
+          "multiplicity": 2,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 1,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            1
+          ],
+          "degree": 1,
+          "multiplicity": 6,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 2,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            0,
+            1
+          ],
+          "degree": 2,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 4,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        },
+        {
+          "coeffs_descending": [
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "degree": 4,
+          "multiplicity": 1,
+          "is_cyclotomic": true,
+          "cyclotomic_n": 8,
+          "is_lehmer_polynomial": false,
+          "M_exact": 1.0
+        }
+      ],
+      "n_factors": 4,
+      "n_non_cyclotomic_factors": 0,
+      "classification": "B1",
+      "classification_reason": "All factors are cyclotomic; M(P) = 1 exactly. Numpy noise put it in band.",
+      "M_non_cyclotomic_product": 1.0,
+      "mossinghoff_cross_check": {
+        "in_catalog": null,
+        "label": null,
+        "match_method": "no_non_cyclotomic_factor"
+      }
+    }
+  ]
+}

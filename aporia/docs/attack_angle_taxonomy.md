@@ -348,3 +348,16 @@ blocker: pip install snappy on M1 (in TODO.md)
 *The siege engine catalog is never complete. Every solved problem adds to it. Every failed attempt reveals which engines DON'T work on which walls — and that negative knowledge is equally valuable.*
 
 *Aporia, 2026-04-21*
+
+---
+
+## 2026-04-26 — Frontier-review-driven revisions in flight
+
+The 21-paradigm extension proposed in `whitepapers/attack_strategy_for_frontier_review_20260426.md` is being cycled through 5 frontier models. Convergent verdicts (held against `stoa/discussions/2026-04-26-frontier-review/`):
+
+- **P20 (Quality-diversity / MAP-Elites) — DEPRECATED as paradigm.** Both ChatGPT (§8.1) and Gemini (§8.1) reject P20 as a mathematical lens; it is correctly framed as a *control policy* over the substrate's exploration loop (the Maieutēs incubator), not as a way of perceiving a mathematical object. Moved to operational layer in two-track epistemics; removed from paradigm catalog pending replacement decision.
+- **P20 replacement — CONTESTED, holding for full 5-model view.** ChatGPT proposes P20' Constraint Relaxation / SAT Encoding (citing REQ-026 and last-20-years SAT breakthroughs). Gemini proposes P22 Spectral Tail Relocation (citing TOOL_GPD_TAIL_FIT and the central-zero obsession of human mathematics). Both are sharp. Decision deferred until Grok, DeepSeek, and Claude (fresh) responses are in.
+- **P19 (Cross-region operator transport) — CONFIRMED** by both ChatGPT and Gemini (§8.1).
+- **P21 (Curated-corpus empirical sweep) — CONFIRMED** by both ChatGPT and Gemini (§8.1).
+
+Final canonical count and the replacement choice will land in this document once the 5-model synthesis converges. Until then, the substrate operates with P19 and P21 as accepted Tier-1 additions; P20 is removed; the slot is open.

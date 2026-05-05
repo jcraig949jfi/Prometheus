@@ -2986,3 +2986,190 @@ Key design notes:
   dependency.
 - DOP853 / BDF are scipy facades; thin wrappers maintain a uniform
   return-dict shape across the namespace.
+
+---
+
+2026-05-02 | Session — pivot from arsenal to RL action space
+
+Five deliverables across the BIND/EVAL stack; 53 new tests passing;
+metadata pass (85 ops calibrated within 2x-50x); REINFORCE baseline
+beats random at p=8.5e-7 on the SigmaMathEnv. Tier-2 backlog
+wave-runner explicitly paused.
+
+Per-module entries:
+
+  sigma_kernel.bind_eval        | A:2 P:3 E:5 C:3 | commit ac4176f0
+  prometheus_math.sigma_env     | A:2 P:4 E:4 C:4 | commit ac4176f0
+  prometheus_math.arsenal_meta  | A:3 P:3 E:2 C:2 | commit 4f5a8a22
+  prometheus_math._metadata_table | A:3 P:3 E:2 C:2 | commit 4f5a8a22
+  prometheus_math.sigma_env_ppo | A:3 P:4 E:5 C:4 | commit 4f5a8a22
+
+Aggregate session rubric: A:13 P:17 E:18 C:15 (53 tests; ≥2 in every
+category in every shipped module).
+
+Bench results (sigma_kernel/bench_bind_eval.py on dev box):
+  BIND p50:               0.270 ms
+  EVAL p50:               0.381 ms
+  rows-per-EVAL:          3.01
+  cost-accuracy band 2x-50x:  57 / 68 testable ops
+  cost overshoots:        0 / 68
+
+REINFORCE-vs-random comparison (SigmaMathEnv, 10K steps, 3 seeds):
+  random mean reward:     63.333
+  reinforce mean reward:  96.956
+  lift:                   +53.1%
+  p-value (Welch 1-sided): 8.5e-7
+  env ceiling reached:    96.96 / 100
+
+Architectural proposal (not yet shipped, awaiting benchmark):
+  Residual-aware falsification — typed Residual + SpectralVerdict +
+  REFINE opcode + three-rule mechanical stopping discipline. Posted
+  to stoa/discussions/2026-05-02-techne-on-residual-aware-
+  falsification.md. Acceptance: ≥80% classifier accuracy on a
+  curated 30-residual benchmark with zero false-positive 'signal'
+  calls on known-noise. If fails, primitive held in escrow.
+
+Session journal: techne/TECHNE_SESSION_2026-05-02.md
+
+---
+
+2026-04-29 | sigma_kernel.residuals — Residual primitive shipped
+
+Residual-aware-falsification primitive built per the proposal at
+stoa/discussions/2026-05-02-techne-on-residual-aware-falsification.md.
+Sidecar architecture (no edits to v0.1 core), same shape as
+bind_eval.py.
+
+  sigma_kernel.residuals        | A:5 P:4 E:6 C:5 | (this session)
+
+Per-category test counts (≥3 required, all categories met with margin):
+  authority:    5  (Mercury, Gaussian, OPERA, Lehmer-half-budget, depth-7)
+  property:     4  (determinism, geometric decay, classification-set,
+                    refine-blocked)
+  edge:         6  (empty subset, magnitude OOB, no-cap, consumed-cap,
+                    depth-20, no-calibration)
+  composition:  5  (full pipeline, 30-residual benchmark [LOAD-BEARING],
+                    chain-walks-to-root, cost conservation, META_CLAIM
+                    auto-spawn)
+
+30-residual benchmark (the day-4 acceptance criterion):
+  accuracy:                          1.000  (30/30)
+  false_positive_signal_count:       0
+  per_class.signal.precision:        1.000
+  per_class.signal.recall:           1.000
+  per_class.noise.precision:         1.000
+  per_class.noise.recall:            1.000
+  per_class.instrument_drift.prec:   1.000
+  per_class.instrument_drift.rec:    1.000
+
+Acceptance criterion (≥80% accuracy + zero FP signal on noise) met
+with margin. Primitive ships.
+
+Three composing stopping rules implemented from day zero:
+  1. Cost-budget compounding: REFINE halves remaining budget;
+     <0.1s minimum-useful threshold raises BudgetExceeded
+     (chain exhausts at depth 7 with default 10s root budget).
+  2. Mechanical signal-vs-noise classifier: four-rule cascade
+     (empty / drift / canonicalizer / coeff_variance > 0.5).
+  3. Instrument-self-audit: drift-class residuals route to
+     record_meta_claim which mints a CLAIM against the battery itself.
+
+Files shipped:
+  sigma_kernel/residuals.py                              748 lines
+  sigma_kernel/test_residuals.py                         781 lines
+  sigma_kernel/residual_benchmark.py                     485 lines
+  sigma_kernel/migrations/003_create_residual_tables.sql  62 lines
+  sigma_kernel/RESIDUAL_PRIMITIVE.md                     183 lines
+
+Caveat (recorded for honest assessment): the benchmark is hand-
+curated; noise residuals are tagged with coeff_variance < 0.05 and
+signal residuals > 0.85, putting them in a generous regime for the
+0.5 heuristic threshold. The first hostile real-world residual that
+lands in the gap will tell us whether the heuristic is robust or
+whether the four-subclass canonicalizer needs to do more of the
+work. Benchmark is necessary, not sufficient.
+
+2026-04-29 | pm.obstruction_env (predicate-discovery RL on synthetic
+            OEIS battery — sequel to discovery_env)             | A:2 P:2 E:3 C:2
+  Files:
+    prometheus_math/obstruction_env.py                          ~595 lines
+    prometheus_math/_obstruction_corpus.py                      ~290 lines
+    prometheus_math/demo_obstruction.py                         ~265 lines
+    prometheus_math/tests/test_obstruction_env.py               ~430 lines
+    prometheus_math/OBSTRUCTION_RESULTS.md                      ~225 lines
+
+  Discovery-grade acceptance test (1000 episodes random vs REINFORCE,
+  5 seeds): REINFORCE consistently beats random by lift >= 13x with
+  p < 1e-15. OBSTRUCTION_SHAPE rediscovered structurally on at least
+  one seed (seed=3, episode 210). Architecture validated on simulated
+  data; live integration to Charon's battery_sweep_v2.jsonl is the
+  next step (per OBSTRUCTION_RESULTS.md §5).
+
+  Tests (23 total): A:4 P:5 E:8 C:6 — all four math-tdd categories
+  >= 2.
+
+2026-04-29 | pm.withheld_benchmark | A:4 P:5 E:5 C:4 | uncommitted
+
+  §6.2.5 of `harmonia/memory/architecture/discovery_via_rediscovery.md`:
+  withheld-rediscovery benchmark. Mossinghoff snapshot (178 entries) is
+  partitioned 142 visible / 36 withheld; the agent runs against a
+  WithheldDiscoveryPipeline whose catalog-check is monkey-patched on
+  the instance (NOT module-globally) so withheld entries look like
+  catalog-misses. Result: REINFORCE in 1000 episodes × 3 seeds
+  rediscovers 0 of 36 withheld entries; calibration estimate for §6.2
+  open-discovery rate is < 1/3000 episodes.
+
+  Tests (18 total): A:4 P:5 E:5 C:4 — all four math-tdd categories
+  >= 2.
+
+| 2026-04-29 | pm.catalog_consistency.run_consistency_check | A:3 | P:3 | E:3 | C:3 | §6.3 multi-catalog gate |
+
+  Multi-catalog cross-check forged in service of §6.3 of
+  `harmonia/memory/architecture/discovery_via_rediscovery.md`.
+
+  Five typed catalog adapters share a `(coeffs, m_value, tol) ->
+  CatalogResult` signature: `mossinghoff_check`, `lehmer_literature_check`
+  (always live; embedded snapshots) plus `lmfdb_check`, `oeis_check`,
+  `arxiv_title_fuzzy_check` (skip-cleanly when network unreachable).
+  `run_consistency_check` aggregates them.
+
+  Lehmer-literature snapshot at `_lehmer_literature_data.py` embeds 24
+  entries spanning Lehmer 1933, Smyth 1971, Boyd 1980/1981/1989,
+  Mossinghoff 1998, and Borwein-Mossinghoff 2007.  Every M-value
+  cross-checked via `techne.lib.mahler_measure` to <1e-6 at table-build
+  time.
+
+  `discovery_pipeline._check_catalog_miss` refactored to call the new
+  orchestrator; backwards-compatible (existing 16 tests still green).
+  `check_results["catalogs_checked"]` now lists all 5 catalogs.
+
+  Tests (22 total): A:5 P:5 E:7 C:5 — all four math-tdd categories
+  >= 3.
+
+| 2026-05-04 | pm.cost_model_profiler (calibration of top-50 hot-path arsenal ops) | A:6 | P:5 | E:5 | C:5 | (this session) |
+  Refs: math-tdd skill four-quadrant gate; substrate cost-aware
+  scheduler review #2 critique. Empirical recalibration on Skullport /
+  Win11 / Py3.11.9 / Ryzen 7 5700X3D collapsed the worst declared/p95
+  ratio from 757x (`flint_polmodp`) to ~31x (`bad_primes`); 33/50
+  in-band -> 50/50 in-band. Added structured `calibrated_cost`
+  (complexity class + n=1 coefficient) on every top-50 op.
+
+  New files:
+    prometheus_math/cost_model_profiler.py (~480 LOC)
+    prometheus_math/tests/test_cost_models.py (21 tests)
+    prometheus_math/COST_MODEL_CALIBRATION_2026-05-04.md
+
+  Modified:
+    prometheus_math/_metadata_table.py (50 cost dicts updated;
+      additive — no existing keys removed)
+    sigma_kernel/bind_eval.py (CostModel.calibrated_cost optional field)
+
+  Tests (21 total): A:6 (mahler_measure subquadratic, is_cyclotomic
+  poly-time, flint_factor subquadratic, logistic_map exactly O(n),
+  smith_normal_form polynomial, JSON round-trip well-formedness)
+  P:5 E:5 C:5 — all four math-tdd categories >= 3.
+
+  Honest framing in the report: this is one calibration on one
+  machine; cost models drift; recalibration cadence recommended
+  monthly or on perceived BudgetExceeded inflation.
+

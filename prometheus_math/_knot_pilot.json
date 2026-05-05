@@ -1,0 +1,155 @@
+{
+  "corpus": {
+    "n_total": 48,
+    "by_class": {
+      "Q": 0,
+      "real_quadratic": 0,
+      "complex_quadratic": 1,
+      "totally_real_cubic": 0,
+      "complex_cubic": 1,
+      "degree_4": 5,
+      "degree_5_plus": 41
+    },
+    "crossing_min": 4,
+    "crossing_max": 10,
+    "trace_field_degree_min": 2,
+    "trace_field_degree_max": 10,
+    "hyperbolic_volume_min": 2.0298832128,
+    "hyperbolic_volume_max": 12.3509062091,
+    "source": "cache:F:\\Prometheus\\prometheus_math\\databases\\knots.json.gz"
+  },
+  "corpus_source": "cache:F:\\Prometheus\\prometheus_math\\databases\\knots.json.gz",
+  "train_size": 34,
+  "test_size": 14,
+  "n_episodes": 5000,
+  "n_seeds": 3,
+  "random_means": [
+    13.86,
+    14.02,
+    13.74
+  ],
+  "reinforce_means": [
+    91.66,
+    91.0,
+    90.98
+  ],
+  "ppo_means": [
+    17.9,
+    22.98,
+    17.5
+  ],
+  "random_mean": 13.873333333333333,
+  "reinforce_mean": 91.21333333333332,
+  "ppo_mean": 19.459999999999997,
+  "p_value_reinforce_vs_random": 3.439815120520606e-07,
+  "p_value_ppo_vs_random": 0.04328581223725314,
+  "test_random_means": [
+    14.4,
+    12.7,
+    12.3
+  ],
+  "test_reinforce_means": [
+    72.2,
+    70.5,
+    70.1
+  ],
+  "test_ppo_means": [
+    73.1,
+    69.1,
+    68.2
+  ],
+  "test_random_mean": 13.133333333333335,
+  "test_reinforce_mean": 70.93333333333332,
+  "test_ppo_mean": 70.13333333333333,
+  "p_value_test_reinforce_vs_random": 1.8436757032169737e-07,
+  "p_value_test_ppo_vs_random": 5.702375765814782e-05,
+  "pred_count_history": {
+    "random": [
+      [
+        697,
+        719,
+        769,
+        725,
+        729,
+        670,
+        691
+      ],
+      [
+        661,
+        704,
+        744,
+        730,
+        695,
+        774,
+        692
+      ],
+      [
+        746,
+        745,
+        753,
+        704,
+        673,
+        679,
+        700
+      ]
+    ],
+    "reinforce": [
+      [
+        0,
+        3,
+        1,
+        1,
+        2,
+        1,
+        4992
+      ],
+      [
+        5,
+        4,
+        2,
+        6,
+        3,
+        4,
+        4976
+      ],
+      [
+        0,
+        1,
+        0,
+        4,
+        3,
+        3,
+        4989
+      ]
+    ],
+    "ppo": [
+      [
+        678,
+        656,
+        706,
+        723,
+        692,
+        637,
+        908
+      ],
+      [
+        611,
+        642,
+        655,
+        610,
+        595,
+        674,
+        1213
+      ],
+      [
+        705,
+        669,
+        720,
+        668,
+        677,
+        655,
+        906
+      ]
+    ]
+  }
+}

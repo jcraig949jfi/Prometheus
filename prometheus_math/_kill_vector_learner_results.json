@@ -1,0 +1,747 @@
+{
+  "baseline_kv_mae": {
+    "cell": 0.00023961582377899897,
+    "global": 0.0002711153346468667,
+    "operator": 0.00026952361421120477,
+    "region": 0.0002302319807797515
+  },
+  "baseline_metrics": {
+    "cell": {
+      "F11_cross_validation": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "F1_permutation_null": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "F6_base_rate": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "F9_simpler_explanation": {
+        "accuracy": 0.9988442950199622,
+        "auc": 0.9712141930507345,
+        "brier": 0.001145607009930896,
+        "n_positive": 33,
+        "n_total": 28554
+      },
+      "catalog:LMFDB": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "catalog:Mossinghoff": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "catalog:OEIS": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "catalog:arXiv": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "catalog:lehmer_literature": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "irreducibility": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "out_of_band": {
+        "accuracy": 0.9988442950199622,
+        "auc": 0.9712141930507345,
+        "brier": 0.0011456070099309724,
+        "n_positive": 28521,
+        "n_total": 28554
+      },
+      "reciprocity": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      }
+    },
+    "global": {
+      "F11_cross_validation": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "F1_permutation_null": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "F6_base_rate": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "F9_simpler_explanation": {
+        "accuracy": 0.9988442950199622,
+        "auc": 0.5,
+        "brier": 0.0011548366716195762,
+        "n_positive": 33,
+        "n_total": 28554
+      },
+      "catalog:LMFDB": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "catalog:Mossinghoff": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "catalog:OEIS": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "catalog:arXiv": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "catalog:lehmer_literature": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "irreducibility": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "out_of_band": {
+        "accuracy": 0.9988442950199622,
+        "auc": 0.5,
+        "brier": 0.0011548366716192511,
+        "n_positive": 28521,
+        "n_total": 28554
+      },
+      "reciprocity": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      }
+    },
+    "operator": {
+      "F11_cross_validation": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "F1_permutation_null": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "F6_base_rate": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "F9_simpler_explanation": {
+        "accuracy": 0.9988442950199622,
+        "auc": 0.8092458188703061,
+        "brier": 0.0011534614323497597,
+        "n_positive": 33,
+        "n_total": 28554
+      },
+      "catalog:LMFDB": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "catalog:Mossinghoff": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "catalog:OEIS": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "catalog:arXiv": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "catalog:lehmer_literature": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "irreducibility": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "out_of_band": {
+        "accuracy": 0.9988442950199622,
+        "auc": 0.8092458188703061,
+        "brier": 0.0011534614323498206,
+        "n_positive": 28521,
+        "n_total": 28554
+      },
+      "reciprocity": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      }
+    },
+    "region": {
+      "F11_cross_validation": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "F1_permutation_null": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "F6_base_rate": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "F9_simpler_explanation": {
+        "accuracy": 0.9988442950199622,
+        "auc": 0.9538585603590337,
+        "brier": 0.0011505476054689836,
+        "n_positive": 33,
+        "n_total": 28554
+      },
+      "catalog:LMFDB": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "catalog:Mossinghoff": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "catalog:OEIS": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "catalog:arXiv": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "catalog:lehmer_literature": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "irreducibility": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      },
+      "out_of_band": {
+        "accuracy": 0.9988442950199622,
+        "auc": 0.9538585603590337,
+        "brier": 0.0011505476054689454,
+        "n_positive": 28521,
+        "n_total": 28554
+      },
+      "reciprocity": {
+        "accuracy": 1.0,
+        "auc": NaN,
+        "brier": 0.0,
+        "n_positive": 0,
+        "n_total": 28554
+      }
+    }
+  },
+  "component_names": [
+    "out_of_band",
+    "reciprocity",
+    "irreducibility",
+    "catalog:Mossinghoff",
+    "catalog:lehmer_literature",
+    "catalog:LMFDB",
+    "catalog:OEIS",
+    "catalog:arXiv",
+    "F1_permutation_null",
+    "F6_base_rate",
+    "F9_simpler_explanation",
+    "F11_cross_validation"
+  ],
+  "dataset_stats": {
+    "coverage_matrix_shape": [
+      6,
+      7
+    ],
+    "n_components": 12,
+    "n_nonempty_cells": 15,
+    "n_operators": 7,
+    "n_records": 142773,
+    "n_regions": 6,
+    "per_operator_records": {
+      "random_null": 53881,
+      "random_seeded": 11544,
+      "random_uniform": 6932,
+      "reinforce_agent": 50298,
+      "reinforce_frozen_bias": 9974,
+      "reinforce_seeded": 5096,
+      "reinforce_uniform": 5048
+    },
+    "per_region_records": {
+      "discovery_pipeline|deg14|w5|step": 38594,
+      "four_counts|deg10|w5|shaped": 13327,
+      "four_counts|deg10|w5|step": 38248,
+      "four_counts|deg10|w7|step": 10647,
+      "four_counts|deg12|w5|step": 17630,
+      "four_counts|deg14|w5|step": 24327
+    },
+    "sparseness": 0.6428571428571428
+  },
+  "learner_kv_mae": 0.00024020728301836752,
+  "learner_metrics": {
+    "F11_cross_validation": {
+      "accuracy": 1.0,
+      "auc": NaN,
+      "brier": 0.0,
+      "n_positive": 0,
+      "n_total": 28554
+    },
+    "F1_permutation_null": {
+      "accuracy": 1.0,
+      "auc": NaN,
+      "brier": 0.0,
+      "n_positive": 0,
+      "n_total": 28554
+    },
+    "F6_base_rate": {
+      "accuracy": 1.0,
+      "auc": NaN,
+      "brier": 0.0,
+      "n_positive": 0,
+      "n_total": 28554
+    },
+    "F9_simpler_explanation": {
+      "accuracy": 0.9988442950199622,
+      "auc": 0.9712141930507345,
+      "brier": 0.001145939795706546,
+      "n_positive": 33,
+      "n_total": 28554
+    },
+    "catalog:LMFDB": {
+      "accuracy": 1.0,
+      "auc": NaN,
+      "brier": 0.0,
+      "n_positive": 0,
+      "n_total": 28554
+    },
+    "catalog:Mossinghoff": {
+      "accuracy": 1.0,
+      "auc": NaN,
+      "brier": 0.0,
+      "n_positive": 0,
+      "n_total": 28554
+    },
+    "catalog:OEIS": {
+      "accuracy": 1.0,
+      "auc": NaN,
+      "brier": 0.0,
+      "n_positive": 0,
+      "n_total": 28554
+    },
+    "catalog:arXiv": {
+      "accuracy": 1.0,
+      "auc": NaN,
+      "brier": 0.0,
+      "n_positive": 0,
+      "n_total": 28554
+    },
+    "catalog:lehmer_literature": {
+      "accuracy": 1.0,
+      "auc": NaN,
+      "brier": 0.0,
+      "n_positive": 0,
+      "n_total": 28554
+    },
+    "irreducibility": {
+      "accuracy": 1.0,
+      "auc": NaN,
+      "brier": 0.0,
+      "n_positive": 0,
+      "n_total": 28554
+    },
+    "out_of_band": {
+      "accuracy": 0.9988442950199622,
+      "auc": 0.9712141930507345,
+      "brier": 0.0011459397957074811,
+      "n_positive": 28521,
+      "n_total": 28554
+    },
+    "reciprocity": {
+      "accuracy": 1.0,
+      "auc": NaN,
+      "brier": 0.0,
+      "n_positive": 0,
+      "n_total": 28554
+    }
+  },
+  "n_test": 28554,
+  "n_train": 99941,
+  "n_val": 14278,
+  "operator_chart_recovery": {
+    "random_null": {
+      "empirical_mean": [
+        0.996976360637713,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0030236393622869707,
+        0.0
+      ],
+      "l1_distance": 0.004513404154783612,
+      "model_mean": [
+        0.9992330627151875,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.000766937284977885,
+        0.0
+      ],
+      "n": 10914
+    },
+    "random_seeded": {
+      "empirical_mean": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "l1_distance": 8.53447474016162e-07,
+      "model_mean": [
+        0.9999995732762603,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        4.2672373433904695e-07,
+        0.0
+      ],
+      "n": 2278
+    },
+    "random_uniform": {
+      "empirical_mean": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "l1_distance": 8.531624457102314e-07,
+      "model_mean": [
+        0.9999995734187855,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        4.265812312469695e-07,
+        0.0
+      ],
+      "n": 1416
+    },
+    "reinforce_agent": {
+      "empirical_mean": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "l1_distance": 1.9611722771901485e-05,
+      "model_mean": [
+        0.9999901941386241,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        9.805861396012584e-06,
+        0.0
+      ],
+      "n": 9921
+    },
+    "reinforce_frozen_bias": {
+      "empirical_mean": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "l1_distance": 8.531707179071078e-07,
+      "model_mean": [
+        0.9999995734146535,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        4.265853714157929e-07,
+        0.0
+      ],
+      "n": 2013
+    },
+    "reinforce_seeded": {
+      "empirical_mean": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "l1_distance": 8.531497409645111e-07,
+      "model_mean": [
+        0.9999995734251351,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        4.2657487608877164e-07,
+        0.0
+      ],
+      "n": 1020
+    },
+    "reinforce_uniform": {
+      "empirical_mean": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "l1_distance": 8.531076770667908e-07,
+      "model_mean": [
+        0.9999995734461666,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        4.2655384370091826e-07,
+        0.0
+      ],
+      "n": 992
+    }
+  },
+  "per_region_metrics": {
+    "discovery_pipeline|deg14|w5|step": {
+      "kv_mae": 7.11033345120621e-08,
+      "macro_accuracy": 1.0,
+      "n": 7719.0
+    },
+    "four_counts|deg10|w5|shaped": {
+      "kv_mae": 0.002553822053689686,
+      "macro_accuracy": 0.997936210131332,
+      "n": 2665.0
+    },
+    "four_counts|deg10|w5|step": {
+      "kv_mae": 2.5540236274389548e-06,
+      "macro_accuracy": 1.0,
+      "n": 7650.0
+    },
+    "four_counts|deg10|w7|step": {
+      "kv_mae": 1.9981972829358006e-06,
+      "macro_accuracy": 1.0,
+      "n": 2129.0
+    },
+    "four_counts|deg12|w5|step": {
+      "kv_mae": 3.868486577908257e-06,
+      "macro_accuracy": 1.0,
+      "n": 3526.0
+    },
+    "four_counts|deg14|w5|step": {
+      "kv_mae": 3.0753161655442975e-06,
+      "macro_accuracy": 1.0,
+      "n": 4865.0
+    }
+  },
+  "rationale": "Learner MAE 0.0002 \u2248 cell-mean baseline 0.0002 (within 0.005). No generalization beyond memorization; Day 5 navigation is just lookup. Need denser data or new operators to find generalisable signal.",
+  "verdict": "B_MATCHES_CELL_MEAN"
+}

@@ -1,0 +1,727 @@
+{
+  "computed_date": "2026-05-05",
+  "computed_by": "Charon (substrate cartography suite, Task B)",
+  "data_sources": [
+    "prometheus_math/_*pilot*.json (10 surveyed)",
+    "ergon/learner/trials/*results*.json (6 surveyed)",
+    "prometheus_math/arsenal_meta.py (theoretical bounds)",
+    "sigma_kernel/*.db (5 demo claims, runtime_ms=0)"
+  ],
+  "telemetry_completeness": {
+    "n_pilots_with_timing": 1,
+    "n_pilots_inconclusive": 8,
+    "n_ergon_configs_with_timing": 12,
+    "domains_with_no_timing": [
+      "BSD",
+      "genus2",
+      "knot",
+      "lehmer",
+      "mock_theta",
+      "modular",
+      "oeis_sleeping"
+    ],
+    "domains_with_some_timing": [
+      "lehmer"
+    ],
+    "oracle_calls_persisted_anywhere": false,
+    "io_vs_cpu_breakdown_persisted_anywhere": false
+  },
+  "per_pipeline": {
+    "bsd_rank__cross_domain_pilot": {
+      "pipeline": "bsd_rank__cross_domain_pilot",
+      "data_quality": "INCONCLUSIVE_DATA",
+      "reason": "no elapsed_seconds telemetry; n_episodes=1000 runs completed but timing was not persisted",
+      "domain": "BSD",
+      "n_episodes_run_aggregate": 1000
+    },
+    "modular_form__cross_domain_pilot": {
+      "pipeline": "modular_form__cross_domain_pilot",
+      "data_quality": "INCONCLUSIVE_DATA",
+      "reason": "no elapsed_seconds telemetry; n_episodes=5000 runs completed but timing was not persisted",
+      "domain": "modular",
+      "n_episodes_run_aggregate": 5000
+    },
+    "knot__cross_domain_pilot": {
+      "pipeline": "knot__cross_domain_pilot",
+      "data_quality": "INCONCLUSIVE_DATA",
+      "reason": "no elapsed_seconds telemetry; n_episodes=5000 runs completed but timing was not persisted",
+      "domain": "knot",
+      "n_episodes_run_aggregate": 5000
+    },
+    "genus2__cross_domain_pilot": {
+      "pipeline": "genus2__cross_domain_pilot",
+      "data_quality": "INCONCLUSIVE_DATA",
+      "reason": "no elapsed_seconds telemetry; n_episodes=5000 runs completed but timing was not persisted",
+      "domain": "genus2",
+      "n_episodes_run_aggregate": 5000
+    },
+    "mock_theta__cross_domain_pilot": {
+      "pipeline": "mock_theta__cross_domain_pilot",
+      "data_quality": "INCONCLUSIVE_DATA",
+      "reason": "no elapsed_seconds telemetry; n_episodes=5000 runs completed but timing was not persisted",
+      "domain": "mock_theta",
+      "n_episodes_run_aggregate": 5000
+    },
+    "oeis_sleeping__cross_domain_pilot": {
+      "pipeline": "oeis_sleeping__cross_domain_pilot",
+      "data_quality": "INCONCLUSIVE_DATA",
+      "reason": "no elapsed_seconds telemetry; n_episodes=5000 runs completed but timing was not persisted",
+      "domain": "oeis_sleeping",
+      "n_episodes_run_aggregate": 5000
+    },
+    "lehmer__discovery_v2": {
+      "pipeline": "lehmer__discovery_v2",
+      "data_quality": "medium",
+      "n_observations": 6,
+      "domain": "lehmer",
+      "operator_vocab": "coefficient_mutators_x7",
+      "per_arm": {
+        "random": {
+          "n": 3,
+          "median_sec_per_ep": 0.013736897600038598,
+          "p95_sec_per_ep": null,
+          "min_sec_per_ep": 0.011538312300030763,
+          "max_sec_per_ep": 0.014276947399989392,
+          "raw_records": [
+            {
+              "sec_per_ep": 0.013736897600038598,
+              "elapsed_s": 41.210692800115794,
+              "n_episodes": 3000,
+              "arm": "random",
+              "seed": 0,
+              "operator_call_counts": {
+                "mutate_single_coef": 5215,
+                "mutate_two_coefs": 5080,
+                "swap_palindromic_pairs": 5132,
+                "increment_at_index": 5220,
+                "decrement_at_index": 5194,
+                "zero_at_index": 5105,
+                "identity": 5054
+              }
+            },
+            {
+              "sec_per_ep": 0.011538312300030763,
+              "elapsed_s": 34.61493690009229,
+              "n_episodes": 3000,
+              "arm": "random",
+              "seed": 1,
+              "operator_call_counts": {
+                "mutate_single_coef": 5243,
+                "mutate_two_coefs": 5153,
+                "swap_palindromic_pairs": 5116,
+                "increment_at_index": 5201,
+                "decrement_at_index": 5066,
+                "zero_at_index": 5114,
+                "identity": 5107
+              }
+            },
+            {
+              "sec_per_ep": 0.014276947399989392,
+              "elapsed_s": 42.830842199968174,
+              "n_episodes": 3000,
+              "arm": "random",
+              "seed": 2,
+              "operator_call_counts": {
+                "mutate_single_coef": 5208,
+                "mutate_two_coefs": 5198,
+                "swap_palindromic_pairs": 5155,
+                "increment_at_index": 5092,
+                "decrement_at_index": 5052,
+                "zero_at_index": 5087,
+                "identity": 5208
+              }
+            }
+          ]
+        },
+        "reinforce": {
+          "n": 3,
+          "median_sec_per_ep": 0.015362456800028061,
+          "p95_sec_per_ep": null,
+          "min_sec_per_ep": 0.011844579933288817,
+          "max_sec_per_ep": 0.016024221200030296,
+          "raw_records": [
+            {
+              "sec_per_ep": 0.015362456800028061,
+              "elapsed_s": 46.08737040008418,
+              "n_episodes": 3000,
+              "arm": "reinforce",
+              "seed": 0,
+              "operator_call_counts": {
+                "mutate_single_coef": 5701,
+                "mutate_two_coefs": 5164,
+                "swap_palindromic_pairs": 4839,
+                "increment_at_index": 4939,
+                "decrement_at_index": 5652,
+                "zero_at_index": 5520,
+                "identity": 4185
+              }
+            },
+            {
+              "sec_per_ep": 0.011844579933288817,
+              "elapsed_s": 35.53373979986645,
+              "n_episodes": 3000,
+              "arm": "reinforce",
+              "seed": 1,
+              "operator_call_counts": {
+                "mutate_single_coef": 6613,
+                "mutate_two_coefs": 6533,
+                "swap_palindromic_pairs": 5028,
+                "increment_at_index": 4103,
+                "decrement_at_index": 4173,
+                "zero_at_index": 6125,
+                "identity": 3425
+              }
+            },
+            {
+              "sec_per_ep": 0.016024221200030296,
+              "elapsed_s": 48.07266360009089,
+              "n_episodes": 3000,
+              "arm": "reinforce",
+              "seed": 2,
+              "operator_call_counts": {
+                "mutate_single_coef": 5150,
+                "mutate_two_coefs": 5431,
+                "swap_palindromic_pairs": 5714,
+                "increment_at_index": 5084,
+                "decrement_at_index": 5304,
+                "zero_at_index": 5234,
+                "identity": 4083
+              }
+            }
+          ]
+        }
+      },
+      "raw": [
+        {
+          "elapsed_s": 41.210692800115794,
+          "n_episodes": 3000,
+          "arm": "random",
+          "seed": 0,
+          "operator_call_counts": {
+            "mutate_single_coef": 5215,
+            "mutate_two_coefs": 5080,
+            "swap_palindromic_pairs": 5132,
+            "increment_at_index": 5220,
+            "decrement_at_index": 5194,
+            "zero_at_index": 5105,
+            "identity": 5054
+          }
+        },
+        {
+          "elapsed_s": 46.08737040008418,
+          "n_episodes": 3000,
+          "arm": "reinforce",
+          "seed": 0,
+          "operator_call_counts": {
+            "mutate_single_coef": 5701,
+            "mutate_two_coefs": 5164,
+            "swap_palindromic_pairs": 4839,
+            "increment_at_index": 4939,
+            "decrement_at_index": 5652,
+            "zero_at_index": 5520,
+            "identity": 4185
+          }
+        },
+        {
+          "elapsed_s": 34.61493690009229,
+          "n_episodes": 3000,
+          "arm": "random",
+          "seed": 1,
+          "operator_call_counts": {
+            "mutate_single_coef": 5243,
+            "mutate_two_coefs": 5153,
+            "swap_palindromic_pairs": 5116,
+            "increment_at_index": 5201,
+            "decrement_at_index": 5066,
+            "zero_at_index": 5114,
+            "identity": 5107
+          }
+        },
+        {
+          "elapsed_s": 35.53373979986645,
+          "n_episodes": 3000,
+          "arm": "reinforce",
+          "seed": 1,
+          "operator_call_counts": {
+            "mutate_single_coef": 6613,
+            "mutate_two_coefs": 6533,
+            "swap_palindromic_pairs": 5028,
+            "increment_at_index": 4103,
+            "decrement_at_index": 4173,
+            "zero_at_index": 6125,
+            "identity": 3425
+          }
+        },
+        {
+          "elapsed_s": 42.830842199968174,
+          "n_episodes": 3000,
+          "arm": "random",
+          "seed": 2,
+          "operator_call_counts": {
+            "mutate_single_coef": 5208,
+            "mutate_two_coefs": 5198,
+            "swap_palindromic_pairs": 5155,
+            "increment_at_index": 5092,
+            "decrement_at_index": 5052,
+            "zero_at_index": 5087,
+            "identity": 5208
+          }
+        },
+        {
+          "elapsed_s": 48.07266360009089,
+          "n_episodes": 3000,
+          "arm": "reinforce",
+          "seed": 2,
+          "operator_call_counts": {
+            "mutate_single_coef": 5150,
+            "mutate_two_coefs": 5431,
+            "swap_palindromic_pairs": 5714,
+            "increment_at_index": 5084,
+            "decrement_at_index": 5304,
+            "zero_at_index": 5234,
+            "identity": 4083
+          }
+        }
+      ]
+    },
+    "lehmer__v2_anti_elitist": {
+      "pipeline": "lehmer__v2_anti_elitist",
+      "data_quality": "INCONCLUSIVE_DATA",
+      "reason": "no parseable telemetry",
+      "domain": "lehmer"
+    },
+    "lehmer__v3_root_space": {
+      "pipeline": "lehmer__v3_root_space",
+      "data_quality": "INCONCLUSIVE_DATA",
+      "reason": "no parseable telemetry",
+      "domain": "lehmer"
+    }
+  },
+  "ergon_a149_per_config": {
+    "trial_3_iter28_a149_results::u05_canonical": {
+      "trial": "trial_3_iter28_a149_results",
+      "config": "u05_canonical",
+      "n_seeds": 3,
+      "elapsed_s_per_seed": [
+        13.97519564628601,
+        13.921520471572876,
+        14.43942928314209
+      ],
+      "n_episodes_per_seed": [
+        5000,
+        5000,
+        5000
+      ],
+      "sec_per_ep_per_seed": [
+        0.002795039129257202,
+        0.0027843040943145753,
+        0.002887885856628418
+      ],
+      "median_sec_per_ep": 0.002795039129257202,
+      "max_sec_per_ep": 0.002887885856628418
+    },
+    "trial_3_iter28_a149_results::u30_broad": {
+      "trial": "trial_3_iter28_a149_results",
+      "config": "u30_broad",
+      "n_seeds": 3,
+      "elapsed_s_per_seed": [
+        12.858718872070312,
+        13.565691232681274,
+        13.681254863739014
+      ],
+      "n_episodes_per_seed": [
+        5000,
+        5000,
+        5000
+      ],
+      "sec_per_ep_per_seed": [
+        0.0025717437744140624,
+        0.002713138246536255,
+        0.002736250972747803
+      ],
+      "median_sec_per_ep": 0.002713138246536255,
+      "max_sec_per_ep": 0.002736250972747803
+    },
+    "trial_3_iter31_a149_results::u05_15k": {
+      "trial": "trial_3_iter31_a149_results",
+      "config": "u05_15k",
+      "n_seeds": 3,
+      "elapsed_s_per_seed": [
+        28.47721767425537,
+        23.244382858276367,
+        25.698067665100098
+      ],
+      "n_episodes_per_seed": [
+        15000,
+        15000,
+        15000
+      ],
+      "sec_per_ep_per_seed": [
+        0.0018984811782836915,
+        0.0015496255238850911,
+        0.0017132045110066732
+      ],
+      "median_sec_per_ep": 0.0017132045110066732,
+      "max_sec_per_ep": 0.0018984811782836915
+    },
+    "trial_3_iter31_a149_results::u30_15k": {
+      "trial": "trial_3_iter31_a149_results",
+      "config": "u30_15k",
+      "n_seeds": 3,
+      "elapsed_s_per_seed": [
+        26.76094388961792,
+        29.8607075214386,
+        22.93511652946472
+      ],
+      "n_episodes_per_seed": [
+        15000,
+        15000,
+        15000
+      ],
+      "sec_per_ep_per_seed": [
+        0.001784062925974528,
+        0.001990713834762573,
+        0.0015290077686309815
+      ],
+      "median_sec_per_ep": 0.001784062925974528,
+      "max_sec_per_ep": 0.001990713834762573
+    },
+    "trial_3_iter18_results::per_seed": {
+      "trial": "trial_3_iter18_results",
+      "config": "per_seed",
+      "n_seeds": 3,
+      "elapsed_s_per_seed": [
+        6.351701736450195,
+        6.336472034454346,
+        6.54854154586792
+      ],
+      "n_episodes_per_seed": [
+        5000,
+        5000,
+        5000
+      ],
+      "sec_per_ep_per_seed": [
+        0.001270340347290039,
+        0.001267294406890869,
+        0.001309708309173584
+      ],
+      "median_sec_per_ep": 0.001270340347290039,
+      "max_sec_per_ep": 0.001309708309173584
+    },
+    "trial_3_iter25_results::rate_0.00": {
+      "trial": "trial_3_iter25_results",
+      "config": "rate_0.00",
+      "n_seeds": 3,
+      "elapsed_s_per_seed": [
+        2.5729281902313232,
+        2.5263049602508545,
+        2.6155786514282227
+      ],
+      "n_episodes_per_seed": [
+        10000,
+        10000,
+        10000
+      ],
+      "sec_per_ep_per_seed": [
+        0.0002572928190231323,
+        0.0002526304960250854,
+        0.0002615578651428223
+      ],
+      "median_sec_per_ep": 0.0002572928190231323,
+      "max_sec_per_ep": 0.0002615578651428223
+    },
+    "trial_3_iter25_results::rate_0.15": {
+      "trial": "trial_3_iter25_results",
+      "config": "rate_0.15",
+      "n_seeds": 3,
+      "elapsed_s_per_seed": [
+        2.485992908477783,
+        2.5607261657714844,
+        2.5363070964813232
+      ],
+      "n_episodes_per_seed": [
+        10000,
+        10000,
+        10000
+      ],
+      "sec_per_ep_per_seed": [
+        0.0002485992908477783,
+        0.0002560726165771484,
+        0.0002536307096481323
+      ],
+      "median_sec_per_ep": 0.0002536307096481323,
+      "max_sec_per_ep": 0.0002560726165771484
+    },
+    "trial_3_iter25_results::rate_0.25": {
+      "trial": "trial_3_iter25_results",
+      "config": "rate_0.25",
+      "n_seeds": 3,
+      "elapsed_s_per_seed": [
+        2.475395917892456,
+        2.521926164627075,
+        2.4548068046569824
+      ],
+      "n_episodes_per_seed": [
+        10000,
+        10000,
+        10000
+      ],
+      "sec_per_ep_per_seed": [
+        0.0002475395917892456,
+        0.00025219261646270753,
+        0.00024548068046569823
+      ],
+      "median_sec_per_ep": 0.0002475395917892456,
+      "max_sec_per_ep": 0.00025219261646270753
+    },
+    "trial_3_iter26_results::baseline": {
+      "trial": "trial_3_iter26_results",
+      "config": "baseline",
+      "n_seeds": 3,
+      "elapsed_s_per_seed": [
+        2.4916253089904785,
+        2.5475454330444336,
+        2.4686594009399414
+      ],
+      "n_episodes_per_seed": [
+        10000,
+        10000,
+        10000
+      ],
+      "sec_per_ep_per_seed": [
+        0.00024916253089904785,
+        0.00025475454330444337,
+        0.00024686594009399416
+      ],
+      "median_sec_per_ep": 0.00024916253089904785,
+      "max_sec_per_ep": 0.00025475454330444337
+    },
+    "trial_3_iter26_results::bumped_uniform_30": {
+      "trial": "trial_3_iter26_results",
+      "config": "bumped_uniform_30",
+      "n_seeds": 3,
+      "elapsed_s_per_seed": [
+        2.070533514022827,
+        2.154553174972534,
+        2.166750431060791
+      ],
+      "n_episodes_per_seed": [
+        10000,
+        10000,
+        10000
+      ],
+      "sec_per_ep_per_seed": [
+        0.00020705335140228272,
+        0.00021545531749725343,
+        0.0002166750431060791
+      ],
+      "median_sec_per_ep": 0.00021545531749725343,
+      "max_sec_per_ep": 0.0002166750431060791
+    },
+    "trial_3_iter26_results::bumped_uniform_15": {
+      "trial": "trial_3_iter26_results",
+      "config": "bumped_uniform_15",
+      "n_seeds": 3,
+      "elapsed_s_per_seed": [
+        2.424208164215088,
+        2.360668897628784,
+        2.423835277557373
+      ],
+      "n_episodes_per_seed": [
+        10000,
+        10000,
+        10000
+      ],
+      "sec_per_ep_per_seed": [
+        0.0002424208164215088,
+        0.00023606688976287842,
+        0.0002423835277557373
+      ],
+      "median_sec_per_ep": 0.0002423835277557373,
+      "max_sec_per_ep": 0.0002424208164215088
+    },
+    "trial_3_iter27_results::per_seed": {
+      "trial": "trial_3_iter27_results",
+      "config": "per_seed",
+      "n_seeds": 3,
+      "elapsed_s_per_seed": [
+        6.773541212081909,
+        6.714862108230591,
+        6.62325119972229
+      ],
+      "n_episodes_per_seed": [
+        5000,
+        5000,
+        5000
+      ],
+      "sec_per_ep_per_seed": [
+        0.001354708242416382,
+        0.0013429724216461182,
+        0.001324650239944458
+      ],
+      "median_sec_per_ep": 0.0013429724216461182,
+      "max_sec_per_ep": 0.001354708242416382
+    }
+  },
+  "arsenal_theoretical_bounds": {
+    "n_callables_with_cost_metadata": 85,
+    "by_category": {
+      "numerics_special": {
+        "n_callables": 14,
+        "max_seconds_distribution": {
+          "min": 5.1e-05,
+          "median": 0.001,
+          "max": 0.0078
+        },
+        "max_oracle_calls_distribution": {
+          "min": null,
+          "median": null,
+          "max": null
+        }
+      },
+      "combinatorics": {
+        "n_callables": 6,
+        "max_seconds_distribution": {
+          "min": 7.5e-05,
+          "median": 0.00034500000000000004,
+          "max": 0.0021
+        },
+        "max_oracle_calls_distribution": {
+          "min": null,
+          "median": null,
+          "max": null
+        }
+      },
+      "numerics": {
+        "n_callables": 7,
+        "max_seconds_distribution": {
+          "min": 9.9e-05,
+          "median": 0.0014,
+          "max": 0.0073
+        },
+        "max_oracle_calls_distribution": {
+          "min": null,
+          "median": null,
+          "max": null
+        }
+      },
+      "geometry": {
+        "n_callables": 5,
+        "max_seconds_distribution": {
+          "min": 0.00027,
+          "median": 0.011,
+          "max": 0.28
+        },
+        "max_oracle_calls_distribution": {
+          "min": null,
+          "median": null,
+          "max": null
+        }
+      },
+      "dynamics": {
+        "n_callables": 3,
+        "max_seconds_distribution": {
+          "min": 0.00071,
+          "median": 0.00075,
+          "max": 0.00075
+        },
+        "max_oracle_calls_distribution": {
+          "min": null,
+          "median": null,
+          "max": null
+        }
+      },
+      "topology": {
+        "n_callables": 5,
+        "max_seconds_distribution": {
+          "min": 0.00071,
+          "median": 0.02,
+          "max": 0.02
+        },
+        "max_oracle_calls_distribution": {
+          "min": null,
+          "median": null,
+          "max": null
+        }
+      },
+      "number_theory": {
+        "n_callables": 20,
+        "max_seconds_distribution": {
+          "min": 1.4e-05,
+          "median": 0.0043,
+          "max": 10.0
+        },
+        "max_oracle_calls_distribution": {
+          "min": null,
+          "median": null,
+          "max": null
+        }
+      },
+      "research_lehmer": {
+        "n_callables": 6,
+        "max_seconds_distribution": {
+          "min": 3e-05,
+          "median": 0.0006249999999999999,
+          "max": 0.0061
+        },
+        "max_oracle_calls_distribution": {
+          "min": null,
+          "median": null,
+          "max": null
+        }
+      },
+      "elliptic_curves": {
+        "n_callables": 9,
+        "max_seconds_distribution": {
+          "min": 5e-05,
+          "median": 0.0019,
+          "max": 0.1
+        },
+        "max_oracle_calls_distribution": {
+          "min": null,
+          "median": null,
+          "max": null
+        }
+      },
+      "research": {
+        "n_callables": 3,
+        "max_seconds_distribution": {
+          "min": 0.05,
+          "median": 0.5,
+          "max": 5.0
+        },
+        "max_oracle_calls_distribution": {
+          "min": 1,
+          "median": 1,
+          "max": 1
+        }
+      },
+      "optimization": {
+        "n_callables": 7,
+        "max_seconds_distribution": {
+          "min": 0.05,
+          "median": 0.5,
+          "max": 1.0
+        },
+        "max_oracle_calls_distribution": {
+          "min": null,
+          "median": null,
+          "max": null
+        }
+      }
+    },
+    "n_untagged": 0,
+    "note": "These are THEORETICAL upper bounds declared via @arsenal_op decorator. Actual runtime cost is not logged at the arsenal-callable granularity. Useful for budget-based gating but NOT for empirical cost-to-kill."
+  },
+  "tar_pits": [],
+  "honesty_notes": [
+    "DATA REALITY: the substrate persists wall-clock telemetry for a149/Lehmer pipelines but NOT for the 6 cross-domain envs (BSD, modular, knot, genus2, mock_theta, oeis_sleeping). For those, n_episodes is recorded but elapsed_seconds is not. INCONCLUSIVE flagged per-domain.",
+    "Per-class cost (structural / symbolic / etc.) is NOT directly measurable: Ergon's elapsed_s is at the (config, seed) level, not per-call. Amortized per-class cost would assume uniform per-call cost across classes within a config \u2014 false (different classes do different work). Reporting per-config amortized-per-episode cost is the granularity available; class breakdown is INCONCLUSIVE without instrumentation work.",
+    "IO-bound vs CPU-bound separation: NOT MEASURABLE. No timing source in the surveyed data separates them. The brief's io_seconds field is INCONCLUSIVE everywhere.",
+    "Oracle-call counts: NOT PERSISTED ANYWHERE. arsenal_meta.py declares theoretical max_oracle_calls per callable but actual fired-counts at runtime are not logged. INCONCLUSIVE for all cells.",
+    "99th-percentile cost-to-kill: requires n>>30 per cell. Available data: max ~12 obs per Ergon config (3 seeds \u00d7 4 configs); Lehmer discovery_v2 has 6 records. None reach n>=30 for stable p99.",
+    "Tar-pit identification scoped to Ergon a149 timing where max/median > 1.5. Cross-domain tar-pit detection INCONCLUSIVE.",
+    "arsenal_meta theoretical bounds are useful for budget-based gating in the kernel but should not be conflated with empirical cost \u2014 they are designer-declared upper bounds, not measurements.",
+    "The substrate-grade implication: Ergon's scheduler cannot make data-driven cost-aware compute allocation across the 6 cross-domain envs without first instrumenting elapsed_seconds (and oracle_calls) into the pilot run loop. ~1 day of engineering to add `time.perf_counter()` brackets and `oracle_calls` counter in each run script. Until then: cost-aware scheduling is structurally aspirational, not empirically grounded."
+  ]
+}

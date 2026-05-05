@@ -1,0 +1,2248 @@
+{
+  "meta": {
+    "D": 6,
+    "N": 8,
+    "true_rank": 3,
+    "seed": 44,
+    "n_train": 8192,
+    "n_val": 4096,
+    "rank_cap": 10,
+    "sample_choices": [
+      128,
+      512,
+      2048,
+      8192
+    ],
+    "operators": [
+      "fit",
+      "grad",
+      "rerank",
+      "perturb",
+      "expand",
+      "compress",
+      "refine",
+      "symmetrize",
+      "reseed"
+    ]
+  },
+  "history": [
+    {
+      "gen": 0,
+      "archive_size": 14,
+      "best_val": 0.9999584797345107,
+      "best_train": 0.9999910092603359,
+      "best_rank": 4,
+      "best_H": 1.0397207708399179
+    },
+    {
+      "gen": 5,
+      "archive_size": 33,
+      "best_val": 0.9274093602894635,
+      "best_train": 0.5054186546587033,
+      "best_rank": 7,
+      "best_H": 1.0397207708399179
+    },
+    {
+      "gen": 10,
+      "archive_size": 36,
+      "best_val": 0.9274093602894635,
+      "best_train": 0.5054186546587033,
+      "best_rank": 7,
+      "best_H": 1.0397207708399179
+    },
+    {
+      "gen": 15,
+      "archive_size": 36,
+      "best_val": 0.4392839774009963,
+      "best_train": 0.42522198370960534,
+      "best_rank": 3,
+      "best_H": 1.5607104090414063
+    },
+    {
+      "gen": 20,
+      "archive_size": 38,
+      "best_val": 0.1094390096284985,
+      "best_train": 0.097235987728847,
+      "best_rank": 5,
+      "best_H": 1.0397207708399179
+    },
+    {
+      "gen": 25,
+      "archive_size": 40,
+      "best_val": 0.03169463807035909,
+      "best_train": 0.026443777877536583,
+      "best_rank": 9,
+      "best_H": 1.8636799873410004
+    },
+    {
+      "gen": 30,
+      "archive_size": 44,
+      "best_val": 0.00588719755704279,
+      "best_train": 0.0016084080760001968,
+      "best_rank": 5,
+      "best_H": 1.6957425341696346
+    },
+    {
+      "gen": 34,
+      "archive_size": 45,
+      "best_val": 0.00588719755704279,
+      "best_train": 0.0016084080760001968,
+      "best_rank": 5,
+      "best_H": 1.6957425341696346
+    }
+  ],
+  "gates": {
+    "g1": true,
+    "g2": true,
+    "g3": true,
+    "g4": "False",
+    "g5": true
+  },
+  "minimal_probe": [
+    {
+      "orig_len": 10,
+      "orig_ops": [
+        "rerank",
+        "grad",
+        "perturb",
+        "fit",
+        "compress",
+        "grad",
+        "expand",
+        "fit",
+        "compress",
+        "fit"
+      ],
+      "orig_val": 0.00588719755704279,
+      "min_len": 10,
+      "min_ops": [
+        "rerank",
+        "grad",
+        "perturb",
+        "fit",
+        "compress",
+        "grad",
+        "expand",
+        "fit",
+        "compress",
+        "fit"
+      ],
+      "min_val": 0.008348424893655847
+    },
+    {
+      "orig_len": 12,
+      "orig_ops": [
+        "rerank",
+        "grad",
+        "perturb",
+        "fit",
+        "compress",
+        "grad",
+        "expand",
+        "fit",
+        "perturb",
+        "expand",
+        "symmetrize",
+        "fit"
+      ],
+      "orig_val": 0.03169463807035909,
+      "min_len": 8,
+      "min_ops": [
+        "rerank",
+        "grad",
+        "perturb",
+        "fit",
+        "compress",
+        "fit",
+        "expand",
+        "fit"
+      ],
+      "min_val": 0.01613979456270507
+    },
+    {
+      "orig_len": 7,
+      "orig_ops": [
+        "rerank",
+        "fit",
+        "fit",
+        "fit",
+        "perturb",
+        "fit",
+        "fit"
+      ],
+      "orig_val": 0.036914932736344004,
+      "min_len": 5,
+      "min_ops": [
+        "fit",
+        "fit",
+        "perturb",
+        "fit",
+        "fit"
+      ],
+      "min_val": 0.6905925690081351
+    }
+  ],
+  "cells": {
+    "r5_e0_H2": {
+      "genome": [
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 2048,
+            "iters": 2
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 2,
+            "amount": 3
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 5,
+      "train_err": 0.23901120971167,
+      "val_err": 0.2691989673087177,
+      "entropy": 1.3321790402101223,
+      "length": 5
+    },
+    "r4_e0_H2": {
+      "genome": [
+        [
+          "perturb",
+          {
+            "sigma": 0.006569635433490893
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 4,
+      "train_err": 0.5400169004458267,
+      "val_err": 0.5923094775672686,
+      "entropy": 1.0397207708399179,
+      "length": 4
+    },
+    "r1_e0_H1": {
+      "genome": [
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.0007020541592612208
+          }
+        ]
+      ],
+      "rank": 1,
+      "train_err": 0.7945321540280755,
+      "val_err": 0.8022799925992288,
+      "entropy": 0.6931471805599453,
+      "length": 2
+    },
+    "r2_e0_H2": {
+      "genome": [
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 6,
+            "lr": 0.18209408465518392
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 2,
+      "train_err": 0.6966492721058003,
+      "val_err": 0.6916793823949113,
+      "entropy": 1.0986122886681096,
+      "length": 3
+    },
+    "r1_e0_H0": {
+      "genome": [
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 2048,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 512,
+            "iters": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 1
+          }
+        ]
+      ],
+      "rank": 1,
+      "train_err": 0.6979337141737476,
+      "val_err": 0.6905921042036597,
+      "entropy": -0.0,
+      "length": 5
+    },
+    "r8_e0_H2": {
+      "genome": [
+        [
+          "rerank",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 8,
+      "train_err": 0.37690870850404284,
+      "val_err": 0.6293095628822518,
+      "entropy": 1.242453324894,
+      "length": 6
+    },
+    "r1_e0_H2": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 1
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.0007020541592612208
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 8192,
+            "steps": 7,
+            "lr": 0.16249841077526067
+          }
+        ]
+      ],
+      "rank": 1,
+      "train_err": 0.839753161413571,
+      "val_err": 0.8423377359122309,
+      "entropy": 1.3321790402101223,
+      "length": 5
+    },
+    "r6_e0_H3": {
+      "genome": [
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.07683020957243598
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.000496051492987916
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 2,
+            "amount": 3
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 9,
+            "lr": 0.02712633159606493
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.03751071174651155
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 2048,
+            "iters": 2
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 6
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 1
+          }
+        ]
+      ],
+      "rank": 6,
+      "train_err": 0.4693691953381548,
+      "val_err": 0.5284984683777715,
+      "entropy": 1.6726254461503207,
+      "length": 11
+    },
+    "r4_e0_H3": {
+      "genome": [
+        [
+          "compress",
+          {
+            "target": 5
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 512,
+            "steps": 6,
+            "lr": 0.20779352703641024
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 3,
+            "amount": 2
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "rerank",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ]
+      ],
+      "rank": 4,
+      "train_err": 0.6386399639477444,
+      "val_err": 0.7706444486935641,
+      "entropy": 1.7917594692280547,
+      "length": 6
+    },
+    "r3_e0_H2": {
+      "genome": [
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 7
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 3
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 3,
+      "train_err": 0.6425932381622446,
+      "val_err": 0.8053457604409892,
+      "entropy": 1.3296613488547582,
+      "length": 6
+    },
+    "r2_e0_H0": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 2
+          }
+        ]
+      ],
+      "rank": 2,
+      "train_err": 0.9999995156602542,
+      "val_err": 1.0000012283138267,
+      "entropy": -0.0,
+      "length": 1
+    },
+    "r7_e0_H1": {
+      "genome": [
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 2048,
+            "iters": 3
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.005885562485570732
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 1
+          }
+        ]
+      ],
+      "rank": 7,
+      "train_err": 0.3132217284539474,
+      "val_err": 0.7695539298121848,
+      "entropy": 0.8675632284814612,
+      "length": 6
+    },
+    "r4_e0_H1": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 4,
+      "train_err": 0.5853821638676756,
+      "val_err": 0.7939411046713337,
+      "entropy": 0.6931471805599453,
+      "length": 2
+    },
+    "r6_e0_H2": {
+      "genome": [
+        [
+          "rerank",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 2048,
+            "iters": 2
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 9,
+            "lr": 0.02712633159606493
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 6,
+      "train_err": 0.42023229489509883,
+      "val_err": 0.6176180634982232,
+      "entropy": 1.3321790402101223,
+      "length": 5
+    },
+    "r1_e0_H3": {
+      "genome": [
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.000496051492987916
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 2,
+            "amount": 3
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 9,
+            "lr": 0.02712633159606493
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.03751071174651155
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 2048,
+            "iters": 2
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 9,
+            "lr": 0.02712633159606493
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 6
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 1
+          }
+        ]
+      ],
+      "rank": 1,
+      "train_err": 0.697933927834092,
+      "val_err": 0.6905893229450051,
+      "entropy": 1.6957425341696346,
+      "length": 10
+    },
+    "r6_e0_H1": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 6,
+      "train_err": 0.5993333955399927,
+      "val_err": 0.8831310551185841,
+      "entropy": 0.6931471805599453,
+      "length": 2
+    },
+    "r5_e0_H3": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 3
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.0017734929422450457
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 9,
+            "lr": 0.02712633159606493
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 1
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 6
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 5,
+      "train_err": 0.35411475842707296,
+      "val_err": 0.507380058349373,
+      "entropy": 1.8891591637540217,
+      "length": 9
+    },
+    "r6_e0_H0": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 1
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 6
+          }
+        ]
+      ],
+      "rank": 6,
+      "train_err": 0.9999915260210234,
+      "val_err": 0.9999956949187482,
+      "entropy": -0.0,
+      "length": 2
+    },
+    "r8_e0_H3": {
+      "genome": [
+        [
+          "perturb",
+          {
+            "sigma": 0.000508311745371239
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 3.137331747106415e-09
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.000508311745371239
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 3,
+            "amount": 1
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 8,
+      "train_err": 0.21792608123661913,
+      "val_err": 0.41111243816128046,
+      "entropy": 1.5607104090414063,
+      "length": 6
+    },
+    "r7_e0_H2": {
+      "genome": [
+        [
+          "compress",
+          {
+            "target": 1
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.005885562485570732
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 7,
+      "train_err": 0.2337210986616585,
+      "val_err": 0.33338573129753574,
+      "entropy": 1.3296613488547582,
+      "length": 6
+    },
+    "r7_e0_H3": {
+      "genome": [
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "refine",
+          {
+            "eps": 2.1020902208829097e-06
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 1
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.0007020541592612208
+          }
+        ]
+      ],
+      "rank": 7,
+      "train_err": 0.7358406442099699,
+      "val_err": 1.1990763116767664,
+      "entropy": 1.5607104090414063,
+      "length": 6
+    },
+    "r3_e0_H1": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 512,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 3,
+      "train_err": 0.706394533151289,
+      "val_err": 0.7060706587162965,
+      "entropy": 0.6365141682948128,
+      "length": 3
+    },
+    "r8_e0_H1": {
+      "genome": [
+        [
+          "rerank",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 8,
+      "train_err": 0.43481169762161714,
+      "val_err": 0.8936945688438811,
+      "entropy": 0.9502705392332347,
+      "length": 5
+    },
+    "r5_e0_H0": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ]
+      ],
+      "rank": 5,
+      "train_err": 0.999994732046697,
+      "val_err": 0.9999977829557244,
+      "entropy": -0.0,
+      "length": 1
+    },
+    "r2_e0_H1": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 2,
+      "train_err": 0.6933999841843911,
+      "val_err": 0.7264817876235453,
+      "entropy": 0.6365141682948128,
+      "length": 3
+    },
+    "r5_e0_H1": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 5,
+      "train_err": 0.20399165004405317,
+      "val_err": 0.2240509670619338,
+      "entropy": 0.6365141682948128,
+      "length": 3
+    },
+    "r9_e0_H2": {
+      "genome": [
+        [
+          "rerank",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 2,
+            "amount": 1
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 1
+          }
+        ]
+      ],
+      "rank": 9,
+      "train_err": 0.6984274293969994,
+      "val_err": 0.9148867723751897,
+      "entropy": 1.0397207708399179,
+      "length": 4
+    },
+    "r3_e0_H3": {
+      "genome": [
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 3
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 3,
+      "train_err": 0.42522198370960534,
+      "val_err": 0.4392839774009963,
+      "entropy": 1.5607104090414063,
+      "length": 6
+    },
+    "r2_e0_H3": {
+      "genome": [
+        [
+          "refine",
+          {
+            "eps": 5.669571647741423e-08
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 9,
+            "lr": 0.02712633159606493
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.03751071174651155
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 1
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 6
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 9,
+            "lr": 0.02712633159606493
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 2,
+      "train_err": 0.6929326049274049,
+      "val_err": 0.6913349702552861,
+      "entropy": 1.7328679513998633,
+      "length": 8
+    },
+    "r10_e0_H2": {
+      "genome": [
+        [
+          "perturb",
+          {
+            "sigma": 0.000508311745371239
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 3,
+            "amount": 1
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 1
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 3,
+            "amount": 3
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 2,
+            "amount": 1
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 1
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.0007020541592612208
+          }
+        ]
+      ],
+      "rank": 11,
+      "train_err": 0.20639733715454794,
+      "val_err": 0.2026068811602052,
+      "entropy": 1.2798542258336676,
+      "length": 10
+    },
+    "r7_e0_H0": {
+      "genome": [
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 2048,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 512,
+            "iters": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 1
+          }
+        ]
+      ],
+      "rank": 7,
+      "train_err": 0.321901602752674,
+      "val_err": 1.0086634227741935,
+      "entropy": 0.45056120886630463,
+      "length": 6
+    },
+    "r9_e0_H1": {
+      "genome": [
+        [
+          "rerank",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 6
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 2,
+            "amount": 1
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 1
+          }
+        ]
+      ],
+      "rank": 9,
+      "train_err": 0.8330788372657206,
+      "val_err": 1.1863641404091967,
+      "entropy": 0.9502705392332347,
+      "length": 5
+    },
+    "r9_e0_H3": {
+      "genome": [
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 9,
+            "lr": 0.02712633159606493
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.03751071174651155
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 1
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 6
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 9,
+            "lr": 0.02712633159606493
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 2,
+            "amount": 3
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 2048,
+            "iters": 2
+          }
+        ]
+      ],
+      "rank": 9,
+      "train_err": 0.26350193136873135,
+      "val_err": 0.3731001026461335,
+      "entropy": 1.8462202193216333,
+      "length": 11
+    },
+    "r10_e0_H3": {
+      "genome": [
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.07683020957243598
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.000496051492987916
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 2,
+            "amount": 3
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 9,
+            "lr": 0.02712633159606493
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.03751071174651155
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 2048,
+            "iters": 2
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 9,
+            "lr": 0.02712633159606493
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 10,
+      "train_err": 0.14523364556130952,
+      "val_err": 0.20873881318458043,
+      "entropy": 1.5571130980576458,
+      "length": 10
+    },
+    "r3_e0_H0": {
+      "genome": [
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 2,
+            "amount": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 2048,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 512,
+            "iters": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 1
+          }
+        ]
+      ],
+      "rank": 3,
+      "train_err": 0.7174022518419951,
+      "val_err": 0.7220938096474935,
+      "entropy": 0.45056120886630463,
+      "length": 6
+    },
+    "r4_e0_H0": {
+      "genome": [
+        [
+          "reseed",
+          {
+            "rank": 4
+          }
+        ]
+      ],
+      "rank": 4,
+      "train_err": 0.999999114859456,
+      "val_err": 1.0000008584787623,
+      "entropy": -0.0,
+      "length": 1
+    },
+    "r7_e1_H1": {
+      "genome": [
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 2048,
+            "iters": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 512,
+            "iters": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.005885562485570732
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 1
+          }
+        ]
+      ],
+      "rank": 7,
+      "train_err": 0.017025996776051145,
+      "val_err": 0.036914932736344004,
+      "entropy": 0.7963116401738131,
+      "length": 7
+    },
+    "r5_e1_H2": {
+      "genome": [
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 7
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 6
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 5,
+      "train_err": 0.05744016857618221,
+      "val_err": 0.07074409890713093,
+      "entropy": 1.3296613488547582,
+      "length": 6
+    },
+    "r9_e1_H3": {
+      "genome": [
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 9,
+            "lr": 0.02712633159606493
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.03751071174651155
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 1
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 6
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 9,
+            "lr": 0.02712633159606493
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.000496051492987916
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 2,
+            "amount": 3
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 2048,
+            "iters": 2
+          }
+        ]
+      ],
+      "rank": 9,
+      "train_err": 0.026443777877536583,
+      "val_err": 0.03169463807035909,
+      "entropy": 1.8636799873410004,
+      "length": 12
+    },
+    "r8_e0_H0": {
+      "genome": [
+        [
+          "rerank",
+          {
+            "rank": 4
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ]
+      ],
+      "rank": 8,
+      "train_err": 0.9999999645960964,
+      "val_err": 0.9999999517087477,
+      "entropy": -0.0,
+      "length": 2
+    },
+    "r8_e1_H2": {
+      "genome": [
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "reseed",
+          {
+            "rank": 5
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 8,
+      "train_err": 0.04861843472711636,
+      "val_err": 0.08977120683621868,
+      "entropy": 1.3321790402101223,
+      "length": 5
+    },
+    "r7_e1_H2": {
+      "genome": [
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.005885562485570732
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 7,
+      "train_err": 0.027958835160227933,
+      "val_err": 0.08826531450726342,
+      "entropy": 1.0549201679861442,
+      "length": 5
+    },
+    "r5_e2_H3": {
+      "genome": [
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 9,
+            "lr": 0.02712633159606493
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.03751071174651155
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 1
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 6
+          }
+        ],
+        [
+          "grad",
+          {
+            "n": 2048,
+            "steps": 9,
+            "lr": 0.02712633159606493
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "compress",
+          {
+            "target": 5
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 5,
+      "train_err": 0.0016084080760001968,
+      "val_err": 0.00588719755704279,
+      "entropy": 1.6957425341696346,
+      "length": 10
+    },
+    "r10_e1_H2": {
+      "genome": [
+        [
+          "perturb",
+          {
+            "sigma": 0.000508311745371239
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 3,
+            "amount": 1
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 1
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 3,
+            "amount": 3
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 2,
+            "amount": 1
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 1,
+            "amount": 3
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "expand",
+          {
+            "bond": 2,
+            "amount": 3
+          }
+        ],
+        [
+          "symmetrize",
+          {}
+        ],
+        [
+          "fit",
+          {
+            "n": 2048,
+            "iters": 2
+          }
+        ]
+      ],
+      "rank": 11,
+      "train_err": 0.08890531708201689,
+      "val_err": 0.11951315563145808,
+      "entropy": 1.3269201940506905,
+      "length": 13
+    },
+    "r7_e1_H3": {
+      "genome": [
+        [
+          "compress",
+          {
+            "target": 1
+          }
+        ],
+        [
+          "reseed",
+          {
+            "rank": 2
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 8
+          }
+        ],
+        [
+          "rerank",
+          {
+            "rank": 7
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 2
+          }
+        ],
+        [
+          "perturb",
+          {
+            "sigma": 0.005885562485570732
+          }
+        ],
+        [
+          "fit",
+          {
+            "n": 8192,
+            "iters": 3
+          }
+        ]
+      ],
+      "rank": 7,
+      "train_err": 0.07776084496780984,
+      "val_err": 0.1368348294706341,
+      "entropy": 1.5498260458782016,
+      "length": 7
+    }
+  }
+}

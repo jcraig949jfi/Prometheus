@@ -1,0 +1,357 @@
+{
+  "computed_date": "2026-05-05",
+  "computed_by": "Charon (instantiated for \u03c0\u2080 calibration task)",
+  "data_sources": [
+    "F:/Prometheus/prometheus_math/_bsd_rank_pilot_run.json",
+    "F:/Prometheus/prometheus_math/_modular_form_pilot.json",
+    "F:/Prometheus/prometheus_math/_knot_pilot.json",
+    "F:/Prometheus/prometheus_math/_genus2_pilot.json",
+    "F:/Prometheus/prometheus_math/_oeis_sleeping_pilot.json",
+    "F:/Prometheus/prometheus_math/_mock_theta_pilot.json",
+    "F:/Prometheus/prometheus_math/four_counts_pilot_run_10k.json"
+  ],
+  "method": "beta_binomial",
+  "method_rationale": "Per-claim p-values are not exposed by the current cross-domain rediscovery envs (each pilot reports one experiment-level p-value, not per-prediction p-values). Storey's q-value approach therefore cannot be applied. Beta-binomial estimation per domain on the random_null arm gives the proportion of test items that fail the ground-truth check under a no-signal generator \u2014 the substrate-relevant proxy for \u03c0\u2080.",
+  "priors": {
+    "primary": "Jeffreys Beta(0.5, 0.5)",
+    "alternative": "Uniform Beta(1, 1)"
+  },
+  "ci_methods": [
+    "beta_posterior_central_95",
+    "wilson_score",
+    "parametric_bootstrap"
+  ],
+  "per_domain": {
+    "BSD_rank": {
+      "name": "BSD_rank",
+      "data_source": "F:/Prometheus/prometheus_math/_bsd_rank_pilot_run.json",
+      "method_arm": "random_uniform_policy",
+      "scoring": "binary_HIT100_MISS0",
+      "n_records_train": 3000,
+      "n_records_test": 900,
+      "k_wrong_train": 2389,
+      "k_correct_train": 611,
+      "per_seed_accuracy_train": [
+        0.21,
+        0.20199999999999999,
+        0.19899999999999998
+      ],
+      "per_seed_accuracy_test": [
+        0.201,
+        0.213,
+        0.185
+      ],
+      "pi0_mean": 0.7962345884705099,
+      "pi0_ci": [
+        0.7816407025927167,
+        0.8104545051897953
+      ],
+      "pi0_ci_width": 0.028813802597078664,
+      "pi0_uniform_prior_mean": 0.7961359093937375,
+      "pi0_uniform_prior_ci": [
+        0.781541950799473,
+        0.8103561479107102
+      ],
+      "pi0_wilson_ci": [
+        0.7815475748226329,
+        0.810361160832824
+      ],
+      "pi0_bootstrap_mean": 0.7964100666666666,
+      "pi0_bootstrap_ci": [
+        0.781,
+        0.8113333333333334
+      ],
+      "test_split_check": {
+        "n_records": 900,
+        "k_wrong": 720,
+        "pi0_jeffreys_mean": 0.7996670366259712,
+        "pi0_jeffreys_ci": [
+          0.7729287294076734,
+          0.8251454206813351
+        ]
+      },
+      "interpretation": "moderate"
+    },
+    "modular_form": {
+      "name": "modular_form",
+      "data_source": "F:/Prometheus/prometheus_math/_modular_form_pilot.json",
+      "method_arm": "random_uniform_policy",
+      "scoring": "binary_HIT100_MISS0",
+      "n_records_train": 15000,
+      "n_records_test": 900,
+      "k_wrong_train": 14250,
+      "k_correct_train": 750,
+      "per_seed_accuracy_train": [
+        0.054000000000000006,
+        0.049,
+        0.047
+      ],
+      "per_seed_accuracy_test": [
+        0.037000000000000005,
+        0.05,
+        0.054000000000000006
+      ],
+      "pi0_mean": 0.9499700019998667,
+      "pi0_ci": [
+        0.946425041382937,
+        0.9534013282602216
+      ],
+      "pi0_ci_width": 0.0069762868772845765,
+      "pi0_uniform_prior_mean": 0.9499400079989335,
+      "pi0_uniform_prior_ci": [
+        0.9463941805997776,
+        0.9533722161831368
+      ],
+      "pi0_wilson_ci": [
+        0.9463955480888547,
+        0.9533740233940141
+      ],
+      "pi0_bootstrap_mean": 0.9500213533333334,
+      "pi0_bootstrap_ci": [
+        0.9450666666666667,
+        0.9546666666666667
+      ],
+      "test_split_check": {
+        "n_records": 900,
+        "k_wrong": 858,
+        "pi0_jeffreys_mean": 0.9528301886792453,
+        "pi0_jeffreys_ci": [
+          0.9380719737671005,
+          0.9656869811817546
+        ]
+      },
+      "interpretation": "high"
+    },
+    "knot_trace_field": {
+      "name": "knot_trace_field",
+      "data_source": "F:/Prometheus/prometheus_math/_knot_pilot.json",
+      "method_arm": "random_uniform_policy",
+      "scoring": "binary_HIT100_MISS0",
+      "n_records_train": 15000,
+      "n_records_test": 42,
+      "k_wrong_train": 12919,
+      "k_correct_train": 2081,
+      "per_seed_accuracy_train": [
+        0.1386,
+        0.1402,
+        0.1374
+      ],
+      "per_seed_accuracy_test": [
+        0.14400000000000002,
+        0.127,
+        0.12300000000000001
+      ],
+      "pi0_mean": 0.8612425838277448,
+      "pi0_ci": [
+        0.8556654131360397,
+        0.866728521628838
+      ],
+      "pi0_ci_width": 0.011063108492798235,
+      "pi0_uniform_prior_mean": 0.8612185041994401,
+      "pi0_uniform_prior_ci": [
+        0.8556411212899675,
+        0.866704666380023
+      ],
+      "pi0_wilson_ci": [
+        0.8556423666606061,
+        0.8667059752454185
+      ],
+      "pi0_bootstrap_mean": 0.8612948399999999,
+      "pi0_bootstrap_ci": [
+        0.8557333333333333,
+        0.8668683333333334
+      ],
+      "test_split_check": {
+        "n_records": 42,
+        "k_wrong": 36,
+        "pi0_jeffreys_mean": 0.8488372093023255,
+        "pi0_jeffreys_ci": [
+          0.7290311649978831,
+          0.9380978912509854
+        ]
+      },
+      "interpretation": "thin_data"
+    },
+    "genus2": {
+      "name": "genus2",
+      "data_source": "F:/Prometheus/prometheus_math/_genus2_pilot.json",
+      "method_arm": "random_uniform_policy",
+      "scoring": "binary_HIT100_MISS0",
+      "n_records_train": 15000,
+      "n_records_test": 1800,
+      "k_wrong_train": 10034,
+      "k_correct_train": 4966,
+      "per_seed_accuracy_train": [
+        0.3264,
+        0.33799999999999997,
+        0.32880000000000004
+      ],
+      "per_seed_accuracy_test": [
+        0.255,
+        0.345,
+        0.34
+      ],
+      "pi0_mean": 0.6689220718618759,
+      "pi0_ci": [
+        0.6613703242465938,
+        0.6764311569166825
+      ],
+      "pi0_ci_width": 0.01506083267008873,
+      "pi0_uniform_prior_mean": 0.6689108118917477,
+      "pi0_uniform_prior_ci": [
+        0.6613592534055794,
+        0.6764197135048231
+      ],
+      "pi0_wilson_ci": [
+        0.6613599389954731,
+        0.6764202230989848
+      ],
+      "pi0_bootstrap_mean": 0.6689365533333334,
+      "pi0_bootstrap_ci": [
+        0.6593333333333333,
+        0.6779333333333333
+      ],
+      "test_split_check": {
+        "n_records": 1800,
+        "k_wrong": 1236,
+        "pi0_jeffreys_mean": 0.6865630205441421,
+        "pi0_jeffreys_ci": [
+          0.6649516196862464,
+          0.7077819619782557
+        ]
+      },
+      "interpretation": "moderate"
+    },
+    "OEIS_sleeping": {
+      "name": "OEIS_sleeping",
+      "data_source": "F:/Prometheus/prometheus_math/_oeis_sleeping_pilot.json",
+      "method_arm": "random_uniform_policy",
+      "scoring": "ternary_HIT100_NEAR25_MISS0",
+      "n_records_train": 15000,
+      "n_records_test": 150,
+      "mean_random_reward_train": 2.8383333333333334,
+      "pi0_lower_bound": 0.8864666666666666,
+      "pi0_upper_bound": 0.9716166666666667,
+      "pi0_mean": 0.9290416666666667,
+      "pi0_ci": [
+        0.8864666666666666,
+        0.9716166666666667
+      ],
+      "pi0_ci_width": 0.08515000000000006,
+      "test_split_check": {
+        "n_records": 150,
+        "mean_reward": 3.6749999999999994,
+        "pi0_lower_bound": 0.853,
+        "pi0_upper_bound": 0.96325
+      },
+      "interpretation": "high_with_bounds",
+      "honesty_note": "Ternary reward: cannot derive a point estimate of \u03c0\u2080 from mean reward alone. Bounds reported. To convert to a point estimate, the env would need to log per-prediction outcome (HIT|NEAR|MISS) rather than aggregate mean reward."
+    },
+    "mock_theta": {
+      "name": "mock_theta",
+      "data_source": "F:/Prometheus/prometheus_math/_mock_theta_pilot.json",
+      "method_arm": "random_uniform_policy",
+      "scoring": "binary_HIT100_MISS0",
+      "n_records_train": 15000,
+      "n_records_test": 39,
+      "k_wrong_train": 14495,
+      "k_correct_train": 505,
+      "per_seed_accuracy_train": [
+        0.0334,
+        0.0294,
+        0.0382
+      ],
+      "per_seed_accuracy_test": [
+        0.03,
+        0.05,
+        0.005
+      ],
+      "pi0_mean": 0.9663022465168989,
+      "pi0_ci": [
+        0.963356304775677,
+        0.9691304348604036
+      ],
+      "pi0_ci_width": 0.005774130084726603,
+      "pi0_uniform_prior_mean": 0.9662711638448207,
+      "pi0_uniform_prior_ci": [
+        0.9633240409648249,
+        0.9691005490085222
+      ],
+      "pi0_wilson_ci": [
+        0.9633253750975499,
+        0.9691024993502528
+      ],
+      "pi0_bootstrap_mean": 0.9663117933333335,
+      "pi0_bootstrap_ci": [
+        0.9612,
+        0.9711333333333333
+      ],
+      "test_split_check": {
+        "n_records": 39,
+        "k_wrong": 38,
+        "pi0_jeffreys_mean": 0.9625,
+        "pi0_jeffreys_ci": [
+          0.8863560303669049,
+          0.9972193172687464
+        ]
+      },
+      "interpretation": "thin_data"
+    },
+    "Lehmer_Mahler_discovery": {
+      "name": "Lehmer_Mahler_discovery",
+      "data_source": "F:/Prometheus/prometheus_math/four_counts_pilot_run_10k.json",
+      "method_arm": "random_null",
+      "scoring": "promote_vs_reject_via_battery",
+      "n_records": 30000,
+      "n_promote": 0,
+      "n_rejected": 29968,
+      "n_catalog_hit": 32,
+      "by_kill_pattern": {
+        "upstream:functional": 26027,
+        "upstream:cyclotomic_or_large": 3325,
+        "upstream:low_m": 581,
+        "upstream:salem_cluster": 35
+      },
+      "pi0_mean": 0.9989167027765741,
+      "pi0_ci": [
+        0.9985140385063475,
+        0.9992565027806837
+      ],
+      "pi0_ci_width": 0.0007424642743362186,
+      "pi0_uniform_prior_mean": 0.9989000733284448,
+      "pi0_uniform_prior_ci": [
+        0.9984945657742796,
+        0.9992427186488058
+      ],
+      "pi0_wilson_ci": [
+        0.9984946169670792,
+        0.9992442906020131
+      ],
+      "promote_rate_mean": 1.6666111129629014e-05,
+      "promote_rate_ci": [
+        1.636768208771674e-08,
+        8.372723337085058e-05
+      ],
+      "promote_rate_rule_of_three_upper_95": 0.0001,
+      "reinforce_arm_pi0_mean": 0.9999833338888704,
+      "reinforce_arm_pi0_ci": [
+        0.9999162727666292,
+        0.9999999836323179
+      ],
+      "reinforce_arm_n_promote": 0,
+      "reinforce_arm_n_episodes": 30000,
+      "interpretation": "near_unity",
+      "operational_note": "0 promotes in 60000 episodes (random + REINFORCE). \u03c0\u2080 is essentially 1.0 with very tight CI. Consistent with Lehmer's conjecture: the domain may genuinely contain no sub-Lehmer non-cyclotomic polynomials, in which case \u03c0\u2080=1 is a structural property, not a finding about substrate competence."
+    }
+  },
+  "operational_implications": "\u03c0\u2080 acts as the per-domain weight on PROMOTE confidence: PROMOTE in a high-\u03c0\u2080 domain (most candidates would be wrong under null) is strong evidence; PROMOTE in a low-\u03c0\u2080 domain is weaker. From these estimates: knot_trace_field and mock_theta have very high \u03c0\u2080 (>0.95) but THIN test sets \u2014 promotes there are individually noisy. modular_form and Lehmer_Mahler_discovery have \u03c0\u2080 near unity with dense data \u2014 any PROMOTE survivor is high-evidence. BSD_rank and genus2 have moderate \u03c0\u2080 (~0.7-0.8); a PROMOTE there is meaningful but weaker than in the harder domains. OEIS_sleeping reports bounds only (ternary reward); resolution requires logging per-prediction outcome rather than mean reward.",
+  "honesty_notes": [
+    "The \u03c0\u2080 computed here is NOT Storey's strict null-proportion in a multi-test family. It is the population error rate of the random null model per domain \u2014 an upper bound on substrate claim-stream \u03c0\u2080 under the assumption that every wrong-under-null prediction maps to a substrate CLAIM.",
+    "The substrate's actual CLAIM stream is filtered (the substrate does not promote every prediction); true substrate \u03c0\u2080 is therefore \u2264 these estimates. The estimates here are best read as 'what \u03c0\u2080 would be if the substrate claimed indiscriminately.'",
+    "All cross-domain rediscovery pilots use n_seeds=3. Bootstrap CIs over only 3 seeds are loose. Wilson and beta-posterior CIs on aggregated counts are tighter but assume i.i.d. predictions, which holds within a seed but not strictly across seeds.",
+    "OEIS_sleeping ternary reward (HIT/NEAR/MISS) prevents point estimation from mean reward alone. Bounds reported. To convert to a point estimate, the env must log per-prediction outcome.",
+    "Lehmer_Mahler_discovery has 0 promotes in 60000 episodes. \u03c0\u2080\u22481.0 may be a substrate competence claim OR a structural property of Lehmer's conjecture. Cannot distinguish from the current data; flagged in operational_note for that domain.",
+    "Thin domains (knot=42 test, mock_theta=39 test, oeis_sleeping=150 test): Wilson CIs are wide. Reported ci_width to be visible.",
+    "Method choice (beta-binomial vs Storey) is data-availability driven, not preference. If/when the substrate begins logging per-claim p-values from F1/F6/F9/F11 battery tests, recompute with Storey for tighter and more interpretable estimates."
+  ]
+}

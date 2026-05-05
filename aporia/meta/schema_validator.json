@@ -1,0 +1,127 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Lehmer Negative-Space Tensor Cell",
+  "description": "One cell = one (paper, approach) pair. See SCHEMA_v1.md for full semantics.",
+  "type": "object",
+  "required": [
+    "cell_id",
+    "paper_id",
+    "year",
+    "authors",
+    "venue",
+    "venue_type",
+    "title",
+    "approach_class",
+    "approach_specific",
+    "result_type",
+    "result_summary",
+    "limitation",
+    "limitation_class",
+    "extractor_confidence",
+    "extraction_date",
+    "extractor_agent"
+  ],
+  "properties": {
+    "cell_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9:_.-]+__[a-z_]+$",
+      "description": "Format: {paper_id}__{approach_class_suffix}"
+    },
+    "paper_id": {
+      "type": "string",
+      "description": "arXiv ID or {LastName}{Year}{letter}"
+    },
+    "year": {
+      "type": "integer",
+      "minimum": 1900,
+      "maximum": 2030
+    },
+    "authors": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1
+    },
+    "venue": {"type": "string"},
+    "venue_type": {
+      "type": "string",
+      "enum": ["journal", "conference", "thesis", "preprint", "book_chapter", "survey"]
+    },
+    "title": {"type": "string"},
+    "doi_or_url": {"type": "string"},
+    "approach_class": {
+      "type": "string",
+      "enum": [
+        "elementary_lower_bound",
+        "analytic_lower_bound",
+        "p_adic",
+        "algebraic_geometry",
+        "algebraic_dynamics",
+        "computational_search",
+        "geometric",
+        "arithmetic_dynamics",
+        "multivariate_extension",
+        "survey",
+        "other"
+      ]
+    },
+    "approach_specific": {
+      "type": "string",
+      "minLength": 30,
+      "description": "Be specific. 'Used p-adic methods' is too vague."
+    },
+    "result_type": {
+      "type": "string",
+      "enum": [
+        "lower_bound",
+        "comp_extension",
+        "structural_obs",
+        "failed_proof",
+        "conjecture_raised",
+        "survey"
+      ]
+    },
+    "result_summary": {"type": "string", "minLength": 30},
+    "limitation": {"type": "string", "minLength": 20},
+    "limitation_class": {
+      "type": "string",
+      "enum": [
+        "method_complexity",
+        "case_restriction",
+        "asymptotic_only",
+        "comp_ceiling",
+        "non_constructive",
+        "requires_unproven_conjecture",
+        "other"
+      ]
+    },
+    "subsequent_work_ids": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "open_questions_raised": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "near_miss": {
+      "type": "object",
+      "required": ["is_near_miss", "description"],
+      "properties": {
+        "is_near_miss": {"type": "boolean"},
+        "description": {"type": "string"},
+        "distance_to_full_result": {"type": "string"}
+      }
+    },
+    "extractor_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low"]
+    },
+    "extractor_notes": {"type": "string"},
+    "extraction_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "extractor_agent": {"type": "string"},
+    "NEEDS_HUMAN_REVIEW": {"type": "boolean"}
+  },
+  "additionalProperties": false
+}

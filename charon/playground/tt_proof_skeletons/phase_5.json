@@ -1,0 +1,345 @@
+{
+  "config": {
+    "pop": 20,
+    "gens": 20
+  },
+  "norms": {
+    "A": [
+      16.03040936187037,
+      11.514879108600601
+    ],
+    "C": [
+      16.410534101965858,
+      11.467126347687552
+    ],
+    "B": [
+      8.864841731815762,
+      7.199787700991677
+    ]
+  },
+  "phase_5A": [
+    {
+      "rank": 1,
+      "len": 8,
+      "n_F_aware": 5,
+      "val_A": 0.003199893368145771,
+      "val_B": 1.4640050733058507,
+      "val_C": 0.9469567884849778,
+      "ops": [
+        "refine",
+        "grad",
+        "cross",
+        "cross",
+        "reseed",
+        "fit",
+        "fit",
+        "rerank"
+      ]
+    },
+    {
+      "rank": 2,
+      "len": 6,
+      "n_F_aware": 3,
+      "val_A": 0.010827471266143657,
+      "val_B": 1.36616303131493,
+      "val_C": 0.05704449334015683,
+      "ops": [
+        "compress",
+        "refine",
+        "cross",
+        "reseed",
+        "fit",
+        "fit"
+      ]
+    },
+    {
+      "rank": 3,
+      "len": 3,
+      "n_F_aware": 2,
+      "val_A": 0.018612886690708114,
+      "val_B": 1.7857339594820052,
+      "val_C": 0.8316141452108287,
+      "ops": [
+        "reseed",
+        "fit",
+        "fit"
+      ]
+    },
+    {
+      "rank": 4,
+      "len": 10,
+      "n_F_aware": 5,
+      "val_A": 0.021298131237087722,
+      "val_B": 0.9166631919527769,
+      "val_C": 0.38714752396329766,
+      "ops": [
+        "refine",
+        "compress",
+        "grad",
+        "symmetrize",
+        "cross",
+        "reseed",
+        "fit",
+        "cross",
+        "fit",
+        "rerank"
+      ]
+    },
+    {
+      "rank": 5,
+      "len": 9,
+      "n_F_aware": 5,
+      "val_A": 0.02730085584590118,
+      "val_B": 1.1386990408240605,
+      "val_C": 0.400447337385776,
+      "ops": [
+        "refine",
+        "compress",
+        "grad",
+        "cross",
+        "cross",
+        "reseed",
+        "fit",
+        "fit",
+        "rerank"
+      ]
+    },
+    {
+      "rank": 6,
+      "len": 8,
+      "n_F_aware": 3,
+      "val_A": 0.043453231565587766,
+      "val_B": 0.7603636224846841,
+      "val_C": 0.8315764246226783,
+      "ops": [
+        "compress",
+        "reseed",
+        "reseed",
+        "refine",
+        "cross",
+        "reseed",
+        "fit",
+        "fit"
+      ]
+    },
+    {
+      "rank": 7,
+      "len": 5,
+      "n_F_aware": 2,
+      "val_A": 0.06110872057227604,
+      "val_B": 1.3989908253255405,
+      "val_C": 1.1279637964674256,
+      "ops": [
+        "compress",
+        "refine",
+        "reseed",
+        "grad",
+        "fit"
+      ]
+    },
+    {
+      "rank": 8,
+      "len": 8,
+      "n_F_aware": 5,
+      "val_A": 0.14251084014903978,
+      "val_B": 1.1680448921370918,
+      "val_C": 0.7603766455732031,
+      "ops": [
+        "refine",
+        "compress",
+        "grad",
+        "cross",
+        "cross",
+        "reseed",
+        "fit",
+        "grad"
+      ]
+    },
+    {
+      "rank": 9,
+      "len": 5,
+      "n_F_aware": 2,
+      "val_A": 0.43899618464397705,
+      "val_B": 1.3260727170490796,
+      "val_C": 0.33057298155498577,
+      "ops": [
+        "refine",
+        "cross",
+        "reseed",
+        "rerank",
+        "fit"
+      ]
+    },
+    {
+      "rank": 10,
+      "len": 9,
+      "n_F_aware": 5,
+      "val_A": 0.533038250716907,
+      "val_B": 0.743798358931322,
+      "val_C": 1.1688348942365994,
+      "ops": [
+        "refine",
+        "refine",
+        "grad",
+        "cross",
+        "cross",
+        "reseed",
+        "fit",
+        "fit",
+        "rerank"
+      ]
+    }
+  ],
+  "phase_5B": [
+    {
+      "rank": 1,
+      "len": 6,
+      "n_F_aware": 3,
+      "val_A": 0.016670139942027606,
+      "val_B": 1.2671396693953467,
+      "val_C": 0.2741853557642856,
+      "ops": [
+        "compress",
+        "compress",
+        "cross",
+        "reseed",
+        "fit",
+        "fit"
+      ]
+    },
+    {
+      "rank": 2,
+      "len": 6,
+      "n_F_aware": 3,
+      "val_A": 0.2578921199772194,
+      "val_B": 0.9940854189676092,
+      "val_C": 0.8383008798233099,
+      "ops": [
+        "compress",
+        "refine",
+        "reseed",
+        "cross",
+        "grad",
+        "fit"
+      ]
+    },
+    {
+      "rank": 3,
+      "len": 6,
+      "n_F_aware": 2,
+      "val_A": 0.863252072511381,
+      "val_B": 1.5299367518868803,
+      "val_C": 0.2824107426632964,
+      "ops": [
+        "compress",
+        "compress",
+        "reseed",
+        "reseed",
+        "fit",
+        "fit"
+      ]
+    },
+    {
+      "rank": 4,
+      "len": 5,
+      "n_F_aware": 2,
+      "val_A": 0.06110872057227604,
+      "val_B": 1.3989908253255405,
+      "val_C": 1.1279637964674256,
+      "ops": [
+        "compress",
+        "refine",
+        "reseed",
+        "grad",
+        "fit"
+      ]
+    },
+    {
+      "rank": 5,
+      "len": 4,
+      "n_F_aware": 1,
+      "val_A": 0.629886887173136,
+      "val_B": 1.04886604974014,
+      "val_C": 0.7632044384652502,
+      "ops": [
+        "compress",
+        "refine",
+        "reseed",
+        "fit"
+      ]
+    },
+    {
+      "rank": 6,
+      "len": 7,
+      "n_F_aware": 2,
+      "val_A": 0.722714224076091,
+      "val_B": 1.188896874081603,
+      "val_C": 0.7299185804459218,
+      "ops": [
+        "refine",
+        "compress",
+        "cross",
+        "reseed",
+        "expand",
+        "fit",
+        "compress"
+      ]
+    },
+    {
+      "rank": 7,
+      "len": 5,
+      "n_F_aware": 1,
+      "val_A": 0.9001829498056707,
+      "val_B": 1.195951991925361,
+      "val_C": 0.582975889046288,
+      "ops": [
+        "refine",
+        "refine",
+        "rerank",
+        "compress",
+        "fit"
+      ]
+    },
+    {
+      "rank": 8,
+      "len": 3,
+      "n_F_aware": 2,
+      "val_A": 0.69975540793755,
+      "val_B": 0.9964056930917644,
+      "val_C": 1.0090743891976865,
+      "ops": [
+        "cross",
+        "refine",
+        "fit"
+      ]
+    },
+    {
+      "rank": 9,
+      "len": 2,
+      "n_F_aware": 1,
+      "val_A": 0.6910216085071721,
+      "val_B": 1.000652029615929,
+      "val_C": 1.023016856677429,
+      "ops": [
+        "refine",
+        "fit"
+      ]
+    },
+    {
+      "rank": 10,
+      "len": 6,
+      "n_F_aware": 3,
+      "val_A": 0.7542743120338108,
+      "val_B": 1.004909155800963,
+      "val_C": 1.069160591046362,
+      "ops": [
+        "rerank",
+        "compress",
+        "perturb",
+        "grad",
+        "fit",
+        "fit"
+      ]
+    }
+  ]
+}

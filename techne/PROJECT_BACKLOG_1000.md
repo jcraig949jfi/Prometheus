@@ -4,6 +4,37 @@
 
 Maintainer: Techne · Initial draft: 2026-04-25 · Living document — never "done"
 
+---
+
+## STATUS 2026-05-02 — Tier-2 wave-runner PAUSED
+
+The Tier-2 backlog wave engine (#51-#1000) is paused per `pivot/techne.md`.
+Cumulative through wave 18: 39 of top-50 + 28 Tier-2 items shipped over
+~36 hours / 18 loop iterations. Breadth on the arsenal is now sufficient
+for the eight-week pivot from "library" to "RL action space."
+
+The next four work items, in order, are NOT from this backlog:
+
+1. BIND/EVAL primitive — **shipped 2026-05-02** (commit `ac4176f0`).
+2. Metadata pass on top-200 arsenal ops — **shipped 2026-05-02**
+   (commit `4f5a8a22`; 85 ops calibrated).
+3. REINFORCE baseline on SigmaMathEnv — **shipped 2026-05-02**
+   (commit `4f5a8a22`; +53.1% lift over random, p=8.5e-7).
+4. Residual-aware falsification primitive — **proposal posted**
+   2026-05-02 to `stoa/discussions/2026-05-02-techne-on-residual-
+   aware-falsification.md`. Awaiting benchmark green-light. If
+   accepted: 5-day work item with day-4 classifier acceptance gate.
+
+After (4): either weeks 5-8 of the BIND/EVAL pivot (harder action
+space, sparse reward, substrate-conditioned actions) OR resumption
+of selected Tier-2 items, depending on team prioritization. Backlog
+items #86-#1000 are deferred indefinitely; do not auto-resume the
+wave loop without an explicit pivot-status review.
+
+See `techne/TECHNE_SESSION_2026-05-02.md` for the session journal.
+
+---
+
 The Prometheus North Star is **frontier mathematics, number theory,
 multi-dimensional mathematical exploration, and the discovery of bridges
 between mathematical domains that humans haven't found**. This backlog

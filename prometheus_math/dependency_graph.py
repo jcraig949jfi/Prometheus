@@ -50,15 +50,53 @@ from typing import Iterable
 # ``prometheus_math.__init__.__all__``. Used as the canonical node set
 # for ``build_dependency_graph()``.
 PM_CATEGORIES: tuple[str, ...] = (
+    # Calibration drift fix (2026-04-29): expanded from the original 9
+    # to include all categorical modules currently exposed by
+    # prometheus_math.__init__. The dependency graph walks PM_CATEGORIES
+    # to detect inter-module dependencies, and combinatorics/optimization/
+    # numerics now have sibling modules (combinatorics_partitions,
+    # optimization_qp, numerics_special_*, ...) that the graph must
+    # recognize as known PM categories rather than unknown deps.
     "number_theory",
     "elliptic_curves",
     "number_fields",
     "topology",
     "combinatorics",
+    "combinatorics_partitions",
+    "combinatorics_permutations",
+    "combinatorics_posets",
     "optimization",
+    "optimization_metaheuristics",
+    "optimization_qp",
+    "optimization_sdp",
+    "optimization_socp",
     "numerics",
+    "numerics_special",
+    "numerics_special_dilogarithm",
+    "numerics_special_eta",
+    "numerics_special_hurwitz",
+    "numerics_special_q_pochhammer",
+    "numerics_special_theta",
     "symbolic",
+    "symbolic_tensor_decomp",
     "algebraic_geometry",
+    "algebraic_geometry_normal_form",
+    "galois",
+    "iwasawa",
+    "geometry_convex_hull",
+    "geometry_delaunay",
+    "geometry_voronoi",
+    "statistics_distributions",
+    "crypto_primitives",
+    "crypto_signature_schemes",
+    "coding_linear",
+    "dynamics_iterated_maps",
+    "dynamics_ode_solvers",
+    "algebra_lie_algebras",
+    "hecke",
+    "modular",
+    "research",
+    "databases",
 )
 
 

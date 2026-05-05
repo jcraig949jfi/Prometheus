@@ -1,0 +1,263 @@
+{
+  "pull_summary": {
+    "n_lattice_total": 0,
+    "n_general_total": 200,
+    "per_prefix_total": {
+      "A152": 50,
+      "A153": 50,
+      "A154": 50,
+      "A155": 50
+    },
+    "per_prefix_lattice": {
+      "A152": 0,
+      "A153": 0,
+      "A154": 0,
+      "A155": 0
+    },
+    "per_prefix_killed": {
+      "A152": 3,
+      "A153": 9,
+      "A154": 26,
+      "A155": 2
+    },
+    "per_prefix_skipped": {
+      "A152": 1,
+      "A153": 1,
+      "A154": 0,
+      "A155": 4
+    }
+  },
+  "per_prefix_signatures": {
+    "A152": [
+      [
+        {
+          "has_anomaly": true,
+          "rate_sign": "pos"
+        },
+        69767.44186046511,
+        43
+      ],
+      [
+        {
+          "has_anomaly": true,
+          "rate_sign": "pos",
+          "regime_change": true
+        },
+        69767.44186046511,
+        43
+      ],
+      [
+        {
+          "rate_sign": "pos",
+          "regime_change": true
+        },
+        69767.44186046511,
+        43
+      ],
+      [
+        {
+          "has_anomaly": true
+        },
+        66666.66666666667,
+        45
+      ],
+      [
+        {
+          "has_anomaly": true,
+          "regime_change": true
+        },
+        66666.66666666667,
+        45
+      ]
+    ],
+    "A153": [
+      [
+        {
+          "has_anomaly": true
+        },
+        191489.36170212767,
+        47
+      ],
+      [
+        {
+          "has_anomaly": true,
+          "regime_change": true
+        },
+        191489.36170212767,
+        47
+      ],
+      [
+        {
+          "regime_change": true
+        },
+        191489.36170212767,
+        47
+      ],
+      [
+        {
+          "has_anomaly": true,
+          "n_terms_bucket": "medium"
+        },
+        7.833333333333334,
+        3
+      ],
+      [
+        {
+          "has_anomaly": true,
+          "n_terms_bucket": "medium",
+          "rate_sign": "pos"
+        },
+        7.833333333333334,
+        3
+      ]
+    ],
+    "A154": [
+      [
+        {
+          "has_anomaly": true
+        },
+        650000.0,
+        40
+      ],
+      [
+        {
+          "has_anomaly": true,
+          "regime_change": true
+        },
+        650000.0,
+        40
+      ],
+      [
+        {
+          "regime_change": true
+        },
+        650000.0,
+        40
+      ],
+      [
+        {
+          "has_anomaly": true,
+          "rate_sign": "pos"
+        },
+        3.876923076923077,
+        26
+      ],
+      [
+        {
+          "has_anomaly": true,
+          "rate_sign": "pos",
+          "regime_change": true
+        },
+        3.876923076923077,
+        26
+      ]
+    ],
+    "A155": [
+      [
+        {
+          "has_anomaly": true,
+          "rate_sign": "pos"
+        },
+        48780.48780487805,
+        41
+      ],
+      [
+        {
+          "has_anomaly": true,
+          "rate_sign": "pos",
+          "regime_change": true
+        },
+        48780.48780487805,
+        41
+      ],
+      [
+        {
+          "rate_sign": "pos",
+          "regime_change": true
+        },
+        48780.48780487805,
+        41
+      ],
+      [
+        {
+          "has_anomaly": true
+        },
+        46511.62790697675,
+        43
+      ],
+      [
+        {
+          "has_anomaly": true,
+          "regime_change": true
+        },
+        46511.62790697675,
+        43
+      ]
+    ]
+  },
+  "aggregate_top": [
+    [
+      {
+        "has_anomaly": true
+      },
+      228571.42857142858,
+      175
+    ],
+    [
+      {
+        "has_anomaly": true,
+        "regime_change": true
+      },
+      228571.42857142858,
+      175
+    ],
+    [
+      {
+        "regime_change": true
+      },
+      228571.42857142858,
+      175
+    ],
+    [
+      {
+        "has_anomaly": true,
+        "n_terms_bucket": "short"
+      },
+      3.0634920634920633,
+      7
+    ],
+    [
+      {
+        "has_anomaly": true,
+        "n_terms_bucket": "short",
+        "rate_sign": "pos"
+      },
+      3.0634920634920633,
+      7
+    ]
+  ],
+  "reinforce": [
+    {
+      "seed": 101,
+      "n_rediscoveries": 0,
+      "n_discoveries": 978,
+      "mean_reward": 48.9,
+      "obstruction_first_episode": null
+    },
+    {
+      "seed": 102,
+      "n_rediscoveries": 897,
+      "n_discoveries": 915,
+      "mean_reward": 90.6,
+      "obstruction_first_episode": 86
+    },
+    {
+      "seed": 103,
+      "n_rediscoveries": 0,
+      "n_discoveries": 701,
+      "mean_reward": 35.05,
+      "obstruction_first_episode": null
+    }
+  ],
+  "elapsed_sec": 21.51355170016177
+}

@@ -1,0 +1,88 @@
+{
+  "n_episodes": 200,
+  "seed": 42,
+  "elapsed_seconds": 0.021000146865844727,
+  "n_promoted": 21,
+  "n_trivial_rejects": 0,
+  "f_trivial_band_reject_rate": 0.0,
+  "archive_n_cells_filled": 19,
+  "operator_call_counts": {
+    "symbolic": 55,
+    "structural": 102,
+    "structured_null": 16,
+    "uniform": 15,
+    "anti_prior": 12
+  },
+  "operator_fill_counts": {
+    "symbolic": 2,
+    "structural": 11,
+    "anti_prior": 3,
+    "uniform": 2,
+    "structured_null": 1
+  },
+  "operator_fill_efficiency": {
+    "symbolic": 0.03636363636363636,
+    "structural": 0.10784313725490197,
+    "structured_null": 0.0625,
+    "uniform": 0.13333333333333333,
+    "anti_prior": 0.25
+  },
+  "coverage_divergences": {
+    "structural_vs_uniform": 1.0,
+    "structural_vs_anti_prior": 1.0,
+    "symbolic_vs_uniform": 1.0,
+    "anti_prior_vs_uniform": 1.0,
+    "anti_prior_vs_structured_null": 1.0
+  },
+  "band_concentration_per_operator": {
+    "symbolic": {
+      "2": 1.0
+    },
+    "structural": {
+      "2": 1.0
+    },
+    "anti_prior": {
+      "2": 1.0
+    },
+    "uniform": {
+      "2": 1.0
+    },
+    "structured_null": {
+      "2": 1.0
+    }
+  },
+  "scheduler_cumulative_shares": {
+    "symbolic": 0.275,
+    "structural": 0.51,
+    "structured_null": 0.08,
+    "uniform": 0.075,
+    "anti_prior": 0.06
+  },
+  "scheduler_min_share_compliance": {
+    "uniform": {
+      "min_share": 0.05,
+      "actual_share": 0.07,
+      "compliant": true
+    },
+    "anti_prior": {
+      "min_share": 0.05,
+      "actual_share": 0.05,
+      "compliant": true
+    },
+    "structured_null": {
+      "min_share": 0.05,
+      "actual_share": 0.11,
+      "compliant": true
+    }
+  },
+  "acceptance": {
+    "primary_structural_vs_uniform_1_5x": true,
+    "primary_structural_fills": 11,
+    "primary_uniform_fills": 2,
+    "primary_ratio": 5.5,
+    "secondary_archive_coverage": true,
+    "secondary_target": 10,
+    "tertiary_trivial_rate": true,
+    "quaternary_min_share_compliance": true
+  }
+}

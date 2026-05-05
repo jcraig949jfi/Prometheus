@@ -82,6 +82,24 @@ class Claim:
     target_tier: Tier
     status: str = "pending"
     verdict: VerdictResult | None = None
+    # Caveats — typed metadata that travels with the claim through
+    # FALSIFY/PROMOTE/TRACE. Operationalizes the C3 fix from the
+    # 2026-05-03 team review (caveat-as-metadata-on-CLAIM).
+    # See sigma_kernel/caveats.py for the canonical preset list and
+    # stoa/proposals/2026-05-04-techne-caveat-as-metadata-schema.md
+    # for the rationale + propagation rules.
+    caveats: list[str] = field(default_factory=list)
+    # Precision metadata — verification-depth as a first-class field.
+    # Shape: {"dps": int | None, "method": str, "convergence": str,
+    #         "stability": float | None}. None for legacy / pre-2026-05-04
+    # claims that predate this field. See
+    # sigma_kernel/PRECISION_METADATA_SPEC.md for the rationale (Lehmer
+    # 17-entry resolution) and migration 005 for the Postgres-side
+    # change. Auto-caveats fire when:
+    #   * dps < expected_min_dps -> "precision_below_expected"
+    #   * convergence in {"failed_max_steps","nan_returned"} -> "verification_failed"
+    # Both auto-propagate via TRACE.
+    precision_metadata: dict | None = None
 
 
 @dataclass(frozen=True)
@@ -156,7 +174,22 @@ CREATE TABLE IF NOT EXISTS claims (
     verdict_rationale   TEXT,
     verdict_input_hash  TEXT,
     verdict_seed        INTEGER,
-    verdict_runtime_ms  INTEGER
+    verdict_runtime_ms  INTEGER,
+    -- Caveats: JSON array of strings. Operationalizes C3 fix from the
+    -- 2026-05-03 team review (caveat-as-metadata-on-CLAIM). Default empty
+    -- for backward compat: existing rows + old code see this as []. See
+    -- sigma_kernel/migrations/004_add_caveats_to_claims.sql for the
+    -- Postgres-side migration.
+    caveats             TEXT NOT NULL DEFAULT '[]',
+    -- Precision metadata: JSON object or NULL. Operationalizes the
+    -- 2026-05-04 substrate change (verification depth as a first-class
+    -- field). Shape: {"dps": int|null, "method": str, "convergence": str,
+    -- "stability": float|null}. NULL is the legacy/backward-compat
+    -- default — existing rows + old code see this as None. See
+    -- sigma_kernel/migrations/005_add_precision_metadata.sql for the
+    -- Postgres-side migration; see PRECISION_METADATA_SPEC.md for the
+    -- rationale (Lehmer 17-entry resolution) and auto-caveat rules.
+    precision_metadata  TEXT
 );
 
 CREATE TABLE IF NOT EXISTS capabilities (
@@ -206,6 +239,18 @@ class _SqliteAdapter:
     def close(self):
         self.conn.close()
 
+    def register_tables(self, *names: str) -> None:
+        """Register extra unqualified table names for the SQL rewriter.
+
+        SQLite has no schema-prefix rewriting, so this is a no-op. The
+        method exists so extensions (BindEvalExtension, ResidualExtension,
+        ...) can call ``conn.register_tables(...)`` uniformly across both
+        backends without branching on backend type. See
+        ``_PostgresAdapter.register_tables`` for the postgres semantics
+        (B-BUGHUNT-003: per-instance, never module-global).
+        """
+        return None
+
 
 class _PostgresAdapter:
     placeholder = "%s"
@@ -243,13 +288,47 @@ class _PostgresAdapter:
         self.conn = self._pool.getconn()
         self.conn.autocommit = False
 
+        # B-BUGHUNT-003: per-instance schema-translation state. Earlier
+        # versions mutated module-global ``_TABLES`` and a class-level
+        # ``_RE_CACHE``; that made cross-extension state leak across
+        # SigmaKernel instances and across test contexts. Both pieces of
+        # state are now bound to ``self`` so two extensions attached to
+        # different schemas never interfere.
+        self._extra_tables: tuple[str, ...] = ()
+        self._RE_CACHE: dict[str, str] = {}
+
         # Schema probe: fail at __init__ time rather than at first DML if
-        # Mnemosyne hasn't applied the migration yet.
+        # Mnemosyne hasn't applied the migration yet. We probe both for the
+        # base schema (migration 001) AND for the caveats column added by
+        # migration 004; the latter is now required by the kernel since it
+        # propagates caveats through CLAIM/FALSIFY/PROMOTE. Migration 005
+        # (precision_metadata) is probed but NOT required: when absent, the
+        # kernel falls back to a NULL-equivalent legacy code path so old
+        # databases keep working until Mnemosyne applies the migration.
+        self._has_precision_metadata = False
         try:
             cur = self.conn.cursor()
             cur.execute("SELECT 1 FROM sigma.symbols LIMIT 0")
+            cur.execute("SELECT caveats FROM sigma.claims LIMIT 0")
+            try:
+                cur.execute("SELECT precision_metadata FROM sigma.claims LIMIT 0")
+                self._has_precision_metadata = True
+            except psycopg2.errors.UndefinedColumn:
+                # Migration 005 not yet applied. That is OK — the kernel
+                # operates in legacy mode until Mnemosyne applies it.
+                self.conn.rollback()
+                self._has_precision_metadata = False
             cur.close()
             self.conn.commit()
+        except psycopg2.errors.UndefinedColumn:
+            self.conn.rollback()
+            self._pool.putconn(self.conn)
+            raise ConnectionError(
+                "sigma.claims is missing the `caveats` column. "
+                "Mnemosyne must apply sigma_kernel/migrations/004_add_caveats_to_claims.sql "
+                "(operationalizes caveat-as-metadata-on-CLAIM; see "
+                "stoa/proposals/2026-05-04-techne-caveat-as-metadata-schema.md)."
+            ) from None
         except psycopg2.errors.UndefinedTable:
             self.conn.rollback()
             self._pool.putconn(self.conn)
@@ -267,19 +346,41 @@ class _PostgresAdapter:
                 f"Underlying error: {e}"
             ) from None
 
-    _RE_CACHE: dict[str, str] = {}
-
     def _translate(self, sql: str) -> str:
+        # B-BUGHUNT-003: cache and table list are both per-instance. The
+        # union ``_TABLES + self._extra_tables`` lets extensions register
+        # extra unqualified table names without touching module-global
+        # state. ``_TABLES`` itself is never mutated.
         cached = self._RE_CACHE.get(sql)
         if cached is not None:
             return cached
         out = sql.replace("?", "%s")
-        for t in _TABLES:
+        for t in _TABLES + self._extra_tables:
             out = re.sub(rf"\b{t}\b", f"sigma.{t}", out)
         # Strip CREATE TABLE statements -- schema is managed by Mnemosyne via migration.
         # (Defensive: if anything calls executescript on this adapter, do nothing.)
         self._RE_CACHE[sql] = out
         return out
+
+    def register_tables(self, *names: str) -> None:
+        """Register additional unqualified table names for the SQL
+        rewriter. Called by extensions at attach time so their tables
+        (e.g. ``bindings`` -> ``sigma.bindings``) are translated.
+
+        B-BUGHUNT-003: state is bound to ``self``, never to the module.
+        Two extensions on two different schemas never interfere. Calling
+        with a name already registered is idempotent. Adding new names
+        invalidates the per-instance translation cache so previously
+        seen SQL gets retranslated against the new table set.
+        """
+        new_names = tuple(n for n in names if n not in self._extra_tables
+                          and n not in _TABLES)
+        if not new_names:
+            return
+        self._extra_tables = self._extra_tables + new_names
+        # Cache invalidation: the union changed, so any cached translation
+        # may now be missing a prefix on the newly-registered name.
+        self._RE_CACHE.clear()
 
     def execute(self, sql: str, params: tuple = ()):
         cur = self.conn.cursor()
@@ -428,6 +529,40 @@ class SigmaKernel:
     # OPCODE 2 — CLAIM
     # ------------------------------------------------------------------
 
+    # Default expected-minimum dps for the auto-caveat firing. Mirrors
+    # ``prometheus_math.kill_vector.DEFAULT_EXPECTED_MIN_DPS``. The Lehmer
+    # 17-entry episode showed dps=30 silently misses boundary objects;
+    # dps>=60 is the substrate's expected floor for Salem/Lehmer
+    # numerical work. See PRECISION_METADATA_SPEC.md.
+    DEFAULT_EXPECTED_MIN_DPS = 60
+
+    @staticmethod
+    def _auto_caveats_for_precision(
+        meta: dict | None,
+        expected_min_dps: int = 60,
+    ) -> list[str]:
+        """Compute caveat tokens implied by precision_metadata.
+
+        Two rules:
+          1. ``meta["dps"] is not None`` and ``< expected_min_dps`` ->
+             ``"precision_below_expected"``
+          2. ``meta["convergence"]`` in {``"failed_max_steps"``,
+             ``"nan_returned"``} -> ``"verification_failed"``
+
+        Returns a (possibly empty) list of auto-caveat tokens. Order is
+        stable; duplicates are deduped.
+        """
+        if not isinstance(meta, dict):
+            return []
+        out: list[str] = []
+        dps = meta.get("dps")
+        if isinstance(dps, int) and dps < expected_min_dps:
+            out.append("precision_below_expected")
+        conv = meta.get("convergence")
+        if conv in ("failed_max_steps", "nan_returned"):
+            out.append("verification_failed")
+        return out
+
     def CLAIM(
         self,
         target_name: str,
@@ -435,10 +570,73 @@ class SigmaKernel:
         evidence: dict,
         kill_path: str,
         target_tier: Tier = Tier.Conjecture,
+        caveats: list[str] | None = None,
+        precision_metadata: dict | None = None,
     ) -> Claim:
-        """Allocate a provisional claim. Born at lowest tier unless overridden."""
+        """Allocate a provisional claim. Born at lowest tier unless overridden.
+
+        Caveats (optional) are typed metadata that travel with the claim
+        through FALSIFY / PROMOTE / TRACE. Use the canonical tokens from
+        ``sigma_kernel.caveats.KNOWN_CAVEATS`` where they apply (e.g.
+        ``"small_n"``, ``"rediscovery_not_discovery"``); arbitrary strings
+        are also accepted. See
+        ``stoa/proposals/2026-05-04-techne-caveat-as-metadata-schema.md``
+        for the rationale (operationalizes C3 from the 2026-05-03 team
+        review). Validation is permissive at write — see
+        ``caveats.validate_caveats`` for normalization rules.
+
+        precision_metadata (optional) is a dict shaped like::
+
+            {"dps": 60, "method": "mpmath_polyroots",
+             "convergence": "converged", "stability": None}
+
+        encoding the verification depth used to compute the evidence.
+        When provided, two auto-caveats fire automatically:
+
+          * ``"precision_below_expected"`` when ``dps < 60``
+          * ``"verification_failed"`` when convergence is
+            ``"failed_max_steps"`` or ``"nan_returned"``
+
+        See ``sigma_kernel/PRECISION_METADATA_SPEC.md`` for the rationale
+        (Lehmer 17-entry resolution).
+        """
+        # Local import to avoid circularity at module load time. Try the
+        # package-qualified path first; fall back to direct module import
+        # for callers that run sigma_kernel/*.py as a script (e.g. demo.py)
+        # where sys.path includes sigma_kernel/ but not its parent.
+        try:
+            from sigma_kernel.caveats import validate_caveats
+        except ModuleNotFoundError:
+            from caveats import validate_caveats  # type: ignore[no-redef]
+
         cid = _new_id("claim")
         evidence_str = json.dumps(evidence, sort_keys=True)
+
+        # Auto-caveat injection from precision_metadata. The auto-caveats
+        # are appended to whatever the caller supplied so the user-token
+        # list is preserved. validate_caveats then dedups + warns on
+        # misspellings as usual.
+        provided = list(caveats or [])
+        auto_tokens = self._auto_caveats_for_precision(
+            precision_metadata, self.DEFAULT_EXPECTED_MIN_DPS
+        )
+        for tok in auto_tokens:
+            if tok not in provided:
+                provided.append(tok)
+        cleaned_caveats = validate_caveats(provided)
+        caveats_json = json.dumps(cleaned_caveats)
+
+        # Persist precision_metadata as JSON; None when not supplied.
+        if precision_metadata is not None and not isinstance(precision_metadata, dict):
+            raise TypeError(
+                f"precision_metadata must be a dict or None; "
+                f"got {type(precision_metadata).__name__}"
+            )
+        pm_json = (
+            None if precision_metadata is None
+            else json.dumps(precision_metadata, sort_keys=True)
+        )
+
         claim = Claim(
             id=cid,
             target_name=target_name,
@@ -446,15 +644,37 @@ class SigmaKernel:
             evidence=evidence_str,
             kill_path=kill_path,
             target_tier=target_tier,
-        )
-        self.conn.execute(
-            "INSERT INTO claims VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
-            (
-                cid, target_name, hypothesis, evidence_str, kill_path,
-                target_tier.value, "pending",
-                None, None, None, None, None,
+            caveats=cleaned_caveats,
+            precision_metadata=(
+                None if precision_metadata is None else dict(precision_metadata)
             ),
         )
+        # Backend-aware INSERT: postgres may not yet have migration 005
+        # applied. In that case write only the legacy 13 columns. SQLite
+        # always has the new column (created in SCHEMA above).
+        if (
+            self.backend == "postgres"
+            and not getattr(self.conn, "_has_precision_metadata", False)
+        ):
+            self.conn.execute(
+                "INSERT INTO claims VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                (
+                    cid, target_name, hypothesis, evidence_str, kill_path,
+                    target_tier.value, "pending",
+                    None, None, None, None, None,
+                    caveats_json,
+                ),
+            )
+        else:
+            self.conn.execute(
+                "INSERT INTO claims VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                (
+                    cid, target_name, hypothesis, evidence_str, kill_path,
+                    target_tier.value, "pending",
+                    None, None, None, None, None,
+                    caveats_json, pm_json,
+                ),
+            )
         self.conn.commit()
         return claim
 
@@ -525,12 +745,26 @@ class SigmaKernel:
         # Bind to claim (in-memory and persisted).
         claim.verdict = verdict
         claim.status = "falsified"
+
+        # WARN-verdict caveat append (operationalizes C3 fix; see
+        # stoa/proposals/2026-05-04-techne-caveat-as-metadata-schema.md §4.2).
+        # The append is atomic with the verdict write so a downstream PROMOTE
+        # captures the warn-rationale in the symbol's def_blob. BLOCK gets no
+        # caveat (the claim is dead anyway); CLEAR gets none (kill_path
+        # passed cleanly).
+        if verdict.status == Verdict.WARN:
+            warn_token = f"falsify_warn:{verdict.rationale[:80]}"
+            if warn_token not in claim.caveats:
+                claim.caveats = list(claim.caveats) + [warn_token]
+        caveats_json = json.dumps(claim.caveats)
+
         self.conn.execute(
             "UPDATE claims SET status='falsified', verdict_status=?, verdict_rationale=?, "
-            "verdict_input_hash=?, verdict_seed=?, verdict_runtime_ms=? WHERE id=?",
+            "verdict_input_hash=?, verdict_seed=?, verdict_runtime_ms=?, caveats=? "
+            "WHERE id=?",
             (
                 verdict.status.value, verdict.rationale, verdict.input_hash,
-                verdict.seed, verdict.runtime_ms, claim.id,
+                verdict.seed, verdict.runtime_ms, caveats_json, claim.id,
             ),
         )
         self.conn.commit()
@@ -608,16 +842,31 @@ class SigmaKernel:
         if claim.verdict.input_hash:
             provenance.append(claim.verdict.input_hash)
 
-        def_blob = json.dumps(
-            {
-                "hypothesis": claim.hypothesis,
-                "evidence": ev,
-                "kill_path": claim.kill_path,
-                "verdict": claim.verdict.status.value,
-                "verdict_rationale": claim.verdict.rationale,
-            },
-            sort_keys=True,
-        )
+        # def_blob includes caveats as a top-level field. Because def_blob is
+        # sha256-content-addressed, caveats become hash-locked: a symbol
+        # cannot lose its caveats without changing its hash, breaking RESOLVE
+        # / TRACE for any downstream consumer. This is the load-bearing
+        # property of caveat-as-metadata (see proposal §2.3). De-dup is the
+        # caller's responsibility via validate_caveats; we sort here for a
+        # canonical content hash (caveat order should not affect hash).
+        promoted_caveats = sorted(set(claim.caveats))
+        # Same hash-locking discipline applies to precision_metadata. We
+        # only emit the field when the claim carried one (None means
+        # "legacy / not recorded"; emitting an explicit None would
+        # change the hash of every existing symbol). For canonicalization
+        # the dict is JSON-dumped with sort_keys=True (already true at the
+        # outer json.dumps) so key ordering does not affect the hash.
+        blob_dict: dict[str, Any] = {
+            "hypothesis": claim.hypothesis,
+            "evidence": ev,
+            "kill_path": claim.kill_path,
+            "verdict": claim.verdict.status.value,
+            "verdict_rationale": claim.verdict.rationale,
+            "caveats": promoted_caveats,
+        }
+        if claim.precision_metadata is not None:
+            blob_dict["precision_metadata"] = dict(claim.precision_metadata)
+        def_blob = json.dumps(blob_dict, sort_keys=True)
         def_hash = _sha256(def_blob)
 
         # 4. Atomic: consume cap + insert symbol.
@@ -752,6 +1001,11 @@ class SigmaKernel:
         Recursive provenance walk from `symbol` outward through dependency hashes.
         Cycle-safe via a visited set. Hashes that don't resolve to a substrate
         symbol are tagged 'external' (e.g. verdict_input_hash, bootstrap roots).
+
+        Each node carries the symbol's caveats as a separate field. A consumer
+        that wants citation-grade caveats unions ``node['caveats']`` along the
+        path from the leaf to the roots. See ``collect_caveats`` for a
+        convenience helper that does exactly this.
         """
         visited: set[str] = set()
 
@@ -761,11 +1015,33 @@ class SigmaKernel:
             visited.add(def_hash)
 
             row = self.conn.execute(
-                "SELECT name, version, provenance FROM symbols WHERE def_hash=?",
+                "SELECT name, version, provenance, def_blob FROM symbols WHERE def_hash=?",
                 (def_hash,),
             ).fetchone()
             if row is None:
                 return {"hash": def_hash[:12], "type": "external"}
+
+            # Parse caveats out of def_blob if present. Older symbols
+            # (pre-migration-004) won't have a caveats key in def_blob;
+            # default to empty list. This is the backward-compat seam.
+            caveats: list[str] = []
+            precision_metadata: dict | None = None
+            try:
+                blob = json.loads(row[3])
+                if isinstance(blob, dict) and "caveats" in blob:
+                    cv = blob["caveats"]
+                    if isinstance(cv, list):
+                        caveats = [str(c) for c in cv]
+                # precision_metadata key is OPTIONAL in def_blob — only
+                # symbols promoted from claims with explicit precision
+                # carry it. Legacy symbols (pre-2026-05-04) will not
+                # have this key and the field is propagated as None.
+                if isinstance(blob, dict) and "precision_metadata" in blob:
+                    pm = blob["precision_metadata"]
+                    if isinstance(pm, dict):
+                        precision_metadata = dict(pm)
+            except (json.JSONDecodeError, TypeError):
+                pass  # bootstrap / errata blobs may have different shapes
 
             children = []
             for child_hash in json.loads(row[2]):
@@ -774,10 +1050,34 @@ class SigmaKernel:
             return {
                 "ref": f"{row[0]}@v{row[1]}",
                 "hash": def_hash[:12],
+                "caveats": caveats,
+                "precision_metadata": precision_metadata,
                 "children": children,
             }
 
         return walk(symbol.def_hash)
+
+    def collect_caveats(self, symbol: Symbol) -> list[str]:
+        """Walk the TRACE graph and return the union of caveats across all
+        nodes, deduplicated, in stable (sorted) order.
+
+        This is the citation-grade helper: a document referencing ``symbol``
+        calls ``collect_caveats`` and renders the returned list as a
+        footnote. The substrate guarantees no caveat in the lineage is
+        dropped — that is the load-bearing property of
+        caveat-as-metadata-on-CLAIM (see proposal §6).
+        """
+        graph = self.TRACE(symbol)
+        out: set[str] = set()
+
+        def walk(node: dict[str, Any]) -> None:
+            for c in node.get("caveats", []):
+                out.add(c)
+            for child in node.get("children", []):
+                walk(child)
+
+        walk(graph)
+        return sorted(out)
 
     # ------------------------------------------------------------------
     # Inspection helpers (not opcodes)

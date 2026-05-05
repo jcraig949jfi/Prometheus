@@ -1,0 +1,62 @@
+{
+  "config": {
+    "n_episodes": 100,
+    "seeds": [
+      0
+    ],
+    "degree": 10,
+    "population_size": 8,
+    "n_mutations_per_episode": 8,
+    "seed_with_known": false,
+    "no_pipeline": false,
+    "out": "prometheus_math/_discovery_v2_pilot_smoke.json"
+  },
+  "results": [
+    {
+      "arm": "random",
+      "seed": 0,
+      "n_episodes": 100,
+      "elapsed_seconds": 1.1817375000100583,
+      "best_m_overall": 1.9962079999855398,
+      "elite_ms_min": 1.9962079999855398,
+      "elite_ms_median": 2.350220945280747,
+      "mean_reward": 3.1863871492569427,
+      "operator_call_counts": {
+        "mutate_single_coef": 117,
+        "mutate_two_coefs": 96,
+        "swap_palindromic_pairs": 117,
+        "increment_at_index": 102,
+        "decrement_at_index": 123,
+        "zero_at_index": 117,
+        "identity": 128
+      },
+      "n_shadow_catalog": 0,
+      "shadow_catalog": [],
+      "n_sub_lehmer_episodes": 0
+    },
+    {
+      "arm": "reinforce",
+      "seed": 0,
+      "n_episodes": 100,
+      "elapsed_seconds": 1.2592154999729246,
+      "best_m_overall": 1.722083805739042,
+      "elite_ms_min": 1.722083805739042,
+      "elite_ms_median": 2.350220945280747,
+      "mean_reward": 3.3818122998970592,
+      "operator_call_counts": {
+        "mutate_single_coef": 98,
+        "mutate_two_coefs": 117,
+        "swap_palindromic_pairs": 99,
+        "increment_at_index": 126,
+        "decrement_at_index": 103,
+        "zero_at_index": 123,
+        "identity": 134
+      },
+      "policy_weights_norm": 0.09173512250254515,
+      "n_shadow_catalog": 0,
+      "shadow_catalog": [],
+      "n_sub_lehmer_episodes": 0
+    }
+  ],
+  "elapsed_total_seconds": 2.473897600080818
+}

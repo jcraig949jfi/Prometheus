@@ -1,0 +1,154 @@
+{
+  "config": {
+    "n_episodes": 3000,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "degree": 10,
+    "population_size": 8,
+    "n_mutations_per_episode": 12,
+    "seed_with_known": false,
+    "no_pipeline": false,
+    "out": "F:/Prometheus/prometheus_math/_discovery_v2_pilot.json"
+  },
+  "results": [
+    {
+      "arm": "random",
+      "seed": 0,
+      "n_episodes": 3000,
+      "elapsed_seconds": 41.210692800115794,
+      "best_m_overall": 1.000000000000005,
+      "elite_ms_min": 1.000000000000005,
+      "elite_ms_median": 2.350220945280747,
+      "mean_reward": 4.5156069620739885,
+      "operator_call_counts": {
+        "mutate_single_coef": 5215,
+        "mutate_two_coefs": 5080,
+        "swap_palindromic_pairs": 5132,
+        "increment_at_index": 5220,
+        "decrement_at_index": 5194,
+        "zero_at_index": 5105,
+        "identity": 5054
+      },
+      "n_shadow_catalog": 0,
+      "shadow_catalog": [],
+      "n_sub_lehmer_episodes": 0
+    },
+    {
+      "arm": "reinforce",
+      "seed": 0,
+      "n_episodes": 3000,
+      "elapsed_seconds": 46.08737040008418,
+      "best_m_overall": 1.0000000000000007,
+      "elite_ms_min": 1.0000000000000007,
+      "elite_ms_median": 2.350220945280747,
+      "mean_reward": 4.688302063646974,
+      "operator_call_counts": {
+        "mutate_single_coef": 5701,
+        "mutate_two_coefs": 5164,
+        "swap_palindromic_pairs": 4839,
+        "increment_at_index": 4939,
+        "decrement_at_index": 5652,
+        "zero_at_index": 5520,
+        "identity": 4185
+      },
+      "policy_weights_norm": 0.30753586167997626,
+      "n_shadow_catalog": 0,
+      "shadow_catalog": [],
+      "n_sub_lehmer_episodes": 0
+    },
+    {
+      "arm": "random",
+      "seed": 1,
+      "n_episodes": 3000,
+      "elapsed_seconds": 34.61493690009229,
+      "best_m_overall": 1.0,
+      "elite_ms_min": 1.0,
+      "elite_ms_median": 2.000000024812856,
+      "mean_reward": 12.207921308357351,
+      "operator_call_counts": {
+        "mutate_single_coef": 5243,
+        "mutate_two_coefs": 5153,
+        "swap_palindromic_pairs": 5116,
+        "increment_at_index": 5201,
+        "decrement_at_index": 5066,
+        "zero_at_index": 5114,
+        "identity": 5107
+      },
+      "n_shadow_catalog": 0,
+      "shadow_catalog": [],
+      "n_sub_lehmer_episodes": 0
+    },
+    {
+      "arm": "reinforce",
+      "seed": 1,
+      "n_episodes": 3000,
+      "elapsed_seconds": 35.53373979986645,
+      "best_m_overall": 1.0,
+      "elite_ms_min": 1.0,
+      "elite_ms_median": 2.0000000000000124,
+      "mean_reward": 13.723439078650276,
+      "operator_call_counts": {
+        "mutate_single_coef": 6613,
+        "mutate_two_coefs": 6533,
+        "swap_palindromic_pairs": 5028,
+        "increment_at_index": 4103,
+        "decrement_at_index": 4173,
+        "zero_at_index": 6125,
+        "identity": 3425
+      },
+      "policy_weights_norm": 1.108266662784182,
+      "n_shadow_catalog": 0,
+      "shadow_catalog": [],
+      "n_sub_lehmer_episodes": 0
+    },
+    {
+      "arm": "random",
+      "seed": 2,
+      "n_episodes": 3000,
+      "elapsed_seconds": 42.830842199968174,
+      "best_m_overall": 1.0,
+      "elite_ms_min": 1.0,
+      "elite_ms_median": 2.0000000000000013,
+      "mean_reward": 7.72830640624172,
+      "operator_call_counts": {
+        "mutate_single_coef": 5208,
+        "mutate_two_coefs": 5198,
+        "swap_palindromic_pairs": 5155,
+        "increment_at_index": 5092,
+        "decrement_at_index": 5052,
+        "zero_at_index": 5087,
+        "identity": 5208
+      },
+      "n_shadow_catalog": 0,
+      "shadow_catalog": [],
+      "n_sub_lehmer_episodes": 0
+    },
+    {
+      "arm": "reinforce",
+      "seed": 2,
+      "n_episodes": 3000,
+      "elapsed_seconds": 48.07266360009089,
+      "best_m_overall": 1.0,
+      "elite_ms_min": 1.0,
+      "elite_ms_median": 1.973713852437458,
+      "mean_reward": 8.059103196672043,
+      "operator_call_counts": {
+        "mutate_single_coef": 5150,
+        "mutate_two_coefs": 5431,
+        "swap_palindromic_pairs": 5714,
+        "increment_at_index": 5084,
+        "decrement_at_index": 5304,
+        "zero_at_index": 5234,
+        "identity": 4083
+      },
+      "policy_weights_norm": 0.4573483823526432,
+      "n_shadow_catalog": 0,
+      "shadow_catalog": [],
+      "n_sub_lehmer_episodes": 0
+    }
+  ],
+  "elapsed_total_seconds": 248.39409140008502
+}

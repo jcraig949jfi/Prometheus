@@ -209,7 +209,11 @@ class TestLLLEdges:
 
 class TestCfExpandEdges:
     """cf_expand edges:
-    - q <= 0: ValueError
+    - q == 0: ValueError ("non-zero")
+    - q < 0: now auto-flips signs (wave 12 sign-normalization, 2026-04-21);
+      no longer raises. Verified by inspection: techne/lib/cf_expansion.py
+      cf_expand normalizes (p, q) -> (-p, -q) when q < 0 so the CF is
+      computed in the canonical q > 0 representation.
     - q = 1: degenerate, returns [p]
     - p = 0: returns [0]
     - p < 0: handles negatives
@@ -217,12 +221,21 @@ class TestCfExpandEdges:
     """
 
     def test_q_zero_raises(self):
-        with pytest.raises(ValueError, match="positive"):
+        # Calibration drift fix (2026-04-29): cf_expand's error message says
+        # "non-zero" not "positive"; assert against the actual wording.
+        with pytest.raises(ValueError, match="non-zero"):
             pm.number_theory.cf_expand(5, 0)
 
     def test_q_negative_raises(self):
-        with pytest.raises(ValueError, match="positive"):
-            pm.number_theory.cf_expand(5, -3)
+        # Calibration drift fix (2026-04-29): cf_expand no longer raises
+        # on q < 0 — wave 12 (cf_expansion.py 2026-04-21) added sign
+        # normalization that auto-flips (p, q) -> (-p, -q) when q < 0,
+        # producing the canonical CF. Verify the auto-flip behavior
+        # produces the same CF as the positive-denominator equivalent.
+        cf_neg = pm.number_theory.cf_expand(5, -3)
+        cf_pos = pm.number_theory.cf_expand(-5, 3)
+        assert cf_neg == cf_pos
+        assert isinstance(cf_neg, list) and len(cf_neg) >= 1
 
     def test_q_equals_1(self):
         # p / 1 = p, exactly one CF digit

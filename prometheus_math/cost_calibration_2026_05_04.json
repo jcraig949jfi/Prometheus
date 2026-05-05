@@ -1,0 +1,1284 @@
+{
+  "hardware": {
+    "platform": "Windows-10-10.0.26200-SP0",
+    "processor": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+    "machine": "AMD64",
+    "python_version": "3.11.9",
+    "python_implementation": "CPython",
+    "wall_clock": "time.perf_counter (monotonic)"
+  },
+  "n_profiled": 50,
+  "n_calibrated": 50,
+  "n_failed": 0,
+  "n_in_band_2x_to_50x": 33,
+  "n_out_of_band": 17,
+  "worst_skewed_top5": [
+    {
+      "callable_ref": "prometheus_math.numerics:flint_polmodp",
+      "sizes": [
+        4,
+        8,
+        16
+      ],
+      "times_us": [
+        1.800013706088066,
+        2.400018274784088,
+        3.4999102354049683
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(log n)",
+      "fitted_coefficient_us": 0.912033480459756,
+      "fitted_r2": 0.9939868517198975,
+      "declared_max_seconds": 0.005,
+      "p95_max_seconds": 6.5998174250125885e-06,
+      "ratio_declared_over_p95": 757.5967148804065,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    },
+    {
+      "callable_ref": "prometheus_math.numerics:flint_matmul_modp",
+      "sizes": [
+        4,
+        8,
+        16
+      ],
+      "times_us": [
+        9.600073099136353,
+        25.700079277157784,
+        87.50008419156075
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n log n)",
+      "fitted_coefficient_us": 1.0119015509324378,
+      "fitted_r2": 0.9960700673395101,
+      "declared_max_seconds": 0.05,
+      "p95_max_seconds": 9.450013749301434e-05,
+      "ratio_declared_over_p95": 529.0997592854943,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    },
+    {
+      "callable_ref": "techne.lib.root_number:root_number",
+      "sizes": [
+        0,
+        1,
+        2
+      ],
+      "times_us": [
+        5.300156772136688,
+        5.00003807246685,
+        21.900050342082977
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n^2)",
+      "fitted_coefficient_us": 5.000038072466852,
+      "fitted_r2": 1.0,
+      "declared_max_seconds": 0.005,
+      "p95_max_seconds": 2.7799978852272034e-05,
+      "ratio_declared_over_p95": 179.85625192629817,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    },
+    {
+      "callable_ref": "prometheus_math.numerics_special_dilogarithm:dilogarithm",
+      "sizes": [
+        4,
+        16,
+        64
+      ],
+      "times_us": [
+        1.00000761449337,
+        0.800006091594696,
+        0.800006091594696
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 1.0772255474802737,
+      "fitted_r2": 0.75,
+      "declared_max_seconds": 0.0005,
+      "p95_max_seconds": 3.400025889277458e-06,
+      "ratio_declared_over_p95": 147.05770375950146,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    },
+    {
+      "callable_ref": "prometheus_math.geometry_convex_hull:convex_hull",
+      "sizes": [
+        8,
+        32,
+        128
+      ],
+      "times_us": [
+        327.59993337094784,
+        353.29977981746197,
+        364.50009793043137
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 304.63932743992183,
+      "fitted_r2": 0.94566342493548,
+      "declared_max_seconds": 0.05,
+      "p95_max_seconds": 0.0003884001635015011,
+      "ratio_declared_over_p95": 128.73321048384875,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    }
+  ],
+  "profiles": {
+    "techne.lib.mahler_measure:mahler_measure": {
+      "callable_ref": "techne.lib.mahler_measure:mahler_measure",
+      "sizes": [
+        10,
+        20,
+        40
+      ],
+      "times_us": [
+        47.40012809634209,
+        108.50001126527786,
+        399.89990182220936
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n log n)",
+      "fitted_coefficient_us": 1.2675437037185362,
+      "fitted_r2": 0.9836418971120107,
+      "declared_max_seconds": 0.002,
+      "p95_max_seconds": 0.00040820008143782616,
+      "ratio_declared_over_p95": 4.899558062201476,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "techne.lib.mahler_measure:log_mahler_measure": {
+      "callable_ref": "techne.lib.mahler_measure:log_mahler_measure",
+      "sizes": [
+        10,
+        20,
+        40
+      ],
+      "times_us": [
+        44.29998807609081,
+        108.90001431107521,
+        400.2000205218792
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n log n)",
+      "fitted_coefficient_us": 1.0706017677120754,
+      "fitted_r2": 0.9889976559813046,
+      "declared_max_seconds": 0.002,
+      "p95_max_seconds": 0.00040549994446337223,
+      "ratio_declared_over_p95": 4.932183166256031,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "techne.lib.mahler_measure:is_cyclotomic": {
+      "callable_ref": "techne.lib.mahler_measure:is_cyclotomic",
+      "sizes": [
+        4,
+        8,
+        16
+      ],
+      "times_us": [
+        22.59993925690651,
+        35.800039768218994,
+        80.1000278443098
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n)",
+      "fitted_coefficient_us": 6.019859980962546,
+      "fitted_r2": 0.9757741938285247,
+      "declared_max_seconds": 0.002,
+      "p95_max_seconds": 8.130003698170185e-05,
+      "ratio_declared_over_p95": 24.600234812317968,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.research.lehmer:identify_salem_class": {
+      "callable_ref": "prometheus_math.research.lehmer:identify_salem_class",
+      "sizes": [
+        4,
+        10,
+        20
+      ],
+      "times_us": [
+        0.800006091594696,
+        1.00000761449337,
+        1.300126314163208
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(log n)",
+      "fitted_coefficient_us": 0.5207943899692097,
+      "fitted_r2": 0.984062547769606,
+      "declared_max_seconds": 5e-05,
+      "p95_max_seconds": 2.600019797682762e-06,
+      "ratio_declared_over_p95": 19.230622799319423,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.research.lehmer:is_reciprocal": {
+      "callable_ref": "prometheus_math.research.lehmer:is_reciprocal",
+      "sizes": [
+        4,
+        10,
+        20
+      ],
+      "times_us": [
+        0.4998873919248581,
+        0.800006091594696,
+        1.00000761449337
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(log n)",
+      "fitted_coefficient_us": 0.2794155510412971,
+      "fitted_r2": 0.9849384884238769,
+      "declared_max_seconds": 5e-05,
+      "p95_max_seconds": 2.00001522898674e-06,
+      "ratio_declared_over_p95": 24.999809639115252,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "techne.lib.cf_expansion:cf_expand": {
+      "callable_ref": "techne.lib.cf_expansion:cf_expand",
+      "sizes": [
+        1,
+        4,
+        16
+      ],
+      "times_us": [
+        0.400003045797348,
+        0.400003045797348,
+        0.2998858690261841
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 0.4196763675875827,
+      "fitted_r2": 0.7499999999999997,
+      "declared_max_seconds": 5e-05,
+      "p95_max_seconds": 1.600012183189392e-06,
+      "ratio_declared_over_p95": 31.249762048894063,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "techne.lib.cf_expansion:cf_max_digit": {
+      "callable_ref": "techne.lib.cf_expansion:cf_max_digit",
+      "sizes": [
+        1,
+        4,
+        16
+      ],
+      "times_us": [
+        0.400003045797348,
+        0.500120222568512,
+        0.400003045797348
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 0.43092365762479,
+      "fitted_r2": 0.0,
+      "declared_max_seconds": 5e-05,
+      "p95_max_seconds": 9.0012326836586e-07,
+      "ratio_declared_over_p95": 50.00000000000001,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "techne.lib.cf_expansion:sturm_bound": {
+      "callable_ref": "techne.lib.cf_expansion:sturm_bound",
+      "sizes": [
+        4,
+        12,
+        30
+      ],
+      "times_us": [
+        1.00000761449337,
+        0.500120222568512,
+        0.4998873919248581
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 1.4842427889237113,
+      "fitted_r2": 0.7942297909300245,
+      "declared_max_seconds": 0.0001,
+      "p95_max_seconds": 1.400010660290718e-06,
+      "ratio_declared_over_p95": 71.4280275403293,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "techne.lib.smith_normal_form:smith_normal_form": {
+      "callable_ref": "techne.lib.smith_normal_form:smith_normal_form",
+      "sizes": [
+        3,
+        5,
+        8
+      ],
+      "times_us": [
+        124.19978156685829,
+        167.69999638199806,
+        284.60007160902023
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n)",
+      "fitted_coefficient_us": 47.238274127385104,
+      "fitted_r2": 0.9672808334139165,
+      "declared_max_seconds": 0.01,
+      "p95_max_seconds": 0.00035069999285042286,
+      "ratio_declared_over_p95": 28.514400353196194,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "techne.lib.smith_normal_form:invariant_factors": {
+      "callable_ref": "techne.lib.smith_normal_form:invariant_factors",
+      "sizes": [
+        3,
+        5,
+        8
+      ],
+      "times_us": [
+        107.70000517368317,
+        160.4999415576458,
+        276.4998935163021
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n)",
+      "fitted_coefficient_us": 36.47833481745612,
+      "fitted_r2": 0.9873825319411571,
+      "declared_max_seconds": 0.01,
+      "p95_max_seconds": 0.00030860002152621746,
+      "ratio_declared_over_p95": 32.404404739001095,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "techne.lib.smith_normal_form:abelian_group_structure": {
+      "callable_ref": "techne.lib.smith_normal_form:abelian_group_structure",
+      "sizes": [
+        3,
+        5,
+        8
+      ],
+      "times_us": [
+        109.20013301074505,
+        162.8999598324299,
+        257.7998675405979
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n)",
+      "fitted_coefficient_us": 41.15559244135073,
+      "fitted_r2": 0.9959450699726993,
+      "declared_max_seconds": 0.01,
+      "p95_max_seconds": 0.00026529980823397636,
+      "ratio_declared_over_p95": 37.69320478053524,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "techne.lib.lll_reduction:lll": {
+      "callable_ref": "techne.lib.lll_reduction:lll",
+      "sizes": [
+        3,
+        5,
+        8
+      ],
+      "times_us": [
+        12.899981811642647,
+        20.10003663599491,
+        43.899985030293465
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n)",
+      "fitted_coefficient_us": 3.093988316851522,
+      "fitted_r2": 0.9672761159723259,
+      "declared_max_seconds": 0.005,
+      "p95_max_seconds": 0.00011739996261894703,
+      "ratio_declared_over_p95": 42.58945138022605,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "techne.lib.lll_reduction:shortest_vector_lll": {
+      "callable_ref": "techne.lib.lll_reduction:shortest_vector_lll",
+      "sizes": [
+        3,
+        5,
+        8
+      ],
+      "times_us": [
+        27.099857106804848,
+        26.099849492311478,
+        51.00015550851822
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n)",
+      "fitted_coefficient_us": 12.007724851561438,
+      "fitted_r2": 0.6834211680476143,
+      "declared_max_seconds": 0.005,
+      "p95_max_seconds": 7.639988325536251e-05,
+      "ratio_declared_over_p95": 65.4451261828211,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics:flint_factor": {
+      "callable_ref": "prometheus_math.numerics:flint_factor",
+      "sizes": [
+        4,
+        8,
+        16
+      ],
+      "times_us": [
+        18.900027498602867,
+        34.00002606213093,
+        68.10016930103302
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n)",
+      "fitted_coefficient_us": 5.15230217550862,
+      "fitted_r2": 0.9976644673383435,
+      "declared_max_seconds": 0.005,
+      "p95_max_seconds": 9.590014815330505e-05,
+      "ratio_declared_over_p95": 52.13756283261469,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics:flint_polmodp": {
+      "callable_ref": "prometheus_math.numerics:flint_polmodp",
+      "sizes": [
+        4,
+        8,
+        16
+      ],
+      "times_us": [
+        1.800013706088066,
+        2.400018274784088,
+        3.4999102354049683
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(log n)",
+      "fitted_coefficient_us": 0.912033480459756,
+      "fitted_r2": 0.9939868517198975,
+      "declared_max_seconds": 0.005,
+      "p95_max_seconds": 6.5998174250125885e-06,
+      "ratio_declared_over_p95": 757.5967148804065,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics:flint_matmul_modp": {
+      "callable_ref": "prometheus_math.numerics:flint_matmul_modp",
+      "sizes": [
+        4,
+        8,
+        16
+      ],
+      "times_us": [
+        9.600073099136353,
+        25.700079277157784,
+        87.50008419156075
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n log n)",
+      "fitted_coefficient_us": 1.0119015509324378,
+      "fitted_r2": 0.9960700673395101,
+      "declared_max_seconds": 0.05,
+      "p95_max_seconds": 9.450013749301434e-05,
+      "ratio_declared_over_p95": 529.0997592854943,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics:mpdft": {
+      "callable_ref": "prometheus_math.numerics:mpdft",
+      "sizes": [
+        4,
+        8,
+        16
+      ],
+      "times_us": [
+        60.20022556185722,
+        98.09993207454681,
+        203.89980636537075
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n)",
+      "fitted_coefficient_us": 17.06736608320617,
+      "fitted_r2": 0.9869121622360371,
+      "declared_max_seconds": 0.002,
+      "p95_max_seconds": 0.0002421000972390175,
+      "ratio_declared_over_p95": 8.261045835208673,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics:mpfft": {
+      "callable_ref": "prometheus_math.numerics:mpfft",
+      "sizes": [
+        4,
+        8,
+        16
+      ],
+      "times_us": [
+        47.79989831149578,
+        94.00001727044582,
+        193.9998473972082
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n)",
+      "fitted_coefficient_us": 11.683074373743073,
+      "fitted_r2": 0.9996040275000019,
+      "declared_max_seconds": 0.002,
+      "p95_max_seconds": 0.00021660001948475838,
+      "ratio_declared_over_p95": 9.233609511012695,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics:bernoulli": {
+      "callable_ref": "prometheus_math.numerics:bernoulli",
+      "sizes": [
+        4,
+        10,
+        20
+      ],
+      "times_us": [
+        1.00000761449337,
+        0.800006091594696,
+        0.800006091594696
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 1.1881512100657474,
+      "fitted_r2": 0.8156986414423963,
+      "declared_max_seconds": 0.005,
+      "p95_max_seconds": 0.00048470008186995983,
+      "ratio_declared_over_p95": 10.31565742821857,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics:zeta": {
+      "callable_ref": "prometheus_math.numerics:zeta",
+      "sizes": [
+        2,
+        4,
+        8
+      ],
+      "times_us": [
+        4.499917849898338,
+        3.400025889277458,
+        3.1997915357351303
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 5.144609298652136,
+      "fitted_r2": 0.8785532003776033,
+      "declared_max_seconds": 0.0003,
+      "p95_max_seconds": 2.1200161427259445e-05,
+      "ratio_declared_over_p95": 14.150835644782216,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics_special_dilogarithm:dilogarithm": {
+      "callable_ref": "prometheus_math.numerics_special_dilogarithm:dilogarithm",
+      "sizes": [
+        4,
+        16,
+        64
+      ],
+      "times_us": [
+        1.00000761449337,
+        0.800006091594696,
+        0.800006091594696
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 1.0772255474802737,
+      "fitted_r2": 0.75,
+      "declared_max_seconds": 0.0005,
+      "p95_max_seconds": 3.400025889277458e-06,
+      "ratio_declared_over_p95": 147.05770375950146,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics_special_dilogarithm:polylogarithm": {
+      "callable_ref": "prometheus_math.numerics_special_dilogarithm:polylogarithm",
+      "sizes": [
+        2,
+        5,
+        10
+      ],
+      "times_us": [
+        0.90012326836586,
+        129.7001726925373,
+        65.70015102624893
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n^3)",
+      "fitted_coefficient_us": 0.26400685013728725,
+      "fitted_r2": 0.7085736962703761,
+      "declared_max_seconds": 0.005,
+      "p95_max_seconds": 0.0002009000163525343,
+      "ratio_declared_over_p95": 24.88800195628718,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics_special_dilogarithm:bloch_wigner_dilog": {
+      "callable_ref": "prometheus_math.numerics_special_dilogarithm:bloch_wigner_dilog",
+      "sizes": [
+        1,
+        2,
+        4
+      ],
+      "times_us": [
+        395.5999854952097,
+        391.7999565601349,
+        512.9999481141567
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 377.6146168664523,
+      "fitted_r2": 0.7221805151830063,
+      "declared_max_seconds": 0.005,
+      "p95_max_seconds": 0.0005202998872846365,
+      "ratio_declared_over_p95": 9.609842558479526,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics_special_dilogarithm:clausen": {
+      "callable_ref": "prometheus_math.numerics_special_dilogarithm:clausen",
+      "sizes": [
+        1,
+        2,
+        4
+      ],
+      "times_us": [
+        213.79999816417694,
+        295.7999240607023,
+        347.8000871837139
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(log n)",
+      "fitted_coefficient_us": 219.67677923707927,
+      "fitted_r2": 0.9640722010537407,
+      "declared_max_seconds": 0.005,
+      "p95_max_seconds": 0.0003909000661224127,
+      "ratio_declared_over_p95": 12.790992975770488,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics_special_hurwitz:hurwitz_zeta": {
+      "callable_ref": "prometheus_math.numerics_special_hurwitz:hurwitz_zeta",
+      "sizes": [
+        2,
+        4,
+        8
+      ],
+      "times_us": [
+        1.4998950064182281,
+        1.400010660290718,
+        1.2998934835195541
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 1.6125743546579892,
+      "fitted_r2": 0.9995460945609913,
+      "declared_max_seconds": 0.0005,
+      "p95_max_seconds": 4.100147634744644e-06,
+      "ratio_declared_over_p95": 121.94682839295855,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics_special_hurwitz:polygamma": {
+      "callable_ref": "prometheus_math.numerics_special_hurwitz:polygamma",
+      "sizes": [
+        0,
+        2,
+        4
+      ],
+      "times_us": [
+        16.19989052414894,
+        103.09997014701366,
+        95.0000248849392
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 111.89053747290396,
+      "fitted_r2": 1.0,
+      "declared_max_seconds": 0.001,
+      "p95_max_seconds": 0.00013079983182251453,
+      "ratio_declared_over_p95": 7.645269768824506,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics_special_theta:theta_null_value": {
+      "callable_ref": "prometheus_math.numerics_special_theta:theta_null_value",
+      "sizes": [
+        1,
+        2,
+        3
+      ],
+      "times_us": [
+        13.09998333454132,
+        11.899974197149277,
+        11.699972674250603
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 13.022178653979202,
+      "fitted_r2": 0.9462086245529148,
+      "declared_max_seconds": 0.0008,
+      "p95_max_seconds": 2.4300068616867065e-05,
+      "ratio_declared_over_p95": 32.92171773723747,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics_special_theta:jacobi_theta": {
+      "callable_ref": "prometheus_math.numerics_special_theta:jacobi_theta",
+      "sizes": [
+        1,
+        2,
+        3
+      ],
+      "times_us": [
+        11.600088328123093,
+        11.800089851021767,
+        11.899974197149277
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 11.602853610830914,
+      "fitted_r2": 0.9981080207080756,
+      "declared_max_seconds": 0.0008,
+      "p95_max_seconds": 1.5900004655122757e-05,
+      "ratio_declared_over_p95": 50.314450677990926,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics_special_eta:eta": {
+      "callable_ref": "prometheus_math.numerics_special_eta:eta",
+      "sizes": [
+        1,
+        2,
+        4
+      ],
+      "times_us": [
+        59.50010381639004,
+        43.40009763836861,
+        36.00004129111767
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 58.23863292645999,
+      "fitted_r2": 0.9786394017149638,
+      "declared_max_seconds": 0.002,
+      "p95_max_seconds": 6.669992581009865e-05,
+      "ratio_declared_over_p95": 29.98504084838415,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics_special_eta:j_invariant": {
+      "callable_ref": "prometheus_math.numerics_special_eta:j_invariant",
+      "sizes": [
+        1,
+        2,
+        4
+      ],
+      "times_us": [
+        60.999998822808266,
+        50.79992115497589,
+        49.79991354048252
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 59.364175018305396,
+      "fitted_r2": 0.82273000711818,
+      "declared_max_seconds": 0.003,
+      "p95_max_seconds": 6.900005973875523e-05,
+      "ratio_declared_over_p95": 43.47822322702993,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics_special_eta:eta_quotient": {
+      "callable_ref": "prometheus_math.numerics_special_eta:eta_quotient",
+      "sizes": [
+        1,
+        2,
+        4
+      ],
+      "times_us": [
+        83.3999365568161,
+        73.20009171962738,
+        66.80004298686981
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 82.86017603975961,
+      "fitted_r2": 0.9898340809687504,
+      "declared_max_seconds": 0.002,
+      "p95_max_seconds": 8.830009028315544e-05,
+      "ratio_declared_over_p95": 22.65003346640439,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics_special_q_pochhammer:euler_function": {
+      "callable_ref": "prometheus_math.numerics_special_q_pochhammer:euler_function",
+      "sizes": [
+        1,
+        2,
+        4
+      ],
+      "times_us": [
+        31.800009310245514,
+        32.20001235604286,
+        36.800047382712364
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 31.164965879795133,
+      "fitted_r2": 0.8136889716978704,
+      "declared_max_seconds": 0.002,
+      "p95_max_seconds": 3.7499936297535896e-05,
+      "ratio_declared_over_p95": 53.3334239325473,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics_special_q_pochhammer:dedekind_eta": {
+      "callable_ref": "prometheus_math.numerics_special_q_pochhammer:dedekind_eta",
+      "sizes": [
+        1,
+        2,
+        4
+      ],
+      "times_us": [
+        49.20014180243015,
+        36.20004281401634,
+        29.900111258029938
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 48.26098587169238,
+      "fitted_r2": 0.982346658339163,
+      "declared_max_seconds": 0.002,
+      "p95_max_seconds": 5.0999922677874565e-05,
+      "ratio_declared_over_p95": 39.2157457302904,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.numerics_special_q_pochhammer:q_pochhammer": {
+      "callable_ref": "prometheus_math.numerics_special_q_pochhammer:q_pochhammer",
+      "sizes": [
+        1,
+        2,
+        4
+      ],
+      "times_us": [
+        129.89994138479233,
+        162.0999537408352,
+        37.499936297535896
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 172.02702199879573,
+      "fitted_r2": 0.6198305186487392,
+      "declared_max_seconds": 0.001,
+      "p95_max_seconds": 0.00016870000399649143,
+      "ratio_declared_over_p95": 5.927682135803611,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.combinatorics_partitions:num_partitions": {
+      "callable_ref": "prometheus_math.combinatorics_partitions:num_partitions",
+      "sizes": [
+        10,
+        30,
+        80
+      ],
+      "times_us": [
+        0.10011717677116394,
+        0.10011717677116394,
+        0.10011717677116394
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 0.10011717677116394,
+      "fitted_r2": 1.0,
+      "declared_max_seconds": 0.0005,
+      "p95_max_seconds": 1.819990575313568e-05,
+      "ratio_declared_over_p95": 27.47266973697677,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.combinatorics_partitions:partitions_of": {
+      "callable_ref": "prometheus_math.combinatorics_partitions:partitions_of",
+      "sizes": [
+        5,
+        8,
+        12
+      ],
+      "times_us": [
+        4.600035026669502,
+        16.900012269616127,
+        71.40007801353931
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n^3)",
+      "fitted_coefficient_us": 0.028654202884667485,
+      "fitted_r2": 0.9948325453355346,
+      "declared_max_seconds": 0.0008,
+      "p95_max_seconds": 7.16999638825655e-05,
+      "ratio_declared_over_p95": 11.157606736180343,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.combinatorics_partitions:conjugate": {
+      "callable_ref": "prometheus_math.combinatorics_partitions:conjugate",
+      "sizes": [
+        5,
+        10,
+        20
+      ],
+      "times_us": [
+        1.90013088285923,
+        4.00003045797348,
+        11.400086805224419
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n)",
+      "fitted_coefficient_us": 0.22567386669365858,
+      "fitted_r2": 0.9905606360617287,
+      "declared_max_seconds": 0.0002,
+      "p95_max_seconds": 1.1499971151351929e-05,
+      "ratio_declared_over_p95": 17.39134797538063,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.combinatorics_partitions:num_standard_young_tableaux": {
+      "callable_ref": "prometheus_math.combinatorics_partitions:num_standard_young_tableaux",
+      "sizes": [
+        3,
+        5,
+        8
+      ],
+      "times_us": [
+        4.400033503770828,
+        9.399838745594025,
+        20.59992402791977
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n log n)",
+      "fitted_coefficient_us": 0.7707656176878924,
+      "fitted_r2": 0.9988736790469467,
+      "declared_max_seconds": 0.0003,
+      "p95_max_seconds": 2.8299866244196892e-05,
+      "ratio_declared_over_p95": 10.600756816704648,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.combinatorics_partitions:rsk": {
+      "callable_ref": "prometheus_math.combinatorics_partitions:rsk",
+      "sizes": [
+        4,
+        8,
+        16
+      ],
+      "times_us": [
+        1.400010660290718,
+        2.00001522898674,
+        4.800036549568176
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n)",
+      "fitted_coefficient_us": 0.37451273830308135,
+      "fitted_r2": 0.9442029869956423,
+      "declared_max_seconds": 0.0002,
+      "p95_max_seconds": 5.00003807246685e-06,
+      "ratio_declared_over_p95": 39.9996954225844,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.combinatorics_partitions:hook_length_array": {
+      "callable_ref": "prometheus_math.combinatorics_partitions:hook_length_array",
+      "sizes": [
+        5,
+        10,
+        20
+      ],
+      "times_us": [
+        7.1998219937086105,
+        27.999980375170708,
+        133.20008292794228
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n^2)",
+      "fitted_coefficient_us": 0.2352789252808409,
+      "fitted_r2": 0.9984127925240243,
+      "declared_max_seconds": 0.0003,
+      "p95_max_seconds": 0.00013970001600682735,
+      "ratio_declared_over_p95": 2.1474585943163995,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.geometry_convex_hull:convex_hull": {
+      "callable_ref": "prometheus_math.geometry_convex_hull:convex_hull",
+      "sizes": [
+        8,
+        32,
+        128
+      ],
+      "times_us": [
+        327.59993337094784,
+        353.29977981746197,
+        364.50009793043137
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 304.63932743992183,
+      "fitted_r2": 0.94566342493548,
+      "declared_max_seconds": 0.05,
+      "p95_max_seconds": 0.0003884001635015011,
+      "ratio_declared_over_p95": 128.73321048384875,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.geometry_voronoi:voronoi_diagram": {
+      "callable_ref": "prometheus_math.geometry_voronoi:voronoi_diagram",
+      "sizes": [
+        8,
+        32,
+        128
+      ],
+      "times_us": [
+        395.29986679553986,
+        452.9999569058418,
+        707.0999126881361
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(log n)",
+      "fitted_coefficient_us": 242.74067741009304,
+      "fitted_r2": 0.9139647620667875,
+      "declared_max_seconds": 0.01,
+      "p95_max_seconds": 0.0007587999571114779,
+      "ratio_declared_over_p95": 13.178703960483839,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.geometry_delaunay:delaunay_triangulation": {
+      "callable_ref": "prometheus_math.geometry_delaunay:delaunay_triangulation",
+      "sizes": [
+        8,
+        32,
+        128
+      ],
+      "times_us": [
+        1488.1999231874943,
+        1033.3999525755644,
+        17668.1000739336
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n)",
+      "fitted_coefficient_us": 136.4203436829629,
+      "fitted_r2": 0.6414995878772867,
+      "declared_max_seconds": 0.02,
+      "p95_max_seconds": 0.01858990010805428,
+      "ratio_declared_over_p95": 1.0758530107073991,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.geometry_delaunay:circumcenter": {
+      "callable_ref": "prometheus_math.geometry_delaunay:circumcenter",
+      "sizes": [
+        2,
+        3,
+        4
+      ],
+      "times_us": [
+        9.699957445263863,
+        9.200070053339005,
+        9.499955922365189
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 9.839105310313538,
+      "fitted_r2": 0.22928858562770627,
+      "declared_max_seconds": 0.0005,
+      "p95_max_seconds": 1.7900019884109497e-05,
+      "ratio_declared_over_p95": 27.932929864724247,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "techne.lib.conductor:conductor": {
+      "callable_ref": "techne.lib.conductor:conductor",
+      "sizes": [
+        0,
+        1,
+        2
+      ],
+      "times_us": [
+        6.600050255656242,
+        5.700159817934036,
+        21.900050342082977
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n^2)",
+      "fitted_coefficient_us": 5.7001598179340345,
+      "fitted_r2": 1.0,
+      "declared_max_seconds": 0.005,
+      "p95_max_seconds": 6.400002166628838e-05,
+      "ratio_declared_over_p95": 78.12497355190303,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "techne.lib.conductor:bad_primes": {
+      "callable_ref": "techne.lib.conductor:bad_primes",
+      "sizes": [
+        0,
+        1,
+        2
+      ],
+      "times_us": [
+        6.800051778554916,
+        6.800051778554916,
+        22.900057956576347
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n^2)",
+      "fitted_coefficient_us": 6.800051778554916,
+      "fitted_r2": 1.0,
+      "declared_max_seconds": 0.005,
+      "p95_max_seconds": 5.3799943998456e-05,
+      "ratio_declared_over_p95": 92.93689971393826,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "techne.lib.root_number:root_number": {
+      "callable_ref": "techne.lib.root_number:root_number",
+      "sizes": [
+        0,
+        1,
+        2
+      ],
+      "times_us": [
+        5.300156772136688,
+        5.00003807246685,
+        21.900050342082977
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n^2)",
+      "fitted_coefficient_us": 5.000038072466852,
+      "fitted_r2": 1.0,
+      "declared_max_seconds": 0.005,
+      "p95_max_seconds": 2.7799978852272034e-05,
+      "ratio_declared_over_p95": 179.85625192629817,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "techne.lib.faltings_height:faltings_height": {
+      "callable_ref": "techne.lib.faltings_height:faltings_height",
+      "sizes": [
+        0,
+        1,
+        2
+      ],
+      "times_us": [
+        88.59997615218163,
+        74.29998368024826,
+        80.30002936720848
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(1)",
+      "fitted_coefficient_us": 74.29998368024827,
+      "fitted_r2": 1.0,
+      "declared_max_seconds": 0.005,
+      "p95_max_seconds": 0.0001276000402867794,
+      "ratio_declared_over_p95": 39.184940606308324,
+      "in_band": true,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.dynamics_iterated_maps:logistic_map": {
+      "callable_ref": "prometheus_math.dynamics_iterated_maps:logistic_map",
+      "sizes": [
+        50,
+        200,
+        800
+      ],
+      "times_us": [
+        3.800028935074806,
+        12.699980288743973,
+        49.900030717253685
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n)",
+      "fitted_coefficient_us": 0.09776256323205942,
+      "fitted_r2": 0.9986851885989656,
+      "declared_max_seconds": 0.005,
+      "p95_max_seconds": 5.000014789402485e-05,
+      "ratio_declared_over_p95": 99.99970421282521,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    },
+    "prometheus_math.dynamics_iterated_maps:tent_map": {
+      "callable_ref": "prometheus_math.dynamics_iterated_maps:tent_map",
+      "sizes": [
+        50,
+        200,
+        800
+      ],
+      "times_us": [
+        3.4999102354049683,
+        11.200085282325745,
+        44.09998655319214
+      ],
+      "n_repeats": 7,
+      "fitted_complexity": "O(n)",
+      "fitted_coefficient_us": 0.09472166309955954,
+      "fitted_r2": 0.9977725026891459,
+      "declared_max_seconds": 0.005,
+      "p95_max_seconds": 4.760012961924076e-05,
+      "ratio_declared_over_p95": 105.04173076829012,
+      "in_band": false,
+      "calibration_failed": false,
+      "error": ""
+    }
+  }
+}
