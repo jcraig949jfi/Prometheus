@@ -1,0 +1,2509 @@
+{
+  "computed_date": "2026-05-05",
+  "data_source": "1337xyz1337xyz/leandojo-benchmark4-v10 (HF mirror of LeanDojo Benchmark 4 v10, Zenodo record 12740403)",
+  "leandojo_version": "2.0.0",
+  "mathlib4_commit": "29dcec074de168ac2bf835a77ef68bbe069194c5",
+  "mathlib4_snapshot_date": "2024-07-02",
+  "split_used": "random (train + val + test, union)",
+  "n_theorems": 122517,
+  "n_theorems_with_tactics": 61544,
+  "fraction_term_mode": 0.4976697111421272,
+  "n_invocations": 259560,
+  "n_unparsed_invocations": 20,
+  "n_multi_head_invocations": 4590,
+  "n_total_head_counts": 265168,
+  "per_split_stats": [
+    {
+      "split": "train.json",
+      "n_theorems": 118517,
+      "n_theorems_with_tactics": 59557,
+      "n_invocations": 250794
+    },
+    {
+      "split": "val.json",
+      "n_theorems": 2000,
+      "n_theorems_with_tactics": 995,
+      "n_invocations": 4260
+    },
+    {
+      "split": "test.json",
+      "n_theorems": 2000,
+      "n_theorems_with_tactics": 992,
+      "n_invocations": 4506
+    }
+  ],
+  "raw_distribution": [
+    {
+      "tactic": "rw",
+      "count": 49209,
+      "fraction": 0.18557669100343932
+    },
+    {
+      "tactic": "simp",
+      "count": 35582,
+      "fraction": 0.13418662885416038
+    },
+    {
+      "tactic": "exact",
+      "count": 30950,
+      "fraction": 0.1167184577324564
+    },
+    {
+      "tactic": "have",
+      "count": 16891,
+      "fraction": 0.06369923972726724
+    },
+    {
+      "tactic": "refine",
+      "count": 14351,
+      "fraction": 0.05412040668557292
+    },
+    {
+      "tactic": "apply",
+      "count": 10185,
+      "fraction": 0.03840961201954987
+    },
+    {
+      "tactic": "intro",
+      "count": 8679,
+      "fraction": 0.03273019368852954
+    },
+    {
+      "tactic": "simpa",
+      "count": 7368,
+      "fraction": 0.02778615820913534
+    },
+    {
+      "tactic": "obtain",
+      "count": 6551,
+      "fraction": 0.024705092620527364
+    },
+    {
+      "tactic": "rcases",
+      "count": 5233,
+      "fraction": 0.019734658782356845
+    },
+    {
+      "tactic": "ext",
+      "count": 5182,
+      "fraction": 0.01954232788270078
+    },
+    {
+      "tactic": "rintro",
+      "count": 5113,
+      "fraction": 0.019282115489048453
+    },
+    {
+      "tactic": "simp_rw",
+      "count": 4825,
+      "fraction": 0.018196011585108307
+    },
+    {
+      "tactic": "rfl",
+      "count": 4407,
+      "fraction": 0.01661965244675074
+    },
+    {
+      "tactic": "rwa",
+      "count": 3253,
+      "fraction": 0.012267694442768358
+    },
+    {
+      "tactic": "let",
+      "count": 3214,
+      "fraction": 0.01212061787244313
+    },
+    {
+      "tactic": "by_cases",
+      "count": 2812,
+      "fraction": 0.010604597839860013
+    },
+    {
+      "tactic": "cases",
+      "count": 2794,
+      "fraction": 0.010536716345863754
+    },
+    {
+      "tactic": "convert",
+      "count": 2638,
+      "fraction": 0.009948410064562842
+    },
+    {
+      "tactic": "dsimp",
+      "count": 2601,
+      "fraction": 0.009808875882459421
+    },
+    {
+      "tactic": "constructor",
+      "count": 2344,
+      "fraction": 0.00883967899595728
+    },
+    {
+      "tactic": "congr",
+      "count": 1740,
+      "fraction": 0.006561877752971701
+    },
+    {
+      "tactic": "cases'",
+      "count": 1645,
+      "fraction": 0.006203614312435889
+    },
+    {
+      "tactic": "suffices",
+      "count": 1535,
+      "fraction": 0.005788782960236529
+    },
+    {
+      "tactic": "induction'",
+      "count": 1498,
+      "fraction": 0.005649248778133108
+    },
+    {
+      "tactic": "haveI",
+      "count": 1251,
+      "fraction": 0.004717763832739999
+    },
+    {
+      "tactic": "use",
+      "count": 1250,
+      "fraction": 0.004713992638629095
+    },
+    {
+      "tactic": "erw",
+      "count": 1160,
+      "fraction": 0.004374585168647801
+    },
+    {
+      "tactic": "induction",
+      "count": 1125,
+      "fraction": 0.004242593374766186
+    },
+    {
+      "tactic": "filter_upwards",
+      "count": 1082,
+      "fraction": 0.004080432027997345
+    },
+    {
+      "tactic": "calc",
+      "count": 986,
+      "fraction": 0.0037183973933506307
+    },
+    {
+      "tactic": "change",
+      "count": 982,
+      "fraction": 0.0037033126169070175
+    },
+    {
+      "tactic": "ring",
+      "count": 978,
+      "fraction": 0.0036882278404634043
+    },
+    {
+      "tactic": "split_ifs",
+      "count": 948,
+      "fraction": 0.003575092017136306
+    },
+    {
+      "tactic": "replace",
+      "count": 906,
+      "fraction": 0.0034167018644783685
+    },
+    {
+      "tactic": "subst",
+      "count": 767,
+      "fraction": 0.002892505883062813
+    },
+    {
+      "tactic": "norm_num",
+      "count": 749,
+      "fraction": 0.002824624389066554
+    },
+    {
+      "tactic": "classical",
+      "count": 746,
+      "fraction": 0.002813310806733844
+    },
+    {
+      "tactic": "positivity",
+      "count": 713,
+      "fraction": 0.0026888614010740363
+    },
+    {
+      "tactic": "linarith",
+      "count": 709,
+      "fraction": 0.002673776624630423
+    },
+    {
+      "tactic": "gcongr",
+      "count": 698,
+      "fraction": 0.002632293489410487
+    },
+    {
+      "tactic": "omega",
+      "count": 698,
+      "fraction": 0.002632293489410487
+    },
+    {
+      "tactic": "unfold",
+      "count": 682,
+      "fraction": 0.0025719543836360344
+    },
+    {
+      "tactic": "set",
+      "count": 641,
+      "fraction": 0.002417335425089
+    },
+    {
+      "tactic": "ext1",
+      "count": 639,
+      "fraction": 0.0024097930368671937
+    },
+    {
+      "tactic": "letI",
+      "count": 628,
+      "fraction": 0.0023683099016472576
+    },
+    {
+      "tactic": "contrapose!",
+      "count": 555,
+      "fraction": 0.0020930127315513182
+    },
+    {
+      "tactic": "norm_cast",
+      "count": 496,
+      "fraction": 0.0018705122790080252
+    },
+    {
+      "tactic": "intros",
+      "count": 456,
+      "fraction": 0.001719664514571894
+    },
+    {
+      "tactic": "infer_instance",
+      "count": 440,
+      "fraction": 0.0016593254087974416
+    },
+    {
+      "tactic": "exacts",
+      "count": 427,
+      "fraction": 0.001610299885355699
+    },
+    {
+      "tactic": "simp_all",
+      "count": 424,
+      "fraction": 0.0015989863030229892
+    },
+    {
+      "tactic": "decide",
+      "count": 377,
+      "fraction": 0.0014217401798105353
+    },
+    {
+      "tactic": "field_simp",
+      "count": 375,
+      "fraction": 0.0014141977915887287
+    },
+    {
+      "tactic": "assumption",
+      "count": 369,
+      "fraction": 0.001391570626923309
+    },
+    {
+      "tactic": "specialize",
+      "count": 360,
+      "fraction": 0.0013576298799251795
+    },
+    {
+      "tactic": "lift",
+      "count": 349,
+      "fraction": 0.0013161467447052435
+    },
+    {
+      "tactic": "swap",
+      "count": 345,
+      "fraction": 0.0013010619682616304
+    },
+    {
+      "tactic": "conv_rhs",
+      "count": 338,
+      "fraction": 0.0012746636094853074
+    },
+    {
+      "tactic": "aesop",
+      "count": 337,
+      "fraction": 0.0012708924153744042
+    },
+    {
+      "tactic": "by_contra",
+      "count": 335,
+      "fraction": 0.0012633500271525976
+    },
+    {
+      "tactic": "funext",
+      "count": 307,
+      "fraction": 0.001157756592047306
+    },
+    {
+      "tactic": "revert",
+      "count": 296,
+      "fraction": 0.0011162734568273699
+    },
+    {
+      "tactic": "clear",
+      "count": 286,
+      "fraction": 0.001078561515718337
+    },
+    {
+      "tactic": "conv_lhs",
+      "count": 282,
+      "fraction": 0.001063476739274724
+    },
+    {
+      "tactic": "split",
+      "count": 279,
+      "fraction": 0.0010521631569420141
+    },
+    {
+      "tactic": "choose",
+      "count": 274,
+      "fraction": 0.0010333071863874977
+    },
+    {
+      "tactic": "push_cast",
+      "count": 265,
+      "fraction": 0.0009993664393893682
+    },
+    {
+      "tactic": "all_goals",
+      "count": 259,
+      "fraction": 0.0009767392747239486
+    },
+    {
+      "tactic": "show",
+      "count": 250,
+      "fraction": 0.0009427985277258191
+    },
+    {
+      "tactic": "contradiction",
+      "count": 236,
+      "fraction": 0.0008900018101731732
+    },
+    {
+      "tactic": "tfae_have",
+      "count": 236,
+      "fraction": 0.0008900018101731732
+    },
+    {
+      "tactic": "aesop_cat",
+      "count": 229,
+      "fraction": 0.0008636034513968504
+    },
+    {
+      "tactic": "abel",
+      "count": 229,
+      "fraction": 0.0008636034513968504
+    },
+    {
+      "tactic": "push_neg",
+      "count": 226,
+      "fraction": 0.0008522898690641404
+    },
+    {
+      "tactic": "tauto",
+      "count": 213,
+      "fraction": 0.0008032643456223979
+    },
+    {
+      "tactic": "nth_rw",
+      "count": 208,
+      "fraction": 0.0007844083750678815
+    },
+    {
+      "tactic": "symm",
+      "count": 207,
+      "fraction": 0.0007806371809569782
+    },
+    {
+      "tactic": "case",
+      "count": 180,
+      "fraction": 0.0006788149399625898
+    },
+    {
+      "tactic": "conv",
+      "count": 177,
+      "fraction": 0.00066750135762988
+    },
+    {
+      "tactic": "delta",
+      "count": 177,
+      "fraction": 0.00066750135762988
+    },
+    {
+      "tactic": "by_contra!",
+      "count": 167,
+      "fraction": 0.0006297894165208472
+    },
+    {
+      "tactic": "fin_cases",
+      "count": 165,
+      "fraction": 0.0006222470282990406
+    },
+    {
+      "tactic": "apply_fun",
+      "count": 163,
+      "fraction": 0.000614704640077234
+    },
+    {
+      "tactic": "nontriviality",
+      "count": 163,
+      "fraction": 0.000614704640077234
+    },
+    {
+      "tactic": "try",
+      "count": 155,
+      "fraction": 0.0005845350871900079
+    },
+    {
+      "tactic": "ring_nf",
+      "count": 154,
+      "fraction": 0.0005807638930791046
+    },
+    {
+      "tactic": "slice_lhs",
+      "count": 151,
+      "fraction": 0.0005694503107463948
+    },
+    {
+      "tactic": "exfalso",
+      "count": 149,
+      "fraction": 0.0005619079225245881
+    },
+    {
+      "tactic": "ring1",
+      "count": 143,
+      "fraction": 0.0005392807578591685
+    },
+    {
+      "tactic": "right",
+      "count": 142,
+      "fraction": 0.0005355095637482653
+    },
+    {
+      "tactic": "left",
+      "count": 129,
+      "fraction": 0.00048648404030652263
+    },
+    {
+      "tactic": "injection",
+      "count": 129,
+      "fraction": 0.00048648404030652263
+    },
+    {
+      "tactic": "trans",
+      "count": 127,
+      "fraction": 0.0004789416520847161
+    },
+    {
+      "tactic": "match",
+      "count": 118,
+      "fraction": 0.0004450009050865866
+    },
+    {
+      "tactic": "generalize",
+      "count": 112,
+      "fraction": 0.00042237374042116695
+    },
+    {
+      "tactic": "linear_combination",
+      "count": 109,
+      "fraction": 0.00041106015808845713
+    },
+    {
+      "tactic": "fun_prop",
+      "count": 109,
+      "fraction": 0.00041106015808845713
+    },
+    {
+      "tactic": "slice_rhs",
+      "count": 101,
+      "fraction": 0.0003808906052012309
+    },
+    {
+      "tactic": "subst_vars",
+      "count": 99,
+      "fraction": 0.00037334821697942435
+    },
+    {
+      "tactic": "congr!",
+      "count": 96,
+      "fraction": 0.00036203463464671453
+    },
+    {
+      "tactic": "exact_mod_cast",
+      "count": 91,
+      "fraction": 0.00034317866409219814
+    },
+    {
+      "tactic": "simp?",
+      "count": 87,
+      "fraction": 0.00032809388764858506
+    },
+    {
+      "tactic": "trivial",
+      "count": 87,
+      "fraction": 0.00032809388764858506
+    },
+    {
+      "tactic": "norm_num1",
+      "count": 85,
+      "fraction": 0.0003205514994267785
+    },
+    {
+      "tactic": "next",
+      "count": 80,
+      "fraction": 0.0003016955288722621
+    },
+    {
+      "tactic": "if",
+      "count": 79,
+      "fraction": 0.00029792433476135885
+    },
+    {
+      "tactic": "coherence",
+      "count": 78,
+      "fraction": 0.00029415314065045554
+    },
+    {
+      "tactic": "introv",
+      "count": 73,
+      "fraction": 0.00027529717009593915
+    },
+    {
+      "tactic": "wlog",
+      "count": 67,
+      "fraction": 0.0002526700054305195
+    },
+    {
+      "tactic": "choose!",
+      "count": 65,
+      "fraction": 0.00024512761720871294
+    },
+    {
+      "tactic": "repeat",
+      "count": 64,
+      "fraction": 0.0002413564230978097
+    },
+    {
+      "tactic": "rename_i",
+      "count": 63,
+      "fraction": 0.0002375852289869064
+    },
+    {
+      "tactic": "inhabit",
+      "count": 62,
+      "fraction": 0.00023381403487600315
+    },
+    {
+      "tactic": "apply_rules",
+      "count": 61,
+      "fraction": 0.00023004284076509987
+    },
+    {
+      "tactic": "borelize",
+      "count": 61,
+      "fraction": 0.00023004284076509987
+    },
+    {
+      "tactic": "first",
+      "count": 60,
+      "fraction": 0.00022627164665419658
+    },
+    {
+      "tactic": "exists",
+      "count": 58,
+      "fraction": 0.00021872925843239004
+    },
+    {
+      "tactic": "nlinarith",
+      "count": 55,
+      "fraction": 0.0002074156760996802
+    },
+    {
+      "tactic": "ac_rfl",
+      "count": 53,
+      "fraction": 0.00019987328787787365
+    },
+    {
+      "tactic": "iterate",
+      "count": 51,
+      "fraction": 0.0001923308996560671
+    },
+    {
+      "tactic": "on_goal",
+      "count": 50,
+      "fraction": 0.00018855970554516383
+    },
+    {
+      "tactic": "tfae_finish",
+      "count": 50,
+      "fraction": 0.00018855970554516383
+    },
+    {
+      "tactic": "repeat'",
+      "count": 50,
+      "fraction": 0.00018855970554516383
+    },
+    {
+      "tactic": "clear_value",
+      "count": 48,
+      "fraction": 0.00018101731732335727
+    },
+    {
+      "tactic": "rotate_left",
+      "count": 47,
+      "fraction": 0.00017724612321245398
+    },
+    {
+      "tactic": "contrapose",
+      "count": 46,
+      "fraction": 0.00017347492910155073
+    },
+    {
+      "tactic": "solve_by_elim",
+      "count": 44,
+      "fraction": 0.00016593254087974416
+    },
+    {
+      "tactic": "nth_rewrite",
+      "count": 39,
+      "fraction": 0.00014707657032522777
+    },
+    {
+      "tactic": "simp!",
+      "count": 39,
+      "fraction": 0.00014707657032522777
+    },
+    {
+      "tactic": "fconstructor",
+      "count": 36,
+      "fraction": 0.00013576298799251795
+    },
+    {
+      "tactic": "convert_to",
+      "count": 36,
+      "fraction": 0.00013576298799251795
+    },
+    {
+      "tactic": "rsuffices",
+      "count": 35,
+      "fraction": 0.00013199179388161467
+    },
+    {
+      "tactic": "mfld_set_tac",
+      "count": 35,
+      "fraction": 0.00013199179388161467
+    },
+    {
+      "tactic": "any_goals",
+      "count": 33,
+      "fraction": 0.00012444940565980813
+    },
+    {
+      "tactic": "continuity",
+      "count": 31,
+      "fraction": 0.00011690701743800157
+    },
+    {
+      "tactic": "congrm",
+      "count": 31,
+      "fraction": 0.00011690701743800157
+    },
+    {
+      "tactic": "fapply",
+      "count": 30,
+      "fraction": 0.00011313582332709829
+    },
+    {
+      "tactic": "map_simp",
+      "count": 30,
+      "fraction": 0.00011313582332709829
+    },
+    {
+      "tactic": "rw_mod_cast",
+      "count": 27,
+      "fraction": 0.00010182224099438847
+    },
+    {
+      "tactic": "substs",
+      "count": 26,
+      "fraction": 9.805104688348519e-05
+    },
+    {
+      "tactic": "refine'",
+      "count": 23,
+      "fraction": 8.673746455077536e-05
+    },
+    {
+      "tactic": "sz_positivity",
+      "count": 23,
+      "fraction": 8.673746455077536e-05
+    },
+    {
+      "tactic": "set_option",
+      "count": 23,
+      "fraction": 8.673746455077536e-05
+    },
+    {
+      "tactic": "eval_simp",
+      "count": 21,
+      "fraction": 7.919507632896881e-05
+    },
+    {
+      "tactic": "isBoundedDefault",
+      "count": 20,
+      "fraction": 7.542388221806553e-05
+    },
+    {
+      "tactic": "clear!",
+      "count": 19,
+      "fraction": 7.165268810716226e-05
+    },
+    {
+      "tactic": "assumption_mod_cast",
+      "count": 19,
+      "fraction": 7.165268810716226e-05
+    },
+    {
+      "tactic": "unfold_let",
+      "count": 19,
+      "fraction": 7.165268810716226e-05
+    },
+    {
+      "tactic": "generalize_proofs",
+      "count": 18,
+      "fraction": 6.788149399625897e-05
+    },
+    {
+      "tactic": "group",
+      "count": 18,
+      "fraction": 6.788149399625897e-05
+    },
+    {
+      "tactic": "C_simp",
+      "count": 17,
+      "fraction": 6.41102998853557e-05
+    },
+    {
+      "tactic": "measurability",
+      "count": 16,
+      "fraction": 6.033910577445242e-05
+    },
+    {
+      "tactic": "beta_reduce",
+      "count": 16,
+      "fraction": 6.033910577445242e-05
+    },
+    {
+      "tactic": "zify",
+      "count": 16,
+      "fraction": 6.033910577445242e-05
+    },
+    {
+      "tactic": "abel_nf",
+      "count": 14,
+      "fraction": 5.279671755264587e-05
+    },
+    {
+      "tactic": "mem_tac",
+      "count": 14,
+      "fraction": 5.279671755264587e-05
+    },
+    {
+      "tactic": "injections",
+      "count": 13,
+      "fraction": 4.902552344174259e-05
+    },
+    {
+      "tactic": "valid",
+      "count": 13,
+      "fraction": 4.902552344174259e-05
+    },
+    {
+      "tactic": "apply_assumption",
+      "count": 13,
+      "fraction": 4.902552344174259e-05
+    },
+    {
+      "tactic": "interval_cases",
+      "count": 13,
+      "fraction": 4.902552344174259e-05
+    },
+    {
+      "tactic": "simp_arith",
+      "count": 13,
+      "fraction": 4.902552344174259e-05
+    },
+    {
+      "tactic": "rcongr",
+      "count": 11,
+      "fraction": 4.148313521993604e-05
+    },
+    {
+      "tactic": "rewrite",
+      "count": 10,
+      "fraction": 3.7711941109032764e-05
+    },
+    {
+      "tactic": "unit_interval",
+      "count": 10,
+      "fraction": 3.7711941109032764e-05
+    },
+    {
+      "tactic": "to_encard_tac",
+      "count": 9,
+      "fraction": 3.394074699812949e-05
+    },
+    {
+      "tactic": "ghost_fun_tac",
+      "count": 9,
+      "fraction": 3.394074699812949e-05
+    },
+    {
+      "tactic": "map_fun_tac",
+      "count": 9,
+      "fraction": 3.394074699812949e-05
+    },
+    {
+      "tactic": "witt_truncateFun_tac",
+      "count": 7,
+      "fraction": 2.6398358776322935e-05
+    },
+    {
+      "tactic": "pick_goal",
+      "count": 7,
+      "fraction": 2.6398358776322935e-05
+    },
+    {
+      "tactic": "init_ring",
+      "count": 7,
+      "fraction": 2.6398358776322935e-05
+    },
+    {
+      "tactic": "peel",
+      "count": 7,
+      "fraction": 2.6398358776322935e-05
+    },
+    {
+      "tactic": "existsi",
+      "count": 7,
+      "fraction": 2.6398358776322935e-05
+    },
+    {
+      "tactic": "pgame_wf_tac",
+      "count": 7,
+      "fraction": 2.6398358776322935e-05
+    },
+    {
+      "tactic": "matrix_simp",
+      "count": 6,
+      "fraction": 2.2627164665419658e-05
+    },
+    {
+      "tactic": "noncomm_ring",
+      "count": 6,
+      "fraction": 2.2627164665419658e-05
+    },
+    {
+      "tactic": "nofun",
+      "count": 6,
+      "fraction": 2.2627164665419658e-05
+    },
+    {
+      "tactic": "pderiv_simp",
+      "count": 6,
+      "fraction": 2.2627164665419658e-05
+    },
+    {
+      "tactic": "assumption'",
+      "count": 5,
+      "fraction": 1.8855970554516382e-05
+    },
+    {
+      "tactic": "compute_degree!",
+      "count": 5,
+      "fraction": 1.8855970554516382e-05
+    },
+    {
+      "tactic": "compute_degree",
+      "count": 5,
+      "fraction": 1.8855970554516382e-05
+    },
+    {
+      "tactic": "subst_hom_lift",
+      "count": 5,
+      "fraction": 1.8855970554516382e-05
+    },
+    {
+      "tactic": "have'",
+      "count": 5,
+      "fraction": 1.8855970554516382e-05
+    },
+    {
+      "tactic": "mono",
+      "count": 5,
+      "fraction": 1.8855970554516382e-05
+    },
+    {
+      "tactic": "unfold_projs",
+      "count": 4,
+      "fraction": 1.5084776443613105e-05
+    },
+    {
+      "tactic": "simpa?",
+      "count": 4,
+      "fraction": 1.5084776443613105e-05
+    },
+    {
+      "tactic": "cases_type",
+      "count": 4,
+      "fraction": 1.5084776443613105e-05
+    },
+    {
+      "tactic": "pi_lower_bound",
+      "count": 4,
+      "fraction": 1.5084776443613105e-05
+    },
+    {
+      "tactic": "rename",
+      "count": 4,
+      "fraction": 1.5084776443613105e-05
+    },
+    {
+      "tactic": "solve",
+      "count": 3,
+      "fraction": 1.1313582332709829e-05
+    },
+    {
+      "tactic": "ghost_calc",
+      "count": 3,
+      "fraction": 1.1313582332709829e-05
+    },
+    {
+      "tactic": "pi_upper_bound",
+      "count": 3,
+      "fraction": 1.1313582332709829e-05
+    },
+    {
+      "tactic": "bitwise_assoc_tac",
+      "count": 3,
+      "fraction": 1.1313582332709829e-05
+    },
+    {
+      "tactic": "infer_param",
+      "count": 3,
+      "fraction": 1.1313582332709829e-05
+    },
+    {
+      "tactic": "qify",
+      "count": 3,
+      "fraction": 1.1313582332709829e-05
+    },
+    {
+      "tactic": "transitivity",
+      "count": 3,
+      "fraction": 1.1313582332709829e-05
+    },
+    {
+      "tactic": "rename'",
+      "count": 2,
+      "fraction": 7.542388221806553e-06
+    },
+    {
+      "tactic": "derivative_simp",
+      "count": 2,
+      "fraction": 7.542388221806553e-06
+    },
+    {
+      "tactic": "rify",
+      "count": 2,
+      "fraction": 7.542388221806553e-06
+    },
+    {
+      "tactic": "cc",
+      "count": 2,
+      "fraction": 7.542388221806553e-06
+    },
+    {
+      "tactic": "focus",
+      "count": 2,
+      "fraction": 7.542388221806553e-06
+    },
+    {
+      "tactic": "with_unfolding_all",
+      "count": 2,
+      "fraction": 7.542388221806553e-06
+    },
+    {
+      "tactic": "ghost_simp",
+      "count": 2,
+      "fraction": 7.542388221806553e-06
+    },
+    {
+      "tactic": "set!",
+      "count": 2,
+      "fraction": 7.542388221806553e-06
+    },
+    {
+      "tactic": "mem_tac_aux",
+      "count": 2,
+      "fraction": 7.542388221806553e-06
+    },
+    {
+      "tactic": "eta_expand",
+      "count": 2,
+      "fraction": 7.542388221806553e-06
+    },
+    {
+      "tactic": "cancel_denoms",
+      "count": 2,
+      "fraction": 7.542388221806553e-06
+    },
+    {
+      "tactic": "ring!",
+      "count": 2,
+      "fraction": 7.542388221806553e-06
+    },
+    {
+      "tactic": "apply_mod_cast",
+      "count": 2,
+      "fraction": 7.542388221806553e-06
+    },
+    {
+      "tactic": "mv_bisim",
+      "count": 2,
+      "fraction": 7.542388221806553e-06
+    },
+    {
+      "tactic": "case'",
+      "count": 2,
+      "fraction": 7.542388221806553e-06
+    },
+    {
+      "tactic": "simp_all!",
+      "count": 2,
+      "fraction": 7.542388221806553e-06
+    },
+    {
+      "tactic": "swap_var",
+      "count": 1,
+      "fraction": 3.7711941109032764e-06
+    },
+    {
+      "tactic": "simp_intro",
+      "count": 1,
+      "fraction": 3.7711941109032764e-06
+    },
+    {
+      "tactic": "lift_lets",
+      "count": 1,
+      "fraction": 3.7711941109032764e-06
+    },
+    {
+      "tactic": "nomatch",
+      "count": 1,
+      "fraction": 3.7711941109032764e-06
+    },
+    {
+      "tactic": "done",
+      "count": 1,
+      "fraction": 3.7711941109032764e-06
+    },
+    {
+      "tactic": "use!",
+      "count": 1,
+      "fraction": 3.7711941109032764e-06
+    },
+    {
+      "tactic": "simp_wf",
+      "count": 1,
+      "fraction": 3.7711941109032764e-06
+    },
+    {
+      "tactic": "aesop_mat",
+      "count": 1,
+      "fraction": 3.7711941109032764e-06
+    },
+    {
+      "tactic": "rel",
+      "count": 1,
+      "fraction": 3.7711941109032764e-06
+    },
+    {
+      "tactic": "norm_cast0",
+      "count": 1,
+      "fraction": 3.7711941109032764e-06
+    },
+    {
+      "tactic": "casesm",
+      "count": 1,
+      "fraction": 3.7711941109032764e-06
+    },
+    {
+      "tactic": "transfer",
+      "count": 1,
+      "fraction": 3.7711941109032764e-06
+    },
+    {
+      "tactic": "open",
+      "count": 1,
+      "fraction": 3.7711941109032764e-06
+    },
+    {
+      "tactic": "run_tac",
+      "count": 1,
+      "fraction": 3.7711941109032764e-06
+    },
+    {
+      "tactic": "transfer_rw",
+      "count": 1,
+      "fraction": 3.7711941109032764e-06
+    },
+    {
+      "tactic": "move_mul",
+      "count": 1,
+      "fraction": 3.7711941109032764e-06
+    },
+    {
+      "tactic": "simpa!",
+      "count": 1,
+      "fraction": 3.7711941109032764e-06
+    },
+    {
+      "tactic": "refold_let",
+      "count": 1,
+      "fraction": 3.7711941109032764e-06
+    },
+    {
+      "tactic": "abel1",
+      "count": 1,
+      "fraction": 3.7711941109032764e-06
+    }
+  ],
+  "category_mapping": {
+    "ring_normalize": [
+      "ring",
+      "field_simp",
+      "ring_nf",
+      "ring1",
+      "group",
+      "noncomm_ring",
+      "compute_degree",
+      "compute_degree!",
+      "ring!"
+    ],
+    "extensionality": [
+      "ext",
+      "congr",
+      "ext1",
+      "funext",
+      "congr!",
+      "congrm"
+    ],
+    "rewrite": [
+      "rw",
+      "simp_rw",
+      "rfl",
+      "rwa",
+      "erw",
+      "change",
+      "subst",
+      "unfold",
+      "conv_rhs",
+      "conv_lhs",
+      "show",
+      "nth_rw",
+      "conv",
+      "delta",
+      "slice_lhs",
+      "slice_rhs",
+      "subst_vars",
+      "ac_rfl",
+      "nth_rewrite",
+      "rw_mod_cast",
+      "substs",
+      "unfold_let",
+      "beta_reduce",
+      "rcongr",
+      "rewrite",
+      "unfold_projs"
+    ],
+    "simp_normalize": [
+      "simp",
+      "simpa",
+      "dsimp",
+      "norm_num",
+      "norm_cast",
+      "simp_all",
+      "aesop",
+      "push_cast",
+      "abel",
+      "aesop_cat",
+      "push_neg",
+      "tauto",
+      "fun_prop",
+      "simp?",
+      "trivial",
+      "norm_num1",
+      "coherence",
+      "simp!",
+      "map_simp",
+      "eval_simp",
+      "C_simp",
+      "abel_nf",
+      "simp_arith",
+      "matrix_simp",
+      "pderiv_simp",
+      "simpa?",
+      "simp_intro"
+    ],
+    "induct_on": [
+      "induction'",
+      "induction",
+      "fin_cases"
+    ],
+    "case_split": [
+      "obtain",
+      "rcases",
+      "by_cases",
+      "cases",
+      "constructor",
+      "cases'",
+      "split_ifs",
+      "split",
+      "choose",
+      "nontriviality",
+      "right",
+      "injection",
+      "left",
+      "match",
+      "if",
+      "wlog",
+      "choose!",
+      "exists",
+      "injections",
+      "interval_cases",
+      "cases_type"
+    ],
+    "decide_arith": [
+      "positivity",
+      "linarith",
+      "omega",
+      "gcongr",
+      "decide",
+      "linear_combination",
+      "nlinarith",
+      "solve_by_elim",
+      "continuity",
+      "sz_positivity",
+      "measurability",
+      "zify",
+      "mono",
+      "solve",
+      "qify"
+    ],
+    "contradiction": [
+      "contrapose!",
+      "by_contra",
+      "contradiction",
+      "by_contra!",
+      "exfalso",
+      "contrapose"
+    ],
+    "intro": [
+      "intro",
+      "rintro",
+      "intros",
+      "introv"
+    ],
+    "apply": [
+      "exact",
+      "have",
+      "refine",
+      "apply",
+      "let",
+      "convert",
+      "suffices",
+      "haveI",
+      "use",
+      "filter_upwards",
+      "replace",
+      "letI",
+      "exacts",
+      "assumption",
+      "specialize",
+      "lift",
+      "show",
+      "tfae_have",
+      "symm",
+      "apply_fun",
+      "trans",
+      "exact_mod_cast",
+      "inhabit",
+      "apply_rules",
+      "tfae_finish",
+      "convert_to",
+      "fconstructor",
+      "rsuffices",
+      "fapply",
+      "refine'",
+      "assumption_mod_cast",
+      "apply_assumption",
+      "existsi",
+      "peel",
+      "have'",
+      "assumption'",
+      "use!"
+    ],
+    "calc_chain": [
+      "calc"
+    ],
+    "domain_specific": [
+      "mfld_set_tac",
+      "isBoundedDefault",
+      "mem_tac",
+      "valid",
+      "unit_interval",
+      "to_encard_tac",
+      "ghost_fun_tac",
+      "map_fun_tac",
+      "pgame_wf_tac",
+      "witt_truncateFun_tac",
+      "init_ring",
+      "pderiv_simp",
+      "subst_hom_lift",
+      "pi_lower_bound",
+      "bitwise_assoc_tac",
+      "pi_upper_bound",
+      "ghost_calc"
+    ],
+    "structural_admin": [
+      "classical",
+      "set",
+      "infer_instance",
+      "swap",
+      "revert",
+      "clear",
+      "all_goals",
+      "case",
+      "try",
+      "generalize",
+      "next",
+      "repeat",
+      "rename_i",
+      "borelize",
+      "first",
+      "iterate",
+      "repeat'",
+      "on_goal",
+      "clear_value",
+      "rotate_left",
+      "any_goals",
+      "set_option",
+      "clear!",
+      "generalize_proofs",
+      "pick_goal",
+      "nofun",
+      "rename",
+      "infer_param",
+      "focus",
+      "set!",
+      "done"
+    ],
+    "__unmapped__": [
+      "transitivity",
+      "rename'",
+      "derivative_simp",
+      "rify",
+      "cc",
+      "with_unfolding_all",
+      "ghost_simp",
+      "mem_tac_aux",
+      "eta_expand",
+      "cancel_denoms",
+      "apply_mod_cast",
+      "mv_bisim",
+      "case'",
+      "simp_all!",
+      "swap_var",
+      "lift_lets",
+      "nomatch",
+      "simp_wf",
+      "aesop_mat",
+      "rel",
+      "norm_cast0",
+      "casesm",
+      "transfer",
+      "open",
+      "run_tac",
+      "transfer_rw",
+      "move_mul",
+      "simpa!",
+      "refold_let",
+      "abel1"
+    ]
+  },
+  "category_mapping_with_counts": {
+    "ring_normalize": [
+      {
+        "tactic": "ring",
+        "count": 978
+      },
+      {
+        "tactic": "field_simp",
+        "count": 375
+      },
+      {
+        "tactic": "ring_nf",
+        "count": 154
+      },
+      {
+        "tactic": "ring1",
+        "count": 143
+      },
+      {
+        "tactic": "group",
+        "count": 18
+      },
+      {
+        "tactic": "noncomm_ring",
+        "count": 6
+      },
+      {
+        "tactic": "compute_degree",
+        "count": 5
+      },
+      {
+        "tactic": "compute_degree!",
+        "count": 5
+      },
+      {
+        "tactic": "ring!",
+        "count": 2
+      }
+    ],
+    "extensionality": [
+      {
+        "tactic": "ext",
+        "count": 5182
+      },
+      {
+        "tactic": "congr",
+        "count": 1740
+      },
+      {
+        "tactic": "ext1",
+        "count": 639
+      },
+      {
+        "tactic": "funext",
+        "count": 307
+      },
+      {
+        "tactic": "congr!",
+        "count": 96
+      },
+      {
+        "tactic": "congrm",
+        "count": 31
+      }
+    ],
+    "rewrite": [
+      {
+        "tactic": "rw",
+        "count": 49209
+      },
+      {
+        "tactic": "simp_rw",
+        "count": 4825
+      },
+      {
+        "tactic": "rfl",
+        "count": 4407
+      },
+      {
+        "tactic": "rwa",
+        "count": 3253
+      },
+      {
+        "tactic": "erw",
+        "count": 1160
+      },
+      {
+        "tactic": "change",
+        "count": 982
+      },
+      {
+        "tactic": "subst",
+        "count": 767
+      },
+      {
+        "tactic": "unfold",
+        "count": 682
+      },
+      {
+        "tactic": "conv_rhs",
+        "count": 338
+      },
+      {
+        "tactic": "conv_lhs",
+        "count": 282
+      },
+      {
+        "tactic": "show",
+        "count": 250
+      },
+      {
+        "tactic": "nth_rw",
+        "count": 208
+      },
+      {
+        "tactic": "conv",
+        "count": 177
+      },
+      {
+        "tactic": "delta",
+        "count": 177
+      },
+      {
+        "tactic": "slice_lhs",
+        "count": 151
+      },
+      {
+        "tactic": "slice_rhs",
+        "count": 101
+      },
+      {
+        "tactic": "subst_vars",
+        "count": 99
+      },
+      {
+        "tactic": "ac_rfl",
+        "count": 53
+      },
+      {
+        "tactic": "nth_rewrite",
+        "count": 39
+      },
+      {
+        "tactic": "rw_mod_cast",
+        "count": 27
+      },
+      {
+        "tactic": "substs",
+        "count": 26
+      },
+      {
+        "tactic": "unfold_let",
+        "count": 19
+      },
+      {
+        "tactic": "beta_reduce",
+        "count": 16
+      },
+      {
+        "tactic": "rcongr",
+        "count": 11
+      },
+      {
+        "tactic": "rewrite",
+        "count": 10
+      },
+      {
+        "tactic": "unfold_projs",
+        "count": 4
+      }
+    ],
+    "simp_normalize": [
+      {
+        "tactic": "simp",
+        "count": 35582
+      },
+      {
+        "tactic": "simpa",
+        "count": 7368
+      },
+      {
+        "tactic": "dsimp",
+        "count": 2601
+      },
+      {
+        "tactic": "norm_num",
+        "count": 749
+      },
+      {
+        "tactic": "norm_cast",
+        "count": 496
+      },
+      {
+        "tactic": "simp_all",
+        "count": 424
+      },
+      {
+        "tactic": "aesop",
+        "count": 337
+      },
+      {
+        "tactic": "push_cast",
+        "count": 265
+      },
+      {
+        "tactic": "abel",
+        "count": 229
+      },
+      {
+        "tactic": "aesop_cat",
+        "count": 229
+      },
+      {
+        "tactic": "push_neg",
+        "count": 226
+      },
+      {
+        "tactic": "tauto",
+        "count": 213
+      },
+      {
+        "tactic": "fun_prop",
+        "count": 109
+      },
+      {
+        "tactic": "simp?",
+        "count": 87
+      },
+      {
+        "tactic": "trivial",
+        "count": 87
+      },
+      {
+        "tactic": "norm_num1",
+        "count": 85
+      },
+      {
+        "tactic": "coherence",
+        "count": 78
+      },
+      {
+        "tactic": "simp!",
+        "count": 39
+      },
+      {
+        "tactic": "map_simp",
+        "count": 30
+      },
+      {
+        "tactic": "eval_simp",
+        "count": 21
+      },
+      {
+        "tactic": "C_simp",
+        "count": 17
+      },
+      {
+        "tactic": "abel_nf",
+        "count": 14
+      },
+      {
+        "tactic": "simp_arith",
+        "count": 13
+      },
+      {
+        "tactic": "matrix_simp",
+        "count": 6
+      },
+      {
+        "tactic": "pderiv_simp",
+        "count": 6
+      },
+      {
+        "tactic": "simpa?",
+        "count": 4
+      },
+      {
+        "tactic": "simp_intro",
+        "count": 1
+      }
+    ],
+    "induct_on": [
+      {
+        "tactic": "induction'",
+        "count": 1498
+      },
+      {
+        "tactic": "induction",
+        "count": 1125
+      },
+      {
+        "tactic": "fin_cases",
+        "count": 165
+      }
+    ],
+    "case_split": [
+      {
+        "tactic": "obtain",
+        "count": 6551
+      },
+      {
+        "tactic": "rcases",
+        "count": 5233
+      },
+      {
+        "tactic": "by_cases",
+        "count": 2812
+      },
+      {
+        "tactic": "cases",
+        "count": 2794
+      },
+      {
+        "tactic": "constructor",
+        "count": 2344
+      },
+      {
+        "tactic": "cases'",
+        "count": 1645
+      },
+      {
+        "tactic": "split_ifs",
+        "count": 948
+      },
+      {
+        "tactic": "split",
+        "count": 279
+      },
+      {
+        "tactic": "choose",
+        "count": 274
+      },
+      {
+        "tactic": "nontriviality",
+        "count": 163
+      },
+      {
+        "tactic": "right",
+        "count": 142
+      },
+      {
+        "tactic": "injection",
+        "count": 129
+      },
+      {
+        "tactic": "left",
+        "count": 129
+      },
+      {
+        "tactic": "match",
+        "count": 118
+      },
+      {
+        "tactic": "if",
+        "count": 79
+      },
+      {
+        "tactic": "wlog",
+        "count": 67
+      },
+      {
+        "tactic": "choose!",
+        "count": 65
+      },
+      {
+        "tactic": "exists",
+        "count": 58
+      },
+      {
+        "tactic": "injections",
+        "count": 13
+      },
+      {
+        "tactic": "interval_cases",
+        "count": 13
+      },
+      {
+        "tactic": "cases_type",
+        "count": 4
+      }
+    ],
+    "decide_arith": [
+      {
+        "tactic": "positivity",
+        "count": 713
+      },
+      {
+        "tactic": "linarith",
+        "count": 709
+      },
+      {
+        "tactic": "omega",
+        "count": 698
+      },
+      {
+        "tactic": "gcongr",
+        "count": 698
+      },
+      {
+        "tactic": "decide",
+        "count": 377
+      },
+      {
+        "tactic": "linear_combination",
+        "count": 109
+      },
+      {
+        "tactic": "nlinarith",
+        "count": 55
+      },
+      {
+        "tactic": "solve_by_elim",
+        "count": 44
+      },
+      {
+        "tactic": "continuity",
+        "count": 31
+      },
+      {
+        "tactic": "sz_positivity",
+        "count": 23
+      },
+      {
+        "tactic": "measurability",
+        "count": 16
+      },
+      {
+        "tactic": "zify",
+        "count": 16
+      },
+      {
+        "tactic": "mono",
+        "count": 5
+      },
+      {
+        "tactic": "solve",
+        "count": 3
+      },
+      {
+        "tactic": "qify",
+        "count": 3
+      }
+    ],
+    "contradiction": [
+      {
+        "tactic": "contrapose!",
+        "count": 555
+      },
+      {
+        "tactic": "by_contra",
+        "count": 335
+      },
+      {
+        "tactic": "contradiction",
+        "count": 236
+      },
+      {
+        "tactic": "by_contra!",
+        "count": 167
+      },
+      {
+        "tactic": "exfalso",
+        "count": 149
+      },
+      {
+        "tactic": "contrapose",
+        "count": 46
+      }
+    ],
+    "intro": [
+      {
+        "tactic": "intro",
+        "count": 8679
+      },
+      {
+        "tactic": "rintro",
+        "count": 5113
+      },
+      {
+        "tactic": "intros",
+        "count": 456
+      },
+      {
+        "tactic": "introv",
+        "count": 73
+      }
+    ],
+    "apply": [
+      {
+        "tactic": "exact",
+        "count": 30950
+      },
+      {
+        "tactic": "have",
+        "count": 16891
+      },
+      {
+        "tactic": "refine",
+        "count": 14351
+      },
+      {
+        "tactic": "apply",
+        "count": 10185
+      },
+      {
+        "tactic": "let",
+        "count": 3214
+      },
+      {
+        "tactic": "convert",
+        "count": 2638
+      },
+      {
+        "tactic": "suffices",
+        "count": 1535
+      },
+      {
+        "tactic": "haveI",
+        "count": 1251
+      },
+      {
+        "tactic": "use",
+        "count": 1250
+      },
+      {
+        "tactic": "filter_upwards",
+        "count": 1082
+      },
+      {
+        "tactic": "replace",
+        "count": 906
+      },
+      {
+        "tactic": "letI",
+        "count": 628
+      },
+      {
+        "tactic": "exacts",
+        "count": 427
+      },
+      {
+        "tactic": "assumption",
+        "count": 369
+      },
+      {
+        "tactic": "specialize",
+        "count": 360
+      },
+      {
+        "tactic": "lift",
+        "count": 349
+      },
+      {
+        "tactic": "show",
+        "count": 250
+      },
+      {
+        "tactic": "tfae_have",
+        "count": 236
+      },
+      {
+        "tactic": "symm",
+        "count": 207
+      },
+      {
+        "tactic": "apply_fun",
+        "count": 163
+      },
+      {
+        "tactic": "trans",
+        "count": 127
+      },
+      {
+        "tactic": "exact_mod_cast",
+        "count": 91
+      },
+      {
+        "tactic": "inhabit",
+        "count": 62
+      },
+      {
+        "tactic": "apply_rules",
+        "count": 61
+      },
+      {
+        "tactic": "tfae_finish",
+        "count": 50
+      },
+      {
+        "tactic": "convert_to",
+        "count": 36
+      },
+      {
+        "tactic": "fconstructor",
+        "count": 36
+      },
+      {
+        "tactic": "rsuffices",
+        "count": 35
+      },
+      {
+        "tactic": "fapply",
+        "count": 30
+      },
+      {
+        "tactic": "refine'",
+        "count": 23
+      },
+      {
+        "tactic": "assumption_mod_cast",
+        "count": 19
+      },
+      {
+        "tactic": "apply_assumption",
+        "count": 13
+      },
+      {
+        "tactic": "existsi",
+        "count": 7
+      },
+      {
+        "tactic": "peel",
+        "count": 7
+      },
+      {
+        "tactic": "have'",
+        "count": 5
+      },
+      {
+        "tactic": "assumption'",
+        "count": 5
+      },
+      {
+        "tactic": "use!",
+        "count": 1
+      }
+    ],
+    "calc_chain": [
+      {
+        "tactic": "calc",
+        "count": 986
+      }
+    ],
+    "domain_specific": [
+      {
+        "tactic": "mfld_set_tac",
+        "count": 35
+      },
+      {
+        "tactic": "isBoundedDefault",
+        "count": 20
+      },
+      {
+        "tactic": "mem_tac",
+        "count": 14
+      },
+      {
+        "tactic": "valid",
+        "count": 13
+      },
+      {
+        "tactic": "unit_interval",
+        "count": 10
+      },
+      {
+        "tactic": "to_encard_tac",
+        "count": 9
+      },
+      {
+        "tactic": "ghost_fun_tac",
+        "count": 9
+      },
+      {
+        "tactic": "map_fun_tac",
+        "count": 9
+      },
+      {
+        "tactic": "pgame_wf_tac",
+        "count": 7
+      },
+      {
+        "tactic": "witt_truncateFun_tac",
+        "count": 7
+      },
+      {
+        "tactic": "init_ring",
+        "count": 7
+      },
+      {
+        "tactic": "pderiv_simp",
+        "count": 6
+      },
+      {
+        "tactic": "subst_hom_lift",
+        "count": 5
+      },
+      {
+        "tactic": "pi_lower_bound",
+        "count": 4
+      },
+      {
+        "tactic": "bitwise_assoc_tac",
+        "count": 3
+      },
+      {
+        "tactic": "pi_upper_bound",
+        "count": 3
+      },
+      {
+        "tactic": "ghost_calc",
+        "count": 3
+      }
+    ],
+    "structural_admin": [
+      {
+        "tactic": "classical",
+        "count": 746
+      },
+      {
+        "tactic": "set",
+        "count": 641
+      },
+      {
+        "tactic": "infer_instance",
+        "count": 440
+      },
+      {
+        "tactic": "swap",
+        "count": 345
+      },
+      {
+        "tactic": "revert",
+        "count": 296
+      },
+      {
+        "tactic": "clear",
+        "count": 286
+      },
+      {
+        "tactic": "all_goals",
+        "count": 259
+      },
+      {
+        "tactic": "case",
+        "count": 180
+      },
+      {
+        "tactic": "try",
+        "count": 155
+      },
+      {
+        "tactic": "generalize",
+        "count": 112
+      },
+      {
+        "tactic": "next",
+        "count": 80
+      },
+      {
+        "tactic": "repeat",
+        "count": 64
+      },
+      {
+        "tactic": "rename_i",
+        "count": 63
+      },
+      {
+        "tactic": "borelize",
+        "count": 61
+      },
+      {
+        "tactic": "first",
+        "count": 60
+      },
+      {
+        "tactic": "iterate",
+        "count": 51
+      },
+      {
+        "tactic": "repeat'",
+        "count": 50
+      },
+      {
+        "tactic": "on_goal",
+        "count": 50
+      },
+      {
+        "tactic": "clear_value",
+        "count": 48
+      },
+      {
+        "tactic": "rotate_left",
+        "count": 47
+      },
+      {
+        "tactic": "any_goals",
+        "count": 33
+      },
+      {
+        "tactic": "set_option",
+        "count": 23
+      },
+      {
+        "tactic": "clear!",
+        "count": 19
+      },
+      {
+        "tactic": "generalize_proofs",
+        "count": 18
+      },
+      {
+        "tactic": "pick_goal",
+        "count": 7
+      },
+      {
+        "tactic": "nofun",
+        "count": 6
+      },
+      {
+        "tactic": "rename",
+        "count": 4
+      },
+      {
+        "tactic": "infer_param",
+        "count": 3
+      },
+      {
+        "tactic": "focus",
+        "count": 2
+      },
+      {
+        "tactic": "set!",
+        "count": 2
+      },
+      {
+        "tactic": "done",
+        "count": 1
+      }
+    ],
+    "__unmapped__": [
+      {
+        "tactic": "transitivity",
+        "count": 3
+      },
+      {
+        "tactic": "rename'",
+        "count": 2
+      },
+      {
+        "tactic": "derivative_simp",
+        "count": 2
+      },
+      {
+        "tactic": "rify",
+        "count": 2
+      },
+      {
+        "tactic": "cc",
+        "count": 2
+      },
+      {
+        "tactic": "with_unfolding_all",
+        "count": 2
+      },
+      {
+        "tactic": "ghost_simp",
+        "count": 2
+      },
+      {
+        "tactic": "mem_tac_aux",
+        "count": 2
+      },
+      {
+        "tactic": "eta_expand",
+        "count": 2
+      },
+      {
+        "tactic": "cancel_denoms",
+        "count": 2
+      },
+      {
+        "tactic": "apply_mod_cast",
+        "count": 2
+      },
+      {
+        "tactic": "mv_bisim",
+        "count": 2
+      },
+      {
+        "tactic": "case'",
+        "count": 2
+      },
+      {
+        "tactic": "simp_all!",
+        "count": 2
+      },
+      {
+        "tactic": "swap_var",
+        "count": 1
+      },
+      {
+        "tactic": "lift_lets",
+        "count": 1
+      },
+      {
+        "tactic": "nomatch",
+        "count": 1
+      },
+      {
+        "tactic": "simp_wf",
+        "count": 1
+      },
+      {
+        "tactic": "aesop_mat",
+        "count": 1
+      },
+      {
+        "tactic": "rel",
+        "count": 1
+      },
+      {
+        "tactic": "norm_cast0",
+        "count": 1
+      },
+      {
+        "tactic": "casesm",
+        "count": 1
+      },
+      {
+        "tactic": "transfer",
+        "count": 1
+      },
+      {
+        "tactic": "open",
+        "count": 1
+      },
+      {
+        "tactic": "run_tac",
+        "count": 1
+      },
+      {
+        "tactic": "transfer_rw",
+        "count": 1
+      },
+      {
+        "tactic": "move_mul",
+        "count": 1
+      },
+      {
+        "tactic": "simpa!",
+        "count": 1
+      },
+      {
+        "tactic": "refold_let",
+        "count": 1
+      },
+      {
+        "tactic": "abel1",
+        "count": 1
+      }
+    ]
+  },
+  "category_distribution": [
+    {
+      "category": "apply",
+      "count": 87600,
+      "fraction": 0.330356604115127
+    },
+    {
+      "category": "rewrite",
+      "count": 67273,
+      "fraction": 0.2536995414227961
+    },
+    {
+      "category": "simp_normalize",
+      "count": 49316,
+      "fraction": 0.18598020877330598
+    },
+    {
+      "category": "case_split",
+      "count": 23860,
+      "fraction": 0.08998069148615218
+    },
+    {
+      "category": "intro",
+      "count": 14321,
+      "fraction": 0.05400727086224582
+    },
+    {
+      "category": "extensionality",
+      "count": 7995,
+      "fraction": 0.030150696916671695
+    },
+    {
+      "category": "structural_admin",
+      "count": 4152,
+      "fraction": 0.015657997948470403
+    },
+    {
+      "category": "decide_arith",
+      "count": 3500,
+      "fraction": 0.013199179388161467
+    },
+    {
+      "category": "induct_on",
+      "count": 2788,
+      "fraction": 0.010514089181198335
+    },
+    {
+      "category": "ring_normalize",
+      "count": 1686,
+      "fraction": 0.006358233270982924
+    },
+    {
+      "category": "contradiction",
+      "count": 1488,
+      "fraction": 0.005611536837024075
+    },
+    {
+      "category": "calc_chain",
+      "count": 986,
+      "fraction": 0.0037183973933506307
+    },
+    {
+      "category": "domain_specific",
+      "count": 158,
+      "fraction": 0.0005958486695227177
+    },
+    {
+      "category": "__unmapped__",
+      "count": 45,
+      "fraction": 0.00016970373499064744
+    }
+  ],
+  "convergence_check": "agreement: all 10 Study 12 categories present",
+  "pareto_summary": {
+    "top_10_head_share": 0.6976671393229952,
+    "top_20_head_share": 0.836594159174561,
+    "top_50_head_share": 0.9461360345139685,
+    "n_distinct_heads_observed": 231
+  },
+  "honesty_notes": [
+    "Source is a HuggingFace mirror (1337xyz1337xyz/leandojo-benchmark4-v10) of the official LeanDojo Benchmark 4 v10 archive on Zenodo (record 12740403). Verified against metadata.json: leandojo_version 2.0.0, mathlib4 commit 29dcec074de168ac2bf835a77ef68bbe069194c5, creation 2024-07-02. The canonical kaiyuy/leandojo_benchmark_4 HF dataset was not searchable at compute time; LeanDojo's primary distribution is via Zenodo, not HF.",
+    "Split: random (train+val+test = 122,517 theorems). The 'novel_premises' split was not analyzed; for tactic-frequency analysis the union of train+val+test of any split covers each theorem exactly once.",
+    "Roughly 50% of mathlib4 theorems are PROVED IN TERM MODE (no traced_tactics). The Pareto here is over the tactic-mode subset only. The fraction_term_mode field captures this. Conclusions about 'how mathlib is proved' must include this caveat.",
+    "Tactic head extraction: regex on first identifier of the (whitespace-stripped, bullet-stripped) tactic string. This is a syntactic head, NOT the elaborated tactic; e.g., a custom user tactic registered as `my_tac` will appear as `my_tac` not as the underlying primitives it desugars to.",
+    "<;> combinator handling: when a tactic invocation contains `<;>` (sequencing onto subgoals), we count the head of BOTH sides. This means n_total_head_counts > n_invocations. The n_multi_head_invocations field reports how many invocations had this pattern.",
+    "We do NOT split on `;` (only on `<;>`), to avoid slicing inside brackets like `simp [h₁, h₂]`. This may slightly under-count rare semicolon-sequenced tactics.",
+    "Normalization aliases applied: refl→rfl. Lean 4 mathlib uses rfl exclusively; the alias is a defensive map. Other aliases (cases'/cases, intro/intros) are NOT collapsed because they preserve meaningful semantic distinctions while still mapping to the same Study 12 category.",
+    "Category mapping is opinion-tinted. Notable judgment calls: (a) `rfl` placed under 'rewrite' (it closes a rewrite-style goal); (b) `aesop` and `aesop_cat` placed under 'simp_normalize' even though they're broader-spectrum automation; (c) `convert` and `convert_to` placed under 'apply' (they apply with congruence holes); (d) `congr*` family placed under 'extensionality' (per Study 12 table); (e) `linear_combination` placed under 'decide_arith'; (f) `noncomm_ring` appears in BOTH simp_normalize and ring_normalize lists — precedence resolution puts it in ring_normalize.",
+    "Heads not in any category list go into '__unmapped__' bucket. This bucket's size and composition is the most informative debug signal: if it's small and structural-only (admin tactics like `swap`, `pick_goal`), the 8-10 category set is approximately complete; if it contains substantively-mathematical tactics, Study 12's list is missing categories.",
+    "The 'structural_admin' category is OUR addition, not Study 12's. It captures admin/orchestration tactics (`swap`, `try`, `all_goals`, `set`, `clear`, ...) that are not derivation primitives in the Study 12 sense. Reporting it separately keeps the 10-category convergence check honest.",
+    "This is a snapshot of mathlib4 at commit 29dcec07 (2024-07-02), as captured by LeanDojo v2.0.0. mathlib4 evolves continuously; `aesop` adoption, `omega` adoption, etc. have changed substantially over time. Recomputing on a newer snapshot would shift specific frequencies but is unlikely to change the qualitative Pareto shape or the category dominance pattern."
+  ]
+}
