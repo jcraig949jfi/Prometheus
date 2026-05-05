@@ -8,10 +8,15 @@ Diversity-collapse risk: if budget is too high, every cell's elite gets
 near-optimal at its rank, and the archive measures "rank ladder" rather
 than "evolutionary exploration." Default budget is 1 sweep total.
 
-One-site update closed form: with all cores except k held fixed,
-T(i_1,...,i_d) = L[i_1...i_{k-1}, :] @ G_k[:, i_k, :] @ R[:, i_{k+1}...i_d]
-The least-squares solution is G_k[:, i_k, :] = pinv(L) @ T_slice @ pinv(R).
-Cheap because L and R are tall-skinny (huge x rank).
+Each one-site local update admits a closed-form least-squares solve:
+
+    G_k[:, i_k, :] = pinv(L_k) @ T_slice @ pinv(R_k)
+
+where L_k (left environment) and R_k (right environment) are contractions
+of all cores except k. Global refinement is still iterative in the usual
+ALS sense: updating G_k changes the environments seen by G_{k+1}, so
+convergence requires bounded alternating sweeps across the whole chain.
+The "closed form" applies to the inner loop, not the outer sweep.
 """
 from __future__ import annotations
 import numpy as np

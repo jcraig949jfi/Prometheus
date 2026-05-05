@@ -1,57 +1,76 @@
-"""Stability descriptor: how much does the TT approximation drift under
-small perturbations of the input tensor?
+"""Stability descriptor — formal, gauge-invariant.
 
-Procedure: add Gaussian noise scaled to relative magnitude `noise_level`,
-recompute TT-SVD at the same rank profile, measure the L2 distance between
-the two approximations relative to the unperturbed approximation.
+For a tensor T with TT approximation \\hat{T}(T) at rank profile r, define
 
-Interpretation:
-  drift << noise_level: TT compression is robust (the structure being captured
-    is genuinely there).
-  drift ~~ noise_level: linear stability (proportional to perturbation).
-  drift >> noise_level: fragile compression (small input changes produce large
-    representation changes — characteristic of approximations that latch onto
-    coincidental SVD alignments rather than structure).
+    S(T, r, eps) := eps / E_delta[ || \\hat{T}(T + delta) - \\hat{T}(T) ||_F / || \\hat{T}(T) ||_F ]
 
-This is a per-(function, rank) measurement. Cheap enough to compute on every
-Pareto-front elite at the end of a run.
+where delta ~ N(0, sigma^2 I) with sigma chosen so E[||delta||_F] = eps * ||T||_F,
+i.e. sigma = eps * ||T||_F / sqrt(|T|).
+
+Gauge invariance. TT representations are non-unique up to bond-wise gauge:
+G_k -> G_k A, G_{k+1} -> A^{-1} G_{k+1} leaves the represented tensor fixed.
+Because S is defined on the reconstruction norm (not on the cores), S is
+invariant under any gauge choice made inside tt_svd.
+
+Interpretation.
+  S > 1  : drift < noise => robust compression (structure is real)
+  S ~ 1  : linear stability (drift proportional to noise)
+  S < 1  : fragile compression (noise amplified by representation; the
+           approximation is latched onto coincidental SVD alignment)
+
+Implementation returns drifts per trial so the caller can audit the
+distribution (a single mean can hide heavy-tailed instability).
 """
 from __future__ import annotations
 import numpy as np
 
-from ..tt.core import TTDecomposition, tt_svd, relative_l2_error
+from ..tt.core import tt_svd, relative_l2_error
+
+
+def _stable_norm(x: np.ndarray) -> float:
+    return float(np.linalg.norm(x))
 
 
 def stability_under_perturbation(dense: np.ndarray, ranks: tuple[int, ...],
                                  noise_level: float = 1e-3, n_trials: int = 3,
                                  seed: int = 20260424) -> dict:
+    """Compute S(T, r, eps) with n_trials realizations of delta.
+
+    All distances are measured on the reconstructed tensors, making S
+    gauge-invariant by construction.
+    """
     rng = np.random.default_rng(seed)
     base_tt = tt_svd(dense, max_ranks=ranks)
     base_recon = base_tt.reconstruct()
     base_error = relative_l2_error(dense, base_recon)
 
-    base_norm = float(np.linalg.norm(base_recon))
-    sigma = noise_level * float(np.linalg.norm(dense)) / np.sqrt(dense.size)
+    t_norm = _stable_norm(dense)
+    sigma = noise_level * t_norm / np.sqrt(dense.size)
+    base_recon_norm = _stable_norm(base_recon)
 
     drifts: list[float] = []
     for _ in range(n_trials):
-        noise = rng.standard_normal(dense.shape) * sigma
-        perturbed = dense + noise
+        delta = rng.standard_normal(dense.shape) * sigma
+        perturbed = dense + delta
         pert_tt = tt_svd(perturbed, max_ranks=ranks)
         pert_recon = pert_tt.reconstruct()
-        if base_norm == 0:
+        if base_recon_norm == 0:
             drifts.append(0.0)
         else:
-            drifts.append(float(np.linalg.norm(pert_recon - base_recon) / base_norm))
+            drifts.append(_stable_norm(pert_recon - base_recon) / base_recon_norm)
 
     mean_drift = float(np.mean(drifts))
+    median_drift = float(np.median(drifts))
     return {
+        "metric_type": "reconstruction_frobenius",
+        "gauge_invariant": True,
         "noise_level": noise_level,
         "n_trials": n_trials,
         "base_error": float(base_error),
-        "drifts": drifts,
+        "drifts": [float(d) for d in drifts],
         "mean_drift": mean_drift,
+        "median_drift": median_drift,
         "max_drift": float(np.max(drifts)),
         "stability_ratio": float(noise_level / max(mean_drift, 1e-15)),
-        # > 1 => robust (drift < noise); ~ 1 => linear; < 1 => fragile (amplifies noise)
+        "log_stability_ratio": float(np.log10(max(noise_level / max(mean_drift, 1e-15), 1e-15))),
     }

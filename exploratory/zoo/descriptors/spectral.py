@@ -72,3 +72,46 @@ def spectral_decay(dense: np.ndarray, bond: int | None = None,
         "n_kept_for_fit": int(mask.sum()),
         "note": None,
     }
+
+
+def effective_rank_at_threshold(dense: np.ndarray, bond: int | None = None,
+                                threshold: float = 1e-8) -> dict:
+    """Bounded integer alternative to spectral_decay. Returns the smallest k
+    such that sigma_{k+1} / sigma_1 < threshold at the middle unfolding.
+
+    Always finite. Cross-function correlation works with as few as 2
+    functions (no inf values).
+
+    threshold = 1e-8 corresponds to asking "how many singular values carry
+    information above a part-in-10^8 relative magnitude."
+    """
+    d = dense.ndim
+    if bond is None:
+        bond = _middle_bond(d)
+    shape = dense.shape
+    left_size = int(np.prod(shape[: bond + 1]))
+    right_size = int(np.prod(shape[bond + 1:]))
+    M = dense.reshape(left_size, right_size)
+    sigmas = np.linalg.svd(M, compute_uv=False)
+
+    if sigmas[0] < 1e-30:
+        return {"effective_rank": 0, "ceiling": int(len(sigmas)),
+                "threshold": threshold, "bond": int(bond),
+                "sigma_1": float(sigmas[0])}
+
+    norm = sigmas / sigmas[0]
+    # First index where norm < threshold; if never, full rank
+    below = np.where(norm < threshold)[0]
+    if len(below) == 0:
+        eff = int(len(sigmas))
+    else:
+        eff = int(below[0])  # count kept
+
+    return {
+        "effective_rank": eff,
+        "ceiling": int(len(sigmas)),
+        "threshold": threshold,
+        "bond": int(bond),
+        "sigma_1": float(sigmas[0]),
+        "log_effective_rank": float(np.log10(max(1, eff))),
+    }

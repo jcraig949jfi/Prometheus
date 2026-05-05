@@ -1,18 +1,32 @@
 # Conjecture Generator (Structure Hunter)
 
-**Status:** v0.2 DRAFT — incubation, not yet candidate. Pre-spec.
+**Status:** v0.3.1 DRAFT — incubation, not yet candidate. Pre-spec.
 **Proposed by:** Harmonia_M2_sessionC with James, 2026-04-23.
 **Slot:** architectural primitive / candidate generator #12.
 **Decision required before v1:** target class (§8), grammar atomic set +
 lineage closure (§4), merger-or-sibling with `gen_11` (§13).
 
-**Reframe (v0.2, per James 2026-04-23):** this is not a "conjecture
-generator." It is a **coordinate-system discovery engine constrained
-by algebraic-lineage pruning and MDL-with-encoding-robustness
-calibration.** Framing A is a derived artifact, not a primary output.
-Every candidate is a coordinate transformation with a declared
-`preserves` / `destroys` audit; candidates that assert invariants are
-type-rejected before scoring.
+**Reframe (v0.3, per James 2026-04-24 five-fragility critique):**
+the earlier reframe stands, but the discipline shape changes. v0.2 was
+"coordinate-system discovery engine constrained by algebraic-lineage
+pruning and MDL-with-encoding-robustness calibration." v0.3 is:
+
+> **Coordinate-system discovery engine defined by continuous
+> measurement of structural independence and usefulness.**
+
+Hard exclusion was over-brittle. A binary R² gate gives false negatives
+(non-linear couplings look novel) and under-uses continuous information
+(a candidate with `R² = 0.85` is genuinely closer to the identity basis
+than one with `R² = 0.05` but was getting equal treatment). v0.3
+replaces the binary gates with continuous metrics along seven axes
+(§6), with Pareto-front promotion rather than pure scalar minimization.
+Framing B stays as the type-level rule on output shape (no equalities,
+inequalities, or correlations), but candidates now carry a third
+metadata slot alongside `preserves`/`destroys`: **`affordances`** —
+empirical measurements of claim-relevant detectability gains under the
+transformation. Affordances are measurements, not claims; but a
+candidate whose affordances cross a declared threshold becomes eligible
+for Framing-A arbitration via `null_protocol_v1.1`.
 
 ---
 
@@ -87,7 +101,7 @@ The hard rule, enforced at the **type level**:
 | Any expression whose natural reading is a claim about the data | Claim in disguise |
 | A projection whose only purpose is to "reveal" a relation | Framing-C smuggling |
 
-**Mandatory declaration per candidate:**
+**Mandatory declaration per candidate (three fields, v0.3):**
 - `preserves`: list of algebraic properties, distributional moments, or
   relational structures that round-trip through the transformation.
   ("Rank is preserved." "Per-decile variance is preserved." "Isogeny
@@ -96,11 +110,84 @@ The hard rule, enforced at the **type level**:
   source coordinate that become indistinguishable under the
   transformation. ("Sign of `a_p` is destroyed." "Magnitude below
   `log N = 5` is quantized.")
+- **`affordances`** (v0.3, per James fragility critique 2A + 3.1):
+  empirical measurements of **claim-relevant detectability** under the
+  transformation. Not claims; measurements.
 
-**Candidates that cannot fill both fields are type-rejected pre-scoring.**
-A projection without a `preserves` / `destroys` audit is an information-
-lossy compression masquerading as a coordinate. The audit schema is
-what separates a coordinate system from a claim.
+**Candidates that cannot fill all three fields are type-rejected
+pre-scoring.** A projection without a `preserves` / `destroys` /
+`affordances` audit is an information-lossy compression masquerading
+as a coordinate.
+
+### 1.2 Affordances — bridging transformation and claim without smuggling (v0.3)
+
+The v0.2 hard rule forbade equalities, inequalities, and correlations
+as output. James's 2A critique: this over-constrains. Many useful
+transformations are useful *because* they linearize or expose a
+relation — a transform that makes `rank` detectable from transformed
+features is implicitly carrying structure. v0.2 forced the system to
+discover structure but never express it directly, producing awkward
+encodings or scoring loss.
+
+**Resolution: affordance measurements are allowed; affordance claims
+are not.** Concretely, a candidate may declare and report (v0.3.1 list,
+7 types):
+
+| Affordance type | Operational form | Measures | Applies |
+|---|---|---|---|
+| `linear_probe_gain` | Accuracy of `linear_model(transformed) → target` vs `linear_model(raw) → target` | How much easier a downstream linear task becomes | all candidates |
+| `nonlinear_probe_gain` | Accuracy of `RF(transformed) → target` vs `RF(raw) → target` (random forest with bounded depth, e.g., 100 trees depth 6) | Catches transformations useful to non-linear models but not linear ones | all candidates |
+| `variance_reduction` | `Var(Y | transformed) / Var(Y | raw)` for declared target `Y` | Tightens conditional distribution of `Y` | numerical targets |
+| `mutual_information_gain` | `I(transformed; Y) − I(raw; Y)` via KSG estimator, k=5 | Information about `Y` recovered/lost | any target |
+| `clustering_separability` | Silhouette score on k-means of transformed vs raw, `k` pinned | Cluster structure revealed | all candidates |
+| `rank_correlation_gain` | `|spearman(transformed, Y)| − |spearman(raw, Y)|` | Ordinal-relation exposure (useful for rank, torsion order, CM-type) | ordinal targets |
+| `autocorrelation_exposure` | Lag-1 autocorrelation of transformed sequence vs raw | Serial structure exposure | **sequence-valued atoms only** (e.g., `a_p` sequences) |
+
+**Null baseline discipline.** Every affordance score carries a
+declared null baseline — same metric computed on shuffled features
+(or equivalent randomization). Reported as a pair
+`(affordance_score, null_baseline)` in the SIGNATURE. The scorer uses
+`affordance_gain = affordance_score − null_baseline`, so candidates
+that score well only because the metric has a non-zero floor are not
+rewarded.
+
+**Affordance aggregation into score axis ζ.**
+
+```
+affordance_max = max over applicable types of (affordance_gain_normalized)
+axis_ζ_contribution = ζ · (1 − affordance_max)
+```
+
+`max` is used (not mean) because: a transformation that helps one
+downstream task strongly and others not at all is still valuable for
+that task; averaging dilutes the signal. Per-type affordances are
+reported individually in SIGNATURE for diagnostic use.
+
+**Extensibility.** The affordance list is versioned (current version
+7 types); an 8th type can be added via substrate amendment. A
+candidate's SIGNATURE records which affordance-list version it was
+scored against.
+
+**Framing-A activation path (v0.3, refined).** A candidate's affordance
+crossing a declared threshold makes it eligible for Framing-A
+arbitration — i.e., eligible to seed a candidate F-ID. The F-ID is NOT
+the affordance measurement itself; it is the hypothesis the affordance
+suggests, audited by `null_protocol_v1.1` with a full claim-class
+assignment. Example:
+
+- Candidate transform `σ(E) = (log|Disc|/log N, ∏c_p, rank)` declares
+  affordance `linear_probe_gain(rank) = +0.23` (accuracy gain on
+  rank prediction).
+- Affordance crosses threshold. Candidate F-ID proposed:
+  "rank is linearly predictable from `σ(E)` on rank-0 cohort."
+- Candidate F-ID enters `register_specimen`, gets Class 2 or Class 3
+  null protocol assignment, passes or fails Pattern 30 lineage check,
+  is audited.
+
+The affordance is NOT treated as evidence for any claim; it is a
+screening device that surfaces claim candidates for independent
+arbitration. The substrate's retraction-enabled infrastructure remains
+the arbiter of truth.
 
 ---
 
@@ -150,45 +237,83 @@ catch:
   equivalence class under the grammar's operator closure (e.g., `log X`
   and `log X + c` for grammar-definable `c` are the same "discovery")
 
-**Needed upgrade: ideal-quotient check.** Given the known-identity basis
-`{I_1, ..., I_k}` (BSD identity, Hasse bound, Mazur torsion classes,
-Scholz reflection, modularity trace, Szpiro-Faltings definitional
-coupling, etc.) **materialized as vectors on the calibration dataset**,
-a candidate expression `E` is checked for membership in the linear
-span these generate. Concretely, for v0:
+**Needed upgrade (v0.3: continuous multi-kernel basis-projection
+score).** Given the known-identity basis `{I_1, ..., I_k}` materialized
+as vectors on the calibration dataset, a candidate expression `E` is
+checked for functional redundancy against the basis using three
+complementary span-detection measures. Unlike v0.2's binary threshold,
+v0.3 returns a continuous score that enters scoring as a soft penalty
+(§6 axis γ), not as a hard prune.
 
-1. Compute `E(x)` over the calibration dataset (vector of length `n_objects`).
-2. Compute `I_j(x)` over the same dataset for each `j`.
-3. Regress `E ~ α_0 + α_1 I_1 + ... + α_k I_k + ε`.
-4. Classify by `R²`:
-   - `R² ≥ 0.99`: `ALGEBRAICALLY_DEPENDENT_LEVEL_3` (hard reject; functionally a rearrangement)
-   - `R² ∈ [0.90, 0.99)`: `ALGEBRAICALLY_DEPENDENT_LEVEL_2` (hard reject with audit-record)
-   - `R² ∈ [0.60, 0.90)`: `NEAR_TAUTOLOGY_LEVEL_1` (advisory flag; scorer penalty γ'; still scoreable)
-   - `R² < 0.60`: `CLEAN`
+**Three measures, taken jointly:**
 
-Thresholds pinned per-run in SIGNATURE. This is NOT a symbolic-algebra
-check; it's a **functional-redundancy check** — orthogonal to the
-atom-tag lineage gate and complementary to it. Expressions can pass the
-atom gate (distinct atomic closure) and still fail the quotient check
-(numerical span of identity basis).
+1. **Linear span strength** `R²_lin`: regress
+   `E ~ α_0 + α_1 I_1 + ... + α_k I_k + ε` via OLS; record `R²`.
+2. **Non-linear span strength** `R²_kern`: kernel ridge regression of
+   `E` against the basis with an RBF kernel (`γ = 1/n_features`, ridge
+   `λ = 1e-3` pinned default). Catches multiplicative couplings,
+   compositional dependencies, and monotone transforms that linear
+   regression misses.
+3. **Information span** `MI_norm`: mutual information estimate between
+   `E` and the basis vector `(I_1, ..., I_k)` via Kraskov-Stögbauer-
+   Grassberger (KSG) `k=5`. Normalized to `[0, 1]` by division by
+   `H(E)` (entropy of candidate). Catches couplings in distributional
+   form that neither regression picks up.
 
-**Honest caveats (logged in §9 failure-mode):**
-- False positives: a genuinely new finding that happens to span the
-  identity basis numerically on the calibration dataset but not
-  structurally. Mitigation: re-test on independent dataset; surface
-  for human adjudication.
-- False negatives: a true rearrangement expressed in a non-linear
-  form that the regression misses. Upgrade path: non-linear
-  identity-span check (kernel regression; symbolic canonicalization);
-  deferred to v1+.
+**Continuous basis-projection score:**
+
+```
+basis_projection_score = max(R²_lin, R²_kern, MI_norm)
+```
+
+Reported per-candidate in `[0, 1]`. Higher = closer to the identity
+span = less novel. Lower = farther from the span = more novel. No
+hard threshold; the score enters the seven-axis scorer (§6) with
+coefficient `γ`. Default `γ` is large enough that candidates with
+`basis_projection_score > 0.95` are effectively de-prioritized without
+being pre-pruned, which preserves auditability of boundary cases.
+
+**Per-measure reporting.** The three component scores are emitted
+separately in SIGNATURE so downstream readers can inspect which kind
+of dependence is firing. A candidate with `R²_lin = 0.1` but
+`R²_kern = 0.9` is a non-linear near-tautology that linear-only
+checks would miss — the separation is diagnostic.
+
+**Why max, not average.** Any one of the three measures crossing high
+is evidence of dependence; averaging dilutes signal. The stricter
+measure wins by construction. If users want a softer scoring, they
+can adjust `γ` downward, not the aggregation rule.
+
+**Rank-and-audit alternative to pure scoring.** Candidates are not only
+scored by aggregate MDL + penalties; they are also ranked on a
+Pareto front where one axis is `1 − basis_projection_score` ("novelty")
+and another is aggregate MDL-goodness. A candidate dominated on both
+is filtered; a candidate on the frontier is retained for review even
+at high `basis_projection_score`. This surfaces boundary cases the
+scalar score would hide (per James 2C critique: "novelty is defined
+relative to what you encoded — make it continuous, not binary").
+
+**Upgrade path to v1+:**
+- Symbolic canonicalization via CAS (SymPy) to catch rearrangements the
+  three numerical measures miss structurally but pick up numerically
+  by accident.
+- Per-kernel tuning to domain (RBF is default; polynomial kernel for
+  near-polynomial couplings; string-kernel for atom-sequence checks).
+- Basis-extension auto-suggestion: when a candidate's
+  `basis_projection_score` is high BUT no single known identity
+  explains it, the residual regression vector is a candidate
+  identity-basis addition.
 
 **The grammar is not just typed variables with lineage. It is:**
 
-> Typed variables + lineage tags + **forbidden subspaces** in the
-> functional span of the known-identity basis.
+> Typed variables + lineage tags + a **continuous distance-from-
+> identity-basis signal** in the functional span of the known
+> identities.
 
-That forbidden-subspace discipline is what prevents the F043 explosion
-beyond what atom-level typing alone would catch.
+Distance-from-basis replaces "forbidden subspaces" as the v0.2 mental
+model. The discipline is the same (prevent F043-shaped output); the
+mechanism is continuous, which makes the instrument's epistemology
+debuggable.
 
 ---
 
@@ -360,31 +485,286 @@ subject to Pattern 18 / `VACUUM@v1` discipline. Geometry 3 (projection-
 discipline is recursive) applied one layer above the candidate. The
 residual channel is where that recursion becomes operational.
 
+### 5.2 Auto-descriptor proposal from residual clusters (v0.3)
+
+Per James 2D critique: the v0.2 residual channel stopped at
+"cluster + surface to humans." Ontology lock-in persists because
+taxonomy updates only happen when a human reviews and decides. v0.3
+extends the residual channel to **machine-proposed descriptors** with
+a quantitative stability test.
+
+**Procedure:**
+
+1. **Cluster** unplaceable candidates as in §5.1 (tree-edit + MDL +
+   atom-Jaccard).
+2. **For each cluster of size ≥ threshold**, fit a simple classifier
+   that distinguishes cluster members from the union of declared-cell
+   members. The classifier's features are: atom-usage vector,
+   tree-depth, operator-histogram, preserves/destroys declarations,
+   affordance vector.
+3. **If the classifier achieves separation accuracy ≥ 0.8**, the
+   decision boundary defines a *candidate descriptor function*
+   `d_new: candidate → ℝ`. The descriptor is the function that, when
+   added as a MAP axis, would move this cluster into its own cell.
+4. **Stability test:** re-run MAP-Elites with `map_axes = existing ∪
+   {d_new}` on a fresh search budget. If:
+   - The new axis produces a cell with stable occupancy (≥ 3
+     candidates across independent seeds),
+   - The existing cells remain stable (out-of-MAP fraction does not
+     spike),
+   - Anchor rediscovery (§6 calibration battery) is not degraded,
+   then the descriptor is a **validated `AXIS_CLASS` extension
+   candidate**.
+5. **Human review** still gates actual `AXIS_CLASS@v2` promotion; the
+   instrument surfaces a quantitative proposal with a stability
+   record, not a unilateral taxonomy edit. The decision record lives
+   in `decisions_for_james.md`.
+
+**Example hypothetical workflow:**
+
+- v0.3 Tink 3 run produces 27 candidates in the residual channel.
+- Clustering yields three clusters of size 9, 8, 6.
+- Cluster-1 classifier separates members from the `magnitude` cell
+  at 0.91 accuracy; the decision boundary uses atom `j_invariant`
+  predominantly.
+- Descriptor `d_new = uses_j_invariant(candidate)` proposed.
+- Re-run with the new axis: new cell (`magnitude × j_invariant_user`)
+  populated with 5 candidates across 3 seeds; existing MAP stable;
+  anchor battery unchanged.
+- Entry surfaces in `decisions_for_james.md`: "candidate `AXIS_CLASS`
+  extension `j_invariant_user` proposed, validated by 2-seed
+  stability test. Recommended for `AXIS_CLASS@v2` if approved."
+
+**Safeguards:**
+
+- The auto-proposer does NOT modify the live `AXIS_CLASS@v1`
+  registry. It writes to a separate `AXIS_CLASS_CANDIDATES`
+  namespace.
+- A proposed descriptor that fails stability (anchor degradation,
+  unstable occupancy) is logged and discarded, not promoted.
+- The classifier's features are restricted to syntactic and
+  declared-metadata signals — it does not use MDL scores or
+  affordance values, so proposed descriptors cannot be gamed by
+  scoring-artifact clusters.
+
+**Composition with other discipline:** auto-descriptor proposals feed
+`gen_11` (coordinate-invention). If Structure Hunter and `gen_11`
+eventually merge (§13 open question), the auto-descriptor pathway is
+the natural interface.
+
 ---
 
-## 6. Scoring — MDL with pinned tradeoff
+## 6. Scoring — seven axes with Pareto-front promotion (v0.3)
 
-`MDL_SCORER@v1` gives `L(model) + L(data|model)` in bits. We extend to
-four-component scoring for the conjecture generator:
+v0.2 used a four-component scorer (α·simplicity + β·fit + γ·Pattern-30
+hard gate + δ·calibration hard gate). James's critique (2E + 3.1 +
+3.4 + 3.5) expanded the scope: MDL as sole proxy for structure misses
+sparse / threshold / phase-transition phenomena; hard gates obscure
+boundary cases; degenerate projections that destroy too much escape a
+fit-only objective; GP search dynamics bias tree shape.
+
+v0.3 generalizes to **seven axes**, all continuous, all pinned per-run,
+with Pareto-front promotion replacing pure scalar minimization.
 
 ```
-score(expr) = α · L(expr)                    [simplicity — shorter = better]
-            + β · L(data | expr)              [explanatory — tighter fit = better]
-            + γ · pattern_30_penalty(expr)    [≥ 2 = +∞; 1 = small penalty; 0 = 0]
-            + δ · calibration_penalty(expr)   [fails to recover anchors = +∞]
+score(expr, data, grammar, basis, anchors, explored) =
+    α · L(expr)                                         [simplicity]
+  + β · L(data | expr)                                  [fit]
+  + γ · basis_projection_score(expr, basis)             [algebraic novelty — §2.1]
+  + δ · calibration_alignment(expr, anchors)            [anchor-battery recovery]
+  + ε · residual_structure_score(expr, data)            [non-random leftover — §6.3 below]
+  + ζ · affordance_gain(expr, data, probes)             [downstream usefulness — §1.2]
+  + η · reconstructability(expr, data, preserves)       [inverse-model accuracy — §6.4]
+  + θ · ast_diversity_penalty(expr, explored)           [search-bias control — §6.5]
 ```
 
-**Tradeoff parameters (α, β, γ, δ) pinned per-run.** Default: α=β=1 (pure
-MDL), γ=∞ (hard reject Level ≥ 2), δ=∞ (hard reject calibration
-failures). A shelf candidate is an expression that passes calibration
-AND has Level ≤ 1 AND achieves competitive MDL against known-anchor
-baselines.
+All coefficients `(α, β, γ, δ, ε, ζ, η, θ)` pinned per-run in the
+SIGNATURE.
 
-**Reproducibility note:** scorer parameters are declared in the run's
-SIGNATURE; two runs with identical parameters on identical data must
-produce byte-identical rankings (per `long_term_architecture.md §2.1`
-idempotence discipline). Non-determinism in GP goes into an explicit
-seed parameter.
+### 6.0.1 Scale normalization (v0.3.1)
+
+Before coefficients make sense, axis scales must be commensurate.
+Naive bits-of-expression (tens to hundreds) and bits-of-data
+(hundreds of thousands for a 500K-row dataset) are orders of
+magnitude apart, and the six other axes live in `[0, 1]`. Default
+normalization:
+
+| Axis | Raw scale | Normalized form | Typical range |
+|---|---|---|---|
+| Simplicity | AST bits | per-node bits = `L(expr) / n_nodes` | `[0, 10]` |
+| Fit | data bits | per-sample bits = `L(data|expr) / n_samples` | `[0, 20]` |
+| Basis projection | `[0, 1]` max-of-three | unchanged | `[0, 1]` |
+| Calibration alignment | `[0, 1]` frac recovered | `1 − frac_recovered` | `[0, 1]` |
+| Residual structure | `[0, 1]` max-of-three | `1 − residual_score` | `[0, 1]` |
+| Affordance gain | `[0, ∞)` max-of-seven | `1 − min(1, affordance_max)` | `[0, 1]` |
+| Reconstructability | `[0, 1]` min accuracy | `1 − reconstructability` | `[0, 1]` |
+| AST diversity | `[0, 1]` similarity | unchanged | `[0, 1]` |
+
+### 6.0.2 Coefficient defaults (v0.3.1, PROVISIONAL)
+
+```
+α = 0.1     # simplicity — per-node bits; light because trees are small
+β = 1.0     # fit — per-sample bits; the anchor scale
+γ = 5.0     # basis projection — load-bearing, heavy penalty on dependence
+δ = +∞      # calibration — HARD REJECTION on total failure (§9.1 gate)
+            # otherwise 2.0 × (1 − calibration_alignment)
+ε = 1.0     # residual structure — substantial but not dominant
+ζ = 1.0     # affordance gain — substantial but not dominant
+η = 0.5     # reconstructability — moderate inverse pressure
+θ = 0.3     # AST diversity — light shape-diversity pressure
+```
+
+**These values are guesses.** The first cheap-path run (Tink 1
+anchor-rediscovery on F003) is the coefficient-calibration pass.
+Expected outcome:
+
+- F003 lands top-10 on aggregate score → current coefficients
+  approximately correct; minor tuning on run-2
+- F003 lands top-100 but not top-10 → raise `γ` and/or lower `α, β`;
+  the scorer under-weights novelty relative to fit
+- F003 not in top-100 → scorer is miscalibrated at the scale level,
+  not the coefficient level; investigate normalization before
+  tuning further
+
+The **coefficient-sensitivity audit** (§9.1 new failure-mode row
+"Pareto-front dominance bias") is the honesty mechanism for
+acknowledging that starting values are guesses. Every shelf-promoted
+candidate must survive coefficient perturbation at ±20% on each
+weight, with Pareto-front composition stable on at least one of the
+three triple axes. Candidates whose promotion depends on a specific
+coefficient value are not shelf-worthy.
+
+**Axis definitions (with operational forms):**
+
+| Axis | Symbol | Range | Measures | Operational form |
+|---|---|---|---|---|
+| Simplicity | `α · L(expr)` | `[0, ∞)` | Description length of the expression tree | Huffman-coded AST bits + symbol-table bits |
+| Fit | `β · L(data|expr)` | `[0, ∞)` | Description length of data given the transformation | Gaussian residual code on reconstructed features |
+| Basis projection | `γ · basis_projection_score` | `[0, 1]` | Functional-span overlap with known identities | `max(R²_lin, R²_kern, MI_norm)` per §2.1 |
+| Calibration alignment | `δ · (1 − frac_anchors_recovered)` | `[0, 1]` | Fraction of battery anchors the scorer places top-N | Per §7 battery |
+| Residual structure | `ε · (1 − randomness(residuals))` | `[0, 1]` | Non-random pattern remaining after transformation | Autocorrelation + Ljung-Box statistic + compression ratio of residuals |
+| Affordance gain | `ζ · (1 − max(affordance_scores))` | `[0, 1]` | How much downstream detectability improves | Per §1.2 probe set |
+| Reconstructability | `η · (1 − inverse_model_accuracy)` | `[0, 1]` | Whether declared preserves can be recovered from transformed features | Per §6.4 |
+| AST diversity penalty | `θ · similarity(expr, explored)` | `[0, 1]` | Penalty for redundancy with previously-explored tree shapes | Per §6.5 replay-buffer |
+
+**Aggregate scalar** used for initial ranking = sum of weighted axes.
+**Pareto-front promotion** replaces pure scalar minimization: the
+top-K promoted set is the non-dominated frontier on a pinned **three-
+axis substrate-value triple**:
+
+```
+Pareto-front axes (v0.3.1 default):
+  (1 − basis_projection_score)   [novelty — orthogonal to identity basis]
+  affordance_gain_normalized      [downstream usefulness]
+  reconstructability              [faithfulness — inverse-model accuracy]
+```
+
+**Why this triple, and why not include `fit`.** The aggregate scalar
+already handles fit and simplicity via `β·L(data|expr) + α·L(expr)`.
+Including fit in the Pareto-front makes the front highly correlated
+with the scalar ranking — the front becomes redundant with the
+ranking. The right move is a Pareto-front **orthogonal** to the
+aggregate scalar's emphasis: surfacing candidates that might lose on
+overall compression/fit but win on a specific substrate-value axis
+that a compression-first scorer underweights.
+
+The triple `(novelty, usefulness, faithfulness)` captures three
+independent ways a transformation can be substrate-valuable:
+- **Novelty** — it's not a rearrangement of what we already encoded
+- **Usefulness** — it makes a downstream measurement easier
+- **Faithfulness** — its declared `preserves` actually round-trip
+
+A candidate dominated on all three is not substrate-interesting
+regardless of MDL; a candidate non-dominated on ≥ 1 is retained for
+audit even if its aggregate scalar is middling. This is what surfaces
+the F011-shaped "statistical deficit that doesn't compress well but
+reveals structure on residuals" class of finding that naive MDL would
+lose.
+
+**Alternative triples** (declared per-run): some research questions
+may warrant different axes. Valid alternatives include
+`(novelty, residual_structure, reconstructability)` for
+phase-transition-style discovery, or
+`(novelty, affordance_gain, calibration_alignment)` for anchor-adjacent
+terrain. The triple choice is a SIGNATURE field; default is the one
+above.
+
+**Hard rejection remains for exactly two cases (v0.3.1 principled
+retention):**
+
+1. **Type-level Framing B violation.** `preserves`/`destroys`/`affordances`
+   not declared, or expression has forbidden output shape (§1.1).
+2. **Calibration battery total failure.** `frac_anchors_recovered = 0`
+   for in-grammar anchors.
+
+**Why these two, and no others.** The v0.3.1 reframe commits to
+continuous discipline "inside the pipeline." But these two rejections
+are not about candidate quality along an axis — they are about two
+distinct categories of failure that continuous pressure cannot
+address:
+
+- **Framing B enforces what the instrument IS.** A candidate that
+  outputs `X = Y` is categorically a different kind of thing from a
+  transformation. Making this continuous ("90% transformation, 10%
+  claim") would be category confusion, not epistemic humility. The
+  rule is semantic: an expression whose *natural reading is an
+  assertion of truth across the dataset* is forbidden. An expression
+  that *uses comparison operators as part of an object-level
+  transformation* (e.g., a Boolean feature `σ(x) = [j(x) > 1728]`) is
+  fine — it's a transformation whose image is `{0, 1}`, not a claim.
+
+- **Calibration total failure means the scorer itself is
+  uncalibrated.** If the instrument cannot recover any known anchor
+  from a grammar that demonstrably contains them, the scorer's
+  verdict on non-anchor candidates is not "worse-ranked"; it is
+  structurally untrustworthy. Soft pressure (δ-penalty scaling) on a
+  broken scorer just means we promote less-bad garbage. The gate
+  exists to prevent broken-scorer outputs from entering review at
+  all.
+
+Both rejections have the property: continuous pressure is
+*categorically inappropriate*, not just weaker. Every other
+discipline layer addresses "how good is this candidate on an axis"
+— the right move there is continuous. These two address "is this
+output the kind of thing the instrument produces" and "is the
+instrument working" — categorical, not continuous.
+
+**All other discipline is continuous.** Pattern-30 / lineage tagging
+(§2) still sets atom-level closure tags, but the `basis_projection_score`
+uses those tags as *input*, not as a gate. A candidate with strong
+atom-level closure AND high `R²_kern` is penalized heavily via `γ`
+but still appears on the Pareto front, still has a SIGNATURE, still
+is auditable. The discipline is encoded in the score, not in the
+gate.
+
+**Why this is better than binary:**
+
+- **Boundary cases surface.** A candidate at `basis_projection_score
+  = 0.85` and `affordance_gain = 0.6` is on the "borderline tautology
+  that also usefully reduces downstream variance" boundary — this is
+  exactly the kind of case where the identity basis might be
+  incomplete (real novelty) OR the affordance might be spurious
+  (false positive). Binary reject gives us no visibility into this
+  class; Pareto-front surfaces it for audit.
+- **Coefficient-sensitivity debuggable.** Running the same candidate
+  set at multiple `γ` values shows how sensitive the promoted set is
+  to basis-projection weight. A promoted set that changes drastically
+  at `γ ∈ [1, 3]` is less trustworthy than one stable across that
+  range. This is the coefficient-space analog of §6.1 encoding-
+  perturbation.
+- **Multi-objective accommodates structure plurality.** Per James 2E:
+  structure is not always compressive. Residual structure, affordance
+  gain, and reconstructability each capture a different kind of
+  "is this meaningful" signal. MDL as sole proxy misses threshold
+  and sparse phenomena; the seven-axis scorer gives them explicit
+  weight.
+
+**Reproducibility note:** scorer parameters (all eight coefficients +
+per-axis sub-thresholds + kernel bandwidths + probe-set + inverse-model
+choice + replay-buffer seed) are declared in the SIGNATURE; two runs
+with identical parameters on identical data produce byte-identical
+rankings (per `long_term_architecture.md §2.1` idempotence). Non-
+determinism lives in an explicit seed.
 
 ### 6.1 Encoding-perturbation robustness (v0.2)
 
@@ -446,6 +826,181 @@ A scorer without these artifacts has not been calibrated — it has only
 been *tested*. The shelf-promotion gate requires all three to be
 present and passing.
 
+### 6.2 Cross-dataset consistency as a first-class artifact (v0.3)
+
+Per James 3.3 critique: cross-dataset validation was mentioned in v0.2
+but not first-class. v0.3 elevates it to a required per-run artifact.
+
+**Protocol:** every production run is executed against **≥ 2
+datasets**:
+
+- **Primary calibration dataset.** `Q_EC_R0_D5@v1` (LMFDB rank-0 EC,
+  conductor `[10⁵, 10⁶)`, `n = 559,386`).
+- **Secondary cross-check dataset (at least one of):**
+  - `Q_EC_R0_D4@v0` (proposed) — rank 0, conductor `[10⁴, 10⁵)`,
+    smaller cohort but same claim-class, tests conductor-range
+    robustness.
+  - `Q_EC_R0_D6@v0` (proposed) — rank 0, conductor `[10⁶, 10⁷)`,
+    larger cohort, tests scaling robustness.
+  - `Q_EC_R2_D5@v0` (proposed) — rank 2 at same conductor range,
+    tests whether candidates are rank-class-specific.
+
+**Per-candidate consistency metrics (required artifact):**
+
+```
+consistency_score(candidate) = 1 - |aggregate_score_primary - aggregate_score_secondary|
+                                    / max(aggregate_score_primary, aggregate_score_secondary)
+```
+
+- `consistency_score ≥ 0.9`: candidate's aggregate score survives
+  dataset swap; robust.
+- `consistency_score ∈ [0.7, 0.9)`: partial consistency; flag for
+  audit.
+- `consistency_score < 0.7`: candidate is dataset-specific; penalize
+  heavily or retain only as a conditional candidate ("works on
+  `Q_EC_R0_D5@v1` only").
+
+**Per-axis consistency decomposition.** The aggregate score's axis
+components are reported separately across datasets; a candidate whose
+`basis_projection_score` is consistent but whose `affordance_gain`
+varies by `2×` is diagnostic — the algebraic structure is stable but
+the downstream utility is dataset-specific, which is informative
+rather than disqualifying.
+
+**Pareto-front promotion now requires** passing `consistency_score ≥
+0.7` on at least one axis-component decomposition. Pure MDL-optimal
+candidates that collapse under dataset swap do not promote.
+
+**Composition with §4.1 affordances:** affordance measurements are
+run independently on each dataset; the affordance_gain axis in the
+scorer uses the *minimum* across datasets (worst-case). Candidates
+that afford linear-probe gain on one dataset but not another are
+surfaced as dataset-specific, not dataset-general.
+
+### 6.3 Residual structure — non-random leftover pattern detection (v0.3)
+
+Per James 2E critique: MDL assumes structure = compression, but some
+real structure (sparse phenomena, phase transitions, threshold
+effects) is not compressive in the given representation. v0.3 adds a
+`residual_structure_score` axis (ε).
+
+**Measurement:**
+
+For a candidate transformation `σ: objects → features`:
+
+1. Compute transformed feature vector `σ(x)` over the dataset.
+2. Compute residuals `r = data - model(σ(x))` where `model` is a
+   pinned simple regressor (e.g., linear regression of raw target
+   against transformed features).
+3. Test residuals `r` for non-random structure using three measures:
+   - **Autocorrelation** of residuals ordered by conductor: lag-1
+     coefficient + Ljung-Box Q statistic p-value.
+   - **Compression ratio** of residual sequence under `zstd` vs under
+     shuffle (deterministic patterns compress below shuffle baseline).
+   - **Mutual information** between residuals and object identity
+     (non-random residuals carry identity information that target-
+     regression missed).
+4. Aggregate: `residual_structure_score = max(1 - p_LjungBox,
+   1 - compress_ratio/compress_ratio_shuffle, MI_normalized)`.
+   Higher = more residual structure = transformation exposes
+   something the simple regression doesn't capture.
+
+**Why this matters:** a transformation that creates a two-hump
+distribution in residuals (phase-transition signature) is exposing
+structure invisible to MDL-on-forward-pass. A transformation that
+produces i.i.d. residuals has compressed all legible structure into
+the model; residual structure is near zero. Both are valid; they
+carry different information. The scorer weights both.
+
+**Pattern 30 interaction:** residual structure with `autocorrelation`
+coefficient ≥ 0.9 AND dataset-wide is candidate for a Pattern 30
+flag — residuals that dense correlate might reflect the transformation
+leaving a definitional term untouched. Cross-check by computing the
+autocorrelation under shuffled dataset order; persistent structure
+under shuffle indicates true residual structure, not ordering artifact.
+
+### 6.4 Reconstructability — inverse pressure against degenerate projections (v0.3)
+
+Per James 3.4 critique: transformations that destroy too much (e.g.,
+a transform that maps all objects to `0`) can score well on simplicity
+and even on some "novelty" axes while being useless. v0.3 adds a
+reconstructability axis (η) as a soft floor.
+
+**Measurement:**
+
+For a candidate with declared `preserves = {P_1, P_2, ...}`:
+
+1. Fit a simple inverse model `invM: σ(x) → preserves(x)` on a
+   train/test split. Default inverse model: gradient-boosted
+   regression (XGBoost with ≤ 100 trees, depth ≤ 4) — bounded-
+   complexity so it cannot memorize the training set.
+2. Measure inverse-model accuracy on test set per preserved property.
+   For numerical properties: `1 − NRMSE`. For categorical: classification accuracy.
+3. Aggregate: `reconstructability = min(accuracy_per_preserved)`.
+   A transformation must reconstruct *all* declared preserves to
+   score well; partial preservation is penalized on the weakest link.
+
+**What this catches:**
+
+- Degenerate projections: `σ(x) = 0` for all `x` can't reconstruct
+  anything → reconstructability = 0 → heavy scorer penalty even if
+  simplicity is maximal.
+- Over-optimistic `preserves` declarations: a candidate that claims
+  to preserve `rank` but whose transformed features don't predict
+  rank → declaration is falsified → reconstructability low.
+- Information-lossy transformations masquerading as useful: a
+  transformation whose affordance gain is high (downstream probes
+  work better) but whose reconstructability is low is genuinely
+  useful only for specific downstream tasks; not a general-purpose
+  coordinate.
+
+**Composition with §1.2 affordances:** reconstructability and
+affordance gain are different axes. A transformation can have high
+affordance for task `T` (downstream probes detect `T`) AND low
+reconstructability for property `P` — the transformation is useful
+for `T` but lossy for `P`. Both are measured; the scorer weights
+them. A candidate with high affordance AND high reconstructability
+is a general-purpose coordinate; a candidate with high affordance
+AND low reconstructability is a task-specific projection (valid but
+narrower).
+
+### 6.5 AST-structure diversity — search-bias control (v0.3)
+
+Per James 3.5 critique: GP search dynamics have structural biases
+(e.g., bloating, symmetry-breaking, operator-frequency skew). v0.3
+adds an `ast_diversity_penalty` axis (θ).
+
+**Mechanism:**
+
+1. Maintain a **replay buffer** of explored expression tree shapes.
+   The buffer stores canonicalized AST hashes (sub-tree ordering
+   normalized, variable-name-substituted) with occurrence counts.
+2. For each new candidate, compute `similarity(expr, buffer)` =
+   weighted mean of (1 − Hamming distance between canonical hashes)
+   over top-K nearest buffer entries.
+3. Penalty: `ast_diversity_penalty = similarity(expr, buffer)` ∈
+   `[0, 1]`. Higher = candidate is redundant with previously-explored
+   shapes.
+
+**Scorer integration:** `θ · ast_diversity_penalty` enters the scalar
+aggregate with default `θ = 0.2`. A candidate repeating a
+previously-explored shape pays a small cost; a candidate with a novel
+tree shape is rewarded.
+
+**Buffer-management discipline:**
+
+- Buffer is per-run, seeded empty; does NOT persist across runs
+  (persistence would bias results by replay history).
+- Canonical-hash computation is pinned in SIGNATURE.
+- Buffer max size = max(1000, 10% of iteration_budget); eviction by
+  FIFO on hash-age (not by score).
+
+**Why this matters:** GP populations collapse to local structural
+optima if unconstrained. Diversity pressure on tree shape
+complements MAP-Elites behavioral diversity — MAP enforces output
+diversity (different cells), θ enforces input diversity (different
+tree shapes). Both are needed; either alone leaves a failure mode.
+
 ---
 
 ## 7. Calibration-first — no novel output until anchors pass
@@ -503,21 +1058,28 @@ this data or on trivial extensions.
 
 ---
 
-## 9. Failure mode declaration (v0.2)
+## 9. Failure mode declaration (v0.3)
 
 Per James's discipline: *if you can't state what the instrument fails
 on, you don't understand the instrument yet.* This section is a
-standing commitment, not a post-hoc audit.
+standing commitment, not a post-hoc audit. v0.3 updates for continuous
+metrics — failure modes are no longer about binary-gate bypass but
+about multi-axis signal corruption.
 
-### 9.1 Expected false positives
+### 9.1 Expected false positives (v0.3, continuous-metric analogs)
 
 | Failure mode | Mechanism | Guard | Residual risk |
 |---|---|---|---|
-| **Numerically-spanning expressions** | Candidate `E` lies in the linear span of the identity basis on the calibration dataset without a true algebraic relation | §2.1 ideal-quotient check catches `R² ≥ 0.9` | A genuinely new quantity whose leading-order behavior happens to span the basis → surfaces for human adjudication, not auto-prune |
-| **Grammar-advantaged functional forms** | MDL prefers whatever the grammar makes cheap; if `log` is cheap, log-laws win regardless of truth | §6.1 encoding-perturbation test; null-encoding baseline | Structural bias the perturbation set doesn't cover (e.g., we only vary operator costs, not atom-inclusion) |
-| **Calibration-mimicking combinators** | Expression numerically matches F001–F009 on the dataset without being the same structure | §7 calibration battery; δ penalty for failed anchors | A false positive that coincidentally matches the anchor on `Q_EC_R0_D5@v1` but would diverge on a different subset — partial mitigation via cross-dataset check |
-| **Reward-signal capture on declared niches** | MAP-Elites converges tightly on pre-declared cells; "full MAP" misread as success | §5.1 residual channel + out-of-MAP fraction threshold | If residual is empty AND full, ambiguous — defaults to warning, not failure |
-| **Anchor-shaped artifacts** | Grammar's atom selection implicitly encodes the anchor; "discovering" the anchor is trivial given the atoms | §6.1.C null-encoding baseline + cross-grammar test (Tink 4) | A grammar whose atoms individually look generic but whose product happens to include anchor structure |
+| **Non-linear identity couplings** | Candidate `E` lies in the non-linear span of the identity basis (multiplicative, compositional, monotone) | §2.1 multi-kernel `basis_projection_score = max(R²_lin, R²_kern, MI_norm)` | A true rearrangement expressed in a form none of the three measures captures; v1+ upgrade = symbolic canonicalization |
+| **Incomplete identity basis** | A candidate "passes" the basis-projection check because the relevant identity was never encoded in the basis | Per-run report surfaces `basis_projection_score` distribution across candidates; histograms with bimodal-at-zero signal thin basis | Silent false negatives when entire identity families are missing from the basis; mitigation = cross-dataset consistency (§6.2) |
+| **Grammar-advantaged functional forms** | MDL prefers whatever the grammar makes cheap; if `log` is cheap, log-laws win regardless of truth | §6.1 encoding-perturbation test (ordering τ + margin stability + null-encoding baseline) | Structural bias the perturbation set doesn't cover (atom-inclusion bias, depth-limit bias); partial mitigation = cross-grammar test in Tink 4 |
+| **Calibration-mimicking combinators** | Expression numerically matches anchors on one dataset without being the same structure | §6.2 cross-dataset consistency metric; flag candidates with `consistency_score < 0.7` | A combinator that coincidentally matches on both `Q_EC_R0_D5@v1` AND `Q_EC_R0_D4@v0` by two-dataset accident; mitigation = third dataset or claim-class-appropriate null |
+| **Reward-signal capture on declared niches** | MAP-Elites converges tightly on `AXIS_CLASS` cells; "full MAP" misread as success | §5.1 residual channel + §5.2 auto-descriptor stability test + out-of-MAP fraction threshold | Dense MAP with empty residual is ambiguous — treated as warning, not pass; human review gate is the tiebreaker |
+| **Anchor-shaped artifacts** | Grammar's atoms implicitly encode the anchor; "discovering" it is trivial given the atoms | §6.1.C null-encoding baseline + Tink 4 cross-grammar convergence | A grammar whose atoms individually look generic but whose product includes anchor structure; mitigation = v1 cross-grammar attack discipline |
+| **Degenerate projections via simplicity pressure** | High-simplicity transformations that destroy everything (e.g., `σ(x) = 0`) score well on `α·L(expr)` + `β·L(data|expr)` in a pathological way | §6.4 reconstructability axis η imposes inverse-model floor | Transformations with high affordance for narrow task BUT low reconstructability are task-specific, surfaced explicitly rather than rejected |
+| **GP search collapse to local shape optima** | Tree-shape bias causes the archive to re-explore structural local optima; diversity is in output (MAP) but not in input (tree shape) | §6.5 AST-diversity penalty θ + replay buffer | Replay buffer is per-run; cross-run structural bias accumulates in the broader grammar-usage patterns and is not caught at the per-run level |
+| **Dataset-specific affordance inflation** | `affordance_gain` high on one dataset but not others, masking scorer bias | §6.2 cross-dataset decomposes affordances per-dataset; minimum used in aggregate | A cohort artifact that persists across both calibration datasets but would fail on a third; mitigation = ≥ 3 datasets for shelf-promotion at v1 |
+| **Pareto-front dominance bias** | The "non-dominated" set can be dominated by whichever axes are heavily weighted; coefficient choice biases which structure survives | Coefficient-sensitivity audit — run the same candidate set at 3 coefficient settings; report stability of Pareto front | Underlying coefficient choice is itself a coordinate decision (meta-Pattern 6); surfaces as recurring failure at the scoring-hyperparameter layer |
 
 ### 9.2 Structure this instrument CANNOT see
 
@@ -556,16 +1118,28 @@ calibration eliminates them; they define the instrument's horizon.
 
 ### 9.3 What the failure-mode declaration guarantees
 
-A promoted candidate from this generator carries, in its SIGNATURE:
+A promoted candidate from this generator carries, in its SIGNATURE
+(v0.3-extended):
 
 - The grammar spec (atoms + operators + depth + lineage tags) active
   at generation time
-- The identity basis used for §2.1 ideal-quotient check
+- The identity basis used for §2.1 basis-projection check
 - The calibration battery pass record (§7) and encoding-perturbation
   artifacts (§6.1.D)
-- The `preserves` / `destroys` declaration (§1.1)
-- The residual-channel state (§5.1) at the time the candidate was
-  promoted
+- The `preserves` / `destroys` / **`affordances`** declaration (§1.1)
+- The residual-channel state (§5.1) and any auto-descriptor proposals
+  from the run (§5.2)
+- **Seven-axis score breakdown** (§6): individual component values for
+  (simplicity, fit, basis_projection, calibration_alignment,
+  residual_structure, affordance_gain, reconstructability,
+  ast_diversity_penalty)
+- **Cross-dataset consistency metrics** (§6.2): per-axis component
+  variance across the ≥ 2 datasets used in the run
+- **Pareto-front position:** which axes the candidate is non-dominated
+  on, and against which dominating candidates it was measured
+- **Coefficient-sensitivity record** (optional but recommended for
+  v1 shelf): how the candidate's rank changes under ±20% perturbation
+  of each scorer coefficient
 
 **That SIGNATURE does NOT carry a claim of "this is the deepest
 structure in the data."** It carries a claim of "this is a coordinate
@@ -677,6 +1251,47 @@ as shelf entry #9, and `gen_12` opens claimable on Agora.
 
 ## Version history
 
+- **v0.3.1** — 2026-04-24 — self-check resolutions after James
+  green-lighted propagation. Four focused refinements: (a) **Pareto-
+  front triple** set to `(1 − basis_projection_score, affordance_gain,
+  reconstructability)` — "novelty, usefulness, faithfulness" — with
+  explicit rationale for excluding fit (already in aggregate scalar);
+  §6 alternative-triples-per-run noted. (b) **Scale normalization**
+  §6.0.1 formalized: per-node bits for `L(expr)`, per-sample bits for
+  `L(data|expr)`, all other axes `[0, 1]`. Coefficient defaults §6.0.2
+  explicitly labeled PROVISIONAL pending Tink 1 calibration pass;
+  coefficient-sensitivity audit named as the honesty mechanism. (c)
+  **Hard-rejection retention justified** §6: two gates are categorical
+  not continuous — Framing B defines what the instrument IS, and
+  calibration failure means the scorer itself is untrustworthy. All
+  other discipline remains continuous. (d) **Affordance list expanded
+  5 → 7**: added `nonlinear_probe_gain` (random forest) and
+  `rank_correlation_gain` (Spearman); flagged `autocorrelation_exposure`
+  as sequence-specific; null-baseline discipline formalized; max-
+  aggregation explained. No structural re-architecture; all four are
+  sharpenings of v0.3 decisions.
+- **v0.3** — 2026-04-24 — James's five-fragility critique absorbed
+  (no-claims rule over-strict, linear R² too weak, identity-basis
+  moving-target, AXIS_CLASS lock-in, MDL-as-sole-proxy misses sparse/
+  threshold/phase-transition structure). Bottom-line reframe:
+  *shift from hard exclusion of "bad structure" to continuous
+  measurement of structural independence and usefulness.* Six
+  substantive changes: (a) §1.2 **affordances** as a third metadata
+  slot — bridges transformation and claim without smuggling;
+  Framing-A activation path refined; (b) §2.1 replaced binary R²
+  gate with continuous `basis_projection_score = max(R²_lin,
+  R²_kern, MI_norm)` — enters scoring as soft penalty γ, not hard
+  prune; (c) §5.2 **auto-descriptor proposal** — residual clusters
+  generate quantitative AXIS_CLASS extension candidates with
+  stability tests; (d) §6 **seven-axis scoring** with Pareto-front
+  promotion replacing scalar minimization — adds residual-structure
+  (ε), affordance-gain (ζ), reconstructability (η), AST-diversity
+  (θ); (e) §6.2 **cross-dataset consistency** as first-class
+  artifact, not aspirational; (f) §9 failure-mode table updated to
+  continuous-metric analogs, SIGNATURE contents expanded to seven-
+  axis breakdown + coefficient-sensitivity record. Framing B's
+  output-shape rule remains type-enforced (unchanged); the
+  discipline inside the pipeline is now continuous.
 - **v0.2** — 2026-04-23 — James's four-tension pushback absorbed.
   Five substantive additions: (a) §1.1 Framing B hard rule +
   `preserves`/`destroys` schema — type-enforced prevention of B→C
