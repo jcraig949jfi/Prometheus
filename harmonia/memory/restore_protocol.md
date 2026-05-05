@@ -1,8 +1,12 @@
-# Harmonia Restore Protocol (v4.3)
+# Harmonia Restore Protocol (v4.4)
 
 **Bootstrap for cold-start context recovery**
 **Minimum viable path: ~12 files, ~30 minutes of reading**
-**Last updated:** 2026-04-21 (v4.3) — data-refresh pass by sessionE
+**Last updated:** 2026-05-05 (v4.4) — sessionE codified pivot Move 2
+ASK_CLAIM dispatch protocol; added `post_sync` / `ask_claim` /
+`tail_claims` to `agora.helpers`; inserted "Tail open ASK_CLAIMs" as
+step 5 in "What you should do first"; added "ASK_CLAIM dispatch"
+subsection. Reading sequence and step-0 primer unchanged.
 cold-start: §Step 6 symbol count updated from stale "five promoted"
 prose to 19-symbols-as-of-wave reference; §Generator pipeline status
 table updated to reflect Tier 0 + Tier 1 executed (gen_02 / gen_06 /
@@ -145,6 +149,22 @@ substrate_health()
 That prints tensor version, symbol versions, queue depth, and qualified
 instances in one call. If anything drifted off-session, you see it
 immediately rather than absorbing it silently.
+
+### Communication discipline — full paths always
+
+When reporting any file or directory to James, use the **absolute path with
+drive letter**, never a repo-relative path. Examples:
+
+- ✅ `D:\Prometheus\whitepapers\descriptor_collapse_audit.md`
+- ✅ `C:\Users\James\.claude\projects\D--Prometheus\memory\MEMORY.md`
+- ❌ `whitepapers/descriptor_collapse_audit.md`
+- ❌ `harmonia/memory/restore_protocol.md`
+
+This applies to final-answer summaries, artifact tables, prose mentions, and
+anywhere else a path appears in user-facing output. Code blocks that quote
+existing source preserve the original style; the rule applies to my prose.
+
+Memory: `feedback_full_paths.md` (auto-loaded via MEMORY.md).
 
 ---
 
@@ -347,17 +367,61 @@ downstream tasks still available to claim).
    - `gen_{02,05,06,10}` — generator specs (Tier 0 executed; Tier 1 unseeded)
    - `track_{A,B,D,E}` — older track prompts (A/B completed; D deferred; E ready for LMFDB creds)
 
-5. **Only after all of the above** — pick up where you left off. If you
+5. **Tail open ASK_CLAIMs** before picking up scope a concurrent session
+   may have already claimed (pivot Move 2 dispatch, see below).
+   ```python
+   from agora.helpers import tail_claims
+   tail_claims(open_only=True)   # only claims still inside their dissent window
+   ```
+
+6. **Only after all of the above** — pick up where you left off. If you
    are conductor, review the decisions queue and queue depth. If you are
    a worker, claim an appropriately-qualified unclaimed task via
-   `agora.work_queue.claim_task`.
+   `agora.work_queue.claim_task`. **If your scope could overlap with
+   concurrent work**, post your own ASK_CLAIM first:
+   ```python
+   from agora.helpers import ask_claim
+   ask_claim(
+       'one-line description of the scope',
+       from_='Harmonia_M2_<role>',
+       pivot_move='Move N',           # or track='Track X'
+       dissent_window_min=60,         # advisory; re-tail before irreversible steps
+       rationale='why this is the right move now',
+       caveats='overlap risks, recency of state checked',
+       session_open=True,             # if combining with SESSION_OPEN
+   )
+   ```
 
-6. **As you act, log compression candidates.** Anything you find
+7. **As you act, log compression candidates.** Anything you find
    yourself re-deriving from prose — a pattern, a composition, a decision
    template — is a symbol-promotion candidate. Note it in
    `methodology_toolkit.md` or propose as a candidate at
    `harmonia/memory/symbols/CANDIDATES.md`. The next Harmonia shouldn't
    re-derive what you just figured out.
+
+### ASK_CLAIM dispatch (pivot Move 2, codified 2026-05-05)
+
+The pivot in `pivot/harmoniaD.md` §6 calls for a dispatch convention so
+that concurrent Harmonia sessions coordinate on **orthogonal** work
+rather than duplicating each other. The protocol is:
+
+1. **At session-open**, post `ASK_CLAIM` (or `SESSION_OPEN_AND_ASK_CLAIM`)
+   with the Asks/Moves you intend to take.
+2. **Concurrent sessions** tail (`tail_claims(open_only=True)`) and skip
+   work overlapping an open claim, posting their own non-overlapping
+   ASK_CLAIM instead.
+3. **The dissent window is advisory** (default 60 min). It does NOT
+   replace pre-push tail-then-act discipline (see
+   `feedback_push_discipline_tail_then_act.md`); re-tail immediately
+   before any irreversible step.
+4. **Disagreement is allowed** — post a `DISSENT` event citing the
+   ASK_CLAIM message ID. The dispatcher resolves like any other
+   coordination concern.
+
+The schema canonicalizes on `type` / `from` / `subject` (matching
+`tail_sync`'s read order), with `pivot_move` / `track` / `asks` /
+`dissent_window_min` / `rationale` / `caveats` as standard fields. See
+`agora/test_helpers.py` for the schema discipline pinned by tests.
 
 ---
 
@@ -434,7 +498,8 @@ downstream tasks still available to claim).
   - `agora.symbols` — symbol registry (resolve/push/by_type/refs_to)
   - `agora.tensor` — tensor mirror (dims/resolve_cell/reconstruct_matrix/tail_updates)
   - `agora.datasets` — snapshot discipline (canonicalize/capture_snapshot/verify_snapshot)
-  - **`agora.helpers`** (new 2026-04-20) — `queue_preview`, `tail_sync`,
+  - **`agora.helpers`** (new 2026-04-20; ASK_CLAIM dispatch added 2026-05-05) —
+    `queue_preview`, `tail_sync`, `post_sync`, `ask_claim`, `tail_claims`,
     `seed_task`, `canonical_instance_name`, `substrate_health`
 - **Cartographer viewer:** `cd cartography/viewer && python server.py` → http://localhost:8777/map
 
@@ -515,16 +580,25 @@ getting better is the bet that pushes it toward escape velocity.
 
 ---
 
-*Restore protocol v4.3 — 2026-04-21, sessionE cold-start data-refresh
-pass: §Step 6 symbol count (stale "five promoted" → 19 promoted with
-Tier 1 wave enumerated); §Generator pipeline status table (stale
-"unseeded" on gen_02 / gen_06 / gen_10 → all Tier 0 + Tier 1 executed;
-gen_11 Tier 2 axis-space producer added; Definition DAG noted as
-substrate primitive); §What's OPEN refreshed to 2026-04-21 state with
-top-priority queue heads included and gen_06 mandatory-companion status
-corrected to LIVE. No prose beyond the three stale-data blocks touched
-— operating disposition, reading sequence, what-you-should-NOT-do, and
-compounding-ahead all unchanged.*
+*Restore protocol v4.4 — 2026-05-05, sessionE codified pivot Move 2
+ASK_CLAIM dispatch as a substrate primitive: added `post_sync` /
+`ask_claim` / `tail_claims` to `agora.helpers` (canonical schema
+type / from / subject + pivot_move / track / dissent_window_min); 21
+unit tests pinning schema discipline at `agora/test_helpers.py`;
+inserted "Tail open ASK_CLAIMs" as step 5 in "What you should do first"
+and bumped subsequent numbering; added "ASK_CLAIM dispatch (pivot
+Move 2)" subsection with the four-rule convention. Reading sequence,
+step-0 primer, what-you-should-NOT-do, and compounding-ahead all
+unchanged. Pivot Move 1 (descriptor-collapse audit substrate primitive)
+shipped 2026-05-01 by sessionB at commit `8b15cbab`; Move 2 was the
+next leverage point per `pivot/harmoniaD.md` §6.*
+*v4.3 — 2026-04-21, sessionE cold-start data-refresh pass: §Step 6
+symbol count (stale "five promoted" → 19 promoted with Tier 1 wave
+enumerated); §Generator pipeline status table (stale "unseeded" on
+gen_02 / gen_06 / gen_10 → all Tier 0 + Tier 1 executed; gen_11 Tier 2
+axis-space producer added; Definition DAG noted as substrate primitive);
+§What's OPEN refreshed to 2026-04-21 state with top-priority queue
+heads included and gen_06 mandatory-companion status corrected to LIVE.*
 *v4.2 — 2026-04-20 evening, added "Operating
 disposition" section before Step 0 (rigor + novelty-seeking +
 compression-seeking posture), a sixth bullet to "what you should do

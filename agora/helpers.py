@@ -146,6 +146,207 @@ def tail_sync(n: int = 20, stream: str = 'agora:harmonia_sync') -> list[dict]:
 
 
 # ---------------------------------------------------------------------------
+# Sync-stream post + ASK_CLAIM dispatch (pivot Move 2)
+# ---------------------------------------------------------------------------
+#
+# Pivot Move 2 (per `pivot/harmoniaD.md` §6) calls for an ASK_CLAIM dispatch
+# convention on `agora:harmonia_sync`: at session-open, post the Asks/Moves
+# you intend to take; other sessions tail and skip overlapping work. The
+# raw xadd was being hand-rolled per session (sessionB on 2026-05-01 used
+# `kind`/`instance`/`session`/`claim`; sessionE on 2026-05-05 used
+# `type`/`from`/`asks`); this helper canonicalizes on `type`/`from`/`subject`
+# (matching what `tail_sync` already reads) so future ASK_CLAIMs are
+# greppable, validated, and one-line to post.
+
+_RESERVED_FIELDS = frozenset({'type', 'from', 'subject'})
+
+
+def post_sync(
+    msg_type: str,
+    subject: str,
+    *,
+    from_: str,
+    stream: str = 'agora:harmonia_sync',
+    **fields: Any,
+) -> str:
+    """Post a multi-field event to a sync stream with schema discipline.
+
+    Required: msg_type, subject, from_ (canonical instance name; validated).
+    Forbidden in **fields: 'type', 'from', 'subject' (they are set explicitly
+    above; passing them in **fields would silently overwrite or duplicate).
+    None values are coerced to '' (Redis streams reject None).
+
+    Returns the Redis message ID. Mirrors `tail_sync`'s read convention:
+    `type` / `from` / `subject` are the canonical trio.
+    """
+    if not msg_type:
+        raise ValueError('post_sync requires msg_type')
+    if not subject:
+        raise ValueError('post_sync requires subject')
+    if not from_:
+        raise ValueError('post_sync requires from_ (canonical instance name)')
+    canonical_from = canonical_instance_name(from_)
+    overlap = _RESERVED_FIELDS & set(fields)
+    if overlap:
+        raise ValueError(
+            'extra fields cannot overwrite reserved keys {}; '
+            'set them via the explicit args'.format(sorted(overlap)))
+
+    payload: dict[str, str] = {
+        'type': msg_type,
+        'from': canonical_from,
+        'subject': subject,
+    }
+    for k, v in fields.items():
+        payload[k] = '' if v is None else str(v)
+
+    r = _get_redis()
+    return r.xadd(stream, payload)
+
+
+def ask_claim(
+    asks: str,
+    *,
+    from_: str,
+    pivot_move: str | None = None,
+    track: str | None = None,
+    dissent_window_min: int = 60,
+    rationale: str = '',
+    caveats: str = '',
+    addressed_to: str = '',
+    subject: str | None = None,
+    session_open: bool = False,
+    stream: str = 'agora:harmonia_sync',
+) -> str:
+    """Post an ASK_CLAIM announcing what this instance is taking on.
+
+    Pivot Move 2 dispatch protocol (`pivot/harmoniaD.md` §6, Move 2): when
+    starting work that other concurrent sessions could also pick up, post
+    your claim. Other sessions tail (`tail_claims`) before claiming
+    overlapping scope. The dissent window is advisory — re-tail
+    immediately before any irreversible step (per
+    `feedback_push_discipline_tail_then_act.md`).
+
+    Args:
+      asks: one-line description of the scope being claimed.
+      from_: instance name (canonicalized; must be in qualified roster).
+      pivot_move: e.g. 'Move 2' — at least one of pivot_move/track required.
+      track: e.g. 'Track D' — alternative scope tag for non-pivot work.
+      dissent_window_min: advisory minutes before claim is treated as
+        consensus. Default 60 matches recent sessionB convention.
+      rationale: why this claim is the right move now.
+      caveats: known overlap risks, recency of state checked, etc.
+      addressed_to: optional list of specific instances expected to ack/dissent.
+      subject: override the auto-generated one-line subject.
+      session_open: if True, type is 'SESSION_OPEN_AND_ASK_CLAIM' (combined
+        announcement); otherwise 'ASK_CLAIM' (mid-session re-claim).
+
+    Returns the Redis message ID.
+    """
+    if not asks:
+        raise ValueError('ask_claim requires asks (one-line description of scope)')
+    if not pivot_move and not track:
+        raise ValueError(
+            'ask_claim requires pivot_move OR track to make the claim greppable')
+
+    msg_type = 'SESSION_OPEN_AND_ASK_CLAIM' if session_open else 'ASK_CLAIM'
+    if subject is None:
+        scope = pivot_move or track
+        canonical_from = canonical_instance_name(from_)
+        subject = '{} ASK_CLAIM = {} ({})'.format(canonical_from, scope, asks)
+        # Cap subject length so tail_sync's one-line print stays readable.
+        if len(subject) > 160:
+            subject = subject[:157] + '...'
+
+    return post_sync(
+        msg_type,
+        subject,
+        from_=from_,
+        stream=stream,
+        asks=asks,
+        pivot_move=pivot_move or '',
+        track=track or '',
+        dissent_window_min=str(dissent_window_min),
+        rationale=rationale,
+        caveats=caveats,
+        addressed_to=addressed_to,
+    )
+
+
+def tail_claims(
+    n: int = 50,
+    *,
+    open_only: bool = False,
+    stream: str = 'agora:harmonia_sync',
+) -> list[dict]:
+    """Tail recent ASK_CLAIM and SESSION_OPEN_AND_ASK_CLAIM messages.
+
+    Use at session-open to see what concurrent sessions have already
+    claimed before posting your own ASK_CLAIM. Pivot Move 2 dispatch
+    convention.
+
+    Args:
+      n: max claims to return (over-fetches by ~4x to handle filtering).
+      open_only: if True, drop claims whose advisory dissent window has
+        elapsed (best-effort: derives age from the Redis stream ID's
+        millisecond timestamp + the `dissent_window_min` field).
+      stream: sync stream name.
+
+    Returns a list of dicts with {id, type, from, subject, asks,
+    pivot_move, track, dissent_window_min, age_min, data}.
+    """
+    r = _get_redis()
+    raw = r.xrevrange(stream, count=max(n * 4, n))
+    now_ms = int(dt.datetime.now(dt.timezone.utc).timestamp() * 1000)
+    out: list[dict] = []
+    for mid, data in raw:
+        t = data.get('type') or data.get('kind') or ''
+        if 'ASK_CLAIM' not in t:
+            continue
+        try:
+            msg_ms = int(str(mid).split('-')[0])
+            age_min = (now_ms - msg_ms) / 60_000.0
+        except (ValueError, IndexError):
+            age_min = float('nan')
+        try:
+            window_min = int(data.get('dissent_window_min') or 60)
+        except (ValueError, TypeError):
+            window_min = 60
+        if open_only and age_min == age_min and age_min > window_min:
+            continue
+        out.append({
+            'id': mid,
+            'type': t,
+            'from': data.get('from') or data.get('source') or data.get('instance') or '?',
+            'subject': data.get('subject') or '',
+            'asks': data.get('asks') or data.get('claim') or '',
+            'pivot_move': data.get('pivot_move') or '',
+            'track': data.get('track') or '',
+            'dissent_window_min': data.get('dissent_window_min') or '',
+            'age_min': age_min,
+            'data': data,
+        })
+        if len(out) >= n:
+            break
+
+    if out:
+        print('{:<18s} {:<12s} {:<26s} {:>6s}  {}'.format(
+            'id', 'move/track', 'from', 'age_m', 'asks'))
+        print('-' * 110)
+        for c in out:
+            move_or_track = c['pivot_move'] or c['track'] or ''
+            age_str = '{:.0f}'.format(c['age_min']) if c['age_min'] == c['age_min'] else '?'
+            print('{:<18s} {:<12s} {:<26s} {:>6s}  {}'.format(
+                str(c['id'])[:18], move_or_track[:12],
+                str(c['from'])[:26], age_str, str(c['asks'])[:60]))
+    else:
+        msg = '(no open ASK_CLAIM messages found)' if open_only \
+              else '(no ASK_CLAIM messages found)'
+        print(msg)
+    return out
+
+
+# ---------------------------------------------------------------------------
 # Schema-enforced task seeding
 # ---------------------------------------------------------------------------
 
@@ -250,6 +451,9 @@ def substrate_health() -> dict:
 __all__ = [
     'queue_preview',
     'tail_sync',
+    'post_sync',
+    'ask_claim',
+    'tail_claims',
     'seed_task',
     'canonical_instance_name',
     'substrate_health',
