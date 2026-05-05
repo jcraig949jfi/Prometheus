@@ -119,6 +119,12 @@ Per Techne 2026-05-05 review of this design doc. Substrate v2.2 (`pivot/substrat
 - Adopt structured `method_spec` + `stability_pass` objects (not bool / single-string) wherever schema touches them
 - Reweight W6.3 RL formulation: EvidenceField axes primary, substrate-PASS as tiebreaker (per v2.2 §8 control-plane vs data-plane lock-in)
 
+**Techne's two follow-up commitments (accepted 2026-05-05 round 2):**
+1. **Early P5 interface stub on Day 1-2 of joint sprint** (instead of end-of-Tier-2 / Day 13). Stub = schema + loader API + anti-leakage flag enforcement + placeholder emitter from existing promotion_ledger. Real triangulation-aware emission lands Day 13, replacing stub via same code path. **Collapses Ergon's blocked-on-substrate window from ~13 days to ~3-4 days for the parts that matter.** Pipeline-D scaffolds against the interface from Day 1.
+2. **Temporary `canonicalizer_observed_distribution` instrumentation in Pre-Tier-0 0a** (R21 mitigation, path b). Logs the canonicalizer subclass used per claim without changing engine behavior. Lets W1.6 Trial-2 re-validation proceed without serializing on P0 landing. Real hot-swap-aware CanonicalizationProtocol lands Day 3-4 with P0.
+
+**Canonical joint timeline:** see `pivot/techne_ergon_joint_sprint_2026-05-05.md` (filed 2026-05-05). The §5 parallelization plan in this doc is superseded by the joint sprint table.
+
 #### Workstream **Pipeline-D** — Training pipeline infrastructure (Weeks 1-4)
 
 Build the end-to-end LoRA training pipeline now, on whatever clean data is available. Per `feedback_ergon_learner_north_star.md`, the pipeline is build-now even if data is placeholder.
