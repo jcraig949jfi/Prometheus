@@ -567,15 +567,32 @@ class ResidualExtension:
         # the parent's reasoning; if the parent had caveats, the user can
         # later add them via FALSIFY's WARN path).
         try:
-            self.kernel.conn.execute(
-                "INSERT INTO claims VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
-                (
-                    new_claim_id, new_target, new_hypothesis, new_evidence,
-                    new_kill, new_tier.value, "pending",
-                    None, None, None, None, None,
-                    "[]",
-                ),
-            )
+            # SQLite always has the 14-column schema; postgres has 13 or
+            # 14 depending on whether migration 005 has been applied. The
+            # adapter exposes ``_has_precision_metadata`` to disambiguate.
+            if (
+                getattr(self.kernel, "backend", "sqlite") == "postgres"
+                and not getattr(self.kernel.conn, "_has_precision_metadata", False)
+            ):
+                self.kernel.conn.execute(
+                    "INSERT INTO claims VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                    (
+                        new_claim_id, new_target, new_hypothesis, new_evidence,
+                        new_kill, new_tier.value, "pending",
+                        None, None, None, None, None,
+                        "[]",
+                    ),
+                )
+            else:
+                self.kernel.conn.execute(
+                    "INSERT INTO claims VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                    (
+                        new_claim_id, new_target, new_hypothesis, new_evidence,
+                        new_kill, new_tier.value, "pending",
+                        None, None, None, None, None,
+                        "[]", None,
+                    ),
+                )
             # Refinement edge.
             self.kernel.conn.execute(
                 "INSERT INTO refinements VALUES (?,?,?,?)",

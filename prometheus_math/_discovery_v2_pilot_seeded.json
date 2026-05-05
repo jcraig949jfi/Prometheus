@@ -1,0 +1,62 @@
+{
+  "config": {
+    "n_episodes": 300,
+    "seeds": [
+      100
+    ],
+    "degree": 10,
+    "population_size": 8,
+    "n_mutations_per_episode": 12,
+    "seed_with_known": true,
+    "no_pipeline": true,
+    "out": "F:/Prometheus/prometheus_math/_discovery_v2_pilot_seeded.json"
+  },
+  "results": [
+    {
+      "arm": "random",
+      "seed": 100,
+      "n_episodes": 300,
+      "elapsed_seconds": 4.241125399945304,
+      "best_m_overall": 1.0,
+      "elite_ms_min": 1.0,
+      "elite_ms_median": 1.0000000000000049,
+      "mean_reward": 20.341284484560045,
+      "operator_call_counts": {
+        "mutate_single_coef": 535,
+        "mutate_two_coefs": 524,
+        "swap_palindromic_pairs": 474,
+        "increment_at_index": 512,
+        "decrement_at_index": 534,
+        "zero_at_index": 522,
+        "identity": 499
+      },
+      "n_shadow_catalog": 0,
+      "shadow_catalog": [],
+      "n_sub_lehmer_episodes": 91
+    },
+    {
+      "arm": "reinforce",
+      "seed": 100,
+      "n_episodes": 300,
+      "elapsed_seconds": 2.8822153999935836,
+      "best_m_overall": 1.0,
+      "elite_ms_min": 1.0,
+      "elite_ms_median": 1.1762808182599187,
+      "mean_reward": 53.33723404447335,
+      "operator_call_counts": {
+        "mutate_single_coef": 7,
+        "mutate_two_coefs": 4,
+        "swap_palindromic_pairs": 57,
+        "increment_at_index": 172,
+        "decrement_at_index": 54,
+        "zero_at_index": 12,
+        "identity": 3294
+      },
+      "policy_weights_norm": 3.143221167808727,
+      "n_shadow_catalog": 0,
+      "shadow_catalog": [],
+      "n_sub_lehmer_episodes": 297
+    }
+  ],
+  "elapsed_total_seconds": 7.157019700156525
+}

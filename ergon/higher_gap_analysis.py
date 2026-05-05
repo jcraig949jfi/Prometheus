@@ -165,9 +165,9 @@ def main():
         print(f"    MF  gap1 var/Gaudin: {mf_gap1:.4f}")
         diff = abs(ec_gap1 - mf_gap1)
         if diff < 0.05:
-            print(f"    VERDICT: SAME deficit in both families → generic unfolding / normalization issue")
+            print(f"    VERDICT: SAME deficit in both families -> generic unfolding / normalization issue")
         else:
-            print(f"    VERDICT: DIFFERENT deficit (delta={diff:.4f}) → family-specific arithmetic structure")
+            print(f"    VERDICT: DIFFERENT deficit (delta={diff:.4f}) -> family-specific arithmetic structure")
 
     print()
     cur.close()

@@ -23,7 +23,7 @@ from collections import defaultdict
 from scipy import stats as sp_stats
 
 DB_PARAMS = dict(host='localhost', port=5432, dbname='lmfdb', user='lmfdb', password='lmfdb')
-GAUDIN_VAR = 4.0 - np.pi  # ~0.178
+GAUDIN_VAR = 3.0 * np.pi / 8.0 - 1.0  # Wigner-surmise NN var for GUE, ~0.1781. Prior code used 4-pi=0.858 with wrong comment.
 
 
 # ── Parsing ──────────────────────────────────────────────────────────────────

@@ -485,13 +485,13 @@ def test_composition_migration_backward_compat_existing_claims_no_caveats():
     # Synthesize a pre-004-style row: caveats = '[]' (the migration
     # default) — what an existing row looks like after the ALTER TABLE.
     k.conn.execute(
-        "INSERT INTO claims VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        "INSERT INTO claims VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
         (
             "claim_legacy_pre_004", "legacy", "legacy hypothesis",
             json.dumps({"dataset_hash": "a" * 64}, sort_keys=True),
             "legacy_kill", Tier.Possible.value, "pending",
             None, None, None, None, None,
-            "[]",
+            "[]", None,
         ),
     )
     k.conn.commit()

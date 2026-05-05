@@ -136,3 +136,27 @@
 *60 reports complete across 3 batches. 477 problems remain in the queue for future batches.*
 
 *Aporia, 2026-04-18*
+
+---
+
+## Update 2026-04-25 — Batches 5–8 added
+
+- Batch 5 (#78–97): Sp uniqueness, phoneme designs (rhythma/taxis/schema/topos), Maass GL3, H85, H15, Scholz, Iwasawa p=2, Mertens, abc-g2, Brumer-Stark, Langlands GL(2,NF), Hilbert 17, genus-3 USp(6), Ulam spiral. → `deep_research_batch5/`
+- Batch 6 (#98–118): operator tensor, Hecke orbits, Serre g=2, Newton stratification, Belyi genus, Bianchi base change, HMF congruences, isogeny diameter, Heegner, Ceresa, Stark units, Shimura p-adic, cusp cohomology GL_n, Rogers-Ramanujan, K3 Mahler, Farey Hecke, g2 Euler defect, Sato-Tate rank-2, noncongruence cusps, BSD ratio, twist collisions. → `deep_research_batch6/`
+- Batch 7 (#119–138): Hecke-Frobenius transport, p-adic L-function, motivic Faltings, mock modular, knot concordance, ray class, arithmetic dynamics, Sha analytic order, higher L-moments, Selberg trace, twisted root numbers, Cohen-Lenstra strata, Siegel g=3, local Langlands depth-zero, hypergeometric motives, Hilbert scheme Göttsche, eta quotient, K-theory regulators, OEIS arithmetic progressions, Minkowski sharpness. → `deep_research_batch7/`
+- **Batch 8 (#139–158)**: Iwasawa HMF, Mazur deformation, F-isocrystal Newton, Manin Fano, Heath-Brown cubic, Vinogradov mean value, anabelian section, perfectoid prismatic, theta correspondence, Drinfeld modular, Coleman p-adic family, Kloosterman, Linnik 3-squares, Roth-Schmidt, GUE Maass, Iwahori-Hecke KL, Tamagawa unitary, Selmer scheme, Weil-Burgess, Heegner Shimura YZZ. → `deep_research_batch8/INDEX.md`
+
+**Cumulative: 80 reports across 8 batches.**
+
+*Aporia, 2026-04-25*
+
+---
+
+## Update 2026-04-28 — Batches 9 and 10 added
+
+- **Batch 9 (#159–178)**: Erdős minimum overlap, Cameron-Erdős, EGZ extremal, distinct distances 4d, unit-distance chromatic, volume conjecture general, slice-ribbon, Smale 7th orbits, Khovanov-Rozansky stability, KMOLS n=10, Hadamard n=668, Brualdi permanents, Voiculescu free entropy gap, Connes bicentralizer, matrix multiplication exponent ω, sleeping-beauty sweep, genus-2 Rosetta validation. → `deep_research_batch9/` (17/20 saved; 3 deferred infra reports relocated to `stoa/proposals/`)
+- **Batch 10 (#179–198)**: Sato-Tate g=3 hyperelliptic, Beauville-Voisin K3 Chow, Bombieri-Lang surfaces, Stark-Heegner real quadratic, Coleman-Voloch p-adic rigidity, Mahler-Manin p-adic, Erdős-Faber-Lovász, Aharoni-Berger rainbow, Frankl union-closed, Property Γ in II_1, Yang-Mills mass gap (lattice), PIT derandomization, sphere packing d=24, kissing numbers d=4..10, Bianchi h(K)>1, Brumer-Kramer paramodular, HMF non-trivial nebentypus. → `deep_research_batch10/` (17/20 saved; #189 Effros-Marechal, #191 BEC, #193 Razborov-Smolensky deferred to Batch 11 by token cap)
+
+**Cumulative: 114 reports across 10 batches.** Doctrine through 2026-04-28: calibration-anchor density first, no bridge-narrative framing, physics extracted as math with probabilistic/QFT interpretation as docstring. Recurring agent `aporia-batch-deep-research-daily` (trig_018W9pWUsyxjssKohqHkbiwa) continues from Batch 11 onward at 04:00 EDT daily.
+
+*Aporia, 2026-04-28*
