@@ -1,0 +1,1217 @@
+{
+  "computed_date": "2026-05-05",
+  "computed_by": "Charon (outside auditor)",
+  "data_sources": [
+    "ergon\\learner\\trials\\ledgers\\trial_3_iter28_a149_u05_canonical_ledger.jsonl",
+    "ergon\\learner\\trials\\ledgers\\trial_3_iter28_a149_u30_broad_ledger.jsonl",
+    "ergon\\learner\\trials\\ledgers\\trial_3_iter31_a149_u05_15k_ledger.jsonl",
+    "ergon\\learner\\trials\\ledgers\\trial_3_iter31_a149_u30_15k_ledger.jsonl"
+  ],
+  "definitions": {
+    "promote": "(substrate-PASS records of class) / (actual scheduler attempts of class). Ergon a149: substrate-pass = lift >= 2.0 AND match_size >= 3.",
+    "archive_fill": "(distinct canonical_predicate_hash values of class) / (actual scheduler attempts of class). Predicate-novelty proxy for MAP-Elites cell-fill.",
+    "near_miss": "(substrate-PASS records of class with matched_kill_rate \u2208 (0, 1)) / (actual scheduler attempts of class). Predicate captured a partial-kill cluster. Adaptation of KILL_VECTOR_SPEC near-miss semantics."
+  },
+  "per_class": {
+    "structural": {
+      "promote_rate": {
+        "mean": 0.33346939528184477,
+        "ci_low": 0.3218853010028707,
+        "ci_high": 0.3437671392211521,
+        "n_seed_observations": 12,
+        "raw_values": [
+          0.3466709346991037,
+          0.3370500159286397,
+          0.34764631043257,
+          0.3011247443762781,
+          0.3173469387755102,
+          0.3006774361646691,
+          0.35743955692832036,
+          0.3389094759131816,
+          0.36003799873337555,
+          0.3282520325203252,
+          0.3474662162162162,
+          0.3190110826939471
+        ]
+      },
+      "archive_fill_rate": {
+        "mean": 0.09676684612455981,
+        "ci_low": 0.08084468897797624,
+        "ci_high": 0.1131956228203444,
+        "n_seed_observations": 12,
+        "raw_values": [
+          0.06850192061459667,
+          0.06212169480726346,
+          0.07124681933842239,
+          0.06441717791411043,
+          0.09030612244897959,
+          0.06618030224075039,
+          0.1222707423580786,
+          0.1019587083112758,
+          0.12149039476461895,
+          0.12127371273712736,
+          0.14611486486486486,
+          0.12531969309462915
+        ]
+      },
+      "near_miss_rate": {
+        "mean": 0.27456034865300144,
+        "ci_low": 0.2672603634057383,
+        "ci_high": 0.2823224508406216,
+        "n_seed_observations": 12,
+        "raw_values": [
+          0.2935339308578745,
+          0.26696400127429115,
+          0.2818066157760814,
+          0.2607361963190184,
+          0.2612244897959184,
+          0.26003126628452317,
+          0.3008840132069443,
+          0.25929062996294333,
+          0.2933291112518472,
+          0.2750677506775068,
+          0.27297297297297296,
+          0.2688832054560955
+        ]
+      },
+      "n_attempts_per_seed": {
+        "median": 4504.5,
+        "min": 1919,
+        "max": 9474
+      }
+    },
+    "symbolic": {
+      "promote_rate": {
+        "mean": 0.12151988480525766,
+        "ci_low": 0.10543078871745355,
+        "ci_high": 0.13693196003024277,
+        "n_seed_observations": 12,
+        "raw_values": [
+          0.16168478260869565,
+          0.11497326203208556,
+          0.08522727272727272,
+          0.12465373961218837,
+          0.1474269819193324,
+          0.1590909090909091,
+          0.12025605852766347,
+          0.08973172987974098,
+          0.07464114832535886,
+          0.11023255813953488,
+          0.13199817933545743,
+          0.1383219954648526
+        ]
+      },
+      "archive_fill_rate": {
+        "mean": 0.05129290959677928,
+        "ci_low": 0.044656127745323994,
+        "ci_high": 0.058715841773863485,
+        "n_seed_observations": 12,
+        "raw_values": [
+          0.03940217391304348,
+          0.0481283422459893,
+          0.03977272727272727,
+          0.04016620498614958,
+          0.037552155771905425,
+          0.05080213903743316,
+          0.05715592135345222,
+          0.04949121184088807,
+          0.041626794258373206,
+          0.06558139534883721,
+          0.07100591715976332,
+          0.07482993197278912
+        ]
+      },
+      "near_miss_rate": {
+        "mean": 0.0895272220080614,
+        "ci_low": 0.07652189400347047,
+        "ci_high": 0.10378207964967395,
+        "n_seed_observations": 12,
+        "raw_values": [
+          0.12092391304347826,
+          0.07085561497326204,
+          0.07386363636363637,
+          0.09002770083102493,
+          0.10570236439499305,
+          0.13636363636363635,
+          0.08733424782807499,
+          0.05504162812210916,
+          0.06315789473684211,
+          0.07069767441860465,
+          0.09877105143377332,
+          0.10158730158730159
+        ]
+      },
+      "n_attempts_per_seed": {
+        "median": 1419.0,
+        "min": 704,
+        "max": 2205
+      }
+    },
+    "anti_prior": {
+      "promote_rate": {
+        "mean": 0.03451106711078577,
+        "ci_low": 0.02809516046382717,
+        "ci_high": 0.04143791857251399,
+        "n_seed_observations": 12,
+        "raw_values": [
+          0.02079002079002079,
+          0.05360824742268041,
+          0.06153846153846154,
+          0.026804123711340205,
+          0.02,
+          0.032196969696969696,
+          0.0290736984448952,
+          0.038101604278074866,
+          0.03926701570680628,
+          0.03413654618473896,
+          0.02952755905511811,
+          0.029088558500323207
+        ]
+      },
+      "archive_fill_rate": {
+        "mean": 0.021447613580121053,
+        "ci_low": 0.018211035053028773,
+        "ci_high": 0.025082327147449828,
+        "n_seed_observations": 12,
+        "raw_values": [
+          0.014553014553014554,
+          0.032989690721649485,
+          0.032692307692307694,
+          0.018556701030927835,
+          0.014,
+          0.022727272727272728,
+          0.0196078431372549,
+          0.022727272727272728,
+          0.015706806282722512,
+          0.024096385542168676,
+          0.019028871391076115,
+          0.02068519715578539
+        ]
+      },
+      "near_miss_rate": {
+        "mean": 0.030511111633361496,
+        "ci_low": 0.024516793804802,
+        "ci_high": 0.03751936851747426,
+        "n_seed_observations": 12,
+        "raw_values": [
+          0.02079002079002079,
+          0.04536082474226804,
+          0.05961538461538462,
+          0.020618556701030927,
+          0.018,
+          0.028409090909090908,
+          0.025016903313049357,
+          0.03409090909090909,
+          0.037303664921465966,
+          0.02677376171352075,
+          0.025590551181102362,
+          0.02456367162249515
+        ]
+      },
+      "n_attempts_per_seed": {
+        "median": 1003.5,
+        "min": 481,
+        "max": 1547
+      }
+    },
+    "uniform": {
+      "promote_rate": {
+        "mean": 0.04847942589032445,
+        "ci_low": 0.046946192525028456,
+        "ci_high": 0.049993971012764586,
+        "n_seed_observations": 12,
+        "raw_values": [
+          0.05089820359281437,
+          0.050955414012738856,
+          0.05,
+          0.04557463672391017,
+          0.053156146179401995,
+          0.05227882037533512,
+          0.047764227642276426,
+          0.04477611940298507,
+          0.045881126173096975,
+          0.04811762085096904,
+          0.046978335233751424,
+          0.045372460496613996
+        ]
+      },
+      "archive_fill_rate": {
+        "mean": 0.022549146229275296,
+        "ci_low": 0.02122103635233277,
+        "ci_high": 0.023936696524643822,
+        "n_seed_observations": 12,
+        "raw_values": [
+          0.02694610778443114,
+          0.025477707006369428,
+          0.025,
+          0.01915455746367239,
+          0.0212624584717608,
+          0.022117962466487937,
+          0.02540650406504065,
+          0.021321961620469083,
+          0.021897810218978103,
+          0.020717308977500556,
+          0.020068415051311288,
+          0.021218961625282168
+        ]
+      },
+      "near_miss_rate": {
+        "mean": 0.040860695248473584,
+        "ci_low": 0.039693692001953496,
+        "ci_high": 0.0421588800102935,
+        "n_seed_observations": 12,
+        "raw_values": [
+          0.038922155688622756,
+          0.041401273885350316,
+          0.040625,
+          0.0416116248348745,
+          0.04584717607973422,
+          0.0435656836461126,
+          0.039634146341463415,
+          0.039445628997867806,
+          0.03753910323253389,
+          0.042771218534194695,
+          0.040364880273660204,
+          0.03860045146726862
+        ]
+      },
+      "n_attempts_per_seed": {
+        "median": 1238.0,
+        "min": 314,
+        "max": 4489
+      }
+    },
+    "structured_null": {
+      "promote_rate": {
+        "mean": 0.024040726760310337,
+        "ci_low": 0.02045350630121152,
+        "ci_high": 0.027175972318586598,
+        "n_seed_observations": 12,
+        "raw_values": [
+          0.027692307692307693,
+          0.01910828025477707,
+          0.02564102564102564,
+          0.02476780185758514,
+          0.00949367088607595,
+          0.019169329073482427,
+          0.030176899063475548,
+          0.01981230448383733,
+          0.032665964172813484,
+          0.030114226375908618,
+          0.023613963039014373,
+          0.026232948583420776
+        ]
+      },
+      "archive_fill_rate": {
+        "mean": 0.02369185293655764,
+        "ci_low": 0.020232081356048922,
+        "ci_high": 0.026565937153434204,
+        "n_seed_observations": 12,
+        "raw_values": [
+          0.027692307692307693,
+          0.01910828025477707,
+          0.02564102564102564,
+          0.02476780185758514,
+          0.00949367088607595,
+          0.019169329073482427,
+          0.029136316337148804,
+          0.01981230448383733,
+          0.030558482613277135,
+          0.029075804776739357,
+          0.023613963039014373,
+          0.026232948583420776
+        ]
+      },
+      "near_miss_rate": {
+        "mean": 0.02158767863957764,
+        "ci_low": 0.01718725998733447,
+        "ci_high": 0.025479506844439354,
+        "n_seed_observations": 12,
+        "raw_values": [
+          0.027692307692307693,
+          0.009554140127388535,
+          0.02564102564102564,
+          0.021671826625386997,
+          0.006329113924050633,
+          0.01597444089456869,
+          0.030176899063475548,
+          0.016684045881126174,
+          0.030558482613277135,
+          0.02699896157840083,
+          0.022587268993839837,
+          0.025183630640083946
+        ]
+      },
+      "n_attempts_per_seed": {
+        "median": 637.0,
+        "min": 312,
+        "max": 974
+      }
+    }
+  },
+  "per_config": {
+    "trial_3_iter28_a149_u05_canonical": {
+      "n_seeds": 3,
+      "n_episodes_per_seed": 5000,
+      "weights": {
+        "structural": 0.65,
+        "symbolic": 0.15,
+        "uniform": 0.05,
+        "structured_null": 0.05,
+        "anti_prior": 0.1
+      },
+      "per_class": {
+        "structural": {
+          "promote_rate": {
+            "mean": 0.3437890870201044,
+            "ci_low": 0.33705001592863965,
+            "ci_high": 0.34764631043257,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.3466709346991037,
+              0.3370500159286397,
+              0.34764631043257
+            ]
+          },
+          "archive_fill_rate": {
+            "mean": 0.06729014492009418,
+            "ci_low": 0.06212169480726346,
+            "ci_high": 0.07124681933842239,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.06850192061459667,
+              0.06212169480726346,
+              0.07124681933842239
+            ]
+          },
+          "near_miss_rate": {
+            "mean": 0.28076818263608233,
+            "ci_low": 0.26696400127429115,
+            "ci_high": 0.2935339308578745,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.2935339308578745,
+              0.26696400127429115,
+              0.2818066157760814
+            ]
+          },
+          "n_attempts_per_seed": {
+            "median": 3139,
+            "min": 3124,
+            "max": 3144
+          }
+        },
+        "symbolic": {
+          "promote_rate": {
+            "mean": 0.12062843912268466,
+            "ci_low": 0.08522727272727272,
+            "ci_high": 0.16168478260869565,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.16168478260869565,
+              0.11497326203208556,
+              0.08522727272727272
+            ]
+          },
+          "archive_fill_rate": {
+            "mean": 0.04243441447725335,
+            "ci_low": 0.03940217391304348,
+            "ci_high": 0.0481283422459893,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.03940217391304348,
+              0.0481283422459893,
+              0.03977272727272727
+            ]
+          },
+          "near_miss_rate": {
+            "mean": 0.08854772146012556,
+            "ci_low": 0.07085561497326204,
+            "ci_high": 0.12092391304347826,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.12092391304347826,
+              0.07085561497326204,
+              0.07386363636363637
+            ]
+          },
+          "n_attempts_per_seed": {
+            "median": 736,
+            "min": 704,
+            "max": 748
+          }
+        },
+        "anti_prior": {
+          "promote_rate": {
+            "mean": 0.04531224325038758,
+            "ci_low": 0.02079002079002079,
+            "ci_high": 0.06153846153846154,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.02079002079002079,
+              0.05360824742268041,
+              0.06153846153846154
+            ]
+          },
+          "archive_fill_rate": {
+            "mean": 0.02674500432232391,
+            "ci_low": 0.014553014553014554,
+            "ci_high": 0.032989690721649485,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.014553014553014554,
+              0.032989690721649485,
+              0.032692307692307694
+            ]
+          },
+          "near_miss_rate": {
+            "mean": 0.041922076715891154,
+            "ci_low": 0.02079002079002079,
+            "ci_high": 0.05961538461538462,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.02079002079002079,
+              0.04536082474226804,
+              0.05961538461538462
+            ]
+          },
+          "n_attempts_per_seed": {
+            "median": 485,
+            "min": 481,
+            "max": 520
+          }
+        },
+        "uniform": {
+          "promote_rate": {
+            "mean": 0.050617872535184405,
+            "ci_low": 0.05000000000000001,
+            "ci_high": 0.05095541401273886,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.05089820359281437,
+              0.050955414012738856,
+              0.05
+            ]
+          },
+          "archive_fill_rate": {
+            "mean": 0.02580793826360019,
+            "ci_low": 0.025000000000000005,
+            "ci_high": 0.02694610778443114,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.02694610778443114,
+              0.025477707006369428,
+              0.025
+            ]
+          },
+          "near_miss_rate": {
+            "mean": 0.04031614319132436,
+            "ci_low": 0.038922155688622756,
+            "ci_high": 0.041401273885350316,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.038922155688622756,
+              0.041401273885350316,
+              0.040625
+            ]
+          },
+          "n_attempts_per_seed": {
+            "median": 320,
+            "min": 314,
+            "max": 334
+          }
+        },
+        "structured_null": {
+          "promote_rate": {
+            "mean": 0.024147204529370137,
+            "ci_low": 0.01910828025477707,
+            "ci_high": 0.027692307692307693,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.027692307692307693,
+              0.01910828025477707,
+              0.02564102564102564
+            ]
+          },
+          "archive_fill_rate": {
+            "mean": 0.024147204529370137,
+            "ci_low": 0.01910828025477707,
+            "ci_high": 0.027692307692307693,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.027692307692307693,
+              0.01910828025477707,
+              0.02564102564102564
+            ]
+          },
+          "near_miss_rate": {
+            "mean": 0.020962491153573955,
+            "ci_low": 0.009554140127388535,
+            "ci_high": 0.027692307692307693,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.027692307692307693,
+              0.009554140127388535,
+              0.02564102564102564
+            ]
+          },
+          "n_attempts_per_seed": {
+            "median": 314,
+            "min": 312,
+            "max": 325
+          }
+        }
+      }
+    },
+    "trial_3_iter28_a149_u30_broad": {
+      "n_seeds": 3,
+      "n_episodes_per_seed": 5000,
+      "weights": {
+        "structural": 0.4,
+        "symbolic": 0.15,
+        "uniform": 0.3,
+        "structured_null": 0.05,
+        "anti_prior": 0.1
+      },
+      "per_class": {
+        "structural": {
+          "promote_rate": {
+            "mean": 0.3063830397721525,
+            "ci_low": 0.3006774361646691,
+            "ci_high": 0.3173469387755102,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.3011247443762781,
+              0.3173469387755102,
+              0.3006774361646691
+            ]
+          },
+          "archive_fill_rate": {
+            "mean": 0.07363453420128013,
+            "ci_low": 0.06441717791411043,
+            "ci_high": 0.09030612244897958,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.06441717791411043,
+              0.09030612244897959,
+              0.06618030224075039
+            ]
+          },
+          "near_miss_rate": {
+            "mean": 0.26066398413315334,
+            "ci_low": 0.26003126628452317,
+            "ci_high": 0.2612244897959184,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.2607361963190184,
+              0.2612244897959184,
+              0.26003126628452317
+            ]
+          },
+          "n_attempts_per_seed": {
+            "median": 1956,
+            "min": 1919,
+            "max": 1960
+          }
+        },
+        "symbolic": {
+          "promote_rate": {
+            "mean": 0.14372387687414329,
+            "ci_low": 0.12465373961218836,
+            "ci_high": 0.1590909090909091,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.12465373961218837,
+              0.1474269819193324,
+              0.1590909090909091
+            ]
+          },
+          "archive_fill_rate": {
+            "mean": 0.04284016659849605,
+            "ci_low": 0.037552155771905425,
+            "ci_high": 0.05080213903743316,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.04016620498614958,
+              0.037552155771905425,
+              0.05080213903743316
+            ]
+          },
+          "near_miss_rate": {
+            "mean": 0.11069790052988478,
+            "ci_low": 0.09002770083102492,
+            "ci_high": 0.13636363636363635,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.09002770083102493,
+              0.10570236439499305,
+              0.13636363636363635
+            ]
+          },
+          "n_attempts_per_seed": {
+            "median": 722,
+            "min": 719,
+            "max": 748
+          }
+        },
+        "anti_prior": {
+          "promote_rate": {
+            "mean": 0.026333697802769968,
+            "ci_low": 0.02,
+            "ci_high": 0.032196969696969696,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.026804123711340205,
+              0.02,
+              0.032196969696969696
+            ]
+          },
+          "archive_fill_rate": {
+            "mean": 0.018427991252733523,
+            "ci_low": 0.014,
+            "ci_high": 0.022727272727272724,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.018556701030927835,
+              0.014,
+              0.022727272727272728
+            ]
+          },
+          "near_miss_rate": {
+            "mean": 0.022342549203373946,
+            "ci_low": 0.018,
+            "ci_high": 0.028409090909090908,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.020618556701030927,
+              0.018,
+              0.028409090909090908
+            ]
+          },
+          "n_attempts_per_seed": {
+            "median": 500,
+            "min": 485,
+            "max": 528
+          }
+        },
+        "uniform": {
+          "promote_rate": {
+            "mean": 0.050336534426215766,
+            "ci_low": 0.04557463672391018,
+            "ci_high": 0.05315614617940199,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.04557463672391017,
+              0.053156146179401995,
+              0.05227882037533512
+            ]
+          },
+          "archive_fill_rate": {
+            "mean": 0.020844992800640377,
+            "ci_low": 0.01915455746367239,
+            "ci_high": 0.022117962466487937,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.01915455746367239,
+              0.0212624584717608,
+              0.022117962466487937
+            ]
+          },
+          "near_miss_rate": {
+            "mean": 0.04367482818690711,
+            "ci_low": 0.0416116248348745,
+            "ci_high": 0.04584717607973423,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.0416116248348745,
+              0.04584717607973422,
+              0.0435656836461126
+            ]
+          },
+          "n_attempts_per_seed": {
+            "median": 1505,
+            "min": 1492,
+            "max": 1514
+          }
+        },
+        "structured_null": {
+          "promote_rate": {
+            "mean": 0.017810267272381174,
+            "ci_low": 0.00949367088607595,
+            "ci_high": 0.024767801857585137,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.02476780185758514,
+              0.00949367088607595,
+              0.019169329073482427
+            ]
+          },
+          "archive_fill_rate": {
+            "mean": 0.017810267272381174,
+            "ci_low": 0.00949367088607595,
+            "ci_high": 0.024767801857585137,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.02476780185758514,
+              0.00949367088607595,
+              0.019169329073482427
+            ]
+          },
+          "near_miss_rate": {
+            "mean": 0.01465846048133544,
+            "ci_low": 0.006329113924050633,
+            "ci_high": 0.021671826625386997,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.021671826625386997,
+              0.006329113924050633,
+              0.01597444089456869
+            ]
+          },
+          "n_attempts_per_seed": {
+            "median": 316,
+            "min": 313,
+            "max": 323
+          }
+        }
+      }
+    },
+    "trial_3_iter31_a149_u05_15k": {
+      "n_seeds": 3,
+      "n_episodes_per_seed": 15000,
+      "weights": {
+        "structural": 0.65,
+        "symbolic": 0.15,
+        "uniform": 0.05,
+        "structured_null": 0.05,
+        "anti_prior": 0.1
+      },
+      "per_class": {
+        "structural": {
+          "promote_rate": {
+            "mean": 0.3521290105249592,
+            "ci_low": 0.3389094759131816,
+            "ci_high": 0.36003799873337555,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.35743955692832036,
+              0.3389094759131816,
+              0.36003799873337555
+            ]
+          },
+          "archive_fill_rate": {
+            "mean": 0.11523994847799113,
+            "ci_low": 0.1019587083112758,
+            "ci_high": 0.1222707423580786,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.1222707423580786,
+              0.1019587083112758,
+              0.12149039476461895
+            ]
+          },
+          "near_miss_rate": {
+            "mean": 0.2845012514739116,
+            "ci_low": 0.25929062996294333,
+            "ci_high": 0.3008840132069443,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.3008840132069443,
+              0.25929062996294333,
+              0.2933291112518472
+            ]
+          },
+          "n_attempts_per_seed": {
+            "median": 9445,
+            "min": 9389,
+            "max": 9474
+          }
+        },
+        "symbolic": {
+          "promote_rate": {
+            "mean": 0.09487631224425443,
+            "ci_low": 0.07464114832535886,
+            "ci_high": 0.12025605852766347,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.12025605852766347,
+              0.08973172987974098,
+              0.07464114832535886
+            ]
+          },
+          "archive_fill_rate": {
+            "mean": 0.049424642484237835,
+            "ci_low": 0.041626794258373206,
+            "ci_high": 0.05715592135345222,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.05715592135345222,
+              0.04949121184088807,
+              0.041626794258373206
+            ]
+          },
+          "near_miss_rate": {
+            "mean": 0.06851125689567542,
+            "ci_low": 0.05504162812210916,
+            "ci_high": 0.08733424782807499,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.08733424782807499,
+              0.05504162812210916,
+              0.06315789473684211
+            ]
+          },
+          "n_attempts_per_seed": {
+            "median": 2162,
+            "min": 2090,
+            "max": 2187
+          }
+        },
+        "anti_prior": {
+          "promote_rate": {
+            "mean": 0.03548077280992545,
+            "ci_low": 0.0290736984448952,
+            "ci_high": 0.03926701570680628,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.0290736984448952,
+              0.038101604278074866,
+              0.03926701570680628
+            ]
+          },
+          "archive_fill_rate": {
+            "mean": 0.019347307382416714,
+            "ci_low": 0.015706806282722512,
+            "ci_high": 0.022727272727272724,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.0196078431372549,
+              0.022727272727272728,
+              0.015706806282722512
+            ]
+          },
+          "near_miss_rate": {
+            "mean": 0.032137159108474804,
+            "ci_low": 0.025016903313049357,
+            "ci_high": 0.037303664921465966,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.025016903313049357,
+              0.03409090909090909,
+              0.037303664921465966
+            ]
+          },
+          "n_attempts_per_seed": {
+            "median": 1496,
+            "min": 1479,
+            "max": 1528
+          }
+        },
+        "uniform": {
+          "promote_rate": {
+            "mean": 0.04614049107278615,
+            "ci_low": 0.04477611940298507,
+            "ci_high": 0.047764227642276426,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.047764227642276426,
+              0.04477611940298507,
+              0.045881126173096975
+            ]
+          },
+          "archive_fill_rate": {
+            "mean": 0.022875425301495944,
+            "ci_low": 0.021321961620469083,
+            "ci_high": 0.02540650406504065,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.02540650406504065,
+              0.021321961620469083,
+              0.021897810218978103
+            ]
+          },
+          "near_miss_rate": {
+            "mean": 0.03887295952395504,
+            "ci_low": 0.03753910323253389,
+            "ci_high": 0.039634146341463415,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.039634146341463415,
+              0.039445628997867806,
+              0.03753910323253389
+            ]
+          },
+          "n_attempts_per_seed": {
+            "median": 959,
+            "min": 938,
+            "max": 984
+          }
+        },
+        "structured_null": {
+          "promote_rate": {
+            "mean": 0.027551722573375455,
+            "ci_low": 0.01981230448383733,
+            "ci_high": 0.032665964172813484,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.030176899063475548,
+              0.01981230448383733,
+              0.032665964172813484
+            ]
+          },
+          "archive_fill_rate": {
+            "mean": 0.026502367811421092,
+            "ci_low": 0.01981230448383733,
+            "ci_high": 0.030558482613277135,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.029136316337148804,
+              0.01981230448383733,
+              0.030558482613277135
+            ]
+          },
+          "near_miss_rate": {
+            "mean": 0.025806475852626284,
+            "ci_low": 0.016684045881126174,
+            "ci_high": 0.030558482613277135,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.030176899063475548,
+              0.016684045881126174,
+              0.030558482613277135
+            ]
+          },
+          "n_attempts_per_seed": {
+            "median": 959,
+            "min": 949,
+            "max": 961
+          }
+        }
+      }
+    },
+    "trial_3_iter31_a149_u30_15k": {
+      "n_seeds": 3,
+      "n_episodes_per_seed": 15000,
+      "weights": {
+        "structural": 0.4,
+        "symbolic": 0.15,
+        "uniform": 0.3,
+        "structured_null": 0.05,
+        "anti_prior": 0.1
+      },
+      "per_class": {
+        "structural": {
+          "promote_rate": {
+            "mean": 0.3315764438101629,
+            "ci_low": 0.3190110826939471,
+            "ci_high": 0.34746621621621615,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.3282520325203252,
+              0.3474662162162162,
+              0.3190110826939471
+            ]
+          },
+          "archive_fill_rate": {
+            "mean": 0.1309027568988738,
+            "ci_low": 0.12127371273712735,
+            "ci_high": 0.14611486486486486,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.12127371273712736,
+              0.14611486486486486,
+              0.12531969309462915
+            ]
+          },
+          "near_miss_rate": {
+            "mean": 0.27230797636885845,
+            "ci_low": 0.2688832054560955,
+            "ci_high": 0.2750677506775068,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.2750677506775068,
+              0.27297297297297296,
+              0.2688832054560955
+            ]
+          },
+          "n_attempts_per_seed": {
+            "median": 5904,
+            "min": 5865,
+            "max": 5920
+          }
+        },
+        "symbolic": {
+          "promote_rate": {
+            "mean": 0.1268509109799483,
+            "ci_low": 0.11023255813953488,
+            "ci_high": 0.1383219954648526,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.11023255813953488,
+              0.13199817933545743,
+              0.1383219954648526
+            ]
+          },
+          "archive_fill_rate": {
+            "mean": 0.07047241482712989,
+            "ci_low": 0.06558139534883721,
+            "ci_high": 0.07482993197278912,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.06558139534883721,
+              0.07100591715976332,
+              0.07482993197278912
+            ]
+          },
+          "near_miss_rate": {
+            "mean": 0.09035200914655984,
+            "ci_low": 0.07069767441860465,
+            "ci_high": 0.1015873015873016,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.07069767441860465,
+              0.09877105143377332,
+              0.10158730158730159
+            ]
+          },
+          "n_attempts_per_seed": {
+            "median": 2197,
+            "min": 2150,
+            "max": 2205
+          }
+        },
+        "anti_prior": {
+          "promote_rate": {
+            "mean": 0.030917554580060094,
+            "ci_low": 0.029088558500323203,
+            "ci_high": 0.03413654618473896,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.03413654618473896,
+              0.02952755905511811,
+              0.029088558500323207
+            ]
+          },
+          "archive_fill_rate": {
+            "mean": 0.021270151363010064,
+            "ci_low": 0.019028871391076115,
+            "ci_high": 0.02409638554216868,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.024096385542168676,
+              0.019028871391076115,
+              0.02068519715578539
+            ]
+          },
+          "near_miss_rate": {
+            "mean": 0.02564266150570609,
+            "ci_low": 0.02456367162249515,
+            "ci_high": 0.02677376171352075,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.02677376171352075,
+              0.025590551181102362,
+              0.02456367162249515
+            ]
+          },
+          "n_attempts_per_seed": {
+            "median": 1524,
+            "min": 1494,
+            "max": 1547
+          }
+        },
+        "uniform": {
+          "promote_rate": {
+            "mean": 0.04682280552711149,
+            "ci_low": 0.045372460496613996,
+            "ci_high": 0.04811762085096904,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.04811762085096904,
+              0.046978335233751424,
+              0.045372460496613996
+            ]
+          },
+          "archive_fill_rate": {
+            "mean": 0.02066822855136467,
+            "ci_low": 0.020068415051311288,
+            "ci_high": 0.021218961625282168,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.020717308977500556,
+              0.020068415051311288,
+              0.021218961625282168
+            ]
+          },
+          "near_miss_rate": {
+            "mean": 0.04057885009170784,
+            "ci_low": 0.03860045146726862,
+            "ci_high": 0.042771218534194695,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.042771218534194695,
+              0.040364880273660204,
+              0.03860045146726862
+            ]
+          },
+          "n_attempts_per_seed": {
+            "median": 4430,
+            "min": 4385,
+            "max": 4489
+          }
+        },
+        "structured_null": {
+          "promote_rate": {
+            "mean": 0.02665371266611459,
+            "ci_low": 0.023613963039014373,
+            "ci_high": 0.030114226375908618,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.030114226375908618,
+              0.023613963039014373,
+              0.026232948583420776
+            ]
+          },
+          "archive_fill_rate": {
+            "mean": 0.026307572133058166,
+            "ci_low": 0.023613963039014373,
+            "ci_high": 0.02907580477673936,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.029075804776739357,
+              0.023613963039014373,
+              0.026232948583420776
+            ]
+          },
+          "near_miss_rate": {
+            "mean": 0.02492328707077487,
+            "ci_low": 0.022587268993839837,
+            "ci_high": 0.02699896157840083,
+            "n_seed_observations": 3,
+            "raw_values": [
+              0.02699896157840083,
+              0.022587268993839837,
+              0.025183630640083946
+            ]
+          },
+          "n_attempts_per_seed": {
+            "median": 963,
+            "min": 953,
+            "max": 974
+          }
+        }
+      }
+    }
+  },
+  "honesty_notes": [
+    "Denominators come from deterministic scheduler simulation (OperatorScheduler replay with seed + weights), not from persisted attempt counts. The engine's operator_call_counts is computed at runtime but not persisted in the ledger or trial_results.json. Replay agrees with weights \u00d7 n_episodes within multinomial variance for the warm-up period; min-share enforcement adjusts shares for post-warm-up episodes (see scheduler.py).",
+    "PROMOTE rate uses Ergon's substrate-pass criterion (lift >= 2.0 AND match_size >= 3). Strict kernel PROMOTE (F1+F6+F9+F11 all CLEAR) is not applicable to predicate search: predicates aren't tested by the battery; corpus records are. Per engine.py docstring, strict kernel PROMOTE at Path B is empirically 0/30000 \u2014 different metric, different pipeline.",
+    "Archive cell-fill rate is approximated by distinct canonical_predicate_hash per class. The MAP-Elites archive's true cell-fill (cell-coordinate-based) is computed at archive.submit() time but not persisted. The proxy may undercount classes that explore many cells with the same predicate or overcount classes that produce predicate variants without exploring new cells. Trial 2's archive_n_cells (per-seed total) is consistent with these numbers in aggregate but cannot be broken down per-class without re-running.",
+    "Near-miss rate adapts KILL_VECTOR_SPEC's 'cleared k of 4 falsifiers, k>=3' to predicate-search. The adaptation: predicate captured a partial-kill cluster (matched_kill_rate strictly in (0, 1)). This is qualitatively similar \u2014 a substrate-PASS event whose match-set isn't unanimous. Don't compare numerically across the Lehmer/Mahler kill_vector pipeline; the semantics of 'falsifier' differ.",
+    "Cross-seed CIs are 95% percentile bootstrap (2000 resamples) over per-seed rates. With 12 seed-records (3 seeds \u00d7 4 configs) the CIs are wide; treat any single-config metric (n_seed_observations=3) as exploratory only. n_seed_observations=1 means single-seed; flagged below.",
+    "Aggregate-level CIs pool across configs. This treats u05_canonical and u30_broad as the same regime, which is partly defensible (same corpus, same evaluator, same scheduler module \u2014 only weights differ) but also partly conflated (different weight regimes induce different exploration dynamics). The per-config table preserves regime separation; consult both.",
+    "Synthetic-corpus ledgers (iter15, iter18, iter27_uniform30) are excluded. Different corpus, different lift threshold, different baseline kill rate. Mixing would conflate regimes.",
+    "Iter28 had 1/3-seed cluster discovery flagged in CALIBRATION post; treat any class-specific metric where one seed dominates as suspect. Per-seed raw_values are reported in the JSON for verification.",
+    "The scheduler's deterministic replay reconstructs attempts exactly only if trial_3_iter28_a149_real.py used the same min_shares (DEFAULT_MIN_SHARES) and lookback_window (100) as the scheduler module. These are the defaults and the trial code does not override; verified by code-read 2026-05-05."
+  ]
+}
