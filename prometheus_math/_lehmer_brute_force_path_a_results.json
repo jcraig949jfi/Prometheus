@@ -1,0 +1,1644 @@
+{
+  "subspace": "deg14_palindromic_coeffs_pm5_c0_positive",
+  "source_brute_force_results": "F:\\Prometheus\\prometheus_math\\_lehmer_brute_force_results.json",
+  "nroots_precision_ladder": [
+    60,
+    100,
+    200
+  ],
+  "n_unverified_entries_loaded": 17,
+  "convergence_counts": {
+    "60": 17,
+    "100": 0,
+    "200": 0,
+    "-1": 0
+  },
+  "classification_counts": {
+    "A1": 15,
+    "A2": 0,
+    "A3": 2,
+    "A4": 0
+  },
+  "verdict_counts": {
+    "cyclotomic_noise": 15,
+    "rediscovery": 2,
+    "candidate": 0,
+    "still_unverified": 0
+  },
+  "substrate_verdict": "H5_CONFIRMED",
+  "substrate_explanation": "All 17 unverified entries resolved at high precision. All A1+A2 entries are cyclotomic-noise (true M \u2248 1, not in-band). All A3 entries match Mossinghoff via M-proximity (rediscovery of catalog entries). Path A lifts the INCONCLUSIVE verdict to H5_CONFIRMED for the deg-14 palindromic \u00b15 subspace.",
+  "candidate_flagged": [],
+  "wall_time_seconds": 0.15737479995004833,
+  "per_entry_results": [
+    {
+      "half_coeffs": [
+        1,
+        -4,
+        5,
+        0,
+        -5,
+        4,
+        -1,
+        0
+      ],
+      "coeffs_ascending": [
+        1,
+        -4,
+        5,
+        0,
+        -5,
+        4,
+        -1,
+        0,
+        -1,
+        4,
+        -5,
+        0,
+        5,
+        -4,
+        1
+      ],
+      "M_numpy": 1.0031432230024813,
+      "M_mpmath_original": NaN,
+      "M_path_a": 1.0,
+      "convergence_precision_digits": 60,
+      "precision_history": [
+        {
+          "precision_digits": 60,
+          "M": 1.0,
+          "status": "ok",
+          "wall_time_seconds": 0.03627300006337464,
+          "error": null
+        }
+      ],
+      "factors": [
+        {
+          "degree": 1,
+          "multiplicity": 2,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1
+          ]
+        },
+        {
+          "degree": 1,
+          "multiplicity": 6,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            -1,
+            1
+          ]
+        },
+        {
+          "degree": 2,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            0,
+            1
+          ]
+        },
+        {
+          "degree": 4,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      ],
+      "status": "ok",
+      "error": null,
+      "classification": "A1",
+      "mossinghoff_match": {
+        "in_catalog": false,
+        "label": null,
+        "match_type": null,
+        "catalog_M": null,
+        "catalog_degree": null
+      },
+      "verdict_per_entry": "cyclotomic_noise"
+    },
+    {
+      "half_coeffs": [
+        1,
+        -3,
+        1,
+        5,
+        -5,
+        -1,
+        3,
+        -2
+      ],
+      "coeffs_ascending": [
+        1,
+        -3,
+        1,
+        5,
+        -5,
+        -1,
+        3,
+        -2,
+        3,
+        -1,
+        -5,
+        5,
+        1,
+        -3,
+        1
+      ],
+      "M_numpy": 1.0043708418422215,
+      "M_mpmath_original": NaN,
+      "M_path_a": 1.0,
+      "convergence_precision_digits": 60,
+      "precision_history": [
+        {
+          "precision_digits": 60,
+          "M": 1.0,
+          "status": "ok",
+          "wall_time_seconds": 0.017420699819922447,
+          "error": null
+        }
+      ],
+      "factors": [
+        {
+          "degree": 1,
+          "multiplicity": 2,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1
+          ]
+        },
+        {
+          "degree": 1,
+          "multiplicity": 6,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            -1,
+            1
+          ]
+        },
+        {
+          "degree": 6,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ],
+      "status": "ok",
+      "error": null,
+      "classification": "A1",
+      "mossinghoff_match": {
+        "in_catalog": false,
+        "label": null,
+        "match_type": null,
+        "catalog_M": null,
+        "catalog_degree": null
+      },
+      "verdict_per_entry": "cyclotomic_noise"
+    },
+    {
+      "half_coeffs": [
+        1,
+        -3,
+        2,
+        1,
+        0,
+        -2,
+        1,
+        0
+      ],
+      "coeffs_ascending": [
+        1,
+        -3,
+        2,
+        1,
+        0,
+        -2,
+        1,
+        0,
+        1,
+        -2,
+        0,
+        1,
+        2,
+        -3,
+        1
+      ],
+      "M_numpy": 1.176532796146304,
+      "M_mpmath_original": NaN,
+      "M_path_a": 1.1762808182599176,
+      "convergence_precision_digits": 60,
+      "precision_history": [
+        {
+          "precision_digits": 60,
+          "M": 1.1762808182599176,
+          "status": "ok",
+          "wall_time_seconds": 0.025047800038009882,
+          "error": null
+        }
+      ],
+      "factors": [
+        {
+          "degree": 1,
+          "multiplicity": 4,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            -1,
+            1
+          ]
+        },
+        {
+          "degree": 10,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.1762808182599176,
+          "coeffs_ascending": [
+            1,
+            1,
+            0,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            0,
+            1,
+            1
+          ]
+        }
+      ],
+      "status": "ok",
+      "error": null,
+      "classification": "A3",
+      "mossinghoff_match": {
+        "in_catalog": true,
+        "label": "Lehmer-extension (deg 14)",
+        "match_type": "M_proximity",
+        "catalog_M": 1.1762808182599176,
+        "catalog_degree": 14
+      },
+      "verdict_per_entry": "rediscovery"
+    },
+    {
+      "half_coeffs": [
+        1,
+        -3,
+        2,
+        2,
+        -4,
+        3,
+        1,
+        -4
+      ],
+      "coeffs_ascending": [
+        1,
+        -3,
+        2,
+        2,
+        -4,
+        3,
+        1,
+        -4,
+        1,
+        3,
+        -4,
+        2,
+        2,
+        -3,
+        1
+      ],
+      "M_numpy": 1.0028435553932493,
+      "M_mpmath_original": NaN,
+      "M_path_a": 1.0,
+      "convergence_precision_digits": 60,
+      "precision_history": [
+        {
+          "precision_digits": 60,
+          "M": 1.0,
+          "status": "ok",
+          "wall_time_seconds": 0.011177999898791313,
+          "error": null
+        }
+      ],
+      "factors": [
+        {
+          "degree": 1,
+          "multiplicity": 2,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1
+          ]
+        },
+        {
+          "degree": 1,
+          "multiplicity": 6,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            -1,
+            1
+          ]
+        },
+        {
+          "degree": 2,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            0,
+            1
+          ]
+        },
+        {
+          "degree": 4,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ],
+      "status": "ok",
+      "error": null,
+      "classification": "A1",
+      "mossinghoff_match": {
+        "in_catalog": false,
+        "label": null,
+        "match_type": null,
+        "catalog_M": null,
+        "catalog_degree": null
+      },
+      "verdict_per_entry": "cyclotomic_noise"
+    },
+    {
+      "half_coeffs": [
+        1,
+        -3,
+        3,
+        -2,
+        1,
+        3,
+        -5,
+        4
+      ],
+      "coeffs_ascending": [
+        1,
+        -3,
+        3,
+        -2,
+        1,
+        3,
+        -5,
+        4,
+        -5,
+        3,
+        1,
+        -2,
+        3,
+        -3,
+        1
+      ],
+      "M_numpy": 1.0042966068173567,
+      "M_mpmath_original": NaN,
+      "M_path_a": 1.0,
+      "convergence_precision_digits": 60,
+      "precision_history": [
+        {
+          "precision_digits": 60,
+          "M": 1.0,
+          "status": "ok",
+          "wall_time_seconds": 0.00703889993019402,
+          "error": null
+        }
+      ],
+      "factors": [
+        {
+          "degree": 1,
+          "multiplicity": 2,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1
+          ]
+        },
+        {
+          "degree": 1,
+          "multiplicity": 6,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            -1,
+            1
+          ]
+        },
+        {
+          "degree": 2,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "degree": 2,
+          "multiplicity": 2,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            0,
+            1
+          ]
+        }
+      ],
+      "status": "ok",
+      "error": null,
+      "classification": "A1",
+      "mossinghoff_match": {
+        "in_catalog": false,
+        "label": null,
+        "match_type": null,
+        "catalog_M": null,
+        "catalog_degree": null
+      },
+      "verdict_per_entry": "cyclotomic_noise"
+    },
+    {
+      "half_coeffs": [
+        1,
+        -2,
+        -1,
+        3,
+        1,
+        -2,
+        -1,
+        2
+      ],
+      "coeffs_ascending": [
+        1,
+        -2,
+        -1,
+        3,
+        1,
+        -2,
+        -1,
+        2,
+        -1,
+        -2,
+        1,
+        3,
+        -1,
+        -2,
+        1
+      ],
+      "M_numpy": 1.0027074558450277,
+      "M_mpmath_original": NaN,
+      "M_path_a": 1.0,
+      "convergence_precision_digits": 60,
+      "precision_history": [
+        {
+          "precision_digits": 60,
+          "M": 1.0,
+          "status": "ok",
+          "wall_time_seconds": 0.004086500033736229,
+          "error": null
+        }
+      ],
+      "factors": [
+        {
+          "degree": 1,
+          "multiplicity": 2,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1
+          ]
+        },
+        {
+          "degree": 1,
+          "multiplicity": 6,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            -1,
+            1
+          ]
+        },
+        {
+          "degree": 2,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "degree": 4,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ],
+      "status": "ok",
+      "error": null,
+      "classification": "A1",
+      "mossinghoff_match": {
+        "in_catalog": false,
+        "label": null,
+        "match_type": null,
+        "catalog_M": null,
+        "catalog_degree": null
+      },
+      "verdict_per_entry": "cyclotomic_noise"
+    },
+    {
+      "half_coeffs": [
+        1,
+        -2,
+        0,
+        0,
+        2,
+        2,
+        -3,
+        0
+      ],
+      "coeffs_ascending": [
+        1,
+        -2,
+        0,
+        0,
+        2,
+        2,
+        -3,
+        0,
+        -3,
+        2,
+        2,
+        0,
+        0,
+        -2,
+        1
+      ],
+      "M_numpy": 1.0032492782631155,
+      "M_mpmath_original": NaN,
+      "M_path_a": 1.0,
+      "convergence_precision_digits": 60,
+      "precision_history": [
+        {
+          "precision_digits": 60,
+          "M": 1.0,
+          "status": "ok",
+          "wall_time_seconds": 0.0019507999531924725,
+          "error": null
+        }
+      ],
+      "factors": [
+        {
+          "degree": 1,
+          "multiplicity": 2,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1
+          ]
+        },
+        {
+          "degree": 1,
+          "multiplicity": 6,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            -1,
+            1
+          ]
+        },
+        {
+          "degree": 2,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            0,
+            1
+          ]
+        },
+        {
+          "degree": 2,
+          "multiplicity": 2,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1,
+            1
+          ]
+        }
+      ],
+      "status": "ok",
+      "error": null,
+      "classification": "A1",
+      "mossinghoff_match": {
+        "in_catalog": false,
+        "label": null,
+        "match_type": null,
+        "catalog_M": null,
+        "catalog_degree": null
+      },
+      "verdict_per_entry": "cyclotomic_noise"
+    },
+    {
+      "half_coeffs": [
+        1,
+        -1,
+        -3,
+        2,
+        3,
+        1,
+        -1,
+        -4
+      ],
+      "coeffs_ascending": [
+        1,
+        -1,
+        -3,
+        2,
+        3,
+        1,
+        -1,
+        -4,
+        -1,
+        1,
+        3,
+        2,
+        -3,
+        -1,
+        1
+      ],
+      "M_numpy": 1.003988958640861,
+      "M_mpmath_original": NaN,
+      "M_path_a": 1.0,
+      "convergence_precision_digits": 60,
+      "precision_history": [
+        {
+          "precision_digits": 60,
+          "M": 1.0,
+          "status": "ok",
+          "wall_time_seconds": 0.0021315000485628843,
+          "error": null
+        }
+      ],
+      "factors": [
+        {
+          "degree": 1,
+          "multiplicity": 4,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1
+          ]
+        },
+        {
+          "degree": 1,
+          "multiplicity": 6,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            -1,
+            1
+          ]
+        },
+        {
+          "degree": 2,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            0,
+            1
+          ]
+        },
+        {
+          "degree": 2,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1,
+            1
+          ]
+        }
+      ],
+      "status": "ok",
+      "error": null,
+      "classification": "A1",
+      "mossinghoff_match": {
+        "in_catalog": false,
+        "label": null,
+        "match_type": null,
+        "catalog_M": null,
+        "catalog_degree": null
+      },
+      "verdict_per_entry": "cyclotomic_noise"
+    },
+    {
+      "half_coeffs": [
+        1,
+        0,
+        3,
+        0,
+        1,
+        0,
+        -5,
+        0
+      ],
+      "coeffs_ascending": [
+        1,
+        0,
+        3,
+        0,
+        1,
+        0,
+        -5,
+        0,
+        -5,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1
+      ],
+      "M_numpy": 1.0011800875987642,
+      "M_mpmath_original": NaN,
+      "M_path_a": 1.0,
+      "convergence_precision_digits": 60,
+      "precision_history": [
+        {
+          "precision_digits": 60,
+          "M": 1.0,
+          "status": "ok",
+          "wall_time_seconds": 0.0019932000432163477,
+          "error": null
+        }
+      ],
+      "factors": [
+        {
+          "degree": 1,
+          "multiplicity": 2,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            -1,
+            1
+          ]
+        },
+        {
+          "degree": 1,
+          "multiplicity": 2,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1
+          ]
+        },
+        {
+          "degree": 2,
+          "multiplicity": 5,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            0,
+            1
+          ]
+        }
+      ],
+      "status": "ok",
+      "error": null,
+      "classification": "A1",
+      "mossinghoff_match": {
+        "in_catalog": false,
+        "label": null,
+        "match_type": null,
+        "catalog_M": null,
+        "catalog_degree": null
+      },
+      "verdict_per_entry": "cyclotomic_noise"
+    },
+    {
+      "half_coeffs": [
+        1,
+        1,
+        -3,
+        -2,
+        3,
+        -1,
+        -1,
+        4
+      ],
+      "coeffs_ascending": [
+        1,
+        1,
+        -3,
+        -2,
+        3,
+        -1,
+        -1,
+        4,
+        -1,
+        -1,
+        3,
+        -2,
+        -3,
+        1,
+        1
+      ],
+      "M_numpy": 1.0039443751800874,
+      "M_mpmath_original": NaN,
+      "M_path_a": 1.0,
+      "convergence_precision_digits": 60,
+      "precision_history": [
+        {
+          "precision_digits": 60,
+          "M": 1.0,
+          "status": "ok",
+          "wall_time_seconds": 0.001850200118497014,
+          "error": null
+        }
+      ],
+      "factors": [
+        {
+          "degree": 1,
+          "multiplicity": 4,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            -1,
+            1
+          ]
+        },
+        {
+          "degree": 1,
+          "multiplicity": 6,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1
+          ]
+        },
+        {
+          "degree": 2,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            -1,
+            1
+          ]
+        },
+        {
+          "degree": 2,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            0,
+            1
+          ]
+        }
+      ],
+      "status": "ok",
+      "error": null,
+      "classification": "A1",
+      "mossinghoff_match": {
+        "in_catalog": false,
+        "label": null,
+        "match_type": null,
+        "catalog_M": null,
+        "catalog_degree": null
+      },
+      "verdict_per_entry": "cyclotomic_noise"
+    },
+    {
+      "half_coeffs": [
+        1,
+        2,
+        -1,
+        -3,
+        1,
+        2,
+        -1,
+        -2
+      ],
+      "coeffs_ascending": [
+        1,
+        2,
+        -1,
+        -3,
+        1,
+        2,
+        -1,
+        -2,
+        -1,
+        2,
+        1,
+        -3,
+        -1,
+        2,
+        1
+      ],
+      "M_numpy": 1.0027074995494392,
+      "M_mpmath_original": NaN,
+      "M_path_a": 1.0,
+      "convergence_precision_digits": 60,
+      "precision_history": [
+        {
+          "precision_digits": 60,
+          "M": 1.0,
+          "status": "ok",
+          "wall_time_seconds": 0.002970099914819002,
+          "error": null
+        }
+      ],
+      "factors": [
+        {
+          "degree": 1,
+          "multiplicity": 2,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            -1,
+            1
+          ]
+        },
+        {
+          "degree": 1,
+          "multiplicity": 6,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1
+          ]
+        },
+        {
+          "degree": 2,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            -1,
+            1
+          ]
+        },
+        {
+          "degree": 4,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            -1,
+            1,
+            -1,
+            1
+          ]
+        }
+      ],
+      "status": "ok",
+      "error": null,
+      "classification": "A1",
+      "mossinghoff_match": {
+        "in_catalog": false,
+        "label": null,
+        "match_type": null,
+        "catalog_M": null,
+        "catalog_degree": null
+      },
+      "verdict_per_entry": "cyclotomic_noise"
+    },
+    {
+      "half_coeffs": [
+        1,
+        2,
+        0,
+        0,
+        2,
+        -2,
+        -3,
+        0
+      ],
+      "coeffs_ascending": [
+        1,
+        2,
+        0,
+        0,
+        2,
+        -2,
+        -3,
+        0,
+        -3,
+        -2,
+        2,
+        0,
+        0,
+        2,
+        1
+      ],
+      "M_numpy": 1.003249074808974,
+      "M_mpmath_original": NaN,
+      "M_path_a": 1.0,
+      "convergence_precision_digits": 60,
+      "precision_history": [
+        {
+          "precision_digits": 60,
+          "M": 1.0,
+          "status": "ok",
+          "wall_time_seconds": 0.0014147001784294844,
+          "error": null
+        }
+      ],
+      "factors": [
+        {
+          "degree": 1,
+          "multiplicity": 2,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            -1,
+            1
+          ]
+        },
+        {
+          "degree": 1,
+          "multiplicity": 6,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1
+          ]
+        },
+        {
+          "degree": 2,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            0,
+            1
+          ]
+        },
+        {
+          "degree": 2,
+          "multiplicity": 2,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            -1,
+            1
+          ]
+        }
+      ],
+      "status": "ok",
+      "error": null,
+      "classification": "A1",
+      "mossinghoff_match": {
+        "in_catalog": false,
+        "label": null,
+        "match_type": null,
+        "catalog_M": null,
+        "catalog_degree": null
+      },
+      "verdict_per_entry": "cyclotomic_noise"
+    },
+    {
+      "half_coeffs": [
+        1,
+        3,
+        1,
+        -5,
+        -5,
+        1,
+        3,
+        2
+      ],
+      "coeffs_ascending": [
+        1,
+        3,
+        1,
+        -5,
+        -5,
+        1,
+        3,
+        2,
+        3,
+        1,
+        -5,
+        -5,
+        1,
+        3,
+        1
+      ],
+      "M_numpy": 1.0043709499369031,
+      "M_mpmath_original": NaN,
+      "M_path_a": 1.0,
+      "convergence_precision_digits": 60,
+      "precision_history": [
+        {
+          "precision_digits": 60,
+          "M": 1.0,
+          "status": "ok",
+          "wall_time_seconds": 0.005426499992609024,
+          "error": null
+        }
+      ],
+      "factors": [
+        {
+          "degree": 1,
+          "multiplicity": 2,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            -1,
+            1
+          ]
+        },
+        {
+          "degree": 1,
+          "multiplicity": 6,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1
+          ]
+        },
+        {
+          "degree": 6,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            -1,
+            1,
+            -1,
+            1,
+            -1,
+            1
+          ]
+        }
+      ],
+      "status": "ok",
+      "error": null,
+      "classification": "A1",
+      "mossinghoff_match": {
+        "in_catalog": false,
+        "label": null,
+        "match_type": null,
+        "catalog_M": null,
+        "catalog_degree": null
+      },
+      "verdict_per_entry": "cyclotomic_noise"
+    },
+    {
+      "half_coeffs": [
+        1,
+        3,
+        2,
+        -2,
+        -4,
+        -3,
+        1,
+        4
+      ],
+      "coeffs_ascending": [
+        1,
+        3,
+        2,
+        -2,
+        -4,
+        -3,
+        1,
+        4,
+        1,
+        -3,
+        -4,
+        -2,
+        2,
+        3,
+        1
+      ],
+      "M_numpy": 1.0028422158098105,
+      "M_mpmath_original": NaN,
+      "M_path_a": 1.0,
+      "convergence_precision_digits": 60,
+      "precision_history": [
+        {
+          "precision_digits": 60,
+          "M": 1.0,
+          "status": "ok",
+          "wall_time_seconds": 0.0033941001165658236,
+          "error": null
+        }
+      ],
+      "factors": [
+        {
+          "degree": 1,
+          "multiplicity": 2,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            -1,
+            1
+          ]
+        },
+        {
+          "degree": 1,
+          "multiplicity": 6,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1
+          ]
+        },
+        {
+          "degree": 2,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            0,
+            1
+          ]
+        },
+        {
+          "degree": 4,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            -1,
+            1,
+            -1,
+            1
+          ]
+        }
+      ],
+      "status": "ok",
+      "error": null,
+      "classification": "A1",
+      "mossinghoff_match": {
+        "in_catalog": false,
+        "label": null,
+        "match_type": null,
+        "catalog_M": null,
+        "catalog_degree": null
+      },
+      "verdict_per_entry": "cyclotomic_noise"
+    },
+    {
+      "half_coeffs": [
+        1,
+        3,
+        2,
+        -1,
+        0,
+        2,
+        1,
+        0
+      ],
+      "coeffs_ascending": [
+        1,
+        3,
+        2,
+        -1,
+        0,
+        2,
+        1,
+        0,
+        1,
+        2,
+        0,
+        -1,
+        2,
+        3,
+        1
+      ],
+      "M_numpy": 1.1765327477345522,
+      "M_mpmath_original": NaN,
+      "M_path_a": 1.1762808182599176,
+      "convergence_precision_digits": 60,
+      "precision_history": [
+        {
+          "precision_digits": 60,
+          "M": 1.1762808182599176,
+          "status": "ok",
+          "wall_time_seconds": 0.011753399856388569,
+          "error": null
+        }
+      ],
+      "factors": [
+        {
+          "degree": 1,
+          "multiplicity": 4,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1
+          ]
+        },
+        {
+          "degree": 10,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.1762808182599176,
+          "coeffs_ascending": [
+            1,
+            -1,
+            0,
+            1,
+            -1,
+            1,
+            -1,
+            1,
+            0,
+            -1,
+            1
+          ]
+        }
+      ],
+      "status": "ok",
+      "error": null,
+      "classification": "A3",
+      "mossinghoff_match": {
+        "in_catalog": true,
+        "label": "Lehmer-extension (deg 14)",
+        "match_type": "M_proximity",
+        "catalog_M": 1.1762808182599176,
+        "catalog_degree": 14
+      },
+      "verdict_per_entry": "rediscovery"
+    },
+    {
+      "half_coeffs": [
+        1,
+        3,
+        3,
+        2,
+        1,
+        -3,
+        -5,
+        -4
+      ],
+      "coeffs_ascending": [
+        1,
+        3,
+        3,
+        2,
+        1,
+        -3,
+        -5,
+        -4,
+        -5,
+        -3,
+        1,
+        2,
+        3,
+        3,
+        1
+      ],
+      "M_numpy": 1.0042965711159693,
+      "M_mpmath_original": NaN,
+      "M_path_a": 1.0,
+      "convergence_precision_digits": 60,
+      "precision_history": [
+        {
+          "precision_digits": 60,
+          "M": 1.0,
+          "status": "ok",
+          "wall_time_seconds": 0.0025290001649409533,
+          "error": null
+        }
+      ],
+      "factors": [
+        {
+          "degree": 1,
+          "multiplicity": 2,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            -1,
+            1
+          ]
+        },
+        {
+          "degree": 1,
+          "multiplicity": 6,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1
+          ]
+        },
+        {
+          "degree": 2,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            -1,
+            1
+          ]
+        },
+        {
+          "degree": 2,
+          "multiplicity": 2,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            0,
+            1
+          ]
+        }
+      ],
+      "status": "ok",
+      "error": null,
+      "classification": "A1",
+      "mossinghoff_match": {
+        "in_catalog": false,
+        "label": null,
+        "match_type": null,
+        "catalog_M": null,
+        "catalog_degree": null
+      },
+      "verdict_per_entry": "cyclotomic_noise"
+    },
+    {
+      "half_coeffs": [
+        1,
+        4,
+        5,
+        0,
+        -5,
+        -4,
+        -1,
+        0
+      ],
+      "coeffs_ascending": [
+        1,
+        4,
+        5,
+        0,
+        -5,
+        -4,
+        -1,
+        0,
+        -1,
+        -4,
+        -5,
+        0,
+        5,
+        4,
+        1
+      ],
+      "M_numpy": 1.0031413054180098,
+      "M_mpmath_original": NaN,
+      "M_path_a": 1.0,
+      "convergence_precision_digits": 60,
+      "precision_history": [
+        {
+          "precision_digits": 60,
+          "M": 1.0,
+          "status": "ok",
+          "wall_time_seconds": 0.00320790009573102,
+          "error": null
+        }
+      ],
+      "factors": [
+        {
+          "degree": 1,
+          "multiplicity": 2,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            -1,
+            1
+          ]
+        },
+        {
+          "degree": 1,
+          "multiplicity": 6,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            1
+          ]
+        },
+        {
+          "degree": 2,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            0,
+            1
+          ]
+        },
+        {
+          "degree": 4,
+          "multiplicity": 1,
+          "leading_coef": 1,
+          "M_factor": 1.0,
+          "coeffs_ascending": [
+            1,
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      ],
+      "status": "ok",
+      "error": null,
+      "classification": "A1",
+      "mossinghoff_match": {
+        "in_catalog": false,
+        "label": null,
+        "match_type": null,
+        "catalog_M": null,
+        "catalog_degree": null
+      },
+      "verdict_per_entry": "cyclotomic_noise"
+    }
+  ]
+}
