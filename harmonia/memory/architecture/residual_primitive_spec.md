@@ -1,8 +1,8 @@
 # RESIDUAL Primitive Specification
 ## Architectural extension of the Σ-kernel for spectral falsification and residual-driven refinement
 
-**Status:** Specification. Not yet implemented. Targets kernel v0.2.
-**Date:** 2026-05-02
+**Status:** Specification (design intent). Implementation shipped 2026-05-03 in `sigma_kernel/residuals.py` (~768 LOC, originated commit `4872bb4a`); caveat-as-metadata extension landed 2026-05-04 (`4fe502e0`); three filed bugs resolved (`f42a2c30`). Spec remains authoritative for **design intent and naming**; consult `sigma_kernel/residuals.py` for the actual API surface. Targets kernel v0.2.
+**Date:** 2026-05-02 (spec); 2026-05-03+ (implementation)
 **Origin:** Synthesis of five-frontier-model adversarial review (ChatGPT, Deepseek, Claude/separate-session, Gemini, Grok) on the residual-signal principle articulated by James. All five reviewers independently proposed essentially this extension; the spec consolidates the convergent shape.
 **Companions:**
 - [`residual_signal.md`](residual_signal.md) — the foundational principle
@@ -213,9 +213,14 @@ The original C1 is preserved as a typed object with status `superseded_by=C1.2`.
 
 ## Implementation status
 
-Not yet implemented. Spec only.
+**Shipped 2026-05-03+.** `sigma_kernel/residuals.py` (~768 LOC) implements the typed Residual + REFINE + spectral verdicts. Caveat-as-metadata-on-CLAIM extension landed 2026-05-04 (`4fe502e0`). Three filed bugs resolved (`f42a2c30`). Test coverage in `sigma_kernel/test_caveats.py` (~533 LOC) plus the kernel's pivot-stack tests (158 → 197 passing as of 2026-05-03 evening).
 
-Implementation order, lowest-risk first:
+What's deferred (still spec-only):
+- META_CLAIM (battery self-falsification)
+- CLUSTER_RESIDUALS (Aporia's residual clustering)
+- The four-counts pilot with null baseline (Charon's lane, per `discovery_via_rediscovery.md` §6.2)
+
+Original implementation order (preserved as design history):
 
 1. **FALSIFY semantic extension.** Existing FALSIFY callers continue to work; new SpectralVerdictResult is opt-in. Add `score` and `residual` fields with defaults that match v0.1 behavior. ~1 day's work.
 2. **Residual storage.** Content-addressed, append-only, mirrors existing CLAIM storage. ~2 days.
