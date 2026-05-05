@@ -207,8 +207,10 @@ def main():
         except Exception:
             has_cyc_factor, residual_M = (False, None)
         is_irred = is_irreducible_rational_root(hc)
-        in_moss, moss_label = lookup_in_mossinghoff(
-            hc, M_mp if M_mp == M_mp else M_np,
+        in_moss, moss_label, moss_cyclo_struct, moss_match_type = (
+            lookup_in_mossinghoff(
+                hc, M_mp if M_mp == M_mp else M_np,
+            )
         )
         asc = descending_to_ascending(build_palindrome_descending(hc))
         verified.append({
@@ -224,6 +226,11 @@ def main():
             "is_irreducible_rational_root": is_irred,
             "in_mossinghoff": bool(in_moss),
             "mossinghoff_label": moss_label,
+            # 2026-05-04 catalog-completeness fix:
+            "mossinghoff_cyclotomic_structure": [
+                [int(n), int(k)] for n, k in moss_cyclo_struct
+            ],
+            "mossinghoff_match_type": moss_match_type,
         })
 
     verdict = verdict_from_band(verified)

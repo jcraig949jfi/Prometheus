@@ -653,38 +653,96 @@ def lookup_in_mossinghoff(
     half_coeffs: Sequence[int],
     M_value: float,
     M_tol: float = 1e-6,
-) -> tuple[bool, Optional[str]]:
+    use_factored: bool = True,
+) -> tuple[bool, Optional[str], list[tuple[int, int]], str]:
     """Cross-check a band candidate against the Mossinghoff catalog.
 
-    Tries (1) coefficient-exact match (with x -> -x flip) and
-    (2) Mahler-measure proximity match.
+    Tries in order:
+      1. coefficient-exact match (with x -> -x flip);
+      2. Mahler-measure proximity match;
+      3. (when ``use_factored=True``) factorization-aware composite
+         match — detects ``Lehmer * Phi_n^k`` and pure cyclotomic
+         products that the original lookup missed.
 
     Returns
     -------
-    (in_catalog, label_or_none)
+    (in_catalog, label_or_none, cyclotomic_structure, match_type)
+        ``cyclotomic_structure`` is a list of ``(n, k)`` tuples (empty
+        for direct or M-proximity matches that don't go through the
+        factorization step).
+        ``match_type`` is one of ``"direct_match"``,
+        ``"M_proximity_match"``, ``"composite_match"``,
+        ``"all_cyclotomic_match"``, or ``"no_match"``.
+
+    Notes
+    -----
+    The original (3-tuple) signature is preserved via
+    :func:`lookup_in_mossinghoff_legacy` for backwards compatibility
+    with the pre-2026-05-04 pipeline.
     """
     from prometheus_math.databases.mahler import (
         lookup_polynomial,
         lookup_by_M,
+        mahler_lookup_factored,
     )
 
     desc = build_palindrome_descending(half_coeffs)
     asc = list(reversed(desc))
+
     # 1. coefficient match
     entry = lookup_polynomial(asc)
     if entry is not None:
-        return (True, str(entry.get("name", "Mossinghoff (unnamed)")))
-    # 2. M-value proximity match (the same M can arise from non-equal
-    # coefficient lists if e.g. our entry is a cyclotomic-multiplicand
+        return (True,
+                str(entry.get("name", "Mossinghoff (unnamed)")),
+                [],
+                "direct_match")
+
+    # 2. M-value proximity match (same M can arise from non-equal
+    # coefficient lists if our entry is a cyclotomic-multiplicand
     # variant of the catalog entry).
     M_hits = lookup_by_M(float(M_value), tol=float(M_tol))
     if M_hits:
-        # Restrict to deg-14 hits (we're enumerating the deg-14 subspace).
         deg14_hits = [h for h in M_hits if h.get("degree") == DEGREE]
         if deg14_hits:
-            return (True, str(deg14_hits[0].get("name", "Mossinghoff (M-match deg14)")))
-        return (True, str(M_hits[0].get("name", "Mossinghoff (M-match)")))
-    return (False, None)
+            return (True,
+                    str(deg14_hits[0].get("name", "Mossinghoff (M-match deg14)")),
+                    [],
+                    "M_proximity_match")
+        return (True,
+                str(M_hits[0].get("name", "Mossinghoff (M-match)")),
+                [],
+                "M_proximity_match")
+
+    # 3. factorization-aware composite match (catalog-completeness fix
+    #    2026-05-04).  Detects Lehmer x Phi_n^k composites and pure
+    #    cyclotomic products even when the literal coefficient list is
+    #    not in the catalog.
+    if use_factored:
+        try:
+            label, struct, mtype = mahler_lookup_factored(asc)
+        except Exception:
+            label, struct, mtype = (None, [], "no_match")
+        if mtype in ("composite_match", "all_cyclotomic_match"):
+            return (True, label, list(struct), mtype)
+
+    return (False, None, [], "no_match")
+
+
+def lookup_in_mossinghoff_legacy(
+    half_coeffs: Sequence[int],
+    M_value: float,
+    M_tol: float = 1e-6,
+) -> tuple[bool, Optional[str]]:
+    """Backwards-compatible 2-tuple wrapper around
+    :func:`lookup_in_mossinghoff`.
+
+    Returns ``(in_catalog, label_or_none)``.  Disables the factorization
+    branch so behaviour matches the pre-2026-05-04 pipeline exactly.
+    """
+    in_cat, label, _struct, _mtype = lookup_in_mossinghoff(
+        half_coeffs, M_value, M_tol=M_tol, use_factored=False,
+    )
+    return (in_cat, label)
 
 
 # ---------------------------------------------------------------------------
@@ -1049,7 +1107,9 @@ def run_brute_force(
             has_cyc_factor, residual_M = (False, None)
 
         is_irred = is_irreducible_rational_root(hc)
-        in_moss, moss_label = lookup_in_mossinghoff(hc, M_mp if M_mp == M_mp else M_np)
+        in_moss, moss_label, moss_cyclo_struct, moss_match_type = (
+            lookup_in_mossinghoff(hc, M_mp if M_mp == M_mp else M_np)
+        )
 
         # mpmath verification status: NaN means we couldn't certify.
         mpmath_failed = not (M_mp == M_mp)  # NaN-safe
@@ -1068,6 +1128,13 @@ def run_brute_force(
             "is_irreducible_rational_root": is_irred,  # bool|None
             "in_mossinghoff": bool(in_moss),
             "mossinghoff_label": moss_label,
+            # 2026-05-04 catalog-completeness fix: record the
+            # cyclotomic-factor structure when the match came via
+            # mahler_lookup_factored (composite_match / all_cyclotomic_match).
+            "mossinghoff_cyclotomic_structure": [
+                [int(n), int(k)] for n, k in moss_cyclo_struct
+            ],
+            "mossinghoff_match_type": moss_match_type,
             "verification_failed": bool(mpmath_failed),
         }
 

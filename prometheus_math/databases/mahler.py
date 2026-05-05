@@ -186,6 +186,215 @@ def lookup_polynomial(coeffs: list[int]) -> Optional[dict]:
     return None
 
 
+# ---------------------------------------------------------------------------
+# Factorization-aware lookup (catalog-completeness fix, 2026-05-04)
+# ---------------------------------------------------------------------------
+
+#: Upper bound on n when probing cyclotomic Phi_n during factorization.
+#: phi(n) grows roughly like n / log log n; for poly degree D <= 200, every
+#: cyclotomic factor has phi(n) <= D, so n <= ~6 * D suffices in practice.
+#: We keep a generous default of 200 (covers all phi(n) <= 200) and degrade
+#: gracefully for higher n via the ``max_n`` argument.
+_DEFAULT_MAX_CYCLOTOMIC_N: int = 200
+
+
+def _is_cyclotomic_poly_sympy(f, x, max_n: int = _DEFAULT_MAX_CYCLOTOMIC_N
+                              ) -> Optional[int]:
+    """If ``f`` (sympy expression in ``x``) equals Phi_n for some n in
+    [1, max_n], return that n; otherwise return None.
+
+    Comparison is done at the polynomial-coefficient level (not sympy
+    structural equality) so that algebraically-equal but structurally
+    different forms still match.
+    """
+    import sympy as sp
+
+    try:
+        f_poly = sp.Poly(f, x, domain=sp.ZZ)
+    except Exception:
+        return None
+    deg_f = f_poly.degree()
+    if deg_f < 1:
+        return None
+    # phi(n) = deg_f restricts the candidate range; iterate small n until
+    # phi(n) > max possible deg_f. We keep a tight per-call cap.
+    for n in range(1, int(max_n) + 1):
+        try:
+            phi = sp.cyclotomic_poly(n, x)
+        except Exception:
+            continue
+        try:
+            phi_poly = sp.Poly(phi, x, domain=sp.ZZ)
+        except Exception:
+            continue
+        if phi_poly.degree() != deg_f:
+            continue
+        if phi_poly == f_poly:
+            return n
+    return None
+
+
+def _ascending_from_sympy_poly(poly, x) -> list[int]:
+    """Extract ascending integer coefficients from a sympy Poly/Expr."""
+    import sympy as sp
+
+    if not isinstance(poly, sp.Poly):
+        poly = sp.Poly(poly, x, domain=sp.ZZ)
+    desc = [int(c) for c in poly.all_coeffs()]
+    return list(reversed(desc))
+
+
+def mahler_lookup_factored(
+    coeffs: list[int],
+    max_cyclotomic_n: int = _DEFAULT_MAX_CYCLOTOMIC_N,
+) -> tuple[Optional[str], list[tuple[int, int]], str]:
+    """Catalog lookup with factorization-aware composite matching.
+
+    The original :func:`lookup_polynomial` does exact-coefficient matching
+    only, so a polynomial like ``Lehmer(x) * Phi_1(x)^4`` (degree 14) is
+    a "miss" even though its non-cyclotomic factor IS Lehmer's polynomial
+    in the catalog and the cyclotomic factor is canonical structure.
+    This function bridges that gap.
+
+    Algorithm
+    ---------
+    1. Try direct lookup via :func:`lookup_polynomial` (with x -> -x flip).
+       If hit, return ``(name, [], "direct_match")``.
+    2. Otherwise, factor the polynomial over ZZ via
+       ``sympy.factor_list``. Classify each irreducible factor as either
+       cyclotomic Phi_n (recording (n, multiplicity)) or non-cyclotomic
+       (kept aside as the "core").
+    3. If every factor is cyclotomic, return
+       ``(label, [(n_1, k_1), ...], "all_cyclotomic_match")`` where
+       ``label`` is a canonical printable summary like
+       ``"Phi_1^4 * Phi_2^2"``.
+    4. Otherwise, reassemble the non-cyclotomic core polynomial and look
+       it up directly. If it matches a catalog entry, return
+       ``(name, [(n_1, k_1), ...], "composite_match")`` — e.g.
+       ``("Lehmer's polynomial", [(1, 4)], "composite_match")``.
+    5. If the core does not match anything, return
+       ``(None, [(n_i, k_i), ...], "no_match")``. The cyclotomic
+       structure is still reported (informational; useful for diagnostics).
+
+    Parameters
+    ----------
+    coeffs : list of int
+        Ascending integer coefficients.
+    max_cyclotomic_n : int, default 200
+        Largest cyclotomic index probed during classification.
+
+    Returns
+    -------
+    (label, cyclotomic_structure, match_type)
+        ``label`` : str or None — catalog entry name (or pure-cyclotomic
+        summary, or None when no match).
+        ``cyclotomic_structure`` : list of (n, k) tuples in ascending
+        ``n`` order.
+        ``match_type`` : one of
+        ``"direct_match"`` / ``"composite_match"`` / ``"all_cyclotomic_match"``
+        / ``"no_match"``.
+
+    Notes
+    -----
+    Backwards compatibility: :func:`lookup_polynomial` is unchanged and
+    still callable independently. Performance: factorization is moderately
+    expensive (~ms per polynomial) and should NOT be applied to every
+    poly in a large brute-force run — only to those that fail direct
+    lookup. See ``MAHLER_FACTORED_LOOKUP_SPEC.md``.
+    """
+    target = _normalize(list(int(c) for c in coeffs))
+    if not target or (len(target) == 1):
+        # Constant or empty — handled as edge case.
+        direct = lookup_polynomial(target)
+        if direct is not None:
+            return (str(direct.get("name", "Mossinghoff (unnamed)")), [],
+                    "direct_match")
+        return (None, [], "no_match")
+
+    # Step 1: direct match (cheap).
+    direct = lookup_polynomial(target)
+    if direct is not None:
+        return (str(direct.get("name", "Mossinghoff (unnamed)")), [],
+                "direct_match")
+
+    # Step 2: factor over ZZ.
+    try:
+        import sympy as sp
+    except Exception:
+        return (None, [], "no_match")
+
+    x = sp.symbols("x")
+    P = sum(int(c) * x ** i for i, c in enumerate(target))
+    try:
+        unit, factors = sp.factor_list(P, x, domain="ZZ")
+    except Exception:
+        return (None, [], "no_match")
+
+    cyclo_struct: dict[int, int] = {}
+    non_cyclo: list[tuple[object, int]] = []
+    for f, mult in factors:
+        # Skip the trivial leading-unit constant factor (rare; defensive).
+        try:
+            f_poly = sp.Poly(f, x, domain=sp.ZZ)
+        except Exception:
+            return (None, [], "no_match")
+        if f_poly.degree() < 1:
+            continue
+        n = _is_cyclotomic_poly_sympy(f, x, max_n=int(max_cyclotomic_n))
+        if n is not None:
+            cyclo_struct[n] = cyclo_struct.get(n, 0) + int(mult)
+        else:
+            non_cyclo.append((f, int(mult)))
+
+    cyclo_list = sorted(cyclo_struct.items())  # [(n_1, k_1), ...]
+
+    # Step 3: every factor cyclotomic.
+    if not non_cyclo:
+        if not cyclo_list:
+            # Degenerate (e.g. unit) — treat as no_match.
+            return (None, [], "no_match")
+        label = " * ".join(
+            (f"Phi_{n}^{k}" if k != 1 else f"Phi_{n}")
+            for n, k in cyclo_list
+        )
+        return (label, cyclo_list, "all_cyclotomic_match")
+
+    # Step 4: reassemble non-cyclotomic core, look it up.
+    core_expr = sp.Integer(1)
+    for f, mult in non_cyclo:
+        core_expr = core_expr * (f ** mult)
+    core_poly = sp.expand(core_expr)
+    core_asc = _ascending_from_sympy_poly(core_poly, x)
+    core_hit = lookup_polynomial(core_asc)
+    if core_hit is not None:
+        return (str(core_hit.get("name", "Mossinghoff (unnamed)")),
+                cyclo_list, "composite_match")
+
+    # Step 5: no match.
+    return (None, cyclo_list, "no_match")
+
+
+def composite_label(label: Optional[str],
+                    cyclotomic_structure: list[tuple[int, int]]) -> str:
+    """Reconstruct a human-readable label from a composite-match tuple.
+
+    Examples
+    --------
+    >>> composite_label("Lehmer's polynomial", [(1, 4)])
+    "Lehmer's polynomial * Phi_1^4"
+    >>> composite_label(None, [(1, 2), (3, 1)])
+    'Phi_1^2 * Phi_3'
+    """
+    parts: list[str] = []
+    if label:
+        parts.append(label)
+    for n, k in cyclotomic_structure:
+        parts.append(f"Phi_{n}^{k}" if k != 1 else f"Phi_{n}")
+    if not parts:
+        return ""
+    return " * ".join(parts)
+
+
 def lookup_by_M(M: float, tol: float = 1e-6) -> list[dict]:
     """Find every catalog entry whose Mahler measure is within ``tol``
     of ``M``.
@@ -725,4 +934,7 @@ __all__ = [
     "find_extremal_at_degree",
     "histogram_by_M",
     "search_by_signature_class",
+    # 2026-05-04 factorization-aware lookup (catalog-completeness fix):
+    "mahler_lookup_factored",
+    "composite_label",
 ]

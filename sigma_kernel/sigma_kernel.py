@@ -89,6 +89,17 @@ class Claim:
     # stoa/proposals/2026-05-04-techne-caveat-as-metadata-schema.md
     # for the rationale + propagation rules.
     caveats: list[str] = field(default_factory=list)
+    # Precision metadata — verification-depth as a first-class field.
+    # Shape: {"dps": int | None, "method": str, "convergence": str,
+    #         "stability": float | None}. None for legacy / pre-2026-05-04
+    # claims that predate this field. See
+    # sigma_kernel/PRECISION_METADATA_SPEC.md for the rationale (Lehmer
+    # 17-entry resolution) and migration 005 for the Postgres-side
+    # change. Auto-caveats fire when:
+    #   * dps < expected_min_dps -> "precision_below_expected"
+    #   * convergence in {"failed_max_steps","nan_returned"} -> "verification_failed"
+    # Both auto-propagate via TRACE.
+    precision_metadata: dict | None = None
 
 
 @dataclass(frozen=True)
@@ -169,7 +180,16 @@ CREATE TABLE IF NOT EXISTS claims (
     -- for backward compat: existing rows + old code see this as []. See
     -- sigma_kernel/migrations/004_add_caveats_to_claims.sql for the
     -- Postgres-side migration.
-    caveats             TEXT NOT NULL DEFAULT '[]'
+    caveats             TEXT NOT NULL DEFAULT '[]',
+    -- Precision metadata: JSON object or NULL. Operationalizes the
+    -- 2026-05-04 substrate change (verification depth as a first-class
+    -- field). Shape: {"dps": int|null, "method": str, "convergence": str,
+    -- "stability": float|null}. NULL is the legacy/backward-compat
+    -- default — existing rows + old code see this as None. See
+    -- sigma_kernel/migrations/005_add_precision_metadata.sql for the
+    -- Postgres-side migration; see PRECISION_METADATA_SPEC.md for the
+    -- rationale (Lehmer 17-entry resolution) and auto-caveat rules.
+    precision_metadata  TEXT
 );
 
 CREATE TABLE IF NOT EXISTS capabilities (
@@ -281,11 +301,23 @@ class _PostgresAdapter:
         # Mnemosyne hasn't applied the migration yet. We probe both for the
         # base schema (migration 001) AND for the caveats column added by
         # migration 004; the latter is now required by the kernel since it
-        # propagates caveats through CLAIM/FALSIFY/PROMOTE.
+        # propagates caveats through CLAIM/FALSIFY/PROMOTE. Migration 005
+        # (precision_metadata) is probed but NOT required: when absent, the
+        # kernel falls back to a NULL-equivalent legacy code path so old
+        # databases keep working until Mnemosyne applies the migration.
+        self._has_precision_metadata = False
         try:
             cur = self.conn.cursor()
             cur.execute("SELECT 1 FROM sigma.symbols LIMIT 0")
             cur.execute("SELECT caveats FROM sigma.claims LIMIT 0")
+            try:
+                cur.execute("SELECT precision_metadata FROM sigma.claims LIMIT 0")
+                self._has_precision_metadata = True
+            except psycopg2.errors.UndefinedColumn:
+                # Migration 005 not yet applied. That is OK — the kernel
+                # operates in legacy mode until Mnemosyne applies it.
+                self.conn.rollback()
+                self._has_precision_metadata = False
             cur.close()
             self.conn.commit()
         except psycopg2.errors.UndefinedColumn:
@@ -497,6 +529,40 @@ class SigmaKernel:
     # OPCODE 2 — CLAIM
     # ------------------------------------------------------------------
 
+    # Default expected-minimum dps for the auto-caveat firing. Mirrors
+    # ``prometheus_math.kill_vector.DEFAULT_EXPECTED_MIN_DPS``. The Lehmer
+    # 17-entry episode showed dps=30 silently misses boundary objects;
+    # dps>=60 is the substrate's expected floor for Salem/Lehmer
+    # numerical work. See PRECISION_METADATA_SPEC.md.
+    DEFAULT_EXPECTED_MIN_DPS = 60
+
+    @staticmethod
+    def _auto_caveats_for_precision(
+        meta: dict | None,
+        expected_min_dps: int = 60,
+    ) -> list[str]:
+        """Compute caveat tokens implied by precision_metadata.
+
+        Two rules:
+          1. ``meta["dps"] is not None`` and ``< expected_min_dps`` ->
+             ``"precision_below_expected"``
+          2. ``meta["convergence"]`` in {``"failed_max_steps"``,
+             ``"nan_returned"``} -> ``"verification_failed"``
+
+        Returns a (possibly empty) list of auto-caveat tokens. Order is
+        stable; duplicates are deduped.
+        """
+        if not isinstance(meta, dict):
+            return []
+        out: list[str] = []
+        dps = meta.get("dps")
+        if isinstance(dps, int) and dps < expected_min_dps:
+            out.append("precision_below_expected")
+        conv = meta.get("convergence")
+        if conv in ("failed_max_steps", "nan_returned"):
+            out.append("verification_failed")
+        return out
+
     def CLAIM(
         self,
         target_name: str,
@@ -505,6 +571,7 @@ class SigmaKernel:
         kill_path: str,
         target_tier: Tier = Tier.Conjecture,
         caveats: list[str] | None = None,
+        precision_metadata: dict | None = None,
     ) -> Claim:
         """Allocate a provisional claim. Born at lowest tier unless overridden.
 
@@ -517,6 +584,21 @@ class SigmaKernel:
         for the rationale (operationalizes C3 from the 2026-05-03 team
         review). Validation is permissive at write — see
         ``caveats.validate_caveats`` for normalization rules.
+
+        precision_metadata (optional) is a dict shaped like::
+
+            {"dps": 60, "method": "mpmath_polyroots",
+             "convergence": "converged", "stability": None}
+
+        encoding the verification depth used to compute the evidence.
+        When provided, two auto-caveats fire automatically:
+
+          * ``"precision_below_expected"`` when ``dps < 60``
+          * ``"verification_failed"`` when convergence is
+            ``"failed_max_steps"`` or ``"nan_returned"``
+
+        See ``sigma_kernel/PRECISION_METADATA_SPEC.md`` for the rationale
+        (Lehmer 17-entry resolution).
         """
         # Local import to avoid circularity at module load time. Try the
         # package-qualified path first; fall back to direct module import
@@ -529,8 +611,32 @@ class SigmaKernel:
 
         cid = _new_id("claim")
         evidence_str = json.dumps(evidence, sort_keys=True)
-        cleaned_caveats = validate_caveats(caveats)
+
+        # Auto-caveat injection from precision_metadata. The auto-caveats
+        # are appended to whatever the caller supplied so the user-token
+        # list is preserved. validate_caveats then dedups + warns on
+        # misspellings as usual.
+        provided = list(caveats or [])
+        auto_tokens = self._auto_caveats_for_precision(
+            precision_metadata, self.DEFAULT_EXPECTED_MIN_DPS
+        )
+        for tok in auto_tokens:
+            if tok not in provided:
+                provided.append(tok)
+        cleaned_caveats = validate_caveats(provided)
         caveats_json = json.dumps(cleaned_caveats)
+
+        # Persist precision_metadata as JSON; None when not supplied.
+        if precision_metadata is not None and not isinstance(precision_metadata, dict):
+            raise TypeError(
+                f"precision_metadata must be a dict or None; "
+                f"got {type(precision_metadata).__name__}"
+            )
+        pm_json = (
+            None if precision_metadata is None
+            else json.dumps(precision_metadata, sort_keys=True)
+        )
+
         claim = Claim(
             id=cid,
             target_name=target_name,
@@ -539,16 +645,36 @@ class SigmaKernel:
             kill_path=kill_path,
             target_tier=target_tier,
             caveats=cleaned_caveats,
-        )
-        self.conn.execute(
-            "INSERT INTO claims VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
-            (
-                cid, target_name, hypothesis, evidence_str, kill_path,
-                target_tier.value, "pending",
-                None, None, None, None, None,
-                caveats_json,
+            precision_metadata=(
+                None if precision_metadata is None else dict(precision_metadata)
             ),
         )
+        # Backend-aware INSERT: postgres may not yet have migration 005
+        # applied. In that case write only the legacy 13 columns. SQLite
+        # always has the new column (created in SCHEMA above).
+        if (
+            self.backend == "postgres"
+            and not getattr(self.conn, "_has_precision_metadata", False)
+        ):
+            self.conn.execute(
+                "INSERT INTO claims VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                (
+                    cid, target_name, hypothesis, evidence_str, kill_path,
+                    target_tier.value, "pending",
+                    None, None, None, None, None,
+                    caveats_json,
+                ),
+            )
+        else:
+            self.conn.execute(
+                "INSERT INTO claims VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                (
+                    cid, target_name, hypothesis, evidence_str, kill_path,
+                    target_tier.value, "pending",
+                    None, None, None, None, None,
+                    caveats_json, pm_json,
+                ),
+            )
         self.conn.commit()
         return claim
 
@@ -724,17 +850,23 @@ class SigmaKernel:
         # caller's responsibility via validate_caveats; we sort here for a
         # canonical content hash (caveat order should not affect hash).
         promoted_caveats = sorted(set(claim.caveats))
-        def_blob = json.dumps(
-            {
-                "hypothesis": claim.hypothesis,
-                "evidence": ev,
-                "kill_path": claim.kill_path,
-                "verdict": claim.verdict.status.value,
-                "verdict_rationale": claim.verdict.rationale,
-                "caveats": promoted_caveats,
-            },
-            sort_keys=True,
-        )
+        # Same hash-locking discipline applies to precision_metadata. We
+        # only emit the field when the claim carried one (None means
+        # "legacy / not recorded"; emitting an explicit None would
+        # change the hash of every existing symbol). For canonicalization
+        # the dict is JSON-dumped with sort_keys=True (already true at the
+        # outer json.dumps) so key ordering does not affect the hash.
+        blob_dict: dict[str, Any] = {
+            "hypothesis": claim.hypothesis,
+            "evidence": ev,
+            "kill_path": claim.kill_path,
+            "verdict": claim.verdict.status.value,
+            "verdict_rationale": claim.verdict.rationale,
+            "caveats": promoted_caveats,
+        }
+        if claim.precision_metadata is not None:
+            blob_dict["precision_metadata"] = dict(claim.precision_metadata)
+        def_blob = json.dumps(blob_dict, sort_keys=True)
         def_hash = _sha256(def_blob)
 
         # 4. Atomic: consume cap + insert symbol.
@@ -893,12 +1025,21 @@ class SigmaKernel:
             # (pre-migration-004) won't have a caveats key in def_blob;
             # default to empty list. This is the backward-compat seam.
             caveats: list[str] = []
+            precision_metadata: dict | None = None
             try:
                 blob = json.loads(row[3])
                 if isinstance(blob, dict) and "caveats" in blob:
                     cv = blob["caveats"]
                     if isinstance(cv, list):
                         caveats = [str(c) for c in cv]
+                # precision_metadata key is OPTIONAL in def_blob — only
+                # symbols promoted from claims with explicit precision
+                # carry it. Legacy symbols (pre-2026-05-04) will not
+                # have this key and the field is propagated as None.
+                if isinstance(blob, dict) and "precision_metadata" in blob:
+                    pm = blob["precision_metadata"]
+                    if isinstance(pm, dict):
+                        precision_metadata = dict(pm)
             except (json.JSONDecodeError, TypeError):
                 pass  # bootstrap / errata blobs may have different shapes
 
@@ -910,6 +1051,7 @@ class SigmaKernel:
                 "ref": f"{row[0]}@v{row[1]}",
                 "hash": def_hash[:12],
                 "caveats": caveats,
+                "precision_metadata": precision_metadata,
                 "children": children,
             }
 

@@ -1,0 +1,2077 @@
+{
+  "n_entries": 17,
+  "feature_keys": [
+    "log10_M_minus_1_clamped",
+    "residual_M_after_cyc",
+    "n_distinct_factors",
+    "n_distinct_cyclotomic_idx",
+    "max_multiplicity",
+    "max_factor_degree",
+    "min_factor_degree",
+    "n_non_cyclotomic_factors"
+  ],
+  "method": "kmeans",
+  "k_range": [
+    2,
+    3,
+    4
+  ],
+  "random_state": 0,
+  "per_k_clustering": [
+    {
+      "k": 2,
+      "labels": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "silhouette": 0.8653234458910928,
+      "cluster_sizes": {
+        "0": 15,
+        "1": 2
+      }
+    },
+    {
+      "k": 3,
+      "labels": [
+        0,
+        2,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "silhouette": 0.7236670078913476,
+      "cluster_sizes": {
+        "0": 12,
+        "1": 2,
+        "2": 3
+      }
+    },
+    {
+      "k": 4,
+      "labels": [
+        0,
+        2,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "silhouette": 0.7755954104107277,
+      "cluster_sizes": {
+        "0": 12,
+        "1": 2,
+        "2": 2,
+        "3": 1
+      }
+    }
+  ],
+  "best_k": 2,
+  "best_labels": [
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0
+  ],
+  "feature_matrix": [
+    [
+      -2.502624805965743,
+      1.0009572253747703,
+      4.0,
+      4.0,
+      6.0,
+      4.0,
+      1.0,
+      0.0
+    ],
+    [
+      -2.3594349080592334,
+      1.000794230517782,
+      3.0,
+      3.0,
+      6.0,
+      6.0,
+      1.0,
+      0.0
+    ],
+    [
+      -0.753174599838534,
+      1.1762994840287977,
+      2.0,
+      1.0,
+      4.0,
+      10.0,
+      1.0,
+      1.0
+    ],
+    [
+      -2.546138307152206,
+      1.0007600784116943,
+      4.0,
+      4.0,
+      6.0,
+      4.0,
+      1.0,
+      0.0
+    ],
+    [
+      -2.3668743868013506,
+      1.0007529355810139,
+      4.0,
+      4.0,
+      6.0,
+      2.0,
+      1.0,
+      0.0
+    ],
+    [
+      -2.5674386174051977,
+      1.0009044860201894,
+      4.0,
+      4.0,
+      6.0,
+      4.0,
+      1.0,
+      0.0
+    ],
+    [
+      -2.4882130947612633,
+      1.000787884285508,
+      4.0,
+      4.0,
+      6.0,
+      2.0,
+      1.0,
+      0.0
+    ],
+    [
+      -2.399140466607923,
+      1.0007610370287587,
+      4.0,
+      4.0,
+      6.0,
+      2.0,
+      1.0,
+      0.0
+    ],
+    [
+      -2.9280857535007603,
+      1.0015949936254822,
+      3.0,
+      3.0,
+      5.0,
+      2.0,
+      1.0,
+      0.0
+    ],
+    [
+      -2.40402178265267,
+      1.0033359417588903,
+      4.0,
+      4.0,
+      6.0,
+      2.0,
+      1.0,
+      0.0
+    ],
+    [
+      -2.567431606974517,
+      1.0032131632993757,
+      4.0,
+      4.0,
+      6.0,
+      4.0,
+      1.0,
+      0.0
+    ],
+    [
+      -2.4882402890395787,
+      1.0040899364566762,
+      4.0,
+      4.0,
+      6.0,
+      2.0,
+      1.0,
+      0.0
+    ],
+    [
+      -2.3594241677156167,
+      1.0034115630535974,
+      3.0,
+      3.0,
+      6.0,
+      6.0,
+      1.0,
+      0.0
+    ],
+    [
+      -2.5463429491209117,
+      1.0042309235902218,
+      4.0,
+      4.0,
+      6.0,
+      4.0,
+      1.0,
+      0.0
+    ],
+    [
+      -0.7531747189379873,
+      1.1762994737393082,
+      2.0,
+      1.0,
+      4.0,
+      10.0,
+      1.0,
+      1.0
+    ],
+    [
+      -2.3668779954582795,
+      1.0031672803784761,
+      4.0,
+      4.0,
+      6.0,
+      2.0,
+      1.0,
+      0.0
+    ],
+    [
+      -2.5028898366330106,
+      1.0053046909405945,
+      4.0,
+      4.0,
+      6.0,
+      4.0,
+      1.0,
+      0.0
+    ]
+  ],
+  "feature_matrix_scaled": [
+    [
+      -0.37253887332408875,
+      -0.3884509105985967,
+      0.5958795715311239,
+      0.5417363388859613,
+      0.44194173824159194,
+      -0.0467269313515996,
+      0.0,
+      -0.36514837167011077
+    ],
+    [
+      -0.1237538486778177,
+      -0.39135691846882015,
+      -0.851256530758749,
+      -0.4815434123430769,
+      0.44194173824159194,
+      0.7476309016255965,
+      0.0,
+      -0.36514837167011077
+    ],
+    [
+      2.667040168299037,
+      2.7376967056283705,
+      -2.2983926330486217,
+      -2.528102914801153,
+      -2.563262081801235,
+      2.3363465675799886,
+      0.0,
+      2.7386127875258306
+    ],
+    [
+      -0.4481413258950643,
+      -0.3919658106198305,
+      0.5958795715311239,
+      0.5417363388859613,
+      0.44194173824159194,
+      -0.0467269313515996,
+      0.0,
+      -0.36514837167011077
+    ],
+    [
+      -0.13667955732956547,
+      -0.3920931589457635,
+      0.5958795715311239,
+      0.5417363388859613,
+      0.44194173824159194,
+      -0.8410847643287958,
+      0.0,
+      -0.36514837167011077
+    ],
+    [
+      -0.4851495107512593,
+      -0.38939119167441844,
+      0.5958795715311239,
+      0.5417363388859613,
+      0.44194173824159194,
+      -0.0467269313515996,
+      0.0,
+      -0.36514837167011077
+    ],
+    [
+      -0.3474992722096136,
+      -0.3914700643758446,
+      0.5958795715311239,
+      0.5417363388859613,
+      0.44194173824159194,
+      -0.8410847643287958,
+      0.0,
+      -0.36514837167011077
+    ],
+    [
+      -0.19274019831946118,
+      -0.39194871959754224,
+      0.5958795715311239,
+      0.5417363388859613,
+      0.44194173824159194,
+      -0.8410847643287958,
+      0.0,
+      -0.36514837167011077
+    ],
+    [
+      -1.1117552137647722,
+      -0.37708024780473887,
+      -0.851256530758749,
+      -0.4815434123430769,
+      -1.0606601717798214,
+      -0.8410847643287958,
+      0.0,
+      -0.36514837167011077
+    ],
+    [
+      -0.2012212318997177,
+      -0.34604117656768396,
+      0.5958795715311239,
+      0.5417363388859613,
+      0.44194173824159194,
+      -0.8410847643287958,
+      0.0,
+      -0.36514837167011077
+    ],
+    [
+      -0.4851373304913721,
+      -0.3482301730565045,
+      0.5958795715311239,
+      0.5417363388859613,
+      0.44194173824159194,
+      -0.0467269313515996,
+      0.0,
+      -0.36514837167011077
+    ],
+    [
+      -0.3475465208584349,
+      -0.33259833201198513,
+      0.5958795715311239,
+      0.5417363388859613,
+      0.44194173824159194,
+      -0.8410847643287958,
+      0.0,
+      -0.36514837167011077
+    ],
+    [
+      -0.12373518788756324,
+      -0.34469293723280153,
+      -0.851256530758749,
+      -0.4815434123430769,
+      0.44194173824159194,
+      0.7476309016255965,
+      0.0,
+      -0.36514837167011077
+    ],
+    [
+      -0.4484968807070482,
+      -0.3300846961387191,
+      0.5958795715311239,
+      0.5417363388859613,
+      0.44194173824159194,
+      -0.0467269313515996,
+      0.0,
+      -0.36514837167011077
+    ],
+    [
+      2.6670399613699107,
+      2.7376965221787946,
+      -2.2983926330486217,
+      -2.528102914801153,
+      -2.563262081801235,
+      2.3363465675799886,
+      0.0,
+      2.7386127875258306
+    ],
+    [
+      -0.13668582718390648,
+      -0.3490482119302865,
+      0.5958795715311239,
+      0.5417363388859613,
+      0.44194173824159194,
+      -0.8410847643287958,
+      0.0,
+      -0.36514837167011077
+    ],
+    [
+      -0.3729993503692727,
+      -0.31094067878364895,
+      0.5958795715311239,
+      0.5417363388859613,
+      0.44194173824159194,
+      -0.0467269313515996,
+      0.0,
+      -0.36514837167011077
+    ]
+  ],
+  "entries": [
+    {
+      "coeffs_ascending": [
+        1,
+        -4,
+        5,
+        0,
+        -5,
+        4,
+        -1,
+        0,
+        -1,
+        4,
+        -5,
+        0,
+        5,
+        -4,
+        1
+      ],
+      "log10_M_minus_1_clamped": -2.502624805965743,
+      "residual_M_after_cyc": 1.0009572253747703,
+      "n_distinct_factors": 4,
+      "n_distinct_cyclotomic_idx": 4,
+      "max_multiplicity": 6,
+      "max_factor_degree": 4,
+      "min_factor_degree": 1,
+      "n_non_cyclotomic_factors": 0,
+      "M_numpy": 1.0031432230024813,
+      "M_path_a": 1.0,
+      "delta_M_numpy_vs_path_a": 0.0031432230024812657,
+      "convergence_precision_digits": 60,
+      "classification_a": "A1",
+      "verdict_a": "cyclotomic_noise",
+      "classification_c": "C3",
+      "cyclotomic_n_indices": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "phi_factors_c": {
+        "1": 6,
+        "2": 2,
+        "4": 1,
+        "8": 1
+      },
+      "lehmer_orientation": null,
+      "failure_mode": "nan_return",
+      "entry_index": 0,
+      "kill_vector_signature": {
+        "out_of_band": true,
+        "has_cyclotomic_factor": true,
+        "is_lehmer_product": false,
+        "is_pure_cyclotomic": true,
+        "verification_failed_at_dps30": true,
+        "mossinghoff_proximity_match": false
+      },
+      "cluster_id_best_k": 0
+    },
+    {
+      "coeffs_ascending": [
+        1,
+        -3,
+        1,
+        5,
+        -5,
+        -1,
+        3,
+        -2,
+        3,
+        -1,
+        -5,
+        5,
+        1,
+        -3,
+        1
+      ],
+      "log10_M_minus_1_clamped": -2.3594349080592334,
+      "residual_M_after_cyc": 1.000794230517782,
+      "n_distinct_factors": 3,
+      "n_distinct_cyclotomic_idx": 3,
+      "max_multiplicity": 6,
+      "max_factor_degree": 6,
+      "min_factor_degree": 1,
+      "n_non_cyclotomic_factors": 0,
+      "M_numpy": 1.0043708418422215,
+      "M_path_a": 1.0,
+      "delta_M_numpy_vs_path_a": 0.004370841842221473,
+      "convergence_precision_digits": 60,
+      "classification_a": "A1",
+      "verdict_a": "cyclotomic_noise",
+      "classification_c": "C3",
+      "cyclotomic_n_indices": [
+        1,
+        2,
+        7
+      ],
+      "phi_factors_c": {
+        "1": 6,
+        "2": 2,
+        "7": 1
+      },
+      "lehmer_orientation": null,
+      "failure_mode": "nan_return",
+      "entry_index": 1,
+      "kill_vector_signature": {
+        "out_of_band": true,
+        "has_cyclotomic_factor": true,
+        "is_lehmer_product": false,
+        "is_pure_cyclotomic": true,
+        "verification_failed_at_dps30": true,
+        "mossinghoff_proximity_match": false
+      },
+      "cluster_id_best_k": 0
+    },
+    {
+      "coeffs_ascending": [
+        1,
+        -3,
+        2,
+        1,
+        0,
+        -2,
+        1,
+        0,
+        1,
+        -2,
+        0,
+        1,
+        2,
+        -3,
+        1
+      ],
+      "log10_M_minus_1_clamped": -0.753174599838534,
+      "residual_M_after_cyc": 1.1762994840287977,
+      "n_distinct_factors": 2,
+      "n_distinct_cyclotomic_idx": 1,
+      "max_multiplicity": 4,
+      "max_factor_degree": 10,
+      "min_factor_degree": 1,
+      "n_non_cyclotomic_factors": 1,
+      "M_numpy": 1.176532796146304,
+      "M_path_a": 1.1762808182599176,
+      "delta_M_numpy_vs_path_a": 0.000251977886386312,
+      "convergence_precision_digits": 60,
+      "classification_a": "A3",
+      "verdict_a": "rediscovery",
+      "classification_c": "C2",
+      "cyclotomic_n_indices": [
+        1
+      ],
+      "phi_factors_c": {
+        "1": 4
+      },
+      "lehmer_orientation": "x",
+      "failure_mode": "nan_return",
+      "entry_index": 2,
+      "kill_vector_signature": {
+        "out_of_band": false,
+        "has_cyclotomic_factor": true,
+        "is_lehmer_product": true,
+        "is_pure_cyclotomic": false,
+        "verification_failed_at_dps30": true,
+        "mossinghoff_proximity_match": true
+      },
+      "cluster_id_best_k": 1
+    },
+    {
+      "coeffs_ascending": [
+        1,
+        -3,
+        2,
+        2,
+        -4,
+        3,
+        1,
+        -4,
+        1,
+        3,
+        -4,
+        2,
+        2,
+        -3,
+        1
+      ],
+      "log10_M_minus_1_clamped": -2.546138307152206,
+      "residual_M_after_cyc": 1.0007600784116943,
+      "n_distinct_factors": 4,
+      "n_distinct_cyclotomic_idx": 4,
+      "max_multiplicity": 6,
+      "max_factor_degree": 4,
+      "min_factor_degree": 1,
+      "n_non_cyclotomic_factors": 0,
+      "M_numpy": 1.0028435553932493,
+      "M_path_a": 1.0,
+      "delta_M_numpy_vs_path_a": 0.0028435553932493196,
+      "convergence_precision_digits": 60,
+      "classification_a": "A1",
+      "verdict_a": "cyclotomic_noise",
+      "classification_c": "C3",
+      "cyclotomic_n_indices": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "phi_factors_c": {
+        "1": 6,
+        "2": 2,
+        "4": 1,
+        "5": 1
+      },
+      "lehmer_orientation": null,
+      "failure_mode": "nan_return",
+      "entry_index": 3,
+      "kill_vector_signature": {
+        "out_of_band": true,
+        "has_cyclotomic_factor": true,
+        "is_lehmer_product": false,
+        "is_pure_cyclotomic": true,
+        "verification_failed_at_dps30": true,
+        "mossinghoff_proximity_match": false
+      },
+      "cluster_id_best_k": 0
+    },
+    {
+      "coeffs_ascending": [
+        1,
+        -3,
+        3,
+        -2,
+        1,
+        3,
+        -5,
+        4,
+        -5,
+        3,
+        1,
+        -2,
+        3,
+        -3,
+        1
+      ],
+      "log10_M_minus_1_clamped": -2.3668743868013506,
+      "residual_M_after_cyc": 1.0007529355810139,
+      "n_distinct_factors": 4,
+      "n_distinct_cyclotomic_idx": 4,
+      "max_multiplicity": 6,
+      "max_factor_degree": 2,
+      "min_factor_degree": 1,
+      "n_non_cyclotomic_factors": 0,
+      "M_numpy": 1.0042966068173567,
+      "M_path_a": 1.0,
+      "delta_M_numpy_vs_path_a": 0.004296606817356663,
+      "convergence_precision_digits": 60,
+      "classification_a": "A1",
+      "verdict_a": "cyclotomic_noise",
+      "classification_c": "C3",
+      "cyclotomic_n_indices": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "phi_factors_c": {
+        "1": 6,
+        "2": 2,
+        "3": 1,
+        "4": 2
+      },
+      "lehmer_orientation": null,
+      "failure_mode": "nan_return",
+      "entry_index": 4,
+      "kill_vector_signature": {
+        "out_of_band": true,
+        "has_cyclotomic_factor": true,
+        "is_lehmer_product": false,
+        "is_pure_cyclotomic": true,
+        "verification_failed_at_dps30": true,
+        "mossinghoff_proximity_match": false
+      },
+      "cluster_id_best_k": 0
+    },
+    {
+      "coeffs_ascending": [
+        1,
+        -2,
+        -1,
+        3,
+        1,
+        -2,
+        -1,
+        2,
+        -1,
+        -2,
+        1,
+        3,
+        -1,
+        -2,
+        1
+      ],
+      "log10_M_minus_1_clamped": -2.5674386174051977,
+      "residual_M_after_cyc": 1.0009044860201894,
+      "n_distinct_factors": 4,
+      "n_distinct_cyclotomic_idx": 4,
+      "max_multiplicity": 6,
+      "max_factor_degree": 4,
+      "min_factor_degree": 1,
+      "n_non_cyclotomic_factors": 0,
+      "M_numpy": 1.0027074558450277,
+      "M_path_a": 1.0,
+      "delta_M_numpy_vs_path_a": 0.0027074558450277397,
+      "convergence_precision_digits": 60,
+      "classification_a": "A1",
+      "verdict_a": "cyclotomic_noise",
+      "classification_c": "C3",
+      "cyclotomic_n_indices": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "phi_factors_c": {
+        "1": 6,
+        "2": 2,
+        "3": 1,
+        "5": 1
+      },
+      "lehmer_orientation": null,
+      "failure_mode": "nan_return",
+      "entry_index": 5,
+      "kill_vector_signature": {
+        "out_of_band": true,
+        "has_cyclotomic_factor": true,
+        "is_lehmer_product": false,
+        "is_pure_cyclotomic": true,
+        "verification_failed_at_dps30": true,
+        "mossinghoff_proximity_match": false
+      },
+      "cluster_id_best_k": 0
+    },
+    {
+      "coeffs_ascending": [
+        1,
+        -2,
+        0,
+        0,
+        2,
+        2,
+        -3,
+        0,
+        -3,
+        2,
+        2,
+        0,
+        0,
+        -2,
+        1
+      ],
+      "log10_M_minus_1_clamped": -2.4882130947612633,
+      "residual_M_after_cyc": 1.000787884285508,
+      "n_distinct_factors": 4,
+      "n_distinct_cyclotomic_idx": 4,
+      "max_multiplicity": 6,
+      "max_factor_degree": 2,
+      "min_factor_degree": 1,
+      "n_non_cyclotomic_factors": 0,
+      "M_numpy": 1.0032492782631155,
+      "M_path_a": 1.0,
+      "delta_M_numpy_vs_path_a": 0.003249278263115496,
+      "convergence_precision_digits": 60,
+      "classification_a": "A1",
+      "verdict_a": "cyclotomic_noise",
+      "classification_c": "C3",
+      "cyclotomic_n_indices": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "phi_factors_c": {
+        "1": 6,
+        "2": 2,
+        "3": 2,
+        "4": 1
+      },
+      "lehmer_orientation": null,
+      "failure_mode": "nan_return",
+      "entry_index": 6,
+      "kill_vector_signature": {
+        "out_of_band": true,
+        "has_cyclotomic_factor": true,
+        "is_lehmer_product": false,
+        "is_pure_cyclotomic": true,
+        "verification_failed_at_dps30": true,
+        "mossinghoff_proximity_match": false
+      },
+      "cluster_id_best_k": 0
+    },
+    {
+      "coeffs_ascending": [
+        1,
+        -1,
+        -3,
+        2,
+        3,
+        1,
+        -1,
+        -4,
+        -1,
+        1,
+        3,
+        2,
+        -3,
+        -1,
+        1
+      ],
+      "log10_M_minus_1_clamped": -2.399140466607923,
+      "residual_M_after_cyc": 1.0007610370287587,
+      "n_distinct_factors": 4,
+      "n_distinct_cyclotomic_idx": 4,
+      "max_multiplicity": 6,
+      "max_factor_degree": 2,
+      "min_factor_degree": 1,
+      "n_non_cyclotomic_factors": 0,
+      "M_numpy": 1.003988958640861,
+      "M_path_a": 1.0,
+      "delta_M_numpy_vs_path_a": 0.003988958640861018,
+      "convergence_precision_digits": 60,
+      "classification_a": "A1",
+      "verdict_a": "cyclotomic_noise",
+      "classification_c": "C3",
+      "cyclotomic_n_indices": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "phi_factors_c": {
+        "1": 6,
+        "2": 4,
+        "3": 1,
+        "4": 1
+      },
+      "lehmer_orientation": null,
+      "failure_mode": "nan_return",
+      "entry_index": 7,
+      "kill_vector_signature": {
+        "out_of_band": true,
+        "has_cyclotomic_factor": true,
+        "is_lehmer_product": false,
+        "is_pure_cyclotomic": true,
+        "verification_failed_at_dps30": true,
+        "mossinghoff_proximity_match": false
+      },
+      "cluster_id_best_k": 0
+    },
+    {
+      "coeffs_ascending": [
+        1,
+        0,
+        3,
+        0,
+        1,
+        0,
+        -5,
+        0,
+        -5,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1
+      ],
+      "log10_M_minus_1_clamped": -2.9280857535007603,
+      "residual_M_after_cyc": 1.0015949936254822,
+      "n_distinct_factors": 3,
+      "n_distinct_cyclotomic_idx": 3,
+      "max_multiplicity": 5,
+      "max_factor_degree": 2,
+      "min_factor_degree": 1,
+      "n_non_cyclotomic_factors": 0,
+      "M_numpy": 1.0011800875987642,
+      "M_path_a": 1.0,
+      "delta_M_numpy_vs_path_a": 0.0011800875987642012,
+      "convergence_precision_digits": 60,
+      "classification_a": "A1",
+      "verdict_a": "cyclotomic_noise",
+      "classification_c": "C3",
+      "cyclotomic_n_indices": [
+        1,
+        2,
+        4
+      ],
+      "phi_factors_c": {
+        "1": 2,
+        "2": 2,
+        "4": 5
+      },
+      "lehmer_orientation": null,
+      "failure_mode": "nan_return",
+      "entry_index": 8,
+      "kill_vector_signature": {
+        "out_of_band": true,
+        "has_cyclotomic_factor": true,
+        "is_lehmer_product": false,
+        "is_pure_cyclotomic": true,
+        "verification_failed_at_dps30": true,
+        "mossinghoff_proximity_match": false
+      },
+      "cluster_id_best_k": 0
+    },
+    {
+      "coeffs_ascending": [
+        1,
+        1,
+        -3,
+        -2,
+        3,
+        -1,
+        -1,
+        4,
+        -1,
+        -1,
+        3,
+        -2,
+        -3,
+        1,
+        1
+      ],
+      "log10_M_minus_1_clamped": -2.40402178265267,
+      "residual_M_after_cyc": 1.0033359417588903,
+      "n_distinct_factors": 4,
+      "n_distinct_cyclotomic_idx": 4,
+      "max_multiplicity": 6,
+      "max_factor_degree": 2,
+      "min_factor_degree": 1,
+      "n_non_cyclotomic_factors": 0,
+      "M_numpy": 1.0039443751800874,
+      "M_path_a": 1.0,
+      "delta_M_numpy_vs_path_a": 0.003944375180087389,
+      "convergence_precision_digits": 60,
+      "classification_a": "A1",
+      "verdict_a": "cyclotomic_noise",
+      "classification_c": "C3",
+      "cyclotomic_n_indices": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "phi_factors_c": {
+        "1": 4,
+        "2": 6,
+        "4": 1,
+        "6": 1
+      },
+      "lehmer_orientation": null,
+      "failure_mode": "nan_return",
+      "entry_index": 9,
+      "kill_vector_signature": {
+        "out_of_band": true,
+        "has_cyclotomic_factor": true,
+        "is_lehmer_product": false,
+        "is_pure_cyclotomic": true,
+        "verification_failed_at_dps30": true,
+        "mossinghoff_proximity_match": false
+      },
+      "cluster_id_best_k": 0
+    },
+    {
+      "coeffs_ascending": [
+        1,
+        2,
+        -1,
+        -3,
+        1,
+        2,
+        -1,
+        -2,
+        -1,
+        2,
+        1,
+        -3,
+        -1,
+        2,
+        1
+      ],
+      "log10_M_minus_1_clamped": -2.567431606974517,
+      "residual_M_after_cyc": 1.0032131632993757,
+      "n_distinct_factors": 4,
+      "n_distinct_cyclotomic_idx": 4,
+      "max_multiplicity": 6,
+      "max_factor_degree": 4,
+      "min_factor_degree": 1,
+      "n_non_cyclotomic_factors": 0,
+      "M_numpy": 1.0027074995494392,
+      "M_path_a": 1.0,
+      "delta_M_numpy_vs_path_a": 0.002707499549439163,
+      "convergence_precision_digits": 60,
+      "classification_a": "A1",
+      "verdict_a": "cyclotomic_noise",
+      "classification_c": "C3",
+      "cyclotomic_n_indices": [
+        1,
+        2,
+        6,
+        10
+      ],
+      "phi_factors_c": {
+        "1": 2,
+        "2": 6,
+        "6": 1,
+        "10": 1
+      },
+      "lehmer_orientation": null,
+      "failure_mode": "nan_return",
+      "entry_index": 10,
+      "kill_vector_signature": {
+        "out_of_band": true,
+        "has_cyclotomic_factor": true,
+        "is_lehmer_product": false,
+        "is_pure_cyclotomic": true,
+        "verification_failed_at_dps30": true,
+        "mossinghoff_proximity_match": false
+      },
+      "cluster_id_best_k": 0
+    },
+    {
+      "coeffs_ascending": [
+        1,
+        2,
+        0,
+        0,
+        2,
+        -2,
+        -3,
+        0,
+        -3,
+        -2,
+        2,
+        0,
+        0,
+        2,
+        1
+      ],
+      "log10_M_minus_1_clamped": -2.4882402890395787,
+      "residual_M_after_cyc": 1.0040899364566762,
+      "n_distinct_factors": 4,
+      "n_distinct_cyclotomic_idx": 4,
+      "max_multiplicity": 6,
+      "max_factor_degree": 2,
+      "min_factor_degree": 1,
+      "n_non_cyclotomic_factors": 0,
+      "M_numpy": 1.003249074808974,
+      "M_path_a": 1.0,
+      "delta_M_numpy_vs_path_a": 0.003249074808973962,
+      "convergence_precision_digits": 60,
+      "classification_a": "A1",
+      "verdict_a": "cyclotomic_noise",
+      "classification_c": "C3",
+      "cyclotomic_n_indices": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "phi_factors_c": {
+        "1": 2,
+        "2": 6,
+        "4": 1,
+        "6": 2
+      },
+      "lehmer_orientation": null,
+      "failure_mode": "nan_return",
+      "entry_index": 11,
+      "kill_vector_signature": {
+        "out_of_band": true,
+        "has_cyclotomic_factor": true,
+        "is_lehmer_product": false,
+        "is_pure_cyclotomic": true,
+        "verification_failed_at_dps30": true,
+        "mossinghoff_proximity_match": false
+      },
+      "cluster_id_best_k": 0
+    },
+    {
+      "coeffs_ascending": [
+        1,
+        3,
+        1,
+        -5,
+        -5,
+        1,
+        3,
+        2,
+        3,
+        1,
+        -5,
+        -5,
+        1,
+        3,
+        1
+      ],
+      "log10_M_minus_1_clamped": -2.3594241677156167,
+      "residual_M_after_cyc": 1.0034115630535974,
+      "n_distinct_factors": 3,
+      "n_distinct_cyclotomic_idx": 3,
+      "max_multiplicity": 6,
+      "max_factor_degree": 6,
+      "min_factor_degree": 1,
+      "n_non_cyclotomic_factors": 0,
+      "M_numpy": 1.0043709499369031,
+      "M_path_a": 1.0,
+      "delta_M_numpy_vs_path_a": 0.0043709499369031235,
+      "convergence_precision_digits": 60,
+      "classification_a": "A1",
+      "verdict_a": "cyclotomic_noise",
+      "classification_c": "C3",
+      "cyclotomic_n_indices": [
+        1,
+        2,
+        14
+      ],
+      "phi_factors_c": {
+        "1": 2,
+        "2": 6,
+        "14": 1
+      },
+      "lehmer_orientation": null,
+      "failure_mode": "nan_return",
+      "entry_index": 12,
+      "kill_vector_signature": {
+        "out_of_band": true,
+        "has_cyclotomic_factor": true,
+        "is_lehmer_product": false,
+        "is_pure_cyclotomic": true,
+        "verification_failed_at_dps30": true,
+        "mossinghoff_proximity_match": false
+      },
+      "cluster_id_best_k": 0
+    },
+    {
+      "coeffs_ascending": [
+        1,
+        3,
+        2,
+        -2,
+        -4,
+        -3,
+        1,
+        4,
+        1,
+        -3,
+        -4,
+        -2,
+        2,
+        3,
+        1
+      ],
+      "log10_M_minus_1_clamped": -2.5463429491209117,
+      "residual_M_after_cyc": 1.0042309235902218,
+      "n_distinct_factors": 4,
+      "n_distinct_cyclotomic_idx": 4,
+      "max_multiplicity": 6,
+      "max_factor_degree": 4,
+      "min_factor_degree": 1,
+      "n_non_cyclotomic_factors": 0,
+      "M_numpy": 1.0028422158098105,
+      "M_path_a": 1.0,
+      "delta_M_numpy_vs_path_a": 0.0028422158098104777,
+      "convergence_precision_digits": 60,
+      "classification_a": "A1",
+      "verdict_a": "cyclotomic_noise",
+      "classification_c": "C3",
+      "cyclotomic_n_indices": [
+        1,
+        2,
+        4,
+        10
+      ],
+      "phi_factors_c": {
+        "1": 2,
+        "2": 6,
+        "4": 1,
+        "10": 1
+      },
+      "lehmer_orientation": null,
+      "failure_mode": "nan_return",
+      "entry_index": 13,
+      "kill_vector_signature": {
+        "out_of_band": true,
+        "has_cyclotomic_factor": true,
+        "is_lehmer_product": false,
+        "is_pure_cyclotomic": true,
+        "verification_failed_at_dps30": true,
+        "mossinghoff_proximity_match": false
+      },
+      "cluster_id_best_k": 0
+    },
+    {
+      "coeffs_ascending": [
+        1,
+        3,
+        2,
+        -1,
+        0,
+        2,
+        1,
+        0,
+        1,
+        2,
+        0,
+        -1,
+        2,
+        3,
+        1
+      ],
+      "log10_M_minus_1_clamped": -0.7531747189379873,
+      "residual_M_after_cyc": 1.1762994737393082,
+      "n_distinct_factors": 2,
+      "n_distinct_cyclotomic_idx": 1,
+      "max_multiplicity": 4,
+      "max_factor_degree": 10,
+      "min_factor_degree": 1,
+      "n_non_cyclotomic_factors": 1,
+      "M_numpy": 1.1765327477345522,
+      "M_path_a": 1.1762808182599176,
+      "delta_M_numpy_vs_path_a": 0.0002519294746345935,
+      "convergence_precision_digits": 60,
+      "classification_a": "A3",
+      "verdict_a": "rediscovery",
+      "classification_c": "C2",
+      "cyclotomic_n_indices": [
+        2
+      ],
+      "phi_factors_c": {
+        "2": 4
+      },
+      "lehmer_orientation": "-x",
+      "failure_mode": "nan_return",
+      "entry_index": 14,
+      "kill_vector_signature": {
+        "out_of_band": false,
+        "has_cyclotomic_factor": true,
+        "is_lehmer_product": true,
+        "is_pure_cyclotomic": false,
+        "verification_failed_at_dps30": true,
+        "mossinghoff_proximity_match": true
+      },
+      "cluster_id_best_k": 1
+    },
+    {
+      "coeffs_ascending": [
+        1,
+        3,
+        3,
+        2,
+        1,
+        -3,
+        -5,
+        -4,
+        -5,
+        -3,
+        1,
+        2,
+        3,
+        3,
+        1
+      ],
+      "log10_M_minus_1_clamped": -2.3668779954582795,
+      "residual_M_after_cyc": 1.0031672803784761,
+      "n_distinct_factors": 4,
+      "n_distinct_cyclotomic_idx": 4,
+      "max_multiplicity": 6,
+      "max_factor_degree": 2,
+      "min_factor_degree": 1,
+      "n_non_cyclotomic_factors": 0,
+      "M_numpy": 1.0042965711159693,
+      "M_path_a": 1.0,
+      "delta_M_numpy_vs_path_a": 0.004296571115969261,
+      "convergence_precision_digits": 60,
+      "classification_a": "A1",
+      "verdict_a": "cyclotomic_noise",
+      "classification_c": "C3",
+      "cyclotomic_n_indices": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "phi_factors_c": {
+        "1": 2,
+        "2": 6,
+        "4": 2,
+        "6": 1
+      },
+      "lehmer_orientation": null,
+      "failure_mode": "nan_return",
+      "entry_index": 15,
+      "kill_vector_signature": {
+        "out_of_band": true,
+        "has_cyclotomic_factor": true,
+        "is_lehmer_product": false,
+        "is_pure_cyclotomic": true,
+        "verification_failed_at_dps30": true,
+        "mossinghoff_proximity_match": false
+      },
+      "cluster_id_best_k": 0
+    },
+    {
+      "coeffs_ascending": [
+        1,
+        4,
+        5,
+        0,
+        -5,
+        -4,
+        -1,
+        0,
+        -1,
+        -4,
+        -5,
+        0,
+        5,
+        4,
+        1
+      ],
+      "log10_M_minus_1_clamped": -2.5028898366330106,
+      "residual_M_after_cyc": 1.0053046909405945,
+      "n_distinct_factors": 4,
+      "n_distinct_cyclotomic_idx": 4,
+      "max_multiplicity": 6,
+      "max_factor_degree": 4,
+      "min_factor_degree": 1,
+      "n_non_cyclotomic_factors": 0,
+      "M_numpy": 1.0031413054180098,
+      "M_path_a": 1.0,
+      "delta_M_numpy_vs_path_a": 0.003141305418009832,
+      "convergence_precision_digits": 60,
+      "classification_a": "A1",
+      "verdict_a": "cyclotomic_noise",
+      "classification_c": "C3",
+      "cyclotomic_n_indices": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "phi_factors_c": {
+        "1": 2,
+        "2": 6,
+        "4": 1,
+        "8": 1
+      },
+      "lehmer_orientation": null,
+      "failure_mode": "nan_return",
+      "entry_index": 16,
+      "kill_vector_signature": {
+        "out_of_band": true,
+        "has_cyclotomic_factor": true,
+        "is_lehmer_product": false,
+        "is_pure_cyclotomic": true,
+        "verification_failed_at_dps30": true,
+        "mossinghoff_proximity_match": false
+      },
+      "cluster_id_best_k": 0
+    }
+  ],
+  "cluster_characterizations": [
+    {
+      "cluster_id": 0,
+      "size": 15,
+      "feature_stats": {
+        "log10_M_minus_1_clamped": {
+          "min": -2.9280857535007603,
+          "max": -2.3594241677156167,
+          "mean": -2.4928785978565506
+        },
+        "residual_M_after_cyc": {
+          "min": 1.0007529355810139,
+          "max": 1.0053046909405945,
+          "mean": 1.0022710913548687
+        },
+        "n_distinct_factors": {
+          "min": 3.0,
+          "max": 4.0,
+          "mean": 3.8
+        },
+        "n_distinct_cyclotomic_idx": {
+          "min": 3.0,
+          "max": 4.0,
+          "mean": 3.8
+        },
+        "max_multiplicity": {
+          "min": 5.0,
+          "max": 6.0,
+          "mean": 5.933333333333334
+        },
+        "max_factor_degree": {
+          "min": 2.0,
+          "max": 6.0,
+          "mean": 3.3333333333333335
+        },
+        "min_factor_degree": {
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0
+        },
+        "n_non_cyclotomic_factors": {
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        }
+      },
+      "classifications_a": [
+        "A1"
+      ],
+      "classifications_c": [
+        "C3"
+      ],
+      "verdicts_a": [
+        "cyclotomic_noise"
+      ],
+      "failure_modes": [
+        "nan_return"
+      ],
+      "cyclotomic_n_index_union": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10,
+        14
+      ],
+      "representative_coeffs_ascending": [
+        1,
+        -4,
+        5,
+        0,
+        -5,
+        4,
+        -1,
+        0,
+        -1,
+        4,
+        -5,
+        0,
+        5,
+        -4,
+        1
+      ],
+      "representative_phi_factors_c": {
+        "1": 6,
+        "2": 2,
+        "4": 1,
+        "8": 1
+      }
+    },
+    {
+      "cluster_id": 1,
+      "size": 2,
+      "feature_stats": {
+        "log10_M_minus_1_clamped": {
+          "min": -0.7531747189379873,
+          "max": -0.753174599838534,
+          "mean": -0.7531746593882607
+        },
+        "residual_M_after_cyc": {
+          "min": 1.1762994737393082,
+          "max": 1.1762994840287977,
+          "mean": 1.176299478884053
+        },
+        "n_distinct_factors": {
+          "min": 2.0,
+          "max": 2.0,
+          "mean": 2.0
+        },
+        "n_distinct_cyclotomic_idx": {
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0
+        },
+        "max_multiplicity": {
+          "min": 4.0,
+          "max": 4.0,
+          "mean": 4.0
+        },
+        "max_factor_degree": {
+          "min": 10.0,
+          "max": 10.0,
+          "mean": 10.0
+        },
+        "min_factor_degree": {
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0
+        },
+        "n_non_cyclotomic_factors": {
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0
+        }
+      },
+      "classifications_a": [
+        "A3"
+      ],
+      "classifications_c": [
+        "C2"
+      ],
+      "verdicts_a": [
+        "rediscovery"
+      ],
+      "failure_modes": [
+        "nan_return"
+      ],
+      "cyclotomic_n_index_union": [
+        1,
+        2
+      ],
+      "representative_coeffs_ascending": [
+        1,
+        -3,
+        2,
+        1,
+        0,
+        -2,
+        1,
+        0,
+        1,
+        -2,
+        0,
+        1,
+        2,
+        -3,
+        1
+      ],
+      "representative_phi_factors_c": {
+        "1": 4
+      }
+    }
+  ],
+  "cluster_kill_vector_map": [
+    {
+      "cluster_id": 0,
+      "kill_vector_signature": {
+        "out_of_band": true,
+        "has_cyclotomic_factor": true,
+        "is_lehmer_product": false,
+        "is_pure_cyclotomic": true,
+        "verification_failed_at_dps30": true,
+        "mossinghoff_proximity_match": false
+      },
+      "uniform_within_cluster": true,
+      "size": 15
+    },
+    {
+      "cluster_id": 1,
+      "kill_vector_signature": {
+        "out_of_band": false,
+        "has_cyclotomic_factor": true,
+        "is_lehmer_product": true,
+        "is_pure_cyclotomic": false,
+        "verification_failed_at_dps30": true,
+        "mossinghoff_proximity_match": true
+      },
+      "uniform_within_cluster": true,
+      "size": 2
+    }
+  ],
+  "sub_clustering_within_largest_class": {
+    "parent_cluster_id": 0,
+    "n_members": 15,
+    "feature_keys_used": [
+      "log10_M_minus_1_clamped",
+      "residual_M_after_cyc",
+      "n_distinct_factors",
+      "n_distinct_cyclotomic_idx",
+      "max_multiplicity",
+      "max_factor_degree"
+    ],
+    "per_k_clustering": [
+      {
+        "k": 2,
+        "labels": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "silhouette": 0.5203727759373982,
+        "cluster_sizes": {
+          "0": 12,
+          "1": 3
+        }
+      },
+      {
+        "k": 3,
+        "labels": [
+          2,
+          0,
+          2,
+          2,
+          2,
+          2,
+          2,
+          1,
+          2,
+          2,
+          2,
+          0,
+          2,
+          2,
+          2
+        ],
+        "silhouette": 0.5486198967478059,
+        "cluster_sizes": {
+          "0": 2,
+          "1": 1,
+          "2": 12
+        }
+      },
+      {
+        "k": 4,
+        "labels": [
+          2,
+          3,
+          2,
+          2,
+          2,
+          2,
+          2,
+          1,
+          0,
+          0,
+          0,
+          3,
+          0,
+          0,
+          0
+        ],
+        "silhouette": 0.42032491664957605,
+        "cluster_sizes": {
+          "0": 6,
+          "1": 1,
+          "2": 6,
+          "3": 2
+        }
+      },
+      {
+        "k": 5,
+        "labels": [
+          1,
+          3,
+          1,
+          4,
+          1,
+          4,
+          4,
+          2,
+          4,
+          0,
+          0,
+          3,
+          0,
+          4,
+          0
+        ],
+        "silhouette": 0.4335426603965885,
+        "cluster_sizes": {
+          "0": 4,
+          "1": 3,
+          "2": 1,
+          "3": 2,
+          "4": 5
+        }
+      }
+    ],
+    "best_k": 3,
+    "best_labels": [
+      2,
+      0,
+      2,
+      2,
+      2,
+      2,
+      2,
+      1,
+      2,
+      2,
+      2,
+      0,
+      2,
+      2,
+      2
+    ],
+    "labels_full_indexing": [
+      2,
+      0,
+      null,
+      2,
+      2,
+      2,
+      2,
+      2,
+      1,
+      2,
+      2,
+      2,
+      0,
+      2,
+      null,
+      2,
+      2
+    ],
+    "cluster_characterizations": [
+      {
+        "cluster_id": 0,
+        "size": 2,
+        "feature_stats": {
+          "log10_M_minus_1_clamped": {
+            "min": -2.3594349080592334,
+            "max": -2.3594241677156167,
+            "mean": -2.359429537887425
+          },
+          "residual_M_after_cyc": {
+            "min": 1.000794230517782,
+            "max": 1.0034115630535974,
+            "mean": 1.0021028967856895
+          },
+          "n_distinct_factors": {
+            "min": 3.0,
+            "max": 3.0,
+            "mean": 3.0
+          },
+          "n_distinct_cyclotomic_idx": {
+            "min": 3.0,
+            "max": 3.0,
+            "mean": 3.0
+          },
+          "max_multiplicity": {
+            "min": 6.0,
+            "max": 6.0,
+            "mean": 6.0
+          },
+          "max_factor_degree": {
+            "min": 6.0,
+            "max": 6.0,
+            "mean": 6.0
+          },
+          "min_factor_degree": {
+            "min": 1.0,
+            "max": 1.0,
+            "mean": 1.0
+          },
+          "n_non_cyclotomic_factors": {
+            "min": 0.0,
+            "max": 0.0,
+            "mean": 0.0
+          }
+        },
+        "classifications_a": [
+          "A1"
+        ],
+        "classifications_c": [
+          "C3"
+        ],
+        "verdicts_a": [
+          "cyclotomic_noise"
+        ],
+        "failure_modes": [
+          "nan_return"
+        ],
+        "cyclotomic_n_index_union": [
+          1,
+          2,
+          7,
+          14
+        ],
+        "representative_coeffs_ascending": [
+          1,
+          -3,
+          1,
+          5,
+          -5,
+          -1,
+          3,
+          -2,
+          3,
+          -1,
+          -5,
+          5,
+          1,
+          -3,
+          1
+        ],
+        "representative_phi_factors_c": {
+          "1": 6,
+          "2": 2,
+          "7": 1
+        }
+      },
+      {
+        "cluster_id": 1,
+        "size": 1,
+        "feature_stats": {
+          "log10_M_minus_1_clamped": {
+            "min": -2.9280857535007603,
+            "max": -2.9280857535007603,
+            "mean": -2.9280857535007603
+          },
+          "residual_M_after_cyc": {
+            "min": 1.0015949936254822,
+            "max": 1.0015949936254822,
+            "mean": 1.0015949936254822
+          },
+          "n_distinct_factors": {
+            "min": 3.0,
+            "max": 3.0,
+            "mean": 3.0
+          },
+          "n_distinct_cyclotomic_idx": {
+            "min": 3.0,
+            "max": 3.0,
+            "mean": 3.0
+          },
+          "max_multiplicity": {
+            "min": 5.0,
+            "max": 5.0,
+            "mean": 5.0
+          },
+          "max_factor_degree": {
+            "min": 2.0,
+            "max": 2.0,
+            "mean": 2.0
+          },
+          "min_factor_degree": {
+            "min": 1.0,
+            "max": 1.0,
+            "mean": 1.0
+          },
+          "n_non_cyclotomic_factors": {
+            "min": 0.0,
+            "max": 0.0,
+            "mean": 0.0
+          }
+        },
+        "classifications_a": [
+          "A1"
+        ],
+        "classifications_c": [
+          "C3"
+        ],
+        "verdicts_a": [
+          "cyclotomic_noise"
+        ],
+        "failure_modes": [
+          "nan_return"
+        ],
+        "cyclotomic_n_index_union": [
+          1,
+          2,
+          4
+        ],
+        "representative_coeffs_ascending": [
+          1,
+          0,
+          3,
+          0,
+          1,
+          0,
+          -5,
+          0,
+          -5,
+          0,
+          1,
+          0,
+          3,
+          0,
+          1
+        ],
+        "representative_phi_factors_c": {
+          "1": 2,
+          "2": 2,
+          "4": 5
+        }
+      },
+      {
+        "cluster_id": 2,
+        "size": 12,
+        "feature_stats": {
+          "log10_M_minus_1_clamped": {
+            "min": -2.5674386174051977,
+            "max": -2.3668743868013506,
+            "mean": -2.478852844881054
+          },
+          "residual_M_after_cyc": {
+            "min": 1.0007529355810139,
+            "max": 1.0053046909405945,
+            "mean": 1.002355465260514
+          },
+          "n_distinct_factors": {
+            "min": 4.0,
+            "max": 4.0,
+            "mean": 4.0
+          },
+          "n_distinct_cyclotomic_idx": {
+            "min": 4.0,
+            "max": 4.0,
+            "mean": 4.0
+          },
+          "max_multiplicity": {
+            "min": 6.0,
+            "max": 6.0,
+            "mean": 6.0
+          },
+          "max_factor_degree": {
+            "min": 2.0,
+            "max": 4.0,
+            "mean": 3.0
+          },
+          "min_factor_degree": {
+            "min": 1.0,
+            "max": 1.0,
+            "mean": 1.0
+          },
+          "n_non_cyclotomic_factors": {
+            "min": 0.0,
+            "max": 0.0,
+            "mean": 0.0
+          }
+        },
+        "classifications_a": [
+          "A1"
+        ],
+        "classifications_c": [
+          "C3"
+        ],
+        "verdicts_a": [
+          "cyclotomic_noise"
+        ],
+        "failure_modes": [
+          "nan_return"
+        ],
+        "cyclotomic_n_index_union": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          8,
+          10
+        ],
+        "representative_coeffs_ascending": [
+          1,
+          -4,
+          5,
+          0,
+          -5,
+          4,
+          -1,
+          0,
+          -1,
+          4,
+          -5,
+          0,
+          5,
+          -4,
+          1
+        ],
+        "representative_phi_factors_c": {
+          "1": 6,
+          "2": 2,
+          "4": 1,
+          "8": 1
+        }
+      }
+    ]
+  },
+  "metadata": {
+    "honest_framing": "17 entries is too small to claim statistical significance; this is descriptive structural analysis of the boundary layer, not a predictive classifier.",
+    "forged_by": "Techne (toolsmith)",
+    "forged_for": "Charon kill-space gradient field seed",
+    "read_only_inputs": [
+      "F:\\Prometheus\\prometheus_math\\_lehmer_brute_force_results.json",
+      "F:\\Prometheus\\prometheus_math\\_lehmer_brute_force_path_a_results.json",
+      "F:\\Prometheus\\prometheus_math\\_lehmer_brute_force_path_b_results.json",
+      "F:\\Prometheus\\prometheus_math\\_lehmer_brute_force_path_c_results.json"
+    ]
+  }
+}

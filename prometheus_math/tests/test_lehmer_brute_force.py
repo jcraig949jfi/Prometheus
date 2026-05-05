@@ -500,14 +500,21 @@ def test_edge_nan_mpmath_marks_verification_failed_or_filters():
 def test_composition_lehmer_extension_lookup_in_mossinghoff():
     """Lehmer-extension deg-14 ([1,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,1])
     is recognised as a Mossinghoff entry.
+
+    Updated 2026-05-04: ``lookup_in_mossinghoff`` now returns a 4-tuple
+    ``(in_catalog, label, cyclotomic_structure, match_type)``. The
+    Lehmer-extension deg-14 is a direct catalog hit, so ``match_type``
+    must be ``"direct_match"`` and ``cyclotomic_structure`` empty.
     """
-    in_moss, label = lookup_in_mossinghoff(
+    in_moss, label, struct, mtype = lookup_in_mossinghoff(
         LEHMER_EXTENSION_HALF, LEHMER_M, M_tol=1e-6,
     )
     assert in_moss is True, (
         f"Lehmer-extension should be in Mossinghoff; got label={label!r}"
     )
     assert label is not None
+    assert struct == []
+    assert mtype == "direct_match"
 
 
 def test_composition_resumable_via_shard_partition():

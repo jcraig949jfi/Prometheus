@@ -5,6 +5,24 @@ Day 3 of the Day 1-5 plan.  Replaces the categorical
 ``KillVector`` whose components are ``(triggered, margin)`` pairs across
 the falsifier battery.
 
+Verification precision (2026-05-04 substrate-level change)
+----------------------------------------------------------
+Each ``KillComponent`` carries the *precision and method* used to
+compute it: ``precision_dps`` (mpmath dps, or None for non-mpmath
+methods), ``method`` (``"mpmath_polyroots"`` / ``"numpy_eigvals"`` /
+``"sympy_factor"`` / ``"catalog_lookup"`` / ``"exact"`` /
+``"heuristic"``), ``convergence_status``
+(``"converged"`` / ``"failed_max_steps"`` / ``"nan_returned"`` /
+``"exact"`` / ``"n/a"``), and an optional ``stability`` score.
+``KillVector`` aggregates these into ``min_precision_dps``,
+``methods_used`` (unordered set), and ``convergence_summary``.
+
+Why first-class: today's Lehmer brute-force run had 17 entries failing
+mpmath at dps=30 that ALL converged at dps=60 via factor-then-nroots.
+Without precision logged on the KillComponent, a dps=30 PASS and a
+dps=100 PASS look identical in the ledger — epistemically
+under-specified. See ``sigma_kernel/PRECISION_METADATA_SPEC.md``.
+
 Why
 ---
 Yesterday's empirical archaeology over the kernel ledger showed
@@ -135,6 +153,44 @@ def _squash_margin(margin: Optional[float], unit: Optional[str]) -> float:
 # ---------------------------------------------------------------------------
 
 
+# ---------------------------------------------------------------------------
+# Precision-metadata vocabulary (2026-05-04 substrate change)
+# ---------------------------------------------------------------------------
+
+
+# Canonical method identifiers. Open list — callers may pass anything
+# string-shaped — but these are the seven recognized values that
+# downstream tooling (caveat rules, dashboards) special-cases.
+METHOD_VALUES: Tuple[str, ...] = (
+    "mpmath_polyroots",     # numerical root-finding via mpmath.polyroots
+    "mpmath_nroots",        # numerical via mpmath.polynomial nroots
+    "numpy_eigvals",        # companion-matrix eigenvalues (numpy)
+    "sympy_factor",         # exact symbolic factorisation
+    "catalog_lookup",       # exact match in known catalog
+    "exact",                # closed-form / arithmetic
+    "heuristic",            # cheap surrogate; precision not measured
+    "unknown",              # legacy / unrecorded; produced by backfill
+)
+
+
+# Canonical convergence statuses.
+CONVERGENCE_VALUES: Tuple[str, ...] = (
+    "converged",            # iterative method reached tolerance
+    "failed_max_steps",     # iteration exhausted budget
+    "nan_returned",         # method returned NaN/inf
+    "exact",                # method is exact (no iteration)
+    "n/a",                  # not applicable / unrecorded
+)
+
+
+# Default precision floor below which auto-caveat fires. The Lehmer
+# brute-force episode showed that mpmath at dps=30 silently misses
+# resolution-dependent boundary objects that converge at dps=60. Set
+# the default expected minimum to 60 for mpmath methods; non-mpmath
+# methods skip the floor check (precision_dps=None).
+DEFAULT_EXPECTED_MIN_DPS = 60
+
+
 @dataclass(frozen=True)
 class KillComponent:
     """One coordinate of the kill vector.
@@ -180,6 +236,25 @@ class KillComponent:
         Falsifier-specific extras (e.g. catalog match label, witness
         seed for F1, irreducibility factor count).  Free-form; consumers
         may rely on it being JSON-serialisable.
+    precision_dps : int | None
+        mpmath ``dps`` (decimal precision) used by the verifier. None
+        when the method does not use mpmath (e.g. ``catalog_lookup``,
+        ``numpy_eigvals``, ``sympy_factor``, ``exact``, ``heuristic``).
+        Backwards-compat: legacy components without this field load as
+        None (treated as "unrecorded"); a downstream consumer can call
+        ``backfill_precision_from_legacy`` to populate sensible
+        defaults.
+    method : str
+        Verification method. One of ``METHOD_VALUES`` is preferred but
+        any string is accepted. Default ``"unknown"`` for backwards
+        compat.
+    convergence_status : str
+        How the verification terminated. One of
+        ``CONVERGENCE_VALUES``. Default ``"n/a"`` for backwards compat.
+    stability : float | None
+        Bootstrap- or perturbation-based stability score in [0, 1] (1.0
+        = perfectly stable). None when not computed. Reserved field —
+        the cheap-approximation algorithm is open (see PRECISION_METADATA_SPEC).
     """
 
     falsifier_name: str
@@ -187,6 +262,10 @@ class KillComponent:
     margin: Optional[float] = None
     margin_unit: Optional[str] = None
     metadata: Dict[str, Any] = field(default_factory=dict)
+    precision_dps: Optional[int] = None
+    method: str = "unknown"
+    convergence_status: str = "n/a"
+    stability: Optional[float] = None
 
     def __post_init__(self) -> None:  # type: ignore[override]
         # Frozen dataclass — bypass setattr for sanity-check side-effects.
@@ -197,6 +276,29 @@ class KillComponent:
                 f"unknown margin_unit {self.margin_unit!r}; "
                 f"must be one of {MARGIN_UNITS}"
             )
+        # Permissive validation for precision fields: accept anything
+        # string-shaped for method/convergence (the substrate is
+        # permissive at write, strict at hash). But coerce types so
+        # JSON serialization doesn't surprise downstream consumers.
+        if self.precision_dps is not None:
+            try:
+                object.__setattr__(self, "precision_dps", int(self.precision_dps))
+            except (TypeError, ValueError):
+                object.__setattr__(self, "precision_dps", None)
+        if not isinstance(self.method, str):
+            object.__setattr__(self, "method", str(self.method))
+        if not isinstance(self.convergence_status, str):
+            object.__setattr__(self, "convergence_status", str(self.convergence_status))
+        if self.stability is not None:
+            try:
+                s = float(self.stability)
+            except (TypeError, ValueError):
+                s = None
+            if s is None or not math.isfinite(s):
+                object.__setattr__(self, "stability", None)
+            else:
+                # Clamp to [0, 1].
+                object.__setattr__(self, "stability", max(0.0, min(1.0, s)))
 
     def squashed(self) -> float:
         """[0, 1] saturated kill-strength for this component."""
@@ -211,10 +313,20 @@ class KillComponent:
             ),
             "margin_unit": self.margin_unit,
             "metadata": dict(self.metadata or {}),
+            "precision_dps": (
+                None if self.precision_dps is None else int(self.precision_dps)
+            ),
+            "method": str(self.method),
+            "convergence_status": str(self.convergence_status),
+            "stability": (
+                None if self.stability is None else float(self.stability)
+            ),
         }
 
     @classmethod
     def from_dict(cls, d: Dict[str, Any]) -> "KillComponent":
+        # Backwards-compat: legacy dicts (pre-2026-05-04) lack the four
+        # precision fields. Defaults reproduce pre-change behavior.
         return cls(
             falsifier_name=str(d["falsifier_name"]),
             triggered=bool(d.get("triggered", False)),
@@ -223,6 +335,16 @@ class KillComponent:
             ),
             margin_unit=d.get("margin_unit"),
             metadata=dict(d.get("metadata") or {}),
+            precision_dps=(
+                None if d.get("precision_dps") is None
+                else int(d["precision_dps"])
+            ),
+            method=str(d.get("method", "unknown")),
+            convergence_status=str(d.get("convergence_status", "n/a")),
+            stability=(
+                None if d.get("stability") is None
+                else float(d["stability"])
+            ),
         )
 
 
@@ -366,6 +488,71 @@ class KillVector:
             if c.falsifier_name == name:
                 return c
         return None
+
+    # ------------------------------------------------------------------
+    # Precision aggregates (2026-05-04 substrate change)
+    # ------------------------------------------------------------------
+
+    @property
+    def min_precision_dps(self) -> Optional[int]:
+        """Lowest non-None ``precision_dps`` across components — the
+        weakest link of numerical resolution. None iff no component
+        recorded a precision (e.g. all methods are non-mpmath).
+
+        Empty-components vector returns None.
+        """
+        dps_values = [
+            c.precision_dps for c in self.components if c.precision_dps is not None
+        ]
+        if not dps_values:
+            return None
+        return min(dps_values)
+
+    @property
+    def methods_used(self) -> Tuple[str, ...]:
+        """Unordered set of methods invoked across components, returned
+        as a sorted tuple for determinism.
+
+        Empty-components vector returns ``()``.
+        """
+        return tuple(sorted({c.method for c in self.components}))
+
+    @property
+    def convergence_summary(self) -> str:
+        """Aggregate convergence verdict across components.
+
+          * ``"all_converged"``   — every component is "converged" or
+                                     "exact" (perfect run)
+          * ``"partial_failure"`` — at least one converged/exact AND at
+                                     least one failed_max_steps/nan_returned
+          * ``"all_failed"``      — every component is failed_max_steps
+                                     or nan_returned
+          * ``"n/a"``             — every component is "n/a" (legacy data
+                                     with no precision recorded)
+          * ``"mixed_unrecorded"`` — mix of n/a and successes; no failures
+
+        Empty-components vector returns ``"n/a"``.
+        """
+        if not self.components:
+            return "n/a"
+        good = {"converged", "exact"}
+        bad = {"failed_max_steps", "nan_returned"}
+        statuses = [c.convergence_status for c in self.components]
+        n_good = sum(1 for s in statuses if s in good)
+        n_bad = sum(1 for s in statuses if s in bad)
+        n_na = sum(1 for s in statuses if s == "n/a")
+        if n_bad == 0 and n_na == 0 and n_good > 0:
+            return "all_converged"
+        if n_good == 0 and n_na == 0 and n_bad > 0:
+            return "all_failed"
+        if n_good > 0 and n_bad > 0:
+            return "partial_failure"
+        if n_good == 0 and n_bad == 0:
+            return "n/a"
+        # n_good > 0, n_bad == 0, n_na > 0: some recorded successes and
+        # some unrecorded — neither "all converged" (we don't know about
+        # the n/a ones) nor a failure.
+        return "mixed_unrecorded"
 
     # ------------------------------------------------------------------
     # Serialisation
@@ -942,11 +1129,157 @@ def aggregate_by_operator(
     return out
 
 
+# ---------------------------------------------------------------------------
+# Precision backfill (2026-05-04 substrate change)
+# ---------------------------------------------------------------------------
+
+
+def backfill_precision_from_legacy(record: Dict[str, Any]) -> Dict[str, Any]:
+    """Infer precision metadata for a legacy record-shaped dict.
+
+    The 17 INCONCLUSIVE entries from the Lehmer brute-force run all
+    failed mpmath at dps=30 but converged at dps=60 via factor-then-
+    nroots. Path A confirmed dps=60 converges; Path B confirmed exact
+    via sympy; Path C via catalog lookup. This helper takes a legacy
+    record and returns a NEW dict with ``precision_dps`` / ``method`` /
+    ``convergence_status`` / ``stability`` populated from sensible
+    defaults plus any hints in the record.
+
+    Inference rules:
+      * If ``record.path_a_converged`` is truthy: dps=60,
+        method="mpmath_polyroots", convergence="converged".
+      * Else if ``record.path_b_exact`` is truthy: dps=None,
+        method="sympy_factor", convergence="exact".
+      * Else if ``record.path_c_catalog_match`` is truthy: dps=None,
+        method="catalog_lookup", convergence="exact".
+      * Else if record has a ``mpmath_dps`` key: use it,
+        method="mpmath_polyroots", convergence inferred from
+        ``mpmath_failed`` flag.
+      * Else: dps=30 (the substrate's old default), method="unknown",
+        convergence="n/a". Stamp ``backfilled=True`` in metadata so
+        downstream tooling can distinguish inferred values from
+        recorded ones.
+
+    The original record is NOT mutated. The returned dict has the same
+    keys as the input, plus precision fields.
+
+    Note (per the task spec): this helper does NOT modify the brute-
+    force JSON files. Backfill happens at LOAD time when reading
+    existing data via ``KillComponent.from_dict``, which falls back to
+    these inferred values when the precision keys are absent.
+    """
+    out = dict(record)
+    # Honor any keys already present.
+    if "precision_dps" in out and "method" in out and "convergence_status" in out:
+        # Fully populated already; just ensure stability key exists.
+        out.setdefault("stability", None)
+        return out
+
+    if record.get("path_a_converged"):
+        out["precision_dps"] = 60
+        out["method"] = "mpmath_polyroots"
+        out["convergence_status"] = "converged"
+        out["stability"] = None
+        out["_backfilled"] = "path_a"
+    elif record.get("path_b_exact"):
+        out["precision_dps"] = None
+        out["method"] = "sympy_factor"
+        out["convergence_status"] = "exact"
+        out["stability"] = None
+        out["_backfilled"] = "path_b"
+    elif record.get("path_c_catalog_match"):
+        out["precision_dps"] = None
+        out["method"] = "catalog_lookup"
+        out["convergence_status"] = "exact"
+        out["stability"] = None
+        out["_backfilled"] = "path_c"
+    elif "mpmath_dps" in record:
+        out["precision_dps"] = int(record["mpmath_dps"])
+        out["method"] = "mpmath_polyroots"
+        out["convergence_status"] = (
+            "failed_max_steps" if record.get("mpmath_failed") else "converged"
+        )
+        out["stability"] = None
+        out["_backfilled"] = "mpmath_dps_present"
+    else:
+        # Conservative default: assume the substrate's pre-change
+        # default of dps=30 and an unrecorded method. This is the
+        # epistemically honest choice — old runs really did use dps=30
+        # silently. The "_backfilled" stamp prevents this from being
+        # confused with a fresh measurement.
+        out["precision_dps"] = 30
+        out["method"] = "unknown"
+        out["convergence_status"] = "n/a"
+        out["stability"] = None
+        out["_backfilled"] = "default_dps_30"
+    return out
+
+
+def precision_caveats_for_component(
+    component: "KillComponent",
+    expected_min_dps: int = DEFAULT_EXPECTED_MIN_DPS,
+) -> List[str]:
+    """Compute the auto-attached caveat tokens implied by a component's
+    precision metadata.
+
+    Rules (operationalize the substrate change):
+      1. If ``precision_dps is not None`` and ``< expected_min_dps``,
+         attach ``"precision_below_expected"``.
+      2. If ``convergence_status`` is ``"failed_max_steps"`` or
+         ``"nan_returned"``, attach ``"verification_failed"``.
+
+    Returns a (possibly empty) list of caveat tokens. Order is stable.
+    Duplicates are deduped.
+    """
+    out: List[str] = []
+    if (
+        component.precision_dps is not None
+        and component.precision_dps < expected_min_dps
+    ):
+        out.append("precision_below_expected")
+    if component.convergence_status in ("failed_max_steps", "nan_returned"):
+        out.append("verification_failed")
+    # Stable de-dup (preserves first-occurrence order).
+    seen: set = set()
+    deduped: List[str] = []
+    for t in out:
+        if t not in seen:
+            seen.add(t)
+            deduped.append(t)
+    return deduped
+
+
+def precision_caveats_for_vector(
+    kv: "KillVector",
+    expected_min_dps: int = DEFAULT_EXPECTED_MIN_DPS,
+) -> List[str]:
+    """Aggregate ``precision_caveats_for_component`` across a KillVector.
+
+    The vector earns ``"precision_below_expected"`` if ANY component
+    does. It earns ``"verification_failed"`` if ANY component's
+    convergence_status is ``"failed_max_steps"`` or ``"nan_returned"``.
+    """
+    seen: set = set()
+    deduped: List[str] = []
+    for c in kv.components:
+        for tok in precision_caveats_for_component(c, expected_min_dps):
+            if tok not in seen:
+                seen.add(tok)
+                deduped.append(tok)
+    return deduped
+
+
 __all__ = [
     "KillComponent",
     "KillVector",
     "MARGIN_UNITS",
+    "METHOD_VALUES",
+    "CONVERGENCE_VALUES",
+    "DEFAULT_EXPECTED_MIN_DPS",
     "kill_vector_from_pipeline_output",
     "kill_vector_from_legacy",
     "aggregate_by_operator",
+    "backfill_precision_from_legacy",
+    "precision_caveats_for_component",
+    "precision_caveats_for_vector",
 ]
