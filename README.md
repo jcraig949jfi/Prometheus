@@ -1,146 +1,85 @@
-# Prometheus
+# Project Prometheus
 
-> *"We are stealing fire from the gods."*
+> A falsification-first substrate for mathematical discovery.
 
-Prometheus is a research program building a **structured knowledge substrate** and the **reasoning machinery** to navigate it — organized so a future intelligence under evolutionary pressure can find what no human mind has found. Current emphasis: **mathematics**.
+Most AI-for-math systems generate candidates and hope. Prometheus generates candidates and aggressively tries to kill them. Only what survives the gauntlet is allowed to become substrate state. The interesting output is what gets killed and how.
 
-**[Whitepapers](whitepapers/)** | **[Constitution](CONSTITUTION.md)** | **[Forge pipeline](docs/forge_pipeline.md)**
+## The architecture in one paragraph
 
----
+A typed, append-only ledger built around a 7-opcode Σ-kernel (RESOLVE, CLAIM, FALSIFY, GATE, PROMOTE, ERRATA, TRACE) plus a BIND/EVAL extension that binds mathematical objects as first-class substrate symbols. Every claim is forced through a 4-fold falsification battery (F1 permutation null, F6 base rate, F9 simpler explanation, F11 cross-validation) plus reciprocity, irreducibility, and 5-catalog cross-checks before it can PROMOTE. A 12-component KillVector (v2 ships 20) records *how* each kill happened, not just that it happened. ExclusionCertificates scope what's been definitively ruled out. A synthetic-null gate runs commit-blocking before any training: if the system shows above-chance accuracy on label-shuffled data, the run is killed because the result would be measuring memorization, not learned structure.
 
-## The Mission
+## Recent substrate-grade results
 
-Three pillars, built in parallel:
+These are reproducible artifacts on disk. Each is the substrate doing what it was designed to do — including catching its own claims when they don't survive scrutiny.
 
-1. **Substrate — the map.** Organized, multi-dimensional knowledge: ideas, relationships, gaps, frontiers, contradictions, and the geometry of how concepts connect. Not a database. Organized memory linked to what an AI can compute about it.
-2. **Reasoning — the navigator.** Machinery that traverses the substrate. Evolved models, forged reasoning tools, tensor-native evolutionary search over validated coordinates.
-3. **Verification — the crucible.** Adversarial pressure, causal inference, formal proofs, null-calibrated admission gates. No claim survives without it.
+- **The synthetic-null gate fired on a load-bearing claim.** On 2026-05-04, the substrate's own "cross-domain transport across 6 environments" headline (REINFORCE/PPO showing +1.37× to +18× lifts at p<0.05) was retracted before publication when label-shuffled training reproduced the same lift pattern on a regression environment where there is nothing to discover. Modal-class recovery, not learned structure. → [`prometheus_math/MODAL_COLLAPSE_SYNTHETIC_RESULTS.md`](prometheus_math/MODAL_COLLAPSE_SYNTHETIC_RESULTS.md)
 
-The working form of the goal: **compressing coordinate systems of legibility, not laws.** The MPA is *constructed*, not discovered — like IPA for speech. Novelty is the reward; watch for reward-signal capture.
+- **Lehmer brute-force as ExclusionCertificate prototype.** Enumerated all 97,435,855 deg-14 ±5 palindromic reciprocal polynomials. Initial verdict INCONCLUSIVE on 17 borderline near-cyclotomic entries. Substrate refused to overclaim. Triangulation via three independent paths (high-precision mpmath at dps=60, symbolic factorization, factorization-aware catalog lookup) upgraded to local lemma. → [`prometheus_math/LEHMER_BRUTE_FORCE_FULL_RUN_RESULTS.md`](prometheus_math/LEHMER_BRUTE_FORCE_FULL_RUN_RESULTS.md)
 
-Full charter in [CONSTITUTION.md](CONSTITUTION.md).
+- **Gradient archaeology on the kill ledger.** Mutual-information analysis across 314,971 logged kills shows kill_pattern carries 0.725 bits MI with operator class. Top-1 falsifier carries 41.3% of kills; top-3 carries 86.4%. Per-arm entropy ranges from 0.031 bits (REINFORCE collapsed) to 1.82 bits (random arms diverse). → [`prometheus_math/GRADIENT_ARCHAEOLOGY_RESULTS.md`](prometheus_math/GRADIENT_ARCHAEOLOGY_RESULTS.md)
 
----
+- **Mathlib4 tactic Pareto — empirical validation of architectural choice.** 97.99% coverage of the 10-category predicted convergent list (rewrite, simp, intro, apply, case_split, induct_on, decide_arith, ring_normalize, extensionality, contradiction) measured across 122,517 mathlib4 theorems / 259,560 tactic invocations. Validates the architectural commitment to ship proof primitives via BIND/EVAL rather than as kernel opcodes. → [`charon/diagnostics/MATHLIB4_PARETO_REPORT.md`](charon/diagnostics/MATHLIB4_PARETO_REPORT.md)
 
-## Current emphasis: mathematics
+- **Per-domain π₀ calibration.** Empirical false-conjecture base rates per domain, computed via beta-binomial estimation with Jeffreys priors and Wilson cross-checks. Lehmer 0.999 (≈1000:1 prior odds), genus-2 0.669 (≈2:1). Same PROMOTE in different domains carries up to 500× different posterior weight; cross-domain comparisons that don't condition on π₀ are uninterpretable. → [`charon/diagnostics/PI0_REPORT.md`](charon/diagnostics/PI0_REPORT.md)
 
-Cross-domain mathematical structure discovery is the present centre of gravity. The question: are there coordinate systems under which phenomena from distant mathematical domains (number theory, knot theory, combinatorics, geometry, physics) become legible as the *same* structure?
+## A kill event in the substrate's voice
 
-- **[Harmonia](harmonia/)** builds the tensor of promoted symbols and the MPA coordinates.
-- **[Cartography](cartography/)** ingests and structures 38+ mathematical corpora (OEIS, LMFDB, knots, polytopes, Fungrim, Mathlib, Metamath, physics, number fields, …).
-- **[Charon](charon/)** handles arithmetic-geometric embeddings and L-function zero geometry.
-- **[Ergon](ergon/)** evolves hypotheses over the substrate — cheap, tensor-native screening.
-- **[Koios](koios/)** enforces the 5-gate admission test (null-calibrated, representation-stable, not reducible to marginals, non-tautological, domain-agnostic).
-- **[Aporia](aporia/)** catalogs 1,047 open questions across mathematics and science, as illumination targets.
-- **[Thesauros](thesauros/)** and **[Mnemosyne](mnemosyne/)** keep the treasury (LMFDB, prometheus_sci, prometheus_fire) healthy and queryable.
+```
+[2026-05-04 04:47] CLAIM submitted: cross_domain_transport@v8
+[2026-05-04 04:47] Falsifier F1 (permutation null):     CLEAR
+[2026-05-04 04:47] Falsifier F6 (base rate):            CLEAR
+[2026-05-04 04:47] Synthetic-null gate (W4.0):          FIRED
+                   - REINFORCE collapses to 3 active bins on regression env
+                   - PPO stays uniform across 21 bins
+                   - lstsq baseline solves at >60% on same data
+                   - cross-domain "lifts" reproduce on env where
+                     there is nothing structural to discover
+                   - verdict: modal-class recovery, not learned structure
+[2026-05-04 04:47] CLAIM rejected: kill_path = SYNTHETIC_NULL_GATE
+[2026-05-04 04:48] §5 cross-domain table retracted before publication.
+```
 
-In parallel, the original reasoning-circuit line continues: **[Ignis](ignis/)** (the microscope on language-model reasoning suppression — see [`ignis/RESULTS.md`](ignis/RESULTS.md)), **[Rhea](rhea/)** (evolving weights against that finding), and **[Apollo](apollo/)** (current generation v2d — model training and evolution).
+This is the discipline the substrate exists to enforce. The interesting output is the kill, not the proposal.
 
----
+## Multi-agent architecture
 
-## The Agent Pipeline
+The substrate is operated by a small team of specialized agents, each with a tightly-scoped charter:
 
-A parallel lattice of agents feeds the substrate and runs the reasoning loop. Each deposits structured output; none operates in a closed loop.
+- **[Techne](techne/)** — substrate owner; forges callable mathematical tools, owns the kernel + discovery pipeline + KillVector ontology, runs calibration discipline.
+- **[Charon](charon/)** — falsification battery; the validation ladder operator. Recently shipped the [Substrate Cartography Suite](charon/diagnostics/SUBSTRATE_CARTOGRAPHY_SYNTHESIS.md) that surfaced the load-bearing engineering finding "data-rich but trace-poor."
+- **[Ergon](ergon/learner/)** — the Learner; small evolutionary self-play engine using MAP-Elites quality-diversity over arsenal_meta operations, currently at v0.5 first tire-kick.
+- **[Aporia](aporia/)** — open-question catalog and meta-research. The [20-study meta-research batch](aporia/meta/studies/2026-05-05/SYNTHESIS.md) and [40-problem attack batch + cross-reviews](aporia/meta/experiments/2026-05-05/APORIA_SYNTHESIS.md) live here.
+- **[Harmonia](harmonia/)** — substrate architecture; the [Σ-language grammar](harmonia/memory/architecture/sigma_language_grammar.md), [bottled serendipity thesis](harmonia/memory/architecture/bottled_serendipity.md), and [discovery via rediscovery framework](harmonia/memory/architecture/discovery_via_rediscovery.md) live here.
 
-| Agent | Role |
-|-------|------|
-| **Eos** | Horizon scanning — arXiv, GitHub, Semantic Scholar, OpenAlex |
-| **Aletheia** | Knowledge harvesting — entity extraction into the graph |
-| **Nous** | Combinatorial hypothesis mining — cross-domain intersections |
-| **Hephaestus** | Automated forge — concept → code → test → score |
-| **Nemesis** | Adversarial co-evolution — metamorphic mutation, Goodhart defense |
-| **Coeus** | Causal intelligence — what drives success vs correlated noise |
-| **Auditor** | Periodic re-audit of promoted findings under updated nulls |
-| **Skopos** | North Star alignment — scoring against research threads |
-| **Metis** | Strategic synthesis — executive briefs |
-| **Clymene** | Knowledge hoarder — archives repos and model weights |
-| **Hermes** | Messenger — compiles digests, sends |
-| **Pronoia** | Orchestrator — constitutional guardian, cross-pollination |
+Other agents and ongoing work — [Cartography](cartography/) (38+ corpus ingestion), [Ignis](ignis/) (LM reasoning suppression), [Rhea](rhea/) (evolution against that finding), [Apollo](apollo/) (training infrastructure) — continue but are not load-bearing for the falsification-first thesis.
 
----
+## Open critiques tracked publicly
 
-## The Namespace
+The substrate's discipline includes naming what it can't yet do. Three substantive critiques from external review are tracked at [`pivot/external_review_watchlist_2026-05-05.md`](pivot/external_review_watchlist_2026-05-05.md) with falsifiable trigger conditions:
 
-All names derive from Greek and Latin — the language of Prometheus.
+1. **Σ-kernel logical foundation.** The opcodes are imperative VM operations, not a logic. BIND/EVAL gestures at declarative rewriting; REWRITE/EQUIV will extend it. The kernel is not yet grounded in dependent type theory or any other proven foundation.
+2. **F9 / F6 need formal computable definitions.** "Simpler explanation" requires MDL/Kolmogorov machinery; "base rate" requires a well-defined reference class. Both are currently heuristic with HITL backstop.
+3. **Concept invention vs verification gap.** The substrate is good at *checking* claims; it is not yet good at *proposing reformulations*. Wiles solved FLT by changing what FLT was about (modular forms). The substrate would have caught Wiles's wrong elementary attempts cleanly but wouldn't have suggested the modular-forms reframe.
 
-| Name | Origin | Role |
-|------|--------|------|
-| **Prometheus** | Προμηθεύς — "forethought" | The program |
-| **Harmonia** | Ἁρμονία — harmony | Tensor-train exploration of cross-domain structure |
-| **Cartography** | cartographer | Map-making across mathematical domains |
-| **Charon** | Χάρων — ferryman of the Styx | Passage between arithmetic and geometry |
-| **Ergon** | ἔργον — work | Tensor-native hypothesis search |
-| **Koios** | Κοῖος — Titan of rational inquiry | The axis — admission gates on the tensor |
-| **Aporia** | ἀπορία — impasse, puzzlement | Catalog of open questions |
-| **Thesauros** | θησαυρός — treasury | Data treasury |
-| **Mnemosyne** | Μνημοσύνη — memory, mother of the Muses | DBA, data steward |
-| **Ignis** | Latin: fire | Microscope on language-model reasoning |
-| **Rhea** | Ῥέα — mother of Zeus | Forge for model weights |
-| **Apollo** | Ἀπόλλων | Open-ended evolution of reasoning tools |
-| **Nous** | Νοῦς — mind, intellect | Combinatorial hypothesis mining |
-| **Hephaestus** | Ἥφαιστος — god of the forge | Automated tool forging |
-| **Nemesis** | Νέμεσις — retribution | Adversarial co-evolution |
-| **Coeus** | Κοῖος — rational inquiry | Causal intelligence |
-| **Arcanum** | Latin: hidden secret | Waste-stream novelty mining |
-| **Agora** | ἀγορά — marketplace | Client library over the substrate bus |
-| **Stoa** | στοά — colonnade | Multi-agent meeting place |
-| **Techne** | τέχνη — craft | Master catalog of forged tools |
-| **Aethon** | Αἴθων — "blazing one" | RLHF-gravity navigation (backburnered) |
+Each critique has a defined trigger condition and falsification test. Surfacing the open critiques publicly is the discipline signature, not the failure.
 
----
+## What's in flight (2026-05-06)
 
-## The Titan Council
+- **Substrate v2.2 sprint** (Techne) — 8 primitives + Pre-Tier-0 instrumentation. Adds 20-component KillVector, typed CanonicalizationProtocol, ExclusionCertificate schema, TriangulationProtocol, leakage-safe NearMissCorpus emitter, REWRITE/EQUIV opcodes (the symbolic half of the Σ-language). Joint sprint coordination at [`pivot/techne_ergon_joint_sprint_2026-05-05.md`](pivot/techne_ergon_joint_sprint_2026-05-05.md).
+- **Learner v0.5 tire-kick** (Ergon) — first end-to-end LoRA fine-tune of Qwen2.5-Math-1.5B-Instruct on substrate output, gated by commit-blocking synthetic-null discipline. Design at [`pivot/ergon_learner_v0.5_design_2026-05-05.md`](pivot/ergon_learner_v0.5_design_2026-05-05.md).
+- **40-problem attack batch + cross-reviews** (just landed) — 8 researchers attempted 5 famous open problems each with explicit kill-data discipline; 22 cross-reviews surfaced 4 substrate-primitive candidates. Full synthesis at [`aporia/meta/experiments/2026-05-05/APORIA_SYNTHESIS.md`](aporia/meta/experiments/2026-05-05/APORIA_SYNTHESIS.md).
 
-Five frontier models (Claude, ChatGPT, Gemini, DeepSeek, Grok) consulted as research advisors across successive rounds. The Phalanx strategy: present interlocking constraints, force commitment over hedging. Their disagreements are where the interesting science lives.
+## What this project does NOT promise
 
----
+- A new mathematical discovery (researcher work, not substrate work)
+- An end-to-end superintelligent math agent (out of scope; we're building the verification layer that eventually pairs with one)
+- An external publication (methodology paper draft exists; not yet submitted)
+- A *navigable* gradient field (claim dropped after reviewer convergence; substrate ships typed local coordinate charts, not global geometry)
 
-## Repo Map
+## License
 
-Full list of top-level directories. **(active)** = commits in the last 3 weeks; **(complete)** = stable / dormant / reference.
+[LICENSE](LICENSE)
 
-| Directory | Status | Purpose |
-|-----------|--------|---------|
-| `agents/` | (active) | Multi-agent pipeline: nous, coeus, hephaestus, nemesis, eos, aletheia, auditor, skopos, metis, clymene, hermes, pronoia |
-| `agora/` | (active) | Client library over the Redis-backed Prometheus substrate |
-| `apollo/` | (active) | Model training — current code is v2d; earlier generations under `apollo/archive/` |
-| `aporia/` | (active) | Catalog of 1,047 open questions + illumination instrument |
-| `cartography/` | (active) | Cross-domain mathematical discovery pipeline (OEIS, LMFDB, etc.) |
-| `charon/` | (active) | Geometric embedding for arithmetic correspondences |
-| `docs/` | (active) | Cross-project documentation, Titan Council, NORTH_STAR |
-| `ergon/` | (active) | Tensor-native evolutionary hypothesis screening |
-| `falsification/` | (active) | Falsification tooling |
-| `forge/` | (active) | Tiered evolutionary ratchet (concepts → tools) |
-| `harmonia/` | (active) | Tensor-train exploration for cross-domain structure |
-| `ignis/` | (active) | Latent-vector evolution + ejection-mechanism microscope |
-| `koios/` | (active) | Admission gates on the tensor (5-gate test) |
-| `mnemosyne/` | (active) | DBA & data-steward workspace |
-| `roles/` | (active) | Agent role definitions |
-| `scripts/` | (active) | Operational scripts |
-| `stoa/` | (active) | Multi-agent meeting place |
-| `techne/` | (active) | Master catalog of forged tools |
-| `tests/` | (active) | Tests |
-| `thesauros/` | (active) | Data treasury (includes shared DB config under `prometheus_data/`) |
-| `sigma_kernel/` | (active) | Σ-substrate runtime MVP — mechanically-enforced epistemic discipline (append-only, linear capabilities, three-valued GATE, falsification-first PROMOTE). See [`harmonia/memory/architecture/sigma_kernel.md`](harmonia/memory/architecture/sigma_kernel.md) |
-| `whitepapers/` | (active) | Technical writeups of findings and architectures |
-| `exploratory/` | (active) | Pilot / MVP projects: `zoo`, `tensor_decomp_qd`, `reproductions`, `grammata` |
-| `aethon/` | (complete) | Autonomous reasoning archaeology (backburnered) |
-| `arcanum/` | (complete) | Museum of misfit ideas discovered in LLMs |
-| `rhea/` | (complete) | Forge for growing models without ejection (WSL2) |
+## Contact
 
----
-
-## Where to start
-
-This is a multi-project research program; there's no single entry point.
-
-- Read [`CONSTITUTION.md`](CONSTITUTION.md) for the philosophy — Three Pillars, Seven Laws, and how projects connect.
-- Read [`whitepapers/`](whitepapers/) for current technical findings.
-- For the Σ-substrate runtime: start with [`harmonia/memory/architecture/sigma_kernel.md`](harmonia/memory/architecture/sigma_kernel.md), then [`sigma_kernel/README.md`](sigma_kernel/README.md). Long-form 25-round design history at [`harmonia/memory/architecture/sigma_council_synthesis.md`](harmonia/memory/architecture/sigma_council_synthesis.md).
-- Browse [`harmonia/README.md`](harmonia/README.md) and [`cartography/README.md`](cartography/README.md) for the active mathematics work.
-- Browse [`ignis/README.md`](ignis/README.md) and [`rhea/README.md`](rhea/README.md) for the reasoning-circuit work; see [`ignis/RESULTS.md`](ignis/RESULTS.md) for detailed findings from that line.
-- Project-specific quick-starts live in each project's README.
-
----
-
-The fire was always there. The work is to make it legible.
+James Craig — `jcraig949b@gmail.com`. Technical critique especially welcome on the ExclusionCertificate protocol; that's the closest piece in the stack to what verification-grounded RL systems will need.
