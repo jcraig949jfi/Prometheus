@@ -1,0 +1,102 @@
+{
+  "fire_id": "fire_1_2026_05_06",
+  "lanes": [
+    "1_claim_flood",
+    "7_precision_gradient"
+  ],
+  "lane_1": {
+    "lane": "1_claim_flood",
+    "n_probes": 100,
+    "n_completed": 100,
+    "n_errors": 0,
+    "wall_clock_seconds": 5.928503751754761,
+    "throughput_per_second": 16.867662430069526,
+    "terminal_state_counts": {
+      "REJECTED": 100
+    },
+    "kill_pattern_root_counts": {
+      "out_of_band": 99,
+      "known_in_catalog": 1
+    },
+    "errors": []
+  },
+  "lane_7": {
+    "lane": "7_precision_gradient",
+    "candidate_coeffs_ascending": [
+      1,
+      -4,
+      5,
+      0,
+      -5,
+      4,
+      -1,
+      0,
+      -1,
+      4,
+      -5,
+      0,
+      5,
+      -4,
+      1
+    ],
+    "candidate_label": "INCONCLUSIVE deg-14 \u00b15 entry #1 (M_numpy \u2248 1.00314)",
+    "results_per_dps": [
+      {
+        "dps": 10,
+        "elapsed_s": 0.03850698471069336,
+        "M": 1.0,
+        "status": "ok",
+        "error": null,
+        "precision_digits_recorded": 10,
+        "n_factors": 4
+      },
+      {
+        "dps": 30,
+        "elapsed_s": 0.007000446319580078,
+        "M": 1.0,
+        "status": "ok",
+        "error": null,
+        "precision_digits_recorded": 30,
+        "n_factors": 4
+      },
+      {
+        "dps": 60,
+        "elapsed_s": 0.007999420166015625,
+        "M": 1.0,
+        "status": "ok",
+        "error": null,
+        "precision_digits_recorded": 60,
+        "n_factors": 4
+      },
+      {
+        "dps": 100,
+        "elapsed_s": 0.007000923156738281,
+        "M": 1.0,
+        "status": "ok",
+        "error": null,
+        "precision_digits_recorded": 100,
+        "n_factors": 4
+      },
+      {
+        "dps": 200,
+        "elapsed_s": 0.007998943328857422,
+        "M": 1.0,
+        "status": "ok",
+        "error": null,
+        "precision_digits_recorded": 200,
+        "n_factors": 4
+      }
+    ],
+    "M_max_valid": 1.0,
+    "M_min_valid": 1.0,
+    "M_spread": 0.0,
+    "band_status_per_dps": {
+      "10": "out_of_band",
+      "30": "out_of_band",
+      "60": "out_of_band",
+      "100": "out_of_band",
+      "200": "out_of_band"
+    },
+    "bugs_detected": []
+  }
+}
