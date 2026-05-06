@@ -398,3 +398,131 @@ def test_telemetry_step_emits_elapsed_and_oracle_calls(small_env):
     )
     # Regression: a known pre-existing key is still present.
     assert "true_rank" in info, "regression: pre-existing key true_rank lost"
+
+
+# ---------------------------------------------------------------------------
+# Tier 3 -- KillVector v2 + EvidenceField wired into info dict (substrate
+# v2.3 §9). Reported as "observed policy table", not "manifold chart"
+# (no CoordinateChart registered for cross-domain envs yet).
+# ---------------------------------------------------------------------------
+
+
+def test_step_info_includes_kill_vector(small_env):
+    """``info["kill_vector"]`` is a dict with at least one component.
+
+    Substrate v2.3 §9 Tier 3 contract: each cross-domain env emits a
+    KillVector covering its falsifier(s). For prediction-style envs
+    the single component is ``"prediction_correct"``.
+    """
+    env = small_env
+    env.reset(seed=2027)
+    _, _, _, _, info = env.step(0)
+    assert "kill_vector" in info, "missing kill_vector in info"
+    kv = info["kill_vector"]
+    assert isinstance(kv, dict), f"kill_vector must be dict, got {type(kv)}"
+    components = kv.get("components")
+    assert isinstance(components, list) and len(components) >= 1, (
+        f"kill_vector.components must be non-empty list; got {components!r}"
+    )
+    # Single-component prediction kill-vector convention.
+    names = [c["falsifier_name"] for c in components]
+    assert "prediction_correct" in names, (
+        f"expected 'prediction_correct' falsifier; got {names}"
+    )
+
+
+def test_step_info_includes_evidence_field(small_env):
+    """``info["evidence_field"]`` carries the 6 axes of EvidenceField.
+
+    Substrate v2.3 §6.2 P1 contract: distance_to_target,
+    battery_survival_depth, verification_depth, exclusion_distance,
+    assumption_load, computational_friction.
+    """
+    env = small_env
+    env.reset(seed=2028)
+    _, _, _, _, info = env.step(0)
+    assert "evidence_field" in info, "missing evidence_field in info"
+    ef = info["evidence_field"]
+    assert isinstance(ef, dict), f"evidence_field must be dict; got {type(ef)}"
+    expected_axes = {
+        "distance_to_target",
+        "battery_survival_depth",
+        "verification_depth",
+        "exclusion_distance",
+        "assumption_load",
+        "computational_friction",
+    }
+    missing = expected_axes - set(ef.keys())
+    assert not missing, f"evidence_field missing axes: {missing}"
+
+
+def test_step_info_evidence_field_computational_friction_populated(small_env):
+    """``EvidenceField.computational_friction`` carries the per-step
+    telemetry verbatim.
+
+    Confirms the Pre-Tier-0 0b telemetry wiring through Tier 3:
+    elapsed_seconds + oracle_calls live on the EvidenceField axis,
+    not just on the bare info dict.
+    """
+    env = small_env
+    env.reset(seed=2029)
+    _, _, _, _, info = env.step(0)
+    cf = info["evidence_field"]["computational_friction"]
+    assert cf["elapsed_seconds"] is not None
+    assert cf["elapsed_seconds"] > 0, (
+        f"computational_friction.elapsed_seconds must be > 0; "
+        f"got {cf['elapsed_seconds']}"
+    )
+    assert cf["oracle_calls"] is not None
+    assert cf["oracle_calls"] >= 1, (
+        f"computational_friction.oracle_calls must be >= 1; "
+        f"got {cf['oracle_calls']}"
+    )
+    # Same numeric values as the bare info keys (single source of truth).
+    assert cf["elapsed_seconds"] == info["elapsed_seconds"]
+    assert cf["oracle_calls"] == info["oracle_calls"]
+
+
+def test_step_info_evidence_field_exclusion_distance_null(small_env):
+    """``EvidenceField.exclusion_distance`` is NULL with an explanatory
+    reason -- anti-fake-topology discipline (no chart+cert pair
+    registered for cross-domain envs yet).
+
+    Substrate v2.3 §8 architectural lock-in: no metric without chart.
+    Cross-domain envs use ``coordinate_chart_id="provisional:..."`` to
+    flag that a real chart is blocked on Charon coord (joint sprint
+    T11). The reason_unpopulated string MUST mention either the
+    missing chart or the missing certificate.
+    """
+    env = small_env
+    env.reset(seed=2030)
+    _, _, _, _, info = env.step(0)
+    ed = info["evidence_field"]["exclusion_distance"]
+    assert ed["value"] is None, (
+        f"exclusion_distance.value must be NULL for cross-domain envs; "
+        f"got {ed['value']}"
+    )
+    reason = ed.get("reason_unpopulated") or ""
+    assert reason, "exclusion_distance.reason_unpopulated must be set"
+    # Either the chart or the certificate must be flagged as missing.
+    low = reason.lower()
+    assert ("certificate" in low) or ("chart" in low), (
+        f"reason_unpopulated must mention chart/certificate; got {reason!r}"
+    )
+
+
+def test_step_info_existing_keys_still_present(small_env):
+    """Regression: pre-existing per-env info keys survive Tier 3 wiring.
+
+    Tier 3 additions are purely additive; existing consumers of
+    ``info["true_rank"]``, ``info["hit"]``, etc., must not break.
+    """
+    env = small_env
+    env.reset(seed=2031)
+    _, _, _, _, info = env.step(0)
+    for key in (
+        "true_rank", "predicted_rank", "hit", "label", "conductor",
+        "running_accuracy", "n_episodes_seen", "binding_name",
+        "elapsed_seconds", "oracle_calls",
+    ):
+        assert key in info, f"regression: pre-existing key {key} lost"

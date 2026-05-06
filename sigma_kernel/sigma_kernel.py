@@ -8,7 +8,12 @@ Mechanically enforces:
   - Falsification-first PROMOTE (verdict required + checked at PROMOTE time)
   - Content-addressed provenance (sha256, integrity-checked on RESOLVE)
 
-Six opcodes: RESOLVE, CLAIM, FALSIFY, GATE, PROMOTE, TRACE.
+Nine opcodes: RESOLVE, CLAIM, FALSIFY, GATE, PROMOTE, ERRATA, TRACE,
+REWRITE, EQUIV. The last two are the "symbolic half" added per substrate
+v2.3 §6.4 + the 2026-05-06 CoC feasibility pass (REWRITE/EQUIV subsume
+cleanly into a dependent-type-theory kernel; see
+``pivot/sigma_kernel_logical_foundation_feasibility_2026-05-06.md`` §3.10
++ §3.11).
 """
 
 from __future__ import annotations
@@ -421,7 +426,10 @@ class SigmaKernel:
     The substrate kernel. Wraps a storage adapter (SQLite default; Postgres
     available when the harmonia substrate has been provisioned).
 
-    Seven opcodes (RESOLVE, CLAIM, FALSIFY, GATE, PROMOTE, ERRATA, TRACE).
+    Nine opcodes (RESOLVE, CLAIM, FALSIFY, GATE, PROMOTE, ERRATA, TRACE,
+    REWRITE, EQUIV). The last two are the "symbolic half" of the substrate
+    grammar added per substrate v2.3 §6.4 + the 2026-05-06 CoC feasibility
+    pass (REWRITE/EQUIV subsume cleanly into a CoC kernel).
     mint_capability and bootstrap_symbol are MVP scaffolding -- flagged as
     such, not opcodes.
 
@@ -1078,6 +1086,403 @@ class SigmaKernel:
 
         walk(graph)
         return sorted(out)
+
+    # ------------------------------------------------------------------
+    # OPCODE 8 -- REWRITE
+    # ------------------------------------------------------------------
+
+    # Symbol-name validation regex for rewrite_rule_id and
+    # equivalence_class_id. Allows lowercase/uppercase letters, digits,
+    # underscore, dot, and hyphen. Disallows path separators ("/", "\\"),
+    # whitespace, and other shell-active characters that would break
+    # downstream consumers expecting a registered Symbol name. Mirrors the
+    # de-facto convention used by Symbol names elsewhere in the kernel.
+    _RULE_ID_RE = re.compile(r"^[A-Za-z0-9_.\-]+$")
+
+    def REWRITE(
+        self,
+        src_expr: Symbol,
+        tgt_expr: Symbol,
+        rewrite_rule_id: str,
+        invariants_preserved: list[str],
+        cap: Capability,
+        rationale: str = "",
+    ) -> Symbol:
+        """Mint a REWRITE Symbol that links src->tgt via a named rule,
+        preserving invariants.
+
+        Per substrate v2.3 §6.4 (parallel kernel-track for REWRITE/EQUIV
+        opcodes — the "symbolic half" of the grammar); CoC feasibility pass
+        2026-05-06 §3.10 confirms REWRITE subsumes cleanly into a
+        CoC + rewriting-rules kernel and is the textbook case for clean
+        type-theoretic encoding (definitional/propositional equality +
+        registered rewrite rules).
+
+        The opcode RECORDS that a rewrite happened, with content-addressed
+        hashes; the actual transformation logic (e.g. applying a
+        ring-homomorphism transformation) is the caller's responsibility,
+        typically via BIND/EVAL. Confluence + termination of the rewrite-
+        rule registry are likewise the caller's responsibility (this matches
+        the Coq ``Hint Rewrite`` discipline; see feasibility pass §3.10).
+
+        The resulting Symbol's def_blob contains:
+          - opcode: "REWRITE"
+          - src_def_hash: src_expr.def_hash
+          - src_ref:      src_expr.ref (e.g. "foo@v3")
+          - tgt_def_hash: tgt_expr.def_hash
+          - tgt_ref:      tgt_expr.ref
+          - rewrite_rule_id: str (e.g., "ring_homomorphism_naturality")
+          - invariants_preserved: list[str]
+          - rationale: str
+
+        Provenance includes both src_def_hash and tgt_def_hash so TRACE
+        walks back to both endpoints. The rewrite_rule_id is logged in the
+        def_blob (and included in provenance only if it is itself a
+        substrate hash; opaque string ids are not provenance walkers).
+
+        Tier defaults to Tier.WorkingTheory — a rewrite is provisional
+        until externally verified (a REWRITE Symbol can later be ERRATA-d
+        or have its own kill-path FALSIFY-ed).
+
+        Args:
+            src_expr: the Symbol being rewritten from. Must be readable
+                from the substrate (its def_hash is recorded).
+            tgt_expr: the Symbol being rewritten to. Same constraint.
+            rewrite_rule_id: the registered rule name (e.g.
+                "ring_homomorphism_naturality"). Must match
+                ``[A-Za-z0-9_.\\-]+`` (no path separators, whitespace, or
+                shell-active chars). Rejected with ValueError otherwise.
+            invariants_preserved: list of named invariants the rewrite is
+                claimed to preserve (e.g. ``["degree", "leading_coeff"]``).
+                Stored verbatim; not currently verified by the kernel.
+            cap: a PromoteCap. Consumed atomically with the symbol insert
+                (matches the existing PROMOTE / ERRATA pattern).
+            rationale: optional human-readable note recorded in def_blob.
+
+        Returns:
+            Symbol: the freshly minted REWRITE record. Symbol name is
+            ``REWRITE_{src_name}_to_{tgt_name}``; version is
+            ``max(version) + 1`` for that name.
+
+        Raises:
+            ValueError: rewrite_rule_id contains invalid characters.
+            CapabilityError: cap is missing, of wrong type, or already
+                consumed.
+            ImmutabilityError: extremely unlikely (a REWRITE collision on
+                the auto-generated name @ same version), kept for parity
+                with other opcodes.
+        """
+        # 0. Reject malformed rule ids early. The id appears in def_blob
+        #    and may flow into downstream resolvers; "/" or whitespace
+        #    breaks the substrate Symbol-name convention.
+        if not isinstance(rewrite_rule_id, str) or not rewrite_rule_id:
+            raise ValueError(
+                "rewrite_rule_id must be a non-empty string; "
+                f"got {rewrite_rule_id!r}"
+            )
+        if not self._RULE_ID_RE.match(rewrite_rule_id):
+            raise ValueError(
+                f"rewrite_rule_id {rewrite_rule_id!r} contains invalid "
+                "characters; allowed: [A-Za-z0-9_.-] (no path separators, "
+                "whitespace, or shell-active chars)"
+            )
+        if not isinstance(invariants_preserved, list):
+            raise TypeError(
+                "invariants_preserved must be a list of strings; "
+                f"got {type(invariants_preserved).__name__}"
+            )
+
+        # 1. Verify capability. Same discipline as PROMOTE.
+        cap_row = self.conn.execute(
+            "SELECT consumed FROM capabilities WHERE cap_id=? AND cap_type='PromoteCap'",
+            (cap.cap_id,),
+        ).fetchone()
+        if cap_row is None:
+            self.conn.rollback()
+            raise CapabilityError(
+                f"capability {cap.cap_id} not registered (mint via mint_capability)"
+            )
+        if cap_row[0]:
+            self.conn.rollback()
+            raise CapabilityError(
+                f"capability {cap.cap_id} already consumed (double-spend rejected)"
+            )
+
+        # 2. Build the def_blob. Sorted keys for canonical hashing.
+        def_obj = {
+            "opcode": "REWRITE",
+            "src_def_hash": src_expr.def_hash,
+            "src_ref": src_expr.ref,
+            "tgt_def_hash": tgt_expr.def_hash,
+            "tgt_ref": tgt_expr.ref,
+            "rewrite_rule_id": rewrite_rule_id,
+            "invariants_preserved": list(invariants_preserved),
+            "rationale": rationale,
+        }
+        def_blob = json.dumps(def_obj, sort_keys=True)
+        def_hash = _sha256(def_blob)
+
+        # 3. Provenance: both endpoints. PROMOTE-style scrape is also run
+        #    on def_blob so that downstream Symbol references embedded in
+        #    invariants_preserved or rationale are picked up. The two
+        #    endpoint hashes are guaranteed in the provenance regardless.
+        provenance: list[str] = [src_expr.def_hash, tgt_expr.def_hash]
+        provenance.extend(
+            self._scrape_hashes_from_blob(def_blob, exclude=set(provenance))
+        )
+
+        # 4. Symbol name + version. Versioning by max+1 mirrors PROMOTE.
+        target_name = f"REWRITE_{src_expr.name}_to_{tgt_expr.name}"
+        max_ver = self.conn.execute(
+            "SELECT COALESCE(MAX(version), 0) FROM symbols WHERE name=?",
+            (target_name,),
+        ).fetchone()[0]
+        new_version = max_ver + 1
+
+        # 5. Atomic: consume cap + insert symbol.
+        try:
+            self.conn.execute(
+                "UPDATE capabilities SET consumed=1 WHERE cap_id=?",
+                (cap.cap_id,),
+            )
+            self.conn.execute(
+                "INSERT INTO symbols VALUES (?,?,?,?,?,?,?)",
+                (
+                    target_name, new_version, def_hash, def_blob,
+                    json.dumps(provenance), Tier.WorkingTheory.value, time.time(),
+                ),
+            )
+            self.conn.commit()
+        except self.conn.IntegrityError as e:
+            self.conn.rollback()
+            raise ImmutabilityError(
+                f"{target_name}@v{new_version} collision: {e}"
+            ) from e
+        except Exception:
+            self.conn.rollback()
+            raise
+
+        return Symbol(
+            name=target_name,
+            version=new_version,
+            def_hash=def_hash,
+            def_blob=def_blob,
+            provenance=provenance,
+            tier=Tier.WorkingTheory,
+        )
+
+    # ------------------------------------------------------------------
+    # OPCODE 9 -- EQUIV
+    # ------------------------------------------------------------------
+
+    def EQUIV(
+        self,
+        expr_a: Symbol,
+        expr_b: Symbol,
+        equivalence_class_id: str,
+        witness: dict,
+        cap: Capability,
+        rationale: str = "",
+    ) -> Symbol:
+        """Mint an EQUIV Symbol asserting expr_a ≡ expr_b under a named
+        equivalence relation.
+
+        Per substrate v2.3 §6.4 (parallel kernel-track for REWRITE/EQUIV
+        opcodes); CoC feasibility pass 2026-05-06 §3.11 confirms EQUIV
+        subsumes cleanly via Sigma-typed setoid + witness inhabitant
+        (the production Coq/Lean/Agda ``Setoid`` machinery is exactly
+        the right abstraction).
+
+        Semantics: a content-addressed assertion that two expressions
+        live in the same equivalence class under a named relation,
+        supported by a typed witness. The witness shape is::
+
+            {"witness_type": "proof_ref" | "finite_check" | "equiv_chain",
+             "value": ...}
+
+        - ``proof_ref``: ``value`` is a Symbol ref (e.g. ``"thm@v2"``) or a
+          64-char hex def_hash referencing a substrate Symbol that proves
+          the equivalence. The proof's def_hash flows into provenance.
+        - ``finite_check``: ``value`` is a dict shaped like
+          ``{"checked_n": int, "method": str, ...}`` recording a finite
+          case-check (computational evidence, not a proof).
+        - ``equiv_chain``: ``value`` is a list of EQUIV Symbol refs that
+          chain transitively from a to b.
+
+        The substrate is APPEND-ONLY: ``EQUIV(a, b, ...)`` and
+        ``EQUIV(b, a, ...)`` produce two distinct Symbols (different
+        endpoints in different positions yield different def_blobs). The
+        equivalence relation's symmetry is the caller's semantic property,
+        not a kernel-enforced one.
+
+        The resulting Symbol's def_blob contains:
+          - opcode: "EQUIV"
+          - a_def_hash: expr_a.def_hash
+          - a_ref:      expr_a.ref
+          - b_def_hash: expr_b.def_hash
+          - b_ref:      expr_b.ref
+          - equivalence_class_id: str (e.g., "polynomial_modulo_equivalence")
+          - witness: dict (typed; see above)
+          - rationale: str
+
+        Provenance includes both a_def_hash and b_def_hash and any
+        64-char-hex strings scraped from the witness payload (so a
+        proof_ref witness flows into TRACE).
+
+        Tier defaults to Tier.WorkingTheory.
+
+        Args:
+            expr_a: first expression in the equivalence.
+            expr_b: second expression in the equivalence.
+            equivalence_class_id: the registered relation name. Must match
+                ``[A-Za-z0-9_.\\-]+``.
+            witness: typed dict (see shape above). Required; may not be
+                empty (the substrate refuses unsupported equivalences).
+            cap: a PromoteCap.
+            rationale: optional human-readable note.
+
+        Returns:
+            Symbol: the EQUIV record. Name is
+            ``EQUIV_{a_name}_eq_{b_name}``; version is max+1 for that name.
+
+        Raises:
+            ValueError: equivalence_class_id is malformed, or witness is
+                not a dict / is empty / has an unknown witness_type.
+            CapabilityError: cap is missing or already consumed.
+        """
+        # 0. Validate equivalence_class_id. Same regex as REWRITE.
+        if not isinstance(equivalence_class_id, str) or not equivalence_class_id:
+            raise ValueError(
+                "equivalence_class_id must be a non-empty string; "
+                f"got {equivalence_class_id!r}"
+            )
+        if not self._RULE_ID_RE.match(equivalence_class_id):
+            raise ValueError(
+                f"equivalence_class_id {equivalence_class_id!r} contains invalid "
+                "characters; allowed: [A-Za-z0-9_.-] (no path separators, "
+                "whitespace, or shell-active chars)"
+            )
+
+        # 1. Validate witness shape. The substrate refuses an empty witness
+        #    — every EQUIV must declare HOW the equivalence is supported
+        #    (proof, finite check, or chain).
+        if not isinstance(witness, dict):
+            raise ValueError(
+                "witness must be a dict with keys 'witness_type' and 'value'; "
+                f"got {type(witness).__name__}"
+            )
+        if not witness:
+            raise ValueError(
+                "witness must not be empty; specify witness_type and value"
+            )
+        wt = witness.get("witness_type")
+        if wt not in ("proof_ref", "finite_check", "equiv_chain"):
+            raise ValueError(
+                f"unknown witness_type {wt!r}; expected one of "
+                "'proof_ref' | 'finite_check' | 'equiv_chain'"
+            )
+
+        # 2. Verify capability. Same discipline as PROMOTE / REWRITE.
+        cap_row = self.conn.execute(
+            "SELECT consumed FROM capabilities WHERE cap_id=? AND cap_type='PromoteCap'",
+            (cap.cap_id,),
+        ).fetchone()
+        if cap_row is None:
+            self.conn.rollback()
+            raise CapabilityError(
+                f"capability {cap.cap_id} not registered (mint via mint_capability)"
+            )
+        if cap_row[0]:
+            self.conn.rollback()
+            raise CapabilityError(
+                f"capability {cap.cap_id} already consumed (double-spend rejected)"
+            )
+
+        # 3. Build the def_blob. Sorted keys for canonical hashing.
+        def_obj = {
+            "opcode": "EQUIV",
+            "a_def_hash": expr_a.def_hash,
+            "a_ref": expr_a.ref,
+            "b_def_hash": expr_b.def_hash,
+            "b_ref": expr_b.ref,
+            "equivalence_class_id": equivalence_class_id,
+            "witness": dict(witness),
+            "rationale": rationale,
+        }
+        def_blob = json.dumps(def_obj, sort_keys=True)
+        def_hash = _sha256(def_blob)
+
+        # 4. Provenance: both endpoints + any hashes scraped from the
+        #    witness payload (proof_ref hashes, equiv_chain refs).
+        provenance: list[str] = [expr_a.def_hash, expr_b.def_hash]
+        provenance.extend(
+            self._scrape_hashes_from_blob(def_blob, exclude=set(provenance))
+        )
+
+        # 5. Symbol name + version. Versioning by max+1.
+        target_name = f"EQUIV_{expr_a.name}_eq_{expr_b.name}"
+        max_ver = self.conn.execute(
+            "SELECT COALESCE(MAX(version), 0) FROM symbols WHERE name=?",
+            (target_name,),
+        ).fetchone()[0]
+        new_version = max_ver + 1
+
+        # 6. Atomic: consume cap + insert symbol.
+        try:
+            self.conn.execute(
+                "UPDATE capabilities SET consumed=1 WHERE cap_id=?",
+                (cap.cap_id,),
+            )
+            self.conn.execute(
+                "INSERT INTO symbols VALUES (?,?,?,?,?,?,?)",
+                (
+                    target_name, new_version, def_hash, def_blob,
+                    json.dumps(provenance), Tier.WorkingTheory.value, time.time(),
+                ),
+            )
+            self.conn.commit()
+        except self.conn.IntegrityError as e:
+            self.conn.rollback()
+            raise ImmutabilityError(
+                f"{target_name}@v{new_version} collision: {e}"
+            ) from e
+        except Exception:
+            self.conn.rollback()
+            raise
+
+        return Symbol(
+            name=target_name,
+            version=new_version,
+            def_hash=def_hash,
+            def_blob=def_blob,
+            provenance=provenance,
+            tier=Tier.WorkingTheory,
+        )
+
+    # ------------------------------------------------------------------
+    # Helper for REWRITE/EQUIV provenance scraping (not an opcode)
+    # ------------------------------------------------------------------
+
+    _HEX64_RE = re.compile(r"\b[0-9a-fA-F]{64}\b")
+
+    @classmethod
+    def _scrape_hashes_from_blob(
+        cls, blob: str, exclude: set[str] | None = None
+    ) -> list[str]:
+        """Scrape 64-char hex strings out of a JSON blob, deduping while
+        preserving first-occurrence order. Mirrors PROMOTE's evidence-
+        scraping pattern so REWRITE/EQUIV def_blobs can carry transitive
+        provenance for any Symbol references embedded in the
+        invariants/rationale/witness payload.
+        """
+        excl = set(exclude or ())
+        seen: set[str] = set(excl)
+        out: list[str] = []
+        for match in cls._HEX64_RE.findall(blob):
+            if match not in seen:
+                seen.add(match)
+                out.append(match)
+        return out
 
     # ------------------------------------------------------------------
     # Inspection helpers (not opcodes)

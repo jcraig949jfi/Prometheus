@@ -58,6 +58,7 @@ from ._modular_form_corpus import (
     ModularFormEntry,
     PRIMES_30,
 )
+from ._tier3_evidence import build_step_evidence
 
 
 # ---------------------------------------------------------------------------
@@ -482,6 +483,26 @@ class ModularFormEnv:
             "elapsed_seconds": float(elapsed_seconds),
             "oracle_calls": int(oracle_calls),
         }
+        # Tier 3: KillVector v2 + EvidenceField (substrate v2.3 §9).
+        info.update(build_step_evidence(
+            correct=bool(hit),
+            domain="modular_form",
+            env_name="modular_form_env",
+            elapsed_seconds=float(elapsed_seconds),
+            oracle_calls=int(oracle_calls),
+            region_meta={
+                "env": "modular_form_env",
+                "split": self.split,
+                "label": self._current.label,
+                "level": int(self._current.level),
+                "weight": int(self._current.weight),
+                "target_prime": int(target_prime),
+                "context_k": int(self._context_k),
+            },
+            candidate_parts=(
+                self._current.label, target_prime, a, true_bin,
+            ),
+        ))
         return self._obs(), float(reward), terminated, truncated, info
 
     def close(self) -> None:

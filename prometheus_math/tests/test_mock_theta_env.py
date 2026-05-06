@@ -561,3 +561,91 @@ def test_telemetry_step_emits_elapsed_and_oracle_calls(small_env):
     )
     # Regression: a known pre-existing key is still present.
     assert "true_bin" in info, "regression: pre-existing key true_bin lost"
+
+
+# ---------------------------------------------------------------------------
+# Tier 3 -- KillVector v2 + EvidenceField wired into info dict (substrate
+# v2.3 §9). Reported as "observed policy table", not "manifold chart".
+# ---------------------------------------------------------------------------
+
+
+def test_step_info_includes_kill_vector(small_env):
+    """``info["kill_vector"]`` is a dict with at least one component."""
+    env = small_env
+    env.reset(seed=2027)
+    _, _, _, _, info = env.step(0)
+    assert "kill_vector" in info, "missing kill_vector in info"
+    kv = info["kill_vector"]
+    assert isinstance(kv, dict), f"kill_vector must be dict; got {type(kv)}"
+    components = kv.get("components")
+    assert isinstance(components, list) and len(components) >= 1, (
+        f"kill_vector.components must be non-empty list; got {components!r}"
+    )
+    names = [c["falsifier_name"] for c in components]
+    assert "prediction_correct" in names, (
+        f"expected 'prediction_correct' falsifier; got {names}"
+    )
+
+
+def test_step_info_includes_evidence_field(small_env):
+    """``info["evidence_field"]`` carries the 6 axes of EvidenceField."""
+    env = small_env
+    env.reset(seed=2028)
+    _, _, _, _, info = env.step(0)
+    assert "evidence_field" in info, "missing evidence_field in info"
+    ef = info["evidence_field"]
+    assert isinstance(ef, dict), f"evidence_field must be dict; got {type(ef)}"
+    expected_axes = {
+        "distance_to_target",
+        "battery_survival_depth",
+        "verification_depth",
+        "exclusion_distance",
+        "assumption_load",
+        "computational_friction",
+    }
+    missing = expected_axes - set(ef.keys())
+    assert not missing, f"evidence_field missing axes: {missing}"
+
+
+def test_step_info_evidence_field_computational_friction_populated(small_env):
+    """``EvidenceField.computational_friction`` carries the per-step
+    telemetry verbatim."""
+    env = small_env
+    env.reset(seed=2029)
+    _, _, _, _, info = env.step(0)
+    cf = info["evidence_field"]["computational_friction"]
+    assert cf["elapsed_seconds"] is not None
+    assert cf["elapsed_seconds"] > 0
+    assert cf["oracle_calls"] is not None
+    assert cf["oracle_calls"] >= 1
+    assert cf["elapsed_seconds"] == info["elapsed_seconds"]
+    assert cf["oracle_calls"] == info["oracle_calls"]
+
+
+def test_step_info_evidence_field_exclusion_distance_null(small_env):
+    """``EvidenceField.exclusion_distance`` is NULL with an explanatory
+    reason -- anti-fake-topology (no chart+cert pair for cross-domain
+    envs)."""
+    env = small_env
+    env.reset(seed=2030)
+    _, _, _, _, info = env.step(0)
+    ed = info["evidence_field"]["exclusion_distance"]
+    assert ed["value"] is None
+    reason = ed.get("reason_unpopulated") or ""
+    assert reason
+    low = reason.lower()
+    assert ("certificate" in low) or ("chart" in low)
+
+
+def test_step_info_existing_keys_still_present(small_env):
+    """Regression: pre-existing per-env info keys survive Tier 3."""
+    env = small_env
+    env.reset(seed=2031)
+    _, _, _, _, info = env.step(0)
+    for key in (
+        "name", "order", "level", "weight", "shadow_class",
+        "target_index", "true_coefficient", "true_bin",
+        "predicted_bin", "context_k", "hit",
+        "elapsed_seconds", "oracle_calls",
+    ):
+        assert key in info, f"regression: pre-existing key {key} lost"

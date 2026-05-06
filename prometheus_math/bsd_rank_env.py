@@ -42,6 +42,7 @@ from sigma_kernel.bind_eval import BindEvalExtension, CostModel
 
 from . import _bsd_corpus
 from ._bsd_corpus import BSDEntry, DEFAULT_N_AP
+from ._tier3_evidence import build_step_evidence
 
 
 # ---------------------------------------------------------------------------
@@ -371,6 +372,21 @@ class BSDRankEnv:
             "elapsed_seconds": float(elapsed_seconds),
             "oracle_calls": int(oracle_calls),
         }
+        # Tier 3: KillVector v2 + EvidenceField (substrate v2.3 §9).
+        info.update(build_step_evidence(
+            correct=bool(hit),
+            domain="bsd_rank",
+            env_name="bsd_rank_env",
+            elapsed_seconds=float(elapsed_seconds),
+            oracle_calls=int(oracle_calls),
+            region_meta={
+                "env": "bsd_rank_env",
+                "split": self.split,
+                "label": self._current.label,
+                "conductor": int(self._current.conductor),
+            },
+            candidate_parts=(self._current.label, a, true_rank),
+        ))
         return self._obs(), float(reward), terminated, truncated, info
 
     def close(self) -> None:

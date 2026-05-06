@@ -68,6 +68,7 @@ from ._knot_trace_field_corpus import (
     N_CLASSES,
     TRACE_FIELD_CLASSES,
 )
+from ._tier3_evidence import build_step_evidence
 
 
 # ---------------------------------------------------------------------------
@@ -396,6 +397,22 @@ class KnotTraceFieldEnv:
             "elapsed_seconds": float(elapsed_seconds),
             "oracle_calls": int(oracle_calls),
         }
+        # Tier 3: KillVector v2 + EvidenceField (substrate v2.3 §9).
+        info.update(build_step_evidence(
+            correct=bool(hit),
+            domain="knot_trace_field",
+            env_name="knot_trace_field_env",
+            elapsed_seconds=float(elapsed_seconds),
+            oracle_calls=int(oracle_calls),
+            region_meta={
+                "env": "knot_trace_field_env",
+                "split": self.split,
+                "name": self._current.name,
+                "crossing_number": int(self._current.crossing_number),
+                "true_class": int(true_class),
+            },
+            candidate_parts=(self._current.name, a, true_class),
+        ))
         return self._obs(), float(reward), terminated, truncated, info
 
     def close(self) -> None:

@@ -70,6 +70,7 @@ from sigma_kernel.bind_eval import BindEvalExtension, CostModel
 
 from . import _mock_theta_corpus
 from ._mock_theta_corpus import MockThetaEntry
+from ._tier3_evidence import build_step_evidence
 
 
 # ---------------------------------------------------------------------------
@@ -476,6 +477,25 @@ class MockThetaEnv:
             "elapsed_seconds": float(elapsed_seconds),
             "oracle_calls": int(oracle_calls),
         }
+        # Tier 3: KillVector v2 + EvidenceField (substrate v2.3 §9).
+        info.update(build_step_evidence(
+            correct=bool(hit),
+            domain="mock_theta",
+            env_name="mock_theta_env",
+            elapsed_seconds=float(elapsed_seconds),
+            oracle_calls=int(oracle_calls),
+            region_meta={
+                "env": "mock_theta_env",
+                "split": self.split,
+                "name": self._current.name,
+                "order": int(self._current.order),
+                "context_k": int(self._context_k),
+                "true_bin": int(true_bin),
+            },
+            candidate_parts=(
+                self._current.name, self._context_k, a, true_bin,
+            ),
+        ))
         return self._obs(), float(reward), terminated, truncated, info
 
     def close(self) -> None:

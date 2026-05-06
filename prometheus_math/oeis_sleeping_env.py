@@ -51,6 +51,7 @@ from ._oeis_sleeping_corpus import (
     GROWTH_CLASSES,
     growth_class_index,
 )
+from ._tier3_evidence import build_step_evidence
 
 
 # ---------------------------------------------------------------------------
@@ -479,6 +480,28 @@ class OeisSleepingEnv:
             "elapsed_seconds": float(elapsed_seconds),
             "oracle_calls": int(oracle_calls),
         }
+        # Tier 3: KillVector v2 + EvidenceField (substrate v2.3 §9).
+        # ``correct`` = exact-bin hit; near-miss counts as a kill since
+        # the prediction did NOT land in the true bin.
+        info.update(build_step_evidence(
+            correct=bool(hit),
+            domain="oeis_sleeping",
+            env_name="oeis_sleeping_env",
+            elapsed_seconds=float(elapsed_seconds),
+            oracle_calls=int(oracle_calls),
+            region_meta={
+                "env": "oeis_sleeping_env",
+                "split": self.split,
+                "a_number": self._current.a_number,
+                "growth_class": self._current.growth_class,
+                "context_k": int(self._context_k),
+                "true_bin": int(true_bin),
+                "near": bool(near),
+            },
+            candidate_parts=(
+                self._current.a_number, self._context_k, a, true_bin,
+            ),
+        ))
         return self._obs(), float(reward), terminated, truncated, info
 
     def close(self) -> None:

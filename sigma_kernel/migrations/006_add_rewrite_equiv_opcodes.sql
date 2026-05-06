@@ -1,0 +1,69 @@
+-- ===========================================================================
+-- sigma_kernel migration 006 -- REWRITE + EQUIV opcodes (NO-OP MIGRATION)
+-- Apply via:  psql -h <host> -U <user> -d prometheus_fire -f 006_add_rewrite_equiv_opcodes.sql
+-- Owner: Mnemosyne (DBA). Apply ONCE per environment (dev, staging, prod).
+-- ===========================================================================
+--
+-- Status: NO-OP. This migration is intentionally empty of DDL.
+--
+-- Purpose:
+--   Document the substrate decision to ship REWRITE + EQUIV opcodes
+--   (substrate v2.3 §6.4 + the 2026-05-06 CoC feasibility pass) WITHOUT
+--   introducing a new table or column. Both opcodes mint regular Symbols
+--   into the existing `sigma.symbols` table. Their def_blob shapes are
+--   the only thing that distinguishes them, and that lives in the kernel
+--   (`sigma_kernel/sigma_kernel.py::SigmaKernel.REWRITE` /
+--    `SigmaKernel.EQUIV`), not in DDL.
+--
+-- Rationale for the no-op:
+--   - REWRITE and EQUIV are content-addressed records (hash + provenance
+--     + def_blob), exactly the same shape as ERRATA-promoted Symbols.
+--     The schema requirements they impose are identical to the ones
+--     migration 001 already satisfies.
+--   - Adding a separate `rewrites` or `equivalences` table would split
+--     the substrate's content-addressed lookup across multiple tables,
+--     breaking the invariant `RESOLVE(name, version) -> Symbol` regardless
+--     of which opcode minted the Symbol. The existing `idx_symbols_def_hash`
+--     index already supports the TRACE walk through REWRITE/EQUIV provenance
+--     hashes (per the kernel's `_scrape_hashes_from_blob` pattern).
+--   - The CoC feasibility pass (§3.10 + §3.11) confirms REWRITE/EQUIV are
+--     "the textbook case for clean type-theoretic encoding" — they encode
+--     onto definitional/propositional equality + Sigma-typed setoid
+--     witnesses respectively. Neither requires substrate-side state
+--     beyond what an existing Symbol already carries (def_blob, provenance,
+--     tier). The decision to NOT add a table mirrors that finding.
+--
+-- Schema impact: NONE.
+--   - No new tables.
+--   - No new columns on existing tables.
+--   - No new indexes (the existing `idx_symbols_def_hash` already supports
+--     TRACE walks from REWRITE/EQUIV records to their endpoint Symbols).
+--   - No new permissions (REWRITE/EQUIV write to `sigma.symbols`, which
+--     already has the necessary GRANTs from migration 001).
+--
+-- Idempotency:
+--   Trivially idempotent (no DDL to re-apply). Running this file twice
+--   has the same effect as running it zero times.
+--
+-- Symbol naming convention used by the kernel (FYI for ad-hoc queries):
+--   - REWRITE Symbols: `REWRITE_{src_name}_to_{tgt_name}`
+--   - EQUIV   Symbols: `EQUIV_{a_name}_eq_{b_name}`
+--
+--   Discoverable via:
+--     SELECT name, version, substr(def_hash, 1, 12), tier
+--     FROM sigma.symbols
+--     WHERE name LIKE 'REWRITE\_%' ESCAPE '\'
+--        OR name LIKE 'EQUIV\_%'   ESCAPE '\';
+--
+-- Future migration 007 (planned, NOT in this file):
+--   The v2 proposal §6.4 sketched migration 007 as carrying the EvidenceField
+--   + ExclusionCertificate + KillVector v2 schema changes. THIS migration
+--   (006) only documents the REWRITE/EQUIV-as-Symbols decision; the
+--   EvidenceField etc. work lives downstream and is tracked separately.
+-- ===========================================================================
+
+-- (deliberately no DDL)
+
+-- ===========================================================================
+-- End of migration 006
+-- ===========================================================================

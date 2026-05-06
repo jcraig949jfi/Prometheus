@@ -356,9 +356,278 @@ def test_loader_load_rank_and_triplet_triples_empty_for_stub(emission_on_disk: P
 # ---------------------------------------------------------------------------
 
 
-def test_emit_from_substrate_raises_not_implemented():
-    """Real triangulated emission ships at Day 13. Until then, stub
-    must NOT silently accept calls — Ergon would train on stub data
-    thinking it is real."""
-    with pytest.raises(NotImplementedError, match="Day 13"):
-        emit_from_substrate()
+def test_emit_from_substrate_raises_on_empty_records():
+    """As of Day-13 ship, emit_from_substrate is real (no longer
+    NotImplementedError). It DOES still reject empty input — calling
+    with no records is a programming error, not a use case."""
+    with pytest.raises(ValueError, match="typed_records cannot be empty"):
+        emit_from_substrate([], region_key="r", label_version="v", domain="lehmer")
+
+
+# ---------------------------------------------------------------------------
+# emit_from_substrate (real, post-Day-13) — full-emission tests
+# ---------------------------------------------------------------------------
+
+
+def _typed_records_lehmer_promoted_and_rejected(n_promoted: int = 4, n_rejected: int = 3, n_candidates: int = 5):
+    """Synthesise typed records with a mix of label_strengths so triple
+    generation has positives + negatives + near-misses to draw from."""
+    base_ts = 1714500000.0
+    records = []
+    region = "lehmer:deg14:pm5:palindromic"
+    for i in range(n_promoted):
+        records.append({
+            "poly_coefficients": [1, 0, -1, 0, 1, 0, -1, 0, 1, 0, -1, 0, 1, 0, 1 + i],
+            "mahler_measure": 1.176 + i * 1e-4,
+            "kill_vector": {"components": [{"falsifier_name": "out_of_band", "triggered": False, "margin": 0.001}]},
+            "evidence_field": {"distance_to_target": {"value": 0.001, "unit": "absolute"}},
+            "method_spec": {"engine": "mpmath", "strategy": "factor_first", "independence_class": "mpmath_polynomial_factorization"},
+            "triangulation_path": "path_a_high_precision_mpmath_dps60",
+            "exclusion_certificate_ref": "ec_lehmer_deg14_pm5",
+            "operator_class": f"DiscoveryEnv@degree=14/seed={i}",
+            "timestamp": base_ts + i,
+            "label_source": "lehmer_brute_force_path_b",
+            "label_strength": "promoted",
+            "region_key": region,
+        })
+    for i in range(n_rejected):
+        records.append({
+            "poly_coefficients": [1, 0, -1, 0, 1, 0, -1, 0, 1, 0, -1, 0, 1, 0, -1 - i],
+            "mahler_measure": 2.0 + i * 0.1,
+            "kill_vector": {"components": [{"falsifier_name": "out_of_band", "triggered": True}]},
+            "method_spec": {"engine": "mpmath", "strategy": "direct", "independence_class": "mpmath_polynomial_factorization"},
+            "triangulation_path": "untriangulated",
+            "operator_class": f"random@seed={i}",
+            "timestamp": base_ts + 100 + i,
+            "label_source": "stub:legacy_ledger",
+            "label_strength": "rejected",
+            "region_key": region,
+        })
+    for i in range(n_candidates):
+        records.append({
+            "poly_coefficients": [1, 0, -1, 0, 1, 0, -1, 0, 1, 0, -1, 0, 1, 1 + i, 1],
+            "mahler_measure": 1.18 + i * 1e-3,
+            "kill_vector": {"components": [{"falsifier_name": "out_of_band", "triggered": False, "margin": 0.005}]},
+            "method_spec": {"engine": "sympy", "strategy": "symbolic", "independence_class": "sympy_symbolic_factorization"},
+            "triangulation_path": "untriangulated",
+            "operator_class": f"DiscoveryEnv@degree=14/seed={i+10}",
+            "timestamp": base_ts + 50 + i,
+            "label_source": "lehmer_brute_force_path_b",
+            "label_strength": "candidate",
+            "region_key": region,
+        })
+    return records
+
+
+def test_emit_from_substrate_schema_version_is_v23_not_stub():
+    records = _typed_records_lehmer_promoted_and_rejected(n_promoted=2, n_rejected=2, n_candidates=2)
+    em = emit_from_substrate(
+        records, region_key="lehmer:deg14:pm5:palindromic",
+        label_version="discovery_pipeline:v2.3", domain="lehmer",
+    )
+    assert em.schema_version == "v2.3"
+    assert "stub" not in em.schema_version
+
+
+def test_emit_from_substrate_post_view_carries_method_spec_and_triangulation():
+    """Post-view must carry the upstream P3/P6/P4 references."""
+    records = _typed_records_lehmer_promoted_and_rejected(n_promoted=1, n_rejected=1, n_candidates=1)
+    em = emit_from_substrate(
+        records, region_key="lehmer:deg14:pm5:palindromic",
+        label_version="v2.3", domain="lehmer",
+    )
+    promoted_post = next(p for p in em.post_views if p.method_spec and p.method_spec.get("strategy") == "factor_first")
+    assert promoted_post.method_spec["engine"] == "mpmath"
+    assert promoted_post.triangulation_path == "path_a_high_precision_mpmath_dps60"
+    assert promoted_post.exclusion_certificate_ref == "ec_lehmer_deg14_pm5"
+
+
+def test_emit_from_substrate_generates_synthetic_null_pack():
+    records = _typed_records_lehmer_promoted_and_rejected(n_promoted=2, n_rejected=2, n_candidates=2)
+    em = emit_from_substrate(
+        records, region_key="lehmer:deg14:pm5:palindromic",
+        label_version="v2.3", domain="lehmer",
+        n_synthetic_null_per_record=2,
+    )
+    # 6 real + 12 synthetic null
+    assert len(em.pre_views) == 6 + 12
+    assert len(em.splits.synthetic_null) == 12
+    # Synthetic-null provenance must carry the family flag
+    null_ids = set(em.splits.synthetic_null)
+    null_provs = [p for p in em.provenance_views if p.object_id in null_ids]
+    assert all(p.synthetic_null_family == "label_shuffle_v1" for p in null_provs)
+
+
+def test_emit_from_substrate_synthetic_null_inherits_object_features():
+    """Synthetic-null records share the source object's features (the
+    shuffle is on LABEL only, not on features). This is the discipline
+    that lets the Learner detect 'is the model learning labels or
+    features' via held-out comparison."""
+    records = _typed_records_lehmer_promoted_and_rejected(n_promoted=1, n_rejected=1, n_candidates=1)
+    em = emit_from_substrate(
+        records, region_key="lehmer:deg14:pm5:palindromic",
+        label_version="v2.3", domain="lehmer",
+        n_synthetic_null_per_record=1,
+    )
+    null_ids = set(em.splits.synthetic_null)
+    null_pre_views = [v for v in em.pre_views if v.object_id in null_ids]
+    real_pre_views = [v for v in em.pre_views if v.object_id not in null_ids]
+    # Each null view's object features should match SOME real view's features
+    for null_v in null_pre_views:
+        assert any(
+            null_v.object.canonical_form == real_v.object.canonical_form
+            for real_v in real_pre_views
+        )
+
+
+def test_emit_from_substrate_generates_triples_anti_trivial_separability():
+    """Triples must be drawn from same region (anti-trivial-separability per Gemini).
+    With promoted + rejected + candidates all in same region, we should get triples."""
+    records = _typed_records_lehmer_promoted_and_rejected(n_promoted=3, n_rejected=3, n_candidates=3)
+    em = emit_from_substrate(
+        records, region_key="lehmer:deg14:pm5:palindromic",
+        label_version="v2.3", domain="lehmer",
+        n_synthetic_null_per_record=0,
+    )
+    assert len(em.triplet_triples) > 0
+    # Triples reference object_ids; all must exist in pre_views
+    pre_ids = {v.object_id for v in em.pre_views}
+    for t in em.triplet_triples:
+        assert t.anchor_id in pre_ids
+        assert t.positive_id in pre_ids
+        assert t.hard_negative_id in pre_ids
+
+
+def test_emit_from_substrate_no_triples_when_region_too_small():
+    """If there are fewer than 3 records in a region, no triples generated.
+    Anti-trivial-separability discipline."""
+    records = _typed_records_lehmer_promoted_and_rejected(n_promoted=1, n_rejected=1, n_candidates=0)
+    em = emit_from_substrate(
+        records, region_key="lehmer:deg14:pm5:palindromic",
+        label_version="v2.3", domain="lehmer",
+        n_synthetic_null_per_record=0,
+    )
+    assert len(em.triplet_triples) == 0
+
+
+def test_emit_from_substrate_canonical_splits_assign_records():
+    records = _typed_records_lehmer_promoted_and_rejected(n_promoted=10, n_rejected=10, n_candidates=10)
+    em = emit_from_substrate(
+        records, region_key="lehmer:deg14:pm5:palindromic",
+        label_version="v2.3", domain="lehmer",
+        n_synthetic_null_per_record=0,
+    )
+    # All 30 records should appear in some split (no record orphaned)
+    in_splits = (
+        set(em.splits.train) | set(em.splits.validation_same_region)
+        | set(em.splits.validation_heldout_region) | set(em.splits.validation_heldout_method)
+        | set(em.splits.validation_later_time)
+    )
+    real_ids = {v.object_id for v in em.pre_views}
+    assert real_ids == in_splits
+
+
+def test_emit_from_substrate_val_later_time_is_top_10_percent():
+    """Temporal split: latest ~10% of records by timestamp go to val_later_time."""
+    records = _typed_records_lehmer_promoted_and_rejected(n_promoted=10, n_rejected=10, n_candidates=10)
+    em = emit_from_substrate(
+        records, region_key="lehmer:deg14:pm5:palindromic",
+        label_version="v2.3", domain="lehmer",
+        n_synthetic_null_per_record=0,
+    )
+    # 30 real records; later_time ~= top 10% = 3 records
+    assert 1 <= len(em.splits.validation_later_time) <= 5
+
+
+def test_emit_from_substrate_holdout_method_split_works():
+    """When holdout_method_independence_class is set, records using that
+    method's IC are routed to val_heldout_method."""
+    records = _typed_records_lehmer_promoted_and_rejected(n_promoted=5, n_rejected=5, n_candidates=5)
+    em = emit_from_substrate(
+        records, region_key="lehmer:deg14:pm5:palindromic",
+        label_version="v2.3", domain="lehmer",
+        n_synthetic_null_per_record=0,
+        holdout_method_independence_class="sympy_symbolic_factorization",  # candidates use this
+    )
+    assert len(em.splits.validation_heldout_method) > 0
+
+
+def test_emit_from_substrate_deterministic_under_split_seed():
+    """Same seed + same records → same emission (modulo timestamps)."""
+    records = _typed_records_lehmer_promoted_and_rejected(n_promoted=3, n_rejected=3, n_candidates=3)
+    em1 = emit_from_substrate(
+        records, region_key="lehmer:deg14:pm5:palindromic",
+        label_version="v2.3", domain="lehmer",
+        split_seed=42, n_synthetic_null_per_record=0,
+    )
+    em2 = emit_from_substrate(
+        records, region_key="lehmer:deg14:pm5:palindromic",
+        label_version="v2.3", domain="lehmer",
+        split_seed=42, n_synthetic_null_per_record=0,
+    )
+    assert em1.splits.train == em2.splits.train
+    assert em1.splits.validation_same_region == em2.splits.validation_same_region
+
+
+def test_emit_from_substrate_different_seeds_yield_different_splits():
+    records = _typed_records_lehmer_promoted_and_rejected(n_promoted=10, n_rejected=10, n_candidates=10)
+    em1 = emit_from_substrate(
+        records, region_key="lehmer:deg14:pm5:palindromic",
+        label_version="v2.3", domain="lehmer",
+        split_seed=0, n_synthetic_null_per_record=0,
+    )
+    em2 = emit_from_substrate(
+        records, region_key="lehmer:deg14:pm5:palindromic",
+        label_version="v2.3", domain="lehmer",
+        split_seed=99, n_synthetic_null_per_record=0,
+    )
+    # Splits must differ across seeds (very high probability with 30 records)
+    assert em1.splits.train != em2.splits.train
+
+
+def test_emit_from_substrate_writes_to_disk(tmp_path: Path):
+    records = _typed_records_lehmer_promoted_and_rejected(n_promoted=2, n_rejected=2, n_candidates=2)
+    em = emit_from_substrate(
+        records, region_key="lehmer:deg14:pm5:palindromic",
+        label_version="v2.3", domain="lehmer",
+        output_root=tmp_path, n_synthetic_null_per_record=1,
+    )
+    root = tmp_path / em.emission_id
+    assert (root / PRE_VIEW_DIRNAME).is_dir()
+    assert (root / POST_VIEW_DIRNAME).is_dir()
+    assert (root / PROVENANCE_VIEW_DIRNAME).is_dir()
+    # Loader can round-trip the disk emission. n_synthetic_null_per_record=1
+    # means ONE null PER RECORD → 6 real records produce 6 nulls = 12 total.
+    loader = LearnerCorpusLoader(root)
+    pre_views = list(loader.load())
+    assert len(pre_views) == 6 + 6  # 6 real + 6 synthetic null
+    splits = loader.load_splits()
+    assert len(splits.synthetic_null) == 6
+
+
+def test_emit_from_substrate_provisional_chart_id_for_unregistered_domain():
+    """Domains without registered CoordinateChart fall back to provisional:<domain>."""
+    records = _typed_records_lehmer_promoted_and_rejected(n_promoted=1, n_rejected=1, n_candidates=1)
+    # Strip the per-record chart_id so the function uses its default
+    for r in records:
+        r.pop("coordinate_chart_id", None)
+    em = emit_from_substrate(
+        records, region_key="lehmer:deg14:pm5:palindromic",
+        label_version="v2.3", domain="lehmer",
+        # no coordinate_chart_id passed → provisional:lehmer
+    )
+    pre = em.pre_views[0]
+    assert pre.object.coordinate_chart_id == "provisional:lehmer"
+
+
+def test_emit_from_substrate_explicit_chart_id_overrides_provisional():
+    records = _typed_records_lehmer_promoted_and_rejected(n_promoted=1, n_rejected=1, n_candidates=1)
+    for r in records:
+        r.pop("coordinate_chart_id", None)
+    em = emit_from_substrate(
+        records, region_key="lehmer:deg14:pm5:palindromic",
+        label_version="v2.3", domain="lehmer",
+        coordinate_chart_id="lehmer:deg14:pm5:palindromic",  # registered chart_id
+    )
+    pre = em.pre_views[0]
+    assert pre.object.coordinate_chart_id == "lehmer:deg14:pm5:palindromic"

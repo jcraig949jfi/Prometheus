@@ -79,7 +79,15 @@ import json
 import math
 import time
 from dataclasses import asdict, dataclass, field
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, FrozenSet, List, Optional, Tuple
+
+from prometheus_math.stability_adapters import (
+    FalsifierType,
+    KTier,
+    StabilityResult,
+    compute_stability as _compute_stability,
+    falsifier_type_for_margin_unit,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -191,6 +199,99 @@ CONVERGENCE_VALUES: Tuple[str, ...] = (
 DEFAULT_EXPECTED_MIN_DPS = 60
 
 
+# ---------------------------------------------------------------------------
+# Component-name registry — KillVector v2 (substrate v2.3 §7)
+# ---------------------------------------------------------------------------
+#
+# Twenty canonical component names: 12 legacy + 8 new from Aporia
+# Study 02 (mathematical-failure-mode literature). Order is the
+# canonical append-order — LEGACY_COMPONENT_NAMES come first (their
+# order is preserved exactly so content-addressed hashes downstream
+# don't break) and NEW_COMPONENT_NAMES are *appended*, never inserted
+# in the middle.
+#
+# Per substrate v2.3 §7.1: all 20 components are independent boolean
+# flags with per-component margin. Co-occurrence is allowed and
+# meaningful. Mutual information across components is reported as
+# substrate-level metadata (see KillVector.compute_pairwise_mi). When
+# 3+ components co-occur on a single Claim, the auto-caveat
+# ``coalescing_failure_signature`` fires.
+
+
+LEGACY_COMPONENT_NAMES: Tuple[str, ...] = (
+    "out_of_band",
+    "reciprocity",
+    "irreducibility",
+    "catalog:Mossinghoff",
+    "catalog:lehmer_literature",
+    "catalog:LMFDB",
+    "catalog:OEIS",
+    "catalog:arXiv",
+    "F1_permutation_null",
+    "F6_base_rate",
+    "F9_simpler_explanation",
+    "F11_cross_validation",
+)
+
+
+# +8 new components per substrate v2.3 §7. Each maps to a
+# mathematical-failure-mode literature anchor (BGS '75, RR '94,
+# Hasse / Brauer-Manin, AM/Eurisko 1984, etc.).
+NEW_COMPONENT_NAMES: Tuple[str, ...] = (
+    "relativizes",                      # Baker-Gill-Solovay 1975
+    "naturalizes",                      # Razborov-Rudich 1994
+    "local_global_gap",                 # Hasse / Brauer-Manin obstruction
+    "requires_unproven_conjecture",     # RH / GRH / BSD / ABC / ...
+    "asymptotic_only",                  # vacuous for small inputs
+    "small_case_artifact",              # works small N, fails at scale
+    "asymmetric_effort",                # forward / converse asymmetry
+    "interpretive_slack",               # AM/Eurisko 1984
+)
+
+
+# Full canonical name list — legacy first, then appended new components.
+ALL_COMPONENT_NAMES: Tuple[str, ...] = LEGACY_COMPONENT_NAMES + NEW_COMPONENT_NAMES
+
+
+# Pre/post-falsification classification per substrate v2.3 §7 + Q-E5.
+# Two of the +8 are detectable from the claim text BEFORE any
+# falsifier runs (dependency analysis on conjecture-citations;
+# structural parsing for "for sufficiently large N"). The other six
+# require the falsifier to have actually fired and produced an
+# observed-vs-expected gap, which is post-falsification only.
+PRE_FALSIFICATION_DERIVABLE: FrozenSet[str] = frozenset({
+    "requires_unproven_conjecture",
+    "asymptotic_only",
+})
+
+POST_FALSIFICATION_ONLY: FrozenSet[str] = frozenset({
+    "relativizes",
+    "naturalizes",
+    "local_global_gap",
+    "small_case_artifact",
+    "asymmetric_effort",
+    "interpretive_slack",
+})
+
+
+# Threshold for the coalescing-failure-signature auto-caveat per
+# substrate v2.3 §7.1: 3+ co-occurring triggered components on a
+# single Claim flag the Claim for human review.
+COALESCING_FAILURE_THRESHOLD: int = 3
+
+
+def component_is_pre_falsification_derivable(name: str) -> bool:
+    """True iff ``name`` is one of the +8 components that can be
+    derived from the claim text before any falsifier fires.
+
+    Legacy 12 components (out_of_band, F1, F6, F9, F11, ...) are NOT
+    pre-falsification-derivable (they encode falsifier outcomes by
+    construction). This helper returns False for any name not in
+    PRE_FALSIFICATION_DERIVABLE.
+    """
+    return name in PRE_FALSIFICATION_DERIVABLE
+
+
 @dataclass(frozen=True)
 class KillComponent:
     """One coordinate of the kill vector.
@@ -253,8 +354,18 @@ class KillComponent:
         ``CONVERGENCE_VALUES``. Default ``"n/a"`` for backwards compat.
     stability : float | None
         Bootstrap- or perturbation-based stability score in [0, 1] (1.0
-        = perfectly stable). None when not computed. Reserved field —
-        the cheap-approximation algorithm is open (see PRECISION_METADATA_SPEC).
+        = perfectly stable). None when not computed. Legacy scalar —
+        kept for backwards compatibility. v2.3 §6.2 introduces
+        ``stability_pass`` as the structured replacement; when the
+        adapter populates ``stability_pass``, ``stability`` is mirrored
+        from ``stability_pass.stability_mean`` so legacy readers
+        continue to work.
+    stability_pass : StabilityResult | None
+        Structured stability output from the v2.3 §6.2 P2 adapters.
+        None when not computed. Carries ``stability_mean``,
+        ``stability_variance``, ``perturbation_family``,
+        ``worst_case_flip_rate``, ``k_used``, ``falsifier_type``.
+        Populated via ``with_computed_stability``.
     """
 
     falsifier_name: str
@@ -266,6 +377,7 @@ class KillComponent:
     method: str = "unknown"
     convergence_status: str = "n/a"
     stability: Optional[float] = None
+    stability_pass: Optional[StabilityResult] = None
 
     def __post_init__(self) -> None:  # type: ignore[override]
         # Frozen dataclass — bypass setattr for sanity-check side-effects.
@@ -321,12 +433,24 @@ class KillComponent:
             "stability": (
                 None if self.stability is None else float(self.stability)
             ),
+            "stability_pass": (
+                None if self.stability_pass is None
+                else self.stability_pass.to_dict()
+            ),
         }
 
     @classmethod
     def from_dict(cls, d: Dict[str, Any]) -> "KillComponent":
         # Backwards-compat: legacy dicts (pre-2026-05-04) lack the four
         # precision fields. Defaults reproduce pre-change behavior.
+        sp_raw = d.get("stability_pass")
+        sp_obj: Optional[StabilityResult]
+        if sp_raw is None:
+            sp_obj = None
+        elif isinstance(sp_raw, StabilityResult):
+            sp_obj = sp_raw
+        else:
+            sp_obj = StabilityResult.from_dict(sp_raw)
         return cls(
             falsifier_name=str(d["falsifier_name"]),
             triggered=bool(d.get("triggered", False)),
@@ -345,6 +469,139 @@ class KillComponent:
                 None if d.get("stability") is None
                 else float(d["stability"])
             ),
+            stability_pass=sp_obj,
+        )
+
+    # ------------------------------------------------------------------
+    # Stability adapters (substrate v2.3 §6.2 P2)
+    # ------------------------------------------------------------------
+
+    def with_computed_stability(
+        self,
+        *,
+        falsifier_type: Optional[FalsifierType] = None,
+        k: int = KTier.DIAGNOSTIC,
+        falsifier_callable: Optional[Callable] = None,
+        **adapter_kwargs: Any,
+    ) -> "KillComponent":
+        """Return a NEW KillComponent with ``stability_pass`` populated
+        via the appropriate adapter, selected by either ``falsifier_type``
+        (explicit) or ``margin_unit`` → FalsifierType mapping (default).
+
+        Parameters
+        ----------
+        falsifier_type : FalsifierType, optional
+            Explicit override. If None, derived from ``margin_unit`` via
+            ``falsifier_type_for_margin_unit``.
+        k : int or KTier
+            Sample budget. Default DIAGNOSTIC (=10).
+        falsifier_callable : Callable, optional
+            Wired falsifier; passed to the adapter as the relevant
+            keyword argument (numeric_margin → ``falsifier_callable``,
+            catalog_lookup → ``lookup_callable``, graph_metric →
+            ``metric_callable``, sequence_feature → ``feature_callable``,
+            model_policy → ``policy_callable`` (positional), etc.). If
+            None, the adapter returns a NaN-filled StabilityResult
+            (legacy-compat).
+        **adapter_kwargs
+            Forwarded to the adapter for adapter-specific extras (e.g.
+            ``catalog_refs``, ``graph_data``, ``perturbations``).
+
+        Returns
+        -------
+        KillComponent
+            New instance with ``stability_pass`` set; ``stability``
+            scalar mirrored from ``stability_pass.stability_mean``
+            (NaN → None) for backwards-compat readers.
+        """
+        ft = falsifier_type or falsifier_type_for_margin_unit(self.margin_unit)
+        if ft is None:
+            # No type derivable; produce an empty StabilityResult.
+            sp = StabilityResult.empty(
+                falsifier_type="unknown",
+                k=int(k.value if isinstance(k, KTier) else k),
+                perturbation_family="no_falsifier_type",
+            )
+        else:
+            # Route the falsifier_callable into the adapter's expected
+            # kwarg name. NUMERIC_MARGIN takes positional (margin,
+            # precision_dps); the others vary.
+            if ft == FalsifierType.NUMERIC_MARGIN:
+                sp = _compute_stability(
+                    ft,
+                    self.margin if self.margin is not None else 0.0,
+                    self.precision_dps,
+                    k=k,
+                    falsifier_callable=falsifier_callable,
+                    **adapter_kwargs,
+                )
+            elif ft == FalsifierType.CATALOG_LOOKUP:
+                # adapter_kwargs is expected to carry ``query``,
+                # ``catalog_refs``, ``lookup_callable``. Allow legacy
+                # ``falsifier_callable`` to feed lookup_callable.
+                lookup = adapter_kwargs.pop(
+                    "lookup_callable", falsifier_callable
+                )
+                query = adapter_kwargs.pop("query", self.margin)
+                catalog_refs = adapter_kwargs.pop("catalog_refs", [])
+                sp = _compute_stability(
+                    ft, query, catalog_refs, k=k,
+                    lookup_callable=lookup, **adapter_kwargs,
+                )
+            elif ft == FalsifierType.SYMBOLIC_FACTORIZATION:
+                expr = adapter_kwargs.pop("expr_canonical_form", self.metadata)
+                sp = _compute_stability(
+                    ft, expr, k=k,
+                    falsifier_callable=falsifier_callable,
+                    **adapter_kwargs,
+                )
+            elif ft == FalsifierType.GRAPH_METRIC:
+                metric = adapter_kwargs.pop(
+                    "metric_callable", falsifier_callable
+                )
+                graph = adapter_kwargs.pop("graph_data", self.metadata)
+                sp = _compute_stability(
+                    ft, graph, k=k,
+                    metric_callable=metric, **adapter_kwargs,
+                )
+            elif ft == FalsifierType.SEQUENCE_FEATURE:
+                feat = adapter_kwargs.pop(
+                    "feature_callable", falsifier_callable
+                )
+                seq = adapter_kwargs.pop("sequence", self.metadata)
+                sp = _compute_stability(
+                    ft, seq, k=k,
+                    feature_callable=feat, **adapter_kwargs,
+                )
+            elif ft == FalsifierType.MODEL_POLICY:
+                policy = adapter_kwargs.pop(
+                    "policy_callable", falsifier_callable
+                )
+                inp = adapter_kwargs.pop("input_data", self.metadata)
+                sp = _compute_stability(
+                    ft, policy, inp, k=k, **adapter_kwargs,
+                )
+            else:
+                sp = _compute_stability(ft, k=k, **adapter_kwargs)
+
+        # Mirror .stability_mean → legacy .stability scalar.
+        scalar: Optional[float]
+        if math.isnan(sp.stability_mean):
+            scalar = None
+        else:
+            scalar = float(sp.stability_mean)
+
+        return KillComponent(
+            falsifier_name=self.falsifier_name,
+            triggered=self.triggered,
+            margin=self.margin,
+            margin_unit=self.margin_unit,
+            metadata=dict(self.metadata or {}),
+            precision_dps=self.precision_dps,
+            method=self.method,
+            convergence_status=self.convergence_status,
+            stability=scalar,
+            stability_pass=sp,
         )
 
 
@@ -553,6 +810,161 @@ class KillVector:
         # some unrecorded — neither "all converged" (we don't know about
         # the n/a ones) nor a failure.
         return "mixed_unrecorded"
+
+    # ------------------------------------------------------------------
+    # Co-occurrence / coalescing-failure-signature (substrate v2.3 §7.1)
+    # ------------------------------------------------------------------
+
+    def triggered_component_names(self) -> Tuple[str, ...]:
+        """Sorted tuple of names of all triggered components — the
+        component-set used for co-occurrence analysis."""
+        return tuple(sorted({c.falsifier_name for c in self.components if c.triggered}))
+
+    def coalescing_failure_signature_caveat(
+        self,
+        threshold: int = COALESCING_FAILURE_THRESHOLD,
+    ) -> Optional[str]:
+        """Return the ``"coalescing_failure_signature"`` caveat string
+        if 3+ components are triggered simultaneously per substrate
+        v2.3 §7.1; None otherwise.
+
+        Co-occurrence per the spec is "same KillVector": a single
+        Claim's KillVector carrying 3+ triggered components on
+        independent flags fires the auto-caveat for human review.
+        Two co-occurring is allowed without flagging (still meaningful
+        for MI but not actionable).
+
+        ``threshold`` is exposed so callers can tune for diagnostic
+        sensitivity studies; default is the v2.3 §7.1 commitment of 3.
+        """
+        if self.triggered_count >= threshold:
+            return "coalescing_failure_signature"
+        return None
+
+    @staticmethod
+    def compute_pairwise_mi(
+        other_vectors: List["KillVector"],
+        *,
+        component_names: Optional[Tuple[str, ...]] = None,
+        min_marginal: float = 0.0,
+    ) -> Dict[Tuple[str, str], float]:
+        """Pairwise mutual information across components.
+
+        Computes per-pair MI between the boolean ``triggered`` flags of
+        each (component_a, component_b) pair across the corpus
+        ``other_vectors``. The estimator uses the standard 2x2 joint
+        histogram::
+
+            I(A; B) = Σ_{a,b} p(a,b) log2[ p(a,b) / (p(a) p(b)) ]
+
+        with Laplace smoothing (+1 in each cell) so singletons don't
+        produce log(0). Returns a sparse dict keyed by sorted
+        ``(name_a, name_b)`` tuples (a < b) so the caller doesn't see
+        duplicates.
+
+        Components whose marginal probability is exactly 0 or 1
+        across the corpus contribute 0 MI by construction; we skip
+        them when ``min_marginal > 0`` to reduce noise from singleton
+        triggers (set ``min_marginal=1/N`` for an N-vector corpus to
+        skip components that fired only once).
+
+        Parameters
+        ----------
+        other_vectors : list[KillVector]
+            Corpus over which MI is estimated. SHOULD include this
+            vector if it's part of the corpus (the helper does not
+            implicitly include ``self``).
+        component_names : tuple[str, ...], optional
+            Restrict to these components. Default: all 20 canonical
+            names from ``ALL_COMPONENT_NAMES``.
+        min_marginal : float
+            Skip components with empirical marginal P(triggered) <=
+            min_marginal or >= 1 - min_marginal. 0 disables filtering.
+
+        Returns
+        -------
+        dict[tuple[str, str], float]
+            Sparse dict: (a, b) → I(A; B) in bits. Keys sorted (a < b).
+            Empty dict if fewer than 2 KillVectors supplied.
+        """
+        if not other_vectors or len(other_vectors) < 2:
+            return {}
+
+        names: Tuple[str, ...]
+        if component_names is None:
+            names = ALL_COMPONENT_NAMES
+        else:
+            names = tuple(component_names)
+
+        # Build name → list[bool] across the corpus.
+        N = len(other_vectors)
+        flags: Dict[str, List[int]] = {n: [0] * N for n in names}
+        for i, kv in enumerate(other_vectors):
+            present_triggers = {
+                c.falsifier_name for c in kv.components if c.triggered
+            }
+            for n in names:
+                flags[n][i] = 1 if n in present_triggers else 0
+
+        # Compute per-name marginal; drop "constant" components.
+        marginals: Dict[str, float] = {}
+        active: List[str] = []
+        for n in names:
+            p = sum(flags[n]) / N
+            marginals[n] = p
+            if min_marginal <= 0:
+                # Still skip strictly constant series (MI = 0 trivially).
+                if 0 < p < 1:
+                    active.append(n)
+            else:
+                if min_marginal < p < (1.0 - min_marginal):
+                    active.append(n)
+
+        out: Dict[Tuple[str, str], float] = {}
+        for i in range(len(active)):
+            a = active[i]
+            for j in range(i + 1, len(active)):
+                b = active[j]
+                # 2x2 joint count with Laplace smoothing.
+                n00 = n01 = n10 = n11 = 0
+                fa, fb = flags[a], flags[b]
+                for k in range(N):
+                    if fa[k] == 0 and fb[k] == 0:
+                        n00 += 1
+                    elif fa[k] == 0 and fb[k] == 1:
+                        n01 += 1
+                    elif fa[k] == 1 and fb[k] == 0:
+                        n10 += 1
+                    else:
+                        n11 += 1
+                # Laplace +1; total is N+4.
+                total = float(N + 4)
+                p00 = (n00 + 1) / total
+                p01 = (n01 + 1) / total
+                p10 = (n10 + 1) / total
+                p11 = (n11 + 1) / total
+                pa0 = p00 + p01
+                pa1 = p10 + p11
+                pb0 = p00 + p10
+                pb1 = p01 + p11
+                mi = 0.0
+                for pjoint, pma, pmb in (
+                    (p00, pa0, pb0),
+                    (p01, pa0, pb1),
+                    (p10, pa1, pb0),
+                    (p11, pa1, pb1),
+                ):
+                    denom = pma * pmb
+                    if denom > 0 and pjoint > 0:
+                        mi += pjoint * math.log2(pjoint / denom)
+                # Numerical floor: tiny negative MI from float math →
+                # clamp to 0 (MI is non-negative analytically).
+                if mi < 0.0 and mi > -1e-12:
+                    mi = 0.0
+                # Sort key for determinism.
+                key = (a, b) if a < b else (b, a)
+                out[key] = float(mi)
+        return out
 
     # ------------------------------------------------------------------
     # Serialisation
@@ -1276,10 +1688,21 @@ __all__ = [
     "METHOD_VALUES",
     "CONVERGENCE_VALUES",
     "DEFAULT_EXPECTED_MIN_DPS",
+    "LEGACY_COMPONENT_NAMES",
+    "NEW_COMPONENT_NAMES",
+    "ALL_COMPONENT_NAMES",
+    "PRE_FALSIFICATION_DERIVABLE",
+    "POST_FALSIFICATION_ONLY",
+    "COALESCING_FAILURE_THRESHOLD",
+    "component_is_pre_falsification_derivable",
     "kill_vector_from_pipeline_output",
     "kill_vector_from_legacy",
     "aggregate_by_operator",
     "backfill_precision_from_legacy",
     "precision_caveats_for_component",
     "precision_caveats_for_vector",
+    # v2.3 stability adapter re-exports
+    "FalsifierType",
+    "KTier",
+    "StabilityResult",
 ]

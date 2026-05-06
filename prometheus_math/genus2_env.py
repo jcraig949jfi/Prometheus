@@ -46,6 +46,7 @@ from ._genus2_corpus import (
     Genus2Entry,
     N_RANK_CLASSES,
 )
+from ._tier3_evidence import build_step_evidence
 
 
 # ---------------------------------------------------------------------------
@@ -370,6 +371,23 @@ class Genus2Env:
             "elapsed_seconds": float(elapsed_seconds),
             "oracle_calls": int(oracle_calls),
         }
+        # Tier 3: KillVector v2 + EvidenceField (substrate v2.3 §9).
+        info.update(build_step_evidence(
+            correct=bool(hit),
+            domain="genus2",
+            env_name="genus2_env",
+            elapsed_seconds=float(elapsed_seconds),
+            oracle_calls=int(oracle_calls),
+            region_meta={
+                "env": "genus2_env",
+                "split": self.split,
+                "label": self._current.label,
+                "iso_class": self._current.iso_class,
+                "conductor": int(self._current.conductor),
+                "true_rank_class": int(true_class),
+            },
+            candidate_parts=(self._current.label, a, true_class),
+        ))
         return self._obs(), float(reward), terminated, truncated, info
 
     def close(self) -> None:
