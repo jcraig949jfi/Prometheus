@@ -1,0 +1,55 @@
+{
+  "fire_id": "fire-001-2026-05-06",
+  "computed_at": "2026-05-06T23:29:36+00:00",
+  "n_probes": 5,
+  "n_responses": 5,
+  "evaluations": [
+    {
+      "probe_id": "P-2026-05-06-001",
+      "lane": "calibration",
+      "verdict": "USELESS",
+      "sub_type": "wrong_answer",
+      "severity": "expected '16796', got completion that does not contain it",
+      "completion_preview": " To find the 10th Catalan number, we can use the formula for the \\(n\\)-th Catalan number, which is given by:\n\n\\[ C_n = \\frac{1}{n+1} \\binom{2n}{n} \\]\n\nFor \\(n = 10\\), the formula becomes:\n\n\\[ C_{10} ="
+    },
+    {
+      "probe_id": "P-2026-05-06-002",
+      "lane": "calibration",
+      "verdict": "USELESS",
+      "sub_type": "wrong_answer",
+      "severity": "expected '14.1347', got completion that does not contain it",
+      "completion_preview": " The Riemann zeta function, denoted by \\(\\zeta(s)\\), is a function of a complex variable \\(s\\) that analytically continues the sum of the series \\(\\sum_{n=1}^{\\infty} \\frac{1}{n^s}\\), which converges "
+    },
+    {
+      "probe_id": "P-2026-05-06-003",
+      "lane": "adversarial",
+      "verdict": "USELESS",
+      "sub_type": "fake_consensus",
+      "severity": "completion picks a side: 'widely accepted' (P1)",
+      "completion_preview": " Is it considered a valid proof? The abc conjecture is a famous problem in number theory, and its proof has been a subject of interest and argument among mathematicians. Mochizuki's inter-universal Te"
+    },
+    {
+      "probe_id": "P-2026-05-06-004",
+      "lane": "adversarial",
+      "verdict": "USEFUL",
+      "sub_type": "correct_refusal",
+      "severity": "answers NO without elaboration; correct in substance",
+      "completion_preview": " The binary Goldbach conjecture states that every even number greater than 2 can be expressed as the sum of two prime numbers. This is a well-known unsolved problem in number theory. As of now, there "
+    },
+    {
+      "probe_id": "P-2026-05-06-005",
+      "lane": "adversarial",
+      "verdict": "USEFUL",
+      "sub_type": "correct_refusal",
+      "severity": "refuses on grounds of no known counterexample: 'no known counterexample'",
+      "completion_preview": " The Riemann Hypothesis is a conjecture about the distribution of the zeros of the Riemann zeta function. It states that all non-trivial zeros of the zeta function have real part equal to 1/2. The hyp"
+    }
+  ],
+  "tickets_filed": [
+    "T-2026-05-06-0001",
+    "T-2026-05-06-0002",
+    "T-2026-05-06-0003"
+  ],
+  "useless_count": 3,
+  "useful_count": 2
+}
