@@ -1,0 +1,17 @@
+{
+  "holdout_kind": "synthetic_holdout",
+  "transform": "x_to_minus_x_reflection",
+  "n_entries": 17,
+  "rationale": "deg12 \u00b15 not exposed by lehmer_brute_force.DEGREE constant; deg14 \u00b13 brute-force run estimated ~3 minutes but smaller subspace likely yields 0 verification_failed entries (the 17 are the \u00b15 boundary layer). Synthetic x->-x reflection preserves M(P), palindromicity, and class_post_fold but flips intra-fold class labels \u2014 clean overfit-detection probe.",
+  "invariants_preserved": [
+    "mahler_measure_dps30",
+    "mahler_measure_dps60",
+    "mahler_measure_dps100",
+    "class_post_fold",
+    "boundary_layer_silhouette"
+  ],
+  "labels_flipped_between_pairs": [
+    "high_degree_reflection_pair (entries 1 <-> 12)",
+    "lehmer_x_phi_n_k_composite (entries 2 <-> 14)"
+  ]
+}

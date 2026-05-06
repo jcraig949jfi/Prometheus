@@ -1,0 +1,269 @@
+{
+  "decode_protocol": "label_mask_forced_decode",
+  "variant_a_boundary": {
+    "seed_42": {
+      "base_zero_shot": {
+        "accuracy": 1.0,
+        "per_class_accuracy": {
+          "cyclotomic_noise": 1.0
+        },
+        "confusion_matrix": {
+          "cyclotomic_noise": {
+            "cyclotomic_noise": 7
+          }
+        }
+      },
+      "lora_post_train": {
+        "accuracy": 1.0,
+        "per_class_accuracy": {
+          "cyclotomic_noise": 1.0
+        },
+        "confusion_matrix": {
+          "cyclotomic_noise": {
+            "cyclotomic_noise": 7
+          }
+        },
+        "n": 7
+      },
+      "decode_protocol": "label_mask_forced_decode",
+      "trained_steps": 50,
+      "final_loss": 2.5089,
+      "wall_clock_seconds": 20.35053586959839,
+      "accuracy": 1.0,
+      "n_correct": 7,
+      "n_total": 7,
+      "p_value": 0.0078125,
+      "decision": "FIRE"
+    },
+    "seed_1234": {
+      "base_zero_shot": {
+        "accuracy": 1.0,
+        "per_class_accuracy": {
+          "cyclotomic_noise": 1.0
+        },
+        "confusion_matrix": {
+          "cyclotomic_noise": {
+            "cyclotomic_noise": 7
+          }
+        }
+      },
+      "lora_post_train": {
+        "accuracy": 1.0,
+        "per_class_accuracy": {
+          "cyclotomic_noise": 1.0
+        },
+        "confusion_matrix": {
+          "cyclotomic_noise": {
+            "cyclotomic_noise": 7
+          }
+        },
+        "n": 7
+      },
+      "decode_protocol": "label_mask_forced_decode",
+      "trained_steps": 50,
+      "final_loss": 2.4396,
+      "wall_clock_seconds": 16.447619199752808,
+      "accuracy": 1.0,
+      "n_correct": 7,
+      "n_total": 7,
+      "p_value": 0.0078125,
+      "decision": "FIRE"
+    },
+    "seed_100": {
+      "base_zero_shot": {
+        "accuracy": 0.8571428571428571,
+        "per_class_accuracy": {
+          "cyclotomic_noise": 1.0,
+          "lehmer_composite": 0.0
+        },
+        "confusion_matrix": {
+          "cyclotomic_noise": {
+            "cyclotomic_noise": 6
+          },
+          "lehmer_composite": {
+            "cyclotomic_noise": 1
+          }
+        }
+      },
+      "lora_post_train": {
+        "accuracy": 0.8571428571428571,
+        "per_class_accuracy": {
+          "cyclotomic_noise": 1.0,
+          "lehmer_composite": 0.0
+        },
+        "confusion_matrix": {
+          "cyclotomic_noise": {
+            "cyclotomic_noise": 6
+          },
+          "lehmer_composite": {
+            "cyclotomic_noise": 1
+          }
+        },
+        "n": 7
+      },
+      "decode_protocol": "label_mask_forced_decode",
+      "trained_steps": 50,
+      "final_loss": 2.5479,
+      "wall_clock_seconds": 13.72922682762146,
+      "accuracy": 0.8571428571428571,
+      "n_correct": 6,
+      "n_total": 7,
+      "p_value": 0.0625,
+      "decision": "FIRE"
+    }
+  },
+  "variant_b_synthetic": {
+    "seed_42": {
+      "base_zero_shot": {
+        "accuracy": 0.515,
+        "per_class_accuracy": {
+          "0": 0.0,
+          "1": 1.0
+        },
+        "confusion_matrix": {
+          "0": {
+            "1": 97
+          },
+          "1": {
+            "1": 103
+          }
+        }
+      },
+      "lora_post_train": {
+        "accuracy": 0.515,
+        "per_class_accuracy": {
+          "0": 0.0,
+          "1": 1.0
+        },
+        "confusion_matrix": {
+          "0": {
+            "1": 97
+          },
+          "1": {
+            "1": 103
+          }
+        },
+        "n": 200
+      },
+      "decode_protocol": "label_mask_forced_decode",
+      "trained_steps": 50,
+      "final_loss": 2.5188,
+      "wall_clock_seconds": 46.69033718109131,
+      "accuracy": 0.515,
+      "n_correct": 103,
+      "n_total": 200,
+      "p_value": 0.36188551315640355,
+      "decision": "PASS"
+    },
+    "seed_1234": {
+      "base_zero_shot": {
+        "accuracy": 0.515,
+        "per_class_accuracy": {
+          "0": 0.0,
+          "1": 1.0
+        },
+        "confusion_matrix": {
+          "0": {
+            "1": 97
+          },
+          "1": {
+            "1": 103
+          }
+        }
+      },
+      "lora_post_train": {
+        "accuracy": 0.515,
+        "per_class_accuracy": {
+          "0": 0.0,
+          "1": 1.0
+        },
+        "confusion_matrix": {
+          "0": {
+            "1": 97
+          },
+          "1": {
+            "1": 103
+          }
+        },
+        "n": 200
+      },
+      "decode_protocol": "label_mask_forced_decode",
+      "trained_steps": 50,
+      "final_loss": 2.5513,
+      "wall_clock_seconds": 48.56673216819763,
+      "accuracy": 0.515,
+      "n_correct": 103,
+      "n_total": 200,
+      "p_value": 0.36188551315640355,
+      "decision": "PASS"
+    },
+    "seed_100": {
+      "base_zero_shot": {
+        "accuracy": 0.515,
+        "per_class_accuracy": {
+          "1": 1.0,
+          "0": 0.0
+        },
+        "confusion_matrix": {
+          "1": {
+            "1": 103
+          },
+          "0": {
+            "1": 97
+          }
+        }
+      },
+      "lora_post_train": {
+        "accuracy": 0.515,
+        "per_class_accuracy": {
+          "1": 1.0,
+          "0": 0.0
+        },
+        "confusion_matrix": {
+          "1": {
+            "1": 103
+          },
+          "0": {
+            "1": 97
+          }
+        },
+        "n": 200
+      },
+      "decode_protocol": "label_mask_forced_decode",
+      "trained_steps": 50,
+      "final_loss": 2.5624,
+      "wall_clock_seconds": 54.26587462425232,
+      "accuracy": 0.515,
+      "n_correct": 103,
+      "n_total": 200,
+      "p_value": 0.36188551315640355,
+      "decision": "PASS"
+    }
+  },
+  "config": {
+    "alpha": 0.1,
+    "chance": 0.5,
+    "shuffle_seeds": [
+      42,
+      1234,
+      100
+    ],
+    "max_steps": 50,
+    "lora_rank": 8
+  },
+  "overall_verdict": "FIRE",
+  "gate_fired_on": [
+    {
+      "variant": "a",
+      "seed": 42
+    },
+    {
+      "variant": "a",
+      "seed": 1234
+    },
+    {
+      "variant": "a",
+      "seed": 100
+    }
+  ]
+}
