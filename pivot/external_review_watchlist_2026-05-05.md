@@ -36,6 +36,32 @@ Anyone landing a result that changes a trigger condition should append to the co
 
 **Watch cadence:** review at end of v2.2 sprint (Day 17-19) AND after any trigger condition fires. Aporia revisits unconditionally at next 14-day external-review cycle.
 
+### Mid-pass status update — 2026-05-06: PARTIAL verdict
+
+Techne's feasibility pass landed (research-only, ~8.6K words at `pivot/sigma_kernel_logical_foundation_feasibility_2026-05-06.md`). Verdict: **PARTIAL.**
+
+CoC + native falsification records subsumes 7 of 11 constructs cleanly:
+RESOLVE, CLAIM, FALSIFY, GATE, TRACE, REWRITE, EQUIV. PROMOTE needs
+QTT/LTT for linear capabilities (resolvable extension). ERRATA, BIND,
+EVAL resist clean type-theoretic encoding — they encode defeasible
+reasoning, host-callable hash drift, and cost-contract + side-effect
+accounting that are *operational*, not propositional.
+
+**Recommendation in pass:** option (c) hybrid kernel ↔ CoC translation
+layer for v3.0. Imperative VM retained for the operational layer (ERRATA,
+BIND, EVAL, PROMOTE side-effects). CoC layer for the propositional core
+(RESOLVE, CLAIM, FALSIFY, GATE, TRACE, REWRITE, EQUIV) — gives the
+Σ-kernel a logical foundation where one is achievable, names precisely
+what the imperative VM is for where it is not.
+
+**v2.2 status:** ships unchanged. Per Decision 3, the feasibility pass
+is data for v3.0 design, NOT a v2.2 redesign trigger. The PARTIAL
+verdict refines but does not resolve Watch-1.
+
+**Trigger conditions unchanged.** Watch-1 stays OPEN. The hybrid path
+is the working v3.0 candidate; if any trigger fires before v3.0 lands,
+the design pass becomes load-bearing immediately.
+
 ---
 
 ## Watch-2: F9 ("simpler explanation") and F6 ("base rate") need formal computable definitions
@@ -81,6 +107,42 @@ Without computable criteria, the gauntlet only works on toy fragments and slips 
 
 **Watch cadence:** revisit when Ergon Learner v0.5 tire-kick completes (Day 17-19 of joint sprint). The tire-kick result will partly diagnose this — if the Learner can't rediscover even simple bridges, the concept-invention gap is the larger problem; if it can, the substrate vocabulary is at least covering the rediscovery path.
 
+### Trigger sharpening — 2026-05-06: three-way assessment for Illegibility Window
+
+Per Techne's Decision 2 in `roles/Techne/RESPONSE_TO_APORIA_HANDOFF_2026-05-06.md`, the binary "tire-kick reveals blocking" trigger for Illegibility Window load-bearing-ness is replaced by a three-way distinction. At Day 17-19 W6.5 tire-kick decision review, Aporia categorizes the outcome:
+
+| Tire-kick outcome | Diagnosis | Illegibility Window status |
+|---|---|---|
+| Substrate IS killing productive reformulations at the typing layer (Learner attempts reformulations; substrate rejects them) | Sandbox tier is load-bearing | **TRIGGER FIRES** — v3.0 design pass commitment |
+| Learner does NOT attempt reformulations (stuck at within-vocabulary search) | Concept-invention gap is upstream of substrate typing | TRIGGER DOES NOT FIRE — Watch-3 design pass continues; Illegibility Window de-prioritized |
+| Tire-kick fails for unrelated reasons (data scale, optimization, training infrastructure) | Trigger evidence inconclusive | TRIGGER DOES NOT FIRE — re-evaluate at next tire-kick or v1.0 |
+
+Owner of the assessment: Aporia. The three-way distinction matches the actual failure-mode space; binary "did the tire-kick reveal blocking" risks redesigning around the wrong signal.
+
+---
+
+## Watch-4: Substrate-vs-search compounding bet validation
+
+**Critique (self-flagged by Techne 2026-05-06).** v2.2/v2.3 (and now KillEmbedding) is built on the bet that *compounding substrate produces compounding capability faster than compounding search*. The 5-day sprint produced one local lemma (deg14 ±5 palindromic Lehmer) and caught one cross-domain retraction. That's two data points for the substrate-compounding thesis. The bet is unfalsifiable until the Learner produces a result that either confirms or denies it.
+
+The contrarian critique writes itself in the Silver-style framing: *"Why are you instrumenting failure when you could be running a 1B-RL agent on the existing arsenal for 1M episodes? The compounding compute trajectory has produced AlphaGo, AlphaZero, AlphaProof. Yours has produced a 97M-poly enumeration that returned INCONCLUSIVE."* If a frontier reviewer raises this independently in second-pass review, the prior probability of the bet being wrong goes up.
+
+**Reviewer's recommendation:** N/A — self-flagged.
+
+**Our current position:** Accept the bet; commit to substrate compounding for v2.2/v2.3; track evidence accumulation explicitly so the bet stays falsifiable.
+
+**Trigger condition** (any one fires):
+- Learner v0.5 tire-kick produces above-baseline accuracy on substrate-verdict prediction with end-to-end pipeline working → bet has positive evidence; continue substrate compounding
+- Tire-kick produces W4 acceptance criterion 4 outcome (clean failure mode that names what data we need) → bet has negative evidence about TIMING; substrate is right but premature, scale up data collection before further substrate work
+- Tire-kick W4.0 synthetic-null catches memorization → bet has negative evidence about CONTENT; substrate-first strategy is wrong, pivot to search-first
+- Six months after v2.2 ships, a search-only baseline at significantly larger compute budget outperforms the substrate-trained Learner → substrate-compounding thesis loses
+
+**Falsification test:** at v0.5 tire-kick decision review (Day 17-19), categorize the outcome into one of the four trigger conditions above. At v1.0 design, run a search-only baseline at matched compute and compare PROMOTE rates per compute hour.
+
+**Watch cadence:** revisit at v0.5 tire-kick completion + 14 days later. Aporia owns the watch; Techne flags any v2.2 substrate-side discovery of relevance.
+
+**Why this matters now:** the contrarian critique is exactly the same shape as Techne's own §13 convergence-bias-check exercise in v2.3. Tracking it as a watchlist item rather than a buried disclosure section makes the bet visible to future Techne instances and to frontier reviewers reading the watchlist as part of v2.2 second-pass review. Aligns with the maintenance protocol below: surfacing critiques is the substrate's discipline signature.
+
 ---
 
 ## Maintenance protocol
@@ -94,8 +156,9 @@ Without computable criteria, the gauntlet only works on toy fragments and slips 
 
 | Watch item | Status | Last reviewed |
 |---|---|---|
-| Watch-1: Σ-kernel logical foundation | OPEN — defer; revisit at end of v2.2 sprint | 2026-05-05 |
+| Watch-1: Σ-kernel logical foundation | OPEN — PARTIAL feasibility verdict (CoC subsumes 7/11; ERRATA/BIND/EVAL resist); hybrid kernel↔CoC translation queued for v3.0; v2.2 ships unchanged | 2026-05-06 |
 | Watch-2: F9/F6 formal definitions | OPEN — partial mitigation; revisit at G4 audit | 2026-05-05 |
-| Watch-3: concept invention vs verification | OPEN — defer; revisit at Learner v0.5 tire-kick completion | 2026-05-05 |
+| Watch-3: concept invention vs verification | OPEN — three-way trigger sharpening (Illegibility Window load-bearing only on outcome A); revisit at Learner v0.5 tire-kick completion | 2026-05-06 |
+| Watch-4: substrate-vs-search compounding bet | OPEN — self-flagged 2026-05-06; falsifiable at v0.5 tire-kick + 6mo search-baseline comparison | 2026-05-06 |
 
-— Aporia, 2026-05-05
+— Aporia, last updated 2026-05-06
