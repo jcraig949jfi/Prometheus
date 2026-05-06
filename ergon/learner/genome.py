@@ -29,15 +29,16 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List, Literal, Optional, Tuple
 
 
-# Mutation operator classes — per v8 §3 + §6.3
+# Mutation operator classes — per v8 §3 + §6.3 + v0.5 W2.7 (equivalence_preserving)
 MutationOperatorClass = Literal[
-    "structural",       # Add/remove/swap nodes; rewire edges
-    "symbolic",         # Bump arg values within type
-    "neural",           # LoRA-fine-tuned policy mutation (v0.5+)
-    "external_llm",     # Frontier LLM API mutation (v0.5+)
-    "anti_prior",       # Anti-correlated with corpus frequency stats
-    "uniform",          # Resample atoms uniformly (strawman null)
-    "structured_null",  # Type-respecting uniform (type-respecting null)
+    "structural",             # Add/remove/swap nodes; rewire edges
+    "symbolic",               # Bump arg values within type
+    "neural",                 # LoRA-fine-tuned policy mutation (v0.5+)
+    "external_llm",           # Frontier LLM API mutation (v0.5+)
+    "anti_prior",             # Anti-correlated with corpus frequency stats
+    "uniform",                # Resample atoms uniformly (strawman null)
+    "structured_null",        # Type-respecting uniform (type-respecting null)
+    "equivalence_preserving", # Math-grounded moves preserving invariants (isogeny / Reidemeister / Hecke / twist) — v0.5 W2.7
 ]
 
 

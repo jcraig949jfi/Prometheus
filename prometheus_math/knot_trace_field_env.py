@@ -52,6 +52,7 @@ from __future__ import annotations
 
 import math
 import random
+import time
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
@@ -327,6 +328,10 @@ class KnotTraceFieldEnv:
 
         true_class = int(self._current.trace_field_class)
 
+        # Cost telemetry (substrate v2.3 EvidenceField.computational_friction).
+        t0 = time.perf_counter()
+        oracle_calls = 0
+
         # BIND/EVAL through the substrate. Episode-fresh kernel so binding
         # names need only be unique within the episode.
         cap_b = self._kernel.mint_capability("BindCap")
@@ -340,6 +345,7 @@ class KnotTraceFieldEnv:
             ],
             cap=cap_b,
         )
+        oracle_calls += 1
         cap_e = self._kernel.mint_capability("EvalCap")
         ev = self._ext.EVAL(
             binding_name=binding.symbol.name,
@@ -349,6 +355,7 @@ class KnotTraceFieldEnv:
             cap=cap_e,
             eval_version=1,
         )
+        oracle_calls += 1
         try:
             output_class = int(ev.output_repr)
         except (TypeError, ValueError):
@@ -368,6 +375,8 @@ class KnotTraceFieldEnv:
         truncated = False
         self._step_called = True
 
+        elapsed_seconds = time.perf_counter() - t0
+
         info = {
             "name": self._current.name,
             "crossing_number": self._current.crossing_number,
@@ -384,6 +393,8 @@ class KnotTraceFieldEnv:
             "eval_success": ev.success,
             "split": self.split,
             "hyperbolic_volume": self._current.hyperbolic_volume,
+            "elapsed_seconds": float(elapsed_seconds),
+            "oracle_calls": int(oracle_calls),
         }
         return self._obs(), float(reward), terminated, truncated, info
 

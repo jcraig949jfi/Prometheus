@@ -122,8 +122,16 @@ class PromotionLedger:
         is_obstruction_discriminator: bool = False,
         is_secondary_discriminator: bool = False,
         extra: Optional[Dict[str, Any]] = None,
+        domain: Optional[str] = None,
+        pi0_weighted_reward: Optional[float] = None,
+        pi0_ci_lower: Optional[float] = None,
+        pi0_ci_upper: Optional[float] = None,
     ) -> Dict[str, Any]:
-        """Append one substrate-PASS record. Writes to disk if path set."""
+        """Append one substrate-PASS record. Writes to disk if path set.
+
+        W1.7: π₀ fields default to None ⇒ they are omitted from legacy records
+        (existing ledgers stay byte-identical when caller omits them).
+        """
         record = {
             "timestamp_iso": datetime.now(timezone.utc).isoformat(),
             "trial_name": self.trial_name,
@@ -141,6 +149,14 @@ class PromotionLedger:
             "is_obstruction_discriminator": bool(is_obstruction_discriminator),
             "is_secondary_discriminator": bool(is_secondary_discriminator),
         }
+        if domain is not None:
+            record["domain"] = domain
+        if pi0_weighted_reward is not None:
+            record["pi0_weighted_reward"] = float(pi0_weighted_reward)
+        if pi0_ci_lower is not None:
+            record["pi0_ci_lower"] = float(pi0_ci_lower)
+        if pi0_ci_upper is not None:
+            record["pi0_ci_upper"] = float(pi0_ci_upper)
         if extra:
             record["extra"] = extra
         self.records.append(record)

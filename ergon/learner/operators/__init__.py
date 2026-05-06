@@ -8,6 +8,8 @@ Per pivot/ergon_learner_proposal_v8.md:
               descriptor-displacement requirement
 - uniform: Resample atoms uniformly (strawman null)
 - structured_null: Per-type sampler with uniform per-arg distributions
+- equivalence_preserving: Math-grounded mutations preserving arsenal invariants
+                          (v0.5 ships isogeny-on-EC; Reidemeister/Hecke/twists v1.0)
 
 Plus deferred (v0.5+):
 - neural: LoRA-fine-tuned policy mutation

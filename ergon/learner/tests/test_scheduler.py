@@ -1,6 +1,7 @@
 """Tests for ergon.learner.scheduler — operator-class scheduler with min-share enforcement."""
 from __future__ import annotations
 
+import json
 from collections import Counter
 
 import pytest
@@ -10,6 +11,8 @@ from ergon.learner.scheduler import (
     DEFAULT_OPERATOR_WEIGHTS_MVP,
     OperatorScheduler,
     SchedulerStats,
+    hit_rate_weighted_allocation,
+    load_per_class_hit_rates,
 )
 
 
@@ -252,3 +255,106 @@ def test_full_pilot_simulation_meets_v8_constraints():
     assert "uniform" in cumulative_ops
     assert "structured_null" in cumulative_ops
     assert "anti_prior" in cumulative_ops
+
+
+# ===========================================================================
+# W1.8 — per-class hit-rate weighting
+# ===========================================================================
+
+
+def _write_hit_rate_table(path, classes_to_means, metric="promote_rate"):
+    raw = {"per_class": {
+        c: {metric: {"mean": m}} for c, m in classes_to_means.items()
+    }}
+    path.write_text(json.dumps(raw), encoding="utf-8")
+
+
+def test_load_per_class_hit_rates_real_file_has_five_classes():
+    """The Charon-shipped JSON exposes hit rates for the five MVP classes."""
+    rates = load_per_class_hit_rates()
+    for cls in ("structural", "symbolic", "uniform",
+                "structured_null", "anti_prior"):
+        assert cls in rates
+
+
+def test_hit_rate_weighted_allocation_floors_respected():
+    """Floors take precedence; sum to 1.0; high-hit-rate class gets more."""
+    base = dict(DEFAULT_OPERATOR_WEIGHTS_MVP)
+    floors = dict(DEFAULT_MIN_SHARES)
+    rates = {
+        "structural": 0.30,
+        "symbolic": 0.10,
+        "uniform": 0.05,
+        "structured_null": 0.02,
+        "anti_prior": 0.03,
+    }
+    alloc = hit_rate_weighted_allocation(base, floors, rates)
+    assert sum(alloc.values()) == pytest.approx(1.0, abs=1e-9)
+    for cls, fl in floors.items():
+        assert alloc[cls] >= fl - 1e-9
+    assert alloc["structural"] > alloc["symbolic"]
+
+
+def test_hit_rate_weighted_allocation_zero_rates_falls_back():
+    """If all hit_rates are zero, allocation falls back to base_weights residual."""
+    base = dict(DEFAULT_OPERATOR_WEIGHTS_MVP)
+    floors = dict(DEFAULT_MIN_SHARES)
+    rates = {c: 0.0 for c in base}
+    alloc = hit_rate_weighted_allocation(base, floors, rates)
+    assert sum(alloc.values()) == pytest.approx(1.0, abs=1e-9)
+    assert alloc["structural"] > alloc["uniform"]
+
+
+def test_scheduler_with_hit_rates_path(tmp_path):
+    """Scheduler reads hit-rate JSON and reweights above the floor."""
+    hr_file = tmp_path / "hit_rates.json"
+    _write_hit_rate_table(hr_file, {
+        "structural": 0.4, "symbolic": 0.1, "uniform": 0.04,
+        "structured_null": 0.02, "anti_prior": 0.03,
+    })
+    sched = OperatorScheduler(
+        seed=1, lookback_window=50, hit_rates_path=hr_file,
+    )
+    for cls, floor in DEFAULT_MIN_SHARES.items():
+        assert sched.operator_weights[cls] >= floor - 1e-9
+    leader = max(sched.operator_weights, key=sched.operator_weights.get)
+    assert leader == "structural"
+
+
+def test_scheduler_hot_swap_preserves_floors():
+    """set_hit_rates re-derives proportional component but floors stay fixed."""
+    sched = OperatorScheduler(
+        seed=1, lookback_window=50,
+        hit_rates={"structural": 0.5, "symbolic": 0.1,
+                   "uniform": 0.05, "structured_null": 0.02, "anti_prior": 0.03},
+    )
+    initial_floors = {c: sched.min_shares[c] for c in DEFAULT_MIN_SHARES}
+    sched.set_hit_rates({
+        "structural": 0.05, "symbolic": 0.05, "uniform": 0.5,
+        "structured_null": 0.3, "anti_prior": 0.1,
+    })
+    for cls, floor in initial_floors.items():
+        assert sched.min_shares[cls] == floor
+        assert sched.operator_weights[cls] >= floor - 1e-9
+    leader = max(sched.operator_weights, key=sched.operator_weights.get)
+    assert leader == "uniform"
+
+
+def test_scheduler_hit_rate_weighted_run_meets_min_shares():
+    """End-to-end: hit-rate weighted run still respects min-share floors."""
+    sched = OperatorScheduler(
+        seed=42, lookback_window=100,
+        hit_rates={"structural": 0.4, "symbolic": 0.1, "uniform": 0.04,
+                   "structured_null": 0.02, "anti_prior": 0.03},
+    )
+    for i in range(1000):
+        sched.next_operator_class(i)
+    window = sched.window_shares()
+    for op, floor in DEFAULT_MIN_SHARES.items():
+        assert window.get(op, 0.0) >= floor - 0.02
+
+
+def test_scheduler_no_hit_rates_uses_base_weights():
+    """Without hit_rates, scheduler keeps original operator_weights (back-compat)."""
+    sched = OperatorScheduler(seed=1)
+    assert sched.operator_weights == DEFAULT_OPERATOR_WEIGHTS_MVP

@@ -41,7 +41,9 @@ def run_one_seed(seed: int, n_episodes: int, promote_rate: float = 0.0001) -> Di
     """Run engine for n_episodes at given seed; return diagnostics."""
     evaluator = MVPSubstrateEvaluator(seed=seed, promote_rate=promote_rate)
     scheduler = OperatorScheduler(seed=seed)
-    engine = TrialTwoEngine(seed=seed, scheduler=scheduler, evaluator=evaluator)
+    engine = TrialTwoEngine(
+        seed=seed, scheduler=scheduler, evaluator=evaluator, use_stub=True,
+    )
 
     # Saturation tracking — sample every 100 episodes
     saturation_curve = []

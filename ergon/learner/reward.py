@@ -27,11 +27,20 @@ agreement-weighted form once those evaluators are wired.
 The function structure is designed to accept v0.5's evaluator-result
 inputs without architectural change — just per-component weights start
 at 0 and get raised when the evaluator ships.
+
+W1.7 (v0.5): per-domain π₀ weighting with CI propagation. Charon's
+beta-binomial estimates of P(false null) per domain weight PROMOTE
+confidence so that the same substrate-pass in genus2 (π₀=0.669, wide CI)
+vs Lehmer (π₀=0.999, tight CI) carries ~500× different posterior weight.
+Without CI propagation, low-data domains amplify noise into the gradient.
 """
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass, field
-from typing import Any, Dict, Optional
+from functools import lru_cache
+from pathlib import Path
+from typing import Any, Dict, Optional, Tuple
 
 
 # Per v8 §5.3 default weights (with w_R conditional)
@@ -113,6 +122,90 @@ def is_promotable(
     """
     score = compute_reward(components, weights)
     return score >= promote_threshold
+
+
+# ---------------------------------------------------------------------------
+# Per-domain π₀ weighting (W1.7) — Charon's beta-binomial calibration
+# ---------------------------------------------------------------------------
+
+DEFAULT_PI0_PATH = (
+    Path(__file__).resolve().parents[2]
+    / "charon" / "diagnostics" / "per_domain_pi0.json"
+)
+
+
+@dataclass
+class Pi0Weight:
+    """Per-domain π₀ point estimate + 95% CI.
+
+    Used by `compute_reward_with_pi0` to weight PROMOTE confidence by the
+    domain's null-rate posterior. Same PROMOTE in low-π₀ domain (genus2
+    0.669) carries far less posterior weight than in a near-unity domain
+    (Lehmer 0.999). CI carries through so wide-CI domains (thin data)
+    don't spuriously amplify the gradient.
+    """
+    domain: str
+    pi0_mean: float
+    pi0_ci_lower: float
+    pi0_ci_upper: float
+
+
+@lru_cache(maxsize=4)
+def _load_pi0_table(path_str: str) -> Dict[str, Pi0Weight]:
+    p = Path(path_str)
+    if not p.exists():
+        return {}
+    raw = json.loads(p.read_text(encoding="utf-8"))
+    out: Dict[str, Pi0Weight] = {}
+    for domain, entry in raw.get("per_domain", {}).items():
+        ci = entry.get("pi0_ci") or [entry.get("pi0_mean", 0.0)] * 2
+        out[domain] = Pi0Weight(
+            domain=domain,
+            pi0_mean=float(entry.get("pi0_mean", 0.0)),
+            pi0_ci_lower=float(ci[0]),
+            pi0_ci_upper=float(ci[1]),
+        )
+    return out
+
+
+def get_pi0_weight(
+    domain: Optional[str],
+    pi0_path: Optional[Path] = None,
+) -> Pi0Weight:
+    """Return Pi0Weight for `domain`; fallback to neutral (1.0, 1.0, 1.0).
+
+    A neutral fallback means the new code is a no-op for trial scripts
+    that don't pass a domain — preserves backwards compatibility.
+    """
+    if domain is None:
+        return Pi0Weight("__neutral__", 1.0, 1.0, 1.0)
+    table = _load_pi0_table(str(pi0_path or DEFAULT_PI0_PATH))
+    weight = table.get(domain)
+    if weight is None:
+        return Pi0Weight(domain, 1.0, 1.0, 1.0)
+    return weight
+
+
+def compute_reward_with_pi0(
+    components: RewardComponents,
+    weights: Optional[Dict[str, float]] = None,
+    domain: Optional[str] = None,
+    pi0_path: Optional[Path] = None,
+) -> Tuple[float, Pi0Weight]:
+    """Reward weighted by per-domain π₀ point estimate; CI returned alongside.
+
+    Returns (pi0_weighted_reward, pi0_weight). Caller should log
+    `pi0_weight.pi0_ci_lower` / `pi0_ci_upper` into the ledger so that
+    downstream cross-corpus comparisons (W5.3) can apply CI-conditioned
+    rate ratios rather than naive point-estimate ratios.
+
+    Multiplicative weighting: a PROMOTE in a high-π₀ domain (most random
+    candidates would be wrong under null) is strong evidence and earns
+    near-full reward; a PROMOTE in a low-π₀ domain is weaker.
+    """
+    base = compute_reward(components, weights)
+    pi0 = get_pi0_weight(domain, pi0_path=pi0_path)
+    return base * pi0.pi0_mean, pi0
 
 
 # ---------------------------------------------------------------------------

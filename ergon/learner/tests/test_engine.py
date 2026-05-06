@@ -6,6 +6,7 @@ import pytest
 from ergon.learner.engine import (
     EngineRunReport,
     EpisodeResult,
+    EvaluatorNotWiredError,
     MVPSubstrateEvaluator,
     TrialTwoEngine,
 )
@@ -17,7 +18,7 @@ from ergon.learner.engine import (
 
 
 def test_engine_initializes_with_default_components():
-    engine = TrialTwoEngine(seed=42)
+    engine = TrialTwoEngine(seed=42, use_stub=True)
     assert engine.scheduler is not None
     assert engine.archive is not None
     assert engine.evaluator is not None
@@ -26,7 +27,7 @@ def test_engine_initializes_with_default_components():
 
 def test_engine_runs_smoke_test():
     """Engine.run(10) completes without errors; produces non-empty episode log."""
-    engine = TrialTwoEngine(seed=42)
+    engine = TrialTwoEngine(seed=42, use_stub=True)
     report = engine.run(n_episodes=10)
     assert isinstance(report, EngineRunReport)
     assert report.n_episodes == 10
@@ -36,7 +37,7 @@ def test_engine_runs_smoke_test():
 
 def test_engine_archive_grows_with_episodes():
     """Archive should fill up cells as engine runs (some episodes win cells)."""
-    engine = TrialTwoEngine(seed=42)
+    engine = TrialTwoEngine(seed=42, use_stub=True)
     engine.run(n_episodes=50)
     assert engine.archive.n_cells_filled() > 0
 
@@ -48,7 +49,7 @@ def test_engine_archive_grows_with_episodes():
 
 def test_engine_uses_all_5_operator_classes():
     """Across enough episodes, all 5 operator classes get invoked."""
-    engine = TrialTwoEngine(seed=42)
+    engine = TrialTwoEngine(seed=42, use_stub=True)
     engine.run(n_episodes=200)
     operator_classes_used = set(ep.operator_class for ep in engine.episodes)
     expected = {"structural", "symbolic", "uniform", "structured_null", "anti_prior"}
@@ -57,7 +58,7 @@ def test_engine_uses_all_5_operator_classes():
 
 def test_engine_min_share_constraint_holds_at_scale():
     """Per v8 §3.5.4: non-prior operators get ≥15% combined share."""
-    engine = TrialTwoEngine(seed=42)
+    engine = TrialTwoEngine(seed=42, use_stub=True)
     engine.run(n_episodes=500)
     cumulative = engine.scheduler.cumulative_shares()
     non_prior_share = (
@@ -70,7 +71,7 @@ def test_engine_min_share_constraint_holds_at_scale():
 
 def test_engine_episodes_have_unique_hashes_per_genome():
     """Each genome's content_hash should be (mostly) unique across episodes."""
-    engine = TrialTwoEngine(seed=42)
+    engine = TrialTwoEngine(seed=42, use_stub=True)
     engine.run(n_episodes=50)
     hashes = [ep.genome_hash for ep in engine.episodes]
     # Most should be unique; some collisions allowed (e.g., null operators
@@ -86,7 +87,7 @@ def test_engine_episodes_have_unique_hashes_per_genome():
 
 def test_engine_tracks_trivial_rejects():
     """Trivial-pattern matches should be counted in the report."""
-    engine = TrialTwoEngine(seed=42)
+    engine = TrialTwoEngine(seed=42, use_stub=True)
     report = engine.run(n_episodes=100)
     assert report.n_trivial_rejects >= 0  # may be 0 if no trivial patterns surface
     assert 0 <= report.f_trivial_band_reject_rate <= 1
@@ -94,7 +95,7 @@ def test_engine_tracks_trivial_rejects():
 
 def test_engine_trivial_reject_skips_evaluation():
     """When triviality fires, kill_path_verdicts include F_TRIVIAL_BAND_REJECT."""
-    engine = TrialTwoEngine(seed=42)
+    engine = TrialTwoEngine(seed=42, use_stub=True)
     engine.run(n_episodes=100)
     trivial_episodes = [ep for ep in engine.episodes if ep.f_trivial_match.matched]
     for ep in trivial_episodes:
@@ -142,7 +143,7 @@ def test_substrate_evaluator_kill_rate_matches_path_b():
 
 
 def test_run_report_format():
-    engine = TrialTwoEngine(seed=42)
+    engine = TrialTwoEngine(seed=42, use_stub=True)
     report = engine.run(n_episodes=20)
     assert hasattr(report, "n_episodes")
     assert hasattr(report, "n_substrate_passed")
@@ -157,7 +158,7 @@ def test_run_report_format():
 
 def test_episode_results_format():
     """Each episode produces a complete EpisodeResult."""
-    engine = TrialTwoEngine(seed=42)
+    engine = TrialTwoEngine(seed=42, use_stub=True)
     engine.run(n_episodes=5)
     for ep in engine.episodes:
         assert isinstance(ep, EpisodeResult)
@@ -178,14 +179,14 @@ def test_episode_results_format():
 
 def test_engine_n_episodes_one():
     """Single-episode run should still produce valid output."""
-    engine = TrialTwoEngine(seed=42)
+    engine = TrialTwoEngine(seed=42, use_stub=True)
     report = engine.run(n_episodes=1)
     assert report.n_episodes == 1
     assert len(engine.episodes) == 1
 
 
 def test_engine_n_episodes_zero():
-    engine = TrialTwoEngine(seed=42)
+    engine = TrialTwoEngine(seed=42, use_stub=True)
     report = engine.run(n_episodes=0)
     assert report.n_episodes == 0
     assert report.archive_n_cells_filled == 0
@@ -206,8 +207,8 @@ def test_engine_deterministic_operator_sequence_given_seed():
     scheduler), which is what Trial 2's per-operator-class diagnostics
     rely on for reproducibility.
     """
-    eng_a = TrialTwoEngine(seed=42)
-    eng_b = TrialTwoEngine(seed=42)
+    eng_a = TrialTwoEngine(seed=42, use_stub=True)
+    eng_b = TrialTwoEngine(seed=42, use_stub=True)
     eng_a.run(n_episodes=20)
     eng_b.run(n_episodes=20)
     ops_a = [ep.operator_class for ep in eng_a.episodes]
@@ -216,10 +217,63 @@ def test_engine_deterministic_operator_sequence_given_seed():
 
 
 def test_engine_different_seeds_diverge():
-    eng_a = TrialTwoEngine(seed=42)
-    eng_b = TrialTwoEngine(seed=99)
+    eng_a = TrialTwoEngine(seed=42, use_stub=True)
+    eng_b = TrialTwoEngine(seed=99, use_stub=True)
     eng_a.run(n_episodes=20)
     eng_b.run(n_episodes=20)
     seqs_a = [ep.genome_hash for ep in eng_a.episodes]
     seqs_b = [ep.genome_hash for ep in eng_b.episodes]
     assert seqs_a != seqs_b
+
+
+# ===========================================================================
+# v0.5 W1.1 — MVPSubstrateEvaluator quarantine
+# ===========================================================================
+
+
+def test_default_engine_routes_through_bind_eval_evaluator():
+    """Default construction wires BindEvalEvaluator (real evaluator)."""
+    from ergon.learner.genome_evaluator import BindEvalEvaluator
+    engine = TrialTwoEngine(seed=42)
+    assert isinstance(engine.evaluator, BindEvalEvaluator)
+
+
+def test_engine_rejects_explicit_stub_without_use_stub_flag():
+    """Passing MVPSubstrateEvaluator without use_stub=True is fatal."""
+    stub = MVPSubstrateEvaluator(seed=42)
+    with pytest.raises(EvaluatorNotWiredError):
+        TrialTwoEngine(seed=42, evaluator=stub)
+
+
+def test_engine_accepts_stub_with_use_stub_flag():
+    """use_stub=True opts into the legacy stub path explicitly."""
+    engine = TrialTwoEngine(seed=42, use_stub=True)
+    assert isinstance(engine.evaluator, MVPSubstrateEvaluator)
+
+
+def test_engine_accepts_explicit_stub_with_use_stub_flag():
+    """Caller may pass MVPSubstrateEvaluator directly when use_stub=True."""
+    stub = MVPSubstrateEvaluator(seed=42, promote_rate=0.001)
+    engine = TrialTwoEngine(seed=42, evaluator=stub, use_stub=True)
+    assert engine.evaluator is stub
+
+
+# ===========================================================================
+# v0.5 W1.2 — all 5 operator classes route through BindEvalKernelV2
+# ===========================================================================
+
+
+def test_all_five_operators_route_through_bind_eval_kernel():
+    """100-episode smoke run with default (real) evaluator covers all 5 classes."""
+    from ergon.learner.genome_evaluator import BindEvalEvaluator
+    engine = TrialTwoEngine(seed=42)
+    assert isinstance(engine.evaluator, BindEvalEvaluator)
+    report = engine.run(n_episodes=100)
+    assert report.n_episodes == 100
+    used = set(ep.operator_class for ep in engine.episodes)
+    assert used == {"structural", "symbolic", "uniform",
+                    "structured_null", "anti_prior"}
+    # Every non-trivial-rejected episode carries kernel-routed verdicts.
+    for ep in engine.episodes:
+        assert ep.kill_path_verdicts
+        assert {"F1", "F6", "F9", "F11"} <= set(ep.kill_path_verdicts.keys())

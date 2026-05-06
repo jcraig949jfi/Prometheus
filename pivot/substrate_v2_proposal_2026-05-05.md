@@ -16,6 +16,7 @@
 | v1.0 | 2026-05-05 morning | Initial proposal — six primitives (P1–P6), three tiers, 15 reviewer questions. |
 | v2.1 | 2026-05-05 afternoon | ChatGPT + Gemini convergent revisions: split EvidenceField from PolicyField; added P0 CoordinateChart; renamed ExclusionZone → ExclusionCertificate; deferred bridge_proximity; added assumption_load + computational_friction axes; structured MethodSpec with independence_class; multi-view leakage-safe NearMissCorpus; tightened TriangulationProtocol independence requirements; reframed mental model. *(Drafted in conversation; not in this doc until v2.2.)* |
 | v2.2 | 2026-05-05 evening | Aporia artifact batch integration (`roles/Techne/AVAILABLE_ARTIFACTS_2026-05-05.md`): Pre-Tier-0 work added (cartography handles 1+2, TRACE preservation audit); P0 CoordinateChart now uses Study 17's `CanonicalizationProtocol` interface with decidability flags; +7 KillVector components from Study 02; architectural lock-in of control-plane vs data-plane (proof primitives via BIND/EVAL only); REWRITE/EQUIV opcodes added as parallel kernel-track; intensional vs behavioural drift channel folded into MethodSpec; Charon G4/G6 coordination noted. **All v2.1 changes are reflected in v2.2.** |
+| v2.3 | 2026-05-05 late | Aporia tightening pass (`roles/Techne/APORIA_FEEDBACK_2026-05-05.md`): added `triangulation_history` field to ExclusionCertificate (prevents future certificates from inheriting `complete` strength without earned triangulation); committed schema decision for KillVector +8 component overlap (option b: independent flags with explicit MI reporting in §7.1); added §13 convergence-bias check applying my own Q-C5 warning to v2.2 design (the discipline is identifying, not necessarily changing). |
 
 ---
 
@@ -291,6 +292,10 @@ ExclusionCertificate
     independence_classes: set[<class_id>]
   replay:
     code_hash, data_hash, seed, environment_hash
+  triangulation_history:           # added v2.3 per Aporia feedback
+    list[TriangulationPathRef]     # which paths were applied to upgrade INCONCLUSIVE → COMPLETE
+    initial_verdict                # what the certificate was BEFORE triangulation (e.g., INCONCLUSIVE with N borderline entries)
+    upgrade_path_summary           # one-line per path: which one verified what
   boundary:
     adjacent_regions
     known_escape_hatches
@@ -298,7 +303,9 @@ ExclusionCertificate
 
 **Hard rule (ChatGPT):** only `complete` and `bounded_complete` certificates feed `EvidenceField.exclusion_distance`. Heuristic failed searches are logged but do not generate negative-space gradients.
 
-The deg14 ±5 palindromic Lehmer enumeration is the prototype: `certificate_type = exhaustive_enumeration`, `strength = complete`, ExclusionCertificate covers 97,435,855 polynomials with `excluded_property = "novel Lehmer band hit beyond known cyclotomic × Φ_n^k composites"`.
+**Hard rule (Aporia v2.3):** `strength = complete` requires non-empty `triangulation_history`. Future ExclusionCertificates without triangulation history default to `strength = bounded_complete` at most. This prevents the prototype's clean appearance from silently licensing "complete" claims that haven't earned the upgrade.
+
+The deg14 ±5 palindromic Lehmer enumeration is the prototype: `certificate_type = exhaustive_enumeration`; **initial verdict was INCONCLUSIVE** with 17 borderline near-cyclotomic entries; `strength = complete` was earned via `triangulation_history = [Path A high-precision mpmath dps=60, Path B symbolic factorization, Path C factorization-aware catalog, Path D Lehmer × Φ_n^k composite detection]` — four independent paths agreeing produced the upgrade. ExclusionCertificate covers 97,435,855 polynomials with `excluded_property = "novel Lehmer band hit beyond known cyclotomic × Φ_n^k composites"`.
 
 #### P6 — `TriangulationProtocol` — ~1 day
 
@@ -415,6 +422,22 @@ Backwards-compatible expansion (no shape contract change; new components join th
 
 Each new component carries the same per-component metadata (margin, margin_unit, precision_dps, method, convergence_status, stability) as the existing 12. Adding them increases substrate diagnostic capability without breaking any consumer of the legacy 12.
 
+### 7.1 Component overlap commitment (added v2.3 per Aporia)
+
+**Schema decision: option (b) — independent flags with explicit MI reporting.**
+
+The +8 components can genuinely co-occur in practice. `interpretive_slack` and `small_case_artifact` overlap (a claim surviving on generous human reading often also fails to scale). `naturalizes` and `requires_unproven_conjecture` overlap (many natural-proof obstructions are conditional on unproven complexity-class separations). Forcing mutual exclusivity (option a) loses information. Forcing hierarchical implication (option c) over-commits to relationships we have not measured.
+
+**Concretely, the schema commitment is:**
+
+- All 20 KillVector components (12 legacy + 8 new) are independent boolean flags with per-component margin.
+- Co-occurrence is allowed and meaningful: a single Claim can carry `naturalizes = True` AND `requires_unproven_conjecture = True` simultaneously, and both contribute to the EvidenceField aggregation.
+- **Mutual information across components is reported as substrate-level metadata**, computed across the ledger on a periodic basis (initially weekly; eventually triggered by ledger growth thresholds). High pairwise MI between two components is a substrate finding to investigate, not a schema bug to fix.
+- Charon's eventual G4 F-gate orthogonality MI audit (per joint sprint S-coordination) is the formal mechanism that turns the periodic MI reports into substrate-level findings.
+- **Auto-caveat fires** when a Claim carries 3+ co-occurring components — the substrate flags it for human review with `coalescing_failure_signature` caveat.
+
+This commitment is in writing BEFORE W2.6 sign-off finalizes (per Aporia's recommendation), so the schema position is locked before the +8 components ship in Day 6-7 of the joint sprint.
+
 ---
 
 ## 8. Architectural lock-ins (decisions made; not relitigated this sprint)
@@ -522,7 +545,25 @@ The Day-4 lesson was: when the data is calling for consolidation, resist surface
 
 ---
 
-## 13. What this proposal does NOT promise
+## 13. Convergence-bias check (added v2.3 per Aporia)
+
+Aporia's feedback flagged that I asked Charon (Q-C5) whether convergent multi-agent enthusiasm on v2.1 might be "coherent error from shared priors" — but did not apply the same skepticism to my own confidence in v2.2. Five reviewers (ChatGPT, Gemini, Aporia × 20-study batch + cartography, Ergon, my own self-revision) converged. That is load-bearing evidence AND a risk signal. If the reviewers all share priors (same project, same recent epistemics, same Day-4 trauma about modal-class collapse), convergence overweights things we all got wrong together.
+
+Per Aporia's instruction, the discipline here is to identify ONE design choice in v2.2 where I would be most surprised if a contrarian reviewer (a "$1B Silver-style" critic from outside the recent Prometheus cycle) called it overengineering — and document why I am going ahead anyway. Identifying the choice IS the discipline; changing the design is not required.
+
+**The choice I would be most surprised to defend:** *the entire substrate v2.2 enterprise — building 8 primitives, 6 evidence axes, +8 KillVector components, CoordinateChart, ExclusionCertificate, TriangulationProtocol, MethodSpec.drift_channel, NearMissCorpus multi-view, and ~17-19 days of substrate work — for a system that has not yet produced a single novel mathematical discovery.*
+
+The contrarian critique writes itself: *"You are scaling instrumentation where you should be scaling search. The 5-day sprint produced exactly one local lemma (deg14 ±5 palindromic Lehmer), which is itself an exclusion result, not a discovery. A Silver-style approach would train a 1B-parameter RL agent on the existing arsenal, give it access to LMFDB and OEIS, run it for 1M episodes, and see what it finds. The substrate is procrastination dressed as architecture. Every week spent on `triangulation_history` fields and `independence_class` taxonomy is a week not spent on the search budget that would actually produce a discovery."*
+
+**Why I am going ahead anyway.** The substrate IS what makes search results trustable. Without the calibration discipline (synthetic null controls, multi-path triangulation, caveat propagation, leak-resistant Learner corpora), the "1M-episode RL agent" produces a §5-cross-domain-table-style retraction — exactly what the substrate caught on Day 4. The bet is that *compounding capability comes from compounding substrate, not from compounding search*. If that bet is wrong, v2.2 is procrastination. If it is right, v2.2 is the prerequisite for any search budget to produce results worth keeping.
+
+But I should be honest that this is a bet, not a proof. The empirical evidence so far is one local lemma + one cross-domain retraction caught before publication. That is not yet enough to know whether the substrate-compounding thesis is correct. v2.2 doubles down on the thesis. If a contrarian reviewer is right that the substrate is procrastination, we will find out at the end of v0.5 / v1.0 when the Learner either produces predictive lift or doesn't.
+
+**What this changes about v2.2:** nothing in the design. The discipline is in the disclosure. v2.2 ships with this section so that future readers — including a future Techne instance evaluating whether to keep building or pivot to search-scale — know exactly what bet they inherited.
+
+---
+
+## 14. What this proposal does NOT promise
 
 - A new mathematical discovery. (Out of scope; that's researcher work, not Techne's.)
 - A second local lemma. (Possible byproduct of P6, not committed.)

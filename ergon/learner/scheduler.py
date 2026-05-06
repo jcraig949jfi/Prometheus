@@ -26,12 +26,20 @@ The scheduler exposes a single method `next_operator_class(episode_idx,
 archive)` that returns the operator class to fire. The scheduler is
 deterministic given the seed; reproducibility is a requirement for
 substrate-grade pilots.
+
+W1.8 (v0.5): hit-rate weighting. When a per-class hit-rate table is
+provided, the headroom above the min-share floor (1 - sum(min_shares))
+is allocated proportional to per-class promote_rate.mean. The min-share
+floor stays fixed; only the proportional component re-derives from the
+table — so hot-swap of the table mid-run leaves floors intact.
 """
 from __future__ import annotations
 
+import json
 import random
 from collections import Counter, deque
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Deque, Dict, List, Optional
 
 from ergon.learner.archive import MAPElitesArchive
@@ -55,6 +63,72 @@ DEFAULT_OPERATOR_WEIGHTS_MVP = {
     "structured_null": 0.07,
     "anti_prior": 0.06,
 }
+
+
+DEFAULT_HIT_RATES_PATH = (
+    Path(__file__).resolve().parent / "diagnostics" / "per_class_hit_rates.json"
+)
+
+
+def load_per_class_hit_rates(
+    path: Optional[Path] = None,
+    metric: str = "promote_rate",
+) -> Dict[str, float]:
+    """Load per-class hit-rate means from the diagnostics JSON.
+
+    Returns {class_name: mean_rate}; empty dict if file missing.
+    `metric` selects "promote_rate", "archive_fill_rate", or "near_miss_rate".
+    """
+    p = Path(path) if path is not None else DEFAULT_HIT_RATES_PATH
+    if not p.exists():
+        return {}
+    raw = json.loads(p.read_text(encoding="utf-8"))
+    out: Dict[str, float] = {}
+    for cls, entry in raw.get("per_class", {}).items():
+        sub = entry.get(metric)
+        if isinstance(sub, dict) and "mean" in sub:
+            out[cls] = float(sub["mean"])
+    return out
+
+
+def hit_rate_weighted_allocation(
+    base_weights: Dict[str, float],
+    min_shares: Dict[str, float],
+    hit_rates: Dict[str, float],
+) -> Dict[str, float]:
+    """Floor + hit-rate-proportional headroom; sums to 1.0.
+
+    Each class gets at least min_shares.get(class, 0); remaining headroom
+    (1 - sum(floors)) is split proportional to hit_rates over the classes
+    in base_weights. Classes with no hit-rate entry fall back to their
+    base_weights share of headroom. If headroom <= 0 (over-floored), the
+    floors are returned renormalised.
+    """
+    classes = list(base_weights.keys())
+    floors = {c: float(min_shares.get(c, 0.0)) for c in classes}
+    floor_total = sum(floors.values())
+    if floor_total >= 1.0:
+        return {c: floors[c] / floor_total for c in classes}
+
+    headroom = 1.0 - floor_total
+    rates = {c: float(hit_rates.get(c, 0.0)) for c in classes}
+    rate_total = sum(rates.values())
+
+    if rate_total > 0.0:
+        proportional = {c: headroom * rates[c] / rate_total for c in classes}
+    else:
+        # Fallback: distribute headroom in proportion to base_weights' headroom share
+        bw_residual = {c: max(base_weights[c] - floors[c], 0.0) for c in classes}
+        bw_residual_total = sum(bw_residual.values())
+        if bw_residual_total > 0.0:
+            proportional = {
+                c: headroom * bw_residual[c] / bw_residual_total for c in classes
+            }
+        else:
+            equal = headroom / max(len(classes), 1)
+            proportional = {c: equal for c in classes}
+
+    return {c: floors[c] + proportional[c] for c in classes}
 
 
 @dataclass
@@ -92,11 +166,29 @@ class OperatorScheduler:
         min_shares: Optional[Dict[MutationOperatorClass, float]] = None,
         lookback_window: int = 100,
         seed: Optional[int] = None,
+        hit_rates: Optional[Dict[str, float]] = None,
+        hit_rates_path: Optional[Path] = None,
+        hit_rate_metric: str = "promote_rate",
     ):
-        self.operator_weights = dict(operator_weights or DEFAULT_OPERATOR_WEIGHTS_MVP)
+        self._base_weights = dict(operator_weights or DEFAULT_OPERATOR_WEIGHTS_MVP)
+        self.operator_weights = dict(self._base_weights)
         self.min_shares = dict(min_shares or DEFAULT_MIN_SHARES)
         self.lookback_window = lookback_window
         self._rng = random.Random(seed)
+        self._hit_rate_metric = hit_rate_metric
+
+        # W1.8 hot-swap discipline: floors fixed at construction; the
+        # proportional component is re-derived from `hit_rates` whenever
+        # set_hit_rates() is called mid-run.
+        if hit_rates is None and hit_rates_path is not None:
+            hit_rates = load_per_class_hit_rates(hit_rates_path, metric=hit_rate_metric)
+        self._hit_rates: Optional[Dict[str, float]] = (
+            dict(hit_rates) if hit_rates else None
+        )
+        if self._hit_rates:
+            self.operator_weights = hit_rate_weighted_allocation(
+                self._base_weights, self.min_shares, self._hit_rates,
+            )
 
         # Sliding window of recent operator selections
         self._recent: Deque[MutationOperatorClass] = deque(maxlen=lookback_window)
@@ -115,6 +207,13 @@ class OperatorScheduler:
             raise ValueError(
                 f"sum of min_shares cannot exceed 1.0; got {share_sum:.3f}"
             )
+
+    def set_hit_rates(self, hit_rates: Dict[str, float]) -> None:
+        """Hot-swap the hit-rate table; floors stay fixed, headroom recomputes."""
+        self._hit_rates = dict(hit_rates)
+        self.operator_weights = hit_rate_weighted_allocation(
+            self._base_weights, self.min_shares, self._hit_rates,
+        )
 
     def next_operator_class(
         self,

@@ -506,3 +506,34 @@ def test_composition_growth_baseline_beats_random(small_corpus):
     # Growth baseline should hit at least 15% accuracy on this corpus
     # (anchors + monotone bodies); random is ~2%.
     assert rep_grow["accuracy"] >= 0.15
+
+
+# ---------------------------------------------------------------------------
+# Telemetry -- substrate v2.3 EvidenceField.computational_friction (Pre-Tier-0
+# step 0b instrumentation). info dict must carry elapsed_seconds + oracle_calls
+# without breaking pre-existing keys.
+# ---------------------------------------------------------------------------
+
+
+def test_telemetry_step_emits_elapsed_and_oracle_calls(small_env):
+    """step() must populate ``elapsed_seconds`` (>0) and ``oracle_calls``
+    (>=1) in the returned info dict, while preserving at least one
+    pre-existing key (regression check).
+
+    Substrate v2.3 contract: EvidenceField.computational_friction has
+    ``elapsed_seconds`` and ``oracle_calls`` as its first two
+    components. Without env-side telemetry these axes ship empty.
+    """
+    env = small_env
+    env.reset(seed=2026)
+    _, _, _, _, info = env.step(0)
+    assert "elapsed_seconds" in info, "missing elapsed_seconds in info"
+    assert info["elapsed_seconds"] > 0, (
+        f"elapsed_seconds must be > 0; got {info['elapsed_seconds']}"
+    )
+    assert "oracle_calls" in info, "missing oracle_calls in info"
+    assert info["oracle_calls"] >= 1, (
+        f"oracle_calls must be >= 1; got {info['oracle_calls']}"
+    )
+    # Regression: a known pre-existing key is still present.
+    assert "true_bin" in info, "regression: pre-existing key true_bin lost"

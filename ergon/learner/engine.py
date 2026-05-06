@@ -6,21 +6,16 @@ The engine ties everything together:
   1. Scheduler picks operator class for each episode
   2. Operator mutates a parent (sampled from archive) -> child genome
   3. Trivial-pattern detector runs F_TRIVIAL_BAND_REJECT on child
-  4. (v0.5+) BindEvalKernelV2 evaluates child; produces reward components
-  5. (MVP) substrate_pass evaluator stub returns kill-path verdicts
-  6. Reward computed; cell coordinate computed; archive submission
-  7. Diagnostics tracked (operator_call_counts, F_TRIVIAL_BAND_REJECT
+  4. BindEvalKernelV2 evaluates child; produces reward components
+  5. Reward computed; cell coordinate computed; archive submission
+  6. Diagnostics tracked (operator_call_counts, F_TRIVIAL_BAND_REJECT
      trigger_rate, archive coverage, etc.)
 
-At MVP scope: BindEvalKernelV2 integration is stubbed. The engine runs
-end-to-end with a synthetic substrate-pass evaluator that produces
-realistic-but-fake kill verdicts (mostly BLOCK, with random-but-rare
-CLEAR/WARN). This validates the loop's structure without requiring the
-full BindEvalKernelV2 pipeline; v0.5 wires the real evaluator.
-
-Trial 2 dry-run: engine.run(n_episodes=N) with N=10 (smoke), 100 (small
-pilot), 1K (full Trial 2). Outputs cumulative archive snapshot +
-per-operator-class diagnostic + F_TRIVIAL_BAND_REJECT statistics.
+v0.5 W1.1/W1.2: every operator class routes through BindEvalKernelV2 via
+the BindEvalEvaluator (default). The legacy MVPSubstrateEvaluator stub is
+quarantined behind use_stub=True for backwards-compat with pre-v0.5 trial
+scripts; instantiating the engine without a real evaluator and without
+use_stub=True raises EvaluatorNotWiredError.
 """
 from __future__ import annotations
 
@@ -49,6 +44,7 @@ from ergon.learner.reward import (
     MVP_REWARD_WEIGHTS,
     RewardComponents,
     compute_reward,
+    compute_reward_with_pi0,
     evaluate_substrate_pass,
     is_promotable,
 )
@@ -74,6 +70,12 @@ class EpisodeResult:
     f_trivial_match: TrivialMatch
     kill_path_verdicts: Dict[str, str]
     elapsed_seconds: float
+    # W1.7: per-domain π₀ weighting + CI propagation. domain=None ⇒ neutral
+    # weight (1.0) so pre-W1.7 trial scripts behave identically.
+    domain: Optional[str] = None
+    pi0_weighted_reward: float = 0.0
+    pi0_ci_lower: float = 1.0
+    pi0_ci_upper: float = 1.0
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 
@@ -103,16 +105,24 @@ class EngineRunReport:
 
 
 # ---------------------------------------------------------------------------
-# MVP substrate-pass evaluator stub
+# Evaluator quarantine (v0.5 W1.1)
 # ---------------------------------------------------------------------------
-#
-# At MVP scope we don't run the real F1+F6+F9+F11 battery against arsenal-
-# composed genomes (that requires the full BindEvalKernelV2 + DiscoveryEnv
-# integration). Instead we use a calibrated stub that produces realistic
-# kill rates aligned with Techne's Path B finding (0/30000 PROMOTEs across
-# 90K episodes).
-#
-# v0.5 swaps this stub for the real BindEvalKernelV2 evaluator pipeline.
+
+
+class EvaluatorNotWiredError(RuntimeError):
+    """Raised when TrialTwoEngine is constructed without a real evaluator.
+
+    v0.5 default routes every operator class through BindEvalKernelV2 via
+    BindEvalEvaluator. The legacy MVPSubstrateEvaluator stub is gated
+    behind explicit use_stub=True (or by passing the stub instance
+    directly as evaluator=). This exception is raised when neither path
+    is selected — the engine refuses to silently fall back to the stub.
+    """
+
+
+# ---------------------------------------------------------------------------
+# MVP substrate-pass evaluator stub (legacy; quarantined behind use_stub)
+# ---------------------------------------------------------------------------
 
 
 class MVPSubstrateEvaluator:
@@ -222,13 +232,17 @@ class TrialTwoEngine:
         self,
         seed: int = 42,
         scheduler: Optional[OperatorScheduler] = None,
-        evaluator: Optional[MVPSubstrateEvaluator] = None,
+        evaluator: Optional[Any] = None,
+        use_stub: bool = False,
+        promote_rate: float = 0.0001,
+        domain: Optional[str] = None,
     ):
         self.rng = random.Random(seed)
         self.scheduler = scheduler or OperatorScheduler(seed=seed)
-        self.evaluator = evaluator or MVPSubstrateEvaluator(seed=seed)
+        self.evaluator = self._wire_evaluator(evaluator, use_stub, seed, promote_rate)
         self.atom_pool = make_mvp_atom_pool()
         self.archive = MAPElitesArchive()
+        self.domain = domain  # W1.7: keys per-domain π₀; None ⇒ neutral weight
 
         # Operator instances
         self._operators = {
@@ -245,6 +259,37 @@ class TrialTwoEngine:
 
         # Episode log
         self.episodes: List[EpisodeResult] = []
+
+    # ------------------------------------------------------------------
+    # Evaluator wiring (v0.5 W1.1)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _wire_evaluator(
+        evaluator: Optional[Any],
+        use_stub: bool,
+        seed: int,
+        promote_rate: float,
+    ) -> Any:
+        if evaluator is not None:
+            if isinstance(evaluator, MVPSubstrateEvaluator) and not use_stub:
+                raise EvaluatorNotWiredError(
+                    "TrialTwoEngine refuses MVPSubstrateEvaluator without "
+                    "use_stub=True. Pass a real evaluator (e.g. "
+                    "BindEvalEvaluator) or set use_stub=True to opt into "
+                    "the legacy stub path."
+                )
+            return evaluator
+        if use_stub:
+            return MVPSubstrateEvaluator(seed=seed, promote_rate=promote_rate)
+        try:
+            from ergon.learner.genome_evaluator import BindEvalEvaluator
+        except ImportError as e:
+            raise EvaluatorNotWiredError(
+                "BindEvalEvaluator unavailable; pass an explicit evaluator "
+                f"or set use_stub=True to opt into the legacy stub. ({e!r})"
+            ) from e
+        return BindEvalEvaluator(promote_rate=promote_rate)
 
     # ------------------------------------------------------------------
     # Run
@@ -349,7 +394,10 @@ class TrialTwoEngine:
         cell = compute_cell_coordinate(child, evaluation=eval_result)
 
         components = RewardComponents(substrate_pass=substrate_pass_value)
-        reward = compute_reward(components, weights=MVP_REWARD_WEIGHTS)
+        pi0_weighted_reward, pi0_weight = compute_reward_with_pi0(
+            components, weights=MVP_REWARD_WEIGHTS, domain=self.domain,
+        )
+        reward = pi0_weighted_reward
 
         # Compute band concentration tier
         if cell.magnitude_bucket in (1, 2):
@@ -382,6 +430,10 @@ class TrialTwoEngine:
             f_trivial_match=trivial_result,
             kill_path_verdicts=kill_verdicts,
             elapsed_seconds=elapsed,
+            domain=self.domain,
+            pi0_weighted_reward=pi0_weighted_reward,
+            pi0_ci_lower=pi0_weight.pi0_ci_lower,
+            pi0_ci_upper=pi0_weight.pi0_ci_upper,
         )
 
     # ------------------------------------------------------------------

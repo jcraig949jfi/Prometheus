@@ -164,9 +164,9 @@ Per ChatGPT's framing (rephrased for Learner march): v0.5 must demonstrate **at 
 1. **Cross-corpus lift (W5):** Structural / KillVector-guided search beats structured uniform by ≥2× on robust near-miss yield across A149 + OBSTRUCTION_SHAPE.
 2. **KillVector monotonicity (W2-W3):** Selected operator classes show statistically stable directional movement toward lower failure margins on held-out region keys.
 3. **Robustness stratification works (W1-W2):** T3 (3/3-seed) claims are meaningfully more likely to survive cross-evaluator or cross-corpus checks than T1 (1/3-seed) claims.
-4. **Pipeline + tire-kick deliver measurable signal (W4):** LoRA-tuned Qwen2.5-Math-1.5B on clean data produces ≥1 of: (a) above-baseline accuracy on substrate-verdict prediction on held-out 17-entry slice; (b) measurable behavior change vs base model on synthetic env recovery; (c) clean failure mode that names what data is needed for v1.0 (e.g., "17 entries is too few; v1.0 needs ≥1K curated near-miss pairs").
+4. **Pipeline + tire-kick deliver measurable signal (W4):** LoRA-tuned Qwen2.5-Math-1.5B on clean data produces ≥1 of: (a) above-baseline accuracy on substrate-verdict prediction on held-out 17-entry slice; (b) measurable behavior change vs base model on synthetic env recovery; (c) clean failure mode that names what data is needed for v1.0 (e.g., "17 entries is too few; v1.0 needs ≥1K curated near-miss pairs"). **Fails if** tire-kick produces no predictive content AND no diagnostic content AND requires materially-different re-run to interpret (per Aporia 2026-05-05 review — distinguishes "informative failure" from "burned-budget non-measurement").
 
-**The fourth criterion is intentionally weak** — even a "measurable failure that names what we need next" counts. The point is to *learn from the tire-kick*, not to ship a useful model on round 1. ChatGPT and Gemini converge on "no 184M classifier yet"; this acceptance criterion respects that bar.
+**The fourth criterion is intentionally weak** — even a "measurable failure that names what we need next" counts. The point is to *learn from the tire-kick*, not to ship a useful model on round 1. ChatGPT and Gemini converge on "no 184M classifier yet"; this acceptance criterion respects that bar. Aporia's added falsifier clause prevents the criterion from being unfalsifiable: a result that requires re-running the same experiment with different setup is *not* a v0.5 finding.
 
 ---
 
@@ -203,7 +203,7 @@ Each task carries: **subject**, **deliverable** (concrete artifact), **success c
 
 | ID | Task | Deliverable | Success condition | Blocked by |
 |----|------|-------------|-------------------|------------|
-| W3.1 | Build synthetic ground-truth env | `ergon/diagnostic_c/synthetic_env.py` — clean env with known latent rule (linear / polynomial regression with structured noise); generates train/held-out splits | 1K train + 200 held-out generated; ground truth recoverable by lstsq on clean data | — |
+| W3.1 | Build synthetic ground-truth env (with locked acceptance criteria per Aporia 2026-05-05 review) | `ergon/diagnostic_c/synthetic_env.py` — clean env with known latent rule on poly-coefficient feature space (NOT arbitrary regression). **Three locked acceptance criteria, ALL must be met BEFORE W4.2 trains on this env:** (1) true latent rule recoverable by documented baseline (LSQ at >85% on held-out clean data); (2) signal-to-noise ratio in documented range — NOT at modal-collapse boundary from Day-4 synthetic, NOT trivially clean; (3) feature space qualitatively similar to 17-entry boundary-layer fixture (poly coefficients + Mahler-style invariants). If all 3 cannot be met, W3.1 is **DROPPED from v0.5 training pipeline** (per Aporia: "it'll add noise to the verdict") | 1K train + 200 held-out generated; ALL 3 acceptance criteria met and documented BEFORE W4.2 starts | — |
 | W3.2 | Materialize 17-entry boundary layer training fixture (substrate v2.2-aligned) | `ergon/pipeline_d/boundary_layer_fixture.py` exports the 17 entries from `prometheus_math/_lehmer_brute_force_path_b.py` results in the **v2.2-aligned schema** (§7.2 below): adds `coordinate_chart_id`, structured `method_spec` (engine + strategy + precision_dps + independence_class + drift_channel), structured `stability_pass` object (not bool), optional `exclusion_certificate_ref`. **Emits separate `pre_falsification_view` and `post_falsification_view` to different file paths per v2.2 §6.3 P5 contract.** | All 17 entries serialized in both views; held-out fixture from `lehmer_brute_force` on deg12 ±5 generated (Techne queued + prioritized); pre/post views in distinct file paths | W2.6 (DONE) + Techne Tier 0 P0 Lehmer chart registration (~2 days) |
 | W3.3 | Pipeline-D scaffold — data loader | `ergon/pipeline_d/data_loader.py` reads schema-conformant JSONL; produces HuggingFace `Dataset`; supports train/eval splits | Loader passes 17-entry fixture + synthetic env data through HF `Trainer` API smoke test (no actual training) | W3.1, W3.2 |
 | W3.4 | Pipeline-D scaffold — model loader (Qwen2.5-Math-1.5B-Instruct) | `ergon/pipeline_d/model.py` downloads + loads Qwen2.5-Math-1.5B-Instruct via `transformers`; configures LoRA via `peft` (rank 8 default, target modules q_proj+v_proj per Rhea precedent) | Base model loads without OOM on RTX 5060 Ti; LoRA adapter attaches; trainable param count <2% of total | — |
@@ -222,6 +222,7 @@ Each task carries: **subject**, **deliverable** (concrete artifact), **success c
 | W4.4 | Backup tire-kick (conditional): Qwen2.5-Math-7B + Unsloth 4-bit | Triggered only if 1.5B underfits visibly on both tire-kicks | Same deliverable pattern; flagged as escalation | W4.1, W4.2 |
 | W4.5 | KillVector monotonicity check (criterion 2) | Aggregate per-operator `E[delta_kill_vector]` across W2-W4 ledgers; statistical test for monotonic trend | Pass/fail + p-value reported per operator class | W2.4 |
 | W4.6 | Robustness stratification check (criterion 3) | Compare T3 vs T1 claims on cross-evaluator pass rate using existing iter28+iter31 ledgers + W1-W4 new records | Stratification effect size + significance test reported | W2.1 |
+| W4.7 | Logistic-regression trivial-feature control (third R14 defense, per Aporia 2026-05-05 review) | `pipeline_d/runs/lr_control/` — train logistic regression on raw `poly_coefficients` alone (no LoRA, no embedding, no derived features) on the same train/held-out split as W4.1. Substrate-grade equivalent of W4.0's null gate at a different layer: W4.0 catches "did it learn anything" (label-shuffle); **W4.7 catches "did it learn something more than the trivial polynomial-coefficient feature"** | LR-control accuracy reported alongside LoRA accuracy; gap (LoRA − LR) reported with significance test; if LoRA ≈ LR, the trivial-feature failure mode is named explicitly in W6.1 | W4.1 |
 
 ### Week 5 — Cross-corpus transfer rung
 
@@ -365,6 +366,21 @@ This is the new gating constraint. v0.5's tire-kick is intra-A149 + synthetic + 
 5. Pre-filtering via `surviving_claim_morphology` (W3.7) is sufficient additional discipline given Aporia's flag that 100 of 103 kill records are A149-only and most cross-domain morphology classifies INDETERMINATE.
 
 **If Aporia rejects:** fall-back is escalation to a pure synthetic corpus generated by Diagnostic-C with no boundary-layer mixing. v0.5 timeline extends by 1 week.
+
+### 7.1.a Aporia W2.5 sign-off — RECEIVED 2026-05-05 (cleared with one condition)
+
+Verbatim from `roles/Ergon/APORIA_FEEDBACK_2026-05-05.md`:
+
+**Cleared as non-contaminated for tire-kick LoRA training:**
+1. Synthetic ground-truth env (W3.1) — **CONDITIONAL** on synthetic env design meeting the three locked acceptance criteria (now in W3.1 task description)
+2. 17-entry Lehmer boundary layer (W3.2) — **CLEARED.** Techne's Path C curation discipline is sufficient given the sharpened gating constraint
+3. Held-out fixture from different finite slice (W3.2 deg12 ±5) — **CLEARED** as falsification-of-overfit
+4. W5.3 cross-corpus transfer (engine-level only, no LoRA across corpora) — **CLEARED**, doesn't trip the sharpened gate
+5. Pre-filtering via surviving_claim_morphology (W3.7) — **CLEARED** with the closed-loop disclosure discipline (filtered + unfiltered control)
+
+**The sharpened gating constraint stands:** defer cross-domain Ergon training (LoRA across multiple domains' kill data) until ≥100 per-claim kill records exist in ≥2 domains. v0.5's intra-A149 + synthetic + boundary-layer is correctly within this gate.
+
+**Status:** W2.5 task = **DONE-conditional**. The condition (W3.1 acceptance criteria locked before W4.2 trains on it) is now baked into the W3.1 task description. If those criteria can't be met, W3.1 drops from v0.5 training pipeline and W4.2 pivots to 17-entry-only.
 
 ### 7.2 Techne sign-off (W2.6) — APPROVED 2026-05-05 with 4 schema additions
 

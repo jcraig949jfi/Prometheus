@@ -59,6 +59,7 @@ from __future__ import annotations
 
 import math
 import random
+import time
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
@@ -399,6 +400,10 @@ class MockThetaEnv:
                 f"action {a} out of range [0, {self._n_bins})"
             )
 
+        # Cost telemetry (substrate v2.3 EvidenceField.computational_friction).
+        t0 = time.perf_counter()
+        oracle_calls = 0
+
         # Compute ground truth.
         true_a = int(self._current.coefficients[self._context_k])
         true_bin = integer_bin_for(true_a, self._n_bins, self._value_range)
@@ -415,6 +420,7 @@ class MockThetaEnv:
             ],
             cap=cap_b,
         )
+        oracle_calls += 1
         cap_e = self._kernel.mint_capability("EvalCap")
         ev = self._ext.EVAL(
             binding_name=binding.symbol.name,
@@ -424,6 +430,7 @@ class MockThetaEnv:
             cap=cap_e,
             eval_version=1,
         )
+        oracle_calls += 1
         try:
             output_bin = int(ev.output_repr)
         except (TypeError, ValueError):
@@ -442,6 +449,8 @@ class MockThetaEnv:
         terminated = True
         truncated = False
         self._step_called = True
+
+        elapsed_seconds = time.perf_counter() - t0
 
         pred_value = bin_to_integer(a, self._n_bins, self._value_range)
 
@@ -464,6 +473,8 @@ class MockThetaEnv:
             "binding_version": binding.symbol.version,
             "eval_success": ev.success,
             "split": self.split,
+            "elapsed_seconds": float(elapsed_seconds),
+            "oracle_calls": int(oracle_calls),
         }
         return self._obs(), float(reward), terminated, truncated, info
 

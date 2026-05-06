@@ -43,6 +43,7 @@ from __future__ import annotations
 
 import math
 import random
+import time
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
@@ -399,6 +400,10 @@ class ModularFormEnv:
                 f"action {a} out of range [0, {self._n_bins})"
             )
 
+        # Cost telemetry (substrate v2.3 EvidenceField.computational_friction).
+        t0 = time.perf_counter()
+        oracle_calls = 0
+
         # Compute ground truth.
         target_prime = int(self._current.primes[self._context_k])
         true_a_p = int(self._current.a_p[self._context_k])
@@ -418,6 +423,7 @@ class ModularFormEnv:
             ],
             cap=cap_b,
         )
+        oracle_calls += 1
         cap_e = self._kernel.mint_capability("EvalCap")
         ev = self._ext.EVAL(
             binding_name=binding.symbol.name,
@@ -427,6 +433,7 @@ class ModularFormEnv:
             cap=cap_e,
             eval_version=1,
         )
+        oracle_calls += 1
         try:
             output_bin = int(ev.output_repr)
         except (TypeError, ValueError):
@@ -445,6 +452,8 @@ class ModularFormEnv:
         terminated = True
         truncated = False
         self._step_called = True
+
+        elapsed_seconds = time.perf_counter() - t0
 
         # Predicted normalized & implied a_p (from bin center).
         pred_norm = bin_center(a, self._n_bins)
@@ -470,6 +479,8 @@ class ModularFormEnv:
             "binding_version": binding.symbol.version,
             "eval_success": ev.success,
             "split": self.split,
+            "elapsed_seconds": float(elapsed_seconds),
+            "oracle_calls": int(oracle_calls),
         }
         return self._obs(), float(reward), terminated, truncated, info
 

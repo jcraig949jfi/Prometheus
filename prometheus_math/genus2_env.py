@@ -30,6 +30,7 @@ from __future__ import annotations
 
 import math
 import random
+import time
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
@@ -302,6 +303,10 @@ class Genus2Env:
                 f"action {a} out of range [0, {N_RANK_ACTIONS})"
             )
 
+        # Cost telemetry (substrate v2.3 EvidenceField.computational_friction).
+        t0 = time.perf_counter()
+        oracle_calls = 0
+
         # BIND/EVAL through substrate.
         cap_b = self._kernel.mint_capability("BindCap")
         binding = self._ext.BIND(
@@ -314,6 +319,7 @@ class Genus2Env:
             ],
             cap=cap_b,
         )
+        oracle_calls += 1
         cap_e = self._kernel.mint_capability("EvalCap")
         ev = self._ext.EVAL(
             binding_name=binding.symbol.name,
@@ -323,6 +329,7 @@ class Genus2Env:
             cap=cap_e,
             eval_version=1,
         )
+        oracle_calls += 1
         try:
             output_value = int(ev.output_repr)
         except (TypeError, ValueError):
@@ -343,6 +350,8 @@ class Genus2Env:
         truncated = False
         self._step_called = True
 
+        elapsed_seconds = time.perf_counter() - t0
+
         info = {
             "label": self._current.label,
             "iso_class": self._current.iso_class,
@@ -358,6 +367,8 @@ class Genus2Env:
             "binding_version": binding.symbol.version,
             "eval_success": ev.success,
             "split": self.split,
+            "elapsed_seconds": float(elapsed_seconds),
+            "oracle_calls": int(oracle_calls),
         }
         return self._obs(), float(reward), terminated, truncated, info
 

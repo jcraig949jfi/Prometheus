@@ -1,17 +1,22 @@
 """Tests for ergon.learner.reward and ergon.learner.stability."""
 from __future__ import annotations
 
+import json
+
 import pytest
 
 from ergon.learner.descriptor import OUT_OF_BAND_BUCKET
 from ergon.learner.genome import Genome, NodeRef
 from ergon.learner.reward import (
     MVP_REWARD_WEIGHTS,
+    Pi0Weight,
     RewardComponents,
     V8_REWARD_WEIGHTS_FULL,
     V8_REWARD_WEIGHTS_POST_TRIAL_1,
     compute_reward,
+    compute_reward_with_pi0,
     evaluate_substrate_pass,
+    get_pi0_weight,
     is_promotable,
 )
 from ergon.learner.stability import (
@@ -241,3 +246,101 @@ def test_stability_with_evaluator_fn_stable_passes():
     assert result.input_jitter_pass_rate == 1.0
     assert result.half_precision_pass
     assert result.new_magnitude_bucket == 3
+
+
+# ===========================================================================
+# W1.7 — per-domain π₀ weighting with CI propagation
+# ===========================================================================
+
+
+def _write_pi0_table(path, entries):
+    raw = {"per_domain": {
+        d: {"pi0_mean": m, "pi0_ci": [lo, hi]}
+        for d, (m, lo, hi) in entries.items()
+    }}
+    path.write_text(json.dumps(raw), encoding="utf-8")
+
+
+def test_pi0_default_table_has_known_domains():
+    """The Charon-shipped JSON exposes the seven W1.7 domains."""
+    for d in ("Lehmer_Mahler_discovery", "genus2", "modular_form"):
+        w = get_pi0_weight(d)
+        assert 0.0 <= w.pi0_ci_lower <= w.pi0_mean <= w.pi0_ci_upper <= 1.0
+
+
+def test_pi0_neutral_when_domain_none():
+    """domain=None ⇒ neutral weight (1.0); reward unchanged."""
+    components = RewardComponents(substrate_pass=1.0)
+    weighted, pi0 = compute_reward_with_pi0(components, domain=None)
+    assert weighted == 1.0
+    assert pi0.pi0_mean == 1.0
+    assert pi0.pi0_ci_lower == 1.0
+    assert pi0.pi0_ci_upper == 1.0
+
+
+def test_pi0_unknown_domain_is_neutral():
+    components = RewardComponents(substrate_pass=1.0)
+    weighted, pi0 = compute_reward_with_pi0(components, domain="not_a_domain")
+    assert weighted == 1.0
+    assert pi0.pi0_mean == 1.0
+
+
+def test_pi0_lehmer_vs_genus2_carries_different_weight(tmp_path):
+    """Same PROMOTE in genus2 (low π₀) vs Lehmer (near 1.0) → different reward."""
+    pi0_file = tmp_path / "pi0.json"
+    _write_pi0_table(pi0_file, {
+        "Lehmer": (0.999, 0.998, 0.999),
+        "genus2": (0.669, 0.661, 0.676),
+    })
+    components = RewardComponents(substrate_pass=1.0)
+    r_lehmer, w_lehmer = compute_reward_with_pi0(
+        components, domain="Lehmer", pi0_path=pi0_file,
+    )
+    r_genus2, w_genus2 = compute_reward_with_pi0(
+        components, domain="genus2", pi0_path=pi0_file,
+    )
+    assert r_lehmer > r_genus2
+    assert w_lehmer.pi0_mean == 0.999
+    assert w_genus2.pi0_mean == 0.669
+    # CI bounds propagate
+    assert w_genus2.pi0_ci_lower == 0.661
+    assert w_genus2.pi0_ci_upper == 0.676
+
+
+def test_pi0_ci_widths_propagate_for_thin_data_domains(tmp_path):
+    """Wide-CI domains expose larger ci_upper - ci_lower so the gradient
+    can downweight thin-data evidence downstream."""
+    pi0_file = tmp_path / "pi0.json"
+    _write_pi0_table(pi0_file, {
+        "thin_domain": (0.85, 0.65, 0.95),    # wide CI
+        "dense_domain": (0.95, 0.945, 0.955),  # tight CI
+    })
+    _, thin = compute_reward_with_pi0(
+        RewardComponents(substrate_pass=1.0),
+        domain="thin_domain", pi0_path=pi0_file,
+    )
+    _, dense = compute_reward_with_pi0(
+        RewardComponents(substrate_pass=1.0),
+        domain="dense_domain", pi0_path=pi0_file,
+    )
+    thin_width = thin.pi0_ci_upper - thin.pi0_ci_lower
+    dense_width = dense.pi0_ci_upper - dense.pi0_ci_lower
+    assert thin_width > dense_width
+
+
+def test_pi0_zero_substrate_pass_zero_reward(tmp_path):
+    pi0_file = tmp_path / "pi0.json"
+    _write_pi0_table(pi0_file, {"any_domain": (0.9, 0.85, 0.95)})
+    weighted, _ = compute_reward_with_pi0(
+        RewardComponents(substrate_pass=0.0),
+        domain="any_domain", pi0_path=pi0_file,
+    )
+    assert weighted == 0.0
+
+
+def test_pi0_weight_dataclass_fields():
+    w = Pi0Weight("d", 0.5, 0.4, 0.6)
+    assert w.domain == "d"
+    assert w.pi0_mean == 0.5
+    assert w.pi0_ci_lower == 0.4
+    assert w.pi0_ci_upper == 0.6

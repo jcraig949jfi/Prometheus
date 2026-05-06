@@ -33,7 +33,7 @@ from ergon.learner.engine import TrialTwoEngine
 def run_dry_run(n_episodes: int = 200, seed: int = 42) -> dict:
     """Execute the dry-run pilot and return results dict."""
     print(f"=== Trial 2 dry-run pilot: n_episodes={n_episodes}, seed={seed} ===")
-    engine = TrialTwoEngine(seed=seed)
+    engine = TrialTwoEngine(seed=seed, use_stub=True)
     report = engine.run(n_episodes=n_episodes)
 
     # Per-operator metrics from archive
