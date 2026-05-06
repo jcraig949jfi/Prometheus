@@ -169,7 +169,6 @@ Per Techne v2.2 §13 + Ergon v0.5 §4:
 - A new mathematical discovery (out of scope; researcher work)
 - A second local lemma (possible byproduct of P6, not committed)
 - An end-to-end usable Learner (Ergon's v1.0 work; v0.5 is tire-kick)
-- An external publication (methodology paper continues on its own track)
 - A *navigable* gradient field (v1.0 framing dropped per ChatGPT/Gemini convergence)
 
 The sister projects promise an instrument upgrade. The instrument's job is to make the team's discovery work more honest, more compositional, and more compounding. Both projects explicitly avoid the pattern where a sprint claims discoveries that get retracted on review — the Day-4 lesson, hard-coded into deferral lists and commit-blocking gates on both sides.

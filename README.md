@@ -12,7 +12,7 @@ A typed, append-only ledger built around a 7-opcode Σ-kernel (RESOLVE, CLAIM, F
 
 These are reproducible artifacts on disk. Each is the substrate doing what it was designed to do — including catching its own claims when they don't survive scrutiny.
 
-- **The synthetic-null gate fired on a load-bearing claim.** On 2026-05-04, the substrate's own "cross-domain transport across 6 environments" headline (REINFORCE/PPO showing +1.37× to +18× lifts at p<0.05) was retracted before publication when label-shuffled training reproduced the same lift pattern on a regression environment where there is nothing to discover. Modal-class recovery, not learned structure. → [`prometheus_math/MODAL_COLLAPSE_SYNTHETIC_RESULTS.md`](prometheus_math/MODAL_COLLAPSE_SYNTHETIC_RESULTS.md)
+- **The synthetic-null gate fired on a load-bearing claim.** On 2026-05-04, the substrate's own "cross-domain transport across 6 environments" headline (REINFORCE/PPO showing +1.37× to +18× lifts at p<0.05) was retracted before circulation when label-shuffled training reproduced the same lift pattern on a regression environment where there is nothing to discover. Modal-class recovery, not learned structure. → [`prometheus_math/MODAL_COLLAPSE_SYNTHETIC_RESULTS.md`](prometheus_math/MODAL_COLLAPSE_SYNTHETIC_RESULTS.md)
 
 - **Lehmer brute-force as ExclusionCertificate prototype.** Enumerated all 97,435,855 deg-14 ±5 palindromic reciprocal polynomials. Initial verdict INCONCLUSIVE on 17 borderline near-cyclotomic entries. Substrate refused to overclaim. Triangulation via three independent paths (high-precision mpmath at dps=60, symbolic factorization, factorization-aware catalog lookup) upgraded to local lemma. → [`prometheus_math/LEHMER_BRUTE_FORCE_FULL_RUN_RESULTS.md`](prometheus_math/LEHMER_BRUTE_FORCE_FULL_RUN_RESULTS.md)
 
@@ -36,7 +36,7 @@ These are reproducible artifacts on disk. Each is the substrate doing what it wa
                      there is nothing structural to discover
                    - verdict: modal-class recovery, not learned structure
 [2026-05-04 04:47] CLAIM rejected: kill_path = SYNTHETIC_NULL_GATE
-[2026-05-04 04:48] §5 cross-domain table retracted before publication.
+[2026-05-04 04:48] §5 cross-domain table retracted before circulation.
 ```
 
 This is the discipline the substrate exists to enforce. The interesting output is the kill, not the proposal.
