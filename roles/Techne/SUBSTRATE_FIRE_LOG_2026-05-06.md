@@ -62,7 +62,7 @@ Delta: 0 (expected — no code changes)
 
 ### Commit
 
-To be recorded after commit: `<hash>` — "Fire #1: T002 KillEmbedding K(c) implementation prep checklist; T001 BLOCKED on scripts/ contract change"
+`c72ca456` — "Fire #1: T002 KillEmbedding K(c) implementation prep checklist; T001 BLOCKED"
 
 ### Schedule wakeup
 
