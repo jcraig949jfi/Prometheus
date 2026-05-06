@@ -76,8 +76,9 @@ class KillObject:
 
     # ─── Stability metadata (per-component) ─────────────────────────
     # Substrate v2.2 §6.2 P2 — perturbation-stability for high-magnitude
-    # buckets (≥3); structured object not bool
-    stability_pass: dict[str, StabilityRecord]  # component_id → record
+    # buckets (≥3); structured object not bool. Type name per
+    # prometheus_math/stability_adapters.py shipped at d17a2ff8.
+    stability_pass: dict[str, StabilityResult]  # component_id → result
 
     # ─── Spatial neighbors (for triplet sampling) ───────────────────
     # P5 NearMissCorpus emission's `neighbors_in_chart` field — the
@@ -92,16 +93,28 @@ class KillObject:
     near_miss: bool                        # cleared k-of-N falsifiers, k ≥ floor
 
     # ─── Computational friction (substrate v2.2 §6.2 P1) ────────────
-    # Populated by Pre-Tier-0 0b telemetry. Currently A149-only;
-    # cross-domain when Techne ships 0b instrumentation.
+    # Populated by Pre-Tier-0 0b telemetry, shipped at d17a2ff8 across
+    # all 6 cross-domain envs (bsd_rank, modular_form, knot_trace_field,
+    # genus2, oeis_sleeping, mock_theta) emitting info["elapsed_seconds"]
+    # + info["oracle_calls"] per step.
     elapsed_seconds: float | None
     oracle_calls: int | None
-    peak_memory_mb: float | None
+    peak_memory_mb: float | None             # expected NaN for cross-domain
+                                             # envs in v0.1; psutil deferred
+                                             # to Tier 3 rollout per Techne
 
     # ─── Cross-references (provenance, for replay) ─────────────────
-    triangulation_history: list[str] | None  # for upgraded INCONCLUSIVE
+    # triangulation_history: v0.1 carries path_ids only (string list);
+    # v0.2 upgrade path is list[TriangulationPathRef] from
+    # sigma_kernel/exclusion_certificate.py if geometry needs verdict +
+    # method-diversity signal.
+    triangulation_history: list[str] | None  # for upgraded INCONCLUSIVE; path_ids only in v0.1
     exclusion_certificate_ref: str | None    # if cell sits inside a registered exclusion
-    parent_cell_ids: list[str]               # lineage for evolution-tracked operators
+    # NOTE: parent_cell_ids is NOT in K(c) v0.1.
+    # P5 emit_from_substrate doesn't currently produce lineage. For v0.1
+    # training we'll source parent lineage from tools/lineage_replay.py
+    # (Ergon W2.3) at training time. v0.2 may promote lineage into K(c)
+    # if cross-review surfaces a geometry need.
 ```
 
 ## Embedding function φ: K(c) → ℝ^d
