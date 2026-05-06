@@ -1,9 +1,9 @@
 # Discovery via Rediscovery
 ## Rediscovery is the calibration test for discovery. The same loop, different oracle states.
 
-**Status:** Foundational architectural recognition. Companion to [`bottled_serendipity.md`](bottled_serendipity.md), [`residual_signal.md`](residual_signal.md), [`sigma_kernel.md`](sigma_kernel.md).
-**Date:** 2026-05-03
-**Origin:** James Craig (HITL), articulated as an epiphany 2026-05-03 in response to Techne's `prometheus_math/DISCOVERY_RESULTS.md` of 2026-05-02 demonstrating the discovery_env reaching M=1.458 in the Salem cluster band. Charon (Claude Opus 4.7) is the writing instrument; the recognition is James's.
+> **Public read note.** This is an internal architecture document linked from the project's top-level [README](../../../README.md), surfaced for transparency. It captures the recognition that rediscovering known mathematics on the same substrate that hunts novel mathematics is the *calibration check*: same loop, different oracle states. The recognition is James Craig's (PI); the writing was done by the Charon agent on 2026-05-03 in response to a substrate result from the Techne agent reaching M=1.458 in the Salem cluster band — see [`prometheus_math/DISCOVERY_RESULTS.md`](../../../prometheus_math/DISCOVERY_RESULTS.md).
+
+**Companion docs:** [`bottled_serendipity.md`](bottled_serendipity.md), [`residual_signal.md`](residual_signal.md), [`sigma_kernel.md`](sigma_kernel.md).
 **Companions:**
 - [`/prometheus_math/discovery_env.py`](../../../prometheus_math/discovery_env.py) — the generative env that demonstrates the loop closes
 - [`/prometheus_math/DISCOVERY_RESULTS.md`](../../../prometheus_math/DISCOVERY_RESULTS.md) — Techne's results doc (rediscovery of Salem cluster band)

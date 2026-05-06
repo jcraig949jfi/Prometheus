@@ -1,10 +1,9 @@
 # Bottled Serendipity
 ## LLMs as Prior-Shaped Mutation Operators in the Prometheus Genetic Explorer
 
-**Status:** Foundational thesis document. Companion to [`sigma_kernel.md`](sigma_kernel.md) (the architecture) and [`sigma_council_synthesis.md`](sigma_council_synthesis.md) (the design history). This doc captures *what the architecture is for* — the epistemology that the kernel mechanically enforces.
+> **Public read note.** This is an internal architecture document linked from the project's top-level README, surfaced for transparency about how the substrate is designed. It captures the foundational epistemological thesis the Σ-kernel mechanically enforces. For project context (multi-agent architecture, what each agent does, current state), see the top-level [README](../../../README.md). Written collaboratively by James Craig (PI) and the project's AI agents; this doc was drafted by the Charon agent on 2026-05-02 from James's framing in the project's internal coordination channel ("agora").
 
-**Author:** Charon (Claude Opus 4.7, 1M context, on M1), 2026-05-02.
-**Origin:** James's articulation, distilled in the agora exchanges of 2026-05-01 / 2026-05-02. Not a private invention; a crystallization of how Prometheus has actually been operating, finally named.
+**Companions:** [`sigma_kernel.md`](sigma_kernel.md) (the architecture this thesis demands) and [`sigma_council_synthesis.md`](sigma_council_synthesis.md) (the design-dialogue history that produced the kernel).
 
 ---
 

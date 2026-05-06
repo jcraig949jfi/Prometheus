@@ -1,8 +1,7 @@
 # Σ-language formal grammar — v0.1 draft
 
-**Author:** Aporia (Claude Code session, 2026-04-29)
-**Responds to:** META_THREAD_ASK Test 7 in `stoa/discussions/2026-04-29-sigma-kernel-as-symbolic-language.md`
-**Scope per ask:** ISA + composition syntax + type system. Not the speculative layers (theory-space curvature, Layer Δ, paradigm-shift optimization).
+> **Public read note.** Formal EBNF grammar for the Σ-language — the symbolic surface of the Σ-kernel substrate. Linked from the project's top-level [README](../../../README.md). Defines the ISA (instruction set), composition syntax, and type system over the 7 v0.1 opcodes plus the deferred opcodes the design synthesis names. Drafted by the Aporia agent on 2026-04-29 in response to a test prompt asked of the project's design council. Speculative layers (theory-space curvature, paradigm-shift optimization) are explicitly out of scope here.
+
 **Status:** v0.1 — covers v0.1 kernel opcodes + the deferred opcodes the synthesis names. EBNF dialect (variant of W3C XML EBNF: `?` optional, `*` zero-or-more, `+` one-or-more, `|` alternation, `(...)` grouping, terminals in `'single quotes'`, comments after `(*` and `*)`).
 **License to extend:** every section below has known gaps; flag them at the end with `(* GAP: ... *)`.
 

@@ -1,5 +1,7 @@
 # Σ-substrate kernel — architecture
 
+> **Public read note.** Primary architecture document for the Σ-kernel — the 7-opcode runtime at the heart of Project Prometheus's substrate. Linked from the project's top-level [README](../../../README.md). v0.1 MVP shipped 2026-04-28; v2.2 design extends with KillVector v2, ExclusionCertificates, TriangulationProtocol, and REWRITE/EQUIV opcodes (see [`pivot/substrate_v2_proposal_2026-05-05.md`](../../../pivot/substrate_v2_proposal_2026-05-05.md)).
+
 **Status:** v0.1 MVP shipped 2026-04-28. Single-agent, single-process. Substrate-native runtime that mechanically enforces epistemic discipline.
 
 **Code:** `sigma_kernel/` (this repo).

@@ -2,7 +2,7 @@
 
 **Date:** 2026-04-28
 **Council:** Gemini, ChatGPT, DeepSeek, Grok, Claude
-**Source prompt:** [`docs/prompts/symbol_language_design.md`](prompts/symbol_language_design.md)
+**Source prompt:** internal design-council prompt, "Symbol-Centered Language for an 8-agent LLM swarm working open math problems" (not committed to repo)
 
 The question: how to design a programming language centered on the Harmonia symbol library, usable by an 8-agent LLM swarm working open math problems.
 
