@@ -69,12 +69,13 @@ Each critique has a defined trigger condition and falsification test. Surfacing 
 - **Learner v0.5 tire-kick** (Ergon) — first end-to-end LoRA fine-tune of Qwen2.5-Math-1.5B-Instruct on substrate output, gated by commit-blocking synthetic-null discipline. Design at [`pivot/ergon_learner_v0.5_design_2026-05-05.md`](pivot/ergon_learner_v0.5_design_2026-05-05.md).
 - **40-problem attack batch + cross-reviews** (just landed) — 8 researchers attempted 5 famous open problems each with explicit kill-data discipline; 22 cross-reviews surfaced 4 substrate-primitive candidates. Full synthesis at [`aporia/meta/experiments/2026-05-05/APORIA_SYNTHESIS.md`](aporia/meta/experiments/2026-05-05/APORIA_SYNTHESIS.md).
 
-## What this project does NOT promise
+## What this project does not yet claim
 
-- A new mathematical discovery (researcher work, not substrate work)
-- An end-to-end superintelligent math agent (out of scope; we're building the verification layer that eventually pairs with one)
-- An external publication (methodology paper draft exists; not yet submitted)
-- A *navigable* gradient field (claim dropped after reviewer convergence; substrate ships typed local coordinate charts, not global geometry)
+The substrate is laying groundwork for several outcomes that may emerge but are not asserted today:
+
+- **A new mathematical discovery.** None claimed. The substrate is built so that *if* discovery emerges, it does so through the falsification gauntlet — kill-record, triangulation, ExclusionCertificate, on disk and reproducible. The current 0-PROMOTE rate across cross-domain envs is what an honest instrument should report when the content is structurally absent.
+- **Structured cognition in the Learner.** Ergon's Learner is at v0.5 first tire-kick. If serendipitous structured cognition emerges from training on the substrate's accumulated kill-data corpus over time, that's the groundwork paying off — and we'll have the discipline to recognize it because the synthetic-null gate is commit-blocking. No current artifact justifies the claim.
+- **A navigable gradient field over discovery space.** What the substrate ships today is typed local coordinate charts and an empirical kill-pattern geometry from ~314K logged kills. As negative-space data accumulates and the KillEmbedding lands, a global gradient field may emerge from the noise. Today it does not exist; we're not pretending it does.
 
 ## License
 
