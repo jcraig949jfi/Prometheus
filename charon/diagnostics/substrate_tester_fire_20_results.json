@@ -1,0 +1,144 @@
+{
+  "fire_id": "fire_20_2026_05_07",
+  "lanes": [
+    "5_large_scale_enumeration"
+  ],
+  "lane_5": {
+    "lane": "5_large_scale_enumeration",
+    "degree": 10,
+    "coef_range": [
+      -5,
+      5
+    ],
+    "n_expected": 805255,
+    "n_processed": 805255,
+    "wall_clock_seconds": 26.192449808120728,
+    "throughput_per_sec": 30743.78326193597,
+    "in_band_count": 44,
+    "in_band_first_5": [
+      [
+        [
+          1,
+          0,
+          2,
+          0,
+          1,
+          0
+        ],
+        1.0000090562719257
+      ],
+      [
+        [
+          1,
+          0,
+          1,
+          0,
+          -2,
+          0
+        ],
+        1.0000096264137033
+      ],
+      [
+        [
+          1,
+          0,
+          1,
+          2,
+          1,
+          2
+        ],
+        1.0000098251911438
+      ],
+      [
+        [
+          1,
+          1,
+          3,
+          2,
+          5,
+          3
+        ],
+        1.0000112476552157
+      ],
+      [
+        [
+          1,
+          0,
+          3,
+          0,
+          4,
+          0
+        ],
+        1.0000119036406048
+      ]
+    ],
+    "n_shards": 55,
+    "progress_log": [
+      {
+        "elapsed_s": 15.108367681503296,
+        "shard_idx": 30,
+        "n_shards": 55,
+        "polys_processed": 453871,
+        "rate_per_sec": 30041.03484691203
+      }
+    ],
+    "n_tests": 5,
+    "verdict_counts": {
+      "PASS": 5
+    },
+    "tests": [
+      {
+        "id": "T1_completion",
+        "expected": "deg-10 +/-5 enumeration completes",
+        "actual": "completed in 26.2s; 805,255 polys @ 30,744/s",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T2_enumeration_count_matches_expected",
+        "expected": "n_polys_processed == 805,255",
+        "actual": "805,255 (match)",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T3_throughput_reasonable",
+        "expected": ">=10K polys/sec",
+        "actual": "30,744 polys/sec",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T4_band_candidates_surface",
+        "expected": "in_band_count > 0",
+        "actual": "in_band_count=44; rate=5.46e-05",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T5_shard_summary_well_formed",
+        "expected": "per_shard_summary has 55 entries",
+        "actual": "55 entries, schema valid",
+        "verdict": "PASS",
+        "severity": null
+      }
+    ],
+    "scale_comparison": {
+      "deg_14_pm_5_baseline": {
+        "n": 97435855,
+        "hits": 253,
+        "rate": 2.596580078247376e-06
+      },
+      "deg_12_pm_5_fire_6": {
+        "n": 8857805,
+        "hits": 113,
+        "rate": 1.275711081921537e-05
+      },
+      "deg_10_pm_5_fire_20": {
+        "n": 805255,
+        "hits": 44,
+        "rate": 5.464107642920566e-05
+      }
+    }
+  }
+}

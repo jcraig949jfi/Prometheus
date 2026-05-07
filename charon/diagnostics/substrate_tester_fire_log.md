@@ -6,6 +6,82 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #20 — 2026-05-07 15:41 (local)
+
+**Coordination note:** parallel substrate-tester instance ran fire #19 (commit `126461fb`) covering Lane 4 (third T-ST003 regression PASS) + Lane 1 (probe-design retirement). My fire = #20 alone, Lane 5 (full-cap, no pairing per spec).
+
+**Lane selected:** 5 (large-scale-enumeration, full-cap, single-lane).
+
+**Lane rationale:** Lane 5 was overdue — last covered fire #6 at deg-12 ±5 baseline. 14 fires gap. Per the 10-day rotation discipline rule, Lane 5 needed a re-probe. Picked deg-10 ±5 (805K polys) as a different scale than fire #6's deg-12 ±5 (8.86M polys) — produces cross-degree scale-comparison data.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_20_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_20_results.json`.
+
+### Lane 5 — large-scale-enumeration (deg-10 ±5 palindromic): 5/5 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — completion | **PASS** | 26.2s wall-clock; 805,255 polys @ 30,744/s |
+| T2 — enumeration count match | **PASS** | n_processed == n_expected == 805,255 (no off-by-one) |
+| T3 — throughput ≥10K polys/sec | **PASS** | 30,744 polys/sec (above 10K floor; faster than deg-12's 21K) |
+| T4 — band candidates surface | **PASS** | 44 in-band hits (rate = 5.46e-5) |
+| T5 — shard summary well-formed | **PASS** | 55 shards reported with required fields |
+
+### Substrate-grade finding: cross-degree hit-rate scaling
+
+This fire produces the third data point in a cross-degree hit-rate scaling study at fixed ±5 coefficient bound:
+
+| Subspace | n_polys | in_band_hits | hit_rate |
+|---|---:|---:|---:|
+| deg-14 ±5 (canonical baseline) | 97,435,855 | 253 | 2.60e-6 |
+| deg-12 ±5 (fire #6) | 8,857,805 | 113 | 1.28e-5 |
+| **deg-10 ±5 (fire #20)** | **805,255** | **44** | **5.46e-5** |
+
+**Pattern: hit rate scales ~4-5× per lower degree at fixed coefficient bound.**
+- deg-14 → deg-12: 4.9× rate increase (n shrinks 11×)
+- deg-12 → deg-10: 4.3× rate increase (n shrinks 11×)
+
+This is substrate-grade aggregate data about the geometry of where small-coefficient palindromic polynomials cluster relative to the unit circle at varying degrees. Not a substrate flaw — substrate is correctly enumerating; the pattern reflects the underlying mathematical landscape.
+
+**Implications for substrate scale planning:**
+- A future deg-8 ±5 enumeration would have ~73K polys with predicted ~16-18 hits at rate ~2.5e-4 (extrapolation)
+- The hit-rate scaling suggests the deg-14 ±5 INCONCLUSIVE list (253 raw → 43 verified hits) is at the leanest end of the scaling regime; lower-degree fires would yield denser borderline lists per polynomial
+- **Suggests a future Aporia ticket: investigate WHY hit rate drops so smoothly with degree; is the geometric explanation the right one, or is there a substrate-grade combinatorial signal underneath?**
+
+### Tickets filed this fire
+
+**0 tickets.** Lane 5 fully PASS; substrate is performing correctly at all 3 measured degree-scales.
+
+### Standing recommendations for next fire (#21)
+
+1. **Anti-repeat:** avoid Lane 5. Suggested fire #21 candidates:
+   - **Lane 11 (batch-sweep)** — every-other-fire cadence; last fire #13 (parallel)
+   - **Lane 6 (undecidable-canonicalization)** — last fire #11 (parallel)
+   - **Lane 10 (real-paper)** — last fire #5 (mine)
+2. **Watch for ST-fire14-001 / ST-fire17-001 fix:** when Techne resolves the IndependenceClass enum-validation gap, fire-#N+ should re-probe both Lane 2 P3 and Lane 3 (smuggle attack regression).
+3. **Lane 12 still deferred:** ST-fire1-002, ST-fire1-003 still OPEN; await closure.
+4. **Cross-degree scaling is now substrate-grade datapoint set:** future fires should NOT keep re-probing Lane 5 at the same scales — instead, vary coefficient bound (±3, ±7) at fixed degree to extend the geometric study.
+
+### Fire-20 stress on substrate health
+
+**Positive:**
+- Brute-force enumeration scales correctly across deg-14 → deg-12 → deg-10.
+- Throughput improves at lower degrees (less work per poly → faster).
+- Hit-rate pattern is smooth and consistent (~4-5× per lower degree).
+- All 805,255 polys enumerated without crash, hang, or off-by-one.
+
+**0 substrate flaws found this fire.**
+
+### Discipline notes
+
+- HARD-1 through HARD-5: respected.
+- Time used: ~6 minutes (well within 50-minute cap; Lane 5 single-lane allowed full cap but didn't need it).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed). Substrate-tester running ticket count after 20 fires: 8 ever filed (2 closed, 6 OPEN).
+
+— substrate-tester, fire #20, 2026-05-07
+
+---
+
 ## Fire #19 — 2026-05-07 19:00 UTC
 
 **Coordination note:** Fire #18 ran on parallel instance (commit `1e1af5d7`) covering Lanes 7 + 9 with 0 tickets. My fire = #19. P0 ticket `T-ST-fire17-001` still OPEN — Techne has not yet shipped the fix; deferred re-probe of the smuggle attack until fix lands.
