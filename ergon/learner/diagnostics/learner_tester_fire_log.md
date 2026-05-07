@@ -332,3 +332,65 @@ Every PASS for the same reason: `lora_acc - base_acc = 0.000 < delta=0.05` (LoRA
 - The fixture hash `a481f43e...f97fed` is the new anchor. If a future fixture change is intentional (e.g., adding a new boundary-layer entry), the test will fail and the new hash needs explicit acknowledgment in the test fixture — that's the right discipline (no silent fixture drift).
 
 ---
+
+## Tester Fire 004 — 2026-05-07T01:48Z
+
+**Lanes covered:** 2 (Harmonia-B dynamical systems), 9 (Aporia-catalog-probe) — per fire-003 standing recommendation.
+**Probes submitted:** 6 (3 Harmonia-B + 3 Aporia-catalog-probe)
+**Adapter used:** `ergon/pipeline_d/runs/tire_kick_a_filtered_seed42`
+**Base model:** Qwen/Qwen2.5-Math-1.5B-Instruct (cached)
+**max_new_tokens:** 384 (bumped from 256 per fire-003 recs)
+**Wall clock:** ~25 min total
+
+### Per-probe verdict
+
+| Probe ID | Lane | Verdict | Sub-type | Notes |
+|---|---|---|---|---|
+| P-2026-05-07-016 | harmonia-b | USEFUL | correct_answer | Topological entropy of full 2-shift = log 2. Correct + clean derivation. |
+| P-2026-05-07-017 | harmonia-b | USELESS | irrelevant (P2) | KS entropy of doubling map. Defined the partition correctly, started the binary symbolic representation, cut off before reaching "log 2." Token-budget cutoff persists at 384 for rich derivations. |
+| P-2026-05-07-018 | harmonia-b | USEFUL | correct_answer | Irrational rotation (a)/(b)/(c) yes/yes/yes. Substantively correct on all three. Boxed "Yes, Yes, Yes." Then degenerates into infinite python code blocks at end (recurring pattern, same as fire-002 P-007). |
+| P-2026-05-07-019 | aporia-catalog-probe | USEFUL (BORDERLINE; should be USELESS / wrong_substance) | correct_answer | (a) correctly cites Zhang 70M → Maynard 246. BUT then claims **"the gap of 2 is currently the best known result"** — false (twin prime conjecture, NOT proven). (b) wrong: invokes "localization problem" instead of parity barrier. Evaluator hit "246" useful_signal first → USEFUL. **Substrate-grade-honest classification: USELESS / fabrication for the false "gap of 2 is best known" claim.** |
+| P-2026-05-07-020 | aporia-catalog-probe | USELESS | irrelevant (P2) | **Total degeneration.** Hallucinated parts (c) through (l) with self-contradictions ("conjecture is true ... and conjecture is false for all other knots") repeated 6+ times. Never named figure-eight or 5_2. Failure mode: question-spec hallucination + self-contradicting sentence loop. |
+| P-2026-05-07-021 | aporia-catalog-probe | USEFUL (BORDERLINE; should be USELESS / wrong_substance) | correct_answer | **Surface-correct, substantively wrong.** Says "every Hodge class in H^2(X, C) is algebraic" — but H^2 / codim 1 is Lefschetz (1,1) (TRIVIALLY proven, not the open question). Hodge conjecture for CY3 lives at codim 2 / H^{2,2}. Model placed open question at trivial case. Evaluator hit "hodge classes" useful_signal → USEFUL. |
+
+### Tickets filed
+
+- **T-2026-05-07-0010** (P2, learner-tester:harmonia-b) — P-017 KS entropy token-cutoff. OPEN.
+- **T-2026-05-07-0011** (P2, learner-tester:aporia-catalog-probe) — P-020 Volume Conjecture total degeneration. OPEN.
+
+Net: 2 OPEN tickets (under 5-cap). **NOTE:** P-019 + P-021 SHOULD ALSO have tickets per honest classification; evaluator's USEFUL was too lenient. Documented here for fire-005 evaluator iteration (anti-signals to veto wrong-substance even when useful_signal matches).
+
+### Substrate-grade observations
+
+1. **NEW FAILURE CLASS — surface-correct-but-substantively-wrong (P-019, P-021).** Model emits correct-sounding terms ("246" + "Maynard sieve" / "Hodge classes" + "algebraic cycles") that trip useful_signal substring matchers, but surrounding reasoning is wrong (claims gap of 2 is proven; places Hodge conjecture at codim 1 instead of codim 2). **More insidious than fabrications surfaced fire-002/003** — those produced fake names; these produce real names + real terms but at wrong structural placement.
+
+2. **Substrate-grade implication for evaluator design:** substring matching on useful_signals is necessary but not sufficient. Fire-005+ should add **anti-signals** that fire even when useful_signals match — wrong-substance veto over surface match. Same principle as fabrication-first priority from fire-002, applied at the substance level.
+
+3. **Cross-agent convergence on tester evaluator's substring-match limit.** Producer's E003 fire log entry independently flagged T-0006 (figure-eight volume false-positive — fire-003) and T-0003 (IUT false-positive — fire-001) as evaluator-substring-mismatch issues. Producer recommends "expected ANY of [primary, alt1, alt2]" matcher. **Substrate-grade signal: two independent observers converging on the same evaluator improvement.** Will incorporate in fire-005's evaluator iteration.
+
+4. **Token-cutoff persists at 384 tokens** for rich derivations (P-017). Bumping further alone won't fix; need explicit "answer first, derivation after" prompt prefix.
+
+5. **Question-spec hallucination is a new failure mode (P-020).** Asked for parts (a) and (b); model hallucinated parts (c) through (l) with self-contradictions. Worth tracking as a sub-type for future evaluator iterations.
+
+6. **4-fire trend:** model is consistently weak on attribution (fires 002+003), placing-the-open-question correctly (fire 004), and concise-direct-answer (fires 001+003+004 token-cutoff). Pattern: model knows correct surface terms but routinely places them at wrong level / wrong attribution / wrong granularity. v1.0 corpus design must distinguish trivial-vs-open cases per conjecture AND include explicit correct attributions.
+
+### Standing recommendations for tester fire-005
+
+- Avoid lanes 2 + 9 (rotation). Open lanes for breadth: **3 (Harmonia-C analysis/PDEs)** + **5 (Harmonia-E complexity/cross-domain)**, OR **7 (Charon-NT-analytic)** + **4 (Harmonia-D logic/foundations)**.
+- Add anti-signals layer to evaluator: detect wrong-substance even when useful_signals match. Specific: "gap of 2 is best known" / "h^2 not h^{2,2}" / "binary goldbach has been proven" / "consensus accepts mochizuki".
+- Coordinate with producer: their E003 fire log already flagged the substring-match limit. Aligned ask: refactor evaluator's `expected` field to support "primary OR alt-list" matcher. Tracking in fire-005 evaluator iteration.
+- Continue testing wrong-substance failure mode at scale.
+
+### Discipline check
+
+- [x] Probes drawn from honest math; no invented references
+- [x] No curation toward expected weakness
+- [x] Cap not exceeded (2 tickets)
+- [x] Wall-clock under 50-min cap (~25 min)
+- [x] Anti-gravitational-well: P-019 + P-021 borderline cases documented honestly; substrate-grade lesson queued for fire-005 evaluator iteration
+- [x] No paper/publication mentions in MY probes (model fabricated some — that's data)
+- [x] Cross-agent observation converged with producer (substring-match evaluator limit)
+
+— Charon (as Learner-Tester), 2026-05-07
+
+---
