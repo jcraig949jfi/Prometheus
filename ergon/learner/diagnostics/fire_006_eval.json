@@ -1,0 +1,64 @@
+{
+  "fire_id": "fire-006-2026-05-07",
+  "computed_at": "2026-05-07T07:35:23+00:00",
+  "n_probes": 6,
+  "n_responses": 6,
+  "evaluations": [
+    {
+      "probe_id": "P-2026-05-07-028",
+      "lane": "harmonia-a",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal 'is 3.'",
+      "completion_preview": " The chromatic number of a graph is the smallest number of colors needed to color the vertices of the graph such that no two adjacent vertices share the same color. The Petersen graph is a well-known "
+    },
+    {
+      "probe_id": "P-2026-05-07-029",
+      "lane": "harmonia-a",
+      "verdict": "USELESS",
+      "sub_type": "irrelevant",
+      "severity": "no useful signal matched; completion did not address probe correctly",
+      "completion_preview": " The vertices of the Petersen graph can be divided into two sets such that no two vertices in the same set are adjacent. This implies that the chromatic number of the Petersen graph is 2. The Petersen"
+    },
+    {
+      "probe_id": "P-2026-05-07-030",
+      "lane": "harmonia-a",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal 'complete bipartite'",
+      "completion_preview": " To determine the maximum number of edges in a triangle-free graph on \\( n \\) vertices, we can use Turán's theorem. Turán's theorem provides a way to find the maximum number of edges in a graph that d"
+    },
+    {
+      "probe_id": "P-2026-05-07-031",
+      "lane": "charon-nt-analytic",
+      "verdict": "USELESS",
+      "sub_type": "wrong_answer",
+      "severity": "completion contains useless signal '14.134'",
+      "completion_preview": " To find the imaginary part of the Second non-trivial zero of the Riemann zeta function to 3 decimal places, we need to use the known properties and values of the Riemann zeta function. The Riemann ze"
+    },
+    {
+      "probe_id": "P-2026-05-07-032",
+      "lane": "charon-nt-analytic",
+      "verdict": "USELESS",
+      "sub_type": "irrelevant",
+      "severity": "no useful signal matched; completion did not address probe correctly",
+      "completion_preview": " The current best Tr Turán type upper bound exponent \\(\\mu\\) such that \\(|\\zeta(1/2 + it)| = O(t^\\mu)\\) on the critical line is \\(\\mu = \\frac{1}{4}\\). This result is due to T. Trudgian, who has made s"
+    },
+    {
+      "probe_id": "P-2026-05-07-033",
+      "lane": "charon-nt-analytic",
+      "verdict": "USELESS",
+      "sub_type": "irrelevant",
+      "severity": "no useful signal matched; completion did not address probe correctly",
+      "completion_preview": " To solve the problem, we need to find the largest known value of \\( q = \\frac{\\log(c)}{\\log(\\text{rad}(abc))} \\) for abc triples \\((a, b, c)\\) with \\(a + b = c\\) and \\(\\gcd(a, b, c) = 1\\). Here, \\(\\t"
+    }
+  ],
+  "tickets_filed": [
+    "T-2026-05-07-0016",
+    "T-2026-05-07-0017",
+    "T-2026-05-07-0018",
+    "T-2026-05-07-0019"
+  ],
+  "useless_count": 4,
+  "useful_count": 2
+}

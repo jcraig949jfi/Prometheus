@@ -1,0 +1,80 @@
+[
+  {
+    "id": "P-2026-05-07-028",
+    "lane": "harmonia-a",
+    "prompt": "What is the chromatic number of the Petersen graph? Reply with the integer.",
+    "expected": "3",
+    "expected_kind": "exact_integer_single_part",
+    "rubric": "USEFUL if completion contains chromatic number 3 (the correct answer). USELESS if 2, 4, 5, or fabrication. SINGLE-PART version paired with P-029 multi-part for hypothesis test.",
+    "useful_signals": ["chromatic number is 3", "chromatic number = 3", "chi(petersen) = 3", "is 3.", "is 3\n", "is 3,", "= 3.", "= 3\n", "= 3,", "boxed{3}", "\\boxed{3}", "the answer is 3", "answer: 3"],
+    "fabrication_signals": [],
+    "gravwell_signals": [],
+    "useless_signals": ["chromatic number is 2", "chromatic number is 4", "chromatic number is 5", "chromatic number = 4", "is 4."],
+    "anti_signals": []
+  },
+  {
+    "id": "P-2026-05-07-029",
+    "lane": "harmonia-a",
+    "prompt": "For the Petersen graph, state: (a) its chromatic number, (b) its girth (length of shortest cycle). Reply concisely with two integers labeled (a) and (b).",
+    "expected": "(a) 3, (b) 5",
+    "expected_kind": "two_part_integers",
+    "rubric": "USEFUL if completion gives BOTH (a) 3 AND (b) 5. USELESS if either is wrong, or only one is given, or degeneration. MULTI-PART version paired with P-028 — tests hypothesis that multi-part questions break the model.",
+    "useful_signals": ["(a) 3", "(a) is 3", "(a): 3", "(a) chromatic number is 3", "chromatic number: 3", "(a) the chromatic number is 3"],
+    "fabrication_signals": [],
+    "gravwell_signals": [],
+    "useless_signals": ["(a) 4", "(a) 2", "(a) 5", "(b) 3", "(b) 4", "(b) 6", "(b) 7", "girth is 3", "girth is 4", "girth is 6"],
+    "anti_signals": ["(d) the petersen", "(e) the petersen", "(f) the petersen"]
+  },
+  {
+    "id": "P-2026-05-07-030",
+    "lane": "harmonia-a",
+    "prompt": "By Mantel's theorem, what is the maximum number of edges in a triangle-free graph on n vertices? Give the formula in terms of n.",
+    "expected": "floor(n^2/4) — i.e., the Turán graph T(n, 2) achieves this; equivalently, the complete balanced bipartite graph K_{floor(n/2), ceil(n/2)}.",
+    "expected_kind": "exact_formula",
+    "rubric": "USEFUL if completion contains 'floor(n^2/4)' OR 'n^2/4' OR 'n²/4' OR explicit formula recovery (n/2 * n/2 etc.). USELESS if any other formula or fabrication.",
+    "useful_signals": ["n^2/4", "n^{2}/4", "n²/4", "\\lfloor n^2/4 \\rfloor", "\\lfloor \\frac{n^2}{4} \\rfloor", "lfloor n^2/4", "\\lfloor n²/4 \\rfloor", "n^2 / 4", "(n^2)/4", "balanced bipartite", "k_{n/2", "complete bipartite"],
+    "fabrication_signals": [],
+    "gravwell_signals": [],
+    "useless_signals": ["n choose 2", "n(n-1)/2", "n^2/3", "n^2/2"],
+    "anti_signals": []
+  },
+  {
+    "id": "P-2026-05-07-031",
+    "lane": "charon-nt-analytic",
+    "prompt": "What is the imaginary part of the SECOND non-trivial zero of the Riemann zeta function, to 3 decimal places? Reply with just the number.",
+    "expected": "21.022 (the second nontrivial zero is at 1/2 + i*21.022039...; first is at 14.134725...).",
+    "expected_kind": "exact_decimal",
+    "rubric": "USEFUL if completion contains '21.022', '21.0220', or '21.02'. USELESS if 14.1347 (that's the FIRST zero), or other fabrication.",
+    "useful_signals": ["21.022", "21.0220", "21.02"],
+    "fabrication_signals": [],
+    "gravwell_signals": [],
+    "useless_signals": ["14.134", "14.1347", "25.010", "30.424"],
+    "anti_signals": ["mathewson", "razbarov", "fabricated"]
+  },
+  {
+    "id": "P-2026-05-07-032",
+    "lane": "charon-nt-analytic",
+    "prompt": "What is the current best UNCONDITIONAL upper bound exponent mu such that |zeta(1/2 + it)| = O(t^mu) on the critical line? Give the fraction value.",
+    "expected": "13/84 (Bourgain 2017, via decoupling). Lindelöf hypothesis predicts mu = 0 for any epsilon > 0; current unconditional record is 13/84.",
+    "expected_kind": "exact_fraction",
+    "rubric": "USEFUL if completion contains '13/84'. USELESS if any other fraction (1/4 trivial convexity, 1/6 Hardy-Littlewood, 1/12 Heath-Brown, 32/205 wrong attribution) or fabrication.",
+    "useful_signals": ["13/84", "13 / 84", "0.1547", "0.155", "bourgain", "decoupling"],
+    "fabrication_signals": ["proven by witten", "wiles proved", "by mathewson"],
+    "gravwell_signals": [],
+    "useless_signals": ["1/4", "1/6"],
+    "anti_signals": ["proven in 2024", "lindelof has been proven", "rh implies"]
+  },
+  {
+    "id": "P-2026-05-07-033",
+    "lane": "charon-nt-analytic",
+    "prompt": "What is the largest known quality value q (where q = log(c) / log(rad(abc))) among abc triples (a, b, c) with a + b = c and gcd(a,b,c) = 1? Reply with the value to 4 decimal places.",
+    "expected": "1.6299 (Reyssat 1987, triple (2, 3^10 * 109, 23^5)). Top of Reken Mee Met ABC@home archive; record stable since 1987.",
+    "expected_kind": "exact_decimal",
+    "rubric": "USEFUL if completion contains '1.629' or '1.6299' or 'Reyssat'. USELESS if other value or fabrication.",
+    "useful_signals": ["1.629", "1.6299", "1.62991", "reyssat", "23^5"],
+    "fabrication_signals": [],
+    "gravwell_signals": [],
+    "useless_signals": ["1.0", "2.0", "infinite"],
+    "anti_signals": ["mochizuki proved", "abc has been proven"]
+  }
+]
