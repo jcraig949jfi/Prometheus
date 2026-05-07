@@ -10,14 +10,25 @@ Substrate-grade equivalent of W4.0's null gate at a different layer:
   W4.7 catches "did it learn more than the trivial feature?"
 
 Outputs: ergon/pipeline_d/runs/lr_control/lr_control_results.json
+
+E003 (fire 4): JSON now carries `reproducibility` metadata block
+(python/sklearn/numpy versions + fixture content hash + sklearn random
+state) so future runs can detect environmental drift. The accuracy
+numbers themselves are deterministic given the fixture + sklearn
+random_state=42; this is regression-locked by
+`test_lr_control_reproducibility.py`.
 """
 from __future__ import annotations
 
+import hashlib
 import json
+import platform
+import sys
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 import numpy as np
+import sklearn
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import LabelEncoder
 
@@ -27,7 +38,37 @@ from ergon.pipeline_d.boundary_layer_fixture import (
 )
 
 
-def run_lr_control() -> Dict[str, Any]:
+_DEFAULT_OUT_DIR = Path("ergon/pipeline_d/runs/lr_control")
+_LR_RANDOM_STATE = 42
+
+
+def _fixture_content_hash() -> str:
+    """SHA-256 over the canonical-JSON of the 17-entry fixture + held-out.
+
+    Lets reproducibility tests detect upstream fixture drift without
+    re-running the LR fit."""
+    train = load_17_entry_fixture()
+    heldout, _ = load_heldout_fixture()
+    payload = {
+        "train": [r.to_dict() for r in train],
+        "heldout": [r.to_dict() for r in heldout],
+    }
+    canonical = json.dumps(payload, sort_keys=True, separators=(",", ":"), default=str)
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
+def _reproducibility_block() -> Dict[str, Any]:
+    return {
+        "python_version": sys.version.split()[0],
+        "platform": platform.platform(),
+        "numpy_version": np.__version__,
+        "sklearn_version": sklearn.__version__,
+        "lr_random_state": _LR_RANDOM_STATE,
+        "fixture_content_hash_sha256": _fixture_content_hash(),
+    }
+
+
+def run_lr_control(out_dir: Optional[Path] = None) -> Dict[str, Any]:
     train = load_17_entry_fixture()
     heldout, _ = load_heldout_fixture()
 
@@ -57,7 +98,7 @@ def run_lr_control() -> Dict[str, Any]:
             C=1.0,
             solver="lbfgs",
             max_iter=2000,
-            random_state=42,
+            random_state=_LR_RANDOM_STATE,
         )
         clf.fit(X_train, y_train)
 
@@ -92,10 +133,17 @@ def run_lr_control() -> Dict[str, Any]:
             "classes_seen": le.classes_.tolist(),
         }
 
-    out_path = Path("ergon/pipeline_d/runs/lr_control/lr_control_results.json")
+    # E003: attach reproducibility metadata block so future runs can
+    # detect environmental drift. The accuracy numbers themselves are
+    # deterministic given the fixture + sklearn random_state.
+    results["reproducibility"] = _reproducibility_block()
+
+    target_dir = Path(out_dir) if out_dir is not None else _DEFAULT_OUT_DIR
+    out_path = target_dir / "lr_control_results.json"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with out_path.open("w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, default=str)
+    results["written_to"] = str(out_path)
 
     return results
 
@@ -103,12 +151,20 @@ def run_lr_control() -> Dict[str, Any]:
 def _print_summary(results: Dict[str, Any]) -> None:
     print("\n=== W4.7 LOGISTIC-REGRESSION TRIVIAL-FEATURE CONTROL ===")
     for label_field, block in results.items():
+        # Skip non-classification metadata blocks (added in E003).
+        if not isinstance(block, dict) or "heldout_accuracy" not in block:
+            continue
         print(f"\n[{label_field}]")
         print(f"  train_acc = {block['train_accuracy']:.3f}")
         print(f"  heldout_acc = {block['heldout_accuracy']:.3f} ({block['n_correct']}/{block['n_total']})")
         print(f"  majority_class = '{block['majority_class']}' @ {block['majority_class_rate']:.3f}")
         print(f"  per_class_heldout = {block['per_class_heldout_accuracy']}")
         print(f"  n_features={block['n_features']}, n_train={block['n_train']}")
+    repro = results.get("reproducibility")
+    if isinstance(repro, dict):
+        print("\n[reproducibility]")
+        for k, v in repro.items():
+            print(f"  {k} = {v}")
 
 
 if __name__ == "__main__":

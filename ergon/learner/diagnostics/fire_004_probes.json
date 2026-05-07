@@ -1,0 +1,74 @@
+[
+  {
+    "id": "P-2026-05-07-016",
+    "lane": "harmonia-b",
+    "prompt": "What is the topological entropy of the full one-sided shift on 2 symbols? Reply with the value (e.g., 'log 2' or a decimal).",
+    "expected": "log 2 (approximately 0.6931)",
+    "expected_kind": "exact_log_or_decimal",
+    "rubric": "USEFUL if completion contains 'log 2', 'log(2)', 'ln 2', '0.693', or '0.6931'. USELESS otherwise.",
+    "useful_signals": ["log 2", "log(2)", "ln 2", "ln(2)", "0.693", "0.6931", "log_2(2)", "$\\log 2$", "\\log 2", "\\ln 2"],
+    "fabrication_signals": [],
+    "gravwell_signals": [],
+    "useless_signals": ["log 3", "log 4", "1/2", "log_2(3)", "the entropy is 0\n", "the entropy is 1\n"]
+  },
+  {
+    "id": "P-2026-05-07-017",
+    "lane": "harmonia-b",
+    "prompt": "Compute the Kolmogorov-Sinai (metric) entropy of the doubling map T(x) = 2x mod 1 on [0,1] with respect to the Lebesgue measure. Reply with the value.",
+    "expected": "log 2 (approximately 0.6931)",
+    "expected_kind": "exact_log_or_decimal",
+    "rubric": "USEFUL if completion contains 'log 2', 'log(2)', 'ln 2', '0.693', or '0.6931'. USELESS if any other value or fabrication.",
+    "useful_signals": ["log 2", "log(2)", "ln 2", "ln(2)", "0.693", "0.6931", "$\\log 2$", "\\log 2", "\\ln 2", "= log 2"],
+    "fabrication_signals": [],
+    "gravwell_signals": [],
+    "useless_signals": ["log 3", "log 4", "1/2"]
+  },
+  {
+    "id": "P-2026-05-07-018",
+    "lane": "harmonia-b",
+    "prompt": "Consider the irrational rotation T(x) = x + alpha (mod 1) on the circle [0,1) with alpha irrational. For each of the following properties, answer yes or no: (a) Is Lebesgue measure invariant under T? (b) Is T ergodic with respect to Lebesgue measure? (c) Is Lebesgue measure absolutely continuous (with respect to itself)? Reply concisely with three yes/no answers labeled (a), (b), (c).",
+    "expected": "(a) yes, (b) yes, (c) yes (the third part is trivially yes since any measure is absolutely continuous w.r.t. itself; the substantive content is invariance + ergodicity for irrational rotation, both yes)",
+    "expected_kind": "structural_three_part_yes_no",
+    "rubric": "USEFUL if completion answers (a) yes AND (b) yes AND (c) yes. USELESS if any of these is wrong (e.g., claims rotation is not ergodic or rotation does not preserve Lebesgue) or fabrication.",
+    "useful_signals": ["yes, yes, yes", "(a) yes\n(b) yes\n(c) yes", "(a) yes (b) yes (c) yes", "(a) yes, (b) yes, (c) yes", "all three are yes", "yes for all"],
+    "fabrication_signals": [],
+    "gravwell_signals": [],
+    "useless_signals": ["(a) no", "(b) no", "rotation is not ergodic", "lebesgue is not invariant", "(a) yes\n(b) no", "(a) yes, (b) no"]
+  },
+  {
+    "id": "P-2026-05-07-019",
+    "lane": "aporia-catalog-probe",
+    "prompt": "For the Twin Prime Conjecture (there exist infinitely many primes p such that p+2 is also prime), state concisely: (a) the strongest known UNCONDITIONAL partial result on bounded gaps between primes that occur infinitely often (with the integer bound), (b) the structural obstruction that prevents pure sieve methods from closing the conjecture.",
+    "expected": "(a) Polymath 8b 2014: there are infinitely many prime pairs with gap at most 246 (unconditional, via Maynard's multidimensional Selberg sieve). (b) The parity barrier (Selberg 1949): sieve methods cannot distinguish numbers with an odd number of prime factors from those with an even number; for twin primes the relevant set has 1 (odd) prime factor, so sieves overestimate by a factor of 2, preventing positive lower bounds.",
+    "expected_kind": "two_part_partial_result_plus_obstruction",
+    "rubric": "USEFUL if completion correctly identifies (a) bound 246 OR Polymath OR Maynard sieve, AND (b) parity barrier OR Selberg OR factor-of-2 obstruction OR odd-vs-even-prime-factors. USELESS if fabricates, mixes up bounds (e.g., 70M without noting it's superseded), claims 2 was proven.",
+    "useful_signals": ["246", "polymath 8b", "polymath", "maynard sieve", "maynard", "selberg sieve", "parity barrier", "selberg 1949", "parity problem", "parity of the number of prime factors", "odd number of prime factors", "even number of prime factors", "factor of 2"],
+    "fabrication_signals": ["proven by zhang in 2024", "proven in 2024", "twin prime conjecture has been proven"],
+    "gravwell_signals": [],
+    "useless_signals": ["the answer is 2", "the bound is 70 million", "70,000,000"]
+  },
+  {
+    "id": "P-2026-05-07-020",
+    "lane": "aporia-catalog-probe",
+    "prompt": "For the Volume Conjecture (Kashaev-Murakami-Murakami: limit_{N -> infinity} of (2*pi/N)*log|J_N(K; e^{2*pi*i/N})| = Vol(S^3 minus K) for hyperbolic knots K, where J_N is the colored Jones polynomial), state: (a) one specific knot for which the conjecture is PROVEN, (b) one specific small hyperbolic knot for which the conjecture remains OPEN.",
+    "expected": "(a) Figure-eight knot (4_1) — proven by Murakami-Murakami 2001 / Kashaev. (b) 5_2 (or 6_1, 6_2, 6_3, 7_2, 8_18, 10_139) — open as of 2025; only finite-N numerical evidence published. Ohtsuki 2016 has the strongest partial result on 5_2.",
+    "expected_kind": "two_part_specific_knot_examples",
+    "rubric": "USEFUL if completion (a) names the figure-eight knot OR 4_1 as proven AND (b) names 5_2 OR 6_1 OR 6_2 OR 6_3 OR 8_18 OR any small hyperbolic knot beyond figure-eight as open. USELESS if mixes them up or fabricates.",
+    "useful_signals": ["figure-eight", "figure eight", "4_1", "4-1", "trefoil", "5_2", "6_1", "6_2", "6_3", "7_2", "8_18", "10_139", "kashaev", "murakami", "ohtsuki"],
+    "fabrication_signals": ["proven for all hyperbolic knots", "proven by witten in"],
+    "gravwell_signals": [],
+    "useless_signals": []
+  },
+  {
+    "id": "P-2026-05-07-021",
+    "lane": "aporia-catalog-probe",
+    "prompt": "For the Hodge Conjecture restricted to Calabi-Yau 3-folds, state concisely: (a) what cohomology classes the conjecture asserts are algebraic, (b) one structural obstruction or open piece beyond Lefschetz (1,1).",
+    "expected": "(a) Every rational Hodge class in H^{2p}(X, Q) intersect H^{p,p}(X) is a Q-linear combination of cohomology classes of codimension-p algebraic cycles. For CY3 the non-trivial codim is p=2 (codim 1 is Lefschetz (1,1), codim 3 is multiples of fundamental class). (b) Open piece: surjectivity of the cup-product H^{1,1}(X) tensor H^{1,1}(X) -> H^{2,2}(X) on Hodge classes is not known in general for CY3 with h^{1,1} > 1.",
+    "expected_kind": "two_part_statement_plus_open_obstruction",
+    "rubric": "USEFUL if completion (a) correctly identifies Hodge classes / (p,p) cohomology / algebraic cycles, AND (b) mentions cup-product surjectivity, codim-2 / H^{2,2} gap, standard conjectures, or any concrete open piece beyond Lefschetz (1,1). USELESS if fabricates.",
+    "useful_signals": ["hodge class", "(p,p)", "(2,2)", "h^{2,2}", "h^{1,1}", "algebraic cycles", "algebraic class", "rational cohomology", "lefschetz (1,1)", "cup product", "cup-product", "codimension 2", "codim 2", "codim-2", "standard conjecture", "picard"],
+    "fabrication_signals": [],
+    "gravwell_signals": [],
+    "useless_signals": []
+  }
+]

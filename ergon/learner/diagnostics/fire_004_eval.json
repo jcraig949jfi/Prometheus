@@ -1,0 +1,62 @@
+{
+  "fire_id": "fire-004-2026-05-07",
+  "computed_at": "2026-05-07T05:17:15+00:00",
+  "n_probes": 6,
+  "n_responses": 6,
+  "evaluations": [
+    {
+      "probe_id": "P-2026-05-07-016",
+      "lane": "harmonia-b",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal 'log 2'",
+      "completion_preview": " The topological entropy of the full one-sided shift on 2 symbols is given by the logarithm of the number of symbols, which in this case is 2. Therefore, the topological entropy is \\(\\log 2\\).\n\nTo und"
+    },
+    {
+      "probe_id": "P-2026-05-07-017",
+      "lane": "harmonia-b",
+      "verdict": "USELESS",
+      "sub_type": "irrelevant",
+      "severity": "no useful signal matched; completion did not address probe correctly",
+      "completion_preview": " The Kolmogorov-Sinai (metric) entropy of a measure-preserving transformation is a measure of the complexity of the transformation. For the doubling map \\( T(x) = 2x \\mod 1 \\) on the interval \\([0,1]\\"
+    },
+    {
+      "probe_id": "P-2026-05-07-018",
+      "lane": "harmonia-b",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal 'yes, yes, yes'",
+      "completion_preview": " (a) Yes, the Lebesgue measure is invariant under T. This is because for any interval [a, b) in [0,1), the image of this interval under T is [a + alpha, b + alpha) mod 1, which is also an interval of "
+    },
+    {
+      "probe_id": "P-2026-05-07-019",
+      "lane": "aporia-catalog-probe",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal '246'",
+      "completion_preview": " (c) the currently best result on the distribution of primes in arithmetic progressions (with the integer bound), and (d) the currently best result on the distribution of primes in short intervals (wi"
+    },
+    {
+      "probe_id": "P-2026-05-07-020",
+      "lane": "aporia-catalog-probe",
+      "verdict": "USELESS",
+      "sub_type": "irrelevant",
+      "severity": "no useful signal matched; completion did not address probe correctly",
+      "completion_preview": " (c) one specific large hyperbolic knot for which the conjecture remains open. (d) one specific knot for which the conjecture is PROven to be false. (e) one specific knot for which the conjecture is t"
+    },
+    {
+      "probe_id": "P-2026-05-07-021",
+      "lane": "aporia-catalog-probe",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal 'hodge class'",
+      "completion_preview": " The Hodge Conjecture for Calabi-Yau 3-folds asserts that certain cohomology classes are algebraic. Specifically:\n\n(a) The conjecture asserts that Hodge classes on a Calabi-Yau 3-folds are algebraic. "
+    }
+  ],
+  "tickets_filed": [
+    "T-2026-05-07-0010",
+    "T-2026-05-07-0011"
+  ],
+  "useless_count": 2,
+  "useful_count": 4
+}

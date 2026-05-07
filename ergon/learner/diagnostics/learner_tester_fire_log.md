@@ -293,3 +293,42 @@ Every PASS for the same reason: `lora_acc - base_acc = 0.000 < delta=0.05` (LoRA
 - Took a tiny ticket (E002, P2 documentation) deliberately after the heavier fires 1+2. Maintains the discipline cycle without burning cycles on work that requires James's pause/resume to allow contract changes or LoRA hyperparam exploration.
 
 ---
+
+## Fire 4 — 2026-05-07 (Ergon producer-side, fire ID 4)
+
+**Triage:** 5 incoming tester P1/P2 tickets (T-2026-05-07-0005 through 0009) marked BLOCKED-DEFERRED-V1.0 with per-ticket notes. T-0006 flagged as evaluator-false-positive candidate (model produced "approximately 2.0299" which IS the expected answer; tester evaluator's substring/format match should be tightened — coordination signal for Aporia/Charon, not Ergon code change). Other 4 are same model-behaviour class as fire-3 deferrals: fabrication-on-attribution (Cauchy-1844, treewidth-knot) + token-budget verbosity (Fibonacci F_8 not produced in budget).
+
+**Ticket:** T-2026-05-06-E003 (P2-normal) — *W4.7 LR-control reproducibility lock (regression test)*
+
+**Action:**
+- Pre-test 312/312 PASS (clean baseline, 53s).
+- Extended `ergon/pipeline_d/lr_control.py`:
+  - Added `_LR_RANDOM_STATE = 42` constant + threaded through `LogisticRegression(random_state=...)`
+  - Added `_fixture_content_hash()` — SHA-256 over canonical-JSON of the 17-entry fixture + held-out, lets reproducibility tests detect upstream fixture drift without re-running the LR fit
+  - Added `_reproducibility_block()` — captures python/platform/numpy/sklearn versions + lr_random_state + fixture hash
+  - `run_lr_control(out_dir=None)` — additive optional kwarg; default None routes to canonical path (existing callers unchanged)
+  - `_print_summary` now skips non-classification metadata blocks gracefully + prints the reproducibility block
+  - Results JSON gains `reproducibility` field + `written_to` field (additive; consumers can ignore)
+- Added `ergon/learner/tests/test_lr_control_reproducibility.py` — 7 tests:
+  - `test_three_runs_byte_identical_per_label_field` — runs lr_control 3× in fresh tmp_paths; asserts byte-identical outputs across runs (acceptance criterion 1)
+  - `test_v0_5_headroom_benchmark_locked` — locks cls_post_fold = 17/17 = 1.000, cls = 16/17 = 0.941, phi_4_singleton specifically misses (the locked v0.5 failure mode)
+  - `test_reproducibility_metadata_block_present` — JSON carries the metadata block with all required fields + valid SHA-256 hash format
+  - `test_fixture_hash_stable_across_calls` — hash function itself is deterministic
+  - `test_three_runs_have_same_fixture_hash` — all 3 runs see same fixture
+  - `test_jsonl_write_round_trip` — disk-load round-trips correctly
+  - `test_canonical_results_file_exists` — committed canonical JSON is on disk
+- Re-ran lr_control to refresh canonical JSON with metadata block. Recorded values: python 3.11.9, sklearn 1.8.0, numpy 2.2.6, fixture hash `a481f43e24f5dfa378e1e209587fa37346a09f352940d659d75890c210f97fed`.
+
+**Test result:** 319/319 pass (312 prior + 7 new). No regressions.
+
+**SELF-REVIEW:**
+- (a) **Did this fix resolve the failure mode the pressure-applier reported?** YES. E003's acceptance was: 1) test_lr_control_reproducibility.py exists + passes on 3 fresh runs; 2) JSON updated with reproducibility metadata. Both delivered. The trivial-feature ceiling (cls_post_fold 1.000, cls 0.941) is now regression-locked: future sklearn/numpy/fixture drift triggers test failure rather than silently shifting the headroom benchmark that v0.5 / v0.5b / v1.0 LoRA tire-kicks anchor against.
+- (b) **Memorization risk that the synthetic-null gate would catch?** None. Documentation + regression-test ticket. No training data, model weights, or decoding logic touched. The LR control itself is a deterministic statistical baseline (sklearn-LBFGS solver, fixed random_state, deterministic fixture).
+- (c) **Did I change any contract?** Argued additive. `run_lr_control(out_dir=None)` adds an optional kwarg with default None — existing callers (e.g., `__main__`) continue to route to the canonical path. The JSON output gains `reproducibility` + `written_to` keys — additive (consumers reading the JSON can ignore them or use them). No fields removed or renamed; `cls_post_fold` and `cls` blocks unchanged. Consistent with the v0.5b precedent of `completion_only_loss` flag + `evaluate_model_with_label_mask` sibling fn.
+- (d) **Conventional-approach drift?** Caught one. The conventional response to "make this reproducible" is an extensive harness with snapshot testing + pinned environment + CI integration. The substrate-grade move: identify the actual deterministic surface (sklearn random_state + fixture content), lock the headroom-benchmark numbers explicitly (so they fail loudly on drift rather than silently anchor v1.0 elsewhere), and record env metadata in the artifact itself. Three small focused additions instead of an infrastructure layer. Per `feedback_anti_gravitational_well.md`: avoid building infrastructure for hypothetical scale; lock the actual signal load-bearing now.
+
+**Journal notes:**
+- T-0006 (figure-eight knot volume) is a tester-side false-positive: model said "approximately 2.0299" — the expected substring IS in the response. The evaluator likely failed because the expected pattern was "2.0299 (or 2.0298832...)" and the matcher required all of it. This is the second instance of a tester-evaluator-substring-mismatch (first was Fire 001's IUT/"widely accepted"). Worth coordinating with Aporia/Charon: the tester evaluator needs an "expected ANY of [primary, alt1, alt2]" matcher, not "expected = full literal pattern."
+- The fixture hash `a481f43e...f97fed` is the new anchor. If a future fixture change is intentional (e.g., adding a new boundary-layer entry), the test will fail and the new hash needs explicit acknowledgment in the test fixture — that's the right discipline (no silent fixture drift).
+
+---
