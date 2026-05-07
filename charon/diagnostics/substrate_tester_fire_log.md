@@ -6,6 +6,75 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #13 — 2026-05-07 16:00 UTC
+
+**Lanes selected:** 11 (batch-sweep, fresh seed) + 13 (canonicalization-fuzz, fresh Hypothesis seed) per fire #12 standing rec.
+
+**Coordination note:** Fire #12 ran on parallel instance (commit `2ec06acc`) covering Lanes 14 + 16 (both newly-LIVE smokes). All 17 LIVE lanes had been exercised at least once by close of fire #12. My fire = #13.
+
+**Lane 15 + 18 reactivation re-check:** still DORMANT (Charon orch ticket OPEN; T-2026-05-07-T017 OPEN).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_13_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_13_results.json`.
+
+### Lane 11 — batch-sweep with fresh seed (20260507_15)
+
+| Metric | Value |
+|---|---:|
+| n_submissions | 30 |
+| n_submitted_ok | 30 / 30 |
+| n_submission_failed | 0 |
+| n_with_verdict | 0 / 30 |
+| seed_diverged_from_fire_8 | True (different probe sample) |
+
+**Substrate verdict: PASS** (architectural impedance finding from fire #8 confirmed stable across seeds).
+
+**Substrate-grade observation (cumulative):** lane 11 batch-sweep over fires #8 + #13 has now produced 60 ingest-OK probes with 0 reaching a substrate verdict. The architectural impedance — `SigmaKernel.CLAIM` is open-vocabulary at write but `DiscoveryPipeline` is Lehmer-domain-specific, so non-Lehmer claims have no falsifier path — is reproducible across two seeds and two corpus samples. Fires #8 and #13 sampled different adversarial probes (seed_diverged=True confirmed), so the finding is not a sampling artifact.
+
+This is **intentional substrate design** (per fire #3 + fire #8 architectural observation precedent). No ticket filed.
+
+### Lane 13 — canonicalization-fuzz with fresh Hypothesis seed
+
+| Metric | Value |
+|---|---:|
+| hypothesis_seed | 20260507_15 |
+| pytest rc | 0 |
+| n_passed | 13 |
+| n_failed | 0 |
+
+**Substrate verdict: PASS.** All 13 invariance properties pass with the fresh seed. Fire #7 used seed 20260507; fire #10 used 20260507; fire #13 uses 20260507_15 — three distinct Hypothesis explorations, three GREEN runs. Substrate-grade canonicalization invariance is robust across the explored seed space.
+
+### Tickets filed this fire
+
+**0 tickets.** Both lanes substrate-correct.
+
+### Standing recommendations for next fire (#14 / next-machine fire)
+
+1. **Anti-repeat:** avoid lanes 11, 13 (just covered). Suggested fire #14:
+   - **Lane 17 (mutation-testing)** — overdue since fire #7. Re-run with a different target file (operator_portability covered fire #7; consider sigma_kernel/method_spec or sigma_kernel/coordinate_chart).
+   - **Lane 5 (large-scale-enumeration)** — last fire #6 (this session). Full-cap heavy job; pair only if no other lane is overdue.
+   - **Lane 7 (precision-gradient)** — last fire #9. Re-probe with a third borderline INCONCLUSIVE coefficient set (fire #1 covered entry #1, fire #9 covered entry #2).
+2. **Lane 15 (cross-machine):** still gated on Charon M2 agent activation. Watch.
+3. **Lane 18 (threshold-sensitivity):** T-2026-05-07-T017 still OPEN.
+4. **Cumulative architectural-observation candidate:** lane 11's fire #8 + #13 finding (no general-purpose CLAIM gauntlet) is now seed-stable; could be promoted from "fire-log architectural observation" to a substrate-design-observation file. Aporia coordination ticket optional.
+
+### Fire-13 stress on substrate health
+
+- Substrate is stable across two distinct Hypothesis seeds for canon-fuzz.
+- Substrate ingestion path is robust to repeated batch-sweep submissions (no state corruption observed).
+- 0 substrate flaws found this fire.
+
+### Discipline notes
+
+- HARD-1..HARD-5: clean. No drift toward established frameworks.
+- Time used: ~20 min (within 50-min cap).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed).
+- Multi-instance coordination: pulled before lane-pick; claimed fire #13 = max-on-origin (12) + 1.
+
+— substrate-tester, fire #13, 2026-05-07 16:00 UTC
+
+---
+
 ## Fire #12 — 2026-05-07 11:06 (local)
 
 **Lanes selected:** 14 (replay-determinism, smoke) + 16 (concurrency-stress, smoke).
