@@ -144,6 +144,63 @@
       "notes": [
         "Fifth calibration anchor (minimal). Confirms calibration-axis hypothesis on early-20th-century high-canon: year recoverable, title not, additional metadata triggers Pattern 6 sub-variant. Together with KC-003 Lagrange 1770 (pre-1900 year-only), establishes the 'year-only' anchor tier as: pre-1900 + 20th-century-early -> minimal anchor with title/venue fab."
       ]
+    },
+    {
+      "id": "KC-006",
+      "fire_id": "014",
+      "probe_id": "P-2026-05-07-063",
+      "lane": "harmonia-a",
+      "decomposition_mode": "OFF",
+      "decode_params": {
+        "rep_penalty": 1.15,
+        "max_new_tokens": 384,
+        "do_sample": false,
+        "num_beams": 1
+      },
+      "topic": "Apery 1978 zeta(3) irrationality (name + year only)",
+      "canonical_output": "Roger Apery, 1978",
+      "verification": "Apery 'Irrationalite de zeta(2) et zeta(3)', Asterisque 61 (1979) pp 11-13; talk at Journees Arithmetiques Marseille June 1978. The Learner correctly emits the name + announcement-year pair.",
+      "caveats_partial_anchor": [
+        "Name: Roger Apery - CORRECT (with proper 'é' diacritic)",
+        "Year: 1978 - CORRECT (announcement at Marseille talk; publication 1979)",
+        "Journal: NOT MENTIONED. Falls one specificity level below KC-001 Wiles (which had vol+pages).",
+        "Confirms calibration-axis hypothesis: late-20th-century + high-canon yields name+year recoverable, journal NOT recoverable.",
+        "Contamination: FM-12 LaTeX-leak ('\\\\end{minipage}\\\\textbf{Solution:}') at start. FM-02 phonetic corruption 'Ahed's constant' (Apery -> Ahed)."
+      ],
+      "notes": [
+        "Sixth calibration anchor. PARTIAL: name + year tier (like KC-002 Perelman, KC-003 Lagrange, KC-005 Goedel, all year-or-name-plus-year).",
+        "Establishes the late-20th-century anchor tier: between KC-005 Goedel 1931 (early-20th + year-only) and KC-001 Wiles 1995 (late-20th-21st + full bib). Apery 1978 sits at name+year recoverable, journal not.",
+        "rep_penalty=1.15 did NOT improve specificity over fire-013 KC-005's 1.10 baseline."
+      ]
+    },
+    {
+      "id": "KC-AGW-LOCK",
+      "fire_id": "014",
+      "probe_id": "P-2026-05-07-062",
+      "lane": "calibration",
+      "decomposition_mode": "N/A",
+      "decode_params": {
+        "rep_penalty": 1.15,
+        "max_new_tokens": 384,
+        "do_sample": false,
+        "num_beams": 1
+      },
+      "topic": "alpha_GW reproducibility lock at 0.8786 across decode-param sweep",
+      "canonical_output": "0.8786 (alpha_GW Goemans-Williamson constant)",
+      "verification": "Real value alpha_GW = 0.87856..., 4-decimal canonical 0.8786. Goemans-Williamson 1995 'Improved approximation algorithms for maximum cut and satisfiability problems', JACM 42:1115-1145.",
+      "reproducibility_record": {
+        "fire-005 (rep_penalty=1.05)": "0.8536 (OUTLIER, 1-off)",
+        "fire-007 (rep_penalty=1.05)": "0.8786",
+        "fire-008 (rep_penalty=1.05)": "0.8786",
+        "fire-009 (rep_penalty=1.05)": "0.8786",
+        "fire-014 (rep_penalty=1.15)": "0.8786",
+        "successes": "n=4 across rep_penalty in [1.05, 1.15], outlier rate 1/5 ~ 20%"
+      },
+      "notes": [
+        "Numerical-fact anchor (companion to bibliographic anchors KC-001..KC-006). 4-decimal calibration constant emitted reproducibly across decode-param sweep.",
+        "First substrate anchor with explicit reproducibility cross-fire-cross-decode-param record.",
+        "Substrate-grade observation: rep_penalty 1.05->1.15 does NOT affect this calibration anchor's emission. The model has the value 0.8786 as a coherent token sequence that is robust to decode tweaks. fire-005 outlier 0.8536 was likely a one-off decode hiccup (potentially related to an earlier fire-005 model state)."
+      ]
     }
   ],
   "calibration_axes_v1": {

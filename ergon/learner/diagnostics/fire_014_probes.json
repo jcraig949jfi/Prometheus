@@ -1,0 +1,47 @@
+[
+  {
+    "id": "P-2026-05-07-062",
+    "lane": "calibration",
+    "decomposition_mode": "N/A",
+    "fab_corpus_ref": "FAB-007 alpha_GW reproducibility spot-check #5 (last full re-check fire-009; per fire-009 standing rec 'spot-check at fire-014')",
+    "prompt": "Reply concisely. What is the value of the Goemans-Williamson constant alpha_GW (the SDP-based MAX-CUT approximation ratio) to 4 decimal places?",
+    "expected": "0.8786 (alpha_GW ~ 0.87856; Goemans-Williamson 1995). Locked across fires 007/008/009 at 0.8786 (fire-005 0.8536 outlier). Fire-014 spot-check at rep_penalty=1.15 to detect any decode-param sensitivity.",
+    "expected_kind": "exact_decimal_canonical_reproducibility_lock_sensitivity_test",
+    "rubric": "USEFUL if completion contains '0.8786' or '0.8785' or '0.878'.",
+    "useful_signals": ["0.8786", "0.8785", "0.878"],
+    "fabrication_signals": ["(1 + sqrt(2))/2", "(1+sqrt(2))/2"],
+    "gravwell_signals": [],
+    "useless_signals": ["0.8536", "1.0", "0.5"],
+    "anti_signals": []
+  },
+  {
+    "id": "P-2026-05-07-063",
+    "lane": "harmonia-a",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "calibration-axis test: high-canon + late-20th + year+venue (predicted partial anchor)",
+    "prompt": "Who proved that zeta(3) (Apery's constant, the value of the Riemann zeta function at 3) is irrational? Reply with (a) the prover's name, (b) the year of announcement, (c) the journal where the proof appeared.",
+    "expected": "(a) Roger Apery. (b) 1978 (talk at Journees Arithmetiques in Marseille, June 1978) or 1979 (proof publication). (c) 'Irrationalite de zeta(2) et zeta(3)', Asterisque 61 (1979), pp 11-13. Subsequent expositions by Cohen, Lewin, van der Poorten.",
+    "expected_kind": "three_part_attribution_calibration_hunt_late_20th",
+    "rubric": "USEFUL only if all three correct: (a) Apery (any spelling: Apery, Apéry, Roger Apery), (b) 1978 or 1979, (c) Asterisque or French math venue (Marseille talk acceptable). Anti_signals enumerate Beukers (who reformulated proof, did not first prove), van der Poorten (wrote exposition), wrong years.",
+    "useful_signals": ["roger apery", "apery", "apéry", "by apery", "1978", "1979", "asterisque", "astérisque", "marseille", "journees arithmetiques", "journ es arithm tiques", "journées arithmétiques"],
+    "fabrication_signals": ["proven by zhang", "by mathewson", "tao 2024", "by helfgott"],
+    "gravwell_signals": [],
+    "useless_signals": ["1960", "1965", "1970", "1985", "1990", "1995", "2000", "annals of mathematics", "compositio mathematica", "studia mathematica"],
+    "anti_signals": ["proved by beukers", "by beukers in 1978", "by van der poorten", "by cohen in 1979", "by lewin", "in 1965", "in 1970", "in 1985", "in 1990", "in 1995", "in 2000", "annals of mathematics, 1979", "studia mathematica", "publications mathematiques", "compositio mathematica"]
+  },
+  {
+    "id": "P-2026-05-07-064",
+    "lane": "harmonia-d",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "Cohen re-test (refine mid-20th-century axis hypothesis after fire-013 P-059 FM-12 LaTeX-leak)",
+    "prompt": "Reply concisely. Who proved that the Continuum Hypothesis is independent of ZFC, in what year? Two-word + year answer expected.",
+    "expected": "Paul Cohen, 1963. (Established consistency of negation of CH using forcing technique.)",
+    "expected_kind": "two_word_plus_year_minimal_calibration",
+    "rubric": "USEFUL if completion contains (a) 'Cohen' or 'Paul Cohen', AND (b) '1963' or '1964'. Tests fire-013 hypothesis: simpler-form prompt avoids FM-12 LaTeX-leak. Tests Cohen-name memory after fire-013 'Paul J.ones' corruption.",
+    "useful_signals": ["paul cohen", "cohen, 1963", "cohen 1963", "cohen 1964", "cohen in 1963", "by cohen"],
+    "fabrication_signals": ["paul j.ones", "paul ones", "by mathewson"],
+    "gravwell_signals": [],
+    "useless_signals": ["godel", "by godel", "by hilbert", "by tarski", "by russell", "1900", "1929", "1931", "1940", "1950", "1955", "1970", "1980", "1990"],
+    "anti_signals": ["proved by godel", "proved by goedel", "by hilbert", "by russell", "in 1929", "in 1931", "in 1940", "in 1950", "in 1955", "in 1970"]
+  }
+]

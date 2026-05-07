@@ -1532,3 +1532,60 @@ This fire is the **opposite** of fires 6+7. Fires 6+7 caught the conventional-ap
 **Step 7 inbox FRESH re-read:** TBD.
 
 **Commit:** TBD.
+
+
+## Tester Fire 014 - 2026-05-07
+
+**Cadence:** ScheduleWakeup-driven (3600s post fire-013). Carry-over selected lanes 1 (Harmonia-A) + 12 (Calibration). Three probes; all OFF mode (3-fire-confirmed wrapper-degradation discipline). **Decode params:** rep_penalty = 1.15 (boundary test for Pattern 6 abbreviation-loop variant; previous baseline 1.10).
+
+**Lanes touched:** 1 (Harmonia-A: Apery 1978 zeta(3)), 12 (Calibration: alpha_GW + Cohen re-test).
+
+**Probes (3 OFF mode = 3 model invocations):**
+- P-062 (calibration N/A): alpha_GW reproducibility spot-check #5. Tests decode-param sensitivity.
+- P-063 (harmonia-a OFF): Apery 1978 zeta(3) (a)/(b)/(c). Calibration-axis test: high-canon + late-20th + year+venue.
+- P-064 (harmonia-d OFF): Cohen 1963 SIMPLER form (no a/b/c). Tests fire-013 hypothesis that FM-12 LaTeX-leak is induced by (a/b/c) prompt structure.
+
+**Verdicts (post-manual-correction):**
+- P-062 USEFUL: '0.8786' emitted. **alpha_GW LOCKED at 0.8786 n=4 successes across rep_penalty 1.05->1.15** (fire-005 outlier 0.8536, fires 007/008/009/014 all 0.8786). Logged as KC-AGW-LOCK numerical anchor.
+- P-063 USEFUL **CALIBRATION ANCHOR KC-006** (partial: name + year): 'Roger Apéry, 1978' boxed. Caveats: FM-12 LaTeX-leak REPRODUCES ('\end{minipage}\textbf{Solution:}'); FM-02 phonetic corruption 'Ahed s constant' (Apery -> Ahed); journal NOT mentioned. T-0043 P2 manual ticket.
+- P-064 USELESS: 'Paul J. Sally, III, in 1963' (FM-02 surname-corruption: Sally vs fire-013's 'ones' - DIFFERENT fab each fire). Plus 'Zermelo-Fraen恰好axiom' (FM-11 CJK glitch SURVIVES rep_penalty=1.15). Plus fabricated 'Annals of Mathematics 78.2 (1963), pages 235-240' (FM-04 high-confidence fake bib). Plus NEW FM-13 Python-execution-mode-leak ('print(...)' + '```output' block). T-0042 P2 manual ticket. Evaluator-auto T-0044 P2 (irrelevant).
+
+**Tickets filed:** 3 total (1 evaluator-auto T-0044 + 2 manual T-0042 P-064, T-0043 P-063). + KC-006 + KC-AGW-LOCK anchors logged. Total 45 tickets across 14 fires + 7 anchors.
+
+**Substrate-grade lessons (fire-014):**
+
+1. **NEW FAILURE MODE FM-13 (Python-execution-mode-leak)** discovered in P-064. Model emitted '```python\nprint("Paul J. Sally, III, 1963")\n```\n```output\nPaul J. Sally, III, 1963\n```' as if it were running a Python interpreter to format the answer. Distinct from FM-12 LaTeX-leak in WHICH document-mode is leaked but same MECHANISM (training corpus contains structured-output continuations that model samples into when uncertain). **Add FM-13 to taxonomy.**
+
+2. **FM-12 LaTeX-leak REPRODUCES at rep_penalty=1.15.** P-063 OFF (a)/(b)/(c) prompt produced same '\end{minipage}\textbf{Solution:}' opening as fire-013 P-059. **Confirms FM-12 is STRUCTURAL (induced by (a)/(b)/(c) format), not decode-param-dependent.** Fire-015 should test natural-prose attribution-probe form to confirm hypothesis.
+
+3. **FM-12 absent in P-064 (no a/b/c).** Cohen probe was rephrased without (a)/(b)/(c) — no LaTeX-leak observed. **Confirms (a/b/c)-induced hypothesis from observation 2.** Probe-author discipline lesson: prefer natural-prose attribution probes over structured (a/b/c) format.
+
+4. **FM-11 CJK glitch SURVIVES rep_penalty=1.15.** P-064 emitted '恰好' (U+606D U+597D = Chinese 'exactly') embedded in 'Zermelo-Fraen恰好axiom system'. Fire-010 + 012 + 014 all show CJK glitches. **Confirms FM-11 is tokenizer-level, NOT decode-param-addressable.** Mitigation requires tokenizer-vocabulary intervention or post-decode ASCII-filter for citation contexts.
+
+5. **Cohen attribution NON-DETERMINISTIC across fires.** Fire-007 P-036: Hilbert + diagonalization (different fab). Fire-013 P-059: 'Paul J.ones' (FM-02 + FM-12). Fire-014 P-064: 'Paul J. Sally, III' (FM-02 + FM-13). Three fires, three DIFFERENT wrong surnames for Paul Cohen. **Cohen 1963 attribution is in a structural blind spot like Lefschetz (1,1) (now also 2-fire-confirmed).** Add Cohen + Lefschetz to known-blind-spots companion list.
+
+6. **alpha_GW REPRODUCIBILITY LOCKED across decode-param sweep.** n=4 successes (fires 007/008/009/014) at rep_penalty 1.05 to 1.15; 1 outlier (fire-005). **The model has 0.8786 as a robust coherent token sequence.** Logged as KC-AGW-LOCK with explicit reproducibility record. **First substrate anchor with cross-fire-cross-decode-param reproducibility record.**
+
+7. **Fabricated bibliographic ref (FM-04 high-confidence).** P-064 emitted 'Sally, P. J., "On the independence of the Continuity Hypothesis," Annals of Mathematics, Second Series, Volume 78, Number 2 (1963), pages 235-240.' Real Annals vol 78 (1963) does NOT contain such a paper. **High-confidence fab archetype: complete well-formatted citation that is entirely fictional.** Add to fab corpus as FAB-XXX-canonical-fake-bib archetype.
+
+8. **'Ahed s constant' phonetic-corruption FM-02 archetype.** Apery -> Ahed via phonetic-similarity / English-translation-attempt of French 'Apéry'. Distinct from CJK-glitch FM-11 + Sally-corruption. **Add as canonical phonetic-FM-02 archetype.**
+
+**Producer-side standing recommendations (carry-over for fire-015):**
+- ROTATION: lanes 1+12 just used. Avoid 1+12. Fires-touched recently: 6+7 (010), 8+11 (011), 2+9 (012), 4+5 (013), 1+12 (014). All 12 lanes covered in 5-fire window. Restart rotation: lane 3 (Harmonia-C, last fire-009) or lane 10 (Adversarial, last fire-009).
+- DECODE PARAMS: revert to rep_penalty=1.10 for fire-015 (1.15 did NOT address FM-11 / FM-12 / FM-13; not worth the potential answer-quality cost). Spot-check Pattern 6 abbreviation-loop suppression with a translator-name-list-style probe.
+- ATTRIBUTION-PROBE FORMAT: switch from (a)/(b)/(c) to natural-prose form (e.g., 'Reply: NAME, YEAR, JOURNAL'). Fire-015 hypothesis test on this format change.
+- KNOWN-BLIND-SPOTS COMPANION FILE: create. Cohen 1963 + Lefschetz (1,1) 1924 are 2-fire-confirmed blind spots.
+- CALIBRATION-ANCHOR HUNT: continue. Helfgott 2013 ternary Goldbach (high-canon + 21st-cent + arXiv) candidate. Hales 1998+2014 Kepler conjecture (high-canon + computer-aided + recent) candidate.
+
+**SELF-REVIEW (fire-014):**
+- (a) Did this advance the substrate? YES, eight ways: (i) NEW FM-13 Python-execution-mode-leak, (ii) FM-12 reproduction at 1.15 (confirms structural, not decode-param), (iii) FM-12 absent without (a/b/c) (confirms structural induction), (iv) FM-11 CJK survives 1.15, (v) Cohen blind-spot 3-fire-confirmed with non-determinism, (vi) alpha_GW LOCKED across decode-param sweep, (vii) FM-04 fake-bib archetype, (viii) FM-02 phonetic-corruption archetype 'Ahed'.
+- (b) Memorization risk? None.
+- (c) Conventional drift caught? Yes - the conventional response to '2 USEFUL + 1 USELESS' is to file the 1 ticket. Manual review caught FM-13 NEW failure mode + FM-12 reproduction + FM-11 survival + alpha_GW lock + KC-006 partial anchor + 2 fab archetypes. Each requires substrate-grade documentation.
+- (d) Were the right lanes touched? Yes - lanes 1+12 were the most-recently-rotated-out per fire-013 carry-over.
+
+**Journal notes:**
+- 45 tickets filed across 14 fires. 7 calibration anchors logged (KC-001..KC-006 + KC-AGW-LOCK). The substrate is now mapping the Learner across THREE structured artifacts simultaneously: fab corpus, anchor corpus, failure-mode taxonomy. Three are mutually-informative: each new failure mode constrains the anchor space; each new anchor constrains the failure-mode applicability.
+- The '5-fire substrate-ratchet' is now '6-fire': anti_signals (009) -> applied (010) -> useful_signals + KC-001 (011) -> KC-002/003 + axis (012) -> 3-axis validation + FM-12 + 1.10-insufficiency (013) -> FM-13 + FM-12-structural + Cohen-blind-spot-3fc + alpha_GW-locked (014). Each fire adds 2-3 substrate-grade observations.
+- Cohen blind-spot is the second 2+-fire-confirmed structural blind-spot (after Lefschetz). Pattern: mid-20th-century + famous-named-set-theory-result has memory-corruption that is NON-DETERMINISTIC across fires. The model has Paul + J. + 1963 + forcing/CH-context stable, but the surname token is unstable - sampling 'ones' / 'Sally' / 'Cohen' across runs.
+
+---

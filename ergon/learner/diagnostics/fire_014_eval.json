@@ -1,0 +1,39 @@
+{
+  "fire_id": "014",
+  "computed_at": "2026-05-07T19:49:54+00:00",
+  "n_probes": 3,
+  "evaluations": [
+    {
+      "probe_id": "P-2026-05-07-062",
+      "lane": "calibration",
+      "decomp_mode": "N/A",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "calibration: completion contains useful signal '0.8786'",
+      "completion_preview": " The value of the Goemans-Williamson constant alpha_GW, which is derived from the semidefinite programming (SDP) approach and used for approximating the maximum cut problem, has been determined throug"
+    },
+    {
+      "probe_id": "P-2026-05-07-063",
+      "lane": "harmonia-a",
+      "decomp_mode": "OFF",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal 'apéry'",
+      "completion_preview": "}\n\\end{minipage}\n\n\\textbf{Solution:} The irrationality of \\(\\zeta(3)\\), also known as Ahed's constant, was proven by Roger Apéry in 1978. His proof involved constructing a sequence of rational numbers"
+    },
+    {
+      "probe_id": "P-2026-05-07-064",
+      "lane": "harmonia-d",
+      "decomp_mode": "OFF",
+      "verdict": "USELESS",
+      "sub_type": "irrelevant",
+      "severity": "no useful signal matched; completion did not address probe correctly",
+      "completion_preview": " The result you are referring to was proven by Paul J. Sally, III, in 1963. He showed that the Continuous Hypothesis (CH) is independent of the Zermelo-Fraen恰好axiom system (ZFC). This means that CH ca"
+    }
+  ],
+  "tickets_filed": [
+    "T-2026-05-07-0043"
+  ],
+  "useless_count": 1,
+  "useful_count": 2
+}
