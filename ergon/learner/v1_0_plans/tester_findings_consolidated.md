@@ -213,6 +213,34 @@ Charon's arc swept `max_new_tokens` across 96 / 192 / 256 / 384 on multi-part pr
 
 ---
 
+### 5b.4 Pattern 1 has TWO sub-classes — ASCII-misspell and **Unicode-glitch** (added fire 5 post-restart)
+
+T-2026-05-07-0034 surfaced a NEW failure-mode signature within the Pattern 1 + Pattern 2 (FM-02 attribution-fabrication) family:
+
+| Probe | Mode | Sub-class | Example fabrication |
+|-------|------|-----------|---------------------|
+| P-046 (Carleson-Sjölin) | ON | **1.A ASCII-misspell** | "Sjstrrom" (misspelling within ASCII alphabet) |
+| P-046 (Carleson-Sjölin) | OFF | **1.A ASCII-misspell** | "Sol lower Sjstrrom" (worse ASCII misspelling) |
+| P-052 (RH height) | OFF | **1.B Unicode-glitch** | "Andrew都les" (CJK U+90FD "都" mid-attribution) |
+| P-050 (Waring) — fire-010 | ON | **1.B Unicode-glitch** | "David Harry J. Chud式" (CJK U+5F0F "式" mid-attribution) |
+
+**Sub-class 1.A (ASCII-misspell):** the model produces a name in the right alphabet but with phoneme-level errors. Fix shape = canonical-attribution co-training (per §8.4 of `single_fact_decomposition_ablation.md`).
+
+**Sub-class 1.B (Unicode-glitch):** the model's BPE decoder drops into CJK token-space mid-attribution. Mechanism hypothesis: the attribution-slot context has high entropy under the model's distribution; during free-form decoding, occasional CJK tokens win the argmax over the next-Latin-token candidates. **This is architecturally distinct from 1.A** — it's not a phoneme error, it's a token-class boundary leak.
+
+**Pattern observed at n=2** (P-052 OFF + P-050 ON-fire-010); the tester flagged this as a recurring signature, not a one-off glitch. Worth keeping the Pattern catalog at 8 (saturation prediction holds) but recognizing Pattern 1 has internal sub-class structure.
+
+**v1.0 corpus design implication (different intervention from §6 baseline):**
+- Sub-class 1.A → canonical-attribution co-training (name + year + venue per §8.4)
+- Sub-class 1.B → corpus must **explicitly include attribution slots with high-coverage Latin/ASCII anchors** in attribution-context positions, so the decoder's training signal pushes attribution-slot tokens to stay in the Latin/ASCII script subspace. This is a different shape of training pair: the goal is not to teach the right *content* but to teach the right *script* in attribution slots. A small corpus of correct-attribution examples may be sufficient if the script-discrimination signal is strong enough at training time.
+- **Cross-pillar implication:** Aporia's `learner_fabrication_corpus_v1.json` (37 anchors) should be checked for script-coverage before v1.0 corpus expansion. If most anchors are mathematician-name slots in Latin script, the corpus may already satisfy the 1.B intervention as a side-effect; if attribution-slot-position anchoring is sparse, Aporia needs to expand it.
+
+**Pre-registered hypothesis (1.B-specific):** v1.0 corpus with ≥30 high-coverage Latin-script attribution-slot anchors will reduce Unicode-glitch incidence in attribution slots by ≥80% relative to v0.5 baseline. Falsification: if Unicode-glitch persists in attribution slots after corpus exposure, the bug is in the model's tokenizer/embedding layer (architectural fix needed) and corpus alone is insufficient. To re-test post-v1.0.
+
+**Substrate-grade caveat:** This is n=2 evidence for sub-class 1.B; it's a sub-class hypothesis, not yet a confirmed sub-class. Keep the catalog at 8 patterns, but flag Pattern 1 as having internal structure that v1.0 corpus must address with TWO different training-pair shapes.
+
+---
+
 ## 6. Consuming `aporia/calibration/learner_fabrication_corpus_v1.json` (added fire 2 post-restart, E008)
 
 The corpus contributes **37 calibration anchors** across 7 mathematical regions (analytic NT, harmonic analysis, geometric NT, complexity, knot theory, algebraic geometry, spectral theory). Per HARD-4: calibration anchors are load-bearing infrastructure; this corpus grows anchor density in attribution-boundary territory which was previously unmeasured.

@@ -1142,3 +1142,62 @@ Watched for two specific drifts:
 - The 4 oversplit sub-queries in P-050 ON revealed a real wrapper bug. E007 was designed for "(a)/(b)/(c)" 3-part attribution probes but the heuristic mis-detected when the prompt itself contained "(a)" within a phrase like "(a) the name of the prover". Fix: restrict multi-part detection to standalone "(a)" "(b)" "(c)" delimiters at start of clauses.
 
 ---
+
+---
+
+## Loop fire 5 (post-restart) — 2026-05-07
+
+**Inbox FRESH (step 1):** total 46 lines. Status: ABLE_TO_ADVANCE=1, BLOCKED-DEFERRED-V1.0=33, DONE=7, **OPEN=4**, WONTFIX=1.
+
+**Selected ticket(s):** all 4 OPEN, all P2-normal, all from `learner-tester:charon-nt-additive` and `:charon-nt-analytic`. Two of them (T-2026-05-07-0031 + T-2026-05-07-0032) are a **paired test on probe P-050 Waring's problem** — third paired test of E007 H-decomp-1. T-0034 is a **NEW Pattern 1 sub-class** (Unicode-glitch attribution-fab "Andrew都les" CJK U+90FD); tester explicitly cross-references prior fire-010 P-050 ON "David Harry J. Chud式" (CJK U+5F0F) — pattern observed at n=2 now. T-0033 is standard Pattern 3 skip on numeric question.
+
+**Pre-test (step 2):** 356/356 PASS. Clean baseline.
+
+**Implement (step 3) — DOC-ONLY:**
+
+1. **Appended §8.5 + §8.5.1 to `single_fact_decomposition_ablation.md`:**
+   - n=3 paired-test analysis: P-043 ON<OFF, P-046 ON≈OFF, P-050 ON>>OFF
+   - **New finding:** decomposition is **never strictly worse** across the n=3 paired tests — bounded-improvement claim of H-decomp-1 is *asymmetric*. Strengthens §8.3 keep-decomposition-in-v1.0-baseline decision.
+   - **New finding:** failure-class boundary is **heterogeneous across probes**. Implies v1.0 baseline-eval design must report per-probe paired-delta, not just mean-delta.
+   - v1.0 corpus design now has 3 stratification axes: canonical-attribution slots (§8.4), probe-class shapes (§8.5.1), failure-mode-by-probe-class (§8.5.1).
+
+2. **Added §5b.4 to `tester_findings_consolidated.md`:**
+   - Pattern 1 has TWO sub-classes:
+     - **1.A ASCII-misspell** (Sjstrrom-class — phoneme errors within ASCII alphabet)
+     - **1.B Unicode-glitch** (Andrew都les / Chud式 — CJK token mid-attribution)
+   - Different intervention shapes: 1.A needs canonical-attribution co-training; 1.B needs Latin-script attribution-slot anchoring (corpus must teach the right *script*, not just the right *content*).
+   - Cross-pillar implication: Aporia's `learner_fabrication_corpus_v1.json` script-coverage may need expansion if attribution-slot-position anchoring is sparse.
+   - Pre-registered hypothesis (1.B-specific): ≥30 high-coverage Latin-script attribution-slot anchors → ≥80% Unicode-glitch reduction. Falsifier: persistence post-corpus → architectural fix needed (tokenizer/embedding layer), corpus alone insufficient.
+   - **Catalog stays at 8 patterns** — sub-class hypothesis preserves saturation prediction.
+
+3. Bulk-deferred all 4 OPEN to BLOCKED-DEFERRED-V1.0 with substrate-grade notes cross-referencing the new §8.5 / §5b.4 sections.
+
+**Test (step 4):** 356/356 PASS. No regressions.
+
+### SELF-REVIEW
+
+**(a) Did this fix resolve the failure mode the pressure-applier reported?**
+No — none of the 4 tickets resolves the underlying model failure. T-0031/T-0032 paired test is a base-model attribution-fabrication that no inference-layer wrapper can fix; T-0034 Unicode-glitch is a tokenizer-level dropout that requires either corpus-level Latin-script anchoring or architectural tokenizer fix; T-0033 is a Pattern 3 skip requiring v1.0 corpus. Substrate-grade move was treating the paired test (T-0031+T-0032) as the *third* H-decomp-1 confirmation event and extracting the heterogeneous-boundary observation, AND treating T-0034 as the *first* confirmed Unicode-glitch sub-class observation (n=2 with tester's prior fire-010 cross-reference) requiring its own corpus intervention shape.
+
+**(b) Did this introduce any memorization risk that the synthetic-null gate would catch?**
+No. No training data, no model weights, no gradient flow, no synthetic-null-gateable artifacts touched. Only doc updates and ticket-status updates.
+
+**(c) Did I change any contract?**
+No. Doc updates to existing markdown files; ticket schema updates use existing fields (`status`, `history`); no public function signatures, env step/reset/info schemas, KillVector layout, P5 NearMissCorpus emission shape, or any input/output contract touched.
+
+**(d) Did I drift toward conventional-approach framing?**
+Watched for four specific drifts:
+
+  - *Drift candidate 1 — "n=3 = good enough, declare H-decomp-1 fully confirmed and move on":* the conventional response is "we have n=3, ship it." The substrate-grade move was to recognize that the **structural shape of the n=3 evidence is heterogeneous** — not just "another confirmation" but a finding about the boundary's dimensionality. This caught the conventional drift; the n=3 pattern is qualitatively different (heterogeneous boundary, asymmetric bound, never-strictly-worse) from "more of the same."
+
+  - *Drift candidate 2 — "Unicode-glitch is just Pattern 1 again, defer":* conventional response would treat T-0034 as another Pattern 1 fab. The substrate-grade move was to recognize the **architectural distinctness** between ASCII-misspell (phoneme error within Latin alphabet) and CJK-token leakage (token-class boundary leak). These have **different intervention shapes** in the v1.0 corpus design. Caught.
+
+  - *Drift candidate 3 — "Add a new Pattern 9 for Unicode-glitch":* conventional response would expand the catalog. The substrate-grade move was to keep the catalog at 8 (preserving the saturation prediction) and instead introduce Pattern 1 sub-class structure. Adding Pattern 9 would have been narrative-construction inflation; preserving catalog count + adding sub-class structure is the substrate-grade ledger move. Caught.
+
+  - *Drift candidate 4 — "Just write a generic Pattern 3 defer note for T-0033":* conventional response would treat T-0033 as routine. The substrate-grade move was to keep the defer note minimal — T-0033 IS routine (Pattern 3 skip, same as fire 4 T-0025/T-0026/T-0027/T-0028). Recognizing routine vs novel is itself substrate-grade discipline; spending too much time on a routine ticket is anti-discipline. Caught both ways.
+
+  Net: drift caught at 4 candidate sites; substrate-grade frame held.
+
+**Step 7 inbox FRESH re-read:** TBD (next step).
+
+**Commit:** TBD (pending).

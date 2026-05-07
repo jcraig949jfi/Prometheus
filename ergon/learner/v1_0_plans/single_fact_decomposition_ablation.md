@@ -188,3 +188,42 @@ This is a different probe-shape from §8.1 (P-043 was a 2-part where ON had Patt
 **Substrate-grade record:** H-decomp-1 confirmed at n=2. Decomposition is bounded by orthogonal failure modes; the boundary is fine-grained (some axes mode-stable, some mode-variable). v1.0 corpus interventions for Pattern 1 + Pattern 4 (canonical-attribution co-training) remain load-bearing — and the canonicality-co-training requirement is now empirically motivated, not just theoretical.
 
 *Updated by Ergon, loop fire 4 (post-restart), 2026-05-07.*
+
+### 8.5 Third paired test: T-2026-05-07-0031 / T-2026-05-07-0032 P-050 Waring's problem (number-theory-additive)
+
+Filed by Charon-as-Learner-Tester between fire 4 and fire 5. **n is now 3 paired tests.**
+
+Probe: *"Who first proved Waring's problem ... Reply with (a) name of prover, (b) year, (c) journal/venue."*  Truth = Hilbert / 1909 / Mathematische Annalen.
+
+| Mode | Failure observed | Severity classification |
+|------|------------------|-------------------------|
+| ON  (T-0031) | "Hilbert / **1920**" — name CORRECT, year wrong by 11. Anti-signal "in 1920" fires; substance veto over surface match. | `wrong_substance` |
+| OFF (T-0032) | Generic exposition; no attribution attempted; Pattern 3 topic-disengagement. | `irrelevant` |
+
+This is the cleanest substrate observation in the n=3 series: **ON-mode is meaningfully BETTER than OFF-mode on P-050.** OFF skips attribution entirely; ON gets the name right with a wrong year. Per the substance-veto convention, both still fail; but the ON failure is *closer to truth* than the OFF failure.
+
+### 8.5.1 Heterogeneous-boundary finding at n=3
+
+Combining the three paired tests:
+
+| Probe | Mode-comparison | Failure pattern |
+|-------|-----------------|-----------------|
+| P-043 (Modularity) — fire 3 | ON < OFF | ON: simple Pattern 1 (Sato); OFF: compound Pattern 6+1 (third-part hallucination + Brer) |
+| P-046 (Carleson-Sjölin) — fire 4 | ON ≈ OFF | Both Pattern 1+2; surface forms differ (year mode-variable, venue mode-stable) |
+| P-050 (Waring) — fire 5 | ON >> OFF | ON: name-correct/year-wrong Pattern 1; OFF: Pattern 3 skip |
+
+**Newly confirmed at n=3 (sharper than §8.4):**
+- **Decomposition is never strictly worse across these 3 paired tests.** The bounded-improvement claim of H-decomp-1 is *asymmetric*: it bounds the upside (decomposition cannot rescue Pattern 1, 2, 6 in either mode), but it does NOT bound the downside (decomposition does not cause regressions in any of n=3 paired tests). This strengthens §8.3's case for keeping decomposition in the v1.0 inference baseline: it's not just preservation-correct, it's strictly-non-regressive across the empirical sample.
+- **The failure-class boundary is heterogeneous across probes.** Some probes (P-050) show ON >> OFF; some (P-046) show ON ≈ OFF; some (P-043) show ON < OFF (with ON better). The variance is substantial. **Implication for v1.0 baseline-eval design:** the eval harness should report per-probe paired-delta, not just mean-delta, since the mean obscures the heterogeneous structure.
+
+**Speculative (NOT confirmed at n=3, deferred):**
+- The heterogeneous boundary may correlate with probe ontology: 2-part probes vs 3-part probes vs single-attribution probes may show systematically different ON/OFF curves. Test in v1.0 with stratified probe set.
+
+**Implication for v1.0 corpus design:** the n=3 paired tests now establish that Pattern 1 attribution-fabrication is a **multi-axis** failure (per §8.4 venue-stable / year-variable) AND a **probe-class-heterogeneous** failure (per §8.5.1). The v1.0 corpus must therefore stratify training pairs across:
+  1. canonical-attribution slots (name + year + venue together) — per §8.4
+  2. probe-class shapes (2-part, 3-part, single-fact) — per §8.5.1
+  3. failure-mode-by-probe-class (ON-rescue cases, ON-near-equal cases, ON-doesn't-help cases)
+
+**Substrate-grade record:** H-decomp-1 confirmed at n=3 with sharper structure. v1.0 corpus design now has three independent stratification axes. Decomposition stays in v1.0 inference baseline as strictly-non-regressive.
+
+*Updated by Ergon, loop fire 5 (post-restart), 2026-05-07.*
