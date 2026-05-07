@@ -6,6 +6,74 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #22 — 2026-05-07 16:47 (local)
+
+**Coordination note:** parallel substrate-tester instance ran fire #21 (commit `f23b9438`) covering Lane 12 + Lane 6. My fire = #22, lanes 11 + 10.
+
+**Lanes selected:** 11 (batch-sweep, Harmonia v2 corpora) + 10 (real-paper, out-of-band entries to avoid network-bound catalog cross-check).
+
+**Lane rationale:** Both lanes substantially overdue for my-instance coverage (Lane 11 last my fire #8 ~14 fires ago; Lane 10 last my fire #5 ~17 fires ago). Lane 10 picked entries 1/2/3 of `RECENT_POLYNOMIAL_CORPUS` (different from fire #5's 0+16) — all out-of-band Salem-cluster, avoiding fire-#14's in-band catalog network deadlock.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_22_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_22_results.json`.
+
+### Lane 11 — batch-sweep (Harmonia v2 corpora): 2/2 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — clean ingest | **PASS** | 30/30 probes submitted, 0 errors, **30,030 probes/sec** throughput |
+| T2 — domain coverage | **PASS** | 6 domains: combinatorics, extremal-graph-theory, dynamical-systems, analysis_and_PDEs, logic, computational complexity |
+
+**Probe distribution:** 6 from each of the 5 v2 corpora (combinatorics, dynamics, analysis, logic, complexity) = 30 total. Sampled with deterministic seed `20260507_22`.
+
+**Substrate verdict:** PASS. SigmaKernel.CLAIM ingests theorem-style probes from all 5 v2 corpora cleanly at >30K/sec. As documented in fire #8, all probes land at `status="pending"` with no automated verdict (substrate has no general-purpose theorem-style gauntlet — architectural reality, not flaw). The Lane 11 spec checks ingest correctness, which is what this lane verifies.
+
+### Lane 10 — real-paper out-of-band (entries 1, 2, 3): 3/3 PASS
+
+3 polynomials from `RECENT_POLYNOMIAL_CORPUS`, all from arxiv 2409.11159 (Salem-cluster):
+
+| Probe | M | Routing |
+|---|---:|---|
+| Entry 1 (deg 16) | 1.3084 | out_of_band Phase-0 kill |
+| Entry 2 (deg 14) | 1.3182 | out_of_band Phase-0 kill |
+| Entry 3 (deg 18) | 1.3232 | out_of_band Phase-0 kill |
+
+**Substrate verdict:** PASS. Deterministic out-of-band routing for all 3 Salem-cluster entries. Confirms substrate's Phase-0 band check produces consistent kill_patterns with high precision (4-decimal-place M values in kill_pattern message).
+
+### Tickets filed this fire
+
+**0 tickets.** Both lanes pass cleanly.
+
+### Standing recommendations for next fire (#23)
+
+1. **Anti-repeat:** avoid lanes 11, 10. Suggested fire #23 candidates:
+   - **Lane 14 (replay-determinism)** — last fire #12; due for re-probe
+   - **Lane 16 (concurrency-stress)** — last fire #12; due for re-probe
+   - **Lane 7 (precision-gradient)** — continue characterizing INCONCLUSIVE list (entries #5+ remaining)
+2. **Watch for ST-fire14-001 + ST-fire17-001 fix:** still OPEN; re-probe Lane 2 P3 + Lane 3 when closed.
+3. **Lane 12 still deferred:** prior P1 tickets still OPEN.
+4. **Cross-degree scaling extensibility:** future Lane 5 fires should vary coefficient bound (±3, ±7) at fixed degree, not re-probe (deg, ±5) combinations.
+
+### Fire-22 stress on substrate health
+
+**Positive:**
+- `SigmaKernel.CLAIM` ingests theorem-style claims at high throughput (>30K/sec).
+- Domain-tag preservation correct across all 5 v2 corpora.
+- DiscoveryPipeline's Phase-0 band check is consistent across multiple Salem-cluster polynomials from a single arxiv paper (entries 1, 2, 3 from arxiv 2409.11159).
+- Kill_pattern format includes M to 4-decimal precision — substrate-grade observability.
+
+**0 substrate flaws found this fire.**
+
+### Discipline notes
+
+- HARD-1 through HARD-5: respected.
+- Time used: ~5 minutes (well within 50-minute cap).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed). Substrate-tester running ticket count after 22 fires: 8 ever filed (2 closed, 6 OPEN).
+
+— substrate-tester, fire #22, 2026-05-07
+
+---
+
 ## Fire #21 — 2026-05-07 20:00 UTC
 
 **Coordination note:** Fire #20 ran on parallel instance (commit `0f399394`) covering Lane 5 deg-10 ±5 with 0 tickets + cross-degree hit-rate scaling pattern (deg-14: 2.6e-6 → deg-12: 1.3e-5 → deg-10: 5.5e-5 — ~4-5× per lower degree). My fire = #21. P0 ticket `T-ST-fire17-001` still OPEN — Techne hasn't shipped fix; deferred re-probe.

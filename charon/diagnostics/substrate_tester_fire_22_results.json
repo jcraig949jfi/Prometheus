@@ -1,0 +1,170 @@
+{
+  "fire_id": "fire_22_2026_05_07",
+  "lanes": [
+    "11_batch_sweep",
+    "10_real_paper_oob"
+  ],
+  "lane_11": {
+    "lane": "11_batch_sweep",
+    "n_probes_sampled": 30,
+    "n_submitted": 30,
+    "n_errors": 0,
+    "wall_clock_seconds": 0.0009989738464355469,
+    "throughput_per_sec": 30030.816229116946,
+    "domain_counts": {
+      "combinatorics": 5,
+      "extremal-graph-theory": 1,
+      "dynamical-systems": 6,
+      "analysis_and_PDEs": 6,
+      "logic": 6,
+      "computational complexity": 6
+    },
+    "n_tests": 2,
+    "verdict_counts": {
+      "PASS": 2
+    },
+    "tests": [
+      {
+        "id": "T1_batch_sweep_clean_ingest",
+        "expected": "30 probes ingested via SigmaKernel.CLAIM with no exceptions",
+        "actual": "30/30 submitted, 0 errors, throughput=30030.8/s",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T2_domain_coverage",
+        "expected": "\u22653 domains represented",
+        "actual": "6 domains: {'combinatorics': 5, 'extremal-graph-theory': 1, 'dynamical-systems': 6, 'analysis_and_PDEs': 6, 'logic': 6, 'computational complexity': 6}",
+        "verdict": "PASS",
+        "severity": null
+      }
+    ],
+    "errors": []
+  },
+  "lane_10": {
+    "lane": "10_real_paper_oob",
+    "n_probes": 3,
+    "case_results": [
+      {
+        "idx": 1,
+        "shape": "real_arxiv_oob",
+        "coeffs": [
+          1,
+          1,
+          0,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          0,
+          1,
+          1
+        ],
+        "submitted_M": 1.308409006213,
+        "paper_arxiv_id": "2409.11159",
+        "paper_year": 2024,
+        "paper_title": "Salem numbers less than 49/37",
+        "elapsed_s": 0.023000240325927734,
+        "terminal_state": "REJECTED",
+        "kill_pattern": "out_of_band:M=1.3084_outside_(1.001,1.18)",
+        "claim_id": null
+      },
+      {
+        "idx": 2,
+        "shape": "real_arxiv_oob",
+        "coeffs": [
+          1,
+          -1,
+          0,
+          -1,
+          1,
+          0,
+          0,
+          -1,
+          0,
+          0,
+          1,
+          -1,
+          0,
+          -1,
+          1
+        ],
+        "submitted_M": 1.318197504432,
+        "paper_arxiv_id": "2409.11159",
+        "paper_year": 2024,
+        "paper_title": "Salem numbers less than 49/37",
+        "elapsed_s": 0.0,
+        "terminal_state": "REJECTED",
+        "kill_pattern": "out_of_band:M=1.3182_outside_(1.001,1.18)",
+        "claim_id": null
+      },
+      {
+        "idx": 3,
+        "shape": "real_arxiv_oob",
+        "coeffs": [
+          1,
+          -1,
+          -1,
+          1,
+          0,
+          0,
+          0,
+          -1,
+          0,
+          1,
+          0,
+          -1,
+          0,
+          0,
+          0,
+          1,
+          -1,
+          -1,
+          1
+        ],
+        "submitted_M": 1.323198173512,
+        "paper_arxiv_id": "2409.11159",
+        "paper_year": 2024,
+        "paper_title": "Salem numbers less than 49/37",
+        "elapsed_s": 0.0,
+        "terminal_state": "REJECTED",
+        "kill_pattern": "out_of_band:M=1.3232_outside_(1.001,1.18)",
+        "claim_id": null
+      }
+    ],
+    "n_tests": 3,
+    "verdict_counts": {
+      "PASS": 3
+    },
+    "tests": [
+      {
+        "id": "P_1_clean_routing",
+        "expected": "deterministic routing with kill_pattern",
+        "actual": "M=1.3084, terminal=REJECTED, kill_pattern='out_of_band:M=1.3084_outside_(1.001,1.18)'",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "P_2_clean_routing",
+        "expected": "deterministic routing with kill_pattern",
+        "actual": "M=1.3182, terminal=REJECTED, kill_pattern='out_of_band:M=1.3182_outside_(1.001,1.18)'",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "P_3_clean_routing",
+        "expected": "deterministic routing with kill_pattern",
+        "actual": "M=1.3232, terminal=REJECTED, kill_pattern='out_of_band:M=1.3232_outside_(1.001,1.18)'",
+        "verdict": "PASS",
+        "severity": null
+      }
+    ]
+  }
+}
