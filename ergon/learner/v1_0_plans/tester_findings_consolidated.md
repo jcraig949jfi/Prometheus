@@ -361,6 +361,21 @@ Tester labels this `BLIND-SPOT BS-001` (n=4 confirmed). **Crucial new observatio
 
 **Cross-probe corroboration at n=2 (different probe class):** T-2026-05-07-0047 on ternary Goldbach 2013 (different topic: additive number theory, not set theory) substituted "Helfgott → Ben Green". Green is also a 21st-century number theorist at top universities; Green-Tao 2008 (arbitrary-long APs in primes) is in the same topic neighborhood as ternary Goldbach 2013. **Same topically-clustered substitution shape on a different probe**. Two independent probe-classes (Cohen-set-theory + Helfgott-NT) show topic-adjacent fabrication; this is not a probe-specific accident.
 
+**BS-003 Helfgott escalates to n=2 within-probe-class (added fire 11, T-2026-05-07-0050):** Helfgott has now been observed at n=2 fire-variable substitutions on the same probe class:
+
+| Fire | Source ticket | Wrong surname | Topic-cluster shape |
+|------|---------------|---------------|---------------------|
+| Fire 10 (T-0047) | P-065 OFF Helfgott prover | "Dr. Ben Green" + "University of arXiv" | real 21st-cent NT mathematician, similar topic |
+| Fire 11 (T-0050) | P-068 OFF Helfgott prover (2nd) | "Ivan M. R. H." (fabricated initials) + "Fermat prize ABC" | totally fabricated; FM-08 wrong-result-conflation |
+
+Tester labels this `BLIND-SPOT BS-003`. **Combined with BS-001 Cohen n=4 (within-probe-class) and the cross-probe corroboration above, the §5b.8.1 fire-variable-with-topic-clustering mechanism hypothesis is now supported by:**
+- BS-001 Cohen: n=4 within-probe-class fire-variable, topic-clustered (set theory basin)
+- BS-003 Helfgott: n=2 within-probe-class fire-variable, partially topic-clustered (one substitution within NT basin "Ben Green", one outside "Ivan M. R. H.")
+
+**Strengthened mechanism claim at fire 11:** the fire-variable + topic-clustering pattern is **NOT specific to Cohen**. It generalizes to other attribution-prior-absent probes. The "topic-conditioned candidate basin" hypothesis now has support from TWO independent blind-spots in different mathematical regions (set theory + additive NT). v1.0 corpus design implication (contrastive training pairs per §5b.8.1 above) is reinforced — applies to ALL attribution-prior-absent probes, not just Cohen-shaped ones.
+
+**Partial-cluster anomaly (n=1 evidence, do NOT over-extend):** Helfgott fire-11 substitution "Ivan M. R. H." is OUTSIDE the topic-conditioned NT basin (no real mathematician of that name). This suggests the basin sampling is not always tight — sometimes the model's free-form decoding falls into total fabrication rather than topic-adjacent substitution. The basin-sampling hypothesis may be probabilistic rather than deterministic. Future evidence at n=3+ within Helfgott will test whether topic-clustering is the dominant variance source or one of several competing attractors. To re-test post-v1.0.
+
 **Mechanism hypothesis (fire 10):** the model's free-form decoding when topic-prior is weak does NOT sample uniformly across the surname-token space. It samples from a **topic-conditioned candidate basin** — the set of surnames that have high co-occurrence with the topic-keywords in the pretraining corpus. For "CH independence" the basin is {Cohen, Gödel, Sierpinski, Hilbert, ...}; for "ternary Goldbach 2013" the basin is {Helfgott, Green, Tao, ...}. The model picks the wrong member of the right basin.
 
 **v1.0 corpus design implication (NEW, load-bearing):** training pairs must teach **discrimination among topic-adjacent candidates**, not just teach correct attributions in isolation. Specifically:
@@ -392,6 +407,65 @@ T-2026-05-07-0047 surfaced a new FM-04 fabrication shape distinct from fire-8's 
 These training pairs are different from canonical-attribution co-training (§8.4) — they teach **venue ontology**, not the venue's specific contents. ≥5-10 venue-ontology anchors covering preprint servers, journals, conference proceedings, and society publications should be sufficient.
 
 **Pre-registered hypothesis (fire 10, FM-04 institutional-affiliation):** v1.0 corpus with venue-ontology anchors will reduce institutional-affiliation fabrications by ≥80% on probes asking for non-traditional venues. Falsifier: if persists post-corpus, the model's representation of venue-as-institutional-entity is too entangled with the topic-prior to be disentangled by anchors alone — needs architectural intervention (separate venue-classification head?). Test post-v1.0.
+
+### 5b.10 NEW FM-14 archetype: **self-aware fabrication** — uncertainty signal exists but does not propagate to answer slot (added fire 11)
+
+T-2026-05-07-0050 surfaced a metacognitive finding distinct from prior fabrication patterns:
+
+> Probe: "Helfgott 2013 ternary Goldbach single-name framing (2nd attempt)"
+> Response: `\boxed{Ivan M. R. H.}` × 6, with explicit self-aware caveat: *"(Note: This is a hypothetical answer since there is no real person named Ivan M. R. H. who fits the criteria. The correct answer should be based on actual historical figures, but such a figure does not exist in this context.)"*
+
+**The model:**
+1. Emitted a fabricated name as the boxed final answer (FM-04 total-fabrication).
+2. **Simultaneously** emitted an explicit caveat acknowledging the answer is fabricated.
+3. Did NOT propagate the uncertainty signal to the answer slot — the boxed value remained the fab.
+
+**This is qualitatively distinct from prior fabrication archetypes:**
+- Confident-fab (most prior tickets): model emits fab without uncertainty marker; behavior consistent with absent topic-prior + no metacognitive signal.
+- §5b.3 Refusal-mode: model can be PROMPTED to emit "I don't know" via specific framings; observed at fire 5 as intact-and-re-engageable.
+- **§5b.10 Self-aware-fab (NEW):** model has SPONTANEOUS metacognitive signal ("there is no real person named X"); the signal is generated in the same response as the fab; the signal fails to override the fab in the answer slot.
+
+**Mechanism hypothesis:** the model's pretraining contains examples where authors hedge ("a hypothetical example...") while still completing a structured answer template. The model has learned to emit *both* the hedge AND the template-filler in parallel, treating them as commensurate outputs. The ANSWER-SLOT stays template-bound regardless of the hedge-content. **Metacognitive signal exists in the residual stream but is not connected to the answer-slot logits via training.**
+
+**v1.0 RLVF / instruction-tuning design implication (load-bearing):**
+1. **Contrastive metacognitive training pairs** (NEW class of corpus anchor): pairs where the prompt is "name a non-existent X" and the correct answer is "I cannot — no such X exists" rather than "{fabricated X} (note: hypothetical)". Teaches the model to PROPAGATE the uncertainty signal to the answer slot, not just emit it as parallel hedge text.
+2. **RLVF reward shaping** (separate axis): if v1.0 includes RL, reward should be NEGATIVE when (uncertainty-signal-present AND fabricated-answer-emitted), even if the verbal caveat is correct. Reward should be POSITIVE for "I don't know" emissions on absent-prior probes. This requires a verifier capable of detecting (caveat-present AND fab-present) co-occurrences in completions.
+3. **Cross-pillar implication:** Aporia's calibration corpus (`learner_fabrication_corpus_v1.json`) should include **self-aware-fab anchors** (real examples of model emitting hedge+fab in same response, with the corrected refusal-only answer as positive). Estimated ~10-15 such anchors needed.
+
+**Pre-registered hypothesis (fire 11, FM-14 self-aware-fab):** v1.0 corpus + RLVF with metacognitive-propagation training pairs (≥10 anchors) will reduce self-aware-fab incidence by ≥70% relative to v0.5 baseline (where self-aware-fab is observed when uncertainty-prior is high). Falsifier: if self-aware-fab persists post-training, the model's caveat-vs-answer-slot decoupling is architectural (separate logit pathways) rather than a corpus learnable; needs decoder-side intervention. Test post-v1.0.
+
+**Note on severity:** self-aware-fab is paradoxically MORE dangerous than confident-fab in some ways — a downstream consumer reading only the boxed answer doesn't see the caveat, and the caveat may even increase the consumer's trust ("the model is being thoughtful, the answer must be reliable"). v1.0 evaluation harness must scan completion text for caveat-vs-answer mismatch as a separate check.
+
+### 5b.11 Five-tier partial-anchor recoverability scale (added fire 11)
+
+T-2026-05-07-0051 surfaced a calibration-axis refinement: between known recoverability tiers, there is a NEW tier where **only the surname recovers, all other metadata fails:**
+
+| Tier | Recoverability shape | Examples |
+|------|---------------------|----------|
+| **1. Full anchor** | name + year + venue + title all correct | KC-001, KC-004 |
+| **2. Partial anchor** | name + year + venue/journal correct, missing some details (e.g., volume number) | KC-002, KC-007 |
+| **3. Name-only-recoverable (NEW, fire 11)** | name correct, ALL other metadata fabricated (wrong year, fake paper title, fake book, FM-02 of co-authors) | T-0051 Mostow rigidity (Mostow correct; year 1965 vs real 1968; paper title totally fabricated) |
+| **4. Year-only-recoverable** | year correct, name wrong / paper-title fabricated | KC-003, KC-005 (Gödel year correct, surname or co-author wrong), KC-006 |
+| **5. Full blind-spot** | nothing recoverable; name fabricated + year fabricated + venue fabricated; topic-clustered fab basin | BS-001 Cohen, BS-002 Lefschetz, BS-003 Helfgott |
+
+**Substrate-grade observation:** the recoverability scale is NOT monotonic with attribution-slot frequency in pretraining. Mostow rigidity is a famous theorem (in geometry / topology); the model has the surname but fabricates the rest. This suggests **slot-level recoverability is independent across attribution slots**, not a single "did the model see this attribution" signal:
+- Some probes: surname (most-frequent slot) recovers, year/venue/title (less-frequent slots) fail.
+- Other probes: year (numerical slot, easy?) recovers, surname (potentially obscured by similar-era mathematicians per §5b.8.1) fails.
+- Other probes: full blind-spot (all slots fail).
+
+**v1.0 corpus design implication (slot-stratified training):**
+- Training pairs must address **per-slot recoverability** as independent variables. A probe where surname recovers but year fails needs different training intervention than a probe where year recovers but surname fails.
+- The §5b.8.1 contrastive-pairs requirement applies to all slots: contrastive pairs for surname (Cohen vs Sierpinski), year (1963 vs 1965), venue (PNAS vs Annals), title (forcing vs related-but-different theorem).
+- **Slot-recoverability eval matrix:** v1.0 evaluation harness should report per-slot recovery rates separately (% of probes where surname recovers; % where year recovers; etc.), not just overall hit-rate. Single hit-rate hides the heterogeneous slot-recoverability structure.
+
+**Pre-registered hypothesis (slot-recoverability):** v1.0 evaluation with slot-stratified metrics will reveal:
+1. Surname-only-recoverable probes are intermediate (between full-blind-spot and partial-anchor) on attribution-prior-presence axis.
+2. Slot-level training (contrastive pairs per slot) yields differential improvements: probes where surname is the failing slot improve most under surname-contrastive training; probes where year is failing improve most under year-contrastive training.
+3. Some failure modes are slot-independent (e.g., Pattern 9 format-mode-leak affects all slots equally because it's upstream of slot-filling).
+
+Falsifier: if slot-stratified metrics show uniform improvement across all slot-types under any training intervention, the slot-independence hypothesis is wrong — slots are entangled in a way the substrate hypothesis doesn't predict. Test post-v1.0.
+
+**Cross-reference:** this scale extends the §8.4 multiple-fabrication-axis observation (mode-stable vs mode-variable) — fire 11 adds **slot-level recoverability** as a third axis orthogonal to mode-stable / mode-variable / fire-variable variance.
 
 ---
 

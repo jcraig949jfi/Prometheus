@@ -1832,3 +1832,61 @@ Watched 4 drift sites:
 - 8-fire substrate-ratchet (009 -> 016): ~2-3 substrate observations per fire continuing. The ratchet is now mature enough to make explicit predictions: future probes targeting KC-001-class (high-canon + 21st-cent + named-book-title) will likely produce full anchors; probes targeting BS-001-class (mid-20th + non-Hofstadter-popular-coverage) will likely produce non-deterministic fabs.
 
 ---
+
+---
+
+## Loop fire 11 (post-restart) — 2026-05-07
+
+**Inbox FRESH (step 1):** total 63. Status: ABLE_TO_ADVANCE=1, BLOCKED-DEFERRED-V1.0=51, DONE=7, **OPEN=3**, WONTFIX=1.
+
+**Selected ticket(s):** 3 OPEN — 1 P1-high (T-0050 Helfgott BS-003 2-fire-confirmed + NEW FM-14 self-aware-fab) + 2 P2 (T-0049 Pattern 3 skip; T-0051 NEW partial-anchor recoverability tier).
+
+**Three substrate-grade findings landed:**
+
+1. **§5b.8.1 generalization across blind-spots.** BS-003 Helfgott now n=2 within-probe-class fire-variable. Combined with BS-001 Cohen n=4, the fire-variable + topic-clustering mechanism hypothesis is now supported by TWO independent blind-spots in different mathematical regions (set theory + additive NT). NOT specific to Cohen.
+
+2. **§5b.10 NEW FM-14 self-aware-fab archetype.** Model emits `\boxed{Ivan M. R. H.}` × 6 WITH explicit self-aware caveat ("there is no real person named Ivan M. R. H."). **Metacognitive signal exists but does not propagate to answer slot.** Distinct from confident-fab (no signal) and §5b.3 refusal-mode (signal must be prompt-activated). v1.0 RLVF/corpus implication: contrastive metacognitive training pairs + RL reward shaping for caveat-vs-answer-slot mismatch detection.
+
+3. **§5b.11 NEW 5-tier partial-anchor recoverability scale.** Mostow rigidity reveals a NEW tier: name-only-recoverable (between partial-anchor and year-only). Surname recovered but year wrong + paper title fab. **Slot-level recoverability is independent across attribution slots** — not a single signal. v1.0 evaluation harness must report per-slot recovery rates; v1.0 training must use slot-stratified contrastive pairs.
+
+**Pre-test (step 2):** 356/356 PASS.
+
+**Implement (step 3) — substantive doc updates:**
+
+1. **`tester_findings_consolidated.md` §5b.8.1 extended:** added BS-003 Helfgott n=2 confirmation table + cross-blind-spot generalization (BS-001 + BS-003 both fire-variable + topic-clustered) + partial-cluster anomaly note ("Ivan M. R. H." outside basin — basin-sampling may be probabilistic, not deterministic, n=1 caveat).
+2. **`tester_findings_consolidated.md` §5b.10 added:** FM-14 self-aware-fab archetype with mechanism hypothesis (caveat-and-answer-slot decoupled in residual stream), v1.0 RLVF implications (contrastive metacognitive pairs + reward shaping for caveat-vs-answer mismatch), pre-registered falsifier filed.
+3. **`tester_findings_consolidated.md` §5b.11 added:** 5-tier recoverability scale (Full → Partial → Name-only NEW → Year-only → Full-blind-spot) with slot-level independence observation + slot-stratified training implication + slot-recoverability eval matrix requirement, pre-registered falsifier filed.
+4. **`aporia_inbox.jsonl`:** standing format-mode-anchors coordination ticket scope expanded for fire 11 (cumulative scope now: format-mode + contrastive negatives + venue-ontology + self-aware-fab anchors + slot-stratified recoverability anchors). Aporia response will inform v1.0 design phase comprehensively.
+5. **`ergon_inbox.jsonl`:** 3 OPEN → BLOCKED-DEFERRED-V1.0 with cross-references to §5b.8.1 / §5b.10 / §5b.11.
+
+**Test (step 4):** 356/356 PASS. No regressions (doc-only).
+
+### SELF-REVIEW
+
+**(a) Did this fix resolve the failure mode the pressure-applier reported?**
+No — none of the underlying model failures resolves in v0.5. T-0050 needs v1.0 contrastive + metacognitive training (the latter is potentially RLVF, not just SFT corpus); T-0051 needs v1.0 slot-stratified training. The substrate-grade move was to (1) confirm cross-blind-spot generalization of fire-variable mechanism, (2) extract the metacognitive-signal-decoupling finding as a NEW corpus design class, (3) extract the 5-tier recoverability scale as a slot-stratified training requirement. All three are load-bearing for v1.0.
+
+**(b) Did this introduce any memorization risk that the synthetic-null gate would catch?**
+No. No code, no training data, no model weights, no gradient flow.
+
+**(c) Did I change any contract?**
+No. Doc + inbox JSONL updates only.
+
+**(d) Did I drift toward conventional-approach framing?**
+Watched 5 drift sites:
+
+  - *Drift candidate 1 — "fires 8/9/10/11 are all substrate-grade kills, this is the new normal, just commit":* false constancy. Fire 6+7 were correctly defer-only, and any future fire could be back to defer-only. The discipline test holds: fire 11's evidence is qualitatively new (BS-003 confirmation generalizes the mechanism beyond Cohen; FM-14 metacognitive finding is genuinely new structural class; 5-tier recoverability is genuinely new calibration axis). Each finding independently passes the v1.0-design-impact test. Caught.
+
+  - *Drift candidate 2 — "FM-14 self-aware-fab justifies a separate 'metacognitive failure modes' top-level category":* over-organization. The catalog has 9 patterns. FM-14 is a *fabrication archetype* within Pattern 1 (specifically a sub-class of FM-04 total-fabrication where the fab is hedged), not a new top-level pattern. Recorded as §5b.10 within the existing 5b- expansion-section pattern. Caught.
+
+  - *Drift candidate 3 — "the 5-tier recoverability scale should refactor §1 Pattern catalog into 'pattern x recoverability tier' grid":* premature refactor. The pattern catalog is ABOUT failure mode shapes (attribution-fab, verbosity, skip, etc.). The recoverability scale is ABOUT calibration-axis depth. Different concerns. Refactoring §1 to be cross-tabulated with §5b.11 would mix the two concerns confusingly. Recorded as separate §5b.11 with explicit cross-reference to §1 instead. Caught.
+
+  - *Drift candidate 4 — "Ivan M. R. H. is outside the topic-cluster — falsify §5b.8.1's topic-conditioned-basin hypothesis":* over-extension at n=1. Single anomalous data point doesn't falsify a hypothesis at n=2; recorded as "partial-cluster anomaly, basin-sampling may be probabilistic, n=1 caveat" within §5b.8.1 with explicit "do NOT over-extend" warning. Refusing to flip the hypothesis on n=1 evidence is the substrate-grade discipline. Caught.
+
+  - *Drift candidate 5 — "FM-14 + RLVF is a v1.0 design phase change, file a coordination ticket to pre-empt RL framing":* premature coordination. The RLVF/corpus implications are recorded in §5b.10; the standing Aporia coordination ticket scope was expanded to include self-aware-fab anchors. That's sufficient for v1.0 design phase to consume. Filing a NEW separate ticket for RLVF reward shaping would be premature scope-shifting (RLVF design is its own phase, not yet open). Caught.
+
+  Net: 5 drift sites caught (1 false-constancy, 2 over-organization, 1 over-extension at n=1, 1 premature-coordination). Substrate-grade frame held.
+
+**Step 7 inbox FRESH re-read:** TBD.
+
+**Commit:** TBD.
