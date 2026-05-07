@@ -1,0 +1,133 @@
+{
+  "fire": 17,
+  "lanes": [
+    3,
+    7
+  ],
+  "lane_3": {
+    "lane": "3_p0_escalation_probe",
+    "n_tests": 4,
+    "verdict_counts": {
+      "CONFIRMED": 1,
+      "PASS": 1,
+      "OBSERVED": 1,
+      "FAIL": 1
+    },
+    "tests": [
+      {
+        "id": "T1_methodspec_accepts_arbitrary_ic",
+        "expected": "fire-14 finding reproduces",
+        "actual": "accepted; ic='not_a_registered_class_xyz'",
+        "verdict": "CONFIRMED",
+        "note": "T-2026-05-07-ST-fire14-001 still OPEN; reproduces"
+      },
+      {
+        "id": "T2_real_paths_construct",
+        "expected": "real-IC paths construct cleanly",
+        "actual": "constructed; primary + real_other",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T3_arb_ic_path_smuggle",
+        "expected": "either reject OR produce a path the protocol later catches",
+        "actual": "constructed cleanly with arbitrary-string IC",
+        "verdict": "OBSERVED",
+        "note": "construction is permissive; question is whether evaluate() catches it"
+      },
+      {
+        "id": "T4_protocol_evaluate_with_smuggled_path",
+        "expected": "REJECT or INSUFFICIENT_INDEPENDENCE (substrate must not let arb-IC count as independent)",
+        "actual": "UPGRADED: verdict=upgraded_to_local_lemma, upgrade_eligible=True, summary=Upgraded: proof-bearing (path_primary) + 2 independent replay(s)",
+        "verdict": "FAIL",
+        "severity": "P0-blocker",
+        "note": "T-2026-05-07-ST-fire14-001 ESCALATES TO P0: arbitrary-IC path treated as independent in TriangulationProtocol upgrade. Substrate's certification discipline can be bypassed by a caller passing arbitrary independence_class strings."
+      }
+    ]
+  },
+  "lane_7": {
+    "lane": "7_precision_gradient_third_borderline",
+    "coeffs_ascending": [
+      1,
+      -3,
+      2,
+      1,
+      0,
+      -2,
+      1,
+      0,
+      1,
+      -2,
+      0,
+      1,
+      2,
+      -3,
+      1
+    ],
+    "dps_ladder": [
+      10,
+      30,
+      60,
+      100,
+      200
+    ],
+    "results": [
+      {
+        "dps": 10,
+        "elapsed_s": 0.05599832534790039,
+        "status": "ok",
+        "M": "1.176280818253872",
+        "method": null,
+        "factorization_label": null
+      },
+      {
+        "dps": 30,
+        "elapsed_s": 0.026002883911132812,
+        "status": "ok",
+        "M": "1.1762808182599176",
+        "method": null,
+        "factorization_label": null
+      },
+      {
+        "dps": 60,
+        "elapsed_s": 0.025997161865234375,
+        "status": "ok",
+        "M": "1.1762808182599176",
+        "method": null,
+        "factorization_label": null
+      },
+      {
+        "dps": 100,
+        "elapsed_s": 0.025003433227539062,
+        "status": "ok",
+        "M": "1.1762808182599176",
+        "method": null,
+        "factorization_label": null
+      },
+      {
+        "dps": 200,
+        "elapsed_s": 0.0229949951171875,
+        "status": "ok",
+        "M": "1.1762808182599176",
+        "method": null,
+        "factorization_label": null
+      }
+    ],
+    "M_values_at_each_dps": [
+      1.176280818253872,
+      1.1762808182599176,
+      1.1762808182599176,
+      1.1762808182599176,
+      1.1762808182599176
+    ],
+    "M_spread": 6.0456084582938274e-12,
+    "converged_to_constant": false,
+    "band_status_at_each_dps": [
+      "in_band",
+      "in_band",
+      "in_band",
+      "in_band",
+      "in_band"
+    ],
+    "verdict_oscillates": false
+  }
+}

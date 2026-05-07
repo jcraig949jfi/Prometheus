@@ -6,6 +6,80 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #17 — 2026-05-07 18:00 UTC — **P0 SUBSTRATE FLAW SURFACED**
+
+**Coordination note:** Fire #16 ran on parallel instance (commit `abc9f324`) covering Lanes 8 + 13 with 0 tickets. My fire = #17.
+
+**Lanes selected:** 3 (T3+T4 retry from fire #15, **P0 escalation probe**) + 7 (precision-gradient, third independent borderline coefficient set).
+
+**Lane 15 + 18 reactivation re-check:** still DORMANT (Charon orch ticket OPEN; T-2026-05-07-T017 OPEN). T-2026-05-07-ST-fire14-001 also still OPEN (Techne hasn't fixed it yet — relevant because this fire confirms it escalates).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_17_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_17_results.json`.
+
+### Lane 3 — TriangulationProtocol P0 escalation probe (fire #15 deferred T3+T4 retry)
+
+**The escalation question:** does fire-14's T-ST-fire14-001 (MethodSpec silently accepts arbitrary IC strings, P1) actually break TriangulationProtocol's independence enforcement at evaluate() time? If yes → escalate to P0.
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — fire-14 finding reproduces | **CONFIRMED** | MethodSpec accepts `"not_a_registered_class_xyz"` silently |
+| T2 — real-IC paths construct | **PASS** | primary proof-bearing + real numerical paths construct cleanly |
+| T3 — smuggle arbitrary-IC path via explicit method_class | **OBSERVED** | constructed cleanly (boundary failsafe absent at TriangulationPath construction) |
+| T4 — `protocol.evaluate()` with smuggled path | **FAIL (P0)** | **UPGRADED_TO_LOCAL_LEMMA**, `upgrade_eligible=True`, summary: "Upgraded: proof-bearing (path_primary) + 2 independent replay(s)" — **substrate's certification discipline bypassed** |
+
+**🔴 P0 SUBSTRATE FLAW CONFIRMED.** The protocol counted the smuggled arbitrary-IC path as one of the 2 independent replays. This is exactly the bypass that the substrate v2.3 §6.3 independence rule was designed to prevent.
+
+**Ticket: `T-2026-05-07-ST-fire17-001` (P0-blocker)** — escalates `T-ST-fire14-001` from P1 to P0 with the demonstrated end-to-end attack chain. Two remediation paths recommended (boundary validation in MethodSpec.__post_init__ OR defense-in-depth in TriangulationProtocol.evaluate()).
+
+### Lane 7 — precision-gradient on third borderline coefficient set
+
+| coeffs (palindrome from half [1,-3,2,1,0,-2,1,0]) | `[1,-3,2,1,0,-2,1,0,1,-2,0,1,2,-3,1]` |
+
+| dps | M (clean) | band | converged |
+|---:|---|---|---|
+| 10  | 1.176280818253872  | in_band | — |
+| 30  | 1.1762808182599176 | in_band | — |
+| 60  | 1.1762808182599176 | in_band | — |
+| 100 | 1.1762808182599176 | in_band | — |
+| 200 | 1.1762808182599176 | in_band | — |
+
+| Property | Value |
+|---|---|
+| M_spread | 6.05e-12 (float-precision noise; dps=10 differs from dps≥30 in last 3 sig figs) |
+| converged_to_constant | False (only because of float precision; semantically converged) |
+| band_status uniform | True — all 5 dps levels in_band |
+| verdict_oscillates | False |
+
+**Substrate verdict: PASS.** All 5 dps levels return M ≈ 1.176280818259918 (in-band). No oscillation. The float-precision blip at dps=10 (6e-12 spread) is below the in_band threshold's resolution and doesn't affect the band verdict.
+
+**🔵 SUBSTRATE-GRADE OBSERVATION:** the third deg-14 ±5 INCONCLUSIVE entry resolves to M ≈ 1.17628 — **Lehmer's polynomial M-value**. Different from fires #1 + #9 which both resolved to M=1.0 (cyclotomic products). This third entry is a genuine Lehmer-class polynomial in the brute-force INCONCLUSIVE list. Fires #1, #9, #17 cumulative pattern: 2 cyclotomic + 1 Lehmer-class. Worth noting for any future Aporia investigation of the deg-14 ±5 INCONCLUSIVE list composition.
+
+### Tickets filed this fire
+
+**1 ticket (P0-blocker):** `T-2026-05-07-ST-fire17-001` — supersedes/escalates `T-ST-fire14-001`. End-to-end attack chain demonstrated: arbitrary IC string → permissive MethodSpec → smuggled TriangulationPath → UPGRADED_TO_LOCAL_LEMMA verdict.
+
+### Standing recommendations for next fire (#18)
+
+1. **HIGH PRIORITY: Watch T-ST-fire17-001 / T-ST-fire14-001 fix.** Once Techne lands the boundary validation (option (a) in remediation_hint), re-probe Lane 3 to verify the smuggle attack now fails. This is THE ticket to track this restart.
+2. **Anti-repeat:** avoid lanes 3, 7 (just covered). Suggested fire #18:
+   - **Lane 4 (cross-domain-leak)** — last fire #10; regression check on T-ST003 across the contract-change-window
+   - **Lane 10 (real-paper)** — last fire #5; under-exercised
+   - **Lane 5 (large-scale-enumeration)** — full-cap candidate
+3. **Lane 17 frozen-dataclass mutation pattern continued:** hypothesis is that frozen-ness gap is substrate-wide; would benefit from 1 more fire targeting `prometheus_math/kill_vector.py` or `sigma_kernel/exclusion_certificate.py` with mutation testing to confirm.
+4. **Substrate-grade Lane 7 cumulative observation:** worth filing an Aporia coordination ticket asking for a complete classification of the deg-14 ±5 brute-force INCONCLUSIVE list (cyclotomic vs Lehmer-class). Could expose interesting structural patterns.
+
+### Discipline notes
+
+- HARD-1..HARD-5: clean. No drift toward established frameworks.
+- Time used: ~40 min (within 50-min cap).
+- Anti-flooding cap: 1 ticket filed (max 5 allowed).
+- Multi-instance coordination: pulled before lane-pick; claimed fire #17 = max-on-origin (16) + 1.
+
+— substrate-tester, fire #17, 2026-05-07 18:00 UTC
+
+---
+
 ## Fire #16 — 2026-05-07 13:30 (local)
 
 **Coordination note:** parallel substrate-tester instance ran fire #15 (commit `38ddf5b6`) covering lanes 17 + 3. My fire = #16, lanes 8 + 13 (no overlap).
