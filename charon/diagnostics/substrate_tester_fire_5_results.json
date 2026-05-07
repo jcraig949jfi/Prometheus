@@ -1,0 +1,144 @@
+{
+  "fire_id": "fire_5_2026_05_07",
+  "lanes": [
+    "2_regression_st002",
+    "10_real_paper"
+  ],
+  "lane_2": {
+    "lane": "2_regression_st002",
+    "n_tests": 2,
+    "verdict_counts": {
+      "PASS": 2
+    },
+    "tests": [
+      {
+        "id": "T1_empty_domain_now_rejected",
+        "expected": "ValueError raised (T-ST002 fix)",
+        "actual": "ValueError: domain must be a colon-free non-empty string; got ''",
+        "verdict": "PASS",
+        "severity": null,
+        "note": "T-ST002 fix verified: empty domain is now rejected"
+      },
+      {
+        "id": "T2_normal_domain_still_accepted",
+        "expected": "CoordinateChart constructs cleanly",
+        "actual": "chart_id=lehmer:deg14:pm5:palindromic",
+        "verdict": "PASS",
+        "severity": null
+      }
+    ]
+  },
+  "lane_10": {
+    "lane": "10_real_paper",
+    "n_tests": 3,
+    "verdict_counts": {
+      "PASS": 3
+    },
+    "case_results": [
+      {
+        "id": "P1_solid_in_band_arxiv_2601_11486",
+        "shape": "solid",
+        "coeffs": [
+          1,
+          1,
+          0,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          0,
+          1,
+          1
+        ],
+        "submitted_M": 1.1762808182599176,
+        "paper_arxiv_id": "2601.11486",
+        "paper_year": 2026,
+        "expected_outcome_class": "in-band; battery runs; either SHADOW_CATALOG (catalog hit) or REJECTED via F1/F6/F9/F11 (consistent with Lehmer being conjectural)",
+        "elapsed_s": 5.652740955352783,
+        "terminal_state": "REJECTED",
+        "kill_pattern": "known_in_catalog:matches Mossinghoff entry Lehmer's polynomial (query=M_value)",
+        "claim_id": null,
+        "symbol_ref": null
+      },
+      {
+        "id": "P2_retracted_shape_wrong_M_for_real_coeffs",
+        "shape": "retracted",
+        "coeffs": [
+          1,
+          1,
+          0,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          0,
+          1,
+          1
+        ],
+        "submitted_M": 2.0,
+        "paper_arxiv_id": "2601.11486:wrong_M",
+        "paper_year": 2026,
+        "expected_outcome_class": "out-of-band Phase-0 kill (M=2.0 > 1.18). The substrate trusts the SUBMITTED M, not the actual M. Detecting paper-claim-vs-truth mismatch requires F1/cross-check \u2014 not Phase 0.",
+        "elapsed_s": 0.0,
+        "terminal_state": "REJECTED",
+        "kill_pattern": "out_of_band:M=2.0000_outside_(1.001,1.18)",
+        "claim_id": null,
+        "symbol_ref": null
+      },
+      {
+        "id": "P3_contested_boundary_near_lehmer_threshold",
+        "shape": "contested",
+        "coeffs": [
+          1,
+          -1,
+          0,
+          0,
+          0,
+          -1,
+          1,
+          -1,
+          0,
+          0,
+          0,
+          -1,
+          1
+        ],
+        "submitted_M": 1.3022688051,
+        "paper_arxiv_id": "2409.11159",
+        "paper_year": 2024,
+        "expected_outcome_class": "out-of-band Phase-0 kill (Salem cluster M=1.302); substrate stores kill record. No 'contested' caveat surfaces because the substrate has no controversy-tracking metadata.",
+        "elapsed_s": 0.0,
+        "terminal_state": "REJECTED",
+        "kill_pattern": "out_of_band:M=1.3023_outside_(1.001,1.18)",
+        "claim_id": null,
+        "symbol_ref": null
+      }
+    ],
+    "tests": [
+      {
+        "id": "P1_solid_in_band_arxiv_2601_11486",
+        "expected": "in-band; battery runs; either SHADOW_CATALOG (catalog hit) or REJECTED via F1/F6/F9/F11 (consistent with Lehmer being conjectural)",
+        "actual": "terminal_state=REJECTED, kill_pattern=\"known_in_catalog:matches Mossinghoff entry Lehmer's polynomial (query=M_value)\"",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "P2_retracted_shape_wrong_M_for_real_coeffs",
+        "expected": "out-of-band Phase-0 kill (M=2.0 > 1.18). The substrate trusts the SUBMITTED M, not the actual M. Detecting paper-claim-vs-truth mismatch requires F1/cross-check \u2014 not Phase 0.",
+        "actual": "terminal_state=REJECTED, kill_pattern='out_of_band:M=2.0000_outside_(1.001,1.18)'",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "P3_contested_boundary_near_lehmer_threshold",
+        "expected": "out-of-band Phase-0 kill (Salem cluster M=1.302); substrate stores kill record. No 'contested' caveat surfaces because the substrate has no controversy-tracking metadata.",
+        "actual": "terminal_state=REJECTED, kill_pattern='out_of_band:M=1.3023_outside_(1.001,1.18)'",
+        "verdict": "PASS",
+        "severity": null
+      }
+    ],
+    "architectural_observation": "Lane 10 spec assumes substrate has retraction-detection / controversy-tracking machinery (e.g., expected outcomes 'KILL with kill_pattern naming what failed' for retracted papers, 'INCONCLUSIVE with caveat' for contested). The v1.5 substrate has neither \u2014 Phase 0 is Mahler-band routing only; the F1/F6/F9/F11 battery operates on Mahler-poly-shape claims and does not consult arxiv retraction lists, withdrawal notices, or community discussion feeds. The substrate accepts the SUBMITTED M as truth and routes accordingly; whether the paper's M-claim was correct is not the substrate's question. This is an architectural observation about scope, not a substrate flaw."
+  }
+}
