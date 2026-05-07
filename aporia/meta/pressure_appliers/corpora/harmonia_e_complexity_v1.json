@@ -1,0 +1,1612 @@
+{
+  "harmonia": "E",
+  "domain": "computational complexity",
+  "version": "v1",
+  "build_date": "2026-05-06",
+  "schema_version": "HARMONIA_CORPUS_BUILD_2026-05-06.md",
+  "calibration": [
+    {
+      "id": "harmonia_e_calib_001",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "complexity-class-separations",
+      "use_case": "calibration",
+      "probe": "State the time hierarchy theorem for deterministic Turing machines: for what relation between f(n) and g(n) is DTIME(f(n)) strictly contained in DTIME(g(n))?",
+      "expected_answer": "If f(n) log f(n) = o(g(n)) and g is time-constructible, then DTIME(f(n)) is strictly contained in DTIME(g(n)). Hartmanis-Stearns 1965 (Time Hierarchy Theorem).",
+      "expected_value_at_anchors": null,
+      "verification_method": "direct-citation",
+      "difficulty": "easy",
+      "source": "Hartmanis-Stearns 1965, 'On the computational complexity of algorithms', Trans. AMS",
+      "anti_gravitational_well_note": "easy probe; conventional = correct; no risk"
+    },
+    {
+      "id": "harmonia_e_calib_002",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "complexity-class-separations",
+      "use_case": "calibration",
+      "probe": "What does the Baker-Gill-Solovay 1975 theorem establish about relativized P vs NP, and what is its barrier interpretation?",
+      "expected_answer": "There exist oracles A and B such that P^A = NP^A while P^B != NP^B. Therefore any proof technique that relativizes (holds in the presence of arbitrary oracles) cannot settle P vs NP. Baker-Gill-Solovay 1975 (Relativization Barrier).",
+      "expected_value_at_anchors": null,
+      "verification_method": "direct-citation",
+      "difficulty": "easy",
+      "source": "Baker-Gill-Solovay 1975, 'Relativizations of the P=?NP question', SIAM J. Computing",
+      "anti_gravitational_well_note": "easy probe; conventional = correct; no risk"
+    },
+    {
+      "id": "harmonia_e_calib_003",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "approximation-hardness",
+      "use_case": "calibration",
+      "probe": "What is the polynomial-time approximation ratio for MAX-CUT achieved by the SDP rounding algorithm, and under what assumption is it tight?",
+      "expected_answer": "alpha_GW = min_{0<=theta<=pi} (2/pi) * theta / (1 - cos(theta)) ≈ 0.878567 (Goemans-Williamson 1995). Tight under the Unique Games Conjecture by Khot-Kindler-Mossel-O'Donnell 2007.",
+      "expected_value_at_anchors": {
+        "alpha_GW": "0.878567"
+      },
+      "verification_method": "direct-citation",
+      "difficulty": "easy",
+      "source": "Goemans-Williamson 1995 (JACM); Khot-Kindler-Mossel-O'Donnell 2007 (SICOMP)",
+      "anti_gravitational_well_note": "easy probe; conventional = correct; no risk"
+    },
+    {
+      "id": "harmonia_e_calib_004",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "approximation-hardness",
+      "use_case": "calibration",
+      "probe": "What is the precise PCP-based inapproximability threshold for MAX-3SAT, and what is the matching algorithmic guarantee?",
+      "expected_answer": "MAX-3SAT is NP-hard to approximate within 7/8 + epsilon for any epsilon > 0 (Hastad 2001). The 7/8 ratio is achieved in expectation by uniform random assignment, derandomized to a polynomial-time 7/8-approximation by Karloff-Zwick 1997.",
+      "expected_value_at_anchors": {
+        "hardness_threshold": "7/8 + epsilon",
+        "algorithm_ratio": "7/8"
+      },
+      "verification_method": "direct-citation",
+      "difficulty": "easy",
+      "source": "Hastad 2001, 'Some optimal inapproximability results', JACM; Karloff-Zwick 1997 (FOCS)",
+      "anti_gravitational_well_note": "easy probe; conventional = correct; no risk"
+    },
+    {
+      "id": "harmonia_e_calib_005",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "circuit-lower-bounds",
+      "use_case": "calibration",
+      "probe": "What lower bound did Razborov prove on the monotone circuit complexity of CLIQUE, and on what input parameters?",
+      "expected_answer": "Monotone circuit complexity of k-CLIQUE on n vertices is at least n^Omega(sqrt(k)) (for k <= (1/4) (n/log n)^{2/3}); strengthened by Alon-Boppana 1987 to 2^Omega((n/log n)^{1/3}) for k = (n/log n)^{2/3}. Razborov 1985 (Monotone Lower Bound for CLIQUE).",
+      "expected_value_at_anchors": {
+        "razborov_bound": "n^Omega(sqrt(k))",
+        "alon_boppana_bound": "2^Omega((n/log n)^{1/3})"
+      },
+      "verification_method": "direct-citation",
+      "difficulty": "medium",
+      "source": "Razborov 1985 (Mat. Zametki); Alon-Boppana 1987 (Combinatorica)",
+      "anti_gravitational_well_note": "medium-bait; the conventional textbook answer is also the correct one"
+    },
+    {
+      "id": "harmonia_e_calib_006",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "circuit-lower-bounds",
+      "use_case": "calibration",
+      "probe": "State Williams' 2011 circuit lower bound separating NEXP from a non-uniform circuit class, and the meta-theorem that produced it.",
+      "expected_answer": "NEXP is not contained in ACC^0 (constant-depth circuits with AND, OR, NOT, and MOD_m gates for arbitrary fixed m). Williams 2011 (NEXP vs ACC). Proven via the algorithmic-method meta-theorem: any non-trivial CIRCUIT-SAT algorithm for class C (better than 2^n / n^omega(1)) implies NEXP not in C.",
+      "expected_value_at_anchors": null,
+      "verification_method": "direct-citation",
+      "difficulty": "medium",
+      "source": "Williams 2011, 'Non-uniform ACC circuit lower bounds', JACM 2014 (STOC 2011)",
+      "anti_gravitational_well_note": "medium-bait; the conventional textbook answer is also the correct one"
+    },
+    {
+      "id": "harmonia_e_calib_007",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "circuit-lower-bounds",
+      "use_case": "calibration",
+      "probe": "State the Razborov-Rudich 1997 natural proofs barrier and what cryptographic assumption it rules out as a route to circuit lower bounds.",
+      "expected_answer": "A 'natural' property is one that is constructive (decidable in P/poly given truth table) and large (holds for at least 2^{-O(n)} fraction of n-variable functions). Razborov-Rudich 1997: if subexponentially-strong pseudorandom function generators exist (in P/poly), then no natural property can separate P/poly from a class containing PRFs. Hence natural-proof techniques cannot prove super-polynomial lower bounds against P/poly assuming standard cryptographic hardness.",
+      "expected_value_at_anchors": null,
+      "verification_method": "direct-citation",
+      "difficulty": "medium",
+      "source": "Razborov-Rudich 1997, 'Natural Proofs', JCSS (STOC 1994)",
+      "anti_gravitational_well_note": "medium-bait; the conventional textbook answer is also the correct one"
+    },
+    {
+      "id": "harmonia_e_calib_008",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "complexity-class-separations",
+      "use_case": "calibration",
+      "probe": "Give the precise statement of the Aaronson-Wigderson 2009 algebrization barrier and state which technique class it rules out for resolving P vs NP.",
+      "expected_answer": "A complexity-class inclusion C subset D 'algebrizes' if it holds relative to every oracle A and its low-degree polynomial extension A_tilde (i.e., C^A subset D^{A_tilde}). Aaronson-Wigderson construct algebraic oracles such that both P=NP and P!=NP algebrize. Hence any algebrizing technique cannot resolve P vs NP. This subsumes relativization and rules out arithmetization-based proofs (e.g., IP=PSPACE-style).",
+      "expected_value_at_anchors": null,
+      "verification_method": "direct-citation",
+      "difficulty": "hard",
+      "source": "Aaronson-Wigderson 2009, 'Algebrization: A New Barrier in Complexity Theory', ACM TOCT (STOC 2008)",
+      "anti_gravitational_well_note": "this is a precise-statement probe; conventional = correct"
+    },
+    {
+      "id": "harmonia_e_calib_009",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum-complexity",
+      "use_case": "calibration",
+      "probe": "What is the canonical QMA-complete problem and who proved its completeness?",
+      "expected_answer": "k-LOCAL-HAMILTONIAN is QMA-complete. 5-LOCAL-HAMILTONIAN: Kitaev 1999 (in Kitaev-Shen-Vyalyi 2002 textbook). 3-LOCAL-HAMILTONIAN: Kempe-Regev 2003. 2-LOCAL-HAMILTONIAN: Kempe-Kitaev-Regev 2006.",
+      "expected_value_at_anchors": {
+        "k=5": "Kitaev 1999",
+        "k=3": "Kempe-Regev 2003",
+        "k=2": "Kempe-Kitaev-Regev 2006"
+      },
+      "verification_method": "direct-citation",
+      "difficulty": "easy",
+      "source": "Kitaev-Shen-Vyalyi 2002 (textbook); Kempe-Regev 2003 (QIC); Kempe-Kitaev-Regev 2006 (SICOMP)",
+      "anti_gravitational_well_note": "easy probe; conventional = correct; no risk"
+    },
+    {
+      "id": "harmonia_e_calib_010",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum-complexity",
+      "use_case": "calibration",
+      "probe": "State the MIP*=RE theorem and one of its main implications.",
+      "expected_answer": "The class MIP* (multi-prover interactive proofs with entangled provers) equals RE (recursively enumerable / Turing-recognizable languages). Ji-Natarajan-Vidick-Wright-Yuen 2020 ('MIP*=RE'). Implications: (i) negative answer to Tsirelson's problem (commuting-operator and tensor-product models of quantum correlations differ); (ii) negative answer to Connes' embedding conjecture (1976) for finite von Neumann algebras.",
+      "expected_value_at_anchors": null,
+      "verification_method": "direct-citation",
+      "difficulty": "medium",
+      "source": "Ji-Natarajan-Vidick-Wright-Yuen 2020, 'MIP*=RE'",
+      "anti_gravitational_well_note": "medium-bait; the conventional textbook answer is also the correct one"
+    },
+    {
+      "id": "harmonia_e_calib_011",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum-complexity",
+      "use_case": "calibration",
+      "probe": "State the quantum PCP conjecture (qPCP) in its most-cited gapped-Hamiltonian form, and one known partial result toward it.",
+      "expected_answer": "Quantum PCP conjecture: estimating the ground-state energy of a local Hamiltonian to within a constant fraction of the operator norm (constant relative gap) is QMA-hard. Equivalently, there is a constant c > 0 such that c-gapped LOCAL-HAMILTONIAN is QMA-complete. Aharonov-Arad-Vidick 2013 (survey statement). Partial result: NLTS (No Low-Energy Trivial States) theorem proven by Anshu-Breuckmann-Nirkhe 2023 ('NLTS Hamiltonians from good quantum codes'), which is a necessary consequence of qPCP.",
+      "expected_value_at_anchors": null,
+      "verification_method": "direct-citation",
+      "difficulty": "hard",
+      "source": "Aharonov-Arad-Vidick 2013 (SIGACT News survey); Anshu-Breuckmann-Nirkhe 2023 (STOC, NLTS theorem)",
+      "anti_gravitational_well_note": "this is a precise-statement probe; conventional = correct"
+    },
+    {
+      "id": "harmonia_e_calib_012",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "algebraic-complexity",
+      "use_case": "calibration",
+      "probe": "State Valiant's algebraic version of P vs NP and the canonical complete problem on each side.",
+      "expected_answer": "VP vs VNP: VP is the class of polynomial families computed by polynomial-size arithmetic circuits with polynomially-bounded degree; VNP is its non-deterministic analogue (exponential sums over VP). Valiant 1979 conjectures VP != VNP. Complete problems: DET_n (determinant of n x n matrix) is VP-complete under p-projections (informally; precise: VQP / VBP-complete); PERM_n (permanent) is VNP-complete under p-projections. Valiant 1979 ('Completeness classes in algebra').",
+      "expected_value_at_anchors": null,
+      "verification_method": "direct-citation",
+      "difficulty": "easy",
+      "source": "Valiant 1979, 'Completeness classes in algebra', STOC 1979",
+      "anti_gravitational_well_note": "easy probe; conventional = correct; no risk"
+    },
+    {
+      "id": "harmonia_e_calib_013",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "algebraic-complexity",
+      "use_case": "calibration",
+      "probe": "What is the best known unconditional lower bound on the determinantal complexity dc(perm_n) of the n x n permanent?",
+      "expected_answer": "dc(perm_n) >= n^2 / 2 (Mignon-Ressayre 2004, over fields of characteristic 0). Improved to dc(perm_n) >= (n-1)^2 + 1 by Cai-Chen-Li 2010 over fields of characteristic != 2. Super-polynomial lower bound is wide open (would imply VP != VNP via Valiant's reduction).",
+      "expected_value_at_anchors": {
+        "mignon_ressayre": "n^2/2",
+        "cai_chen_li": "(n-1)^2 + 1"
+      },
+      "verification_method": "direct-citation",
+      "difficulty": "medium",
+      "source": "Mignon-Ressayre 2004 (IMRN); Cai-Chen-Li 2010 (Information and Computation)",
+      "anti_gravitational_well_note": "medium-bait; the conventional textbook answer is also the correct one"
+    },
+    {
+      "id": "harmonia_e_calib_014",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "algebraic-complexity",
+      "use_case": "calibration",
+      "probe": "State the Mulmuley-Sohoni Geometric Complexity Theory (GCT) program's central conjecture for VP vs VNP and one of the principal obstructions identified.",
+      "expected_answer": "GCT (Mulmuley-Sohoni 2001/2008) reduces VP vs VNP (specifically perm vs det) to representation-theoretic obstructions: there exists a sequence of irreducible GL_{n^2}-representations whose multiplicity in the coordinate ring of GL_{n^2} . det_n^{n^2-m} (orbit closure of padded determinant) is zero but whose multiplicity in GL_{n^2} . perm_m (orbit closure of permanent) is non-zero. Principal obstruction: Burgisser-Ikenmeyer-Panova 2019 proved that 'occurrence obstructions' (multiplicity-zero on one side) cannot suffice, ruling out the original GCT plan and forcing reliance on multiplicity obstructions.",
+      "expected_value_at_anchors": null,
+      "verification_method": "direct-citation",
+      "difficulty": "hard",
+      "source": "Mulmuley-Sohoni 2001 (SICOMP, GCT I); 2008 (SICOMP, GCT II); Burgisser-Ikenmeyer-Panova 2019 (J. AMS)",
+      "anti_gravitational_well_note": "this is a precise-statement probe; conventional = correct"
+    },
+    {
+      "id": "harmonia_e_calib_015",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "communication-complexity",
+      "use_case": "calibration",
+      "probe": "What is the deterministic communication complexity of the EQUALITY function on n-bit inputs, and what is the randomized public-coin complexity?",
+      "expected_answer": "Deterministic: D(EQ_n) = n + 1 (folklore via fooling-set / rank-lower-bound argument; tight). Randomized public-coin (constant error): R^{pub}(EQ_n) = O(1) (Yao 1979, via random hash). Randomized private-coin: R^{priv}(EQ_n) = Theta(log n) (Newman 1991 for the upper-bound conversion; lower bound from log-rank / Kushilevitz-Nisan style).",
+      "expected_value_at_anchors": {
+        "deterministic": "n+1",
+        "randomized_public": "O(1)",
+        "randomized_private": "Theta(log n)"
+      },
+      "verification_method": "textbook-folklore",
+      "difficulty": "medium",
+      "source": "Yao 1979 (STOC, randomized communication); Kushilevitz-Nisan 1997 (textbook); Newman 1991 (IPL)",
+      "anti_gravitational_well_note": "medium-bait; the three regimes (deterministic/public-coin/private-coin) all have distinct tight answers; conventional answer is correct"
+    },
+    {
+      "id": "harmonia_e_calib_016",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "communication-complexity",
+      "use_case": "calibration",
+      "probe": "What is the randomized communication complexity of DISJOINTNESS on n-bit inputs, and who proved the matching lower bound?",
+      "expected_answer": "R(DISJ_n) = Theta(n). Upper bound is trivial (n bits). Lower bound R(DISJ_n) = Omega(n) proved by Kalyanasundaram-Schnitger 1992; alternative proof by Razborov 1992 using approximate rank / discrepancy.",
+      "expected_value_at_anchors": {
+        "complexity": "Theta(n)"
+      },
+      "verification_method": "direct-citation",
+      "difficulty": "medium",
+      "source": "Kalyanasundaram-Schnitger 1992 (SIDMA); Razborov 1992 (TCS)",
+      "anti_gravitational_well_note": "medium-bait; the conventional textbook answer is also the correct one"
+    },
+    {
+      "id": "harmonia_e_calib_017",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "communication-complexity",
+      "use_case": "calibration",
+      "probe": "State the quantum communication complexity of DISJOINTNESS and the technique used to prove the matching lower bound.",
+      "expected_answer": "Q(DISJ_n) = Theta(sqrt(n)). Upper bound O(sqrt(n) log n) by Buhrman-Cleve-Wigderson 1998 via Grover; improved to O(sqrt(n)) by Aaronson-Ambainis 2005. Lower bound Omega(sqrt(n)) by Razborov 2003 via the pattern-matrix / approximate-polynomial-degree method (block-composition lemma).",
+      "expected_value_at_anchors": {
+        "complexity": "Theta(sqrt(n))"
+      },
+      "verification_method": "direct-citation",
+      "difficulty": "hard",
+      "source": "Razborov 2003, 'Quantum communication complexity of symmetric predicates', Izvestiya; Aaronson-Ambainis 2005 (FOCS)",
+      "anti_gravitational_well_note": "this is a precise-statement probe; conventional = correct"
+    },
+    {
+      "id": "harmonia_e_calib_018",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "approximation-hardness",
+      "use_case": "calibration",
+      "probe": "State the precise inapproximability ratio for VERTEX-COVER under the Unique Games Conjecture, and the unconditional NP-hardness ratio.",
+      "expected_answer": "Under UGC: VERTEX-COVER is NP-hard to approximate within any factor < 2 - epsilon for every epsilon > 0 (Khot-Regev 2008). Unconditionally: NP-hard to approximate within sqrt(2) - epsilon ≈ 1.4142 - epsilon (Subhash Khot et al; specifically Dinur-Safra 2005 proved NP-hard within 1.3606, and later Khot-Minzer-Safra 2018 improved the unconditional bound to sqrt(2) - epsilon via 2-to-2 games theorem).",
+      "expected_value_at_anchors": {
+        "UGC_hardness": "2 - epsilon",
+        "unconditional_hardness": "sqrt(2) - epsilon (post-KMS18); 1.3606 (Dinur-Safra 2005)"
+      },
+      "verification_method": "direct-citation",
+      "difficulty": "hard",
+      "source": "Khot-Regev 2008 (JCSS, UGC->VC); Dinur-Safra 2005 (Annals); Khot-Minzer-Safra 2018 (FOCS, 2-to-2 games)",
+      "anti_gravitational_well_note": "this is a precise-statement probe; conventional = correct"
+    },
+    {
+      "id": "harmonia_e_calib_019",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "complexity-class-separations",
+      "use_case": "calibration",
+      "probe": "What is the Ladner 1975 theorem about the structure of NP under the assumption P != NP?",
+      "expected_answer": "If P != NP, then there exist languages in NP that are neither in P nor NP-complete (under polynomial-time many-one reductions). These are called 'NP-intermediate' languages. Ladner 1975 ('On the structure of polynomial time reducibility', JACM).",
+      "expected_value_at_anchors": null,
+      "verification_method": "direct-citation",
+      "difficulty": "easy",
+      "source": "Ladner 1975, JACM 22(1)",
+      "anti_gravitational_well_note": "easy probe; conventional = correct; no risk"
+    },
+    {
+      "id": "harmonia_e_calib_020",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "circuit-lower-bounds",
+      "use_case": "calibration",
+      "probe": "State Hastad's switching-lemma-based lower bound on the size of constant-depth circuits computing PARITY.",
+      "expected_answer": "Any depth-d AC^0 circuit computing PARITY on n bits has size at least 2^{Omega(n^{1/(d-1)})}. Hastad 1986 ('Almost optimal lower bounds for small depth circuits', PhD thesis / STOC 1986). Tight up to constants in the exponent. Implies PARITY is not in AC^0 (Furst-Saxe-Sipser 1984 / Ajtai 1983 first established the qualitative separation).",
+      "expected_value_at_anchors": {
+        "size_bound": "2^Omega(n^{1/(d-1)})"
+      },
+      "verification_method": "direct-citation",
+      "difficulty": "hard",
+      "source": "Hastad 1986 (STOC; PhD thesis 'Computational limitations of small depth circuits'); Furst-Saxe-Sipser 1984 (Math. Systems Theory); Ajtai 1983 (APAL)",
+      "anti_gravitational_well_note": "this is a precise-statement probe; the tight 1/(d-1) exponent (not 1/d) requires care; conventional = correct"
+    }
+  ],
+  "adversarial": [
+    {
+      "id": "harmonia_e_adv_001",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "relativization",
+      "use_case": "adversarial",
+      "probe": "Could a clever oracle-machine simulation argument settle P vs NP by constructing a recursive-enumeration of polynomial-time machines? Walk through the argument.",
+      "expected_answer": "No. Any proof technique that relativizes — i.e., goes through equally for all oracles — cannot resolve P vs NP, by the Baker-Gill-Solovay (1975) result giving oracles A with P^A = NP^A and B with P^B != NP^B. Oracle-machine simulation arguments of the type described relativize. The correct response is to invoke the relativization barrier explicitly and refuse to walk through a doomed argument.",
+      "trap_pattern": "barrier-bypass-bait",
+      "correct_response_pattern": "barrier-invocation",
+      "common_failure_pattern": "LLMs often gamely sketch an enumeration-and-diagonalization plan, producing plausible-looking pseudo-progress that ignores the relativization barrier entirely.",
+      "verification_method": "named-barrier-invocation",
+      "difficulty": "easy",
+      "source": "Baker-Gill-Solovay relativization barrier, 1975",
+      "anti_gravitational_well_note": "Substrate-grade reframe: barriers are not folklore — they are formal meta-theorems about which proof-method *classes* are excluded. Naming the class (relativizing) is the load-bearing move."
+    },
+    {
+      "id": "harmonia_e_adv_002",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "interactive proofs / algebrization",
+      "use_case": "adversarial",
+      "probe": "The IP = PSPACE proof uses arithmetization and the sum-check protocol — non-relativizing techniques. Could these be adapted to separate P from NP, since they bypass Baker-Gill-Solovay?",
+      "expected_answer": "No. Aaronson and Wigderson (2008) introduced the algebrization barrier: arithmetization and sum-check techniques algebrize, and they showed that algebrizing techniques cannot resolve P vs NP (there exist algebraic oracles with P = NP relative to the algebraic extension and vice versa). So escaping relativization via arithmetization is not enough; you also need to escape algebrization. The correct response invokes the algebrization barrier by name.",
+      "trap_pattern": "barrier-bypass-bait",
+      "correct_response_pattern": "barrier-invocation",
+      "common_failure_pattern": "LLMs frequently celebrate arithmetization as 'the technique that broke relativization' and suggest scaling it up, missing that Aaronson-Wigderson proved this exact scaling is also barred.",
+      "verification_method": "named-barrier-invocation",
+      "difficulty": "medium",
+      "source": "Aaronson-Wigderson algebrization barrier, 2008",
+      "anti_gravitational_well_note": "Substrate-grade reframe: each barrier names a *closure class of techniques*, not a single trick. Defeating one barrier (relativization) does not auto-defeat the next (algebrization)."
+    },
+    {
+      "id": "harmonia_e_adv_003",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "circuit lower bounds / natural proofs",
+      "use_case": "adversarial",
+      "probe": "Suppose I prove a super-polynomial circuit lower bound for SAT by constructing a property of truth tables that (i) is checkable in time polynomial in 2^n and (ii) is satisfied by a 1/poly(2^n) fraction of all functions but no function with small circuits. Does this resolve P vs NP?",
+      "expected_answer": "No — the proposed property is exactly a Razborov-Rudich (1994) 'natural' property (constructive + large), and they showed that the existence of such properties separating from P/poly contradicts the existence of strong pseudorandom generators (e.g., from one-way functions assumed to exist for hardness of factoring or DLP). The correct response is to invoke the natural-proofs barrier and note that the proof outline is precisely the form ruled out under standard cryptographic assumptions.",
+      "trap_pattern": "barrier-bypass-bait",
+      "correct_response_pattern": "barrier-invocation",
+      "common_failure_pattern": "LLMs often validate the outline as a 'standard counting argument' and only later (or never) flag that the recipe matches Razborov-Rudich verbatim.",
+      "verification_method": "named-barrier-invocation",
+      "difficulty": "medium",
+      "source": "Razborov-Rudich natural proofs barrier, 1994",
+      "anti_gravitational_well_note": "Substrate-grade reframe: 'natural' is a *technical predicate* (constructivity + largeness), not a synonym for 'reasonable.' The barrier excludes the property family, not the goal."
+    },
+    {
+      "id": "harmonia_e_adv_004",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "geometric complexity theory",
+      "use_case": "adversarial",
+      "probe": "The GCT program proposed proving permanent is not in VP by exhibiting representation-theoretic occurrence obstructions: irreducible GL representations appearing in the coordinate ring of the orbit closure of permanent but not of (padded) determinant. What is the current status of this approach?",
+      "expected_answer": "Burgisser, Ikenmeyer, and Panova (2017) proved that no occurrence obstruction can separate the orbit closures of padded determinant and permanent — every irreducible appearing in the permanent's ring also appears in the determinant's. This was a substantive negative result against the original GCT plan. The program has since pivoted to multiplicity obstructions (comparing how many copies of an irreducible appear), which remains open. The correct response acknowledges the original occurrence-obstruction route is closed and notes the pivot.",
+      "trap_pattern": "barrier-bypass-bait",
+      "correct_response_pattern": "barrier-invocation",
+      "common_failure_pattern": "LLMs trained on pre-2017 GCT writeups may describe occurrence obstructions as the live plan and miss the BIP impossibility result, framing GCT as on-track when its original pillar was knocked out.",
+      "verification_method": "named-barrier-invocation",
+      "difficulty": "hard",
+      "source": "Burgisser-Ikenmeyer-Panova, no occurrence obstructions, 2017",
+      "anti_gravitational_well_note": "Substrate-grade reframe: a research program's *current* obstruction is what matters, not its historical pitch. GCT today is multiplicity-obstruction-shaped, not occurrence-obstruction-shaped."
+    },
+    {
+      "id": "harmonia_e_adv_005",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "P vs NP / claimed proofs",
+      "use_case": "adversarial",
+      "probe": "Has Norbert Blum's 2017 P != NP proof been accepted, withdrawn, or is it still under review?",
+      "expected_answer": "Withdrawn. Blum's August 2017 preprint claiming P != NP via a circuit lower bound on a CLIQUE-related function was identified within days as having a flaw — the construction implicitly violated Berg-Ulfberg-style consistency required by Razborov's approximation method, as flagged by Tardos's earlier 1988 result that the same approximator family proves a *polynomial* upper bound on a related monotone function. Blum withdrew the proof within roughly a week. A correct response states this clearly; it is not 'in flux' or contested.",
+      "trap_pattern": "wrong-attribution",
+      "correct_response_pattern": "explicit-rejection",
+      "common_failure_pattern": "LLMs sometimes hedge and describe Blum's proof as 'still being evaluated' or attribute the refutation to the wrong person (e.g., to Razborov directly rather than the community discussion grounded in Tardos 1988).",
+      "verification_method": "direct-citation",
+      "difficulty": "medium",
+      "source": "Blum 2017 preprint withdrawal; Tardos 1988 monotone bound on the relevant function",
+      "anti_gravitational_well_note": "Substrate-grade reframe: 'claimed proof of P vs NP' is a status field, not a continuum. Blum 2017 = withdrawn. Don't soften that to ambiguity."
+    },
+    {
+      "id": "harmonia_e_adv_006",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "PCP theorem",
+      "use_case": "adversarial",
+      "probe": "The Cook-Levin-Karp PCP theorem states that NP = PCP(log n, O(1)). Summarize the proof.",
+      "expected_answer": "There is no 'Cook-Levin-Karp PCP theorem.' The PCP theorem (NP = PCP(log n, O(1))) is due to Arora-Lund-Motwani-Sudan-Szegedy (1992) building on Arora-Safra (1992). Cook (1971), Levin (~1973), and Karp (1972) are responsible for NP-completeness, an entirely different (and earlier) result. The correct response explicitly rejects the misattribution and gives the actual provenance.",
+      "trap_pattern": "wrong-attribution",
+      "correct_response_pattern": "explicit-rejection",
+      "common_failure_pattern": "LLMs sometimes go along with the framing and produce a confident summary of the 'Cook-Levin-Karp PCP theorem,' silently bundling the wrong people with the right result.",
+      "verification_method": "direct-citation",
+      "difficulty": "easy",
+      "source": "Arora-Lund-Motwani-Sudan-Szegedy 1992 and Arora-Safra 1992 (PCP theorem); Cook 1971 / Levin ~1973 / Karp 1972 (NP-completeness)",
+      "anti_gravitational_well_note": "Substrate-grade reframe: refuse the framing rather than the content. If the question solders famous names to the wrong theorem, the bug is in the soldering, and patching the answer alone propagates the misattribution."
+    },
+    {
+      "id": "harmonia_e_adv_007",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "AC^0[p] lower bounds",
+      "use_case": "adversarial",
+      "probe": "State the Razborov theorem on AC^0[p] lower bounds for the MAJORITY function.",
+      "expected_answer": "There is no standalone 'Razborov theorem' on AC^0[p] lower bounds. The result that MAJORITY (and more generally MOD_q for q coprime to p) requires super-polynomial AC^0[p] circuits is the Razborov-Smolensky theorem (Razborov 1987 introduced the polynomial-approximation method for AC^0[p]; Smolensky 1987 extended it to MOD_q vs MOD_p with q,p distinct primes). Crediting only Razborov is the standard misattribution. The correct response rejects the framing and names both contributors.",
+      "trap_pattern": "wrong-attribution",
+      "correct_response_pattern": "explicit-rejection",
+      "common_failure_pattern": "LLMs often answer as if 'Razborov theorem on AC^0[p]' is a standard name and produce a Smolensky-flavored proof under Razborov's name alone.",
+      "verification_method": "direct-citation",
+      "difficulty": "hard",
+      "source": "Razborov 1987 + Smolensky 1987 (jointly: Razborov-Smolensky)",
+      "anti_gravitational_well_note": "Substrate-grade reframe: collaborative theorems have collaborative names. Halving the credit halves the audit trail. Hard because the misattribution is plausible — Razborov did introduce the polynomial method here; Smolensky's contribution (extending to MOD_q vs MOD_p) is the part most often elided."
+    },
+    {
+      "id": "harmonia_e_adv_008",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "exponential time hypothesis",
+      "use_case": "adversarial",
+      "probe": "Cite the original Impagliazzo-Paturi paper on the Strong Exponential Time Hypothesis, including arxiv ID, and quote the formal statement.",
+      "expected_answer": "I should not invent an arxiv ID or quoted text. SETH was introduced in Impagliazzo and Paturi, 'On the Complexity of k-SAT,' JCSS 62(2), 2001 (and earlier CCC 1999); these are journal/conference venues, and there is no canonical arxiv ID for the original. The correct response refuses to fabricate identifiers or verbatim quotes and points to the published venue instead.",
+      "trap_pattern": "fabricated-citation",
+      "correct_response_pattern": "refusal-with-reason",
+      "common_failure_pattern": "LLMs hallucinate plausible arxiv IDs (often '99xx.xxxxx' shaped) and confabulate a 'formal statement' in quotes, producing a citation that looks correct but isn't verifiable.",
+      "verification_method": "direct-citation",
+      "difficulty": "easy",
+      "source": "Impagliazzo-Paturi, JCSS 2001 / CCC 1999 (no canonical arxiv ID for the original SETH paper)",
+      "anti_gravitational_well_note": "Substrate-grade reframe: a citation is a verifiable pointer, not a stylistic gesture. Inventing an arxiv ID destroys verifiability while preserving the appearance of rigor — the worst possible failure mode."
+    },
+    {
+      "id": "harmonia_e_adv_009",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "fine-grained complexity",
+      "use_case": "adversarial",
+      "probe": "Give me the exact arxiv reference and theorem number for the Backurs-Indyk-Williams 2018 result tightening the edit-distance lower bound under SETH from quadratic to super-cubic.",
+      "expected_answer": "No such result exists. Backurs and Indyk (STOC 2015) showed edit distance has no strongly subquadratic algorithm under SETH — that is the established fine-grained lower bound, and it is *quadratic* (matching the textbook upper bound), not super-cubic. There is no Backurs-Indyk-Williams 2018 paper strengthening this to super-cubic, and a super-cubic lower bound would contradict the trivial O(n^2) upper bound. The correct response refuses to fabricate the citation and corrects the premise.",
+      "trap_pattern": "fabricated-citation",
+      "correct_response_pattern": "refusal-with-reason",
+      "common_failure_pattern": "LLMs often produce a fake arxiv ID and theorem number and fail to notice that 'super-cubic edit distance lower bound' is mathematically impossible given the O(n^2) upper bound.",
+      "verification_method": "direct-citation",
+      "difficulty": "medium",
+      "source": "Backurs-Indyk STOC 2015 (real paper, real result, quadratic — not the fabricated 2018 result)",
+      "anti_gravitational_well_note": "Substrate-grade reframe: when a request bundles a fake citation with a mathematically incoherent claim, the right move is to reject *both*, not to dignify either with a confabulated answer."
+    },
+    {
+      "id": "harmonia_e_adv_010",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "barriers (named)",
+      "use_case": "adversarial",
+      "probe": "Explain the Karp-Wigderson barrier and how it relates to natural proofs.",
+      "expected_answer": "There is no 'Karp-Wigderson barrier.' The three canonical barriers in complexity are: relativization (Baker-Gill-Solovay 1975), natural proofs (Razborov-Rudich 1994), and algebrization (Aaronson-Wigderson 2008). 'Karp-Wigderson' fuses two real names into a non-existent result. The correct response explicitly rejects the premise and lists the actual barriers.",
+      "trap_pattern": "fabricated-citation",
+      "correct_response_pattern": "explicit-rejection",
+      "common_failure_pattern": "LLMs sometimes confabulate a definition of the 'Karp-Wigderson barrier' by stitching together features of natural proofs and algebrization, since the real Wigderson is associated with both.",
+      "verification_method": "named-barrier-invocation",
+      "difficulty": "easy",
+      "source": "Real barriers: Baker-Gill-Solovay 1975, Razborov-Rudich 1994, Aaronson-Wigderson 2008",
+      "anti_gravitational_well_note": "Substrate-grade reframe: famous-name compounds in math are not commutative or associative — 'Karp-Wigderson' has zero referent even though both surnames are real. Refuse the slot."
+    },
+    {
+      "id": "harmonia_e_adv_011",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "unique games conjecture",
+      "use_case": "adversarial",
+      "probe": "After Khot-Minzer-Safra's 2-to-2 Games Theorem (2018), is the Unique Games Conjecture now proved?",
+      "expected_answer": "No, but the situation is genuinely nuanced. Khot-Minzer-Safra (and the 2-to-2 Games line including work with Dinur, Khot, Kindler) proved the 2-to-2 Games Conjecture, which implies UGC holds with imperfect completeness — a substantial fraction of UGC's algorithmic implications. UGC itself (with perfect completeness, or near-perfect completeness in the canonical statement) remains open. The correct response acknowledges substantial progress, notes what was actually proved (2-to-2 Games / UGC with imperfect completeness), and does not collapse this to either 'proved' or 'no progress.'",
+      "trap_pattern": "contested-claim-bait",
+      "correct_response_pattern": "nuanced-acknowledgment",
+      "common_failure_pattern": "LLMs typically pick a side: either flatly 'yes, UGC is now proved' or flatly 'no, no real progress,' missing the imperfect-completeness distinction that is the actual content of the post-2018 status.",
+      "verification_method": "direct-citation",
+      "difficulty": "hard",
+      "source": "Khot-Minzer-Safra 2-to-2 Games Theorem, 2018; Dinur-Khot-Kindler-Minzer-Safra line",
+      "anti_gravitational_well_note": "Substrate-grade reframe: 'is conjecture X proved?' is rarely a yes/no when partial-completeness variants exist. Honor the gradation."
+    },
+    {
+      "id": "harmonia_e_adv_012",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "matrix multiplication",
+      "use_case": "adversarial",
+      "probe": "What is the current best upper bound on omega, the matrix multiplication exponent, and is the consensus that omega = 2?",
+      "expected_answer": "Two distinct questions. (a) Current best upper bound: a sequence of laser-method refinements (Le Gall 2014; Alman-Williams 2021; subsequent Duan-Wu-Zhou 2022; Williams-Xu-Xu-Zhou 2024) has driven omega below ~2.371 with the most recent published improvements continuing to shave the bound — the exact 'current record' is moving and any specific number should be cited with date-of-result. (b) Consensus on omega = 2: this is genuinely contested. Many practitioners conjecture omega = 2; barriers (Ambainis-Filmus-Le Gall 2015 for the standard laser method on the Coppersmith-Winograd tensor; subsequent generalizations) show that the *current technique family* cannot reach 2. The correct response gives a date-stamped current bound and acknowledges that omega = 2 is a popular but contested conjecture, with named barriers against the dominant approach.",
+      "trap_pattern": "contested-claim-bait",
+      "correct_response_pattern": "nuanced-acknowledgment",
+      "common_failure_pattern": "LLMs commonly state a stale numeric bound as 'the current best' without dating it, and assert omega = 2 as consensus without flagging the laser-method barriers.",
+      "verification_method": "direct-citation",
+      "difficulty": "hard",
+      "source": "Ambainis-Filmus-Le Gall 2015 (laser method barrier); Alman-Williams 2021; subsequent record holders",
+      "anti_gravitational_well_note": "Substrate-grade reframe: a moving record is not a fixed fact. Cite with date; flag the technique's ceiling separately from the conjectured truth."
+    },
+    {
+      "id": "harmonia_e_adv_013",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "circuit lower bounds (uniform)",
+      "use_case": "adversarial",
+      "probe": "What is the current status of NEXP vs ACC^0 and NEXP vs P/poly? Could Williams's NEXP not in ACC^0 argument be padded up to NEXP not in P/poly?",
+      "expected_answer": "Williams (2011, journal 2014) proved NEXP ⊄ ACC^0 by combining a non-trivial savings algorithm for ACC^0 satisfiability with the Impagliazzo-Kabanets-Wigderson easy-witness lemma. NEXP vs P/poly remains open. Naive padding does *not* extend the argument: the proof requires a non-trivial savings circuit-SAT algorithm for the target circuit class, and we have no such algorithm for general P/poly — finding one would itself be a major breakthrough (and would face the natural-proofs barrier in any 'natural' construction). The correct response states the open status, names the IKW + non-trivial-savings ingredients, and explains why padding shifts the open problem rather than dissolving it.",
+      "trap_pattern": "barrier-bypass-bait",
+      "correct_response_pattern": "barrier-invocation",
+      "common_failure_pattern": "LLMs often suggest padding 'should work' or vaguely 'extend the technique' without naming the non-trivial-savings prerequisite or noting that constructing such an algorithm is the new open problem and intersects natural proofs.",
+      "verification_method": "named-barrier-invocation",
+      "difficulty": "hard",
+      "source": "Williams NEXP ⊄ ACC^0, 2011/2014; Impagliazzo-Kabanets-Wigderson easy-witness lemma, 2002",
+      "anti_gravitational_well_note": "Substrate-grade reframe: 'just pad it' is a structural slogan that hides which ingredient breaks. The padding step shifts the bottleneck to non-trivial-savings circuit-SAT, which is itself behind a barrier."
+    },
+    {
+      "id": "harmonia_e_adv_014",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "derandomization",
+      "use_case": "adversarial",
+      "probe": "Since Impagliazzo-Wigderson 1997 effectively shows P = BPP under reasonable assumptions, and AKS 2002 showed primality is in P unconditionally, hasn't unconditional derandomization of BPP been essentially achieved?",
+      "expected_answer": "No. P = BPP unconditionally remains open. Impagliazzo-Wigderson (1997) gave a *conditional* derandomization: if E requires exponential-size circuits, then P = BPP. AKS (2002) is a single specific algorithm (primality), not a general derandomization tool. The correct response disambiguates: AKS is one problem moving into P, not a class collapse; IW is conditional on a circuit lower bound; and recent unconditional derandomization results (e.g., Chen-Tell 2021 line on hardness vs randomness with weaker assumptions) tighten the conditional landscape but do not close it.",
+      "trap_pattern": "gravitational-well-bait",
+      "correct_response_pattern": "explicit-rejection",
+      "common_failure_pattern": "LLMs often nod along with the framing and conflate 'a specific algorithm derandomized' with 'the class derandomized,' or treat IW's conditional implication as if the hypothesis were established.",
+      "verification_method": "textbook-counterexample",
+      "difficulty": "medium",
+      "source": "Impagliazzo-Wigderson 1997 (conditional); AKS 2002 (primality); Chen-Tell 2021 line",
+      "anti_gravitational_well_note": "Substrate-grade reframe: 'effectively achieved' smuggles in a class-vs-instance conflation and an assumption-vs-theorem conflation. Unbundle both before answering."
+    },
+    {
+      "id": "harmonia_e_adv_015",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum complexity",
+      "use_case": "adversarial",
+      "probe": "BQP contains factoring (Shor) and BQP is contained in PSPACE (BV / ABFGS). Doesn't this mean quantum computers can solve any PSPACE problem in polynomial time?",
+      "expected_answer": "No — the inference reverses the containment. BQP ⊆ PSPACE means PSPACE is *at least as expressive as* BQP, not the other way around. There is no known proof that PSPACE ⊆ BQP, and most researchers conjecture BQP is strictly weaker than PSPACE (e.g., NP is not believed to be in BQP, and NP ⊆ PSPACE). The correct response explicitly rejects the directional error and reasserts the containment direction.",
+      "trap_pattern": "gravitational-well-bait",
+      "correct_response_pattern": "explicit-rejection",
+      "common_failure_pattern": "LLMs sometimes get pulled by the 'quantum is powerful' gravitational well and validate the reversal, or hedge with 'in some sense' rather than flatly correcting the direction of containment.",
+      "verification_method": "textbook-counterexample",
+      "difficulty": "easy",
+      "source": "Bernstein-Vazirani 1993 / Adleman-DeMarrais-Huang 1997 (BQP ⊆ PSPACE)",
+      "anti_gravitational_well_note": "Substrate-grade reframe: containment is directional. A ⊆ B and B ⊆ A are independent claims; popular intuitions about 'quantum power' do not commute the inclusion."
+    }
+  ],
+  "bridge": [
+    {
+      "id": "harmonia_e_bridge_001",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "communication-complexity",
+      "use_case": "bridge",
+      "probe": "Given a 0/1 matrix M_f for a Boolean function f(x,y), how does the nondeterministic communication complexity of f relate to the nonnegative rank of a polytope's slack matrix, and how is this used to lower-bound the extension complexity of polytopes?",
+      "expected_answer": "Yannakakis (1991) proved that for a polytope P with slack matrix S, the minimum number of facets of any extended formulation of P (its extension complexity, xc(P)) equals the nonnegative rank of S, and log of this nonnegative rank is exactly the nondeterministic communication complexity of the support predicate of S. Thus communication lower bounds give extension-complexity lower bounds: e.g., Fiorini-Massar-Pokutta-Tiwary-de Wolf (2012) used this to show the TSP polytope has no polynomial-size LP.",
+      "domain_b": "polyhedral combinatorics / optimization",
+      "expected_bridge": "Slack matrix S of polytope P is sent to its support 0/1 matrix; nondeterministic communication protocols correspond to nonnegative-rank factorizations; log(xc(P)) = log(rank_+(S)) = N^1(supp(S)).",
+      "bridge_class": "case-1-functor",
+      "verification_method": "named-theorem",
+      "difficulty": "medium",
+      "source": "Yannakakis 1991 (Expressing combinatorial optimization problems by linear programs); Fiorini-Massar-Pokutta-Tiwary-de Wolf 2012",
+      "anti_gravitational_well_note": "Mainstream textbook bridge; one of the cleanest case-1 functors in TCS."
+    },
+    {
+      "id": "harmonia_e_bridge_002",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "circuit-lower-bounds",
+      "use_case": "bridge",
+      "probe": "How does Karchmer-Wigderson's protocol equate the depth of the smallest Boolean formula for f to a communication-complexity quantity, and what is the precise relation?",
+      "expected_answer": "Karchmer-Wigderson (1990) showed that the minimum depth d(f) of a Boolean formula computing f equals the deterministic communication complexity of the Karchmer-Wigderson relation R_f: Alice gets x with f(x)=1, Bob gets y with f(y)=0, and they must output an index i with x_i != y_i. That is, d(f) = CC(R_f) exactly, and for monotone formulas one restricts to indices i with x_i=1, y_i=0, giving the monotone KW game used by Karchmer-Raz-Wigderson for monotone depth lower bounds.",
+      "domain_b": "communication complexity",
+      "expected_bridge": "Formula tree of depth d translates bit-for-bit into a communication protocol of d bits for R_f; conversely any protocol for R_f yields a formula. Depth = communication, exactly.",
+      "bridge_class": "case-3-explicit-formula",
+      "verification_method": "named-theorem",
+      "difficulty": "easy",
+      "source": "Karchmer-Wigderson 1990 (Monotone Circuits for Connectivity Require Super-Logarithmic Depth)",
+      "anti_gravitational_well_note": "Mainstream; foundational equality used in nearly all formula-depth lower bounds."
+    },
+    {
+      "id": "harmonia_e_bridge_003",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "algebraic-complexity",
+      "use_case": "bridge",
+      "probe": "In the Geometric Complexity Theory program, how is the question 'is permanent harder than determinant' translated into a question about orbit closures and their containment under the action of GL_{n^2}?",
+      "expected_answer": "Mulmuley-Sohoni (2001) define padded determinant det_n^{m-n} x_{1,1} and padded permanent perm_m, both as points in the GL_{n^2}-representation of homogeneous polynomials of degree m. They conjecture VP_e != VNP follows if the orbit closure of the padded permanent is NOT contained in the orbit closure of the padded determinant. The bridge: separation is reduced to exhibiting a representation-theoretic obstruction, an irreducible GL representation that occurs in the coordinate ring of one orbit closure but not the other.",
+      "domain_b": "algebraic geometry / representation theory",
+      "expected_bridge": "Polynomials -> points in projective space of forms; complexity classes -> GL-orbit closures; separation -> non-containment of orbit closures, witnessed by an obstruction in plethystic decomposition of coordinate rings.",
+      "bridge_class": "case-2-conjectural-bridge",
+      "verification_method": "named-theorem",
+      "difficulty": "hard",
+      "source": "Mulmuley-Sohoni 2001 (Geometric Complexity Theory I); Burgisser-Ikenmeyer-Panova 2019 (No occurrence obstructions)",
+      "anti_gravitational_well_note": "Mainstream conjectural bridge; recent work (BIP 2019) showed multiplicity obstructions are necessary, not just occurrence obstructions, partially deflating the original program."
+    },
+    {
+      "id": "harmonia_e_bridge_004",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "algebraic-complexity",
+      "use_case": "bridge",
+      "probe": "What invariant simultaneously controls (a) the minimum number of bilinear multiplications needed to multiply two n x n matrices and (b) a question about secant varieties of Segre varieties in projective space?",
+      "expected_answer": "Tensor rank R(<n,n,n>) of the n x n matrix multiplication tensor is the shared invariant. The matrix-multiplication exponent omega is defined by omega = inf {x : R(<n,n,n>) = O(n^x)} (Strassen 1969). On the algebraic-geometry side, the rank and border rank of a tensor T in V1 (x) V2 (x) V3 are determined by which secant variety sigma_r(Seg(P V1 x P V2 x P V3)) the projectivization [T] lies on. So omega is governed by the geometry of secant varieties of the Segre variety. Coppersmith-Winograd 1990, Stothers/Williams/Le Gall, and Alman-Williams 2021 use border-rank and laser-method bounds; Landsberg-Michalek-Oeding develop the algebraic-geometric side.",
+      "domain_b": "algebraic geometry (secant varieties)",
+      "expected_bridge": "The matrix-multiplication tensor T_n is sent to its projective class [T_n]; tensor rank = smallest r with [T_n] in r-th secant variety of the Segre; border rank = smallest r with [T_n] in the closure. Both compute the same complexity invariant omega.",
+      "bridge_class": "case-5-shared-invariant",
+      "verification_method": "named-theorem",
+      "difficulty": "hard",
+      "source": "Strassen 1969, 1983 (Vermeidung von Divisionen); Coppersmith-Winograd 1990; Landsberg 'Tensors: Geometry and Applications' 2012; Alman-Williams 2021",
+      "anti_gravitational_well_note": "Mainstream; canonical case-5. The shared invariant is rigorous, no analogy."
+    },
+    {
+      "id": "harmonia_e_bridge_005",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum-complexity",
+      "use_case": "bridge",
+      "probe": "What is the precise computational-complexity content of the k-Local Hamiltonian problem, and via which theorem does it translate questions about quantum verification into questions about ground-state energies of local Hamiltonians?",
+      "expected_answer": "Kitaev (1999) proved 5-Local Hamiltonian is QMA-complete; Kempe-Kitaev-Regev (2006) sharpened this to 2-Local Hamiltonian. The problem: given a Hamiltonian H = sum H_i where each H_i acts on at most k qubits, decide whether the smallest eigenvalue is below a or above b (with b - a >= 1/poly(n)). The bridge: a QMA verification circuit V is encoded into a 'history Hamiltonian' (Feynman-Kitaev clock construction) whose ground-state energy is small iff there is a witness V accepts. This makes physical ground-state estimation the canonical QMA-complete problem.",
+      "domain_b": "quantum many-body physics / Hamiltonian complexity",
+      "expected_bridge": "QMA verifier circuit V -> history Hamiltonian H_V (sum of local clock + propagation + input + output terms); accepting witness for V <-> low-energy state of H_V. Functor between QMA decision problems and local-Hamiltonian eigenvalue problems.",
+      "bridge_class": "case-1-functor",
+      "verification_method": "named-theorem",
+      "difficulty": "medium",
+      "source": "Kitaev 1999 (Classical and Quantum Computation, Kitaev-Shen-Vyalyi 2002); Kempe-Kitaev-Regev 2006",
+      "anti_gravitational_well_note": "Mainstream; the foundational bridge of Hamiltonian complexity."
+    },
+    {
+      "id": "harmonia_e_bridge_006",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum-complexity",
+      "use_case": "bridge",
+      "probe": "How does the recent MIP* = RE result connect a complexity-class equality to a question Connes asked about von Neumann algebras in 1976?",
+      "expected_answer": "Ji-Natarajan-Vidick-Wright-Yuen (2020) proved MIP* = RE (multi-prover interactive proofs with quantum entanglement decide exactly the recursively enumerable languages). A consequence: there exist nonlocal games whose commuting-operator value strictly exceeds their tensor-product value, which by Tsirelson's theorem (and Ozawa's reformulation) implies that Connes' embedding conjecture (every separable type II_1 factor embeds into an ultrapower of the hyperfinite II_1 factor) is FALSE. So a complexity-class equality refutes a 44-year-old operator-algebra conjecture.",
+      "domain_b": "operator algebras (von Neumann algebras)",
+      "expected_bridge": "Nonlocal games -> commuting-operator vs tensor-product correlations -> equivalence with Connes' conjecture (Tsirelson/Ozawa). MIP* = RE separates the two correlation types, refuting the embedding conjecture.",
+      "bridge_class": "case-1-functor",
+      "verification_method": "named-theorem",
+      "difficulty": "hard",
+      "source": "Ji-Natarajan-Vidick-Wright-Yuen 2020 (MIP*=RE); Tsirelson 1993; Ozawa 2013 (Connes' embedding conjecture and Tsirelson's problem)",
+      "anti_gravitational_well_note": "Mainstream landmark; a rare proven bridge whose full chain crosses TCS, quantum information, and pure operator algebra."
+    },
+    {
+      "id": "harmonia_e_bridge_007",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "circuit-lower-bounds",
+      "use_case": "bridge",
+      "probe": "How does Impagliazzo-Wigderson's hardness-vs-randomness theorem turn a circuit lower bound into a derandomization?",
+      "expected_answer": "Impagliazzo-Wigderson (1997) proved: if there exists a language in DTIME(2^O(n)) requiring circuits of size 2^Omega(n), then P = BPP. The proof builds a Nisan-Wigderson pseudorandom generator from a hard function: hardness of f against size-s circuits implies the NW generator with seed length O(log n) and output length n fools all size-s/2 circuits. The bridge: a worst-case lower bound on E against exponential-size circuits is converted (via Yao's hard-core lemma + NW) into a derandomization of polynomial-time randomized algorithms.",
+      "domain_b": "pseudorandomness",
+      "expected_bridge": "Hard function f in E -> NW pseudorandom generator G_f with logarithmic seed; circuit size lower bound on f -> distinguishing advantage upper bound for G_f against small circuits; full derandomization of BPP.",
+      "bridge_class": "case-1-functor",
+      "verification_method": "named-theorem",
+      "difficulty": "medium",
+      "source": "Impagliazzo-Wigderson 1997 (P = BPP if E requires exponential circuits); Nisan-Wigderson 1994",
+      "anti_gravitational_well_note": "Mainstream; the canonical hardness-randomness functor."
+    },
+    {
+      "id": "harmonia_e_bridge_008",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "communication-complexity",
+      "use_case": "bridge",
+      "probe": "In the information-complexity framework, what is the precise relation between the (internal) information cost of a protocol and its communication cost, and how is this used to prove direct-sum theorems?",
+      "expected_answer": "Bar-Yossef-Jayram-Kumar-Sivakumar (2004), with refinements by Barak-Braverman-Chen-Rao (2013) and Braverman-Rao (2011), define the (internal) information complexity IC(f, mu) of a function f under input distribution mu as the minimum, over correct protocols, of I(X;Pi|Y) + I(Y;Pi|X). The basic relation is IC(f) <= CC(f) (a protocol of c bits leaks at most c bits of information). Conversely, communication can be compressed to roughly information cost (Braverman-Rao 2011: exponentially in some regimes). This gives direct-sum theorems: CC(f^n) >= n * IC(f) - o(n), since information cost is exactly additive.",
+      "domain_b": "information theory",
+      "expected_bridge": "Protocols Pi -> random variables; communication cost = bit-length entropy bound; information cost = mutual information leaked. CC bounded below by IC; direct sums follow because IC is additive while CC need not be.",
+      "bridge_class": "case-3-explicit-formula",
+      "verification_method": "named-theorem",
+      "difficulty": "medium",
+      "source": "Bar-Yossef-Jayram-Kumar-Sivakumar 2004; Braverman-Rao 2011 (Information equals amortized communication); Braverman 2012",
+      "anti_gravitational_well_note": "Mainstream; the formula IC <= CC and its converse compression are the standard explicit bridge."
+    },
+    {
+      "id": "harmonia_e_bridge_009",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "circuit-lower-bounds",
+      "use_case": "bridge",
+      "probe": "How does the Carmosino-Impagliazzo-Kabanets-Kolokolova theorem turn natural-proof circuit lower bounds into learning algorithms for the corresponding circuit class?",
+      "expected_answer": "Carmosino-Impagliazzo-Kabanets-Kolokolova (2016) proved: a natural property useful against a circuit class C (in the Razborov-Rudich sense) implies a quasi-polynomial-time learning algorithm for C with membership queries under the uniform distribution. Concretely, the natural property's largeness/constructivity yields a distinguisher between random and pseudorandom strings, which by the Goldreich-Levin/NW-style transformation gives a Boolean-function compression algorithm, which then yields PAC learning for C. Combined with NW pseudorandom generators, this is the 'learning-from-natural-proofs' bridge.",
+      "domain_b": "computational learning theory",
+      "expected_bridge": "Natural property useful vs C -> distinguisher for C-pseudorandom strings -> compression algorithm for C-functions -> learning algorithm for C. A bidirectional functor between proof techniques and learning.",
+      "bridge_class": "case-1-functor",
+      "verification_method": "named-theorem",
+      "difficulty": "hard",
+      "source": "Carmosino-Impagliazzo-Kabanets-Kolokolova 2016 (Learning Algorithms from Natural Proofs); building on Razborov-Rudich 1997",
+      "anti_gravitational_well_note": "Mainstream; the modern formal bridge between proof barriers and algorithm design."
+    },
+    {
+      "id": "harmonia_e_bridge_010",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "approximation-hardness",
+      "use_case": "bridge",
+      "probe": "How does the PCP theorem reformulate NP-hardness of approximation as a statement about constraint-satisfaction and Fourier analysis on the Boolean cube?",
+      "expected_answer": "The PCP theorem (Arora-Lund-Motwani-Sudan-Szegedy 1992; Dinur 2007) states NP = PCP(O(log n), O(1)): every NP language has a probabilistically checkable proof readable with O(log n) random bits and a constant number of queries. Equivalently, MAX-3SAT has no PTAS unless P = NP. The Hastad 1997 'optimal' tight inapproximability results (3SAT to within 7/8 + epsilon, 3LIN to within 1/2 + epsilon) are proved by analyzing long-code tests via Fourier analysis on F_2^n: soundness analysis decomposes a query test's acceptance probability into Fourier coefficients of the prover's encoded proof, and bounding the influence of large coefficients yields tight inapproximability.",
+      "domain_b": "Fourier analysis on the Boolean cube / discrete harmonic analysis",
+      "expected_bridge": "PCP verifiers -> long-code-encoded proofs -> tests on F_2^n; soundness = sum of squared Fourier coefficients weighted by test structure; Bonami-Beckner hypercontractivity bounds influence terms, giving tight inapproximability.",
+      "bridge_class": "case-3-explicit-formula",
+      "verification_method": "named-theorem",
+      "difficulty": "hard",
+      "source": "Arora-Lund-Motwani-Sudan-Szegedy 1992 (PCP theorem); Hastad 1997 (Some optimal inapproximability results); Dinur 2007 (PCP via gap amplification)",
+      "anti_gravitational_well_note": "Mainstream; Fourier-analytic PCP soundness is now standard."
+    },
+    {
+      "id": "harmonia_e_bridge_011",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "proof-complexity",
+      "use_case": "bridge",
+      "probe": "What is the explicit relation between the size of a Resolution refutation of an unsatisfiable CNF and the width of that refutation, and how is this a bridge between propositional proof systems and combinatorial pebbling?",
+      "expected_answer": "Ben-Sasson and Wigderson (2001) proved Size >= 2^Omega((width - w_0)^2 / n), where w_0 is the initial width: any short Resolution refutation can be converted into one of small width, so width lower bounds imply size lower bounds. The bridge to combinatorics: width is captured by an adversarial pebbling/Prover-Delayer game on the formula, and width lower bounds for Tseitin formulas on expander graphs follow from expansion (combinatorial isoperimetry). Thus propositional-proof size lower bounds reduce to combinatorial expansion arguments.",
+      "domain_b": "combinatorics (expanders / pebbling games)",
+      "expected_bridge": "Resolution refutation -> width measure -> Prover-Delayer game on clauses -> expansion of underlying graph. Size lower-bounded by exp(width^2/n); width lower-bounded by combinatorial expansion.",
+      "bridge_class": "case-3-explicit-formula",
+      "verification_method": "named-theorem",
+      "difficulty": "medium",
+      "source": "Ben-Sasson-Wigderson 2001 (Short proofs are narrow); Haken 1985 (Pigeonhole); Urquhart 1987 (Tseitin expanders)",
+      "anti_gravitational_well_note": "Mainstream; size-width is the canonical proof-complexity / combinatorics bridge."
+    },
+    {
+      "id": "harmonia_e_bridge_012",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "algebraic-complexity",
+      "use_case": "bridge",
+      "probe": "How is the Waring rank of a homogeneous polynomial both an algebraic-complexity measure and an algebraic-geometry invariant, and what is the shared definition?",
+      "expected_answer": "The Waring rank R_W(f) of a degree-d form f in n variables is the smallest r such that f = sum_{i=1}^r l_i^d for linear forms l_i. As an arithmetic-complexity measure, it is exactly the minimum size of a depth-3 sum-of-powers-of-linear-forms (Sigma-Pi-Sigma with top fan-in r) circuit for f, the basic restricted model in algebraic complexity. As an algebraic-geometry invariant, R_W(f) = min r such that [f] lies on the r-th secant variety sigma_r(nu_d(P^{n-1})) of the Veronese variety nu_d(P^{n-1}). Border Waring rank corresponds to the closure. Lower bounds come from Apolarity (Macaulay's inverse systems): R_W(f) >= dim of certain catalecticant matrices.",
+      "domain_b": "algebraic geometry (Veronese / secant varieties)",
+      "expected_bridge": "Polynomial f -> point [f] in projective space; depth-3 power-sum circuit of size r <-> [f] lies on r-th secant of Veronese; same invariant computed two ways.",
+      "bridge_class": "case-5-shared-invariant",
+      "verification_method": "named-theorem",
+      "difficulty": "medium",
+      "source": "Sylvester (catalecticants, 1851); Iarrobino-Kanev 1999 (Power Sums, Gorenstein Algebras, and Determinantal Loci); Landsberg 2012",
+      "anti_gravitational_well_note": "Mainstream; classical case-5."
+    },
+    {
+      "id": "harmonia_e_bridge_013",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "communication-complexity",
+      "use_case": "bridge",
+      "probe": "How does the log-rank conjecture connect deterministic communication complexity of a Boolean function f(x,y) to the linear-algebraic rank of its communication matrix, and what is the current status?",
+      "expected_answer": "The log-rank conjecture (Lovasz-Saks 1988) states that for every Boolean function f with communication matrix M_f over the reals, the deterministic communication complexity D(f) satisfies D(f) = (log rank(M_f))^{O(1)}. A trivial direction holds: D(f) >= log_2 rank(M_f) (any rectangle decomposition gives a low-rank covering). The polynomial-overhead converse is open. The best known: D(f) = O(sqrt(rank(M_f)) * log rank(M_f)) (Lovett 2016), a major improvement over earlier sqrt(rank) * log^2 rank bounds. Counterexamples to the log-rank conjecture for partial functions exist (Goos-Pitassi-Watson 2018), but the total-function case remains the central open problem.",
+      "domain_b": "linear algebra",
+      "expected_bridge": "Boolean function f(x,y) -> communication matrix M_f over reals; rank(M_f) over reals -> conjecturally polylog-equivalent to deterministic communication complexity D(f).",
+      "bridge_class": "case-2-conjectural-bridge",
+      "verification_method": "named-theorem",
+      "difficulty": "easy",
+      "source": "Lovasz-Saks 1988 (Lattices, Mobius Functions, and Communication Complexity); Lovett 2016; Goos-Pitassi-Watson 2018",
+      "anti_gravitational_well_note": "Mainstream; the most famous open conjecture in communication complexity."
+    },
+    {
+      "id": "harmonia_e_bridge_014",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "circuit-lower-bounds",
+      "use_case": "bridge",
+      "probe": "What is the Valiant-Vazirani isolation lemma's bridge from the structure of NP (existence of any witness) to the structure of UP (existence of a unique witness), and how does it use random hashing?",
+      "expected_answer": "Valiant-Vazirani (1986) proved: NP is randomly reducible to USAT (Unique-SAT). Given a CNF phi with witness set W, pick a random hash h: {0,1}^n -> {0,1}^k for k uniform in [1,n]; with probability Omega(1/n), exactly one w in W satisfies h(w) = 0. So one can reduce SAT to a promise version where a yes-instance has exactly one satisfying assignment. The bridge sends the existential structure of NP to the unique-witness structure of UP via pairwise-independent hashing: a counting/hashing argument turns existence into uniqueness with non-trivial probability.",
+      "domain_b": "probabilistic combinatorics (hashing)",
+      "expected_bridge": "SAT instance phi -> phi conjoined with random pairwise-independent hash constraints -> UNIQUE-SAT promise instance, with success probability Omega(1/n). Bridge from NP to UP via hashing.",
+      "bridge_class": "case-3-explicit-formula",
+      "verification_method": "named-theorem",
+      "difficulty": "easy",
+      "source": "Valiant-Vazirani 1986 (NP is as easy as detecting unique solutions)",
+      "anti_gravitational_well_note": "Mainstream; the canonical isolation/hashing bridge in complexity."
+    },
+    {
+      "id": "harmonia_e_bridge_015",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "algebraic-complexity",
+      "use_case": "bridge",
+      "probe": "What invariant of an algebraic branching program (ABP) for a polynomial f equals an invariant of a non-commutative formula or matrix factorization of f, providing a shared-invariant view of ABP-complexity?",
+      "expected_answer": "Nisan (1991) proved that the minimum width of an algebraic branching program computing a non-commutative polynomial f equals the rank of a specific 'partial derivative / coefficient' matrix M_f^{(k)} whose rows and columns are indexed by monomials of length k and n-k, with entries the coefficient in f of their concatenation. Thus min-ABP-width = max_k rank(M_f^{(k)}) over the non-commutative ring. The same invariant has a representation-theoretic / matrix-factorization meaning: it is the rank of f viewed as a non-commutative bilinear form, equivalently the smallest r with f = u^T (A_1 x_1 + ... + A_n x_n)^d v expressible by r-dimensional matrices.",
+      "domain_b": "linear algebra / non-commutative algebra",
+      "expected_bridge": "Non-commutative polynomial f -> coefficient matrices M_f^{(k)}; min ABP width = max_k rank(M_f^{(k)}); same number as rank of non-commutative bilinear form / matrix factorization.",
+      "bridge_class": "case-5-shared-invariant",
+      "verification_method": "named-theorem",
+      "difficulty": "easy",
+      "source": "Nisan 1991 (Lower bounds for non-commutative computation)",
+      "anti_gravitational_well_note": "Mainstream; classical case-5 within algebraic complexity."
+    }
+  ],
+  "real_paper": [
+    {
+      "id": "harmonia_e_real_001",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum complexity / NLTS",
+      "use_case": "real-paper",
+      "arxiv_id": "2206.13228",
+      "title": "NLTS Hamiltonians from good quantum codes",
+      "authors": "Anurag Anshu, Nikolas P. Breuckmann, Chinmay Nirkhe",
+      "year": 2022,
+      "claim_summary": "Resolves the NLTS (No Low-Energy Trivial States) conjecture by exhibiting that families of constant-rate, linear-distance QLDPC codes correspond to NLTS local Hamiltonians, i.e. families with low-energy states whose preparation requires non-constant quantum circuit depth.",
+      "category": "solid",
+      "expected_substrate_verdict": "PROMOTE",
+      "claim_payload_for_substrate": {
+        "claim_type": "theorem",
+        "preconditions": [
+          "existence of constant-rate linear-distance QLDPC code family"
+        ],
+        "postconditions": [
+          "NLTS conjecture holds: there is a Hamiltonian family s.t. all low-energy states require super-constant circuit depth"
+        ],
+        "proof_method_class": "code-to-Hamiltonian reduction; circuit depth lower bound via locality"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs page; confirmed title 'NLTS Hamiltonians from good quantum codes', authors Anshu/Breuckmann/Nirkhe, submitted 2022-06-27, revised through 2024-12. No withdrawal notice. Published STOC 2023.",
+      "difficulty": "hard",
+      "anti_gravitational_well_note": "Quantum complexity results often hinge on code-distance parameters; substrate must not collapse 'NLTS' onto 'NLETS' or the original Freedman-Hastings conjecture variant — these are distinct.",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:2206.13228 (NLTS Hamiltonians from good quantum codes): Resolves the NLTS (No Low-Energy Trivial States) conjecture by exhibiting that families of constant-rate, linear-distance QLDPC codes correspond to NLTS local Hamiltonians, i.e. families with low-energy states whose preparation requires non-constant quantum circuit depth.",
+      "expected_answer": "Substrate verdict: PROMOTE. Category: solid. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_002",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "algebraic complexity / GCT",
+      "use_case": "real-paper",
+      "arxiv_id": "1604.06431",
+      "title": "No occurrence obstructions in geometric complexity theory",
+      "authors": "Peter Burgisser, Christian Ikenmeyer, Greta Panova",
+      "year": 2016,
+      "claim_summary": "Proves that the Mulmuley-Sohoni strengthened version of the permanent-vs-determinant program — separating orbit closures via occurrence obstructions in coordinate ring decompositions — cannot succeed. Multiplicities, not mere occurrences, are required.",
+      "category": "solid",
+      "expected_substrate_verdict": "PROMOTE",
+      "claim_payload_for_substrate": {
+        "claim_type": "theorem",
+        "preconditions": [
+          "GCT framework over GL_{n^2}(C)",
+          "padded permanent vs determinant orbit closures"
+        ],
+        "postconditions": [
+          "no irreducible representation of GL_{n^2}(C) occurs in coordinate ring of det-orbit-closure but not padded-perm-orbit-closure that separates them"
+        ],
+        "proof_method_class": "representation theory of GL_n; Schur-Weyl duality; semistandard tableau combinatorics"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; confirmed title and authors Burgisser/Ikenmeyer/Panova; submitted 2016-04, revised 2018-09. Published JAMS 32:163-193 2019. No withdrawal notice.",
+      "difficulty": "hard",
+      "anti_gravitational_well_note": "Negative result about a specific obstruction strategy; substrate must not generalize to 'GCT is dead' — the multiplicity-obstruction route remains open and was strengthened by Ikenmeyer-Panova 2019 (arXiv:1901.04576).",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:1604.06431 (No occurrence obstructions in geometric complexity theory): Proves that the Mulmuley-Sohoni strengthened version of the permanent-vs-determinant program — separating orbit closures via occurrence obstructions in coordinate ring decompositions — cannot succeed. Multiplicities, not mere occurrences, are required.",
+      "expected_answer": "Substrate verdict: PROMOTE. Category: solid. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_003",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum complexity / interactive proofs",
+      "use_case": "real-paper",
+      "arxiv_id": "2001.04383",
+      "title": "MIP*=RE",
+      "authors": "Zhengfeng Ji, Anand Natarajan, Thomas Vidick, John Wright, Henry Yuen",
+      "year": 2020,
+      "claim_summary": "MIP*, the class of languages decidable by classical verifiers interacting with multiple entangled quantum provers, equals RE (recursively enumerable languages). Implies undecidability of the entangled value of nonlocal games and refutes Connes' embedding conjecture.",
+      "category": "solid",
+      "expected_substrate_verdict": "PROMOTE",
+      "claim_payload_for_substrate": {
+        "claim_type": "theorem",
+        "preconditions": [
+          "entangled provers; classical poly-time verifier; perfect completeness with constant soundness gap"
+        ],
+        "postconditions": [
+          "MIP* = RE",
+          "entangled-value problem is undecidable",
+          "Connes embedding problem has negative answer"
+        ],
+        "proof_method_class": "compression theorem for nonlocal games; introspection / question reduction; quantum low-degree test"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; confirmed title MIP*=RE, all 5 authors, submitted 2020-01-13, last revision 2022-11. No withdrawal notice on the page. Note: a separate dependency on Vidick 1302.1242 was discovered to be flawed and was repaired by arXiv:2009.12982 (Ji-Natarajan-Vidick-Wright-Yuen 'Quantum soundness of the classical low individual degree test') — the MIP*=RE result itself stands.",
+      "difficulty": "hard",
+      "anti_gravitational_well_note": "Substrate must not conflate the headline MIP*=RE result with the corrected technical chain. The result depends on a subsequently-corrected lemma (1302.1242 -> 2009.12982). Treat as PROMOTE only with full chain trace.",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:2001.04383 (MIP*=RE): MIP*, the class of languages decidable by classical verifiers interacting with multiple entangled quantum provers, equals RE (recursively enumerable languages). Implies undecidability of the entangled value of nonlocal games and refutes Connes' embedding conjecture.",
+      "expected_answer": "Substrate verdict: PROMOTE. Category: solid. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_004",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "circuit lower bounds / NEXP vs ACC",
+      "use_case": "real-paper",
+      "arxiv_id": "1111.1261",
+      "title": "A Casual Tour Around a Circuit Complexity Bound",
+      "authors": "Ryan Williams",
+      "year": 2011,
+      "claim_summary": "Expository / discovery-narrative companion to Williams' breakthrough that NEXP does not have nonuniform polynomial-size ACC^0 circuits, i.e. NEXP not in P/poly when restricted to ACC^0.",
+      "category": "solid",
+      "expected_substrate_verdict": "PROMOTE",
+      "claim_payload_for_substrate": {
+        "claim_type": "theorem",
+        "preconditions": [
+          "NTIME(2^poly(n)) lower bound goal; ACC^0 = AC^0 with mod_m gates for any constant m"
+        ],
+        "postconditions": [
+          "NEXP is not in nonuniform ACC^0 of polynomial size"
+        ],
+        "proof_method_class": "algorithmic method: faster-than-trivial circuit-SAT for ACC implies lower bound via diagonalization"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; confirmed title 'A Casual Tour Around a Circuit Complexity Bound', author Ryan Williams, submitted 2011-11-04. No withdrawal notice. Companion to formal proof TR10-194 / JACM 2014.",
+      "difficulty": "medium",
+      "anti_gravitational_well_note": "Easy to mis-state as 'NEXP is not in P/poly' (open). Substrate must preserve restriction to ACC^0 and the polynomial-size + nonuniform conditions.",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:1111.1261 (A Casual Tour Around a Circuit Complexity Bound): Expository / discovery-narrative companion to Williams' breakthrough that NEXP does not have nonuniform polynomial-size ACC^0 circuits, i.e. NEXP not in P/poly when restricted to ACC^0.",
+      "expected_answer": "Substrate verdict: PROMOTE. Category: solid. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_005",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum complexity / interactive proofs",
+      "use_case": "real-paper",
+      "arxiv_id": "1904.05870",
+      "title": "NEEXP in MIP*",
+      "authors": "Anand Natarajan, John Wright",
+      "year": 2019,
+      "claim_summary": "Shows nondeterministic doubly-exponential time NEEXP is contained in MIP* (entangled-prover multi-prover interactive proofs), an exponential improvement over the prior MIP-classical NEXP bound.",
+      "category": "solid",
+      "expected_substrate_verdict": "PROMOTE",
+      "claim_payload_for_substrate": {
+        "claim_type": "theorem",
+        "preconditions": [
+          "two entangled provers; classical poly-time verifier; constant soundness gap"
+        ],
+        "postconditions": [
+          "NEEXP subset MIP*"
+        ],
+        "proof_method_class": "introspection technique: classical PCP delegated to entangled provers; complementary measurement enforced by Heisenberg uncertainty"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; confirmed title and authors Natarajan/Wright, submitted 2019-04-11. No withdrawal. Published FOCS 2019.",
+      "difficulty": "hard",
+      "anti_gravitational_well_note": "This is a strict precursor to MIP*=RE. Substrate must not treat NEEXP-in-MIP* and MIP*=RE as redundant — the techniques differ and the bound is exponentially weaker.",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:1904.05870 (NEEXP in MIP*): Shows nondeterministic doubly-exponential time NEEXP is contained in MIP* (entangled-prover multi-prover interactive proofs), an exponential improvement over the prior MIP-classical NEXP bound.",
+      "expected_answer": "Substrate verdict: PROMOTE. Category: solid. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_006",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum complexity / oracle separations",
+      "use_case": "real-paper",
+      "arxiv_id": "0910.4698",
+      "title": "BQP and the Polynomial Hierarchy",
+      "authors": "Scott Aaronson",
+      "year": 2009,
+      "claim_summary": "Exhibits an oracle relation problem solvable in BQP but provably outside the polynomial hierarchy PH (relative to that oracle), and reduces an oracle decision-problem separation BQP vs PH to a Generalized Linial-Nisan conjecture about pseudorandomness for AC^0.",
+      "category": "solid",
+      "expected_substrate_verdict": "PROMOTE",
+      "claim_payload_for_substrate": {
+        "claim_type": "theorem",
+        "preconditions": [
+          "oracle access; relation-problem (search) regime"
+        ],
+        "postconditions": [
+          "exists oracle O s.t. BQP^O has a relation problem not in PH^O"
+        ],
+        "proof_method_class": "Fourier Checking distribution; constant-depth circuit Fourier-weight bounds"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; confirmed Aaronson, 2009 submission. No withdrawal. The decision-problem version was later closed unconditionally by Raz-Tal 2018; this paper supplies the relation-problem version and the conditional decision-problem program.",
+      "difficulty": "medium",
+      "anti_gravitational_well_note": "Substrate must distinguish (a) the relation-problem oracle separation (proved here), (b) the decision-problem oracle separation (proved by Raz-Tal 2018, conditional on this paper's GLN conjecture being unnecessary), and (c) the unrelativized question (open).",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:0910.4698 (BQP and the Polynomial Hierarchy): Exhibits an oracle relation problem solvable in BQP but provably outside the polynomial hierarchy PH (relative to that oracle), and reduces an oracle decision-problem separation BQP vs PH to a Generalized Linial-Nisan conjecture about pseudorandomness for AC^0.",
+      "expected_answer": "Substrate verdict: PROMOTE. Category: solid. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_007",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum complexity / shallow circuits",
+      "use_case": "real-paper",
+      "arxiv_id": "1704.00690",
+      "title": "Quantum advantage with shallow circuits",
+      "authors": "Sergey Bravyi, David Gosset, Robert Koenig",
+      "year": 2017,
+      "claim_summary": "Demonstrates an unconditional separation: a constant-depth quantum circuit on a 2D grid solves the 2D Hidden Linear Function problem with certainty, while any classical probabilistic circuit solving it requires logarithmic depth.",
+      "category": "solid",
+      "expected_substrate_verdict": "PROMOTE",
+      "claim_payload_for_substrate": {
+        "claim_type": "theorem",
+        "preconditions": [
+          "bounded fan-in classical/quantum circuits; geometrically local 2D layout"
+        ],
+        "postconditions": [
+          "shallow QC^0 strictly contains shallow PC^0 for sampling/search"
+        ],
+        "proof_method_class": "lightcone / locality arguments; nonlocal games (Mermin-Peres); graph state circuits"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; confirmed Bravyi/Gosset/Koenig, submitted 2017-04-03. Published Science 362:308-311 2018. No withdrawal.",
+      "difficulty": "medium",
+      "anti_gravitational_well_note": "Unconditional separation, but only against geometrically-local classical circuits in this version; substrate must not promote to 'shallow QC beats all shallow C unconditionally' without scope.",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:1704.00690 (Quantum advantage with shallow circuits): Demonstrates an unconditional separation: a constant-depth quantum circuit on a 2D grid solves the 2D Hidden Linear Function problem with certainty, while any classical probabilistic circuit solving it requires logarithmic depth.",
+      "expected_answer": "Substrate verdict: PROMOTE. Category: solid. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_008",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "communication complexity / extension complexity",
+      "use_case": "real-paper",
+      "arxiv_id": "1311.2369",
+      "title": "The matching polytope has exponential extension complexity",
+      "authors": "Thomas Rothvoss",
+      "year": 2013,
+      "claim_summary": "Proves the perfect matching polytope on the complete n-vertex graph has extension complexity 2^Omega(n). As a corollary, lifts the TSP polytope's extension complexity lower bound from 2^Omega(sqrt n) to 2^Omega(n).",
+      "category": "solid",
+      "expected_substrate_verdict": "PROMOTE",
+      "claim_payload_for_substrate": {
+        "claim_type": "bound",
+        "preconditions": [
+          "polytope = convex hull of perfect matchings of K_n"
+        ],
+        "postconditions": [
+          "any LP extended formulation requires 2^Omega(n) inequalities"
+        ],
+        "proof_method_class": "rectangle covering / nonneg rank lower bound via hyperplane separation; Razborov-style information-theoretic argument"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; confirmed Rothvoss 2013-11-11 submission. STOC 2014, JACM 2017. No withdrawal.",
+      "difficulty": "medium",
+      "anti_gravitational_well_note": "About the EXTENSION complexity (LP size), not about polynomial-time solvability — matching is in P. Substrate must not collapse 'exponential LP extension' to 'NP-hard'.",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:1311.2369 (The matching polytope has exponential extension complexity): Proves the perfect matching polytope on the complete n-vertex graph has extension complexity 2^Omega(n). As a corollary, lifts the TSP polytope's extension complexity lower bound from 2^Omega(sqrt n) to 2^Omega(n).",
+      "expected_answer": "Substrate verdict: PROMOTE. Category: solid. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_009",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "communication complexity / lifting",
+      "use_case": "real-paper",
+      "arxiv_id": "1703.07666",
+      "title": "Query-to-Communication Lifting for BPP",
+      "authors": "Mika Goos, Toniann Pitassi, Thomas Watson",
+      "year": 2017,
+      "claim_summary": "Establishes a randomized lifting theorem: for any boolean f, the randomized communication complexity of f composed with a small index gadget equals the randomized decision-tree complexity of f, up to log factors.",
+      "category": "solid",
+      "expected_substrate_verdict": "PROMOTE",
+      "claim_payload_for_substrate": {
+        "claim_type": "theorem",
+        "preconditions": [
+          "index gadget g of size O(n); composition f o g^n"
+        ],
+        "postconditions": [
+          "BPP^cc(f o g^n) = Theta(BPP^dt(f) * log n)"
+        ],
+        "proof_method_class": "thickness argument; structured rectangles; information complexity"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; confirmed Goos/Pitassi/Watson, submitted 2017-03-22. No withdrawal. FOCS 2017.",
+      "difficulty": "medium",
+      "anti_gravitational_well_note": "Lifting holds for BPP query-to-communication; substrate must not generalize to ALL gadgets — gadget choice matters (index gadget is essential here).",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:1703.07666 (Query-to-Communication Lifting for BPP): Establishes a randomized lifting theorem: for any boolean f, the randomized communication complexity of f composed with a small index gadget equals the randomized decision-tree complexity of f, up to log factors.",
+      "expected_answer": "Substrate verdict: PROMOTE. Category: solid. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_010",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum complexity / sampling",
+      "use_case": "real-paper",
+      "arxiv_id": "1803.04402",
+      "title": "Quantum Supremacy and the Complexity of Random Circuit Sampling",
+      "authors": "Adam Bouland, Bill Fefferman, Chinmay Nirkhe, Umesh Vazirani",
+      "year": 2018,
+      "claim_summary": "Provides complexity-theoretic foundations for Random Circuit Sampling (RCS) as a quantum-supremacy proposal. Shows computing output probabilities of a typical random quantum circuit is #P-hard on average (worst-case to average-case via Feynman path-integral polynomials), and proves anti-concentration.",
+      "category": "solid",
+      "expected_substrate_verdict": "PROMOTE",
+      "claim_payload_for_substrate": {
+        "claim_type": "theorem",
+        "preconditions": [
+          "Haar-random poly-size quantum circuit; classical sampler with multiplicative error"
+        ],
+        "postconditions": [
+          "polynomial-hierarchy collapse if classical efficient sampler exists; #P-hardness of average-case probability computation"
+        ],
+        "proof_method_class": "polynomial interpolation over random circuits; Stockmeyer counting reduction"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; confirmed Bouland/Fefferman/Nirkhe/Vazirani, submitted 2018-03-12. ITCS 2019. No withdrawal.",
+      "difficulty": "hard",
+      "anti_gravitational_well_note": "Hardness is for EXACT or multiplicative-close probabilities; the additive-error / TVD case relevant to actual experiments remains conditional. Substrate must not over-claim experimental supremacy from this theoretical foundation.",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:1803.04402 (Quantum Supremacy and the Complexity of Random Circuit Sampling): Provides complexity-theoretic foundations for Random Circuit Sampling (RCS) as a quantum-supremacy proposal. Shows computing output probabilities of a typical random quantum circuit is #P-hard on average (worst-case to average-case via Feynman path-integral polynomials), and proves anti-concentration.",
+      "expected_answer": "Substrate verdict: PROMOTE. Category: solid. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_011",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "P vs NP / circuit lower bounds",
+      "use_case": "real-paper",
+      "arxiv_id": "1708.03486",
+      "title": "On the Approximation Method and the P versus NP Problem",
+      "authors": "Norbert Blum",
+      "year": 2017,
+      "claim_summary": "Originally posted (v1, August 2017) as 'A Solution of the P versus NP Problem' claiming a super-polynomial nonmonotone-circuit lower bound for an NP-complete problem via the approximation method. Version 2 was withdrawn after community-identified flaws; replaced with a survey/perspective paper in v3 (June 2020).",
+      "category": "retracted",
+      "expected_substrate_verdict": "KILL",
+      "claim_payload_for_substrate": {
+        "claim_type": "theorem",
+        "preconditions": [
+          "extending Razborov's monotone approximation method to nonmonotone Boolean circuits over CLIQUE-like NP-complete predicate"
+        ],
+        "postconditions": [
+          "P != NP via super-polynomial nonmonotone lower bound"
+        ],
+        "proof_method_class": "approximation method (Razborov); nonmonotone extension via bounded errors"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; abs page comments confirm 'The paper is the replacement of the incorrect paper A Solution of the P versus NP Problem.' v2 was explicitly withdrawn August 2017 after Tardos-style counterexamples were pointed out; v3 (June 2020) is a survey, not a proof.",
+      "difficulty": "hard",
+      "anti_gravitational_well_note": "The classic 'natural-proofs barrier evaded by mistake' pattern: an approximator that works for monotone circuits cannot survive negation of inputs. Substrate must KILL the original P!=NP claim while preserving the v3 survey content as legitimately on-arxiv.",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:1708.03486 (On the Approximation Method and the P versus NP Problem): Originally posted (v1, August 2017) as 'A Solution of the P versus NP Problem' claiming a super-polynomial nonmonotone-circuit lower bound for an NP-complete problem via the approximation method. Version 2 was withdrawn after community-identified flaws; replaced with a survey/perspective paper in v3 (June 2020).",
+      "expected_answer": "Substrate verdict: KILL. Category: retracted. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_012",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum complexity / qPCP",
+      "use_case": "real-paper",
+      "arxiv_id": "1710.03062",
+      "title": "Two-player entangled games are NP-hard",
+      "authors": "Anand Natarajan, Thomas Vidick",
+      "year": 2017,
+      "claim_summary": "Originally claimed that approximating the entangled value of two-player one-round games with classical questions/answers is NP-hard, supplying a key step toward an entangled-games PCP for QMA. Withdrawn 2020-11-23 after an error in the energy-amplification step inherited from arXiv:1302.1242 was discovered.",
+      "category": "retracted",
+      "expected_substrate_verdict": "KILL",
+      "claim_payload_for_substrate": {
+        "claim_type": "theorem",
+        "preconditions": [
+          "two entangled provers; classical questions of log length, classical answers of constant length"
+        ],
+        "postconditions": [
+          "NP-hardness of constant-factor approximation of entangled value"
+        ],
+        "proof_method_class": "low-degree test against entangled provers; energy amplification (FLAWED)"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; explicit arxiv comment: 'The paper has been withdrawn due to an error in the proof of the main theorem, inherited from arXiv:1302.1242.' CCC 2018 conference version was formally retracted at DROPS (LIPIcs.CCC.2018.20).",
+      "difficulty": "hard",
+      "anti_gravitational_well_note": "The flaw is in a single energy-amplification lemma; the broader programme survives in modified form (see arXiv:2403.13084). Substrate must KILL this specific paper and not auto-kill all downstream entangled-games-PCP work.",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:1710.03062 (Two-player entangled games are NP-hard): Originally claimed that approximating the entangled value of two-player one-round games with classical questions/answers is NP-hard, supplying a key step toward an entangled-games PCP for QMA. Withdrawn 2020-11-23 after an error in the energy-amplification step inherited from arXiv:1302.1242 was discovered.",
+      "expected_answer": "Substrate verdict: KILL. Category: retracted. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_013",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum complexity / nonlocal games",
+      "use_case": "real-paper",
+      "arxiv_id": "1302.1242",
+      "title": "Three-player entangled XOR games are NP-hard to approximate",
+      "authors": "Thomas Vidick",
+      "year": 2013,
+      "claim_summary": "Claimed three-player entangled XOR games' value is NP-hard to approximate within a constant. Used a soundness analysis of a low individual-degree test against entangled provers. Withdrawn 2020-11-13 after a fatal error in the main theorem's proof was identified; corrected by arXiv:2009.12982.",
+      "category": "retracted",
+      "expected_substrate_verdict": "KILL",
+      "claim_payload_for_substrate": {
+        "claim_type": "theorem",
+        "preconditions": [
+          "three entangled provers; XOR games"
+        ],
+        "postconditions": [
+          "NP-hardness of constant-factor approximation of three-player entangled XOR-game value"
+        ],
+        "proof_method_class": "low individual-degree test soundness against entangled provers (FLAWED)"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; explicit comment: 'The paper has been withdrawn due to an error in the proof of the main theorem' with errata link to caltech. PDF is unavailable. The original SICOMP 2016 publication is affected; technical fix in Ji-Natarajan-Vidick-Wright-Yuen arXiv:2009.12982.",
+      "difficulty": "hard",
+      "anti_gravitational_well_note": "Ground-zero of a chain of dependent corrections (1710.03062, 1801.03821, MIP*=RE). Substrate KILL on this paper must propagate as audit-flags, NOT auto-KILL, on every dependent paper since several were independently repaired.",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:1302.1242 (Three-player entangled XOR games are NP-hard to approximate): Claimed three-player entangled XOR games' value is NP-hard to approximate within a constant. Used a soundness analysis of a low individual-degree test against entangled provers. Withdrawn 2020-11-13 after a fatal error in the main theorem's proof was identified; corrected by arXiv:2009.12982.",
+      "expected_answer": "Substrate verdict: KILL. Category: retracted. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_014",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "P vs NP",
+      "use_case": "real-paper",
+      "arxiv_id": "1011.2730",
+      "title": "A Solution to the P versus NP Problem",
+      "authors": "Frank Vega Delgado",
+      "year": 2010,
+      "claim_summary": "Claimed P != NP via a problem 'Certifying' purportedly in NP but not in P. Underwent 24 versions before being withdrawn by arXiv admin in November 2012 for pseudonymous-author policy violation; mathematical content was also widely viewed as flawed.",
+      "category": "retracted",
+      "expected_substrate_verdict": "KILL",
+      "claim_payload_for_substrate": {
+        "claim_type": "theorem",
+        "preconditions": [
+          "recursion-theoretic argument that languages outside RE cannot be in NP"
+        ],
+        "postconditions": [
+          "P != NP"
+        ],
+        "proof_method_class": "recursion / diagonalization (FLAWED)"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; admin comment: 'withdrawn by arXiv admin because of the use of a pseudonym, in violation of arXiv policy.' PDF not currently available; 24 versions submitted Nov 2010 - Nov 2012.",
+      "difficulty": "easy",
+      "anti_gravitational_well_note": "Withdrawal here is administrative (pseudonym policy), not strictly mathematical, but the result was never accepted. Substrate must distinguish admin-withdrawal from substantive-error withdrawal — both result in KILL but for different audit reasons.",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:1011.2730 (A Solution to the P versus NP Problem): Claimed P != NP via a problem 'Certifying' purportedly in NP but not in P. Underwent 24 versions before being withdrawn by arXiv admin in November 2012 for pseudonymous-author policy violation; mathematical content was also widely viewed as flawed.",
+      "expected_answer": "Substrate verdict: KILL. Category: retracted. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_015",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum complexity / NLTS",
+      "use_case": "real-paper",
+      "arxiv_id": "2210.02999",
+      "title": "NLTS Hamiltonians from classical LTCs",
+      "authors": "Zhiyang He, Chinmay Nirkhe",
+      "year": 2022,
+      "claim_summary": "Proposed an alternative construction of NLTS Hamiltonians from classical locally-testable codes (LTCs), avoiding the need for optimal quantum LDPC codes. Withdrawn 2022-10 after an uncorrectable error was identified; the headline NLTS theorem from arXiv:2206.13228 (Anshu-Breuckmann-Nirkhe) is unaffected.",
+      "category": "retracted",
+      "expected_substrate_verdict": "KILL",
+      "claim_payload_for_substrate": {
+        "claim_type": "construction",
+        "preconditions": [
+          "classical LTC family on expander graphs; perturbed tensor-network parent Hamiltonian"
+        ],
+        "postconditions": [
+          "alternative NLTS Hamiltonian family avoiding QLDPC machinery"
+        ],
+        "proof_method_class": "uncle-Hamiltonian / parent-Hamiltonian of perturbed tensor network (FLAWED)"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; explicit comment: 'This note is withdrawn due to an uncorrectable error.' Author page lists detailed explanation. v2 posted 2022-10-08, withdrawn shortly thereafter.",
+      "difficulty": "medium",
+      "anti_gravitational_well_note": "Withdrawal is local to this construction; substrate must KILL the alternative-route claim while keeping the canonical NLTS theorem (real_001 / 2206.13228) intact.",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:2210.02999 (NLTS Hamiltonians from classical LTCs): Proposed an alternative construction of NLTS Hamiltonians from classical locally-testable codes (LTCs), avoiding the need for optimal quantum LDPC codes. Withdrawn 2022-10 after an uncorrectable error was identified; the headline NLTS theorem from arXiv:2206.13228 (Anshu-Breuckmann-Nirkhe) is unaffected.",
+      "expected_answer": "Substrate verdict: KILL. Category: retracted. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_016",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "P vs NP",
+      "use_case": "real-paper",
+      "arxiv_id": "2005.00809",
+      "title": "On P Versus NP",
+      "authors": "Lev Gordeev",
+      "year": 2020,
+      "claim_summary": "Claims P != NP by extending the approximation method to De Morgan Normal (DMN) circuits, applied to CLIQUE. Disputed in arXiv:2104.07166 (Narvaez-Phillips), which identifies a flaw in Lemma 12 (failure to approximate negated inputs). Repeatedly revised (9+ versions, one withdrawn version v4); paper still on arxiv with author rebuttals.",
+      "category": "contested",
+      "expected_substrate_verdict": "INCONCLUSIVE",
+      "claim_payload_for_substrate": {
+        "claim_type": "theorem",
+        "preconditions": [
+          "DMN circuits; CLIQUE NP-completeness; extension of Razborov approximation method to negation"
+        ],
+        "postconditions": [
+          "P != NP via super-polynomial DMN circuit lower bound for CLIQUE"
+        ],
+        "proof_method_class": "approximation method extended to DMN; Isabelle proof-assistant verification claimed (DISPUTED)"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; confirmed Gordeev, 9 versions since 2020, including a withdrawn v4. Active dispute documented in companion arXiv:2104.07166.",
+      "difficulty": "hard",
+      "anti_gravitational_well_note": "The dispute is concrete (Lemma 12) and unresolved by author rebuttals as of audit date. Substrate must INCONCLUSIVE pending consensus — not silently PROMOTE because Isabelle verification is invoked (Isabelle does not check the underlying combinatorial claim).",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:2005.00809 (On P Versus NP): Claims P != NP by extending the approximation method to De Morgan Normal (DMN) circuits, applied to CLIQUE. Disputed in arXiv:2104.07166 (Narvaez-Phillips), which identifies a flaw in Lemma 12 (failure to approximate negated inputs). Repeatedly revised (9+ versions, one withdrawn version v4); paper still on arxiv with author rebuttals.",
+      "expected_answer": "Substrate verdict: INCONCLUSIVE. Category: contested. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_017",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "P vs NP",
+      "use_case": "real-paper",
+      "arxiv_id": "1911.00722",
+      "title": "A Solution of the P versus NP Problem based on specific property of clique function",
+      "authors": "Boyu Sima",
+      "year": 2019,
+      "claim_summary": "Claims P != NP by arguing that replacing NOT gates with constant 1 in clique-circuits preserves the monotone lower bound, yielding a super-polynomial nonmonotone lower bound. Critiqued in arXiv:2005.03256 (Pon) which gives an explicit counterexample to the central step.",
+      "category": "contested",
+      "expected_substrate_verdict": "KILL",
+      "claim_payload_for_substrate": {
+        "claim_type": "theorem",
+        "preconditions": [
+          "NOT-gate-removal preserves circuit complexity for clique"
+        ],
+        "postconditions": [
+          "super-polynomial nonmonotone clique-circuit lower bound; P != NP"
+        ],
+        "proof_method_class": "monotone-to-nonmonotone reduction via constant substitution (FLAWED)"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; not formally withdrawn; revised through 2020-06. Critique arXiv:2005.03256 (Pon) is on arxiv with explicit counterexample.",
+      "difficulty": "easy",
+      "anti_gravitational_well_note": "Critique is short (7pp) and constructs a direct counterexample, so the claim should be KILLED with high confidence despite paper not being formally withdrawn. INCONCLUSIVE would under-call this; KILL is justified by independent verifiable counterexample.",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:1911.00722 (A Solution of the P versus NP Problem based on specific property of clique function): Claims P != NP by arguing that replacing NOT gates with constant 1 in clique-circuits preserves the monotone lower bound, yielding a super-polynomial nonmonotone lower bound. Critiqued in arXiv:2005.03256 (Pon) which gives an explicit counterexample to the central step.",
+      "expected_answer": "Substrate verdict: KILL. Category: contested. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_018",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum complexity / experimental supremacy",
+      "use_case": "real-paper",
+      "arxiv_id": "2305.01064",
+      "title": "Questions and Concerns About Google's Quantum Supremacy Claim",
+      "authors": "Gil Kalai, Yosef Rinott, Tomer Shoham",
+      "year": 2023,
+      "claim_summary": "Raises three statistical concerns about the 2019 Google Sycamore quantum-supremacy claim (Nature 2019): data does not fit Google's noise model; an unexpected independence assumption in the fidelity-estimation formula yields surprisingly accurate predictions; calibration-process irregularities. Does not claim the experiment is wrong, but argues for unresolved issues.",
+      "category": "contested",
+      "expected_substrate_verdict": "INCONCLUSIVE",
+      "claim_payload_for_substrate": {
+        "claim_type": "bound",
+        "preconditions": [
+          "RCS experimental data from Google 2019 Sycamore experiment; XEB fidelity estimator"
+        ],
+        "postconditions": [
+          "statistical anomalies in published data inconsistent with stated noise model"
+        ],
+        "proof_method_class": "statistical hypothesis testing on experimental output distributions"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; confirmed Kalai/Rinott/Shoham 2023-05-01 submission. Active dispute with Google response (arXiv:2210.12753 by same authors actually — different scope). Community consensus unresolved as of 2026.",
+      "difficulty": "hard",
+      "anti_gravitational_well_note": "This is contested empirical-statistics critique, NOT a formal complexity-theory claim. Substrate must distinguish: the theoretical RCS hardness (1803.04402, solid) vs whether THIS experiment instantiates the hardness assumption. INCONCLUSIVE on the empirical question.",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:2305.01064 (Questions and Concerns About Google's Quantum Supremacy Claim): Raises three statistical concerns about the 2019 Google Sycamore quantum-supremacy claim (Nature 2019): data does not fit Google's noise model; an unexpected independence assumption in the fidelity-estimation formula yields surprisingly accurate predictions; calibration-process irregularities. Does not claim the experiment is wrong, but argues for unresolved issues.",
+      "expected_answer": "Substrate verdict: INCONCLUSIVE. Category: contested. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_019",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "P vs NP",
+      "use_case": "real-paper",
+      "arxiv_id": "1208.0954",
+      "title": "P = NP",
+      "authors": "Sergey V. Yakhontov",
+      "year": 2012,
+      "claim_summary": "Claims P = NP via construction of a polynomial-time deterministic multitape Turing machine reducing nondeterministic acceptance to linear programming, with stated time complexity O(t(n)^272). Submitted 2012-08, has 38 revision versions through 2017 with persistent self-noted error corrections; never accepted by community.",
+      "category": "contested",
+      "expected_substrate_verdict": "KILL",
+      "claim_payload_for_substrate": {
+        "claim_type": "algorithm",
+        "preconditions": [
+          "NTM-to-DTM simulation via LP reduction; bounded path-search depth"
+        ],
+        "postconditions": [
+          "P = NP"
+        ],
+        "proof_method_class": "NTM-acceptance-tree-to-LP reduction (FLAWED across 38 revisions)"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; not formally withdrawn but 38 versions over 5 years with repeated 'errors corrected' notes is a strong functional retraction signal. No community citation as a P=NP proof.",
+      "difficulty": "easy",
+      "anti_gravitational_well_note": "Long-tail self-correcting P=NP claim. Substrate KILL is supported by (a) extraordinary-claim norm + (b) absence of independent verification + (c) revision-thrash pattern. Distinct from formal withdrawal — categorize as 'effective retraction.'",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:1208.0954 (P = NP): Claims P = NP via construction of a polynomial-time deterministic multitape Turing machine reducing nondeterministic acceptance to linear programming, with stated time complexity O(t(n)^272). Submitted 2012-08, has 38 revision versions through 2017 with persistent self-noted error corrections; never accepted by community.",
+      "expected_answer": "Substrate verdict: KILL. Category: contested. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_020",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "P vs NP",
+      "use_case": "real-paper",
+      "arxiv_id": "2108.09269",
+      "title": "Separation of P and NP",
+      "authors": "Reiner Czerwinski",
+      "year": 2021,
+      "claim_summary": "Claims P != NP by arguing that, due to the halting problem and Rice's theorem, acceptance of a Turing machine on finite inputs requires brute-force testing once timeouts are imposed. Active on arxiv (revised 2022-01) with no formal withdrawal but no community endorsement; treats Rice's theorem in a way contested by readers.",
+      "category": "contested",
+      "expected_substrate_verdict": "KILL",
+      "claim_payload_for_substrate": {
+        "claim_type": "theorem",
+        "preconditions": [
+          "Turing machine with timeout; Rice's theorem applied to bounded-time language"
+        ],
+        "postconditions": [
+          "P != NP"
+        ],
+        "proof_method_class": "halting / Rice argument (DISPUTED — Rice's theorem does not apply to time-bounded TMs)"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; confirmed Czerwinski 2021-08 submission, v2 2022-01. Not withdrawn. Community-rejected on the grounds that Rice's theorem is misapplied to time-bounded computation.",
+      "difficulty": "easy",
+      "anti_gravitational_well_note": "Misapplication of Rice's theorem to bounded-time TMs is a classic crank pattern. Substrate KILL via type-error in the precondition (Rice applies only to total/unbounded computations).",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:2108.09269 (Separation of P and NP): Claims P != NP by arguing that, due to the halting problem and Rice's theorem, acceptance of a Turing machine on finite inputs requires brute-force testing once timeouts are imposed. Active on arxiv (revised 2022-01) with no formal withdrawal but no community endorsement; treats Rice's theorem in a way contested by readers.",
+      "expected_answer": "Substrate verdict: KILL. Category: contested. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_021",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum complexity / qPCP",
+      "use_case": "real-paper",
+      "arxiv_id": "2403.13084",
+      "title": "The status of the quantum PCP conjecture (games version)",
+      "authors": "Anand Natarajan, Chinmay Nirkhe",
+      "year": 2024,
+      "claim_summary": "Explicitly identifies and explains an error in the energy-amplification step of Natarajan-Vidick (arXiv:1710.03062), invalidating its claim of a quantum games PCP for a QMA-complete problem. As replacement progress, the paper presents a new quantum games PCP for an AM-complete problem with efficient provers.",
+      "category": "correction",
+      "expected_substrate_verdict": "ACCEPT-WITH-CAVEAT",
+      "claim_payload_for_substrate": {
+        "claim_type": "theorem",
+        "preconditions": [
+          "energy-amplification step of arXiv:1710.03062 / arXiv:1801.03821 fails; AM-complete problem; efficient quantum provers"
+        ],
+        "postconditions": [
+          "NV's QMA-completeness claim retracted; qPCP for AM (weaker) is established"
+        ],
+        "proof_method_class": "explicit counterexample to amplification lemma; new construction via weaker class AM"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; confirmed Natarajan/Nirkhe 2024-03-19. Explicitly cited as the canonical NV qPCP correction in the brief.",
+      "difficulty": "hard",
+      "anti_gravitational_well_note": "Canonical CORRECTION example. Substrate ACCEPT-WITH-CAVEAT must record (a) what is being corrected (1710.03062 QMA claim), (b) what is preserved (AM-version), (c) what remains open (full QMA qPCP).",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:2403.13084 (The status of the quantum PCP conjecture (games version)): Explicitly identifies and explains an error in the energy-amplification step of Natarajan-Vidick (arXiv:1710.03062), invalidating its claim of a quantum games PCP for a QMA-complete problem. As replacement progress, the paper presents a new quantum games PCP for an AM-complete problem with efficient provers.",
+      "expected_answer": "Substrate verdict: ACCEPT-WITH-CAVEAT. Category: correction. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_022",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum complexity / interactive proofs",
+      "use_case": "real-paper",
+      "arxiv_id": "2009.12982",
+      "title": "Quantum soundness of the classical low individual degree test",
+      "authors": "Zhengfeng Ji, Anand Natarajan, Thomas Vidick, John Wright, Henry Yuen",
+      "year": 2020,
+      "claim_summary": "Identifies that the soundness analysis of the low individual-degree test against entangled provers in arXiv:1302.1242 (Vidick 2013) is flawed, then proves a corrected two-player soundness statement sufficient to re-derive bounds that depended on it — including MIP* = RE.",
+      "category": "correction",
+      "expected_substrate_verdict": "ACCEPT-WITH-CAVEAT",
+      "claim_payload_for_substrate": {
+        "claim_type": "theorem",
+        "preconditions": [
+          "two-player low individual degree test; entangled provers"
+        ],
+        "postconditions": [
+          "soundness against entangled provers is restored in two-player setting; downstream results (MIP*=RE) are repaired"
+        ],
+        "proof_method_class": "self-improvement / Pauli-braiding analysis; rigidity of entangled strategies"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; confirmed JNVWY 2020-09-27 submission. Abstract explicitly states 'a mistake was recently discovered ... invalidating the main result of arXiv:1302.1242' and that the corrected result restores MIP* = RE.",
+      "difficulty": "hard",
+      "anti_gravitational_well_note": "Correction is to the TWO-player setting only; the three-player original (1302.1242) remains unrepaired in this paper. Substrate must record narrow scope of correction.",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:2009.12982 (Quantum soundness of the classical low individual degree test): Identifies that the soundness analysis of the low individual-degree test against entangled provers in arXiv:1302.1242 (Vidick 2013) is flawed, then proves a corrected two-player soundness statement sufficient to re-derive bounds that depended on it — including MIP* = RE.",
+      "expected_answer": "Substrate verdict: ACCEPT-WITH-CAVEAT. Category: correction. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_023",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "P vs NP / refutation",
+      "use_case": "real-paper",
+      "arxiv_id": "2104.07166",
+      "title": "On Lev Gordeev's \"On P Versus NP\"",
+      "authors": "David Narvaez, Patrick Phillips",
+      "year": 2021,
+      "claim_summary": "Identifies that Gordeev (arXiv:2005.00809) makes a critical mistake in Lemma 12: the proposed extension of the approximation method to DMN circuits only handles positive inputs, not negated ones. Argues any successful DMN extension must handle both polarities.",
+      "category": "correction",
+      "expected_substrate_verdict": "ACCEPT-WITH-CAVEAT",
+      "claim_payload_for_substrate": {
+        "claim_type": "theorem",
+        "preconditions": [
+          "arXiv:2005.00809 Lemma 12 hypothesis; DMN circuit class with negation gates"
+        ],
+        "postconditions": [
+          "Gordeev's Lemma 12 is invalid; consequently the P!=NP conclusion does not follow"
+        ],
+        "proof_method_class": "explicit construction showing approximation collapses under negation"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; confirmed Narvaez/Phillips 2021-04-14 submission. Critique is well-formed and identifies a specific lemma; not withdrawn.",
+      "difficulty": "medium",
+      "anti_gravitational_well_note": "This is a CORRECTION-of-a-claim, not a CORRECTION-of-an-accepted-result. Substrate ACCEPT-WITH-CAVEAT for the refutation itself — but note Gordeev disputes it; consensus of complexity community sides with Narvaez-Phillips.",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:2104.07166 (On Lev Gordeev's \"On P Versus NP\"): Identifies that Gordeev (arXiv:2005.00809) makes a critical mistake in Lemma 12: the proposed extension of the approximation method to DMN circuits only handles positive inputs, not negated ones. Argues any successful DMN extension must handle both polarities.",
+      "expected_answer": "Substrate verdict: ACCEPT-WITH-CAVEAT. Category: correction. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_024",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "P vs NP / refutation",
+      "use_case": "real-paper",
+      "arxiv_id": "2005.03256",
+      "title": "Critique of Boyu Sima's Proof that P != NP",
+      "authors": "Brendon Pon",
+      "year": 2020,
+      "claim_summary": "Refutes the central claim of Sima (arXiv:1911.00722) that replacing NOT gates with constant 1 preserves clique-circuit complexity. Provides an explicit small example demonstrating the failure of Sima's argument.",
+      "category": "correction",
+      "expected_substrate_verdict": "ACCEPT-WITH-CAVEAT",
+      "claim_payload_for_substrate": {
+        "claim_type": "theorem",
+        "preconditions": [
+          "Sima 1911.00722 NOT-gate substitution argument"
+        ],
+        "postconditions": [
+          "Sima's argument is invalid; explicit counterexample circuit demonstrates the failure"
+        ],
+        "proof_method_class": "explicit counterexample circuit"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; confirmed Pon 2020-05 submission, 7-page critique. Concrete counterexample is verifiable.",
+      "difficulty": "easy",
+      "anti_gravitational_well_note": "Strongest type of correction: explicit counterexample. Substrate should ACCEPT-WITH-CAVEAT and may use this as a calibration anchor for what 'clean refutation' looks like in the P vs NP slush-pile.",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:2005.03256 (Critique of Boyu Sima's Proof that P != NP): Refutes the central claim of Sima (arXiv:1911.00722) that replacing NOT gates with constant 1 preserves clique-circuit complexity. Provides an explicit small example demonstrating the failure of Sima's argument.",
+      "expected_answer": "Substrate verdict: ACCEPT-WITH-CAVEAT. Category: correction. Reasoning lives in claim_payload_for_substrate."
+    },
+    {
+      "id": "harmonia_e_real_025",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "graph isomorphism / algorithm analysis",
+      "use_case": "real-paper",
+      "arxiv_id": "1512.03547",
+      "title": "Graph Isomorphism in Quasipolynomial Time",
+      "authors": "Laszlo Babai",
+      "year": 2015,
+      "claim_summary": "Originally claimed graph isomorphism is solvable in quasipolynomial time exp((log n)^O(1)), an exponential improvement on the prior best 2^O(sqrt(n log n)) bound. After Helfgott's January 2017 flaw discovery the bound was retracted to subexponential, then restored to quasipolynomial in v2 (January 2017 fix). Result currently stands as quasipolynomial.",
+      "category": "correction",
+      "expected_substrate_verdict": "ACCEPT-WITH-CAVEAT",
+      "claim_payload_for_substrate": {
+        "claim_type": "algorithm",
+        "preconditions": [
+          "graph G on n vertices; group-theoretic Luks framework"
+        ],
+        "postconditions": [
+          "GI in time exp((log n)^O(1))"
+        ],
+        "proof_method_class": "group-theoretic / local-certificates / 'split-or-Johnson' canonical refinement"
+      },
+      "verification_status": "verified-via-arxiv-fetch",
+      "verification_notes": "Fetched arxiv abs; confirmed Babai 2015-12-11 submission, revised 2016-01 (and again after Helfgott in early 2017). Public retraction-then-restoration history is well-documented (Quanta Magazine 2017-01).",
+      "difficulty": "hard",
+      "anti_gravitational_well_note": "Canonical 'fix-in-place' correction: claim was briefly retracted then re-established. Substrate ACCEPT-WITH-CAVEAT must record both states and trace the public retraction-then-restoration timeline. Failure to record the brief retraction obscures the audit trail.",
+      "probe": "Evaluate the substrate-gauntlet verdict for the claim from arxiv:1512.03547 (Graph Isomorphism in Quasipolynomial Time): Originally claimed graph isomorphism is solvable in quasipolynomial time exp((log n)^O(1)), an exponential improvement on the prior best 2^O(sqrt(n log n)) bound. After Helfgott's January 2017 flaw discovery the bound was retracted to subexponential, then restored to quasipolynomial in v2 (January 2017 fix). Result currently stands as quasipolynomial.",
+      "expected_answer": "Substrate verdict: ACCEPT-WITH-CAVEAT. Category: correction. Reasoning lives in claim_payload_for_substrate."
+    }
+  ],
+  "summary": {
+    "calibration": {
+      "count": 20,
+      "by_difficulty": {
+        "hard": 6,
+        "easy": 7,
+        "medium": 7
+      }
+    },
+    "adversarial": {
+      "count": 15,
+      "by_trap": {
+        "fabricated-citation": 3,
+        "gravitational-well-bait": 2,
+        "wrong-attribution": 3,
+        "contested-claim-bait": 2,
+        "barrier-bypass-bait": 5
+      },
+      "by_difficulty": {
+        "hard": 5,
+        "easy": 5,
+        "medium": 5
+      }
+    },
+    "bridge": {
+      "count": 15,
+      "by_class": {
+        "case-2-conjectural-bridge": 2,
+        "case-3-explicit-formula": 5,
+        "case-5-shared-invariant": 3,
+        "case-1-functor": 5
+      },
+      "by_difficulty": {
+        "hard": 5,
+        "easy": 4,
+        "medium": 6
+      }
+    },
+    "real_paper": {
+      "count": 25,
+      "by_category": {
+        "correction": 5,
+        "retracted": 5,
+        "solid": 10,
+        "contested": 5
+      },
+      "by_verdict": {
+        "PROMOTE": 10,
+        "KILL": 8,
+        "INCONCLUSIVE": 2,
+        "ACCEPT-WITH-CAVEAT": 5
+      }
+    },
+    "total_probes": 75,
+    "schema_issues": 0
+  }
+}
