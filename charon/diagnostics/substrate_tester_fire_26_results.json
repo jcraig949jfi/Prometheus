@@ -1,0 +1,67 @@
+{
+  "fire_id": "fire_26_2026_05_07",
+  "lanes": [
+    "11_batch_sweep",
+    "13_canonicalization_fuzz"
+  ],
+  "lane_11": {
+    "lane": "11_batch_sweep",
+    "n_probes": 30,
+    "n_submitted": 30,
+    "n_errors": 0,
+    "wall_clock_seconds": 0.0010006427764892578,
+    "throughput_per_sec": 29980.72909220872,
+    "domain_counts": {
+      "combinatorics": 5,
+      "extremal-graph-theory": 1,
+      "dynamical-systems": 6,
+      "analysis_and_PDEs": 6,
+      "logic": 6,
+      "computational complexity": 6
+    },
+    "n_tests": 2,
+    "verdict_counts": {
+      "PASS": 2
+    },
+    "tests": [
+      {
+        "id": "T1_batch_sweep_clean_ingest",
+        "expected": "30 probes ingested cleanly",
+        "actual": "30/30 submitted, 0 errors, throughput=29981/s",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T2_domain_coverage",
+        "expected": "\u22653 domains",
+        "actual": "6 domains: {'combinatorics': 5, 'extremal-graph-theory': 1, 'dynamical-systems': 6, 'analysis_and_PDEs': 6, 'logic': 6, 'computational complexity': 6}",
+        "verdict": "PASS",
+        "severity": null
+      }
+    ]
+  },
+  "lane_13": {
+    "lane": "13_canonicalization_fuzz",
+    "status": "LIVE",
+    "hypothesis_seed": "20260520",
+    "wall_clock_seconds": 54.544456005096436,
+    "rc": 0,
+    "n_passed": 13,
+    "n_failed": 0,
+    "summary_line": "13 passed in 47.28s",
+    "n_tests": 1,
+    "verdict_counts": {
+      "PASS": 1
+    },
+    "tests": [
+      {
+        "id": "T1_fuzzer_clean_run",
+        "expected": "all property tests pass",
+        "actual": "13 passed / 0 failed in 54.5s; 13 passed in 47.28s",
+        "verdict": "PASS",
+        "severity": null,
+        "note": "hypothesis seed=20260520; cumulative coverage: 5+ independent seeds, 0 failures total"
+      }
+    ]
+  }
+}
