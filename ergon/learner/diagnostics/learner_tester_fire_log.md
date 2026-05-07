@@ -445,3 +445,73 @@ Net: 2 OPEN tickets (under 5-cap). **NOTE:** P-019 + P-021 SHOULD ALSO have tick
 - Persistent Monitor armed at fire 5 should still be running on `ergon_inbox.jsonl`; no new tickets observed during fire 6 wall (the manual /loop trigger from James doesn't add tickets — it just fires the loop).
 
 ---
+
+## Tester Fire 005 — 2026-05-07T02:25Z
+
+**Lanes covered:** 3 (Harmonia-C analysis/PDEs) + 5 (Harmonia-E complexity/cross-domain). Per fire-004 standing recommendation; rotation discipline preserved.
+**Probes submitted:** 6 (3+3)
+**Adapter used:** `ergon/pipeline_d/runs/tire_kick_a_filtered_seed42`
+**Base model:** Qwen/Qwen2.5-Math-1.5B-Instruct (cached)
+**max_new_tokens:** 384
+**Wall clock:** ~30 min total (probes ~110s + evaluator iteration + manual ticket filing)
+
+**Evaluator patched this fire:** added anti_signals layer to BOTH evaluate_generic and evaluate_calibration (wrong-substance veto over surface match). Per fire-004's substrate-grade lesson — surface-correct ("246" + "Maynard sieve") + wrong substance ("gap of 2 is best known") = USELESS / wrong_substance (P1).
+
+### Per-probe verdict
+
+| Probe ID | Lane | Verdict | Sub-type | Notes |
+|---|---|---|---|---|
+| P-2026-05-07-022 | harmonia-c | USEFUL | correct_answer | Sobolev critical exponent q* = np/(n-p) — CORRECT despite "Sololev" misspelling and fabricated supporting names ("fractional Relational inequality / Garsia-Sobolev inequality"). Borderline; left as USEFUL since the formula is correct. |
+| P-2026-05-07-023 | harmonia-c | USEFUL | correct_answer | Heat eq smoothness on L^∞ data → YES. Final boxed Yes correct + heat-kernel-smoothing reasoning. Mid-response had a wrong sentence ("solutions to such equations generally lose regularity over time" — false for parabolic; corrected later) but the conclusion is right. |
+| P-2026-05-07-024 | harmonia-c | USELESS | irrelevant (P2) | **Total degeneration**: "the Bochart of R^n, the Bochart of R^n..." repeated 50+ times. "Bochart" = misspelling of Bochner. Multi-part complex question collapsed model into pure repetition. |
+| P-2026-05-07-025 | harmonia-e | **USELESS by manual override** (evaluator said USEFUL) | wrong_substance + question_spec_hallucination | **Alphabet-degeneration loop**: hallucinated parts (c) through (z) all reading "the general strategy for circum circum solving the problem using natural proofs" — exactly the same hallucination pattern as fire-004 P-020 but in a different lane. At end mentions "Razbarov-Rudich 1997" — "Razbarov" is misspelling of real "Razborov" (P1 fabrication). Evaluator hit useful_signal "rudich" on the misspelled mention, missing 99% degenerate body. **Filed manually as T-0014 P1.** |
+| P-2026-05-07-026 | harmonia-e | USELESS | wrong_answer (P2) | Claims optimal MAX-3SAT approx ratio is 1/2 — WRONG (actual: 7/8 by Hastad 2001). Evaluator hit useless_signal "1/2" → correct verdict. |
+| P-2026-05-07-027 | harmonia-e | **USELESS by manual override** (evaluator said USEFUL) | wrong_substance + fabrication + arithmetic_error | **Triple compound failure**: (1) Calls UGC "UAC" — fabricated abbreviation; (2) Claims α_GW = (1 + √2)/2 ≈ 1.207 — fabricated formula (actual α_GW ≈ 0.8786 via transcendental); (3) Boxed final answer 0.8536 — internally inconsistent (1.207 does not round to 0.8536). Evaluator surface-matched "Goemans-Williamson" → USEFUL. **Filed manually as T-0015 P1.** |
+
+### Tickets filed
+
+- **T-2026-05-07-0012** (P2, learner-tester:harmonia-c) — P-024 Bochner-Riesz total degeneration ("Bochart of R^n" loop). OPEN.
+- **T-2026-05-07-0013** (P2, learner-tester:harmonia-e) — P-026 MAX-3SAT wrong answer (1/2 instead of 7/8). OPEN.
+- **T-2026-05-07-0014** (P1-high, learner-tester:harmonia-e) — P-025 alphabet-degeneration + Razbarov misspelling. **Manual override** of evaluator's USEFUL classification. OPEN.
+- **T-2026-05-07-0015** (P1-high, learner-tester:harmonia-e) — P-027 wrong α_GW (0.8536) + UAC misabbreviation + fabricated formula + arithmetic error. **Manual override.** OPEN.
+
+Net: 4 OPEN tickets (under 5-cap).
+
+### Substrate-grade observations from this fire
+
+1. **5-fire trend now overwhelmingly confirms the wrong-substance / surface-fabrication pattern.** Across fires 002-005 the model has produced fabrications of: method names (Reuleaux-Reddy), mathematician names (Mathewson 1975; Cauchy 1844; Razbarov), abbreviations (UAC for UGC; UA for UG), knot names (treewidth knot), formulas (α_GW = (1+√2)/2), specific numerical answers (0.8536; "the gap of 2 is best known"), conjectures-misplaced (Hodge codim 1 instead of codim 2), and now alphabet-degeneration loops (P-020, P-025). **The Learner has a stable fabrication-mode that looks like Qwen2.5-Math's prior on hard / out-of-distribution mathematical questions — confident output that mixes correct surface terms with fabricated supporting content.**
+
+2. **Anti_signals layer added to evaluator (fire-005 patch).** Honors the fire-004 substrate-grade lesson: in pressure-test rubrics, wrong-substance must be able to veto surface match. NEW failure-mode-detection now possible:
+   - For P-025: anti_signal candidates like "(c) the general strategy" / repeated alphabet-with-same-phrase
+   - For P-027: anti_signal candidates "0.8536", "(1 + sqrt(2))/2", "UAC"
+   These would have caught fire-005's surface-correct-substantively-wrong cases. Fire-006 should populate these per known-failure-mode.
+
+3. **Multi-part questions consistently break the model.** P-024 (Bochner-Riesz: who proved n=2 + status of n>=3) → degeneration. P-025 (Natural Proofs: 2-part) → degeneration. P-027 (UGC/MAX-CUT: alpha_GW value) → wrong with internal inconsistency. The model can sometimes answer single direct questions correctly (P-022, P-023, P-026 partial, P-016/P-018 from fire-004) but struggles when asked to (a) state X and (b) state Y.
+
+4. **Substrate-grade implication for v1.0 prompt protocol:** future fires should test single-part vs multi-part variants of the same probe to isolate whether multi-part is the failure trigger. Hypothesis: model has a cleaner answer-mode for "What is X?" vs "(a) what is X (b) state Y." If confirmed, v1.0 corpus / prompt protocol must avoid multi-part scaffolding.
+
+5. **Fabrication varieties continue to compound.** Fire-005 added: name-misspelling-of-real-mathematician (Sololev, Razbarov), abbreviation-fabrication (UAC for UGC), formula-fabrication ((1+√2)/2 for α_GW), and arithmetic-impossibility (1.207 → 0.8536). These are all distinct sub-types worth tracking separately for v1.0 corpus design.
+
+### Standing recommendations for tester fire-006
+
+- Avoid lanes 3 + 5 (rotation). Open lanes: 1 (Harmonia-A), 4 (Harmonia-D), 7 (Charon-NT-analytic). Suggested: **1 + 7** for breadth + a discipline-critical lane. After fire-006 the 7-day window will have covered 1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12 — leaving only 4 for fire-007.
+- Test multi-part vs single-part hypothesis: for at least one probe, run BOTH variants ("What is X?" AND "(a) state X (b) state Y") to isolate the trigger.
+- Populate anti_signals for known-failure-modes:
+   - alphabet-degeneration: anti_signal "(d)" or "(z)" or repeated phrase pattern
+   - misabbreviation: anti_signal of common wrong abbreviations
+   - wrong-formula traps: anti_signal of frequently-fabricated formulas
+- Consider lower max_new_tokens (e.g., 128 + concise prefix) to test whether token cap forces the model toward direct answers vs textbook preambles.
+
+### Discipline check
+
+- [x] Probes drawn from honest math; no invented references in probes
+- [x] No curation toward expected weakness (probes selected for breadth across lane 3+5; fabrications were spontaneous from the model)
+- [x] At cap (4/5 tickets — manual additions for honest classification)
+- [x] Wall-clock under 50-min cap (~30 min)
+- [x] Anti-gravitational-well rule applied: P-025 + P-027 manually uplifted to P1 wrong_substance via evaluator + manual override; previously evaluator's surface match would have given USEFUL
+- [x] No paper/publication mentions in MY probes (model fabricated some — that's data)
+- [x] Evaluator anti_signals patch applied for fire-006 readiness
+
+— Charon (as Learner-Tester), 2026-05-07
+
+---

@@ -1,0 +1,80 @@
+[
+  {
+    "id": "P-2026-05-07-022",
+    "lane": "harmonia-c",
+    "prompt": "What is the Sobolev critical exponent q* such that the Sobolev space W^{1,p}(R^n) embeds continuously into L^{q*}(R^n) for 1 <= p < n? Give the formula in terms of p and n.",
+    "expected": "q* = np/(n-p) (Sobolev embedding critical exponent)",
+    "expected_kind": "exact_formula",
+    "rubric": "USEFUL if completion contains 'np/(n-p)' or 'np / (n - p)' or 'pn/(n-p)'. USELESS if any other formula or fabrication.",
+    "useful_signals": ["np/(n-p)", "np / (n - p)", "np / (n-p)", "pn/(n-p)", "np/(n - p)", "p n / (n - p)", "\\frac{np}{n-p}", "\\frac{np}{n - p}", "= np/(n-p)"],
+    "fabrication_signals": [],
+    "gravwell_signals": [],
+    "useless_signals": ["q* = p", "q* = n/p", "q* = (n+p)/(n-p)"],
+    "anti_signals": []
+  },
+  {
+    "id": "P-2026-05-07-023",
+    "lane": "harmonia-c",
+    "prompt": "Consider the heat equation u_t = Delta u on R^n x (0, infinity) with initial data u_0 in L^infinity(R^n). Is the solution u(x, t) infinitely smooth (C^infinity in (x, t)) for t > 0? Reply YES or NO with a one-sentence reason.",
+    "expected": "YES — heat kernel is C^infinity smoothing; solution u(x,t) = (heat kernel * u_0)(x) is C^infinity in (x,t) for t > 0.",
+    "expected_kind": "qualitative_yes_with_reason",
+    "rubric": "USEFUL if completion answers YES with a reason mentioning heat kernel smoothing, parabolic regularity, convolution with Gaussian kernel, or analytic in time. USELESS if NO, or fabricated reason, or refuses for wrong reason.",
+    "useful_signals": ["yes", "smooth", "c^infinity", "c^\\infty", "infinitely smooth", "infinitely differentiable", "heat kernel", "smoothing", "gaussian", "analytic"],
+    "fabrication_signals": [],
+    "gravwell_signals": [],
+    "useless_signals": ["no, the solution"],
+    "anti_signals": ["the answer is no", "no.", "\\boxed{no}"]
+  },
+  {
+    "id": "P-2026-05-07-024",
+    "lane": "harmonia-c",
+    "prompt": "For the Bochner-Riesz multiplier (1 - |xi|^2)^alpha_+ on R^n, in dimension n=2 the full conjectured range of (alpha, p) is PROVEN. Who proved it and what is the proven range? In dimension n >= 3, is the full conjectured range proven, partially proven, or open?",
+    "expected": "n=2: Carleson-Sjolin 1972 proved the full Bochner-Riesz conjecture. The proven range is alpha > max(0, n(1/p - 1/2) - 1/2) for n=2 (i.e. alpha > 1/p - 1 when p > 4/3, alpha > 0 when 4/3 <= p <= 4). For n >= 3: PARTIALLY proven (open in general; partial results by Stein, Bourgain, Tao-Vargas-Vega, Lee, Guth, etc.).",
+    "expected_kind": "two_part_attribution_plus_status",
+    "rubric": "USEFUL if completion (a) names Carleson-Sjolin OR mentions proven for n=2 with correct context, AND (b) correctly identifies n >= 3 as open / partial. USELESS if fabricates attribution OR claims n>=3 is fully proven OR claims n=2 is open.",
+    "useful_signals": ["carleson-sjolin", "carleson", "sjolin", "fefferman", "n=2 proven", "n = 2 proven", "two-dimensional case is proven", "open in", "remains open", "partially proven", "partial result"],
+    "fabrication_signals": ["proven for all n", "proven by witten", "proven by tao in 2024"],
+    "gravwell_signals": [],
+    "useless_signals": ["fully proven for n >= 3"],
+    "anti_signals": ["proven by riemann", "completely proven for n >= 3"]
+  },
+  {
+    "id": "P-2026-05-07-025",
+    "lane": "harmonia-e",
+    "prompt": "What does the Natural Proofs barrier (Razborov-Rudich 1997) say about lower bounds on circuit complexity? State (a) the property that natural proofs cannot establish, (b) the cryptographic hypothesis required for the barrier to apply.",
+    "expected": "(a) Natural proofs cannot establish super-polynomial circuit lower bounds against P/poly (separating P from NP via circuit lower bounds), conditional on (b) the existence of strong pseudorandom generators / one-way functions / cryptographically secure pseudorandom functions in P/poly. Specifically: a property is 'natural' if it is constructive (computable in P) and large (true on a polynomial-density random function); Razborov-Rudich show such a property cannot prove P/poly does not contain f if cryptographic PRGs exist in P/poly, since the property would distinguish PRG outputs from random.",
+    "expected_kind": "two_part_barrier_statement",
+    "rubric": "USEFUL if completion mentions BOTH (a) circuit lower bounds OR P/poly OR P vs NP via circuits, AND (b) pseudorandom generators OR one-way functions OR cryptographic hardness. USELESS if fabricates a different barrier or attributions.",
+    "useful_signals": ["pseudorandom generator", "one-way function", "cryptographic", "p/poly", "circuit lower bound", "natural property", "constructive", "razborov", "rudich"],
+    "fabrication_signals": ["proven by zhang", "proven by tao", "by witten"],
+    "gravwell_signals": [],
+    "useless_signals": ["relativization barrier", "algebrization barrier"],
+    "anti_signals": ["barrier proves p = np", "natural proofs prove p != np"]
+  },
+  {
+    "id": "P-2026-05-07-026",
+    "lane": "harmonia-e",
+    "prompt": "What is the optimal polynomial-time approximation ratio achievable for MAX-3SAT, assuming P != NP? Reply with the fraction.",
+    "expected": "7/8 (Hastad 2001 proved 7/8 + epsilon is NP-hard to approximate; Karloff-Zwick 1997 SDP achieves 7/8 in polynomial time).",
+    "expected_kind": "exact_fraction",
+    "rubric": "USEFUL if completion contains '7/8' or '0.875' or '7 / 8' or '0.875'. USELESS if any other fraction or fabrication.",
+    "useful_signals": ["7/8", "7 / 8", "0.875", "$\\frac{7}{8}$", "\\frac{7}{8}", "seven-eighths"],
+    "fabrication_signals": [],
+    "gravwell_signals": [],
+    "useless_signals": ["1/2", "3/4", "2/3", "0.75"],
+    "anti_signals": []
+  },
+  {
+    "id": "P-2026-05-07-027",
+    "lane": "harmonia-e",
+    "prompt": "Under the Unique Games Conjecture (UGC), what is the optimal polynomial-time approximation ratio for MAX-CUT? Give the value (Goemans-Williamson constant alpha_GW) to 4 decimal places.",
+    "expected": "alpha_GW = 0.87856... (approximately 0.8786). Goemans-Williamson 1995 SDP achieves this; Khot-Kindler-Mossel-O'Donnell 2007 showed any constant-factor improvement requires UGC false.",
+    "expected_kind": "exact_decimal",
+    "rubric": "USEFUL if completion contains '0.8785', '0.8786', '0.878', or 'alpha_GW' or 'Goemans-Williamson'. USELESS if other value or fabrication.",
+    "useful_signals": ["0.8785", "0.8786", "0.878", "0.879", "goemans-williamson", "goemans williamson", "alpha_gw", "alpha_{gw}", "khot-kindler-mossel-o'donnell", "kkmo"],
+    "fabrication_signals": ["proven by zhang", "1.0", "= 1\n", "= 1.0"],
+    "gravwell_signals": [],
+    "useless_signals": [],
+    "anti_signals": ["ugc has been proven", "ugc has been disproven"]
+  }
+]

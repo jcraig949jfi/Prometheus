@@ -1,0 +1,62 @@
+{
+  "fire_id": "fire-005-2026-05-07",
+  "computed_at": "2026-05-07T06:27:26+00:00",
+  "n_probes": 6,
+  "n_responses": 6,
+  "evaluations": [
+    {
+      "probe_id": "P-2026-05-07-022",
+      "lane": "harmonia-c",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal '\\frac{np}{n-p}'",
+      "completion_preview": " The Sololev critical exponent \\( q^* \\) such that the Sololev space \\( W^{1,p}(\\mathbb{R}^n) \\) embeds continuously into \\( L^{q^*}(\\mathbb{R}^n) \\) for \\( 1 \\leq p < n \\) is given by the formula:\n\n\\"
+    },
+    {
+      "probe_id": "P-2026-05-07-023",
+      "lane": "harmonia-c",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal 'yes'",
+      "completion_preview": "}}} To determine whether the solution \\( u(x, t) \\) to the heat equation \\( u_t = \\Delta u \\) on \\( \\mathbb{R}^n \\times (0, \\infty) \\) with initial data \\( u_0 \\in L^\\infty(\\mathbb{R}^n) \\) is infinit"
+    },
+    {
+      "probe_id": "P-2026-05-07-024",
+      "lane": "harmonia-c",
+      "verdict": "USELESS",
+      "sub_type": "irrelevant",
+      "severity": "no useful signal matched; completion did not address probe correctly",
+      "completion_preview": " The Bochart of R^n, the Bochart of R^n, the Bochart of R^n, the Bochart of R^n, the Bochart of R^n, the Bochart of R^n, the Bochart of R^n, the Bochart of R^n, the Bochart of R^n, the Bochart of R^n,"
+    },
+    {
+      "probe_id": "P-2026-05-07-025",
+      "lane": "harmonia-e",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal 'rudich'",
+      "completion_preview": " (c) the general strategy for circum circum solving the problem using natural proofs. (d) the general strategy for circum solving the problem using natural proofs. (e) the general strategy for circum "
+    },
+    {
+      "probe_id": "P-2026-05-07-026",
+      "lane": "harmonia-e",
+      "verdict": "USELESS",
+      "sub_type": "wrong_answer",
+      "severity": "completion contains useless signal '1/2'",
+      "completion_preview": " The problem of finding the optimal polynomial-time approximation ratio for the maximum satisfiability problem (max-3 satisfied) under the assumption that P != NP is a well-known problem in theoretica"
+    },
+    {
+      "probe_id": "P-2026-05-07-027",
+      "lane": "harmonia-e",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal 'goemans-williamson'",
+      "completion_preview": " The Unique Games Conjecture (UAC) is a computational complexity hypothesis that has been used to derive approximation algorithms for various problems. One such problem is the maximum cut problem (max"
+    }
+  ],
+  "tickets_filed": [
+    "T-2026-05-07-0012",
+    "T-2026-05-07-0013"
+  ],
+  "useless_count": 2,
+  "useful_count": 4
+}

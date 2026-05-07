@@ -91,11 +91,23 @@ def evaluate_calibration(probe: Dict[str, Any], response: Dict[str, Any]) -> Tup
     # Useful_signals (per-probe overrides; for partial-match accommodation)
     for s in probe.get("useful_signals", []):
         if s.lower() in completion_lower:
+            # Anti-signals layer (fire-004 substrate-grade lesson)
+            for a in probe.get("anti_signals", []):
+                if a.lower() in completion_lower:
+                    return ("USELESS", "wrong_substance",
+                            f"calibration: surface-correct '{s}' BUT wrong-substance anti-signal "
+                            f"'{a}' fires (P1; substance veto over surface match)")
             return ("USEFUL", "correct_answer",
                     f"calibration: completion contains useful signal '{s}'")
 
     # Substring match on full expected (legacy behavior; lower priority than useful_signals)
     if expected in completion_lower:
+        # Anti-signals layer
+        for a in probe.get("anti_signals", []):
+            if a.lower() in completion_lower:
+                return ("USELESS", "wrong_substance",
+                        f"calibration: full-expected match BUT wrong-substance anti-signal "
+                        f"'{a}' fires (P1)")
         return ("USEFUL", "correct_answer",
                 f"completion contains expected '{probe['expected']}'")
 
@@ -274,10 +286,23 @@ def evaluate_generic(probe: Dict[str, Any], response: Dict[str, Any]) -> Tuple[s
     # Useful signals (negation-correct first, if provided)
     for s in probe.get("negation_correct_signals", []):
         if s.lower() in completion_lower:
+            # Anti-signals can still veto (wrong-substance even with negation-correct surface)
+            for a in probe.get("anti_signals", []):
+                if a.lower() in completion_lower:
+                    return ("USELESS", "wrong_substance",
+                            f"surface-correct (negation-correct '{s}') BUT wrong-substance "
+                            f"anti-signal '{a}' fires (P1; substance veto over surface match)")
             return ("USEFUL", "correct_nuanced",
                     f"completion contains negation-correct signal '{s}'")
     for s in probe.get("useful_signals", []):
         if s.lower() in completion_lower:
+            # Anti-signals layer (fire-004 substrate-grade lesson):
+            # surface match + wrong substance = USELESS / wrong_substance (P1).
+            for a in probe.get("anti_signals", []):
+                if a.lower() in completion_lower:
+                    return ("USELESS", "wrong_substance",
+                            f"surface-correct ('{s}') BUT wrong-substance anti-signal "
+                            f"'{a}' also fires (P1; substance veto over surface match)")
             return ("USEFUL", "correct_answer",
                     f"completion contains useful signal '{s}'")
 
