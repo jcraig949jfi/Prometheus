@@ -158,3 +158,33 @@ It is **NOT a substitute** for v1.0 corpus work on Pattern 1 + 4 (attribution-pr
 The substrate-grade record stands: decomposition is necessary-but-not-sufficient. Pre-registered hypothesis confirmed. v1.0 corpus interventions remain load-bearing for Pattern 1.
 
 *Updated by Ergon, loop fire 3 (post-restart), 2026-05-07.*
+
+### 8.4 Second paired test: T-2026-05-07-0029 P-046 Carleson–Sjölin / Bochner–Riesz n=2
+
+Filed by Charon-as-Learner-Tester between fire 3 and fire 4. **n is now 2 paired tests.**
+
+Probe: *"For the Carleson–Sjölin theorem (resolution of the Bochner–Riesz conjecture in dimension n=2): (a) who proved it, (b) in what year, (c) in what journal or venue did the proof appear?"*  Truth = Carleson and Sjölin / 1972 / Studia Mathematica.
+
+| Mode | Name | Year | Venue | Failure pattern |
+|------|------|------|-------|-----------------|
+| ON  (T-0029) | "Lennart Carleson and **Sjstrrom**" (FM-02 misspell) | **1961** | Annals of Mathematics | Pattern 1 + Pattern 2 |
+| OFF (T-0029) | "Lennart Carleson and **Sol lower Sjstrrom**" (FM-02 worse) | **1967** | Annals of Mathematics | Pattern 1 + Pattern 2 |
+
+This is a different probe-shape from §8.1 (P-043 was a 2-part where ON had Pattern 1 + OFF had Pattern 6+1; P-046 is a 3-part where BOTH modes fail Pattern 1 + 2 within sub-answers). The new evidence cleanly resolves the §8.2 "NOT confirmed" question:
+
+**Newly confirmed at n=2:**
+- **Failure CLASS is stable across modes.** Both modes produce attribution-fabrication-within-subquery (Pattern 1) on P-046. The wrapper does not change the fabrication category.
+- **Surface form of fabrication varies between modes.** Different specific years (1961 vs 1967), different specific name misspellings ("Sjstrrom" vs "Sol lower Sjstrrom"). Subquery-level decoding context produces different specific fabrications than full-question decoding context, even though both fall in the same Pattern 1 + 2 family. This was the §8.2 first NOT-confirmed item; n=2 now shows the pattern.
+- **Some fabrication levels are mode-stable; others are mode-variable.** P-046 ON and OFF disagree on year (mode-variable) but **converge on the wrong venue** ("Annals of Mathematics" instead of correct "Studia Mathematica") (mode-stable). This is a finer-grained substrate observation than fire 3 captured: a single probe yields multiple fabrication-axes that are differentially mode-coupled. Suggests model attribution-priors have at least two coexisting strata — one tied to the full-question prompt (mode-variable) and one tied to the topic ontology (mode-stable across decoding context).
+
+**Still NOT confirmed at n=2 (deferred):**
+- Whether the *same* mode produces stable fabrications across random seeds, or whether OFF-mode "1961" and ON-mode "1967" are themselves sample-stochastic. Distinguishing requires `seed × mode` factorial, deferred to v1.0 evaluation harness work.
+- Whether the venue-stable / year-variable split is a property of P-046 specifically or of attribution-fabrication generally. Hypothesis: more-canonical attribution slots (year, name) are mode-coupled because they're more sensitive to local prompt context, while less-canonical slots (venue) are mode-stable because the model retrieves them from a topic-level prior. Defer to v1.0 corpus § for systematic test.
+
+**Implication for v1.0 corpus work (no contract change):**
+- Tells `tester_findings_consolidated.md` §6 that the Pattern 1 corpus needs to **train all canonical attribution slots together** (name + year + venue), not just the most-frequent slot. The cheapest fab-axis (venue) is exactly the one decomposition cannot rescue.
+- Tells the v1.0 baseline-eval design that paired ON/OFF tests on **3+ part probes** (not just 2-part) are the cleanest H-decomp-1 evidence shape — they expose multiple fabrication axes in one probe.
+
+**Substrate-grade record:** H-decomp-1 confirmed at n=2. Decomposition is bounded by orthogonal failure modes; the boundary is fine-grained (some axes mode-stable, some mode-variable). v1.0 corpus interventions for Pattern 1 + Pattern 4 (canonical-attribution co-training) remain load-bearing — and the canonicality-co-training requirement is now empirically motivated, not just theoretical.
+
+*Updated by Ergon, loop fire 4 (post-restart), 2026-05-07.*

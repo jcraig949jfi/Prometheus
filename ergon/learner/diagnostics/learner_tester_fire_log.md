@@ -1038,3 +1038,51 @@ Net: 3 P1 tickets (within 5-cap; all manual filings since the v1 evaluator does 
 - 30 tickets filed across 9 fires (T-0001..T-0030). Substrate is functioning as intended: high-priority (P1) fabrication tickets cluster around attribution probes; P2 wrong_answer / truncation tickets cluster around computational probes that exceed 192-token budget.
 
 ---
+
+---
+
+## Loop fire 4 (post-restart) — 2026-05-07
+
+**Inbox FRESH (step 1):** total 42 lines. Status distribution: ABLE_TO_ADVANCE=1, BLOCKED-DEFERRED-V1.0=27, DONE=7, **OPEN=6**, WONTFIX=1.
+
+**Selected ticket(s):** all 6 OPEN, all from `learner-tester` (none from `coordination` source). Highest-priority OPEN: T-2026-05-07-0029 P1-high — paired-test on Carleson–Sjölin / Bochner–Riesz n=2 probe (P-046), BOTH modes Pattern 1 + Pattern 2 attribution-fabrication. **This is a second paired test confirming E007 H-decomp-1 (after fire 3's T-0022/T-0023 P-043 paired test).** Plus T-0030 P1-high (adversarial P-048 verdict-correct-but-attribution-wrong fab) and T-0025/T-0026/T-0027/T-0028 P2-normal (4 adversarial Pattern-3 topic-disengagement tickets).
+
+**Pre-test (step 2):** 356/356 PASS. Clean baseline.
+
+**Implement (step 3) — DOC-ONLY:**
+- Appended **§8.4 Second paired test** to `ergon/learner/v1_0_plans/single_fact_decomposition_ablation.md`. Records:
+  - n=2 paired tests now confirm H-decomp-1.
+  - **Newly confirmed at n=2:** failure CLASS is mode-stable; surface form is mode-variable; some fabrication axes (venue) are mode-stable while others (year, name) are mode-variable on the SAME probe.
+  - **Implication for v1.0 corpus design:** Pattern 1 corpus must train all canonical-attribution slots together (name + year + venue), not just the most-frequent slot. The cheapest fab-axis (venue) is exactly the one decomposition cannot rescue.
+  - **Implication for v1.0 baseline-eval design:** 3+ part probes are the cleanest H-decomp-1 evidence shape (multiple fab axes per probe).
+- Bulk-deferred all 6 OPEN tickets to BLOCKED-DEFERRED-V1.0 with substrate-grade notes.
+- T-0029 note explicitly cross-references §8.4 in the ablation report so the v1.0 corpus designer can find the empirical motivation for canonical-attribution co-training.
+- T-0030 note flags the verdict-correct/attribution-wrong sub-class — evidence v1.0 corpus needs to treat attribution as an independent training axis, not derivative of verdict correctness.
+
+**Test (step 4):** 356/356 PASS. No regressions.
+
+### SELF-REVIEW
+
+**(a) Did this fix resolve the failure mode the pressure-applier reported?**
+No — none of the 6 tickets resolves the underlying model failure. T-0029 is a base-model attribution-fabrication that no inference-layer wrapper can fix (and the tester explicitly confirmed this by running the probe in BOTH modes, both of which fabricated). Real remediation requires v1.0 Pattern 1 + Pattern 4 corpus + LoRA training, which is out of v0.5 scope. The substrate-grade move was to treat the paired test as **a hypothesis-confirmation event**, not as a "fix me" ticket — and to extract the new finding (mode-stable vs mode-variable fabrication axes) into the pre-registered ablation report so the v1.0 corpus designer has empirical motivation. T-0030 surfaces a sub-class observation (verdict-correct, attribution-wrong) that informs corpus axis design. T-0025–T-0028 are pattern-saturation evidence (Pattern 3 reliably surfaces on adversarial framing) — also a substrate observation, deferred.
+
+**(b) Did this introduce any memorization risk that the synthetic-null gate would catch?**
+No. No training data, no model weights, no gradient flow touched. Only doc updates and ticket-status updates.
+
+**(c) Did I change any contract?**
+No. Doc updates to existing markdown file; ticket schema updates use existing fields (`status`, `history`); `single_fact_decomposition_ablation.md` is internal documentation, not a contract surface. No changes to public function signatures, env step/reset/info schemas, KillVector layout, P5 NearMissCorpus emission shape, or any input/output contract.
+
+**(d) Did I drift toward conventional-approach framing?**
+Watched for two specific drifts:
+
+  - *Drift candidate 1 — "just classify and defer":* the conventional response to 6 OPEN tester tickets is to read each one, slot it into a pattern category, and bulk-defer. That would have missed the substrate-grade observation in T-0029. The substrate-grade move was to recognize the second paired-test as a **resolution event for the §8.2 first NOT-confirmed item from fire 3**, and to extract the n=2 → fine-grained-axis-coupling finding rather than just "Pattern 1 again, defer." This caught the conventional drift.
+
+  - *Drift candidate 2 — "pattern category is enough":* the conventional response would be to call T-0029 "another Pattern 1, ship it." The substrate-grade move was to read the tester's per-axis breakdown (year DIFFERS between modes, venue STABLE between modes) and extract that as a fine-grained sub-axis observation that **changes the v1.0 corpus axis design** (must train all canonical slots together, not just most-frequent slot). This is what `feedback_assume_wrong.md` calls out: kills (and bounded-fix-confirmations) are the most valuable substrate output, *if* you actually extract the structural finding rather than just the categorical label.
+
+  - *Drift candidate 3 — "T-0030 attribution-fab → corpus" generic:* T-0030's notable detail (verdict-correct + attribution-wrong) was at risk of being absorbed into "yet another Pattern 1." The substrate-grade move was to extract the sub-class observation that **attribution is empirically separable from verdict correctness** in this model's failure manifold, which informs the v1.0 corpus axis structure (attribution training pairs need to be independent of verdict-correctness training pairs).
+
+  Net: drift caught at 3 candidate sites; substrate-grade frame held.
+
+**Step 7 inbox FRESH re-read:** total 42; **OPEN went 6 → 0**; 0 new arrivals during fire.
+
+**Commit:** TBD (pending). One commit, doc-only.
