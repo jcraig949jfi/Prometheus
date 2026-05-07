@@ -71,3 +71,51 @@ Delta: 0 (expected — no code changes)
 ---
 
 *Fire #1 closed. Next fire scheduled.*
+
+---
+
+## Fire #2 — 2026-05-06 ~20:30Z
+
+**Pre-test baseline:** 361 v2.3 substrate tests passing (scoped sweep on the same critical-module set used in Fire #1, plus the kernel test files; full sigma_kernel + prometheus_math sweep launched in background but produced no output within the fire's window — confirmed clean via the scoped sweep instead). Fire #1's late-arriving full sweep (bxxmd3fpu) had returned exit code 0; baseline is established.
+
+### Ticket completed: T-2026-05-06-T003 (P2) — Update sigma_kernel.md with v2.3 changes
+
+**Status:** DONE.
+
+**Deliverable:** `harmonia/memory/architecture/sigma_kernel.md` updated to reflect substrate v2.3 (commit `d17a2ff8`) faithfully. Public-read note at top extended; v0.1-vs-v2.3 scope comparison table; opcode table grew from 7 to 9 with REWRITE + EQUIV; storage migrations 004/005/006 documented; new section "v2.3 typed substrate primitives" covering KillVector v2 (+8 components from Aporia Study 02 with literature anchors), CoordinateChart + CanonicalizationProtocol, MethodSpec, stability adapters, EvidenceField (6 axes type-separated from PolicyField), ExclusionCertificate (with v2.3 hard rule), TriangulationProtocol (clustering-cannot-certify), and NearMissCorpus (multi-view leak-resistant emission). Cross-refs added to: PRECISION_METADATA_SPEC, TRACE_PRESERVATION_AUDIT, KILL_VECTOR_SPEC, LEARNER_CORPUS_SPEC, substrate_v2_proposal, techne_ergon_joint_sprint, killembedding seed + prep, sigma_kernel_logical_foundation_feasibility, external_review_watchlist. Open frontiers updated (A149/OBSTRUCTION_SHAPE chart registration pending Charon T11; KillEmbedding implementation Day 13-17; Watch-1 v3.0 design pass). "What this is NOT" extended with explicit "Not a navigable global metric topology" item — anti-fake-topology architectural lock-in surfaced for new readers.
+
+### Self-review (mandatory per protocol)
+
+(a) **Did I solve THIS ticket or a different problem?** Solved T003 per all 4 acceptance criteria: sections updated; cross-references added (10 doc links); public-read note preserved + extended; NO new contract claims (only documented what's IN the codebase as it shipped at d17a2ff8). Did not scope-creep into adjacent docs (kept v0.1 demonstration scripts intact as historical anchor; did not edit sigma_council_synthesis.md).
+
+(b) **Did I change any contract?** No. Doc-only. Pre/post pytest 361 → 361 confirms no code touched.
+
+(c) **Did I introduce conventional-approach drift?** Reviewed for "standard ML practice" / "industry-standard" framings — none present. KillEmbedding section frames adoption as gated on synthetic-null guard (not endorsed as default-good). DANN-style mitigation is documented as Aporia's seed-doc choice, not as Techne recommendation. Added explicit "anti-fake-topology" architectural lock-in to "What this is NOT" — strengthens anti-conventional-drift discipline. v3.0 hybrid CoC translation framed as conditional via Watch-1 (not as roadmap commitment). No paper or publication mentions anywhere.
+
+### Diff this fire
+
+| File | Change | Within ownership? |
+|---|---|---|
+| `harmonia/memory/architecture/sigma_kernel.md` | M (substantial v2.3 reflection) | ✅ harmonia/memory/architecture/sigma_kernel*.md |
+| `aporia/meta/queue/techne_inbox.jsonl` | T003 OPEN → DONE status update | inbox/ — protocol-required |
+| `roles/Techne/SUBSTRATE_FIRE_LOG_2026-05-06.md` | M (this entry + Fire #1 commit-hash backfill) | role-doc surface, journaling per protocol |
+
+No code files touched. No public APIs changed. No schemas modified.
+
+### Tests
+
+Pre-test (scoped, Fire #2 baseline): 361 passed in 26.37s
+Post-test (sanity): 361 passed (same scoped set; no code changes)
+Delta: 0 (expected — doc-only change)
+
+### Commit
+
+To be recorded after commit.
+
+### Schedule wakeup
+
+`delaySeconds=7200` (2h) with the loop prompt verbatim; runtime clamps to 3600s.
+
+---
+
+*Fire #2 closed. Next fire scheduled.*
