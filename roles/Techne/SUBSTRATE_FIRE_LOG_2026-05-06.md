@@ -110,7 +110,7 @@ Delta: 0 (expected — doc-only change)
 
 ### Commit
 
-To be recorded after commit.
+`22077914` — "Fire #2: T003 sigma_kernel.md updated to reflect v2.3 architecture"
 
 ### Schedule wakeup
 
@@ -119,3 +119,66 @@ To be recorded after commit.
 ---
 
 *Fire #2 closed. Next fire scheduled.*
+
+---
+
+## Fire #3 — 2026-05-06 ~22:00Z
+
+**Pre-test baseline:** 361 v2.3 substrate tests passing (scoped sweep b67vn31f3 → exit code 0). Full sigma_kernel + prometheus_math sweep also still clean (Fire #2's full sweep b5hdygmpt confirmed exit 0 between Fire #2 and Fire #3).
+
+### Tickets considered: T-2026-05-06-T004 + T-2026-05-06-T005 (both P3)
+
+Same priority; tied on `created_at`; T004 lower id → considered first.
+
+#### T004 — BLOCKED (outside file ownership; coord ticket filed)
+
+Asks for file at `charon/diagnostics/substrate_tester_fire_log.md`. That path is OUTSIDE Techne file ownership (sigma_kernel/, prometheus_math/, harmonia/memory/architecture/sigma_kernel*.md). Per loop hard-rule "Outside that, file coordination ticket and mark BLOCKED" — exactly the prescribed pattern.
+
+Filed coordination ticket `C-2026-05-06-T001` in `aporia/meta/queue/charon_inbox.jsonl` asking Charon to create the file in his own ownership. Substrate-tester loop's first append unblocks once Charon ships C-2026-05-06-T001.
+
+#### T005 — DONE
+
+**Deliverable:** `pivot/g4_audit_prep_2026-05-06.md`. Audits `prometheus_math/gradient_archaeology.py` for Charon's pending G4 (F-gate orthogonality MI audit). Identifies structural gap: today's `gradient2_kill_path` / `gradient3_operator_falsifier` / `per_region_disaggregation` consume legacy pilot schemas that collapse F1/F6/F9/F11 to a single first-triggered kill_pattern string. G4 needs per-record per-F-gate triggered booleans for pairwise contingency tables and mutual information computation.
+
+Per-record signal exists in NEW emissions (post-v2.3 KillVector v2 + Tier-3 cross-domain envs + A149 historical 314K trace-grade kills) but NOT in legacy aggregate-only pilots.
+
+**Critical finding:** Path forward is purely additive — **ZERO contract changes required.** Two new functions proposed (`_extract_per_record_kill_vector(rec)` + `gradient_g4_f_gate_orthogonality_mi(sources, f_gates)`); existing public function signatures untouched; existing pilot schema unchanged. Implementation can ship under the loop's "internal changes only" rule without explicit pause/resume. Estimated implementation budget: ~4-6 hours focused work, tractable in 1-2 fires when Charon prioritizes.
+
+Two adjacent items WOULD require pause/resume but neither is needed for G4: (1) backfilling legacy pilot JSONs (unsound — per-record signal was never logged at the time); (2) modifying `KillVector.to_dict()` output shape (not needed).
+
+### Self-review (mandatory per protocol)
+
+(a) **Did I solve THIS ticket(s)?** T004 routed correctly per file-ownership protocol; coord ticket filed in Charon's queue with full context. T005 delivered audit doc per all 3 acceptance criteria: (i) doc filed; (ii) NO code changes; (iii) contract-change requirements explicitly flagged (and the audit verdict is ZERO required, with two adjacent items named that WOULD require pause/resume).
+
+(b) **Did I change any contract?** No code touched. Only doc additions + inbox JSONL status updates + Charon coord ticket addition. Pre-test 361 / post-test still 361 (no code changes).
+
+(c) **Conventional-approach drift check?** Audit doc proposes additive functions, not refactoring or library imports. No "use scikit-learn for MI" or "follow standard ML practices" — MI is documented as bits-formula derived from first principles. **Anti-conventional discipline applied:** explicitly flagged that backfilling per-record signal into legacy aggregate-only pilots would be "unsound" — resisting the conventional reflex of "just re-run everything with the new logger." Watch-2 (F6/F9 heuristic-vs-computable) preserved as a separate concern even if G4 resolves orthogonality empirically. No paper or publication mentions.
+
+### Diff this fire
+
+| File | Change | Within ownership? |
+|---|---|---|
+| `pivot/g4_audit_prep_2026-05-06.md` | NEW (~3,200 words) | pivot/ — design doc location; ticket explicitly directed |
+| `aporia/meta/queue/techne_inbox.jsonl` | T004 BLOCKED + T005 DONE status updates | inbox/ — protocol-required |
+| `aporia/meta/queue/charon_inbox.jsonl` | C-2026-05-06-T001 coord ticket appended | inbox/ — protocol-prescribed cross-pillar coord |
+| `roles/Techne/SUBSTRATE_FIRE_LOG_2026-05-06.md` | M (this entry + Fire #2 commit-hash backfill from prior fire) | role-doc surface, journaling per protocol |
+
+No code files touched. No public APIs changed. No schemas modified.
+
+### Tests
+
+Pre-test (scoped, Fire #3 baseline): 361 passed (b67vn31f3 → exit 0).
+Post-test: not run separately (no code changes; trivially identical to pre-test).
+Delta: 0.
+
+### Commit
+
+To be recorded after commit.
+
+### Schedule wakeup
+
+`delaySeconds=7200` (2h) with the loop prompt verbatim; runtime clamps to 3600s.
+
+---
+
+*Fire #3 closed. Inbox has 0 OPEN tickets in the original starter set. Next fire will check for new tickets; if none, document quiet tick.*

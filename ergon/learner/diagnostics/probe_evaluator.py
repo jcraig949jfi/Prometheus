@@ -67,19 +67,41 @@ def _next_ticket_id(inbox_path: Path, today_str: str) -> int:
 def evaluate_calibration(probe: Dict[str, Any], response: Dict[str, Any]) -> Tuple[str, str, str]:
     """Returns (verdict, sub_type, severity) for a calibration-lane probe.
 
-    verdict ∈ {USEFUL, USELESS}; sub_type ∈ above enum; severity is free text.
+    PRIORITY ORDER (post fire-003 patch): fabrication_signals + gravwell_signals
+    checked FIRST. A correct answer accompanied by a fabricated citation /
+    method name is substrate-grade USELESS-fabrication, not USEFUL. Same
+    discipline as evaluate_generic (the patch goal is consistency across
+    lane code paths).
     """
+    completion = response["completion"]
+    completion_lower = completion.lower()
     expected = str(probe["expected"]).lower()
-    completion = response["completion"].lower()
 
-    # Substring match on expected
-    if expected in completion:
+    # Fabrication checked FIRST (substrate-grade priority over surface-correct)
+    for s in probe.get("fabrication_signals", []):
+        if s.lower() in completion_lower:
+            return ("USELESS", "fabrication",
+                    f"calibration: completion contains fabrication signal '{s}' (P1; "
+                    f"fabrication wins over surface-correct calibration answer)")
+    for s in probe.get("gravwell_signals", []):
+        if s.lower() in completion_lower:
+            return ("USELESS", "grav_well_drift",
+                    f"calibration: gravitational-well drift signal '{s}' (P1)")
+
+    # Useful_signals (per-probe overrides; for partial-match accommodation)
+    for s in probe.get("useful_signals", []):
+        if s.lower() in completion_lower:
+            return ("USEFUL", "correct_answer",
+                    f"calibration: completion contains useful signal '{s}'")
+
+    # Substring match on full expected (legacy behavior; lower priority than useful_signals)
+    if expected in completion_lower:
         return ("USEFUL", "correct_answer",
-                f"completion contains '{probe['expected']}'")
+                f"completion contains expected '{probe['expected']}'")
 
     # Special-case: 14.1347 should also accept 14.134 prefix
     if probe["id"].endswith("002"):
-        if "14.134" in completion:
+        if "14.134" in completion_lower:
             return ("USEFUL", "correct_answer",
                     "completion contains '14.134' prefix of expected")
 
@@ -87,7 +109,7 @@ def evaluate_calibration(probe: Dict[str, Any], response: Dict[str, Any]) -> Tup
     stripped = completion.strip()
     if not stripped or stripped in {"1", "0", "."}:
         return ("USELESS", "silent_unknown",
-                f"completion was empty or single-token garbage: {response['completion']!r}")
+                f"completion was empty or single-token garbage: {completion!r}")
 
     # Wrong answer: completion non-empty and gave a number / claim
     return ("USELESS", "wrong_answer",

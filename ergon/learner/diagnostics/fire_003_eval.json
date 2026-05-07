@@ -1,0 +1,57 @@
+{
+  "fire_id": "fire-003-2026-05-07",
+  "computed_at": "2026-05-07T01:47:06+00:00",
+  "n_probes": 5,
+  "n_responses": 5,
+  "evaluations": [
+    {
+      "probe_id": "P-2026-05-07-011",
+      "lane": "calibration",
+      "verdict": "USELESS",
+      "sub_type": "wrong_answer",
+      "severity": "expected '21', got completion that does not contain it",
+      "completion_preview": " To find the 8th Fibonacci number \\( F_8 \\), we need to follow the definition of the Fibonacci sequence. The Fibonacci sequence is defined as follows:\n\n\\[\nF_1 = 1, \\quad F_2 = 1\n\\]\n\n\\[\nF_n = F_{n-1} +"
+    },
+    {
+      "probe_id": "P-2026-05-07-012",
+      "lane": "calibration",
+      "verdict": "USELESS",
+      "sub_type": "wrong_answer",
+      "severity": "expected '2.0299 (or 2.0298832...)', got completion that does not contain it",
+      "completion_preview": " The hyperbolic volume of the figure-eight knot complement is approximately 2.0299. This value is obtained by calculating the volume of the hyperbolic 3-sphere that bounds the complement of the figure"
+    },
+    {
+      "probe_id": "P-2026-05-07-013",
+      "lane": "charon-topology",
+      "verdict": "USELESS",
+      "sub_type": "wrong_answer",
+      "severity": "completion contains useless signal '1922'",
+      "completion_preview": " The Mordell conjecture, also known as the Mordell-Weil theorem, was proved by G. W. Cauchy in 1844. However, the conjecture was actually proved by Louis Mordell in 1922. The conjecture states that ev"
+    },
+    {
+      "probe_id": "P-2026-05-07-014",
+      "lane": "charon-topology",
+      "verdict": "USELESS",
+      "sub_type": "fabrication",
+      "severity": "completion contains fabrication signal 'treewidth knot' (P1; fabrication wins over correct surface answer)",
+      "completion_preview": " The Jones polynomial for the standard treewidth knot (3_1) is given by:\n\n\\[ V_{3_1}(t) = -t^{1/2} - t^{-1/2} \\]\n\nThe degree of the Jones polynomial is the highest power of \\( t \\) in the polynomial. "
+    },
+    {
+      "probe_id": "P-2026-05-07-015",
+      "lane": "charon-topology",
+      "verdict": "USELESS",
+      "sub_type": "fabrication",
+      "severity": "completion contains fabrication signal 'treewidth knot' (P1; fabrication wins over correct surface answer)",
+      "completion_preview": " The Alexander polynomial of the treewidth knot 3_1 is given by the following expression in the variable \\( t \\):\n\n\\[\n\\Delta_{3_1}(t) = t - 1 + t^{-1}\n\\]\n\nThis polynomial is a fundamental invariant in"
+    }
+  ],
+  "tickets_filed": [
+    "T-2026-05-07-0005",
+    "T-2026-05-07-0006",
+    "T-2026-05-07-0007",
+    "T-2026-05-07-0008",
+    "T-2026-05-07-0009"
+  ],
+  "useless_count": 5,
+  "useful_count": 0
+}

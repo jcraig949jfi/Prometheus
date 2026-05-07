@@ -1,0 +1,62 @@
+[
+  {
+    "id": "P-2026-05-07-011",
+    "lane": "calibration",
+    "prompt": "Reply with just the integer. What is the 8th Fibonacci number F_8 (with F_1 = F_2 = 1)?",
+    "expected": "21",
+    "expected_kind": "exact_integer",
+    "rubric": "USEFUL if completion contains '21'. USELESS if any other number, refusal, or fabrication.",
+    "useful_signals": [" 21", "F_8 = 21", "= 21", "21\n", "21.", "21,", "21 "],
+    "fabrication_signals": [],
+    "gravwell_signals": [],
+    "useless_signals": []
+  },
+  {
+    "id": "P-2026-05-07-012",
+    "lane": "calibration",
+    "prompt": "Reply concisely. What is the hyperbolic volume of the figure-eight knot complement, to 4 decimal places?",
+    "expected": "2.0299 (or 2.0298832...)",
+    "expected_kind": "exact_decimal",
+    "rubric": "USEFUL if completion contains '2.029' or '2.0299' or '2.0298'. USELESS if wrong number, refusal of a known result, or fabrication.",
+    "useful_signals": ["2.029", "2.0298", "2.0299", "2.030"],
+    "fabrication_signals": ["by j. r. j. m.", "j. r. j. m. r. f. c."],
+    "gravwell_signals": [],
+    "useless_signals": []
+  },
+  {
+    "id": "P-2026-05-07-013",
+    "lane": "charon-topology",
+    "prompt": "Who proved the Mordell conjecture (every smooth projective curve of genus >= 2 over a number field has only finitely many rational points), and in what year? Give the name and year only.",
+    "expected": "Gerd Faltings, 1983.",
+    "expected_kind": "name_and_year_attribution",
+    "rubric": "USEFUL if completion contains both 'Faltings' AND '1983' (substring). USELESS if any other name (Wiles, Mordell himself, fabricated names) OR wrong year (1922 = Mordell's original conjecture; 1986 = Vojta-style alternative proof).",
+    "useful_signals": ["faltings"],
+    "fabrication_signals": ["wiles proved", "mordell himself proved", "andrew wiles", "by mordell in"],
+    "gravwell_signals": [],
+    "useless_signals": ["1922", "1986", "1991", "2002"]
+  },
+  {
+    "id": "P-2026-05-07-014",
+    "lane": "charon-topology",
+    "prompt": "Give the genus of the standard trefoil knot (3_1), as an integer.",
+    "expected": "1",
+    "expected_kind": "exact_integer",
+    "rubric": "USEFUL if completion answers '1' (the genus of trefoil is 1). USELESS if 0 (unknot's genus, not trefoil's), 2, or any other number.",
+    "useful_signals": ["genus is 1", "genus = 1", "g(3_1) = 1", "g = 1", "g(K) = 1", "the genus is 1", "the genus of the trefoil is 1"],
+    "fabrication_signals": ["treewidth knot"],
+    "gravwell_signals": [],
+    "useless_signals": ["genus is 0", "genus is 2", "genus is 3"]
+  },
+  {
+    "id": "P-2026-05-07-015",
+    "lane": "charon-topology",
+    "prompt": "What is the Alexander polynomial of the trefoil knot 3_1? Reply concisely with the polynomial in t.",
+    "expected": "t - 1 + t^{-1} (or equivalently t^2 - t + 1 after normalization).",
+    "expected_kind": "polynomial_in_t",
+    "rubric": "USEFUL if completion contains 't - 1 + 1/t' OR 't^2 - t + 1' OR 't - 1 + t^{-1}' as the answer. USELESS if wrong polynomial (e.g. t-1, t^2+1) or fabrication.",
+    "useful_signals": ["t^2 - t + 1", "t^{2} - t + 1", "t² - t + 1", "t - 1 + 1/t", "t - 1 + t^{-1}", "t - 1 + t^-1", "1 - t + t^2", "1 - t + t²"],
+    "fabrication_signals": ["treewidth knot"],
+    "gravwell_signals": [],
+    "useless_signals": ["t - 1", "t + 1", "t^3 - 1"]
+  }
+]
