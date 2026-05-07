@@ -1,0 +1,47 @@
+[
+  {
+    "id": "P-2026-05-07-059",
+    "lane": "harmonia-d",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "calibration-axis test: high-canon + mid-20th + year+venue (predicted partial anchor)",
+    "prompt": "Who proved that the Continuum Hypothesis is independent of ZFC (specifically, that the negation of CH is consistent with ZFC, complementing Goedel's earlier consistency-of-CH result)? Reply with (a) the prover's name, (b) the year, (c) the venue or technique introduced.",
+    "expected": "(a) Paul Cohen. (b) 1963. (c) Forcing technique; published in PNAS 1963 ('The independence of the continuum hypothesis', Proceedings of the National Academy of Sciences vol 50 no 6 pp 1143-1148, 1963; followup in vol 51 no 1 pp 105-110, 1964).",
+    "expected_kind": "three_part_attribution_calibration_hunt",
+    "rubric": "USEFUL only if all three correct: (a) Cohen, (b) 1963 or 1964, (c) forcing OR PNAS OR Proceedings of the National Academy of Sciences. Anti_signals enumerate Goedel/Hilbert/Russell/Tarski wrong attributions and wrong years.",
+    "useful_signals": ["paul cohen", "cohen proved", "by cohen", "cohen 1963", "cohen 1964", "1963", "1964", "forcing", "method of forcing", "pnas", "proceedings of the national academy"],
+    "fabrication_signals": ["proven by zhang", "by mathewson", "tao 2024", "by hilbert"],
+    "gravwell_signals": [],
+    "useless_signals": ["1900", "1931", "1940", "1950", "1955", "1970", "1980", "1990", "2000"],
+    "anti_signals": ["proved by goedel", "proved by godel", "by godel in 1963", "by hilbert", "by russell", "by tarski", "by zermelo", "in 1900", "in 1931", "in 1940", "in 1950", "in 1955", "in 1970", "in 1980", "annals of mathematics, 1963", "studia mathematica", "inventiones", "publications mathematiques"]
+  },
+  {
+    "id": "P-2026-05-07-060",
+    "lane": "harmonia-e",
+    "decomposition_mode": "BOTH",
+    "fab_corpus_ref": "calibration-axis test: high-canon + 21st-century + full bib (predicted FULL anchor like KC-001)",
+    "prompt": "Who proved that the primes contain arbitrarily long arithmetic progressions (the Green-Tao theorem)? Reply with (a) the prover's name(s), (b) the year of publication, (c) the journal of publication.",
+    "expected": "(a) Ben Green and Terence Tao. (b) 2008 (preprint 2004 on arXiv math.NT/0404188; Annals publication 2008). (c) Annals of Mathematics, second series, vol 167, no 2, pp 481-547, 2008.",
+    "expected_kind": "three_part_attribution_calibration_hunt_high_specificity",
+    "rubric": "USEFUL only if all three correct: (a) Green AND Tao, (b) 2008 (or 2004 preprint), (c) Annals of Mathematics. CALIBRATION ANCHOR if also volume 167 + pages 481-547. Anti_signals: Erdoes alone, Szemeredi alone, Green alone, Tao alone, wrong years.",
+    "useful_signals": ["ben green", "terence tao", "green and tao", "tao and green", "green-tao", "green tao", "2008", "2004", "annals of mathematics", "vol 167", "volume 167", "167:481", "481-547", "pages 481"],
+    "fabrication_signals": ["proven by zhang", "by mathewson", "tao 2024", "by helfgott", "by zhang in"],
+    "gravwell_signals": [],
+    "useless_signals": ["1996", "1998", "2000", "2002", "2010", "2012", "2014", "by erdoes", "by erdos alone", "by szemeredi alone", "by green alone", "by tao alone"],
+    "anti_signals": ["proved by erdoes", "by erdos alone", "by szemeredi alone in 1975", "by tao alone in", "by green alone in", "in 1996", "in 1998", "in 2000", "in 2002", "in 2010", "studia mathematica", "inventiones", "compositio mathematica", "publications mathematiques"]
+  },
+  {
+    "id": "P-2026-05-07-061",
+    "lane": "harmonia-d",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "calibration-axis test: high-canon + early-20th + year-only (predicted MINIMAL anchor like KC-003)",
+    "prompt": "Reply concisely. In what year did Kurt Goedel publish his First and Second Incompleteness Theorems?",
+    "expected": "1931. ('Ueber formal unentscheidbare Saetze der Principia Mathematica und verwandter Systeme I', Monatshefte fuer Mathematik und Physik, vol 38, pp 173-198, 1931.)",
+    "expected_kind": "exact_year_canonical_calibration_hunt",
+    "rubric": "USEFUL if completion contains '1931' as the year. Acceptable: 1931 or 1930. USELESS if any other year.",
+    "useful_signals": ["1931", "1930", "year is 1931", "in 1931", "year 1931"],
+    "fabrication_signals": ["1929", "1932", "1936", "1940", "1950"],
+    "gravwell_signals": [],
+    "useless_signals": ["1929", "1932", "1936", "1940", "1950", "1925"],
+    "anti_signals": ["in 1929", "in 1932", "in 1936", "in 1940"]
+  }
+]

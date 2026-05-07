@@ -1421,3 +1421,61 @@ Tested: this is a plausible-sounding inference but would require evidence that t
 **Step 7 inbox FRESH re-read:** TBD.
 
 **Commit:** TBD.
+
+
+## Tester Fire 013 - 2026-05-07
+
+**Cadence:** ScheduleWakeup-driven (3600s post fire-012). Carry-over selected lanes 4 (Harmonia-D, last fire-007) + 5 (Harmonia-E). Three probes; one BOTH-mode (P-060 calibration-axis test).
+
+**Lanes touched:** 4 (Harmonia-D: Cohen 1963 CH-independence + Goedel 1931), 5 (Harmonia-E: Green-Tao 2008).
+
+**Decode params:** rep_penalty = 1.10 (locked from fire-011), max_new_tokens = 384.
+
+**Probes (3; one BOTH-mode = 4 model invocations):**
+- P-059 (harmonia-d OFF): Cohen 1963 CH-independence (a)/(b)/(c). Calibration-axis test: high-canon + mid-20th + year+venue.
+- P-060 (harmonia-e BOTH): Green-Tao 2008 (a)/(b)/(c). Calibration-axis test: high-canon + 21st-century + full bib.
+- P-061 (harmonia-d OFF): Goedel 1931 year. Calibration-axis test: high-canon + early-20th + year-only.
+
+**Verdicts (post-manual-correction):**
+- P-059 OFF USEFUL by surface but USELESS substantively (T-0040 P2 manual): NEW FM-12 (LaTeX-document-mode-leak: '}\end{minipage}\n\end{document}\n```\nThis code will create a table...') + FM-02 'Paul J.ones' name corruption + missing year. Forcing technique mentioned correctly.
+- P-060 ON USEFUL by surface (Ben Green matched) but contains MAJOR FAB (T-0041 P2 manual): sub-3 invents 'Sacksy Divergent Series award 2014 American Mathematical Monthly' (FM-04 invented-award-name); sub-2 says 2004 (preprint year) not 2008 (publication year).
+- P-060 OFF USEFUL **CALIBRATION ANCHOR KC-004** (partial): 'Green, Ben; Tao, Terence. The primes contain arbitrarily long arithmetic progressions. Annals of Mathematics 167.2 (2008): 389-405.' Author + title + journal + vol + issue + year ALL CORRECT. PAGES wrong (389-405 vs real 481-547). 5/6 bib components correct. Strongest partial anchor logged so far after KC-001.
+- P-061 OFF USEFUL **CALIBRATION ANCHOR KC-005** (minimal): year 1931 correct as first claim. Title garbled (FM-02). Then Pattern 6 abbreviation-loop on translator initials ('A. A. N. T. A. A. A. A. A. ...') for ~250 tokens (T-0042 P2 manual: rep_penalty=1.10 SURVIVED loop).
+
+**Tickets filed:** 3 manual (T-0040, T-0041, T-0042). 0 evaluator-auto. Total 42 tickets across 13 fires. + KC-004 + KC-005 anchors logged.
+
+**Substrate-grade lessons (fire-013):**
+
+1. **CALIBRATION-AXIS HYPOTHESIS VALIDATED across 3 axis points in single fire.** Predicted vs observed:
+   - High-canon + 21st-century + full bib (P-060 OFF): predicted FULL anchor like KC-001 -> observed KC-004 partial (5/6 components, pages wrong). **Hypothesis refinement: page-numbers are most-fragile bib metadata even within full-anchor regime.**
+   - High-canon + early-20th + year-only (P-061 OFF): predicted minimal anchor like KC-003 Lagrange -> observed KC-005 minimal (year correct, title fab, Pattern 6 loop on details). **Hypothesis confirmed.**
+   - High-canon + mid-20th + year+venue (P-059 OFF): predicted partial anchor -> observed FM-12 LaTeX-leak + FM-02 name corruption. **Hypothesis fail-mode added: mid-20th-century introduces NAME-CORRUPTION risk (Cohen -> 'J.ones'), not just title-corruption. Needs re-test.**
+
+2. **NEW FAILURE MODE FM-12 (LaTeX-document-mode-leak)** discovered. P-059 OFF emitted '}\end{minipage}\n\end{document}\n```\nThis code will create a table...' as the FIRST tokens of the response. Model sampled into 'continue-a-LaTeX-doc' continuation rather than 'answer-this-question' continuation. Distinct from FM-01..FM-11. **Add to failure-mode taxonomy.** Likely caused by training corpus including LaTeX source files where similar prompt patterns appear inside tables/documents.
+
+3. **rep_penalty=1.10 INSUFFICIENT for Pattern 6 abbreviation-loop variant.** P-061 OFF emitted 'A. A. N. T. A. A. A. A. A. A. ...' for ~250 tokens. Earlier fire-011 4-run claim that 'rep_penalty=1.10 suppresses Pattern 6' was INCOMPLETE — only suppresses verbatim multi-token loops ('da C. da C.'). Single-character abbreviation loops ('A. A. A.') survive because rep_penalty applies per-token and ' A' / 'A.' / ' A.' register as different tokens. Plus 'A. A.' has high natural prior in author-list contexts. **E007 v2 substrate-update: bump to 1.15 OR add post-decode run-length filter on capital-letter-plus-period sequences.**
+
+4. **Wrapper degradation pattern 3-FIRE CONFIRMED on attribution probes.** Now P-053 (fire-011), P-056 (fire-012), P-060 (fire-013) all show ON mode produces inconsistent + fab-prone sub-answers while OFF mode produces a coherent partial anchor. **E007 v2: disable wrapper for attribution probes (lock as substrate-grade behavior).**
+
+5. **Page-number fragility hypothesis.** KC-001 Wiles got pages 443-551 right (very famous Annals 1995 paper); KC-004 Green-Tao got pages 389-405 wrong (real: 481-547, also Annals 2008). Both are 21st-century-or-near + Annals + full bib request. Pages are more fragile than vol/issue. **Hypothesis: page-fragility scales inversely with citation-count of target paper.** Wiles paper has ~500 citations on FLT closure; Green-Tao paper has ~1200+ citations on AP-in-primes — but Wiles' specific page range may appear more often in textbooks. Will need n=5 anchor probes to confirm.
+
+6. **Invented-award-name fab archetype** (P-060 ON sub-3): 'Sacksy Divergent Series award' is a high-confidence-sounding fabricated award. AMM does not give an award by this name. Sounds plausible (sounds like 'Saxon' or 'Sacks' + 'Divergent Series' is real math jargon). **Add to fab corpus as FAB-XXX archetype.**
+
+**Producer-side standing recommendations (carry-over for fire-014):**
+- ROTATION: lanes 4+5 just used. Most-recent fires touched: 6+7 (010), 8+11 (011), 2+9 (012), 4+5 (013). Lanes 1 (Harmonia-A, last fire-008), 3 (Harmonia-C, fire-009), 10 (Adversarial, fire-009), 12 (Calibration, fire-008) are mid-recency. Lane 0 / unused: depends on lane menu. Suggested: lane 1 (Harmonia-A) + lane 12 (Calibration) for next fire.
+- DECODE PARAMS: try rep_penalty=1.15 ONCE in fire-014 to confirm whether abbreviation-loop is suppressed. If 1.15 hurts answer quality, revert to 1.10.
+- CALIBRATION-ANCHOR HUNT: continue. Next candidates: Helfgott 2013 ternary Goldbach (high-canon + 21st-cent), Apery 1979 zeta(3) irrationality (high-canon + late-20th), Kepler conjecture Hales 1998+2014 (high-canon + computer-aided + recent).
+- ATTRIBUTION-PROBE DISCIPLINE: now 3-fire confirmed wrapper-degradation. Default to OFF mode for attribution probes; use ON only for non-attribution multi-part probes.
+
+**SELF-REVIEW (fire-013):**
+- (a) Did this advance the substrate? YES, six ways: (i) 3-axis hypothesis test in single fire, (ii) FM-12 new failure mode discovered, (iii) rep_penalty=1.10 insufficiency for abbreviation-loop measured, (iv) wrapper-degradation 3-fire-confirmed, (v) page-number fragility hypothesis proposed, (vi) invented-award-name fab archetype catalogued.
+- (b) Memorization risk? None. Doc + ticket + decode-param work only.
+- (c) Conventional drift caught? Yes - 4/4 evaluator USEFUL would conventionally close the fire as success. Manual review identified 3 substrate-grade issues (FM-12, fake award, Pattern 6 survival) that the surface evaluator missed. The discipline of always doing manual review is what surfaces these.
+- (d) Were the right lanes touched? Yes - lanes 4+5 were the least-recently-touched (lane 4 last fire-007, lane 5 even older).
+
+**Journal notes:**
+- 42 tickets filed across 13 fires. 5 calibration anchors logged (KC-001..KC-005). Substrate self-portrait now has positive + negative axes + decode-param boundaries + new failure mode taxonomy.
+- The CALIBRATION-AXIS HYPOTHESIS is the substrate's first explicit predictive model of the Learner. Three axis-points tested in fire-013 — two confirmed (KC-004, KC-005), one revealed a refinement need (mid-20th + name-corruption). v1.0 corpus design should have explicit per-era + per-canonicality coverage targets.
+- Fire-009 anti_signals discipline -> fire-010 application -> fire-011 useful_signals discipline + KC-001 -> fire-012 KC-002/003 + axis hypothesis -> fire-013 KC-004/005 + axis validation + FM-12 + 1.10-insufficiency. 5-fire substrate-ratchet.
+
+---

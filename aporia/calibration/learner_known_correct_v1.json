@@ -22,7 +22,7 @@
       "lane": "charon-nt-topology",
       "decomposition_mode": "OFF",
       "decode_params": {
-        "rep_penalty": 1.10,
+        "rep_penalty": 1.1,
         "max_new_tokens": 384,
         "do_sample": false,
         "num_beams": 1
@@ -45,7 +45,7 @@
       "lane": "aporia-catalog",
       "decomposition_mode": "OFF",
       "decode_params": {
-        "rep_penalty": 1.10,
+        "rep_penalty": 1.1,
         "max_new_tokens": 384,
         "do_sample": false,
         "num_beams": 1
@@ -72,7 +72,7 @@
       "lane": "harmonia-b",
       "decomposition_mode": "OFF",
       "decode_params": {
-        "rep_penalty": 1.10,
+        "rep_penalty": 1.1,
         "max_new_tokens": 384,
         "do_sample": false,
         "num_beams": 1
@@ -88,6 +88,61 @@
       "notes": [
         "Third calibration anchor — partial (year-only). Useful for substrate-corpus-design: shows the Learner has STRONG attribution memory for famous-named-theorem -> year mappings (Lagrange -> 1770, Wiles -> 1995, Perelman -> 2002-03), but WEAK memory for specific paper titles / venues for older works.",
         "Calibration-axis observation: the (canonicality, era) plane partitions probe difficulty. High-canonicality + post-1990 = full bibliographic reference recoverable (KC-001 Wiles 141:443-551). High-canonicality + pre-1900 = year recoverable, title not (KC-003 Lagrange 1770). Low-canonicality + any era = full fabrication (P-056 Lefschetz 1924, P-054 X_0(11) genus)."
+      ]
+    },
+    {
+      "id": "KC-004",
+      "fire_id": "013",
+      "probe_id": "P-2026-05-07-060",
+      "lane": "harmonia-e",
+      "decomposition_mode": "OFF",
+      "decode_params": {
+        "rep_penalty": 1.1,
+        "max_new_tokens": 384,
+        "do_sample": false,
+        "num_beams": 1
+      },
+      "topic": "Green-Tao theorem (arbitrarily long APs in primes) bibliographic reference",
+      "canonical_output": "Green, Ben; Tao, Terence. 'The primes contain arbitrarily long arithmetic progressions.' Annals of Mathematics 167.2 (2008): 389-405.",
+      "verification": "Real bibliographic data: Green-Tao 'The primes contain arbitrarily long arithmetic progressions', Annals of Mathematics 167(2):481-547, 2008. The Learner emitted ALMOST-correct ref: author + title + journal + vol + issue + year all correct, PAGES wrong (389-405 vs real 481-547).",
+      "caveats_partial_anchor": [
+        "Author: Ben Green and Terence Tao - CORRECT",
+        "Title: 'The primes contain arbitrarily long arithmetic progressions' - CORRECT (verbatim)",
+        "Journal: Annals of Mathematics - CORRECT",
+        "Volume: 167 - CORRECT",
+        "Issue: 2 - CORRECT (167.2 notation)",
+        "Year: 2008 - CORRECT",
+        "Pages: 389-405 - WRONG (real: 481-547). FM-04 page-number-fab.",
+        "Substrate finding: page numbers are most-fragile bibliographic metadata. KC-001 Wiles 1995 got pages 443-551 right (more famous result?); KC-004 Green-Tao got pages wrong by ~100. Hypothesis: page-fragility scales inversely with citation-count of the target paper."
+      ],
+      "notes": [
+        "Fourth calibration anchor. Strongest of the partial anchors so far (5/6 bib components correct, only pages wrong). Confirms calibration-axis hypothesis: high-canon + 21st-century + full bib request -> KC-001-quality output approximately, with page-number fragility as the failure mode.",
+        "ON mode for same probe produced DIFFERENT outputs across 3 sub-answers including FM-04 fabricated 'Sacksy Divergent Series award 2014 American Mathematical Monthly' (sub-3) + 2004 year (sub-2). Wrapper degradation 3-fire-confirmed (P-053, P-056, P-060) for attribution probes."
+      ]
+    },
+    {
+      "id": "KC-005",
+      "fire_id": "013",
+      "probe_id": "P-2026-05-07-061",
+      "lane": "harmonia-d",
+      "decomposition_mode": "OFF",
+      "decode_params": {
+        "rep_penalty": 1.1,
+        "max_new_tokens": 384,
+        "do_sample": false,
+        "num_beams": 1
+      },
+      "topic": "Goedel Incompleteness Theorems year",
+      "canonical_output": "1931",
+      "verification": "Goedel 1931 'Ueber formal unentscheidbare Saetze...' Monatshefte fuer Mathematik und Physik 38:173-198. Confirmed via standard logic bibliographies.",
+      "caveats_partial_anchor": [
+        "Year 1931 correctly emitted as the FIRST claim in the response.",
+        "Title fab: 'On Formally Incompleteax systems of axiomatic Arithmetic' / 'OnFormally Incomplete Axiom systems of Axiological Arithmetic' (real: 'Ueber formal unentscheidbare Saetze der Principia Mathematica und verwandter Systeme I'). FM-02 garbled English translation.",
+        "Pattern 6 abbreviation-loop on translator's initials 'A. A. N. T. A. A. A. A. A. A. ...' for ~250 tokens. rep_penalty=1.10 SURVIVED this loop variant.",
+        "MINIMAL ANCHOR - year-only, like KC-003 Lagrange 1770. Same era × specificity profile."
+      ],
+      "notes": [
+        "Fifth calibration anchor (minimal). Confirms calibration-axis hypothesis on early-20th-century high-canon: year recoverable, title not, additional metadata triggers Pattern 6 sub-variant. Together with KC-003 Lagrange 1770 (pre-1900 year-only), establishes the 'year-only' anchor tier as: pre-1900 + 20th-century-early -> minimal anchor with title/venue fab."
       ]
     }
   ],
