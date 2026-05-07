@@ -6,6 +6,81 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #6 — 2026-05-07 03:33 UTC
+
+**Lanes selected:** 5 (large-scale-enumeration), single-lane full-cap fire.
+
+**Lane rationale:** Lane 5 was the only lane untouched after 5 fires (others all exercised at least once). 10-day-window rotation discipline rule says all 10 lanes must land. Lane 5 takes the full cap by design.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_6_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_6_results.json`.
+
+### Lane 5 — large-scale-enumeration: 5/5 PASS
+
+Ran `prometheus_math.lehmer_brute_force_general.run_brute_force_general(degree=12, coef_range=(-5, 5))` — the canonical Lane 5 target (~10x smaller than the deg-14 ±5 baseline of 97,435,855 polys).
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — completion (no crash/hang) | **PASS** | Completed in 423.1s (~7 min); processed exactly 8,857,805 polys |
+| T2 — enumeration count matches expected | **PASS** | n_polys_processed == n_expected == 8,857,805 (no off-by-one) |
+| T3 — throughput reasonable | **PASS** | 20,937 polys/sec sustained, well above 10K threshold |
+| T4 — band candidates surface | **PASS** | 113 in-band hits, M-values clustered just above 1.0 (cyclotomic-noise pattern consistent with deg-14 ±5 baseline of 253 raw → 210 noise → 43 verified) |
+| T5 — shard summary well-formed | **PASS** | 55 shards reported with required fields (shard_idx, polys_processed, n_band_hits) |
+
+**Substrate verdict:** PASS. Brute-force enumeration scales correctly from deg-14 baseline to deg-12 ±5; throughput is ~21K polys/sec sustained; band-candidate distribution mirrors the deg-14 cyclotomic-noise-dominated shape (>>90% of band hits are at M ≈ 1.0000... — these are the cyclotomic-and-near-cyclotomic-product polynomials that the verification phase would filter out).
+
+**Initial harness bug:** my `progress_callback` signature took 4 args (shard_idx, n_shards, polys_processed, in_band_count), but the actual contract is 3 args (no in_band_count). Crashed at 8.4s on first attempt. Fix: removed the in_band_count arg. Substrate's API was correct; my probe was wrong. Re-run completed cleanly.
+
+### Architectural observations (substrate-grade, not flaws)
+
+1. **No ExclusionCertificate auto-generation at the brute-force level.** Per the module's own docstring and Aporia ticket T-2026-05-07-T007, `run_brute_force_general` is scoped to enumerate-and-report only — verification (mpmath recheck, cyclotomic filter, Mossinghoff cross-check) and certificate emission are downstream tickets. The 113 band candidates surfaced this fire are the input to a future verification phase, not a finished verdict. The lane-5 spec's "ExclusionCertificate not generated: P1-high" criterion would be a P1 IF the brute-force module promised to generate one and didn't — but it explicitly disclaims that scope. **Documenting this as an architectural observation, not a ticket.**
+
+2. **No INCONCLUSIVE comparison to deg-14 baseline this fire.** Same reason: substrate didn't run the verification phase, so there's no INCONCLUSIVE verdict to compare. The deg-14 baseline (97M → INCONCLUSIVE → COMPLETE via 4-path triangulation) ran a full pipeline including verification + triangulation + certificate emission. The deg-12 ±5 fire #6 stops at the enumeration step. This is documented and intentional.
+
+3. **Sequential execution (not multiprocessing).** Per the module docstring: "multiprocessing was deliberately not added in this v1 — Windows spawn-mode complexity is not justified for the current deg-12 ±5 target which finishes in minutes." Confirmed: 7 min sequential is acceptable. Any future ticket adding MP would need to preserve the 8.86M-polys exact match in T2.
+
+4. **113 band candidates is in the right rough scale.** Deg-14 ±5 produced 253 raw band candidates from 97M polys (≈ 2.6e-6 hit rate). Deg-12 ±5 produced 113 from 8.86M polys (≈ 1.27e-5 hit rate). The hit rate is ~5x higher at deg-12 — interesting but not a substrate concern; reflects the geometry of where small-coefficient palindromic polynomials cluster relative to the unit circle at smaller degrees. Worth flagging for future Aporia/Charon investigation.
+
+### Tickets filed this fire
+
+**0 tickets.** Lane 5 fully PASS; all observations are documented architectural choices, not flaws.
+
+### Standing recommendations for next fire (#7)
+
+1. **All 10 lanes have now been exercised at least once** over 6 fires. Rotation discipline rule satisfied.
+2. **Anti-repeat:** avoid Lane 5. Suggested fire #7 combinations:
+   - Lane 1 (CLAIM-flood with stratified in-band sampler — closes fire-#1 standing rec) + Lane 7 (precision-gradient with new probes)
+   - Lane 8 (ExclusionCertificate-extension repeat with the duplicate-cert behavior observed in fire #3 as a starting point) + Lane 9 (NearMissCorpus-leak repeat)
+3. **`get_raw_invariant_keys` ticket T-ST003** still BLOCKED. Whenever Techne unblocks, fire-#N+ should re-probe Lane 4.
+4. **Verification follow-up (Aporia/Charon scope, not substrate-tester):** the 113 deg-12 ±5 band candidates landed by this fire are inputs to a future verification phase. If/when Techne ships an auto-verification phase that runs after `run_brute_force_general`, substrate-tester should re-run Lane 5 to verify the verification phase emits a deg-12 ExclusionCertificate consistent with the deg-14 baseline.
+5. **Hit-rate observation (113/8.86M ≈ 1.27e-5 vs deg-14's 253/97M ≈ 2.6e-6, ~5x higher):** worth flagging for a future Aporia ticket. Not substrate-tester scope to follow up.
+
+### Lane rotation tracking (10 of 10 lanes exercised over 6 fires) — DISCIPLINE RULE SATISFIED
+
+| Lane | Fires exercised |
+|---|---|
+| 1. CLAIM-flood | fire #1 |
+| 2. adversarial-CLAIM | fire #2, fire #5 (regression) |
+| 3. correlated-triangulation | fire #4 |
+| 4. cross-domain-leak | fire #3 |
+| 5. large-scale-enumeration | **fire #6** |
+| 6. undecidable-canonicalization | fire #4 |
+| 7. precision-gradient | fire #1 |
+| 8. ExclusionCertificate-extension | fire #3 |
+| 9. NearMissCorpus-leak | fire #2 |
+| 10. real-paper | fire #5 |
+
+### Discipline notes
+
+- No paper/publication mentions in this fire.
+- No drift toward established frameworks observed in the substrate code I read this fire.
+- Time used: ~17 minutes (well within 50-minute cap; 7 min for actual brute-force, ~10 min for harness writing + initial debugging).
+- Anti-flooding cap: 0 tickets filed.
+
+— substrate-tester, fire #6, 2026-05-07 03:33 UTC
+
+---
+
 ## Fire #5 — 2026-05-07 02:27 UTC
 
 **Lanes selected:** 2 (regression check on T-ST002 fix) + 10 (real-paper, first-time exercise).

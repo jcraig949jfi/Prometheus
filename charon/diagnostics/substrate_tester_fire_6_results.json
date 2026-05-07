@@ -1,0 +1,209 @@
+{
+  "fire_id": "fire_6_2026_05_07",
+  "lanes": [
+    "5_large_scale_enumeration"
+  ],
+  "lane_5": {
+    "lane": "5_large_scale_enumeration",
+    "degree": 12,
+    "coef_range": [
+      -5,
+      5
+    ],
+    "n_expected": 8857805,
+    "n_processed": 8857805,
+    "wall_clock_seconds": 423.07281041145325,
+    "throughput_per_sec": 20936.833523727208,
+    "in_band_count": 113,
+    "in_band_first_5": [
+      [
+        [
+          1,
+          -2,
+          3,
+          -2,
+          2,
+          -2,
+          3
+        ],
+        1.0000088209323137
+      ],
+      [
+        [
+          1,
+          1,
+          2,
+          1,
+          -1,
+          -2,
+          -4
+        ],
+        1.00000953818002
+      ],
+      [
+        [
+          1,
+          2,
+          2,
+          0,
+          -2,
+          -2,
+          -2
+        ],
+        1.0000100502080649
+      ],
+      [
+        [
+          1,
+          2,
+          3,
+          2,
+          2,
+          2,
+          3
+        ],
+        1.0000100855973073
+      ],
+      [
+        [
+          1,
+          -2,
+          2,
+          0,
+          -2,
+          2,
+          -2
+        ],
+        1.0000101107707542
+      ]
+    ],
+    "n_shards": 55,
+    "progress_log": [
+      {
+        "elapsed_s": 34.01641488075256,
+        "shard_idx": 3,
+        "n_shards": 55,
+        "polys_processed": 644204,
+        "rate_per_sec": 18938.033365900315
+      },
+      {
+        "elapsed_s": 65.57133531570435,
+        "shard_idx": 7,
+        "n_shards": 55,
+        "polys_processed": 1288408,
+        "rate_per_sec": 19648.951692027324
+      },
+      {
+        "elapsed_s": 103.09646725654602,
+        "shard_idx": 12,
+        "n_shards": 55,
+        "polys_processed": 2093663,
+        "rate_per_sec": 20307.805453606023
+      },
+      {
+        "elapsed_s": 134.34351658821106,
+        "shard_idx": 17,
+        "n_shards": 55,
+        "polys_processed": 2898918,
+        "rate_per_sec": 21578.398970199254
+      },
+      {
+        "elapsed_s": 164.3779435157776,
+        "shard_idx": 22,
+        "n_shards": 55,
+        "polys_processed": 3704173,
+        "rate_per_sec": 22534.48924334827
+      },
+      {
+        "elapsed_s": 195.021586894989,
+        "shard_idx": 27,
+        "n_shards": 55,
+        "polys_processed": 4509428,
+        "rate_per_sec": 23122.71206380932
+      },
+      {
+        "elapsed_s": 232.78914833068848,
+        "shard_idx": 32,
+        "n_shards": 55,
+        "polys_processed": 5314683,
+        "rate_per_sec": 22830.458542037493
+      },
+      {
+        "elapsed_s": 266.7458074092865,
+        "shard_idx": 36,
+        "n_shards": 55,
+        "polys_processed": 5958887,
+        "rate_per_sec": 22339.19647275606
+      },
+      {
+        "elapsed_s": 300.9339859485626,
+        "shard_idx": 40,
+        "n_shards": 55,
+        "polys_processed": 6603091,
+        "rate_per_sec": 21941.99162712263
+      },
+      {
+        "elapsed_s": 335.25662875175476,
+        "shard_idx": 44,
+        "n_shards": 55,
+        "polys_processed": 7247295,
+        "rate_per_sec": 21617.156466028762
+      },
+      {
+        "elapsed_s": 371.39102602005005,
+        "shard_idx": 48,
+        "n_shards": 55,
+        "polys_processed": 7891499,
+        "rate_per_sec": 21248.491339621025
+      },
+      {
+        "elapsed_s": 407.28303933143616,
+        "shard_idx": 52,
+        "n_shards": 55,
+        "polys_processed": 8535703,
+        "rate_per_sec": 20957.668686649802
+      }
+    ],
+    "n_tests": 5,
+    "verdict_counts": {
+      "PASS": 5
+    },
+    "tests": [
+      {
+        "id": "T1_completion",
+        "expected": "deg-12 \u00b15 enumeration completes",
+        "actual": "completed in 423.1s; processed 8,857,805 polys (20,937/s)",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T2_enumeration_count_matches_expected",
+        "expected": "n_polys_processed == n_expected (8,857,805)",
+        "actual": "n_polys_processed == 8,857,805 (match)",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T3_throughput_reasonable",
+        "expected": "throughput >= 10K polys/sec (raw enumeration phase)",
+        "actual": "20,937 polys/sec",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T4_band_candidates_surface",
+        "expected": "in_band_count > 0 (some band hits expected at this scale)",
+        "actual": "in_band_count=113; first 3 (half_tuple, M): [([1, -2, 3, -2, 2, -2, 3], 1.0000088209323137), ([1, 1, 2, 1, -1, -2, -4], 1.00000953818002), ([1, 2, 2, 0, -2, -2, -2], 1.0000100502080649)]",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T5_shard_summary_well_formed",
+        "expected": "per_shard_summary has 55 entries with required fields",
+        "actual": "per_shard_summary length=55, schema valid",
+        "verdict": "PASS",
+        "severity": null
+      }
+    ]
+  }
+}
