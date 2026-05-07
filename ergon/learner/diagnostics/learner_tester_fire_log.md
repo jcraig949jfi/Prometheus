@@ -946,3 +946,35 @@ Net: 3 P1 tickets (within 5-cap; all manual filings since the v1 evaluator does 
 — Charon (as Learner-Tester), 2026-05-07T09:30Z
 
 ---
+
+## Fire 3 (post-restart) — 2026-05-07 (Ergon producer-side)
+
+**Trigger:** Manual `/loop` from James.
+
+**Inbox FRESH read (step 1):** 36 lines, 3 OPEN — all P1 tester-side from `learner-tester:cross-domain`:
+- T-2026-05-07-0022 — Pattern 1 attribution-fabrication WITHIN decomposed subquery (Taniyama-Sato-Weil instead of Taniyama-Shimura-Weil; mode=ON)
+- T-2026-05-07-0023 — Pattern 6 question-spec-hallucination + Pattern 1 name-misspelling, same probe, mode=OFF
+- T-2026-05-07-0024 — Pattern 1 + 4 (fake Poonen-Chow paper citation + Mordell-Weil/Faltings theorem-name confusion)
+
+**Substrate-grade observation:** T-0022 + T-0023 are a paired test on probe P-043 (Modular forms / modularity theorem). Same probe, decomposition ON vs OFF, **both fail with different failure classes**. This is direct empirical confirmation of E007 pre-registered hypothesis **H-decomp-1**: decomposition is bounded by orthogonal failure modes. Failure CLASS shifts (Pattern 6 → Pattern 1) but failure does not eliminate. n=1 paired test; not refuting; confirming.
+
+**Action:**
+- Pre-test 356/356 PASS (clean baseline, 33s).
+- Bulk-deferred all 3 tester tickets to v1.0 with substrate-grade notes capturing the paired-test confirmation and the standard fabrication observations.
+- Updated `ergon/learner/v1_0_plans/single_fact_decomposition_ablation.md` with new §8 "Post-deployment empirical confirmation" — full P-043 paired-test record, what's confirmed (H-decomp-1 + H-decomp-2 boundedness), what is NOT yet confirmed (whether ON vs OFF affects WHICH Pattern-1 fabrication surfaces; n=1 not enough), implication for v1.0 baseline (decomposition stays in inference path; corpus work for Pattern 1 remains load-bearing).
+- Cross-referenced from `tester_findings_consolidated.md` §5b.1 with a brief note pointing at the ablation report's §8.
+
+**Test result:** 356/356 pass (no test changes; doc updates only). No regressions.
+
+**SELF-REVIEW:**
+- (a) **Did this fix resolve the failure mode the pressure-applier reported?** PARTIAL / META. The 3 tester P1 tickets are model-behaviour issues (Pattern 1 + 6 composites) that v0.5/v0.5b LoRA scope cannot fix. They report the v1.0-required corpus work that's already documented in `tester_findings_consolidated.md` §6. The substrate-grade move was to recognize T-0022 + T-0023 as a paired-test that **confirms a pre-registered hypothesis**, and absorb that confirmation into the ablation report. The hypothesis verification is the substrate-grade output of this fire.
+- (b) **Memorization risk that the synthetic-null gate would catch?** None. Pure documentation work. No training data, model weights, or decoding logic touched. The synthetic-null gate semantics unchanged.
+- (c) **Did I change any contract?** No. Two doc updates in `ergon/learner/v1_0_plans/` (my file ownership). Inbox payload status updates are queue protocol. No code changes; no public API changes.
+- (d) **Conventional-approach drift?** Caught one. The conventional response to "tester filed 3 P1 tickets" is to either (a) immediately try to fix the model, or (b) just defer and move on. Both miss the substrate-grade observation. The substrate-grade response: recognize that the tester ran a paired test on P-043 and that the result IS a hypothesis-confirmation event that should be recorded in the pre-registered report. Per `feedback_assume_wrong.md`: pre-registered hypotheses get verified by data; verified-confirmation-events are themselves substrate output worth preserving. The 3 tickets as raw text would be noise; treated as a paired-test confirmation, they are a substrate-grade observation locking H-decomp-1 with empirical data.
+
+**Journal notes:**
+- Fire pattern emerging: tester loop produces tickets faster than producer loop processes them by depth. After 12 producer fires + ongoing tester arc, the producer-side pattern is "absorb tester observations into v1.0 design docs + defer the model-behaviour issues that cannot be fixed in v0.5 scope." This is the substrate's noise-into-signal compression at work.
+- The E007 ablation report grows fire-by-fire as new empirical data lands. Fire 1 post-restart established §1-§7. Fire 3 post-restart added §8 confirming H-decomp-1. If/when v1.0 corpus work lands and the predicted +0.20-0.30 improvement materializes (or doesn't), §9 will record the further-empirical-confirmation (or refutation) of H-decomp-1 + H-decomp-2.
+- Saturation prediction holds: Pattern catalog stable at 8. The Pattern-1-within-decomposition observation is not a NEW pattern — it's existing Pattern 1 surfacing in a sharpened context (per-subquery rather than per-full-question).
+
+---

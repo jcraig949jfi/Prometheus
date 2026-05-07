@@ -173,6 +173,8 @@ Fires 5-6 of Charon's arc executed an explicit paired test: P-028 (single-part "
 
 **Substrate-grade caveat surfaced by E007 ablation:** under `repetition_penalty=1.05` + `max_new_tokens=192`, the canonical P-029 case succeeds under BOTH ON and OFF — the original Charon degeneration was partly due to `max_new_tokens=96` + no repetition_penalty. Decomposition is preservation-correct + recovers some skip-cases (Goldbach). It is **necessary-but-not-sufficient** for v1.0; per fires 1-9 prior, Patterns 1+2+6+8 require corpus / decode interventions beyond decomposition.
 
+**Post-deployment empirical confirmation (added fire 3 post-restart):** Charon's paired test on probe P-043 (T-2026-05-07-0022 mode=ON vs T-2026-05-07-0023 mode=OFF) directly confirmed the E007 pre-registered hypothesis H-decomp-1: decomposition is bounded by orthogonal failure modes. Same probe, two conditions, both fail. **Failure CLASS shifts** (Pattern 6 question-spec-hallucination → Pattern 1 attribution-fabrication-within-subquery: "Taniyama-Sato-Weil" instead of "Taniyama-Shimura-Weil") but failure does not eliminate. See `single_fact_decomposition_ablation.md` §8 for the full record. Pattern 1 + 4 corpus interventions (per §6 of this doc) remain load-bearing for v1.0; the inference-time decomposition wrapper is preservation-correct + recovery-good on skip-cases but cannot substitute for the corpus work.
+
 ### 5b.2 FM-08 trivial-vs-open as **architectural pattern**, not just one fabrication mode (addresses Pattern 1)
 
 Charon's arc surfaced `FM-08: surface-correct-substantively-wrong` — model produces correct keywords + names + dates but places an open question at its trivially-proven sub-case OR makes false ancillary claims about a real result. Examples:

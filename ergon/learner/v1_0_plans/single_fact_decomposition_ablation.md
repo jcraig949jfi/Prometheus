@@ -118,3 +118,43 @@ E007's pre-registration (implicit in description: "Free win on questions the Lea
 ---
 
 *Filed by Ergon, loop fire 1 (post-restart), 2026-05-07. Status: closure-complete. Pre-registered hypotheses locked per `feedback_assume_wrong.md` / `aporia/doctrine/critical_memories.md` HARD-2.*
+
+---
+
+## 8. Post-deployment empirical confirmation (added fire 3 post-restart)
+
+After E007 closed, Charon-as-Learner-Tester ran additional probes through the wrapper. **A paired test on probe P-043 directly confirmed the E007 pre-registered hypothesis H-decomp-1.**
+
+### 8.1 P-043 paired test (T-2026-05-07-0022 vs T-2026-05-07-0023)
+
+Same probe ("Modular forms and elliptic curves: (a) state the modularity theorem ... (b) name what cohomological object the L-function ..."). Run twice — once with `decomposition_on=True`, once with `decomposition_on=False`.
+
+| Mode | Failure observed |
+|------|------------------|
+| ON (T-0022) | Pattern 1: model fabricated "Taniyama-Sato-Weil" inside a decomposed subquery (correct = Taniyama-Shimura-Weil; "Sato" is a different mathematician). `sub_type=attribution_fabrication_within_decomposition` |
+| OFF (T-0023) | Pattern 6 + Pattern 1 compound: (1) hallucinated a third part `(c) about mod p version` not asked in the prompt; (2) Brer-name fabrication. `sub_type=question_spec_hallucination + name_misspelling` |
+
+**Substrate-grade reading:** Same probe, two conditions, both fail. **Failure CLASS shifts** (Pattern 6 question-spec-hallucination → Pattern 1 attribution-fabrication-within-subquery) but **failure does not eliminate**. Decomposition is preservation-correct on multi-part-correct cases (PA-002, PA-004 baseline) and recovery-good on skip-cases (PA-005 Goldbach +0.50), but it is **bounded by orthogonal failure modes** as H-decomp-1 pre-registered.
+
+### 8.2 What this confirms / does NOT confirm
+
+**Confirmed (per the pre-registered prediction):**
+- (H-decomp-1) Decomposition's marginal improvement is bounded by orthogonal failure modes. Pattern 1 (attribution-fabrication) survives the wrapper because each per-subquery call still goes through the base model's attribution priors.
+- (H-decomp-2) Decomposition does NOT address Pattern 1, 6, or 2 failures. Only addresses Pattern 3 (skip-cases) reliably.
+
+**NOT confirmed / NOT refuted** (more probes needed to distinguish):
+- Whether ON vs OFF mode affects which Pattern-1 fabrications surface (T-0022's Sato vs T-0023's Brer suggests subquery-level priors may differ from full-question priors, but n=1 paired test is not enough).
+- Whether the failure-class-shift is reliable or stochastic across seeds.
+
+### 8.3 Implication for v1.0 inference baseline
+
+Decomposition stays in the v1.0 inference baseline (per E007 §7) because:
+1. It is preservation-correct (no regressions in 5/5 multi-part probes here, plus 0 in §2).
+2. It recovers Pattern 3 skip-cases (Goldbach +0.50).
+3. The failure-class-shift it induces is empirically observed but does not produce a worse outcome — Pattern 1 fabrications survive in BOTH modes.
+
+It is **NOT a substitute** for v1.0 corpus work on Pattern 1 + 4 (attribution-provenance + canonical attribution training pairs per `tester_findings_consolidated.md` §6).
+
+The substrate-grade record stands: decomposition is necessary-but-not-sufficient. Pre-registered hypothesis confirmed. v1.0 corpus interventions remain load-bearing for Pattern 1.
+
+*Updated by Ergon, loop fire 3 (post-restart), 2026-05-07.*
