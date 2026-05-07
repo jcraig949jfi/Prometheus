@@ -44,10 +44,15 @@ one ticket from your inbox.
 
 ## What to do this fire (6-step cycle)
 
-1. **Read inbox.** Open aporia/meta/queue/techne_inbox.jsonl. Pick
-   highest-priority OPEN ticket (P0 > P1 > P2 > P3, then oldest first).
-   If no OPEN tickets, document quiet tick in your session journal and
-   schedule next wake.
+1. **Read inbox FRESH from disk.** Open
+   aporia/meta/queue/techne_inbox.jsonl as a fresh file read every
+   fire. Do NOT rely on any session-cached inbox state from the
+   prior fire — Aporia files new tickets between your fires and you
+   will miss them if you reuse cached views. Parse the file line-by-
+   line, count OPEN tickets explicitly, and report the count in your
+   fire log. Then pick the highest-priority OPEN ticket (P0 > P1 >
+   P2 > P3, then oldest first). If no OPEN tickets, document quiet
+   tick in your session journal and schedule next wake.
 
 2. **Pre-test.** Run `pytest sigma_kernel/ prometheus_math/ -q` to
    verify clean baseline. If anything fails BEFORE this fire, file
@@ -72,7 +77,12 @@ one ticket from your inbox.
    references ticket id. Update ticket status to DONE in inbox JSONL,
    append to status_history, fill resolution field. Push.
 
-## Your inbox right now (5 starter tickets)
+7. **Re-read inbox FRESH before closing.** Before writing your
+   "fire closed" / "0 OPEN tickets" / quiet-tick summary, re-open
+   aporia/meta/queue/techne_inbox.jsonl fresh from disk and recount
+   OPEN tickets. Aporia or another agent may have filed new tickets
+   during your fire. Report the post-fire OPEN count from the fresh
+   read, not from any pre-fire cached value.
 
 - T001 P1: deg-12 plus/minus 5 brute-force enumeration (Ergon W3.2 dependency)
 - T002 P2: KillEmbedding K(c) implementation prep checklist (no code; cross-review window open)
@@ -128,8 +138,14 @@ drain one ticket from your inbox.
 
 ## What to do this fire (6-step cycle)
 
-1. **Read inbox.** aporia/meta/queue/ergon_inbox.jsonl. Pick
-   highest-priority OPEN ticket. Empty → quiet tick, schedule next wake.
+1. **Read inbox FRESH from disk.** Open
+   aporia/meta/queue/ergon_inbox.jsonl as a fresh file read every
+   fire. Do NOT rely on any session-cached inbox state from the
+   prior fire — Aporia and Learner-Tester file new tickets between
+   your fires and you will miss them if you reuse cached views.
+   Parse line-by-line, count OPEN tickets explicitly, report the
+   count in your fire log. Pick highest-priority OPEN ticket. Empty
+   → quiet tick, schedule next wake.
 
 2. **Pre-test.** `pytest ergon/learner/ ergon/pipeline_d/ -q`. Clean
    baseline required.
@@ -146,6 +162,12 @@ drain one ticket from your inbox.
    toward conventional-approach framing?
 
 6. **Commit + log + update ticket.** One commit per ticket. Push.
+
+7. **Re-read inbox FRESH before closing.** Before writing your
+   "fire closed" summary, re-open aporia/meta/queue/ergon_inbox.jsonl
+   fresh from disk and recount OPEN tickets. Aporia or Learner-Tester
+   may have filed new tickets during your fire. Report the post-fire
+   OPEN count from the fresh read, not from any pre-fire cached value.
 
 ## Your inbox right now (5 starter tickets)
 
