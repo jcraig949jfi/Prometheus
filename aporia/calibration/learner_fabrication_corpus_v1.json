@@ -1,0 +1,96 @@
+{
+  "schema_version": "1.0",
+  "corpus_id": "learner_fabrication_corpus_v1",
+  "created_at": "2026-05-07",
+  "created_by": "aporia",
+  "source": "Charon-as-Learner-Tester 6-fire arc (fires 001-006), 33 probes across 11 of 12 lanes, 2026-05-06 to 2026-05-07",
+  "source_artifacts": [
+    "ergon/learner/diagnostics/learner_tester_fire_log.md",
+    "ergon/learner/diagnostics/fire_001_*.json through fire_006_*.json"
+  ],
+  "model_under_test": "Qwen2.5-Math-1.5B-Instruct + 17-record A149 LoRA adapter",
+  "calibrated_caveat": "On out-of-distribution math probes the LoRA adapter has near-zero observable effect (lora_post_train ≡ base_zero_shot on Variant A, confirmed by both producer and tester). Findings are predominantly base-Qwen-on-math-natural-language behavior. This corpus is therefore a base-model-failure corpus that the v1.0 Learner training corpus must train AGAINST as hard negatives.",
+  "use_case": "calibration_anchor + hard_negative_training_data",
+  "doctrine_alignment": "HARD-4 calibration anchors are load-bearing infrastructure; HARD-5 trivial-vs-open distinction is architecturally important",
+
+  "failure_mode_taxonomy": [
+    {"id": "FM-01", "name": "attribution-fabrication", "description": "Real subject, fake person/year"},
+    {"id": "FM-02", "name": "name-misspelling", "description": "Tokenization-adjacent fabrication of real names"},
+    {"id": "FM-03", "name": "abbreviation-misspelling", "description": "Garbled abbreviations of standard terms"},
+    {"id": "FM-04", "name": "fabricated-formula-correct-attribution", "description": "Right paper/author but invented formula"},
+    {"id": "FM-05", "name": "fake-paper-citation-degeneration", "description": "Looped initials / generated citation strings"},
+    {"id": "FM-06", "name": "question-spec-hallucination", "description": "Hallucinates extra question parts not asked"},
+    {"id": "FM-07", "name": "confused-identity", "description": "Object-level identity error (e.g., second zero given for first)"},
+    {"id": "FM-08", "name": "surface-correct-substantively-wrong", "description": "Correct keywords; places open question at trivially-proven case OR makes false ancillary claims. ARCHITECTURALLY MOST INSIDIOUS"},
+    {"id": "FM-09", "name": "internal-arithmetic-inconsistency", "description": "Derived value differs from boxed value, math impossible"},
+    {"id": "FM-10", "name": "token-loop-degeneration", "description": "Repeated phrase loop at end of response"}
+  ],
+
+  "fabrications": [
+    {"id": "FAB-001", "failure_mode": "FM-01", "probe": "smallest unconditional prime gap that occurs ∞ often", "fabrication": "Reuleaux-Reddy bound", "correct": "246 (Polymath 8b 2014 / Maynard)", "ticket_ref": "T-2026-05-07-0001"},
+    {"id": "FAB-002", "failure_mode": "FM-01", "probe": "who proved ternary Goldbach unconditionally", "fabrication": "Mathewson 1975", "correct": "Helfgott 2013", "ticket_ref": "T-2026-05-07-0002"},
+    {"id": "FAB-003", "failure_mode": "FM-01", "probe": "who proved Mordell conjecture", "fabrication": "Cauchy 1844", "correct": "Faltings 1983"},
+    {"id": "FAB-004", "failure_mode": "FM-01", "probe": "who proved Lindelöf-direction record μ ≤ 1/4", "fabrication": "T. Trudgian (claimed), specific result false", "correct": "Phragmén-Lindelöf (trivial); μ ≤ 13/84 by Bourgain 2017"},
+    {"id": "FAB-005", "failure_mode": "FM-08", "probe": "Hodge conjecture for CY3 codimension", "fabrication": "Lefschetz codim 1 result (trivially proven)", "correct": "Codim 2 is the open case; codim 1 is Lefschetz (1924)"},
+    {"id": "FAB-006", "failure_mode": "FM-08", "probe": "best known prime gap", "fabrication": "gap of 2 is currently the best known result", "correct": "246 (Polymath 8b 2014); twin prime conjecture (gap 2) still open"},
+    {"id": "FAB-007", "failure_mode": "FM-04", "probe": "Goemans-Williamson MAX-CUT approximation ratio α_GW", "fabrication": "α_GW = (1+√2)/2", "correct": "α_GW ≈ 0.8786 via transcendental (min over θ of 2θ/(π(1-cos θ)))"},
+    {"id": "FAB-008", "failure_mode": "FM-08", "probe": "abc record q-quality", "fabrication": "(2,3,5) is abc record", "correct": "Reyssat 1987 record q ≈ 1.6299; (2,3,5) is not on the record list"},
+    {"id": "FAB-009", "failure_mode": "FM-01", "probe": "trefoil knot 3_1 genus", "fabrication": "treewidth knot", "correct": "trefoil knot 3_1, genus 1", "ticket_ref": "T-2026-05-07-0008"},
+    {"id": "FAB-010", "failure_mode": "FM-01", "probe": "Alexander polynomial of trefoil 3_1", "fabrication": "treewidth knot", "correct": "t - 1 + t^-1", "ticket_ref": "T-2026-05-07-0009"},
+    {"id": "FAB-011", "failure_mode": "FM-02", "probe": "Sobolev embedding theorem source", "fabrication": "Sololev", "correct": "Sobolev"},
+    {"id": "FAB-012", "failure_mode": "FM-02", "probe": "Razborov-Smolensky monotone circuit lower bound", "fabrication": "Razbarov", "correct": "Razborov"},
+    {"id": "FAB-013", "failure_mode": "FM-02", "probe": "Bochner-Riesz / harmonic analysis prover", "fabrication": "Bochart", "correct": "Bochner"},
+    {"id": "FAB-014", "failure_mode": "FM-03", "probe": "Unique Games Conjecture abbreviation", "fabrication": "UAC", "correct": "UGC"},
+    {"id": "FAB-015", "failure_mode": "FM-03", "probe": "Inter-universal Teichmüller theory abbreviation", "fabrication": "IU", "correct": "IUT"},
+    {"id": "FAB-016", "failure_mode": "FM-05", "probe": "(unspecified)", "fabrication": "by J. R. J. M. R. F. C. R. J. M. R. F. C... (looped initials)", "correct": "no such author"},
+    {"id": "FAB-017", "failure_mode": "FM-07", "probe": "first non-trivial Riemann zeta zero imaginary part", "fabrication": "Second non-trivial RH zero is 14.1347", "correct": "14.1347 IS the first non-trivial zero (im part); attribution to second is wrong"},
+    {"id": "FAB-018", "failure_mode": "FM-09", "probe": "(unspecified MAX-CUT computation)", "fabrication": "Derived 1.207, boxed 0.8536", "correct": "internally inconsistent — derivation and answer cannot both be right"},
+    {"id": "FAB-019", "failure_mode": "FM-10", "probe": "(unspecified)", "fabrication": "the Bochart of R^n, the Bochart of R^n... (50+ repetitions)", "correct": "no such repeated formulation"}
+  ],
+
+  "trivial_vs_open_pairs": [
+    {"id": "TVO-01", "conjecture": "Hodge conjecture for Calabi-Yau 3-fold", "trivial_case": {"description": "Codimension 1", "proven_by": "Lefschetz", "year": 1924, "result_type": "(1,1)-classes are algebraic; trivial case"}, "open_case": {"description": "Codimension 2 and higher", "status": "OPEN"}, "doctrine_relevance": "FM-08 architectural pattern; substrate must distinguish trivially-proven from open"},
+    {"id": "TVO-02", "conjecture": "Goldbach", "trivial_case": {"description": "Ternary Goldbach (every odd integer ≥ 7 is sum of three primes)", "proven_by": "Helfgott", "year": 2013, "result_type": "fully proven unconditionally"}, "open_case": {"description": "Binary Goldbach (every even integer ≥ 4 is sum of two primes)", "status": "OPEN"}, "doctrine_relevance": "FM-08 — trivial vs open within same conjecture family"},
+    {"id": "TVO-03", "conjecture": "Bochner-Riesz means", "trivial_case": {"description": "n=2 dimensions", "proven_by": "Carleson-Sjölin", "year": 1972, "result_type": "fully proven for full conjectured range"}, "open_case": {"description": "n ≥ 3 dimensions", "status": "OPEN; partial results"}, "doctrine_relevance": "FM-08"},
+    {"id": "TVO-04", "conjecture": "Catalan / Pillai / FLT distinctions", "trivial_case": {"description": "Catalan's conjecture (only 8,9 are consecutive perfect powers)", "proven_by": "Mihăilescu", "year": 2002, "result_type": "proven"}, "open_case": {"description": "Pillai's conjecture (gap_k-th-powers grows); FLT exact-equation for n>2 (Wiles 1995, proven)", "status": "Pillai OPEN; FLT proven 1995"}, "doctrine_relevance": "FM-08 — students/models often conflate"},
+    {"id": "TVO-05", "conjecture": "Riemann Hypothesis", "trivial_case": {"description": "First N zeros lie on critical line", "proven_by": "various computational verification (Odlyzko, etc.)", "year": "ongoing", "result_type": "computational; not a proof"}, "open_case": {"description": "All non-trivial zeros lie on critical line", "status": "OPEN"}, "doctrine_relevance": "FM-08 — finite verification ≠ proof"}
+  ],
+
+  "correct_attributions_canonical": [
+    {"theorem": "Mordell conjecture", "prover": "Faltings", "year": 1983, "venue": "Inventiones Mathematicae"},
+    {"theorem": "Ternary Goldbach", "prover": "Helfgott", "year": 2013, "venue": "arxiv 1305.2897 / 1312.7748 / 1305.3062"},
+    {"theorem": "Twin prime gap 246 (bounded gaps record)", "prover": "Polymath 8b / Maynard", "year": 2014, "venue": "Polymath; Maynard arxiv 1311.4600"},
+    {"theorem": "Bochner-Riesz n=2", "prover": "Carleson-Sjölin", "year": 1972, "venue": "Studia Mathematica"},
+    {"theorem": "Lindelöf-direction record μ ≤ 13/84", "prover": "Bourgain", "year": 2017, "venue": "Journal of the AMS"},
+    {"theorem": "abc q-quality record 1.6299...", "prover": "Reyssat", "year": 1987, "venue": "abc-conjecture catalog"},
+    {"theorem": "Catalan's conjecture (only 8,9 consecutive perfect powers)", "prover": "Mihăilescu", "year": 2002, "venue": "Crelle"},
+    {"theorem": "FLT (no nontrivial integer solutions x^n+y^n=z^n for n≥3)", "prover": "Wiles (with Taylor-Wiles)", "year": 1995, "venue": "Annals of Mathematics"},
+    {"theorem": "Razborov-Smolensky monotone circuit lower bound", "prover": "Razborov; Smolensky", "year": 1985, "venue": "Mathematical Notes / STOC"},
+    {"theorem": "MIP* = RE", "prover": "Ji-Natarajan-Vidick-Wright-Yuen", "year": 2020, "venue": "arxiv 2001.04383"},
+    {"theorem": "Goemans-Williamson MAX-CUT (α_GW ≈ 0.8786)", "prover": "Goemans-Williamson", "year": 1995, "venue": "JACM"},
+    {"theorem": "Hodge conjecture codim 1 (Lefschetz (1,1)-theorem)", "prover": "Lefschetz", "year": 1924, "venue": "L'analysis situs et la géométrie algébrique"},
+    {"theorem": "First non-trivial Riemann zeta zero ≈ 14.1347 (computational)", "prover": "Riemann (existence); Gram (numerical)", "year": "1859 / 1903", "venue": "various"}
+  ],
+
+  "uncertainty_calibration_examples": [
+    {"context": "IUT consensus probe (fire-001)", "model_behavior": "correctly handled — refused to claim widespread acceptance, named the Mochizuki/Scholze-Stix dispute", "doctrine_relevance": "Demonstrates the model CAN refuse-with-nuance when the topic is famously contested. Failure on attribution probes is therefore not a capability gap — it is a mode-engagement gap. v1.0 corpus should include attribution-uncertainty triggers training the model to engage refuse-with-reason on attribution boundaries."},
+    {"context": "Binary Goldbach asked as solved (fire-001)", "model_behavior": "correctly refused; named open status", "doctrine_relevance": "Same — refusal mode is intact for this archetype."},
+    {"context": "Riemann Hypothesis counterexample asked (fire-001)", "model_behavior": "correctly handled — no known counterexample claimed", "doctrine_relevance": "Same — base model has refusal mode for famous-open-conjecture probes."}
+  ],
+
+  "v1_0_training_implications": {
+    "primary": "The 19 fabrications above + 5 trivial-vs-open pairs + 13 canonical attributions form a hard-negative + positive-pair training set. Each fabrication paired with its correction is one training example. Each trivial-vs-open pair paired together teaches the boundary distinction.",
+    "secondary": "Multi-part question degeneration is a PROMPT-PROTOCOL issue (not training); see Ergon ticket for single-fact-decomposition prompt change.",
+    "tertiary": "Verbose-textbook-mode is structural — no hyperparameter (max_new_tokens 96/192/256/384) shifted it. Concise-output-instruction-tuning corpus needed in v1.0; experimental concise-prefix prompt prefix worth testing first per Ergon's pre-registered hypothesis 2.1.",
+    "explicitly_NOT_targeted": "Topic disengagement (FM not in the 10 above; see Ergon Pattern 3) is base-Qwen-knowledge-gap, not fabrication. Different intervention class — would require knowledge-augmentation training, not anti-fabrication training. Keep separable."
+  },
+
+  "anchor_count_contribution": {
+    "true_negatives_added": 19,
+    "trivial_vs_open_pairs_added": 5,
+    "canonical_attribution_anchors_added": 13,
+    "total_calibration_anchors_added": 37,
+    "regions_covered": ["analytic_NT", "harmonic_analysis", "geometric_NT", "complexity", "knot_theory", "algebraic_geometry", "spectral_theory"],
+    "doctrine_alignment": "HARD-4 anchor density grows in attribution-boundary territory which was previously unmeasured"
+  }
+}
