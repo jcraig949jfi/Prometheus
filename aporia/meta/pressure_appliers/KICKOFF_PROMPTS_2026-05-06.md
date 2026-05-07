@@ -84,14 +84,6 @@ one ticket from your inbox.
    during your fire. Report the post-fire OPEN count from the fresh
    read, not from any pre-fire cached value.
 
-- T001 P1: deg-12 plus/minus 5 brute-force enumeration (Ergon W3.2 dependency)
-- T002 P2: KillEmbedding K(c) implementation prep checklist (no code; cross-review window open)
-- T003 P2: Update sigma_kernel.md with v2.3 changes (documentation only)
-- T004 P3: Create Substrate-Tester fire log file (one-liner)
-- T005 P3: Audit gradient_archaeology for G4 prep (documentation only)
-
-Pick T001 first (highest priority, tightest dependency).
-
 ## ScheduleWakeup at end of fire
 
 delaySeconds=7200, prompt=<this exact prompt verbatim>
@@ -169,17 +161,6 @@ drain one ticket from your inbox.
    may have filed new tickets during your fire. Report the post-fire
    OPEN count from the fresh read, not from any pre-fire cached value.
 
-## Your inbox right now (5 starter tickets)
-
-- E001 P1: Eval-protocol fix — logit masking on Qwen2.5-Math-1.5B label vocab (THE load-bearing v0.5b sub-sprint)
-- E002 P2: Document synthetic env (W3.1) explicit acceptance criteria
-- E003 P2: W4.7 LR-control reproducibility lock (regression test)
-- E004 P3: Create Learner-Tester fire log file (one-liner)
-- E005 P3: Queue Trial 2 KillVector-revalidation for v1.0 (tracking only)
-
-Pick E001 first. The eval-protocol fix is the v0.5b sub-sprint James
-wants to land before the pitch artifact ships.
-
 ## ScheduleWakeup at end of fire
 
 delaySeconds=7200, prompt=<this exact prompt verbatim>
@@ -221,15 +202,26 @@ probes, files tickets per useless answer.
 - aporia/meta/pressure_appliers/PRESSURE_PROMPTS_v1.md (lane definitions
   for Pressure-applier 01 through 12)
 - aporia/meta/queue/README.md (ticket schema)
-- ergon/learner/trials/TIRE_KICK_v0.5_RESULT_2026-05-06.md (calibrates
-  what useful means)
+- aporia/calibration/learner_fabrication_corpus_v1.json (37 anchors:
+  19 fabrications, 5 trivial-vs-open pairs, 13 canonical attributions,
+  3 uncertainty-calibration positives. Use as ground truth for
+  evaluation; pull adversarial / calibration probes from here in
+  preference to ad-hoc generation.)
+
+## Decomposition wrapper awareness
+
+If ergon/learner/inference/single_fact_decomposition.py exists, the
+Learner supports a multi-part-decomposition wrapper with ON/OFF flag.
+For every multi-part probe you generate, run BOTH modes and report
+the delta in your fire log. Tester output that doesn't measure the
+wrapper is under-instrumented — it's the single highest-leverage
+inference change since loop start.
 
 ## What to do this fire
 
 1. Read your last fire's session journal at
-   ergon/learner/diagnostics/learner_tester_fire_log.md (created by
-   producer ticket E004; if missing, this fire's first job is to
-   create it). Avoid back-to-back same-lane.
+   ergon/learner/diagnostics/learner_tester_fire_log.md. Avoid
+   back-to-back same-lane.
 
 2. Pick 1-2 lanes from this menu:
    1. Harmonia-A (combinatorics)
@@ -261,8 +253,10 @@ probes, files tickets per useless answer.
    - target: ergon
    - type: useless-answer
    - priority: P0 unsafe; P1 hallucinated citation OR gravitational-well
-     drift; P2 otherwise
-   - payload: probe, expected, actual, severity, remediation_hint
+     drift OR FM-08 trivial-vs-open confusion (placing open question at
+     trivially-proven case); P2 otherwise
+   - payload: probe, expected, actual, severity, remediation_hint,
+     decomposition_mode (ON / OFF / N/A)
 
 6. Update fire log at ergon/learner/diagnostics/learner_tester_fire_log.md:
    timestamp, lanes covered, probes submitted, useless count, ticket ids.
@@ -307,34 +301,45 @@ structured stress, files tickets per anomaly.
 ## Read first
 
 - aporia/meta/pressure_appliers/PRESSURE_PROMPTS_v1.md (lane definitions
-  for Pressure-applier 13 through 22)
+  for Pressure-applier 13 through 30)
 - aporia/meta/queue/README.md (ticket schema)
-- pivot/substrate_v2_proposal_2026-05-05.md (current substrate state)
+- aporia/meta/pressure_appliers/corpora/ (landed Harmonia probe
+  corpora, used by lane 11 batch-sweep)
 
 ## What to do this fire
 
 1. Read your last fire's session journal at
-   charon/diagnostics/substrate_tester_fire_log.md (created by producer
-   ticket T004; if missing, first job is to create it). Avoid back-to-
-   back same-lane.
+   charon/diagnostics/substrate_tester_fire_log.md. Avoid back-to-back
+   same-lane.
 
-2. Pick 1-2 lanes from this menu:
-   1. CLAIM-flood (substrate throughput + verdict accuracy)
-   2. adversarial-CLAIM (input validation)
-   3. correlated-triangulation (TriangulationProtocol independence)
-   4. cross-domain-leak (domain isolation)
-   5. large-scale-enumeration (heavy job; takes full cap)
-   6. undecidable-canonicalization
-   7. precision-gradient (verdict stability)
-   8. ExclusionCertificate-extension
-   9. NearMissCorpus-leak (view separation)
+2. Pick 1-2 lanes from this 18-lane menu (lanes 13-18 dormant until
+   their corresponding Techne harness ticket lands; check first):
+    1. CLAIM-flood (substrate throughput + verdict accuracy)
+    2. adversarial-CLAIM (input validation)
+    3. correlated-triangulation (TriangulationProtocol independence)
+    4. cross-domain-leak (domain isolation)
+    5. large-scale-enumeration (heavy job; takes full cap)
+    6. undecidable-canonicalization
+    7. precision-gradient (verdict stability)
+    8. ExclusionCertificate-extension
+    9. NearMissCorpus-leak (view separation)
    10. real-paper (real arxiv ingestion)
+   11. batch-sweep (30 probes/fire from Harmonia corpora; ~10x
+       throughput; pick ~every other fire to avoid Techne overflow)
+   12. representation-pressure (3 capability-gap probes/fire; expect
+       P1-blocked-contract-change tickets that accumulate as backlog)
+   13. canonicalization-fuzz (live if T-2026-05-07-T006 DONE)
+   14. replay-determinism (live if T-2026-05-07-T012 DONE)
+   15. cross-machine (live if T013 DONE AND Charon M2 agent running)
+   16. concurrency-stress (live if T015 DONE)
+   17. mutation-testing (live if T014 DONE)
+   18. threshold-sensitivity (live if T017 DONE)
 
    For lane definitions, see PRESSURE_PROMPTS_v1.md sections
-   "Pressure-applier 13" through "22".
+   "Pressure-applier 13" through "30".
 
-   If lane 5 is selected, that fire takes the full cap; don't pair it
-   with a second lane.
+   If lane 5 or lane 11 is selected, that fire takes the full cap;
+   don't pair it with a second lane.
 
 3. Run stress per lane definitions. Most use Python harnesses; if
    missing, file ONE P1 ticket and stop.
@@ -364,8 +369,9 @@ delaySeconds=3600, prompt=<this exact prompt verbatim>
 - Honest stress generation. Random within lane.
 - Cap: max 5 tickets per fire.
 - Cap: 50 minutes per fire (1h cadence; leave buffer).
-- Lane rotation: over any 10-day window, all 10 lanes should get
-  exercised at least once.
+- Lane rotation: over any 10-day window, all live lanes should get
+  exercised at least once. Dormant lanes don't count toward rotation
+  until they activate.
 
 — Begin.
 ```
