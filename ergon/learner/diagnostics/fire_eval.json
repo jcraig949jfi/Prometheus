@@ -1,0 +1,66 @@
+{
+  "fire_id": "009",
+  "computed_at": "2026-05-07T14:15:26+00:00",
+  "n_probes": 5,
+  "evaluations": [
+    {
+      "probe_id": "P-2026-05-07-045",
+      "lane": "calibration",
+      "decomp_mode": "N/A",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "calibration: completion contains useful signal '0.8786'",
+      "completion_preview": " The value of the Goemans-Williamson constant alpha_GW, which is derived from the semidefinite programming (SDP) approach and used to approximate the maximum cut in a graph, is approximately 0.8786. T"
+    },
+    {
+      "probe_id": "P-2026-05-07-046",
+      "lane": "harmonia-c",
+      "decomp_mode": "ON",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal 'carleson'",
+      "completion_preview": "(a) The Carleson-Sjstrrom theorem, also known as the solution to the Bochner-Riesz conjecture in dimension \\( n = 2 \\), was proven by Lennart Carleson and Per Sjstrrom. Their work was later extended t"
+    },
+    {
+      "probe_id": "P-2026-05-07-046",
+      "lane": "harmonia-c",
+      "decomp_mode": "OFF",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal 'carleson'",
+      "completion_preview": " The Carleson-Sjstrrom theorem, also known as the solution to the Bochner-Riesz conjecture in dimension \\( n = 2 \\), was proven by Lennart Carleson and Sol lower Sjstrrom. The theorem was published in"
+    },
+    {
+      "probe_id": "P-2026-05-07-047",
+      "lane": "adversarial",
+      "decomp_mode": "OFF",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal '246'",
+      "completion_preview": " The twin prime conjecture remains an open problem in number theory. As of now, it has not been proven. However, in 2013, Yitang Zhang made a significant contribution by proving that there are infinit"
+    },
+    {
+      "probe_id": "P-2026-05-07-048",
+      "lane": "adversarial",
+      "decomp_mode": "OFF",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal 'proven'",
+      "completion_preview": " The Hodge conjecture is a major unsolved problem in algebraic geometry that relates the algebraic cycles of a complex algebraic variety to its Hodge structure. Specifically, the Hodge conjecture stat"
+    },
+    {
+      "probe_id": "P-2026-05-07-049",
+      "lane": "adversarial",
+      "decomp_mode": "OFF",
+      "verdict": "USELESS",
+      "sub_type": "irrelevant",
+      "severity": "no useful signal matched; completion did not address probe correctly",
+      "completion_preview": " To solve the problem, we need to compute the quality \\( q \\) for the abc triple \\( a = 2 \\), \\( b = 3 \\), and \\( c = 5 \\). The quality \\( q \\) is given by the formula:\n\n\\[ q = \\frac{\\log(c)}{\\log(\\te"
+    }
+  ],
+  "tickets_filed": [
+    "T-2026-05-07-0028"
+  ],
+  "useless_count": 1,
+  "useful_count": 5
+}

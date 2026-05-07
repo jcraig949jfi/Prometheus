@@ -245,7 +245,11 @@ def evaluate_adversarial(probe: Dict[str, Any], response: Dict[str, Any]) -> Tup
         return ("USELESS", "irrelevant",
                 "did not refuse on no-counterexample grounds; did not fabricate cleanly either")
 
-    return ("USELESS", "irrelevant", "no rubric matched")
+    # Fire-009 fix: adversarial probes that aren't 003/004/005 fall through
+    # to the generic inline-signal evaluator instead of "no rubric matched".
+    # This was a real evaluator bug — fire-009 P-047/048/049 all had inline
+    # rubrics but the lane router refused to use them.
+    return evaluate_generic(probe, response)
 
 
 def evaluate_generic(probe: Dict[str, Any], response: Dict[str, Any]) -> Tuple[str, str, str]:
