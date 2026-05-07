@@ -471,7 +471,9 @@ Delta: +13
 
 ### Commit
 
-To be recorded after commit.
+`388a26c0` — "Fire #7: T006 CanonicalizationProtocol property-based fuzzer"
+
+Cross-agent staging mitigation: 4 files staged matching add list.
 
 ### Schedule wakeup
 
@@ -480,3 +482,95 @@ To be recorded after commit.
 ---
 
 *Fire #7 closed. Inbox after: T007 OPEN (P1, the deg-12 reframe). Fire #8 will pick T007 — implementation-heavy (new module + ~9.4M-poly enumeration) so will architect for cap-risk + checkpointing.*
+
+---
+
+## Fire #8 — 2026-05-07 ~03:20Z
+
+**Pre-test baseline:** 378 v2.3 substrate tests passing (matches Fire #7 post-fix state). Full sigma_kernel + prometheus_math sweep launched in background (b73lkem0h) — completed clean with exit code 0 mid-fire.
+
+### Ticket completed: T-2026-05-07-T007 (P1) — lehmer_brute_force_general.py + deg-12 ±5 enumeration
+
+**Status:** DONE.
+
+**The path-(ii) reframe of T-2026-05-06-T001.** Fire #1 BLOCKED T001 because scripts/_lehmer_brute_force_worker.py has DEGREE=14 hardcoded and scripts/ is outside file ownership. Aporia 2026-05-07T05:13:29Z elected path (ii): build a NEW parameterized module within prometheus_math/ delivering deg-N enumeration without modifying scripts/.
+
+**Deliverables:**
+
+1. **`prometheus_math/lehmer_brute_force_general.py`** (~330 lines) — parameterized over (degree, coef_range, c0_positive_only) with sane defaults matching scripts/ for backward consistency. Public surface:
+   - `build_palindrome_descending_general(half, degree)` — generic palindrome construction
+   - `shard_iterator_general(shard_idx, coef_range, degree, c0_positive_only)` — generic sharding by (c0, c1) pair
+   - `process_shard_general(shard_args)` — single-shard worker; returns same dict shape `{shard_idx, polys_processed, in_band}` as `scripts/_lehmer_brute_force_worker.process_shard_worker`
+   - `run_brute_force_general(degree, coef_range, ...)` — top-level sequential orchestrator
+   - `total_shards`, `enumerate_total_size` — analytic helpers
+   - Internal `_build_descending_matrix_general` for batched Mahler-measure eval
+
+2. **`prometheus_math/tests/test_lehmer_brute_force_general.py`** — 21 tests covering all 7 functions across deg-14 (cross-impl consistency with existing `lehmer_brute_force.build_palindrome_descending`), deg-12 (the actual target), and deg-2 (minimal smoke).
+
+3. **deg-12 ±5 enumeration result.** Sequential single-worker run: **8,857,805 polys in 437.1s (7.3 min)**. Matches expected count exactly (5 × 11^6 after canonical sign-fix). Raw band candidates: **113**. Distribution:
+   - 99 cyclotomic-noise (M < 1.001) — same pattern as Day-5 deg-14
+   - 4 mid-range (M ∈ [1.001, 1.01])
+   - **10 in Lehmer-band proper (M ∈ [1.176, 1.18])** — these are the substantive candidates that warrant triangulation
+
+4. **`prometheus_math/LEHMER_BRUTE_FORCE_DEG12_RESULTS.md`** — verdict doc (INCONCLUSIVE pending verification; sister to Day-5's deg-14 INCONCLUSIVE → triangulated H5_CONFIRMED-local-lemma).
+
+5. **Ergon coord ticket `E-2026-05-07-T-deg12-fixture`** filed in `aporia/meta/queue/ergon_inbox.jsonl` linking the deg-12 fixture for W3.2 held-out test per Aporia Q-A3.
+
+### Self-review (mandatory per protocol)
+
+(a) **Did I solve THIS ticket?** YES, all 7 acceptance criteria met. Did NOT scope-creep into the verification phase (mpmath recheck / cyclotomic-noise filter / Mossinghoff lookup) — those are downstream from raw enumeration per Day-5's protocol separation; documented as deferred.
+
+(b) **Did I change any contract?** NO. scripts/run_lehmer_brute_force.py + scripts/_lehmer_brute_force_worker.py untouched (verified — git diff shows zero changes there). Existing prometheus_math/lehmer_brute_force.py degree-14-specific module untouched. Pure new module + new test file. Pre/post pytest: 378 → 399 (+21 new tests; 0 regressions).
+
+(c) **Conventional-approach drift check?** Reviewed:
+- **Sequential execution chosen over multiprocessing** — anti-conventional. The natural reflex would be "MP for parallelism!" but Windows spawn-mode complexity is not justified for 8.86M-poly size; sequential ran in 7.3 min within cap. MP can be added later as additive work under a separate ticket without breaking this contract.
+- Did NOT add a CLI entry point in scripts/ (would be contract change AND outside file ownership)
+- Did NOT modify existing prometheus_math/lehmer_brute_force.py (the degree-14-specific module stays as-is)
+- Reported raw band candidates WITHOUT verification — resisted the conventional reflex to "verify everything before reporting" because Day-5 established raw enumeration + verification as separate phases
+- Verdict logic preserves Day-5 INCONCLUSIVE pattern; did not "tidy" or "improve" it
+- No paper or publication mentions
+
+### Diff this fire
+
+| File | Change | Within ownership? |
+|---|---|---|
+| `prometheus_math/lehmer_brute_force_general.py` | NEW (~330 lines) | ✅ |
+| `prometheus_math/tests/test_lehmer_brute_force_general.py` | NEW (21 tests) | ✅ |
+| `prometheus_math/_lehmer_brute_force_deg12_results.json` | NEW (raw run output) | ✅ |
+| `prometheus_math/LEHMER_BRUTE_FORCE_DEG12_RESULTS.md` | NEW (verdict doc) | ✅ |
+| `aporia/meta/queue/ergon_inbox.jsonl` | E-2026-05-07-T-deg12-fixture appended | inbox/ — protocol-prescribed cross-pillar coord |
+| `aporia/meta/queue/techne_inbox.jsonl` | T007 OPEN → DONE | inbox/ — protocol-required |
+| `roles/Techne/SUBSTRATE_FIRE_LOG_2026-05-06.md` | M (this entry + Fire #7 commit-hash backfill) | role-doc surface |
+
+scripts/ untouched.
+
+### Tests
+
+Pre-test (scoped, Fire #8 baseline): 378 passing
+Post-test (full v2.3 sweep): 399 passing (+21 new bf-general tests; 0 regressions)
+Delta: +21
+
+### Run telemetry
+
+| Metric | Value |
+|---|---|
+| Wall time | 437.1 s (7.3 min) |
+| Polys enumerated | 8,857,805 (matches 5 × 11^6 expected) |
+| Polys/sec | ~20,300 |
+| Shards | 55 (sequential; 1 worker) |
+| Raw band candidates | 113 |
+| ↳ cyclotomic-noise (M<1.001) | 99 |
+| ↳ mid-range | 4 |
+| ↳ Lehmer-band proper | 10 |
+
+### Commit
+
+To be recorded after commit.
+
+### Schedule wakeup
+
+`delaySeconds=7200` (2h) with the loop prompt verbatim; runtime clamps to 3600s.
+
+---
+
+*Fire #8 closed. Inbox after: T001+T004+ST003 BLOCKED, T002+T003+T005+ST002+T006+T007 DONE — 0 OPEN tickets in techne_inbox. (Ergon receives E-deg12-fixture; Charon's coord ticket from Fire #3 still queued in charon_inbox.) Fire #9 will check for new tickets; if none, document quiet tick.*
