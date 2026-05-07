@@ -201,6 +201,35 @@
         "First substrate anchor with explicit reproducibility cross-fire-cross-decode-param record.",
         "Substrate-grade observation: rep_penalty 1.05->1.15 does NOT affect this calibration anchor's emission. The model has the value 0.8786 as a coherent token sequence that is robust to decode tweaks. fire-005 outlier 0.8536 was likely a one-off decode hiccup (potentially related to an earlier fire-005 model state)."
       ]
+    },
+    {
+      "id": "KC-007",
+      "fire_id": "015",
+      "probe_id": "P-2026-05-07-066",
+      "lane": "harmonia-c",
+      "decomposition_mode": "OFF",
+      "decode_params": {
+        "rep_penalty": 1.1,
+        "max_new_tokens": 384,
+        "do_sample": false,
+        "num_beams": 1
+      },
+      "topic": "Hales 1998 Kepler conjecture proof + 2005 Annals publication",
+      "canonical_output": "Thomas Hales in 1998. The proof involved a combination of mathematical reasoning and computer calculations. The final proof was published in the Annals of Mathematics in 2005.",
+      "verification": "Hales 'A proof of the Kepler conjecture', Annals of Mathematics 162(3):1065-1185, 2005. Announcement 1998 (Hales project page + popular press). Flyspeck formal verification 2014, published 'A formal proof of the Kepler conjecture', Forum of Mathematics, Pi vol 5 e2 (2017).",
+      "caveats_partial_anchor": [
+        "Prover: Thomas Hales - CORRECT",
+        "Year of announcement: 1998 - CORRECT",
+        "Year of Annals publication: 2005 - CORRECT (vol 162 issue 3 not specified)",
+        "Title 'Kepler conjecture' CORRUPTED to 'Kelevin conjecture' (FM-02 word-corruption emitted TWICE in same response - high-confidence corruption persists)",
+        "Pattern 1 paragraph-repetition contamination: ~10 paragraphs of 'The solution is written in a step-by-step format, making it easy to follow and understand.' x10 (rep_penalty=1.10 did NOT suppress)",
+        "Did NOT mention Flyspeck (2014 formal verification) or Forum of Mathematics Pi (2017)"
+      ],
+      "notes": [
+        "Seventh calibration anchor. PARTIAL: prover + year + venue-year all correct, but title corrupted ('Kelevin') and Pattern 1 contamination. Same tier as KC-002 Perelman: top-line attribution recoverable, surrounding prose degraded.",
+        "Confirms calibration-axis hypothesis on 21st-century-NEAR + computer-aided + high-canon: full attribution recoverable except for specific paper title (Kepler -> Kelevin FM-02 corruption is striking — the model has the result + prover + dates but corrupts the actual conjecture name).",
+        "FM-02 'Kelevin' is a NEW corruption archetype — distinct from FM-02 phonetic ('Ahed' from Apery in KC-006) and FM-02 surname ('Sally' for Cohen in BS-001). Three distinct FM-02 sub-patterns now catalogued."
+      ]
     }
   ],
   "calibration_axes_v1": {

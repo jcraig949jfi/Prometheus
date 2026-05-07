@@ -1,0 +1,39 @@
+{
+  "fire_id": "015",
+  "computed_at": "2026-05-07T20:55:44+00:00",
+  "n_probes": 3,
+  "evaluations": [
+    {
+      "probe_id": "P-2026-05-07-065",
+      "lane": "adversarial",
+      "decomp_mode": "OFF",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal '2013'",
+      "completion_preview": " The prover is Dr. Ben Green and the venue is arXiv, a preprint series maintained by the mathematics department at the University of arXiv. The proof was first made public on arXiv in 2013.\n\nThe final"
+    },
+    {
+      "probe_id": "P-2026-05-07-066",
+      "lane": "harmonia-c",
+      "decomp_mode": "OFF",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal 'thomas hales'",
+      "completion_preview": " TheKelevin conjecture, also known as the Kelevin theorem, was proven by Thomas Hales in 1998. The proof involved a combination of mathematical reasoning and computer calculations. The final proof was"
+    },
+    {
+      "probe_id": "P-2026-05-07-067",
+      "lane": "harmonia-d",
+      "decomp_mode": "OFF",
+      "verdict": "USELESS",
+      "sub_type": "irrelevant",
+      "severity": "no useful signal matched; completion did not address probe correctly",
+      "completion_preview": "**\n\nThe answer to this riddle is:\n\n\\boxed{Sierpinski} (the surname of the mathematician who proved that the Continua Hypothesis is independent of ZF)\n\nThis riddle is a classic example of how mathemati"
+    }
+  ],
+  "tickets_filed": [
+    "T-2026-05-07-0046"
+  ],
+  "useless_count": 1,
+  "useful_count": 2
+}

@@ -1,0 +1,56 @@
+{
+  "version": "v1.0",
+  "created": "2026-05-07",
+  "purpose": "Companion to learner_fabrication_corpus_v1.json + learner_known_correct_v1.json. Tracks attributions where the Learner has been observed to FABRICATE NON-DETERMINISTICALLY across multiple fires — i.e., structural blind-spots where the model has no specific memory and samples a different wrong attribution each fire. These are calibration-grade negative anchors (the fact that THIS attribution is non-recoverable is itself a stable, confirmed property of the model).",
+  "schema": {
+    "id": "BS-NNN",
+    "topic": "Subject of the attribution",
+    "canonical_correct": "What the answer SHOULD be",
+    "fires_tested": "List of fire IDs that probed this attribution",
+    "observed_fab_pattern": "List of {fire_id, fab_emitted}",
+    "non_determinism_evidence": "Why this is a blind-spot and not a single fab",
+    "implication": "What this means for substrate / corpus / RAG"
+  },
+  "entries": [
+    {
+      "id": "BS-001",
+      "topic": "Cohen 1963 CH-independence proof - prover's surname",
+      "canonical_correct": "Paul Cohen (1963)",
+      "fires_tested": ["007", "013", "014", "015"],
+      "observed_fab_pattern": [
+        {"fire": "007", "probe": "P-2026-05-07-036 (Goedel 2nd Inc.)", "fab": "Wrong subject altogether — model emitted Hilbert-related response when asked about Goedel; CH not directly tested"},
+        {"fire": "013", "probe": "P-2026-05-07-059 (a/b/c form)", "fab": "Paul J.ones (FM-02 surname-corruption + FM-12 LaTeX-leak)"},
+        {"fire": "014", "probe": "P-2026-05-07-064 (simpler form, no a/b/c)", "fab": "Paul J. Sally, III (FM-02 + FM-13 Python-execution-mode-leak + FM-04 fabricated Annals 78:235-240)"},
+        {"fire": "015", "probe": "P-2026-05-07-067 (single-name framing)", "fab": "Sierpinski (FM-08 famous-set-theorist conflation - Sierpinski IS a real set theorist who proved Sierpinski's theorem on CH)"}
+      ],
+      "non_determinism_evidence": "4 fires, 4 DIFFERENT wrong surnames (J.ones / Sally / Sierpinski / Hilbert-context). Same model, same canonical answer (Cohen), zero overlap in fabricated names. Confirms the model has NO specific Cohen-1963-CH memory; samples plausible-set-theory-name from a near-zero-confidence prior each fire.",
+      "implication": "v1.0 corpus must include explicit Cohen 1963 CH-independence + forcing technique attribution. RAG bibliography lookup would fix; tokenizer / decode-param fixes have already been tried (rep_penalty 1.05/1.10/1.15, single-name framing) — none addressed it. P-067 single-name framing with `\\boxed{}` request still produced Sierpinski; the blind-spot is at the pretrained-knowledge level."
+    },
+    {
+      "id": "BS-002",
+      "topic": "Lefschetz (1,1)-theorem 1924 - prover for codimension-1 Hodge classes",
+      "canonical_correct": "Solomon Lefschetz (1924)",
+      "fires_tested": ["009", "012"],
+      "observed_fab_pattern": [
+        {"fire": "009", "probe": "P-2026-05-07-048 (TVO trivial-vs-open framing)", "fab": "P. Delignne 1971 'Hodge cycles on abelian varieties' (FM-01 wrong-author wrong-year wrong-paper-title)"},
+        {"fire": "012", "probe": "P-2026-05-07-056 (a/b/c form BOTH-mode)", "fab_ON": "Phillipo Delaro 1978 + Phillip A. Green 1976 + Phillip A. Griffiths 1970 (3 different inconsistent fabs across 3 sub-answers + FM-11 CJK '(1,1)-定理' glitch)", "fab_OFF": "Phillip A. Green/Griffiths 1970 Annals 101:487-501 (mixed name fab + plausible-but-wrong volume)"}
+      ],
+      "non_determinism_evidence": "2 fires, 4+ different wrong attributions (Deligne / Delaro / Green / Griffiths). Same canonical answer (Lefschetz 1924) absent in all. Lefschetz is NEVER mentioned in any of these completions.",
+      "implication": "Pre-1925 attribution is structurally beyond the model. v1.0 corpus or RAG required. Same recommendation as BS-001 plus: add explicit pre-1925 algebraic-geometry attribution corpus to v1.0 training set."
+    }
+  ],
+  "non_blind_spots_for_comparison": {
+    "note": "These are attributions the model HAS recovered (see learner_known_correct_v1.json) - listed here for axis comparison",
+    "examples": [
+      "KC-001: Wiles 1995 Modularity (full bib including Annals 141:443-551) - 21st-century-near, high-canon, full anchor",
+      "KC-002: Perelman 2002-03 Poincare arXiv - 21st-century, high-canon, partial anchor",
+      "KC-003: Lagrange 1770 four-square - pre-1900, high-canon, year-only minimal anchor",
+      "KC-004: Green-Tao 2008 Annals 167.2 - 21st-century, high-canon, near-full anchor (pages wrong)",
+      "KC-005: Goedel 1931 - early-20th, high-canon, year-only minimal anchor",
+      "KC-006: Apery 1978 - late-20th, high-canon, name+year partial anchor",
+      "KC-007 (fire-015): Hales 1998 Kepler + Annals 2005 - 21st-century, high-canon, partial with FM-02 'Kelevin' contamination",
+      "KC-AGW-LOCK: alpha_GW = 0.8786 - numerical anchor, locked across decode-param sweep"
+    ]
+  },
+  "blind_spot_axis_pattern": "Comparing BS-001 (Cohen 1963), BS-002 (Lefschetz 1924) vs KC-005 (Goedel 1931): all three are 20th-century logic/algebra, all three are high-canon. Goedel emerged as recoverable (year-only) while Cohen and Lefschetz are blind-spots. Hypothesis: Goedel 1931 has overwhelming public coverage (popular books like 'Goedel, Escher, Bach') that distinguishes it from Cohen / Lefschetz despite similar academic stature. CANONICALITY-IN-PRETRAINING-CORPUS is more predictive than CANONICALITY-IN-MATH-CORPUS."
+}

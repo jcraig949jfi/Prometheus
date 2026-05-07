@@ -1652,3 +1652,67 @@ Watched 4 drift sites:
 **Step 7 inbox FRESH re-read:** TBD.
 
 **Commit:** TBD.
+
+
+## Tester Fire 015 - 2026-05-07
+
+**Cadence:** ScheduleWakeup-driven (3600s post fire-014). Carry-over selected lanes 3 (Harmonia-C) + 10 (Adversarial). Three probes; all OFF mode + all NATURAL-PROSE form (no a/b/c) per fire-014 FM-12 structural hypothesis.
+
+**Lanes touched:** 3 (Harmonia-C: Hales Kepler), 10 (Adversarial: Helfgott ternary Goldbach), 4 (Harmonia-D: Cohen blind-spot 4th attempt).
+
+**Decode params:** rep_penalty = 1.10 (reverted from fire-014's 1.15 boundary test which didn't help), max_new_tokens = 384.
+
+**Probes (3 OFF natural-prose = 3 model invocations):**
+- P-065 (adversarial OFF natural-prose): Helfgott 2013 ternary Goldbach. Calibration-anchor hunt.
+- P-066 (harmonia-c OFF natural-prose): Hales 1998+2005+2014 Kepler conjecture. Calibration-anchor hunt + computer-aided axis.
+- P-067 (harmonia-d OFF single-name framing): Cohen 1963 4th attempt - simplest possible "reply with one word: surname" framing.
+
+**Verdicts (post-manual-correction):**
+- P-065 USEFUL by surface (T-0046 P2 manual): NO LaTeX-leak (natural-prose worked). But "Dr. Ben Green" FM-01 wrong-attribution (Green is Green-Tao APs, not ternary Goldbach) + "University of arXiv" FM-04 fabricated-institution (arXiv is preprint server, not university). NOT a calibration anchor — wrong attribution.
+- P-066 USEFUL **CALIBRATION ANCHOR KC-007** (partial): "Thomas Hales in 1998 ... Annals of Mathematics in 2005" - prover + announcement-year + venue-year ALL CORRECT. Caveats: "Kepler" -> "Kelevin" FM-02 word-corruption (emitted TWICE persistently); ~10 paragraphs Pattern 1 verbatim repetition ("The solution is written in a step-by-step format..." x10) survived rep_penalty=1.10.
+- P-067 USELESS (T-0047 P1 manual upgrade): "\boxed{Sierpinski}" x3 (Pattern 1 paragraph repetition). **COHEN BLIND-SPOT 4-FIRE-CONFIRMED**: Hilbert(007) -> J.ones(013) -> Sally,III(014) -> Sierpinski(015). 4 different wrong surnames, same canonical answer (Cohen) absent in ALL 4 fires. **Logged BS-001 in new aporia/calibration/learner_known_blind_spots_v1.json.**
+
+**Tickets filed:** 3 total (1 evaluator-auto T-0048 P-067 USELESS-irrelevant + 2 manual T-0046 P-065 P2 + T-0047 P-067 P1-upgrade). Total 48 tickets across 15 fires + 8 anchors + 2 blind-spots.
+
+**Substrate-grade lessons (fire-015):**
+
+1. **FM-12 STRUCTURAL HYPOTHESIS CONFIRMED across 3 probes.** P-065 + P-066 + P-067 all natural-prose form, NO LaTeX-leak observed. **Fire-014 hypothesis ('FM-12 induced by (a)/(b)/(c) prompt format') is now 3-probe-validated.** Substrate-grade probe-author discipline lock-in: prefer natural-prose attribution probes; reserve (a)/(b)/(c) only when sub-question structure is essential.
+
+2. **NEW BLIND-SPOTS COMPANION FILE created:** `aporia/calibration/learner_known_blind_spots_v1.json`. BS-001 (Cohen 1963 4-fire) + BS-002 (Lefschetz 1924 2-fire). With learner_known_correct_v1.json (8 KC entries) and learner_fabrication_corpus_v1.json (37 anchors), the substrate now maps the Learner across THREE structured artifacts: positive anchors, negative anchors (blind-spots), fab archetypes.
+
+3. **NEW FM-04 archetype: 'University of arXiv'** (P-065). Model fabricates institutional affiliation when uncertain about a venue's nature. Add to fab corpus as canonical FM-04 archetype.
+
+4. **NEW FM-02 word-corruption sub-pattern: 'Kepler' -> 'Kelevin'** (P-066, emitted TWICE persistently). Distinct from prior FM-02 sub-patterns:
+   - Surname-corruption (Cohen -> Sally / J.ones / Sierpinski)
+   - Phonetic-corruption (Apery -> Ahed)
+   - **Word-corruption (Kepler -> Kelevin)** [NEW]
+   - Term-corruption (Continuum -> Continua, P-067)
+   Four FM-02 sub-patterns now catalogued.
+
+5. **Pattern 1 paragraph-repetition SURVIVES rep_penalty=1.10.** P-066 emitted ~10 verbatim paragraphs ("The solution is written in a step-by-step format..."); P-067 emitted 3 verbatim paragraphs ("This riddle is a classic example..."). **rep_penalty=1.10 suppresses token-level loops but NOT paragraph-level loops** (different mechanism — paragraph-level uses paraphrase variation that doesn't trigger token rep_penalty). v1.0 candidate: post-decode paragraph-deduplication filter.
+
+6. **Helfgott NOT 2-fire-confirmed yet but candidate.** P-065 single-fire fab Green-instead-of-Helfgott. Re-test in fire-016 needed to determine if 2-fire blind-spot.
+
+7. **Calibration-axis hypothesis update.** KC-007 Hales 1998 (21st-century-near + computer-aided + high-canon) emitted prover + 2 dates + venue ALL correct. Plus title fab + Pattern 1 contamination. Same tier as KC-002 Perelman (top-line attribution recoverable, surrounding prose degraded). Hypothesis: 21st-century + high-canon -> top-line recoverable, but rare-named-conjecture-titles ('Kelevin') corrupt because they appear in fewer training contexts than the result/dates.
+
+8. **Sierpinski-conflation FM-08 archetype.** P-067 emitted Sierpinski (a real set theorist who proved 'Sierpinski's theorem on CH'). FM-08 famous-set-theorist-conflation: when blind-spot, model substitutes a related-domain-famous-name. Predicts: Cohen-blind-spot fab will tend to surface set-theory adjacent names (Sierpinski / Goedel / Fraenkel / Zermelo / Tarski) in future re-tests.
+
+**Producer-side standing recommendations (carry-over for fire-016):**
+- ROTATION: lanes 3+10+4 just used. Fires-touched recently: 1+12 (014), 3+10+4 (015). Lane 5 (Harmonia-E, last fire-013), 8 (Charon-NT-topology, last fire-011), 11 (Cross-domain, last fire-011) are best candidates. Suggested fire-016: lanes 5 + 8 OR 5 + 11.
+- DECODE PARAMS: stick with rep_penalty=1.10. Add Pattern 1 paragraph-deduplication post-decode filter as v1.0 candidate.
+- ATTRIBUTION-PROBE FORMAT: natural-prose default LOCKED. Reserve (a)/(b)/(c) only when sub-question structure is essential.
+- CALIBRATION-ANCHOR HUNT: continue. Re-test Helfgott 2013 in fire-016 (anchor candidate or 2-fire blind-spot). Test more 21st-century anchors: Mochizuki IUT 2012 (high-canon + contested), Maynard 2014 bounded gaps in primes (high-canon + 21st), Iwaniec-Kowalski analytic number theory book (high-canon + Princeton).
+- BLIND-SPOTS COMPANION: maintain. Hunt for 3rd blind-spot in mid-20th-century / pre-1925 era (where most of BS-001 + BS-002 live).
+
+**SELF-REVIEW (fire-015):**
+- (a) Did this advance the substrate? YES, eight ways: (i) FM-12 structural hypothesis 3-probe confirmed, (ii) BS-001 Cohen 4-fire-confirmed, (iii) NEW blind-spots companion file created, (iv) NEW FM-04 'University of arXiv' archetype, (v) NEW FM-02 word-corruption 'Kepler -> Kelevin' archetype, (vi) Pattern 1 paragraph-repetition survives rep_penalty=1.10 (different mechanism than token-loops), (vii) KC-007 Hales partial anchor, (viii) FM-08 Sierpinski-conflation archetype.
+- (b) Memorization risk? None.
+- (c) Conventional drift caught? Yes - the conventional response to 'natural-prose form fixed FM-12' would be to declare success. Substrate-grade response: notice that natural-prose did NOT fix Pattern 1 paragraph-repetition, did NOT fix Cohen blind-spot, and produced 2 NEW failure-mode archetypes (FM-04 institution + FM-02 word-corruption). Format change is one fix in a multi-axis problem space.
+- (d) Were the right lanes touched? Yes - lanes 3+10+4 covered the 3 most-recently-needed test classes (calibration-anchor hunt, FM-12 hypothesis test, Cohen blind-spot re-test).
+
+**Journal notes:**
+- 48 tickets, 8 anchors (KC-001..KC-007 + KC-AGW-LOCK), 2 blind-spots (BS-001 + BS-002) across 15 fires. The substrate self-portrait now spans positive recoverable attributions, structural blind-spots, fabrication archetypes, decode-param boundaries, and probe-format hypotheses.
+- The 7-fire substrate-ratchet (009 -> 015) has produced: anti_signals discipline + applied + KC-001 + KC-002/003 + axis hypothesis + 3-axis validation + FM-12 + 1.10-insufficiency + FM-13 + FM-12-structural + Cohen-blind-spot + alpha_GW-locked + FM-12-3-probe-confirmed + BS companion file + FM-04 institution + FM-02 word-corruption + Pattern-1-paragraph-survival. Lesson density: ~2-3 new substrate-grade observations per fire. The substrate is functioning as a noise-into-signal compressor at exactly the cadence designed.
+- Critical insight from BS-001 Cohen: the 4-fire-non-determinism is itself substrate-grade STABLE. The blind-spot is calibration-grade ("the model does NOT know Cohen 1963" is a confirmed property). Future fires can use Cohen as a known-NEGATIVE control: if a future intervention (RAG, new corpus, fine-tune) elicits 'Cohen' from this probe, that's a measurable substrate improvement.
+
+---

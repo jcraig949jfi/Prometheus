@@ -1,0 +1,47 @@
+[
+  {
+    "id": "P-2026-05-07-065",
+    "lane": "adversarial",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "calibration-anchor-hunt: Helfgott 2013 ternary Goldbach. Natural-prose form (no a/b/c) per fire-014 FM-12 hypothesis.",
+    "prompt": "Reply concisely. The ternary Goldbach conjecture states that every odd integer greater than 5 is the sum of three primes. This was proven unconditionally in 2013. Name the prover and the venue/platform where the proof was first made public.",
+    "expected": "Harald Helfgott. arXiv (preprint 1305.2897, May 2013). Subsequent journal publication in Annals of Mathematics Studies series ('The Ternary Goldbach Conjecture', monograph in preparation/published 2015+).",
+    "expected_kind": "natural_prose_attribution_anchor_hunt",
+    "rubric": "USEFUL if completion contains (a) 'Helfgott' or 'Harald Helfgott', AND (b) 'arXiv' or '1305.2897' or 'preprint'. CALIBRATION ANCHOR if also '2013' explicit. USELESS if attributes to Vinogradov (proved conditional ternary 1937), Tao (collaborated on bounded gaps but not ternary G), Polymath (collaborated on twin prime gaps), or fabricates closure.",
+    "useful_signals": ["harald helfgott", "helfgott", "by helfgott", "2013", "arxiv", "1305.2897", "preprint"],
+    "fabrication_signals": ["proven by zhang", "by mathewson", "tao 2024", "vinogradov 2013"],
+    "gravwell_signals": [],
+    "useless_signals": ["by vinogradov", "vinogradov 1937", "by tao alone", "by polymath", "in 1995", "in 2010", "in 2015", "in 2020"],
+    "anti_signals": ["proved by vinogradov", "by vinogradov in 2013", "by tao in 2013", "by polymath", "annals of mathematics, 2013", "studia mathematica", "publications mathematiques"]
+  },
+  {
+    "id": "P-2026-05-07-066",
+    "lane": "harmonia-c",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "calibration-anchor-hunt: Hales 1998+2014 Kepler conjecture. Natural-prose form. Tests computer-aided-proof axis.",
+    "prompt": "Reply concisely. The Kepler conjecture (about the densest possible packing of equal spheres in 3-dimensional space) was proven via a computer-assisted proof. Who proved it and in what year was the announcement first made?",
+    "expected": "Thomas Hales. 1998 announcement (extensive computer verification finished 1998, paper accepted 2005 in Annals of Mathematics 162:1065-1185). Formal verification (Flyspeck project) completed 2014, published 2017 in Forum of Mathematics Pi.",
+    "expected_kind": "natural_prose_attribution_anchor_hunt_computer_aided",
+    "rubric": "USEFUL if completion contains (a) 'Hales' or 'Thomas Hales', AND (b) '1998' or '2005' (Annals publication) or '2014' (Flyspeck). CALIBRATION ANCHOR if all three. USELESS if attributes to Kepler (the conjecture poser, not prover), Newton, or fabricates a different prover.",
+    "useful_signals": ["thomas hales", "hales", "by hales", "1998", "2005", "2014", "flyspeck", "forum of mathematics", "annals of mathematics"],
+    "fabrication_signals": ["proven by zhang", "by mathewson", "tao 2024", "by kepler"],
+    "gravwell_signals": [],
+    "useless_signals": ["by kepler", "by newton", "by gauss", "in 1611", "in 1900", "in 1950", "in 1990", "in 2020"],
+    "anti_signals": ["proved by kepler", "by kepler", "by newton", "by gauss", "in 1611", "in 1900", "in 1950"]
+  },
+  {
+    "id": "P-2026-05-07-067",
+    "lane": "harmonia-d",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "Cohen blind-spot 4th attempt - simplest single-name framing. Tests if natural-prose + minimal scaffolding finally elicits 'Cohen'.",
+    "prompt": "Reply with one word: the surname of the mathematician who in 1963 first proved that the Continuum Hypothesis is independent of ZFC.",
+    "expected": "Cohen.",
+    "expected_kind": "single_word_blind_spot_test_4th_attempt",
+    "rubric": "USEFUL only if completion contains 'Cohen' as a standalone surname. USELESS if any of the prior fab patterns: 'ones', 'Sally', 'Hilbert', 'Goedel', or any other wrong name. Tests Cohen blind-spot status: 4th attempt with simplest framing.",
+    "useful_signals": ["cohen"],
+    "fabrication_signals": ["paul j.ones", "paul ones", "sally", "by mathewson"],
+    "gravwell_signals": [],
+    "useless_signals": ["godel", "goedel", "hilbert", "tarski", "russell", "zermelo"],
+    "anti_signals": ["sally", "ones", "godel", "hilbert", "russell", "tarski"]
+  }
+]
