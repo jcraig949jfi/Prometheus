@@ -48,7 +48,7 @@ import json
 import math
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Iterable, Optional, Sequence
+from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
 import mpmath as mp
 import sympy as sp
@@ -557,6 +557,143 @@ def main() -> int:  # pragma: no cover -- CLI wrapper
     print(f"[boundary_layer_fixture] wrote {heldout_path} ({len(heldout)} records)")
     print(f"[boundary_layer_fixture] wrote {meta_path}")
     return 0
+
+
+# ---------------------------------------------------------------------------
+# Deg-12 held-out fixture (Techne fire-8 commitment T12; ingested fire-9)
+# ---------------------------------------------------------------------------
+#
+# Per coordination ticket E-2026-05-07-T-deg12-fixture (techne-fire-8):
+# Techne shipped the deg-12 ±5 palindromic brute-force fixture. 8.86M polys
+# enumerated; 113 raw band candidates in [1.000001, 1.18]. Verdict:
+# INCONCLUSIVE-pending-verification — triangulation phase deferred (Path
+# A/B/C/D verification has not been run, so cls / cls_post_fold labels
+# are NOT yet assigned). Per file ownership (prometheus_math/ is Techne's
+# territory), Ergon ingests as UNLABELED structural held-out: the
+# poly_coefficients + mahler_measure are sufficient for val_heldout_region
+# metrics that don't require ground-truth class labels (n records,
+# distribution by mahler band, model-prediction-distribution, etc.). When
+# Techne ships the triangulation follow-up, this loader will gain a
+# `with_triangulated_labels=True` mode.
+
+DEFAULT_DEG12_RESULTS = _PROMETHEUS_MATH / "_lehmer_brute_force_deg12_results.json"
+
+DEG12_DEGREE = 12
+DEG12_N_FREE = 7  # palindromic deg-12 has 7 free coefficients (positions 0..6)
+
+
+@dataclass(frozen=True)
+class Deg12HeldoutRecord:
+    """Unlabeled deg-12 ±5 palindromic in-band record (held-out for W3.2).
+
+    Sister type to ``BoundaryLayerRecord`` but with a thinner schema
+    reflecting the deferred-triangulation state of the deg-12 brute-force
+    fixture. ``cls`` / ``cls_post_fold`` are deliberately ABSENT (not
+    Optional[None] — absent) because ground-truth class assignment requires
+    Path A/B/C/D triangulation that Techne has not yet run on this slice.
+
+    NOT a subclass of BoundaryLayerRecord. Existing code that consumes
+    BoundaryLayerRecord is unaffected. Loaders that want to use this
+    held-out for unsupervised metrics import Deg12HeldoutRecord directly.
+    """
+
+    poly_coefficients: list[int]                 # full deg-12 palindrome, length 13
+    free_coefficients: list[int]                 # length 7, positions 0..6
+    mahler_measure: float                        # one precision; matches Techne's run
+    in_band: bool                                # always True for entries in this fixture
+    band_lower: float
+    band_upper: float
+    triangulation_status: str                   # always "pending" until Techne ships verification
+    source: str = "lehmer_deg12_palindromic_pm5_path_a_brute_force"
+
+
+def _palindromize_deg12(free: list[int]) -> list[int]:
+    """Reconstruct full deg-12 palindromic coefficient list from 7 free coeffs.
+
+    Free indices 0..6; palindromic → coeff[12-i] = coeff[i] for i in 0..5;
+    coeff[6] is the central coefficient (free position 6)."""
+    if len(free) != DEG12_N_FREE:
+        raise ValueError(f"deg-12 palindrome needs {DEG12_N_FREE} free coeffs; got {len(free)}")
+    full = [0] * (DEG12_DEGREE + 1)
+    for i in range(DEG12_N_FREE):
+        full[i] = int(free[i])
+    for i in range(DEG12_N_FREE - 1):  # 0..5 mirror to 12..7
+        full[DEG12_DEGREE - i] = int(free[i])
+    return full
+
+
+def load_deg12_heldout_fixture(
+    path: Optional[Path] = None,
+) -> Tuple[List[Deg12HeldoutRecord], Dict[str, Any]]:
+    """Load Techne's deg-12 ±5 brute-force fixture as an unlabeled held-out.
+
+    Returns: (records, metadata) where metadata mirrors the source JSON's
+    top-level fields (degree, coef_range, band_upper, n_polys_processed,
+    etc.) so downstream code can record the held-out's provenance.
+
+    Records have NO class labels (ground-truth assignment requires
+    triangulation; deferred to Techne). Use for structural / unsupervised
+    val_heldout_region metrics (count, mahler distribution, prediction-
+    distribution, structural similarity to deg-14 fixture).
+    """
+    src = Path(path) if path is not None else DEFAULT_DEG12_RESULTS
+    if not src.exists():
+        raise FileNotFoundError(
+            f"deg-12 fixture not found at {src}. Per coordination ticket "
+            f"E-2026-05-07-T-deg12-fixture, Techne ships this; if missing, "
+            f"contact via aporia/meta/queue/techne_inbox.jsonl."
+        )
+
+    raw = json.loads(src.read_text(encoding="utf-8"))
+    band_lower = float(raw.get("band_lower", 1.000001))  # default per Techne fixture summary
+    band_upper = float(raw.get("band_upper", 1.18))
+
+    records: List[Deg12HeldoutRecord] = []
+    for entry in raw.get("in_band", []):
+        # Each entry is a 2-tuple [free_coefficients_list, mahler_measure_float]
+        if not (isinstance(entry, list) and len(entry) == 2):
+            raise ValueError(f"unexpected entry shape in deg-12 fixture: {entry!r}")
+        free, mahler = entry
+        records.append(Deg12HeldoutRecord(
+            poly_coefficients=_palindromize_deg12(list(free)),
+            free_coefficients=[int(c) for c in free],
+            mahler_measure=float(mahler),
+            in_band=True,
+            band_lower=band_lower,
+            band_upper=band_upper,
+            triangulation_status="pending",
+        ))
+
+    metadata = {
+        "degree": int(raw.get("degree", DEG12_DEGREE)),
+        "coef_range": list(raw.get("coef_range", [-5, 5])),
+        "band_upper": band_upper,
+        "band_lower": band_lower,
+        "n_polys_processed": int(raw.get("n_polys_processed", 0)),
+        "in_band_count": int(raw.get("in_band_count", len(records))),
+        "elapsed_seconds": float(raw.get("_elapsed_seconds", 0.0)),
+        "run_timestamp": raw.get("_run_timestamp"),
+        "triangulation_status": "pending",  # block-level; per-record same
+        "source_file": str(src),
+        "source_module": "prometheus_math.lehmer_brute_force_general",
+        "techne_ticket": "E-2026-05-07-T-deg12-fixture",
+    }
+    return records, metadata
+
+
+__all__ = [
+    # deg-14 fixture (existing)
+    "BoundaryLayerRecord",
+    "load_17_entry_fixture",
+    "load_heldout_fixture",
+    "dump_to_jsonl",
+    # deg-12 fixture (fire-9, ingested from Techne T12)
+    "Deg12HeldoutRecord",
+    "load_deg12_heldout_fixture",
+    "DEFAULT_DEG12_RESULTS",
+    "DEG12_DEGREE",
+    "DEG12_N_FREE",
+]
 
 
 if __name__ == "__main__":  # pragma: no cover

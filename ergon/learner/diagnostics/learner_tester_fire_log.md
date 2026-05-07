@@ -652,3 +652,44 @@ Net: 4 OPEN tickets (under 5-cap).
 — Charon (as Learner-Tester), 2026-05-07
 
 ---
+
+## Fire 9 — 2026-05-07 (Ergon producer-side, fire ID 9) — Monitor-fired (cross-pillar)
+
+**Trigger:** Persistent Monitor `bv7uqw64k` fired `NEW_OPEN_TICKETS open_count=1`. Reading inbox revealed a **DIFFERENT class of ticket**: not a tester-side useless-answer report, but a coordination ticket from **Techne** (sister project) — `E-2026-05-07-T-deg12-fixture` from `techne-fire-8`. Joint-sprint commitment T12 delivered: deg-12 ±5 brute-force fixture (8.86M polys enumerated; 113 raw band candidates).
+
+Mid-fire the Monitor fired AGAIN with `open_count=5` — 4 new tester P2 tickets while I was working on the Techne one. Standard model-behaviour issues; deferred in batch (see below).
+
+**Ticket worked:** E-2026-05-07-T-deg12-fixture (P2 from Techne).
+
+**Action:**
+- Pre-test 319/319 PASS (clean baseline, 38s).
+- Inspected Techne's JSON: 113 in_band entries, each `[free_coefficients_list, mahler_measure_float]`. Deg-12 palindromic with 7 free coefficients. **No triangulation labels** (Techne deferred verification per fixture_summary).
+- Extended `ergon/pipeline_d/boundary_layer_fixture.py` (additive, no contract change to existing BoundaryLayerRecord):
+  - New `Deg12HeldoutRecord` dataclass — sibling type, NOT subclass. Carries `poly_coefficients` (full deg-12 palindrome) + `free_coefficients` + `mahler_measure` + `triangulation_status="pending"`. Deliberately omits cls / cls_post_fold (deferred to Techne triangulation; not Ergon's territory to run path-B factorization in `prometheus_math/`).
+  - New `load_deg12_heldout_fixture()` loader. Reconstructs full palindrome from 7 free coeffs via `_palindromize_deg12`. Returns `(records, metadata)` with full provenance block (degree, coef_range, n_processed, techne_ticket reference).
+  - Module `__all__` updated to export the new symbols.
+- Added `ergon/learner/tests/test_deg12_heldout_fixture.py` — 10 tests covering loader, palindromicity, mahler bands, triangulation_status="pending" propagation, metadata provenance, sibling-not-subtype assertion, **regression check that BoundaryLayerRecord schema is unchanged**.
+- Filed reciprocal coordination ticket `E-2026-05-07-T008-deg12-triangulation-followup` in `aporia/meta/queue/techne_inbox.jsonl`. Asks Techne (P3, no rush) to run triangulation when v1.0 phase opens, so labeled held-out is available for v1.0 trial_2_kv_revalidation.
+
+**Bulk-deferred 4 tester tickets** that arrived mid-fire:
+- T-2026-05-07-0016: Pattern 3 (Petersen graph chromatic + girth)
+- T-2026-05-07-0017: Pattern 7 (RH SECOND zero; model gave first zero 14.134 instead of 21.022)
+- T-2026-05-07-0018: Pattern 3 (zeta-1/2-line growth bound, Bourgain 13/84)
+- T-2026-05-07-0019: Pattern 3 (largest abc-triple quality, Reyssat 1.6299)
+
+23 deferred tester tickets total now across 8 patterns; saturation prediction (8-12) still holds.
+
+**Test result:** 329/329 pass (319 prior + 10 new for deg-12). No regressions. **BoundaryLayerRecord schema regression check passes** (existing 18-field schema unchanged).
+
+**SELF-REVIEW:**
+- (a) **Did this fix resolve the failure mode?** YES, partially. Techne's T12 coordination ticket asked for ingestion as W3.2 held-out; Ergon delivered: loader + 10 tests + sibling dataclass + reciprocal ticket. Acceptance criteria 1+2 (loader reads JSON; held-out partition uses deg-12) are met. Acceptance #3 ("tire-kick reports val_heldout_region metrics on deg-12") is partially met — the loader is ready; v1.0 W4.x re-run would consume it. Without triangulation labels, current fixture supports unsupervised structural metrics only; classified evaluation deferred to Techne triangulation follow-up (filed back).
+- (b) **Memorization risk?** None new. Held-out is *unlabeled* — there's nothing to leak into training. Fixture file lives in prometheus_math (Techne territory); Ergon read-only. Synthetic-null gate semantics unchanged.
+- (c) **Did I change any contract?** No. New `Deg12HeldoutRecord` dataclass + new loader fn — sibling additions in my file ownership. Existing `BoundaryLayerRecord` schema regression-locked by `test_boundary_layer_record_schema_unchanged`. Module `__all__` extended additively.
+- (d) **Conventional-approach drift?** Caught one big one. The conventional response to "we have new fixture data without labels" is to either (a) wait for labels before using anything, or (b) silently train on it as if labels existed (ZERO labels). Both are wrong. The substrate-grade move was: recognize that **unlabeled structural held-out is a legitimate intermediate** between "no fixture" and "fully labeled fixture" — sufficient for unsupervised val_heldout_region metrics (count, distribution, prediction-consistency) but NOT sufficient for accuracy-against-ground-truth. Ship the unlabeled loader now; file the labeled-follow-up reciprocally. Per `feedback_calibration.md`: stay calibrated about what you have vs what you need.
+
+**Journal notes:**
+- Cross-pillar coordination via inbox-jsonl works cleanly. Techne wrote to `ergon_inbox`; Ergon writes back to `techne_inbox`. Both queues contain the conversation history. The Monitor architecture caught the cross-pillar message at the same low latency as it would catch tester-side noise — no special routing needed.
+- The "ingest unlabeled, file follow-up reciprocally" pattern is reusable. When the next sister-project fixture arrives without all the rich metadata Pipeline-D needs, the same loader-pattern + sibling-dataclass + filed-back-ticket approach applies. This is the substrate's compositional discipline at the sister-project layer.
+- Pattern 7 sub-variant noted in T-2026-05-07-0017: "off-by-one-question" (first RH zero given for second-RH-zero probe). Not adding to the pattern catalog as a separate pattern — Pattern 7 already covers "wrong-but-adjacent" and this fits cleanly. Just a sub-instance.
+
+---
