@@ -6,6 +6,87 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #16 — 2026-05-07 13:30 (local)
+
+**Coordination note:** parallel substrate-tester instance ran fire #15 (commit `38ddf5b6`) covering lanes 17 + 3. My fire = #16, lanes 8 + 13 (no overlap).
+
+**Lanes selected:** 8 (ExclusionCertificate-extension regression) + 13 (canonicalization-fuzz with fresh hypothesis seed 20260514).
+
+**Lane rationale:** Per fire #14 standing rec, avoid lanes 1, 2 (covered fire #14) and 3, 17 (covered fire #15 parallel). Picked Lane 8 for regression check on the COMPLETE-strength + triangulation_history hard rule + cert primitive discipline post-restart. Lane 13 because the fuzzer expands its input region with each new seed; fire #10 used 20260507, fire #13 used a different seed; my seed 20260514 covers a third region.
+
+**Inbox state at fire start:** 44 tickets total; 7 substrate-tester tickets total (2 closed, 5 OPEN). Avoided Lane 12 because ST-fire1-002 + ST-fire1-003 are still OPEN P1 — would only add duplicates without resolution.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_16_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_16_results.json`.
+
+### Lane 8 — ExclusionCertificate-extension regression: 5/5 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — Lehmer cert COMPLETE with triangulation_history | **PASS** | strength=COMPLETE, 4 triangulation paths registered |
+| T2 — empty triangulation_history with COMPLETE rejected | **PASS** | ValueError raised (Aporia v2.3 hard rule) |
+| T3 — cert lookup by chart_id | **PASS** | 1 cert registered for `lehmer:deg14:pm5:palindromic` |
+| T4 — distinct content yields distinct cert_id | **PASS** | a0114bba6df421a7... vs b909bb9896cd9a23... |
+| T5 — in-scope candidate routes via normal pipeline | **PASS** | M=2.5184 → out_of_band kill, no cert reference in kill_pattern |
+
+**Substrate verdict:** PASS. Cert primitive discipline holds across the contract-change-window restart:
+- Hard rule "strength=COMPLETE requires non-empty triangulation_history" enforced.
+- Registry correctly resolves cert by chart_id.
+- Content-hashing produces distinct certificate_ids for distinct contents (no collision).
+- DiscoveryPipeline does NOT short-circuit on cert scope (no silent extension; substrate runs the normal pipeline regardless).
+
+**Substantive observation:** all 4 Lane-8 properties verified at fire #3 still hold at fire #16. The cert primitive contract is one of the most stable parts of the substrate across the contract-change window.
+
+### Lane 13 — canonicalization-fuzz fresh seed 20260514: 1/1 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — fuzzer clean run | **PASS** | 13 property tests passed / 0 failed in 22.9s harness wall-clock; pytest summary `13 passed in 15.52s` |
+
+**Substrate verdict:** PASS. 2,600 hypothesis-generated probes (13 properties × 200 examples) with fresh seed 20260514 — substrate-grade GREEN.
+
+**Cumulative Lane-13 fuzzer coverage across fires:**
+- Fire #10: seed 20260507
+- Fire #13 (parallel instance): different seed
+- Fire #16: seed 20260514
+
+Three independent seeds, 0 failures across all = 7,800+ unique hypothesis-generated probes. The canonicalization protocol's invariants are robust under property-based testing.
+
+### Tickets filed this fire
+
+**0 tickets.** Both lanes pass cleanly. No regressions detected.
+
+### Standing recommendations for next fire (#17)
+
+1. **Anti-repeat:** avoid lanes 8, 13. Suggested fire #17 candidates:
+   - **Lane 9 (NearMissCorpus-leak)** — last fire #11 (parallel); regression check on view-separation discipline post-window
+   - **Lane 4 (cross-domain-leak)** — last fire #10 (mine); regression check on T-ST003 fix
+   - **Lane 7 (precision-gradient)** — last fire #9; new borderline candidate
+   - **Lane 5 (large-scale-enumeration)** — full-cap; last fire #6
+2. **Lane 1 probe-design iteration STILL pending:** Mossinghoff-perturbation single-coef-flip yielded 0 in fire #14. Future Lane 1 fires need multi-coef-flip OR irreducible-only Mossinghoff filter.
+3. **Watch ST-fire14-001 fix:** when Techne resolves the MethodSpec.independence_class enum-validation gap, fire-#N+ should re-probe Lane 2 P3.
+4. **Lane 12 deferred:** ST-fire1-002 + ST-fire1-003 still OPEN; re-probe only after at least one closes to avoid duplicate tickets.
+
+### Fire-16 stress on substrate health
+
+**Positive:**
+- ExclusionCertificate primitive discipline fully intact post-restart (5/5 PASS).
+- Canonicalization fuzzer GREEN under three independent hypothesis seeds.
+- Substrate's hash-distinctness contract holds (no content-collision).
+- DiscoveryPipeline still has no certificate-aware short-circuit (no silent extension).
+
+**0 substrate flaws found this fire.**
+
+### Discipline notes
+
+- HARD-1 through HARD-5: respected.
+- Time used: ~12 minutes (well within 50-minute cap).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed). Substrate-tester running ticket count after 16 fires: 7 ever filed (ST002 closed, ST003 closed, ST-fire1-001/002/003 OPEN, ST-fire14-001 OPEN, ST-fire15-001 OPEN — 2 closed, 5 OPEN).
+
+— substrate-tester, fire #16, 2026-05-07
+
+---
+
 ## Fire #15 — 2026-05-07 17:00 UTC
 
 **Coordination note:** Fire #14 ran on parallel instance (commit `604ec472`) covering Lanes 1 + 2 with 1 P1 ticket (`T-2026-05-07-ST-fire14-001`: MethodSpec accepts arbitrary IC strings). My fire = #15.

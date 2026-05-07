@@ -1,0 +1,75 @@
+{
+  "fire_id": "fire_16_2026_05_07",
+  "lanes": [
+    "8_exclusion_certificate_regression",
+    "13_canonicalization_fuzz"
+  ],
+  "lane_8": {
+    "lane": "8_exclusion_certificate_regression",
+    "n_tests": 5,
+    "verdict_counts": {
+      "PASS": 5
+    },
+    "tests": [
+      {
+        "id": "T1_lehmer_cert_complete_with_triangulation",
+        "expected": "strength=COMPLETE AND triangulation_history non-empty",
+        "actual": "strength=COMPLETE, triangulation_paths=4",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T2_empty_triangulation_complete_rejected",
+        "expected": "ValueError raised",
+        "actual": "ValueError: ExclusionCertificate.strength=complete requires non-empty triangulation_history. Future certificates without earned triangulation must use b",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T3_cert_lookup_by_chart",
+        "expected": "Lehmer cert resolvable via certificates_for_chart",
+        "actual": "1 cert(s) registered for chart_id=lehmer:deg14:pm5:palindromic",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T4_distinct_content_distinct_cert_id",
+        "expected": "distinct contents yield distinct certificate_ids",
+        "actual": "c1.id=a0114bba6df421a7..., c2.id=b909bb9896cd9a23...",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T5_in_scope_candidate_no_cert_shortcut",
+        "expected": "candidate routes via normal pipeline",
+        "actual": "M=2.5184, terminal_state=REJECTED, kill_pattern='out_of_band:M=2.5184_outside_(1.001,1.18)'",
+        "verdict": "PASS",
+        "severity": null
+      }
+    ]
+  },
+  "lane_13": {
+    "lane": "13_canonicalization_fuzz",
+    "status": "LIVE",
+    "hypothesis_seed": "20260514",
+    "wall_clock_seconds": 22.880525827407837,
+    "rc": 0,
+    "n_passed": 13,
+    "n_failed": 0,
+    "summary_line": "13 passed in 15.52s",
+    "n_tests": 1,
+    "verdict_counts": {
+      "PASS": 1
+    },
+    "tests": [
+      {
+        "id": "T1_fuzzer_clean_run_fresh_seed",
+        "expected": "all 13 property tests pass with new seed",
+        "actual": "13 passed / 0 failed in 22.9s; summary: '13 passed in 15.52s'",
+        "verdict": "PASS",
+        "severity": null,
+        "note": "Fresh hypothesis seed=20260514. Lane 13 has now run with seeds 20260507 (fire #10) + parallel-instance-seed (fire #13) + 20260514 (fire #16). Each seed explores different input regions."
+      }
+    ]
+  }
+}
