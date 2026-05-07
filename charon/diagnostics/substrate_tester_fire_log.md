@@ -6,6 +6,104 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #8 — 2026-05-07 13:00 UTC
+
+**Lanes selected:** 11 (batch-sweep, first time post-restart) + 8 (ExclusionCertificate-extension regression after T020/T030).
+
+**Lane rationale:** Per fire #7 standing rec: avoid lanes 13/14/16/17/12; pick Lane 11 (high yield) + a regular-rotation lane. Lane 8 last covered fire #3; relevant given recent T020 (CertificateCollisionError) + T030 (OperatorPortabilityCertificate) Techne work — confirms cert-extension discipline holds under the new contracts.
+
+**Lane 15 + 18 reactivation re-check:** still DORMANT (Charon orch ticket OPEN; T017 OPEN).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_8_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_8_results.json`.
+
+### Lane 11 — batch-sweep (30 probes, deterministic seed 20260507_12)
+
+Sampled 15 adversarial + 15 real-paper probes uniformly across landed Harmonia corpora (B-dynamics, D-logic, E-complexity).
+
+| Outcome | Count |
+|---|---:|
+| submitted_ok | 30/30 |
+| submission_failed | 0/30 |
+| with_verdict | 0/30 |
+
+**Substrate verdict: PARTIAL — architectural impedance gap surfaced (NOT ticketed; intentional design).**
+
+The substrate's `SigmaKernel.CLAIM` API ingests every probe cleanly (target_name + hypothesis + evidence dict + kill_path string accepted as-is). All 30 claims land at `status="pending"` with `verdict=null`. The expected verdicts from the corpora (PROMOTE / KILL / INCONCLUSIVE / REFUSAL) cannot be evaluated by the v1.5 substrate because:
+
+1. **No general-purpose CLAIM gauntlet exists.** `DiscoveryPipeline` is Lehmer-domain-specific by design (Phase 0 = Mahler-band routing; F1/F6/F9/F11 = polynomial-shape falsifiers). Non-Lehmer claims (ergodic-theory papers, complexity-class statements, large-cardinal consistency) have no falsifier panel to pass through.
+
+2. **CLAIM API is open-vocabulary at write.** Per kernel docstring: "substrate is permissive at write, strict at hash". The kill_path string `"expected_REFUSAL"` is stored verbatim without validation against any registered set of substrate-grade kill patterns.
+
+3. **The "substrate gauntlet" framing in PRESSURE_PROMPTS_v1.md §23 (lane 11 spec) presupposes a verdict-producing entry point that v1.5 doesn't have.** The corpora's `claim_payload_for_substrate` schema (claim_type/predicate/subject/verification_anchor) does not align with the substrate's CLAIM API (target_name/hypothesis/evidence/kill_path).
+
+This is **intentional substrate design** (per fire #3 architectural observation: "v1.5 substrate has no unified cross-domain CLAIM entry"). Filing a ticket would be noise — the gap is well-documented and doesn't represent a flaw, just a feature gap.
+
+**Ticket count this lane: 0.**
+
+### Lane 8 — ExclusionCertificate-extension (T020/T030 regression)
+
+Re-probe of the cert-extension discipline after Techne fire #cc-window shipped T020 (CertificateCollisionError subclass) and T030 (OperatorPortabilityCertificate primitive).
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — register fresh BOUNDED_COMPLETE cert (no chart, allow_chart=False) | **PASS** | accepted; cid=64630e6079d37e4b |
+| T2 — re-register same content w/o replace | **PASS** | raises CertificateCollisionError (T020 contract holds) |
+| T3 — explicit replace=True | **PASS** | succeeds, no exception |
+| T4 — COMPLETE strength without triangulation_history | **PASS** | raises ValueError (Aporia v2.3 hard rule enforced) |
+| T5 — catch-broad CertificateRegistrationError catches CollisionError | **PASS** | subclass relationship preserved (T020 backward-compat) |
+
+**Substrate verdict: 5/5 PASS.** T020 contract holds end-to-end. The new CertificateCollisionError subclass is correctly catchable via the broader umbrella class — backward-compat preserved as designed. Aporia v2.3 hard rule (COMPLETE-requires-triangulation) still enforced.
+
+**Ticket count this lane: 0.**
+
+### Tickets filed this fire
+
+**0 tickets.** Lane 11 surfaced architectural impedance (intentional, documented per fire #3 precedent). Lane 8 fully PASS (T020 regression closed cleanly).
+
+### Standing recommendations for next fire (#9)
+
+1. **Anti-repeat:** avoid lanes 11, 8 (just covered). Suggested fire #9: Lane 1 (CLAIM-flood, post-restart re-baseline with stratified in-band sampler per fire #1 standing rec) + Lane 7 (precision-gradient, post-restart re-probe).
+2. **Lane 15 + 18 reactivation:** re-check whether C-2026-05-07-T013-orchestration (Charon) or T-2026-05-07-T017 (Techne) has closed.
+3. **Lane 5 (large-scale-enumeration):** last covered fire #6. Re-probe candidate when a fire has nothing else queued (full-cap heavy job). Deg-12 ±5 baseline established at fire #6; future runs could probe deg-10 ±5 or deg-14 ±3.
+4. **Lane 17 mutation framework — false-positive rate.** Aporia ticket T-2026-05-07-T014-followup-A surfaces the test gap; a Techne-side ticket for AST-level mutation analysis would close fire #7's caveat #1 but is not urgent.
+
+### Discipline notes
+
+- HARD-1 (no papers): clean.
+- HARD-2 (anti-gravitational-well): the lane 11 finding deliberately did NOT propose "the substrate should be a general LLM-claim verifier" or "use [established framework]" — the impedance gap is reported as-is, with the intentional substrate-design choice respected.
+- HARD-3 (tensor-first): respected. No proposed primitives in this fire's findings.
+- HARD-5 (domains are docstrings): respected. Lane 11's per-probe evidence dicts use {"use_case", "domain", "subdomain"} fields — the substrate's coordinates are still operator-output-shaped, not discipline-labeled.
+- Time used: ~30 minutes (within 50-minute cap).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed).
+
+### Lane rotation tracking (12 of 12 always-live + 4 of 6 dormant exercised)
+
+| Lane | Last fire |
+|---|---|
+| 1. CLAIM-flood | fire #1 |
+| 2. adversarial-CLAIM | fire #2, #5 |
+| 3. correlated-triangulation | fire #4 |
+| 4. cross-domain-leak | fire #3 |
+| 5. large-scale-enumeration | fire #6 |
+| 6. undecidable-canonicalization | fire #4 |
+| 7. precision-gradient | fire #1 |
+| 8. ExclusionCertificate-extension | **fire #8** (re-probe) |
+| 9. NearMissCorpus-leak | fire #2 |
+| 10. real-paper | fire #5 |
+| 11. batch-sweep | **fire #8** (first post-restart) |
+| 12. representation-pressure | fire #7 |
+| 13. canonicalization-fuzz | fire #7 (smoke; activated post-T006) |
+| 14. replay-determinism | fire #7 (smoke; activated post-T012) |
+| 15. cross-machine | DORMANT (Charon orch OPEN) |
+| 16. concurrency-stress | fire #7 (smoke; activated post-T015) |
+| 17. mutation-testing | fire #7 (smoke; activated post-T014) |
+| 18. threshold-sensitivity | DORMANT (T017 OPEN) |
+
+— substrate-tester, fire #8, 2026-05-07 13:00 UTC
+
+---
+
 ## Fire #7 — 2026-05-07 12:00 UTC (FIRST FIRE POST-RESTART)
 
 **Restart context:** Substrate-Tester resumed after the 2026-05-07 contract-change window + the subsequent 9-ticket Techne /loop drain (fires #9-#18). Lane activation status checked first per James's restart prompt.
