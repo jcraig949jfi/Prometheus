@@ -279,6 +279,23 @@ Audit confirmed: field is required; `__post_init__` raises `ValueError` on inval
 
 `KillComponent.margin` is `Optional[float]` (IEEE 754 double). Sufficient for current discovery-pipeline domains (Lehmer, BSD, modular forms in their typical ranges); INSUFFICIENT for the HARD-4 hunt regions (Maass forms with 50+ digit Hecke eigenvalues, p-adic L-function values with native O(p^N) precision, motivic periods with conjectural high-precision identities). Audit doc at `prometheus_math/MULTIPRECISION_AUDIT.md` recommends Option B (additive `margin_high_precision` sister field) for a future contract-change window. No code change in this window.
 
+### Tier 3 — capability-gap encodings (operator-portability primitive + 6 design docs)
+
+Per HARD-5 (refinement, 2026-04-26): "the discovery worth promoting is the operator's signature pattern across regions, not the bridge story we tell about it." Tier 3 of this contract-change window ships substrate-grade encodings for under-explored regions, all anchored on (object, operator-output) pairs and operator-derived structural partitions — discipline labels live in `notes` fields, NEVER in chart coordinates.
+
+**T030 — Operator-portability primitive (SHIPPED — `sigma_kernel/operator_portability.py`).** New module + tests. Defines `OperatorPortabilityCertificate(operator_id, source_chart_id, target_chart_id, transfer_method, evidence_pre, evidence_post, equivalence_relation, verdict, rationale, replay)` with content-addressed `certificate_id` and a registry mirroring the ExclusionCertificate pattern. The substrate now has a typed encoding for "operator X transports from region A to region B with evidence Y." Worked example: Mahler-measure operator across the deg14 ±5 (Day-5) and deg12 ±5 (Fire #8 W3.2 fixture) Lehmer charts. Design doc: `harmonia/memory/architecture/operator_portability_GAP.md`. 26 tests pass.
+
+**T023 — Maass form Hecke eigenvalue (SHIPPED — `prometheus_math/encodings/maass_form_hecke.py`).** New module via the more-general `OperatorOutputSequence` primitive. The substrate-grade primitive for any "object that produces a sequence of values under a parameterized operator" — Maass forms are one instance (operator = Hecke at prime p; index = primes); modular form q-expansion coefficients and L-function values at integer arguments are sister instances. String-encoded high-precision values (mpmath.mpf serialization) sidestep the float-precision contract gap from T029. Design doc: `prometheus_math/encodings/maass_form_hecke_GAP.md`. 12 tests pass.
+
+**T024-T028 — design docs only (deferred to next contract-change window):**
+- `prometheus_math/encodings/tropical_curve_GAP.md` (T024) — `LatticePolytope` + `ValuationTag` primitives for tropical curves
+- `prometheus_math/encodings/padic_l_function_GAP.md` (T025) — `PadicValue` + `PadicLFunctionValue` (depends on T029 multi-precision)
+- `prometheus_math/encodings/galois_cohomology_GAP.md` (T026) — `Cocycle` + `GroupActionContext`
+- `prometheus_math/encodings/large_cardinal_consistency_GAP.md` (T027) — `FormalTheory` + `ConsistencyRelation`
+- `prometheus_math/encodings/motivic_period_GAP.md` (T028) — `TranscendentalValue` + `ConjecturalIdentity` (depends on T029 multi-precision)
+
+All 5 deferred designs follow the same pattern: substrate-grade primitive name, dataclass shape, CoordinateChart placement, worked encoding example, deferred-implementation note. Implementation can ship under a future contract-change window without breaking the v2.3 contracts.
+
 ---
 
 ## Open frontiers (next sessions)
