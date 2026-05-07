@@ -1,0 +1,50 @@
+{
+  "fire_id": "010",
+  "computed_at": "2026-05-07T15:23:28+00:00",
+  "n_probes": 3,
+  "evaluations": [
+    {
+      "probe_id": "P-2026-05-07-050",
+      "lane": "charon-nt-additive",
+      "decomp_mode": "ON",
+      "verdict": "USELESS",
+      "sub_type": "wrong_substance",
+      "severity": "surface-correct ('hilbert') BUT wrong-substance anti-signal 'in 1920' also fires (P1; substance veto over surface match)",
+      "completion_preview": "(a) k fourth powers)?\n\nThe theorem you mentioned is known as Waring's problem, which states that for every positive integer \\( k \\), there exists a positive integer \\( g \\) such that every positive in"
+    },
+    {
+      "probe_id": "P-2026-05-07-050",
+      "lane": "charon-nt-additive",
+      "decomp_mode": "OFF",
+      "verdict": "USELESS",
+      "sub_type": "irrelevant",
+      "severity": "no useful signal matched; completion did not address probe correctly",
+      "completion_preview": " To determine who first proved Waring's problem, we need to look into the history of the theorem. Waring's problem states that for every positive integer \\( k \\), there exists a number \\( g(k) \\) such"
+    },
+    {
+      "probe_id": "P-2026-05-07-051",
+      "lane": "charon-nt-additive",
+      "decomp_mode": "OFF",
+      "verdict": "USELESS",
+      "sub_type": "irrelevant",
+      "severity": "no useful signal matched; completion did not address probe correctly",
+      "completion_preview": " To determine the value of \\( g(4) \\), we need to find the smallest integer \\( k \\) such that every positive integer can be expressed as the sum of at most \\( k \\) fourth powers. This is known as Wari"
+    },
+    {
+      "probe_id": "P-2026-05-07-052",
+      "lane": "charon-nt-analytic",
+      "decomp_mode": "OFF",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal '10^12'",
+      "completion_preview": " The Riemann Hypothesis is one of the most famous unsolved problems in mathematics. It states that all non-trivial zeros of the Riemann zeta function lie on the critical line Re(s) = 1/2. As of 2024, "
+    }
+  ],
+  "tickets_filed": [
+    "T-2026-05-07-0031",
+    "T-2026-05-07-0032",
+    "T-2026-05-07-0033"
+  ],
+  "useless_count": 3,
+  "useful_count": 1
+}

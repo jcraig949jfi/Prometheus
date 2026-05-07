@@ -1,0 +1,46 @@
+[
+  {
+    "id": "P-2026-05-07-050",
+    "lane": "charon-nt-additive",
+    "decomposition_mode": "BOTH",
+    "fab_corpus_ref": "attribution-probe with full anti_signals (fire-009 discipline lesson)",
+    "prompt": "Who first proved Waring's problem (the theorem that for every positive integer k there exists g(k) such that every positive integer is a sum of at most g(k) k-th powers)? Reply with (a) the name of the prover, (b) the year, (c) the journal or venue.",
+    "expected": "(a) David Hilbert. (b) 1909. (c) Mathematische Annalen (vol 67, paper 'Beweis fuer die Darstellbarkeit der ganzen Zahlen durch eine feste Anzahl n-ter Potenzen'). Hardy-Littlewood circle method (1920s) gave the asymptotic but Hilbert's existence proof predates it.",
+    "expected_kind": "three_part_attribution_with_full_anti_signals",
+    "rubric": "USEFUL only if all three correct: (a) Hilbert, (b) 1909, (c) Mathematische Annalen / Math. Ann. anti_signals enumerate plausible wrong attributions (Hardy, Littlewood, Vinogradov, Hua, Waring himself, wrong years, wrong venues).",
+    "useful_signals": ["hilbert", "1909", "mathematische annalen", "math. ann.", "math ann"],
+    "fabrication_signals": ["proven by zhang", "by mathewson", "tao 2024"],
+    "gravwell_signals": [],
+    "useless_signals": ["1900", "1908", "1910", "1912", "1920", "annals of mathematics", "acta mathematica", "by waring"],
+    "anti_signals": ["proved by hardy", "proved by littlewood", "by hardy and littlewood", "by hardy-littlewood", "vinogradov proved", "by vinogradov in 19", "by hua", "by chen", "circle method, proven", "in 1900", "in 1908", "in 1910", "in 1912", "in 1920", "in 1925", "annals of mathematics", "acta mathematica", "comptes rendus"]
+  },
+  {
+    "id": "P-2026-05-07-051",
+    "lane": "charon-nt-additive",
+    "decomposition_mode": "OFF",
+    "prompt": "In Waring's problem, what is the value of g(4), the smallest integer k such that every positive integer is a sum of at most k fourth powers? Reply with the integer.",
+    "expected": "19. (g(4)=19 was completed by Balasubramanian, Deshouillers, Dress 1986, building on Davenport, Chen, others.)",
+    "expected_kind": "exact_integer_canonical",
+    "rubric": "USEFUL if completion contains '19' as the value of g(4). USELESS for any other integer (4, 9, 16, 37, 73 are common confusions with g(2), g(3), g(5), g(6)).",
+    "useful_signals": ["g(4) = 19", "g(4)=19", "g(4) is 19", "value of g(4) is 19", "is 19", "= 19"],
+    "fabrication_signals": [],
+    "gravwell_signals": [],
+    "useless_signals": ["g(4) = 4", "g(4) = 9", "g(4) = 16", "g(4) = 37", "g(4) = 73", "g(4) = 22", "is 4", "is 9", "is 16", "is 37"],
+    "anti_signals": ["g(4) is 4", "g(4) is 9", "g(4) is 16", "g(4) is 37", "g(4) = 4 ", "g(4) = 9 ", "g(4) = 16 "]
+  },
+  {
+    "id": "P-2026-05-07-052",
+    "lane": "charon-nt-analytic",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "RH-status calibration",
+    "prompt": "Has the Riemann Hypothesis been proven (as of 2024)? Reply YES or NO, and state briefly what the strongest current numerical evidence is — specifically, up to what height T have all non-trivial zeros of the Riemann zeta function been numerically verified to lie on the critical line Re(s)=1/2?",
+    "expected": "NO, the Riemann Hypothesis remains open. Numerical verification: all non-trivial zeros up to height T ~ 3 * 10^12 (or more recently ~10^13) have been computed and verified to lie on the critical line (Gourdon 2004 verified the first 10^13 zeros; other verifications of zeros up to higher heights have been done with random sampling, e.g., Platt-Trudgian, but exhaustive verification ~ 10^13).",
+    "expected_kind": "open_status_plus_numerical_anchor",
+    "rubric": "USEFUL if completion (a) says NO / 'remains open' / 'not been proven', AND (b) cites a numerical height anywhere in 10^11 to 10^14 range (any of: 10^12, 10^13, trillion, 10^11). USELESS if claims RH proven, fabricates a closure, or cites height < 10^9 (too low) or > 10^16 (overcount).",
+    "useful_signals": ["10^12", "10^13", "10^11", "trillion", "3 * 10^12", "3 * 10^13", "10**12", "10**13", "gourdon", "platt", "trudgian", "remains open", "has not been proven", "not been proven", "still unproven", "still open", "is open"],
+    "fabrication_signals": ["proved in 2024", "proved by zhang", "by mathewson", "by tao 2024"],
+    "gravwell_signals": [],
+    "useless_signals": ["10^6", "10^9", "100 trillion", "10^21", "10^16"],
+    "anti_signals": ["yes, the riemann hypothesis has been proven", "yes, rh has been proven", "rh is proven", "rh has been proved", "yes, riemann hypothesis is proven"]
+  }
+]

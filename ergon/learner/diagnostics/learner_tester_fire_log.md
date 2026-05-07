@@ -1086,3 +1086,59 @@ Watched for two specific drifts:
 **Step 7 inbox FRESH re-read:** total 42; **OPEN went 6 → 0**; 0 new arrivals during fire.
 
 **Commit:** TBD (pending). One commit, doc-only.
+
+
+## Tester Fire 010 - 2026-05-07
+
+**Cadence:** ScheduleWakeup-driven (3600s post fire-009). Fire-009 carry-over recommended lanes 6 (Charon-NT-additive) or 7 (Charon-NT-analytic) since Charon lanes were underweighted in fires 007-009. Selected lanes 6 + 7. Three probes; one BOTH-mode (P-050 attribution).
+
+**Lanes touched:** 6 (Charon-NT-additive: Waring's problem attribution + computational), 7 (Charon-NT-analytic: RH status + numerical verification height).
+
+**Probes (3; one BOTH-mode = 4 model invocations):**
+- P-050 (charon-nt-additive BOTH): Waring's problem first proof: (a) prover (b) year (c) venue. Anti_signals enumerated 18 wrong-attribution patterns (fire-009 discipline lesson applied).
+- P-051 (charon-nt-additive OFF): g(4) = ? expected 19.
+- P-052 (charon-nt-analytic OFF): RH proven? + verification height. Expected NO + 10^12 to 10^13.
+
+**Verdicts:**
+- P-050 ON USELESS wrong_substance (T-0031 P1) - **anti_signals worked**: 'hilbert' matched useful_signal but 'in 1920' fired anti_signal -> wrong_substance veto. Substrate detail: 4 sub-queries (oversplit on '(c)') produced 4 cascading fabrications: 'David Harry J. Chud[U+5F0F]' (FM-02 Unicode glitch), 'David Harry Wiles 1995' (FM-01), 'Ivan Leopold Gelfand 1949' (FM-01), 'Hardy + Littlewood 1920' (FM-01: g(4)=19 was Balasubramanian-Deshouillers-Dress 1986), 'Ivan M. Gozky + Dzjaparidze 1962' (FM-01 fabricated names). One sub-answer DID say 'David Hilbert in 1909' correctly mid-stream but surrounded by fabrications.
+- P-050 OFF USELESS irrelevant (T-0032 P2) - **Pattern 6 token-loop survived rep_penalty=1.05**. Degenerated to "Ivan M. G. F. da C. da C. da C. ..." x40. Substrate-grade: rep_penalty=1.05 from E007 ablation report is INSUFFICIENT for this loop class. May need 1.10 or 1.15.
+- P-051 USELESS irrelevant (T-0033 P2) - same truncation as fire-009 P-049: started reasoning about fourth powers mod 16, ran out of 256-token budget at 7^4 = 2401. Did NOT emit final value. **256 still not enough for "show your work" computational probes.** Future computational probes need 384-512 tokens OR explicit "answer only, no reasoning" framing.
+- P-052 USEFUL (with sub-fab) - 'NO' + '10^12' both correct. Sub-fab: 'Andrew[U+90FD]les' Unicode glitch in name (likely degraded 'Andrew Odlyzko'). Filed P-052 sub-fab as info ticket T-0034 P2 (Unicode-glitch-name as new FM-11 candidate).
+
+**Tickets filed:** 4 total (3 evaluator-auto + 1 manual info)
+- T-2026-05-07-0031 (P-050 ON wrong_substance P1: cascading FM-01/FM-02 across 4 oversplit sub-queries)
+- T-2026-05-07-0032 (P-050 OFF irrelevant P2: Pattern 6 token-loop survived rep_penalty=1.05)
+- T-2026-05-07-0033 (P-051 OFF irrelevant P2: 256-token truncation on computational probe; same as fire-009 P-049)
+- T-2026-05-07-0034 (P-052 OFF info P2: Unicode-glitch-name FM-11 candidate; "Andrew[U+90FD]les")
+
+**Substrate-grade lessons (fire-010):**
+
+1. **Anti_signals discipline VALIDATED.** Fire-009 lesson 4 ("attribution probes need anti_signals enumerating wrong tuples") was applied to P-050 with 18 anti_signal patterns. Result: evaluator correctly flagged USELESS via wrong_substance veto on 'in 1920' even though 'hilbert' useful_signal also matched. Without the discipline, P-050 would have surface-matched USEFUL. **The discipline is calibration-grade-validated and should be permanent for all future attribution probes.**
+
+2. **rep_penalty=1.05 is insufficient for Pattern 6 token-loops.** P-050 OFF degenerated despite the E007 ablation report's recommendation. Substrate update: bump default to 1.10 OR add max-token-repetition cap OR add early-stop when same token emitted 5x in window. Will add to E007 v2 follow-up.
+
+3. **256-token budget still truncates computational probes.** P-051 (g(4)=?) ran the full 256 and died at 7^4 reasoning. Same pattern as fire-009 P-049. **For computational probes, need either 384-512 token budget OR "answer only, no reasoning" prompt scaffolding.** This is a probe-design discipline, not a model fix.
+
+4. **NEW failure mode candidate FM-11 (Unicode-glitch-name).** Two instances in fire-010: 'Chud[U+5F0F]' (P-050 ON) and 'Andrew[U+90FD]les' (P-052 OFF). Pattern: Chinese characters embedded in attempted Western names. Hypothesis: Qwen2.5-Math's CJK vocabulary bleeds into Western-name production under low-confidence decode. Mitigation: post-decode ASCII-only filter for citation contexts, OR train-time corpus discipline. Worth cataloguing in failure-mode taxonomy.
+
+5. **Decomposition wrapper oversplit at "(c)" delimiter.** P-050 ON produced 4 sub-queries instead of 3: the wrapper split on every "(letter)" pattern including a phantom "(d)" introduced by the prompt structure. The decomposition heuristic in `single_fact_decomposition.py:is_multi_part` over-fired on this prompt format. **E007 v2 follow-up: harden the multi-part detector.**
+
+**Producer-side standing recommendations (carry-over for fire-011):**
+- ROTATION: lanes 6+7 just used. Avoid 6+7. Charon lanes 8 (Charon-NT-topology) underweighted. Suggested: lane 2 (Harmonia-B), lane 5 (Harmonia-E), lane 8, lane 9 (Aporia-catalog), or lane 11 (Cross-domain).
+- Pattern 6 mitigation: try rep_penalty=1.10 in fire-011 (small bump; safe).
+- Computational probes: budget 384 tokens OR add "answer only" framing.
+- Anti_signals discipline: extend to ALL non-attribution probes too (e.g., trivial-vs-open probes need anti-signals on the trivial side).
+- FM-11 cataloguing: add to fab corpus + failure-mode taxonomy.
+
+**SELF-REVIEW (fire-010):**
+- (a) Did this advance the substrate? YES, four ways: (i) anti_signals discipline validated end-to-end, (ii) Pattern 6 + rep_penalty=1.05 boundary measured, (iii) FM-11 Unicode-glitch-name pattern catalogued, (iv) decomposition oversplit failure mode identified.
+- (b) Memorization risk? None. Doc + ticket work only.
+- (c) Conventional drift caught? Yes - the conventional response to "evaluator says USELESS wrong_substance" is to file the ticket and move on. Substrate-grade response: investigate WHY the anti_signal fired (because of the explicit fire-009 discipline) and recognize that as VALIDATION of the discipline. Then catalogue the cross-mode behaviors as substrate findings (Pattern 6 boundary, FM-11 candidate, oversplit bug).
+- (d) Were the right lanes touched? Yes - rotated to Charon-NT lanes per fire-009 carry-over. Charon-NT-topology (lane 8) still underweighted; next fire could target there or a Harmonia lane (2/5).
+
+**Journal notes:**
+- 34 tickets filed across 10 fires. Acceleration in P1 fabrication tickets clustered around attribution probes (T-0029, T-0030, T-0031). The substrate is correctly identifying attribution as the dominant failure mode; the v1.0 corpus work for FM-01/FM-02 is the substrate-bottleneck remediation.
+- Fire-010 demonstrated discipline ratchet: fire-009 lesson -> applied in fire-010 -> validated by evaluator. This is the substrate self-improving via tester findings flowing into next-fire probe design.
+- The 4 oversplit sub-queries in P-050 ON revealed a real wrapper bug. E007 was designed for "(a)/(b)/(c)" 3-part attribution probes but the heuristic mis-detected when the prompt itself contained "(a)" within a phrase like "(a) the name of the prover". Fix: restrict multi-part detection to standalone "(a)" "(b)" "(c)" delimiters at start of clauses.
+
+---
