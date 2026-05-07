@@ -6,6 +6,94 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #4 — 2026-05-06 22:53 UTC
+
+**Lanes selected:** 3 (correlated-triangulation) + 6 (undecidable-canonicalization).
+
+**Lane rationale:** Per fire #3 standing recommendation. Avoided lanes 4 + 8 (anti-repeat). Picked: triangulation independence-enforcement (lane 3) + canonicalization decidability-flag enforcement (lane 6). Both have shipped substrate code (`sigma_kernel/triangulation_protocol.py`, `sigma_kernel/coordinate_chart.py` + `sigma_kernel/method_spec.py`).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_4_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_4_results.json`.
+
+### Lane 3 — correlated-triangulation: 5 PASS / 1 OBSERVATION
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — 3 proof-bearing, 2 share IC, 1 distinct | **OBSERVATION** | Substrate UPGRADES because the third path provides the required different-class peer; the upgrade rule is "primary-proof-bearing needs ≥1 different-class verified peer," not "all paths must be distinct." Correct behavior. |
+| T1b — 3 proof-bearing paths, ALL same IC (SYMPY_SYMBOLIC_FACTORIZATION) | **PASS** | INCONCLUSIVE_INSUFFICIENT_INDEPENDENCE — substrate correctly rejects upgrade because no path has different IC than primary |
+| T2 — 3 verified paths, NONE proof-bearing | **PASS** | REJECTED ("clustering/exploratory cannot certify alone") |
+| T3 — positive control: 3 distinct, ≥1 proof-bearing, all verified | **PASS** | UPGRADED_TO_LOCAL_LEMMA |
+| T4 — only 2 paths total | **PASS** | INCONCLUSIVE_WAITING (need ≥3) |
+| T5 — 3 paths, 1 contradicted | **PASS** | CONTRADICTED (substrate finding logged) |
+
+**Probe-design correction during fire:** T1b initially used `MPMATH_POLYNOMIAL_FACTORIZATION` (which maps to `MethodClass.NUMERICAL`, not `PROOF_BEARING`). With no proof-bearing path, substrate correctly returned REJECTED — meaning my probe didn't actually exercise the independence rule. Re-ran with `SYMPY_SYMBOLIC_FACTORIZATION` (the only IC mapped to `PROOF_BEARING` in the registered table at `triangulation_protocol.py:84-97`) to actually reach the independence check, which then correctly returned `INCONCLUSIVE_INSUFFICIENT_INDEPENDENCE`. Substrate behaved correctly throughout; only the probe needed correction.
+
+**Substrate verdict:** Lane 3 is solid. TriangulationProtocol enforces all 4 rules (≥3 paths; no contradictions; ≥1 proof-bearing verified; ≥1 different-class verified peer). The independence rule is real, not decorative — confirmed via T1b after probe correction.
+
+**Note for future Lane 3 fires:** the proof-bearing IC vocabulary is currently narrow — only `sympy_symbolic_factorization` maps to `PROOF_BEARING` in the registered method-class table. This is intentional (substrate v2.3 §6.3 hard rule: "an unknown method cannot be silently upgraded to certifying weight"), but means correlated-triangulation tests against the proof-bearing path are constrained to one IC. If Techne adds new proof-bearing classes (e.g., `theorem_backed_reduction`, `exhaustive_enumeration`), this lane should be re-probed with cross-class same-method-class scenarios.
+
+### Lane 6 — undecidable-canonicalization: 4/4 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — construct CanonicalizationProtocol with decidability_status='undecidable' | **PASS** | Accepted; impl='novikov_word_problem', decidability_status='undecidable' |
+| T2 — invalid decidability_status='maybe' | **PASS** | ValueError: decidability_status must be one of ('decidable', 'undecidable', 'conditional') |
+| T3 — apply() on undecidable protocol with no bound impl | **PASS** | NotImplementedError: registry-only entry without bound implementation |
+| T4 — registered Lehmer chart's canonicalization | **PASS** | impl='reflection_quotient', decidability_status='decidable' |
+
+**Substrate verdict:** Lane 6 fully passes. The decidability-flag discipline from Aporia Study 17 is enforced at construction time; invalid values raise; undecidable cases are first-class (constructible without an impl, raising on apply). The registered Lehmer chart correctly declares `decidable` for its reflection-quotient canonicalizer.
+
+**Architectural observation:** the lane spec said `sigma_kernel/canonicalization_protocol.py`, but the actual code path is `sigma_kernel/coordinate_chart.py:CanonicalizationProtocol` (with a related but separate `prometheus_math/canonicalizer_observability.py` for runtime telemetry). The protocol is co-located with the chart definition rather than in a standalone file. Documenting this for future Lane 6 fires.
+
+### Tickets filed this fire
+
+**0 tickets.** All probes either PASSED or are OBSERVATIONS (correct substrate behavior, not flaws). The T1b initial-FAIL was probe-design, not substrate-flaw — discipline note "File tickets only for ACTUAL failures, not subjective preferences" applied.
+
+### Standing recommendations for next fire (#5)
+
+1. **Anti-repeat:** avoid lanes 3 + 6. Suggested fire #5: Lane 10 (real-paper) — high-value, hasn't been exercised yet — paired with Lane 1 (CLAIM-flood) using a stratified in-band sampler this time.
+2. **Lane 5 (large-scale-enumeration)** still queued. With fire #4 yielding 0 tickets and no new substrate-flaws to chase, fire #5 is a candidate for Lane 5 alone (full-cap heavy job). Defer if fire #5 is short on time.
+3. **CoordinateChart fix tracking:** ticket T-2026-05-06-ST002 (P1-high empty-domain) is still OPEN as of inbox snapshot pre-fire. Fire #5 should re-probe Lane 2 if Techne resolves it.
+4. **`get_raw_invariant_keys` fix tracking:** ticket T-2026-05-06-ST003 (P2-normal sentinel) still OPEN. Re-probe Lane 4 once resolved.
+
+### Fire-4 stress on substrate health
+
+**Positive:**
+- TriangulationProtocol enforces all 4 upgrade rules correctly (paths-count, contradiction-detection, proof-bearing-required, independence-required).
+- Method-class registry is conservative: unregistered ICs default to EXPLORATORY (not silently certifying).
+- CanonicalizationProtocol's decidability-flag discipline is enforced at construction with informative error messages.
+- The Lehmer chart's canonicalizer is correctly tagged as `decidable` (reflection-quotient is a valid algorithmic equivalence).
+
+**0 substrate flaws found this fire.**
+
+### Lane rotation tracking (5 of 10 lanes exercised over 4 fires)
+
+| Lane | Fires exercised |
+|---|---|
+| 1. CLAIM-flood | fire #1 |
+| 2. adversarial-CLAIM | fire #2 |
+| 3. correlated-triangulation | fire #4 |
+| 4. cross-domain-leak | fire #3 |
+| 5. large-scale-enumeration | — |
+| 6. undecidable-canonicalization | fire #4 |
+| 7. precision-gradient | fire #1 |
+| 8. ExclusionCertificate-extension | fire #3 |
+| 9. NearMissCorpus-leak | fire #2 |
+| 10. real-paper | — |
+
+Lanes 5 and 10 still untouched; both should land in next 2-3 fires per the 10-day-window discipline rule.
+
+### Discipline notes
+
+- No paper/publication mentions in this fire (per `feedback_exploration_not_papers.md` HARD RULE 2026-05-06).
+- No drift toward established frameworks observed in the substrate code I read this fire (per `feedback_anti_gravitational_well.md` HARD RULE 2026-05-06).
+- Time used: ~32 minutes (within 50-minute cap).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed). Substrate-tester running ticket count remains: T-ST002 (P1-high), T-ST003 (P2-normal).
+
+— substrate-tester, fire #4, 2026-05-06 22:53 UTC
+
+---
+
 ## Fire #3 — 2026-05-06 21:45 UTC
 
 **Lanes selected:** 4 (cross-domain-leak) + 8 (ExclusionCertificate-extension).

@@ -1,0 +1,97 @@
+{
+  "fire_id": "fire_4_2026_05_06",
+  "lanes": [
+    "3_correlated_triangulation",
+    "6_undecidable_canonicalization"
+  ],
+  "lane_3": {
+    "lane": "3_correlated_triangulation",
+    "n_tests": 6,
+    "verdict_counts": {
+      "OBSERVATION": 1,
+      "PASS": 5
+    },
+    "tests": [
+      {
+        "id": "T1_three_proof_bearing_2_shared_class",
+        "expected": "Verdict depends on whether ANY independent-class peer exists",
+        "actual": "verdict=UPGRADED_TO_LOCAL_LEMMA, summary=Upgraded: proof-bearing (p3_sympy_symbolic) + 2 independent replay(s)",
+        "verdict": "OBSERVATION",
+        "severity": null,
+        "note": "Read of upgrade rule: 'independent replay' = different-class than primary-proof-bearing. With 3 paths and only 2 sharing class, the third path provides the required independence -> UPGRADE is correct."
+      },
+      {
+        "id": "T1b_three_verified_all_same_class",
+        "expected": "INCONCLUSIVE_INSUFFICIENT_INDEPENDENCE (no independent replay)",
+        "actual": "verdict=INCONCLUSIVE_INSUFFICIENT_INDEPENDENCE",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T2_no_proof_bearing_paths",
+        "expected": "REJECTED (clustering/exploratory cannot certify alone)",
+        "actual": "verdict=REJECTED",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T3_positive_control_upgrade",
+        "expected": "UPGRADED_TO_LOCAL_LEMMA",
+        "actual": "verdict=UPGRADED_TO_LOCAL_LEMMA",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T4_only_two_paths",
+        "expected": "INCONCLUSIVE_WAITING",
+        "actual": "verdict=INCONCLUSIVE_WAITING",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T5_one_contradicted",
+        "expected": "CONTRADICTED (substrate finding logged)",
+        "actual": "verdict=CONTRADICTED",
+        "verdict": "PASS",
+        "severity": null
+      }
+    ]
+  },
+  "lane_6": {
+    "lane": "6_undecidable_canonicalization",
+    "n_tests": 4,
+    "verdict_counts": {
+      "PASS": 4
+    },
+    "tests": [
+      {
+        "id": "T1_construct_undecidable_protocol",
+        "expected": "CanonicalizationProtocol constructed; decidability_status=='undecidable'",
+        "actual": "impl=novikov_word_problem, decidability_status=undecidable",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T2_invalid_decidability_status",
+        "expected": "ValueError raised",
+        "actual": "ValueError: decidability_status must be one of ('decidable', 'undecidable', 'conditional'); got 'maybe'",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T3_apply_undecidable_no_impl",
+        "expected": "NotImplementedError raised",
+        "actual": "NotImplementedError: CanonicalizationProtocol(impl='drozd_wild_quiver') has no bound canonicalize implementation; this is a registry-only ent",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T4_lehmer_chart_decidability",
+        "expected": "decidability_status set (decidable / undecidable / conditional)",
+        "actual": "impl=reflection_quotient, decidability_status=decidable",
+        "verdict": "PASS",
+        "severity": null
+      }
+    ]
+  }
+}
