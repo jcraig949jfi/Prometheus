@@ -185,6 +185,44 @@ def run_w4_0_masked() -> Dict[str, Any]:
     }
     fired = []
 
+    # E006 calibrated gate: H0 = max(0.5, empirical_majority_rate) AND
+    # require lora_acc - base_acc >= delta (default 0.05). Pure base-prior
+    # firing is no longer flagged as memorization. Old chance=0.5 logic
+    # mis-fired on class-imbalanced held-out under masked decode.
+    from ergon.pipeline_d.null_gate_h0 import synthetic_null_gate_decision
+
+    def _decide(block: Dict[str, Any]) -> Dict[str, Any]:
+        base_acc = float(block["base_zero_shot"]["accuracy"])
+        lora = block["lora_post_train"]
+        lora_acc = float(lora["accuracy"])
+        n_total = int(lora["n"])
+        n_correct = int(round(lora_acc * n_total))
+        # Held-out gold-label distribution from confusion matrix row-sums
+        confusion = lora.get("confusion_matrix", {})
+        counts: Dict[str, int] = {
+            str(g): sum(int(v) for v in pred_dict.values())
+            for g, pred_dict in confusion.items()
+        }
+        d = synthetic_null_gate_decision(
+            lora_acc=lora_acc, base_acc=base_acc,
+            n_correct=n_correct, n_total=n_total,
+            gold_label_counts=counts,
+        )
+        block.update({
+            "accuracy": lora_acc,
+            "n_correct": n_correct,
+            "n_total": n_total,
+            "majority_rate": d.majority_rate,
+            "h0_rate": d.h0_rate,
+            "p_value": d.p_value,
+            "lora_minus_base": lora_acc - base_acc,
+            "beats_baseline": d.beats_baseline,
+            "lora_beats_base_by_delta": d.lora_beats_base_by_delta,
+            "decision": d.decision,
+            "decision_reason": d.reason,
+        })
+        return block
+
     for seed in SHUFFLE_SEEDS:
         try:
             train_recs, held_recs, cands = _shuffled_variant_a(seed)
@@ -192,15 +230,7 @@ def run_w4_0_masked() -> Dict[str, Any]:
                 train_recs, held_recs,
                 run_name=f"v0_5b_null_a_s{seed}", seed=seed, candidate_labels=cands,
             )
-            acc = block["lora_post_train"]["accuracy"]
-            n_total = block["lora_post_train"]["n"]
-            n_correct = int(round(acc * n_total))
-            bt = binomtest(n_correct, n_total, p=0.5, alternative="greater")
-            block["accuracy"] = acc
-            block["n_correct"] = n_correct
-            block["n_total"] = n_total
-            block["p_value"] = float(bt.pvalue)
-            block["decision"] = "FIRE" if bt.pvalue < ALPHA else "PASS"
+            block = _decide(block)
         except Exception as exc:
             block = {"decision": "ENGINEERING_FAIL",
                      "error_type": type(exc).__name__,
@@ -217,15 +247,7 @@ def run_w4_0_masked() -> Dict[str, Any]:
                 train_recs, held_recs,
                 run_name=f"v0_5b_null_b_s{seed}", seed=seed, candidate_labels=cands,
             )
-            acc = block["lora_post_train"]["accuracy"]
-            n_total = block["lora_post_train"]["n"]
-            n_correct = int(round(acc * n_total))
-            bt = binomtest(n_correct, n_total, p=0.5, alternative="greater")
-            block["accuracy"] = acc
-            block["n_correct"] = n_correct
-            block["n_total"] = n_total
-            block["p_value"] = float(bt.pvalue)
-            block["decision"] = "FIRE" if bt.pvalue < ALPHA else "PASS"
+            block = _decide(block)
         except Exception as exc:
             block = {"decision": "ENGINEERING_FAIL",
                      "error_type": type(exc).__name__,

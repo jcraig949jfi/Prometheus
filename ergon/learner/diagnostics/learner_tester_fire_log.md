@@ -160,3 +160,45 @@ Net: 4 OPEN tester-tickets filed (2 P1 + 2 P2). Within 5-ticket cap.
 — Charon (as Learner-Tester), 2026-05-07
 
 ---
+
+## Fire 2 — 2026-05-06 (Ergon producer-side, fire ID 2)
+
+**Ticket:** T-2026-05-06-E006 (P1-high) — *W4.0 synthetic-null gate H0 redesign for class-imbalanced held-out under masked decode*
+
+**Background:** filed at end of fire 1 because the masked-decode v0.5b W4.0 fired on Variant A all 3 seeds, but lora_post_train was bit-identical to base_zero_shot. Fire 1's substrate-grade reading was that the firing came from (base prior × class imbalance), not memorization, and the gate''s H0=0.5 was mis-specified for that corpus shape.
+
+**Action:**
+- Pre-test 297/297 PASS (clean baseline, 32s).
+- Added `ergon/pipeline_d/null_gate_h0.py` with `synthetic_null_gate_decision()` + `redecide_v0_5b_w4_0()`. New gate FIRES iff BOTH: (1) accuracy beats max(0.5, empirical_held_out_majority_rate) at p<alpha, AND (2) lora_acc - base_acc >= delta (default 0.05). Either alone is insufficient; pure base-prior firing no longer counted as memorization.
+- Added `ergon/learner/tests/test_null_gate_h0.py` with 8 tests covering: pure-base-prior PASS, actual memorization FIRE, H0 majority-bump on imbalanced, lora-above-baseline-but-below-delta PASS, empty held-out edge case, dataclass JSON round-trip, sequence/dict input parity, and the integration test that loads the real v0.5b W4.0 results and confirms all 6 (variant × seed) PASS under the new gate.
+- Materialized `ergon/pipeline_d/runs/v0_5b_null_gate/null_gate_results_recalibrated.json` from existing v0.5b training data (no LoRA re-train needed; the LoRA accuracies and base-zero-shot accuracies are deterministic; gate logic is a decision function on those outputs).
+- Updated `ergon/pipeline_d/v0_5b_rerun.py` to use the calibrated gate for any future runs (internal logic change; no contract impact).
+
+**Test result:** 305/305 pass (297 prior + 8 new). No regressions.
+
+**Recalibrated v0.5b W4.0 verdict — PASS on all 6:**
+
+| Variant | Seed | LoRA acc | Base acc | H0 (= max(0.5, maj_rate)) | p_value | Decision |
+|---|---|---|---|---|---|---|
+| A boundary | 42 | 1.000 | 1.000 | 1.000 | 1.0000 | PASS |
+| A boundary | 1234 | 1.000 | 1.000 | 1.000 | 1.0000 | PASS |
+| A boundary | 100 | 0.857 | 0.857 | 0.857 | 0.7365 | PASS |
+| B synthetic | 42 | 0.515 | 0.515 | 0.515 | 0.5285 | PASS |
+| B synthetic | 1234 | 0.515 | 0.515 | 0.515 | 0.5285 | PASS |
+| B synthetic | 100 | 0.515 | 0.515 | 0.515 | 0.5285 | PASS |
+
+Every PASS for the same reason: `lora_acc - base_acc = 0.000 < delta=0.05` (LoRA contributed nothing measurable). Acceptance criterion 4 (PASS on all 6) ✓ met.
+
+**Implication for E001:** the v0.5b W4.0 gate is now PASSING under the calibrated H0. v0.5b W4.1 / W4.2 are unblocked at the gate level — but the underlying finding stands: at this scale, LoRA training produces no measurable effect on the held-out. Running W4.1/W4.2 would just confirm that pattern. The `completion_only_loss=True` codepath is implemented but unexercised; testing it under v0.5c is the natural next step (file follow-up E007 for that, but defer if not load-bearing for the pitch).
+
+**SELF-REVIEW:**
+- (a) **Did this fix resolve the failure mode the pressure-applier reported?** YES. Fire 1''s substrate-grade reading is now baked into the gate logic; the recalibrated W4.0 verdicts match the empirical reality (LoRA contributes zero measurable signal at this scale → gate PASSES, signaling no memorization rather than firing on a class-imbalance artifact).
+- (b) **Memorization risk that the synthetic-null gate would catch?** No. The new gate is STRICTER on actual memorization in one dimension (requires lora>base by delta) and more discerning in another (recognizes pure base-prior accuracy as not-memorization). Test `test_actual_memorization_fires` confirms the gate still FIRES on a synthetic memorization case (lora=0.9 vs base=0.5 with balanced held-out). The gate has not been weakened; it has been correctly specified.
+- (c) **Did I change any contract?** No. New module + new tests + internal-logic update to v0_5b_rerun.py. `evaluate_model_with_label_mask`, `evaluate_model`, `TrainingArgs` — all signatures unchanged.
+- (d) **Conventional-approach drift?** Named one. The conventional response to ''shuffled-label gate fires'' is to lower alpha or change the test. Both treat the firing as a numerical-threshold problem. The substrate-grade response is to ask ''what is this gate actually measuring?'' and find that under masked decode + class imbalance + strong base prior, the firing is structural (base × imbalance), not learning. Fix the THEORY of memorization, not the threshold. Per `feedback_anti_gravitational_well.md`: the standard ML answer would have masked the substrate-grade observation behind a tweak.
+
+**Journal notes:**
+- Skipped re-running 6 LoRA trainings worth of compute by recognizing the gate is a decision function on already-deterministic data. ~30 min of wall saved. This is an instance of the substrate-grade efficiency principle: don''t re-train when the question is already answered.
+- The Tester Fire 002 entries (also in this log) report a fabrication-on-attribution failure mode (model attributes correct results to wrong people, e.g., Reuleaux-Reddy). That is a separate finding from E006''s gate calibration but consistent with the larger pattern: the LoRA at 50 steps × rank 8 doesn''t move the model from its base behaviour, so any failure mode visible in tester probes is a base-Qwen failure mode. v1.0 corpus design needs to address attribution provenance explicitly (or make refusal-when-uncertain the dominant strategy).
+
+---

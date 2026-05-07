@@ -1,0 +1,102 @@
+{
+  "source_results": "ergon\\pipeline_d\\runs\\v0_5b_null_gate\\null_gate_results.json",
+  "h0_protocol": "max(chance, empirical_held_out_majority_rate) AND lora-base>=delta",
+  "alpha": 0.1,
+  "delta": 0.05,
+  "decode_protocol": "label_mask_forced_decode",
+  "variant_a_boundary": {
+    "seed_42": {
+      "lora_acc": 1.0,
+      "base_acc": 1.0,
+      "n_correct": 7,
+      "n_total": 7,
+      "majority_rate": 1.0,
+      "h0_rate": 1.0,
+      "p_value": 1.0,
+      "beats_baseline": false,
+      "lora_beats_base_by_delta": false,
+      "decision": "PASS",
+      "reason": "neither condition met: p=1.0000 vs alpha=0.1, lora-base=+0.000 vs delta=0.05"
+    },
+    "seed_1234": {
+      "lora_acc": 1.0,
+      "base_acc": 1.0,
+      "n_correct": 7,
+      "n_total": 7,
+      "majority_rate": 1.0,
+      "h0_rate": 1.0,
+      "p_value": 1.0,
+      "beats_baseline": false,
+      "lora_beats_base_by_delta": false,
+      "decision": "PASS",
+      "reason": "neither condition met: p=1.0000 vs alpha=0.1, lora-base=+0.000 vs delta=0.05"
+    },
+    "seed_100": {
+      "lora_acc": 0.8571428571428571,
+      "base_acc": 0.8571428571428571,
+      "n_correct": 6,
+      "n_total": 7,
+      "majority_rate": 0.8571428571428571,
+      "h0_rate": 0.8571428571428571,
+      "p_value": 0.7364861336930797,
+      "beats_baseline": false,
+      "lora_beats_base_by_delta": false,
+      "decision": "PASS",
+      "reason": "neither condition met: p=0.7365 vs alpha=0.1, lora-base=+0.000 vs delta=0.05"
+    }
+  },
+  "variant_b_synthetic": {
+    "seed_42": {
+      "lora_acc": 0.515,
+      "base_acc": 0.515,
+      "n_correct": 103,
+      "n_total": 200,
+      "majority_rate": 0.515,
+      "h0_rate": 0.515,
+      "p_value": 0.5284676262525785,
+      "beats_baseline": false,
+      "lora_beats_base_by_delta": false,
+      "decision": "PASS",
+      "reason": "neither condition met: p=0.5285 vs alpha=0.1, lora-base=+0.000 vs delta=0.05"
+    },
+    "seed_1234": {
+      "lora_acc": 0.515,
+      "base_acc": 0.515,
+      "n_correct": 103,
+      "n_total": 200,
+      "majority_rate": 0.515,
+      "h0_rate": 0.515,
+      "p_value": 0.5284676262525785,
+      "beats_baseline": false,
+      "lora_beats_base_by_delta": false,
+      "decision": "PASS",
+      "reason": "neither condition met: p=0.5285 vs alpha=0.1, lora-base=+0.000 vs delta=0.05"
+    },
+    "seed_100": {
+      "lora_acc": 0.515,
+      "base_acc": 0.515,
+      "n_correct": 103,
+      "n_total": 200,
+      "majority_rate": 0.515,
+      "h0_rate": 0.515,
+      "p_value": 0.5284676262525785,
+      "beats_baseline": false,
+      "lora_beats_base_by_delta": false,
+      "decision": "PASS",
+      "reason": "neither condition met: p=0.5285 vs alpha=0.1, lora-base=+0.000 vs delta=0.05"
+    }
+  },
+  "config": {
+    "alpha": 0.1,
+    "chance": 0.5,
+    "shuffle_seeds": [
+      42,
+      1234,
+      100
+    ],
+    "max_steps": 50,
+    "lora_rank": 8
+  },
+  "overall_verdict": "PASS",
+  "gate_fired_on": []
+}

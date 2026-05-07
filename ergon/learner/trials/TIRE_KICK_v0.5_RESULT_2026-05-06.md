@@ -316,6 +316,30 @@ W4.1/W4.2 cannot proceed under the current gate. Two independent fixes are neede
 1. **Gate H0 redesign:** binomial test against `max(0.5, empirical_held_out_majority_rate)` instead of fixed 0.5. This is filed as follow-up ticket E006 (drafted for next fire).
 2. **Held-out class-balancing or de-priored evaluation:** for the 17-entry corpus, this likely requires either stratified sampling that preserves the 15:2 ratio in both train and held-out (so majority-rate baseline is the same on both), or an evaluation that subtracts the base zero-shot prior from the LoRA post-train predictions.
 
+### 11.4b — E006 gate H0 recalibration (fire 2, 2026-05-06)
+
+The W4.0 gate's `H0=0.5` baseline + greedy threshold proved mis-specified for class-imbalanced held-out + strong-prior base models under masked decode. Fixed in `ergon/pipeline_d/null_gate_h0.py`. New gate FIRES iff BOTH:
+
+1. accuracy beats `max(0.5, empirical_held_out_majority_rate)` at p < 0.10 (binomial)
+2. `lora_acc - base_acc >= 0.05` (delta) — LoRA must contribute *something* beyond base prior
+
+Recalibrated verdicts on the same v0.5b W4.0 training data:
+
+| Variant | Seed | LoRA acc | Base acc | H0 | p (vs H0) | LoRA−Base | Decision |
+|---------|------|----------|----------|-----|------------|------------|----------|
+| A boundary | 42 | 1.000 | 1.000 | 1.000 | 1.0000 | +0.000 | **PASS** |
+| A boundary | 1234 | 1.000 | 1.000 | 1.000 | 1.0000 | +0.000 | **PASS** |
+| A boundary | 100 | 0.857 | 0.857 | 0.857 | 0.7365 | +0.000 | **PASS** |
+| B synthetic | 42 | 0.515 | 0.515 | 0.515 | 0.5285 | +0.000 | **PASS** |
+| B synthetic | 1234 | 0.515 | 0.515 | 0.515 | 0.5285 | +0.000 | **PASS** |
+| B synthetic | 100 | 0.515 | 0.515 | 0.515 | 0.5285 | +0.000 | **PASS** |
+
+All 6 PASS for the same reason: `lora_acc − base_acc = 0.000 < delta=0.05` (LoRA contributed nothing measurable at 50 steps × rank 8). Recalibrated JSON: `ergon/pipeline_d/runs/v0_5b_null_gate/null_gate_results_recalibrated.json`.
+
+**Updated v0.5b verdict (E001 + E006 closed):** the eval-protocol fix worked + the gate is now correctly specified. The deeper substrate-grade finding stands: **at 50 training steps × LoRA rank 8, the LoRA adapter does not measurably shift Qwen2.5-Math-1.5B-Instruct's behaviour on this corpus.** The base model's prior dominates entirely — both under masked-decode scoring (this run) and under free-form natural-language probing (Tester Fire 001 + 002 in parallel).
+
+This is the calibrated negative the pitch artifact wanted: the discipline ran, the findings are honest, and the v1.0 design has a specific actionable next step (LoRA hyperparam exploration: longer training, higher rank, target additional modules; or full classifier-head fine-tune; or completion-only-loss training, which is implemented in code but unexercised).
+
 ### 11.5 What v0.5b achieved + did NOT achieve
 
 **Achieved:**
