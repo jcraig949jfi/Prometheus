@@ -1,0 +1,516 @@
+{
+  "schema_version": "v1",
+  "module": "prometheus_math.tests.test_killvector_v2_fuzz",
+  "ticket": "T-2026-05-07-T008",
+  "completed_at": 1778146629.0916078,
+  "n_components_covered": 20,
+  "n_tests": 101,
+  "n_failures": 0,
+  "results": [
+    {
+      "test": "prop1_relabeling_metadata::out_of_band",
+      "status": "pass",
+      "ts": 1778146623.3022175
+    },
+    {
+      "test": "prop1_relabeling_metadata::reciprocity",
+      "status": "pass",
+      "ts": 1778146623.365206
+    },
+    {
+      "test": "prop1_relabeling_metadata::irreducibility",
+      "status": "pass",
+      "ts": 1778146623.4372048
+    },
+    {
+      "test": "prop1_relabeling_metadata::catalog:Mossinghoff",
+      "status": "pass",
+      "ts": 1778146623.503203
+    },
+    {
+      "test": "prop1_relabeling_metadata::catalog:lehmer_literature",
+      "status": "pass",
+      "ts": 1778146623.5872014
+    },
+    {
+      "test": "prop1_relabeling_metadata::catalog:LMFDB",
+      "status": "pass",
+      "ts": 1778146623.6722002
+    },
+    {
+      "test": "prop1_relabeling_metadata::catalog:OEIS",
+      "status": "pass",
+      "ts": 1778146623.746198
+    },
+    {
+      "test": "prop1_relabeling_metadata::catalog:arXiv",
+      "status": "pass",
+      "ts": 1778146623.8101974
+    },
+    {
+      "test": "prop1_relabeling_metadata::F1_permutation_null",
+      "status": "pass",
+      "ts": 1778146623.8941963
+    },
+    {
+      "test": "prop1_relabeling_metadata::F6_base_rate",
+      "status": "pass",
+      "ts": 1778146623.9791942
+    },
+    {
+      "test": "prop1_relabeling_metadata::F9_simpler_explanation",
+      "status": "pass",
+      "ts": 1778146624.0561929
+    },
+    {
+      "test": "prop1_relabeling_metadata::F11_cross_validation",
+      "status": "pass",
+      "ts": 1778146624.1201916
+    },
+    {
+      "test": "prop1_relabeling_metadata::relativizes",
+      "status": "pass",
+      "ts": 1778146624.1841903
+    },
+    {
+      "test": "prop1_relabeling_metadata::naturalizes",
+      "status": "pass",
+      "ts": 1778146624.2481892
+    },
+    {
+      "test": "prop1_relabeling_metadata::local_global_gap",
+      "status": "pass",
+      "ts": 1778146624.311188
+    },
+    {
+      "test": "prop1_relabeling_metadata::requires_unproven_conjecture",
+      "status": "pass",
+      "ts": 1778146624.383187
+    },
+    {
+      "test": "prop1_relabeling_metadata::asymptotic_only",
+      "status": "pass",
+      "ts": 1778146624.4451842
+    },
+    {
+      "test": "prop1_relabeling_metadata::small_case_artifact",
+      "status": "pass",
+      "ts": 1778146624.5131829
+    },
+    {
+      "test": "prop1_relabeling_metadata::asymmetric_effort",
+      "status": "pass",
+      "ts": 1778146624.5991814
+    },
+    {
+      "test": "prop1_relabeling_metadata::interpretive_slack",
+      "status": "pass",
+      "ts": 1778146624.684181
+    },
+    {
+      "test": "prop2_relabeling_parent_claim::out_of_band",
+      "status": "pass",
+      "ts": 1778146624.7841792
+    },
+    {
+      "test": "prop2_relabeling_parent_claim::reciprocity",
+      "status": "pass",
+      "ts": 1778146624.868178
+    },
+    {
+      "test": "prop2_relabeling_parent_claim::irreducibility",
+      "status": "pass",
+      "ts": 1778146624.9601765
+    },
+    {
+      "test": "prop2_relabeling_parent_claim::catalog:Mossinghoff",
+      "status": "pass",
+      "ts": 1778146625.0471742
+    },
+    {
+      "test": "prop2_relabeling_parent_claim::catalog:lehmer_literature",
+      "status": "pass",
+      "ts": 1778146625.138173
+    },
+    {
+      "test": "prop2_relabeling_parent_claim::catalog:LMFDB",
+      "status": "pass",
+      "ts": 1778146625.229171
+    },
+    {
+      "test": "prop2_relabeling_parent_claim::catalog:OEIS",
+      "status": "pass",
+      "ts": 1778146625.3201685
+    },
+    {
+      "test": "prop2_relabeling_parent_claim::catalog:arXiv",
+      "status": "pass",
+      "ts": 1778146625.4121704
+    },
+    {
+      "test": "prop2_relabeling_parent_claim::F1_permutation_null",
+      "status": "pass",
+      "ts": 1778146625.4981656
+    },
+    {
+      "test": "prop2_relabeling_parent_claim::F6_base_rate",
+      "status": "pass",
+      "ts": 1778146625.5891633
+    },
+    {
+      "test": "prop2_relabeling_parent_claim::F9_simpler_explanation",
+      "status": "pass",
+      "ts": 1778146625.6811626
+    },
+    {
+      "test": "prop2_relabeling_parent_claim::F11_cross_validation",
+      "status": "pass",
+      "ts": 1778146625.773161
+    },
+    {
+      "test": "prop2_relabeling_parent_claim::relativizes",
+      "status": "pass",
+      "ts": 1778146625.8471606
+    },
+    {
+      "test": "prop2_relabeling_parent_claim::naturalizes",
+      "status": "pass",
+      "ts": 1778146625.915158
+    },
+    {
+      "test": "prop2_relabeling_parent_claim::local_global_gap",
+      "status": "pass",
+      "ts": 1778146625.9831567
+    },
+    {
+      "test": "prop2_relabeling_parent_claim::requires_unproven_conjecture",
+      "status": "pass",
+      "ts": 1778146626.0561576
+    },
+    {
+      "test": "prop2_relabeling_parent_claim::asymptotic_only",
+      "status": "pass",
+      "ts": 1778146626.1441529
+    },
+    {
+      "test": "prop2_relabeling_parent_claim::small_case_artifact",
+      "status": "pass",
+      "ts": 1778146626.2341514
+    },
+    {
+      "test": "prop2_relabeling_parent_claim::asymmetric_effort",
+      "status": "pass",
+      "ts": 1778146626.3051624
+    },
+    {
+      "test": "prop2_relabeling_parent_claim::interpretive_slack",
+      "status": "pass",
+      "ts": 1778146626.3751493
+    },
+    {
+      "test": "prop3_permutation_of_components::out_of_band",
+      "status": "pass",
+      "ts": 1778146626.4121492
+    },
+    {
+      "test": "prop3_permutation_of_components::reciprocity",
+      "status": "pass",
+      "ts": 1778146626.453148
+    },
+    {
+      "test": "prop3_permutation_of_components::irreducibility",
+      "status": "pass",
+      "ts": 1778146626.4941459
+    },
+    {
+      "test": "prop3_permutation_of_components::catalog:Mossinghoff",
+      "status": "pass",
+      "ts": 1778146626.534145
+    },
+    {
+      "test": "prop3_permutation_of_components::catalog:lehmer_literature",
+      "status": "pass",
+      "ts": 1778146626.5761445
+    },
+    {
+      "test": "prop3_permutation_of_components::catalog:LMFDB",
+      "status": "pass",
+      "ts": 1778146626.6161435
+    },
+    {
+      "test": "prop3_permutation_of_components::catalog:OEIS",
+      "status": "pass",
+      "ts": 1778146626.6581426
+    },
+    {
+      "test": "prop3_permutation_of_components::catalog:arXiv",
+      "status": "pass",
+      "ts": 1778146626.699142
+    },
+    {
+      "test": "prop3_permutation_of_components::F1_permutation_null",
+      "status": "pass",
+      "ts": 1778146626.7401426
+    },
+    {
+      "test": "prop3_permutation_of_components::F6_base_rate",
+      "status": "pass",
+      "ts": 1778146626.781141
+    },
+    {
+      "test": "prop3_permutation_of_components::F9_simpler_explanation",
+      "status": "pass",
+      "ts": 1778146626.8221405
+    },
+    {
+      "test": "prop3_permutation_of_components::F11_cross_validation",
+      "status": "pass",
+      "ts": 1778146626.8621404
+    },
+    {
+      "test": "prop3_permutation_of_components::relativizes",
+      "status": "pass",
+      "ts": 1778146626.9031389
+    },
+    {
+      "test": "prop3_permutation_of_components::naturalizes",
+      "status": "pass",
+      "ts": 1778146626.9441383
+    },
+    {
+      "test": "prop3_permutation_of_components::local_global_gap",
+      "status": "pass",
+      "ts": 1778146626.9841373
+    },
+    {
+      "test": "prop3_permutation_of_components::requires_unproven_conjecture",
+      "status": "pass",
+      "ts": 1778146627.0251367
+    },
+    {
+      "test": "prop3_permutation_of_components::asymptotic_only",
+      "status": "pass",
+      "ts": 1778146627.0631363
+    },
+    {
+      "test": "prop3_permutation_of_components::small_case_artifact",
+      "status": "pass",
+      "ts": 1778146627.0921383
+    },
+    {
+      "test": "prop3_permutation_of_components::asymmetric_effort",
+      "status": "pass",
+      "ts": 1778146627.1231377
+    },
+    {
+      "test": "prop3_permutation_of_components::interpretive_slack",
+      "status": "pass",
+      "ts": 1778146627.1621337
+    },
+    {
+      "test": "prop4_isomorphism_on_parent_claim::out_of_band",
+      "status": "pass",
+      "ts": 1778146627.205133
+    },
+    {
+      "test": "prop4_isomorphism_on_parent_claim::reciprocity",
+      "status": "pass",
+      "ts": 1778146627.2471335
+    },
+    {
+      "test": "prop4_isomorphism_on_parent_claim::irreducibility",
+      "status": "pass",
+      "ts": 1778146627.289131
+    },
+    {
+      "test": "prop4_isomorphism_on_parent_claim::catalog:Mossinghoff",
+      "status": "pass",
+      "ts": 1778146627.3301303
+    },
+    {
+      "test": "prop4_isomorphism_on_parent_claim::catalog:lehmer_literature",
+      "status": "pass",
+      "ts": 1778146627.3731303
+    },
+    {
+      "test": "prop4_isomorphism_on_parent_claim::catalog:LMFDB",
+      "status": "pass",
+      "ts": 1778146627.4121292
+    },
+    {
+      "test": "prop4_isomorphism_on_parent_claim::catalog:OEIS",
+      "status": "pass",
+      "ts": 1778146627.4521284
+    },
+    {
+      "test": "prop4_isomorphism_on_parent_claim::catalog:arXiv",
+      "status": "pass",
+      "ts": 1778146627.4931276
+    },
+    {
+      "test": "prop4_isomorphism_on_parent_claim::F1_permutation_null",
+      "status": "pass",
+      "ts": 1778146627.5341284
+    },
+    {
+      "test": "prop4_isomorphism_on_parent_claim::F6_base_rate",
+      "status": "pass",
+      "ts": 1778146627.5761266
+    },
+    {
+      "test": "prop4_isomorphism_on_parent_claim::F9_simpler_explanation",
+      "status": "pass",
+      "ts": 1778146627.6181252
+    },
+    {
+      "test": "prop4_isomorphism_on_parent_claim::F11_cross_validation",
+      "status": "pass",
+      "ts": 1778146627.6551256
+    },
+    {
+      "test": "prop4_isomorphism_on_parent_claim::relativizes",
+      "status": "pass",
+      "ts": 1778146627.686125
+    },
+    {
+      "test": "prop4_isomorphism_on_parent_claim::naturalizes",
+      "status": "pass",
+      "ts": 1778146627.719123
+    },
+    {
+      "test": "prop4_isomorphism_on_parent_claim::local_global_gap",
+      "status": "pass",
+      "ts": 1778146627.7501225
+    },
+    {
+      "test": "prop4_isomorphism_on_parent_claim::requires_unproven_conjecture",
+      "status": "pass",
+      "ts": 1778146627.7831244
+    },
+    {
+      "test": "prop4_isomorphism_on_parent_claim::asymptotic_only",
+      "status": "pass",
+      "ts": 1778146627.8226311
+    },
+    {
+      "test": "prop4_isomorphism_on_parent_claim::small_case_artifact",
+      "status": "pass",
+      "ts": 1778146627.8656301
+    },
+    {
+      "test": "prop4_isomorphism_on_parent_claim::asymmetric_effort",
+      "status": "pass",
+      "ts": 1778146627.906631
+    },
+    {
+      "test": "prop4_isomorphism_on_parent_claim::interpretive_slack",
+      "status": "pass",
+      "ts": 1778146627.9426289
+    },
+    {
+      "test": "prop5_round_trip_and_squash_pure::out_of_band",
+      "status": "pass",
+      "ts": 1778146627.9966278
+    },
+    {
+      "test": "prop5_round_trip_and_squash_pure::reciprocity",
+      "status": "pass",
+      "ts": 1778146628.0606272
+    },
+    {
+      "test": "prop5_round_trip_and_squash_pure::irreducibility",
+      "status": "pass",
+      "ts": 1778146628.1146274
+    },
+    {
+      "test": "prop5_round_trip_and_squash_pure::catalog:Mossinghoff",
+      "status": "pass",
+      "ts": 1778146628.1676283
+    },
+    {
+      "test": "prop5_round_trip_and_squash_pure::catalog:lehmer_literature",
+      "status": "pass",
+      "ts": 1778146628.2206273
+    },
+    {
+      "test": "prop5_round_trip_and_squash_pure::catalog:LMFDB",
+      "status": "pass",
+      "ts": 1778146628.278624
+    },
+    {
+      "test": "prop5_round_trip_and_squash_pure::catalog:OEIS",
+      "status": "pass",
+      "ts": 1778146628.332625
+    },
+    {
+      "test": "prop5_round_trip_and_squash_pure::catalog:arXiv",
+      "status": "pass",
+      "ts": 1778146628.3896205
+    },
+    {
+      "test": "prop5_round_trip_and_squash_pure::F1_permutation_null",
+      "status": "pass",
+      "ts": 1778146628.4416194
+    },
+    {
+      "test": "prop5_round_trip_and_squash_pure::F6_base_rate",
+      "status": "pass",
+      "ts": 1778146628.4986184
+    },
+    {
+      "test": "prop5_round_trip_and_squash_pure::F9_simpler_explanation",
+      "status": "pass",
+      "ts": 1778146628.5516174
+    },
+    {
+      "test": "prop5_round_trip_and_squash_pure::F11_cross_validation",
+      "status": "pass",
+      "ts": 1778146628.6176164
+    },
+    {
+      "test": "prop5_round_trip_and_squash_pure::relativizes",
+      "status": "pass",
+      "ts": 1778146628.6866148
+    },
+    {
+      "test": "prop5_round_trip_and_squash_pure::naturalizes",
+      "status": "pass",
+      "ts": 1778146628.7536135
+    },
+    {
+      "test": "prop5_round_trip_and_squash_pure::local_global_gap",
+      "status": "pass",
+      "ts": 1778146628.8066165
+    },
+    {
+      "test": "prop5_round_trip_and_squash_pure::requires_unproven_conjecture",
+      "status": "pass",
+      "ts": 1778146628.8616147
+    },
+    {
+      "test": "prop5_round_trip_and_squash_pure::asymptotic_only",
+      "status": "pass",
+      "ts": 1778146628.9136145
+    },
+    {
+      "test": "prop5_round_trip_and_squash_pure::small_case_artifact",
+      "status": "pass",
+      "ts": 1778146628.966614
+    },
+    {
+      "test": "prop5_round_trip_and_squash_pure::asymmetric_effort",
+      "status": "pass",
+      "ts": 1778146629.0206103
+    },
+    {
+      "test": "prop5_round_trip_and_squash_pure::interpretive_slack",
+      "status": "pass",
+      "ts": 1778146629.0906072
+    },
+    {
+      "test": "substrate_v2_count_invariant",
+      "status": "pass",
+      "ts": 1778146629.0916078
+    }
+  ]
+}
