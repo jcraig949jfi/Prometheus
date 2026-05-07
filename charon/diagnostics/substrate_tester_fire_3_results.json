@@ -1,0 +1,88 @@
+{
+  "fire_id": "fire_3_2026_05_06",
+  "lanes": [
+    "4_cross_domain_leak",
+    "8_exclusion_certificate_extension"
+  ],
+  "lane_4": {
+    "lane": "4_cross_domain_leak",
+    "n_tests": 4,
+    "verdict_counts": {
+      "PASS": 2,
+      "PARTIAL": 1,
+      "FAIL": 1
+    },
+    "architecture_observation": "v1.5 substrate has NO unified cross-domain CLAIM entry. DiscoveryPipeline is Lehmer-only; BSDRankEnv is BSD-only; etc. The lane-4 spec's literal 'submit Lehmer claim to BSD env' is structurally not supported. Tests above exercise the closest analogue: LearnerCorpus domain-isolation discipline.",
+    "tests": [
+      {
+        "id": "T1_domain_registry_disjoint",
+        "expected": "bsd_rank and lehmer raw_invariants are disjoint",
+        "actual": "disjoint; bsd=5 keys, lehmer=13 keys",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T2_emit_with_domain_content_mismatch",
+        "expected": "either reject OR clearly mark mismatch",
+        "actual": "emission accepted; domain tag='bsd_rank'; raw_invariants all-None for 5/5 BSD keys; no warning or coherence-check log emitted",
+        "verdict": "PARTIAL",
+        "severity": "P3-low",
+        "note": "Domain-content coherence is not validated. The substrate stores the declared domain tag faithfully; downstream consumers must themselves check that raw_invariants are non-None for the domain's registered keys. This is a substrate-architectural observation: domain isolation is by-construction (per-pipeline) rather than by-validation."
+      },
+      {
+        "id": "T3_invalid_domain_silent_acceptance",
+        "expected": "KeyError or ValueError raised",
+        "actual": "silently returned ('__unregistered__',)",
+        "verdict": "FAIL",
+        "severity": "P2-normal"
+      },
+      {
+        "id": "T4_object_id_cross_domain_collision",
+        "expected": "object_id should include domain to prevent cross-domain ID collisions",
+        "actual": "oid1 (lehmer) = 8b475470b3d92748...; oid2 (bsd_rank) = 96d27279a9b8b899...; equal? False",
+        "verdict": "PASS",
+        "severity": null,
+        "note": "domains produce distinct object_ids; cross-domain ID collisions ruled out"
+      }
+    ]
+  },
+  "lane_8": {
+    "lane": "8_exclusion_certificate_extension",
+    "n_tests": 4,
+    "verdict_counts": {
+      "PASS": 4
+    },
+    "tests": [
+      {
+        "id": "T1_certificate_complete_with_triangulation",
+        "expected": "strength=COMPLETE AND len(triangulation_history) >= 2",
+        "actual": "strength=COMPLETE, triangulation_history=4 paths",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T2_certificate_chart_id_matches",
+        "expected": "chart_id='lehmer:deg14:pm5:palindromic'",
+        "actual": "chart_id='lehmer:deg14:pm5:palindromic'",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T3_in_scope_candidate_normal_pipeline",
+        "expected": "candidate processed via normal pipeline; no certificate-aware short-circuit",
+        "actual": "M=3.635593, terminal_state=REJECTED, kill_pattern='out_of_band:M=3.6356_outside_(1.001,1.18)', cert_referenced=False",
+        "verdict": "PASS",
+        "severity": null,
+        "note": "no silent certificate extension; substrate runs the normal pipeline"
+      },
+      {
+        "id": "T4_duplicate_certificate_per_chart",
+        "expected": "deterministic behavior (allow/reject/replace explicit)",
+        "actual": "before: 1 certs for chart; after: appended (substrate allows multiple certs per chart)",
+        "verdict": "PASS",
+        "severity": null,
+        "note": "documenting substrate behavior on duplicate-chart certificate registration"
+      }
+    ]
+  }
+}

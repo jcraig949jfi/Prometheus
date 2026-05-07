@@ -6,6 +6,78 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #3 — 2026-05-06 21:45 UTC
+
+**Lanes selected:** 4 (cross-domain-leak) + 8 (ExclusionCertificate-extension).
+
+**Lane rationale:** Per fire #2 standing recommendation. Avoided lanes 2 + 9 (anti-repeat). Picked: domain-isolation discipline (lane 4) + certificate-extension discipline (lane 8). Both have shipped substrate code (`prometheus_math/learner_corpus.py`, `sigma_kernel/exclusion_certificate.py`, `sigma_kernel/exclusion_certificates/lehmer_deg14.py`).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_3_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_3_results.json`.
+
+### Lane 4 — cross-domain-leak: 2 PASS / 1 PARTIAL / 1 FAIL
+
+**Architectural observation up front:** the v1.5 substrate has NO unified cross-domain CLAIM entry. `DiscoveryPipeline` is Lehmer-only; `BSDRankEnv` is BSD-only; etc. The lane-4 spec's literal "submit Lehmer claim to BSD env" is structurally not what the substrate supports — domain isolation is by-construction (per-pipeline), not by-validation. Tests below adapt to exercise the closest analogue: LearnerCorpus domain-tagging discipline.
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — registered domain keys disjoint | **PASS** | bsd_rank=5 keys, lehmer=13 keys; no overlap |
+| T2 — emit with domain="bsd_rank" but Lehmer-shape record | **PARTIAL** | Accepted silently; raw_invariants all-None for 5/5 BSD keys; no warning |
+| T3 — `get_raw_invariant_keys("nonexistent_domain_xyz")` | **FAIL** | Returns `('__unregistered__',)` silently. **→ ticket T-2026-05-06-ST003 (P2-normal).** |
+| T4 — object_id cross-domain collision | **PASS** | Distinct hashes for same canonical_form across domains |
+
+**Key finding (FAIL T3):** `prometheus_math/learner_corpus.py:get_raw_invariant_keys` returns a sentinel `("__unregistered__",)` on typo/unknown domain instead of raising. Downstream callers like `stub_emit_from_legacy_ledger` then look up "__unregistered__" as a key in record dicts (returns None) and produce a valid-looking but content-empty emission. This is silent degradation; substrate prefers loud-fail-on-typo. Filed P2-normal.
+
+**Related observation (PARTIAL T2):** the same architectural pattern (schema isolation by-construction) means stub_emit_from_legacy_ledger doesn't validate that the record content actually matches the declared domain's keys. Fixing T3 + adding a warn-or-error log when stub_emit detects all-None raw_invariants would close both. Documented in T-2026-05-06-ST003 payload as `related_observations`.
+
+### Lane 8 — ExclusionCertificate-extension: 4/4 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — Lehmer cert is COMPLETE with triangulation_history | **PASS** | strength=COMPLETE, 4 triangulation paths (Path A/B/C/D) |
+| T2 — chart_id matches expected scope | **PASS** | `lehmer:deg14:pm5:palindromic` |
+| T3 — fresh in-scope candidate via DiscoveryPipeline | **PASS** | M=3.636 → out_of_band; cert NOT referenced in kill_pattern |
+| T4 — duplicate certificate registration on same chart | **PASS** | Behavior is deterministic (appended; 1 → 2 certs/chart) |
+
+**Substrate verdict:** Lane 8 is solid. The Lehmer deg-14 ±5 palindromic prototype certificate satisfies Aporia v2.3's hard rule (`strength=COMPLETE` requires non-empty `triangulation_history`). DiscoveryPipeline does NOT short-circuit on certificate scope — it runs the normal pipeline regardless, so silent certificate extension (the lane-8 critical bug) is structurally prevented by the pipeline's certificate-unaware design. Duplicate-per-chart registration appends deterministically — the substrate allows multiple certificates per chart_id, which is sensible for layered claims.
+
+### Tickets filed this fire
+
+**1 ticket (P2-normal):** `T-2026-05-06-ST003` — `get_raw_invariant_keys` silently returns sentinel for unregistered domains. See `aporia/meta/queue/techne_inbox.jsonl`. Payload includes related-observations for T2 PARTIAL (same root cause).
+
+### Standing recommendations for next fire (#4)
+
+1. **Anti-repeat:** avoid lanes 4 + 8. Suggested fire #4: Lane 3 (correlated-triangulation) + Lane 6 (undecidable-canonicalization), or Lane 10 (real-paper).
+2. **CoordinateChart fix tracking:** if Techne resolves T-2026-05-06-ST002 (fire #2's empty-domain ticket), fire #4 or #5 should re-probe with Lane 2 to confirm regression closed.
+3. **Lane 5 (large-scale-enumeration)** still queued. Defer until a fire has nothing else.
+4. **Lane 1 (CLAIM-flood)** should return with a stratified in-band sampler (rejection-sampling on M ∈ (1.001, 1.18) so F1/F6/F9/F11 actually get exercised).
+5. **Domain-content coherence (T2 PARTIAL):** if Techne's fix for T3 also adds the warn-or-error log on all-None raw_invariants, fire-2's PARTIAL becomes PASS retroactively.
+
+### Fire-3 stress on substrate health
+
+**Positive:**
+- Lane 8 fully passes — ExclusionCertificate primitive discipline is solid.
+- Triangulation_history hard rule (Aporia v2.3) is enforced for COMPLETE strength.
+- Domain registry has clean disjoint keys between cross-domain envs (no overlap between bsd_rank and lehmer raw_invariant lists).
+- object_id is domain-distinct (cross-domain ID collisions structurally impossible).
+
+**One real flaw:**
+- `get_raw_invariant_keys` silent sentinel on unknown domain (P2-normal; ticket filed).
+
+**Architectural observation worth surfacing:**
+- v1.5 substrate has no unified CLAIM entry — domain isolation is by-construction (per-pipeline) rather than by-validation. Lane-4 spec needs adaptation when v2.x lands a unified entry; until then, the lane targets LearnerCorpus domain discipline.
+
+### Discipline notes
+
+- No paper/publication mentions in this fire (per `feedback_exploration_not_papers.md` HARD RULE 2026-05-06).
+- No drift toward established frameworks observed in the substrate code I read this fire (per `feedback_anti_gravitational_well.md` HARD RULE 2026-05-06).
+- Time used: ~38 minutes (within 50-minute cap).
+- Anti-flooding cap: 1 ticket filed (max 5 allowed).
+
+— substrate-tester, fire #3, 2026-05-06 21:45 UTC
+
+---
+
 ## Fire #2 — 2026-05-06 20:35 UTC
 
 **Lanes selected:** 2 (adversarial-CLAIM) + 9 (NearMissCorpus-leak).
