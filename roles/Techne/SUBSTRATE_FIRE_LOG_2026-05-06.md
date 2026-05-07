@@ -319,7 +319,9 @@ Delta: 0
 
 ### Commit
 
-To be recorded after commit.
+`77f1274a` — "Fire #5: ST003 BLOCKED (contract change required); 3 paths forward filed"
+
+Cross-agent staging mitigation worked again: `git diff --cached --name-only` confirmed exactly 2 files staged before commit.
 
 ### Schedule wakeup
 
@@ -328,3 +330,72 @@ To be recorded after commit.
 ---
 
 *Fire #5 closed. Inbox: 0 OPEN tickets (T001+T004+ST003 BLOCKED, T002+T003+T005+ST002 DONE). Fire #6 will check for new tickets; if none, document quiet tick.*
+
+---
+
+## Fire #6 — 2026-05-07 ~01:00Z — QUIET TICK
+
+**Pre-test baseline:** 365 v2.3 substrate tests passing (scoped sweep, 113s; full sweep launched in background bpt0qvfo9 — confirmed clean from prior fire).
+
+### Inbox state at fire start
+
+7 tickets, all in terminal/blocked states:
+
+| ID | Status | Notes |
+|---|---|---|
+| T-2026-05-06-T001 | BLOCKED | scripts/ contract change required (deg-12 brute-force) |
+| T-2026-05-06-T002 | DONE | Fire #1 — KillEmbedding K(c) prep checklist |
+| T-2026-05-06-T003 | DONE | Fire #2 — sigma_kernel.md v2.3 update |
+| T-2026-05-06-T004 | BLOCKED | charon/diagnostics/ outside file ownership; Charon coord ticket filed |
+| T-2026-05-06-T005 | DONE | Fire #3 — gradient_archaeology G4 audit |
+| T-2026-05-06-ST002 | DONE | Fire #4 — CoordinateChart empty-domain validator bug fix |
+| T-2026-05-06-ST003 | BLOCKED | contract change required (get_raw_invariant_keys silent sentinel) |
+
+**0 OPEN tickets.** Per protocol step 1: "If no OPEN tickets, document quiet tick in your session journal and schedule next wake."
+
+### Substrate observations during quiet tick
+
+Working-tree shows substrate-tester's Fire 4 outputs landed (`charon/diagnostics/substrate_tester_fire_4_harness.py` + `substrate_tester_fire_4_results.json`) but no new tickets surfaced in `aporia/meta/queue/techne_inbox.jsonl`. Either the Fire 4 results showed clean (no new substrate flaws) OR new tickets are being prepared and haven't landed yet. Will pick up at Fire #7 if they appear.
+
+### Quiet-tick discipline
+
+Resisted the urge to scope-creep into self-directed work during this quiet tick:
+- PATH C from Fire #5's ST003 resolution (additive warning log on stub_emit when raw_invariants are all-None) is tractable in one fire WITHOUT contract change
+- But the loop protocol is **inbox-driven**: "drain ONE ticket from your inbox" — proactive work without a ticket violates the discipline
+- If James/Aporia want PATH C done, they'll file the ticket; until then, quiet tick stands
+
+This is consistent with the substrate's content-addressed-provenance discipline (work has provenance via ticket id) and the anti-conventional-drift rule (don't pull work the system didn't ask for).
+
+### Self-review (mandatory per protocol — abbreviated for quiet tick)
+
+(a) **Did I solve the right problem?** YES — correctly identified 0 OPEN tickets and went to quiet tick rather than fabricating work. Resisted the conventional-completionist reflex of "I should always be doing something."
+
+(b) **Did I change any contract?** NO — no code changes; only inbox-state observation + journal entry.
+
+(c) **Conventional-approach drift?** NONE — explicitly resisted self-directed PATH C work as out-of-protocol; deferred to inbox.
+
+### Diff this fire
+
+| File | Change | Within ownership? |
+|---|---|---|
+| `roles/Techne/SUBSTRATE_FIRE_LOG_2026-05-06.md` | M (this entry + Fire #5 commit-hash backfill from prior fire) | role-doc surface |
+
+No code files touched. No public APIs changed. No schemas modified.
+
+### Tests
+
+Pre-test (scoped, Fire #6 baseline): 365 passing
+Post-test: not run (no code changes)
+Delta: 0
+
+### Commit
+
+To be recorded after commit.
+
+### Schedule wakeup
+
+`delaySeconds=7200` (2h) with the loop prompt verbatim; runtime clamps to 3600s.
+
+---
+
+*Fire #6 closed (quiet tick). Inbox unchanged: 7 tickets, all terminal/blocked. Fire #7 will check for new tickets again.*
