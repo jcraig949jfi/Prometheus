@@ -177,7 +177,8 @@ Read `aporia/doctrine/critical_memories.md` first; binding.
    charon/diagnostics/substrate_tester_fire_log.md to know which lanes
    you covered most recently. Rotate.
 
-2. Pick 1-2 lanes from this menu:
+2. Pick 1-2 lanes from this menu (lanes 11-13 added 2026-05-07 to
+   raise Techne ticket throughput):
    1. CLAIM-flood (substrate throughput + verdict accuracy)
    2. adversarial-CLAIM (input validation)
    3. correlated-triangulation (TriangulationProtocol independence)
@@ -189,6 +190,17 @@ Read `aporia/doctrine/critical_memories.md` first; binding.
       modification)
    9. NearMissCorpus-leak (pre/post-falsification view separation)
    10. real-paper (real-world arxiv claim ingestion)
+   11. batch-sweep (NEW — 30 probes/fire from landed Harmonia
+       adversarial+real-paper corpora; ~10x ticket yield; pick
+       roughly every other fire to avoid Techne overflow)
+   12. representation-pressure (NEW — capability-gap probe: pick 3
+       real mathematical objects, attempt to encode as CLAIMs,
+       file P1 capability-gap tickets per encoding failure;
+       expect most to go BLOCKED-CONTRACT-CHANGE and accumulate
+       as next-pause/resume backlog)
+   13. canonicalization-fuzz (NEW — drive the Hypothesis-style
+       canonicalization fuzzer once T-2026-05-07-T006 lands;
+       dormant until then)
 
    For lane definitions and stress-vector rules, see
    aporia/meta/pressure_appliers/PRESSURE_PROMPTS_v1.md sections
@@ -236,7 +248,7 @@ Read `aporia/doctrine/critical_memories.md` first; binding.
   favor or disfavor the substrate. Random within lane.
 - Cap: max 5 tickets per fire.
 - Cap: 1.5 hours per fire wall-clock (lane 5 may take the full cap).
-- Lane rotation: over any 10-day window, all 10 lanes should get
+- Lane rotation: over any 10-day window, all 13 lanes should get
   exercised at least once. If you notice you've skipped a lane for
   >10 days, prioritize it next fire.
 
