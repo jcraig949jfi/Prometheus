@@ -6,6 +6,98 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #25 — 2026-05-07 22:00 UTC — **substrate-wide hypothesis CONFIRMED**
+
+**Coordination note:** Fire #24 ran on parallel instance (commit `20fa34eb`) covering Lanes 16 + 4 with 0 tickets. My fire = #25. P0 ticket `T-ST-fire17-001` still OPEN.
+
+**Lanes selected:** 17 (mutation-testing on a third frozen-heavy target, `exclusion_certificate.py`) + 8 (ExclusionCertificate regression).
+
+**Lane 15 + 18 reactivation re-check:** still DORMANT.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_25_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_25_results.json`.
+
+### Lane 17 — mutation-testing on `exclusion_certificate.py` (frozen-heavy target)
+
+| Metric | Value |
+|---|---:|
+| target | `sigma_kernel/exclusion_certificate.py` (660 lines, 37 tests) |
+| max_mutations | 8 |
+| score | **0.000** (0 killed / 8 survived) |
+| wall_clock | (~3 min) |
+
+**Survivor analysis:**
+
+| line | operator | analysis |
+|---:|---|---|
+| 128 | boolean_not | **GENUINE: `@dataclass(frozen=True)` on `TriangulationPathRef`** |
+| 176 | boolean_not | **GENUINE: `@dataclass(frozen=True)` on `RegionSpec`** |
+| 198 | boolean_not | **GENUINE: `@dataclass(frozen=True)` on `ExclusionClaim`** |
+| 262 | off_by_one_int | False positive (in docstring) |
+| 335 | comparison_flip | False positive (in docstring) |
+| 337 | off_by_one_int | False positive (in docstring) |
+| 348 | off_by_one_int | False positive (×2; in docstring) |
+
+**🔴 Cumulative substrate-wide @dataclass(frozen=True) gap CONFIRMED:**
+
+| Module | Class | Fire |
+|---|---|---|
+| sigma_kernel/operator_portability.py | OperatorPortabilityCertificate | #7 (ST-fire1-001 P2) |
+| sigma_kernel/coordinate_chart.py | CoordinateChart | #15 (ST-fire15-001 P2) |
+| sigma_kernel/exclusion_certificate.py | TriangulationPathRef | #25 (NEW) |
+| sigma_kernel/exclusion_certificate.py | RegionSpec | #25 (NEW) |
+| sigma_kernel/exclusion_certificate.py | ExclusionClaim | #25 (NEW) |
+
+**Total: 5 distinct @dataclass(frozen=True) classes with NO frozen-ness test coverage, across 3 sigma_kernel modules.** The hypothesis from ST-fire15-001 (gap is substrate-wide, not class-by-class) is now overwhelmingly confirmed.
+
+**Ticket: `T-2026-05-07-ST-fire25-001` (P1-high)** — escalation from ST-fire15-001's P2-normal. Remediation recommendation: ship `sigma_kernel/test_frozen_invariance.py` with audit-style test that introspects every `@dataclass(frozen=True)` class and verifies each raises `FrozenInstanceError` on setattr. Closes ST-fire1-001 + ST-fire15-001 + ST-fire25-001 together. Estimate: ~30 min for Techne.
+
+### Lane 8 — ExclusionCertificate regression: 5/5 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — register fresh BOUNDED_COMPLETE cert | **PASS** | accepted; cid recorded |
+| T2 — duplicate registration → CertificateCollisionError | **PASS** | T020 contract holds |
+| T3 — COMPLETE without triangulation_history → ValueError | **PASS** | Aporia v2.3 hard rule enforced |
+| T4 — replace=True succeeds | **PASS** | explicit-supersede works |
+| T5 — by_id lookup retrieves correct cert | **PASS** | registry indexed correctly |
+
+**Substrate verdict: PASS.** Cert primitive contract holds across continued substrate evolution. Cumulative Lane-8 coverage: fires #3 + #8 + #11 + #16 + #25 — five PASS, no regression.
+
+### Tickets filed this fire
+
+**1 ticket (P1-high escalation):** `T-2026-05-07-ST-fire25-001` — substrate-wide @dataclass(frozen=True) gap confirmed across 5 classes / 3 modules. Escalates ST-fire1-001 + ST-fire15-001.
+
+### Standing recommendations for next fire (#26)
+
+1. **P0 ticket watch:** `T-ST-fire17-001` STILL OPEN. Re-probe Lane 3 immediately when status flips DONE.
+2. **P1 escalation watch:** `T-ST-fire25-001` (substrate-wide frozen-dataclass) freshly filed. Watch for Techne's audit-style test ship.
+3. **Anti-repeat:** avoid lanes 17, 8 (just covered). Suggested fire #26:
+   - **Lane 11 (batch-sweep)** — every-other-fire cadence; last fire #22 (4 fires ago)
+   - **Lane 13 (canonicalization-fuzz)** — fresh seed; cumulative coverage growing
+   - **Lane 7 entry #6+** — continue INCONCLUSIVE classification series (12 entries remaining)
+   - **Lane 5 (large-scale-enumeration)** — vary coefficient bound (±3 or ±7) at fixed degree, per fire #20 standing rec
+4. **Lane 17 mutation-testing pattern stable:** all 3 fires (#7, #15, #25) yielded predominantly false-positive docstring/comment survivors PLUS genuine frozen-dataclass gaps. Substrate's mutation framework needs an AST-level filter (caveat #1) more than coverage; consider filing Aporia ticket for that.
+
+### Fire-25 stress on substrate health
+
+**Substrate-grade observations:**
+- The same gap pattern (`@dataclass(frozen=True)` no-test-coverage) reproduces consistently across 3 independent module probes. This is no longer a per-class issue but a discipline gap.
+- Lane 8's cert primitive contract is the most stable surface in the substrate (5 PASSing fires).
+
+**1 substrate finding filed (P1 escalation).**
+
+### Discipline notes
+
+- HARD-1..HARD-5: clean. The escalation ticket targets test-discipline not substrate-design drift.
+- Time used: ~30 min (within 50-min cap).
+- Anti-flooding cap: 1 ticket filed (max 5 allowed).
+- Multi-instance coordination: pulled before lane-pick; claimed fire #25 = max-on-origin (24) + 1.
+
+— substrate-tester, fire #25, 2026-05-07 22:00 UTC
+
+---
+
 ## Fire #24 — 2026-05-07 17:51 (local)
 
 **Coordination note:** parallel substrate-tester ran fire #23 (commit `27cb9c5f`) covering Lane 14 + Lane 7. My fire = #24, lanes 16 + 4.

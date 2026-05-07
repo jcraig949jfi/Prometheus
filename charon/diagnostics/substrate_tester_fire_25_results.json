@@ -1,0 +1,107 @@
+{
+  "fire": 25,
+  "lanes": [
+    17,
+    8
+  ],
+  "lane_17": {
+    "lane": "17_mutation_on_exclusion_certificate",
+    "target": "sigma_kernel/exclusion_certificate.py",
+    "max_mutations_requested": 8,
+    "wall_clock_seconds": 172.91328954696655,
+    "rc": 0,
+    "summary_line": "[mutation] score=0.000 killed=0 survived=8 errored=0 skipped=0",
+    "score": 0.0,
+    "n_killed": 0,
+    "n_survived": 8,
+    "n_errored": 0,
+    "n_skipped": 0,
+    "mutations": [
+      {
+        "idx": "1",
+        "verdict": "survived",
+        "site": "exclusion_certificate.py:128:boolean_not"
+      },
+      {
+        "idx": "2",
+        "verdict": "survived",
+        "site": "exclusion_certificate.py:176:boolean_not"
+      },
+      {
+        "idx": "3",
+        "verdict": "survived",
+        "site": "exclusion_certificate.py:198:boolean_not"
+      },
+      {
+        "idx": "4",
+        "verdict": "survived",
+        "site": "exclusion_certificate.py:262:off_by_one_int"
+      },
+      {
+        "idx": "5",
+        "verdict": "survived",
+        "site": "exclusion_certificate.py:335:comparison_flip"
+      },
+      {
+        "idx": "6",
+        "verdict": "survived",
+        "site": "exclusion_certificate.py:337:off_by_one_int"
+      },
+      {
+        "idx": "7",
+        "verdict": "survived",
+        "site": "exclusion_certificate.py:348:off_by_one_int"
+      },
+      {
+        "idx": "8",
+        "verdict": "survived",
+        "site": "exclusion_certificate.py:348:off_by_one_int"
+      }
+    ],
+    "frozen_dataclass_survivor": {
+      "site": "exclusion_certificate.py:128:boolean_not",
+      "line_no": 128,
+      "src_line": "@dataclass(frozen=True)"
+    },
+    "stderr_tail": ""
+  },
+  "lane_8": {
+    "lane": "8_cert_extension_regression",
+    "n_tests": 5,
+    "verdict_counts": {
+      "PASS": 5
+    },
+    "tests": [
+      {
+        "id": "T1_register_fresh",
+        "expected": "registers cleanly",
+        "actual": "cid=b0f77e48bc6da4e3",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T2_collision_raises",
+        "expected": "CertificateCollisionError",
+        "actual": "raised CertificateCollisionError",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T3_complete_requires_triangulation",
+        "expected": "ValueError",
+        "actual": "ValueError raised (Aporia v2.3 hard rule enforced)",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T4_replace_true_succeeds",
+        "expected": "replace=True overrides",
+        "actual": "succeeds",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T5_by_id_lookup",
+        "expected": "lookup returns cert",
+        "actual": "retrieved cid=b0f77e48bc6da4e3",
+        "verdict": "PASS"
+      }
+    ]
+  }
+}
