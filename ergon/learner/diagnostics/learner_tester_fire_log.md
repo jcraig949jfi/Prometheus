@@ -829,3 +829,44 @@ Net: 2 OPEN Ergon tickets + 1 Aporia coord. Within 5-cap.
 — Charon (as Learner-Tester), 2026-05-07T05:00Z
 
 ---
+
+## Fire 2 (post-restart) — 2026-05-07 (Ergon producer-side)
+
+**Trigger:** Manual `/loop` from James. Skipped first-fire-only pre-step (already satisfied fire 1 post-restart).
+
+**Inbox FRESH read (step 1):** 33 lines, 3 OPEN tickets:
+- T-2026-05-07-0021 P1 (learner-tester) — Gödel 2nd Incompleteness fabrication
+- T-2026-05-07-E008 P1 (aporia-seed) — Extend v1.0 corpus design with Charon 6-fire findings + consume fabrication corpus
+- T-2026-05-07-0020 P2 (learner-tester) — wrong_answer on calibration probe
+
+Picked **E008** (Aporia-side, productive doc work, no contract-touching). Tester tickets bulk-deferred per fire-3-onwards pattern.
+
+**Action:**
+- Pre-test 356/356 PASS (clean baseline, 33s).
+- Bulk-deferred T-0021 + T-0020 to v1.0 with notes (Pattern 1+6 composite for 0021, Pattern 7 for 0020).
+- Updated `ergon/learner/v1_0_plans/tester_findings_consolidated.md` with all 6 substantive E008 acceptance criteria:
+  - **§5b.1 Multi-part-degeneration causal-confirmation** referencing E007 (closed fire 1 post-restart) as the addressing ticket
+  - **§5b.2 FM-08 trivial-vs-open as architectural pattern** — pulled from corpus's TVO-01..05 (Hodge / Goldbach / Bochner-Riesz / Catalan-Pillai-FLT / RH); refined Pattern 1 with the surface-correct-substantively-wrong sub-pattern
+  - **§5b.3 Refusal-mode-engagement section** — refines Pattern 1 rank-2 from "uncertainty calibration mostly silences" to "uncertainty calibration as **mode-engagement training** may produce stronger correction"; cited the 3 uncertainty_calibration_examples (IUT, binary Goldbach, RH counterexample) as positive anchors
+  - **§5b.4 Verbose-textbook-mode is structural** — Charon's max_new_tokens 96/192/256/384 sweep showed no shift; Pattern 2 sharpened: concise-output IT corpus is **necessary** (not just helpful); concise-prefix prompt prefix is the cheap v0.5b pre-test
+  - **§6 Consuming the fabrication corpus** with per-anchor-type mapping table (19 fabrications → hard-negative pairs; 5 trivial-vs-open → architectural-pattern positive pairs; 13 canonical attributions → positive anchor data; 3 uncertainty examples → mode-engagement positive anchors)
+  - **§7 Pre-registered hypothesis revisions** — table mapping fire-6-fire-7-fire-8 originals to fire-2-post-restart revisions, with explicit rationale per HARD-2 + `feedback_assume_wrong.md`
+- Cleaned stale title (`§1 "Five failure-mode patterns"` → `§1 "Eight failure-mode patterns"` reflecting Patterns 6/7/8 added in earlier fires).
+- v1.0 effort allocation revised from 70% corpus / 30% hyperparam → **60% corpus / 25% inference-time decode/protocol / 15% hyperparam.** Inference-time interventions (decomposition + repetition_penalty + concise-prefix) are cheap, additive, and shipping zero-cost wins.
+
+**Test result:** 356/356 pass (no test changes; doc-only). No regressions.
+
+**SELF-REVIEW:**
+- (a) **Did this fix resolve the failure mode the pressure-applier reported?** YES, doc-only completion. Aporia's E008 was explicit acceptance: 8 criteria spanning multi-part-degeneration causal confirmation + FM-08 architectural pattern + refusal-mode-engagement + verbose-textbook-mode structural + corpus consumption + pre-reg revisions. All 8 met. Doc grew from ~16.6KB to ~31.9KB (~2x); structure preserved while adding §5b/§6/§7.
+- (b) **Memorization risk that the synthetic-null gate would catch?** None. Pure documentation work. No training data, model weights, or decoding logic touched. The corpus-consumption mapping in §6.2 is a v1.0 *plan* — not actually executed this fire. When v1.0 corpus construction begins, the W4.0 synthetic-null gate runs on the constructed training data per existing protocol; this doc's contribution is the construction recipe, not the corpus itself.
+- (c) **Did I change any contract?** No. Only file modified is `ergon/learner/v1_0_plans/tester_findings_consolidated.md` — design doc in my file ownership. No code changes. No public API changes. Inbox payload changes are queue protocol, not contracts.
+- (d) **Conventional-approach drift?** Caught two:
+  1. **Generic-mix-and-train drift.** The conventional response to "we have hard-negative training data" is to mix fabrications + corrections into a standard SFT dataset and train. The substrate-grade response (per HARD-2) is to **respect the failure-mode taxonomy and pair explicitly per anchor type** (§6.2 construction protocol). This preserves the FM-01..10 structure as a routable training signal rather than averaging it out.
+  2. **Capability-uplift drift on uncertainty calibration.** The conventional framing of "model fabricates attributions" is "needs more knowledge." The substrate-grade framing per Charon's 3 uncertainty_calibration_examples is "model HAS the refusal mode; it just doesn't engage on lesser-known boundaries — this is mode-engagement, not capability." That reframe sharpens the Pattern 1 rank-2 prediction (§5b.3).
+
+**Journal notes:**
+- The synthesis doc is now the canonical v1.0 corpus-design input. It survives the loop's reset-and-restart cycle: each fire either (a) produces tester observations that the doc absorbs, or (b) refines the doc directly. After 9+ producer fires, the doc reflects the substrate's current best understanding of v1.0-required interventions.
+- E007 ablation result (fire 1 post-restart) feeds directly into §5b.1's caveat: decomposition is preservation-correct + recovers some skip-cases, but bounded. That bounded delta IS the substrate-grade signal, not a disappointment.
+- Current OPEN inbox: 0 P1, 0 P2 once T-0021 + T-0020 deferred. Quiet next fire likely.
+
+---
