@@ -1372,3 +1372,52 @@ The MAIN drift candidate this fire was the inverse of typical: the conventional 
 - The Lefschetz (1,1) blind-spot is now 2-fire-confirmed: Deligne-1971 (fire-009) and Green/Griffiths-1970 (fire-012). Different fabs, same canonical answer (Lefschetz 1924) absent. **This blind-spot is a substrate-grade calibration anchor for the Learner: "the model does NOT know Lefschetz 1924" is itself a known-fact about the model. Add as anti-anchor entry to learner_known_correct_v1.json.**
 
 ---
+
+---
+
+## Loop fire 7 (post-restart) — 2026-05-07
+
+**Inbox FRESH (step 1):** total 51 lines. Status: ABLE_TO_ADVANCE=1, BLOCKED-DEFERRED-V1.0=40, DONE=7, **OPEN=2**, WONTFIX=1.
+
+**Selected ticket(s):** T-0038 (mode=ON) + T-0039 (mode=OFF), both P2-normal, both `irrelevant` on the same probe P-056 (Lefschetz (1,1)-theorem / Hodge conjecture for divisor classes). **BOTH-SKIP paired test:** both modes hit Pattern 3 topic-disengagement.
+
+**Pre-test (step 2):** 356/356 PASS. Clean baseline.
+
+**Implement (step 3) — DEFER-ONLY, no doc updates.**
+
+This is the 4th paired test for H-decomp-1 — after P-043 (ON<OFF), P-046 (ON≈OFF), P-050 (ON>>OFF) — but with a **vacuous outcome (BOTH-SKIP).** The simplest explanation is that the model has ~zero training on Lefschetz (1,1)-theorem (a niche algebraic-geometry topic); the decomposition wrapper has no signal to amplify because all decomposed sub-questions still trigger Pattern 3 skip on the same absent topic-prior.
+
+**Discipline test on whether to add §8.5.2:**
+The BOTH-SKIP observation tells us trivially that "decomposition can't help when topic-prior is absent" — already implicit in §6 of `tester_findings_consolidated.md` Pattern 3 corpus recommendation. Per `feedback_narrative_resistance.md` (test simplest explanation before building mechanism claims), the simplest explanation does NOT require new substrate-grade documentation. **The observation does not produce a change in v1.0 design that wasn't already covered.**
+
+**Same discipline as fire 6:** if I'm uncertain whether to add a section, default to NOT adding. The fire-6 lesson — resist the LLM gradient toward narrative construction — applies here too.
+
+**Test (step 4):** 356/356 PASS. No regressions.
+
+### SELF-REVIEW
+
+**(a) Did this fix resolve the failure mode the pressure-applier reported?**
+No — both tickets are Pattern 3 skip on a niche topic (Lefschetz (1,1)-theorem). No inference-layer wrapper can rescue a model with absent topic-prior. Remediation requires v1.0 Pattern 3 corpus expansion. The substrate-grade move was to recognize this as a discipline-correct defer-only fire (no new structural finding).
+
+**(b) Did this introduce any memorization risk that the synthetic-null gate would catch?**
+No. No code, no training data, no model weights, no gradient flow.
+
+**(c) Did I change any contract?**
+No. Ticket schema updates only.
+
+**(d) Did I drift toward conventional-approach framing?**
+**Main drift candidate:** "BOTH-SKIP is the 4th paired-test cell, write a §8.5.2 to complete the table!"
+This was tempting because §8.5.1 already has a 3-row paired-test table (ON<OFF, ON≈OFF, ON>>OFF). Adding a 4th row (BOTH-SKIP / vacuous) would FEEL like completing a structural picture. But it would be **drift**: the 4th row doesn't add structural information. It's the trivial case where the wrapper-vs-no-wrapper comparison is undefined because BOTH conditions fail upstream of decomposition.
+
+The mechanism claim "decomposition is conditional on topic-prior being non-absent" is **a reformulation of an already-trivial observation** (no wrapper rescues a model that lacks training on the topic). Per `feedback_narrative_resistance.md`, this is exactly the kind of mechanism-construction the LLM gradient pulls toward. Caught.
+
+**Secondary drift candidate:** "Maybe write a `topic-prior-coverage-must-precede-attribution-corpus` curriculum-ordering note."
+Tested: this is a plausible-sounding inference but would require evidence that the model trained on Pattern 1 corpus WITHOUT also covering Pattern 3 topic-priors first produces measurably worse outcomes than the inverse ordering. We have no such evidence. Adding a curriculum-ordering claim would be **fabricating substrate guidance**. Caught.
+
+**Inverse drift check (the fire-6 lesson):** the discipline-correct move is to NOT add doc sections every fire when the structural findings don't warrant. Two consecutive defer-only fires (6 + 7) is fine — it means the tester is in a saturation regime relative to current doc structure, which IS the substrate-grade observation: **the documentation has caught up with the failure-mode space the tester is currently exercising.** Fire 7's substrate-grade move is recognizing this.
+
+  Net: 2 drift candidates caught, 1 inverse-drift held. Substrate-grade frame held.
+
+**Step 7 inbox FRESH re-read:** TBD.
+
+**Commit:** TBD.
