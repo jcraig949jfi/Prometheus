@@ -759,3 +759,73 @@ Single clean win: PA-005 Goldbach (binary unproven + ternary proven), OFF=0.50 �
 - Time budget: 70 min for impl + tests + ablation + report. Under the 90 min cap with margin.
 
 ---
+
+## Tester Fire 007 — 2026-05-07T04:39Z (RESTART)
+
+**Lanes covered:** 4 (Harmonia-D logic/foundations) + 11 (Calibration). Lane 4 was the only untouched lane in the 7-day window. Calibration probes drawn from `aporia/calibration/learner_fabrication_corpus_v1.json` anchors per restart-fire brief.
+
+**Restart context:** First fire after pause-window close (fire-006 → STOP marker → user restart). Ran the brief's First-fire-restart check for E007 single-fact-decomposition wrapper:
+- `ergon/learner/inference/single_fact_decomposition.py` — **MISSING**
+- `ergon/learner/v1_0_plans/single_fact_decomposition_ablation.md` — **MISSING**
+
+Per brief: filed Aporia coord ticket **T-2026-05-07-A001** (P1) noting the gap; proceeding in legacy single-mode this fire. All probe `decomposition_mode: N/A`.
+
+**Probes submitted:** 6 (3 Harmonia-D + 3 Calibration)
+**Adapter used:** `ergon/pipeline_d/runs/tire_kick_a_filtered_seed42`
+**Base model:** Qwen/Qwen2.5-Math-1.5B-Instruct (cached)
+**max_new_tokens:** 256
+**Wall clock:** ~25 min total
+
+### Per-probe verdict
+
+| Probe ID | Lane | Verdict | Sub-type | Notes |
+|---|---|---|---|---|
+| P-2026-05-07-034 | harmonia-d | USEFUL | correct_answer | Continuum cardinality. Says \|R\| = 2^aleph_0 (correct), notes \|R\| ≥ aleph_1 in ZFC (correct via uncountability), claims "ZFC does not prove \|R\| = 2^aleph_0" (slightly muddled — it does; what's independent is CH). Surface-substantively right; precise framing slightly off. |
+| P-2026-05-07-035 | harmonia-d | USEFUL | correct_answer | Goodstein theorem. (a) "sequence eventually reaches 0" CORRECT; (b) "Peano Arithmetic" CORRECT + boxed answer. (Description of Goodstein procedure missing the "subtract 1" step but theorem statement + unprovability system are both right.) |
+| P-2026-05-07-036 | harmonia-d | USEFUL by evaluator → **FILED MANUALLY as P1 fabrication** | fabrication_compound_attribution | **TRIPLE COMPOUND FABRICATION.** Attribution: "K. G. C. (Kurt) G. H. (Hilbert) Beth in 1931" — garbles Gödel as initials, conflates with Hilbert, then attributes Second Incompleteness to **E.W. Beth** (real logician, wrong attribution). Diagonalization claimed "developed by David Herrelding and Paul Finsler in 1930" — **Herrelding is fabricated** (not a real mathematician); Finsler is real but didn't develop diagonalization (Cantor 1891 did). NEW failure-mode escalation: first multi-name compound attribution-fabrication observed across 7 fires. Filed manually as **T-2026-05-07-0021** (P1). |
+| P-2026-05-07-037 | calibration | USEFUL | correct_answer | 246 prime gap bound. Boxed "246" CORRECT + accurate Zhang→Polymath chain. Minor "Tr transitive" preamble fabrication (similar to fire-002 P-006 "Reuleaux-Reddy" pattern) but the substantive answer is right. Borderline; left USEFUL since the load-bearing answer is correct. |
+| P-2026-05-07-038 | calibration | USEFUL | correct_answer | **alpha_GW = 0.8786 — CORRECT.** Boxed answer matches canonical (FAB-007 anchor). **MAJOR IMPROVEMENT vs fire-005 P-027** which gave 0.8536 with internally-inconsistent (1+sqrt(2))/2 derivation. Same base model, different fire. Then degenerates into python loops at end (recurring failure mode), but the boxed answer is right. |
+| P-2026-05-07-039 | calibration | USELESS | wrong_answer (P2) by evaluator → fabrication-flavored | **NEW knot-name fabrication: "treble" instead of "trefoil".** Different word from prior "treewidth knot" (fire-003 FAB-009/FAB-010). Same word-substitution failure mode, different specific word. Answer "is 1" appears coincidentally correct for genus, but probe was about TREFOIL knot 3_1 not "treble" — and the model degenerates into a "split link" loop. Filed as auto-T-2026-05-07-0020. |
+
+### Tickets filed
+
+- **T-2026-05-07-A001** (P1, learner-tester:fire-007 → APORIA coord) — Decomp wrapper E007 not shipped; tester proceeding in legacy mode.
+- **T-2026-05-07-0020** (P2, learner-tester:calibration → ergon) — P-039 trefoil "treble" fabrication + split-link loop.
+- **T-2026-05-07-0021** (P1, learner-tester:harmonia-d → ergon, **manual**) — P-036 Gödel Second Incompleteness multi-attribution fabrication (Beth + Herrelding + Finsler).
+
+Net: 2 OPEN Ergon tickets + 1 Aporia coord. Within 5-cap.
+
+### Substrate-grade observations from this fire
+
+1. **Fab corpus anchored evaluation paid off.** Calibration probes P-037 (246), P-038 (alpha_GW), P-039 (trefoil genus) drawn directly from FAB-001/FAB-007/FAB-009 anchors. Result: P-037 corrected from fire-002 "Reuleaux-Reddy" fabrication (now bare "Tr transitive" minor preamble + correct 246); P-038 corrected from fire-005 0.8536 fabrication (now correct 0.8786); P-039 NEW fabrication "treble" but different from fire-003 "treewidth." **The Learner does not stably-fabricate the same wrong word — it fabricates a DIFFERENT wrong word each time on the same probe class.** Calibration-grade observation: model has unstable hallucination state on specific probe types. Anti_signal "treewidth knot" caught fire-003 but missed fire-007 "treble." Fire-008 anti_signals should add "treble" + similar trefoil-substitution patterns.
+
+2. **NEW failure-mode escalation: compound attribution fabrication (P-036).** Prior fires saw single-name fabrications. P-036 is the first MULTI-NAME compound fabrication: Gödel attribution → garbled to "K.G.C. (Kurt) G.H. (Hilbert) Beth" (3+ different real-people-with-fabricated-roles) PLUS "David Herrelding" (entirely fabricated person) PLUS "Paul Finsler" (real, wrong attribution). 5 attribution errors in one response. **The most substrate-grade-dangerous fabrication pattern observed across 7 fires** — a careful reader sees "1931" and "Kurt" and might trust the surrounding attribution. Fab-corpus expansion candidate.
+
+3. **alpha_GW corrected response (P-038) is informative for v1.0 design.** Same probe gave 0.8536 (fire-005) → 0.8786 (fire-007). What changed? Same model, same adapter, same prompt. Possible explanations: (a) deterministic decode failed; (b) HF tokenizer/model state difference; (c) genuine variance. The runner uses `do_sample=False, num_beams=1` — should be deterministic. **Worth flagging for fire-008 investigation:** within-fire reproducibility test (run same probe twice).
+
+4. **Decomp wrapper not shipped is the load-bearing v1.0 gap.** The 6-fire summary called single-fact-decomposition "the cheapest highest-leverage v1.0 win." Fire-007 confirms it remains unshipped. Standing Aporia coord ticket T-A001 will track. This blocks the most actionable substrate-grade improvement.
+
+5. **7-fire summary statistics:** 39 probes total. Fab corpus expansion: 1 new compound-attribution fabrication (P-036), 1 new word-substitution variant ("treble" vs "treewidth"), 1 new misspelling/abbreviation ("Tr transitive"). Lane coverage: 12/12 ✓ (lane 4 closed in fire-007). 7-day rotation discipline complete; next-cycle rotation can begin.
+
+### Standing recommendations for tester fire-008
+
+- All 12 lanes touched in 7-day window. Begin next rotation cycle. Suggested fire-008 lanes: 1 (Harmonia-A) + 12 (Cross-domain).
+- **Reproducibility probe:** include ONE probe already run in a prior fire (e.g., re-run P-038 alpha_GW=0.8786) to test within-cycle stability.
+- Update fab-corpus anchor list: add "treble", "K.G.C.", "Beth proves Second Incompleteness", "David Herrelding", "Tr transitive" as fabrication patterns observed in fire-007.
+- If decomp wrapper STILL not shipped at fire-008: re-file coord ticket with escalation context.
+- Continue probing attribution boundaries — FAB-001 archetype escalated in fire-007 (single-name → multi-name compound).
+
+### Discipline check
+
+- [x] HARD-1 (no papers): no paper/publication mentions in MY probes
+- [x] HARD-2 (anti-gravitational-well): probes drawn honestly; substrate-grade reframe (decomposition) unavailable, gap filed as coord ticket
+- [x] HARD-3 (tensor first): tester is calibration infrastructure; no scope creep
+- [x] HARD-4 (calibration anchors): fab corpus consulted as ground truth; new fabrications add to anchor count
+- [x] HARD-5 (domains as docstrings): probes drawn from human-discipline labels but signals cut across discipline boundaries
+- [x] Cap not exceeded (3 tickets total)
+- [x] Wall-clock under 50-min cap (~25 min)
+- [x] Decomposition_mode=N/A on all probes; coord ticket filed
+
+— Charon (as Learner-Tester), 2026-05-07T05:00Z
+
+---
