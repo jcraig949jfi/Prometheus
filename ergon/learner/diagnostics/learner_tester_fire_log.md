@@ -1316,3 +1316,59 @@ The MAIN drift candidate this fire was the inverse of typical: the conventional 
 **Step 7 inbox FRESH re-read:** TBD next.
 
 **Commit:** TBD.
+
+
+## Tester Fire 012 - 2026-05-07
+
+**Cadence:** ScheduleWakeup-driven (3600s post fire-011). Carry-over selected lanes 2 (Harmonia-B) + 9 (Aporia-catalog). Three probes; one BOTH-mode (P-056 Lefschetz re-test).
+
+**Lanes touched:** 2 (Harmonia-B: Lefschetz (1,1) re-test + Lagrange 1770), 9 (Aporia-catalog: Perelman Poincare).
+
+**Decode params:** rep_penalty = 1.10 (locked from fire-011), max_new_tokens = 384.
+
+**Probes (3; one BOTH-mode = 4 model invocations):**
+- P-056 (harmonia-b BOTH): Lefschetz (1,1)-theorem (a) prover (b) year (c) venue. Re-test after fire-009 P-048's Deligne-1971 fab. 25-pattern anti_signals.
+- P-057 (aporia-catalog OFF): Perelman Poincare conjecture - calibration-anchor hunt (high-canonicality 21st-century).
+- P-058 (harmonia-b OFF): Lagrange four-square theorem year - calibration-anchor hunt (low-difficulty, high-canonicality, pre-1900).
+
+**Verdicts:**
+- P-056 ON USELESS irrelevant (T-0038 P2): "Phillipo Delaro 1978" (FM-01/FM-02 fabricated name) + fake arXiv ID "math/0503426" (arxiv started 1991, this ID does not exist) + Russian-paper claim + CJK glitch "(1,1)-定理" (FM-11). Sub-2 says "Phillip A. Green 1976". Sub-3 says "Phillip A. Griffiths 1970" then "Green" inconsistent. **No mention of Lefschetz at all.**
+- P-056 OFF USELESS irrelevant (T-0039 P2): "Phillip A. Griffiths in 1970" but then "Phillip A. Green" - name confusion within single response. "Annals of Mathematics, vol 101, pages 487-501". Real volume but wrong attribution; no Lefschetz mention.
+- P-057 USEFUL (correct_answer): **CALIBRATION ANCHOR KC-002** (partial). Top-line correct: Grigori Perelman + 2002 + 2003 + arXiv all match. Caveat FM-04: "released his work as a book called 'The Poincaré Conjecture: In Search of the Shape of the Universe' at the Mathematics arXiv" - that book is Donal O'Shea 2007, NOT Perelman's. Plus Pattern-1 boxed-spam (8+ trailing \boxed{} statements).
+- P-058 USEFUL (correct_answer): **CALIBRATION ANCHOR KC-003** (minimal). Year 1770 boxed correctly. Caveat FM-02: "Nouanges de Mathematiques" garbled title (real: 'Démonstration d un théorème d arithmétique' in Nouveaux Mémoires de l Académie royale...).
+
+**Tickets filed:** 2 evaluator-auto (T-0038 P-056 ON, T-0039 P-056 OFF). Total 39 tickets across 12 fires.
+
+**Substrate-grade lessons (fire-012):**
+
+1. **CALIBRATION ANCHORS KC-002 + KC-003 LOGGED.** With KC-001 (Wiles 1995 Annals 141:443-551 fire-011) and now KC-002 (Perelman 2002-03 arXiv) and KC-003 (Lagrange 1770), n=3 anchors across 12 fires. The Learner is NOT uniformly fab-prone; on high-canonicality top-level attribution probes in OFF mode, top-line correctness is recoverable. Pattern: WHO + WHEN + WHERE (abstract platform) all recoverable; SPECIFIC titles + volumes + pages are recoverable only for 21st-century results (KC-001 Wiles).
+
+2. **CALIBRATION-AXIS HYPOTHESIS proposed**: Recoverability(probe) ~= f(canonicality, era_recency, specificity). High-canon + 21st-cent + reaching-vol+pages = KC-001 full. High-canon + 21st-cent + abstract = KC-002 partial. High-canon + pre-1900 + year-only = KC-003 minimal. Medium-canon + early-20th + year+venue = P-056 fab. Low-canon + any era = P-054 ramble (fire-011). **3-axis decomposition added to learner_known_correct_v1.json.**
+
+3. **Lefschetz 1924 attribution remains beyond model in OFF mode (re-tested).** Fire-009 P-048 produced "Deligne 1971 Hodge cycles on abelian varieties" fab. Fire-012 P-056 OFF produces "Phillip A. Green/Griffiths 1970 Annals 101:487-501" - DIFFERENT fab, same prompt, same model. Non-deterministic fab on this attribution: model has no specific Lefschetz memory and samples different plausible-sounding alg-geometers each time (Deligne / Griffiths / Green). **Calibration-grade evidence that Lefschetz (1,1) attribution is in a structural blind spot for Qwen2.5-Math-1.5B-Instruct.**
+
+4. **CJK glitch FM-11 SURVIVES rep_penalty=1.10.** P-056 ON sub-2 + sub-3 emitted "(1,1)-定理" (定理 = theorem in Chinese/Japanese, U+5B9A U+7406). Plus fire-010 had 'Chud[U+5F0F]' + 'Andrew[U+90FD]les'. Three fires producing FM-11 - this is a structural failure mode of Qwen2.5-Math-1.5B-Instruct's CJK vocabulary leaking into Western-name production. **rep_penalty does not address it; tokenizer-level intervention required.**
+
+5. **Pattern-1 boxed-spam observed at rep_penalty=1.10.** P-057 OFF emitted 8+ trailing \boxed{} statements ("\boxed{4-dimensional space}", "\boxed{topology}" x2). rep_penalty suppresses verbatim repetition but NOT paraphrase-loops where the paraphrase wraps a stop-token-ish closing structure. **E007 v2 follow-up: detect and trim \boxed{} repetition.**
+
+6. **Wrapper degradation pattern STRENGTHENED on attribution probes.** P-056 BOTH-mode: ON gave 3 different inconsistent attributions (Delaro / Green / Griffiths) across 3 sub-answers, each shorter and more fab-prone; OFF gave consistent (but wrong) "Green/Griffiths". Same pattern as fire-011 P-053 (where OFF won). Two-fire confirmation: **for attribution probes, ON mode AMPLIFIES fab variance.** E007 v2 should disable wrapper for attribution probes.
+
+**Producer-side standing recommendations (carry-over for fire-013):**
+- ROTATION: lanes 2+9 just used. Avoid 2+9. Most-recent fires touched: 1+12 (008), 3+10 (009), 6+7 (010), 8+11 (011), 2+9 (012). Lanes 4 (Harmonia-D, last fire-007) and 5 (Harmonia-E) are LEAST-recently touched. Suggested for fire-013: lane 4 + lane 5.
+- KEEP rep_penalty = 1.10 (Pattern 6 still suppressed; FM-11 + Pattern-1 boxed-spam are separate issues not solved by rep_penalty).
+- KEEP max_new_tokens = 384.
+- CALIBRATION-ANCHOR HUNT continues: target high-canonicality 21st-century results to chase the next KC-004 anchor. Candidates: Tao-Green 2008 arithmetic progressions in primes (Annals 167:481-547), Helfgott 2013 ternary Goldbach (arXiv:1305.2897), Clay Millennium Prize problems list.
+- ATTRIBUTION-PROBE DISCIPLINE: continues. Plus recognition that BOTH-mode is informative for SCOPE-of-fab (different sub-answers reveal different fab paths) but OFF mode is preferred for ACCURACY (wrapper degrades attribution).
+
+**SELF-REVIEW (fire-012):**
+- (a) Did this advance the substrate? YES, four ways: (i) KC-002 + KC-003 logged (n=3 anchors total), (ii) calibration-axis hypothesis formalized, (iii) Lefschetz blind-spot reproduced (calibration-grade evidence on attribution failure), (iv) wrapper-degradation pattern strengthened to 2-fire confirmation.
+- (b) Memorization risk? None. Doc + ticket + decode-params work only.
+- (c) Conventional drift caught? Yes - the conventional response to "evaluator says 2/4 USEFUL" is to file the 2 USELESS tickets and move on. Substrate-grade response: investigate the 2 USEFUL completions for sub-fab + log them as PARTIAL anchors with caveats. The KC-002/KC-003 partial-anchor entries with explicit caveats are substrate-grade-honest output.
+- (d) Were the right lanes touched? Yes - lanes 2+9 were the least-recently-touched per fire-011 carry-over.
+
+**Journal notes:**
+- 39 tickets filed across 12 fires. The substrate is now producing BOTH negative findings (fab tickets) AND positive anchors (KC entries) simultaneously. The substrate self-portrait is sharpening: fab corpus + anchor corpus + axis hypothesis collectively map the model's competence boundary in 3D.
+- Fire-009 anti_signals discipline -> fire-010 application -> fire-011 useful_signals discipline failure + KC-001 anchor -> fire-012 KC-002/003 anchors + axis hypothesis. Substrate ratchet observed across 4 consecutive fires; each fire adds a new substrate-grade observation.
+- The Lefschetz (1,1) blind-spot is now 2-fire-confirmed: Deligne-1971 (fire-009) and Green/Griffiths-1970 (fire-012). Different fabs, same canonical answer (Lefschetz 1924) absent. **This blind-spot is a substrate-grade calibration anchor for the Learner: "the model does NOT know Lefschetz 1924" is itself a known-fact about the model. Add as anti-anchor entry to learner_known_correct_v1.json.**
+
+---

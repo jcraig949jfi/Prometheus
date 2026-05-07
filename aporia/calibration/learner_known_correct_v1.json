@@ -37,8 +37,66 @@
         "Implication for E007 v2: detect 'high-canonicality' attribution probes and skip wrapper. May need a 'canonicality oracle' (small classifier or heuristic on probe text) to gate the wrapper.",
         "Calibration-grade because every component is correct: author (Andrew Wiles), title ('Modular elliptic curves and Fermat's Last Theorem'), journal (Annals of Mathematics), series (second series), volume (141), issue (3), page range (443-551), year (1995)."
       ]
+    },
+    {
+      "id": "KC-002",
+      "fire_id": "012",
+      "probe_id": "P-2026-05-07-057",
+      "lane": "aporia-catalog",
+      "decomposition_mode": "OFF",
+      "decode_params": {
+        "rep_penalty": 1.10,
+        "max_new_tokens": 384,
+        "do_sample": false,
+        "num_beams": 1
+      },
+      "topic": "Perelman 2002-2003 Poincare conjecture (3D) arXiv preprints",
+      "canonical_output": "Grigori Perelman in 2003. Perelman's proof was first announced in 2002 and then placed on arXiv. (Three useful facts correctly emitted: WHO=Perelman, WHEN=2002-2003, WHERE=arXiv).",
+      "verification": "Perelman's three preprints: math.DG/0211159 (Nov 2002), math.DG/0303109 (Mar 2003), math.DG/0307245 (Jul 2003). Confirmed via arXiv historical records.",
+      "caveats_partial_anchor": [
+        "Top-line attribution is correct (Perelman + 2002-2003 + arXiv all match useful_signals).",
+        "Surrounding prose contains FM-04 fabrication: 'released his work as a book called The Poincaré Conjecture: In Search of the Shape of the Universe at the Mathematics arXiv'. The cited book title is real (it is Donal O'Shea, 2007 popular book) but it is NOT Perelman's work. FM-08 confused-identity (Perelman never wrote a book; he wrote 3 arXiv preprints).",
+        "Pattern-1-like degeneration: 8+ trailing \\boxed{} statements (some correct, some wrong - '\\boxed{4-dimensional space}', '\\boxed{topology}' x2). The boxed-spam shows decode-loop tendency at rep_penalty=1.10 — penalty suppresses verbatim repetition but not paraphrase-loop.",
+        "Did NOT emit specific arXiv IDs (math.DG/0211159 etc.); the canonical reference is at the abstract-level (Perelman + arXiv) not detailed-level (specific papers + IDs)."
+      ],
+      "notes": [
+        "Second calibration anchor (n=2 across 12 fires). Less detailed than KC-001 (Wiles 1995 Annals 141:443-551) — KC-002 is a partial anchor: correct at the level of (who, when, where) but with FM-04 contamination in surrounding prose.",
+        "Confirms KC-001 hypothesis: high-canonicality probes elicit substrate-grade-correct attribution in OFF mode. Both KC-001 and KC-002 are 21st-century or late-20th-century mathematics with extensive Wikipedia / press coverage (likely heavily represented in pretraining corpus).",
+        "Implication for v1.0 corpus: high-canonicality proofs (Wiles, Perelman) are recoverable; pre-1900 attributions (Lefschetz 1924 — see fire-009 + fire-012 P-056 fab persistence) and low-canonicality results (modular curve genera — fire-011 P-054 ramble) require dedicated corpus or RAG."
+      ]
+    },
+    {
+      "id": "KC-003",
+      "fire_id": "012",
+      "probe_id": "P-2026-05-07-058",
+      "lane": "harmonia-b",
+      "decomposition_mode": "OFF",
+      "decode_params": {
+        "rep_penalty": 1.10,
+        "max_new_tokens": 384,
+        "do_sample": false,
+        "num_beams": 1
+      },
+      "topic": "Lagrange's four-square theorem year",
+      "canonical_output": "1770. (Joseph-Louis Lagrange, 1770.)",
+      "verification": "Lagrange's 'Demonstration d'un theoreme d'arithmetique', Nouveaux Mémoires de l'Académie royale des Sciences et Belles-Lettres de Berlin, 1770. Confirmed via standard NT bibliographies.",
+      "caveats_partial_anchor": [
+        "Top-line YEAR is correct: 1770. The model emitted '\\boxed{1770}'.",
+        "Title fabrication: 'Nouanges de Mathematiques' — FM-02 garbled spelling. Correct title is 'Demonstration d'un theoreme d'arithmetique' (the paper) appearing in 'Nouveaux Memoires de l'Academie royale des Sciences et Belles-Lettres de Berlin'. 'Nouanges' is degenerated 'Nouveaux Memoires' or 'Melanges'.",
+        "Confirms canonicality-axis pattern: simple year-only attribution for famous classical result is recoverable, but title / venue is NOT."
+      ],
+      "notes": [
+        "Third calibration anchor — partial (year-only). Useful for substrate-corpus-design: shows the Learner has STRONG attribution memory for famous-named-theorem -> year mappings (Lagrange -> 1770, Wiles -> 1995, Perelman -> 2002-03), but WEAK memory for specific paper titles / venues for older works.",
+        "Calibration-axis observation: the (canonicality, era) plane partitions probe difficulty. High-canonicality + post-1990 = full bibliographic reference recoverable (KC-001 Wiles 141:443-551). High-canonicality + pre-1900 = year recoverable, title not (KC-003 Lagrange 1770). Low-canonicality + any era = full fabrication (P-056 Lefschetz 1924, P-054 X_0(11) genus)."
+      ]
     }
   ],
+  "calibration_axes_v1": {
+    "axis_1_canonicality": "Number of public (textbook/Wikipedia/press) references. High = Wiles, Perelman, Lagrange. Low = Lefschetz (1,1), specific modular curve genera.",
+    "axis_2_era": "Pre-1900 vs 20th century vs 21st century. 21st-century proofs heavily covered in modern Internet corpora; pre-1900 sparse.",
+    "axis_3_specificity": "Year-only vs Year+venue vs Year+venue+volume+pages. Specificity recoverable scales with canonicality + era recency.",
+    "observed_pattern": "Recoverability(probe) ~= f(canonicality, era_recency, specificity). Wiles 1995 high-canon + 21st-cent + reaching-vol+pages = KC-001 full. Perelman 2002-03 high-canon + 21st-cent + abstract-level = KC-002 partial. Lagrange 1770 high-canon + pre-1900 + year-only = KC-003 minimal. Lefschetz 1924 medium-canon + early-20th + year+venue = P-056 full fab."
+  },
   "next_anchors_to_hunt": [
     "Other Millennium-problem original references (Perelman 2002/2003 arXiv, Wiles 1995, BSD 1965, Hodge 1950, RH 1859, P vs NP attributions)",
     "Other fire-011-class probes: 'who proved X' for X in well-known modern theorems (Modularity, Fermat's LT, Poincare conjecture, Mostow rigidity)",

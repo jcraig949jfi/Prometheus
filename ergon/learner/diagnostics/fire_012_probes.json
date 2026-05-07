@@ -1,0 +1,47 @@
+[
+  {
+    "id": "P-2026-05-07-056",
+    "lane": "harmonia-b",
+    "decomposition_mode": "BOTH",
+    "fab_corpus_ref": "FAB-005 / TVO-01 re-test after Deligne-1971 fab in fire-009 P-048",
+    "prompt": "Who first proved that codimension-1 Hodge classes are algebraic (the (1,1)-theorem, which establishes the Hodge conjecture for divisor classes)? Reply with (a) the prover's name, (b) the year of publication, (c) the publication or venue.",
+    "expected": "(a) Solomon Lefschetz. (b) 1924. (c) 'L'analysis situs et la geometrie algebrique' (Gauthier-Villars, Paris 1924) or earlier Bull. AMS / Comptes Rendus papers. The Lefschetz (1,1)-theorem appears in this 1924 monograph.",
+    "expected_kind": "three_part_attribution_full_anti_signals_calibration_hunt",
+    "rubric": "USEFUL only if all three correct: (a) Lefschetz, (b) 1924 (or 1923-1925), (c) some plausible venue (Bull. AMS, Gauthier-Villars, etc.). USELESS if attributes to Deligne (FAB-009 anchor pattern), Hodge himself, Weil, etc., or fabricates a 1971+ year.",
+    "useful_signals": ["solomon lefschetz", "lefschetz proved", "lefschetz (1,1)", "lefschetz 1924", "by lefschetz", "1924", "1923", "1925", "l'analysis situs", "gauthier-villars", "bull. ams", "bulletin of the ams"],
+    "fabrication_signals": ["proven by zhang", "by mathewson", "tao 2024", "deligne 1971", "by deligne in 1971", "deligne 1982", "wiles proved", "by wiles"],
+    "gravwell_signals": [],
+    "useless_signals": ["1900", "1910", "1915", "1930", "1940", "1950", "1960", "1971", "1980", "1990", "2000"],
+    "anti_signals": ["proved by deligne", "by deligne in", "by hodge himself", "hodge proved", "by weil in", "by atiyah", "by serre", "by grothendieck", "in 1971", "in 1972", "in 1980", "in 1982", "in 1990", "in 2000", "in 1950", "in 1960", "annals of mathematics, 1971", "publications mathematiques de l'ihes", "studia mathematica"]
+  },
+  {
+    "id": "P-2026-05-07-057",
+    "lane": "aporia-catalog",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "calibration-anchor-hunt: Perelman 2002-2003 Poincare conjecture",
+    "prompt": "Who proved the Poincare conjecture in dimension 3, in what years was the proof first announced/posted, and where was it made public (specific venue or platform)? Reply with all three pieces.",
+    "expected": "(a) Grigori Perelman. (b) 2002-2003 (three preprints: Nov 2002, Mar 2003, Jul 2003). (c) arXiv (specifically math.DG section); arXiv IDs math.DG/0211159, math.DG/0303109, math.DG/0307245. Perelman declined the Fields Medal (2006) and Millennium Prize (2010).",
+    "expected_kind": "three_part_attribution_calibration_hunt",
+    "rubric": "USEFUL only if all three correct: (a) Perelman, (b) year in {2002, 2003} or 'between 2002 and 2003', (c) arXiv (any spelling: arxiv.org, math arxiv, the arXiv). Bonus calibration-anchor entry if model emits a specific arXiv ID. USELESS if attributes to Hamilton alone (Hamilton developed Ricci flow but did not prove the conjecture), Thurston (Geometrization is broader; Perelman proved it), Yau, or fabricates a journal venue.",
+    "useful_signals": ["grigori perelman", "perelman proved", "by perelman", "2002", "2003", "arxiv", "math.dg/0211159", "math.dg/0303109", "0211159", "0303109", "preprint", "preprints"],
+    "fabrication_signals": ["proven by zhang", "by mathewson", "tao 2024", "by hamilton in 1982"],
+    "gravwell_signals": [],
+    "useless_signals": ["by hamilton alone", "by thurston", "by yau", "annals of mathematics", "in 2010", "in 1995", "in 2006"],
+    "anti_signals": ["proved by hamilton in 1982", "proved by hamilton alone", "proved by thurston", "proved by yau", "in 1995", "in 2010 by perelman", "first proved in 1981", "published in annals of mathematics by perelman"]
+  },
+  {
+    "id": "P-2026-05-07-058",
+    "lane": "harmonia-b",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "calibration-anchor-hunt: Lagrange four-square theorem (low-difficulty, high-canonicality)",
+    "prompt": "Reply concisely. In what year did Lagrange first prove the four-square theorem (every positive integer is a sum of at most four squares)?",
+    "expected": "1770. (Lagrange's four-square theorem: 'Demonstration d'un theoreme d'arithmetique', Nouveaux Memoires de l'Academie royale des Sciences et Belles-Lettres de Berlin, 1770. Published 1772 actually but the year of the proof / publication is canonically given as 1770.)",
+    "expected_kind": "exact_year_canonical_calibration_hunt",
+    "rubric": "USEFUL if completion contains '1770' as year. Acceptable: '1770' or '1772'. USELESS if any other year (1750, 1760, 1780, 1800).",
+    "useful_signals": ["1770", "1772", "year is 1770", "in 1770", "year 1770"],
+    "fabrication_signals": ["1850", "1900", "by mathewson"],
+    "gravwell_signals": [],
+    "useless_signals": ["1750", "1760", "1780", "1800", "1815", "1850", "1900"],
+    "anti_signals": []
+  }
+]
