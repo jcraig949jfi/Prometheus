@@ -1260,3 +1260,59 @@ Watched for four specific drifts:
 - Lesson ratchet continues: fire-009 lesson 4 (anti_signals discipline) -> fire-010 application (P-050 caught) -> fire-011 useful_signals discipline failure observed (P-054). Each fire's lesson informs the next fire's probe authoring + reveals new failure modes.
 
 ---
+
+---
+
+## Loop fire 6 (post-restart) — 2026-05-07
+
+**Inbox FRESH (step 1):** total 49 lines. Status: ABLE_TO_ADVANCE=1, BLOCKED-DEFERRED-V1.0=37, DONE=7, **OPEN=3**, WONTFIX=1.
+
+**Selected ticket(s):** all 3 OPEN, all P2-normal, from `learner-tester:charon-nt-topology` and `:cross-domain`. None are new paired tests; none surface a new pattern or sub-class.
+
+- **T-0035** P-054 OFF: Pattern 5 evaluator-FP (rambling-with-surface-keywords)
+- **T-0036** P-053 ON: compound failure (year off-by-1 1994/1995 + FM-08 Tate's Conjecture + Heegner-points fab)
+- **T-0037** P-055: FM-08 "BSD is part of more general ABC conjecture" (trivial-vs-open conflation)
+
+**Pre-test (step 2):** 356/356 PASS. Clean baseline.
+
+**Implement (step 3) — DEFER-ONLY, no doc updates:**
+
+The substrate-grade observation for fire 6 is **the absence of new structural findings.** All 3 tickets surface evidence for axes ALREADY documented:
+- T-0035 → Pattern 5 evaluator-FP (cataloged in §1 of `tester_findings_consolidated.md`)
+- T-0036 year off-by-1 → already-documented year-as-mode-variable axis (§8.4 of ablation report); compound-failure shape → already-observed fire-3 P-043 ON+OFF compound; FM-08 → already in §5b.2
+- T-0037 FM-08 → already in §5b.2
+
+No new doc section needed. Bulk-defer all 3 with substrate-grade notes that explicitly cross-reference the existing sections, so the v1.0 corpus designer can trace the evidence trail without spawning a new section per fire.
+
+**Marginal observation (NOT a new structural finding, recorded in defer note only):** the off-by-1 year (P-053) is a fine-grained quantifier of the year-fragility axis. Year errors now observed at off-by-1 (P-053) to off-by-decades (P-050: 11 years; P-046: 11 years) across n=4 probes (PA-003 + P-046 + P-050 + P-053). The off-by-1 case is qualitatively different from the larger errors and may suggest year-as-soft-slot training behavior. Worth noting in the v1.0 corpus design phase IF the v1.0 corpus exposes a measurable difference between fine-grained-year-correction vs decade-grained-year-correction. Not loadbearing for current fire.
+
+**Test (step 4):** 356/356 PASS. No regressions (no code changes, but verified the inbox-update is well-formed JSON and pytest still runs clean).
+
+### SELF-REVIEW
+
+**(a) Did this fix resolve the failure mode the pressure-applier reported?**
+No, and substrate-grade discipline says that's correct. None of the 3 tickets surface a failure mode that requires immediate inference-layer remediation, and all surface evidence for v1.0 corpus interventions already documented. The substrate-grade move was to recognize that **fire 6 is a "no new structural finding" fire** and to NOT inflate the doc with marginal observations.
+
+**(b) Did this introduce any memorization risk that the synthetic-null gate would catch?**
+No. No code, no training data, no model weights, no gradient flow touched. Only ticket-status updates.
+
+**(c) Did I change any contract?**
+No. Ticket schema updates only; no public function signatures, env step/reset/info schemas, KillVector layout, P5 NearMissCorpus emission shape, or any input/output contract touched.
+
+**(d) Did I drift toward conventional-approach framing?**
+The MAIN drift candidate this fire was the inverse of typical: the conventional response to "we have new evidence!" is to write a new doc section, expand the catalog, etc. The substrate-grade move was to **resist** that pull and recognize that fire 6 produces *evidence for axes already documented*, not *new axes*. Adding a new section every fire would be:
+  1. Catalog-inflation (anti-`feedback_assume_wrong.md`: kills are valuable, not narrative)
+  2. Diluting load-bearing structural findings under noise
+  3. Conventional "incremental progress" framing (anti-substrate-grade)
+
+  Watched for two more drift sites:
+  - *"The off-by-1 finding is interesting, write a §8.6":* would have been narrative-construction inflation. The off-by-1 doesn't change v1.0 corpus design. Logged in defer note instead. Caught.
+  - *"T-0036 is compound failure, this is THE 2nd compound observation, must write a section on compound failures":* tempting but n=2 isn't enough to claim a stable structure. Logged in defer note for T-0036. Caught.
+
+  The substrate-grade discipline this fire is recognizing **when nothing new structural is happening** and resisting the LLM gradient toward narrative construction. Per `feedback_narrative_resistance.md` (resist LLM narrative construction; test simplest explanation before building mechanism claims), the simplest explanation here is: *the tester is finding more instances of patterns we've already documented; v1.0 corpus is the right intervention; no new substrate finding requires fire-6 documentation.*
+
+  Net: drift caught at 2 candidate sites + 1 inverse-drift caught (resisting the pull toward unnecessary doc expansion). Substrate-grade frame held.
+
+**Step 7 inbox FRESH re-read:** TBD next.
+
+**Commit:** TBD.
