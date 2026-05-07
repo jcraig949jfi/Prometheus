@@ -98,3 +98,65 @@ Net: 2 OPEN tester-tickets filed. Well under 5-ticket cap.
 — Charon (as Learner-Tester), 2026-05-06
 
 ---
+
+## Tester Fire 002 — 2026-05-07T00:35Z
+
+**Lanes covered:** 6 (Charon-NT-additive), 12 (Cross-domain) — per fire-001 standing recommendation; rotation discipline preserved (no overlap with fire-001's lanes 11+10).
+**Probes submitted:** 5 (3 NT-additive + 2 Cross-domain)
+**Adapter used:** `ergon/pipeline_d/runs/tire_kick_a_filtered_seed42`
+**Base model:** Qwen/Qwen2.5-Math-1.5B-Instruct (cached from fire-001 — base load 6.7s vs 22.6s in fire-001)
+**max_new_tokens:** 192 (compromise per fire-001 recommendation; up from 96)
+**Wall clock:** ~16s for the model run (5 probes × ~8s each); total fire ~15 min including evaluator-priority-order patch
+
+### Per-probe verdict
+
+| Probe ID | Lane | Verdict | Sub-type | Notes |
+|---|---|---|---|---|
+| P-2026-05-06-006 | charon-nt-additive | **USELESS** | **fabrication (P1)** | Correct numeric answer (246) but introduces it as "the current best Reuleaux-Reddy bound" — fabricated method name. Substrate-grade kill: model arrives at right answer through fabricated attribution. Path-fabrication is worse than just-wrong because user might trust the answer and assume the path is valid. |
+| P-2026-05-06-007 | charon-nt-additive | **USELESS** | **fabrication (P1)** | Says "unconditional" correctly but attributes proof to "H. I. D. Mathewson in 1975" — total fabrication. Actual proof is Helfgott 2013 (combining circle method + computational verification). Then model spirals into infinite python code blocks at end of response. Compounds correct-conclusion-via-fabricated-attribution with output-degeneration. |
+| P-2026-05-06-008 | charon-nt-additive | USELESS | irrelevant (P2) | Confuses "parity (odd or even nature) of the number of such integers" (parity of count) with the actual parity barrier (parity of count of prime factors). Wrong on the structural detail. |
+| P-2026-05-06-009 | cross-domain | USEFUL | correct_answer | "weight 2 modular form" + "L-function of elliptic curve = L-function of modular form" — bridge correctly identified at the L-function level. |
+| P-2026-05-06-010 | cross-domain | USELESS | irrelevant (P2) | Cut off at 192-token budget mid-explanation; never reached the (xyz)^{1+ε} reduction. Same token-budget pattern as fire-001 P-001/P-002. |
+
+### Tickets filed
+
+- **T-2026-05-06-0004** (P1-high, learner-tester:charon-nt-additive) — P-006 fabricated method name "Reuleaux-Reddy bound." OPEN.
+- **T-2026-05-06-0005** (P1-high, learner-tester:charon-nt-additive) — P-007 fabricated attribution "H.I.D. Mathewson 1975." OPEN.
+- **T-2026-05-06-0006** (P2-normal, learner-tester:charon-nt-additive) — P-008 confuses parity-of-count vs parity-of-prime-factor-count on parity barrier. OPEN.
+- **T-2026-05-06-0007** (P2-normal, learner-tester:cross-domain) — P-010 token-budget cutoff before reaching abc → FLT reduction. OPEN.
+
+Net: 4 OPEN tester-tickets filed (2 P1 + 2 P2). Within 5-ticket cap.
+
+### Substrate-grade observations from this fire
+
+1. **The Learner FABRICATES ATTRIBUTIONS even when arriving at correct answers.** This is the load-bearing finding of fire-002. P-006 gives "246" (correct) but attributes it to a non-existent "Reuleaux-Reddy bound." P-007 says "unconditional" (correct) but attributes the proof to fictional "H. I. D. Mathewson 1975." This is exactly the failure mode anti-gravitational-well discipline targets: the surface answer is right, but the path is fabricated. A user trusting the answer would ALSO trust the false attribution, polluting downstream reasoning.
+
+2. **Substrate-grade implication for v1.0 training corpus:** the corpus needs to include explicit correct attributions (Helfgott 2013 for ternary Goldbach; Polymath 8b 2014 + Maynard for prime gap 246) as ground-truth labels, OR the model needs explicit uncertainty calibration (refuse to attribute when uncertain). Filed as P1 substrate-grade signal in tickets.
+
+3. **Evaluator priority order patched.** Discovered that the evaluator was checking useful_signals BEFORE fabrication_signals, allowing fabricated responses with correct-surface-content to pass as USEFUL. Patched: fabrication_signals + gravwell_signals now checked FIRST. Substrate-grade lesson: in pressure-test rubrics, P1 sub-types must always win over P2 useful classifications (otherwise correct-answer-via-fabrication slips through).
+
+4. **Token-budget protocol gap persists.** Fire-001 had P-001/P-002 cut off at 96 tokens. Fire-002 bumped to 192 and STILL had P-010 cut off. Compound diagnosis: model is structurally verbose (writes textbook preambles before getting to the answer); 192 tokens insufficient for cross-domain bridge explanations. Either bump further (256+) OR add prompt-prefix discipline ("Reply concisely in 30 words or fewer.").
+
+5. **Model is good on bridge identification when token budget allows.** P-009 produced a clean modularity-bridge answer within budget. The model knows the structural connection; it just runs out of room when asked for richer explanations.
+
+6. **Fire-001 negation-context patch validated.** No false positives on adversarial-style negation contexts in fire-002 (lane 6+12 didn't include negation-trap probes). The patch is dormant-correct; will be exercised when adversarial lane returns.
+
+### Standing recommendations for tester fire-003
+
+- Avoid lanes 6 + 12 (rotation discipline)
+- Bump `max_new_tokens` to 256 or add "Reply concisely in 30 words or fewer." prefix
+- Suggested lanes: Charon-topology (8) + Calibration (11) — diverse surfaces, calibration as anchor for whether fabrication shows up in known-result rediscovery
+- Watch for: more fabrication-on-attribution patterns; the Reuleaux-Reddy + Mathewson 1975 pair suggests fabrication-when-asked-for-name is a systemic failure mode worth specifically probing
+
+### Discipline check
+
+- [x] Probes drawn from honest math; no invented references in probes
+- [x] No curation toward expected weakness — probes designed to test correct attribution; the fabrications were spontaneous from the model
+- [x] Cap not exceeded (4 OPEN tickets filed)
+- [x] Wall-clock under 50-min cap (~15 min)
+- [x] Anti-gravitational-well rule applied: P-006 + P-007 correctly uplifted to P1 fabrication (per the new fabrication-first evaluator order)
+- [x] No paper/publication mentions
+
+— Charon (as Learner-Tester), 2026-05-07
+
+---

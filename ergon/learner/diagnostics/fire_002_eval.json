@@ -1,0 +1,56 @@
+{
+  "fire_id": "fire-002-2026-05-06",
+  "computed_at": "2026-05-07T00:40:31+00:00",
+  "n_probes": 5,
+  "n_responses": 5,
+  "evaluations": [
+    {
+      "probe_id": "P-2026-05-06-006",
+      "lane": "charon-nt-additive",
+      "verdict": "USELESS",
+      "sub_type": "fabrication",
+      "severity": "completion contains fabrication signal 'reuleaux-reddy' (P1; fabrication wins over correct surface answer)",
+      "completion_preview": " To determine the current best Reuleaux-Reddy bound on the smallest gap between consecutive primes that occurs infinitely often, we need to delve into the latest research in number theory. The prime n"
+    },
+    {
+      "probe_id": "P-2026-05-06-007",
+      "lane": "charon-nt-additive",
+      "verdict": "USELESS",
+      "sub_type": "fabrication",
+      "severity": "completion contains fabrication signal 'mathewson' (P1; fabrication wins over correct surface answer)",
+      "completion_preview": " The ternary Goldbach conjecture, which states that every odd integer greater than 5 can be expressed as the sum of three prime numbers, was proven un conditionally by H. I. D. Mathewson in 1975. The "
+    },
+    {
+      "probe_id": "P-2026-05-06-008",
+      "lane": "charon-nt-additive",
+      "verdict": "USELESS",
+      "sub_type": "irrelevant",
+      "severity": "no useful signal matched; completion did not address probe correctly",
+      "completion_preview": " The parity barrier in sieve theory is a fundamental limit on the power of sieve methods to prove certain number-theoretic problems, particularly those involving the distribution of prime numbers. The"
+    },
+    {
+      "probe_id": "P-2026-05-06-009",
+      "lane": "cross-domain",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal 'weight 2'",
+      "completion_preview": " modular forms are functions on the upper half-plane that satisfy certain transformation properties under the action of the modular group. Elliptic curves over Q are given by equations of the form y^2"
+    },
+    {
+      "probe_id": "P-2026-05-06-010",
+      "lane": "cross-domain",
+      "verdict": "USELESS",
+      "sub_type": "irrelevant",
+      "severity": "no useful signal matched; completion did not address probe correctly",
+      "completion_preview": " The abc conjecture, also known as the Masser-Oesterle conjecture, is a deep and far from trivial statement in number theory. It has implications for many other problems in number theory, including Fe"
+    }
+  ],
+  "tickets_filed": [
+    "T-2026-05-07-0001",
+    "T-2026-05-07-0002",
+    "T-2026-05-07-0003",
+    "T-2026-05-07-0004"
+  ],
+  "useless_count": 4,
+  "useful_count": 1
+}

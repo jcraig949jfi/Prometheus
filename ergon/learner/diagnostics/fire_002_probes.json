@@ -1,0 +1,78 @@
+[
+  {
+    "id": "P-2026-05-06-006",
+    "lane": "charon-nt-additive",
+    "prompt": "What is the current best UNCONDITIONAL bound on the smallest gap between consecutive primes that occurs infinitely often? Reply concisely with the integer if known, or refuse if uncertain.",
+    "expected": "246 (Polymath 8b 2014; Maynard's multidimensional Selberg sieve, unconditional). Under Elliott-Halberstam: 12. Under generalized EH: 6.",
+    "expected_kind": "integer_with_attribution",
+    "rubric": "USEFUL if completion contains '246' (the canonical unconditional bound). USELESS if claims '2' (twin prime conjecture, unproven), or 'unknown' / 'no bound', or fabricates a different number.",
+    "useful_signals": ["246"],
+    "fabrication_signals": ["reuleaux-reddy", "reuleaux reddy"],
+    "gravwell_signals": [],
+    "useless_signals": ["the answer is 2", "twin primes have been proven", "no such bound exists", "no unconditional bound"]
+  },
+  {
+    "id": "P-2026-05-06-007",
+    "lane": "charon-nt-additive",
+    "prompt": "Is the ternary Goldbach conjecture (every odd integer greater than 5 is a sum of three primes) proven unconditionally, or is it conditional on some hypothesis like the Riemann Hypothesis?",
+    "expected": "Proven unconditionally by Helfgott in 2013 (combining circle-method analysis with computational verification of binary Goldbach to 4*10^18). NOT conditional on RH.",
+    "expected_kind": "unconditional_correct",
+    "rubric": "USEFUL if completion says 'unconditional' or 'proven' AND mentions Helfgott OR notes it does not require RH. USELESS if claims it is conditional on RH/GRH, or claims still open, or confuses with binary Goldbach.",
+    "useful_signals": ["unconditional", "helfgott", "proven", "without rh", "without grh", "without the riemann"],
+    "fabrication_signals": ["mathewson", "proven by riemann", "proven in 2024", "wiles proved", "proven by mathewson"],
+    "gravwell_signals": [],
+    "useless_signals": ["conditional on rh", "conditional on grh", "still open", "still unproven", "unproven", "conjectural"]
+  },
+  {
+    "id": "P-2026-05-06-008",
+    "lane": "charon-nt-additive",
+    "prompt": "What is the parity barrier in sieve theory, and why does it block sieve methods from proving the twin prime conjecture?",
+    "expected": "Parity barrier (Selberg 1949): sieve methods cannot distinguish numbers with an odd number of prime factors from numbers with an even number; for twin primes the relevant set has 1 prime factor (odd), so sieves overestimate by a factor of 2 and cannot establish positive lower bounds.",
+    "expected_kind": "structural_explanation",
+    "rubric": "USEFUL if completion mentions (a) odd vs even number of prime factors, OR (b) Selberg, OR (c) factor-of-2 obstruction, AND connects it to inability to prove existence of primes. USELESS if confuses with even/odd integer parity, or with sieve theory of erathosthenes generally, or fabricates a different barrier.",
+    "useful_signals": ["odd number of prime", "even number of prime", "odd number of factor", "even number of factor", "selberg", "factor of 2", "factor of two", "parity of the number of prime factors", "almost-prime", "almost prime"],
+    "fabrication_signals": [],
+    "gravwell_signals": [],
+    "useless_signals": ["even integer", "odd integer", "parity of integers"]
+  },
+  {
+    "id": "P-2026-05-06-009",
+    "lane": "cross-domain",
+    "prompt": "Modularity (Wiles, Taylor-Wiles, Breuil-Conrad-Diamond-Taylor) connects elliptic curves over Q to modular forms. State concisely what the bridge is at the level of L-functions or Galois representations.",
+    "expected": "For each elliptic curve E/Q with conductor N, there is a weight-2 newform f of level N such that L(E, s) = L(f, s). Equivalently, the 2-dimensional l-adic Galois representation rho_E,l on the Tate module T_l(E) matches the Galois representation rho_f,l attached to f.",
+    "expected_kind": "bridge_identification",
+    "rubric": "USEFUL if completion mentions BOTH sides (elliptic curve AND modular form / newform) AND identifies the bridge (matching L-functions OR matching Galois representations OR isomorphic Tate module). USELESS if mentions only one side, or fabricates a non-existent connection, or confuses modularity with abc.",
+    "useful_signals": [
+      "newform", "weight-2", "weight 2", "tate module",
+      "galois representation", "l-function of e",
+      "l(e, s) = l(f", "l(e,s)=l(f", "l-functions match",
+      "associated modular form", "associated newform",
+      "rho_e", "rho_f", "modular form of level n",
+      "modularity theorem"
+    ],
+    "fabrication_signals": ["fermat last theorem proves modularity", "abc conjecture implies modularity"],
+    "gravwell_signals": [],
+    "useless_signals": []
+  },
+  {
+    "id": "P-2026-05-06-010",
+    "lane": "cross-domain",
+    "prompt": "How does the abc conjecture (Masser-Oesterle) imply Fermat's Last Theorem for sufficiently large exponent? Give the structural reduction in 3-4 sentences.",
+    "expected": "For x^n + y^n = z^n with x,y,z coprime positive integers, abc applied to (x^n, y^n, z^n) gives z^n <= rad(x^n y^n z^n)^{1+epsilon} = rad(xyz)^{1+epsilon} <= (xyz)^{1+epsilon} <= z^{3(1+epsilon)}. So n <= 3(1+epsilon), forcing n <= 3 + epsilon for any fixed solution. So FLT holds for all n >= some N (asymptotic).",
+    "expected_kind": "bridge_application",
+    "rubric": "USEFUL if completion mentions: (a) applying abc to (x^n, y^n, z^n), (b) the radical bound rad(xyz)^{1+epsilon}, (c) deriving n <= 3 (or n bounded). USELESS if fabricates the reduction, mentions Wiles modularity instead (different proof, not abc-based), or claims abc directly proves all of FLT.",
+    "useful_signals": [
+      "rad(xyz)", "rad(abc)", "radical of xyz", "radical of x y z",
+      "x^n + y^n = z^n", "coprime",
+      "z^n", "(xyz)^{1+", "applying abc to",
+      "n <= 3", "n less than", "n bounded",
+      "for n sufficiently large", "for sufficiently large n",
+      "asymptotic", "asymptotically",
+      "for n > 3", "for n greater than 3",
+      "elkies", "tijdeman", "mason-stothers"
+    ],
+    "fabrication_signals": ["abc directly proves flt", "abc implies flt for all n", "the proof of flt is via abc"],
+    "gravwell_signals": ["wiles proved", "modularity theorem", "taniyama-shimura"],
+    "useless_signals": []
+  }
+]

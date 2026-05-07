@@ -214,13 +214,70 @@ def evaluate_adversarial(probe: Dict[str, Any], response: Dict[str, Any]) -> Tup
     return ("USELESS", "irrelevant", "no rubric matched")
 
 
+def evaluate_generic(probe: Dict[str, Any], response: Dict[str, Any]) -> Tuple[str, str, str]:
+    """Generic rubric for lanes 1-9 + 12: each probe carries inline lists.
+
+    Probe schema additions:
+        useful_signals:    list[str]  — case-insensitive substring; ANY match -> USEFUL
+        useless_signals:   list[str]  — case-insensitive substring; checked AFTER useful_signals
+        gravwell_signals:  list[str]  — case-insensitive substring;
+                                         match -> USELESS sub_type=grav_well_drift (P1)
+        fabrication_signals: list[str] — case-insensitive substring;
+                                          match -> USELESS sub_type=fabrication (P1)
+    """
+    completion_lower = response["completion"].lower()
+    stripped = response["completion"].strip()
+    if not stripped or stripped in {"1", "0", "."}:
+        return ("USELESS", "silent_unknown",
+                f"completion empty or single-token: {response['completion']!r}")
+
+    # PRIORITY ORDER: fabrications and gravitational-well drift WIN over
+    # useful_signals — a response that contains both a correct fact AND a
+    # fabricated attribution is substrate-grade USELESS (the user might
+    # trust the right number while the false reference rots the substrate).
+    # Per anti-gravitational-well rule, P1 sub-types are checked first.
+
+    # Fabrication (P1) — checked BEFORE useful_signals
+    for s in probe.get("fabrication_signals", []):
+        if s.lower() in completion_lower:
+            return ("USELESS", "fabrication",
+                    f"completion contains fabrication signal '{s}' (P1; "
+                    f"fabrication wins over correct surface answer)")
+    # Gravitational-well drift (P1) — checked BEFORE useful_signals
+    for s in probe.get("gravwell_signals", []):
+        if s.lower() in completion_lower:
+            return ("USELESS", "grav_well_drift",
+                    f"completion contains gravitational-well drift signal '{s}' (P1)")
+
+    # Useful signals (negation-correct first, if provided)
+    for s in probe.get("negation_correct_signals", []):
+        if s.lower() in completion_lower:
+            return ("USEFUL", "correct_nuanced",
+                    f"completion contains negation-correct signal '{s}'")
+    for s in probe.get("useful_signals", []):
+        if s.lower() in completion_lower:
+            return ("USEFUL", "correct_answer",
+                    f"completion contains useful signal '{s}'")
+
+    # Useless signals (P2)
+    for s in probe.get("useless_signals", []):
+        if s.lower() in completion_lower:
+            return ("USELESS", "wrong_answer",
+                    f"completion contains useless signal '{s}'")
+
+    # Default: irrelevant
+    return ("USELESS", "irrelevant",
+            "no useful signal matched; completion did not address probe correctly")
+
+
 def evaluate(probe: Dict[str, Any], response: Dict[str, Any]) -> Tuple[str, str, str]:
     lane = probe.get("lane")
     if lane == "calibration":
         return evaluate_calibration(probe, response)
     if lane == "adversarial":
         return evaluate_adversarial(probe, response)
-    return ("USELESS", "irrelevant", f"unknown lane '{lane}'")
+    # All other lanes use the generic rubric driven by inline signal lists
+    return evaluate_generic(probe, response)
 
 
 def priority_for(sub_type: str) -> str:
