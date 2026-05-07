@@ -6,6 +6,83 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #15 — 2026-05-07 17:00 UTC
+
+**Coordination note:** Fire #14 ran on parallel instance (commit `604ec472`) covering Lanes 1 + 2 with 1 P1 ticket (`T-2026-05-07-ST-fire14-001`: MethodSpec accepts arbitrary IC strings). My fire = #15.
+
+**Lanes selected:** 17 (mutation-testing, fresh target `coordinate_chart.py`) + 3 (correlated-triangulation, **interaction probe** against fire-14's finding to test escalation potential).
+
+**Lane 15 + 18 reactivation re-check:** still DORMANT (Charon orch ticket OPEN; T-2026-05-07-T017 OPEN).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_15_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_15_results.json`.
+
+### Lane 17 — mutation-testing on `coordinate_chart.py` (fresh target)
+
+| Metric | Value |
+|---|---:|
+| target | `sigma_kernel/coordinate_chart.py` (491 lines, 34 tests pass in 14s) |
+| max_mutations | 8 |
+| score | 0.375 |
+| killed | 3 |
+| survived | 5 |
+| errored / skipped | 0 / 0 |
+| wall_clock | 178s |
+
+**Survivor analysis:**
+
+| line | operator | analysis |
+|---:|---|---|
+| 92  | off_by_one_int | False positive (`Day-3` in trailing comment) |
+| 125 | off_by_one_int | False positive (`Study 07` in docstring) |
+| 148 | off_by_one_int | False positive (`1.0.0` in docstring) |
+| 193 | boolean_not    | **Genuine test gap** — `@dataclass(frozen=True)` flip survives |
+| 301 | comparison_flip | False positive (`:` in f-string error message) |
+
+**Substrate finding (substrate-grade, escalates fire #7's per-class finding):** the line-193 survivor is a `@dataclass(frozen=True)` flip on `CoordinateChart`. Same pattern as fire #7's finding `T-2026-05-07-ST-fire1-001` (`OperatorPortabilityCertificate`). **Two independent confirmations of the same gap → the gap is likely substrate-wide.** Filing a P2 escalation ticket recommending an audit-style test instead of class-by-class fixes.
+
+**Ticket: `T-2026-05-07-ST-fire15-001`** (P2-normal): substrate-wide audit of `@dataclass(frozen=True)` frozen-ness coverage. Closes both fire-7 and fire-15 instances.
+
+### Lane 3 — TriangulationProtocol × fire-14 finding interaction probe
+
+**Goal:** does fire-14's `T-2026-05-07-ST-fire14-001` (MethodSpec silently accepts arbitrary IC string) actually break `TriangulationProtocol`'s independence enforcement? If yes, escalate that ticket from P1 to P0.
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — fire-14 finding reproduces | **CONFIRMED** | `MethodSpec(independence_class="not_a_registered_class_xyz")` accepted; arbitrary string stored verbatim |
+| T2 — `method_class_for_independence_class` on arbitrary IC | **PASS** | Raises `KeyError` with registered-IC enumeration in the message — T-2026-05-07-T018 silent-sentinel fix HOLDS at the lookup site |
+| T3 — `TriangulationPath` construction with arbitrary-IC spec | **ERROR** | Harness signature mismatch (`summary` not a kwarg of `TriangulationPath`; uses `runtime_ms`) |
+| T4 — `TriangulationProtocol.evaluate()` against arbitrary-IC path | **DEFERRED** | T3 ERROR blocked T4 |
+
+**Substantive partial finding:** even though MethodSpec accepts arbitrary IC strings (T1), the substrate's downstream `method_class_for_independence_class` lookup raises `KeyError` on arbitrary strings (T2). This means **arbitrary IC strings cannot transit through the path-construction → method-class-resolution chain without error**. The fire-14 P1 ticket DOES NOT obviously escalate to P0 based on T2 evidence: the substrate has a downstream failsafe at the lookup boundary.
+
+**T3+T4 deferred to fire #16:** the harness needs the correct `TriangulationPath` constructor signature (`runtime_ms` not `summary`). The unanswered question is whether a caller could smuggle an arbitrary-IC path through by passing `method_class` explicitly (caller-asserted, bypassing the lookup). Worth one more fire's investigation.
+
+### Tickets filed this fire
+
+**1 ticket (P2-normal):** `T-2026-05-07-ST-fire15-001` — substrate-wide @dataclass(frozen=True) audit. Escalates fire-7 finding scope; recommends audit-style test instead of per-class fixes.
+
+### Standing recommendations for next fire (#16)
+
+1. **Anti-repeat:** avoid lanes 17, 3 (just covered). Suggested:
+   - **Lane 3 (T3+T4 retry)** — the deferred interaction probe with the correct `TriangulationPath` signature; would close the question of whether fire-14 ticket escalates to P0
+   - **Lane 10 (real-paper)** — last fire #5 (this session); under-exercised
+   - **Lane 7 (precision-gradient)** — last fire #9; third borderline INCONCLUSIVE coefficient set untested
+   - **Lane 5 (large-scale-enumeration)** — full-cap candidate
+2. **Lane 3 retry priority:** if fire #16 has time, run the deferred T3+T4 probe with `runtime_ms` field. Will resolve whether `T-2026-05-07-ST-fire14-001` stays P1 or escalates to P0.
+3. **Fire-15 mutation finding pattern:** suggest fire #16+ runs lane 17 against ANOTHER `@dataclass(frozen=True)`-heavy module (e.g. `prometheus_math/kill_vector.py` or `sigma_kernel/exclusion_certificate.py`) to test the substrate-wide hypothesis. If a 3rd frozen-ness gap appears, T-ST-fire15-001 priority should escalate.
+
+### Discipline notes
+
+- HARD-1..HARD-5: clean. No drift toward established frameworks.
+- Time used: ~40 min (within 50-min cap).
+- Anti-flooding cap: 1 ticket filed (max 5 allowed).
+- Multi-instance coordination: pulled before lane-pick; claimed fire #15 = max-on-origin (14) + 1.
+
+— substrate-tester, fire #15, 2026-05-07 17:00 UTC
+
+---
+
 ## Fire #14 — 2026-05-07 12:23 (local)
 
 **Coordination note:** parallel substrate-tester instance ran fire #13 (commit `2ca27636`) covering lanes 11 + 13. My fire = #14, lanes 1 + 2. Multi-instance coordination operating cleanly.

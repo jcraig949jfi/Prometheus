@@ -1,0 +1,94 @@
+{
+  "fire": 15,
+  "lanes": [
+    17,
+    3
+  ],
+  "lane_17": {
+    "lane": "17_mutation_testing_fresh_target",
+    "target": "sigma_kernel/coordinate_chart.py",
+    "max_mutations_requested": 8,
+    "wall_clock_seconds": 178.24344658851624,
+    "rc": 0,
+    "summary_line": "[mutation] score=0.375 killed=3 survived=5 errored=0 skipped=0",
+    "score": 0.375,
+    "n_killed": 3,
+    "n_survived": 5,
+    "n_errored": 0,
+    "n_skipped": 0,
+    "mutations": [
+      {
+        "idx": "1",
+        "verdict": "survived",
+        "site": "coordinate_chart.py:92:off_by_one_int"
+      },
+      {
+        "idx": "2",
+        "verdict": "survived",
+        "site": "coordinate_chart.py:125:off_by_one_int"
+      },
+      {
+        "idx": "3",
+        "verdict": "survived",
+        "site": "coordinate_chart.py:148:off_by_one_int"
+      },
+      {
+        "idx": "4",
+        "verdict": "killed",
+        "site": "coordinate_chart.py:185:return_constant_None"
+      },
+      {
+        "idx": "5",
+        "verdict": "survived",
+        "site": "coordinate_chart.py:193:boolean_not"
+      },
+      {
+        "idx": "6",
+        "verdict": "killed",
+        "site": "coordinate_chart.py:273:return_constant_None"
+      },
+      {
+        "idx": "7",
+        "verdict": "killed",
+        "site": "coordinate_chart.py:283:return_constant_None"
+      },
+      {
+        "idx": "8",
+        "verdict": "survived",
+        "site": "coordinate_chart.py:301:comparison_flip"
+      }
+    ],
+    "stderr_tail": ""
+  },
+  "lane_3": {
+    "lane": "3_triangulation_x_fire14_finding",
+    "tests": [
+      {
+        "id": "T1_methodspec_accepts_arbitrary_ic_string",
+        "expected": "fire-14 finding reproduces: MethodSpec accepts arbitrary string",
+        "actual": "accepted; independence_class='not_a_registered_class_xyz'",
+        "verdict": "CONFIRMED",
+        "note": "fire-14 finding T-ST-fire14-001 reproduces exactly"
+      },
+      {
+        "id": "T2_unregistered_ic_method_class_lookup",
+        "expected": "KeyError raised",
+        "actual": "KeyError: \"unregistered independence_class 'not_a_registered_class_xyz'; registered: ['clustering_boundary', 'literature_cross_check', 'lmfdb_catalog'",
+        "verdict": "PASS",
+        "note": "T018 silent-sentinel fix HOLDS at the lookup site"
+      },
+      {
+        "id": "T3_triangulation_setup",
+        "expected": "real-IC paths construct cleanly",
+        "actual": "raised: TypeError: TriangulationPath.__init__() got an unexpected keyword argument 'summary'",
+        "verdict": "ERROR",
+        "severity": "P2-normal"
+      }
+    ],
+    "verdict_counts": {
+      "CONFIRMED": 1,
+      "PASS": 1,
+      "ERROR": 1
+    }
+  }
+}
