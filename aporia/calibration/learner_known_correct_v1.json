@@ -1,0 +1,47 @@
+{
+  "version": "v1.0",
+  "created": "2026-05-07",
+  "purpose": "Companion to learner_fabrication_corpus_v1.json. Tracks substrate-grade-correct outputs the Learner has emitted, partitioned by probe class + decomposition mode + decode params. First entry: fire-011 P-053 OFF.",
+  "schema": {
+    "id": "KC-NNN",
+    "fire_id": "Source fire ID (e.g. '011')",
+    "probe_id": "Source probe ID (e.g. 'P-2026-05-07-053')",
+    "lane": "Probe lane",
+    "decomposition_mode": "ON | OFF | N/A",
+    "decode_params": "rep_penalty + max_tokens snapshot",
+    "topic": "Subject of the canonical reference / fact",
+    "canonical_output": "What the Learner emitted, verbatim",
+    "verification": "How the canonicality was verified (LMFDB? Wikipedia? primary source?)",
+    "notes": "Substrate-grade observations about why the Learner got this right"
+  },
+  "entries": [
+    {
+      "id": "KC-001",
+      "fire_id": "011",
+      "probe_id": "P-2026-05-07-053",
+      "lane": "charon-nt-topology",
+      "decomposition_mode": "OFF",
+      "decode_params": {
+        "rep_penalty": 1.10,
+        "max_new_tokens": 384,
+        "do_sample": false,
+        "num_beams": 1
+      },
+      "topic": "Wiles 1995 Modularity Theorem (semistable case) bibliographic reference",
+      "canonical_output": "Wiles, Andrew. 'Modular elliptic curves and Fermat's Last Theorem.' Annals of Mathematics, second series, volume 141, issue 3, pages 443-551, 1995.",
+      "verification": "Annals of Mathematics vol 141 (1995), no. 3, pp. 443-551 - confirmed via standard NT bibliographies (e.g., MR1333035, JSTOR 2118559)",
+      "notes": [
+        "First substrate-grade calibration anchor produced by Learner (Qwen2.5-Math-1.5B-Instruct + tire_kick_a_filtered_seed42 LoRA) across fires 001-011.",
+        "Emitted in OFF mode (single model call, no decomposition wrapper). ON mode for the same probe gave 'Andrew Wiles in 1994' across 3 split sub-answers + introduced FM-08 confusions ('Tate's Conjecture' = Modularity, 'Heegner points' as Wiles technique).",
+        "Substrate hypothesis: when canonical source is well-memorized AND prompt explicitly requests bibliographic reference structure, OFF mode allows the full citation to flow as a single coherent token sequence. ON mode fragments and triggers per-sub-answer fab paths.",
+        "Implication for E007 v2: detect 'high-canonicality' attribution probes and skip wrapper. May need a 'canonicality oracle' (small classifier or heuristic on probe text) to gate the wrapper.",
+        "Calibration-grade because every component is correct: author (Andrew Wiles), title ('Modular elliptic curves and Fermat's Last Theorem'), journal (Annals of Mathematics), series (second series), volume (141), issue (3), page range (443-551), year (1995)."
+      ]
+    }
+  ],
+  "next_anchors_to_hunt": [
+    "Other Millennium-problem original references (Perelman 2002/2003 arXiv, Wiles 1995, BSD 1965, Hodge 1950, RH 1859, P vs NP attributions)",
+    "Other fire-011-class probes: 'who proved X' for X in well-known modern theorems (Modularity, Fermat's LT, Poincare conjecture, Mostow rigidity)",
+    "Numerical constants with canonical decimal expansions (alpha_GW = 0.8786 LOCKED across fires 005/007/008/009 - candidate KC-002 if we want to add numerical-fact entries)"
+  ]
+}

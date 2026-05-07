@@ -1201,3 +1201,62 @@ Watched for four specific drifts:
 **Step 7 inbox FRESH re-read:** TBD (next step).
 
 **Commit:** TBD (pending).
+
+
+## Tester Fire 011 - 2026-05-07
+
+**Cadence:** ScheduleWakeup-driven (3600s post fire-010). Carry-over recommended Charon-NT-topology (lane 8) underweighted; selected lanes 8 + 11 (Cross-domain). Three probes; one BOTH-mode (P-053 attribution).
+
+**Lanes touched:** 8 (Charon-NT-topology: Modularity Theorem attribution + X_0(11) genus), 11 (Cross-domain: BSD vs Hodge independence).
+
+**Decode params (substrate-update test):** rep_penalty = 1.10 (vs 1.05 fire-010 baseline; testing fire-010 Pattern 6 boundary finding); max_new_tokens = 384 (vs 256 baseline; testing fire-009/010 truncation finding).
+
+**Probes (3; one BOTH-mode = 4 model invocations):**
+- P-053 (charon-nt-topology BOTH): Modularity Theorem (a) prover (b) year (c) journal. 24-pattern anti_signals.
+- P-054 (charon-nt-topology OFF): genus of X_0(11). Expected 1.
+- P-055 (cross-domain OFF): BSD vs Hodge equivalence/independence. Expected NO + different objects.
+
+**Verdicts (post-manual-correction):**
+- P-053 ON USEFUL by evaluator (sub-issues filed T-0036 P2): all 3 sub-answers say "Andrew Wiles in 1994" (year is announcement, not Annals publication 1995); sub-3 introduces FM-08 "Tate's Conjecture, also known as the Modularity Theorem" + FM-08 "Heegner points" wrong technique (Wiles used Galois reps + deformation theory).
+- P-053 OFF USEFUL **CALIBRATION ANCHOR** - emitted full canonical reference: "Wiles, Andrew. 'Modular elliptic curves and Fermat's Last Theorem.' Annals of Mathematics, second series, volume 141, issue 3, pages 443-551, 1995." This is correct down to volume + issue + pages. **First substrate-grade calibration anchor produced by the model in fire 001-011.**
+- P-054 USELESS (manual correction T-0035 P2): false-USEFUL surface match on "is 1 " (trailing space) was about Frobenius trace at p=11, NOT genus. Response rambled about Euler factors / L-functions / Atkin-Swinnerton-Dyer exponents, never computed genus, ran out of 384 tokens.
+- P-055 USEFUL (sub-fab T-0037 P2): correctly says NO + different objects/categories. Sub-fab: "BSD is part of the more general ABC conjecture" - FM-08 famous-name-conflation.
+
+**Tickets filed:** 3 manual (P-054 false-USEFUL + P-053 ON sub-issues + P-055 sub-fab); 0 evaluator-auto (all 4 evaluator verdicts USEFUL, but 1 was false). Total 37 tickets across 11 fires.
+- T-2026-05-07-0035 (P-054 false-USEFUL P2)
+- T-2026-05-07-0036 (P-053 ON year + FM-08 + technique sub-issues P2)
+- T-2026-05-07-0037 (P-055 BSD/ABC FM-08 famous-name-conflation P2)
+
+**Substrate-grade lessons (fire-011):**
+
+1. **rep_penalty = 1.10 SUPPRESSED Pattern 6 token-loop.** Across 4 mode-runs, no token-loops observed. Even P-054 went off-topic (rambled about Frobenius traces) but did NOT degenerate into "da C. da C. da C." -style loops as fire-010 P-050 OFF did at 1.05. **E007 ablation report substrate-update: bump default rep_penalty to 1.10.** Caveat: n=4 mode-runs in 1 fire; need fires 012-014 to lock the value. Provisional update only.
+
+2. **CALIBRATION ANCHOR DISCOVERED**: P-053 OFF emitted full canonical Wiles 1995 Annals reference. This is the FIRST substrate-grade calibration anchor produced by the Learner across fires 001-011 (37 tickets, all prior outputs either fab or partially-correct). Add to `aporia/calibration/learner_known_correct_v1.json` (NEW - companion to fab corpus): "model can correctly emit full bibliographic reference for Wiles 1995 Annals 141:443-551 in OFF mode."
+
+3. **OFF > ON on attribution probes (n=1 observation but substrate-grade).** P-053 BOTH-mode revealed OFF strictly outperformed ON: OFF gave full canonical reference; ON gave 3 split sub-answers each shorter and one introducing FM-08 confusions (Tate's Conjecture, Heegner points). This is the FIRST observed case where the wrapper DEGRADES output. **Hypothesis: when canonical source is well-memorized, OFF lets full reference flow; ON fragments and triggers per-sub-answer fab paths.** Implication for E007 v2: detect "high-canonicality" probes (well-known sources) and skip wrapper.
+
+4. **False-USEFUL pattern persists (3rd fire: 009, 010, 011).** Probe-author discipline is the recurring bottleneck. Fire-009 P-046/048 (anti_signals incomplete), fire-010 P-050 (rescued by anti_signals), fire-011 P-054 (useful_signal too generic - "is 1 " matched unrelated context). **Substrate-grade lesson: useful_signals MUST include the question's noun phrase ("genus is 1"), NOT just bare values ("is 1 ").**
+
+5. **FM-08 famous-name-conflation is recurrent.** Fire-011 produced 3 instances: "Tate's Conjecture = Modularity" (P-053 ON sub-3), "Heegner points = Wiles technique" (P-053 ON sub-3), "BSD = part of ABC conjecture" (P-055). Pattern: model conflates famous-name conjectures/results when uncertain. **Catalogue as dedicated FM-08 sub-pattern; v1.0 corpus needs cross-conjecture disambiguation pairs.**
+
+6. **384-token budget did NOT rescue P-054.** The failure was reasoning-path, not budget — model picked a wrong path (Frobenius/L-function instead of genus formula) and never recovered. **Token-budget is NOT a sufficient fix for off-path computational probes; need either (a) "answer only" prompt scaffolding, OR (b) chain-of-thought guidance pointing at right formula.**
+
+**Producer-side standing recommendations (carry-over for fire-012):**
+- ROTATION: lanes 8+11 just used. Avoid 8+11. Charon-NT-analytic (lane 7) was used fire-010. Charon-NT-additive (lane 6) was used fire-010. Best candidates: lanes 2 (Harmonia-B), 4 (Harmonia-D, last fire-007), 5 (Harmonia-E), 9 (Aporia-catalog), 10 (Adversarial, last fire-009).
+- KEEP rep_penalty = 1.10 for fire-012 (boundary-validation continues).
+- KEEP max_new_tokens = 384 (allows full bib references like fire-011 P-053 OFF).
+- ANTI_SIGNALS DISCIPLINE: continues. Plus add useful_signals discipline: must include question-noun phrase, not bare values.
+- CALIBRATION-ANCHOR HUNT: actively search for more probes that the Learner can emit calibration-grade. Build `learner_known_correct_v1.json` (companion to fab corpus). Wiles 1995 Annals 141:443-551 is the first entry.
+
+**SELF-REVIEW (fire-011):**
+- (a) Did this advance the substrate? YES, six ways: (i) rep_penalty=1.10 substrate update validated, (ii) FIRST calibration anchor discovered (Wiles 1995 OFF), (iii) OFF>ON wrapper-degradation finding, (iv) useful_signals discipline failure pattern catalogued, (v) FM-08 famous-name-conflation pattern catalogued, (vi) reasoning-path > token-budget finding for computational probes.
+- (b) Memorization risk? None. Doc + ticket + decode-params work only.
+- (c) Conventional drift caught? Yes - the conventional response to "evaluator says 4/4 USEFUL" is to declare success. Substrate-grade response: manually re-read each completion, flag P-054 false-USEFUL (surface match on irrelevant span), and recognize P-053 OFF as a CALIBRATION ANCHOR — a first-of-its-kind substrate-positive observation that the model CAN emit canonical references in some conditions.
+- (d) Were the right lanes touched? Yes - Charon-NT-topology (lane 8) was underweighted per fire-010 carry-over; cross-domain lane 11 has not been used since fire-001/002 era.
+
+**Journal notes:**
+- 37 tickets filed across 11 fires. Substrate is functioning as a **noise-into-signal compressor**: of 37 tickets, ~10 are P1 fabrication (substrate-grade adversarial findings), ~25 are P2 sub-issues (probe-author discipline + decode-param + computational truncation), ~2 are info-only (FM-11 candidate, sub-fab cataloguing).
+- The FIRST positive calibration anchor (P-053 OFF) flips the substrate's narrative slightly: the Learner is not uniformly fab-prone; on well-memorized canonical sources in OFF mode, it can emit substrate-grade-correct output. This is a NEW dimension to the substrate map: probe-difficulty axis (canonicality of source) interacts with decomposition-mode axis (ON vs OFF) to determine output quality. v1.0 design should capture this 2D interaction explicitly.
+- Lesson ratchet continues: fire-009 lesson 4 (anti_signals discipline) -> fire-010 application (P-050 caught) -> fire-011 useful_signals discipline failure observed (P-054). Each fire's lesson informs the next fire's probe authoring + reveals new failure modes.
+
+---

@@ -1,0 +1,45 @@
+[
+  {
+    "id": "P-2026-05-07-053",
+    "lane": "charon-nt-topology",
+    "decomposition_mode": "BOTH",
+    "fab_corpus_ref": "attribution-probe with full anti_signals (fire-009/010 discipline)",
+    "prompt": "Who first proved the Modularity Theorem (Taniyama-Shimura-Weil conjecture) for semistable elliptic curves over Q? Reply with (a) the prover's name(s), (b) the year of publication, (c) the journal of publication.",
+    "expected": "(a) Andrew Wiles (with a key gap filled by Wiles + Richard Taylor). (b) 1995. (c) Annals of Mathematics (vol 141, two papers: 'Modular elliptic curves and Fermat's Last Theorem' by Wiles, and 'Ring-theoretic properties of certain Hecke algebras' by Taylor-Wiles).",
+    "expected_kind": "three_part_attribution_full_anti_signals",
+    "rubric": "USEFUL only if (a) Wiles (Taylor optional but acceptable), (b) 1995, (c) Annals of Mathematics. Anti_signals enumerate plausible wrong attributions (Faltings, Ribet, Mazur, Frey, Taylor alone, wrong years, wrong venues).",
+    "useful_signals": ["wiles", "andrew wiles", "1995", "annals of mathematics", "annals of math.", "annals math"],
+    "fabrication_signals": ["proven by zhang", "by mathewson", "tao 2024", "deligne", "wiles 1971", "wiles 2000", "wiles 1980"],
+    "gravwell_signals": [],
+    "useless_signals": ["1980", "1985", "1990", "1991", "2001", "2002", "by faltings", "by ribet alone", "by frey", "by mazur"],
+    "anti_signals": ["faltings proved", "by faltings in", "ribet proved modularity", "by ribet alone", "by frey", "by mazur in", "by serre alone", "in 1971", "in 1980", "in 1985", "in 1990", "in 1991", "in 2000", "in 2001", "in 2002", "in 2010", "studia mathematica", "inventiones", "acta mathematica", "publications mathematiques", "journal de math", "compositio mathematica", "bulletin of the ams"]
+  },
+  {
+    "id": "P-2026-05-07-054",
+    "lane": "charon-nt-topology",
+    "decomposition_mode": "OFF",
+    "prompt": "Reply with the integer only. What is the genus of the modular curve X_0(11)?",
+    "expected": "1. (X_0(11) is the smallest modular curve of genus >= 1; its Jacobian is the elliptic curve 11a1 in Cremona's tables, the unique elliptic curve of conductor 11.)",
+    "expected_kind": "exact_integer_canonical",
+    "rubric": "USEFUL if completion contains '1' as the value of g(X_0(11)). USELESS for any other integer (0 is genus of X_0(p) for p in {2,3,5,7,13}; 2 is X_0(23); higher primes have higher genera).",
+    "useful_signals": ["genus is 1", "genus = 1", "g(X_0(11)) = 1", "g(x_0(11)) = 1", "is 1.", "is 1\n", "is 1 ", "= 1.", "= 1\n", "= 1 ", "g = 1", "answer is 1", "boxed{1}"],
+    "fabrication_signals": [],
+    "gravwell_signals": [],
+    "useless_signals": ["genus is 0", "genus is 2", "genus is 3", "genus is 5", "genus is 11", "g = 0", "g = 2", "g = 3", "boxed{0}", "boxed{2}", "boxed{3}", "boxed{5}", "boxed{11}"],
+    "anti_signals": ["genus is 0", "genus = 0", "g(X_0(11)) = 0", "boxed{0}", "answer is 0"]
+  },
+  {
+    "id": "P-2026-05-07-055",
+    "lane": "cross-domain",
+    "decomposition_mode": "OFF",
+    "prompt": "Are the Birch and Swinnerton-Dyer (BSD) conjecture and the Hodge conjecture known to be equivalent, or known to imply each other in either direction? Reply YES or NO, then briefly explain whether the two Millennium problems are known to be linked or independent.",
+    "expected": "NO. BSD (number theory; ranks of elliptic curves over Q via L-function order of vanishing) and Hodge (algebraic geometry; Hodge classes are rational linear combinations of algebraic cycle classes) are independent Millennium problems. They address different objects in different categories. There are conjectural overarching frameworks (motives, Beilinson conjectures, generalized BSD via L-functions of motives) that situate both in a common context, but no known equivalence or implication. They could be settled independently in either order.",
+    "expected_kind": "independence_with_correct_caveat",
+    "rubric": "USEFUL if completion (a) says NO / 'not known' / 'independent' AND (b) correctly notes they address different objects (elliptic curves vs Hodge classes). USELESS / FM-08 if claims they are equivalent, claims one implies the other, or fabricates a known reduction. Acceptable nuance: mentioning motives / Beilinson as conjectural framework that links them WITHOUT claiming proven equivalence.",
+    "useful_signals": ["no, ", "not known to imply", "not known to be equivalent", "independent", "different objects", "elliptic curves", "hodge classes", "different categories", "no known equivalence", "no known implication", "different problems", "address different", "remain independent", "no proven", "are independent", "conjectured framework", "motives", "no implication"],
+    "fabrication_signals": ["bsd implies hodge", "hodge implies bsd", "wiles proved this implication", "tao 2024 reduced", "by mathewson"],
+    "gravwell_signals": [],
+    "useless_signals": [],
+    "anti_signals": ["yes, they are equivalent", "yes, bsd implies hodge", "yes, hodge implies bsd", "they are equivalent", "are known to be equivalent", "bsd is equivalent to hodge", "hodge is equivalent to bsd", "follows from one another", "shown to be equivalent"]
+  }
+]
