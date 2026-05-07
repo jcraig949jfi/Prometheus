@@ -457,9 +457,21 @@ class ExclusionCertificate:
 
 
 class CertificateRegistrationError(RuntimeError):
-    """Raised on duplicate certificate_id registration without ``replace=True``,
-    or when a certificate's ``coordinate_chart_id`` does not resolve at
-    registration time."""
+    """Umbrella error for ExclusionCertificate registration failures. Raised
+    on duplicate certificate_id registration without ``replace=True``, or
+    when a certificate's ``coordinate_chart_id`` does not resolve at
+    registration time. See subclasses for finer-grained dispatch."""
+
+
+class CertificateCollisionError(CertificateRegistrationError):
+    """Raised specifically on duplicate ``certificate_id`` registration
+    without ``replace=True`` (the substrate's "explicit-supersede" flag).
+
+    Per the 2026-05-07 contract-change window (T-2026-05-07-T020):
+    callers can now narrowly catch the collision case (vs. the broader
+    "missing chart" case) by catching this subclass. Existing callers
+    catching :class:`CertificateRegistrationError` continue to work
+    unchanged — collision still IS a registration error."""
 
 
 class CertificateRegistry:
@@ -519,9 +531,11 @@ class CertificateRegistry:
 
         cid = cert.certificate_id
         if cid in self._certs and not replace:
-            raise CertificateRegistrationError(
+            raise CertificateCollisionError(
                 f"certificate_id {cid!r} already registered; pass replace=True "
-                "to override"
+                "(explicit supersede) to override. Catching "
+                "CertificateRegistrationError continues to work since "
+                "CertificateCollisionError is a subclass."
             )
 
         # If we're replacing, scrub the old chart-index entry first.
@@ -636,6 +650,7 @@ __all__ = [
     # registry
     "CertificateRegistry",
     "CertificateRegistrationError",
+    "CertificateCollisionError",
     "DEFAULT_REGISTRY",
     # free-function aliases
     "register_certificate",

@@ -36,6 +36,7 @@ from sigma_kernel.exclusion_certificate import (
     DEFAULT_REGISTRY,
     NEGATIVE_SPACE_FEEDING_STRENGTHS,
     Boundary,
+    CertificateCollisionError,
     CertificateRegistrationError,
     CertificateRegistry,
     CertificateStrength,
@@ -519,6 +520,67 @@ def test_certificate_registry_duplicate_raises_without_replace():
     reg.register(cert, require_chart=False)
     with pytest.raises(CertificateRegistrationError, match="already registered"):
         reg.register(cert, require_chart=False)
+
+
+def test_certificate_registry_duplicate_raises_collision_subclass_specifically():
+    """Per T-2026-05-07-T020 contract-change window (2026-05-07): the
+    registry now raises the more-specific :class:`CertificateCollisionError`
+    on duplicate certificate_id (instead of the umbrella
+    :class:`CertificateRegistrationError`). The subclass relationship
+    means existing callers catching CertificateRegistrationError continue
+    to work; new callers can narrowly catch the collision case."""
+    reg = CertificateRegistry()
+    cert = ExclusionCertificate(
+        region_spec=_basic_region_spec(),
+        exclusion_claim=_basic_claim("dup-collision-subclass"),
+        certificate_type=CertificateType.EXHAUSTIVE_ENUMERATION,
+        strength=CertificateStrength.BOUNDED_COMPLETE,
+        verifier_set=VerifierSet(methods=()),
+        replay=_placeholder_replay(),
+    )
+    reg.register(cert, require_chart=False)
+    # Specific subclass dispatch
+    with pytest.raises(CertificateCollisionError, match="explicit supersede"):
+        reg.register(cert, require_chart=False)
+    # Subclass relationship: catching umbrella still works
+    assert issubclass(CertificateCollisionError, CertificateRegistrationError)
+
+
+def test_certificate_registry_missing_chart_does_NOT_raise_collision_subclass():
+    """The missing-chart case still raises the umbrella class, NOT
+    CertificateCollisionError. Subclass discipline: only true collisions
+    raise the specific subclass."""
+    reg = CertificateRegistry()
+    cert = ExclusionCertificate(
+        region_spec=_basic_region_spec("nonexistent:chart:id-for-non-collision-test"),
+        exclusion_claim=_basic_claim("missing-chart-not-collision"),
+        certificate_type=CertificateType.EXHAUSTIVE_ENUMERATION,
+        strength=CertificateStrength.BOUNDED_COMPLETE,
+        verifier_set=VerifierSet(methods=()),
+        replay=_placeholder_replay(),
+    )
+    with pytest.raises(CertificateRegistrationError) as excinfo:
+        reg.register(cert, require_chart=True)
+    # The umbrella catches it, but the specific subclass does NOT.
+    assert not isinstance(excinfo.value, CertificateCollisionError)
+
+
+def test_certificate_registry_replace_supersedes_collision():
+    """The explicit-supersede flag (replace=True) bypasses
+    CertificateCollisionError; certificate is overwritten in registry."""
+    reg = CertificateRegistry()
+    cert = ExclusionCertificate(
+        region_spec=_basic_region_spec(),
+        exclusion_claim=_basic_claim("supersede-test"),
+        certificate_type=CertificateType.EXHAUSTIVE_ENUMERATION,
+        strength=CertificateStrength.BOUNDED_COMPLETE,
+        verifier_set=VerifierSet(methods=()),
+        replay=_placeholder_replay(),
+    )
+    reg.register(cert, require_chart=False)
+    # Same cert, replace=True, no raise
+    reg.register(cert, require_chart=False, replace=True)
+    assert reg.by_id(cert.certificate_id) is cert
 
 
 def test_certificate_registry_validates_chart_id_at_registration():
