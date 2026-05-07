@@ -394,3 +394,30 @@ Net: 2 OPEN tickets (under 5-cap). **NOTE:** P-019 + P-021 SHOULD ALSO have tick
 — Charon (as Learner-Tester), 2026-05-07
 
 ---
+
+## Fire 5 — 2026-05-07 (Ergon producer-side, fire ID 5)
+
+**Triage:** 4 incoming P2 tester tickets (T-2026-05-06-0001/0002 + T-2026-05-07-0010/0011) marked BLOCKED-DEFERRED-V1.0. T-0001/0002 are token-budget-verbosity (Catalan + RH zero not produced within budget); T-0010/0011 are the same model-behaviour class (free-form natural-language probes; LoRA at 50 steps × rank 8 cannot move base Qwen). All four are v1.0 corpus-design issues.
+
+**Ticket:** T-2026-05-06-E005 (P3-low) — *Queue Trial 2 KillVector-revalidation for v1.0 (tracking only)*
+
+**Action:**
+- Pre-test 319/319 PASS (clean baseline, 29s).
+- Filed `ergon/learner/v1_0_plans/trial_2_kv_revalidation.md` — 5-section v1.0 implementation plan covering: what this is + why, why-now-not-now, implementation plan (fitness fn / trial script / per-component margin normalization / v0.5-comparison / time+compute estimate), what the plan does NOT promise, coordination dependencies, and **a pre-registered hypothesis** (structural-vs-uniform multiplier under KV-ranked fitness in [0.8×, 4×] — explicitly NOT predicting 47σ to repeat; v0.5's effect size was inflated by cell-fill-only metric capturing exploration not margin quality).
+- Updated inbox payload with `v1_0_plan_doc` link; status BLOCKED-DEFERRED-V1.0 per ticket spec ("Ticket documented with full v1.0 implementation plan in payload; no code changes this fire").
+- Cleaned legacy task tracker: W4.2 marked completed (was in_progress; sub-agent run completed in v0.5b round but never explicitly closed); W4.3/W4.4 marked deleted (conditional tasks that were not exercised).
+
+**Test result:** 319/319 pass (no test changes; doc + inbox-only changes). No regressions.
+
+**SELF-REVIEW:**
+- (a) **Did this fix resolve the failure mode the pressure-applier reported?** YES. E005's acceptance was: "Ticket documented with full v1.0 implementation plan in payload; no code changes this fire. Mark BLOCKED with reason='deferred to v1.0 design pass'." Both delivered. Plan doc has 5 sections + pre-registered hypothesis. Inbox payload carries the link. Status is BLOCKED-DEFERRED-V1.0.
+- (b) **Memorization risk that the synthetic-null gate would catch?** None. Documentation + tracking ticket; no training data, model weights, decoding logic, or feature engineering touched.
+- (c) **Did I change any contract?** No. New `ergon/learner/v1_0_plans/` directory + plan markdown (my territory). No code modified. Inbox payload extension follows the existing convention (other tickets carry payload-specific keys like `probe`, `expected`, `actual`, `severity`).
+- (d) **Conventional-approach drift?** Caught one. The conventional response to "queue this for later" is a TODO comment or a sticky note in a spreadsheet. The substrate-grade move was: write a real plan doc with a **pre-registered hypothesis** (per `feedback_assume_wrong.md` + `feedback_narrative_resistance.md`) so future-me can't post-hoc rationalize whatever the v1.0 result turns out to be. Pre-registration is the substrate's truth-keeping discipline; converting "we'll get to it" into "here's the plan with a falsifiable hypothesis on file" is the load-bearing move.
+
+**Journal notes:**
+- Fire 5 is the lightest fire so far (no code change, no LoRA training). Rotation discipline reasonable: heavy substrate work in fires 1+2; medium documentation work in fire 3+4; planning-only in fire 5. Burns less compute, lets the loop demonstrate sustained activity at varying ticket weights.
+- Filed plan in `ergon/learner/v1_0_plans/` (my territory) rather than `pivot/` (shared design space) per file-ownership rule. If James wants the plan promoted to pivot/ for cross-pillar visibility, a coordination ticket can move it.
+- Watching for new tickets: arming a persistent Monitor on `aporia/meta/queue/ergon_inbox.jsonl` that fires on OPEN-count-increase — when a tester loop adds new tickets, the producer loop wakes immediately rather than waiting for the heartbeat.
+
+---
