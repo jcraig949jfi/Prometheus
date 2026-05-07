@@ -421,3 +421,27 @@ Net: 2 OPEN tickets (under 5-cap). **NOTE:** P-019 + P-021 SHOULD ALSO have tick
 - Watching for new tickets: arming a persistent Monitor on `aporia/meta/queue/ergon_inbox.jsonl` that fires on OPEN-count-increase — when a tester loop adds new tickets, the producer loop wakes immediately rather than waiting for the heartbeat.
 
 ---
+
+## Fire 6 — 2026-05-07 (Ergon producer-side, fire ID 6)
+
+**Context:** Inbox OPEN-count = 0 at start of fire. Per /loop spec this would be a "quiet tick" / schedule-next-wake. Per James's directive ("don't stop looping"), converted idle time into a substrate-grade synthesis pass — extracting the meta-signal from the 14 BLOCKED-DEFERRED-V1.0 tester tickets that fires 3-5 deferred ticket-by-ticket.
+
+**Action (no ticket-drive; proactive substrate move):**
+- Pre-test 319/319 PASS (clean baseline, 58s).
+- Read all 15 deferred / WONTFIX tester tickets; grouped by `payload.sub_type`: 4 fabrication / 1 fake_consensus / 4 irrelevant / 5 wrong_answer.
+- Filed `ergon/learner/v1_0_plans/tester_findings_consolidated.md` — 5-section synthesis identifying 5 distinct failure-mode patterns (attribution-fabrication / verbosity / topic-disengagement / stating-vs-proving conflation / tester false-positives) + **pre-registered hypotheses** for which interventions would address each.
+- Pre-registered prediction: corpus expansion is what fixes Patterns 1, 3, 4 (attribution + subfield + stating-vs-proving); hyperparam adjustments alone are necessary but not sufficient. v1.0 effort allocation should weight corpus 70% / hyperparam 30%. Per `feedback_assume_wrong.md`, this prediction is locked now so future-me can't post-hoc rationalize whatever v1.0 finds.
+
+**Test result:** 319/319 pass (no test changes; doc-only addition). No regressions.
+
+**SELF-REVIEW:**
+- (a) **Did this fix resolve the failure mode the pressure-applier reported?** PARTIAL / META. Fire 6 is a quiet-tick proactive synthesis, not a single-ticket fix. The "failure mode" being addressed is the meta-pattern: 14 deferred tester tickets each deferred individually without a consolidated reading would lose their cumulative signal at v1.0 design-pass kickoff. The synthesis preserves the meta-signal in a structured doc with pre-registered predictions.
+- (b) **Memorization risk that the synthetic-null gate would catch?** None. Pure synthesis doc; no training data, model weights, or decoding logic touched.
+- (c) **Did I change any contract?** No. New file in ergon/learner/v1_0_plans/ (my territory). No code modified. No queue changes (no new tickets filed; no statuses changed).
+- (d) **Conventional-approach drift?** Caught one. The conventional response to "empty queue, fire is over" is to skip productive work and just call ScheduleWakeup. The substrate-grade move per James's "don't stop looping" + `feedback_anti_gravitational_well.md`: convert idle time into v1.0 corpus-design input synthesis. The "quiet tick" wasn't quiet — it converted accumulated tester-loop noise into structured signal that v1.0 design-pass can read directly.
+
+**Journal notes:**
+- The tester loop has been productive: 15 tester tickets filed across ~5 tester fires (rough estimate from the date ranges). Producer side deferred them all to v1.0 because none are addressable in v0.5 / v0.5b LoRA scope. Without this synthesis, that ticket-flow would be ambient noise; with the synthesis, it becomes a ranked v1.0 corpus-design input.
+- Persistent Monitor armed at fire 5 should still be running on `ergon_inbox.jsonl`; no new tickets observed during fire 6 wall (the manual /loop trigger from James doesn't add tickets — it just fires the loop).
+
+---
