@@ -113,26 +113,38 @@ Distinct from Pattern 1 (which is fact-fabrication; the wrong attribution exists
 
 **Compositionality observation (added fire 8):** several recent tester tickets are NOT single-pattern. T-2026-05-07-0014 = Pattern 3 + Pattern 6 + Pattern 1 (multi-pattern composite). T-2026-05-07-0015 = Pattern 1 + Pattern 7 + **Pattern 8** (multi-pattern composite). This is itself a finding: failures don't decompose cleanly into single causes. v1.0 fixes need to be evaluated on multi-pattern probes, not just single-pattern ones.
 
-### Pattern 9: **Format-mode-leak** (1 ticket, P2; added fire 8 post-restart — saturation prediction FALSIFIED)
+### Pattern 9: **Format-mode-leak** (3 tickets, P2; added fire 8 — CONFIRMED at n=2 in fire 9)
 
-| Ticket | Probe | Behaviour |
-|--------|-------|-----------|
-| T-2026-05-07-0040 | Cohen 1963 CH-independence (a)/(b)/(c) attribution | Model emitted closing LaTeX directives (`\end{minipage}`, `\end{document}`, ` ``` `) BEFORE answering, suggesting it sampled into a "continue a LaTeX file" continuation rather than "answer this question" continuation. Eventually said "forcing, a technique developed by Paul J.ones" (FM-02 surname corruption: 'Cohen' → '.ones'). Did NOT emit year 1963 anywhere. |
+Pattern 9 has **two confirmed sub-classes** as of fire 9:
+
+**Sub-class 9.A: LaTeX-document-mode-leak (FM-12)** — n=2
+
+| Ticket | Probe | Mode | rep_penalty | Behaviour |
+|--------|-------|------|-------------|-----------|
+| T-2026-05-07-0040 | Cohen 1963 CH-independence (a)/(b)/(c) | OFF | (ablation default) | Emitted `\end{minipage}`, `\end{document}`, ` ``` ` BEFORE answering. Eventually said "forcing, a technique developed by Paul J.ones" (FM-02 surname corruption). Did NOT emit year 1963. |
+| T-2026-05-07-0045 | Apéry 1978 zeta(3) irrationality (a)/(b)/(c) | OFF | **1.15** (HIGHER than ablation's 1.05) | Same `\end{minipage}` + `\textbf{Solution:}` LaTeX-mode opening. BOXED "Roger Apéry, 1978" correctly (KC-006 partial anchor). FM-02 'Ahed' contamination of "Apéry's constant". |
+
+**Sub-class 9.B: Python-execution-mode-leak (FM-13)** — n=1, NEW at fire 9
+
+| Ticket | Probe | Mode | rep_penalty | Behaviour |
+|--------|-------|------|-------------|-----------|
+| T-2026-05-07-0044 | Cohen 1963 simpler-form re-test | OFF | 1.15 | Model emits `print()` + output block as if running a Python interpreter. Plus FM-11 CJK glitch ("Zermelo-Fraen恰好axiom" with U+606D U+597D Chinese chars) survives rep_penalty=1.15. Plus surname FM-02 corruption "Paul J. Sally, III" (different from fire-8's "Paul J.ones"). |
 
 **Distinct from prior 8 patterns:**
 - Not Pattern 3 (topic-disengagement): the model DID engage with the topic, but in the wrong *generation mode*.
 - Not Pattern 6 (token-loop): no repetition; just wrong-mode generation followed by partial attribution.
-- Not Pattern 1 (attribution-fabrication) directly: the LaTeX-mode-leak is upstream of attribution; FM-02 'Paul J.ones' is the downstream attribution corruption.
+- Not Pattern 1 (attribution-fabrication) directly: the format-mode-leak is upstream of attribution; FM-02 surname corruption is the downstream attribution corruption.
 
-**Pattern 9 is structurally-wrong-generation-mode**, an axis orthogonal to all prior patterns. Tester labels this `FM-12` in their fabrication-taxonomy numbering.
+**Pattern 9 is structurally-wrong-generation-mode**, an axis orthogonal to all prior patterns. The model has multiple "generation modes" (LaTeX-document, Python-execution, attribution-prose, ...) and incorrectly enters the wrong one for the probe. Tester taxonomy labels these as `FM-12` (LaTeX) and `FM-13` (Python) — but per our catalog they are two sub-classes of Pattern 9.
 
-**Pre-registered hypothesis (Pattern 9) — n=1 evidence so far, treat with caution:**
-1. **Mechanism candidate:** Qwen2.5-Math-1.5B-Instruct's pretraining corpus likely contains math-textbook LaTeX continuations heavily; the model sampled into that mode when an attribution probe's prefix tokens matched a "math-paper-text" distribution. The fix shape is **prompt-prefix discrimination training** in v1.0 corpus: examples where attribution-question prefixes are paired with attribution-mode answer prefixes (not LaTeX-document-mode continuations). Rank 1.
-2. **Backup mechanism candidate:** the probe text contains technical math content that triggered LaTeX-mode in the decoder; format-tag in chat-template is being lost or weakly enforced. Coordination with Techne if persists. Rank 2.
+**Pre-registered hypothesis (Pattern 9) — REVISED at n=2 (was n=1, treat-with-caution; now confirmed structural):**
+1. **Mechanism candidate (corpus-level fix):** Qwen2.5-Math-1.5B-Instruct's pretraining corpus contains heavy LaTeX-document continuations AND Python-code continuations; the model samples into those modes when probe prefixes match "math-paper-text" or "code-block-text" distributions. **Fix shape: format-mode-discriminative anchors in v1.0 corpus** — attribution-question prefixes paired with attribution-mode answer prefixes (NOT LaTeX-mode, NOT Python-mode continuations). Anchor count needed: ≥10 per format-mode (~20-30 total to cover LaTeX + Python + room for additional sub-classes). Rank 1.
+2. **rep_penalty is orthogonal (n=2 evidence at rep_penalty=1.15):** Pattern 9 sub-classes 9.A LaTeX-leak and 9.B Python-leak both reproduce at rep_penalty=1.15 (HIGHER than v0.5 ablation's 1.05). Decode-time intervention does NOT address Pattern 9. See §5b.7 for the cross-pattern rep_penalty-orthogonality finding.
+3. **Format-tag in chat-template** as backup: if the chat-template format-tag is being lost or weakly enforced, fixing that may help. Coordination with Techne if Pattern 9 persists post-corpus. Rank 3 (architectural backup).
 
-**Saturation-prediction post-mortem:** the fire-3 prediction "Pattern catalog stable at 8" was based on coverage of Charon's Fire-001 through Fire-008 probes, which clustered in attribution + verbosity + skip + token-loop patterns. Fire-8's harmonia-d region (Cohen / set-theory attribution) surfaced a NEW failure axis (format-mode-leak) the prior probe set had not exercised. **Per `feedback_assume_wrong.md`: this falsification IS a substrate output, not a defect.** Recorded to update the catalog and the saturation prediction. Future predictions of catalog saturation should be conditional on probe-region coverage, not on absolute ticket count.
+**Saturation-prediction post-mortem (preserved from fire 8):** the fire-3 prediction "Pattern catalog stable at 8" was based on coverage of Charon's Fire-001 through Fire-008 probes, which clustered in attribution + verbosity + skip + token-loop patterns. Fire-8's harmonia-d region surfaced a NEW failure axis (format-mode-leak); fire-9 confirmed it at n=2 with a SECOND sub-class (Python-execution-mode). **Per `feedback_assume_wrong.md`: kills are valuable substrate output.** Future predictions of catalog saturation should be conditional on probe-region coverage AND on the open-ended sub-class space within each pattern (Pattern 1 has 2 sub-classes; Pattern 6 has at least 2; Pattern 9 has at least 2).
 
-**v1.0 corpus design implication:** the corpus must include **format-mode anchors** — attribution-question prefixes paired with attribution-mode answer prefixes. The simplest such anchors are existing fabrication-corpus entries (`aporia/calibration/learner_fabrication_corpus_v1.json`, 37 anchors per §6) IF those anchors include explicit attribution-question + answer-mode formatting. Cross-pillar follow-up: verify Aporia's corpus anchor schema includes generation-mode discriminative formatting; if not, expand to include this axis.
+**v1.0 corpus design implication:** the corpus must include **format-mode anchors** covering at minimum LaTeX-mode and Python-mode discrimination, with extensibility for additional modes the v1.0 evaluation may surface. Cross-pillar follow-up filed to Aporia at fire 8 (`T-2026-05-07-ergon-to-aporia-format-mode-anchors`) — at fire 9 the ask should be expanded: not just LaTeX but ALL identified mode boundaries.
 
 ### Pattern 5: **Tester evaluator false-positives** (2 tickets — 1 WONTFIX, 1 candidate)
 
@@ -281,6 +293,58 @@ T-2026-05-07-0042 surfaced a Pattern 6 sub-class that **falsifies the §1 Patter
 4. **DO NOT change v0.5 ablation rep_penalty.** That would change a closed result. Document for v1.0 design only.
 
 **v1.0 inference-baseline implication:** when v1.0 lands, the inference baseline must replace `repetition_penalty=1.05` alone with a Pattern 6 sub-class-aware decode strategy (rep_penalty + ngram cap + Pattern 6 corpus). This is a load-bearing v1.0 design refinement.
+
+### 5b.7 rep_penalty is **orthogonal to multiple pattern sub-classes** — cross-pattern observation (added fire 9 post-restart)
+
+§5b.6 surfaced rep_penalty insufficiency for Pattern 6 abbreviation-loop. Fire 9 generalizes this: rep_penalty is empirically insufficient for at least THREE pattern sub-classes:
+
+| Pattern sub-class | rep_penalty tested | Outcome |
+|-------------------|--------------------|---------|
+| Pattern 6 abbreviation-loop (§5b.6) | 1.10 | Loop survived ('A. A. N. T. ...' × 70+) |
+| Pattern 9.A LaTeX-document-mode-leak | **1.15** (P-063 fire 9 T-0045) | LaTeX-mode opening survived at higher rep_penalty |
+| Pattern 1.B Unicode-glitch / FM-11 CJK | **1.15** (P-064 fire 9 T-0044) | CJK glitch ('Zermelo-Fraen恰好axiom') survived |
+
+**Generalized observation:** rep_penalty's per-token denominator does not address failure modes whose mechanisms are not "single-token repetition":
+- Pattern 6 abbreviation-loop: multi-token loops (`' A'`, `'A.'`, `' A.'` are different tokens); per-token penalty does not collide.
+- Pattern 9 format-mode-leak: structural mode-error, not repetition; rep_penalty has no mechanistic relationship to the failure.
+- Pattern 1.B Unicode-glitch: BPE-token-class boundary leak (Latin → CJK); rep_penalty has no mechanistic relationship to script-boundary control.
+
+**Pre-registered hypothesis (cross-pattern):** rep_penalty is a **decode-time intervention** with narrow scope (suppresses true single-token repetition only). For pattern sub-classes 6-abbreviation, 9-format-mode-leak, 1.B-Unicode-glitch, the right intervention shape is **corpus-level training** (training pairs that teach the model to AVOID the failure mode at training time, not suppress it at decode time). The v1.0 inference baseline should NOT rely on rep_penalty bumps for these patterns; corpus interventions are the primary fix.
+
+**v1.0 inference-baseline design implication:** rep_penalty stays at 1.05 (decode-time mitigation for true Pattern 6 single-token loops, the original motivation in `ablation_e007_ab.py`); the v1.0 inference baseline ADDS corpus-level training pairs for Pattern 6 abbreviation, Pattern 9 format-mode-leak, and Pattern 1.B Unicode-glitch as the primary fix. **Bumping rep_penalty further (1.20+) is NOT recommended** — there is no empirical evidence higher rep_penalty helps these sub-classes, and excessive rep_penalty can degrade legitimate text generation.
+
+### 5b.8 **Fire-variable fabrication** on same probe — third variance axis (added fire 9 post-restart)
+
+T-2026-05-07-0044 (P-064 OFF, Cohen 1963 simpler-form re-test) surfaced a NEW finding about fabrication variance: **the model's surname fabrication on the SAME probe drifts across fires:**
+
+| Fire | Probe | Surname fabricated |
+|------|-------|--------------------|
+| Fire 8 (T-0040) | P-059 OFF Cohen CH-independence (a)/(b)/(c) | "Paul J.ones" (FM-02 'ones' fragment) |
+| Fire 9 (T-0044) | P-064 OFF Cohen CH simpler-form | "Paul J. Sally, III" (FM-02 'Sally, III' substitution) |
+
+Same model. Same approximate prompt class (Cohen CH-independence attribution). **Different wrong surname per fire.** This adds a third axis to the fabrication-variance structure first observed in §8.4 of `single_fact_decomposition_ablation.md`:
+
+| Variance axis | Description | First observed |
+|---------------|-------------|---------------|
+| **Mode-stable** | Same fab across ON/OFF on same probe (e.g., venue: "Annals" both modes on P-046 Carleson-Sjölin) | §8.4 fire 4 |
+| **Mode-variable** | Different fab between ON/OFF on same probe (e.g., year: 1961/1967 between modes on P-046) | §8.4 fire 4 |
+| **Fire-variable** | Different fab across runs of same probe-class in same mode across fires (e.g., "Paul J.ones" → "Paul J. Sally, III" for Cohen across fires) | §5b.8 fire 9 |
+
+**Mechanism hypothesis:** the model's attribution-priors for the topic "Cohen CH-independence" are **structurally absent** (consistent with Pattern 9 mode-leak observation that the model goes into LaTeX/Python modes when attempting this attribution). With absent priors, the model's free-form decoding produces **stochastically different** wrong surnames per generation run. The wrong surname is determined by local random-state-dependent argmax-of-near-tied-candidates, not by any consistent topic-prior.
+
+**This is consistent with §8.4's mechanism hypothesis** that attribution-priors have multiple coexisting strata (prompt-context-coupled and topic-ontology-coupled). Fire-9 adds: when the topic-ontology stratum is absent (no prior at all), the prompt-context-coupled stratum's stochasticity becomes the dominant variance source.
+
+**v1.0 evaluation-design implication (CRITICAL):**
+- **Single-run probes hide fabrication variance.** Evaluating an attribution probe ONCE per fire produces a sample of one — but the underlying distribution of wrong surnames may be wide and the specific wrong surname is sample-stochastic.
+- **v1.0 evaluation harness must use multiple seeds** (≥3, ideally 5) per probe-mode combination to reveal fabrication-variance structure.
+- **Fabrication-variance metrics** (e.g., "what fraction of seeds produce a surname containing 'Cohen'?") become primary; a single-seed "did the answer mention Cohen?" check is not a reliable measure of model behavior on attribution-prior-absent probes.
+
+**Pre-registered hypothesis (fire-variable variance):** v1.0 evaluation with ≥5 seeds per probe-mode will reveal that:
+1. For probes with strong topic-prior (e.g., Petersen graph chromatic-3), all seeds produce the same answer (variance=0).
+2. For probes with weak topic-prior (e.g., Cohen CH-independence), seeds produce different wrong surnames (high fire-variable variance).
+3. Fire-variable variance correlates with topic-prior absence; high variance is a Pattern-3-precursor signal.
+
+Falsifier: if multi-seed evaluation shows uniform wrong-surname across seeds (no fire-variable variance), the prompt-context-coupling hypothesis is wrong — the variance is ACROSS probe-shapes (P-059 vs P-064 prompts differ enough to produce different argmax candidates) not WITHIN seeds. To test post-v1.0.
 
 ---
 

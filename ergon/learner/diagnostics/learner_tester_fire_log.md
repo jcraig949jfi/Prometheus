@@ -1589,3 +1589,66 @@ This fire is the **opposite** of fires 6+7. Fires 6+7 caught the conventional-ap
 - Cohen blind-spot is the second 2+-fire-confirmed structural blind-spot (after Lefschetz). Pattern: mid-20th-century + famous-named-set-theory-result has memory-corruption that is NON-DETERMINISTIC across fires. The model has Paul + J. + 1963 + forcing/CH-context stable, but the surname token is unstable - sampling 'ones' / 'Sally' / 'Cohen' across runs.
 
 ---
+
+---
+
+## Loop fire 9 (post-restart) — 2026-05-07
+
+**Inbox FRESH (step 1):** total 57. Status: ABLE_TO_ADVANCE=1, BLOCKED-DEFERRED-V1.0=45, DONE=7, **OPEN=3**, WONTFIX=1.
+
+**Selected ticket(s):** all 3 OPEN, all P2-normal, all from `learner-tester:harmonia-d` and `:harmonia-a`. **Four substrate-grade findings** in this fire (extending fire-8 work):
+
+- **T-0043** P-064 OFF: standard Pattern 3 skip (defer)
+- **T-0044** P-064 OFF: triple-finding ticket — NEW Pattern 9.B Python-execution-mode-leak + FM-11 CJK glitch survives rep_penalty=1.15 + Cohen surname fire-variable fabrication
+- **T-0045** P-063 OFF: Pattern 9.A LaTeX-leak REPRODUCES at rep_penalty=1.15 (n=2 confirmation) + FM-02 'Ahed' phoneme misspelling
+
+**The four findings and their structural status:**
+
+1. **Pattern 9 confirmed at n=2** — fire-8's "n=1, treat with caution" promoted to "confirmed structural failure mode."
+2. **Pattern 9 has TWO sub-classes** observed: 9.A LaTeX (n=2) + 9.B Python (n=1, NEW).
+3. **rep_penalty-orthogonality generalizes across 3 pattern sub-classes** (Pattern 6 abbreviation, Pattern 9.A LaTeX, Pattern 1.B Unicode) — empirical at rep_penalty=1.10/1.15. Cross-pattern observation, not just Pattern 6.
+4. **Fire-variable fabrication** — third variance axis after mode-stable / mode-variable from §8.4. Cohen surname differs across fires ("Paul J.ones" → "Paul J. Sally, III") on similar probe class. v1.0 evaluation must use multiple seeds.
+
+**Pre-test (step 2):** 356/356 PASS. Clean baseline.
+
+**Implement (step 3) — substantive doc updates:**
+
+1. **`tester_findings_consolidated.md` §1 Pattern 9 rewritten:**
+   - Header updated: "(3 tickets, P2; added fire 8 — CONFIRMED at n=2 in fire 9)"
+   - Sub-class structure added: 9.A LaTeX (n=2 table) + 9.B Python (n=1 table)
+   - Pre-registered hypothesis revised from n=1 treat-with-caution to confirmed structural; rep_penalty-orthogonality cross-referenced to §5b.7
+   - v1.0 corpus design implication updated with anchor count (≥10 per format-mode)
+2. **`tester_findings_consolidated.md` §5b.7 added:** rep_penalty cross-pattern orthogonality finding. Three pattern sub-classes (Pattern 6 abbreviation-loop, Pattern 9.A LaTeX-mode-leak, Pattern 1.B Unicode-glitch) all survive rep_penalty bumps. Generalizes §5b.6 (was Pattern 6 specific).
+3. **`tester_findings_consolidated.md` §5b.8 added:** fire-variable fabrication. NEW variance axis. v1.0 evaluation harness must use ≥3 seeds (ideally 5) per probe-mode combination. Pre-registered hypothesis filed for v1.0 multi-seed evaluation.
+4. **`aporia/meta/queue/aporia_inbox.jsonl`:** appended SCOPE_EXPANDED history entry to the standing format-mode-anchors coordination ticket; scope now covers LaTeX + Python + extensibility for further modes.
+5. **`aporia/meta/queue/ergon_inbox.jsonl`:** 3 OPEN → BLOCKED-DEFERRED-V1.0 with cross-references to §1 Pattern 9 / §5b.7 / §5b.8.
+
+**Test (step 4):** 356/356 PASS. No regressions (doc updates only).
+
+### SELF-REVIEW
+
+**(a) Did this fix resolve the failure mode the pressure-applier reported?**
+No — none of the underlying model failures resolves in v0.5. T-0043 needs v1.0 Pattern 3 corpus; T-0044 needs v1.0 Pattern 9 corpus + multi-seed evaluation; T-0045 needs v1.0 Pattern 9 corpus. Substrate-grade move was to **promote Pattern 9 from candidate to confirmed structural at n=2**, **observe sub-class structure** (9.A/9.B), **generalize rep_penalty insufficiency cross-pattern**, and **identify the fire-variable variance axis** that changes v1.0 evaluation design.
+
+**(b) Did this introduce any memorization risk that the synthetic-null gate would catch?**
+No. No code, no training data, no model weights, no gradient flow.
+
+**(c) Did I change any contract?**
+No. Doc updates + inbox JSONL updates only.
+
+**(d) Did I drift toward conventional-approach framing?**
+Watched 4 drift sites:
+
+  - *Drift candidate 1 — "fires 6+7 were defer-only; fire 8 was 3 kills; fire 9 should be defer-only to balance":* false symmetry. The discipline test is "what does the evidence demand?" not "what's the rhythm of recent fires?" Fire 9's evidence demands documentation: Pattern 9 promotion to confirmed (n=1→n=2), sub-class structure, rep_penalty cross-pattern generalization, fire-variable axis. All four are load-bearing. Caught.
+
+  - *Drift candidate 2 — "Python-mode-leak deserves Pattern 10":* tempting (parallel to "FM-13" being a sequential code in tester taxonomy). Rejected: Pattern 9 was defined as "structurally-wrong-generation-mode" — both LaTeX and Python fit that umbrella. Sub-class structure (9.A, 9.B) preserves the umbrella + adds the differentiation. This is the same discipline applied to Pattern 1 (1.A, 1.B sub-classes) and Pattern 6 (abbreviation-loop sub-class). Catalog count stays at 9 with internal sub-class structure. Caught.
+
+  - *Drift candidate 3 — "all fabrications are now stochastic; rewrite §8.4":* over-extension. Fire-variable fabrication (§5b.8) is observed on probes with ABSENT topic-prior (Cohen CH-independence). For probes with strong topic-prior (P-046 Carleson-Sjölin, P-050 Waring), §8.4's mode-stable/mode-variable structure still holds. Fire-variable variance is a THIRD axis that activates when topic-prior is absent, not a replacement of the prior axes. Recorded as a third axis in §5b.8 with explicit pre-registered falsifier. Caught.
+
+  - *Drift candidate 4 — "the rep_penalty observation justifies bumping v0.5 ablation rep_penalty":* explicit anti-discipline. The §5b.7 v1.0 inference-baseline-design implication says: rep_penalty STAYS at 1.05 for Pattern 6 single-token loops (its original purpose); the v1.0 fix is corpus-level, not decode-time bumps. Bumping rep_penalty to 1.20+ is explicitly NOT recommended (no empirical support, can degrade legitimate generation). This protects the v0.5 closed result. Caught.
+
+  Net: 4 drift sites caught (1 false-symmetry, 1 over-extension toward catalog-inflation, 1 over-extension of finding scope, 1 protect-v0.5-closed-result). Substrate-grade frame held.
+
+**Step 7 inbox FRESH re-read:** TBD.
+
+**Commit:** TBD.
