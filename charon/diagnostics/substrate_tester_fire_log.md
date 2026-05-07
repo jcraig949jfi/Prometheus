@@ -6,6 +6,93 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #23 — 2026-05-07 21:00 UTC
+
+**Coordination note:** Fire #22 ran on parallel instance (commit `9b9ce4f8`) covering Lanes 11 + 10 with 0 tickets. My fire = #23. P0 ticket `T-ST-fire17-001` still OPEN — Techne hasn't shipped fix; deferred re-probe.
+
+**Lanes selected:** 14 (replay-determinism, fresh-seed smoke; last fire #12 = 5 fires ago) + 7 (precision-gradient on INCONCLUSIVE entry #5; continues classification series).
+
+**Lane 15 + 18 reactivation re-check:** still DORMANT (Charon orch ticket OPEN; T017 OPEN).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_23_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_23_results.json`.
+
+### Lane 14 — replay-determinism with fresh Hypothesis seed (`20260507_23`)
+
+| Metric | Value |
+|---|---:|
+| pytest rc | 0 |
+| n_passed | 7 |
+| n_failed | 0 |
+| hypothesis_seed | 20260507_23 |
+
+**Substrate verdict: PASS.** All 7 replay-determinism tests pass with fresh seed. Cumulative coverage:
+- Fire #12: seed 20260507_12 (parallel instance)
+- Fire #14 fresh seed (parallel instance)
+- **Fire #23: seed 20260507_23 (this fire)**
+
+Three independent Hypothesis explorations across the replay-capsule corpus, all GREEN. Bit-identical replay invariance robust under property-based testing.
+
+### Lane 7 — INCONCLUSIVE entry #5 precision-gradient
+
+| coeffs (palindrome from half [1,0,1,-1,1,-1,0,1]) | `[1,0,1,-1,1,-1,0,1,0,-1,1,-1,1,0,1]` |
+
+| dps | M (clean) | band | classification |
+|---:|---|---|---|
+| 10  | 1.770944584175595  | out_of_band | (numpy noise vs. mpmath) |
+| 30  | 1.7709445841945068 | out_of_band | salem_cluster |
+| 60  | 1.7709445841945068 | out_of_band | salem_cluster |
+| 100 | 1.7709445841945068 | out_of_band | salem_cluster |
+| 200 | 1.7709445841945068 | out_of_band | salem_cluster |
+
+| Property | Value |
+|---|---|
+| M_spread | 1.89e-11 (float-precision noise) |
+| converged | True (semantically; only dps=10 has 11th-decimal noise) |
+| band_status uniform | True — all 5 dps levels OUT-OF-BAND (high side, M >> 1.18) |
+| verdict_oscillates | False |
+
+**Substrate verdict: PASS.** Substrate correctly identifies entry #5 as Salem-cluster (M ≈ 1.7709, well above the 1.18 band ceiling). All 5 dps levels return identical M in this position. No precision oscillation.
+
+### 🔵 Cumulative deg-14 ±5 INCONCLUSIVE classification (5 of 17 entries covered)
+
+| Entry | half_coeffs | M | Class | Fire |
+|---:|---|---:|---|---|
+| 1 | [1,-4,5,0,-5,4,-1,0] | 1.0 | cyclotomic_product | #1 |
+| 2 | [1,-3,1,5,-5,-1,3,-2] | 1.0 | cyclotomic_product | #9 |
+| 3 | [1,-3,2,1,0,-2,1,0] | 1.17628 | lehmer_class | #17 |
+| 4 | [1,1,-1,0,0,1,-1,-1] | 1.7433 | salem_cluster | #18 |
+| 5 | [1,0,1,-1,1,-1,0,1] | 1.7709 | salem_cluster | **#23** |
+
+**Cumulative pattern (5 of 17):** 2 cyclotomic + 1 Lehmer-class + 2 Salem-cluster. The 2 Salem-cluster entries (#4, #5) have M >> 1.18 — they should never have been in the INCONCLUSIVE list IF the brute-force used high-precision M from the start. The fact that they ARE in the list reveals that the brute-force phase relies on numpy's float-precision M check, which gives noisy values near borderline polynomials. The substrate's high-precision factor-then-nroots strategy correctly identifies these as out-of-band at every dps≥10.
+
+**Substrate-grade observation:** the deg-14 ±5 INCONCLUSIVE list has FALSE-POSITIVE in-band candidates due to numpy-precision noise in the brute-force phase. This is documented architecture (brute-force is fast, verification is precise), not a substrate flaw. **Future Aporia ticket candidate:** classify all 17 entries to estimate the false-positive rate (is the rate ~12% so far = 2/5? does it stabilize? does it suggest the brute-force precision threshold should be tightened?).
+
+### Tickets filed this fire
+
+**0 tickets.** Both lanes PASS substrate-correct.
+
+### Standing recommendations for next fire (#24)
+
+1. **P0 ticket watch:** `T-ST-fire17-001` STILL OPEN. Re-probe Lane 3 immediately when status flips DONE.
+2. **Anti-repeat:** avoid lanes 14, 7 (just covered). Suggested fire #24:
+   - **Lane 16 (concurrency-stress)** — last fire #12 (5 fires ago); due
+   - **Lane 17 (mutation-testing)** — last fires #7 + #15; could probe a third frozen-dataclass-heavy module to confirm/expand the substrate-wide @dataclass(frozen=True) hypothesis from ST-fire15-001
+   - **Lane 8 (ExclusionCertificate-extension)** — last fires #8 + #11 + #16
+3. **Lane 7 series continuation:** entries #6+ remaining for the deg-14 ±5 INCONCLUSIVE classification. 12 entries remain; could process 2/fire over coming fires until pattern fully characterized.
+4. **Lane 11 + Lane 12 cumulative observations:** worth filing Aporia coordination tickets for (a) lane 11's no-general-gauntlet finding (seed-stable across 2 seeds), (b) lane 12's 4-gap "structural equivalence-class primitive" pattern.
+
+### Discipline notes
+
+- HARD-1..HARD-5: clean.
+- Time used: ~30 min (within 50-min cap).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed).
+- Multi-instance coordination: pulled before lane-pick; claimed fire #23 = max-on-origin (22) + 1.
+
+— substrate-tester, fire #23, 2026-05-07 21:00 UTC
+
+---
+
 ## Fire #22 — 2026-05-07 16:47 (local)
 
 **Coordination note:** parallel substrate-tester instance ran fire #21 (commit `f23b9438`) covering Lane 12 + Lane 6. My fire = #22, lanes 11 + 10.

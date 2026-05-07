@@ -1,0 +1,105 @@
+{
+  "fire": 23,
+  "lanes": [
+    14,
+    7
+  ],
+  "lane_14": {
+    "lane": "14_replay_determinism",
+    "status": "LIVE",
+    "hypothesis_seed": "20260507_23",
+    "wall_clock_seconds": 20.25536847114563,
+    "rc": 0,
+    "n_passed": 7,
+    "n_failed": 0,
+    "summary_line": "7 passed in 12.75s",
+    "verdict": "PASS",
+    "stdout_tail": ""
+  },
+  "lane_7": {
+    "lane": "7_precision_gradient_entry_5",
+    "coeffs_ascending": [
+      1,
+      0,
+      1,
+      -1,
+      1,
+      -1,
+      0,
+      1,
+      0,
+      -1,
+      1,
+      -1,
+      1,
+      0,
+      1
+    ],
+    "dps_ladder": [
+      10,
+      30,
+      60,
+      100,
+      200
+    ],
+    "results": [
+      {
+        "dps": 10,
+        "elapsed_s": 0.05700039863586426,
+        "status": "ok",
+        "M": "1.770944584175595",
+        "method": null,
+        "factorization_label": null
+      },
+      {
+        "dps": 30,
+        "elapsed_s": 0.02499985694885254,
+        "status": "ok",
+        "M": "1.7709445841945068",
+        "method": null,
+        "factorization_label": null
+      },
+      {
+        "dps": 60,
+        "elapsed_s": 0.03099989891052246,
+        "status": "ok",
+        "M": "1.7709445841945068",
+        "method": null,
+        "factorization_label": null
+      },
+      {
+        "dps": 100,
+        "elapsed_s": 0.029999971389770508,
+        "status": "ok",
+        "M": "1.7709445841945068",
+        "method": null,
+        "factorization_label": null
+      },
+      {
+        "dps": 200,
+        "elapsed_s": 0.031999826431274414,
+        "status": "ok",
+        "M": "1.7709445841945068",
+        "method": null,
+        "factorization_label": null
+      }
+    ],
+    "M_values_at_each_dps": [
+      1.770944584175595,
+      1.7709445841945068,
+      1.7709445841945068,
+      1.7709445841945068,
+      1.7709445841945068
+    ],
+    "M_spread": 1.891176104606984e-11,
+    "band_status_at_each_dps": [
+      "out_of_band",
+      "out_of_band",
+      "out_of_band",
+      "out_of_band",
+      "out_of_band"
+    ],
+    "verdict_oscillates": false,
+    "classification": "salem_cluster"
+  }
+}
