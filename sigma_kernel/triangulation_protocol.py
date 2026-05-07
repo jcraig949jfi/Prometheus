@@ -76,11 +76,16 @@ class MethodClass(str, enum.Enum):
 
 # Map IndependenceClass values → MethodClass per substrate v2.3 §6.3.
 #
-# Note on coverage: this dict's keys cover all 13 :class:`IndependenceClass`
-# enum values minus ``UNKNOWN``. ``UNKNOWN`` deliberately has no entry so
-# that :func:`method_class_for_independence_class` falls through to the
-# conservative ``EXPLORATORY`` default — a path with an unclassified
-# independence class cannot be silently upgraded to certifying weight.
+# Coverage: this dict's keys cover ALL 13 :class:`IndependenceClass` enum
+# values (the 12 method-discipline classes + ``UNKNOWN``). Per the
+# 2026-05-07 contract-change window (T-2026-05-06-ST003 + T-2026-05-07-T018
+# silent-sentinel audit), ``method_class_for_independence_class`` now
+# raises ``KeyError`` on truly-unregistered strings instead of silently
+# falling through to ``EXPLORATORY``. The ``UNKNOWN`` enum value gets an
+# explicit ``EXPLORATORY`` entry here so callers who deliberately want
+# cannot-certify semantics can pass ``IndependenceClass.UNKNOWN``
+# explicitly without raising — that contract is now LOUD: type the
+# UNKNOWN intent, don't let typos masquerade as it.
 INDEPENDENCE_TO_METHOD_CLASS = {
     "sympy_symbolic_factorization": MethodClass.PROOF_BEARING,
     "mahler_lookup_catalog": MethodClass.CATALOG,
@@ -94,6 +99,7 @@ INDEPENDENCE_TO_METHOD_CLASS = {
     "numpy_linear_algebra": MethodClass.NUMERICAL,
     "perturbation_robustness": MethodClass.ROBUSTNESS,
     "clustering_boundary": MethodClass.EXPLORATORY,
+    "unknown": MethodClass.EXPLORATORY,  # explicit cannot-certify opt-in
 }
 
 
@@ -106,16 +112,31 @@ def method_class_for_independence_class(ic: str) -> MethodClass:
         The :class:`IndependenceClass` value — accepts either an enum
         instance or the bare string (since :class:`IndependenceClass` is
         a str-mixin, enum instances compare equal to their string value).
+        Pass :attr:`IndependenceClass.UNKNOWN` explicitly when the
+        caller wants the cannot-certify (exploratory-equivalent)
+        treatment without registering a new class.
 
     Returns
     -------
     MethodClass
-        The registered method class. Falls back to
-        :attr:`MethodClass.EXPLORATORY` for any independence class not in
-        the registry — this is deliberate: an unknown method cannot be
-        silently upgraded to certifying weight (substrate v2.3 §6.3 hard
-        rule). Callers that need a certifying classification must
-        register the independence class explicitly.
+        The registered method class.
+
+    Raises
+    ------
+    KeyError
+        If the independence class is not registered in
+        :data:`INDEPENDENCE_TO_METHOD_CLASS`. Per the
+        2026-05-07 contract-change window (T-2026-05-06-ST003 +
+        T-2026-05-07-T018 sister-of-ST003 audit): substrate discipline
+        is loud-fail-on-typo, not silent-fallback-to-EXPLORATORY.
+        Previously this function returned ``MethodClass.EXPLORATORY``
+        for any unrecognised string — which silently masked a
+        registration gap. A genuinely proof-bearing new method that
+        was unregistered would have been silently rejected from
+        triangulation. Callers must now either (a) register the new
+        independence_class in ``INDEPENDENCE_TO_METHOD_CLASS``, or
+        (b) pass :attr:`IndependenceClass.UNKNOWN` to opt explicitly
+        into cannot-certify semantics.
     """
     # Accept either IndependenceClass enum or raw string; the str-mixin
     # makes both compare equal.
@@ -124,7 +145,16 @@ def method_class_for_independence_class(ic: str) -> MethodClass:
     # ("IndependenceClass.UNKNOWN") under str(); fall back to .value.
     if isinstance(ic, IndependenceClass):
         key = ic.value
-    return INDEPENDENCE_TO_METHOD_CLASS.get(key, MethodClass.EXPLORATORY)
+    try:
+        return INDEPENDENCE_TO_METHOD_CLASS[key]
+    except KeyError:
+        raise KeyError(
+            f"unregistered independence_class {key!r}; registered: "
+            f"{sorted(INDEPENDENCE_TO_METHOD_CLASS)}. Pass "
+            f"IndependenceClass.UNKNOWN to opt into cannot-certify "
+            f"semantics, or register your new class in "
+            f"INDEPENDENCE_TO_METHOD_CLASS."
+        ) from None
 
 
 # ---------------------------------------------------------------------------

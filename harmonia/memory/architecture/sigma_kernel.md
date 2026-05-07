@@ -249,6 +249,38 @@ The architecture-from-Round-19 line worth keeping:
 
 v2.3 expands the microkernel surface from 7 opcodes to 9 and adds the typed primitives (CoordinateChart, MethodSpec, EvidenceField, ExclusionCertificate, TriangulationProtocol, NearMissCorpus) the user-space math relies on. The "user space" math currently runs in `omega_oracle.py` as a deterministic stub plus six cross-domain envs (BSD ranks, modular forms, knot trace fields, genus-2 curves, OEIS sleeping-beauty sequences, mock theta functions) that emit KillVector v2 + EvidenceField via Tier 3 rollout. Real Ω invocations will shell out to Python / Sage / Lean sandboxes that return signed result blobs.
 
+## Contract-change window 2026-05-07 — locked changes
+
+The 2026-05-07 contract-change window (`aporia/meta/pressure_appliers/CONTRACT_CHANGE_WINDOW_TECHNE_2026-05-07.md`) authorized a small, focused batch of contract changes after the substrate-tester surfaced silent-degradation patterns that the regular contract-locked loop could not address. The new locked contracts:
+
+### Contract change #1 — `prometheus_math.learner_corpus.get_raw_invariant_keys` (ST003 + T018)
+
+Was: returned `("__unregistered__",)` sentinel tuple on unregistered domain.
+Now: raises `KeyError(f"unregistered domain {domain!r}; registered: ...")`. Substrate discipline is loud-fail-on-typo; silent-sentinel masked typo'd domain inputs that propagated downstream as all-None `raw_invariants` in NearMissCorpus emission.
+
+Backwards-compat note: callers wanting Optional-style behavior can wrap with `RAW_INVARIANTS_PER_DOMAIN.get(domain)` directly (the registry is a public module attribute).
+
+### Contract change #2 — `sigma_kernel.triangulation_protocol.method_class_for_independence_class` (T018 sister-of-ST003)
+
+Was: returned `MethodClass.EXPLORATORY` for any unregistered IC string.
+Now: raises `KeyError(f"unregistered independence_class {key!r}; registered: ...")`. `INDEPENDENCE_TO_METHOD_CLASS` now contains all 13 `IndependenceClass` enum values explicitly (including `unknown` → `EXPLORATORY` as the explicit cannot-certify opt-in). Truly unregistered method strings raise; the `UNKNOWN` enum value is the explicit-typed way to opt into cannot-certify semantics.
+
+Migration: 2 existing tests updated; `evaluate()` and other internal callers continue to work because they were using registered IC values.
+
+### Contract change #3 — `sigma_kernel.exclusion_certificate.CertificateCollisionError` (T020)
+
+Added: a new exception class `CertificateCollisionError(CertificateRegistrationError)`. The registry's duplicate-id detection (already in place) now raises the more-specific subclass, allowing callers to distinguish "duplicate certificate_id" from the umbrella "registration error" cases (which also includes "missing chart"). Existing callers catching `CertificateRegistrationError` continue to work unchanged (subclass relationship).
+
+### Documented-as-safe — `CanonicalizationProtocol.decidability_status` defaults (T021)
+
+Audit confirmed: field is required; `__post_init__` raises `ValueError` on invalid values; missing field raises `TypeError` at construction. No silent default. No hardening needed. Audit doc at `prometheus_math/DECIDABILITY_STATUS_AUDIT.md`.
+
+### Audit-deferred — KillVector v2 multi-precision (T029)
+
+`KillComponent.margin` is `Optional[float]` (IEEE 754 double). Sufficient for current discovery-pipeline domains (Lehmer, BSD, modular forms in their typical ranges); INSUFFICIENT for the HARD-4 hunt regions (Maass forms with 50+ digit Hecke eigenvalues, p-adic L-function values with native O(p^N) precision, motivic periods with conjectural high-precision identities). Audit doc at `prometheus_math/MULTIPRECISION_AUDIT.md` recommends Option B (additive `margin_high_precision` sister field) for a future contract-change window. No code change in this window.
+
+---
+
 ## Open frontiers (next sessions)
 
 1. **A149 + OBSTRUCTION_SHAPE chart registration** — pending Charon coordination per joint sprint commitment T11. Lehmer chart is the v2.3 prototype; the 5 cross-domain envs use `provisional:<domain>` chart_ids until charts land.

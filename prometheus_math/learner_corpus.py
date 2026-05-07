@@ -123,11 +123,25 @@ RAW_INVARIANTS_PER_DOMAIN: Dict[str, Tuple[str, ...]] = {
 def get_raw_invariant_keys(domain: str) -> Tuple[str, ...]:
     """Return the registered raw-invariant feature list for a domain.
 
-    Falls back to ``("__unregistered__",)`` for unknown domains so the
-    emission shape is always well-defined; consumers can detect
-    unregistered domains via this sentinel.
+    Raises ``KeyError`` on unregistered domain. Substrate discipline is
+    loud-fail-on-typo, not silent-degradation: a typo
+    (``"bsd-rank"`` instead of ``"bsd_rank"``) used to silently return
+    ``("__unregistered__",)`` and propagate as all-None ``raw_invariants``
+    in downstream emission. The contract was inverted in the
+    2026-05-07 contract-change window per T-2026-05-06-ST003 +
+    T-2026-05-07-T018 audit.
+
+    Callers who need an Optional-style behavior can wrap with
+    ``RAW_INVARIANTS_PER_DOMAIN.get(domain)`` directly (the registry is
+    a public module attribute).
     """
-    return RAW_INVARIANTS_PER_DOMAIN.get(domain, ("__unregistered__",))
+    try:
+        return RAW_INVARIANTS_PER_DOMAIN[domain]
+    except KeyError:
+        raise KeyError(
+            f"unregistered domain {domain!r}; registered: "
+            f"{sorted(RAW_INVARIANTS_PER_DOMAIN)}"
+        ) from None
 
 
 # ---------------------------------------------------------------------------

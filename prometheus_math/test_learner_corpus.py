@@ -89,9 +89,15 @@ def test_per_domain_raw_invariant_registry_has_lehmer_full_list():
     assert "reflection_pair_partner_hash" in keys
 
 
-def test_per_domain_raw_invariant_registry_unknown_domain_returns_sentinel():
-    keys = get_raw_invariant_keys("nonexistent_domain")
-    assert keys == ("__unregistered__",)
+def test_per_domain_raw_invariant_registry_unknown_domain_raises():
+    """Per T-2026-05-06-ST003 + T-2026-05-07-T018 contract-change window
+    (2026-05-07): get_raw_invariant_keys now raises KeyError on
+    unregistered domains instead of silently returning a sentinel
+    tuple. Substrate discipline = loud-fail-on-typo, not silent
+    degradation. The error message lists registered domains for
+    debugging."""
+    with pytest.raises(KeyError, match="unregistered domain 'nonexistent_domain'"):
+        get_raw_invariant_keys("nonexistent_domain")
 
 
 def test_obstruction_shape_deferred_to_charon():

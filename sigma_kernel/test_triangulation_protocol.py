@@ -113,30 +113,44 @@ def test_triangulation_verdict_enum_has_5_values():
 # ===========================================================================
 
 
-def test_independence_to_method_class_covers_all_classified_independence_classes():
-    """All 13 IndependenceClass values minus UNKNOWN must be classified.
+def test_independence_to_method_class_covers_all_independence_classes_including_unknown():
+    """All 13 IndependenceClass values must be classified explicitly.
 
-    UNKNOWN deliberately has no entry — the lookup helper falls through
-    to EXPLORATORY (conservative default; cannot certify).
+    Per the 2026-05-07 contract-change window
+    (T-2026-05-06-ST003 + T-2026-05-07-T018 silent-sentinel audit):
+    UNKNOWN is now an EXPLICIT entry in INDEPENDENCE_TO_METHOD_CLASS
+    mapping to EXPLORATORY (cannot-certify opt-in). Truly-unregistered
+    strings now raise KeyError instead of silently falling through to
+    EXPLORATORY.
     """
     classified = set(INDEPENDENCE_TO_METHOD_CLASS.keys())
-    expected = {ic.value for ic in IndependenceClass} - {"unknown"}
+    expected = {ic.value for ic in IndependenceClass}
     assert classified == expected
-    # Exactly 12 classified entries; UNKNOWN deliberately absent.
-    assert len(INDEPENDENCE_TO_METHOD_CLASS) == 12
-    assert "unknown" not in INDEPENDENCE_TO_METHOD_CLASS
+    # Exactly 13 classified entries; UNKNOWN now explicit.
+    assert len(INDEPENDENCE_TO_METHOD_CLASS) == 13
+    assert "unknown" in INDEPENDENCE_TO_METHOD_CLASS
+    assert INDEPENDENCE_TO_METHOD_CLASS["unknown"] == MethodClass.EXPLORATORY
 
 
-def test_method_class_for_unknown_independence_class_is_exploratory():
-    """Conservative default: an unknown IC cannot be silently certifying."""
+def test_method_class_for_explicit_unknown_independence_class_is_exploratory():
+    """IndependenceClass.UNKNOWN is an EXPLICIT cannot-certify opt-in;
+    callers passing UNKNOWN deliberately get EXPLORATORY back.
+    Substrate discipline distinguishes 'I know this is unclassified'
+    (UNKNOWN, returns EXPLORATORY) from 'this is a typo or unregistered
+    new method' (raises KeyError)."""
     assert method_class_for_independence_class("unknown") == MethodClass.EXPLORATORY
     assert method_class_for_independence_class(IndependenceClass.UNKNOWN) == MethodClass.EXPLORATORY
 
 
-def test_method_class_for_arbitrary_unregistered_string_is_exploratory():
-    """Unregistered IC strings also fall through to EXPLORATORY (safe default)."""
-    assert method_class_for_independence_class("future_quantum_oracle") == MethodClass.EXPLORATORY
-    assert method_class_for_independence_class("") == MethodClass.EXPLORATORY
+def test_method_class_for_arbitrary_unregistered_string_raises():
+    """Per 2026-05-07 contract-change window: unregistered IC strings
+    now raise KeyError instead of silently returning EXPLORATORY.
+    Substrate discipline = loud-fail-on-typo. Forces caller to either
+    register the new IC or pass UNKNOWN explicitly."""
+    with pytest.raises(KeyError, match="unregistered independence_class"):
+        method_class_for_independence_class("future_quantum_oracle")
+    with pytest.raises(KeyError, match="unregistered independence_class"):
+        method_class_for_independence_class("")
 
 
 def test_method_class_lookup_for_proof_bearing():
