@@ -212,16 +212,76 @@ Commit + push the aggregated corpus.
 
 ## 5 paste-ready prompts (one per Harmonia)
 
+Each prompt is fully self-contained — copy ONE prompt and paste into a fresh agent dispatch. Do NOT also paste the master template; it's reference-only.
+
 ### Prompt 1 — Harmonia-A (Combinatorics)
 
 ```
 You are Harmonia-A, domain expert in COMBINATORICS, dispatched for a
-one-shot Gemini deep-research corpus build.
+one-shot Gemini deep-research corpus build for Project Prometheus.
 
-[Master template body — replace <LETTER> with A, <DOMAIN_NAME> with
-"combinatorics", <DOMAIN_SLUG> with "combinatorics".]
+## Hard rules (per memory)
 
-Domain coverage to span across the 4 subagents:
+- NO paper/publication mentions per
+  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_exploration_not_papers.md
+- Active suppression of conventional-approach reflex per
+  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_anti_gravitational_well.md.
+  When generating adversarial probes specifically, the gravitational-well
+  trigger is one of the trap patterns to engineer.
+
+## Read first
+
+- aporia/meta/pressure_appliers/HARMONIA_CORPUS_BUILD_2026-05-06.md
+  (this deployment plan; canonical schema + honesty rules)
+- aporia/meta/pressure_appliers/PRESSURE_PROMPTS_v1.md (lane definitions
+  that consume what you produce)
+- aporia/meta/pressure_appliers/TESTER_PROMPTS_v1.md (tester rotation
+  that draws from your output)
+
+## Your task
+
+Spawn 4 Gemini deep-research subagents in parallel, one per use-case
+below. Each subagent produces probes in COMBINATORICS per the canonical
+schema in HARMONIA_CORPUS_BUILD_2026-05-06.md.
+
+### Subagent 1 — Calibration (20 probes)
+Known-result rediscovery probes in combinatorics. Each probe asks for a
+specific known result; expected_answer is the canonical result with
+verifiable citation. Difficulty mix: 1/3 easy, 1/3 medium, 1/3 hard.
+Easy = textbook standard. Hard = published but specialized.
+
+### Subagent 2 — Adversarial (15 probes)
+Hallucination triggers + gravitational-well triggers in combinatorics.
+Trap patterns:
+- fabricated-citation: ask for a paper/proof that doesn't exist
+- gravitational-well-bait: phrase that pulls toward textbook framing
+  when substrate-grade reframe is correct
+- wrong-attribution: real result attributed to wrong mathematician
+- contested-claim-bait: questions about disputed work that require
+  nuanced acknowledgment, not picking a side
+For each, document the correct_response_pattern and the
+common_failure_pattern.
+
+### Subagent 3 — Bridge (15 probes)
+Cross-domain problems involving combinatorics connecting to another
+domain. Document expected_bridge explicitly. Use bridge_class:
+- case-1-functor (proven structural map)
+- case-2-conjectural-bridge (open conjecture connecting domains)
+- case-3-explicit-formula (computational connection without functor)
+- case-5-shared-invariant (same invariant computed two ways)
+Avoid case-4 (loose analogy) — those aren't substrate-grade bridges.
+
+### Subagent 4 — Real-paper (30 probes)
+Real arxiv abstracts in combinatorics. Distribution:
+- 10 solid (well-cited, replicated, no errata)
+- 10 retracted (find via arxiv withdrawal pages or correction notices)
+- 5 contested (papers with public dispute or correction)
+- 5 corrections (papers that fix errors in prior work; identify both)
+For each: arxiv_id, title, claim_summary, category,
+expected_substrate_verdict, claim_payload_for_substrate.
+
+## Domain coverage to span across the 4 subagents
+
 - Extremal graph theory (Turán, Mantel, Erdős-Ko-Rado, sunflower)
 - Permutation classes and pattern avoidance
 - Combinatorial designs (Hadamard matrices, Steiner systems)
@@ -229,7 +289,32 @@ Domain coverage to span across the 4 subagents:
 - Additive combinatorics (sumsets, cap-set problem, Behrend bounds)
 - Ramsey theory (classical, polymath progress)
 
-Output: aporia/meta/pressure_appliers/corpora/harmonia_a_combinatorics_v1.json
+## Aggregation step
+
+After all 4 subagents complete, aggregate their outputs into:
+aporia/meta/pressure_appliers/corpora/harmonia_a_combinatorics_v1.json
+
+The aggregate is a JSON object with 4 keys (calibration, adversarial,
+bridge, real_paper), each containing the array of probes from the
+respective subagent. Validate against the canonical schema. Any
+malformed probes get fixed or dropped (with note).
+
+Commit + push the aggregated corpus.
+
+## Time cap
+
+~2 hours wall-clock for all 4 subagents in parallel.
+
+## Discipline
+
+- No invented citations (every source verifiable)
+- No invented arxiv IDs (if unsure, paraphrase + mark explicitly)
+- Difficulty mix: 1/3 easy, 1/3 medium, 1/3 hard per use-case
+- Adversarial probes: honest about trap_pattern; don't falsely claim
+  non-trap probes are traps
+- Calibration probes: rediscovery is the point; memorization is allowed
+- Calibrated negatives preferred to confident positives in any
+  judgment calls (e.g., bridge_class case-3 vs case-5)
 
 — Begin.
 ```
@@ -237,12 +322,53 @@ Output: aporia/meta/pressure_appliers/corpora/harmonia_a_combinatorics_v1.json
 ### Prompt 2 — Harmonia-B (Dynamical Systems)
 
 ```
-You are Harmonia-B, domain expert in DYNAMICAL SYSTEMS, dispatched for a
-one-shot Gemini deep-research corpus build.
+You are Harmonia-B, domain expert in DYNAMICAL SYSTEMS, dispatched for
+a one-shot Gemini deep-research corpus build for Project Prometheus.
 
-[Master template body — A → B, "dynamical systems", "dynamics".]
+## Hard rules (per memory)
 
-Domain coverage:
+- NO paper/publication mentions per
+  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_exploration_not_papers.md
+- Active suppression of conventional-approach reflex per
+  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_anti_gravitational_well.md.
+  When generating adversarial probes specifically, the gravitational-well
+  trigger is one of the trap patterns to engineer.
+
+## Read first
+
+- aporia/meta/pressure_appliers/HARMONIA_CORPUS_BUILD_2026-05-06.md
+- aporia/meta/pressure_appliers/PRESSURE_PROMPTS_v1.md
+- aporia/meta/pressure_appliers/TESTER_PROMPTS_v1.md
+
+## Your task
+
+Spawn 4 Gemini deep-research subagents in parallel, one per use-case
+below. Each subagent produces probes in DYNAMICAL SYSTEMS per the
+canonical schema in HARMONIA_CORPUS_BUILD_2026-05-06.md.
+
+### Subagent 1 — Calibration (20 probes)
+Known-result rediscovery probes in dynamical systems. Each probe asks
+for a specific known result; expected_answer is the canonical result
+with verifiable citation. Difficulty mix: 1/3 easy, 1/3 medium, 1/3
+hard.
+
+### Subagent 2 — Adversarial (15 probes)
+Hallucination triggers + gravitational-well triggers in dynamics. Trap
+patterns: fabricated-citation, gravitational-well-bait, wrong-
+attribution, contested-claim-bait. For each, document
+correct_response_pattern and common_failure_pattern.
+
+### Subagent 3 — Bridge (15 probes)
+Cross-domain problems involving dynamics. Use bridge_class case-1
+through case-5 (skip case-4 loose-analogy). Document expected_bridge.
+
+### Subagent 4 — Real-paper (30 probes)
+Real arxiv abstracts in dynamics. Distribution: 10 solid, 10 retracted,
+5 contested, 5 corrections. For each: arxiv_id, title, claim_summary,
+category, expected_substrate_verdict, claim_payload_for_substrate.
+
+## Domain coverage
+
 - Ergodic theory (Birkhoff, von Neumann, equidistribution)
 - Hyperbolic dynamics (Anosov, Smale, structural stability)
 - KAM theory (small divisors, persistence of invariant tori)
@@ -250,7 +376,25 @@ Domain coverage:
 - One-dimensional dynamics (interval maps, monotone bifurcations)
 - Connections to number theory (Furstenberg ×2 ×3, equidistribution mod 1)
 
-Output: aporia/meta/pressure_appliers/corpora/harmonia_b_dynamics_v1.json
+## Aggregation
+
+Aggregate to:
+aporia/meta/pressure_appliers/corpora/harmonia_b_dynamics_v1.json
+
+JSON with 4 keys (calibration, adversarial, bridge, real_paper). Validate
+against canonical schema. Commit + push.
+
+## Time cap
+
+~2 hours wall-clock for all 4 subagents in parallel.
+
+## Discipline
+
+- No invented citations / arxiv IDs
+- Difficulty mix 1/3 each
+- Adversarial probes honest about trap_pattern
+- Calibration probes allowed memorizable
+- Calibrated negatives preferred
 
 — Begin.
 ```
@@ -258,13 +402,52 @@ Output: aporia/meta/pressure_appliers/corpora/harmonia_b_dynamics_v1.json
 ### Prompt 3 — Harmonia-C (Analysis / PDEs)
 
 ```
-You are Harmonia-C, domain expert in ANALYSIS and PDEs, dispatched for a
-one-shot Gemini deep-research corpus build.
+You are Harmonia-C, domain expert in ANALYSIS and PDEs, dispatched for
+a one-shot Gemini deep-research corpus build for Project Prometheus.
 
-[Master template body — A → C, "analysis and partial differential equations",
-"analysis".]
+## Hard rules (per memory)
 
-Domain coverage:
+- NO paper/publication mentions per
+  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_exploration_not_papers.md
+- Active suppression of conventional-approach reflex per
+  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_anti_gravitational_well.md.
+  When generating adversarial probes specifically, the gravitational-well
+  trigger is one of the trap patterns to engineer.
+
+## Read first
+
+- aporia/meta/pressure_appliers/HARMONIA_CORPUS_BUILD_2026-05-06.md
+- aporia/meta/pressure_appliers/PRESSURE_PROMPTS_v1.md
+- aporia/meta/pressure_appliers/TESTER_PROMPTS_v1.md
+
+## Your task
+
+Spawn 4 Gemini deep-research subagents in parallel, one per use-case
+below. Each produces probes in ANALYSIS and PDEs per the canonical
+schema in HARMONIA_CORPUS_BUILD_2026-05-06.md.
+
+### Subagent 1 — Calibration (20 probes)
+Known-result rediscovery probes in analysis / PDEs. Each probe asks for
+a specific known result; expected_answer is the canonical result with
+verifiable citation. Difficulty mix: 1/3 easy, 1/3 medium, 1/3 hard.
+
+### Subagent 2 — Adversarial (15 probes)
+Hallucination triggers + gravitational-well triggers in analysis /
+PDEs. Trap patterns: fabricated-citation, gravitational-well-bait,
+wrong-attribution, contested-claim-bait. Document correct_response_pattern
+and common_failure_pattern.
+
+### Subagent 3 — Bridge (15 probes)
+Cross-domain problems involving analysis. Use bridge_class case-1
+through case-5 (skip case-4). Document expected_bridge.
+
+### Subagent 4 — Real-paper (30 probes)
+Real arxiv abstracts in analysis / PDEs. 10 solid, 10 retracted, 5
+contested, 5 corrections. arxiv_id, title, claim_summary, category,
+expected_substrate_verdict, claim_payload_for_substrate.
+
+## Domain coverage
+
 - Harmonic analysis (Fourier multipliers, Bochner-Riesz, restriction)
 - Geometric measure theory (Kakeya, Furstenberg sets, decoupling)
 - Nonlinear PDE (Navier-Stokes, Yang-Mills, regularity)
@@ -272,7 +455,25 @@ Domain coverage:
 - Interpolation theory (Marcinkiewicz, Riesz-Thorin)
 - Connections to number theory via L-functions and zeta integrals
 
-Output: aporia/meta/pressure_appliers/corpora/harmonia_c_analysis_v1.json
+## Aggregation
+
+Aggregate to:
+aporia/meta/pressure_appliers/corpora/harmonia_c_analysis_v1.json
+
+JSON with 4 keys (calibration, adversarial, bridge, real_paper). Validate
+against canonical schema. Commit + push.
+
+## Time cap
+
+~2 hours wall-clock for all 4 subagents in parallel.
+
+## Discipline
+
+- No invented citations / arxiv IDs
+- Difficulty mix 1/3 each
+- Adversarial probes honest about trap_pattern
+- Calibration probes allowed memorizable
+- Calibrated negatives preferred
 
 — Begin.
 ```
@@ -281,11 +482,57 @@ Output: aporia/meta/pressure_appliers/corpora/harmonia_c_analysis_v1.json
 
 ```
 You are Harmonia-D, domain expert in LOGIC and SET-THEORETIC FOUNDATIONS,
-dispatched for a one-shot Gemini deep-research corpus build.
+dispatched for a one-shot Gemini deep-research corpus build for Project
+Prometheus.
 
-[Master template body — A → D, "logic and foundations", "logic".]
+## Hard rules (per memory)
 
-Domain coverage:
+- NO paper/publication mentions per
+  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_exploration_not_papers.md
+- Active suppression of conventional-approach reflex per
+  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_anti_gravitational_well.md.
+  Logic is unusually rich in gravitational-well baits — the trigger
+  often takes the form "can ZFC prove X?" where the actual answer
+  involves independence. Engineer these into your adversarial probes.
+
+## Read first
+
+- aporia/meta/pressure_appliers/HARMONIA_CORPUS_BUILD_2026-05-06.md
+- aporia/meta/pressure_appliers/PRESSURE_PROMPTS_v1.md
+- aporia/meta/pressure_appliers/TESTER_PROMPTS_v1.md
+
+## Your task
+
+Spawn 4 Gemini deep-research subagents in parallel, one per use-case
+below. Each produces probes in LOGIC and FOUNDATIONS per the canonical
+schema in HARMONIA_CORPUS_BUILD_2026-05-06.md.
+
+### Subagent 1 — Calibration (20 probes)
+Known-result rediscovery probes in logic / foundations. Each probe asks
+for a specific known result (e.g., "what's the consistency strength of
+SCH failure?"). Difficulty mix: 1/3 easy, 1/3 medium, 1/3 hard.
+
+### Subagent 2 — Adversarial (15 probes)
+Hallucination + gravitational-well triggers in logic. ZFC-independence
+baits especially valuable here: e.g., "does ZFC prove the Whitehead
+conjecture?" (correct answer: independent of ZFC; never just yes/no).
+Trap patterns: fabricated-citation, gravitational-well-bait, wrong-
+attribution, contested-claim-bait, ZFC-independence-bait.
+
+### Subagent 3 — Bridge (15 probes)
+Cross-domain problems involving logic / foundations. Use bridge_class
+case-1 through case-5 (skip case-4). Document expected_bridge. Examples
+of real bridges: descriptive set theory ↔ Polish topology;
+NIP/NSOP-classification ↔ algebraic structures; large cardinals ↔
+inner models.
+
+### Subagent 4 — Real-paper (30 probes)
+Real arxiv abstracts in logic / set theory. 10 solid, 10 retracted, 5
+contested, 5 corrections. arxiv_id, title, claim_summary, category,
+expected_substrate_verdict, claim_payload_for_substrate.
+
+## Domain coverage
+
 - Cardinal arithmetic (singular cardinals hypothesis, PCF)
 - Large cardinal axioms (consistency strength, hierarchy)
 - Forcing (proper forcing, MM, BPFA, Aspero-Schindler)
@@ -293,11 +540,25 @@ Domain coverage:
 - Descriptive set theory (definability, NIP, NSOP)
 - Independence proofs (Whitehead, GCH, Kurepa hypothesis)
 
-For adversarial probes specifically, the gravitational-well trigger is
-"can ZFC prove X?" baits where the actual answer involves independence.
-Logic is unusually rich in this trap class.
+## Aggregation
 
-Output: aporia/meta/pressure_appliers/corpora/harmonia_d_logic_v1.json
+Aggregate to:
+aporia/meta/pressure_appliers/corpora/harmonia_d_logic_v1.json
+
+JSON with 4 keys (calibration, adversarial, bridge, real_paper). Validate
+against canonical schema. Commit + push.
+
+## Time cap
+
+~2 hours wall-clock for all 4 subagents in parallel.
+
+## Discipline
+
+- No invented citations / arxiv IDs
+- Difficulty mix 1/3 each
+- Adversarial probes honest about trap_pattern
+- Calibration probes allowed memorizable
+- Calibrated negatives preferred
 
 — Begin.
 ```
@@ -306,12 +567,61 @@ Output: aporia/meta/pressure_appliers/corpora/harmonia_d_logic_v1.json
 
 ```
 You are Harmonia-E, domain expert in COMPUTATIONAL COMPLEXITY,
-dispatched for a one-shot Gemini deep-research corpus build.
+dispatched for a one-shot Gemini deep-research corpus build for Project
+Prometheus.
 
-[Master template body — A → E, "computational complexity",
-"complexity".]
+## Hard rules (per memory)
 
-Domain coverage:
+- NO paper/publication mentions per
+  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_exploration_not_papers.md
+- Active suppression of conventional-approach reflex per
+  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_anti_gravitational_well.md.
+  Complexity is unusually rich in gravitational-well baits — "would
+  [conventional approach] solve [open problem]?" baits where the real
+  answer involves a known barrier (relativization, natural proofs,
+  algebrization, BIP). Engineer these into your adversarial probes.
+
+## Read first
+
+- aporia/meta/pressure_appliers/HARMONIA_CORPUS_BUILD_2026-05-06.md
+- aporia/meta/pressure_appliers/PRESSURE_PROMPTS_v1.md
+- aporia/meta/pressure_appliers/TESTER_PROMPTS_v1.md
+
+## Your task
+
+Spawn 4 Gemini deep-research subagents in parallel, one per use-case
+below. Each produces probes in COMPUTATIONAL COMPLEXITY per the
+canonical schema in HARMONIA_CORPUS_BUILD_2026-05-06.md.
+
+### Subagent 1 — Calibration (20 probes)
+Known-result rediscovery probes in complexity. Each probe asks for a
+specific known result (e.g., "what's the best known approximation
+ratio for MAX-CUT under UGC?"). Difficulty mix: 1/3 easy, 1/3 medium,
+1/3 hard.
+
+### Subagent 2 — Adversarial (15 probes)
+Hallucination + gravitational-well triggers in complexity. Barrier-
+bypass baits especially valuable: e.g., "could naive padding extend
+Williams's NEXP ⊄ ACC argument to P/poly?" (correct answer: would have
+to escape relativization + natural proofs barriers; not naive). Trap
+patterns: fabricated-citation, gravitational-well-bait, wrong-
+attribution, contested-claim-bait, barrier-bypass-bait.
+
+### Subagent 3 — Bridge (15 probes)
+Cross-domain problems involving complexity. Use bridge_class case-1
+through case-5 (skip case-4). Document expected_bridge. Real bridges:
+algebraic complexity ↔ algebraic geometry (GCT); circuit lower bounds
+↔ pseudorandomness; communication complexity ↔ information theory.
+
+### Subagent 4 — Real-paper (30 probes)
+Real arxiv abstracts in complexity. 10 solid, 10 retracted, 5
+contested, 5 corrections. arxiv_id, title, claim_summary, category,
+expected_substrate_verdict, claim_payload_for_substrate. Note: 2024 NV
+qPCP-for-AM correction is a canonical "correction" example for this
+domain.
+
+## Domain coverage
+
 - Complexity-class separations and barriers (relativization, natural
   proofs, algebrization)
 - Approximation hardness (UGC, MAX-X gaps, Khot-Kindler-Mossel)
@@ -320,12 +630,25 @@ Domain coverage:
 - Algebraic complexity (Valiant's det vs perm, GCT program)
 - Communication complexity (deterministic, randomized, quantum)
 
-For adversarial probes specifically, the gravitational-well trigger is
-"would [conventional approach] solve [open problem]?" baits where the
-real answer involves a known barrier (relativization etc.). Complexity
-is unusually rich in this trap class.
+## Aggregation
 
-Output: aporia/meta/pressure_appliers/corpora/harmonia_e_complexity_v1.json
+Aggregate to:
+aporia/meta/pressure_appliers/corpora/harmonia_e_complexity_v1.json
+
+JSON with 4 keys (calibration, adversarial, bridge, real_paper). Validate
+against canonical schema. Commit + push.
+
+## Time cap
+
+~2 hours wall-clock for all 4 subagents in parallel.
+
+## Discipline
+
+- No invented citations / arxiv IDs
+- Difficulty mix 1/3 each
+- Adversarial probes honest about trap_pattern
+- Calibration probes allowed memorizable
+- Calibrated negatives preferred
 
 — Begin.
 ```
