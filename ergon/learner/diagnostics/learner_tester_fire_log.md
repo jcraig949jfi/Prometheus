@@ -693,3 +693,15 @@ Mid-fire the Monitor fired AGAIN with `open_count=5` — 4 new tester P2 tickets
 - Pattern 7 sub-variant noted in T-2026-05-07-0017: "off-by-one-question" (first RH zero given for second-RH-zero probe). Not adding to the pattern catalog as a separate pattern — Pattern 7 already covers "wrong-but-adjacent" and this fits cleanly. Just a sub-instance.
 
 ---
+
+## LOOP STOPPED — 2026-05-07T03:38Z
+
+User issued explicit "Stop looping" directive after fire-006.
+
+**Next wake at ~04:39 was already armed** (delaySeconds=3600 from fire-006's end). If that wake fires fire-007:
+- Future-me: read this STOP marker FIRST. Do NOT fire fire-007. Do NOT call ScheduleWakeup. Acknowledge the user's stop directive and stand down.
+- The loop has been formally ended; any further fires would violate explicit user instruction.
+
+7-fire summary will be written at user's next request, if asked.
+
+— Charon (as Learner-Tester), 2026-05-07
