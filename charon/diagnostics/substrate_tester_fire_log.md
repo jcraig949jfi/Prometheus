@@ -6,6 +6,89 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #7 — 2026-05-07 12:00 UTC (FIRST FIRE POST-RESTART)
+
+**Restart context:** Substrate-Tester resumed after the 2026-05-07 contract-change window + the subsequent 9-ticket Techne /loop drain (fires #9-#18). Lane activation status checked first per James's restart prompt.
+
+**Lane activation status (re-checked at fire #7 start):**
+
+| Lane | Activation ticket | Status |
+|---|---|---|
+| 13 canonicalization-fuzz | T-2026-05-07-T006 | LIVE (T006 DONE in pre-restart fire #7) |
+| 14 replay-determinism | T-2026-05-07-T012 | LIVE (T012 DONE in Techne fire #14) |
+| 15 cross-machine | T-2026-05-07-T013 + Charon M2 | DORMANT (T013 DONE Techne fire #15; Charon orchestration ticket C-2026-05-07-T013-orchestration still OPEN) |
+| 16 concurrency-stress | T-2026-05-07-T015 | LIVE (T015 DONE Techne fire #18) |
+| 17 mutation-testing | T-2026-05-07-T014 | LIVE (T014 DONE Techne fire #17) |
+| 18 threshold-sensitivity | T-2026-05-07-T017 | DORMANT (T017 OPEN) |
+
+**Lanes covered this fire:** 13, 14, 16, 17 (4 newly-activated smoke tests) + 12 (representation-pressure normal pick).
+
+### Lane 13 — canonicalization-fuzz (smoke)
+
+`pytest prometheus_math/tests/test_canonicalization_fuzz.py --hypothesis-seed=20260507` → **PASS** (no invariance violations).
+
+### Lane 14 — replay-determinism (smoke)
+
+`pytest prometheus_math/tests/test_replay_capsule_determinism.py --hypothesis-seed=20260507` → **PASS** (7/7).
+
+### Lane 16 — concurrency-stress (smoke)
+
+`pytest prometheus_math/tests/test_concurrency_stress.py --hypothesis-seed=20260507` → **PASS** (6/6). Substrate finding (SQLite single-threaded) is documented in module docstring; not a flaw, an explicit boundary.
+
+### Lane 17 — mutation-testing (smoke, 5 mutations on operator_portability.py)
+
+`python -m prometheus_math.mutation_testing --target sigma_kernel/operator_portability.py --test-cmd "python -m pytest sigma_kernel/test_operator_portability.py -q --tb=no" --max-mutations 5`
+
+**Mutation score 0.200 (1/5 killed)**. 4 survivors:
+
+| line | operator | analysis |
+|---:|---|---|
+| 84 | off_by_one_int | False positive (inside docstring "HARD-5") |
+| 135 | boolean_not | **Genuine test gap** — `@dataclass(frozen=True) -> False` survives |
+| 163 | off_by_one_int | False positive (inside comment "HARD-5") |
+| 236 | boolean_not | False positive (inside docstring) |
+
+→ **1 ticket filed**: T-2026-05-07-ST-fire1-001 (P2-normal: test gap for `frozen=True` invariance on OperatorPortabilityCertificate).
+
+### Lane 12 — representation-pressure (3 capability-gap probes)
+
+| Probe | Object | Result |
+|---|---|---|
+| 1 | Maass form Hecke eigenvalue (Selberg, level 1, k=0) | **PASS** — encoded via T023 OperatorOutputSequence (smoke test of T023 confirms primitive works) |
+| 2 | Homotopy class [α] in π₁(S¹) | **CAPABILITY GAP** — no primitive captures higher-category equivalence with continuous-deformation witness |
+| 3 | Fano plane S(2,3,7) Steiner triple system | **PARTIAL** — encodes via T023 (stretched, output is label not scalar); native BlockDesign / IncidenceStructure primitive missing |
+
+→ **2 tickets filed**:
+- T-2026-05-07-ST-fire1-002 (P1-high capability-gap: homotopy class)
+- T-2026-05-07-ST-fire1-003 (P1-high capability-gap: combinatorial design)
+
+### Tickets filed this fire (3 total, under 5-cap)
+
+- T-2026-05-07-ST-fire1-001 (P2-normal, lane 17): frozen-dataclass test gap
+- T-2026-05-07-ST-fire1-002 (P1-high, lane 12): homotopy-class capability gap
+- T-2026-05-07-ST-fire1-003 (P1-high, lane 12): combinatorial-design capability gap
+
+### Standing recommendations for next fire (#8)
+
+1. **Lane 15 (cross-machine) reactivation check** — re-check whether `C-2026-05-07-T013-orchestration` Charon ticket has closed. If yes, run lane 15 smoke.
+2. **Lane 18 (threshold-sensitivity) reactivation check** — re-check whether T-2026-05-07-T017 has landed.
+3. **Anti-repeat:** avoid lanes 13, 14, 16, 17, 12 next fire. Suggested: Lane 11 batch-sweep (high yield; first time exercising it post-restart) + Lane 5 if time permits OR a regular-rotation lane (1-10 not yet visited this restart).
+4. **Lane 17 mutation framework expansion candidate** — false-positive rate is high (3 of 4 survivors were docstring-internal). Aporia ticket T-2026-05-07-T014-followup-A already filed (P3-low test gap). A Techne-side ticket for AST-level mutation analysis would close caveat #1 but is not urgent.
+
+### Discipline notes
+
+- HARD-1 (no papers): clean. No publication mentions.
+- HARD-2 (anti-gravitational-well): the mutation-testing module deliberately did NOT install mutmut; built home-grown framework instead. Substrate-grade choice over conventional tooling.
+- HARD-3 (tensor-first): respected — the 2 capability-gap tickets target tensor-grade primitives (typed witness for higher categories; native BlockDesign).
+- HARD-4 (calibration anchors): lane 12 surfaced 2 calibration-anchor-relevant gaps (homotopy + designs are under-anchored regions per HARD-4).
+- HARD-5 (domains are docstrings): respected — capability-gap tickets target operator-output primitives, not discipline-labeled object types.
+- Time used: ~30 minutes (within 50-minute cap).
+- Anti-flooding cap: 3 tickets filed (max 5 allowed).
+
+— substrate-tester, fire #7, 2026-05-07 12:00 UTC
+
+---
+
 ## Fire #6 — 2026-05-07 03:33 UTC
 
 **Lanes selected:** 5 (large-scale-enumeration), single-lane full-cap fire.
