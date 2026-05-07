@@ -1,0 +1,82 @@
+{
+  "fire": 11,
+  "lanes": [
+    9,
+    6
+  ],
+  "note": "Fire #10 was performed by a parallel substrate-tester instance (commit db0c157d). My fire = #11.",
+  "lane_9": {
+    "lane": "9_near_miss_corpus_leak_regression",
+    "n_tests": 4,
+    "verdict_counts": {
+      "FAIL": 1,
+      "PASS": 3
+    },
+    "tests": [
+      {
+        "id": "T1_post_view_default_rejects",
+        "expected": "PostFalsificationLeakageError",
+        "actual": "silently returned views",
+        "verdict": "FAIL",
+        "severity": "P0-blocker"
+      },
+      {
+        "id": "T2_post_view_positional_args_rejected",
+        "expected": "TypeError",
+        "actual": "TypeError: LearnerCorpusLoader.load_post_view() takes 1 positional argument but 4 were given",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T3_post_view_allow_true_succeeds",
+        "expected": "loaded successfully",
+        "actual": "loaded 1 views with allow=True",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T4_default_load_pre_view_no_leak",
+        "expected": "leak-safe default load",
+        "actual": "loaded 1 pre-views; no leak fields",
+        "verdict": "PASS"
+      }
+    ]
+  },
+  "lane_6": {
+    "lane": "6_undecidable_canonicalization_regression",
+    "n_tests": 5,
+    "verdict_counts": {
+      "PASS": 5
+    },
+    "tests": [
+      {
+        "id": "T1_undecidable_construction",
+        "expected": "construction succeeds",
+        "actual": "impl='novikov_word_problem', decidability='undecidable'",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T2_invalid_decidability_rejected",
+        "expected": "ValueError naming valid options",
+        "actual": "ValueError: decidability_status must be one of ('decidable', 'undecidable', 'conditional'); got 'maybe'",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T3_apply_without_impl_raises",
+        "expected": "NotImplementedError",
+        "actual": "NotImplementedError: CanonicalizationProtocol(impl='registry_only') has no bound canonicalize implementation; this is a registry-only entry.",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T4_lehmer_chart_decidable",
+        "expected": "decidable",
+        "actual": "impl='reflection_quotient', decidability='decidable'",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T5_valid_decidability_tuple_unchanged",
+        "expected": "['conditional', 'decidable', 'undecidable']",
+        "actual": "['conditional', 'decidable', 'undecidable']",
+        "verdict": "PASS"
+      }
+    ]
+  }
+}

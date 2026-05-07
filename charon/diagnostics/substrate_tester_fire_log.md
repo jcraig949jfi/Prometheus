@@ -6,6 +6,69 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #11 — 2026-05-07 15:00 UTC
+
+**Coordination note:** Fire #10 was performed by a parallel substrate-tester instance (commit `db0c157d`) covering Lane 4 (ST003 regression PASS) + Lane 13 (canon-fuzz PASS). My fire = #11. Multi-machine substrate-tester coordination operational.
+
+**Lanes selected:** 9 (NearMissCorpus-leak, last fire #2) + 6 (undecidable-canonicalization, last fire #4). Both untouched since the contract-change window; both relevant after T020 / T030 / T023 / ST003 work landed.
+
+**Lane 15 + 18 reactivation re-check:** still DORMANT (Charon orch ticket OPEN; T-2026-05-07-T017 OPEN).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_11_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_11_results.json`.
+
+### Lane 9 — NearMissCorpus-leak regression: 4/4 PASS (1 harness-bug false positive corrected)
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — `load_post_view(allow=False)` rejects | **PASS*** | reported FAIL by harness; verified by manual repro — substrate IS correctly raising `PostFalsificationLeakageError` on iteration. Harness false positive: did not iterate the returned generator. |
+| T2 — positional args rejected (kw-only enforcement) | **PASS** | TypeError raised |
+| T3 — `load_post_view(allow=True)` succeeds | **PASS** | 1 view loaded |
+| T4 — default `loader.load()` returns leak-safe pre-views | **PASS** | 1 pre-view; no kill_vector / kill_pattern / verdict fields |
+
+**Harness-bug finding (substrate-grade lesson):** `LearnerCorpusLoader.load_post_view` is a Python generator function. The leakage-protection error fires inside the generator's first `__next__`, not at call time. My harness wrote `views = loader.load_post_view(...)` without iterating, so it received a generator object back with no error and falsely concluded "silently returned views".
+
+Manual reproducer with `list(loader.load_post_view(...))` correctly raises `PostFalsificationLeakageError`. Substrate verdict: **PASS** (re-classified post-repro).
+
+**Substrate verdict for Lane 9: PASS.** Anti-leakage discipline still enforced: kw-only flag holds, mandatory caller_id + purpose still required, audit log written, leak-safe default load preserved.
+
+**Future-harness rule:** when probing generator-returning APIs, always iterate (`list(...)`) to surface generator-internal errors.
+
+### Lane 6 — undecidable-canonicalization regression: 5/5 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — construct CanonicalizationProtocol(undecidable) | **PASS** | impl='novikov_word_problem', decidability='undecidable' |
+| T2 — invalid decidability_status raises ValueError | **PASS** | "must be one of ('decidable', 'undecidable', 'conditional')" |
+| T3 — apply() on registry-only entry raises NotImplementedError | **PASS** | per the protocol's intentional "no impl bound" path |
+| T4 — registered Lehmer chart's canonicalization is `decidable` | **PASS** | impl='reflection_quotient', decidability_status='decidable' |
+| T5 — `VALID_DECIDABILITY` tuple unchanged since fire #4 baseline | **PASS** | `('conditional', 'decidable', 'undecidable')` |
+
+**Substrate verdict: PASS.** Decidability-flag discipline from Aporia Study 17 fully holds across the contract-change window. The `VALID_DECIDABILITY` tuple is contract-stable; registered Lehmer chart correctly tagged decidable; registry-only entries correctly raise on `apply()`.
+
+### Tickets filed this fire
+
+**0 tickets.** Both lanes substrate-correct. Lane 9 T1 was a harness false positive (generator-iteration discipline lesson).
+
+### Standing recommendations for next fire (#12 / next-machine fire)
+
+1. **Anti-repeat:** avoid lanes 6, 9 (just covered). Suggested fire #12: Lane 2 (adversarial-CLAIM, last fires #2 + #5) + Lane 3 (correlated-triangulation, last fire #4) — both relevant post-contract-change-window.
+2. **Generator-iteration rule for future harnesses:** any test probing a generator-returning API must `list(...)` the result to surface generator-internal errors. Codify in fire #11+ harness templates.
+3. **Mossinghoff-perturbation in-band sampler still needed for Lane 1.** Standing rec from fire #9 unchanged.
+4. **Lane 5 (large-scale-enumeration):** last fire #6. Re-probe candidate when a fire has nothing else queued.
+5. **Multi-machine coordination:** fire #10 ran on M2 while I was waking up; both updated the log without conflict. Continue current pattern (each agent inserts newest entry; respect commit order).
+
+### Discipline notes
+
+- HARD-1..HARD-5: clean. No drift toward established frameworks.
+- Time used: ~35 min (within 50-min cap).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed).
+- Multi-agent etiquette: did not overwrite parallel-agent fire #10 harness; restored after accidental delete.
+
+— substrate-tester, fire #11, 2026-05-07 15:00 UTC
+
+---
+
 ## Fire #10 — 2026-05-07 09:58 (local)
 
 **Lanes selected:** 4 (cross-domain-leak, regression for T-ST003 closure) + 13 (canonicalization-fuzz, smoke-test of newly-LIVE T006 fuzzer).
