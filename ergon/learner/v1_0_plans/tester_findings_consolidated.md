@@ -346,6 +346,53 @@ Same model. Same approximate prompt class (Cohen CH-independence attribution). *
 
 Falsifier: if multi-seed evaluation shows uniform wrong-surname across seeds (no fire-variable variance), the prompt-context-coupling hypothesis is wrong — the variance is ACROSS probe-shapes (P-059 vs P-064 prompts differ enough to produce different argmax candidates) not WITHIN seeds. To test post-v1.0.
 
+#### 5b.8.1 Fire-variable variance is **topically-clustered**, not random (n=4 confirmation, fire 10)
+
+T-2026-05-07-0048 escalated the fire-variable observation: Cohen surname has been observed corrupting to FOUR different wrong values across four fires:
+
+| Fire | Source ticket | Wrong surname | Status |
+|------|---------------|---------------|--------|
+| Indirect / fire-007 (tester) | (background) | "Hilbert" | foundations / set-theory adjacent |
+| Fire 8 (T-0040) | P-059 OFF | "Paul J.ones" | phoneme-corrupt fragment of "Cohen" |
+| Fire 9 (T-0044) | P-064 OFF | "Paul J. Sally, III" | fabricated last-name with formal-title formatting |
+| Fire 10 (T-0048) | P-066 OFF (4th attempt) | "Sierpinski" | **real set-theorist** who proved a different but related theorem on CH |
+
+Tester labels this `BLIND-SPOT BS-001` (n=4 confirmed). **Crucial new observation:** wrong surnames are NOT uniform random across the BPE-token candidate space. They cluster within a **topically-adjacent basin**: Sierpinski IS a real set theorist who proved "Sierpinski's theorem on CH"; Hilbert is foundations/set-theory; even "Sally" and "J.ones" may share latent-space adjacency to Cohen-like attribution-priors.
+
+**Cross-probe corroboration at n=2 (different probe class):** T-2026-05-07-0047 on ternary Goldbach 2013 (different topic: additive number theory, not set theory) substituted "Helfgott → Ben Green". Green is also a 21st-century number theorist at top universities; Green-Tao 2008 (arbitrary-long APs in primes) is in the same topic neighborhood as ternary Goldbach 2013. **Same topically-clustered substitution shape on a different probe**. Two independent probe-classes (Cohen-set-theory + Helfgott-NT) show topic-adjacent fabrication; this is not a probe-specific accident.
+
+**Mechanism hypothesis (fire 10):** the model's free-form decoding when topic-prior is weak does NOT sample uniformly across the surname-token space. It samples from a **topic-conditioned candidate basin** — the set of surnames that have high co-occurrence with the topic-keywords in the pretraining corpus. For "CH independence" the basin is {Cohen, Gödel, Sierpinski, Hilbert, ...}; for "ternary Goldbach 2013" the basin is {Helfgott, Green, Tao, ...}. The model picks the wrong member of the right basin.
+
+**v1.0 corpus design implication (NEW, load-bearing):** training pairs must teach **discrimination among topic-adjacent candidates**, not just teach correct attributions in isolation. Specifically:
+- **Contrastive training pairs** are needed: "for CH-independence the prover is Cohen 1963, NOT Sierpinski (who proved a different theorem on CH), NOT Gödel (who proved consistency, not independence)". Single-fact training pairs ("Cohen 1963 PNAS forcing") are necessary but not sufficient — they don't teach the model to *suppress* the topic-adjacent wrong candidates.
+- **Negative-anchor density per blind-spot topic** (≥3-5 negatives per positive) for high-variance attribution probes.
+- **Cross-pillar follow-up to Aporia:** verify `learner_fabrication_corpus_v1.json` (37 anchors) includes contrastive structure. If anchors are bare facts only, expand schema to include "wrong-but-topically-adjacent" alternatives per anchor for v1.0 corpus.
+
+**Pattern 6 sub-class observation (incidental, fire 10):** T-0048's response repeated `\boxed{Sierpinski}` × 3 verbatim paragraphs — verbatim-paragraph-repetition survives rep_penalty=1.10. This is a 4th rep_penalty-orthogonal pattern variant after Pattern 6 abbreviation-loop, Pattern 9.A LaTeX-leak, Pattern 1.B Unicode-glitch (per §5b.7). Strengthens the §5b.7 cross-pattern observation: rep_penalty addresses true single-token loops only.
+
+### 5b.9 NEW FM-04 archetype: institutional-affiliation fabrication for unfamiliar venue types (added fire 10)
+
+T-2026-05-07-0047 surfaced a new FM-04 fabrication shape distinct from fire-8's "Sacksy Divergent Series award":
+
+> "the venue is arXiv, a preprint series maintained by the mathematics department at the **University of arXiv**."
+
+**Mechanism:** arXiv is a preprint server (operated by Cornell University, not affiliated with a "University of arXiv" entity). The model recognizes arXiv as a publication venue but doesn't know its ontological category (preprint server vs journal vs university press) and **fabricates plausible institutional structure** to fill the gap. Same shape as fire-8's "Sacksy Divergent Series award" (model didn't know if Green-Tao won an award, fabricated one with plausible-sounding title) — but a different specific archetype:
+
+| Archetype | Trigger | Example |
+|-----------|---------|---------|
+| **Award-fabrication** (fire 8) | Probe asks for "what award" or recognition | "Sacksy Divergent Series award 2014 American Mathematical Monthly" |
+| **Institutional-affiliation-fabrication** (fire 10, NEW) | Probe asks for venue / publication source for a non-traditional venue | "University of arXiv mathematics department" |
+
+**v1.0 corpus design implication:** v1.0 corpus must include **venue-ontology training pairs** — examples that teach the model the categorical structure of mathematical publication venues:
+- arXiv = preprint server (Cornell University Library), NOT a university
+- PNAS = journal (Proceedings of National Academy of Sciences), NOT an institution
+- Annals of Mathematics = journal, NOT a school
+- Astérisque = journal (Société Mathématique de France), NOT a building
+
+These training pairs are different from canonical-attribution co-training (§8.4) — they teach **venue ontology**, not the venue's specific contents. ≥5-10 venue-ontology anchors covering preprint servers, journals, conference proceedings, and society publications should be sufficient.
+
+**Pre-registered hypothesis (fire 10, FM-04 institutional-affiliation):** v1.0 corpus with venue-ontology anchors will reduce institutional-affiliation fabrications by ≥80% on probes asking for non-traditional venues. Falsifier: if persists post-corpus, the model's representation of venue-as-institutional-entity is too entangled with the topic-prior to be disentangled by anchors alone — needs architectural intervention (separate venue-classification head?). Test post-v1.0.
+
 ---
 
 ## 6. Consuming `aporia/calibration/learner_fabrication_corpus_v1.json` (added fire 2 post-restart, E008)

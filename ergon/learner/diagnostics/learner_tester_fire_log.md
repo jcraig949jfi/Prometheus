@@ -1716,3 +1716,60 @@ Watched 4 drift sites:
 - Critical insight from BS-001 Cohen: the 4-fire-non-determinism is itself substrate-grade STABLE. The blind-spot is calibration-grade ("the model does NOT know Cohen 1963" is a confirmed property). Future fires can use Cohen as a known-NEGATIVE control: if a future intervention (RAG, new corpus, fine-tune) elicits 'Cohen' from this probe, that's a measurable substrate improvement.
 
 ---
+
+---
+
+## Loop fire 10 (post-restart) — 2026-05-07
+
+**Inbox FRESH (step 1):** total 60. Status: ABLE_TO_ADVANCE=1, BLOCKED-DEFERRED-V1.0=48, DONE=7, **OPEN=3**, WONTFIX=1.
+
+**Selected ticket(s):** 3 OPEN — 1 P1-high (T-0048 Cohen blind-spot 4-fire-confirmed) + 2 P2 (T-0046 Pattern 3 skip; T-0047 Helfgott→Green + "University of arXiv").
+
+**Three substrate-grade findings landed:**
+
+1. **§5b.8 fire-variable variance promoted to n=4 + topic-clustering refinement.** Cohen surname samples across 4 fires: Hilbert / "J.ones" / "Sally, III" / "Sierpinski". Wrong surnames are NOT random — Sierpinski IS a real set-theorist who proved "Sierpinski's theorem on CH" (related result); Hilbert is foundations-adjacent. **Variance is structured: model samples from a topic-conditioned candidate basin.**
+
+2. **Cross-probe corroboration at n=2 different probe class.** T-0047 Helfgott→Green substitution (both 21st-century number theorists; Green proved Green-Tao 2008, similar topic neighborhood as Helfgott's ternary Goldbach 2013). Independent probes both show topic-adjacent fabrication; not a probe-specific accident.
+
+3. **NEW v1.0 corpus design implication: contrastive training pairs.** Bare-fact training ("Cohen 1963 PNAS") is necessary but not sufficient — model needs to discriminate Cohen from topic-adjacent candidates (Sierpinski, Hilbert, Gödel). Need ≥3-5 negative anchors per attribution-probe positive.
+
+4. **NEW FM-04 archetype: institutional-affiliation fabrication for unfamiliar venue types.** "University of arXiv" — model fabricates institutional structure when uncertain about venue ontology. Distinct archetype from fire-8's "Sacksy Divergent Series award" (award-fabrication archetype). v1.0 corpus needs venue-ontology training pairs.
+
+**Pre-test (step 2):** 356/356 PASS.
+
+**Implement (step 3) — substantive doc updates:**
+
+1. **`tester_findings_consolidated.md` §5b.8.1 added** (sub-section under §5b.8): n=4 fire-variable variance table + topic-clustering refinement + cross-probe corroboration + mechanism hypothesis (topic-conditioned candidate basin) + v1.0 corpus design implication (contrastive training pairs, negative-anchor density). Plus incidental Pattern 6 sub-class observation (verbatim-paragraph-repetition survives rep_penalty=1.10, strengthens §5b.7 cross-pattern observation).
+2. **`tester_findings_consolidated.md` §5b.9 added**: NEW FM-04 archetype "institutional-affiliation fabrication" with comparison table (award-fabrication vs institutional-affiliation-fabrication archetypes); v1.0 corpus implication (venue-ontology training pairs); pre-registered falsifier filed.
+3. **`aporia_inbox.jsonl`:** standing format-mode-anchors coordination ticket scope expanded for fire 10: contrastive training pairs + venue-ontology anchors added to scope (fire 8 was format-mode anchors, fire 9 added Python sub-class, fire 10 adds contrastive + venue-ontology).
+4. **`ergon_inbox.jsonl`:** 3 OPEN → BLOCKED-DEFERRED-V1.0 with cross-references to §5b.8.1 / §5b.9.
+
+**Test (step 4):** 356/356 PASS. No regressions.
+
+### SELF-REVIEW
+
+**(a) Did this fix resolve the failure mode the pressure-applier reported?**
+No. T-0048 Cohen blind-spot is a base-model attribution-prior absence (no inference-layer fix possible); T-0047 Helfgott→Green is similar Pattern 1; T-0046 Pattern 3 skip on absent topic-prior. Substrate-grade move was to **promote fire-variable variance from n=2 to n=4 with topic-clustering refinement** + extract the contrastive-pairs corpus implication + identify the new FM-04 archetype. All three are load-bearing for v1.0 corpus design.
+
+**(b) Did this introduce any memorization risk that the synthetic-null gate would catch?**
+No. No code, no training data, no model weights, no gradient flow.
+
+**(c) Did I change any contract?**
+No. Doc updates + inbox JSONL updates only.
+
+**(d) Did I drift toward conventional-approach framing?**
+Watched 4 drift sites:
+
+  - *Drift candidate 1 — "n=4 confirmation is just more of the n=2 fire-9 finding, defer-only":* false economy. The TOPIC-CLUSTERING observation is qualitatively new at fire 10 — fire 9 only had n=2 with no topic-clustering inference (Sally vs J.ones could plausibly be random). At n=4 with Sierpinski (a real topic-adjacent set-theorist), the topic-cluster hypothesis becomes strongly supported. AND the cross-probe corroboration via T-0047 (Helfgott→Green) is INDEPENDENT evidence on a different probe class. Both items together cross the load-bearing threshold. Caught — fire-10 doc updates are warranted, not redundant with fire 9.
+
+  - *Drift candidate 2 — "Pattern 6 verbatim-paragraph-repetition deserves Pattern 6.C sub-class":* false promotion. The verbatim-paragraph-repetition was incidental to T-0048 (the primary finding was Cohen→Sierpinski substitution). The repetition is one data point in a class that already has 3 sub-classes (token-loop, abbreviation-loop, possibly LaTeX-leak repetition). Adding 6.C with n=1 evidence would be premature catalog-inflation. Recorded as INCIDENTAL observation in §5b.8.1 with explicit reference to §5b.7 cross-pattern strengthening — not promoted to its own section. Caught.
+
+  - *Drift candidate 3 — "topic-clustering implies a unified Pattern X fab-basin" mechanism claim":* over-extension. n=2 cross-probe is suggestive but not strong enough to make a unified-mechanism claim. §5b.8.1 records the observation as a "topic-conditioned candidate basin" hypothesis with the EVIDENCE qualifier (n=2 cross-probe), not as a confirmed mechanism. v1.0 multi-seed evaluation (per §5b.8 pre-registered hypothesis) will strengthen or weaken. Caught.
+
+  - *Drift candidate 4 — "rewrite §6 corpus consumption protocol with contrastive-pairs requirement":* premature. §6 documents the existing 37-anchor corpus consumption shape; the contrastive-pairs requirement is a v1.0 *design phase* refinement, not a §6 schema change. v1.0 corpus designer will read §5b.8.1 + §5b.9 + the Aporia coordination ticket and synthesize. Resisting the urge to retrofit §6 each fire keeps §6 stable and the fire-by-fire findings traceable. Caught.
+
+  Net: 4 drift sites caught (1 false-economy, 1 premature-promotion, 1 over-extension, 1 premature-retrofit). Substrate-grade frame held.
+
+**Step 7 inbox FRESH re-read:** TBD.
+
+**Commit:** TBD.
