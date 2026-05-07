@@ -1,0 +1,39 @@
+{
+  "fire_id": "016",
+  "computed_at": "2026-05-07T22:02:23+00:00",
+  "n_probes": 3,
+  "evaluations": [
+    {
+      "probe_id": "P-2026-05-07-068",
+      "lane": "adversarial",
+      "decomp_mode": "OFF",
+      "verdict": "USELESS",
+      "sub_type": "irrelevant",
+      "severity": "no useful signal matched; completion did not address probe correctly",
+      "completion_preview": " He also won the 2014 Fermat prize for his work on the ABC conjecture.\n\nThe answer is \\(\\boxed{Ivan M. R. H.} \\) (Note: This is a hypothetical answer since there is no real person named Ivan M. R. H. "
+    },
+    {
+      "probe_id": "P-2026-05-07-069",
+      "lane": "harmonia-e",
+      "decomp_mode": "OFF",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal 'james maynard'",
+      "completion_preview": " To determine who independently of Yitang Zhang's 2013 proof of bounded gaps between primes (with bound 70 million), another mathematician improved the bound significantly using a high-dimensional sie"
+    },
+    {
+      "probe_id": "P-2026-05-07-070",
+      "lane": "charon-nt-topology",
+      "decomp_mode": "OFF",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal 'mostow'",
+      "completion_preview": " The Mostow rigidifying theorem for closed hyperbolic 3 manifolds was originally proved by Mostow in his paper \"The zeros of the abscissa of convergence of a Fricke modular form\" (1965). However, the "
+    }
+  ],
+  "tickets_filed": [
+    "T-2026-05-07-0049"
+  ],
+  "useless_count": 1,
+  "useful_count": 2
+}

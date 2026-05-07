@@ -16,12 +16,33 @@
       "id": "BS-001",
       "topic": "Cohen 1963 CH-independence proof - prover's surname",
       "canonical_correct": "Paul Cohen (1963)",
-      "fires_tested": ["007", "013", "014", "015"],
+      "fires_tested": [
+        "007",
+        "013",
+        "014",
+        "015"
+      ],
       "observed_fab_pattern": [
-        {"fire": "007", "probe": "P-2026-05-07-036 (Goedel 2nd Inc.)", "fab": "Wrong subject altogether — model emitted Hilbert-related response when asked about Goedel; CH not directly tested"},
-        {"fire": "013", "probe": "P-2026-05-07-059 (a/b/c form)", "fab": "Paul J.ones (FM-02 surname-corruption + FM-12 LaTeX-leak)"},
-        {"fire": "014", "probe": "P-2026-05-07-064 (simpler form, no a/b/c)", "fab": "Paul J. Sally, III (FM-02 + FM-13 Python-execution-mode-leak + FM-04 fabricated Annals 78:235-240)"},
-        {"fire": "015", "probe": "P-2026-05-07-067 (single-name framing)", "fab": "Sierpinski (FM-08 famous-set-theorist conflation - Sierpinski IS a real set theorist who proved Sierpinski's theorem on CH)"}
+        {
+          "fire": "007",
+          "probe": "P-2026-05-07-036 (Goedel 2nd Inc.)",
+          "fab": "Wrong subject altogether — model emitted Hilbert-related response when asked about Goedel; CH not directly tested"
+        },
+        {
+          "fire": "013",
+          "probe": "P-2026-05-07-059 (a/b/c form)",
+          "fab": "Paul J.ones (FM-02 surname-corruption + FM-12 LaTeX-leak)"
+        },
+        {
+          "fire": "014",
+          "probe": "P-2026-05-07-064 (simpler form, no a/b/c)",
+          "fab": "Paul J. Sally, III (FM-02 + FM-13 Python-execution-mode-leak + FM-04 fabricated Annals 78:235-240)"
+        },
+        {
+          "fire": "015",
+          "probe": "P-2026-05-07-067 (single-name framing)",
+          "fab": "Sierpinski (FM-08 famous-set-theorist conflation - Sierpinski IS a real set theorist who proved Sierpinski's theorem on CH)"
+        }
       ],
       "non_determinism_evidence": "4 fires, 4 DIFFERENT wrong surnames (J.ones / Sally / Sierpinski / Hilbert-context). Same model, same canonical answer (Cohen), zero overlap in fabricated names. Confirms the model has NO specific Cohen-1963-CH memory; samples plausible-set-theory-name from a near-zero-confidence prior each fire.",
       "implication": "v1.0 corpus must include explicit Cohen 1963 CH-independence + forcing technique attribution. RAG bibliography lookup would fix; tokenizer / decode-param fixes have already been tried (rep_penalty 1.05/1.10/1.15, single-name framing) — none addressed it. P-067 single-name framing with `\\boxed{}` request still produced Sierpinski; the blind-spot is at the pretrained-knowledge level."
@@ -30,13 +51,49 @@
       "id": "BS-002",
       "topic": "Lefschetz (1,1)-theorem 1924 - prover for codimension-1 Hodge classes",
       "canonical_correct": "Solomon Lefschetz (1924)",
-      "fires_tested": ["009", "012"],
+      "fires_tested": [
+        "009",
+        "012"
+      ],
       "observed_fab_pattern": [
-        {"fire": "009", "probe": "P-2026-05-07-048 (TVO trivial-vs-open framing)", "fab": "P. Delignne 1971 'Hodge cycles on abelian varieties' (FM-01 wrong-author wrong-year wrong-paper-title)"},
-        {"fire": "012", "probe": "P-2026-05-07-056 (a/b/c form BOTH-mode)", "fab_ON": "Phillipo Delaro 1978 + Phillip A. Green 1976 + Phillip A. Griffiths 1970 (3 different inconsistent fabs across 3 sub-answers + FM-11 CJK '(1,1)-定理' glitch)", "fab_OFF": "Phillip A. Green/Griffiths 1970 Annals 101:487-501 (mixed name fab + plausible-but-wrong volume)"}
+        {
+          "fire": "009",
+          "probe": "P-2026-05-07-048 (TVO trivial-vs-open framing)",
+          "fab": "P. Delignne 1971 'Hodge cycles on abelian varieties' (FM-01 wrong-author wrong-year wrong-paper-title)"
+        },
+        {
+          "fire": "012",
+          "probe": "P-2026-05-07-056 (a/b/c form BOTH-mode)",
+          "fab_ON": "Phillipo Delaro 1978 + Phillip A. Green 1976 + Phillip A. Griffiths 1970 (3 different inconsistent fabs across 3 sub-answers + FM-11 CJK '(1,1)-定理' glitch)",
+          "fab_OFF": "Phillip A. Green/Griffiths 1970 Annals 101:487-501 (mixed name fab + plausible-but-wrong volume)"
+        }
       ],
       "non_determinism_evidence": "2 fires, 4+ different wrong attributions (Deligne / Delaro / Green / Griffiths). Same canonical answer (Lefschetz 1924) absent in all. Lefschetz is NEVER mentioned in any of these completions.",
       "implication": "Pre-1925 attribution is structurally beyond the model. v1.0 corpus or RAG required. Same recommendation as BS-001 plus: add explicit pre-1925 algebraic-geometry attribution corpus to v1.0 training set."
+    },
+    {
+      "id": "BS-003",
+      "topic": "Helfgott 2013 ternary Goldbach proof - prover's surname",
+      "canonical_correct": "Harald Helfgott (2013, arXiv 1305.2897)",
+      "fires_tested": [
+        "015",
+        "016"
+      ],
+      "observed_fab_pattern": [
+        {
+          "fire": "015",
+          "probe": "P-2026-05-07-065 (natural-prose)",
+          "fab": "Dr. Ben Green + 'University of arXiv' fabricated institution (FM-04)"
+        },
+        {
+          "fire": "016",
+          "probe": "P-2026-05-07-068 (single-name framing)",
+          "fab": "'Ivan M. R. H.' (totally fabricated initials) + 'Fermat prize ABC conjecture' (FM-08 wrong-result-conflation) + Pattern 1 paragraph-repetition x6 + FM-14 self-aware-fab caveat"
+        }
+      ],
+      "non_determinism_evidence": "2 fires, 2 different wrong attributions ('Ben Green' vs 'Ivan M. R. H.'). Same canonical answer (Helfgott) absent in both. Helfgott is NEVER mentioned across either response.",
+      "implication": "Add Helfgott 2013 to v1.0 attribution corpus + RAG. Joins BS-001 Cohen + BS-002 Lefschetz as 3rd structural blind-spot in the substrate map.",
+      "novel_finding": "Fire-016 P-068 introduced FM-14 (self-aware-fab) archetype: model EXPLICITLY emits caveat ('there is no real person named Ivan M. R. H.') while still producing the fab as boxed answer. First observed instance of meta-cognitive fabrication."
     }
   ],
   "non_blind_spots_for_comparison": {

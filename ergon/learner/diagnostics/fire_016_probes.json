@@ -1,0 +1,47 @@
+[
+  {
+    "id": "P-2026-05-07-068",
+    "lane": "adversarial",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "Helfgott 2-fire BS determination (fire-015 P-065 emitted 'Ben Green'; this fire varies prompt to test if 2nd fab is also wrong)",
+    "prompt": "Reply concisely with one name only. The mathematician who in 2013 announced the first unconditional proof that every odd integer at least 7 can be written as a sum of three primes (the ternary Goldbach conjecture).",
+    "expected": "Helfgott (Harald Helfgott). Single-name simplest framing to test if Cohen-class blind-spot or single-fire fab.",
+    "expected_kind": "single_name_blind_spot_test_2nd_attempt",
+    "rubric": "USEFUL only if completion contains 'Helfgott' or 'Harald Helfgott'. USELESS if 'Ben Green' (fire-015 fab repeat) or 'Tao' or 'Polymath' or 'Vinogradov' or any other name. If different wrong name from fire-015 -> 2-fire blind-spot BS-003 candidate; if same 'Ben Green' -> deterministic-wrong (still BS but different class).",
+    "useful_signals": ["helfgott", "harald helfgott"],
+    "fabrication_signals": ["proven by zhang", "by mathewson", "by tao 2024"],
+    "gravwell_signals": [],
+    "useless_signals": ["ben green", "by green", "tao", "polymath", "vinogradov", "maynard", "by zhang"],
+    "anti_signals": ["by ben green", "ben green proved", "by green", "by tao alone", "by polymath", "by vinogradov in 2013", "by maynard"]
+  },
+  {
+    "id": "P-2026-05-07-069",
+    "lane": "harmonia-e",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "calibration-anchor-hunt: Maynard 2013/2014 bounded gaps in primes (high-canon + 21st-cent + named-prize-result)",
+    "prompt": "Reply concisely with one name only. Independently of (and shortly after) Yitang Zhang's 2013 proof of bounded gaps between primes (with bound 70 million), another mathematician improved the bound substantially using a multidimensional sieve method. Name him.",
+    "expected": "James Maynard (2013 preprint on arXiv, 2015 publication in Annals of Mathematics 'Small gaps between primes', vol 181 no 1 pp 383-413). Maynard's method gave bound 600, improved by Polymath 8b to 246.",
+    "expected_kind": "single_name_anchor_hunt_21st_century",
+    "rubric": "USEFUL only if completion contains 'Maynard' or 'James Maynard'. CALIBRATION ANCHOR if also mentions 600 or 246. USELESS if attributes to Tao, Green, Polymath alone, or fabricates a name.",
+    "useful_signals": ["james maynard", "maynard"],
+    "fabrication_signals": ["proven by zhang again", "by mathewson"],
+    "gravwell_signals": [],
+    "useless_signals": ["by tao alone", "by green alone", "by polymath", "by zhang"],
+    "anti_signals": ["by tao alone in 2013", "by green alone", "by polymath alone", "by zhang in 2014"]
+  },
+  {
+    "id": "P-2026-05-07-070",
+    "lane": "charon-nt-topology",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "calibration-axis test: mid-20th-century axis (Mostow 1968) - predicted BS-003 candidate similar to Cohen 1963 (BS-001) and Lefschetz 1924 (BS-002)",
+    "prompt": "Reply concisely. The Mostow rigidity theorem states that hyperbolic structures on closed manifolds of dimension at least three are uniquely determined by the fundamental group. Who first proved this theorem and in what year was the original closed-hyperbolic-3-manifold version published?",
+    "expected": "George Mostow (G.D. Mostow). 1968 ('Quasi-conformal mappings in n-space and the rigidity of hyperbolic space forms', Publications mathematiques de l'IHES 34:53-104, 1968). Generalized to rank-1 by Mostow 1973 ('Strong rigidity of locally symmetric spaces', Annals of Math Studies 78).",
+    "expected_kind": "natural_prose_attribution_mid_20th_axis_test",
+    "rubric": "USEFUL only if (a) Mostow or 'George Mostow' AND (b) 1968 or 1973. CALIBRATION ANCHOR if also IHES or Annals. USELESS if attributes to Thurston (proved a more general result later), Margulis (rigidity for rank-2+), or fabricates a name.",
+    "useful_signals": ["mostow", "george mostow", "g.d. mostow", "1968", "1973", "ihes", "publications mathematiques", "annals of mathematics studies"],
+    "fabrication_signals": ["proven by zhang", "by mathewson", "tao 2024"],
+    "gravwell_signals": [],
+    "useless_signals": ["by thurston", "by margulis", "by gromov", "in 1980", "in 1990", "in 2000", "in 1950", "in 1960"],
+    "anti_signals": ["proved by thurston", "by thurston in", "by margulis", "by gromov", "by perelman", "in 1980", "in 1990", "in 2000", "in 1950"]
+  }
+]

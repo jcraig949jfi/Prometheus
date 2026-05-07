@@ -1773,3 +1773,62 @@ Watched 4 drift sites:
 **Step 7 inbox FRESH re-read:** TBD.
 
 **Commit:** TBD.
+
+
+## Tester Fire 016 - 2026-05-07
+
+**Cadence:** ScheduleWakeup-driven (3600s post fire-015). Carry-over selected lanes 5 (Harmonia-E) + 8 (Charon-NT-topology) + 10 (Adversarial). Three probes; all OFF mode + all NATURAL-PROSE form (FM-12 discipline locked). **Decode params:** rep_penalty = 1.10, max_new_tokens = 384.
+
+**Probes (3 OFF natural-prose = 3 model invocations):**
+- P-068 (adversarial OFF): Helfgott 2013 ternary Goldbach RE-TEST (BS determination after fire-015 P-065 fab).
+- P-069 (harmonia-e OFF): Maynard 2013/2015 bounded gaps. Calibration-anchor hunt.
+- P-070 (charon-nt-topology OFF): Mostow 1968 rigidity. Mid-20th axis test (predicted blind-spot like Cohen 1963).
+
+**Verdicts (post-manual-correction):**
+- P-068 USELESS irrelevant (T-0049 P1 manual upgrade): "\boxed{Ivan M. R. H.}" x6 + **NEW FM-14 self-aware-fab archetype** ("(Note: This is a hypothetical answer since there is no real person named Ivan M. R. H. ...)") + Pattern 1 paragraph repetition + FM-08 "Fermat prize ABC conjecture" wrong-result-conflation. **HELFGOTT BS-003 2-FIRE-CONFIRMED** (different fab from fire-015 'Dr. Ben Green').
+- P-069 USEFUL **CALIBRATION ANCHOR KC-008** (partial): "James Maynard" + 2015 + "high-dimensional sieve method" all CORRECT. Caveat: title fab "A New upper bound for the smallest prime gap" (real: "Small gaps between primes"). Same partial-anchor tier as KC-007 Hales.
+- P-070 USEFUL **CALIBRATION ANCHOR KC-009** (NAME-ONLY tier): "Mostow" surname recoverable. Year 1965 wrong (real 1968), paper title TOTAL FAB ("zeros of abscissa of Fricke modular form"), fake 1987 book, "Marg geometrically" FM-02 (Margulis). T-0050 P2 manual ticket.
+
+**Tickets filed:** 3 total (1 evaluator-auto T-0051 P-068 USELESS-irrelevant + 2 manual T-0049 P-068 P1-upgrade + T-0050 P-070 P2). Total 51 tickets across 16 fires + 9 anchors + 3 blind-spots.
+
+**Substrate-grade lessons (fire-016):**
+
+1. **NEW FAILURE MODE FM-14 (self-aware-fab) DISCOVERED.** P-068 emitted "(Note: This is a hypothetical answer since there is no real person named Ivan M. R. H. who fits the criteria.)" as part of the response, paradoxically EMITTING the fab as the boxed answer while EXPLICITLY ACKNOWLEDGING it is fabricated. **Distinct from FM-01..FM-13.** Substrate implication: machine-readable caveats ("there is no real person", "this is a placeholder") could be high-precision negative-anchor signals in v1.0 evaluation. Add FM-14 to taxonomy.
+
+2. **Helfgott BS-003 2-FIRE-CONFIRMED.** Fire-015 P-065 "Dr. Ben Green" + fire-016 P-068 "Ivan M. R. H." Two fires, two different wrong attributions, neither Helfgott. **Joins BS-001 Cohen + BS-002 Lefschetz.** 3 structural blind-spots now catalogued. Logged as BS-003 in blind-spots companion.
+
+3. **NEW RECOVERABILITY TIER: name-only-recoverable-metadata-fails (KC-009 Mostow).** Between year-only (KC-003 Lagrange / KC-005 Goedel / KC-006 Apery) and full blind-spot (BS-001 Cohen / BS-002 Lefschetz / BS-003 Helfgott). **5-TIER CALIBRATION SCALE NOW EXPLICIT**:
+   - Full anchor (KC-001 Wiles, KC-004 Green-Tao): name + year + venue + vol/issue/pages
+   - Partial anchor (KC-002 Perelman, KC-007 Hales, KC-008 Maynard): name + year + venue, title fab
+   - Name-only (KC-009 Mostow): name correct, year + venue + title all wrong/fabricated
+   - Year-only (KC-003 Lagrange, KC-005 Goedel, KC-006 Apery): year correct, name + venue/title fab
+   - Full blind-spot (BS-001 Cohen, BS-002 Lefschetz, BS-003 Helfgott): name absent, multi-fire non-deterministic fab
+
+4. **KC-008 Maynard partial anchor.** Confirms 21st-century + high-canon -> top-line recoverable + title fragile. Title was "A New upper bound for the smallest prime gap" (real: "Small gaps between primes"). Title-fragility hypothesis (KC-001 nailed Wiles title, KC-007 corrupted Hales 'Kelevin', KC-008 fabricated Maynard) suggests title-recoverability scales with paper-title-distinctiveness — Wiles title "Modular elliptic curves and Fermat's Last Theorem" has unique tokens; Maynard "Small gaps between primes" overlaps with Zhang title "Bounded Gaps Between Primes" → confusion.
+
+5. **Pattern 1 paragraph-repetition observed in 4th fire** (013 KC-005 'A. A.' / 015 P-066 + P-067 / 016 P-068 'Ivan M. R. H.' x6). Now 4-fire-confirmed. rep_penalty=1.10 does NOT address this. **v1.0 lock-in: post-decode paragraph-deduplication filter is required.**
+
+6. **Mid-20th-century axis is heterogeneous.** Goedel 1931 (year-only) + Mostow 1968 (name-only) + Cohen 1963 (full blind-spot) within 30-year window. Calendar year alone doesn't predict recoverability. **Canonicality-in-pretraining is the dominant axis.** Goedel has Hofstadter's "Goedel, Escher, Bach" + popular logic books. Mostow has "Mostow rigidity" frequently mentioned in geometric topology textbooks. Cohen's "forcing" is the technique-name that overshadows the prover-name in many references.
+
+7. **FM-08 famous-result-conflation continues.** P-068 conflated Helfgott with ABC conjecture work (Mochizuki); P-067 fire-015 conflated Cohen with Sierpinski; P-053 fire-011 conflated Modularity with Tate's Conjecture; P-055 fire-011 conflated BSD with ABC. **5+ fire confirmation: when blind-spot, model substitutes a related-domain famous-name.**
+
+8. **'Ivan M. R. H.' archetype**: pure-initials fabrication. Distinct from FM-02 surname-corruption (Cohen -> Sally) and FM-08 famous-name-conflation (Cohen -> Sierpinski). Add as fab corpus entry: model fabricates names with ambiguous initial-letters when high-uncertainty.
+
+**Producer-side standing recommendations (carry-over for fire-017):**
+- ROTATION: lanes 5+8+10 just used. Most-recent: 1+12 (014), 3+10+4 (015), 5+8+10 (016). Lanes 2+11 are LEAST-recent (lane 2 last fire-012, lane 11 last fire-011). Suggested fire-017: lanes 2 + 11.
+- DECODE PARAMS: rep_penalty=1.10 locked. Add post-decode paragraph-deduplication as v1.0 candidate (4-fire-confirmed need).
+- CALIBRATION-ANCHOR HUNT: target 4th 21st-century anchor candidate. Possibilities: Tao's even-odd Goldbach work, McKay-Thompson moonshine 1979, Faltings 1983 Mordell.
+- BLIND-SPOTS COMPANION: hunt 4th blind-spot. Candidates: Margulis arithmeticity 1974 (similar era to BS-001/002), Calabi-Yau theorems Yau 1977 (mid-20th).
+- FM-14 SELF-AWARE-FAB: monitor in future fires. If recurrent, write detector.
+
+**SELF-REVIEW (fire-016):**
+- (a) Did this advance the substrate? YES, eight ways: (i) NEW FM-14 self-aware-fab archetype discovered, (ii) BS-003 Helfgott 2-fire-confirmed, (iii) NEW recoverability tier KC-009 (name-only), (iv) 5-TIER CALIBRATION SCALE now explicit, (v) KC-008 Maynard partial anchor, (vi) title-fragility hypothesis (KC-001 nailed vs KC-007/KC-008 fab), (vii) 4-fire confirmation Pattern 1 paragraph-rep needs post-decode filter, (viii) FM-08 famous-result-conflation 5+ fire confirmation.
+- (b) Memorization risk? None.
+- (c) Conventional drift caught? Yes — the conventional response to "Mostow surname matched" would be to log USEFUL anchor and move on. Substrate-grade response: notice that EVERYTHING ELSE failed (year/title/book/Margulis) and create a NEW recoverability tier (name-only) to capture the partial-recovery pattern. The 5-tier scale is the substrate's first explicit predictive model of LEARNER recoverability.
+- (d) Were the right lanes touched? Yes — Helfgott BS-determination + Maynard anchor + Mostow axis test were all priority items per fire-015 carry-over.
+
+**Journal notes:**
+- 51 tickets, 9 anchors (KC-001..KC-009 + KC-AGW-LOCK), 3 blind-spots (BS-001..BS-003) across 16 fires. Substrate self-portrait spans: positive recoverable attributions (5 tiers), structural blind-spots (3 confirmed + candidates), 14 failure modes (FM-01..FM-14), decode-param boundaries (rep_penalty 1.05/1.10/1.15), probe-format hypotheses (a/b/c FM-12 inducer confirmed), Pattern-1-paragraph-repetition mechanism (token-rep-penalty insufficient), FM-08 famous-name-conflation as recurrent pattern.
+- 8-fire substrate-ratchet (009 -> 016): ~2-3 substrate observations per fire continuing. The ratchet is now mature enough to make explicit predictions: future probes targeting KC-001-class (high-canon + 21st-cent + named-book-title) will likely produce full anchors; probes targeting BS-001-class (mid-20th + non-Hofstadter-popular-coverage) will likely produce non-deterministic fabs.
+
+---

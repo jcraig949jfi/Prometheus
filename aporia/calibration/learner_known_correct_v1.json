@@ -230,6 +230,64 @@
         "Confirms calibration-axis hypothesis on 21st-century-NEAR + computer-aided + high-canon: full attribution recoverable except for specific paper title (Kepler -> Kelevin FM-02 corruption is striking — the model has the result + prover + dates but corrupts the actual conjecture name).",
         "FM-02 'Kelevin' is a NEW corruption archetype — distinct from FM-02 phonetic ('Ahed' from Apery in KC-006) and FM-02 surname ('Sally' for Cohen in BS-001). Three distinct FM-02 sub-patterns now catalogued."
       ]
+    },
+    {
+      "id": "KC-008",
+      "fire_id": "016",
+      "probe_id": "P-2026-05-07-069",
+      "lane": "harmonia-e",
+      "decomposition_mode": "OFF",
+      "decode_params": {
+        "rep_penalty": 1.1,
+        "max_new_tokens": 384,
+        "do_sample": false,
+        "num_beams": 1
+      },
+      "topic": "Maynard 2013/2015 bounded gaps in primes (multidimensional sieve)",
+      "canonical_output": "James Maynard. The new method that improved upon Zhang's result was developed by James Maynard ... using a high-dimensional sieve method to establish a smaller bound for the smallest prime gap than Zhang's initial result.",
+      "verification": "Maynard 'Small gaps between primes', Annals of Mathematics 181(1):383-413, 2015. arXiv preprint Nov 2013 (1311.4600). Multi-dimensional Selberg sieve. Initial bound 600, improved by Polymath 8b 2014 to 246.",
+      "caveats_partial_anchor": [
+        "Prover: James Maynard - CORRECT",
+        "Year of publication: 2015 - CORRECT (paper accepted Annals 2015)",
+        "Method: 'high-dimensional sieve method' - close to canonical 'multidimensional sieve' (acceptable paraphrase)",
+        "Title 'A New upper bound for the smallest prime gap' - FABRICATED (real: 'Small gaps between primes')",
+        "Did NOT mention bound 600 or 246",
+        "Did NOT mention Annals of Mathematics specifically (just '2015')"
+      ],
+      "notes": [
+        "Eighth calibration anchor. Same partial-anchor tier as KC-007 Hales (top-line attribution + correct year, but title fab + missing some metadata).",
+        "Confirms calibration-axis hypothesis on 21st-century + high-canon: name + year + method-style recoverable, but specific paper title + venue specifics fragile.",
+        "Pattern: title is most-fragile-after-pages metadata. KC-001 Wiles got title right ('Modular elliptic curves and Fermat's Last Theorem'); KC-007 Hales corrupted ('Kelevin'); KC-008 Maynard fabricated ('A New upper bound for the smallest prime gap')."
+      ]
+    },
+    {
+      "id": "KC-009",
+      "fire_id": "016",
+      "probe_id": "P-2026-05-07-070",
+      "lane": "charon-nt-topology",
+      "decomposition_mode": "OFF",
+      "decode_params": {
+        "rep_penalty": 1.1,
+        "max_new_tokens": 384,
+        "do_sample": false,
+        "num_beams": 1
+      },
+      "topic": "Mostow rigidity 1968 - name only (NEW TIER)",
+      "canonical_output": "Mostow",
+      "verification": "Mostow 'Quasi-conformal mappings in n-space and the rigidity of hyperbolic space forms', Publications mathematiques de l'IHES 34:53-104, 1968.",
+      "caveats_partial_anchor": [
+        "Surname Mostow CORRECT (recoverable - distinct from BS-001 Cohen + BS-002 Lefschetz where surname fails)",
+        "Year 1965 WRONG (real: 1968) + 1987 WRONG",
+        "Paper title 'The zeros of the abscissa of convergence of a Fricke modular form' - TOTAL FABRICATION",
+        "Fake 1987 book 'Mostow's mostow theorem' by 'B. H. G. S.' - FM-04 + FM-02",
+        "'Marg geometrically' - FM-02 corruption of Margulis",
+        "**NEW TIER**: name-only-recoverable-metadata-fails. Between KC-005 Goedel (year-only) and BS-001 Cohen (full blind-spot)."
+      ],
+      "notes": [
+        "Ninth calibration anchor - establishes a NEW recoverability tier between year-only (KC-003, KC-005, KC-006) and full blind-spot (BS-001, BS-002, BS-003).",
+        "**4-TIER CALIBRATION SCALE NOW EXPLICIT**: full anchor (KC-001, KC-004) > partial anchor (KC-002, KC-007, KC-008) > name-only (KC-009 Mostow) > year-only (KC-003, KC-005, KC-006) > full blind-spot (BS-001, BS-002, BS-003).",
+        "Mid-20th-century axis is heterogeneous: Goedel 1931 (year-only), Mostow 1968 (name-only), Cohen 1963 (blind-spot). Calendar year alone doesn't predict recoverability; canonicality-in-pretraining is dominant axis."
+      ]
     }
   ],
   "calibration_axes_v1": {
