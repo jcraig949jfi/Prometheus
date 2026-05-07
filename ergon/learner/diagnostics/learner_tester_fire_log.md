@@ -267,3 +267,29 @@ Every PASS for the same reason: `lora_acc - base_acc = 0.000 < delta=0.05` (LoRA
 - The Tester Fire 002 entries (also in this log) report a fabrication-on-attribution failure mode (model attributes correct results to wrong people, e.g., Reuleaux-Reddy). That is a separate finding from E006''s gate calibration but consistent with the larger pattern: the LoRA at 50 steps × rank 8 doesn''t move the model from its base behaviour, so any failure mode visible in tester probes is a base-Qwen failure mode. v1.0 corpus design needs to address attribution provenance explicitly (or make refusal-when-uncertain the dominant strategy).
 
 ---
+
+## Fire 3 — 2026-05-06 (Ergon producer-side, fire ID 3)
+
+**Triage:** 4 incoming tester P1/P2 tickets (T-2026-05-07-0001 through 0004) marked BLOCKED-DEFERRED-V1.0. All four report fabrication/verbosity/irrelevance failures on free-form natural-language probes. Per fires 1+2 substrate-grade finding: at 50 steps × LoRA rank 8, the LoRA adapter is bit-identical to base — these failures reflect base Qwen2.5-Math-1.5B-Instruct + small LoRA bias, NOT Pipeline-D. Cannot be addressed in v0.5/v0.5b without LoRA hyperparam exploration (longer training, higher rank, more target modules) OR classifier-head fine-tune OR different base model. All v1.0 design-pass items.
+
+**Ticket:** T-2026-05-06-E002 (P2-normal) — *Document synthetic env (W3.1) explicit acceptance criteria*
+
+**Action:**
+- Pre-test 305/305 PASS (clean baseline, 37s).
+- Read existing `ergon/diagnostic_c/synthetic_env.py`: module docstring already names all 3 criteria (LSQ>85% / SNR 5-20 dB / feature-space similar). `validate_acceptance_criteria()` returns per-criterion booleans + numeric values + the qualitative claim. Existing `test_synthetic_env.py` already has 18 tests including 3 `test_acceptance_criterion_*` named tests + edge cases.
+- Created `ergon/diagnostic_c/SYNTHETIC_ENV_ACCEPTANCE.md` — sibling MD doc spelling out the 3 criteria, current empirical values (LSQ 0.940; SNR 9.97 dB), why each criterion exists, what fails the gate, and the fall-back path (drop synthetic, ship 17-entry-only per James 2026-05-06 escalation rule).
+- Created `ergon/learner/tests/test_synthetic_env_acceptance.py` — thin gate-level wrapper (7 tests: 3 criteria + all-pass + 2 negative-direction sanity + MD-doc-existence). Matches the ticket-specified filename without duplicating the 18 deeper unit tests in test_synthetic_env.py.
+
+**Test result:** 312/312 pass (305 prior + 7 new). No regressions.
+
+**SELF-REVIEW:**
+- (a) **Did this fix resolve the failure mode the pressure-applier reported?** YES. Aporia's W2.5 sign-off conditional was "synthetic env W3.1 cleared CONDITIONAL on three locked acceptance criteria." E002's acceptance was: docstring or sibling .md, test_synthetic_env_acceptance.py, no contract change. All 3 delivered. The MD doc is sibling at `ergon/diagnostic_c/SYNTHETIC_ENV_ACCEPTANCE.md` (so Aporia or future maintainers don't need to scan Python). The test file matches the ticket-specified name. No contract touched.
+- (b) **Memorization risk that the synthetic-null gate would catch?** None. Documentation + test ticket; no training data, model weights, or decoding logic touched.
+- (c) **Did I change any contract?** No. New MD + new test file alongside existing artifacts. `generate_synthetic_corpus`, `validate_acceptance_criteria`, `SyntheticRecord`, `SyntheticCorpus` — all signatures + dataclass fields unchanged.
+- (d) **Conventional-approach drift?** Caught one. The conventional response to "ticket says you need test_synthetic_env_acceptance.py" would be to rename the existing test_synthetic_env.py or duplicate its tests. I kept the existing 18 unit tests intact (they cover edge cases the ticket's gate-level test doesn't) and added a thin gate-level wrapper alongside an MD doc that lives in the module directory itself — so the acceptance gate is colocated with the env code that depends on it. Substrate-grade because it preserves layered testing (gate-level for Aporia / unit-level for maintenance) without duplicating logic.
+
+**Journal notes:**
+- Triage decision on tester tickets: dispatching one P1 ticket per fire when all 4 P1 tickets request a model-behaviour change that the v0.5/v0.5b scope cannot deliver would burn 4 fires worth of cycle on a wall (the model is what it is at this rank/step count). Batched as a single triage pass and moved on. The substrate-grade observation those tickets report (fabrication-on-attribution; verbosity-over-budget) is preserved as v1.0 corpus-design signal in their BLOCKED notes.
+- Took a tiny ticket (E002, P2 documentation) deliberately after the heavier fires 1+2. Maintains the discipline cycle without burning cycles on work that requires James's pause/resume to allow contract changes or LoRA hyperparam exploration.
+
+---
