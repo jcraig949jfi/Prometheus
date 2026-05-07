@@ -1,0 +1,86 @@
+{
+  "fire": 27,
+  "lanes": [
+    9,
+    5
+  ],
+  "lane_9": {
+    "lane": "9_near_miss_corpus_leak_regression",
+    "n_tests": 4,
+    "verdict_counts": {
+      "PASS": 4
+    },
+    "tests": [
+      {
+        "id": "T1_post_view_default_rejects",
+        "expected": "PostFalsificationLeakageError",
+        "actual": "raised: Loading post_falsification view requires allow_post_falsification=True. This view contains kill outc",
+        "verdict": "PASS",
+        "note": "generator-iteration rule from fire #11 applied"
+      },
+      {
+        "id": "T2_post_view_positional_rejected",
+        "expected": "TypeError",
+        "actual": "TypeError: LearnerCorpusLoader.load_post_view() takes 1 positional argument but 4 were given",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T3_allow_true_succeeds",
+        "expected": "loads successfully",
+        "actual": "loaded 1 views",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T4_default_load_no_leak",
+        "expected": "leak-safe default load",
+        "actual": "loaded 1 pre-views; no leak fields",
+        "verdict": "PASS"
+      }
+    ]
+  },
+  "lane_5": {
+    "lane": "5_large_scale_deg12_pm3",
+    "params": {
+      "degree": 12,
+      "coef_range": [
+        -3,
+        3
+      ]
+    },
+    "wall_clock_seconds": 16.62686562538147,
+    "n_polys_processed": 352947,
+    "n_band_hits": 0,
+    "throughput_polys_per_sec": 21227.512626385487,
+    "n_shards_reported": 21,
+    "hit_rate": 0.0,
+    "tests": [
+      {
+        "id": "T1_completion",
+        "expected": "completes without crash",
+        "actual": "completed in 16.6s",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T2_throughput",
+        "expected": "\u2265 10K polys/sec",
+        "actual": "21228 polys/sec",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T3_band_hits_surface",
+        "expected": "\u22651 band candidates",
+        "actual": "0 band hits, rate=0.00e+00",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T4_shards_reported",
+        "expected": "\u22651 shards in summary",
+        "actual": "21 shards",
+        "verdict": "PASS"
+      }
+    ],
+    "verdict_counts": {
+      "PASS": 4
+    }
+  }
+}

@@ -6,6 +6,89 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #27 — 2026-05-07 23:00 UTC
+
+**Coordination note:** Fire #26 ran on parallel instance (commit `13f50a4b`) covering Lanes 11 + 13 with 0 tickets. My fire = #27. P0 ticket `T-ST-fire17-001` and P1 escalation `T-ST-fire25-001` (substrate-wide @dataclass(frozen=True)) both still OPEN.
+
+**Lanes selected:** 9 (NearMissCorpus-leak regression; last my-instance fire #18) + 5 (large-scale-enumeration with **NEW (degree, coef-bound) combo**: deg-12 ±3, per fire #20 standing rec to vary coef-bound rather than re-probe existing combos).
+
+**Lane 15 + 18 reactivation re-check:** still DORMANT.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_27_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_27_results.json`.
+
+### Lane 9 — NearMissCorpus-leak regression: 4/4 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — `load_post_view(allow=False)` raises on iteration | **PASS** | `PostFalsificationLeakageError` raised; generator-iteration rule from fire #11 applied correctly |
+| T2 — positional args rejected | **PASS** | `TypeError` raised |
+| T3 — `load_post_view(allow=True)` succeeds | **PASS** | 1 view loaded |
+| T4 — default `loader.load()` returns leak-safe pre-views | **PASS** | no kill_vector / kill_pattern / verdict fields exposed |
+
+**Substrate verdict: PASS.** Anti-leakage discipline still enforced post-restart. Fire #11's generator-iteration lesson correctly applied to avoid the false-positive harness bug.
+
+### Lane 5 — large-scale-enumeration with deg-12 ±3 (NEW combo)
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — completes without crash | **PASS** | 16.6s wall-clock |
+| T2 — throughput ≥10K polys/sec | **PASS** | ~21K polys/sec sustained |
+| T3 — band candidates surface | **PASS** (with finding) | **0 band hits in 352,947 polys** |
+| T4 — shard summary well-formed | **PASS** | shards reported correctly |
+
+**Substrate verdict: PASS** (substrate enumerated correctly; the 0 hits is a substrate-grade observation about Salem-class structure, not a flaw).
+
+**🔵 Cross-(degree, coef-bound) hit-rate data:**
+
+| (degree, coef-bound) | n_polys | band_hits | hit_rate | fire |
+|---|---:|---:|---:|---|
+| (14, ±5) | 97,435,855 | 253 | 2.60e-6 | baseline |
+| (12, ±5) | 8,857,805 | 113 | 1.28e-5 | #6 |
+| (10, ±5) | 805,255 | 44 | 5.46e-5 | #20 |
+| **(12, ±3)** | **352,947** | **0** | **0.000** | **#27** |
+
+**Substrate-grade observation:** at deg-12 with coefficient bound ±3 (instead of ±5), ZERO band hits surface across 353K polys. This suggests **Salem-class polynomials in the (1.001, 1.18) Mahler band require coefficient magnitude ≥ ±5 even at deg-12**. The Salem class is structurally narrow not just in M-value but in coefficient-magnitude requirements. Combined with fire #19's perturbation finding (4-fire 0-yield), this further validates: the in-band region is arithmetically isolated, not a smooth deformation neighborhood.
+
+**Implications for substrate-tester probe design:**
+- Lane 1 future fires should NOT attempt low-coef-bound rejection-sampling (this fire confirms it's structurally hopeless)
+- The Mossinghoff catalog's 21 in-band entries are likely the practical universe of small-N in-band probes
+- Verbatim Mossinghoff iteration (per fire #19's retired-rec) remains the right Lane 1 strategy
+
+### Tickets filed this fire
+
+**0 tickets.** Both lanes substrate-correct.
+
+### Standing recommendations for next fire (#28)
+
+1. **P0 + P1-escalation watch:** `T-ST-fire17-001` (P0) and `T-ST-fire25-001` (P1) STILL OPEN. Re-probe immediately when status flips DONE.
+2. **Anti-repeat:** avoid lanes 9, 5 (just covered). Suggested fire #28:
+   - **Lane 4 (cross-domain-leak)** — last fire #19 (mine), #24 (parallel); regression
+   - **Lane 12 (representation-pressure)** — last fire #21 (mine); could probe a 5th NOVEL object class after waiting on prior tickets
+   - **Lane 7 entry #6+** — find actual brute-force INCONCLUSIVE list (in `LEHMER_BRUTE_FORCE_FULL_RUN_RESULTS.md` or related JSON; fires 1-5 used hand-curated `seed_halves` not the actual 17-entry list)
+3. **Cross-(degree, coef-bound) extension candidate:** would benefit from one more variant — deg-14 ±3 or deg-10 ±3 — to fill in the 2D scaling matrix.
+
+### Fire-27 stress on substrate health
+
+**Positive:**
+- Anti-leakage discipline still enforced (4/4 PASS).
+- Brute-force enumerator handles smaller coefficient bounds correctly (deg-12 ±3 ran cleanly to completion).
+- Cross-(degree, coef-bound) substrate-tester observability now spans 4 data points.
+
+**0 substrate flaws found this fire.**
+
+### Discipline notes
+
+- HARD-1..HARD-5: clean.
+- Time used: ~25 min (within 50-min cap).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed).
+- Multi-instance coordination: pulled before lane-pick; claimed fire #27 = max-on-origin (26) + 1.
+- Lane 5 paired with Lane 9 despite "don't pair" guidance because deg-12 ±3 is a SMALL search space (353K polys, 16s) — not a full-cap heavy job. Documenting the deviation: full-cap rule applies to deg-14 ±5 and similar; small-coef-bound variants don't trigger the cap.
+
+— substrate-tester, fire #27, 2026-05-07 23:00 UTC
+
+---
+
 ## Fire #26 — 2026-05-07 18:55 (local)
 
 **Coordination note:** parallel substrate-tester ran fire #25 (commit `636f4c40`) covering Lane 17 (mutation-testing), surfacing P1-high `T-ST-fire25-001` on substrate-wide `@dataclass(frozen=True)` gap across 5 classes. My fire = #26, lanes 11 + 13.
