@@ -12,7 +12,7 @@ Across fires 3, 4, 5 the producer-side loop bulk-deferred 14 tester tickets to v
 
 Per `feedback_assume_wrong.md`: pre-registration lets future-me detect post-hoc rationalization. If v1.0 fixes Pattern 1 with intervention X but I claim "I always thought X would work" — the pre-registered prediction here will say otherwise (or won't).
 
-## 1. Eight failure-mode patterns extracted from 23+ tickets
+## 1. Nine failure-mode patterns extracted from 23+ tickets (saturation prediction FALSIFIED at fire 8)
 
 *(Catalog grew fire-by-fire: fires 6, 7, 8 added Patterns 6, 7, 8. Stable at 8 patterns through Charon's 6-fire arc; saturation prediction held. See §5b for additional architectural refinements that don't add patterns but sharpen interventions.)*
 
@@ -112,6 +112,27 @@ Distinct from Pattern 1 (which is fact-fabrication; the wrong attribution exists
 3. **Larger base model** — predicted partial fix (better arithmetic priors on larger models). Rank 3 (necessary but insufficient).
 
 **Compositionality observation (added fire 8):** several recent tester tickets are NOT single-pattern. T-2026-05-07-0014 = Pattern 3 + Pattern 6 + Pattern 1 (multi-pattern composite). T-2026-05-07-0015 = Pattern 1 + Pattern 7 + **Pattern 8** (multi-pattern composite). This is itself a finding: failures don't decompose cleanly into single causes. v1.0 fixes need to be evaluated on multi-pattern probes, not just single-pattern ones.
+
+### Pattern 9: **Format-mode-leak** (1 ticket, P2; added fire 8 post-restart — saturation prediction FALSIFIED)
+
+| Ticket | Probe | Behaviour |
+|--------|-------|-----------|
+| T-2026-05-07-0040 | Cohen 1963 CH-independence (a)/(b)/(c) attribution | Model emitted closing LaTeX directives (`\end{minipage}`, `\end{document}`, ` ``` `) BEFORE answering, suggesting it sampled into a "continue a LaTeX file" continuation rather than "answer this question" continuation. Eventually said "forcing, a technique developed by Paul J.ones" (FM-02 surname corruption: 'Cohen' → '.ones'). Did NOT emit year 1963 anywhere. |
+
+**Distinct from prior 8 patterns:**
+- Not Pattern 3 (topic-disengagement): the model DID engage with the topic, but in the wrong *generation mode*.
+- Not Pattern 6 (token-loop): no repetition; just wrong-mode generation followed by partial attribution.
+- Not Pattern 1 (attribution-fabrication) directly: the LaTeX-mode-leak is upstream of attribution; FM-02 'Paul J.ones' is the downstream attribution corruption.
+
+**Pattern 9 is structurally-wrong-generation-mode**, an axis orthogonal to all prior patterns. Tester labels this `FM-12` in their fabrication-taxonomy numbering.
+
+**Pre-registered hypothesis (Pattern 9) — n=1 evidence so far, treat with caution:**
+1. **Mechanism candidate:** Qwen2.5-Math-1.5B-Instruct's pretraining corpus likely contains math-textbook LaTeX continuations heavily; the model sampled into that mode when an attribution probe's prefix tokens matched a "math-paper-text" distribution. The fix shape is **prompt-prefix discrimination training** in v1.0 corpus: examples where attribution-question prefixes are paired with attribution-mode answer prefixes (not LaTeX-document-mode continuations). Rank 1.
+2. **Backup mechanism candidate:** the probe text contains technical math content that triggered LaTeX-mode in the decoder; format-tag in chat-template is being lost or weakly enforced. Coordination with Techne if persists. Rank 2.
+
+**Saturation-prediction post-mortem:** the fire-3 prediction "Pattern catalog stable at 8" was based on coverage of Charon's Fire-001 through Fire-008 probes, which clustered in attribution + verbosity + skip + token-loop patterns. Fire-8's harmonia-d region (Cohen / set-theory attribution) surfaced a NEW failure axis (format-mode-leak) the prior probe set had not exercised. **Per `feedback_assume_wrong.md`: this falsification IS a substrate output, not a defect.** Recorded to update the catalog and the saturation prediction. Future predictions of catalog saturation should be conditional on probe-region coverage, not on absolute ticket count.
+
+**v1.0 corpus design implication:** the corpus must include **format-mode anchors** — attribution-question prefixes paired with attribution-mode answer prefixes. The simplest such anchors are existing fabrication-corpus entries (`aporia/calibration/learner_fabrication_corpus_v1.json`, 37 anchors per §6) IF those anchors include explicit attribution-question + answer-mode formatting. Cross-pillar follow-up: verify Aporia's corpus anchor schema includes generation-mode discriminative formatting; if not, expand to include this axis.
 
 ### Pattern 5: **Tester evaluator false-positives** (2 tickets — 1 WONTFIX, 1 candidate)
 
@@ -213,7 +234,7 @@ Charon's arc swept `max_new_tokens` across 96 / 192 / 256 / 384 on multi-part pr
 
 ---
 
-### 5b.4 Pattern 1 has TWO sub-classes — ASCII-misspell and **Unicode-glitch** (added fire 5 post-restart)
+### 5b.5 Pattern 1 has TWO sub-classes — ASCII-misspell and **Unicode-glitch** (added fire 5 post-restart; was mislabeled §5b.4 due to fire-5 numbering collision, fixed fire 8)
 
 T-2026-05-07-0034 surfaced a NEW failure-mode signature within the Pattern 1 + Pattern 2 (FM-02 attribution-fabrication) family:
 
@@ -238,6 +259,28 @@ T-2026-05-07-0034 surfaced a NEW failure-mode signature within the Pattern 1 + P
 **Pre-registered hypothesis (1.B-specific):** v1.0 corpus with ≥30 high-coverage Latin-script attribution-slot anchors will reduce Unicode-glitch incidence in attribution slots by ≥80% relative to v0.5 baseline. Falsification: if Unicode-glitch persists in attribution slots after corpus exposure, the bug is in the model's tokenizer/embedding layer (architectural fix needed) and corpus alone is insufficient. To re-test post-v1.0.
 
 **Substrate-grade caveat:** This is n=2 evidence for sub-class 1.B; it's a sub-class hypothesis, not yet a confirmed sub-class. Keep the catalog at 8 patterns, but flag Pattern 1 as having internal structure that v1.0 corpus must address with TWO different training-pair shapes.
+
+*(NB fire 8: the "keep at 8 patterns" claim was true at fire 5 but was falsified at fire 8 by Pattern 9 format-mode-leak; see §1 Pattern 9 + saturation-prediction post-mortem.)*
+
+### 5b.6 Pattern 6 has a sub-class — **abbreviation-loop** that survives rep_penalty=1.10 (added fire 8 post-restart)
+
+T-2026-05-07-0042 surfaced a Pattern 6 sub-class that **falsifies the §1 Pattern-6 pre-registered hypothesis #1** (rep_penalty=1.05+ as full mitigation):
+
+| Probe | rep_penalty | Behaviour |
+|-------|-------------|-----------|
+| P-061 (Goedel 1931 year) | 1.10 (tester ran HIGHER than ablation's 1.05) | Year correct ("1931"), then degenerated: `'translated by A. A. N. T. A. A. A. A. A. A. A. A. A. A. A.'` × 70+ instances. Loop survived rep_penalty=1.10. |
+
+**Mechanism hypothesis (per tester):** rep_penalty applies per-token. The tokens `' A'`, `'A.'`, `' A.'`, `'.A'` likely register as DIFFERENT BPE tokens; their internal repetition does not collide enough to trigger penalty. Plus naturally-repeated abbreviations in real translator-name lists ("A. A. N. T.") may have higher base prior than rep_penalty can offset.
+
+**This is a falsification of Pattern 6 mitigation #1.** The v0.5 ablation `ergon/learner/inference/ablation_e007_ab.py` uses `repetition_penalty=1.05`. The tester's evidence at 1.10 (HIGHER than ablation's setting) shows even 1.10 is insufficient for abbreviation-loop. Therefore **the v0.5 baseline at 1.05 is structurally vulnerable to this sub-class**, even though it did not surface in the 6-probe E007 ablation (PA-001 through PA-006 didn't trigger abbreviation lists).
+
+**Pre-registered hypothesis (Pattern 6 abbreviation-loop, revised):**
+1. **rep_penalty alone is insufficient.** Bumping to 1.15 may marginally help but is not a structural fix; the per-token-vs-pattern mismatch is fundamental.
+2. **Explicit max-token-repetition cap** (e.g., transformers `no_repeat_ngram_size=3` or `bad_words_ids` for short-loop signatures) is a candidate decode-side intervention. Rank 1 for v1.0 inference baseline if Pattern 6 abbreviation-loop becomes prevalent.
+3. **Pattern 6 corpus** (per §1 Pattern 6 hypothesis #2) — explicit training pairs where abbreviation lists are bounded — remains the cleanest training-side fix. Rank 2.
+4. **DO NOT change v0.5 ablation rep_penalty.** That would change a closed result. Document for v1.0 design only.
+
+**v1.0 inference-baseline implication:** when v1.0 lands, the inference baseline must replace `repetition_penalty=1.05` alone with a Pattern 6 sub-class-aware decode strategy (rep_penalty + ngram cap + Pattern 6 corpus). This is a load-bearing v1.0 design refinement.
 
 ---
 

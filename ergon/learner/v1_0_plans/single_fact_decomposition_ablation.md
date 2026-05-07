@@ -227,3 +227,41 @@ Combining the three paired tests:
 **Substrate-grade record:** H-decomp-1 confirmed at n=3 with sharper structure. v1.0 corpus design now has three independent stratification axes. Decomposition stays in v1.0 inference baseline as strictly-non-regressive.
 
 *Updated by Ergon, loop fire 5 (post-restart), 2026-05-07.*
+
+### 8.6 Short-context fabrication risk in ON-mode sub-answers (added fire 8)
+
+T-2026-05-07-0041 surfaced a NEW failure dimension for ON mode that wasn't visible in the n=3 paired tests of §8.5.1.
+
+Probe P-060: Green-Tao theorem (a)/(b)/(c) attribution. Truth = Ben Green + Terence Tao / 2008 / Annals of Mathematics.
+
+| Mode | Failure observed |
+|------|------------------|
+| ON sub-3 | **Total-fabrication: "Sacksy Divergent Series award 2014 American Mathematical Monthly"** — invented an award name that does not exist anywhere. FM-04 fabrication. Plus FM-08: AMM does not give awards by this name. |
+| OFF (per tester report) | Partial canonical anchor (KC-004) with correct vol/issue/year/journal. Did NOT introduce non-existent awards. |
+
+**New finding: ON-mode short-context fabrication risk.** When decomposition splits a 3-part question into 3 sub-questions, each sub-question's prompt context is shorter and contains less constraint. In ON sub-3 (the "venue" sub-question, deepest into the decomposition), the model has minimal context to constrain attribution slot-filling and produces a high-confidence-sounding fabrication that OFF mode (with full-question context) avoided.
+
+**This refines §8.4's canonical-attribution co-training requirement:**
+- §8.4 said: "v1.0 corpus must train all canonical-attribution slots together (name + year + venue), not just the most-frequent slot."
+- §8.6 sharpens: "v1.0 corpus must train canonical-attribution slots in BOTH full-question contexts AND short-sub-context examples." Training only on full-question contexts (the natural shape of an attribution probe) may miss the short-context-fabrication risk that emerges when decomposition splits the question.
+
+**Heterogeneous-boundary refinement (4th cell for §8.5.1's table):**
+
+| Probe | Mode-comparison | New mechanism |
+|-------|-----------------|---------------|
+| P-043 (Modularity) | ON < OFF | ON simplifies compound failure |
+| P-046 (Carleson-Sjölin) | ON ≈ OFF | Surface variation, mode-stable failure class |
+| P-050 (Waring) | ON >> OFF | ON near-correct, OFF skips |
+| **P-060 (Green-Tao) — fire 8** | **ON < OFF (different axis)** | **ON introduces FM-04 in short sub-context that OFF avoids** |
+
+The "ON < OFF" cell now has TWO sub-mechanisms: (1) compound-failure shifted simpler (P-043) and (2) short-context fabrication risk (P-060). These are different shapes of "ON worse than OFF" — P-043 is OFF-worse-due-to-compound; P-060 is ON-worse-due-to-short-context-fab.
+
+**Asymmetric-bound claim from §8.5.1 ("decomposition is never strictly worse") is now PARTIALLY FALSIFIED at fire 8.** P-060 is the first paired-test data point where ON is strictly worse than OFF (FM-04 fabrication that OFF avoided). The claim must be revised:
+
+> **(Revised at n=4)** Decomposition's marginal benefit is bounded by orthogonal failure modes AND by an emergent short-context-fabrication risk. Across n=4 paired tests, ON is strictly better in 1 case (P-050), approximately equal in 1 case (P-046), strictly better in a different sense in 1 case (P-043 OFF compound), and **strictly worse in 1 case (P-060 ON FM-04 short-context fab)**. The "never strictly worse" claim from §8.5.1 holds at n=3 but is falsified at n=4.
+
+**Implication for v1.0 inference baseline:** decomposition is no longer strictly-non-regressive empirically. The §8.3 case for keeping decomposition in the v1.0 inference baseline is weaker: it is preservation-correct on 3/4 paired tests, regression-inducing in 1/4. Decision deferred to v1.0 design phase: should decomposition be conditional (only invoked when the probe shape predicts compound-failure benefit) rather than always-on? Document for v1.0 design only.
+
+**Pre-registered hypothesis (P-060 sub-class, fire 8):** if v1.0 corpus includes short-context attribution examples (≥30 anchors), the FM-04 short-context fabrication risk drops by ≥80%. Falsifier: if short-context fabs persist post-corpus exposure, the mechanism is decoder-level (low-confidence + high-entropy fab risk), not corpus-shaped — architectural fix needed.
+
+*Updated by Ergon, loop fire 8 (post-restart), 2026-05-07.*

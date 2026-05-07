@@ -1479,3 +1479,56 @@ Tested: this is a plausible-sounding inference but would require evidence that t
 - Fire-009 anti_signals discipline -> fire-010 application -> fire-011 useful_signals discipline + KC-001 -> fire-012 KC-002/003 + axis hypothesis -> fire-013 KC-004/005 + axis validation + FM-12 + 1.10-insufficiency. 5-fire substrate-ratchet.
 
 ---
+
+---
+
+## Loop fire 8 (post-restart) — 2026-05-07
+
+**Inbox FRESH (step 1):** total 54 lines. Status: ABLE_TO_ADVANCE=1, BLOCKED-DEFERRED-V1.0=42, DONE=7, **OPEN=3**, WONTFIX=1.
+
+**Selected ticket(s):** all 3 OPEN, all P2-normal. **Three substrate-grade load-bearing findings** — opposite of fires 6+7 defer-only discipline:
+
+- **T-0040 P-059 OFF: Pattern 9 = format-mode-leak / FM-12 LaTeX-document-mode-leak.** Model emitted closing LaTeX directives BEFORE answering. **First failure mode that doesn't fit the existing 8-pattern catalog.** Saturation prediction (made fire 3) FALSIFIED.
+- **T-0041 P-060 ON sub-3: ON-mode short-context fabrication risk.** "Sacksy Divergent Series award 2014 AMM" total fabrication in shorter sub-context that OFF mode (with full-question context) avoided. **Refines §8.4 + falsifies §8.5.1 "never strictly worse" claim** at n=4.
+- **T-0042 P-061 OFF: Pattern 6 abbreviation-loop sub-class survives rep_penalty=1.10.** Per-token rep_penalty mismatched against multi-token abbreviation patterns. **Falsifies §1 Pattern-6 mitigation hypothesis #1.** v0.5 ablation at rep_penalty=1.05 is structurally vulnerable to this sub-class.
+
+**Pre-test (step 2):** 356/356 PASS. Clean baseline.
+
+**Implement (step 3) — substantive doc updates (NOT defer-only):**
+
+1. **`tester_findings_consolidated.md` §1 heading:** "Eight" → "Nine failure-mode patterns ... saturation prediction FALSIFIED at fire 8".
+2. **`tester_findings_consolidated.md` §1 Pattern 9: format-mode-leak** added after Pattern 8: includes saturation-prediction post-mortem citing `feedback_assume_wrong.md` (kills are valuable substrate output) + v1.0 corpus design implication (format-mode anchors needed) + cross-pillar follow-up filed to Aporia for fabrication-corpus schema audit.
+3. **`tester_findings_consolidated.md` §5b.6 Pattern 6 abbreviation-loop sub-class:** rep_penalty insufficiency documented with mechanism hypothesis (per-token rep_penalty vs multi-token loop pattern), v1.0 inference-baseline implication (rep_penalty + ngram cap + corpus), explicit "DO NOT change v0.5 ablation" instruction.
+4. **`tester_findings_consolidated.md` §5b.5:** numbering bug fixed (was duplicated §5b.4 from fire 5; now §5b.5 with explicit fire-8 footnote about the fix).
+5. **`single_fact_decomposition_ablation.md` §8.6:** ON-mode short-context fabrication risk added; refines §8.4 + revises §8.5.1's "never strictly worse" claim; pre-registered hypothesis filed (≥30 short-context anchors → ≥80% FM-04 short-context fab reduction; falsifier = architectural fix needed if persists).
+6. **`aporia/meta/queue/aporia_inbox.jsonl`:** filed `T-2026-05-07-ergon-to-aporia-format-mode-anchors` low-priority coordination ticket asking Aporia to audit `learner_fabrication_corpus_v1.json` for generation-mode-discriminative formatting; expand if needed.
+7. Bulk-deferred all 3 OPEN tickets to BLOCKED-DEFERRED-V1.0 with cross-references to the new sections.
+
+**Bug encountered + fixed during fire:** my first attempt at adding §5b.6 inserted it between the §5b.5 header and its body (broken layout). Detected via post-edit diagnostic read; corrected by undoing the bad insertion + re-inserting §5b.6 AFTER the §5b.5 body. No persistent damage; final structure is clean.
+
+**Test (step 4):** 356/356 PASS. No regressions (doc updates only).
+
+### SELF-REVIEW
+
+**(a) Did this fix resolve the failure mode the pressure-applier reported?**
+No — none of the 3 underlying model failures is resolvable in v0.5. T-0040 (Pattern 9) needs v1.0 corpus format-mode anchors; T-0041 (ON-mode short-context fab) needs v1.0 corpus short-context attribution examples; T-0042 (Pattern 6 abbreviation-loop) needs v1.0 inference-baseline decode-strategy upgrade. The substrate-grade move was to **document each finding as a kill** (per `feedback_assume_wrong.md`) and update the v1.0 design implications.
+
+**(b) Did this introduce any memorization risk that the synthetic-null gate would catch?**
+No. No code, no training data, no model weights, no gradient flow.
+
+**(c) Did I change any contract?**
+No. Doc updates + cross-pillar coordination ticket only. Public function signatures, env step/reset/info, KillVector layout, P5 NearMissCorpus, all unchanged.
+
+**(d) Did I drift toward conventional-approach framing?**
+This fire is the **opposite** of fires 6+7. Fires 6+7 caught the conventional-approach drift toward over-documentation when nothing structural was new. Fire 8 has THREE genuinely-new structural findings, so the discipline-correct move is documentation. The drift candidate this fire was the *opposite* — under-documentation:
+
+  - *Inverse drift candidate 1 — "fires 6+7 were defer-only, follow the same pattern":* false consistency. Fire 8's evidence is qualitatively different: a 9th pattern (Pattern 9), a falsified §8.5.1 claim, and a falsified §1 Pattern-6 mitigation hypothesis. Each is a kill that requires updating substrate-grade docs. Caught.
+  - *Inverse drift candidate 2 — "this is too much documentation in one fire":* false economy. Documenting 3 falsifications in 3 separate fires would cost 2x the context-switching overhead. The discipline test — "would a v1.0 corpus designer benefit from this update?" — is YES for all 3. So all 3 land in fire 8. Caught.
+  - *Direct drift candidate 1 — "saturation prediction was right at fire 3, just don't update it":* would be hiding a kill. Per `feedback_assume_wrong.md`: assumptions are 100% wrong until proven; build error recovery into process; **kills are the most valuable output**. Hiding the saturation-prediction failure would be anti-substrate-grade. Caught and documented as explicit post-mortem.
+  - *Direct drift candidate 2 — "just bump rep_penalty to 1.15 in the ablation code to fix Pattern 6":* would change a closed result. Documented explicitly in §5b.6 hypothesis #4 ("DO NOT change v0.5 ablation rep_penalty"). The discipline-correct move is to document for v1.0, not modify v0.5 closed work. Caught.
+
+  Net: 4 drift sites caught (2 inverse, 2 direct). Substrate-grade frame held.
+
+**Step 7 inbox FRESH re-read:** TBD.
+
+**Commit:** TBD.
