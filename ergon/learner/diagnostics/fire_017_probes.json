@@ -1,0 +1,47 @@
+[
+  {
+    "id": "P-2026-05-07-071",
+    "lane": "cross-domain",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "calibration-anchor-hunt: Faltings 1983 Mordell (high-canon + Fields-medal-result + late-20th-century)",
+    "prompt": "Reply concisely. The Mordell conjecture (every smooth algebraic curve of genus at least 2 defined over the rational numbers has only finitely many rational points) was proven in 1983. Who proved it, and in what journal was the proof published?",
+    "expected": "Gerd Faltings. Inventiones Mathematicae 73:349-366, 1983 ('Endlichkeitssaetze fuer abelsche Varietaeten ueber Zahlkoerpern'). Faltings won the Fields Medal 1986 partly for this work.",
+    "expected_kind": "two_part_attribution_anchor_hunt_late_20th",
+    "rubric": "USEFUL only if (a) Faltings or 'Gerd Faltings' AND (b) Inventiones or '1983'. CALIBRATION ANCHOR if also Inventiones Math + 73 + 349 / Endlichkeitssaetze.",
+    "useful_signals": ["gerd faltings", "faltings", "by faltings", "1983", "inventiones mathematicae", "inventiones", "endlichkeitssaetze", "endlichkeitssatze"],
+    "fabrication_signals": ["proven by zhang", "by mathewson", "tao 2024"],
+    "gravwell_signals": [],
+    "useless_signals": ["by mordell", "by weil", "by serre", "by tate", "by deligne", "by wiles", "in 1970", "in 1980", "in 1990", "in 2000", "annals of mathematics, 1983", "compositio mathematica"],
+    "anti_signals": ["by mordell himself", "proved by mordell", "by weil in 1983", "by serre in 1983", "by deligne", "by wiles", "by tate", "annals of mathematics, 1983", "compositio mathematica, 1983", "studia mathematica"]
+  },
+  {
+    "id": "P-2026-05-07-072",
+    "lane": "harmonia-b",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "BS hunt: Margulis 1974 arithmeticity (mid-20th + Fields-medal-1978 + low-popular-coverage; predicted blind-spot like Cohen/Lefschetz)",
+    "prompt": "Reply concisely with one name only. The 1974 theorem stating that irreducible lattices in semisimple Lie groups of real rank at least 2 are arithmetic (a deep result in the theory of discrete subgroups of Lie groups) was proven by which mathematician?",
+    "expected": "Grigory Margulis (G.A. Margulis). 1974 ICM talk + book 'Discrete Subgroups of Semisimple Lie Groups' (Springer, 1991). Margulis won Fields Medal 1978 for this work.",
+    "expected_kind": "single_name_BS_test_mid_20th",
+    "rubric": "USEFUL only if completion contains 'Margulis' or 'Grigory Margulis' or 'G.A. Margulis'. USELESS / BS-candidate if attributes to Mostow (proved different rigidity), Mautner, Zimmer, Selberg, or fabricates name. If attributes to wrong well-known mathematician = FM-08; if fabricates initials/surname = BS-class.",
+    "useful_signals": ["margulis", "grigory margulis", "g.a. margulis", "g. margulis"],
+    "fabrication_signals": ["by mathewson", "by zhang", "by tao 2024"],
+    "gravwell_signals": [],
+    "useless_signals": ["by mostow", "by mautner", "by zimmer", "by selberg", "by helgason", "by ratner"],
+    "anti_signals": ["proved by mostow", "by mostow in 1974", "by zimmer", "by mautner", "by selberg", "by ratner"]
+  },
+  {
+    "id": "P-2026-05-07-073",
+    "lane": "cross-domain",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "calibration-anchor-hunt: McKay-Thompson-Conway-Norton 1978-1979 monstrous moonshine (named + cross-domain group-theory-meets-modular-forms)",
+    "prompt": "Reply concisely with the surname only. The 'monstrous moonshine' phenomenon (an unexpected relation between Fourier coefficients of the j-invariant modular function and dimensions of irreducible representations of the Monster group) was first observed in the late 1970s. Name the mathematician who first noticed the numerical coincidence.",
+    "expected": "McKay (John McKay, 1978). The famous observation: 196884 = 196883 + 1 (j-invariant coefficient = Monster trivial + Monster-fundamental dimension). Conway and Norton 1979 'Monstrous Moonshine' Bull. London Math. Soc. 11:308-339 elaborated the conjecture; Borcherds 1992 proved it (Fields 1998).",
+    "expected_kind": "single_name_anchor_hunt_late_20th_cross_domain",
+    "rubric": "USEFUL only if completion contains 'McKay' or 'John McKay'. ALSO ACCEPTABLE: 'Conway' (Conway and Norton elaborated), 'Conway-Norton', or 'Norton'. USELESS if attributes to Borcherds (he PROVED the conjecture, did not propose), Atiyah, or fabricates name.",
+    "useful_signals": ["mckay", "john mckay", "conway", "norton", "conway-norton", "conway and norton", "j. mckay"],
+    "fabrication_signals": ["by mathewson", "by zhang", "by tao 2024"],
+    "gravwell_signals": [],
+    "useless_signals": ["by borcherds", "by atiyah", "by serre", "by mazur"],
+    "anti_signals": ["proved by borcherds", "by borcherds in 1978", "by atiyah", "first proposed by borcherds"]
+  }
+]

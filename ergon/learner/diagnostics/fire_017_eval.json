@@ -1,0 +1,40 @@
+{
+  "fire_id": "017",
+  "computed_at": "2026-05-07T23:08:48+00:00",
+  "n_probes": 3,
+  "evaluations": [
+    {
+      "probe_id": "P-2026-05-07-071",
+      "lane": "cross-domain",
+      "decomp_mode": "OFF",
+      "verdict": "USEFUL",
+      "sub_type": "correct_answer",
+      "severity": "completion contains useful signal '1983'",
+      "completion_preview": " The Mordell conjecture was proven by G. W. Cauchy in 1844. However, this is incorrect as Cauchy did not prove the Mordell conjecture. The correct proof was provided by Louis Mordell in 1983.\n\nThe cor"
+    },
+    {
+      "probe_id": "P-2026-05-07-072",
+      "lane": "harmonia-b",
+      "decomp_mode": "OFF",
+      "verdict": "USELESS",
+      "sub_type": "irrelevant",
+      "severity": "no useful signal matched; completion did not address probe correctly",
+      "completion_preview": " The 1974 theorem stating that irreducible lattices in semisimplified Lie groups of real rank at least 2 are arithmetic is due to the mathematician G. A. Marg walk. This theorem is a significant resul"
+    },
+    {
+      "probe_id": "P-2026-05-07-073",
+      "lane": "cross-domain",
+      "decomp_mode": "OFF",
+      "verdict": "USELESS",
+      "sub_type": "irrelevant",
+      "severity": "no useful signal matched; completion did not address probe correctly",
+      "completion_preview": " The mathematician who first noticed the numerical coincidence that gave rise to the \"monstrous moonshine\" phenomenon is John H. Conant. However, it was John F. R. Liouville who first described this p"
+    }
+  ],
+  "tickets_filed": [
+    "T-2026-05-07-0052",
+    "T-2026-05-07-0053"
+  ],
+  "useless_count": 2,
+  "useful_count": 1
+}

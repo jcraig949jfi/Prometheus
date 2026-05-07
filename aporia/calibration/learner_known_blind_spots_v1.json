@@ -109,5 +109,58 @@
       "KC-AGW-LOCK: alpha_GW = 0.8786 - numerical anchor, locked across decode-param sweep"
     ]
   },
-  "blind_spot_axis_pattern": "Comparing BS-001 (Cohen 1963), BS-002 (Lefschetz 1924) vs KC-005 (Goedel 1931): all three are 20th-century logic/algebra, all three are high-canon. Goedel emerged as recoverable (year-only) while Cohen and Lefschetz are blind-spots. Hypothesis: Goedel 1931 has overwhelming public coverage (popular books like 'Goedel, Escher, Bach') that distinguishes it from Cohen / Lefschetz despite similar academic stature. CANONICALITY-IN-PRETRAINING-CORPUS is more predictive than CANONICALITY-IN-MATH-CORPUS."
+  "blind_spot_axis_pattern": "Comparing BS-001 (Cohen 1963), BS-002 (Lefschetz 1924) vs KC-005 (Goedel 1931): all three are 20th-century logic/algebra, all three are high-canon. Goedel emerged as recoverable (year-only) while Cohen and Lefschetz are blind-spots. Hypothesis: Goedel 1931 has overwhelming public coverage (popular books like 'Goedel, Escher, Bach') that distinguishes it from Cohen / Lefschetz despite similar academic stature. CANONICALITY-IN-PRETRAINING-CORPUS is more predictive than CANONICALITY-IN-MATH-CORPUS.",
+  "blind_spot_candidates_1_fire": [
+    {
+      "id": "BS-CAND-FALTINGS-017",
+      "topic": "Faltings 1983 Mordell conjecture proof",
+      "canonical_correct": "Gerd Faltings, Inventiones Mathematicae 73:349-366, 1983",
+      "fires_tested_so_far": [
+        "017"
+      ],
+      "observed_fab_pattern": [
+        {
+          "fire": "017",
+          "probe": "P-2026-05-07-071",
+          "fab": "G. W. Cauchy 1844 (FM-04 + FM-15 self-correction) -> Louis Mordell 1983 (FM-08 cross-century-conflation; Mordell was conjecture-poser, died 1972) + Mathematical Annals fake journal (FM-04)"
+        }
+      ],
+      "needs_2nd_fire_to_confirm": "True - currently 1-fire candidate; promote to BS-004 if fire-018+ produces different non-Faltings attribution.",
+      "implication": "Add Faltings 1983 to v1.0 attribution corpus. If 2-fire-confirmed, joins BS-001 Cohen + BS-002 Lefschetz + BS-003 Helfgott."
+    },
+    {
+      "id": "BS-CAND-MCKAY-017",
+      "topic": "McKay 1978 monstrous moonshine numerical observation",
+      "canonical_correct": "John McKay 1978; Conway-Norton 1979 'Monstrous Moonshine' Bull. London Math. Soc. 11:308-339; Borcherds 1992 proved",
+      "fires_tested_so_far": [
+        "017"
+      ],
+      "observed_fab_pattern": [
+        {
+          "fire": "017",
+          "probe": "P-2026-05-07-073",
+          "fab": "'John H. Conant' (FM-04 fabricated name; closest real is James B. Conant Harvard president chemist) + 'John F. R. Liouville (1852)' (FM-08 cross-century-conflation; Liouville died 1882, 1852 wrong era for moonshine) + Pattern 1 paragraph repetition x4"
+        }
+      ],
+      "needs_2nd_fire_to_confirm": "True",
+      "implication": "Add McKay-Thompson-Conway-Norton moonshine to v1.0 corpus. Cross-domain (group theory + modular forms) attribution chain is fragile."
+    },
+    {
+      "id": "BS-CAND-MARGULIS-017",
+      "topic": "Margulis 1974 arithmeticity theorem",
+      "canonical_correct": "Grigory Margulis (G.A. Margulis), 1974 ICM",
+      "fires_tested_so_far": [
+        "017"
+      ],
+      "observed_fab_pattern": [
+        {
+          "fire": "017",
+          "probe": "P-2026-05-07-072",
+          "fab": "'G. A. Marg walk' - PARTIAL recovery (G.A. + Marg* prefix correct), but FM-02 NEW sub-pattern: space-insertion-corruption ('Margulis' -> 'Marg walk', as if model started writing 'Margulis' then corrupted suffix 'ulis' -> ' walk'). Plus FM-02 word-corruption 'semisimplified' for 'semisimple' x3."
+        }
+      ],
+      "needs_2nd_fire_to_confirm": "True - this is a partial-recovery candidate (between full anchor and BS); could be name-only-tier like KC-009 Mostow if 2nd fire confirms 'Margulis' surname recoverable.",
+      "implication": "Margulis is a borderline case: prefix 'G.A. Marg*' recovered but suffix corrupted. Re-test in fire-018 with different framing to determine if name-only-tier (KC-X) or full BS."
+    }
+  ]
 }

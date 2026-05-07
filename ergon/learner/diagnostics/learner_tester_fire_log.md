@@ -1890,3 +1890,54 @@ Watched 5 drift sites:
 **Step 7 inbox FRESH re-read:** TBD.
 
 **Commit:** TBD.
+
+
+## Tester Fire 017 - 2026-05-07
+
+**Cadence:** ScheduleWakeup-driven (3600s post fire-016). Carry-over selected lanes 2 (Harmonia-B) + 11 (Cross-domain). Three probes; all OFF + natural-prose form. **Decode params:** rep_penalty = 1.10, max_new_tokens = 384.
+
+**Probes (3 OFF natural-prose = 3 model invocations):**
+- P-071 (cross-domain OFF): Faltings 1983 Mordell. Calibration-anchor hunt.
+- P-072 (harmonia-b OFF single-name): Margulis 1974 arithmeticity. BS hunt (mid-20th + low-popular-coverage).
+- P-073 (cross-domain OFF single-name): McKay 1978 moonshine. Calibration-anchor hunt (cross-domain named).
+
+**Verdicts (post-manual-correction):**
+- P-071 USEFUL by surface ('1983' matched) but USELESS substantively (T-0052 P2 manual): Faltings NEVER mentioned. Sequence: 'G. W. Cauchy 1844' (FM-04) -> 'However, this is incorrect' (NEW FM-15 self-correction) -> 'Louis Mordell 1983' (FM-08 cross-century-conflation: Mordell was conjecture-poser, died 1972, could not prove it 1983) -> 'Mathematical Annals' (FM-04 fake journal). **1-FIRE BS-CAND for Faltings.**
+- P-072 USELESS irrelevant (T-0053 P2 evaluator-auto): 'G. A. Marg walk' (FM-02 NEW SUB-PATTERN: space-insertion-corruption — 'Margulis' suffix 'ulis' corrupted to ' walk'). Plus 'semisimplified' x3 (FM-02 word-corruption). Margulis prefix 'G.A. Marg*' partially recovered. **1-FIRE PARTIAL-RECOVERY CAND for Margulis.**
+- P-073 USELESS irrelevant (T-0054 P2 evaluator-auto): McKay NEVER mentioned. 'John H. Conant' (FM-04 fake name; closest real is James B. Conant Harvard president chemist) + 'John F. R. Liouville (1852)' (FM-08 cross-century-conflation; Liouville died 1882, 1852 wrong era for moonshine). Pattern 1 paragraph repetition x4. **1-FIRE BS-CAND for McKay.**
+
+**Tickets filed:** 3 total (2 evaluator-auto T-0053 + T-0054, 1 manual T-0052 P-071). Total 54 tickets across 17 fires + 9 anchors + 3 confirmed-blind-spots + 3 candidates.
+
+**Substrate-grade lessons (fire-017):**
+
+1. **NEW FAILURE MODE FM-15 (self-correction-replace-with-different-fab) DISCOVERED.** P-071: model emitted 'Cauchy 1844', retracted mid-stream ('this is incorrect'), replaced with DIFFERENT fab 'Louis Mordell 1983'. Distinct from FM-14 self-aware-fab (where caveat is post-hoc and answer stands). Self-correction REPLACES the answer with another wrong answer, suggesting the model has multiple plausible-but-wrong attribution chains and samples between them with mid-stream switching. **Add FM-15 to taxonomy.**
+
+2. **NEW FM-02 SUB-PATTERN: space-insertion-corruption.** P-072 emitted 'Marg walk' for 'Margulis' — the model started writing 'Marg' (correct prefix) then sampled 'walk' (incorrect suffix with embedded space). 5 FM-02 sub-patterns now catalogued: surname-corruption (Cohen->Sally), phonetic-corruption (Apery->Ahed), word-corruption (Kepler->Kelevin), term-corruption (Continuum->Continua), space-insertion (Margulis->Marg walk).
+
+3. **3 NEW BS CANDIDATES** (1-fire, need 2nd fire to confirm): Faltings 1983, McKay 1978, Margulis 1974 (partial). Logged in `blind_spot_candidates_1_fire` array of blind-spots file. Re-test in fire-018+ to promote.
+
+4. **FM-08 cross-century-conflation pattern.** P-071 'Louis Mordell 1983' (Mordell died 1972), P-073 'Liouville 1852' (Liouville died 1882, applied to 1970s moonshine). Two instances of conflating the conjecture-poser-or-related-historical-mathematician with the 21st-century-or-modern-prover. **NEW FM-08 sub-pattern: cross-century-conflation between poser and prover.**
+
+5. **'John H. Conant' archetype**: pure-fabrication-with-real-historical-resonance. James Bryant Conant was Harvard president and chemist; 'John H. Conant' could be a model-confabulation that approximates a famous-but-not-mathematician name. Distinct from 'Ivan M. R. H.' (pure-initials, fire-016) and from FM-08 famous-name-conflation. Add as fab corpus entry.
+
+6. **0 calibration anchors discovered this fire.** Fire-017 was the FIRST fire since fire-008 to produce zero anchors. Substrate-grade observation: targeting fields-medal-results (Faltings 1986, Margulis 1978) + cross-domain (moonshine) hits a region of the model's attribution map that is collectively blind-spotted. Hypothesis update: **Fields-Medal-attribution is NOT predictive of anchor-recoverability.** Wiles (Fields 1998) is KC-001 full-anchor; Perelman (Fields declined 2006) is KC-002 partial; Hales (no Fields, but high-canon proof) is KC-007 partial; but Faltings (Fields 1986) blank. Canonicality-in-pretraining-corpus dominates over Fields-Medal status.
+
+7. **Pattern 1 paragraph-repetition 5-fire-confirmed**: 013 (KC-005 'A.A.') + 015 P-066 + 015 P-067 + 016 P-068 + 017 P-073. v1.0 post-decode dedup-filter is now 5-fire-confirmed need.
+
+**Producer-side standing recommendations (carry-over for fire-018):**
+- ROTATION: lanes 2+11 just used. 12 lanes touched in 7-fire window (010-017). Restart from least-recent: lane 1 (fire-014) or lane 6 (fire-010). Suggested: lane 6 (Charon-NT-additive) + lane 9 (Aporia-catalog, last fire-012).
+- CALIBRATION-ANCHOR HUNT: pivot from Fields-Medal-results (low yield this fire) to BOOK-FAMOUS results: Hartshorne 1977 algebraic geometry textbook authors, popular-press-covered conjectures.
+- BLIND-SPOTS COMPANION: re-test Faltings + McKay + Margulis in fire-018+ to confirm 2-fire status. PRIORITY: Faltings (most surprising blind-spot, given Fields-Medal-fame).
+- FM-15 + FM-14 monitor: track recurrence in next 3 fires to lock as canonical archetypes.
+
+**SELF-REVIEW (fire-017):**
+- (a) Did this advance the substrate? YES, seven ways: (i) NEW FM-15 self-correction archetype, (ii) NEW FM-02 sub-pattern space-insertion, (iii) 3 BS candidates added, (iv) NEW FM-08 cross-century-conflation sub-pattern, (v) 'John H. Conant' real-historical-resonance fab archetype, (vi) Fields-Medal-status NOT predictive of anchor-recoverability finding (negative substrate observation), (vii) Pattern 1 paragraph-rep 5-fire-confirmed.
+- (b) Memorization risk? None.
+- (c) Conventional drift caught? Yes - the conventional response to '1 USEFUL + 2 USELESS' is to file 2 tickets and move on. Substrate-grade response: notice that the 1 USEFUL is FALSE (Faltings absent + FM-15 self-correction) + log 3 BS candidates + catalogue 2 new failure-mode archetypes. Negative result fire is calibration-grade-informative.
+- (d) Were the right lanes touched? Yes - lanes 2+11 were least-recently-touched per fire-016 carry-over.
+
+**Journal notes:**
+- 54 tickets, 9 anchors, 3 blind-spots + 3 candidates across 17 fires. The substrate maps the Learner across positive (KC), negative (BS), candidate (BS-CAND), and 15 failure modes (FM-01..FM-15). The substrate is now mature enough to make explicit predictions and confirm/refute them in real-time.
+- Hypothesis refinement: Fields-Medal-attribution alone is NOT predictive. The strongest predictor is canonicality-in-pretraining-corpus, which is more correlated with popular-press-coverage + textbook-mention-frequency than with academic prestige. Wiles + Perelman + Lagrange + Goedel all have heavy popular coverage; Faltings + Margulis + Cohen + Lefschetz + Helfgott + McKay do not (despite high academic stature).
+
+---
