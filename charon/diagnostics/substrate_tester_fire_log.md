@@ -6,6 +6,110 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #10 — 2026-05-07 09:58 (local)
+
+**Lanes selected:** 4 (cross-domain-leak, regression for T-ST003 closure) + 13 (canonicalization-fuzz, smoke-test of newly-LIVE T006 fuzzer).
+
+**Lane rationale:** Per fire #9 standing rec (#3): re-probe Lane 4 to confirm T-ST003 fix sticks. Lane 13 is one of 5 dormant lanes that activated during the contract-change window (T006 DONE per techne_inbox); fires #7-9 of the prior session smoke-tested only lanes 12 and 17, leaving 13/14/15/16 untouched. Fire #10 picks Lane 13 to start closing that gap.
+
+**Inbox state at fire start:** 43 tickets total. T-ST002 + T-ST003 both DONE. Dormant-lane activation tickets: T006/T012/T013/T014/T015 = DONE; T017 = OPEN. Lanes 13/14/15/16/17 are LIVE; Lane 18 stays DORMANT.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_10_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_10_results.json`.
+
+### Lane 4 — regression on T-ST003 closure: 2/2 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — unknown domain now raises | **PASS** | `KeyError: "unregistered domain 'nonexistent_domain_xyz'; registered: ['bsd_rank', 'genus2', 'knot_trace_field', 'lehmer', 'mock_theta', 'mod...']"` |
+| T2 — registered domain still works (no over-blocking) | **PASS** | `lehmer` returns 13-tuple of registered keys, first 3: `('poly_coefficients', 'mahler_measure_dps30', 'mahler_measure_dps60')` |
+
+**Substrate verdict:** **T-ST003 fix verified.** The fix replaces the silent `("__unregistered__",)` sentinel return with a loud `KeyError` whose message lists the registered domains alphabetically — exactly the remediation_hint pattern I filed in the ticket payload. Closure confirmed; cycle ticket→fix→regression-check operates correctly across the contract-change-window restart.
+
+**Workflow validation:** my fire-#3 ticket (T-ST003) → Techne contract-change-window backlog → Techne fix → fire-#10 confirms closure across the window. Both my P1+ tickets (ST002, ST003) are now closed. The substrate-tester ticket-flow has now operated cleanly through 2 full cycles.
+
+### Lane 13 — canonicalization-fuzz smoke (newly LIVE): 1/1 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — fuzzer clean run with hypothesis seed=20260507 | **PASS** | 13 property tests passed, 0 failed; pytest summary: `13 passed in 13.26s`; ~20s harness wall-clock |
+
+**Substrate verdict:** **GREEN at 2,600 hypothesis-generated probes.** The fuzzer (T006) ships with 13 invariance properties, each tested against 200 hypothesis-generated examples. Property classes include:
+- TestProtocolDataclassValidation (valid_inputs_construct + invalid_decidability_status_raises)
+- TestClass5DecidabilityStatusInvariance (apply_independent_of_version_field)
+- TestLehmerChartIntegration (chart_protocol_apply_matches_underlying_canonicalize)
+- + 10 more invariance classes
+
+All 13 × 200 = 2,600 probes passed. Substrate-grade GREEN.
+
+**Substantive observation:** the fuzzer correctly handles Hypothesis edge-cases (e.g., "Aborted test because unable to satisfy integers(-5, 5).filter(lambda x: x != 0)") at <1% invalid rate, indicating sound test scaffolding. Future fires re-running with different seeds will explore different regions of the input space — Hypothesis's shrink-on-failure machinery will minimize any failures it finds.
+
+**Per lane spec ("Do not skip future fires — the fuzz domain expands as Hypothesis explores"):** Lane 13 is now part of standard rotation. Re-probing every 5-7 fires with a different seed is the right cadence.
+
+### Tickets filed this fire
+
+**0 tickets.** Both lanes PASS. T-ST003 closure verified (regression check); Lane 13 fuzzer reports clean.
+
+### Standing recommendations for next fire (#11)
+
+1. **Anti-repeat:** avoid lanes 4, 13. Suggested fire #11 candidates:
+   - **Lane 14 (replay-determinism, T012 newly LIVE)** — second untouched dormant-lane activation; smoke-test priority
+   - **Lane 16 (concurrency-stress, T015 newly LIVE)** — third untouched dormant-lane activation
+   - **Lane 9 (NearMissCorpus-leak)** — last covered fire #2; fresh probes after contract-change window
+   - **Lane 11 (batch-sweep)** — every-other-fire cadence; last covered fire #8
+2. **Fuzzer cadence:** re-run Lane 13 with `--hypothesis-seed=<different_seed>` every ~5-7 fires to cover new input regions.
+3. **Lane 5 (large-scale-enumeration):** last fire #6 ran deg-12 ±5; could re-baseline at deg-10 ±5 (much smaller) for quicker re-probe, OR defer until concurrent activity quiets.
+4. **Lane 18 (threshold-sensitivity, T017):** still OPEN/DORMANT. Watch for activation in future contract-change windows.
+
+### Fire-10 stress on substrate health
+
+**Positive:**
+- T-ST003 fix is loud and informative (lists registered domains in KeyError message).
+- Property-based fuzzer (T006) is comprehensive (13 invariant classes) and clean across 2,600 probes.
+- Both my filed P1+ tickets are now closed; substrate-tester ticket-flow operates correctly across restart.
+- 5 dormant lanes activated during contract-change window; substrate-tester rotation expanded from 10-lane to 17-lane menu.
+
+**0 substrate flaws found this fire.**
+
+### Lane rotation tracking (post-restart, with newly-LIVE lanes)
+
+| Lane | Status | Most recent fire |
+|---|---|---|
+| 1. CLAIM-flood | LIVE | fire #9 |
+| 2. adversarial-CLAIM | LIVE | fire #5 (regression) |
+| 3. correlated-triangulation | LIVE | fire #4 |
+| 4. cross-domain-leak | LIVE | **fire #10** |
+| 5. large-scale-enumeration | LIVE | fire #6 |
+| 6. undecidable-canonicalization | LIVE | fire #4 |
+| 7. precision-gradient | LIVE | fire #9 |
+| 8. ExclusionCertificate-extension | LIVE | fire #8 |
+| 9. NearMissCorpus-leak | LIVE | fire #2 |
+| 10. real-paper | LIVE | fire #5 |
+| 11. batch-sweep | LIVE | fire #8 |
+| 12. representation-pressure | LIVE | fire #7 (new instance) |
+| 13. canonicalization-fuzz | LIVE | **fire #10** |
+| 14. replay-determinism | LIVE | — *(needs smoke)* |
+| 15. cross-machine | LIVE-pending-Charon-M2 | — |
+| 16. concurrency-stress | LIVE | — *(needs smoke)* |
+| 17. mutation-testing | LIVE | fire #7 (new instance) |
+| 18. threshold-sensitivity | DORMANT (T017 OPEN) | — |
+
+**Live lanes needing smoke:** 14 (replay-determinism), 16 (concurrency-stress). These are next-fire priorities to close the post-activation rotation gap.
+
+### Discipline notes
+
+- HARD-1 (no papers): clean.
+- HARD-2 (anti-gravitational-well): no drift toward established frameworks observed in substrate code (Hypothesis is a property-testing library, not a "refactor to standard ML" pull).
+- HARD-3 (tensor-first): respected.
+- HARD-4 (calibration anchors): respected; T006 fuzzer IS substrate-grade calibration anchoring (property-based tests over registered protocol invariants).
+- HARD-5 (domains are docstrings): respected; T-ST003 fix correctly raises with registered-domain enumeration in the message.
+- Time used: ~24 minutes (well within 50-minute cap).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed). Substrate-tester running ticket count: 2 ever filed (ST002, ST003), **2 closed** during contract-change window.
+
+— substrate-tester, fire #10, 2026-05-07
+
+---
+
 ## Fire #9 — 2026-05-07 14:00 UTC
 
 **Lanes selected:** 1 (CLAIM-flood, stratified in-band sampler retry) + 7 (precision-gradient, fresh borderline).

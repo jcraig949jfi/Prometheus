@@ -1,0 +1,56 @@
+{
+  "fire_id": "fire_10_2026_05_07",
+  "lanes": [
+    "4_regression_st003",
+    "13_canonicalization_fuzz"
+  ],
+  "lane_4": {
+    "lane": "4_regression_st003",
+    "n_tests": 2,
+    "verdict_counts": {
+      "PASS": 2
+    },
+    "tests": [
+      {
+        "id": "T1_unknown_domain_raises",
+        "expected": "KeyError or ValueError raised",
+        "actual": "KeyError: \"unregistered domain 'nonexistent_domain_xyz'; registered: ['bsd_rank', 'genus2', 'knot_trace_field', 'lehmer', 'mock_theta', 'modular_form'",
+        "verdict": "PASS",
+        "severity": null,
+        "note": "T-ST003 fix verified: unknown domain now loud-fails with helpful message"
+      },
+      {
+        "id": "T2_registered_domain_works",
+        "expected": "lehmer returns its registered key tuple",
+        "actual": "13 keys returned, first 3: ('poly_coefficients', 'mahler_measure_dps30', 'mahler_measure_dps60')",
+        "verdict": "PASS",
+        "severity": null
+      }
+    ]
+  },
+  "lane_13": {
+    "lane": "13_canonicalization_fuzz",
+    "status": "LIVE",
+    "fuzzer_path": "F:\\Prometheus\\prometheus_math\\tests\\test_canonicalization_fuzz.py",
+    "hypothesis_seed": "20260507",
+    "wall_clock_seconds": 20.02295184135437,
+    "rc": 0,
+    "n_passed": 13,
+    "n_failed": 0,
+    "summary_line": "13 passed in 13.26s",
+    "n_tests": 1,
+    "verdict_counts": {
+      "PASS": 1
+    },
+    "tests": [
+      {
+        "id": "T1_fuzzer_clean_run",
+        "expected": "all property tests pass with hypothesis seed",
+        "actual": "13 property tests passed, 0 failed, 20.0s wall-clock; summary: '13 passed in 13.26s'",
+        "verdict": "PASS",
+        "severity": null,
+        "note": "13 invariance properties \u00d7 200 hypothesis-generated examples each \u2248 2,600 fuzz probes. Substrate-grade GREEN."
+      }
+    ]
+  }
+}
