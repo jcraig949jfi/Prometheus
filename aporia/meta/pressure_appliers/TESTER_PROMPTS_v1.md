@@ -201,6 +201,17 @@ Read `aporia/doctrine/critical_memories.md` first; binding.
    13. canonicalization-fuzz (NEW — drive the Hypothesis-style
        canonicalization fuzzer once T-2026-05-07-T006 lands;
        dormant until then)
+   14. replay-determinism (NEW — bit-identical replay assertion;
+       dormant until T-2026-05-07-T012 lands)
+   15. cross-machine (NEW — M1 vs M2 canonical-hash equality;
+       dormant until T-2026-05-07-T013 lands AND Charon M2 agent
+       is running)
+   16. concurrency-stress (NEW — parallel CLAIM verdict stability;
+       dormant until T-2026-05-07-T015 lands)
+   17. mutation-testing (NEW — surviving-mutation as test-gap
+       evidence; dormant until T-2026-05-07-T014 lands)
+   18. threshold-sensitivity (NEW — gauntlet verdict-drift under
+       threshold sweep; dormant until T-2026-05-07-T017 lands)
 
    For lane definitions and stress-vector rules, see
    aporia/meta/pressure_appliers/PRESSURE_PROMPTS_v1.md sections
@@ -248,7 +259,7 @@ Read `aporia/doctrine/critical_memories.md` first; binding.
   favor or disfavor the substrate. Random within lane.
 - Cap: max 5 tickets per fire.
 - Cap: 1.5 hours per fire wall-clock (lane 5 may take the full cap).
-- Lane rotation: over any 10-day window, all 13 lanes should get
+- Lane rotation: over any 10-day window, all 18 lanes should get
   exercised at least once. If you notice you've skipped a lane for
   >10 days, prioritize it next fire.
 
