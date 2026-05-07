@@ -6,6 +6,84 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #18 — 2026-05-07 14:36 (local)
+
+**Coordination note:** parallel substrate-tester instance ran fire #17 (commit `5efbe39d`) **escalating my fire-#14 finding (T-ST-fire14-001) to P0-blocker** — demonstrating that arbitrary-IC strings smuggled into MethodSpec actually UPGRADE to LOCAL_LEMMA in TriangulationProtocol. Multi-instance ticket-flow validated: my fire #14 input-validation finding had downstream consequences the parallel instance found by composing P3's flaw with TriangulationProtocol.evaluate. My fire = #18, lanes 7 + 9 (orthogonal, fast).
+
+**Lanes selected:** 7 (precision-gradient on INCONCLUSIVE entries #3 + #4) + 9 (NearMissCorpus-leak regression).
+
+**Lane rationale:** Lane 7 last fire #9 (covered entry #2). Fire #1 covered entry #1. Continue characterizing the 17-entry INCONCLUSIVE list with entries #3 + #4. Lane 9 last fire #11 (parallel); regression-check view-separation discipline post-restart.
+
+**Inbox state at fire start:** 46 tickets total; 8 substrate-tester tickets (2 closed, 6 OPEN — including the new T-ST-fire17-001 P0-blocker which is downstream of my T-ST-fire14-001).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_18_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_18_results.json`.
+
+### Lane 7 — precision-gradient on INCONCLUSIVE entries #3 + #4: 2/2 PASS
+
+| Entry | half_coeffs | M (all dps) | band | Precision recorded |
+|---|---|---:|---|---|
+| #3 | [1, -3, 2, 1, 0, -2, 1, 0] | **1.17628081826** (M_spread=0) | in_band | ✓ all 5 dps |
+| #4 (analog) | [1, 1, -1, 0, 0, 1, -1, -1] | **1.7432937** (M_spread=0) | out_of_band | ✓ all 5 dps |
+
+**Substantive substrate-grade finding (entry #3):**
+- Entry #3's M = 1.17628081826 is **exactly Lehmer's polynomial Mahler measure**.
+- The deg-14 ±5 palindrome factor-first decomposes as **Lehmer's polynomial × cyclotomic factor(s)**.
+- Substrate correctly extracts the Lehmer factor at every precision (dps ∈ {10, 30, 60, 100, 200}) — same M to ~10 decimal places throughout.
+- This validates the substrate's factor-first strategy: borderline INCONCLUSIVE entries that *appear* to be novel band hits are actually products containing the canonical Lehmer's polynomial. The substrate identifies the Lehmer factor cleanly.
+
+**Cumulative Lane 7 observations across fires #1, #9, #18:**
+- Entry #1 → M = 1.0 (pure cyclotomic product)
+- Entry #2 → M = 1.0 (pure cyclotomic product)
+- Entry #3 → **M = 1.17628 (Lehmer's polynomial × cyclotomic)**
+- Entry #4 (analog) → M = 1.7433 (Salem cluster)
+
+Pattern: the deg-14 ±5 INCONCLUSIVE list is dominated by composites of **named small-Mahler polynomials × cyclotomic factors**. Strategy (factor-first) is the discriminating axis at the boundary; precision is not. Substrate-grade evidence that the deg-14 ±5 ExclusionCertificate's `triangulation_history` (Path A high-precision mpmath, Path B symbolic factorization, Path C catalog-aware lookup, Path D Lehmer × Φ_n^k composite detection) is correctly characterizing the borderline class.
+
+### Lane 9 — NearMissCorpus-leak regression: 4/4 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — `load_post_view(allow_post_falsification=False)` raises | **PASS** | PostFalsificationLeakageError raised |
+| T2 — `load_post_view(allow_post_falsification=True, caller_id, purpose)` succeeds and logs | **PASS** | 2 views loaded, 1 log entry written |
+| T3 — positional args rejected | **PASS** | TypeError (kw-only enforcement) |
+| T4 — default `load()` yields only pre-views | **PASS** | 2 pre-views, no kill_vector leak |
+
+**Substrate verdict:** PASS. Anti-leakage discipline holds across the contract-change-window restart. Same 4 properties verified at fire #2 + #11 still hold at fire #18.
+
+### Tickets filed this fire
+
+**0 tickets.** Both lanes pass cleanly. No regressions detected.
+
+### Standing recommendations for next fire (#19)
+
+1. **Anti-repeat:** avoid lanes 7, 9. Suggested fire #19 candidates:
+   - **Lane 4 (cross-domain-leak)** — last fire #10 (mine); regression check on T-ST003 fix
+   - **Lane 11 (batch-sweep)** — every-other-fire cadence; last fire #13 (parallel)
+   - **Lane 5 (large-scale-enumeration)** — full-cap; last fire #6 (substantially overdue)
+2. **Lane 12 still deferred:** ST-fire1-002, ST-fire1-003 still OPEN; await closure.
+3. **Watch ST-fire14-001 + ST-fire17-001 fix:** when Techne ships the IndependenceClass enum-validation, fire-#N+ should re-probe BOTH Lane 2 P3 AND Lane 3 (the smuggle-attack regression).
+4. **Lane 7 follow-up:** entries #3 + #4 done; 13 INCONCLUSIVE entries remain in the deg-14 ±5 list. Worth processing 2/fire over coming fires until pattern fully characterized — would produce substrate-grade aggregate observation.
+
+### Fire-18 stress on substrate health
+
+**Positive:**
+- Substrate factor-first strategy correctly extracts Lehmer's polynomial from a borderline deg-14 ±5 palindromic composite at every precision level.
+- Anti-leakage discipline (view-separation) fully intact post-restart (4/4 PASS).
+- Cumulative Lane 7 finding: deg-14 ±5 INCONCLUSIVE entries are products of named small-Mahler polynomials, not novel band hits.
+
+**0 substrate flaws found this fire.**
+
+### Discipline notes
+
+- HARD-1 through HARD-5: respected.
+- Time used: ~10 minutes (well within 50-minute cap).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed). Substrate-tester running ticket count after 18 fires: 8 ever filed (2 closed, 6 OPEN).
+
+— substrate-tester, fire #18, 2026-05-07
+
+---
+
 ## Fire #17 — 2026-05-07 18:00 UTC — **P0 SUBSTRATE FLAW SURFACED**
 
 **Coordination note:** Fire #16 ran on parallel instance (commit `abc9f324`) covering Lanes 8 + 13 with 0 tickets. My fire = #17.

@@ -1,0 +1,213 @@
+{
+  "fire_id": "fire_18_2026_05_07",
+  "lanes": [
+    "7_precision_gradient_entries_3_4",
+    "9_nearmiss_corpus_leak_regression"
+  ],
+  "lane_7": {
+    "lane": "7_precision_gradient_entries_3_4",
+    "n_tests": 2,
+    "verdict_counts": {
+      "PASS": 2
+    },
+    "tests": [
+      {
+        "id": "T_entry_3_clean_convergence",
+        "expected": "M converges across dps; precision recorded; no oscillation",
+        "actual": "M_spread=0.000000; band_status_unique={'in_band'}; M_max=1.1762808182599176",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T_entry_4_analog_high_residual_clean_convergence",
+        "expected": "M converges across dps; precision recorded; no oscillation",
+        "actual": "M_spread=0.000000; band_status_unique={'out_of_band'}; M_max=1.7432936724944739",
+        "verdict": "PASS",
+        "severity": null
+      }
+    ],
+    "per_entry_results": {
+      "entry_3": {
+        "coeffs": [
+          1,
+          -3,
+          2,
+          1,
+          0,
+          -2,
+          1,
+          0,
+          1,
+          -2,
+          0,
+          1,
+          2,
+          -3,
+          1
+        ],
+        "results_per_dps": [
+          {
+            "dps": 10,
+            "elapsed_s": 0.0429995059967041,
+            "M": 1.176280818253872,
+            "status": "ok",
+            "precision_digits_recorded": 10,
+            "n_factors": 2
+          },
+          {
+            "dps": 30,
+            "elapsed_s": 0.017999649047851562,
+            "M": 1.1762808182599176,
+            "status": "ok",
+            "precision_digits_recorded": 30,
+            "n_factors": 2
+          },
+          {
+            "dps": 60,
+            "elapsed_s": 0.01900005340576172,
+            "M": 1.1762808182599176,
+            "status": "ok",
+            "precision_digits_recorded": 60,
+            "n_factors": 2
+          },
+          {
+            "dps": 100,
+            "elapsed_s": 0.0299990177154541,
+            "M": 1.1762808182599176,
+            "status": "ok",
+            "precision_digits_recorded": 100,
+            "n_factors": 2
+          },
+          {
+            "dps": 200,
+            "elapsed_s": 0.03199958801269531,
+            "M": 1.1762808182599176,
+            "status": "ok",
+            "precision_digits_recorded": 200,
+            "n_factors": 2
+          }
+        ],
+        "M_max_valid": 1.1762808182599176,
+        "M_min_valid": 1.176280818253872,
+        "M_spread": 6.0456084582938274e-12,
+        "band_status_per_dps": {
+          "10": "in_band",
+          "30": "in_band",
+          "60": "in_band",
+          "100": "in_band",
+          "200": "in_band"
+        },
+        "verdict_oscillates": false
+      },
+      "entry_4_analog_high_residual": {
+        "coeffs": [
+          1,
+          1,
+          -1,
+          0,
+          0,
+          1,
+          -1,
+          -1,
+          -1,
+          1,
+          0,
+          0,
+          -1,
+          1,
+          1
+        ],
+        "results_per_dps": [
+          {
+            "dps": 10,
+            "elapsed_s": 0.046999216079711914,
+            "M": 1.7432936724944739,
+            "status": "ok",
+            "precision_digits_recorded": 10,
+            "n_factors": 1
+          },
+          {
+            "dps": 30,
+            "elapsed_s": 0.04500269889831543,
+            "M": 1.7432936724890824,
+            "status": "ok",
+            "precision_digits_recorded": 30,
+            "n_factors": 1
+          },
+          {
+            "dps": 60,
+            "elapsed_s": 0.03699755668640137,
+            "M": 1.7432936724890824,
+            "status": "ok",
+            "precision_digits_recorded": 60,
+            "n_factors": 1
+          },
+          {
+            "dps": 100,
+            "elapsed_s": 0.04099893569946289,
+            "M": 1.7432936724890824,
+            "status": "ok",
+            "precision_digits_recorded": 100,
+            "n_factors": 1
+          },
+          {
+            "dps": 200,
+            "elapsed_s": 0.04300045967102051,
+            "M": 1.7432936724890824,
+            "status": "ok",
+            "precision_digits_recorded": 200,
+            "n_factors": 1
+          }
+        ],
+        "M_max_valid": 1.7432936724944739,
+        "M_min_valid": 1.7432936724890824,
+        "M_spread": 5.391465052184685e-12,
+        "band_status_per_dps": {
+          "10": "out_of_band",
+          "30": "out_of_band",
+          "60": "out_of_band",
+          "100": "out_of_band",
+          "200": "out_of_band"
+        },
+        "verdict_oscillates": false
+      }
+    }
+  },
+  "lane_9": {
+    "lane": "9_nearmiss_corpus_leak_regression",
+    "n_tests": 4,
+    "verdict_counts": {
+      "PASS": 4
+    },
+    "tests": [
+      {
+        "id": "T1_post_view_without_flag_raises",
+        "expected": "PostFalsificationLeakageError",
+        "actual": "PostFalsificationLeakageError: Loading post_falsification view requires allow_post_falsification=True. This view contains kill outcomes from the same f",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T2_post_view_with_flag_succeeds_and_logs",
+        "expected": "succeeds + log entry",
+        "actual": "2 views loaded, 1 log entries",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T3_post_view_positional_args_rejected",
+        "expected": "TypeError",
+        "actual": "TypeError: LearnerCorpusLoader.load_post_view() takes 1 positional argument but 4 were given",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T4_default_load_yields_pre_only",
+        "expected": "default load() returns only pre-views",
+        "actual": "2 pre-views; any has kill_vector? False",
+        "verdict": "PASS",
+        "severity": null
+      }
+    ]
+  }
+}
