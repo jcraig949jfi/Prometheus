@@ -390,7 +390,9 @@ Delta: 0
 
 ### Commit
 
-To be recorded after commit.
+`8748d941` — "Fire #6: quiet tick (0 OPEN tickets); Fire #5 hash backfill"
+
+Cross-agent staging mitigation: 1 file staged matching add list.
 
 ### Schedule wakeup
 
@@ -399,3 +401,82 @@ To be recorded after commit.
 ---
 
 *Fire #6 closed (quiet tick). Inbox unchanged: 7 tickets, all terminal/blocked. Fire #7 will check for new tickets again.*
+
+---
+
+## Fire #7 — 2026-05-07 ~02:00Z
+
+**Pre-test baseline:** 365 v2.3 substrate tests passing (matches Fire #6 state).
+
+### Inbox state at fire start
+
+9 tickets. **Two new P1 tickets** added by Aporia at 2026-05-07T05:13:29Z:
+- **T-2026-05-07-T006** (P1-high) — CanonicalizationProtocol property-based fuzzer
+- **T-2026-05-07-T007** (P1-high) — `prometheus_math/lehmer_brute_force_general.py` (deg-N reframe of T001 SUPERSEDED path-ii)
+
+T001 was reframed/SUPERSEDED into T007. Both T006 and T007 are P1 with identical `created_at`. Per protocol "P0>P1>P2>P3, then oldest first", tied on timestamp → ID-order tiebreaker → T006 first (T006 < T007 alphabetically). T007 also has the cap-risk concern (~9.4M-poly brute-force enumeration could overrun 1.5h budget).
+
+### Ticket completed: T-2026-05-07-T006 (P1) — CanonicalizationProtocol property-based fuzzer
+
+**Status:** DONE.
+
+**Deliverable:** `prometheus_math/tests/test_canonicalization_fuzz.py` — 13 tests covering all 5 named transformation classes:
+
+| Class | Test | Behavior |
+|---|---|---|
+| 1 — relabeling | `test_half_and_full_representations_canonicalize_same` | half-vector AND 15-element full palindrome must canonicalize to same key |
+| 2 — permutation | `test_swap_c1_and_c2_changes_canonical_form_for_asymmetric_input` | NEGATIVE invariance: Lehmer's positional encoding must NOT collapse permuted asymmetric inputs |
+| 3 — isomorphism | `test_canonicalize_invariant_under_x_neg_x_reflection` + `test_double_reflection_is_identity` | x→-x reflection invariance (the headline) + reflection-as-involution sanity |
+| 4 — encoding round-trip | `test_canonicalize_invariant_under_json_roundtrip` | JSON serialize/parse preserves canonical form |
+| 5 — decidability_status invariance | `test_apply_independent_of_decidability_status` + `test_apply_independent_of_version_field` | apply() output independent of decidability_status AND version field |
+
+Plus dataclass-validation fuzzing (5 tests for `__post_init__` validator branches) + Lehmer chart integration smoke (1 test).
+
+**Probe count:** 10 @given tests × Hypothesis `max_examples=200` ≈ 2000+ probes per invocation (well above 1000+ target).
+
+**Deterministic seed:** Hypothesis's native `--hypothesis-seed=N` flag works out of the box; verified `--hypothesis-seed=42` produces consistent pass.
+
+**JSON failure report:** session-scoped autouse fixture finalizer writes `prometheus_math/tests/canonicalization_fuzz_failures.json` with schema `{schema_version, module, completed_at, n_tests, n_failures, results[]}`. File present unconditionally so Substrate-Tester lane 13 has a known path; empty-failures payload (`n_failures: 0`) is the success signal.
+
+### Self-review (mandatory per protocol)
+
+(a) **Did I solve THIS ticket?** YES — all 7 acceptance criteria literally met. Confirmed in pytest: 13/13 pass deterministically; JSON report file written with correct shape; 0 regressions in broader 378-test sweep.
+
+(b) **Did I change any contract?** NO. coordinate_chart.py untouched; pure new test file in `prometheus_math/tests/`. Pre/post pytest: 365 → 378 (+13 new tests; 0 regressions).
+
+(c) **Conventional-approach drift check?** Reviewed:
+- Class 2 implements NEGATIVE invariance (canonicalizer must NOT silently collapse positionally-distinct inputs) — anti-conventional discipline; catches a real failure mode that pure positive-invariance fuzzing would miss
+- Did NOT pull in extra libraries beyond already-available Hypothesis (no scikit-learn, no pydantic-style validation framework)
+- Did NOT create a separate conftest.py dependency — kept JSON report mechanism self-contained in the test module
+- Did NOT scope-creep into adjacent canonicalizers (focused on currently-wired Lehmer reflection_quotient + protocol-level dataclass validation)
+- The session-scoped fixture pattern is standard pytest — not a "use a pytest plugin" import-burden reflex
+- No paper or publication mentions
+
+### Diff this fire
+
+| File | Change | Within ownership? |
+|---|---|---|
+| `prometheus_math/tests/test_canonicalization_fuzz.py` | NEW (~360 lines, 13 tests across 7 classes) | ✅ |
+| `prometheus_math/tests/canonicalization_fuzz_failures.json` | NEW (session report; auto-overwritten on each test run) | ✅ |
+| `aporia/meta/queue/techne_inbox.jsonl` | T006 OPEN → DONE | inbox/ — protocol-required |
+| `roles/Techne/SUBSTRATE_FIRE_LOG_2026-05-06.md` | M (this entry + Fire #6 commit-hash backfill from prior fire) | role-doc surface |
+
+No code (kernel/primitive) files touched.
+
+### Tests
+
+Pre-test (scoped, Fire #7 baseline): 365 passing
+Post-test: 378 passing (+13 new fuzzer tests; 0 regressions)
+Delta: +13
+
+### Commit
+
+To be recorded after commit.
+
+### Schedule wakeup
+
+`delaySeconds=7200` (2h) with the loop prompt verbatim; runtime clamps to 3600s.
+
+---
+
+*Fire #7 closed. Inbox after: T007 OPEN (P1, the deg-12 reframe). Fire #8 will pick T007 — implementation-heavy (new module + ~9.4M-poly enumeration) so will architect for cap-risk + checkpointing.*
