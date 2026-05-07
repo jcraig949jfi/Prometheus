@@ -1,0 +1,119 @@
+{
+  "fire_id": "fire_12_2026_05_07",
+  "lanes": [
+    "14_replay_determinism",
+    "16_concurrency_stress"
+  ],
+  "lane_14": {
+    "lane": "14_replay_determinism",
+    "status": "LIVE",
+    "pytest_result": {
+      "label": "lane_14_replay_determinism",
+      "test_path": "F:\\Prometheus\\prometheus_math\\tests\\test_replay_capsule_determinism.py",
+      "rc": 0,
+      "wall_clock_seconds": 19.975579261779785,
+      "n_passed": 7,
+      "n_failed": 0,
+      "summary_line": "7 passed in 12.85s",
+      "test_names": [
+        {
+          "name": "test_each_of_20_records_replays_to_identical_sha256",
+          "verdict": "PASSED"
+        },
+        {
+          "name": "test_k_replays_all_produce_identical_sha256",
+          "verdict": "PASSED"
+        },
+        {
+          "name": "test_to_json_from_json_to_json_is_byte_identical",
+          "verdict": "PASSED"
+        },
+        {
+          "name": "test_independent_constructions_yield_same_sha256",
+          "verdict": "PASSED"
+        },
+        {
+          "name": "test_replay_timing_reported",
+          "verdict": "PASSED"
+        },
+        {
+          "name": "test_capsule_corpus_covers_all_20_v2_component_types",
+          "verdict": "PASSED"
+        },
+        {
+          "name": "test_replay_does_not_mutate_capsule",
+          "verdict": "PASSED"
+        }
+      ],
+      "stderr_tail": ""
+    },
+    "n_tests": 1,
+    "verdict_counts": {
+      "PASS": 1
+    },
+    "tests": [
+      {
+        "id": "T1_replay_determinism_clean_run",
+        "expected": "all replay-determinism property tests pass",
+        "actual": "7 passed / 0 failed in 20.0s; 7 passed in 12.85s",
+        "verdict": "PASS",
+        "severity": null,
+        "note": "Properties: per-record replay determinism, cross-replay determinism (K replays sha256-identical), JSON round-trip stability, canonical-form determinism, replay timing soft-fail, full corpus coverage of 20 v2 KillVector component types, replay-does-not-mutate-capsule. Substrate-grade GREEN."
+      }
+    ]
+  },
+  "lane_16": {
+    "lane": "16_concurrency_stress",
+    "status": "LIVE",
+    "pytest_result": {
+      "label": "lane_16_concurrency_stress",
+      "test_path": "F:\\Prometheus\\prometheus_math\\tests\\test_concurrency_stress.py",
+      "rc": 0,
+      "wall_clock_seconds": 111.92977261543274,
+      "n_passed": 6,
+      "n_failed": 0,
+      "summary_line": "6 passed in 104.80s (0:01:44)",
+      "test_names": [
+        {
+          "name": "test_parallel_claims_to_shared_sqlite_kernel_raise_or_serialize",
+          "verdict": "PASSED"
+        },
+        {
+          "name": "test_no_silent_data_corruption_after_parallel_attempts",
+          "verdict": "PASSED"
+        },
+        {
+          "name": "test_100_parallel_claims_across_100_kernels_succeed",
+          "verdict": "PASSED"
+        },
+        {
+          "name": "test_identical_inputs_across_per_thread_kernels_yield_identical_content",
+          "verdict": "PASSED"
+        },
+        {
+          "name": "test_distinct_inputs_across_threads_yield_distinct_ids",
+          "verdict": "PASSED"
+        },
+        {
+          "name": "test_substrate_thread_safety_boundary_documented_in_module_docstring",
+          "verdict": "PASSED"
+        }
+      ],
+      "stderr_tail": ""
+    },
+    "n_tests": 1,
+    "verdict_counts": {
+      "PASS": 1
+    },
+    "tests": [
+      {
+        "id": "T1_concurrency_stress_clean_run",
+        "expected": "all concurrency-stress property tests pass",
+        "actual": "6 passed / 0 failed in 111.9s; 6 passed in 104.80s (0:01:44)",
+        "verdict": "PASS",
+        "severity": null,
+        "note": "Properties: parallel CLAIMs against shared SQLite kernel raise-or-serialize (no silent data corruption), 100 parallel claims across 100 separate kernels succeed, identical inputs yield identical content across threads, distinct inputs yield distinct ids, thread-safety boundary documented. Substrate-grade GREEN."
+      }
+    ]
+  }
+}

@@ -6,6 +6,108 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #12 — 2026-05-07 11:06 (local)
+
+**Lanes selected:** 14 (replay-determinism, smoke) + 16 (concurrency-stress, smoke).
+
+**Coordination note:** A parallel substrate-tester instance ran fire #11 (commit `9e6ce41f`) covering Lanes 9 + 6 simultaneously with my work. My harness write to `substrate_tester_fire_11_harness.py` collided with theirs; renumbered to **#12** with Lanes 14 + 16 (different lanes, no logical overlap). Multi-instance substrate-tester coordination is now part of standard discipline.
+
+**Lane rationale:** Per fire #10 standing rec (mine): smoke-test Lane 14 (replay-determinism, T012 newly LIVE) + Lane 16 (concurrency-stress, T015 newly LIVE) — both LIVE post-restart but never tested. Closes the post-activation rotation gap. Fire #10 covered Lane 13; fires #7 (prior session) covered Lanes 12 + 17. Among activated dormant lanes, only 14, 15, 16 remained un-smoked. Fire #12 covers 14 + 16; only Lane 15 (cross-machine) remains, gated on Charon M2 agent.
+
+**Inbox state at fire start:** post-pull, 43 tickets total. T-ST002 + T-ST003 both DONE.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_12_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_12_results.json`.
+
+### Lane 14 — replay-determinism smoke (T012 newly LIVE): 1/1 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — fuzzer clean run | **PASS** | 7 pytest tests passed / 0 failed; pytest summary `7 passed in 12.85s`; ~20s harness wall-clock |
+
+Test names verified:
+- `TestProperty1PerRecordReplayDeterminism::test_each_of_20_records_replays_to_identical_sha256`
+- `TestProperty2CrossReplayDeterminism::test_k_replays_all_produce_identical_sha256`
+- `TestProperty3JsonRoundTripStability::test_to_json_from_json_to_json_is_byte_identical`
+- `TestProperty4CanonicalFormDeterminism::test_independent_constructions_yield_same_sha256`
+- `TestProperty5TimingVarianceSoftFail::test_replay_timing_reported`
+- `test_capsule_corpus_covers_all_20_v2_component_types`
+- `test_replay_does_not_mutate_capsule`
+
+**Substrate verdict:** PASS. Covers all 20 v2 KillVector component types; sha256-byte-identical reproduction across K replays; JSON round-trip stable; canonical-form determinism (independent constructions yield same hash); replay-does-not-mutate-capsule. Substrate-grade GREEN.
+
+### Lane 16 — concurrency-stress smoke (T015 newly LIVE): 1/1 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — concurrency-stress clean run | **PASS** | 6 pytest tests passed / 0 failed; pytest summary `6 passed in 104.80s`; ~112s harness wall-clock |
+
+Test names verified:
+- `TestParallelClaimsAgainstOneKernel::test_parallel_claims_to_shared_sqlite_kernel_raise_or_serialize`
+- `TestParallelClaimsAgainstOneKernel::test_no_silent_data_corruption_after_parallel_attempts`
+- `TestParallelClaimsAgainstSeparateKernels::test_100_parallel_claims_across_100_kernels_succeed`
+- `TestSerializedParallelClaimsAreDeterministic::test_identical_inputs_across_per_thread_kernels_yield_identical_content`
+- `TestDistinctClaimsYieldDistinctIds::test_distinct_inputs_across_threads_yield_distinct_ids`
+- `test_substrate_thread_safety_boundary_documented_in_module_docstring`
+
+**Substrate verdict:** PASS. Parallel CLAIMs against shared SQLite kernel raise-or-serialize cleanly (no silent corruption); 100 parallel claims across 100 separate kernels succeed; identical inputs yield identical content across threads (determinism preserved under parallelism); distinct inputs yield distinct ids (no hash collision); thread-safety boundary explicitly documented in module docstring. Substrate-grade GREEN.
+
+### Tickets filed this fire
+
+**0 tickets.** Both lane smoke-tests pass cleanly.
+
+### Lane rotation tracking (post-restart)
+
+| Lane | Status | Most recent fire |
+|---|---|---|
+| 1. CLAIM-flood | LIVE | fire #9 |
+| 2. adversarial-CLAIM | LIVE | fire #5 (regression) |
+| 3. correlated-triangulation | LIVE | fire #4 |
+| 4. cross-domain-leak | LIVE | fire #10 |
+| 5. large-scale-enumeration | LIVE | fire #6 |
+| 6. undecidable-canonicalization | LIVE | fire #11 (parallel instance) |
+| 7. precision-gradient | LIVE | fire #9 |
+| 8. ExclusionCertificate-extension | LIVE | fire #8 |
+| 9. NearMissCorpus-leak | LIVE | fire #11 (parallel instance) |
+| 10. real-paper | LIVE | fire #5 |
+| 11. batch-sweep | LIVE | fire #8 |
+| 12. representation-pressure | LIVE | fire #7 (new instance) |
+| 13. canonicalization-fuzz | LIVE | fire #10 |
+| 14. replay-determinism | LIVE | **fire #12** |
+| 15. cross-machine | LIVE-pending-Charon-M2 | — |
+| 16. concurrency-stress | LIVE | **fire #12** |
+| 17. mutation-testing | LIVE | fire #7 (new instance) |
+| 18. threshold-sensitivity | DORMANT (T017 OPEN) | — |
+
+**All 17 LIVE lanes have now been exercised at least once.** Only Lane 15 (cross-machine) remains unsmoked, gated on Charon M2 agent.
+
+### Standing recommendations for next fire (#13)
+
+1. **Anti-repeat:** avoid lanes 14, 16. Suggested fire #13 candidates:
+   - **Lane 11 (batch-sweep)** — every-other-fire cadence (last fire #8)
+   - **Lane 13 (canonicalization-fuzz)** — re-run with new `--hypothesis-seed` to expand explored input region
+   - **Lane 5 (large-scale-enumeration)** — re-baseline candidate when full cap available
+2. **Lane 15 (cross-machine):** watch for Charon M2 agent activation.
+3. **Lane 18 (threshold-sensitivity):** T017 still OPEN.
+4. **Multi-instance coordination protocol:** pull before lane-pick; claim fire number = max-on-origin/main + 1.
+
+### Fire-12 stress on substrate health
+
+- Replay-determinism + concurrency-stress contracts are now both substrate-grade pressure-tested.
+- All 17 LIVE lanes exercised at least once.
+- Substrate is stable across the contract-change-window restart.
+- 0 substrate flaws found this fire.
+
+### Discipline notes
+
+- HARD-1 through HARD-5: respected.
+- Time used: ~20 minutes.
+- Anti-flooding cap: 0 tickets filed.
+
+— substrate-tester, fire #12, 2026-05-07
+
+---
+
 ## Fire #11 — 2026-05-07 15:00 UTC
 
 **Coordination note:** Fire #10 was performed by a parallel substrate-tester instance (commit `db0c157d`) covering Lane 4 (ST003 regression PASS) + Lane 13 (canon-fuzz PASS). My fire = #11. Multi-machine substrate-tester coordination operational.
