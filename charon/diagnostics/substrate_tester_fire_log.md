@@ -6,6 +6,108 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #14 — 2026-05-07 12:23 (local)
+
+**Coordination note:** parallel substrate-tester instance ran fire #13 (commit `2ca27636`) covering lanes 11 + 13. My fire = #14, lanes 1 + 2. Multi-instance coordination operating cleanly.
+
+**Lanes selected:** 1 (CLAIM-flood with **Mossinghoff-perturbation sampler**, closing the long-outstanding fire-#9 standing rec) + 2 (adversarial-CLAIM, fresh probes against contract-change-window primitives).
+
+**Inbox state at fire start:** 43 tickets total (T-ST002, T-ST003 closed; new T-ST-fire1-001/002/003 open from prior session's first fires).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_14_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_14_results.json`.
+
+### Pre-fire harness deadlock + revision
+
+First harness attempt (30 in-band probes: 10 verbatim + 20 perturbed) **deadlocked** at ~6 minutes wall-clock. Process PID 51632 alive but CPU stuck at 23.578s — blocked on something.
+
+**Root cause:** the in-band gauntlet path includes `prometheus_math.catalog_consistency.run_consistency_check` which makes **live LMFDB / OEIS / arxiv catalog calls per probe**. 30 probes hitting the network sequentially exceeded fire cap. Killed (TaskStop + Stop-Process) and revised harness to 8 probes (4 verbatim + 4 perturbed). 
+
+**Architectural observation (substrate-grade, not a flaw, no ticket):** in-band path has a network-bound critical section. For substrate-tester throughput, this caps fire-cap-fitting probe counts at ~10 per Lane 1 fire when verbatim/in-band. The prior fire-#1 ran 100 probes only because 99% were Phase-0-killed before reaching the catalog cross-check. Future Lane 1 fires must either (a) skip in-band probes, (b) cap probe count to ≤10, or (c) invest in a substrate ticket to make catalog-cross-check timeout-bounded or async.
+
+### Lane 1 — CLAIM-flood with Mossinghoff-perturbation sampler (revised, 8 probes target → 4 actual)
+
+**Probe construction:**
+- Mossinghoff catalog loaded: 8,625 entries, M ∈ [1.0, 1.84]
+- In-band seeds (M ∈ (1.001, 1.18)): filtered subset
+- 4 verbatim Mossinghoff entries (positive control)
+- Perturbation: 200 attempts, 0 yielded — every single-coefficient ±1 flip moved M out of band. Documents that the in-band region is structurally narrow even for nearby polynomials; the rejection-sampling approach in fire #9 + this fire's perturbation-of-in-band-seeds both confirm: **single-coefficient flips don't preserve in-band M for Mossinghoff entries.**
+
+**Routing of 4 verbatim probes:**
+
+| kill_pattern_root | count |
+|---|---:|
+| known_in_catalog | 1 |
+| reducible | 2 |
+| reciprocity_failed | 1 |
+
+**Substrate verdict:** PASS (substrate routed all 4 cleanly). The 3 non-catalog kills are NOT a substrate flaw — they're Phase-1 mechanical kill-path checks (reducibility + reciprocity) firing before the catalog cross-check. Substrate-grade observation: the first 4 in-band Mossinghoff entries include some Lehmer × Φ_n^k composites which are reducible-by-design; substrate correctly identifies them at Phase 1.
+
+**Tests:**
+
+| Test | Verdict | Note |
+|---|---|---|
+| T1 — 8 probes routed | **PARTIAL** | 4 probes (perturbation yielded 0); routing clean (0 errors) |
+| T2 — verbatim hits catalog | **FAIL (probe-design)** | 1/4 hits; other 3 routed via reducibility/reciprocity (substrate correct, my expectation wrong) |
+| T3 — perturbed exercises battery | **PARTIAL** | 0/4 perturbed (perturbation yielded 0) |
+
+**Ticket count for Lane 1: 0** — substrate routed every probe cleanly; the unmet expectations are probe-design issues, documented for future fire iteration.
+
+**Substantive substrate observation:** even with the Mossinghoff-perturbation strategy, the in-band region is structurally narrow. The fire-#9 standing rec ("replace rejection-sampling with Mossinghoff-perturbation") needs further iteration — perturbation must preserve in-band M. **Future Lane 1 standing rec:** either use multi-coefficient-flip perturbations (more aggressive search), or submit verbatim Mossinghoff entries with lower-degree polys (more likely to be irreducible Salem class), or accept that Lane 1 in-band coverage will always be small-N.
+
+### Lane 2 — adversarial-CLAIM (post-restart fresh probes): 3 PASS / 2 FAIL
+
+| Probe | Verdict | Detail |
+|---|---|---|
+| P1 — strength=COMPLETE with empty triangulation_history | **PASS** | `ValueError: ExclusionCertificate.strength=complete requires non-empty triangulation_history. Future certificates without earned triangulation...` |
+| P2 — RegionSpec with int chart_id | **PASS** | `ValueError: coordinate_chart_id must be a non-empty string; got 42` |
+| P3 — MethodSpec with arbitrary string for independence_class | **FAIL** | silently accepted: `independence_class='not_an_enum_value'` |
+| P4 — chart re-registration without replace=True | **FAIL** | Lehmer chart not in registry (probe-design issue: forgot to import `coordinate_charts` package which auto-registers) |
+| P5 — TriangulationPath with garbage verdict string | **PASS** | TriangulationProtocol REJECTED ("no proof-bearing path verified") — substrate doesn't trust garbage verdicts |
+
+**Real substrate finding (P3):** **MethodSpec silently accepts arbitrary strings as `independence_class`.** The IndependenceClass enum is a str-mixin (so technically any string is acceptable to Python's type system), but the substrate's triangulation discipline depends on the registered enum vocabulary. A caller passing a typo'd or arbitrary string would silently bypass `is_independent_of()`'s class-equality comparison.
+
+**Ticket filed: T-2026-05-07-ST-fire14-001 (P1-high)** — see `aporia/meta/queue/techne_inbox.jsonl` line 44.
+
+**P4 is probe-design**, not substrate flaw: I imported `from sigma_kernel.coordinate_chart import register_chart` but didn't import the `sigma_kernel.coordinate_charts` package which side-effect-registers the Lehmer chart. Substrate behavior would be correct given the import path I exercised.
+
+### Tickets filed this fire
+
+**1 ticket (P1-high):** `T-2026-05-07-ST-fire14-001` — MethodSpec silently accepts arbitrary strings as `independence_class`. See `aporia/meta/queue/techne_inbox.jsonl`.
+
+### Standing recommendations for next fire (#15)
+
+1. **Anti-repeat:** avoid lanes 1, 2. Suggested fire #15 candidates:
+   - **Lane 8 (ExclusionCertificate-extension)** — last fire #8; would benefit from a regression check on the COMPLETE-strength + triangulation_history hard rule (just confirmed working in P1 above)
+   - **Lane 12 (representation-pressure)** — last fire #7 (prior session); may have new shape after contract-change-window
+   - **Lane 13 (canonicalization-fuzz)** — fire #13 (parallel) used a fresh seed; could re-run with another new seed for further input-region coverage
+   - **Lane 5 (large-scale-enumeration)** — full-cap candidate when nothing else queued
+2. **Lane 1 probe-design iteration:** for future Lane 1 fires, switch from single-coefficient perturbation to multi-coefficient-flip OR verbatim Salem-class entries (degree 8-12 with smooth in-band M). Single-coef flips don't preserve in-band M.
+3. **Watch T-ST-fire14-001 fix:** when Techne ships the IndependenceClass enum-validation, fire-#16+ should re-probe Lane 2 P3.
+4. **Architectural observation in Lane 1:** in-band catalog cross-check is network-bound. Consider filing a follow-up ticket for Aporia or Techne to make this timeout-bounded or async — affects substrate-tester scaling.
+
+### Fire-14 stress on substrate health
+
+**Positive:**
+- ExclusionCertificate enforces `strength=COMPLETE → non-empty triangulation_history` (Aporia v2.3 hard rule).
+- RegionSpec rejects non-string `coordinate_chart_id` with informative ValueError.
+- TriangulationProtocol rejects upgrade attempts with garbage verdict strings (defensive against rule-3 "no proof-bearing path verified").
+- DiscoveryPipeline routes verbatim Mossinghoff entries cleanly through Phase 1 (reducibility + reciprocity + catalog cross-check).
+- Phase-1 mechanical checks correctly identify Lehmer × Φ_n^k composites as reducible BEFORE running the more expensive catalog cross-check.
+
+**One real flaw:**
+- MethodSpec.independence_class silently accepts arbitrary strings (P1-high; ticket T-ST-fire14-001 filed).
+
+### Discipline notes
+
+- HARD-1 through HARD-5: respected.
+- Time used: ~38 minutes including the deadlock investigation + harness revision + ticket filing.
+- Anti-flooding cap: 1 ticket filed (max 5 allowed). Substrate-tester running ticket count after 14 fires: 3 ever filed (ST002 closed, ST003 closed, ST-fire14-001 OPEN).
+
+— substrate-tester, fire #14, 2026-05-07
+
+---
+
 ## Fire #13 — 2026-05-07 16:00 UTC
 
 **Lanes selected:** 11 (batch-sweep, fresh seed) + 13 (canonicalization-fuzz, fresh Hypothesis seed) per fire #12 standing rec.

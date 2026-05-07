@@ -1,0 +1,109 @@
+{
+  "fire_id": "fire_14_2026_05_07",
+  "lanes": [
+    "1_claim_flood_mossinghoff_perturbation",
+    "2_adversarial_post_window"
+  ],
+  "lane_1": {
+    "lane": "1_claim_flood_mossinghoff_perturbation",
+    "n_probes": 4,
+    "n_routed": 4,
+    "n_errors": 0,
+    "wall_clock_seconds": 26.102324962615967,
+    "throughput_per_sec": 0.15324305423861068,
+    "perturb_attempts": 200,
+    "perturb_yielded": 0,
+    "terminal_state_counts": {
+      "REJECTED": 4
+    },
+    "kill_pattern_root_counts": {
+      "known_in_catalog": 1,
+      "reducible": 2,
+      "reciprocity_failed": 1
+    },
+    "by_shape_kill_pattern": {
+      "verbatim_mossinghoff": {
+        "known_in_catalog": 1,
+        "reducible": 2,
+        "reciprocity_failed": 1
+      }
+    },
+    "n_tests": 3,
+    "verdict_counts": {
+      "PARTIAL": 2,
+      "FAIL": 1
+    },
+    "tests": [
+      {
+        "id": "T1_8_probes_routed",
+        "expected": "8 in-band probes",
+        "actual": "4 probes generated, 4 routed, 0 errors",
+        "verdict": "PARTIAL",
+        "severity": "P2-normal"
+      },
+      {
+        "id": "T2_verbatim_mossinghoff_hits_catalog",
+        "expected": "\u22653/4 verbatim hits",
+        "actual": "1/4 hit catalog; by_shape_kp={'known_in_catalog': 1, 'reducible': 2, 'reciprocity_failed': 1}",
+        "verdict": "FAIL",
+        "severity": "P1-high",
+        "note": "catalog cross-check primitive may have regressed"
+      },
+      {
+        "id": "T3_perturbed_exercises_battery",
+        "expected": "\u22651/4 perturbed reach battery",
+        "actual": "0/4 reached battery; by_shape_kp={}",
+        "verdict": "PARTIAL",
+        "severity": "P3-low",
+        "note": "perturbed entries mostly land in catalog (perturbations preserve catalog-membership-shape) \u2014 substrate behavior is correct, but probe-design needs more aggressive perturbation to exercise battery"
+      }
+    ],
+    "errors": []
+  },
+  "lane_2": {
+    "lane": "2_adversarial_post_window",
+    "n_tests": 5,
+    "verdict_counts": {
+      "PASS": 3,
+      "FAIL": 2
+    },
+    "tests": [
+      {
+        "id": "P1_complete_strength_empty_triangulation",
+        "expected": "ValueError raised",
+        "actual": "ValueError: ExclusionCertificate.strength=complete requires non-empty triangulation_history. Future certificates without earned triangulation must use b",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "P2_region_spec_int_chart_id",
+        "expected": "ValueError or TypeError",
+        "actual": "ValueError: coordinate_chart_id must be a non-empty string; got 42",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "P3_method_spec_string_independence_class",
+        "expected": "TypeError or ValueError (must be IndependenceClass enum)",
+        "actual": "silently accepted string: independence_class='not_an_enum_value'",
+        "verdict": "FAIL",
+        "severity": "P1-high",
+        "note": "MethodSpec.independence_class is str-mixin enum; raw string may slip through"
+      },
+      {
+        "id": "P4_chart_reregistration_without_replace",
+        "expected": "ChartRegistrationError raised on re-register",
+        "actual": "Lehmer chart not found in registry",
+        "verdict": "FAIL",
+        "severity": "P1-high"
+      },
+      {
+        "id": "P5_garbage_verdict_string",
+        "expected": "no upgrade with garbage verdicts",
+        "actual": "verdict=REJECTED, summary=No proof-bearing path verified; clustering/exploratory cannot certify",
+        "verdict": "PASS",
+        "severity": null
+      }
+    ]
+  }
+}
