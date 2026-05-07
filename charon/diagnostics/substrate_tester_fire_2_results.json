@@ -1,0 +1,90 @@
+{
+  "fire_id": "fire_2_2026_05_06",
+  "lanes": [
+    "2_adversarial_claim",
+    "9_nearmiss_corpus_leak"
+  ],
+  "lane_2": {
+    "lane": "2_adversarial_claim",
+    "n_probes": 5,
+    "verdict_counts": {
+      "PASS": 4,
+      "FAIL": 1
+    },
+    "probes": [
+      {
+        "id": "P1_precision_metadata_as_string",
+        "expected": "TypeError raised",
+        "actual": "TypeError: precision_metadata must be a dict or None; got str",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "P2_chart_empty_domain",
+        "expected": "ValueError raised",
+        "actual": "silently accepted",
+        "verdict": "FAIL",
+        "severity": "P0-blocker",
+        "ill_formed_aspect": "domain is empty string"
+      },
+      {
+        "id": "P3_chart_colon_in_domain",
+        "expected": "ValueError raised",
+        "actual": "ValueError: domain must be a colon-free non-empty string; got 'lehmer:bad'",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "P4_chart_coordsys_as_list",
+        "expected": "TypeError raised",
+        "actual": "TypeError: coordinate_system must be a tuple",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "P5_pipeline_string_mahler_measure",
+        "expected": "TypeError or ValueError",
+        "actual": "TypeError: '<' not supported between instances of 'float' and 'str'",
+        "verdict": "PASS",
+        "severity": null
+      }
+    ]
+  },
+  "lane_9": {
+    "lane": "9_nearmiss_corpus_leak",
+    "n_tests": 4,
+    "verdict_counts": {
+      "PASS": 4
+    },
+    "tests": [
+      {
+        "id": "T1_post_view_without_flag",
+        "expected": "PostFalsificationLeakageError raised",
+        "actual": "PostFalsificationLeakageError: Loading post_falsification view requires allow_post_falsification=True. This view contains kill outcomes from the same f",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T2_post_view_with_flag",
+        "expected": "succeeds + log entry written",
+        "actual": "loaded 3 views; log entries for caller=1",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T3_post_view_positional_args",
+        "expected": "TypeError (kw-only enforcement)",
+        "actual": "TypeError: LearnerCorpusLoader.load_post_view() takes 1 positional argument but 4 were given",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T4_default_load_yields_pre_only",
+        "expected": "default load() returns only pre-falsification views",
+        "actual": "loaded 3 pre-views; any had kill_vector? False",
+        "verdict": "PASS",
+        "severity": null
+      }
+    ]
+  }
+}

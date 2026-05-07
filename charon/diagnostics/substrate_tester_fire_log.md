@@ -6,6 +6,75 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #2 — 2026-05-06 20:35 UTC
+
+**Lanes selected:** 2 (adversarial-CLAIM) + 9 (NearMissCorpus-leak).
+
+**Lane rationale:** Per fire #1 standing recommendation. Avoided lanes 1 + 7 (anti-repeat). Picked orthogonal axes: input-validation discipline (lane 2) vs view-isolation discipline (lane 9). Both have shipped substrate code (`sigma_kernel/coordinate_chart.py`, `prometheus_math/learner_corpus.py`).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_2_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_2_results.json`.
+
+### Lane 2 — adversarial-CLAIM: 4 PASS / 1 FAIL
+
+5 ill-formed probes against `SigmaKernel.CLAIM`, `CoordinateChart`, and `DiscoveryPipeline.process_candidate`:
+
+| Probe | Verdict | Detail |
+|---|---|---|
+| P1 — `SigmaKernel.CLAIM(precision_metadata="string")` | **PASS** | TypeError: precision_metadata must be a dict or None |
+| P2 — `CoordinateChart(domain="")` | **FAIL** | Silently accepted. Validator inconsistency. **→ ticket T-2026-05-06-ST002 (P1-high).** |
+| P3 — `CoordinateChart(domain="lehmer:bad")` | **PASS** | ValueError: domain must be colon-free non-empty string |
+| P4 — `CoordinateChart(coordinate_system=["x","y"])` | **PASS** | TypeError: coordinate_system must be a tuple |
+| P5 — `DiscoveryPipeline.process_candidate(mahler_measure="not_a_number")` | **PASS** | TypeError surfaces at band-check comparison (cleanly typed) |
+
+**Key finding (FAIL P2):** `CoordinateChart.__post_init__` (sigma_kernel/coordinate_chart.py:248-251) checks `isinstance(domain, str)` AND `":" not in domain` but does NOT check non-empty — even though the error message at line 250 reads "must be a colon-free non-empty string" and the sibling `region_key` validator at line 252 DOES enforce non-empty. Validator and contract disagree. Empty-domain charts would produce chart_id like `:region_key` with downstream `_split_chart_id` semantic corruption.
+
+**Substrate verdict:** 4/5 PASS. P2 is a real input-validation gap. **Ticket T-2026-05-06-ST002 filed (P1-high).**
+
+### Lane 9 — NearMissCorpus-leak: 4/4 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — `load_post_view(allow_post_falsification=False, ...)` | **PASS** | PostFalsificationLeakageError raised with informative message |
+| T2 — `load_post_view(allow_post_falsification=True, caller_id=..., purpose="audit")` | **PASS** | Loaded 3 views; 1 leakage-log entry written for caller |
+| T3 — `load_post_view(True, "caller", "purpose")` (positional) | **PASS** | TypeError raised — kw-only enforcement is real, not decorative |
+| T4 — `loader.load()` default | **PASS** | 3 pre-views returned; no kill_vector or post-falsification fields leaked |
+
+**Substrate verdict:** PASS. Anti-leakage discipline is enforced at the typing layer; opt-in flag is mandatory; audit log is written; default load is leak-safe.
+
+### Tickets filed this fire
+
+**1 ticket (P1-high):** `T-2026-05-06-ST002` — CoordinateChart accepts empty domain. See `aporia/meta/queue/techne_inbox.jsonl`.
+
+### Standing recommendations for next fire (#3)
+
+1. **Anti-repeat:** avoid lanes 2 + 9. Suggested fire #3: Lane 4 (cross-domain-leak) + Lane 8 (ExclusionCertificate-extension), or Lane 3 (correlated-triangulation).
+2. **Stratified in-band sampler still pending.** Will become valuable when fire returns to Lane 1.
+3. **Lane 5 (large-scale-enumeration)** still queued. Defer.
+4. **Lane 6 (undecidable-canonicalization)** path resolution: code lives at `prometheus_math/canonicalizer_observability.py`. When Lane 6 is selected, treat that as the protocol entry-point.
+5. **Watch CoordinateChart fix:** if Techne resolves T-2026-05-06-ST002, future Lane 2 fires should re-probe to confirm the regression is closed.
+
+### Fire-2 stress on substrate health
+
+**Positive:**
+- 4/5 lane-2 probes correctly rejected ill-formed input — substrate's typed-primitive discipline is mostly working.
+- Lane 9 view-separation enforcement is fully working: kw-only flag, mandatory caller_id + purpose, audit log on every load, leak-safe default.
+- `PostFalsificationLeakageError` message is clear and actionable.
+
+**One real flaw:**
+- `CoordinateChart` empty-domain validator gap (P1-high; ticket filed).
+
+### Discipline notes
+
+- No paper/publication mentions in this fire (per `feedback_exploration_not_papers.md` HARD RULE 2026-05-06).
+- No drift toward established frameworks observed in the substrate code I read this fire (per `feedback_anti_gravitational_well.md` HARD RULE 2026-05-06).
+- Time used: ~28 minutes (within 50-minute cap).
+- Anti-flooding cap: 1 ticket filed (max 5 allowed).
+
+— substrate-tester, fire #2, 2026-05-06 20:35 UTC
+
+---
+
 ## Fire #1 — 2026-05-06 19:28 UTC
 
 **Lanes selected:** 1 (CLAIM-flood) + 7 (precision-gradient).
