@@ -1,0 +1,52 @@
+{
+  "fire": 19,
+  "lanes": [
+    4,
+    1
+  ],
+  "lane_4": {
+    "lane": "4_st003_third_regression",
+    "n_tests": 4,
+    "verdict_counts": {
+      "PASS": 4
+    },
+    "tests": [
+      {
+        "id": "T1_unknown_domain_raises",
+        "expected": "KeyError raised",
+        "actual": "KeyError: \"unregistered domain 'nonexistent_xyz_fire19'; registered: ['bsd_rank', 'genus2', 'knot_trace_field', 'lehmer', 'mock_theta', 'modular_form'",
+        "verdict": "PASS",
+        "note": "T-ST003 fix sticks across third regression check (fires #3, #10, #19)"
+      },
+      {
+        "id": "T2_lehmer_registered",
+        "expected": "lehmer returns registered key tuple",
+        "actual": "13 keys; sample ('poly_coefficients', 'mahler_measure_dps30', 'mahler_measure_dps60')",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T2_bsd_rank_registered",
+        "expected": "bsd_rank returns registered key tuple",
+        "actual": "5 keys; sample ('cremona_label', 'conductor', 'j_invariant')",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T3_domain_keys_disjoint",
+        "expected": "bsd_rank and lehmer raw_invariants are disjoint",
+        "actual": "overlap=none; |bsd|=5, |lehmer|=13",
+        "verdict": "PASS",
+        "severity": null
+      }
+    ]
+  },
+  "lane_1": {
+    "lane": "1_multi_coef_flip_mossinghoff",
+    "n_in_band_seeds_loaded": 21,
+    "n_seeds_used_for_perturbation": 5,
+    "n_attempts_total": 500,
+    "n_perturbations_in_band": 0,
+    "in_band_yield_rate": 0.0,
+    "sample_in_band_perturbations": [],
+    "fire_14_yield_for_comparison": "0 / 200 (single-coef-flip)"
+  }
+}

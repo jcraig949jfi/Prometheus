@@ -6,6 +6,80 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #19 — 2026-05-07 19:00 UTC
+
+**Coordination note:** Fire #18 ran on parallel instance (commit `1e1af5d7`) covering Lanes 7 + 9 with 0 tickets. My fire = #19. P0 ticket `T-ST-fire17-001` still OPEN — Techne has not yet shipped the fix; deferred re-probe of the smuggle attack until fix lands.
+
+**Lanes selected:** 4 (cross-domain-leak, **third post-restart T-ST003 regression check**) + 1 (CLAIM-flood, **multi-coef-flip Mossinghoff perturbation** — closes long-standing probe-design iteration from fires #1, #9, #14).
+
+**Lane 15 + 18 reactivation re-check:** still DORMANT (Charon orch ticket OPEN; T-2026-05-07-T017 OPEN).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_19_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_19_results.json`.
+
+### Lane 4 — T-ST003 third regression check: 4/4 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — unknown domain raises KeyError | **PASS** | `KeyError("unregistered domain 'nonexistent_xyz_fire19'; registered: ['bsd_rank', ..., 'lehmer']")` |
+| T2 — `lehmer` registered | **PASS** | 13 keys returned |
+| T2 — `bsd_rank` registered | **PASS** | 5 keys returned |
+| T3 — bsd_rank ∩ lehmer disjoint | **PASS** | no overlap; \|bsd\|=5, \|lehmer\|=13 |
+
+**Substrate verdict: PASS.** T-ST003 fix is durable across **three regression checks** (fires #3 pre-window, #10 parallel, #19). Fix sticks. Domain registry retains expected disjoint structure.
+
+### Lane 1 — multi-coef-flip Mossinghoff perturbation (probe-design iteration)
+
+| Metric | Value |
+|---|---:|
+| Mossinghoff catalog total entries | 8625 |
+| Filtered to in-band (M ∈ [1.001, 1.18]) | 21 seeds |
+| Smallest-degree seeds used | 5 |
+| Multi-coef-flip attempts (2-3 coefs each, 100/seed) | 500 |
+| Perturbations remaining in-band | **0** |
+| Yield rate | 0.000 |
+| Fire #14 single-coef-flip yield (comparison) | 0 / 200 |
+
+**Substrate verdict: PASS** (substrate ingestion path — not exercised this fire because no in-band probes reached it).
+
+**🔵 SUBSTRATE-GRADE OBSERVATION (cumulative across 4 fires):**
+
+| Fire | Strategy | In-band yield |
+|---|---|---:|
+| #1 | random palindromic | 0% |
+| #9 | rejection-sampling at deg-10/14 ±5 | 0 / 50,000 |
+| #14 | single-coef-flip Mossinghoff perturbation | 0 / 200 |
+| #19 | **multi-coef-flip** (2-3 coefs) Mossinghoff perturbation | 0 / 500 |
+
+**Convergent finding:** the Salem in-band region is structurally narrow. Perturbation-based sampling at any flip-count cannot reliably yield in-band probes — small-Mahler polynomials are arithmetically isolated, not smoothly deformable. **Probe-design lesson, definitive after 4 fires:** use VERBATIM small-N Mossinghoff entries (the 21 in-band seeds loaded this fire), NOT perturbation-search. Fire #14's 4 verbatim probes triggered Phase-1 mechanical kills (reducibility + reciprocity), demonstrating verbatim probes DO exercise the substrate's falsifier panel beyond Phase 0.
+
+**Action:** future Lane 1 fires should drop perturbation entirely in favor of verbatim Mossinghoff entries, accepting the ~21-probe N-cap as a real boundary. The fire-#1 standing rec ("stratified in-band sampler") is now formally retired in favor of "verbatim Mossinghoff iteration."
+
+### Tickets filed this fire
+
+**0 tickets.** Both lanes substrate-correct. Lane 1 produced a substrate-tester probe-design lesson, not a substrate flaw.
+
+### Standing recommendations for next fire (#20)
+
+1. **Anti-repeat:** avoid lanes 4, 1 (just covered). Suggested fire #20:
+   - **Lane 3 / P0 ticket re-probe** — IF Techne has shipped the fix for `T-ST-fire17-001` between fires #19 and #20, re-run the smuggle attack to verify regression closed. Check ticket status first.
+   - **Lane 12 (representation-pressure)** — last fire #7; ST-fire1-002, ST-fire1-003 still OPEN (homotopy + Fano plane). Could probe a NOVEL object class not in T023-T028 design set (e.g. algebraic stack, A∞-algebra) to avoid duplicate tickets.
+   - **Lane 5 (large-scale-enumeration)** — last fire #6; substantially overdue (full-cap heavy job; don't pair).
+2. **Lane 1 retired probe-design rec:** remove standing rec to "iterate the in-band sampler". Lane 1 future fires use verbatim Mossinghoff entries with N≤21.
+3. **Aporia coordination ticket candidate:** lane 7 cumulative observation (deg-14 ±5 INCONCLUSIVE list classification: 2 cyclotomic + 1 Lehmer-class + 1 Salem-class so far across 4 entries) is worth filing for a complete classification audit. Fire #20+ optional.
+4. **P0 ticket watch protocol:** every fire should pull and check `T-ST-fire17-001` status; re-probe Lane 3 immediately when status flips DONE. This is the load-bearing finding of this restart.
+
+### Discipline notes
+
+- HARD-1..HARD-5: clean.
+- Time used: ~30 min (within 50-min cap).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed).
+- Multi-instance coordination: pulled before lane-pick; claimed fire #19 = max-on-origin (18) + 1.
+
+— substrate-tester, fire #19, 2026-05-07 19:00 UTC
+
+---
+
 ## Fire #18 — 2026-05-07 14:36 (local)
 
 **Coordination note:** parallel substrate-tester instance ran fire #17 (commit `5efbe39d`) **escalating my fire-#14 finding (T-ST-fire14-001) to P0-blocker** — demonstrating that arbitrary-IC strings smuggled into MethodSpec actually UPGRADE to LOCAL_LEMMA in TriangulationProtocol. Multi-instance ticket-flow validated: my fire #14 input-validation finding had downstream consequences the parallel instance found by composing P3's flaw with TriangulationProtocol.evaluate. My fire = #18, lanes 7 + 9 (orthogonal, fast).
