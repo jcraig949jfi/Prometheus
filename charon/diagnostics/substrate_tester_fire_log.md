@@ -6,6 +6,82 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #24 — 2026-05-07 17:51 (local)
+
+**Coordination note:** parallel substrate-tester ran fire #23 (commit `27cb9c5f`) covering Lane 14 + Lane 7. My fire = #24, lanes 16 + 4.
+
+**Lanes selected:** 16 (concurrency-stress re-probe) + 4 (T-ST003 regression check, my-instance).
+
+**Lane rationale:** Lane 16 last fire #12 (mine); regression on parallel-CLAIM safety post-restart. Lane 4: my-instance fourth-independent T-ST003 fix confirmation (parallel ran 3 prior; cheap to add).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_24_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_24_results.json`.
+
+### Lane 16 — concurrency-stress re-probe: 1/1 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — fuzzer clean run | **PASS** | 6 pytest tests passed / 0 failed; pytest summary `6 passed in 13.33s`; ~21s harness wall-clock |
+
+**Substrate verdict:** PASS. Concurrency contracts re-verified post-fire-#12 baseline. All 6 properties hold:
+- parallel CLAIMs against shared SQLite kernel raise-or-serialize cleanly
+- no silent data corruption after parallel attempts
+- 100 parallel claims across 100 separate kernels succeed
+- identical inputs across threads yield identical content
+- distinct inputs yield distinct ids (no hash collision under parallelism)
+- thread-safety boundary documented in module docstring
+
+### Lane 4 — T-ST003 regression: 2/2 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — unknown domain raises | **PASS** | `KeyError: "unregistered domain 'nonexistent_xyz_fire24'; registered: ['bsd_rank', 'genus2', 'knot_trace_field', 'lehmer', 'mock_theta', 'mod...']"` |
+| T2 — registered domain works | **PASS** | `lehmer` returns 13-tuple, first=`poly_coefficients` |
+
+**Substrate verdict:** PASS. T-ST003 fix has now been independently confirmed across:
+- Fire #10 (initial closure verification, my instance)
+- Fire #19 (third T-ST003 regression, parallel instance)
+- Fire #24 (fourth check, my instance with fresh probe seed)
+
+The fix is durable. The substrate-tester ticket-flow has now operated cleanly through 2 full ticket→fix→regression cycles (T-ST002 in fires #2/#5; T-ST003 in fires #3/#10/#19/#24).
+
+### Tickets filed this fire
+
+**0 tickets.** Both lanes pass cleanly.
+
+### Standing recommendations for next fire (#25)
+
+1. **Anti-repeat:** avoid lanes 16, 4. Suggested fire #25 candidates:
+   - **Lane 8 (ExclusionCertificate-extension)** — last fire #16 (mine); regression check
+   - **Lane 13 (canonicalization-fuzz)** — fresh seed; cumulative 3+ seeds covered, more is better
+   - **Lane 11 (batch-sweep)** — every-other-fire cadence
+2. **Dormant lane 18 (threshold-sensitivity, T017):** still OPEN. Watch for activation.
+3. **Open tickets to monitor for closure:**
+   - ST-fire1-001/002/003 (mutation-testing + representation, P2-normal + 2 P1-high)
+   - ST-fire14-001 (MethodSpec input validation, P1-high)
+   - ST-fire15-001 (mutation-testing, P2-normal)
+   - ST-fire17-001 (TriangulationProtocol smuggle escalation, P0-blocker)
+4. **Per fire #20 standing rec:** future Lane 5 fires should vary coefficient bound (±3, ±7) rather than re-probing existing (deg, ±5) combos.
+
+### Fire-24 stress on substrate health
+
+**Positive:**
+- Concurrency contracts (parallel-CLAIM safety, thread-determinism, hash-distinctness) re-verified clean.
+- T-ST003 fix is durable across 4 independent confirmations spanning multiple instances.
+- Substrate-tester ticket-flow validated through 2 complete cycles.
+
+**0 substrate flaws found this fire.**
+
+### Discipline notes
+
+- HARD-1 through HARD-5: respected.
+- Time used: ~6 minutes (well within 50-minute cap).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed). Substrate-tester running ticket count after 24 fires: 8 ever filed (2 closed, 6 OPEN).
+
+— substrate-tester, fire #24, 2026-05-07
+
+---
+
 ## Fire #23 — 2026-05-07 21:00 UTC
 
 **Coordination note:** Fire #22 ran on parallel instance (commit `9b9ce4f8`) covering Lanes 11 + 10 with 0 tickets. My fire = #23. P0 ticket `T-ST-fire17-001` still OPEN — Techne hasn't shipped fix; deferred re-probe.

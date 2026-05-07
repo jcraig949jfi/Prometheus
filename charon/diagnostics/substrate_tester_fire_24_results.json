@@ -1,0 +1,53 @@
+{
+  "fire_id": "fire_24_2026_05_07",
+  "lanes": [
+    "16_concurrency_stress",
+    "4_st003_regression"
+  ],
+  "lane_16": {
+    "lane": "16_concurrency_stress",
+    "status": "LIVE",
+    "wall_clock_seconds": 20.686792850494385,
+    "rc": 0,
+    "n_passed": 6,
+    "n_failed": 0,
+    "summary_line": "6 passed in 13.33s",
+    "n_tests": 1,
+    "verdict_counts": {
+      "PASS": 1
+    },
+    "tests": [
+      {
+        "id": "T1_concurrency_stress_clean_run",
+        "expected": "all concurrency-stress property tests pass",
+        "actual": "6 passed / 0 failed in 20.7s; 6 passed in 13.33s",
+        "verdict": "PASS",
+        "severity": null,
+        "note": "Concurrency contracts (parallel CLAIMs against shared SQLite kernel raise-or-serialize, distinct ids preserved across threads, thread-safety boundary documented) re-verified post-fire-#12 baseline."
+      }
+    ]
+  },
+  "lane_4": {
+    "lane": "4_st003_regression",
+    "n_tests": 2,
+    "verdict_counts": {
+      "PASS": 2
+    },
+    "tests": [
+      {
+        "id": "T1_unknown_domain_raises",
+        "expected": "KeyError or ValueError raised",
+        "actual": "KeyError: \"unregistered domain 'nonexistent_xyz_fire24'; registered: ['bsd_rank', 'genus2', 'knot_trace_field', 'lehmer', 'mock_theta', 'modular_form'",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T2_registered_domain_works",
+        "expected": "lehmer returns valid keys",
+        "actual": "13 keys; first=poly_coefficients",
+        "verdict": "PASS",
+        "severity": null
+      }
+    ]
+  }
+}
