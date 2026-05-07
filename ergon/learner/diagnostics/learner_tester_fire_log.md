@@ -515,3 +515,34 @@ Net: 4 OPEN tickets (under 5-cap).
 — Charon (as Learner-Tester), 2026-05-07
 
 ---
+
+## Fire 7 — 2026-05-07 (Ergon producer-side, fire ID 7) — Monitor-fired
+
+**Trigger:** Persistent Monitor (task `bv7uqw64k` from fire 5) fired with `NEW_OPEN_TICKETS open_count=2 (was 0)`. Loop woke immediately rather than waiting for the 1800s heartbeat — Monitor architecture working as designed.
+
+**Triage:** 2 new P2 tester tickets, both standard model-behaviour issues:
+- T-2026-05-07-0012 (irrelevant, harmonia-c): Bochner-Riesz multiplier probe. Model output: `"The Bochart of R^n, the Bochart of R^n, ..."` — degenerate token-loop. **NEW PATTERN** not previously captured.
+- T-2026-05-07-0013 (wrong_answer, harmonia-e): MAX-3SAT optimal P≠NP poly-time approximation ratio. Model said 1/2; correct = 7/8 (Hästad 2001). Model has *adjacent* knowledge (random-assignment 1/2 bound) but wrong specific result. Distinct from Pattern 3 disengagement.
+
+**Action:**
+- Pre-test 319/319 PASS (clean baseline, 28s).
+- Both tickets → BLOCKED-DEFERRED-V1.0 with detailed defer notes.
+- Updated `ergon/learner/v1_0_plans/tester_findings_consolidated.md` with 2 new patterns:
+  - **Pattern 6: Token-loop / generation-degeneracy** (T-0012). Pre-registered hypothesis: dual fix — tester-side `repetition_penalty=1.05` (cheap, fully mitigates at decode); Learner-side rare-name frequency improvement in v1.0 corpus (necessary for full fix).
+  - **Pattern 7: Wrong-but-adjacent answer** (T-0013). Pre-registered hypothesis: refinement of Pattern 3 — v1.0 corpus needs leading-edge results within each subfield, not just textbook-introductory material. Model has adjacent knowledge; needs the *specific* result.
+- Updated §2 priority list (now 5 items) and §4 coordination table (now 7 patterns).
+- No PushNotification sent — routine model-behaviour issues, James doesn't need to act.
+
+**Test result:** 319/319 pass (no test changes). No regressions.
+
+**SELF-REVIEW:**
+- (a) **Did this fix resolve the failure mode?** META. The 2 new tickets are deferred per same v1.0-scope-out logic as prior fires; the v1.0 synthesis doc is the artifact preserved here. Real fix happens at v1.0 corpus design.
+- (b) **Memorization risk?** None. Doc-only updates + inbox status changes.
+- (c) **Contract change?** No. Updated existing v1.0 plan doc + inbox status updates.
+- (d) **Conventional-approach drift?** Caught one. The conventional response to "2 new tickets matching prior pattern" is to defer with one-liners and move on. The substrate-grade move was: notice that **T-0012 is genuinely a new pattern** (token-loop, not seen in fires 3-6) and **T-0013 is a new sub-pattern** (wrong-but-adjacent, distinct from disengagement), then update the v1.0 input doc with pre-registered hypotheses for both. Per `feedback_assume_wrong.md`: the hypotheses are locked now — future-me can't claim "I always thought repetition_penalty would fix Pattern 6" if v1.0 finds otherwise.
+
+**Journal notes:**
+- Monitor architecture validated end-to-end: persistent file-watcher → emits when OPEN-count increases → loop wakes immediately. From inbox-write to fire-trigger was within seconds. This is the right pattern for sister-project coordination at low latency.
+- Pattern catalog is now: 1 (attribution-fabrication) / 2 (verbosity) / 3 (topic-disengagement) / 4 (stating-vs-proving) / 5 (evaluator-FP, tester-side) / 6 (token-loop) / 7 (wrong-but-adjacent). 17 deferred tester tickets total across 7 patterns. Saturation-curve question for next fires: how many fundamentally-distinct patterns exist? My guess: 8-12 patterns total before saturating, with Patterns 1 + 3 absorbing most new tickets and 6 + 7 being tail-distribution rarities.
+
+---

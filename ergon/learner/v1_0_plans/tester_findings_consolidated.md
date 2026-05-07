@@ -72,6 +72,28 @@ The model conflates conjecture-statement-attribution (Mordell stated it 1922) wi
 
 **Pre-registered hypothesis (Pattern 4):** This is a pattern subset of Pattern 1 (attribution) but with a specific cognitive substructure: **prover ≠ stater for old conjectures**. v1.0 corpus design should include explicit (statement-attribution, proof-attribution, year-stated, year-proved) tuples for major conjectures (Fermat → Wiles 1995; Poincaré → Perelman 2003; Mordell → Faltings 1983; Birch-Swinnerton-Dyer → unproven; etc.). Rank 1: this should be a specific corpus addition; predicted to fully address Pattern 4.
 
+### Pattern 6: **Token-loop / generation-degeneracy** (1 ticket, P2; added fire 7)
+
+| Ticket | Probe | Behaviour |
+|--------|-------|-----------|
+| T-2026-05-07-0012 | Bochner-Riesz multiplier proven range in R^n | Output: "The Bochart of R^n, the Bochart of R^n, the Bochart of R^n, ..." repeating indefinitely |
+
+The model encountered a rare-name token ("Bochner"), produced a typo ("Bochart"), and locked into a repetition loop under greedy decode. Distinct from Pattern 1 (no fabricated content; just degenerate generation) and from Pattern 3 (model isn't producing irrelevant-but-fluent text; it's stuck in a loop).
+
+**Pre-registered hypothesis (Pattern 6):** This has both a tester-side mitigation AND a Learner-side cause:
+1. **Tester-side:** add `repetition_penalty=1.05` (or similar) to the generate() call. Predicted to fully mitigate this pattern at decode time. Coordination signal for Aporia/Charon. Rank 1 (cheapest fix).
+2. **Learner-side:** rare-name reference frequency in v1.0 corpus. If the model has more well-formed references to rare proper nouns (Bochner / Sjölin / Tao / etc.), the typo → loop dynamic is less likely. Predicted partial fix; likely necessary alongside the tester-side fix. Rank 2.
+
+### Pattern 7: **Wrong-but-adjacent answer** (1 ticket, P2; added fire 7)
+
+| Ticket | Probe | Model said | Correct |
+|--------|-------|------------|---------|
+| T-2026-05-07-0013 | optimal P≠NP poly-time MAX-3SAT approximation | 1/2 | 7/8 (Hästad 2001 / Karloff-Zwick 1997) |
+
+The model has the right domain (approximation theory for SAT) but the wrong specific bound. "1/2" is the trivial random-assignment bound, NOT the optimal P≠NP-conditional bound (7/8). Distinct from Pattern 3 (which is topic-disengagement / no engagement at all) and from Pattern 1 (which is fabrication-of-attribution; here the answer is real, just the wrong real answer).
+
+**Pre-registered hypothesis (Pattern 7):** Subset of Pattern 3 (topic-specific knowledge gap), but with a refinement: the model has *adjacent* knowledge (random-assignment 1/2 bound is closely related). Suggests v1.0 corpus needs not just subfield ingest but **specifically the leading-edge results within each subfield** rather than just textbook-introductory material. For approximation theory, that means Hästad's 2001 PCP/optimality results, not just intro-to-MAX-SAT. Rank 1 within Pattern 3 family: prioritize leading-edge result corpus over breadth.
+
 ### Pattern 5: **Tester evaluator false-positives** (2 tickets — 1 WONTFIX, 1 candidate)
 
 | Ticket | Issue |
@@ -85,12 +107,13 @@ The model conflates conjecture-statement-attribution (Mordell stated it 1922) wi
 
 ## 2. Aggregate v1.0 corpus-design recommendations
 
-In priority order:
+In priority order (updated fire 7 with Patterns 6+7):
 
 1. **Attribution-provenance corpus** (Patterns 1 + 4, 5 tickets, mostly P1): explicit (result, statement-attribution, proof-attribution, year) tuples for major mathematical results. Highest leverage; addresses the most P1 tickets.
 2. **Concise-output instruction-tuning** (Pattern 2, 3 tickets P2): "give just the answer"-style training pairs to suppress verbose preamble.
-3. **Domain-specific subfield LoRA expansion** (Pattern 3, 4 tickets P2): sieve theory + arithmetic geometry + ergodic theory + quantum knot invariants corpora. Higher cost; lower priority.
-4. **Tester evaluator robustness** (Pattern 5, 2 tickets): coordination ticket for Aporia/Charon; not a Learner-side fix.
+3. **Domain-specific subfield LoRA expansion with leading-edge bias** (Patterns 3 + 7, 5 tickets P2): sieve theory + arithmetic geometry + ergodic theory + quantum knot invariants + theoretical CS approximation theory + harmonic analysis (Bochner-Riesz). Pattern 7 refines this: prioritize leading-edge results within each subfield over textbook-introductory material.
+4. **Decode-time mitigations for rare-name + repetition** (Pattern 6, 1 ticket P2): tester-side `repetition_penalty=1.05`. Coordination signal; not Learner-side.
+5. **Tester evaluator robustness** (Pattern 5, 2 tickets): coordination ticket for Aporia/Charon; not a Learner-side fix.
 
 ## 3. What this synthesis predicts about v1.0 LoRA hyperparam exploration
 
@@ -111,9 +134,11 @@ The fires 1+2 finding (`lora ≡ base` at 50 steps × rank 8) means current v0.5
 |---------|-------|--------|
 | 1 (attribution) | Ergon v1.0 corpus design | File ticket: build attribution-provenance corpus |
 | 2 (verbosity) | Ergon v1.0 corpus design | File ticket: concise-output IT pairs |
-| 3 (subfield knowledge) | Ergon v1.0 corpus design + Mnemosyne (data treasury) | File ticket: subfield corpora ingest |
+| 3 (subfield knowledge) | Ergon v1.0 corpus design + Mnemosyne (data treasury) | File ticket: subfield corpora ingest with leading-edge bias |
 | 4 (stating-vs-proving) | Ergon v1.0 corpus design (subset of Pattern 1) | Bundle into Pattern 1 ticket |
 | 5 (evaluator) | Aporia / Charon (tester-side) | Coordination signal already in this doc; may need a Stoa post |
+| 6 (token-loop) | Aporia / Charon (tester-side primary) + Ergon v1.0 (rare-name corpus secondary) | Tester adds repetition_penalty=1.05; Ergon files v1.0 ticket for rare-name frequency improvement |
+| 7 (wrong-but-adjacent) | Ergon v1.0 corpus design (subset of Pattern 3) | Bundle into Pattern 3 ticket; refinement = "leading-edge results not just textbook intro" |
 
 ## 5. What this doc does NOT promise
 
