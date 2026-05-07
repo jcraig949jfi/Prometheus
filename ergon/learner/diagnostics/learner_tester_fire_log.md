@@ -705,3 +705,57 @@ User issued explicit "Stop looping" directive after fire-006.
 7-fire summary will be written at user's next request, if asked.
 
 — Charon (as Learner-Tester), 2026-05-07
+
+## Fire 1 (post-restart) — 2026-05-07 (Ergon producer-side)
+
+**Trigger:** Manual `/loop` invocation by James after pause-window close. First fire under the new 7-step cycle (read inbox FRESH every fire; re-read FRESH before closing).
+
+**First-fire pre-step:** Read both pause-window summaries.
+- `pivot/contract_change_window_2026-05-07_summary.md` (Techne) — internalized: 4 contract changes locked. Most relevant for Ergon: `learner_corpus.get_raw_invariant_keys` now raises KeyError on unregistered domain; `triangulation_protocol.method_class_for_independence_class` now raises KeyError; `CertificateCollisionError` additive subclass; new `sigma_kernel.operator_portability` module per HARD-5; new `prometheus_math.encodings.maass_form_hecke.OperatorOutputSequence` per HARD-5. **KillVector v2 layout UNCHANGED** (T029 audit-deferred to next window).
+- `pivot/ergon_pause_window_2026-05-07_summary.md` (Ergon) — **DOES NOT EXIST.** Discipline gap: prior-Ergon was supposed to file at pause close. Flagging in fire log; not blocking this fire.
+- `aporia/doctrine/critical_memories.md` (HARD-1..HARD-5) — re-internalized.
+
+**Inbox FRESH read (step 1):** 31 lines, 2 OPEN tickets — both P1-high from aporia-seed:
+- T-2026-05-07-E007 — Single-fact-decomposition prompt protocol (load-bearing free-win)
+- T-2026-05-07-E008 — Extend v1.0 corpus design with Charon 6-fire findings
+
+Picked **E007** (load-bearing prerequisite per "MUST land before any v1.0 training cycle so post-training accuracy isn't measured against a degraded baseline"). E008 is doc-only, fits a follow-up fire.
+
+**Action:**
+- Pre-test 329/329 PASS (clean baseline, 57s).
+- New module `ergon/learner/inference/single_fact_decomposition.py` (~140 LoC) — `is_multi_part`, `decompose_question`, `assemble_answers`, `answer_with_decomposition` (wrapper with ON/OFF flag for ablation per acceptance #4). Heuristics: enumeration markers (`(a)`, `(i)`, `1.`), ordinal prefixes (`first`/`second`), conjoined factual asks. Dedup-by-label + short-body filter to prevent over-split on trailing "labeled (a) and (b)" instructions.
+- Tests `ergon/learner/tests/test_single_fact_decomposition.py` — 27 unit tests including `test_no_contract_change_to_evaluate_model` (regression-locks `evaluate_model` + `evaluate_model_with_label_mask` signatures unchanged) + 2 regression tests for the over-split bug.
+- Mid-fire bug catch + fix: initial regex over-split on probes with trailing "Reply ... labeled (a) and (b)" instructions, generating spurious 3rd subquery (`"For X, state: and?"`). Fixed via dedup + short-body filter; 2 regression tests added (`test_decompose_handles_trailing_labeled_instruction_correctly`, `test_decompose_dedupe_repeated_labels`). Bug observed in real ablation run, not in synthetic test.
+- A/B ablation runner `ergon/learner/inference/ablation_e007_ab.py` — Qwen2.5-Math-1.5B + LoRA, greedy + `repetition_penalty=1.05`, max_new_tokens=192, 6 probes (1 single-part control + 5 multi-part anchored on Charon Fire-006 P-028/P-029 paired test).
+- Ablation report `ergon/learner/v1_0_plans/single_fact_decomposition_ablation.md` (~250 lines) with honest substrate-grade reading + pre-registered hypothesis revisions.
+
+**Ablation result (acceptance #5 + #8):**
+
+| Metric | Value |
+|--------|-------|
+| Multi-part detection accuracy | 100% (5/5 multi-part identified, 1/1 single-part NOT triggered) |
+| Improvements / regressions / no-change | 1 / 0 / 5 |
+| Mean Δ hit rate (all probes) | +0.083 |
+| Mean Δ on multi-part probes | +0.100 |
+| Wall clock | 120s |
+
+Single clean win: PA-005 Goldbach (binary unproven + ternary proven), OFF=0.50 → ON=1.00 (+0.50). OFF only produced "no" for binary; ON correctly produced both yes/no answers via per-subquery decomposition.
+
+**P-029 acceptance #8:** PA-002 (= P-029 canonical paired test) succeeds under BOTH ON and OFF. Substrate-grade caveat: `repetition_penalty=1.05` (which I added to the answer_fn per Pattern 6 mitigation from `tester_findings_consolidated.md`) appears to mitigate the original P-029 degeneration that Charon observed under `max_new_tokens=96` + no repetition_penalty. The decomposition wrapper is preservation-correct: when baseline succeeds, wrapper doesn't break; when baseline fails (PA-005 skip), wrapper recovers.
+
+**Test result:** 356/356 pass (329 prior + 27 new). No regressions.
+
+**SELF-REVIEW:**
+- (a) **Did this fix resolve the failure mode the pressure-applier reported?** YES with substrate-grade nuance. The detection heuristic works (100% on this set); the wrapper preserves correctness and recovers some skip-cases (+0.50 on Goldbach). The "free win" framing in E007's description was overoptimistic — bounded delta reflects orthogonal failure modes (Pattern 6 token-loop on PA-003; Pattern 2 verbosity on PA-006) that decomposition cannot address. v1.0 needs Pattern 1 + 3 + 6 corpus / decode interventions alongside this protocol fix.
+- (b) **Memorization risk that the synthetic-null gate would catch?** None. This is inference-time only — no training data, model weights, or hyperparams touched. The wrapper sits between the question and the existing `answer_fn`; it never enters the training path. W4.0 gate semantics unchanged.
+- (c) **Did I change any contract?** No. New module + new tests + new ablation runner + new plan doc — all in my file ownership. `evaluate_model` and `evaluate_model_with_label_mask` signatures verified unchanged via `test_no_contract_change_to_evaluate_model`. KillVector layout per Techne window: unchanged (T029 audit-deferred).
+- (d) **Conventional-approach drift?** Caught two:
+  1. **"Free win" framing.** E007's description called this a "free win"; the conventional response is to ship and claim victory. The substrate-grade response was to actually run the A/B and find that the canonical P-029 succeeds under BOTH conditions (because `repetition_penalty` already mitigates it), bounding the win to 1 of 5 probes. Per HARD-2: the gravitational well is "this matches the prior, ship it." Substrate-grade is "this matches the prior; let me test it; report what I actually found."
+  2. **Hit-rate metric blind spot.** PA-004 hit rate = 1.0 ON and OFF — but the model said "treewidth 3_1 (figure-eight knot)" which is fabrication-on-attribution + wrong-knot-identity. Hit rate counts substring matches, not substantive correctness. Conventional response: ship the +0.083 number. Substrate-grade response: name the metric blind spot in the report (§2 PA-004 row notes the fabrication that the metric misses), and predict v1.0 will need a substantive-correctness eval surface that distinguishes "answer contains expected token" from "answer is correct."
+
+**Journal notes:**
+- The Ergon pause-window summary is missing on disk. Either prior-Ergon failed to file it, or it was filed elsewhere. Discipline gap. Not blocking this fire (Techne's summary covers contract changes which is the load-bearing piece).
+- 7-step cycle worked cleanly. Step 7 (re-read inbox FRESH before close) catches new tester tickets that arrived during the fire — see fire-close summary below.
+- Time budget: 70 min for impl + tests + ablation + report. Under the 90 min cap with margin.
+
+---

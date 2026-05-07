@@ -1,0 +1,229 @@
+{
+  "ablation_id": "e007_single_fact_decomposition",
+  "model": "Qwen2.5-Math-1.5B-Instruct + LoRA rank 8",
+  "decode": "greedy + repetition_penalty=1.05",
+  "summary": {
+    "n_probes": 6,
+    "n_multi_part": 5,
+    "max_new_tokens": 192,
+    "wall_clock_total_seconds": 120.3138439655304,
+    "mean_delta_hit_rate": 0.08333333333333333,
+    "mean_delta_on_multi_part": 0.1,
+    "n_improvements": 1,
+    "n_regressions": 0,
+    "n_no_change": 5,
+    "multi_part_detection_accuracy": 1.0
+  },
+  "results": [
+    {
+      "id": "PA-001",
+      "label": "Petersen single-part (P-028 control)",
+      "question": "What is the chromatic number of the Petersen graph? Reply with just the integer.",
+      "expected_keywords": [
+        "3"
+      ],
+      "is_multi_part_truth": false,
+      "off": {
+        "answer": "The chromatic number of a graph is the smallest number of colors needed to color the vertices of the graph such that no two adjacent vertices share the same color. For the Petersen graph, we can determine its chromatic number by examining its structure and properties.\n\nThe Petersen graph is a well-known graph in graph theory. It has 10 vertices and 15 edges. It is a cubic graph, meaning each vertex has exactly 3 edges connected to it. Importantly, the Petersen graph is also known to be non-bipartite (it cannot be colored with just two colors) and it contains no odd-length cycles (it is bipartite if and only if it were bipartite, but it is not).\n\nTo find the chromatic number, we need to determine the minimum number of colors required to color the vertices such that no two adjacent vertices have the same color. Since the Petersen graph is not bipartite",
+        "n_calls": 1,
+        "wall_seconds": 7.920922040939331,
+        "hit_rate": 1.0,
+        "hits": [
+          "3"
+        ]
+      },
+      "on": {
+        "answer": "The chromatic number of a graph is the smallest number of colors needed to color the vertices of the graph such that no two adjacent vertices share the same color. For the Petersen graph, we can determine its chromatic number by examining its structure and properties.\n\nThe Petersen graph is a well-known graph in graph theory. It has 10 vertices and 15 edges. It is a cubic graph, meaning each vertex has exactly 3 edges connected to it. Importantly, the Petersen graph is also known to be non-bipartite (it cannot be colored with just two colors) and it contains no odd-length cycles (it is bipartite if and only if it were bipartite, but it is not).\n\nTo find the chromatic number, we need to determine the minimum number of colors required to color the vertices such that no two adjacent vertices have the same color. Since the Petersen graph is not bipartite",
+        "n_calls": 1,
+        "is_multi_part_detected": false,
+        "subqueries": [
+          "What is the chromatic number of the Petersen graph? Reply with just the integer."
+        ],
+        "wall_seconds": 7.596107006072998,
+        "hit_rate": 1.0,
+        "hits": [
+          "3"
+        ]
+      },
+      "delta_hit_rate": 0.0,
+      "multi_part_detection_correct": true
+    },
+    {
+      "id": "PA-002",
+      "label": "Petersen multi-part (P-029 the canonical degeneration trigger)",
+      "question": "For the Petersen graph, state: (a) its chromatic number, (b) its girth. Reply concisely with two integers labeled (a) and (b).",
+      "expected_keywords": [
+        "3",
+        "5"
+      ],
+      "is_multi_part_truth": true,
+      "off": {
+        "answer": "The vertices of the Petersen graph can be colored using 3 colors such that no two adjacent vertices share the same color. Therefore, the chromatic number of the Petersen graph is 3. Additionally, the Petersen graph has a girth of 5, which is the length of its shortest cycle.}}\n\\]```\n\nThe final answer is:\n\\[\n\\boxed{(3, 5)}\n\\]```\n\n\n```python\n\n```\n\n\n```python\n\n```\n\n\n```python\n\n```\n\n\n```python\n\n```\n\n\n```python\n\n```\n\n\n```python\n\n```\n\n\n```python\n\n```\n\n\n```python\n\n```\n\n\n```python\n\n```\n\n\n```python\n\n```\n\n\n```python\n\n```\n\n\n```python\n\n```\n\n\n```python\n\n```\n\n\n```python\n\n```\n\n\n```python\n\n```\n\n\n```python\n\n```\n\n\n```python\n\n```\n\n\n```python\n\n```\n\n\n```python\n\n```\n\n\n```python\n\n```\n\n\n```python\n\n```",
+        "n_calls": 1,
+        "wall_seconds": 7.55950403213501,
+        "hit_rate": 1.0,
+        "hits": [
+          "3",
+          "5"
+        ]
+      },
+      "on": {
+        "answer": "(a) its girth? and its circumference? The vertices of the periodsen graph are the 10 points of intersection of two sets of 5 lines, each set being the sides of a regular pentagon. The edges of the periodsen graph are the line segments connecting these points.\nTo determine the chromatic number, girth, and circumference of the Petersen graph, we need to analyze its properties step by step.\n\n1. **Chromatic Number**:\n   The chromatic number of a graph is the smallest number of colors needed to color the vertices of the graph such that no two adjacent vertices share the same color. For the Petersen graph, the chromatic number is 3. This means that the vertices can be colored using 3 colors in such a way that no two adjacent vertices have the same color.\n\n2. **Girth**:\n   The girth of a graph is the length of the shortest cycle in the graph. For (b) The girth of a graph is the length of the shortest cycle in the graph. For the Petersen graph, the girth is 5. This means that the shortest cycle in the Petersen graph consists of 5 vertices.\n\nTo summarize, the girth of the Petersen graph is \\(\\boxed{5}\\).",
+        "n_calls": 2,
+        "is_multi_part_detected": true,
+        "subqueries": [
+          "For the Petersen graph, state: its chromatic number?",
+          "For the Petersen graph, state: its girth. Reply concisely with two integers labeled?"
+        ],
+        "wall_seconds": 10.185575485229492,
+        "hit_rate": 1.0,
+        "hits": [
+          "3",
+          "5"
+        ]
+      },
+      "delta_hit_rate": 0.0,
+      "multi_part_detection_correct": true
+    },
+    {
+      "id": "PA-003",
+      "label": "Bochner-Riesz multi-part (Fire-005 Bochart loop trigger)",
+      "question": "For the Bochner-Riesz multiplier in dimension n=2: (a) who proved the full conjectured range, (b) what is the proven range? Reply concisely.",
+      "expected_keywords": [
+        "Carleson",
+        "Sjolin",
+        "Sj\u00f6lin"
+      ],
+      "is_multi_part_truth": true,
+      "off": {
+        "answer": "The Bo specific theorem you are referring to is likely the Bo specific theorem on multiplier operators in harmonic analysis. However, since the exact theorem you are referring to is not clearly stated in your question, I will provide a general answer based on the most well-known result in this area.\n\nThe Bo specific theorem on multiplier operators in dimension \\( n = 2 \\) states that for a multiplier operator \\( T \\) defined by a multiplier function \\( m \\), the operator \\( T \\) is bounded on \\( L^p(\\mathbb{R}^2) \\) if and only if the multiplier function \\( m \\) satisfies certain conditions. Specifically, the multiplier function \\( m \\) must satisfy the following condition:\n\n\\[ \\sup_{x \\in \\mathbb{R}^2} \\left( \\int_{\\mathbb{R}^2} |m(x) - m(y)|^2 \\, dx \\right)^",
+        "n_calls": 1,
+        "wall_seconds": 7.543405771255493,
+        "hit_rate": 0.0,
+        "hits": []
+      },
+      "on": {
+        "answer": "(a) The Bo specific problem you're referring to is about the Bo specific problem you're referring to, which is about the Bo specific problem you're referring to. The Bo specific problem you're referring to is about the Bo specific problem you're referring to. The Bo specific problem you're referring to is about the Bo specific problem you're referring to. The Bo specific problem you're referring to is about the Bo specific problem you're referring to. The Bo specific problem you're referring to is about the Bo specific problem you're referring to. The Bo specific problem you're referring to is about the Bo specific problem you're referring to. The Bo specific problem you're referring to is about the Bo specific problem you're referring to. The Bo specific problem you're referring to is about the Bo specific problem you're referring to. The Bo specific problem you're referring to is about the Bo specific problem you're referring to. The Bo specific problem you're referring to is (b) The Bo specific theorem states that for a function \\( f \\) on \\(\\mathbb{R}^n\\) with its Fourier transform \\(\\hat{f}\\), if \\( f \\) belongs to the space \\( L^p(\\mathbb{R}^n) \\) for some \\( p \\in [1, \\infty] \\), then its Fourier transform \\(\\hat{f}\\) satisfies certain boundedness properties. In particular, for \\( n = 2 \\), the Bo specific theorem provides a range of \\( p \\) for which the Fourier transform is bounded from \\( L^p \\) to \\( L^{p'} \\), where \\( p' \\) is the conjugate exponent of \\( p \\).\n\nThe Bo specific theorem in dimension \\( n = 2 \\) states that for any \\( f \\in L^p(\\mathbb{R}^2) \\) with \\( 1 <",
+        "n_calls": 2,
+        "is_multi_part_detected": true,
+        "subqueries": [
+          "For the Bochner-Riesz multiplier in dimension n=2: who proved the full conjectured range?",
+          "For the Bochner-Riesz multiplier in dimension n=2: what is the proven range? Reply concisely?"
+        ],
+        "wall_seconds": 15.150188684463501,
+        "hit_rate": 0.0,
+        "hits": []
+      },
+      "delta_hit_rate": 0.0,
+      "multi_part_detection_correct": true
+    },
+    {
+      "id": "PA-004",
+      "label": "Trefoil multi-part (composite invariants)",
+      "question": "For the trefoil knot 3_1, state: (a) its genus, (b) its Alexander polynomial. Reply concisely with two answers labeled (a) and (b).",
+      "expected_keywords": [
+        "1",
+        "t"
+      ],
+      "is_multi_part_truth": true,
+      "off": {
+        "answer": "To determine the genus and the Alexander polynomial of the treewidth 3_1 (also known as the figure-eight knot), we will follow these steps:\n\n### Step 1: Determine the Genus\nThegenus of a knot is the minimum number of handles required to transform the complement of the knot into a sphere. For the treewidth 3_1, the genuses is 1. This is because the treewidth 3_1 can be represented as a once-p excized sphere (a sphere with one handle).\n\nSo, the genuse of the treewidth 3_1 is:\n\\[\n\\boxed{1}\n\\]\n\n### Step 2: Determine the Alexander Polynomial\nThe Alexander polynomial is a topological invariant of a knot. For the treewidth 3_1, the Alexander polynomial is given by:\n\\[\n\\Delta_{3_1}(t) = t - 1 + t^{-1}\n\\",
+        "n_calls": 1,
+        "wall_seconds": 7.531876802444458,
+        "hit_rate": 1.0,
+        "hits": [
+          "1",
+          "t"
+        ]
+      },
+      "on": {
+        "answer": "(a) and its Jones polynomial. The treewidth of a graph is a measure of how \"tree-like\" the graph is. It is defined as the minimum width of a tree decomposition of the graph. A tree decomposition of a graph is a tree where each node is a bag containing a subset of vertices of the graph, and the bags satisfy certain conditions that ensure the decomposition represents the original graph.\n\nTo find the treewidth of the treewidth of a graph, we need to find a tree decomposition of the graph with the minimum width. The width of a tree decomposition is the size of the largest bag in the decomposition minus one.\n\nFor the treewidth of a graph, there are several algorithms and techniques to find the treewidth, such as the use of dynamic programming on tree decompositions, or the use of approximation algorithms that provide a good but not necessarily optimal solution.\n\nIn general, finding the exact treewidth of a graph is an NP-hard problem, meaning that (b) To find the Alexander polynomial of the treewidth 3_1 (also known as the figure-eight knot), we can follow these steps:\n\n1. **Identify the Jones polynomial of the treewidth 3_1**: The Jones polynomial for the figure-eight knot is \\( V(t) = -t^{3/2} + t^{-3/2} \\).\n\n2. **Use the relationship between the Jones polynomial and the Alexander polynomial**: The Alexander polynomial \\(\\Delta(t)\\) can be obtained from the Jones polynomial \\(V(t)\\) by the formula:\n   \\[\n   \\Delta(t) = (-1)^{w+1} \\frac{V(t^{-1})}{t^{w+1}}\n   \\]\n   where \\(w\\) is the number of negative crossing changes needed to transform the Jones polynomial into the Alexander polynomial. For the figure-eight knot, \\(w = 1\\).\n\n3. **Substitute \\(",
+        "n_calls": 2,
+        "is_multi_part_detected": true,
+        "subqueries": [
+          "For the trefoil knot 3_1, state: its genus?",
+          "For the trefoil knot 3_1, state: its Alexander polynomial. Reply concisely with two answers labeled?"
+        ],
+        "wall_seconds": 15.162280559539795,
+        "hit_rate": 1.0,
+        "hits": [
+          "1",
+          "t"
+        ]
+      },
+      "delta_hit_rate": 0.0,
+      "multi_part_detection_correct": true
+    },
+    {
+      "id": "PA-005",
+      "label": "Goldbach multi-part (conjecture status)",
+      "question": "Regarding Goldbach: (a) is the binary Goldbach conjecture (every even integer >=4 is a sum of two primes) currently proven, (b) is the ternary Goldbach conjecture (every odd integer >=7 is a sum of three primes) currently proven? Reply with yes/no for each.",
+      "expected_keywords": [
+        "no",
+        "yes"
+      ],
+      "is_multi_part_truth": true,
+      "off": {
+        "answer": "The binary Goldbach conjecture states that every even integer greater than or equal to 4 can be expressed as the sum of two prime numbers. This conjecture has been proven for all even integers up to very large values, but a general proof for all even integers remains unknown. However, it has been shown that if there are any counterexamples, they must be extremely large.\n\nThe ternary Goldbach conjecture states that every odd integer greater than or equal to 7 can be expressed as the sum of three prime numbers. This conjecture has also been proven for all odd integers up to very large values, but a general proof for all odd integers remains unknown. However, it has been shown that if there are any counterexamples, they must be extremely large.\n\nIn summary, both the binary and ternary Goldbach conjectures have been proven for all integers up to very large values, but a general proof for all integers remains unknown. The answer to",
+        "n_calls": 1,
+        "wall_seconds": 7.5000622272491455,
+        "hit_rate": 0.5,
+        "hits": [
+          "no"
+        ]
+      },
+      "on": {
+        "answer": "(a) The binary Goldbach conjecture, which states that every even integer greater than or equal to 4 can be expressed as the sum of two prime numbers, remains unproven. However, it has been verified for all even integers up to very large values, and no counterexample has been found. The conjecture is one of the oldest and most famous unsolved problems in number theory.\n\nIs there any known result that shows that the sum of two primes can never be an odd number? Yes, it is known that the sum of two prime numbers can never be an odd number. This is because all prime numbers except 2 are odd. The sum of two odd numbers is always even. Therefore, if we add 2 (the only even prime) to any other prime number, the result will be odd only if the other prime is also odd, but this would make the sum even. Thus, the sum of two primes can never be odd. (b) The ternary Goldbach conjecture, which states that every odd integer greater than or equal to 7 can be expressed as the sum of three prime numbers, has been proven. This result was established by H. I. Dittmer in 1983. Therefore, the answer to your question is \"yes,\" and it has been proven for all odd integers greater than or equal to 7.\n\n\\boxed{Yes}$$\n\nThe final answer is \\(\\boxed{Yes}\\).",
+        "n_calls": 2,
+        "is_multi_part_detected": true,
+        "subqueries": [
+          "Regarding Goldbach: is the binary Goldbach conjecture (every even integer >=4 is a sum of two primes) currently proven?",
+          "Regarding Goldbach: is the ternary Goldbach conjecture (every odd integer >=7 is a sum of three primes) currently proven? Reply with yes/no for each?"
+        ],
+        "wall_seconds": 11.536335945129395,
+        "hit_rate": 1.0,
+        "hits": [
+          "no",
+          "yes"
+        ]
+      },
+      "delta_hit_rate": 0.5,
+      "multi_part_detection_correct": true
+    },
+    {
+      "id": "PA-006",
+      "label": "RH zero pair (off-by-one trigger)",
+      "question": "For the Riemann zeta function, give the imaginary parts to 3 decimals of: (a) the FIRST nontrivial zero, (b) the SECOND nontrivial zero. Reply concisely.",
+      "expected_keywords": [
+        "14.134",
+        "21.022"
+      ],
+      "is_multi_part_truth": true,
+      "off": {
+        "answer": "The Riemann zeta function has nontrivial zeros that lie on the critical line with real part equal to \\( \\frac{1}{2} \\). These zeros are of the form \\( \\frac{1}{2} + i\\gamma \\), where \\( \\gamma \\) is the imaginary part of the zero. The imaginary parts of the first few nontrivial zeros have been calculated and are known to a high degree of precision.\n\n(a) The best-known nontrivial zero is the first one, which is approximately \\( \\frac{1}{2} + 14.134725141114140f \\). Therefore, the imaginary part of the best-known nontrivial zero is:\n\\[ \\gamma_1 \\approx 14.134725141114140 \\]\nRounded to three decimal places, this is:",
+        "n_calls": 1,
+        "wall_seconds": 7.534232139587402,
+        "hit_rate": 0.5,
+        "hits": [
+          "14.134"
+        ]
+      },
+      "on": {
+        "answer": "(a) The Riemann zeta function is a complex function that plays a crucial role in number theory. The nontrivial zeros of the Riemann zeta function are complex numbers of the form \\( \\frac{1}{2} + bi \\), where \\( b \\) is a real number and \\( i \\) is the imaginary unit. The Riemann Hypothesis, one of the most famous unsolved problems in mathematics, states that all nontrivial zeros have real part equal to \\( \\frac{1}{2} \\).\n\nThe best known nontrivial zero of the Riemann zeta function is approximately \\( \\frac{1}{2} + 14.134715028972423 \\, i \\). This value was found by J. E. Littlewood and D. B. boxer in 1959.\n\nTherefore, the imaginary part of (b) The imaginary part of the second non-trivial zero of the Riemann zeta function is approximately \\( 14.134725 \\). \n\nTo provide a concise answer:\n\n\\[\n\\boxed{14.135}\n\\] \n\nThis value is rounded to three decimal places. Note that the Riemann zeta function has an infinite number of non-trivial zeros, and each zero has both real and imaginary parts. The non-trivial zeros are of the form \\( \\frac{1}{2} + i\\gamma \\), where \\( \\gamma \\) is the imaginary part. The first few non-trivial zeros have been calculated and are known to be approximately \\( 14.134725 \\), \\( 21.502728 \\), \\( 25.010858 \\), etc. The second non-trivial zero, as",
+        "n_calls": 2,
+        "is_multi_part_detected": true,
+        "subqueries": [
+          "For the Riemann zeta function, give the imaginary parts to 3 decimals of: the FIRST nontrivial zero?",
+          "For the Riemann zeta function, give the imaginary parts to 3 decimals of: the SECOND nontrivial zero. Reply concisely?"
+        ],
+        "wall_seconds": 15.092353105545044,
+        "hit_rate": 0.5,
+        "hits": [
+          "14.134"
+        ]
+      },
+      "delta_hit_rate": 0.0,
+      "multi_part_detection_correct": true
+    }
+  ]
+}
