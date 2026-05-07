@@ -6,6 +6,71 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #21 — 2026-05-07 20:00 UTC
+
+**Coordination note:** Fire #20 ran on parallel instance (commit `0f399394`) covering Lane 5 deg-10 ±5 with 0 tickets + cross-degree hit-rate scaling pattern (deg-14: 2.6e-6 → deg-12: 1.3e-5 → deg-10: 5.5e-5 — ~4-5× per lower degree). My fire = #21. P0 ticket `T-ST-fire17-001` still OPEN — Techne hasn't shipped fix; deferred re-probe.
+
+**Lanes selected:** 12 (representation-pressure, **2 NOVEL capability-gap probes**) + 6 (undecidable-canonicalization regression).
+
+**Lane 15 + 18 reactivation re-check:** still DORMANT (Charon orch ticket OPEN; T017 OPEN).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_21_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_21_results.json`.
+
+### Lane 12 — representation-pressure with NOVEL objects (2/2 capability gaps)
+
+Object selection deliberately avoids ST-fire1-002 (homotopy class), ST-fire1-003 (Fano plane), and the T024-T028 design set (tropical curve, p-adic L-function, Galois cohomology, large-cardinal consistency, motivic period). Probes target genuinely uncovered object classes.
+
+| Probe | Object | Result | Missing primitive |
+|---|---|---|---|
+| 1 | Knot HOMFLY polynomial of trefoil 3_1: `-a^4 + a^2*z^2 + 2*a^2` | **CAPABILITY GAP** | `SymbolicLaurentPolynomial` (variable_set + laurent_terms + coefficient_ring) with skein-equivalence canonicalization |
+| 2 | A∞-algebra: dg-algebra C*(S^2; Z) | **CAPABILITY GAP** | `ArityGradedOperationFamily` (m_n: A^⊗n → A tower with Stasheff coherence) |
+
+**Tickets filed:**
+- **`T-2026-05-07-ST-fire21-001` (P1-high)**: SymbolicLaurentPolynomial primitive missing (HOMFLY)
+- **`T-2026-05-07-ST-fire21-002` (P1-high)**: ArityGradedOperationFamily primitive missing (A∞-algebra) — RELATED-TO ST-fire1-002
+
+**Substrate-grade observation (cumulative across lane 12 fires):** of 4 Lane-12 probes filed across fires #7 + #21, all 4 except Maass form (T023 covered) reveal capability gaps that share a common pattern: **the substrate handles scalar-output operators well (T023), but lacks primitives for SYMBOLIC structures with their OWN equivalence relations (homotopy, isotopy, A∞-coherence, combinatorial-design-isomorphism)**. Recommend Aporia consider a unifying "Structured Equivalence Class" meta-primitive in the next contract-change window, rather than 4 separate one-off primitives.
+
+### Lane 6 — undecidable-canonicalization regression: 4/4 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — VALID_DECIDABILITY tuple unchanged since fire #11 baseline | **PASS** | `('conditional', 'decidable', 'undecidable')` |
+| T2 — invalid decidability_status raises ValueError | **PASS** | with helpful enumeration message |
+| T3 — undecidable construction succeeds (word_problem_for_finitely_presented_groups) | **PASS** | impl + decidability_status set as expected |
+| T4 — registered Lehmer chart's canonicalization is `decidable` | **PASS** | impl='reflection_quotient', decidability='decidable' |
+
+**Substrate verdict: PASS.** Decidability-flag discipline still holds across all post-restart fires (fire #4, #11, #21 all PASS).
+
+### Tickets filed this fire
+
+**2 tickets (both P1-high):**
+- `T-2026-05-07-ST-fire21-001` — SymbolicLaurentPolynomial capability gap (HOMFLY)
+- `T-2026-05-07-ST-fire21-002` — ArityGradedOperationFamily capability gap (A∞-algebra)
+
+### Standing recommendations for next fire (#22)
+
+1. **P0 ticket watch:** `T-ST-fire17-001` (TriangulationProtocol bypassable via arbitrary-IC smuggle) STILL OPEN. Re-probe Lane 3 immediately when status flips DONE. This is THE ticket to track this restart.
+2. **Anti-repeat:** avoid lanes 12, 6 (just covered). Suggested fire #22:
+   - **Lane 11 (batch-sweep)** — every-other-fire cadence; last fire #13 (parallel)
+   - **Lane 10 (real-paper)** — substantially overdue (last fire #5)
+   - **Lane 14 (replay-determinism)** — fresh-seed re-run; last fire #12
+3. **Lane 12 cumulative-observation candidate:** 4 capability-gap tickets across fires #7 + #21 share a "structural equivalence-class primitive missing" pattern. Worth filing an Aporia coordination ticket asking for a unified design rather than 4 one-off primitives.
+4. **Lane 5 hit-rate scaling pattern from fire #20:** worth filing an Aporia investigation ticket for the smooth ~4-5× per-degree hit-rate increase (deg-14: 2.6e-6 → deg-10: 5.5e-5). Geometric or substrate-combinatorial signal?
+
+### Discipline notes
+
+- HARD-1..HARD-5: clean. Capability-gap probes target operator-output-shaped or arity-graded primitives, not discipline-labeled object types (HARD-5 respected).
+- HARD-3 (tensor-first): the proposed unifying "Structured Equivalence Class" meta-primitive would be tensor-grade.
+- Time used: ~30 min (within 50-min cap).
+- Anti-flooding cap: 2 tickets filed (max 5 allowed).
+- Multi-instance coordination: pulled before lane-pick; claimed fire #21 = max-on-origin (20) + 1.
+
+— substrate-tester, fire #21, 2026-05-07 20:00 UTC
+
+---
+
 ## Fire #20 — 2026-05-07 15:41 (local)
 
 **Coordination note:** parallel substrate-tester instance ran fire #19 (commit `126461fb`) covering Lane 4 (third T-ST003 regression PASS) + Lane 1 (probe-design retirement). My fire = #20 alone, Lane 5 (full-cap, no pairing per spec).

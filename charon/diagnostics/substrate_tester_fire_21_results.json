@@ -1,0 +1,77 @@
+{
+  "fire": 21,
+  "lanes": [
+    12,
+    6
+  ],
+  "lane_12": {
+    "lane": "12_representation_pressure_novel_objects",
+    "n_probes": 2,
+    "n_capability_gaps": 2,
+    "probes": [
+      {
+        "probe": "knot_invariant_HOMFLY_polynomial_trefoil_3_1",
+        "encoded_cleanly": false,
+        "encoding_attempts": [
+          "CoordinateChart: would need (a, z) Laurent-polynomial coordinates with a metric over the polynomial ring. No registered chart for knot_invariants:HOMFLY exists. CoordinateChart's metric is over scalar-coordinate points, not polynomial-ring elements.",
+          "KillVector: N/A (not a falsifier outcome).",
+          "OperatorOutputSequence (T023): partial \u2014 could encode the (a, z) -> P(a, z) as an output sequence indexed by (a, z) lattice points. But the natural identity is a SYMBOLIC LAURENT POLYNOMIAL, not a sequence of evaluated values. The sequence loses the symbolic structure that makes HOMFLY recognizable up to isotopy.",
+          "ExclusionCertificate: N/A (not an exclusion claim).",
+          "REWRITE: skein relation a*P(L_+) - a^{-1}*P(L_-) = z*P(L_0) is structurally a rewrite rule from one knot's HOMFLY to its neighbors'. Could be encoded as REWRITE Symbol from L_+ to L_- via rewrite_rule_id='homfly_skein_relation'. BUT: substrate's REWRITE primitive expects scalar-valued Symbols, not polynomials in a, z."
+        ],
+        "missing_primitive": "SymbolicLaurentPolynomial primitive that natively carries (variable_set: tuple[str, ...], laurent_terms: dict[tuple[int, ...], Coefficient]) with skein-equivalence + isotopy-invariance registered as canonicalization protocols.",
+        "verdict_notes": [
+          "Knot HOMFLY polynomials are SYMBOLIC objects in a 2-variable Laurent polynomial ring. The substrate has no native primitive for symbolic-polynomial-valued objects with structural recognition (skein equivalence, isotopy invariance). T023 OperatorOutputSequence captures evaluations but loses symbolic identity."
+        ]
+      },
+      {
+        "probe": "A_infinity_algebra_singular_cochains_S2",
+        "encoded_cleanly": false,
+        "encoding_attempts": [
+          "CoordinateChart: A\u221e-algebra has graded vector space + tower of operations m_n: A^{\u2297n} -> A. No registered chart captures this; CoordinateChart's coordinate_system is a tuple of scalar axes, not a graded vector space + operad action.",
+          "KillVector: N/A (not a falsifier outcome).",
+          "OperatorOutputSequence (T023): could encode each m_n as a separate sequence (operator_id='m_n', index=n-tuple of basis elements). But: requires registering INFINITE many operator_ids (m_2, m_3, m_4, ...) because A\u221e has unbounded arity. Substrate has no notion of arity-graded operator family.",
+          "REWRITE/EQUIV: A\u221e-morphisms include higher coherences (the L\u221e structure). REWRITE only captures binary src->tgt; cannot express the arity-graded family of (f_1, f_2, f_3, ...) maps that constitute an A\u221e-morphism."
+        ],
+        "missing_primitive": "ArityGradedOperationFamily primitive: a registered tower of operations indexed by arity n with type-checked composition + Stasheff associativity coherence relations. Likely a substantial contract-change.",
+        "verdict_notes": [
+          "A\u221e-algebras require an ARITY-GRADED OPERATION FAMILY primitive. Substrate has no such primitive. Related to the homotopy-class capability gap from fire #7 (ST-fire1-002) \u2014 both want higher-categorical structure."
+        ],
+        "related_to_existing_ticket": "ST-fire1-002 (homotopy class) \u2014 both want higher-categorical structure"
+      }
+    ]
+  },
+  "lane_6": {
+    "lane": "6_undecidable_canonicalization_regression",
+    "n_tests": 4,
+    "verdict_counts": {
+      "PASS": 4
+    },
+    "tests": [
+      {
+        "id": "T1_valid_decidability_unchanged",
+        "expected": "['conditional', 'decidable', 'undecidable']",
+        "actual": "['conditional', 'decidable', 'undecidable']",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T2_invalid_decidability_rejected",
+        "expected": "ValueError",
+        "actual": "ValueError: decidability_status must be one of ('decidable', 'undecidable', 'conditional'); got 'not_a_valid_status'",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T3_undecidable_construction",
+        "expected": "construction succeeds",
+        "actual": "impl='word_problem_for_finitely_presented_groups', decidability='undecidable'",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T4_lehmer_chart_decidable",
+        "expected": "decidable",
+        "actual": "impl='reflection_quotient', decidability='decidable'",
+        "verdict": "PASS"
+      }
+    ]
+  }
+}
