@@ -173,6 +173,86 @@ Delta: 0.
 
 ### Commit
 
+`62a64901` — "Fire #3: T005 gradient_archaeology G4 audit; T004 BLOCKED + Charon coord ticket"
+
+**⚠ Cross-agent staging incident:** the commit picked up 6 additional files beyond my explicit `git add` (5 ergon/learner/diagnostics/* files + ergon_inbox.jsonl mods). Likely an Ergon /loop agent staged files in parallel between my `git add` and `git commit`, and they got swept into Fire #3's commit. Files are legitimate (Ergon's parallel work) but credit is misattributed in commit message. **Future fires:** check `git diff --cached` immediately before commit and `git reset` any unexpected files; or use `git -c commit.cleanupCRLF.warn=false add ... && git diff --cached --name-only` to verify staging just-in-time. The shared working-tree across parallel /loop agents is a known coord hazard.
+
+### Schedule wakeup
+
+`delaySeconds=7200` (2h) with the loop prompt verbatim; runtime clamps to 3600s.
+
+---
+
+*Fire #3 closed. Inbox has 0 OPEN tickets in the original starter set (T001+T004 BLOCKED, T002+T003+T005 DONE). Next fire will check for new tickets; if none, document quiet tick + schedule next wake.*
+
+---
+
+## Fire #4 — 2026-05-06 ~22:50Z
+
+**Pre-test baseline:** 361 v2.3 substrate tests passing (scoped). Full sigma_kernel + prometheus_math sweep launched in background (bods8446c) — confirmed clean from prior fires.
+
+### Inbox state at fire start
+
+Original starter set fully drained at end of Fire #3. **2 new tickets added by substrate-tester between Fire #3 and Fire #4:**
+
+- **ST002 (P1-high)** — substrate-flaw: CoordinateChart silently accepts empty domain string despite docstring claiming non-empty
+- **ST003 (P2-normal)** — substrate-flaw: get_raw_invariant_keys silently returns sentinel for unregistered domains
+
+Picked ST002 first (P1 > P2).
+
+### Ticket completed: T-2026-05-06-ST002 (P1) — CoordinateChart empty-domain validation
+
+**Status:** DONE.
+
+**Bug:** `CoordinateChart.__post_init__` line 248 checked `isinstance(domain, str)` AND `":" not in domain` but missed the non-empty check. Sibling `region_key` validator at line 252 DID check non-empty. The asymmetry let `domain=""` succeed silently, producing chart_id `":<region_key>"` which corrupts `_split_chart_id` semantics downstream (the leading colon makes "domain" parse as empty string and "region_key" capture everything after — masking the original intent).
+
+**Fix:** Changed line 248 to mirror line 252's structure:
+```python
+if not isinstance(self.domain, str) or not self.domain or ":" in self.domain:
+    raise ValueError(...)
+```
+Comment added referencing ST002 ticket id + explanation of the asymmetry.
+
+**Tests:** New `TestCoordinateChartValidation` class with 4 tests:
+- `test_coordinate_chart_rejects_empty_domain` (the requested test)
+- `test_coordinate_chart_rejects_non_string_domain` (sanity for sibling rule branch)
+- `test_coordinate_chart_rejects_colon_in_domain` (sanity for sibling rule branch)
+- `test_coordinate_chart_accepts_valid_domain` (positive sanity check)
+
+### Self-review (mandatory per protocol)
+
+(a) **Did I solve THIS ticket?** YES. Remediation_hint applied verbatim. The probe scenario (`CoordinateChart(domain="", ...)`) now raises ValueError as expected. The 4 tests cover the empty-domain case + adjacent rule branches.
+
+(b) **Did I change any contract?** NO — the docstring + error message at line 250 already declared "non-empty string"; this fix brings implementation into line with the declared contract. Substrate-tester filed as `type: substrate-flaw` validating the bug-fix framing. Loop hard rule: "You CAN fix bugs, optimize internals, refactor without changing surface, ADD TESTS, write docs." This is squarely a bug fix + test addition.
+
+(c) **Conventional-approach drift check?** Reviewed:
+- Fix mirrors the existing region_key validator pattern; NOT a "use a validation library" or "switch to pydantic" reflex
+- Kept scope tight (4 tests; did not refactor adjacent code "while I'm here")
+- Comment in fix references ST002 ticket id — preserves audit trail per substrate's content-addressed-provenance discipline
+- Did not over-test (resisted urge to add a test_coordinate_chart_accepts_unicode_domain or similar edge cases not in scope)
+- No paper or publication mentions
+
+### Diff this fire
+
+| File | Change | Within ownership? |
+|---|---|---|
+| `sigma_kernel/coordinate_chart.py` | Line 248 validator: added `not self.domain` clause; +5-line audit-trail comment | ✅ |
+| `sigma_kernel/test_coordinate_chart.py` | New `TestCoordinateChartValidation` class (4 tests) | ✅ |
+| `aporia/meta/queue/techne_inbox.jsonl` | ST002 OPEN → DONE status update | inbox/ — protocol-required |
+| `roles/Techne/SUBSTRATE_FIRE_LOG_2026-05-06.md` | M (this entry + Fire #3 commit-hash backfill from prior fire) | role-doc surface |
+
+### Tests
+
+Pre-test (scoped, Fire #4 baseline): 361 passing
+Post-test (full v2.3 sweep): 365 passing (+4 from this fix)
+Delta: +4 tests; 0 regressions
+
+### Cross-agent staging hazard mitigation (per Fire #3 incident)
+
+Before commit, will run `git diff --cached --name-only` to verify staged files match my explicit `git add` list. Reset any unexpected files to keep Fire #4's commit credit clean.
+
+### Commit
+
 To be recorded after commit.
 
 ### Schedule wakeup
@@ -181,4 +261,4 @@ To be recorded after commit.
 
 ---
 
-*Fire #3 closed. Inbox has 0 OPEN tickets in the original starter set. Next fire will check for new tickets; if none, document quiet tick.*
+*Fire #4 closed. Inbox after: ST002 DONE, ST003 OPEN (P2). Fire #5 will pick ST003.*

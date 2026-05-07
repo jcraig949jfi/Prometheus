@@ -138,6 +138,59 @@ class TestCanonicalizationProtocol:
 
 
 # ---------------------------------------------------------------------------
+# CoordinateChart.__post_init__ validation
+# ---------------------------------------------------------------------------
+
+
+class TestCoordinateChartValidation:
+    """Validators in CoordinateChart.__post_init__. Substrate-tester ST002
+    surfaced the empty-domain asymmetry vs region_key (2026-05-06)."""
+
+    def _minimal_proto(self) -> CanonicalizationProtocol:
+        return CanonicalizationProtocol(
+            impl="stub",
+            decidability_status="decidable",
+            choice_dependencies=(),
+            version="1.0.0",
+        )
+
+    def _minimal_chart_kwargs(self, **overrides):
+        kwargs = dict(
+            domain="test",
+            region_key="r1",
+            coordinate_system=("x",),
+            canonicalization=self._minimal_proto(),
+            metric=lambda a, b: 0.0,
+            metric_id="trivial",
+            equivalence_relations=(),
+            admissible_region=lambda p: True,
+            valid_operations=(),
+        )
+        kwargs.update(overrides)
+        return kwargs
+
+    def test_coordinate_chart_rejects_empty_domain(self):
+        """ST002: domain='' must raise ValueError; previously accepted silently
+        producing chart_id ':<region_key>' with downstream _split_chart_id corruption."""
+        with pytest.raises(ValueError, match="domain must be a colon-free non-empty string"):
+            CoordinateChart(**self._minimal_chart_kwargs(domain=""))
+
+    def test_coordinate_chart_rejects_non_string_domain(self):
+        with pytest.raises(ValueError, match="domain must be a colon-free non-empty string"):
+            CoordinateChart(**self._minimal_chart_kwargs(domain=123))
+
+    def test_coordinate_chart_rejects_colon_in_domain(self):
+        with pytest.raises(ValueError, match="domain must be a colon-free non-empty string"):
+            CoordinateChart(**self._minimal_chart_kwargs(domain="a:b"))
+
+    def test_coordinate_chart_accepts_valid_domain(self):
+        """Sanity check: a normal domain string still constructs successfully."""
+        chart = CoordinateChart(**self._minimal_chart_kwargs(domain="lehmer"))
+        assert chart.domain == "lehmer"
+        assert chart.chart_id == "lehmer:r1"
+
+
+# ---------------------------------------------------------------------------
 # ChartRegistry
 # ---------------------------------------------------------------------------
 

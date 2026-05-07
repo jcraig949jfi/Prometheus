@@ -245,7 +245,12 @@ class CoordinateChart:
     valid_operations: Tuple[str, ...]
 
     def __post_init__(self) -> None:
-        if not isinstance(self.domain, str) or ":" in self.domain:
+        # Bug fix 2026-05-06 (substrate-tester ST002): added `not self.domain`
+        # to mirror region_key's non-empty check below. The error message
+        # (and docstring) already promised non-empty; the validator was
+        # silently accepting domain="" producing chart_id ":<region_key>"
+        # which corrupts _split_chart_id semantics downstream.
+        if not isinstance(self.domain, str) or not self.domain or ":" in self.domain:
             raise ValueError(
                 f"domain must be a colon-free non-empty string; got {self.domain!r}"
             )
