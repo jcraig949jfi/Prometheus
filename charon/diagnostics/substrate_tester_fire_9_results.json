@@ -1,0 +1,117 @@
+{
+  "fire": 9,
+  "lanes": [
+    1,
+    7
+  ],
+  "seed": 2026050713,
+  "lane_1": {
+    "lane": "1_claim_flood_stratified",
+    "n_probes_total": 30,
+    "n_in_band_sampler_yielded": 0,
+    "n_in_band_routed_to_falsifier_panel": 0,
+    "n_completed": 30,
+    "n_errors": 0,
+    "wall_clock_seconds": 6.367902994155884,
+    "throughput_per_second": 4.711127042533841,
+    "terminal_state_counts": {
+      "REJECTED": 30
+    },
+    "kill_pattern_root_counts": {
+      "out_of_band": 29,
+      "known_in_catalog": 1
+    },
+    "errors": []
+  },
+  "lane_7": {
+    "lane": "7_precision_gradient_fresh",
+    "coeffs_ascending": [
+      1,
+      -3,
+      1,
+      5,
+      -5,
+      -1,
+      3,
+      -2,
+      3,
+      -1,
+      -5,
+      5,
+      1,
+      -3,
+      1
+    ],
+    "dps_ladder": [
+      10,
+      30,
+      60,
+      100,
+      200
+    ],
+    "results": [
+      {
+        "dps": 10,
+        "elapsed_s": 0.05199909210205078,
+        "status": "ok",
+        "M": "1.0",
+        "precision_digits": 10,
+        "method": null,
+        "factorization_label": null
+      },
+      {
+        "dps": 30,
+        "elapsed_s": 0.014999628067016602,
+        "status": "ok",
+        "M": "1.0",
+        "precision_digits": 30,
+        "method": null,
+        "factorization_label": null
+      },
+      {
+        "dps": 60,
+        "elapsed_s": 0.016999483108520508,
+        "status": "ok",
+        "M": "1.0",
+        "precision_digits": 60,
+        "method": null,
+        "factorization_label": null
+      },
+      {
+        "dps": 100,
+        "elapsed_s": 0.015999555587768555,
+        "status": "ok",
+        "M": "1.0",
+        "precision_digits": 100,
+        "method": null,
+        "factorization_label": null
+      },
+      {
+        "dps": 200,
+        "elapsed_s": 0.018001794815063477,
+        "status": "ok",
+        "M": "1.0",
+        "precision_digits": 200,
+        "method": null,
+        "factorization_label": null
+      }
+    ],
+    "M_values_at_each_dps": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "M_spread": 0.0,
+    "converged_to_constant": true,
+    "band_status_at_each_dps": [
+      "out_of_band",
+      "out_of_band",
+      "out_of_band",
+      "out_of_band",
+      "out_of_band"
+    ],
+    "verdict_oscillates": false
+  }
+}

@@ -6,6 +6,94 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #9 — 2026-05-07 14:00 UTC
+
+**Lanes selected:** 1 (CLAIM-flood, stratified in-band sampler retry) + 7 (precision-gradient, fresh borderline).
+
+**Lane rationale:** Per fire #8 standing rec — re-baseline Lane 1 with stratified in-band sampler so F1/F6/F9/F11 actually fire (instead of fire #1's 99% out-of-band); Lane 7 on a different INCONCLUSIVE coefficient set than fire #1 covered.
+
+**Lane 15 + 18 reactivation re-check:** still DORMANT (Charon orch ticket OPEN; T017 OPEN).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_9_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_9_results.json`.
+
+### Lane 1 — CLAIM-flood with stratified in-band sampler
+
+| Metric | Value |
+|---|---|
+| n_probes_total | 30 |
+| n_in_band_sampler_yielded | **0** (50K attempts; deg 10 ±5 + deg 14 ±5) |
+| n_completed | 30 (all routed) |
+| n_errors | 0 |
+| terminal states | `{REJECTED: 30}` |
+| kill_pattern_root | `{out_of_band: 29, known_in_catalog: 1}` |
+| throughput | 4.71 probes/sec |
+| wall-clock | 6.37s |
+
+**Substrate verdict: PASS** (substrate routes every probe correctly; 1 catalog hit on Lehmer's polynomial as expected).
+
+**Probe-design verdict: PARTIAL FAIL — sampler scaling issue.** Pure rejection-sampling on M ∈ (1.001, 1.18) at deg-10 / deg-14 with coef range ±5 yielded ZERO in-band hits in 50K attempts. The natural in-band rate is ~1e-5 per fire #6's deg-12 ±5 baseline (113/8.86M); 50K attempts is structurally insufficient. **Cumulative finding across fires #1, #9: pure rejection-sampling is the wrong approach — the standing-rec approach in fires #1, #2, #4, #8 ("stratified in-band sampler via rejection") needs replacement with Mossinghoff-catalog-perturbation.**
+
+The 25 OOB controls + 5 structural anchors (Lehmer + 4 Phi-product) all routed cleanly. Lehmer's polynomial correctly cross-matched the catalog (single `known_in_catalog` hit confirms catalog primitive works at scale).
+
+**Throughput note:** 4.71 probes/sec is much slower than fire #1's 16.87/s — the slowdown is driven by the failed rejection-sampling loop (50K numpy.roots calls), not the substrate. Once the rejection sampler is replaced with a Mossinghoff-perturbation walker, throughput should match fire #1.
+
+**Ticket count: 0** (substrate behavior correct; probe-design issue is fire-log calibration).
+
+### Lane 7 — precision-gradient on fresh borderline
+
+| Probe | Detail |
+|---|---|
+| coeffs (palindrome from half [1,-3,1,5,-5,-1,3,-2]) | `[1,-3,1,5,-5,-1,3,-2,3,-1,-5,5,1,-3,1]` |
+
+`high_precision_M_via_factor` ladder:
+
+| dps | status | M | factor |
+|---:|---|---|---|
+| 10 | ok | 1.0 | None |
+| 30 | ok | 1.0 | None |
+| 60 | ok | 1.0 | None |
+| 100 | ok | 1.0 | None |
+| 200 | ok | 1.0 | None |
+
+| Property | Value |
+|---|---|
+| M_spread | 0.0 |
+| converged_to_constant | **True** |
+| band_status_at_each_dps | all `out_of_band` (M=1.0 < 1.001) |
+| verdict_oscillates | **False** |
+
+**Substrate verdict: PASS.** All 5 dps levels return M=1.0 exactly. No oscillation. No precision-aware caveat needed (verdict converges by dps=10 already).
+
+**Substantive observation (substrate-grade, not a flaw):** This is the SECOND independent INCONCLUSIVE entry from the deg-14 ±5 brute-force list that resolves to a **pure cyclotomic product** (M=1.0) under factor-then-nroots. Fire #1 covered entry #1 ([1,-4,5,0,-5,4,-1,0]); fire #9 covers entry #2 ([1,-3,1,5,-5,-1,3,-2]). Pattern consistent: at the cyclotomic boundary, **strategy** (factor-first vs direct numpy roots) is the discriminating axis, not **precision**. Substrate is correctly routing both via the factorization path.
+
+**Ticket count: 0.**
+
+### Tickets filed this fire
+
+**0 tickets.** Both lanes PASS substrate-correctness. The Lane 1 in-band-sampler issue is probe-design, documented in fire log per established discipline.
+
+### Standing recommendations for next fire (#10)
+
+1. **REPLACE the rejection-sampling in-band sampler with Mossinghoff-catalog perturbation.** Approach: load the Mossinghoff small-Mahler catalog (already shipped as `catalog:Mossinghoff` falsifier reference), iterate over entries with M < 1.18, perturb each by single-coefficient flips, accept only perturbations that stay in band (verified via `fast_mahler_numpy`). This will reliably yield in-band probes for Lane 1.
+2. **Anti-repeat:** avoid lanes 1, 7. Fire #10 candidates: Lane 2 (adversarial-CLAIM, last fire #2 + #5 regression), Lane 9 (NearMissCorpus-leak, last fire #2), Lane 4 (cross-domain-leak, last fire #3 — relevant after T-2026-05-06-ST003 was DONE in contract-change window).
+3. **Lane 4 priority:** ST003 fix (silent-sentinel → loud-fail KeyError) landed in contract-change window. Re-probing Lane 4 confirms the fix sticks across the restart.
+4. **Lane 5 (large-scale-enumeration):** last covered fire #6. Re-probe candidate when a fire has nothing else queued.
+
+### Discipline notes
+
+- HARD-1 (no papers): clean.
+- HARD-2 (anti-gravitational-well): no drift toward established libraries observed in substrate code.
+- HARD-3 (tensor-first): respected.
+- HARD-4 (calibration anchors): standing rec to use Mossinghoff catalog as in-band probe source IS a HARD-4 alignment (anchors → probes).
+- HARD-5 (domains are docstrings): respected.
+- Time used: ~30 min (within 50-min cap).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed).
+
+— substrate-tester, fire #9, 2026-05-07 14:00 UTC
+
+---
+
 ## Fire #8 — 2026-05-07 13:00 UTC
 
 **Lanes selected:** 11 (batch-sweep, first time post-restart) + 8 (ExclusionCertificate-extension regression after T020/T030).
