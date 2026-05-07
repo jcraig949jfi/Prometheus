@@ -1,0 +1,2409 @@
+{
+  "schema_version": "harmonia_v2_2026-05-07",
+  "corpus_id": "harmonia_d_logic_v2",
+  "created_at": "2026-05-07",
+  "created_by": "Harmonia_M2_sessionD via 4 parallel general-purpose subagents",
+  "harmonia": "D",
+  "domain": "logic",
+  "doctrine_alignment": "aporia/doctrine/critical_memories.md (HARD-1, HARD-2, HARD-5)",
+  "subagent_dispatch_note": "Plan called for Gemini deep-research; M2 used 4 parallel general-purpose Claude subagents with WebSearch+WebFetch as the closest available analog. Capability-gap subagent rate-limited on first dispatch; succeeded on retry.",
+  "use_case_counts": {
+    "paired": 25,
+    "trivial_vs_open": 25,
+    "attribution": 30,
+    "capability_gap": 20
+  },
+  "paired": [
+    {
+      "id": "harmonia_d_paired_001",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "cardinal-arithmetic",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "What is the consistency strength of the failure of SCH at ℵ_ω?",
+      "single_part_expected": "Equiconsistent with a measurable cardinal κ of Mitchell order o(κ) = κ⁺⁺",
+      "multi_part_probe": "For the failure of SCH at ℵ_ω: (a) what is the exact consistency strength? (b) which forcing construction realizes the upper bound? (c) what core-model technique gives the matching lower bound?",
+      "multi_part_expected": "(a) equiconsistent with a measurable cardinal κ of Mitchell order o(κ) = κ⁺⁺ [Gitik–Mitchell 1996]; (b) Magidor 1977 supercompact-based forcing realizes the failure of SCH at ℵ_ω, with subsequent reductions of the supercompact hypothesis (eventually to o(κ)=κ⁺⁺ via Gitik’s forcing); (c) Mitchell-style core model construction recovers a measurable inner model of o(κ)=κ⁺⁺ from any failure of SCH",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers the multi-part answer (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "medium",
+      "source": "Magidor 1977 (Ann. Math. 106); Gitik 1989; Gitik–Mitchell 1996 (Ann. Pure Appl. Logic 82)"
+    },
+    {
+      "id": "harmonia_d_paired_002",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "cardinal-arithmetic",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "What does Silver's theorem say about cardinal arithmetic at singular cardinals of uncountable cofinality?",
+      "single_part_expected": "If κ is a singular cardinal of uncountable cofinality and GCH holds below κ on a stationary set, then 2^κ = κ⁺ (so GCH cannot first fail at such a κ)",
+      "multi_part_probe": "Concerning Silver's theorem on singular cardinals: (a) what does the theorem say about cardinal arithmetic at a singular cardinal of uncountable cofinality? (b) why does the theorem fail at singulars of cofinality ω? (c) what proof technique did Silver introduce, and how was it later reformulated?",
+      "multi_part_expected": "(a) if κ is a singular cardinal of uncountable cofinality and GCH holds below κ on a stationary set, then 2^κ = κ⁺ (so GCH cannot first fail at such a κ); (b) at cofinality ω, no analogous stationary-set reflection is available, and Magidor / Prikry-type forcings show GCH can first fail at ℵ_ω from large-cardinal hypotheses; (c) Silver’s original 1974 proof used generic ultrapowers; Baumgartner–Prikry later gave a purely combinatorial proof using normal filters on stationary sets",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "easy",
+      "source": "Silver 1974 (ICM Vancouver); Baumgartner–Prikry 1976 (AMM 83); Jech, Set Theory (3rd ed.) Ch. 8"
+    },
+    {
+      "id": "harmonia_d_paired_003",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "cardinal-arithmetic",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "What upper bound does Shelah's PCF theorem give on 2^ℵ_ω assuming ℵ_ω is a strong limit?",
+      "single_part_expected": "If ℵ_ω is a strong limit then 2^ℵ_ω < ℵ_{ω₄}",
+      "multi_part_probe": "Concerning Shelah's PCF bound on 2^ℵ_ω: (a) what upper bound does the theorem give assuming ℵ_ω is a strong limit? (b) what is the central PCF object whose cardinality controls the bound? (c) is the exponent 4 in ℵ_{ω₄} known to be optimal?",
+      "multi_part_expected": "(a) if ℵ_ω is a strong limit then 2^ℵ_ω < ℵ_{ω₄}; (b) the bound is controlled by |pcf(A)| where A is an interval of regular cardinals cofinal in ℵ_ω; Shelah proved |pcf(A)| < |A|⁺⁴, which yields the ω₄ bound; (c) it is open whether 4 is optimal; ℵ_{ω₁} cannot be the exact value, but no specific countable α < ω₄ has been ruled out, and 2^ℵ_ω = ℵ_{α+1} is known consistent (Magidor) for any countable α modulo large cardinals",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "hard",
+      "source": "Shelah, Cardinal Arithmetic (Oxford 1994); Shelah 2000 'Cardinal Arithmetic for Skeptics' (Sh 400a); Holz–Steffens–Weitz, Introduction to Cardinal Arithmetic"
+    },
+    {
+      "id": "harmonia_d_paired_004",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "large-cardinals",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "What is Kunen's inconsistency theorem?",
+      "single_part_expected": "In ZFC there is no non-trivial elementary embedding j : V → V; equivalently, no Reinhardt cardinal exists in ZFC",
+      "multi_part_probe": "Concerning Kunen's inconsistency theorem: (a) what does the theorem assert? (b) what is the role of the axiom of choice in the proof? (c) what large-cardinal axiom is the strongest known to be consistent with ZFC under the I-hierarchy that lies just below the Kunen bound?",
+      "multi_part_expected": "(a) in ZFC there is no non-trivial elementary embedding j : V → V; equivalently, no Reinhardt cardinal exists in ZFC; (b) Kunen’s 1971 proof uses AC essentially — specifically a well-ordering argument applied to a Jonsson-style ω-sequence of critical points and an ω-Jonsson algebra of Erdős–Hajnal type; whether Reinhardt cardinals are consistent with ZF (without choice) remains open; (c) the strongest axioms known consistent with ZFC sit just below in the I-hierarchy: I3 (j : V_λ → V_λ), I2, I1 (j : V_{λ+1} → V_{λ+1}), and I0 (j : L(V_{λ+1}) → L(V_{λ+1})), each just below the Kunen bound at j : V_{λ+2} → V_{λ+2}",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "easy",
+      "source": "Kunen 1971 (JSL 36); Kanamori, The Higher Infinite (2nd ed.) Ch. 23; Goldberg 2021 'Even ordinals and the Kunen inconsistency'"
+    },
+    {
+      "id": "harmonia_d_paired_005",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "large-cardinals",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "Define the Mitchell order on normal measures.",
+      "single_part_expected": "For normal measures U, U' on κ, U ⊲ U' iff U ∈ Ult(V, U'); the relation ⊲ is well-founded, and its rank function o(U) gives a well-founded ordering on the normal measures over κ",
+      "multi_part_probe": "Concerning the Mitchell order on normal measures: (a) define the Mitchell order; (b) why is it well-founded? (c) what is the consistency strength of o(κ) = κ⁺⁺, and how does it relate to SCH?",
+      "multi_part_expected": "(a) for normal measures U, U' on κ, U ⊲ U' iff U ∈ Ult(V, U'); the relation ⊲ is well-founded, and its rank function o(U) gives a well-founded ordering on the normal measures over κ; (b) Mitchell proved ⊲ is well-founded by an absoluteness/rank-comparison argument over iterated ultrapowers — if it had a descending chain, one could extract a non-well-founded iteration; (c) o(κ) = κ⁺⁺ is exactly the consistency strength of the failure of SCH at a singular limit (Gitik–Mitchell 1996), giving the optimal lower bound matching Magidor’s upper bound",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "medium",
+      "source": "Mitchell 1974 (JSL 39); Mitchell, 'The Core Model for Sequences of Measures I' 1984; Gitik–Mitchell 1996"
+    },
+    {
+      "id": "harmonia_d_paired_006",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "large-cardinals",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State Magidor's theorem on the identity-crisis for strongly compact cardinals.",
+      "single_part_expected": "It is consistent that the least strongly compact cardinal equals the least measurable cardinal; it is also consistent that the least strongly compact cardinal equals the least supercompact cardinal",
+      "multi_part_probe": "Concerning Magidor's identity-crisis theorem for strongly compact cardinals: (a) what are the two consistent identifications it establishes? (b) what large-cardinal hypothesis does Magidor start from? (c) what does the result say about the absolute position of the least strongly compact in the large-cardinal hierarchy?",
+      "multi_part_expected": "(a) it is consistent (assuming a supercompact) that the least strongly compact cardinal equals the least measurable cardinal; it is also consistent that the least strongly compact cardinal equals the least supercompact cardinal; (b) Magidor starts from the existence of a supercompact cardinal and applies an iterated Prikry/Magidor-type forcing to either destroy or preserve supercompactness while preserving strong compactness; (c) the result shows the least strongly compact has no fixed position in the large-cardinal hierarchy below supercompact — it is not an absolute property of an ordinal but depends on the model, motivating the term 'identity crisis'",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "hard",
+      "source": "Magidor 1976 'How large is the first strongly compact cardinal?' Ann. Math. Logic 10; Apter–Cummings followups"
+    },
+    {
+      "id": "harmonia_d_paired_007",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "forcing-axioms",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "What does the Asperó–Schindler 2021 theorem prove?",
+      "single_part_expected": "MM⁺⁺ implies Woodin's axiom (∗)",
+      "multi_part_probe": "Concerning the Asperó–Schindler 2021 theorem: (a) what is the main implication proved? (b) what 1990s-era question does it resolve? (c) what common consequence at ℵ_2 do MM⁺⁺ and (∗) share?",
+      "multi_part_expected": "(a) MM⁺⁺ implies Woodin's axiom (∗); (b) it resolves the 1990s question of whether the strongest forcing-axiom approach (Martin’s Maximum) and the strongest P_max-determinacy approach ((∗)) are compatible — in fact one implies the other; (c) both axioms imply 2^ℵ_0 = ℵ_2, and both pin down the theory of H(ℵ_2) under their respective dual viewpoints; the result amalgamates the forcing-axiom and determinacy-style routes to that theory (paper appeared in Annals of Math. 193(3), 793–835)",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "hard",
+      "source": "Asperó–Schindler, 'Martin’s Maximum⁺⁺ implies Woodin’s axiom (∗)' Ann. Math. 193(3), 2021, pp. 793–835; Hausdorff Medal 2022"
+    },
+    {
+      "id": "harmonia_d_paired_008",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "forcing-axioms",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "What is Martin's Axiom (MA), and what is its standard consequence for the value of 2^ℵ_0?",
+      "single_part_expected": "MA states that for every ccc partial order P and every family of fewer than 2^ℵ_0 dense subsets of P, there is a filter meeting all of them; MA + ¬CH is consistent and consistent with 2^ℵ_0 being arbitrarily large below the first weakly inaccessible",
+      "multi_part_probe": "Concerning Martin's Axiom (MA): (a) state MA and its standard consequence for the size of 2^ℵ_0; (b) what is the consistency strength of MA + 2^ℵ_0 = ℵ_2? (c) name two combinatorial consequences of MA + ¬CH that fail under CH.",
+      "multi_part_expected": "(a) MA states that for every ccc partial order P and every family of fewer than 2^ℵ_0 dense subsets of P, there is a filter meeting all of them; MA + ¬CH is consistent and consistent with 2^ℵ_0 being arbitrarily large below the first weakly inaccessible; (b) MA + 2^ℵ_0 = ℵ_2 is equiconsistent with ZFC (no large cardinals required); the standard model is obtained by a finite-support ccc iteration of length ℵ_2 over a model of CH (Solovay–Tennenbaum 1971); (c) under MA + ¬CH every Suslin tree has a cofinal branch (so no Suslin trees exist); the union of fewer than 2^ℵ_0 meager sets is meager (so cov(meager) = 2^ℵ_0); both fail under CH",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "easy",
+      "source": "Solovay–Tennenbaum 1971 (Ann. Math. 94); Kunen, Set Theory (2nd ed.) Ch. III; Bartoszyński–Judah, Set Theory: On the Structure of the Real Line"
+    },
+    {
+      "id": "harmonia_d_paired_009",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "forcing-axioms",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "What is the consistency strength of the Proper Forcing Axiom (PFA)?",
+      "single_part_expected": "PFA is known consistent from a supercompact cardinal (upper bound, Baumgartner) and known to imply the existence of inner models with many Woodin cardinals (lower bound, Schindler–Steel and others); the exact equiconsistency is open",
+      "multi_part_probe": "Concerning the consistency strength of PFA: (a) what is the standard upper bound? (b) what is the best known lower bound? (c) is the exact equiconsistency known?",
+      "multi_part_expected": "(a) PFA is known consistent from a supercompact cardinal — Baumgartner's 1984 forcing iterates proper forcings of length a supercompact κ with countable supports, and the Laver-prepared supercompact yields a model of PFA; (b) the best known lower bound has been pushed up via core-model theory: Schindler, Steel, and others established that PFA implies inner models with infinitely many Woodin cardinals, and more recent work pushes towards inner models satisfying AD⁺ / closer to a supercompact; (c) the exact equiconsistency of PFA is OPEN — it is conjectured but not proved that PFA is equiconsistent with a supercompact cardinal",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "medium",
+      "source": "Baumgartner 1984 in Handbook of Set-Theoretic Topology; Todorčević, Partition Problems in Topology; Schindler–Steel core model induction"
+    },
+    {
+      "id": "harmonia_d_paired_010",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "inner-models",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "What is Gödel's constructible universe L, and what does it satisfy?",
+      "single_part_expected": "L is the class defined by L_0 = ∅, L_{α+1} = Def(L_α), L_λ = ⋃_{α<λ} L_α; L is an inner model of ZFC and satisfies V = L, GCH, and ⋄ (Jensen's diamond at every uncountable regular)",
+      "multi_part_probe": "Concerning Gödel's constructible universe L: (a) define L and state the principal axioms it satisfies; (b) which large cardinals are absolute to L, and which become inconsistent in L? (c) what is Jensen's covering lemma, and what does it say about V vs. L when 0⁻ does not exist?",
+      "multi_part_expected": "(a) L is the class defined by L_0 = ∅, L_{α+1} = Def(L_α), L_λ = ⋃_{α<λ} L_α; L is an inner model of ZFC and satisfies V = L, GCH, and ⋄ (Jensen's diamond at every uncountable regular cardinal); (b) inaccessible, Mahlo, weakly compact, ineffable, and (more generally) all small large cardinals up to 0⁻ are absolute to L; from a measurable cardinal upward, large cardinals are inconsistent with V = L — Scott showed measurable cardinals contradict V = L; (c) Jensen's covering lemma states that if 0⁻ does not exist, then every uncountable set of ordinals is contained in a constructible set of the same cardinality; equivalently, V is 'close' to L in the sense that singular cardinals of V are singular in L",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "easy",
+      "source": "Gödel 1940; Scott 1961 (JSL 26); Jensen 1972 (Ann. Math. Logic 4); Devlin–Jensen, 'Marginalia to a theorem of Silver'"
+    },
+    {
+      "id": "harmonia_d_paired_011",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "inner-models",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State Woodin's HOD dichotomy theorem.",
+      "single_part_expected": "If κ is an extendible cardinal, then exactly one of the following holds: (i) every regular cardinal δ ≥ κ is measurable in HOD, or (ii) every singular cardinal γ > κ is singular in HOD and (γ⁺)^HOD = γ⁺ (the HOD Hypothesis holds at κ)",
+      "multi_part_probe": "Concerning Woodin's HOD dichotomy: (a) state the dichotomy theorem; (b) what is the HOD conjecture? (c) what is the present status: which side of the dichotomy is conjectured to hold under sufficient large cardinals, and is this proved?",
+      "multi_part_expected": "(a) if κ is an extendible cardinal, then exactly one of the following holds: (i) every regular cardinal δ ≥ κ is measurable in HOD, or (ii) every singular cardinal γ > κ is singular in HOD and (γ⁺)^HOD = γ⁺ (the HOD Hypothesis holds at κ); (b) the HOD conjecture asserts that ZFC + 'there is an extendible cardinal' proves the HOD Hypothesis (option (ii)); (c) under sufficient large cardinals (extendibles), Woodin conjectures option (ii) holds (HOD is 'close' to V); the conjecture is open as of 2026; recent work by Goldberg has shed light on partial reductions but the full HOD conjecture remains unresolved",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "hard",
+      "source": "Woodin 2017 (Bull. Symb. Logic, In Search of Ultimate-L); Woodin–Davis–Rodríguez, 'The HOD Dichotomy' arXiv:1605.00613; Goldberg 2024 talks/notes on optimality of the HOD dichotomy"
+    },
+    {
+      "id": "harmonia_d_paired_012",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "descriptive-set-theory",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "Define a Polish space and state a characterization of Polish spaces among separable metrizable spaces.",
+      "single_part_expected": "A Polish space is a separable, completely metrizable topological space; equivalently (Alexandrov), a separable metrizable space is Polish iff it is homeomorphic to a G_δ subset of the Hilbert cube [0,1]^ω",
+      "multi_part_probe": "Concerning Polish spaces: (a) define a Polish space and give a structural characterization among separable metrizable spaces; (b) state the perfect-set property dichotomy for Polish spaces; (c) what is the Cantor–Bendixson theorem and how does it connect to (b)?",
+      "multi_part_expected": "(a) a Polish space is a separable, completely metrizable topological space; equivalently (Alexandrov), a separable metrizable space is Polish iff it is homeomorphic to a G_δ subset of the Hilbert cube [0,1]^ω; (b) every closed subset of a Polish space is either countable or contains a perfect (hence size 2^ℵ_0) subset — the perfect-set property for closed sets, provable in ZFC; (c) the Cantor–Bendixson theorem says every closed subset of a Polish space decomposes uniquely as the disjoint union of a perfect kernel and a countable scattered set; the perfect kernel is empty iff the closed set is countable, recovering (b)",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "easy",
+      "source": "Kechris, Classical Descriptive Set Theory (1995) Ch. 3, 6; Cantor 1883; Alexandrov 1916"
+    },
+    {
+      "id": "harmonia_d_paired_013",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "descriptive-set-theory",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "What is the projective hierarchy on a Polish space, and what is the lightface vs. boldface distinction?",
+      "single_part_expected": "The projective hierarchy is built from analytic (Σ¹_1) sets by alternating projection and complement: Π¹_n = complements of Σ¹_n, Σ¹_{n+1} = projections of Π¹_n; lightface (Σ¹_n with no superscript) requires definability without parameters / by recursive parameters, while boldface (Σ¹_n) allows arbitrary real parameters",
+      "multi_part_probe": "Concerning the projective hierarchy: (a) define the hierarchy and state the lightface/boldface distinction; (b) what is the regularity-property status of Σ¹_2 sets in ZFC? (c) what large-cardinal hypothesis implies that all projective sets are Lebesgue measurable, have the Baire property, and the perfect-set property?",
+      "multi_part_expected": "(a) the projective hierarchy is built from analytic (Σ¹_1) sets by alternating projection and complement: Π¹_n = complements of Σ¹_n, Σ¹_{n+1} = projections of Π¹_n; lightface (Σ¹_n with no superscript) requires definability without parameters / by recursive parameters, while boldface (Σ¹_n) allows arbitrary real parameters; (b) regularity for Σ¹_2 (Lebesgue measurability, BP, PSP) is independent of ZFC — e.g., V = L gives a non-measurable Σ¹_2 set (Gödel); under inaccessibles or stronger, all Σ¹_2 sets are regular (Solovay); (c) the existence of infinitely many Woodin cardinals (more precisely, projective determinacy, which follows from ω Woodin cardinals with a measurable above by Martin–Steel–Woodin) implies that all projective sets are Lebesgue measurable, have the Baire property, and the perfect-set property",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "medium",
+      "source": "Moschovakis, Descriptive Set Theory (2nd ed.); Martin–Steel 1989 (JAMS 2); Woodin 1988 (PNAS 85)"
+    },
+    {
+      "id": "harmonia_d_paired_014",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "independence",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the Continuum Hypothesis (CH) and the independence result for CH.",
+      "single_part_expected": "CH asserts 2^ℵ_0 = ℵ_1; Gödel (1938) proved Con(ZFC) → Con(ZFC + CH) via L; Cohen (1963) proved Con(ZFC) → Con(ZFC + ¬CH) via forcing — so CH is independent of ZFC",
+      "multi_part_probe": "Concerning CH and its independence: (a) state CH and the independence result; (b) what method did Gödel use for the consistency of CH, and what method did Cohen introduce for ¬CH? (c) what is one well-known modern axiom (post-2000) that decides CH, and which way does it decide it?",
+      "multi_part_expected": "(a) CH asserts 2^ℵ_0 = ℵ_1; Gödel (1938) proved Con(ZFC) → Con(ZFC + CH) via the constructible universe L; Cohen (1963) proved Con(ZFC) → Con(ZFC + ¬CH) via the forcing method — so CH is independent of ZFC; (b) Gödel used the inner model L (showing CH holds in L from the condensation lemma); Cohen introduced forcing, adding ℵ_2 generic reals to a model of CH via the partial order Add(ω, ℵ_2); (c) Woodin's axiom (∗) (from his P_max work, and shown by Asperó–Schindler 2021 to follow from MM⁺⁺) decides CH negatively: under (∗), 2^ℵ_0 = ℵ_2",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "easy",
+      "source": "Gödel 1938 (PNAS 24); Cohen 1963–1964 (PNAS 50, 51); Woodin, The Axiom of Determinacy, Forcing Axioms, and the Nonstationary Ideal (de Gruyter, 1999); Asperó–Schindler 2021"
+    },
+    {
+      "id": "harmonia_d_paired_015",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "independence",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "What is the Suslin Hypothesis, and what is the independence result for it?",
+      "single_part_expected": "Suslin Hypothesis (SH): every ccc dense linear order without endpoints that is order-complete is order-isomorphic to (ℝ, <); Tennenbaum (1968) and Jech (1967) constructed Suslin trees from ⋄ (so SH fails in L); Solovay–Tennenbaum (1971) used iterated ccc forcing to obtain Con(ZFC + SH); thus SH is independent of ZFC",
+      "multi_part_probe": "Concerning the Suslin Hypothesis: (a) state SH and its independence; (b) what is a Suslin tree, and how does its existence relate to SH? (c) what role did Suslin's problem play in motivating the development of forcing iterations and Martin's Axiom?",
+      "multi_part_expected": "(a) Suslin Hypothesis (SH): every ccc dense linear order without endpoints that is order-complete is order-isomorphic to (ℝ, <); Tennenbaum (1968) and Jech (1967) constructed Suslin trees from ⋄ (so SH fails in L); Solovay–Tennenbaum (1971) used iterated ccc forcing to obtain Con(ZFC + SH); thus SH is independent of ZFC; (b) a Suslin tree is an ℵ_1-tree with no uncountable chain or antichain; SH is equivalent to 'there are no Suslin trees', because the order-completion of a Suslin tree (suitably ordered) gives a Suslin line, and conversely; (c) solving Suslin's problem in the consistency direction required iterating ccc forcings to kill all potential Suslin trees, which led directly to Martin's Axiom and the systematic theory of finite-support ccc iterations — Solovay–Tennenbaum 1971 is the foundational paper",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "medium",
+      "source": "Suslin 1920 (Fund. Math. 1); Tennenbaum 1968 (PNAS 59); Jech 1967 (Czech. Math. J. 17); Solovay–Tennenbaum 1971 (Ann. Math. 94)"
+    },
+    {
+      "id": "harmonia_d_paired_016",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "independence",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "What does Shelah's theorem on the Whitehead problem establish?",
+      "single_part_expected": "Shelah (1974) proved the Whitehead problem (whether every abelian group A with Ext¹(A, ℤ) = 0 is free) is independent of ZFC: under V = L every Whitehead group is free, while under MA + ¬CH there exists a non-free Whitehead group of cardinality ℵ_1",
+      "multi_part_probe": "Concerning Shelah's theorem on the Whitehead problem: (a) what does Shelah establish? (b) what set-theoretic principles did he use on each side of the independence? (c) what is significant about the Whitehead problem being the first 'natural' algebra problem shown independent of ZFC?",
+      "multi_part_expected": "(a) Shelah (1974) proved the Whitehead problem (whether every abelian group A with Ext¹(A, ℤ) = 0 is free) is independent of ZFC: under V = L every Whitehead group is free, while under MA + ¬CH there exists a non-free Whitehead group of cardinality ℵ_1; (b) the consistency of 'every Whitehead group is free' was proved using ⋄ (Jensen's diamond, which holds in L); the consistency of 'some Whitehead group is non-free' was proved using MA + ¬CH (or just enough of it to construct an ℵ_1-filtration that fails to split); (c) the Whitehead problem was the first 'natural' problem in mainstream algebra (group theory / homological algebra) shown independent of ZFC, demonstrating that set-theoretic independence is not confined to set theory itself — this had profound impact on the perception of foundational issues in mathematics",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "medium",
+      "source": "Shelah 1974 (Israel J. Math. 18); Eklof–Mekler, Almost Free Modules (1990, rev. 2002)"
+    },
+    {
+      "id": "harmonia_d_paired_017",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "independence",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "What is the Kurepa Hypothesis, and what is the consistency strength of its negation?",
+      "single_part_expected": "Kurepa Hypothesis (KH): there exists an ℵ_1-tree with at least ℵ_2 cofinal branches (a Kurepa tree); the negation ¬KH is equiconsistent with the existence of an inaccessible cardinal (Solovay; Silver showed an inaccessible suffices and is necessary)",
+      "multi_part_probe": "Concerning the Kurepa Hypothesis: (a) state KH and the consistency strength of ¬KH; (b) does KH hold in L? (c) what is the Lévy collapse construction used to make ¬KH consistent?",
+      "multi_part_expected": "(a) Kurepa Hypothesis (KH): there exists an ℵ_1-tree with at least ℵ_2 cofinal branches (a Kurepa tree); the negation ¬KH is equiconsistent with the existence of an inaccessible cardinal (Solovay–Silver: inaccessible suffices, and an inaccessible is necessary because under ¬KH, ℵ_2 is inaccessible in L); (b) yes — KH holds in L; in fact ⋄_{ℵ_1} (which holds in L) implies the existence of a Kurepa tree; (c) starting from an inaccessible κ, the Lévy collapse Coll(ℵ_1, < κ) makes κ into ℵ_2 of the extension; in the extension, no Kurepa tree from the ground model survives, and a counting/genericity argument shows no new ones appear, giving Con(¬KH)",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "medium",
+      "source": "Kurepa 1935 (Publ. Inst. Math. Belgrade); Solovay (unpublished); Silver 1971 (PNAS 68); Jech, Set Theory (3rd ed.) Ch. 17"
+    },
+    {
+      "id": "harmonia_d_paired_018",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "computability",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the Friedberg–Muchnik theorem.",
+      "single_part_expected": "There exist computably enumerable (c.e.) sets A and B with A ≰_T B and B ≰_T A; equivalently, there are intermediate c.e. Turing degrees strictly between 0 and 0', resolving Post's problem affirmatively",
+      "multi_part_probe": "Concerning the Friedberg–Muchnik theorem: (a) state the theorem and the problem it resolves; (b) what new method did the proof introduce, and what is its key technical feature? (c) how does the result relate to the structure of c.e. Turing degrees more broadly?",
+      "multi_part_expected": "(a) there exist computably enumerable (c.e.) sets A and B with A ≰_T B and B ≰_T A; equivalently, there are intermediate c.e. Turing degrees strictly between 0 and 0', resolving Post's problem affirmatively (independently by Friedberg 1957 and Muchnik 1956); (b) the proof introduced the priority method: requirements R_e are listed in order of priority, and each requirement may be 'injured' finitely often by higher-priority actions but is eventually satisfied; the key technical feature is that the injury count for each requirement is finite; (c) the c.e. Turing degrees (under ≤_T) form a non-trivial countable upper-semilattice with 0 and 0' as minimum and maximum; the Sacks Density Theorem (1964) shows the c.e. degrees are dense, and there are continuum many c.e. degrees, with intricate definability and embedding properties studied via finer priority arguments",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "easy",
+      "source": "Friedberg 1957 (PNAS 43); Muchnik 1956 (Dokl. Akad. Nauk SSSR 108); Soare, Recursively Enumerable Sets and Degrees (1987); Sacks 1964 (Ann. Math. 80)"
+    },
+    {
+      "id": "harmonia_d_paired_019",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "computability",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "Define the hyperarithmetic hierarchy and state its connection to Δ¹_1 sets.",
+      "single_part_expected": "The hyperarithmetic hierarchy is defined by transfinite iteration of the Turing jump along recursive ordinals: H_0 = 0, H_{a+1} = H_a', H_a = ⋂_{b<_O a} H_b along Kleene's O; a real x is hyperarithmetic iff x ≤_T H_a for some recursive ordinal a; by the Kleene–Suslin theorem, the hyperarithmetic sets coincide with the Δ¹_1 sets of reals",
+      "multi_part_probe": "Concerning the hyperarithmetic hierarchy: (a) define it and state its connection to Δ¹_1; (b) what is ω₁ᶜᵏ, and how does it relate to the hierarchy? (c) what does the Spector–Gandy theorem say about Π¹_1 sets and hyperarithmetic reductions?",
+      "multi_part_expected": "(a) the hyperarithmetic hierarchy is defined by transfinite iteration of the Turing jump along recursive ordinals: H_0 = 0, H_{a+1} = H_a', H_a = ⋂_{b<_O a} H_b along Kleene's O; a real x is hyperarithmetic iff x ≤_T H_a for some recursive ordinal a; by the Kleene–Suslin theorem, the hyperarithmetic sets coincide with the Δ¹_1 sets of reals; (b) ω₁ᶜᵏ is the supremum of the recursive ordinals (the Church–Kleene ordinal); the hyperarithmetic hierarchy is exactly indexed by ordinals < ω₁ᶜᵏ; (c) the Spector–Gandy theorem states that Π¹_1 = Σ_1^{L_{ω₁ᶜᵏ}} (Π¹_1 sets are exactly those Σ_1-definable over the smallest admissible set L_{ω₁ᶜᵏ}), which gives a Levy-style normal form and connects Π¹_1 to admissible set theory / KP",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "hard",
+      "source": "Kleene 1955 (Trans. AMS 79); Spector 1955 (J. Symb. Logic 20); Gandy 1960; Sacks, Higher Recursion Theory (1990)"
+    },
+    {
+      "id": "harmonia_d_paired_020",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "reverse-mathematics",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "Name the Big Five subsystems of second-order arithmetic in reverse mathematics.",
+      "single_part_expected": "The Big Five are RCA_0, WKL_0, ACA_0, ATR_0, and Π¹_1-CA_0, in increasing order of strength",
+      "multi_part_probe": "Concerning the Big Five subsystems in reverse mathematics: (a) name them in order of increasing strength; (b) name a canonical mathematical theorem equivalent over RCA_0 to each of WKL_0 and ACA_0; (c) what is the proof-theoretic ordinal of ACA_0 and of Π¹_1-CA_0?",
+      "multi_part_expected": "(a) the Big Five are RCA_0, WKL_0, ACA_0, ATR_0, and Π¹_1-CA_0, in increasing order of strength; (b) WKL_0 is equivalent over RCA_0 to the Heine–Borel theorem for [0,1] (every covering of [0,1] by open intervals has a finite subcover) and to Gödel's completeness theorem for countable theories; ACA_0 is equivalent over RCA_0 to the Bolzano–Weierstrass theorem (every bounded sequence in ℝ has a convergent subsequence) and to existence of ranges of ℕ→ℕ functions; (c) ACA_0 has proof-theoretic ordinal ε_0 (same as PA), and Π¹_1-CA_0 has proof-theoretic ordinal ψ_Ω(ε_{Ω+1}) (the Bachmann–Howard / Takeuti ordinal), well above Γ_0",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "easy",
+      "source": "Simpson, Subsystems of Second-Order Arithmetic (2nd ed., 2009); Friedman 1975 (ICM Vancouver); Pohlers, Proof Theory: The First Step into Impredicativity"
+    },
+    {
+      "id": "harmonia_d_paired_021",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "reverse-mathematics",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "What is the reverse-mathematical strength of Ramsey's theorem for pairs (RT²_2)?",
+      "single_part_expected": "RT²_2 is strictly between RCA_0 and ACA_0 over RCA_0; it does not imply WKL_0 (Liu 2012) and is not implied by WKL_0 (Jockusch); the precise location of RT²_2 is one of the most studied questions in reverse mathematics",
+      "multi_part_probe": "Concerning the reverse-mathematical strength of Ramsey's theorem for pairs (RT²_2): (a) where does RT²_2 sit among the Big Five? (b) what is the relation between RT²_2 and WKL_0? (c) does RT²_2 imply RT² (Ramsey for pairs and arbitrary finite colors)?",
+      "multi_part_expected": "(a) RT²_2 is strictly between RCA_0 and ACA_0 over RCA_0 (Seetapun 1995 showed RT²_2 does not imply ACA_0); (b) RT²_2 and WKL_0 are incomparable: Liu (2012) proved RT²_2 does not imply WKL_0, and Jockusch (1972) results combined with Seetapun show WKL_0 does not imply RT²_2; (c) yes — RT²_2 implies RT²_k for every standard k, by an iterated application; over RCA_0, RT²_2 ↔ RT² (Ramsey for pairs, all finite colors), but RT² with k varying as a parameter requires RT² stated with k as a number, which goes through similarly",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "hard",
+      "source": "Seetapun–Slaman 1995 (Notre Dame J. Formal Logic 36); Cholak–Jockusch–Slaman 2001 (JSL 66); Liu 2012 (JSL 77); Hirschfeldt, Slicing the Truth (2014)"
+    },
+    {
+      "id": "harmonia_d_paired_022",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "cardinal-invariants",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "What does the Malliaris–Shelah theorem (2013) prove about the cardinal invariants p and t?",
+      "single_part_expected": "Malliaris–Shelah (2013) proved p = t in ZFC — the pseudo-intersection number equals the tower number, resolving an open question dating to the 1940s",
+      "multi_part_probe": "Concerning the Malliaris–Shelah theorem on cardinal invariants of the continuum: (a) what does the theorem prove? (b) what model-theoretic problem do they solve simultaneously? (c) what general framework do they introduce to prove both results?",
+      "multi_part_expected": "(a) Malliaris–Shelah (2013) proved p = t in ZFC — the pseudo-intersection number equals the tower number, resolving an open question dating to the 1940s (Rothberger); (b) simultaneously, they proved that SOP₂ theories are maximal in Keisler's order, an open problem in classification model theory; (c) they introduce 'cofinality spectrum problems' (CSPs) — a general framework subsuming both questions; the main theorem on CSPs translates to p = t on the set-theoretic side and to SOP₂ maximality on the model-theoretic side; surprisingly, p = t turns out to be a ZFC theorem rather than an independence result",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "hard",
+      "source": "Malliaris–Shelah, 'Cofinality spectrum theorems in model theory, set theory, and general topology' J. Amer. Math. Soc. 29 (2016), 237–297 (announced 2012–2013); Rothberger 1948"
+    },
+    {
+      "id": "harmonia_d_paired_023",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "determinacy",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the Martin–Steel theorem (1989) connecting Woodin cardinals and projective determinacy.",
+      "single_part_expected": "Martin–Steel (1989) proved: if there exist n Woodin cardinals with a measurable cardinal above them, then Π¹_{n+1}-determinacy holds; in particular, ω Woodin cardinals with a measurable above implies projective determinacy (PD)",
+      "multi_part_probe": "Concerning the Martin–Steel theorem: (a) state the implication from Woodin cardinals to projective determinacy; (b) what is the converse direction (Woodin's theorem)? (c) what regularity properties does PD imply for projective sets?",
+      "multi_part_expected": "(a) Martin–Steel (1989) proved: if there exist n Woodin cardinals with a measurable cardinal above them, then Π¹_{n+1}-determinacy holds; in particular, ω Woodin cardinals with a measurable above implies projective determinacy (PD); (b) Woodin (1988, refined later) proved a converse: PD implies the existence of inner models with n Woodin cardinals for every n; combined with Martin–Steel this gives that PD is equiconsistent with 'there are infinitely many Woodin cardinals'; (c) PD implies that every projective set of reals is Lebesgue measurable, has the Baire property, has the perfect-set property, is uniformizable (in a definable way at appropriate levels), and that the projective sets satisfy strong regularity uniformly across the projective hierarchy",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "medium",
+      "source": "Martin–Steel, 'A proof of projective determinacy' J. Amer. Math. Soc. 2 (1989), 71–125; Woodin 1988 (PNAS 85); Neeman, The Determinacy of Long Games (2004)"
+    },
+    {
+      "id": "harmonia_d_paired_024",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "determinacy-inner-models",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "What is the Largest Suslin Axiom (LSA) studied by Sargsyan and Trang?",
+      "single_part_expected": "LSA is the determinacy theory AD⁺ + 'there is a largest Suslin cardinal, and it is a member of the Solovay sequence'; equivalently, AD⁺ + Θ = θ_{α+1} where θ_α is the largest Suslin cardinal",
+      "multi_part_probe": "Concerning the Largest Suslin Axiom (LSA) and the Sargsyan–Trang program: (a) state LSA; (b) what is the consistency status of LSA, and who proved it? (c) what is the role of LSA in the hod-mice / inner-model program?",
+      "multi_part_expected": "(a) LSA is the determinacy theory AD⁺ + 'there is a largest Suslin cardinal, and it is a member of the Solovay sequence'; equivalently, AD⁺ + Θ = θ_{α+1} where θ_α is the largest Suslin cardinal; (b) LSA was first isolated by Woodin and shown consistent by Sargsyan; the consistency proof builds the minimal model of LSA via hod-mice constructions; the comprehensive treatment is Sargsyan–Trang, The Largest Suslin Axiom (Cambridge LNL 56, 2024); (c) LSA is a benchmark in the hod-mice / Mouse Set Conjecture program: Sargsyan–Trang prove the Mouse Set Conjecture in the minimal model of LSA, and LSA represents one of the strongest determinacy theories whose consistency has been established by inner-model methods, sitting in the hierarchy below AD_ℝ but providing a robust 'fine-structural' upper limit for current hod-mice technology",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "hard",
+      "source": "Sargsyan–Trang, The Largest Suslin Axiom, Cambridge Lecture Notes in Logic 56 (2024); Sargsyan, Hod Mice and the Mouse Set Conjecture (Memoirs AMS 236, 2015); Woodin (unpublished isolation of LSA)"
+    },
+    {
+      "id": "harmonia_d_paired_025",
+      "harmonia": "D",
+      "domain": "logic",
+      "subdomain": "model-theory-classification",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "Define NIP (the non-independence property) for a complete first-order theory.",
+      "single_part_expected": "A complete theory T is NIP iff no formula φ(x; y) has the independence property in T — equivalently, for every φ(x; y) there is no model M of T and tuples (a_i)_{i<ω} in M such that for every S ⊆ ω there exists b in M with φ(a_i; b) ↔ i ∈ S",
+      "multi_part_probe": "Concerning NIP theories: (a) define NIP; (b) name two natural examples of NIP theories and one canonical example of a non-NIP (i.e., IP) theory; (c) what is the relation between NIP and stability — specifically, where do stable, NIP, and simple theories sit relative to each other?",
+      "multi_part_expected": "(a) a complete theory T is NIP iff no formula φ(x; y) has the independence property in T — equivalently, for every φ(x; y) there is no model M of T and tuples (a_i)_{i<ω} in M such that for every S ⊆ ω there exists b in M with φ(a_i; b) ↔ i ∈ S; (b) examples of NIP theories include the theory of real closed fields RCF, the theory of algebraically closed valued fields ACVF, and any o-minimal expansion of an ordered group; the canonical IP (non-NIP) example is the random graph (Th(R), the theory of the Rado graph); (c) Shelah's classification: stable = NIP ∩ simple; every stable theory is NIP and simple, NIP and simple are incomparable in general (stable is their intersection), and a theory has SOP (the strict order property, hence is non-simple) and IP (non-NIP) when it is the random graph or fails both; in the modern picture the non-stable NIP theories (like RCF, ACVF) are studied via Pillay–Hrushovski and Hrushovski–Loeser geometric methods",
+      "decomposition_target": "the paired structure validates whether E007 decomposition wrapper recovers (a)+(b)+(c) when the model can answer the single-part (a) correctly",
+      "difficulty": "medium",
+      "source": "Shelah, Classification Theory and the Number of Non-Isomorphic Models (2nd ed., 1990); Simon, A Guide to NIP Theories (Cambridge, 2015); Hrushovski–Pillay; Hrushovski–Loeser, Non-Archimedean Tame Topology"
+    }
+  ],
+  "trivial_vs_open": [
+    {
+      "id": "harmonia_d_tvo_001",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "easy",
+      "conjecture_family": "Singular Cardinals Hypothesis variants and PCF bounds",
+      "trivial_case": {
+        "description": "If kappa is singular of uncountable cofinality and 2^lambda = lambda^+ for all sufficiently large lambda < kappa, then 2^kappa = kappa^+ (GCH cannot first fail at a singular of uncountable cofinality)",
+        "result": "Stationary-set reflection forces GCH to lift through uncountable-cofinality singulars; Silver's theorem",
+        "proven_by": "Jack Silver",
+        "year": 1974,
+        "venue": "Proc. ICM Vancouver 1974, 'On the singular cardinals problem'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether 2^aleph_omega can be precisely characterized in ZFC under the strong-limit hypothesis (Shelah's PCF gives 2^aleph_omega < aleph_{omega_4}; Shelah Strong Hypothesis pp(aleph_omega) < aleph_{omega_1} remains open)",
+        "result": "Shelah Strong Hypothesis conjectures pp(aleph_omega) < aleph_{omega_1}; current ZFC bound 2^aleph_omega < aleph_{omega_4}",
+        "status": "OPEN as of 2026; no improvement to Shelah's PCF bound has been confirmed"
+      },
+      "common_failure_pattern": "FM-08: model conflates Silver's uncountable-cofinality theorem with the (open) countable-cofinality case at aleph_omega; or claims SH/SCH is a theorem rather than a conjecture",
+      "doctrine_relevance": "HARD-5: substrate must distinguish proven uncountable-cofinality case (Silver 1974, technique=Fodor/regression) from open countable-cofinality case (PCF, technique=Shelah)"
+    },
+    {
+      "id": "harmonia_d_tvo_002",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "easy",
+      "conjecture_family": "Cardinal Continuum Function and CH",
+      "trivial_case": {
+        "description": "The Continuum Hypothesis 2^aleph_0 = aleph_1 is independent of ZFC: Goedel showed Con(ZFC) implies Con(ZFC + CH); Cohen showed Con(ZFC) implies Con(ZFC + ¬CH)",
+        "result": "Independence of CH from ZFC, established via L (Goedel 1940) and forcing (Cohen 1963)",
+        "proven_by": "Kurt Goedel (1940) and Paul Cohen (1963)",
+        "year": 1963,
+        "venue": "Cohen, PNAS 50 (1963) and 51 (1964), 'The independence of the continuum hypothesis'",
+        "status": "PROVEN (settled-as-independent)"
+      },
+      "open_case": {
+        "description": "What is the 'correct' value of 2^aleph_0 under a privileged extension of ZFC? Woodin's program suggests aleph_2 via Pmax/(*); Goedel's program seeks intrinsically motivated axioms. No consensus on the value",
+        "result": "Multiple programmatic candidates (Woodin's (*), forcing-axiom approach via MM++ implies (*), inner-model approaches) but no community-accepted determination",
+        "status": "OPEN as a foundational/philosophical question; (*) follows from MM++ (Aspero-Schindler 2021), but the meta-question of which axiomatic extension is correct remains contested"
+      },
+      "common_failure_pattern": "FM-08: model claims CH is open within ZFC (it is not — it is independent), or claims continuum value is settled at aleph_2 (it is not — only conditional on chosen axiom)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled independence (Cohen 1963) from open programmatic determination of c"
+    },
+    {
+      "id": "harmonia_d_tvo_003",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "easy",
+      "conjecture_family": "Determinacy hierarchy",
+      "trivial_case": {
+        "description": "Every Borel game on omega^omega with Borel payoff set is determined (one of the players has a winning strategy)",
+        "result": "Borel determinacy in ZFC; the proof uses iterated power set up through the Borel hierarchy and is provably non-eliminable from ZFC (Friedman 1971 lower bound)",
+        "proven_by": "Donald A. Martin",
+        "year": 1975,
+        "venue": "Annals of Mathematics 102 (1975), 'Borel determinacy'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "The exact consistency strength of long projective determinacy at length omega^2 (precise Woodin-cardinal placement) remains open; equivalence of PD with all its analytical consequences for projective sets (Woodin's last Delfino problem) is open",
+        "result": "Pi^1_{n+1}-determinacy at length omega^2 implies model with omega+n Woodin cardinals (Aguilera-Mueller 2020 partial); upper-equivalence direction conjectural",
+        "status": "OPEN; partial progress on long-game consistency strength; analytical-equivalence Delfino problem unresolved"
+      },
+      "common_failure_pattern": "FM-08: model claims 'projective determinacy is a ZFC theorem' (false — needs Woodin cardinals), or claims length-omega^2 consistency strength is exactly characterized (only one direction known)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish ZFC-provable Borel determinacy (Martin 1975) from large-cardinal-requiring PD and its open precise calibration"
+    },
+    {
+      "id": "harmonia_d_tvo_004",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "easy",
+      "conjecture_family": "Halting problem and Turing reducibility",
+      "trivial_case": {
+        "description": "The halting problem H = {(M,x) : Turing machine M halts on input x} is undecidable; equivalently, 0' (the Turing jump of 0) is strictly above 0 in the Turing degrees",
+        "result": "Diagonal argument: assuming a decider D for H, construct M_D that halts iff D says it does not, contradiction",
+        "proven_by": "Alan Turing",
+        "year": 1936,
+        "venue": "Proc. London Math Soc. (2) 42 (1936-37), 'On computable numbers, with an application to the Entscheidungsproblem'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether the Turing degrees of c.e. sets D_T have any non-trivial automorphism (beyond the identity); the bi-interpretability conjecture for the c.e. degrees remains open",
+        "result": "Non-trivial automorphism existence for the c.e. degrees is open; partial results show definability of large classes (Nies-Shore-Slaman 1998, Slaman-Woodin program)",
+        "status": "OPEN as of 2026"
+      },
+      "common_failure_pattern": "FM-08: model conflates settled undecidability of halting with the open structural question of automorphisms in the c.e. degree structure",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled undecidability (Turing 1936) from open automorphism/rigidity questions in the same degree-theoretic family"
+    },
+    {
+      "id": "harmonia_d_tvo_005",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "easy",
+      "conjecture_family": "Forcing-axiom strength at omega_1 versus higher cardinals",
+      "trivial_case": {
+        "description": "MA_{aleph_1} (Martin's Axiom at aleph_1) is consistent with ZFC and implies 2^aleph_0 > aleph_1; the standard ccc iteration of length aleph_2 over a model of GCH yields a model of MA_{aleph_1} + 2^aleph_0 = aleph_2",
+        "result": "Solovay-Tennenbaum forcing iteration produces MA + ¬CH",
+        "proven_by": "Robert Solovay and Stanley Tennenbaum",
+        "year": 1971,
+        "venue": "Annals of Mathematics 94 (1971), 'Iterated Cohen extensions and Souslin's problem'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "A satisfactory two-cardinal forcing axiom at omega_2 with the strength of MA at omega_1 — i.e., a generalization MA(aleph_2) preserving aleph_2 with full ccc-analogue — remains open; Shelah's MA(aleph_2) variants and Neeman's two-cardinal proper forcing only partially resolve this",
+        "result": "Shelah's MA^+ at aleph_2, Neeman's two-cardinal side-condition method give partial substitutes; full natural analogue open",
+        "status": "OPEN as of 2026; active program (Neeman, Veličković, Aspero)"
+      },
+      "common_failure_pattern": "FM-08: model claims MA(aleph_2) is a known theorem analogous to MA at aleph_1; conflates the omega_1 and omega_2 cases",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled MA_{aleph_1} (Solovay-Tennenbaum 1971) from open higher-cardinal analogues"
+    },
+    {
+      "id": "harmonia_d_tvo_006",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "easy",
+      "conjecture_family": "Whitehead problem and homological independence",
+      "trivial_case": {
+        "description": "The Whitehead problem 'every Whitehead group is free' is independent of ZFC: Shelah showed it follows from V=L and is refuted by MA + ¬CH",
+        "result": "Independence of Whitehead's conjecture from ZFC",
+        "proven_by": "Saharon Shelah",
+        "year": 1974,
+        "venue": "Israel J. Math. 18 (1974), 'Infinite abelian groups, Whitehead problem and some constructions'",
+        "status": "PROVEN (settled-as-independent)"
+      },
+      "open_case": {
+        "description": "Whether the Whitehead problem for groups of cardinality aleph_omega+1 (or other specific singular-successor cardinalities) has the same independence pattern as at aleph_1, or whether ZFC settles it at higher cardinalities under additional cardinal-arithmetic hypotheses",
+        "result": "Eklof-Shelah and Magidor-Shelah extended independence to many cardinalities; the precise behavior at successors of singulars under SCH-failure scenarios is partially open",
+        "status": "OPEN at specific singular-successor cardinalities under cardinal-arithmetic constraints"
+      },
+      "common_failure_pattern": "FM-08: model claims Whitehead at aleph_1 is unsolved (it is solved — independent), or treats higher-cardinality cases as automatic from aleph_1 result",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled independence at aleph_1 (Shelah 1974) from open higher-cardinality refinements within the same family"
+    },
+    {
+      "id": "harmonia_d_tvo_007",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "easy",
+      "conjecture_family": "Reverse mathematics Big Five and Ramsey-type principles",
+      "trivial_case": {
+        "description": "Konig's lemma for finitely-branching trees (KL) is equivalent to ACA_0 over RCA_0; weak Konig's lemma WKL_0 is strictly weaker than ACA_0 over RCA_0",
+        "result": "Big-Five hierarchy RCA_0 < WKL_0 < ACA_0 strictly increases; established via standard reverse-math techniques",
+        "proven_by": "Stephen G. Simpson and collaborators",
+        "year": 1984,
+        "venue": "Simpson, 'Subsystems of Second-Order Arithmetic', Springer (1999); core results from 1970s-80s reverse-math program",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "The exact strength of Ramsey's theorem for pairs RT^2_2 over RCA_0: it is known to lie between RCA_0 and ACA_0, but its precise placement and whether it implies WKL_0 remain open",
+        "result": "RT^2_2 does not imply ACA_0 (Seetapun-Slaman 1995); does not imply WKL_0 (Liu 2012); no natural principle is known strictly between ACA_0 and RT^2_2",
+        "status": "OPEN: precise reverse-math placement of RT^2_2 still investigated; many sub-questions open"
+      },
+      "common_failure_pattern": "FM-08: model claims RT^2_2 is equivalent to ACA_0 (false — Seetapun-Slaman 1995), or places it at RCA_0/WKL_0 levels incorrectly",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled Big-Five strict hierarchy from open precise placement of RT^2_2"
+    },
+    {
+      "id": "harmonia_d_tvo_008",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "easy",
+      "conjecture_family": "Inner model existence",
+      "trivial_case": {
+        "description": "The constructible universe L exists in ZFC and is an inner model (transitive proper class containing all ordinals, satisfying ZFC). L satisfies V=L, GCH, and the diamond principle",
+        "result": "L is defined by transfinite recursion using definable power set; ZFC proves L is a model of ZFC + GCH + diamond",
+        "proven_by": "Kurt Goedel",
+        "year": 1938,
+        "venue": "PNAS 24 (1938), 'The consistency of the axiom of choice and of the generalized continuum-hypothesis'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Construction of a fine-structural canonical inner model for one supercompact cardinal (the 'supercompact L'); the Sargsyan-Steel program and Woodin's Ultimate-L are active",
+        "result": "Substantial partial progress: Sargsyan's hod mice through Lambda-mice levels (2025), Steel's K-construction at smaller large cardinals; supercompact level not yet achieved",
+        "status": "OPEN as of 2026; recent Sargsyan-Steel 'Nairian models' (arXiv 2501.18958) is partial progress"
+      },
+      "common_failure_pattern": "FM-08: model claims canonical inner model for supercompact is constructed (false — only partial); conflates L (settled) with inner-model program (open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled L (Goedel 1938) from open supercompact inner-model existence (Sargsyan-Steel program)"
+    },
+    {
+      "id": "harmonia_d_tvo_009",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "medium",
+      "conjecture_family": "Easton-style continuum function on regular cardinals versus singulars",
+      "trivial_case": {
+        "description": "Easton's theorem: for any class function F : Regulars -> Cardinals satisfying F(kappa) > kappa, F monotonic, and cf(F(kappa)) > kappa, there is a forcing extension where 2^kappa = F(kappa) for all regular kappa (assuming GCH in the ground model)",
+        "result": "Class forcing with Easton products produces extensions realizing any allowed continuum function on regulars",
+        "proven_by": "William Easton",
+        "year": 1970,
+        "venue": "Annals of Math. Logic 1 (1970), 'Powers of regular cardinals'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Characterization of all possible continuum functions on singular cardinals consistent with ZFC; PCF theory imposes nontrivial constraints (Shelah's bound 2^aleph_omega < aleph_{omega_4} under strong-limit) but the full characterization is open",
+        "result": "Shelah's PCF gives upper bounds; consistency-strength results constrain failure of SCH; full characterization open",
+        "status": "OPEN as of 2026; central singular-cardinals problem"
+      },
+      "common_failure_pattern": "FM-08: model claims Easton-style theorem covers singulars (false — singulars are PCF-constrained); conflates regular-cardinal Easton with open singular case",
+      "doctrine_relevance": "HARD-5: substrate must distinguish Easton on regulars (1970) from open singular-cardinals continuum-function problem"
+    },
+    {
+      "id": "harmonia_d_tvo_010",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "medium",
+      "conjecture_family": "Suslin Hypothesis and tree properties",
+      "trivial_case": {
+        "description": "The Suslin Hypothesis (no Suslin lines on R) is independent of ZFC: it follows from MA + ¬CH (Solovay-Tennenbaum 1971) and fails under V=L (diamond gives a Suslin tree, Jensen 1968)",
+        "result": "Independence of SH from ZFC",
+        "proven_by": "Jensen (failure under V=L, 1968) and Solovay-Tennenbaum (consistency of SH, 1971)",
+        "year": 1971,
+        "venue": "Solovay-Tennenbaum, Annals of Math 94 (1971); Jensen, Trans AMS (1972)",
+        "status": "PROVEN (settled-as-independent at omega_1)"
+      },
+      "open_case": {
+        "description": "Generalized Suslin Hypothesis at omega_2 (no aleph_2-Suslin trees) and its precise consistency strength under stronger forcing axioms; whether SH(aleph_2) is consistent assuming only weakly compact below remains open in some formulations",
+        "result": "Laver-Shelah established SH(aleph_2) from a weakly compact; consistency-strength refinements and behavior under PFA/MM remain open at higher cardinals",
+        "status": "OPEN at specific higher-cardinal generalizations; active research (Hayut, Magidor, Veličković)"
+      },
+      "common_failure_pattern": "FM-08: model claims SH(aleph_2) follows automatically from SH(aleph_1) settled-as-independent; conflates omega_1 (settled) with omega_2 (open in ZFC + intermediate large cardinals)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled SH-independence at omega_1 from open higher-cardinal generalizations"
+    },
+    {
+      "id": "harmonia_d_tvo_011",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "medium",
+      "conjecture_family": "Vaught's conjecture and counting countable models",
+      "trivial_case": {
+        "description": "Vaught's conjecture for omega-stable theories: every countable complete omega-stable theory has either at most countably many or exactly 2^aleph_0 countable models",
+        "result": "Shelah's stability-theoretic analysis using prime models over independent sets",
+        "proven_by": "Saharon Shelah",
+        "year": 1984,
+        "venue": "Shelah-Harrington-Makkai, Israel J. Math. 49 (1984), 'A proof of Vaught's conjecture for omega-stable theories'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Vaught's conjecture in full generality (for all countable first-order theories): the number of countable models is finite, aleph_0, or 2^aleph_0",
+        "result": "Knight (2002, 2007) announced a counterexample, but it has not been verified by the community as of 2026; conjecture proven for many sub-classes (o-minimal, weakly minimal, superstable of finite U-rank), but unverified in general",
+        "status": "OPEN as of 2026; status of Knight's claimed counterexample remains unresolved"
+      },
+      "common_failure_pattern": "FM-08: model claims Vaught's conjecture is settled in general (false — Knight's claim unverified, conjecture open); conflates omega-stable case (settled) with general case (open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled omega-stable Vaught (Shelah 1984) from open general Vaught's conjecture"
+    },
+    {
+      "id": "harmonia_d_tvo_012",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "medium",
+      "conjecture_family": "PCF bounds at singular cardinals",
+      "trivial_case": {
+        "description": "ZFC proves cf(2^aleph_omega) > aleph_omega: the cofinality of the continuum function at a singular is bounded below by the cofinality of the cardinal itself (Konig's theorem applied to singular case)",
+        "result": "Konig's inequality kappa^{cf(kappa)} > kappa applied to 2^aleph_omega",
+        "proven_by": "Julius Konig",
+        "year": 1905,
+        "venue": "Math. Ann. 60 (1905); standard exposition in Jech 'Set Theory'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether 2^aleph_omega can equal aleph_{omega_1+omega} or aleph_{omega_1} or some specific value beyond aleph_{omega_1}; whether the Shelah Strong Hypothesis pp(aleph_omega) < aleph_{omega_1} holds",
+        "result": "Shelah's PCF gives upper bound aleph_{omega_4}; Magidor-Shelah forcing constructions give consistency of various values < aleph_{omega_4}; precise ZFC value unknown",
+        "status": "OPEN as of 2026"
+      },
+      "common_failure_pattern": "FM-08: model claims 2^aleph_omega has a known ZFC value (false), or conflates Konig's lemma (settled) with PCF bound problem (open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish ZFC-trivial Konig bound from open PCF strong-hypothesis question"
+    },
+    {
+      "id": "harmonia_d_tvo_013",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "medium",
+      "conjecture_family": "Forcing-axiom continuum determination",
+      "trivial_case": {
+        "description": "PFA implies 2^aleph_0 = aleph_2",
+        "result": "Veličković and (independently) Todorčević used PFA-consequences (e.g., the P-ideal dichotomy / mapping reflection principle) to pin down c at aleph_2; classical Todorčević-Bekkali argument using OCA",
+        "proven_by": "Boban Veličković and Stevo Todorčević (independently)",
+        "year": 1992,
+        "venue": "Veličković, J. Symb. Logic 57 (1992); Todorčević, 'Partition Problems in Topology' AMS (1989)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether MM (Martin's Maximum) at omega_2 — i.e., a natural higher-cardinal analogue MM(aleph_2) preserving aleph_2-stationarity — is consistent and what continuum-function values it forces",
+        "result": "MM++ implies (*) (Aspero-Schindler, Annals 2021), pinning c=aleph_2 from MM++. The MM(aleph_2) higher-cardinal analogue and its consistency strength remain under active investigation",
+        "status": "OPEN; MM(aleph_2)-style axioms not yet shown consistent at full strength"
+      },
+      "common_failure_pattern": "FM-08: model claims MM(aleph_2) is known consistent or settled, or conflates PFA-implies-c=aleph_2 (settled) with higher-cardinal MM analogue (open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish PFA pinning c (Veličković-Todorčević 1992) from open higher-cardinal forcing-axiom analogues"
+    },
+    {
+      "id": "harmonia_d_tvo_014",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "medium",
+      "conjecture_family": "Cardinal characteristics of the continuum",
+      "trivial_case": {
+        "description": "ZFC proves aleph_1 <= b <= d <= 2^aleph_0 and aleph_1 <= cov(M) <= non(N) <= cof(N), giving the Cichon diagram inclusions",
+        "result": "Cichon diagram of cardinal characteristics is fully established in ZFC; all 10 entries with their inequalities provably hold",
+        "proven_by": "Cichon, Bartoszyński, Judah, and others",
+        "year": 1995,
+        "venue": "Bartoszyński-Judah, 'Set Theory: On the Structure of the Real Line' (1995)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether all 'reasonable' cardinal characteristics in Cichon's maximum (Goldstern-Kellner-Shelah 2019 showed all 10 distinct) extend to higher analogues at uncountable cardinals; whether a fully analogous diagram for kappa-Cichon at uncountable kappa is consistent",
+        "result": "Goldstern-Kellner-Shelah (Annals 2022) established Cichon's maximum (10 distinct values); higher-cardinal generalizations are under active investigation, with several specific open consistencies",
+        "status": "OPEN at uncountable cardinals; specific higher-Cichon configurations unresolved"
+      },
+      "common_failure_pattern": "FM-08: model claims higher-Cichon at uncountable cardinals is settled by analogy with omega; conflates Cichon's maximum (settled at omega) with open uncountable analogues",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled Cichon diagram and Cichon's maximum from open higher-cardinal generalizations"
+    },
+    {
+      "id": "harmonia_d_tvo_015",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "medium",
+      "conjecture_family": "Inaccessibility and large-cardinal existence",
+      "trivial_case": {
+        "description": "The existence of an inaccessible cardinal is not provable in ZFC (assuming Con(ZFC)): if kappa is inaccessible then V_kappa models ZFC, so ZFC + 'exists inaccessible' proves Con(ZFC), violating Goedel's second incompleteness theorem",
+        "result": "Standard application of Goedel-second-incompleteness via V_kappa modeling ZFC",
+        "proven_by": "Folklore from Goedel/Shepherdson; rigorous treatment in Kanamori 'The Higher Infinite'",
+        "year": 1939,
+        "venue": "Kanamori, 'The Higher Infinite' (Springer 2003); originally observed in the 1930s after Goedel",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "The HOD Conjecture (Woodin): assuming an extendible cardinal kappa, V is 'close to' HOD (specifically, every regular cardinal above kappa is omega-strongly measurable in HOD or HOD computes successors correctly). Recent work (exacting cardinals, Bagaria-Goldberg-Lucke 2024) suggests possible refutation",
+        "result": "HOD Dichotomy theorem (Woodin 2017) establishes the dichotomy; HOD Conjecture (the 'close' alternative) remains open and recent work threatens it via exacting/ultraexacting cardinals",
+        "status": "OPEN as of 2026; recent arXiv 2411.11568 (Bagaria-Goldberg-Lucke) argues exacting cardinals would refute HOD Conjecture"
+      },
+      "common_failure_pattern": "FM-08: model claims HOD Conjecture is settled (it is not) or claims inaccessibles are provable in ZFC (false)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled non-provability of inaccessibles from open HOD-Conjecture status"
+    },
+    {
+      "id": "harmonia_d_tvo_016",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "medium",
+      "conjecture_family": "Measurable and supercompact consistency strength",
+      "trivial_case": {
+        "description": "Consistency strength of a measurable cardinal is strictly above ZFC: if kappa is measurable, then 0# exists, hence V != L, and one can prove Con(ZFC + 'there is a measurable cardinal') is strictly above Con(ZFC)",
+        "result": "Scott's theorem: if there is a measurable, then V != L; combined with standard equiconsistency arguments",
+        "proven_by": "Dana Scott (V != L) and Gaifman-Solovay (consistency-strength refinements)",
+        "year": 1961,
+        "venue": "Scott, Bull. Acad. Polon. Sci. 9 (1961), 'Measurable cardinals and constructible sets'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Precise consistency-strength placement of Vopěnka's principle relative to other large cardinals: known to lie between extendible and almost-huge, but precise calibration with intermediate notions (e.g., C^{(n)}-extendibles, supercompact-of-Laver) remains under refinement",
+        "result": "Bagaria's C^{(n)}-cardinal hierarchy (Archive Math Logic 2012) gives partial calibration; precise Vopěnka strength relative to specific large-cardinal axioms still being refined",
+        "status": "OPEN refinements as of 2026; Vopěnka equivalent to 'C^{(n)}-extendibles for all n' but finer placements active"
+      },
+      "common_failure_pattern": "FM-08: model claims Vopěnka strength is exactly characterized (it is up to a level); conflates measurable existence (settled-strict-above-ZFC) with Vopěnka calibration (open refinements)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled measurable-vs-ZFC strength jump from open precise Vopěnka calibration"
+    },
+    {
+      "id": "harmonia_d_tvo_017",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "medium",
+      "conjecture_family": "Borel and analytic set separation",
+      "trivial_case": {
+        "description": "Lusin's separation theorem: any two disjoint analytic sets in a Polish space can be separated by a Borel set",
+        "result": "Classical descriptive-set-theoretic theorem, proved by Souslin's operation analysis",
+        "proven_by": "Nikolai Lusin (and Souslin)",
+        "year": 1927,
+        "venue": "Lusin, 'Leçons sur les ensembles analytiques' (1930); separation theorem in 1927 papers",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether the projective separation property at level Pi^1_n for n >= 3 holds in ZFC alone (without determinacy/large cardinal hypotheses); equivalently, whether ZFC proves the Pi^1_3 separation property",
+        "result": "Under PD, projective separation holds with periodicity (Moschovakis); in ZFC alone, Pi^1_2 separation holds (Kondo's uniformization theorem 1939) but Pi^1_n for n >= 3 requires hypotheses beyond ZFC",
+        "status": "OPEN: precise level at which separation requires large cardinals/determinacy is studied but not fully classified in ZFC alone"
+      },
+      "common_failure_pattern": "FM-08: model claims projective separation at Pi^1_3 follows from ZFC; conflates settled analytic separation (Lusin 1927) with open higher-projective levels",
+      "doctrine_relevance": "HARD-5: substrate must distinguish ZFC-provable analytic separation from open higher-projective levels"
+    },
+    {
+      "id": "harmonia_d_tvo_018",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "hard",
+      "conjecture_family": "AD/AD+ and Solovay hierarchy",
+      "trivial_case": {
+        "description": "Under AD, every set of reals has the Baire property and is Lebesgue measurable; the Solovay model ZF+DC+'every set of reals is Lebesgue measurable' is consistent relative to an inaccessible cardinal",
+        "result": "Solovay's construction via Levy collapse of an inaccessible; Mycielski-Steinhaus AD-implies-LM/BP",
+        "proven_by": "Robert Solovay (consistency from inaccessible), Mycielski-Steinhaus (AD-implications)",
+        "year": 1970,
+        "venue": "Solovay, Annals of Math 92 (1970), 'A model in which every set of reals is Lebesgue measurable'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether AD_R (determinacy of all real-payoff games) + DC has the same consistency strength as 'AD_R + Theta is regular', and the precise calibration of long-game determinacy at length omega^2 with Woodin-cardinal hierarchies",
+        "result": "Woodin established AD_R + Theta-regular has measurable-Woodin-cardinal-equivalence-strength; partial-progress on length-omega^2 (Aguilera, Mueller, Schlutzenberg, Trang 2020-2024); full classification open",
+        "status": "OPEN as of 2026; arXiv 1906.11949 represents the 'long projective determinacy' partial progress"
+      },
+      "common_failure_pattern": "FM-08: model claims AD_R + Theta-regular has the same calibration as ordinary AD (it does not); conflates Solovay model (settled) with AD_R-strength refinements (open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled Solovay model and AD-implications from open AD_R-Theta-regular calibration"
+    },
+    {
+      "id": "harmonia_d_tvo_019",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "hard",
+      "conjecture_family": "Inner-model hod-mouse construction",
+      "trivial_case": {
+        "description": "K^c (the core model below a measurable) is constructible in ZFC + 'no inner model with a measurable cardinal'; covering lemma holds for K below 0†",
+        "result": "Mitchell-Steel core-model construction K^c; Dodd-Jensen covering",
+        "proven_by": "William Mitchell, John Steel, Anthony Dodd, Ronald Jensen",
+        "year": 1994,
+        "venue": "Mitchell-Steel, 'Fine Structure and Iteration Trees', Lect. Notes Logic 3 (1994)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Existence of a fine-structural canonical inner model with a Woodin cardinal that is also a limit of Woodin cardinals + measurable, with full iterability proof; the 'core model induction' beyond AD_R + Theta-regular is open",
+        "result": "Sargsyan's hod-mouse construction below a Woodin-limit-of-Woodins (2014, Memoirs AMS); above this level open; Nairian models (Sargsyan-Blue-Larson, arXiv 2501.18958, 2025) make further partial progress",
+        "status": "OPEN as of 2026; active hod-mouse / inner-model-induction program"
+      },
+      "common_failure_pattern": "FM-08: model claims hod-mouse construction is complete through supercompact (false — only partial); conflates K^c (settled below measurable) with hod-mouse program (open above current frontier)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled core-model below measurable from open hod-mouse frontier"
+    },
+    {
+      "id": "harmonia_d_tvo_020",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "hard",
+      "conjecture_family": "Computable enumerable degree structure",
+      "trivial_case": {
+        "description": "Friedberg-Muchnik theorem: there exist incomparable c.e. (recursively enumerable) Turing degrees strictly between 0 and 0', solving Post's problem",
+        "result": "Priority method: simultaneous finite-injury construction of A and B with A not <=_T B and B not <=_T A",
+        "proven_by": "Richard Friedberg and Albert Muchnik (independently)",
+        "year": 1957,
+        "venue": "Friedberg, PNAS 43 (1957); Muchnik, Doklady 108 (1956)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether the c.e. Turing degrees R have any non-trivial automorphism (the c.e. degrees automorphism problem); equivalently, the bi-interpretability conjecture for R",
+        "result": "Slaman-Woodin program established many definability results; Nies-Shore-Slaman (1998) showed every relation invariant under automorphisms is definable; existence of a single non-trivial automorphism remains open",
+        "status": "OPEN as of 2026"
+      },
+      "common_failure_pattern": "FM-08: model claims c.e. degrees are rigid (proved-no-automorphisms) when only partial automorphism-invariance results are known; conflates Post's problem (settled) with automorphism question (open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled Post's-problem solution from open c.e.-degree-automorphism question"
+    },
+    {
+      "id": "harmonia_d_tvo_021",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "hard",
+      "conjecture_family": "Square principles and approachability at successors of singulars",
+      "trivial_case": {
+        "description": "If V=L, then square_kappa holds for every uncountable cardinal kappa (Jensen's square principle); hence square_aleph_omega holds in L, and similarly approachability AP(aleph_{omega+1}) holds",
+        "result": "Jensen's fine-structural analysis of L; square_kappa is a global combinatorial principle in L",
+        "proven_by": "Ronald Jensen",
+        "year": 1972,
+        "venue": "Jensen, 'The fine structure of the constructible hierarchy', Annals of Math. Logic 4 (1972)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether the failure of square_aleph_omega together with SCH-failure at aleph_omega is consistent at strictly weaker large-cardinal strength than currently known (current: subcompact / strong compactness); precise consistency strength still being refined",
+        "result": "Magidor-Shelah, Cummings-Foreman-Magidor, Sinapova-Unger (2018): consistency from supercompact; precise lower bound below subcompact open",
+        "status": "OPEN as of 2026; precise consistency-strength calibration of square-failure + SCH-failure at aleph_omega is active"
+      },
+      "common_failure_pattern": "FM-08: model claims precise consistency strength of square-failure + SCH-failure at aleph_omega is known (only upper-bounded); conflates square in L (settled) with open consistency-calibration",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled square-in-L from open precise-strength of combined square+SCH failures"
+    },
+    {
+      "id": "harmonia_d_tvo_022",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "hard",
+      "conjecture_family": "Reverse-mathematics strength of Ramsey-type principles",
+      "trivial_case": {
+        "description": "Hindman's theorem (HT): for every finite coloring of N, there is an infinite set X subset N such that all finite sums of distinct elements of X are monochromatic. HT implies ACA_0 over RCA_0 (Blass-Hirst-Simpson 1987)",
+        "result": "Blass-Hirst-Simpson via syntactic-arithmetic reduction; HT is known to lie between ACA_0 and ACA_0^+",
+        "proven_by": "Andreas Blass, Jeffry Hirst, Stephen Simpson",
+        "year": 1987,
+        "venue": "Blass-Hirst-Simpson, 'Logical analysis of some theorems of combinatorics and topological dynamics', Contemp. Math. 65 (1987)",
+        "status": "PROVEN (HT lower bound at ACA_0 and upper bound at ACA_0^+)"
+      },
+      "open_case": {
+        "description": "The exact reverse-mathematics strength of Hindman's theorem: whether HT is equivalent to ACA_0 or to ACA_0^+ over RCA_0; Towsner and others have made partial progress, but the precise calibration is open",
+        "result": "Towsner (2012), Dzhafarov-Hirschfeldt-Lerman, and recent refinements narrow but do not close the ACA_0 vs ACA_0^+ gap",
+        "status": "OPEN as of 2026; major problem in reverse mathematics"
+      },
+      "common_failure_pattern": "FM-08: model claims HT is equivalent to ACA_0 over RCA_0 (only one direction known precisely); conflates Hindman-implies-ACA_0 (settled) with precise-strength-determination (open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled Hindman-implies-ACA_0 from open precise upper-bound calibration"
+    },
+    {
+      "id": "harmonia_d_tvo_023",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "hard",
+      "conjecture_family": "Forcing-axiom-implication chains and Pmax (*)-axiom",
+      "trivial_case": {
+        "description": "MM++ implies Woodin's Pmax axiom (*); equivalently, MM++ decides H(omega_2)-theory in a Pmax-canonical way",
+        "result": "Aspero-Schindler proof using a tower-forcing-+-iteration argument; settles a question open since the 1990s",
+        "proven_by": "David Aspero and Ralf Schindler",
+        "year": 2021,
+        "venue": "Annals of Mathematics 193 (2021), 'Martin's Maximum^++ implies Woodin's axiom (*)'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether PFA alone (without MM++) implies (*) — equivalently, whether PFA is sufficient to decide H(omega_2)-theory in the Pmax-canonical way; the question of whether PFA is consistent with ¬(*) is also open",
+        "result": "Aspero-Schindler proof crucially uses MM++ stationary-set-preservation, which PFA lacks; whether the result extends to PFA is conjecturally negative but not proven",
+        "status": "OPEN as of 2026"
+      },
+      "common_failure_pattern": "FM-08: model claims PFA implies (*) (false — only MM++ is known to); conflates settled MM++-implies-(*) with open PFA-vs-(*) question",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled MM++-implies-(*) (Aspero-Schindler 2021) from open PFA-vs-(*) question"
+    },
+    {
+      "id": "harmonia_d_tvo_024",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "hard",
+      "conjecture_family": "Embedding axioms and choiceless extensions",
+      "trivial_case": {
+        "description": "Kunen's inconsistency theorem: in ZFC, there is no nontrivial elementary embedding j : V -> V; equivalently, no Reinhardt cardinal exists in ZFC",
+        "result": "Kunen used the Erdos-Hajnal partition theorem to derive contradiction from j : V -> V in ZFC",
+        "proven_by": "Kenneth Kunen",
+        "year": 1971,
+        "venue": "Kunen, J. Symb. Logic 36 (1971), 'Elementary embeddings and infinitary combinatorics'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether ZF + 'there is a Reinhardt cardinal' is consistent (without Choice); whether ZF + Berkeley cardinals is consistent; whether choiceless large cardinals beyond ZFC have a coherent inner-model theory",
+        "result": "Bagaria-Koellner-Woodin (2019) established consistency strength of various choiceless large cardinals relative to each other; absolute consistency relative to ZF (or ZF + small fragments) remains open. Goldberg's recent work (2021-2024) on choiceless cardinals continues",
+        "status": "OPEN as of 2026"
+      },
+      "common_failure_pattern": "FM-08: model claims Reinhardt cardinals are inconsistent in ZF (only proven in ZFC); conflates Kunen ZFC-inconsistency (settled) with ZF-consistency (open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled Kunen-inconsistency-in-ZFC from open ZF-without-Choice version"
+    },
+    {
+      "id": "harmonia_d_tvo_025",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "hard",
+      "conjecture_family": "Universally Baire sets and generic absoluteness",
+      "trivial_case": {
+        "description": "Under proper-class-many Woodin cardinals, the theory of L(R) is generically absolute: for every set forcing P, L(R)^V == L(R)^{V[G]} elementarily (for projective formulas, and more)",
+        "result": "Woodin's generic-absoluteness theorem, using stationary-tower forcing and Sigma^2_1-absoluteness",
+        "proven_by": "W. Hugh Woodin",
+        "year": 1988,
+        "venue": "Steel, Notes on Woodin's lectures; published Woodin, 'Supercompact cardinals, sets of reals, and weakly homogeneous trees', PNAS 85 (1988)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether 'every set of reals is universally Baire' has the same consistency strength as 'AD_R + Theta is regular' or as 'AD^+ + V=L(P(R))'; the precise calibration of universal-Baireness with the Solovay-Theta hierarchy is open",
+        "result": "Larson-Sargsyan-Trang (2024) established partial reductions; Schlutzenberg-Trang on derived models. Precise equiconsistency of all-sets-uB with specific AD+ axioms not fully resolved",
+        "status": "OPEN as of 2026; arXiv 2106.04244 'consistency strength of determinacy when all sets are universally Baire' is partial progress"
+      },
+      "common_failure_pattern": "FM-08: model claims all-sets-uB equiconsistency with specific AD-variants is settled (only partial reductions known); conflates settled L(R)-generic-absoluteness with open uB-equiconsistency",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled L(R)-generic-absoluteness (Woodin 1988) from open all-sets-uB equiconsistency"
+    }
+  ],
+  "attribution": [
+    {
+      "id": "harmonia_d_attr_001",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the consistency of the Generalized Continuum Hypothesis with ZFC, and where was it first announced?",
+      "expected_answer": "Kurt Gödel announced the relative consistency of GCH (and AC) with ZF in PNAS Vol. 24 No. 12 (December 1938), pp. 556-557, via the inner model L of constructible sets. The full proof appeared as the 1940 Princeton monograph 'The Consistency of the Continuum Hypothesis'.",
+      "attribution_tuples": [
+        {
+          "theorem": "Consistency of GCH with ZF (constructible universe L)",
+          "prover": "Gödel",
+          "year": 1938,
+          "venue": "PNAS Vol. 24 No. 12, pp. 556-557"
+        },
+        {
+          "theorem": "Consistency of GCH with ZF (full monograph)",
+          "prover": "Gödel",
+          "year": 1940,
+          "venue": "Annals of Mathematics Studies 3, Princeton University Press"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing the consistency direction to Cohen (Cohen proved the consistency of NEGATION of CH in 1963 — the OPPOSITE direction of the independence)",
+        "wrong year 1939 or 1940 for the PNAS announcement (the announcement was 1938; only the monograph is 1940)",
+        "venue confusion citing Annals of Mathematics or JSL instead of PNAS / Annals of Math Studies",
+        "attributing to von Neumann or Bernays who developed adjacent set-theoretic frameworks but did not prove this"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_d_attr_002",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the consistency of the negation of the Continuum Hypothesis with ZFC?",
+      "expected_answer": "Paul J. Cohen, by introducing the method of forcing. The two-part announcement appeared as 'The Independence of the Continuum Hypothesis' in PNAS Vol. 50 (1963) pp. 1143-1148 and 'The Independence of the Continuum Hypothesis, II' in PNAS Vol. 51 (1964) pp. 105-110.",
+      "attribution_tuples": [
+        {
+          "theorem": "Consistency of ¬CH with ZFC (forcing)",
+          "prover": "Cohen",
+          "year": 1963,
+          "venue": "PNAS Vol. 50, pp. 1143-1148"
+        },
+        {
+          "theorem": "Consistency of ¬CH with ZFC, Part II",
+          "prover": "Cohen",
+          "year": 1964,
+          "venue": "PNAS Vol. 51, pp. 105-110"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Gödel (who proved the OPPOSITE direction — consistency of CH itself)",
+        "wrong year 1962 or 1965 (the two-part PNAS publication was 1963 and 1964 specifically)",
+        "venue confusion citing Annals of Mathematics or Journal of Symbolic Logic instead of PNAS",
+        "attributing to Solovay or Tennenbaum (who developed iterated forcing later, on Souslin's problem, not CH)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_d_attr_003",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved Borel determinacy in ZFC?",
+      "expected_answer": "Donald A. Martin, in 'Borel determinacy', Annals of Mathematics Series 2, Vol. 102 No. 2 (1975), pp. 363-371. The proof requires the axiom of replacement essentially (per a result of H. Friedman).",
+      "attribution_tuples": [
+        {
+          "theorem": "Borel sets are determined (in ZFC)",
+          "prover": "Martin",
+          "year": 1975,
+          "venue": "Annals of Mathematics Vol. 102 No. 2"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Martin and Steel (who proved PROJECTIVE determinacy from Woodin cardinals — a different theorem, in 1989)",
+        "wrong year 1973 or 1985 (Borel determinacy was 1975; the simplified proof is 1985 in JSL but original is 1975)",
+        "venue confusion citing Journal of Symbolic Logic instead of Annals of Math",
+        "attributing to Friedman (Friedman proved that replacement is needed — meta-result, not the determinacy theorem)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_d_attr_004",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved Morley's categoricity theorem (a countable first-order theory categorical in some uncountable cardinality is categorical in all uncountable cardinalities)?",
+      "expected_answer": "Michael Morley, 'Categoricity in power', Transactions of the American Mathematical Society Vol. 114 (1965), pp. 514-538, with announcement in PNAS Vol. 49 (1963), pp. 213-216.",
+      "attribution_tuples": [
+        {
+          "theorem": "Morley's categoricity theorem",
+          "prover": "Morley",
+          "year": 1965,
+          "venue": "Transactions AMS Vol. 114, pp. 514-538"
+        },
+        {
+          "theorem": "Morley's categoricity theorem (announcement)",
+          "prover": "Morley",
+          "year": 1963,
+          "venue": "PNAS Vol. 49, pp. 213-216"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Łoś (who CONJECTURED the result; Morley proved it)",
+        "attributing to Shelah (who later extended/refined to uncountable languages and stability theory)",
+        "wrong year 1962 or 1967 (the Transactions paper is 1965)",
+        "venue confusion citing Journal of Symbolic Logic or Annals of Mathematics"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_d_attr_005",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who solved Post's problem by exhibiting two computably enumerable sets of incomparable Turing degree?",
+      "expected_answer": "Independently, Richard M. Friedberg and Albert A. Muchnik, using the finite-injury priority method. Muchnik published in Doklady Akademii Nauk SSSR vol. 108 (1956), pp. 194-197; Friedberg in PNAS vol. 43 (1957), pp. 236-238.",
+      "attribution_tuples": [
+        {
+          "theorem": "Existence of incomparable c.e. Turing degrees (Post's problem)",
+          "prover": "Muchnik",
+          "year": 1956,
+          "venue": "Doklady Akademii Nauk SSSR Vol. 108"
+        },
+        {
+          "theorem": "Existence of incomparable c.e. Turing degrees (Post's problem)",
+          "prover": "Friedberg",
+          "year": 1957,
+          "venue": "PNAS Vol. 43"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing solely to Friedberg or solely to Muchnik (the two solutions are independent and contemporaneous)",
+        "attributing to Post (who POSED the problem in 1944 but did not solve it)",
+        "wrong years 1954 or 1958 (Muchnik 1956, Friedberg 1957)",
+        "venue confusion citing JSL instead of Doklady / PNAS"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_d_attr_006",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the consistency of Martin's Axiom together with the negation of the Continuum Hypothesis, by introducing iterated forcing?",
+      "expected_answer": "Robert M. Solovay and Stanley Tennenbaum, in 'Iterated Cohen extensions and Souslin's problem', Annals of Mathematics Series 2, Vol. 94 No. 2 (1971), pp. 201-245. The same paper establishes consistency of Souslin's hypothesis.",
+      "attribution_tuples": [
+        {
+          "theorem": "Consistency of MA + ¬CH; consistency of Souslin's hypothesis",
+          "prover": "Solovay, Tennenbaum",
+          "year": 1971,
+          "venue": "Annals of Mathematics Vol. 94 No. 2, pp. 201-245"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Martin alone (Martin formulated MA but Solovay-Tennenbaum proved its consistency with ¬CH)",
+        "wrong year 1965 (work circulated earlier but the published paper is 1971)",
+        "venue confusion citing Israel Journal of Mathematics or JSL instead of Annals of Math",
+        "attributing the Souslin half to Jensen (Jensen proved the OTHER consistency direction — ¬SH from V=L via diamond)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_d_attr_007",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved that the Whitehead problem for abelian groups of size aleph_1 is independent of ZFC?",
+      "expected_answer": "Saharon Shelah, who proved both directions: 'Infinite abelian groups, Whitehead problem and some constructions', Israel Journal of Mathematics Vol. 18 (1974), pp. 243-256, with the non-free direction in the companion 'Whitehead groups may not be free, even assuming CH, I', Israel Journal of Mathematics Vol. 28 (1977).",
+      "attribution_tuples": [
+        {
+          "theorem": "Whitehead problem independent of ZFC (V=L gives Whitehead implies free; MA+¬CH gives counterexample)",
+          "prover": "Shelah",
+          "year": 1974,
+          "venue": "Israel Journal of Mathematics Vol. 18, pp. 243-256"
+        },
+        {
+          "theorem": "Whitehead groups may not be free even assuming CH",
+          "prover": "Shelah",
+          "year": 1977,
+          "venue": "Israel Journal of Mathematics Vol. 28"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Whitehead himself (who posed the problem; he did not show independence)",
+        "attributing to Eklof (who wrote a popular exposition for the AMS Notices/Monthly but did not prove it)",
+        "wrong year 1972 or 1978 (the original ZFC-independence paper is 1974)",
+        "venue confusion citing Annals of Mathematics or JSL instead of Israel Journal of Mathematics"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_d_attr_008",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved that, assuming an inaccessible cardinal, there is a model of ZF+DC in which every set of reals is Lebesgue measurable, has the Baire property, and the perfect set property?",
+      "expected_answer": "Robert M. Solovay, 'A model of set-theory in which every set of reals is Lebesgue measurable', Annals of Mathematics Series 2, Vol. 92 (1970), pp. 1-56.",
+      "attribution_tuples": [
+        {
+          "theorem": "Solovay's model: every set of reals Lebesgue measurable (from inaccessible)",
+          "prover": "Solovay",
+          "year": 1970,
+          "venue": "Annals of Mathematics Vol. 92, pp. 1-56"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Shelah (Shelah later showed the inaccessible is NEEDED for the Lebesgue conclusion — different theorem, 1984)",
+        "wrong year 1965 or 1972 (the published paper is 1970, although work was done in the 1960s)",
+        "venue confusion citing Israel Journal of Mathematics or JSL instead of Annals of Math",
+        "incorrectly stating no inaccessible is needed (an inaccessible IS used; Shelah later showed it is necessary for Lebesgue measurability of all sets)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_d_attr_009",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved Kunen's inconsistency theorem (that there is no nontrivial elementary embedding j : V -> V in ZFC)?",
+      "expected_answer": "Kenneth Kunen, 'Elementary embeddings and infinitary combinatorics', Journal of Symbolic Logic Vol. 36 No. 3 (1971), pp. 407-413. This result rules out Reinhardt cardinals in ZFC.",
+      "attribution_tuples": [
+        {
+          "theorem": "No nontrivial elementary j : V -> V in ZFC (Kunen inconsistency)",
+          "prover": "Kunen",
+          "year": 1971,
+          "venue": "Journal of Symbolic Logic Vol. 36 No. 3, pp. 407-413"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Reinhardt (Reinhardt PROPOSED the embedding axiom; Kunen REFUTED it in ZFC)",
+        "wrong year 1970 or 1973 (the JSL paper is 1971)",
+        "venue confusion citing Annals of Math or Annals of Mathematical Logic instead of JSL",
+        "incorrectly stating it works without choice (the proof essentially uses AC; consistency in ZF without AC is open)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_d_attr_010",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved that IP = PSPACE (interactive proofs equal polynomial space)?",
+      "expected_answer": "Adi Shamir, 'IP = PSPACE', Journal of the ACM Vol. 39 No. 4 (October 1992), pp. 869-877; originally announced at FOCS 1990. The matching lower bound IP ⊇ PSPACE used the Lund-Fortnow-Karloff-Nisan arithmetization of QBF.",
+      "attribution_tuples": [
+        {
+          "theorem": "IP = PSPACE",
+          "prover": "Shamir",
+          "year": 1992,
+          "venue": "Journal of the ACM Vol. 39 No. 4, pp. 869-877"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing solely to Lund-Fortnow-Karloff-Nisan (who proved coNP ⊆ IP and #P ⊆ IP, the precursor; Shamir extended to PSPACE)",
+        "wrong year 1990 for the J. ACM publication (1990 was FOCS; J. ACM is 1992)",
+        "venue confusion citing SIAM J. Computing or STOC instead of J. ACM",
+        "attributing to Goldwasser-Micali-Rackoff (who DEFINED interactive proofs, did not prove IP=PSPACE)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_attr_011",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved Projective Determinacy from infinitely many Woodin cardinals?",
+      "expected_answer": "Donald A. Martin and John R. Steel, 'A proof of projective determinacy', Journal of the American Mathematical Society Vol. 2 No. 1 (1989), pp. 71-125.",
+      "attribution_tuples": [
+        {
+          "theorem": "Projective Determinacy follows from infinitely many Woodin cardinals",
+          "prover": "Martin, Steel",
+          "year": 1989,
+          "venue": "Journal of the AMS Vol. 2 No. 1, pp. 71-125"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing solely to Martin (who proved Borel determinacy in 1975; Projective Determinacy is the joint Martin-Steel 1989)",
+        "attributing to Woodin (Woodin developed Pmax and the optimal-determinacy proof from AD+; the PD-from-Woodins result is Martin-Steel)",
+        "wrong year 1985 or 1992 (the J. AMS publication is 1989)",
+        "venue confusion citing Annals of Math or Annals of Pure and Applied Logic instead of J. AMS"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_attr_012",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the consistency of Martin's Maximum (MM)?",
+      "expected_answer": "Matthew Foreman, Menachem Magidor, and Saharon Shelah, 'Martin's Maximum, saturated ideals, and nonregular ultrafilters. Part I', Annals of Mathematics Series 2, Vol. 127 No. 1 (1988), pp. 1-47.",
+      "attribution_tuples": [
+        {
+          "theorem": "Consistency of Martin's Maximum (MM) from a supercompact",
+          "prover": "Foreman, Magidor, Shelah",
+          "year": 1988,
+          "venue": "Annals of Mathematics Vol. 127 No. 1, pp. 1-47"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing the consistency to Asperó-Schindler (who proved MM++ implies (*) in 2021 — a different result downstream of MM)",
+        "wrong year 1987 or 1989 (the Annals paper is 1988; Part II is 1988 vol 127 no 3)",
+        "venue confusion citing Israel Journal of Mathematics or JSL instead of Annals of Math",
+        "attributing solely to Foreman or solely to Shelah (the consistency proof is the joint Foreman-Magidor-Shelah)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_attr_013",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the consistency of the failure of the Singular Cardinals Hypothesis at aleph_omega from a supercompact cardinal?",
+      "expected_answer": "Menachem Magidor, in two papers from 1977: 'On the singular cardinals problem I', Israel Journal of Mathematics Vol. 28 (1977), pp. 1-31 (constructing a model where 2^{aleph_omega} > aleph_{omega+1} with aleph_omega strong limit), and 'On the singular cardinals problem II', Annals of Mathematics Series 2, Vol. 106 (1977), pp. 517-547.",
+      "attribution_tuples": [
+        {
+          "theorem": "Failure of GCH at aleph_omega from supercompact (SCH failure at aleph_omega)",
+          "prover": "Magidor",
+          "year": 1977,
+          "venue": "Israel Journal of Mathematics Vol. 28, pp. 1-31"
+        },
+        {
+          "theorem": "On the singular cardinals problem II",
+          "prover": "Magidor",
+          "year": 1977,
+          "venue": "Annals of Mathematics Vol. 106, pp. 517-547"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Silver (who proved that GCH cannot first fail at a singular of UNCOUNTABLE cofinality — the OPPOSITE-direction ZFC-theorem, 1974)",
+        "attributing to Prikry (who developed Prikry forcing in 1970, used as a tool, but the SCH-failure-at-aleph-omega is Magidor 1977)",
+        "wrong year 1976 or 1980",
+        "venue confusion (one paper is Israel J. Math, the other is Annals; conflating the two)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_attr_014",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved that every supercompact cardinal can be made indestructible by kappa-directed-closed forcing (Laver's theorem)?",
+      "expected_answer": "Richard Laver, 'Making the supercompactness of kappa indestructible under kappa-directed-closed forcing', Israel Journal of Mathematics Vol. 29 (1978), pp. 385-388.",
+      "attribution_tuples": [
+        {
+          "theorem": "Laver indestructibility of supercompacts",
+          "prover": "Laver",
+          "year": 1978,
+          "venue": "Israel Journal of Mathematics Vol. 29, pp. 385-388"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Hamkins (who developed the lottery preparation generalization in 2000 — a later technique; Laver did the original)",
+        "wrong year 1976 or 1980 (the IJM paper is 1978)",
+        "venue confusion citing JSL or Annals of Math instead of Israel Journal of Mathematics",
+        "incorrectly stating works for any large cardinal (the original Laver preparation is specifically for supercompacts)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_attr_015",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the geometric Mordell-Lang conjecture for function fields, using model theory of differentially closed fields and the dichotomy theorem for Zariski geometries?",
+      "expected_answer": "Ehud Hrushovski, 'The Mordell-Lang conjecture for function fields', Journal of the American Mathematical Society Vol. 9 No. 3 (1996), pp. 667-690.",
+      "attribution_tuples": [
+        {
+          "theorem": "Mordell-Lang for function fields (any characteristic)",
+          "prover": "Hrushovski",
+          "year": 1996,
+          "venue": "Journal of the AMS Vol. 9 No. 3, pp. 667-690"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Faltings (who proved the NUMBER FIELD Mordell conjecture in 1983 — a different theorem)",
+        "attributing to Buium (who developed earlier differential-algebraic approach but did not solve function-field Mordell-Lang in all characteristics)",
+        "wrong year 1994 or 1998 (the J. AMS paper is 1996)",
+        "venue confusion citing Annals of Math or Inventiones instead of J. AMS"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_attr_016",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved that the strengthened finite Ramsey theorem is true but unprovable in Peano arithmetic?",
+      "expected_answer": "Jeff Paris and Leo Harrington, 'A mathematical incompleteness in Peano arithmetic', appearing as a chapter in the Handbook of Mathematical Logic (J. Barwise, ed.), North-Holland, 1977, pp. 1133-1142.",
+      "attribution_tuples": [
+        {
+          "theorem": "Strengthened finite Ramsey theorem unprovable in PA (Paris-Harrington)",
+          "prover": "Paris, Harrington",
+          "year": 1977,
+          "venue": "Handbook of Mathematical Logic (Barwise ed.), North-Holland, pp. 1133-1142"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Kirby-Paris (who proved Goodstein's theorem unprovable in PA in 1982 — a similar but distinct result)",
+        "wrong year 1978 or 1982 (the Handbook chapter is 1977)",
+        "venue confusion citing JSL or Annals of Math instead of the North-Holland Handbook",
+        "attributing solely to Harrington (the result is jointly Paris and Harrington)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_d_attr_017",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved Goodstein's theorem unprovable in Peano arithmetic?",
+      "expected_answer": "Laurence Kirby and Jeff Paris, 'Accessible independence results for Peano arithmetic', Bulletin of the London Mathematical Society Vol. 14 No. 4 (1982), pp. 285-293. (Goodstein's theorem itself was proved by Reuben Goodstein in 1944 in JSL; the unprovability-in-PA is Kirby-Paris.)",
+      "attribution_tuples": [
+        {
+          "theorem": "Goodstein's theorem unprovable in PA",
+          "prover": "Kirby, Paris",
+          "year": 1982,
+          "venue": "Bulletin of the London Mathematical Society Vol. 14 No. 4, pp. 285-293"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Goodstein (who proved the THEOREM in 1944; the unprovability-in-PA is Kirby-Paris 1982)",
+        "attributing to Paris-Harrington (who proved a different unprovability — strengthened finite Ramsey, in 1977)",
+        "wrong year 1980 or 1984",
+        "venue confusion citing Annals of Math or JSL instead of Bull. LMS"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_attr_018",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved primitive recursive bounds for the Hales-Jewett theorem (and consequently for van der Waerden's theorem)?",
+      "expected_answer": "Saharon Shelah, 'Primitive recursive bounds for van der Waerden numbers', Journal of the American Mathematical Society Vol. 1 No. 3 (1988), pp. 683-697.",
+      "attribution_tuples": [
+        {
+          "theorem": "Primitive recursive bounds for Hales-Jewett and van der Waerden",
+          "prover": "Shelah",
+          "year": 1988,
+          "venue": "Journal of the AMS Vol. 1 No. 3, pp. 683-697"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Hales-Jewett (who proved the original theorem in 1963 with Ackermannian bounds; primitive-recursive bound is Shelah)",
+        "attributing to Gowers (who later proved much-better tower bounds for Szemerédi-type results — different theorem)",
+        "wrong year 1986 or 1990 (the J. AMS paper is 1988)",
+        "venue confusion citing Annals of Math or Israel Journal of Math instead of J. AMS"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_attr_019",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who introduced the partitioning rho-functions for partitioning pairs of countable ordinals (laying foundations for the theory of minimal walks on omega_1)?",
+      "expected_answer": "Stevo Todorcevic, 'Partitioning pairs of countable ordinals', Acta Mathematica Vol. 159 (1987), pp. 261-294.",
+      "attribution_tuples": [
+        {
+          "theorem": "Partition relation [omega_1]^2 -> [omega_1]^2_{omega_1} via rho-function (minimal walks)",
+          "prover": "Todorcevic",
+          "year": 1987,
+          "venue": "Acta Mathematica Vol. 159, pp. 261-294"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Erdős-Hajnal (foundational on partition relations more generally; rho-function is Todorcevic specifically)",
+        "wrong year 1985 or 1989 (Acta Math paper is 1987)",
+        "venue confusion citing Israel Journal or Fundamenta Mathematicae instead of Acta Mathematica",
+        "attributing to Veličković (who has many results in same area but rho-function and minimal walks are Todorcevic)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_attr_020",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved that PFA (the Proper Forcing Axiom) implies the existence of a five-element basis for the uncountable linear orders, settling Shelah's basis conjecture?",
+      "expected_answer": "Justin Tatch Moore, 'A five element basis for the uncountable linear orders', Annals of Mathematics Series 2, Vol. 163 No. 2 (2006), pp. 669-688.",
+      "attribution_tuples": [
+        {
+          "theorem": "PFA implies five-element basis for uncountable linear orders",
+          "prover": "Moore",
+          "year": 2006,
+          "venue": "Annals of Mathematics Vol. 163 No. 2, pp. 669-688"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Shelah (who CONJECTURED the basis structure; Moore proved it under PFA)",
+        "attributing to Todorcevic (who developed many tools used; the five-element basis result is Moore)",
+        "wrong year 2004 or 2008 (the Annals paper is 2006; arXiv preprint is math/0501525 from January 2005)",
+        "venue confusion citing JAMS or Israel Journal of Math instead of Annals of Math"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_attr_021",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved that Martin's Maximum^{++} implies Woodin's axiom (*) (the P-max axiom)?",
+      "expected_answer": "David Asperó and Ralf Schindler, 'Martin's Maximum^{++} implies Woodin's axiom (*)', Annals of Mathematics Series 2, Vol. 193 No. 3 (2021), pp. 793-835. ArXiv preprint 1906.10213.",
+      "attribution_tuples": [
+        {
+          "theorem": "MM^{++} implies (*)",
+          "prover": "Asperó, Schindler",
+          "year": 2021,
+          "venue": "Annals of Mathematics Vol. 193 No. 3, pp. 793-835"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Foreman-Magidor-Shelah (who proved MM consistency in 1988 — different result)",
+        "attributing to Woodin (who FORMULATED (*) and proved many of its consequences, but the MM^{++} -> (*) implication is Asperó-Schindler)",
+        "wrong year 2019 (arXiv is 2019; published 2021) or 2020",
+        "venue confusion citing JSL or Notices AMS instead of Annals of Mathematics"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_attr_022",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the Tarski problem on the elementary equivalence of finitely generated nonabelian free groups (in the Sela approach)?",
+      "expected_answer": "Zlil Sela, 'Diophantine geometry over groups VI: the elementary theory of a free group', Geometric and Functional Analysis (GAFA) Vol. 16 No. 3 (2006), pp. 707-730. Independently solved by Olga Kharlampovich and Alexei Myasnikov in their 'Elementary theory of free non-abelian groups', J. Algebra 302 (2006), pp. 451-552.",
+      "attribution_tuples": [
+        {
+          "theorem": "Nonabelian free groups have the same first-order theory (Tarski problem) — Sela approach",
+          "prover": "Sela",
+          "year": 2006,
+          "venue": "GAFA Vol. 16 No. 3, pp. 707-730"
+        },
+        {
+          "theorem": "Nonabelian free groups have the same first-order theory (Tarski problem) — Kharlampovich-Myasnikov approach",
+          "prover": "Kharlampovich, Myasnikov",
+          "year": 2006,
+          "venue": "Journal of Algebra Vol. 302, pp. 451-552"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing solely to Sela without crediting Kharlampovich-Myasnikov (independent contemporaneous solution)",
+        "wrong year 2001 or 2010 (both GAFA paper VI and the Kharlampovich-Myasnikov paper are 2006)",
+        "venue confusion citing Annals of Math instead of GAFA / J. Algebra (the result is in TWO different journals)",
+        "attributing to Tarski (who POSED the problem c. 1945; he did not solve it)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_attr_023",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who introduced the C^{(n)}-cardinal hierarchy, giving a characterization of Vopěnka's principle in terms of C^{(n)}-extendible cardinals?",
+      "expected_answer": "Joan Bagaria, 'C^{(n)}-cardinals', Archive for Mathematical Logic Vol. 51 No. 3-4 (2012), pp. 213-240.",
+      "attribution_tuples": [
+        {
+          "theorem": "Characterization of Vopěnka's principle via C^{(n)}-extendible cardinals",
+          "prover": "Bagaria",
+          "year": 2012,
+          "venue": "Archive for Mathematical Logic Vol. 51 No. 3-4, pp. 213-240"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Vopěnka (who proposed the principle c. 1970s; the C^{(n)}-characterization is Bagaria)",
+        "wrong year 2010 or 2014 (the Archive paper is 2012)",
+        "venue confusion citing JSL or Annals of Pure and Applied Logic instead of Archive for Mathematical Logic",
+        "attributing to Bagaria-Magidor (later joint extensions exist; the original C^{(n)}-cardinals paper is Bagaria solo)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_attr_024",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the lower-bound result that the failure of the Singular Cardinals Hypothesis (SCH) requires at least a measurable cardinal of high Mitchell order, via the analysis of indiscernible sequences for extenders?",
+      "expected_answer": "Moti Gitik and William J. Mitchell, 'Indiscernible sequences for extenders, and the singular cardinal hypothesis', Annals of Pure and Applied Logic Vol. 82 No. 3 (1996), pp. 273-316.",
+      "attribution_tuples": [
+        {
+          "theorem": "Lower-bound consistency strength for failure of SCH (via indiscernible sequences for extenders)",
+          "prover": "Gitik, Mitchell",
+          "year": 1996,
+          "venue": "Annals of Pure and Applied Logic Vol. 82 No. 3, pp. 273-316"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Mitchell alone (Mitchell proved earlier core-model lower bounds c. 1984-1992; this specific 1996 result is Gitik-Mitchell joint)",
+        "attributing to Gitik alone (Gitik has many later strengthenings; the 1996 paper is joint with Mitchell)",
+        "wrong year 1994 or 1998 (the APAL paper is 1996)",
+        "venue confusion citing JSL or Annals of Math instead of Annals of Pure and Applied Logic"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_attr_025",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the Glimm-Effros dichotomy for arbitrary Borel equivalence relations (so that either E_0 reduces to it or it is smooth)?",
+      "expected_answer": "Leo Harrington, Alexander S. Kechris, and Alain Louveau, 'A Glimm-Effros dichotomy for Borel equivalence relations', Journal of the American Mathematical Society Vol. 3 No. 4 (1990), pp. 903-928.",
+      "attribution_tuples": [
+        {
+          "theorem": "Glimm-Effros dichotomy for Borel equivalence relations",
+          "prover": "Harrington, Kechris, Louveau",
+          "year": 1990,
+          "venue": "Journal of the AMS Vol. 3 No. 4, pp. 903-928"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Glimm or Effros (who proved the original C*-algebra/topological-group versions in 1961/1965; Borel-equivalence-relations form is Harrington-Kechris-Louveau)",
+        "wrong year 1988 or 1992 (the J. AMS paper is 1990)",
+        "venue confusion citing Annals of Math or Fundamenta Mathematicae instead of J. AMS",
+        "attributing solely to Kechris (the result is the joint Harrington-Kechris-Louveau paper)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_attr_026",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved that the real exponential field is o-minimal (equivalently, model-complete with decidability conditional on Schanuel)?",
+      "expected_answer": "Alex J. Wilkie, 'Model completeness results for expansions of the ordered field of real numbers by restricted Pfaffian functions and the exponential function', Journal of the American Mathematical Society Vol. 9 No. 4 (1996), pp. 1051-1094.",
+      "attribution_tuples": [
+        {
+          "theorem": "Model completeness of the real exponential field; o-minimality of (R, exp)",
+          "prover": "Wilkie",
+          "year": 1996,
+          "venue": "Journal of the AMS Vol. 9 No. 4, pp. 1051-1094"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Tarski (who CONJECTURED decidability of (R, exp); Wilkie proved model completeness, decidability still requires Schanuel)",
+        "attributing to Pillay-Steinhorn (who introduced o-minimality in 1986 — earlier framework; (R, exp) o-minimality is Wilkie 1996)",
+        "wrong year 1994 or 1998 (the J. AMS paper is 1996)",
+        "venue confusion citing Annals of Math or Israel Journal of Math instead of J. AMS"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_attr_027",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved that PFA implies AD holds in L(R)?",
+      "expected_answer": "John R. Steel, 'PFA implies AD^{L(R)}', Journal of Symbolic Logic Vol. 70 No. 4 (2005), pp. 1255-1296. (Earlier results in this direction by Todorčević and Schimmerling-Schindler.)",
+      "attribution_tuples": [
+        {
+          "theorem": "PFA implies AD^{L(R)}",
+          "prover": "Steel",
+          "year": 2005,
+          "venue": "Journal of Symbolic Logic Vol. 70 No. 4, pp. 1255-1296"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Woodin (whose Pmax/AD+ machinery is foundational; the PFA -> AD^L(R) implication is Steel 2005)",
+        "attributing to Schindler alone or Trang (who have related core-model-induction results; this specific theorem is Steel)",
+        "wrong year 2003 or 2007 (the JSL paper is 2005)",
+        "venue confusion citing Annals of Math or J. Math. Logic instead of JSL"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_attr_028",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved that the bounded proper forcing axiom (BPFA) is equiconsistent with a Sigma_1-reflecting cardinal?",
+      "expected_answer": "Martin Goldstern and Saharon Shelah, 'The bounded proper forcing axiom', Journal of Symbolic Logic Vol. 60 No. 1 (March 1995), pp. 58-73. (Shelah publication number 507.)",
+      "attribution_tuples": [
+        {
+          "theorem": "BPFA equiconsistent with a Sigma_1-reflecting cardinal",
+          "prover": "Goldstern, Shelah",
+          "year": 1995,
+          "venue": "Journal of Symbolic Logic Vol. 60 No. 1, pp. 58-73"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing solely to Shelah (the result is joint Goldstern-Shelah)",
+        "attributing to Bagaria (who developed bounded forcing axioms as principles of generic absoluteness — companion result; the equiconsistency is Goldstern-Shelah)",
+        "wrong year 1993 or 1997 (the JSL paper is March 1995)",
+        "venue confusion citing Israel Journal of Math or Archive for Mathematical Logic instead of JSL"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_attr_029",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the classification of aleph_0-categorical, aleph_0-stable structures via a coordinatization theorem (also known as the Cherlin-Harrington-Lachlan theorem)?",
+      "expected_answer": "Gregory Cherlin, Leo Harrington, and Alistair H. Lachlan, 'aleph_0-categorical, aleph_0-stable structures', Annals of Pure and Applied Logic Vol. 28 No. 2 (1985), pp. 103-135.",
+      "attribution_tuples": [
+        {
+          "theorem": "Cherlin-Harrington-Lachlan classification of aleph_0-categorical aleph_0-stable structures",
+          "prover": "Cherlin, Harrington, Lachlan",
+          "year": 1985,
+          "venue": "Annals of Pure and Applied Logic Vol. 28 No. 2, pp. 103-135"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing the third author as Macintyre instead of Lachlan (common conflation — both are model theorists; the actual paper is Cherlin-Harrington-Lachlan)",
+        "wrong year 1983 or 1987 (APAL paper is 1985)",
+        "venue confusion citing JSL or Israel Journal of Math instead of Annals of Pure and Applied Logic",
+        "attributing to Zilber (who proved related structure theorems for totally categorical theories — adjacent result; CHL is the joint paper)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_attr_030",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the Borel reducibility dichotomy for orbit equivalence relations of Polish group actions via the technique of turbulence?",
+      "expected_answer": "Greg Hjorth, 'Classification and orbit equivalence relations', Mathematical Surveys and Monographs Vol. 75, American Mathematical Society, Providence, 2000, xviii + 195 pp. The dichotomy theorem refinement appeared in 'A dichotomy theorem for turbulence', Journal of Symbolic Logic Vol. 67 No. 4 (2002), pp. 1520-1540.",
+      "attribution_tuples": [
+        {
+          "theorem": "Turbulence dichotomy for Polish group actions (monograph)",
+          "prover": "Hjorth",
+          "year": 2000,
+          "venue": "AMS Mathematical Surveys and Monographs Vol. 75"
+        },
+        {
+          "theorem": "A dichotomy theorem for turbulence",
+          "prover": "Hjorth",
+          "year": 2002,
+          "venue": "Journal of Symbolic Logic Vol. 67 No. 4, pp. 1520-1540"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Hjorth-Kechris (Kechris collaborates extensively on related Borel-equivalence-relations work, but the turbulence framework is Hjorth's solo monograph)",
+        "wrong year 1998 or 2003 (the AMS Surveys monograph is 2000; JSL dichotomy paper is 2002)",
+        "venue confusion citing Annals of Math or JAMS instead of AMS Surveys / JSL",
+        "attributing the original turbulence concept to Becker-Kechris (whose 1996 'Descriptive set theory of Polish group actions' is foundational background, but turbulence is Hjorth)"
+      ],
+      "difficulty": "hard"
+    }
+  ],
+  "capability_gap": [
+    {
+      "id": "harmonia_d_cap_001",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "capability-gap",
+      "object_class": "Forcing notion (Cohen forcing for adding a real)",
+      "object_specification": {
+        "type": "Cohen forcing P = (2^{<omega}, supseteq)",
+        "instance": {
+          "underlying_set": "{s : s is a function from a finite ordinal n in omega into 2}; presented by the recursion S_0 = {<>}, S_{n+1} = {s ^ <0> : s in S_n} cup {s ^ <1> : s in S_n}, underlying_set = union_{n<omega} S_n",
+          "order": "p <= q iff dom(q) subseteq dom(p) and p restricted to dom(q) equals q",
+          "maximum_element": "<> (empty sequence)",
+          "cardinality_of_conditions": "aleph_0",
+          "antichain_specification": "an antichain is a set A of pairwise-incompatible conditions; max antichain size is aleph_0 (countable)"
+        },
+        "structural_metadata": {
+          "is_proper": true,
+          "is_ccc": true,
+          "preserves_cardinals": true,
+          "adds_real": true,
+          "preserves_cof_omega": true,
+          "completeness": "not sigma-closed (the descending sequence p_n = 0^n is not bounded below by a condition)",
+          "regularity": "homogeneous (for any p, q in P there is an automorphism phi with phi(p) = q via bit-flip composed with rebasing)",
+          "verification_methods": {
+            "is_ccc": "any antichain is at most countable since |P| = aleph_0",
+            "is_proper": "ccc implies proper",
+            "preserves_cardinals": "follows from ccc by Solovay's theorem",
+            "adds_real": "the union of the generic filter G is a function omega -> 2 not in V",
+            "homogeneous": "explicit bit-flip automorphism phi_t(p)(n) = p(n) XOR t(n) for t in 2^{dom(p)}"
+          },
+          "gap_with_substrate": "no current CoordinateChart primitive for forcing posets; closest is generic-poset which lacks forcing-specific operators (extension testing, density verification, generic-filter construction, antichain enumeration, name evaluation)"
+        }
+      },
+      "encoding_question": "Does the substrate's CoordinateChart system have a primitive for forcing posets? If not, the minimal new primitive: ForcingPoset dataclass with fields (underlying_set: Set, order: Callable[[E,E], bool], maximum: E, antichain_bound: Cardinal, structural_metadata: Dict). Required operators: (a) extends(p, q) -> bool, (b) is_dense(D) -> bool relative to a model M, (c) generic_filter(M, D_seq) -> Filter, (d) name_evaluation(tau, G) -> object, (e) boolean_completion() -> CompleteBooleanAlgebra. Does the existing canonicalization-protocol cover forcing-equivalence (boolean-completion equivalence, dense-embedding equivalence)?",
+      "expected_substrate_action": "Substrate attempts encoding via existing CoordinateChart primitives. PROMOTE if encoding succeeds with all structural-metadata fields preserved through round-trip (ccc, properness, cardinal-preservation, homogeneity). CAPABILITY-GAP-TICKET if any forcing-specific operator is missing or if canonicalization cannot distinguish Cohen from random forcing on equivalence classes. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\forcing_poset_GAP.md with proposed ForcingPoset dataclass spec and operator surface."
+    },
+    {
+      "id": "harmonia_d_cap_002",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "capability-gap",
+      "object_class": "Forcing notion (Sacks forcing, perfect-tree poset)",
+      "object_specification": {
+        "type": "Sacks forcing P_S = (PerfectTrees(2^{<omega}), supseteq)",
+        "instance": {
+          "underlying_set": "{T subseteq 2^{<omega} : T is a tree (closed under initial segments) AND for every s in T there exist t_0, t_1 in T with s subseteq t_0, s subseteq t_1, t_0 incomparable with t_1}",
+          "order": "T <= S iff T subseteq S",
+          "maximum_element": "the full tree 2^{<omega}",
+          "splitting_predicate": "s is a splitting node of T iff s ^ <0> in T AND s ^ <1> in T",
+          "cardinality_of_conditions": "2^{aleph_0}",
+          "fusion_sequence_definition": "a fusion sequence is (T_n, F_n) with T_{n+1} <= T_n and F_n subseteq splitnodes(T_n) finite, F_n subseteq F_{n+1}, every node in F_n is a splitting node in T_{n+1}"
+        },
+        "structural_metadata": {
+          "is_proper": true,
+          "is_ccc": false,
+          "is_omega_omega_bounding": true,
+          "preserves_cardinals": true,
+          "adds_real": true,
+          "minimal_real_property": "the generic real has minimal V-degree (no real strictly between V and V[s])",
+          "completeness": "not sigma-closed but has fusion (Axiom A)",
+          "regularity": "homogeneous via tree-automorphism rebasing",
+          "verification_methods": {
+            "is_proper": "Axiom A with fusion implies proper (Baumgartner-Laver)",
+            "is_omega_omega_bounding": "any name for f: omega -> omega is fusion-decided to lie below a ground-model g",
+            "minimal_real": "if x in V[s] non-trivial then s in V[x] (Sacks 1971)",
+            "homogeneous": "for T, S perfect trees, the canonical isomorphism via splitting-node bijection lifts to a poset automorphism"
+          },
+          "gap_with_substrate": "ForcingPoset (gap_001) does not yet support tree-valued conditions, splitting-node predicates, or fusion-sequence verification. Need PerfectTreePoset subclass with splitnode(s, T) operator and fusion-witness validator."
+        }
+      },
+      "encoding_question": "Beyond a generic ForcingPoset, can the substrate represent tree-valued conditions? Proposed primitive: PerfectTreePoset(ForcingPoset) with extra fields tree_universe: Set[Tree], splitnode_predicate: Callable. Required operators: splitnodes(T) -> Set[Sequence], fuse(seq: List[Tree], witnesses: List[Set]) -> Tree, is_axiom_A() -> bool, omega_omega_bounding_check(name) -> bool. How does canonicalization recognize Sacks-equivalent posets (e.g. perfect-set forcing on 2^omega vs on omega^omega via Cantor scheme)?",
+      "expected_substrate_action": "PROMOTE if encoding round-trips Axiom A, omega^omega-bounding, minimal-real, properness; in particular if the substrate can mechanically verify a fusion sequence converges to a condition. CAPABILITY-GAP-TICKET otherwise. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\perfect_tree_forcing_GAP.md."
+    },
+    {
+      "id": "harmonia_d_cap_003",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "capability-gap",
+      "object_class": "Forcing notion (Mathias forcing)",
+      "object_specification": {
+        "type": "Mathias forcing P_M = ({(a, A) : a in [omega]^{<omega}, A in [omega]^omega, max(a) < min(A)}, <=_M)",
+        "instance": {
+          "underlying_set": "pairs (a, A) where a is a finite subset of omega (presented as the strictly increasing tuple of its elements), A is an infinite subset of omega, and every element of a is strictly less than every element of A",
+          "order": "(b, B) <=_M (a, A) iff a is an initial segment of b (i.e. a = b cap [0, max(a)+1]), B subseteq A, and b setminus a subseteq A",
+          "maximum_element": "(emptyset, omega)",
+          "pure_extension": "(a, B) is a pure extension of (a, A) iff B subseteq A (the stem is unchanged)",
+          "cardinality_of_conditions": "2^{aleph_0}"
+        },
+        "structural_metadata": {
+          "is_proper": true,
+          "is_ccc": false,
+          "preserves_p_points": true,
+          "adds_dominating_real": true,
+          "happy_family_relativization": "for a Ramsey ultrafilter U, M_U = {(a, A) : A in U} is a sigma-closed-times-ccc factorization",
+          "regularity": "satisfies Mathias property: for any colouring c: [omega]^omega -> 2 there is an infinite homogeneous A in V[G]",
+          "verification_methods": {
+            "is_proper": "factor as sigma-closed (pure-extension part) followed by ccc (stem-extension part); both proper, hence proper (Mathias 1977)",
+            "preserves_p_points": "every ground-model P-point ultrafilter generates a P-point in V[G]",
+            "adds_dominating_real": "the union of stems along generic G dominates every f in V cap omega^omega",
+            "ramsey_property": "(a, A) forces 'union of generic stems is c-homogeneous' for any c in V"
+          },
+          "gap_with_substrate": "ForcingPoset (gap_001) lacks support for two-component conditions (stem, side-set), pure-extension factorization, or ultrafilter-relativized variants. Need MixedSupportForcing primitive with stem/side decomposition operator."
+        }
+      },
+      "encoding_question": "Can the substrate encode a forcing whose conditions are pairs and whose order has a non-trivial factorization (sigma-closed times ccc)? Proposed primitive: TwoPartCondition with fields stem: FiniteSet, side: InfiniteSet, separation_predicate: Callable. Operators: pure_extend(p, B) -> Condition, stem_extend(p, k) -> Condition, factor() -> (SigmaClosedPoset, CCCPoset). How does canonicalization handle Mathias-vs-MathiasU equivalence?",
+      "expected_substrate_action": "PROMOTE if encoding round-trips properness, preservation-of-P-points, Ramsey property, and exhibits the sigma-closed/ccc factorization explicitly. CAPABILITY-GAP-TICKET if factorization is opaque. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\mathias_forcing_GAP.md."
+    },
+    {
+      "id": "harmonia_d_cap_004",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "capability-gap",
+      "object_class": "Forcing notion (Prikry forcing for a measurable cardinal)",
+      "object_specification": {
+        "type": "Prikry forcing P_kappa = ({(s, A) : s in [kappa]^{<omega}, s strictly increasing, A in U, min(A) > max(s)}, <=_P) where U is a normal ultrafilter on measurable kappa",
+        "instance": {
+          "parameter": "kappa is measurable with normal ultrafilter U on kappa (assumed given)",
+          "underlying_set": "pairs (s, A) where s = (alpha_0 < alpha_1 < ... < alpha_{n-1}) is a finite increasing sequence from kappa and A in U with min(A) > alpha_{n-1} (or A = kappa if s = empty)",
+          "order": "(t, B) <=_P (s, A) iff s is an initial segment of t, B subseteq A, and {t(i) : i >= |s|} subseteq A",
+          "maximum_element": "(empty, kappa)",
+          "prikry_property_statement": "for any sentence phi in the forcing language and any (s, A), there is B subseteq A with B in U such that (s, B) decides phi",
+          "cardinality_of_conditions": "2^kappa"
+        },
+        "structural_metadata": {
+          "is_proper": false,
+          "is_kappa_cc": false,
+          "preserves_cardinals": true,
+          "preserves_cofinalities_above_kappa": true,
+          "changes_cof_kappa_to_omega": true,
+          "satisfies_prikry_property": true,
+          "consistency_strength": "measurable cardinal",
+          "verification_methods": {
+            "preserves_cardinals": "Prikry property + U-normality imply no new bounded subsets of kappa, hence cardinals preserved (Prikry 1970)",
+            "changes_cofinality": "the union of generic stems is an omega-sequence cofinal in kappa",
+            "prikry_property_check": "for each (s, A) and phi, define A_0 = {alpha in A : exists B subseteq A setminus (alpha+1), B in U, (s ^ <alpha>, B) decides phi}; show A_0 in U by normality"
+          },
+          "gap_with_substrate": "ForcingPoset (gap_001) cannot express normal-ultrafilter-parametrized conditions or the Prikry property. Need LargeCardinalForcing primitive with measure-parameter slot and prikry_property_verifier operator."
+        }
+      },
+      "encoding_question": "Can the substrate represent a forcing parametrized by a normal ultrafilter on a measurable cardinal? Proposed primitive: UltrafilterParametrizedForcing with fields cardinal: LargeCardinal, ultrafilter: NormalUltrafilter, condition_constructor: Callable. Operators: prikry_property(phi, p) -> Condition, decide_modulo_measure(phi, p) -> Condition, generic_omega_sequence() -> Sequence. How does canonicalization recognize Prikry-equivalent forcings (e.g. tree-Prikry vs. classical Prikry)?",
+      "expected_substrate_action": "PROMOTE if substrate encodes the ultrafilter parameter explicitly and verifies the Prikry property mechanically. CAPABILITY-GAP-TICKET if the ultrafilter is opaque or Prikry-property is asserted rather than verified. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\prikry_forcing_GAP.md with explicit dependency on LargeCardinal primitive."
+    },
+    {
+      "id": "harmonia_d_cap_005",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "capability-gap",
+      "object_class": "Forcing notion (Magidor forcing for changing cof(kappa) to uncountable)",
+      "object_specification": {
+        "type": "Magidor forcing P_M(kappa, lambda) for changing cof(kappa) to lambda < kappa, using a coherent sequence of measures",
+        "instance": {
+          "parameters": "kappa with a coherent sequence of normal measures U = <U_alpha : alpha < lambda> where U_alpha concentrates on {beta < kappa : o(beta) = alpha} (Mitchell order)",
+          "underlying_set": "conditions are pairs (f, F) where f is a partial function from lambda to kappa with |dom(f)| < lambda, increasing on its domain, and F is a function on lambda \\ dom(f) such that F(alpha) in U_alpha for every alpha in dom(F), and the F-image is bounded compatibly with f",
+          "order": "(g, G) <= (f, F) iff dom(f) subseteq dom(g), g restricted to dom(f) = f, for alpha in dom(g) \\ dom(f) we have g(alpha) in F(alpha), and G(alpha) subseteq F(alpha) for alpha in dom(G) cap dom(F)",
+          "maximum_element": "(empty, F_max) where F_max(alpha) = {beta < kappa : o(beta) = alpha}",
+          "coherence_requirement": "the ultrafilter sequence must be coherent: if j_alpha : V -> M_alpha is the embedding from U_alpha then j_alpha(U) restricted to alpha equals U restricted to alpha"
+        },
+        "structural_metadata": {
+          "is_proper": false,
+          "preserves_cardinals_above_kappa": true,
+          "preserves_lambda_and_below": true,
+          "changes_cof_kappa_to_lambda": true,
+          "satisfies_prikry_like_property": true,
+          "consistency_strength": "o(kappa) >= lambda + 1 (Mitchell order at least lambda+1)",
+          "verification_methods": {
+            "cardinal_preservation": "Magidor 1978: coherent-sequence Prikry-like property + measure-normality",
+            "cofinality_change": "the union of dom-extensions yields a cofinal lambda-sequence in kappa",
+            "prikry_like": "for any sentence phi and (f, F), there exists F' <= F (pointwise in U) such that (f, F') decides phi"
+          },
+          "gap_with_substrate": "Beyond the gap in cap_004, this requires a coherent-sequence-of-measures parameter and Mitchell-order representation. UltrafilterParametrizedForcing must extend to MeasureSequenceForcing with coherence verifier."
+        }
+      },
+      "encoding_question": "Can the substrate represent a coherent sequence of normal measures and the Mitchell order? Proposed primitive: CoherentMeasureSequence with fields cardinal: kappa, length: lambda, sequence: List[NormalMeasure], coherence_witness: ElementaryEmbedding. Required: mitchell_order(U, V) -> Ordinal, generic_cofinal_sequence() -> Sequence. How does canonicalization handle Magidor-equivalence with Radin forcing (which generalizes by allowing club rather than sequence)?",
+      "expected_substrate_action": "PROMOTE only if Mitchell-order, coherence, and Prikry-like property are all encoded as verifiable operators. CAPABILITY-GAP-TICKET on any opacity. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\magidor_forcing_GAP.md citing dependence on CoherentMeasureSequence and the open question of Radin-vs-Magidor canonicalization."
+    },
+    {
+      "id": "harmonia_d_cap_006",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "capability-gap",
+      "object_class": "Forcing notion (Levy collapse Coll(omega, <kappa))",
+      "object_specification": {
+        "type": "Levy collapse to make kappa = aleph_1: Coll(omega, <kappa) = product_{alpha < kappa} Coll(omega, alpha) with finite support",
+        "instance": {
+          "parameter": "kappa is inaccessible (or any uncountable regular cardinal)",
+          "underlying_set": "functions p with dom(p) a finite subset of kappa x omega and for each (alpha, n) in dom(p), p(alpha, n) in alpha (so p(alpha, n) is an ordinal < alpha)",
+          "order": "p <= q iff dom(q) subseteq dom(p) and p restricted to dom(q) = q",
+          "maximum_element": "the empty function",
+          "factor_structure": "Coll(omega, alpha) = {f : finite partial function omega -> alpha}; full collapse is finite-support product",
+          "cardinality_of_conditions": "kappa (when kappa inaccessible)"
+        },
+        "structural_metadata": {
+          "is_proper": true,
+          "is_kappa_cc": true,
+          "is_sigma_closed": false,
+          "preserves_cardinals_above_kappa": true,
+          "collapses_all_below_kappa_to_omega": true,
+          "kappa_becomes_aleph_1": true,
+          "regularity": "homogeneous (any two conditions with disjoint supports have a common extension obtained by union; full automorphism group acts transitively on conditions of fixed dom-shape)",
+          "verification_methods": {
+            "kappa_cc": "Delta-system lemma applied to finite-support conditions, using kappa-inaccessibility",
+            "collapsing_below": "for each alpha < kappa, the union of generic restricted to {alpha} x omega is a surjection omega -> alpha",
+            "kappa_preserved": "kappa-cc preserves cofinalities >= kappa; combined with inaccessibility, kappa survives as aleph_1",
+            "homogeneity": "for finite supports F, G of the same shape, the bijection induced by support-realignment is a poset automorphism"
+          },
+          "gap_with_substrate": "ForcingPoset must support finite-support products of varying-codomain factors. Need ProductForcing primitive with support_type in {finite, countable, kappa}, factor_indexer: Index -> Forcing. Existing generic-product primitive (if any) likely lacks the per-factor codomain dependence."
+        }
+      },
+      "encoding_question": "Does the substrate's product-forcing primitive support varying codomains (Coll(omega, alpha) varies with alpha)? Proposed: IndexedProductForcing with fields index_set, factor: Callable[Index, Forcing], support_predicate: Callable[Set, bool]. Operators: project_to_factor(p, alpha) -> Condition, finite_support_extend(p, q), homogeneity_witness(p, q) -> Automorphism.",
+      "expected_substrate_action": "PROMOTE if Levy collapse round-trips kappa-cc, homogeneity, and the explicit collapsing maps onto each alpha < kappa. CAPABILITY-GAP-TICKET if the indexed-product structure is collapsed. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\levy_collapse_GAP.md."
+    },
+    {
+      "id": "harmonia_d_cap_007",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "capability-gap",
+      "object_class": "Large cardinal axiom (Inaccessible cardinal with consistency-strength tuple)",
+      "object_specification": {
+        "type": "Inaccessible cardinal axiom: there exists a cardinal kappa that is uncountable, regular, and strong-limit",
+        "instance": {
+          "axiom_statement": "exists kappa (kappa > omega AND cf(kappa) = kappa AND for all lambda < kappa, 2^lambda < kappa)",
+          "definitional_witnesses": {
+            "uncountable": "kappa > aleph_0",
+            "regular": "no cofinal subset of kappa has order-type < kappa, i.e. cf(kappa) = kappa",
+            "strong_limit": "for all lambda < kappa, the powerset cardinal 2^lambda < kappa"
+          },
+          "model_theoretic_characterization": "V_kappa is a model of ZFC (so kappa is a Grothendieck universe top)",
+          "consistency_strength_tuple": {
+            "level": "Mahlo",
+            "below": [
+              "worldly cardinal (V_kappa models ZFC but kappa not regular-strong-limit a priori)",
+              "n-th-order reflection cardinal"
+            ],
+            "above": [
+              "Mahlo cardinal",
+              "weakly compact cardinal"
+            ],
+            "ordinal_height_in_consistency_hierarchy": "level approximately 2 (above ZFC, below Mahlo)"
+          },
+          "ordinal_arithmetic": "kappa is fixed point of beth: beth_kappa = kappa"
+        },
+        "structural_metadata": {
+          "consistent_relative_to_ZFC": "strict consistency strength above ZFC (Godel: ZFC does not prove existence)",
+          "implies": [
+            "existence of a transitive model of ZFC",
+            "Sigma_2 reflection at kappa"
+          ],
+          "implied_by": [
+            "Mahlo cardinal",
+            "any larger large cardinal"
+          ],
+          "verification_methods": {
+            "regularity": "show no cofinal sequence of length less than kappa exists",
+            "strong_limit": "show beth function does not reach kappa from below",
+            "V_kappa_models_ZFC": "verify replacement schema, powerset, etc. in V_kappa using regularity+strong-limit"
+          },
+          "gap_with_substrate": "Substrate likely lacks a LargeCardinal primitive that bundles axiom statement + consistency-strength position + verification methods. Closest is generic-cardinal which has no axiom-strength or model-theoretic-characterization slot."
+        }
+      },
+      "encoding_question": "Does the substrate have a LargeCardinal primitive? Proposed: LargeCardinal dataclass with fields name: str, axiom: Formula, defining_properties: List[Property], consistency_strength: ConsistencyTuple, model_characterization: ModelStatement. Required: implies(other: LargeCardinal) -> bool, equiconsistent(other) -> bool, partial_order_in_strength_hierarchy() -> Position. How does canonicalization handle equiconsistent-but-not-equivalent axioms (e.g., 'measurable' vs '0# exists')?",
+      "expected_substrate_action": "PROMOTE if LargeCardinal primitive exists and the inaccessible axiom embeds with all consistency-strength edges populated. CAPABILITY-GAP-TICKET if the consistency hierarchy is not first-class. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\large_cardinal_axiom_GAP.md."
+    },
+    {
+      "id": "harmonia_d_cap_008",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "capability-gap",
+      "object_class": "Large cardinal (Measurable cardinal with normal ultrafilter and Mitchell order)",
+      "object_specification": {
+        "type": "Measurable cardinal kappa with a specified normal kappa-complete non-principal ultrafilter U; Mitchell order o(kappa) = 0 specified",
+        "instance": {
+          "axiom_statement": "exists kappa exists U (kappa uncountable AND U is a kappa-complete non-principal ultrafilter on kappa AND U is normal: for any regressive f: kappa -> kappa with {alpha : f(alpha) < alpha} in U, there exists beta and X in U with X subseteq f^{-1}({beta}))",
+          "explicit_ultrafilter_specification": {
+            "domain": "P(kappa)",
+            "filter_axioms": "(i) kappa in U, (ii) X, Y in U => X cap Y in U, (iii) X in U, X subseteq Y => Y in U, (iv) emptyset not in U",
+            "kappa_completeness": "intersection of fewer than kappa many U-sets is in U",
+            "non_principality": "no singleton {alpha} is in U",
+            "normality": "diagonal-intersection closure: if X_alpha in U for alpha < kappa, then Delta_{alpha < kappa} X_alpha = {beta : for all alpha < beta, beta in X_alpha} is in U"
+          },
+          "mitchell_order": "o(kappa) = 0 means there is no normal measure on kappa concentrating on {alpha < kappa : alpha measurable}",
+          "elementary_embedding": "j: V -> M = Ult(V, U) with crit(j) = kappa, j(kappa) > kappa, M^kappa subseteq M (kappa-closure)"
+        },
+        "structural_metadata": {
+          "consistent_relative_to_ZFC": "strict consistency strength above ZFC; equiconsistent with 'kappa measurable + 0# exists'",
+          "implies": [
+            "inaccessible",
+            "Mahlo",
+            "weakly compact",
+            "Ramsey"
+          ],
+          "implied_by": [
+            "strong cardinal",
+            "Woodin cardinal"
+          ],
+          "verification_methods": {
+            "ultrafilter_axioms": "check the four filter axioms, kappa-completeness, non-principality, normality on the explicit U",
+            "embedding_construction": "build Ult(V, U) and verify crit(j) = kappa via Los's theorem",
+            "M_closure": "verify [f]_U for f: kappa -> V, kappa-sequences are absorbed",
+            "mitchell_order_zero": "show {alpha < kappa : alpha measurable in V_kappa} not in U"
+          },
+          "gap_with_substrate": "LargeCardinal primitive (cap_007) must extend to carry an embedding witness and an ultrafilter witness. Need MeasurableCardinal subclass with fields ultrafilter: NormalUltrafilter, embedding: ElementaryEmbedding, mitchell_rank: Ordinal."
+        }
+      },
+      "encoding_question": "Can the substrate represent normal ultrafilters with normality verified mechanically (diagonal-intersection closure)? Proposed: NormalUltrafilter dataclass with fields cardinal, sets: Set[Set], operators check_normality(f: regressive function) -> Witness, diagonal_intersection(seq) -> Set. Plus ElementaryEmbedding(V, M, j) with verification of M-closure. How does canonicalization recognize Rudin-Keisler-equivalent ultrafilters?",
+      "expected_substrate_action": "PROMOTE if substrate verifies the four filter axioms, kappa-completeness, normality (via diagonal intersection), and constructs Ult(V, U) with the required closure. CAPABILITY-GAP-TICKET if normality is asserted rather than checked. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\measurable_cardinal_GAP.md."
+    },
+    {
+      "id": "harmonia_d_cap_009",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "capability-gap",
+      "object_class": "Large cardinal (Supercompact cardinal via Magidor's elementary-embedding characterization)",
+      "object_specification": {
+        "type": "kappa is supercompact iff for every lambda >= kappa there is an elementary embedding j: V -> M with crit(j) = kappa, j(kappa) > lambda, and M^lambda subseteq M",
+        "instance": {
+          "axiom_statement": "for all lambda exists j, M (j: V -> M elementary, crit(j) = kappa, j(kappa) > lambda, M is closed under lambda-sequences (i.e., every f: lambda -> M with f in V is in M))",
+          "ultrafilter_characterization": "equivalent: for every lambda >= kappa there is a normal fine kappa-complete ultrafilter U on P_kappa(lambda) where P_kappa(lambda) = {x subseteq lambda : |x| < kappa}",
+          "fineness_definition": "U is fine iff for every alpha < lambda, {x in P_kappa(lambda) : alpha in x} in U",
+          "magidor_characterization": "kappa supercompact iff for every alpha there is a beta < kappa and an elementary embedding i: V_beta -> V_alpha with i(crit(i)) = kappa (Magidor 1971)",
+          "explicit_lambda_lambda_supercompact_witness": "for lambda = kappa^+, the ultrafilter U_lambda on P_kappa(kappa^+) is normal, fine, kappa-complete; for the embedding j_U: V -> Ult(V, U), crit(j_U) = kappa and Ult is closed under kappa^+-sequences"
+        },
+        "structural_metadata": {
+          "consistent_relative_to_ZFC": "very strong: implies measurable, strong, Woodin, and many more",
+          "implies": [
+            "measurable",
+            "strong",
+            "Woodin",
+            "huge below in some senses"
+          ],
+          "implied_by": [
+            "extendible",
+            "huge",
+            "almost-huge"
+          ],
+          "preserves_under_small_forcing": "Laver-prepared supercompactness is indestructible under <kappa-directed-closed forcing",
+          "verification_methods": {
+            "embedding_existence": "for each lambda, exhibit U_lambda normal+fine+kappa-complete on P_kappa(lambda) and construct Ult(V, U_lambda)",
+            "fineness_check": "for each alpha < lambda, verify {x : alpha in x} is in U_lambda",
+            "lambda_closure": "verify M = Ult is closed under lambda-sequences via factoring through a kappa-internal lambda-sequence",
+            "magidor_equivalence": "show Magidor characterization equivalent via reflection of supercompactness witnesses"
+          },
+          "gap_with_substrate": "Beyond MeasurableCardinal (cap_008), supercompactness requires lambda-parametrized families of embeddings/ultrafilters with closure conditions. Need SupercompactWitness primitive with lambda-indexed family and uniform closure verifier."
+        }
+      },
+      "encoding_question": "Can the substrate represent a class-sized family of elementary embeddings indexed by a proper class of cardinals, with uniform lambda-closure? Proposed: SupercompactWitness with fields cardinal: kappa, embedding_family: Callable[Cardinal, ElementaryEmbedding], ultrafilter_family: Callable[Cardinal, NormalFineUltrafilter]. Operators: closure_check(j, lambda) -> bool, magidor_reflection() -> List[(beta, embedding)]. How does canonicalization compare supercompactness via Laver functions?",
+      "expected_substrate_action": "PROMOTE only if the substrate handles class-sized embedding families with uniform closure and validates fineness mechanically. CAPABILITY-GAP-TICKET if class-sized parametrization is not supported. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\supercompact_cardinal_GAP.md citing the broader gap of class-sized large-cardinal witnesses."
+    },
+    {
+      "id": "harmonia_d_cap_010",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "capability-gap",
+      "object_class": "Large cardinal (Reinhardt cardinal: ZF-consistent, ZFC-inconsistent by Kunen)",
+      "object_specification": {
+        "type": "Reinhardt cardinal kappa: critical point of a non-trivial elementary embedding j: V -> V (in ZF without choice)",
+        "instance": {
+          "axiom_statement_ZF": "exists j (j: V -> V elementary, j is not the identity, crit(j) = kappa, kappa is least with j(kappa) > kappa)",
+          "kunen_inconsistency": "ZFC + Reinhardt is inconsistent: Kunen's theorem (1971) shows there is no non-trivial j: V -> V in ZFC, via the Erdos-Hajnal partition theorem applied to a kappa-omega-sequence above the embedding's critical point, using AC at omega-th iterate",
+          "kunen_proof_sketch": "let lambda = sup_n j^n(kappa); by Erdos-Hajnal in ZFC there is f: [lambda]^omega -> lambda with no homogeneous set of size lambda; but j(f) restricted to a generic omega-sequence in j^omega(kappa) yields one, contradiction",
+          "weaker_consistent_versions": "I0, I1, I2, I3 axioms are ZFC-consistent and hover just below Reinhardt",
+          "ZF_consistent_status": "open whether ZF + Reinhardt is consistent; conjectured by some to be inconsistent; no known ZF-proof of inconsistency"
+        },
+        "structural_metadata": {
+          "consistent_with_ZFC": false,
+          "consistent_with_ZF": "open (no proof of inconsistency in ZF; existence is hypothetical)",
+          "inconsistency_proof_uses": "Axiom of Choice at one specific point (extracting a homogeneous set from Erdos-Hajnal)",
+          "weaker_alternatives": [
+            "I0: there is j: L(V_{lambda+1}) -> L(V_{lambda+1}) with crit(j) < lambda",
+            "I1: j: V_{lambda+1} -> V_{lambda+1}",
+            "I2: j: V -> M with V_lambda subseteq M",
+            "I3: j: V_lambda -> V_lambda"
+          ],
+          "verification_methods": {
+            "kunen_inconsistency_check": "given a candidate j: V -> V in ZFC, derive contradiction via Erdos-Hajnal at sup_n j^n(kappa)",
+            "I0_through_I3_consistency": "relative to a huge cardinal; ZFC + I0 is believed consistent"
+          },
+          "gap_with_substrate": "Substrate must handle inconsistent objects (with witness of inconsistency) and their nearby consistent approximations. Need InconsistentAxiom primitive with fields inconsistency_proof, theory_of_failure, weaker_consistent_neighbors. Most existing primitives assume consistency."
+        }
+      },
+      "encoding_question": "Can the substrate encode an axiom that is provably inconsistent in ZFC, with the inconsistency proof attached? Proposed: InconsistentAxiom(LargeCardinal) with fields inconsistency_witness: Proof, base_theory: Theory, consistent_neighbors: List[LargeCardinal]. Operators: kunen_witness() -> Proof, weaken_to_consistent() -> List[LargeCardinal]. How does canonicalization distinguish 'ZFC-inconsistent' from 'ZF-inconsistent' from 'open'?",
+      "expected_substrate_action": "PROMOTE if substrate accepts inconsistent objects with explicit inconsistency-witness and lists I0-I3 as consistent neighbors. CAPABILITY-GAP-TICKET if encoding fails because objects are required to be consistent. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\reinhardt_cardinal_GAP.md highlighting the meta-issue: the substrate may currently hard-bake consistency assumptions."
+    },
+    {
+      "id": "harmonia_d_cap_011",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "capability-gap",
+      "object_class": "Inner model (Godel's L, the constructible universe)",
+      "object_specification": {
+        "type": "L = union_{alpha in Ord} L_alpha, the constructible hierarchy",
+        "instance": {
+          "definition_recursion": "L_0 = emptyset; L_{alpha+1} = Def(L_alpha) where Def(X) = {Y subseteq X : Y is first-order definable over (X, in) with parameters from X}; L_lambda = union_{alpha < lambda} L_alpha for limit lambda",
+          "definability_predicate": "Y in Def(X) iff there exists a formula phi(x, y_1, ..., y_n) and parameters a_1, ..., a_n in X such that Y = {z in X : (X, in) models phi(z, a_1, ..., a_n)}",
+          "ordinal_levels": "Ord cap L = Ord (every ordinal is constructible)",
+          "GCH_in_L": "L models V = L, GCH (every cardinal kappa satisfies 2^kappa = kappa^+)",
+          "diamond_in_L": "L models <>_kappa for every regular uncountable kappa",
+          "global_well_order": "L has a Sigma_1-definable well-order <_L of all sets"
+        },
+        "structural_metadata": {
+          "is_inner_model": true,
+          "models_ZFC": true,
+          "is_minimal_inner_model_containing_ordinals": true,
+          "satisfies_V_equals_L_internally": true,
+          "satisfies_GCH": true,
+          "satisfies_diamond_at_all_regular_uncountables": true,
+          "is_definable_in_V": "L is Pi_2-definable in V (Sigma_2 with one universal quantifier over ordinals)",
+          "verification_methods": {
+            "ZFC_in_L": "verify each axiom; pairing/union/infinity inherited; replacement uses absoluteness of definability; choice from <_L",
+            "GCH": "show |L_kappa^+| = kappa^+ and every constructible subset of kappa appears at some L_alpha with alpha < kappa^+",
+            "diamond": "construct diamond sequence by enumeration along <_L using condensation",
+            "absoluteness": "Sigma_1 absoluteness between L and V"
+          },
+          "gap_with_substrate": "Substrate likely lacks an InnerModel primitive that carries a transfinite recursive construction with parameter Def. Existing model-theoretic primitives may handle countable models but not class-sized recursion. Need ConstructibleHierarchy with stage_indexer: Ord -> Set and definability operator."
+        }
+      },
+      "encoding_question": "Can the substrate represent a class-sized transfinite recursion whose successor step is 'definable subsets'? Proposed: InnerModel dataclass with fields stage: Callable[Ordinal, Set], successor_op: Callable[Set, Set], limit_op: Callable[List[Set], Set], well_order: Definition. Operators: condensation_lemma() -> Theorem, absoluteness_class(formula) -> AbsolutenessLevel. How does canonicalization handle L-vs-L[A] for A absolute parameter?",
+      "expected_substrate_action": "PROMOTE if substrate encodes the Def operator first-class, verifies condensation, and proves V=L => GCH internally. CAPABILITY-GAP-TICKET if Def is not first-class. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\constructible_universe_GAP.md."
+    },
+    {
+      "id": "harmonia_d_cap_012",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "capability-gap",
+      "object_class": "Inner model (L[U] relative to a normal measure U on a measurable kappa)",
+      "object_specification": {
+        "type": "L[U] = union_{alpha} L_alpha[U], the smallest inner model containing the ordinals and U as a predicate",
+        "instance": {
+          "definition_recursion": "L_0[U] = emptyset; L_{alpha+1}[U] = Def_{(L_alpha[U], in, U cap L_alpha[U])}(L_alpha[U]) (definability over the structure that includes U as a unary predicate); L_lambda[U] = union_{alpha < lambda} L_alpha[U]",
+          "kunen_coherence_theorem": "L[U] models 'there is a unique normal measure on kappa', and the measure is U cap L[U]",
+          "GCH_in_LU": "L[U] models GCH",
+          "iterated_ultrapowers": "the iterated ultrapowers L[U]_alpha = Ult^alpha(L[U], U) for alpha in Ord trace an Ord-length linear iteration; the alpha-th critical point is the alpha-th measurable in the iteration",
+          "comparison": "any two iterates compare via further iteration to a common iterate (Kunen)"
+        },
+        "structural_metadata": {
+          "is_inner_model": true,
+          "models_ZFC_plus_GCH": true,
+          "models_existence_of_unique_normal_measure_on_kappa": true,
+          "minimal_inner_model_with_a_measurable": true,
+          "linearly_iterable": true,
+          "is_definable_from_U": "Sigma_1 in the predicate U",
+          "verification_methods": {
+            "uniqueness_of_measure": "Kunen 1970: any normal measure in L[U] equals U cap L[U] by coherence and absoluteness",
+            "GCH": "fine structure analogous to L; condensation extended to U-coherence",
+            "linear_iterability": "iterated ultrapower at every stage well-founded by kappa-completeness propagation"
+          },
+          "gap_with_substrate": "Beyond InnerModel (cap_011), L[U] requires definability-over-structure-with-extra-predicate. Need ParametrizedConstructibleHierarchy with predicate parameter and predicate-coherence verifier. Plus an IteratedUltrapower primitive for class-length linear iteration."
+        }
+      },
+      "encoding_question": "Can the substrate represent constructibility relative to a class-predicate, plus class-length linear iteration of an ultrafilter? Proposed: RelativizedInnerModel(InnerModel) with predicate: Predicate, coherence_law: Theorem. Plus IteratedUltrapower with fields base, ultrafilter, length: Ord, comparison_op: Callable. How does canonicalization handle L[U]-vs-L[U'] for different normal measures (they coincide by Kunen)?",
+      "expected_substrate_action": "PROMOTE if substrate verifies uniqueness-of-measure and class-length iteration. CAPABILITY-GAP-TICKET if predicate-relativization or class-length iteration is unsupported. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\LU_inner_model_GAP.md."
+    },
+    {
+      "id": "harmonia_d_cap_013",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "capability-gap",
+      "object_class": "Inner model (K, the Mitchell-Steel core model below a Woodin cardinal)",
+      "object_specification": {
+        "type": "K = the core model, an L-like inner model approximating the universe up to the largest large-cardinal it can house",
+        "instance": {
+          "construction_outline": "K is built as a union of mice (iterable premice) along the Mitchell-Steel construction; at each stage a new extender E is added if it coheres and a fine-structural soundness condition holds",
+          "premouse_definition": "a premouse is a structure (J_alpha^{vec E}, in, vec E) where J is the Jensen hierarchy and vec E is a coherent sequence of extenders, with each extender coding a partial elementary embedding",
+          "iterability_condition": "K is iterable: every countable elementary submodel of K embeds back into K (this is what makes K 'right')",
+          "covering_property": "if there is no inner model with a Woodin cardinal, then K satisfies weak covering: for every singular cardinal kappa, kappa^+ as computed in K equals (kappa^+)^V",
+          "weakening_dependence": "the construction of K assumes anti-large-cardinal hypothesis: 'no inner model with a Woodin cardinal'; under stronger LC hypotheses K is replaced by a hod-mouse-like model"
+        },
+        "structural_metadata": {
+          "is_inner_model": true,
+          "is_L_like": true,
+          "models_GCH": true,
+          "satisfies_V_equals_K_internally": true,
+          "fine_structural": true,
+          "consistency_strength_dependent": "the K we get depends on background hypotheses; Steel's K below a Woodin requires anti-Woodin",
+          "verification_methods": {
+            "iterability": "Q-structure analysis; Steel's iterability proof for K^c",
+            "covering": "weak covering via comparison + condensation arguments at singular cardinals",
+            "fine_structure": "soundness, projecta, standard parameters at every premouse stage"
+          },
+          "gap_with_substrate": "Beyond cap_012, K requires extender sequences, fine-structural premice, comparison arguments, and conditional definitions (depends on anti-LC hypothesis). Need ExtenderSequence primitive, Premouse primitive with fine-structural-witness, and ConditionalInnerModel primitive parametrized by anti-LC hypothesis."
+        }
+      },
+      "encoding_question": "Can the substrate represent extender sequences and fine-structural premice, plus inner models conditioned on anti-large-cardinal hypotheses? Proposed: Extender(j, kappa, lambda) with fields critical_point, length, coherence_witness; Premouse with extender_sequence, projectum, standard_parameter; CoreModel(InnerModel) with anti_LC_hypothesis, iterability_proof, covering_witness. How does canonicalization handle K-vs-K^c (the L-like vs the absolute version)?",
+      "expected_substrate_action": "PROMOTE if substrate supports extender sequences, premice with fine structure, and conditional inner models. CAPABILITY-GAP-TICKET (very likely) since this is at the frontier of contemporary inner model theory. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\core_model_K_GAP.md flagging the chain of dependencies (cap_007, 008, 011, 012, plus new extender/premouse primitives)."
+    },
+    {
+      "id": "harmonia_d_cap_014",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "capability-gap",
+      "object_class": "Recursive ordinal (omega, the first infinite ordinal)",
+      "object_specification": {
+        "type": "omega: the least non-zero limit ordinal; the order-type of the natural numbers",
+        "instance": {
+          "definition": "omega = {0, 1, 2, 3, ...} = {n : n is a finite von Neumann ordinal}; explicitly 0 = emptyset, n+1 = n cup {n}, omega = union_n n",
+          "first_order_axioms": "omega is the smallest set X such that emptyset in X and (y in X => y cup {y} in X)",
+          "von_neumann_presentation": "0 = {}, 1 = {0}, 2 = {0, 1}, 3 = {0, 1, 2}, ..., omega = {0, 1, 2, ...}",
+          "ordinal_arithmetic": "omega + 1 = omega cup {omega}; omega * 2 = omega + omega; omega^2 = sup_n (omega * n); omega^omega = sup_n omega^n",
+          "cofinality": "cf(omega) = omega",
+          "cardinality": "|omega| = aleph_0"
+        },
+        "structural_metadata": {
+          "is_ordinal": true,
+          "is_limit": true,
+          "is_initial_ordinal_of_aleph_0": true,
+          "is_recursive": true,
+          "ordinal_notation_index_in_Kleene_O": "the constant notation 1 (smallest limit ordinal index)",
+          "recursive_well_ordering_on_omega": "the natural order < on N",
+          "verification_methods": {
+            "limit_ordinal": "no immediate predecessor: forall alpha < omega, alpha+1 < omega",
+            "cofinality": "the natural enumeration f(n) = n is cofinal of order-type omega",
+            "recursivity": "the well-order < on N is computably decidable"
+          },
+          "gap_with_substrate": "Substrate may handle finite ordinals but not the limit construction. Need OrdinalHierarchy primitive with successor_op, limit_sup_op, and recognition of omega as the first non-recursive-bounded limit. Closest existing is generic-natural-numbers which lacks the von Neumann transitive structure."
+        }
+      },
+      "encoding_question": "Does the substrate have a primitive for ordinals built via von Neumann transitive sets, with recognition of limit ordinals? Proposed: Ordinal dataclass with fields rank, predecessor_or_none, limit_witness_or_none. Operators: successor() -> Ordinal, sup(seq) -> Ordinal, is_limit() -> bool, ordinal_notation_index() -> KleeneOIndex. Canonicalization should recognize that omega encoded multiple ways (von Neumann, Zermelo, set-of-finite-ordinals) all denote the same ordinal.",
+      "expected_substrate_action": "PROMOTE if encoding round-trips von-Neumann-ness, limit-ness, and the canonical cofinality witness. CAPABILITY-GAP-TICKET if limit ordinals are not first-class. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\ordinal_omega_GAP.md."
+    },
+    {
+      "id": "harmonia_d_cap_015",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "capability-gap",
+      "object_class": "Recursive ordinal (epsilon_0, the smallest fixed point of alpha |-> omega^alpha)",
+      "object_specification": {
+        "type": "epsilon_0 = sup{omega, omega^omega, omega^omega^omega, ...} = least alpha with omega^alpha = alpha",
+        "instance": {
+          "definition_as_supremum": "epsilon_0 = sup_n epsilon_0^{(n)} where epsilon_0^{(0)} = omega, epsilon_0^{(n+1)} = omega^{epsilon_0^{(n)}}",
+          "fixed_point_equation": "omega^{epsilon_0} = epsilon_0",
+          "cantor_normal_form_below_epsilon_0": "every alpha < epsilon_0 has unique CNF: alpha = omega^{beta_1} * c_1 + omega^{beta_2} * c_2 + ... + omega^{beta_k} * c_k with beta_1 > beta_2 > ... > beta_k, c_i in N positive, and each beta_i < alpha (which makes CNF computable recursively)",
+          "ordinal_notation": "explicit tree-based notation: each ordinal < epsilon_0 is a finite tree with internal nodes labeled by 'omega-power' and leaves by natural numbers; example: omega^{omega+1}*3 + omega*2 + 5",
+          "proof_theoretic_role": "epsilon_0 is the proof-theoretic ordinal of Peano arithmetic (Gentzen 1936)"
+        },
+        "structural_metadata": {
+          "is_ordinal": true,
+          "is_limit": true,
+          "is_recursive": true,
+          "is_countable": true,
+          "is_proof_theoretic_ordinal_of_PA": true,
+          "ordinal_notation_index_in_Kleene_O": "an explicit recursive notation; well-known computable recursion",
+          "well_foundedness_provable": "well-foundedness of the recursive notation system below epsilon_0 is provable in PA + induction up to any alpha < epsilon_0, but not in PA alone (Gentzen)",
+          "verification_methods": {
+            "fixed_point": "verify omega^{epsilon_0} = epsilon_0 by passing to the supremum",
+            "CNF_uniqueness": "induction on ordinal rank below epsilon_0",
+            "PA_proof_theoretic": "Gentzen's consistency proof of PA uses transfinite induction up to epsilon_0"
+          },
+          "gap_with_substrate": "Beyond cap_014, we need an ordinal notation system as a first-class object. Need OrdinalNotation primitive with fields tree_representation, recursive_well_order, proof_theoretic_role. Closest existing is generic-recursive-structure which lacks the ordinal-specific axioms."
+        }
+      },
+      "encoding_question": "Can the substrate represent ordinal notation systems (CNF trees) and recognize their well-foundedness? Proposed: OrdinalNotation dataclass with fields signature, recursive_compare: Callable, well_foundedness_proof_strength: Theory. Operators: cnf_decompose(alpha) -> List, fixed_point_of(F: Callable) -> Notation, proof_theoretic_strength() -> Theory. Canonicalization: epsilon_0 represented as the omega-tower vs as a fixed-point equation should canonicalize to the same notation.",
+      "expected_substrate_action": "PROMOTE if CNF trees, recursive comparison, and proof-theoretic-ordinal classification are first-class. CAPABILITY-GAP-TICKET if proof-theoretic ordinal annotation is missing. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\epsilon_0_notation_GAP.md."
+    },
+    {
+      "id": "harmonia_d_cap_016",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "capability-gap",
+      "object_class": "Recursive ordinal (Gamma_0, the Feferman-Schutte ordinal)",
+      "object_specification": {
+        "type": "Gamma_0 = least alpha such that phi_alpha(0) = alpha; the proof-theoretic ordinal of predicative analysis (ATR_0)",
+        "instance": {
+          "veblen_function_definition": "phi_0(alpha) = omega^alpha; for beta > 0, phi_beta(alpha) is the alpha-th common fixed point of {phi_gamma : gamma < beta} (i.e., the alpha-th point fixed by all lower phi's)",
+          "diagonal_iteration": "Gamma_0 = sup_n Gamma_0^{(n)} where Gamma_0^{(0)} = 0 and Gamma_0^{(n+1)} = phi_{Gamma_0^{(n)}}(0)",
+          "fixed_point_equation": "phi_{Gamma_0}(0) = Gamma_0",
+          "ordinal_notation": "Veblen normal form: every alpha < Gamma_0 is uniquely alpha = phi_{beta_1}(alpha_1) + ... + phi_{beta_k}(alpha_k) with the standard descending-additive constraints; recursive comparison defined by case analysis on Veblen forms",
+          "proof_theoretic_role": "Gamma_0 is the proof-theoretic ordinal of ATR_0 (arithmetic transfinite recursion) and of predicative analysis (Feferman 1964, Schutte 1965)"
+        },
+        "structural_metadata": {
+          "is_ordinal": true,
+          "is_limit": true,
+          "is_recursive": true,
+          "is_countable": true,
+          "is_proof_theoretic_ordinal_of_ATR0": true,
+          "is_marker_for_predicativity": "Gamma_0 marks the boundary of Schutte's predicative analysis",
+          "well_foundedness_provable_in": "stronger systems than ATR_0; not provable in ATR_0 itself",
+          "verification_methods": {
+            "veblen_fixed_point_construction": "induct on Veblen-rank to verify phi_alpha is well-defined and increasing",
+            "diagonal_fixed_point": "the diagonal sequence phi_{Gamma_0^{(n)}}(0) converges to Gamma_0",
+            "proof_theoretic_ordinal_of_ATR0": "Schutte 1965 ordinal-analysis"
+          },
+          "gap_with_substrate": "Beyond cap_015, need Veblen hierarchy as first-class operator. Specifically: VeblenFunction primitive parametrized by ordinal index, with fixed-point and diagonal-fixed-point operations. Existing substrate (if it has any ordinal-notation primitive) likely stops at epsilon_0."
+        }
+      },
+      "encoding_question": "Can the substrate represent the Veblen hierarchy phi_alpha as an ordinal-indexed family with diagonal fixed-points? Proposed: VeblenHierarchy dataclass with veblen_function: Callable[Ordinal, Callable[Ordinal, Ordinal]], operators veblen_normal_form(alpha) -> List, diagonal_fixed_point(F: family) -> Ordinal. Canonicalization: Gamma_0 written as phi_{Gamma_0}(0) vs as the diagonal-sup-n should canonicalize to the same notation.",
+      "expected_substrate_action": "PROMOTE if Veblen hierarchy is encodable with diagonal fixed-points and proof-theoretic-ordinal label. CAPABILITY-GAP-TICKET if Veblen functions are not first-class. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\gamma_0_veblen_GAP.md."
+    },
+    {
+      "id": "harmonia_d_cap_017",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "capability-gap",
+      "object_class": "Tree (Suslin tree on omega_1, diamond-based construction)",
+      "object_specification": {
+        "type": "Suslin tree T on omega_1: a tree of height omega_1, all levels countable, with no uncountable chain and no uncountable antichain",
+        "instance": {
+          "construction_under_diamond": "assume <>_{omega_1}; let <S_alpha : alpha < omega_1> be a diamond sequence (each S_alpha subseteq alpha and for every X subseteq omega_1, {alpha : X cap alpha = S_alpha} is stationary)",
+          "level_construction": "Level T_0 = {<>}; level T_{alpha+1} = {x ^ <0>, x ^ <1> : x in T_alpha}; for limit alpha define T_alpha by selecting cofinal branches in T cap alpha by case-analysis on whether S_alpha codes an antichain through T cap alpha",
+          "limit_step_specification": "if S_alpha codes a maximal antichain A in T cap alpha, then for each x in T cap alpha extending some element of A pick a branch through T cap alpha containing x and put its limit in T_alpha; if S_alpha does not code an antichain, fill T_alpha with all cofinal branches",
+          "underlying_set": "T = union_{alpha < omega_1} T_alpha; each T_alpha countable",
+          "tree_order": "x <_T y iff x is a proper initial segment of y (T is a subtree of 2^{<omega_1})"
+        },
+        "structural_metadata": {
+          "is_tree": true,
+          "height": "omega_1",
+          "all_levels_countable": true,
+          "no_uncountable_chain": true,
+          "no_uncountable_antichain": true,
+          "is_Suslin": true,
+          "construction_assumption": "diamond on omega_1 (provable in V=L)",
+          "verification_methods": {
+            "no_uncountable_antichain": "diamond ensures any potential uncountable antichain A is anticipated as S_alpha for stationary alpha; the limit step seals A at level alpha so no extension above alpha avoids A",
+            "no_uncountable_chain": "any chain through T projects to a function omega_1 -> 2 of unbounded length, but levels are countable so cofinal chain forces uncountable antichain (contradiction by previous)",
+            "all_levels_countable": "by construction (countable splitting at each level)"
+          },
+          "gap_with_substrate": "Substrate needs trees of uncountable height with diamond-based limit-step constructions. Need TransfiniteTree primitive with height: Ordinal, level_indexer: Ordinal -> Set, limit_step_strategy: Callable. Plus a DiamondSequence primitive parametrized by stationarity verifier."
+        }
+      },
+      "encoding_question": "Can the substrate represent trees of height omega_1 with explicit limit-step strategies, plus diamond sequences as parameters? Proposed: TransfiniteTree dataclass with height: Ordinal, level: Callable[Ordinal, Set], limit_strategy: Callable. DiamondSequence with sequence: Callable[Ordinal, Set], stationarity_witness: Stationary. Canonicalization should recognize Suslin-line-vs-Suslin-tree equivalence.",
+      "expected_substrate_action": "PROMOTE if substrate verifies the no-uncountable-antichain property mechanically given the diamond construction. CAPABILITY-GAP-TICKET if uncountable-height trees or diamond sequences are not first-class. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\suslin_tree_GAP.md."
+    },
+    {
+      "id": "harmonia_d_cap_018",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "capability-gap",
+      "object_class": "Tree (Aronszajn tree on omega_1)",
+      "object_specification": {
+        "type": "Aronszajn tree T on omega_1: tree of height omega_1, all levels countable, no uncountable branch (note: Aronszajn trees provably exist in ZFC; Suslin requires more)",
+        "instance": {
+          "explicit_construction_via_finite_partial_injections": "Level T_alpha = {f : f is a finite partial injective function alpha -> Q with cofinal range in Q cap (-infty, q) for some q in Q}; specifically T_alpha consists of strictly-increasing finite-to-rationals partial injections with bounded sup",
+          "tree_order": "f <_T g iff f subseteq g (g extends f)",
+          "construction_recursion": "successor: T_{alpha+1} = {f cup {(alpha, q)} : f in T_alpha, q in Q, q > sup(range(f)), q < bound(f)+1}; limit alpha: T_alpha = {union_n f_n : (f_n) is a cofinal sequence of compatible elements with bounded suprema}",
+          "specialization": "T is special: T = union_n T_n where each T_n is an antichain (Q-rationals provide the specialization function)",
+          "underlying_set": "T = union_{alpha < omega_1} T_alpha"
+        },
+        "structural_metadata": {
+          "is_tree": true,
+          "height": "omega_1",
+          "all_levels_countable": true,
+          "no_uncountable_branch": true,
+          "is_Aronszajn": true,
+          "is_special": true,
+          "exists_in_ZFC": true,
+          "verification_methods": {
+            "no_uncountable_branch": "any branch B of height omega_1 would project to a strictly-increasing function omega_1 -> Q with bounded sup at every countable stage, but Q is countable so B would force injection omega_1 -> Q (contradiction)",
+            "all_levels_countable": "by construction; each level a subset of finite partial functions with bounded range so countable",
+            "specialization": "the bound-of-range function f |-> bound(f) (after rounding to finite Q-precision) gives a countable partition into antichains"
+          },
+          "gap_with_substrate": "Same as cap_017 plus specific support for special-tree witness (countable partition into antichains). Need Specialization primitive: an antichain partition Callable[Tree, List[Antichain]]."
+        }
+      },
+      "encoding_question": "Can the substrate represent Aronszajn trees with explicit specialization witnesses? Proposed: TransfiniteTree (from cap_017) extended with optional specialization: Callable[Element, Index] field. Operators: is_special() -> bool, specialization_function() -> Callable. How does canonicalization handle special-vs-non-special Aronszajn trees (both exist consistently)?",
+      "expected_substrate_action": "PROMOTE if encoding handles specialization witnesses and ZFC-provability annotation. CAPABILITY-GAP-TICKET if specialization is not first-class. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\aronszajn_tree_GAP.md."
+    },
+    {
+      "id": "harmonia_d_cap_019",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "capability-gap",
+      "object_class": "Tree (Kurepa tree on omega_1 with aleph_2 cofinal branches)",
+      "object_specification": {
+        "type": "Kurepa tree T on omega_1: tree of height omega_1, all levels countable, with at least aleph_2 many cofinal branches",
+        "instance": {
+          "construction_in_L": "in V=L use diamond+ (or directly the L-structure) to construct T; at limit stages use the L-canonical well-order to select aleph_2-many distinct cofinal branches arising from L-definable bookkeeping",
+          "level_specification": "T_alpha subseteq 2^alpha countable, with the property that for each x in T cap alpha, x extends to at least one cofinal branch; the construction ensures the branch-set has cardinality aleph_2",
+          "branch_set_specification": "Branch(T) = {b : b is a cofinal chain through T}; |Branch(T)| >= aleph_2",
+          "consistency_status": "Kurepa Hypothesis (KH) = 'there is a Kurepa tree' is independent of ZFC: holds in L, fails after Levy-collapsing an inaccessible to omega_2",
+          "explicit_branch_indexing_in_L": "in L, branches correspond to L-definable subsets of omega_1 of a specific Sigma_1-definability rank; the indexing is by ordinals < omega_2"
+        },
+        "structural_metadata": {
+          "is_tree": true,
+          "height": "omega_1",
+          "all_levels_countable": true,
+          "branch_count": ">= aleph_2",
+          "is_Kurepa": true,
+          "consistent_with_ZFC": true,
+          "consistent_with_not_KH": true,
+          "consistency_strength_of_negation": "inaccessible cardinal (Silver: Not-KH equiconsistent with inaccessible)",
+          "verification_methods": {
+            "level_countability": "by construction at each stage",
+            "branch_count": "explicit aleph_2-indexed family of L-definable cofinal branches",
+            "kurepa_definition": "verify height + level-countable + branch >= aleph_2 jointly"
+          },
+          "gap_with_substrate": "Beyond cap_017/018, Kurepa trees require enumerating aleph_2-many cofinal branches and recognizing the equiconsistency-with-inaccessible status. Need BranchEnumerator primitive of cardinality aleph_2 and ConsistencyStrengthAnnotation slot."
+        }
+      },
+      "encoding_question": "Can the substrate represent trees with aleph_2-indexed branch families plus equiconsistency annotations? Proposed: TransfiniteTree extended with branch_enumerator: Callable[Cardinal, Branch] for cardinalities aleph_2 and above. Plus ConsistencyAnnotation field on the tree. How does canonicalization handle Kurepa-tree-vs-Kurepa-tree-with-different-aleph_2-witnesses?",
+      "expected_substrate_action": "PROMOTE if substrate verifies the branch-cardinality bound and annotates the consistency-strength relationship. CAPABILITY-GAP-TICKET if branch families above the continuum are unsupported. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\kurepa_tree_GAP.md."
+    },
+    {
+      "id": "harmonia_d_cap_020",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "capability-gap",
+      "object_class": "Computable structure (Kleene's O, the system of recursive ordinal notations)",
+      "object_specification": {
+        "type": "Kleene's O: the set of natural-number indices for recursive ordinals, with a partial order |O| extending well-foundedness",
+        "instance": {
+          "definition_recursive": "O is the smallest set such that (a) 1 in O with |1| = 0; (b) if a in O with |a| = alpha, then 2^a in O with |2^a| = alpha + 1; (c) if e is an index for a total computable function such that for all n, phi_e(n) in O and phi_e(n) <_O phi_e(n+1), then 3 * 5^e in O with |3 * 5^e| = sup_n |phi_e(n)|",
+          "partial_order": "a <_O b is the transitive closure of: (i) a <_O 2^a; (ii) for each n, phi_e(n) <_O 3 * 5^e",
+          "ordinal_height": "the supremum of {|a| : a in O} is omega_1^{CK}, the Church-Kleene ordinal (least non-recursive ordinal)",
+          "explicit_index_examples": "1 codes 0; 2^1 codes 1; 2^{2^1} codes 2; 3 * 5^e codes omega when phi_e(n) = 2^{2^{...^1}} (n-fold tower); etc.",
+          "non_uniqueness": "|.| is well-defined but the index encoding is not unique: many distinct indices a, b in O have |a| = |b|"
+        },
+        "structural_metadata": {
+          "is_set_of_natural_numbers": true,
+          "is_Pi_1_1_complete": true,
+          "ordinal_height": "omega_1^{CK}",
+          "partial_order_is_well_founded": true,
+          "computability_status": "the set O is Pi_1_1-complete; not arithmetical",
+          "uniformity": "the function n |-> |n| (when defined) is hyperarithmetical but not arithmetical",
+          "verification_methods": {
+            "well_foundedness": "well-foundedness of <_O follows from the inductive definition (each clause produces a successor or limit witness)",
+            "Pi_1_1_completeness": "encode any Pi_1_1 set into O via tree-of-attempts construction (Kleene 1955)",
+            "Church_Kleene_height": "every recursive ordinal has an index in O; conversely every index codes a recursive ordinal"
+          },
+          "gap_with_substrate": "Substrate likely lacks a primitive for hyperarithmetical objects with well-foundedness witnesses on partial orders. Need HyperarithmeticalSet primitive with definability-class slot and well-foundedness verifier. Also need PartialOrdinalNotation primitive (distinct from cap_015's total notation)."
+        }
+      },
+      "encoding_question": "Can the substrate represent Pi_1_1-complete sets with explicit recursive generators and partial well-orderings? Proposed: HyperarithmeticalSet dataclass with definability_class: Sigma_n_or_Pi_n, generators: List[Clause], well_foundedness_witness: Witness. Plus PartialOrdinalNotation with index_set, partial_order: Callable, height: Ordinal. Canonicalization should recognize that distinct Kleene-O presentations yielding the same ordinal-height profile are equivalent up to recursive isomorphism, but distinct Kleene-O elements with same ordinal value are NOT equal in O.",
+      "expected_substrate_action": "PROMOTE if substrate handles Pi_1_1-completeness annotation, partial-order notation distinct from total, and the well-foundedness witness. CAPABILITY-GAP-TICKET if hyperarithmetical complexity classes are not first-class. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\kleene_O_GAP.md."
+    }
+  ]
+}
