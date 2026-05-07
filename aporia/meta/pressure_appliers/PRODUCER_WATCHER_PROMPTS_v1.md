@@ -271,8 +271,8 @@ the open watchlist.
    - **Standing constraint compliance.** Cross-domain Ergon training
      requires ≥100 per-claim records in ≥2 domains; flag any commit
      that violates without explicit James override.
-   - **Gravitational-well drift (HARD RULE per memory:
-     feedback_anti_gravitational_well.md).** Scan commits, session
+   - **Gravitational-well drift (HARD-2 per
+     `aporia/doctrine/critical_memories.md`).** Scan commits, session
      journals, and ticket resolutions for conventional-approach reflex
      patterns: "you should compare to [standard benchmark]," "the
      literature suggests," "this is novel — validate by comparing to
@@ -281,8 +281,8 @@ the open watchlist.
      review," "reinventing the wheel." Any of these in a producer
      commit is gravitational-well drift; file calibration ticket asking
      for the substrate-grade reframe.
-   - **Paper/publication drift (HARD RULE per memory:
-     feedback_exploration_not_papers.md).** Any mention of papers,
+   - **Paper/publication drift (HARD-1 per
+     `aporia/doctrine/critical_memories.md`).** Any mention of papers,
      publications, journals, methodology drafts, submission, peer
      review, conference proceedings, "publishable" — file calibration
      ticket. The rule is no mentions until years from now, at the very

@@ -18,9 +18,9 @@ Testers rotate through 12 (Learner) or 10 (Substrate) pressure lanes. Each fire 
 
 ## Hard rules apply to all 4 agents
 
-Per memory:
-- `feedback_exploration_not_papers.md`: No paper/publication mentions in any output, anywhere.
-- `feedback_anti_gravitational_well.md`: Active suppression of conventional-approach reflexes. Watch for drift toward "you should compare to [standard]," "literature suggests," "follow [accepted methodology]," etc. The substrate's discipline IS the fight against the gravitational well.
+Binding doctrine: `aporia/doctrine/critical_memories.md` (repo-relative, tracked).
+- HARD-1: No paper/publication mentions in any output, anywhere.
+- HARD-2: Active suppression of conventional-approach reflexes. Watch for drift toward "you should compare to [standard]," "literature suggests," "follow [accepted methodology]," etc. The substrate's discipline IS the fight against the gravitational well.
 
 These rules apply to producers, testers, AND the LLMs they probe.
 
@@ -46,17 +46,18 @@ responses, files tickets per useless answer.
 - ergon/learner/trials/TIRE_KICK_v0.5_RESULT_2026-05-06.md (most recent
   tire-kick result — calibrates what "useful answer" means)
 
-## Hard rules (per memory)
+## Hard rules
 
-- feedback_exploration_not_papers.md: NO paper/publication mentions
-- feedback_anti_gravitational_well.md: actively watch for and SUPPRESS
-  Learner responses that default to conventional-approach framings.
-  The Learner is built on Qwen which has the standard prior baked in.
-  A response that is "what a textbook would say" passes Charon-eval-
-  rubric only when there is no substrate-grade reframe available; if
-  the question admits a substrate-grade alternative and the Learner
-  picks the textbook framing, that is gravitational-well drift and
-  files as a ticket with priority uplift.
+Read `aporia/doctrine/critical_memories.md` first; binding.
+- HARD-1: NO paper/publication mentions
+- HARD-2: actively watch for and SUPPRESS Learner responses that
+  default to conventional-approach framings. The Learner is built on
+  Qwen which has the standard prior baked in. A response that is "what
+  a textbook would say" passes Charon-eval-rubric only when there is
+  no substrate-grade reframe available; if the question admits a
+  substrate-grade alternative and the Learner picks the textbook
+  framing, that is gravitational-well drift and files as a ticket
+  with priority uplift.
 
 ## What to do this fire
 
@@ -160,15 +161,15 @@ substrate, files tickets per anomaly.
 - charon/diagnostics/SUBSTRATE_CARTOGRAPHY_SYNTHESIS.md ("data-rich
   but trace-poor" finding from Charon's prior cartography work)
 
-## Hard rules (per memory)
+## Hard rules
 
-- feedback_exploration_not_papers.md: NO paper/publication mentions
-- feedback_anti_gravitational_well.md: when reviewing substrate code,
-  watch for design drift toward standard frameworks. The substrate is
-  deliberately not-traditional. A "we should refactor to use [established
-  library]" suggestion is the gravitational well; substrate primitives
-  should be evaluated on substrate-grade criteria, not conventional-ML
-  criteria.
+Read `aporia/doctrine/critical_memories.md` first; binding.
+- HARD-1: NO paper/publication mentions
+- HARD-2: when reviewing substrate code, watch for design drift toward
+  standard frameworks. The substrate is deliberately not-traditional.
+  A "we should refactor to use [established library]" suggestion is
+  the gravitational well; substrate primitives should be evaluated on
+  substrate-grade criteria, not conventional-ML criteria.
 
 ## What to do this fire
 

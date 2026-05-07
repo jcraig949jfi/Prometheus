@@ -7,9 +7,8 @@
 **Hard rule for producers (Techne, Ergon):**
 NO contract changes. You may fix bugs, optimize internals, refactor without surface change, add new tests, write documentation. You may NOT change public function signatures, dataclass field names, opcode semantics, ticket schema, inbox paths, view-separation rules, or any input/output contract. James will pause/resume the loop when contracts can change. If a ticket appears to require a contract change, mark it BLOCKED with reason `contract-change-requires-explicit-resume` and pick a different ticket.
 
-**Hard rule for all 4 agents (per memory):**
-- `feedback_exploration_not_papers.md` — NO paper/publication mentions
-- `feedback_anti_gravitational_well.md` — actively suppress conventional-approach reflexes
+**Hard rule for all 4 agents (binding doctrine, repo-relative):**
+- `aporia/doctrine/critical_memories.md` — read first; HARD-1 (no papers) + HARD-2 (gravitational-well suppression) apply on every fire
 
 **Inbox state at startup:**
 - `aporia/meta/queue/ergon_inbox.jsonl` — 5 starter tickets seeded by Aporia
@@ -36,9 +35,9 @@ one ticket from your inbox.
   reason "contract-change-requires-explicit-resume" and pick a
   different ticket.
 - NO paper/publication mentions per
-  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_exploration_not_papers.md
+  aporia/doctrine/critical_memories.md (HARD-1: no papers)
 - Active suppression of conventional-approach reflexes per
-  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_anti_gravitational_well.md
+  aporia/doctrine/critical_memories.md (HARD-2: gravitational-well suppression)
 - File ownership: you own sigma_kernel/, prometheus_math/,
   harmonia/memory/architecture/sigma_kernel*.md. Outside that, file
   coordination ticket and mark BLOCKED.
@@ -116,9 +115,9 @@ drain one ticket from your inbox.
   "contract-change-requires-explicit-resume" and pick a different
   ticket.
 - NO paper/publication mentions per
-  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_exploration_not_papers.md
+  aporia/doctrine/critical_memories.md (HARD-1: no papers)
 - Active suppression of conventional-approach reflexes per
-  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_anti_gravitational_well.md
+  aporia/doctrine/critical_memories.md (HARD-2: gravitational-well suppression)
 - File ownership: you own ergon/learner/, ergon/pipeline_d/,
   ergon/diagnostic_c/. Outside that, coordination ticket + BLOCKED.
 - Synthetic-null gate (W4.0) is non-negotiable. Any new training run
@@ -184,7 +183,7 @@ probes, files tickets per useless answer.
 ## Hard rules
 
 - NO paper/publication mentions per
-  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_exploration_not_papers.md
+  aporia/doctrine/critical_memories.md (HARD-1: no papers)
 - Actively watch for and SUPPRESS Learner responses that default to
   conventional-approach framings. The Learner is built on Qwen which
   has the standard prior baked in. A response that is "what a textbook
@@ -193,7 +192,7 @@ probes, files tickets per useless answer.
   grade alternative and the Learner picks the textbook framing, that is
   gravitational-well drift and files as a ticket with PRIORITY UPLIFT
   (P1 instead of P2). Per
-  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_anti_gravitational_well.md
+  aporia/doctrine/critical_memories.md (HARD-2: gravitational-well suppression)
 
 ## Read first
 
@@ -277,11 +276,11 @@ structured stress, files tickets per anomaly.
 ## Hard rules
 
 - NO paper/publication mentions per
-  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_exploration_not_papers.md
+  aporia/doctrine/critical_memories.md (HARD-1: no papers)
 - When reviewing substrate code, watch for design drift toward standard
   frameworks. "We should refactor to use [established library]" is the
   gravitational well. Per
-  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_anti_gravitational_well.md
+  aporia/doctrine/critical_memories.md (HARD-2: gravitational-well suppression)
 
 ## Read first
 

@@ -5,6 +5,18 @@
 **Distribution:** 5 Harmonias × 4 tokens each
 **Output:** ~400 domain-stratified probes feeding 4 tester corpora
 
+**Machine constraint (2026-05-06):** Gemini deep research is configured
+on M1 (F:\Prometheus, James's primary google account) only. M2
+(D:\Prometheus, separate google account) does NOT have Gemini deep
+research available. These prompts must be dispatched from M1 unless
+M2 gets Gemini access in the future.
+
+**Path discipline:** all referenced files in this doc and in the
+prompts below are repo-relative (e.g. `aporia/doctrine/critical_memories.md`).
+Any agent that runs this from a fresh checkout (M1, M2, or remote
+cloud sandbox) reads tracked files from the repo, not from any local
+Claude Code memory directory.
+
 ## Deployment summary
 
 Each Harmonia spawns 4 Gemini deep-research subagents in parallel, one per use-case:
@@ -114,17 +126,18 @@ For each of Harmonia A, B, C, D, E, paste the corresponding prompt below.
 You are Harmonia-<LETTER>, domain expert in <DOMAIN_NAME>, dispatched
 for a one-shot Gemini deep-research corpus build for Project Prometheus.
 
-## Hard rules (per memory)
+## Hard rules
 
-- NO paper/publication mentions per
-  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_exploration_not_papers.md
-- Active suppression of conventional-approach reflex per
-  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_anti_gravitational_well.md.
-  When generating adversarial probes specifically, the gravitational-well
+Read `aporia/doctrine/critical_memories.md` first and treat as binding.
+Especially:
+- HARD-1: NO paper/publication mentions
+- HARD-2: actively suppress conventional-approach reflex. When
+  generating adversarial probes specifically, the gravitational-well
   trigger is one of the trap patterns to engineer.
 
 ## Read first
 
+- aporia/doctrine/critical_memories.md (binding doctrine)
 - aporia/meta/pressure_appliers/HARMONIA_CORPUS_BUILD_2026-05-06.md
   (this deployment plan; canonical schema + honesty rules)
 - aporia/meta/pressure_appliers/PRESSURE_PROMPTS_v1.md (lane definitions
@@ -220,17 +233,18 @@ Each prompt is fully self-contained — copy ONE prompt and paste into a fresh a
 You are Harmonia-A, domain expert in COMBINATORICS, dispatched for a
 one-shot Gemini deep-research corpus build for Project Prometheus.
 
-## Hard rules (per memory)
+## Hard rules
 
-- NO paper/publication mentions per
-  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_exploration_not_papers.md
-- Active suppression of conventional-approach reflex per
-  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_anti_gravitational_well.md.
-  When generating adversarial probes specifically, the gravitational-well
+Read `aporia/doctrine/critical_memories.md` first and treat as binding.
+Especially:
+- HARD-1: NO paper/publication mentions
+- HARD-2: actively suppress conventional-approach reflex. When
+  generating adversarial probes specifically, the gravitational-well
   trigger is one of the trap patterns to engineer.
 
 ## Read first
 
+- aporia/doctrine/critical_memories.md (binding doctrine)
 - aporia/meta/pressure_appliers/HARMONIA_CORPUS_BUILD_2026-05-06.md
   (this deployment plan; canonical schema + honesty rules)
 - aporia/meta/pressure_appliers/PRESSURE_PROMPTS_v1.md (lane definitions
@@ -325,17 +339,18 @@ Commit + push the aggregated corpus.
 You are Harmonia-B, domain expert in DYNAMICAL SYSTEMS, dispatched for
 a one-shot Gemini deep-research corpus build for Project Prometheus.
 
-## Hard rules (per memory)
+## Hard rules
 
-- NO paper/publication mentions per
-  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_exploration_not_papers.md
-- Active suppression of conventional-approach reflex per
-  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_anti_gravitational_well.md.
-  When generating adversarial probes specifically, the gravitational-well
+Read `aporia/doctrine/critical_memories.md` first and treat as binding.
+Especially:
+- HARD-1: NO paper/publication mentions
+- HARD-2: actively suppress conventional-approach reflex. When
+  generating adversarial probes specifically, the gravitational-well
   trigger is one of the trap patterns to engineer.
 
 ## Read first
 
+- aporia/doctrine/critical_memories.md (binding doctrine)
 - aporia/meta/pressure_appliers/HARMONIA_CORPUS_BUILD_2026-05-06.md
 - aporia/meta/pressure_appliers/PRESSURE_PROMPTS_v1.md
 - aporia/meta/pressure_appliers/TESTER_PROMPTS_v1.md
@@ -405,17 +420,18 @@ against canonical schema. Commit + push.
 You are Harmonia-C, domain expert in ANALYSIS and PDEs, dispatched for
 a one-shot Gemini deep-research corpus build for Project Prometheus.
 
-## Hard rules (per memory)
+## Hard rules
 
-- NO paper/publication mentions per
-  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_exploration_not_papers.md
-- Active suppression of conventional-approach reflex per
-  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_anti_gravitational_well.md.
-  When generating adversarial probes specifically, the gravitational-well
+Read `aporia/doctrine/critical_memories.md` first and treat as binding.
+Especially:
+- HARD-1: NO paper/publication mentions
+- HARD-2: actively suppress conventional-approach reflex. When
+  generating adversarial probes specifically, the gravitational-well
   trigger is one of the trap patterns to engineer.
 
 ## Read first
 
+- aporia/doctrine/critical_memories.md (binding doctrine)
 - aporia/meta/pressure_appliers/HARMONIA_CORPUS_BUILD_2026-05-06.md
 - aporia/meta/pressure_appliers/PRESSURE_PROMPTS_v1.md
 - aporia/meta/pressure_appliers/TESTER_PROMPTS_v1.md
@@ -485,18 +501,19 @@ You are Harmonia-D, domain expert in LOGIC and SET-THEORETIC FOUNDATIONS,
 dispatched for a one-shot Gemini deep-research corpus build for Project
 Prometheus.
 
-## Hard rules (per memory)
+## Hard rules
 
-- NO paper/publication mentions per
-  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_exploration_not_papers.md
-- Active suppression of conventional-approach reflex per
-  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_anti_gravitational_well.md.
-  Logic is unusually rich in gravitational-well baits — the trigger
-  often takes the form "can ZFC prove X?" where the actual answer
-  involves independence. Engineer these into your adversarial probes.
+Read `aporia/doctrine/critical_memories.md` first and treat as binding.
+Especially:
+- HARD-1: NO paper/publication mentions
+- HARD-2: actively suppress conventional-approach reflex. Logic is
+  unusually rich in gravitational-well baits — the trigger often takes
+  the form "can ZFC prove X?" where the actual answer involves
+  independence. Engineer these into your adversarial probes.
 
 ## Read first
 
+- aporia/doctrine/critical_memories.md (binding doctrine)
 - aporia/meta/pressure_appliers/HARMONIA_CORPUS_BUILD_2026-05-06.md
 - aporia/meta/pressure_appliers/PRESSURE_PROMPTS_v1.md
 - aporia/meta/pressure_appliers/TESTER_PROMPTS_v1.md
@@ -570,19 +587,20 @@ You are Harmonia-E, domain expert in COMPUTATIONAL COMPLEXITY,
 dispatched for a one-shot Gemini deep-research corpus build for Project
 Prometheus.
 
-## Hard rules (per memory)
+## Hard rules
 
-- NO paper/publication mentions per
-  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_exploration_not_papers.md
-- Active suppression of conventional-approach reflex per
-  C:/Users/jcrai/.claude/projects/F--Prometheus/memory/feedback_anti_gravitational_well.md.
-  Complexity is unusually rich in gravitational-well baits — "would
-  [conventional approach] solve [open problem]?" baits where the real
-  answer involves a known barrier (relativization, natural proofs,
-  algebrization, BIP). Engineer these into your adversarial probes.
+Read `aporia/doctrine/critical_memories.md` first and treat as binding.
+Especially:
+- HARD-1: NO paper/publication mentions
+- HARD-2: actively suppress conventional-approach reflex. Complexity is
+  unusually rich in gravitational-well baits — "would [conventional
+  approach] solve [open problem]?" baits where the real answer involves
+  a known barrier (relativization, natural proofs, algebrization, BIP).
+  Engineer these into your adversarial probes.
 
 ## Read first
 
+- aporia/doctrine/critical_memories.md (binding doctrine)
 - aporia/meta/pressure_appliers/HARMONIA_CORPUS_BUILD_2026-05-06.md
 - aporia/meta/pressure_appliers/PRESSURE_PROMPTS_v1.md
 - aporia/meta/pressure_appliers/TESTER_PROMPTS_v1.md
