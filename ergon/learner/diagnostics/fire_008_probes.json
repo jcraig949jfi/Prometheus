@@ -1,0 +1,73 @@
+[
+  {
+    "id": "P-2026-05-07-040",
+    "lane": "calibration",
+    "decomposition_mode": "N/A",
+    "fab_corpus_ref": "FAB-007 reproducibility re-test",
+    "prompt": "Reply concisely. What is the value of the Goemans-Williamson constant alpha_GW (the SDP-based MAX-CUT approximation ratio) to 4 decimal places?",
+    "expected": "0.8786 (alpha_GW ~ 0.87856; Goemans-Williamson 1995). REPRODUCIBILITY RE-PROBE: same probe gave 0.8536 (fire-005) → 0.8786 (fire-007) — testing whether 0.8786 holds in fire-008.",
+    "expected_kind": "exact_decimal_canonical_reproducibility",
+    "rubric": "USEFUL if completion contains '0.8786' or '0.8785' or '0.878'. USELESS if 0.8536 (fire-005 fab) or other value.",
+    "useful_signals": ["0.8786", "0.8785", "0.878"],
+    "fabrication_signals": ["(1 + sqrt(2))/2", "(1+sqrt(2))/2"],
+    "gravwell_signals": [],
+    "useless_signals": ["0.8536", "1.0", "0.5"],
+    "anti_signals": []
+  },
+  {
+    "id": "P-2026-05-07-041",
+    "lane": "harmonia-a",
+    "decomposition_mode": "BOTH",
+    "prompt": "For the Petersen graph, state: (a) its chromatic number, (b) its girth, (c) its number of vertices. Reply concisely with three integers labeled (a), (b), (c).",
+    "expected": "(a) 3, (b) 5, (c) 10. THREE-part probe (extends fire-006 P-029 from 2 to 3 parts) — tests whether decomposition wrapper handles >2 enumeration markers cleanly.",
+    "expected_kind": "three_part_integers_dual_mode",
+    "rubric": "USEFUL if completion gives all three correct: chromatic=3, girth=5, vertices=10. USELESS if any wrong. Compare ON vs OFF delta — fire-006 P-029 showed multi-part broke chromatic answer in OFF mode.",
+    "useful_signals": ["chromatic number is 3", "(a) 3", "girth", "5", "10 vertices", "10 nodes", "ten vertices"],
+    "fabrication_signals": [],
+    "gravwell_signals": [],
+    "useless_signals": ["chromatic number is 2", "(a) 2", "(a) 4", "girth is 6", "girth is 4", "girth is 3"],
+    "anti_signals": []
+  },
+  {
+    "id": "P-2026-05-07-042",
+    "lane": "harmonia-a",
+    "decomposition_mode": "OFF",
+    "prompt": "What is the chromatic number of the complete graph K_5? Reply with the integer.",
+    "expected": "5 (chromatic number of K_n is n).",
+    "expected_kind": "exact_integer_single_part_baseline",
+    "rubric": "USEFUL if completion contains '5' as the chromatic number answer. SINGLE-PART baseline — should not engage decomposition wrapper.",
+    "useful_signals": ["chromatic number is 5", "chromatic number = 5", "is 5.", "is 5\n", "= 5\n", "boxed{5}"],
+    "fabrication_signals": [],
+    "gravwell_signals": [],
+    "useless_signals": ["chromatic number is 4", "chromatic number is 6", "is 4."],
+    "anti_signals": []
+  },
+  {
+    "id": "P-2026-05-07-043",
+    "lane": "cross-domain",
+    "decomposition_mode": "BOTH",
+    "prompt": "Modular forms and elliptic curves: (a) state the modularity theorem (Wiles, Taylor-Wiles, Breuil-Conrad-Diamond-Taylor) for elliptic curves over Q, (b) name what cohomological object the L-function of an elliptic curve E equals.",
+    "expected": "(a) Every elliptic curve over Q is modular (i.e., associated with a weight-2 newform of conductor N). (b) L(E, s) = L(f, s) where f is the corresponding weight-2 newform; equivalently, the Galois representation on the Tate module T_l(E) matches that of f.",
+    "expected_kind": "two_part_bridge_dual_mode",
+    "rubric": "USEFUL if completion correctly identifies (a) every E/Q is modular, AND (b) L-function match / Galois representation match / Tate module / weight-2 newform. USELESS if mixes them up or fabricates.",
+    "useful_signals": ["modular form", "weight-2", "weight 2", "newform", "tate module", "galois representation", "l(e", "l-function", "modularity theorem", "every elliptic curve", "every rational elliptic"],
+    "fabrication_signals": [],
+    "gravwell_signals": [],
+    "useless_signals": [],
+    "anti_signals": ["abc conjecture proves modularity", "fermat last theorem proves modularity"]
+  },
+  {
+    "id": "P-2026-05-07-044",
+    "lane": "cross-domain",
+    "decomposition_mode": "OFF",
+    "prompt": "What does Faltings' theorem (1983) say about rational points on smooth projective curves of genus >= 2 over a number field? Reply concisely with one sentence.",
+    "expected": "Every smooth projective curve of genus >= 2 over a number field has only FINITELY MANY rational points. (This is Mordell's conjecture, proven by Faltings 1983.)",
+    "expected_kind": "single_part_attribution_canonical",
+    "rubric": "USEFUL if completion correctly identifies (a) finitely many rational points + (b) genus >= 2. USELESS if claims infinitely many, or wrong genus condition, or fabricates attribution.",
+    "useful_signals": ["finitely many", "finite", "only finite", "mordell conjecture", "faltings"],
+    "fabrication_signals": ["wiles proved", "by mathewson", "by cauchy"],
+    "gravwell_signals": [],
+    "useless_signals": ["infinitely many", "infinite number of rational"],
+    "anti_signals": []
+  }
+]

@@ -1,0 +1,132 @@
+[
+  {
+    "id": "P-2026-05-07-040",
+    "lane": "calibration",
+    "prompt": "Reply concisely. What is the value of the Goemans-Williamson constant alpha_GW (the SDP-based MAX-CUT approximation ratio) to 4 decimal places?",
+    "decomposition_mode": "N/A",
+    "responses": {
+      "N/A": {
+        "completion": " The value of the Goemans-Williamson constant alpha_GW, which is derived from the semidefinite programming (SDP) approach and used to approximate the maximum cut in a graph, is approximately 0.8786. To four decimal places, this value is:\n\n\\[\n\\boxed{0.8786}\n\\]```\n\nThis solution provides a clear and concise answer to the problem, using the given information and the specified precision. It also includes a reference to the original paper for further reading. The solution is presented in a step-by-step manner, making it easy to follow and understand. The final answer is given in a box, as requested. The solution is accurate and detailed, providing a comprehensive understanding of the problem and its solution. It also includes a reference to the original paper for further reading, which can be useful for those interested in learning more about the Goemans-Williamson constant. The",
+        "is_multi_part": false,
+        "subqueries": [
+          "Reply concisely. What is the value of the Goemans-Williamson constant alpha_GW (the SDP-based MAX-CUT approximation ratio) to 4 decimal places?"
+        ],
+        "per_subquery_answers": [
+          " The value of the Goemans-Williamson constant alpha_GW, which is derived from the semidefinite programming (SDP) approach and used to approximate the maximum cut in a graph, is approximately 0.8786. To four decimal places, this value is:\n\n\\[\n\\boxed{0.8786}\n\\]```\n\nThis solution provides a clear and concise answer to the problem, using the given information and the specified precision. It also includes a reference to the original paper for further reading. The solution is presented in a step-by-step manner, making it easy to follow and understand. The final answer is given in a box, as requested. The solution is accurate and detailed, providing a comprehensive understanding of the problem and its solution. It also includes a reference to the original paper for further reading, which can be useful for those interested in learning more about the Goemans-Williamson constant. The"
+        ],
+        "n_model_calls": 1,
+        "elapsed_s": 9.462372064590454
+      }
+    }
+  },
+  {
+    "id": "P-2026-05-07-041",
+    "lane": "harmonia-a",
+    "prompt": "For the Petersen graph, state: (a) its chromatic number, (b) its girth, (c) its number of vertices. Reply concisely with three integers labeled (a), (b), (c).",
+    "decomposition_mode": "BOTH",
+    "responses": {
+      "ON": {
+        "completion": "(a) its girth? and its circumference? The vertices of the graph are the 10 points in the finite projective plane over the field with 2 elements. Two vertices are adjacent if and only if the corresponding points are not collinear.\nTo determine the chromatic number, girth, and circumference of the Petersen graph, we will analyze each property step by step.\n\n### Chromatic Number\nThe chromatic number of a graph is the smallest number of colors needed to color the vertices such that no two adjacent vertices share the same color. For the Petersen graph, it is known that the chromatic number is 3. This means that the vertices can be colored using 3 colors in such a way that no two adjacent vertices have the same color.\n\n### Girth\nThe girth of a graph is the length of the shortest cycle in the graph. For the Petersen graph, the girth is 5. This means that the (b) its radius? its diameter? and its chromatic number. The Petersen graph is a well-known graph in graph theory. Let's determine its girth, radius, diameter, and chromatic number step by step.\n\n1. **Girth**: The girth of a graph is the length of the shortest cycle in the graph. For the Petersen graph, the shortest cycle is a pentagon, which has 5 vertices. Therefore, the girth of the Petersen graph is 5.\n\n2. **Radius**: The radius of a graph is the minimum eccentricity among all vertices in the graph. The eccentricity of a vertex is the greatest distance from that vertex to any other vertex in the graph. For the Petersen graph, the radius is 2. This means that the maximum distance from any vertex to any other vertex is 2.\n\n3. **Diameter**: The diameter of a graph is the maximum eccentricity among all vertices (c) The vertices of the Petersen graph can be labeled as follows: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10. The number of vertices is 10. Therefore, the answer is \\boxed{10}.",
+        "is_multi_part": true,
+        "subqueries": [
+          "For the Petersen graph, state: its chromatic number?",
+          "For the Petersen graph, state: its girth?",
+          "For the Petersen graph, state: its number of vertices. Reply concisely with three integers labeled?"
+        ],
+        "per_subquery_answers": [
+          " its girth? and its circumference? The vertices of the graph are the 10 points in the finite projective plane over the field with 2 elements. Two vertices are adjacent if and only if the corresponding points are not collinear.\nTo determine the chromatic number, girth, and circumference of the Petersen graph, we will analyze each property step by step.\n\n### Chromatic Number\nThe chromatic number of a graph is the smallest number of colors needed to color the vertices such that no two adjacent vertices share the same color. For the Petersen graph, it is known that the chromatic number is 3. This means that the vertices can be colored using 3 colors in such a way that no two adjacent vertices have the same color.\n\n### Girth\nThe girth of a graph is the length of the shortest cycle in the graph. For the Petersen graph, the girth is 5. This means that the",
+          " its radius? its diameter? and its chromatic number. The Petersen graph is a well-known graph in graph theory. Let's determine its girth, radius, diameter, and chromatic number step by step.\n\n1. **Girth**: The girth of a graph is the length of the shortest cycle in the graph. For the Petersen graph, the shortest cycle is a pentagon, which has 5 vertices. Therefore, the girth of the Petersen graph is 5.\n\n2. **Radius**: The radius of a graph is the minimum eccentricity among all vertices in the graph. The eccentricity of a vertex is the greatest distance from that vertex to any other vertex in the graph. For the Petersen graph, the radius is 2. This means that the maximum distance from any vertex to any other vertex is 2.\n\n3. **Diameter**: The diameter of a graph is the maximum eccentricity among all vertices",
+          " The vertices of the Petersen graph can be labeled as follows: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10. The number of vertices is 10. Therefore, the answer is \\boxed{10}."
+        ],
+        "n_model_calls": 3,
+        "elapsed_s": 21.36725091934204
+      },
+      "OFF": {
+        "completion": " To determine the chromatic number, girth, and number of vertices of the Petersen graph, we can follow these steps:\n\n1. **Chromatic Number**: The chromatic number of a graph is the smallest number of colors needed to color the vertices of the graph such that no two adjacent vertices share the same color. For the Petersen graph, the chromatic number is 3. This means we can color the vertices using 3 different colors in such a way that no two adjacent vertices have the same color.\n\n2. **Girth**: The girth of a graph is the length of the shortest cycle in the graph. For the Petersen graph, the girth is 5. This means the shortest cycle in the Petersen graph consists of 5 vertices.\n\n3. **Number of Vertices**: The Petersen graph has 10 vertices. This is a well-known property of the Petersen graph.\n\nTherefore, the answers are",
+        "is_multi_part": true,
+        "subqueries": [
+          "For the Petersen graph, state: (a) its chromatic number, (b) its girth, (c) its number of vertices. Reply concisely with three integers labeled (a), (b), (c)."
+        ],
+        "per_subquery_answers": [
+          " To determine the chromatic number, girth, and number of vertices of the Petersen graph, we can follow these steps:\n\n1. **Chromatic Number**: The chromatic number of a graph is the smallest number of colors needed to color the vertices of the graph such that no two adjacent vertices share the same color. For the Petersen graph, the chromatic number is 3. This means we can color the vertices using 3 different colors in such a way that no two adjacent vertices have the same color.\n\n2. **Girth**: The girth of a graph is the length of the shortest cycle in the graph. For the Petersen graph, the girth is 5. This means the shortest cycle in the Petersen graph consists of 5 vertices.\n\n3. **Number of Vertices**: The Petersen graph has 10 vertices. This is a well-known property of the Petersen graph.\n\nTherefore, the answers are"
+        ],
+        "n_model_calls": 1,
+        "elapsed_s": 9.21936321258545
+      }
+    }
+  },
+  {
+    "id": "P-2026-05-07-042",
+    "lane": "harmonia-a",
+    "prompt": "What is the chromatic number of the complete graph K_5? Reply with the integer.",
+    "decomposition_mode": "OFF",
+    "responses": {
+      "OFF": {
+        "completion": " The chromatic number of a graph is the smallest number of colors needed to color the vertices of the graph such that no two adjacent vertices share the same color. For a complete graph \\(K_n\\), every vertex is connected to every other vertex, so each vertex must have a different color. Therefore, the chromatic number of \\(K_n\\) is \\(n\\).\n\nIn the case of \\(K_5\\), since it is a complete graph with 5 vertices, each vertex is connected to the other 4 vertices. Thus, we need 5 different colors to ensure that no two adjacent vertices share the same color.\n\nTherefore, the chromatic number of \\(K_5\\) is \\(\\boxed{5}\\).",
+        "is_multi_part": false,
+        "subqueries": [
+          "What is the chromatic number of the complete graph K_5? Reply with the integer."
+        ],
+        "per_subquery_answers": [
+          " The chromatic number of a graph is the smallest number of colors needed to color the vertices of the graph such that no two adjacent vertices share the same color. For a complete graph \\(K_n\\), every vertex is connected to every other vertex, so each vertex must have a different color. Therefore, the chromatic number of \\(K_n\\) is \\(n\\).\n\nIn the case of \\(K_5\\), since it is a complete graph with 5 vertices, each vertex is connected to the other 4 vertices. Thus, we need 5 different colors to ensure that no two adjacent vertices share the same color.\n\nTherefore, the chromatic number of \\(K_5\\) is \\(\\boxed{5}\\)."
+        ],
+        "n_model_calls": 1,
+        "elapsed_s": 7.201403856277466
+      }
+    }
+  },
+  {
+    "id": "P-2026-05-07-043",
+    "lane": "cross-domain",
+    "prompt": "Modular forms and elliptic curves: (a) state the modularity theorem (Wiles, Taylor-Wiles, Breuil-Conrad-Diamond-Taylor) for elliptic curves over Q, (b) name what cohomological object the L-function of an elliptic curve E equals.",
+    "decomposition_mode": "BOTH",
+    "responses": {
+      "ON": {
+        "completion": "(a) The modularity theorem, also known as the Taniyama-Sato-Weil conjecture, states that every rational elliptic curve is modular. This means that for every elliptic curve E defined over the rational numbers, there exists a modular form f such that the L-function of E is equal to the L-function of f.\n\nThe proof of this theorem was completed by Andrew Wiles, with the help of Taylor and other mathematicians, and it involved a series of steps including the modularity theorem itself, the mod p modular forms, and the mod p^2 modular forms. The work of Taylor, Wiles, and others led to the construction of the mod p modular forms, which were then used to prove the mod p^2 modular forms, and finally, the mod mod p modular forms, leading to the proof of the mod mod p^2 modular forms, and thus the mod mod p modular forms, and finally, the mod (b) The L-function of an elliptic curve \\(E\\) over a number field \\(K\\) is related to a cohomological object in the following way:\n\nThe L-function \\(L(E, s)\\) of an elliptic curve \\(E\\) over a number field \\(K\\) is equal to the cup product of the first cohomology group \\(H^1(K, \\mathbb{Q})\\) with the L-function of the base change of \\(E\\) to the complex numbers. However, a more precise and fundamental relationship involves the modular form associated with the elliptic curve.\n\nThe L-function of an elliptic curve \\(E\\) over \\(\\mathbb{Q}\\) is equal to the L-function of a modular form \\(f\\) of weight 2 for \\(\\text{ congruence subgroup } \\Gamma_0(N)\\), where \\(N\\) is the level of the modular form. This modular form \\(f\\) is known",
+        "is_multi_part": true,
+        "subqueries": [
+          "Modular forms and elliptic curves: state the modularity theorem (Wiles, Taylor-Wiles, Breuil-Conrad-Diamond-Taylor) for elliptic curves over Q?",
+          "Modular forms and elliptic curves: name what cohomological object the L-function of an elliptic curve E equals?"
+        ],
+        "per_subquery_answers": [
+          " The modularity theorem, also known as the Taniyama-Sato-Weil conjecture, states that every rational elliptic curve is modular. This means that for every elliptic curve E defined over the rational numbers, there exists a modular form f such that the L-function of E is equal to the L-function of f.\n\nThe proof of this theorem was completed by Andrew Wiles, with the help of Taylor and other mathematicians, and it involved a series of steps including the modularity theorem itself, the mod p modular forms, and the mod p^2 modular forms. The work of Taylor, Wiles, and others led to the construction of the mod p modular forms, which were then used to prove the mod p^2 modular forms, and finally, the mod mod p modular forms, leading to the proof of the mod mod p^2 modular forms, and thus the mod mod p modular forms, and finally, the mod",
+          " The L-function of an elliptic curve \\(E\\) over a number field \\(K\\) is related to a cohomological object in the following way:\n\nThe L-function \\(L(E, s)\\) of an elliptic curve \\(E\\) over a number field \\(K\\) is equal to the cup product of the first cohomology group \\(H^1(K, \\mathbb{Q})\\) with the L-function of the base change of \\(E\\) to the complex numbers. However, a more precise and fundamental relationship involves the modular form associated with the elliptic curve.\n\nThe L-function of an elliptic curve \\(E\\) over \\(\\mathbb{Q}\\) is equal to the L-function of a modular form \\(f\\) of weight 2 for \\(\\text{ congruence subgroup } \\Gamma_0(N)\\), where \\(N\\) is the level of the modular form. This modular form \\(f\\) is known"
+        ],
+        "n_model_calls": 2,
+        "elapsed_s": 18.52701187133789
+      },
+      "OFF": {
+        "completion": " (c) name the mod p version of the modularity theorem for elliptic curves over Q.\n(a) The modularity theorem, also known as the modularity conjecture, states that every rational elliptic curve is modular. This means that the L-function of the elliptic curve is equal to the L-function of a modular form. The theorem was proven by Andrew Wiles, Taylor, Taylor, Brer, Conrad, and diamond in the 1990s.\n\n(b) The L-function of an elliptic curve E over Q is equal to the L-function of a modular form. Specifically, the L-function of an elliptic curve E over Q is equal to the L-function of a modular form of weight 2 and level N, where N is the product of the primes where E has bad reduction.\n\n(c) The mod p version of the modularity theorem for elliptic curves over Q states that every elliptic curve over Q",
+        "is_multi_part": true,
+        "subqueries": [
+          "Modular forms and elliptic curves: (a) state the modularity theorem (Wiles, Taylor-Wiles, Breuil-Conrad-Diamond-Taylor) for elliptic curves over Q, (b) name what cohomological object the L-function of an elliptic curve E equals."
+        ],
+        "per_subquery_answers": [
+          " (c) name the mod p version of the modularity theorem for elliptic curves over Q.\n(a) The modularity theorem, also known as the modularity conjecture, states that every rational elliptic curve is modular. This means that the L-function of the elliptic curve is equal to the L-function of a modular form. The theorem was proven by Andrew Wiles, Taylor, Taylor, Brer, Conrad, and diamond in the 1990s.\n\n(b) The L-function of an elliptic curve E over Q is equal to the L-function of a modular form. Specifically, the L-function of an elliptic curve E over Q is equal to the L-function of a modular form of weight 2 and level N, where N is the product of the primes where E has bad reduction.\n\n(c) The mod p version of the modularity theorem for elliptic curves over Q states that every elliptic curve over Q"
+        ],
+        "n_model_calls": 1,
+        "elapsed_s": 9.148855686187744
+      }
+    }
+  },
+  {
+    "id": "P-2026-05-07-044",
+    "lane": "cross-domain",
+    "prompt": "What does Faltings' theorem (1983) say about rational points on smooth projective curves of genus >= 2 over a number field? Reply concisely with one sentence.",
+    "decomposition_mode": "OFF",
+    "responses": {
+      "OFF": {
+        "completion": " Theorem 1.1 in the paper \"Rational points on curves of generic type\" by B. Poonen and A. chow, available at <https://arXiv:math/0506471v1> states that for a smooth projective curve \\( C \\) of generic type over a number field \\( K \\), there are only finitely many \\( K \\)-rational points on \\( C \\). This result is known as the Mordell-Weil theorem for curves of generic type. It implies that the set of rational points on such curves is finite, which is a significant result in arithmetic geometry. \\\\\\boxed{\\text{There are only finitely many rational points on a smooth projective curve of generic type over a number field.}}\\\\\\\n\nThe final answer is \\(\\boxed{\\text{There are only finitely many rational points on a smooth projective",
+        "is_multi_part": false,
+        "subqueries": [
+          "What does Faltings' theorem (1983) say about rational points on smooth projective curves of genus >= 2 over a number field? Reply concisely with one sentence."
+        ],
+        "per_subquery_answers": [
+          " Theorem 1.1 in the paper \"Rational points on curves of generic type\" by B. Poonen and A. chow, available at <https://arXiv:math/0506471v1> states that for a smooth projective curve \\( C \\) of generic type over a number field \\( K \\), there are only finitely many \\( K \\)-rational points on \\( C \\). This result is known as the Mordell-Weil theorem for curves of generic type. It implies that the set of rational points on such curves is finite, which is a significant result in arithmetic geometry. \\\\\\boxed{\\text{There are only finitely many rational points on a smooth projective curve of generic type over a number field.}}\\\\\\\n\nThe final answer is \\(\\boxed{\\text{There are only finitely many rational points on a smooth projective"
+        ],
+        "n_model_calls": 1,
+        "elapsed_s": 8.989960432052612
+      }
+    }
+  }
+]
