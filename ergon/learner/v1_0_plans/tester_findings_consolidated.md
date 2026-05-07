@@ -94,6 +94,21 @@ The model has the right domain (approximation theory for SAT) but the wrong spec
 
 **Pre-registered hypothesis (Pattern 7):** Subset of Pattern 3 (topic-specific knowledge gap), but with a refinement: the model has *adjacent* knowledge (random-assignment 1/2 bound is closely related). Suggests v1.0 corpus needs not just subfield ingest but **specifically the leading-edge results within each subfield** rather than just textbook-introductory material. For approximation theory, that means Hästad's 2001 PCP/optimality results, not just intro-to-MAX-SAT. Rank 1 within Pattern 3 family: prioritize leading-edge result corpus over breadth.
 
+### Pattern 8: **Arithmetic-internal-inconsistency** (1 ticket, P1; added fire 8)
+
+| Ticket | Probe | Behaviour |
+|--------|-------|-----------|
+| T-2026-05-07-0015 | α_GW for MAX-CUT under UGC | Model claims `α_GW = (1+√2)/2 ≈ 1.207 ≈ 0.8536`. Each pair of "≈"s is a separate arithmetic claim that doesn't follow from the previous: (1+√2)/2 = 1.207 (correct); 1.207 = 0.8536 (FALSE — these don't equal). The model's *own* derivation chain is internally inconsistent. |
+
+Distinct from Pattern 1 (which is fact-fabrication; the wrong attribution exists outside the model's chain of reasoning), distinct from Pattern 7 (which is wrong-but-adjacent fact; here even the model's own claimed intermediate doesn't follow to its own conclusion). Pattern 8 is about **internal consistency of multi-step computation**, not external truth.
+
+**Pre-registered hypothesis (Pattern 8):** This is the hardest pattern to address. Three candidate v1.0 interventions:
+1. **Chain-of-thought verification training** — add CoT examples where the model is trained to *verify* its own arithmetic before producing a final answer (e.g., "step 5: 1.207 ≈ 0.8536 — check: |1.207 - 0.8536| = 0.353, not negligible — STOP, error in chain"). Predicted to address this directly. Rank 1.
+2. **External calculator integration** — route arithmetic to a separate verifier (sympy, mpmath); model's role becomes "construct the symbolic expression," external tool computes. Predicted to fully address Pattern 8 but at the cost of moving complexity outside the Learner. Rank 2 (substrate-engineering, not Learner-corpus).
+3. **Larger base model** — predicted partial fix (better arithmetic priors on larger models). Rank 3 (necessary but insufficient).
+
+**Compositionality observation (added fire 8):** several recent tester tickets are NOT single-pattern. T-2026-05-07-0014 = Pattern 3 + Pattern 6 + Pattern 1 (multi-pattern composite). T-2026-05-07-0015 = Pattern 1 + Pattern 7 + **Pattern 8** (multi-pattern composite). This is itself a finding: failures don't decompose cleanly into single causes. v1.0 fixes need to be evaluated on multi-pattern probes, not just single-pattern ones.
+
 ### Pattern 5: **Tester evaluator false-positives** (2 tickets — 1 WONTFIX, 1 candidate)
 
 | Ticket | Issue |
@@ -107,13 +122,14 @@ The model has the right domain (approximation theory for SAT) but the wrong spec
 
 ## 2. Aggregate v1.0 corpus-design recommendations
 
-In priority order (updated fire 7 with Patterns 6+7):
+In priority order (updated fire 8 with Pattern 8):
 
-1. **Attribution-provenance corpus** (Patterns 1 + 4, 5 tickets, mostly P1): explicit (result, statement-attribution, proof-attribution, year) tuples for major mathematical results. Highest leverage; addresses the most P1 tickets.
-2. **Concise-output instruction-tuning** (Pattern 2, 3 tickets P2): "give just the answer"-style training pairs to suppress verbose preamble.
-3. **Domain-specific subfield LoRA expansion with leading-edge bias** (Patterns 3 + 7, 5 tickets P2): sieve theory + arithmetic geometry + ergodic theory + quantum knot invariants + theoretical CS approximation theory + harmonic analysis (Bochner-Riesz). Pattern 7 refines this: prioritize leading-edge results within each subfield over textbook-introductory material.
-4. **Decode-time mitigations for rare-name + repetition** (Pattern 6, 1 ticket P2): tester-side `repetition_penalty=1.05`. Coordination signal; not Learner-side.
-5. **Tester evaluator robustness** (Pattern 5, 2 tickets): coordination ticket for Aporia/Charon; not a Learner-side fix.
+1. **Attribution-provenance corpus** (Patterns 1 + 4, 5+ tickets, mostly P1): explicit (result, statement-attribution, proof-attribution, year) tuples for major mathematical results. Highest leverage; addresses the most P1 tickets.
+2. **Chain-of-thought verification training** (Pattern 8, 1 ticket P1; new): CoT examples where the model is trained to *verify* its own arithmetic before producing the final answer. Most subtle and most general intervention: addresses internal-consistency failures across many surface-level patterns.
+3. **Concise-output instruction-tuning** (Pattern 2, 3 tickets P2): "give just the answer"-style training pairs.
+4. **Domain-specific subfield LoRA expansion with leading-edge bias** (Patterns 3 + 7, 5+ tickets P2): sieve theory + arithmetic geometry + ergodic theory + quantum knot invariants + theoretical CS approximation theory + harmonic analysis. Prioritize leading-edge results, not textbook-introductory.
+5. **Decode-time mitigations for rare-name + repetition** (Pattern 6, 2 tickets including alphabet-degeneration variant): tester-side `repetition_penalty=1.05`. Coordination signal; not Learner-side.
+6. **Tester evaluator robustness** (Pattern 5, 2 tickets): coordination signal for Aporia/Charon.
 
 ## 3. What this synthesis predicts about v1.0 LoRA hyperparam exploration
 
@@ -139,6 +155,7 @@ The fires 1+2 finding (`lora ≡ base` at 50 steps × rank 8) means current v0.5
 | 5 (evaluator) | Aporia / Charon (tester-side) | Coordination signal already in this doc; may need a Stoa post |
 | 6 (token-loop) | Aporia / Charon (tester-side primary) + Ergon v1.0 (rare-name corpus secondary) | Tester adds repetition_penalty=1.05; Ergon files v1.0 ticket for rare-name frequency improvement |
 | 7 (wrong-but-adjacent) | Ergon v1.0 corpus design (subset of Pattern 3) | Bundle into Pattern 3 ticket; refinement = "leading-edge results not just textbook intro" |
+| 8 (arithmetic-internal-inconsistency) | Ergon v1.0 corpus design + substrate (calculator integration) | File ticket: CoT-verification training pairs (Learner-side) + coordinate with substrate v2.x for optional sympy/mpmath verifier hook |
 
 ## 5. What this doc does NOT promise
 

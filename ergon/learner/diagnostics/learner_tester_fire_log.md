@@ -546,3 +546,40 @@ Net: 4 OPEN tickets (under 5-cap).
 - Pattern catalog is now: 1 (attribution-fabrication) / 2 (verbosity) / 3 (topic-disengagement) / 4 (stating-vs-proving) / 5 (evaluator-FP, tester-side) / 6 (token-loop) / 7 (wrong-but-adjacent). 17 deferred tester tickets total across 7 patterns. Saturation-curve question for next fires: how many fundamentally-distinct patterns exist? My guess: 8-12 patterns total before saturating, with Patterns 1 + 3 absorbing most new tickets and 6 + 7 being tail-distribution rarities.
 
 ---
+
+## Fire 8 — 2026-05-07 (Ergon producer-side, fire ID 8) — Manual /loop fire
+
+**Trigger:** Manual `/loop` invocation by James. Inbox state: 2 OPEN P1 tickets (T-2026-05-07-0014 + T-2026-05-07-0015).
+
+**Triage:** Both tester-side P1 with **composite sub_types** — multi-mode failures rather than single patterns.
+- T-0014 (harmonia-e Razborov-Rudich Natural Proofs probe): `sub_type=wrong_substance + question_spec_hallucination`. Observed: 99% alphabet-degeneration loop ("(c), (d), (e), ..., (z)") + single misspelled "Razbarov-Rudich" mention; never addresses (a)/(b) parts of question. **Composite of Pattern 3 (topic disengagement) + Pattern 6 variant (alphabet-degeneration; coarser-granularity token-loop) + Pattern 1 (name-misspelling).**
+- T-0015 (harmonia-e α_GW for MAX-CUT): `sub_type=wrong_substance + fabrication + arithmetic_error`. Observed: (1) UGC → UAC fabricated abbreviation; (2) wrong formula α_GW = (1+√2)/2; (3) **internally-inconsistent arithmetic** — model claims 1.207 ≈ 0.8536 in its own derivation chain (these don't equal). **Composite of Pattern 1 (fabricated abbrev) + Pattern 7 (wrong formula) + NEW Pattern 8.**
+
+**NEW Pattern 8: Arithmetic-internal-inconsistency.** Distinct from Pattern 1 (which is fact-fabrication external to the chain), distinct from Pattern 7 (which is wrong-but-adjacent fact). Pattern 8 is about the model's *own* multi-step computation chain failing internal consistency: even given the model's claimed intermediates, the conclusion doesn't follow. This is the hardest pattern observed so far.
+
+**Action:**
+- Pre-test 319/319 PASS (clean baseline, 29s).
+- Both tickets → BLOCKED-DEFERRED-V1.0 with composite-pattern notes.
+- Updated `ergon/learner/v1_0_plans/tester_findings_consolidated.md`:
+  - **Pattern 8** added: arithmetic-internal-inconsistency. Pre-registered hypothesis: 3 candidate interventions ranked — CoT-verification training (rank 1, Learner-side); external calculator integration (rank 2, substrate-engineering); larger base model (rank 3, partial).
+  - **Compositionality observation** added: T-0014 = Pattern 3+6+1 composite; T-0015 = Pattern 1+7+8 composite. Failures don't decompose cleanly into single causes; v1.0 fixes need multi-pattern probe evaluation.
+  - Priority list now 6 items (Pattern 8 inserts at rank 2 because CoT-verification is the most general intervention — addresses internal-consistency failures across many surface-level patterns).
+  - Coordination table now 8 patterns.
+- 19 deferred tester tickets total across 8 patterns.
+
+**Test result:** 319/319 pass (no test changes). No regressions.
+
+**SELF-REVIEW:**
+- (a) **Did this fix resolve the failure mode?** META — same defer-pattern as fires 3-7. Real fix is at v1.0 corpus + LoRA hyperparam exploration. The artifact preserved here is the v1.0 synthesis doc with Pattern 8 + compositionality observation.
+- (b) **Memorization risk?** None. Doc-only updates.
+- (c) **Contract change?** No.
+- (d) **Conventional-approach drift?** Caught two:
+  1. Pattern-classification drift: the conventional response would be to label T-0015 as "Pattern 1 + Pattern 7" (existing patterns) and move on. The substrate-grade move was to recognize that **internal-consistency failure in multi-step arithmetic is qualitatively different** from either fact-fabrication or wrong-but-adjacent — it's about the validity of the reasoning chain itself, not about whether individual facts are right. Pattern 8 is genuinely new.
+  2. Compositionality drift: the conventional response is to pick the most prominent sub_type and classify accordingly. The substrate-grade move was to **note that recent failures are multi-pattern composites** and treat that as itself a finding (v1.0 must evaluate fixes against multi-pattern probes, not just single-pattern ones).
+
+**Journal notes:**
+- Pattern catalog growth: fires 6+7+8 added Patterns 6, 7, 8 from new tester tickets. Saturation prediction (fire 7): 8-12 patterns total. Currently at 8. Either the tail is shorter than predicted, or the next fires will reveal Patterns 9-12.
+- Compositionality is a structural finding I didn't anticipate. v1.0 evaluation strategy implication: each test probe should specify which patterns it tests for, and the report should track which patterns each fix addresses (so we don't claim a fix-for-Pattern-1 by passing a Pattern-3-disguised-as-Pattern-1 probe).
+- Pattern 8's CoT-verification intervention overlaps interestingly with substrate v2.2's KillVector ontology (the substrate already encodes precision/method/convergence as first-class fields). v1.0 design pass should consider whether the Learner's CoT verification can hook into the substrate's verification machinery rather than re-implementing it.
+
+---
