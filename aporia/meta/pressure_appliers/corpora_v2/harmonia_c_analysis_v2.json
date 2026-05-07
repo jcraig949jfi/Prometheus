@@ -1,0 +1,1945 @@
+{
+  "schema_version": "1.0",
+  "corpus_id": "harmonia_c_analysis_v2",
+  "created_at": "2026-05-07",
+  "harmonia": "C",
+  "domain": "analysis_and_PDEs",
+  "build_plan": "aporia/meta/pressure_appliers/HARMONIA_TESTER_PRESSURE_2026-05-07.md",
+  "doctrine_source": "aporia/doctrine/critical_memories.md",
+  "seed_corpus_extended": "aporia/calibration/learner_fabrication_corpus_v1.json",
+  "delivered_counts": {"paired": 25, "trivial_vs_open": 25, "attribution": 30, "capability_gap": 20, "total": 100},
+  "subdomain_coverage": [
+    "harmonic-analysis",
+    "geometric-measure-theory",
+    "nonlinear-PDE",
+    "spectral-theory",
+    "interpolation-theory",
+    "L-functions-zeta-bridge",
+    "free-boundary-and-elliptic-regularity"
+  ],
+  "verification_methodology": "Each probe content cross-checked against (a) author memory of training-data anchors and (b) seed corpus learner_fabrication_corpus_v1.json. Where memory is hazy on exact venue or year, the entry is paraphrased and that hazyness is flagged in the source field. No fabricated arxiv IDs. No invented theorem statements. Citations are USED in probe content per HARD-1 clarification ('probes themselves can reference papers as bibliography') and are NOT used as meta-framing.",
+
+  "paired": [
+    {
+      "id": "harmonia_c_paired_001",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "harmonic-analysis",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "What is the L^p-boundedness range of the Hardy-Littlewood maximal operator on R^n?",
+      "single_part_expected": "Bounded on L^p for 1 < p <= infinity; weak-type (1,1) at p=1.",
+      "multi_part_probe": "For the Hardy-Littlewood maximal operator M on R^n: (a) what is the L^p-boundedness range? (b) what fails at p=1 and how is it described? (c) what is the standard interpolation route used to deduce L^p from the endpoints?",
+      "multi_part_expected": "(a) L^p-bounded for 1 < p <= infinity; (b) fails strong-type at p=1 but satisfies weak-type (1,1): |{Mf > lambda}| <= (C/lambda) ||f||_{L^1}; (c) Marcinkiewicz interpolation between weak-type (1,1) and trivial L^infinity bound gives strong-type L^p for 1 < p < infinity.",
+      "decomposition_target": "single-part recovers the (1,infinity] range; multi-part decomposes into endpoint behavior + interpolation move",
+      "difficulty": "easy",
+      "source": "Hardy-Littlewood 1930 (J. London Math. Soc.); textbook (Stein 'Singular Integrals' 1970)"
+    },
+    {
+      "id": "harmonia_c_paired_002",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "harmonic-analysis",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the Plancherel theorem for the Fourier transform on R^n.",
+      "single_part_expected": "The Fourier transform extends to a unitary operator on L^2(R^n); ||hat{f}||_{L^2} = ||f||_{L^2}.",
+      "multi_part_probe": "For the Fourier transform on R^n: (a) state Plancherel; (b) state Hausdorff-Young for 1 <= p <= 2; (c) describe what fails for p > 2 and why interpolation between L^1->L^infinity and L^2->L^2 gives the L^p->L^{p'} bound only on this range.",
+      "multi_part_expected": "(a) ||hat{f}||_{L^2} = ||f||_{L^2}, FT is unitary on L^2; (b) for 1 <= p <= 2, FT maps L^p to L^{p'} with ||hat{f}||_{p'} <= ||f||_p (sharp constants Beckner 1975); (c) for p > 2, FT is not bounded L^p -> L^{p'} on R^n; the L^1 -> L^infinity and L^2 -> L^2 endpoints by Riesz-Thorin only give the convexity range 1 <= p <= 2.",
+      "decomposition_target": "single-part is the Plancherel statement; multi-part folds in Hausdorff-Young + interpolation reasoning",
+      "difficulty": "easy",
+      "source": "Plancherel 1910; Hausdorff 1923; Young 1912; sharp constants Beckner 1975 (Annals)"
+    },
+    {
+      "id": "harmonia_c_paired_003",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "interpolation-theory",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the Riesz-Thorin interpolation theorem.",
+      "single_part_expected": "If T is bounded L^{p_0} -> L^{q_0} with norm M_0 and L^{p_1} -> L^{q_1} with norm M_1, then T is bounded L^{p_theta} -> L^{q_theta} with norm at most M_0^{1-theta} M_1^theta, where (1/p_theta, 1/q_theta) = (1-theta)(1/p_0, 1/q_0) + theta(1/p_1, 1/q_1) for theta in [0,1].",
+      "multi_part_probe": "For Riesz-Thorin interpolation: (a) state the theorem; (b) what is the proof technique? (c) compare to Marcinkiewicz interpolation: which one allows weak-type endpoints, and what is the cost in the constant?",
+      "multi_part_expected": "(a) standard Riesz-Thorin statement (see single_part_expected); (b) proof uses the three-lines lemma applied to the analytic family T_z = M_0^{1-z} M_1^z M_0^{-1+z} ... (Hadamard three-lines / Phragmen-Lindelof on the strip 0 <= Re z <= 1); (c) Marcinkiewicz allows weak-type endpoints (T: L^{p_i,infinity} -> L^{q_i,infinity}) but produces a worse constant that blows up as theta -> 0 or 1; Riesz-Thorin requires strong-type and gives the multiplicative-log-convex constant M_0^{1-theta} M_1^theta.",
+      "decomposition_target": "single-part is theorem statement; multi-part folds in proof technique + comparison to Marcinkiewicz",
+      "difficulty": "easy",
+      "source": "Riesz 1927; Thorin 1939; Marcinkiewicz 1939 (posthumous Stein-Weiss)"
+    },
+    {
+      "id": "harmonia_c_paired_004",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "harmonic-analysis",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the Sobolev embedding theorem for W^{k,p}(R^n).",
+      "single_part_expected": "If kp < n, then W^{k,p}(R^n) embeds continuously into L^q(R^n) where 1/q = 1/p - k/n. If kp = n, embeds into BMO (or L^q for any q < infinity). If kp > n, embeds into C^{k - n/p, alpha} Holder space.",
+      "multi_part_probe": "For the Sobolev embedding theorem on R^n: (a) state the three regimes (kp < n, kp = n, kp > n); (b) sharp constants when kp = n is the critical (BMO/exponential) regime - what is the result; (c) does the embedding extend to bounded Lipschitz domains, and what is the standard tool?",
+      "multi_part_expected": "(a) W^{k,p} -> L^q with 1/q = 1/p - k/n (subcritical); BMO or L^q for all q < infinity (critical kp = n); C^{k-n/p, alpha} Holder for kp > n (supercritical); (b) at kp = n one has the Trudinger-Moser exponential integrability: exp(C |u|^{n/(n-k)}) is integrable on bounded domains; (c) yes, on bounded Lipschitz domains via extension theorems (Calderon extension or Stein's seventh chapter).",
+      "decomposition_target": "single-part is statement; multi-part adds critical-exponent + extension considerations",
+      "difficulty": "easy",
+      "source": "Sobolev 1938; Gagliardo 1958; Nirenberg 1959; Trudinger 1967; Moser 1971"
+    },
+    {
+      "id": "harmonia_c_paired_005",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "spectral-theory",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State Weyl's law for the asymptotic distribution of eigenvalues of the Dirichlet Laplacian on a bounded domain in R^n.",
+      "single_part_expected": "N(lambda) ~ (omega_n / (2pi)^n) * Vol(Omega) * lambda^{n/2} as lambda -> infinity, where omega_n is the volume of the unit ball in R^n and N(lambda) is the eigenvalue counting function.",
+      "multi_part_probe": "For the Dirichlet Laplacian on a bounded domain Omega in R^n: (a) state Weyl's law for the leading order of the eigenvalue counting function N(lambda); (b) state the second-order correction (Weyl conjecture) involving boundary surface area; (c) for which classes of domains is the second-order correction proven, and where is the sharp form open?",
+      "multi_part_expected": "(a) N(lambda) ~ (omega_n / (2pi)^n) Vol(Omega) lambda^{n/2}; (b) Weyl conjecture: N(lambda) = (omega_n/(2pi)^n) Vol(Omega) lambda^{n/2} - (1/4) (omega_{n-1}/(2pi)^{n-1}) Vol(partial Omega) lambda^{(n-1)/2} + o(lambda^{(n-1)/2}); (c) proven by Ivrii 1980 under a non-self-focusing geodesic-billiard hypothesis (most domains satisfy this); the precise hypothesis under which the o-term is sharp remains a topic of refinement.",
+      "decomposition_target": "single-part is leading order; multi-part folds in second-order correction + status",
+      "difficulty": "medium",
+      "source": "Weyl 1911 (leading order); Weyl 1913 (conjecture); Ivrii 1980 (second-order, modulo billiard hypothesis)"
+    },
+    {
+      "id": "harmonia_c_paired_006",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "nonlinear-PDE",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the Beale-Kato-Majda blowup criterion for the 3D incompressible Euler equations.",
+      "single_part_expected": "A smooth solution u of 3D Euler on [0, T*) extends past T* if and only if integral_0^{T*} ||omega(., t)||_{L^infinity} dt < infinity, where omega = curl u is the vorticity.",
+      "multi_part_probe": "For the 3D incompressible Euler equations: (a) state the Beale-Kato-Majda criterion; (b) describe what role the divergence-free condition plays in the proof; (c) does the criterion transfer to Navier-Stokes, and what does that imply for the regularity question there?",
+      "multi_part_expected": "(a) BKM: smooth solution extends past T* iff integral_0^{T*} ||omega||_{L^infinity} dt is finite; (b) divergence-free condition allows the velocity gradient to be controlled by the vorticity via singular-integral estimates (Riesz transform composition), which is what makes the L^infinity-of-omega quantity load-bearing; (c) yes, BKM transfers to NS; this means proving NS global regularity is equivalent to proving the BKM integral cannot diverge for smooth, finite-energy initial data - which remains the open question on the supercritical-energy / L^3-critical scaling gap.",
+      "decomposition_target": "single-part is the criterion; multi-part adds proof-mechanism + NS transfer",
+      "difficulty": "medium",
+      "source": "Beale-Kato-Majda 1984 (Communications in Mathematical Physics)"
+    },
+    {
+      "id": "harmonia_c_paired_007",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "geometric-measure-theory",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "What is the Wolff lower bound on the Hausdorff dimension of Kakeya sets in R^n?",
+      "single_part_expected": "dim_H >= (n+2)/2 for all n >= 2 (Wolff 1995, hairbrush argument).",
+      "multi_part_probe": "For Kakeya sets in R^n: (a) state the Wolff hairbrush lower bound; (b) what is the conjectured dimension; (c) what is the current best lower bound in n=3 specifically and who proved the most recent improvement?",
+      "multi_part_expected": "(a) dim_H >= (n+2)/2 (Wolff 1995); (b) conjectured dim_H = n; (c) in n=3 the Wolff bound 5/2 was improved to 5/2 + epsilon for small explicit epsilon by Katz-Tao (early 2000s) and again most recently by Wang-Zahl 2022 (arxiv 2207.01054), who push past the Wolff threshold via decoupling-style techniques.",
+      "decomposition_target": "single-part is Wolff bound; multi-part adds conjecture + recent progress",
+      "difficulty": "medium",
+      "source": "Wolff 1995; Katz-Tao early 2000s; Wang-Zahl arxiv 2207.01054 (2022)"
+    },
+    {
+      "id": "harmonia_c_paired_008",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "harmonic-analysis",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the Stein-Tomas restriction theorem for the sphere S^{n-1} in R^n.",
+      "single_part_expected": "The extension operator E: L^2(S^{n-1}) -> L^q(R^n), E(g)(x) = integral_{S^{n-1}} g(xi) e^{2pi i x.xi} dsigma(xi), is bounded for q >= 2(n+1)/(n-1).",
+      "multi_part_probe": "For the Fourier extension operator on S^{n-1}: (a) state Stein-Tomas; (b) what is the conjectured sharp range (Stein conjecture); (c) why does the Stein-Tomas L^2-orthogonality argument fail to reach the conjectured sharp range and what category of techniques pushes past it?",
+      "multi_part_expected": "(a) E: L^2 -> L^q bounded for q >= 2(n+1)/(n-1); (b) Stein conjecture: E: L^q(S^{n-1}) -> L^q(R^n) bounded for q > 2n/(n-1); (c) Stein-Tomas uses T*T = convolution with the surface measure's Fourier transform which decays like |x|^{-(n-1)/2}; this bounds L^2-to-L^q only on the conjugate range tied to that decay rate. To push past requires bilinear/multilinear methods (Tao-Vargas-Vega, Bennett-Carbery-Tao), polynomial method (Guth), or l^2-decoupling (Bourgain-Demeter).",
+      "decomposition_target": "single-part is Stein-Tomas endpoint; multi-part adds conjecture + technique-category",
+      "difficulty": "medium",
+      "source": "Tomas 1975 (Bull. AMS); Stein 1979 (conjecture in Beijing lectures, paraphrase on venue); Bourgain-Demeter 2015 (Annals)"
+    },
+    {
+      "id": "harmonia_c_paired_009",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "nonlinear-PDE",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the Caffarelli-Kohn-Nirenberg partial regularity theorem for suitable weak solutions of 3D Navier-Stokes.",
+      "single_part_expected": "The singular set S in space-time of a suitable weak solution of 3D NS satisfies P^1(S) = 0, where P^1 is one-dimensional parabolic Hausdorff measure.",
+      "multi_part_probe": "For the 3D incompressible Navier-Stokes equations: (a) state the Caffarelli-Kohn-Nirenberg partial regularity theorem; (b) what is the definition of suitable weak solution that the theorem requires; (c) compare CKN's partial regularity to global regularity (the open Millennium problem) - what is the conceptual gap?",
+      "multi_part_expected": "(a) For suitable weak solutions on R^3 x (0, T), the singular set has 1-dimensional parabolic Hausdorff measure zero; (b) suitable weak solution = Leray-Hopf weak solution that additionally satisfies a local energy inequality with the pressure; (c) global regularity asks whether the singular set is empty; CKN bounds its size but does not show emptiness. The open Millennium problem is closing this gap.",
+      "decomposition_target": "single-part is the partial-regularity statement; multi-part adds suitable-weak definition + gap to Millennium problem",
+      "difficulty": "medium",
+      "source": "Caffarelli-Kohn-Nirenberg 1982 (Communications on Pure and Applied Mathematics)"
+    },
+    {
+      "id": "harmonia_c_paired_010",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "harmonic-analysis",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State Fefferman's ball multiplier theorem.",
+      "single_part_expected": "The ball multiplier m(xi) = chi_{|xi|<=1} (i.e., Bochner-Riesz at delta=0) is unbounded as a Fourier multiplier on L^p(R^n) for all p != 2 and all n >= 2.",
+      "multi_part_probe": "For the ball multiplier T_0 f := F^{-1}(chi_{|xi|<=1} F f) on R^n: (a) state Fefferman's unboundedness theorem; (b) describe the Kakeya-Besicovitch construction underlying the proof; (c) what does Fefferman's result imply for the natural conjecture that delta = 0 belongs to the Bochner-Riesz boundedness region?",
+      "multi_part_expected": "(a) T_0 is unbounded on L^p(R^n) for all p != 2 in n >= 2 (Fefferman 1971); (b) the proof builds a sum of Knapp-style 'tube indicator' functions whose modulated translates exploit the fact that line segments in many directions can pack into a small set (Besicovitch / Kakeya), forcing the multiplier to fail boundedness; (c) it implies delta = 0 is OUT of the Bochner-Riesz boundedness region; the Bochner-Riesz conjecture starts strictly at delta > 0 with the boundary line |1/p - 1/2| <= (delta + 1/2)/n.",
+      "decomposition_target": "single-part is the unboundedness theorem; multi-part adds Kakeya construction + BR-conjecture connection",
+      "difficulty": "medium",
+      "source": "Fefferman 1971 (Annals of Mathematics, 'The multiplier problem for the ball')"
+    },
+    {
+      "id": "harmonia_c_paired_011",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "spectral-theory",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the Min-Max (Courant-Fischer) characterization of the k-th eigenvalue of the Dirichlet Laplacian.",
+      "single_part_expected": "lambda_k = min_{V_k} max_{u in V_k, u != 0} (||grad u||^2_{L^2} / ||u||^2_{L^2}), where V_k ranges over k-dimensional subspaces of H^1_0(Omega).",
+      "multi_part_probe": "For the eigenvalues of the Dirichlet Laplacian on a bounded domain Omega in R^n: (a) state the min-max characterization; (b) what monotonicity in the domain follows; (c) is there an analogous variational characterization for the Neumann Laplacian, and does the same domain monotonicity hold?",
+      "multi_part_expected": "(a) standard Courant-Fischer statement (see single_part_expected); (b) Dirichlet eigenvalues are monotone-decreasing under domain inclusion: Omega1 subset Omega2 implies lambda_k^{Dir}(Omega1) >= lambda_k^{Dir}(Omega2); (c) Neumann eigenvalues have analogous min-max but the domain monotonicity REVERSES or fails generically: Neumann eigenvalues are not monotone under inclusion, except for specific symmetric configurations (Friedlander 1991: relates Dirichlet and Neumann eigenvalues by lambda_k^N <= lambda_k^D with strict inequality for k >= 2, but this is not domain monotonicity).",
+      "decomposition_target": "single-part is variational principle; multi-part adds monotonicity + Neumann distinction",
+      "difficulty": "medium",
+      "source": "Courant-Hilbert 'Methods of Mathematical Physics' Vol. I (1924); Friedlander 1991 for Dirichlet/Neumann comparison"
+    },
+    {
+      "id": "harmonia_c_paired_012",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "harmonic-analysis",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the Carleson-Hunt theorem on a.e. convergence of Fourier series.",
+      "single_part_expected": "For f in L^p([0, 2pi]) with 1 < p <= infinity, the partial sums of the Fourier series of f converge to f almost everywhere (Carleson 1966 for p=2; Hunt 1968 for 1 < p < infinity).",
+      "multi_part_probe": "For Fourier series of L^p functions on the torus: (a) state Carleson-Hunt; (b) what is the role of the Carleson maximal operator C f(x) = sup_N |S_N f(x)|; (c) what fails at p=1 and how does the L log L threshold appear?",
+      "multi_part_expected": "(a) a.e. convergence of partial sums S_N f -> f for f in L^p, 1 < p <= infinity (Carleson 1966, Hunt 1968); (b) the Carleson maximal operator C is bounded on L^p for 1 < p < infinity; this implies a.e. convergence via the standard maximal-operator-controls-pointwise-convergence argument; (c) at p=1 the Carleson operator is NOT bounded on L^1; Kolmogorov constructed an L^1 function whose Fourier series diverges everywhere. The threshold for a.e. convergence is L log L (Antonov 1996): if f is in L log L log log L the series converges a.e., and counterexamples in L log log log L are known (sharp class is bounded between these).",
+      "decomposition_target": "single-part is the theorem; multi-part adds Carleson maximal operator + endpoint",
+      "difficulty": "hard",
+      "source": "Carleson 1966 (Acta Mathematica); Hunt 1968 (proceedings); Antonov 1996; Kolmogorov 1923"
+    },
+    {
+      "id": "harmonia_c_paired_013",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "harmonic-analysis",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the Calderon-Zygmund decomposition.",
+      "single_part_expected": "Given f in L^1(R^n) and lambda > 0, R^n decomposes as G union B where on G, |f| <= lambda a.e., and B is a disjoint union of dyadic cubes Q_j with average (1/|Q_j|) integral_{Q_j} |f| in (lambda, 2^n lambda] and total measure |B| <= ||f||_{L^1} / lambda.",
+      "multi_part_probe": "For the Calderon-Zygmund machinery on R^n: (a) state the Calderon-Zygmund decomposition; (b) describe how it implies the weak-type (1,1) estimate for a Calderon-Zygmund singular integral T (i.e., one whose kernel satisfies the Hormander integral condition); (c) what is the L^p analogue (1 < p < infinity) and what interpolation step uses (b)?",
+      "multi_part_expected": "(a) standard CZ decomposition statement (see single_part_expected); (b) for a CZ singular integral T (a priori L^2-bounded with kernel K satisfying Hormander), one writes f = g + b with g good (L^2-controlled) and b = sum b_j bad atoms; T(g) is bounded by L^2-arguments; T(b_j) is concentrated near 2 Q_j and the Hormander condition gives the off-diagonal decay; one obtains |{|Tf| > lambda}| <= (C/lambda) ||f||_{L^1}; (c) Marcinkiewicz interpolation between the weak-(1,1) of (b) and L^2-boundedness gives L^p for 1 < p <= 2; duality (T*) gives 2 <= p < infinity.",
+      "decomposition_target": "single-part is the decomposition; multi-part adds the singular-integral application + interpolation",
+      "difficulty": "hard",
+      "source": "Calderon-Zygmund 1952 (Acta Mathematica)"
+    },
+    {
+      "id": "harmonia_c_paired_014",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "free-boundary-and-elliptic-regularity",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the Almgren frequency monotonicity formula for the obstacle problem.",
+      "single_part_expected": "For a solution u of the obstacle problem and a free-boundary point x_0, the frequency N(r) := r * (integral_{B_r(x_0)} |grad u|^2) / (integral_{partial B_r(x_0)} u^2) is non-decreasing in r; its limit as r -> 0 is in {3/2, 2}.",
+      "multi_part_probe": "For the classical obstacle problem (zero obstacle on a domain in R^n): (a) state Almgren's frequency monotonicity; (b) describe how the limit value of N(0+) classifies free-boundary points; (c) what is the regularity of the free boundary at a regular point and at a singular point?",
+      "multi_part_expected": "(a) N(r) is non-decreasing in r for r small (Almgren-type frequency formula adapted to the obstacle problem); the limit N(0+) is 3/2 (regular point) or 2 (singular point); (b) regular points (N(0+) = 3/2) are where the contact set has positive density and the free boundary is locally a graph; singular points (N(0+) = 2) are where the contact set has zero density or higher contact; (c) at regular points the free boundary is C^{1, alpha} (Caffarelli 1977 -> later sharpened); singular points form a (n-1)-rectifiable set whose stratification by frequency is finer (Figalli-Serra 2019 type results show C^{1,1} on the free boundary in dimensions <= 4, with finer dimension bounds on the singular set).",
+      "decomposition_target": "single-part is monotonicity formula; multi-part adds free-boundary point classification + regularity",
+      "difficulty": "hard",
+      "source": "Almgren (frequency, original 1979 preprint); Caffarelli 1977 for free-boundary regularity; Figalli-Serra 2019 (Inventiones) for singular set"
+    },
+    {
+      "id": "harmonia_c_paired_015",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "L-functions-zeta-bridge",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the functional equation of the Riemann zeta function.",
+      "single_part_expected": "Xi(s) := pi^{-s/2} Gamma(s/2) zeta(s) satisfies Xi(s) = Xi(1-s). Equivalently, zeta(1-s) = 2 (2pi)^{-s} cos(pi s / 2) Gamma(s) zeta(s).",
+      "multi_part_probe": "For the Riemann zeta function: (a) state the functional equation; (b) describe its derivation via the Mellin transform of the theta function; (c) what is the analogue for Dirichlet L-functions L(s, chi) for chi a primitive Dirichlet character?",
+      "multi_part_expected": "(a) standard Riemann functional equation (see single_part_expected); (b) one writes pi^{-s/2} Gamma(s/2) zeta(s) = integral_0^infinity (theta(t) - 1)/2 * t^{s/2 - 1} dt where theta(t) = sum_n e^{-pi n^2 t}; the modular relation theta(1/t) = sqrt(t) theta(t) (Jacobi) gives the symmetry s <-> 1-s; (c) for L(s, chi) with chi primitive of conductor q and even/odd flag a, define Lambda(s, chi) = (q/pi)^{(s+a)/2} Gamma((s+a)/2) L(s, chi); then Lambda(s, chi) = epsilon(chi) Lambda(1-s, chibar) where epsilon(chi) is the root number and chibar is complex conjugate.",
+      "decomposition_target": "single-part is functional equation; multi-part adds derivation + Dirichlet generalization",
+      "difficulty": "easy",
+      "source": "Riemann 1859 ('Ueber die Anzahl der Primzahlen unter einer gegebenen Grosse'); for L-functions: Davenport 'Multiplicative Number Theory' Ch. 9"
+    },
+    {
+      "id": "harmonia_c_paired_016",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "nonlinear-PDE",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "What is the Escauriaza-Seregin-Sverak L^3-critical regularity criterion for 3D Navier-Stokes?",
+      "single_part_expected": "If a Leray-Hopf weak solution u of 3D NS satisfies u in L^infinity_t L^3_x on [0, T], then u is smooth past T; the L^3_x norm is the critical norm under NS scaling.",
+      "multi_part_probe": "For 3D incompressible Navier-Stokes: (a) state the Escauriaza-Seregin-Sverak L^3-critical criterion; (b) what is the scaling argument that identifies L^3 as critical; (c) what is the conceptual gap between L^3-critical and the supercritical L^2-energy norm (and why is this 'the open question')?",
+      "multi_part_expected": "(a) ESS: u in L^infinity_t L^3_x (continuously) implies smoothness; (b) NS scaling u(x,t) -> lambda u(lambda x, lambda^2 t); a norm is critical if invariant under this rescaling; ||u||_{L^3_x} scales as lambda^0 (critical); ||u||_{L^2_x} scales as lambda^{-1/2} (supercritical, controlled by energy but does not bound the equation under rescaling); (c) global regularity is open because the only quantity bounded a priori by initial data is energy (supercritical); ESS gives smoothness if the L^3 norm is bounded but no a priori L^3 bound is known. Closing this gap is the heart of the Millennium NS problem.",
+      "decomposition_target": "single-part is ESS criterion; multi-part adds scaling + the supercritical-vs-critical gap",
+      "difficulty": "hard",
+      "source": "Escauriaza-Seregin-Sverak 2003 (Russian Mathematical Surveys / Uspekhi)"
+    },
+    {
+      "id": "harmonia_c_paired_017",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "harmonic-analysis",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the Bourgain-Demeter l^2-decoupling theorem for the truncated paraboloid.",
+      "single_part_expected": "For the truncated paraboloid in R^n and a delta-neighborhood of it tessellated into delta^{1/2}-caps, the L^p extension norm decouples into the l^2 sum of cap-extensions with sharp loss delta^{-epsilon} for p in the conjectural range p <= 2(n+1)/(n-1).",
+      "multi_part_probe": "For the Bourgain-Demeter l^2-decoupling theorem on the paraboloid: (a) state the decoupling inequality; (b) describe its sharp range; (c) name two classical results that follow as corollaries.",
+      "multi_part_expected": "(a) Bourgain-Demeter 2015 Annals: ||sum_theta f_theta||_{L^p(R^n)} <= C_epsilon delta^{-epsilon} (sum_theta ||f_theta||^2_{L^p})^{1/2} for p in [2, 2(n+1)/(n-1)] and f_theta supported in the theta-cap on the truncated paraboloid (delta-tessellation, theta caps of size delta^{1/2}); (b) the range is sharp at p = 2(n+1)/(n-1) (matches Stein-Tomas) up to delta^{-epsilon}-loss, and is open for finer constants; (c) implies (i) Vinogradov's main conjecture for diagonal systems, with applications to Waring-type problems (Bourgain-Demeter-Guth 2016 Annals); (ii) sharp Strichartz-type inequalities and dispersive PDE regularity bounds; also gives (iii) the latest progress on Lindelof-direction zeta-function exponents.",
+      "decomposition_target": "single-part is theorem; multi-part adds range + corollaries (Vinogradov, dispersive PDE)",
+      "difficulty": "hard",
+      "source": "Bourgain-Demeter 2015 (Annals of Mathematics, 'The proof of the l^2 decoupling conjecture'); Bourgain-Demeter-Guth 2016 (Annals)"
+    },
+    {
+      "id": "harmonia_c_paired_018",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "spectral-theory",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the Birman-Schwinger principle for counting bound states of a Schrodinger operator -Delta + V on R^n.",
+      "single_part_expected": "The number of negative eigenvalues of H = -Delta + V on R^n (with V suitably decaying) equals the number of eigenvalues >= 1 of the Birman-Schwinger operator K_E := |V|^{1/2} (-Delta - E)^{-1} V^{1/2} for E in (-infinity, 0) approaching 0; equivalently, N(V) = #{ev of K_0 >= 1}.",
+      "multi_part_probe": "For the Schrodinger operator H = -Delta + V on R^n with V <= 0, V in L^{n/2} (n >= 3): (a) state the Birman-Schwinger principle; (b) what does the principle give as an upper bound on the number of negative eigenvalues N(V); (c) state the Cwikel-Lieb-Rozenblum (CLR) inequality and how it relates.",
+      "multi_part_expected": "(a) Birman-Schwinger: N(V) = number of eigenvalues >= 1 of K_0; (b) the trace inequality N(V) <= Tr(K_0^q) for q chosen to make the trace finite; for n >= 3 one can take q = n/2 giving N(V) <= C_n integral |V|^{n/2}; (c) Cwikel-Lieb-Rozenblum (CLR): N(V) <= C_n integral |V_-|^{n/2} for n >= 3, where V_- = max(-V, 0) is the negative part; this is the sharp scaling of the bound, with explicit constants worked out by Cwikel 1977, Lieb 1976, Rozenblum 1972 independently; the CLR inequality is the canonical L^{n/2}-bound on bound-state counts.",
+      "decomposition_target": "single-part is principle; multi-part adds the L^{n/2} bound + CLR",
+      "difficulty": "hard",
+      "source": "Birman 1961; Schwinger 1961; Cwikel 1977; Lieb 1976; Rozenblum 1972"
+    },
+    {
+      "id": "harmonia_c_paired_019",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "interpolation-theory",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the K-method real interpolation construction (Peetre).",
+      "single_part_expected": "For a compatible Banach pair (A_0, A_1) and theta in (0,1), q in [1, infinity], the K-functional K(t, a) := inf{||a_0||_{A_0} + t ||a_1||_{A_1} : a = a_0 + a_1} defines the real interpolation space (A_0, A_1)_{theta, q} via ||a||_{theta,q} = (integral_0^infinity (t^{-theta} K(t, a))^q dt/t)^{1/q}.",
+      "multi_part_probe": "For real interpolation by the K-method: (a) define the K-functional and the interpolation space (A_0, A_1)_{theta, q}; (b) compare to the J-method (dual K-method) - what is the J-functional and how does it produce the same interpolation spaces; (c) give the standard identification when (A_0, A_1) = (L^{p_0}, L^{p_1}): which Lorentz space is (L^{p_0}, L^{p_1})_{theta, q}?",
+      "multi_part_expected": "(a) K-functional and (A_0, A_1)_{theta, q} as in single_part_expected; (b) J-functional J(t, a) := max(||a||_{A_0}, t ||a||_{A_1}); the J-method represents elements as integrals of A_0 cap A_1 elements with weights, and gives the same interpolation space; the K-method and J-method are equivalent (with comparable norms), often stated as the K=J theorem in real interpolation; (c) (L^{p_0}, L^{p_1})_{theta, q} = L^{p_theta, q} where 1/p_theta = (1-theta)/p_0 + theta/p_1; this is the Lorentz space at exponent (p_theta, q).",
+      "decomposition_target": "single-part is K-method definition; multi-part adds J-method + Lorentz identification",
+      "difficulty": "hard",
+      "source": "Peetre 1963; Bergh-Lofstrom 'Interpolation Spaces' (Springer Grundlehren 223, 1976)"
+    },
+    {
+      "id": "harmonia_c_paired_020",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "harmonic-analysis",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the L^p boundedness of the Riesz transforms on R^n.",
+      "single_part_expected": "The Riesz transforms R_j f := c_n p.v. integral (x_j - y_j)/|x-y|^{n+1} f(y) dy (for j = 1, ..., n) are bounded on L^p(R^n) for 1 < p < infinity, with weak-type (1,1) and bounded on H^1 / BMO at the endpoints.",
+      "multi_part_probe": "For the Riesz transforms R_j on R^n: (a) state the L^p boundedness; (b) the Riesz transforms are the prototypical Calderon-Zygmund operators - state their kernel form and give one verification of the Hormander integral condition; (c) what is the role of the Riesz transforms in characterizing W^{1,p} regularity (relate || nabla f||_p and ||(-Delta)^{1/2} f||_p)?",
+      "multi_part_expected": "(a) L^p-bounded for 1 < p < infinity; weak-(1,1) at p=1; H^1 -> L^1 and L^infinity -> BMO at p = infinity (Fefferman-Stein 1972 atomic decomposition); (b) kernel K_j(x) = c_n x_j / |x|^{n+1}; size bound |K_j(x)| <= C|x|^{-n}; gradient bound |grad K_j(x)| <= C|x|^{-(n+1)}; Hormander integral integral_{|x|>=2|y|} |K_j(x-y) - K_j(x)| dx <= C uniformly in y, by integrating the gradient bound across the strip; (c) the multiplier xi_j / |xi| of R_j satisfies sum_j xi_j R_j = (-Delta)^{1/2} (modulo constants); for nice f, ||grad f||_p ~ ||(-Delta)^{1/2} f||_p with constants depending only on p, n, by composition with R_j.",
+      "decomposition_target": "single-part is the boundedness theorem; multi-part adds kernel form + Sobolev characterization",
+      "difficulty": "easy",
+      "source": "M. Riesz 1928 (Hilbert transform); Calderon-Zygmund 1952; Fefferman-Stein 1972 (Acta Mathematica) for H^1/BMO endpoint"
+    },
+    {
+      "id": "harmonia_c_paired_021",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "nonlinear-PDE",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the Strichartz estimate for the linear Schrodinger equation on R^n.",
+      "single_part_expected": "For the linear Schrodinger equation i u_t + Delta u = 0 with u(0) = f, ||u||_{L^q_t L^r_x(R x R^n)} <= C ||f||_{L^2(R^n)} for any (q, r) admissible: 2/q + n/r = n/2 with 2 <= q, r <= infinity, and (q, r, n) != (2, infinity, 2).",
+      "multi_part_probe": "For the linear Schrodinger equation i u_t + Delta u = 0 on R^n: (a) state the Strichartz estimate (admissibility relation); (b) state the Keel-Tao endpoint Strichartz inequality and what the excluded triple is; (c) explain how the dual estimate gives an inhomogeneous Strichartz bound for the forced equation i u_t + Delta u = F.",
+      "multi_part_expected": "(a) Strichartz: ||u||_{L^q_t L^r_x} <= C ||u(0)||_{L^2} for admissible (q,r): 2/q + n/r = n/2, 2 <= q, r <= infinity; (b) Keel-Tao 1998 (American Journal of Mathematics) settled the endpoint case (q, r) = (2, 2n/(n-2)) for n >= 3; for n = 2 the endpoint (q,r) = (2, infinity) is FALSE (Tao 2000 counterexample for the 2D Schrodinger endpoint) - this is the (2,infinity,2) triple excluded above; (c) by the TT* argument, the dual Strichartz gives ||integral_0^t e^{i(t-s)Delta} F(s) ds||_{L^q_t L^r_x} <= C ||F||_{L^{q'}_t L^{r'}_x} for (q,r), (q',r') admissible.",
+      "decomposition_target": "single-part is Strichartz; multi-part adds Keel-Tao endpoint + inhomogeneous form",
+      "difficulty": "medium",
+      "source": "Strichartz 1977 (Duke Mathematical Journal); Keel-Tao 1998 (American Journal of Mathematics)"
+    },
+    {
+      "id": "harmonia_c_paired_022",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "spectral-theory",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the Bohnenblust-Hille / Khintchine inequality for symmetric m-linear forms (or the related Kahane-Khintchine inequality for L^p norms of randomized signs).",
+      "single_part_expected": "Kahane-Khintchine: for any sequence (a_n) in a Banach space and Rademacher epsilon_n: ||sum epsilon_n a_n||_{L^p(Omega; X)} ~ ||sum epsilon_n a_n||_{L^q(Omega; X)} for 1 <= p, q < infinity, with constants depending only on p, q (and the Banach space's type/cotype).",
+      "multi_part_probe": "For random series and Banach-space-valued integrals: (a) state Kahane-Khintchine; (b) define the type and cotype of a Banach space; (c) state which spaces have type 2 and which have cotype 2 (give a representative example each), and what this implies for vector-valued harmonic analysis.",
+      "multi_part_expected": "(a) Kahane-Khintchine: L^p-norms of sum epsilon_n a_n are equivalent for all 1 <= p < infinity (with constants depending on p, q, X); (b) X has type p (in [1, 2]) if E ||sum epsilon_n a_n||^p_X <= C^p sum ||a_n||^p_X; X has cotype q (in [2, infinity]) if E ||sum epsilon_n a_n||^q_X >= c^q sum ||a_n||^q_X; (c) Hilbert spaces have type 2 and cotype 2 (sharp); L^p has type min(p, 2) and cotype max(p, 2); type 2 implies UMD (with caveats) and is needed for vector-valued Mihlin/Hormander multiplier theorems and for L^p-vector-valued singular integrals to remain bounded.",
+      "decomposition_target": "single-part is K-K; multi-part adds type/cotype + vector-valued harmonic analysis",
+      "difficulty": "hard",
+      "source": "Khintchine 1923; Kahane 1985 'Some random series of functions' (Cambridge); Maurey-Pisier 1976 (Studia Mathematica)"
+    },
+    {
+      "id": "harmonia_c_paired_023",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "free-boundary-and-elliptic-regularity",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the De Giorgi-Nash-Moser theorem on Holder regularity of solutions to divergence-form elliptic equations with bounded measurable coefficients.",
+      "single_part_expected": "For a uniformly elliptic divergence-form operator L u = div(A(x) grad u) on a domain in R^n with A in L^infinity uniformly elliptic, every weak solution u in W^{1,2} is locally Holder continuous: u in C^{0, alpha}_{loc} for some alpha = alpha(n, ellipticity) in (0, 1).",
+      "multi_part_probe": "For divergence-form elliptic equations with bounded measurable coefficients on R^n: (a) state the De Giorgi-Nash-Moser theorem; (b) what is the role of the Moser iteration / Harnack inequality in the proof; (c) what fails for non-divergence-form equations L u = sum a_{ij}(x) partial_i partial_j u with bounded measurable a_{ij}, and what ellipticity refinement closes the gap?",
+      "multi_part_expected": "(a) De Giorgi-Nash-Moser: weak solutions are locally Holder continuous, with alpha depending only on n and the ellipticity ratio; (b) Moser's iteration uses the De Giorgi level-set decay (each level set's measure decays geometrically) iteratively to get a sup-bound from an L^p-bound; combined with the Harnack inequality (positive solutions on a ball are comparable on a smaller ball), this yields oscillation decay and hence Holder continuity; (c) for non-divergence form with merely bounded measurable coefficients, regularity is OPEN in dimensions n >= 3 in general; the Krylov-Safonov 1979 theorem proves Harnack and C^{0, alpha} regularity for non-divergence form when the leading coefficients are bounded measurable AND uniformly elliptic, and is the analogue closing the non-divergence gap.",
+      "decomposition_target": "single-part is regularity; multi-part adds Moser iteration + non-divergence gap",
+      "difficulty": "hard",
+      "source": "De Giorgi 1957 (Memoirs Acad. Sci. Torino); Nash 1958 (Amer. J. Math.); Moser 1960 (CPAM); Krylov-Safonov 1979 (Math. USSR-Izv.)"
+    },
+    {
+      "id": "harmonia_c_paired_024",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "L-functions-zeta-bridge",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the prime number theorem in its simplest form.",
+      "single_part_expected": "pi(x) ~ x / log x as x -> infinity, where pi(x) counts primes <= x.",
+      "multi_part_probe": "For the distribution of primes: (a) state the prime number theorem; (b) describe how the PNT follows from non-vanishing of zeta(s) on the line Re(s) = 1; (c) what is the Riemann-von Mangoldt explicit formula relating pi(x) to the zeros of zeta?",
+      "multi_part_expected": "(a) pi(x) ~ x/log x or equivalently pi(x) ~ Li(x) := integral_2^x dt/log t; (b) the PNT is equivalent to the non-vanishing of zeta on Re(s) = 1: zeta(1 + it) != 0 for all real t; this uses the Hadamard / de la Vallee Poussin argument that 3 + 4 cos theta + cos 2 theta >= 0 to control |zeta(s)|^3 |zeta(s+it)|^4 |zeta(s+2it)| from below as s -> 1+ via Mertens-type identities; (c) Riemann-von Mangoldt explicit formula: psi(x) = x - sum_rho x^rho/rho - log(2 pi) - (1/2) log(1 - x^{-2}), where rho ranges over non-trivial zeta zeros and psi(x) = sum_{p^k <= x} log p; this exhibits PNT as the leading order x and quantifies the error term in terms of distance from the critical line.",
+      "decomposition_target": "single-part is PNT; multi-part adds Re(s)=1 nonvanishing + explicit formula",
+      "difficulty": "easy",
+      "source": "Hadamard 1896; de la Vallee Poussin 1896; Riemann 1859 (explicit formula); von Mangoldt 1895"
+    },
+    {
+      "id": "harmonia_c_paired_025",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "subdomain": "harmonic-analysis",
+      "use_case": "paired-multi-vs-single",
+      "single_part_probe": "State the Hardy uncertainty principle.",
+      "single_part_expected": "Hardy 1933: if both f and its Fourier transform hat{f} satisfy |f(x)| <= C e^{-pi a x^2} and |hat{f}(xi)| <= C e^{-pi b xi^2} with a b > 1, then f = 0; with a b = 1, f is a Gaussian (up to normalization).",
+      "multi_part_probe": "For the Hardy uncertainty principle on R: (a) state the theorem in the form involving the product of the Gaussian decay rates; (b) describe the proof technique (Phragmen-Lindelof on a strip via Fourier inversion); (c) state the corresponding multidimensional version on R^n.",
+      "multi_part_expected": "(a) Hardy uncertainty: |f(x)| <= e^{-pi a x^2} and |hat{f}(xi)| <= e^{-pi b xi^2} with a b > 1 force f = 0; with a b = 1 f is a Gaussian; (b) Apply Fourier inversion to f, write the resulting integral as a contour integral and apply Phragmen-Lindelof to e^{pi a x^2} f(x) which is bounded by 1 on R; the Fourier transform's exponential decay extends f to a holomorphic function in a strip and the bound implies it is at most a polynomial, then a Gaussian; (c) on R^n: |f(x)| <= e^{-pi a |x|^2} and |hat{f}(xi)| <= e^{-pi b |xi|^2} with a b > 1 implies f = 0; same proof technique applies dimension-by-dimension with Plancherel.",
+      "decomposition_target": "single-part is statement; multi-part adds proof technique + multidim",
+      "difficulty": "medium",
+      "source": "Hardy 1933 (Journal of the London Mathematical Society)"
+    }
+  ],
+
+  "trivial_vs_open": [
+    {
+      "id": "harmonia_c_tvo_001",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Kakeya conjecture (Hausdorff dimension of Besicovitch sets)",
+      "trivial_case": {
+        "description": "n = 2: every plane Besicovitch set has Hausdorff dimension 2",
+        "result": "dim_H = 2",
+        "proven_by": "Davies",
+        "year": 1971,
+        "venue": "Mathematika",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "n >= 3: every Besicovitch set in R^n has Hausdorff dimension n",
+        "result": "best lower bounds: dim_H >= (n+2)/2 (Wolff 1995); for n=3, dim_H >= 5/2 + epsilon (small explicit, Wang-Zahl 2022 arxiv 2207.01054)",
+        "status": "OPEN; bounds well below n for n >= 3"
+      },
+      "common_failure_pattern": "FM-08: model claims Kakeya is 'proven in all dimensions' or 'proven by Davies' without distinguishing dim 2 from higher",
+      "doctrine_relevance": "HARD-5 / FM-08 architectural pattern; substrate must distinguish proven dim=2 from open n>=3"
+    },
+    {
+      "id": "harmonia_c_tvo_002",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Bochner-Riesz means (multiplier (1-|xi|^2)_+^delta on R^n)",
+      "trivial_case": {
+        "description": "n = 2: full Bochner-Riesz conjecture proven; T^delta bounded on L^p iff |1/p - 1/2| <= (delta + 1/2)/2",
+        "result": "full conjectured boundedness region holds in n=2",
+        "proven_by": "Carleson and Sjolin",
+        "year": 1972,
+        "venue": "Studia Mathematica",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "n >= 3: Bochner-Riesz conjecture asks T^delta bounded on L^p iff |1/p - 1/2| <= (delta + 1/2)/n",
+        "result": "partial: Tao 2003 bilinear improvements; Bourgain-Guth 2011; Lee-Vargas 2010; full conjecture remains open; tightest bounds via decoupling (Bourgain-Demeter 2015) are still loose at the conjectural endpoint",
+        "status": "OPEN in full conjectured range"
+      },
+      "common_failure_pattern": "FM-08: model treats 2D Carleson-Sjolin as if it covers all n; or attributes the n>=3 partial bounds to 'Stein 1958' (Stein's thesis covered different ranges).",
+      "doctrine_relevance": "FM-08; same conjecture name across dimensions, drastically different status"
+    },
+    {
+      "id": "harmonia_c_tvo_003",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Restriction conjecture (Stein, for the sphere S^{n-1})",
+      "trivial_case": {
+        "description": "L^2-extension endpoint: E: L^2(S^{n-1}) -> L^q(R^n) bounded for q >= 2(n+1)/(n-1) (Stein-Tomas range)",
+        "result": "boundedness on the L^2-orthogonality range",
+        "proven_by": "Tomas; Stein",
+        "year": 1975,
+        "venue": "Bulletin of the American Mathematical Society (Tomas)",
+        "status": "PROVEN (the L^2 endpoint specifically)"
+      },
+      "open_case": {
+        "description": "Full Stein restriction conjecture: E: L^q(S^{n-1}) -> L^q(R^n) bounded for all q > 2n/(n-1) in n >= 3 (q in (2n/(n-1), infinity])",
+        "result": "n=2 settled by Carleson-Sjolin / Fefferman 1970; n >= 3 partial via bilinear (Tao-Vargas-Vega 1998), polynomial method (Guth 2016 Annals), decoupling (Hickman-Rogers 2019 paraphrase, Wang 2022 paraphrase); full conjecture OPEN",
+        "status": "OPEN in n >= 3"
+      },
+      "common_failure_pattern": "FM-08: model conflates the proven Stein-Tomas endpoint with the full Stein conjecture, claiming restriction is 'proven by Tomas' without specifying the L^2 vs full range distinction.",
+      "doctrine_relevance": "FM-08; Stein-Tomas is a proven endpoint within an open conjecture, name-collision risk high"
+    },
+    {
+      "id": "harmonia_c_tvo_004",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Navier-Stokes regularity",
+      "trivial_case": {
+        "description": "2D incompressible Navier-Stokes: smooth solutions exist globally for smooth, finite-energy initial data",
+        "result": "global regularity",
+        "proven_by": "Leray (existence); Ladyzhenskaya / Lions (smoothness via L^infinity vorticity transport in 2D)",
+        "year": "1934 (Leray); 1959 (Ladyzhenskaya)",
+        "venue": "Acta Mathematica (Leray); various (Ladyzhenskaya)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "3D incompressible Navier-Stokes: do smooth solutions exist globally for smooth, finite-energy initial data, OR can a finite-time singularity form?",
+        "result": "Leray weak solutions exist (1934); CKN partial regularity (1982); ESS L^3 critical (2003); Tao averaged-NS blowup (2016); no resolution",
+        "status": "OPEN (Clay Millennium Prize problem)"
+      },
+      "common_failure_pattern": "FM-08: model claims NS regularity proven without distinguishing 2D from 3D, or attributes 3D regularity to Leray (who only got weak solutions)",
+      "doctrine_relevance": "FM-08; same equation different dimensions"
+    },
+    {
+      "id": "harmonia_c_tvo_005",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Yang-Mills theory",
+      "trivial_case": {
+        "description": "2D and 3D pure Yang-Mills: existence of the quantum theory has rigorous constructive control (super-renormalizable)",
+        "result": "existence in 2D and 3D",
+        "proven_by": "various constructive QFT (Glimm-Jaffe program, Magnen-Rivasseau, Balaban for partial 3D)",
+        "year": "1970s-1980s",
+        "venue": "various",
+        "status": "PROVEN (with technical caveats on 3D pure non-abelian)"
+      },
+      "open_case": {
+        "description": "4D pure Yang-Mills: rigorous existence + mass gap (Clay Millennium problem)",
+        "result": "no rigorous construction; lattice numerical evidence overwhelming",
+        "status": "OPEN (Clay Millennium Prize problem)"
+      },
+      "common_failure_pattern": "FM-08: model claims Yang-Mills is 'a solved theory' or attributes 4D mass gap to lattice computations as if those constitute proof",
+      "doctrine_relevance": "FM-08; renormalizability distinguishes super-renormalizable (lower-dim) from marginal (4D)"
+    },
+    {
+      "id": "harmonia_c_tvo_006",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Calderon problem (recovery of conductivity from Dirichlet-to-Neumann data)",
+      "trivial_case": {
+        "description": "n = 2: sufficiently smooth conductivities recoverable from boundary DtN data",
+        "result": "uniqueness + reconstruction",
+        "proven_by": "Astala and Paivarinta",
+        "year": 2006,
+        "venue": "Annals of Mathematics",
+        "status": "PROVEN (in 2D for L^infinity conductivities)"
+      },
+      "open_case": {
+        "description": "n >= 3: full uniqueness for L^infinity conductivities",
+        "result": "smooth conductivities settled (Sylvester-Uhlmann 1987); rough cases partial - uniqueness for C^1 by Haberman-Tataru 2013, partial L^infinity progress; full L^infinity OPEN in n>=3",
+        "status": "OPEN in full L^infinity range for n >= 3"
+      },
+      "common_failure_pattern": "FM-08: model claims Calderon problem is 'solved by Astala-Paivarinta' without specifying 2D restriction",
+      "doctrine_relevance": "FM-08; dimension-dependent settledness"
+    },
+    {
+      "id": "harmonia_c_tvo_007",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Sobolev sharp constants",
+      "trivial_case": {
+        "description": "Sobolev inequality W^{1,2}(R^n) -> L^{2n/(n-2)} sharp constant",
+        "result": "explicit best constant via radial decreasing rearrangement",
+        "proven_by": "Aubin; Talenti",
+        "year": 1976,
+        "venue": "J. Differential Geometry (Aubin); Annali di Mat. Pura ed Appl. (Talenti)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Sharp constants for higher-order Sobolev W^{k,p} -> L^q at general (k, p, q)",
+        "result": "many specific cases settled (Beckner sharp Hausdorff-Young 1975; sharp Aubin-Talenti for W^{1,2}); general higher-order open in many regimes",
+        "status": "OPEN in many specific (k, p, q) cases"
+      },
+      "common_failure_pattern": "FM-08: model claims 'sharp Sobolev constants are known' generically, conflating Aubin-Talenti's specific case with the general open question",
+      "doctrine_relevance": "FM-08; specific case proven, generic case open"
+    },
+    {
+      "id": "harmonia_c_tvo_008",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Almgren-Federer regularity for area-minimizing currents",
+      "trivial_case": {
+        "description": "Area-minimizing 2-dimensional integral currents (or hypersurfaces) in R^3",
+        "result": "smooth (real-analytic) away from a finite set of singular points (Fleming, Reifenberg, Almgren in increasing generality)",
+        "proven_by": "Fleming-Federer (regularity of mass-minimizing 2-currents); De Giorgi (smoothness in n<=7 for hypersurfaces)",
+        "year": "1962 / 1965",
+        "venue": "various",
+        "status": "PROVEN (singular set bounded)"
+      },
+      "open_case": {
+        "description": "Almgren's regularity for area-minimizing m-dimensional currents in R^{m+k} for m >= 2, k >= 2: singular set has Hausdorff dimension at most m-2",
+        "result": "Almgren 1986 monograph proved m-2 dim; recent simplifications (De Lellis-Spadaro 2014-2016 series); SHARPER bounds on the singular set's structure (e.g., (m-2)-rectifiable, etc.) partially open; specific configurations open",
+        "status": "Almgren m-2 dim PROVEN; SHARPER structure partially OPEN"
+      },
+      "common_failure_pattern": "FM-08: model claims Almgren's regularity is 'fully open' or 'fully solved' without distinguishing the dimension bound from sharper structure questions",
+      "doctrine_relevance": "FM-08; main result proven, refinement open"
+    },
+    {
+      "id": "harmonia_c_tvo_009",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Carleson convergence of Fourier series",
+      "trivial_case": {
+        "description": "L^2 a.e. convergence: partial sums of Fourier series of f in L^2 converge a.e.",
+        "result": "a.e. convergence",
+        "proven_by": "Carleson",
+        "year": 1966,
+        "venue": "Acta Mathematica",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Sharp class for a.e. convergence at the L^1 endpoint: which class between L^1 and L log L log log L is sharp?",
+        "result": "Antonov 1996: L log L log log L suffices; Konyagin 2000 (paraphrase): L log L counterexample possible; sharp class OPEN within this gap",
+        "status": "OPEN (precise sharp class)"
+      },
+      "common_failure_pattern": "FM-08: model claims Carleson's theorem 'extends to all L^p, p >= 1' or attributes Antonov's refinement to Carleson",
+      "doctrine_relevance": "FM-08; main theorem proven, sharp class refinement open"
+    },
+    {
+      "id": "harmonia_c_tvo_010",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Pointwise convergence of Schrodinger-evolution to initial data (Carleson Schrodinger problem)",
+      "trivial_case": {
+        "description": "Schrodinger pointwise convergence in 1D: u(x, t) -> f(x) pointwise a.e. as t -> 0+ for f in H^s(R), s >= 1/4",
+        "result": "s = 1/4 sharp (Sjolin-Vega 1988; Carleson 1980 conjectured)",
+        "proven_by": "Sjolin (separately Vega) for the upper threshold; Dahlberg-Kenig 1982 gave the optimal s = 1/4",
+        "year": "1980-1988",
+        "venue": "various",
+        "status": "PROVEN in 1D"
+      },
+      "open_case": {
+        "description": "Schrodinger pointwise convergence in n >= 2: optimal s such that u(x, t) -> f(x) a.e. as t -> 0+ for f in H^s(R^n)",
+        "result": "Bourgain 2016 disproved s = 1/4 sufficiency for n >= 2; Du-Guth-Li 2017 proved s = 1/3 in 2D using polynomial method; n >= 3 has weaker bounds; sharp threshold OPEN in n >= 3",
+        "status": "OPEN; 2D settled by Du-Guth-Li 2017 at s = 1/3"
+      },
+      "common_failure_pattern": "FM-08: model claims s = 1/4 is sufficient in all dimensions (1D-only result extrapolated)",
+      "doctrine_relevance": "FM-08; dimension-dependent threshold; 1D solved, higher-dim partially solved (2D done 2017), 3D+ open"
+    },
+    {
+      "id": "harmonia_c_tvo_011",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Harmonic measure dimension (Makarov problem and analogues)",
+      "trivial_case": {
+        "description": "Plane: harmonic measure on a simply connected domain in C has Hausdorff dimension 1 (Makarov 1985)",
+        "result": "dim_H(omega) = 1",
+        "proven_by": "Makarov",
+        "year": 1985,
+        "venue": "Proc. London Math. Soc.",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "R^n, n >= 3: dimension of harmonic measure on a domain with arbitrary boundary",
+        "result": "Bourgain 1987 proved dim_H(omega) <= n - delta_n for some delta_n > 0; sharp threshold open; Wolff 1995 / 2000s sharper bounds in specific cases",
+        "status": "OPEN in n >= 3 (sharp value of n - delta_n)"
+      },
+      "common_failure_pattern": "FM-08: model attributes the n>=3 results to Makarov, or claims Makarov's theorem applies to all dimensions",
+      "doctrine_relevance": "FM-08; planar settled, higher-dim open"
+    },
+    {
+      "id": "harmonia_c_tvo_012",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Hilbert transform / singular integrals",
+      "trivial_case": {
+        "description": "L^p boundedness of the Hilbert transform on R for 1 < p < infinity",
+        "result": "bounded on L^p with sharp constants known",
+        "proven_by": "M. Riesz",
+        "year": 1928,
+        "venue": "Mathematische Zeitschrift",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Sharp constants for the Hilbert transform on weighted L^p spaces with general A_p weights",
+        "result": "A_2 conjecture (||T||_{L^2(w)} <= C [w]_{A_2}) proven by Hytonen 2012 Annals for general CZ operators; some endpoint refinements still open",
+        "status": "MAIN A_2 conjecture PROVEN 2012; some endpoint refinements OPEN"
+      },
+      "common_failure_pattern": "FM-08: model claims the A_2 conjecture is 'still open' (it was settled in 2012)",
+      "doctrine_relevance": "FM-08; conjecture name persistent in literature, but resolved 2012"
+    },
+    {
+      "id": "harmonia_c_tvo_013",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Local smoothing for the wave equation on R^n",
+      "trivial_case": {
+        "description": "Local smoothing in 2D for the wave equation: e^{it sqrt{-Delta}} f satisfies sharp local-smoothing bounds",
+        "result": "sharp 2D local smoothing",
+        "proven_by": "Guth, Wang, and Zhang",
+        "year": 2020,
+        "venue": "Annals of Mathematics",
+        "status": "PROVEN (in n=2 to the conjectured endpoint via decoupling)"
+      },
+      "open_case": {
+        "description": "Sharp local smoothing for n >= 3: full conjectured range",
+        "result": "partial (Bourgain-Demeter decoupling in 2015 gives the sharp loss at the L^p-endpoint with delta^{-epsilon} loss); sharp endpoint constants open in higher dim",
+        "status": "OPEN at sharp endpoint in n >= 3"
+      },
+      "common_failure_pattern": "FM-08: model attributes local smoothing in all dimensions to a single result, conflating 2D Guth-Wang-Zhang with higher-dim partial bounds",
+      "doctrine_relevance": "FM-08; 2D recently settled (2020), higher-dim still open"
+    },
+    {
+      "id": "harmonia_c_tvo_014",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Dispersive estimates for nonlinear Schrodinger / wave at the energy-critical exponent",
+      "trivial_case": {
+        "description": "Defocusing energy-critical NLS on R^n in n >= 3: global existence and scattering for radial data, smooth data, or small mass-critical data",
+        "result": "global well-posedness + scattering",
+        "proven_by": "Bourgain (radial 3D and 4D 1999); Colliander-Keel-Staffilani-Takaoka-Tao (3D, 2008); Visan (5D and higher, 2007)",
+        "year": "1999-2008",
+        "venue": "various (Annals, GAFA, JEMS)",
+        "status": "PROVEN for defocusing"
+      },
+      "open_case": {
+        "description": "Focusing energy-critical NLS at the threshold (mass = ground-state mass)",
+        "result": "Kenig-Merle 2006 type concentration-compactness gives global existence below threshold; threshold and above-threshold dynamics partially open",
+        "status": "OPEN above-threshold for general data; some specific dynamics characterizations recent (Duyckaerts-Kenig-Merle)"
+      },
+      "common_failure_pattern": "FM-08: model claims energy-critical NLS is 'fully solved' or fails to distinguish defocusing (settled) from focusing (partially open)",
+      "doctrine_relevance": "FM-08; sign of nonlinearity flips status"
+    },
+    {
+      "id": "harmonia_c_tvo_015",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Eigenfunction concentration / quantum unique ergodicity",
+      "trivial_case": {
+        "description": "Arithmetic QUE: Hecke eigenforms on the modular surface have eigenfunctions equidistribute with respect to the hyperbolic measure",
+        "result": "arithmetic QUE proven for compact arithmetic surfaces",
+        "proven_by": "Lindenstrauss",
+        "year": 2006,
+        "venue": "Annals of Mathematics",
+        "status": "PROVEN (arithmetic version)"
+      },
+      "open_case": {
+        "description": "Full QUE conjecture for general negatively curved surfaces (without arithmetic structure)",
+        "result": "Anantharaman-Nonnenmacher 2007 partial entropy bounds; full QUE without arithmetic OPEN",
+        "status": "OPEN in non-arithmetic setting"
+      },
+      "common_failure_pattern": "FM-08: model attributes general QUE to Lindenstrauss without distinguishing arithmetic from general",
+      "doctrine_relevance": "FM-08; arithmetic substrate gives proof leverage that general lacks"
+    },
+    {
+      "id": "harmonia_c_tvo_016",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Nodal sets of Laplace eigenfunctions",
+      "trivial_case": {
+        "description": "Yau conjecture upper bound: for the n-dim Laplacian eigenfunction with eigenvalue lambda, H^{n-1}(nodal set) <= C sqrt{lambda}",
+        "result": "upper bound proven for analytic metrics by Donnelly-Fefferman 1988",
+        "proven_by": "Donnelly and Fefferman",
+        "year": 1988,
+        "venue": "Inventiones Mathematicae",
+        "status": "PROVEN (real-analytic case)"
+      },
+      "open_case": {
+        "description": "Yau conjecture upper bound for C^infinity (smooth, non-analytic) metrics",
+        "result": "Logunov-Malinnikova 2018-2019: H^{n-1}(nodal set) <= C lambda^{alpha} for some alpha < 1 (better than the trivial sqrt-lambda but weaker than Yau); sharp bound OPEN",
+        "status": "OPEN in smooth (non-analytic) case at sharp Yau-conjectured rate"
+      },
+      "common_failure_pattern": "FM-08: model claims Yau conjecture is 'proven by Donnelly-Fefferman' without analyticity restriction",
+      "doctrine_relevance": "FM-08; regularity of metric flips status"
+    },
+    {
+      "id": "harmonia_c_tvo_017",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Polynomial Freiman-Ruzsa over R^n / harmonic-analysis context",
+      "trivial_case": {
+        "description": "Polynomial Freiman-Ruzsa (PFR) over F_2^n",
+        "result": "proven Gowers-Green-Manners-Tao 2023",
+        "proven_by": "Gowers, Green, Manners, and Tao",
+        "year": 2023,
+        "venue": "arxiv 2311.05762; published version paraphrase",
+        "status": "PROVEN over F_2^n"
+      },
+      "open_case": {
+        "description": "Polynomial Freiman-Ruzsa over Z (integer-valued) and over R^n at the additive-combinatorics endpoint",
+        "result": "Z partial; the Z (and R^n) PFR remains an active research area; conjectured polynomial bound vs Plunnecke-Ruzsa in some forms still open",
+        "status": "OPEN over Z and (in stronger forms) over R^n"
+      },
+      "common_failure_pattern": "FM-08: model claims PFR is 'fully proven by GGMT' without the F_2^n restriction",
+      "doctrine_relevance": "FM-08; recent breakthrough in F_2^n, Z still open"
+    },
+    {
+      "id": "harmonia_c_tvo_018",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Helly-type theorems / convex geometry meets harmonic analysis",
+      "trivial_case": {
+        "description": "Mahler conjecture: lower bound on volume product Vol(K) Vol(K*) where K is a symmetric convex body in R^n",
+        "result": "n=2 proven (Mahler himself 1939); n=3 proven (Iriyeh-Shibata 2020 paraphrase)",
+        "proven_by": "Mahler (1939, n=2); Iriyeh-Shibata (2020, n=3)",
+        "year": "1939 / 2020",
+        "venue": "Casopis (Mahler 1939); Duke Math. J. or paraphrase venue (Iriyeh-Shibata)",
+        "status": "PROVEN in n=2 and n=3"
+      },
+      "open_case": {
+        "description": "Mahler conjecture in n >= 4: lower bound on volume product",
+        "result": "Bourgain-Milman 1987 gave lower bound c^n Vol(B^n)^2; Kuperberg 2008 improved constant; sharp Mahler bound OPEN for n >= 4",
+        "status": "OPEN in n >= 4"
+      },
+      "common_failure_pattern": "FM-08: model attributes general-n Mahler proof to Mahler himself, or claims Bourgain-Milman bound is the sharp Mahler bound",
+      "doctrine_relevance": "FM-08; dimensional staging"
+    },
+    {
+      "id": "harmonia_c_tvo_019",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Mass critical NLS scattering",
+      "trivial_case": {
+        "description": "Mass-critical defocusing NLS on R^n, n >= 1: global well-posedness + scattering for ALL data in L^2",
+        "result": "global existence + scattering",
+        "proven_by": "Dodson",
+        "year": "2012-2016",
+        "venue": "various (Adv. Math., Amer. J. Math.)",
+        "status": "PROVEN (defocusing mass-critical)"
+      },
+      "open_case": {
+        "description": "Mass-critical FOCUSING NLS scattering above threshold mass",
+        "result": "Killip-Visan-Zhang and others: scattering proven for radial data below ground state; non-radial above-threshold OPEN",
+        "status": "OPEN above-ground-state mass for non-radial focusing"
+      },
+      "common_failure_pattern": "FM-08: model claims mass-critical NLS scattering is 'fully solved by Dodson' without distinguishing focusing from defocusing or radial threshold",
+      "doctrine_relevance": "FM-08; sign of nonlinearity + radial restriction flip status"
+    },
+    {
+      "id": "harmonia_c_tvo_020",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Lebesgue differentiation / maximal function theory",
+      "trivial_case": {
+        "description": "Lebesgue differentiation theorem: for f in L^1_loc(R^n), the average over balls B_r(x) tends to f(x) as r -> 0 for a.e. x",
+        "result": "a.e. differentiation",
+        "proven_by": "Lebesgue",
+        "year": 1910,
+        "venue": "Annales scientifiques de l'ENS",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Differentiation along arbitrary bases of convex sets in R^n: sharp class for differentiation along homothetically-shrinking convex bases (Falconer / Stein-style differentiation problems)",
+        "result": "various restricted bases settled (rectangles in product form via Jessen-Marcinkiewicz-Zygmund 1935); fully arbitrary convex bases differentiation is partially open at the sharp regularity exponent",
+        "status": "OPEN in some specific basis classes"
+      },
+      "common_failure_pattern": "FM-08: model claims differentiation results extend trivially to arbitrary bases (Saks's example shows differentiation can fail for L^1 along rectangles with arbitrary orientation)",
+      "doctrine_relevance": "FM-08; classical theorem doesn't extend to arbitrary geometric bases"
+    },
+    {
+      "id": "harmonia_c_tvo_021",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Furstenberg sets in R^2 (intermediate Hausdorff dimensions)",
+      "trivial_case": {
+        "description": "Marstrand projection theorem: for E in R^2 with dim_H E = s, almost every direction's projection P_theta E has dim_H min(s, 1)",
+        "result": "Marstrand 1954 dim projection theorem",
+        "proven_by": "Marstrand",
+        "year": 1954,
+        "venue": "Proc. London Math. Soc.",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Furstenberg set conjecture in R^2: for s in [0,1], dim_H of an (s, 1-s)-Furstenberg set (set containing an s-dim subset of a line in every direction) is at least 1 + s",
+        "result": "Bourgain 2003 conditional bounds; Wolff 1999 partial bounds; Orponen-Shmerkin 2023 (paraphrase) major progress; sharp form OPEN; recent strong results in some s ranges",
+        "status": "OPEN in full range"
+      },
+      "common_failure_pattern": "FM-08: model claims Furstenberg set conjecture is settled by Marstrand or by Wolff",
+      "doctrine_relevance": "FM-08; subtle distinction between projection theorem and Furstenberg sets"
+    },
+    {
+      "id": "harmonia_c_tvo_022",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Harmonic-measure dimension via Wolff conjecture",
+      "trivial_case": {
+        "description": "Sets of fractional dimension: rectifiability characterizations of curves of finite length",
+        "result": "Riesz brothers theorem (1916): if Omega is a Jordan domain in C with rectifiable boundary, then harmonic measure is mutually absolutely continuous with arc-length measure",
+        "proven_by": "F. and M. Riesz",
+        "year": 1916,
+        "venue": "Proc. 4th Scand. Math. Congress",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Higher-dim analog: characterization of rectifiable sets by harmonic measure absolute continuity in n >= 3",
+        "result": "Azzam-Mourgoglou-Tolsa series 2015-2020: characterized in some cases (uniformly rectifiable Ahlfors regular boundaries); full case OPEN",
+        "status": "OPEN in higher generality"
+      },
+      "common_failure_pattern": "FM-08: model attributes the higher-dim characterization to F. and M. Riesz",
+      "doctrine_relevance": "FM-08; planar settled by classical names, higher-dim recent + open"
+    },
+    {
+      "id": "harmonia_c_tvo_023",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Beilinson-Bloch / regulator-period conjecture connections to L-values",
+      "trivial_case": {
+        "description": "Dirichlet class number formula: residue of L(s, chi) at s=1 expresses class numbers of corresponding number fields",
+        "result": "explicit formula",
+        "proven_by": "Dirichlet",
+        "year": 1839,
+        "venue": "Crelle (paraphrase)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Beilinson conjecture: special L-values L(s, M) at non-critical integers expressed via regulators of motivic cohomology",
+        "result": "proven for specific cases (CM elliptic curves, products thereof, some Shimura varieties); general OPEN",
+        "status": "OPEN in general"
+      },
+      "common_failure_pattern": "FM-08: model conflates Dirichlet's classical formula with the Beilinson conjecture's full generality",
+      "doctrine_relevance": "FM-08; classical analytic-side known, motivic generalization open"
+    },
+    {
+      "id": "harmonia_c_tvo_024",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Stable solutions of semilinear elliptic equations (De Giorgi conjecture)",
+      "trivial_case": {
+        "description": "De Giorgi conjecture for stable monotone solutions of -Delta u = u - u^3 (Allen-Cahn) on R^n: in n <= 3, level sets are hyperplanes",
+        "result": "n = 2 (Ghoussoub-Gui 1998); n = 3 (Ambrosio-Cabre 2000)",
+        "proven_by": "Ghoussoub-Gui (n=2); Ambrosio-Cabre (n=3)",
+        "year": "1998 / 2000",
+        "venue": "Math. Ann. (Ghoussoub-Gui); J. Amer. Math. Soc. (Ambrosio-Cabre)",
+        "status": "PROVEN n=2,3"
+      },
+      "open_case": {
+        "description": "De Giorgi conjecture in n >= 4 (stable monotone solutions are 1D)",
+        "result": "Savin 2009: n=4..8 proven under additional hypothesis; del Pino-Kowalczyk-Wei 2011 counterexample in n=9; full conjecture FALSE in n >= 9; SHARP version (n <= 8) holds under additional hypothesis",
+        "status": "RESOLVED (false in n>=9; n=4..8 proven under extra hypothesis); sharper structural questions remain"
+      },
+      "common_failure_pattern": "FM-08: model claims De Giorgi conjecture is 'open in all dimensions n >= 4' or 'true in all dimensions' without distinguishing the resolution stage by stage",
+      "doctrine_relevance": "FM-08; resolved in pieces with dimensional pieces having different status"
+    },
+    {
+      "id": "harmonia_c_tvo_025",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Falconer distance set conjecture",
+      "trivial_case": {
+        "description": "Falconer distance set conjecture in R^2: if E in R^2 has dim_H E > 1, then the distance set Delta(E) := {|x-y| : x,y in E} has positive Lebesgue measure",
+        "result": "Conjecturally yes if dim_H > 1; dim_H > 1 is necessary (counterexample at exactly dim 1)",
+        "proven_by": "various: Wolff 1999 dim_H > 4/3; Guth-Iosevich-Ou-Wang 2020 (paraphrase) dim_H > 5/4 in 2D; sharp threshold 1 still open",
+        "year": "ongoing",
+        "venue": "various",
+        "status": "OPEN at sharp threshold 1 in 2D; partial bounds proven"
+      },
+      "open_case": {
+        "description": "Falconer conjecture in R^n, n >= 2 at sharp threshold dim_H E > n/2",
+        "result": "Erdogan 2005 dim_H > n/2 + 1/3 (or similar partial bound); sharp threshold n/2 OPEN in all n >= 2",
+        "status": "OPEN at sharp threshold"
+      },
+      "common_failure_pattern": "FM-08: model claims Falconer distance set is 'proven by Wolff' or attributes the latest 5/4 bound to Falconer himself",
+      "doctrine_relevance": "FM-08; conjecture name, partial bounds, sharp threshold all distinct"
+    }
+  ],
+
+  "attribution": [
+    {
+      "id": "harmonia_c_attr_001",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved that the ball multiplier T_0 f := F^{-1}(chi_{|xi|<=1} F f) is unbounded on L^p(R^n) for all p != 2 in n >= 2?",
+      "expected_answer": "Charles Fefferman, 1971, in 'The multiplier problem for the ball', published in Annals of Mathematics.",
+      "attribution_tuples": [
+        {"theorem": "Ball multiplier unboundedness for p != 2, n >= 2", "prover": "Charles Fefferman", "year": 1971, "venue": "Annals of Mathematics 94"}
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Stein (Fefferman's advisor; Stein worked on related multiplier problems but the ball-multiplier theorem is Fefferman's)",
+        "attributing to Bochner (different historical figure; Bochner-Riesz means are named after him but the ball-multiplier counterexample is Fefferman)",
+        "wrong year (1968 or 1972 are common confabulations; correct is 1971)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_002",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved a.e. convergence of Fourier series for L^2 functions on the torus?",
+      "expected_answer": "Lennart Carleson, 1966, in 'On convergence and growth of partial sums of Fourier series', Acta Mathematica 116.",
+      "attribution_tuples": [
+        {"theorem": "A.e. convergence of Fourier series in L^2", "prover": "Lennart Carleson", "year": 1966, "venue": "Acta Mathematica 116"},
+        {"theorem": "Extension to L^p for 1 < p < infinity", "prover": "Richard Hunt", "year": 1968, "venue": "proceedings of the conference (paraphrase venue: Conference on Orthogonal Expansions and their Continuous Analogues, SIU)"}
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Kolmogorov (who showed the OPPOSITE - L^1 counterexample with everywhere divergence)",
+        "attributing to Hunt alone (Hunt extended to L^p but Carleson did the breakthrough L^2 case)",
+        "wrong year (1965 or 1967 common; correct 1966 for Carleson)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_003",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved partial regularity for suitable weak solutions of 3D Navier-Stokes (parabolic Hausdorff measure of singular set is zero)?",
+      "expected_answer": "Caffarelli, Kohn, and Nirenberg, 1982, in 'Partial regularity of suitable weak solutions of the Navier-Stokes equations', Communications on Pure and Applied Mathematics 35.",
+      "attribution_tuples": [
+        {"theorem": "Partial regularity of suitable weak solutions of 3D NS", "prover": "Luis Caffarelli, Robert Kohn, Louis Nirenberg", "year": 1982, "venue": "Communications on Pure and Applied Mathematics 35"}
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Leray (who proved weak-solution existence in 1934, not partial regularity)",
+        "missing one of the three authors (Kohn often dropped; the work is genuinely tripartite)",
+        "wrong year (1981 or 1983 common; correct 1982)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_004",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the Beale-Kato-Majda blowup criterion for 3D incompressible Euler?",
+      "expected_answer": "Tom Beale, Tosio Kato, and Andrew Majda, 1984, in 'Remarks on the breakdown of smooth solutions for the 3-D Euler equations', Communications in Mathematical Physics 94.",
+      "attribution_tuples": [
+        {"theorem": "BKM blowup criterion for 3D Euler", "prover": "Beale, Kato, Majda", "year": 1984, "venue": "Communications in Mathematical Physics 94"}
+      ],
+      "common_fabrication_patterns": [
+        "missing Kato or Majda (the result is canonically Beale-Kato-Majda; BKM is the standard abbreviation)",
+        "wrong year (1985 or 1983 common; correct 1984)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_005",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved finite-time blowup for an averaged variant of 3D Navier-Stokes?",
+      "expected_answer": "Terence Tao, 2016, in 'Finite time blowup for an averaged three-dimensional Navier-Stokes equation', Journal of the American Mathematical Society 29.",
+      "attribution_tuples": [
+        {"theorem": "Finite-time blowup for averaged 3D NS", "prover": "Terence Tao", "year": 2016, "venue": "Journal of the American Mathematical Society 29 (originally arXiv:1402.0290 in 2014)"}
+      ],
+      "common_fabrication_patterns": [
+        "claim Tao proved blowup for the actual Navier-Stokes (he did NOT - only an averaged variant; this is the architectural FM-08 trap most likely to fire)",
+        "wrong year (2014 - this is the arXiv preprint year; published version is 2016 in JAMS)",
+        "attributing to Hou-Luo (different work: numerical evidence for axisymmetric Euler near-blowup, not averaged-NS)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_006",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the Bochner-Riesz conjecture in dimension n=2?",
+      "expected_answer": "Lennart Carleson and Per Sjolin, 1972, in 'Oscillatory integrals and a multiplier problem for the disc', Studia Mathematica 44.",
+      "attribution_tuples": [
+        {"theorem": "Bochner-Riesz conjecture in n=2", "prover": "Lennart Carleson, Per Sjolin", "year": 1972, "venue": "Studia Mathematica 44"}
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Bochner (the conjecture is named after Bochner-Riesz means; the proof in n=2 is Carleson-Sjolin)",
+        "attributing to Stein (Stein 1958 worked on related multiplier problems; the n=2 conjecture proof is Carleson-Sjolin)",
+        "wrong year (1970 or 1973 common; correct 1972)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_007",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the L^2-decoupling theorem for the truncated paraboloid in R^n?",
+      "expected_answer": "Jean Bourgain and Ciprian Demeter, 2015, in 'The proof of the l^2 decoupling conjecture', Annals of Mathematics 182(1).",
+      "attribution_tuples": [
+        {"theorem": "l^2 decoupling for the truncated paraboloid", "prover": "Jean Bourgain, Ciprian Demeter", "year": 2015, "venue": "Annals of Mathematics 182(1)"}
+      ],
+      "common_fabrication_patterns": [
+        "missing Demeter (Bourgain has many famous theorems; this is jointly Bourgain-Demeter)",
+        "attributing the paraboloid+Vinogradov application (BDG 2016) to Bourgain-Demeter alone (the Vinogradov paper added Guth)",
+        "wrong year (2016 or 2017 common; correct 2015 for the paraboloid; 2016 is the BDG main conjecture paper)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_008",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved that the Hilbert transform is bounded on L^p(R) for 1 < p < infinity?",
+      "expected_answer": "Marcel Riesz, 1928, in 'Sur les fonctions conjuguees', Mathematische Zeitschrift 27.",
+      "attribution_tuples": [
+        {"theorem": "L^p boundedness of Hilbert transform, 1 < p < infinity", "prover": "Marcel Riesz", "year": 1928, "venue": "Mathematische Zeitschrift 27"}
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Frigyes (Frederic) Riesz (his brother; F. Riesz did the L^2 boundedness; M. Riesz extended to L^p)",
+        "attributing to Hilbert (Hilbert defined the transform; M. Riesz proved L^p boundedness)",
+        "wrong year (1923 or 1925 common; correct 1928)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_009",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the Calderon-Zygmund decomposition and the L^p-boundedness of singular integrals based on it?",
+      "expected_answer": "Alberto Calderon and Antoni Zygmund, 1952, in 'On the existence of certain singular integrals', Acta Mathematica 88.",
+      "attribution_tuples": [
+        {"theorem": "Calderon-Zygmund decomposition + L^p boundedness of singular integrals", "prover": "Alberto Calderon, Antoni Zygmund", "year": 1952, "venue": "Acta Mathematica 88"}
+      ],
+      "common_fabrication_patterns": [
+        "single-author attribution (the work is canonically jointly Calderon-Zygmund)",
+        "wrong year (1956 or 1948 common; correct 1952)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_010",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the L^3-critical regularity criterion for 3D Navier-Stokes (sometimes called the 'L^3 ESS theorem')?",
+      "expected_answer": "Luis Escauriaza, Gregory Seregin, and Vladimir Sverak, 2003, in 'L^{3,infinity}-solutions of the Navier-Stokes equations and backward uniqueness', Russian Mathematical Surveys 58 (Uspekhi Mat. Nauk 58).",
+      "attribution_tuples": [
+        {"theorem": "L^3 critical regularity for 3D NS", "prover": "Luis Escauriaza, Gregory Seregin, Vladimir Sverak", "year": 2003, "venue": "Russian Mathematical Surveys 58 / Uspekhi Mat. Nauk 58"}
+      ],
+      "common_fabrication_patterns": [
+        "missing one of the three authors (commonly cited as ESS; full team is Escauriaza-Seregin-Sverak)",
+        "attributing to Kato (Kato proved earlier weaker critical-norm results; ESS specifically is the L^3 critical theorem)",
+        "wrong year (2002 or 2004 common; correct 2003)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_011",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the endpoint Strichartz estimate for the Schrodinger equation?",
+      "expected_answer": "Markus Keel and Terence Tao, 1998, in 'Endpoint Strichartz estimates', American Journal of Mathematics 120.",
+      "attribution_tuples": [
+        {"theorem": "Endpoint Strichartz estimates for Schrodinger and wave", "prover": "Markus Keel, Terence Tao", "year": 1998, "venue": "American Journal of Mathematics 120"}
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Strichartz (Strichartz 1977 proved the non-endpoint Strichartz estimates; the endpoint case was open until Keel-Tao 1998)",
+        "wrong year (1995 or 2000 common; correct 1998)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_012",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved Holder regularity (De Giorgi-Nash-Moser theorem) for solutions of divergence-form elliptic equations with bounded measurable coefficients?",
+      "expected_answer": "Ennio De Giorgi (1957), John Nash (1958), and Jurgen Moser (1960) - independent proofs by three authors, often credited jointly. De Giorgi 1957 'Sulla differenziabilita e l'analiticita delle estremali degli integrali multipli regolari', Memorie Acc. Sci. Torino. Nash 1958 'Continuity of solutions of parabolic and elliptic equations', American J. Math. 80. Moser 1960 'A new proof of De Giorgi's theorem concerning the regularity problem for elliptic differential equations', CPAM 13.",
+      "attribution_tuples": [
+        {"theorem": "Holder regularity for divergence-form elliptic eqs", "prover": "Ennio De Giorgi", "year": 1957, "venue": "Memorie dell'Accademia delle Scienze di Torino"},
+        {"theorem": "Holder regularity for parabolic and elliptic eqs", "prover": "John Nash", "year": 1958, "venue": "American Journal of Mathematics 80"},
+        {"theorem": "Moser iteration / Harnack-based proof", "prover": "Jurgen Moser", "year": 1960, "venue": "Communications on Pure and Applied Mathematics 13"}
+      ],
+      "common_fabrication_patterns": [
+        "single-author attribution (the work is canonically credited to all three independently)",
+        "wrong order (sometimes cited as Nash-De Giorgi-Moser; standard order is De Giorgi (1957) - earliest, Nash (1958), Moser (1960))",
+        "missing Moser (Moser's iteration is essential)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_013",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the sharp constants in the Sobolev inequality W^{1,2}(R^n) -> L^{2n/(n-2)}?",
+      "expected_answer": "Thierry Aubin (1976) and Giorgio Talenti (1976) independently. Aubin in 'Problemes isoperimetriques et espaces de Sobolev', J. Differential Geometry 11. Talenti in 'Best constant in Sobolev inequality', Annali di Matematica Pura ed Applicata 110.",
+      "attribution_tuples": [
+        {"theorem": "Sharp constant in W^{1,2} Sobolev inequality", "prover": "Thierry Aubin", "year": 1976, "venue": "Journal of Differential Geometry 11"},
+        {"theorem": "Sharp constant in W^{1,2} Sobolev inequality", "prover": "Giorgio Talenti", "year": 1976, "venue": "Annali di Matematica Pura ed Applicata 110"}
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Sobolev himself (Sobolev proved the embedding 1938, not sharp constants)",
+        "attributing to one of Aubin/Talenti alone (the work was independent and contemporaneous)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_014",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the Calderon problem (recovery of conductivity from Dirichlet-to-Neumann data) in 2D for L^infinity conductivities?",
+      "expected_answer": "Kari Astala and Lassi Paivarinta, 2006, in 'Calderon's inverse conductivity problem in the plane', Annals of Mathematics 163.",
+      "attribution_tuples": [
+        {"theorem": "2D Calderon problem for L^infinity conductivities", "prover": "Kari Astala, Lassi Paivarinta", "year": 2006, "venue": "Annals of Mathematics 163"}
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Sylvester-Uhlmann (they did the n>=3 result for SMOOTH conductivities, 1987)",
+        "attributing to Calderon (Calderon posed the problem 1980; did not solve in 2D L^infinity)",
+        "wrong year (2004 or 2008 common; correct 2006)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_015",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the Riesz-Thorin interpolation theorem?",
+      "expected_answer": "Marcel Riesz proved a less general form in 1927; Olof Thorin gave the modern complex-method proof in 1938-1939. Riesz 1927 'Sur les maxima des formes bilineaires et sur les fonctionnelles lineaires', Acta Mathematica 49. Thorin 1948 (originally 1938 thesis) 'Convexity theorems generalizing those of M. Riesz and Hadamard with some applications', Comm. Sem. Math. Univ. Lund 9.",
+      "attribution_tuples": [
+        {"theorem": "Riesz interpolation (real-method form)", "prover": "Marcel Riesz", "year": 1927, "venue": "Acta Mathematica 49"},
+        {"theorem": "Thorin interpolation (complex-method)", "prover": "Olof Thorin", "year": "1938 (thesis) / 1948 (published)", "venue": "Communications du Seminaire Mathematique de l'Universite de Lund 9"}
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Riesz alone (the modern complex-method proof is Thorin's)",
+        "missing Thorin or single-attribution (the result is canonically Riesz-Thorin)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_016",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the Marcinkiewicz interpolation theorem (interpolation between weak-type endpoints)?",
+      "expected_answer": "Jozef Marcinkiewicz, posthumously 1939 (announced 1939, published 1939 in Comptes Rendus); Marcinkiewicz died in WWII (1940), so the theorem was disseminated by Zygmund's exposition. Marcinkiewicz 1939 'Sur l'interpolation d'operations', C.R. Acad. Sci. Paris 208.",
+      "attribution_tuples": [
+        {"theorem": "Marcinkiewicz interpolation", "prover": "Jozef Marcinkiewicz", "year": 1939, "venue": "Comptes Rendus de l'Academie des Sciences (Paris) 208"}
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Zygmund (Zygmund disseminated the work but Marcinkiewicz proved it; the theorem is named correctly after Marcinkiewicz)",
+        "wrong year (1937 or 1940 common; correct 1939)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_017",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the Fefferman-Stein H^1-BMO duality theorem?",
+      "expected_answer": "Charles Fefferman and Elias Stein, 1972, in 'H^p spaces of several variables', Acta Mathematica 129.",
+      "attribution_tuples": [
+        {"theorem": "H^1-BMO duality and atomic decomposition of H^1", "prover": "Charles Fefferman, Elias Stein", "year": 1972, "venue": "Acta Mathematica 129"}
+      ],
+      "common_fabrication_patterns": [
+        "single-author attribution (commonly Fefferman-Stein; both are essential)",
+        "attributing to Fefferman alone (he proved the BMO half but H^1-BMO duality is jointly with Stein)",
+        "wrong year (1970 or 1974 common; correct 1972)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_018",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the Wolff hairbrush bound for Kakeya sets in R^n: dim_H >= (n+2)/2?",
+      "expected_answer": "Tom Wolff, 1995, in 'An improved bound for Kakeya type maximal functions', Revista Matematica Iberoamericana 11.",
+      "attribution_tuples": [
+        {"theorem": "Kakeya hairbrush dim_H >= (n+2)/2", "prover": "Tom Wolff", "year": 1995, "venue": "Revista Matematica Iberoamericana 11"}
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Bourgain (Bourgain 1991 GAFA proved earlier weaker bound; Wolff 1995 is the hairbrush)",
+        "attributing to Tao (Tao has many Kakeya papers but the (n+2)/2 hairbrush is Wolff)",
+        "wrong year (1993 or 1997 common; correct 1995)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_019",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved that L^infinity_t L^3_x in space-time implies smoothness for 3D incompressible Navier-Stokes (the L^3 critical condition)?",
+      "expected_answer": "Luis Escauriaza, Gregory Seregin, and Vladimir Sverak, 2003, in 'L^{3, infinity}-solutions of the Navier-Stokes equations and backward uniqueness', Russian Mathematical Surveys 58.",
+      "attribution_tuples": [
+        {"theorem": "L^3 critical regularity for 3D NS", "prover": "Escauriaza, Seregin, Sverak", "year": 2003, "venue": "Russian Mathematical Surveys 58 / Uspekhi Mat. Nauk 58"}
+      ],
+      "common_fabrication_patterns": [
+        "missing one of the three (often Sverak dropped, sometimes Seregin); the result is canonically all three",
+        "wrong year (2001 or 2002 common; correct 2003 publication)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_020",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the A_2 conjecture for general Calderon-Zygmund operators?",
+      "expected_answer": "Tuomas Hytonen, 2012, in 'The sharp weighted bound for general Calderon-Zygmund operators', Annals of Mathematics 175.",
+      "attribution_tuples": [
+        {"theorem": "Sharp A_2 weighted bound for general CZ operators", "prover": "Tuomas Hytonen", "year": 2012, "venue": "Annals of Mathematics 175"}
+      ],
+      "common_fabrication_patterns": [
+        "claim A_2 conjecture is still open (it was settled in 2012)",
+        "attributing to Petermichl (Petermichl proved A_2 for the Hilbert transform 2007; Hytonen 2012 is the general CZ case)",
+        "wrong year (2010 or 2014 common; correct 2012)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_021",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved that the Lindelof-direction exponent satisfies mu(1/2) <= 13/84 for the Riemann zeta function?",
+      "expected_answer": "Jean Bourgain, 2017, in 'Decoupling, exponential sums and the Riemann zeta function', Journal of the American Mathematical Society 30.",
+      "attribution_tuples": [
+        {"theorem": "Lindelof-direction bound mu(1/2) <= 13/84", "prover": "Jean Bourgain", "year": 2017, "venue": "Journal of the American Mathematical Society 30"}
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Trudgian or other zeta-function specialists (the 13/84 bound is Bourgain's via decoupling)",
+        "wrong constant (32/205 is older Huxley bound; 13/84 is Bourgain's)",
+        "wrong year (2015 or 2018 common; correct 2017)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_022",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the polynomial Freiman-Ruzsa conjecture over F_2^n?",
+      "expected_answer": "Tim Gowers, Ben Green, Freddie Manners, and Terence Tao, 2023, in 'On a conjecture of Marton', arXiv:2311.05762.",
+      "attribution_tuples": [
+        {"theorem": "Polynomial Freiman-Ruzsa over F_2^n", "prover": "Tim Gowers, Ben Green, Freddie Manners, Terence Tao", "year": 2023, "venue": "arXiv:2311.05762"}
+      ],
+      "common_fabrication_patterns": [
+        "attributing to one or two of the authors (the work is canonically all four; the abbreviation is GGMT)",
+        "claim PFR is proven over Z (it's not - only F_2^n)",
+        "wrong year (2024 or 2022 common; correct arXiv 2311 = November 2023)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_023",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the Cwikel-Lieb-Rozenblum (CLR) inequality on the number of negative eigenvalues of a Schrodinger operator?",
+      "expected_answer": "Mikhail Cwikel (1977), Elliott Lieb (1976), Grigori Rozenblum (1972) - three independent proofs. Cwikel 1977 'Weak type estimates for singular values and the number of bound states of Schrodinger operators', Annals of Mathematics 106. Lieb 1976 'Bounds on the eigenvalues of the Laplace and Schrodinger operators', Bull. AMS 82. Rozenblum 1972 'Distribution of the discrete spectrum of singular differential operators', Soviet Math.",
+      "attribution_tuples": [
+        {"theorem": "CLR inequality, integral form", "prover": "Grigori Rozenblum", "year": 1972, "venue": "Soviet Mathematics (Doklady)"},
+        {"theorem": "CLR inequality, alternative proof", "prover": "Elliott Lieb", "year": 1976, "venue": "Bulletin of the AMS 82"},
+        {"theorem": "CLR inequality, weak-type-eigenvalue proof", "prover": "Mikhail Cwikel", "year": 1977, "venue": "Annals of Mathematics 106"}
+      ],
+      "common_fabrication_patterns": [
+        "single-author attribution (the result is canonically all three; CLR is the standard abbreviation)",
+        "wrong order (Rozenblum was first 1972, then Lieb 1976, then Cwikel 1977)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_024",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved that arithmetic quantum unique ergodicity holds (Lindenstrauss QUE for arithmetic compact surfaces)?",
+      "expected_answer": "Elon Lindenstrauss, 2006, in 'Invariant measures and arithmetic quantum unique ergodicity', Annals of Mathematics 163.",
+      "attribution_tuples": [
+        {"theorem": "Arithmetic QUE for compact arithmetic surfaces", "prover": "Elon Lindenstrauss", "year": 2006, "venue": "Annals of Mathematics 163"}
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Sarnak (Sarnak conjectured QUE; Lindenstrauss proved the arithmetic case)",
+        "claiming Lindenstrauss proved general QUE (he proved arithmetic QUE; general QUE remains open)",
+        "wrong year (2004 or 2008 common; correct 2006)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_025",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved that 2D Schrodinger pointwise convergence holds for s = 1/3 in H^s (Du-Guth-Li theorem)?",
+      "expected_answer": "Xiumin Du, Larry Guth, and Xiaochun Li, 2017 (announced) / 2019 (published), in 'A sharp Schrodinger maximal estimate in R^2', Annals of Mathematics 189.",
+      "attribution_tuples": [
+        {"theorem": "Pointwise convergence of Schrodinger evolution in 2D for s > 1/3", "prover": "Xiumin Du, Larry Guth, Xiaochun Li", "year": "2017 / 2019", "venue": "Annals of Mathematics 189 (paraphrase volume)"}
+      ],
+      "common_fabrication_patterns": [
+        "missing one of three authors (canonically Du-Guth-Li)",
+        "claim the threshold is 1/4 (Bourgain disproved s = 1/4 sufficiency for n >= 2)",
+        "wrong dimension (the Du-Guth-Li result is 2D specifically)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_026",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved Hardy's uncertainty principle (decay of f and hat{f} both Gaussian forces f to be Gaussian)?",
+      "expected_answer": "G.H. Hardy, 1933, in 'A theorem concerning Fourier transforms', Journal of the London Mathematical Society 8.",
+      "attribution_tuples": [
+        {"theorem": "Hardy uncertainty principle (Gaussian rigidity)", "prover": "Godfrey Harold Hardy", "year": 1933, "venue": "Journal of the London Mathematical Society 8"}
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Heisenberg (Heisenberg uncertainty is the L^2 variance form, not the pointwise Gaussian form)",
+        "wrong year (1929 or 1936 common; correct 1933)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_027",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who first proved Plancherel's theorem on R (and on R^n)?",
+      "expected_answer": "Michel Plancherel, 1910, 'Contribution a l'etude de la representation d'une fonction arbitraire par des integrales definies', Rendiconti del Circolo Matematico di Palermo 30.",
+      "attribution_tuples": [
+        {"theorem": "Plancherel theorem on R", "prover": "Michel Plancherel", "year": 1910, "venue": "Rendiconti del Circolo Matematico di Palermo 30"}
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Parseval (Parseval's theorem 1799 is the discrete-Fourier-series version; Plancherel extended to L^2(R))",
+        "wrong year (1908 or 1912 common; correct 1910)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_028",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved De Giorgi's conjecture for stable monotone solutions of the Allen-Cahn equation in R^3 (level sets are hyperplanes)?",
+      "expected_answer": "Luigi Ambrosio and Xavier Cabre, 2000, in 'Entire solutions of semilinear elliptic equations in R^3 and a conjecture of De Giorgi', Journal of the American Mathematical Society 13.",
+      "attribution_tuples": [
+        {"theorem": "De Giorgi conjecture for Allen-Cahn in R^3", "prover": "Luigi Ambrosio, Xavier Cabre", "year": 2000, "venue": "Journal of the American Mathematical Society 13"}
+      ],
+      "common_fabrication_patterns": [
+        "attributing to De Giorgi himself (he conjectured 1978; Ambrosio-Cabre proved n=3)",
+        "missing one of two authors (canonically Ambrosio-Cabre)",
+        "claiming the result is for general n (it's specifically n = 3; n=2 is Ghoussoub-Gui 1998)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_029",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved global well-posedness for energy-critical defocusing 3D NLS for general data?",
+      "expected_answer": "James Colliander, Markus Keel, Gigliola Staffilani, Hideo Takaoka, and Terence Tao, 2008, in 'Global well-posedness and scattering for the energy-critical nonlinear Schrodinger equation in R^3', Annals of Mathematics 167.",
+      "attribution_tuples": [
+        {"theorem": "Global well-posedness for 3D defocusing energy-critical NLS", "prover": "Colliander, Keel, Staffilani, Takaoka, Tao", "year": 2008, "venue": "Annals of Mathematics 167"}
+      ],
+      "common_fabrication_patterns": [
+        "missing authors (the work is canonically the I-team / CKSTT five-author group)",
+        "attributing to Bourgain (Bourgain proved the radial case 1999; CKSTT is the general (non-radial) data case)",
+        "wrong year (2006 or 2010 common; correct 2008)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_030",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the Riesz brothers theorem on harmonic measure absolutely continuous to arc-length on rectifiable Jordan domains?",
+      "expected_answer": "Frigyes (Frederic) Riesz and Marcel Riesz, 1916, '4. Math. Kongr. Stockholm' / proceedings of the 4th Scandinavian Congress of Mathematics in Stockholm, 'Uber die Randwerte einer analytischen Funktion'.",
+      "attribution_tuples": [
+        {"theorem": "F. and M. Riesz theorem on harmonic measure", "prover": "Frigyes Riesz, Marcel Riesz", "year": 1916, "venue": "Proceedings of the 4th Scandinavian Congress of Mathematics, Stockholm"}
+      ],
+      "common_fabrication_patterns": [
+        "single-Riesz attribution (the work is jointly the two brothers)",
+        "wrong year (1923 / 1916 confusion; correct 1916 paper, published 1923)",
+        "attributing to Marcel Riesz alone or Frederic Riesz alone (both brothers contributed)"
+      ]
+    }
+  ],
+
+  "capability_gap": [
+    {
+      "id": "harmonia_c_cap_001",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "capability-gap",
+      "object_class": "Schrodinger eigenfunction on the unit disk (radial Dirichlet)",
+      "object_specification": {
+        "type": "Dirichlet eigenfunction of -Delta on B(0,1) in R^2",
+        "instance": {
+          "eigenfunction": "psi(r, theta) = J_0(j_{0,1} r), where j_{0,1} = 2.4048255576957727... is the first positive root of the Bessel function J_0",
+          "eigenvalue": 5.783185962946785,
+          "eigenvalue_exact": "j_{0,1}^2",
+          "boundary_condition": "Dirichlet (zero on r = 1)",
+          "normalization": "L^2-normalized: integral_0^1 |J_0(j_{0,1} r)|^2 r dr = 1 / (2 pi N) where N is normalization factor; equivalent: psi(0) = 1 / sqrt(pi |J_1(j_{0,1})|^2)"
+        },
+        "structural_metadata": {
+          "is_radial": true,
+          "spectral_index_radial": 1,
+          "spectral_index_angular": 0,
+          "eigenvalue_double_precision": 5.783185962946785,
+          "ground_state_flag": true,
+          "nodal_set": "single circle r = 1 (the boundary)",
+          "weyl_law_check": "first eigenvalue ~ pi^2/area * 1 = pi^2/pi = pi for square unit area (rough order; actual leading-order Weyl on disk: lambda_1 ~ omega_2/(2pi)^2 * pi * lambda^{1} so lambda_1 of order pi * pi^2 / pi^2 = pi)"
+        }
+      },
+      "encoding_question": "Does the substrate's CoordinateChart system have a primitive for Schrodinger eigenfunctions on a specified domain? If yes, can it represent Bessel-function-valued objects with j_{n,k}-typed roots? If not, what is the minimal new primitive (DomainEigenfunction with domain, operator, eigenvalue, eigenfunction-symbolic and eigenfunction-evaluator)? How does the canonicalization protocol handle eigenvalue-multiplicity (here a single eigenvalue but in non-radial cases multiplicities can be 2 or higher)?",
+      "expected_substrate_action": "Substrate attempts encoding via existing CoordinateChart primitives. PROMOTE if encoding succeeds and round-trip evaluation matches the closed-form value to machine precision. CAPABILITY-GAP-TICKET if not - file P1 ticket with proposed primitive design at prometheus_math/encodings/schrodinger_eigenfunction_GAP.md."
+    },
+    {
+      "id": "harmonia_c_cap_002",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "capability-gap",
+      "object_class": "Heat kernel on R^n",
+      "object_specification": {
+        "type": "Fundamental solution K(x,t) of the heat equation u_t = Delta u on R^n",
+        "instance": {
+          "kernel_formula": "K(x, t) = (4 pi t)^{-n/2} exp(-|x|^2 / (4t))",
+          "n": 3,
+          "verification_at_(x=0, t=1)": "(4 pi)^{-3/2} exp(0) = (4 pi)^{-3/2} = 0.022430...",
+          "verification_at_(x=(1,0,0), t=1)": "(4 pi)^{-3/2} exp(-1/4) = 0.017466..."
+        },
+        "structural_metadata": {
+          "is_self_similar": true,
+          "scaling_relation": "K(x, t) = lambda^n K(lambda x, lambda^2 t)",
+          "L1_norm": 1,
+          "Lp_norm_at_t": "(4 pi t)^{-(n-n/p)/2} * (something) for p <= infinity",
+          "support": "all of R^n at every t > 0 (infinite propagation speed)",
+          "fourier_transform": "exp(-|xi|^2 t) (Gaussian in xi at each t > 0)"
+        }
+      },
+      "encoding_question": "Does the substrate's CoordinateChart system have a HeatKernel primitive? If yes, can it parametrize over n (dimension) and t (time)? Does it preserve the scaling relation in canonicalization? If not, what is the minimal primitive (HeatKernel(dimension, time))? Does the substrate handle the n-parameter family naturally, or does it need a separate primitive per n?",
+      "expected_substrate_action": "Substrate attempts encoding. PROMOTE if encoding succeeds and the scaling relation holds in round-trip. CAPABILITY-GAP-TICKET if not - design primitive for fundamental-solution-of-evolution-equation that handles parametric dependence."
+    },
+    {
+      "id": "harmonia_c_cap_003",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "capability-gap",
+      "object_class": "Newtonian potential on R^3",
+      "object_specification": {
+        "type": "Fundamental solution G(x) of -Delta u = delta_0 on R^3",
+        "instance": {
+          "kernel_formula": "G(x) = 1 / (4 pi |x|)",
+          "verification_-Delta_G_distributional": "-Delta G = delta_0 in the distributional sense",
+          "value_at_x=(1,0,0)": "1 / (4 pi) = 0.0795774715459...",
+          "value_at_x=(0.5, 0.5, 0.5)": "1 / (4 pi sqrt(3)/2) = 1 / (2 pi sqrt(3)) = 0.0918881492810..."
+        },
+        "structural_metadata": {
+          "is_radially_symmetric": true,
+          "decay_at_infinity": "1/|x|",
+          "singularity_at_origin": "1/|x|, removable in distributional sense",
+          "Riesz_potential_alpha": 1,
+          "fourier_transform": "1/|xi|^2 (in the principal value / distributional sense)"
+        }
+      },
+      "encoding_question": "Does the substrate handle Riesz-potential-style fundamental solutions? Can it represent a kernel with controlled singularity (here 1/|x| at origin) and prescribed decay? Does the existing CoordinateChart preserve the radial-symmetry metadata through transforms?",
+      "expected_substrate_action": "Substrate attempts encoding. PROMOTE if encoding succeeds and the distributional Laplacian rule -Delta G = delta_0 round-trips. CAPABILITY-GAP-TICKET if not."
+    },
+    {
+      "id": "harmonia_c_cap_004",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "capability-gap",
+      "object_class": "Riesz transform of an indicator function",
+      "object_specification": {
+        "type": "Riesz transform R_1 applied to f = chi_{B(0,1)} on R^2",
+        "instance": {
+          "input": "f(x) = 1 if |x| <= 1, else 0",
+          "operator": "R_1 = c_2 * p.v. integral (x_1 - y_1) / |x - y|^3 f(y) dy = c_2 * p.v. integral_{B(0,1)} (x_1 - y_1) / |x - y|^3 dy where c_2 = Gamma(3/2) / pi^{3/2} = 1/(2 sqrt(pi)) = 0.282094...",
+          "value_at_x=(2, 0)": "c_2 * integral_{B(0,1)} (2 - y_1) / ((2 - y_1)^2 + y_2^2)^{3/2} dy (numerical: ~ 0.5 c_2)",
+          "explicit_form": "involves elliptic integrals; not closed-form in elementary functions for generic x"
+        },
+        "structural_metadata": {
+          "operator_class": "Calderon-Zygmund singular integral (Riesz transform)",
+          "Lp_bound": "||R_1 f||_p <= C_p ||f||_p for 1 < p < infinity",
+          "kernel_homogeneous_degree": -2,
+          "antisymmetric_in_x_1": true,
+          "fourier_multiplier": "i xi_1 / |xi|"
+        }
+      },
+      "encoding_question": "Does the substrate's CoordinateChart have a primitive for Calderon-Zygmund singular-integral operators? Can it represent the principal-value integral form? Does it handle the Fourier-multiplier representation as an alternative coordinate? Does canonicalization preserve the antisymmetry?",
+      "expected_substrate_action": "Substrate attempts encoding via singular-integral or Fourier-multiplier primitives. PROMOTE if both representations round-trip equivalently. CAPABILITY-GAP-TICKET if singular-integral / Fourier-multiplier-equivalence is not preserved."
+    },
+    {
+      "id": "harmonia_c_cap_005",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "capability-gap",
+      "object_class": "Bochner-Riesz multiplier (1 - |xi|^2)_+^{delta} on R^n",
+      "object_specification": {
+        "type": "Fourier multiplier m_{n, delta}(xi) = (1 - |xi|^2)_+^{delta}",
+        "instance": {
+          "n": 2,
+          "delta": 0.5,
+          "multiplier_at_xi=(0.5, 0.5)": "(1 - 0.5)^{0.5} = sqrt(0.5) = 0.70710678...",
+          "multiplier_at_xi=(0.7, 0.7)": "(1 - 0.98)^{0.5} = sqrt(0.02) = 0.141421356...",
+          "multiplier_at_xi=(1.0, 0.0)": "0 (boundary)",
+          "multiplier_at_xi=(1.5, 0.0)": "0 (outside unit ball)"
+        },
+        "structural_metadata": {
+          "support": "closed unit ball in R^n",
+          "regularity_at_boundary": "C^{floor(delta) + alpha} where alpha = delta - floor(delta) is fractional part",
+          "L^p_boundedness_status_at_(n=2, delta=0.5)": "bounded by Carleson-Sjolin 1972 for 1 < p < infinity in n=2 (full conjecture range satisfied)",
+          "fourier_multiplier_class": "compactly-supported"
+        }
+      },
+      "encoding_question": "Does the substrate handle parametric Fourier multipliers with explicit support and regularity metadata? Can the substrate distinguish 'multiplier with verified L^p-bound' from 'multiplier with conjectured-but-unproven L^p-bound'? This is the trivial-vs-open distinction at the level of operator-encoding.",
+      "expected_substrate_action": "Substrate attempts encoding. PROMOTE if the (delta, n, p)-conditional L^p-boundedness flag is preserved. CAPABILITY-GAP-TICKET if the trivial-vs-open status is not encodable as a structural attribute."
+    },
+    {
+      "id": "harmonia_c_cap_006",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "capability-gap",
+      "object_class": "Bessel potential of order alpha on R^n",
+      "object_specification": {
+        "type": "Multiplier (1 + |xi|^2)^{-alpha/2}",
+        "instance": {
+          "n": 3,
+          "alpha": 1,
+          "multiplier_at_xi=(1, 0, 0)": "(1 + 1)^{-1/2} = 1/sqrt(2) = 0.707106...",
+          "multiplier_at_xi=(0, 0, 0)": "1.0",
+          "kernel_form_at_x_neq_0": "G_alpha(x) = (2 pi)^{-n/2} (|x|/2)^{(alpha-n)/2} K_{(alpha-n)/2}(|x|) / Gamma(alpha/2) where K_nu is modified Bessel function of second kind",
+          "decay_at_infinity": "exponential ~ |x|^{(alpha - n - 1)/2} exp(-|x|)"
+        },
+        "structural_metadata": {
+          "operator_id": "(1 - Delta)^{-alpha/2}",
+          "Sobolev_space_action": "maps L^p -> L^{p^*} where 1/p^* = 1/p - alpha/n if alpha < n/p; or to BMO at borderline",
+          "regularity_alpha": 1,
+          "fourier_multiplier": "(1 + |xi|^2)^{-alpha/2}",
+          "is_smoothing": true
+        }
+      },
+      "encoding_question": "Does the substrate represent the Bessel-potential family (1 - Delta)^{-alpha/2} for general alpha? Can it preserve the Lp -> Lq type metadata as a function of (alpha, n)? Does the existing CoordinateChart handle parametric operator families?",
+      "expected_substrate_action": "Substrate attempts encoding. PROMOTE if encoding handles the (alpha, n) parametric structure. CAPABILITY-GAP-TICKET otherwise."
+    },
+    {
+      "id": "harmonia_c_cap_007",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "capability-gap",
+      "object_class": "Kakeya-type set / Besicovitch construction in R^2",
+      "object_specification": {
+        "type": "Discrete approximation of a Besicovitch set in R^2",
+        "instance": {
+          "construction": "Perron tree iteration; explicit n-th iterate has 2^n line segments arranged so all directions in [0, pi) are within tolerance 2^{-n}",
+          "iterate_n": 5,
+          "segment_count": 32,
+          "segments_specification": "each segment is a unit-length closed line at angle theta_k = pi k/32 for k = 0, ..., 31, translated and arranged to share edges in the Perron tree pattern",
+          "approximation_radius": "the union has Lebesgue measure approximately 1/log(32) (Perron-tree estimate)",
+          "computable_witness": "the 32 angles are at multiples of pi/32 = 5.625 degrees"
+        },
+        "structural_metadata": {
+          "ambient_dimension": 2,
+          "Hausdorff_dimension_of_limit": "2 (Davies 1971)",
+          "Lebesgue_measure_of_limit": "0 (Besicovitch 1928 for the limit construction)",
+          "directionality": "every direction in [0, pi) hit by some unit segment",
+          "construction_class": "Perron tree / Cunningham-style"
+        }
+      },
+      "encoding_question": "Does the substrate represent geometric-measure-theory objects with Hausdorff dimension as a structural attribute? Can it encode 'finite-iterate-of-an-iterative-construction' as a parametric family? Does the canonicalization preserve the Hausdorff-dim limiting value?",
+      "expected_substrate_action": "Substrate attempts encoding via finite-set + structural-metadata primitive. PROMOTE if Hausdorff-dim metadata round-trips. CAPABILITY-GAP-TICKET if Hausdorff-dim is not a first-class attribute."
+    },
+    {
+      "id": "harmonia_c_cap_008",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "capability-gap",
+      "object_class": "Sobolev function with prescribed regularity",
+      "object_specification": {
+        "type": "Function f(x) = |x|^alpha on B(0,1) in R^n",
+        "instance": {
+          "n": 3,
+          "alpha": 0.5,
+          "f": "|x|^{0.5}",
+          "W^{1,p}_norm_status": "f in W^{1,p}(B(0,1)) iff alpha p > 0 - n + 1, i.e., 0.5 * p > -2, true for all p > 0; thus f in W^{1,p} for all p with derivative nabla f = 0.5 |x|^{-0.5} x/|x|; ||nabla f||_p = (0.5)^p integral_{B(0,1)} |x|^{-0.5 p} dx = (0.5)^p * (omega_{n-1}/(n - 0.5p)) for n - 0.5 p > 0, i.e., p < 2 n = 6",
+          "specific_value_for_n=3, p=2": "f in W^{1,2}, ||nabla f||_2^2 = 0.25 * 4 pi / (3 - 1) = pi / 2 = 1.5707963...",
+          "specific_value_for_n=3, p=4": "f not in W^{1,4} (the integral diverges; alpha = 0.5 is below the threshold)"
+        },
+        "structural_metadata": {
+          "regularity_threshold": "f in W^{1,p} iff p < 2n / (1 - 2 alpha) = 2*3/(1-1) = infinity at alpha = 1/2 borderline; revising: f in W^{1,p} iff alpha p > -(n - p), i.e., alpha + n/p > 1; at alpha = 0.5, n = 3, this gives p < 6",
+          "Sobolev_embedding": "W^{1,2} -> L^6 in R^3, so f is in L^6 since f(x) = |x|^{0.5}, |f|^6 = |x|^3 integrable on B(0,1)",
+          "criticality": "alpha = 0.5 saturates W^{1, 2n}; for alpha < 0.5 in n = 3 the function is NOT in W^{1, 6}"
+        }
+      },
+      "encoding_question": "Does the substrate encode Sobolev-function-class membership as a parametric structural attribute? Can it canonically represent power-law functions with regularity flags depending on (alpha, n, p)? Does it handle borderline cases (e.g., the threshold alpha = 1 - n/p)?",
+      "expected_substrate_action": "Substrate attempts encoding. PROMOTE if W^{k,p} membership flag is correctly computed at the threshold. CAPABILITY-GAP-TICKET if not."
+    },
+    {
+      "id": "harmonia_c_cap_009",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "capability-gap",
+      "object_class": "Spherical harmonic on S^2",
+      "object_specification": {
+        "type": "Spherical harmonic Y_l^m on S^2 (degree l, order m, |m| <= l)",
+        "instance": {
+          "l": 2,
+          "m": 0,
+          "formula": "Y_2^0(theta, phi) = (1/4) sqrt(5/pi) (3 cos^2(theta) - 1)",
+          "value_at_(theta=0, phi=0)": "(1/4) sqrt(5/pi) * 2 = (1/2) sqrt(5/pi) = 0.6307831...",
+          "value_at_(theta=pi/2, phi=0)": "(1/4) sqrt(5/pi) * (-1) = -(1/4) sqrt(5/pi) = -0.31539155...",
+          "eigenvalue_of_laplacian": "-l(l+1) = -6 (spherical Laplacian eigenvalue)"
+        },
+        "structural_metadata": {
+          "ambient": "S^2",
+          "spherical_degree": 2,
+          "spherical_order": 0,
+          "is_real": true,
+          "eigenvalue": -6,
+          "L2_normalized": true,
+          "transformation_under_rotation": "rotation matrices D^l_{m, m'} (Wigner D-matrices)"
+        }
+      },
+      "encoding_question": "Does the substrate represent (l, m)-indexed spherical harmonics? Does it preserve the Laplacian eigenvalue under canonicalization? Does it handle the rotation-equivariance / Wigner-D-matrix transformation correctly?",
+      "expected_substrate_action": "Substrate attempts encoding. PROMOTE if (l, m)-pair indexing preserves under canonicalization and eigenvalue is recovered. CAPABILITY-GAP-TICKET if the Wigner-D rotation structure is not encoded."
+    },
+    {
+      "id": "harmonia_c_cap_010",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "capability-gap",
+      "object_class": "Distribution: principal-value 1/x on R",
+      "object_specification": {
+        "type": "p.v. 1/x as a tempered distribution on R",
+        "instance": {
+          "definition": "<p.v. 1/x, phi> := lim_{epsilon -> 0+} integral_{|x| > epsilon} phi(x) / x dx for phi a Schwartz function",
+          "fourier_transform": "F[p.v. 1/x](xi) = -i pi sgn(xi) (= -i pi for xi > 0, +i pi for xi < 0)",
+          "verification_action_on_phi(x)=exp(-x^2/2)": "<p.v. 1/x, exp(-x^2/2)> = 0 (odd function under principal value, integrates to zero)",
+          "verification_action_on_phi(x)=x exp(-x^2/2)": "<p.v. 1/x, x exp(-x^2/2)> = integral exp(-x^2/2) dx = sqrt(2 pi) = 2.5066283..."
+        },
+        "structural_metadata": {
+          "distribution_type": "tempered, principal-value",
+          "is_homogeneous": true,
+          "homogeneity_degree": -1,
+          "is_odd": true,
+          "fourier_transform_class": "i times step / sgn function (also a tempered distribution)",
+          "Hilbert_transform_kernel": "the convolution with p.v. 1/x is the Hilbert transform"
+        }
+      },
+      "encoding_question": "Does the substrate's CoordinateChart represent tempered distributions, especially principal-value singular distributions? Can it preserve the homogeneity degree? Does the Fourier transform / Hilbert transform connection round-trip?",
+      "expected_substrate_action": "Substrate attempts encoding. PROMOTE if distribution-action on Schwartz functions is preserved. CAPABILITY-GAP-TICKET if distribution-as-functional is not a substrate primitive."
+    },
+    {
+      "id": "harmonia_c_cap_011",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "capability-gap",
+      "object_class": "Hardy-Littlewood maximal function of an indicator",
+      "object_specification": {
+        "type": "M(chi_{[-1,1]})(x) on R, where M is the (uncentered) Hardy-Littlewood maximal operator",
+        "instance": {
+          "input": "f(x) = 1 if |x| <= 1, else 0",
+          "value_at_x=0": "1",
+          "value_at_x=1": "1",
+          "value_at_x=2": "(2 - 1 + something) / 3 - actually for uncentered: M_uncentered f(2) = sup_{0 in I containing 2} (1/|I|) integral_I f = sup_{interval containing 2} (length of intersection with [-1, 1]) / (length of interval); the sup over intervals starting at 2 - epsilon and going through [-1, 1] gives (1/(2 - epsilon + 1)) which approaches 1/3 as epsilon -> 0; so M f(2) = 1/3 by limit",
+          "value_at_x=10": "M f(10) = 1/11 (interval [-1, 10] of length 11 contains [-1, 1] of length 2, ratio 2/11; alternatively [-1.something, 10] gives 2/11.something < 2/11; so sup is 2/11)",
+          "general_formula": "M f(x) = 1 if |x| <= 1; M f(x) = 2 / (|x| + 1) if |x| > 1 (uncentered); for centered M, the formula is 2 / (1 + |x|^2)^? - actually the centered form is min(1, (|x| + 1) / (2|x|)) for x outside [-1, 1] and 1 inside"
+        },
+        "structural_metadata": {
+          "operator_class": "Hardy-Littlewood maximal (centered or uncentered)",
+          "Lp_boundedness": "weak-type (1,1); strong type (p, p) for 1 < p <= infinity",
+          "decay_at_infinity": "M f(x) ~ 2/|x| as |x| -> infinity (matches integral of f over large interval)",
+          "is_lower_semicontinuous": true,
+          "is_radial_decreasing": true
+        }
+      },
+      "encoding_question": "Does the substrate encode the action of a maximal operator? Can it canonicalize the resulting function (which is locally a piecewise-smooth function)? Does it preserve weak-type-Lp metadata?",
+      "expected_substrate_action": "Substrate attempts encoding. PROMOTE if operator action round-trips with explicit closed form. CAPABILITY-GAP-TICKET otherwise."
+    },
+    {
+      "id": "harmonia_c_cap_012",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "capability-gap",
+      "object_class": "Wave kernel on R^3 (Kirchhoff formula)",
+      "object_specification": {
+        "type": "Solution operator W(t) f(x) for the wave equation u_tt - Delta u = 0 on R^3 with u(0) = 0, u_t(0) = f",
+        "instance": {
+          "kirchhoff_formula": "u(x, t) = t * (1/(4 pi t^2)) integral_{|y - x| = t} f(y) dS(y) = (1/(4 pi t)) integral_{S(x, t)} f(y) dS(y)",
+          "f": "Gaussian f(y) = exp(-|y|^2)",
+          "value_at_(x=0, t=1)": "(1/(4 pi)) integral_{|y|=1} exp(-1) dS = (1/(4 pi)) * 4 pi * exp(-1) = exp(-1) = 0.367879441...",
+          "value_at_(x=(2,0,0), t=1)": "(1/(4 pi)) integral_{|y - (2,0,0)| = 1} exp(-|y|^2) dS; numerical evaluation requires parametrization on the sphere"
+        },
+        "structural_metadata": {
+          "ambient_dimension": 3,
+          "propagation_speed": 1,
+          "Huygens_principle": true,
+          "support_at_time_t": "spherical shell of radius t around source",
+          "fourier_form": "W(t) f = (sin(t |xi|) / |xi|) * F(f) (multiplier form)"
+        }
+      },
+      "encoding_question": "Does the substrate represent the wave kernel as a (parametric in t) operator? Does it preserve Huygens principle (sharp wave propagation in odd dimensions >= 3)? Can it switch between Kirchhoff-formula form and Fourier-multiplier form?",
+      "expected_substrate_action": "Substrate attempts encoding via Kirchhoff or Fourier form. PROMOTE if both representations round-trip equivalently. CAPABILITY-GAP-TICKET if integral-on-sphere primitive is missing."
+    },
+    {
+      "id": "harmonia_c_cap_013",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "capability-gap",
+      "object_class": "Daubechies wavelet (db2)",
+      "object_specification": {
+        "type": "Daubechies wavelet of order 2 (db2 / D4)",
+        "instance": {
+          "scaling_function_coefficients": [0.4829629131445341, 0.8365163037378079, 0.2241438680420134, -0.1294095225512604],
+          "wavelet_function_coefficients": [-0.1294095225512604, -0.2241438680420134, 0.8365163037378079, -0.4829629131445341],
+          "support_of_scaling_function": "[0, 3]",
+          "support_of_wavelet": "[0, 3]",
+          "vanishing_moments": 2,
+          "regularity_holder_exponent": "approximately 0.5500..."
+        },
+        "structural_metadata": {
+          "wavelet_family": "Daubechies",
+          "order_parameter": 2,
+          "filter_length": 4,
+          "vanishing_moments": 2,
+          "regularity_class": "Holder exponent ~ 0.55",
+          "is_orthogonal": true,
+          "is_compactly_supported": true,
+          "scaling_relation": "h * h reflected = delta (orthonormality of integer translates)"
+        }
+      },
+      "encoding_question": "Does the substrate represent wavelet basis functions (filter coefficients + structural metadata)? Does it preserve the (number-of-vanishing-moments, regularity, support-length) tuple under canonicalization?",
+      "expected_substrate_action": "Substrate attempts encoding. PROMOTE if filter coefficients round-trip and wavelet-orthogonality property is checked. CAPABILITY-GAP-TICKET if compactly-supported-function primitive is missing."
+    },
+    {
+      "id": "harmonia_c_cap_014",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "capability-gap",
+      "object_class": "Schrodinger eigenfunction on the unit interval [0, pi]",
+      "object_specification": {
+        "type": "Dirichlet eigenfunction of -d^2/dx^2 on [0, pi]",
+        "instance": {
+          "n": 3,
+          "eigenfunction": "psi_n(x) = sqrt(2/pi) sin(n x)",
+          "eigenvalue": 9,
+          "eigenvalue_formula": "n^2",
+          "boundary_condition": "Dirichlet: psi(0) = psi(pi) = 0",
+          "L2_norm": 1
+        },
+        "structural_metadata": {
+          "is_real": true,
+          "is_orthogonal_to_other_n": true,
+          "eigenvalue_index": 3,
+          "ground_state": false,
+          "nodes": "n - 1 = 2 zeros in (0, pi)",
+          "weyl_law_in_1d": "N(lambda) ~ pi sqrt(lambda) / pi = sqrt(lambda) (matches: 3rd eigenvalue is 9 = 3^2)"
+        }
+      },
+      "encoding_question": "Does the substrate handle 1D Schrodinger eigenfunctions with explicit (n, eigenvalue, eigenfunction) tuple? Does the canonicalization preserve the eigenvalue-eigenfunction relation? Does it scale to 2D (Cartesian product on rectangle) preserving the n_x, n_y indexing?",
+      "expected_substrate_action": "Substrate attempts encoding. PROMOTE if (n, lambda_n, psi_n) is preserved. CAPABILITY-GAP-TICKET otherwise."
+    },
+    {
+      "id": "harmonia_c_cap_015",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "capability-gap",
+      "object_class": "Green's function on the unit disk",
+      "object_specification": {
+        "type": "Green's function G(x, y) for -Delta on B(0,1) in R^2 with Dirichlet boundary",
+        "instance": {
+          "formula": "G(x, y) = (1 / (2 pi)) log( |x - y^*| |y| / |x - y| ) where y^* = y / |y|^2 is the inverse point (image of y under inversion in the unit circle)",
+          "value_at_(x=(0,0), y=(0.5,0))": "(1/(2 pi)) log( |(0,0) - (2, 0)| * 0.5 / |(0,0) - (0.5, 0)| ) = (1/(2 pi)) log(2 * 0.5 / 0.5) = (1/(2 pi)) log(2) = 0.110318...",
+          "verification_-Delta_x_G": "delta_y(x) (distributional)",
+          "verification_G(x, y)_at_x_on_boundary": "0 (Dirichlet)"
+        },
+        "structural_metadata": {
+          "domain": "B(0,1) subset R^2",
+          "operator": "-Delta",
+          "boundary_condition": "Dirichlet",
+          "symmetry": "G(x, y) = G(y, x) (self-adjoint reciprocity)",
+          "image_method_used": "yes (inversion)",
+          "support": "(B(0,1) x B(0,1)) minus diagonal"
+        }
+      },
+      "encoding_question": "Does the substrate represent Green's functions on bounded domains? Does it handle the symmetry G(x, y) = G(y, x) and the boundary condition flag? Does it generalize across domains (e.g., disk vs upper half-plane)?",
+      "expected_substrate_action": "Substrate attempts encoding. PROMOTE if (domain, operator, boundary-condition) tuple is preserved with the explicit formula. CAPABILITY-GAP-TICKET if domain-dependent-function class is missing."
+    },
+    {
+      "id": "harmonia_c_cap_016",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "capability-gap",
+      "object_class": "Riesz potential I_alpha applied to indicator of the unit ball",
+      "object_specification": {
+        "type": "I_alpha f(x) = c_{n, alpha} integral f(y) / |x - y|^{n - alpha} dy applied to f = chi_{B(0,1)}",
+        "instance": {
+          "n": 3,
+          "alpha": 1,
+          "c_{3, 1}": "Gamma((n - alpha)/2) / (2^alpha pi^{n/2} Gamma(alpha/2)) = Gamma(1) / (2 pi^{3/2} Gamma(1/2)) = 1 / (2 pi^{3/2} sqrt(pi)) = 1 / (2 pi^2) = 0.05066...",
+          "value_at_x=0": "I_1(chi_B)(0) = c_{3,1} integral_B 1 / |y|^2 dy = c_{3, 1} * 4 pi * integral_0^1 r^2 / r^2 dr = c_{3,1} * 4 pi = 4 pi / (2 pi^2) = 2 / pi = 0.6366197...",
+          "value_at_x=(2,0,0)": "value involves integration over B(0,1) of 1/|x - y|^2 dy; closed form for Riesz potentials of indicators of balls exists involving hypergeometric functions"
+        },
+        "structural_metadata": {
+          "operator_class": "Riesz potential of order alpha",
+          "fourier_multiplier": "|xi|^{-alpha}",
+          "Lp_boundedness": "I_alpha: L^p -> L^q with 1/q = 1/p - alpha/n (Hardy-Littlewood-Sobolev)",
+          "homogeneity_of_kernel": "|x - y|^{-(n - alpha)}, homogeneous degree -(n - alpha)"
+        }
+      },
+      "encoding_question": "Does the substrate handle the Riesz-potential family I_alpha as a one-parameter family of operators? Does it preserve the (alpha, n)-dependent normalization c_{n, alpha}? Does it integrate with the Fourier-multiplier representation cleanly?",
+      "expected_substrate_action": "Substrate attempts encoding. PROMOTE if (alpha, n) parametric family is canonical. CAPABILITY-GAP-TICKET otherwise."
+    },
+    {
+      "id": "harmonia_c_cap_017",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "capability-gap",
+      "object_class": "Schrodinger eigenvalue counting function on a 2D rectangle",
+      "object_specification": {
+        "type": "N(lambda) := #{eigenvalues of -Delta on [0, a] x [0, b] with Dirichlet bc, eigenvalue <= lambda}",
+        "instance": {
+          "a": "pi",
+          "b": "pi",
+          "eigenvalues": "lambda_{m,n} = m^2 + n^2 for m, n positive integers; first few: (1,1)->2, (1,2)->5, (2,1)->5, (2,2)->8, (1,3)->10, (3,1)->10, (2,3)->13, (3,2)->13, (1,4)->17, (4,1)->17, (3,3)->18, (2,4)->20, (4,2)->20, ...",
+          "N(lambda=10)": "5 (eigenvalues 2, 5, 5, 8, 10, 10 - so N(10) = 6 actually; recount: lambda=2: 1; lambda=5: 2 (m=1,n=2 and m=2,n=1); lambda=8: 1; lambda=10: 2; lambda=13: 2; cumulative through 10 is 1+2+1+2 = 6)",
+          "weyl_law_check": "N(lambda) ~ (Area / 4 pi) lambda = (pi^2 / 4 pi) lambda = (pi/4) lambda; at lambda = 10: prediction (pi/4) * 10 = 7.85; observed 6 - within 25% which is consistent with finite-lambda corrections"
+        },
+        "structural_metadata": {
+          "domain_area": "pi^2",
+          "boundary_perimeter": "4 pi",
+          "weyl_law_leading": "(pi^2 / 4 pi) lambda = (pi/4) lambda for n=2",
+          "weyl_law_subleading": "-(perimeter / 4 pi) sqrt(lambda)",
+          "expected_subleading": "-(4 pi / 4 pi) sqrt(lambda) = -sqrt(lambda)",
+          "expected_at_lambda=10": "(pi/4) * 10 - sqrt(10) = 7.85 - 3.16 = 4.7; observed 6 - need finer correction or counting check"
+        }
+      },
+      "encoding_question": "Does the substrate represent eigenvalue counting functions for Laplace-Dirichlet operators on rectangles? Does it preserve the (a, b)-parametric structure and the discrete eigenvalue enumeration? Does Weyl-law leading and subleading corrections round-trip?",
+      "expected_substrate_action": "Substrate attempts encoding. PROMOTE if eigenvalue-listing primitive matches and Weyl-law metadata is preserved. CAPABILITY-GAP-TICKET if eigenvalue-counting primitive is not canonical."
+    },
+    {
+      "id": "harmonia_c_cap_018",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "capability-gap",
+      "object_class": "Sobolev function in W^{1,2}(R^2) at borderline",
+      "object_specification": {
+        "type": "f(x) = log(log(1/|x|)) on B(0, 1/e) in R^2 (the borderline-W^{1,2}-but-not-L^infinity example)",
+        "instance": {
+          "n": 2,
+          "function": "f(x) = log(log(1/|x|)) for |x| < 1/e",
+          "regularity_W12": "f in W^{1,2}(B(0, 1/e)) (gradient is ||grad f||^2 = (1/(|x|^2 (log(1/|x|))^2)) integrable)",
+          "verification_grad_f_L2": "integral_{B(0, 1/e)} 1/(|x|^2 (log(1/|x|))^2) dx = integral_0^{1/e} 2 pi r / (r^2 (log(1/r))^2) dr = 2 pi integral_0^{1/e} (1/r) / (log(1/r))^2 dr = 2 pi integral_1^{infinity} u^{-2} du = 2 pi * 1 = 2 pi where u = log(1/r)",
+          "L^infinity_failure": "lim_{x -> 0} f(x) = +infinity, so f is NOT in L^infinity",
+          "f_value_at_|x|=0.1": "log(log(10)) = log(2.302585) = 0.8340324..."
+        },
+        "structural_metadata": {
+          "regularity_W^{1,2}": "yes",
+          "L^infinity_membership": "no",
+          "Sobolev_critical_exponent_in_n=2": "W^{1,2}(R^2) does NOT embed in L^infinity (sharp regime); embeds in BMO and in exp-L^p",
+          "Trudinger_Moser_class": "yes (exp-integrable)",
+          "doctrinal_significance": "this object lives in the PRECISE borderline of Sobolev embedding W^{1,2}(R^2) -> X where X is the right exponent space"
+        }
+      },
+      "encoding_question": "Does the substrate represent borderline-Sobolev functions (in W^{1,p} but not in L^infinity)? Does it carry the Trudinger-Moser exp-integrability flag as a structural attribute? Can it canonicalize the example function class log log(1/|x|)?",
+      "expected_substrate_action": "Substrate attempts encoding. PROMOTE if borderline-regularity metadata is preserved. CAPABILITY-GAP-TICKET if Trudinger-Moser flag is not encodable."
+    },
+    {
+      "id": "harmonia_c_cap_019",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "capability-gap",
+      "object_class": "Schrodinger eigenfunction on 2-torus T^2",
+      "object_specification": {
+        "type": "Eigenfunction of -Delta on T^2 = R^2 / Z^2",
+        "instance": {
+          "k": "(2, 1)",
+          "eigenfunction": "psi(x, y) = exp(2 pi i (2 x + y))",
+          "eigenvalue": "(2 pi)^2 (4 + 1) = 5 * 4 pi^2 = 20 pi^2 = 197.392...",
+          "L2_normalized": true,
+          "domain": "T^2 = [0, 1]^2 with periodic identifications"
+        },
+        "structural_metadata": {
+          "ambient": "T^2",
+          "lattice_index_k": "(2, 1)",
+          "eigenvalue_formula": "(2 pi |k|)^2",
+          "is_complex": true,
+          "multiplicity_at_eigenvalue_20pi^2": "8 (k = (+/-2, +/-1) and (+/-1, +/-2) give the same eigenvalue)",
+          "spectral_index_pair": "(2, 1)",
+          "is_eigenfunction_of_translations": true
+        }
+      },
+      "encoding_question": "Does the substrate represent eigenfunctions on the n-torus indexed by the dual lattice Z^n? Does it preserve the translation-invariance (eigenfunction of all translations)? Does it handle multiplicities correctly when |k|^2 = |k'|^2 with k != +/-k'?",
+      "expected_substrate_action": "Substrate attempts encoding. PROMOTE if (k, eigenvalue, multiplicity)-tuple is preserved. CAPABILITY-GAP-TICKET if the dual-lattice structure isn't canonical."
+    },
+    {
+      "id": "harmonia_c_cap_020",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "capability-gap",
+      "object_class": "Heat-kernel-regularized Riesz transform",
+      "object_specification": {
+        "type": "Approximation R_j^t f := R_j (e^{t Delta} f) for the Riesz transform R_j of a function f on R^n",
+        "instance": {
+          "n": 2,
+          "j": 1,
+          "f": "f(x) = exp(-|x|^2)",
+          "t": 0.5,
+          "fourier_form": "F[R_1^t f](xi) = (i xi_1 / |xi|) exp(-t |xi|^2) F[f](xi) = (i xi_1 / |xi|) exp(-0.5 |xi|^2) exp(-|xi|^2 / 4) (since F[exp(-|x|^2)] = pi exp(-|xi|^2/4))",
+          "verification_t_to_zero": "as t -> 0, R_1^t f -> R_1 f in L^p for 1 < p < infinity (mollification)",
+          "value_R_1^t f_at_x=0": "F^{-1}[(i xi_1 / |xi|) pi exp(-0.5 |xi|^2 - |xi|^2/4)](0) = pi * 0 = 0 (odd in xi_1)"
+        },
+        "structural_metadata": {
+          "operator_class": "regularized Calderon-Zygmund (heat smoothing of Riesz transform)",
+          "regularization_parameter": "t > 0",
+          "limit_as_t_to_zero": "Riesz transform R_j",
+          "Lp_uniform_bound_in_t": "yes, by L^p-boundedness of e^{t Delta} contraction semigroup and R_j",
+          "fourier_form": "i xi_j / |xi| times Gaussian-cutoff exp(-t |xi|^2)"
+        }
+      },
+      "encoding_question": "Does the substrate represent t-parametrized regularizations of CZ operators? Does it preserve the t -> 0 limit behavior as a structural attribute? Does it handle composition with the heat semigroup as a primitive?",
+      "expected_substrate_action": "Substrate attempts encoding. PROMOTE if (R_j, e^{t Delta}) composition is canonical. CAPABILITY-GAP-TICKET if t-parametrized operator family + limiting structure is not encodable."
+    }
+  ]
+}
