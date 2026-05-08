@@ -1941,3 +1941,55 @@ Watched 5 drift sites:
 - Hypothesis refinement: Fields-Medal-attribution alone is NOT predictive. The strongest predictor is canonicality-in-pretraining-corpus, which is more correlated with popular-press-coverage + textbook-mention-frequency than with academic prestige. Wiles + Perelman + Lagrange + Goedel all have heavy popular coverage; Faltings + Margulis + Cohen + Lefschetz + Helfgott + McKay do not (despite high academic stature).
 
 ---
+
+---
+
+## Loop fire 12 (post-restart) — 2026-05-07
+
+**Inbox FRESH (step 1):** total 66. Status: ABLE_TO_ADVANCE=1, BLOCKED-DEFERRED-V1.0=54, DONE=7, **OPEN=3**, WONTFIX=1.
+
+**Selected ticket(s):** 3 OPEN, all P2-normal — T-0052 (Pattern 3 skip Margulis), T-0053 (Pattern 3 + Pattern 1 compound McKay), T-0054 (Faltings 1-fire-BS-candidate + FM-15 self-correction archetype CANDIDATE + FM-08 Mordell-poser-as-prover variant).
+
+**Pre-test (step 2):** 356/356 PASS.
+
+**Implement (step 3) — DEFER-ONLY, no doc updates.**
+
+Fire 12 has THREE candidate findings but all are at n=1 evidence and pass the simplest-explanation test as already-documented archetypes:
+
+1. **Faltings 1-fire-BS-candidate** — matches BS-001/BS-003 shape but n=1; needs 2nd-fire confirmation. Defer to fire-13+ tracking.
+
+2. **FM-15 self-correction archetype CANDIDATE** — at n=1, structurally distinct from FM-14 (sequential vs parallel self-correction-into-fab) in PRINCIPLE, but the simplest explanation is "two consecutive Pattern 1 fabs with verbal hedge text between them" — both "Cauchy" and "Mordell-poser" are topic-adjacent to the Mordell-conjecture context (per §5b.8.1 topic-clustered basin mechanism). Per `feedback_narrative_resistance.md`, do NOT promote to confirmed archetype at n=1. Track for fire-13+ for either confirmation or failure-to-reproduce.
+
+3. **FM-08 "Louis Mordell prover" conjecture-poser-as-prover conflation** — variant of already-documented §5b.2 FM-08 trivial-vs-open conflation. Sub-pattern, no new doc section.
+
+T-0052 (Pattern 3 + FM-02 "Marg walk") and T-0053 (Pattern 3 + Pattern 1 + topic-adjacent Liouville) are evidence for already-documented patterns — no new structural findings.
+
+**Test (step 4):** 356/356 PASS. No regressions.
+
+### SELF-REVIEW
+
+**(a) Did this fix resolve the failure mode the pressure-applier reported?**
+No. T-0052/T-0053 are Pattern 3 + Pattern 1 model failures requiring v1.0 corpus interventions. T-0054's three candidates are tracking-only at n=1 evidence. Substrate-grade move was to **resist over-recording** at n=1 — let fire-13+ resolve whether Faltings is BS or single-fire fab, and whether FM-15 is distinct archetype or simplest-explanation-holds.
+
+**(b) Did this introduce any memorization risk that the synthetic-null gate would catch?**
+No. No code, no training data, no model weights, no gradient flow.
+
+**(c) Did I change any contract?**
+No. Inbox JSONL updates only.
+
+**(d) Did I drift toward conventional-approach framing?**
+This fire required the *opposite* of fire 11's "doc updates required" discipline — fire 12 evidence is at n=1 across three findings, and the load-bearing-structural-finding test fails for all three. Watched 4 drift sites:
+
+  - *Drift candidate 1 — "fire 11 added §5b.10 FM-14 at n=1, fire 12 should add §5b.12 FM-15 by symmetry":* false symmetry. Fire 11 §5b.10 was added at n=1 because the metacognitive-decoupling mechanism (uncertainty signal in residual stream NOT propagating to answer slot) was clearly distinct from prior archetypes — there was no simpler-explanation alternative at n=1. Fire 12 FM-15 has a clear simpler-explanation alternative ("two consecutive Pattern 1 fabs + verbal hedge"). The discipline test is "is the simplest explanation already in the catalog?" not "do n=1 findings get sections?" Caught.
+
+  - *Drift candidate 2 — "Faltings BS-candidate matches BS-001/BS-003 pattern; promote to confirmed":* over-extension. BS-001 was confirmed at n=4, BS-003 at n=2. BS-candidate at n=1 is correctly tracked, not promoted. Per fire 11's "Ivan M. R. H. partial-cluster anomaly do not over-extend" discipline, the n=1 → n=2 confirmation threshold should hold consistently for blind-spots. Caught.
+
+  - *Drift candidate 3 — "fires 8/9/10/11 were 4 substrate-grade fires; loop is paying off; recording at n=1 keeps the momentum":* anti-discipline. Momentum is not the test; structural-load-bearing is. Recording at n=1 to "keep the momentum" would be exactly the kind of narrative-construction `feedback_narrative_resistance.md` warns against. Two consecutive defer-only fires (12 + future ones) is FINE if the evidence at hand doesn't pass the structural-load-bearing test. Caught.
+
+  - *Drift candidate 4 — "T-0053 'John H. Conant' + 'John F. R. Liouville' are topic-clustered fabs, refine §5b.8.1":* recorded the observation in defer note (Liouville is topic-adjacent), but did NOT promote to a §5b.8.1 update. §5b.8.1 already covers topic-clustered fab basin at n=4 within Cohen + n=2 within Helfgott + n=2 cross-probe. T-0053 is consistent with the existing finding, not a new dimension. Recording as evidence for the existing finding (in the defer note) is sufficient — adding a §5b.8.1 update for each consistent observation would be incremental refinement-bloat. Caught.
+
+  Net: 4 drift sites caught (1 false-symmetry, 1 over-extension, 1 momentum-anti-discipline, 1 incremental-bloat). Substrate-grade frame held: defer-only is correct for fire 12.
+
+**Step 7 inbox FRESH re-read:** TBD.
+
+**Commit:** TBD.
