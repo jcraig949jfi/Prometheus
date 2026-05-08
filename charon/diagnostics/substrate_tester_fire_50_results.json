@@ -1,0 +1,26 @@
+{
+  "fire": 50,
+  "posture": "investigation + fix (closes fire #49 frozen-mutation puzzle)",
+  "lanes": [
+    1,
+    2
+  ],
+  "lane_1": {
+    "lane": "1_diagnosis",
+    "n_frozen_flips_applied": 2,
+    "audit_passed_under_mutation": true,
+    "audit_summary_under_mutation": "3 passed in 73.63s (0:01:13)",
+    "root_cause": "test_frozen_invariance._is_frozen_dataclass filters for cls.__dataclass_params__.frozen is True. Mutated classes (frozen=False) drop out of enrollment, so the audit only walks classes that ARE frozen and asserts they STAY frozen. Mutation never reaches the assertion.",
+    "verdict": "DIAGNOSIS_CONFIRMED"
+  },
+  "lane_2": {
+    "lane": "2_ship_baseline_manifest_fix",
+    "manifest_path": "sigma_kernel/tests/test_frozen_baseline_manifest.py",
+    "baseline_pass_summary": "14 passed in 12.88s",
+    "baseline_passes": true,
+    "manifest_caught_mutation": true,
+    "mutation_failure_summary": "2 failed, 12 passed in 73.50s (0:01:13)",
+    "verdict": "PASS",
+    "fix_design": "EXPECTED_FROZEN_CLASSES manifest = 12 qualified class names. Parametrized test asserts each cls.__dataclass_params__.frozen is True directly. Mutation that flips the flag fails the assertion. Manifest is hand-maintained \u2014 adding a new frozen dataclass requires an append to the list (forces explicit substrate-design intent)."
+  }
+}

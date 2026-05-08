@@ -6,6 +6,54 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #50 — 2026-05-08 (RESOLVED: fire #49 frozen-mutation puzzle — diagnosis + fix shipped)
+
+**Coordination note:** no new commits between fire #49 and fire #50. Fire #50 closes the investigative loop opened by fire #49.
+
+**Lanes selected:** 1 (root-cause diagnosis) + 2 (ship + verify the fix). No regression lane this fire — investigation is the work.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_50_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_50_results.json`.
+
+### Lane 1 — Root cause diagnosed (DIAGNOSIS_CONFIRMED)
+
+Read `test_frozen_invariance.py:_is_frozen_dataclass` filter. Predicted mechanism: when `@dataclass(frozen=True)` is mutated to `frozen=False`, `_is_frozen_dataclass` returns False, the class drops out of enrollment, and the audit walks only still-frozen classes — silently passing.
+
+**Empirical confirmation:** manually flipped `frozen=True → False` on 2 classes in `method_spec.py` (DriftChannel + MethodSpec). Re-ran `test_frozen_invariance.py` — all 3 audit tests PASSED in 13.49s. Diagnosis verified.
+
+### Lane 2 — Fix shipped + verified (PASS)
+
+Created `sigma_kernel/tests/test_frozen_baseline_manifest.py` (139 lines, 14 tests):
+
+- `EXPECTED_FROZEN_CLASSES` — explicit baseline manifest of 12 qualified class names that MUST stay frozen
+- `test_class_remains_frozen` — parametrized; for each manifest entry, asserts `cls.__dataclass_params__.frozen is True` directly
+- `test_manifest_count_matches_baseline` — guards against silent shrinkage
+- `test_manifest_uniqueness` — sanity
+
+**Baseline:** 14/14 PASS in 12.39s.
+
+**Fix verification:** re-ran the same 2-class `frozen=True → False` mutation; new manifest test FAILS with 2 specific assertion errors (DriftChannel + MethodSpec frozen=False). **Mutation no longer survives.**
+
+### Why a manifest, not better auto-enrollment?
+
+Auto-enrollment based on `frozen=True` is intrinsically blind to flips of that flag — the filter literally requires the property it's auditing for. A baseline manifest is **explicit substrate-design intent**: adding a new frozen dataclass requires appending; removing requires review. This is the kind of "epistemic explicitness" that v2 already established for other substrate primitives (per `pivot/substrate_v2_proposal_2026-05-05.md`).
+
+### Ticket closed
+
+`T-2026-05-08-ST-fire50-001` (P2-medium, test-coverage-gap-CLOSED) → Techne. Documents diagnosis + fix + verification. Notes that fire #49's OTHER finding (factory-method return-value gap) REMAINS open as P3 ticket ST-fire49-001.
+
+### Substrate-tester observation — investigative-fire shape
+
+Fire #50 is the cleanest investigative fire to date:
+- Fire #49 surfaced a puzzling negative result
+- Fire #50 diagnosed cause + shipped fix + verified fix all in one cycle
+- Fire log captures the full causal chain (#49 → #50)
+- Two-fire cycle is the right shape for "negative result + investigation" pattern
+
+Future substrate-tester maintenance fires can follow this shape when interesting puzzles surface.
+
+---
+
 ## Fire #49 — 2026-05-08 (post-pivot lower-cadence: §III matrix-filling + Lane 16 mutation-testing finding)
 
 **Coordination note:** no new commits between fire #48 and fire #49. First fire of the post-pivot lower-cadence regime.
