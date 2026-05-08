@@ -125,6 +125,73 @@ This is the **substrate-grade rationale** for evolving tensor tools, not a "fram
 
 ---
 
+## Three framings, not two (per James 2026-05-08 correction to both AI takes)
+
+Both my original framing AND ChatGPT's review framing missed the third axis. The complete picture has THREE framings, each addressing a different strategic question:
+
+| Framing | Strategic question | Method examples |
+|---|---|---|
+| **Defensive** (my original) | "How do we delay the local-lab → cloud-compute transition?" | TT/Tucker decomposition of pre-existing arrays; MPS compression of computed states |
+| **Diagnostic** (ChatGPT's review) | "Does substrate structure collapse onto low-dimensional manifolds?" | Rank study; bond-dimension measurement; correlation-decay analysis |
+| **Offensive** (James's correction) | "What can tensors enable us to compute that we COULDN'T otherwise compute at all?" | **TT-cross / cross-approximation; QTT; sparse-grid quadrature; active subspaces** |
+
+The offensive framing is genuinely different. It's not about "we have N-dim brute force; tensor compresses it." It's about **we have N-dim spaces we couldn't enumerate at all; tensor methods let us SEARCH them**.
+
+### Offensive method catalog
+
+**TT-cross / TT-completion** (Oseledets, Goreinov, et al.) — adaptive cross-approximation algorithms that build a low-rank tensor train from a small number of function evaluations. Polynomial time in dimension when the underlying function has bounded TT-rank. Used for:
+- High-dim Bayesian optimization (search complex landscapes)
+- Function approximation on `[N]^d` where naive grid search is infeasible
+- Combinatorial optimization where the full landscape is exponential but structure permits sampling
+
+**QTT (Quantics Tensor Train)** — represents continuous functions via binary-encoded TT, achieving polynomial cost on continuum problems that classical methods make exponential. Used for:
+- High-dim PDE solving on local hardware
+- Continuum integration over `[0, 1]^d` for very large d
+
+**Sparse-grid quadrature (Smolyak)** — combines low-dim quadratures into high-dim integrals with cost polynomial-in-d instead of exponential. Used for:
+- Multi-dim integration with bounded mixed regularity
+- Reduces high-dim integration to a substrate-feasible budget
+
+**Active subspaces** — discovers a low-dim subspace where the function actually varies, then operates only in that subspace. Used for:
+- Sensitivity analysis on high-dim parameter spaces
+- Reduced-order models when the effective dimensionality << ambient dimension
+
+### Offensive substrate use cases (concrete)
+
+Where the substrate could **enable computations that don't currently exist as feasible options**:
+
+1. **deg-16+ Lehmer enumeration via TT-cross adaptive search**. Currently capped at deg-14 ±5 (~97M states; brute force feasible). deg-16 ±5 ≈ 2.4B states — infeasible on local hardware. **TT-cross** with the in-band-indicator function would adaptively sample only where in-band density is high. If the in-band region has low-rank structure (Walk-1's diagnostic answer), TT-cross enables a domain (deg-16) that's currently closed to us entirely.
+
+2. **Operator composition search**. Search the space of N-step operator compositions for "interesting" combinations (high information yield, near-misses, novel intersections). Naive: combinatorial explosion in N. **TT-cross on the operator-composition tensor** with an "interesting score" function: polynomial time IF the score landscape has low-rank structure. Enables compositional discovery the substrate currently can't do.
+
+3. **Counterexample search in high-dim conjecture spaces**. For a conjecture "∀ params ∈ `[low, high]^N`, property P holds," **TT-cross with the property-violation indicator** can search for counterexamples in spaces too large for grid search. This is a candidate Aporia tool — flip "exhaustive verification infeasible" to "adaptive search for failure cases feasible."
+
+4. **High-dim Bayesian optimization over substrate-tester probe parameters**. The N-dim space of (lane-1-thru-18 × probe configurations × seed/threshold tunings × stratification choices) is too large for grid search; **TT-cross BO** could find probe configurations with high yield-per-fire that we'd never reach by hand.
+
+5. **Cross-(degree, coef-bound, palindromic-class, ...) sweet-spot characterization**. Fire #31 surfaced the deg-10 sweet-spot finding (±5 yields hits; ±3 and ±7 don't). The full landscape across (degree, coef-bound, palindromic-class, etc.) is high-dim. **Sparse-grid quadrature or TT-cross** would map the whole sweet-spot manifold without exhaustive enumeration.
+
+### The shift this represents
+
+The offensive framing changes Walk-1's purpose. The original Walk-1 framing answered the diagnostic question ("can we compress this?"). The upgraded framing answers BOTH questions simultaneously:
+
+| Question | Walk-1 measurement |
+|---|---|
+| **Diagnostic:** does the in-band region have low-rank structure? | Bond-dimension profile across rank-truncation levels |
+| **Offensive:** could TT-cross adaptively SEARCH this lattice? | Same bond-dimension measurement IS the answer — bounded bond dim → TT-cross is feasible |
+
+Walk-1 outcome interpretations:
+- Bond dim < 50 → **both** "structure compressible" (diagnostic-pass) AND "TT-cross adaptive search viable" (offensive-pass). Unlocks deg-16 enumeration as a candidate domain.
+- Bond dim ~50-200 → ambiguous; further structural analysis needed.
+- Bond dim >> 200 → both diagnostic-fail AND offensive-fail. Lehmer in-band region is genuinely incompressible / non-low-rank; tensor methods don't help here. Other compression geometries (categorical, evolutionary, sparse symbolic) become the candidates.
+
+**The strategic upgrade:** the substrate's tensor-tool roadmap now has TWO independent leverage points:
+- **Compress what we already compute** (defensive framing; modest gains)
+- **Compute what we currently can't** (offensive framing; potentially transformative)
+
+Walk-1 result determines which leverage is available for the Lehmer surface; future walk-experiments determine the same for cross-operator joints, conjecture counterexample spaces, etc.
+
+---
+
 ## Strategic upgrade (per ChatGPT 2026-05-08 review)
 
 ChatGPT's review of this doc and the related charter sharpened several framings worth codifying:

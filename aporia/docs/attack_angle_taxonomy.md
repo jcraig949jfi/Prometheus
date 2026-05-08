@@ -433,3 +433,80 @@ Canonical count is now P01-P26 (P20 still removed pending replacement decision; 
 ---
 
 *Aporia, 2026-05-08*
+
+---
+
+## 2026-05-08 (later) — Tensor-specific paradigms (P27-P31)
+
+Per James 2026-05-08 directive (`aporia/mathematics/tensor_open_problems_v1.md`): tensor mathematics is going to be central to Prometheus, and the attack vectors used in the tensor-frontier literature don't reduce cleanly to P01-P26. Five additional paradigms specific to (or strongly characteristic of) tensor problems.
+
+### P27 — Slice Rank / Polynomial Method on F_q (Croot-Lev-Pach)
+**Move:** Build a high-degree polynomial vanishing on a combinatorial set; bound the dimension of the polynomial space; bound the set size via the rank of the slice operator. Slice rank, partition rank, analytic rank, geometric rank are related-but-distinct structure detectors; pick the right one for the bound you want.
+**Exemplar:** Cap-set bound o(2.756^n) for Z_3^n (Ellenberg-Gijswijt 2017) and Z_4^n (Croot-Lev-Pach 2017). Core technique: 3-tensor T(x,y,z) = δ(x+y+z=0); slice rank of T over F_3 bounds cap set size.
+**Computation:** Polynomial dimension counting; tensor-rank-zoo computation over finite fields.
+**Tools:** Sage, Magma; custom polynomial-method codes.
+**Prometheus:** Substrate-friendly because (a) operates over F_q with explicit dimension counts (auditable by substrate-tester), (b) handles many cap-set-style problems uniformly, (c) exposes the rank-zoo (slice / partition / analytic / geometric) as a calibration anchor.
+**Tactics:** Slice rank | Partition rank (Naslund) | Analytic rank (Lovett) | Geometric rank (Kopparty-Moshkovitz-Zuiddam) | Polynomial method on F_q
+**Distinction from P22 (Polynomial Method on Signed Graphs):** P22 attacks bilinear questions via Cauchy interlacing on a signed graph. P27 attacks combinatorial-set-size questions via polynomial-rank bounds in F_q. Different graph vs. polynomial space; different inequality (rank vs interlacing).
+**Catalog refs:** Open problems #13-15, #56, #95-99 in `aporia/mathematics/tensor_open_problems_v1.md`.
+
+### P28 — Asymptotic Spectrum (Strassen)
+**Move:** Find a complete set of monotone semiring-homomorphisms (real-valued functionals) on a tensor pre-order under restriction / degeneration; the asymptotic value of the pre-order on a tensor is the maximum of these monotones. Each monotone is a "spectrum point."
+**Exemplar:** Strassen's asymptotic rank (1986-1991). Monotones include: matrix flattenings, support functionals, slice rank, quantum functionals (Christandl-Vrana-Zuiddam 2017). ω = log_2 R(M⟨2⟩^∞) is the asymptotic-rank value of the matrix multiplication tensor.
+**Computation:** Compute candidate monotones on test tensors; verify monotonicity numerically over restriction relations; search for new monotones from quantum entropy inequalities.
+**Tools:** Numerical SDP for moment polytopes; symbolic representation theory (LiE, Symmetrica).
+**Prometheus:** A meta-paradigm for "asymptotic invariants of pre-orders." The substrate's CoordinateChart / asymptotic-restriction primitive (T030 operator-portability extends in this direction) is a P28-shaped object.
+**Tactics:** Spectrum-point construction | Quantum functionals | Support functionals | Razborov rank functions | Moment-polytope evaluation
+**Distinction from P04 (Spectral Analysis):** P04 spectrum is eigenvalues; P28 spectrum is real-valued monotones on a pre-order. Different mathematical object — eigenvalue vs functional.
+**Catalog refs:** Open problems #1-2, #7-8, #16-17 in tensor_open_problems_v1.md.
+
+### P29 — Border Apolarity (Buczyńska-Buczyński)
+**Move:** Bound the border rank of a tensor / form via combinatorial conditions on apolar 0-dimensional schemes (Gorenstein quotients of polynomial rings). Replace the topological closure (border rank) with a scheme-theoretic invariant (cactus rank); use Macaulay's inverse-system theory + Hilbert function bookkeeping.
+**Exemplar:** Border-rank lower bounds on M⟨3⟩ (Landsberg-Michałek). Border apolarity gives R̲(M⟨3⟩) ≥ 17. Buczyńska-Buczyński-Galązka algorithms enumerate B-invariant ideals of fixed multiplicity.
+**Computation:** Macaulay2 with Apolarity package; symbolic Hilbert-function tracking; multigraded Hilbert scheme computations.
+**Tools:** Macaulay2 SecantVarieties; Apolarity; MultigradedHilbert.
+**Prometheus:** Substrate-friendly because lower bounds via apolarity are CONSTRUCTIVE (the obstruction is a specific scheme), making them auditable by substrate-tester. Pairs with the substrate's TriangulationProtocol (independent obstructions = independent apolar schemes).
+**Tactics:** Apolar Gorenstein scheme construction | Hilbert function bookkeeping | Multigraded Hilbert scheme | B-invariant ideal enumeration
+**Distinction from P02 (Cohomological Obstruction):** P02 reads cohomology of variety; P29 constructs apolar 0-d scheme. Different setup — variety vs apolar quotient.
+**Distinction from P15 (Tensor / Multilinear Decomposition):** P15 decomposes tensors; P29 bounds the rank of decomposition via scheme combinatorics. Decomposition vs decomposition-bound.
+**Catalog refs:** Open problems #5, #19, #20, #28-30 in tensor_open_problems_v1.md.
+
+### P30 — Tensor Network Contraction (TN / DMRG / PEPS)
+**Move:** Represent a high-dimensional tensor as a network of low-dimensional tensors connected by index contractions; computational task = optimal contraction order; approximation = bounded bond dimension. Multi-particle quantum systems use MPS / PEPS / MERA / TT formats.
+**Exemplar:** DMRG (White 1992) for 1D quantum many-body problems; PEPS for 2D; MERA for critical / scale-invariant systems; cotengra / opt_einsum for general tensor-network contraction-order optimization.
+**Computation:** ITensor (Julia/C++); TenPy (Python); TensorNetwork (Google); cotengra; opt_einsum.
+**Tools:** ITensor, TenPy, TensorNetwork, cotengra, opt_einsum, T3F (TensorFlow), TT-Toolbox.
+**Prometheus:** Tensor networks are the natural representation for the unified-tensor build (HARD-3). The substrate's CoordinateChart system can host a TensorNetwork primitive that internally uses these tools. P30 is THE paradigm for the substrate's eventual large-scale data structure.
+**Tactics:** MPS / TT contraction | PEPS / 2D contraction | MERA hierarchical decomposition | Bond-dimension truncation | Treewidth-based contraction order | Variational tensor-network optimization
+**Distinction from P15 (Tensor and Multilinear Decomposition):** P15 = decompose a fixed tensor into rank-1 sums (CP decomposition). P30 = represent a tensor as a contraction-network of small tensors (TT / Tucker / MPS). Decomposition format differs.
+**Distinction from P09 (Exhaustive Computation):** P09 enumerates all states; P30 represents a state implicitly via contractions, side-stepping enumeration.
+**Catalog refs:** Open problems #49-51, #75-78, #82-84 in tensor_open_problems_v1.md.
+
+### P31 — Secant Variety Geometry (Algebraic-Geometric Tensor Decomposition)
+**Move:** Embed tensors into projective space via Segre / Veronese / Segre-Veronese embedding; rank-r tensors form the r-th secant variety σ_r; identifiability and decomposition uniqueness reduce to non-defectivity of σ_r; defining equations of σ_r give rank-detection certificates.
+**Exemplar:** Alexander-Hirschowitz theorem (generic Waring rank). Landsberg-Ottaviani Young flattenings (defining equations of σ_r). Salmon problem (defining equations of σ_4 in 4×4×4). Kruskal's theorem on CP identifiability via column ranks.
+**Computation:** Macaulay2 SecantVarieties package; Bertini / HomotopyContinuation.jl numerical AG; Schubert calculus for enumerative invariants.
+**Tools:** Macaulay2, Bertini, HomotopyContinuation.jl, Sage, Singular.
+**Prometheus:** Substrate-friendly because (a) defining equations are EXPLICIT polynomial certificates auditable by substrate-tester, (b) Terracini's lemma reduces dim-of-secant-variety to a tangent-space computation, (c) generic-rank facts become anchors per HARD-4. The substrate's identifiability discipline can directly use σ_r geometry.
+**Tactics:** Segre / Veronese / Segre-Veronese embedding | Terracini's lemma | Young flattenings | Schubert calculus | Newton-polytope / cohomological dimension counts | Apolar-scheme-based equations
+**Distinction from P29 (Border Apolarity):** P29 uses apolar 0-d schemes (combinatorial / scheme-theoretic). P31 uses secant varieties (continuous / variety-theoretic). The two paradigms are dual frameworks for the same underlying decomposition problem; either can give a lower bound the other can't.
+**Distinction from P15 (Tensor and Multilinear):** P15 is the "do the decomposition" task. P31 is the "geometry of all possible decompositions" task. Decomposition vs moduli.
+**Catalog refs:** Open problems #5, #18, #21, #26-35, #38-42 in tensor_open_problems_v1.md.
+
+---
+
+## Tensor-paradigm cross-cutting observations
+
+P27-P31 share characteristics distinct from P01-P26:
+
+- **All five are "young" paradigms** by mathematical-history standards. P27 is ~10 years old in its modern form (Croot-Lev-Pach 2017); P28 is the oldest at 40 years (Strassen 1986); P29 is ~15 years old (Buczyńska-Buczyński 2010s); P30 emerged from physics (DMRG 1992) but became a math paradigm later; P31 has classical roots (Severi 1900, Veronese; Terracini 1911) but the modern computational form is post-2000. **Mathematicians have not had centuries to noodle over them; tools are emerging fast.**
+
+- **All five have rich computational hooks.** Unlike P01-P26 which are sometimes purely conceptual, every tensor paradigm has a corresponding software ecosystem: Sage / Macaulay2 (P27, P29, P31); explicit functional codes (P28); ITensor / TenPy (P30); Bertini / HomotopyContinuation.jl (P31). This makes them substrate-grade.
+
+- **All five touch NP-hard problems.** P30 contains #P-hard problems (PEPS contraction); P29 / P31 give bounds on NP-hard rank decisions; P27 attacks NP-hard combinatorial extremal problems; P28 sits adjacent to undecidable questions (rank decidability over ℚ).
+
+- **The asymptotic spectrum (P28) is the meta-organizer.** P29 and P31 produce monotones; P27 produces a specific monotone (slice rank); P30 produces approximation theorems. P28 unifies them under a single framework.
+
+Effective canonical count: **31 paradigms (P20 still removed; 30 active)**. P22-P26 from earlier 2026-05-08 round, P27-P31 from this tensor-specific round.
+
+— Aporia, 2026-05-08
