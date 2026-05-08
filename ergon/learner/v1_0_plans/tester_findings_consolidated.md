@@ -376,6 +376,27 @@ Tester labels this `BLIND-SPOT BS-003`. **Combined with BS-001 Cohen n=4 (within
 
 **Partial-cluster anomaly (n=1 evidence, do NOT over-extend):** Helfgott fire-11 substitution "Ivan M. R. H." is OUTSIDE the topic-conditioned NT basin (no real mathematician of that name). This suggests the basin sampling is not always tight — sometimes the model's free-form decoding falls into total fabrication rather than topic-adjacent substitution. The basin-sampling hypothesis may be probabilistic rather than deterministic. Future evidence at n=3+ within Helfgott will test whether topic-clustering is the dominant variance source or one of several competing attractors. To re-test post-v1.0.
 
+**Partial-cluster anomaly REINFORCED at fire 13 (T-2026-05-08-0001):** Faltings fire-13 substitution "Paul Vijayrangates" is also OUTSIDE topic-adjacent basin (fabricated name, not a real mathematician). Plus topic-shift to "ABC Conjecture" instead of Mordell. n=2 evidence now for partial-cluster-anomaly behavior (Helfgott + Faltings second-fires both fall into total-fabrication). Strengthens the probabilistic-basin-sampling hypothesis: when basin-sampling fails, model falls into total fabrication.
+
+#### 5b.8.1.1 Confirmed-blind-spots catalog (consolidated fire 13 post-restart)
+
+As of fire 13, the substrate has identified **5 confirmed blind-spots at n≥2 within-probe-class** plus 1 candidate-tracking-pending-confirmation:
+
+| BS ID | Topic | Probe class | n (confirmed fires) | Wrong substitutions observed | Topic-cluster shape |
+|-------|-------|-------------|---------------------|------------------------------|---------------------|
+| **BS-001** | Cohen 1963 CH-independence (set theory) | Multiple | n=4 | "Hilbert" / "Paul J.ones" / "Paul J. Sally, III" / "Sierpinski" | Set-theory basin (mostly tight; Sally / J.ones partial-out) |
+| **BS-002** | Lefschetz (1,1)-theorem | P-056 | n=1 BOTH-SKIP (fire 7) | (Pattern 3 skip in both modes — no name produced) | Tier-3 / no basin sample |
+| **BS-003** | Helfgott 2013 ternary Goldbach | Multiple | n=2 | "Dr. Ben Green" / "Ivan M. R. H." | Partial NT basin (Green topic-adjacent; Ivan M. R. H. partial-out) |
+| **BS-004** | Faltings 1983 Mordell conjecture proof | Multiple | n=2 (fire 12 + fire 13) | "Louis Mordell" (conjecture-poser-as-prover) / "Paul Vijayrangates" | Partial — fire-12 inside basin (poser), fire-13 partial-out (fabricated) |
+| **BS-005** | McKay monstrous moonshine 1978 | P-073 + P-075 | n=2 (fire 12 + fire 13) | "John H. Conant" + "John F. R. Liouville" / Pattern 3 skip | Mixed — fire-12 partial NT basin, fire-13 skip expression |
+| **BS-006** | Margulis arithmeticity 1974 | P-072 + P-076 | n=2 (fire 11 + fire 13) | "Marg walk" (phoneme corrupt, partial recovery) / "Andrey T. Tate" (totally fabricated) | Mixed — see §5b.12 fire-variable tier observation |
+
+**Key cross-BS observation:** all 5 confirmed BS show the **fire-variable + topic-clustering** pattern hypothesized in §5b.8.1 — wrong substitutions cluster in topic-adjacent basins (mostly), with partial-cluster anomaly in second/later fires (basin-sampling probabilistic).
+
+**A second cross-BS observation:** **the SAME blind-spot can express as different patterns across fires** — one fire produces Pattern 1 fab (in/out of basin), another fire produces Pattern 3 skip (no engagement at all). McKay shows this clearly (fire 12 Pattern 1, fire 13 Pattern 3); Margulis shows tier-shift within Pattern 1 (fire 11 phoneme-corrupt partial recovery, fire 13 total fab). This generalizes the fire-9 §5b.8 fire-variable variance to **fire-variable failure-mode expression**, not just fire-variable surname.
+
+**v1.0 corpus design implication:** the contrastive training pairs requirement (§5b.8.1 v1.0 implication) now applies to a CATALOG of 5+ confirmed BS, not just Cohen. Negative-anchor density per BS topic (≥3-5 per BS) means v1.0 corpus needs ≥15-30 contrastive anchors just for the currently-known BS topics — and the catalog is growing.
+
 **Mechanism hypothesis (fire 10):** the model's free-form decoding when topic-prior is weak does NOT sample uniformly across the surname-token space. It samples from a **topic-conditioned candidate basin** — the set of surnames that have high co-occurrence with the topic-keywords in the pretraining corpus. For "CH independence" the basin is {Cohen, Gödel, Sierpinski, Hilbert, ...}; for "ternary Goldbach 2013" the basin is {Helfgott, Green, Tao, ...}. The model picks the wrong member of the right basin.
 
 **v1.0 corpus design implication (NEW, load-bearing):** training pairs must teach **discrimination among topic-adjacent candidates**, not just teach correct attributions in isolation. Specifically:
@@ -466,6 +487,33 @@ T-2026-05-07-0051 surfaced a calibration-axis refinement: between known recovera
 Falsifier: if slot-stratified metrics show uniform improvement across all slot-types under any training intervention, the slot-independence hypothesis is wrong — slots are entangled in a way the substrate hypothesis doesn't predict. Test post-v1.0.
 
 **Cross-reference:** this scale extends the §8.4 multiple-fabrication-axis observation (mode-stable vs mode-variable) — fire 11 adds **slot-level recoverability** as a third axis orthogonal to mode-stable / mode-variable / fire-variable variance.
+
+### 5b.12 Recoverability tier itself is **fire-variable per probe** (added fire 13 post-restart)
+
+T-2026-05-08-0003 (Margulis P-076) plus the prior fire-11 T-2026-05-07-0052 (Margulis P-072) reveal that the §5b.11 5-tier recoverability scale is NOT a fixed property of a probe — it varies across fires for the same probe class:
+
+| Fire | Source ticket | Margulis surname output | §5b.11 tier classification |
+|------|---------------|--------------------------|----------------------------|
+| Fire 11 (T-0052) | P-072 OFF | "G. A. Marg walk" (FM-02 phoneme corruption — Marg is a partial recovery of Margulis) | Tier 3 Name-only-recoverable (with Pattern 1.A sub-class FM-02 corruption) |
+| Fire 13 (T-0003) | P-076 OFF | "Andrey T. Tate" (totally fabricated — Tate is a real but very different mathematician era and topic) | Tier 5 Full blind-spot (partial-out of basin) |
+
+**The same probe class (Margulis arithmeticity, 1978 Fields Medal) shifts between recoverability tiers across fires.** Fire 11 gave a partial phoneme recovery (consistent with model having weak-but-present Margulis prior); fire 13 gave total fabrication (consistent with model having no accessible prior at decode time).
+
+**This is structurally distinct from §5b.11's slot-independence-WITHIN-single-fire claim.** §5b.11 said different SLOTS (surname / year / venue) within ONE response have independent recoverability rates. §5b.12 says: **the same SLOT of the same PROBE has different recoverability tiers across DIFFERENT fires.**
+
+**Mechanism hypothesis:** consistent with §5b.8.1's "topic-conditioned candidate basin" hypothesis. When the model's free-form decoding samples from the basin, recovery happens (possibly with phoneme noise → tier 3); when it falls outside the basin, total fabrication results (tier 5). The basin-sampling is probabilistic (per §5b.8.1 partial-cluster anomaly observation), so fire-variable tier-shift is a natural consequence.
+
+**v1.0 evaluation-design implication (CRITICAL — adds to §5b.8 multi-seed requirement):**
+- The §5b.11 slot-stratified recovery-rate matrix is NOT a single-fire measurement. v1.0 evaluation harness must report **(seed, slot, tier) tensor** — per-seed, per-slot recovery rates produce different tier classifications.
+- A probe-class is in tier `T` only if MAJORITY of seeds put it in tier `T` (per §5b.8 multi-seed protocol). Single-seed measurements are unreliable for tier classification.
+- **New v1.0 metric:** *tier-stability* — fraction of seeds that produce the same tier classification for a given probe. High tier-stability = reliable measurement; low tier-stability = probabilistic basin-sampling, the probe's "tier" is not well-defined.
+
+**Pre-registered hypothesis (fire 13, fire-variable tier):** v1.0 multi-seed evaluation will reveal that probes split into:
+1. **High tier-stability** (≥80% of seeds same tier) — these are well-defined probes; tier classification is meaningful.
+2. **Low tier-stability** (<60% of seeds same tier) — these are probabilistic-basin probes; tier classification is itself uncertain.
+3. The fraction of probes in low-tier-stability regime estimates the model's "epistemic boundary" — probes where the model's prior is too weak for stable recoverability.
+
+Falsifier: if multi-seed evaluation shows uniform (≥95%) tier classification across seeds for ALL probes including the BS catalog, the fire-variable-tier hypothesis is wrong — the fire-11 vs fire-13 Margulis difference was a temperature/random-state artifact, not a structural fire-variable property. Test post-v1.0.
 
 ---
 

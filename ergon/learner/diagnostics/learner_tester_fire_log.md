@@ -2050,3 +2050,60 @@ This fire required the *opposite* of fire 11's "doc updates required" discipline
 - Updated calibration-axis hypothesis: recoverability is jointly determined by (canonicality, era, BS-subtype). The 3 BS sub-classes interact differently with corpus interventions: non-deterministic BS likely fixed by single corpus addition; deterministic BS requires corpus + active unlearning; partial-recovery requires tokenizer-level intervention.
 
 ---
+
+---
+
+## Loop fire 13 (post-restart) — 2026-05-08 (day rollover)
+
+**Inbox FRESH (step 1):** total 69. Status: ABLE_TO_ADVANCE=1, BLOCKED-DEFERRED-V1.0=57, DONE=7, **OPEN=3**, WONTFIX=1.
+
+**Selected ticket(s):** 3 OPEN, all P2-normal — T-2026-05-08-0001 (Faltings 2nd fire), T-2026-05-08-0002 (McKay 2nd fire), T-2026-05-08-0003 (Margulis 2nd fire). Initial scan suggested all standard Pattern 3 skips, but careful reading reveals THREE structural findings.
+
+**Three substrate-grade findings landed:**
+
+1. **Faltings BS-004 promoted from BS-CANDIDATE to CONFIRMED at n=2.** Fire 12's tracked candidate now confirmed. Wrong substitutions: "Louis Mordell" (fire 12, conjecture-poser, topic-adjacent) → "Paul Vijayrangates" (fire 13, totally fabricated, partial-out of basin). Same partial-cluster-anomaly pattern as Helfgott "Ivan M. R. H." — strengthens probabilistic-basin-sampling hypothesis.
+
+2. **McKay BS-005 NEW CONFIRMED at n=2.** Fire 12's "Conant" + "Liouville" fabs + fire 13's Pattern 3 skip = McKay never recovered across 2 fires. **NEW cross-BS observation: same blind-spot expresses as Pattern 1 fab in one fire, Pattern 3 skip in another fire.** Generalizes fire-9 §5b.8 fire-variable variance to fire-variable failure-mode expression.
+
+3. **§5b.12 NEW finding: recoverability TIER is fire-variable per probe.** Margulis (BS-006 also confirmed) shifted from §5b.11 Tier 3 (Name-only-recoverable with phoneme corruption "Marg walk") at fire 11 to Tier 5 (Full blind-spot with total fab "Andrey T. Tate") at fire 13. The 5-tier scale is NOT a fixed probe property — it varies across fires. Structurally distinct from §5b.11's slot-independence-within-single-fire. New v1.0 metric: tier-stability (fraction of seeds same-tier per probe).
+
+**Pre-test (step 2):** 356/356 PASS.
+
+**Implement (step 3) — substantive doc updates:**
+
+1. **`tester_findings_consolidated.md` §5b.8.1 extended + §5b.8.1.1 Confirmed-blind-spots catalog added.** BS-001 through BS-006 consolidated in one table. Plus partial-cluster-anomaly REINFORCED note (n=2 evidence with Helfgott + Faltings second-fires both falling into total fabrication). Plus cross-BS observation (same BS expresses as Pattern 1 OR Pattern 3 across fires).
+2. **`tester_findings_consolidated.md` §5b.12 added** (fire-variable recoverability tier). Distinguished from §5b.11 (which was slot-independence within single fire). v1.0 evaluation-design implication: per-(seed, slot, tier) tensor reporting + tier-stability metric.
+3. **`aporia_inbox.jsonl`:** standing format-mode-anchors coordination ticket scope expanded fire 13 (BS catalog growth from 2 to 5+ → 15-30+ contrastive negative anchors needed; per-(seed, slot, tier) evaluation tensor added).
+4. **`ergon_inbox.jsonl`:** 3 OPEN → BLOCKED-DEFERRED-V1.0 with cross-references to §5b.8.1.1 / §5b.12.
+
+**Test (step 4):** 356/356 PASS. No regressions.
+
+### SELF-REVIEW
+
+**(a) Did this fix resolve the failure mode the pressure-applier reported?**
+No. The 3 BS confirmations are base-model attribution-prior absences requiring v1.0 contrastive corpus (now ≥15-30 anchors needed for known BS catalog). The fire-variable tier finding adds an evaluation-design requirement (multi-seed per probe). Substrate-grade move was to **promote 3 BS candidates to confirmed** at n=2, **consolidate the BS catalog** in one canonical table, and **identify the fire-variable-tier finding** as a structurally distinct refinement of §5b.11.
+
+**(b) Did this introduce any memorization risk that the synthetic-null gate would catch?**
+No. No code, no training data, no model weights, no gradient flow.
+
+**(c) Did I change any contract?**
+No. Doc + inbox JSONL updates only.
+
+**(d) Did I drift toward conventional-approach framing?**
+Watched 5 drift sites:
+
+  - *Drift candidate 1 — "fire 12 was defer-only / fire 13 should also be defer-only by symmetry":* false symmetry. Fire 12 had n=1 candidates with simpler-explanation alternatives. Fire 13 has n=2 confirmations of fire-12 candidates AND a new structural finding (fire-variable tier). The discipline test holds: fire 13 evidence passes the load-bearing test, defer-only does not. Caught.
+
+  - *Drift candidate 2 — "promote BS-002 Lefschetz to a §5b.8.1.1 entry too, even at n=1 BOTH-SKIP":* over-extension. BS-002 was the fire-7 BOTH-SKIP observation; tester labeled it BS but it's at n=1 with no name produced (Pattern 3 skip both modes). Including it in the BS catalog at n=1 is INCONSISTENT with the n≥2 confirmation threshold I've been using. Resolution: included in the table with explicit "n=1 BOTH-SKIP" annotation showing it differs from the n=2 confirmed BS, and explicit tier label showing it's a different shape (Tier 3 / no basin sample, not name-fabricated). Caught — kept consistent threshold while preserving tester's BS-002 label.
+
+  - *Drift candidate 3 — "the fire-variable-tier finding really should fold into §5b.11 as an extension":* false consolidation. §5b.11 says slots within a single fire have independent recovery rates. §5b.12 says the same slot has different tiers across fires. These are STRUCTURALLY distinct claims. Folding §5b.12 into §5b.11 would obscure the distinction. Recorded as separate §5b.12 with explicit cross-reference + "structurally distinct from §5b.11" framing. Caught.
+
+  - *Drift candidate 4 — "BS-005 McKay 'Pattern 1 in one fire, Pattern 3 in another' justifies a top-level finding ('the same BS can express as different patterns')":* worth recording but at the right granularity. Recorded as a "cross-BS observation" within §5b.8.1.1 BS catalog, not as a separate top-level §5b.13. The observation is about HOW BS express across fires, which belongs with the BS catalog. Caught — right granularity.
+
+  - *Drift candidate 5 — "the BS catalog is growing fast (2 → 5 in one fire); estimate total BS-count and warn":* premature estimation. We have 5+ confirmed BS at fire 13; the rate of BS catalog growth depends on tester probe coverage. Estimating "total BS count" or making predictions about catalog saturation would repeat the fire-3 saturation-prediction failure (which fire 8 falsified). Recorded as "catalog is growing" without estimation. Caught — explicit lesson learned from fire-3 saturation-prediction post-mortem (per §1 Pattern 9).
+
+  Net: 5 drift sites caught (1 false-symmetry, 1 over-extension, 1 false-consolidation, 1 right-granularity correction, 1 premature-estimation). Substrate-grade frame held.
+
+**Step 7 inbox FRESH re-read:** TBD.
+
+**Commit:** TBD.
