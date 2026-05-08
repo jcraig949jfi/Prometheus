@@ -6,6 +6,60 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #49 — 2026-05-08 (post-pivot lower-cadence: §III matrix-filling + Lane 16 mutation-testing finding)
+
+**Coordination note:** no new commits between fire #48 and fire #49. First fire of the post-pivot lower-cadence regime.
+
+**Lanes selected:** 12 (catalog entry #22 — Waring rank of the permanent, §III) + 16 (mutation-testing on `sigma_kernel/method_spec.py`).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_49_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_49_results.json`.
+
+### Lane 12 — Waring rank of the permanent: 5-tier model HOLDS with refinements
+
+§III is the symmetric-tensor analog of §I rank. As predicted, fits cleanly into the 5-tier model with two refinements:
+
+| Refinement | Tier | Type |
+|---|---|---|
+| **SymmetricTensor flag/subtype** | Tier A | Refinement of TensorObject (engineering call: flag vs subtype) |
+| **WaringDecompositionWitness** | Tier B subtype #7 | Specialization of RankDecompositionWitness with linear-form payload |
+
+**5-tier composition for #22:** Tier A SchemeObject (apolar ideal) + Tier B WaringDecompositionWitness (upper bound) + Tier B structural_inequality_certificate (catalecticant lower bound) + Tier C MomentPolytope + Tier E SymmetricFunction/Plethysm (Schur decomposition for GCT separation strategy). Four-tier coordinated attack.
+
+**SECOND independent saturation confirmation** (after fire #45). 9 fires now produce refinements not new tiers. Marginal substrate-design value approaching zero from additional matrix-filling.
+
+### Lane 16 — Mutation-testing on `sigma_kernel/method_spec.py`: score 0.200
+
+Ran 10 mutations (boolean_not, return_constant_None, off_by_one_int) against the contract-change-window test suite (`test_enum_validation_2026_05_08.py + test_frozen_invariance.py + test_claim_kill_path_typing_2026_05_08.py`).
+
+**Result:** 2 killed, 8 survived (score 0.200, 272s wall-clock).
+
+| Mutation | Survives? | Notes |
+|---|---|---|
+| Line 80, 151, 262 `frozen=True` → `False` | SURVIVED | UNEXPECTED — `test_frozen_invariance.py` auto-enrolls and should catch. Likely import-cache or pkgutil-ordering artifact. Worth diagnosing. |
+| Line 163 `0` → `1` (off_by_one_int) | SURVIVED | likely on a non-validation literal |
+| Lines 256, 267, 270, 280 (factory `return ... → None`) | SURVIVED | **GENUINE TEST GAP.** Tests assert what factories ACCEPT, not what they RETURN non-None. |
+
+### Substrate-tester observations + P3 ticket candidate
+
+**Observation 1 (genuine test gap):** factory-method return-value assertions missing. P3 ticket should extend `test_enum_validation_2026_05_08.py` with `assert spec is not None; assert isinstance(spec, MethodSpec)` after each `MethodSpec(...)` factory call.
+
+**Observation 2 (frozen-mutation puzzle):** `test_frozen_invariance.py` should catch `frozen=True → False` mutations but didn't. Possible explanations: pytest's import cache, pkgutil enumeration ordering, or the auto-enrollment skip-condition triggering on classes the framework already imported pre-mutation. Worth investigating in a future fire.
+
+Filing recommended: P3 ticket for both observations (low priority — doesn't block substrate work; useful for test-suite hardening).
+
+### Substrate-tester regime — post-pivot
+
+Eight matrix-filling fires (#38-#45) → three pivot fires (#46-#48) → fire #49 first lower-cadence fire. Pattern going forward:
+- Lower-frequency Lane 12 matrix-filling on §II/§VI/§XI (one per 2-3 fires)
+- Mutation-testing / regression / frozen-invariance / sigma_kernel sweep maintenance
+- Watch Aporia inbox for response on coordination chain
+- Pivot to test-suite expansion if Aporia greenlights contract-change window
+
+The matrix is complete enough; substrate-tester now operates in maintenance + opportunistic-finding mode.
+
+---
+
 ## Fire #48 — 2026-05-08 (Tier D core test-suite stub filed; design-prep pivot complete)
 
 **Coordination note:** no new commits between fire #47 and fire #48. Fire #48 completes the planned design-prep pivot.

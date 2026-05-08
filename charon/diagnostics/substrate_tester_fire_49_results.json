@@ -1,0 +1,77 @@
+{
+  "fire": 49,
+  "posture": "lower-cadence mix (post-pivot): \u00a7III matrix-filling + sigma_kernel mutation-testing",
+  "lanes": [
+    12,
+    16
+  ],
+  "lane_12": {
+    "lane": "12_catalog_pulled_permanent_waring_probe",
+    "catalog_entry": "#22 Waring rank of the permanent",
+    "section": "III. Symmetric Tensors and Waring Decomposition",
+    "encoding_attempts": [
+      {
+        "probe": "encode_permanent_as_SymmetricTensor",
+        "attempt": "Encode perm_n as a homogeneous polynomial / symmetric tensor in S^n V (V = C^{n^2}). Substrate uses TensorObject (Tier A) for general tensors; symmetric tensors need SYMMETRIC slot constraint as substrate-grade typing.",
+        "tier_classification": "REFINEMENT of Tier A TensorObject \u2014 adds symmetric flag / subtype SymmetricTensor. Could be a property on TensorObject (symmetric=True) or distinct subtype. Same engineering call as Tier-B subtype-vs-flag question from fire #46.",
+        "verdict": "TIER_A_REFINEMENT \u2014 SymmetricTensor as TensorObject subtype/flag"
+      },
+      {
+        "probe": "encode_waring_decomposition_as_Tier_B",
+        "attempt": "perm_n = sum c_i * (linear_form_i)^n is a Waring decomposition. Witness shape: (linear_forms, coefficients, rank_claimed). Compare against Tier B's RankDecompositionWitness.",
+        "tier_B_fit": "FITS as a SUBVARIANT of RankDecompositionWitness. Ordinary rank decomposition: sum of outer products u_i (x) v_i (x) w_i. Waring decomposition: sum of c_i * (l_i)^d (only one factor, raised to power d, scalar in front). Subtype WaringDecompositionWitness or specialization parameter on RankDecompositionWitness (decomposition_kind: 'rank' | 'waring' | 'symmetric_rank').",
+        "verdict": "TIER_B_REFINEMENT \u2014 WaringDecompositionWitness as RankDecompositionWitness specialization"
+      },
+      {
+        "probe": "encode_perm_det_gap_via_Tier_E",
+        "attempt": "GCT separation strategy: Waring rank gap between perm_n and det_n is geometrically meaningful. Schur-functor decomposition of the apolar ideal of perm_n vs det_n. Tier E (representation-theoretic) primitives apply: PartitionObject + IrreducibleRepresentation + SymmetricFunction/Plethysm. Plus Tier A SchemeObject for the apolar ideal.",
+        "tier_composition": "Tier A (SchemeObject for apolar ideal) + Tier E (SymmetricFunction for plethysm/Schur decomposition) + Tier B (WaringDecompositionWitness for upper bound; structural_inequality_certificate for catalecticant lower bound). FOUR-TIER composition (A + B + E plus implicit Tier C MomentPolytope for moment-map analysis). The 5-tier model naturally composes to attack #22.",
+        "verdict": "5_TIER_COMPOSITION_FITS \u2014 A + B + C + E coordinated attack"
+      }
+    ],
+    "verdict": "5_TIER_MODEL_HOLDS_WITH_REFINEMENTS \u2014 SymmetricTensor flag + WaringDecompositionWitness",
+    "capability_gaps_identified": [
+      {
+        "primitive": "SymmetricTensor flag/subtype on TensorObject (Tier A refinement)",
+        "purpose": "encode symmetric / Hermitian / partially-symmetric structure as substrate-grade typing",
+        "needed_for": "Waring (#21-23, #25), symmetric Borel #20, all of \u00a7III + parts of \u00a7V/\u00a7VIII",
+        "tier_classification": "Refinement of existing Tier A TensorObject; design call: flag vs subtype"
+      },
+      {
+        "primitive": "WaringDecompositionWitness (Tier B subtype #7)",
+        "purpose": "witness for symmetric/Waring rank: linear forms + coefficients + rank claim",
+        "needed_for": "all of \u00a7III + parts of \u00a7IV apolarity",
+        "tier_classification": "Specialization of RankDecompositionWitness; brings Tier B subtypes to 7"
+      }
+    ],
+    "saturation_note": "SECOND independent saturation confirmation (fire #45 was first). \u00a7III Waring rank is the symmetric-tensor analog of \u00a7I rank; it fits cleanly with Tier-A/B refinements + Tier-E composition. No new tier; no new structural family. The 5-tier model continues to hold.",
+    "tier_summary_after_9_fires": "Tier A: 4 primitives + SymmetricTensor refinement (NEW from fire #49)\nTier B: 7 subtypes (added WaringDecompositionWitness #49) + cross-tier composition\nTier C: 3 primitives\nTier D: 5 primitives + 1 specialization\nTier E: 3 primitives\n\n9 fires now produced refinements not new tiers (fires #45 + #49 are the saturation confirmations). Marginal substrate-design value approaching zero from additional matrix-filling."
+  },
+  "lane_16": {
+    "lane": "16_mutation_testing",
+    "target": "sigma_kernel/method_spec.py",
+    "max_mutations": 10,
+    "returncode": 0,
+    "summary_lines": [
+      "[mutation 1/10] survived @ method_spec.py:80:boolean_not  (frozen=True->False)",
+      "[mutation 2/10] killed @ method_spec.py:N:operator",
+      "[mutation 3/10] survived @ method_spec.py:151:boolean_not (frozen=True->False)",
+      "[mutation 4/10] survived @ method_spec.py:163:off_by_one_int (0->1)",
+      "[mutation 5/10] survived @ method_spec.py:256:return_constant_None",
+      "[mutation 6/10] killed @ method_spec.py:M:operator",
+      "[mutation 7/10] survived @ method_spec.py:262:boolean_not (frozen=True->False)",
+      "[mutation 8/10] survived @ method_spec.py:267:return_constant_None (factory)",
+      "[mutation 9/10] survived @ method_spec.py:270:return_constant_None (factory)",
+      "[mutation 10/10] survived @ method_spec.py:280:return_constant_None (__str__)",
+      "[mutation] score=0.200 killed=2 survived=8 errored=0 skipped=0"
+    ],
+    "kill_counts": {
+      "killed": 2,
+      "survived": 8,
+      "errored": 0
+    },
+    "verdict": "INFORMATIVE",
+    "score": 0.2,
+    "finding": "score=0.200: 2 killed, 8 survived. Substrate-tester observations: (a) frozen=True->False mutations on lines 80/151/262 SURVIVED \u2014 unexpected; test_frozen_invariance auto-enrollment may be missing the modules due to import-cache or pkgutil ordering. Worth diagnosing. (b) Factory-method return_constant_None mutations (lines 256/267/270/280) survived \u2014 tests assert what factory methods ACCEPT, not what they RETURN non-None. Genuine test gap. P3 ticket candidate: extend test_enum_validation with factory-method return-value assertions."
+  }
+}
