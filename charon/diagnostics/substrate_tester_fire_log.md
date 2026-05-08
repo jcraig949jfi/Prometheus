@@ -6,6 +6,67 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #41 — 2026-05-08 (FOUR-FIRE TIER-B CONFIRMATION + Aporia coordination ticket)
+
+**Coordination note:** no new commits between fire #40 and fire #41 from parallel instance. Fire #41 is mine.
+
+**Lanes selected:** 12 (catalog entry #34 — border-rank variety membership, §IV, paradigms P29/P31) + 11 (canon-fuzz pytest fresh seed).
+
+Lane 12 choice was DELIBERATE: catalog #34 is a canonical positive-existential-with-witness problem ("decide T ∈ σ_r" → constructive witness needed). Direct test of the Tier-B prediction from fires #38/#39/#40. If ConstructiveExistenceWitness surfaces again, four-fire convergence locks in.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_41_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_41_results.json`.
+
+### Lane 12 — Border-rank variety membership encoding probe: FAIL_ENCODING
+
+| Encoding attempt | Verdict | Blocker |
+|---|---|---|
+| 1. CLAIM with hypothesis="T ∈ σ_2" | FAIL_ENCODING | no SchemeObject; σ_r is an algebraic variety, not a region/chart |
+| 2. EQUIV with equiv_chain | FAIL_ENCODING | chain is FINITE; border-rank requires INFINITE LIMIT (ε → 0); no LimitWitness primitive |
+| 3. ExclusionCertificate | PARTIAL | non-membership encodable via Young-flattening defining equations; positive membership witness has no home (4th time) |
+| 4. CoordinateChart for σ_r | FAIL_ENCODING | scheme has singular loci, components, embedded primes; chart structure too poor |
+
+### Tier-B FOUR-FIRE CONFIRMATION (most robust matrix-filling finding)
+
+| Fire | Section | Catalog | Paradigm | Tier-B witness |
+|---|---|---|---|---|
+| #38 | §I | #4 M⟨3⟩ | P28-P31 | RankDecompositionWitness |
+| #39 | §X | #84 TN contraction | P30 | ContractionOrderWitness |
+| #40 | §VII | #58 tensor iso | P30+P31 | IsomorphismCertificate |
+| #41 | §IV | #34 σ_r membership | P29+P31 | LimitWitness/BorderRankWitness |
+
+**Four sections, four paradigms, same shape.** Substrate has ExclusionCertificate for negative existentials; no companion primitive for positive existentials with constructive witness. ConstructiveExistenceWitness as a substrate-WIDE primitive is now justified by the strongest convergence evidence the matrix-filling exercise has produced.
+
+### Tier A extended — SchemeObject
+
+§IV's algebraic-geometric flavor surfaces a NEW Tier-A primitive: SchemeObject (vanishing locus of polynomial ideal; singular loci, components, embedded primes). Section IV (#26-35) cannot reduce to TensorObject + TensorNetworkGraph + GroupAction. Tier A becomes:
+
+`TensorObject + TensorNetworkGraph + GroupAction + SchemeObject = TensorAlgebra subsystem (extended)`
+
+### Two tickets filed
+
+1. **`T-2026-05-08-ST-fire41-001`** (P1-high, capability-gap-tensor-catalog) → Techne. Continues matrix-filling.
+2. **`T-2026-05-08-ST-fire41-002`** (P1-high, strategic-coordination-tier-B-convergence) → Aporia. Flags ConstructiveExistenceWitness for strategic-planning review and contract-change-window prioritization. Single contract-change pass shipping the primitive + four subtypes is comparable in scope to the 5-of-5 cluster's Structured-Equivalence-Class. Co-design recommended.
+
+### Lane 11 — canon-fuzz fresh seed: 13 passed
+
+| Metric | Value |
+|---|---:|
+| seed | 20260508_06 |
+| pytest rc | 0 |
+| n_passed | 13 |
+| wall-clock | 31.30s |
+
+Canonicalization fuzz infrastructure healthy.
+
+### Substrate-tester observation
+
+Fire #41 marks the inflection point: matrix-filling has produced enough convergence evidence (4 fires, 4 paradigms, 1 substrate-wide primitive) to JUSTIFY a strategic-planning-level decision. Aporia coordination ticket invites that decision. Future fires can continue diversifying (§III/§V/§VIII/§XII) but the contract-change recommendation is already overdetermined for Tier B.
+
+If Aporia greenlights the contract-change window, substrate-tester transitions from "matrix-filling for evidence" to "designing test suite for the new primitive" mode.
+
+---
+
 ## Fire #40 — 2026-05-08 (THREE-FIRE CONVERGENCE: ConstructiveExistenceWitness substrate-wide gap)
 
 **Coordination note:** no new commits between fire #39 and fire #40 from parallel instance. Fire #40 is mine.

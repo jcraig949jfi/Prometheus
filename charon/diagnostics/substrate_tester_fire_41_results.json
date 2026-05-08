@@ -1,0 +1,95 @@
+{
+  "fire": 41,
+  "posture": "fourth-HARD-6-fire (matrix-filling: \u00a7IV catalog entry #34; testing Tier-B prediction directly)",
+  "lanes": [
+    12,
+    11
+  ],
+  "lane_12": {
+    "lane": "12_catalog_pulled_border_rank_membership_probe",
+    "catalog_entry": "#34 Border-rank variety membership problem",
+    "section": "IV. Algebraic Geometry: Secant Varieties, Schemes, Apolarity",
+    "attack_paradigms": [
+      "P29",
+      "P31"
+    ],
+    "encoding_attempts": [
+      {
+        "probe": "encode_membership_as_CLAIM",
+        "attempt": "CLAIM(target_name='W_tensor', hypothesis='W in sigma_2 (border rank <= 2)', evidence={...}, kill_path='check_no_degeneration_sequence', target_tier=Conjecture). The kill_path attempts to falsify by finding a defining-equation violator.",
+        "blocker": "CLAIM stores hypothesis as a string. The substrate has no way to represent 'sigma_r' as a substrate-grade object \u2014 it's a variety (algebraic-geometric scheme), not a region or chart. Even if hypothesis is just text: the evidence dict would need to carry a degeneration witness, which has no substrate type. SchemeMembership claim shape unsupported.",
+        "verdict": "FAIL_ENCODING \u2014 no SchemeObject / VarietyObject primitive"
+      },
+      {
+        "probe": "encode_degeneration_via_EQUIV_chain",
+        "attempt": "EQUIV(W_tensor, limit_object, equivalence_class_id='border_rank_2_membership', witness_type=equiv_chain, witness=[T(epsilon_1), T(epsilon_2), ...] as epsilon -> 0). The chain encodes a Bini-style degeneration sequence.",
+        "blocker": "EQUIV's equiv_chain witness type is for FINITE chains of syntactic equivalences (e.g. rewrite chains). Border-rank membership requires an INFINITE LIMIT (epsilon -> 0). Substrate has no LimitWitness / ParametricFamily primitive. Could approximate by truncating to finite epsilon \u2014 but then loses the 'limit equals T' semantic, leaving only an inequality 'T near sigma_2.'",
+        "verdict": "FAIL_ENCODING \u2014 no LimitWitness / ParametricFamily"
+      },
+      {
+        "probe": "encode_non_membership_via_ExclusionCertificate",
+        "attempt": "ExclusionCertificate(region_spec=..., exclusion_claim=ExclusionClaim(excluded_property='border_rank_le_r', result_class='secant_variety_membership', reason='defining_equation_violated'), ...). Defining equations of sigma_r (Young flattenings, border-apolarity equations) cert the non-membership.",
+        "blocker": "Works for non-membership (negative direction). BUT same asymmetric-existential gap as fires #39 + #40: T in sigma_r (positive direction) has no constructive-witness primitive. Substrate could store 'T not in sigma_r because Young-flattening rank > r' but couldn't store 'T in sigma_r witnessed by Bini degeneration sequence.' THIS IS THE FOURTH PARADIGM TO HIT THE SAME GAP.",
+        "verdict": "PARTIAL \u2014 non-membership encodable, membership witness has no home"
+      },
+      {
+        "probe": "encode_sigma_r_as_CoordinateChart",
+        "attempt": "CoordinateChart(domain='secant_variety', region_key='sigma_2_2x2x2', coordinate_system=('rank_param', 'tensor_entries'), metric=...). Treat sigma_r as a region.",
+        "blocker": "Variety sigma_r is an ALGEBRAIC SCHEME \u2014 vanishing locus of polynomial ideal \u2014 not a coordinate chart. CoordinateChart represents differentiable manifolds with coordinate axes; sigma_r has singular loci, irreducible components, embedded primes. Mapping a scheme to a chart loses the scheme structure.",
+        "verdict": "FAIL_ENCODING \u2014 no SchemeObject / IdealObject primitive"
+      }
+    ],
+    "all_attempts_failed": true,
+    "capability_gaps_identified": [
+      {
+        "missing_primitive": "ConstructiveExistenceWitness (4TH PARADIGM CONFIRMATION)",
+        "purpose": "constructive witness for positive existential \u2014 completing ExclusionCertificate's asymmetry",
+        "needed_for": "border-rank membership (#34), tensor iso (#58), contraction order (#84), rank decomposition (#4)",
+        "convergence_with_fires_38_39_40": "FOUR fires (#38/#39/#40/#41) from FOUR sections (\u00a7I/\u00a7X/\u00a7VII/\u00a7IV) and FOUR paradigm-clusters all hit the same shape: substrate has ExclusionCertificate for negative existentials but no companion for positive existentials with witness. This is now the most robust finding of the matrix-filling exercise. Tier B should be treated as confirmed contract-change priority.",
+        "blocks_paradigms": [
+          "P28",
+          "P29",
+          "P30",
+          "P31",
+          "all NP-search problems"
+        ],
+        "blocks_catalog_entries": "broader than tensors \u2014 applies to any 'witnessed existential' decision the substrate may track"
+      },
+      {
+        "missing_primitive": "SchemeObject / IdealObject / VarietyObject",
+        "purpose": "represent algebraic schemes (vanishing loci of polynomial ideals); singular loci, components, primes",
+        "needed_for": "secant varieties (sigma_r), SLOCC orbit closures, defective varieties (#26-33), border-rank variety geometry",
+        "blocks_paradigms": [
+          "P29",
+          "P31"
+        ],
+        "blocks_catalog_entries": "all of Section IV (#26-35) + parts of Section III (Waring) + Section X #79 (orbit closures)",
+        "convergence_note": "NEW PRIMITIVE not surfaced in fires #38/#39/#40. Section IV's algebraic-geometric flavor introduces a distinct foundational object class. Tier A's TensorAlgebra subsystem should be EXTENDED with SchemeObject as the geometric companion to TensorObject + TensorNetworkGraph."
+      },
+      {
+        "missing_primitive": "LimitWitness / ParametricFamily",
+        "purpose": "represent limits / degeneration sequences with parameter epsilon -> 0",
+        "needed_for": "border-rank witnesses (Bini degenerations), asymptotic restriction, deformation arguments",
+        "blocks_paradigms": [
+          "P28",
+          "P29"
+        ],
+        "blocks_catalog_entries": "#5 + #10 + #34 + most border-rank problems in \u00a7I + apolarity-style degeneration in \u00a7IV",
+        "convergence_note": "Specialization of ConstructiveExistenceWitness for the 'limit-of-rank-r-decompositions' case. Could be a subtype of ConstructiveExistenceWitness rather than separate primitive."
+      }
+    ],
+    "verdict": "FAIL_ENCODING \u2014 Tier-B confirmed (4th paradigm) + new SchemeObject + LimitWitness primitives needed",
+    "feeds_techne_ticket": "T-2026-05-08-T038 (substrate-primitive classification of all 104 catalog entries)",
+    "tier_B_confirmation_status": "FOUR FIRES, FOUR PARADIGMS, SAME GAP. ConstructiveExistenceWitness is now the most robust missing-primitive finding from matrix-filling. Recommendation: Aporia coordination ticket flagging Tier B for strategic-planning review.",
+    "tier_A_extension": "Tier A (TensorAlgebra subsystem) should be extended with SchemeObject / IdealObject as the algebraic-geometric companion to TensorObject + TensorNetworkGraph + GroupAction. Section IV's geometric flavor can't reduce to the existing Tier-A primitives."
+  },
+  "lane_11": {
+    "lane": "11_canon_fuzz_smoke",
+    "seed": "20260508_06",
+    "returncode": 0,
+    "summary_line": "13 passed in 31.30s",
+    "stdout_tail": ".............                                                            [100%]\n13 passed in 31.30s",
+    "stderr_tail": "",
+    "verdict": "PASS"
+  }
+}
