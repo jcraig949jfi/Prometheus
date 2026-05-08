@@ -6,6 +6,86 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #28 — 2026-05-07 20:01 (local)
+
+**Coordination note:** parallel substrate-tester ran fire #27 (commit `3552c650`) covering Lane 9 (leak regression) + Lane 5 deg-12 ±3 NEW combo. My fire = #28, lanes 7 + 8.
+
+**Lanes selected:** 7 (precision-gradient, INCONCLUSIVE entries #6 + #7) + 8 (ExclusionCertificate-extension regression).
+
+**Lane rationale:** Lane 7 extends the cumulative INCONCLUSIVE-list characterization across fires #1/#9/#18/#28 (my-instance) by processing 2 fresh entries. Entry #7 has M_numpy=1.176281 — predicted to extract Lehmer's polynomial (same M-pattern as fire #18's entry #2). Lane 8 fast regression on cert primitives — last my-instance fire #16.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_28_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_28_results.json`.
+
+### Lane 7 — INCONCLUSIVE entries #6 + #7: 2/2 PASS
+
+| Entry | half_coeffs | M (all dps) | spread | Outcome |
+|---|---|---:|---:|---|
+| #6 | [1, -2, 0, 0, 2, 2, -3, 0] | **1.000000** | 0.0 | pure cyclotomic |
+| #7 | [1, -2, 1, 0, 0, -1, 1, 0] | **1.176281** | 6e-12 | **Lehmer × cyclotomic** |
+
+**Substrate verdict:** PASS. Both entries factor-first decompose cleanly with stable M across all 5 dps levels.
+
+### Substrate-grade cumulative finding: my-instance Lane 7 coverage
+
+5 entries characterized across fires #1/#9/#18/#28:
+
+| Entry | Outcome |
+|---|---|
+| #0 | M = 1.0 (pure cyclotomic) |
+| #1 | M = 1.0 (pure cyclotomic) |
+| #2 | M = 1.176 (Lehmer × cyclotomic) |
+| #6 | M = 1.0 (pure cyclotomic) |
+| #7 | M = 1.176 (Lehmer × cyclotomic) |
+
+**Distribution: 3 pure cyclotomic (60%) + 2 Lehmer-bearing (40%) + 0 novel band hits.**
+
+**Cumulative substrate-grade evidence for the deg-14 ±5 palindromic ExclusionCertificate:** 5/5 entries probed independently across precision ladders all classify as composites of named small-Mahler polynomials × cyclotomics. **Zero novel band hits across 5 borderline samples** — this is substantively independent verification of the 4-path triangulation_history that earned the cert's `strength=COMPLETE` rating.
+
+The pattern (40% Lehmer-bearing + 60% pure cyclotomic) is interesting and worth flagging for future Aporia investigation: do borderline INCONCLUSIVE entries cluster around named small-Mahler polynomials at fixed proportions, or is it sample-size noise?
+
+### Lane 8 — cert regression: 2/2 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — Lehmer cert COMPLETE with triangulation_history | **PASS** | strength=COMPLETE, 4 paths registered |
+| T2 — empty triangulation_history rejected | **PASS** | ValueError raised (Aporia v2.3 hard rule) |
+
+**Substrate verdict:** PASS. Cert primitive discipline holds; this is the third independent regression confirmation across fires #16, #14 (positive-direction adversarial), #28.
+
+### Tickets filed this fire
+
+**0 tickets.** Both lanes pass cleanly.
+
+### Standing recommendations for next fire (#29)
+
+1. **Anti-repeat:** avoid lanes 7, 8. Fire #29 candidates:
+   - **Lane 4 (cross-domain-leak)** — last fire #24 (mine, 4th confirm); could re-run quickly
+   - **Lane 14 / 16 (replay/concurrency)** — both quick pytest runs
+   - **Lane 11 (batch-sweep)** — every-other-fire cadence
+2. **Lane 5 (large-scale)** — parallel just covered deg-12 ±3 combo; future Lane 5 fires should explore (deg-10, ±3) or (deg-12, ±7) per the geometry-study standing rec.
+3. **Lane 7 cumulative pattern:** 5 of 43 in-band entries characterized (~12% coverage). Future Lane 7 fires should continue at 2 entries/fire to maintain cumulative pattern data.
+4. **Watch open P1+ tickets:** ST-fire1-002/003, ST-fire14-001, ST-fire17-001 (P0), ST-fire25-001.
+
+### Fire-28 stress on substrate health
+
+**Positive:**
+- Substrate factor-first strategy correctly extracts Lehmer's polynomial from a SECOND independent borderline composite (entry #7), confirming pattern from fire #18's entry #2.
+- Cert primitive discipline regression-clean.
+- 5/5 my-instance Lane 7 entries: 0 novel band hits — consistent with the deg-14 ±5 ExclusionCertificate's claim of NO novel Lehmer band hits.
+
+**0 substrate flaws found this fire.**
+
+### Discipline notes
+
+- HARD-1 through HARD-5: respected.
+- Time used: ~7 minutes (well within 50-minute cap).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed). Substrate-tester running ticket count after 28 fires: 9 ever filed (2 closed, 7 OPEN).
+
+— substrate-tester, fire #28, 2026-05-07
+
+---
+
 ## Fire #27 — 2026-05-07 23:00 UTC
 
 **Coordination note:** Fire #26 ran on parallel instance (commit `13f50a4b`) covering Lanes 11 + 13 with 0 tickets. My fire = #27. P0 ticket `T-ST-fire17-001` and P1 escalation `T-ST-fire25-001` (substrate-wide @dataclass(frozen=True)) both still OPEN.

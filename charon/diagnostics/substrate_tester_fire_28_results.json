@@ -1,0 +1,197 @@
+{
+  "fire_id": "fire_28_2026_05_07",
+  "lanes": [
+    "7_entries_6_7",
+    "8_cert_regression_quick"
+  ],
+  "lane_7": {
+    "lane": "7_entries_6_7",
+    "n_tests": 2,
+    "verdict_counts": {
+      "PASS": 2
+    },
+    "tests": [
+      {
+        "id": "T_entry_6_clean_convergence",
+        "expected": "M converges across dps; precision recorded",
+        "actual": "M=1.000000 (spread=0.000000e+00); outcome=pure_cyclotomic_M=1.0",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T_entry_7_clean_convergence",
+        "expected": "M converges across dps; precision recorded",
+        "actual": "M=1.176281 (spread=6.045608e-12); outcome=lehmer_polynomial_extracted",
+        "verdict": "PASS",
+        "severity": null
+      }
+    ],
+    "per_entry_results": {
+      "entry_6": {
+        "half_coeffs": [
+          1,
+          -2,
+          0,
+          0,
+          2,
+          2,
+          -3,
+          0
+        ],
+        "coeffs_ascending": [
+          1,
+          -2,
+          0,
+          0,
+          2,
+          2,
+          -3,
+          0,
+          -3,
+          2,
+          2,
+          0,
+          0,
+          -2,
+          1
+        ],
+        "M_numpy_quoted": 1.003249,
+        "results_per_dps": [
+          {
+            "dps": 10,
+            "elapsed_s": 0.035003662109375,
+            "M": 1.0,
+            "status": "ok",
+            "precision_digits_recorded": 10
+          },
+          {
+            "dps": 30,
+            "elapsed_s": 0.0059964656829833984,
+            "M": 1.0,
+            "status": "ok",
+            "precision_digits_recorded": 30
+          },
+          {
+            "dps": 60,
+            "elapsed_s": 0.006001472473144531,
+            "M": 1.0,
+            "status": "ok",
+            "precision_digits_recorded": 60
+          },
+          {
+            "dps": 100,
+            "elapsed_s": 0.005998373031616211,
+            "M": 1.0,
+            "status": "ok",
+            "precision_digits_recorded": 100
+          },
+          {
+            "dps": 200,
+            "elapsed_s": 0.0070002079010009766,
+            "M": 1.0,
+            "status": "ok",
+            "precision_digits_recorded": 200
+          }
+        ],
+        "M_max": 1.0,
+        "M_min": 1.0,
+        "M_spread": 0.0,
+        "outcome": "pure_cyclotomic_M=1.0"
+      },
+      "entry_7": {
+        "half_coeffs": [
+          1,
+          -2,
+          1,
+          0,
+          0,
+          -1,
+          1,
+          0
+        ],
+        "coeffs_ascending": [
+          1,
+          -2,
+          1,
+          0,
+          0,
+          -1,
+          1,
+          0,
+          1,
+          -1,
+          0,
+          0,
+          1,
+          -2,
+          1
+        ],
+        "M_numpy_quoted": 1.176281,
+        "results_per_dps": [
+          {
+            "dps": 10,
+            "elapsed_s": 0.025002002716064453,
+            "M": 1.176280818253872,
+            "status": "ok",
+            "precision_digits_recorded": 10
+          },
+          {
+            "dps": 30,
+            "elapsed_s": 0.02500176429748535,
+            "M": 1.1762808182599176,
+            "status": "ok",
+            "precision_digits_recorded": 30
+          },
+          {
+            "dps": 60,
+            "elapsed_s": 0.026998281478881836,
+            "M": 1.1762808182599176,
+            "status": "ok",
+            "precision_digits_recorded": 60
+          },
+          {
+            "dps": 100,
+            "elapsed_s": 0.021998167037963867,
+            "M": 1.1762808182599176,
+            "status": "ok",
+            "precision_digits_recorded": 100
+          },
+          {
+            "dps": 200,
+            "elapsed_s": 0.02299976348876953,
+            "M": 1.1762808182599176,
+            "status": "ok",
+            "precision_digits_recorded": 200
+          }
+        ],
+        "M_max": 1.1762808182599176,
+        "M_min": 1.176280818253872,
+        "M_spread": 6.0456084582938274e-12,
+        "outcome": "lehmer_polynomial_extracted"
+      }
+    }
+  },
+  "lane_8": {
+    "lane": "8_cert_regression_quick",
+    "n_tests": 2,
+    "verdict_counts": {
+      "PASS": 2
+    },
+    "tests": [
+      {
+        "id": "T1_lehmer_cert_complete",
+        "expected": "strength=COMPLETE with non-empty triangulation_history",
+        "actual": "strength=COMPLETE, paths=4",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T2_empty_triangulation_rejected",
+        "expected": "ValueError raised",
+        "actual": "ValueError: ExclusionCertificate.strength=complete requires non-empty triangulation_history. Future certificates",
+        "verdict": "PASS",
+        "severity": null
+      }
+    ]
+  }
+}
