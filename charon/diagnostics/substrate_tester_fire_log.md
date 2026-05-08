@@ -6,6 +6,76 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #43 — 2026-05-08 (Tier-D CONFIRMED + EXTENDED 3→5; Tier B/D compose cleanly)
+
+**Coordination note:** no new commits between fire #42 and fire #43 from parallel instance. Fire #43 is mine.
+
+**Lanes selected:** 12 (catalog entry #73 — tensor PCA computational threshold, §IX Random Tensors, P28 distributional) + 11 (canon-fuzz pytest fresh seed 20260508_07).
+
+Lane 12 choice: §IX is the natural habitat for Tier-D primitives. Pulling here directly tests whether fire #42's Tier-D shape (DistributionObject + StatisticalTestSpec + ProbabilityMeasure) holds up on a fresh §IX problem and whether the catalog reveals additional distributional primitives.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_43_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_43_results.json`.
+
+### Lane 12 — Tensor PCA threshold probe: Tier-D CONFIRMED + EXTENDED
+
+| Encoding attempt | Verdict |
+|---|---|
+| 1. Spike model T = λ·v⊗d + W as DistributionObject | TIER_D_CONFIRMED |
+| 2. Dual-threshold gap (λ_stat vs λ_comp) | EXTENDS_TIER_D — needs PhaseTransitionThreshold |
+| 3. SOS lower-bound certificate | TIER_B/TIER_D_INTERACTION — composes cleanly |
+| 4. AMP / power method as MethodSpec | EXTENDS_TIER_D — needs AlgorithmThresholdCert |
+
+### Tier D EXTENDED (3 → 5 primitives)
+
+| Primitive | Status | Source |
+|---|---|---|
+| **DistributionObject** | CONFIRMED | fire #42 origin, fire #43 independent confirmation |
+| **StatisticalTestSpec** | retained | fire #42 |
+| **ProbabilityMeasure / RandomVariable** | retained | fire #42 |
+| **PhaseTransitionThreshold** | NEW | fire #43 |
+| **AlgorithmThresholdCert / AsymptoticSuccessGuarantee** | NEW | fire #43 |
+
+`PhaseTransitionThreshold = (parameter_axis, threshold_value, regime_below, regime_above, semantic_class)` — encodes the phase-transition geometry of an ensemble. `AlgorithmThresholdCert` lives at MethodSpec / Tier-D interface — captures "method M succeeds with prob ≥ p above threshold."
+
+### Tier B / Tier D INTERACTION — substrate-design finding
+
+Tier B (ConstructiveExistenceWitness) applies **at fixed parameters** (individual existential claim). Tier D (PhaseTransitionThreshold) applies **as parameters scale** (asymptotic / population claim). They **compose cleanly without redundancy.**
+
+Example: Hopkins-Steurer SOS lower bound for tensor PCA = Tier-B SOS certificate at fixed (n, d, λ); the threshold λ_SOS_k(n, d) scaling with n = Tier-D PhaseTransitionThreshold. Both primitives needed; neither subsumes the other.
+
+**Implication for contract-change window:** bundled Tier-B + Tier-D design pass benefits both. Fire #43 revises substrate-tester recommendation to (b) bundled (was (a) Tier-B alone in fire #42).
+
+### Six-fire substrate-extension proposal (4 tiers, ~16 primitives)
+
+| Tier | Count | Primitives |
+|---|---:|---|
+| **A** | 4 | TensorObject + TensorNetworkGraph + GroupAction + SchemeObject |
+| **B** | 4+ | RankDecompositionWitness + ContractionOrderWitness + IsomorphismCertificate + LimitWitness; SOS certificates compose with Tier D |
+| **C** | 3 | MomentPolytope + RewriteSearchTree + OrbitStratification |
+| **D** | 5 | DistributionObject + StatisticalTestSpec + ProbabilityMeasure + PhaseTransitionThreshold + AlgorithmThresholdCert |
+
+Plus cross-tier composition: Tier B / Tier D compose at the individual-vs-asymptotic boundary.
+
+### Two tickets filed
+
+1. **`T-2026-05-08-ST-fire43-001`** (P1-high, capability-gap-tensor-catalog) → Techne. Continues matrix-filling; extends Tier D from 3 to 5 primitives.
+2. **`T-2026-05-08-ST-fire43-002`** (P1-high, strategic-coordination-supplement) → Aporia. SUPPLEMENT to ST-fire42-002: Tier-D extended scope + Tier B/D composition finding. Revised recommendation: option (b) bundled Tier B + Tier D contract-change pass.
+
+### Lane 11 — canon-fuzz fresh seed: 13 passed (78.82s)
+
+Canonicalization fuzz infrastructure healthy.
+
+### Substrate-tester observation
+
+Six fires, 4 tiers, ~16 primitives. The Tier B/D composition finding is fire #43's substrate-design contribution: the proposed primitives interlock cleanly across tiers without overlap or redundancy. Future fires can:
+
+- Pull §V (identifiability) to test whether identifiability problems map to Tier B/D composition or surface a fifth tier
+- Pull §XII (geometric complexity theory) — most abstract section, likely surfaces NEW primitive class if substrate doesn't already cover GCT-style invariants
+- Pivot to test-suite design once Aporia greenlights a contract-change window
+
+---
+
 ## Fire #42 — 2026-05-08 (DIVERGENCE TEST: Tier-B QUALIFIED + Tier-D distributional emerges)
 
 **Coordination note:** no new commits between fire #41 and fire #42 from parallel instance. Fire #42 is mine.

@@ -1,0 +1,80 @@
+{
+  "fire": 43,
+  "posture": "sixth-HARD-6-fire (matrix-filling: \u00a7IX catalog entry #73; Tier D shape confirmation + extension)",
+  "lanes": [
+    12,
+    11
+  ],
+  "lane_12": {
+    "lane": "12_catalog_pulled_tensor_pca_threshold_probe",
+    "catalog_entry": "#73 Tensor PCA computational threshold",
+    "section": "IX. Random Tensors and Probabilistic Problems",
+    "attack_paradigms": [
+      "P28 distributional"
+    ],
+    "encoding_attempts": [
+      {
+        "probe": "encode_spiked_model_as_proposed_DistributionObject",
+        "attempt": "Use Tier D's DistributionObject (proposed) to represent the ensemble: T = lambda * v_outer_d + W where W has i.i.d. Gaussian entries. Parameters: (n, d, lambda, signal_v).",
+        "tier_D_fit": "FITS \u2014 DistributionObject with parameters (n, d, lambda, v) captures the family of spiked tensors. CONFIRMS Tier D's expected shape.",
+        "verdict": "TIER_D_CONFIRMED \u2014 DistributionObject works for spike model"
+      },
+      {
+        "probe": "encode_dual_threshold_gap",
+        "attempt": "The OPEN problem (#73) is the gap between statistical threshold lambda_stat ~ n^{(1-d/2)/2} and computational threshold lambda_comp ~ n^{(d/2-1)/4}. Need to represent BOTH thresholds + the gap region as substrate objects.",
+        "tier_D_fit": "PARTIAL FIT \u2014 DistributionObject can hold the ensemble PARAMETERIZATION but doesn't natively carry THRESHOLDS as first-class objects. PhaseTransitionThreshold is a candidate NEW Tier-D primitive: a triple (parameter_axis, threshold_value, regime_below, regime_above) carrying information-theoretic vs computational semantics. The GAP region between two thresholds is itself a substrate-grade object (a 'computational hardness regime').",
+        "verdict": "EXTENDS_TIER_D \u2014 PhaseTransitionThreshold as additional Tier-D primitive needed"
+      },
+      {
+        "probe": "encode_SOS_lower_bound_as_Tier_B",
+        "attempt": "SOS hierarchy lower bounds (Hopkins-Steurer-Schramm) are computational-hardness certificates: 'no degree-k SOS polynomial certifies recovery at lambda < lambda_SOS_k'. Could be a Tier B ConstructiveExistenceWitness with Witness=SOS-decomposition? OR negative existential (ExclusionCertificate)?",
+        "tier_B_intersection": "MIXED \u2014 SOS certificates CAN be cast as Tier-B existential: 'there EXISTS a degree-k SOS polynomial certifying recovery' (positive) vs 'no such polynomial exists' (negative, ExclusionCertificate). BUT the threshold scaling is DISTRIBUTIONAL \u2014 it's about how lambda scales with n, not individual instances. Tier-B ConstructiveExistenceWitness applies AT FIXED (n, d, lambda) \u2014 but the THRESHOLD ITSELF is Tier-D. Two-tier interaction: Tier B for individual SOS certificates, Tier D for the threshold curve.",
+        "verdict": "TIER_B_TIER_D_INTERACTION \u2014 primitives compose cleanly"
+      },
+      {
+        "probe": "encode_AMP_power_method_as_MethodSpec",
+        "attempt": "AMP (Approximate Message Passing) and tensor power method as MethodSpec instances; their RECOVERY SUCCESS / FAILURE as evidence in CLAIMs about the spiked model.",
+        "tier_existing_fit": "PARTIAL \u2014 MethodSpec covers the algorithm at instance level (run AMP at fixed n, d, lambda). For the THRESHOLD characterization, need to encode 'AMP succeeds for lambda > threshold_AMP, fails below' \u2014 that's a DistributionalAlgorithmGuarantee (algorithm + distributional regime + success-probability bound). Possibly a fourth Tier-D primitive: AlgorithmThresholdCert or AsymptoticSuccessGuarantee.",
+        "verdict": "EXTENDS_TIER_D \u2014 AlgorithmThresholdCert candidate"
+      }
+    ],
+    "tier_D_status": "CONFIRMED + EXTENDED (3 \u2192 5 primitives)",
+    "capability_gaps_identified": [
+      {
+        "primitive": "DistributionObject (Tier D)",
+        "status": "CONFIRMED via spike model encoding",
+        "convergence_with_fire_42": "First independent confirmation that Tier-D's DistributionObject shape from fire #42 fits a fresh \u00a7IX problem."
+      },
+      {
+        "primitive": "PhaseTransitionThreshold (NEW Tier D primitive)",
+        "purpose": "represent threshold values + regime semantics (statistical vs computational) on a parameter axis",
+        "needed_for": "tensor PCA threshold (#73), all phase-transition problems in \u00a7IX, area-law thresholds in \u00a7X",
+        "blocks_paradigms": [
+          "P28 distributional"
+        ],
+        "tier_D_extension": "Expands Tier D from 3 primitives (DistributionObject, StatisticalTestSpec, ProbabilityMeasure) to 4. Threshold is a substrate-grade object distinct from individual samples \u2014 encodes the phase-transition geometry of the ensemble."
+      },
+      {
+        "primitive": "AlgorithmThresholdCert / AsymptoticSuccessGuarantee (NEW Tier D / cross-tier)",
+        "purpose": "encode '<algorithm> succeeds with probability >= p for parameter > threshold' contracts",
+        "needed_for": "AMP, tensor power method, SOS hierarchy guarantees, all asymptotic algorithm-success claims",
+        "tier_interaction": "Lives at Tier D / MethodSpec interface. MethodSpec alone is per-instance; AlgorithmThresholdCert is asymptotic / distributional. Could be MethodSpec + PhaseTransitionThreshold composed, OR a distinct primitive."
+      }
+    ],
+    "tier_B_tier_D_interaction": {
+      "finding": "Tier B (ConstructiveExistenceWitness) and Tier D (distributional primitives) COMPOSE rather than overlap. Individual SOS certificates at fixed (n, d, lambda) are Tier-B (positive existential with witness); the threshold curve they trace as (n, d, lambda) varies is Tier-D (distributional).",
+      "implication": "Substrate primitives interlock cleanly across tiers. Fire #43 finding: Tier D's DistributionObject + PhaseTransitionThreshold + AlgorithmThresholdCert give Tier-B's ConstructiveExistenceWitness a distributional context. Together they cover both individual and asymptotic claims about random ensembles."
+    },
+    "verdict": "TIER_D_CONFIRMED + EXTENDED \u2014 DistributionObject fits; PhaseTransitionThreshold + AlgorithmThresholdCert added",
+    "feeds_techne_ticket": "T-2026-05-08-T038 + supplements ST-fire42-001 with extended Tier D scope",
+    "tier_summary_after_6_fires": "Tier A (TensorAlgebra subsystem): TensorObject + TensorNetworkGraph + GroupAction + SchemeObject\n\nTier B (ConstructiveExistenceWitness \u2014 QUALIFIED to decision-problems-with-individual-witness): RankDecompositionWitness + ContractionOrderWitness + IsomorphismCertificate + LimitWitness/BorderRankWitness + [SOS certificates at fixed parameters per fire #43]\n\nTier C (discrete-optimization geometry): MomentPolytope + RewriteSearchTree + OrbitStratification\n\nTier D (distributional / population-level \u2014 EXTENDED in fire #43 from 3 to 5 primitives): DistributionObject + StatisticalTestSpec + ProbabilityMeasure + PhaseTransitionThreshold + AlgorithmThresholdCert\n\nSix fires, four tiers, ~16 substrate primitives proposed. Tier B/D INTERACTION (composes cleanly) is fire #43's additional finding."
+  },
+  "lane_11": {
+    "lane": "11_canon_fuzz_smoke",
+    "seed": "20260508_07",
+    "returncode": 0,
+    "summary_line": "13 passed in 78.82s (0:01:18)",
+    "stdout_tail": ".............                                                            [100%]\n13 passed in 78.82s (0:01:18)",
+    "verdict": "PASS"
+  }
+}
