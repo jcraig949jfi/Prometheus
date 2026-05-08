@@ -2356,3 +2356,22 @@ The substrate-grade discipline this session: **the doc structure tracked the evi
 **(d)** Drift check on this fire's discipline: the conventional drift candidate is "the loop just resumed, do something to demonstrate activity." Caught — empty-inbox quiet tick is the discipline-correct response. No work invented; no doc sections added speculatively. The loop's value is in responding to evidence, not in generating activity.
 
 **Step 7 inbox FRESH re-read:** TBD.
+
+---
+
+## Loop fire 15 (post-restart) — 2026-05-08
+
+**Inbox FRESH (step 1):** total 69. Status: ABLE_TO_ADVANCE=1, BLOCKED-DEFERRED-V1.0=60, DONE=7, **OPEN=0**, WONTFIX=1. Tester filed 0 new tickets between fire 14 and fire 15.
+
+**Pre-test (step 2):** 356/356 PASS.
+
+**Implement (step 3):** quiet tick, empty inbox.
+
+### SELF-REVIEW
+
+**(a)** No fix performed (empty inbox).
+**(b)** No memorization risk introduced.
+**(c)** No contract changed.
+**(d)** Drift check: the candidate this fire is "back-to-back quiet ticks suggest tester load has dropped; do something proactive (review pre-registered hypotheses, audit doc structure, etc.)." Caught — proactive work outside the inbox-driven cycle is anti-discipline. Tester pace is the rate-limiter. If quiet continues for many fires, the discipline-correct response remains "wait for evidence" not "invent activity."
+
+**Step 7 inbox FRESH re-read:** TBD.
