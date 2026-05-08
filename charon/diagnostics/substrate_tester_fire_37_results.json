@@ -1,0 +1,75 @@
+{
+  "fire": 37,
+  "lanes": [
+    17,
+    13
+  ],
+  "lane_17": {
+    "lane": "17_mutation_outside_audit_scope",
+    "target": "prometheus_math/kill_vector.py",
+    "test_cmd": "python -m pytest prometheus_math/tests/test_kill_vector.py prometheus_math/tests/test_kill_vector_v2.py prometheus_math/tests/test_kill_vector_precision.py -q --tb=no",
+    "wall_clock_seconds": 223.9318220615387,
+    "rc": 0,
+    "summary_line": "[mutation] score=0.000 killed=0 survived=8 errored=0 skipped=0",
+    "score": 0.0,
+    "n_killed": 0,
+    "n_survived": 8,
+    "n_errored": 0,
+    "n_skipped": 0,
+    "mutations": [
+      {
+        "idx": "1",
+        "verdict": "survived",
+        "site": "kill_vector.py:102:off_by_one_int"
+      },
+      {
+        "idx": "2",
+        "verdict": "survived",
+        "site": "kill_vector.py:102:off_by_one_int"
+      },
+      {
+        "idx": "3",
+        "verdict": "survived",
+        "site": "kill_vector.py:102:off_by_one_int"
+      },
+      {
+        "idx": "4",
+        "verdict": "survived",
+        "site": "kill_vector.py:103:off_by_one_int"
+      },
+      {
+        "idx": "5",
+        "verdict": "survived",
+        "site": "kill_vector.py:103:off_by_one_int"
+      },
+      {
+        "idx": "6",
+        "verdict": "survived",
+        "site": "kill_vector.py:104:off_by_one_int"
+      },
+      {
+        "idx": "7",
+        "verdict": "survived",
+        "site": "kill_vector.py:104:off_by_one_int"
+      },
+      {
+        "idx": "8",
+        "verdict": "survived",
+        "site": "kill_vector.py:104:off_by_one_int"
+      }
+    ],
+    "frozen_dataclass_outcomes": [],
+    "frozen_survivors_count": 0
+  },
+  "lane_13": {
+    "lane": "13_canon_fuzz",
+    "status": "LIVE",
+    "hypothesis_seed": "20260508_05",
+    "wall_clock_seconds": 23.04568076133728,
+    "rc": 0,
+    "n_passed": 13,
+    "n_failed": 0,
+    "summary_line": "13 passed in 15.95s",
+    "verdict": "PASS"
+  }
+}

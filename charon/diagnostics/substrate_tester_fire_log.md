@@ -6,6 +6,65 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #37 — 2026-05-08
+
+**Coordination note:** my fire #36 was last; James's tensor compute-fabric directive landed between fires (commits `91ffbc43` + `3a4dcd19`). Tensor strategy doc + memory entry codified.
+
+**Lanes selected:** 17 (mutation-testing on prometheus_math/kill_vector.py — outside the substrate-wide audit's sigma_kernel/-only scope) + 13 (canon-fuzz fresh seed 20260508_05).
+
+**Lane 15 + 18 reactivation re-check:** still DORMANT.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_37_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_37_results.json`.
+
+### Lane 17 — mutation outside audit scope: inconclusive (all false positives)
+
+| Metric | Value |
+|---|---:|
+| target | `prometheus_math/kill_vector.py` (~1700 LoC, 2 frozen dataclasses: KillComponent + KillVector) |
+| score | 0.0 (0 killed / 8 survived) |
+| frozen-dataclass survivors | 0 |
+
+All 8 mutations are `off_by_one_int` hits at lines 102-104 — inside the `MARGIN_UNITS` tuple's inline comment text (`[0, 1]`, `1 - p_value`, `1+d`, etc.). **Pure false positives** per framework caveat #1 (docstring/comment naïveté). The two actual `@dataclass(frozen=True)` lines weren't among first-8 sampled because the framework's site-selection picks first-encountered candidates which cluster near the module-top heavy-commented region.
+
+**Verdict:** Lane 17 result not informative for substrate health on this module. Substrate-wide audit's sigma_kernel/-only scope question NOT answered by this fire — would need a smarter site-selection or a higher max-mutations cap to reach the actual frozen-decorator lines.
+
+**Substrate-tester observation:** the mutation framework's site-selection is biased toward commented module-top regions when run with `--max-mutations N` < total candidates. Future fire could file a P3 ticket recommending site-selection improvements (e.g. skip multi-line docstring blocks entirely; or shuffle candidates per --hypothesis-style seed). Not filing this fire — caveat #1 already documents the underlying limitation.
+
+### Lane 13 — canon-fuzz fresh seed (20260508_05): 13/0 PASS
+
+| Metric | Value |
+|---|---:|
+| pytest rc | 0 |
+| n_passed | 13 |
+| n_failed | 0 |
+
+**Substrate verdict: PASS.** Fourth (or higher) independent Hypothesis seed exploration; canonicalization invariants robust.
+
+### Tickets filed this fire
+
+**0 tickets.** Lane 17 inconclusive (false positives only); Lane 13 PASS.
+
+### Standing recommendations for next fire (#38)
+
+1. **Anti-repeat:** avoid lanes 17, 13. Suggested fire #38:
+   - **Lane 8 (cert-extension)** — last my-instance fire #25
+   - **Lane 11 (batch-sweep)** with corpus-extension awareness — recent commits (`e10e26a9`) added "Round 2 expansions: batch11 seeds + 4 catalog extensions"; worth re-running batch-sweep against the expanded corpora
+   - **Lane 7 entry continuation** — if INCONCLUSIVE list locatable
+2. **P3 ticket candidate (deferred):** the mutation framework's site-selection bias is real but caveat #1 already documents it. File only if a future fire surfaces another instance where site-selection blocked a substrate finding.
+3. **Tensor compute-fabric strategy now codified** (commits `91ffbc43` + `3a4dcd19`). When a substrate-pressure finding has 1D-structured-exponential-state-space signature, charter says: file Aporia coordination ticket flagging Walk-1/2/3 candidacy. No such finding this fire.
+
+### Discipline notes
+
+- HARD-1..HARD-5: clean. No tensor-tool drift; no framework adoption.
+- Time used: ~25 min (within 50-min cap).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed).
+- Multi-instance coordination: pulled before lane-pick; claimed fire #37 = max-on-origin (36) + 1.
+
+— substrate-tester, fire #37, 2026-05-08
+
+---
+
 ## Fire #36 — 2026-05-08
 
 **Coordination note:** my fire #35 was last; no new parallel.
