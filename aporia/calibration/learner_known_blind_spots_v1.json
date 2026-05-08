@@ -94,6 +94,78 @@
       "non_determinism_evidence": "2 fires, 2 different wrong attributions ('Ben Green' vs 'Ivan M. R. H.'). Same canonical answer (Helfgott) absent in both. Helfgott is NEVER mentioned across either response.",
       "implication": "Add Helfgott 2013 to v1.0 attribution corpus + RAG. Joins BS-001 Cohen + BS-002 Lefschetz as 3rd structural blind-spot in the substrate map.",
       "novel_finding": "Fire-016 P-068 introduced FM-14 (self-aware-fab) archetype: model EXPLICITLY emits caveat ('there is no real person named Ivan M. R. H.') while still producing the fab as boxed answer. First observed instance of meta-cognitive fabrication."
+    },
+    {
+      "id": "BS-004",
+      "topic": "Faltings 1983 Mordell conjecture proof - prover's surname",
+      "subtype": "non_deterministic",
+      "canonical_correct": "Gerd Faltings (1983, Inventiones Math 73:349-366)",
+      "fires_tested": [
+        "017",
+        "018"
+      ],
+      "observed_fab_pattern": [
+        {
+          "fire": "017",
+          "probe": "P-2026-05-07-071",
+          "fab": "G. W. Cauchy 1844 (FM-04 + FM-15 self-correction) -> Louis Mordell 1983 (FM-08 cross-century-conflation; Mordell died 1972)"
+        },
+        {
+          "fire": "018",
+          "probe": "P-2026-05-07-074 (with 'Faltings's theorem' EMBEDDED in prompt as hint)",
+          "fab": "Paul Vijayrangates (pure FM-04) + Gisbertus H. W. CHA homogeneous (FM-04) + Mordell-Weil-theorem confusion (FM-08). Faltings STILL not mentioned even with hint embedded."
+        }
+      ],
+      "non_determinism_evidence": "2 fires, different fabs each time. Fire-018's prompt EXPLICITLY embedded 'Faltings's theorem' as a hint - model still emitted unrelated fabricated names. Strong evidence: this is a structural blind-spot at pretrained-knowledge level, not a retrieval failure.",
+      "implication": "Add Faltings 1983 to v1.0 corpus. Most surprising blind-spot given Fields-Medal-fame: refutes hypothesis that academic prestige predicts recoverability. Canonicality-in-pretraining-corpus dominant axis."
+    },
+    {
+      "id": "BS-005",
+      "topic": "McKay 1978 monstrous moonshine numerical observation - prover's surname",
+      "subtype": "deterministic",
+      "canonical_correct": "John McKay (1978, Concordia University Montreal)",
+      "fires_tested": [
+        "017",
+        "018"
+      ],
+      "observed_fab_pattern": [
+        {
+          "fire": "017",
+          "probe": "P-2026-05-07-073",
+          "fab": "'John H. Conant' (FM-04 + FM-08 cross-century: Liouville 1852)"
+        },
+        {
+          "fire": "018",
+          "probe": "P-2026-05-07-075 (different framing: 'Scottish-Canadian mathematician')",
+          "fab": "'John H. Conant' SAME ATTRIBUTION as fire-017 (deterministic)"
+        }
+      ],
+      "non_determinism_evidence": "DETERMINISTIC: same 'John H. Conant' fab across 2 fires with different framings. NEW BS sub-class. Model has 'John H. Conant' as a memorized pattern, not a sampled alternative.",
+      "implication": "Deterministic blind-spots are HARDER to fix than non-deterministic ones (require active unlearning + corpus override). Add McKay-Thompson-Conway-Norton moonshine to v1.0 corpus + flag 'John H. Conant' as canonical-fab archetype."
+    },
+    {
+      "id": "BS-006",
+      "topic": "Margulis 1974 arithmeticity / Fields 1978 - prover's surname",
+      "subtype": "partial_recovery_with_deterministic_corruption",
+      "canonical_correct": "Grigory Aleksandrovich Margulis (G.A. Margulis), Fields Medal 1978",
+      "fires_tested": [
+        "017",
+        "018"
+      ],
+      "observed_fab_pattern": [
+        {
+          "fire": "017",
+          "probe": "P-2026-05-07-072 (mid-20th BS test)",
+          "fab": "'G. A. Marg walk' (prefix correct, suffix space-insertion-corruption)"
+        },
+        {
+          "fire": "018",
+          "probe": "P-2026-05-07-076 (Soviet + Fields 1978 strong hints)",
+          "fab": "'G. A. Marg walk' SAME FM-02 corruption + 'Andrey T. Tate' + 'Andrey Weil' (FM-15 self-correction Tate->Weil->Tate)"
+        }
+      ],
+      "non_determinism_evidence": "DETERMINISTIC space-insertion corruption: same 'Marg walk' across 2 fires. Surname PREFIX 'G. A. Marg*' recoverable; suffix 'ulis' deterministically corrupts to ' walk'. PLUS fire-018 produced FM-15 self-correction 'Tate -> Weil -> Tate' (cross-fire FM-15 confirmation).",
+      "implication": "Borderline blind-spot. Could potentially be 'rescued' to KC-009-tier (name-only) with corpus exposure to 'Margulis' suffix. The deterministic-corruption pattern suggests tokenizer-level issue: 'Margulis' may not be a single token; 'Marg' tokenizes cleanly but 'ulis' fragments badly into ' walk'-like suffix."
     }
   ],
   "non_blind_spots_for_comparison": {
@@ -109,7 +181,7 @@
       "KC-AGW-LOCK: alpha_GW = 0.8786 - numerical anchor, locked across decode-param sweep"
     ]
   },
-  "blind_spot_axis_pattern": "Comparing BS-001 (Cohen 1963), BS-002 (Lefschetz 1924) vs KC-005 (Goedel 1931): all three are 20th-century logic/algebra, all three are high-canon. Goedel emerged as recoverable (year-only) while Cohen and Lefschetz are blind-spots. Hypothesis: Goedel 1931 has overwhelming public coverage (popular books like 'Goedel, Escher, Bach') that distinguishes it from Cohen / Lefschetz despite similar academic stature. CANONICALITY-IN-PRETRAINING-CORPUS is more predictive than CANONICALITY-IN-MATH-CORPUS.",
+  "blind_spot_axis_pattern": "Comparing BS-001 (Cohen 1963), BS-002 (Lefschetz 1924) vs KC-005 (Goedel 1931): all three are 20th-century logic/algebra, all three are high-canon. Goedel emerged as recoverable (year-only) while Cohen and Lefschetz are blind-spots. Hypothesis: Goedel 1931 has overwhelming public coverage (popular books like 'Goedel, Escher, Bach') that distinguishes it from Cohen / Lefschetz despite similar academic stature. CANONICALITY-IN-PRETRAINING-CORPUS is more predictive than CANONICALITY-IN-MATH-CORPUS. UPDATE FIRE-018: Total 6 confirmed blind-spots across 3 sub-classes (non-deterministic / deterministic / partial-recovery). Sub-class taxonomy added. Deterministic sub-class (BS-005 McKay) is NEW finding requiring different remediation than non-deterministic class.",
   "blind_spot_candidates_1_fire": [
     {
       "id": "BS-CAND-FALTINGS-017",
@@ -126,7 +198,9 @@
         }
       ],
       "needs_2nd_fire_to_confirm": "True - currently 1-fire candidate; promote to BS-004 if fire-018+ produces different non-Faltings attribution.",
-      "implication": "Add Faltings 1983 to v1.0 attribution corpus. If 2-fire-confirmed, joins BS-001 Cohen + BS-002 Lefschetz + BS-003 Helfgott."
+      "implication": "Add Faltings 1983 to v1.0 attribution corpus. If 2-fire-confirmed, joins BS-001 Cohen + BS-002 Lefschetz + BS-003 Helfgott.",
+      "resolved_in_fire": "018",
+      "resolved_as": "BS-004"
     },
     {
       "id": "BS-CAND-MCKAY-017",
@@ -143,7 +217,9 @@
         }
       ],
       "needs_2nd_fire_to_confirm": "True",
-      "implication": "Add McKay-Thompson-Conway-Norton moonshine to v1.0 corpus. Cross-domain (group theory + modular forms) attribution chain is fragile."
+      "implication": "Add McKay-Thompson-Conway-Norton moonshine to v1.0 corpus. Cross-domain (group theory + modular forms) attribution chain is fragile.",
+      "resolved_in_fire": "018",
+      "resolved_as": "BS-005 (deterministic NEW SUB-CLASS)"
     },
     {
       "id": "BS-CAND-MARGULIS-017",
@@ -160,7 +236,35 @@
         }
       ],
       "needs_2nd_fire_to_confirm": "True - this is a partial-recovery candidate (between full anchor and BS); could be name-only-tier like KC-009 Mostow if 2nd fire confirms 'Margulis' surname recoverable.",
-      "implication": "Margulis is a borderline case: prefix 'G.A. Marg*' recovered but suffix corrupted. Re-test in fire-018 with different framing to determine if name-only-tier (KC-X) or full BS."
+      "implication": "Margulis is a borderline case: prefix 'G.A. Marg*' recovered but suffix corrupted. Re-test in fire-018 with different framing to determine if name-only-tier (KC-X) or full BS.",
+      "resolved_in_fire": "018",
+      "resolved_as": "BS-006 (partial-recovery NEW SUB-CLASS)"
     }
-  ]
+  ],
+  "bs_subtype_taxonomy": {
+    "non_deterministic": {
+      "description": "Different wrong attribution emitted each fire. Model has near-zero-confidence prior on the canonical answer; samples plausible alternatives non-deterministically.",
+      "examples": [
+        "BS-001 Cohen (Hilbert/J.ones/Sally/Sierpinski)",
+        "BS-002 Lefschetz (Deligne/Delaro/Green/Griffiths)",
+        "BS-003 Helfgott (Ben Green/Ivan M.R.H.)",
+        "BS-004 Faltings (Cauchy+Mordell/Vijayrangates+CHA-homogeneous)"
+      ],
+      "implication": "Easier to detect (multi-fire variance is the signal); fix requires corpus + RAG."
+    },
+    "deterministic": {
+      "description": "SAME wrong attribution emitted across fires. Model has the wrong attribution memorized as a stable pattern.",
+      "examples": [
+        "BS-005 McKay ('John H. Conant' both fires 017 + 018)"
+      ],
+      "implication": "Harder to detect (single fab looks like confident memory); fix requires corpus override + active unlearning. NEW class discovered fire-018."
+    },
+    "partial_recovery_with_deterministic_corruption": {
+      "description": "Surname PREFIX or initials recovered correctly, but suffix/ending corrupted DETERMINISTICALLY (same corruption across fires).",
+      "examples": [
+        "BS-006 Margulis ('G.A. Marg walk' both fires 017 + 018; FM-02 space-insertion deterministic)"
+      ],
+      "implication": "Borderline blind-spot - between full-fab BS class and name-only-tier (KC-009 Mostow). Reveals partial knowledge with stable corruption pattern."
+    }
+  }
 }

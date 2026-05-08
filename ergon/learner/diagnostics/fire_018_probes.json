@@ -1,0 +1,47 @@
+[
+  {
+    "id": "P-2026-05-07-074",
+    "lane": "charon-nt-additive",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "BS-CAND-FALTINGS-017 RE-TEST: 2-fire confirmation. Different framing - emphasizes German connection to test if 'Faltings' can be elicited.",
+    "prompt": "Reply with one surname only. A German mathematician proved Mordell's conjecture in 1983, using algebraic-geometric methods (Faltings's theorem). Whose theorem is this?",
+    "expected": "Faltings (Gerd Faltings).",
+    "expected_kind": "single_name_BS_retest_with_strong_hint",
+    "rubric": "USEFUL only if completion contains 'Faltings' or 'Gerd Faltings'. STRONG HINT framing - if model still misses, BS-004 is decisive. Note: prompt explicitly mentions 'Faltings's theorem' as a clue.",
+    "useful_signals": ["faltings", "gerd faltings"],
+    "fabrication_signals": ["proven by zhang", "by mathewson"],
+    "gravwell_signals": [],
+    "useless_signals": ["by mordell", "louis mordell", "by cauchy", "by serre", "by deligne", "by tate", "by wiles"],
+    "anti_signals": ["by mordell himself", "by louis mordell", "by g. w. cauchy", "by deligne", "by tate", "by serre", "by wiles"]
+  },
+  {
+    "id": "P-2026-05-07-075",
+    "lane": "aporia-catalog",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "BS-CAND-MCKAY-017 RE-TEST: 2-fire confirmation. Different framing - explicit numerical coincidence emphasis.",
+    "prompt": "Reply with one surname only. The numerical coincidence 196884 = 196883 + 1 (relating Fourier coefficients of the j-invariant modular function to dimensions of irreducible representations of the Monster simple group) was first observed in 1978 by which Scottish-Canadian mathematician?",
+    "expected": "McKay (John McKay, then at Concordia University Montreal). The observation directly led to the monstrous moonshine conjecture by Conway-Norton 1979.",
+    "expected_kind": "single_name_BS_retest_with_strong_hint",
+    "rubric": "USEFUL only if completion contains 'McKay' or 'John McKay'. STRONG HINT framing - explicit numerical coincidence + nationality.",
+    "useful_signals": ["mckay", "john mckay", "j. mckay"],
+    "fabrication_signals": ["proven by zhang", "by mathewson"],
+    "gravwell_signals": [],
+    "useless_signals": ["by conway alone", "by norton alone", "by borcherds", "by atiyah", "by liouville", "by conant"],
+    "anti_signals": ["by liouville", "by conant", "by atiyah", "by borcherds in 1978", "by james conant"]
+  },
+  {
+    "id": "P-2026-05-07-076",
+    "lane": "aporia-catalog",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "BS-CAND-MARGULIS-017 RE-TEST: determine if name-only-tier (KC) or full BS. Different framing - emphasizes Soviet connection + Fields Medal.",
+    "prompt": "Reply with one surname only. A Soviet mathematician won the 1978 Fields Medal for proving the arithmeticity of irreducible lattices in higher-rank semisimple Lie groups. His surname is?",
+    "expected": "Margulis (Grigory Aleksandrovich Margulis).",
+    "expected_kind": "single_name_BS_retest_with_strong_hint",
+    "rubric": "USEFUL only if completion contains 'Margulis' (full surname, not 'Marg walk' or 'Marg' prefix only). STRONG HINT - Soviet + Fields 1978.",
+    "useful_signals": ["margulis", "grigory margulis", "g. margulis", "g.a. margulis"],
+    "fabrication_signals": ["proven by zhang", "by mathewson"],
+    "gravwell_signals": [],
+    "useless_signals": ["by gelfand", "by vinogradov", "by manin", "by arnold", "by sinai", "by mostow", "by selberg"],
+    "anti_signals": ["by gelfand", "by vinogradov in 1978", "by mostow in 1978", "by arnold", "by sinai", "by manin", "by selberg"]
+  }
+]

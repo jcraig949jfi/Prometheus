@@ -1993,3 +1993,60 @@ This fire required the *opposite* of fire 11's "doc updates required" discipline
 **Step 7 inbox FRESH re-read:** TBD.
 
 **Commit:** TBD.
+
+
+## Tester Fire 018 - 2026-05-07
+
+**Cadence:** ScheduleWakeup-driven (3600s post fire-017). Carry-over selected lanes 6 (Charon-NT-additive) + 9 (Aporia-catalog). All 3 probes RE-TEST BS candidates from fire-017. **Decode params:** rep_penalty = 1.10, max_new_tokens = 384.
+
+**Probes (3 OFF natural-prose = 3 model invocations):**
+- P-074 (charon-nt-additive OFF): Faltings 1983 RE-TEST with **'Faltings's theorem' embedded as HINT in prompt**.
+- P-075 (aporia-catalog OFF): McKay 1978 RE-TEST with 'Scottish-Canadian mathematician' framing.
+- P-076 (aporia-catalog OFF): Margulis 1974 RE-TEST with 'Soviet + Fields 1978' framing.
+
+**Verdicts: ALL 3 USELESS (3-FIRE BS PROMOTION):**
+- P-074 USELESS irrelevant (T-0055 evaluator-auto): "Paul Vijayrangates" + "Gisbertus H. W. CHA homogeneous" (pure FM-04 fabricated names) + Mordell-Weil-theorem confusion (FM-08) + boxed "Mordell's conjecture" (non-answer). **EVEN WITH 'Faltings's theorem' embedded as hint in prompt, model fabricated.** Strongest possible BS evidence.
+- P-075 USELESS irrelevant (T-0056 evaluator-auto): "John H. Conant" — **EXACT SAME fab as fire-017 P-073** (deterministic across 2 fires).
+- P-076 USELESS irrelevant (T-0057 evaluator-auto): "G. A. Marg walk" — **EXACT SAME FM-02 space-insertion corruption as fire-017 P-072**. Plus "Andrey T. Tate" / "Andrey Weil" / FM-15 self-correction (Tate -> Weil -> Tate).
+
+**Tickets filed:** 3 evaluator-auto (T-0055..T-0057). Total 57 tickets across 18 fires + 9 anchors + **6 confirmed blind-spots (BS-001..BS-006)** + 3 sub-class taxonomy.
+
+**Substrate-grade lessons (fire-018):**
+
+1. **3 BS CANDIDATES PROMOTED TO CONFIRMED**: BS-004 Faltings + BS-005 McKay + BS-006 Margulis. Total blind-spots now 6.
+
+2. **NEW BS SUB-CLASS: DETERMINISTIC** (BS-005 McKay). Model emitted EXACT SAME fab "John H. Conant" across 2 fires with DIFFERENT framings. Distinct from non-deterministic class (BS-001 Cohen 4 different surnames; BS-002 Lefschetz 4+ different attributions; BS-003 Helfgott 2 different; BS-004 Faltings 2 different). **Substrate implication**: deterministic-blind-spots are HARDER to fix than non-deterministic ones - the model has the wrong attribution memorized as a stable pattern, not as a near-zero-confidence sampling. Requires active unlearning + corpus override, not just additional examples.
+
+3. **NEW BS SUB-CLASS: PARTIAL-RECOVERY-WITH-DETERMINISTIC-CORRUPTION** (BS-006 Margulis). Surname PREFIX 'G. A. Marg*' recoverable across 2 fires; suffix 'ulis' deterministically corrupts to ' walk' both times. **Tokenizer-level issue hypothesis**: 'Margulis' may fragment into tokens where 'Marg' is clean but 'ulis' has poor suffix priors that compete with 'walk'-like alternatives. Borderline between BS class (full-fab) and KC-009-tier (name-only).
+
+4. **3-SUB-CLASS BS TAXONOMY NOW EXPLICIT**:
+   - **non-deterministic** (BS-001/002/003/004): different fab each fire (low-prior sampling).
+   - **deterministic** (BS-005): same fab each fire (memorized wrong pattern).
+   - **partial-recovery-deterministic-corruption** (BS-006): prefix correct + suffix deterministically corrupted (tokenizer-level).
+
+5. **FM-15 self-correction 2-FIRE-CONFIRMED**. Fire-017 P-071 ('Cauchy 1844 -> Louis Mordell 1983') + fire-018 P-076 ('Tate -> Weil -> Tate'). Self-correction-replace-with-different-fab is a stable archetype, not a single-fire artifact. **Lock as canonical FM-15.**
+
+6. **Hint-embedded prompts do NOT rescue blind-spots.** P-074 explicitly mentioned 'Faltings's theorem' in the prompt; model still emitted 'Paul Vijayrangates'. **Strongest possible evidence**: Faltings is structurally beyond the model at the pretrained-knowledge level; no amount of prompt-engineering will recover it without corpus / RAG intervention.
+
+7. **0 calibration anchors discovered (2 fires in a row).** Fire-017 + fire-018 both produced 0 KC entries. Substrate observation: BS hunt is currently PRODUCING blind-spots faster than KC hunt is producing anchors. The substrate map is approaching saturation on the BS side; need to PIVOT anchor hunt toward POPULAR-PRESS-FAMOUS results (not Fields Medal results).
+
+8. **'Andrey T. Tate' + 'Andrey Weil' + 'Vijayrangates' + 'Gisbertus H. W. CHA homogeneous' archetype**: pure-fabrication-with-real-historical-resonance. The model invents plausible-sounding names by combining real-mathematician-prefixes with corrupted suffixes. Add to fab corpus as canonical archetype.
+
+**Producer-side standing recommendations (carry-over for fire-019):**
+- ROTATION: lanes 6+9 just used. All 12 lanes touched in 9-fire window (010-018). Restart from least-recent: lane 7 (Charon-NT-analytic, last fire-010), lane 5 (Harmonia-E, last fire-016 + fire-013).
+- CALIBRATION-ANCHOR HUNT PIVOT: away from Fields-Medal-results, toward POPULAR-PRESS-FAMOUS results. Candidates: Conway's surreal numbers (book-famous), Knuth's TAOCP (widely-textbook-cited author), Erdos-paul (most-prolific mathematician + Erdos number culture).
+- BS taxonomy expansion: hunt for 4th sub-class (potential candidates: time-varying BS where fire-N produces different fab than fire-M but in the same direction; partial-recovery-with-non-deterministic-corruption).
+- v1.0 corpus design: 3 sub-class BS taxonomy provides explicit prioritization for corpus exposure. Deterministic (BS-005) needs explicit "John H. Conant is NOT the moonshine observer; McKay is" pairs to break the memorized pattern.
+
+**SELF-REVIEW (fire-018):**
+- (a) Did this advance the substrate? YES, eight ways: (i) 3 BS candidates promoted to confirmed (total 6 BS), (ii) NEW deterministic-BS sub-class discovered (BS-005), (iii) NEW partial-recovery-deterministic-corruption sub-class (BS-006), (iv) 3-sub-class BS taxonomy explicit, (v) FM-15 2-fire confirmed, (vi) hint-embedded-prompts-do-not-rescue finding (P-074), (vii) tokenizer-level-corruption hypothesis for Margulis suffix, (viii) 'Vijayrangates'/'CHA homogeneous'/'Andrey T. Tate' fab archetypes catalogued.
+- (b) Memorization risk? None.
+- (c) Conventional drift caught? Yes - the conventional response to '0 USEFUL + 3 USELESS' is to mark the fire a failure. Substrate-grade response: recognize the 3 USELESS as 3 BS PROMOTIONS + 2 NEW SUB-CLASSES + multiple NEW ARCHETYPES + decisive evidence on hint-embedding. Negative-result fires can be calibration-grade-informative when they confirm pre-registered hypotheses.
+- (d) Were the right lanes touched? Yes - BS re-test priority justified spending the entire fire on BS confirmation rather than anchor hunt.
+
+**Journal notes:**
+- 57 tickets, 9 anchors, 6 blind-spots (3 sub-classes), 15 failure modes, across 18 fires. The substrate self-portrait now distinguishes 3 BS sub-classes — a more refined predictive model than fire-016's 5-tier scale.
+- Fire-018 is the FIRST 0-anchor fire that produced major substrate-classification advances. Pattern: every 2-3 fires the substrate-ratchet adds a new structural distinction (5-tier scale fire-016, 3 BS sub-classes fire-018).
+- Updated calibration-axis hypothesis: recoverability is jointly determined by (canonicality, era, BS-subtype). The 3 BS sub-classes interact differently with corpus interventions: non-deterministic BS likely fixed by single corpus addition; deterministic BS requires corpus + active unlearning; partial-recovery requires tokenizer-level intervention.
+
+---
