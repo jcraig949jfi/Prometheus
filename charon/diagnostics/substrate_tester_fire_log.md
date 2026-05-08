@@ -6,6 +6,52 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #46 — 2026-05-08 (PIVOT FIRE — substrate_v3 proposal stub filed; design-prep phase begins)
+
+**Coordination note:** no new commits between fire #45 and fire #46 from parallel instance, no Aporia response yet on ST-fire45-002. Per fire #45 default ("attempt the pivot if no override"), fire #46 shifts from Lane-12 catalog probes to test-suite-design-prep.
+
+**Lanes selected:** 1 NEW (design-doc preparation) + 11 (canon-fuzz fresh seed 20260508_10).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_46_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_46_results.json`.
+
+### Lane 1 — substrate_v3_proposal stub doc filed
+
+Target: `pivot/substrate_v3_proposal_stub_2026-05-08.md` (250 lines, 11 sections).
+
+Captures the 5-tier model from fires #38-#45 in design-doc form, ready for Techne pickup. Sections:
+
+| § | Content |
+|---|---|
+| 0 | Provenance — fire-by-fire findings table |
+| 1 | Executive summary |
+| 2 | The 5-tier model (Tier A/B/C/D/E with ~22 primitives) |
+| 3 | Cross-tier composition (Tier B/D) |
+| 4 | Recommended contract-change scope (option a/b/c/d) |
+| 5 | Test-suite design hooks for fires #47/#48 |
+| 6 | 5 open design questions for Techne/Aporia |
+| 7 | Catalog coverage estimate (~85-95%) |
+| 8 | Coordination ticket chain |
+| 9 | HARD-6 + HARD POSTURE alignment |
+| 10 | Next steps |
+
+**Stays a STUB.** Substrate-tester surfaces gaps; Techne owns the substrate (HARD-3 + natural division). Aporia decides scope.
+
+### Lane 11 — canon-fuzz fresh seed: 13 passed (16.13s)
+
+Regression continues at low cadence — health check, not the substrate-design work.
+
+### Substrate-tester observation — pivot complete
+
+Eight-fire matrix-filling phase ended at fire #45 saturation. Fire #46 is the FIRST design-prep fire. Future fires:
+- **Fire #47:** ConstructiveExistenceWitness (Tier B core) test-suite stub — concrete Python skeleton, T1-T6 tests
+- **Fire #48:** DistributionObject + PhaseTransitionThreshold (Tier D core) test-suite stub
+- **Fire #49+:** return to matrix-filling on §II Rank Zoo / §III Waring / §VI Numerical Decomposition / §XI Specific Tensor Families at lower frequency
+
+If Aporia greenlights a contract-change window before fire #49, fires #47-#48 outputs become directly useful test-spec material for Techne's build phase.
+
+---
+
 ## Fire #45 — 2026-05-08 (5-tier model HOLDS; SATURATION SIGNAL; pivot proposal filed)
 
 **Coordination note:** no new commits between fire #44 and fire #45 from parallel instance. Fire #45 is mine.
