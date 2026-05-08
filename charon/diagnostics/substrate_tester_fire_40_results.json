@@ -1,0 +1,111 @@
+{
+  "fire": 40,
+  "posture": "third-HARD-6-fire (matrix-filling: \u00a7VII catalog entry #58; testing TensorAlgebra-subsystem convergence beyond \u00a7I+\u00a7X)",
+  "lanes": [
+    12,
+    14
+  ],
+  "lane_12": {
+    "lane": "12_catalog_pulled_tensor_iso_probe",
+    "catalog_entry": "#58 Tensor isomorphism complexity",
+    "section": "VII. Decidability and Computational Complexity",
+    "attack_paradigms": [
+      "P30",
+      "P31"
+    ],
+    "encoding_attempts": [
+      {
+        "probe": "encode_tensor_iso_via_EQUIV",
+        "attempt": "EQUIV(symbol_T, symbol_T', equivalence_class_id='GL_n_x_GL_n_x_GL_n_action_iso', witness_type=??, witness=...). EQUIV's three witness types are proof_ref / finite_check / equiv_chain. None of them carries a group-action witness (an explicit triple (A, B, C) in GL_n cubed).",
+        "blocker": "EQUIV's witness types don't include 'group_action_witness'. finite_check could fit small-format tensors (2x2x2) where exhaustive search over invertible matrices is feasible \u2014 but returns boolean, not the witnessing (A,B,C). proof_ref could point to an external proof but loses substrate-grade verifiability. equiv_chain doesn't apply to non-syntactic equivalence.",
+        "verdict": "PARTIAL \u2014 EQUIV exists but witness types incomplete"
+      },
+      {
+        "probe": "encode_group_action_via_T030",
+        "attempt": "OperatorPortabilityCertificate(operator='GL_n_action', source_chart='tensor_iso:T', target_chart='tensor_iso:T_prime', transfer_method=STRUCTURAL_ANALOGY, ...). The operator 'GL_n action' applies (A, B, C) to T to get T'.",
+        "blocker": "T030 has the right shape (operator transports T to T') but doesn't carry the GROUP STRUCTURE \u2014 substrate has no GroupAction primitive that knows about group composition, inverses, identity. The witness for tensor isomorphism MUST come from a group; OperatorPortabilityCertificate treats the operator as a black box. Loses isomorphism-class semantics.",
+        "verdict": "FAIL_ENCODING \u2014 no GroupAction / GroupActionWitness"
+      },
+      {
+        "probe": "encode_iso_test_via_MethodSpec",
+        "attempt": "MethodSpec(engine='magma', strategy='tensor_isomorphism', independence_class=??, version='2.27'). Wrap a tensor-isomorphism test as a MethodSpec; the test's output (true/false + optional witness) is then a CLAIM.",
+        "blocker": "Same enum-gap as fire #39: no IndependenceClass value for GROUP_ACTION_INVARIANT. Even with one added: MethodSpec operates at the call-engine level, not the ALGEBRAIC-STRUCTURE level. Substrate could RUN a Magma iso-test but couldn't represent the equivalence-class structure (orbit, stabilizer, fundamental domain) as substrate-grade data.",
+        "verdict": "FAIL_ENCODING \u2014 no algebraic-structure-level primitive"
+      },
+      {
+        "probe": "encode_non_iso_via_ExclusionCertificate",
+        "attempt": "ExclusionCertificate(region_spec=..., exclusion_claim=ExclusionClaim(excluded_property='isomorphism_to_T_prime', result_class='gln_iso_class', reason='Galois_orbit_invariant_differs'), ...).",
+        "blocker": "Works for the NEGATIVE direction (T \u2262 T'): the exclusion certificate carries a Galois-orbit-invariant or other non-iso obstruction. BUT the substrate has no companion POSITIVE primitive \u2014 the (A,B,C) witness for T \u2245 T' has no substrate-grade home. Same asymmetric-existential pattern as fire #39's ContractionOrderWitness. Strongly suggests this asymmetry is substrate-WIDE, not tensor-specific.",
+        "verdict": "PARTIAL \u2014 non-iso encodable, iso witness has no home"
+      }
+    ],
+    "all_attempts_failed": true,
+    "capability_gaps_identified": [
+      {
+        "missing_primitive": "GroupAction / GroupActionWitness",
+        "purpose": "explicit (A_1, ..., A_k) in G action mapping T to T'; substrate-grade group structure",
+        "needed_for": "tensor iso, code equivalence, MinRank, post-quantum-crypto schemes (MEDS, ALTEQ)",
+        "blocks_paradigms": [
+          "P30",
+          "P31"
+        ],
+        "blocks_catalog_entries": "#58 directly; also entries in \u00a7V (identifiability), \u00a7IX (random tensors with symmetry), \u00a7X (SLOCC entanglement classification)"
+      },
+      {
+        "missing_primitive": "IsomorphismCertificate (positive existential with witness, complementing ExclusionCertificate)",
+        "purpose": "constructive isomorphism witness; the upper-bound side of NP-search",
+        "needed_for": "completing the existential symmetry \u2014 ANY 'is-isomorphic-to' / 'is-equivalent-to' decision needs a constructive POSITIVE primitive",
+        "broader_pattern": "Same ASYMMETRIC EXISTENTIAL gap as fire #39's ContractionOrderWitness. Two fires from different paradigms (P30 + GI-hard) hit the same shape \u2014 strongly suggests substrate-wide design issue, not tensor-specific.",
+        "convergence_with_fire_39": "Fire #39 surfaced ContractionOrderWitness for combinatorial optimization upper bound; fire #40 surfaces IsomorphismCertificate for equivalence-decision upper bound. Both are positive-existentials-with-witness; both lack a substrate-grade home. The unifying primitive is ConstructiveExistenceWitness with role-specific subclasses.",
+        "blocks_paradigms": [
+          "P30",
+          "P31",
+          "all NP-search problems substrate may track"
+        ],
+        "blocks_catalog_entries": "broader than tensors \u2014 applies whenever substrate needs to track an explicit witness for an existential claim with cost/correctness annotation"
+      },
+      {
+        "missing_primitive": "OrbitStratification / FundamentalDomain",
+        "purpose": "encode the orbit space of group action (equivalence classes); enable canonical-form reasoning",
+        "needed_for": "tensor iso classification (#58), SLOCC classification (#79), Comon's conjecture lineage, any 'classify modulo G' problem",
+        "blocks_paradigms": [
+          "P31"
+        ],
+        "blocks_catalog_entries": "#58 + #79 + parts of \u00a7III/\u00a7IV/\u00a7XII (geometric complexity theory)",
+        "convergence_note": "RELATED TO 5-of-5 capability-gap cluster's Structured-Equivalence-Class meta-primitive. Tensor iso is another instance of 'structured equivalence under specified transformations.' Pre-existing recommendation may unify this gap with the cluster's needs."
+      }
+    ],
+    "verdict": "FAIL_ENCODING \u2014 substrate has no GroupAction primitive + asymmetric existential pattern (recurring)",
+    "feeds_techne_ticket": "T-2026-05-08-T038 (substrate-primitive classification of all 104 catalog entries)",
+    "convergence_status": "Three fires (#38/#39/#40), three sections (\u00a7I/\u00a7X/\u00a7VII), three paradigms (P28-P31 + P30 + P30/P31). Convergence increasingly clear:\n  - TensorObject + TensorNetworkGraph + GroupAction = tensor-specific subsystem (foundational primitives)\n  - RankDecompositionWitness + ContractionOrderWitness + IsomorphismCertificate = SAME asymmetric-existential pattern (positive-existential-with-witness substrate-wide gap)\n  - MomentPolytope + RewriteSearchTree + OrbitStratification = optimization-geometry-over-discrete-structure family\nPattern: foundational tensor primitives + asymmetric-existential general primitive + optimization-geometry family. Three subsystems, not one \u2014 but they interlock."
+  },
+  "lane_14": {
+    "lane": "14_frozen_invariance_regression",
+    "n_tests": 5,
+    "verdict_counts": {
+      "PASS": 5
+    },
+    "tests": [
+      {
+        "id": "T1_MethodSpec_frozen",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T2_ExclusionClaim_frozen",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T3_RegionSpec_frozen",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T4_ReplayInfo_frozen",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T5_ExclusionCertificate_frozen",
+        "verdict": "PASS"
+      }
+    ]
+  }
+}

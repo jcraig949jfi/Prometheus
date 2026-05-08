@@ -6,6 +6,62 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #40 — 2026-05-08 (THREE-FIRE CONVERGENCE: ConstructiveExistenceWitness substrate-wide gap)
+
+**Coordination note:** no new commits between fire #39 and fire #40 from parallel instance. Fire #40 is mine.
+
+**Lanes selected:** 12 (catalog entry #58 — tensor isomorphism complexity, §VII, paradigms P30/P31) + 14 (frozen-dataclass invariance regression).
+
+Diversification choice: §VII / equivalence-class decision under group action — orthogonal to fires #38 (rank/decomposition, §I) and #39 (network-topology contraction, §X). Tests whether subsystem convergence holds in a third direction.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_40_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_40_results.json`.
+
+### Lane 12 — Tensor isomorphism encoding probe: FAIL_ENCODING
+
+| Encoding attempt | Verdict | Blocker |
+|---|---|---|
+| 1. EQUIV opcode | PARTIAL | 3 witness types (proof_ref/finite_check/equiv_chain) don't include group-action witness |
+| 2. OperatorPortabilityCertificate (T030) | FAIL_ENCODING | right shape but no GroupAction primitive (no composition/inverse/identity) |
+| 3. MethodSpec/IndependenceClass | FAIL_ENCODING | could RUN Magma iso-test, can't represent equivalence-class structure as substrate data |
+| 4. ExclusionCertificate | PARTIAL | non-iso encodable; iso witness has no home — same asymmetric-existential as fire #39 |
+
+### Capability gaps (3 missing primitives)
+
+1. **GroupAction / GroupActionWitness** — explicit group-element tuple acting on substrate object. Blocks #58, parts of §V/§IX/§X (#79 SLOCC).
+2. **IsomorphismCertificate (positive existential with witness)** — same shape as fire #39's ContractionOrderWitness. Substrate-wide, not tensor-specific.
+3. **OrbitStratification / FundamentalDomain** — orbit space of group action; canonical-form reasoning. Overlaps with 5-of-5 capability-gap cluster's Structured-Equivalence-Class.
+
+### Three-fire convergence — ROBUST FINDING
+
+| Tier | Fire #38 | Fire #39 | Fire #40 | Subsystem |
+|---|---|---|---|---|
+| **A — foundational tensor objects** | TensorObject | TensorNetworkGraph | GroupAction | **TensorAlgebra subsystem** |
+| **B — asymmetric existential (ROBUST)** | RankDecompositionWitness | ContractionOrderWitness | IsomorphismCertificate | **ConstructiveExistenceWitness primitive (substrate-WIDE)** |
+| **C — discrete-optimization geometry** | MomentPolytope/SecantVarietyEquation | RewriteSearchTree | OrbitStratification | **discrete-optimization-geometry family** |
+
+**Tier B is the strongest convergence finding.** Three distinct paradigms (P28-P31, P30, P30/P31/GI-hard) all hit the same shape: substrate has ExclusionCertificate for negative existentials, no companion primitive for positive existentials with cost/correctness annotation. This is a substrate-wide design issue. **Highest-priority recommendation:** ship `ConstructiveExistenceWitness` as a substrate-wide primitive with rank/contraction-order/isomorphism specializations.
+
+**Tier C overlaps with the pre-existing 5-of-5 capability-gap cluster's Structured-Equivalence-Class meta-primitive.** Co-design recommended.
+
+**Filed:** `T-2026-05-08-ST-fire40-001` (P1-high) → Techne. Cross-references catalog #58, paradigms P30/P31, sister tickets from fires #38/#39, 5-of-5 cluster.
+
+### Lane 14 — frozen-dataclass invariance: 5/5 PASS
+
+Walked MethodSpec, ExclusionClaim, RegionSpec, ReplayInfo, ExclusionCertificate. All reject mutation (FrozenInstanceError on attribute write). Mini-window Tier-2 fix's auto-enrollment audit working as expected.
+
+### Substrate-tester observation
+
+Three-fire matrix-filling has produced enough convergence to recommend contract-change scope:
+
+1. **HIGHEST PRIORITY:** `ConstructiveExistenceWitness` substrate-wide primitive (Tier B).
+2. **SECOND:** TensorAlgebra subsystem (TensorObject, TensorNetworkGraph, GroupAction) — Tier A.
+3. **THIRD:** discrete-optimization-geometry family co-designed with 5-of-5 cluster — Tier C.
+
+Future fires can keep filling the matrix, but Tier B's three-paradigm robustness already justifies bringing this to a contract-change-window agenda. Aporia coordination ticket may be warranted next fire to flag the convergence for strategic-planning review.
+
+---
+
 ## Fire #39 — 2026-05-08 (CONVERGENCE: 6 MISSING PRIMITIVES → TensorAlgebra SUBSYSTEM)
 
 **Coordination note:** no new commits between fire #38 and fire #39 from parallel instance. Fire #39 is mine.
