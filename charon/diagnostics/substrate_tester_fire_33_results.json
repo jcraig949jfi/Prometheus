@@ -1,0 +1,119 @@
+{
+  "fire": 33,
+  "lanes": [
+    3,
+    17
+  ],
+  "purpose": "mini-window verification (P0 smuggle + Tier 2 audit regression)",
+  "lane_3": {
+    "lane": "3_p0_smuggle_regression",
+    "n_tests": 4,
+    "verdict_counts": {
+      "PASS": 4
+    },
+    "tests": [
+      {
+        "id": "T1_step1_methodspec_arbitrary_ic_must_raise",
+        "expected": "ValueError",
+        "actual": "ValueError raised: independence_class='not_a_registered_class_xyz' is not a registered IndependenceClass value. Registered values: ['clustering_boundary', 'lit",
+        "verdict": "PASS",
+        "note": "Tier 1 contract change #1 holds"
+      },
+      {
+        "id": "T2_step2_triangpath_arbitrary_method_class_must_raise",
+        "expected": "ValueError",
+        "actual": "ValueError raised: method_class='not_a_method_class_enum' is not a registered MethodClass value. Registered values: ['catalog', 'exploratory', 'numerical', 'pr",
+        "verdict": "PASS",
+        "note": "Tier 1 contract change #2 holds"
+      },
+      {
+        "id": "T3_step3_defense_in_depth_at_evaluate",
+        "expected": "REJECTED with 'Defense-in-depth violation'",
+        "actual": "REJECTED: Defense-in-depth violation: path 'smuggled' has non-enum independence_class='post_construction_arbitrary_ic_string'. Substrate's certificati",
+        "verdict": "PASS",
+        "note": "Tier 1 contract change #3 holds"
+      },
+      {
+        "id": "T4_positive_control_clean_3_paths_upgrade",
+        "expected": "UPGRADED_TO_LOCAL_LEMMA",
+        "actual": "upgraded: Upgraded: proof-bearing (primary) + 2 independent replay(s)",
+        "verdict": "PASS",
+        "note": "no over-blocking; clean paths still certify"
+      }
+    ]
+  },
+  "lane_17": {
+    "lane": "17_mutation_regression_on_exclusion_certificate",
+    "target": "sigma_kernel/exclusion_certificate.py",
+    "wall_clock_seconds": 188.81516814231873,
+    "rc": 0,
+    "summary_line": "[mutation] score=0.250 killed=2 survived=6 errored=0 skipped=0",
+    "score": 0.25,
+    "n_killed": 2,
+    "n_survived": 6,
+    "n_errored": 0,
+    "n_skipped": 0,
+    "mutations": [
+      {
+        "idx": "1",
+        "verdict": "survived",
+        "site": "exclusion_certificate.py:128:boolean_not"
+      },
+      {
+        "idx": "2",
+        "verdict": "killed",
+        "site": "exclusion_certificate.py:176:boolean_not"
+      },
+      {
+        "idx": "3",
+        "verdict": "killed",
+        "site": "exclusion_certificate.py:198:boolean_not"
+      },
+      {
+        "idx": "4",
+        "verdict": "survived",
+        "site": "exclusion_certificate.py:262:off_by_one_int"
+      },
+      {
+        "idx": "5",
+        "verdict": "survived",
+        "site": "exclusion_certificate.py:335:comparison_flip"
+      },
+      {
+        "idx": "6",
+        "verdict": "survived",
+        "site": "exclusion_certificate.py:337:off_by_one_int"
+      },
+      {
+        "idx": "7",
+        "verdict": "survived",
+        "site": "exclusion_certificate.py:348:off_by_one_int"
+      },
+      {
+        "idx": "8",
+        "verdict": "survived",
+        "site": "exclusion_certificate.py:348:off_by_one_int"
+      }
+    ],
+    "frozen_dataclass_outcomes": [
+      {
+        "site": "exclusion_certificate.py:128:boolean_not",
+        "verdict": "survived",
+        "src_line": "@dataclass(frozen=True)"
+      },
+      {
+        "site": "exclusion_certificate.py:176:boolean_not",
+        "verdict": "killed",
+        "src_line": "@dataclass(frozen=True)"
+      },
+      {
+        "site": "exclusion_certificate.py:198:boolean_not",
+        "verdict": "killed",
+        "src_line": "@dataclass(frozen=True)"
+      }
+    ],
+    "n_frozen_killed_post_audit": 2,
+    "n_frozen_survived_post_audit": 1,
+    "tier_2_audit_regression_held": false
+  }
+}

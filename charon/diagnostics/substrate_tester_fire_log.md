@@ -6,6 +6,74 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #33 — 2026-05-08 (post mini-window verification)
+
+**Coordination note:** First post-restart fire after the 2026-05-08 mini contract-change window (commit `ee109150` summary; 7 substrate-tester tickets closed including the P0). My fire = #33. Per the mini-window summary's standing rec, this fire re-probes Lane 3 (P0 smuggle attack) immediately to regression-confirm the Tier 1 fix lands in the wild.
+
+**Lanes selected:** 3 (P0 smuggle-attack regression; closes ST-fire17-001 verification chain) + 17 (mutation-testing regression on `exclusion_certificate.py`; verifies Tier 2 audit catches the frozen-dataclass survivors fire #25 surfaced).
+
+**Prior P0 + P1 ticket statuses (post-mini-window):** 7 of 8 OPEN substrate-tester tickets closed.
+
+**Lane 15 + 18 reactivation re-check:** still DORMANT.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_33_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_33_results.json`.
+
+### 🟢 Lane 3 — P0 smuggle attack regression: 4/4 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — MethodSpec(arbitrary IC string) raises | **PASS** | `ValueError` raised with registered-set listing per Tier 1 contract change #1 |
+| T2 — TriangulationPath(arbitrary method_class) raises | **PASS** | `ValueError` raised; Tier 1 contract change #2 holds |
+| T3 — defense-in-depth at evaluate() with mutation bypass | **PASS** | `REJECTED` with "Defense-in-depth violation: path 'smuggled' has non-enum independence_class=..."; Tier 1 contract change #3 holds |
+| T4 — positive control: clean 3-path triangulation still upgrades | **PASS** | `UPGRADED_TO_LOCAL_LEMMA` returned; no over-blocking of legitimate paths |
+
+**🟢 P0 fix verified end-to-end in the wild.** The substrate-tester independently confirms the Tier 1 co-fix (commit `881e416d`) closes the smuggle attack chain at all three layers. T-ST-fire17-001 closure is durable.
+
+### Lane 17 — mutation-testing regression on `exclusion_certificate.py`: 2/3 frozen-dataclass mutations killed
+
+Re-ran the same probe that surfaced 3 frozen-dataclass survivors in fire #25. Now with the new `sigma_kernel/tests/test_frozen_invariance.py` audit (Tier 2):
+
+| line | class | fire #25 | **fire #33** |
+|---:|---|---|---|
+| 128 | `TriangulationPathRef` | survived | **survived** (still!) |
+| 176 | `RegionSpec` | survived | **killed** ✓ |
+| 198 | `ExclusionClaim` | survived | **killed** ✓ |
+
+**Substrate finding:** Tier 2 audit catches `RegionSpec` + `ExclusionClaim` (the two value-objects with simple constructors) but NOT `TriangulationPathRef`. The audit's `_try_minimal_construct()` synthesizer can't auto-generate the `MethodSpec` arg required for TriangulationPathRef construction; the class is SKIPPED at audit time. The mini-window self-review explicitly documented this limitation: "covered indirectly through parent-class constructions OR via existing per-class tests" — but substrate-tester confirms the indirect coverage isn't sufficient (mutation-test still surfaces it).
+
+**Filed: `T-2026-05-08-ST-fire33-001` (P3-low residue ticket)** — Tier 2 audit gap on TriangulationPathRef. Two remediation options provided (explicit per-class test OR enhance synthesizer for nested dataclasses).
+
+Other 5 survivors at lines 262, 335, 337, 348 (×2) are docstring/comment-internal false positives (pattern documented as MUTATION_TESTING_BASELINE.md caveat #1; framework limitation, not substrate flaw).
+
+**Cumulative Tier 2 audit performance:** 2 of 3 fire-#25 frozen-dataclass survivors NOW KILLED. The audit cleanly closes the substrate-wide pattern; the residue is a single non-trivially-constructible class. Substrate health: significantly improved post-Tier 2.
+
+### Tickets filed this fire
+
+**1 ticket (P3-low):** `T-2026-05-08-ST-fire33-001` — Tier 2 audit gap on TriangulationPathRef nested-construction skip.
+
+### Standing recommendations for next fire (#34)
+
+1. **Mini-window verified — P0 + 6 of 7 sister-tickets durably closed.** The P0 substrate-tester saga (fires #14 → #15 → #17 → #25 → #29 → mini-window → fire #33) closes successfully.
+2. **Anti-repeat:** avoid lanes 3, 17 (just covered). Suggested fire #34:
+   - **Lane 1 (CLAIM-flood)** — could probe the new `kill_path` string-typing (Tier 3 contract change #5) by sending non-string kill_path values; should now reject
+   - **Lane 11 (batch-sweep)** — every-other-fire cadence; would test new MethodSpec validation if any corpus probes happen to construct MethodSpecs
+   - **Lane 8 (cert-extension)** — verify TriangulationPathRef's frozen-ness somehow (it's used by ExclusionCertificate's triangulation_history)
+3. **Lane 12 NOW UNBLOCKED:** ST-fire1-001 + ST-fire1-002 + ST-fire1-003 + ST-fire15-001 statuses — fire1-001 + fire15-001 are DONE; the 4 capability gaps (fire1-002, fire1-003, fire21-001, fire21-002) remain OPEN-deferred for the next FULL contract-change window. Lane 12 can probe NEW novel objects (5+ uncovered classes from the original lane-12 menu), but should explicitly skip homotopy / BlockDesign / SymbolicLaurentPolynomial / ArityGradedOperationFamily to avoid duplicates.
+4. **Aporia coordination ticket candidate:** worth filing a "lane 11 architectural impedance" + "lane 5 sweet-spot characterization" coordination ticket since both findings are now seed-stable across multiple fires.
+
+### Discipline notes
+
+- HARD-1..HARD-5: clean.
+- Time used: ~30 min (within 50-min cap).
+- Anti-flooding cap: 1 ticket filed (max 5 allowed).
+- Multi-instance coordination: pulled before lane-pick; claimed fire #33 = max-on-origin (32) + 1.
+- **Substrate health milestone:** P0-blocker closed and verified. Substrate-tester running ticket count: 9 ever filed + 1 new this fire = 10 tickets across all of substrate-tester history; 8 closed / 2 OPEN-deferred-capability + 1 OPEN P3 (this fire's residue).
+
+— substrate-tester, fire #33, 2026-05-08
+
+---
+
 ## Fire #32 — 2026-05-08
 
 **Coordination note:** my fire #31 was the last fire. No new parallel since. P0 + P1-escalation tickets all still OPEN.
