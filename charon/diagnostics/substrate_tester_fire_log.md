@@ -6,6 +6,70 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #36 — 2026-05-08
+
+**Coordination note:** my fire #35 was last; no new parallel.
+
+**Lanes selected:** 11 (batch-sweep, 4th seed) + 16 (concurrency-stress smoke; first my-instance run; covered by parallel fires #12 and #24 only).
+
+**Lane 15 + 18 reactivation re-check:** still DORMANT.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_36_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_36_results.json`.
+
+### Lane 11 — batch-sweep with seed 20260508_03
+
+| Metric | Value |
+|---|---:|
+| n_submissions | 30 |
+| n_submitted_ok | 30 / 30 |
+| first probe sampled | `harmonia_b_adv_006` |
+
+**Substrate verdict: PASS** (architectural impedance now 4-seed-confirmed).
+
+**Cumulative Lane 11:**
+- Fire #8: seed 20260507_12, first `harmonia_b_adv_010`
+- Fire #13: seed 20260507_15, divergent
+- Fire #32: seed 20260508_01, first `harmonia_d_adv_004`
+- **Fire #36: seed 20260508_03, first `harmonia_b_adv_006`**
+
+**Total: 120 ingest-OK probes across 4 distinct seeds, 0 substrate verdicts.** Each seed produces a different first probe — confirming distinct sample cohorts. The architectural-impedance finding (no general-purpose CLAIM gauntlet for non-Lehmer mathematical claims) is now overwhelmingly seed-stable.
+
+### Lane 16 — concurrency-stress smoke (first my-instance run)
+
+| Metric | Value |
+|---|---:|
+| pytest rc | 0 |
+| n_passed | 6 |
+| n_failed | 0 |
+| wall_clock | 21.8s |
+
+**Substrate verdict: PASS.** All 6 concurrency tests pass (parallel-CLAIM safety, thread-determinism, hash-distinctness, etc.). My-instance confirms the parallel-instance fires #12 and #24 results.
+
+### Tickets filed this fire
+
+**0 tickets.** Both lanes substrate-correct.
+
+### Standing recommendations for next fire (#37)
+
+1. **Aporia coordination ticket candidate (HIGH PRIORITY):** the 5-of-5 capability-gap pattern (per fire #35) is now the most actionable finding awaiting Aporia coordination. Recommend filing a coordination ticket proposing the unified Structured-Equivalence-Class meta-primitive design.
+2. **Anti-repeat:** avoid lanes 11, 16 (just covered). Suggested fire #37:
+   - **Lane 13 (canonicalization-fuzz)** with fresh seed — cumulative seed coverage growing
+   - **Lane 14 (replay-determinism)** smoke
+   - **Lane 17 (mutation-testing)** — could probe a 4th frozen-heavy module to test the Tier 2 audit's coverage breadth
+3. **Lane 11 cumulative observation now 4-seed-stable:** very strong evidence that the substrate impedance is intentional + reproducible. Worth promoting from "fire-log architectural observation" to a substrate-design-observation file via Aporia coordination.
+
+### Discipline notes
+
+- HARD-1..HARD-5: clean.
+- Time used: ~10 min (well within 50-min cap; both lanes fast).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed).
+- Multi-instance coordination: pulled before lane-pick; claimed fire #36 = max-on-origin (35) + 1.
+
+— substrate-tester, fire #36, 2026-05-08
+
+---
+
 ## Fire #35 — 2026-05-08
 
 **Coordination note:** my fire #34 was last; no new parallel.
