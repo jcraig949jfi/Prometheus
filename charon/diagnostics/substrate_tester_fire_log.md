@@ -6,6 +6,76 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #42 — 2026-05-08 (DIVERGENCE TEST: Tier-B QUALIFIED + Tier-D distributional emerges)
+
+**Coordination note:** no new commits between fire #41 and fire #42 from parallel instance. Fire #42 is mine.
+
+**Lanes selected:** 12 (catalog entry #66 — Z-eigenvalue distribution, §VIII Spectral, paradigm P28 distributional flavor) + 9 (sigma_kernel test suite full sweep).
+
+Lane 12 choice was DELIBERATE divergence test: distributional/probabilistic flavor structurally orthogonal to fires #38-#41. If Tier-B (ConstructiveExistenceWitness) surfaces here too, even stronger; if it diverges, the substrate-wide claim gets calibrated.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_42_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_42_results.json`.
+
+### Lane 12 — Z-eigenvalue distribution probe: DIVERGENCE_FINDING
+
+| Encoding attempt | Verdict | Blocker |
+|---|---|---|
+| 1. Aggregate KillVectors as distribution | FAIL_ENCODING | no DistributionObject / Ensemble primitive |
+| 2. CLAIM with distributional hypothesis | PARTIAL | text level works; evidence dict lacks distributional schema |
+| 3. CoordinateChart for ensemble | FAIL_ENCODING | chart represents deterministic region; no measure-theoretic structure |
+| 4. Search for Tier-B pattern | DIVERGENCE | population-level claim, not individual-existential — Tier B doesn't apply |
+
+### Tier-B QUALIFIED — substrate-wide claim calibrated
+
+Tier B (ConstructiveExistenceWitness) is QUALIFIED to **decision problems with individual witness** across §I/§III/§IV/§VII/§X. Distributional / population-level problems need a different primitive class (Tier D). Not a refutation — a CALIBRATION of the substrate-wide claim.
+
+### Tier D — NEW distributional primitives emerge
+
+| Primitive | Purpose | Blocks |
+|---|---|---|
+| **DistributionObject / EmpiricalCDF / RandomTensorEnsemble** | probability distributions over tensor space | §IX entirely + #66 + parts of §VIII |
+| **StatisticalTestSpec** | statistical tests with null distribution / sample-size / p-value contracts | population-level claim falsification |
+| **ProbabilityMeasure / RandomVariable** | measure-theoretic substrate primitive | random matrix theory, free probability |
+
+### Five-fire substrate-extension proposal (4 tiers)
+
+| Tier | Primitive Family | Source Fires |
+|---|---|---|
+| **A** | TensorAlgebra subsystem (TensorObject + TensorNetworkGraph + GroupAction + SchemeObject) | #38/#39/#40/#41 |
+| **B** | ConstructiveExistenceWitness — QUALIFIED to decision-problems-with-individual-witness | #38/#39/#40/#41 |
+| **C** | Discrete-optimization geometry (MomentPolytope + RewriteSearchTree + OrbitStratification) | #38/#39/#40 |
+| **D** | Distributional primitives (DistributionObject + StatisticalTestSpec + ProbabilityMeasure) | #42 |
+
+Each tier is a SEPARATE design problem; bundled or independent shipping is a design call.
+
+### Three tickets filed
+
+1. **`T-2026-05-08-ST-fire42-001`** (P1-high, capability-gap-tensor-catalog) → Techne. Continues matrix-filling; introduces Tier D.
+2. **`T-2026-05-08-ST-fire42-002`** (P1-high, strategic-coordination-supplement) → Aporia. SUPPLEMENT to ST-fire41-002: Tier-B scope QUALIFIED + Tier D add-on. Decision requested: ship Tier B alone (a), Tier B + Tier D bundled (b), or wait one more divergence-test fire (c). Substrate-tester recommendation: (a) — Tier B has strongest convergence; Tier D is fresher.
+3. **`T-2026-05-08-ST-fire42-003`** (P3-low, test-infrastructure) → Techne. Three sigma_kernel test files fail under bare `pytest` invocation; pass under `python -m pytest`. Workaround documented in fire #42 harness Lane 9 comment.
+
+### Lane 9 — sigma_kernel test suite full sweep: 24/0 PASS
+
+| Metric | Value |
+|---|---:|
+| invocation | `python -m pytest sigma_kernel/tests/` (bare `pytest` fails — see ST-fire42-003) |
+| n_passed | 24 |
+| wall-clock | 74.44s |
+
+Kernel test suite healthy. Three new mini-window-era tests + frozen-invariance audit included.
+
+### Substrate-tester observation
+
+The DELIBERATE divergence test was high-leverage: it produced a Tier-B SCOPE QUALIFICATION (substrate-wide for individual-decision problems, not literally universal) plus a NEW Tier D family. Five fires now produce a 4-tier substrate-extension proposal — usable scope guidance for one, two, or three contract-change windows depending on Aporia's strategic call.
+
+Future fires can:
+- Continue divergence-testing (§V identifiability, §XII GCT) to test whether Tier D fits or another tier emerges
+- Fill the matrix more uniformly (catalog entries by paradigm)
+- Pivot toward designing test-suites for the proposed primitives if Aporia greenlights a contract-change window
+
+---
+
 ## Fire #41 — 2026-05-08 (FOUR-FIRE TIER-B CONFIRMATION + Aporia coordination ticket)
 
 **Coordination note:** no new commits between fire #40 and fire #41 from parallel instance. Fire #41 is mine.
