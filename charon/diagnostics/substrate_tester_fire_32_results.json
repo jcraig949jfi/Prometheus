@@ -1,0 +1,45 @@
+{
+  "fire": 32,
+  "lanes": [
+    11,
+    4
+  ],
+  "lane_11": {
+    "lane": "11_batch_sweep_third_seed",
+    "seed": 2026050801,
+    "n_corpora_loaded": 3,
+    "n_submissions": 30,
+    "n_submitted_ok": 30,
+    "n_submission_failed": 0,
+    "n_with_verdict": 0,
+    "first_probe_id": "harmonia_d_adv_004"
+  },
+  "lane_4": {
+    "lane": "4_st003_fourth_regression",
+    "n_tests": 3,
+    "verdict_counts": {
+      "PASS": 3
+    },
+    "tests": [
+      {
+        "id": "T1_unknown_domain_raises",
+        "expected": "KeyError",
+        "actual": "KeyError: \"unregistered domain 'nonexistent_xyz_fire32'; registered: ['bsd_rank', 'genus2', 'knot_trace_field', 'lehmer', 'mock_theta', 'modular_form'",
+        "verdict": "PASS",
+        "note": "T-ST003 fix sticks across 4 regression checks (fires #3, #10, #19, #32)"
+      },
+      {
+        "id": "T2_lehmer_registered",
+        "expected": "lehmer returns key tuple",
+        "actual": "13 keys",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T2_bsd_rank_registered",
+        "expected": "bsd_rank returns key tuple",
+        "actual": "5 keys",
+        "verdict": "PASS"
+      }
+    ]
+  }
+}

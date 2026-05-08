@@ -6,6 +6,72 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #32 — 2026-05-08
+
+**Coordination note:** my fire #31 was the last fire. No new parallel since. P0 + P1-escalation tickets all still OPEN.
+
+**Lanes selected:** 11 (batch-sweep with fresh seed; most my-instance overdue, last mine #13) + 4 (T-ST003 4th regression confirmation).
+
+**Lane 15 + 18 reactivation re-check:** still DORMANT.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_32_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_32_results.json`.
+
+### Lane 11 — batch-sweep with fresh seed (20260508_01)
+
+| Metric | Value |
+|---|---:|
+| n_submissions | 30 |
+| n_submitted_ok | 30 / 30 |
+| n_submission_failed | 0 |
+| n_with_verdict | 0 / 30 |
+| first probe sampled | `harmonia_d_adv_004` (different cohort from fires #8 + #13) |
+
+**Substrate verdict: PASS** (architectural impedance finding now seed-confirmed across 3 distinct seeds).
+
+**Cumulative Lane 11:**
+- Fire #8: seed 20260507_12, first probe `harmonia_b_adv_010`
+- Fire #13: seed 20260507_15, divergent sample
+- Fire #32: seed 20260508_01, first probe `harmonia_d_adv_004`
+- **Total: 90 ingest-OK probes across 3 distinct seeds, 0 substrate verdicts.** Architectural impedance triple-confirmed-stable.
+
+**Substrate-grade observation (consistent with fires #8 + #13):** `SigmaKernel.CLAIM` ingests every probe cleanly but `DiscoveryPipeline` (the only verdict-producing path) is Lehmer-domain-specific. Non-Lehmer corpus probes have no falsifier panel to pass through. Documented architecture, not a flaw.
+
+### Lane 4 — T-ST003 4th regression check: 3/3 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — unknown domain raises KeyError | **PASS** | T-ST003 fix sticks across 4 regression checks (fires #3, #10, #19, #32) |
+| T2 — `lehmer` registered | **PASS** | 13 keys returned |
+| T2 — `bsd_rank` registered | **PASS** | 5 keys returned |
+
+**Substrate verdict: PASS.** T-ST003 fix is now confirmed durable across **four** independent regression checks. Likely the most regression-tested substrate fix in the substrate-tester history.
+
+### Tickets filed this fire
+
+**0 tickets.** Both lanes substrate-correct.
+
+### Standing recommendations for next fire (#33)
+
+1. **P0 + P1-escalation watch:** `T-ST-fire17-001` (P0) + `T-ST-fire25-001` (P1) STILL OPEN. Re-probe immediately when status flips.
+2. **Anti-repeat:** avoid lanes 11, 4. Suggested fire #33:
+   - **Lane 13 (canonicalization-fuzz)** with fresh seed — most my-instance overdue (last mine #13)
+   - **Lane 7 entry continuation** — characterize INCONCLUSIVE list entries #6+ (12 entries remaining)
+   - **Lane 6 (undecidable-canonicalization)** — last mine #21
+3. **Lane 11 cumulative observation now triple-seed-stable:** worth filing Aporia coordination ticket promoting "no general-purpose CLAIM gauntlet" from fire-log architectural observation to a substrate-design-observation file.
+4. **T-ST003 4-fire regression milestone** could be cited in any Techne fix-discipline retrospective.
+
+### Discipline notes
+
+- HARD-1..HARD-5: clean.
+- Time used: ~10 min (within 50-min cap).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed).
+- Multi-instance coordination: pulled before lane-pick; claimed fire #32 = max-on-origin (31) + 1.
+
+— substrate-tester, fire #32, 2026-05-08
+
+---
+
 ## Fire #31 — 2026-05-08 (post-restart)
 
 **Coordination note:** loop resumed after user STOP/Document/Restart sequence. Parallel fire #30 (commit `23483f0e`) was the last pre-stop fire. Two session-close commits intervened (`14a6ebcb` + `1a4446ca`). My fire = #31 — single-lane Lane 5 per "full cap; don't pair".
