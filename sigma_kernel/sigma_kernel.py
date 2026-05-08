@@ -608,6 +608,22 @@ class SigmaKernel:
         See ``sigma_kernel/PRECISION_METADATA_SPEC.md`` for the rationale
         (Lehmer 17-entry resolution).
         """
+        # Tier 3 input validation (contract-change window 2026-05-08,
+        # T-2026-05-07-ST-fire29-002): kill_path must be a string.
+        # Substrate-tester fire #29 P5 confirmed non-string values
+        # (e.g. int 12345) were silently stored verbatim, breaking
+        # downstream string-formatting + concatenation in TRACE +
+        # kill_pattern reporting. Loud-fail discipline applies (ST003
+        # precedent). The kernel docstring's "permissive at write" framing
+        # applies to FREE-FORM string content, not type-shape.
+        if not isinstance(kill_path, str):
+            raise TypeError(
+                f"kill_path must be a str; got {type(kill_path).__name__}: "
+                f"{kill_path!r}. Substrate's downstream consumers "
+                f"(TRACE, kill_pattern reporting) assume kill_path is a "
+                f"string."
+            )
+
         # Local import to avoid circularity at module load time. Try the
         # package-qualified path first; fall back to direct module import
         # for callers that run sigma_kernel/*.py as a script (e.g. demo.py)
