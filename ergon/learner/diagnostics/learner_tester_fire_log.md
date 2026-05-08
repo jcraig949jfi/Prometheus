@@ -2107,3 +2107,41 @@ Watched 5 drift sites:
 **Step 7 inbox FRESH re-read:** TBD.
 
 **Commit:** TBD.
+
+
+## STOP MARKER - Fire 019 - 2026-05-07
+
+User issued "Stop looping" after fire-019 background runner had completed but before evaluator/extras processing. Fire-019 results captured below for resumption continuity but NOT promoted to formal anchors/blind-spots; these will be processed if user resumes the loop.
+
+**Fire-019 quick capture (not formally promoted):**
+- P-077 Conway surreal numbers (anchor hunt, popular-press): "John H. Conant" (FM-04 SAME deterministic fab as BS-005 McKay - Conway BS-CAND-019 candidate; deterministic-fab class).
+- P-078 Erdős prolific: "Erdős" CORRECT + Hungarian + Erdos number + 1923 (real: 1913). Top-line CORRECT with sub-fab "Euler,oo" birthplace + "Paul Turán's son" (FM-08 famous-name-conflation). **Popular-press-pivot hypothesis VALIDATED (1st confirmation)**.
+- P-079 Knuth TAOCP: "Knuth" CORRECT + TAOCP + TeX + Vol 1 1968 + Vol 2 1973. Strongest popular-press-anchor since KC-001 Wiles. **Popular-press-pivot hypothesis VALIDATED (2nd confirmation)**.
+
+**Quick substrate observations (held for resumption):**
+1. Popular-press-pivot hypothesis validated 2/3 (Erdős + Knuth recoverable; Conway not). Fire-018 carry-over recommendation was correct.
+2. Conway is candidate for BS-CAND-019 (1-fire) - "John H. Conant" same fab as BS-005 McKay (deterministic-class memorized pattern). Suggests "John H. Conant" is a model-canonical mistaken-memory used for multiple low-confidence cross-domain attributions.
+3. Knuth recoverable demonstrates: COMPUTER-SCIENCE + TEXTBOOK + author-of-named-system is a strong anchor profile. Add to substrate axes.
+
+**Files written but not formally processed:**
+- `ergon/learner/diagnostics/fire_019_probes.json` (3 probes)
+- `ergon/learner/diagnostics/fire_019_responses.json` (3 responses)
+
+**Held for user-decided resumption:**
+- Run `evaluate_fire_019.py` (not yet written)
+- Promote KC-010 Erdős partial + KC-011 Knuth partial (or not, per user)
+- Promote BS-CAND-CONWAY-019 to candidates list (or not)
+- Append full fire-019 entry to fire log (or not)
+- ScheduleWakeup for fire-020 (NOT scheduled per stop)
+
+**Loop state at stop:**
+- 18 fires fully processed (001-018; fire-019 partial)
+- 9 anchors logged (KC-001..KC-009 + KC-AGW-LOCK)
+- 6 blind-spots confirmed (BS-001..BS-006 across 3 sub-classes: non-deterministic / deterministic / partial-recovery)
+- 15 failure modes catalogued (FM-01..FM-15)
+- 57 tickets filed (T-0001..T-0057 across 18 fires)
+- 5-tier calibration recoverability scale + 3-class BS taxonomy
+- alpha_GW reproducibility LOCKED at 0.8786 (n=4 across rep_penalty 1.05..1.15)
+- E007 decomposition wrapper: scope confirmed (structural only); FM-12 induced by (a)/(b)/(c) prompts; natural-prose form locked
+
+---

@@ -1,0 +1,47 @@
+[
+  {
+    "id": "P-2026-05-07-077",
+    "lane": "harmonia-e",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "anchor-hunt-PIVOT: Conway surreal numbers (book-famous via 'On Numbers and Games' 1976 + 'Winning Ways for your Mathematical Plays')",
+    "prompt": "Reply concisely with one surname only. The surreal number system, an ordered field that contains all real numbers as well as infinite and infinitesimal numbers, was introduced in 1974/1976 by a British mathematician at Cambridge famous for the Game of Life cellular automaton. His surname is?",
+    "expected": "Conway (John Horton Conway). 'On Numbers and Games' Academic Press 1976. Surreal numbers introduced via combinatorial game theory; Donald Knuth coined the term 'surreal numbers' in his 1974 novella 'Surreal Numbers'.",
+    "expected_kind": "single_name_anchor_hunt_book_famous",
+    "rubric": "USEFUL only if completion contains 'Conway' or 'John Conway'. CALIBRATION ANCHOR if also book mentioned ('On Numbers and Games').",
+    "useful_signals": ["conway", "john conway", "john horton conway", "j. conway"],
+    "fabrication_signals": ["proven by zhang", "by mathewson"],
+    "gravwell_signals": [],
+    "useless_signals": ["by knuth", "by cantor", "by dedekind", "by robinson", "by berkeley", "by russell"],
+    "anti_signals": ["by knuth alone", "by abraham robinson", "by cantor", "by dedekind", "by russell", "by berkeley"]
+  },
+  {
+    "id": "P-2026-05-07-078",
+    "lane": "charon-nt-analytic",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "anchor-hunt-PIVOT: Paul Erdos popular-culture (most-prolific + Erdos-number culture + 'The Man Who Loved Only Numbers' Hoffman 1998)",
+    "prompt": "Reply concisely with one surname only. The most prolific mathematician of the 20th century, with over 1,500 published papers, an itinerant lifestyle, and a 'Erdos number' tradition tracking collaborative distance to him. Hungarian-born. Surname?",
+    "expected": "Erdos (Paul Erdos / Paul Erdoes / Paul Erdős, 1913-1996, Hungarian).",
+    "expected_kind": "single_name_anchor_hunt_popular_culture",
+    "rubric": "USEFUL only if completion contains 'Erdos' or 'Erdoes' or 'Erdős' or 'Erdős' or 'Paul Erdos'. CALIBRATION ANCHOR if also Hungarian birth + 1996 death + 'Man Who Loved Only Numbers' or 'Erdos number' explicitly named.",
+    "useful_signals": ["erdos", "paul erdos", "erdoes", "paul erdoes", "erd s"],
+    "fabrication_signals": ["proven by zhang", "by mathewson"],
+    "gravwell_signals": [],
+    "useless_signals": ["by polya", "by lakatos", "by neumann", "by selberg", "by hardy", "by ramanujan"],
+    "anti_signals": ["by neumann", "by polya", "by lakatos", "by hardy", "by ramanujan"]
+  },
+  {
+    "id": "P-2026-05-07-079",
+    "lane": "harmonia-e",
+    "decomposition_mode": "OFF",
+    "fab_corpus_ref": "anchor-hunt-PIVOT: Donald Knuth TAOCP (textbook-famous, software-engineering-foundational, computer-science-popular-press)",
+    "prompt": "Reply concisely with one surname only. The author of the multi-volume monograph 'The Art of Computer Programming' (TAOCP, volumes 1-3 published 1968-1973, ongoing) and creator of the TeX typesetting system. American computer scientist at Stanford. Surname?",
+    "expected": "Knuth (Donald E. Knuth, b. 1938).",
+    "expected_kind": "single_name_anchor_hunt_textbook_famous",
+    "rubric": "USEFUL only if completion contains 'Knuth' or 'Donald Knuth'. CALIBRATION ANCHOR if also TAOCP + TeX both confirmed.",
+    "useful_signals": ["knuth", "donald knuth", "donald e. knuth", "d. knuth"],
+    "fabrication_signals": ["proven by zhang", "by mathewson"],
+    "gravwell_signals": [],
+    "useless_signals": ["by turing", "by dijkstra", "by hoare", "by neumann", "by wirth"],
+    "anti_signals": ["by turing", "by dijkstra", "by hoare", "by neumann"]
+  }
+]
