@@ -6,6 +6,59 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #38 — 2026-05-08 (FIRST FIRE UNDER HARD-6 + HARD POSTURE)
+
+**Coordination note:** James filed HARD-6 (`7cb418d1`) — *"attack the problems of the tools we will need most in the future. The failures will guide us."* — plus the canonical 104-entry tensor catalog at `aporia/mathematics/tensor_open_problems_v1.md`. Per HARD POSTURE 2026-05-08, Lane 12 (representation-pressure) now pulls probes from the canonical catalog instead of inventing novel objects. This fire is the **first cell** of the 104 × 5-paradigm matrix.
+
+**Lanes selected:** 12 (catalog-pulled M⟨3⟩ encoding probe — entry #4) + 8 (cert-extension regression smoke).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_38_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_38_results.json`.
+
+### Lane 12 — M⟨3⟩ encoding probe: FAIL_ENCODING (the failure IS the output)
+
+Pulled catalog entry #4 verbatim: *"Exact rank of M⟨3⟩ — bounds 19 ≤ R(M⟨3⟩) ≤ 23."* Built the 9×9×9 tensor (27 nonzero entries via `T[(i,j),(k,l),(m,p)] = δ_{j,k} δ_{l,m} δ_{p,i}`) and attempted four encodings against existing substrate primitives.
+
+| Encoding attempt | Verdict | Blocker |
+|---|---|---|
+| 1. CoordinateChart | FAIL_ENCODING | `coordinate_system` is named scalar axes, not tensor entries; chart can register metadata but can't HOLD the tensor |
+| 2. KillVector / OperatorOutputSequence (T023) | FAIL_ENCODING | force-fits as index→scalar; loses multilinearity; rank queries inexpressible |
+| 3. REWRITE / EQUIV | FAIL_ENCODING | REWRITE expects scalar Symbols; EQUIV's 3 witness types (proof_ref / finite_check / equiv_chain) don't carry outer-product witnesses |
+| 4. OperatorPortabilityCertificate (T030) | PARTIAL | symmetry-group annotation only (Z/3 cyclic, GL₃³); no compute backbone for rank lower-bound work |
+
+**Verdict:** substrate has NO native tensor primitive. M⟨3⟩ — one of the foundational tensor objects (matrix-multiplication exponent ω is the asymptotic rank of the M_n family) — is unrepresentable.
+
+### Capability gaps surfaced (3 missing primitives)
+
+1. **TensorObject** — n-dim tensor with entry-level identity. Blocks paradigms P28/P29/P30/P31 + catalog entries #4/#5/#6 + at least #18-21.
+2. **RankDecompositionWitness** — sum of outer products with rank annotation; substrate-grade certificate. Blocks P28/P29 + every rank-bound problem in §I of the catalog.
+3. **MomentPolytope / SecantVarietyEquation** — algebraic-geometric tensor object; defining equations of secant varieties. Blocks P29/P31 + every border-rank/secant-variety problem in §I-III.
+
+**Filed:** `T-2026-05-08-ST-fire38-001` (P1-high, capability-gap-tensor-catalog) → Techne. Cross-references catalog entry #4 + paradigms P28/P29/P30/P31 + Techne T-2026-05-08-T038 (classification of all 104) + Ergon E009 (probe-shape audit) + the related-but-different 5-of-5 capability-gap cluster.
+
+**HARD-6 alignment:** by induction the same blocking pattern applies to most of §I (rank/border-rank/asymptotic-complexity) and substantial parts of §II-III. A single TensorObject-design pass during the next contract-change window unblocks ~30+ catalog entries simultaneously. **The failure mode IS the output** — substrate-tester's role under HARD-6 + HARD POSTURE is to systematically fill the 104 × 5 paradigm matrix with honest negative-result data.
+
+### Lane 8 — cert smoke: 3/3 PASS
+
+| Test | Verdict |
+|---|---|
+| T1 register cert | PASS |
+| T2 collision raises | PASS |
+| T3 COMPLETE without triangulation_history → ValueError | PASS |
+
+ExclusionCertificate primitive healthy.
+
+### Substrate-tester observation
+
+Future Lane-12 fires under HARD POSTURE follow this pattern:
+- pull catalog entry by index; document its mathematical content
+- attempt encoding via existing primitives; enumerate failure modes
+- file capability-gap ticket cross-referencing catalog entry + attack paradigms + missing primitives
+
+Over many fires this fills the 104 × 5 paradigm matrix; convergent missing-primitive findings (e.g. TensorObject appearing across many cells) signal the next contract-change priorities.
+
+---
+
 ## Fire #37 — 2026-05-08
 
 **Coordination note:** my fire #36 was last; James's tensor compute-fabric directive landed between fires (commits `91ffbc43` + `3a4dcd19`). Tensor strategy doc + memory entry codified.

@@ -1,0 +1,108 @@
+{
+  "fire": 38,
+  "posture": "first-HARD-6-fire (failures guide; tensor catalog drives lane 12)",
+  "lanes": [
+    12,
+    8
+  ],
+  "lane_12": {
+    "lane": "12_catalog_pulled_M3_probe",
+    "catalog_entry": "#4 Exact rank of M\u27e83\u27e9",
+    "attack_paradigms": [
+      "P28",
+      "P29",
+      "P30",
+      "P31"
+    ],
+    "tensor_data_summary": {
+      "shape": [
+        9,
+        9,
+        9
+      ],
+      "n_nonzero_entries": 27,
+      "expected_n_nonzero": 27
+    },
+    "encoding_attempts": [
+      {
+        "probe": "register_M3_as_CoordinateChart",
+        "attempt": "CoordinateChart(domain='matrix_mult', region_key='M3', coordinate_system=('a_idx', 'b_idx', 'c_idx'), metric=...).",
+        "blocker": "CoordinateChart's coordinate_system is a tuple of named scalar axes; M\u27e83\u27e9's natural shape is a 9\u00d79\u00d79 tensor whose entries are the substrate-grade primitive content, not the coordinates. There's no substrate primitive for 'tensor with entries as first-class identity.' CoordinateChart can register the metadata but can't HOLD the tensor.",
+        "verdict": "FAIL_ENCODING \u2014 no TensorObject primitive"
+      },
+      {
+        "probe": "encode_via_KillVector_or_EvidenceField",
+        "attempt": "KillVector / EvidenceField are typed value objects for falsifier outcomes. Force-fit M\u27e83\u27e9 entries as (operator_id, index, output) in OperatorOutputSequence (T023) \u2014 operator = 'M3_tensor_lookup', index = (i*9 + j*3 + k) integer-encoded, output = '0' or '1' string.",
+        "blocker": "T023 OperatorOutputSequence is index\u2192scalar-output. Loses the 3-tensor structure (3 independent index axes). The substrate would store 729 (operator_id, index, output) entries but lose the multilinearity that makes M\u27e83\u27e9's rank decomposition meaningful. Rank queries (e.g. 'is there a rank-22 decomposition?') are not expressible against this encoding.",
+        "verdict": "FAIL_ENCODING \u2014 loses tensor structure"
+      },
+      {
+        "probe": "encode_via_REWRITE_EQUIV",
+        "attempt": "REWRITE(A\u00b7B, C, rewrite_rule_id='matrix_multiply_3x3', invariants_preserved=['rank', 'bilinear_complexity']). Or EQUIV(rank_decomposition_X, M3, equivalence_class_id='rank_decomposition_equivalence', witness=...).",
+        "blocker": "REWRITE expects scalar-valued Symbols. EQUIV's 3 witness types (proof_ref / finite_check / equiv_chain) don't carry rank-r decomposition data. Rank-r decomposition of M\u27e83\u27e9 is a tuple of r outer products (a_i \u2297 b_i \u2297 c_i) \u2014 substrate has no primitive for outer-product witnesses.",
+        "verdict": "FAIL_ENCODING \u2014 no outer-product witness type"
+      },
+      {
+        "probe": "encode_via_OperatorPortabilityCertificate",
+        "attempt": "T030 OperatorPortabilityCertificate carries 'operator transports from region A to region B' semantics. Could M\u27e83\u27e9's symmetry group (cyclic Z/3 action; GL_3 \u00d7 GL_3 \u00d7 GL_3 from each dimension) be a portability certificate? Operator = 'cyclic_permutation_M3', source_chart = 'matrix_mult:M3:identity', target_chart = 'matrix_mult:M3:cyclic_permuted'.",
+        "blocker": "T030 can express the symmetry GROUP ACTION at the metadata level (chart_id + transfer_method) but doesn't carry the tensor entry data. The encoding tags M\u27e83\u27e9's symmetry without letting the substrate do anything WITH it (rank lower-bound computation, decomposition search, etc.). Substrate-grade annotation, not substrate-grade compute.",
+        "verdict": "PARTIAL \u2014 symmetry annotation only, no compute backbone"
+      }
+    ],
+    "all_attempts_failed": true,
+    "capability_gaps_identified": [
+      {
+        "missing_primitive": "TensorObject (n-dim tensor with entry-level identity)",
+        "needed_for": "any encoding of M\u27e83\u27e9 that preserves multilinearity",
+        "attack_paradigms_blocked": [
+          "P28",
+          "P29",
+          "P30",
+          "P31"
+        ],
+        "catalog_entries_blocked": "#4 + #5 + #6 + at least #18-21 (similar bilinear-complexity objects)"
+      },
+      {
+        "missing_primitive": "RankDecompositionWitness (sum of outer products with rank annotation)",
+        "needed_for": "R(M\u27e83\u27e9) lower/upper bound certificates as substrate-grade primitives",
+        "attack_paradigms_blocked": [
+          "P28",
+          "P29"
+        ],
+        "catalog_entries_blocked": "#4 + #5 + #6 + every rank-bound problem in \u00a7I"
+      },
+      {
+        "missing_primitive": "MomentPolytope / SecantVarietyEquation (algebraic-geometric tensor object)",
+        "needed_for": "Border-rank apolarity (P29) and Young-flattening (P31) certificates",
+        "attack_paradigms_blocked": [
+          "P29",
+          "P31"
+        ],
+        "catalog_entries_blocked": "Every border-rank / secant-variety problem in \u00a7I-III"
+      }
+    ],
+    "verdict": "FAIL_ENCODING \u2014 substrate has NO native tensor primitive",
+    "feeds_techne_ticket": "T-2026-05-08-T038 (substrate-primitive classification of all 104 catalog entries)"
+  },
+  "lane_8": {
+    "lane": "8_cert_smoke",
+    "n_tests": 3,
+    "verdict_counts": {
+      "PASS": 3
+    },
+    "tests": [
+      {
+        "id": "T1_register",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T2_collision_raises",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T3_complete_requires_triangulation",
+        "verdict": "PASS"
+      }
+    ]
+  }
+}
