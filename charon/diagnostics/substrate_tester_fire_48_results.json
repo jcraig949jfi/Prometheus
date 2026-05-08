@@ -1,0 +1,35 @@
+{
+  "fire": 48,
+  "posture": "third-pivot-fire (Tier D core test-suite stub; design-prep pivot complete)",
+  "lanes": [
+    1,
+    11
+  ],
+  "lane_1": {
+    "lane": "1_tier_D_test_suite_stub",
+    "target_path": "sigma_kernel/tests/test_distribution_object_stub.py",
+    "filed": true,
+    "n_lines": 358,
+    "n_test_classes": 7,
+    "n_test_methods": 17,
+    "pytest_collect_summary": "17 skipped in 0.14s",
+    "pytest_returncode": 0,
+    "design_coverage": [
+      "DistributionObject contract (5 tests: parametric instantiation gaussian + spike model, seeded reproducibility, registry collision, content-addressed ID)",
+      "StatisticalTestSpec (3 tests: known-test registry, run returns p-value, below-sample-size raises)",
+      "ProbabilityMeasure / RandomVariable (2 tests: Lebesgue construction, pushforward)",
+      "GenericityAlmostEverywhereCert specialization (1 test: fire #45 refinement)",
+      "PhaseTransitionThreshold (3 tests: construction, classify regime, dual-threshold gap region)",
+      "AlgorithmThresholdCert (2 tests: fields + MethodSpec consistency)",
+      "TierDIntegration smoke (1 test: distribution + threshold + cert reference same parameter_axis)"
+    ],
+    "verdict": "PASS"
+  },
+  "lane_11": {
+    "lane": "11_canon_fuzz_smoke",
+    "seed": "20260508_12",
+    "returncode": 0,
+    "summary_line": "13 passed in 15.86s",
+    "verdict": "PASS"
+  }
+}

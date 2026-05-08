@@ -6,6 +6,65 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #48 — 2026-05-08 (Tier D core test-suite stub filed; design-prep pivot complete)
+
+**Coordination note:** no new commits between fire #47 and fire #48. Fire #48 completes the planned design-prep pivot.
+
+**Lanes selected:** 1 (Tier D test-suite stub) + 11 (canon-fuzz fresh seed 20260508_12).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_48_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_48_results.json`.
+
+### Lane 1 — Tier D core test-suite stub
+
+Target: `sigma_kernel/tests/test_distribution_object_stub.py`. **7 test classes, 17 test methods.**
+
+| Class | Tests | Coverage |
+|---|---:|---|
+| `TestDistributionObjectContract` | 5 | parametric instantiation (gaussian + spike model), seeded reproducibility, registry collision, content-addressed ID |
+| `TestStatisticalTestSpec` | 3 | known-test registry, run returns p-value, below-sample-size raises |
+| `TestProbabilityMeasure` | 2 | Lebesgue construction, pushforward under RandomVariable |
+| `TestGenericityAlmostEverywhereCert` | 1 | full-measure subset + measure-zero exception (fire #45 refinement) |
+| `TestPhaseTransitionThreshold` | 3 | construction, classify regime, dual-threshold gap region |
+| `TestAlgorithmThresholdCert` | 2 | fields + MethodSpec consistency at Tier D / B interface |
+| `TestTierDIntegration` | 1 | distribution + threshold + cert reference same parameter_axis |
+
+**Pytest collection result:** 17 skipped in 0.14s — clean collection, clean skip.
+
+**Module-level skipif guard** lifts when `sigma_kernel/distribution_object.py` lands. Helper builders are `NotImplementedError` placeholders for Techne to wire when building.
+
+### Three-fire design-prep pivot complete
+
+| Fire | Deliverable | Lines | Tests |
+|---|---|---:|---:|
+| #46 | `pivot/substrate_v3_proposal_stub_2026-05-08.md` (design doc) | 250 | – |
+| #47 | `sigma_kernel/tests/test_constructive_existence_witness_stub.py` (Tier B) | 318 | 21 |
+| #48 | `sigma_kernel/tests/test_distribution_object_stub.py` (Tier D) | 295 | 17 |
+
+Total Techne pickup material: **5-tier design doc + 38 contract tests across 15 test classes spanning Tier B + Tier D.** Once Techne ships the primitives, ~38 tests un-skip simultaneously and validate the contract substrate-tester surfaced via fires #38-#45.
+
+### Lane 11 — canon-fuzz fresh seed: 13 passed (15.86s)
+
+### Substrate-tester observation — phase complete
+
+Eight matrix-filling fires (#38-#45) → three design-prep fires (#46-#48) → 5-tier substrate-extension proposal with 38 contract tests ready for Techne pickup.
+
+**Fire #49+ plan:**
+- **Lower-cadence matrix-filling** on unpulled sections (§II Rank Zoo, §III Waring, §VI Numerical Decomposition, §XI Specific Tensor Families) — 1 every 2-3 fires
+- **Substrate-tester maintenance** filling the gap fires: regression smoke, mutation-testing, frozen-invariance audits, cross-machine sync checks
+- **Watch for Aporia response** on the coordination chain (ST-fire41-002 / 42-002 / 43-002 / 44-002 / 45-002); pivot to test-suite expansion if greenlit, continue maintenance otherwise
+
+Substrate-tester role under HARD-6 has produced:
+- 5-tier substrate-extension proposal (~22 primitives)
+- Cross-tier composition finding (Tier B/D)
+- Three pivot deliverables (design doc + 2 test-suite stubs)
+- 8 capability-gap tickets + 5 strategic-coordination tickets + 1 P3 infra ticket
+- ~85-95% catalog-coverage estimate
+
+The matrix is built. Time to package.
+
+---
+
 ## Fire #47 — 2026-05-08 (Tier B core test-suite stub filed for Techne pickup)
 
 **Coordination note:** no new commits between fire #46 and fire #47. Fire #47 continues the design-prep pivot.
