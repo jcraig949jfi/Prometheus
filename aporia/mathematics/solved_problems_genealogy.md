@@ -259,3 +259,138 @@ The proof genealogies predict:
 *This catalog grows with every solved problem we add. Each genealogy is training data for predicting how current voids will fill.*
 
 *Aporia, 2026-04-17*
+
+---
+
+# Round 2 — Recent solves (2026-05-08)
+
+**Source:** James 2026-05-08 prompt called out "Sensitivity (now solved)" as one entry; per HARD-4 (calibration anchors load-bearing) several other notable solves of the past 50 years should be backfilled as anchors. Round 2 backfills 5: Sensitivity Conjecture (Huang 2019), Catalan's Conjecture (Mihăilescu 2002), Ternary Goldbach (Helfgott 2013), MIP*=RE (Ji-Natarajan-Vidick-Wright-Yuen 2020), Bochner-Riesz n=2 (Carleson-Sjölin 1972).
+
+## R1. Sensitivity Conjecture
+
+**Statement:** For Boolean f: {0,1}^n → {0,1}, block-sensitivity bs(f) is bounded by a polynomial in sensitivity s(f) (specifically bs(f) ≤ s(f)^4 in the polynomial-relationship sense).
+**Posed:** 1992 (Nisan-Szegedy). **Solved:** 2019 (Hao Huang). **Gap:** 27 years.
+
+**Proof Genealogy:**
+1. [1992] Nisan-Szegedy formulate; show many Boolean-function complexity measures are polynomially related except sensitivity.
+2. [1990s-2010s] Multiple partial results; best gap bs(f) ≤ s(f)^O(log s(f)).
+3. [2018] Graph-spectral approaches attempted; the right signing of the hypercube graph not yet identified.
+4. [July 2019] Hao Huang posts a 6-page preprint: signed n-dimensional hypercube + Cauchy interlacing inequality on the largest induced subgraph of size > 2^{n-1} forces a vertex of degree at least √n, which translates directly to s(f) ≥ √(deg(f)).
+5. [2019-2020] Aaronson, Tao verify; full polynomial relationship now established.
+
+**Domain transfer:** YES — TCS / Boolean-function complexity solved via spectral graph theory + Cauchy interlacing. Single-domain technique import.
+**Solution type:** Single insight. The 6-page proof is among the shortest for a 27-year-old conjecture.
+**Barrier broken:** Technique. The right graph (signed hypercube) + the right inequality (Cauchy interlacing) hadn't been combined.
+**What it unlocked:** Polynomial-method-on-spectra as Boolean-function technique; applied to adjacent conjectures (block sensitivity vs. quantum query complexity) immediately.
+**Could it have been predicted?** Partially. Cauchy interlacing approach was in the air; the specific signing of the hypercube was the missing ingredient.
+**Calibration-anchor utility:** Anchor for "27-year-old conjecture, 6-page resolution via single technique import." Counter-anchor to FLT-style 358-year framework programs.
+
+---
+
+## R2. Catalan's Conjecture (Mihăilescu)
+
+**Statement:** The only solution to xᵃ - yᵇ = 1 in positive integers x, y, a, b with min(a,b) ≥ 2 is 3² - 2³ = 1.
+**Posed:** 1844 (Catalan). **Solved:** 2002 (Mihăilescu). **Gap:** 158 years.
+
+**Proof Genealogy:**
+1. [1844] Catalan formulates as conjecture.
+2. [1850-1976] Specific cases: Lebesgue (1850, b = 2), Ko Chao (1962, a = 2), Hyyrö (1964), Inkeri (1964) — by 1976 only finitely many candidate (a,b) remained.
+3. [1976] Tijdeman: proves conjecturally finitely many solutions, with effective height bound.
+4. [1999] Bilu, Hanrot, Voutier: refined linear-forms-in-logarithms bounds.
+5. [2002] Preda Mihăilescu: completes via cyclotomic-field arithmetic + class group structure of ℚ(ζ_p) (Wieferich-pair-style arguments). Avoids Tijdeman's heavy machinery; uses essentially elementary cyclotomic theory in ~30 pages.
+
+**Domain transfer:** Internal to number theory; cyclotomic arithmetic + class field theory.
+**Solution type:** Long program with relatively short final phase.
+**Barrier broken:** Conceptual. Mihăilescu found the right cyclotomic structure (Wieferich-type pair conditions) that prior cases hadn't isolated.
+**What it unlocked:** Pillai's conjecture (gap = k for general k) remains open; Catalan is a cleanly solved exception.
+**Could it have been predicted?** Trajectory clear by 1999; specific cyclotomic structure less foreseeable.
+**Calibration-anchor utility:** Anchor for "long program with elementary final step." Calibration probe for cyclotomic-field reasoning.
+
+---
+
+## R3. Ternary Goldbach (Helfgott)
+
+**Statement:** Every odd integer ≥ 7 is the sum of three primes.
+**Posed:** 1742 (Goldbach to Euler, weak form). **Solved:** 2013 (Helfgott). **Gap:** ~270 years.
+
+**Proof Genealogy:**
+1. [1923] Hardy-Littlewood: under GRH, ternary Goldbach holds for all sufficiently large odd integers.
+2. [1937] Vinogradov: unconditional version for "sufficiently large" — explicit but astronomical bound.
+3. [1956] Borozdkin: refined bound to 3^{3^{15}} ≈ 10^{6,846,168}.
+4. [1989] Chen-Wang: bound to 10^{43,000}.
+5. [2002] Liu-Wang: bound to 10^{1346}.
+6. [1989-2012] Computer verification of small cases up to ~10^{30}.
+7. [2013] Helfgott: closes the gap via (a) sharper minor-arc estimates on exponential sums, (b) major-arc analysis with explicit zero-free regions, (c) computer verification up to 8.875 × 10^{30}. Three preprints (~280 pages total).
+
+**Domain transfer:** Internal to analytic number theory; explicit zero-free regions for Dirichlet L-functions + circle method + computer verification.
+**Solution type:** Long program (1923-2013, 90-year continuous push) with explicit-bound-tightening as the recurring move.
+**Barrier broken:** Quantitative. Astronomical Vinogradov bound needed multiple orders-of-magnitude shrinking; computer verification couldn't keep up until Helfgott's analytic improvements brought the bound into tractable range.
+**What it unlocked:** Binary Goldbach STILL OPEN. Ternary's resolution doesn't directly transfer.
+**Could it have been predicted?** Yes, on a 5-10-year horizon by 2008. Bound-tightening trajectory was clear.
+**Calibration-anchor utility:** Anchor for "quantitative-bound-tightening long program." Ternary-vs-binary asymmetry: a problem and its "obvious sister" can have completely different difficulty profiles.
+
+---
+
+## R4. MIP* = RE (Ji-Natarajan-Vidick-Wright-Yuen)
+
+**Statement:** The class MIP* (multi-prover interactive proofs with quantum-entangled provers) equals RE (recursively enumerable languages).
+**Posed:** ~2003 (formal entanglement-IP formalism). **Solved:** 2020 (Ji-Natarajan-Vidick-Wright-Yuen). **Gap:** ~17 years.
+
+**Proof Genealogy:**
+1. [1991] Babai-Fortnow-Lund: MIP = NEXP.
+2. [2003] MIP* introduced (entangled provers); initial conjecture MIP* ⊆ NEXP.
+3. [2010s] Surprising results: MIP* contains languages outside any previously suspected complexity class. Reichardt-Unger-Vazirani 2013 establishes MIP* contains co-NP^O(log).
+4. [2017] Slofstra disproves Tsirelson's problem; MIP* contains undecidable languages.
+5. [2020] Ji-Natarajan-Vidick-Wright-Yuen: full characterization MIP* = RE. Key technique: "recursive compression" — an inner protocol computes a smaller MIP* protocol's result; iteration simulates arbitrary Turing-machine halting.
+6. [2020-present] Connes embedding problem (operator algebras) — equivalent to Tsirelson's problem (Junge et al. 2011) — resolved NEGATIVE as corollary.
+
+**Domain transfer:** YES — quantum complexity + operator algebras + recursion theory. Three-domain merge in a single proof.
+**Solution type:** Theorem program with single dramatic resolution.
+**Barrier broken:** Conceptual. The "compression" idea — that an MIP* protocol can simulate a smaller MIP* protocol with strict savings — was the missing ingredient.
+**What it unlocked:** Connes embedding negative resolution; Tsirelson's problem; broader understanding of entanglement-aided proof systems.
+**Could it have been predicted?** Trajectory after Slofstra 2017 made clear MIP* was larger than anticipated; that it equaled RE specifically was less foreseeable.
+**Calibration-anchor utility:** Anchor for "complexity theory problem solving operator-algebra problem via recursion-theoretic technique." Three-domain transfer in a single proof is rare and substrate-grade.
+
+---
+
+## R5. Bochner-Riesz Conjecture (n = 2)
+
+**Statement:** The Bochner-Riesz multiplier (1 - |ξ|²)^δ_+ is an L^p Fourier multiplier on ℝⁿ iff δ > n(1/p - 1/2) - 1/2 in the optimal range.
+**Posed:** 1936 (Bochner). **Solved (n = 2):** 1972 (Carleson-Sjölin). **Status (n ≥ 3):** OPEN.
+
+**Proof Genealogy (for n = 2):**
+1. [1936] Bochner introduces Bochner-Riesz means as analog of Fejér summation.
+2. [1954] Stein: partial bounds via interpolation.
+3. [1971] Fefferman: proves the disc multiplier (δ = 0 in n = 2) is not bounded on L^p for p ≠ 2 — a pivotal negative result.
+4. [1972] Carleson-Sjölin: prove Bochner-Riesz for n = 2 in the full range. Maximal-function reduction + Stein's complex interpolation.
+5. [1991] Bourgain breaks Tomas-Stein bound for higher n via restriction-conjecture machinery; partial progress for n ≥ 3.
+6. [2020s] Bochner-Riesz n ≥ 3 remains OPEN; tied to Kakeya conjecture.
+
+**Domain transfer:** Internal to harmonic analysis; restriction-conjecture machinery imported in n=2.
+**Solution type:** Pivotal-negative-result-then-positive (Fefferman 1971 disc; Carleson-Sjölin 1972).
+**Barrier broken:** Technique. Maximal-function reduction + complex interpolation was the right combination.
+**What it unlocked:** Restriction conjecture program; Kakeya conjecture; full Bochner-Riesz n ≥ 3 (still open).
+**Could it have been predicted?** After Fefferman 1971, yes — within a year.
+**Calibration-anchor utility:** Anchor for "negative result reorients field; positive resolution within a few years." Calibration probe for n = 2 vs n ≥ 3 distinction in conjectures with dimensional dependence.
+
+---
+
+## Round 2 cross-cutting observations
+
+Combining R1-R5 with Round 1's 9 entries (14 total):
+
+- **Domain-transfer count:** 8 of 14 involve cross-domain technique import (R1 spectral→TCS; R4 recursion-theory→quantum complexity; R5 maximal-function→harmonic analysis; FLT 3-domain merge; Poincaré Ricci flow; Geometric Langlands DAG; sphere packing modular forms; partial abc results).
+- **Time-to-solve distribution in Round 2:**
+  - 6 pages, 27 years: R1 Sensitivity
+  - ~30 pages, 158 years: R2 Catalan
+  - ~280 pages, 270 years: R3 Ternary Goldbach
+  - Multi-paper, 17 years: R4 MIP*=RE
+  - 1 paper, 36 years: R5 Bochner-Riesz n=2
+- **Predictability:** Trajectory-predictable (R3, R5) vs single-insight-unpredictable (R1, R4) is roughly 2:2 in this sample. Substrate's expected-attribution discipline should reflect this — predictable solves are anchorable years in advance; insight solves are not.
+- **Sister-problem asymmetry:** Ternary Goldbach solved 2013 but binary still open. Bochner-Riesz n=2 solved 1972 but n≥3 still open. Catalan (gap=1) solved but Pillai (gap=k) still open. A problem and its "obvious sister" can have completely different difficulty profiles — substrate-grade lesson.
+
+14 documented genealogies now provide training data for technique-transfer detection. HARD-4 anchor density grows.
+
+---
+
+*Aporia, 2026-05-08*

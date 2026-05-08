@@ -289,3 +289,255 @@
 *These 25 problems are the SECOND TIER — important to experts, invisible to the public. At least 8 are directly testable against Prometheus databases. Several suggest new tensor dimensions.*
 
 *Aporia, 2026-04-17*
+
+---
+
+# Round 2 — Lesser-known classical problems (2026-05-08)
+
+**Source:** 32 gaps identified by `aporia/docs/problem_database_coverage_2026-05-08.md`. Round 1 covered specialist-tier problems; Round 2 covers classical-but-less-famous problems whose statements are accessible at undergraduate level but whose computational frontiers map cleanly to substrate operators. The first 18 are also in `aporia/docs/deep_research_batch11_seeds.md`.
+
+---
+
+## 26. Lehmer's Totient Problem
+
+**Subfield:** Number theory (totient function)
+**Statement:** Does there exist a composite integer n such that φ(n) divides n - 1?
+**Year/Origin:** 1932, D. H. Lehmer
+**Why it matters:** Composite n with φ(n) | n-1 would be Carmichael-like at every base. Connections to Carmichael totient and Giuga's conjecture.
+**Partial results:** Brute-force verified to ~10^22; Cohen-Hagis 1980 proved any such n must have ≥14 distinct prime factors and be > 10^20.
+**Barrier:** No structural obstruction known; existence not ruled out by standard heuristics.
+**Data coupling:** Brute-force totient corpus; Carmichael number tables; Giuga number tables.
+
+---
+
+## 27. Pillai's Conjecture
+
+**Subfield:** Number theory (perfect-power gaps)
+**Statement:** For every k ≥ 1, the equation x^p - y^q = k has only finitely many integer solutions with min(p,q) ≥ 2. Equivalently, gaps between consecutive perfect powers grow unboundedly.
+**Year/Origin:** 1945, S. S. Pillai
+**Why it matters:** Catalan's conjecture (gap = 1) proved 2002 by Mihăilescu; Pillai is the natural generalization. Implied by abc.
+**Partial results:** Catalan case (k=1) proven 2002; specific k handled.
+**Barrier:** abc-implication route blocked by abc itself being open; direct attack stalls.
+**Data coupling:** Perfect-power enumeration, exponent-pair tables, abc triples.
+
+---
+
+## 28. Quasiperfect Numbers
+
+**Subfield:** Number theory (perfect-number variants)
+**Statement:** Does there exist a positive integer n with σ(n) = 2n + 1?
+**Year/Origin:** 19th-century inheritance from perfect-number theory.
+**Why it matters:** Sister to odd-perfect-number problem (which IS in the database). If a quasiperfect exists, it must be an odd square > 10^35 with very specific divisor structure.
+**Partial results:** None known; brute-force exclusion to large bounds.
+**Barrier:** Same arithmetic-density barrier as odd-perfect.
+**Data coupling:** σ-function tables, perfect-number computational corpus.
+
+---
+
+## 29. Pollock Tetrahedral Conjecture
+
+**Subfield:** Number theory (Waring-type representation)
+**Statement:** Every positive integer is a sum of at most 5 tetrahedral numbers Tn = n(n+1)(n+2)/6.
+**Year/Origin:** 1850, F. Pollock.
+**Why it matters:** Three-dimensional analog of Lagrange's four-square theorem. Dimension-3 vs dimension-4 representation gap.
+**Partial results:** Verified to large bounds. 17 candidate exceptional integers (those needing 5 not 4) catalogued.
+**Barrier:** No structural reason 5 is the right bound.
+**Data coupling:** Integer-representation tables; Waring-problem corpora.
+
+---
+
+## 30. Euclid-Mullin Sequence
+
+**Subfield:** Number theory (prime sequences)
+**Statement:** Define a₁ = 2; a_{n+1} = smallest prime factor of a₁·...·aₙ + 1. Does the sequence contain every prime?
+**Year/Origin:** 1963, A. A. Mullin.
+**Why it matters:** Tests effectivity of Euclid's-style proofs of prime infinitude. The "5 not yet known to appear" gap is a famous puzzle.
+**Partial results:** First several dozen terms computed; smallest missing prime is 5.
+**Barrier:** Each new term requires factoring a tower-exponentially-growing integer.
+**Data coupling:** Mullin-sequence computation; large-integer factorization records.
+
+---
+
+## 31. Feit-Thompson Divisibility Conjecture
+
+**Subfield:** Number theory / group theory boundary
+**Statement:** For distinct primes p, q: (p^q - 1)/(p - 1) is never divisible by (q^p - 1)/(q - 1).
+**Year/Origin:** Feit-Thompson 1962 (related to odd-order theorem).
+**Why it matters:** A divisibility lemma needed in the original Feit-Thompson proof; theorem now stands without it but the divisibility statement remains independently open.
+**Partial results:** Verified for many small (p,q); no structural counterexample.
+**Barrier:** No closed-form discriminant for the divisibility.
+**Data coupling:** Cyclotomic-polynomial divisibility tables.
+
+---
+
+## 32. Riesel Problem
+
+**Subfield:** Number theory (always-composite arithmetic progressions)
+**Statement:** What is the smallest odd k such that k·2ⁿ - 1 is composite for all n ≥ 1?
+**Year/Origin:** 1956, H. Riesel.
+**Why it matters:** Sister to Sierpiński number problem; together they probe density of "always-composite" residue classes.
+**Partial results:** Conjecturally k = 509,203; ~50 candidates remain unresolved.
+**Barrier:** Each candidate elimination requires finding ONE prime, but search is sparse.
+**Data coupling:** Riesel-sieve project corpus; primality test results at high n.
+
+---
+
+## 33. Sierpiński Number Problem
+
+**Subfield:** Number theory (always-composite arithmetic progressions)
+**Statement:** What is the smallest odd k with k·2ⁿ + 1 composite for all n ≥ 1?
+**Year/Origin:** 1960, W. Sierpiński.
+**Why it matters:** Sister to Riesel. Conjecturally k = 78,557 (Selfridge 1962); pursued by PrimeGrid / Seventeen-or-Bust.
+**Partial results:** Down to ~5 candidates remaining.
+**Barrier:** Same as Riesel.
+**Data coupling:** PrimeGrid / Seventeen-or-Bust corpus.
+
+---
+
+## 34. Hilbert's Tenth Problem over the Rationals
+
+**Subfield:** Logic / number theory boundary
+**Statement:** Is there an algorithm that, given a polynomial Diophantine equation, decides whether it has a rational solution?
+**Year/Origin:** 1900 (Hilbert); ℚ refinement late 20th c.
+**Why it matters:** Over ℤ proved undecidable (DPRM 1970). Over ℚ remains OPEN. A negative answer resolves uniformity questions in arithmetic geometry.
+**Partial results:** Mazur uniform-boundedness, if true, implies undecidability over many number fields. Conditional progress under BSD, Mordell.
+**Barrier:** Need either explicit Diophantine model of ℤ in ℚ, or a decision procedure.
+**Data coupling:** Curves of small genus over ℚ; rational-point datasets; Mazur torsion results.
+
+---
+
+## 35. Congruent Number Problem
+
+**Subfield:** Number theory / elliptic curves
+**Statement:** Deterministic algorithm for: is integer n the area of a right triangle with rational sides?
+**Year/Origin:** 10th-century Arabic; modern formulation via elliptic curves.
+**Why it matters:** Equivalent to determining the rank of Eₙ: y² = x³ - n²x. Tunnell 1983 gives polynomial-time algorithm conditional on BSD.
+**Partial results:** Unconditional algorithm for n ≡ 5,6,7 (mod 8). General case relies on BSD.
+**Barrier:** BSD itself is open.
+**Data coupling:** LMFDB elliptic-curve rank data; Heegner-point algorithms.
+
+---
+
+## 36. Triangulation Conjecture
+
+**Subfield:** Topology
+**Statement:** Is every topological manifold homeomorphic to a simplicial complex?
+**Year/Origin:** 19th-century inheritance.
+**Why it matters:** TRUE in dim ≤3; FALSE in dim ≥5 (Manolescu 2013, Pin(2)-equivariant Seiberg-Witten Floer cohomology obstruction). Boundary at dim 4 remains open and interlaces with smooth-4-Poincaré.
+**Partial results:** Manolescu's Pin(2)-cohomology obstruction characterizes high-dim case.
+**Barrier:** Dim 4 is the exotic dimension where smooth and topological categories diverge.
+**Data coupling:** Triangulated 4-manifold datasets; Kirby diagrams.
+
+---
+
+## 37. Riemannian Zoll Surface Classification
+
+**Subfield:** Differential geometry
+**Statement:** Classify all Riemannian metrics on Sⁿ for which every geodesic is closed.
+**Year/Origin:** Zoll 1903 (S² with non-round metric).
+**Why it matters:** Connects to spectral geometry (Berger conjecture: Zoll implies all Laplacian eigenvalues integers).
+**Partial results:** S² Zoll metrics form an infinite-dimensional family (Funk; Guillemin); higher-dim largely unknown.
+**Barrier:** No coordinate-free classification; geodesic-flow analysis delicate.
+**Data coupling:** Spectral data; geodesic-length spectra; explicit Zoll-metric examples.
+
+---
+
+## 38. Illumination Problem
+
+**Subfield:** Discrete / combinatorial geometry
+**Statement:** Is every mirrored polygonal room illuminable from a single point source?
+**Year/Origin:** Penrose / Klee, mid-20th c.
+**Why it matters:** Tests light-ray dynamics in non-convex billiards; failure regions reveal hyperbolic / chaotic trajectories.
+**Partial results:** Tokarsky 1995 constructed a non-illuminable polygonal room (26-sided); some convex cases handled.
+**Barrier:** Counterexamples are intricate; positive cases need ergodic-theoretic tools.
+**Data coupling:** Polygon-billiards corpus; geodesic-flow datasets.
+
+---
+
+## 39. Erdős-Gyárfás Cycle Conjecture
+
+**Subfield:** Graph theory
+**Statement:** Every graph with minimum degree ≥3 contains a cycle of length 2^k for some k ≥ 1.
+**Year/Origin:** 1995, Erdős-Gyárfás.
+**Why it matters:** Tests how cycle-length structure constrains bounded-min-degree graphs. Connects to Hadwiger's conjecture and graph minor theory.
+**Partial results:** Verified for several graph classes (planar, K₄-minor-free).
+**Barrier:** Standard cycle-length tools don't isolate powers of 2.
+**Data coupling:** Random regular graphs; small-graph enumeration.
+
+---
+
+## 40. Chvátal Toughness Conjecture
+
+**Subfield:** Graph theory (Hamiltonicity)
+**Statement:** ∃ constant t₀ such that toughness ≥ t₀ implies Hamiltonian.
+**Year/Origin:** 1973, V. Chvátal.
+**Why it matters:** Originally conjectured t₀ = 9/4; bounds have moved up. Tests how Hamiltonicity relates to "global connectivity" beyond minimum degree.
+**Partial results:** Bauer-Broersma-Veldman 2000 gave non-Hamiltonian graphs with toughness slightly less than 9/4.
+**Barrier:** Toughness is NP-hard to compute; structural Hamiltonicity arguments don't naturally use it.
+**Data coupling:** Tough-graph corpus; non-Hamiltonian highly-connected graphs.
+
+---
+
+## 41. Painlevé Integrability Classification
+
+**Subfield:** Dynamical systems / ODE theory
+**Statement:** Classify ODEs of form y'' = R(x, y, y') (R rational) whose movable singularities are only poles.
+**Year/Origin:** Painlevé / Gambier 1900s.
+**Why it matters:** Painlevé transcendents appear in random matrix correlation kernels, KdV, gravitational instantons. Classification opens new "function libraries."
+**Partial results:** Order-2 done (six canonical PI–PVI); order-3 partial (Cosgrove, Bureau); discrete Painlevé open.
+**Barrier:** Painlevé property hard to detect algorithmically; ALAY test necessary not sufficient.
+**Data coupling:** Symbolic-computation systems; Painlevé-transcendent corpora.
+
+---
+
+## 42. Mean-Value Polynomial Conjecture (Smale)
+
+**Subfield:** Complex analysis / polynomial theory
+**Statement:** For polynomial f of degree d ≥ 2 and z ∈ ℂ, ∃ critical point c with |f(z) - f(c)|/|z - c| ≤ K · |f'(z)| for absolute K.
+**Year/Origin:** 1981, Stephen Smale.
+**Why it matters:** A "discrete" mean-value theorem. Smale conjectured K = 4 (or K = 1 normalized); current best K bounded by ~d - 1. Matters for Newton's-method convergence.
+**Partial results:** Tischler 1989, Crane 2007; small d handled.
+**Barrier:** No symmetric tool for all degrees uniformly.
+**Data coupling:** Random-polynomial root sets; critical-point distributions.
+
+---
+
+## 43. Erdős-Ko-Rado-Type Generalizations
+
+**Subfield:** Extremal combinatorics
+**Statement:** Specific open EKR variants: r-wise intersecting, weighted, vector-space EKR for non-prime-power q, infinite-dim analogs.
+**Year/Origin:** Original EKR 1961; generalizations 1990s-present.
+**Why it matters:** EKR is the prototype of "concentration on a point" in extremal theory.
+**Partial results:** Classical EKR; r-wise (Frankl-Tokushige) partial; vector-space EKR (Hsieh, Frankl-Wilson) for prime-power q.
+**Barrier:** Each generalization needs its own structural argument; no universal template.
+**Data coupling:** Set-system corpora; vector-space designs over various q.
+
+---
+
+## 44. Kaplansky Direct Finiteness Conjecture
+
+**Subfield:** Algebra (group rings)
+**Statement:** For torsion-free group G and field K, the group ring K[G] is directly finite (one-sided invertible ⟹ two-sided invertible).
+**Year/Origin:** Kaplansky mid-20th c. (sister to zero-divisor conjecture, which IS in the database).
+**Why it matters:** Implied by stronger Kaplansky conjectures. Elek-Szabo 2004 proved direct finiteness for sofic groups (uses Lück approximation). General case open since no known non-sofic group exists.
+**Partial results:** Amenable case; sofic case (Elek-Szabo 2004).
+**Barrier:** Sofic vs non-sofic dichotomy itself open.
+**Data coupling:** Group-ring computational corpora; specific torsion-free groups.
+
+---
+
+## 45. Sensitivity-Adjacent Boolean Function Conjectures
+
+**Subfield:** Theoretical computer science / combinatorics
+**Statement:** Sensitivity Conjecture itself was RESOLVED by Hao Huang (2019, ~6-page proof using Cauchy interlacing on signed-edge graphs). Adjacent conjectures remain: tight Boolean-function sensitivity-block-degree relationships; quantum query complexity sharp bounds.
+**Year/Origin:** Sensitivity Conjecture 1992 (Nisan-Szegedy); Huang's resolution 2019.
+**Why it matters:** A solved problem becomes a calibration anchor — see `aporia/mathematics/solved_problems_genealogy.md` for full backfill. Adjacent open problems remain in tight sensitivity-block bounds.
+**Partial results:** Sensitivity Conjecture proved; some adjacent quantum-query bounds open.
+**Barrier:** Huang's technique (Cauchy interlacing on signed-edge graphs) is novel but doesn't generalize to all adjacent conjectures.
+**Data coupling:** Boolean-function corpus; small-circuit datasets.
+
+---
+
+*Round 2 adds 20 entries (#26-45) to the catalog. Combined catalog now spans 45 problems across two tiers (Round 1: specialist; Round 2: classical-but-less-famous). 12 gaps remain from the 32-gap list — Sierpiński m²-n², Cullen primes, palindromic primes, Fibonacci primes, Kusner L¹, Arnold diffusion, FPU paradox, Ruelle-Takens turbulence, Church-Turing physics thesis, Guralnick-Thompson, Herzog-Schönheim, π·e algebraic independence — queued for Round 3 + batch 12.*
+
+*Aporia, 2026-05-08*

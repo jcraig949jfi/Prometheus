@@ -361,3 +361,75 @@ The 21-paradigm extension proposed in `whitepapers/attack_strategy_for_frontier_
 - **P21 (Curated-corpus empirical sweep) — CONFIRMED** by both ChatGPT and Gemini (§8.1).
 
 Final canonical count and the replacement choice will land in this document once the 5-model synthesis converges. Until then, the substrate operates with P19 and P21 as accepted Tier-1 additions; P20 is removed; the slot is open.
+
+---
+
+## 2026-05-08 — Round 2 paradigm additions from recent solves
+
+Round 2 of solved-problems genealogy (`aporia/mathematics/solved_problems_genealogy.md` R1-R5) surfaced techniques not cleanly captured by P01-P21. Adding 5 new paradigms based on observed 2002-2020 attack patterns. Numbering continues from P21 (P20 still removed).
+
+### P22 — Polynomial Method (Spectral on Signed Graphs)
+**Move:** Build a signed graph encoding the combinatorial object; apply Cauchy interlacing or related spectral inequality on a carefully-chosen induced subgraph; extract the desired bound from the spectral bound.
+**Exemplar:** Hao Huang's Sensitivity Conjecture proof (2019, 6 pages). Signed n-dimensional hypercube + Cauchy interlacing on largest subgraph of size > 2^{n-1} forces a vertex of degree ≥ √n, giving s(f) ≥ √(deg(f)).
+**Computation:** numpy/scipy eigensolvers; sparse graph eigensolvers; symbolic-spectral toolboxes.
+**Tools:** Sage / numpy.linalg / spectral-graph libraries.
+**Prometheus:** Boolean-function probes are downstream of substrate's operator-output pairs. Signed-edge construction is a generic "weight by parity of property" template — applies to any combinatorial object with a binary property.
+**Tactics:** Cauchy interlacing | Signed-edge weighting | Largest-induced-subgraph extraction | Polynomial-method on F_2^n
+**Distinction from P15 (Tensor / Multilinear):** P15 decomposes a multilinear object; P22 builds an auxiliary graph and reads spectra. Different objects.
+**Distinction from P04 (Spectral Analysis):** P04 reads the spectrum of an operator already attached to the math object (Laplacian, Hecke). P22 *constructs* the operator (signed adjacency) specifically to encode the property. Constructive vs given.
+
+### P23 — Recursive Self-Compression (Protocol Bootstrapping)
+**Move:** Show that an instance of a computational/proof system can simulate a strictly smaller instance of itself; iterate to get unbounded simulation power.
+**Exemplar:** Ji-Natarajan-Vidick-Wright-Yuen 2020 MIP* = RE. MIP* protocols admit compression: outer protocol delegates to an inner MIP* protocol with strict savings; iteration lets MIP* simulate Turing-machine halting (RE).
+**Computation:** Symbolic protocol verification; theorem-prover-style checking of inner-protocol correctness.
+**Tools:** Coq / Lean for protocol formalization; complexity-theory frameworks.
+**Prometheus:** Meta-paradigm. Probes for "is there a self-similar structure that allows compression?" Substrate's CLAIM evaluation might admit P23-style analysis if a CLAIM can compute the verdict on a smaller CLAIM.
+**Tactics:** Protocol delegation | Strictly-decreasing-size lemma | Iteration to fixed-point | Halting-problem encoding
+**Distinction from P09 (Exhaustive Computation):** P09 enumerates instances; P23 doesn't enumerate, it bootstraps capability.
+**Distinction from P14 (Forcing and Independence):** P14 builds models; P23 builds protocols that simulate themselves at smaller scale.
+
+### P24 — Quantitative Bound-Tightening Long Program
+**Move:** A theorem holds in principle for "sufficiently large" parameters; the bound is astronomical; iteratively tighten the bound (often with hybrid analytic+computational improvements) until it meets computer-verification range.
+**Exemplar:** Ternary Goldbach (Vinogradov 1937 with 3^{3^{15}} bound; tightened by Borozdkin 1956, Chen-Wang 1989, Liu-Wang 2002; closed by Helfgott 2013 with 8.875 × 10^{30} bound + computer verification). 90-year continuous push.
+**Computation:** Explicit zero-free regions for L-functions; major-arc/minor-arc estimates; computer verification of small cases.
+**Tools:** mpmath, FLINT, Pari, GMP for high-precision arithmetic; explicit-formula libraries.
+**Prometheus:** Substrate's "deg-N enumeration scaling" pattern (per substrate-tester fire-20 / fire-27 cross-degree hit-rate finding) is a P24-shaped probe at small scale. Bound-tightening is itself a substrate-grade operator: each fire that tightens a numerical threshold by 0.5 dex is a P24 step.
+**Tactics:** Explicit zero-free regions | Major-arc / minor-arc decomposition | Computer-verification-meets-analytic-bound | Hybrid analytic+computational
+**Distinction from P09 (Exhaustive Computation):** P24 *combines* analytic bound-tightening with exhaustive computation. P09 alone gives only direct verification.
+
+### P25 — Pivotal Negative Result (Reorienting Lemma)
+**Move:** A surprising negative theorem (e.g., "this expected-true proposition is actually false") forces the field to re-formulate the conjecture; the re-formulation then becomes tractable.
+**Exemplar:** Fefferman 1971 disc-multiplier negative result for Bochner-Riesz at δ=0 pivots the field's understanding; Carleson-Sjölin proves the correct conjecture in n=2 within a year. Other exemplars: Manolescu 2013 Pin(2)-cohomology obstruction → triangulation conjecture FALSE in dim ≥5; Slofstra 2017 Tsirelson-problem disproof → MIP* path open.
+**Computation:** Counterexample construction; explicit obstruction class; numerical experiments that surface anomalies.
+**Tools:** Sage, Magma, GAP, computer-search frameworks.
+**Prometheus:** This is the substrate's KILL operator at the meta-level. Every kill that reorients a research direction is a P25 instance. The 4-fold falsification battery is a structural P25-generator.
+**Tactics:** Counterexample construction | Obstruction-class identification | Surprise-amplification (when the negative result was widely-believed-not-to-hold)
+**Distinction from P02 (Cohomological Obstruction):** P02 *reads* an existing cohomology class to detect impossibility; P25 produces the negative result that motivates building the obstruction theory.
+**Distinction from P09 (Exhaustive Computation):** P09 verifies; P25 *finds* the unexpected counterexample.
+
+### P26 — Continuous Relaxation / Linear Programming Bound
+**Move:** A discrete-optimization problem (sphere packing, code distances, Turán-type extremal counts) is relaxed to a continuous LP / SDP / convex program; the relaxation's optimum is computable; matching constructive lower bounds with the relaxation upper bound proves optimality.
+**Exemplar:** Cohn-Elkies 2003 sphere packing LP bound; Viazovska 2016 sphere packing in d=8 (uses a magic modular function as the LP-feasible witness); Cohn-Kumar-Miller-Radchenko-Viazovska 2017 d=24. The LP bound is structural; the magic function is the constructive piece that hits it.
+**Computation:** Linear and semidefinite programming (CDD, CVX, Mosek); modular-form computation; theta-series integration.
+**Tools:** SageMath (LP solvers), CVX / CVXPY, Magma (modular forms), Pari/GP.
+**Prometheus:** Substrate's calibration-anchor density measurement (T036) is a P26-flavored audit. Sphere-packing in d=24 is already in the database as Tier 1 (#194); P26 is the technique that solved its 2D / 8D / 24D cases.
+**Tactics:** LP / SDP relaxation | Magic-function witness construction | Modular-form-meets-optimization | Cohn-Elkies linear programming bound
+**Distinction from P17 (Variational / Extremal Principle):** P17 minimizes/maximizes a functional; P26 specifically relaxes to a continuous convex program with computable optimum.
+**Distinction from P15 (Tensor and Multilinear):** P15 decomposes; P26 optimizes.
+
+---
+
+## Round 2 cross-cutting observations
+
+The 5 new paradigms (P22-P26) are derived from 5 recent landmark solves (R1-R5 of solved-problems genealogy). Patterns:
+
+- **P22, P23, P25 are "single-insight" paradigms** — each cracks a problem via one well-chosen construction. Predictability of appearing in advance: low.
+- **P24, P26 are "long-program" paradigms** — each is a multi-decade trajectory of incremental refinement. Predictability: high (trajectory visible years in advance).
+- **All 5 involve cross-domain ingredient import** — none of P22-P26 is purely internal to the original problem domain. Reinforces HARD-5: discipline labels are docstrings; the paradigm crosses them freely.
+- **P25 (Pivotal Negative Result) is the substrate's natural meta-paradigm** — every kill that reorients direction is P25-shaped. The 4-fold falsification battery is a structural P25-generator.
+
+Canonical count is now P01-P26 (P20 still removed pending replacement decision; effective active paradigms: 25).
+
+---
+
+*Aporia, 2026-05-08*
