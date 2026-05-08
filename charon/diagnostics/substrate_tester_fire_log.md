@@ -6,6 +6,48 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #47 — 2026-05-08 (Tier B core test-suite stub filed for Techne pickup)
+
+**Coordination note:** no new commits between fire #46 and fire #47. Fire #47 continues the design-prep pivot.
+
+**Lanes selected:** 1 (test-suite stub for `ConstructiveExistenceWitness`) + 11 (canon-fuzz fresh seed 20260508_11).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_47_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_47_results.json`.
+
+### Lane 1 — `ConstructiveExistenceWitness` test-suite stub
+
+Target: `sigma_kernel/tests/test_constructive_existence_witness_stub.py`. **8 test classes, 21 test methods.**
+
+Module-level `skipif` guard: pytest collects but skips cleanly until `sigma_kernel/constructive_existence_witness.py` lands. Once Techne builds the primitive, the import succeeds, skip lifts, and tests run unmodified.
+
+| Class | Tests | Coverage |
+|---|---:|---|
+| `TestParentContract` | 6 | T1 registry collision, T2 content-addressed payload, T3 subtype dispatch, T4 verify roundtrip, T5 scope/replay/cert-registry, T6 asymmetric-existential consistency |
+| `TestRankDecompositionWitness` | 4 | sum-to-target, rank annotation, uniqueness flag, globally-unique implies sufficient cert |
+| `TestContractionOrderWitness` | 2 | order is valid permutation, claimed cost matches recomputed |
+| `TestIsomorphismCertificate` | 2 | group elements invertible, action maps source to target |
+| `TestLimitWitness` | 2 | parametric family bounded rank, limit equals target |
+| `TestRepresentationTheoreticWitness` | 2 | witness object type matches subkind, positivity implication |
+| `TestStructuralInequalityCertificate` | 2 | predicate evaluates true, named predicate from registry |
+| `TestTierBTierDComposition` | 1 | witness at fixed parameters implies threshold regime_above (double-skipped until Tier D primitive lands) |
+
+**Pytest collection result:** 21 skipped in 0.14s — clean collection, clean skip.
+
+**Helper builders are placeholders** (`raise NotImplementedError`); Techne wires them to the primitive when building. Substrate-tester wrote the contract; Techne fills in the implementation glue.
+
+### Lane 11 — canon-fuzz fresh seed: 13 passed (16.30s)
+
+### Substrate-tester observation
+
+Two pivot fires complete:
+- **Fire #46:** `pivot/substrate_v3_proposal_stub_2026-05-08.md` (design-doc form)
+- **Fire #47:** `sigma_kernel/tests/test_constructive_existence_witness_stub.py` (test-contract form)
+
+The design-doc + test-contract pair is the natural deliverable shape for Techne pickup: design says "what", test says "passes when". Fire #48 produces the analogous pair for Tier D core (`DistributionObject` + `PhaseTransitionThreshold`).
+
+---
+
 ## Fire #46 — 2026-05-08 (PIVOT FIRE — substrate_v3 proposal stub filed; design-prep phase begins)
 
 **Coordination note:** no new commits between fire #45 and fire #46 from parallel instance, no Aporia response yet on ST-fire45-002. Per fire #45 default ("attempt the pivot if no override"), fire #46 shifts from Lane-12 catalog probes to test-suite-design-prep.

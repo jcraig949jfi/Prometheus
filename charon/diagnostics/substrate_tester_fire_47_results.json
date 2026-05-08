@@ -1,0 +1,37 @@
+{
+  "fire": 47,
+  "posture": "second-pivot-fire (Tier B core test-suite stub for Techne pickup)",
+  "lanes": [
+    1,
+    11
+  ],
+  "lane_1": {
+    "lane": "1_witness_test_suite_stub",
+    "target_path": "sigma_kernel/tests/test_constructive_existence_witness_stub.py",
+    "filed": true,
+    "n_lines": 386,
+    "n_test_classes": 8,
+    "n_test_methods": 21,
+    "pytest_collect_summary": "21 skipped in 0.14s",
+    "pytest_returncode": 0,
+    "design_coverage": [
+      "T1-T6 parent-type contract (registry collision, content-addressed payload, subtype dispatch, verify roundtrip, scope/replay/cert-registry, asymmetric-existential consistency)",
+      "Subtype 1: RankDecompositionWitness (4 tests)",
+      "Subtype 2: ContractionOrderWitness (2 tests)",
+      "Subtype 3: IsomorphismCertificate (2 tests)",
+      "Subtype 4: LimitWitness/BorderRankWitness (2 tests)",
+      "Subtype 5: RepresentationTheoreticWitness (2 tests)",
+      "Subtype 6: StructuralInequalityCertificate (2 tests)",
+      "Tier B/D composition (1 test, double-skipped until both primitives exist)",
+      "Helper builders (placeholders for Techne to wire to primitive)"
+    ],
+    "verdict": "PASS"
+  },
+  "lane_11": {
+    "lane": "11_canon_fuzz_smoke",
+    "seed": "20260508_11",
+    "returncode": 0,
+    "summary_line": "13 passed in 16.30s",
+    "verdict": "PASS"
+  }
+}
