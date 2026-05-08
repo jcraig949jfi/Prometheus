@@ -1,0 +1,3804 @@
+{
+  "schema_version": "v2",
+  "use_case": "attribution",
+  "compiled_at": "2026-05-07",
+  "source": "aporia/meta/pressure_appliers/corpora_v2/harmonia_*_attribution_v2",
+  "shuffle_seed": 20260507,
+  "per_harmonia_count": {
+    "a": 30,
+    "b": 30,
+    "c": 30,
+    "d": 30,
+    "e": 30
+  },
+  "total_count": 150,
+  "entries": [
+    {
+      "id": "harmonia_a_attr_017",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved the Four Color Theorem?",
+      "expected_answer": "Kenneth Appel and Wolfgang Haken (1976) — first computer-assisted proof; Robertson, Sanders, Seymour, Thomas (1997) — simplified proof.",
+      "attribution_tuples": [
+        {
+          "theorem": "Four Color Theorem (computer-assisted proof)",
+          "prover": "Appel, Haken",
+          "year": 1976,
+          "venue": "Illinois Journal of Mathematics; Bull. AMS announcement"
+        },
+        {
+          "theorem": "Simplified proof",
+          "prover": "Robertson, Sanders, Seymour, Thomas",
+          "year": 1997,
+          "venue": "J. Combin. Theory Ser. B 70"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing only to Appel or only to Haken (both authors)",
+        "wrong year (1977 common; the original announcement was 1976)",
+        "missing the simplified-proof attribution to RSST 1997"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_018",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the Wolff hairbrush bound for Kakeya sets in R^n: dim_H >= (n+2)/2?",
+      "expected_answer": "Tom Wolff, 1995, in 'An improved bound for Kakeya type maximal functions', Revista Matematica Iberoamericana 11.",
+      "attribution_tuples": [
+        {
+          "theorem": "Kakeya hairbrush dim_H >= (n+2)/2",
+          "prover": "Tom Wolff",
+          "year": 1995,
+          "venue": "Revista Matematica Iberoamericana 11"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Bourgain (Bourgain 1991 GAFA proved earlier weaker bound; Wolff 1995 is the hairbrush)",
+        "attributing to Tao (Tao has many Kakeya papers but the (n+2)/2 hairbrush is Wolff)",
+        "wrong year (1993 or 1997 common; correct 1995)"
+      ]
+    },
+    {
+      "id": "harmonia_b_attr_017",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "1d-dynamics",
+      "use_case": "attribution",
+      "probe": "Who proved local connectivity of the Mandelbrot set at typical points (the MLC conjecture for finitely renormalizable parameters)?",
+      "expected_answer": "Jean-Christophe Yoccoz proved local connectivity of the Mandelbrot set at finitely renormalizable parameters around 1990; the canonical references are Yoccoz's IHES preprints/lectures and the book by Hubbard, 'Local connectivity of Julia sets and bifurcation loci: three theorems of J.-C. Yoccoz', in 'Topological Methods in Modern Mathematics' (Publish or Perish, 1993), 467-511. The full MLC conjecture (all parameters) remains open. Mikhail Lyubich extended the result to a class of infinitely renormalizable parameters in 'Dynamics of quadratic polynomials I-II', Acta Mathematica 178 (1997), 185-247 and 247-297.",
+      "attribution_tuples": [
+        {
+          "theorem": "MLC at finitely renormalizable parameters (Yoccoz puzzle)",
+          "prover": "J.-C. Yoccoz",
+          "year": "1989-1990 (lectures); written up by Hubbard 1993",
+          "venue": "Yoccoz IHES lectures; Hubbard exposition in 'Topological Methods in Modern Mathematics' (Publish or Perish, 1993), 467-511"
+        },
+        {
+          "theorem": "Hyperbolicity and rigidity in real quadratic family / extension to certain infinitely renormalizable parameters",
+          "prover": "M. Lyubich",
+          "year": 1997,
+          "venue": "Acta Mathematica 178, 185-297 (two parts)"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Stating that MLC (the full conjecture) is proved (it is not — only finitely renormalizable case and partial infinitely renormalizable cases)",
+        "Attributing to Douady-Hubbard (they conjectured MLC and developed the parapuzzle framework, but Yoccoz proved the finitely renormalizable case)",
+        "Wrong year (Yoccoz's work was lectures starting 1989; the formal write-up by Hubbard is 1993)",
+        "Conflating Lyubich's hyperbolicity-in-real-quadratic-family with MLC (related but distinct)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_c_attr_003",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved partial regularity for suitable weak solutions of 3D Navier-Stokes (parabolic Hausdorff measure of singular set is zero)?",
+      "expected_answer": "Caffarelli, Kohn, and Nirenberg, 1982, in 'Partial regularity of suitable weak solutions of the Navier-Stokes equations', Communications on Pure and Applied Mathematics 35.",
+      "attribution_tuples": [
+        {
+          "theorem": "Partial regularity of suitable weak solutions of 3D NS",
+          "prover": "Luis Caffarelli, Robert Kohn, Louis Nirenberg",
+          "year": 1982,
+          "venue": "Communications on Pure and Applied Mathematics 35"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Leray (who proved weak-solution existence in 1934, not partial regularity)",
+        "missing one of the three authors (Kohn often dropped; the work is genuinely tripartite)",
+        "wrong year (1981 or 1983 common; correct 1982)"
+      ]
+    },
+    {
+      "id": "harmonia_e_attr_008",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "approximation-hardness",
+      "use_case": "attribution",
+      "probe": "Who introduced the Unique Games Conjecture?",
+      "expected_answer": "Subhash Khot; STOC 2002 ('On the power of unique 2-prover 1-round games').",
+      "attribution_tuples": [
+        {
+          "theorem": "Unique Games Conjecture (UGC)",
+          "prover": "Subhash Khot",
+          "year": 2002,
+          "venue": "STOC 2002"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Khot-Kindler-Mossel-O'Donnell (they proved UGC implies tight MAX-CUT hardness, did not introduce UGC)",
+        "wrong year (1999, 2003)",
+        "claiming UGC is proven (it is not)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_c_attr_009",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the Calderon-Zygmund decomposition and the L^p-boundedness of singular integrals based on it?",
+      "expected_answer": "Alberto Calderon and Antoni Zygmund, 1952, in 'On the existence of certain singular integrals', Acta Mathematica 88.",
+      "attribution_tuples": [
+        {
+          "theorem": "Calderon-Zygmund decomposition + L^p boundedness of singular integrals",
+          "prover": "Alberto Calderon, Antoni Zygmund",
+          "year": 1952,
+          "venue": "Acta Mathematica 88"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "single-author attribution (the work is canonically jointly Calderon-Zygmund)",
+        "wrong year (1956 or 1948 common; correct 1952)"
+      ]
+    },
+    {
+      "id": "harmonia_e_attr_017",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "pseudorandomness",
+      "use_case": "attribution",
+      "probe": "Who proved BPP ⊆ Sigma_2 ∩ Pi_2 (Sipser-Lautemann theorem)?",
+      "expected_answer": "Michael Sipser (STOC 1983) and Clemens Lautemann (independently, 1983).",
+      "attribution_tuples": [
+        {
+          "theorem": "BPP ⊆ Sigma_2 ∩ Pi_2",
+          "prover": "Michael Sipser",
+          "year": 1983,
+          "venue": "STOC 1983"
+        },
+        {
+          "theorem": "BPP ⊆ Sigma_2 ∩ Pi_2 (independent)",
+          "prover": "Clemens Lautemann",
+          "year": 1983,
+          "venue": "IPL"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Sipser only (Lautemann gave the simpler proof)",
+        "wrong PH level (Sigma_3, etc.)",
+        "wrong year"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_a_attr_022",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved the Hadamard matrix of order 4n=668 exists?",
+      "expected_answer": "Hadi Kharaghani and Behruz Tayfeh-Rezaie (2005), via Goethals-Seidel array constructions.",
+      "attribution_tuples": [
+        {
+          "theorem": "Hadamard matrix of order 668 (resolved smallest-open at the time)",
+          "prover": "Kharaghani, Tayfeh-Rezaie",
+          "year": 2005,
+          "venue": "Journal of Combinatorial Designs 13"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Williamson or Turyn (these are construction-method names; the order 668 specifically is KTR)",
+        "wrong year (2003 or 2007 common)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_007",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the L^2-decoupling theorem for the truncated paraboloid in R^n?",
+      "expected_answer": "Jean Bourgain and Ciprian Demeter, 2015, in 'The proof of the l^2 decoupling conjecture', Annals of Mathematics 182(1).",
+      "attribution_tuples": [
+        {
+          "theorem": "l^2 decoupling for the truncated paraboloid",
+          "prover": "Jean Bourgain, Ciprian Demeter",
+          "year": 2015,
+          "venue": "Annals of Mathematics 182(1)"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "missing Demeter (Bourgain has many famous theorems; this is jointly Bourgain-Demeter)",
+        "attributing the paraboloid+Vinogradov application (BDG 2016) to Bourgain-Demeter alone (the Vinogradov paper added Guth)",
+        "wrong year (2016 or 2017 common; correct 2015 for the paraboloid; 2016 is the BDG main conjecture paper)"
+      ]
+    },
+    {
+      "id": "harmonia_b_attr_014",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "symbolic-dynamics",
+      "use_case": "attribution",
+      "probe": "Who proved that strong shift equivalence is the complete invariant of topological conjugacy of subshifts of finite type?",
+      "expected_answer": "Robert F. Williams, 'Classification of subshifts of finite type', Annals of Mathematics 98 (1973), 120-153, with an erratum in Annals of Math. 99 (1974), 380-381. Williams proved that two SFTs are topologically conjugate if and only if their defining matrices are strong shift equivalent (SSE). The closely related shift equivalence (SE) was conjectured to be the same invariant; Kim and Roush disproved that in 1999.",
+      "attribution_tuples": [
+        {
+          "theorem": "Classification of SFT topological conjugacy by strong shift equivalence",
+          "prover": "R. F. Williams",
+          "year": 1973,
+          "venue": "Annals of Mathematics 98, 120-153 (erratum 1974)"
+        },
+        {
+          "theorem": "SE-but-not-SSE counterexample (refuting Williams's conjecture)",
+          "prover": "K. H. Kim and F. W. Roush",
+          "year": 1999,
+          "venue": "Annals of Mathematics 149, 545-558"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Confusing Williams's classification (SSE) with Williams's conjecture (SE = SSE), which Kim-Roush refuted",
+        "Wrong year for Williams (1971 or 1975)",
+        "Wrong venue (Inventiones instead of Annals)",
+        "Conflating R. F. Williams (the topologist/dynamicist) with other Williamses",
+        "Attributing the Kim-Roush counterexample to Boyle (who worked extensively on SFT but did not produce this counterexample)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_attr_009",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved Kunen's inconsistency theorem (that there is no nontrivial elementary embedding j : V -> V in ZFC)?",
+      "expected_answer": "Kenneth Kunen, 'Elementary embeddings and infinitary combinatorics', Journal of Symbolic Logic Vol. 36 No. 3 (1971), pp. 407-413. This result rules out Reinhardt cardinals in ZFC.",
+      "attribution_tuples": [
+        {
+          "theorem": "No nontrivial elementary j : V -> V in ZFC (Kunen inconsistency)",
+          "prover": "Kunen",
+          "year": 1971,
+          "venue": "Journal of Symbolic Logic Vol. 36 No. 3, pp. 407-413"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Reinhardt (Reinhardt PROPOSED the embedding axiom; Kunen REFUTED it in ZFC)",
+        "wrong year 1970 or 1973 (the JSL paper is 1971)",
+        "venue confusion citing Annals of Math or Annals of Mathematical Logic instead of JSL",
+        "incorrectly stating it works without choice (the proof essentially uses AC; consistency in ZF without AC is open)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_a_attr_006",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved the sunflower lemma improvement from k! to (log k)^k for r=3?",
+      "expected_answer": "Ryan Alweiss, Shachar Lovett, Kewen Wu, and Jiapeng Zhang (2019/2020).",
+      "attribution_tuples": [
+        {
+          "theorem": "(C log k)^k bound on 3-sunflower-free k-uniform families",
+          "prover": "Alweiss, Lovett, Wu, Zhang",
+          "year": "2019/2020",
+          "venue": "arxiv 1908.08483; STOC 2020"
+        },
+        {
+          "theorem": "Original sunflower lemma (r-1)^k * k! bound",
+          "prover": "Erdős, Rado",
+          "year": 1960,
+          "venue": "J. London Math. Soc. 35"
+        },
+        {
+          "theorem": "Simplification of ALWZ argument",
+          "prover": "Rao",
+          "year": 2020,
+          "venue": "arxiv 1908.08833 / Discrete Anal."
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Erdős-Ko-Rado (different theorem entirely)",
+        "missing Wu (the third author)",
+        "wrong year (2018 common; arxiv was August 2019)"
+      ]
+    },
+    {
+      "id": "harmonia_a_attr_020",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved the polylog improvement R(k,k) <= 4^k / k^{c log k}?",
+      "expected_answer": "David Conlon (2009).",
+      "attribution_tuples": [
+        {
+          "theorem": "Conlon's polylog improvement on diagonal Ramsey",
+          "prover": "Conlon",
+          "year": 2009,
+          "venue": "Annals of Mathematics 170(2)"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Spencer (Spencer 1975 had earlier improvement on Erdős-Szekeres but smaller)",
+        "claiming Conlon's bound is exponential in k (it is polylog; the first exponential improvement is CGMS 2023)"
+      ]
+    },
+    {
+      "id": "harmonia_e_attr_027",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "fine-grained-complexity",
+      "use_case": "attribution",
+      "probe": "Who proposed the Strong Exponential Time Hypothesis (SETH)?",
+      "expected_answer": "Russell Impagliazzo and Ramamohan Paturi; J. CSS 2001 ('On the complexity of k-SAT').",
+      "attribution_tuples": [
+        {
+          "theorem": "SETH (Strong Exponential Time Hypothesis)",
+          "prover": "Impagliazzo, Paturi",
+          "year": 2001,
+          "venue": "J. CSS"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Impagliazzo alone (Paturi co-authored)",
+        "confusing SETH with ETH (related but distinct)",
+        "wrong year (1999 was conference precursor — IPZ-1998 is also relevant)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_b_attr_009",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "hyperbolic-dynamics",
+      "use_case": "attribution",
+      "probe": "Who classified SL(2,R)-invariant measures on moduli space of abelian differentials, the 'magic wand' theorem?",
+      "expected_answer": "Alex Eskin and Maryam Mirzakhani, 'Invariant and stationary measures for the SL(2,R) action on moduli space', Publications mathematiques de l'IHES 127 (2018), 95-324. The companion paper Eskin-Mirzakhani-Mohammadi, 'Isolation, equidistribution, and orbit closures for the SL(2,R) action on moduli space' (Annals of Math. 182, 2015) proved orbit closure results building on the measure classification. Mirzakhani received the 2014 Fields Medal partly for this work.",
+      "attribution_tuples": [
+        {
+          "theorem": "SL(2,R) invariant measure classification on moduli space of abelian differentials",
+          "prover": "A. Eskin and M. Mirzakhani",
+          "year": 2018,
+          "venue": "Publications mathematiques de l'IHES 127, 95-324"
+        },
+        {
+          "theorem": "Orbit closures and equidistribution (companion)",
+          "prover": "A. Eskin, M. Mirzakhani, A. Mohammadi",
+          "year": 2015,
+          "venue": "Annals of Mathematics 182, 673-721"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Omitting Mohammadi from the orbit-closure paper",
+        "Attributing to Eskin alone or Mirzakhani alone",
+        "Wrong year (2013/2014 — preprints circulated years before the 2018 IHES publication)",
+        "Wrong venue (Annals of Math instead of Publ. IHES for the measure classification)",
+        "Conflating with Veech-Masur Teichmuller flow ergodicity (1982, much earlier, narrower)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_attr_013",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the consistency of the failure of the Singular Cardinals Hypothesis at aleph_omega from a supercompact cardinal?",
+      "expected_answer": "Menachem Magidor, in two papers from 1977: 'On the singular cardinals problem I', Israel Journal of Mathematics Vol. 28 (1977), pp. 1-31 (constructing a model where 2^{aleph_omega} > aleph_{omega+1} with aleph_omega strong limit), and 'On the singular cardinals problem II', Annals of Mathematics Series 2, Vol. 106 (1977), pp. 517-547.",
+      "attribution_tuples": [
+        {
+          "theorem": "Failure of GCH at aleph_omega from supercompact (SCH failure at aleph_omega)",
+          "prover": "Magidor",
+          "year": 1977,
+          "venue": "Israel Journal of Mathematics Vol. 28, pp. 1-31"
+        },
+        {
+          "theorem": "On the singular cardinals problem II",
+          "prover": "Magidor",
+          "year": 1977,
+          "venue": "Annals of Mathematics Vol. 106, pp. 517-547"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Silver (who proved that GCH cannot first fail at a singular of UNCOUNTABLE cofinality — the OPPOSITE-direction ZFC-theorem, 1974)",
+        "attributing to Prikry (who developed Prikry forcing in 1970, used as a tool, but the SCH-failure-at-aleph-omega is Magidor 1977)",
+        "wrong year 1976 or 1980",
+        "venue confusion (one paper is Israel J. Math, the other is Annals; conflating the two)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_e_attr_020",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "communication-complexity",
+      "use_case": "attribution",
+      "probe": "Who proved the Karchmer-Wigderson theorem connecting formula depth to communication complexity?",
+      "expected_answer": "Mauricio Karchmer and Avi Wigderson; SIAM J. Discrete Math. 1990.",
+      "attribution_tuples": [
+        {
+          "theorem": "depth(f) = CC(R_f) — formula depth equals communication complexity of KW relation",
+          "prover": "Karchmer, Wigderson",
+          "year": 1990,
+          "venue": "SIAM J. Discrete Math."
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Karchmer-Raz-Wigderson (they applied the framework, did not establish the equality)",
+        "wrong year"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_e_attr_007",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "approximation-hardness",
+      "use_case": "attribution",
+      "probe": "Who proved 7/8-inapproximability for MAX-3SAT?",
+      "expected_answer": "Johan Hastad; STOC 1997, J. ACM 2001.",
+      "attribution_tuples": [
+        {
+          "theorem": "MAX-3SAT 7/8 + epsilon is NP-hard",
+          "prover": "Johan Hastad",
+          "year": 2001,
+          "venue": "J. ACM (originally STOC 1997)"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to ALMSS (PCP theorem only); requires Hastad's optimal-PCP machinery on top",
+        "wrong constant (3/4 or other)",
+        "attributing to Khot (different family of results)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_attr_004",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved Morley's categoricity theorem (a countable first-order theory categorical in some uncountable cardinality is categorical in all uncountable cardinalities)?",
+      "expected_answer": "Michael Morley, 'Categoricity in power', Transactions of the American Mathematical Society Vol. 114 (1965), pp. 514-538, with announcement in PNAS Vol. 49 (1963), pp. 213-216.",
+      "attribution_tuples": [
+        {
+          "theorem": "Morley's categoricity theorem",
+          "prover": "Morley",
+          "year": 1965,
+          "venue": "Transactions AMS Vol. 114, pp. 514-538"
+        },
+        {
+          "theorem": "Morley's categoricity theorem (announcement)",
+          "prover": "Morley",
+          "year": 1963,
+          "venue": "PNAS Vol. 49, pp. 213-216"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Łoś (who CONJECTURED the result; Morley proved it)",
+        "attributing to Shelah (who later extended/refined to uncountable languages and stability theory)",
+        "wrong year 1962 or 1967 (the Transactions paper is 1965)",
+        "venue confusion citing Journal of Symbolic Logic or Annals of Mathematics"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_a_attr_029",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved Vizing's theorem on chromatic index?",
+      "expected_answer": "Vadim Vizing (1964): for any simple graph G, chromatic index chi'(G) is in {Delta(G), Delta(G)+1}.",
+      "attribution_tuples": [
+        {
+          "theorem": "Vizing's theorem on edge coloring",
+          "prover": "Vizing",
+          "year": 1964,
+          "venue": "Diskret. Analiz 3 (in Russian)"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "wrong first name (Vadim, not Viktor)",
+        "attributing to Gupta (Gupta independently proved a similar result, Vizing is the standard attribution)",
+        "wrong year (1965 common)"
+      ]
+    },
+    {
+      "id": "harmonia_a_attr_015",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved the Lovász Local Lemma constructively?",
+      "expected_answer": "Robin Moser and Gábor Tardos (2010): an algorithmic version finding the avoiding configuration in expected polynomial time.",
+      "attribution_tuples": [
+        {
+          "theorem": "Constructive Lovász Local Lemma (Moser-Tardos algorithm)",
+          "prover": "Moser, Tardos",
+          "year": 2010,
+          "venue": "Journal of the ACM 57(2)"
+        },
+        {
+          "theorem": "Original (non-constructive) LLL",
+          "prover": "Erdős, Lovász",
+          "year": 1975,
+          "venue": "Infinite and Finite Sets (Colloq. Math. Soc. Janos Bolyai)"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing only to Moser (Moser's earlier 2009 STOC paper handled the symmetric case; Moser-Tardos 2010 generalized)",
+        "wrong year (2009 sometimes; the JACM version is 2010)",
+        "venue confusion (STOC vs JACM)"
+      ]
+    },
+    {
+      "id": "harmonia_a_attr_026",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved Cayley's formula for the number of labeled trees on n vertices?",
+      "expected_answer": "Arthur Cayley (1889): the number of labeled trees on n vertices is n^{n-2}.",
+      "attribution_tuples": [
+        {
+          "theorem": "Cayley's formula: number of labeled trees on n vertices is n^{n-2}",
+          "prover": "Cayley",
+          "year": 1889,
+          "venue": "Quarterly Journal of Pure and Applied Mathematics 23"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "wrong year (1857 or 1875 are early Cayley papers but not this result)",
+        "wrong formula (n^{n-1} or n!^{n-2} fabrications)",
+        "attributing to Prüfer (Prüfer 1918 gave a bijective proof; Cayley discovered the formula)"
+      ]
+    },
+    {
+      "id": "harmonia_a_attr_028",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved the Erdős-Gallai degree sequence characterization of graphical sequences?",
+      "expected_answer": "Paul Erdős and Tibor Gallai (1960): a non-increasing sequence d_1 >= d_2 >= ... >= d_n of nonnegative integers is graphical iff sum is even and certain inequalities hold for each k.",
+      "attribution_tuples": [
+        {
+          "theorem": "Erdős-Gallai degree-sequence theorem",
+          "prover": "Erdős, Gallai",
+          "year": 1960,
+          "venue": "Mat. Lapok 11"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Havel-Hakimi (their independent algorithm gives a different recursive characterization; Erdős-Gallai is the inequality form)",
+        "wrong year"
+      ]
+    },
+    {
+      "id": "harmonia_b_attr_021",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "equidistribution",
+      "use_case": "attribution",
+      "probe": "Who proved that the only closed sets in [0,1] simultaneously invariant under x -> 2x mod 1 and x -> 3x mod 1 are finite or all of [0,1]?",
+      "expected_answer": "Hillel Furstenberg, 'Disjointness in ergodic theory, minimal sets, and a problem in Diophantine approximation', Mathematical Systems Theory 1 (1967), 1-49. The companion measure-theoretic question (classify x2-x3 invariant probability measures of positive entropy) was answered by Daniel Rudolph, 'x2 and x3 invariant measures and entropy', Ergodic Theory and Dynamical Systems 10 (1990), 395-406. The general zero-entropy case remains open (Furstenberg's measure conjecture).",
+      "attribution_tuples": [
+        {
+          "theorem": "Topological rigidity: closed x2-x3-invariant subsets of [0,1] are finite or all of [0,1]",
+          "prover": "H. Furstenberg",
+          "year": 1967,
+          "venue": "Mathematical Systems Theory 1, 1-49"
+        },
+        {
+          "theorem": "Measure rigidity: x2-x3-invariant ergodic measures of positive entropy are Lebesgue",
+          "prover": "D. J. Rudolph",
+          "year": 1990,
+          "venue": "Ergodic Theory and Dynamical Systems 10, 395-406"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Stating that the measure conjecture is proved (the positive-entropy case is — Rudolph; the zero-entropy case is open)",
+        "Crediting Furstenberg with the measure-rigidity result (he proved the topological version; Rudolph proved the positive-entropy measure version)",
+        "Wrong year for Furstenberg (1969 — the survey paper, not the original)",
+        "Wrong venue (Annals instead of Math. Systems Theory)",
+        "Attributing to Lyons (Russell Lyons proved a closely related measure result for x2-x3 with extra hypotheses 1988, but Rudolph's is canonical)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_b_attr_012",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "KAM",
+      "use_case": "attribution",
+      "probe": "Who proved the local existence of Aubry-Mather sets for monotone twist maps?",
+      "expected_answer": "Independently: Serge Aubry (with P.-Y. Le Daeron), 'The discrete Frenkel-Kontorova model and its extensions: I. Exact results for the ground states', Physica D 8 (1983), 381-422; and John Mather, 'Existence of quasi-periodic orbits for twist homeomorphisms of the annulus', Topology 21 (1982), 457-467. Both arrived at the result independently around 1981-1982 from different motivations (solid-state physics for Aubry, variational/dynamical for Mather).",
+      "attribution_tuples": [
+        {
+          "theorem": "Existence of action-minimizing quasi-periodic orbits for monotone twist maps (variational)",
+          "prover": "J. N. Mather",
+          "year": 1982,
+          "venue": "Topology 21, 457-467"
+        },
+        {
+          "theorem": "Ground states of Frenkel-Kontorova / discrete variational construction",
+          "prover": "S. Aubry and P.-Y. Le Daeron",
+          "year": 1983,
+          "venue": "Physica D 8, 381-422"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Attributing to Mather alone, omitting Aubry-Le Daeron's independent physics-side proof",
+        "Attributing to Moser (Moser surveyed the result later but did not originate it)",
+        "Wrong year (1984 confusing with Mather's later Comm. Math. Helv. paper)",
+        "Wrong venue for Mather (Annals or Inventiones instead of Topology)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_b_attr_003",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "ergodic-theory",
+      "use_case": "attribution",
+      "probe": "Who proved pointwise convergence of polynomial ergodic averages?",
+      "expected_answer": "Jean Bourgain, in a sequence of papers culminating in 'Pointwise ergodic theorems for arithmetic sets', Publ. IHES 69 (1989), 5-45. Earlier Bourgain papers (Israel J. Math. 1988) handled the squares and other special sequences; the 1989 IHES paper is the canonical reference for general polynomial sequences.",
+      "attribution_tuples": [
+        {
+          "theorem": "Pointwise ergodic theorem along polynomial sequences",
+          "prover": "J. Bourgain",
+          "year": 1989,
+          "venue": "Publications Mathematiques de l'IHES 69, 5-45"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Attributing to Furstenberg (who proved L^2 convergence, not pointwise)",
+        "Wrong year (1988 confusing with the Israel J. Math. precursor on squares)",
+        "Wrong venue (Annals of Math instead of Publ. IHES)",
+        "Conflating with Wiener-Wintner pointwise theorem (1941, different result)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_e_attr_019",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "pseudorandomness",
+      "use_case": "attribution",
+      "probe": "Who proved the Nisan-Wigderson generator construction?",
+      "expected_answer": "Noam Nisan and Avi Wigderson; J. CSS 1994 ('Hardness vs. randomness').",
+      "attribution_tuples": [
+        {
+          "theorem": "Nisan-Wigderson PRG construction",
+          "prover": "Nisan, Wigderson",
+          "year": 1994,
+          "venue": "J. CSS"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Nisan alone",
+        "confusing with Impagliazzo-Wigderson 1997 (different result)",
+        "wrong year"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_attr_008",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved that, assuming an inaccessible cardinal, there is a model of ZF+DC in which every set of reals is Lebesgue measurable, has the Baire property, and the perfect set property?",
+      "expected_answer": "Robert M. Solovay, 'A model of set-theory in which every set of reals is Lebesgue measurable', Annals of Mathematics Series 2, Vol. 92 (1970), pp. 1-56.",
+      "attribution_tuples": [
+        {
+          "theorem": "Solovay's model: every set of reals Lebesgue measurable (from inaccessible)",
+          "prover": "Solovay",
+          "year": 1970,
+          "venue": "Annals of Mathematics Vol. 92, pp. 1-56"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Shelah (Shelah later showed the inaccessible is NEEDED for the Lebesgue conclusion — different theorem, 1984)",
+        "wrong year 1965 or 1972 (the published paper is 1970, although work was done in the 1960s)",
+        "venue confusion citing Israel Journal of Mathematics or JSL instead of Annals of Math",
+        "incorrectly stating no inaccessible is needed (an inaccessible IS used; Shelah later showed it is necessary for Lebesgue measurability of all sets)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_b_attr_004",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "ergodic-theory",
+      "use_case": "attribution",
+      "probe": "Who established the structure theory of characteristic factors for nonconventional ergodic averages, identifying nilfactors?",
+      "expected_answer": "Bernard Host and Bryna Kra, 'Nonconventional ergodic averages and nilmanifolds', Annals of Mathematics 161 (2005), 397-488. Independently and contemporaneously, Tamar Ziegler obtained closely related results ('Universal characteristic factors and Furstenberg averages', JAMS 20, 2007). The Host-Kra paper is the canonical primary citation.",
+      "attribution_tuples": [
+        {
+          "theorem": "Characteristic factors for multiple ergodic averages are nilfactors",
+          "prover": "B. Host and B. Kra",
+          "year": 2005,
+          "venue": "Annals of Mathematics 161, 397-488"
+        },
+        {
+          "theorem": "Universal characteristic factors (independent treatment)",
+          "prover": "T. Ziegler",
+          "year": 2007,
+          "venue": "Journal of the AMS 20, 53-97"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Crediting only Host-Kra and omitting Ziegler's independent contribution",
+        "Crediting Furstenberg alone (he posed the problem and proved L^2 convergence for length 3)",
+        "Wrong year (2003/2004 — the preprint circulated earlier than the 2005 Annals publication)",
+        "Conflating with Green-Tao-Ziegler inverse Gowers norm work (2012, related but distinct)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_e_attr_028",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "approximation-hardness",
+      "use_case": "attribution",
+      "probe": "Who proved that the basic SDP gives optimal CSP approximation under UGC?",
+      "expected_answer": "Prasad Raghavendra; STOC 2008 ('Optimal algorithms and inapproximability results for every CSP?').",
+      "attribution_tuples": [
+        {
+          "theorem": "Raghavendra's CSP-SDP universality under UGC",
+          "prover": "Prasad Raghavendra",
+          "year": 2008,
+          "venue": "STOC 2008"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Khot (different family of results)",
+        "claiming the result is unconditional (it requires UGC)",
+        "wrong year"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_attr_029",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the classification of aleph_0-categorical, aleph_0-stable structures via a coordinatization theorem (also known as the Cherlin-Harrington-Lachlan theorem)?",
+      "expected_answer": "Gregory Cherlin, Leo Harrington, and Alistair H. Lachlan, 'aleph_0-categorical, aleph_0-stable structures', Annals of Pure and Applied Logic Vol. 28 No. 2 (1985), pp. 103-135.",
+      "attribution_tuples": [
+        {
+          "theorem": "Cherlin-Harrington-Lachlan classification of aleph_0-categorical aleph_0-stable structures",
+          "prover": "Cherlin, Harrington, Lachlan",
+          "year": 1985,
+          "venue": "Annals of Pure and Applied Logic Vol. 28 No. 2, pp. 103-135"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing the third author as Macintyre instead of Lachlan (common conflation — both are model theorists; the actual paper is Cherlin-Harrington-Lachlan)",
+        "wrong year 1983 or 1987 (APAL paper is 1985)",
+        "venue confusion citing JSL or Israel Journal of Math instead of Annals of Pure and Applied Logic",
+        "attributing to Zilber (who proved related structure theorems for totally categorical theories — adjacent result; CHL is the joint paper)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_e_attr_029",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "circuit-lower-bounds",
+      "use_case": "attribution",
+      "probe": "Who proved Hastad's switching lemma (and the corresponding AC^0 lower bound for PARITY)?",
+      "expected_answer": "Johan Hastad; Hastad's PhD thesis 1986 / Wiley book 'Computational Limitations of Small-Depth Circuits' 1987. (Earlier weaker AC^0 lower bounds: Furst-Saxe-Sipser 1984; Ajtai 1983; Yao 1985.)",
+      "attribution_tuples": [
+        {
+          "theorem": "Hastad's switching lemma; AC^0 lower bound for PARITY",
+          "prover": "Johan Hastad",
+          "year": 1987,
+          "venue": "Hastad's MIT thesis 1986; book 1987"
+        },
+        {
+          "theorem": "AC^0 cannot compute PARITY (earlier weaker LB)",
+          "prover": "Furst, Saxe, Sipser",
+          "year": 1984,
+          "venue": "Math. Systems Theory"
+        },
+        {
+          "theorem": "AC^0 PARITY LB (independent)",
+          "prover": "Ajtai",
+          "year": 1983,
+          "venue": "Annals of Pure and Applied Logic"
+        },
+        {
+          "theorem": "AC^0 PARITY LB (independent strengthening)",
+          "prover": "Yao",
+          "year": 1985,
+          "venue": "FOCS 1985"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing only to Hastad (the original AC^0 LB for PARITY is FSS / Ajtai / Yao; Hastad sharpened)",
+        "wrong year"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_a_attr_016",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved that K_{3,3}-free graphs have max edges Theta(n^{5/3}) up to constants?",
+      "expected_answer": "W. G. Brown (1966) constructed dense K_{3,3}-free graphs achieving the Kővári-Sós-Turán O(n^{5/3}) upper bound.",
+      "attribution_tuples": [
+        {
+          "theorem": "Tight constant for Zarankiewicz z(n,n;3,3) ~ n^{5/3}",
+          "prover": "Brown",
+          "year": 1966,
+          "venue": "Canadian Mathematical Bulletin 9"
+        },
+        {
+          "theorem": "Kővári-Sós-Turán upper bound",
+          "prover": "Kővári, Sós, Turán",
+          "year": 1954,
+          "venue": "Colloquium Mathematicum 3"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "wrong author for the construction (Erdős-Rényi, Reiman common fabrications; Brown specifically did K_{3,3})",
+        "wrong exponent"
+      ]
+    },
+    {
+      "id": "harmonia_b_attr_022",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "equidistribution",
+      "use_case": "attribution",
+      "probe": "Who proved measure rigidity for diagonal flows on SL(n,R)/SL(n,Z) under positive entropy assumptions, leading to progress on the Littlewood conjecture?",
+      "expected_answer": "Manfred Einsiedler, Anatole Katok, and Elon Lindenstrauss, 'Invariant measures and the set of exceptions to Littlewood's conjecture', Annals of Mathematics 164 (2006), 513-560. They proved that the set of exceptions to Littlewood's conjecture has Hausdorff dimension zero, using measure rigidity for the diagonal action on SL(3,R)/SL(3,Z). Lindenstrauss received the 2010 Fields Medal partly for this work and for arithmetic quantum unique ergodicity.",
+      "attribution_tuples": [
+        {
+          "theorem": "Measure rigidity for diagonal action on SL(n,R)/SL(n,Z) with positive entropy; Littlewood exceptions have Hausdorff dimension 0",
+          "prover": "M. Einsiedler, A. Katok, E. Lindenstrauss",
+          "year": 2006,
+          "venue": "Annals of Mathematics 164, 513-560"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Stating Littlewood's conjecture is proved (only that the exceptional set is small)",
+        "Omitting any of the three authors (Einsiedler-Katok-Lindenstrauss is the canonical attribution)",
+        "Wrong year (2003 preprint vs 2006 publication)",
+        "Wrong venue (Inventiones or JAMS instead of Annals)",
+        "Conflating with Lindenstrauss's arithmetic QUE result (Annals 163, 2006 — different paper, same year)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_b_attr_028",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "ergodic-theory",
+      "use_case": "attribution",
+      "probe": "Who proved Ornstein's isomorphism theorem for Bernoulli shifts?",
+      "expected_answer": "Donald S. Ornstein, 'Bernoulli shifts with the same entropy are isomorphic', Advances in Mathematics 4 (1970), 337-352. The result classifies Bernoulli shifts up to measure-theoretic isomorphism by their entropy, settling a long-standing question of Kolmogorov. Ornstein received the Bocher Memorial Prize for this work in 1974.",
+      "attribution_tuples": [
+        {
+          "theorem": "Bernoulli shifts with equal entropy are measure-theoretically isomorphic",
+          "prover": "D. S. Ornstein",
+          "year": 1970,
+          "venue": "Advances in Mathematics 4, 337-352"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Attributing to Kolmogorov (he posed the question and introduced entropy 1958, but the isomorphism theorem is Ornstein's)",
+        "Attributing to Sinai (Sinai proved 'weak isomorphism' in 1962 — a precursor, but Ornstein proved the full isomorphism)",
+        "Wrong year (1969 or 1971)",
+        "Wrong venue (Annals of Math instead of Advances in Math)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_e_attr_022",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "communication-complexity",
+      "use_case": "attribution",
+      "probe": "Who proved the Theta(sqrt(n)) quantum communication complexity of DISJOINTNESS?",
+      "expected_answer": "Aleksandr Razborov; J. of the ACM 2003 (lower bound). Upper bound construction by Buhrman-Cleve-Wigderson via Grover and by Aaronson-Ambainis (efficient version).",
+      "attribution_tuples": [
+        {
+          "theorem": "DISJOINTNESS quantum CC lower bound Omega(sqrt(n))",
+          "prover": "Razborov",
+          "year": 2003,
+          "venue": "J. ACM"
+        },
+        {
+          "theorem": "DISJOINTNESS quantum CC upper bound O(sqrt(n))",
+          "prover": "Aaronson, Ambainis",
+          "year": 2005,
+          "venue": "FOCS / SIAM J. Comput."
+        }
+      ],
+      "common_fabrication_patterns": [
+        "confusing classical (Theta(n)) with quantum (Theta(sqrt(n)))",
+        "attributing only Buhrman-Cleve-Wigderson (early upper bound; Aaronson-Ambainis improved)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_c_attr_013",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the sharp constants in the Sobolev inequality W^{1,2}(R^n) -> L^{2n/(n-2)}?",
+      "expected_answer": "Thierry Aubin (1976) and Giorgio Talenti (1976) independently. Aubin in 'Problemes isoperimetriques et espaces de Sobolev', J. Differential Geometry 11. Talenti in 'Best constant in Sobolev inequality', Annali di Matematica Pura ed Applicata 110.",
+      "attribution_tuples": [
+        {
+          "theorem": "Sharp constant in W^{1,2} Sobolev inequality",
+          "prover": "Thierry Aubin",
+          "year": 1976,
+          "venue": "Journal of Differential Geometry 11"
+        },
+        {
+          "theorem": "Sharp constant in W^{1,2} Sobolev inequality",
+          "prover": "Giorgio Talenti",
+          "year": 1976,
+          "venue": "Annali di Matematica Pura ed Applicata 110"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Sobolev himself (Sobolev proved the embedding 1938, not sharp constants)",
+        "attributing to one of Aubin/Talenti alone (the work was independent and contemporaneous)"
+      ]
+    },
+    {
+      "id": "harmonia_b_attr_002",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "ergodic-theory",
+      "use_case": "attribution",
+      "probe": "Who proved the multiple recurrence theorem giving an ergodic-theoretic proof of Szemeredi's theorem?",
+      "expected_answer": "Hillel Furstenberg, 1977, 'Ergodic behavior of diagonal measures and a theorem of Szemeredi on arithmetic progressions', Journal d'Analyse Mathematique 31, 204-256. Szemeredi's original combinatorial proof appeared in 1975 (Acta Arithmetica 27); Furstenberg's reproof opened the field of ergodic Ramsey theory.",
+      "attribution_tuples": [
+        {
+          "theorem": "Multiple recurrence theorem (ergodic Szemeredi)",
+          "prover": "H. Furstenberg",
+          "year": 1977,
+          "venue": "Journal d'Analyse Mathematique 31, 204-256"
+        },
+        {
+          "theorem": "Original combinatorial Szemeredi theorem",
+          "prover": "E. Szemeredi",
+          "year": 1975,
+          "venue": "Acta Arithmetica 27, 199-245"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Attributing the ergodic proof to Furstenberg-Katznelson (they extended to multidimensional 1978, not the original)",
+        "Wrong year (1975 confusing with Szemeredi's combinatorial proof)",
+        "Wrong venue (Annals or Inventiones instead of J. d'Analyse Math)",
+        "Conflating with the Green-Tao theorem (primes in AP, 2008)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_c_attr_015",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the Riesz-Thorin interpolation theorem?",
+      "expected_answer": "Marcel Riesz proved a less general form in 1927; Olof Thorin gave the modern complex-method proof in 1938-1939. Riesz 1927 'Sur les maxima des formes bilineaires et sur les fonctionnelles lineaires', Acta Mathematica 49. Thorin 1948 (originally 1938 thesis) 'Convexity theorems generalizing those of M. Riesz and Hadamard with some applications', Comm. Sem. Math. Univ. Lund 9.",
+      "attribution_tuples": [
+        {
+          "theorem": "Riesz interpolation (real-method form)",
+          "prover": "Marcel Riesz",
+          "year": 1927,
+          "venue": "Acta Mathematica 49"
+        },
+        {
+          "theorem": "Thorin interpolation (complex-method)",
+          "prover": "Olof Thorin",
+          "year": "1938 (thesis) / 1948 (published)",
+          "venue": "Communications du Seminaire Mathematique de l'Universite de Lund 9"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Riesz alone (the modern complex-method proof is Thorin's)",
+        "missing Thorin or single-attribution (the result is canonically Riesz-Thorin)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_010",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the L^3-critical regularity criterion for 3D Navier-Stokes (sometimes called the 'L^3 ESS theorem')?",
+      "expected_answer": "Luis Escauriaza, Gregory Seregin, and Vladimir Sverak, 2003, in 'L^{3,infinity}-solutions of the Navier-Stokes equations and backward uniqueness', Russian Mathematical Surveys 58 (Uspekhi Mat. Nauk 58).",
+      "attribution_tuples": [
+        {
+          "theorem": "L^3 critical regularity for 3D NS",
+          "prover": "Luis Escauriaza, Gregory Seregin, Vladimir Sverak",
+          "year": 2003,
+          "venue": "Russian Mathematical Surveys 58 / Uspekhi Mat. Nauk 58"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "missing one of the three authors (commonly cited as ESS; full team is Escauriaza-Seregin-Sverak)",
+        "attributing to Kato (Kato proved earlier weaker critical-norm results; ESS specifically is the L^3 critical theorem)",
+        "wrong year (2002 or 2004 common; correct 2003)"
+      ]
+    },
+    {
+      "id": "harmonia_e_attr_010",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum-complexity",
+      "use_case": "attribution",
+      "probe": "Who proved MIP* = RE?",
+      "expected_answer": "Ji, Natarajan, Vidick, Wright, Yuen; arxiv 2001.04383 (2020).",
+      "attribution_tuples": [
+        {
+          "theorem": "MIP* = RE",
+          "prover": "Ji, Natarajan, Vidick, Wright, Yuen",
+          "year": 2020,
+          "venue": "arxiv 2001.04383"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "dropping authors (this is a 5-author result)",
+        "attributing to Vidick alone or Natarajan-Vidick alone",
+        "wrong year (2019, 2021)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_b_attr_024",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "mean-field-particle",
+      "use_case": "attribution",
+      "probe": "Who first formulated and proved propagation of chaos for interacting particle systems with smooth interactions, leading to McKean-Vlasov equations?",
+      "expected_answer": "Henry P. McKean Jr., 'A class of Markov processes associated with nonlinear parabolic equations', Proceedings of the National Academy of Sciences USA 56 (1966), 1907-1911, and 'Propagation of chaos for a class of nonlinear parabolic equations', in 'Lecture Series in Differential Equations 7' (Catholic University, 1967), 41-57. The systematic mathematical exposition with the modern coupling method is due to Alain-Sol Sznitman, 'Topics in propagation of chaos', in Ecole d'Ete de Probabilites de Saint-Flour XIX, Lecture Notes in Mathematics 1464 (Springer, 1991), 165-251.",
+      "attribution_tuples": [
+        {
+          "theorem": "McKean-Vlasov SDE; first propagation-of-chaos result for smooth interactions",
+          "prover": "H. P. McKean Jr.",
+          "year": 1966,
+          "venue": "Proc. Natl. Acad. Sci. USA 56, 1907-1911"
+        },
+        {
+          "theorem": "Saint-Flour systematic treatment of propagation of chaos via coupling",
+          "prover": "A.-S. Sznitman",
+          "year": 1991,
+          "venue": "Saint-Flour XIX, Lecture Notes in Math 1464 (Springer), 165-251"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Attributing 'propagation of chaos' phrase to Boltzmann or Kac alone (Kac introduced 'propagation of chaos' for caricature 1956 PSPM, McKean's 1966-67 papers gave the first rigorous nonlinear-parabolic proofs)",
+        "Wrong year for Sznitman (1989 or 1992 — the volume is 1991)",
+        "Wrong venue for McKean (Annals of Probability instead of PNAS)",
+        "Conflating Vlasov's (heuristic) 1938 derivation with rigorous propagation of chaos"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_a_attr_008",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved Polynomial Freiman-Ruzsa over F_2^n?",
+      "expected_answer": "Tim Gowers, Ben Green, Freddie Manners, and Terence Tao (2023).",
+      "attribution_tuples": [
+        {
+          "theorem": "Polynomial Freiman-Ruzsa conjecture over F_2^n",
+          "prover": "Gowers, Green, Manners, Tao",
+          "year": 2023,
+          "venue": "arxiv 2311.05762"
+        },
+        {
+          "theorem": "Original conjecture (PFR over abelian groups)",
+          "prover": "Marton (Katalin)",
+          "year": "1980s",
+          "venue": "various"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Sanders (Sanders 2012 proved the quasi-polynomial version, weaker)",
+        "claiming it solved PFR over Z (it solved over F_2^n; Z version is OPEN)",
+        "missing Manners (the third author, sometimes dropped)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_026",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved Hardy's uncertainty principle (decay of f and hat{f} both Gaussian forces f to be Gaussian)?",
+      "expected_answer": "G.H. Hardy, 1933, in 'A theorem concerning Fourier transforms', Journal of the London Mathematical Society 8.",
+      "attribution_tuples": [
+        {
+          "theorem": "Hardy uncertainty principle (Gaussian rigidity)",
+          "prover": "Godfrey Harold Hardy",
+          "year": 1933,
+          "venue": "Journal of the London Mathematical Society 8"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Heisenberg (Heisenberg uncertainty is the L^2 variance form, not the pointwise Gaussian form)",
+        "wrong year (1929 or 1936 common; correct 1933)"
+      ]
+    },
+    {
+      "id": "harmonia_a_attr_025",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved Dirac's theorem on Hamiltonian cycles?",
+      "expected_answer": "Gabriel Andrew Dirac (1952): every graph on n >= 3 vertices with min degree >= n/2 has a Hamiltonian cycle.",
+      "attribution_tuples": [
+        {
+          "theorem": "Dirac's theorem on Hamiltonian cycles",
+          "prover": "Dirac",
+          "year": 1952,
+          "venue": "Proc. London Math. Soc. (3) 2"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "wrong full name (Gabriel Andrew Dirac, not Paul Dirac the physicist)",
+        "attributing to Ore (Ore's theorem 1960 is a generalization)",
+        "wrong threshold (n/2 is correct; n/3 is fabrication)"
+      ]
+    },
+    {
+      "id": "harmonia_a_attr_021",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who introduced the regularity lemma?",
+      "expected_answer": "Endre Szemerédi (1975, in the proof of his arithmetic-progression theorem; published as a stand-alone in 1978).",
+      "attribution_tuples": [
+        {
+          "theorem": "Szemerédi Regularity Lemma",
+          "prover": "Szemerédi",
+          "year": "1975 (in AP theorem proof); 1978 (stand-alone)",
+          "venue": "Problèmes combinatoires et théorie des graphes (1978 publication)"
+        },
+        {
+          "theorem": "Strong regularity / removal lemma",
+          "prover": "Ruzsa, Szemerédi",
+          "year": 1978,
+          "venue": "Combinatorics (Keszthely 1976)"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Erdős (Erdős had related ideas; the lemma is Szemerédi's)",
+        "claiming it was first stated in the AP-theorem paper alone (the stand-alone formulation came 1978)"
+      ]
+    },
+    {
+      "id": "harmonia_e_attr_024",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "circuit-lower-bounds",
+      "use_case": "attribution",
+      "probe": "Who proved super-polynomial monotone-circuit lower bounds for CLIQUE?",
+      "expected_answer": "Aleksandr Razborov; Math. Notes 1985 ('Lower bounds for the monotone complexity of some Boolean functions'). Strengthened to exponential by Alon and Boppana (Combinatorica 1987).",
+      "attribution_tuples": [
+        {
+          "theorem": "Super-polynomial monotone CLIQUE LB",
+          "prover": "Razborov",
+          "year": 1985,
+          "venue": "Math. Notes"
+        },
+        {
+          "theorem": "Exponential monotone CLIQUE LB (strengthening)",
+          "prover": "Alon, Boppana",
+          "year": 1987,
+          "venue": "Combinatorica"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "misspelling Razborov as Razbarov (FM-02)",
+        "attributing to Razborov-Smolensky (different theorem — AC^0[p])",
+        "wrong year"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_c_attr_006",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the Bochner-Riesz conjecture in dimension n=2?",
+      "expected_answer": "Lennart Carleson and Per Sjolin, 1972, in 'Oscillatory integrals and a multiplier problem for the disc', Studia Mathematica 44.",
+      "attribution_tuples": [
+        {
+          "theorem": "Bochner-Riesz conjecture in n=2",
+          "prover": "Lennart Carleson, Per Sjolin",
+          "year": 1972,
+          "venue": "Studia Mathematica 44"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Bochner (the conjecture is named after Bochner-Riesz means; the proof in n=2 is Carleson-Sjolin)",
+        "attributing to Stein (Stein 1958 worked on related multiplier problems; the n=2 conjecture proof is Carleson-Sjolin)",
+        "wrong year (1970 or 1973 common; correct 1972)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_019",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved that L^infinity_t L^3_x in space-time implies smoothness for 3D incompressible Navier-Stokes (the L^3 critical condition)?",
+      "expected_answer": "Luis Escauriaza, Gregory Seregin, and Vladimir Sverak, 2003, in 'L^{3, infinity}-solutions of the Navier-Stokes equations and backward uniqueness', Russian Mathematical Surveys 58.",
+      "attribution_tuples": [
+        {
+          "theorem": "L^3 critical regularity for 3D NS",
+          "prover": "Escauriaza, Seregin, Sverak",
+          "year": 2003,
+          "venue": "Russian Mathematical Surveys 58 / Uspekhi Mat. Nauk 58"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "missing one of the three (often Sverak dropped, sometimes Seregin); the result is canonically all three",
+        "wrong year (2001 or 2002 common; correct 2003 publication)"
+      ]
+    },
+    {
+      "id": "harmonia_d_attr_005",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who solved Post's problem by exhibiting two computably enumerable sets of incomparable Turing degree?",
+      "expected_answer": "Independently, Richard M. Friedberg and Albert A. Muchnik, using the finite-injury priority method. Muchnik published in Doklady Akademii Nauk SSSR vol. 108 (1956), pp. 194-197; Friedberg in PNAS vol. 43 (1957), pp. 236-238.",
+      "attribution_tuples": [
+        {
+          "theorem": "Existence of incomparable c.e. Turing degrees (Post's problem)",
+          "prover": "Muchnik",
+          "year": 1956,
+          "venue": "Doklady Akademii Nauk SSSR Vol. 108"
+        },
+        {
+          "theorem": "Existence of incomparable c.e. Turing degrees (Post's problem)",
+          "prover": "Friedberg",
+          "year": 1957,
+          "venue": "PNAS Vol. 43"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing solely to Friedberg or solely to Muchnik (the two solutions are independent and contemporaneous)",
+        "attributing to Post (who POSED the problem in 1944 but did not solve it)",
+        "wrong years 1954 or 1958 (Muchnik 1956, Friedberg 1957)",
+        "venue confusion citing JSL instead of Doklady / PNAS"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_b_attr_015",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "symbolic-dynamics",
+      "use_case": "attribution",
+      "probe": "Who characterized the entropies of Z^d shifts of finite type for d at least 2?",
+      "expected_answer": "Michael Hochman and Tom Meyerovitch, 'A characterization of the entropies of multidimensional shifts of finite type', Annals of Mathematics 171 (2010), 2011-2038. The characterization: the entropies of Z^d SFTs (d at least 2) are exactly the right-recursively-enumerable nonnegative reals. This contrasts sharply with d=1, where SFT entropies are logs of Perron numbers (D. Lind, 1984).",
+      "attribution_tuples": [
+        {
+          "theorem": "Z^d SFT entropies (d at least 2) are precisely the right-recursively-enumerable nonnegative reals",
+          "prover": "M. Hochman and T. Meyerovitch",
+          "year": 2010,
+          "venue": "Annals of Mathematics 171, 2011-2038"
+        },
+        {
+          "theorem": "Z^1 SFT entropies are logs of Perron numbers (contrasting case)",
+          "prover": "D. Lind",
+          "year": 1984,
+          "venue": "Ergodic Theory and Dynamical Systems 4, 283-300"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Wrong year (2008 — the preprint, vs 2010 publication)",
+        "Wrong venue (Inventiones or Duke instead of Annals)",
+        "Conflating the d=1 Lind characterization (Perron numbers) with the d>=2 Hochman-Meyerovitch characterization (RE numbers); these are very different",
+        "Attributing the Z^d result to Lind (who proved the d=1 case decades earlier)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_attr_028",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved that the bounded proper forcing axiom (BPFA) is equiconsistent with a Sigma_1-reflecting cardinal?",
+      "expected_answer": "Martin Goldstern and Saharon Shelah, 'The bounded proper forcing axiom', Journal of Symbolic Logic Vol. 60 No. 1 (March 1995), pp. 58-73. (Shelah publication number 507.)",
+      "attribution_tuples": [
+        {
+          "theorem": "BPFA equiconsistent with a Sigma_1-reflecting cardinal",
+          "prover": "Goldstern, Shelah",
+          "year": 1995,
+          "venue": "Journal of Symbolic Logic Vol. 60 No. 1, pp. 58-73"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing solely to Shelah (the result is joint Goldstern-Shelah)",
+        "attributing to Bagaria (who developed bounded forcing axioms as principles of generic absoluteness — companion result; the equiconsistency is Goldstern-Shelah)",
+        "wrong year 1993 or 1997 (the JSL paper is March 1995)",
+        "venue confusion citing Israel Journal of Math or Archive for Mathematical Logic instead of JSL"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_attr_015",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the geometric Mordell-Lang conjecture for function fields, using model theory of differentially closed fields and the dichotomy theorem for Zariski geometries?",
+      "expected_answer": "Ehud Hrushovski, 'The Mordell-Lang conjecture for function fields', Journal of the American Mathematical Society Vol. 9 No. 3 (1996), pp. 667-690.",
+      "attribution_tuples": [
+        {
+          "theorem": "Mordell-Lang for function fields (any characteristic)",
+          "prover": "Hrushovski",
+          "year": 1996,
+          "venue": "Journal of the AMS Vol. 9 No. 3, pp. 667-690"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Faltings (who proved the NUMBER FIELD Mordell conjecture in 1983 — a different theorem)",
+        "attributing to Buium (who developed earlier differential-algebraic approach but did not solve function-field Mordell-Lang in all characteristics)",
+        "wrong year 1994 or 1998 (the J. AMS paper is 1996)",
+        "venue confusion citing Annals of Math or Inventiones instead of J. AMS"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_attr_003",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved Borel determinacy in ZFC?",
+      "expected_answer": "Donald A. Martin, in 'Borel determinacy', Annals of Mathematics Series 2, Vol. 102 No. 2 (1975), pp. 363-371. The proof requires the axiom of replacement essentially (per a result of H. Friedman).",
+      "attribution_tuples": [
+        {
+          "theorem": "Borel sets are determined (in ZFC)",
+          "prover": "Martin",
+          "year": 1975,
+          "venue": "Annals of Mathematics Vol. 102 No. 2"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Martin and Steel (who proved PROJECTIVE determinacy from Woodin cardinals — a different theorem, in 1989)",
+        "wrong year 1973 or 1985 (Borel determinacy was 1975; the simplified proof is 1985 in JSL but original is 1975)",
+        "venue confusion citing Journal of Symbolic Logic instead of Annals of Math",
+        "attributing to Friedman (Friedman proved that replacement is needed — meta-result, not the determinacy theorem)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_c_attr_028",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved De Giorgi's conjecture for stable monotone solutions of the Allen-Cahn equation in R^3 (level sets are hyperplanes)?",
+      "expected_answer": "Luigi Ambrosio and Xavier Cabre, 2000, in 'Entire solutions of semilinear elliptic equations in R^3 and a conjecture of De Giorgi', Journal of the American Mathematical Society 13.",
+      "attribution_tuples": [
+        {
+          "theorem": "De Giorgi conjecture for Allen-Cahn in R^3",
+          "prover": "Luigi Ambrosio, Xavier Cabre",
+          "year": 2000,
+          "venue": "Journal of the American Mathematical Society 13"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to De Giorgi himself (he conjectured 1978; Ambrosio-Cabre proved n=3)",
+        "missing one of two authors (canonically Ambrosio-Cabre)",
+        "claiming the result is for general n (it's specifically n = 3; n=2 is Ghoussoub-Gui 1998)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_021",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved that the Lindelof-direction exponent satisfies mu(1/2) <= 13/84 for the Riemann zeta function?",
+      "expected_answer": "Jean Bourgain, 2017, in 'Decoupling, exponential sums and the Riemann zeta function', Journal of the American Mathematical Society 30.",
+      "attribution_tuples": [
+        {
+          "theorem": "Lindelof-direction bound mu(1/2) <= 13/84",
+          "prover": "Jean Bourgain",
+          "year": 2017,
+          "venue": "Journal of the American Mathematical Society 30"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Trudgian or other zeta-function specialists (the 13/84 bound is Bourgain's via decoupling)",
+        "wrong constant (32/205 is older Huxley bound; 13/84 is Bourgain's)",
+        "wrong year (2015 or 2018 common; correct 2017)"
+      ]
+    },
+    {
+      "id": "harmonia_d_attr_001",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the consistency of the Generalized Continuum Hypothesis with ZFC, and where was it first announced?",
+      "expected_answer": "Kurt Gödel announced the relative consistency of GCH (and AC) with ZF in PNAS Vol. 24 No. 12 (December 1938), pp. 556-557, via the inner model L of constructible sets. The full proof appeared as the 1940 Princeton monograph 'The Consistency of the Continuum Hypothesis'.",
+      "attribution_tuples": [
+        {
+          "theorem": "Consistency of GCH with ZF (constructible universe L)",
+          "prover": "Gödel",
+          "year": 1938,
+          "venue": "PNAS Vol. 24 No. 12, pp. 556-557"
+        },
+        {
+          "theorem": "Consistency of GCH with ZF (full monograph)",
+          "prover": "Gödel",
+          "year": 1940,
+          "venue": "Annals of Mathematics Studies 3, Princeton University Press"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing the consistency direction to Cohen (Cohen proved the consistency of NEGATION of CH in 1963 — the OPPOSITE direction of the independence)",
+        "wrong year 1939 or 1940 for the PNAS announcement (the announcement was 1938; only the monograph is 1940)",
+        "venue confusion citing Annals of Mathematics or JSL instead of PNAS / Annals of Math Studies",
+        "attributing to von Neumann or Bernays who developed adjacent set-theoretic frameworks but did not prove this"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_e_attr_018",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "pseudorandomness",
+      "use_case": "attribution",
+      "probe": "Who proved the Impagliazzo-Wigderson hardness-vs-randomness theorem?",
+      "expected_answer": "Russell Impagliazzo and Avi Wigderson; STOC 1997.",
+      "attribution_tuples": [
+        {
+          "theorem": "If E requires 2^Omega(n)-size circuits, then BPP = P",
+          "prover": "Impagliazzo, Wigderson",
+          "year": 1997,
+          "venue": "STOC 1997"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Nisan-Wigderson (they proved earlier conditional results, IW improved)",
+        "claiming unconditional BPP = P (it is conditional on circuit LBs)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_a_attr_018",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved Ramsey's theorem?",
+      "expected_answer": "Frank Plumpton Ramsey (1930).",
+      "attribution_tuples": [
+        {
+          "theorem": "Ramsey's theorem (finite and infinite versions)",
+          "prover": "Ramsey",
+          "year": 1930,
+          "venue": "Proc. London Math. Soc. (2) 30"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "wrong first name (Frank Plumpton Ramsey, not John Ramsey)",
+        "wrong year (1928 or 1929 common; the published paper is 1930)",
+        "wrong venue (J. London Math. Soc. as opposed to Proc. London Math. Soc.)"
+      ]
+    },
+    {
+      "id": "harmonia_e_attr_004",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "circuit-lower-bounds",
+      "use_case": "attribution",
+      "probe": "Who proved NEXP is not in non-uniform ACC^0?",
+      "expected_answer": "Ryan Williams; proven in 2011 (STOC), final version in J. ACM 2014.",
+      "attribution_tuples": [
+        {
+          "theorem": "NEXP not in ACC^0",
+          "prover": "Ryan Williams",
+          "year": 2014,
+          "venue": "J. ACM (originally STOC 2011)"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Razborov (different person)",
+        "claiming P/poly result (it's ACC^0, not P/poly)",
+        "wrong year 2010 or 2013"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_c_attr_016",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the Marcinkiewicz interpolation theorem (interpolation between weak-type endpoints)?",
+      "expected_answer": "Jozef Marcinkiewicz, posthumously 1939 (announced 1939, published 1939 in Comptes Rendus); Marcinkiewicz died in WWII (1940), so the theorem was disseminated by Zygmund's exposition. Marcinkiewicz 1939 'Sur l'interpolation d'operations', C.R. Acad. Sci. Paris 208.",
+      "attribution_tuples": [
+        {
+          "theorem": "Marcinkiewicz interpolation",
+          "prover": "Jozef Marcinkiewicz",
+          "year": 1939,
+          "venue": "Comptes Rendus de l'Academie des Sciences (Paris) 208"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Zygmund (Zygmund disseminated the work but Marcinkiewicz proved it; the theorem is named correctly after Marcinkiewicz)",
+        "wrong year (1937 or 1940 common; correct 1939)"
+      ]
+    },
+    {
+      "id": "harmonia_b_attr_027",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "hyperbolic-dynamics",
+      "use_case": "attribution",
+      "probe": "Who introduced topological pressure and the variational principle for it?",
+      "expected_answer": "Topological pressure was introduced by David Ruelle, 'Statistical mechanics on a compact set with Z^nu action satisfying expansiveness and specification', Transactions of the AMS 185 (1973), 237-251, generalizing Adler-Konheim-McAndrew topological entropy. The variational principle relating pressure to measure-theoretic pressure was proved by Peter Walters, 'A variational principle for the pressure of continuous transformations', American Journal of Mathematics 97 (1975), 937-971, building on Ruelle's setup and the entropy variational principle (Goodwyn 1969 / Dinaburg 1970 / Goodman 1971).",
+      "attribution_tuples": [
+        {
+          "theorem": "Definition of topological pressure",
+          "prover": "D. Ruelle",
+          "year": 1973,
+          "venue": "Transactions of the AMS 185, 237-251"
+        },
+        {
+          "theorem": "Variational principle for pressure (full generality)",
+          "prover": "P. Walters",
+          "year": 1975,
+          "venue": "American Journal of Mathematics 97, 937-971"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Attributing variational principle to Ruelle alone (he proved it under expansiveness+specification; Walters removed those hypotheses)",
+        "Wrong year for Ruelle (1972 or 1976)",
+        "Wrong venue for Walters (Trans AMS instead of American Journal of Math)",
+        "Conflating with the entropy variational principle (Goodwyn-Dinaburg-Goodman, earlier and special case)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_attr_016",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved that the strengthened finite Ramsey theorem is true but unprovable in Peano arithmetic?",
+      "expected_answer": "Jeff Paris and Leo Harrington, 'A mathematical incompleteness in Peano arithmetic', appearing as a chapter in the Handbook of Mathematical Logic (J. Barwise, ed.), North-Holland, 1977, pp. 1133-1142.",
+      "attribution_tuples": [
+        {
+          "theorem": "Strengthened finite Ramsey theorem unprovable in PA (Paris-Harrington)",
+          "prover": "Paris, Harrington",
+          "year": 1977,
+          "venue": "Handbook of Mathematical Logic (Barwise ed.), North-Holland, pp. 1133-1142"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Kirby-Paris (who proved Goodstein's theorem unprovable in PA in 1982 — a similar but distinct result)",
+        "wrong year 1978 or 1982 (the Handbook chapter is 1977)",
+        "venue confusion citing JSL or Annals of Math instead of the North-Holland Handbook",
+        "attributing solely to Harrington (the result is jointly Paris and Harrington)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_c_attr_020",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the A_2 conjecture for general Calderon-Zygmund operators?",
+      "expected_answer": "Tuomas Hytonen, 2012, in 'The sharp weighted bound for general Calderon-Zygmund operators', Annals of Mathematics 175.",
+      "attribution_tuples": [
+        {
+          "theorem": "Sharp A_2 weighted bound for general CZ operators",
+          "prover": "Tuomas Hytonen",
+          "year": 2012,
+          "venue": "Annals of Mathematics 175"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "claim A_2 conjecture is still open (it was settled in 2012)",
+        "attributing to Petermichl (Petermichl proved A_2 for the Hilbert transform 2007; Hytonen 2012 is the general CZ case)",
+        "wrong year (2010 or 2014 common; correct 2012)"
+      ]
+    },
+    {
+      "id": "harmonia_a_attr_003",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved the existence of combinatorial designs (Steiner-type) for arbitrary t?",
+      "expected_answer": "Peter Keevash (2014) proved existence of designs for sufficiently large n satisfying the natural divisibility conditions, using randomized algebraic constructions.",
+      "attribution_tuples": [
+        {
+          "theorem": "Existence of designs S(t, k, n) for sufficiently large n satisfying divisibility",
+          "prover": "Keevash",
+          "year": 2014,
+          "venue": "arxiv 1401.3665"
+        },
+        {
+          "theorem": "Combinatorial proof of design existence via iterative absorption",
+          "prover": "Glock, Kühn, Lo, Osthus",
+          "year": 2016,
+          "venue": "arxiv 1611.06827"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Wilson (Wilson 1975 proved existence for k=3 case and graph-design analogues; not the general t-design result)",
+        "attributing to Erdős (he posed many design questions; did not prove this)",
+        "wrong year (2010 or 2012 common)"
+      ]
+    },
+    {
+      "id": "harmonia_e_attr_009",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "approximation-hardness",
+      "use_case": "attribution",
+      "probe": "Who proved the 2-to-2 Games Conjecture?",
+      "expected_answer": "Khot, Minzer, Safra; FOCS 2018.",
+      "attribution_tuples": [
+        {
+          "theorem": "2-to-2 Games Conjecture (Pseudorandom sets in Grassmann graph have near-perfect expansion)",
+          "prover": "Khot, Minzer, Safra",
+          "year": 2018,
+          "venue": "FOCS 2018"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "claiming this proves UGC (it is a strict weakening — 2-to-2 not 1-to-1)",
+        "attributing to Khot alone",
+        "wrong year (2017)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_a_attr_012",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved the Erdős-Ko-Rado theorem?",
+      "expected_answer": "Paul Erdős, Chao Ko, and Richard Rado (1961). Note: the result was obtained earlier (around 1938) but published in 1961 due to wartime delays.",
+      "attribution_tuples": [
+        {
+          "theorem": "Erdős-Ko-Rado intersection theorem for k-uniform families",
+          "prover": "Erdős, Ko, Rado",
+          "year": 1961,
+          "venue": "Quarterly Journal of Mathematics Oxford 12"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "wrong order of names (alphabetical: Erdős, Ko, Rado is correct)",
+        "wrong venue (Annals or J. Combin. Theory common fabrications)",
+        "missing Ko (Ko is sometimes dropped, leaving 'Erdős-Rado theorem' which is a different sunflower-related result)"
+      ]
+    },
+    {
+      "id": "harmonia_d_attr_027",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved that PFA implies AD holds in L(R)?",
+      "expected_answer": "John R. Steel, 'PFA implies AD^{L(R)}', Journal of Symbolic Logic Vol. 70 No. 4 (2005), pp. 1255-1296. (Earlier results in this direction by Todorčević and Schimmerling-Schindler.)",
+      "attribution_tuples": [
+        {
+          "theorem": "PFA implies AD^{L(R)}",
+          "prover": "Steel",
+          "year": 2005,
+          "venue": "Journal of Symbolic Logic Vol. 70 No. 4, pp. 1255-1296"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Woodin (whose Pmax/AD+ machinery is foundational; the PFA -> AD^L(R) implication is Steel 2005)",
+        "attributing to Schindler alone or Trang (who have related core-model-induction results; this specific theorem is Steel)",
+        "wrong year 2003 or 2007 (the JSL paper is 2005)",
+        "venue confusion citing Annals of Math or J. Math. Logic instead of JSL"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_attr_023",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who introduced the C^{(n)}-cardinal hierarchy, giving a characterization of Vopěnka's principle in terms of C^{(n)}-extendible cardinals?",
+      "expected_answer": "Joan Bagaria, 'C^{(n)}-cardinals', Archive for Mathematical Logic Vol. 51 No. 3-4 (2012), pp. 213-240.",
+      "attribution_tuples": [
+        {
+          "theorem": "Characterization of Vopěnka's principle via C^{(n)}-extendible cardinals",
+          "prover": "Bagaria",
+          "year": 2012,
+          "venue": "Archive for Mathematical Logic Vol. 51 No. 3-4, pp. 213-240"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Vopěnka (who proposed the principle c. 1970s; the C^{(n)}-characterization is Bagaria)",
+        "wrong year 2010 or 2014 (the Archive paper is 2012)",
+        "venue confusion citing JSL or Annals of Pure and Applied Logic instead of Archive for Mathematical Logic",
+        "attributing to Bagaria-Magidor (later joint extensions exist; the original C^{(n)}-cardinals paper is Bagaria solo)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_b_attr_013",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "symbolic-dynamics",
+      "use_case": "attribution",
+      "probe": "Who classified Sturmian sequences as the binary sequences of minimal complexity p(n) = n + 1?",
+      "expected_answer": "Marston Morse and Gustav Hedlund, 'Symbolic dynamics II: Sturmian trajectories', American Journal of Mathematics 62 (1940), 1-42. The companion paper 'Symbolic dynamics' (American Journal of Mathematics 60, 1938, 815-866) introduced the framework. The term 'Sturmian' honors J. C. F. Sturm.",
+      "attribution_tuples": [
+        {
+          "theorem": "Characterization of Sturmian sequences (complexity n+1, mechanical/cutting-sequence equivalence)",
+          "prover": "M. Morse and G. A. Hedlund",
+          "year": 1940,
+          "venue": "American Journal of Mathematics 62, 1-42"
+        },
+        {
+          "theorem": "Foundations of symbolic dynamics",
+          "prover": "M. Morse and G. A. Hedlund",
+          "year": 1938,
+          "venue": "American Journal of Mathematics 60, 815-866"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Attributing to Sturm himself (Sturm worked on differential equations, not symbolic sequences; the name is honorific)",
+        "Crediting only Morse (Hedlund was co-author on both founding papers)",
+        "Wrong year (1938 confusing with the first Symbolic Dynamics paper)",
+        "Wrong venue (Annals or Trans. AMS instead of American Journal of Math)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_d_attr_006",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the consistency of Martin's Axiom together with the negation of the Continuum Hypothesis, by introducing iterated forcing?",
+      "expected_answer": "Robert M. Solovay and Stanley Tennenbaum, in 'Iterated Cohen extensions and Souslin's problem', Annals of Mathematics Series 2, Vol. 94 No. 2 (1971), pp. 201-245. The same paper establishes consistency of Souslin's hypothesis.",
+      "attribution_tuples": [
+        {
+          "theorem": "Consistency of MA + ¬CH; consistency of Souslin's hypothesis",
+          "prover": "Solovay, Tennenbaum",
+          "year": 1971,
+          "venue": "Annals of Mathematics Vol. 94 No. 2, pp. 201-245"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Martin alone (Martin formulated MA but Solovay-Tennenbaum proved its consistency with ¬CH)",
+        "wrong year 1965 (work circulated earlier but the published paper is 1971)",
+        "venue confusion citing Israel Journal of Mathematics or JSL instead of Annals of Math",
+        "attributing the Souslin half to Jensen (Jensen proved the OTHER consistency direction — ¬SH from V=L via diamond)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_e_attr_013",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "complexity-class-separations",
+      "use_case": "attribution",
+      "probe": "Who proved IP = PSPACE?",
+      "expected_answer": "Adi Shamir; J. ACM 1992 (originally announced FOCS 1990). Lund-Fortnow-Karloff-Nisan first showed coNP ⊆ IP via arithmetization (FOCS 1990).",
+      "attribution_tuples": [
+        {
+          "theorem": "IP = PSPACE",
+          "prover": "Adi Shamir",
+          "year": 1992,
+          "venue": "J. ACM"
+        },
+        {
+          "theorem": "coNP ⊆ IP (precursor)",
+          "prover": "Lund, Fortnow, Karloff, Nisan",
+          "year": 1990,
+          "venue": "FOCS"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to LFKN (they proved coNP ⊆ IP, a key step; Shamir completed the equality)",
+        "wrong year (1991)",
+        "attributing to Babai (different result)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_d_attr_022",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the Tarski problem on the elementary equivalence of finitely generated nonabelian free groups (in the Sela approach)?",
+      "expected_answer": "Zlil Sela, 'Diophantine geometry over groups VI: the elementary theory of a free group', Geometric and Functional Analysis (GAFA) Vol. 16 No. 3 (2006), pp. 707-730. Independently solved by Olga Kharlampovich and Alexei Myasnikov in their 'Elementary theory of free non-abelian groups', J. Algebra 302 (2006), pp. 451-552.",
+      "attribution_tuples": [
+        {
+          "theorem": "Nonabelian free groups have the same first-order theory (Tarski problem) — Sela approach",
+          "prover": "Sela",
+          "year": 2006,
+          "venue": "GAFA Vol. 16 No. 3, pp. 707-730"
+        },
+        {
+          "theorem": "Nonabelian free groups have the same first-order theory (Tarski problem) — Kharlampovich-Myasnikov approach",
+          "prover": "Kharlampovich, Myasnikov",
+          "year": 2006,
+          "venue": "Journal of Algebra Vol. 302, pp. 451-552"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing solely to Sela without crediting Kharlampovich-Myasnikov (independent contemporaneous solution)",
+        "wrong year 2001 or 2010 (both GAFA paper VI and the Kharlampovich-Myasnikov paper are 2006)",
+        "venue confusion citing Annals of Math instead of GAFA / J. Algebra (the result is in TWO different journals)",
+        "attributing to Tarski (who POSED the problem c. 1945; he did not solve it)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_b_attr_016",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "1d-dynamics",
+      "use_case": "attribution",
+      "probe": "Who proved the period-ordering theorem for continuous self-maps of the interval (so-called 'period 3 implies chaos' precursor)?",
+      "expected_answer": "Oleksandr (Alexander) Sharkovsky, 'Co-existence of cycles of a continuous mapping of the line into itself', Ukrainian Mathematical Journal 16 (1964), 61-71 (in Russian). Sharkovsky's full ordering predates Li-Yorke's 'Period three implies chaos' (American Mathematical Monthly 82, 1975, 985-992) by about a decade and is strictly stronger.",
+      "attribution_tuples": [
+        {
+          "theorem": "Sharkovsky ordering of periods for continuous interval maps",
+          "prover": "O. M. Sharkovsky",
+          "year": 1964,
+          "venue": "Ukrainian Mathematical Journal (Ukrainskii Matematicheskii Zhurnal) 16, 61-71"
+        },
+        {
+          "theorem": "Period three implies chaos (independent later rediscovery of period-3 case in the West)",
+          "prover": "T. Y. Li and J. A. Yorke",
+          "year": 1975,
+          "venue": "American Mathematical Monthly 82, 985-992"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Crediting Li-Yorke as discoverers of the ordering (they only proved the period-3 case and were unaware of Sharkovsky)",
+        "Wrong year for Sharkovsky (1962 or 1965)",
+        "Wrong spelling 'Sarkovskii' vs 'Sharkovsky' vs 'Sharkovskii' (all transliterations exist; Ukrainian spelling Sharkovsky is now standard)",
+        "Wrong venue (Doklady or Soviet Math instead of Ukrainian Math Journal)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_e_attr_030",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "circuit-lower-bounds",
+      "use_case": "attribution",
+      "probe": "Who proved that natural proofs imply learning algorithms?",
+      "expected_answer": "Marco Carmosino, Russell Impagliazzo, Valentine Kabanets, Antonina Kolokolova; CCC 2016 ('Learning algorithms from natural proofs').",
+      "attribution_tuples": [
+        {
+          "theorem": "Natural proofs imply learning algorithms",
+          "prover": "Carmosino, Impagliazzo, Kabanets, Kolokolova",
+          "year": 2016,
+          "venue": "CCC 2016"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "dropping authors (CIKK is a 4-author result)",
+        "attributing to Razborov-Rudich (they showed natural proofs => break PRGs, CIKK gave the learning translation)",
+        "wrong year"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_e_attr_023",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "complexity-class-separations",
+      "use_case": "attribution",
+      "probe": "Who proved that PCP[O(log n), O(1)] = NP (the PCP theorem)?",
+      "expected_answer": "Sanjeev Arora and Shmuel Safra (Annals 1998 / FOCS 1992); and Arora, Lund, Motwani, Sudan, Szegedy (J. ACM 1998 / FOCS 1992). Combinatorial proof by Irit Dinur (J. ACM 2007).",
+      "attribution_tuples": [
+        {
+          "theorem": "PCP theorem (one direction: PCP[log, O(1)] = NP)",
+          "prover": "Arora, Safra",
+          "year": 1998,
+          "venue": "J. ACM (originally FOCS 1992)"
+        },
+        {
+          "theorem": "PCP theorem (with optimal soundness for inapproximability)",
+          "prover": "Arora, Lund, Motwani, Sudan, Szegedy (ALMSS)",
+          "year": 1998,
+          "venue": "J. ACM (originally FOCS 1992)"
+        },
+        {
+          "theorem": "Combinatorial proof of PCP via gap amplification",
+          "prover": "Irit Dinur",
+          "year": 2007,
+          "venue": "J. ACM"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "dropping co-authors of ALMSS or AS",
+        "attributing to Dinur alone (her proof is alternative, not the original)",
+        "wrong year"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_d_attr_030",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the Borel reducibility dichotomy for orbit equivalence relations of Polish group actions via the technique of turbulence?",
+      "expected_answer": "Greg Hjorth, 'Classification and orbit equivalence relations', Mathematical Surveys and Monographs Vol. 75, American Mathematical Society, Providence, 2000, xviii + 195 pp. The dichotomy theorem refinement appeared in 'A dichotomy theorem for turbulence', Journal of Symbolic Logic Vol. 67 No. 4 (2002), pp. 1520-1540.",
+      "attribution_tuples": [
+        {
+          "theorem": "Turbulence dichotomy for Polish group actions (monograph)",
+          "prover": "Hjorth",
+          "year": 2000,
+          "venue": "AMS Mathematical Surveys and Monographs Vol. 75"
+        },
+        {
+          "theorem": "A dichotomy theorem for turbulence",
+          "prover": "Hjorth",
+          "year": 2002,
+          "venue": "Journal of Symbolic Logic Vol. 67 No. 4, pp. 1520-1540"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Hjorth-Kechris (Kechris collaborates extensively on related Borel-equivalence-relations work, but the turbulence framework is Hjorth's solo monograph)",
+        "wrong year 1998 or 2003 (the AMS Surveys monograph is 2000; JSL dichotomy paper is 2002)",
+        "venue confusion citing Annals of Math or JAMS instead of AMS Surveys / JSL",
+        "attributing the original turbulence concept to Becker-Kechris (whose 1996 'Descriptive set theory of Polish group actions' is foundational background, but turbulence is Hjorth)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_b_attr_026",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "ergodic-theory",
+      "use_case": "attribution",
+      "probe": "Who proved the Shannon-McMillan-Breiman theorem (almost-sure convergence of -1/n log mu(C_n(x)) to entropy)?",
+      "expected_answer": "Three-stage attribution: Claude Shannon proved the L^1 (mean) version for stationary ergodic Markov chains in 'A Mathematical Theory of Communication', Bell System Technical Journal 27 (1948); Brockway McMillan extended to stationary ergodic processes in L^1 in 'The basic theorems of information theory', Annals of Mathematical Statistics 24 (1953), 196-219; Leo Breiman strengthened to almost-sure convergence in 'The individual ergodic theorem of information theory', Annals of Mathematical Statistics 28 (1957), 809-811, with a correction in Annals of Math. Stat. 31 (1960), 809-810.",
+      "attribution_tuples": [
+        {
+          "theorem": "Mean-entropy convergence for ergodic Markov chains (original)",
+          "prover": "C. E. Shannon",
+          "year": 1948,
+          "venue": "Bell System Technical Journal 27, 379-423 and 623-656"
+        },
+        {
+          "theorem": "L^1 convergence for stationary ergodic processes",
+          "prover": "B. McMillan",
+          "year": 1953,
+          "venue": "Annals of Mathematical Statistics 24, 196-219"
+        },
+        {
+          "theorem": "Almost-sure (pointwise) convergence",
+          "prover": "L. Breiman",
+          "year": 1957,
+          "venue": "Annals of Mathematical Statistics 28, 809-811 (correction 1960)"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Attributing entire theorem to Shannon (only proved Markov-chain mean version)",
+        "Omitting any of the three names",
+        "Wrong year for Breiman (1958 or 1960 — the correction was 1960 but the main paper is 1957)",
+        "Wrong venue (IEEE Trans Inf Theory instead of Annals of Math Stat — the journal name predates IEEE)",
+        "Conflating with the Kolmogorov-Sinai theorem (entropy as conjugacy invariant; different result)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_c_attr_014",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the Calderon problem (recovery of conductivity from Dirichlet-to-Neumann data) in 2D for L^infinity conductivities?",
+      "expected_answer": "Kari Astala and Lassi Paivarinta, 2006, in 'Calderon's inverse conductivity problem in the plane', Annals of Mathematics 163.",
+      "attribution_tuples": [
+        {
+          "theorem": "2D Calderon problem for L^infinity conductivities",
+          "prover": "Kari Astala, Lassi Paivarinta",
+          "year": 2006,
+          "venue": "Annals of Mathematics 163"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Sylvester-Uhlmann (they did the n>=3 result for SMOOTH conductivities, 1987)",
+        "attributing to Calderon (Calderon posed the problem 1980; did not solve in 2D L^infinity)",
+        "wrong year (2004 or 2008 common; correct 2006)"
+      ]
+    },
+    {
+      "id": "harmonia_a_attr_009",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved the 5-chromatic unit-distance graph (improving Hadwiger-Nelson lower bound)?",
+      "expected_answer": "Aubrey de Grey (2018); Polymath 16 subsequently refined the construction to smaller graphs.",
+      "attribution_tuples": [
+        {
+          "theorem": "chi(R^2) >= 5 via explicit unit-distance graph",
+          "prover": "de Grey",
+          "year": 2018,
+          "venue": "arxiv 1804.02385; Geombinatorics 28"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Polymath (Polymath 16 came after de Grey, refining)",
+        "claiming chi(R^2) was proven to be 5 exactly (de Grey only raised the LOWER bound; upper bound 7 stands)",
+        "wrong year (2017 or 2019 common)"
+      ]
+    },
+    {
+      "id": "harmonia_a_attr_010",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved the Robertson-Seymour Graph Minor Theorem?",
+      "expected_answer": "Neil Robertson and Paul Seymour, across the 20-paper Graph Minors series spanning 1983-2004.",
+      "attribution_tuples": [
+        {
+          "theorem": "Graph Minor Theorem: finite graphs are well-quasi-ordered under minor relation",
+          "prover": "Robertson, Seymour",
+          "year": "1983-2004",
+          "venue": "Journal of Combinatorial Theory Series B (Graph Minors I-XX)"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Wagner (Wagner posed the conjecture, did not prove it)",
+        "claiming a single paper proves it (it is a 20-paper series)",
+        "wrong years (1990s common; the series began 1983)"
+      ]
+    },
+    {
+      "id": "harmonia_a_attr_011",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved Mantel's theorem on triangle-free graphs?",
+      "expected_answer": "Willem Mantel (1907); Pál Turán (1941) generalized to K_{r+1}-free graphs.",
+      "attribution_tuples": [
+        {
+          "theorem": "Max edges in triangle-free graph on n vertices is floor(n^2/4)",
+          "prover": "Mantel",
+          "year": 1907,
+          "venue": "Wiskundige Opgaven 10"
+        },
+        {
+          "theorem": "Generalization to K_{r+1}-free graphs (Turán graphs)",
+          "prover": "Turán",
+          "year": 1941,
+          "venue": "Mat. Fiz. Lapok 48"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing only to Turán (Turán 1941 generalized; Mantel 1907 had the triangle case first)",
+        "wrong year for Mantel (1907 specifically)",
+        "wrong attribution to Erdős"
+      ]
+    },
+    {
+      "id": "harmonia_d_attr_011",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved Projective Determinacy from infinitely many Woodin cardinals?",
+      "expected_answer": "Donald A. Martin and John R. Steel, 'A proof of projective determinacy', Journal of the American Mathematical Society Vol. 2 No. 1 (1989), pp. 71-125.",
+      "attribution_tuples": [
+        {
+          "theorem": "Projective Determinacy follows from infinitely many Woodin cardinals",
+          "prover": "Martin, Steel",
+          "year": 1989,
+          "venue": "Journal of the AMS Vol. 2 No. 1, pp. 71-125"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing solely to Martin (who proved Borel determinacy in 1975; Projective Determinacy is the joint Martin-Steel 1989)",
+        "attributing to Woodin (Woodin developed Pmax and the optimal-determinacy proof from AD+; the PD-from-Woodins result is Martin-Steel)",
+        "wrong year 1985 or 1992 (the J. AMS publication is 1989)",
+        "venue confusion citing Annals of Math or Annals of Pure and Applied Logic instead of J. AMS"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_c_attr_004",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the Beale-Kato-Majda blowup criterion for 3D incompressible Euler?",
+      "expected_answer": "Tom Beale, Tosio Kato, and Andrew Majda, 1984, in 'Remarks on the breakdown of smooth solutions for the 3-D Euler equations', Communications in Mathematical Physics 94.",
+      "attribution_tuples": [
+        {
+          "theorem": "BKM blowup criterion for 3D Euler",
+          "prover": "Beale, Kato, Majda",
+          "year": 1984,
+          "venue": "Communications in Mathematical Physics 94"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "missing Kato or Majda (the result is canonically Beale-Kato-Majda; BKM is the standard abbreviation)",
+        "wrong year (1985 or 1983 common; correct 1984)"
+      ]
+    },
+    {
+      "id": "harmonia_b_attr_025",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "mean-field-particle",
+      "use_case": "attribution",
+      "probe": "Who proved a mean-field limit / propagation of chaos for the 2D Euler equation in the vortex formulation with singular Biot-Savart kernel?",
+      "expected_answer": "The first rigorous mean-field results for the 2D Euler vortex system with smoothed kernels go back to Marchioro and Pulvirenti (1982). The breakthrough handling the true singular Biot-Savart kernel via a relative-entropy method is due to Pierre-Emmanuel Jabin and Zhenfu Wang, 'Quantitative estimates of propagation of chaos for stochastic systems with W^{-1,infinity} kernels', Inventiones Mathematicae 214 (2018), 523-591. For deterministic 2D Euler vortices (no noise), full mean-field convergence remains delicate; the partial result of Schochet ('The point-vortex method for periodic weak solutions of the 2-D Euler equations', CPAM 49, 1996, 911-965) is canonical.",
+      "attribution_tuples": [
+        {
+          "theorem": "Quantitative propagation of chaos for stochastic 2D Euler / W^{-1,infinity} kernels (relative entropy)",
+          "prover": "P.-E. Jabin and Z. Wang",
+          "year": 2018,
+          "venue": "Inventiones Mathematicae 214, 523-591"
+        },
+        {
+          "theorem": "Earlier vortex mean-field with regularized kernels",
+          "prover": "C. Marchioro and M. Pulvirenti",
+          "year": 1982,
+          "venue": "Communications in Mathematical Physics 84, 483-503"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Stating the deterministic 2D Euler vortex mean-field is fully solved (it is not — singular kernel deterministic case remains partial)",
+        "Attributing solely to Caglioti-Marchioro-Pulvirenti (they did related stationary-statistical work, not the dynamical entropy-method breakthrough)",
+        "Wrong year (2016 — preprint, vs 2018 Inventiones)",
+        "Wrong venue (Annals or JAMS instead of Inventiones)",
+        "Confusing Jabin-Wang's stochastic result with full deterministic propagation of chaos"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_b_attr_011",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "KAM",
+      "use_case": "attribution",
+      "probe": "Who proved that quasi-periodic motions occur with positive Lebesgue measure in the parameter space for typical one-parameter families of area-preserving twist maps (the 'measurable KAM' / abundance result)?",
+      "expected_answer": "The full abundance/density-of-quasi-periodic-tori in the smooth/typical setting is due to several authors building on Kolmogorov-Arnold-Moser. The strongest 'global' result for SL(2,R) cocycles and one-frequency Schrodinger operators is due to Artur Avila, Bassam Fayad, and Raphael Krikorian, e.g., Avila-Krikorian, 'Reducibility or nonuniform hyperbolicity for quasiperiodic Schrodinger cocycles', Annals of Mathematics 164 (2006), 911-940. For the abundance of invariant tori in nearly-integrable Hamiltonians, Lazutkin (1973, billiard tables) and Poschel ('Integrability of Hamiltonian systems on Cantor sets', CPAM 35, 1982, 653-696) gave foundational measure-theoretic versions.",
+      "attribution_tuples": [
+        {
+          "theorem": "Reducibility / nonuniform hyperbolicity dichotomy for quasiperiodic Schrodinger cocycles",
+          "prover": "A. Avila and R. Krikorian",
+          "year": 2006,
+          "venue": "Annals of Mathematics 164, 911-940"
+        },
+        {
+          "theorem": "Cantor families of KAM tori (measure-theoretic abundance)",
+          "prover": "J. Poschel",
+          "year": 1982,
+          "venue": "Communications on Pure and Applied Mathematics 35, 653-696"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Attributing the entire abundance picture to Kolmogorov (1954 paper sketches existence of one torus, not measure)",
+        "Wrong attribution to Herman (Herman did seminal work on circle diffeomorphisms / Diophantine rotations 1979, related but distinct)",
+        "Wrong venue for Avila-Krikorian (JAMS or Inventiones instead of Annals)",
+        "Conflating with Avila's Fields Medal citation (which covered a broader body of work)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_a_attr_030",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved the Galvin theorem on list edge coloring of bipartite multigraphs?",
+      "expected_answer": "Fred Galvin (1995): the list-chromatic index of any bipartite multigraph equals its chromatic index.",
+      "attribution_tuples": [
+        {
+          "theorem": "Galvin's theorem (List Coloring Conjecture for bipartite multigraphs)",
+          "prover": "Galvin",
+          "year": 1995,
+          "venue": "Journal of Combinatorial Theory Series B 63"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "claiming Galvin proved LCC in general (Galvin proved bipartite case)",
+        "attributing to Erdős-Rubin-Taylor (they posed the LCC; did not prove Galvin's case)",
+        "wrong year"
+      ]
+    },
+    {
+      "id": "harmonia_b_attr_010",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "KAM",
+      "use_case": "attribution",
+      "probe": "Who originally announced what became known as the KAM theorem?",
+      "expected_answer": "Andrey Kolmogorov, 'On conservation of conditionally periodic motions for a small change in Hamilton's function', Doklady Akademii Nauk SSSR 98 (1954), 527-530. Kolmogorov gave a sketch of proof; complete proofs in different smoothness classes were given by Vladimir Arnold ('Proof of a theorem of A. N. Kolmogorov...', Russian Mathematical Surveys 18, 1963, 9-36, analytic case) and Jurgen Moser ('On invariant curves of area-preserving mappings of an annulus', Nachrichten der Akademie der Wissenschaften in Gottingen 1962, 1-20, finitely-differentiable twist maps). The acronym K-A-M reflects all three.",
+      "attribution_tuples": [
+        {
+          "theorem": "Persistence of invariant tori under small Hamiltonian perturbation (announcement)",
+          "prover": "A. N. Kolmogorov",
+          "year": 1954,
+          "venue": "Doklady Akademii Nauk SSSR 98, 527-530"
+        },
+        {
+          "theorem": "Full proof, analytic case",
+          "prover": "V. I. Arnold",
+          "year": 1963,
+          "venue": "Russian Mathematical Surveys 18, 9-36"
+        },
+        {
+          "theorem": "Smooth twist maps version",
+          "prover": "J. Moser",
+          "year": 1962,
+          "venue": "Nachr. Akad. Wiss. Gottingen, Math.-Phys. Kl. II, 1-20"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Attributing the entire theorem to one of the three (especially Moser, who is most cited in the West)",
+        "Wrong year for Kolmogorov (1953 or 1955)",
+        "Wrong venue for Moser (Annals or Math. Annalen instead of the Gottingen Nachrichten)",
+        "Wrong year for Arnold (1961 or 1964)",
+        "Conflating Kolmogorov's theorem with the later Arnold diffusion result"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_c_attr_002",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved a.e. convergence of Fourier series for L^2 functions on the torus?",
+      "expected_answer": "Lennart Carleson, 1966, in 'On convergence and growth of partial sums of Fourier series', Acta Mathematica 116.",
+      "attribution_tuples": [
+        {
+          "theorem": "A.e. convergence of Fourier series in L^2",
+          "prover": "Lennart Carleson",
+          "year": 1966,
+          "venue": "Acta Mathematica 116"
+        },
+        {
+          "theorem": "Extension to L^p for 1 < p < infinity",
+          "prover": "Richard Hunt",
+          "year": 1968,
+          "venue": "proceedings of the conference (paraphrase venue: Conference on Orthogonal Expansions and their Continuous Analogues, SIU)"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Kolmogorov (who showed the OPPOSITE - L^1 counterexample with everywhere divergence)",
+        "attributing to Hunt alone (Hunt extended to L^p but Carleson did the breakthrough L^2 case)",
+        "wrong year (1965 or 1967 common; correct 1966 for Carleson)"
+      ]
+    },
+    {
+      "id": "harmonia_d_attr_026",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved that the real exponential field is o-minimal (equivalently, model-complete with decidability conditional on Schanuel)?",
+      "expected_answer": "Alex J. Wilkie, 'Model completeness results for expansions of the ordered field of real numbers by restricted Pfaffian functions and the exponential function', Journal of the American Mathematical Society Vol. 9 No. 4 (1996), pp. 1051-1094.",
+      "attribution_tuples": [
+        {
+          "theorem": "Model completeness of the real exponential field; o-minimality of (R, exp)",
+          "prover": "Wilkie",
+          "year": 1996,
+          "venue": "Journal of the AMS Vol. 9 No. 4, pp. 1051-1094"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Tarski (who CONJECTURED decidability of (R, exp); Wilkie proved model completeness, decidability still requires Schanuel)",
+        "attributing to Pillay-Steinhorn (who introduced o-minimality in 1986 — earlier framework; (R, exp) o-minimality is Wilkie 1996)",
+        "wrong year 1994 or 1998 (the J. AMS paper is 1996)",
+        "venue confusion citing Annals of Math or Israel Journal of Math instead of J. AMS"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_a_attr_004",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved the Kahn-Kalai expectation-threshold conjecture?",
+      "expected_answer": "Jinyoung Park and Huy Tuan Pham (2022).",
+      "attribution_tuples": [
+        {
+          "theorem": "Kahn-Kalai expectation-threshold conjecture",
+          "prover": "Park, Pham",
+          "year": 2022,
+          "venue": "arxiv 2203.17207"
+        },
+        {
+          "theorem": "Original conjecture posed",
+          "prover": "Kahn, Kalai",
+          "year": 2007,
+          "venue": "Combinatorics Probability and Computing 16(3)"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Kahn-Kalai (they posed the conjecture; did not prove it)",
+        "attributing to Talagrand (Talagrand worked on related concentration; not this)",
+        "wrong year (2021 or 2023 common)"
+      ]
+    },
+    {
+      "id": "harmonia_d_attr_002",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the consistency of the negation of the Continuum Hypothesis with ZFC?",
+      "expected_answer": "Paul J. Cohen, by introducing the method of forcing. The two-part announcement appeared as 'The Independence of the Continuum Hypothesis' in PNAS Vol. 50 (1963) pp. 1143-1148 and 'The Independence of the Continuum Hypothesis, II' in PNAS Vol. 51 (1964) pp. 105-110.",
+      "attribution_tuples": [
+        {
+          "theorem": "Consistency of ¬CH with ZFC (forcing)",
+          "prover": "Cohen",
+          "year": 1963,
+          "venue": "PNAS Vol. 50, pp. 1143-1148"
+        },
+        {
+          "theorem": "Consistency of ¬CH with ZFC, Part II",
+          "prover": "Cohen",
+          "year": 1964,
+          "venue": "PNAS Vol. 51, pp. 105-110"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Gödel (who proved the OPPOSITE direction — consistency of CH itself)",
+        "wrong year 1962 or 1965 (the two-part PNAS publication was 1963 and 1964 specifically)",
+        "venue confusion citing Annals of Mathematics or Journal of Symbolic Logic instead of PNAS",
+        "attributing to Solovay or Tennenbaum (who developed iterated forcing later, on Souslin's problem, not CH)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_b_attr_006",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "hyperbolic-dynamics",
+      "use_case": "attribution",
+      "probe": "Who introduced the horseshoe map and the Omega-stability framework for Axiom A systems?",
+      "expected_answer": "Stephen Smale, 'Differentiable dynamical systems', Bulletin of the AMS 73 (1967), 747-817. The horseshoe construction itself was announced earlier (Smale's 1965 'Diffeomorphisms with many periodic points' in Differential and Combinatorial Topology, Princeton), but the canonical reference for both the horseshoe and the Axiom A / Omega-stability framework is the 1967 BAMS survey.",
+      "attribution_tuples": [
+        {
+          "theorem": "Horseshoe map; Axiom A diffeomorphisms; Omega-stability conjecture",
+          "prover": "S. Smale",
+          "year": 1967,
+          "venue": "Bulletin of the AMS 73, 747-817"
+        },
+        {
+          "theorem": "Original horseshoe announcement",
+          "prover": "S. Smale",
+          "year": 1965,
+          "venue": "Differential and Combinatorial Topology (Princeton volume in honor of M. Morse), 63-80"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Attributing horseshoe to Birkhoff (Birkhoff had a 'remarkable curve' in 1932 with similar dynamics, but the horseshoe construction is Smale's)",
+        "Wrong year (1966 or 1968)",
+        "Wrong venue (Annals of Math instead of Bull. AMS)",
+        "Conflating Omega-stability (proved by Smale) with structural stability (proved by Robbin/Robinson/Mane)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_e_attr_026",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "approximation-hardness",
+      "use_case": "attribution",
+      "probe": "Who proved the subexponential algorithm for unique games?",
+      "expected_answer": "Sanjeev Arora, Boaz Barak, David Steurer; FOCS 2010 ('Subexponential algorithms for unique games and related problems').",
+      "attribution_tuples": [
+        {
+          "theorem": "Subexponential algorithm for UG (exp(n^poly(epsilon)))",
+          "prover": "Arora, Barak, Steurer",
+          "year": 2010,
+          "venue": "FOCS 2010"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Khot (Khot introduced UGC, did not give the subexp algorithm)",
+        "claiming the result refutes UGC (it does not — establishes algorithmic cap, not refutation)",
+        "wrong year"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_a_attr_013",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved Szemerédi's theorem on arithmetic progressions in dense subsets of integers?",
+      "expected_answer": "Endre Szemerédi (1975).",
+      "attribution_tuples": [
+        {
+          "theorem": "Szemerédi's theorem: every positive-density subset of N contains arbitrarily long arithmetic progressions",
+          "prover": "Szemerédi",
+          "year": 1975,
+          "venue": "Acta Arithmetica 27"
+        },
+        {
+          "theorem": "Ergodic-theoretic proof",
+          "prover": "Furstenberg",
+          "year": 1977,
+          "venue": "J. Anal. Math. 31"
+        },
+        {
+          "theorem": "Hypergraph-removal-lemma proof",
+          "prover": "Gowers; independently Nagle-Rödl-Schacht-Skokan",
+          "year": "2006-2007",
+          "venue": "various"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Roth (Roth 1953 proved the k=3 case; Szemerédi 1975 generalized)",
+        "wrong year (1973 common; correct 1975)",
+        "missing the multiple-proof history"
+      ]
+    },
+    {
+      "id": "harmonia_d_attr_017",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved Goodstein's theorem unprovable in Peano arithmetic?",
+      "expected_answer": "Laurence Kirby and Jeff Paris, 'Accessible independence results for Peano arithmetic', Bulletin of the London Mathematical Society Vol. 14 No. 4 (1982), pp. 285-293. (Goodstein's theorem itself was proved by Reuben Goodstein in 1944 in JSL; the unprovability-in-PA is Kirby-Paris.)",
+      "attribution_tuples": [
+        {
+          "theorem": "Goodstein's theorem unprovable in PA",
+          "prover": "Kirby, Paris",
+          "year": 1982,
+          "venue": "Bulletin of the London Mathematical Society Vol. 14 No. 4, pp. 285-293"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Goodstein (who proved the THEOREM in 1944; the unprovability-in-PA is Kirby-Paris 1982)",
+        "attributing to Paris-Harrington (who proved a different unprovability — strengthened finite Ramsey, in 1977)",
+        "wrong year 1980 or 1984",
+        "venue confusion citing Annals of Math or JSL instead of Bull. LMS"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_e_attr_005",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "algebraic-complexity",
+      "use_case": "attribution",
+      "probe": "Who established the n^2/2 unconditional lower bound on the determinantal complexity of perm_n?",
+      "expected_answer": "Mignon and Ressayre; published 2004 in Theory of Computing.",
+      "attribution_tuples": [
+        {
+          "theorem": "dc(perm_n) >= n^2/2",
+          "prover": "Mignon, Ressayre",
+          "year": 2004,
+          "venue": "Theory of Computing"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Valiant (Valiant 1979 stated the conjecture; did not prove this LB)",
+        "wrong constant (n^2 instead of n^2/2)",
+        "attributing to Mulmuley-Sohoni (they proposed GCT, did not prove this LB)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_attr_024",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the lower-bound result that the failure of the Singular Cardinals Hypothesis (SCH) requires at least a measurable cardinal of high Mitchell order, via the analysis of indiscernible sequences for extenders?",
+      "expected_answer": "Moti Gitik and William J. Mitchell, 'Indiscernible sequences for extenders, and the singular cardinal hypothesis', Annals of Pure and Applied Logic Vol. 82 No. 3 (1996), pp. 273-316.",
+      "attribution_tuples": [
+        {
+          "theorem": "Lower-bound consistency strength for failure of SCH (via indiscernible sequences for extenders)",
+          "prover": "Gitik, Mitchell",
+          "year": 1996,
+          "venue": "Annals of Pure and Applied Logic Vol. 82 No. 3, pp. 273-316"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Mitchell alone (Mitchell proved earlier core-model lower bounds c. 1984-1992; this specific 1996 result is Gitik-Mitchell joint)",
+        "attributing to Gitik alone (Gitik has many later strengthenings; the 1996 paper is joint with Mitchell)",
+        "wrong year 1994 or 1998 (the APAL paper is 1996)",
+        "venue confusion citing JSL or Annals of Math instead of Annals of Pure and Applied Logic"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_c_attr_024",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved that arithmetic quantum unique ergodicity holds (Lindenstrauss QUE for arithmetic compact surfaces)?",
+      "expected_answer": "Elon Lindenstrauss, 2006, in 'Invariant measures and arithmetic quantum unique ergodicity', Annals of Mathematics 163.",
+      "attribution_tuples": [
+        {
+          "theorem": "Arithmetic QUE for compact arithmetic surfaces",
+          "prover": "Elon Lindenstrauss",
+          "year": 2006,
+          "venue": "Annals of Mathematics 163"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Sarnak (Sarnak conjectured QUE; Lindenstrauss proved the arithmetic case)",
+        "claiming Lindenstrauss proved general QUE (he proved arithmetic QUE; general QUE remains open)",
+        "wrong year (2004 or 2008 common; correct 2006)"
+      ]
+    },
+    {
+      "id": "harmonia_b_attr_005",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "hyperbolic-dynamics",
+      "use_case": "attribution",
+      "probe": "Who proved structural stability of Anosov diffeomorphisms?",
+      "expected_answer": "Dmitri V. Anosov, 'Geodesic flows on closed Riemannian manifolds with negative curvature', Proceedings of the Steklov Institute of Mathematics 90 (1967). The original Russian publication was Trudy Mat. Inst. Steklov 90 (1967), translated by AMS. Anosov proved both the C^1 structural stability of his namesake systems and ergodicity of geodesic flow on negatively curved manifolds.",
+      "attribution_tuples": [
+        {
+          "theorem": "Structural stability of Anosov diffeomorphisms; ergodicity of geodesic flow on negatively curved manifolds",
+          "prover": "D. V. Anosov",
+          "year": 1967,
+          "venue": "Proceedings of the Steklov Institute of Mathematics (Trudy Mat. Inst. Steklov) 90"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Attributing structural stability to Smale (he proved stability of Axiom A diffeomorphisms in his 1967 BAMS survey, building on Anosov)",
+        "Wrong year (1962 — the original announcements were earlier but the canonical full proof is the 1967 monograph)",
+        "Wrong venue (Russian Math. Surveys instead of Trudy Steklov)",
+        "Conflating with the Hadamard-Perron stable manifold theorem (much earlier, narrower)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_c_attr_008",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved that the Hilbert transform is bounded on L^p(R) for 1 < p < infinity?",
+      "expected_answer": "Marcel Riesz, 1928, in 'Sur les fonctions conjuguees', Mathematische Zeitschrift 27.",
+      "attribution_tuples": [
+        {
+          "theorem": "L^p boundedness of Hilbert transform, 1 < p < infinity",
+          "prover": "Marcel Riesz",
+          "year": 1928,
+          "venue": "Mathematische Zeitschrift 27"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Frigyes (Frederic) Riesz (his brother; F. Riesz did the L^2 boundedness; M. Riesz extended to L^p)",
+        "attributing to Hilbert (Hilbert defined the transform; M. Riesz proved L^p boundedness)",
+        "wrong year (1923 or 1925 common; correct 1928)"
+      ]
+    },
+    {
+      "id": "harmonia_d_attr_014",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved that every supercompact cardinal can be made indestructible by kappa-directed-closed forcing (Laver's theorem)?",
+      "expected_answer": "Richard Laver, 'Making the supercompactness of kappa indestructible under kappa-directed-closed forcing', Israel Journal of Mathematics Vol. 29 (1978), pp. 385-388.",
+      "attribution_tuples": [
+        {
+          "theorem": "Laver indestructibility of supercompacts",
+          "prover": "Laver",
+          "year": 1978,
+          "venue": "Israel Journal of Mathematics Vol. 29, pp. 385-388"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Hamkins (who developed the lottery preparation generalization in 2000 — a later technique; Laver did the original)",
+        "wrong year 1976 or 1980 (the IJM paper is 1978)",
+        "venue confusion citing JSL or Annals of Math instead of Israel Journal of Mathematics",
+        "incorrectly stating works for any large cardinal (the original Laver preparation is specifically for supercompacts)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_c_attr_025",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved that 2D Schrodinger pointwise convergence holds for s = 1/3 in H^s (Du-Guth-Li theorem)?",
+      "expected_answer": "Xiumin Du, Larry Guth, and Xiaochun Li, 2017 (announced) / 2019 (published), in 'A sharp Schrodinger maximal estimate in R^2', Annals of Mathematics 189.",
+      "attribution_tuples": [
+        {
+          "theorem": "Pointwise convergence of Schrodinger evolution in 2D for s > 1/3",
+          "prover": "Xiumin Du, Larry Guth, Xiaochun Li",
+          "year": "2017 / 2019",
+          "venue": "Annals of Mathematics 189 (paraphrase volume)"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "missing one of three authors (canonically Du-Guth-Li)",
+        "claim the threshold is 1/4 (Bourgain disproved s = 1/4 sufficiency for n >= 2)",
+        "wrong dimension (the Du-Guth-Li result is 2D specifically)"
+      ]
+    },
+    {
+      "id": "harmonia_a_attr_001",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved the Stanley-Wilf conjecture?",
+      "expected_answer": "Adam Marcus and Gábor Tardos (2004), via reduction by Klazar (2000) of Stanley-Wilf to the Füredi-Hajnal conjecture on excluded permutation matrices.",
+      "attribution_tuples": [
+        {
+          "theorem": "Stanley-Wilf conjecture (existence of L(sigma) limit)",
+          "prover": "Marcus, Tardos",
+          "year": 2004,
+          "venue": "Journal of Combinatorial Theory Series A 107(1), pages 153-160"
+        },
+        {
+          "theorem": "Reduction Stanley-Wilf to Füredi-Hajnal",
+          "prover": "Klazar",
+          "year": 2000,
+          "venue": "Formal Power Series and Algebraic Combinatorics conference / DMTCS"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Stanley alone (Stanley posed the conjecture; he did not prove it)",
+        "wrong venue (Annals of Mathematics is a common fabrication; correct is JCTA Series A)",
+        "wrong year (2002 or 2003 are common; correct is 2004)"
+      ]
+    },
+    {
+      "id": "harmonia_e_attr_001",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "complexity-class-separations",
+      "use_case": "attribution",
+      "probe": "Who proved the relativization barrier (existence of oracles A, B with P^A = NP^A and P^B != NP^B)?",
+      "expected_answer": "Baker, Gill, and Solovay; published 1975 in SIAM Journal on Computing.",
+      "attribution_tuples": [
+        {
+          "theorem": "relativization barrier (BGS 1975)",
+          "prover": "Baker, Gill, Solovay",
+          "year": 1975,
+          "venue": "SIAM J. Comput."
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Cook (Cook 1971 is NP-completeness, not relativization)",
+        "wrong year (1973 / 1979)",
+        "attributing only to Solovay (the result is a triple-author paper)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_c_attr_023",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the Cwikel-Lieb-Rozenblum (CLR) inequality on the number of negative eigenvalues of a Schrodinger operator?",
+      "expected_answer": "Mikhail Cwikel (1977), Elliott Lieb (1976), Grigori Rozenblum (1972) - three independent proofs. Cwikel 1977 'Weak type estimates for singular values and the number of bound states of Schrodinger operators', Annals of Mathematics 106. Lieb 1976 'Bounds on the eigenvalues of the Laplace and Schrodinger operators', Bull. AMS 82. Rozenblum 1972 'Distribution of the discrete spectrum of singular differential operators', Soviet Math.",
+      "attribution_tuples": [
+        {
+          "theorem": "CLR inequality, integral form",
+          "prover": "Grigori Rozenblum",
+          "year": 1972,
+          "venue": "Soviet Mathematics (Doklady)"
+        },
+        {
+          "theorem": "CLR inequality, alternative proof",
+          "prover": "Elliott Lieb",
+          "year": 1976,
+          "venue": "Bulletin of the AMS 82"
+        },
+        {
+          "theorem": "CLR inequality, weak-type-eigenvalue proof",
+          "prover": "Mikhail Cwikel",
+          "year": 1977,
+          "venue": "Annals of Mathematics 106"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "single-author attribution (the result is canonically all three; CLR is the standard abbreviation)",
+        "wrong order (Rozenblum was first 1972, then Lieb 1976, then Cwikel 1977)"
+      ]
+    },
+    {
+      "id": "harmonia_a_attr_005",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved the first exponential improvement on the diagonal Ramsey upper bound?",
+      "expected_answer": "Marcelo Campos, Simon Griffiths, Robert Morris, and Julian Sahasrabudhe (2023): R(k,k) <= (4 - epsilon)^k with epsilon = 2^{-7}.",
+      "attribution_tuples": [
+        {
+          "theorem": "R(k,k) <= (4 - 2^{-7})^k, first exponential improvement on Erdős-Szekeres 4^k",
+          "prover": "Campos, Griffiths, Morris, Sahasrabudhe",
+          "year": 2023,
+          "venue": "arxiv 2303.09521; accepted Annals of Mathematics"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Conlon alone (Conlon 2009 gave a polylog improvement, not exponential)",
+        "missing one of the four authors (especially Sahasrabudhe is sometimes dropped)",
+        "wrong year (2024 common; arxiv submission was March 2023)"
+      ]
+    },
+    {
+      "id": "harmonia_e_attr_011",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum-complexity",
+      "use_case": "attribution",
+      "probe": "Who proved that 2-Local Hamiltonian is QMA-complete?",
+      "expected_answer": "Kempe, Kitaev, Regev; SIAM J. Comput. 2006.",
+      "attribution_tuples": [
+        {
+          "theorem": "2-Local Hamiltonian is QMA-complete",
+          "prover": "Kempe, Kitaev, Regev",
+          "year": 2006,
+          "venue": "SIAM J. Comput."
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Kitaev alone (Kitaev showed 5-local in 2002 book; KKR improved to 2-local)",
+        "wrong locality (5-local rather than 2-local)",
+        "wrong year"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_attr_025",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the Glimm-Effros dichotomy for arbitrary Borel equivalence relations (so that either E_0 reduces to it or it is smooth)?",
+      "expected_answer": "Leo Harrington, Alexander S. Kechris, and Alain Louveau, 'A Glimm-Effros dichotomy for Borel equivalence relations', Journal of the American Mathematical Society Vol. 3 No. 4 (1990), pp. 903-928.",
+      "attribution_tuples": [
+        {
+          "theorem": "Glimm-Effros dichotomy for Borel equivalence relations",
+          "prover": "Harrington, Kechris, Louveau",
+          "year": 1990,
+          "venue": "Journal of the AMS Vol. 3 No. 4, pp. 903-928"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Glimm or Effros (who proved the original C*-algebra/topological-group versions in 1961/1965; Borel-equivalence-relations form is Harrington-Kechris-Louveau)",
+        "wrong year 1988 or 1992 (the J. AMS paper is 1990)",
+        "venue confusion citing Annals of Math or Fundamenta Mathematicae instead of J. AMS",
+        "attributing solely to Kechris (the result is the joint Harrington-Kechris-Louveau paper)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_attr_012",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved the consistency of Martin's Maximum (MM)?",
+      "expected_answer": "Matthew Foreman, Menachem Magidor, and Saharon Shelah, 'Martin's Maximum, saturated ideals, and nonregular ultrafilters. Part I', Annals of Mathematics Series 2, Vol. 127 No. 1 (1988), pp. 1-47.",
+      "attribution_tuples": [
+        {
+          "theorem": "Consistency of Martin's Maximum (MM) from a supercompact",
+          "prover": "Foreman, Magidor, Shelah",
+          "year": 1988,
+          "venue": "Annals of Mathematics Vol. 127 No. 1, pp. 1-47"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing the consistency to Asperó-Schindler (who proved MM++ implies (*) in 2021 — a different result downstream of MM)",
+        "wrong year 1987 or 1989 (the Annals paper is 1988; Part II is 1988 vol 127 no 3)",
+        "venue confusion citing Israel Journal of Mathematics or JSL instead of Annals of Math",
+        "attributing solely to Foreman or solely to Shelah (the consistency proof is the joint Foreman-Magidor-Shelah)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_attr_020",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved that PFA (the Proper Forcing Axiom) implies the existence of a five-element basis for the uncountable linear orders, settling Shelah's basis conjecture?",
+      "expected_answer": "Justin Tatch Moore, 'A five element basis for the uncountable linear orders', Annals of Mathematics Series 2, Vol. 163 No. 2 (2006), pp. 669-688.",
+      "attribution_tuples": [
+        {
+          "theorem": "PFA implies five-element basis for uncountable linear orders",
+          "prover": "Moore",
+          "year": 2006,
+          "venue": "Annals of Mathematics Vol. 163 No. 2, pp. 669-688"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Shelah (who CONJECTURED the basis structure; Moore proved it under PFA)",
+        "attributing to Todorcevic (who developed many tools used; the five-element basis result is Moore)",
+        "wrong year 2004 or 2008 (the Annals paper is 2006; arXiv preprint is math/0501525 from January 2005)",
+        "venue confusion citing JAMS or Israel Journal of Math instead of Annals of Math"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_b_attr_001",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "ergodic-theory",
+      "use_case": "attribution",
+      "probe": "Who proved the pointwise ergodic theorem, and when?",
+      "expected_answer": "George David Birkhoff, 1931, in PNAS 17, 656-660 ('Proof of the ergodic theorem'). The mean (L^2) ergodic theorem is due to von Neumann (1932 PNAS 18, 70-82); von Neumann's proof was actually completed first chronologically (communicated late 1931) but Birkhoff's pointwise version was published first.",
+      "attribution_tuples": [
+        {
+          "theorem": "Pointwise (almost-everywhere) ergodic theorem",
+          "prover": "G. D. Birkhoff",
+          "year": 1931,
+          "venue": "Proc. Natl. Acad. Sci. USA 17, 656-660"
+        },
+        {
+          "theorem": "Mean (L^2 / Hilbert space) ergodic theorem",
+          "prover": "J. von Neumann",
+          "year": 1932,
+          "venue": "Proc. Natl. Acad. Sci. USA 18, 70-82"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Attributing both theorems to Birkhoff (textbooks present them adjacent and undisciplined LLMs lump)",
+        "Wrong year (1933 instead of 1931, confusion with monograph publication)",
+        "Wrong venue (Annals of Math instead of PNAS)",
+        "Conflating G. D. Birkhoff with his son Garrett Birkhoff (lattice theory / algebra)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_b_attr_018",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "1d-dynamics",
+      "use_case": "attribution",
+      "probe": "Who proved density of hyperbolicity in the space of real polynomials of any degree (the real Fatou conjecture)?",
+      "expected_answer": "Oleg Kozlovski, Weixiao Shen, and Sebastian van Strien, 'Density of hyperbolicity in dimension one', Annals of Mathematics 166 (2007), 145-182. For the special case of the real quadratic family, the result was proved earlier by Mikhail Lyubich ('Dynamics of quadratic polynomials, III: Parapuzzle and SBR measure', Asterisque 261, 2000, 173-200; also in his 1997 Acta papers and 'Regular and stochastic dynamics in the real quadratic family', PNAS 95, 1998).",
+      "attribution_tuples": [
+        {
+          "theorem": "Density of hyperbolicity for real polynomials of arbitrary degree",
+          "prover": "O. Kozlovski, W. Shen, S. van Strien",
+          "year": 2007,
+          "venue": "Annals of Mathematics 166, 145-182"
+        },
+        {
+          "theorem": "Density of hyperbolicity in real quadratic family (precursor)",
+          "prover": "M. Lyubich",
+          "year": 1997,
+          "venue": "Acta Mathematica 178, 185-297"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Attributing the general-degree result to Lyubich (he handled real quadratic; the general case is Kozlovski-Shen-van Strien)",
+        "Omitting any of the three KSvS authors",
+        "Wrong year (2003 — the preprint vs 2007 publication)",
+        "Wrong venue (Inventiones instead of Annals)",
+        "Confusing with the complex Fatou conjecture (still open)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_e_attr_025",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "approximation-hardness",
+      "use_case": "attribution",
+      "probe": "Who proved the Goemans-Williamson approximation algorithm for MAX-CUT?",
+      "expected_answer": "Michel Goemans and David Williamson; J. ACM 1995. Achieves ratio alpha_GW approximately 0.87856 via SDP relaxation + random hyperplane rounding.",
+      "attribution_tuples": [
+        {
+          "theorem": "Goemans-Williamson 0.87856-approx for MAX-CUT",
+          "prover": "Goemans, Williamson",
+          "year": 1995,
+          "venue": "J. ACM"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "fabricating closed form like (1+sqrt(2))/2 (FAB-007 in seed corpus)",
+        "attributing to Khot-Kindler-Mossel-O'Donnell (they proved tightness under UGC, did not introduce GW)",
+        "wrong year"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_a_attr_014",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who established the Behrend lower bound for 3-AP-free sets?",
+      "expected_answer": "Felix Behrend (1946): r_3(N) >= N exp(-C sqrt(log N)) via lifting integers to spheres in high dimensions.",
+      "attribution_tuples": [
+        {
+          "theorem": "Behrend lower bound on 3-AP-free subset size",
+          "prover": "Behrend",
+          "year": 1946,
+          "venue": "Proceedings of the National Academy of Sciences 32"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Salem-Spencer (Salem-Spencer 1942 had a weaker construction; Behrend 1946 sharpened)",
+        "wrong exponent (often (log N)^{2/3} or (log N)^{1/3} appear as fabrications; correct is sqrt(log N))",
+        "wrong year"
+      ]
+    },
+    {
+      "id": "harmonia_d_attr_010",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved that IP = PSPACE (interactive proofs equal polynomial space)?",
+      "expected_answer": "Adi Shamir, 'IP = PSPACE', Journal of the ACM Vol. 39 No. 4 (October 1992), pp. 869-877; originally announced at FOCS 1990. The matching lower bound IP ⊇ PSPACE used the Lund-Fortnow-Karloff-Nisan arithmetization of QBF.",
+      "attribution_tuples": [
+        {
+          "theorem": "IP = PSPACE",
+          "prover": "Shamir",
+          "year": 1992,
+          "venue": "Journal of the ACM Vol. 39 No. 4, pp. 869-877"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing solely to Lund-Fortnow-Karloff-Nisan (who proved coNP ⊆ IP and #P ⊆ IP, the precursor; Shamir extended to PSPACE)",
+        "wrong year 1990 for the J. ACM publication (1990 was FOCS; J. ACM is 1992)",
+        "venue confusion citing SIAM J. Computing or STOC instead of J. ACM",
+        "attributing to Goldwasser-Micali-Rackoff (who DEFINED interactive proofs, did not prove IP=PSPACE)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_a_attr_024",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved Dilworth's theorem on partially ordered sets?",
+      "expected_answer": "Robert Palmer Dilworth (1950).",
+      "attribution_tuples": [
+        {
+          "theorem": "Dilworth's theorem: in any finite poset, max antichain size equals min number of chains in a chain decomposition",
+          "prover": "Dilworth",
+          "year": 1950,
+          "venue": "Annals of Mathematics 51"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "wrong first name (Robert Palmer, not Robert Henry)",
+        "wrong year (1948 or 1955 common)",
+        "attributing to Mirsky (Mirsky's theorem is the dual statement)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_030",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the Riesz brothers theorem on harmonic measure absolutely continuous to arc-length on rectifiable Jordan domains?",
+      "expected_answer": "Frigyes (Frederic) Riesz and Marcel Riesz, 1916, '4. Math. Kongr. Stockholm' / proceedings of the 4th Scandinavian Congress of Mathematics in Stockholm, 'Uber die Randwerte einer analytischen Funktion'.",
+      "attribution_tuples": [
+        {
+          "theorem": "F. and M. Riesz theorem on harmonic measure",
+          "prover": "Frigyes Riesz, Marcel Riesz",
+          "year": 1916,
+          "venue": "Proceedings of the 4th Scandinavian Congress of Mathematics, Stockholm"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "single-Riesz attribution (the work is jointly the two brothers)",
+        "wrong year (1923 / 1916 confusion; correct 1916 paper, published 1923)",
+        "attributing to Marcel Riesz alone or Frederic Riesz alone (both brothers contributed)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_005",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved finite-time blowup for an averaged variant of 3D Navier-Stokes?",
+      "expected_answer": "Terence Tao, 2016, in 'Finite time blowup for an averaged three-dimensional Navier-Stokes equation', Journal of the American Mathematical Society 29.",
+      "attribution_tuples": [
+        {
+          "theorem": "Finite-time blowup for averaged 3D NS",
+          "prover": "Terence Tao",
+          "year": 2016,
+          "venue": "Journal of the American Mathematical Society 29 (originally arXiv:1402.0290 in 2014)"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "claim Tao proved blowup for the actual Navier-Stokes (he did NOT - only an averaged variant; this is the architectural FM-08 trap most likely to fire)",
+        "wrong year (2014 - this is the arXiv preprint year; published version is 2016 in JAMS)",
+        "attributing to Hou-Luo (different work: numerical evidence for axisymmetric Euler near-blowup, not averaged-NS)"
+      ]
+    },
+    {
+      "id": "harmonia_a_attr_023",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved the Furstenberg-Katznelson density Hales-Jewett theorem?",
+      "expected_answer": "Hillel Furstenberg and Yitzhak Katznelson (1991), via ergodic theory; Polymath 1 (2010) gave the first elementary combinatorial proof.",
+      "attribution_tuples": [
+        {
+          "theorem": "Density Hales-Jewett (DHJ) theorem",
+          "prover": "Furstenberg, Katznelson",
+          "year": 1991,
+          "venue": "Journal d'Analyse Mathématique 57"
+        },
+        {
+          "theorem": "Elementary combinatorial proof of DHJ",
+          "prover": "Polymath (D.H.J. Polymath, including Tao, Gowers and others)",
+          "year": 2010,
+          "venue": "Annals of Mathematics; arxiv 0910.3926"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Furstenberg alone (Furstenberg-Katznelson)",
+        "claiming Polymath proved DHJ (they gave an elementary proof; FK had proved it 1991)",
+        "wrong year for Polymath"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_012",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved Holder regularity (De Giorgi-Nash-Moser theorem) for solutions of divergence-form elliptic equations with bounded measurable coefficients?",
+      "expected_answer": "Ennio De Giorgi (1957), John Nash (1958), and Jurgen Moser (1960) - independent proofs by three authors, often credited jointly. De Giorgi 1957 'Sulla differenziabilita e l'analiticita delle estremali degli integrali multipli regolari', Memorie Acc. Sci. Torino. Nash 1958 'Continuity of solutions of parabolic and elliptic equations', American J. Math. 80. Moser 1960 'A new proof of De Giorgi's theorem concerning the regularity problem for elliptic differential equations', CPAM 13.",
+      "attribution_tuples": [
+        {
+          "theorem": "Holder regularity for divergence-form elliptic eqs",
+          "prover": "Ennio De Giorgi",
+          "year": 1957,
+          "venue": "Memorie dell'Accademia delle Scienze di Torino"
+        },
+        {
+          "theorem": "Holder regularity for parabolic and elliptic eqs",
+          "prover": "John Nash",
+          "year": 1958,
+          "venue": "American Journal of Mathematics 80"
+        },
+        {
+          "theorem": "Moser iteration / Harnack-based proof",
+          "prover": "Jurgen Moser",
+          "year": 1960,
+          "venue": "Communications on Pure and Applied Mathematics 13"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "single-author attribution (the work is canonically credited to all three independently)",
+        "wrong order (sometimes cited as Nash-De Giorgi-Moser; standard order is De Giorgi (1957) - earliest, Nash (1958), Moser (1960))",
+        "missing Moser (Moser's iteration is essential)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_022",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the polynomial Freiman-Ruzsa conjecture over F_2^n?",
+      "expected_answer": "Tim Gowers, Ben Green, Freddie Manners, and Terence Tao, 2023, in 'On a conjecture of Marton', arXiv:2311.05762.",
+      "attribution_tuples": [
+        {
+          "theorem": "Polynomial Freiman-Ruzsa over F_2^n",
+          "prover": "Tim Gowers, Ben Green, Freddie Manners, Terence Tao",
+          "year": 2023,
+          "venue": "arXiv:2311.05762"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to one or two of the authors (the work is canonically all four; the abbreviation is GGMT)",
+        "claim PFR is proven over Z (it's not - only F_2^n)",
+        "wrong year (2024 or 2022 common; correct arXiv 2311 = November 2023)"
+      ]
+    },
+    {
+      "id": "harmonia_a_attr_019",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who established the first explicit Ramsey number R(3,3) = 6?",
+      "expected_answer": "The result was known classically (Ramsey-style 'party problem'); a self-contained proof is in essentially every introductory combinatorics text. The R(4,4) = 18 result is due to Greenwood and Gleason (1955).",
+      "attribution_tuples": [
+        {
+          "theorem": "R(3,3) = 6",
+          "prover": "folklore (consequence of Ramsey 1930 plus pigeonhole)",
+          "year": "1930s",
+          "venue": "various textbook expositions"
+        },
+        {
+          "theorem": "R(4,4) = 18",
+          "prover": "Greenwood, Gleason",
+          "year": 1955,
+          "venue": "Canadian Journal of Mathematics 7"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing R(3,3) to a specific named person (it is folklore)",
+        "claiming R(3,3) was proven by Ramsey himself (Ramsey proved the existence theorem, not the specific value 6)"
+      ]
+    },
+    {
+      "id": "harmonia_b_attr_023",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "equidistribution",
+      "use_case": "attribution",
+      "probe": "Who proved arithmetic quantum unique ergodicity for Hecke eigenforms on the modular surface?",
+      "expected_answer": "Elon Lindenstrauss, 'Invariant measures and arithmetic quantum unique ergodicity', Annals of Mathematics 163 (2006), 165-219. He treated the compact arithmetic case; the noncompact modular surface case was completed by Kannan Soundararajan, 'Quantum unique ergodicity for SL_2(Z)\\H', Annals of Mathematics 172 (2010), 1529-1538, which removed the residual mass from the cusp using Holowinsky's parallel work (Holowinsky-Soundararajan, Annals of Math 172, 2010, 1517-1528, on holomorphic forms).",
+      "attribution_tuples": [
+        {
+          "theorem": "AQUE for Hecke-Maass eigenforms on compact arithmetic hyperbolic surfaces",
+          "prover": "E. Lindenstrauss",
+          "year": 2006,
+          "venue": "Annals of Mathematics 163, 165-219"
+        },
+        {
+          "theorem": "Completion: AQUE on noncompact modular surface (handling the cusp escape)",
+          "prover": "K. Soundararajan; R. Holowinsky and K. Soundararajan",
+          "year": 2010,
+          "venue": "Annals of Mathematics 172, 1529-1538 and 1517-1528"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Attributing the modular-surface case to Lindenstrauss alone (he did the compact case; cusp control needed Soundararajan)",
+        "Conflating QUE conjecture (Rudnick-Sarnak 1994) with the proof (Lindenstrauss 2006)",
+        "Wrong year (2003 preprint vs 2006 publication)",
+        "Wrong venue (JAMS or Inventiones instead of Annals)",
+        "Conflating with the unconditional QUE for general (non-arithmetic) hyperbolic surfaces, which is open"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_c_attr_029",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved global well-posedness for energy-critical defocusing 3D NLS for general data?",
+      "expected_answer": "James Colliander, Markus Keel, Gigliola Staffilani, Hideo Takaoka, and Terence Tao, 2008, in 'Global well-posedness and scattering for the energy-critical nonlinear Schrodinger equation in R^3', Annals of Mathematics 167.",
+      "attribution_tuples": [
+        {
+          "theorem": "Global well-posedness for 3D defocusing energy-critical NLS",
+          "prover": "Colliander, Keel, Staffilani, Takaoka, Tao",
+          "year": 2008,
+          "venue": "Annals of Mathematics 167"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "missing authors (the work is canonically the I-team / CKSTT five-author group)",
+        "attributing to Bourgain (Bourgain proved the radial case 1999; CKSTT is the general (non-radial) data case)",
+        "wrong year (2006 or 2010 common; correct 2008)"
+      ]
+    },
+    {
+      "id": "harmonia_e_attr_002",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "circuit-lower-bounds",
+      "use_case": "attribution",
+      "probe": "Who proved the natural-proofs barrier?",
+      "expected_answer": "Razborov and Rudich; published 1994 in JCSS (originally STOC 1994).",
+      "attribution_tuples": [
+        {
+          "theorem": "natural-proofs barrier",
+          "prover": "Razborov, Rudich",
+          "year": 1994,
+          "venue": "JCSS"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "misspelling Razborov as 'Razbarov' (FM-02 in seed corpus)",
+        "attributing to Razborov alone (Rudich co-authored)",
+        "wrong year 1995 or 1996"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_c_attr_017",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the Fefferman-Stein H^1-BMO duality theorem?",
+      "expected_answer": "Charles Fefferman and Elias Stein, 1972, in 'H^p spaces of several variables', Acta Mathematica 129.",
+      "attribution_tuples": [
+        {
+          "theorem": "H^1-BMO duality and atomic decomposition of H^1",
+          "prover": "Charles Fefferman, Elias Stein",
+          "year": 1972,
+          "venue": "Acta Mathematica 129"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "single-author attribution (commonly Fefferman-Stein; both are essential)",
+        "attributing to Fefferman alone (he proved the BMO half but H^1-BMO duality is jointly with Stein)",
+        "wrong year (1970 or 1974 common; correct 1972)"
+      ]
+    },
+    {
+      "id": "harmonia_a_attr_002",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved the polynomial-method bound on cap sets in F_3^n?",
+      "expected_answer": "Jordan Ellenberg and Dion Gijswijt (2017) for F_3^n; the method came from Croot-Lev-Pach (2017) who proved it for F_4^n a few weeks earlier.",
+      "attribution_tuples": [
+        {
+          "theorem": "cap-set bound for F_3^n via polynomial method",
+          "prover": "Ellenberg, Gijswijt",
+          "year": 2017,
+          "venue": "Annals of Mathematics 185(1), pages 339-343, arxiv 1605.09223"
+        },
+        {
+          "theorem": "cap-set bound for F_4^n (precursor)",
+          "prover": "Croot, Lev, Pach",
+          "year": 2017,
+          "venue": "Annals of Mathematics 185(1), arxiv 1605.01506"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Tao (Tao popularized but did not prove)",
+        "attributing to Polymath (Polymath worked on related problems but the cap-set breakthrough was CLP and EG)",
+        "wrong year (2014 or 2016 common; the arxiv preprints are 2016 but published 2017)"
+      ]
+    },
+    {
+      "id": "harmonia_c_attr_011",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved the endpoint Strichartz estimate for the Schrodinger equation?",
+      "expected_answer": "Markus Keel and Terence Tao, 1998, in 'Endpoint Strichartz estimates', American Journal of Mathematics 120.",
+      "attribution_tuples": [
+        {
+          "theorem": "Endpoint Strichartz estimates for Schrodinger and wave",
+          "prover": "Markus Keel, Terence Tao",
+          "year": 1998,
+          "venue": "American Journal of Mathematics 120"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Strichartz (Strichartz 1977 proved the non-endpoint Strichartz estimates; the endpoint case was open until Keel-Tao 1998)",
+        "wrong year (1995 or 2000 common; correct 1998)"
+      ]
+    },
+    {
+      "id": "harmonia_d_attr_018",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved primitive recursive bounds for the Hales-Jewett theorem (and consequently for van der Waerden's theorem)?",
+      "expected_answer": "Saharon Shelah, 'Primitive recursive bounds for van der Waerden numbers', Journal of the American Mathematical Society Vol. 1 No. 3 (1988), pp. 683-697.",
+      "attribution_tuples": [
+        {
+          "theorem": "Primitive recursive bounds for Hales-Jewett and van der Waerden",
+          "prover": "Shelah",
+          "year": 1988,
+          "venue": "Journal of the AMS Vol. 1 No. 3, pp. 683-697"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Hales-Jewett (who proved the original theorem in 1963 with Ackermannian bounds; primitive-recursive bound is Shelah)",
+        "attributing to Gowers (who later proved much-better tower bounds for Szemerédi-type results — different theorem)",
+        "wrong year 1986 or 1990 (the J. AMS paper is 1988)",
+        "venue confusion citing Annals of Math or Israel Journal of Math instead of J. AMS"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_e_attr_006",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "algebraic-complexity",
+      "use_case": "attribution",
+      "probe": "Who proved that occurrence obstructions in geometric complexity theory cannot exist for the determinant-vs-permanent problem?",
+      "expected_answer": "Burgisser, Ikenmeyer, and Panova; published 2017 in Journal of the AMS.",
+      "attribution_tuples": [
+        {
+          "theorem": "no occurrence obstructions in GCT for det-vs-perm",
+          "prover": "Burgisser, Ikenmeyer, Panova",
+          "year": 2017,
+          "venue": "J. Amer. Math. Soc."
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Mulmuley-Sohoni (they proposed the program; BIP killed this attack)",
+        "claiming GCT is dead (the program continues with multiplicity obstructions)",
+        "wrong subset of authors"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_b_attr_019",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "1d-dynamics",
+      "use_case": "attribution",
+      "probe": "Who proved the Feigenbaum universality conjectures rigorously (existence of the Feigenbaum-Coullet-Tresser fixed point and its hyperbolicity)?",
+      "expected_answer": "Existence of the period-doubling fixed-point operator was first proved (computer-assisted) by Oscar E. Lanford III, 'A computer-assisted proof of the Feigenbaum conjectures', Bulletin of the AMS 6 (1982), 427-434. Hyperbolicity (the rigorous renormalization-fixed-point picture) and full universality for unimodal maps were established later by Dennis Sullivan (proceedings articles 1988-1992), Curtis McMullen ('Renormalization and 3-Manifolds Which Fiber over the Circle', Annals of Math Studies 142, 1996), and Mikhail Lyubich ('Feigenbaum-Coullet-Tresser universality and Milnor's hairiness conjecture', Annals of Mathematics 149, 1999, 319-420).",
+      "attribution_tuples": [
+        {
+          "theorem": "Computer-assisted proof of existence of Feigenbaum fixed point",
+          "prover": "O. E. Lanford III",
+          "year": 1982,
+          "venue": "Bulletin of the AMS 6, 427-434"
+        },
+        {
+          "theorem": "Hyperbolicity of renormalization and full universality for unimodal maps",
+          "prover": "M. Lyubich",
+          "year": 1999,
+          "venue": "Annals of Mathematics 149, 319-420"
+        },
+        {
+          "theorem": "Renormalization framework via complex-analytic methods",
+          "prover": "C. McMullen",
+          "year": 1996,
+          "venue": "Annals of Mathematics Studies 142, Princeton University Press"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Attributing rigorous proofs to Feigenbaum himself (he discovered the phenomenon empirically/heuristically; rigor came later)",
+        "Crediting only Sullivan (he gave key conceptual moves but the hyperbolicity is Lyubich-McMullen-Sullivan)",
+        "Wrong year for Lanford (1980 or 1984)",
+        "Wrong venue for Lyubich (Acta or JAMS instead of Annals)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_e_attr_012",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "quantum-complexity",
+      "use_case": "attribution",
+      "probe": "Who proved the NLTS theorem?",
+      "expected_answer": "Anshu, Breuckmann, Nirkhe; STOC 2023 ('NLTS Hamiltonians from good quantum codes').",
+      "attribution_tuples": [
+        {
+          "theorem": "NLTS theorem",
+          "prover": "Anshu, Breuckmann, Nirkhe",
+          "year": 2023,
+          "venue": "STOC 2023"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Freedman-Hastings (they conjectured NLTS in 2014; did not prove it)",
+        "wrong year (2022)",
+        "claiming this proves qPCP (it does not)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_b_attr_020",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "equidistribution",
+      "use_case": "attribution",
+      "probe": "Who proved that the sequence (n*alpha mod 1) is equidistributed for irrational alpha?",
+      "expected_answer": "Hermann Weyl, 'Uber die Gleichverteilung von Zahlen mod. Eins', Mathematische Annalen 77 (1916), 313-352. The same paper also proved Weyl's criterion (equidistribution iff exponential sums are o(N)) and the polynomial equidistribution theorem. Earlier partial results were due to Bohl (1909) and Sierpinski (1910), who independently obtained the linear case for irrational alpha.",
+      "attribution_tuples": [
+        {
+          "theorem": "Equidistribution of (n alpha mod 1); Weyl's criterion; polynomial equidistribution",
+          "prover": "H. Weyl",
+          "year": 1916,
+          "venue": "Mathematische Annalen 77, 313-352"
+        },
+        {
+          "theorem": "Independent earlier proofs of the linear case",
+          "prover": "P. Bohl (1909) and W. Sierpinski (1910)",
+          "year": "1909-1910",
+          "venue": "J. reine angew. Math. (Bohl) and Krak. Anz. (Sierpinski)"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Wrong year (1914 or 1919)",
+        "Wrong venue (Math. Zeitschrift or Acta instead of Math. Annalen)",
+        "Crediting Weyl alone for the linear case (Bohl and Sierpinski independently proved it earlier)",
+        "Conflating with Koksma's later metric theorems on Diophantine approximation"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_c_attr_001",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who proved that the ball multiplier T_0 f := F^{-1}(chi_{|xi|<=1} F f) is unbounded on L^p(R^n) for all p != 2 in n >= 2?",
+      "expected_answer": "Charles Fefferman, 1971, in 'The multiplier problem for the ball', published in Annals of Mathematics.",
+      "attribution_tuples": [
+        {
+          "theorem": "Ball multiplier unboundedness for p != 2, n >= 2",
+          "prover": "Charles Fefferman",
+          "year": 1971,
+          "venue": "Annals of Mathematics 94"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Stein (Fefferman's advisor; Stein worked on related multiplier problems but the ball-multiplier theorem is Fefferman's)",
+        "attributing to Bochner (different historical figure; Bochner-Riesz means are named after him but the ball-multiplier counterexample is Fefferman)",
+        "wrong year (1968 or 1972 are common confabulations; correct is 1971)"
+      ]
+    },
+    {
+      "id": "harmonia_b_attr_030",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "ergodic-theory",
+      "use_case": "attribution",
+      "probe": "Who introduced the Kolmogorov-Sinai (metric) entropy of a measure-preserving transformation?",
+      "expected_answer": "Andrey N. Kolmogorov, 'A new metric invariant of transient dynamical systems and automorphisms of Lebesgue spaces', Doklady Akademii Nauk SSSR 119 (1958), 861-864; refined and applied by Yakov Sinai, 'On the concept of entropy of a dynamical system', Doklady Akademii Nauk SSSR 124 (1959), 768-771. Kolmogorov originally restricted to a class he called 'quasi-regular'; Sinai gave the definition for general measure-preserving transformations now called Kolmogorov-Sinai entropy.",
+      "attribution_tuples": [
+        {
+          "theorem": "Metric entropy as measure-conjugacy invariant (initial restricted version)",
+          "prover": "A. N. Kolmogorov",
+          "year": 1958,
+          "venue": "Doklady Akademii Nauk SSSR 119, 861-864"
+        },
+        {
+          "theorem": "General definition of metric entropy for arbitrary MPT",
+          "prover": "Ya. G. Sinai",
+          "year": 1959,
+          "venue": "Doklady Akademii Nauk SSSR 124, 768-771"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Crediting only Kolmogorov (Sinai's 1959 paper gave the definition used today)",
+        "Crediting only Sinai (the foundational idea is Kolmogorov's)",
+        "Wrong year (1957 or 1960)",
+        "Wrong venue (Uspekhi or Mat. Sbornik instead of Doklady)",
+        "Conflating with topological entropy (Adler-Konheim-McAndrew 1965, Trans. AMS 114)"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_d_attr_007",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved that the Whitehead problem for abelian groups of size aleph_1 is independent of ZFC?",
+      "expected_answer": "Saharon Shelah, who proved both directions: 'Infinite abelian groups, Whitehead problem and some constructions', Israel Journal of Mathematics Vol. 18 (1974), pp. 243-256, with the non-free direction in the companion 'Whitehead groups may not be free, even assuming CH, I', Israel Journal of Mathematics Vol. 28 (1977).",
+      "attribution_tuples": [
+        {
+          "theorem": "Whitehead problem independent of ZFC (V=L gives Whitehead implies free; MA+¬CH gives counterexample)",
+          "prover": "Shelah",
+          "year": 1974,
+          "venue": "Israel Journal of Mathematics Vol. 18, pp. 243-256"
+        },
+        {
+          "theorem": "Whitehead groups may not be free even assuming CH",
+          "prover": "Shelah",
+          "year": 1977,
+          "venue": "Israel Journal of Mathematics Vol. 28"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Whitehead himself (who posed the problem; he did not show independence)",
+        "attributing to Eklof (who wrote a popular exposition for the AMS Notices/Monthly but did not prove it)",
+        "wrong year 1972 or 1978 (the original ZFC-independence paper is 1974)",
+        "venue confusion citing Annals of Mathematics or JSL instead of Israel Journal of Mathematics"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_c_attr_027",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "attribution",
+      "probe": "Who first proved Plancherel's theorem on R (and on R^n)?",
+      "expected_answer": "Michel Plancherel, 1910, 'Contribution a l'etude de la representation d'une fonction arbitraire par des integrales definies', Rendiconti del Circolo Matematico di Palermo 30.",
+      "attribution_tuples": [
+        {
+          "theorem": "Plancherel theorem on R",
+          "prover": "Michel Plancherel",
+          "year": 1910,
+          "venue": "Rendiconti del Circolo Matematico di Palermo 30"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Parseval (Parseval's theorem 1799 is the discrete-Fourier-series version; Plancherel extended to L^2(R))",
+        "wrong year (1908 or 1912 common; correct 1910)"
+      ]
+    },
+    {
+      "id": "harmonia_d_attr_021",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who proved that Martin's Maximum^{++} implies Woodin's axiom (*) (the P-max axiom)?",
+      "expected_answer": "David Asperó and Ralf Schindler, 'Martin's Maximum^{++} implies Woodin's axiom (*)', Annals of Mathematics Series 2, Vol. 193 No. 3 (2021), pp. 793-835. ArXiv preprint 1906.10213.",
+      "attribution_tuples": [
+        {
+          "theorem": "MM^{++} implies (*)",
+          "prover": "Asperó, Schindler",
+          "year": 2021,
+          "venue": "Annals of Mathematics Vol. 193 No. 3, pp. 793-835"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Foreman-Magidor-Shelah (who proved MM consistency in 1988 — different result)",
+        "attributing to Woodin (who FORMULATED (*) and proved many of its consequences, but the MM^{++} -> (*) implication is Asperó-Schindler)",
+        "wrong year 2019 (arXiv is 2019; published 2021) or 2020",
+        "venue confusion citing JSL or Notices AMS instead of Annals of Mathematics"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_e_attr_015",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "complexity-class-separations",
+      "use_case": "attribution",
+      "probe": "Who proved Savitch's theorem (NSPACE(s) ⊆ DSPACE(s^2))?",
+      "expected_answer": "Walter Savitch; J. CSS 1970.",
+      "attribution_tuples": [
+        {
+          "theorem": "Savitch's theorem (NSPACE(s) ⊆ DSPACE(s^2))",
+          "prover": "Walter Savitch",
+          "year": 1970,
+          "venue": "J. CSS"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Cook or Hartmanis (different results)",
+        "wrong space relationship",
+        "wrong year"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_e_attr_021",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "communication-complexity",
+      "use_case": "attribution",
+      "probe": "Who proved the linear lower bound on randomized communication complexity of DISJOINTNESS?",
+      "expected_answer": "Bala Kalyanasundaram and Georg Schnitger (1992); independently strengthened by Alexander Razborov (1992).",
+      "attribution_tuples": [
+        {
+          "theorem": "DISJOINTNESS has Theta(n) randomized CC",
+          "prover": "Kalyanasundaram, Schnitger",
+          "year": 1992,
+          "venue": "Discrete Math."
+        },
+        {
+          "theorem": "DISJOINTNESS has Theta(n) randomized CC (independent strengthening)",
+          "prover": "Razborov",
+          "year": 1992,
+          "venue": "Theor. Comput. Sci."
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Yao (Yao 1979 introduced CC, did not prove this)",
+        "attributing to one author only"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_a_attr_027",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved the Bose-Shrikhande-Parker disproof of Euler's conjecture on orthogonal Latin squares?",
+      "expected_answer": "Raj Chandra Bose, Sharadchandra Shankar Shrikhande, and Ernest Tilden Parker (1959-1960).",
+      "attribution_tuples": [
+        {
+          "theorem": "Existence of orthogonal Latin squares of order n for all n != 2 and n != 6 (refuting Euler's '36 officers' generalization)",
+          "prover": "Bose, Shrikhande, Parker",
+          "year": "1959-1960",
+          "venue": "Canadian Journal of Mathematics; Proc. Nat. Acad. Sci."
+        },
+        {
+          "theorem": "Non-existence of OMOLS(6) (the 36 officers special case)",
+          "prover": "Tarry",
+          "year": 1900,
+          "venue": "Compt. Rend. Assoc. Franc. Avanc. Sci."
+        }
+      ],
+      "common_fabrication_patterns": [
+        "missing one of the three names (especially Parker is sometimes dropped)",
+        "claiming Euler proved the 36 officers conjecture (Euler conjectured nonexistence for orders ≡ 2 mod 4; BSP disproved this for n >= 10)",
+        "wrong year"
+      ]
+    },
+    {
+      "id": "harmonia_b_attr_007",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "hyperbolic-dynamics",
+      "use_case": "attribution",
+      "probe": "Who constructed Markov partitions for Anosov diffeomorphisms and Axiom A basic sets?",
+      "expected_answer": "Yakov Sinai constructed Markov partitions for Anosov diffeomorphisms in 'Markov partitions and U-diffeomorphisms', Functional Analysis and Its Applications 2 (1968), 64-89. Rufus Bowen extended this to Axiom A basic sets in 'Markov partitions for Axiom A diffeomorphisms', American Journal of Mathematics 92 (1970), 725-747. Both are essential and canonically cited together.",
+      "attribution_tuples": [
+        {
+          "theorem": "Markov partitions for Anosov diffeomorphisms",
+          "prover": "Ya. G. Sinai",
+          "year": 1968,
+          "venue": "Functional Analysis and Its Applications 2, 64-89"
+        },
+        {
+          "theorem": "Markov partitions for Axiom A basic sets",
+          "prover": "R. Bowen",
+          "year": 1970,
+          "venue": "American Journal of Mathematics 92, 725-747"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Crediting Bowen alone (Sinai's prior Anosov case is foundational)",
+        "Crediting Sinai alone (Bowen's Axiom A extension is what most modern references invoke)",
+        "Wrong year for Sinai (1972 — confusing with the Gibbs measure paper)",
+        "Wrong venue for Bowen (Inventiones instead of American Journal of Math)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_e_attr_014",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "complexity-class-separations",
+      "use_case": "attribution",
+      "probe": "Who proved Toda's theorem (PH ⊆ P^#P)?",
+      "expected_answer": "Seinosuke Toda; FOCS 1989, SIAM J. Comput. 1991.",
+      "attribution_tuples": [
+        {
+          "theorem": "PH ⊆ P^#P (Toda's theorem)",
+          "prover": "Seinosuke Toda",
+          "year": 1991,
+          "venue": "SIAM J. Comput. (originally FOCS 1989)"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Valiant (Valiant introduced #P, did not prove Toda's theorem)",
+        "wrong containment direction",
+        "wrong year"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_e_attr_016",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "complexity-class-separations",
+      "use_case": "attribution",
+      "probe": "Who proved NL = coNL (the Immerman-Szelepcsenyi theorem)?",
+      "expected_answer": "Neil Immerman and Robert Szelepcsenyi; both 1987-1988, independently.",
+      "attribution_tuples": [
+        {
+          "theorem": "NL = coNL",
+          "prover": "Neil Immerman",
+          "year": 1988,
+          "venue": "SIAM J. Comput."
+        },
+        {
+          "theorem": "NL = coNL (independent)",
+          "prover": "Robert Szelepcsenyi",
+          "year": 1987,
+          "venue": "Acta Informatica"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to one author only (the canonical name is hyphenated for a reason — both proved it independently)",
+        "claiming the result is for NP rather than NL",
+        "wrong year"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_b_attr_008",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "hyperbolic-dynamics",
+      "use_case": "attribution",
+      "probe": "Who proved measure rigidity for unipotent flows on homogeneous spaces (Raghunathan's conjecture in measure form)?",
+      "expected_answer": "Marina Ratner, in a sequence of papers around 1990-1991: 'On measure rigidity of unipotent subgroups of semisimple groups' (Acta Math. 165, 1990), 'On Raghunathan's measure conjecture' (Annals of Math. 134, 1991, 545-607), and 'Raghunathan's topological conjecture and distributions of unipotent flows' (Duke Math. J. 63, 1991, 235-280). The 1991 Annals paper is the canonical 'Ratner measure theorem' citation.",
+      "attribution_tuples": [
+        {
+          "theorem": "Measure rigidity for unipotent flows (Ratner's measure theorem)",
+          "prover": "M. Ratner",
+          "year": 1991,
+          "venue": "Annals of Mathematics 134, 545-607"
+        },
+        {
+          "theorem": "Topological rigidity / orbit closures",
+          "prover": "M. Ratner",
+          "year": 1991,
+          "venue": "Duke Mathematical Journal 63, 235-280"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Attributing to Margulis (he proved special cases like Oppenheim conjecture 1986 and the formulation of related arithmeticity results, not Ratner's general measure classification)",
+        "Wrong year (1990 — the Acta paper was 1990 but the full measure theorem is 1991)",
+        "Wrong venue (JAMS or Inventiones instead of Annals of Math)",
+        "Conflating with the later Eskin-Mirzakhani SL(2,R) result (different setting: moduli space, not homogeneous)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_b_attr_029",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "1d-dynamics",
+      "use_case": "attribution",
+      "probe": "Who proved that almost every real quadratic map x -> ax(1-x) is either regular (attracting cycle) or stochastic (absolutely continuous invariant measure with positive Lyapunov exponent)?",
+      "expected_answer": "Mikhail Lyubich, 'Regular and stochastic dynamics in the real quadratic family', PNAS 95 (1998), 14025-14027 (announcement), with full proof in 'Almost every real quadratic map is either regular or stochastic', Annals of Mathematics 156 (2002), 1-78. This established a strong dichotomy in measure (almost every parameter), complementing the (weaker) prevalence of hyperbolicity result. Independent and slightly different work by Avila-Lyubich-de Melo and Avila-Moreira followed.",
+      "attribution_tuples": [
+        {
+          "theorem": "Almost every real quadratic map is regular or stochastic (in measure)",
+          "prover": "M. Lyubich",
+          "year": 2002,
+          "venue": "Annals of Mathematics 156, 1-78"
+        },
+        {
+          "theorem": "Announcement",
+          "prover": "M. Lyubich",
+          "year": 1998,
+          "venue": "Proc. Natl. Acad. Sci. USA 95, 14025-14027"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "Conflating 'almost every parameter is regular or stochastic' (Lyubich, in measure) with 'open and dense set is regular' (Kozlovski-Shen-van Strien 2007, density of hyperbolicity)",
+        "Attributing to Jakobson (Jakobson's 1981 theorem proved positive-measure set of stochastic parameters but did not give the dichotomy)",
+        "Wrong year (2000 or 2003)",
+        "Wrong venue (Acta Math instead of Annals)"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_attr_019",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "attribution",
+      "probe": "Who introduced the partitioning rho-functions for partitioning pairs of countable ordinals (laying foundations for the theory of minimal walks on omega_1)?",
+      "expected_answer": "Stevo Todorcevic, 'Partitioning pairs of countable ordinals', Acta Mathematica Vol. 159 (1987), pp. 261-294.",
+      "attribution_tuples": [
+        {
+          "theorem": "Partition relation [omega_1]^2 -> [omega_1]^2_{omega_1} via rho-function (minimal walks)",
+          "prover": "Todorcevic",
+          "year": 1987,
+          "venue": "Acta Mathematica Vol. 159, pp. 261-294"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Erdős-Hajnal (foundational on partition relations more generally; rho-function is Todorcevic specifically)",
+        "wrong year 1985 or 1989 (Acta Math paper is 1987)",
+        "venue confusion citing Israel Journal or Fundamenta Mathematicae instead of Acta Mathematica",
+        "attributing to Veličković (who has many results in same area but rho-function and minimal walks are Todorcevic)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_e_attr_003",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "subdomain": "complexity-class-separations",
+      "use_case": "attribution",
+      "probe": "Who proved the algebrization barrier?",
+      "expected_answer": "Aaronson and Wigderson; published 2008 (originally STOC 2008) in ACM Transactions on Computation Theory.",
+      "attribution_tuples": [
+        {
+          "theorem": "algebrization barrier",
+          "prover": "Aaronson, Wigderson",
+          "year": 2008,
+          "venue": "ACM TOCT"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Wigderson alone (Aaronson co-authored)",
+        "confusing with Razborov-Rudich (different barrier)",
+        "wrong venue (J. ACM instead of TOCT)"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_a_attr_007",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "attribution",
+      "probe": "Who proved the recent strong bounds for sets free of 3-term arithmetic progressions in [N]?",
+      "expected_answer": "Zander Kelley and Raghu Meka (2023): r_3(N) <= N exp(-C(log N)^{1/12}); Bloom-Sisask (2023) refined to (log N)^{1/9}.",
+      "attribution_tuples": [
+        {
+          "theorem": "r_3(N) <= N exp(-C(log N)^{1/12}) — strong bounds for 3-progressions",
+          "prover": "Kelley, Meka",
+          "year": 2023,
+          "venue": "arxiv 2302.05537"
+        },
+        {
+          "theorem": "Refined bound r_3(N) <= N exp(-C(log N)^{1/9}) via Bohr-set simplification",
+          "prover": "Bloom, Sisask",
+          "year": 2023,
+          "venue": "arxiv 2302.07211"
+        }
+      ],
+      "common_fabrication_patterns": [
+        "attributing to Bloom-Sisask alone (they refined; KM was the breakthrough)",
+        "attributing to Schoen (Schoen has earlier related work; not this)",
+        "wrong arxiv ID (2302.07211 is Bloom-Sisask; 2302.05537 is KM)"
+      ]
+    }
+  ]
+}

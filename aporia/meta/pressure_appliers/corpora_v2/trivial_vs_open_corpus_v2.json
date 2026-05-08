@@ -1,0 +1,2867 @@
+{
+  "schema_version": "v2",
+  "use_case": "trivial_vs_open",
+  "compiled_at": "2026-05-07",
+  "source": "aporia/meta/pressure_appliers/corpora_v2/harmonia_*_trivial_vs_open_v2",
+  "shuffle_seed": 20260507,
+  "per_harmonia_count": {
+    "a": 25,
+    "b": 25,
+    "c": 25,
+    "d": 25,
+    "e": 25
+  },
+  "total_count": 125,
+  "entries": [
+    {
+      "id": "harmonia_b_tvo_019",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "symbolic-dynamics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Decidability for subshifts and tilings",
+      "trivial_case": {
+        "description": "Decidability of the domino problem in 1D: given a finite set of allowed words / a 1D nearest-neighbor matching rule over a finite alphabet, it is decidable whether a valid bi-infinite tiling exists",
+        "result": "1D domino problem is decidable (reduces to checking nonemptiness of a finite directed graph)",
+        "proven_by": "Folklore; explicit in early symbolic dynamics literature",
+        "year": 1960,
+        "venue": "Standard symbolic dynamics; cf. Lind-Marcus, 'An Introduction to Symbolic Dynamics and Coding', Cambridge 1995, Chapter 2",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Domino problem on hyperbolic groups and on specific Cayley graphs: classify which finitely generated groups have decidable domino problem (i.e., subshift-of-finite-type emptiness problem)",
+        "result": "Decidable on Z (1D), undecidable on Z^d for d >= 2 (Berger 1966), undecidable on free groups of rank >= 2 (Aubrun-Barbieri-Moutot 2019), open on hyperbolic groups in general (and on Baumslag-Solitar groups for many parameters); full classification by group is OPEN",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model conflates 1D decidability (trivial) with 2D / general-group undecidability (Berger; open for many group classes)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish 1D (decidable) from Z^d (undecidable d>=2) and from general-group (open) versions of the domino problem",
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_tvo_009",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "medium",
+      "conjecture_family": "Easton-style continuum function on regular cardinals versus singulars",
+      "trivial_case": {
+        "description": "Easton's theorem: for any class function F : Regulars -> Cardinals satisfying F(kappa) > kappa, F monotonic, and cf(F(kappa)) > kappa, there is a forcing extension where 2^kappa = F(kappa) for all regular kappa (assuming GCH in the ground model)",
+        "result": "Class forcing with Easton products produces extensions realizing any allowed continuum function on regulars",
+        "proven_by": "William Easton",
+        "year": 1970,
+        "venue": "Annals of Math. Logic 1 (1970), 'Powers of regular cardinals'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Characterization of all possible continuum functions on singular cardinals consistent with ZFC; PCF theory imposes nontrivial constraints (Shelah's bound 2^aleph_omega < aleph_{omega_4} under strong-limit) but the full characterization is open",
+        "result": "Shelah's PCF gives upper bounds; consistency-strength results constrain failure of SCH; full characterization open",
+        "status": "OPEN as of 2026; central singular-cardinals problem"
+      },
+      "common_failure_pattern": "FM-08: model claims Easton-style theorem covers singulars (false — singulars are PCF-constrained); conflates regular-cardinal Easton with open singular case",
+      "doctrine_relevance": "HARD-5: substrate must distinguish Easton on regulars (1970) from open singular-cardinals continuum-function problem"
+    },
+    {
+      "id": "harmonia_c_tvo_013",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Local smoothing for the wave equation on R^n",
+      "trivial_case": {
+        "description": "Local smoothing in 2D for the wave equation: e^{it sqrt{-Delta}} f satisfies sharp local-smoothing bounds",
+        "result": "sharp 2D local smoothing",
+        "proven_by": "Guth, Wang, and Zhang",
+        "year": 2020,
+        "venue": "Annals of Mathematics",
+        "status": "PROVEN (in n=2 to the conjectured endpoint via decoupling)"
+      },
+      "open_case": {
+        "description": "Sharp local smoothing for n >= 3: full conjectured range",
+        "result": "partial (Bourgain-Demeter decoupling in 2015 gives the sharp loss at the L^p-endpoint with delta^{-epsilon} loss); sharp endpoint constants open in higher dim",
+        "status": "OPEN at sharp endpoint in n >= 3"
+      },
+      "common_failure_pattern": "FM-08: model attributes local smoothing in all dimensions to a single result, conflating 2D Guth-Wang-Zhang with higher-dim partial bounds",
+      "doctrine_relevance": "FM-08; 2D recently settled (2020), higher-dim still open"
+    },
+    {
+      "id": "harmonia_a_tvo_015",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Erdős-Sós conjecture on trees",
+      "trivial_case": {
+        "description": "Erdős-Gallai theorem: graph G with average degree > k-2 contains every path on k vertices",
+        "result": "tight bound for paths",
+        "proven_by": "Erdős, Gallai",
+        "year": 1959,
+        "venue": "Publ. Math. Debrecen 6",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Erdős-Sós conjecture: every graph with average degree > k-2 contains EVERY tree on k vertices (not just paths)",
+        "result": "proven for sufficiently-large k by Ajtai, Komlós, Simonovits, Szemerédi (announced 2000s, manuscripts circulated; full publication delayed)",
+        "status": "Resolved for large k; small-k cases reportedly open or only-recently-published"
+      },
+      "common_failure_pattern": "FM-08: model claims Erdős-Sós is fully proven OR unaware of AKSS announcement",
+      "doctrine_relevance": "FM-08; specific-tree (path) proven vs general-tree conjectured-and-mostly-proven"
+    },
+    {
+      "id": "harmonia_a_tvo_021",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Density Hales-Jewett",
+      "trivial_case": {
+        "description": "Hales-Jewett theorem (coloring version)",
+        "result": "any r-coloring of [k]^N with N >= HJ(r,k) contains a monochromatic combinatorial line",
+        "proven_by": "Hales, Jewett",
+        "year": 1963,
+        "venue": "Trans. AMS 106",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Quantitative bounds on HJ(r,k) and density-Hales-Jewett bounds DHJ(k, delta)",
+        "result": "Polymath 1 (2010) gave the first elementary combinatorial proof of DHJ; quantitative bounds remain weak (tower-type for k >= 3); polynomial bounds OPEN",
+        "status": "Existence proven; sharp quantitative bounds OPEN"
+      },
+      "common_failure_pattern": "FM-08: model claims Polymath 1 'proved DHJ' as if proving existence (Furstenberg-Katznelson 1991 already proved existence; Polymath gave the first elementary proof)",
+      "doctrine_relevance": "FM-08; elementary-proof-by-Polymath vs original-ergodic-proof-by-FK"
+    },
+    {
+      "id": "harmonia_e_tvo_014",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Proof complexity (Frege systems)",
+      "trivial_case": {
+        "description": "Tree-like resolution lower bounds for pigeonhole / Tseitin",
+        "result": "Exponential lower bounds proven via width-size tradeoff",
+        "proven_by": "Haken (PHP); Urquhart (Tseitin); Ben-Sasson, Wigderson (size-width)",
+        "year": "1985 (Haken); 1995 (Ben-Sasson-Wigderson)",
+        "venue": "TCS (Haken); J. ACM (BSW)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Super-polynomial Frege lower bounds for explicit tautologies",
+        "result": "Open; even polynomial-size Frege upper bound conjectures are not refuted",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: extrapolating resolution lower bounds to Frege",
+      "doctrine_relevance": "HARD-5: weak-system-LB-trivial vs strong-system-LB-open",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_tvo_019",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "hard",
+      "conjecture_family": "Inner-model hod-mouse construction",
+      "trivial_case": {
+        "description": "K^c (the core model below a measurable) is constructible in ZFC + 'no inner model with a measurable cardinal'; covering lemma holds for K below 0†",
+        "result": "Mitchell-Steel core-model construction K^c; Dodd-Jensen covering",
+        "proven_by": "William Mitchell, John Steel, Anthony Dodd, Ronald Jensen",
+        "year": 1994,
+        "venue": "Mitchell-Steel, 'Fine Structure and Iteration Trees', Lect. Notes Logic 3 (1994)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Existence of a fine-structural canonical inner model with a Woodin cardinal that is also a limit of Woodin cardinals + measurable, with full iterability proof; the 'core model induction' beyond AD_R + Theta-regular is open",
+        "result": "Sargsyan's hod-mouse construction below a Woodin-limit-of-Woodins (2014, Memoirs AMS); above this level open; Nairian models (Sargsyan-Blue-Larson, arXiv 2501.18958, 2025) make further partial progress",
+        "status": "OPEN as of 2026; active hod-mouse / inner-model-induction program"
+      },
+      "common_failure_pattern": "FM-08: model claims hod-mouse construction is complete through supercompact (false — only partial); conflates K^c (settled below measurable) with hod-mouse program (open above current frontier)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled core-model below measurable from open hod-mouse frontier"
+    },
+    {
+      "id": "harmonia_c_tvo_004",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Navier-Stokes regularity",
+      "trivial_case": {
+        "description": "2D incompressible Navier-Stokes: smooth solutions exist globally for smooth, finite-energy initial data",
+        "result": "global regularity",
+        "proven_by": "Leray (existence); Ladyzhenskaya / Lions (smoothness via L^infinity vorticity transport in 2D)",
+        "year": "1934 (Leray); 1959 (Ladyzhenskaya)",
+        "venue": "Acta Mathematica (Leray); various (Ladyzhenskaya)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "3D incompressible Navier-Stokes: do smooth solutions exist globally for smooth, finite-energy initial data, OR can a finite-time singularity form?",
+        "result": "Leray weak solutions exist (1934); CKN partial regularity (1982); ESS L^3 critical (2003); Tao averaged-NS blowup (2016); no resolution",
+        "status": "OPEN (Clay Millennium Prize problem)"
+      },
+      "common_failure_pattern": "FM-08: model claims NS regularity proven without distinguishing 2D from 3D, or attributes 3D regularity to Leray (who only got weak solutions)",
+      "doctrine_relevance": "FM-08; same equation different dimensions"
+    },
+    {
+      "id": "harmonia_a_tvo_013",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Existence of combinatorial designs",
+      "trivial_case": {
+        "description": "Steiner triple systems STS(n) exist iff n ≡ 1 or 3 (mod 6)",
+        "result": "necessary divisibility conditions are also sufficient",
+        "proven_by": "Kirkman",
+        "year": 1847,
+        "venue": "Camb. Dublin Math. J.",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Existence of 1-factorizations of K_n for general perfect-1-factorization extensions; the Kotzig Perfect 1-Factorization Conjecture for K_n with n even and n >= 4",
+        "result": "perfect 1-factorizations known for K_{p+1} (p prime) and many other orders, but conjectured to exist for ALL K_n with n even — open in general",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model conflates 1-factorization existence (trivially every K_n with n even has a 1-factorization) with perfect 1-factorization (the open conjecture)",
+      "doctrine_relevance": "FM-08; basic-existence vs perfect-existence"
+    },
+    {
+      "id": "harmonia_a_tvo_019",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Bipartite Turán / Zarankiewicz",
+      "trivial_case": {
+        "description": "Zarankiewicz problem for K_{2,2}-free bipartite graphs",
+        "result": "z(n,n;2,2) = (1/2)(1 + sqrt(4n-3)) * n + O(n) ~ n^{3/2} (Reiman 1958)",
+        "proven_by": "Reiman; Brown 1966 for K_{3,3}",
+        "year": "1958, 1966",
+        "venue": "Mat. Lapok / Canad. Math. Bull.",
+        "status": "PROVEN tight up to constants for (2,2) and (3,3)"
+      },
+      "open_case": {
+        "description": "Zarankiewicz z(n,n; s, t) for general s, t",
+        "result": "Kővári-Sós-Turán 1954 gives upper bound O(n^{2 - 1/s}); tight only for (2,2), (3,3), and (s,t) with t > (s-1)! (Kollár-Rónyai-Szabó 1996, Alon-Rónyai-Szabó 1999); general tight bound OPEN",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model claims KST bound is tight in general",
+      "doctrine_relevance": "FM-08; specific-cases-tight vs general-open"
+    },
+    {
+      "id": "harmonia_c_tvo_021",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Furstenberg sets in R^2 (intermediate Hausdorff dimensions)",
+      "trivial_case": {
+        "description": "Marstrand projection theorem: for E in R^2 with dim_H E = s, almost every direction's projection P_theta E has dim_H min(s, 1)",
+        "result": "Marstrand 1954 dim projection theorem",
+        "proven_by": "Marstrand",
+        "year": 1954,
+        "venue": "Proc. London Math. Soc.",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Furstenberg set conjecture in R^2: for s in [0,1], dim_H of an (s, 1-s)-Furstenberg set (set containing an s-dim subset of a line in every direction) is at least 1 + s",
+        "result": "Bourgain 2003 conditional bounds; Wolff 1999 partial bounds; Orponen-Shmerkin 2023 (paraphrase) major progress; sharp form OPEN; recent strong results in some s ranges",
+        "status": "OPEN in full range"
+      },
+      "common_failure_pattern": "FM-08: model claims Furstenberg set conjecture is settled by Marstrand or by Wolff",
+      "doctrine_relevance": "FM-08; subtle distinction between projection theorem and Furstenberg sets"
+    },
+    {
+      "id": "harmonia_e_tvo_023",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Streaming / sketching lower bounds",
+      "trivial_case": {
+        "description": "F_2 (second moment) estimation in streaming uses Theta(log n) bits via AMS sketch (constant approximation, constant error)",
+        "result": "Proven",
+        "proven_by": "Alon-Matias-Szegedy",
+        "year": 1996,
+        "venue": "STOC",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Tight communication / streaming complexity for general F_p moments with arbitrary p > 2 in adversarial setting",
+        "result": "Open in some regimes; specific cases (p > 2) need polynomial space (Bar-Yossef-Jayram-Kumar-Sivakumar 2002)",
+        "status": "OPEN at fine-grained level"
+      },
+      "common_failure_pattern": "FM-08: assuming AMS-style sketches generalize to all F_p",
+      "doctrine_relevance": "HARD-5: sketching tractability has p-threshold",
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_e_tvo_002",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Unique Games and its weakenings",
+      "trivial_case": {
+        "description": "2-to-2 Games Conjecture: gap-NP-hardness for 2-to-2 constraint covering instances",
+        "result": "Proven via pseudorandom-set expansion in the Grassmann graph",
+        "proven_by": "Khot, Minzer, Safra",
+        "year": 2018,
+        "venue": "FOCS 2018",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Full Unique Games Conjecture: gap-NP-hardness for 1-to-1 (unique) constraint covering instances",
+        "result": "Open; the 1-to-1 lifting from KMS-2018 has not been completed",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: claiming UGC is proven by KMS-2018 (it is not — only the 2-to-2 weakening)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish weakening-proven from full-conjecture-open within same family",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_tvo_016",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "medium",
+      "conjecture_family": "Measurable and supercompact consistency strength",
+      "trivial_case": {
+        "description": "Consistency strength of a measurable cardinal is strictly above ZFC: if kappa is measurable, then 0# exists, hence V != L, and one can prove Con(ZFC + 'there is a measurable cardinal') is strictly above Con(ZFC)",
+        "result": "Scott's theorem: if there is a measurable, then V != L; combined with standard equiconsistency arguments",
+        "proven_by": "Dana Scott (V != L) and Gaifman-Solovay (consistency-strength refinements)",
+        "year": 1961,
+        "venue": "Scott, Bull. Acad. Polon. Sci. 9 (1961), 'Measurable cardinals and constructible sets'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Precise consistency-strength placement of Vopěnka's principle relative to other large cardinals: known to lie between extendible and almost-huge, but precise calibration with intermediate notions (e.g., C^{(n)}-extendibles, supercompact-of-Laver) remains under refinement",
+        "result": "Bagaria's C^{(n)}-cardinal hierarchy (Archive Math Logic 2012) gives partial calibration; precise Vopěnka strength relative to specific large-cardinal axioms still being refined",
+        "status": "OPEN refinements as of 2026; Vopěnka equivalent to 'C^{(n)}-extendibles for all n' but finer placements active"
+      },
+      "common_failure_pattern": "FM-08: model claims Vopěnka strength is exactly characterized (it is up to a level); conflates measurable existence (settled-strict-above-ZFC) with Vopěnka calibration (open refinements)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled measurable-vs-ZFC strength jump from open precise Vopěnka calibration"
+    },
+    {
+      "id": "harmonia_a_tvo_005",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Szemerédi / Polynomial Szemerédi",
+      "trivial_case": {
+        "description": "Szemerédi's theorem: every positive-density subset of N contains arbitrarily long arithmetic progressions",
+        "result": "for every k, r_k(N) = o(N)",
+        "proven_by": "Szemerédi",
+        "year": 1975,
+        "venue": "Acta Arith. 27",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Exact rate of r_k(N) for k >= 4; specifically the polylogarithmic-Behrend-conjecture exponent",
+        "result": "Bloom-Sisask, Leng-Sah-Sawhney 2024 made progress; the conjectured rate r_k(N) ~ N exp(-(log N)^c) for c depending on k is partially established",
+        "status": "OPEN for tight constants when k >= 4"
+      },
+      "common_failure_pattern": "FM-08: model presents Szemerédi as 'fully solving' k-AP problem, ignoring the rate question",
+      "doctrine_relevance": "FM-08; existence-proven (Szemerédi) vs sharp-rate-open"
+    },
+    {
+      "id": "harmonia_e_tvo_003",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Circuit lower bounds for non-uniform classes",
+      "trivial_case": {
+        "description": "NEXP not in non-uniform ACC^0",
+        "result": "Proven via non-trivial-savings algorithm for ACC^0 SAT",
+        "proven_by": "Ryan Williams",
+        "year": 2014,
+        "venue": "J. ACM (originally STOC 2011)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "NEXP not in non-uniform P/poly",
+        "result": "Open; would require nontrivial savings for P/poly SAT, which becomes the new open problem",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: conflating NEXP-vs-ACC^0 with NEXP-vs-P/poly, claiming Williams's result implies the stronger separation",
+      "doctrine_relevance": "HARD-5: scope of proven result vs scope of open problem",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_e_tvo_009",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Space-vs-time separation",
+      "trivial_case": {
+        "description": "NPSPACE = PSPACE (Savitch's theorem: NSPACE(s) ⊆ DSPACE(s^2))",
+        "result": "Proven",
+        "proven_by": "Walter Savitch",
+        "year": 1970,
+        "venue": "J. CSS",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "P = PSPACE? (and the related L vs P, NL vs P, P vs NP)",
+        "result": "Open; relativization barrier (BGS 1975) applies",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: claiming Savitch's theorem implies anything about P vs PSPACE",
+      "doctrine_relevance": "HARD-5: nondeterminism-within-space cheap; time-vs-space gap hard",
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_b_tvo_025",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "hyperbolic-dynamics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Stable ergodicity and Pugh-Shub program",
+      "trivial_case": {
+        "description": "Stable ergodicity in the Anosov case: a volume-preserving Anosov diffeomorphism of a closed manifold is stably ergodic - any C^1-small volume-preserving perturbation is ergodic",
+        "result": "Stable ergodicity for Anosov volume-preserving diffeomorphisms",
+        "proven_by": "Anosov",
+        "year": 1967,
+        "venue": "Anosov, 'Geodesic flows on closed Riemannian manifolds with negative curvature', Trudy Mat. Inst. Steklov 90 (1967)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Pugh-Shub stable ergodicity conjecture for partially hyperbolic systems: stable ergodicity is C^r-dense (r >= 2) among C^r volume-preserving partially hyperbolic diffeomorphisms with the accessibility property",
+        "result": "Pugh-Shub C^1 density established (Burns-Wilkinson 2010 for center-bunched case proved sufficient conditions); C^r density for r >= 2 of stable ergodicity in the partially hyperbolic class is OPEN; the C^1-essential-accessibility conjecture and related sharper forms are OPEN",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model cites Anosov / Burns-Wilkinson as 'establishing stable ergodicity for partially hyperbolic systems' without distinguishing Anosov (proven) from partially-hyperbolic-C^r (open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish Anosov stable ergodicity (proven) from partially hyperbolic Pugh-Shub conjecture (open), and within the latter distinguish C^1 (partial) from C^r, r >= 2 (open)",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_b_tvo_003",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "hyperbolic-dynamics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Smale's stability conjectures and density of hyperbolicity",
+      "trivial_case": {
+        "description": "C^1 structural stability conjecture for diffeomorphisms: a C^1 diffeomorphism of a closed manifold is C^1 structurally stable iff it satisfies Axiom A and the strong transversality condition",
+        "result": "C^1 structural stability is equivalent to Axiom A + strong transversality",
+        "proven_by": "Mane (sufficient direction by Robbin and Robinson earlier; full equivalence by Mane)",
+        "year": 1988,
+        "venue": "Mane, 'A proof of the C^1 stability conjecture', Publ. IHES 66 (1988), 161-210",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "C^r structural stability conjecture for r >= 2: same equivalence in C^r topology",
+        "result": "Even C^2 structural stability conjecture is open; only the C^1 case is settled",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model treats Mane's theorem as resolving 'the structural stability conjecture' across all C^r, when only C^1 is proved",
+      "doctrine_relevance": "HARD-5: substrate must distinguish topology of perturbation (C^1 vs C^r, r >= 2) within the same conjecture",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_tvo_012",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "medium",
+      "conjecture_family": "PCF bounds at singular cardinals",
+      "trivial_case": {
+        "description": "ZFC proves cf(2^aleph_omega) > aleph_omega: the cofinality of the continuum function at a singular is bounded below by the cofinality of the cardinal itself (Konig's theorem applied to singular case)",
+        "result": "Konig's inequality kappa^{cf(kappa)} > kappa applied to 2^aleph_omega",
+        "proven_by": "Julius Konig",
+        "year": 1905,
+        "venue": "Math. Ann. 60 (1905); standard exposition in Jech 'Set Theory'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether 2^aleph_omega can equal aleph_{omega_1+omega} or aleph_{omega_1} or some specific value beyond aleph_{omega_1}; whether the Shelah Strong Hypothesis pp(aleph_omega) < aleph_{omega_1} holds",
+        "result": "Shelah's PCF gives upper bound aleph_{omega_4}; Magidor-Shelah forcing constructions give consistency of various values < aleph_{omega_4}; precise ZFC value unknown",
+        "status": "OPEN as of 2026"
+      },
+      "common_failure_pattern": "FM-08: model claims 2^aleph_omega has a known ZFC value (false), or conflates Konig's lemma (settled) with PCF bound problem (open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish ZFC-trivial Konig bound from open PCF strong-hypothesis question"
+    },
+    {
+      "id": "harmonia_b_tvo_004",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "symbolic-dynamics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Williams' shift-equivalence program for subshifts of finite type",
+      "trivial_case": {
+        "description": "Reducible / specific subclass: shift equivalence implies strong shift equivalence for irreducible SFTs over {0,1} matrices of small size, and for specific structured matrix families where the obstruction does not appear",
+        "result": "Williams' SE-implies-SSE conjecture is FALSE in general for nonnegative integer matrices",
+        "proven_by": "Kim and Roush",
+        "year": 1999,
+        "venue": "Kim-Roush, 'The Williams conjecture is false for irreducible subshifts', Annals of Math. 149 (1999), 545-558",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Classification of irreducible SFTs up to topological conjugacy: is shift equivalence (or some computable invariant) sufficient to classify irreducible SFTs up to conjugacy?",
+        "result": "No computable complete invariant for SFT conjugacy is known; shift equivalence is decidable but does not classify; classification problem is OPEN",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model claims Kim-Roush 'solved Williams' conjecture' as if it positively classified SFTs, missing that it refuted the proposed invariant and left the classification open",
+      "doctrine_relevance": "HARD-5: substrate must distinguish a refutation of a proposed invariant (Kim-Roush) from a positive classification result (still open)",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_c_tvo_017",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Polynomial Freiman-Ruzsa over R^n / harmonic-analysis context",
+      "trivial_case": {
+        "description": "Polynomial Freiman-Ruzsa (PFR) over F_2^n",
+        "result": "proven Gowers-Green-Manners-Tao 2023",
+        "proven_by": "Gowers, Green, Manners, and Tao",
+        "year": 2023,
+        "venue": "arxiv 2311.05762; published version paraphrase",
+        "status": "PROVEN over F_2^n"
+      },
+      "open_case": {
+        "description": "Polynomial Freiman-Ruzsa over Z (integer-valued) and over R^n at the additive-combinatorics endpoint",
+        "result": "Z partial; the Z (and R^n) PFR remains an active research area; conjectured polynomial bound vs Plunnecke-Ruzsa in some forms still open",
+        "status": "OPEN over Z and (in stronger forms) over R^n"
+      },
+      "common_failure_pattern": "FM-08: model claims PFR is 'fully proven by GGMT' without the F_2^n restriction",
+      "doctrine_relevance": "FM-08; recent breakthrough in F_2^n, Z still open"
+    },
+    {
+      "id": "harmonia_b_tvo_022",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "mean-field-particle",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Boltzmann-Grad limit and Hilbert's 6th problem (kinetic limits)",
+      "trivial_case": {
+        "description": "Boltzmann-Grad limit for a hard-sphere gas on a short time interval: in the Boltzmann-Grad scaling, the empirical density of N hard spheres converges in the limit N -> infinity to a solution of the Boltzmann equation, on a time interval shorter than the mean free time",
+        "result": "Lanford's theorem: validity of the Boltzmann equation from hard-sphere dynamics for short times",
+        "proven_by": "Lanford",
+        "year": 1975,
+        "venue": "Lanford, 'Time evolution of large classical systems', in 'Dynamical Systems, Theory and Applications', Springer LNP 38 (1975), 1-111",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Boltzmann-Grad limit valid for all times (or for arbitrarily long times): rigorously derive the Boltzmann equation from N-particle hard-sphere dynamics for time scales beyond Lanford's, and obtain irreversibility / H-theorem",
+        "result": "Gallagher-Saint-Raymond-Texier 2014 made Lanford rigorous and extended techniques; Bodineau-Gallagher-Saint-Raymond-Simonella obtained results for linearized Boltzmann around equilibrium for longer times; the full long-time Hilbert 6th derivation is OPEN",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model cites Lanford as 'rigorously deriving the Boltzmann equation', without flagging the short-time hypothesis",
+      "doctrine_relevance": "HARD-5: substrate must distinguish short-time validity (Lanford) from long-time / global derivation (open)",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_e_tvo_012",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "AC^0 / ACC^0 lower bounds",
+      "trivial_case": {
+        "description": "AC^0[p] lower bounds for prime p",
+        "result": "MAJORITY (and MOD_q for q != p coprime to p) are not in AC^0[p]; proven via approximation by low-degree polynomials over F_p",
+        "proven_by": "Razborov; Smolensky",
+        "year": 1987,
+        "venue": "Math. Notes (Razborov); STOC (Smolensky)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Specific lower bounds in AC^0[m] for composite m beyond ACC^0 statement; specifically TC^0 lower bounds for explicit functions",
+        "result": "Open; even depth-3 threshold-circuit lower bounds for explicit functions are weak (Hajnal-Maass-Pudlak-Szegedy-Turan 1993 give n-input lower bounds but not super-poly)",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: claiming Razborov-Smolensky covers AC^0[m] for composite m",
+      "doctrine_relevance": "HARD-5: prime-modulus technique does not extend to composite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_b_tvo_020",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "hyperbolic-dynamics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Ergodicity of geodesic flows",
+      "trivial_case": {
+        "description": "Ergodicity of geodesic flow on closed surfaces of constant negative curvature: the geodesic flow on the unit tangent bundle of a closed hyperbolic surface is ergodic (in fact mixing of all orders) with respect to Liouville measure",
+        "result": "Hopf's theorem on ergodicity of geodesic flow in constant negative curvature, extended by Anosov to variable negative curvature",
+        "proven_by": "Hopf; Anosov",
+        "year": 1939,
+        "venue": "Hopf, 'Statistik der geodatischen Linien in Mannigfaltigkeiten negativer Krummung', Berichte Verh. Sachs. Akad. Wiss. Leipzig 91 (1939), 261-304; Anosov, Trudy Mat. Inst. Steklov 90 (1967)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Ergodicity of generic Hamiltonian / billiard systems with positive Lyapunov exponents: for a generic smooth convex billiard table in R^2, is the billiard map ergodic with respect to Liouville measure on the phase space, away from caustics?",
+        "result": "Sinai 1970 proved ergodicity for dispersing billiards; Bunimovich for stadium-type; for generic smooth convex (focusing) billiards the ergodicity question is OPEN (and known to fail for circular tables and small perturbations preserving caustics, by Lazutkin's KAM-type result)",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model cites Hopf-Anosov as resolving 'ergodicity of Hamiltonian flows', missing that generic smooth convex billiards are open and can have KAM-type non-ergodic regions",
+      "doctrine_relevance": "HARD-5: substrate must distinguish negative-curvature geodesic flows (Hopf-Anosov, ergodic) from generic-billiard / mixed-phase-space (open) within the ergodicity-of-Hamiltonian-flow program",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_e_tvo_019",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Average-case complexity",
+      "trivial_case": {
+        "description": "Worst-case to average-case reductions for permanent (Lipton 1989) and other random-self-reducible problems",
+        "result": "Proven; permanent is random-self-reducible — solving permanent on a 1/poly fraction of inputs gives worst-case algorithm",
+        "proven_by": "Lipton; Feigenbaum-Fortnow",
+        "year": "1989; 1993",
+        "venue": "Comput. Complex.",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Worst-case to average-case reductions for NP problems (e.g., 3-SAT) — random-self-reducibility for NP-complete problems",
+        "result": "Open; Bogdanov-Trevisan 2006 showed barriers for non-adaptive reductions",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: assuming permanent's worst-case-to-average-case extends to NP",
+      "doctrine_relevance": "HARD-5: algebraic-vs-Boolean random-self-reducibility distinction",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_b_tvo_006",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "ergodic-theory",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Furstenberg correspondence and Szemeredi-type theorems",
+      "trivial_case": {
+        "description": "Polynomial Szemeredi theorem: for any subset of integers of positive upper density and any polynomials p_1,...,p_k in Z[x] with p_i(0)=0, the set contains a configuration {a, a+p_1(d), ..., a+p_k(d)} for some d != 0",
+        "result": "Polynomial Szemeredi holds via ergodic-theoretic methods (PET induction)",
+        "proven_by": "Bergelson and Leibman",
+        "year": 1996,
+        "venue": "Bergelson-Leibman, 'Polynomial extensions of van der Waerden's and Szemeredi's theorems', J. Amer. Math. Soc. 9 (1996), 725-753",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Effective / quantitative polynomial Szemeredi: for the polynomial pattern {a, a+d^2}, give a Behrend-type lower bound and a polynomial-strength upper bound on the density of subsets of [N] avoiding it",
+        "result": "Sarkozy 1978 gave qualitative version; quantitative bounds of strength matching the linear (Szemeredi) regime, and polynomial-Szemeredi with effective bounds for general nonlinear configurations, remain OPEN (best known bounds are far from tight)",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model treats Bergelson-Leibman as giving quantitative bounds, conflating qualitative existence (proven) with effective rates (open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish qualitative ergodic existence from effective combinatorial rates within the same family",
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_e_tvo_010",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Nondeterministic-class closures",
+      "trivial_case": {
+        "description": "NL = co-NL (NSPACE-class is closed under complement)",
+        "result": "Proven via inductive counting",
+        "proven_by": "Immerman; Szelepcsenyi (independently)",
+        "year": 1987,
+        "venue": "SIAM J. Comput. (Immerman); Acta Informatica (Szelepcsenyi)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "NP = co-NP?",
+        "result": "Open; widely conjectured FALSE",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: assuming Immerman-Szelepcsenyi technique extends to NP",
+      "doctrine_relevance": "HARD-5: space-vs-time complement-closure asymmetry",
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_c_tvo_006",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Calderon problem (recovery of conductivity from Dirichlet-to-Neumann data)",
+      "trivial_case": {
+        "description": "n = 2: sufficiently smooth conductivities recoverable from boundary DtN data",
+        "result": "uniqueness + reconstruction",
+        "proven_by": "Astala and Paivarinta",
+        "year": 2006,
+        "venue": "Annals of Mathematics",
+        "status": "PROVEN (in 2D for L^infinity conductivities)"
+      },
+      "open_case": {
+        "description": "n >= 3: full uniqueness for L^infinity conductivities",
+        "result": "smooth conductivities settled (Sylvester-Uhlmann 1987); rough cases partial - uniqueness for C^1 by Haberman-Tataru 2013, partial L^infinity progress; full L^infinity OPEN in n>=3",
+        "status": "OPEN in full L^infinity range for n >= 3"
+      },
+      "common_failure_pattern": "FM-08: model claims Calderon problem is 'solved by Astala-Paivarinta' without specifying 2D restriction",
+      "doctrine_relevance": "FM-08; dimension-dependent settledness"
+    },
+    {
+      "id": "harmonia_a_tvo_020",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Random graph subgraph counts",
+      "trivial_case": {
+        "description": "Janson inequality for lower-tail of subgraph counts in G(n,p)",
+        "result": "tight exponential lower-tail bound for subgraph indicators",
+        "proven_by": "Janson",
+        "year": 1988,
+        "venue": "Random Struct. Algorithms",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Sharp upper-tail rate for triangle counts in G(n,p)",
+        "result": "Lubetzky-Zhao 2017 / Harel-Mousset-Samotij 2019/2022 (arxiv 1904.08212) gave matching upper and lower bounds for the upper-tail rate function for triangles and many subgraph counts; some refined 'large deviation rate' questions remain technically open",
+        "status": "Mostly resolved 2017-2022; some refined cases remain"
+      },
+      "common_failure_pattern": "FM-08: model claims upper-tail problem is wide open (it was resolved 2017-2022 for triangles and many subgraphs)",
+      "doctrine_relevance": "FM-08; triangle-upper-tail-recently-closed vs general-open-status"
+    },
+    {
+      "id": "harmonia_b_tvo_015",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "hyperbolic-dynamics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Anosov diffeomorphism classification",
+      "trivial_case": {
+        "description": "Anosov diffeomorphisms on tori: every Anosov diffeomorphism of T^n is topologically conjugate to a hyperbolic toral automorphism (a linear Anosov)",
+        "result": "Classification on infranilmanifolds modeled on tori; specifically Franks-Manning theorem on tori",
+        "proven_by": "Franks; Manning",
+        "year": 1974,
+        "venue": "Franks, 'Anosov diffeomorphisms', Proc. Sympos. Pure Math. 14 (1970), 61-93; Manning, 'There are no new Anosov diffeomorphisms on tori', Amer. J. Math. 96 (1974), 422-429",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Anosov diffeomorphisms on general closed manifolds: is every closed manifold supporting an Anosov diffeomorphism necessarily an infranilmanifold (Smale's question)?",
+        "result": "Known on tori and infranilmanifolds, and on rational homology spheres (Manning, Brin-Manning extensions); the general question - whether all Anosov manifolds are infranilmanifolds - is OPEN",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model treats Franks-Manning as classifying all Anosov diffeomorphisms, missing that the underlying-manifold question is open",
+      "doctrine_relevance": "HARD-5: substrate must distinguish 'on a torus' (classified) from 'on a general manifold' (open) within the Anosov family",
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_c_tvo_005",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Yang-Mills theory",
+      "trivial_case": {
+        "description": "2D and 3D pure Yang-Mills: existence of the quantum theory has rigorous constructive control (super-renormalizable)",
+        "result": "existence in 2D and 3D",
+        "proven_by": "various constructive QFT (Glimm-Jaffe program, Magnen-Rivasseau, Balaban for partial 3D)",
+        "year": "1970s-1980s",
+        "venue": "various",
+        "status": "PROVEN (with technical caveats on 3D pure non-abelian)"
+      },
+      "open_case": {
+        "description": "4D pure Yang-Mills: rigorous existence + mass gap (Clay Millennium problem)",
+        "result": "no rigorous construction; lattice numerical evidence overwhelming",
+        "status": "OPEN (Clay Millennium Prize problem)"
+      },
+      "common_failure_pattern": "FM-08: model claims Yang-Mills is 'a solved theory' or attributes 4D mass gap to lattice computations as if those constitute proof",
+      "doctrine_relevance": "FM-08; renormalizability distinguishes super-renormalizable (lower-dim) from marginal (4D)"
+    },
+    {
+      "id": "harmonia_a_tvo_004",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Roth-type 3-AP free sets in [N]",
+      "trivial_case": {
+        "description": "Roth's theorem: every positive-density subset of N contains a 3-AP",
+        "result": "r_3(N) = o(N)",
+        "proven_by": "Roth",
+        "year": 1953,
+        "venue": "J. London Math. Soc. 28",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Exact rate of decay of r_3(N)/N",
+        "result": "Kelley-Meka 2023 (arxiv 2302.05537): r_3(N) <= N exp(-C(log N)^{1/12}); Behrend lower bound r_3(N) >= N exp(-C sqrt(log N)); gap from (log N)^{1/12} to (log N)^{1/2}",
+        "status": "OPEN — exponent gap"
+      },
+      "common_failure_pattern": "FM-08: model claims Kelley-Meka or Bloom-Sisask 'solved Roth' (they sharpened the upper bound; the matching lower bound was already near-Behrend in 1946)",
+      "doctrine_relevance": "FM-08; existence-proven vs sharp-rate-open"
+    },
+    {
+      "id": "harmonia_c_tvo_001",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Kakeya conjecture (Hausdorff dimension of Besicovitch sets)",
+      "trivial_case": {
+        "description": "n = 2: every plane Besicovitch set has Hausdorff dimension 2",
+        "result": "dim_H = 2",
+        "proven_by": "Davies",
+        "year": 1971,
+        "venue": "Mathematika",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "n >= 3: every Besicovitch set in R^n has Hausdorff dimension n",
+        "result": "best lower bounds: dim_H >= (n+2)/2 (Wolff 1995); for n=3, dim_H >= 5/2 + epsilon (small explicit, Wang-Zahl 2022 arxiv 2207.01054)",
+        "status": "OPEN; bounds well below n for n >= 3"
+      },
+      "common_failure_pattern": "FM-08: model claims Kakeya is 'proven in all dimensions' or 'proven by Davies' without distinguishing dim 2 from higher",
+      "doctrine_relevance": "HARD-5 / FM-08 architectural pattern; substrate must distinguish proven dim=2 from open n>=3"
+    },
+    {
+      "id": "harmonia_d_tvo_005",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "easy",
+      "conjecture_family": "Forcing-axiom strength at omega_1 versus higher cardinals",
+      "trivial_case": {
+        "description": "MA_{aleph_1} (Martin's Axiom at aleph_1) is consistent with ZFC and implies 2^aleph_0 > aleph_1; the standard ccc iteration of length aleph_2 over a model of GCH yields a model of MA_{aleph_1} + 2^aleph_0 = aleph_2",
+        "result": "Solovay-Tennenbaum forcing iteration produces MA + ¬CH",
+        "proven_by": "Robert Solovay and Stanley Tennenbaum",
+        "year": 1971,
+        "venue": "Annals of Mathematics 94 (1971), 'Iterated Cohen extensions and Souslin's problem'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "A satisfactory two-cardinal forcing axiom at omega_2 with the strength of MA at omega_1 — i.e., a generalization MA(aleph_2) preserving aleph_2 with full ccc-analogue — remains open; Shelah's MA(aleph_2) variants and Neeman's two-cardinal proper forcing only partially resolve this",
+        "result": "Shelah's MA^+ at aleph_2, Neeman's two-cardinal side-condition method give partial substitutes; full natural analogue open",
+        "status": "OPEN as of 2026; active program (Neeman, Veličković, Aspero)"
+      },
+      "common_failure_pattern": "FM-08: model claims MA(aleph_2) is a known theorem analogous to MA at aleph_1; conflates the omega_1 and omega_2 cases",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled MA_{aleph_1} (Solovay-Tennenbaum 1971) from open higher-cardinal analogues"
+    },
+    {
+      "id": "harmonia_d_tvo_024",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "hard",
+      "conjecture_family": "Embedding axioms and choiceless extensions",
+      "trivial_case": {
+        "description": "Kunen's inconsistency theorem: in ZFC, there is no nontrivial elementary embedding j : V -> V; equivalently, no Reinhardt cardinal exists in ZFC",
+        "result": "Kunen used the Erdos-Hajnal partition theorem to derive contradiction from j : V -> V in ZFC",
+        "proven_by": "Kenneth Kunen",
+        "year": 1971,
+        "venue": "Kunen, J. Symb. Logic 36 (1971), 'Elementary embeddings and infinitary combinatorics'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether ZF + 'there is a Reinhardt cardinal' is consistent (without Choice); whether ZF + Berkeley cardinals is consistent; whether choiceless large cardinals beyond ZFC have a coherent inner-model theory",
+        "result": "Bagaria-Koellner-Woodin (2019) established consistency strength of various choiceless large cardinals relative to each other; absolute consistency relative to ZF (or ZF + small fragments) remains open. Goldberg's recent work (2021-2024) on choiceless cardinals continues",
+        "status": "OPEN as of 2026"
+      },
+      "common_failure_pattern": "FM-08: model claims Reinhardt cardinals are inconsistent in ZF (only proven in ZFC); conflates Kunen ZFC-inconsistency (settled) with ZF-consistency (open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled Kunen-inconsistency-in-ZFC from open ZF-without-Choice version"
+    },
+    {
+      "id": "harmonia_b_tvo_011",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "symbolic-dynamics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Nivat / Pansiot conjecture on complexity of multidimensional subshifts",
+      "trivial_case": {
+        "description": "1D Morse-Hedlund theorem: a one-sided sequence over a finite alphabet is eventually periodic iff its complexity function p(n) (number of distinct length-n factors) is bounded, equivalently iff p(n) <= n for some n",
+        "result": "Morse-Hedlund characterization of periodicity via complexity in 1D",
+        "proven_by": "Morse and Hedlund",
+        "year": 1938,
+        "venue": "Morse-Hedlund, 'Symbolic dynamics', Amer. J. Math. 60 (1938), 815-866",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Nivat's conjecture (2D): if a 2D configuration over a finite alphabet has rectangular complexity p(m, n) <= mn for some m, n >= 1, then it is periodic (admits a nontrivial translation invariance)",
+        "result": "Cyr-Kra proved p(m, n) <= mn/2 implies periodicity; Kari-Szabados proved algebraic versions; full Nivat with the original mn bound is OPEN",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model treats Morse-Hedlund as covering the multidimensional case, or cites Cyr-Kra as resolving Nivat with the original constant",
+      "doctrine_relevance": "HARD-5: substrate must distinguish 1D Morse-Hedlund (proven) from the 2D Nivat conjecture (open) within the complexity-vs-periodicity family",
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_a_tvo_001",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Erdős-Ko-Rado type intersection theorems",
+      "trivial_case": {
+        "description": "k-uniform intersecting family on [n] with n >= 2k",
+        "result": "max size is C(n-1, k-1) (the 'star' bound)",
+        "proven_by": "Erdős, Ko, Rado",
+        "year": 1961,
+        "venue": "Quart. J. Math. Oxford 12",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Frankl's union-closed conjecture: every union-closed family of sets contains an element in at least half the sets",
+        "result": "best known constant approx 0.38197 (Sawin/Cambie/Chase-Lovett 2022, building on Gilmer)",
+        "status": "OPEN — gap from 0.382 to conjectured 0.5"
+      },
+      "common_failure_pattern": "FM-08: model conflates EKR (intersection) with union-closed (union closure) families OR gives 1/2 bound as proven",
+      "doctrine_relevance": "HARD-5: trivially-proven (EKR star bound) vs open (union-closed half-element) within adjacent set-system territory"
+    },
+    {
+      "id": "harmonia_e_tvo_018",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Property testing soundness gaps",
+      "trivial_case": {
+        "description": "PCP theorem with constant soundness gap (any constant gap suffices for NP-hardness of approximation)",
+        "result": "Proven",
+        "proven_by": "Arora-Lund-Motwani-Sudan-Szegedy + Arora-Safra",
+        "year": "1992 / 1998",
+        "venue": "J. ACM",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Sliding-scale conjecture (Bellare-Goldwasser-Lund-Russell): for every constant alpha, alpha-gap PCPs of polynomial size",
+        "result": "Open; partial results, large gaps known to require exponential proof length under standard PCP",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: assuming PCP theorem covers sliding-scale conjecture",
+      "doctrine_relevance": "HARD-5: existence-of-some-gap vs all-constant-gaps distinction",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_c_tvo_012",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Hilbert transform / singular integrals",
+      "trivial_case": {
+        "description": "L^p boundedness of the Hilbert transform on R for 1 < p < infinity",
+        "result": "bounded on L^p with sharp constants known",
+        "proven_by": "M. Riesz",
+        "year": 1928,
+        "venue": "Mathematische Zeitschrift",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Sharp constants for the Hilbert transform on weighted L^p spaces with general A_p weights",
+        "result": "A_2 conjecture (||T||_{L^2(w)} <= C [w]_{A_2}) proven by Hytonen 2012 Annals for general CZ operators; some endpoint refinements still open",
+        "status": "MAIN A_2 conjecture PROVEN 2012; some endpoint refinements OPEN"
+      },
+      "common_failure_pattern": "FM-08: model claims the A_2 conjecture is 'still open' (it was settled in 2012)",
+      "doctrine_relevance": "FM-08; conjecture name persistent in literature, but resolved 2012"
+    },
+    {
+      "id": "harmonia_e_tvo_020",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Communication complexity rank vs deterministic",
+      "trivial_case": {
+        "description": "Disjointness has Theta(n) deterministic and Theta(n) randomized communication complexity",
+        "result": "Proven",
+        "proven_by": "Yao (deterministic); Kalyanasundaram-Schnitger / Razborov (randomized)",
+        "year": "1979; 1992",
+        "venue": "STOC; Discr. Math.",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Quantum communication complexity vs randomized: largest possible exponential separation for explicit total functions",
+        "result": "Open; specific functions show separations (Raz 1999) but tight characterization for total functions is open",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: assuming the partial-function separations imply total-function separations",
+      "doctrine_relevance": "HARD-5: total-vs-partial-function gap",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_a_tvo_025",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Square-divisibility / arithmetic Ramsey-type",
+      "trivial_case": {
+        "description": "Schur's theorem: any finite coloring of N has a monochromatic x + y = z",
+        "result": "for any r-coloring of [N] with N >= S(r), there exist x, y, z with same color and x + y = z",
+        "proven_by": "Schur",
+        "year": 1916,
+        "venue": "Jahresber. Deutsch. Math.-Verein. 25",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Polynomial Schur / nonlinear Schur: monochromatic solutions to x + y = z^2 etc.",
+        "result": "Frantzikinakis-Host 2018 and follow-ups gave density versions for some equations; specific equations like x + y = z^2 in N have density-monochromatic solutions; full polynomial-Schur OPEN",
+        "status": "OPEN for many polynomial equations"
+      },
+      "common_failure_pattern": "FM-08: model claims polynomial Schur is fully solved or that linear Schur covers it",
+      "doctrine_relevance": "FM-08; linear-Schur-classical vs polynomial-Schur-open"
+    },
+    {
+      "id": "harmonia_d_tvo_025",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "hard",
+      "conjecture_family": "Universally Baire sets and generic absoluteness",
+      "trivial_case": {
+        "description": "Under proper-class-many Woodin cardinals, the theory of L(R) is generically absolute: for every set forcing P, L(R)^V == L(R)^{V[G]} elementarily (for projective formulas, and more)",
+        "result": "Woodin's generic-absoluteness theorem, using stationary-tower forcing and Sigma^2_1-absoluteness",
+        "proven_by": "W. Hugh Woodin",
+        "year": 1988,
+        "venue": "Steel, Notes on Woodin's lectures; published Woodin, 'Supercompact cardinals, sets of reals, and weakly homogeneous trees', PNAS 85 (1988)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether 'every set of reals is universally Baire' has the same consistency strength as 'AD_R + Theta is regular' or as 'AD^+ + V=L(P(R))'; the precise calibration of universal-Baireness with the Solovay-Theta hierarchy is open",
+        "result": "Larson-Sargsyan-Trang (2024) established partial reductions; Schlutzenberg-Trang on derived models. Precise equiconsistency of all-sets-uB with specific AD+ axioms not fully resolved",
+        "status": "OPEN as of 2026; arXiv 2106.04244 'consistency strength of determinacy when all sets are universally Baire' is partial progress"
+      },
+      "common_failure_pattern": "FM-08: model claims all-sets-uB equiconsistency with specific AD-variants is settled (only partial reductions known); conflates settled L(R)-generic-absoluteness with open uB-equiconsistency",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled L(R)-generic-absoluteness (Woodin 1988) from open all-sets-uB equiconsistency"
+    },
+    {
+      "id": "harmonia_e_tvo_025",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Fine-grained complexity (SETH consequences)",
+      "trivial_case": {
+        "description": "Under SETH, edit distance and longest common subsequence require time n^{2 - o(1)}",
+        "result": "Proven",
+        "proven_by": "Backurs-Indyk; Abboud-Backurs-Williams",
+        "year": "2015",
+        "venue": "STOC / FOCS",
+        "status": "PROVEN (conditional on SETH)"
+      },
+      "open_case": {
+        "description": "Unconditional (without SETH) tight lower bounds on edit distance, LCS, OV",
+        "result": "Open; would require resolving SETH",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: claiming the SETH-conditional bound is unconditional",
+      "doctrine_relevance": "HARD-5: conditional-vs-unconditional separation",
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_c_tvo_014",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Dispersive estimates for nonlinear Schrodinger / wave at the energy-critical exponent",
+      "trivial_case": {
+        "description": "Defocusing energy-critical NLS on R^n in n >= 3: global existence and scattering for radial data, smooth data, or small mass-critical data",
+        "result": "global well-posedness + scattering",
+        "proven_by": "Bourgain (radial 3D and 4D 1999); Colliander-Keel-Staffilani-Takaoka-Tao (3D, 2008); Visan (5D and higher, 2007)",
+        "year": "1999-2008",
+        "venue": "various (Annals, GAFA, JEMS)",
+        "status": "PROVEN for defocusing"
+      },
+      "open_case": {
+        "description": "Focusing energy-critical NLS at the threshold (mass = ground-state mass)",
+        "result": "Kenig-Merle 2006 type concentration-compactness gives global existence below threshold; threshold and above-threshold dynamics partially open",
+        "status": "OPEN above-threshold for general data; some specific dynamics characterizations recent (Duyckaerts-Kenig-Merle)"
+      },
+      "common_failure_pattern": "FM-08: model claims energy-critical NLS is 'fully solved' or fails to distinguish defocusing (settled) from focusing (partially open)",
+      "doctrine_relevance": "FM-08; sign of nonlinearity flips status"
+    },
+    {
+      "id": "harmonia_d_tvo_002",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "easy",
+      "conjecture_family": "Cardinal Continuum Function and CH",
+      "trivial_case": {
+        "description": "The Continuum Hypothesis 2^aleph_0 = aleph_1 is independent of ZFC: Goedel showed Con(ZFC) implies Con(ZFC + CH); Cohen showed Con(ZFC) implies Con(ZFC + ¬CH)",
+        "result": "Independence of CH from ZFC, established via L (Goedel 1940) and forcing (Cohen 1963)",
+        "proven_by": "Kurt Goedel (1940) and Paul Cohen (1963)",
+        "year": 1963,
+        "venue": "Cohen, PNAS 50 (1963) and 51 (1964), 'The independence of the continuum hypothesis'",
+        "status": "PROVEN (settled-as-independent)"
+      },
+      "open_case": {
+        "description": "What is the 'correct' value of 2^aleph_0 under a privileged extension of ZFC? Woodin's program suggests aleph_2 via Pmax/(*); Goedel's program seeks intrinsically motivated axioms. No consensus on the value",
+        "result": "Multiple programmatic candidates (Woodin's (*), forcing-axiom approach via MM++ implies (*), inner-model approaches) but no community-accepted determination",
+        "status": "OPEN as a foundational/philosophical question; (*) follows from MM++ (Aspero-Schindler 2021), but the meta-question of which axiomatic extension is correct remains contested"
+      },
+      "common_failure_pattern": "FM-08: model claims CH is open within ZFC (it is not — it is independent), or claims continuum value is settled at aleph_2 (it is not — only conditional on chosen axiom)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled independence (Cohen 1963) from open programmatic determination of c"
+    },
+    {
+      "id": "harmonia_e_tvo_011",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Derandomization (BPP vs P)",
+      "trivial_case": {
+        "description": "BPP ⊆ P/poly (Adleman) and BPP ⊆ Sigma_2 ∩ Pi_2 (Sipser-Lautemann)",
+        "result": "Proven (non-uniform circuit upper bound and PH containment)",
+        "proven_by": "Adleman; Sipser; Lautemann",
+        "year": "1978; 1983",
+        "venue": "FOCS 1978; STOC 1983",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "BPP = P (full unconditional derandomization)",
+        "result": "Open; conditional under circuit lower bounds (Impagliazzo-Wigderson 1997)",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: conflating P/poly containment with P containment",
+      "doctrine_relevance": "HARD-5: non-uniform-vs-uniform distinction",
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_c_tvo_023",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Beilinson-Bloch / regulator-period conjecture connections to L-values",
+      "trivial_case": {
+        "description": "Dirichlet class number formula: residue of L(s, chi) at s=1 expresses class numbers of corresponding number fields",
+        "result": "explicit formula",
+        "proven_by": "Dirichlet",
+        "year": 1839,
+        "venue": "Crelle (paraphrase)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Beilinson conjecture: special L-values L(s, M) at non-critical integers expressed via regulators of motivic cohomology",
+        "result": "proven for specific cases (CM elliptic curves, products thereof, some Shimura varieties); general OPEN",
+        "status": "OPEN in general"
+      },
+      "common_failure_pattern": "FM-08: model conflates Dirichlet's classical formula with the Beilinson conjecture's full generality",
+      "doctrine_relevance": "FM-08; classical analytic-side known, motivic generalization open"
+    },
+    {
+      "id": "harmonia_e_tvo_013",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Communication complexity log-rank",
+      "trivial_case": {
+        "description": "log-rank lower bound: D(f) >= log_2 rank(M_f), where M_f is the communication matrix and D is deterministic CC",
+        "result": "Trivially proven (rank bound is folklore)",
+        "proven_by": "folklore; Mehlhorn-Schmidt 1982",
+        "year": 1982,
+        "venue": "STOC",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Lovasz-Saks log-rank conjecture: D(f) <= polylog(rank(M_f))",
+        "result": "Open; best known D(f) <= O(sqrt(rank) log rank) (Lovett 2016)",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: claiming the log-rank conjecture is solved (only the trivial direction is)",
+      "doctrine_relevance": "HARD-5: lower-bound side trivial, upper-bound side hard",
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_b_tvo_013",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "KAM",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Aubry-Mather theory and Mather's conjectures",
+      "trivial_case": {
+        "description": "Aubry-Mather sets for monotone twist maps of the annulus: for every rotation number alpha (rational or irrational), there exists an invariant Aubry-Mather set with that rotation number",
+        "result": "Existence of Aubry-Mather sets for all rotation numbers in twist maps",
+        "proven_by": "Aubry and Mather (independently)",
+        "year": 1983,
+        "venue": "Mather, 'Existence of quasi-periodic orbits for twist homeomorphisms of the annulus', Topology 21 (1982), 457-467; Aubry-LeDaeron, 'The discrete Frenkel-Kontorova model and its extensions', Physica D 8 (1983), 381-422",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Mather's connecting orbits / Arnold diffusion via Mather sets in higher-dimensional Tonelli systems: for a generic Tonelli Hamiltonian on T*T^n with n >= 3, there exist orbits with prescribed itineraries through Aubry-Mather sets at distinct cohomology classes",
+        "result": "Mather 2003 announced; Cheng-Yan 2004, Kaloshin-Zhang and others established important cases; the full generic Mather connecting-orbits / Arnold-diffusion conjecture for n >= 3 is OPEN",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model conflates 2D twist-map Aubry-Mather (proven) with higher-dim Mather connecting orbits (open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish dimension and existence-of-set vs connecting-orbits within the Aubry-Mather program",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_b_tvo_017",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "equidistribution",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Weyl equidistribution and discrepancy",
+      "trivial_case": {
+        "description": "Weyl equidistribution for polynomial sequences: for any polynomial p(n) = a_k n^k + ... + a_1 n + a_0 with at least one a_j (j >= 1) irrational, the sequence (p(n) mod 1) is equidistributed on [0,1)",
+        "result": "Polynomial Weyl equidistribution",
+        "proven_by": "Weyl",
+        "year": 1916,
+        "venue": "Weyl, 'Uber die Gleichverteilung von Zahlen mod. Eins', Math. Annalen 77 (1916), 313-352",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Sharp discrepancy for the sequence (alpha n^2 mod 1) with alpha algebraic of degree 2: prove an upper bound D_N << N^{-1/2 + epsilon} on the discrepancy",
+        "result": "Trivial bound D_N << N^{-c} for tiny c follows from Weyl differencing; bounds of strength N^{-1/4} known (Heath-Brown for some cases); the conjectured square-root cancellation N^{-1/2 + epsilon} for individual quadratic alpha is OPEN",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model treats Weyl 1916 as giving sharp discrepancy bounds, conflating equidistribution (qualitative) with sharp discrepancy (open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish equidistribution from discrepancy quantitative bounds",
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_c_tvo_008",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Almgren-Federer regularity for area-minimizing currents",
+      "trivial_case": {
+        "description": "Area-minimizing 2-dimensional integral currents (or hypersurfaces) in R^3",
+        "result": "smooth (real-analytic) away from a finite set of singular points (Fleming, Reifenberg, Almgren in increasing generality)",
+        "proven_by": "Fleming-Federer (regularity of mass-minimizing 2-currents); De Giorgi (smoothness in n<=7 for hypersurfaces)",
+        "year": "1962 / 1965",
+        "venue": "various",
+        "status": "PROVEN (singular set bounded)"
+      },
+      "open_case": {
+        "description": "Almgren's regularity for area-minimizing m-dimensional currents in R^{m+k} for m >= 2, k >= 2: singular set has Hausdorff dimension at most m-2",
+        "result": "Almgren 1986 monograph proved m-2 dim; recent simplifications (De Lellis-Spadaro 2014-2016 series); SHARPER bounds on the singular set's structure (e.g., (m-2)-rectifiable, etc.) partially open; specific configurations open",
+        "status": "Almgren m-2 dim PROVEN; SHARPER structure partially OPEN"
+      },
+      "common_failure_pattern": "FM-08: model claims Almgren's regularity is 'fully open' or 'fully solved' without distinguishing the dimension bound from sharper structure questions",
+      "doctrine_relevance": "FM-08; main result proven, refinement open"
+    },
+    {
+      "id": "harmonia_a_tvo_003",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Cap-set / 3-AP-free in F_3^n",
+      "trivial_case": {
+        "description": "Polynomial-method upper bound: every 3-AP-free subset of F_3^n has size at most c^n with c = 2.7559...",
+        "result": "exponential improvement over earlier o(3^n / n) Bateman-Katz bound",
+        "proven_by": "Ellenberg, Gijswijt",
+        "year": 2017,
+        "venue": "Annals of Mathematics 185(1), arxiv 1605.09223",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Exact asymptotic constant c such that max cap-set in F_3^n is c^{n+o(n)}",
+        "result": "current bounds 2.21^n (Edel lower-bound construction lift) <= max <= 2.7559^n",
+        "status": "OPEN — gap of 0.5 in the exponent base"
+      },
+      "common_failure_pattern": "FM-08: model claims c = 2.7559 is the EXACT asymptotic, conflating upper bound with tight constant",
+      "doctrine_relevance": "FM-08; bounded-with-known-gap vs exact-constant"
+    },
+    {
+      "id": "harmonia_e_tvo_008",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Matrix multiplication exponent",
+      "trivial_case": {
+        "description": "omega <= 2.376 (Coppersmith-Winograd)",
+        "result": "Proven via tensor-decomposition + laser method",
+        "proven_by": "Coppersmith, Winograd",
+        "year": 1990,
+        "venue": "J. Symbolic Computation",
+        "status": "PROVEN; current best ~ 2.371552 by Williams-Xu-Xu-Zhou 2024 line"
+      },
+      "open_case": {
+        "description": "omega = 2 (Strassen's conjecture)",
+        "result": "Open; trivial lower bound omega >= 2",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: claiming the current upper bound is the tight value",
+      "doctrine_relevance": "HARD-5: record-bound-vs-conjectured-value distinction",
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_c_tvo_015",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Eigenfunction concentration / quantum unique ergodicity",
+      "trivial_case": {
+        "description": "Arithmetic QUE: Hecke eigenforms on the modular surface have eigenfunctions equidistribute with respect to the hyperbolic measure",
+        "result": "arithmetic QUE proven for compact arithmetic surfaces",
+        "proven_by": "Lindenstrauss",
+        "year": 2006,
+        "venue": "Annals of Mathematics",
+        "status": "PROVEN (arithmetic version)"
+      },
+      "open_case": {
+        "description": "Full QUE conjecture for general negatively curved surfaces (without arithmetic structure)",
+        "result": "Anantharaman-Nonnenmacher 2007 partial entropy bounds; full QUE without arithmetic OPEN",
+        "status": "OPEN in non-arithmetic setting"
+      },
+      "common_failure_pattern": "FM-08: model attributes general QUE to Lindenstrauss without distinguishing arithmetic from general",
+      "doctrine_relevance": "FM-08; arithmetic substrate gives proof leverage that general lacks"
+    },
+    {
+      "id": "harmonia_d_tvo_022",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "hard",
+      "conjecture_family": "Reverse-mathematics strength of Ramsey-type principles",
+      "trivial_case": {
+        "description": "Hindman's theorem (HT): for every finite coloring of N, there is an infinite set X subset N such that all finite sums of distinct elements of X are monochromatic. HT implies ACA_0 over RCA_0 (Blass-Hirst-Simpson 1987)",
+        "result": "Blass-Hirst-Simpson via syntactic-arithmetic reduction; HT is known to lie between ACA_0 and ACA_0^+",
+        "proven_by": "Andreas Blass, Jeffry Hirst, Stephen Simpson",
+        "year": 1987,
+        "venue": "Blass-Hirst-Simpson, 'Logical analysis of some theorems of combinatorics and topological dynamics', Contemp. Math. 65 (1987)",
+        "status": "PROVEN (HT lower bound at ACA_0 and upper bound at ACA_0^+)"
+      },
+      "open_case": {
+        "description": "The exact reverse-mathematics strength of Hindman's theorem: whether HT is equivalent to ACA_0 or to ACA_0^+ over RCA_0; Towsner and others have made partial progress, but the precise calibration is open",
+        "result": "Towsner (2012), Dzhafarov-Hirschfeldt-Lerman, and recent refinements narrow but do not close the ACA_0 vs ACA_0^+ gap",
+        "status": "OPEN as of 2026; major problem in reverse mathematics"
+      },
+      "common_failure_pattern": "FM-08: model claims HT is equivalent to ACA_0 over RCA_0 (only one direction known precisely); conflates Hindman-implies-ACA_0 (settled) with precise-strength-determination (open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled Hindman-implies-ACA_0 from open precise upper-bound calibration"
+    },
+    {
+      "id": "harmonia_c_tvo_019",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Mass critical NLS scattering",
+      "trivial_case": {
+        "description": "Mass-critical defocusing NLS on R^n, n >= 1: global well-posedness + scattering for ALL data in L^2",
+        "result": "global existence + scattering",
+        "proven_by": "Dodson",
+        "year": "2012-2016",
+        "venue": "various (Adv. Math., Amer. J. Math.)",
+        "status": "PROVEN (defocusing mass-critical)"
+      },
+      "open_case": {
+        "description": "Mass-critical FOCUSING NLS scattering above threshold mass",
+        "result": "Killip-Visan-Zhang and others: scattering proven for radial data below ground state; non-radial above-threshold OPEN",
+        "status": "OPEN above-ground-state mass for non-radial focusing"
+      },
+      "common_failure_pattern": "FM-08: model claims mass-critical NLS scattering is 'fully solved by Dodson' without distinguishing focusing from defocusing or radial threshold",
+      "doctrine_relevance": "FM-08; sign of nonlinearity + radial restriction flip status"
+    },
+    {
+      "id": "harmonia_a_tvo_022",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Ryser / Brualdi conjecture on Latin square transversals",
+      "trivial_case": {
+        "description": "Existence of partial transversals in Latin squares of order n",
+        "result": "Hatami-Shor 2008: every Latin square of order n has a partial transversal of size n - O(log^2 n)",
+        "proven_by": "Hatami, Shor",
+        "year": 2008,
+        "venue": "J. Combin. Theory Ser. A",
+        "status": "PROVEN as approximation"
+      },
+      "open_case": {
+        "description": "Ryser's conjecture: every Latin square of odd order has a transversal",
+        "result": "Montgomery-Pokrovskiy-Sudakov 2020 proved every Latin square has a transversal of size n - 1 for sufficiently large n; full Ryser conjecture (transversal of size n for odd order) and Brualdi-Stein conjecture (transversal of size n - 1 always) — Brualdi recently resolved; Ryser may have been resolved by Montgomery (announcement); verify before quoting closure",
+        "status": "Recent progress; verify exact closure status"
+      },
+      "common_failure_pattern": "FM-08: model claims Ryser is fully solved or fully open without acknowledging the recent rapid progress 2020-2024",
+      "doctrine_relevance": "FM-08; partial-transversal vs full-transversal; recent-rapid-progress regime"
+    },
+    {
+      "id": "harmonia_a_tvo_009",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Random graph thresholds",
+      "trivial_case": {
+        "description": "Erdős-Rényi connectivity threshold",
+        "result": "G(n,p) is connected with high probability iff np - log n -> infinity",
+        "proven_by": "Erdős, Rényi",
+        "year": 1959,
+        "venue": "Publ. Math. Debrecen 6",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Shamir's perfect-matching threshold for random k-uniform hypergraphs (k >= 3)",
+        "result": "Kahn 2023 (post-Park-Pham) confirmed Shamir's threshold conjecture for perfect matchings in random hypergraphs; before that it was known only via Park-Pham machinery",
+        "status": "Recently CLOSED for many cases; some hypergraph-Shamir variants remain open"
+      },
+      "common_failure_pattern": "FM-08: model treats Shamir as still-open or as 'recently proven by Kahn-Kalai' (Kahn-Kalai gave the conjecture; Park-Pham 2022 proved the framework; Kahn 2023 + others closed specific cases)",
+      "doctrine_relevance": "FM-08; classical-threshold vs Shamir-style hypergraph-threshold"
+    },
+    {
+      "id": "harmonia_a_tvo_008",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Stanley-Wilf / permutation pattern enumeration",
+      "trivial_case": {
+        "description": "Stanley-Wilf conjecture: |Av_n(sigma)| <= c(sigma)^n for some c(sigma) finite",
+        "result": "the Stanley-Wilf limit L(sigma) = lim |Av_n(sigma)|^{1/n} exists and is finite",
+        "proven_by": "Marcus, Tardos",
+        "year": 2004,
+        "venue": "J. Combin. Theory Ser. A 107",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Exact value of L(sigma) for general sigma of length k >= 4",
+        "result": "exact: L(132)=4, L(1342)=8, L(1234)=9 (Regev 1981), L(1324) only known to be roughly in (10.27, 13.5) — exact value unknown",
+        "status": "OPEN — L(1324) is the most famous open Stanley-Wilf limit"
+      },
+      "common_failure_pattern": "FM-08: model claims L(1324) has been computed (it has not — only bounds), OR conflates the existence-of-limit (proven) with exact-value (open for most patterns)",
+      "doctrine_relevance": "FM-08; existence-proven vs exact-value-open"
+    },
+    {
+      "id": "harmonia_b_tvo_010",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "1d-dynamics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Lyapunov exponents in the quadratic family",
+      "trivial_case": {
+        "description": "Positive Lyapunov exponent for a positive-measure set of parameters: for the real quadratic family x -> x^2 + c, there is a positive-measure set of c in [-2, 1/4] for which the critical orbit has positive Lyapunov exponent (Collet-Eckmann maps)",
+        "result": "Existence of a positive-measure set of stochastic parameters with positive Lyapunov exponent",
+        "proven_by": "Jakobson; refined by Benedicks-Carleson",
+        "year": 1981,
+        "venue": "Jakobson, Comm. Math. Phys. 81 (1981), 39-88; Benedicks-Carleson, Annals of Math. 122 (1985), 1-25",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Sharp Lyapunov-exponent regularity / monotonicity along the family: is the Lyapunov exponent function c -> chi(c) continuous (or monotone) on the set of stochastic parameters? Is it analytic on hyperbolic components and Holder elsewhere?",
+        "result": "Continuity at Misiurewicz parameters and along certain families is known (Tsujii, Avila-Moreira); full regularity / monotonicity question and behavior at the boundary of the stochastic set is OPEN",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model cites Jakobson / Benedicks-Carleson as 'fully describing Lyapunov exponents in the quadratic family', missing the regularity question",
+      "doctrine_relevance": "HARD-5: substrate must distinguish existence of positive-measure stochastic set (proven) from regularity of the Lyapunov-exponent function (open)",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_c_tvo_020",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Lebesgue differentiation / maximal function theory",
+      "trivial_case": {
+        "description": "Lebesgue differentiation theorem: for f in L^1_loc(R^n), the average over balls B_r(x) tends to f(x) as r -> 0 for a.e. x",
+        "result": "a.e. differentiation",
+        "proven_by": "Lebesgue",
+        "year": 1910,
+        "venue": "Annales scientifiques de l'ENS",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Differentiation along arbitrary bases of convex sets in R^n: sharp class for differentiation along homothetically-shrinking convex bases (Falconer / Stein-style differentiation problems)",
+        "result": "various restricted bases settled (rectangles in product form via Jessen-Marcinkiewicz-Zygmund 1935); fully arbitrary convex bases differentiation is partially open at the sharp regularity exponent",
+        "status": "OPEN in some specific basis classes"
+      },
+      "common_failure_pattern": "FM-08: model claims differentiation results extend trivially to arbitrary bases (Saks's example shows differentiation can fail for L^1 along rectangles with arbitrary orientation)",
+      "doctrine_relevance": "FM-08; classical theorem doesn't extend to arbitrary geometric bases"
+    },
+    {
+      "id": "harmonia_a_tvo_006",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Hadamard matrix existence",
+      "trivial_case": {
+        "description": "Hadamard matrices exist for all orders 2^k (Sylvester 1867)",
+        "result": "explicit construction H_{2^k} = block recursion of H_1 = (1)",
+        "proven_by": "Sylvester",
+        "year": 1867,
+        "venue": "Phil. Mag.",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Hadamard conjecture: Hadamard matrix exists for every order divisible by 4",
+        "result": "verified for all orders <= 664 and many others; smallest open frontier shifted with Kharaghani-Tayfeh-Rezaie 2005 resolving 668",
+        "status": "OPEN — no general construction"
+      },
+      "common_failure_pattern": "FM-08: model claims Hadamard conjecture is 'almost surely true' as if proven, OR attributes Hadamard to Sylvester (Sylvester gave the 2^k construction; the general conjecture is Hadamard 1893)",
+      "doctrine_relevance": "FM-08; partial-construction vs general-existence-open"
+    },
+    {
+      "id": "harmonia_d_tvo_017",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "medium",
+      "conjecture_family": "Borel and analytic set separation",
+      "trivial_case": {
+        "description": "Lusin's separation theorem: any two disjoint analytic sets in a Polish space can be separated by a Borel set",
+        "result": "Classical descriptive-set-theoretic theorem, proved by Souslin's operation analysis",
+        "proven_by": "Nikolai Lusin (and Souslin)",
+        "year": 1927,
+        "venue": "Lusin, 'Leçons sur les ensembles analytiques' (1930); separation theorem in 1927 papers",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether the projective separation property at level Pi^1_n for n >= 3 holds in ZFC alone (without determinacy/large cardinal hypotheses); equivalently, whether ZFC proves the Pi^1_3 separation property",
+        "result": "Under PD, projective separation holds with periodicity (Moschovakis); in ZFC alone, Pi^1_2 separation holds (Kondo's uniformization theorem 1939) but Pi^1_n for n >= 3 requires hypotheses beyond ZFC",
+        "status": "OPEN: precise level at which separation requires large cardinals/determinacy is studied but not fully classified in ZFC alone"
+      },
+      "common_failure_pattern": "FM-08: model claims projective separation at Pi^1_3 follows from ZFC; conflates settled analytic separation (Lusin 1927) with open higher-projective levels",
+      "doctrine_relevance": "HARD-5: substrate must distinguish ZFC-provable analytic separation from open higher-projective levels"
+    },
+    {
+      "id": "harmonia_c_tvo_025",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Falconer distance set conjecture",
+      "trivial_case": {
+        "description": "Falconer distance set conjecture in R^2: if E in R^2 has dim_H E > 1, then the distance set Delta(E) := {|x-y| : x,y in E} has positive Lebesgue measure",
+        "result": "Conjecturally yes if dim_H > 1; dim_H > 1 is necessary (counterexample at exactly dim 1)",
+        "proven_by": "various: Wolff 1999 dim_H > 4/3; Guth-Iosevich-Ou-Wang 2020 (paraphrase) dim_H > 5/4 in 2D; sharp threshold 1 still open",
+        "year": "ongoing",
+        "venue": "various",
+        "status": "OPEN at sharp threshold 1 in 2D; partial bounds proven"
+      },
+      "open_case": {
+        "description": "Falconer conjecture in R^n, n >= 2 at sharp threshold dim_H E > n/2",
+        "result": "Erdogan 2005 dim_H > n/2 + 1/3 (or similar partial bound); sharp threshold n/2 OPEN in all n >= 2",
+        "status": "OPEN at sharp threshold"
+      },
+      "common_failure_pattern": "FM-08: model claims Falconer distance set is 'proven by Wolff' or attributes the latest 5/4 bound to Falconer himself",
+      "doctrine_relevance": "FM-08; conjecture name, partial bounds, sharp threshold all distinct"
+    },
+    {
+      "id": "harmonia_c_tvo_016",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Nodal sets of Laplace eigenfunctions",
+      "trivial_case": {
+        "description": "Yau conjecture upper bound: for the n-dim Laplacian eigenfunction with eigenvalue lambda, H^{n-1}(nodal set) <= C sqrt{lambda}",
+        "result": "upper bound proven for analytic metrics by Donnelly-Fefferman 1988",
+        "proven_by": "Donnelly and Fefferman",
+        "year": 1988,
+        "venue": "Inventiones Mathematicae",
+        "status": "PROVEN (real-analytic case)"
+      },
+      "open_case": {
+        "description": "Yau conjecture upper bound for C^infinity (smooth, non-analytic) metrics",
+        "result": "Logunov-Malinnikova 2018-2019: H^{n-1}(nodal set) <= C lambda^{alpha} for some alpha < 1 (better than the trivial sqrt-lambda but weaker than Yau); sharp bound OPEN",
+        "status": "OPEN in smooth (non-analytic) case at sharp Yau-conjectured rate"
+      },
+      "common_failure_pattern": "FM-08: model claims Yau conjecture is 'proven by Donnelly-Fefferman' without analyticity restriction",
+      "doctrine_relevance": "FM-08; regularity of metric flips status"
+    },
+    {
+      "id": "harmonia_c_tvo_003",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Restriction conjecture (Stein, for the sphere S^{n-1})",
+      "trivial_case": {
+        "description": "L^2-extension endpoint: E: L^2(S^{n-1}) -> L^q(R^n) bounded for q >= 2(n+1)/(n-1) (Stein-Tomas range)",
+        "result": "boundedness on the L^2-orthogonality range",
+        "proven_by": "Tomas; Stein",
+        "year": 1975,
+        "venue": "Bulletin of the American Mathematical Society (Tomas)",
+        "status": "PROVEN (the L^2 endpoint specifically)"
+      },
+      "open_case": {
+        "description": "Full Stein restriction conjecture: E: L^q(S^{n-1}) -> L^q(R^n) bounded for all q > 2n/(n-1) in n >= 3 (q in (2n/(n-1), infinity])",
+        "result": "n=2 settled by Carleson-Sjolin / Fefferman 1970; n >= 3 partial via bilinear (Tao-Vargas-Vega 1998), polynomial method (Guth 2016 Annals), decoupling (Hickman-Rogers 2019 paraphrase, Wang 2022 paraphrase); full conjecture OPEN",
+        "status": "OPEN in n >= 3"
+      },
+      "common_failure_pattern": "FM-08: model conflates the proven Stein-Tomas endpoint with the full Stein conjecture, claiming restriction is 'proven by Tomas' without specifying the L^2 vs full range distinction.",
+      "doctrine_relevance": "FM-08; Stein-Tomas is a proven endpoint within an open conjecture, name-collision risk high"
+    },
+    {
+      "id": "harmonia_d_tvo_003",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "easy",
+      "conjecture_family": "Determinacy hierarchy",
+      "trivial_case": {
+        "description": "Every Borel game on omega^omega with Borel payoff set is determined (one of the players has a winning strategy)",
+        "result": "Borel determinacy in ZFC; the proof uses iterated power set up through the Borel hierarchy and is provably non-eliminable from ZFC (Friedman 1971 lower bound)",
+        "proven_by": "Donald A. Martin",
+        "year": 1975,
+        "venue": "Annals of Mathematics 102 (1975), 'Borel determinacy'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "The exact consistency strength of long projective determinacy at length omega^2 (precise Woodin-cardinal placement) remains open; equivalence of PD with all its analytical consequences for projective sets (Woodin's last Delfino problem) is open",
+        "result": "Pi^1_{n+1}-determinacy at length omega^2 implies model with omega+n Woodin cardinals (Aguilera-Mueller 2020 partial); upper-equivalence direction conjectural",
+        "status": "OPEN; partial progress on long-game consistency strength; analytical-equivalence Delfino problem unresolved"
+      },
+      "common_failure_pattern": "FM-08: model claims 'projective determinacy is a ZFC theorem' (false — needs Woodin cardinals), or claims length-omega^2 consistency strength is exactly characterized (only one direction known)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish ZFC-provable Borel determinacy (Martin 1975) from large-cardinal-requiring PD and its open precise calibration"
+    },
+    {
+      "id": "harmonia_e_tvo_001",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Quantum PCP / NLTS",
+      "trivial_case": {
+        "description": "NLTS (No Low-energy Trivial States): there exist k-local Hamiltonian families with constant gap such that any state with energy within a constant of the ground state has Omega(log n) circuit depth",
+        "result": "Proven via good quantum LDPC codes",
+        "proven_by": "Anshu, Breuckmann, Nirkhe",
+        "year": 2023,
+        "venue": "STOC 2023",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Quantum PCP conjecture: constant-gap k-local Hamiltonian estimation is QMA-complete",
+        "result": "Open; NLTS is necessary but not sufficient",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: conflating NLTS with full qPCP, claiming qPCP is settled because NLTS is",
+      "doctrine_relevance": "HARD-5 architectural pattern: necessary-not-sufficient distinction is exactly what substrate must preserve",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_b_tvo_007",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "mean-field-particle",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Propagation of chaos for interacting particle systems",
+      "trivial_case": {
+        "description": "McKean-Vlasov / smooth-kernel propagation of chaos: for N interacting diffusions with bounded Lipschitz interaction kernel, as N -> infinity the empirical measure converges to the McKean-Vlasov nonlinear PDE",
+        "result": "Quantitative propagation of chaos with Lipschitz drift",
+        "proven_by": "Sznitman",
+        "year": 1991,
+        "venue": "Sznitman, 'Topics in propagation of chaos', Ecole d'Ete de Probabilites de Saint-Flour XIX-1989, Springer LNM 1464",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Propagation of chaos for 2D point-vortex / singular Biot-Savart kernel: derive 2D Euler / Navier-Stokes from N interacting point vortices in the singular regime",
+        "result": "Partial results: Fournier-Hauray-Mischler 2014 for 2D Navier-Stokes with viscosity; Goodman-Hou-Lowengrub for vanishing viscosity; full singular case for 2D Euler from deterministic vortices is OPEN",
+        "status": "PARTIAL_PROGRESS"
+      },
+      "common_failure_pattern": "FM-08: model cites Sznitman as 'establishing propagation of chaos' without distinguishing Lipschitz kernels (proven) from singular kernels like Biot-Savart (partial)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish smoothness regime of interaction kernel within the propagation-of-chaos program",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_b_tvo_005",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "KAM",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Persistence of invariant tori for nearly integrable Hamiltonians",
+      "trivial_case": {
+        "description": "Diophantine tori in real-analytic, nondegenerate, nearly integrable Hamiltonians: Diophantine invariant tori of the integrable system persist under small real-analytic perturbations satisfying Kolmogorov nondegeneracy",
+        "result": "Classical KAM theorem: positive-measure set of Diophantine tori survives small perturbations",
+        "proven_by": "Kolmogorov; Arnold; Moser",
+        "year": 1954,
+        "venue": "Kolmogorov, Dokl. Akad. Nauk SSSR 98 (1954); Arnold, Russian Math. Surveys 18 (1963); Moser, Nachr. Akad. Wiss. Gottingen (1962)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Arnold diffusion conjecture: for generic real-analytic perturbations of a nondegenerate integrable Hamiltonian with n >= 3 degrees of freedom, there exist orbits whose action variables undergo O(1) drift along resonant channels in the gaps between KAM tori",
+        "result": "Examples constructed (Mather, Cheng-Yan, Kaloshin-Zhang and others) for specific systems; full genericity for n >= 3 with explicit time bounds and topological generality is OPEN",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model presents KAM as 'solving stability of nearly integrable systems', missing that KAM gives stability ON tori but Arnold diffusion in the gaps is open",
+      "doctrine_relevance": "HARD-5: substrate must distinguish persistence of Diophantine tori (proven) from generic instability in the gaps (Arnold diffusion, open)",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_e_tvo_015",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Monotone-vs-non-monotone circuit complexity",
+      "trivial_case": {
+        "description": "Monotone CLIQUE has super-polynomial monotone circuit complexity",
+        "result": "Proven via approximation method; later strengthened to exponential",
+        "proven_by": "Razborov; Alon-Boppana",
+        "year": "1985; 1987",
+        "venue": "Math. Notes; Combinatorica",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Super-polynomial non-monotone (P/poly) lower bounds for CLIQUE or any explicit NP function",
+        "result": "Open; Tardos 1988 showed monotone-vs-non-monotone gap is exponential — monotone bounds do not lift",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: claiming monotone lower bounds resolve P vs NP",
+      "doctrine_relevance": "HARD-5: monotone-only result does not transfer (the canonical case)",
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_tvo_006",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "easy",
+      "conjecture_family": "Whitehead problem and homological independence",
+      "trivial_case": {
+        "description": "The Whitehead problem 'every Whitehead group is free' is independent of ZFC: Shelah showed it follows from V=L and is refuted by MA + ¬CH",
+        "result": "Independence of Whitehead's conjecture from ZFC",
+        "proven_by": "Saharon Shelah",
+        "year": 1974,
+        "venue": "Israel J. Math. 18 (1974), 'Infinite abelian groups, Whitehead problem and some constructions'",
+        "status": "PROVEN (settled-as-independent)"
+      },
+      "open_case": {
+        "description": "Whether the Whitehead problem for groups of cardinality aleph_omega+1 (or other specific singular-successor cardinalities) has the same independence pattern as at aleph_1, or whether ZFC settles it at higher cardinalities under additional cardinal-arithmetic hypotheses",
+        "result": "Eklof-Shelah and Magidor-Shelah extended independence to many cardinalities; the precise behavior at successors of singulars under SCH-failure scenarios is partially open",
+        "status": "OPEN at specific singular-successor cardinalities under cardinal-arithmetic constraints"
+      },
+      "common_failure_pattern": "FM-08: model claims Whitehead at aleph_1 is unsolved (it is solved — independent), or treats higher-cardinality cases as automatic from aleph_1 result",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled independence at aleph_1 (Shelah 1974) from open higher-cardinality refinements within the same family"
+    },
+    {
+      "id": "harmonia_a_tvo_023",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Erdős-Faber-Lovász coloring conjecture",
+      "trivial_case": {
+        "description": "EFL for small n",
+        "result": "verified by Hindman 1981 and successors for n <= 10 and beyond computationally",
+        "proven_by": "Hindman; computational follow-ups",
+        "year": 1981,
+        "venue": "Canad. J. Math.",
+        "status": "PROVEN for small n"
+      },
+      "open_case": {
+        "description": "EFL conjecture in full: union of n complete graphs each on n vertices, pairwise sharing at most one vertex, is n-colorable",
+        "result": "Kang-Kelly-Kühn-Methuku-Osthus 2021 (arxiv 2101.04698) proved EFL for sufficiently large n",
+        "status": "PROVEN for large n; small-to-large transition has unspecified threshold N_0"
+      },
+      "common_failure_pattern": "FM-08: model claims KKKMO 'proved EFL' without the 'sufficiently large n' caveat OR claims it remains entirely open",
+      "doctrine_relevance": "FM-08; small-n-verified plus large-n-proved vs threshold-N_0-implicit"
+    },
+    {
+      "id": "harmonia_b_tvo_014",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "ergodic-theory",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Pointwise convergence of ergodic averages",
+      "trivial_case": {
+        "description": "Birkhoff pointwise ergodic theorem: for a measure-preserving transformation T on (X, mu) and f in L^1, the time averages (1/N) sum_{n=0}^{N-1} f(T^n x) converge mu-a.e.",
+        "result": "Birkhoff's pointwise ergodic theorem",
+        "proven_by": "Birkhoff",
+        "year": 1931,
+        "venue": "Birkhoff, 'Proof of the ergodic theorem', Proc. Nat. Acad. Sci. USA 17 (1931), 656-660",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Pointwise convergence of multiple ergodic averages along polynomial iterates: for an ergodic m.p.s. and f, g in L^infty, does (1/N) sum_{n=1}^{N} f(T^{n} x) g(T^{n^2} x) converge mu-a.e.?",
+        "result": "L^2 norm convergence proven (Furstenberg 1977 for n,2n; Host-Kra 2005, Ziegler 2007 for general linear; Bergelson-Leibman for polynomials in norm); pointwise a.e. convergence of f(T^n x) g(T^{n^2} x) is OPEN (recent partial results by Krause-Mirek-Tao 2022 for one polynomial in L^p, p > 1)",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model cites Birkhoff or Host-Kra L^2 convergence as resolving pointwise convergence of multiple polynomial averages",
+      "doctrine_relevance": "HARD-5: substrate must distinguish pointwise convergence of single Birkhoff average from pointwise convergence of multiple polynomial averages",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_e_tvo_016",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Quantum interactive proofs",
+      "trivial_case": {
+        "description": "MIP = NEXP (classical multi-prover interactive proofs equal NEXP)",
+        "result": "Proven via two-prover one-round protocols + arithmetization",
+        "proven_by": "Babai, Fortnow, Lund",
+        "year": 1991,
+        "venue": "Computational Complexity",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Quantitative qPCP-style results: constant-gap multi-prover quantum protocols at specific gap thresholds (the relationship between MIP* hierarchy levels at finite parameter regimes)",
+        "result": "Largely open; MIP* = RE settled the unbounded-resource case 2020 but finer structure is open",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: assuming MIP*=RE settles all multi-prover quantum questions",
+      "doctrine_relevance": "HARD-5: limit-result vs finite-parameter distinction",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_c_tvo_011",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Harmonic measure dimension (Makarov problem and analogues)",
+      "trivial_case": {
+        "description": "Plane: harmonic measure on a simply connected domain in C has Hausdorff dimension 1 (Makarov 1985)",
+        "result": "dim_H(omega) = 1",
+        "proven_by": "Makarov",
+        "year": 1985,
+        "venue": "Proc. London Math. Soc.",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "R^n, n >= 3: dimension of harmonic measure on a domain with arbitrary boundary",
+        "result": "Bourgain 1987 proved dim_H(omega) <= n - delta_n for some delta_n > 0; sharp threshold open; Wolff 1995 / 2000s sharper bounds in specific cases",
+        "status": "OPEN in n >= 3 (sharp value of n - delta_n)"
+      },
+      "common_failure_pattern": "FM-08: model attributes the n>=3 results to Makarov, or claims Makarov's theorem applies to all dimensions",
+      "doctrine_relevance": "FM-08; planar settled, higher-dim open"
+    },
+    {
+      "id": "harmonia_b_tvo_018",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "ergodic-theory",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Sarnak's Mobius disjointness conjecture",
+      "trivial_case": {
+        "description": "Sarnak's conjecture for zero-entropy systems with specific structure: Mobius disjointness holds for nilsystems, horocycle flows, certain rank-one systems, interval exchange transformations of bounded type, and various automatic / substitution systems",
+        "result": "Mobius disjointness in many specific zero-entropy classes",
+        "proven_by": "Green-Tao (nilsequences); Bourgain-Sarnak-Ziegler (horocycle); Ferenczi-Mauduit-Rivat (Thue-Morse / automatic); Bourgain (rank-one)",
+        "year": "2010-2017",
+        "venue": "Green-Tao, Annals of Math. 175 (2012), 541-566; Bourgain-Sarnak-Ziegler, in 'From Fourier Analysis and Number Theory to Radon Transforms and Geometry', Springer 2013; Ferenczi-Mauduit-Rivat, J. London Math. Soc. 2017",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "General Sarnak's conjecture: for every zero-entropy topological dynamical system (X, T) and every continuous f: X -> C and every x in X, (1/N) sum_{n=1}^{N} f(T^n x) mu(n) -> 0, where mu is the Mobius function",
+        "result": "Logarithmic version proved equivalent to Chowla by Tao 2017; full averaged form OPEN; Chowla itself OPEN; specific systems still resist (e.g., some smooth flows on surfaces)",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model cites the nilsequence / horocycle special cases as 'proving Sarnak's conjecture'",
+      "doctrine_relevance": "HARD-5: substrate must distinguish specific-class Mobius-disjointness theorems from the general Sarnak conjecture",
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_b_tvo_012",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "equidistribution",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Normality of algebraic numbers",
+      "trivial_case": {
+        "description": "Almost-everywhere normality: with respect to Lebesgue measure on [0,1], almost every real number is normal in every integer base b >= 2",
+        "result": "Borel's normal number theorem",
+        "proven_by": "Borel",
+        "year": 1909,
+        "venue": "Borel, 'Les probabilites denombrables et leurs applications arithmetiques', Rend. Circ. Mat. Palermo 27 (1909), 247-271",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Normality of specific algebraic irrationals: is sqrt(2) normal in base 10? More generally, is every algebraic irrational number normal in every base?",
+        "result": "No algebraic irrational is known to be normal in any base; Borel's conjecture that they all are is OPEN; even a single digit-frequency lower bound for sqrt(2) of strength c log N (for the count of any fixed digit in the first N base-10 digits) is open",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model conflates 'almost every real is normal' (Borel 1909) with 'sqrt(2) is normal' (open) - presence of normality somewhere implies it for specific algebraics",
+      "doctrine_relevance": "HARD-5: substrate must distinguish measure-theoretic 'almost every' (proven) from individual algebraic instances (open)",
+      "difficulty": "easy"
+    },
+    {
+      "id": "harmonia_c_tvo_010",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Pointwise convergence of Schrodinger-evolution to initial data (Carleson Schrodinger problem)",
+      "trivial_case": {
+        "description": "Schrodinger pointwise convergence in 1D: u(x, t) -> f(x) pointwise a.e. as t -> 0+ for f in H^s(R), s >= 1/4",
+        "result": "s = 1/4 sharp (Sjolin-Vega 1988; Carleson 1980 conjectured)",
+        "proven_by": "Sjolin (separately Vega) for the upper threshold; Dahlberg-Kenig 1982 gave the optimal s = 1/4",
+        "year": "1980-1988",
+        "venue": "various",
+        "status": "PROVEN in 1D"
+      },
+      "open_case": {
+        "description": "Schrodinger pointwise convergence in n >= 2: optimal s such that u(x, t) -> f(x) a.e. as t -> 0+ for f in H^s(R^n)",
+        "result": "Bourgain 2016 disproved s = 1/4 sufficiency for n >= 2; Du-Guth-Li 2017 proved s = 1/3 in 2D using polynomial method; n >= 3 has weaker bounds; sharp threshold OPEN in n >= 3",
+        "status": "OPEN; 2D settled by Du-Guth-Li 2017 at s = 1/3"
+      },
+      "common_failure_pattern": "FM-08: model claims s = 1/4 is sufficient in all dimensions (1D-only result extrapolated)",
+      "doctrine_relevance": "FM-08; dimension-dependent threshold; 1D solved, higher-dim partially solved (2D done 2017), 3D+ open"
+    },
+    {
+      "id": "harmonia_b_tvo_024",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "ergodic-theory",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Furstenberg's xp-invariant measure conjectures and times-p-times-q",
+      "trivial_case": {
+        "description": "Single-map xp invariance: for p >= 2 and the map T_p: x -> p x mod 1 on R/Z, classification of T_p-invariant ergodic Borel probability measures is wide open; but for the specific subclass of T_p-invariant Bernoulli measures the classification is trivial (they are determined by a finite probability vector, with maximal entropy giving Lebesgue)",
+        "result": "Bernoulli T_p-invariant measures are classified explicitly via their digit-distribution vector",
+        "proven_by": "Folklore from Bernoulli theory; explicit in Furstenberg's writing",
+        "year": 1967,
+        "venue": "Furstenberg, Math. Systems Theory 1 (1967), 1-49",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Classification of all T_p-invariant ergodic measures (single-map version): without joint invariance under T_q for q multiplicatively independent of p, classify all T_p-invariant ergodic Borel probability measures on R/Z",
+        "result": "Hopelessly wild without a second invariance: there are uncountably many T_p-invariant ergodic measures (e.g., supported on T_p-invariant Cantor sets); no rigidity holds for the single-map case; the classification problem in any meaningful sense is OPEN / known to be intractable",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model conflates Furstenberg ×p ×q rigidity (joint, partially proven) with single-map ×p classification (intractably wild). The trick is that the joint case is the rigid one; reducing to single-map breaks rigidity entirely",
+      "doctrine_relevance": "HARD-5: substrate must distinguish joint invariance under multiplicatively-independent maps (rigid, partially proven) from single-map invariance (wild, open / intractable). FM-08 risk: this looks like a 'simpler' version but is actually harder to classify",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_a_tvo_012",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Graph minor / treewidth structural results",
+      "trivial_case": {
+        "description": "Robertson-Seymour Graph Minor Theorem: graphs are well-quasi-ordered under minor relation",
+        "result": "every minor-closed family has a finite list of forbidden minors",
+        "proven_by": "Robertson, Seymour (20-paper Graph Minors series)",
+        "year": "1983-2004",
+        "venue": "J. Combin. Theory Ser. B (multiple papers)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Polynomial-time recognition algorithms for specific minor-closed families with concrete constants",
+        "result": "RS gave existence of O(n^3) recognition algorithms but with astronomical constants; Erdős-Pósa-style constants for specific families remain ongoing research",
+        "status": "OPEN for many specific concrete-constant questions"
+      },
+      "common_failure_pattern": "FM-08: model presents RS GMT as 'gives polynomial-time algorithms for everything' without noting the constant explosion",
+      "doctrine_relevance": "FM-08; existence-of-algorithm vs feasible-constants"
+    },
+    {
+      "id": "harmonia_b_tvo_001",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "equidistribution",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Furstenberg's x2 x3 measure rigidity",
+      "trivial_case": {
+        "description": "Closed-set version: the only closed subsets of R/Z invariant under both x -> 2x mod 1 and x -> 3x mod 1 are finite sets of rationals and the entire circle",
+        "result": "Closed-set (topological) rigidity for the joint x2, x3 action",
+        "proven_by": "Furstenberg",
+        "year": 1967,
+        "venue": "Math. Systems Theory 1, 1-49 ('Disjointness in ergodic theory, minimal sets, and a problem in Diophantine approximation')",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Measure version assuming zero entropy: classify ergodic non-atomic Borel probability measures on R/Z jointly invariant under x2 and x3 with zero entropy under x2",
+        "result": "Rudolph (1990) proved Lebesgue is the only such measure under the positive-entropy hypothesis; the zero-entropy case has no known nontrivial bound",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model conflates closed-set rigidity (Furstenberg 1967) with measure rigidity (Rudolph 1990 + still-open zero-entropy case)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish topological from measure rigidity, and within measure rigidity distinguish positive-entropy (proven) from zero-entropy (open)",
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_tvo_013",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "medium",
+      "conjecture_family": "Forcing-axiom continuum determination",
+      "trivial_case": {
+        "description": "PFA implies 2^aleph_0 = aleph_2",
+        "result": "Veličković and (independently) Todorčević used PFA-consequences (e.g., the P-ideal dichotomy / mapping reflection principle) to pin down c at aleph_2; classical Todorčević-Bekkali argument using OCA",
+        "proven_by": "Boban Veličković and Stevo Todorčević (independently)",
+        "year": 1992,
+        "venue": "Veličković, J. Symb. Logic 57 (1992); Todorčević, 'Partition Problems in Topology' AMS (1989)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether MM (Martin's Maximum) at omega_2 — i.e., a natural higher-cardinal analogue MM(aleph_2) preserving aleph_2-stationarity — is consistent and what continuum-function values it forces",
+        "result": "MM++ implies (*) (Aspero-Schindler, Annals 2021), pinning c=aleph_2 from MM++. The MM(aleph_2) higher-cardinal analogue and its consistency strength remain under active investigation",
+        "status": "OPEN; MM(aleph_2)-style axioms not yet shown consistent at full strength"
+      },
+      "common_failure_pattern": "FM-08: model claims MM(aleph_2) is known consistent or settled, or conflates PFA-implies-c=aleph_2 (settled) with higher-cardinal MM analogue (open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish PFA pinning c (Veličković-Todorčević 1992) from open higher-cardinal forcing-axiom analogues"
+    },
+    {
+      "id": "harmonia_c_tvo_024",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Stable solutions of semilinear elliptic equations (De Giorgi conjecture)",
+      "trivial_case": {
+        "description": "De Giorgi conjecture for stable monotone solutions of -Delta u = u - u^3 (Allen-Cahn) on R^n: in n <= 3, level sets are hyperplanes",
+        "result": "n = 2 (Ghoussoub-Gui 1998); n = 3 (Ambrosio-Cabre 2000)",
+        "proven_by": "Ghoussoub-Gui (n=2); Ambrosio-Cabre (n=3)",
+        "year": "1998 / 2000",
+        "venue": "Math. Ann. (Ghoussoub-Gui); J. Amer. Math. Soc. (Ambrosio-Cabre)",
+        "status": "PROVEN n=2,3"
+      },
+      "open_case": {
+        "description": "De Giorgi conjecture in n >= 4 (stable monotone solutions are 1D)",
+        "result": "Savin 2009: n=4..8 proven under additional hypothesis; del Pino-Kowalczyk-Wei 2011 counterexample in n=9; full conjecture FALSE in n >= 9; SHARP version (n <= 8) holds under additional hypothesis",
+        "status": "RESOLVED (false in n>=9; n=4..8 proven under extra hypothesis); sharper structural questions remain"
+      },
+      "common_failure_pattern": "FM-08: model claims De Giorgi conjecture is 'open in all dimensions n >= 4' or 'true in all dimensions' without distinguishing the resolution stage by stage",
+      "doctrine_relevance": "FM-08; resolved in pieces with dimensional pieces having different status"
+    },
+    {
+      "id": "harmonia_d_tvo_021",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "hard",
+      "conjecture_family": "Square principles and approachability at successors of singulars",
+      "trivial_case": {
+        "description": "If V=L, then square_kappa holds for every uncountable cardinal kappa (Jensen's square principle); hence square_aleph_omega holds in L, and similarly approachability AP(aleph_{omega+1}) holds",
+        "result": "Jensen's fine-structural analysis of L; square_kappa is a global combinatorial principle in L",
+        "proven_by": "Ronald Jensen",
+        "year": 1972,
+        "venue": "Jensen, 'The fine structure of the constructible hierarchy', Annals of Math. Logic 4 (1972)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether the failure of square_aleph_omega together with SCH-failure at aleph_omega is consistent at strictly weaker large-cardinal strength than currently known (current: subcompact / strong compactness); precise consistency strength still being refined",
+        "result": "Magidor-Shelah, Cummings-Foreman-Magidor, Sinapova-Unger (2018): consistency from supercompact; precise lower bound below subcompact open",
+        "status": "OPEN as of 2026; precise consistency-strength calibration of square-failure + SCH-failure at aleph_omega is active"
+      },
+      "common_failure_pattern": "FM-08: model claims precise consistency strength of square-failure + SCH-failure at aleph_omega is known (only upper-bounded); conflates square in L (settled) with open consistency-calibration",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled square-in-L from open precise-strength of combined square+SCH failures"
+    },
+    {
+      "id": "harmonia_d_tvo_008",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "easy",
+      "conjecture_family": "Inner model existence",
+      "trivial_case": {
+        "description": "The constructible universe L exists in ZFC and is an inner model (transitive proper class containing all ordinals, satisfying ZFC). L satisfies V=L, GCH, and the diamond principle",
+        "result": "L is defined by transfinite recursion using definable power set; ZFC proves L is a model of ZFC + GCH + diamond",
+        "proven_by": "Kurt Goedel",
+        "year": 1938,
+        "venue": "PNAS 24 (1938), 'The consistency of the axiom of choice and of the generalized continuum-hypothesis'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Construction of a fine-structural canonical inner model for one supercompact cardinal (the 'supercompact L'); the Sargsyan-Steel program and Woodin's Ultimate-L are active",
+        "result": "Substantial partial progress: Sargsyan's hod mice through Lambda-mice levels (2025), Steel's K-construction at smaller large cardinals; supercompact level not yet achieved",
+        "status": "OPEN as of 2026; recent Sargsyan-Steel 'Nairian models' (arXiv 2501.18958) is partial progress"
+      },
+      "common_failure_pattern": "FM-08: model claims canonical inner model for supercompact is constructed (false — only partial); conflates L (settled) with inner-model program (open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled L (Goedel 1938) from open supercompact inner-model existence (Sargsyan-Steel program)"
+    },
+    {
+      "id": "harmonia_e_tvo_017",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Permanent vs determinant in algebraic complexity (Valiant)",
+      "trivial_case": {
+        "description": "permanent is #P-complete; permanent is VNP-complete",
+        "result": "Proven",
+        "proven_by": "Valiant",
+        "year": 1979,
+        "venue": "STOC; SIAM J. Comput.",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "VP != VNP (algebraic analog of P != NP)",
+        "result": "Open",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: claiming completeness implies separation",
+      "doctrine_relevance": "HARD-5: completeness-vs-separation distinction in algebraic complexity",
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_c_tvo_007",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Sobolev sharp constants",
+      "trivial_case": {
+        "description": "Sobolev inequality W^{1,2}(R^n) -> L^{2n/(n-2)} sharp constant",
+        "result": "explicit best constant via radial decreasing rearrangement",
+        "proven_by": "Aubin; Talenti",
+        "year": 1976,
+        "venue": "J. Differential Geometry (Aubin); Annali di Mat. Pura ed Appl. (Talenti)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Sharp constants for higher-order Sobolev W^{k,p} -> L^q at general (k, p, q)",
+        "result": "many specific cases settled (Beckner sharp Hausdorff-Young 1975; sharp Aubin-Talenti for W^{1,2}); general higher-order open in many regimes",
+        "status": "OPEN in many specific (k, p, q) cases"
+      },
+      "common_failure_pattern": "FM-08: model claims 'sharp Sobolev constants are known' generically, conflating Aubin-Talenti's specific case with the general open question",
+      "doctrine_relevance": "FM-08; specific case proven, generic case open"
+    },
+    {
+      "id": "harmonia_a_tvo_007",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Ramsey numbers",
+      "trivial_case": {
+        "description": "Specific small Ramsey numbers determined exactly",
+        "result": "R(3,3)=6, R(3,4)=9, R(4,4)=18, R(3,5)=14, R(3,6)=18, R(3,7)=23, R(3,8)=28, R(3,9)=36, R(4,5)=25",
+        "proven_by": "various (Greenwood-Gleason 1955 for R(4,4); McKay-Radziszowski 1995 for R(4,5))",
+        "year": "1955-1995",
+        "venue": "various",
+        "status": "PROVEN for small (s,t)"
+      },
+      "open_case": {
+        "description": "R(5,5) and beyond; asymptotic R(k,k)",
+        "result": "R(5,5) bounded between 43 and 46 (Angeltveit-McKay 2017 upper); R(k,k) <= (4-2^{-7})^k (Campos et al. 2023 first exponential improvement on Erdős-Szekeres 4^k)",
+        "status": "OPEN — R(5,5) exact value unknown for >70 years"
+      },
+      "common_failure_pattern": "FM-08: model fabricates specific R(5,5) value (42, 43, 45, 46 are all plausible-looking but R(5,5) is OPEN)",
+      "doctrine_relevance": "FM-08; small-cases-known vs medium-case-open"
+    },
+    {
+      "id": "harmonia_c_tvo_009",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Carleson convergence of Fourier series",
+      "trivial_case": {
+        "description": "L^2 a.e. convergence: partial sums of Fourier series of f in L^2 converge a.e.",
+        "result": "a.e. convergence",
+        "proven_by": "Carleson",
+        "year": 1966,
+        "venue": "Acta Mathematica",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Sharp class for a.e. convergence at the L^1 endpoint: which class between L^1 and L log L log log L is sharp?",
+        "result": "Antonov 1996: L log L log log L suffices; Konyagin 2000 (paraphrase): L log L counterexample possible; sharp class OPEN within this gap",
+        "status": "OPEN (precise sharp class)"
+      },
+      "common_failure_pattern": "FM-08: model claims Carleson's theorem 'extends to all L^p, p >= 1' or attributes Antonov's refinement to Carleson",
+      "doctrine_relevance": "FM-08; main theorem proven, sharp class refinement open"
+    },
+    {
+      "id": "harmonia_e_tvo_004",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Permanent lower bounds (Valiant)",
+      "trivial_case": {
+        "description": "dc(perm_n) >= n^2 / 2 quadratic lower bound",
+        "result": "Proven via Hessian-rank / second-derivative-dimension argument",
+        "proven_by": "Mignon, Ressayre",
+        "year": 2004,
+        "venue": "Theory of Computing",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Valiant's conjecture: dc(perm_n) is super-polynomial in n",
+        "result": "Open; gap between Omega(n^2) lower bound and 2^n - 1 upper bound (Grenet)",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: claiming the quadratic lower bound is super-polynomial",
+      "doctrine_relevance": "HARD-5: quantitative-but-not-asymptotic-strong distinction",
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_tvo_015",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "medium",
+      "conjecture_family": "Inaccessibility and large-cardinal existence",
+      "trivial_case": {
+        "description": "The existence of an inaccessible cardinal is not provable in ZFC (assuming Con(ZFC)): if kappa is inaccessible then V_kappa models ZFC, so ZFC + 'exists inaccessible' proves Con(ZFC), violating Goedel's second incompleteness theorem",
+        "result": "Standard application of Goedel-second-incompleteness via V_kappa modeling ZFC",
+        "proven_by": "Folklore from Goedel/Shepherdson; rigorous treatment in Kanamori 'The Higher Infinite'",
+        "year": 1939,
+        "venue": "Kanamori, 'The Higher Infinite' (Springer 2003); originally observed in the 1930s after Goedel",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "The HOD Conjecture (Woodin): assuming an extendible cardinal kappa, V is 'close to' HOD (specifically, every regular cardinal above kappa is omega-strongly measurable in HOD or HOD computes successors correctly). Recent work (exacting cardinals, Bagaria-Goldberg-Lucke 2024) suggests possible refutation",
+        "result": "HOD Dichotomy theorem (Woodin 2017) establishes the dichotomy; HOD Conjecture (the 'close' alternative) remains open and recent work threatens it via exacting/ultraexacting cardinals",
+        "status": "OPEN as of 2026; recent arXiv 2411.11568 (Bagaria-Goldberg-Lucke) argues exacting cardinals would refute HOD Conjecture"
+      },
+      "common_failure_pattern": "FM-08: model claims HOD Conjecture is settled (it is not) or claims inaccessibles are provable in ZFC (false)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled non-provability of inaccessibles from open HOD-Conjecture status"
+    },
+    {
+      "id": "harmonia_d_tvo_007",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "easy",
+      "conjecture_family": "Reverse mathematics Big Five and Ramsey-type principles",
+      "trivial_case": {
+        "description": "Konig's lemma for finitely-branching trees (KL) is equivalent to ACA_0 over RCA_0; weak Konig's lemma WKL_0 is strictly weaker than ACA_0 over RCA_0",
+        "result": "Big-Five hierarchy RCA_0 < WKL_0 < ACA_0 strictly increases; established via standard reverse-math techniques",
+        "proven_by": "Stephen G. Simpson and collaborators",
+        "year": 1984,
+        "venue": "Simpson, 'Subsystems of Second-Order Arithmetic', Springer (1999); core results from 1970s-80s reverse-math program",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "The exact strength of Ramsey's theorem for pairs RT^2_2 over RCA_0: it is known to lie between RCA_0 and ACA_0, but its precise placement and whether it implies WKL_0 remain open",
+        "result": "RT^2_2 does not imply ACA_0 (Seetapun-Slaman 1995); does not imply WKL_0 (Liu 2012); no natural principle is known strictly between ACA_0 and RT^2_2",
+        "status": "OPEN: precise reverse-math placement of RT^2_2 still investigated; many sub-questions open"
+      },
+      "common_failure_pattern": "FM-08: model claims RT^2_2 is equivalent to ACA_0 (false — Seetapun-Slaman 1995), or places it at RCA_0/WKL_0 levels incorrectly",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled Big-Five strict hierarchy from open precise placement of RT^2_2"
+    },
+    {
+      "id": "harmonia_a_tvo_011",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Hadwiger-Nelson chromatic number of the plane",
+      "trivial_case": {
+        "description": "Bounds 4 <= chi(R^2) <= 7 from the 1950s",
+        "result": "lower bound 4 from explicit unit-distance graph; upper bound 7 from hexagonal tiling",
+        "proven_by": "Nelson, Hadwiger, Mosers",
+        "year": "1950s",
+        "venue": "various",
+        "status": "PROVEN as bounds"
+      },
+      "open_case": {
+        "description": "Exact value of chi(R^2)",
+        "result": "de Grey 2018 (arxiv 1804.02385) raised lower bound to 5; Polymath 16 refined to small explicit graphs; upper bound 7 unchanged",
+        "status": "OPEN — chi(R^2) in {5, 6, 7}"
+      },
+      "common_failure_pattern": "FM-08: model claims chi(R^2) is known to be 7 (the upper bound) OR claims de Grey proved it equals 5 (de Grey raised the lower bound to 5; the upper bound remains 7)",
+      "doctrine_relevance": "FM-08; bounds-known vs exact-unknown; de Grey's contribution is lower-bound only"
+    },
+    {
+      "id": "harmonia_e_tvo_005",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Bochner-Riesz multiplier (analysis-complexity overlap)",
+      "trivial_case": {
+        "description": "Bochner-Riesz conjecture in dimension n=2",
+        "result": "Proven for the full conjectured range of (delta, p)",
+        "proven_by": "Carleson, Sjolin",
+        "year": 1972,
+        "venue": "Studia Mathematica",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Bochner-Riesz conjecture in n >= 3",
+        "result": "Open; partial results via bilinear methods, decoupling",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: claiming the conjecture is proven (true only in n=2)",
+      "doctrine_relevance": "HARD-5: dimensional threshold pattern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_a_tvo_017",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Latin squares structure",
+      "trivial_case": {
+        "description": "Latin square of order n exists for every n >= 1",
+        "result": "trivial: cyclic shift Z_n gives one; many others",
+        "proven_by": "folklore",
+        "year": "ancient",
+        "venue": "n/a",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Existence of three Mutually Orthogonal Latin Squares (MOLS(n)) for all n != 6 and n != 2; the related combinatorial-design existence-of-resolvable Steiner triple systems",
+        "result": "Chowla-Erdős-Straus 1960 / Bose-Shrikhande-Parker 1959 resolved Euler's '36 officers' OMOLS(6) impossibility and existence for n != 2,6; the 3-MOLS existence for various n is open or recently resolved (Keevash-Sah-Sawhney 2022 type results)",
+        "status": "OPEN for some k-MOLS variants"
+      },
+      "common_failure_pattern": "FM-08: model claims '36 officers problem' is open (it is solved: no OMOLS(6) by Tarry 1900, Bose-Shrikhande-Parker 1959 for OMOLS existence n != 2, 6)",
+      "doctrine_relevance": "FM-08; classical-existence-resolved vs MOLS-extensions-some-open"
+    },
+    {
+      "id": "harmonia_d_tvo_014",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "medium",
+      "conjecture_family": "Cardinal characteristics of the continuum",
+      "trivial_case": {
+        "description": "ZFC proves aleph_1 <= b <= d <= 2^aleph_0 and aleph_1 <= cov(M) <= non(N) <= cof(N), giving the Cichon diagram inclusions",
+        "result": "Cichon diagram of cardinal characteristics is fully established in ZFC; all 10 entries with their inequalities provably hold",
+        "proven_by": "Cichon, Bartoszyński, Judah, and others",
+        "year": 1995,
+        "venue": "Bartoszyński-Judah, 'Set Theory: On the Structure of the Real Line' (1995)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether all 'reasonable' cardinal characteristics in Cichon's maximum (Goldstern-Kellner-Shelah 2019 showed all 10 distinct) extend to higher analogues at uncountable cardinals; whether a fully analogous diagram for kappa-Cichon at uncountable kappa is consistent",
+        "result": "Goldstern-Kellner-Shelah (Annals 2022) established Cichon's maximum (10 distinct values); higher-cardinal generalizations are under active investigation, with several specific open consistencies",
+        "status": "OPEN at uncountable cardinals; specific higher-Cichon configurations unresolved"
+      },
+      "common_failure_pattern": "FM-08: model claims higher-Cichon at uncountable cardinals is settled by analogy with omega; conflates Cichon's maximum (settled at omega) with open uncountable analogues",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled Cichon diagram and Cichon's maximum from open higher-cardinal generalizations"
+    },
+    {
+      "id": "harmonia_b_tvo_016",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "1d-dynamics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Wandering domains for rational maps",
+      "trivial_case": {
+        "description": "No wandering domains for rational maps of the Riemann sphere: every Fatou component of a rational map of degree >= 2 is eventually periodic (no wandering domains)",
+        "result": "Sullivan's no-wandering-domains theorem for rational maps",
+        "proven_by": "Sullivan",
+        "year": 1985,
+        "venue": "Sullivan, 'Quasiconformal homeomorphisms and dynamics I: Solution of the Fatou-Julia problem on wandering domains', Annals of Math. 122 (1985), 401-418",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Wandering domains for transcendental entire functions: classify the dynamical / topological types of wandering domains, and determine whether wandering domains exist in all natural parameter families (e.g., Eremenko-Lyubich class B)",
+        "result": "Existence of wandering domains for some transcendental entire functions known (Baker 1976); Bishop 2015 constructed wandering domains in class B; full classification of wandering-domain types and existence questions for several specific function families remain OPEN",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model cites Sullivan as 'eliminating wandering domains in complex dynamics' without distinguishing rational (no wandering, proven) from transcendental (wandering exists; classification open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish rational maps (Sullivan, no wandering) from transcendental maps (Baker-Bishop, wandering exists; structure open)",
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_a_tvo_016",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Off-diagonal Ramsey numbers",
+      "trivial_case": {
+        "description": "Off-diagonal Ramsey R(3, k)",
+        "result": "R(3,k) = Theta(k^2 / log k) (Kim 1995 lower bound matching Ajtai-Komlós-Szemerédi 1980 upper bound)",
+        "proven_by": "Kim (lower); Ajtai-Komlós-Szemerédi (upper)",
+        "year": "1980, 1995",
+        "venue": "Random Struct. Algorithms (Kim)",
+        "status": "PROVEN tight up to constants"
+      },
+      "open_case": {
+        "description": "Off-diagonal R(4, k) tight asymptotics",
+        "result": "best lower bound R(4,k) >= Omega(k^{5/2}/log^2 k) (Mattheus-Verstraete 2024); upper bound R(4,k) <= O(k^3 / log^2 k) (Ajtai-Komlós-Szemerédi); gap of k^{1/2}",
+        "status": "OPEN — gap remains"
+      },
+      "common_failure_pattern": "FM-08: model claims R(4,k) is k^3/log^2 k tight (it is only the upper bound) OR conflates the recent Mattheus-Verstraete improvement with closing the gap",
+      "doctrine_relevance": "FM-08; tight-bound vs gap-with-recent-progress"
+    },
+    {
+      "id": "harmonia_d_tvo_018",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "hard",
+      "conjecture_family": "AD/AD+ and Solovay hierarchy",
+      "trivial_case": {
+        "description": "Under AD, every set of reals has the Baire property and is Lebesgue measurable; the Solovay model ZF+DC+'every set of reals is Lebesgue measurable' is consistent relative to an inaccessible cardinal",
+        "result": "Solovay's construction via Levy collapse of an inaccessible; Mycielski-Steinhaus AD-implies-LM/BP",
+        "proven_by": "Robert Solovay (consistency from inaccessible), Mycielski-Steinhaus (AD-implications)",
+        "year": 1970,
+        "venue": "Solovay, Annals of Math 92 (1970), 'A model in which every set of reals is Lebesgue measurable'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether AD_R (determinacy of all real-payoff games) + DC has the same consistency strength as 'AD_R + Theta is regular', and the precise calibration of long-game determinacy at length omega^2 with Woodin-cardinal hierarchies",
+        "result": "Woodin established AD_R + Theta-regular has measurable-Woodin-cardinal-equivalence-strength; partial-progress on length-omega^2 (Aguilera, Mueller, Schlutzenberg, Trang 2020-2024); full classification open",
+        "status": "OPEN as of 2026; arXiv 1906.11949 represents the 'long projective determinacy' partial progress"
+      },
+      "common_failure_pattern": "FM-08: model claims AD_R + Theta-regular has the same calibration as ordinary AD (it does not); conflates Solovay model (settled) with AD_R-strength refinements (open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled Solovay model and AD-implications from open AD_R-Theta-regular calibration"
+    },
+    {
+      "id": "harmonia_a_tvo_018",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Sumset structure / Polynomial Freiman-Ruzsa",
+      "trivial_case": {
+        "description": "Freiman's theorem: small-doubling A in Z embeds in a generalized arithmetic progression of bounded dimension and size",
+        "result": "bounded-doubling implies bounded-dimension GAP containment",
+        "proven_by": "Freiman",
+        "year": 1973,
+        "venue": "monograph 'Foundations of a Structural Theory of Set Addition'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Polynomial Freiman-Ruzsa over Z: A with |A+A| <= K|A| is contained in a GAP of size <= poly(K) * |A| with dimension <= poly(log K)",
+        "result": "Sanders 2012 quasi-polynomial; Gowers-Green-Manners-Tao 2023 (arxiv 2311.05762) proved PFR over F_2^n; PFR over Z is OPEN",
+        "status": "OPEN over Z"
+      },
+      "common_failure_pattern": "FM-08: model claims PFR over Z is solved by GGMT 2023 (GGMT solved PFR over F_2^n; the integer version is still open)",
+      "doctrine_relevance": "FM-08; F_2-version solved vs Z-version open"
+    },
+    {
+      "id": "harmonia_e_tvo_006",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Cap-set bound in F_3^n",
+      "trivial_case": {
+        "description": "Upper bound r_3(F_3^n) <= O(2.756^n)",
+        "result": "Proven via polynomial method / slice rank",
+        "proven_by": "Ellenberg, Gijswijt",
+        "year": 2017,
+        "venue": "Annals of Mathematics 185(1)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Exact asymptotic constant for r_3(F_3^n) — closing the gap between Behrend-Edel-style lower bounds and the Ellenberg-Gijswijt 2.756 upper bound",
+        "result": "Open; multiplicative gap of ~5x at n=7 between LB and UB",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: claiming 2.756 is the tight asymptotic constant",
+      "doctrine_relevance": "HARD-5: bound-vs-tight-constant distinction",
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_b_tvo_021",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "KAM",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Reducibility of quasi-periodic cocycles",
+      "trivial_case": {
+        "description": "Reducibility of one-frequency Diophantine quasi-periodic cocycles in SL(2,R) close to constant: for alpha Diophantine and A in SL(2,R) with rotation number Diophantine w.r.t. alpha, the cocycle (alpha, A + small perturbation) is analytically reducible to a constant cocycle",
+        "result": "Eliasson's reducibility theorem (one-frequency, near-constant, Diophantine)",
+        "proven_by": "Eliasson",
+        "year": 1992,
+        "venue": "Eliasson, 'Floquet solutions for the 1-dimensional quasi-periodic Schrodinger equation', Comm. Math. Phys. 146 (1992), 447-482",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Almost-reducibility / global theory for non-perturbative SL(2,R) cocycles with Liouville frequency: for Liouville alpha and arbitrary (not near-constant) analytic A, characterize the spectrum of reducible / almost-reducible / non-uniformly hyperbolic regimes",
+        "result": "Avila's global theory and almost-reducibility theorem (Acta Math. 2015, Annals 2015) handle the one-frequency analytic case modulo the critical-set obstruction; the multi-frequency Liouville case and sharp boundary description for the critical set remain OPEN in many regimes",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model cites Eliasson or Avila as resolving 'reducibility of quasi-periodic cocycles' without restricting to one-frequency / Diophantine / analytic",
+      "doctrine_relevance": "HARD-5: substrate must distinguish near-constant Diophantine reducibility (Eliasson) from global / multi-frequency / Liouville cases (open / partial)",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_c_tvo_002",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Bochner-Riesz means (multiplier (1-|xi|^2)_+^delta on R^n)",
+      "trivial_case": {
+        "description": "n = 2: full Bochner-Riesz conjecture proven; T^delta bounded on L^p iff |1/p - 1/2| <= (delta + 1/2)/2",
+        "result": "full conjectured boundedness region holds in n=2",
+        "proven_by": "Carleson and Sjolin",
+        "year": 1972,
+        "venue": "Studia Mathematica",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "n >= 3: Bochner-Riesz conjecture asks T^delta bounded on L^p iff |1/p - 1/2| <= (delta + 1/2)/n",
+        "result": "partial: Tao 2003 bilinear improvements; Bourgain-Guth 2011; Lee-Vargas 2010; full conjecture remains open; tightest bounds via decoupling (Bourgain-Demeter 2015) are still loose at the conjectural endpoint",
+        "status": "OPEN in full conjectured range"
+      },
+      "common_failure_pattern": "FM-08: model treats 2D Carleson-Sjolin as if it covers all n; or attributes the n>=3 partial bounds to 'Stein 1958' (Stein's thesis covered different ranges).",
+      "doctrine_relevance": "FM-08; same conjecture name across dimensions, drastically different status"
+    },
+    {
+      "id": "harmonia_b_tvo_009",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "hyperbolic-dynamics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Density of hyperbolicity (Smale / Palis program)",
+      "trivial_case": {
+        "description": "C^1 density of hyperbolicity for surface diffeomorphisms: in dimension 2, hyperbolic diffeomorphisms (Axiom A) are C^1 dense among diffeomorphisms with the property that there is no homoclinic tangency or heterodimensional cycle (in dim 2 the latter is vacuous)",
+        "result": "Surface case: density of hyperbolicity in C^1 topology away from tangencies; specifically Pujals-Sambarino: every C^1-generic surface diffeomorphism is either hyperbolic or has a homoclinic tangency",
+        "proven_by": "Pujals and Sambarino",
+        "year": 2000,
+        "venue": "Pujals-Sambarino, 'Homoclinic tangencies and hyperbolicity for surface diffeomorphisms', Annals of Math. 151 (2000), 961-1023",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Palis density conjecture in higher dimensions and stronger topology: in dim >= 3, every diffeomorphism is C^r-approximated (r >= 1) by either a hyperbolic system, one with a homoclinic tangency, or one with a heterodimensional cycle; and the C^r (r >= 2) version even on surfaces",
+        "result": "Crovisier-Pujals proved the C^1 dichotomy in higher dim under partial hyperbolicity assumptions; full Palis conjecture for general C^1 diffeomorphisms in dim >= 3, and the C^r version for r >= 2 in any dimension, remain OPEN",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model cites Pujals-Sambarino as resolving 'Palis' density conjecture' without restricting to surfaces and C^1",
+      "doctrine_relevance": "HARD-5: substrate must track dimension and regularity (C^1 vs C^r) within the Palis program",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_d_tvo_004",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "easy",
+      "conjecture_family": "Halting problem and Turing reducibility",
+      "trivial_case": {
+        "description": "The halting problem H = {(M,x) : Turing machine M halts on input x} is undecidable; equivalently, 0' (the Turing jump of 0) is strictly above 0 in the Turing degrees",
+        "result": "Diagonal argument: assuming a decider D for H, construct M_D that halts iff D says it does not, contradiction",
+        "proven_by": "Alan Turing",
+        "year": 1936,
+        "venue": "Proc. London Math Soc. (2) 42 (1936-37), 'On computable numbers, with an application to the Entscheidungsproblem'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether the Turing degrees of c.e. sets D_T have any non-trivial automorphism (beyond the identity); the bi-interpretability conjecture for the c.e. degrees remains open",
+        "result": "Non-trivial automorphism existence for the c.e. degrees is open; partial results show definability of large classes (Nies-Shore-Slaman 1998, Slaman-Woodin program)",
+        "status": "OPEN as of 2026"
+      },
+      "common_failure_pattern": "FM-08: model conflates settled undecidability of halting with the open structural question of automorphisms in the c.e. degree structure",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled undecidability (Turing 1936) from open automorphism/rigidity questions in the same degree-theoretic family"
+    },
+    {
+      "id": "harmonia_e_tvo_024",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Lattice cryptography",
+      "trivial_case": {
+        "description": "Worst-case to average-case reduction for SVP (Shortest Vector Problem) approximation",
+        "result": "Ajtai 1996 / 2004 reduction: average-case SIS as hard as worst-case GapSVP",
+        "proven_by": "Ajtai",
+        "year": "1996; 2004 (revised)",
+        "venue": "STOC; J. ACM",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Quantum hardness of SVP / LWE under quantum reductions; quantum-secure cryptography from worst-case lattice problems",
+        "result": "Partial — Regev 2009 LWE reduction; quantum-vs-classical gap details open",
+        "status": "OPEN at full-gap precision"
+      },
+      "common_failure_pattern": "FM-08: assuming classical reductions transfer cleanly to quantum",
+      "doctrine_relevance": "HARD-5: classical-vs-quantum reduction distinction",
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_d_tvo_023",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "hard",
+      "conjecture_family": "Forcing-axiom-implication chains and Pmax (*)-axiom",
+      "trivial_case": {
+        "description": "MM++ implies Woodin's Pmax axiom (*); equivalently, MM++ decides H(omega_2)-theory in a Pmax-canonical way",
+        "result": "Aspero-Schindler proof using a tower-forcing-+-iteration argument; settles a question open since the 1990s",
+        "proven_by": "David Aspero and Ralf Schindler",
+        "year": 2021,
+        "venue": "Annals of Mathematics 193 (2021), 'Martin's Maximum^++ implies Woodin's axiom (*)'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether PFA alone (without MM++) implies (*) — equivalently, whether PFA is sufficient to decide H(omega_2)-theory in the Pmax-canonical way; the question of whether PFA is consistent with ¬(*) is also open",
+        "result": "Aspero-Schindler proof crucially uses MM++ stationary-set-preservation, which PFA lacks; whether the result extends to PFA is conjecturally negative but not proven",
+        "status": "OPEN as of 2026"
+      },
+      "common_failure_pattern": "FM-08: model claims PFA implies (*) (false — only MM++ is known to); conflates settled MM++-implies-(*) with open PFA-vs-(*) question",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled MM++-implies-(*) (Aspero-Schindler 2021) from open PFA-vs-(*) question"
+    },
+    {
+      "id": "harmonia_d_tvo_010",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "medium",
+      "conjecture_family": "Suslin Hypothesis and tree properties",
+      "trivial_case": {
+        "description": "The Suslin Hypothesis (no Suslin lines on R) is independent of ZFC: it follows from MA + ¬CH (Solovay-Tennenbaum 1971) and fails under V=L (diamond gives a Suslin tree, Jensen 1968)",
+        "result": "Independence of SH from ZFC",
+        "proven_by": "Jensen (failure under V=L, 1968) and Solovay-Tennenbaum (consistency of SH, 1971)",
+        "year": 1971,
+        "venue": "Solovay-Tennenbaum, Annals of Math 94 (1971); Jensen, Trans AMS (1972)",
+        "status": "PROVEN (settled-as-independent at omega_1)"
+      },
+      "open_case": {
+        "description": "Generalized Suslin Hypothesis at omega_2 (no aleph_2-Suslin trees) and its precise consistency strength under stronger forcing axioms; whether SH(aleph_2) is consistent assuming only weakly compact below remains open in some formulations",
+        "result": "Laver-Shelah established SH(aleph_2) from a weakly compact; consistency-strength refinements and behavior under PFA/MM remain open at higher cardinals",
+        "status": "OPEN at specific higher-cardinal generalizations; active research (Hayut, Magidor, Veličković)"
+      },
+      "common_failure_pattern": "FM-08: model claims SH(aleph_2) follows automatically from SH(aleph_1) settled-as-independent; conflates omega_1 (settled) with omega_2 (open in ZFC + intermediate large cardinals)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled SH-independence at omega_1 from open higher-cardinal generalizations"
+    },
+    {
+      "id": "harmonia_a_tvo_024",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Chromatic-index / list-coloring conjectures",
+      "trivial_case": {
+        "description": "Vizing's theorem on chromatic index",
+        "result": "chi'(G) is in {Delta(G), Delta(G)+1}",
+        "proven_by": "Vizing",
+        "year": 1964,
+        "venue": "Diskret. Analiz",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "List-Coloring Conjecture (LCC): chi'_L(G) = chi'(G); equivalently, edge-list-chromatic number equals chromatic index",
+        "result": "Galvin 1995 proved it for bipartite multigraphs; Kahn 2000 proved an asymptotic version with epsilon error; full LCC OPEN in general",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model claims Galvin proved LCC in general (Galvin proved it for bipartite multigraphs)",
+      "doctrine_relevance": "FM-08; bipartite-case-by-Galvin vs general-LCC-open"
+    },
+    {
+      "id": "harmonia_a_tvo_014",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Ramsey-Turán type",
+      "trivial_case": {
+        "description": "Ramsey-Turán bound for triangle-free graphs of large independence number",
+        "result": "for triangle-free graphs G on n vertices with alpha(G) = o(n), max edges is at most n^2 / 8 + o(n^2)",
+        "proven_by": "Erdős, Sós",
+        "year": 1969,
+        "venue": "Combinatorial structures and their applications",
+        "status": "PROVEN for triangle case"
+      },
+      "open_case": {
+        "description": "Ramsey-Turán density for K_4: max edges in K_4-free graph with alpha = o(n)",
+        "result": "Erdős-Sós conjectured 1/8 * n^2; Sudakov 2003 confirmed upper bound matches lower bound for K_4 and certain other cases; full picture for K_t with t >= 5 remains open",
+        "status": "OPEN for K_t with t >= 5 in some regimes"
+      },
+      "common_failure_pattern": "FM-08: model treats Ramsey-Turán as 'all done by Erdős-Sós', missing the K_t generalization gap",
+      "doctrine_relevance": "FM-08; specific-result vs general-extension"
+    },
+    {
+      "id": "harmonia_d_tvo_001",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "easy",
+      "conjecture_family": "Singular Cardinals Hypothesis variants and PCF bounds",
+      "trivial_case": {
+        "description": "If kappa is singular of uncountable cofinality and 2^lambda = lambda^+ for all sufficiently large lambda < kappa, then 2^kappa = kappa^+ (GCH cannot first fail at a singular of uncountable cofinality)",
+        "result": "Stationary-set reflection forces GCH to lift through uncountable-cofinality singulars; Silver's theorem",
+        "proven_by": "Jack Silver",
+        "year": 1974,
+        "venue": "Proc. ICM Vancouver 1974, 'On the singular cardinals problem'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether 2^aleph_omega can be precisely characterized in ZFC under the strong-limit hypothesis (Shelah's PCF gives 2^aleph_omega < aleph_{omega_4}; Shelah Strong Hypothesis pp(aleph_omega) < aleph_{omega_1} remains open)",
+        "result": "Shelah Strong Hypothesis conjectures pp(aleph_omega) < aleph_{omega_1}; current ZFC bound 2^aleph_omega < aleph_{omega_4}",
+        "status": "OPEN as of 2026; no improvement to Shelah's PCF bound has been confirmed"
+      },
+      "common_failure_pattern": "FM-08: model conflates Silver's uncountable-cofinality theorem with the (open) countable-cofinality case at aleph_omega; or claims SH/SCH is a theorem rather than a conjecture",
+      "doctrine_relevance": "HARD-5: substrate must distinguish proven uncountable-cofinality case (Silver 1974, technique=Fodor/regression) from open countable-cofinality case (PCF, technique=Shelah)"
+    },
+    {
+      "id": "harmonia_d_tvo_020",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "hard",
+      "conjecture_family": "Computable enumerable degree structure",
+      "trivial_case": {
+        "description": "Friedberg-Muchnik theorem: there exist incomparable c.e. (recursively enumerable) Turing degrees strictly between 0 and 0', solving Post's problem",
+        "result": "Priority method: simultaneous finite-injury construction of A and B with A not <=_T B and B not <=_T A",
+        "proven_by": "Richard Friedberg and Albert Muchnik (independently)",
+        "year": 1957,
+        "venue": "Friedberg, PNAS 43 (1957); Muchnik, Doklady 108 (1956)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Whether the c.e. Turing degrees R have any non-trivial automorphism (the c.e. degrees automorphism problem); equivalently, the bi-interpretability conjecture for R",
+        "result": "Slaman-Woodin program established many definability results; Nies-Shore-Slaman (1998) showed every relation invariant under automorphisms is definable; existence of a single non-trivial automorphism remains open",
+        "status": "OPEN as of 2026"
+      },
+      "common_failure_pattern": "FM-08: model claims c.e. degrees are rigid (proved-no-automorphisms) when only partial automorphism-invariance results are known; conflates Post's problem (settled) with automorphism question (open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled Post's-problem solution from open c.e.-degree-automorphism question"
+    },
+    {
+      "id": "harmonia_a_tvo_010",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Graph coloring / chromatic number bounds",
+      "trivial_case": {
+        "description": "Four Color Theorem: every planar graph is 4-colorable",
+        "result": "chi(G) <= 4 for planar G",
+        "proven_by": "Appel, Haken (1976; computer-assisted); Robertson-Sanders-Seymour-Thomas (1997 simplified proof)",
+        "year": 1976,
+        "venue": "Illinois J. Math. (Appel-Haken)",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Hadwiger conjecture for k >= 7: chi(G) >= k implies K_k is a minor of G",
+        "result": "open for k >= 7; reduced to 4CT for k = 6 by Robertson-Seymour-Thomas 1993",
+        "status": "OPEN for k >= 7"
+      },
+      "common_failure_pattern": "FM-08: model treats Hadwiger as 'proven up to k=6' as if k=7+ is incremental; the structural barrier at k=7 is qualitatively different (no 4CT-style reduction known)",
+      "doctrine_relevance": "FM-08; planar-coloring vs general-Hadwiger"
+    },
+    {
+      "id": "harmonia_d_tvo_011",
+      "harmonia": "D",
+      "domain": "logic",
+      "use_case": "trivial-vs-open",
+      "difficulty": "medium",
+      "conjecture_family": "Vaught's conjecture and counting countable models",
+      "trivial_case": {
+        "description": "Vaught's conjecture for omega-stable theories: every countable complete omega-stable theory has either at most countably many or exactly 2^aleph_0 countable models",
+        "result": "Shelah's stability-theoretic analysis using prime models over independent sets",
+        "proven_by": "Saharon Shelah",
+        "year": 1984,
+        "venue": "Shelah-Harrington-Makkai, Israel J. Math. 49 (1984), 'A proof of Vaught's conjecture for omega-stable theories'",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Vaught's conjecture in full generality (for all countable first-order theories): the number of countable models is finite, aleph_0, or 2^aleph_0",
+        "result": "Knight (2002, 2007) announced a counterexample, but it has not been verified by the community as of 2026; conjecture proven for many sub-classes (o-minimal, weakly minimal, superstable of finite U-rank), but unverified in general",
+        "status": "OPEN as of 2026; status of Knight's claimed counterexample remains unresolved"
+      },
+      "common_failure_pattern": "FM-08: model claims Vaught's conjecture is settled in general (false — Knight's claim unverified, conjecture open); conflates omega-stable case (settled) with general case (open)",
+      "doctrine_relevance": "HARD-5: substrate must distinguish settled omega-stable Vaught (Shelah 1984) from open general Vaught's conjecture"
+    },
+    {
+      "id": "harmonia_c_tvo_022",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Harmonic-measure dimension via Wolff conjecture",
+      "trivial_case": {
+        "description": "Sets of fractional dimension: rectifiability characterizations of curves of finite length",
+        "result": "Riesz brothers theorem (1916): if Omega is a Jordan domain in C with rectifiable boundary, then harmonic measure is mutually absolutely continuous with arc-length measure",
+        "proven_by": "F. and M. Riesz",
+        "year": 1916,
+        "venue": "Proc. 4th Scand. Math. Congress",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Higher-dim analog: characterization of rectifiable sets by harmonic measure absolute continuity in n >= 3",
+        "result": "Azzam-Mourgoglou-Tolsa series 2015-2020: characterized in some cases (uniformly rectifiable Ahlfors regular boundaries); full case OPEN",
+        "status": "OPEN in higher generality"
+      },
+      "common_failure_pattern": "FM-08: model attributes the higher-dim characterization to F. and M. Riesz",
+      "doctrine_relevance": "FM-08; planar settled by classical names, higher-dim recent + open"
+    },
+    {
+      "id": "harmonia_b_tvo_008",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "ergodic-theory",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Multiple recurrence and Khintchine-type returns",
+      "trivial_case": {
+        "description": "Khintchine recurrence for a single nontrivial power: for an ergodic measure-preserving system (X, mu, T) and any A with mu(A) > 0, the set { n : mu(A intersect T^{-n} A) > mu(A)^2 - epsilon } has bounded gaps",
+        "result": "Khintchine recurrence, single intersection",
+        "proven_by": "Khintchine",
+        "year": 1934,
+        "venue": "Khintchine, 'Eine Verscharfung des Poincareschen \"Wiederkehrsatzes\"', Compositio Math. 1 (1934), 177-179",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Khintchine-type lower bound for triple intersections with polynomial iterates: for all A, do we have { n : mu(A intersect T^{-n^2} A intersect T^{-2n^2} A) > mu(A)^c - epsilon } syndetic for some c?",
+        "result": "Bergelson-Host-Kra 2005 proved Khintchine-type bounds for linear length-3 progressions; for length 4 it FAILS (Bergelson-Host-Kra counterexample); polynomial-iterate Khintchine-type lower bounds remain OPEN in general",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model assumes Khintchine-type bounds extend to all multiple recurrence, missing that they fail at length 4 and are open for polynomial iterates",
+      "doctrine_relevance": "HARD-5: substrate must distinguish single-return Khintchine (1934) from multiple-return Khintchine-type, and within multiple-return distinguish proven (length 3 linear), false (length 4 linear), and open (polynomial)",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_c_tvo_018",
+      "harmonia": "C",
+      "domain": "analysis_and_PDEs",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Helly-type theorems / convex geometry meets harmonic analysis",
+      "trivial_case": {
+        "description": "Mahler conjecture: lower bound on volume product Vol(K) Vol(K*) where K is a symmetric convex body in R^n",
+        "result": "n=2 proven (Mahler himself 1939); n=3 proven (Iriyeh-Shibata 2020 paraphrase)",
+        "proven_by": "Mahler (1939, n=2); Iriyeh-Shibata (2020, n=3)",
+        "year": "1939 / 2020",
+        "venue": "Casopis (Mahler 1939); Duke Math. J. or paraphrase venue (Iriyeh-Shibata)",
+        "status": "PROVEN in n=2 and n=3"
+      },
+      "open_case": {
+        "description": "Mahler conjecture in n >= 4: lower bound on volume product",
+        "result": "Bourgain-Milman 1987 gave lower bound c^n Vol(B^n)^2; Kuperberg 2008 improved constant; sharp Mahler bound OPEN for n >= 4",
+        "status": "OPEN in n >= 4"
+      },
+      "common_failure_pattern": "FM-08: model attributes general-n Mahler proof to Mahler himself, or claims Bourgain-Milman bound is the sharp Mahler bound",
+      "doctrine_relevance": "FM-08; dimensional staging"
+    },
+    {
+      "id": "harmonia_e_tvo_021",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "PromiseBQP / quantum-supremacy",
+      "trivial_case": {
+        "description": "Boson sampling and IQP sampling: classical hardness conditional on PH not collapsing",
+        "result": "Proven (Aaronson-Arkhipov 2011 / Bremner-Jozsa-Shepherd 2010)",
+        "proven_by": "Aaronson-Arkhipov; Bremner-Jozsa-Shepherd",
+        "year": "2010 / 2011",
+        "venue": "STOC; Proc. R. Soc. A",
+        "status": "PROVEN (conditional)"
+      },
+      "open_case": {
+        "description": "Verifiable quantum supremacy in the cryptographic-assumption-free setting",
+        "result": "Open; Yamakawa-Zhandry 2024-class results give certified randomness under specific assumptions",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: conflating sampling-supremacy (proven conditional) with verifiable-supremacy (open)",
+      "doctrine_relevance": "HARD-5: sampling-vs-decision distinction",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_b_tvo_023",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "1d-dynamics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Conjugacy of circle diffeomorphisms to rotations",
+      "trivial_case": {
+        "description": "Denjoy theorem for C^2 circle diffeomorphisms with irrational rotation number: every C^2 orientation-preserving diffeomorphism of S^1 with irrational rotation number alpha is topologically conjugate to the rigid rotation R_alpha",
+        "result": "Denjoy's theorem on topological conjugacy",
+        "proven_by": "Denjoy",
+        "year": 1932,
+        "venue": "Denjoy, 'Sur les courbes definies par les equations differentielles a la surface du tore', J. Math. Pures Appl. 11 (1932), 333-375",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Smooth conjugacy at the boundary of Diophantine: Herman-Yoccoz showed C^infty conjugacy holds when alpha is Diophantine; sharp regularity / loss-of-derivatives results across the full Diophantine-Liouville spectrum (e.g., precise Holder exponent of conjugacy as a function of arithmetic of alpha for finitely-differentiable diffeomorphisms) are OPEN in several regimes",
+        "result": "Herman 1979, Yoccoz 1984 settled smooth conjugacy under Diophantine; Katznelson-Ornstein, Khanin-Sinai gave sharper conditions; precise regularity theory for finitely-differentiable diffeomorphisms with Liouville rotation numbers and the optimal arithmetic-vs-regularity Diophantine threshold are OPEN",
+        "status": "PARTIAL_PROGRESS"
+      },
+      "common_failure_pattern": "FM-08: model cites Denjoy / Herman-Yoccoz as fully resolving smooth conjugacy of circle diffeos, missing the finitely-differentiable / Liouville regime",
+      "doctrine_relevance": "HARD-5: substrate must distinguish topological conjugacy (Denjoy) from smooth conjugacy (Herman-Yoccoz) and from sharp finite-regularity questions (open)",
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_a_tvo_002",
+      "harmonia": "A",
+      "domain": "combinatorics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Sunflower bounds",
+      "trivial_case": {
+        "description": "Erdős-Rado sunflower lemma: family of k-sets with > (r-1)^k * k! sets contains a sunflower with r petals",
+        "result": "(r-1)^k * k! upper bound",
+        "proven_by": "Erdős, Rado",
+        "year": 1960,
+        "venue": "J. London Math. Soc. 35",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Erdős-Rado sunflower conjecture: c(r)^k bound (constant base instead of factorial)",
+        "result": "Alweiss-Lovett-Wu-Zhang 2019 (arxiv 1908.08483) brought it to (C log k)^k for r=3; conjectured constant base",
+        "status": "OPEN — log k factor remains"
+      },
+      "common_failure_pattern": "FM-08: model presents ALWZ bound as proving the conjecture, or attributes the original lemma to the modern improvers",
+      "doctrine_relevance": "FM-08; trivially-proven lemma vs open conjecture within sunflower theory"
+    },
+    {
+      "id": "harmonia_b_tvo_002",
+      "harmonia": "B",
+      "domain": "dynamical-systems",
+      "subdomain": "1d-dynamics",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Fatou conjecture (density of hyperbolicity)",
+      "trivial_case": {
+        "description": "Real Fatou conjecture for the quadratic family: hyperbolic parameters are dense in the real interval of the Mandelbrot family x -> x^2 + c, c in R",
+        "result": "Density of hyperbolicity holds in the real quadratic family; equivalently real polynomials in the quadratic family are densely hyperbolic",
+        "proven_by": "Lyubich; independently Graczyk-Swiatek",
+        "year": 1997,
+        "venue": "Lyubich, Annals of Math. 149 (1999), 319-420; Graczyk-Swiatek, Annals of Math. 146 (1997), 1-52",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Complex Fatou conjecture: hyperbolic components are dense in the parameter space of complex polynomials of degree d (already open for the complex quadratic family x -> x^2 + c, c in C, equivalent to MLC for that family)",
+        "result": "MLC and density of hyperbolicity are open even in the complex quadratic family; MLC is known on a large set (Lyubich, Kahn-Lyubich) but not at all parameters",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: model cites Lyubich / Graczyk-Swiatek as resolving 'the Fatou conjecture' without flagging that the real-line case is what was proved, while the complex case (and MLC) remain open",
+      "doctrine_relevance": "HARD-5: substrate must distinguish density of hyperbolicity along the real slice from density in the full complex parameter space",
+      "difficulty": "medium"
+    },
+    {
+      "id": "harmonia_e_tvo_007",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Local Hamiltonian QMA-completeness",
+      "trivial_case": {
+        "description": "k-Local Hamiltonian for k=2 is QMA-complete",
+        "result": "Proven (with inverse-polynomial promise gap)",
+        "proven_by": "Kempe, Kitaev, Regev",
+        "year": 2006,
+        "venue": "SIAM J. Comput.",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Constant-gap Local Hamiltonian is QMA-complete (qPCP)",
+        "result": "Open; this is the quantum PCP conjecture",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: claiming QMA-completeness implies qPCP",
+      "doctrine_relevance": "HARD-5: gap-strength is the load-bearing distinction (inverse-poly proven, constant open)",
+      "difficulty": "hard"
+    },
+    {
+      "id": "harmonia_e_tvo_022",
+      "harmonia": "E",
+      "domain": "computational complexity",
+      "use_case": "trivial-vs-open",
+      "conjecture_family": "Hardness amplification",
+      "trivial_case": {
+        "description": "Yao's XOR lemma: if f is mildly hard (e.g. cannot be computed by size-s circuits with prob > 1/2 + delta), then f^{XOR k} is much harder",
+        "result": "Proven (Yao 1982)",
+        "proven_by": "Yao",
+        "year": 1982,
+        "venue": "FOCS",
+        "status": "PROVEN"
+      },
+      "open_case": {
+        "description": "Optimal hardness amplification for NP (without circuit-LB hypothesis); equivalence between worst-case and average-case hardness for NP",
+        "result": "Open; barriers in Bogdanov-Trevisan 2006",
+        "status": "OPEN"
+      },
+      "common_failure_pattern": "FM-08: assuming XOR lemma implies arbitrary worst-to-average reductions for NP",
+      "doctrine_relevance": "HARD-5: hardness-amplification scope",
+      "difficulty": "hard"
+    }
+  ]
+}
