@@ -107,6 +107,23 @@ A "bridge" is just the human-narrative term for "two regions of the unified tens
 
 ---
 
+## HARD-6 — Attack the problems of the tools we'll need most; failures guide
+
+**Rule:** Problem selection is tool-need-driven. Attack the open problems of the tools the substrate will need most in the future. Failures are not setbacks — they are guidance. The failure mode IS the output: it reveals where the substrate is bumping into limits, what primitive is missing, what the next contract change must address.
+
+**Why:** James 2026-05-08 directive verbatim: *"We're going to attack the problems of the tools we will need most in the future. The failures will guide us."* Pairs with the tensor-near-and-dear posture (tensor problems are the canonical near-term example because tensors will be long-term substrate infrastructure per HARD-3) and with the existing kill-as-product doctrine (per feedback_assume_wrong.md, paradigm P25 in attack_angle_taxonomy).
+
+**How to apply:**
+- When selecting deep-research batch candidates: bias toward problems whose resolution would help the substrate's tools, not toward problems "interesting in their own right." Tensor problems (`aporia/mathematics/tensor_open_problems_v1.md`) are the current high-priority pool.
+- When Techne or Ergon attempts a problem and fails: the failure IS the output. Document the failure as substrate-grade kill (which falsifier triggered, what alternate hypothesis surfaced, what gap this reveals). Do NOT treat as a defeat or a reason to back off; treat as P25 Pivotal-Negative-Result paradigm in motion.
+- When choosing among capability-gap tickets to elevate: prioritize ones tied to tools-we-need-most. Capability-gap tickets surfaced by tensor-classification work get priority over generic capability-gap tickets.
+- Tester output that surfaces a P0-class flaw (e.g. `T-ST-fire17-001` TriangulationProtocol bypass) is the substrate doing exactly this — failing forward in a directed way.
+- This rule operates upstream of HARD-3 (tensor first): tensor-first names the priority OBJECT; HARD-6 names the priority POSTURE toward whichever object is being attacked.
+
+**Distinction from HARD-2 (anti-gravitational-well):** HARD-2 is about resisting conventional framings. HARD-6 is about choosing problems by tool need. They are aligned but distinct: HARD-2 governs HOW you attack; HARD-6 governs WHICH problems you attack.
+
+---
+
 ## Notes for cross-machine portability
 
 - This file is the canonical doctrine source for any agent invoked outside M1 (F:\Prometheus). Do not reference local Claude Code memory directories — they don't exist on M2 (D:\Prometheus) or in remote cloud sandboxes.
