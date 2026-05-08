@@ -6,6 +6,84 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #35 — 2026-05-08
+
+**Coordination note:** my fire #34 was last; no new parallel.
+
+**Lanes selected:** 8 (TriangulationPathRef indirect frozen-ness probe; addresses ST-fire33-001 P3) + 12 (5th NOVEL capability-gap probe).
+
+**Lane 15 + 18 reactivation re-check:** still DORMANT.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_35_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_35_results.json`.
+
+### Lane 8 — TriangulationPathRef indirect frozen-ness probe: 3/3 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — direct setattr on ref | **PASS** | `FrozenInstanceError` raised |
+| T3 — parent's `triangulation_history` field mutation | **PASS** | `FrozenInstanceError` raised |
+| T4 — inner ref via `cert.triangulation_history[0].path_id =` | **PASS** | `FrozenInstanceError` raised on inner setattr |
+
+**Substrate verdict: PASS.** TriangulationPathRef IS actually frozen at the dataclass level — verified end-to-end via direct, parent-field, and inner-via-parent-index mutation attempts.
+
+**Substantive observation re: ST-fire33-001:** the gap reported in fire #33 is purely in **audit-test coverage**, not in substrate behavior. The frozen invariant holds; the audit's `_try_minimal_construct` synthesizer just can't auto-generate the nested `MethodSpec` arg required to enroll TriangulationPathRef.
+
+**ST-fire33-001 stays at P3** — substrate-tester confirms the substrate is correct, the gap is in test discipline. The ticket's recommended remediation paths (explicit per-class test OR enhanced synthesizer for nested dataclasses) are still appropriate; the priority does not need to change.
+
+### Lane 12 — 5th NOVEL capability-gap probe: finite-group representation (S_3)
+
+Encoded the irreducible 2-dim standard representation of S_3:
+- (1 2) → [[-1, 1], [0, 1]]
+- (1 2 3) → [[0, -1], [1, -1]]
+
+**Result: CAPABILITY GAP.**
+
+Required substrate primitives MISSING:
+- `GroupObject` (finite group with multiplication table or generators+relations)
+- `MatrixOverField` (typed matrix with coefficient-field metadata)
+- `GroupHomomorphism` / `Representation` (G → GL(V) data)
+
+EQUIV's witness types (proof_ref / finite_check / equiv_chain) cannot capture the matrix-valued intertwining isomorphism that defines representation equivalence.
+
+**Filed: `T-2026-05-08-ST-fire35-001` (P1-high)** — 5th capability-gap in the **"Structured Equivalence Class" cluster**:
+
+| # | Ticket | Object class | Missing primitive |
+|---:|---|---|---|
+| 1 | ST-fire1-002 | homotopy class | higher-category equivalence with deformation witness |
+| 2 | ST-fire1-003 | combinatorial design | BlockDesign / IncidenceStructure |
+| 3 | ST-fire21-001 | knot HOMFLY | SymbolicLaurentPolynomial + skein equivalence |
+| 4 | ST-fire21-002 | A∞-algebra | ArityGradedOperationFamily |
+| 5 | ST-fire35-001 (this fire) | finite-group rep | GroupRepresentation + intertwining isomorphism |
+
+**5-of-5 cumulative pattern:** the substrate has scalar-output operators (T023) but lacks primitives for **structured objects with their own equivalence relations** whose witness data isn't a scalar value or a Symbol-ref. The unified **Structured-Equivalence-Class meta-primitive** (Aporia recommendation, cited in mini-window summary) is the right design candidate for the next contract-change window — closes all 5 tickets together rather than 5 one-off primitives.
+
+### Tickets filed this fire
+
+**1 ticket (P1-high):** `T-2026-05-08-ST-fire35-001` — 5th capability gap in the Structured Equivalence Class cluster.
+
+### Standing recommendations for next fire (#36)
+
+1. **Aporia coordination ticket candidate (HIGH PRIORITY):** the 5-of-5 cumulative pattern in capability-gap tickets is now overwhelmingly clear. Recommend filing an Aporia coordination ticket that aggregates the 5 P1-high tickets into a single design proposal: "Unified Structured-Equivalence-Class meta-primitive for the next contract-change window". Aporia/Techne co-design.
+2. **Anti-repeat:** avoid lanes 8, 12 (just covered). Suggested fire #36:
+   - **Lane 11 (batch-sweep)** — every-other-fire cadence; last my-instance fire #32
+   - **Lane 14 / 16 (replay/concurrency)** — quick smokes
+   - **Lane 7 entry continuation** — if INCONCLUSIVE list locatable
+3. **ST-fire33-001 P3 stays OPEN** — substrate is correct (per Lane 8); audit needs explicit per-class test for TriangulationPathRef.
+4. **Mini-window verification arc COMPLETE:** all 3 tiers verified across fires #33 (Tier 1+2) + #34 (Tier 3). Substrate-tester saga 2026-05-07/08 closes successfully. Substrate health: significantly improved.
+
+### Discipline notes
+
+- HARD-1..HARD-5: clean. Capability-gap probe targets operator-output-shaped or arity-graded primitives, not discipline-labeled object types (HARD-5 respected).
+- HARD-3 (tensor-first): the proposed Structured-Equivalence-Class meta-primitive would be tensor-grade.
+- Time used: ~25 min (within 50-min cap).
+- Anti-flooding cap: 1 ticket filed (max 5 allowed).
+- Multi-instance coordination: pulled before lane-pick; claimed fire #35 = max-on-origin (34) + 1.
+
+— substrate-tester, fire #35, 2026-05-08
+
+---
+
 ## Fire #34 — 2026-05-08
 
 **Coordination note:** my fire #33 was last; no new parallel. All 7 mini-window tickets DONE; only ST-fire33-001 P3 OPEN from substrate-tester history. **My fire = #34.**

@@ -1,0 +1,61 @@
+{
+  "fire": 35,
+  "lanes": [
+    8,
+    12
+  ],
+  "lane_8": {
+    "lane": "8_triangulation_path_ref_indirect_frozen_probe",
+    "n_tests": 3,
+    "verdict_counts": {
+      "PASS": 3
+    },
+    "tests": [
+      {
+        "id": "T1_direct_setattr_on_ref",
+        "expected": "FrozenInstanceError",
+        "actual": "FrozenInstanceError raised on direct setattr",
+        "verdict": "PASS",
+        "note": "TriangulationPathRef IS actually frozen (just not auto-enrolled in audit)"
+      },
+      {
+        "id": "T3_parent_field_mutation",
+        "expected": "FrozenInstanceError",
+        "actual": "FrozenInstanceError raised on parent setattr",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T4_inner_ref_mutation_through_parent",
+        "expected": "FrozenInstanceError",
+        "actual": "FrozenInstanceError raised on inner ref via parent",
+        "verdict": "PASS",
+        "note": "indirect coverage HOLDS \u2014 ST-fire33-001 may be downgrade-candidate"
+      }
+    ]
+  },
+  "lane_12": {
+    "probe": "finite_group_representation_S3_irreducible",
+    "encoded_cleanly": false,
+    "encoding_attempts": [
+      "CoordinateChart: would need (group_element, matrix_image) coordinate pairs. No registered chart for rep_theory:finite_group:S_3 exists. CoordinateChart's metric is over scalar-coordinate points; matrix-valued outputs are structurally different. The natural identity is the homomorphism G \u2192 GL(V), not a point in some scalar space.",
+      "OperatorOutputSequence (T023): could encode as operator='representation_image', index=group_element_index (0 to 5 for S_3), output=serialized_matrix_string. Stretches T023 \u2014 output_unit is not a meaningful scalar; the matrix structure (multiplicativity \u03c1(gh)=\u03c1(g)\u03c1(h)) is lost in the sequence shape.",
+      "REWRITE/EQUIV: two representations are equivalent iff there's an intertwining isomorphism. EQUIV(rep_A, rep_B, equivalence_class_id='intertwining_isomorphism', witness=intertwining_matrix) is conceptually right but the witness shape (a non-scalar matrix M satisfying M\u00b7\u03c1_A(g)=\u03c1_B(g)\u00b7M for all g) doesn't match the 3 substrate witness types (proof_ref, finite_check, equiv_chain). 'finite_check' could stretch to encode the verification of the intertwining property for all 6 group elements, but loses the structural identity (M is what makes A and B equivalent, not just that they ARE).",
+      "KillVector / ExclusionCertificate: N/A (representations are not falsifier outcomes nor exclusion claims)."
+    ],
+    "missing_primitives": [
+      "GroupObject (finite group with multiplication table or generators)",
+      "MatrixOverField (typed matrix with coefficient field metadata)",
+      "GroupHomomorphism / Representation (G \u2192 GL(V) data)"
+    ],
+    "verdict_notes": [
+      "Group representations require: (a) a finite group object as domain; (b) a vector space (or matrix algebra over a field) as codomain; (c) the homomorphism data; (d) intertwining morphisms as the canonical equivalence relation. Substrate has no GroupObject primitive, no MatrixOverField primitive, and the EQUIV witness-types don't capture matrix-valued intertwining data.",
+      "Pattern observed: this is the FIFTH lane-12 capability-gap where the substrate has NO native primitive for a structured object class with its own equivalence relation. Cumulative: ST-fire1-002 (homotopy), ST-fire1-003 (combinatorial design), ST-fire21-001 (HOMFLY/symbolic Laurent), ST-fire21-002 (A\u221e-algebra), and now ST-fire35 (group representation). The common theme: 'Structured Equivalence Class' meta-primitive is the unified design candidate for the next contract-change window (per Aporia recommendation cited in the mini-window summary)."
+    ],
+    "related_to_existing_tickets": [
+      "ST-fire1-002 (homotopy class)",
+      "ST-fire1-003 (combinatorial design)",
+      "ST-fire21-001 (HOMFLY)",
+      "ST-fire21-002 (A\u221e-algebra)"
+    ]
+  }
+}
