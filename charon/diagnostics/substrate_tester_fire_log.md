@@ -6,6 +6,64 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #44 — 2026-05-08 (Tier-E EMERGES — representation-theoretic primitives = 5th tier)
+
+**Coordination note:** no new commits between fire #43 and fire #44 from parallel instance. Fire #44 is mine.
+
+**Lanes selected:** 12 (catalog entry #95 — Kronecker coefficient vanishing/positivity, §XII GCT) + 11 (canon-fuzz fresh seed 20260508_08).
+
+Lane 12 choice: §XII is the most abstract section. Tier A/B/C/D primitives are tensor-algebraic, decision-witness, optimization-geometric, and distributional; representation theory is structurally distinct. DELIBERATE divergence test against the 4-tier model.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_44_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_44_results.json`.
+
+### Lane 12 — Kronecker positivity probe: TIER E EMERGES
+
+| Encoding attempt | Verdict |
+|---|---|
+| 1. Partitions as bootstrap_symbol | FAIL_ENCODING — no PartitionObject |
+| 2. Tier-A TensorObject for V_λ ⊗ V_μ | FAIL_ENCODING — no IrreducibleRepresentation |
+| 3. Tier-B existence witness for g > 0 | EXTENDS Tier B — RepresentationTheoreticWitness subtype |
+| 4. Plethysm s_a[s_b] as substrate object | FAIL_ENCODING — no SymmetricFunction primitive |
+
+### Tier E (representation-theoretic) — NEW 5th tier
+
+| Primitive | Purpose | Blocks |
+|---|---|---|
+| **PartitionObject / YoungLatticePoint** | partitions of n + transpose, dominance, branching | all of §XII + §III + §V with symmetry |
+| **IrreducibleRepresentation / RepresentationRing** | abstract irreducibles + branching/induction/restriction + character table | Kronecker (#95), GCT (#92), Foulkes (#98), Saxl (#99) |
+| **SymmetricFunction / Plethysm / SchurFunctor** | symmetric-function ring + plethysm + Hall inner product + ω involution | #98 + #92 + §III Waring + §IV apolarity |
+
+Plus **RepresentationTheoreticWitness** as Tier B's 5th subtype (Young-tableau / pictograph / plethysm-coefficient witnesses).
+
+### Five-tier substrate-extension proposal (~20 primitives)
+
+| Tier | Count | Family |
+|---|---:|---|
+| **A** | 4 | TensorAlgebra |
+| **B** | 5 subtypes | ConstructiveExistenceWitness |
+| **C** | 3 | Discrete-optimization geometry |
+| **D** | 5 | Distributional |
+| **E** | 3 | Representation-theoretic (NEW) |
+
+### Two tickets filed
+
+1. **`T-2026-05-08-ST-fire44-001`** (P1-high, capability-gap) → Techne. Tier E proposal.
+2. **`T-2026-05-08-ST-fire44-002`** (P1-high, strategic-coordination-supplement) → Aporia. Supplement to ST-fire43-002 with Tier E + raises **saturation question**: continue matrix-filling vs pivot to test-suite design? Substrate-tester recommendation: option (c) — Tier B + Tier D + partial Tier A (TensorObject + GroupAction) is optimal contract-change scope; Tier C, E, remaining A primitives can ship in subsequent windows.
+
+### Lane 11 — canon-fuzz fresh seed: 13 passed (31.54s)
+
+### Substrate-tester observation — saturation approaching
+
+Seven fires have surfaced 5 tiers covering the catalog's main mathematical-object classes. Returns from additional matrix-filling fires may diminish unless targeting NEW SECTIONS (§II Rank Zoo, §III Waring, §V Identifiability, §VI Numerical Decomposition, §XI Specific Tensor Families). Aporia coordination ticket explicitly raises this strategic question.
+
+Pivot options to flag for next 1-2 fires:
+- Continue matrix-filling at 1h cadence (current discipline)
+- Pivot to test-suite design for the 5-tier proposal (assumes Aporia will greenlight)
+- Hybrid: fire #45 = §V identifiability test of Tier-B/Tier-D composition; fire #46 = first test-suite stub for ConstructiveExistenceWitness primitive
+
+---
+
 ## Fire #43 — 2026-05-08 (Tier-D CONFIRMED + EXTENDED 3→5; Tier B/D compose cleanly)
 
 **Coordination note:** no new commits between fire #42 and fire #43 from parallel instance. Fire #43 is mine.
