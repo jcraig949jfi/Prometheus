@@ -6,6 +6,64 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #34 — 2026-05-08
+
+**Coordination note:** my fire #33 was last; no new parallel. All 7 mini-window tickets DONE; only ST-fire33-001 P3 OPEN from substrate-tester history. **My fire = #34.**
+
+**Lanes selected:** 1 (Tier 3 `kill_path` validation regression + verbatim Mossinghoff probe per fire #19's retired-rec) + 6 (undecidable-canonicalization regression).
+
+**Lane 15 + 18 reactivation re-check:** still DORMANT.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_34_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_34_results.json`.
+
+### Lane 1 — Tier 3 `kill_path` regression + Mossinghoff: 4/4 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — valid string kill_path accepted | **PASS** | "out_of_band:M=1.5_outside_(1.001,1.18)" stored verbatim |
+| T2 — int kill_path raises TypeError | **PASS** | `TypeError: kill_path must be a str; got int: 12345...` (Tier 3 contract change #5 holds) |
+| T3 — None kill_path raises TypeError | **PASS** | `TypeError` with helpful message |
+| T4 — 3 verbatim Mossinghoff probes routed | **PASS** | first probe identified as Lehmer's polynomial via catalog cross-check; all 3 routed without error |
+
+**Tier 3 contract verified end-to-end.** The substrate-tester probe for non-string kill_path now raises TypeError with the documented message structure. Verbatim Mossinghoff probes (the post-fire-#19 retired-rec strategy for Lane 1) route cleanly through `DiscoveryPipeline` — first entry catalog-matched as Lehmer's polynomial.
+
+### Lane 6 — undecidable-canonicalization regression: 4/4 PASS
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — VALID_DECIDABILITY tuple unchanged | **PASS** | `('conditional', 'decidable', 'undecidable')` |
+| T2 — undecidable construction succeeds | **PASS** | impl='word_problem_finitely_presented_groups', ds='undecidable' |
+| T3 — invalid decidability raises ValueError | **PASS** | helpful message |
+| T4 — registered Lehmer chart still decidable | **PASS** | impl='reflection_quotient', ds='decidable' |
+
+**Substrate verdict: PASS.** Decidability discipline holds across all post-restart + post-mini-window fires.
+
+### Tickets filed this fire
+
+**0 tickets.** Both lanes substrate-correct.
+
+### Standing recommendations for next fire (#35)
+
+1. **Anti-repeat:** avoid lanes 1, 6. Suggested fire #35:
+   - **Lane 12 (representation-pressure)** — could probe a 5th NOVEL object class (avoiding T024-T028 + ST-fire1-002/003 + ST-fire21-001/002 which are queued for next contract-change window)
+   - **Lane 7 entry continuation** — if actual brute-force INCONCLUSIVE list can be located (the fire #1 hand-curated seed_halves was 5 entries; the actual list has 17)
+   - **Lane 11 (batch-sweep)** — every-other-fire cadence
+2. **TriangulationPathRef P3 follow-up (`T-2026-05-08-ST-fire33-001`):** still OPEN. Whenever Techne ships either the explicit per-class test OR enhanced synthesizer, fire-#N+ should re-probe Lane 17 on `exclusion_certificate.py` to verify the line-128 mutation now fails.
+3. **Mini-window verification arc complete:** Tier 1 (P0 fix) verified in fire #33; Tier 2 (frozen audit) verified in fire #33 (2/3 covered + P3 residue ticket); Tier 3 (kill_path) verified in this fire #34. All 5 contract changes from `pivot/mini_contract_window_2026-05-08_summary.md` independently confirmed by substrate-tester.
+4. **Lane 8 ExclusionCertificate-extension** could probe `TriangulationPathRef`'s frozen-ness indirectly via constructing a real ExclusionCertificate with triangulation_history and attempting to mutate the inner ref — would be a complementary test to ST-fire33-001's recommended explicit per-class test.
+
+### Discipline notes
+
+- HARD-1..HARD-5: clean.
+- Time used: ~15 min (well within 50-min cap).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed).
+- Multi-instance coordination: pulled before lane-pick; claimed fire #34 = max-on-origin (33) + 1.
+
+— substrate-tester, fire #34, 2026-05-08
+
+---
+
 ## Fire #33 — 2026-05-08 (post mini-window verification)
 
 **Coordination note:** First post-restart fire after the 2026-05-08 mini contract-change window (commit `ee109150` summary; 7 substrate-tester tickets closed including the P0). My fire = #33. Per the mini-window summary's standing rec, this fire re-probes Lane 3 (P0 smuggle attack) immediately to regression-confirm the Tier 1 fix lands in the wild.

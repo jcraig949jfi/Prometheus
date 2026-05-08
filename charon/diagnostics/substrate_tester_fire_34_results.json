@@ -1,0 +1,75 @@
+{
+  "fire": 34,
+  "lanes": [
+    1,
+    6
+  ],
+  "lane_1": {
+    "lane": "1_tier3_kill_path_and_mossinghoff",
+    "n_tests": 4,
+    "verdict_counts": {
+      "PASS": 4
+    },
+    "tests": [
+      {
+        "id": "T1_valid_string_kill_path_accepted",
+        "expected": "accepted",
+        "actual": "accepted; kill_path=out_of_band:M=1.5_outside_(1.001,1.18)",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T2_int_kill_path_rejected",
+        "expected": "TypeError",
+        "actual": "TypeError: kill_path must be a str; got int: 12345. Substrate's downstream consumers (TRACE, kill_pattern reporting) assume kill_path is a string.",
+        "verdict": "PASS",
+        "note": "Tier 3 contract change #5 holds"
+      },
+      {
+        "id": "T3_none_kill_path_rejected",
+        "expected": "TypeError",
+        "actual": "TypeError: kill_path must be a str; got NoneType: None. Substrate's downstream consumers (TRACE, kill_pattern r",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T4_verbatim_mossinghoff_probes",
+        "expected": "deterministic routing for all 3",
+        "actual": "routed 3 probes; outcomes: [{'M': 1.1762808182599176, 'deg': 10, 'terminal_state': 'REJECTED', 'kill_pattern': \"known_in_catalog:matches Mossinghoff entry Lehmer's polynomial (query=M_value)\"}, {'M': 1.1762808182599245, 'deg': 11, 'terminal_state': 'REJECTED', 'kill_pattern': 'reciprocity_failed'}, {'M': 1.176280818259923, 'deg': 11, 'terminal_state': 'REJECTED', 'kill_pattern': 'reducible:reducible: (x + 1)^1; (x**10 + x**9 - x**7 - x**6 - x**5 - x**4 - x**3'}]",
+        "verdict": "PASS"
+      }
+    ]
+  },
+  "lane_6": {
+    "lane": "6_undecidable_canonicalization_regression",
+    "n_tests": 4,
+    "verdict_counts": {
+      "PASS": 4
+    },
+    "tests": [
+      {
+        "id": "T1_valid_decidability_tuple_unchanged",
+        "expected": "['conditional', 'decidable', 'undecidable']",
+        "actual": "['conditional', 'decidable', 'undecidable']",
+        "verdict": "PASS",
+        "severity": null
+      },
+      {
+        "id": "T2_undecidable_construction",
+        "expected": "succeeds",
+        "actual": "impl='word_problem_finitely_presented_groups', ds='undecidable'",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T3_invalid_decidability_rejected",
+        "expected": "ValueError",
+        "actual": "ValueError: decidability_status must be one of ('decidable', 'undecidable', 'conditional'); got 'not_a_valid_sta",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T4_lehmer_chart_decidable",
+        "expected": "decidable",
+        "actual": "impl='reflection_quotient', ds=decidable",
+        "verdict": "PASS"
+      }
+    ]
+  }
+}
