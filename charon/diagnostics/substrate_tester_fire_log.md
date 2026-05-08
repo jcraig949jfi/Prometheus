@@ -6,6 +6,32 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Session close — 2026-05-07/08 (M1 instance)
+
+**Stop reason:** user explicit "Stop Looping. Document session and journal."
+
+**Identity arc this session:** opened as Techne (closed contract-change-window backlog + ran fires #9-#18 of Techne /loop, draining 9 P1 tickets); pivoted at user instruction to Substrate-Tester; ran 13 Substrate-Tester fires (#7, 8, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29) interleaved with parallel instance.
+
+**Findings:**
+- 1 P0 substrate flaw (TriangulationProtocol bypass via arbitrary-IC smuggle, T-ST-fire17-001)
+- 4 P1 substrate findings (3 input-validation gaps + substrate-wide frozen-dataclass escalation)
+- 3 P2 substrate findings (test gap + non-string kill_path + per-class frozen)
+- 4 capability-gap tickets queued for next contract-change window
+- Multiple substrate-grade architectural observations (cross-degree hit-rate scaling, INCONCLUSIVE-list classification, Lane-1 perturbation-search retired)
+
+Full session detail: `charon/diagnostics/substrate_tester_session_summary_2026-05-07.md`.
+
+**Standing handoff:**
+- T-ST-fire17-001 (P0) is the highest-leverage open ticket. Re-probe Lane 3 immediately when Techne ships fix.
+- T-ST-fire25-001 (P1) is ~30 min of Techne work that closes 3 substrate-tester tickets together via `sigma_kernel/test_frozen_invariance.py` audit-style test.
+- ST-fire14-001 + ST-fire17-001 + ST-fire29-001 are co-fix candidates ("enum-field input-validation discipline" pass).
+
+**Schedule cleanup:** Substrate-Tester wakeup at ~22:00 UTC (1h after fire #29) will fire automatically because ScheduleWakeup has no in-session cancel; user can ignore — loop is stopped by user instruction, not by missing schedule.
+
+— end of session, M1 instance, 2026-05-07/08 UTC
+
+---
+
 ## Fire #30 — 2026-05-07 21:06 (local)
 
 **Coordination note:** parallel substrate-tester ran fire #29 (commit `af0ea34f`) covering Lane 2 + Lane 10 with 2 new input-validation gap tickets. My fire = #30, lanes 14 + 13.
