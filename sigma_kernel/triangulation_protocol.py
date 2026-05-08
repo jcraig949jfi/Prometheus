@@ -234,6 +234,47 @@ class TriangulationPath:
     rationale: str
     timestamp: float
 
+    def __post_init__(self) -> None:
+        """Validate ``method_class`` is a :class:`MethodClass` enum
+        member (instance OR exact-string-name match).
+
+        Per contract-change window 2026-05-08 (T-2026-05-07-ST-fire29-001 +
+        ST-fire17-001 P0 escalation): closes the input-validation gap
+        where TriangulationPath silently accepted arbitrary strings as
+        ``method_class``. The substrate's certifying-weight discipline
+        (proof_bearing > catalog/numerical/robustness > exploratory)
+        depends on the registered enum vocabulary; arbitrary strings
+        could let a smuggled path masquerade as proof-bearing.
+
+        Acceptable values:
+          * a :class:`MethodClass` enum instance, OR
+          * a string that exactly matches an enum value (coerced).
+
+        Anything else raises ``TypeError`` or ``ValueError`` with the
+        registered enum values listed (loud-fail discipline).
+        """
+        mc = self.method_class
+        if isinstance(mc, MethodClass):
+            return
+        if isinstance(mc, str):
+            try:
+                coerced = MethodClass(mc)
+            except ValueError:
+                registered = sorted(m.value for m in MethodClass)
+                raise ValueError(
+                    f"method_class={mc!r} is not a registered "
+                    f"MethodClass value. Registered values: "
+                    f"{registered}. Pass a MethodClass enum member "
+                    f"(e.g. MethodClass.NUMERICAL) or an exact "
+                    f"string-name match."
+                ) from None
+            object.__setattr__(self, "method_class", coerced)
+            return
+        raise TypeError(
+            f"method_class must be a MethodClass enum instance or a "
+            f"registered string value; got {type(mc).__name__}: {mc!r}"
+        )
+
     @property
     def is_proof_bearing(self) -> bool:
         """True iff this path's :class:`MethodClass` is ``PROOF_BEARING``."""
@@ -395,6 +436,32 @@ class TriangulationProtocol:
         # behavioural-hash collisions per Aporia Study 15).
         primary = proof_bearing_verified[0]
         primary_ic = primary.method_spec.independence_class
+
+        # Defense-in-depth (contract-change window 2026-05-08, T-ST-fire17-001
+        # P0 escalation): re-validate at evaluate-time that every path's
+        # independence_class is an actual IndependenceClass enum instance.
+        # MethodSpec.__post_init__ already enforces this at construction;
+        # this belt-and-suspenders check refuses upgrade if a path somehow
+        # carries a non-enum IC (e.g. legacy unpickled payload, runtime
+        # mutation via object.__setattr__, etc.). Loud-fail: refuse upgrade
+        # with explicit reason rather than silently treating arbitrary
+        # strings as "independent" via != comparison against the primary.
+        for p in paths_tuple:
+            if not isinstance(p.method_spec.independence_class, IndependenceClass):
+                return TriangulationResult(
+                    verdict=TriangulationVerdict.REJECTED,
+                    paths_run=paths_tuple,
+                    independence_classes_covered=ics,
+                    method_classes_covered=mcs,
+                    summary=(
+                        f"Defense-in-depth violation: path {p.path_id!r} has "
+                        f"non-enum independence_class={p.method_spec.independence_class!r}. "
+                        f"Substrate's certification discipline requires registered "
+                        f"IndependenceClass values; refusing upgrade."
+                    ),
+                    upgrade_eligible=False,
+                )
+
         independent_replays = [
             p
             for p in verified

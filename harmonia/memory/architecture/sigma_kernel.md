@@ -249,6 +249,66 @@ The architecture-from-Round-19 line worth keeping:
 
 v2.3 expands the microkernel surface from 7 opcodes to 9 and adds the typed primitives (CoordinateChart, MethodSpec, EvidenceField, ExclusionCertificate, TriangulationProtocol, NearMissCorpus) the user-space math relies on. The "user space" math currently runs in `omega_oracle.py` as a deterministic stub plus six cross-domain envs (BSD ranks, modular forms, knot trace fields, genus-2 curves, OEIS sleeping-beauty sequences, mock theta functions) that emit KillVector v2 + EvidenceField via Tier 3 rollout. Real Ω invocations will shell out to Python / Sage / Lean sandboxes that return signed result blobs.
 
+## Contract-change window 2026-05-08 — locked changes (mini)
+
+The 2026-05-08 mini contract-change window (`aporia/meta/pressure_appliers/MINI_CONTRACT_WINDOW_TECHNE_2026-05-08.md`) authorized a security-priority batch closing the input-validation + freeze-invariance gaps surfaced by Substrate-Tester fires #14, #15, #17, #25, #29 during 2026-05-07. Capability-gap tickets queued for the next full window (unified `Structured-Equivalence-Class` meta-primitive design). The new locked contracts:
+
+### Contract change #1 — `MethodSpec.independence_class` enum-validation (ST-fire14-001 + ST-fire17-001 P0)
+
+**Old contract:** field type `IndependenceClass` per the dataclass declaration, but no `__post_init__` validation. Python's str-mixin enum allowed arbitrary strings to be stored verbatim. Substrate-tester fire #17 demonstrated this enabled a smuggle attack: arbitrary-IC `MethodSpec` → `TriangulationPath` → `TriangulationProtocol.evaluate()` returned `UPGRADED_TO_LOCAL_LEMMA` with the smuggled path counted as "independent."
+
+**New contract:** `MethodSpec.__post_init__` validates `independence_class`:
+- accepts `IndependenceClass` enum instance (no-op);
+- accepts string that exactly matches an enum value (coerced via `IndependenceClass(value)`);
+- raises `TypeError` for non-string non-enum;
+- raises `ValueError` for string-not-in-enum, with full registered-value listing per loud-fail discipline (cf. ST003 + T018 sister patterns).
+
+**Justification:** load-bearing for `TriangulationProtocol`'s certification discipline (substrate v2.3 §6.3). Closes T-2026-05-07-ST-fire14-001 (P1) and the upstream input-validation half of T-2026-05-07-ST-fire17-001 (P0).
+
+**Doc location:** `sigma_kernel/method_spec.py` MethodSpec.__post_init__ docstring + this section + the round-trip test at `sigma_kernel/tests/test_enum_validation_2026_05_08.py`.
+
+### Contract change #2 — `TriangulationPath.method_class` enum-validation (ST-fire29-001 + ST-fire17-001 P0)
+
+**Old contract:** field type `MethodClass` per declaration, no `__post_init__` validation. Substrate-tester fire #29 confirmed arbitrary strings were silently accepted; same gap class as fire #14 on a sister field.
+
+**New contract:** `TriangulationPath.__post_init__` validates `method_class` symmetrically with #1: enum instance OK, exact-string-name match coerced, anything else raises with registered-value listing.
+
+**Justification:** the substrate's certifying-weight discipline (`PROOF_BEARING > CATALOG/NUMERICAL/ROBUSTNESS > EXPLORATORY`) depends on the registered enum vocabulary; arbitrary strings could let a smuggled path masquerade as proof-bearing. Closes T-2026-05-07-ST-fire29-001 (P1) and the sister input-validation half of ST-fire17-001 (P0).
+
+**Doc location:** `sigma_kernel/triangulation_protocol.py` TriangulationPath.__post_init__ docstring + this section + tests.
+
+### Contract change #3 — `TriangulationProtocol.evaluate()` defense-in-depth IC re-validation (ST-fire17-001 P0)
+
+**Old contract:** `evaluate()` trusted that each path's `method_spec.independence_class` was a registered enum value. The independence rule (Rule 4) used `!=` comparison between IC values without re-validating type.
+
+**New contract:** before applying Rule 4, `evaluate()` iterates all paths and verifies `isinstance(p.method_spec.independence_class, IndependenceClass)`. If any path has a non-enum IC (e.g. legacy unpickled payload, runtime mutation through `object.__setattr__`, etc.), the protocol returns `REJECTED` with explicit reason, refusing the upgrade.
+
+**Justification:** belt-and-suspenders defense for the load-bearing P0 fix. Even with #1 + #2 closing the construction-time gaps, an adversarial mutation path through `object.__setattr__` (frozen-dataclass bypass) could re-introduce arbitrary ICs. Defense-in-depth at evaluate-time ensures the protocol cannot be fooled regardless of how a path's state was reached. Closes T-2026-05-07-ST-fire17-001 (P0) end-to-end.
+
+**Doc location:** `sigma_kernel/triangulation_protocol.py` TriangulationProtocol.evaluate() inline comment block + this section + tests.
+
+### Contract change #4 — substrate-wide `@dataclass(frozen=True)` audit (ST-fire25-001 + ST-fire1-001 + ST-fire15-001)
+
+**Old contract:** `frozen=True` semantics documented per dataclass but no per-class regression tests. Substrate-tester mutation testing surfaced 5 distinct frozen-dataclass classes whose `frozen=True` decorator could be flipped to `False` without any test catching it.
+
+**New contract:** `sigma_kernel/tests/test_frozen_invariance.py` ships an audit-style test that introspects every `@dataclass(frozen=True)` class in `sigma_kernel/` and asserts `FrozenInstanceError` (or compatible) on attribute mutation. New `@dataclass(frozen=True)` classes auto-enrolled going forward (no manual enumeration).
+
+**Note:** technically NOT a contract change — `frozen=True` semantics were already documented; the test module just enforces the documented contract. Documented under this window for visibility.
+
+**Doc location:** `sigma_kernel/tests/test_frozen_invariance.py` module docstring + this section.
+
+### Contract change #5 — `SigmaKernel.CLAIM.kill_path` string-typing (ST-fire29-002)
+
+**Old contract:** `kill_path` accepted any value verbatim per "permissive at write" docstring; substrate-tester fire #29 confirmed `kill_path=12345` (int) was stored without rejection. Downstream consumers (TRACE, kill_pattern reporting) assume string.
+
+**New contract:** `SigmaKernel.CLAIM` validates `kill_path` is a `str` at the top of the method body, raising `TypeError` with the actual received type otherwise. Empty string OK (current behavior).
+
+**Justification:** loud-fail discipline (cf. ST003) applied to the CLAIM ingestion boundary. The "permissive at write" framing in the kernel docstring updated to clarify it applies to FREE-FORM string content, not type-shape.
+
+**Doc location:** `sigma_kernel/sigma_kernel.py` `CLAIM()` docstring + this section + test.
+
+---
+
 ## Contract-change window 2026-05-07 — locked changes
 
 The 2026-05-07 contract-change window (`aporia/meta/pressure_appliers/CONTRACT_CHANGE_WINDOW_TECHNE_2026-05-07.md`) authorized a small, focused batch of contract changes after the substrate-tester surfaced silent-degradation patterns that the regular contract-locked loop could not address. The new locked contracts:

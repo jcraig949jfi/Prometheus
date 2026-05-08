@@ -167,6 +167,57 @@ class MethodSpec:
     drift_channel: Optional[DriftChannel] = None
 
     # ------------------------------------------------------------------
+    # Validation (contract-change window 2026-05-08)
+    # ------------------------------------------------------------------
+
+    def __post_init__(self) -> None:
+        """Validate ``independence_class`` is an :class:`IndependenceClass`
+        enum member (instance OR exact-string-name match).
+
+        Per contract-change window 2026-05-08 (T-2026-05-07-ST-fire14-001 +
+        ST-fire17-001 P0 escalation): closes the input-validation gap
+        where MethodSpec silently accepted arbitrary strings as
+        ``independence_class``. Substrate v2.3 §6.3 TriangulationProtocol
+        independence rule depends on the registered enum vocabulary;
+        arbitrary strings break the discipline (smuggle attack
+        demonstrated upgrades to LOCAL_LEMMA via arbitrary-IC paths).
+
+        Acceptable values:
+          * an :class:`IndependenceClass` enum instance, OR
+          * a string that exactly matches an enum value (coerced).
+
+        Anything else raises ``TypeError`` (non-string, non-enum) or
+        ``ValueError`` (string not in registered set, with helpful
+        enumeration of registered values per loud-fail discipline).
+        """
+        ic = self.independence_class
+        if isinstance(ic, IndependenceClass):
+            # Enum instance — already valid; no coercion needed.
+            return
+        if isinstance(ic, str):
+            # String that's not an enum instance — try coercion.
+            try:
+                coerced = IndependenceClass(ic)
+            except ValueError:
+                registered = sorted(m.value for m in IndependenceClass)
+                raise ValueError(
+                    f"independence_class={ic!r} is not a registered "
+                    f"IndependenceClass value. Registered values: "
+                    f"{registered}. Pass an IndependenceClass enum "
+                    f"member (e.g. IndependenceClass.UNKNOWN) or an "
+                    f"exact string-name match."
+                ) from None
+            # Frozen dataclass — must use object.__setattr__ to coerce.
+            object.__setattr__(self, "independence_class", coerced)
+            return
+        # Not enum, not string — outright TypeError.
+        raise TypeError(
+            f"independence_class must be an IndependenceClass enum "
+            f"instance or a registered string value; got "
+            f"{type(ic).__name__}: {ic!r}"
+        )
+
+    # ------------------------------------------------------------------
     # Legacy bridge
     # ------------------------------------------------------------------
 
