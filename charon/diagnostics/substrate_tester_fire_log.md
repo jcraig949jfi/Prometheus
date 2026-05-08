@@ -6,6 +6,70 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #39 — 2026-05-08 (CONVERGENCE: 6 MISSING PRIMITIVES → TensorAlgebra SUBSYSTEM)
+
+**Coordination note:** no new commits between fire #38 and fire #39 from parallel instance. Fire #39 is mine.
+
+**Lanes selected:** 12 (catalog entry #84 — optimal tensor network contraction order, §X, paradigm P30) + 4 (SIGMA opcode smoke).
+
+Diversification: §X / P30 ≠ §I / P28-P31 from fire #38. Pulling from a different section + different paradigm tests whether missing primitives converge or diverge across the catalog matrix.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_39_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_39_results.json`.
+
+### Lane 12 — Optimal contraction-order encoding probe: FAIL_ENCODING
+
+Toy network: 4-tensor cycle A-B-C-D with shared indices a/b/c/d. Contraction-order optimization = NP-hard combinatorial problem (Markov-Shi 2008).
+
+| Encoding attempt | Verdict | Blocker |
+|---|---|---|
+| 1. CoordinateChart | FAIL_ENCODING | flat tuple of named scalar axes; no GraphObject — topology of TN can't reduce to chart |
+| 2. MethodSpec / IndependenceClass | FAIL_ENCODING | no enum value; encoding each order as a MethodSpec loses optimization semantics (no dominance relation between orders) |
+| 3. ExclusionCertificate | PARTIAL | works for negative existential (no order achieves cost < B) but no companion **constructive witness** primitive — substrate has asymmetric existential coverage |
+| 4. REWRITE associativity | PARTIAL | captures one move, not optimization-over-moves — no RewriteSearchTree primitive |
+
+### Capability gaps surfaced (3 missing primitives)
+
+1. **TensorNetworkGraph (general LabeledHypergraph)** — vertices = tensors with shapes; edges = shared indices. Blocks #75-84 + Feynman/factor/knot diagrams.
+2. **ContractionOrderWitness** — constructive upper-bound witness for combinatorial optimization. **Broader pattern:** substrate's existential primitives are asymmetric (ExclusionCertificate for lower bounds; nothing for upper-bound-with-cost). Applies to ALL NP-hard optimization the substrate wants to track.
+3. **RewriteSearchTree / RewriteCostFunctional** — optimization-over-rewrite-sequences; complements REWRITE's single-move semantics.
+
+### Convergence with fire #38 — TensorAlgebra subsystem design
+
+| Fire | Catalog | Section | Paradigm | Missing primitives |
+|---|---|---|---|---|
+| #38 | #4 (M⟨3⟩ rank) | §I | P28/29/30/31 | TensorObject, RankDecompositionWitness, MomentPolytope/SecantVarietyEquation |
+| #39 | #84 (TN contraction order) | §X | P30 | TensorNetworkGraph, ContractionOrderWitness, RewriteSearchTree |
+
+**Two fires, six missing primitives, all converging on a TensorAlgebra subsystem.** TensorObject (single-tensor identity) + TensorNetworkGraph (multi-tensor topology) are foundational; witness/decomposition primitives sit on top. Single contract-change pass shipping the subsystem could unblock ~30+ catalog entries spanning §I + §X.
+
+The ContractionOrderWitness asymmetric-existential pattern is BROADER than tensors — it's a substrate-wide gap any time the kernel needs to track a constructive witness with a verifiable cost annotation for an NP-hard optimization. That gap likely also blocks parts of the 5-of-5 capability-gap cluster.
+
+**Filed:** `T-2026-05-08-ST-fire39-001` (P1-high, capability-gap-tensor-catalog) → Techne. Cross-references catalog #84 + paradigm P30 + sister ticket from fire #38 + Techne T-2026-05-08-T038.
+
+### Lane 4 — SIGMA opcode smoke: 5/5 PASS
+
+| Test | Verdict |
+|---|---|
+| T1 bootstrap_symbol | PASS |
+| T2 RESOLVE round-trip + hash integrity | PASS |
+| T3 RESOLVE missing → KeyError | PASS |
+| T4 CLAIM with valid kill_path | PASS |
+| T5 CLAIM with non-string kill_path → TypeError (mini-window contract) | PASS |
+
+Kernel opcode chain healthy. T5 is a regression of the mini-window Tier-3 fix (T-2026-05-07-ST-fire29-002).
+
+### Substrate-tester observation
+
+Fires #38 + #39 establish the matrix-filling discipline:
+- distinct catalog entries from different sections surface OVERLAPPING missing-primitive sets (subsystem-level design needs)
+- AND distinct primitive sets (deeper structural variety)
+- convergence pattern across cells = scope guidance for the next contract-change window
+
+Future fire #40 onward should continue diversifying: pick from §IV (algebraic geometry) or §VII (decidability) next to see whether the TensorAlgebra subsystem design holds beyond §I + §X.
+
+---
+
 ## Fire #38 — 2026-05-08 (FIRST FIRE UNDER HARD-6 + HARD POSTURE)
 
 **Coordination note:** James filed HARD-6 (`7cb418d1`) — *"attack the problems of the tools we will need most in the future. The failures will guide us."* — plus the canonical 104-entry tensor catalog at `aporia/mathematics/tensor_open_problems_v1.md`. Per HARD POSTURE 2026-05-08, Lane 12 (representation-pressure) now pulls probes from the canonical catalog instead of inventing novel objects. This fire is the **first cell** of the 104 × 5-paradigm matrix.
