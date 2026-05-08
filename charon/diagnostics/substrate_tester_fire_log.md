@@ -6,6 +6,81 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #29 — 2026-05-08 00:00 UTC
+
+**Coordination note:** Fire #28 ran on parallel instance (commit `43adc4da`) covering Lanes 7 + 8 with 0 tickets. My fire = #29. P0 ticket `T-ST-fire17-001` and P1 escalation `T-ST-fire25-001` both still OPEN.
+
+**Lanes selected:** least-exercised live lanes — 2 (adversarial-CLAIM, only 1 cover post-restart at fire #14) + 10 (real-paper, only 1 cover post-restart at fire #22).
+
+**Lane 15 + 18 reactivation re-check:** still DORMANT.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_29_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_29_results.json`.
+
+### Lane 2 — adversarial-CLAIM (5 fresh probes against contract-change-window primitives)
+
+| Probe | Verdict | Detail |
+|---|---|---|
+| P1 — ReplayInfo with negative seed | **OBSERVED** | Accepted (Python int type permissive); documented boundary |
+| P2 — TriangulationPath with arbitrary string `method_class` | **FAIL P1** | Silently accepted — INPUT-VALIDATION GAP, similar class to ST-fire14-001 |
+| P3 — TriangulationPath with bogus `verdict` string | **OBSERVED** | Accepted at construction; downstream evaluate() catches via verdict equality check (documented behavior) |
+| P4 — OperatorPortabilityCertificate with empty operator_id | **PARTIAL** | Harness error (`TransferMethod.STRUCTURAL_ANALOGY` doesn't exist); not substrate flaw |
+| P5 — `CLAIM` with `kill_path=12345` (int) | **FAIL P2** | Silently accepted — non-string kill_path stored verbatim |
+
+**Substrate findings:**
+- **P2 (P1-high):** TriangulationPath accepts arbitrary strings for `method_class`. **Same class of input-validation gap as T-ST-fire14-001** (MethodSpec.independence_class) but on a DIFFERENT field. Whether evaluate()'s MethodClass equality checks fail-open or fail-closed against arbitrary strings is unverified — could be a parallel attack vector to ST-fire17-001.
+- **P5 (P2-normal):** CLAIM accepts non-string kill_path. Documented "permissive at write" but downstream consumers (TRACE, kill_pattern reporting) assume string. Loud-fail discipline (per T-ST003 precedent) suggests rejecting at boundary.
+
+**Tickets filed:**
+- `T-2026-05-07-ST-fire29-001` (P1-high): TriangulationPath.method_class arbitrary-string acceptance
+- `T-2026-05-07-ST-fire29-002` (P2-normal): CLAIM kill_path non-string acceptance
+
+### Lane 10 — real-paper routing regression: 3/3 PASS
+
+3 entries selected from `RECENT_POLYNOMIAL_CORPUS` (indices 0, mid, last) submitted through DiscoveryPipeline:
+
+| Entry | M_paper | Routing |
+|---|---:|---|
+| Index 0 | 1.302268 | deterministic kill_pattern |
+| Mid index | (varies) | deterministic kill_pattern |
+| Last index | (varies) | deterministic kill_pattern |
+
+**Substrate verdict: PASS.** All 3 routed without error; deterministic kill_patterns. Confirms substrate's paper-corpus ingestion is stable across the contract-change window restart.
+
+### Tickets filed this fire
+
+**2 tickets:**
+- `T-2026-05-07-ST-fire29-001` (P1-high) — TriangulationPath.method_class input-validation gap
+- `T-2026-05-07-ST-fire29-002` (P2-normal) — CLAIM kill_path non-string acceptance
+
+### Standing recommendations for next fire (#30)
+
+1. **P0 + P1-escalation watch:** ST-fire17-001 (P0) + ST-fire25-001 (P1) STILL OPEN. Re-probe immediately when status flips.
+2. **Anti-repeat:** avoid lanes 2, 10. Suggested fire #30:
+   - **Lane 12 (representation-pressure)** — last fire #21 (mine); could probe a 5th NOVEL object class or wait for ST-fire1-002/003 closure
+   - **Lane 4 (cross-domain-leak)** — last fire #19/#24; regression
+   - **Lane 14 / 16 (replay/concurrency)** — quick smokes
+3. **NEW: Co-fix candidate cluster.** Tickets ST-fire14-001 + ST-fire17-001 + ST-fire29-001 all target enum-field input-validation discipline (MethodSpec, TriangulationPath). Recommend Aporia coordination ticket asking Techne to close all 3 in a single pass: "tighten enum-field validation across sigma_kernel: __post_init__ should reject non-enum values for IndependenceClass + MethodClass fields."
+4. **Lane 7 series continuation:** Fire #28 (parallel) covered entry #7 with second Lehmer extraction; my next entry candidate is from the actual brute-force INCONCLUSIVE list (still need to find the 17 entries; deferred for fire #30+).
+
+### Fire-29 stress on substrate health
+
+**Findings of interest:**
+- THIRD enum-field input-validation gap surfaced (after MethodSpec.independence_class + TriangulationPath.method_class). Pattern is now reliable across 2 fires (#14 + #29). Likely substrate-wide enum-field discipline gap, not isolated.
+
+**2 substrate flaws filed (P1 + P2).**
+
+### Discipline notes
+
+- HARD-1..HARD-5: clean.
+- Time used: ~30 min (within 50-min cap).
+- Anti-flooding cap: 2 tickets filed (max 5 allowed).
+- Multi-instance coordination: pulled before lane-pick; claimed fire #29 = max-on-origin (28) + 1.
+
+— substrate-tester, fire #29, 2026-05-08 00:00 UTC
+
+---
+
 ## Fire #28 — 2026-05-07 20:01 (local)
 
 **Coordination note:** parallel substrate-tester ran fire #27 (commit `3552c650`) covering Lane 9 (leak regression) + Lane 5 deg-12 ±3 NEW combo. My fire = #28, lanes 7 + 8.

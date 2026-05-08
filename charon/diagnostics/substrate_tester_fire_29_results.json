@@ -1,0 +1,85 @@
+{
+  "fire": 29,
+  "lanes": [
+    2,
+    10
+  ],
+  "lane_2": {
+    "lane": "2_adversarial_claim",
+    "n_tests": 5,
+    "verdict_counts": {
+      "OBSERVED": 2,
+      "FAIL": 2,
+      "PARTIAL": 1
+    },
+    "tests": [
+      {
+        "id": "P1_replay_negative_seed",
+        "expected": "either accept (allowed) OR ValueError",
+        "actual": "accepted; seed=-1",
+        "verdict": "OBSERVED",
+        "note": "negative seeds technically allowed by Python int type; documents the substrate's permissive boundary"
+      },
+      {
+        "id": "P2_triangpath_bogus_method_class",
+        "expected": "TypeError or ValueError",
+        "actual": "silently accepted: method_class='not_a_method_class_enum'",
+        "verdict": "FAIL",
+        "severity": "P1-high",
+        "note": "TriangulationPath accepts arbitrary strings as method_class \u2014 input-validation gap similar to ST-fire14-001"
+      },
+      {
+        "id": "P3_triangpath_bogus_verdict",
+        "expected": "either reject OR documented permissive accept",
+        "actual": "accepted; verdict='not_a_real_verdict_xyz'",
+        "verdict": "OBSERVED",
+        "note": "TriangulationPath verdict is open-vocabulary at construction; downstream evaluate() catches via verdict-string equality check"
+      },
+      {
+        "id": "P4_opportcert_empty_operator_id",
+        "expected": "ValueError or TypeError",
+        "actual": "raised: AttributeError: STRUCTURAL_ANALOGY",
+        "verdict": "PARTIAL"
+      },
+      {
+        "id": "P5_claim_non_string_kill_path",
+        "expected": "TypeError",
+        "actual": "accepted; stored kill_path=12345",
+        "verdict": "FAIL",
+        "severity": "P2-normal"
+      }
+    ]
+  },
+  "lane_10": {
+    "lane": "10_real_paper",
+    "n_corpus_total": 17,
+    "n_probes": 3,
+    "n_tests": 3,
+    "verdict_counts": {
+      "PASS": 3
+    },
+    "tests": [
+      {
+        "id": "T_entry_0",
+        "probe": "deg=12, M_paper=0.0000",
+        "expected": "deterministic routing with informative kill_pattern",
+        "actual": "terminal_state=REJECTED, kill_pattern=out_of_band:M=0.0000_outside_(1.001,1.18)",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T_entry_8",
+        "probe": "deg=38, M_paper=0.0000",
+        "expected": "deterministic routing with informative kill_pattern",
+        "actual": "terminal_state=REJECTED, kill_pattern=out_of_band:M=0.0000_outside_(1.001,1.18)",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T_entry_16",
+        "probe": "deg=10, M_paper=0.0000",
+        "expected": "deterministic routing with informative kill_pattern",
+        "actual": "terminal_state=REJECTED, kill_pattern=out_of_band:M=0.0000_outside_(1.001,1.18)",
+        "verdict": "PASS"
+      }
+    ]
+  }
+}
