@@ -1,0 +1,48 @@
+{
+  "fire_id": "fire_30_2026_05_07",
+  "lanes": [
+    "14_replay_determinism",
+    "13_canonicalization_fuzz"
+  ],
+  "hypothesis_seed": "20260601",
+  "combined_pytest_result": {
+    "wall_clock_seconds": 38.775267362594604,
+    "rc": 0,
+    "n_total_passed": 20,
+    "n_total_failed": 0,
+    "n_replay_passed": 7,
+    "n_canon_passed": 13,
+    "summary_line": "20 passed in 31.47s",
+    "lane_14": {
+      "n_tests": 1,
+      "verdict_counts": {
+        "PASS": 1
+      },
+      "tests": [
+        {
+          "id": "T1_replay_determinism_clean_run",
+          "expected": "all 7 replay-determinism tests pass",
+          "actual": "7 passed",
+          "verdict": "PASS",
+          "severity": null
+        }
+      ]
+    },
+    "lane_13": {
+      "n_tests": 1,
+      "verdict_counts": {
+        "PASS": 1
+      },
+      "tests": [
+        {
+          "id": "T1_fuzzer_clean_run_seed_20260601",
+          "expected": "all 13 fuzz properties pass",
+          "actual": "13 passed at seed=20260601",
+          "verdict": "PASS",
+          "severity": null,
+          "note": "6th independent hypothesis seed for cumulative coverage"
+        }
+      ]
+    }
+  }
+}

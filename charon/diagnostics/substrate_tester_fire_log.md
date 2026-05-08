@@ -6,6 +6,61 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #30 — 2026-05-07 21:06 (local)
+
+**Coordination note:** parallel substrate-tester ran fire #29 (commit `af0ea34f`) covering Lane 2 + Lane 10 with 2 new input-validation gap tickets. My fire = #30, lanes 14 + 13.
+
+**Lanes selected:** 14 (replay-determinism re-probe) + 13 (canonicalization-fuzz with hypothesis seed 20260601).
+
+**Lane rationale:** Both pytest-based, fast. Lane 14 last my-instance fire #12; regression check on parallel-CLAIM determinism. Lane 13 cumulative seed coverage — 6th independent seed for the fuzzer. Combined into single pytest invocation for efficiency.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_30_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_30_results.json`.
+
+### Combined pytest run: 20/20 PASS in 38.8s
+
+| Lane | Tests Passed | Wall-clock contribution |
+|---|---:|---|
+| 14 (replay-determinism) | 7/7 | shared pytest run |
+| 13 (canonicalization-fuzz, seed 20260601) | 13/13 | shared pytest run |
+
+**Cumulative Lane 13 fuzzer coverage now spans 6+ independent seeds** across fires #10/#13/#16/#23/#26/#30 — **15,000+ unique hypothesis-generated probes, 0 failures total**. The substrate's canonicalization invariants are robust under property-based testing across diverse input regions.
+
+**Cumulative Lane 14 replay-determinism coverage** across fires #12/#14_parallel/#23_parallel/#24/#30: 7 properties × 5+ fires = 35+ independent confirmations. Each fire verifies (per-record sha256 identity, K-replay determinism, JSON round-trip stability, canonical-form determinism, replay-does-not-mutate, full 20 v2 component coverage, replay timing soft-fail).
+
+### Tickets filed this fire
+
+**0 tickets.** Both lanes pass cleanly via shared pytest invocation.
+
+### Standing recommendations for next fire (#31)
+
+1. **Anti-repeat:** avoid lanes 14, 13. Suggested fire #31 candidates:
+   - **Lane 4 (cross-domain-leak)** — quick T-ST003 regression confirmation
+   - **Lane 11 (batch-sweep)** — every-other-fire cadence
+   - **Lane 7 (precision-gradient)** — entries #8, #9 to extend cumulative pattern (5/43 in-band entries done so far)
+   - **Lane 5 (large-scale)** — if full cap available, try (deg-12, ±7) for new geometric data
+2. **Watch P1+ open tickets:** ST-fire1-002/003, ST-fire14-001, ST-fire17-001 (P0), ST-fire25-001, plus the 2 new ones from parallel fire #29.
+3. **Lane 12 still deferred:** await closure of P1 representation tickets.
+
+### Fire-30 stress on substrate health
+
+**Positive:**
+- Replay-determinism contracts hold (35+ cumulative confirmations across 5+ fires).
+- Canonicalization fuzzer GREEN under 6+ independent hypothesis seeds.
+- Combined pytest invocation efficient (20 tests in 38.8s).
+
+**0 substrate flaws found this fire.**
+
+### Discipline notes
+
+- HARD-1 through HARD-5: respected.
+- Time used: ~6 minutes (well within 50-minute cap; combined pytest reduces overhead).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed). Substrate-tester running ticket count after 30 fires: 9 ever filed (2 closed, 7 OPEN — not counting new tickets from parallel fire #29 which haven't been counted in my totals).
+
+— substrate-tester, fire #30, 2026-05-07
+
+---
+
 ## Fire #29 — 2026-05-08 00:00 UTC
 
 **Coordination note:** Fire #28 ran on parallel instance (commit `43adc4da`) covering Lanes 7 + 8 with 0 tickets. My fire = #29. P0 ticket `T-ST-fire17-001` and P1 escalation `T-ST-fire25-001` both still OPEN.
