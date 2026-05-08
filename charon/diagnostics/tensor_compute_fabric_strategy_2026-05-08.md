@@ -125,6 +125,66 @@ This is the **substrate-grade rationale** for evolving tensor tools, not a "fram
 
 ---
 
+## Strategic upgrade (per ChatGPT 2026-05-08 review)
+
+ChatGPT's review of this doc and the related charter sharpened several framings worth codifying:
+
+### Upgrade 1: the discriminator is **compressible locality under an ordering**, not "1D-ness"
+
+My original framing — "exponential-state-space-with-1D-structure" — was correct in shape but loose in property. The sharper framing:
+
+> Tensor methods become leverage **when there exists an ordering under which information density obeys compressible locality**.
+
+A 2D-structured space CAN be compressible (PEPS, MERA hierarchies). A 1D-structured space CAN be incompressible (random-SAT instances). The discriminator is locality + correlation decay, not dimensionality. Walk-1 (Lehmer TT-rank study) tests this property directly — bond dimension growth IS the locality measurement.
+
+### Upgrade 2: "Tensors as camouflage for brute force" is a real failure mode
+
+When bond dimension explodes during a walk-experiment, the substrate is *worse off* than before — false epistemic comfort. The tooling looks sophisticated; the underlying problem is unchanged; agents downstream may treat the tensor encoding as "solved" when it's just brute force in a wig.
+
+**Detection rule for walk-experiments:** unbounded bond-dimension growth must be reported as a **failure**, not as "still working on it." A failed walk-experiment that produces a clear NEGATIVE result ("this region is incompressible") is more valuable than a partial-success that hides cost. **Falsifiable benchmark with informative-failure semantics** is non-negotiable.
+
+### Upgrade 3: Tensor-Admissibility Criteria (the gating predicate)
+
+Before any subsystem becomes tensorized, require ALL seven:
+
+| Criterion | Measurable signal |
+|---|---|
+| 1. Stable ordering exists | named axis (coef position, operator-chain depth, etc.) |
+| 2. Locality hypothesis exists | nearby-position interactions dominate |
+| 3. Empirical correlation decay | measurable from sample data |
+| 4. Compressibility measurable | TT-rank / bond-dimension can be bounded |
+| 5. Bond growth polynomial | not exponential as system size grows |
+| 6. Falsifiable benchmark exists | compression-threshold target set in advance |
+| 7. Failure informative | negative result reveals structural property, not just "didn't work" |
+
+Walk-1 (Lehmer TT-rank study) satisfies #1, #2, #4, #6, #7 by design. Criterion #3 (correlation decay) is the open question the experiment will answer. Criterion #5 is the falsifiable target.
+
+### Upgrade 4: tensors are a **probe**, not the goal
+
+The strategic question is NOT "should we use tensors?" It is:
+
+> **Does substrate structure naturally collapse onto low-dimensional manifolds?**
+
+Tensors are one probe for that question. Other probes for the same question include:
+- **Probabilistic programs** (over latent generative models)
+- **Categorical rewrites** (the 5-of-5 capability-gap cluster's natural geometry — closer to topos theory than tensor decomposition)
+- **Graph grammars** (operator composition algebra)
+- **Sparse symbolic operators** (when most entries are zero / canonical form)
+- **Homotopy structures** (closely related to ST-fire1-002 + ST-fire21-002 capability gaps)
+- **Evolutionary search** (when no analytical compression geometry exists)
+
+The substrate may eventually need DIFFERENT compression geometries for different surfaces. The 5-of-5 capability-gap cluster (homotopy, combinatorial design, HOMFLY, A∞-algebra, group representation) likely wants **categorical rewrites** more than tensor decomposition — these are structural/symbolic compression, not numerical. Tensor methods are RIGHT for the substrate's enumeration / search / joint-distribution surfaces; they are NOT obviously right for the equivalence-class surfaces.
+
+**Charter rule (added):** when surfacing a substrate-pressure problem, evaluate compressibility candidates across MULTIPLE geometries (tensor, categorical, graph, probabilistic, etc.), not just tensor. Filing a Walk-1 candidacy is contingent on the problem being clearly tensor-shaped (Tensor-Admissibility Criteria #1-#7), not just "high-dimensional."
+
+### Upgrade 5: developmental-order vindication (and the trap to keep avoiding)
+
+ChatGPT named the developmental order Prometheus is following: ontology → invariants → compression-geometry → asymptotic scaling. Most teams jump to compute (GPUs, distributed systems, JAX migrations) before having canonical primitives or trustworthy invariants — they create *faster chaos*. The substrate's deliberate ordering (ontology + falsification first, compression-geometry only when topology suggests it) is the high-leverage discipline.
+
+**The trap to keep avoiding:** premature collapse onto one computational religion. Every ambitious system has a moment where one framing (ML / probabilistic / categorical / tensor) starts to feel like THE answer. That feeling is the warning sign, not the green light. Keeping multiple compression-geometry candidates open is a discipline, not indecision.
+
+---
+
 ## Charter additions (Substrate-Tester, codified)
 
 1. **On every capability-gap or substrate-flaw ticket:** include "tensor-tool fit" assessment in payload (existing). UPGRADED: when a substrate-pressure problem with exponential-state-space-with-1D-structure structure surfaces, file an Aporia coordination ticket flagging Walk-1/2/3 candidacy.
