@@ -4,6 +4,15 @@
 **Date:** 2026-05-08
 **Status:** Living document. Companion to `tensor_tooling_catalog_2026-05-08.md` (which catalogs the TOOLS); this document codifies the **strategic FRAMING** per James's 2026-05-08 directive.
 
+**🔴 SUPERSEDING POSTURE (2026-05-08, late):** Tensor mathematics is now **HARD POSTURE / "near and dear to Prometheus"** per `feedback_tensors_near_and_dear.md`. The **canonical 104-entry catalog at `aporia/mathematics/tensor_open_problems_v1.md`** is the authoritative reference for substrate-grade tensor open problems. Five tensor-specific attack paradigms (P27-P31) are codified in `aporia/docs/attack_angle_taxonomy.md`: slice rank / asymptotic spectrum / border apolarity / tensor network contraction / secant variety geometry.
+
+Substrate-Tester's Lane 12 (representation-pressure) now **pulls capability-gap probes directly from the 104-entry catalog** rather than inventing novel objects. The 5-of-5 capability-gap pattern I surfaced across fires #7-#35 (homotopy / designs / HOMFLY / A∞ / group reps) is independently re-discovered framing of a SUBSET of the territory the catalog formalizes more rigorously. Likely substrate primitives needed (per the canonical reference): `TensorNetwork`, `AsymptoticSpectrumMonotone`, `BorderApolarityWitness`, `MomentPolytope`, `SecantVarietyEquation`.
+
+Tickets queued (filed by Aporia 2026-05-08):
+- **`T-2026-05-08-T038`** — Techne: classify all 104 entries by substrate-primitive needs; surface capability gaps.
+- **`T-2026-05-08-E009`** — Ergon: for each entry with computational hooks, design probe-shape for v1.0 corpus.
+- Substrate-Tester tracks both tickets' progress + amplifies via lane 12 probes.
+
 **The shift:** tensors are not just a tooling option. They are a **compute-fabric strategy** for delaying the local-lab → expensive-cloud-compute transition as substrate complexity grows exponentially. NP-hard problems are coming; brute force is the substrate's current default; tensor methods are mathematically known to compress exponential state spaces into polynomial ones (when the underlying structure is exploitable).
 
 ---
