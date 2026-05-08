@@ -6,6 +6,71 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #31 — 2026-05-08 (post-restart)
+
+**Coordination note:** loop resumed after user STOP/Document/Restart sequence. Parallel fire #30 (commit `23483f0e`) was the last pre-stop fire. Two session-close commits intervened (`14a6ebcb` + `1a4446ca`). My fire = #31 — single-lane Lane 5 per "full cap; don't pair".
+
+P0 + P1-escalation tickets (`T-ST-fire17-001`, `T-ST-fire25-001`, `T-ST-fire14-001`, `T-ST-fire29-001`) all still OPEN.
+
+**Lane selected:** 5 (large-scale-enumeration with NEW combo deg-10 ±7) per fire #30 standing rec.
+
+**Lane 15 + 18 reactivation re-check:** still DORMANT (`T-2026-05-07-T017` OPEN).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_31_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_31_results.json`.
+
+### Lane 5 — large-scale-enumeration deg-10 ±7
+
+| Test | Verdict | Detail |
+|---|---|---|
+| T1 — completes without crash | **PASS** | 180.1s wall-clock |
+| T2 — throughput ≥10K polys/sec | **PASS** | 29,509 polys/sec sustained |
+| T3 — band candidates surface | **PASS** | 0 band hits in 5,315,625 polys |
+| T4 — shard summary well-formed | **PASS** | shards reported correctly |
+
+**Substrate verdict: PASS.** Enumerator handled the new (deg, coef-bound) combo correctly.
+
+### 🔵 Cross-(degree, coef-bound) hit-rate matrix now 5 data points
+
+| (deg, ±) | n_polys | hits | hit_rate | fire |
+|---|---:|---:|---:|---|
+| (14, 5) | 97,435,855 | 253 | 2.60e-6 | baseline |
+| (12, 5) | 8,857,805 | 113 | 1.28e-5 | #6 |
+| (10, 5) | 805,255 | 44 | 5.46e-5 | #20 |
+| (12, 3) | 352,947 | 0 | 0.000 | #27 |
+| **(10, 7)** | **5,315,625** | **0** | **0.000** | **#31** |
+
+**Substrate-grade observation (substantive, NEW):** at deg-10, coefficient bound ±5 yields 44 in-band hits but BOTH ±3 (too small) AND ±7 (too large) yield ZERO. **The in-band region requires a sweet-spot coefficient range per degree.** Large-coef palindromic polynomials at low degree push M past the 1.18 band ceiling; small-coef polynomials don't reach the 1.001 floor of in-band polynomials.
+
+**Implication:** the deg-14 ±5 ExclusionCertificate's claim is conservative-by-construction — the in-band Salem class lives in a NARROW (degree, coef-bound) channel. Future Aporia investigation candidate: characterize the sweet-spot (degree, coef-bound) function across the substrate's interest range. Could reveal mathematical structure of the Salem class.
+
+**Implication for substrate-tester probe design:** Lane 1's verbatim Mossinghoff strategy (per fire #19's retired-rec) becomes even more clearly correct — Mossinghoff entries are the rare polynomials that hit the sweet-spot natively; perturbation-search around them was hopeless for the same reason.
+
+### Tickets filed this fire
+
+**0 tickets.** Substrate-correct.
+
+### Standing recommendations for next fire (#32)
+
+1. **P0 + P1-escalation watch:** `T-ST-fire17-001` (P0) + `T-ST-fire25-001` (P1) STILL OPEN. Re-probe Lane 3 + Lane 17 immediately when status flips.
+2. **Anti-repeat:** avoid lane 5 (just covered). Suggested fire #32:
+   - **Lane 3 P0 re-probe** — IF Techne has shipped fix
+   - **Lane 4 (cross-domain-leak)** — quick T-ST003 4th regression
+   - **Lane 11 (batch-sweep)** — every-other-fire cadence
+3. **Cross-(degree, coef-bound) sweet-spot characterization:** worth filing Aporia coordination ticket asking for (a) what's the in-band sweet-spot function f(degree)→coef_bound? (b) is the Salem class M-distribution characterizable analytically?
+4. **Lane 1 verbatim-Mossinghoff strategy now doubly-validated** (fire #19 perturbation-failure + fire #31 sweet-spot finding). Iterate Mossinghoff entries verbatim in next Lane 1 fire.
+
+### Discipline notes
+
+- HARD-1..HARD-5: clean.
+- Time used: ~7 min (well within 50-min cap; Lane 5 took 3 min wall-clock + harness).
+- Anti-flooding cap: 0 tickets filed (max 5 allowed).
+- Multi-instance coordination: pulled before lane-pick; claimed fire #31 = max-on-origin (30) + 1.
+
+— substrate-tester, fire #31, 2026-05-08
+
+---
+
 ## Session close — 2026-05-07/08 (M1 instance)
 
 **Stop reason:** user explicit "Stop Looping. Document session and journal."

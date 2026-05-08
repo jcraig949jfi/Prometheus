@@ -1,0 +1,51 @@
+{
+  "fire": 31,
+  "lanes": [
+    5
+  ],
+  "lane_5": {
+    "lane": "5_large_scale_deg10_pm7",
+    "params": {
+      "degree": 10,
+      "coef_range": [
+        -7,
+        7
+      ]
+    },
+    "wall_clock_seconds": 180.13269019126892,
+    "n_polys_processed": 5315625,
+    "n_band_hits": 0,
+    "throughput_polys_per_sec": 29509.496551435226,
+    "n_shards_reported": 105,
+    "hit_rate": 0.0,
+    "tests": [
+      {
+        "id": "T1_completion",
+        "expected": "completes without crash",
+        "actual": "completed in 180.1s",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T2_throughput",
+        "expected": "\u2265 10K polys/sec",
+        "actual": "29509 polys/sec",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T3_band_hits_surface",
+        "expected": "\u22650 band candidates (informational)",
+        "actual": "0 band hits, rate=0.00e+00",
+        "verdict": "PASS"
+      },
+      {
+        "id": "T4_shards_reported",
+        "expected": "\u22651 shards in summary",
+        "actual": "105 shards",
+        "verdict": "PASS"
+      }
+    ],
+    "verdict_counts": {
+      "PASS": 4
+    }
+  }
+}
