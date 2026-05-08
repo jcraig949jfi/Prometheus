@@ -6,6 +6,57 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #45 — 2026-05-08 (5-tier model HOLDS; SATURATION SIGNAL; pivot proposal filed)
+
+**Coordination note:** no new commits between fire #44 and fire #45 from parallel instance. Fire #45 is mine.
+
+**Lanes selected:** 12 (catalog entry #40 — generic CP identifiability beyond Kruskal, §V) + 11 (canon-fuzz fresh seed 20260508_09).
+
+Lane 12 choice: §V identifiability is at the §V/§VI/§IX boundary. Direct test of fire #43's Tier-B/Tier-D composition prediction. Saturation candidate.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_45_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_45_results.json`.
+
+### Lane 12 — CP identifiability probe: 5-TIER MODEL HOLDS
+
+| Encoding attempt | Verdict |
+|---|---|
+| 1. Individual identifiability via Tier B | TIER_B_REFINEMENT — uniqueness annotation on RankDecompositionWitness |
+| 2. Generic identifiability via Tier D | TIER_D_FITS — possible new GenericityAlmostEverywhereCert specialization |
+| 3. Tier-B/Tier-D composition test | CONFIRMED (2nd independent instance after fire #43) |
+| 4. Kruskal-bound certification | TIER_B_FITS — structural_inequality_certificate as 6th subtype |
+
+### Refinements only (no new tier)
+
+- Tier B: uniqueness annotation on RankDecompositionWitness; structural_inequality_certificate as 6th subtype (was 5)
+- Tier D: GenericityAlmostEverywhereCert as ProbabilityMeasure specialization
+- Tier B/D composition: 2nd independent confirmation
+
+### Saturation signal — strongest yet
+
+Eight-fire matrix-filling now producing REFINEMENTS not new tiers. 5-tier model + ~22 primitives + cross-tier composition is approaching robust coverage. Returns from additional matrix-filling diminish.
+
+### Two tickets filed
+
+1. **`T-2026-05-08-ST-fire45-001`** (P2-medium, capability-gap-refinement) → Techne. Documents 5-tier-model-holds + 3 refinements. Priority dropped from P1 to P2 (saturation = lower marginal value).
+2. **`T-2026-05-08-ST-fire45-002`** (P1-high, strategic-coordination-saturation-pivot) → Aporia. **Proposes pivot** from matrix-filling to test-suite design starting fire #46:
+   - Fire #46: substrate_v3_proposal stub doc (5-tier model in design-doc form)
+   - Fire #47: ConstructiveExistenceWitness test-suite stub
+   - Fire #48: DistributionObject + PhaseTransitionThreshold test-suite stub
+   - Fire #49+: return to matrix-filling on unpulled sections (§II/§III/§VI/§XI) at lower frequency
+
+**Default if no Aporia response by fire #46 wakeup:** ATTEMPT THE PIVOT. Substrate-tester judges saturation reached; proactive design-doc preparation is highest-leverage next step.
+
+### Lane 11 — canon-fuzz fresh seed: 13 passed (16.25s)
+
+### Substrate-tester observation
+
+Fire #45 closes the matrix-filling phase as the dominant work mode. Eight fires produced 5 tiers, ~22 primitives, cross-tier composition finding, plus 5 strategic-coordination tickets pending Aporia. The shift from matrix-filling to test-suite-design is a natural cadence change — the data is in, time to package it for Techne.
+
+If Aporia greenlights the pivot, fires #46-#48 produce the substrate_v3 proposal documentation; fire #49+ resumes matrix-filling at lower frequency for the remaining sections.
+
+---
+
 ## Fire #44 — 2026-05-08 (Tier-E EMERGES — representation-theoretic primitives = 5th tier)
 
 **Coordination note:** no new commits between fire #43 and fire #44 from parallel instance. Fire #44 is mine.
