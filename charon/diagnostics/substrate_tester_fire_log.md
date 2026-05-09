@@ -6,6 +6,50 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #65 — 2026-05-09 (Maintenance: Lane 16 on operator_portability.py — first post-trilogy run)
+
+**Coordination note:** no new commits between fires #64 and #65.
+
+**Lanes selected:** 16 (mutation testing on `sigma_kernel/operator_portability.py`, 351 LoC, substrate v2.3 §6.3 P6 primitive bundling OperatorPortabilityCertificate + PortabilityEvidence + PortabilityReplay) + 11 (canon-fuzz fresh seed 20260509_06).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_65_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_65_results.json`.
+
+### Lane 16 — `operator_portability.py` sweep: raw 0.300, ALL 7 survivors GENUINE
+
+10 mutations, 3 killed, 7 survived. **0 false positives** — all survivors on real code lines. Confirms post-trilogy framework (fires #53/#62/#64) is now production-grade for this module.
+
+| Site | Operator | Verdict | Notes |
+|---|---|---|---|
+| Line 94 (`<`) | comparison_flip | **GENUINE** | n_objects_tested boundary — no negative-input test |
+| Line 94 (`0`) | off_by_one_int | **GENUINE** | sister to above; same boundary |
+| Line 204 `sort_keys=True` | boolean_not | **GENUINE** | canonical-hash stability — no sort-stability test |
+| Line 205 hash return | return_constant_None | **GENUINE** | content-addressed-id return-value gap |
+| Line 229 `replace: bool = False` | boolean_not | **GENUINE** | registry replace-semantic; no default-value test |
+| Line 256 `!=` | comparison_flip | **GENUINE** | registry list-comp removal-filter — no removal-path test |
+| Line 261 `!=` | comparison_flip | **GENUINE** | sister to 256; same pattern |
+
+**Genuine score: 3 killed / (3 killed + 7 genuine survivors) = 0.300** — same as raw. The whole 0.300 reflects real test-coverage gaps; no FPs to discount.
+
+### Lane 11 — canon-fuzz fresh seed: 13 passed (17.90s)
+
+### Substrate-tester observation
+
+First Lane 16 run after the three-FP-class trilogy resolved (fires #53/#62/#64). **The framework now produces 0 false positives on this module** — all 7 survivors are direct-actionable test-coverage gaps.
+
+This validates the trilogy investment: per-fire FP triage overhead is now zero. Lane 16 fires deliver actionable findings directly.
+
+The genuine-coverage gaps cluster around:
+1. **Boundary conditions** (n_objects_tested < 0, registry default-values)
+2. **Content-addressing stability** (sort_keys, hash returns)
+3. **Removal-path bookkeeping** (list-comp filter `x != cid` patterns)
+
+These are similar in shape to gaps closed for other modules in fires #51/#54/#55/#62/#64. Fire #66 could close with the established 3-part pattern.
+
+Filed `T-2026-05-09-ST-fire65-001` (P3-low) with all 7 findings + suggested-fix shape (TestOperatorPortabilityCertificate covering content-addressed id stability, n_objects_tested validation, replace-semantics, and registry removal-path).
+
+---
+
 ## Fire #64 — 2026-05-09 (RESOLVES ST-fire63-001 — inline-comment filter + coordinate_chart return tests; score 0.300→0.900)
 
 **Coordination note:** no new commits between fires #63 and #64.

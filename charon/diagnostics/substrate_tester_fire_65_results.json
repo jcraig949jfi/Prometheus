@@ -1,0 +1,42 @@
+{
+  "fire": 65,
+  "posture": "maintenance: Lane 16 on operator_portability.py (post-trilogy)",
+  "lanes": [
+    16,
+    11
+  ],
+  "lane_16": {
+    "lane": "16_operator_portability_sweep",
+    "target": "sigma_kernel/operator_portability.py",
+    "loc": 351,
+    "framework_status": "post-trilogy production-grade (3 FP classes resolved)",
+    "kill_counts": {
+      "killed": 3,
+      "survived": 7,
+      "errored": 0
+    },
+    "score": 0.3,
+    "summary_lines": [
+      "[mutation 1/10] killed @ operator_portability.py:79:boolean_not (38.0s)",
+      "[mutation 2/10] survived @ operator_portability.py:94:comparison_flip (68.5s)",
+      "[mutation 3/10] survived @ operator_portability.py:94:off_by_one_int (20.2s)",
+      "[mutation 4/10] killed @ operator_portability.py:111:boolean_not (35.6s)",
+      "[mutation 5/10] killed @ operator_portability.py:135:boolean_not (19.9s)",
+      "[mutation 6/10] survived @ operator_portability.py:204:boolean_not (36.0s)",
+      "[mutation 7/10] survived @ operator_portability.py:205:return_constant_None (51.3s)",
+      "[mutation 8/10] survived @ operator_portability.py:229:boolean_not (51.1s)",
+      "[mutation 9/10] survived @ operator_portability.py:256:comparison_flip (137.7s)",
+      "[mutation 10/10] survived @ operator_portability.py:261:comparison_flip (20.0s)",
+      "[mutation] score=0.300 killed=3 survived=7 errored=0 skipped=0",
+      "[mutation] report written: F:\\Prometheus\\prometheus_math\\MUTATION_TESTING_BASELINE.md"
+    ],
+    "verdict": "INFORMATIVE"
+  },
+  "lane_11": {
+    "lane": "11_canon_fuzz_smoke",
+    "seed": "20260509_06",
+    "returncode": 0,
+    "summary_line": "13 passed in 17.90s",
+    "verdict": "PASS"
+  }
+}
