@@ -6,6 +6,54 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #59 — 2026-05-09 (Tier A++ TensorNetwork test-suite stub — 4th of 5)
+
+**Coordination note:** no new commits between fire #58 and fire #59. Continuing the planned 5-stub completion sequence.
+
+**Lanes selected:** 1 (Tier A++ `TensorNetwork` test-suite stub) + 11 (canon-fuzz fresh seed 20260509_03).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_59_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_59_results.json`.
+
+### Lane 1 — Tier A++ test-suite stub: 15 tests, 6 classes
+
+Target: `sigma_kernel/tests/test_tensor_network_stub.py`. Tier A++ is the most foundational meta — extends `CoordinateChart` with index-contraction structure and bundles TensorObject + TensorNetworkGraph + GroupAction + SchemeObject from fires #38-#41.
+
+| Class | Tests | Coverage |
+|---|---:|---|
+| `TestTensorNetworkConstruction` | 5 | empty / single-vertex / two-vertex networks + dimension consistency + content-addressed id |
+| `TestContractionOperation` | 3 | full contraction → scalar; partial contraction → smaller network; associativity under order swap |
+| `TestCoordinateChartExtension` | 2 | TensorNetwork is-a CoordinateChart + chart metadata preserved (Tier A++ extension contract) |
+| `TestGroupActionOnNetwork` | 1 | GL-symmetric network; group action preserves contraction value |
+| `TestTierATierBComposition` | 1 | ContractionOrderWitness validates against network (double-skipped until Tier B ships) |
+| `TestCatalogCoverageSmoke` | 3 | TT chain (#49), PEPS grid (#76), matrix-mult tensor M⟨n⟩ (#4 origin) |
+
+**Module-level `skipif`** lifts when `sigma_kernel/tensor_network.py` lands. Helper builders (`_make_scalar_yielding_network`, `_make_3_vertex_chain`, `_make_GL_symmetric_network`, `_random_GL_element`) are `NotImplementedError` placeholders.
+
+**Pytest collection:** 15 skipped in 0.14s.
+
+### Stub status after fire #59 (4 of 5 meta-primitives covered)
+
+| Meta-primitive | Tier | Status | Tests |
+|---|---|---|---:|
+| **TensorNetwork** | **A++** | **shipped fire #59** | **15** |
+| ConstructiveExistenceWitness/StructuredEquivalenceClass | B | shipped #47 | 21 |
+| MomentPolytope/SecantVarietyEquation | C | shipped #58 | 17 |
+| GenericityAlmostEverywhereCert | D | shipped #48 | 17 |
+| RepresentationTheoreticInvariant | E | not yet shipped (fire #60 next) | – |
+
+**Total stubbed contract tests for Techne pickup: 70.**
+
+### Lane 11 — canon-fuzz fresh seed: 13 passed (15.56s)
+
+### Substrate-tester observation
+
+Four of five meta-primitive stubs shipped. Fire #60 closes the set with Tier E `RepresentationTheoreticInvariant`. After that, substrate-tester transitions to maintenance + opportunistic finding mode.
+
+The 5-stub corpus together forms the contract specification Techne's Phase-2 contract-change window must satisfy. Once Techne ships the 5 meta-primitives (~85+ tests un-skip simultaneously), the cross-tier composition tests validate against the actual primitives.
+
+---
+
 ## Fire #58 — 2026-05-09 (Tier C MomentPolytope test-suite stub — 3rd of 5)
 
 **Coordination note:** no new commits between fire #57 and fire #58. Fire #58 executes against the Aporia-ratified plan: ship the next meta-primitive test-suite stub.
