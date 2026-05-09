@@ -1,6 +1,6 @@
 # Mutation Testing Baseline
 
-_Generated: 2026-05-09 11:40:31 UTC_
+_Generated: 2026-05-09 12:52:37 UTC_
 _Per inbox ticket T-2026-05-07-T014 (prometheus_math/mutation_testing.py)_
 
 ## Summary
@@ -9,12 +9,12 @@ _Per inbox ticket T-2026-05-07-T014 (prometheus_math/mutation_testing.py)_
   - `sigma_kernel\sigma_kernel.py`
 - **Test command:** `"C:\Users\jcrai\AppData\Local\Programs\Python\Python311\python.exe" -m pytest sigma_kernel/tests/ -q --no-header -x`
 - **Total mutations proposed:** 10
-- **Killed (caught by tests):** 3
-- **Survived (test gap):** 7
+- **Killed (caught by tests):** 8
+- **Survived (test gap):** 2
 - **Errored (mutation broke loader):** 0
 - **Skipped (operator anchor mismatch):** 0
-- **Mutation score (killed / (killed + survived)):** 0.300
-- **Elapsed:** 202.8s
+- **Mutation score (killed / (killed + survived)):** 0.800
+- **Elapsed:** 203.1s
 
 ## Top Surviving Mutations (test-gap candidates)
 
@@ -22,13 +22,8 @@ Each survivor is a mutation that did NOT cause any test failure — i.e. the tes
 
 | # | site | operator | original -> mutated |
 |---|---|---|---|
-| 1 | `sigma_kernel.py:68` | `return_constant_None` | `return f"{self.name}@v{self.version}"` -> `return None` |
-| 2 | `sigma_kernel.py:120` | `boolean_not` | `False` -> `True` |
-| 3 | `sigma_kernel.py:125` | `boolean_not` | `True` -> `False` |
-| 4 | `sigma_kernel.py:125` | `return_constant_None` | `return Capability(self.cap_id, self.cap_type, True)` -> `return None` |
-| 5 | `sigma_kernel.py:184` | `off_by_one_int` | `05` -> `6` |
-| 6 | `sigma_kernel.py:184` | `off_by_one_int` | `03` -> `4` |
-| 7 | `sigma_kernel.py:190` | `off_by_one_int` | `05` -> `6` |
+| 1 | `sigma_kernel.py:236` | `return_constant_None` | `return self.conn.execute(self._translate(sql), params)` -> `return None` |
+| 2 | `sigma_kernel.py:275` | `off_by_one_int` | `0` -> `1` |
 
 ## Caveats
 

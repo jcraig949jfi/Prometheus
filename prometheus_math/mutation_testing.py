@@ -286,6 +286,71 @@ def _ast_docstring_line_ranges(text: str) -> set:
     return docstring_lines
 
 
+def _ast_string_literal_spans(text: str) -> list:
+    """Return a list of (line, col_start, col_end) spans for every
+    string-literal byte in the source. Used to suppress mutation
+    proposals that fall inside arbitrary string literals (SQL DDL,
+    JSON templates, formatted error messages, etc.) — the broader
+    case beyond docstring expressions handled by
+    `_ast_docstring_line_ranges`.
+
+    Closes ST-fire61-002 part 1: discovered via Lane 16 on
+    `sigma_kernel/sigma_kernel.py` where the SQL `INSERT INTO symbols`
+    string contained date stamps "2026-05-03" / "2026-05-04" whose
+    digits were mutated as code-level int literals.
+
+    Column-precise (not line-based) so that lines containing BOTH a
+    string literal AND real code (e.g. `x = 5; raise ValueError("2026")`)
+    keep the real-code mutations live.
+
+    Returns empty list on ast.parse failure.
+    """
+    import ast
+    try:
+        tree = ast.parse(text)
+    except SyntaxError:
+        return []
+
+    spans: list = []
+    for node in ast.walk(tree):
+        is_str_const = (
+            isinstance(node, ast.Constant) and isinstance(node.value, str)
+        )
+        is_joined_str = isinstance(node, ast.JoinedStr)
+        if not (is_str_const or is_joined_str):
+            continue
+        start_line = getattr(node, "lineno", None)
+        end_line = getattr(node, "end_lineno", None) or start_line
+        start_col = getattr(node, "col_offset", None) or 0
+        end_col = getattr(node, "end_col_offset", None)
+        if start_line is None:
+            continue
+        # Multi-line span: each interior line is fully covered; first
+        # and last lines have explicit column ranges.
+        if start_line == end_line:
+            spans.append((start_line, start_col, end_col if end_col is not None else 10**9))
+        else:
+            # First line: from start_col to EOL
+            spans.append((start_line, start_col, 10**9))
+            # Interior lines: full coverage
+            for ln in range(start_line + 1, end_line):
+                spans.append((ln, 0, 10**9))
+            # Last line: from BOL to end_col
+            spans.append((end_line, 0, end_col if end_col is not None else 10**9))
+
+    return spans
+
+
+def _proposal_falls_in_string_span(line_no: int, column: int, spans: list) -> bool:
+    """True iff (line_no, column) falls inside any (line, col_start,
+    col_end) span. Used by propose_mutations to suppress string-literal
+    false-positives."""
+    for ln, c_start, c_end in spans:
+        if ln == line_no and c_start <= column < c_end:
+            return True
+    return False
+
+
 def propose_mutations(
     file_path: Path,
     *,
@@ -308,11 +373,15 @@ def propose_mutations(
     # AST-level docstring detection (fire #53). Empty set if parse fails;
     # in that case the coarse fallback below is the only filter.
     docstring_lines = _ast_docstring_line_ranges(text)
+    # AST-level string-literal span detection (fire #62 / ST-fire61-002).
+    # Column-precise so lines mixing string-literal + real code keep
+    # real-code mutations live.
+    string_literal_spans = _ast_string_literal_spans(text)
     fallback_in_docstring = False
 
     for i, line in enumerate(lines, start=1):
         stripped = line.lstrip()
-        # AST-level skip
+        # AST-level skip: full docstring lines are out
         if i in docstring_lines:
             continue
         # Fallback coarse tracker (only fires if AST parse failed and
@@ -330,6 +399,10 @@ def propose_mutations(
             if yielder is None:
                 continue
             for column, original, replacement in yielder(line):
+                # Fire #62: skip if the proposal falls inside an
+                # arbitrary string literal (not just a docstring).
+                if _proposal_falls_in_string_span(i, column, string_literal_spans):
+                    continue
                 proposals.append(
                     MutationProposal(
                         file_path=file_path,

@@ -1,0 +1,65 @@
+{
+  "fire": 62,
+  "posture": "closes ST-fire61-002 (3-part: AST extension + 2 return-value tests + verify)",
+  "lanes": [
+    1,
+    2,
+    3
+  ],
+  "lane_1": {
+    "lane": "1_string_literal_filter_works",
+    "n_string_literal_spans": 668,
+    "n_total_proposals": 86,
+    "known_FP_lines": [
+      184,
+      190
+    ],
+    "n_leaked_to_FP_lines": 0,
+    "verdict": "PASS"
+  },
+  "lane_2": {
+    "lane": "2_new_tests_pass_and_catch",
+    "test_file": "sigma_kernel/tests/test_sigma_kernel_core_returns.py",
+    "baseline_summary": "12 passed in 0.14s",
+    "baseline_passes": true,
+    "n_mutations_tested": 2,
+    "catch_results": [
+      {
+        "marker": "line_68_Symbol_ref",
+        "verdict": "CAUGHT"
+      },
+      {
+        "marker": "line_125_Capability_consume",
+        "verdict": "CAUGHT"
+      }
+    ],
+    "n_caught": 2,
+    "verdict": "PASS"
+  },
+  "lane_3": {
+    "lane": "3_rerun_mutation_testing",
+    "target": "sigma_kernel/sigma_kernel.py",
+    "kill_counts": {
+      "killed": 8,
+      "survived": 2,
+      "errored": 0
+    },
+    "score": 0.8,
+    "summary_lines": [
+      "[mutation 1/10] killed @ sigma_kernel.py:57:boolean_not (21.7s)",
+      "[mutation 2/10] killed @ sigma_kernel.py:68:return_constant_None (20.0s)",
+      "[mutation 3/10] killed @ sigma_kernel.py:71:boolean_not (20.0s)",
+      "[mutation 4/10] killed @ sigma_kernel.py:110:boolean_not (19.9s)",
+      "[mutation 5/10] killed @ sigma_kernel.py:120:boolean_not (20.3s)",
+      "[mutation 6/10] killed @ sigma_kernel.py:125:boolean_not (20.0s)",
+      "[mutation 7/10] killed @ sigma_kernel.py:125:return_constant_None (20.3s)",
+      "[mutation 8/10] killed @ sigma_kernel.py:233:return_constant_None (20.1s)",
+      "[mutation 9/10] survived @ sigma_kernel.py:236:return_constant_None (20.5s)",
+      "[mutation 10/10] survived @ sigma_kernel.py:275:off_by_one_int (20.0s)",
+      "[mutation] score=0.800 killed=8 survived=2 errored=0 skipped=0",
+      "[mutation] report written: F:\\Prometheus\\prometheus_math\\MUTATION_TESTING_BASELINE.md"
+    ],
+    "improvement_chain": "Fire #61 (no string filter, original tests): raw 0.300 (3K, 7S \u2014 4 SQL-string FPs + 2 genuine)\nFire #62 (string filter + new tests): raw 0.800 (8K, 2S)",
+    "verdict": "PASS"
+  }
+}

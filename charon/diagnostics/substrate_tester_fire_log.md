@@ -6,6 +6,68 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #62 — 2026-05-09 (RESOLVES ST-fire61-002 — string-literal AST filter + Symbol/Capability return tests)
+
+**Coordination note:** no new commits between fires #61 and #62.
+
+**Lanes selected:** 1 (verify string-literal filter shipped) + 2 (verify new core-returns tests pass + catch mutations) + 3 (re-run Lane 16 with both improvements).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_62_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_62_results.json`.
+
+### Lane 1 — AST string-literal span filter shipped (PASS)
+
+`prometheus_math/mutation_testing.py` extended:
+- New `_ast_string_literal_spans(text)` returns `(line, col_start, col_end)` tuples for every `ast.Constant(str)` and `ast.JoinedStr` (f-string)
+- New `_proposal_falls_in_string_span(line_no, column, spans)` per-proposal column-precise filter
+- `propose_mutations` now skips proposals falling inside string spans
+- **Column-precise** (not line-based) so lines mixing string-literal + real code (`x = 5; raise ValueError("2026")`) keep real-code mutations live
+
+**Verification on `sigma_kernel/sigma_kernel.py`:** 668 string-literal spans detected; **0 leaks** at known-FP lines 184/190 (the SQL DDL `2026-05-03`/`2026-05-04` date stamps from fire #61).
+
+### Lane 2 — `test_sigma_kernel_core_returns.py` shipped + verified (PASS)
+
+12 tests across 2 classes:
+
+| Class | Tests | Coverage |
+|---|---:|---|
+| `TestSymbolRefReturnContract` | 5 | non-None + str type + format + name + version |
+| `TestCapabilityConsumeReturnContract` | 7 | non-None + Capability instance + cap_id/cap_type preservation + consumed=True + immutable + linearity (CapabilityError on double-consume) |
+
+**Baseline:** 12/12 PASS in 0.14s.
+
+**Mutation verification:** both `return None` mutations on lines 68 + 125 caught (2/2).
+
+### Lane 3 — Re-run Lane 16 on kernel core: SCORE 0.300 → 0.800
+
+Same 1500-LoC target, same test invocation. Score jumped from raw 0.300 (with 4 SQL-string FPs + 2 genuine survivors + 1 edge-case) to **0.800** (8 killed, 2 survived).
+
+| Pass | Filter | Tests | Killed | Survived | Score |
+|---|---|---|---:|---:|---:|
+| Fire #61 | docstring-only | original suite | 3 | 7 | 0.300 (4 FPs) |
+| Fire #62 | docstring + string-literal | + core-returns | 8 | 2 | **0.800** |
+
+Two remaining survivors (genuine, lower priority):
+- Line 236: `SqliteAdapter.execute()` `return self.conn.execute(...)` → `return None` — DB-adapter delegate, no return-type test
+- Line 275: `off_by_one_int 0 → 1` — to be inspected (likely a small-int default that doesn't matter)
+
+**Genuine score elevation: 0.500 → 0.800** comparing fire #61's after-triage baseline vs fire #62's raw score.
+
+### Investigative chain extended — 9 RESOLVED tickets
+
+The fires-#49 → #62 chain now spans 14 fires with 9 RESOLVED tickets (was 8 at fire #55):
+- #49 (surfaced) → #50/#51 (RESOLVED frozen + factory) → #52 (surfaced) → #53 (RESOLVED AST + manifest) → #54/#55 (RESOLVED feeds_negative + triangulation) → #61 (surfaced new FP class) → **#62 (RESOLVED string-literal AST + Symbol/Capability)**
+
+The investigative-fire pattern continues to compound: each cycle hardens the framework AND raises substrate-test coverage.
+
+### Substrate-tester observation
+
+Filed `T-2026-05-09-ST-fire62-001` (P3-low, RESOLVED) — closes ST-fire61-002. Two ride-along survivors (lines 236, 275) noted but not addressed this fire.
+
+The mutation-testing framework is now production-grade for both docstrings AND arbitrary string literals. Future Lane 16 fires on string-heavy modules (SQL adapters, JSON handlers, error-message-rich code) should produce directly-actionable findings without per-fire FP triage.
+
+---
+
 ## Fire #61 — 2026-05-09 (Maintenance: §XI catalog closure + Lane 16 on kernel core)
 
 **Coordination note:** new commit `b3bbaddb` "v1.0 design suggestions doc" landed between fires #60 and #61 (not directly substrate-tester domain).
