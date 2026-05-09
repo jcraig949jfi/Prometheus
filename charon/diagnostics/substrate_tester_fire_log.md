@@ -6,6 +6,65 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #53 — 2026-05-08 (RESOLVED ST-fire52-003 + extended fire #50 manifest)
+
+**Coordination note:** no new commits between fire #52 and fire #53. Fire #53 closes another investigative loop and surfaces a sister finding.
+
+**Lanes selected:** 1 (AST filter sanity) + 2 (re-run mutation testing) + 3 (manifest expansion baseline).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_53_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_53_results.json`.
+
+### Lane 1 — AST docstring filter shipped
+
+Modified `prometheus_math/mutation_testing.py`:
+- Added `_ast_docstring_line_ranges(text)` — uses `ast.parse + ast.walk` to identify line ranges of all module/class/function docstring expression statements
+- `propose_mutations()` now skips lines in the AST-detected docstring set
+- Coarse line-based filter retained as fallback for files where `ast.parse` fails (broken Python; preserves backward compat)
+
+**Sanity check on `exclusion_certificate.py`:** 228 docstring lines detected. All 5 known false-positive sites from fire #52 (lines 262/335/337/348/468) now correctly skipped. **0 leaks** to known-FP lines in proposal generation.
+
+### Lane 2 — Re-run mutation testing on `exclusion_certificate.py`
+
+| Pass | Filter | Manifest size | Killed | Survived | Score |
+|---|---|---:|---:|---:|---:|
+| Fire #52 | line-based | 12 | 3 | 7 | 0.300 (6 docstring FPs) |
+| Fire #53 mid | AST | 12 | 5 | 5 | 0.500 (no FPs; Boundary still surviving) |
+| Fire #53 end | AST | 25 | 6 | 4 | **0.600** (Boundary now caught) |
+
+**Doubling of genuine score from fire #52 baseline** — driven by two improvements: (a) AST filter eliminated 6 docstring false positives, (b) expanded manifest closed the `Boundary` frozen-flip gap.
+
+Remaining 4 surviving mutations: `return_constant_None` on `_stable_repr` private helper return paths (lines 315/317/319/321) — private function, not on substrate-grade contract surface; lower priority.
+
+### Lane 3 — Fire #50 manifest expanded (12 → 25)
+
+While verifying the AST filter, sister finding surfaced: fire #50's `EXPECTED_FROZEN_CLASSES` was incomplete. Walked all `sigma_kernel/*` modules; found 25 frozen dataclasses, but manifest had only 12. Missing 13:
+
+- `Boundary` (exclusion_certificate)
+- `Binding`, `CostModel`, `Evaluation` (bind_eval)
+- `CanonicalizationProtocol` (coordinate_chart)
+- `PortabilityEvidence`, `PortabilityReplay` (operator_portability)
+- `BenchmarkEntry` (residual_benchmark)
+- `Residual`, `SpectralVerdict` (residuals)
+- `Capability`, `Symbol`, `VerdictResult` (sigma_kernel core)
+
+Updated manifest + count assertion (was `>= 12`, now `>= 25`). **Baseline: 27/27 PASS in 12.35s** (was 14/14).
+
+### Two tickets filed
+
+1. **`T-2026-05-08-ST-fire53-001`** (P3-low, RESOLVED) — closes ST-fire52-003 (AST docstring filter shipped); also documents fire #50 manifest gap as RESOLVED via expansion.
+2. Parser bug note (no ticket): fire #53 harness parser missed the score line because mutation framework writes `[mutation ...]` lines to **STDERR**, not stdout. Fixed in code post-hoc; values manually patched from report file.
+
+### Substrate-tester observation — investigative shape continues
+
+Fire #53 = another clean investigative cycle:
+- ST-fire52-003 → diagnose → ship → verify (closed)
+- Plus sister finding (fire #50 manifest gap) → expand → verify (closed)
+
+Two improvements landed in one fire; mutation-testing framework now usable without per-fire manual triage. Future Lane 16 fires should produce immediately-actionable findings.
+
+---
+
 ## Fire #52 — 2026-05-08 (§VI matrix-filling + Lane 16 on exclusion_certificate)
 
 **Coordination note:** no new commits between fire #51 and fire #52.

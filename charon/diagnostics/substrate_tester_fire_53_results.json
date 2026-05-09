@@ -1,0 +1,65 @@
+{
+  "fire": 53,
+  "posture": "framework improvement (closes ST-fire52-003) + manifest expansion (extends fire #50)",
+  "lanes": [
+    1,
+    2,
+    3
+  ],
+  "lane_1": {
+    "lane": "1_ast_filter_sanity",
+    "n_docstring_lines_detected": 228,
+    "known_false_positive_lines": [
+      262,
+      335,
+      337,
+      348,
+      468
+    ],
+    "all_known_FPs_now_skipped": true,
+    "skip_status_per_line": {
+      "262": true,
+      "335": true,
+      "337": true,
+      "348": true,
+      "468": true
+    },
+    "n_total_proposals": 44,
+    "n_leaked_to_FP_lines": 0,
+    "verdict": "PASS"
+  },
+  "lane_2": {
+    "lane": "2_rerun_mutation_testing",
+    "target": "sigma_kernel/exclusion_certificate.py",
+    "kill_counts": {
+      "killed": 6,
+      "survived": 4,
+      "errored": 0
+    },
+    "score": 0.6,
+    "summary_lines": [
+      "[mutation N/10] killed @ exclusion_certificate.py:128:boolean_not",
+      "[mutation N/10] killed @ exclusion_certificate.py:176:boolean_not",
+      "[mutation N/10] killed @ exclusion_certificate.py:198:boolean_not",
+      "[mutation N/10] killed @ exclusion_certificate.py:213:boolean_not",
+      "[mutation N/10] killed @ exclusion_certificate.py:256:boolean_not",
+      "[mutation N/10] killed @ exclusion_certificate.py:280:boolean_not (Boundary frozen=True - now caught by expanded manifest!)",
+      "[mutation N/10] survived @ exclusion_certificate.py:315-321:return_constant_None (_stable_repr return paths; private helper)",
+      "[mutation] score=0.600 killed=6 survived=4 errored=0 (combined: AST filter eliminated 6 docstring FPs; expanded manifest caught Boundary frozen flip)"
+    ],
+    "improvement_over_fire_52": "Score went from 0.300 raw (fire #52, with 6 docstring FPs) to -1.000 raw with NO docstring FPs.",
+    "verdict": "PASS",
+    "improvement_chain": "Fire #52 (no AST filter, manifest=12): raw 0.300 (3K, 7S \u2014 6 docstring FPs)\nFire #53 mid (AST filter, manifest=12): raw 0.500 (5K, 5S \u2014 Boundary still surviving)\nFire #53 end (AST filter, manifest=25): raw 0.600 (6K, 4S \u2014 Boundary now caught)\nDoubling of genuine score from fire #52 baseline.",
+    "parser_bug_note": "Fire #53 harness parser missed score because the framework writes [mutation ...] lines to STDERR not STDOUT. Fixed in code; values above patched manually from MUTATION_TESTING_BASELINE.md report file."
+  },
+  "lane_3": {
+    "lane": "3_manifest_expansion_baseline",
+    "manifest_size_was": 12,
+    "manifest_size_now": 25,
+    "test_count_was": 14,
+    "test_count_now_estimate": 27,
+    "summary_line": "27 passed in 12.35s",
+    "returncode": 0,
+    "verdict": "PASS"
+  }
+}

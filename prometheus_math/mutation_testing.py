@@ -241,6 +241,51 @@ MUTATION_OPERATORS: Dict[str, Callable[[str], Iterable[Tuple[int, str, str]]]] =
 # ---------------------------------------------------------------------------
 
 
+def _ast_docstring_line_ranges(text: str) -> set:
+    """Return the set of 1-indexed line numbers that fall inside a
+    docstring expression (module / class / function body, first
+    statement is a string literal). Uses ast.parse; returns empty set
+    on parse failure (caller falls back to coarse line-based filter).
+
+    Closes ST-fire52-003: AST-level docstring filter eliminates the
+    false-positive flood from the previous coarse line-based scan
+    (which misses single-line docstrings, nested cases, and string
+    literals embedded mid-line).
+    """
+    import ast
+    try:
+        tree = ast.parse(text)
+    except SyntaxError:
+        return set()
+
+    docstring_lines: set = set()
+
+    def _enroll_docstring_node(body_owner) -> None:
+        body = getattr(body_owner, "body", None)
+        if not body:
+            return
+        first = body[0]
+        if not isinstance(first, ast.Expr):
+            return
+        val = first.value
+        if not isinstance(val, ast.Constant) or not isinstance(val.value, str):
+            return
+        # Found a docstring expression. Enroll its line range.
+        start = getattr(val, "lineno", None) or first.lineno
+        end = getattr(val, "end_lineno", None) or start
+        for ln in range(start, end + 1):
+            docstring_lines.add(ln)
+
+    # Module-level docstring
+    _enroll_docstring_node(tree)
+    # Per-class / per-function docstrings
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            _enroll_docstring_node(node)
+
+    return docstring_lines
+
+
 def propose_mutations(
     file_path: Path,
     *,
@@ -249,21 +294,35 @@ def propose_mutations(
 ) -> List[MutationProposal]:
     """Walk a single Python file line by line; emit MutationProposals
     for every operator-applicable site. Skips comment-only lines and
-    docstring delimiters as a coarse hygiene filter (true AST-level
-    analysis would be cleaner; this is the minimum-viable pass)."""
+    docstring lines (per AST analysis) as a hygiene filter.
+
+    AST-level docstring filtering closes ST-fire52-003; replaces the
+    previous coarse line-based filter that produced 50-90% false
+    positives on docstring-rich modules. Falls back to the coarse
+    filter only if ast.parse fails (e.g. Python 2 syntax in a target).
+    """
     proposals: List[MutationProposal] = []
     text = file_path.read_text(encoding="utf-8")
     lines = text.splitlines(keepends=False)
-    in_docstring = False
+
+    # AST-level docstring detection (fire #53). Empty set if parse fails;
+    # in that case the coarse fallback below is the only filter.
+    docstring_lines = _ast_docstring_line_ranges(text)
+    fallback_in_docstring = False
+
     for i, line in enumerate(lines, start=1):
         stripped = line.lstrip()
-        # Coarse docstring tracker (NOT precise; misses single-line and
-        # complicated nested cases — acceptable for a baseline pass).
-        if stripped.startswith('"""') or stripped.startswith("'''"):
-            in_docstring = not in_docstring
+        # AST-level skip
+        if i in docstring_lines:
             continue
-        if in_docstring:
-            continue
+        # Fallback coarse tracker (only fires if AST parse failed and
+        # docstring_lines is empty — kept for safety).
+        if not docstring_lines:
+            if stripped.startswith('"""') or stripped.startswith("'''"):
+                fallback_in_docstring = not fallback_in_docstring
+                continue
+            if fallback_in_docstring:
+                continue
         if any(stripped.startswith(prefix) for prefix in skip_lines_starting_with):
             continue
         for op_name in operators:

@@ -46,16 +46,38 @@ import pytest
 # when a new @dataclass(frozen=True) class is added intentionally;
 # REMOVE only with explicit substrate-design review.
 EXPECTED_FROZEN_CLASSES: List[str] = [
+    # bind_eval
+    "sigma_kernel.bind_eval.Binding",
+    "sigma_kernel.bind_eval.CostModel",
+    "sigma_kernel.bind_eval.Evaluation",
+    # coordinate_chart
+    "sigma_kernel.coordinate_chart.CanonicalizationProtocol",
     "sigma_kernel.coordinate_chart.CoordinateChart",
+    # exclusion_certificate (Boundary added fire #53; was missed in fire #50)
+    "sigma_kernel.exclusion_certificate.Boundary",
     "sigma_kernel.exclusion_certificate.ExclusionCertificate",
     "sigma_kernel.exclusion_certificate.ExclusionClaim",
     "sigma_kernel.exclusion_certificate.RegionSpec",
     "sigma_kernel.exclusion_certificate.ReplayInfo",
     "sigma_kernel.exclusion_certificate.TriangulationPathRef",
     "sigma_kernel.exclusion_certificate.VerifierSet",
+    # method_spec
     "sigma_kernel.method_spec.DriftChannel",
     "sigma_kernel.method_spec.MethodSpec",
+    # operator_portability
     "sigma_kernel.operator_portability.OperatorPortabilityCertificate",
+    "sigma_kernel.operator_portability.PortabilityEvidence",
+    "sigma_kernel.operator_portability.PortabilityReplay",
+    # residual_benchmark
+    "sigma_kernel.residual_benchmark.BenchmarkEntry",
+    # residuals
+    "sigma_kernel.residuals.Residual",
+    "sigma_kernel.residuals.SpectralVerdict",
+    # sigma_kernel
+    "sigma_kernel.sigma_kernel.Capability",
+    "sigma_kernel.sigma_kernel.Symbol",
+    "sigma_kernel.sigma_kernel.VerdictResult",
+    # triangulation_protocol
     "sigma_kernel.triangulation_protocol.TriangulationPath",
     "sigma_kernel.triangulation_protocol.TriangulationResult",
 ]
@@ -97,13 +119,15 @@ def test_class_remains_frozen(qualified_name: str):
 
 
 def test_manifest_count_matches_baseline():
-    """The manifest must contain at least the 12 classes from the
-    fire-#50 baseline. Removing entries is a contract change requiring
-    review."""
-    assert len(EXPECTED_FROZEN_CLASSES) >= 12, (
+    """The manifest must contain at least the 25 classes enumerated by
+    fire #53 (was 12 in fire #50; expanded after Lane 16 surfaced
+    `Boundary` as a missed entry). Removing entries is a contract
+    change requiring review."""
+    assert len(EXPECTED_FROZEN_CLASSES) >= 25, (
         f"Manifest shrunk below baseline ({len(EXPECTED_FROZEN_CLASSES)} "
-        f"< 12). Remove an entry only with explicit substrate-design "
-        f"review per fire #50 ticket T-2026-05-08-ST-fire50-001."
+        f"< 25). Remove an entry only with explicit substrate-design "
+        f"review per fire #50 ticket T-2026-05-08-ST-fire50-001 "
+        f"(updated baseline fire #53 ticket T-2026-05-08-ST-fire53-001)."
     )
 
 
