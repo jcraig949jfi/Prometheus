@@ -6,6 +6,59 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #56 — 2026-05-09 (§II Rank Zoo: 4th saturation confirmation)
+
+**Coordination note:** parallel-instance commit `547b849e` ("Full-arc session close 2026-05-07 → 2026-05-09: 12-fire consolidated journal") landed during my session-summary work. No conflict — different fire-numbering scheme. My commit `266fbe33` (session summary + journal) appended cleanly.
+
+**Lanes selected:** 12 (catalog entry #16 — Subrank-rank duality / asymptotic spectrum, §II Rank Zoo) + 11 (canon-fuzz fresh seed 20260509_01).
+
+Lane 12 choice: §II is the most abstract section pulled to date (Strassen's monotone classification, semiring homomorphisms). Tests whether 5-tier model handles abstract algebraic structures or surfaces a sixth tier.
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_56_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_56_results.json`.
+
+### Lane 12 — Asymptotic spectrum probe: 5-TIER MODEL HOLDS
+
+| Encoding attempt | Verdict |
+|---|---|
+| 1. Single monotone as MethodSpec | TIER_A_REFINEMENT — SemiringHomomorphism primitive needed (carry algebraic properties) |
+| 2. Asymptotic spectrum as substrate object | TIER_A_TIER_C_COMPOSITION — CoordinateChart + MomentPolytope existing primitives compose |
+| 3. Complete classification claim (no further monotones) | TIER_B_FITS — same asymmetric-existential pattern; FunctionalWitness as new subtype |
+| 4. omega = 2 implication chain | EXISTING_OPCODES_FIT — REWRITE/EQUIV handle without new primitive |
+
+### FOURTH independent saturation confirmation
+
+| Fire | Section | Catalog entry | Outcome |
+|---|---|---|---|
+| #45 | V identifiability | #40 | 5-tier holds; refinements (uniqueness annotation, structural_inequality_certificate, GenericityAlmostEverywhereCert) |
+| #49 | III Waring | #22 | 5-tier holds; refinements (SymmetricTensor flag, WaringDecompositionWitness Tier B subtype #7) |
+| #52 | VI Numerical | #43 | 5-tier holds; refinement (InfimalWitness Tier B subtype #8) |
+| **#56** | **II Rank Zoo** | **#16** | **5-tier holds; refinements (SemiringHomomorphism Tier A, FunctionalWitness Tier B subtype #9)** |
+
+Post-pivot matrix-filling has produced ONLY refinements (no new tiers) since fire #45. **Saturation is now overdetermined.** 4 distinct sections + ranging from concrete (#22 permanent) to abstract (#16 spectrum) all fit cleanly.
+
+### Tier B subtypes after fire #56 (now 9)
+
+1. RankDecompositionWitness (#38)
+2. ContractionOrderWitness (#39)
+3. IsomorphismCertificate (#40)
+4. LimitWitness/BorderRankWitness (#41)
+5. RepresentationTheoreticWitness (#44)
+6. structural_inequality_certificate (#45)
+7. WaringDecompositionWitness (#49)
+8. InfimalWitness (#52)
+9. **FunctionalWitness (#56)** — function value + monotonicity proof + multiplicativity proof + additivity proof
+
+### Lane 11 — canon-fuzz fresh seed: 13 passed (73.29s)
+
+### Substrate-tester observation
+
+Four saturation confirmations across §V/§III/§VI/§II — different mathematical flavors (identifiability, Waring decomposition, numerical approximation, rank-zoo abstraction). The 5-tier model is doctrinally robust. Future Lane 12 fires can continue at low cadence to fill remaining sections (§XI Specific Tensor Families is the last unpulled), but contributing scope guidance has plateaued.
+
+Filed `T-2026-05-09-ST-fire56-001` (P3-low) documenting the 4th confirmation + the 2 new refinements (SemiringHomomorphism Tier A, FunctionalWitness Tier B subtype #9).
+
+---
+
 ## Fire #55 — 2026-05-09 (RESOLVED ST-fire54-002 — triangulation_protocol gaps)
 
 **Coordination note:** no new commits between fire #54 and fire #55. Fire #55 closes the 4 surviving mutations from fire #54's `triangulation_protocol.py` Lane 16 sweep.

@@ -1,0 +1,63 @@
+{
+  "fire": 56,
+  "posture": "lower-cadence: \u00a7II Rank Zoo matrix-filling + canon-fuzz regression",
+  "lanes": [
+    12,
+    11
+  ],
+  "lane_12": {
+    "lane": "12_catalog_pulled_asymptotic_spectrum_probe",
+    "catalog_entry": "#16 Subrank-rank duality / asymptotic spectrum description",
+    "section": "II. The Rank Zoo: Alternative Rank Notions",
+    "encoding_attempts": [
+      {
+        "probe": "encode_single_monotone",
+        "attempt": "A monotone is a function phi: T -> R+ that respects the asymptotic spectrum's restriction preorder T <= S => phi(T) <= phi(S), is multiplicative under tensor product phi(T (x) S) = phi(T) * phi(S), and additive under direct sum phi(T (+) S) = phi(T) + phi(S). Could encode as a MethodSpec (engine='compute_monotone', strategy='quantum_functional') with the function as substrate-grade callable.",
+        "tier_classification": "MIXED \u2014 MethodSpec covers the COMPUTATION (call the monotone on a tensor) but loses the ALGEBRAIC PROPERTIES (monotonicity / multiplicativity / additivity). Substrate treats it as a black-box callable; can't verify or exploit the semiring-homomorphism structure. Tier-A refinement: SemiringHomomorphism / MonotoneFunctional as a property-carrying primitive.",
+        "verdict": "TIER_A_REFINEMENT \u2014 SemiringHomomorphism primitive needed"
+      },
+      {
+        "probe": "encode_asymptotic_spectrum_as_object",
+        "attempt": "Strassen's asymptotic spectrum is a TOPOLOGICAL SPACE (specifically a compact convex subset of R^N for N = number of monotones) of which each known point is a specific monotone. The spectrum itself is a substrate-grade object \u2014 could it be a CoordinateChart over a domain='asymptotic_spectrum'?",
+        "tier_classification": "PARTIAL \u2014 CoordinateChart can register the spectrum as a named region with axes='monotones'. But the spectrum's convex-geometric structure (extreme points, supporting hyperplanes, faces) needs Tier C MomentPolytope-like primitives. The spectrum's POINTS are a different shape from the spectrum's CONVEX GEOMETRY. Two-tier composition: Tier A (CoordinateChart for the spectrum) + Tier C (MomentPolytope for the convex structure).",
+        "verdict": "TIER_A_TIER_C_COMPOSITION \u2014 existing primitives compose"
+      },
+      {
+        "probe": "encode_complete_classification_claim",
+        "attempt": "The OPEN problem: 'the known monotones (matrix flattenings, support functionals, Razborov, slice rank, quantum functionals) constitute the COMPLETE list.' Equivalently: no new monotone can be constructed. This is a Tier-B-style negative existential ('no further monotone exists'). Substrate's ExclusionCertificate covers.",
+        "tier_B_fit": "FITS \u2014 the classification claim's negative direction is a natural ExclusionCertificate. The positive direction (constructing a NEW monotone) would be Tier-B ConstructiveExistenceWitness with a witness type = FunctionalWitness (a callable + monotonicity proof + multiplicativity proof + additivity proof). Same asymmetric-existential pattern as fires #38-#41 + #45.",
+        "verdict": "TIER_B_FITS \u2014 same asymmetric-existential pattern; FunctionalWitness as new subtype"
+      },
+      {
+        "probe": "encode_omega_2_implication_chain",
+        "attempt": "If the asymptotic spectrum is fully characterized AND the subrank/rank gap closes for matrix-mult tensor M<n>, then omega = 2. This is a CHAIN OF IMPLICATIONS across multiple substrate claims. Could be encoded via REWRITE/EQUIV opcodes (claim A & claim B => claim C).",
+        "tier_existing_fit": "FITS \u2014 REWRITE/EQUIV (existing kernel opcodes) handle implication chains. Tier B subtypes act as the witness leaves; REWRITE chains them into a TheoremGraph (implicit, not as a new primitive). Substrate already supports this composition.",
+        "verdict": "EXISTING_OPCODES_FIT \u2014 REWRITE/EQUIV handle implication chain"
+      }
+    ],
+    "verdict": "5_TIER_MODEL_HOLDS \u2014 refinements only; saturation overdetermined",
+    "capability_gaps_identified": [
+      {
+        "primitive": "SemiringHomomorphism / MonotoneFunctional (Tier A refinement)",
+        "purpose": "carry algebraic properties (monotonicity, multiplicativity, additivity) of substrate-grade callables; verifiable not just runnable",
+        "needed_for": "Strassen's asymptotic spectrum (#16), quantum functionals (#17), semiring-homomorphism arguments across \u00a7II",
+        "tier_classification": "Refinement of MethodSpec/Tier A; could be specialization or wrapper"
+      },
+      {
+        "primitive": "FunctionalWitness (Tier B subtype #9)",
+        "purpose": "constructive witness for 'this callable is a valid monotone' \u2014 function value + monotonicity proof + multiplicativity proof + additivity proof",
+        "needed_for": "Strassen's monotone classification (#16), border-apolarity functional certificates (\u00a7I), spectral functionals (\u00a7VIII)",
+        "tier_classification": "Specialization of ConstructiveExistenceWitness; brings Tier B subtypes to 9 (after fire #52's InfimalWitness #8)"
+      }
+    ],
+    "saturation_note": "FOURTH independent saturation confirmation (after fires #45 + #49 + #52). \u00a7II Rank Zoo's most abstract entry \u2014 Strassen's asymptotic spectrum, monotone classification \u2014 fits via Tier A refinement (SemiringHomomorphism), Tier B subtype #9 (FunctionalWitness), and existing REWRITE/EQUIV for implication chains. No new tier; no new structural family. Saturation is now overdetermined.",
+    "tier_summary_after_10_post_pivot_fires": "Tier A: 4 primitives + 2 refinements (SymmetricTensor #49, SemiringHomomorphism #56)\nTier B: 9 subtypes (added FunctionalWitness #56) + cross-tier composition with Tier D\nTier C: 3 primitives\nTier D: 5 primitives + 1 specialization\nTier E: 3 primitives\n\nPost-pivot matrix-filling at lower cadence has produced only refinements (no new tiers) since fire #45. The 5-tier model is doctrinally robust."
+  },
+  "lane_11": {
+    "lane": "11_canon_fuzz_smoke",
+    "seed": "20260509_01",
+    "returncode": 0,
+    "summary_line": "13 passed in 73.29s (0:01:13)",
+    "verdict": "PASS"
+  }
+}
