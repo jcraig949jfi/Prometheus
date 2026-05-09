@@ -6,6 +6,58 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #58 — 2026-05-09 (Tier C MomentPolytope test-suite stub — 3rd of 5)
+
+**Coordination note:** no new commits between fire #57 and fire #58. Fire #58 executes against the Aporia-ratified plan: ship the next meta-primitive test-suite stub.
+
+**Lanes selected:** 1 (Tier C `MomentPolytope/SecantVarietyEquation` test-suite stub) + 11 (canon-fuzz fresh seed 20260509_02).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_58_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_58_results.json`.
+
+### Lane 1 — Tier C test-suite stub: 17 tests, 6 classes
+
+Target: `sigma_kernel/tests/test_moment_polytope_stub.py` (267 lines).
+
+| Class | Tests | Coverage |
+|---|---:|---|
+| `TestSecantVarietyContract` | 4 | construction from format + content-addressed id + dimension/codimension consistency |
+| `TestSecantVarietyEquationContract` | 3 | known equation kinds (Young flattening, border apolarity, Strassen) + scalar evaluation + inside/outside discrimination |
+| `TestMomentPolytopeContract` | 4 | construction + vertices + closed-convex containment + tensor-image membership |
+| `TestApolarityWitnessContract` | 3 | apolar ideal payload + border-rank lower-bound implication + verification roundtrip |
+| `TestTierBTierCComposition` | 2 | catalog #34 membership decision via LimitWitness (positive) + defining equation (negative) |
+| `TestTierATierCComposition` | 1 | TensorNetwork → σ_r projection (double-skipped until Tier A stub ships) |
+
+**Module-level `skipif` guard** lifts when `sigma_kernel/moment_polytope.py` lands. Helper builders (`_make_rank_2_tensor`, `_make_rank_4_tensor`, `_make_apolarity_witness`) are `NotImplementedError` placeholders.
+
+**Pytest collection:** 17 skipped in 0.14s.
+
+### Stub status after fire #58 (3 of 5 meta-primitives covered)
+
+| Meta-primitive | Tier | Status | Tests | Source fire |
+|---|---|---|---:|---|
+| TensorNetwork | A++ | not yet shipped | – | – |
+| ConstructiveExistenceWitness/StructuredEquivalenceClass | B | shipped | 21 | #47 |
+| **MomentPolytope/SecantVarietyEquation** | **C** | **shipped (this fire)** | **17** | **#58** |
+| GenericityAlmostEverywhereCert | D | shipped | 17 | #48 |
+| RepresentationTheoreticInvariant | E | not yet shipped | – | – |
+
+**Total stubbed contract tests for Techne pickup: 55** (21 + 17 + 17).
+
+### Lane 11 — canon-fuzz fresh seed: 13 passed (15.73s)
+
+### Substrate-tester observation
+
+Three of five meta-primitive stubs shipped. Future fires can finish the set:
+- **Fire #59 (next):** Tier A `TensorNetwork` test-suite stub (most foundational; extends CoordinateChart with index-contraction structure)
+- **Fire #60:** Tier E `RepresentationTheoreticInvariant` test-suite stub (Schur/Kronecker/plethysm certificates)
+
+After fires #59-#60 complete the set, substrate-tester transitions to maintenance + opportunistic finding mode (Lane 16 sweeps on remaining sigma_kernel/* modules; §XI Specific Tensor Families pull; quiet-tick if no new findings emerge).
+
+The five test-suite stubs together form the contract specification Techne's Phase-2 contract-change window must satisfy. Once Techne ships the 5 meta-primitives, all ~85 stubbed tests un-skip simultaneously and validate the cross-tier composition.
+
+---
+
 ## Fire #57 — 2026-05-09 (APORIA RESPONSE LANDED — pivot ACCEPTED + 5 meta-primitives named)
 
 **Coordination note:** New commit `370b28c6` from Aporia / James (2026-05-09 02:14): **"Restart decisions 2026-05-09 + Gemini tensor priority dispatch"** — the long-pending response on the substrate-tester strategic-coordination chain. Full doc at `pivot/restart_decisions_2026-05-09.md`.

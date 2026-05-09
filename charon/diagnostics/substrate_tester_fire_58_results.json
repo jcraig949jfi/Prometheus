@@ -1,0 +1,42 @@
+{
+  "fire": 58,
+  "posture": "Tier C MomentPolytope/SecantVarietyEquation test-suite stub (3rd of 5 meta-primitive stubs)",
+  "lanes": [
+    1,
+    11
+  ],
+  "lane_1": {
+    "lane": "1_tier_C_stub",
+    "target_path": "sigma_kernel/tests/test_moment_polytope_stub.py",
+    "filed": true,
+    "n_lines": 293,
+    "n_test_classes": 6,
+    "n_test_methods": 17,
+    "pytest_collect_summary": "17 skipped in 0.14s",
+    "pytest_returncode": 0,
+    "design_coverage": [
+      "TestSecantVarietyContract (4): construction + content-addressed id + dimension/codimension consistency",
+      "TestSecantVarietyEquationContract (3): known equation kinds (Young flattening / border apolarity / Strassen) + scalar evaluation + inside/outside discrimination",
+      "TestMomentPolytopeContract (4): construction + vertices + closed-convex containment + tensor-image membership",
+      "TestApolarityWitnessContract (3): apolar ideal payload + border-rank lower-bound implication + verification roundtrip",
+      "TestTierBTierCComposition (2): catalog #34 membership decision via LimitWitness (positive) + defining equation (negative)",
+      "TestTierATierCComposition (1): TensorNetwork \u2192 \u03c3_r projection"
+    ],
+    "verdict": "PASS"
+  },
+  "lane_11": {
+    "lane": "11_canon_fuzz_smoke",
+    "seed": "20260509_02",
+    "returncode": 0,
+    "summary_line": "13 passed in 15.73s",
+    "verdict": "PASS"
+  },
+  "stub_status_after_fire_58": {
+    "Tier_A_TensorNetwork": "not yet shipped",
+    "Tier_B_ConstructiveExistenceWitness_StructuredEquivalenceClass": "shipped fire #47 (21 tests)",
+    "Tier_C_MomentPolytope_SecantVarietyEquation": "shipped fire #58 (17 tests)",
+    "Tier_D_GenericityAlmostEverywhereCert": "shipped fire #48 (17 tests)",
+    "Tier_E_RepresentationTheoreticInvariant": "not yet shipped"
+  },
+  "total_stubbed_tests_for_techne": 55
+}
