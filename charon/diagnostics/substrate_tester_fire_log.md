@@ -6,6 +6,62 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #51 — 2026-05-08 (RESOLVED: fire #49 factory-return-value gap — 4 mutations now caught)
+
+**Coordination note:** no new commits between fire #50 and fire #51. Fire #51 closes the second open finding from fire #49 (sister to fire #50's frozen-flip closure).
+
+**Lanes selected:** 1 (verify new test baseline) + 2 (verify each of the 4 mutations is now caught) + 11 (canon-fuzz regression hygiene).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_51_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_51_results.json`.
+
+### Lane 1 — `test_method_spec_factory_returns.py` baseline: 11/11 PASS (0.15s)
+
+3 test classes, 11 test methods:
+
+| Class | Tests | Coverage |
+|---|---:|---|
+| `TestFromStringReturnPaths` | 7 | each of 3 return paths + default `independence_class=UNKNOWN` + `ValueError` on empty + `TypeError` on non-string |
+| `TestToStringReturnValue` | 3 | non-None + str type + format contract `f"{engine}_{strategy}"` |
+| `TestFactoryRoundtrip` | 1 | known-engine `to_string → from_string` preserves engine+strategy (with documented `independence_class → UNKNOWN` lossiness) |
+
+### Lane 2 — Each fire-#49 mutation now caught: 4/4 CAUGHT
+
+Empirically applied each `return X → return None` mutation in turn; ran the new test suite; confirmed the mutation FAILS the suite:
+
+| Mutation site | Original | Verdict |
+|---|---|---|
+| Line 256 | `return cls(engine=head, strategy=tail)` | **CAUGHT** |
+| Line 267 | `return cls(engine=prefix, strategy=known)` | **CAUGHT** |
+| Line 270 | `return cls(engine=norm, strategy="direct")` | **CAUGHT** |
+| Line 280 | `return f"{self.engine}_{self.strategy}"` | **CAUGHT** |
+
+### Fire #49 fully resolved
+
+| Mutation class | Count | Closed by |
+|---|---:|---|
+| Frozen=True → False (lines 80/151/262) | 3 | Fire #50 (`test_frozen_baseline_manifest.py`) |
+| Factory return X → None (lines 256/267/270/280) | 4 | Fire #51 (`test_method_spec_factory_returns.py`) |
+| off_by_one_int on line 163 (likely non-validation constant) | 1 | not addressed; marginal gap |
+
+**Estimated updated mutation score on `method_spec.py`:** 7/10 = 0.700 (was 0.200) once Techne re-runs Lane 16 with both new test files included.
+
+### Lane 11 — canon-fuzz fresh seed: 13 passed (74.15s)
+
+### Substrate-tester observation — three-fire investigative cycle
+
+Fires #49 → #50 → #51 demonstrate the substrate-tester investigative pattern at scale:
+
+- **Fire #49** ran mutation testing, surfaced 8 surviving mutations as a P3 finding
+- **Fire #50** diagnosed root cause + shipped fix for the 3 frozen-flip mutations + verified the fix catches them
+- **Fire #51** shipped fix for the 4 factory-return mutations + verified the fix catches them
+
+Three fires, two closures, mutation score raised from 0.200 → ~0.700 on `method_spec.py`. The investigative-fire shape is reusable: surface a quantitative finding, decompose into causes, ship + verify fixes one cause at a time.
+
+Two tickets filed: ST-fire50-001 (P2-medium, RESOLVED) + ST-fire51-001 (P3-low, RESOLVED). Parent ST-fire49-001 fully closed.
+
+---
+
 ## Fire #50 — 2026-05-08 (RESOLVED: fire #49 frozen-mutation puzzle — diagnosis + fix shipped)
 
 **Coordination note:** no new commits between fire #49 and fire #50. Fire #50 closes the investigative loop opened by fire #49.

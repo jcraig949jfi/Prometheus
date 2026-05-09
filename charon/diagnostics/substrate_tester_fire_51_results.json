@@ -1,0 +1,47 @@
+{
+  "fire": 51,
+  "posture": "closes second fire-#49 finding (factory-return-value gap)",
+  "lanes": [
+    1,
+    2,
+    11
+  ],
+  "lane_1": {
+    "lane": "1_baseline_passes",
+    "test_file": "sigma_kernel/tests/test_method_spec_factory_returns.py",
+    "returncode": 0,
+    "summary_line": "11 passed in 0.15s",
+    "verdict": "PASS"
+  },
+  "lane_2": {
+    "lane": "2_each_mutation_caught",
+    "mutations_tested": 4,
+    "n_caught": 4,
+    "results": [
+      {
+        "marker": "line_256_known_engine_prefix",
+        "verdict": "CAUGHT"
+      },
+      {
+        "marker": "line_267_known_strategy_suffix",
+        "verdict": "CAUGHT"
+      },
+      {
+        "marker": "line_270_fallback",
+        "verdict": "CAUGHT"
+      },
+      {
+        "marker": "line_280_to_string",
+        "verdict": "CAUGHT"
+      }
+    ],
+    "verdict": "PASS"
+  },
+  "lane_11": {
+    "lane": "11_canon_fuzz_smoke",
+    "seed": "20260508_13",
+    "returncode": 0,
+    "summary_line": "13 passed in 74.15s (0:01:14)",
+    "verdict": "PASS"
+  }
+}
