@@ -1,0 +1,50 @@
+{
+  "fire": 54,
+  "posture": "closes ST-fire52-002 + production-grade Lane 16 demo on triangulation_protocol",
+  "lanes": [
+    1,
+    2,
+    16
+  ],
+  "lane_1": {
+    "lane": "1_baseline_passes",
+    "test_file": "sigma_kernel/tests/test_exclusion_certificate_returns.py",
+    "returncode": 0,
+    "summary_line": "7 passed in 12.55s",
+    "verdict": "PASS"
+  },
+  "lane_2": {
+    "lane": "2_mutation_caught",
+    "mutation": "line 451: `return self.strength in NEGATIVE_SPACE_FEEDING_STRENGTHS` -> `return None`",
+    "caught": true,
+    "n_test_failures": 7,
+    "verdict": "PASS"
+  },
+  "lane_16": {
+    "lane": "16_triangulation_protocol_sweep",
+    "target": "sigma_kernel/triangulation_protocol.py",
+    "kill_counts": {
+      "killed": 5,
+      "survived": 5,
+      "errored": 0
+    },
+    "score": 0.5,
+    "summary_lines": [
+      "[mutation 1/10] survived @ triangulation_protocol.py:149:return_constant_None (19.9s)",
+      "[mutation 2/10] killed @ triangulation_protocol.py:196:boolean_not (20.2s)",
+      "[mutation 3/10] survived @ triangulation_protocol.py:281:comparison_flip (20.4s)",
+      "[mutation 4/10] killed @ triangulation_protocol.py:281:return_constant_None (19.7s)",
+      "[mutation 5/10] survived @ triangulation_protocol.py:292:comparison_flip (20.2s)",
+      "[mutation 6/10] survived @ triangulation_protocol.py:292:return_constant_None (20.1s)",
+      "[mutation 7/10] killed @ triangulation_protocol.py:300:boolean_not (20.4s)",
+      "[mutation 8/10] killed @ triangulation_protocol.py:374:return_constant_None (19.9s)",
+      "[mutation 9/10] survived @ triangulation_protocol.py:388:comparison_flip (20.5s)",
+      "[mutation 10/10] killed @ triangulation_protocol.py:388:off_by_one_int (20.3s)",
+      "[mutation] score=0.500 killed=5 survived=5 errored=0 skipped=0",
+      "[mutation] report written: F:\\Prometheus\\prometheus_math\\MUTATION_TESTING_BASELINE.md"
+    ],
+    "framework_status": "post-fire-#53 production-grade (AST filter + expanded manifest)",
+    "no_docstring_FPs": true,
+    "verdict": "INFORMATIVE"
+  }
+}

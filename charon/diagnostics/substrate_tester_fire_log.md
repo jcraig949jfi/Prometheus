@@ -6,6 +6,70 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #54 — 2026-05-08 (RESOLVED ST-fire52-002 + production-grade Lane 16 demo)
+
+**Coordination note:** no new commits between fire #53 and fire #54. Fire #54 closes the third open ticket from the fire-#49 → #50/#51/#52/#53 investigative chain, and demonstrates the post-#53 production-grade mutation-testing framework on a fresh module.
+
+**Lanes selected:** 1 (verify new test baseline) + 2 (verify mutation caught) + 16 (Lane 16 sweep on `triangulation_protocol.py`).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_54_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_54_results.json`.
+
+### Lane 1 — `test_exclusion_certificate_returns.py` baseline: 7/7 PASS (12.55s)
+
+1 test class, 7 test methods covering `feeds_negative_space_axis()` return-value contract:
+
+| Test | Coverage |
+|---|---|
+| `test_COMPLETE_feeds` | strength=COMPLETE → True |
+| `test_BOUNDED_COMPLETE_feeds` | strength=BOUNDED_COMPLETE → True |
+| `test_CONDITIONAL_does_not_feed` | strength=CONDITIONAL → False |
+| `test_HEURISTIC_does_not_feed` | strength=HEURISTIC → False |
+| `test_DIAGNOSTIC_ONLY_does_not_feed` | strength=DIAGNOSTIC_ONLY → False |
+| `test_return_type_is_bool` | parametrized over all 5; isinstance(bool) — double-guards return_constant_None |
+| `test_consistent_with_NEGATIVE_SPACE_FEEDING_STRENGTHS_constant` | parametrized over all 5; method's return must match module-level constant |
+
+### Lane 2 — Fire-#52 mutation now caught: PASS (7 test failures)
+
+Empirically applied `return self.strength in NEGATIVE_SPACE_FEEDING_STRENGTHS → return None` mutation. **All 7 tests fail** as expected. Mutation no longer survives.
+
+### Lane 16 — Production-grade sweep on `triangulation_protocol.py`: score 0.500 (fresh baseline)
+
+10 mutations, 5 killed, 5 survived. **NO docstring false positives** — the post-#53 AST filter is doing its job. Every survivor is on real code.
+
+| Site | Operator | Context | Suggested fix |
+|---|---|---|---|
+| Line 149 | `return_constant_None` | `INDEPENDENCE_TO_METHOD_CLASS[key]` lookup | test helper returns expected MethodClass per key |
+| Line 281 | `comparison_flip` | `self.method_class == MethodClass.PROOF_BEARING` | parametrized test across all MethodClass values |
+| Line 292 | `comparison_flip` + `return_constant_None` (both survived) | `self.method_class != MethodClass.EXPLORATORY` | parametrized test |
+| Line 388 | `comparison_flip` | `len(paths_tuple) < 3` — substrate v2.3 §6.4 triangulation threshold | threshold-crossing test (load-bearing constraint) |
+
+**Framework demonstration successful:** first Lane 16 fire under the post-#53 framework produces directly-actionable findings. No manual triage required to separate docstring false positives. Confirms ST-fire53-001 closure delivered promised production-grade quality.
+
+### Two tickets filed
+
+1. **`T-2026-05-08-ST-fire54-001`** (P3-low, RESOLVED) — closes ST-fire52-002. Documents fix + verification + minor finding (TriangulationPathRef signature drift caught during test setup).
+2. **`T-2026-05-08-ST-fire54-002`** (P3-low, NEW findings) — 5 surviving mutations on triangulation_protocol.py with suggested fixes. Could ship as `test_triangulation_protocol_returns.py` (fire-#54-pattern, ~30 lines).
+
+### Substrate-tester observation — investigative chain summary
+
+Fire-#49 → #50/#51/#52/#53/#54 is the longest investigative chain to date:
+
+| Fire | Action | Outcome |
+|---|---|---|
+| #49 | Lane 16 found 8 surviving mutations on method_spec.py | P3 ticket: "frozen-mutation puzzle" + "factory-return gap" |
+| #50 | diagnose frozen puzzle, ship manifest fix | RESOLVED 3 frozen mutations |
+| #51 | ship factory-return tests | RESOLVED 4 factory-return mutations |
+| #52 | Lane 16 on exclusion_certificate found 7 survivors | 1 P3: feeds_negative_space_axis gap; 1 P3: framework AST filter |
+| #53 | ship AST filter + expand manifest | RESOLVED framework FPs + manifest gap; doubled exclusion_certificate score |
+| #54 | ship feeds_negative_space_axis test, fresh Lane 16 demo | RESOLVED ST-fire52-002; production-grade demo confirms framework quality |
+
+**Tickets RESOLVED in this chain: ST-fire49-001 (parent), ST-fire50-001, ST-fire51-001, ST-fire52-002, ST-fire52-003, ST-fire53-001, ST-fire54-001.** One open: ST-fire54-002 (new findings, P3-low).
+
+The investigative-fire pattern is durable. Future Lane 16 fires will produce immediately-actionable findings without per-fire triage overhead.
+
+---
+
 ## Fire #53 — 2026-05-08 (RESOLVED ST-fire52-003 + extended fire #50 manifest)
 
 **Coordination note:** no new commits between fire #52 and fire #53. Fire #53 closes another investigative loop and surfaces a sister finding.
