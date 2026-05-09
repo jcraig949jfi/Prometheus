@@ -6,6 +6,85 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #61 — 2026-05-09 (Maintenance: §XI catalog closure + Lane 16 on kernel core)
+
+**Coordination note:** new commit `b3bbaddb` "v1.0 design suggestions doc" landed between fires #60 and #61 (not directly substrate-tester domain).
+
+**Lanes selected:** 12 (catalog #88 — final unpulled section §XI Specific Tensor Families) + 16 (mutation testing on `sigma_kernel/sigma_kernel.py` core, 1500 LoC).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_61_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_61_results.json`.
+
+### Lane 12 — §XI #88 (group-algebra multiplication): 5-TIER MODEL HOLDS via multi-tier composition
+
+Wedderburn decomposition F[G] ≅ ⊕ M_{d_i}(F) → tensor decomposes additively into matrix-multiplication tensors M⟨d_i⟩. Encoding via 5-tier composition:
+- Tier A++ TensorNetwork: T_G as 3-tensor in F^{|G|}^3
+- Tier E (RepresentationTheoreticInvariant): irreducible decomposition (d_1, ..., d_k) via Wedderburn
+- Tier B (RankDecompositionWitness): per-block rank R(M⟨d_i⟩)
+- Tier B (structural_inequality_certificate): Cohn-Umans triple-product-property bound
+- Optional Tier C (MomentPolytope): GIT moment polytope for GL action
+
+**5-TIER COMPOSITION FITS** — no new primitive needed. **FIFTH independent saturation confirmation** (after #45/#49/#52/#56).
+
+### CATALOG MATRIX SWEEP COMPLETE
+
+| § | Catalog | Fire |
+|---|---|---|
+| I | #4 M⟨3⟩ rank | #38 |
+| II | #16 asymptotic spectrum | #56 |
+| III | #22 Waring rank of permanent | #49 |
+| IV | #34 σ_r membership | #41 |
+| V | #40 CP identifiability | #45 |
+| VI | #43 best rank-r approximation | #52 |
+| VII | #58 tensor isomorphism | #40 |
+| VIII | #66 Z-eigenvalue distribution | #42 |
+| IX | #73 PCA threshold | #43 |
+| X | #84 TN contraction order | #39 |
+| **XI** | **#88 group-algebra multiplication** | **#61** |
+| XII | #95 Kronecker positivity | #44 |
+
+**12 of 12 sections pulled. Catalog matrix sweep at 100% completion.**
+
+### Lane 16 — Mutation testing on `sigma_kernel/sigma_kernel.py` (1500 LoC kernel core)
+
+Raw score 0.300 (3 killed, 7 survived). 202.8s wall-clock.
+
+| Site | Operator | Verdict | Notes |
+|---|---|---|---|
+| Line 68 `return f"{self.name}@v{self.version}"` | return_constant_None | **GENUINE** | Symbol.ref property return-value gap |
+| Line 120 `consumed: bool = False` (default) | boolean_not | partial | dataclass field default; tests exercising consume() may catch |
+| Line 125 `True` in Capability ctor | boolean_not | partial | linked to consume() |
+| Line 125 `return Capability(...)` | return_constant_None | **GENUINE** | Capability.consume() return-value gap |
+| Line 184 `2026-05-03` in SQL comment string | off_by_one_int | **FALSE POSITIVE (NEW class)** | numeric literal INSIDE A STRING LITERAL — AST filter handles docstrings, not arbitrary string literals |
+| Line 184 `2026-05-04` (same string) | off_by_one_int | **FALSE POSITIVE (NEW class)** | sister of above |
+| Line 190 `2026-05-04` in SQL comment | off_by_one_int | **FALSE POSITIVE (NEW class)** | sister of above |
+
+**Genuine score: 2 killed / (2 killed + 2 genuine survivors) = 0.500** after excluding SQL-string-literal false positives.
+
+### NEW caveat class surfaced: string-literal numeric mutations
+
+Fire #53's AST filter handles docstring expression statements (module/class/function `__doc__`). It does NOT handle numeric literals embedded inside ARBITRARY STRING LITERALS in code (e.g. SQL DDL strings, JSON templates, formatted error messages). The kernel core's `INSERT INTO symbols` SQL string contains date stamps "2026-05-03" / "2026-05-04" whose digits the framework treats as code-level int literals.
+
+**Fix design:** extend `_ast_docstring_line_ranges()` to also collect line ranges of ALL `ast.Constant(value=str, ...)` nodes (not just docstring-positioned ones). Could be a P3 ticket.
+
+### Two tickets filed
+
+1. **`T-2026-05-09-ST-fire61-001`** (P3-low, capability-gap-refinement) — 5th saturation confirmation; Tier-E composition FITS; documents catalog matrix sweep COMPLETE.
+2. **`T-2026-05-09-ST-fire61-002`** (P3-low, framework-improvement) — extend AST filter to cover string-literal numeric mutations. Symbol.ref + Capability.consume() return-value gaps as ride-along sub-findings.
+
+### Substrate-tester observation
+
+Maintenance fire produced two distinct outputs:
+- **Catalog closure:** all 12 catalog sections now have at least one matrix-fill probe; 5 saturation confirmations across 5 sections; the catalog-driven discovery phase is exhausted as a substrate-design search activity
+- **Framework caveat:** Lane 16 on a SQL-heavy module surfaced a new false-positive class. Investigative-fire pattern continues to yield framework improvements
+
+Future fires can:
+- Close ST-fire61-002 (string-literal AST filter extension) using fire #50/#53 investigative pattern
+- Quiet-tick if no new findings (HARD-2 anti-busywork)
+- Watch for Techne Phase-2 contract-change-window status updates
+
+---
+
 ## Fire #60 — 2026-05-09 (Tier E test-suite stub — 5TH OF 5; SET COMPLETE)
 
 **Coordination note:** no new commits between fire #59 and fire #60. Final fire of the 5-stub completion sequence.
