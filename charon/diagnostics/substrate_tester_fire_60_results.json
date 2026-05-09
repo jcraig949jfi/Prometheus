@@ -1,0 +1,59 @@
+{
+  "fire": 60,
+  "posture": "Tier E test-suite stub (5th of 5 \u2014 CLOSES THE SET)",
+  "lanes": [
+    1,
+    2,
+    11
+  ],
+  "lane_1": {
+    "lane": "1_tier_E_stub",
+    "target_path": "sigma_kernel/tests/test_representation_theoretic_invariant_stub.py",
+    "filed": true,
+    "n_lines": 354,
+    "n_test_classes": 8,
+    "n_test_methods": 24,
+    "pytest_collect_summary": "24 skipped in 0.14s",
+    "pytest_returncode": 0,
+    "design_coverage": [
+      "TestPartitionContract (6): construction, validation, transpose involution, dominance order, content-addressed id",
+      "TestIrreducibleRepresentationContract (4): lookup by partition, hook-length dimension formula, trivial rep, sign rep",
+      "TestSymmetricFunctionContract (4): Schur basis, Hall inner product orthonormality, Littlewood-Richardson multiplication, omega involution",
+      "TestPlethysmContract (2): construction, known small case s_2[s_2]=s_4+s_(2,2)",
+      "TestKroneckerCoefficientContract (3): trivial, S_3 symmetry, non-negativity",
+      "TestSchurPositivityCertificateContract (2): positive function passes, negative coefficient fails",
+      "TestTierBTierEComposition (1): RepresentationTheoreticWitness consumes Tier E primitives (double-skipped)",
+      "TestCatalogCoverageSmoke (2): Kronecker decision (#95), Foulkes setup (#98)"
+    ],
+    "verdict": "PASS"
+  },
+  "lane_2": {
+    "lane": "2_full_5_stub_corpus_integration",
+    "n_stub_files": 5,
+    "files": [
+      "sigma_kernel/tests/test_constructive_existence_witness_stub.py",
+      "sigma_kernel/tests/test_distribution_object_stub.py",
+      "sigma_kernel/tests/test_moment_polytope_stub.py",
+      "sigma_kernel/tests/test_tensor_network_stub.py",
+      "sigma_kernel/tests/test_representation_theoretic_invariant_stub.py"
+    ],
+    "pytest_summary": "94 skipped in 0.25s",
+    "pytest_returncode": 0,
+    "verdict": "PASS"
+  },
+  "lane_11": {
+    "lane": "11_canon_fuzz_smoke",
+    "seed": "20260509_04",
+    "returncode": 0,
+    "summary_line": "13 passed in 16.62s",
+    "verdict": "PASS"
+  },
+  "stub_status_after_fire_60_COMPLETE_SET": {
+    "Tier_A_TensorNetwork": "shipped fire #59 (15 tests)",
+    "Tier_B_ConstructiveExistenceWitness_StructuredEquivalenceClass": "shipped fire #47 (21 tests)",
+    "Tier_C_MomentPolytope_SecantVarietyEquation": "shipped fire #58 (17 tests)",
+    "Tier_D_GenericityAlmostEverywhereCert": "shipped fire #48 (17 tests)",
+    "Tier_E_RepresentationTheoreticInvariant": "shipped fire #60 (24 tests)",
+    "total_stubbed_tests_for_techne": 94
+  }
+}

@@ -6,6 +6,75 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #60 — 2026-05-09 (Tier E test-suite stub — 5TH OF 5; SET COMPLETE)
+
+**Coordination note:** no new commits between fire #59 and fire #60. Final fire of the 5-stub completion sequence.
+
+**Lanes selected:** 1 (Tier E `RepresentationTheoreticInvariant` stub) + 2 (5-stub corpus integration check) + 11 (canon-fuzz fresh seed 20260509_04).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_60_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_60_results.json`.
+
+### Lane 1 — Tier E test-suite stub: 24 tests, 8 classes
+
+Target: `sigma_kernel/tests/test_representation_theoretic_invariant_stub.py`. Largest of the 5 stubs by test count — representation theory has more concrete computational contracts (hook-length formula, Hall inner product orthonormality, LR rule, plethysm small cases) than the more abstract foundational primitives.
+
+| Class | Tests | Coverage |
+|---|---:|---|
+| `TestPartitionContract` | 6 | construction, validation, transpose involution, dominance order, content-addressed id |
+| `TestIrreducibleRepresentationContract` | 4 | lookup, hook-length dimension formula, trivial rep dim=1, sign rep dim=1 |
+| `TestSymmetricFunctionContract` | 4 | Schur basis, Hall orthonormality, LR-rule multiplication, ω involution |
+| `TestPlethysmContract` | 2 | construction + known small case s_2[s_2] = s_4 + s_(2,2) |
+| `TestKroneckerCoefficientContract` | 3 | trivial g((2),(2),(2))=1, S_3 symmetry, non-negativity |
+| `TestSchurPositivityCertificateContract` | 2 | positive function passes, negative coefficient fails |
+| `TestTierBTierEComposition` | 1 | RepresentationTheoreticWitness consumes Tier E primitives (double-skipped) |
+| `TestCatalogCoverageSmoke` | 2 | Kronecker decision (#95), Foulkes setup (#98) |
+
+**Pytest collection:** 24 skipped in 0.14s.
+
+### Lane 2 — Full 5-stub corpus integration: PASS
+
+Ran all 5 meta-primitive stub files together: **94 skipped in 0.25s.** All collect cleanly under their respective module-level `skipif` guards. No import errors, no test-collection conflicts.
+
+### 5-STUB SET COMPLETE
+
+| Meta-primitive | Tier | Status | Tests | Source fire |
+|---|---|---|---:|---|
+| TensorNetwork | A++ | shipped | 15 | #59 |
+| ConstructiveExistenceWitness/StructuredEquivalenceClass | B | shipped | 21 | #47 |
+| MomentPolytope/SecantVarietyEquation | C | shipped | 17 | #58 |
+| GenericityAlmostEverywhereCert | D | shipped | 17 | #48 |
+| **RepresentationTheoreticInvariant** | **E** | **shipped (this fire)** | **24** | **#60** |
+| **TOTAL** | | | **94** | |
+
+The 5-stub corpus is the complete contract specification Techne's Phase-2 contract-change window must satisfy. Once Techne ships the 5 meta-primitives, all 94 stubbed tests un-skip simultaneously and validate the cross-tier composition.
+
+### Lane 11 — canon-fuzz fresh seed: 13 passed (16.62s)
+
+### Substrate-tester observation — set complete; transition to maintenance
+
+The 4-fire pivot/stub sequence (fires #46-#48 + #58-#60) is complete:
+
+- Fire #46: `pivot/substrate_v3_proposal_stub_2026-05-08.md` (250 lines, 11 sections)
+- Fire #47: Tier B stub (21 tests)
+- Fire #48: Tier D stub (17 tests)
+- Fire #58: Tier C stub (17 tests)
+- Fire #59: Tier A stub (15 tests)
+- Fire #60: Tier E stub (24 tests; SET COMPLETE)
+
+**Total handoff to Techne:** 1 design proposal doc + 5 test-suite stubs covering 94 contract tests across 35 test classes spanning all 5 meta-primitives + cross-tier composition.
+
+**Next-fire candidates (substrate-tester transitions to maintenance):**
+- §XI Specific Tensor Families (final unpulled catalog section) — single matrix-fill probe to close the catalog sweep
+- Lane 16 sweep on `sigma_kernel/sigma_kernel.py` core (1500 LoC; heaviest mutation-testing target; framework now production-grade)
+- Lane 16 sweep on `sigma_kernel/coordinate_chart.py` (small but load-bearing per substrate v2.3 §6.2 P0)
+- Quiet-tick if no new findings emerge (HARD-2 anti-busywork discipline)
+- Watch Aporia/Techne queues for new tickets / contract-change-window status updates
+
+The substrate-tester role's session-arc deliverables are now MAXIMAL for the current evidence base. Future fires execute against (a) Aporia/Techne pickup signals or (b) HARD-2 quiet-tick discipline.
+
+---
+
 ## Fire #59 — 2026-05-09 (Tier A++ TensorNetwork test-suite stub — 4th of 5)
 
 **Coordination note:** no new commits between fire #58 and fire #59. Continuing the planned 5-stub completion sequence.
