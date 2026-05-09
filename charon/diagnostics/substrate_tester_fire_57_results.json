@@ -1,0 +1,59 @@
+{
+  "fire": 57,
+  "posture": "process Aporia restart decisions; mark coordination chain RESOLVED",
+  "lanes": [
+    1,
+    2,
+    3
+  ],
+  "lane_1": {
+    "lane": "1_verify_decision_doc",
+    "doc_path": "pivot/restart_decisions_2026-05-09.md",
+    "doc_size_chars": 9891,
+    "meta_primitives_found": {
+      "TensorNetwork": true,
+      "ConstructiveExistenceWitness": true,
+      "GenericityAlmostEverywhereCert": true,
+      "RepresentationTheoreticInvariant": true,
+      "MomentPolytope": true
+    },
+    "phrases_found": {
+      "Substrate-Tester pivot": true,
+      "ACCEPTED": true,
+      "5-tier": true,
+      "RESOLVED-PIVOT-ACCEPTED": true
+    },
+    "verdict": "PASS"
+  },
+  "lane_2": {
+    "lane": "2_verify_ticket_status_updated",
+    "n_targets": 5,
+    "statuses": {
+      "T-2026-05-08-ST-fire41-002": "RESOLVED-PIVOT-ACCEPTED",
+      "T-2026-05-08-ST-fire42-002": "RESOLVED-PIVOT-ACCEPTED",
+      "T-2026-05-08-ST-fire43-002": "RESOLVED-PIVOT-ACCEPTED",
+      "T-2026-05-08-ST-fire44-002": "RESOLVED-PIVOT-ACCEPTED",
+      "T-2026-05-08-ST-fire45-002": "RESOLVED-PIVOT-ACCEPTED"
+    },
+    "all_resolved": true,
+    "verdict": "PASS"
+  },
+  "lane_3": {
+    "lane": "3_verify_ack_filed",
+    "target_id": "T-2026-05-09-ST-fire57-001",
+    "found_in_inbox": true,
+    "verdict": "PASS"
+  },
+  "aporia_response_summary": {
+    "decision_1_pivot": "ACCEPTED",
+    "decision_2_meta_primitives": [
+      "TensorNetwork (Tier A++)",
+      "ConstructiveExistenceWitness/StructuredEquivalenceClass (Tier B)",
+      "GenericityAlmostEverywhereCert (Tier D)",
+      "RepresentationTheoreticInvariant (Tier E)",
+      "MomentPolytope/SecantVarietyEquation (Tier C)"
+    ],
+    "decision_3_ergon_sequence": "E007 first \u2192 E009 second \u2192 defer training",
+    "tickets_collapsed_into_meta_primitives": 8
+  }
+}

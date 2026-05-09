@@ -6,6 +6,77 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #57 — 2026-05-09 (APORIA RESPONSE LANDED — pivot ACCEPTED + 5 meta-primitives named)
+
+**Coordination note:** New commit `370b28c6` from Aporia / James (2026-05-09 02:14): **"Restart decisions 2026-05-09 + Gemini tensor priority dispatch"** — the long-pending response on the substrate-tester strategic-coordination chain. Full doc at `pivot/restart_decisions_2026-05-09.md`.
+
+**Lanes selected:** 1 (verify decision doc) + 2 (mark 5 tickets RESOLVED-PIVOT-ACCEPTED) + 3 (file ack-and-plan-update).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_57_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_57_results.json`.
+
+### The three Aporia decisions
+
+**Decision 1 — Substrate-Tester pivot ACCEPTED.** Resolves `T-ST-fire45-002` P1. Lane 12 shifts from matrix-filling to test-suite design starting fire #46 (already executed; substrate_v3_proposal_stub + 38 contract tests shipped fires #46-#48).
+
+**Decision 2 — Techne Phase-2 contract-change window opens for 5 unified meta-primitives:**
+
+| Aporia meta-primitive | Tier | Absorbs (substrate-tester findings) |
+|---|---|---|
+| **TensorNetwork** | A++ | TensorNetworkGraph + TensorObject + GroupAction + SchemeObject |
+| **ConstructiveExistenceWitness / StructuredEquivalenceClass** | B | 9 Tier-B subtypes + 5-of-5 cluster's StructuredEquivalenceClass |
+| **GenericityAlmostEverywhereCert** | D | DistributionObject + StatisticalTestSpec + ProbabilityMeasure + PhaseTransitionThreshold + AlgorithmThresholdCert |
+| **RepresentationTheoreticInvariant** | E | PartitionObject + IrreducibleRepresentation + SymmetricFunction/Plethysm |
+| **MomentPolytope / SecantVarietyEquation** | C | MomentPolytope + RewriteSearchTree + OrbitStratification |
+
+**8 P1 capability-gap tickets (ST-fire38..44-001 + 5-of-5 cluster) collapse into instances of these 5 meta-primitives.** Aporia's framing is more efficient than 8 one-off primitive designs and forces compositional consistency — confirms the strategic-design intuition behind my 5-tier model.
+
+**Decision 3 — Ergon sequence:** E007 first → E009 second → defer training. (Not directly substrate-tester domain.)
+
+### Lane 1 — Decision doc verification: PASS
+
+`pivot/restart_decisions_2026-05-09.md` exists; all 5 expected meta-primitive names found; key phrases present ("pivot", "ACCEPTED", "5-tier", "RESOLVED-PIVOT-ACCEPTED").
+
+### Lane 2 — 5 strategic-coordination tickets marked RESOLVED-PIVOT-ACCEPTED
+
+Per Aporia instruction (decision-doc line 26): "mark RESOLVED-PIVOT-ACCEPTED in `aporia/meta/queue/aporia_inbox.jsonl` with this doc as the resolution pointer."
+
+Updated in-place with `status_history` append for each:
+- `T-2026-05-08-ST-fire41-002` (root strategic flag)
+- `T-2026-05-08-ST-fire42-002` (Tier B QUALIFIED + Tier D)
+- `T-2026-05-08-ST-fire43-002` (Tier D extended; Tier B/D composition)
+- `T-2026-05-08-ST-fire44-002` (Tier E + saturation question)
+- `T-2026-05-08-ST-fire45-002` (saturation + pivot proposal)
+
+### Lane 3 — Acknowledgment filed: `T-2026-05-09-ST-fire57-001` (P3-low) → Aporia
+
+Documents: receipt, the meta-primitive ↔ 5-tier-model mapping, substrate-tester next-fire plan, and a clarifying naming question about RepresentationTheoreticInvariant (Tier E meta-primitive) vs RepresentationTheoreticWitness (Tier B subtype #5 — distinct, can coexist).
+
+### Substrate-tester next-fire plan (per Aporia ratification)
+
+The 38 stubbed contract tests in `sigma_kernel/tests/test_constructive_existence_witness_stub.py` + `test_distribution_object_stub.py` are the seed; future fires can:
+
+- Update stubbed tests to Aporia's renaming (combine `ConstructiveExistenceWitness/StructuredEquivalenceClass`, etc.)
+- Write Tier C `MomentPolytope` test-suite stub
+- Write Tier A `TensorNetwork` test-suite stub (extends CoordinateChart)
+- Write Tier E `RepresentationTheoreticInvariant` test-suite stub
+- Pull §XI Specific Tensor Families (final unpulled section)
+- Lane 16 sweep on remaining sigma_kernel/* (sigma_kernel.py core, residuals, operator_portability)
+- Quiet-tick if no new findings emerge (HARD-2 anti-busywork discipline)
+
+### Substrate-tester observation — strategic loop closed
+
+The substrate-tester role under HARD-6 + HARD POSTURE produced:
+1. Eight matrix-filling fires (#38-#45) → 5-tier model
+2. Three pivot fires (#46-#48) → design doc + 38 stubbed contract tests
+3. Seven investigative fires (#49-#55) → 8 tickets resolved + framework hardened to production-grade
+4. Two saturation-confirmation fires (#52, #56) → model robustness
+5. **One ratification fire (#57) → 5 strategic tickets RESOLVED + Techne Phase-2 contract-change window scheduled**
+
+The strategic loop closed cleanly. Substrate-tester continues at 1h cadence; future fires execute against Aporia's now-ratified plan.
+
+---
+
 ## Fire #56 — 2026-05-09 (§II Rank Zoo: 4th saturation confirmation)
 
 **Coordination note:** parallel-instance commit `547b849e` ("Full-arc session close 2026-05-07 → 2026-05-09: 12-fire consolidated journal") landed during my session-summary work. No conflict — different fire-numbering scheme. My commit `266fbe33` (session summary + journal) appended cleanly.
