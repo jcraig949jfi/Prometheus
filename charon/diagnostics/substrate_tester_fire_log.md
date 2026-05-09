@@ -6,6 +6,63 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #55 — 2026-05-09 (RESOLVED ST-fire54-002 — triangulation_protocol gaps)
+
+**Coordination note:** no new commits between fire #54 and fire #55. Fire #55 closes the 4 surviving mutations from fire #54's `triangulation_protocol.py` Lane 16 sweep.
+
+**Lanes selected:** 1 (verify new test baseline) + 2 (verify each mutation caught).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_55_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_55_results.json`.
+
+### Lane 1 — `test_triangulation_protocol_returns.py` baseline: 32/32 PASS (0.16s)
+
+4 test classes, 32 test methods:
+
+| Class | Tests | Coverage |
+|---|---:|---|
+| `TestMethodClassForIndependenceClassReturn` | 15 | parametrized over all 13 INDEPENDENCE_TO_METHOD_CLASS entries + isinstance + KeyError on unregistered |
+| `TestIsProofBearingReturn` | 6 | parametrized over all 5 MethodClass values + isinstance(bool) |
+| `TestCanCertifyReturn` | 6 | parametrized over all 5 MethodClass values + isinstance(bool) |
+| `TestEvaluateThreshold` | 5 | zero/one/two/three paths threshold crossing + summary text non-None |
+
+### Lane 2 — All 4 mutations from fire #54 now caught: PASS
+
+| Mutation site | Original | Mutation | Verdict |
+|---|---|---|---|
+| Line 149 | `return INDEPENDENCE_TO_METHOD_CLASS[key]` | `return None` | **CAUGHT** |
+| Line 281 | `self.method_class == MethodClass.PROOF_BEARING` | `!= flip` | **CAUGHT** |
+| Line 292 | `self.method_class != MethodClass.EXPLORATORY` | `== flip` | **CAUGHT** |
+| Line 388 | `len(paths_tuple) < 3` | `> flip` | **CAUGHT** |
+
+### Investigative chain status — 8 tickets RESOLVED
+
+The fires-#49→#55 chain is the longest investigative loop to date:
+
+| Fire | Action | Tickets resolved |
+|---|---|---|
+| #49 | Lane 16 first run (mutation testing on method_spec.py) | (surfaced) |
+| #50 | diagnose frozen-mutation puzzle, ship manifest | ST-fire49-001 frozen half + ST-fire50-001 |
+| #51 | method_spec factory-return tests | ST-fire49-001 factory half + ST-fire51-001 |
+| #52 | Lane 16 on exclusion_certificate (raw 0.300; 6 docstring FPs) | (surfaced 2 P3 findings) |
+| #53 | AST docstring filter + manifest expansion | ST-fire52-003 + ST-fire53-001 + manifest gap |
+| #54 | exclusion_certificate return-value tests + Lane 16 demo on triangulation_protocol | ST-fire52-002 + ST-fire54-001 |
+| #55 | triangulation_protocol return-value tests | ST-fire54-002 + ST-fire55-001 |
+
+**8 tickets RESOLVED across 7 fires.** Investigative-fire pattern is now battle-tested across 4 sigma_kernel modules (method_spec, exclusion_certificate, triangulation_protocol, plus the framework itself). Lane 16 is production-grade.
+
+### Substrate-tester observation
+
+Fire #55 closes the chain cleanly. All open mutation-testing findings from fires #49-#54 are now resolved. Future Lane 16 fires on fresh modules will surface fresh findings using the same pattern, but the methodology + test-pattern are stable.
+
+Possible next directions:
+- §II Rank Zoo or §XI Specific Tensor Families — final two unpulled catalog sections
+- Take stock: substrate-tester session summary documenting fires #46-#55 (post-pivot phase)
+- Lane 16 on sigma_kernel/sigma_kernel.py (the kernel's own 1500-LoC core)
+- Wait for Aporia response on coordination chain
+
+---
+
 ## Fire #54 — 2026-05-08 (RESOLVED ST-fire52-002 + production-grade Lane 16 demo)
 
 **Coordination note:** no new commits between fire #53 and fire #54. Fire #54 closes the third open ticket from the fire-#49 → #50/#51/#52/#53 investigative chain, and demonstrates the post-#53 production-grade mutation-testing framework on a fresh module.

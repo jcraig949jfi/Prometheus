@@ -1,0 +1,39 @@
+{
+  "fire": 55,
+  "posture": "closes ST-fire54-002 (triangulation_protocol return-value gaps)",
+  "lanes": [
+    1,
+    2
+  ],
+  "lane_1": {
+    "lane": "1_baseline_passes",
+    "test_file": "sigma_kernel/tests/test_triangulation_protocol_returns.py",
+    "returncode": 0,
+    "summary_line": "32 passed in 0.16s",
+    "verdict": "PASS"
+  },
+  "lane_2": {
+    "lane": "2_each_mutation_caught",
+    "n_mutations_tested": 4,
+    "n_caught": 4,
+    "results": [
+      {
+        "marker": "line_149_return_None",
+        "verdict": "CAUGHT"
+      },
+      {
+        "marker": "line_281_neq_flip",
+        "verdict": "CAUGHT"
+      },
+      {
+        "marker": "line_292_eq_flip",
+        "verdict": "CAUGHT"
+      },
+      {
+        "marker": "line_388_gt_flip",
+        "verdict": "CAUGHT"
+      }
+    ],
+    "verdict": "PASS"
+  }
+}
