@@ -1,0 +1,42 @@
+{
+  "fire": 63,
+  "posture": "maintenance: Lane 16 on coordinate_chart.py (substrate v2.3 P0) + canon-fuzz hygiene",
+  "lanes": [
+    16,
+    11
+  ],
+  "lane_16": {
+    "lane": "16_coordinate_chart_sweep",
+    "target": "sigma_kernel/coordinate_chart.py",
+    "loc": 491,
+    "framework_status": "post-fire-#62 production-grade (AST docstring + string-literal filters)",
+    "kill_counts": {
+      "killed": 3,
+      "survived": 7,
+      "errored": 0
+    },
+    "score": 0.3,
+    "summary_lines": [
+      "[mutation 1/10] survived @ coordinate_chart.py:92:off_by_one_int (20.0s)",
+      "[mutation 2/10] killed @ coordinate_chart.py:121:boolean_not (19.6s)",
+      "[mutation 3/10] survived @ coordinate_chart.py:185:return_constant_None (19.6s)",
+      "[mutation 4/10] killed @ coordinate_chart.py:193:boolean_not (20.1s)",
+      "[mutation 5/10] killed @ coordinate_chart.py:269:return_constant_None (19.9s)",
+      "[mutation 6/10] survived @ coordinate_chart.py:273:return_constant_None (20.0s)",
+      "[mutation 7/10] survived @ coordinate_chart.py:283:return_constant_None (20.2s)",
+      "[mutation 8/10] survived @ coordinate_chart.py:287:return_constant_None (20.0s)",
+      "[mutation 9/10] survived @ coordinate_chart.py:303:off_by_one_int (21.0s)",
+      "[mutation 10/10] survived @ coordinate_chart.py:308:return_constant_None (20.5s)",
+      "[mutation] score=0.300 killed=3 survived=7 errored=0 skipped=0",
+      "[mutation] report written: F:\\Prometheus\\prometheus_math\\MUTATION_TESTING_BASELINE.md"
+    ],
+    "verdict": "INFORMATIVE"
+  },
+  "lane_11": {
+    "lane": "11_canon_fuzz_smoke",
+    "seed": "20260509_05",
+    "returncode": 0,
+    "summary_line": "13 passed in 16.10s",
+    "verdict": "PASS"
+  }
+}

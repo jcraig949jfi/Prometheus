@@ -6,6 +6,52 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #63 — 2026-05-09 (Lane 16 on coordinate_chart.py + new FP class: inline comments)
+
+**Coordination note:** no new commits between fires #62 and #63. Maintenance fire.
+
+**Lanes selected:** 16 (mutation testing on `sigma_kernel/coordinate_chart.py`, 491 LoC, substrate v2.3 §6.2 P0 primitive) + 11 (canon-fuzz fresh seed 20260509_05).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_63_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_63_results.json`.
+
+### Lane 16 — `coordinate_chart.py` sweep: raw 0.300, GENUINE 5/6 gaps + 1 NEW FP class
+
+10 mutations, 3 killed, 7 survived (raw score 0.300). After triage:
+
+| Site | Operator | Verdict | Notes |
+|---|---|---|---|
+| Line 92 `# Lehmer chart, Day-3 ship` | off_by_one_int | **FALSE POSITIVE (NEW class)** | "3" inside an INLINE COMMENT (not a string literal); AST filter doesn't catch |
+| Line 185 `return self.canonicalize(point)` | return_constant_None | **GENUINE** | CanonicalizationProtocol.apply() return-value |
+| Line 273 `return self.canonicalization.apply(point)` | return_constant_None | **GENUINE** | CoordinateChart canonicalize delegate |
+| Line 283 `return float(self.metric(ca, cb))` | return_constant_None | **GENUINE** | distance() return-value |
+| Line 287 `return bool(self.admissible_region(point))` | return_constant_None | **GENUINE** | is_admissible() return-value |
+| Line 303 `chart_id.split(":", 1)` | off_by_one_int | **GENUINE (potential)** | maxsplit `1→2` changes behavior on multi-`:` chart_ids; tests likely don't exercise |
+| Line 308 `return domain, region_key` | return_constant_None | **GENUINE** | parse helper return-value |
+
+**Genuine score: 3 killed / (3 killed + 6 genuine survivors) = 0.333.** 6 genuine gaps on a load-bearing P0 primitive.
+
+### NEW false-positive class surfaced: inline comments
+
+Fire #53 added AST docstring filter; fire #62 added AST string-literal filter. **Both fail to catch numeric/boolean literals in INLINE COMMENTS** (`# ... Day-3 ship` style). The framework's existing `skip_lines_starting_with=("#", ...)` only catches FULL-LINE comments where the first non-whitespace char is `#`.
+
+**Fix design (P3 candidate):** extend `propose_mutations` to detect inline `#` and trim line content from `#` onward before applying mutation operators. ~5 lines of code.
+
+### Lane 11 — canon-fuzz fresh seed: 13 passed (16.10s)
+
+### Substrate-tester observation
+
+Three FP classes now identified in framework:
+1. ✅ Docstring expressions (RESOLVED fire #53)
+2. ✅ Arbitrary string literals (RESOLVED fire #62)
+3. ❗ Inline comments (NEW; fire #63)
+
+Pattern: each Lane 16 fire on a fresh module surfaces ~50% genuine gaps (matching the test-pattern shipped fires #51/#54/#55/#62) + 1-2 framework caveats. The framework + substrate-test corpus continue to compound.
+
+Filed `T-2026-05-09-ST-fire63-001` (P3-low) — 6 genuine gaps on coordinate_chart + inline-comment framework FP class. Could close in fire #64 using established 3-part investigative pattern (extend filter + ship return-tests + verify).
+
+---
+
 ## Fire #62 — 2026-05-09 (RESOLVES ST-fire61-002 — string-literal AST filter + Symbol/Capability return tests)
 
 **Coordination note:** no new commits between fires #61 and #62.
