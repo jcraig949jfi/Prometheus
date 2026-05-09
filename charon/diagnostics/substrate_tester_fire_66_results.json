@@ -1,0 +1,73 @@
+{
+  "fire": 66,
+  "posture": "closes ST-fire65-001 (2-part: 14 return tests + verify 7 mutations + re-run)",
+  "lanes": [
+    1,
+    2
+  ],
+  "lane_1": {
+    "lane": "1_new_tests_pass_and_catch",
+    "test_file": "sigma_kernel/tests/test_operator_portability_returns.py",
+    "baseline_summary": "14 passed in 0.16s",
+    "baseline_passes": true,
+    "n_mutations_tested": 7,
+    "catch_results": [
+      {
+        "marker": "line_94_lt_flip",
+        "verdict": "CAUGHT"
+      },
+      {
+        "marker": "line_94_0_to_1",
+        "verdict": "CAUGHT"
+      },
+      {
+        "marker": "line_204_sort_keys",
+        "verdict": "CAUGHT"
+      },
+      {
+        "marker": "line_205_hash_None",
+        "verdict": "CAUGHT"
+      },
+      {
+        "marker": "line_229_default_flip",
+        "verdict": "CAUGHT"
+      },
+      {
+        "marker": "line_256_neq_flip",
+        "verdict": "CAUGHT"
+      },
+      {
+        "marker": "line_261_neq_flip",
+        "verdict": "CAUGHT"
+      }
+    ],
+    "n_caught": 7,
+    "verdict": "PASS"
+  },
+  "lane_2": {
+    "lane": "2_rerun_mutation_testing",
+    "target": "sigma_kernel/operator_portability.py",
+    "kill_counts": {
+      "killed": 10,
+      "survived": 0,
+      "errored": 0
+    },
+    "score": 1.0,
+    "summary_lines": [
+      "[mutation 1/10] killed @ operator_portability.py:79:boolean_not (20.2s)",
+      "[mutation 2/10] killed @ operator_portability.py:94:comparison_flip (20.0s)",
+      "[mutation 3/10] killed @ operator_portability.py:94:off_by_one_int (19.9s)",
+      "[mutation 4/10] killed @ operator_portability.py:111:boolean_not (19.7s)",
+      "[mutation 5/10] killed @ operator_portability.py:135:boolean_not (19.7s)",
+      "[mutation 6/10] killed @ operator_portability.py:204:boolean_not (20.6s)",
+      "[mutation 7/10] killed @ operator_portability.py:205:return_constant_None (19.7s)",
+      "[mutation 8/10] killed @ operator_portability.py:229:boolean_not (20.0s)",
+      "[mutation 9/10] killed @ operator_portability.py:256:comparison_flip (20.4s)",
+      "[mutation 10/10] killed @ operator_portability.py:261:comparison_flip (20.1s)",
+      "[mutation] score=1.000 killed=10 survived=0 errored=0 skipped=0",
+      "[mutation] report written: F:\\Prometheus\\prometheus_math\\MUTATION_TESTING_BASELINE.md"
+    ],
+    "improvement_chain": "Fire #65 (no new tests): raw 0.300 (3K, 7S \u2014 0 FPs, all genuine)\nFire #66 (with new tests): raw 1.000 (10K, 0S)",
+    "verdict": "PASS"
+  }
+}

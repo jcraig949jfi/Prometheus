@@ -1,6 +1,6 @@
 # Mutation Testing Baseline
 
-_Generated: 2026-05-09 16:33:32 UTC_
+_Generated: 2026-05-09 17:44:07 UTC_
 _Per inbox ticket T-2026-05-07-T014 (prometheus_math/mutation_testing.py)_
 
 ## Summary
@@ -9,26 +9,16 @@ _Per inbox ticket T-2026-05-07-T014 (prometheus_math/mutation_testing.py)_
   - `sigma_kernel\operator_portability.py`
 - **Test command:** `"C:\Users\jcrai\AppData\Local\Programs\Python\Python311\python.exe" -m pytest sigma_kernel/tests/ -q --no-header -x`
 - **Total mutations proposed:** 10
-- **Killed (caught by tests):** 3
-- **Survived (test gap):** 7
+- **Killed (caught by tests):** 10
+- **Survived (test gap):** 0
 - **Errored (mutation broke loader):** 0
 - **Skipped (operator anchor mismatch):** 0
-- **Mutation score (killed / (killed + survived)):** 0.300
-- **Elapsed:** 478.5s
+- **Mutation score (killed / (killed + survived)):** 1.000
+- **Elapsed:** 200.6s
 
-## Top Surviving Mutations (test-gap candidates)
+## Survivors
 
-Each survivor is a mutation that did NOT cause any test failure — i.e. the test suite has no assertion that would catch this specific change. Each is a candidate for a new test.
-
-| # | site | operator | original -> mutated |
-|---|---|---|---|
-| 1 | `operator_portability.py:94` | `comparison_flip` | `<` -> `>` |
-| 2 | `operator_portability.py:94` | `off_by_one_int` | `0` -> `1` |
-| 3 | `operator_portability.py:204` | `boolean_not` | `True` -> `False` |
-| 4 | `operator_portability.py:205` | `return_constant_None` | `return hashlib.sha256(canonical.encode()).hexdigest()` -> `return None` |
-| 5 | `operator_portability.py:229` | `boolean_not` | `False` -> `True` |
-| 6 | `operator_portability.py:256` | `comparison_flip` | `!=` -> `==` |
-| 7 | `operator_portability.py:261` | `comparison_flip` | `!=` -> `==` |
+**No survivors.** Every proposed mutation was killed by the test suite. The current test coverage of the target file(s) is adequate against this operator set.
 
 ## Caveats
 
