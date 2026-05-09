@@ -6,6 +6,55 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #52 — 2026-05-08 (§VI matrix-filling + Lane 16 on exclusion_certificate)
+
+**Coordination note:** no new commits between fire #51 and fire #52.
+
+**Lanes selected:** 12 (catalog #43 — existence of best rank-r tensor approximations, §VI Numerical Decomposition) + 16 (mutation-testing on `sigma_kernel/exclusion_certificate.py`).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_52_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_52_results.json`.
+
+### Lane 12 — Best rank-r approximation: 5-tier model holds with InfimalWitness refinement
+
+de Silva-Lim 2008: best rank-r approximation MAY NOT EXIST for tensors of order ≥ 3 (W tensor is the canonical example: rank 3, border rank 2; the infimum of rank-2 approximations is approached but not attained).
+
+| Encoding attempt | Verdict |
+|---|---|
+| 1. Tier B / D for ill-posed optimization | TIER_B_REFINEMENT — InfimalWitness subtype (or `closed_attained` flag) |
+| 2. Border-rank closure via Tier A SchemeObject + Tier B LimitWitness | TIER_A_TIER_B_FITS — standard remediation; substrate covers |
+| 3. GenericityAlmostEverywhereCert for ill-posed measure-zero locus | TIER_D_FITS — fire #45 specialization covers |
+
+**THIRD independent saturation confirmation** (after fires #45 + #49). 5-tier model continues to hold; refinements only.
+
+| Refinement | Tier | Source |
+|---|---|---|
+| **InfimalWitness** (epsilon-approximate existence + limit-not-attained) | Tier B subtype #8 | Fire #52 |
+
+### Lane 16 — Mutation-testing on `exclusion_certificate.py`: raw score 0.300, GENUINE 0.75
+
+10 mutations; 3 killed, 7 survived (raw score 0.300). However, **6 of 7 survivors are FALSE POSITIVES** (framework mutated numeric/boolean literals inside docstrings — caveat #1: coarse docstring filter):
+
+| Site | Operator | Verdict |
+|---|---|---|
+| Line 262 (docstring "0 is a valid value") | off_by_one_int | FALSE POSITIVE |
+| Line 335 (docstring rule "1.") | comparison_flip | FALSE POSITIVE |
+| Line 337, 348, 348 (docstring "3.") | off_by_one_int | FALSE POSITIVE |
+| Line 468 (docstring "replace=True") | boolean_not | FALSE POSITIVE |
+| **Line 451 `feeds_negative_space_axis()` return** | return_constant_None | **GENUINE TEST GAP** |
+
+**Genuine score: 3 killed / (3 killed + 1 genuine survivor) = 0.75** (after excluding docstring false positives).
+
+The single genuine gap is the same pattern fire #51 closed for `method_spec.py`: a method that returns a structured value has no return-value test. Suggested fix (P3): extend test_exclusion_certificate.py with `assert cert.feeds_negative_space_axis() in (True, False)` for known-COMPLETE and known-NEGATIVE_BOUNDED certificates.
+
+### Substrate-tester observation
+
+Lane 16 mutation testing increasingly produces information about the framework's docstring-filter caveat, not substrate quality. The framework's caveat #1 ("future ticket should switch to AST-level analysis") is now load-bearing — until that ships, mutation-testing reports need manual triage to separate genuine gaps from docstring false positives.
+
+Could file as P3 ticket: extend `prometheus_math/mutation_testing.py` with AST-level docstring filtering. Substrate-tester maintenance work but lower priority than continuing matrix-filling and v3 design preparation.
+
+---
+
 ## Fire #51 — 2026-05-08 (RESOLVED: fire #49 factory-return-value gap — 4 mutations now caught)
 
 **Coordination note:** no new commits between fire #50 and fire #51. Fire #51 closes the second open finding from fire #49 (sister to fire #50's frozen-flip closure).
