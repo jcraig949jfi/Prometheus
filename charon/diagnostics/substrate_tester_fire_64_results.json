@@ -1,0 +1,79 @@
+{
+  "fire": 64,
+  "posture": "closes ST-fire63-001 (3-part: inline-comment filter + 6 return tests + verify)",
+  "lanes": [
+    1,
+    2,
+    3
+  ],
+  "lane_1": {
+    "lane": "1_inline_comment_filter_works",
+    "n_total_proposals": 24,
+    "known_FP_lines": [
+      92
+    ],
+    "n_leaked_to_FP_lines": 0,
+    "verdict": "PASS"
+  },
+  "lane_2": {
+    "lane": "2_new_tests_pass_and_catch",
+    "test_file": "sigma_kernel/tests/test_coordinate_chart_returns.py",
+    "baseline_summary": "21 passed in 12.74s",
+    "baseline_passes": true,
+    "n_mutations_tested": 6,
+    "catch_results": [
+      {
+        "marker": "line_185_apply",
+        "verdict": "CAUGHT"
+      },
+      {
+        "marker": "line_273_canonicalize_delegate",
+        "verdict": "CAUGHT"
+      },
+      {
+        "marker": "line_283_distance",
+        "verdict": "CAUGHT"
+      },
+      {
+        "marker": "line_287_admits",
+        "verdict": "CAUGHT"
+      },
+      {
+        "marker": "line_303_split_maxsplit",
+        "verdict": "CAUGHT"
+      },
+      {
+        "marker": "line_308_return_tuple",
+        "verdict": "CAUGHT"
+      }
+    ],
+    "n_caught": 6,
+    "verdict": "PASS"
+  },
+  "lane_3": {
+    "lane": "3_rerun_mutation_testing",
+    "target": "sigma_kernel/coordinate_chart.py",
+    "kill_counts": {
+      "killed": 9,
+      "survived": 1,
+      "errored": 0
+    },
+    "score": 0.9,
+    "summary_lines": [
+      "[mutation 1/10] killed @ coordinate_chart.py:121:boolean_not (20.5s)",
+      "[mutation 2/10] killed @ coordinate_chart.py:185:return_constant_None (20.1s)",
+      "[mutation 3/10] killed @ coordinate_chart.py:193:boolean_not (20.2s)",
+      "[mutation 4/10] killed @ coordinate_chart.py:269:return_constant_None (20.6s)",
+      "[mutation 5/10] killed @ coordinate_chart.py:273:return_constant_None (20.0s)",
+      "[mutation 6/10] killed @ coordinate_chart.py:283:return_constant_None (19.6s)",
+      "[mutation 7/10] killed @ coordinate_chart.py:287:return_constant_None (19.7s)",
+      "[mutation 8/10] killed @ coordinate_chart.py:303:off_by_one_int (19.7s)",
+      "[mutation 9/10] killed @ coordinate_chart.py:308:return_constant_None (20.5s)",
+      "[mutation 10/10] survived @ coordinate_chart.py:326:boolean_not (20.0s)",
+      "[mutation] score=0.900 killed=9 survived=1 errored=0 skipped=0",
+      "[mutation] report written: F:\\Prometheus\\prometheus_math\\MUTATION_TESTING_BASELINE.md"
+    ],
+    "improvement_chain": "Fire #63 (no inline-comment filter, original tests): raw 0.300 (3K, 7S \u2014 1 FP + 6 genuine)\nFire #64 (inline-comment filter + new tests): raw 0.900 (9K, 1S)",
+    "verdict": "PASS"
+  }
+}

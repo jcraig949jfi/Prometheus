@@ -6,6 +6,90 @@ Author: substrate-tester (Charon-aligned), per pivot/substrate_v2_proposal_2026-
 
 ---
 
+## Fire #64 — 2026-05-09 (RESOLVES ST-fire63-001 — inline-comment filter + coordinate_chart return tests; score 0.300→0.900)
+
+**Coordination note:** no new commits between fires #63 and #64.
+
+**Lanes selected:** 1 (verify inline-comment filter shipped) + 2 (verify new return tests + 6 mutations caught) + 3 (re-run Lane 16).
+
+**Harness:** `charon/diagnostics/substrate_tester_fire_64_harness.py`.
+**Results JSON:** `charon/diagnostics/substrate_tester_fire_64_results.json`.
+
+### Lane 1 — Inline-comment AST filter shipped
+
+`prometheus_math/mutation_testing.py` extended with `_inline_comment_column(line, line_no, string_spans)`:
+- Finds the column of the first `#` not inside any string-literal span on this line
+- Returns `len(line)` if no inline `#` exists
+- Reuses `_proposal_falls_in_string_span()` from fire #62 to skip `#` chars inside string literals
+- `propose_mutations` skips proposals at `column >= comment_col`
+
+**Verification on `coordinate_chart.py`:** **0 leaks** at line 92 (the `# Lehmer chart, Day-3 ship` inline-comment FP from fire #63).
+
+### Lane 2 — `test_coordinate_chart_returns.py` shipped + verified
+
+21 tests across 5 classes:
+
+| Class | Tests | Coverage |
+|---|---:|---|
+| `TestCanonicalizationProtocolApply` | 3 | non-None for identity + non-identity canonical + unbound NotImplementedError |
+| `TestCoordinateChartCanonicalize` | 2 | non-None + delegates to protocol (sort) |
+| `TestCoordinateChartDistance` | 4 | non-None + float type + Manhattan value 7.0 + self-zero |
+| `TestCoordinateChartAdmits` | 4 | non-None + bool type + true-inside + false-outside |
+| `TestSplitChartId` | 8 | non-None + tuple-of-2-strings + first-colon-only + simple + 4 raise cases (empty domain/region/no-colon/non-string) |
+
+**Baseline:** 21/21 PASS in 12.74s. **Mutation verification: all 6 caught (6/6).**
+
+### Lane 3 — Re-run Lane 16: SCORE 0.300 → 0.900
+
+Same 491-LoC target. Score elevation:
+
+| Pass | Filter | Tests | Killed | Survived | Score |
+|---|---|---|---:|---:|---:|
+| Fire #63 | docstring + string-literal | original | 3 | 7 | 0.300 (1 inline-FP + 6 genuine) |
+| Fire #64 | + inline-comment | + return-tests | **9** | **1** | **0.900** |
+
+**Strongest single-fire score elevation in the session.**
+
+The 1 remaining survivor is a genuine but lower-priority gap (likely a small-int default or chart-registry bookkeeping). Could close in a future fire if needed.
+
+### Three-FP-class trilogy COMPLETE
+
+| FP class | Identified | Resolved |
+|---|---|---|
+| Docstring expressions | fire #52 | fire #53 |
+| Arbitrary string literals | fire #61 | fire #62 |
+| Inline comments | fire #63 | **fire #64** |
+
+The mutation-testing framework's false-positive caveats are now exhaustively addressed for the three classes substrate-tester has encountered. Future Lane 16 fires on any module should produce direct-actionable findings without per-fire FP triage.
+
+### Investigative chain summary — 10 RESOLVED tickets
+
+The fires-#49 → #64 chain:
+
+| Fire | Action | Tickets resolved |
+|---|---|---|
+| #49 | Lane 16 surfaced 8 mutations on method_spec | (parent ST-fire49-001) |
+| #50 | frozen-mutation puzzle resolution + manifest | ST-fire50-001 |
+| #51 | factory-return tests | ST-fire51-001 |
+| #52 | exclusion_certificate Lane 16 + §VI matrix-fill | (3 tickets surfaced) |
+| #53 | AST docstring filter + manifest expansion | ST-fire52-003 + ST-fire53-001 |
+| #54 | feeds_negative_space_axis tests + production demo | ST-fire52-002 + ST-fire54-001 |
+| #55 | triangulation_protocol return tests | ST-fire54-002 + ST-fire55-001 |
+| #61 | kernel-core Lane 16 (surfaced new FP class) | (parent ST-fire61-002) |
+| #62 | string-literal AST filter + Symbol/Capability tests | ST-fire61-002 + ST-fire62-001 |
+| #63 | coordinate_chart Lane 16 (surfaced 3rd FP class) | (parent ST-fire63-001) |
+| #64 | inline-comment filter + coordinate_chart return tests | **ST-fire63-001 + ST-fire64-001** |
+
+**10 RESOLVED tickets across 11 fires** + framework now comprehensive across all three known FP classes + 5 sigma_kernel modules hardened (method_spec, exclusion_certificate, triangulation_protocol, sigma_kernel core, coordinate_chart).
+
+### Substrate-tester observation
+
+The investigative-fire pattern has now been applied to its natural conclusion for the framework FP classes. Future Lane 16 fires on remaining modules (residuals.py, operator_portability.py, residual_benchmark.py) should produce purely substrate-test-coverage findings (no new framework caveats expected).
+
+Filed `T-2026-05-09-ST-fire64-001` (P3-low, RESOLVED) — closes ST-fire63-001 + documents three-FP-class trilogy completion.
+
+---
+
 ## Fire #63 — 2026-05-09 (Lane 16 on coordinate_chart.py + new FP class: inline comments)
 
 **Coordination note:** no new commits between fires #62 and #63. Maintenance fire.

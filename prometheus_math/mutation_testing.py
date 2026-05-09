@@ -351,6 +351,29 @@ def _proposal_falls_in_string_span(line_no: int, column: int, spans: list) -> bo
     return False
 
 
+def _inline_comment_column(line: str, line_no: int, string_spans: list) -> int:
+    """Return the column of the first inline `#` that is NOT inside any
+    string-literal span on this line; returns len(line) if no such `#`
+    exists.
+
+    Closes ST-fire63-001: discovered via Lane 16 on
+    `sigma_kernel/coordinate_chart.py` line 92 ('# Lehmer chart, Day-3
+    ship') where '3' inside an inline comment was mutated as a code
+    literal. Fire #53 + #62 AST filters handle docstrings + string
+    literals; this closes the third FP class (inline comments).
+
+    Uses string_spans (from `_ast_string_literal_spans`) to skip `#`
+    characters that appear inside string literals — those are NOT
+    comment markers.
+    """
+    for col, ch in enumerate(line):
+        if ch != "#":
+            continue
+        if not _proposal_falls_in_string_span(line_no, col, string_spans):
+            return col
+    return len(line)
+
+
 def propose_mutations(
     file_path: Path,
     *,
@@ -394,6 +417,9 @@ def propose_mutations(
                 continue
         if any(stripped.startswith(prefix) for prefix in skip_lines_starting_with):
             continue
+        # Fire #64: column of the first inline-comment `#` (after this
+        # column the line is comment text, not code).
+        comment_col = _inline_comment_column(line, i, string_literal_spans)
         for op_name in operators:
             yielder = MUTATION_OPERATORS.get(op_name)
             if yielder is None:
@@ -402,6 +428,9 @@ def propose_mutations(
                 # Fire #62: skip if the proposal falls inside an
                 # arbitrary string literal (not just a docstring).
                 if _proposal_falls_in_string_span(i, column, string_literal_spans):
+                    continue
+                # Fire #64: skip if the proposal is past the inline-`#`.
+                if column >= comment_col:
                     continue
                 proposals.append(
                     MutationProposal(
