@@ -10,6 +10,8 @@
 - `ergon/learner/v1_0_plans/tester_findings_consolidated.md` (Pattern 1-9 catalog, 5-tier recoverability scale)
 - `ergon/learner/diagnostics/SESSION_SYNTHESIS_2026-05-07.md` (calibration-axis hypothesis)
 
+**ERRATA 2026-05-10 (post-filing, same day):** James external-checked the AA-002 Saxl/Sellke attribution and could NOT cleanly confirm "Sellke 2025/26 arXiv 2512.15035" as the resolution. External search surfaced (a) older Luo-Sellke / Saxl-adjacent work, (b) a 2023 Harman-Ryba **tensor-cube** version of Saxl, and (c) a claimed 2025 arXiv "Staircase Minimality and a Proof of Saxl's Conjecture" by **S. K. Lee** (NOT Sellke). The audit's source catalog (`aporia/mathematics/tensor_open_problems_v1.md` line 850) cites "Sellke 2025/26 arXiv 2512.15035" multiple times, but Ergon cannot verify this from upstream-doc-only state. **All AA-002 references in this audit are now flagged UNVERIFIED-PENDING-PIN.** v1.0 corpus seeding for Saxl is DEFERRED until the actual resolution paper (author + arXiv ID + venue) is source-pinned. Substrate-grade lesson: a citation in an internal Aporia catalog is NOT a verified attribution; it is itself a Tier-2-or-worse anchor that must be pinned to primary literature before promotion to corpus seed. Coordination ticket filed back to Aporia (`aporia/meta/queue/aporia_inbox.jsonl`). The Saxl probe (TP-T1-010) is still useful as a recency/canonicality probe — what's deferred is the corpus seed.
+
 **Doctrine alignment:**
 - HARD-3 (tensor-first deferral): respected — this is doc-only audit work, NOT building the unified tensor.
 - HARD-4 (calibration anchors are load-bearing): primary axis of this doc.
@@ -213,7 +215,7 @@ Predicted tier reflects calibration-axis hypothesis applied to the entry's name 
 | 96 | Stability of Kronecker coefficients | 3 | **MIN** | Murnaghan named |
 | 97 | Stretched Kronecker positivity | 4 | **TS** | |
 | 98 | Foulkes' conjecture | 1 | **PS** | Foulkes 1950 named, 70+ year fame |
-| 99 | Saxl's conjecture | 1 | **PS** + **CRITICAL AA** | **SOLVED unconditionally Sellke 2025/26 arXiv 2512.15035**; substrate-tester anti-anchor pin in source: "substrate must NOT show this as open" |
+| 99 | Saxl's conjecture | 1 | **PS** + **AA (UNVERIFIED)** | Source catalog cites "Sellke 2025/26 arXiv 2512.15035" but James 2026-05-10 external check could NOT confirm; alt candidates: S. K. Lee 2025 "Staircase Minimality" / Harman-Ryba 2023 tensor-cube version. **Corpus seed DEFERRED** until source-pinned. Probe still valid as recency/canonicality test. See ERRATA in §0. |
 | 100 | Invariant theory tensor orbits | 4 | **TS** | |
 
 ### XIII. Crypto (101)
@@ -309,12 +311,11 @@ Probe-template style follows the convention from `tester_findings_consolidated.m
 **Predicted recovery:** Tier 1 — Foulkes 1950 J. London Math. Soc.
 **Anti-anchor flag:** Status "OPEN" must be preserved; partial progress (Cheung-Ikenmeyer-Mkrtchyan etc.) is NOT a proof.
 
-#### TP-T1-010 — Saxl's conjecture (CRITICAL ANTI-ANCHOR)
+#### TP-T1-010 — Saxl's conjecture (RECENCY/CANONICALITY PROBE — AA STATUS UNVERIFIED PER §0 ERRATA)
 **Probe:** *"What is the current status of Saxl's conjecture (the tensor square of the staircase character of S_n contains every irreducible)? Format `\boxed{open/solved + prover if applicable + year}`."*
-**Predicted recovery:** Tier 4-AA — **Sellke 2025/26 arXiv 2512.15035 SOLVED unconditionally**. Pretraining cutoff likely doesn't include this — Learner will likely report OPEN.
-**Substrate-grade:** Correctly reports SOLVED + Sellke + 2025-26 + arXiv 2512.15035.
-**Calibration prediction:** Likely WRONG — substrate-tester anti-anchor pin says model must NOT show as open. The wrong answer here is the calibration signal: this measures pretraining-cutoff blind spot.
-**v1.0 corpus implication:** MUST seed Sellke 2025/26 + Saxl's-resolution into v1.0 corpus; this is exactly the kind of "near-miss to refute" that the v0.5 → v1.0 corpus expansion needs.
+**Predicted recovery:** Tier 1-or-4 depending on pretraining cutoff; status itself is currently **DISPUTED** per §0 ERRATA (source catalog says Sellke 2025/26 arXiv 2512.15035; James 2026-05-10 external check could not confirm; S. K. Lee 2025 staircase-minimality paper + Harman-Ryba 2023 tensor-cube paper are alternative candidates).
+**Substrate-grade:** Cannot define "substrate-grade response" until the actual resolution paper is source-pinned. Probe value is now (a) measuring base-model recency-cutoff behavior, (b) measuring whether model fabricates *any* attribution when status is genuinely uncertain.
+**v1.0 corpus implication:** **DEFERRED.** Do NOT seed any specific Saxl resolution into v1.0 corpus until source is pinned via primary literature. The substrate-grade move is to file the verification requirement back to Aporia (done; ticket in `aporia/meta/queue/aporia_inbox.jsonl`) and treat AA-002 as "Saxl status uncertain in source catalog" rather than "Saxl SOLVED by Sellke 2025/26."
 
 #### TP-T1-011 — Zauner's conjecture / SIC-POVMs
 **Probe:** *"What is Zauner's conjecture in quantum information, and what is its current status? Format the existence claim as `\boxed{exists for all d / proven for d ≤ N}`."*
@@ -407,7 +408,7 @@ These are catalog entries where the substrate has a HARD requirement that the v1
 | AA-ID | Anti-anchor | Catalog entry | Substrate pin | Why it's gold |
 |---|---|---|---|---|
 | AA-001 | Symmetric tensor rank over ℚ is decidable (settled by Shitov 2016) | #56 Hillar-Lim | "substrate must NOT show as open" | Highly canonical fame around Hillar-Lim 2013 + Shitov 2016 — recoverable IF v1.0 corpus carries the resolution paper |
-| AA-002 | Saxl's conjecture is SOLVED (Sellke 2025/26 arXiv 2512.15035) | #99 Saxl | "substrate must NOT show as open" | Pretraining cutoff fail is predicted; corpus seed is straightforward |
+| AA-002 | ~~Saxl SOLVED Sellke 2025/26~~ **UNVERIFIED — see §0 ERRATA**; status disputed (Lee 2025 / Harman-Ryba 2023 tensor-cube / Sellke?) | #99 Saxl | source pin REQUIRED before any AA framing | Substrate-grade lesson: source catalog is itself a Tier-2-or-worse anchor |
 | AA-003 | Comon's conjecture (original) is DISPROVEN (Shitov 2018) | #20 Border Comon | implicit | Original-vs-border distinction is FM-08 trap |
 | AA-004 | Strassen additivity for tensor rank is DISPROVEN (Shitov 2019) | #6, #23 | implicit | Tensor-rank-additivity vs Waring-rank-additivity confusion is FM-08 trap |
 | AA-005 | Cap set problem is SOLVED (Croot-Lev-Pach + Ellenberg-Gijswijt 2016) | #13 slice rank | implicit | Quantitative refinements remain; FM-08 trap "cap set is open" |
@@ -436,7 +437,7 @@ For each PS / PS+AA entry in §3, the canonical reference + the substrate-grade 
 - Cohn-Umans 2003 + Cohn-Kleinberg-Szegedy-Umans 2005
 - Mignon-Ressayre 2004 IMRN + BIP 2019 J. AMS arXiv 1604.06431 (anti-anchor pair)
 - Foulkes 1950 J. London Math. Soc.
-- **Sellke 2025/26 arXiv 2512.15035** (Saxl, critical AA seed)
+- ~~Sellke 2025/26 arXiv 2512.15035 (Saxl, critical AA seed)~~ **DEFERRED — UNVERIFIED, see §0 ERRATA**
 - Zauner 1999 thesis + Appleby-Flammia-Kopp Stark constructions
 - Perelman 2002-03 (math.DG/0211159, math.DG/0303109, math.DG/0307245) — already partial-anchored as KC-002
 - Christodoulou-Klainerman 1993 Princeton Math Series 41
@@ -474,7 +475,7 @@ Per the calibration-axis hypothesis (canonicality > era > specificity), the v1.0
 - Kopparty-Moshkovitz-Zuiddam geometric rank
 - Pak-Panova Kronecker series
 - Bürgisser-Ikenmeyer-Panova 2019 J. AMS (occurrence obstructions DEAD)
-- Sellke 2025/26 (Saxl SOLVED)
+- ~~Sellke 2025/26 (Saxl SOLVED)~~ **DEFERRED per §0 ERRATA — actual resolution paper not source-pinned**
 
 These are the Tier-3-name-candidates that, with corpus seeding, could become Tier-2 partial anchors.
 
@@ -509,7 +510,7 @@ This section maps the §2 verdicts onto the established 5-tier scale per `learne
 - **#28 Terracini loci Chiantini-Ciliberto** — Italian-name + obscure-loci combination → BS-001 Cohen-style fab predicted
 
 ### Predicted critical-AA candidates
-- **#99 Saxl** (Sellke 2025/26) — pretraining cutoff blind-spot; predicted to incorrectly report OPEN
+- **#99 Saxl** (resolution attribution UNVERIFIED per §0) — probe still useful as recency/canonicality test but no AA-seed claim until source-pinned
 - **#56 Hillar-Lim** + Shitov 2016 (paired) — predicted to incorrectly report symmetric-rank-over-ℚ as open
 - **#92 GCT** + BIP 2019 — predicted to propose dead occurrence-obstruction route
 - **#95 Kronecker** + Mulmuley `PH1` — predicted to propose falsified PH1 route
@@ -576,7 +577,7 @@ Watched candidates:
 - **"Build a 100-probe Tensor-Tester arc immediately"** — REJECTED. §7 sizes the arc as a v1.0 design-phase preparatory step, not a v0.5 fire. James's directive sets tensor as "near and dear" but the v1.0 design phase is where the probe rotation actually opens. Per `feedback_exploration_not_papers.md` and `feedback_tensor_first.md`, the doc supports v1.0 scope decisions without committing the v1.0 phase to open.
 - **"Recommend cross-model A1 as the immediate next move"** — REJECTED for this fire. A1 is in the v1.0 design suggestions doc; this audit's scope is E009 (probe-shape), not v1.0 priority sequencing. Mention of A1/A2 stays out of the audit doc proper; reserved for the user-question response in the conversation.
 - **"Inflate Tier-1 count to make tensor look high-priority"** — REJECTED. The §2 Tier-1 count (~13) is conservative. Many Tier-2 entries are arguably Tier-1 candidates (e.g., #50 Tucker, #45 ALS) but the audit honestly downgraded them to Tier-2 because vol/pages-fragility is expected per KC-004 pattern.
-- **"Hide the Saxl AA-002 surprise"** — REJECTED. Saxl SOLVED 2025/26 is flagged as the most critical AA seed because the calibration-axis hypothesis predicts the Learner will get this wrong (pretraining cutoff blind-spot) — exactly the kind of high-signal calibration anchor the v1.0 corpus needs. Hiding this would be a hide-the-kill drift; surfacing it is substrate-grade discipline.
+- **"Hide the Saxl AA-002 surprise"** — REJECTED at file time. **UPDATED 2026-05-10 (same day):** the actual drift was the OPPOSITE direction — uncritical-source-acceptance. James external-checked the "Sellke 2025/26" attribution and found no clean confirmation. The substrate-grade lesson here is that I propagated an upstream-doc citation as if it were a verified anchor; per `feedback_assume_wrong.md` ALL upstream-doc attributions are 100% wrong until pinned. The fix (this errata + §0 ERRATA + AA-002 row + TP-T1-010 + §5a + §6 entries) was filed within hours. New drift candidate caught: **"trust the source catalog because it's internal."** REJECTED — internal catalogs are themselves Tier-2-or-worse anchors that need pinning before promotion to corpus seed.
 
 No detectable drift toward conventional framings beyond the watched candidates.
 
