@@ -378,6 +378,19 @@ class KillComponent:
     convergence_status: str = "n/a"
     stability: Optional[float] = None
     stability_pass: Optional[StabilityResult] = None
+    # Multi-precision sister fields (T-2026-05-07-T029 mini contract-change
+    # window 2026-05-10; per MULTIPRECISION_AUDIT.md Option B). Existing
+    # `margin: Optional[float]` contract preserved (always present as the
+    # double-precision approximation); high-precision regions populate
+    # `margin_high_precision` (string-serialized for JSON-roundtrip
+    # safety; consumers parse with mpmath.mpf(s) when needed) and
+    # `margin_precision_dps` (decimal places of precision the high-
+    # precision string carries). Required for HARD-4 hunt regions where
+    # double precision (~15-16 digits) silently loses information:
+    # Maass form Hecke eigenvalues, p-adic L-function values, motivic
+    # period equality testing.
+    margin_high_precision: Optional[str] = None
+    margin_precision_dps: Optional[int] = None
 
     def __post_init__(self) -> None:  # type: ignore[override]
         # Frozen dataclass — bypass setattr for sanity-check side-effects.
@@ -411,6 +424,32 @@ class KillComponent:
             else:
                 # Clamp to [0, 1].
                 object.__setattr__(self, "stability", max(0.0, min(1.0, s)))
+        # T-2026-05-07-T029 multi-precision sister-field validation.
+        # Permissive at write (substrate v2.3 §6.2 P3 discipline): coerce
+        # to None on bad input rather than raising, mirroring the
+        # precision_dps + stability handling above.
+        if self.margin_high_precision is not None:
+            if not isinstance(self.margin_high_precision, str):
+                object.__setattr__(self, "margin_high_precision",
+                                   str(self.margin_high_precision))
+            # Empty string is treated as "not present" — consumers should
+            # not see "" and try to parse it.
+            if self.margin_high_precision == "":
+                object.__setattr__(self, "margin_high_precision", None)
+        if self.margin_precision_dps is not None:
+            try:
+                d = int(self.margin_precision_dps)
+                if d < 0:
+                    d = None
+            except (TypeError, ValueError):
+                d = None
+            object.__setattr__(self, "margin_precision_dps", d)
+        # Substrate-grade coherence rule: if margin_high_precision is set,
+        # margin_precision_dps SHOULD also be set so consumers know the
+        # reliable digit count. Loud-fail not appropriate (additive
+        # contract; we coerce instead): if the high-precision string is
+        # present without a dps annotation, the consumer can fall back
+        # to mpmath's default. Documented as caveat, not enforced.
 
     def squashed(self) -> float:
         """[0, 1] saturated kill-strength for this component."""
@@ -436,6 +475,13 @@ class KillComponent:
             "stability_pass": (
                 None if self.stability_pass is None
                 else self.stability_pass.to_dict()
+            ),
+            # Multi-precision sister fields (T-2026-05-07-T029). Omit
+            # from JSON when None to avoid bloating legacy dumps.
+            "margin_high_precision": self.margin_high_precision,
+            "margin_precision_dps": (
+                None if self.margin_precision_dps is None
+                else int(self.margin_precision_dps)
             ),
         }
 
@@ -470,6 +516,14 @@ class KillComponent:
                 else float(d["stability"])
             ),
             stability_pass=sp_obj,
+            # Multi-precision sister fields (T-2026-05-07-T029). Legacy
+            # pre-2026-05-10 dumps lack these; defaults to None preserve
+            # pre-change behavior.
+            margin_high_precision=d.get("margin_high_precision"),
+            margin_precision_dps=(
+                None if d.get("margin_precision_dps") is None
+                else int(d["margin_precision_dps"])
+            ),
         )
 
     # ------------------------------------------------------------------

@@ -1,9 +1,9 @@
 # Multi-Precision Audit — KillVector v2 Numeric Components
 
-**Date:** 2026-05-07 (contract-change window dispatch)
-**Ticket:** T-2026-05-07-T029 (P2)
-**Auditor:** Techne
-**Verdict:** **PARTIAL gap — 2 of 6 margin units need multi-precision for under-explored regions; deferred to a future contract-change window per ticket scope (audit-only here).**
+**Date:** 2026-05-07 (audit) → 2026-05-10 (Option B SHIPPED)
+**Ticket:** T-2026-05-07-T029 (P2) — **RESOLVED 2026-05-10 mini contract-change window**
+**Auditor:** Techne (audit) + Techne (mini-window implementation)
+**Verdict:** **PARTIAL gap identified 2026-05-07; Option B IMPLEMENTED 2026-05-10 in `prometheus_math/kill_vector.py`. Two new opt-in sister fields preserve the existing `margin: Optional[float]` contract; legacy callers see no change. 15 dedicated tests at `prometheus_math/tests/test_kill_vector_multiprecision.py` (all passing); 17 pre-existing kill_vector tests preserved.**
 
 ---
 
@@ -85,6 +85,28 @@ margin_precision_dps: Optional[int] = None  # decimal places of precision
 **Tradeoff:** keeps `margin: float` contract intact (zero migration cost for existing callers); adds explicit precision-tagged sister fields. Downstream consumers use `margin_high_precision` if present, else `margin`. This is more conservative; preserves backwards compatibility at the cost of a slightly chunkier dataclass.
 
 **Recommendation: Option B.** Preserves the existing `margin: Optional[float]` contract; multi-precision becomes opt-in via the sister field. Aligns with the substrate's pattern of additive-where-possible contract evolution (e.g., the `stability_pass` sister field on `KillComponent` for structured stability without removing the legacy scalar `stability` field).
+
+### Option B IMPLEMENTED 2026-05-10
+
+Mini contract-change window (parallel to Aporia's pending Phase-2 5-meta-primitive window; this change is orthogonal to those). Added two opt-in fields on `KillComponent`:
+
+```python
+margin_high_precision: Optional[str] = None  # serialized mpmath.mpf string
+margin_precision_dps: Optional[int] = None   # decimal places of precision
+```
+
+Wired into `__post_init__` (permissive validation per substrate v2.3 §6.2 P3: empty string → None; negative dps → None; non-int dps coerced or → None) and into both `to_dict` / `from_dict` for JSON-roundtrip safety. Legacy pre-2026-05-10 dicts load with both fields defaulting to None (no migration needed).
+
+**Tests:** `prometheus_math/tests/test_kill_vector_multiprecision.py` — 15 tests across 5 classes:
+- `TestDefaultsPreservePreContractBehavior` (2): defaults None + legacy dict loads with defaults
+- `TestHighPrecisionPayload` (3): set string + parseable by mpmath + double recovery
+- `TestPermissiveValidation` (5): empty string / negative dps / non-int / float dps / zero dps
+- `TestRoundtripSafety` (3): to_dict includes new fields + from_dict restores + full equality
+- `TestCoherenceCaveatNoEnforcement` (2): high-precision without dps OK + dps without high-precision OK (both unenforced per ticket scope)
+
+**Regression:** 17/17 pre-existing kill_vector tests preserved.
+
+**Downstream consumers** that need multi-precision read `margin_high_precision` and parse with `mpmath.mpf(s)`; those that don't read `margin` (double approximation) as before. The substrate-grade pattern: callers OPT INTO precision rather than the substrate forcing it.
 
 ---
 
