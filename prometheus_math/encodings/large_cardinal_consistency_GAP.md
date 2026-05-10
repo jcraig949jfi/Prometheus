@@ -1,8 +1,15 @@
 # Large-Cardinal Consistency-Strength Encoding — Design (T-2026-05-07-T027)
 
-**Date:** 2026-05-07 (contract-change window dispatch)
-**Ticket:** T-2026-05-07-T027 (P2)
-**Status:** Design landed; impl deferred.
+**Date:** 2026-05-07 (design) → 2026-05-10 (SHIPPED)
+**Ticket:** T-2026-05-07-T027 (P2) — **RESOLVED 2026-05-10 mini contract-change window**
+**Status:** Design + implementation BOTH SHIPPED. See `prometheus_math/encodings/large_cardinal_consistency.py` (155 lines, 2 frozen dataclasses + 2 closed enums) and `prometheus_math/tests/test_large_cardinal_consistency.py` (27 tests, all passing). Mini-window orthogonal to Aporia Phase-2 5-meta-primitive plan; this primitive is foundations/logic, not in any of the 5 meta categories.
+
+**What landed beyond design:**
+- Closed enums `AxiomatizationLang` (informal/lean4/coq/metamath) and `JustificationMethod` (axiomatic_inclusion/interpretation/inner_model/forcing/relative_consistency_proof) — substrate-grade typed-error discipline (no silent fallthrough on unknown values)
+- `is_strict` property on `ConsistencyRelation` distinguishes reflexive `Con(T) → Con(T)` (content-empty) from cross-theory implications (substrate-grade)
+- 27 tests covering construction, validation (rejection of empty/non-string/unknown-enum inputs), parametrized enum coverage, the design doc's worked example (Magidor 1977 SCH failure), and substrate-integration patterns (chart_id namespace, str-value enum roundtrip)
+
+---
 
 ---
 
