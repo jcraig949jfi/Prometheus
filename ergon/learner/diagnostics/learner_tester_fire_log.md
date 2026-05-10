@@ -2634,4 +2634,76 @@ The 7-substrate-grade / 3-defer-only / 2-quiet split reflects the tester's actua
 
 **Loop closes here.** Resumption is at user direction.
 
+---
+
+## Fire 16 — 2026-05-10 (post-resume; user direct request)
+
+**Ticket:** T-2026-05-08-E009 (P1-high) — *Tensor-shape probe corpus design (Learner-Tester + v1.0 corpus)*
+
+**Trigger:** User direct request "yes, do E009" after resume from full-arc session-close 2026-05-09. Not a /loop fire — single-shot E009 execution.
+
+**Inbox state at fire start (fresh disk read):** 70 lines / 70 tickets. Status counts: `OPEN=1, ABLE_TO_ADVANCE=1, BLOCKED-DEFERRED-V1.0=60, DONE=7, WONTFIX=1`. Sole OPEN: T-2026-05-08-E009.
+
+**Pre-test:** 356/356 PASS (28.6s) under `PYTHONPATH=F:/prometheus PYTHONUTF8=1`. Initial pre-test without env vars failed with 18 collection errors (pytest couldn't find `ergon` package) + 5 trl-1.3.0 UnicodeDecodeError failures — both environment-config issues, not code regressions. Documented for future fires: env vars are required for the canonical 356/356 baseline that prior fires reported.
+
+**Action:**
+1. Read source catalog `aporia/mathematics/tensor_open_problems_v1.md` (957 lines, 104 entries) and the calibration JSONs (KC-001..KC-009 + KC-AGW-LOCK; BS-001..BS-006 + 3-subclass taxonomy; FM-01..FM-10).
+2. Wrote `ergon/learner/v1_0_plans/tensor_probe_shape_audit.md` (~600 lines, 10 sections + checklist + SELF-REVIEW).
+3. Per-problem classification of all 104 entries (§2): 28 PS / 5 PS+AA / 28 MIN / 8 AA-only / 35 TS. Honest aggregate: ~56 too-specialist for v1.0.
+4. 29 detailed probe templates (§3): 13 Tier-1 + 16 Tier-2.
+5. 10 anti-anchor entries consolidated (§4) with substrate-tester pin status — including AA-002 Saxl SOLVED 2025/26 (Sellke arXiv 2512.15035) and AA-006 GCT occurrence-obstructions DEAD (BIP 2019 J. AMS).
+6. v1.0 corpus seed recommendations (§5): direct-seed bibliographic anchors, hard-negative pairs from anti-anchors, FM-08 trivial-vs-open expansion, calibration-axis training pressure (non-canonical-but-correct seeds).
+7. Cross-reference §6: tier predictions per entry, tied to KC/BS exemplars (KC-001 Wiles-style for ω; KC-009 Mostow-style name-only candidates; BS-001 Cohen-style fab-prediction for non-canonical Italian/Polish-name authors per BS-006 Margulis-tokenizer pattern).
+8. Tensor-Tester arc sizing (§7): 33 PS+AA entries match the 33-probe Charon arc structure exactly.
+9. Honest framing (§8): 6 explicit "what this is NOT" claims including tensor-first / HARD-3 deferral preserved.
+10. AC checklist + SELF-REVIEW (§§9-10).
+
+**Post-test:** 356/356 PASS (28.1s). No regressions. Doc-only fire — no code touched.
+
+**Files created:** `ergon/learner/v1_0_plans/tensor_probe_shape_audit.md` (one file).
+
+### SELF-REVIEW (per /loop spec)
+
+**(a) Did this fix resolve the failure mode the pressure-applier reported?**
+Aporia ticket E009 asked for per-problem probe-shape classification + probe templates + corpus seeds. All 6 acceptance criteria addressed. The doc is the falsifiable artifact the ticket asked for — predictions per the calibration-axis hypothesis that a future Tensor-Tester arc can refute. Does not "solve" the question of whether tensor mathematics is the right v1.0 priority — that's a James-decision per `feedback_tensor_first.md` and the v1.0 design suggestions doc.
+
+**(b) Did this introduce any memorization risk that the synthetic-null gate (W4.0) would catch?**
+No. Doc-only fire, no training data changed. The probe templates in §3 and seeds in §5 are DESIGN proposals — they will need to pass W4.0 if/when v1.0 corpus is built, but that's a v1.0-design-phase concern. No memorization risk introduced by this fire.
+
+**(c) Did I change any contract?**
+No. Doc-only. File in `ergon/learner/v1_0_plans/` per file ownership. No public function signatures, env step/reset/info schemas, KillVector layout, or P5 NearMissCorpus emission shape touched.
+
+**(d) Did I drift toward conventional-approach framing?**
+Caught and rejected drift candidates documented in doc §10:
+1. "Tensor problems are deep, give them all probes" — REJECTED via honest TS=35 count instead of inflating PS.
+2. "Probe-shape = hard-anchor-recoverable only" — REJECTED via preserving AA-only verdict for blind-spot calibration value.
+3. "Build 100-probe Tensor-Tester arc immediately" — REJECTED; sized as v1.0-design-phase prep, not v0.5 commitment.
+4. "Recommend cross-model A1 in this audit" — REJECTED; A1/A2 belong in v1.0 design suggestions doc, not in E009 scope.
+5. "Inflate Tier-1 count" — REJECTED; honestly downgraded marginal Tier-1 candidates (#50 Tucker, #45 ALS) to Tier-2.
+6. "Hide the Saxl AA-002 surprise" — REJECTED; surfaced as the most critical AA seed because pretraining-cutoff blind-spot is exactly the v1.0 calibration target.
+
+Additional drift watched in this fire (post-resume from prior session):
+- "Treat this as fire-1 of a new loop" — REJECTED. This is a single-shot user-direct execution, not /loop continuation. No ScheduleWakeup at close per user not having invoked /loop.
+- "Inflate verdict counts to make the audit look 'productive'" — REJECTED. The 28/28/35 split is calibrated, not padded.
+
+### Substrate-grade observation
+
+The §2 verdict tier (~28% probe-shaped) is consistent with the broader substrate finding from the full-arc session-close: high-canonicality coverage in pretraining is the binding constraint, not academic prestige. Tensor mathematics is academically prestigious but heterogeneously canonical — the Foulkes/Saxl/area-law/Ricci-flow Tier-1 candidates are popular-coverage-rich, while the Buczyńska-Buczyński/Christandl-Vrana-Zuiddam/Cartwright-Sturmfels candidates are predicted Tier-4 fab risks per the BS-006 Margulis tokenizer-fragility pattern.
+
+Anti-anchor density is unusually high in this catalog (10 of 104, ~10%, vs ~5% baseline in the existing fabrication corpus) — primarily because the catalog itself is meticulously up-to-date with 2024-2025 frontier resolutions (Sellke Saxl, BIP 2019, IMW Kronecker, Lampert-Moshkovitz Sept 2025). This is a v1.0 corpus opportunity, not a problem.
+
+### Inbox state at fire close (re-read fresh from disk)
+
+Re-reading `aporia/meta/queue/ergon_inbox.jsonl` to recount. (Ticket needs to be marked as DONE-shipped.)
+
+### Operational state
+
+- Inbox: 1 OPEN (E009) → will be closed by ticket update commit.
+- Tests: 356/356 PASS (post-test).
+- Files: 1 new doc, no code.
+- No Monitor armed.
+- No pending wakeup (single-shot, not /loop).
+- Commit: pending.
+
+
 *Full-arc session-close written by Ergon, 2026-05-09.*
