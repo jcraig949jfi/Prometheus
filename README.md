@@ -2,9 +2,25 @@
 
 > A falsification-first reasoning substrate for automated mathematical discovery.
 
-Most AI-for-math systems generate candidates and hope. Prometheus generates candidates and aggressively tries to kill them. Only what survives the gauntlet is allowed to become substrate state. The interesting output is what gets killed and how — and the architecture is engineered to make the kills carry structural information that downstream training and discovery can navigate.
+Most AI-for-math systems treat generative variance — what users call "hallucinations" — as a failure mode to suppress. Prometheus treats variance as the engine of an evolutionary search and engineers ruthless mechanistic selection to impose on it. Most AI-for-math systems generate candidates and hope. Prometheus generates candidates and aggressively tries to kill them. Only what survives the gauntlet is allowed to become substrate state. The interesting output is what gets killed and how — and the architecture is engineered to make the kills carry structural information that downstream training and discovery can navigate.
 
 The system is local-first, multi-agent, and operates on a strict falsification-first contract: hypotheses are forced through a deterministic battery of tests that produce high-dimensional **KillVectors** describing exactly how a claim broke. Hard kills (hallucinations, mathematically invalid claims) are terminated. Soft kills (near-misses) are tagged, routed for repair, and reused as training signal — so a multi-step reasoning chain is never discarded over a recoverable error.
+
+## The thesis: hallucinations as mutation, falsification as selection
+
+A generative model produces variance. Without selection pressure, variance is noise. With ruthless mechanistic selection, variance becomes the substrate of an evolutionary search through a high-dimensional space the substrate cannot exhaustively enumerate.
+
+This reframes the field's dominant complaint about large generative models. Hallucinations are not a bug to suppress; they are **gene recombinations** — structurally undirected variation, cheap to produce, exploring corners of hypothesis space no enumeration strategy would reach. The bug, when it appears, is the absence of fitness pressure, not the presence of variance.
+
+Prometheus is engineered to be the fitness pressure. The 4-fold falsification battery, the synthetic-null gate, the KillVector geometry, the cactus-barrier-aware contract changes, the anti-anchor sentinels, the ExclusionCertificates, the per-domain `π₀` calibration, the substrate-tester multi-instance fire chain — together they form a selection regime that lets useful mutations through and kills deleterious ones with high specificity. Survivors are not "things the model produced"; they are claims that passed a gauntlet designed to terminate them.
+
+The deliberately-different bet against frontier-LLM scaling is concrete: a larger model with no selection pressure is a faster mutation engine, not a smarter discovery engine. The leverage is in the selection.
+
+**Empirical evidence the selection carries signal.** Gradient archaeology on the ~314K logged kills shows `kill_pattern` carries **0.725 bits of mutual information** with operator class. The kill geometry is structured — the killed claims encode the topology of where the search failed, and survivors carry the inverted information. This is not yet a discovery; it is the empirical fitness landscape on which discovery may emerge. See [`prometheus_math/GRADIENT_ARCHAEOLOGY_RESULTS.md`](prometheus_math/GRADIENT_ARCHAEOLOGY_RESULTS.md).
+
+**Worked example of the selection killing a deleterious mutation in real time.** On 2026-05-09 the substrate's own synthesis machinery surfaced the claim "Saxl conjecture (T#99) solved unconditionally by Sellke 2025/26 (arXiv:2512.15035)." Within 24 hours the Wave 1 anti-anchor verification pass caught that Lee 2025 (arXiv:2512.15035) was *withdrawn within 3 days of posting* — the substrate had absorbed a mutation that looked plausible and would have entered the v1.0 Learner training corpus. The selection pressure caught it; four documents reverted; two new sub-anchors registered. Commit `4c6131fe`. Full audit-trail in the Verification surface section below.
+
+The mutation engine is generative variance. The selection engine is everything else in this repository. The question this project tests is whether the second can dominate the first.
 
 ## Core architecture
 
@@ -70,9 +86,9 @@ The Learner's eventual action space is the 5-layer **substrate vocabulary** at [
 
 This is the deliberately-different bet in concrete form: navigate a discrete typed grammar of mathematical attack, not predict tokens.
 
-## Recent substrate-grade results
+## Recent substrate-grade results — selection pressure in action
 
-These are reproducible artifacts on disk. Each is the substrate doing what it was designed to do — including catching its own claims when they don't survive scrutiny.
+These are reproducible artifacts on disk. Each is the substrate doing what it was designed to do — applying selection pressure to generative variance and recording the outcome with enough fidelity that downstream training and external audit can both consume it. Read this section as evidence the selection regime works, including on the substrate's own output.
 
 - **The synthetic-null gate fired on a load-bearing claim.** On 2026-05-04, the substrate's own "cross-domain transport across 6 environments" headline (REINFORCE/PPO showing +1.37× to +18× lifts at p<0.05) was retracted before circulation when label-shuffled training reproduced the same lift pattern on a regression environment where there is nothing to discover. Modal-class recovery, not learned structure. → [`prometheus_math/MODAL_COLLAPSE_SYNTHETIC_RESULTS.md`](prometheus_math/MODAL_COLLAPSE_SYNTHETIC_RESULTS.md)
 
@@ -194,6 +210,17 @@ The substrate is laying groundwork for several outcomes that may emerge but are 
 - **A new mathematical discovery.** None claimed. The substrate is built so that *if* discovery emerges, it does so through the falsification gauntlet — kill record, triangulation, ExclusionCertificate, on disk and reproducible. The current 0-PROMOTE rate across cross-domain envs is what an honest instrument should report when the content is structurally absent.
 - **Structured cognition in the Learner.** Ergon's Learner is at MVP-paused state with the pilot LoRA design deferred. If structured cognition emerges from training on the substrate's accumulated kill-data corpus over time, the synthetic-null gate is commit-blocking so we'll have the discipline to recognize it. No current artifact justifies the claim.
 - **A navigable gradient field over discovery space.** What ships today is typed local coordinate charts and an empirical kill-pattern geometry from ~314K logged kills. As negative-space data accumulates and the KillEmbedding lands, a global gradient field may emerge. Today it does not exist; we're not pretending it does.
+
+## If you are working on adjacent problems
+
+The architecture sits adjacent to several research programs that share the discovery-not-generation framing. If you are working on:
+
+- **First-principles physics discovery** from raw sensor data (lasers, colliders, telemetry) and need a mathematical substrate that codifies surviving claims into a rigid syntax with reproducible verification — Prometheus's `ExclusionCertificate` protocol and the typed `CoordinateChart` / `CanonicalizationProtocol` pre-tier-P0 primitives are the closest pieces in the stack.
+- **Mechanistic interpretability** of small math models — the substrate's 5 confirmed blind-spots (Cohen, Helfgott, Faltings, McKay, Margulis) and 9 failure-mode patterns are reproducible probes against any candidate 3B-4B model; the calibration battery is independently useful.
+- **Evolutionary search over symbolic spaces** — the KillVector schema, the gradient-archaeology on `kill_pattern`, and the NearMissCorpus emission shape are designed to make the kill geometry trainable rather than discarded.
+- **Verification-grounded RL** — the synthetic-null gate (commit-blocking; fires on label-shuffled-data above-chance accuracy) is the kind of plumbing reward-hacking-resistant RL systems will need; we publish what fires and how on disk.
+
+Cold critique is welcome. Cold proposals to compare notes are welcome. The most useful conversations are not "is your approach right" but "where do our selection regimes need to converge to handle hypothesis generation at scale."
 
 ## License
 
