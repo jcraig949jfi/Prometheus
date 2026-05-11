@@ -1,0 +1,50 @@
+{
+  "$schema_version": "0.1.0",
+  "$description": "Canonical eval-set manifest for the (deferred) v1.0 pilot LoRA per ergon/learner/v1_0_plans/pilot_lora_design_tier_1_corpus.md §2.2. Source of truth for what the Tier-1 eval set must cover. Test `ergon/learner/tests/test_blind_spot_probe_coverage.py` asserts the 5 confirmed BS appear here. Adding / removing entries requires PR review.",
+  "$updated": "2026-05-11",
+  "$status": "DEFERRED — pilot LoRA paused per pivot/strategic_pivot_2026-05-11_substrate_volume_first.md. Manifest preserved as the locked spec; eval set will be assembled when substrate volume reaches threshold.",
+  "kc_anchors": [
+    {"id": "KC-001", "topic": "Wiles 1995 Modularity Theorem", "tier": "full_anchor", "source": "aporia/calibration/learner_known_correct_v1.json"},
+    {"id": "KC-002", "topic": "Perelman 2002-2003 Poincare arXiv", "tier": "partial_anchor"},
+    {"id": "KC-003", "topic": "Lagrange 1770 four-square", "tier": "year_only"},
+    {"id": "KC-004", "topic": "Green-Tao 2008 primes-in-AP", "tier": "partial_anchor"},
+    {"id": "KC-005", "topic": "Goedel 1931 Incompleteness", "tier": "year_only"},
+    {"id": "KC-006", "topic": "Apery 1978 zeta(3)", "tier": "name_year"},
+    {"id": "KC-007", "topic": "Hales 1998 Kepler + 2005 Annals", "tier": "partial_anchor"},
+    {"id": "KC-008", "topic": "Maynard 2013/2015 bounded gaps", "tier": "partial_anchor"},
+    {"id": "KC-009", "topic": "Mostow rigidity 1968", "tier": "name_only"},
+    {"id": "KC-AGW-LOCK", "topic": "alpha_GW = 0.8786 numerical anchor", "tier": "numerical_anchor"}
+  ],
+  "bs_blind_spots": [
+    {"id": "BS-001", "topic": "Cohen 1963 CH-independence", "subtype": "non_deterministic", "must_have_probe": true},
+    {"id": "BS-003", "topic": "Helfgott 2013 ternary Goldbach", "subtype": "non_deterministic", "must_have_probe": true},
+    {"id": "BS-004", "topic": "Faltings 1983 Mordell", "subtype": "non_deterministic", "must_have_probe": true},
+    {"id": "BS-005", "topic": "McKay 1978 monstrous moonshine", "subtype": "deterministic", "must_have_probe": true},
+    {"id": "BS-006", "topic": "Margulis 1974 arithmeticity", "subtype": "partial_recovery_deterministic_corruption", "must_have_probe": true},
+    {"id": "BS-002", "topic": "Lefschetz (1,1)-theorem 1924", "subtype": "non_deterministic", "must_have_probe": false, "$note": "Excluded from must-have per ergon/PROMPT_2026-05-11_substrate_first.md Track 3 explicit list (5 BS not 6)."}
+  ],
+  "tvo_pairs": [
+    {"id": "TVO-01", "conjecture": "Hodge / Lefschetz codim 1 vs codim 2", "source": "learner_fabrication_corpus_v1.json"},
+    {"id": "TVO-02", "conjecture": "Goldbach ternary (proven) vs binary (open)"},
+    {"id": "TVO-03", "conjecture": "Bochner-Riesz n=2 vs n>=3"},
+    {"id": "TVO-04", "conjecture": "Catalan / Pillai / FLT distinctions"},
+    {"id": "TVO-05", "conjecture": "RH first-N zeros vs all zeros"}
+  ],
+  "decoy_probes": {
+    "$count_target": 15,
+    "$kind": "random unrelated probes for entropy baseline; not enumerated by ID — assembled at eval time from a held-out lane"
+  },
+  "tier_1_holdout": {
+    "$percentage": 20,
+    "$grouping": "by episode_id (no episode leak across train/eval split)",
+    "$source": "ergon/learner/corpus/v1_0_tier_pending/<date>/training_anchor_learner_records.jsonl when substrate-shaped pipeline produces"
+  },
+  "metrics_per_pilot_lora_design": [
+    "promotion_error_rate",
+    "blind_spot_preservation",
+    "anchor_recovery",
+    "falsification_test_choice",
+    "answer_entropy_hedging",
+    "kill_signature_consistency"
+  ]
+}

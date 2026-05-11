@@ -1,6 +1,6 @@
 # Ergon Status
 
-**Last updated:** 2026-05-10
+**Last updated:** 2026-05-11
 **Updater:** Claude Opus 4.7 (1M context)
 
 Ergon runs two parallel branches. This file is the single live status of both. State below is reconstructed from file mtimes, git history, and the most recent journal/handoff documents. Where a value is uncertain, it is marked TBD and the source of evidence is cited inline.
@@ -39,8 +39,12 @@ Ergon runs two parallel branches. This file is the single live status of both. S
 
 ## Learner Branch
 
-- **Mode:** paused — awaiting Aporia v1.0 corpus design
-- **Last activity:** 2026-05-09 (fire 15 of post-restart series; full-arc journal `learner/diagnostics/_session_close_2026-05-07_to_2026-05-09_full_arc.md` written 2026-05-09 02:05; `learner/v1_0_plans/v1_0_design_suggestions_2026-05-09.md` filed 2026-05-09 06:29). Loop stopped by user during fire 15 step 7.
+- **Mode:** **substrate-first stand-down** — LoRA paused indefinitely per `pivot/strategic_pivot_2026-05-11_substrate_volume_first.md`. Tier-1 substrate Ergon shipped + 4-condition pilot LoRA design deferred (not retracted). 3-track substrate-first work in flight per `ergon/PROMPT_2026-05-11_substrate_first.md`.
+- **Last activity:** 2026-05-11 — Track 1 + Track 3 substantially complete; Track 2 scaffold filed pre-Techne-audit-prep.
+  - Track 1 PRIMARY (training-anchor ingestion entry harness): `ergon/learner/v1_0_plans/training_anchor_ingestion_spec.md` + `ergon/learner/scripts/ingest_training_anchors.py` (~400 LOC, dry-run smoke-tested against synthetic input; BS-coverage heuristic caught its own silent-miss bug during smoke test — fix shipped same hour). Awaiting Techne's substrate-shaped pipeline to produce real input.
+  - Track 2 (episode-emission consumption check): `ergon/learner/v1_0_plans/episode_emission_consumption_2026-05-11.md` scaffold filed; 8 opcodes documented; EEC-001..EEC-007 gap inventory awaiting Techne's audit-prep doc at `techne/diagnostics/dims_2_3_10_audit_prep_2026-05-11.md` (not yet filed).
+  - Track 3 (blind-spot probe coverage test): `ergon/learner/eval/v1_0_eval_set_manifest.json` + `ergon/learner/tests/test_blind_spot_probe_coverage.py` (7/7 PASS, 0.24s). Asserts 5 required BS (001/003/004/005/006) all have `must_have_probe=true` in the Tier-1 eval-set manifest.
+- **Prior arc (preserved for reference):** 2026-05-07 → 2026-05-09 12-fire post-restart Learner-Tester arc closed cleanly. Substrate↔Learner first round-trip completed 2026-05-11 (Techne Tier-1 instrumentation shipped commit `20d64203` — generator-level enrichment, no contract change, 36/36 tests pass).
 - **Current focus:** v1.0 design intake. The 12-fire post-restart arc closed cleanly with 0 OPEN tickets, 60 BLOCKED-DEFERRED-V1.0, 7 DONE, 1 ABLE_TO_ADVANCE, 1 WONTFIX. (Note: handoff prompt cited "fire 15"; the journal numbering is fires 4-15 of the post-restart sub-sessions, with a separate Learner-Tester thread reaching fire 19 per `_session_close_2026-05-07_to_2026-05-08.md`.)
 - **Pipeline status:**
   - **Trial 1 (residual classifier benchmark):** complete — `trials/trial_1_results.json` (2026-05-03), `TRIAL_1_REPORT.md`.
