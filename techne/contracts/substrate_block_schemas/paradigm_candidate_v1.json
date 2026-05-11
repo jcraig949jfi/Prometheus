@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prometheus.local/techne/contracts/substrate_block_schemas/paradigm_candidate_v1.json",
+  "title": "paradigm_candidate (v1)",
+  "description": "Proposal for a new attack paradigm class (P32+). Tier-4 optional. Substrate-tester saturation rule: requires 2+ INDEPENDENT confirmations before promotion from candidate (P-CANDIDATE-<name>) to active (P32, P33, ...). Confirmation_status enum distinguishes concrete deliverables from future-promise speculation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "_schema_version", "id", "name", "confirmation_status",
+    "current_confirmations", "literature_anchors", "source_report",
+    "promotion_gate"
+  ],
+  "properties": {
+    "_schema_version": {
+      "$ref": "_common_definitions.json#/$defs/schemaVersion",
+      "const": "1.0.0"
+    },
+    "id": {
+      "$ref": "_common_definitions.json#/$defs/paradigmCandidateId",
+      "description": "P-CANDIDATE-<name> format until the saturation rule is met. Promoted form (P32 / P33 / ...) is assigned at ingestion."
+    },
+    "proposed_id_if_promoted": {
+      "$ref": "_common_definitions.json#/$defs/paradigmPromotedId",
+      "description": "Proposed PNN ID if/when the paradigm is promoted. May conflict with another candidate's proposal; the ingestion script breaks ties by source_date."
+    },
+    "name": {
+      "title": "Paradigm name (UpperCamelCase)",
+      "type": "string",
+      "pattern": "^[A-Z][A-Za-z0-9]+$",
+      "minLength": 4,
+      "maxLength": 100
+    },
+    "sub_tactics": {
+      "title": "Sub-tactics composing the paradigm",
+      "description": "List of UpperCamelCase tactic names that together constitute the paradigm. Sub-tactics are not themselves paradigms; they're the components.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z][A-Za-z0-9]+$"
+      },
+      "uniqueItems": true,
+      "default": []
+    },
+    "confirmation_status": {
+      "title": "What kind of evidence currently exists",
+      "description": "concrete_deliverable: at least one execution producing artifacts inspectable by the substrate. future_promise: published intent / forecast without execution. speculation: not even claimed by any author group.",
+      "type": "string",
+      "enum": ["concrete_deliverable", "future_promise", "speculation"]
+    },
+    "required_independent_confirmations": {
+      "title": "Saturation threshold for promotion",
+      "description": "Substrate-tester convention: 2 independent confirmations from distinct author groups before promotion. Defaults to 2; can be raised for higher-risk paradigm registrations.",
+      "type": "integer",
+      "minimum": 1,
+      "default": 2
+    },
+    "current_confirmations": {
+      "title": "Confirmations on file",
+      "description": "Each confirmation is a {citation, context} object. The validator does NOT enforce the count vs required_independent_confirmations automatically (independence is a judgment call); the reviewer asserts.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["citation", "context"],
+        "properties": {
+          "citation": {"$ref": "_common_definitions.json#/$defs/citationArxivOrDoi"},
+          "context": {
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 600
+          }
+        }
+      }
+    },
+    "literature_anchors": {
+      "title": "Primary citations grounding the paradigm",
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "_common_definitions.json#/$defs/citationArxivOrDoi"},
+      "uniqueItems": true
+    },
+    "source_report": {
+      "$ref": "_common_definitions.json#/$defs/sourceReportRef"
+    },
+    "source_date": {
+      "$ref": "_common_definitions.json#/$defs/isoDate"
+    },
+    "promotion_gate": {
+      "title": "What additional evidence is needed for promotion",
+      "description": "Concrete description of what would have to land for this candidate to be promoted from P-CANDIDATE- to P32+. Examples: 'one additional independent demonstration on a non-tensor problem', 'arXiv-verified replication with full code release'.",
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 2000
+    },
+    "anti_anchor_pins": {
+      "title": "Anti-anchor IDs related to this paradigm",
+      "description": "Forward false-anchors this paradigm guards against (e.g. AA-021 'AlphaEvolve solved hard problems' if this paradigm is EvolutionaryLLMSynthesis). Cross-reference checked at validate-time.",
+      "type": "array",
+      "items": {"$ref": "_common_definitions.json#/$defs/anchorIdAA"},
+      "uniqueItems": true,
+      "default": []
+    }
+  },
+  "examples": [
+    {
+      "_schema_version": "1.0.0",
+      "id": "P-CANDIDATE-EvolutionaryLLMSynthesis",
+      "proposed_id_if_promoted": "P32",
+      "name": "EvolutionaryLLMSynthesis",
+      "sub_tactics": [
+        "IslandPopulationArchitecture",
+        "CascadeEvaluationGate",
+        "LLMMutationOperator"
+      ],
+      "confirmation_status": "concrete_deliverable",
+      "required_independent_confirmations": 2,
+      "current_confirmations": [
+        {
+          "citation": "arXiv:2310.06117",
+          "context": "Wave 4 report 10 — AlphaEvolve methodology decomposition"
+        }
+      ],
+      "literature_anchors": ["arXiv:2310.06117"],
+      "source_report": "report 10",
+      "source_date": "2026-05-10",
+      "promotion_gate": "One additional independent group reproducing the cascade-evaluation-gated island-population pattern on a substrate-relevant problem (matrix multiplication, slice rank, or similar). Without that, the paradigm risks AlphaEvolve-specific lock-in.",
+      "anti_anchor_pins": ["AA-021"]
+    }
+  ]
+}

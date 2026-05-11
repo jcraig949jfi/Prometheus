@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prometheus.local/techne/contracts/substrate_block_schemas/composition_rule_v1.json",
+  "title": "composition_rule (v1)",
+  "description": "A literature-confirmed substrate composition rule. Mirrors and enriches techne/registry/compositions.jsonl (the existing JSONL uses literature_confirmation: [str]; v1 schema uses literature_confirmation: [{citation, context}] for richer provenance). Speculative compositions go in narrative; only confirmed compositions go in this block.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "_schema_version", "id", "name",
+    "precondition_primitives", "output_primitive",
+    "literature_confirmation", "confirmed", "tiers", "source_report"
+  ],
+  "properties": {
+    "_schema_version": {
+      "$ref": "_common_definitions.json#/$defs/schemaVersion",
+      "const": "1.0.0"
+    },
+    "id": {
+      "$ref": "_common_definitions.json#/$defs/compositionIdC"
+    },
+    "name": {
+      "title": "Composition name (descriptive snake_case)",
+      "description": "snake_case name describing the composition pattern. Examples: 'TierB_x_TierD_BorderRank_x_PhaseTransition'. Underscores and CamelCase mixed acceptable when describing tier × tier compositions.",
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_]+$",
+      "minLength": 8,
+      "maxLength": 240
+    },
+    "precondition_primitives": {
+      "title": "Primitives that must exist for this composition to apply",
+      "description": "Two or more substrate primitives whose composition produces output_primitive. Each must be UpperCamelCase; each must already exist in the substrate or be a primitive_proposal in the same batch.",
+      "type": "array",
+      "minItems": 2,
+      "items": {"$ref": "_common_definitions.json#/$defs/primitiveName"},
+      "uniqueItems": true
+    },
+    "output_primitive": {
+      "$ref": "_common_definitions.json#/$defs/primitiveName",
+      "description": "The substrate primitive produced by composing the preconditions. May or may not be a primitive_proposal in the same batch — composition rules can predate the existence of their output primitive."
+    },
+    "applicable_attacks": {
+      "title": "Attack paradigms (PNN) this composition unlocks",
+      "type": "array",
+      "items": {"$ref": "_common_definitions.json#/$defs/attackParadigmId"},
+      "uniqueItems": true,
+      "default": []
+    },
+    "literature_confirmation": {
+      "title": "Literature confirmations of this composition",
+      "description": "Each confirmation is an object {citation, context}. Substrate-grade confirmation requires 2+ INDEPENDENT confirmations (substrate-tester saturation rule). The 'confirmed' boolean below indicates whether that threshold is met.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["citation", "context"],
+        "properties": {
+          "citation": {"$ref": "_common_definitions.json#/$defs/citationArxivOrDoi"},
+          "context": {
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 600,
+            "description": "Free-form context: where in the paper this composition appears, which fire surfaced it, T#NN entry it was associated with."
+          }
+        }
+      }
+    },
+    "confirmed": {
+      "title": "Has the saturation rule been met (≥2 independent confirmations)?",
+      "description": "true ONLY if literature_confirmation has 2+ entries from independent sources (different author groups, different papers). The validator does NOT enforce the 2+ count automatically because 'independent' is a judgment call; the reviewer asserts.",
+      "type": "boolean"
+    },
+    "tiers": {
+      "title": "Substrate tiers this composition spans",
+      "type": "array",
+      "minItems": 2,
+      "items": {"$ref": "_common_definitions.json#/$defs/substrateTier"},
+      "uniqueItems": true
+    },
+    "source_report": {
+      "$ref": "_common_definitions.json#/$defs/sourceReportRef"
+    },
+    "notes": {
+      "title": "One-paragraph rationale",
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 4000
+    }
+  },
+  "examples": [
+    {
+      "_schema_version": "1.0.0",
+      "id": "C-001",
+      "name": "TierB_x_TierD_BorderRank_x_PhaseTransition",
+      "precondition_primitives": ["BorderRankWitness", "PhaseTransitionThreshold"],
+      "output_primitive": "ConstructiveDistributionalWitness",
+      "applicable_attacks": ["P29", "P15"],
+      "literature_confirmation": [
+        {
+          "citation": "arXiv:2304.05566",
+          "context": "T#73 fire #43 — Hopkins-Steurer SOS lower bound for tensor PCA at fixed (n,d,lambda) is the Tier-B SOS certificate; the threshold curve is the Tier-D"
+        }
+      ],
+      "confirmed": true,
+      "tiers": ["B", "D"],
+      "source_report": "T#73",
+      "notes": "First independent confirmation of Tier-B + Tier-D cross-tier composition. Tensor-PCA threshold cluster: BorderRankWitness composes with PhaseTransitionThreshold to certify a constructive existence claim that holds within a stated distributional regime."
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prometheus.local/techne/contracts/substrate_block_schemas/training_anchor_v1.json",
+  "title": "training_anchor (v1)",
+  "description": "A labeled instance (or labeled set) Ergon's calibration battery can verify against ground truth. Tier-3 mandatory. Trust-tier enum is load-bearing per Wave 3 of the 2026-05-10 batch (AA-019/020/017): every training_anchor MUST distinguish analytically_proven from numerically_certified from ml_predicted to prevent murmuration-style ground-truth contamination.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "_schema_version", "id", "domain", "anchor_type",
+    "dataset_source", "scale", "prompt_template",
+    "expected_answer_shape", "verification_method",
+    "trust_tier", "source", "source_date"
+  ],
+  "properties": {
+    "_schema_version": {
+      "$ref": "_common_definitions.json#/$defs/schemaVersion",
+      "const": "1.0.0"
+    },
+    "id": {
+      "title": "Anchor ID (anchor-<domain>-<NNN>)",
+      "type": "string",
+      "pattern": "^anchor-[a-z][a-z0-9_]+-\\d{3,5}$",
+      "examples": ["anchor-knots-001", "anchor-maass_gl3-014"]
+    },
+    "domain": {
+      "title": "Mathematical / computational domain",
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 60,
+      "examples": ["knots", "maass_gl3", "genus2", "tensor", "abelian_surfaces", "modular_forms"]
+    },
+    "anchor_type": {
+      "title": "What kind of label this anchor carries",
+      "type": "string",
+      "enum": [
+        "invariant_value",
+        "classification",
+        "bound",
+        "predicate",
+        "spectrum",
+        "decomposition"
+      ]
+    },
+    "dataset_source": {
+      "title": "Where the labeled data lives",
+      "description": "URL, LMFDB table name, paper reference, or repo path. Free-form but should be re-resolvable by a downstream consumer.",
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 600
+    },
+    "dataset_license": {
+      "title": "License of the dataset",
+      "description": "License string (e.g. 'CC-BY-4.0', 'CC0', 'public domain', 'LMFDB CC-BY-NC-SA-4.0', 'unspecified-academic-use').",
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 200
+    },
+    "scale": {
+      "title": "Size of the labeled set",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coverage_qualifier"],
+      "properties": {
+        "instance_count": {
+          "title": "Number of labeled instances",
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "description": "Null acceptable when the set is implicitly defined (e.g. 'all hyperbolic knots <= 20 crossings' without enumerating the count)."
+        },
+        "coverage_qualifier": {
+          "title": "What completeness qualifier applies",
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 400,
+          "examples": [
+            "complete up to conductor 1000",
+            "all hyperbolic <= 20 crossings",
+            "first 10000 LMFDB entries"
+          ]
+        }
+      }
+    },
+    "prompt_template": {
+      "title": "Natural-language form of the verification question",
+      "description": "Template for how an Ergon Learner-Tester would frame the verification question. Should include placeholders (e.g. {invariant_name}, {input_object}) so the same template applies across the full labeled set.",
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 4000
+    },
+    "expected_answer_shape": {
+      "title": "Type description of the expected answer",
+      "description": "Free-form but should be parseable by Ergon as a Python type or schema. Examples: 'Tuple[int, int]', 'one of {trefoil, figure_eight, ...}', 'float in (0, 1)'.",
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 600
+    },
+    "verification_method": {
+      "$ref": "_common_definitions.json#/$defs/verificationMethod",
+      "description": "How each instance's label was established. Distinct from trust_tier (which is the substrate-grade epistemic strength)."
+    },
+    "trust_tier": {
+      "$ref": "_common_definitions.json#/$defs/trustTier",
+      "description": "Substrate-grade trust tier. Per Wave 3 2026-05-10 finding: distinguishing analytically_proven vs numerically_certified vs ml_predicted is LOAD-BEARING for downstream Learner training corpus. ml_predicted entries CANNOT be used as ground truth without explicit caveats (anti-murmuration discipline)."
+    },
+    "source": {
+      "title": "Primary citation for the dataset",
+      "oneOf": [
+        {"$ref": "_common_definitions.json#/$defs/citationArxivOrDoi"},
+        {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 600,
+          "description": "Free-form citation when no arXiv ID / DOI applies (e.g. 'LMFDB Modular Forms database, accessed 2026-05-11')."
+        }
+      ]
+    },
+    "source_date": {
+      "$ref": "_common_definitions.json#/$defs/isoDate"
+    },
+    "caveats": {
+      "title": "Measure-zero exceptions, AI-prediction admixture, completeness qualifiers",
+      "description": "Free-form paragraph capturing all caveats the reviewer should know. Required even if 'no caveats known' — the substrate's epistemic-explicitness discipline says caveats not enumerated are caveats not considered.",
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 4000
+    },
+    "consumed_by": {
+      "title": "Downstream consumer (Ergon script path or queue entry)",
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 400,
+      "examples": [
+        "ergon/calibration/knot_invariant_battery.py",
+        "ergon_inbox.jsonl entry E-2026-05-NN-..."
+      ]
+    },
+    "source_report": {
+      "$ref": "_common_definitions.json#/$defs/sourceReportRef"
+    }
+  },
+  "examples": [
+    {
+      "_schema_version": "1.0.0",
+      "id": "anchor-knots-001",
+      "domain": "knots",
+      "anchor_type": "invariant_value",
+      "dataset_source": "https://www.indiana.edu/~knotinfo/",
+      "dataset_license": "Academic use; KnotInfo terms",
+      "scale": {
+        "instance_count": 2978,
+        "coverage_qualifier": "all prime knots <= 12 crossings, KnotInfo 2024-12 snapshot"
+      },
+      "prompt_template": "Compute the Alexander polynomial of the knot {knot_id} (given as a Gauss code or DT notation).",
+      "expected_answer_shape": "sympy.Poly over ZZ in variable t",
+      "verification_method": "computational_certified",
+      "trust_tier": "numerically_certified",
+      "source": "Cha-Livingston KnotInfo 2024-12 snapshot",
+      "source_date": "2024-12-01",
+      "caveats": "Coverage extends only to prime knots through 12 crossings; composite knots and higher-crossing-number knots are out of scope. Alexander polynomial is well-defined up to units (factor of +/- t^k); answers should be normalized to the canonical form per KnotInfo conventions.",
+      "consumed_by": "ergon/calibration/knot_invariant_battery.py",
+      "source_report": "T#KNOTINFO_TIER3"
+    }
+  ]
+}

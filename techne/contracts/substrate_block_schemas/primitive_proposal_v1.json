@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prometheus.local/techne/contracts/substrate_block_schemas/primitive_proposal_v1.json",
+  "title": "primitive_proposal (v1)",
+  "description": "Proposal for a new substrate primitive or sub-type. Mandatory for Tier-3 (Tier-F bundle) and Tier-4 (multiple per fire). Required-fields list enforces HARD-5 at write time: bare-noun coordinate names ('rank', 'complexity', 'dimension', 'degree' alone) are rejected; distinct coordinates must be carried as distinct fields.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "_schema_version", "name", "tier", "parent_class",
+    "required_fields", "source_report"
+  ],
+  "properties": {
+    "_schema_version": {
+      "$ref": "_common_definitions.json#/$defs/schemaVersion",
+      "const": "1.0.0"
+    },
+    "name": {
+      "$ref": "_common_definitions.json#/$defs/primitiveName",
+      "description": "Proposed primitive name. UpperCamelCase. Bare-noun ambiguous coordinate names ('Rank', 'Complexity', 'Dimension', 'Degree' alone) are REJECTED — disambiguate at proposal time."
+    },
+    "tier": {
+      "$ref": "_common_definitions.json#/$defs/substrateTier"
+    },
+    "parent_class": {
+      "title": "Parent substrate class",
+      "description": "The existing substrate class this primitive sits under. UpperCamelCase. Examples: ConstructiveExistenceWitness, MomentPolytope, RepresentationTheoreticInvariant, ComputationalComplexityCertificate.",
+      "type": "string",
+      "pattern": "^[A-Z][A-Za-z0-9]+$",
+      "minLength": 4
+    },
+    "sub_types": {
+      "title": "Sub-types declared under this primitive",
+      "type": "array",
+      "items": {"$ref": "_common_definitions.json#/$defs/primitiveName"},
+      "uniqueItems": true,
+      "default": []
+    },
+    "composition_eligibility": {
+      "title": "Cross-tier composition flags",
+      "description": "List of tiers this primitive composes with, plus a one-sentence rationale per composition. Per fire-#43 substrate-design finding: cross-tier composition is the bottleneck of substrate evolution.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["tier", "required", "rationale"],
+        "properties": {
+          "tier": {"$ref": "_common_definitions.json#/$defs/substrateTier"},
+          "required": {
+            "type": "boolean",
+            "description": "true = this composition is mandatory for the primitive to fulfill its substrate role; false = optional but supported."
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 600
+          }
+        }
+      },
+      "default": []
+    },
+    "required_fields": {
+      "title": "Required fields the primitive must carry (HARD-5 enforced)",
+      "description": "List of {field_name, type} pairs. Field names are snake_case and MUST disambiguate ambiguous coordinates ('rank' alone is rejected; 'border_rank', 'slice_rank', 'cactus_rank' etc. are accepted). Per the 2026-05-11 derive_kill_signature audit finding: write-time HARD-5 enforcement catches collapsing of distinct coordinates that would silently leak across registries.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["field_name", "type"],
+        "properties": {
+          "field_name": {"$ref": "_common_definitions.json#/$defs/primitiveFieldName"},
+          "type": {"$ref": "_common_definitions.json#/$defs/fieldType"}
+        }
+      },
+      "uniqueItems": true
+    },
+    "anti_anchor_pins": {
+      "title": "Anti-anchor IDs this primitive pins / addresses",
+      "description": "Cross-references to AA-NNN entries this primitive's existence is motivated by. Cross-reference checked at validate-time.",
+      "type": "array",
+      "items": {"$ref": "_common_definitions.json#/$defs/anchorIdAA"},
+      "uniqueItems": true,
+      "default": []
+    },
+    "downstream_consumer": {
+      "title": "Who consumes this primitive once registered",
+      "description": "Free-form name of the substrate-tester probe / Ergon script / catalog edit / agent that will read or emit instances of this primitive.",
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 240
+    },
+    "source_report": {
+      "$ref": "_common_definitions.json#/$defs/sourceReportRef"
+    },
+    "source_citations": {
+      "title": "Primary citations motivating the proposal",
+      "type": "array",
+      "items": {"$ref": "_common_definitions.json#/$defs/citationArxivOrDoi"},
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000
+    }
+  },
+  "examples": [
+    {
+      "_schema_version": "1.0.0",
+      "name": "BellNumberDeterminantBound",
+      "tier": "outside_tier",
+      "parent_class": "ComputationalComplexityCertificate",
+      "sub_types": [],
+      "composition_eligibility": [
+        {
+          "tier": "D",
+          "required": false,
+          "rationale": "Composes with PhaseTransitionThreshold when the bound is parameterized by tensor format dimensions."
+        }
+      ],
+      "required_fields": [
+        {"field_name": "field_characteristic", "type": "int"},
+        {"field_name": "bell_number_value", "type": "int"},
+        {"field_name": "bound_tightness", "type": "Optional[float]"}
+      ],
+      "anti_anchor_pins": ["AA-015"],
+      "downstream_consumer": "substrate-tester representation-pressure probe lane 12",
+      "source_report": "T#86",
+      "source_citations": ["arXiv:2301.06586"]
+    }
+  ]
+}

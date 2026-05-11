@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prometheus.local/techne/contracts/substrate_block_schemas/catalog_edit_v1.json",
+  "title": "catalog_edit (v1)",
+  "description": "A surgical edit to a canonical catalog file (e.g. aporia/mathematics/tensor_open_problems_v1.md). Tier-2 mandatory if any catalog row is stale. before/after strings are verbatim; ingest_substrate_blocks.py refuses to apply if the before string is not unique in the target file (anti-fabrication enforcement).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "_schema_version", "catalog_file", "entry_id", "field",
+    "before", "after", "citation", "edit_type", "motivation", "source_report"
+  ],
+  "properties": {
+    "_schema_version": {
+      "$ref": "_common_definitions.json#/$defs/schemaVersion",
+      "const": "1.0.0"
+    },
+    "catalog_file": {
+      "title": "Path to the catalog file (repo-relative)",
+      "description": "Repo-relative path. Validator confirms file exists. Initial pilot scope: only aporia/mathematics/tensor_open_problems_v1.md is accepted; future catalogs add to the enum.",
+      "type": "string",
+      "enum": [
+        "aporia/mathematics/tensor_open_problems_v1.md",
+        "aporia/mathematics/calibration_anchors_v1.md"
+      ]
+    },
+    "entry_id": {
+      "$ref": "_common_definitions.json#/$defs/tensorCatalogEntryId",
+      "description": "T#NN entry being edited. Cross-reference checked at validate-time: the validator confirms entry_id exists in the target catalog_file."
+    },
+    "field": {
+      "title": "Field within the entry being edited",
+      "description": "Free-form descriptor of which part of the entry is changing. Examples: 'status_paragraph', 'attack_vectors', 'authors', 'bound', 'citation_references'. Reviewer interprets; the verbatim before/after strings are what actually drives the edit.",
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 80
+    },
+    "before": {
+      "title": "Verbatim current text in the catalog",
+      "description": "EXACT current text from the catalog file. ingest_substrate_blocks.py performs a string-replace using this as the search key; if the before string does not appear unchanged in the target file, the ingest refuses (anti-fabrication: Gemini cannot edit text it didn't actually find). Whitespace is significant.",
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 8000
+    },
+    "after": {
+      "title": "Verbatim replacement text",
+      "description": "Exact replacement text. May include inline citations using the standard catalog format. Should preserve catalog conventions (paragraph wrapping, citation style).",
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 8000
+    },
+    "citation": {
+      "$ref": "_common_definitions.json#/$defs/citationArxivOrDoi",
+      "description": "Primary citation motivating the edit. Required even for stylistic edits (the substrate's epistemic-explicitness discipline)."
+    },
+    "citation_date": {
+      "$ref": "_common_definitions.json#/$defs/isoDate"
+    },
+    "citation_withdrawn_status": {
+      "$ref": "_common_definitions.json#/$defs/withdrawnStatus",
+      "default": "active"
+    },
+    "edit_type": {
+      "title": "Edit propagation discipline",
+      "description": "PROPAGATE = well-confirmed edit; ingestable directly. VERIFY-LIVE = needs second-pass before catalog write (e.g. an unverified frontier claim).",
+      "type": "string",
+      "enum": ["PROPAGATE", "VERIFY-LIVE"]
+    },
+    "motivation": {
+      "title": "Why this edit is required now",
+      "description": "One sentence. Examples: 'omega upper bound updated 2.371552 -> 2.371339 (Vassilevska Williams 2024)', 'tensor isomorphism complexity refined: GI-hard not just suspected'.",
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 1200
+    },
+    "source_report": {
+      "$ref": "_common_definitions.json#/$defs/sourceReportRef"
+    },
+    "associated_anchor_pins": {
+      "title": "Anti-anchor IDs related to this edit",
+      "description": "When a catalog row's update relates to an existing anti-anchor (e.g. correcting a stale 'X solved Y' claim that's pinned in AA-NNN), name the anchors here. Cross-reference checked at validate-time.",
+      "type": "array",
+      "items": {"$ref": "_common_definitions.json#/$defs/anchorIdAA"},
+      "uniqueItems": true,
+      "default": []
+    }
+  },
+  "examples": [
+    {
+      "_schema_version": "1.0.0",
+      "catalog_file": "aporia/mathematics/tensor_open_problems_v1.md",
+      "entry_id": "T#1",
+      "field": "status_paragraph",
+      "before": "The infimum of τ such that two n×n matrices can be multiplied in O(n^τ) operations. Current bounds 2 ≤ ω ≤ 2.371552 (Williams; Duan-Wu-Zhou 2023; Vassilevska Williams-Xu-Xu-Zhou 2024).",
+      "after": "The infimum of τ such that two n×n matrices can be multiplied in O(n^τ) operations. Current bounds 2 ≤ ω ≤ 2.371339 (Vassilevska Williams-Xu-Xu-Zhou 2024 update; supersedes 2.371552 from Duan-Wu-Zhou 2023).",
+      "citation": "arXiv:2404.16349",
+      "citation_date": "2024-04-25",
+      "citation_withdrawn_status": "active",
+      "edit_type": "PROPAGATE",
+      "motivation": "omega upper bound updated 2.371552 -> 2.371339 from VWXXZ 2024 final preprint; current text references DWZ 2023 only.",
+      "source_report": "T#1"
+    }
+  ]
+}

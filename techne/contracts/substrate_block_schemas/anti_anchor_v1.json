@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prometheus.local/techne/contracts/substrate_block_schemas/anti_anchor_v1.json",
+  "title": "anti_anchor (v1)",
+  "description": "A registered or refined forward false-anchor. Mirrors and extends the existing techne/registry/anti_anchors.jsonl shape. Tier-1 mandatory; all other tiers optional. Field-level HARD-5 + anti-leakage enforcement: false_form/true_form minimum lengths, citation regex matching, withdrawn-status structured patterns.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "_schema_version", "id", "name", "false_form", "true_form",
+    "citation", "verified_against_primary", "verification_source",
+    "source_report", "recommended_action"
+  ],
+  "properties": {
+    "_schema_version": {
+      "$ref": "_common_definitions.json#/$defs/schemaVersion",
+      "const": "1.0.0"
+    },
+    "id": {
+      "$ref": "_common_definitions.json#/$defs/anchorIdAA"
+    },
+    "name": {
+      "$ref": "_common_definitions.json#/$defs/shortSnakeUpper",
+      "maxLength": 80
+    },
+    "false_form": {
+      "title": "Forward false statement an LLM might emit",
+      "description": "One-sentence false statement, written in the voice of a hypothetical LLM emission. The substrate's anti-anchor catches this exact false form mechanically.",
+      "type": "string",
+      "minLength": 30,
+      "maxLength": 1000
+    },
+    "true_form": {
+      "title": "True statement with all conditional qualifiers",
+      "description": "One-paragraph true statement. ALL conditional qualifiers (regime restrictions, special-case carve-outs, definitional qualifiers like 'occurrence vs multiplicity') MUST appear here verbatim. Minimum length 60 to discourage qualifier-clipping; the substrate-tester pattern shows clipped qualifiers are the dominant anti-anchor failure mode.",
+      "type": "string",
+      "minLength": 60,
+      "maxLength": 4000
+    },
+    "citation": {
+      "$ref": "_common_definitions.json#/$defs/citationArxivOrDoi",
+      "description": "Primary source. Not 'BIP 2019' alone — must be the arXiv ID or DOI. Hallucinated arXiv IDs fail at parse time via the regex; the verify_arxiv_citations.py post-step adds existence + withdrawal checks."
+    },
+    "citation_journal_or_venue": {
+      "title": "Journal / conference / preprint venue",
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 200,
+      "examples": ["J. AMS", "FOCS 2024", "Inventiones Mathematicae", "preprint"]
+    },
+    "citation_date_published": {
+      "$ref": "_common_definitions.json#/$defs/isoDate"
+    },
+    "citation_withdrawn_status": {
+      "$ref": "_common_definitions.json#/$defs/withdrawnStatus",
+      "default": "active"
+    },
+    "verified_against_primary": {
+      "title": "Was the primary source actually consulted?",
+      "description": "Boolean assertion the reviewer must re-verify. The validator records the assertion; it does not trust it. Required true for Tier-1 verifications.",
+      "type": "boolean"
+    },
+    "verification_source": {
+      "$ref": "_common_definitions.json#/$defs/verificationSource"
+    },
+    "last_verified": {
+      "$ref": "_common_definitions.json#/$defs/isoDate",
+      "description": "Most recent verification date. Anti-anchors get re-verified every 90-120 days."
+    },
+    "source_report": {
+      "$ref": "_common_definitions.json#/$defs/sourceReportRef"
+    },
+    "recommended_action": {
+      "title": "What ingestion should do with this block",
+      "type": "string",
+      "enum": [
+        "register-as-new",
+        "refine-existing",
+        "invert-existing",
+        "no-change"
+      ]
+    },
+    "refines_existing_aa_id": {
+      "$ref": "_common_definitions.json#/$defs/anchorIdAA",
+      "description": "When recommended_action is 'refine-existing' or 'invert-existing', the AA-NNN being refined/inverted. Cross-reference checked at validate-time."
+    },
+    "risk_tier": {
+      "title": "How load-bearing is this anti-anchor",
+      "description": "high = active false-anchor likely to be emitted by current LLMs; medium = plausible false-anchor in the literature; low = niche or already well-corrected.",
+      "type": "string",
+      "enum": ["high", "medium-high", "medium", "low"]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"recommended_action": {"const": "refine-existing"}}
+      },
+      "then": {"required": ["refines_existing_aa_id"]}
+    },
+    {
+      "if": {
+        "properties": {"recommended_action": {"const": "invert-existing"}}
+      },
+      "then": {"required": ["refines_existing_aa_id"]}
+    }
+  ],
+  "examples": [
+    {
+      "_schema_version": "1.0.0",
+      "id": "AA-001",
+      "name": "GCT_OCCURRENCE_DEAD",
+      "false_form": "Bürgisser-Ikenmeyer-Panova killed GCT entirely; occurrence obstructions for det/padded-perm are still a viable path to VP vs VNP separation.",
+      "true_form": "BIP 2019 (J. AMS) killed *occurrence* obstructions for (det_m, padded_perm_{n,m}, m=poly(n)) specifically. Multiplicity, vanishing-ideal, outside-orbit, and equivariant obstructions remain. Substrate must reject any agent attempt to construct an OccurrenceObstruction in this regime as a sentinel-violation.",
+      "citation": "arXiv:1604.06431",
+      "citation_journal_or_venue": "J. AMS",
+      "citation_date_published": "2019-04-15",
+      "citation_withdrawn_status": "active",
+      "verified_against_primary": true,
+      "verification_source": "Wave 1 Gemini Deep Research, prompt 01",
+      "last_verified": "2026-05-11",
+      "source_report": "T#92",
+      "recommended_action": "no-change",
+      "risk_tier": "high"
+    }
+  ]
+}

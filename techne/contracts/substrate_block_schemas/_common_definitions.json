@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prometheus.local/techne/contracts/substrate_block_schemas/_common_definitions.json",
+  "title": "Substrate-block common definitions (v1)",
+  "description": "Shared shapes referenced via $ref by the 6 substrate_block schemas. Citation regexes, withdrawn-status patterns, schema-version constraint.",
+  "$defs": {
+    "schemaVersion": {
+      "title": "Schema version",
+      "description": "Pinned per-block at write time so the validator can refuse on mismatch and the migration script knows which transformer to apply.",
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "examples": ["1.0.0"]
+    },
+    "citationArxivOrDoi": {
+      "title": "Primary citation (arXiv ID or DOI)",
+      "description": "arXiv ID format (arXiv:NNNN.NNNNN) or DOI (NN.NNNN/identifier). Hallucinated citation strings fail at parse time.",
+      "type": "string",
+      "pattern": "^(arXiv:\\d{4}\\.\\d{4,5}|\\d{2}\\.\\d{4}/\\S+)$",
+      "examples": ["arXiv:2501.03970", "10.1090/jams/918", "arXiv:1604.06431"]
+    },
+    "isoDate": {
+      "title": "ISO date YYYY-MM-DD",
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "withdrawnStatus": {
+      "title": "Citation withdrawn status",
+      "description": "Either an enum value or a 'withdrawn YYYY-MM-DD' pattern. Used by verify_arxiv_citations.py as cross-check against arXiv API.",
+      "oneOf": [
+        {"enum": ["active", "preprint-only"]},
+        {"type": "string", "pattern": "^withdrawn \\d{4}-\\d{2}-\\d{2}$"}
+      ]
+    },
+    "trustTier": {
+      "title": "Trust tier for training anchors / domain claims",
+      "description": "Substrate-grade trust tier. analytically_proven > numerically_certified > ml_predicted > unverified. Wave 3 of 2026-05-10 batch established this enum as load-bearing for AA-019/020/017.",
+      "type": "string",
+      "enum": ["analytically_proven", "numerically_certified", "ml_predicted", "folklore", "unverified"]
+    },
+    "verificationMethod": {
+      "title": "How a training anchor was verified",
+      "type": "string",
+      "enum": ["analytical_proof", "ml_prediction", "computational_certified", "folklore"]
+    },
+    "anchorIdAA": {
+      "title": "Anti-anchor ID",
+      "description": "AA-NNN format. Use AA-XXX as placeholder when proposing a new anchor and letting ingest assign the next free ID.",
+      "type": "string",
+      "pattern": "^AA-(XXX|\\d{3,4})$"
+    },
+    "compositionIdC": {
+      "title": "Composition rule ID",
+      "description": "C-NNN format. Use C-XXX as placeholder when proposing.",
+      "type": "string",
+      "pattern": "^C-(XXX|\\d{3,4})$"
+    },
+    "paradigmCandidateId": {
+      "title": "Paradigm candidate ID",
+      "description": "P-CANDIDATE-<name> format until promoted; promoted form is P32, P33, ...",
+      "type": "string",
+      "pattern": "^P-CANDIDATE-[A-Za-z0-9_]+$"
+    },
+    "paradigmPromotedId": {
+      "title": "Paradigm promoted ID",
+      "type": "string",
+      "pattern": "^P\\d{1,3}$"
+    },
+    "tensorCatalogEntryId": {
+      "title": "Tensor catalog entry ID (T#NN)",
+      "description": "References an entry in aporia/mathematics/tensor_open_problems_v1.md. Cross-reference checked at validate-time.",
+      "type": "string",
+      "pattern": "^T#\\d{1,4}$"
+    },
+    "attackParadigmId": {
+      "title": "Attack paradigm ID (PNN)",
+      "type": "string",
+      "pattern": "^P\\d{1,3}$"
+    },
+    "substrateTier": {
+      "title": "Substrate primitive tier",
+      "description": "A++ = TensorNetwork-level foundational; B = ConstructiveExistenceWitness; C = MomentPolytope/SecantVarietyEquation; D = GenericityAlmostEverywhereCert; E = RepresentationTheoreticInvariant. F/G are domain-anchor and method-synthesis tiers; outside_tier reserved for primitives that do not fit the existing scheme.",
+      "type": "string",
+      "enum": ["A++", "B", "C", "D", "E", "F", "G", "outside_tier"]
+    },
+    "primitiveName": {
+      "title": "Primitive name (UpperCamelCase)",
+      "description": "Substrate-grade primitive identifier. UpperCamelCase, no spaces, no underscores. Reject bare-noun ambiguous coordinate names: 'Rank', 'Complexity', 'Dimension', 'Degree' alone are rejected; use 'BorderRank', 'BilinearComplexity', 'KrullDimension', 'PolynomialDegree' etc.",
+      "type": "string",
+      "pattern": "^[A-Z][A-Za-z0-9]+$",
+      "not": {"enum": ["Rank", "Complexity", "Dimension", "Degree"]}
+    },
+    "primitiveFieldName": {
+      "title": "Primitive required-field name (snake_case)",
+      "description": "snake_case identifier for a required field on a primitive. HARD-5 enforcement: rejects bare-noun ambiguous coordinate names ('rank', 'complexity', 'dimension', 'degree' alone) — distinct coordinates must be carried as distinct fields.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]+$",
+      "not": {"enum": ["rank", "complexity", "dimension", "degree"]}
+    },
+    "fieldType": {
+      "title": "Field type annotation (informal)",
+      "description": "Type description for a primitive's required field. Free-form snake-case but should be readable as a Python type annotation.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "snakeCaseId": {
+      "title": "snake_case identifier",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]+$"
+    },
+    "shortSnakeUpper": {
+      "title": "SHORT_SNAKE_UPPER identifier",
+      "description": "Anti-anchor name format. ALL_CAPS underscore-separated.",
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]+$"
+    },
+    "verificationSource": {
+      "title": "Verification source string",
+      "description": "Free-form human-readable verification provenance, e.g. 'Wave 1 Gemini Deep Research, prompt 01' or 'Techne fire #66 manual audit 2026-05-11'.",
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 240
+    },
+    "sourceReportRef": {
+      "title": "Source report reference",
+      "description": "Free-form reference to the originating report or fire. Examples: 'T#92', 'AA-013', 'report 04', 'fire #45', 'Wave 6'.",
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 120
+    }
+  }
+}
