@@ -31,12 +31,12 @@ A note on tools that recur: TensorLy (Python CP/Tucker/TT), TensorNetwork & ITen
 ## I. Foundations: Rank, Border Rank, Asymptotic Complexity
 
 ### 1. Matrix multiplication exponent ω
-The infimum of τ such that two n×n matrices can be multiplied in O(n^τ) operations. Current bounds 2 ≤ ω ≤ 2.371552 (Williams; Duan-Wu-Zhou 2023; Vassilevska Williams-Xu-Xu-Zhou 2024). Equivalent to the asymptotic rank of the matrix multiplication tensor M⟨n⟩.
+The infimum of τ such that two n×n matrices can be multiplied in O(n^τ) operations. Current bounds 2 ≤ ω ≤ 2.371339 (Alman-Duan-Vassilevska Williams-Xu-Xu-Zhou 2024, arXiv:2404.16349; supersedes prior 2.371552 figure of Duan-Wu-Zhou 2023 / VWXXZ 2024). Equivalent to the asymptotic rank of the matrix multiplication tensor M⟨n⟩. *Algorithm-discovery anchor:* DeepMind AlphaEvolve (May 2024) reported a rank-48 decomposition of the 4×4 matrix multiplication tensor over ℂ, the first improvement over Strassen-recursion's 49 in fifty-plus years for that format; orthogonal to the asymptotic ω bound but a paradigm event for evolutionary-LLM algorithm synthesis. (Updated 2026-05-10 per tensor batch synthesis §2.)
 **Class.** Algebraic complexity / asymptotic tensor rank.
 **Attack vectors.** Refinements of Strassen's laser method on Coppersmith–Winograd auxiliary tensors. Group-theoretic embedding via Cohn–Umans (find groups with the simultaneous triple product property of the right strength). Asymptotic spectrum: prove additional monotones that pinch ω from below. Construct entirely new auxiliary tensors with high subrank-to-rank ratios.
 **Compute.** Low-rank decomposition search via SAT/SMT, gradient methods on Brent equations, or RL (AlphaTensor and successors). Symbolic verification of decompositions in Macaulay2 / Singular over ℚ and finite fields. Numerical homotopy methods (Bertini, HomotopyContinuation.jl) to navigate components of the rank variety.
 **Opens.** ω = 2 would settle a half-century-old central question; cascades into linear programming, graph algorithms, neural network training, and circuit complexity. Even partial improvements rewrite practical complexity tables.
-**Refs.** Bürgisser-Clausen-Shokrollahi *Algebraic Complexity Theory*; Landsberg *Geometry and Complexity Theory*; AlphaTensor (Fawzi et al., Nature 2022); Alman-Williams "A Refined Laser Method" (2021); Vassilevska Williams' survey on matrix multiplication.
+**Refs.** Bürgisser-Clausen-Shokrollahi *Algebraic Complexity Theory*; Landsberg *Geometry and Complexity Theory*; AlphaTensor (Fawzi et al., Nature 2022); AlphaEvolve (DeepMind, May 2024) — 4×4 rank-48 over ℂ; Alman-Duan-Vassilevska Williams-Xu-Xu-Zhou 2024 (arXiv:2404.16349); Alman-Williams "A Refined Laser Method" (2021); Vassilevska Williams' survey on matrix multiplication.
 
 ### 2. Strassen's asymptotic rank conjecture
 Asymptotic tensor rank of every concise tight tensor in ℂ^d⊗ℂ^d⊗ℂ^d equals d. Implies ω = 2 when applied to M⟨2⟩.
@@ -129,12 +129,16 @@ Best known: Ω(n log n / log log n) (Strassen, Lickteig, refined by Bläser, Lan
 ## II. The Rank Zoo: Alternative Rank Notions
 
 ### 13. Slice rank vs analytic rank gap
-Over a fixed finite field 𝔽_q, the analytic rank A(T) and slice rank S(T) of an order-d tensor satisfy S(T) ≤ A(T) ≤ poly(S(T), d). Whether the polynomial dependence can be reduced to a constant factor (independent of d) is open.
-**Class.** Tensor structure detectors / additive combinatorics.
-**Attack.** Sharpen the proof of Lovett's bound A ≤ S^d. Improve on Cohen-Moshkovitz / Janzer log-loss bounds. Construct families with maximum A/S ratio.
-**Compute.** Compute A and S for small explicit tensors over 𝔽_3, 𝔽_5. Random tensor experiments for typical A/S behavior.
-**Opens.** Tightens the slice-rank method's reach in capset-like problems and unlocks parameter-counting arguments in Gowers-norm theory.
-**Refs.** Lovett "The analytic rank of tensors"; Cohen-Moshkovitz "Structure vs randomness"; Janzer "Polynomial bound for partition rank in terms of analytic rank."
+Over a fixed finite field 𝔽_q, the analytic rank A(T) and slice rank S(T) of an order-d tensor satisfy S(T) ≤ A(T) ≤ poly(S(T), d). The catalog originally posed the question of whether the polynomial dependence reduces to a constant factor (independent of d). The 2025 frontier subdivides this into four sub-questions, with one direction now negatively resolved. (Updated 2026-05-10 per tensor batch synthesis §2; see also synthesis §2 for the canonical (a)-(d) specification of `RankZooSignature`.)
+- **(a) Uniform-in-d direction (partition-rank vs analytic-rank).** *NEGATIVELY-RESOLVED.* Lampert-Moshkovitz (Sept 2025, arXiv:2509.06294) construct an explicit family — built from `det_n` — witnessing that the partition-rank-to-analytic-rank ratio cannot be bounded uniformly in the order d. The "constant-factor independent of d" hope is dead in this direction.
+- **(b) Bounded-d direction.** *OPEN.* For each fixed d, sharp constants in A ≤ C_d · S (and in the partition-rank counterpart) remain to be pinned down; current best constants degrade with d.
+- **(c) Field-characteristic dependence.** *OPEN.* Whether the gap behavior is uniform across `char 𝔽_q` (or whether small primes / characteristic 0 are pathological) is unsettled; existing log-loss bounds (Cohen-Moshkovitz / Janzer) are field-uniform but the lower-bound constructions are characteristic-sensitive.
+- **(d) Effective bound improvements.** *OPEN.* Quantitative refinements of A ≤ S^d (Lovett) and the polynomial bounds of Cohen-Moshkovitz / Janzer — particularly any sub-polynomial improvement for structured (non-generic) tensor families.
+**Class.** Tensor structure detectors / additive combinatorics; rank-zoo coordinate separation (HARD-5).
+**Attack.** Sharpen the proof of Lovett's bound A ≤ S^d. Improve on Cohen-Moshkovitz / Janzer log-loss bounds. Construct families with maximum A/S ratio. Post-Lampert-Moshkovitz: re-target attack at (b) and (c) — (a) is closed in the negative direction and further work there reduces to refining the explicit `det_n`-based separator.
+**Compute.** Compute A and S for small explicit tensors over 𝔽_3, 𝔽_5. Random tensor experiments for typical A/S behavior. Explicit `det_n`-witness reproduction (Lampert-Moshkovitz construction) at moderate n on 𝔽_3.
+**Opens.** Tightens the slice-rank method's reach in capset-like problems and unlocks parameter-counting arguments in Gowers-norm theory; (a)'s closure reframes downstream applications (capset quantitative refinements, Gowers-norm inverse theorems) around bounded-d regimes rather than uniform-d guarantees.
+**Refs.** Lovett "The analytic rank of tensors"; Cohen-Moshkovitz "Structure vs randomness"; Janzer "Polynomial bound for partition rank in terms of analytic rank"; Lampert-Moshkovitz Sept 2025 (arXiv:2509.06294) — uniform-in-d separator via `det_n`.
 
 ### 14. Geometric rank vs partition rank
 Geometric rank GR (Kopparty-Moshkovitz-Zuiddam 2020) and partition rank PR (Naslund 2017) for order-d tensors. Sharp polynomial-vs-linear comparison is open.
@@ -483,12 +487,12 @@ Decidability of tensor rank over the rationals. Conditional on Hilbert's tenth p
 **Refs.** Shitov "How hard is the tensor rank?" (arXiv:1611.01559); Hillar-Lim "Most tensor problems are NP-hard."
 
 ### 56. Symmetric tensor rank NP-hardness (Hillar-Lim conjecture)
-Sharp NP-hardness for symmetric rank computation; current results are partial.
-**Class.** Computational complexity of tensor problems.
-**Attack.** Reduction from clique / 3-SAT through symmetric flattenings. Use Waring rank lower bounds as gadgets.
+Hillar-Lim 2013 (*Most tensor problems are NP-hard*) established NP-hardness for tensor-rank computation over ℝ; that result remains the canonical anchor and stands. The closely-coupled question of **symmetric-rank-over-ℚ** is **SETTLED** by Shitov (2016, *How hard is the tensor rank?*, arXiv:1611.01559) — the proof reduces tensor rank over an integral domain to systems of polynomial equations, then specializes to symmetric tensors. Tensor rank over ℤ is **undecidable** by the same construction (answers Gonzalez–Ja'Ja' 1980). (Updated 2026-05-11 — citation arXiv:1611.01559 corrected per Wave 1 anti-anchor verification; prior arXiv:1605.07532 was wrong, points to a PDE paper.) The remaining open frontier under this entry: sharp parameterized / approximation-hardness for symmetric rank (e.g., constant-factor approximation algorithms vs. APX-hardness), and the analogous decidability picture over number fields beyond ℚ.
+**Class.** Computational complexity of tensor problems; `ComputationalComplexityCertificate` Tier-B sub-primitive (synthesis §3.2).
+**Attack.** Reduction from clique / 3-SAT through symmetric flattenings. Use Waring rank lower bounds as gadgets. For approximation-hardness frontier: PCP-style reductions from gap-3SAT.
 **Compute.** Empirical hardness; reduction certificates. Sum-of-squares lower bounds.
-**Opens.** Foundation for parameterized / approximation hardness in algebraic complexity.
-**Refs.** Hillar-Lim 2013 *Most tensor problems are NP-hard*; Schaefer-Štefankovič NP-hardness refinements.
+**Opens.** Foundation for parameterized / approximation hardness in algebraic complexity; Shitov 2016 closure of the ℚ direction unblocks downstream `∃ℝ`-vs-NP separation work in the rank zoo.
+**Refs.** Hillar-Lim 2013 *Most tensor problems are NP-hard*; Schaefer-Štefankovič NP-hardness refinements; Shitov 2016 *How hard is the tensor rank?* (arXiv:1611.01559) — settles symmetric-rank-over-ℚ; tensor rank over ℤ undecidable as a corollary.
 
 ### 57. Constant-factor approximation algorithms for tensor rank
 Polynomial-time algorithms with provable constant approximation for tensor rank.
@@ -781,12 +785,17 @@ Construct explicit tensor families with tight rank or border rank lower bounds b
 ## XII. Geometric Complexity Theory and Representation Theory
 
 ### 92. GCT VP vs VNP via padded permanent
-Whether the orbit closure of the padded permanent is contained in that of the determinant — the central remaining barrier of the Mulmuley-Sohoni program.
-**Class.** Geometric complexity theory.
-**Attack.** Plethystic decomposition obstructions. Search for Kronecker / plethysm coefficients separating multiplicities. Newton-polytope and moment-map arguments.
+Whether the orbit closure of the padded permanent is contained in that of the determinant — the central remaining barrier of the Mulmuley-Sohoni program. (Updated 2026-05-10 per tensor batch synthesis §2; cross-link to anti-anchor pins in synthesis §4.)
+**Status notes (2024-2026 frontier).**
+- **Lower-bound state.** The Mignon-Ressayre `n²/2` bound (Mignon-Ressayre 2004, IMRN) remains the current best unrestricted lower bound on `dc(perm_n)` and has stood for 22 years. No general-model improvement since.
+- **Equivariant exponential is restricted-model only.** Landsberg-Ressayre 2017 (arXiv:1508.05788) gives an exponential lower bound on `dc(perm_n)` *restricted to the equivariant model*; this is NOT an unrestricted lower bound. Substrate must carry the `restricted_to: SymmetryGroup` annotation (synthesis §3.2 `EquivariantComplexityCertificate`) and refuse to extrapolate. (HARD-5 / PATTERN_RANK_PARITY_LEAK at the model-restriction layer.)
+- **Occurrence obstructions are dead.** Bürgisser-Ikenmeyer-Panova (BIP, *Journal of the AMS* 2019, arXiv:1604.06431) proved that **occurrence obstructions cannot separate the determinant orbit closure from the padded-permanent orbit closure** for the relevant parameter regime. This kills the original Mulmuley-Sohoni occurrence-obstruction route. Anti-anchor PATTERN_GCT_OCCURRENCE_DEAD: substrate-tester sentinel rejects any agent attempt to construct an `OccurrenceObstruction` for `(det_m, padded_perm_{n,m}, m=poly(n))`.
+- **Surviving GCT obstruction sub-types.** Multiplicity obstructions, vanishing-ideal obstructions, outside-orbit obstructions, and equivariant obstructions (the four non-occurrence subtypes of `GCTObstructionCertificate`, synthesis §3.2) remain open. No concrete obstruction has been constructed since 2020. Do not mistake "GCT survives" for "GCT has produced a separator."
+**Class.** Geometric complexity theory; `OrbitClosureNonMembershipWitness`, `GCTObstructionCertificate` (composite Tier-B/E, ×5 sub-types), `BorderComplexitySeparator`, `EquivariantComplexityCertificate`, `AlgebraicNaturalProofsBarrier` (synthesis §3.2 / §3.4).
+**Attack.** Plethystic decomposition obstructions for the surviving (non-occurrence) sub-types. Search for Kronecker / plethysm coefficients separating multiplicities. Newton-polytope and moment-map arguments. Cross-route weighting: per HARD-2, equal-or-higher weight on non-GCT routes (LST/Forbes 2024, Bhattacharjee 2024, Kumar-Volk 2021) before committing GCT-only effort.
 **Compute.** Schur ring / SchurRings package in Macaulay2. LiE / Symmetrica for plethysm.
-**Opens.** Polynomial vs exponential lower bounds; first algebraic-circuit super-polynomial separations.
-**Refs.** Mulmuley-Sohoni *Geometric complexity theory* I-VIII; Bürgisser-Ikenmeyer no-go theorems; Ikenmeyer-Panova plethystic obstructions.
+**Opens.** Polynomial vs exponential lower bounds; first algebraic-circuit super-polynomial separations. Even modest progress past Mignon-Ressayre `n²/2` in the unrestricted model would be a 22-year breakthrough.
+**Refs.** Mulmuley-Sohoni *Geometric complexity theory* I-VIII; Mignon-Ressayre 2004 IMRN — `n²/2` lower bound on `dc(perm_n)`; Landsberg-Ressayre 2017 (arXiv:1508.05788) — equivariant exponential, restricted-model only; Bürgisser-Ikenmeyer-Panova 2019 J. AMS (arXiv:1604.06431) — occurrence obstructions killed for det/padded-perm; Ikenmeyer-Panova plethystic obstructions; cross-link to entry 95 (Saxl / Kronecker positivity, including Ikenmeyer-Mulmuley-Walter NP-hardness of Kronecker-positivity).
 
 ### 93. Orbit closure containment problem
 For tensors / forms T and S under group action G, decide whether G·T ⊆ G·S̄ (orbit closure).
@@ -805,12 +814,13 @@ Achievable spectra / orbits arising from tensor actions: explicit description of
 **Refs.** Berenstein-Sjamaar; Klyachko quantum marginals; Walter quantum-polytope thesis.
 
 ### 95. Kronecker coefficient vanishing/positivity
-Decide when Kronecker coefficients g(λ, μ, ν) vanish / are positive. #P-hard in general; combinatorial interpretation a major open problem.
-**Class.** Algebraic combinatorics / representation theory.
-**Attack.** Search for Littlewood-Richardson-style combinatorial rule. Stanley's Kronecker-rule programs.
+Decide when Kronecker coefficients g(λ, μ, ν) vanish / are positive. #P-hard in general; combinatorial interpretation a major open problem. (Updated 2026-05-10 per tensor batch synthesis §2.)
+**Status notes (Mulmuley `PH1` falsified).** The Mulmuley `PH1` route — which would have routed Kronecker positivity into the polynomial hierarchy — was **falsified** by Ikenmeyer-Mulmuley-Walter, who proved Kronecker positivity is **NP-hard**. This eliminates the original GCT-program hope that Kronecker positivity admits an efficient verifier. Combinatorial interpretation (LR-rule analogue) and quantitative vanishing remain wide open. See entry 99 (Saxl conjecture) for a related positivity question — Saxl proper remains OPEN as of 2026-05-11 (Lee 2025 arXiv:2512.15035 was withdrawn within 3 days; Luo-Sellke 2017 proved only the fourth-power relaxation; 2022 follow-on tightened to the cube). (Updated 2026-05-11 per Wave 1 anti-anchor verification.)
+**Class.** Algebraic combinatorics / representation theory; `RepresentationTheoreticInvariant`, `KroneckerInvariant`, `PartitionObject` (synthesis §3.5).
+**Attack.** Search for Littlewood-Richardson-style combinatorial rule. Stanley's Kronecker-rule programs. Avoid Mulmuley `PH1`-style framings as a primary route (falsified above); treat the NP-hardness as a structural constraint.
 **Compute.** Sage / Symmetrica explicit computation. Mulmuley-Narayanan-Sohoni nonnegativity tests.
-**Opens.** GCT positivity conjectures; lower-bound certifications.
-**Refs.** Mulmuley-Narayanan-Sohoni #P-hardness; Pak-Panova; Ikenmeyer-Mulmuley-Walter on positivity.
+**Opens.** GCT positivity conjectures; lower-bound certifications. Note: with `PH1` falsified, any new positivity verifier must accept the NP-hardness baseline.
+**Refs.** Mulmuley-Narayanan-Sohoni #P-hardness; Pak-Panova; Ikenmeyer-Mulmuley-Walter — Kronecker positivity NP-hard (falsifies Mulmuley `PH1`).
 
 ### 96. Stability of Kronecker coefficients
 Sharp stability ranges (Murnaghan-style stabilization) and combinatorial interpretations beyond rectangular shapes.
@@ -837,12 +847,13 @@ For a ≤ b, whether the plethysm s_a[s_b] − s_b[s_a] is Schur-positive.
 **Refs.** Foulkes 1950 original; Cheung-Ikenmeyer-Mkrtchyan partial progress; Briand-Orellana-Rosas plethysm survey.
 
 ### 99. Saxl's conjecture
-Whether the tensor square of the staircase character of S_n contains every irreducible representation as a constituent.
-**Class.** Symmetric-group representation theory.
-**Attack.** Murnaghan-Nakayama formula refinements. Asymptotic / probabilistic methods.
-**Compute.** Sage character-table computations. Empirical verification for small n.
-**Opens.** Concrete combinatorial lower bound on tensor-square multiplicities; GCT-style separation tool.
-**Refs.** Saxl original; Pak-Panova-Vallejo; Ikenmeyer Saxl progress.
+Whether the tensor square of the staircase character of S_n contains every irreducible representation as a constituent. **OPEN.** (Updated 2026-05-11 per Wave 1 anti-anchor verification — the prior 2026-05-10 edit claiming "SOLVED unconditionally by Sellke 2025/26" was itself a fabrication and has been reverted; Lee 2025 arXiv:2512.15035 was withdrawn within 3 days due to mathematical gaps.)
+**Status.** *OPEN.* Lee's December 2025 preprint (arXiv:2512.15035, "Staircase Minimality and a Proof of Saxl's Conjecture") was withdrawn 2025-12-20 with the comment "This paper requires significant revision to address mathematical gaps identified by expert reviewers." Luo-Sellke 2017 proved only the *fourth-power* relaxation `(S_{ρ_n})^⊗4 ⊇ all irreps`; a 2022 follow-on (centre-mersenne) tightened to the *cube* `(S_{ρ_n})^⊗3 ⊇ all irreps` (see new entry SAXL_CUBE_ANCHOR in anti_anchors registry). The tensor square (Saxl proper) remains open. Mulmuley's `PH1` GCT-style route was independently falsified at the Kronecker-positivity layer by Ikenmeyer-Mulmuley-Walter (see entry 95).
+**Class.** Symmetric-group representation theory; `RepresentationTheoreticInvariant` / `KroneckerInvariant` consumer (synthesis §3.5).
+**Attack.** Murnaghan-Nakayama formula refinements; bounds on plethysm coefficients; semigroup-property arguments (Luo-Sellke style); modular reduction methods. Lee's withdrawn approach via "Staircase Minimality Theorem" + Bessenrodt-Bowman-Sutton lifting is suggestive but the gap is in the lifting step.
+**Compute.** Sage character-table computations. Empirical verification of the cube relaxation at moderate n; tensor-square multiplicity sweeps to identify which irreps' multiplicities approach zero.
+**Opens.** The full Saxl conjecture itself; quantitative multiplicity lower bounds; analogues for non-staircase self-conjugate partitions; whether the gap between cube and square is genuinely structural or amenable to existing methods.
+**Refs.** Saxl original; Pak-Panova-Vallejo; Luo-Sellke 2017 *J. Algebraic Combin.* (fourth-power); 2022 cube tightening; Ikenmeyer Saxl progress; Lee 2025 (arXiv:2512.15035, **WITHDRAWN**) — do not cite as proof; Ikenmeyer-Mulmuley-Walter — Kronecker-positivity NP-hardness (falsifies the Mulmuley `PH1` route, see entry 95).
 
 ### 100. Invariant theory of tensor orbits
 Equations, syzygies, and stabilizers of orbit closures for specific tensor formats — beyond basic GCT cases.

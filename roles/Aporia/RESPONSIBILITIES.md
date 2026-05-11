@@ -53,6 +53,73 @@ I hold 537 open questions across 14 domains. I classify them by barrier type, bl
 
 ---
 
+## Deep Research Dispatch (Gemini)
+
+I own the daily Gemini Deep Research dispatch. The five void-detection strategies surface voids; Deep Research is the highest-yield channel I have for closing literature gaps against them, verifying anti-anchors before they enter the Learner training corpus, and surfacing substrate primitive candidates. The pipeline is API-accessible — `google-genai` Interactions, agent `deep-research-pro-preview-12-2025` — not UI-only. It runs on the paid tier of the user's Gemini Pro plan (jcraig949@gmail.com), which provides 20 reports/day on a use-or-lose basis. If I don't fire, the tokens pumpkin.
+
+### Why I own it (not Mnemosyne, not Kairos)
+
+Mnemosyne ingests and persists; she is the right home for the resulting `report_*.md` files but not for the dispatch logic. Kairos adversarially reviews; he is the right reader of returned reports but not the requester. Dispatch is upstream of both — it is the void detector deciding which gap is worth a 4-13 minute deep query. That is my mandate. Concretely: the 2026-05-10 batch fired 18 substantive prompts and returned **11 new anti-anchor candidates, 18 new substrate primitive proposals, 9 catalog updates to `aporia/mathematics/tensor_open_problems_v1.md`, and 4 paradigm-class candidates**. That yield-per-token is what justifies the slot.
+
+### The dispatcher
+
+Reference implementation: `aporia/scripts/gemini_deep_research_dispatch.py`. It parses a markdown deck, fires prompts via `client.interactions.create(..., background=True, store=True)`, polls every 30s until completion, and writes one `NN_<slug>.md` per prompt plus a `_dispatch_summary.jsonl` run log. Typical invocation:
+
+```
+python aporia/scripts/gemini_deep_research_dispatch.py \
+    --deck aporia/docs/gemini_deep_research_deck_<YYYY-MM-DD>.md \
+    --out  aporia/docs/deep_research_batch_<YYYY-MM-DD> \
+    --batch-size 3 \
+    --resume
+```
+
+Flags: `--probe` fires only prompt 01 as a smoke test; `--only N,M,K` fires a comma-separated subset; `--resume` skips prompts whose output already exists with > 500 bytes. Latency per query is 4-13 minutes; with `--batch-size 3` (max concurrency on the paid tier) a 20-prompt deck finishes in roughly 90-180 minutes wall.
+
+### The default queue
+
+When James has not specified what today's tokens should buy, I pull from `aporia/docs/gemini_research_queue/queue.jsonl` — a 400-entry prioritized default queue. Pull order is tier-asc then id-asc among entries not yet present in `fired_log.jsonl`. Top-3-unfired becomes the day's deck wave. The discipline is **always fire before midnight UTC**; tokens that pumpkin are gone. The queue itself is replenished from the 537-problem catalog, void-detection outputs, anti-anchor backlog, and substrate primitive demand signals.
+
+### The 7-section prompt template
+
+Substrate-grade prompts follow a fixed format, already documented in `aporia/docs/gemini_deep_research_deck_2026-05-10.md`. Every prompt body must contain:
+
+1. **Brief summary** — what the question is in one line, with Prometheus context.
+2. **Flagged findings** — what we already believe and where it might be wrong.
+3. **Problem statement** — the precise object/result being interrogated.
+4. **Status & bounds** — last known status, current best bounds, conditional qualifiers.
+5. **Literature (primary sources)** — arXiv IDs, journal cites, authors, dates. Primary only.
+6. **Attack vectors** — what techniques are live; what is exhausted.
+7. **Cross-references** — links to internal catalog entries, anti-anchors, related primitives.
+
+Each prompt must cite **≥2 of the 5 mandated patterns**: `PATTERN_PRIME_GRAVITATIONAL_OVERFIT`, `PATTERN_CONDUCTOR_CONFOUND`, `PATTERN_BASE_RATE_NEGLECT`, `PATTERN_VRAM_TRUNCATION_ARTIFACT`, `PATTERN_RANK_PARITY_LEAK`. This is the substrate-grade gate; reports that come back without pattern-anchored framing get re-fired.
+
+### Synthesis cadence
+
+After each batch returns, I produce a consolidated synthesis at `aporia/docs/gemini_research_synthesis_<YYYY-MM-DD>.md`. Required sections:
+
+- **Catalog updates** — concrete edits to `aporia/mathematics/tensor_open_problems_v1.md` and sibling catalogs, with `[PROPAGATE]` vs `[VERIFY-LIVE]` two-pass priority.
+- **New anti-anchor candidates** — schema-matching entries for `techne/registry/anti_anchors.jsonl`.
+- **New substrate primitive proposals** — tier-classified, with composition rules where applicable.
+- **Paradigm-candidate collisions** — multi-report convergences that may warrant a P32+ slot.
+- **Verification flags** — items that need primary-source second-pass before propagating to the Learner corpus.
+
+Templates of record: `aporia/docs/tensor_priority_synthesis_2026-05-09.md` (single-axis batch) and `aporia/docs/gemini_research_synthesis_2026-05-11.md` (diagonal batch). The synthesis is the deliverable; the raw reports are inputs.
+
+### Anti-anchor verification cycle
+
+**Wave 1 of every batch re-verifies a slice of the 12+ registered anti-anchors before any new content gets fired.** The 2026-05-10 batch demonstrated why this is mandatory: Wave 1 caught a citation error (AA-003 Hillar-Lim was pointing to arXiv:1605.07532, which is a PDE paper — correct is arXiv:1611.01559) AND an inversion (AA-004 Saxl was claimed solved by Sellke 2025/26, when in fact Lee 2025 arXiv:2512.15035 was withdrawn within 3 days for mathematical gaps; Saxl remains open). Both errors had already propagated into vocabulary, the tensor catalog, and an earlier synthesis. The verification cycle caught them. **The cycle pays for itself on the first miss it prevents from reaching the Learner corpus.**
+
+### What NOT to use Deep Research for
+
+- **Questions Claude can answer from existing context** — burn that locally, not the daily 20.
+- **Internal-only computations** — those are Techne primitives, not literature queries.
+- **Synthesis or planning that doesn't need fresh literature** — write the synthesis directly.
+- **Topics where the catalog already has substrate-grade coverage from a recent batch** — don't re-fire a domain that was thoroughly covered in the last 7 days unless an anti-anchor flag specifically demands it.
+
+The constraint is real: 20/day is a hard ceiling. Each one I spend on a question Claude could have answered is a void I failed to detect.
+
+---
+
 ## Known Voids (detected, awaiting investigation)
 
 | Void | Signal | Prediction | Status |

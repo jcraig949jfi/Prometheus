@@ -1,10 +1,13 @@
 {
-  "version": 3,
-  "updated": "2026-04-22",
+  "version": 4,
+  "schema_version": "4.0",
+  "schema_notes": "v3.next minor (2026-05-10): per-primitive 'version' field added, backfilled to 1.0.0 for all existing tools. Top-level 'version' bumped 3 -> 4 to mark schema change. Existing tool interfaces unchanged.",
+  "updated": "2026-05-10",
   "description": "Master catalog of all forged tools",
   "tools": [
     {
       "name": "TOOL_MAHLER_MEASURE",
+      "version": "1.0.0",
       "file": "techne/lib/mahler_measure.py",
       "tier": 1,
       "interface": "mahler_measure(coefficients) -> float",
@@ -18,6 +21,7 @@
     },
     {
       "name": "TOOL_GPD_TAIL_FIT",
+      "version": "1.0.0",
       "file": "techne/lib/gpd_tail_fit.py",
       "tier": 1,
       "interface": "gpd_tail_fit(data, threshold) -> dict",
@@ -31,6 +35,7 @@
     },
     {
       "name": "TOOL_CF_EXPANSION",
+      "version": "1.0.0",
       "file": "techne/lib/cf_expansion.py",
       "tier": 1,
       "interface": "cf_expand(p, q) -> list[int]",
@@ -44,6 +49,7 @@
     },
     {
       "name": "TOOL_SINGULARITY_CLASSIFIER",
+      "version": "1.0.0",
       "file": "techne/lib/singularity_classifier.py",
       "tier": 1,
       "interface": "classify_singularity(coefficients) -> dict",
@@ -57,6 +63,7 @@
     },
     {
       "name": "TOOL_HYPERBOLIC_VOLUME",
+      "version": "1.0.0",
       "file": "techne/lib/hyperbolic_volume.py",
       "tier": 1,
       "interface": "hyperbolic_volume(knot) -> float",
@@ -70,6 +77,7 @@
     },
     {
       "name": "TOOL_ROOT_NUMBER",
+      "version": "1.0.0",
       "file": "techne/lib/root_number.py",
       "tier": 1,
       "interface": "root_number(ainvs) -> int",
@@ -83,6 +91,7 @@
     },
     {
       "name": "TOOL_CONDUCTOR",
+      "version": "1.0.0",
       "file": "techne/lib/conductor.py",
       "tier": 1,
       "interface": "conductor(ainvs) -> int",
@@ -96,6 +105,7 @@
     },
     {
       "name": "TOOL_CLASS_NUMBER",
+      "version": "1.0.0",
       "file": "techne/lib/class_number.py",
       "tier": 1,
       "interface": "class_number(polynomial) -> int",
@@ -109,6 +119,7 @@
     },
     {
       "name": "TOOL_REGULATOR",
+      "version": "1.0.0",
       "file": "techne/lib/regulator.py",
       "tier": 1,
       "interface": "regulator(ainvs) -> float",
@@ -122,6 +133,7 @@
     },
     {
       "name": "TOOL_SMITH_NORMAL_FORM",
+      "version": "1.0.0",
       "file": "techne/lib/smith_normal_form.py",
       "tier": 1,
       "interface": "smith_normal_form(M) -> np.ndarray",
@@ -135,6 +147,7 @@
     },
     {
       "name": "TOOL_GALOIS_GROUP",
+      "version": "1.0.0",
       "file": "techne/lib/galois_group.py",
       "tier": 1,
       "interface": "galois_group(polynomial) -> dict (name, order, transitive_id, parity, is_abelian, degree)",
@@ -148,6 +161,7 @@
     },
     {
       "name": "TOOL_LLL_REDUCTION",
+      "version": "1.0.0",
       "file": "techne/lib/lll_reduction.py",
       "tier": 1,
       "interface": "lll(basis) -> np.ndarray (rows = LLL-reduced basis)",
@@ -161,6 +175,7 @@
     },
     {
       "name": "TOOL_KNOT_SHAPE_FIELD",
+      "version": "1.0.0",
       "file": "techne/lib/knot_shape_field.py",
       "tier": 1,
       "interface": "knot_shape_field(knot, bits_prec=300, max_deg=8) -> dict",
@@ -174,6 +189,7 @@
     },
     {
       "name": "TOOL_HILBERT_CLASS_FIELD",
+      "version": "1.0.0",
       "file": "techne/lib/hilbert_class_field.py",
       "tier": 1,
       "interface": "hilbert_class_field(polynomial) -> dict (abs_poly, rel_poly, degree_abs, disc, class_number_K, is_trivial)",
@@ -187,6 +203,7 @@
     },
     {
       "name": "TOOL_ANALYTIC_SHA",
+      "version": "1.0.0",
       "file": "techne/lib/analytic_sha.py",
       "tier": 1,
       "interface": "analytic_sha(ainvs) -> dict (value, rounded, rank, L_r_over_fact, Omega, Reg, tam, tors, disc_sign)",
@@ -200,6 +217,7 @@
     },
     {
       "name": "TOOL_SELMER_RANK",
+      "version": "1.0.0",
       "file": "techne/lib/selmer_rank.py",
       "tier": 1,
       "interface": "selmer_2_rank(ainvs, effort=1) -> int",
@@ -213,6 +231,7 @@
     },
     {
       "name": "TOOL_FALTINGS_HEIGHT",
+      "version": "1.0.0",
       "file": "techne/lib/faltings_height.py",
       "tier": 1,
       "interface": "faltings_height(ainvs) -> float",
@@ -226,6 +245,7 @@
     },
     {
       "name": "TOOL_ALEXANDER_POLYNOMIAL",
+      "version": "1.0.0",
       "file": "techne/lib/alexander_polynomial.py",
       "tier": 1,
       "interface": "alexander_polynomial(knot) -> dict (coeffs, coeffs_by_grading, degree, is_unit, determinant)",
@@ -239,6 +259,7 @@
     },
     {
       "name": "TOOL_FUNCTIONAL_EQ_CHECK",
+      "version": "1.0.0",
       "file": "techne/lib/functional_eq_check.py",
       "tier": 1,
       "interface": "functional_eq_check(obj, precision=100, threshold_log10=-8) -> dict (residual_log10, satisfies, kind, conductor, degree)",
@@ -252,6 +273,7 @@
     },
     {
       "name": "TOOL_TROPICAL_RANK",
+      "version": "1.0.0",
       "file": "techne/lib/tropical_rank.py",
       "tier": 1,
       "interface": "tropical_rank(adjacency, divisor) -> int",
@@ -265,6 +287,7 @@
     },
     {
       "name": "TOOL_CM_ORDER_DATA",
+      "version": "1.0.0",
       "file": "techne/lib/cm_order_data.py",
       "tier": 1,
       "interface": "cm_order_data(D) -> dict (fundamental_disc, cm_conductor, class_number, is_maximal, ring_class_polynomial, degree)",
@@ -277,6 +300,7 @@
     },
     {
       "name": "TOOL_SAT_SOLVER",
+      "version": "1.0.0",
       "file": "techne/lib/sat_solver.py",
       "tier": 1,
       "interface": "solve_cnf(clauses: list[list[int]], solver: str = 'kissat', timeout: float | None = None) -> dict",
@@ -290,6 +314,7 @@
     },
     {
       "name": "TOOL_TT_SPLICE",
+      "version": "1.0.0",
       "file": "techne/lib/tt_splice.py",
       "tier": 1,
       "interface": "tt_splice_compatibility(region_a_npz: Path, region_b_npz: Path, prime_detrend: bool = True, null_perms: int = 300, seed: int = 20260417) -> dict",
@@ -304,6 +329,7 @@
     },
     {
       "name": "TAIL_VS_BULK_DECOMPOSITION",
+      "version": "1.0.0",
       "file": "techne/lib/tail_vs_bulk.py",
       "tier": 1,
       "interface": "decompose_spectral(spectral_signal: np.ndarray, tail_threshold: float | str = 'auto', null_model: callable | None = None, n_perms: int = 300, seed: int = 20260417) -> dict",
@@ -317,6 +343,7 @@
     },
     {
       "name": "OPERATOR_RANK_PARITY_NULL_CONTROL",
+      "version": "1.0.0",
       "file": "techne/lib/rank_parity_null.py",
       "tier": 1,
       "interface": "rank_parity_null_control(population: np.ndarray | str | list, rank_field: str = 'analytic_rank', conductor_field: str = 'conductor', n_perms: int = 300, seed: int = 20260417) -> dict",
