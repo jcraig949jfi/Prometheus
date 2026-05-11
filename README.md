@@ -22,6 +22,16 @@ The deliberately-different bet against frontier-LLM scaling is concrete: a large
 
 The mutation engine is generative variance. The selection engine is everything else in this repository. The question this project tests is whether the second can dominate the first.
 
+### The other half: kill geometry as emergent gradient field
+
+If the falsification battery is selection pressure, the KillVector ledger is the **fitness landscape that selection produces**. Most machine-learning systems treat negative training signal as a loss to minimize and discard. Prometheus treats it as primary substrate. The KillVector schema is engineered to make the kill geometry **trainable rather than thrown away**: each kill is high-dimensional, content-addressed, linked to its originating `CLAIM`, and tagged with the falsifier that fired, the competing hypothesis it failed against, the calibration tier of the evidence, the precision floor at which the kill became deterministic, and the `repair_attempt_id` linking forward to any subsequent `REWRITE`.
+
+The Learner is being designed to predict KillVector components from CLAIM features, not to predict promotion outcomes. **Negative-space data is the training target.** As kills accumulate, a navigable gradient field over discovery space may emerge from the noise — not by construction but as the empirical structure of where claims fail. The 0.725 bits of mutual information already measurable in the ~314K-kill ledger is the early evidence that this field exists and has signal. Soft kills (near-misses) are the highest-information class: a hypothesis that passes logical consistency but fails a boundary condition is the kind of data point that informs a gradient. They are not discarded; they are routed through `REWRITE`, tagged for the NearMissCorpus, and re-fed into the search.
+
+This is the half of the bet that the rest of the architecture exists to support. The substrate's job is not to surface a discovery; the substrate's job is to **make the kill geometry rich enough that downstream search and training can navigate it**. Whether the gradient field becomes navigable in months, years, or never is an empirical question. The current state — typed local coordinate charts plus an empirical kill-pattern geometry with measurable mutual-information content — is the lower bound. The upper bound is open and not asserted today.
+
+Sister thesis to mutation-plus-selection: variance generates the points; selection ranks them; the ledger of ranked points is the landscape; the landscape, navigated, is discovery. Each half is necessary; neither is sufficient alone.
+
 ## Core architecture
 
 Prometheus has three major subsystems.
@@ -210,6 +220,20 @@ The substrate is laying groundwork for several outcomes that may emerge but are 
 - **A new mathematical discovery.** None claimed. The substrate is built so that *if* discovery emerges, it does so through the falsification gauntlet — kill record, triangulation, ExclusionCertificate, on disk and reproducible. The current 0-PROMOTE rate across cross-domain envs is what an honest instrument should report when the content is structurally absent.
 - **Structured cognition in the Learner.** Ergon's Learner is at MVP-paused state with the pilot LoRA design deferred. If structured cognition emerges from training on the substrate's accumulated kill-data corpus over time, the synthetic-null gate is commit-blocking so we'll have the discipline to recognize it. No current artifact justifies the claim.
 - **A navigable gradient field over discovery space.** What ships today is typed local coordinate charts and an empirical kill-pattern geometry from ~314K logged kills. As negative-space data accumulates and the KillEmbedding lands, a global gradient field may emerge. Today it does not exist; we're not pretending it does.
+
+## Five clusters, one substrate
+
+Prometheus bundles roughly twelve theses into five clusters. Each cluster is independently defensible; together they reinforce each other. The bundling is deliberate — the substrate gives the Learner its grammar, falsifiability gives the substrate its discipline, the kill geometry gives falsifiability its emergent gradient field, the audit surface keeps the discipline honest, and the multi-agent inboxes give the discipline operational coherence. Pulling any one cluster out collapses the others.
+
+The five clusters and where each is developed in this README:
+
+- **Substrate-first** — typed action space (primitives + attacks + patterns + anti-anchors + composition rules as the Learner's grammar, not tokens), Σ-kernel with frozen-interface contracts and 9 opcodes, HARD-5 distinct coordinates at the type level. *Developed in: Core architecture, the Σ-kernel and KillVector methodology, the Learner's action-space.*
+- **Falsifiability-first** — kills are the output, the 4-fold falsification battery, the synthetic-null gate as commit-blocker, only survivors `PROMOTE`. *Developed in: the thesis section, Core architecture's Falsification engine, the kill event in the substrate's voice.*
+- **Model-as-something-new** — falsification-routing Learner (predict the kill, not the answer), LLM as genetic drift engine, kill geometry as emergent gradient field over discovery space. *Developed in: the thesis section (both halves), the Learner.*
+- **Process discipline** — anti-anchor sentinels with primary-source verification, generic-dim-to-specific-instance audit pattern, anti-passive-consumer warning, anti-gravitational-well doctrine, citation pinning. *Developed in: Verification surface, Open critiques, what this project does not yet claim.*
+- **Orchestration** — multi-agent operators with append-only ticket-shaped inboxes plus prose-shaped session-dialogue capture, scoped charters per agent (Aporia / Techne / Charon / Ergon / Harmonia), behavior-delta required of every artifact. *Developed in: Core architecture's Orchestration layer.*
+
+The bundling is the point. A reviewer can read the README looking for the cluster they care about and ignore the rest; the section that addresses them is reachable in one scroll. A peer-to-peer conversation starts in whichever cluster is closest to the visitor's own work.
 
 ## If you are working on adjacent problems
 
