@@ -1,0 +1,24 @@
+{
+  "n_enumerated": 15625,
+  "n_processed": 4,
+  "n_skipped_no_mahler": 1801,
+  "n_skipped_out_of_band": 13820,
+  "elapsed_total_s": 457.56,
+  "records_per_hour": 31.5,
+  "near_miss_rate": 0.0,
+  "catalog_disagreement_rate": 1.0,
+  "survived_count": 0,
+  "kill_pattern_distribution_top": {
+    "reducible:reducible: (x**2 + 1)^1; (x**10 - x**9 + x**7 - x**6 + x**5 - x**4 + x**3 - x + ": 1,
+    "reducible:reducible: (x**2 - x + 1)^1; (x**10 + x**9 - x**7 - x**6 - x**5 - x**4 - x**3 + ": 1,
+    "reducible:reducible: (x**2 + x + 1)^1; (x**10 - x**9 + x**7 - x**6 + x**5 - x**4 + x**3 - ": 1,
+    "reducible:reducible: (x**2 + 1)^1; (x**10 + x**9 - x**7 - x**6 - x**5 - x**4 - x**3 + x + ": 1
+  },
+  "run_args": {
+    "degree": 12,
+    "coef_bound": 2,
+    "max_candidates": 30,
+    "out": "prometheus_math/substrate_generation/_tier_0_smoke_results.json",
+    "writeable": false
+  }
+}
