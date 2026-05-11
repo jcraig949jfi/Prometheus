@@ -63,6 +63,65 @@ The substrate's discipline includes naming what it can't yet do. Three substanti
 
 Each critique has a defined trigger condition and falsification test. Surfacing the open critiques publicly is the discipline signature, not the failure.
 
+## Verification surface
+
+A falsification-first substrate is only as good as its audit trail. The plumbing below is what a skeptical reader can inspect to verify the system's reliability without trusting any narrative claim. The interfaces are designed for an outside party to reproduce the discipline from disk artifacts, not to take the maintainer's word.
+
+### 1. Append-only kill ledger
+
+Every CLAIM submitted to the Σ-kernel emits a KillVector (12 components in v1, 20 in v2). Kills are content-addressed, timestamped, and linked to the originating CLAIM. ~314K kills are logged to date; the gradient-archaeology analysis at [`prometheus_math/GRADIENT_ARCHAEOLOGY_RESULTS.md`](prometheus_math/GRADIENT_ARCHAEOLOGY_RESULTS.md) shows 0.725 bits of mutual information between `kill_pattern` and operator class. The kills carry structural information, not noise.
+
+### 2. Anti-anchor registry
+
+12 pinned false claims with primary-source refutation citations live in [`techne/registry/anti_anchors.jsonl`](techne/registry/anti_anchors.jsonl). Each entry carries:
+
+- `false_form` — what an LLM with conventional training data tends to assert
+- `true_form` — what the primary literature actually shows
+- `citation` — arXiv ID / DOI / journal reference of the refuting source
+- `last_verified` — ISO date of the most recent re-verification against primary
+- `verified_against_primary` — boolean flag set by the Gemini Deep Research verification pass
+- `verification_source` — which deep-research prompt surfaced or refreshed the verification
+
+Substrate-tester probes treat any agent output asserting a registered `false_form` as a sentinel-violation. The registry is the substrate's immune system.
+
+### 3. Citation-pinning discipline
+
+Every claim in synthesis docs / catalog entries / vocabulary entries that names a result must carry a primary-source citation (arXiv ID, DOI, or journal reference) with a date. Reverse-direction false-anchors — substrate showing a problem as "open" when it's solved, or "solved" when it's open — are first-class registry citizens.
+
+### 4. Σ-kernel contract surface
+
+The kernel ships 25 frozen-dataclass primitives (`@dataclass(frozen=True)`, content-addressed identity, linear capabilities, 3-valued GATE). 94 contract tests across 35 classes are queued in [`sigma_kernel/tests/`](sigma_kernel/tests/), currently skipif-guarded against five unified meta-primitives that Techne will register in v4.0 Wave 1: `TensorNetwork`, `ConstructiveExistenceWitness`, `GenericityAlmostEverywhereCert`, `RepresentationTheoreticInvariant`, `MomentPolytope`. The mutation-testing framework lifted six sigma_kernel modules from 0.25 → 0.85 average mutation score via a 14-fire investigative chain. The frozen-interface doctrine is enforced through the test surface, not by convention.
+
+### 5. Substrate vocabulary as typed action space
+
+The 5-layer vocabulary at [`aporia/doctrine/substrate_vocabulary/`](aporia/doctrine/substrate_vocabulary/) enforces HARD-5 (distinct coordinates) at the type level. Tensor rank, border rank, cactus rank, border cactus rank, slice rank, partition rank, analytic rank, and geometric rank are eight distinct primitive types that cannot be silently collapsed. Determinantal complexity `dc`, border determinantal `dc-bar`, formula size `L`, and equivariant `dc` are four distinct types. A future Learner trained against this vocabulary navigates these as discrete symbols — not as token-prediction targets where coordinate collapse happens invisibly.
+
+### 6. Worked example — the Saxl capture (2026-05-09 → 2026-05-10)
+
+All five surfaces interacting on a single real fabrication:
+
+- **2026-05-09.** A tensor-priority synthesis run surfaced the claim "Saxl conjecture (T#99) SOLVED unconditionally by Sellke 2025/26 (arXiv:2512.15035)." The claim was based on subagent literature output without primary-source verification and propagated into four documents in one day: catalog entry 99, synthesis §1/§2/§4, vocabulary `anti_anchors.md` AA-004, vocabulary `primitives.md` (`RepresentationTheoreticInvariant` description), and `attacks.md` (`P_CANDIDATE_ModularSaturation`).
+- **2026-05-10.** Wave 1 of the next Gemini Deep Research batch re-verified the registered anti-anchor AA-004 against primary literature. The verification report stated: *Lee 2025 (arXiv:2512.15035) was withdrawn within 3 days of posting due to "mathematical gaps identified by expert reviewers"; Luo-Sellke 2017 proved only the fourth-power relaxation `(S_{ρ_n})^⊗4 ⊇ all irreps`; a 2022 follow-on tightened to the cube; the tensor square — the conjecture proper — remains open.* The same verification pass caught an unrelated citation error: AA-003 (Hillar-Lim symmetric-rank-over-ℚ resolved) had cited arXiv:1605.07532, which is a partial-differential-equations paper, not Shitov; the correct reference is arXiv:1611.01559.
+- **Same day, multiple commits.** All four documents reverted to the correct OPEN status; AA-004 inverted (`false_form` and `true_form` swapped); AA-003 citation corrected and propagated to all four affected files; two new sub-anchors registered (AA-011 `SAXL_CUBE_ANCHOR`, AA-012 `TENSOR_RANK_Z_UNDECIDABLE`); the `P_CANDIDATE_ModularSaturation` paradigm candidate marked RETRACTED in `attacks.md` with the citation chain to the withdrawn preprint.
+
+The capture is on disk: commit `4c6131fe` (and the Wave 1 corrections in earlier commits on the same day). The verification report itself is at `aporia/docs/deep_research_batch_2026-05-10/01_verify_anti_anchors_aa_001_through_aa_004.md` (local-only; available on request). A fabrication that propagated through four documents in one day was caught and reverted within 24 hours through primary-source verification — without the verification pass, the false claim would have entered the v1.0 Learner training corpus.
+
+### 7. Git history as audit trail
+
+Every substrate state change lands as a named commit. Commit messages describe behavior deltas, not narrative claims. Mid-flight pre-session work-in-progress is intentionally left unstaged so co-researchers' investigative fires aren't disrupted. The full history is at [https://github.com/jcraig949jfi/Prometheus](https://github.com/jcraig949jfi/Prometheus).
+
+### Where this still requires trust
+
+Being explicit about what isn't yet machine-verifiable:
+
+- **The Learner does not yet exist as weights.** Ergon's Learner is at MVP-paused state (fire 15, 2026-05-08), 60 tickets deferred to v1.0. No trained model exists to evaluate against external benchmarks. The discipline above is what *protects* the v1.0 corpus from absorbing fabrications before training, not evidence of a model that has already learned anything.
+- **Most primitive specs are not yet Sigma-registered.** The substrate vocabulary v0.1.0 ships 22 primitive specs; Techne v4.0 Wave 1 will register 7 of them (5 meta-primitives + 2 P0 prerequisites). The remaining 15 await later waves.
+- **The composition-rule grammar has 2 confirmed entries, not a complete grammar.** Tier-B × Tier-D and Tier-B × Tier-E are twice-confirmed via the tensor batch; five candidate composition rules await empirical confirmation.
+- **Cross-domain coverage is uneven.** Tensor mathematics is HARD-3-weighted; non-tensor domains (knots, number fields, L-functions, Maass forms, genus-2 curves) have substrate coverage at roughly 10-30% of tensor depth. A 423-entry prioritized research queue exists to close this gap; the daily Gemini Deep Research dispatch burns down ~20 entries per day.
+- **Some entries in the vocabulary are speculative until empirically confirmed.** Pattern candidates `GCT_OCCURRENCE_DEAD`, `GCT_GRAVITATIONAL_OVERFIT`, `ZAUNER_FALSE_ANCHOR` are flagged as candidates; promotion to load-bearing patterns requires second-batch confirmation.
+
+These are not failures; they are the system's current frontier. Naming them is the discipline, not papering over them.
+
 ## What's in flight (2026-05-06)
 
 - **Substrate v2.2 sprint** (Techne) — 8 primitives + Pre-Tier-0 instrumentation. Adds 20-component KillVector, typed CanonicalizationProtocol, ExclusionCertificate schema, TriangulationProtocol, leakage-safe NearMissCorpus emitter, REWRITE/EQUIV opcodes (the symbolic half of the Σ-language). Joint sprint coordination at [`pivot/techne_ergon_joint_sprint_2026-05-05.md`](pivot/techne_ergon_joint_sprint_2026-05-05.md).
