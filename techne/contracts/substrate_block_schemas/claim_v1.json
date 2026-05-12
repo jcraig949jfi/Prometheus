@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prometheus.local/techne/contracts/substrate_block_schemas/claim_v1.json",
+  "title": "claim (v1)",
+  "description": "A substrate-grade CLAIM block. Consumed by tier_1_claim_runner.py which routes each claim through CLAIM/FALSIFY/PROMOTE using one of seven verifier types. Per the design at pivot/claim_stack_design_2026-05-11.md and Aporia adjudication 2026-05-12. The schema is producer-agnostic: hand-authored (Aporia) and mined (extractor) claims share the same shape; provenance is descriptive in source_report.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "_schema_version", "id", "claim_category", "claim_text",
+    "expected_verifier_primary", "expected_verdict",
+    "ground_truth_source", "trust_tier", "source_report"
+  ],
+  "properties": {
+    "_schema_version": {
+      "$ref": "_common_definitions.json#/$defs/schemaVersion",
+      "const": "1.0.0"
+    },
+    "id": {
+      "title": "Claim ID",
+      "description": "CLAIM-<category-prefix>-NNNNN format. category-prefix groups related claims (e.g. 'frontier', 'calibration-knots', 'boundary-T4', 'substrate-self'). Uppercase letters allowed in the prefix to accommodate catalog references (T4 = T#4). Substrate's content-addressed Symbol IDs assigned at PROMOTE; this id is the human-readable handle.",
+      "type": "string",
+      "pattern": "^CLAIM-[a-z][a-zA-Z0-9_-]+-\\d{4,5}$"
+    },
+    "claim_category": {
+      "title": "Claim category for sampling discipline",
+      "description": "Per claim_stack_design §3 + Aporia Mod Q5: frontier_survey + calibration + boundary authored by Aporia; substrate_self authored by Techne. 'other' reserved for outside-typology claims pending category assignment.",
+      "type": "string",
+      "enum": [
+        "frontier_survey",
+        "calibration",
+        "boundary",
+        "substrate_self",
+        "other"
+      ]
+    },
+    "claim_text": {
+      "title": "Natural-language claim statement",
+      "description": "The proposition being claimed, in natural language. Minimum 20 characters discourages trivial / placeholder claims at write time.",
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 4000
+    },
+    "expected_verifier_primary": {
+      "title": "Primary verifier dispatch",
+      "description": "Which of the seven verifier functions in tier_1_claim_runner.py routes this claim. Choose conservatively; manual_review is the escape hatch when no automated verifier fits.",
+      "type": "string",
+      "enum": [
+        "citation_audit",
+        "catalog_lookup",
+        "mpmath_compute",
+        "sympy_factor",
+        "triangulation",
+        "substrate_self_check",
+        "manual_review"
+      ]
+    },
+    "expected_verifier_fallback": {
+      "title": "Optional fallback verifier",
+      "description": "When primary verifier returns inconclusive / transient_failure, the runner attempts the fallback. Same enum as primary.",
+      "type": "string",
+      "enum": [
+        "citation_audit",
+        "catalog_lookup",
+        "mpmath_compute",
+        "sympy_factor",
+        "triangulation",
+        "substrate_self_check",
+        "manual_review"
+      ]
+    },
+    "expected_verdict": {
+      "title": "Author-asserted expected verdict",
+      "description": "What the author believes the verifier should return. Disagreement between expected and actual at runtime is informative (substrate-grade catch). Per Aporia Mod Q3: 'open' is allowed and maps to kernel's INCONCLUSIVE outcome class; conditional maps to INCONCLUSIVE with caveats metadata. No new kernel verdict added (no contract change).",
+      "type": "string",
+      "enum": ["survived", "falsified", "open", "conditional"]
+    },
+    "ground_truth_source": {
+      "title": "Citation or dataset reference for ground truth",
+      "description": "How the claim's truth/falsity is established. Either an arXiv ID / DOI (for citation-bearing claims) or free-form dataset reference (for catalog / training-anchor claims). Required even for expected_verdict=open (captures how the open status is known). Uses anyOf (not oneOf) because arXiv strings validate against both branches and we don't require exclusivity — the verifier dispatch examines the string content directly.",
+      "anyOf": [
+        {"$ref": "_common_definitions.json#/$defs/citationArxivOrDoi"},
+        {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 600,
+          "description": "Free-form when no arXiv/DOI applies (e.g. 'KnotInfo 2024-12 snapshot, knot 3_1' or 'T#4 catalog entry — exact value unknown in (19, 23)')."
+        }
+      ]
+    },
+    "trust_tier": {
+      "$ref": "_common_definitions.json#/$defs/trustTier",
+      "description": "Substrate-grade trust tier inherited from ground_truth_source. Per Rule C (claim_stack_design §5): ml_predicted claims must not exceed 10% of any batch; analytically_proven + numerically_certified should be >=70%."
+    },
+    "source_report": {
+      "$ref": "_common_definitions.json#/$defs/sourceReportRef",
+      "description": "Provenance string. Hand-authored: 'AA-001 anti_anchor false_form'. Mined: 'extracted from <path> line N via extractor v0.1'. Producer-agnostic; the runner doesn't care which."
+    },
+    "parent_block": {
+      "title": "Parent substrate_block reference",
+      "description": "When derived from another substrate_block (e.g. anti_anchor becoming a paired claim couplet), references the source block by id. Cross-reference checked at validate time when the parent ID type is known.",
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 240
+    },
+    "paired_claim_id": {
+      "title": "Paired claim (for couplets)",
+      "description": "When this claim is part of a couplet (e.g. false_form/true_form derived from an anti_anchor), references the partner. Both claims point at each other. Train/eval split MUST keep paired claims together (anti-leakage).",
+      "type": "string",
+      "pattern": "^CLAIM-[a-z][a-z0-9_-]+-\\d{4,5}$"
+    },
+    "prompt_template": {
+      "title": "Natural-language form for Learner Q&A",
+      "description": "Template a Learner-Tester would use to ask the question. Required for calibration claims (Aporia adjudication Q2); optional for others (claim_text often suffices). Supports {placeholder} interpolation for parametric claims.",
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 4000
+    },
+    "expected_answer_shape": {
+      "title": "Expected answer type description",
+      "description": "Free-form Python-type-annotation-style description of the expected answer shape. Useful for calibration claims; ignored otherwise.",
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 600
+    },
+    "verifier_args": {
+      "title": "Opaque verifier-specific arguments",
+      "description": "Dict of arguments passed to the verifier dispatch (e.g. mpmath_compute receives {dps: 60, tolerance: 1e-30}; catalog_lookup receives {catalog_source: 'lmfdb'}). Schema is opaque; each verifier validates its own args internally.",
+      "type": "object"
+    },
+    "stratification_rule": {
+      "title": "Calibration sampling stratification rule (Aporia Mod Q2)",
+      "description": "When this calibration claim was sampled from a parent training_anchor's instance set, this string documents the deterministic sampling rule for reproducibility. Examples: 'first 10 prime knots <= 8 crossings', 'every 30th LMFDB elliptic curve in conductor range [1, 10000]'. Optional; required only for calibration claims that subsample a parent anchor's instance set.",
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 600
+    },
+    "caveats": {
+      "title": "Conditionality / qualifier text",
+      "description": "Free-form paragraph capturing measure-zero exceptions, GRH-conditionality, expected drift, paired-claim handling, etc. Required when expected_verdict is 'conditional' (the conditionality must be named); strongly recommended when expected_verdict is 'open' (how is the open status itself established).",
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 4000
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"expected_verdict": {"const": "conditional"}}
+      },
+      "then": {"required": ["caveats"]}
+    },
+    {
+      "if": {
+        "properties": {"claim_category": {"const": "calibration"}}
+      },
+      "then": {"required": ["prompt_template"]}
+    }
+  ],
+  "examples": [
+    {
+      "_schema_version": "1.0.0",
+      "id": "CLAIM-frontier-00001",
+      "claim_category": "frontier_survey",
+      "claim_text": "Bürgisser-Ikenmeyer-Panova killed GCT entirely; occurrence obstructions for det/padded-perm are still a viable path to VP vs VNP separation.",
+      "expected_verifier_primary": "citation_audit",
+      "expected_verdict": "falsified",
+      "ground_truth_source": "arXiv:1604.06431",
+      "trust_tier": "analytically_proven",
+      "source_report": "AA-001 anti_anchor false_form",
+      "parent_block": "AA-001",
+      "paired_claim_id": "CLAIM-frontier-00002",
+      "caveats": "Paired with CLAIM-frontier-00002 which carries the TRUE form including the multiplicity / vanishing-ideal / outside-orbit / equivariant carve-outs."
+    },
+    {
+      "_schema_version": "1.0.0",
+      "id": "CLAIM-calibration-knots-00001",
+      "claim_category": "calibration",
+      "claim_text": "The Alexander polynomial of the trefoil knot 3_1 is t**2 - t + 1 in canonical form (constant term +1).",
+      "expected_verifier_primary": "sympy_factor",
+      "expected_verifier_fallback": "catalog_lookup",
+      "expected_verdict": "survived",
+      "ground_truth_source": "KnotInfo 2024-12 snapshot, knot 3_1",
+      "trust_tier": "numerically_certified",
+      "source_report": "extracted from anchor-knots-001 training_anchor instance 1 via extractor v0.1",
+      "parent_block": "anchor-knots-001",
+      "prompt_template": "Compute the Alexander polynomial of the knot 3_1 (trefoil). Normalize to canonical form (constant term = +1).",
+      "expected_answer_shape": "sympy.Poly over ZZ in variable t",
+      "stratification_rule": "first 10 prime knots <= 8 crossings, KnotInfo deterministic order",
+      "verifier_args": {
+        "canonical_form": "constant_term_positive",
+        "tolerance": "exact"
+      }
+    },
+    {
+      "_schema_version": "1.0.0",
+      "id": "CLAIM-boundary-T4-00003",
+      "claim_category": "boundary",
+      "claim_text": "R(M<3>) <= 18 (the matrix multiplication tensor M<3> has rank at most 18).",
+      "expected_verifier_primary": "catalog_lookup",
+      "expected_verifier_fallback": "citation_audit",
+      "expected_verdict": "falsified",
+      "ground_truth_source": "T#4 catalog entry — Landsberg lower bound R(M<3>) >= 19",
+      "trust_tier": "analytically_proven",
+      "source_report": "T#4 catalog entry, falsification probe (violates lower bound)",
+      "parent_block": "T#4",
+      "caveats": "Any claim of R(M<3>) <= 18 contradicts the established lower bound of 19. Substrate MUST emit FALSIFIED here; if it doesn't, that's a substrate failure surfacing a verifier gap."
+    }
+  ]
+}

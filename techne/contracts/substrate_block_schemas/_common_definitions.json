@@ -122,11 +122,11 @@
       "maxLength": 240
     },
     "sourceReportRef": {
-      "title": "Source report reference",
-      "description": "Free-form reference to the originating report or fire. Examples: 'T#92', 'AA-013', 'report 04', 'fire #45', 'Wave 6'.",
+      "title": "Source report reference (hand-authored or mined)",
+      "description": "Free-form reference to the originating report, fire, or extraction site. Hand-authored examples: 'T#92', 'AA-013', 'report 04', 'fire #45', 'Wave 6'. Mined examples: 'extracted from aporia/docs/deep_research_batch_2026-05-10/report_T19_cactus_rank.md line 142 via extractor v0.1'. Per Aporia adjudication 2026-05-12 Mod 1: bumped maxLength 120 -> 400 to accommodate mined provenance descriptively without adding a new schema field. Runner stays producer-agnostic.",
       "type": "string",
       "minLength": 2,
-      "maxLength": 120
+      "maxLength": 400
     }
   }
 }

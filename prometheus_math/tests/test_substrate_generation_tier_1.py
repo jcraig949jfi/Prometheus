@@ -7,6 +7,7 @@ Per Ergon discussion `ergon/learner/v1_0_plans/substrate_quality_for_learner_dis
 """
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
 from typing import Optional
 
@@ -18,6 +19,7 @@ from prometheus_math.substrate_generation.learner_enrichment import (
     LearnerRecord,
     OUTCOME_CLASSES,
     VERIFICATION_TIERS,
+    VERIFIER_OUTCOME_CLASSES,
     derive_kill_signature,
     enrich,
     lookup_verification_tier,
@@ -290,3 +292,307 @@ class TestInterleaveDecoys:
         for c in decoys:
             assert len(c) == 13
             assert c == list(reversed(c))
+
+
+# ===========================================================================
+# Claim-stack pipeline (Aporia adjudication 2026-05-12)
+# ===========================================================================
+
+
+class TestVerifierOutcomeClassesEnum:
+    """Per Aporia Mod 2: 5-value enum on LearnerRecord."""
+
+    def test_enum_has_five_values(self):
+        assert len(VERIFIER_OUTCOME_CLASSES) == 5
+
+    def test_two_decisive_pass_outcomes_present(self):
+        assert "decisive_verified" in VERIFIER_OUTCOME_CLASSES
+        assert "decisive_contradicted" in VERIFIER_OUTCOME_CLASSES
+
+    def test_inconclusive_separate_from_failure(self):
+        # The whole point of Aporia Mod 2: real Learner signal vs missing data
+        assert "decisive_inconclusive" in VERIFIER_OUTCOME_CLASSES
+        assert "verifier_transient_failure" in VERIFIER_OUTCOME_CLASSES
+        assert "verifier_permanent_failure" in VERIFIER_OUTCOME_CLASSES
+
+
+class TestEnrichVerifierOutcomeClassParameter:
+
+    def test_default_is_none(self):
+        rec = enrich(_FakeDiscoveryRecord())
+        assert rec.verifier_outcome_class is None
+
+    def test_accepts_each_known_value(self):
+        for v in VERIFIER_OUTCOME_CLASSES:
+            rec = enrich(_FakeDiscoveryRecord(), verifier_outcome_class=v)
+            assert rec.verifier_outcome_class == v
+
+    def test_explicit_none_is_accepted(self):
+        rec = enrich(_FakeDiscoveryRecord(), verifier_outcome_class=None)
+        assert rec.verifier_outcome_class is None
+
+    def test_unknown_value_raises(self):
+        with pytest.raises(ValueError):
+            enrich(_FakeDiscoveryRecord(), verifier_outcome_class="bogus_outcome")
+
+    def test_underscore_separated_typo_raises(self):
+        # Common typo: 'decisive verified' (space) — must reject
+        with pytest.raises(ValueError):
+            enrich(_FakeDiscoveryRecord(), verifier_outcome_class="decisive verified")
+
+
+class TestClaimRunnerVerifierStubs:
+    """Day-1: all 7 verifiers return verifier_permanent_failure with not_yet_implemented."""
+
+    def test_known_verifiers_count(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import KNOWN_VERIFIERS
+        assert len(KNOWN_VERIFIERS) == 7
+
+    def test_each_verifier_in_registry(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            KNOWN_VERIFIERS, VERIFIER_REGISTRY,
+        )
+        for name in KNOWN_VERIFIERS:
+            assert name in VERIFIER_REGISTRY
+            assert callable(VERIFIER_REGISTRY[name])
+
+    def test_get_verifier_unknown_raises(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import get_verifier
+        with pytest.raises(ValueError):
+            get_verifier("not_a_real_verifier")
+
+    def test_stub_returns_not_yet_implemented(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import get_verifier
+        result = get_verifier("citation_audit")({"id": "CLAIM-test-00001"})
+        assert result.outcome_class == "verifier_permanent_failure"
+        assert result.evidence_blob["flag"] == "not_yet_implemented"
+        assert result.evidence_blob["claim_id"] == "CLAIM-test-00001"
+
+
+class TestVerifierDispatchWrapper:
+    """Per Aporia Mod 2: transient retries once, permanent fails immediately."""
+
+    def _make_payload(self):
+        return {
+            "id": "CLAIM-test-00001",
+            "claim_category": "frontier_survey",
+            "expected_verifier_primary": "citation_audit",
+            "expected_verdict": "falsified",
+        }
+
+    def test_decisive_outcome_passes_through(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            VerifierResult, _dispatch_verifier,
+        )
+        def good_verifier(_payload):
+            return VerifierResult(outcome_class="decisive_verified")
+        result = _dispatch_verifier(good_verifier, self._make_payload())
+        assert result.outcome_class == "decisive_verified"
+
+    def test_invalid_outcome_class_returns_permanent_failure(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            VerifierResult, _dispatch_verifier,
+        )
+        def bad_verifier(_payload):
+            return VerifierResult(outcome_class="not_a_real_outcome")
+        result = _dispatch_verifier(bad_verifier, self._make_payload())
+        assert result.outcome_class == "verifier_permanent_failure"
+
+    def test_non_verifier_result_return_returns_permanent_failure(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import _dispatch_verifier
+        def wrong_return_type(_payload):
+            return {"this": "is not a VerifierResult"}
+        result = _dispatch_verifier(wrong_return_type, self._make_payload())
+        assert result.outcome_class == "verifier_permanent_failure"
+
+    def test_value_error_is_permanent(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import _dispatch_verifier
+        def value_err(_payload):
+            raise ValueError("bad input shape")
+        result = _dispatch_verifier(value_err, self._make_payload())
+        assert result.outcome_class == "verifier_permanent_failure"
+        assert "ValueError" in result.error_text
+
+    def test_timeout_error_is_transient_retried_once(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import _dispatch_verifier
+        call_count = [0]
+        def transient_then_succeed(_payload):
+            call_count[0] += 1
+            if call_count[0] == 1:
+                raise TimeoutError("network timed out")
+            from prometheus_math.substrate_generation.tier_1_claim_runner import VerifierResult
+            return VerifierResult(outcome_class="decisive_verified")
+        result = _dispatch_verifier(transient_then_succeed, self._make_payload())
+        assert result.outcome_class == "decisive_verified"
+        assert call_count[0] == 2  # one retry happened
+
+    def test_persistent_transient_returns_transient_failure(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import _dispatch_verifier
+        def always_timeout(_payload):
+            raise TimeoutError("persistent timeout")
+        result = _dispatch_verifier(always_timeout, self._make_payload())
+        assert result.outcome_class == "verifier_transient_failure"
+
+
+class TestRunClaim:
+
+    def _payload(self, **overrides):
+        base = {
+            "_schema_version": "1.0.0",
+            "id": "CLAIM-test-00001",
+            "claim_category": "frontier_survey",
+            "claim_text": "Sample claim long enough to pass the 20-char minimum.",
+            "expected_verifier_primary": "citation_audit",
+            "expected_verdict": "falsified",
+            "ground_truth_source": "arXiv:1604.06431",
+            "trust_tier": "analytically_proven",
+            "source_report": "test fixture",
+        }
+        base.update(overrides)
+        return base
+
+    def test_stubbed_verifier_yields_permanent_failure(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import run_claim
+        result, records = run_claim(self._payload())
+        assert result.actual_verdict == "verifier_permanent_failure"
+        assert result.verifier_used == "citation_audit"
+        assert result.expected_actual_match is False  # failure never matches expected
+        assert len(records) == 1
+        assert records[0].verifier_outcome_class == "verifier_permanent_failure"
+
+    def test_verdict_match_mapping(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import _verdict_match
+        assert _verdict_match("survived", "decisive_verified") is True
+        assert _verdict_match("falsified", "decisive_contradicted") is True
+        assert _verdict_match("open", "decisive_inconclusive") is True
+        assert _verdict_match("conditional", "decisive_inconclusive") is True
+        assert _verdict_match("survived", "decisive_contradicted") is False
+        assert _verdict_match("falsified", "verifier_permanent_failure") is False
+
+    def test_kill_signature_anti_leakage(self):
+        # Permanent verifier failure should produce a categorical
+        # kill_pattern, not literal claim_text content
+        from prometheus_math.substrate_generation.tier_1_claim_runner import run_claim
+        _result, records = run_claim(self._payload())
+        sig = records[0].kill_signature
+        # No literal claim_text content in the signature
+        assert all("Sample" not in s for s in sig)
+        assert all("arXiv" not in s for s in sig)
+
+
+class TestClaimBatchQualityRules:
+    """Per claim_stack_design §5: Rules A (diversity) / B (verdicts) / C (trust)."""
+
+    def _claim(self, idx, **overrides):
+        base = {
+            "_schema_version": "1.0.0",
+            "id": f"CLAIM-test-{idx:05d}",
+            "claim_category": "frontier_survey",
+            "claim_text": "Sample claim long enough to pass the 20-char minimum.",
+            "expected_verifier_primary": "citation_audit",
+            "expected_verdict": "falsified",
+            "ground_truth_source": "arXiv:1604.06431",
+            "trust_tier": "analytically_proven",
+            "source_report": "test fixture",
+        }
+        base.update(overrides)
+        return base
+
+    def test_empty_batch_rejected(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import _enforce_quality_rules
+        with pytest.raises(ValueError, match="empty"):
+            _enforce_quality_rules([])
+
+    def test_small_batch_uniform_categories_allowed(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import _enforce_quality_rules
+        # 5 claims, all same category — Rule A only kicks in at >=10
+        _enforce_quality_rules([self._claim(i) for i in range(5)])
+
+    def test_large_batch_requires_3_categories(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import _enforce_quality_rules
+        # 10 claims, all frontier_survey — must fail Rule A
+        with pytest.raises(ValueError, match="Rule A"):
+            _enforce_quality_rules([self._claim(i) for i in range(10)])
+
+    def test_rule_c_ml_predicted_over_10pct_rejected(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import _enforce_quality_rules
+        # 10 claims, 2 ml_predicted (20%) — must fail Rule C
+        # Spread categories + verdicts to clear Rules A & B first
+        claims = [self._claim(i) for i in range(8)]
+        for i, c in enumerate(claims):
+            c["claim_category"] = ["frontier_survey", "calibration", "boundary"][i % 3]
+            c["expected_verdict"] = ["falsified", "survived"][i % 2]
+            if c["claim_category"] == "calibration":
+                c["prompt_template"] = "answer this please"
+        ml_claims = [self._claim(i + 100, trust_tier="ml_predicted") for i in range(2)]
+        for i, c in enumerate(ml_claims):
+            c["claim_category"] = ["frontier_survey", "calibration"][i % 2]
+            c["expected_verdict"] = "open"
+            if c["claim_category"] == "calibration":
+                c["prompt_template"] = "answer this please"
+        with pytest.raises(ValueError, match="Rule C"):
+            _enforce_quality_rules(claims + ml_claims)
+
+    def test_well_balanced_batch_passes(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import _enforce_quality_rules
+        claims = []
+        for i in range(12):
+            c = self._claim(
+                i,
+                claim_category=["frontier_survey", "calibration", "boundary"][i % 3],
+                expected_verdict=["falsified", "survived", "open"][i % 3],
+            )
+            if c["claim_category"] == "calibration":
+                c["prompt_template"] = "answer this please"
+            claims.append(c)
+        # All analytically_proven → 100% proven, 0% ml_predicted; passes Rule C
+        # 3 categories, 3 verdicts; passes A and B
+        _enforce_quality_rules(claims)
+
+
+class TestRunClaimBatch:
+    """End-to-end: load batch → dispatch all stubs → emit summary."""
+
+    def test_batch_run_with_stubs(self, tmp_path):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import run_claim_batch
+
+        # Build a minimal batch (3 claims, mixed categories, all proven)
+        batch_path = tmp_path / "batch.jsonl"
+        claims = [
+            {
+                "_schema_version": "1.0.0",
+                "id": f"CLAIM-test-{i:05d}",
+                "claim_category": ["frontier_survey", "boundary", "substrate_self"][i],
+                "claim_text": "Sample claim long enough to pass the 20-char minimum.",
+                "expected_verifier_primary": "citation_audit",
+                "expected_verdict": ["falsified", "survived", "open"][i],
+                "ground_truth_source": "arXiv:1604.06431",
+                "trust_tier": "analytically_proven",
+                "source_report": "test fixture",
+            }
+            for i in range(3)
+        ]
+        batch_path.write_text(
+            "\n".join(json.dumps(c) for c in claims), encoding="utf-8",
+        )
+
+        out_jsonl = tmp_path / "records.jsonl"
+        out_summary = tmp_path / "summary.json"
+        summary = run_claim_batch(
+            batch_path,
+            out_jsonl=out_jsonl,
+            out_summary=out_summary,
+            kernel=None,
+            enforce_quality_rules=False,  # 3 claims < diversity threshold anyway
+        )
+
+        assert summary["n_claims"] == 3
+        assert summary["n_learner_records"] == 3
+        assert summary["permanent_failure_count"] == 3  # all stubs fail
+        assert summary["expected_actual_match_rate"] == 0.0
+        assert out_jsonl.exists()
+        assert out_summary.exists()
+        # Each emitted record carries the verifier_outcome_class
+        for line in out_jsonl.read_text(encoding="utf-8").splitlines():
+            rec = json.loads(line)
+            assert rec["verifier_outcome_class"] == "verifier_permanent_failure"

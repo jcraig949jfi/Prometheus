@@ -84,6 +84,13 @@ class LearnerRecord:
     decoy_kind: Optional[str]
     kill_signature: Tuple[str, ...]
     outcome_class: str
+    # Claim-stack extension (Aporia adjudication 2026-05-12 Mod 2). Splits
+    # "verifier said inconclusive" (real Learner signal) from "verifier
+    # failed to run" (missing data). Optional + default None so existing
+    # Tier-1 enriched-generator call sites that don't run a verifier
+    # (Tier-0 generator's brute-force enumeration) don't break.
+    # Values: VERIFIER_OUTCOME_CLASSES.
+    verifier_outcome_class: Optional[str] = None
 
 
 EPISODE_PHASES: Tuple[str, ...] = (
@@ -112,6 +119,23 @@ DECOY_KINDS: Tuple[str, ...] = (
     "seeded_survivor",   # known-survivor injected from survivor_seed_pool
     "known_kill",        # known-kill injected as negative anchor
 )
+
+
+VERIFIER_OUTCOME_CLASSES: Tuple[str, ...] = (
+    # Decisive — real Learner signal. Train/eval can use these directly.
+    "decisive_verified",          # verifier ran cleanly, returned a confirming verdict
+    "decisive_contradicted",      # verifier ran cleanly, returned a refuting verdict
+    "decisive_inconclusive",      # verifier ran cleanly, genuine inconclusive (verifier disagreement, open problem)
+    # Failure — missing data, NOT signal. Train/eval should mask these.
+    "verifier_transient_failure", # network / timeout / 503 — retry once; if still failing, mark this and move on
+    "verifier_permanent_failure", # 404 / schema-validation / verifier-not-implemented — decisive failure to verify
+)
+"""Per Aporia adjudication 2026-05-12 Mod 2. The kernel's three-verdict
+vocabulary (verified / contradicted / inconclusive) conflates two
+different things at the substrate level: 'verifier ran and concluded'
+vs 'verifier failed to run'. The Learner needs to distinguish them.
+This enum lives at the LearnerRecord layer (NOT at the kernel verdict
+level) so no contract change is required."""
 
 
 # ---------------------------------------------------------------------------
@@ -258,14 +282,18 @@ def enrich(
     chart_registry: Optional[Any] = None,
     decoy_kind: Optional[str] = None,
     episode_phase: str = "evaluate",
+    verifier_outcome_class: Optional[str] = None,
 ) -> LearnerRecord:
-    """Convert a DiscoveryRecord to a LearnerRecord.
+    """Convert a DiscoveryRecord (or claim-runner result) to a LearnerRecord.
 
     Parameters
     ----------
     discovery_record : DiscoveryRecord
         Substrate-grade record with .candidate_hash, .terminal_state,
         .kill_pattern fields (per prometheus_math.discovery_pipeline).
+        For claim-stack consumers, a duck-typed object with the same
+        attribute names also works (the claim runner constructs a
+        DiscoveryRecord-shaped lite struct from the verifier result).
     chart_id : str | None
         ``"<domain>:<region_key>"`` if a registered chart applies. The
         Tier-1 Lehmer generator passes ``"lehmer:deg12_palindromic"``
@@ -277,8 +305,15 @@ def enrich(
         None for enumerated candidates; ``"seeded_survivor"`` for
         injected positives from the survivor_seed_pool.
     episode_phase : str
-        Tier-1 always uses ``"evaluate"``; Tier-2+ will use full
-        claim / falsify / promote phases.
+        Tier-1 always uses ``"evaluate"``; the claim runner uses
+        ``"claim"`` / ``"falsify"`` / ``"promote"`` per emitted opcode.
+    verifier_outcome_class : str | None
+        Per Aporia adjudication 2026-05-12 Mod 2 (claim-stack pipeline).
+        Splits "verifier said inconclusive" (real signal) from "verifier
+        failed to run" (missing data). One of VERIFIER_OUTCOME_CLASSES
+        or None for non-verifier-driven records (Tier-0 brute-force
+        enumeration). The claim runner classifies its own verifier
+        outcome and passes the result here.
     """
     if episode_phase not in EPISODE_PHASES:
         raise ValueError(
@@ -287,6 +322,12 @@ def enrich(
     if decoy_kind is not None and decoy_kind not in DECOY_KINDS:
         raise ValueError(
             f"decoy_kind must be one of {DECOY_KINDS} or None; got {decoy_kind!r}"
+        )
+    if (verifier_outcome_class is not None
+            and verifier_outcome_class not in VERIFIER_OUTCOME_CLASSES):
+        raise ValueError(
+            f"verifier_outcome_class must be one of "
+            f"{VERIFIER_OUTCOME_CLASSES} or None; got {verifier_outcome_class!r}"
         )
     underlying_hash = getattr(discovery_record, "candidate_hash", "")
     terminal_state = getattr(discovery_record, "terminal_state", None)
@@ -303,6 +344,7 @@ def enrich(
         decoy_kind=decoy_kind,
         kill_signature=derive_kill_signature(kill_pattern),
         outcome_class=normalize_outcome_class(terminal_state),
+        verifier_outcome_class=verifier_outcome_class,
     )
 
 
@@ -311,6 +353,7 @@ __all__ = [
     "EPISODE_PHASES",
     "VERIFICATION_TIERS",
     "OUTCOME_CLASSES",
+    "VERIFIER_OUTCOME_CLASSES",
     "DECOY_KINDS",
     "derive_kill_signature",
     "lookup_verification_tier",

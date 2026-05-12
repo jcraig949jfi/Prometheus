@@ -70,6 +70,7 @@ def _load_schemas() -> Tuple[Dict[str, dict], dict]:
         "catalog_edit_v1.json",
         "training_anchor_v1.json",
         "paradigm_candidate_v1.json",
+        "claim_v1.json",
     ):
         block_type = fname.replace("_v1.json", "")
         schemas[block_type] = json.loads((SCHEMA_DIR / fname).read_text(encoding="utf-8"))
