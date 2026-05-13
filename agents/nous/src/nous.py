@@ -22,8 +22,33 @@ from openai import OpenAI
 from concepts import CONCEPTS
 from scorer import score_response
 
+# Agora telemetry — optional. Nous runs without it if unavailable.
+try:
+    from agora.client import AgoraClient
+    from agora.protocol import MessageType
+    HAS_AGORA = True
+except Exception:
+    HAS_AGORA = False
+    AgoraClient = None
+    MessageType = None
+
 NOUS_ROOT = Path(__file__).resolve().parent.parent
 log_file = NOUS_ROOT / "nous.log"
+STATUS_PATH = NOUS_ROOT / "STATUS.json"
+
+# Auto-load agents/nous/.env if present. Existing env vars take precedence
+# (so command-line overrides still work). No external dependency.
+_NOUS_ENV = NOUS_ROOT / ".env"
+if _NOUS_ENV.exists():
+    try:
+        for _line in _NOUS_ENV.read_text(encoding="utf-8").splitlines():
+            _line = _line.strip()
+            if not _line or _line.startswith("#") or "=" not in _line:
+                continue
+            _k, _v = _line.split("=", 1)
+            os.environ.setdefault(_k.strip(), _v.strip().strip('"').strip("'"))
+    except Exception:
+        pass
 
 logging.basicConfig(
     level=logging.INFO,
@@ -465,10 +490,99 @@ def main():
         sys.exit(1)
 
     client = OpenAI(
-        base_url="https://integrate.api.nvidia.com/v1",
+        base_url=os.environ.get("NVIDIA_API_ENDPOINT", "https://integrate.api.nvidia.com/v1"),
         api_key=api_key,
         timeout=60.0,
     )
+
+    # Agora telemetry (optional — degrades gracefully if Redis unreachable)
+    agora_client = None
+    machine = os.environ.get("PROMETHEUS_MACHINE", "M4")
+    if HAS_AGORA:
+        try:
+            agora_client = AgoraClient(agent_name="Nous", machine=machine, persist=False)
+            agora_client.connect()
+            agora_client.start_heartbeat()
+            agora_client.send(
+                stream="main",
+                subject="Nous online",
+                body=f"Run starting on {machine}",
+                confidence=1.0,
+                msg_type=MessageType.ANNOUNCE,
+            )
+            log.info("Agora connected as Nous@%s", machine)
+        except Exception as e:
+            log.warning("Agora unavailable, running without telemetry: %s", e)
+            agora_client = None
+    else:
+        log.info("Agora client not installed; running without telemetry")
+
+    last_hp_event = None
+
+    def _emit_status(run_dir, completed, batch, processed):
+        status = {
+            "agent": "Nous",
+            "machine": machine,
+            "status": "running",
+            "last_heartbeat": datetime.utcnow().isoformat() + "Z",
+            "pid": os.getpid(),
+            "current_op": f"batch {batch}, {completed} done (run {run_dir.name})",
+            "key_metrics": {
+                "run_dir": run_dir.name,
+                "completed_this_session": completed,
+                "unique_triples_processed": len(processed),
+                "last_high_potential": last_hp_event,
+                "model": args.model,
+                "delay_sec": args.delay,
+            },
+        }
+        try:
+            STATUS_PATH.write_text(json.dumps(status, indent=2, default=str), encoding="utf-8")
+        except Exception:
+            pass
+        if agora_client and agora_client.r:
+            try:
+                agora_client.r.hset("agent:Nous", mapping={
+                    "status_json": json.dumps(status, default=str),
+                    "last_status_update": status["last_heartbeat"],
+                })
+            except Exception:
+                pass
+
+    def _emit_high_potential(entry):
+        if not agora_client:
+            return
+        try:
+            names = " + ".join(entry["concept_names"])
+            comp = entry["score"].get("composite_score", 0)
+            agora_client.share_discovery(
+                subject=f"Nous HIGH_POTENTIAL: {names}",
+                body=entry.get("response_text", "")[:1000],
+                evidence=f"composite={comp:.1f}, novelty={entry['score'].get('novelty', '?')}",
+                confidence=min(1.0, comp / 10.0),
+            )
+        except Exception as e:
+            log.warning("Failed to emit HIGH_POTENTIAL to Agora: %s", e)
+
+    def _emit_warn(subject, body):
+        if not agora_client:
+            return
+        try:
+            agora_client.send(stream="main", subject=subject, body=body,
+                              confidence=0.5, msg_type=MessageType.ANNOUNCE)
+        except Exception:
+            pass
+
+    def _emit_shutdown(completed):
+        if not agora_client:
+            return
+        try:
+            agora_client.send(stream="main", subject="Nous shutting down",
+                              body=f"completed {completed} combinations this session",
+                              confidence=1.0, msg_type=MessageType.ANNOUNCE)
+            agora_client.disconnect()
+        except Exception:
+            pass
 
     # Load concepts
     concepts = load_concepts(args.concept_file)
@@ -554,6 +668,10 @@ def main():
 
                 if response_text is None:
                     log.warning(f"Skipping failed combination: {concept_names}")
+                    _emit_warn(
+                        subject=f"Nous API failure: {concept_names[0]}",
+                        body=f"failed combo: {concept_names}",
+                    )
                     continue
 
                 score = score_response(response_text)
@@ -577,6 +695,12 @@ def main():
                         f"  *** HIGH POTENTIAL *** composite={score['composite_score']:.1f} "
                         f"novelty={score['novelty']}"
                     )
+                    _emit_high_potential(entry)
+                    last_hp_event = {
+                        "concepts": concept_names,
+                        "composite": score["composite_score"],
+                        "at": datetime.utcnow().isoformat() + "Z",
+                    }
                 else:
                     log.info(
                         f"  composite={score['composite_score']:.1f} novelty={score['novelty']}"
@@ -586,6 +710,7 @@ def main():
                 if completed % 10 == 0:
                     save_checkpoint(run_dir, processed)
                     log.info(f"  Checkpoint saved ({completed} done)")
+                    _emit_status(run_dir, completed, batch, processed)
 
                 # Rate limit
                 time.sleep(args.delay)
@@ -604,6 +729,8 @@ def main():
     # Generate rankings
     generate_rankings(run_dir, concepts)
     log.info("Done.")
+
+    _emit_shutdown(completed)
 
 
 if __name__ == "__main__":
