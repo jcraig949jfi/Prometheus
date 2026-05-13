@@ -344,10 +344,170 @@ def _verifier_citation_audit(claim_payload: dict) -> VerifierResult:
     )
 
 
+# ---------------------------------------------------------------------------
+# catalog_lookup verifier (Track 2 Verifier 2, 2026-05-13)
+# ---------------------------------------------------------------------------
+
+
+# T#NN catalog ID extractor — matches the claim_id pattern
+# "CLAIM-boundary-T<N>-NNNNN" used by Aporia's boundary claims.
+_BOUNDARY_T_ENTRY_RE = re.compile(r"^CLAIM-boundary-T(\d+)-\d{4,5}$")
+
+# tensor_open_problems_v1.md catalog path + entry regex (mirrors
+# validate_substrate_blocks.py's loader).
+_TENSOR_CATALOG_PATH = Path("aporia/mathematics/tensor_open_problems_v1.md")
+_T_ENTRY_RE = re.compile(r"^### (\d+)\.\s", re.MULTILINE)
+
+
+def _load_tensor_catalog_entries() -> Dict[str, str]:
+    """Parse tensor_open_problems_v1.md once. Returns {T#NN -> entry body}.
+
+    Entry body is the markdown text from the entry's header to the next
+    entry's header (or end of section). Caches per-process via a
+    module-level singleton dict; the catalog file rarely changes within
+    a single runner invocation.
+    """
+    if not _TENSOR_CATALOG_PATH.exists():
+        return {}
+    text = _TENSOR_CATALOG_PATH.read_text(encoding="utf-8")
+    entries: Dict[str, str] = {}
+    matches = list(_T_ENTRY_RE.finditer(text))
+    for i, m in enumerate(matches):
+        n = m.group(1)
+        start = m.start()
+        end = matches[i + 1].start() if i + 1 < len(matches) else len(text)
+        entries[f"T#{n}"] = text[start:end]
+    return entries
+
+
+_TENSOR_CATALOG_CACHE: Optional[Dict[str, str]] = None
+
+
+def _get_tensor_catalog() -> Dict[str, str]:
+    """Lazy-cached accessor; returns empty dict if the catalog file
+    is unavailable."""
+    global _TENSOR_CATALOG_CACHE
+    if _TENSOR_CATALOG_CACHE is None:
+        _TENSOR_CATALOG_CACHE = _load_tensor_catalog_entries()
+    return _TENSOR_CATALOG_CACHE
+
+
+def _extract_t_entry_id(claim_payload: dict) -> Optional[str]:
+    """Determine the T#NN catalog entry ID this claim targets.
+
+    Strategy:
+      1. Explicit verifier_args.entry_id (e.g. {"entry_id": "T#4"})
+      2. Derived from claim id pattern (CLAIM-boundary-T4-NNNNN -> T#4)
+      3. None if neither applies — non-T# catalog dispatch
+    """
+    args = claim_payload.get("verifier_args", {}) or {}
+    explicit = args.get("entry_id")
+    if isinstance(explicit, str) and explicit.startswith("T#"):
+        return explicit
+    claim_id = claim_payload.get("id", "")
+    m = _BOUNDARY_T_ENTRY_RE.match(claim_id)
+    if m:
+        return f"T#{m.group(1)}"
+    return None
+
+
+def _verifier_catalog_lookup(claim_payload: dict) -> VerifierResult:
+    """Catalog-lookup verifier.
+
+    Current scope (MVP, 2026-05-13):
+      - Tensor catalog (aporia/mathematics/tensor_open_problems_v1.md):
+        verifies the T#NN entry exists. If the claim targets a T#NN
+        derived from claim_id or verifier_args.entry_id, looks up the
+        catalog entry.
+        - Entry missing -> decisive_contradicted (catalog miss; the claim
+          references a catalog entry that doesn't exist)
+        - Entry exists -> decisive_inconclusive (entry confirmed but
+          numeric bound comparison is not yet wired; dispatch to fallback
+          verifier or manual_review for the bound check)
+      - Non-T# catalog dispatch (LMFDB, OEIS, Mossinghoff): returns
+        decisive_inconclusive with a not_yet_wired flag. The dispatch
+        wrapper can try a fallback verifier (citation_audit, manual_review).
+
+    Network-free verifier — reads local catalog files only. No exceptions
+    expected unless the catalog file is unreadable (permanent failure).
+    """
+    t_start = time.perf_counter()
+    entry_id = _extract_t_entry_id(claim_payload)
+    if entry_id is None:
+        return VerifierResult(
+            outcome_class="decisive_inconclusive",
+            method_used="catalog_lookup",
+            evidence_blob={
+                "reason": "no_t_entry_id_extractable",
+                "claim_id": claim_payload.get("id"),
+                "note": (
+                    "Non-tensor-catalog claims (LMFDB EC, OEIS, Mossinghoff) "
+                    "need adapter wiring; falling back to inconclusive."
+                ),
+            },
+            runtime_ms=int((time.perf_counter() - t_start) * 1000),
+            caveats=(
+                "catalog_lookup MVP only covers the tensor_open_problems "
+                "catalog (T#NN entries). Non-T# claims should set "
+                "expected_verifier_fallback to citation_audit or manual_review."
+            ),
+        )
+    catalog = _get_tensor_catalog()
+    if not catalog:
+        return VerifierResult(
+            outcome_class="verifier_permanent_failure",
+            method_used="catalog_lookup",
+            evidence_blob={
+                "reason": "tensor_catalog_unavailable",
+                "path": str(_TENSOR_CATALOG_PATH),
+            },
+            runtime_ms=int((time.perf_counter() - t_start) * 1000),
+            error_text=(
+                f"tensor catalog file not readable at "
+                f"{_TENSOR_CATALOG_PATH} (cwd: {Path.cwd()})"
+            ),
+        )
+    runtime_ms = int((time.perf_counter() - t_start) * 1000)
+    if entry_id not in catalog:
+        return VerifierResult(
+            outcome_class="decisive_contradicted",
+            method_used="catalog_lookup",
+            evidence_blob={
+                "entry_id": entry_id,
+                "reason": "catalog_entry_missing",
+                "catalog_size": len(catalog),
+            },
+            runtime_ms=runtime_ms,
+            caveats=(
+                f"{entry_id} not present in tensor_open_problems_v1.md. "
+                "Claim references a catalog entry that doesn't exist."
+            ),
+        )
+    entry_text = catalog[entry_id]
+    return VerifierResult(
+        outcome_class="decisive_inconclusive",
+        method_used="catalog_lookup",
+        evidence_blob={
+            "entry_id": entry_id,
+            "entry_body_chars": len(entry_text),
+            "entry_preview": entry_text[:240],
+            "reason": "entry_confirmed_but_bound_comparison_not_wired",
+        },
+        runtime_ms=runtime_ms,
+        caveats=(
+            f"{entry_id} catalog entry exists. MVP does not yet do "
+            "numeric bound extraction + comparison; dispatch fallback "
+            "verifier (citation_audit or manual_review) for the "
+            "specific claim assertion."
+        ),
+    )
+
+
 VERIFIER_REGISTRY: Dict[str, VerifierFn] = {
     name: _verifier_stub_factory(name) for name in KNOWN_VERIFIERS
 }
 VERIFIER_REGISTRY["citation_audit"] = _verifier_citation_audit
+VERIFIER_REGISTRY["catalog_lookup"] = _verifier_catalog_lookup
 
 
 def get_verifier(name: str) -> VerifierFn:

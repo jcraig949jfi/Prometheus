@@ -497,6 +497,71 @@ class TestCitationAuditVerifier:
         assert VERIFIER_REGISTRY["citation_audit"] is _verifier_citation_audit
 
 
+class TestCatalogLookupVerifier:
+    """Track 2 Verifier 2 (2026-05-13). MVP: tensor catalog T#NN entry
+    existence lookup. Non-tensor catalogs return inconclusive for now."""
+
+    def test_extract_t_entry_id_from_claim_id(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _extract_t_entry_id,
+        )
+        assert _extract_t_entry_id({"id": "CLAIM-boundary-T4-00001"}) == "T#4"
+        assert _extract_t_entry_id({"id": "CLAIM-boundary-T56-00001"}) == "T#56"
+        assert _extract_t_entry_id({"id": "CLAIM-frontier-00001"}) is None
+        assert _extract_t_entry_id({"id": "CLAIM-calibration-knots-00001"}) is None
+
+    def test_extract_t_entry_id_from_verifier_args(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _extract_t_entry_id,
+        )
+        # Explicit verifier_args.entry_id overrides claim_id pattern
+        assert (
+            _extract_t_entry_id({
+                "id": "CLAIM-frontier-00001",
+                "verifier_args": {"entry_id": "T#22"},
+            })
+            == "T#22"
+        )
+
+    def test_no_t_entry_returns_inconclusive(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_catalog_lookup,
+        )
+        result = _verifier_catalog_lookup({"id": "CLAIM-calibration-bsd-00001"})
+        assert result.outcome_class == "decisive_inconclusive"
+        assert "no_t_entry_id_extractable" in result.evidence_blob["reason"]
+
+    def test_existing_t_entry_returns_inconclusive_with_evidence(self):
+        """T#1 (matrix multiplication exponent ω) is well-established in
+        the tensor catalog."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_catalog_lookup,
+        )
+        result = _verifier_catalog_lookup({"id": "CLAIM-boundary-T1-00001"})
+        assert result.outcome_class == "decisive_inconclusive"
+        assert result.evidence_blob["entry_id"] == "T#1"
+        assert result.evidence_blob["entry_body_chars"] > 100
+        assert "entry_confirmed" in result.evidence_blob["reason"]
+
+    def test_missing_t_entry_returns_contradicted(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_catalog_lookup,
+        )
+        # T#9999 won't exist in the catalog
+        result = _verifier_catalog_lookup({
+            "id": "CLAIM-boundary-T9999-00001",
+        })
+        assert result.outcome_class == "decisive_contradicted"
+        assert result.evidence_blob["entry_id"] == "T#9999"
+        assert "catalog_entry_missing" in result.evidence_blob["reason"]
+
+    def test_registry_points_at_real_verifier(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            VERIFIER_REGISTRY, _verifier_catalog_lookup,
+        )
+        assert VERIFIER_REGISTRY["catalog_lookup"] is _verifier_catalog_lookup
+
+
 class TestLearnerRecordClaimExtensionFields:
     """Per Track 1 prompt 2026-05-13: claim_id, claim_category, actual_verdict
     carry through from CLAIM payload to LearnerRecord."""
