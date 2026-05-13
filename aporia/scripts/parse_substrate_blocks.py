@@ -133,6 +133,14 @@ def _parse_body_as_docs(body: str, lang_hint: str) -> List[Any]:
     YAML multi-doc (--- separators) yields multiple docs. JSON fence
     yields the single top-level value (which may itself be a list).
     Single YAML doc yields one. Parse failures return [].
+
+    Resilience for pilot output (2026-05-13): some Gemini-emitted YAML
+    bodies contain LaTeX escapes (e.g. ``\\underline{R}`` in a double-
+    quoted string), which YAML interprets as a unicode escape and
+    fails the entire body. Fall back to splitting on ``---`` and
+    parsing each chunk separately; skip the ones that fail. This
+    preserves the good docs when one is broken by an unescaped LaTeX
+    sequence.
     """
     body = body.strip()
     if not body:
@@ -149,7 +157,43 @@ def _parse_body_as_docs(body: str, lang_hint: str) -> List[Any]:
     try:
         docs = list(yaml.safe_load_all(body))
     except yaml.YAMLError:
-        return []
+        # Fall back to per-chunk parsing. Split on lines that are
+        # exactly ``---`` (the YAML doc separator).
+        docs = []
+        current_chunk_lines: List[str] = []
+        chunks: List[str] = []
+        for raw_line in body.splitlines():
+            if raw_line.strip() == "---":
+                if current_chunk_lines:
+                    chunks.append("\n".join(current_chunk_lines))
+                    current_chunk_lines = []
+            else:
+                current_chunk_lines.append(raw_line)
+        if current_chunk_lines:
+            chunks.append("\n".join(current_chunk_lines))
+        for chunk in chunks:
+            chunk_text = chunk.strip()
+            if not chunk_text:
+                continue
+            try:
+                doc = yaml.safe_load(chunk_text)
+                if doc is not None:
+                    docs.append(doc)
+            except yaml.YAMLError:
+                # Common failure mode: LaTeX backslash escapes inside
+                # double-quoted YAML strings (e.g. ``\underline{R}``,
+                # ``\mathbb{Z}``). YAML interprets ``\u`` as unicode escape
+                # and fails. Retry with bare backslashes doubled so they
+                # parse as literal characters.
+                escaped = chunk_text.replace("\\", "\\\\")
+                try:
+                    doc = yaml.safe_load(escaped)
+                    if doc is not None:
+                        docs.append(doc)
+                except yaml.YAMLError:
+                    # Skip this chunk only — keep the others
+                    continue
+        return docs
     return [d for d in docs if d is not None]
 
 

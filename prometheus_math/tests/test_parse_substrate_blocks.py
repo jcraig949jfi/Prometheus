@@ -242,6 +242,40 @@ baz: qux
         blocks = list(iter_blocks_in_text(text, source_file="test.md"))
         assert len(blocks) == 0  # no known convention markers
 
+    def test_latex_escape_in_yaml_does_not_lose_other_docs(self):
+        """Per pilot DR-001 finding 2026-05-13 hour 8: a YAML body with
+        a LaTeX escape (`\\underline{R}`) inside a double-quoted string
+        breaks yaml.safe_load_all for the entire body. Per-chunk
+        fallback splits on `---` and retries each chunk; bare-backslash
+        doubling lets LaTeX-bearing chunks parse as literal strings.
+        Without this, DR-001 yielded 0 blocks; with it, both DR-001
+        blocks recover."""
+        text = '''
+```yaml
+---
+_schema_version: "1.0.0"
+substrate_type: anti_anchor
+id: AA-013
+name: STRASSEN_ADDITIVITY_TEST
+false_form: "Strassen direct-sum verified via exhaustive search"
+true_form: "Strassen direct-sum holds for tensor rank R when R <= 7"
+---
+_schema_version: "1.0.0"
+substrate_type: catalog_edit
+entry_id: T#AA013-ROUTING
+field: downstream_consumer
+before: "BorderRankWitness"
+after: "TensorRankWitness"
+reason: "HARD-5 violation. Tensor rank R bounds, not border rank \\underline{R}."
+```
+'''
+        blocks = list(iter_blocks_in_text(text, source_file="test.md"))
+        # Both docs should recover — the catalog_edit via the LaTeX-escape
+        # retry path (bare backslashes doubled so they parse as literals).
+        assert len(blocks) == 2
+        types = sorted(bt for bt, _, _ in blocks)
+        assert types == ["anti_anchor", "catalog_edit"]
+
     def test_all_seven_block_types_recognized(self):
         # Each known block_type should be detectable via C1
         for bt in KNOWN_BLOCK_TYPES:
