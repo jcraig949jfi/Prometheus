@@ -685,6 +685,33 @@ class TestSubstrateSelfCheckVerifier:
         })
         assert result.outcome_class == "decisive_verified"
 
+    def test_loop_hour_6_runtime_invariants_hold(self):
+        """Per Day-3 substrate_self batch (loop hour 6): runtime invariants
+        added for VERIFIER_REGISTRY consistency, calibration tables, T#
+        bound checkers, and anti_anchor registry sanity."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_substrate_self_check,
+        )
+        new_invariants = [
+            "verifier_registry_matches_known_verifiers",
+            "mpmath_calibration_table_has_lehmer_entry",
+            "sympy_calibration_table_has_trefoil_entry",
+            "sympy_calibration_table_has_jones_entry",
+            "t_bound_checkers_have_t1_t4_t56",
+            "anti_anchor_registry_has_aa001",
+            "anti_anchor_registry_nonempty",
+            "t1_omega_lower_is_2",
+            "t4_m3_upper_is_23",
+        ]
+        for inv in new_invariants:
+            result = _verifier_substrate_self_check({
+                "id": "X",
+                "verifier_args": {"invariant_name": inv},
+            })
+            assert result.outcome_class == "decisive_verified", (
+                f"invariant {inv!r} should hold but returned {result.outcome_class}"
+            )
+
     def test_registry_points_at_real_verifier(self):
         from prometheus_math.substrate_generation.tier_1_claim_runner import (
             VERIFIER_REGISTRY, _verifier_substrate_self_check,

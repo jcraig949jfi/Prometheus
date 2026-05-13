@@ -1052,13 +1052,21 @@ def _verifier_mpmath_compute(claim_payload: dict) -> VerifierResult:
 def _build_substrate_self_invariants() -> Dict[str, Callable[[], bool]]:
     """Construct the invariants dict. Built lazily to avoid import-time
     coupling — the invariants reference module-level constants whose
-    imports cycle if defined at top-of-file."""
+    imports cycle if defined at top-of-file.
+
+    Loop hour 6 expansion (2026-05-13): added invariants tracking
+    VERIFIER_REGISTRY consistency with KNOWN_VERIFIERS, calibration
+    tables (mpmath, sympy), T# bound checkers (T#1, T#4, T#56), and
+    anti_anchor registry sanity. These flag drift if someone changes
+    a constant without updating the corresponding substrate_self claim.
+    """
     from prometheus_math.substrate_generation.learner_enrichment import (
         VERIFIER_OUTCOME_CLASSES,
         EPISODE_PHASES,
         derive_kill_signature,
     )
     return {
+        # Original 6 (loop hour 2)
         "verifier_outcome_classes_size_5": (
             lambda: len(VERIFIER_OUTCOME_CLASSES) == 5
         ),
@@ -1076,6 +1084,34 @@ def _build_substrate_self_invariants() -> Dict[str, Callable[[], bool]]:
         ),
         "decisive_outcomes_size_3": (
             lambda: len(VERIFIER_DECISIVE_OUTCOMES) == 3
+        ),
+        # Loop hour 6 expansion — runtime substrate state
+        "verifier_registry_matches_known_verifiers": (
+            lambda: set(VERIFIER_REGISTRY.keys()) == set(KNOWN_VERIFIERS)
+        ),
+        "mpmath_calibration_table_has_lehmer_entry": (
+            lambda: "CLAIM-calibration-mahler-00001" in _MPMATH_CALIBRATION_TABLE
+        ),
+        "sympy_calibration_table_has_trefoil_entry": (
+            lambda: "CLAIM-calibration-knots-00001" in _SYMPY_CALIBRATION_TABLE
+        ),
+        "sympy_calibration_table_has_jones_entry": (
+            lambda: "CLAIM-calibration-jones-00001" in _SYMPY_CALIBRATION_TABLE
+        ),
+        "t_bound_checkers_have_t1_t4_t56": (
+            lambda: {"T#1", "T#4", "T#56"}.issubset(set(_T_BOUND_CHECKERS.keys()))
+        ),
+        "anti_anchor_registry_has_aa001": (
+            lambda: "AA-001" in _load_anti_anchor_ids()
+        ),
+        "anti_anchor_registry_nonempty": (
+            lambda: len(_load_anti_anchor_ids()) > 0
+        ),
+        "t1_omega_lower_is_2": (
+            lambda: _T1_OMEGA_LOWER == 2.0
+        ),
+        "t4_m3_upper_is_23": (
+            lambda: _T4_M3_UPPER == 23
         ),
     }
 
