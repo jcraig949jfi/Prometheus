@@ -1627,42 +1627,44 @@ def run_claim(
 
     t_start = time.perf_counter()
 
-    # 1. Try primary verifier
-    primary_result = _dispatch_verifier(get_verifier(primary_name), claim_payload)
-    chosen_verifier_name = primary_name
-    chosen_result = primary_result
-
-    # 2. If primary returned inconclusive / transient_failure, try fallback (if any)
-    if (
-        fallback_name
-        and primary_result.outcome_class in ("decisive_inconclusive", "verifier_transient_failure")
-    ):
-        fallback_result = _dispatch_verifier(get_verifier(fallback_name), claim_payload)
-        # Use fallback only if it's MORE decisive than primary
-        # (decisive_* > verifier_*_failure; among decisive, prefer non-inconclusive)
-        if (
-            fallback_result.outcome_class in ("decisive_verified", "decisive_contradicted")
-            or (
-                primary_result.outcome_class == "verifier_transient_failure"
-                and fallback_result.outcome_class.startswith("decisive_")
-            )
-        ):
-            chosen_verifier_name = fallback_name
-            chosen_result = fallback_result
-
-    # 2.5. Anti-anchor couplet override (loop hour 5, 2026-05-13).
-    # If the claim is by-construction the false_form of a registered
-    # anti_anchor (per parent_block + source_report metadata), substrate
-    # falsifies the claim regardless of what the citation_audit verifier
-    # returned about the cited paper's existence. This handles the
-    # fundamental limitation that citation_audit verifies existence not
-    # semantic alignment between claim_text and the cited paper's content.
+    # 0. Anti-anchor couplet override pre-check (loop hour 14, 2026-05-13).
+    # When the claim is by-construction the false_form / true_form of a
+    # registered anti_anchor, the substrate's anti_anchor registry IS the
+    # determinative answer — citation_audit can't add information beyond
+    # what the registry encodes. Short-circuit to skip primary + fallback
+    # verifier dispatch entirely. This was added when mining the
+    # anti_anchor registry yielded 24 couplet claims whose ground_truth_
+    # source carries arXiv IDs — without this pre-check, every couplet
+    # ran a citation_audit network roundtrip before being overridden.
     couplet_override = _check_anti_anchor_couplet_override(claim_payload)
     if couplet_override is not None:
         chosen_verifier_name = "anti_anchor_couplet_override"
         chosen_result = couplet_override
+        elapsed_ms = int((time.perf_counter() - t_start) * 1000)
+    else:
+        # 1. Try primary verifier
+        primary_result = _dispatch_verifier(get_verifier(primary_name), claim_payload)
+        chosen_verifier_name = primary_name
+        chosen_result = primary_result
 
-    elapsed_ms = int((time.perf_counter() - t_start) * 1000)
+        # 2. If primary returned inconclusive / transient_failure, try fallback
+        if (
+            fallback_name
+            and primary_result.outcome_class in ("decisive_inconclusive", "verifier_transient_failure")
+        ):
+            fallback_result = _dispatch_verifier(get_verifier(fallback_name), claim_payload)
+            # Use fallback only if it's MORE decisive than primary
+            if (
+                fallback_result.outcome_class in ("decisive_verified", "decisive_contradicted")
+                or (
+                    primary_result.outcome_class == "verifier_transient_failure"
+                    and fallback_result.outcome_class.startswith("decisive_")
+                )
+            ):
+                chosen_verifier_name = fallback_name
+                chosen_result = fallback_result
+
+        elapsed_ms = int((time.perf_counter() - t_start) * 1000)
 
     # 3. Translate verifier outcome to terminal_state for the
     # DiscoveryRecord-shaped lite struct that enrich() consumes
