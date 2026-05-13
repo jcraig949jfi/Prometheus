@@ -6,20 +6,57 @@
 
 ---
 
-## Context — Prometheus and the North Star
+## Reviewer Preamble — what Prometheus is actually building
 
-Prometheus is a falsification-first reasoning substrate for automated mathematical discovery. Its thesis is that generative variance (LLM "hallucinations") is the mutation engine; ruthless mechanistic selection imposed on that variance is what produces discovery. Most of the system is the selection regime — typed primitives, KillVector ontology, anti-anchor registry, synthetic-null gate, multi-agent ticket inboxes.
+Prometheus is not building a single AI. It is building the **substrate from which intelligences emerge**. The bet — explicit, deliberately-different from frontier-LLM scaling — is that genuinely structured reasoning will not arrive by enlarging existing language models against existing token data. It will arrive by constructing two things and letting selection do the rest:
 
-The **North Star** is to build a structured reasoning AI. Two candidate paths, both live:
+1. An **advanced symbolic language** — typed primitives + falsification-anchored grammar — expressive enough for intelligences to think and communicate in directly, without routing through natural language.
+2. A **library of cognitive training seeds** — falsification-tested reasoning genes (from Hephaestus) and evolved problem-solving organisms (from Apollo) — providing the procedural knowledge an intelligence needs to inherit when learning the language.
 
-- **Path (a):** A math-domain LLM with a LoRA bolt-on, where the LoRA is trained on the substrate's structured outputs (KillVectors, primitive sequences, falsification-routing traces).
-- **Path (b):** A new neural net trained from the ground up using the substrate as weights — substrate primitives + falsification artifacts forming the action space the model navigates.
+The working hypothesis: provide both, apply selection pressure (the falsification battery), and intelligences emerge from the primordial soup. The architecture is engineered to produce the substrate of emergence, not the intelligence directly.
 
-Either path requires a **training corpus of structured reasoning artifacts**. Two agents historically produced such artifacts: **Apollo** (evolved program compositions = "molecules" of primitives) and **Hephaestus** (forged Python reasoning tools = operational reasoning units). Both went dark around April 2-9 and have not run since.
+### What makes this different from current LLM training
 
-The user (James) is now deciding whether to revive either, and is asking the right question: **don't revive — autopsy first, decide value proposition, then revive only if justified.**
+The frontier path is: bigger model, more tokens, more compute, better natural-language outputs. The implicit assumption is that reasoning is a *capability* of language modeling — emerges from sufficient scale on sufficient text. The current state of that bet shows the limit: models that produce plausible-sounding reasoning that nonetheless fabricates citations, can be tricked by adversarial framing, and degrades on out-of-distribution mathematical questions.
 
-The two autopsy questions per agent:
+Prometheus's bet is different. Reasoning isn't a capability of language modeling; it's an *operation on typed symbols under falsification pressure*. Natural language is downstream — a serialization layer for I/O between intelligences and humans, not the substrate of cognition itself. If this bet is right, an intelligence trained natively in the symbolic substrate has access to genuine selection-pressure reasoning that scale-only-LLMs structurally cannot achieve. If it's wrong, Prometheus produces a very rich research corpus and a typed symbol library that's independently useful for verification and tool-augmented reasoning systems.
+
+### The multi-intelligence aspect
+
+The symbolic language is *not* intended as one model's private cognitive format. It is designed to be a **lingua franca**: a shared symbolic substrate any sufficiently-trained intelligence can think and communicate in. Two intelligences trained on this substrate could converse directly in falsification-grounded symbols, without either dropping down through human natural language. AI-to-AI communication via a typed-symbolic substrate is the structural endpoint; AI-to-human via natural-language translation is a fallback for compatibility with humans, not the architecture's central mode.
+
+This raises the dictionary-design problem to the scale of language design itself. Prometheus's discipline — frozen interfaces, ablation gates, anti-anchor registries, kill-ledger preservation — is engineered for the case where the vocabulary has to be stable across multiple intelligences and time. That discipline isn't documentation hygiene; it's the only thing preventing the symbol library from drifting into ambiguity the way every natural language eventually does.
+
+### Where the forges fit
+
+- **Hephaestus** forges *morphemes* — atomic falsification-tested symbols. Each `ReasoningTool` it produced is a self-contained reasoning gene with a typed signature and verified behavior.
+- **Apollo** evolves *syntactic patterns* — compositions of morphemes that survive multi-objective selection (accuracy, calibration, ablation, generalization, diversity, parsimony). Each surviving organism is a complex sentence in the substrate language.
+- **Techne** maintains the *dictionary* — the Σ-kernel registry of typed primitives, frozen interfaces, contract-change discipline. The Σ-kernel is a general symbol-forging mechanism; it is currently being exercised on mathematical concepts as the proving ground, but the architecture is designed to extend to reasoning-skill primitives once the math curriculum matures.
+- **Charon** applies the *selection pressure* — the 4-fold falsification battery + synthetic-null gate + anti-anchor sentinels. Without selection pressure, the symbol library accumulates noise; with it, only falsification-anchored symbols survive into substrate state.
+
+None of these agents are producing for any *current* downstream agent. They are *all* producing into the substrate that future intelligences will train on or evolve through. The "consumer" of every artifact is deferred to the future intelligence; the pipeline that produces the corpus is the only present-tense consumer.
+
+### Ergon — the first Learner attempt
+
+Ergon was Prometheus's first attempt at a *Learner* — an intelligence trained on the substrate. Approach: LoRA side-car on a base model, fine-tuned against Techne's substrate, aimed at solving math problems. Expectations were deliberately low. They were not met. The attempt did produce one artifact of architectural value: a sketched Learner model — what inputs it needs, what outputs it should emit, how it should be evaluated, what failure modes to expect.
+
+Ergon is currently paused. The Learner is **expected to be plural** — multiple architectures attempting different routes from substrate to intelligence (LoRA bolt-on, ground-up training, hybrid approaches). Ergon is the first specimen, not the model. Future Learners will explore different approaches; the substrate produced by the forges feeds all of them.
+
+This matters for reading the autopsy: the question of Apollo's and Hephaestus's value is not "are they good agents in isolation" but "are they producing into the substrate that current and future Learners need." Both sides of the bet — substrate construction and Learner attempts — are coevolving and early.
+
+### How to read the questions below
+
+The 5 questions in this autopsy are *not* engineering questions. They are **strategic alignment** questions: given the thesis above, what should the next 30 days of attention to Apollo and Hephaestus look like? The user has limited attention and is in a substrate-volume-first pivot. The decision is whether the forges' contribution to the substrate justifies the attention cost, and if so, in what shape they should run.
+
+**External reviewers are invited to challenge the thesis itself, not just the autopsy.** If the multi-intelligence-via-symbolic-substrate bet is wrong in a way that is structurally obvious from outside the project, that is the most valuable feedback possible — the autopsy's 5 questions become secondary if the substrate work does not lead where the thesis claims.
+
+---
+
+## Project context (technical recap)
+
+For reviewers who want the falsification-first framing in its own words: Prometheus treats generative variance ("hallucinations") as the mutation engine, and ruthless mechanistic selection as what produces discovery. The selection regime is the bulk of the system — typed primitives, KillVector ontology, anti-anchor registry, synthetic-null gate, append-only ticket inboxes between specialized agents. The substrate is local-first and engineered so that an outside party can reproduce the discipline from disk artifacts, not from narrative claims.
+
+The two autopsy questions per agent, restated for the record:
 1. **Was the agent showing potential?**
 2. **Would additional thought and engineering benefit it?**
 
