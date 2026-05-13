@@ -40,6 +40,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 import time
 import urllib.error
@@ -231,9 +232,122 @@ def _verifier_stub_factory(name: str) -> VerifierFn:
     return _stub
 
 
+# ---------------------------------------------------------------------------
+# citation_audit verifier (Track 2 Verifier 1, 2026-05-13)
+# ---------------------------------------------------------------------------
+
+
+# Permissive arXiv-ID extractor: finds arXiv:NNNN.NNNNN anywhere in the
+# ground_truth_source string, so claims like "arXiv:1604.06431 (BIP 2019 J.
+# AMS)" with parenthetical context after the ID still dispatch correctly.
+_ARXIV_EXTRACT_RE = re.compile(r"\barXiv:(\d{4}\.\d{4,5})\b")
+_ARXIV_ABS_URL = "https://arxiv.org/abs/{arxiv_id}"
+_ARXIV_TIMEOUT_S = 12
+
+
+def _verifier_citation_audit(claim_payload: dict) -> VerifierResult:
+    """Citation-audit verifier.
+
+    Strategy:
+      1. Extract arXiv ID from ``ground_truth_source`` via permissive regex.
+      2. HEAD-check the abstract page. Non-200 → decisive_contradicted.
+      3. GET the abstract body. If 'withdrawn' or 'retracted' appears →
+         decisive_contradicted. Otherwise decisive_verified.
+      4. For DOI / free-form / non-arXiv citations: returns
+         decisive_inconclusive so the dispatch wrapper can try a fallback
+         verifier (catalog_lookup, manual_review).
+
+    Network errors propagate as exceptions; the dispatch wrapper classifies
+    them as transient and retries once.
+    """
+    gts = claim_payload.get("ground_truth_source", "")
+    if not isinstance(gts, str) or not gts:
+        return VerifierResult(
+            outcome_class="decisive_inconclusive",
+            method_used="citation_audit",
+            evidence_blob={"reason": "no_ground_truth_source"},
+            caveats="ground_truth_source missing or non-string; verifier cannot dispatch",
+        )
+    m = _ARXIV_EXTRACT_RE.search(gts)
+    if not m:
+        return VerifierResult(
+            outcome_class="decisive_inconclusive",
+            method_used="citation_audit",
+            evidence_blob={
+                "reason": "no_arxiv_id_extractable",
+                "ground_truth_source_preview": gts[:120],
+            },
+            caveats=(
+                "No arXiv ID found in ground_truth_source. citation_audit "
+                "cannot verify DOI / free-form citations; fallback verifier "
+                "(catalog_lookup or manual_review) should handle this."
+            ),
+        )
+    arxiv_id = m.group(1)
+    url = _ARXIV_ABS_URL.format(arxiv_id=arxiv_id)
+
+    import urllib.request
+    t_start = time.perf_counter()
+
+    # 1. HEAD check
+    req = urllib.request.Request(url, method="HEAD")
+    with urllib.request.urlopen(req, timeout=_ARXIV_TIMEOUT_S) as resp:
+        head_code = resp.getcode()
+    if head_code != 200:
+        return VerifierResult(
+            outcome_class="decisive_contradicted",
+            method_used="citation_audit",
+            evidence_blob={
+                "arxiv_id": arxiv_id,
+                "head_code": head_code,
+                "reason": "arxiv_head_nonexistent",
+            },
+            runtime_ms=int((time.perf_counter() - t_start) * 1000),
+            caveats=(
+                f"arXiv:{arxiv_id} returned HTTP {head_code} (not 200). "
+                "Citation does not resolve; expected_verifier author cited "
+                "a hallucinated or removed paper."
+            ),
+        )
+
+    # 2. Abstract-body withdrawal check
+    req = urllib.request.Request(url, method="GET")
+    with urllib.request.urlopen(req, timeout=_ARXIV_TIMEOUT_S) as resp:
+        body = resp.read().decode("utf-8", errors="replace").lower()
+    runtime_ms = int((time.perf_counter() - t_start) * 1000)
+    is_withdrawn = ("withdrawn" in body) or ("retracted" in body)
+    if is_withdrawn:
+        return VerifierResult(
+            outcome_class="decisive_contradicted",
+            method_used="citation_audit",
+            evidence_blob={
+                "arxiv_id": arxiv_id,
+                "head_code": 200,
+                "reason": "arxiv_withdrawn_or_retracted",
+            },
+            runtime_ms=runtime_ms,
+            caveats=(
+                f"arXiv:{arxiv_id} abstract contains withdrawn/retracted marker. "
+                "Citation is not active; substrate falsifies any claim treating "
+                "it as authoritative."
+            ),
+        )
+    return VerifierResult(
+        outcome_class="decisive_verified",
+        method_used="citation_audit",
+        evidence_blob={
+            "arxiv_id": arxiv_id,
+            "head_code": 200,
+            "active": True,
+        },
+        runtime_ms=runtime_ms,
+    )
+
+
 VERIFIER_REGISTRY: Dict[str, VerifierFn] = {
     name: _verifier_stub_factory(name) for name in KNOWN_VERIFIERS
 }
+VERIFIER_REGISTRY["citation_audit"] = _verifier_citation_audit
 
 
 def get_verifier(name: str) -> VerifierFn:

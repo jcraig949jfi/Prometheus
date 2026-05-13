@@ -362,8 +362,10 @@ class TestClaimRunnerVerifierStubs:
             get_verifier("not_a_real_verifier")
 
     def test_stub_returns_not_yet_implemented(self):
+        # Track 2 2026-05-13: citation_audit is no longer stubbed; use sympy_factor
+        # (still stubbed). Same behavior applies to the remaining stubs.
         from prometheus_math.substrate_generation.tier_1_claim_runner import get_verifier
-        result = get_verifier("citation_audit")({"id": "CLAIM-test-00001"})
+        result = get_verifier("sympy_factor")({"id": "CLAIM-test-00001"})
         assert result.outcome_class == "verifier_permanent_failure"
         assert result.evidence_blob["flag"] == "not_yet_implemented"
         assert result.evidence_blob["claim_id"] == "CLAIM-test-00001"
@@ -434,6 +436,67 @@ class TestVerifierDispatchWrapper:
         assert result.outcome_class == "verifier_transient_failure"
 
 
+class TestCitationAuditVerifier:
+    """Track 2 Verifier 1 (2026-05-13). Offline-only tests — the network-
+    bound paths (arxiv.org HEAD + abstract fetch) are exercised at smoke
+    time, not in pytest."""
+
+    def test_no_ground_truth_source_returns_inconclusive(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_citation_audit,
+        )
+        result = _verifier_citation_audit({"id": "X"})
+        assert result.outcome_class == "decisive_inconclusive"
+        assert "no_ground_truth_source" in result.evidence_blob["reason"]
+
+    def test_empty_ground_truth_source_returns_inconclusive(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_citation_audit,
+        )
+        result = _verifier_citation_audit({"id": "X", "ground_truth_source": ""})
+        assert result.outcome_class == "decisive_inconclusive"
+
+    def test_non_arxiv_citation_returns_inconclusive(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_citation_audit,
+        )
+        result = _verifier_citation_audit({
+            "id": "X",
+            "ground_truth_source": "Shitov 2021 SIAGA 5(4); Boij-Teitler 2019",
+        })
+        assert result.outcome_class == "decisive_inconclusive"
+        assert "no_arxiv_id_extractable" in result.evidence_blob["reason"]
+
+    def test_arxiv_id_with_parenthetical_context_extracts(self):
+        """Aporia's batch uses 'arXiv:1604.06431 (BIP 2019 J. AMS)' shape."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _ARXIV_EXTRACT_RE,
+        )
+        m = _ARXIV_EXTRACT_RE.search("arXiv:1604.06431 (BIP 2019 J. AMS)")
+        assert m is not None
+        assert m.group(1) == "1604.06431"
+
+    def test_arxiv_id_at_end_of_string_extracts(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _ARXIV_EXTRACT_RE,
+        )
+        m = _ARXIV_EXTRACT_RE.search("Lee 2025 arXiv:2512.15035 WITHDRAWN")
+        assert m is not None
+        assert m.group(1) == "2512.15035"
+
+    def test_no_arxiv_id_returns_none(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _ARXIV_EXTRACT_RE,
+        )
+        assert _ARXIV_EXTRACT_RE.search("KnotInfo 2024-12 snapshot") is None
+
+    def test_registry_points_at_real_verifier_not_stub(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            VERIFIER_REGISTRY, _verifier_citation_audit,
+        )
+        assert VERIFIER_REGISTRY["citation_audit"] is _verifier_citation_audit
+
+
 class TestLearnerRecordClaimExtensionFields:
     """Per Track 1 prompt 2026-05-13: claim_id, claim_category, actual_verdict
     carry through from CLAIM payload to LearnerRecord."""
@@ -464,7 +527,9 @@ class TestRunClaim:
             "id": "CLAIM-test-00001",
             "claim_category": "frontier_survey",
             "claim_text": "Sample claim long enough to pass the 20-char minimum.",
-            "expected_verifier_primary": "citation_audit",
+            # Use a stubbed verifier so this test stays deterministic offline
+            # (citation_audit is wired against arxiv.org as of 2026-05-13).
+            "expected_verifier_primary": "sympy_factor",
             "expected_verdict": "falsified",
             "ground_truth_source": "arXiv:1604.06431",
             "trust_tier": "analytically_proven",
@@ -477,7 +542,7 @@ class TestRunClaim:
         from prometheus_math.substrate_generation.tier_1_claim_runner import run_claim
         result, records = run_claim(self._payload())
         assert result.actual_verdict == "verifier_permanent_failure"
-        assert result.verifier_used == "citation_audit"
+        assert result.verifier_used == "sympy_factor"
         assert result.expected_actual_match is False  # failure never matches expected
         assert len(records) == 1
         assert records[0].verifier_outcome_class == "verifier_permanent_failure"
@@ -590,7 +655,8 @@ class TestRunClaimBatch:
                 "id": f"CLAIM-test-{i:05d}",
                 "claim_category": ["frontier_survey", "boundary", "substrate_self"][i],
                 "claim_text": "Sample claim long enough to pass the 20-char minimum.",
-                "expected_verifier_primary": "citation_audit",
+                # sympy_factor still stubbed; citation_audit now wired (network).
+                "expected_verifier_primary": "sympy_factor",
                 "expected_verdict": ["falsified", "survived", "open"][i],
                 "ground_truth_source": "arXiv:1604.06431",
                 "trust_tier": "analytically_proven",

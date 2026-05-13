@@ -70,27 +70,111 @@ KNOWN_BLOCK_TYPES = (
 
 
 # Match a fenced code block whose first content line is the substrate_block
-# marker. Captures (block_type, body_yaml).
-_FENCE_RE = re.compile(
+# marker (the strict / expected convention). Captures (block_type, body_yaml).
+_STRICT_FENCE_RE = re.compile(
     r"^```[a-zA-Z]*\s*\n# substrate_block:\s*(\w+)\s*\n(.*?)^```\s*$",
     re.MULTILINE | re.DOTALL,
 )
+
+# Match ANY fenced code block — used by the alt-convention path which sniffs
+# the body content for C1/C2/C3 emission shapes. Captures (lang, body).
+_ANY_FENCE_RE = re.compile(
+    r"^```([a-zA-Z]*)\s*\n(.*?)^```\s*$",
+    re.MULTILINE | re.DOTALL,
+)
+
+# Backwards-compat alias for callers that import the old name.
+_FENCE_RE = _STRICT_FENCE_RE
+
+
+def _detect_alt_convention(doc: Any) -> Optional[Tuple[str, dict]]:
+    """Per Track 4 pilot finding (2026-05-13): the Gemini model emits
+    substrate-shaped blocks using one of three alternate conventions
+    instead of the strict ``# substrate_block:`` comment marker.
+
+    Returns (block_type, normalized_payload) if ``doc`` matches one of
+    the three; otherwise None.
+
+    C1 — substrate_type-as-field (observed in DR-001):
+        {_schema_version: "1.0.0", substrate_type: "anti_anchor", id: "AA-013", ...}
+
+    C2 — block-type-as-top-level-key (observed in DR-007):
+        {training_anchor: {_schema_version: "1.0.0", id: "anchor-...", ...}}
+
+    C3 — schema-as-field (observed in DR-231, typically in JSON arrays):
+        {schema: "training_anchor", domain: "knots", ...}
+
+    All three normalize to the same (block_type, payload) pair the
+    downstream validator consumes. The substrate_type / schema /
+    wrapper-key are stripped from the payload so the inner fields match
+    the JSON Schema directly.
+    """
+    if not isinstance(doc, dict):
+        return None
+    # C1: substrate_type: <type> as field
+    bt = doc.get("substrate_type")
+    if isinstance(bt, str) and bt in KNOWN_BLOCK_TYPES:
+        return (bt, {k: v for k, v in doc.items() if k != "substrate_type"})
+    # C3: schema: <type> as field (JSON convention)
+    bt = doc.get("schema")
+    if isinstance(bt, str) and bt in KNOWN_BLOCK_TYPES:
+        return (bt, {k: v for k, v in doc.items() if k != "schema"})
+    # C2: single top-level key is a known block_type, value is a dict
+    if len(doc) == 1:
+        only_key = next(iter(doc))
+        if only_key in KNOWN_BLOCK_TYPES and isinstance(doc[only_key], dict):
+            return (only_key, doc[only_key])
+    return None
+
+
+def _parse_body_as_docs(body: str, lang_hint: str) -> List[Any]:
+    """Parse a fenced-block body as a list of top-level docs.
+
+    YAML multi-doc (--- separators) yields multiple docs. JSON fence
+    yields the single top-level value (which may itself be a list).
+    Single YAML doc yields one. Parse failures return [].
+    """
+    body = body.strip()
+    if not body:
+        return []
+    lang = lang_hint.lower()
+    # JSON branch
+    if lang == "json":
+        try:
+            top = json.loads(body)
+        except json.JSONDecodeError:
+            return []
+        return [top]
+    # YAML branch (default) — try multi-doc first
+    try:
+        docs = list(yaml.safe_load_all(body))
+    except yaml.YAMLError:
+        return []
+    return [d for d in docs if d is not None]
 
 
 def iter_blocks_in_text(
     text: str, *, source_file: str,
 ) -> Iterator[Tuple[str, dict, int]]:
-    """Yield (block_type, parsed_yaml, source_line_number) for each
-    fenced substrate_block in `text`.
+    """Yield (block_type, parsed_payload, source_line_number) for each
+    substrate-shaped block in ``text``.
 
-    YAML parse failures are reported but skipped (the validator catches
-    them downstream); type-unknown markers are reported but skipped.
+    Recognizes four conventions:
+      - Strict marker: ``# substrate_block: <type>`` on the line after
+        a fence opener (the documented/preferred convention).
+      - C1, C2, C3 alt conventions: see ``_detect_alt_convention``.
+
+    To prevent double-counting, fences matched by the strict-marker
+    path are skipped in the alt-convention pass.
     """
-    for m in _FENCE_RE.finditer(text):
+    yielded_spans: List[Tuple[int, int]] = []
+
+    # Pass 1: strict-marker convention
+    for m in _STRICT_FENCE_RE.finditer(text):
         block_type = m.group(1)
         body = m.group(2)
-        # Compute source line number (1-indexed) of the marker line
-        line_no = text.count("\n", 0, m.start()) + 2  # fence opens, marker is +1
+        line_no = text.count("\n", 0, m.start()) + 2
+        yielded_spans.append((m.start(), m.end()))
         if block_type not in KNOWN_BLOCK_TYPES:
             print(
                 f"WARN: {source_file}:{line_no} unknown substrate_block type "
@@ -107,8 +191,6 @@ def iter_blocks_in_text(
                 file=sys.stderr,
             )
             continue
-        # Per the design doc, blocks may emit either ONE object or a
-        # YAML LIST of objects. Normalize to list of dicts.
         if payload is None:
             print(
                 f"WARN: {source_file}:{line_no} {block_type}: empty payload; "
@@ -117,15 +199,9 @@ def iter_blocks_in_text(
             )
             continue
         if isinstance(payload, dict):
-            entries = [payload]
+            entries: List[dict] = [payload]
         elif isinstance(payload, list):
             entries = [p for p in payload if isinstance(p, dict)]
-            if len(entries) != len(payload):
-                print(
-                    f"WARN: {source_file}:{line_no} {block_type}: "
-                    f"{len(payload) - len(entries)} non-dict entries skipped",
-                    file=sys.stderr,
-                )
         else:
             print(
                 f"WARN: {source_file}:{line_no} {block_type}: top-level "
@@ -135,6 +211,30 @@ def iter_blocks_in_text(
             continue
         for entry in entries:
             yield (block_type, _coerce_date_to_iso_str(entry), line_no)
+
+    # Pass 2: alt conventions (C1, C2, C3)
+    for m in _ANY_FENCE_RE.finditer(text):
+        if any(s[0] <= m.start() < s[1] for s in yielded_spans):
+            continue  # already consumed by strict-marker pass
+        lang = m.group(1)
+        body = m.group(2)
+        fence_line_no = text.count("\n", 0, m.start()) + 1
+        docs = _parse_body_as_docs(body, lang)
+        if not docs:
+            continue
+        # Each top-level doc may itself be a list of block-shaped dicts
+        for doc in docs:
+            candidates: List[Any] = doc if isinstance(doc, list) else [doc]
+            for entry in candidates:
+                detected = _detect_alt_convention(entry)
+                if detected is None:
+                    continue
+                block_type, normalized = detected
+                yield (
+                    block_type,
+                    _coerce_date_to_iso_str(normalized),
+                    fence_line_no,
+                )
 
 
 def parse_batch_dir(batch_dir: Path) -> List[dict]:
