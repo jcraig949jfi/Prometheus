@@ -694,9 +694,65 @@ def _t4_m3_rank_bound_check(claim_text: str) -> Optional[Tuple[str, str]]:
     return None
 
 
+def _t56_sym_rank_complexity_check(claim_text: str) -> Optional[Tuple[str, str]]:
+    """Bound check for T#56 (symmetric tensor rank NP-hardness).
+
+    Catalog says: symmetric tensor rank over Q is NP-hard (Shitov 2016
+    arXiv:1611.01559). Therefore NOT decidable in polynomial time
+    unless P = NP. Tensor rank over Z is undecidable (Shitov 2016 +
+    Gonzalez-Ja'Ja 1980).
+
+    This checker handles complexity claims:
+      - Claim "decidable in polynomial time" / "in P" / "polynomial-time
+        algorithm" -> decisive_contradicted (assuming P != NP standard
+        complexity-theoretic premise).
+      - Claim "NP-hard" -> decisive_verified.
+      - Claim "undecidable over Z" -> decisive_verified.
+      - Otherwise None (defer).
+
+    Per Aporia's CLAIM-boundary-T56-00001 caveats: "Conditional verdict
+    ('conditional on P != NP') is also acceptable" — both falsified
+    and conditional are reasonable verdicts for the in-P claim.
+    """
+    # Normalize whitespace — Aporia's claim_text has line wraps that
+    # split "polynomial time" across newlines.
+    lc = re.sub(r"\s+", " ", claim_text.lower()).strip()
+    # P-vs-NP-style "in P" / "polynomial time" / "polynomial-time"
+    in_p_markers = [
+        "decidable in polynomial time",
+        "decidable in poly time",
+        "is in p",
+        "polynomial-time algorithm",
+        "polynomial time algorithm",
+        "decidable in p ",
+    ]
+    if any(marker in lc for marker in in_p_markers):
+        return (
+            "decisive_contradicted",
+            "Claim of polynomial-time decidability for symmetric tensor rank "
+            "over Q contradicts Shitov 2016 (arXiv:1611.01559) NP-hardness. "
+            "Standard premise P != NP makes this decisive_contradicted; "
+            "with P=?NP open, conditional verdict is also reasonable.",
+        )
+    if "np-hard" in lc or "np hard" in lc:
+        return (
+            "decisive_verified",
+            "Claim of NP-hardness for symmetric tensor rank over Q is "
+            "established by Shitov 2016 (arXiv:1611.01559).",
+        )
+    if "undecidable" in lc and ("\\mathbb{z}" in lc or " over z" in lc or "over ℤ" in lc):
+        return (
+            "decisive_verified",
+            "Claim of undecidability for tensor rank over Z is established "
+            "by Shitov 2016 + Gonzalez-Ja'Ja 1980.",
+        )
+    return None
+
+
 _T_BOUND_CHECKERS: Dict[str, Callable[[str], Optional[Tuple[str, str]]]] = {
     "T#1": _t1_omega_bound_check,
     "T#4": _t4_m3_rank_bound_check,
+    "T#56": _t56_sym_rank_complexity_check,
 }
 
 

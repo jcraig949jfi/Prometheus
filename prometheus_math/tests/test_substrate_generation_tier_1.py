@@ -783,12 +783,56 @@ class TestTBoundCheckers:
         assert result.evidence_blob["entry_id"] == "T#1"
         assert result.evidence_blob.get("bound_check") == "T#-specific-closure"
 
-    def test_t_bound_checker_registry_has_t1_t4(self):
+    def test_t_bound_checker_registry_has_t1_t4_t56(self):
         from prometheus_math.substrate_generation.tier_1_claim_runner import (
             _T_BOUND_CHECKERS,
         )
         assert "T#1" in _T_BOUND_CHECKERS
         assert "T#4" in _T_BOUND_CHECKERS
+        assert "T#56" in _T_BOUND_CHECKERS
+
+    def test_t56_sym_rank_in_p_contradicted(self):
+        """Claim of polynomial-time decidability for symmetric tensor rank
+        over Q contradicts Shitov 2016 NP-hardness."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _t56_sym_rank_complexity_check,
+        )
+        result = _t56_sym_rank_complexity_check(
+            "The symmetric tensor rank computation over the rationals is decidable in polynomial time."
+        )
+        assert result is not None
+        outcome, _ = result
+        assert outcome == "decisive_contradicted"
+
+    def test_t56_handles_line_wrapped_claim_text(self):
+        """Aporia's CLAIM-boundary-T56-00001 has 'decidable in\\npolynomial time'.
+        Whitespace normalization in the checker must handle this."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _t56_sym_rank_complexity_check,
+        )
+        result = _t56_sym_rank_complexity_check(
+            "The symmetric tensor rank computation over the rationals is decidable in\npolynomial time."
+        )
+        assert result is not None
+        outcome, _ = result
+        assert outcome == "decisive_contradicted"
+
+    def test_t56_np_hard_claim_verified(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _t56_sym_rank_complexity_check,
+        )
+        result = _t56_sym_rank_complexity_check(
+            "Symmetric tensor rank over Q is NP-hard."
+        )
+        assert result is not None
+        outcome, _ = result
+        assert outcome == "decisive_verified"
+
+    def test_t56_unrelated_claim_returns_none(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _t56_sym_rank_complexity_check,
+        )
+        assert _t56_sym_rank_complexity_check("Some unrelated text about tensors.") is None
 
 
 class TestSympyFactorVerifier:
