@@ -362,11 +362,10 @@ class TestClaimRunnerVerifierStubs:
             get_verifier("not_a_real_verifier")
 
     def test_stub_returns_not_yet_implemented(self):
-        # 2026-05-13 hour 3: 5 of 7 verifiers wired (citation_audit,
-        # catalog_lookup, mpmath_compute, substrate_self_check, sympy_factor).
-        # triangulation and manual_review remain stubbed.
+        # 2026-05-13 hour 7: 6 of 7 verifiers wired. Only manual_review
+        # remains stubbed (needs human-in-the-loop infrastructure design).
         from prometheus_math.substrate_generation.tier_1_claim_runner import get_verifier
-        result = get_verifier("triangulation")({"id": "CLAIM-test-00001"})
+        result = get_verifier("manual_review")({"id": "CLAIM-test-00001"})
         assert result.outcome_class == "verifier_permanent_failure"
         assert result.evidence_blob["flag"] == "not_yet_implemented"
         assert result.evidence_blob["claim_id"] == "CLAIM-test-00001"
@@ -719,6 +718,131 @@ class TestSubstrateSelfCheckVerifier:
         assert VERIFIER_REGISTRY["substrate_self_check"] is _verifier_substrate_self_check
 
 
+class TestTriangulationVerifier:
+    """Loop hour 7 2026-05-13. Meta-verifier dispatching multiple
+    verifiers and aggregating into agreement/disagreement."""
+
+    def test_unanimous_verified_agreement(self):
+        """When all dispatched verifiers return decisive_verified,
+        triangulation returns decisive_verified."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_triangulation, VerifierResult, VERIFIER_REGISTRY,
+        )
+        # Stub the registry temporarily — both return verified
+        orig_a = VERIFIER_REGISTRY.get("citation_audit")
+        orig_b = VERIFIER_REGISTRY.get("catalog_lookup")
+        VERIFIER_REGISTRY["citation_audit"] = lambda p: VerifierResult(
+            outcome_class="decisive_verified", method_used="citation_audit",
+        )
+        VERIFIER_REGISTRY["catalog_lookup"] = lambda p: VerifierResult(
+            outcome_class="decisive_verified", method_used="catalog_lookup",
+        )
+        try:
+            result = _verifier_triangulation({"id": "X"})
+            assert result.outcome_class == "decisive_verified"
+            assert result.evidence_blob["agreement"] == "unanimous"
+        finally:
+            VERIFIER_REGISTRY["citation_audit"] = orig_a
+            VERIFIER_REGISTRY["catalog_lookup"] = orig_b
+
+    def test_unanimous_contradicted_agreement(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_triangulation, VerifierResult, VERIFIER_REGISTRY,
+        )
+        orig_a = VERIFIER_REGISTRY.get("citation_audit")
+        orig_b = VERIFIER_REGISTRY.get("catalog_lookup")
+        VERIFIER_REGISTRY["citation_audit"] = lambda p: VerifierResult(
+            outcome_class="decisive_contradicted", method_used="citation_audit",
+        )
+        VERIFIER_REGISTRY["catalog_lookup"] = lambda p: VerifierResult(
+            outcome_class="decisive_contradicted", method_used="catalog_lookup",
+        )
+        try:
+            result = _verifier_triangulation({"id": "X"})
+            assert result.outcome_class == "decisive_contradicted"
+        finally:
+            VERIFIER_REGISTRY["citation_audit"] = orig_a
+            VERIFIER_REGISTRY["catalog_lookup"] = orig_b
+
+    def test_mixed_decisive_flags_disagreement(self):
+        """When verifiers disagree (one verified, one contradicted),
+        triangulation returns decisive_inconclusive with disagreement
+        evidence — a substrate-grade finding."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_triangulation, VerifierResult, VERIFIER_REGISTRY,
+        )
+        orig_a = VERIFIER_REGISTRY.get("citation_audit")
+        orig_b = VERIFIER_REGISTRY.get("catalog_lookup")
+        VERIFIER_REGISTRY["citation_audit"] = lambda p: VerifierResult(
+            outcome_class="decisive_verified", method_used="citation_audit",
+        )
+        VERIFIER_REGISTRY["catalog_lookup"] = lambda p: VerifierResult(
+            outcome_class="decisive_contradicted", method_used="catalog_lookup",
+        )
+        try:
+            result = _verifier_triangulation({"id": "X"})
+            assert result.outcome_class == "decisive_inconclusive"
+            assert result.evidence_blob["agreement"] == "mixed_decisive"
+            assert "substrate_verifier_disagreement" in result.evidence_blob["reason"]
+        finally:
+            VERIFIER_REGISTRY["citation_audit"] = orig_a
+            VERIFIER_REGISTRY["catalog_lookup"] = orig_b
+
+    def test_all_inconclusive_returns_inconclusive(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_triangulation, VerifierResult, VERIFIER_REGISTRY,
+        )
+        orig_a = VERIFIER_REGISTRY.get("citation_audit")
+        orig_b = VERIFIER_REGISTRY.get("catalog_lookup")
+        VERIFIER_REGISTRY["citation_audit"] = lambda p: VerifierResult(
+            outcome_class="decisive_inconclusive", method_used="citation_audit",
+        )
+        VERIFIER_REGISTRY["catalog_lookup"] = lambda p: VerifierResult(
+            outcome_class="decisive_inconclusive", method_used="catalog_lookup",
+        )
+        try:
+            result = _verifier_triangulation({"id": "X"})
+            assert result.outcome_class == "decisive_inconclusive"
+            assert result.evidence_blob["agreement"] == "no_decisive_signal"
+        finally:
+            VERIFIER_REGISTRY["citation_audit"] = orig_a
+            VERIFIER_REGISTRY["catalog_lookup"] = orig_b
+
+    def test_self_recursion_filter(self):
+        """triangulation must not recurse into itself."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_triangulation,
+        )
+        result = _verifier_triangulation({
+            "id": "X",
+            "verifier_args": {"verifiers": ["triangulation"]},
+        })
+        # After self-filter the list is empty -> permanent_failure
+        assert result.outcome_class == "verifier_permanent_failure"
+
+    def test_unknown_verifier_in_list_records_permanent_failure(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_triangulation,
+        )
+        result = _verifier_triangulation({
+            "id": "X",
+            "verifier_args": {"verifiers": ["not_a_real_verifier"]},
+        })
+        # All inconclusive -> aggregate inconclusive
+        assert result.outcome_class == "decisive_inconclusive"
+        unknown_entries = [
+            e for e in result.evidence_blob["per_verifier"]
+            if e.get("reason") == "unknown_verifier"
+        ]
+        assert len(unknown_entries) == 1
+
+    def test_registry_points_at_real_verifier(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            VERIFIER_REGISTRY, _verifier_triangulation,
+        )
+        assert VERIFIER_REGISTRY["triangulation"] is _verifier_triangulation
+
+
 class TestAntiAnchorCoupletOverride:
     """Loop hour 5 2026-05-13. Anti-anchor couplet logic — handles
     fundamental citation_audit limitation (verifies existence not
@@ -1066,9 +1190,9 @@ class TestRunClaim:
             "claim_category": "frontier_survey",
             "claim_text": "Sample claim long enough to pass the 20-char minimum.",
             # Use a still-stubbed verifier so this test stays deterministic
-            # offline. As of 2026-05-13 hour 3: triangulation + manual_review
-            # remain stubbed; the other 5 are wired (live).
-            "expected_verifier_primary": "triangulation",
+            # offline. As of 2026-05-13 hour 7: only manual_review remains
+            # stubbed; the other 6 are wired (live).
+            "expected_verifier_primary": "manual_review",
             "expected_verdict": "falsified",
             "ground_truth_source": "arXiv:1604.06431",
             "trust_tier": "analytically_proven",
@@ -1081,7 +1205,7 @@ class TestRunClaim:
         from prometheus_math.substrate_generation.tier_1_claim_runner import run_claim
         result, records = run_claim(self._payload())
         assert result.actual_verdict == "verifier_permanent_failure"
-        assert result.verifier_used == "triangulation"
+        assert result.verifier_used == "manual_review"
         assert result.expected_actual_match is False  # failure never matches expected
         assert len(records) == 1
         assert records[0].verifier_outcome_class == "verifier_permanent_failure"
@@ -1194,9 +1318,9 @@ class TestRunClaimBatch:
                 "id": f"CLAIM-test-{i:05d}",
                 "claim_category": ["frontier_survey", "boundary", "substrate_self"][i],
                 "claim_text": "Sample claim long enough to pass the 20-char minimum.",
-                # triangulation still stubbed as of hour 3 2026-05-13;
-                # sympy_factor and the other 4 are wired.
-                "expected_verifier_primary": "triangulation",
+                # As of hour 7 2026-05-13, only manual_review remains stubbed
+                # — all 6 others are wired (live). Keep tests offline.
+                "expected_verifier_primary": "manual_review",
                 "expected_verdict": ["falsified", "survived", "open"][i],
                 "ground_truth_source": "arXiv:1604.06431",
                 "trust_tier": "analytically_proven",

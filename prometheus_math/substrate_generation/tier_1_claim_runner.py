@@ -1374,6 +1374,140 @@ def _verifier_sympy_factor(claim_payload: dict) -> VerifierResult:
     )
 
 
+# ---------------------------------------------------------------------------
+# triangulation verifier (loop hour 7, 2026-05-13)
+# ---------------------------------------------------------------------------
+
+
+# Default set of verifiers triangulation dispatches when verifier_args
+# doesn't specify. Both are local + cheap (no network beyond
+# citation_audit when ground_truth_source has an arXiv ID).
+_TRIANGULATION_DEFAULT_VERIFIERS: Tuple[str, ...] = (
+    "citation_audit",
+    "catalog_lookup",
+)
+
+
+def _verifier_triangulation(claim_payload: dict) -> VerifierResult:
+    """Meta-verifier: dispatches a configurable list of other verifiers
+    on the same claim and reports agreement/disagreement.
+
+    verifier_args.verifiers: list of verifier names (excluding
+    'triangulation' itself; would otherwise recurse). Defaults to
+    _TRIANGULATION_DEFAULT_VERIFIERS = (citation_audit, catalog_lookup).
+
+    Aggregation logic:
+      - All registered verifiers return decisive_verified -> decisive_verified
+      - All registered verifiers return decisive_contradicted -> decisive_contradicted
+      - Mixed decisive outcomes (verified vs contradicted) ->
+        decisive_inconclusive with substrate-grade-disagreement evidence.
+        This is a real finding: the substrate's tools disagree about
+        the same claim, worth flagging for review.
+      - Only inconclusive / failure outcomes -> decisive_inconclusive
+        with no-signal flag.
+
+    Uses _dispatch_verifier internally so each member verifier gets
+    proper transient/permanent retry discipline.
+    """
+    t_start = time.perf_counter()
+    args = claim_payload.get("verifier_args", {}) or {}
+    verifiers_to_run = args.get("verifiers")
+    if not isinstance(verifiers_to_run, (list, tuple)) or not verifiers_to_run:
+        verifiers_to_run = list(_TRIANGULATION_DEFAULT_VERIFIERS)
+    # Defensive: reject triangulation calling itself (infinite recursion)
+    verifiers_to_run = [v for v in verifiers_to_run if v != "triangulation"]
+    if not verifiers_to_run:
+        return VerifierResult(
+            outcome_class="verifier_permanent_failure",
+            method_used="triangulation",
+            runtime_ms=int((time.perf_counter() - t_start) * 1000),
+            error_text=(
+                "triangulation requested but verifier_args.verifiers "
+                "is empty after self-recursion filter"
+            ),
+        )
+    # Dispatch each
+    per_verifier: List[Dict[str, Any]] = []
+    for v_name in verifiers_to_run:
+        if v_name not in VERIFIER_REGISTRY:
+            per_verifier.append({
+                "verifier": v_name,
+                "outcome_class": "verifier_permanent_failure",
+                "reason": "unknown_verifier",
+            })
+            continue
+        sub_result = _dispatch_verifier(VERIFIER_REGISTRY[v_name], claim_payload)
+        per_verifier.append({
+            "verifier": v_name,
+            "outcome_class": sub_result.outcome_class,
+            "method_used": sub_result.method_used,
+            "runtime_ms": sub_result.runtime_ms,
+        })
+    runtime_ms = int((time.perf_counter() - t_start) * 1000)
+
+    # Aggregate
+    decisive_outcomes = {
+        e["outcome_class"]
+        for e in per_verifier
+        if e["outcome_class"] in ("decisive_verified", "decisive_contradicted")
+    }
+    if len(decisive_outcomes) == 1:
+        # Unanimous decisive verdict (or only one verifier returned decisive)
+        only = decisive_outcomes.pop()
+        n_decisive = sum(
+            1 for e in per_verifier if e["outcome_class"] == only
+        )
+        return VerifierResult(
+            outcome_class=only,
+            method_used="triangulation",
+            evidence_blob={
+                "verifiers_dispatched": verifiers_to_run,
+                "per_verifier": per_verifier,
+                "agreement": "unanimous",
+                "decisive_count": n_decisive,
+                "total_count": len(per_verifier),
+            },
+            runtime_ms=runtime_ms,
+        )
+    if len(decisive_outcomes) >= 2:
+        # Mixed decisive outcomes — substrate-grade DISAGREEMENT finding
+        return VerifierResult(
+            outcome_class="decisive_inconclusive",
+            method_used="triangulation",
+            evidence_blob={
+                "verifiers_dispatched": verifiers_to_run,
+                "per_verifier": per_verifier,
+                "agreement": "mixed_decisive",
+                "decisive_outcomes_observed": sorted(decisive_outcomes),
+                "reason": "substrate_verifier_disagreement",
+            },
+            runtime_ms=runtime_ms,
+            caveats=(
+                "Substrate-grade finding: the dispatched verifiers DISAGREE "
+                f"({sorted(decisive_outcomes)}). Worth manual review — either "
+                "a verifier has a bug, the claim has hidden complexity the "
+                "substrate's tools haven't disambiguated, or the verifier "
+                "scope assumptions differ."
+            ),
+        )
+    # No decisive outcomes — all inconclusive or failure
+    return VerifierResult(
+        outcome_class="decisive_inconclusive",
+        method_used="triangulation",
+        evidence_blob={
+            "verifiers_dispatched": verifiers_to_run,
+            "per_verifier": per_verifier,
+            "agreement": "no_decisive_signal",
+            "reason": "all_verifiers_inconclusive_or_failure",
+        },
+        runtime_ms=runtime_ms,
+        caveats=(
+            "No verifier in the dispatched set produced a decisive verdict. "
+            "Triangulation aggregates to inconclusive."
+        ),
+    )
+
+
 VERIFIER_REGISTRY: Dict[str, VerifierFn] = {
     name: _verifier_stub_factory(name) for name in KNOWN_VERIFIERS
 }
@@ -1382,6 +1516,7 @@ VERIFIER_REGISTRY["catalog_lookup"] = _verifier_catalog_lookup
 VERIFIER_REGISTRY["mpmath_compute"] = _verifier_mpmath_compute
 VERIFIER_REGISTRY["substrate_self_check"] = _verifier_substrate_self_check
 VERIFIER_REGISTRY["sympy_factor"] = _verifier_sympy_factor
+VERIFIER_REGISTRY["triangulation"] = _verifier_triangulation
 
 
 def get_verifier(name: str) -> VerifierFn:
