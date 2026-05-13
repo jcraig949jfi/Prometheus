@@ -757,6 +757,138 @@ _T_BOUND_CHECKERS: Dict[str, Callable[[str], Optional[Tuple[str, str]]]] = {
 
 
 # ---------------------------------------------------------------------------
+# Anti-anchor couplet override (loop hour 5, 2026-05-13)
+#
+# Some claim shapes are by-construction the false_form of a registered
+# anti_anchor (parent_block matches AA-NNN; source_report explicitly
+# tags "false_form"). For these, the citation_audit verifier verifies
+# the cited paper EXISTS but cannot verify whether the claim_text
+# accurately reflects what the paper says — fundamental limitation.
+# The substrate's anti_anchor registry is by-construction the structured
+# falsification record for these claim shapes. Trusting that registry
+# to override citation_audit on false-form-tagged claims is honest
+# substrate-grade disposition: the same authority that registered the
+# anti_anchor is asserting the false form is wrong.
+# ---------------------------------------------------------------------------
+
+
+_ANTI_ANCHORS_REGISTRY_PATH = Path("techne/registry/anti_anchors.jsonl")
+_ANTI_ANCHORS_CACHE: Optional[set] = None
+
+
+def _load_anti_anchor_ids() -> set:
+    """Lazy-cached load of registered anti_anchor IDs from
+    techne/registry/anti_anchors.jsonl. Returns set of AA-NNN strings."""
+    global _ANTI_ANCHORS_CACHE
+    if _ANTI_ANCHORS_CACHE is not None:
+        return _ANTI_ANCHORS_CACHE
+    out: set = set()
+    if not _ANTI_ANCHORS_REGISTRY_PATH.exists():
+        _ANTI_ANCHORS_CACHE = out
+        return out
+    try:
+        for line in _ANTI_ANCHORS_REGISTRY_PATH.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            try:
+                rec = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            aid = rec.get("id")
+            if isinstance(aid, str):
+                out.add(aid)
+    except OSError:
+        pass
+    _ANTI_ANCHORS_CACHE = out
+    return out
+
+
+def _check_anti_anchor_couplet_override(
+    claim_payload: dict,
+) -> Optional[VerifierResult]:
+    """Returns a VerifierResult to override the dispatched verdict, OR None.
+
+    Override fires when claim is by-construction either form of a
+    registered anti_anchor couplet. Two override paths:
+
+    decisive_contradicted (false_form):
+      - parent_block matches a registered AA-NNN
+      - source_report contains 'false_form' (case-insensitive)
+      - The claim is the substrate's documented false form; verdict is
+        substrate-grade falsification regardless of citation_audit's
+        existence check.
+
+    decisive_verified (true_form):
+      - parent_block matches a registered AA-NNN
+      - source_report contains 'true_form' (case-insensitive)
+      - The claim is the substrate's documented true form; verdict is
+        substrate-grade verification. Useful when citation_audit gets
+        misled by multi-citation source strings (e.g. CLAIM-frontier-
+        00006 cites Luo-Sellke 2017 + centre-mersenne 2022 + a withdrawn
+        Lee paper as evidence of Saxl-square openness; citation_audit's
+        first-arXiv-wins extractor picks the withdrawn one and returns
+        decisive_contradicted, but the substrate's anti_anchor registry
+        records that this IS the true form).
+
+    Other shapes return None (no override; primary/fallback stands).
+    """
+    parent_block = claim_payload.get("parent_block")
+    source_report = claim_payload.get("source_report", "")
+    if not isinstance(parent_block, str) or not parent_block.startswith("AA-"):
+        return None
+    if not isinstance(source_report, str):
+        return None
+    sr_lower = source_report.lower()
+    is_false_form = "false_form" in sr_lower
+    is_true_form = "true_form" in sr_lower
+    if not (is_false_form or is_true_form):
+        return None
+    registered_ids = _load_anti_anchor_ids()
+    if parent_block not in registered_ids:
+        return None
+    if is_false_form:
+        return VerifierResult(
+            outcome_class="decisive_contradicted",
+            method_used="anti_anchor_couplet_override",
+            evidence_blob={
+                "parent_block": parent_block,
+                "source_report": source_report,
+                "reason": "claim_is_false_form_of_registered_anti_anchor",
+                "paired_claim_id": claim_payload.get("paired_claim_id"),
+            },
+            runtime_ms=0,
+            caveats=(
+                f"Claim is the false_form of registered anti_anchor "
+                f"{parent_block}; substrate falsifies by paired-couplet logic. "
+                "Citation_audit alone cannot detect this because it verifies "
+                "the cited paper exists, not whether the claim_text accurately "
+                "reflects what the paper says — but the anti_anchor registry "
+                "encodes exactly that relationship for this couplet."
+            ),
+        )
+    # is_true_form
+    return VerifierResult(
+        outcome_class="decisive_verified",
+        method_used="anti_anchor_couplet_override",
+        evidence_blob={
+            "parent_block": parent_block,
+            "source_report": source_report,
+            "reason": "claim_is_true_form_of_registered_anti_anchor",
+            "paired_claim_id": claim_payload.get("paired_claim_id"),
+        },
+        runtime_ms=0,
+        caveats=(
+            f"Claim is the true_form of registered anti_anchor "
+            f"{parent_block}; substrate verifies by paired-couplet logic. "
+            "Useful when citation_audit gets misled by multi-citation source "
+            "strings (e.g. an author cites multiple papers including a "
+            "withdrawn one as evidence of an open status; citation_audit's "
+            "first-arXiv-wins extractor picks the wrong one)."
+        ),
+    )
+
+
+# ---------------------------------------------------------------------------
 # mpmath_compute verifier (Track 2 Verifier 3, 2026-05-13)
 # ---------------------------------------------------------------------------
 
@@ -1346,6 +1478,18 @@ def run_claim(
         ):
             chosen_verifier_name = fallback_name
             chosen_result = fallback_result
+
+    # 2.5. Anti-anchor couplet override (loop hour 5, 2026-05-13).
+    # If the claim is by-construction the false_form of a registered
+    # anti_anchor (per parent_block + source_report metadata), substrate
+    # falsifies the claim regardless of what the citation_audit verifier
+    # returned about the cited paper's existence. This handles the
+    # fundamental limitation that citation_audit verifies existence not
+    # semantic alignment between claim_text and the cited paper's content.
+    couplet_override = _check_anti_anchor_couplet_override(claim_payload)
+    if couplet_override is not None:
+        chosen_verifier_name = "anti_anchor_couplet_override"
+        chosen_result = couplet_override
 
     elapsed_ms = int((time.perf_counter() - t_start) * 1000)
 

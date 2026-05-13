@@ -692,6 +692,108 @@ class TestSubstrateSelfCheckVerifier:
         assert VERIFIER_REGISTRY["substrate_self_check"] is _verifier_substrate_self_check
 
 
+class TestAntiAnchorCoupletOverride:
+    """Loop hour 5 2026-05-13. Anti-anchor couplet logic — handles
+    fundamental citation_audit limitation (verifies existence not
+    semantic alignment)."""
+
+    def test_no_parent_block_returns_none(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _check_anti_anchor_couplet_override,
+        )
+        assert _check_anti_anchor_couplet_override({"id": "X"}) is None
+
+    def test_non_AA_parent_block_returns_none(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _check_anti_anchor_couplet_override,
+        )
+        result = _check_anti_anchor_couplet_override({
+            "id": "X", "parent_block": "T#1", "source_report": "false_form",
+        })
+        assert result is None
+
+    def test_no_form_marker_returns_none(self):
+        """parent_block matches but source_report doesn't tag false/true_form."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _check_anti_anchor_couplet_override,
+        )
+        result = _check_anti_anchor_couplet_override({
+            "id": "X",
+            "parent_block": "AA-001",
+            "source_report": "general note",
+        })
+        assert result is None
+
+    def test_unregistered_aa_id_returns_none(self):
+        """Even with form marker + AA-NNN shape, unregistered IDs defer."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _check_anti_anchor_couplet_override,
+        )
+        result = _check_anti_anchor_couplet_override({
+            "id": "X",
+            "parent_block": "AA-9999",
+            "source_report": "AA-9999 anti_anchor false_form",
+        })
+        assert result is None
+
+    def test_false_form_registered_aa_yields_contradicted(self):
+        """AA-001 is registered + source_report tags false_form -> override."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _check_anti_anchor_couplet_override,
+        )
+        result = _check_anti_anchor_couplet_override({
+            "id": "CLAIM-frontier-00001",
+            "parent_block": "AA-001",
+            "source_report": "AA-001 anti_anchor false_form",
+            "paired_claim_id": "CLAIM-frontier-00002",
+        })
+        assert result is not None
+        assert result.outcome_class == "decisive_contradicted"
+        assert result.evidence_blob["parent_block"] == "AA-001"
+
+    def test_true_form_registered_aa_yields_verified(self):
+        """true_form override resolves the multi-citation Saxl case."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _check_anti_anchor_couplet_override,
+        )
+        result = _check_anti_anchor_couplet_override({
+            "id": "CLAIM-frontier-00006",
+            "parent_block": "AA-004",
+            "source_report": "AA-004 anti_anchor true_form",
+        })
+        assert result is not None
+        assert result.outcome_class == "decisive_verified"
+
+    def test_run_claim_applies_override(self):
+        """End-to-end: false_form claim with citation_audit-verified citation
+        should be overridden to decisive_contradicted."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            run_claim,
+        )
+        # Use a claim shape Aporia would author
+        claim = {
+            "_schema_version": "1.0.0",
+            "id": "CLAIM-frontier-00001",
+            "claim_category": "frontier_survey",
+            "claim_text": (
+                "Bürgisser-Ikenmeyer-Panova killed GCT entirely; occurrence "
+                "obstructions for det/padded-perm are still a viable path."
+            ),
+            # Use sympy_factor (returns inconclusive on no-calibration-entry)
+            # to keep the test offline; couplet override should still fire.
+            "expected_verifier_primary": "sympy_factor",
+            "expected_verdict": "falsified",
+            "ground_truth_source": "arXiv:1604.06431",
+            "trust_tier": "analytically_proven",
+            "source_report": "AA-001 anti_anchor false_form",
+            "parent_block": "AA-001",
+        }
+        result, _records = run_claim(claim, kernel=None, emit_kernel_opcodes=False)
+        assert result.actual_verdict == "decisive_contradicted"
+        assert result.verifier_used == "anti_anchor_couplet_override"
+        assert result.expected_actual_match is True
+
+
 class TestTBoundCheckers:
     """Per-T# numeric bound comparison closures wired into catalog_lookup,
     loop hour 4 2026-05-13."""

@@ -333,6 +333,15 @@ def main(argv: Optional[List[str]] = None) -> int:
                    help="Output rejected.jsonl (with reason field)")
     p.add_argument("--no-arxiv-check", action="store_true",
                    help="Skip network calls (arXiv HEAD + withdrawal)")
+    p.add_argument("--stage-dir", type=Path, default=None,
+                   help=(
+                       "Optional directory; when set, also write "
+                       "<block_type>.jsonl per block type containing only "
+                       "VALIDATED records. Downstream consumers (Ergon's "
+                       "ingest_training_anchors.py expects training_anchor.jsonl) "
+                       "read these per-type files. Per Aporia ticket "
+                       "T-2026-05-13-aporia-to-techne-pilot-output-ready-fire-track4."
+                   ))
     args = p.parse_args(argv)
 
     if not args.parsed.exists():
@@ -352,6 +361,11 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     args.validated.parent.mkdir(parents=True, exist_ok=True)
     args.rejected.parent.mkdir(parents=True, exist_ok=True)
+    if args.stage_dir is not None:
+        args.stage_dir.mkdir(parents=True, exist_ok=True)
+
+    # Collect validated records by block_type for per-type staging
+    validated_by_type: Dict[str, List[dict]] = {}
 
     n_validated = 0
     n_rejected = 0
@@ -373,10 +387,33 @@ def main(argv: Optional[List[str]] = None) -> int:
             if ok:
                 f_ok.write(json.dumps(record) + "\n")
                 n_validated += 1
+                if args.stage_dir is not None:
+                    bt = record.get("block_type", "unknown")
+                    validated_by_type.setdefault(bt, []).append(record)
             else:
                 record["validation_errors"] = errors
                 f_bad.write(json.dumps(record) + "\n")
                 n_rejected += 1
+
+    # Per-type stage files (always written when --stage-dir is set, even if empty)
+    if args.stage_dir is not None:
+        # Use the schema registry as the canonical block-type list so
+        # consumers can rely on a known file existing for each type
+        # (empty file is valid; means 'no validated blocks of this type').
+        for bt in schemas.keys():
+            stage_path = args.stage_dir / f"{bt}.jsonl"
+            entries = validated_by_type.get(bt, [])
+            with open(stage_path, "w", encoding="utf-8") as f_stage:
+                for rec in entries:
+                    f_stage.write(json.dumps(rec) + "\n")
+        print(
+            f"Staged per-type files in {args.stage_dir}: "
+            + ", ".join(
+                f"{bt}={len(validated_by_type.get(bt, []))}"
+                for bt in sorted(schemas.keys())
+            ),
+            file=sys.stderr,
+        )
 
     print(
         f"Validated {n_validated}; rejected {n_rejected} "
