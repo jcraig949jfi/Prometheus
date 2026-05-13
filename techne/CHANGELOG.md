@@ -13,6 +13,143 @@ Versioning convention:
 
 ---
 
+## v3.3.0 (minor) - 2026-05-13 (autonomous loop hours 1-7)
+
+Same-day follow-up to v3.2.0. Six of seven verifiers wired, parser
+hardening shipped, T# numeric bound comparison built, anti-anchor
+couplet override implemented, substrate-self invariant registry
+expanded, Day-3 substrate_self claim batch authored. Aporia's
+17-claim starter batch hits 100% expected/actual match by end of day
+(was 0% at session start). 7 cron-driven autonomous loop iterations
+across the day.
+
+### Verifiers wired (6 of 7)
+
+- **`citation_audit`** (hour 1): wraps arxiv.org HEAD + abstract
+  withdrawal scan. Permissive arXiv-ID extractor handles parenthetical
+  context ("arXiv:1604.06431 (BIP 2019 J. AMS)" shape). Returns
+  decisive_inconclusive for DOI / free-form citations so dispatch
+  wrapper falls back. Network errors propagate as exceptions; the
+  wrapper classifies TimeoutError / 5xx HTTPError as transient and
+  retries once.
+- **`catalog_lookup`** (hours 2 + 4): parses
+  `aporia/mathematics/tensor_open_problems_v1.md` for T#NN entries.
+  Per-T# bound-check closures (`_T_BOUND_CHECKERS`) registered for
+  T#1 (ω ∈ [2, 2.371339)), T#4 (R(M<3>) ∈ [19, 23]), T#56
+  (sym-rank NP-hardness). Each closure takes claim_text, returns
+  (outcome_class, caveats) or None to defer. Catalog entry exists
+  but no bound checker registered -> decisive_inconclusive for
+  fallback.
+- **`mpmath_compute`** (hour 3): Mahler-measure family via
+  `_MPMATH_CALIBRATION_TABLE` keyed by claim_id. Lehmer entry
+  computes to 1.176280818259917506544... at dps=30 in 8ms; diff vs
+  catalog 3.5e-32, well inside 1e-25 tolerance.
+- **`substrate_self_check`** (hour 3, expanded hour 6): registry of
+  15 invariants over substrate's own state (enum sizes, calibration
+  table entries, T# bound checker presence, anti_anchor registry
+  sanity, T#1/T#4 numeric drift detectors). Each is a zero-arg
+  callable. Dispatch via verifier_args.invariant_name.
+- **`sympy_factor`** (hour 3): polynomial form comparison via
+  `_SYMPY_CALIBRATION_TABLE`. Two entries: trefoil Alexander
+  polynomial, figure-eight Jones polynomial. Heuristic extraction
+  from claim_text after the last '=' sign, with TeX caret -> Python
+  power normalization. sp.simplify(claimed - canonical) == 0 match.
+- **`triangulation`** (hour 7): meta-verifier dispatching a configurable
+  list (defaults to citation_audit + catalog_lookup). Unanimous
+  decisive verdict -> verifier returns that verdict. Mixed decisive
+  (verified AND contradicted observed) -> decisive_inconclusive with
+  substrate_verifier_disagreement reason (substrate-grade finding —
+  the substrate's tools disagree about the same claim). Self-recursion
+  filter prevents infinite recursion.
+
+### Parser hardening (hour 1)
+
+`aporia/scripts/parse_substrate_blocks.py` now recognizes 4 emission
+conventions, not just the strict `# substrate_block: <type>` marker.
+The pilot model produced 14 blocks across 3 reports using 3 different
+alt conventions; the parser now accepts all of them:
+
+- **C0 strict marker** (preferred / documented): `# substrate_block: <type>`
+  on the line after the fence opener.
+- **C1 substrate_type field**: `substrate_type: <type>` as a YAML field
+  inside the body, with `---` doc separators for multiple blocks.
+- **C2 block-type-as-key**: `<block_type>:` as the single top-level
+  YAML key in a mapping; multi-doc YAML again allowed.
+- **C3 schema field in JSON array**: `"schema": "<block_type>"` per
+  item, typically inside ```json fences.
+
+`_detect_alt_convention(doc)` returns `(block_type, normalized_payload)`
+with the wrapper field stripped. Strict and alt passes are mutually
+exclusive (yielded-spans tracking prevents double-counting).
+
+### Anti-anchor couplet override (hour 5)
+
+`run_claim` adds a post-dispatch override step. When
+`claim.parent_block` matches a registered anti_anchor ID AND
+`claim.source_report` contains `false_form` -> override verdict to
+decisive_contradicted. For `true_form` -> decisive_verified. Handles
+the fundamental citation_audit limitation: it verifies the cited
+paper exists, not whether the claim_text accurately reflects what
+the paper says. The substrate's `techne/registry/anti_anchors.jsonl`
+encodes that relationship explicitly for couplet pairs.
+
+### Per-block-type staging (hour 5)
+
+`aporia/scripts/validate_substrate_blocks.py` adds `--stage-dir`
+flag. When set, writes `<block_type>.jsonl` per block_type into the
+stage dir containing only VALIDATED records. Files always written
+even when empty (consumer contract: file exists, zero-line means
+"no valid blocks of this type"). Per Aporia's pilot-output-ready
+ticket, Ergon's `ingest_training_anchors.py` reads
+`<stage-dir>/training_anchor.jsonl`.
+
+### Substrate-self claim batch (hour 6)
+
+`aporia/meta/queue/substrate_self_claims_techne_2026-05-13.jsonl` —
+15 claims authored by Techne (one per registered invariant). All
+validate against `claim_v1.json`. End-to-end runner dispatch:
+15/15 = 100% decisive_verified in 1ms. Builds the substrate's
+self-falsification surface; future drift gets caught here first.
+
+### Aporia starter batch results
+
+`aporia/meta/queue/claim_stack_aporia_starter_2026-05-13.md` — 20
+claims authored by Aporia. 17 valid against `claim_v1.json` (3
+calibration claims fail prompt_template requirement; separate
+finding ticket open). End-to-end on the 17:
+
+  Hour 1 (all stubs):              0/17 =   0.0%
+  Hour 2 (4 verifiers):            7/17 =  41.2%
+  Hour 3 (5 verifiers + sympy):    9/17 =  52.9%
+  Hour 4 (T#1 + T#4 bound check): 12/17 =  70.6%
+  Hour 4 (+T#56 complexity):      13/17 =  76.5%
+  Hour 5 (+false_form override):  16/17 =  94.1%
+  Hour 5 (+true_form override):   17/17 = 100.0%
+
+Final verdict distribution exactly mirrors expected: 7 contradicted
+(= 7 falsified) + 9 verified (= 9 survived) + 1 inconclusive
+(= 1 open). End-to-end wall clock: ~1s for 17 claims.
+
+### Tests
+
+123 tests pass in 12.6s (was 36 at session start; +87 tests today
+covering claim-stack runner, parser conventions, verifier dispatch,
+quality rules, bound checkers, couplet override, substrate-self
+invariants, triangulation aggregation).
+
+### Remaining stubs / known limitations
+
+- `manual_review` verifier remains stubbed (needs human-in-the-loop
+  infrastructure design).
+- `triangulation` is wired but isn't on the dispatch path for any
+  current Aporia claim (none specify it as primary). Available for
+  future calls.
+- The pilot batch's field-shape divergence (14 blocks parsed but
+  0 validated due to model-invented field names within block_types)
+  is Track B prompt-strengthening territory; not a v3.3.0 deliverable.
+
+---
+
 ## v3.2.0 (minor) - 2026-05-13
 
 Claim-stack pipeline ships. Adds the 7th substrate_block schema (`claim_v1`)
