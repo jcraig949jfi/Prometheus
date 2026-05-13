@@ -503,11 +503,303 @@ def _verifier_catalog_lookup(claim_payload: dict) -> VerifierResult:
     )
 
 
+# ---------------------------------------------------------------------------
+# mpmath_compute verifier (Track 2 Verifier 3, 2026-05-13)
+# ---------------------------------------------------------------------------
+
+
+# Calibration table: claim_id -> (coeffs_descending, expected_value, default_dps)
+# Pre-registered numeric calibration anchors. MVP scope: Mahler-measure
+# family. Future entries (Galois-group invariants, L-function special
+# values, etc.) follow the same shape. Tolerance comes from
+# verifier_args.tolerance per claim; default 1e-25 if absent.
+_MPMATH_CALIBRATION_TABLE: Dict[str, Tuple[List[int], str, int]] = {
+    # Lehmer's polynomial L(x) = x^10 + x^9 - x^7 - x^6 - x^5 - x^4 - x^3 + x + 1.
+    # M(L) = 1.17628081825991750185... — the smallest known Mahler measure
+    # greater than 1 of a monic integer polynomial. Lehmer 1933;
+    # Mossinghoff polynomial database.
+    "CLAIM-calibration-mahler-00001": (
+        [1, 1, 0, -1, -1, -1, -1, -1, 0, 1, 1],  # descending: x^10, x^9, ..., x^0
+        "1.176280818259917506544070338474",       # M(L) at dps>=30
+        30,
+    ),
+}
+
+
+def _compute_mahler_measure(
+    coeffs_descending: List[int], dps: int,
+) -> Any:
+    """Compute Mahler measure M(P) at the requested mpmath precision.
+
+    M(P) = |a_n| * prod(max(1, |alpha_i|)) where alpha_i are the roots
+    of P(x) and a_n is the leading coefficient. Returns an mpmath.mpf.
+    """
+    import mpmath as mp
+    saved_dps = mp.mp.dps
+    mp.mp.dps = dps + 5  # small headroom for cumulative rounding
+    try:
+        mp_coeffs = [mp.mpf(int(c)) for c in coeffs_descending]
+        roots = mp.polyroots(mp_coeffs, maxsteps=300, extraprec=4 * dps)
+        leading = abs(mp_coeffs[0])
+        product = leading
+        for r in roots:
+            ar = abs(r)
+            if ar > 1:
+                product *= ar
+        return +product  # force re-evaluation at saved precision
+    finally:
+        mp.mp.dps = saved_dps
+
+
+def _verifier_mpmath_compute(claim_payload: dict) -> VerifierResult:
+    """mpmath_compute verifier.
+
+    MVP (2026-05-13): supports the Mahler-measure family via a small
+    calibration table keyed by claim_id. The verifier:
+
+      1. Looks up the claim_id in _MPMATH_CALIBRATION_TABLE. If absent,
+         returns decisive_inconclusive (unsupported claim shape).
+      2. Reads dps + tolerance from verifier_args (defaults: 30, 1e-25).
+      3. Computes the calibration value at dps precision.
+      4. Compares to the table's stored expected_value within tolerance.
+         |computed - expected| <= tolerance -> decisive_verified;
+         otherwise decisive_contradicted with the numeric discrepancy.
+
+    Future extension: accept polynomial coefficients via verifier_args
+    when the claim is parametric. For now the table covers the smoke
+    target (CLAIM-calibration-mahler-00001) and similar pre-registered
+    anchors; new anchors are added by Techne as substrate_self claims.
+    """
+    t_start = time.perf_counter()
+    claim_id = claim_payload.get("id", "")
+    if claim_id not in _MPMATH_CALIBRATION_TABLE:
+        return VerifierResult(
+            outcome_class="decisive_inconclusive",
+            method_used="mpmath_compute",
+            evidence_blob={
+                "claim_id": claim_id,
+                "reason": "no_calibration_entry",
+                "supported_claim_ids": sorted(_MPMATH_CALIBRATION_TABLE.keys()),
+            },
+            runtime_ms=int((time.perf_counter() - t_start) * 1000),
+            caveats=(
+                "mpmath_compute MVP only handles pre-registered calibration "
+                "anchors. Future versions will accept polynomial coefficients "
+                "via verifier_args.coeffs."
+            ),
+        )
+    coeffs, expected_str, default_dps = _MPMATH_CALIBRATION_TABLE[claim_id]
+    args = claim_payload.get("verifier_args", {}) or {}
+    dps = int(args.get("dps", default_dps))
+    # tolerance may arrive as float or string ('1e-25'); coerce defensively
+    tol_raw = args.get("tolerance", "1e-25")
+    try:
+        tolerance = float(tol_raw)
+    except (TypeError, ValueError):
+        return VerifierResult(
+            outcome_class="verifier_permanent_failure",
+            method_used="mpmath_compute",
+            runtime_ms=int((time.perf_counter() - t_start) * 1000),
+            error_text=f"verifier_args.tolerance not coercible to float: {tol_raw!r}",
+        )
+
+    import mpmath as mp
+    saved_dps = mp.mp.dps
+    mp.mp.dps = dps + 5
+    try:
+        computed = _compute_mahler_measure(coeffs, dps)
+        expected = mp.mpf(expected_str)
+        diff = abs(computed - expected)
+        within = diff <= mp.mpf(tolerance)
+    finally:
+        mp.mp.dps = saved_dps
+    runtime_ms = int((time.perf_counter() - t_start) * 1000)
+    if within:
+        return VerifierResult(
+            outcome_class="decisive_verified",
+            method_used="mpmath_compute",
+            evidence_blob={
+                "claim_id": claim_id,
+                "computed": mp.nstr(computed, dps),
+                "expected": expected_str,
+                "diff": mp.nstr(diff, max(3, dps - 25)),
+                "tolerance": str(tolerance),
+                "dps": dps,
+            },
+            runtime_ms=runtime_ms,
+            precision_dps=dps,
+        )
+    return VerifierResult(
+        outcome_class="decisive_contradicted",
+        method_used="mpmath_compute",
+        evidence_blob={
+            "claim_id": claim_id,
+            "computed": mp.nstr(computed, dps),
+            "expected": expected_str,
+            "diff": mp.nstr(diff, dps),
+            "tolerance": str(tolerance),
+            "dps": dps,
+            "reason": "computed_value_outside_tolerance",
+        },
+        runtime_ms=runtime_ms,
+        precision_dps=dps,
+        caveats=(
+            f"Computed M = {mp.nstr(computed, dps)} differs from catalog "
+            f"value by {mp.nstr(diff, dps)}, exceeding tolerance {tolerance}."
+        ),
+    )
+
+
+# ---------------------------------------------------------------------------
+# substrate_self_check verifier (Track 2 Verifier 4, 2026-05-13)
+# ---------------------------------------------------------------------------
+
+
+# Registry of substrate-self invariants. Each entry maps a short
+# invariant_name -> a zero-arg callable returning True (invariant holds)
+# or False (contradicted). Exceptions raised by the callable propagate
+# as verifier_permanent_failure via the dispatch wrapper.
+#
+# Per claim_stack_design Q5 / adjudication 2026-05-12: substrate_self
+# claims are Techne's authoring territory. Aporia's starter batch
+# intentionally has none. This registry is the substrate's own
+# self-falsification surface.
+def _build_substrate_self_invariants() -> Dict[str, Callable[[], bool]]:
+    """Construct the invariants dict. Built lazily to avoid import-time
+    coupling — the invariants reference module-level constants whose
+    imports cycle if defined at top-of-file."""
+    from prometheus_math.substrate_generation.learner_enrichment import (
+        VERIFIER_OUTCOME_CLASSES,
+        EPISODE_PHASES,
+        derive_kill_signature,
+    )
+    return {
+        "verifier_outcome_classes_size_5": (
+            lambda: len(VERIFIER_OUTCOME_CLASSES) == 5
+        ),
+        "episode_phases_size_5": (
+            lambda: len(EPISODE_PHASES) == 5
+        ),
+        "kill_signature_survived_for_none": (
+            lambda: derive_kill_signature(None) == ("survived",)
+        ),
+        "kill_signature_survived_for_empty_string": (
+            lambda: derive_kill_signature("") == ("survived",)
+        ),
+        "known_verifiers_size_7": (
+            lambda: len(KNOWN_VERIFIERS) == 7
+        ),
+        "decisive_outcomes_size_3": (
+            lambda: len(VERIFIER_DECISIVE_OUTCOMES) == 3
+        ),
+    }
+
+
+_SUBSTRATE_SELF_INVARIANTS_CACHE: Optional[Dict[str, Callable[[], bool]]] = None
+
+
+def _get_substrate_self_invariants() -> Dict[str, Callable[[], bool]]:
+    global _SUBSTRATE_SELF_INVARIANTS_CACHE
+    if _SUBSTRATE_SELF_INVARIANTS_CACHE is None:
+        _SUBSTRATE_SELF_INVARIANTS_CACHE = _build_substrate_self_invariants()
+    return _SUBSTRATE_SELF_INVARIANTS_CACHE
+
+
+def _verifier_substrate_self_check(claim_payload: dict) -> VerifierResult:
+    """substrate_self_check verifier.
+
+    Dispatches via ``verifier_args.invariant_name`` — claim selects a
+    named invariant from the registry. Callable returning True is
+    decisive_verified; False is decisive_contradicted (the substrate
+    is falsifying its own asserted invariant — a real substrate-grade
+    catch). Exceptions raised by the callable propagate so the dispatch
+    wrapper classifies them as transient/permanent.
+
+    Claims without verifier_args.invariant_name return
+    decisive_inconclusive (unable to dispatch).
+
+    Network-free.
+    """
+    t_start = time.perf_counter()
+    args = claim_payload.get("verifier_args", {}) or {}
+    invariant_name = args.get("invariant_name")
+    invariants = _get_substrate_self_invariants()
+    if not isinstance(invariant_name, str) or not invariant_name:
+        return VerifierResult(
+            outcome_class="decisive_inconclusive",
+            method_used="substrate_self_check",
+            evidence_blob={
+                "reason": "no_invariant_name",
+                "available_invariants": sorted(invariants.keys()),
+            },
+            runtime_ms=int((time.perf_counter() - t_start) * 1000),
+            caveats=(
+                "substrate_self_check requires verifier_args.invariant_name. "
+                "Available invariants are in evidence_blob.available_invariants."
+            ),
+        )
+    if invariant_name not in invariants:
+        return VerifierResult(
+            outcome_class="decisive_inconclusive",
+            method_used="substrate_self_check",
+            evidence_blob={
+                "reason": "unknown_invariant_name",
+                "invariant_name": invariant_name,
+                "available_invariants": sorted(invariants.keys()),
+            },
+            runtime_ms=int((time.perf_counter() - t_start) * 1000),
+            caveats=(
+                f"Invariant {invariant_name!r} not in substrate-self registry. "
+                "Register it via _build_substrate_self_invariants or fix the "
+                "claim's verifier_args."
+            ),
+        )
+    holds = invariants[invariant_name]()  # may raise -> dispatch wrapper
+    runtime_ms = int((time.perf_counter() - t_start) * 1000)
+    if not isinstance(holds, bool):
+        return VerifierResult(
+            outcome_class="verifier_permanent_failure",
+            method_used="substrate_self_check",
+            runtime_ms=runtime_ms,
+            error_text=(
+                f"invariant {invariant_name!r} returned non-bool "
+                f"{type(holds).__name__}: {holds!r}"
+            ),
+        )
+    if holds:
+        return VerifierResult(
+            outcome_class="decisive_verified",
+            method_used="substrate_self_check",
+            evidence_blob={
+                "invariant_name": invariant_name,
+                "holds": True,
+            },
+            runtime_ms=runtime_ms,
+        )
+    return VerifierResult(
+        outcome_class="decisive_contradicted",
+        method_used="substrate_self_check",
+        evidence_blob={
+            "invariant_name": invariant_name,
+            "holds": False,
+            "reason": "substrate_self_invariant_violated",
+        },
+        runtime_ms=runtime_ms,
+        caveats=(
+            f"Substrate-self invariant {invariant_name!r} returned False. "
+            "The substrate is falsifying its own asserted invariant — "
+            "this is a real substrate-grade catch and requires investigation."
+        ),
+    )
+
+
 VERIFIER_REGISTRY: Dict[str, VerifierFn] = {
     name: _verifier_stub_factory(name) for name in KNOWN_VERIFIERS
 }
 VERIFIER_REGISTRY["citation_audit"] = _verifier_citation_audit
 VERIFIER_REGISTRY["catalog_lookup"] = _verifier_catalog_lookup
+VERIFIER_REGISTRY["mpmath_compute"] = _verifier_mpmath_compute
+VERIFIER_REGISTRY["substrate_self_check"] = _verifier_substrate_self_check
 
 
 def get_verifier(name: str) -> VerifierFn:

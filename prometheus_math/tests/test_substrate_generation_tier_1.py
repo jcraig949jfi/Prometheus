@@ -562,6 +562,135 @@ class TestCatalogLookupVerifier:
         assert VERIFIER_REGISTRY["catalog_lookup"] is _verifier_catalog_lookup
 
 
+class TestMpmathComputeVerifier:
+    """Track 2 Verifier 3 (2026-05-13). MVP scope: Mahler-measure family
+    via calibration table keyed by claim_id."""
+
+    def test_unknown_claim_id_returns_inconclusive(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_mpmath_compute,
+        )
+        result = _verifier_mpmath_compute({"id": "CLAIM-test-99999"})
+        assert result.outcome_class == "decisive_inconclusive"
+        assert "no_calibration_entry" in result.evidence_blob["reason"]
+
+    def test_lehmer_smoke_target_verifies(self):
+        """Aporia's CLAIM-calibration-mahler-00001 — the canonical smoke
+        target. M(Lehmer) = 1.176280818259917506544... at dps=30."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_mpmath_compute,
+        )
+        result = _verifier_mpmath_compute({
+            "id": "CLAIM-calibration-mahler-00001",
+            "verifier_args": {"dps": 30, "tolerance": "1e-25"},
+        })
+        assert result.outcome_class == "decisive_verified"
+        assert result.evidence_blob["dps"] == 30
+        # Diff should be << tolerance
+        assert "diff" in result.evidence_blob
+
+    def test_compute_mahler_measure_matches_known_value(self):
+        """Direct numerical check on _compute_mahler_measure."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _compute_mahler_measure,
+        )
+        coeffs = [1, 1, 0, -1, -1, -1, -1, -1, 0, 1, 1]  # Lehmer descending
+        import mpmath as mp
+        saved = mp.mp.dps
+        mp.mp.dps = 35
+        try:
+            computed = _compute_mahler_measure(coeffs, 30)
+            expected = mp.mpf("1.17628081825991750654407033847")
+            assert abs(computed - expected) < mp.mpf("1e-25")
+        finally:
+            mp.mp.dps = saved
+
+    def test_invalid_tolerance_returns_permanent_failure(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_mpmath_compute,
+        )
+        result = _verifier_mpmath_compute({
+            "id": "CLAIM-calibration-mahler-00001",
+            "verifier_args": {"tolerance": "not-a-float"},
+        })
+        assert result.outcome_class == "verifier_permanent_failure"
+
+    def test_registry_points_at_real_verifier(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            VERIFIER_REGISTRY, _verifier_mpmath_compute,
+        )
+        assert VERIFIER_REGISTRY["mpmath_compute"] is _verifier_mpmath_compute
+
+
+class TestSubstrateSelfCheckVerifier:
+    """Track 2 Verifier 4 (2026-05-13). Dispatches via
+    verifier_args.invariant_name."""
+
+    def test_no_invariant_name_returns_inconclusive(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_substrate_self_check,
+        )
+        result = _verifier_substrate_self_check({"id": "X"})
+        assert result.outcome_class == "decisive_inconclusive"
+        assert "no_invariant_name" in result.evidence_blob["reason"]
+        assert len(result.evidence_blob["available_invariants"]) >= 4
+
+    def test_unknown_invariant_returns_inconclusive(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_substrate_self_check,
+        )
+        result = _verifier_substrate_self_check({
+            "id": "X",
+            "verifier_args": {"invariant_name": "not_registered"},
+        })
+        assert result.outcome_class == "decisive_inconclusive"
+        assert "unknown_invariant_name" in result.evidence_blob["reason"]
+
+    def test_known_holding_invariant_verifies(self):
+        """verifier_outcome_classes_size_5 holds: 5 enum values."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_substrate_self_check,
+        )
+        result = _verifier_substrate_self_check({
+            "id": "CLAIM-substrate-self-00001",
+            "verifier_args": {"invariant_name": "verifier_outcome_classes_size_5"},
+        })
+        assert result.outcome_class == "decisive_verified"
+        assert result.evidence_blob["holds"] is True
+
+    def test_kill_signature_invariant_holds(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_substrate_self_check,
+        )
+        for inv_name in (
+            "kill_signature_survived_for_none",
+            "kill_signature_survived_for_empty_string",
+        ):
+            result = _verifier_substrate_self_check({
+                "id": "CLAIM-substrate-self-test",
+                "verifier_args": {"invariant_name": inv_name},
+            })
+            assert result.outcome_class == "decisive_verified", (
+                f"invariant {inv_name} should hold"
+            )
+
+    def test_known_verifiers_size_7(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_substrate_self_check,
+        )
+        result = _verifier_substrate_self_check({
+            "id": "X",
+            "verifier_args": {"invariant_name": "known_verifiers_size_7"},
+        })
+        assert result.outcome_class == "decisive_verified"
+
+    def test_registry_points_at_real_verifier(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            VERIFIER_REGISTRY, _verifier_substrate_self_check,
+        )
+        assert VERIFIER_REGISTRY["substrate_self_check"] is _verifier_substrate_self_check
+
+
 class TestLearnerRecordClaimExtensionFields:
     """Per Track 1 prompt 2026-05-13: claim_id, claim_category, actual_verdict
     carry through from CLAIM payload to LearnerRecord."""
