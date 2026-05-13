@@ -13,6 +13,108 @@ Versioning convention:
 
 ---
 
+## v3.2.0 (minor) - 2026-05-13
+
+Claim-stack pipeline ships. Adds the 7th substrate_block schema (`claim_v1`)
+plus a Tier-1 claim runner that routes claims through verifier dispatch and
+emits LearnerRecord output. Per `pivot/claim_stack_design_2026-05-11.md` +
+Aporia adjudication 2026-05-12 (Mods 1+2 applied) + Track 1 prompt 2026-05-13
+(three carry-through fields added).
+
+### Added
+
+- **`techne/contracts/substrate_block_schemas/claim_v1.json`** — 7th
+  substrate_block schema. Fields: `_schema_version`, `id` (CLAIM-<prefix>-NNNNN
+  pattern, uppercase prefix allowed for catalog refs), `claim_category`
+  (frontier_survey/calibration/boundary/substrate_self/other), `claim_text`
+  (>=20 chars), `expected_verifier_primary` + optional fallback (7-verifier
+  enum), `expected_verdict` (survived/falsified/open/conditional),
+  `ground_truth_source` (arXiv ID, DOI, or free-form via anyOf),
+  `trust_tier`, `source_report`. Optional: `parent_block`, `paired_claim_id`,
+  `prompt_template`, `expected_answer_shape`, `verifier_args`,
+  `stratification_rule`, `caveats`. allOf: conditional verdict requires
+  caveats; calibration category requires prompt_template. Three embedded
+  examples all validate.
+- **`techne/contracts/substrate_block_schemas/_common_definitions.json`** —
+  `sourceReportRef.maxLength` bumped 120 → 400 (Aporia Mod 1). Carries mined
+  provenance descriptively without adding a new schema field.
+- **`prometheus_math/substrate_generation/learner_enrichment.py`** —
+  `VERIFIER_OUTCOME_CLASSES` enum (5 values) per Aporia Mod 2. Splits real
+  Learner signal ("verifier ran cleanly and returned inconclusive") from
+  missing data ("verifier failed to run"). Four new Optional fields on
+  `LearnerRecord`: `verifier_outcome_class` (Mod 2), `claim_id`,
+  `claim_category`, `actual_verdict` (Track 1 2026-05-13). All default None
+  so Tier-0 brute-force callsites stay backward-compatible.
+- **`prometheus_math/substrate_generation/tier_1_claim_runner.py`** — new,
+  ~400 LOC. Verifier dispatch wrapper with transient-vs-permanent retry
+  discipline (`TimeoutError`/`ConnectionError`/5xx `HTTPError` = transient,
+  retried once; everything else permanent). Seven verifier slots in
+  `VERIFIER_REGISTRY` all Day-1 stubbed. `run_claim()` routes through primary
+  + optional fallback. `run_claim_batch()` loads JSONL, enforces quality
+  Rules A/B/C, emits run summary with health flags. CLI entrypoint.
+- **`aporia/scripts/validate_substrate_blocks.py`** — `claim_v1` wired into
+  schema registry.
+- **`aporia/scripts/parse_substrate_blocks.py`** — `claim` added to
+  `KNOWN_BLOCK_TYPES`.
+- **`prometheus_math/tests/test_substrate_generation_tier_1.py`** — +29
+  claim-stack tests (65 total, all pass in 13s).
+
+### Smoke results
+
+- Aporia's 20-claim starter batch validates 17/20. 3 calibration claims fail
+  `prompt_template` requirement (citation/catalog-shaped, not Q&A-shaped);
+  finding filed as
+  `T-2026-05-13-techne-to-aporia-claim-stack-starter-batch-divergence`.
+- End-to-end on the 17 valid claims: 17ms wall-clock, all dispatch through
+  stubs as expected, every LearnerRecord carries the new four fields.
+
+### Design-time bugs caught at smoke
+
+- `ground_truth_source` `oneOf` → `anyOf` (arXiv strings match both branches).
+- `id` pattern widened `[a-z]` → `[a-zA-Z]` in the prefix segment so catalog
+  refs (`boundary-T4`) work.
+
+### Next (Day 2-3)
+
+Wire 4 highest-leverage verifiers (citation_audit / catalog_lookup /
+mpmath_compute / substrate_self_check) on top of Day-1 stubs.
+
+---
+
+## v3.1.1 (patch) - 2026-05-13
+
+Backwards-compatible patch to `training_anchor_v1.json` per Aporia approval
+ticket `T-2026-05-11-aporia-to-techne-bs_coverage-schema-approved-as-v1.1`.
+
+### Changed
+
+- **`training_anchor_v1.json`** `_schema_version`: `const "1.0.0"` →
+  `enum ["1.0.0", "1.1.0"]`. Existing emitters at v1.0.0 continue to validate
+  unchanged.
+- **`training_anchor_v1.json`** adds optional `bs_coverage` field
+  (`Array[string]`, items pattern `^BS-\d{3,5}$`, uniqueItems). Per Ergon's
+  `training_anchor_ingestion_spec.md` §3.1 + §5.1 Gap 1: explicit blind-spot
+  links replace regex-heuristic inference of BS-NNN from
+  prompt_template/caveats/source/dataset_source. Empty list and absent field
+  are both legal; absent means Ergon's `derive_bs_coverage` falls back to
+  regex heuristic.
+- **`training_anchor_v1.json`** `source` field `oneOf` → `anyOf`. Same fix
+  pattern as claim_v1.json: arXiv IDs and DOIs validate against both the
+  structured citation pattern and the free-form fallback, and downstream
+  consumers examine the string directly; no exclusivity needed. Caught when
+  the v1.1.0 worked example (Cohen 1963 CH-independence anchor with DOI
+  `10.1073/pnas.50.6.1143`) failed to validate against `oneOf`.
+- Added a second embedded example (`anchor-set_theory-001` at v1.1.0)
+  demonstrating the new field with `bs_coverage: ["BS-001"]`.
+
+### Coordination
+
+Filed `T-2026-05-13-techne-to-aporia-and-ergon-training_anchor-v1.1-ready` to
+both inboxes; Ergon's `ingest_training_anchors.py` switches from regex
+heuristic to explicit field consumption when v1.1 is detected.
+
+---
+
 ## v3.1.0 (minor) - 2026-05-10
 
 Scaffolding-only minor release. No tool interfaces changed; no substrate-tier

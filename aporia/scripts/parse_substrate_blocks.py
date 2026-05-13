@@ -65,6 +65,7 @@ KNOWN_BLOCK_TYPES = (
     "catalog_edit",
     "training_anchor",
     "paradigm_candidate",
+    "claim",
 )
 
 

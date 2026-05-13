@@ -14,7 +14,8 @@
   "properties": {
     "_schema_version": {
       "$ref": "_common_definitions.json#/$defs/schemaVersion",
-      "const": "1.0.0"
+      "description": "Per T-2026-05-11-aporia-to-techne-bs_coverage-schema-approved-as-v1.1: enum 1.0.0 or 1.1.0. v1.1.0 adds optional bs_coverage field; v1.0.0 entries continue to validate unchanged.",
+      "enum": ["1.0.0", "1.1.0"]
     },
     "id": {
       "title": "Anchor ID (anchor-<domain>-<NNN>)",
@@ -104,7 +105,8 @@
     },
     "source": {
       "title": "Primary citation for the dataset",
-      "oneOf": [
+      "description": "Uses anyOf (not oneOf) because arXiv IDs and DOIs match both the structured pattern and the free-form fallback; downstream consumers examine the string directly. Same pattern fix as claim_v1.json (Day-1 catch).",
+      "anyOf": [
         {"$ref": "_common_definitions.json#/$defs/citationArxivOrDoi"},
         {
           "type": "string",
@@ -136,6 +138,17 @@
     },
     "source_report": {
       "$ref": "_common_definitions.json#/$defs/sourceReportRef"
+    },
+    "bs_coverage": {
+      "title": "Blind-spot coverage links",
+      "description": "List of BS-NNN blind-spot entry IDs this training_anchor covers. Per T-2026-05-11-aporia-to-techne-bs_coverage-schema-approved-as-v1.1 + Ergon's training_anchor_ingestion_spec.md §3.1 + §5.1 Gap 1: explicit blind-spot mapping replaces Ergon's regex-heuristic search of prompt_template/caveats/source/dataset_source. When this field is present (v1.1.0 emitters), Ergon's derive_bs_coverage prefers it over regex inference. Empty list and absent field are both legal; absent means consumer falls back to heuristic.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^BS-\\d{3,5}$"
+      },
+      "uniqueItems": true,
+      "examples": [["BS-001"], ["BS-001", "BS-003"], []]
     }
   },
   "examples": [
@@ -159,6 +172,27 @@
       "caveats": "Coverage extends only to prime knots through 12 crossings; composite knots and higher-crossing-number knots are out of scope. Alexander polynomial is well-defined up to units (factor of +/- t^k); answers should be normalized to the canonical form per KnotInfo conventions.",
       "consumed_by": "ergon/calibration/knot_invariant_battery.py",
       "source_report": "T#KNOTINFO_TIER3"
+    },
+    {
+      "_schema_version": "1.1.0",
+      "id": "anchor-set_theory-001",
+      "domain": "set_theory",
+      "anchor_type": "predicate",
+      "dataset_source": "Cohen 1963 forcing construction; Kunen 'Set Theory' Ch. VII",
+      "scale": {
+        "instance_count": 1,
+        "coverage_qualifier": "single foundational result (CH-independence)"
+      },
+      "prompt_template": "Who proved that the Continuum Hypothesis is independent of ZFC, and what year?",
+      "expected_answer_shape": "Tuple[str, int] — (mathematician name, year)",
+      "verification_method": "analytical_proof",
+      "trust_tier": "analytically_proven",
+      "source": "10.1073/pnas.50.6.1143",
+      "source_date": "1963-12-15",
+      "caveats": "Q-shaped anchor whose answer ('Cohen, 1963') lives in the source/dataset_source rather than the prompt_template. Demonstrates the bs_coverage field replacing Ergon's regex-heuristic search — explicit BS-001 link, no inference needed.",
+      "bs_coverage": ["BS-001"],
+      "consumed_by": "ergon/learner/scripts/ingest_training_anchors.py",
+      "source_report": "T-2026-05-11-aporia-to-techne-bs_coverage-schema-approved-as-v1.1 worked example"
     }
   ]
 }

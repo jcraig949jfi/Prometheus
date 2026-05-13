@@ -406,6 +406,9 @@ def run_claim(
         decoy_kind=None,
         episode_phase="evaluate",
         verifier_outcome_class=verifier_outcome_class,
+        claim_id=claim_id,
+        claim_category=claim_category,
+        actual_verdict=chosen_result.outcome_class,
     )
 
     # 5. Optionally emit kernel opcodes (Day 2 enhancement; Day 1 stub)
@@ -616,6 +619,9 @@ def _learner_record_to_dict(r: Any) -> Dict[str, Any]:
         "kill_signature": list(r.kill_signature),
         "outcome_class": r.outcome_class,
         "verifier_outcome_class": r.verifier_outcome_class,
+        "claim_id": r.claim_id,
+        "claim_category": r.claim_category,
+        "actual_verdict": r.actual_verdict,
     }
 
 

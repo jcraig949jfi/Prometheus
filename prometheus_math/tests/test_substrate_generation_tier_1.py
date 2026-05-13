@@ -434,6 +434,28 @@ class TestVerifierDispatchWrapper:
         assert result.outcome_class == "verifier_transient_failure"
 
 
+class TestLearnerRecordClaimExtensionFields:
+    """Per Track 1 prompt 2026-05-13: claim_id, claim_category, actual_verdict
+    carry through from CLAIM payload to LearnerRecord."""
+
+    def test_defaults_are_none(self):
+        rec = enrich(_FakeDiscoveryRecord())
+        assert rec.claim_id is None
+        assert rec.claim_category is None
+        assert rec.actual_verdict is None
+
+    def test_pass_through_via_enrich(self):
+        rec = enrich(
+            _FakeDiscoveryRecord(),
+            claim_id="CLAIM-test-00001",
+            claim_category="frontier_survey",
+            actual_verdict="decisive_verified",
+        )
+        assert rec.claim_id == "CLAIM-test-00001"
+        assert rec.claim_category == "frontier_survey"
+        assert rec.actual_verdict == "decisive_verified"
+
+
 class TestRunClaim:
 
     def _payload(self, **overrides):
@@ -459,6 +481,10 @@ class TestRunClaim:
         assert result.expected_actual_match is False  # failure never matches expected
         assert len(records) == 1
         assert records[0].verifier_outcome_class == "verifier_permanent_failure"
+        # Track 1 2026-05-13: claim_id / claim_category / actual_verdict carry through
+        assert records[0].claim_id == "CLAIM-test-00001"
+        assert records[0].claim_category == "frontier_survey"
+        assert records[0].actual_verdict == "verifier_permanent_failure"
 
     def test_verdict_match_mapping(self):
         from prometheus_math.substrate_generation.tier_1_claim_runner import _verdict_match

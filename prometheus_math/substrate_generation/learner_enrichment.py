@@ -91,6 +91,14 @@ class LearnerRecord:
     # (Tier-0 generator's brute-force enumeration) don't break.
     # Values: VERIFIER_OUTCOME_CLASSES.
     verifier_outcome_class: Optional[str] = None
+    # Claim-stack extension (Day-1 prompt 2026-05-13). Three carry-through
+    # fields from the originating CLAIM block, so a Learner consumer can
+    # group records by claim_id / stratify by claim_category / compare
+    # actual_verdict against expected_verdict without joining back to the
+    # source batch. None for non-claim records (Tier-0 enumeration).
+    claim_id: Optional[str] = None
+    claim_category: Optional[str] = None
+    actual_verdict: Optional[str] = None
 
 
 EPISODE_PHASES: Tuple[str, ...] = (
@@ -283,6 +291,9 @@ def enrich(
     decoy_kind: Optional[str] = None,
     episode_phase: str = "evaluate",
     verifier_outcome_class: Optional[str] = None,
+    claim_id: Optional[str] = None,
+    claim_category: Optional[str] = None,
+    actual_verdict: Optional[str] = None,
 ) -> LearnerRecord:
     """Convert a DiscoveryRecord (or claim-runner result) to a LearnerRecord.
 
@@ -345,6 +356,9 @@ def enrich(
         kill_signature=derive_kill_signature(kill_pattern),
         outcome_class=normalize_outcome_class(terminal_state),
         verifier_outcome_class=verifier_outcome_class,
+        claim_id=claim_id,
+        claim_category=claim_category,
+        actual_verdict=actual_verdict,
     )
 
 
