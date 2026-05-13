@@ -692,6 +692,105 @@ class TestSubstrateSelfCheckVerifier:
         assert VERIFIER_REGISTRY["substrate_self_check"] is _verifier_substrate_self_check
 
 
+class TestTBoundCheckers:
+    """Per-T# numeric bound comparison closures wired into catalog_lookup,
+    loop hour 4 2026-05-13."""
+
+    def test_t1_omega_upper_bound_implication(self):
+        """ω < 2.371339 follows from established upper bound."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _t1_omega_bound_check,
+        )
+        result = _t1_omega_bound_check("The matrix multiplication exponent ω satisfies ω < 2.371339.")
+        assert result is not None
+        outcome, _caveats = result
+        assert outcome == "decisive_verified"
+
+    def test_t1_omega_below_lower_bound_contradicts(self):
+        """ω = 1.9 violates trivial lower bound ω >= 2."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _t1_omega_bound_check,
+        )
+        result = _t1_omega_bound_check("The matrix multiplication exponent ω equals 1.9 (i.e., ω < 2).")
+        assert result is not None
+        outcome, _caveats = result
+        assert outcome == "decisive_contradicted"
+
+    def test_t1_omega_equals_2_open(self):
+        """ω = 2 is within range but unproven; inconclusive.
+
+        Note: extractor regex requires the `=` symbol, not the word
+        'equals'. Aporia's actual CLAIM-boundary-T1-00002 uses the
+        word form ('ω equals 2 exactly'), which falls through to the
+        outer catalog_lookup's 'entry confirmed but extraction failed'
+        path — also returning decisive_inconclusive at the verifier
+        level. Either way, expected=open matches.
+        """
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _t1_omega_bound_check,
+        )
+        result = _t1_omega_bound_check("Claim: ω = 2 exactly.")
+        assert result is not None
+        outcome, _caveats = result
+        assert outcome == "decisive_inconclusive"
+
+    def test_t1_no_omega_mention_returns_none(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _t1_omega_bound_check,
+        )
+        assert _t1_omega_bound_check("Some unrelated text about tensors.") is None
+
+    def test_t4_m3_rank_at_upper_bound_verifies(self):
+        """R(M<3>) <= 23 is implied by Laderman 1976."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _t4_m3_rank_bound_check,
+        )
+        result = _t4_m3_rank_bound_check("R(M<3>) <= 23.")
+        assert result is not None
+        outcome, _caveats = result
+        assert outcome == "decisive_verified"
+
+    def test_t4_m3_rank_below_lower_bound_contradicts(self):
+        """R(M<3>) <= 18 violates Landsberg lower bound 19."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _t4_m3_rank_bound_check,
+        )
+        result = _t4_m3_rank_bound_check("R(M<3>) <= 18.")
+        assert result is not None
+        outcome, _caveats = result
+        assert outcome == "decisive_contradicted"
+
+    def test_t4_m3_rank_equality_in_range(self):
+        """R(M<3>) = 20 is within [19,23]; inconclusive (exact value open)."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _t4_m3_rank_bound_check,
+        )
+        result = _t4_m3_rank_bound_check("Claim: R(M<3>) = 20.")
+        assert result is not None
+        outcome, _caveats = result
+        assert outcome == "decisive_inconclusive"
+
+    def test_catalog_lookup_uses_t_bound_checker_when_registered(self):
+        """End-to-end: catalog_lookup dispatches T#1 to its bound checker."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_catalog_lookup,
+        )
+        result = _verifier_catalog_lookup({
+            "id": "CLAIM-boundary-T1-00001",
+            "claim_text": "ω < 2.371339",
+        })
+        assert result.outcome_class == "decisive_verified"
+        assert result.evidence_blob["entry_id"] == "T#1"
+        assert result.evidence_blob.get("bound_check") == "T#-specific-closure"
+
+    def test_t_bound_checker_registry_has_t1_t4(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _T_BOUND_CHECKERS,
+        )
+        assert "T#1" in _T_BOUND_CHECKERS
+        assert "T#4" in _T_BOUND_CHECKERS
+
+
 class TestSympyFactorVerifier:
     """sympy_factor verifier wired 2026-05-13 hour 3."""
 

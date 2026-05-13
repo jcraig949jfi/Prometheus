@@ -484,6 +484,24 @@ def _verifier_catalog_lookup(claim_payload: dict) -> VerifierResult:
             ),
         )
     entry_text = catalog[entry_id]
+    # Bound-comparison layer: dispatch to per-T# closure if registered.
+    bound_check = _T_BOUND_CHECKERS.get(entry_id)
+    if bound_check is not None:
+        claim_text = claim_payload.get("claim_text", "") or ""
+        check_result = bound_check(claim_text)
+        if check_result is not None:
+            outcome, caveats = check_result
+            return VerifierResult(
+                outcome_class=outcome,
+                method_used="catalog_lookup",
+                evidence_blob={
+                    "entry_id": entry_id,
+                    "bound_check": "T#-specific-closure",
+                    "claim_text_preview": claim_text[:200],
+                },
+                runtime_ms=runtime_ms,
+                caveats=caveats,
+            )
     return VerifierResult(
         outcome_class="decisive_inconclusive",
         method_used="catalog_lookup",
@@ -491,16 +509,195 @@ def _verifier_catalog_lookup(claim_payload: dict) -> VerifierResult:
             "entry_id": entry_id,
             "entry_body_chars": len(entry_text),
             "entry_preview": entry_text[:240],
-            "reason": "entry_confirmed_but_bound_comparison_not_wired",
+            "reason": (
+                "entry_confirmed_but_bound_extraction_failed"
+                if bound_check is not None
+                else "entry_confirmed_but_no_bound_checker_registered"
+            ),
         },
         runtime_ms=runtime_ms,
         caveats=(
-            f"{entry_id} catalog entry exists. MVP does not yet do "
-            "numeric bound extraction + comparison; dispatch fallback "
-            "verifier (citation_audit or manual_review) for the "
-            "specific claim assertion."
+            f"{entry_id} catalog entry exists. Bound-extraction did not "
+            "fire (either no extractor registered or claim_text shape "
+            "didn't match the regex). Fallback verifier should handle."
         ),
     )
+
+
+# ---------------------------------------------------------------------------
+# Per-T# numeric bound checkers (loop hour 4, 2026-05-13)
+#
+# Each checker takes the claim_text string and returns
+# (outcome_class, caveats_string) when a confident verdict is possible,
+# or None to defer to the generic "entry confirmed but bound check
+# couldn't fire" path. Bounds are stored as Python constants so they
+# track the catalog body's stated values; if the catalog updates, these
+# constants must be updated in lockstep (substrate_self invariant
+# territory — see _build_substrate_self_invariants for the test
+# infrastructure that flags drift).
+# ---------------------------------------------------------------------------
+
+
+# T#1: matrix multiplication exponent ω. Catalog says ω in [2, 2.371339)
+# (lower bound from associativity; upper from Alman-Duan-VW-Xu-Xu-Zhou
+# 2024 arXiv:2404.16349, superseding Duan-Wu-Zhou 2023). Exact value
+# ω = 2 conjectured but unproven.
+_T1_OMEGA_LOWER = 2.0
+_T1_OMEGA_UPPER = 2.371339
+
+# T#4: 3x3 matrix multiplication tensor M<3> rank. Laderman 1976 upper
+# bound 23; Landsberg lower bound 19 (cited in Aporia's CLAIM-boundary-
+# T4-00002 ground_truth_source). Open in [19, 23].
+_T4_M3_LOWER = 19
+_T4_M3_UPPER = 23
+
+
+_OMEGA_REGEX = re.compile(
+    r"(?:omega|ω|\\omega)\s*([<>]=?|=)\s*(\d+(?:\.\d+)?)",
+    re.IGNORECASE,
+)
+_M3_RANK_REGEX = re.compile(
+    r"R\s*\(\s*M\s*[<⟨]\s*3\s*[>⟩]\s*\)\s*([<>]=?|=)\s*(\d+)",
+)
+
+
+def _t1_omega_bound_check(claim_text: str) -> Optional[Tuple[str, str]]:
+    """Bound check for T#1 (matrix multiplication exponent ω).
+
+    Catalog: ω in [_T1_OMEGA_LOWER, _T1_OMEGA_UPPER) — lower trivial,
+    upper from ADVWXXZ 2024. Exact value ω = 2 conjectured-but-open.
+
+    Returns (outcome_class, caveats) or None on extraction failure.
+    """
+    m = _OMEGA_REGEX.search(claim_text)
+    if not m:
+        return None
+    op = m.group(1)
+    try:
+        val = float(m.group(2))
+    except ValueError:
+        return None
+    # Equality claim: ω = val
+    if op == "=":
+        if val < _T1_OMEGA_LOWER:
+            return (
+                "decisive_contradicted",
+                f"Claim ω={val} violates trivial lower bound ω ≥ {_T1_OMEGA_LOWER} "
+                f"(from associativity-counting on the M<n> tensor; n^2 entries "
+                "must be read by any algorithm).",
+            )
+        if val >= _T1_OMEGA_UPPER:
+            return (
+                "decisive_contradicted",
+                f"Claim ω={val} violates established upper bound ω < "
+                f"{_T1_OMEGA_UPPER} (Alman-Duan-VW-Xu-Xu-Zhou 2024).",
+            )
+        # val in [lower, upper) — within established interval but
+        # exact value is conjecturally ω=2 and unproven.
+        return (
+            "decisive_inconclusive",
+            f"Claim ω={val} is within established range [{_T1_OMEGA_LOWER}, "
+            f"{_T1_OMEGA_UPPER}) but exact value remains open (ω=2 "
+            "conjectured, unproven).",
+        )
+    # Upper-bound claim: ω <= val or ω < val
+    if op in ("<=", "<"):
+        if val <= _T1_OMEGA_LOWER:
+            return (
+                "decisive_contradicted",
+                f"Claim ω {op} {val} violates lower bound ω ≥ {_T1_OMEGA_LOWER}.",
+            )
+        if val >= _T1_OMEGA_UPPER:
+            return (
+                "decisive_verified",
+                f"Claim ω {op} {val} is implied by established upper bound ω < "
+                f"{_T1_OMEGA_UPPER} (ADVWXXZ 2024 arXiv:2404.16349).",
+            )
+        return None  # Tighter than established — can't verify from catalog
+    # Lower-bound claim: ω >= val or ω > val
+    if op in (">=", ">"):
+        if val >= _T1_OMEGA_UPPER:
+            return (
+                "decisive_contradicted",
+                f"Claim ω {op} {val} violates upper bound ω < {_T1_OMEGA_UPPER}.",
+            )
+        if val <= _T1_OMEGA_LOWER:
+            return (
+                "decisive_verified",
+                f"Claim ω {op} {val} is implied by established lower bound ω ≥ "
+                f"{_T1_OMEGA_LOWER}.",
+            )
+        return None  # Tighter than established — can't verify from catalog
+    return None
+
+
+def _t4_m3_rank_bound_check(claim_text: str) -> Optional[Tuple[str, str]]:
+    """Bound check for T#4 (R(M<3>) — rank of 3x3 matrix multiplication).
+
+    Catalog: R(M<3>) in [_T4_M3_LOWER, _T4_M3_UPPER] — Landsberg lower
+    bound 19; Laderman 1976 upper bound 23. Exact value open.
+    """
+    m = _M3_RANK_REGEX.search(claim_text)
+    if not m:
+        return None
+    op = m.group(1)
+    try:
+        val = int(m.group(2))
+    except ValueError:
+        return None
+    if op == "=":
+        if val < _T4_M3_LOWER:
+            return (
+                "decisive_contradicted",
+                f"Claim R(M<3>)={val} violates Landsberg lower bound "
+                f"R(M<3>) ≥ {_T4_M3_LOWER}.",
+            )
+        if val > _T4_M3_UPPER:
+            return (
+                "decisive_contradicted",
+                f"Claim R(M<3>)={val} violates Laderman 1976 upper bound "
+                f"R(M<3>) ≤ {_T4_M3_UPPER}.",
+            )
+        return (
+            "decisive_inconclusive",
+            f"Claim R(M<3>)={val} is within established range "
+            f"[{_T4_M3_LOWER}, {_T4_M3_UPPER}] but exact value remains open.",
+        )
+    if op in ("<=", "<"):
+        if val < _T4_M3_LOWER:
+            return (
+                "decisive_contradicted",
+                f"Claim R(M<3>) {op} {val} violates Landsberg lower bound "
+                f"R(M<3>) ≥ {_T4_M3_LOWER}.",
+            )
+        if val >= _T4_M3_UPPER:
+            return (
+                "decisive_verified",
+                f"Claim R(M<3>) {op} {val} is implied by Laderman 1976 upper "
+                f"bound R(M<3>) ≤ {_T4_M3_UPPER}.",
+            )
+        return None
+    if op in (">=", ">"):
+        if val > _T4_M3_UPPER:
+            return (
+                "decisive_contradicted",
+                f"Claim R(M<3>) {op} {val} violates upper bound R(M<3>) ≤ "
+                f"{_T4_M3_UPPER}.",
+            )
+        if val <= _T4_M3_LOWER:
+            return (
+                "decisive_verified",
+                f"Claim R(M<3>) {op} {val} is implied by Landsberg lower "
+                f"bound R(M<3>) ≥ {_T4_M3_LOWER}.",
+            )
+        return None
+    return None
+
+
+_T_BOUND_CHECKERS: Dict[str, Callable[[str], Optional[Tuple[str, str]]]] = {
+    "T#1": _t1_omega_bound_check,
+    "T#4": _t4_m3_rank_bound_check,
+}
 
 
 # ---------------------------------------------------------------------------
