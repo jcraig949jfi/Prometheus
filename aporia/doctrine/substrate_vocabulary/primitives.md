@@ -39,13 +39,26 @@ Primitives are the **structured mathematical objects** that substrate agents pro
 
 The Tier-B cluster is the densest in the seed batch. It absorbs the rank / decomposition / complexity / orbit-closure witnesses that an attack produces as concrete certificate output.
 
+### `TensorRankWitness`
+
+- **Tier:** B (parent class — sibling to `BorderRankWitness`)
+- **Parent:** `ConstructiveExistenceWitness` (abstract Tier-B root)
+- **Sub-types:** v0.1.1 leaves the sub-type tree shallow on purpose. The first registered sub-types are expected to be `DirectSumAdditivitySafeZoneWitness` (the AA-013 / Rupniewski 2024 safe-zone certificate for `R ≤ 7` over `ℂ`) and `ExactRankCertificate` (witness that a specific decomposition achieves `R(T) = r` rather than just upper-bounding `R̄(T)`). Both register through the Techne v4.0 Wave 2 contract-change window.
+- **Composition eligibility:** Tier-B × Tier-D (pairs naturally with `GenericityAlmostEverywhereCert` for "almost every tensor has rank `r`" statements over given fields); Tier-B × Tier-E via `RankZooSignature` (HARD-5: must register `R` slot distinctly from `R̄` slot in the signature tuple).
+- **Description:** Witness that a tensor `T` has **ordinary tensor rank** `R(T) = r` (or `≤ r` / `≥ r` per certificate grade). Distinct from `BorderRankWitness` by definitional locus: `TensorRankWitness` certifies membership in the rank-`r` locus itself (the constructible set of tensors decomposable as a sum of `r` rank-1 terms), whereas `BorderRankWitness` certifies membership in the Zariski / topological **closure** of that locus. **Do not substitute one for the other unless an explicit theorem or reduction bridges `R` and `R̄` in the scoped setting** — strict separations are pervasive (Schönhage 1981 border-rank additivity failure; the entire matmul-exponent literature; Lampert–Moshkovitz 2025 partition-rank vs analytic-rank separation).
+- **Empirical motivation (load-bearing):** AA-013 in `anti_anchors.md` records the HARD-5 routing-correction caught by Aporia's 2026-05-13 Gemini Deep Research pilot (DR-001, Rupniewski 2024 LAA Vol 698, DOI 10.1016/j.laa.2024.06.016). Strassen's direct-sum additivity strictly holds for **exact tensor rank `R` over `ℂ` when both tensors satisfy `R ≤ 7`** — NOT for border rank `R̄`, where additivity fails earlier per Schönhage 1981. The first version of AA-013's prompt-author routing destination named `BorderRankWitness` as the consumer; a primary-source check on Rupniewski 2024 surfaced that the result is about `R`, not `R̄`. The catch happened at a routing-decision layer one above code or citation (see `feedback_generic_to_specific_audit.md` four-layer audit pattern).
+- **Consumer hook (substrate-tester / Learner-Tester):** the routing correction is durable only if it can be exercised as a fixture. The named fixtures are:
+  - **Substrate-tester probe:** `prometheus_math/tests/substrate_tester/test_aa_013_tensor_rank_vs_border_rank_separation.py` — given a Tier-B witness annotated `cert_type=DirectSumAdditivitySafeZoneWitness`, refuses to register the witness if `rank_invariant ∈ {border_rank, R_bar}` and accepts only if `rank_invariant == ordinary_rank`. Sentinel-violation on a substitution attempt fires `PATTERN_RANK_PARITY_LEAK` (see `attacks.md`).
+  - **Learner-Tester routing smoke test:** `ergon/learner/fixtures/smoke_tests/aa_013_tensor_rank_routing.json` — given a corpus input matching the AA-013 true_form, the Learner's witness-routing head must select `TensorRankWitness`, NOT `BorderRankWitness`. Required to pass before any LoRA / supervised-routing checkpoint can claim AA-013 coverage.
+- **Source:** AA-013 (this file's sibling registry); Rupniewski 2024 LAA Vol 698 (DOI 10.1016/j.laa.2024.06.016); first announced arXiv:2209.11040. Substrate-shaped pipeline pilot 2026-05-13.
+
 ### `BorderRankWitness`
 
-- **Tier:** B (parent class)
+- **Tier:** B (parent class — sibling to `TensorRankWitness`)
 - **Parent:** `ConstructiveExistenceWitness` (abstract Tier-B root)
 - **Sub-types:** `DecompositionCertificate`, `DegenerationWitness`, `LimitWitness`, `CactusRankWitness`, `WaringRankWitness`, `BorderCactusWitness`. (Plus the cross-cutting sub-primitives `DualityCheck`, `PrecisionFloorCertificate`, `ReshapingCertificate`, `MeasureZeroExceptionAnnotation` listed below.)
 - **Composition eligibility:** Tier-B × Tier-D (confirmed twice — see `composition_rules.md`); Tier-B × Tier-E (confirmed via T#92 `GCTObstructionCertificate`).
-- **Description:** Witness that a tensor `T` lies in (or outside) the closure of the rank-`r` locus inside the ambient tensor space. Encodes the witness type, the certificate-grade (exact / numerical-certified / numerical-heuristic), the duality-check status, and the precision floor. Parent for the entire border-rank cluster.
+- **Description:** Witness that a tensor `T` lies in (or outside) the **Zariski / topological closure** of the rank-`r` locus inside the ambient tensor space — i.e. certifies a statement about border rank `R̄(T)`, not ordinary rank `R(T)`. Encodes the witness type, the certificate-grade (exact / numerical-certified / numerical-heuristic), the duality-check status, and the precision floor. Parent for the entire border-rank cluster. **Sibling to `TensorRankWitness`; the two are NOT interchangeable** (border-rank additivity fails earlier per Schönhage 1981, and the closure-vs-locus distinction is foundational — see AA-013 and the sibling primitive's empirical-motivation block).
 - **Source:** T#34 (`report_T34_borderrank_membership.md`); synthesis §3.2.
 
 ### `LimitWitness`
