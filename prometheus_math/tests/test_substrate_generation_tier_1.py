@@ -362,10 +362,11 @@ class TestClaimRunnerVerifierStubs:
             get_verifier("not_a_real_verifier")
 
     def test_stub_returns_not_yet_implemented(self):
-        # Track 2 2026-05-13: citation_audit is no longer stubbed; use sympy_factor
-        # (still stubbed). Same behavior applies to the remaining stubs.
+        # 2026-05-13 hour 3: 5 of 7 verifiers wired (citation_audit,
+        # catalog_lookup, mpmath_compute, substrate_self_check, sympy_factor).
+        # triangulation and manual_review remain stubbed.
         from prometheus_math.substrate_generation.tier_1_claim_runner import get_verifier
-        result = get_verifier("sympy_factor")({"id": "CLAIM-test-00001"})
+        result = get_verifier("triangulation")({"id": "CLAIM-test-00001"})
         assert result.outcome_class == "verifier_permanent_failure"
         assert result.evidence_blob["flag"] == "not_yet_implemented"
         assert result.evidence_blob["claim_id"] == "CLAIM-test-00001"
@@ -691,6 +692,77 @@ class TestSubstrateSelfCheckVerifier:
         assert VERIFIER_REGISTRY["substrate_self_check"] is _verifier_substrate_self_check
 
 
+class TestSympyFactorVerifier:
+    """sympy_factor verifier wired 2026-05-13 hour 3."""
+
+    def test_unknown_claim_id_returns_inconclusive(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_sympy_factor,
+        )
+        result = _verifier_sympy_factor({"id": "CLAIM-test-99999"})
+        assert result.outcome_class == "decisive_inconclusive"
+        assert "no_calibration_entry" in result.evidence_blob["reason"]
+
+    def test_trefoil_alexander_verifies(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_sympy_factor,
+        )
+        result = _verifier_sympy_factor({
+            "id": "CLAIM-calibration-knots-00001",
+            "claim_text": (
+                "The Alexander polynomial of the trefoil knot (3_1) is "
+                "Δ(t) = t^2 - t + 1\nin canonical form."
+            ),
+        })
+        assert result.outcome_class == "decisive_verified"
+        assert result.evidence_blob["match"] is True
+
+    def test_figure_eight_jones_verifies(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_sympy_factor,
+        )
+        result = _verifier_sympy_factor({
+            "id": "CLAIM-calibration-jones-00001",
+            "claim_text": (
+                "The Jones polynomial of the figure-eight knot 4_1 is "
+                "V(t) = t^{-2} - t^{-1} + 1 - t + t^2."
+            ),
+        })
+        assert result.outcome_class == "decisive_verified"
+
+    def test_mismatched_polynomial_contradicts(self):
+        """If the claim_text says the wrong polynomial, must contradict."""
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_sympy_factor,
+        )
+        result = _verifier_sympy_factor({
+            "id": "CLAIM-calibration-knots-00001",
+            "claim_text": (
+                # Wrong polynomial — t^2 + t + 1 instead of t^2 - t + 1
+                "The Alexander polynomial of the trefoil knot (3_1) is "
+                "Δ(t) = t^2 + t + 1\nin canonical form."
+            ),
+        })
+        assert result.outcome_class == "decisive_contradicted"
+        assert "polynomial_mismatch" in result.evidence_blob["reason"]
+
+    def test_unparseable_claim_text_returns_inconclusive(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            _verifier_sympy_factor,
+        )
+        result = _verifier_sympy_factor({
+            "id": "CLAIM-calibration-knots-00001",
+            "claim_text": "some text with no = sign at all",
+        })
+        assert result.outcome_class == "decisive_inconclusive"
+
+    def test_registry_points_at_real_verifier(self):
+        from prometheus_math.substrate_generation.tier_1_claim_runner import (
+            VERIFIER_REGISTRY, _verifier_sympy_factor,
+        )
+        assert VERIFIER_REGISTRY["sympy_factor"] is _verifier_sympy_factor
+
+
 class TestLearnerRecordClaimExtensionFields:
     """Per Track 1 prompt 2026-05-13: claim_id, claim_category, actual_verdict
     carry through from CLAIM payload to LearnerRecord."""
@@ -721,9 +793,10 @@ class TestRunClaim:
             "id": "CLAIM-test-00001",
             "claim_category": "frontier_survey",
             "claim_text": "Sample claim long enough to pass the 20-char minimum.",
-            # Use a stubbed verifier so this test stays deterministic offline
-            # (citation_audit is wired against arxiv.org as of 2026-05-13).
-            "expected_verifier_primary": "sympy_factor",
+            # Use a still-stubbed verifier so this test stays deterministic
+            # offline. As of 2026-05-13 hour 3: triangulation + manual_review
+            # remain stubbed; the other 5 are wired (live).
+            "expected_verifier_primary": "triangulation",
             "expected_verdict": "falsified",
             "ground_truth_source": "arXiv:1604.06431",
             "trust_tier": "analytically_proven",
@@ -736,7 +809,7 @@ class TestRunClaim:
         from prometheus_math.substrate_generation.tier_1_claim_runner import run_claim
         result, records = run_claim(self._payload())
         assert result.actual_verdict == "verifier_permanent_failure"
-        assert result.verifier_used == "sympy_factor"
+        assert result.verifier_used == "triangulation"
         assert result.expected_actual_match is False  # failure never matches expected
         assert len(records) == 1
         assert records[0].verifier_outcome_class == "verifier_permanent_failure"
@@ -849,8 +922,9 @@ class TestRunClaimBatch:
                 "id": f"CLAIM-test-{i:05d}",
                 "claim_category": ["frontier_survey", "boundary", "substrate_self"][i],
                 "claim_text": "Sample claim long enough to pass the 20-char minimum.",
-                # sympy_factor still stubbed; citation_audit now wired (network).
-                "expected_verifier_primary": "sympy_factor",
+                # triangulation still stubbed as of hour 3 2026-05-13;
+                # sympy_factor and the other 4 are wired.
+                "expected_verifier_primary": "triangulation",
                 "expected_verdict": ["falsified", "survived", "open"][i],
                 "ground_truth_source": "arXiv:1604.06431",
                 "trust_tier": "analytically_proven",

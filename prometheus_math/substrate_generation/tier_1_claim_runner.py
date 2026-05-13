@@ -793,6 +793,166 @@ def _verifier_substrate_self_check(claim_payload: dict) -> VerifierResult:
     )
 
 
+# ---------------------------------------------------------------------------
+# sympy_factor verifier (bonus, 2026-05-13 hour 3)
+# ---------------------------------------------------------------------------
+
+
+# Calibration table for sympy-factor / polynomial-form claims.
+# claim_id -> (variable_name, expected_canonical_expression_str).
+# The verifier parses the canonical expression via sympy.sympify; if the
+# table contains this claim, returns decisive_verified (the substrate's
+# stored canonical answer is the ground truth this verifier confirms).
+#
+# Future extension: extract the claimed polynomial expression from
+# claim_text via a tighter parser and compare to canonical; the MVP
+# trusts the calibration table as ground truth and verifies that the
+# canonical form itself parses cleanly (substrate-self-consistency).
+_SYMPY_CALIBRATION_TABLE: Dict[str, Tuple[str, str]] = {
+    # Alexander polynomial of trefoil knot 3_1.
+    # Δ(t) = t^2 - t + 1 in canonical form (constant term +1).
+    "CLAIM-calibration-knots-00001": (
+        "t",
+        "t**2 - t + 1",
+    ),
+    # Jones polynomial of figure-eight knot 4_1.
+    # V(t) = t^{-2} - t^{-1} + 1 - t + t^2 (Laurent polynomial,
+    # symmetric about t^0).
+    "CLAIM-calibration-jones-00001": (
+        "t",
+        "t**(-2) - t**(-1) + 1 - t + t**2",
+    ),
+}
+
+
+def _verifier_sympy_factor(claim_payload: dict) -> VerifierResult:
+    """sympy_factor verifier.
+
+    MVP (2026-05-13): looks up claim_id in _SYMPY_CALIBRATION_TABLE.
+    If present, sympy-parses the stored canonical expression and the
+    claim_text's polynomial form, compares via sp.simplify(...) == 0.
+
+    Extraction from claim_text uses a permissive heuristic: search for
+    the substring after the last '=' and before the first '.' or end
+    of line. If extraction or parsing fails, returns
+    decisive_inconclusive with the parse error in evidence_blob.
+
+    Network-free.
+    """
+    t_start = time.perf_counter()
+    claim_id = claim_payload.get("id", "")
+    if claim_id not in _SYMPY_CALIBRATION_TABLE:
+        return VerifierResult(
+            outcome_class="decisive_inconclusive",
+            method_used="sympy_factor",
+            evidence_blob={
+                "claim_id": claim_id,
+                "reason": "no_calibration_entry",
+                "supported_claim_ids": sorted(_SYMPY_CALIBRATION_TABLE.keys()),
+            },
+            runtime_ms=int((time.perf_counter() - t_start) * 1000),
+            caveats=(
+                "sympy_factor MVP only handles pre-registered calibration "
+                "anchors. Add entries to _SYMPY_CALIBRATION_TABLE."
+            ),
+        )
+    var_name, canonical_str = _SYMPY_CALIBRATION_TABLE[claim_id]
+    claim_text = claim_payload.get("claim_text", "")
+
+    # Extract candidate polynomial expression from claim_text. Heuristic:
+    # after the last '=' sign, take up to the first sentence/clause
+    # terminator. Order matters — check more specific terminators first.
+    if "=" in claim_text:
+        after = claim_text.rsplit("=", 1)[-1]
+        # Truncate at first sentence terminator or clause boundary.
+        # \nin catches "= POLY\nin canonical form normalized to..."
+        # (the trefoil/Jones claim_text shape).
+        for terminator in ("\nin ", "\nwhere ", " in ", ". ", ".\n", "\n\n", "\n"):
+            if terminator in after:
+                after = after.split(terminator)[0]
+                break
+        candidate = after.strip().rstrip(".").strip()
+        # Normalize TeX caret to Python power; strip braces from {-2}
+        candidate = candidate.replace("^", "**")
+        candidate = re.sub(r"\*\*\{([^}]+)\}", r"**(\1)", candidate)
+    else:
+        candidate = ""
+
+    import sympy as sp
+    var = sp.Symbol(var_name)
+    locals_dict = {var_name: var}
+    try:
+        canonical_expr = sp.sympify(canonical_str, locals=locals_dict)
+    except (sp.SympifyError, SyntaxError, TypeError) as exc:
+        return VerifierResult(
+            outcome_class="verifier_permanent_failure",
+            method_used="sympy_factor",
+            runtime_ms=int((time.perf_counter() - t_start) * 1000),
+            error_text=f"canonical_str failed sympy.sympify: {exc}",
+        )
+    if not candidate:
+        # Substrate's stored answer is the ground truth — no claim form
+        # to compare against. Treat as inconclusive so fallback can fire.
+        return VerifierResult(
+            outcome_class="decisive_inconclusive",
+            method_used="sympy_factor",
+            evidence_blob={
+                "claim_id": claim_id,
+                "reason": "no_polynomial_expression_in_claim_text",
+                "canonical_form": canonical_str,
+            },
+            runtime_ms=int((time.perf_counter() - t_start) * 1000),
+        )
+    try:
+        claimed_expr = sp.sympify(candidate, locals=locals_dict)
+    except (sp.SympifyError, SyntaxError, TypeError) as exc:
+        return VerifierResult(
+            outcome_class="decisive_inconclusive",
+            method_used="sympy_factor",
+            evidence_blob={
+                "claim_id": claim_id,
+                "reason": "claim_polynomial_unparseable",
+                "candidate": candidate[:120],
+                "parse_error": f"{type(exc).__name__}: {str(exc)[:200]}",
+            },
+            runtime_ms=int((time.perf_counter() - t_start) * 1000),
+            caveats=(
+                "Claim's polynomial form could not be parsed; canonical "
+                "comparison skipped. Likely a heuristic-extraction miss."
+            ),
+        )
+    diff = sp.simplify(claimed_expr - canonical_expr)
+    runtime_ms = int((time.perf_counter() - t_start) * 1000)
+    if diff == 0:
+        return VerifierResult(
+            outcome_class="decisive_verified",
+            method_used="sympy_factor",
+            evidence_blob={
+                "claim_id": claim_id,
+                "canonical_form": canonical_str,
+                "claimed_form": str(claimed_expr),
+                "match": True,
+            },
+            runtime_ms=runtime_ms,
+        )
+    return VerifierResult(
+        outcome_class="decisive_contradicted",
+        method_used="sympy_factor",
+        evidence_blob={
+            "claim_id": claim_id,
+            "canonical_form": canonical_str,
+            "claimed_form": str(claimed_expr),
+            "diff": str(diff),
+            "reason": "polynomial_mismatch",
+        },
+        runtime_ms=runtime_ms,
+        caveats=(
+            f"Claimed polynomial form {str(claimed_expr)} differs from "
+            f"canonical {canonical_str}; diff = {str(diff)}."
+        ),
+    )
+
+
 VERIFIER_REGISTRY: Dict[str, VerifierFn] = {
     name: _verifier_stub_factory(name) for name in KNOWN_VERIFIERS
 }
@@ -800,6 +960,7 @@ VERIFIER_REGISTRY["citation_audit"] = _verifier_citation_audit
 VERIFIER_REGISTRY["catalog_lookup"] = _verifier_catalog_lookup
 VERIFIER_REGISTRY["mpmath_compute"] = _verifier_mpmath_compute
 VERIFIER_REGISTRY["substrate_self_check"] = _verifier_substrate_self_check
+VERIFIER_REGISTRY["sympy_factor"] = _verifier_sympy_factor
 
 
 def get_verifier(name: str) -> VerifierFn:
