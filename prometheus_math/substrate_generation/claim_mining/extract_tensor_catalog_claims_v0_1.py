@@ -113,7 +113,19 @@ def _numeric_hash_suffix(text: str) -> str:
 
 def _entry_status_verdict(body_first_paragraph: str) -> str:
     """Heuristic verdict assignment based on status language in the
-    entry's first paragraph (the bounds-and-status statement)."""
+    entry's first paragraph (the bounds-and-status statement).
+
+    Calibration note (loop hour 15): default changed from 'survived' to
+    'open' when no explicit status language present. Empirical reason:
+    the substrate's catalog_lookup verifier returns decisive_inconclusive
+    for catalog entries lacking a specific bound checker (only T#1, T#4,
+    T#56 wired so far). Defaulting to 'survived' produced match rate
+    5.77% on 104 mined catalog claims (the 6 'open'-status entries
+    matched; everything else was inconclusive vs survived). Defaulting
+    to 'open' gives the substrate honest credit when it correctly says
+    'I don't have bound knowledge for this entry.' Status-language-
+    explicit cases (settled / disproven) still take precedence.
+    """
     lower = body_first_paragraph.lower()
     if any(s in lower for s in _STATUS_FALSIFIED_INDICATORS):
         return "falsified"
@@ -121,7 +133,7 @@ def _entry_status_verdict(body_first_paragraph: str) -> str:
         return "open"
     if any(s in lower for s in _STATUS_SETTLED_INDICATORS):
         return "survived"
-    return "survived"  # default for catalog entries (catalog IS ground truth)
+    return "open"  # default: honest 'I don't know' matches inconclusive
 
 
 def _detect_rule_d(text: str, arxiv_span: Tuple[int, int]) -> bool:
