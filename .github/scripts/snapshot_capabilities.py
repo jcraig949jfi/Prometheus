@@ -14,7 +14,12 @@ import json
 import pathlib
 import sys
 
-import prometheus_math.registry as r
+# CI runs this script from the repo root but doesn't pip install -e .,
+# so prometheus_math isn't on sys.path by default. Add cwd. Without this
+# the daily capability-tracking job fails ModuleNotFoundError.
+sys.path.insert(0, str(pathlib.Path.cwd()))
+
+import prometheus_math.registry as r  # noqa: E402
 
 
 def main() -> int:

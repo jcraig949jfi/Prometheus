@@ -104,6 +104,12 @@ jobs:
 
       - name: Print capability matrix
         id: capmatrix
+        env:
+          # prometheus_math isn't pip-installed; tell python to find it
+          # at the repo root. Without this the python -c imports fail and
+          # capability_matrix.json gets written empty (caught downstream
+          # by capability_matrix_md.py's empty-handling fallback).
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           python -m prometheus_math.registry || true
           python -c "import prometheus_math.registry as r, json; print(json.dumps(r.installed(), indent=2))" > capability_matrix.json
