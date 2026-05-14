@@ -136,7 +136,13 @@ jobs:
         if: always()
         run: |
           if [ -d techne/tests ]; then
+            # Deselect intrinsically slow tests that don't fit the smoke
+            # budget. test_composition_batch_then_sort_matches_sorted_scalars
+            # took 1h23m alone in run 25839878805 (scalar-Mahler over the
+            # full Mossinghoff snapshot). The elementwise property test in
+            # the same file covers the same correctness shape.
             pytest techne/tests -v -n auto \
+              --deselect 'techne/tests/test_mahler_batch.py::test_composition_batch_then_sort_matches_sorted_scalars' \
               --junitxml=test-results/techne-py${{ matrix.python-version }}.xml \
               --tb=short || true
           else
