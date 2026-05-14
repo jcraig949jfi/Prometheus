@@ -1,0 +1,436 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prometheus.local/techne/contracts/substrate_block_schemas/problem_card_v0.json",
+  "title": "problem_card (v0 DRAFT)",
+  "description": "DRAFT schema per pivot/arena_problem_atlas_sandbox_vision_2026-05-14.md Part 4 (Layer 5.5 Problem Atlas). A structured map of an unsolved problem with its hardness signature and the navigation primitives needed to support Arena/Sandbox infrastructure. NOT a contract change — sits alongside the 7 existing substrate_block schemas as a draft for Aporia review. Per session-prompt 2026-05-14 Track 4 (optional). Will be promoted to v1.0 only after Aporia adjudication and a 10-card MVP smoke test demonstrates the schema captures the navigation signal the Arena needs.",
+  "_status": "draft",
+  "_status_note": "v0 draft. Aporia ships review notes; if approved, version bumps to 1.0.0 and _status field is removed. Do NOT use in production substrate_block emission until promoted.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "_schema_version",
+    "_status",
+    "id",
+    "statement",
+    "status",
+    "hardness_signature",
+    "source_report"
+  ],
+  "properties": {
+    "_schema_version": {
+      "$ref": "_common_definitions.json#/$defs/schemaVersion",
+      "const": "0.1.0"
+    },
+    "_status": {
+      "type": "string",
+      "const": "draft",
+      "description": "v0 DRAFT marker. Required at v0 to make it impossible for a draft block to leak into the production substrate by accident. Promotes to absent at v1.0.0."
+    },
+    "id": {
+      "title": "Problem card ID",
+      "description": "PC-NNNN format. Allocated by Aporia at registration time. PC-XXX as placeholder when proposing.",
+      "type": "string",
+      "pattern": "^PC-(XXX|\\d{3,4})$",
+      "examples": ["PC-001", "PC-XXX"]
+    },
+    "statement": {
+      "title": "Problem statement",
+      "description": "Natural-language problem statement. Includes the precise mathematical formulation, current best bound (if any), and the canonical phrasing used in the field. Citations belong in known_attacks / candidate_representations / hardness_signature, not here.",
+      "type": "string",
+      "minLength": 30,
+      "maxLength": 4000
+    },
+    "status": {
+      "title": "Resolution status",
+      "type": "string",
+      "enum": [
+        "open",
+        "partially-known",
+        "numerical-evidence-only",
+        "independent-of-axioms",
+        "settled"
+      ],
+      "description": "open: no proof or refutation. partially-known: subset settled (e.g. specific cases proven). numerical-evidence-only: extensive computation supports but no proof. independent-of-axioms: proven independent of standard axioms (CH-style). settled: included for completeness when card describes a recently-solved problem (still useful for the Atlas to record HOW it closed)."
+    },
+    "hardness_signature": {
+      "$ref": "#/$defs/hardnessSignature",
+      "description": "Required: weighted vector over the 8-dimension hardness taxonomy. Per the operating thesis (vision doc Part 4): hard problems are hard because the current language compresses them badly; this signature names the compression failure mode."
+    },
+    "method_gap_patterns": {
+      "title": "Documented method-gap patterns",
+      "description": "Each entry is a structured record of 'we can prove X with exponent 0.51 but need 0.5' or 'we can prove pointwise for random but not deterministic.' Each known method-gap becomes a queryable substrate object.",
+      "type": "array",
+      "items": {"$ref": "#/$defs/methodGapPattern"},
+      "uniqueItems": true
+    },
+    "representation_shift_witnesses": {
+      "title": "Successful coordinate-change witnesses",
+      "description": "Cases where shifting the representation closed the gap (numbers->ideals, curves->function fields, counting->geometry). Each witness records the before/after representations + the theorem that closed when the shift was applied. Empty list = no successful shift documented yet.",
+      "type": "array",
+      "items": {"$ref": "#/$defs/representationShiftWitness"},
+      "uniqueItems": true
+    },
+    "precursor_dependencies": {
+      "title": "Required precursor concepts/theorems",
+      "description": "Directed-graph edges: 'problem X needs concept Y or theorem Z established first.' Wiles needed modular-forms theory; modular-forms theory needed earlier scaffolding. Each entry names a required precursor + relationship type.",
+      "type": "array",
+      "items": {"$ref": "#/$defs/precursorDependency"},
+      "uniqueItems": true
+    },
+    "conceptual_absences": {
+      "title": "Registered missing mathematical objects",
+      "description": "Explicit registration that the problem needs an object that doesn't exist yet. Substrate value-prop sharpens here: forces naming of what's missing. Each entry: the absent object's tentative name, what role it would play, what existing structure most-resembles it.",
+      "type": "array",
+      "items": {"$ref": "#/$defs/conceptualAbsenceEntry"},
+      "uniqueItems": true
+    },
+    "musical_signature": {
+      "title": "Attack history (which methods made progress, which failed)",
+      "description": "Structured record of attempted attacks on the problem with their outcome. Two problems with similar musical signatures are candidates for cross-transport. Empty list = no documented attempts (rare; mostly applies to extremely new problems).",
+      "type": "array",
+      "items": {"$ref": "#/$defs/musicalSignatureEntry"},
+      "uniqueItems": true
+    },
+    "known_attacks": {
+      "title": "Catalog of canonical attack vectors documented for this problem",
+      "description": "Higher-level than musical_signature entries — these are named techniques (Iwasawa theory, modular lifting, ergodic methods, etc.). Each known_attack entry references where the technique was documented and which hardness dimension it addresses.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["technique_name", "addresses_dimension"],
+        "properties": {
+          "technique_name": {"type": "string", "minLength": 4, "maxLength": 200},
+          "addresses_dimension": {"$ref": "#/$defs/hardnessDimensionEnum"},
+          "primary_citation": {"$ref": "_common_definitions.json#/$defs/citationArxivOrDoi"},
+          "free_form_citation": {"type": "string", "minLength": 8, "maxLength": 600}
+        }
+      },
+      "uniqueItems": true
+    },
+    "candidate_representations": {
+      "title": "Untested or partially-tested coordinate systems for this problem",
+      "description": "Distinct from representation_shift_witnesses (which records shifts that WORKED). These are speculative or in-progress representation candidates. Each: candidate_name, sketch_description, status_marker.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["candidate_name", "sketch_description", "status_marker"],
+        "properties": {
+          "candidate_name": {"type": "string", "minLength": 4, "maxLength": 200},
+          "sketch_description": {"type": "string", "minLength": 20, "maxLength": 1500},
+          "status_marker": {
+            "type": "string",
+            "enum": ["untested", "in_progress", "stalled", "abandoned"]
+          }
+        }
+      },
+      "uniqueItems": true
+    },
+    "arena_readiness_flags": {
+      "title": "Per-flag readiness assertions for the Arena pipeline",
+      "description": "Tracks whether the problem_card has the supporting context the Arena's team-of-three rounds expect. Each flag is set independently; all-true means card is fully Arena-ready.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "has_canonical_statement": {"type": "boolean"},
+        "has_hardness_signature": {"type": "boolean"},
+        "has_at_least_one_method_gap": {"type": "boolean"},
+        "has_at_least_one_known_attack": {"type": "boolean"},
+        "primary_citations_resolve": {"type": "boolean"},
+        "ready_for_team_round": {
+          "type": "boolean",
+          "description": "Aggregate: true iff above flags are all true AND no out-of-scope content."
+        }
+      }
+    },
+    "domain_tags": {
+      "title": "Mathematical domain tags",
+      "description": "Free-form short tags for indexing (e.g. 'number_theory', 'tensor_complexity', 'topological_combinatorics'). Multiple tags allowed.",
+      "type": "array",
+      "items": {"type": "string", "minLength": 2, "maxLength": 60},
+      "uniqueItems": true,
+      "maxItems": 20
+    },
+    "source_report": {
+      "$ref": "_common_definitions.json#/$defs/sourceReportRef"
+    },
+    "notes": {
+      "title": "Free-form annotations",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000
+    }
+  },
+  "$defs": {
+    "hardnessDimensionEnum": {
+      "title": "8-dimension hardness taxonomy enum",
+      "description": "Per vision doc Part 4 §The 8-dimension hardness taxonomy. Each dimension names a distinct compression-failure mode. A problem's hardness_signature distributes weight over these.",
+      "type": "string",
+      "enum": [
+        "method_gap",
+        "representation_gap",
+        "global_obstruction",
+        "exactness_barrier",
+        "hidden_pathology",
+        "coupled_difficulty",
+        "non_hereditary_structure",
+        "conceptual_absence"
+      ]
+    },
+    "hardnessSignature": {
+      "title": "Weighted hardness signature over the 8 dimensions",
+      "description": "Required: each of the 8 dimensions present with weight + confidence + citations. Weights need not sum to 1 (a problem can score high on multiple dimensions). Confidence per dimension reflects how confident the classifier is in the weight assignment.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method_gap",
+        "representation_gap",
+        "global_obstruction",
+        "exactness_barrier",
+        "hidden_pathology",
+        "coupled_difficulty",
+        "non_hereditary_structure",
+        "conceptual_absence"
+      ],
+      "properties": {
+        "method_gap": {"$ref": "#/$defs/dimensionEntry"},
+        "representation_gap": {"$ref": "#/$defs/dimensionEntry"},
+        "global_obstruction": {"$ref": "#/$defs/dimensionEntry"},
+        "exactness_barrier": {"$ref": "#/$defs/dimensionEntry"},
+        "hidden_pathology": {"$ref": "#/$defs/dimensionEntry"},
+        "coupled_difficulty": {"$ref": "#/$defs/dimensionEntry"},
+        "non_hereditary_structure": {"$ref": "#/$defs/dimensionEntry"},
+        "conceptual_absence": {"$ref": "#/$defs/dimensionEntry"}
+      }
+    },
+    "dimensionEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["weight", "confidence"],
+      "properties": {
+        "weight": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Strength of this hardness dimension's contribution to the problem's overall difficulty (0 = irrelevant, 1 = dominant)."
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Classifier confidence in this weight assignment (0 = wild guess, 1 = certain)."
+        },
+        "citations": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 4, "maxLength": 600},
+          "uniqueItems": true,
+          "description": "Free-form citations supporting the weight+confidence assignment. Use for source attribution; does NOT need to be arXiv/DOI strict."
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 1500,
+          "description": "Brief justification for the weight+confidence combo."
+        }
+      }
+    },
+    "methodGapPattern": {
+      "title": "Method gap pattern (one per known near-miss)",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pattern_summary", "current_best", "needed"],
+      "properties": {
+        "pattern_summary": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 1000,
+          "description": "Brief: 'we can prove X with exponent 0.51 but need 0.5'."
+        },
+        "current_best": {"type": "string", "minLength": 5, "maxLength": 600},
+        "needed": {"type": "string", "minLength": 5, "maxLength": 600},
+        "barrier_type": {
+          "type": "string",
+          "enum": [
+            "constant_factor",
+            "logarithmic_factor",
+            "specific_to_general",
+            "asymptotic_to_exact",
+            "random_to_deterministic",
+            "low_dim_to_high_dim",
+            "smooth_to_rough",
+            "other"
+          ]
+        },
+        "primary_citation": {"$ref": "_common_definitions.json#/$defs/citationArxivOrDoi"}
+      }
+    },
+    "representationShiftWitness": {
+      "title": "Successful coordinate-change record",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["before_representation", "after_representation", "closed_theorem"],
+      "properties": {
+        "before_representation": {"type": "string", "minLength": 5, "maxLength": 600},
+        "after_representation": {"type": "string", "minLength": 5, "maxLength": 600},
+        "closed_theorem": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 1500,
+          "description": "Theorem statement that became provable after the shift."
+        },
+        "shift_type": {
+          "type": "string",
+          "enum": [
+            "numbers_to_ideals",
+            "discrete_to_continuous",
+            "counting_to_geometry",
+            "explicit_to_categorical",
+            "object_to_invariant",
+            "domain_lift",
+            "other"
+          ]
+        },
+        "primary_citation": {"$ref": "_common_definitions.json#/$defs/citationArxivOrDoi"}
+      }
+    },
+    "precursorDependency": {
+      "title": "Required precursor concept or theorem",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["precursor_name", "dependency_type"],
+      "properties": {
+        "precursor_name": {"type": "string", "minLength": 4, "maxLength": 400},
+        "dependency_type": {
+          "type": "string",
+          "enum": [
+            "concept_required",
+            "theorem_required",
+            "construction_required",
+            "language_required",
+            "other"
+          ]
+        },
+        "precursor_already_exists": {
+          "type": "boolean",
+          "description": "False means the precursor itself is a conceptual_absence — chain through to that entry."
+        },
+        "primary_citation": {"$ref": "_common_definitions.json#/$defs/citationArxivOrDoi"}
+      }
+    },
+    "conceptualAbsenceEntry": {
+      "title": "Registered missing mathematical object",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tentative_name", "expected_role"],
+      "properties": {
+        "tentative_name": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 200,
+          "description": "Working name for the absent object. May change at invention time."
+        },
+        "expected_role": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 1500,
+          "description": "What this absent object would do if it existed."
+        },
+        "nearest_existing_analog": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 600,
+          "description": "Existing structure most-resembling the absent object (e.g. 'like sheaves but with extra symmetry')."
+        },
+        "absence_confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "How confident we are the object truly doesn't exist (vs. exists-but-unknown)."
+        }
+      }
+    },
+    "musicalSignatureEntry": {
+      "title": "One attack-attempt record (the musical motif)",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["attack_method", "outcome"],
+      "properties": {
+        "attack_method": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 200
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "made_substantial_progress",
+            "partial_progress_specific_case",
+            "near_miss_method_gap",
+            "failed_dead_end",
+            "produced_counterexample",
+            "produced_independence_result",
+            "still_in_progress"
+          ]
+        },
+        "outcome_details": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 1500
+        },
+        "year": {
+          "type": "integer",
+          "minimum": 1700,
+          "maximum": 2030
+        },
+        "primary_citation": {"$ref": "_common_definitions.json#/$defs/citationArxivOrDoi"}
+      }
+    }
+  },
+  "examples": [
+    {
+      "_schema_version": "0.1.0",
+      "_status": "draft",
+      "id": "PC-XXX",
+      "statement": "Determine the asymptotic value of the matrix multiplication exponent ω. The trivial lower bound is ω >= 2 (read all n^2 entries); the current upper bound is ω < 2.371339 (Alman-Duan-VW-Xu-Xu-Zhou 2024). It is conjectured but unproven that ω = 2 exactly.",
+      "status": "open",
+      "hardness_signature": {
+        "method_gap": {
+          "weight": 0.85,
+          "confidence": 0.9,
+          "citations": ["arXiv:2404.16349 ADVWXXZ 2024"],
+          "rationale": "Decade-by-decade improvements via laser method refinements; each step closes constant-factor gaps but doesn't break the structural barrier between 2.37 and 2."
+        },
+        "representation_gap": {
+          "weight": 0.6,
+          "confidence": 0.7,
+          "citations": ["Cohn-Umans group-theoretic embedding"],
+          "rationale": "Group-theoretic embedding (Cohn-Umans) suggested representation may matter; no embedding has yielded ω=2."
+        },
+        "global_obstruction": {"weight": 0.2, "confidence": 0.5, "citations": []},
+        "exactness_barrier": {"weight": 0.7, "confidence": 0.8, "citations": [], "rationale": "Asymptotic evidence is insufficient — need exact bound."},
+        "hidden_pathology": {"weight": 0.1, "confidence": 0.4, "citations": []},
+        "coupled_difficulty": {"weight": 0.5, "confidence": 0.6, "citations": []},
+        "non_hereditary_structure": {"weight": 0.3, "confidence": 0.5, "citations": []},
+        "conceptual_absence": {
+          "weight": 0.65,
+          "confidence": 0.55,
+          "citations": [],
+          "rationale": "Conjectured: a yet-undiscovered tensor or auxiliary structure with extreme subrank-to-rank ratio would close the gap."
+        }
+      },
+      "method_gap_patterns": [
+        {
+          "pattern_summary": "Laser method on Coppersmith-Winograd auxiliary tensors closes constant-factor gaps but each variant approaches the same limiting exponent ~2.37; structural barrier prevents reaching 2 via this family.",
+          "current_best": "ω < 2.371339 (ADVWXXZ 2024)",
+          "needed": "ω = 2",
+          "barrier_type": "asymptotic_to_exact",
+          "primary_citation": "arXiv:2404.16349"
+        }
+      ],
+      "domain_tags": ["algebraic_complexity", "tensor_decomposition"],
+      "source_report": "Vision doc Part 4 worked example; references AA-013 + T#1.",
+      "notes": "Worked example for the v0 schema review. Real PC-001 would be filed separately."
+    }
+  ]
+}
