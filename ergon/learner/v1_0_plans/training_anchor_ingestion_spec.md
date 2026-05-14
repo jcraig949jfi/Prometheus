@@ -142,17 +142,20 @@ Per `learner_enrichment.py:103-108`, `OUTCOME_CLASSES = ("rejected", "survived",
 
 ## §3 Blind-spot anchor coverage per ingested batch
 
-### §3.1 BS-mapping gap (file Aporia ticket — schema modification proposed)
+### §3.1 BS-coverage propagation (schema v1.1, explicit field with regex fallback)
 
-The current `training_anchor` schema has NO field linking an anchor to a `BS-NNN` blind-spot entry. This is a gap because:
+Blind-spot coverage is critical to the calibration-preservation gate (`pilot_lora_design_tier_1_corpus.md` §2.3 Gate 1). Per `feedback_substrate_passive_consumer_warning.md`, blind-spot ingestion is one of the highest-value behavior-delta paths (a Tier-1 training corpus without explicit BS coverage produces a calibration-poisoning result).
 
-- Blind-spot coverage is critical to the calibration-preservation gate (`pilot_lora_design_tier_1_corpus.md` §2.3 Gate 1).
-- Per `feedback_substrate_passive_consumer_warning.md`, every doc must trace to behavior delta — blind-spot ingestion is one of the highest-value behavior-delta paths (a Tier-1 training corpus without explicit BS coverage will produce a calibration-poisoning result).
-- Post-hoc matching via `prompt_template` regex is brittle and prone to silent miss.
+**Schema status (2026-05-13):** `training_anchor` v1.1.0 ships an optional `bs_coverage: Array[String matching ^BS-\d{3,5}$]` field, uniqueItems, empty list and absent both legal (`techne/contracts/substrate_block_schemas/training_anchor_v1.json:142-152`). Authority: ticket `T-2026-05-13-techne-to-aporia-and-ergon-training_anchor-v1.1-ready` (originating gap was §5.1 Gap 1 below, closed by this ship). v1.0.0 emitters validate unchanged; v1.1.0 emitters can supply `bs_coverage` explicitly.
 
-**Proposed schema addition (file Aporia ticket; do not modify directly):** add optional field `bs_coverage: List[str]` (e.g., `[BS-001, BS-003]`) to the `training_anchor` block. Defaults to `[]` if no BS link. Permits multi-BS mapping when a single anchor probes multiple blind-spots.
+**Ingester behavior (two code paths, both live):**
 
-Until Aporia adjudicates the schema addition, the ingester applies a **fallback heuristic**: regex match against the canonical BS topic strings from `aporia/calibration/learner_known_blind_spots_v1.json` (e.g., `Cohen.*1963.*CH-independence` → BS-001). **Search corpus = `prompt_template + caveats + source + dataset_source` concatenation**, NOT prompt_template alone. Bug caught at 2026-05-11 smoke test: prompt_template carries the QUESTION ("Who proved CH-independence?") while the prover's name typically lives in `caveats` ("Paul Cohen 1963 forcing") or `source` ("Notices of the AMS, 1963"). Heuristic on prompt_template alone silent-misses all Q-form anchors. Matches are written to the sidecar `_training_anchor_meta.bs_coverage` field. Reviewer flags any anchor with topic-relevant text that PROBES a BS topic but does NOT have a regex match — these are the residual silent-miss candidates the schema addition is designed to prevent.
+1. **Explicit field (v1.1.0 path, preferred):** If the block carries a `bs_coverage` key whose value is a list (including empty list `[]`), the ingester uses that list verbatim. Empty list is a meaningful signal: "author considered BS coverage; no link applies." This is the path that closes the silent-miss prone Q-form anchor failure mode (e.g., Cohen 1963 CH-independence, where the answer "Cohen, 1963" lives in `source` not `prompt_template`).
+2. **Regex fallback (v1.0.0 path, backwards-compat):** If the block has no `bs_coverage` key, the ingester scans **`prompt_template + caveats + source + dataset_source` concatenation** against canonical BS topic regexes from `aporia/calibration/learner_known_blind_spots_v1.json`. Bug caught at 2026-05-11 smoke test: scanning `prompt_template` alone silent-missed all Q-form anchors (prompt carries the QUESTION, not the prover's name). Search-corpus expanded accordingly. Matches are written to the sidecar `_training_anchor_meta.bs_coverage` field.
+
+**Version detection:** the ingester does NOT inspect `_schema_version` explicitly. It dispatches solely on `bs_coverage` field presence (`block.get("bs_coverage") is not None`). This is correct because Techne's upstream schema validator (`stage_substrate_blocks`) rejects v1.0.0 blocks containing `bs_coverage` (additionalProperties:false on v1.0.0); therefore any `bs_coverage` reaching Ergon's ingester is from a validated v1.1.0 block. Defense-in-depth `_schema_version`-prefix check is intentionally omitted to keep ingester logic minimal.
+
+**Reviewer hook (regression-discipline):** the per-batch summary's `bs_coverage.unmapped` count is the residual silent-miss indicator. Batches with `unmapped` high while authors are emitting v1.0.0 are the population most at risk of Q-form silent miss; encourage author migration to v1.1.0 + explicit `bs_coverage` for those domains.
 
 ### §3.2 Per-batch BS coverage accounting
 
@@ -265,11 +268,11 @@ It is **NOT idempotent on appending**: running with the same date twice will ove
 
 ## §5 Coordination with Techne
 
-### §5.1 Schema gaps to file as Aporia tickets
+### §5.1 Schema gaps + resolutions
 
 Per the prompt's "If you see fields you'd want different (e.g., adding episode_id slot to support falsification-routing training), file an Aporia ticket — don't modify schemas directly."
 
-**Gap 1: `bs_coverage` field on `training_anchor` (§3.1).** Without this, BS coverage is regex-heuristic and silent-miss-prone. Aporia ticket to be filed: P2-medium.
+**Gap 1: `bs_coverage` field on `training_anchor` — RESOLVED 2026-05-13.** Closed by Techne ship of v1.1.0 schema (`T-2026-05-13-techne-to-aporia-and-ergon-training_anchor-v1.1-ready`). Optional array of `^BS-\d{3,5}$`-matching strings, uniqueItems. Ingester dual-path (explicit-then-fallback) documented in §3.1. Originating gap was the silent-miss-prone regex path on Q-form anchors (Cohen 1963 CH-independence the canonical case).
 
 **Gap 2: `episode_id` slot (potentially deferred).** Currently the ingester uses SHA256-of-canonical-blob as `underlying_record_hash` and 1:1 as `episode_id`. This is fine for Tier-1. If Techne's substrate-shaped pipeline ever wants to emit multi-record episodes (one prompt + multiple training-anchor blocks sharing an episode), the schema would need an explicit `episode_id` field. Defer ticket until pilot evidence forces it.
 
@@ -277,7 +280,7 @@ Per the prompt's "If you see fields you'd want different (e.g., adding episode_i
 
 ### §5.2 Filing order
 
-File Gap 1 as Aporia ticket P2-medium NOW (along with this spec). File Gap 2 and Gap 3 only if pilot evidence (when LoRA fires, post-substrate-volume-threshold) shows they bite.
+Gap 1 RESOLVED via v1.1 ship (2026-05-13). File Gap 2 and Gap 3 only if pilot evidence (when LoRA fires, post-substrate-volume-threshold) shows they bite.
 
 ---
 
@@ -287,7 +290,7 @@ Per `feedback_calibration.md`: this spec covers Track 1 of the 2026-05-11 prompt
 
 - That the substrate-shaped pipeline will produce useful `training_anchor` blocks at scale (Techne pilot evidence required).
 - That trust-tier mapping in §2 is the right convention (Aporia adjudication may revise).
-- That the BS-coverage heuristic in §3.1 will catch all silent-miss candidates (schema addition is the proper fix).
+- That the BS-coverage regex fallback in §3.1 will catch all silent-miss candidates (the v1.1 explicit `bs_coverage` field is the proper fix for v1.1.0-emitter blocks; v1.0.0 blocks still rely on the heuristic).
 - That `outcome_class` mapping in §2.3 is final (predicates that are TRUE vs FALSE may need a richer terminal-state vocabulary in Tier-2+).
 
 Per `feedback_verify_upstream_attributions.md`: when `training_anchor` blocks start landing, the ingester does NOT auto-trust `verified_against_primary: true` — it propagates the flag and trusts Techne's `verify_arxiv_citations.py` to have run at stage time. If that pipeline isn't yet in place when first batches land, the ingester logs a warning and drops to `--allow-unverified=false` strict mode.

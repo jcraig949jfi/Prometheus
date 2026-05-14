@@ -1,0 +1,97 @@
+{
+  "fixture_id": "aa_013_tensor_rank_routing_v0.2",
+  "fixture_schema_version": "0.2.0",
+  "fixture_type": "learner_tester_routing_smoke_test",
+  "scope": "Exercises witness-primitive routing across the R vs R-bar (TensorRankWitness vs BorderRankWitness) distinction. Includes positive cases (AA-013 safe zone — must route to TensorRankWitness), contrapositive cases (border-rank claims — must route to BorderRankWitness), and ambiguous-edge cases (must surface routing uncertainty rather than confident misroute).",
+  "source_anti_anchor_primary": "AA-013",
+  "source_anti_anchor_file": "aporia/doctrine/substrate_vocabulary/anti_anchors.md",
+  "source_primitive_entry": "aporia/doctrine/substrate_vocabulary/primitives.md §TensorRankWitness + §BorderRankWitness (sibling Tier-B parent classes)",
+  "evaluation_method": "string_match",
+  "evaluation_method_notes": "For positive + contrapositive cases: Learner's emitted witness_type field must equal expected_witness_route (PASS) AND must NOT equal forbidden_witness_route (FAIL). Alternative when routing head emits softmax: routing_head_argmax == expected_witness_route AND routing_head_max_prob >= 0.7. For ambiguous-edge cases: routing_head_max_prob < 0.7 (uncertainty surfaced) OR explicit 'request_clarification' emit. Fixture is shape-only today; no Learner head exists (pilot LoRA training paused per substrate-first stand-down).",
+  "advancement_requirements": {
+    "fixture_created": "This file exists on disk at the named path with named test_cases array populated.",
+    "eval_run": "A Learner checkpoint with a witness-routing head exists and emits structured results against all test_cases.",
+    "eval_passed": "All positive + contrapositive cases route to expected_witness_route AND avoid forbidden_witness_route. All ambiguous-edge cases surface uncertainty (low margin OR explicit clarification request)."
+  },
+  "expected_failure_mode_when_misrouted": "PATTERN_RANK_PARITY_LEAK (per aporia/doctrine/substrate_vocabulary/attacks.md) — the Learner has substituted a border-rank witness for an exact-rank claim (or vice-versa), silently admitting Schönhage 1981 additivity failures or analogous closure-vs-locus conflations into the corpus.",
+  "test_cases": [
+    {
+      "case_id": "positive_aa_013_rupniewski_safe_zone",
+      "case_type": "positive_should_route_to_tensor_rank",
+      "source_anti_anchor": "AA-013",
+      "input_prompt": "Rupniewski (2024, Linear Algebra and its Applications Vol 698, DOI 10.1016/j.laa.2024.06.016) establishes that Strassen's direct-sum additivity conjecture strictly holds for two independent tensors over the complex field when each has exact tensor rank R ≤ 7. Which witness primitive should certify a corpus claim that invokes this safe-zone result?",
+      "expected_witness_route": "TensorRankWitness",
+      "expected_witness_subtype_hint": "DirectSumAdditivitySafeZoneWitness",
+      "forbidden_witness_route": "BorderRankWitness",
+      "rationale_for_routing": "Rupniewski 2024's safe-zone applies to ordinary tensor rank R, not border rank R-bar; per Schönhage 1981, border-rank additivity fails earlier than rank additivity, so routing this claim to BorderRankWitness conflates the rank-locus (TensorRankWitness) with its Zariski closure (BorderRankWitness) and would silently admit the strict-separation failure mode AA-013 was designed to prevent.",
+      "rupniewski_citation": "Rupniewski 2024 LAA Vol 698 (DOI 10.1016/j.laa.2024.06.016); first announced arXiv:2209.11040"
+    },
+    {
+      "case_id": "contrapositive_schoenhage_border_rank_additivity_failure",
+      "case_type": "contrapositive_should_route_to_border_rank",
+      "input_prompt": "Schönhage (1981) showed that border-rank additivity fails strictly earlier than ordinary-rank additivity: there exist tensors T₁, T₂ with R̄(T₁ ⊕ T₂) < R̄(T₁) + R̄(T₂) (strict inequality), even though R(T₁ ⊕ T₂) = R(T₁) + R(T₂) holds in the corresponding rank-additivity safe zone. Which witness primitive should certify a corpus claim that invokes this border-rank additivity failure?",
+      "expected_witness_route": "BorderRankWitness",
+      "expected_witness_subtype_hint": "DegenerationWitness",
+      "forbidden_witness_route": "TensorRankWitness",
+      "rationale_for_routing": "Schönhage 1981's failure is fundamentally about R̄ (border rank, Zariski-closure membership), not R (ordinary rank). Routing this to TensorRankWitness would conflate the closure with its constructible interior and admit the symmetric failure mode of AA-013 — the contrapositive: a border-rank claim silently treated as ordinary-rank evidence. Both directions of the misrouting are sentinel violations of the same closure-vs-locus distinction."
+    },
+    {
+      "case_id": "contrapositive_matmul_exponent_omega_border_rank",
+      "case_type": "contrapositive_should_route_to_border_rank",
+      "input_prompt": "The matrix multiplication exponent ω is defined as the infimum over r such that the matmul tensor M⟨n⟩ has border rank R̄(M⟨n⟩) ≤ n^r asymptotically (Bini-Capponi-Lotti-Romani 1979, Strassen 1986, Le Gall 2014, Williams 2014). Which witness primitive should certify a corpus claim about an upper bound on ω derived from an approximate (border-rank) algorithm construction?",
+      "expected_witness_route": "BorderRankWitness",
+      "expected_witness_subtype_hint": "ComputationalComplexityCertificate",
+      "forbidden_witness_route": "TensorRankWitness",
+      "rationale_for_routing": "The matmul exponent literature is fundamentally a border-rank story — Bini's epsilon-decompositions, the Coppersmith-Winograd laser method, Strassen's tau theorem all operate on R̄, NOT R. Ordinary tensor rank R(M⟨n⟩) gives only a much weaker exponent (e.g. R(M⟨2⟩) = 7 yields ω ≤ log₂(7) ≈ 2.807 via Strassen's 1969 exact algorithm; border-rank constructions push much lower at the cost of approximation). Routing a matmul-omega upper-bound claim to TensorRankWitness would over-certify the construction's exactness — a closure-vs-locus conflation in the opposite direction of AA-013."
+    },
+    {
+      "case_id": "contrapositive_lampert_moshkovitz_partition_analytic_rank",
+      "case_type": "contrapositive_should_route_to_border_rank",
+      "input_prompt": "Lampert-Moshkovitz 2025 establish a strict separation between partition rank and analytic rank for certain tensor families: there exist tensor families where the analytic rank can be bounded asymptotically tightly via the partition-rank zoo, even though no constructive ordinary-rank decomposition matches the bound. The witness operates on closure-membership, not constructive locus residence. Which witness primitive should certify a corpus claim that invokes this Lampert-Moshkovitz separation?",
+      "expected_witness_route": "BorderRankWitness",
+      "expected_witness_subtype_hint": "CactusRankWitness or WaringRankWitness (Lampert-Moshkovitz operates in the broader closure family)",
+      "forbidden_witness_route": "TensorRankWitness",
+      "rationale_for_routing": "Partition rank and analytic rank both live in the closure / asymptotic / approximate-decomposition family that BorderRankWitness parents (per primitives.md §BorderRankWitness sub-types). The separation Lampert-Moshkovitz prove is a *non-constructive* bound — exactly the kind of statement TensorRankWitness was defined to exclude (per primitives.md §TensorRankWitness: 'witness that a tensor T has ordinary tensor rank R(T) = r... distinct from BorderRankWitness by definitional locus'). Misrouting would falsely claim a constructive bound where the literature provides only an asymptotic one."
+    },
+    {
+      "case_id": "ambiguous_edge_unspecified_rank_field",
+      "case_type": "ambiguous_uncertainty_expected",
+      "input_prompt": "A 4-tensor T over a field F has rank ≤ 7. Which witness primitive should certify this bound?",
+      "expected_witness_route": "uncertain_should_request_clarification",
+      "expected_routing_head_max_prob_ceiling": 0.7,
+      "forbidden_confident_route_either_direction": ["TensorRankWitness", "BorderRankWitness"],
+      "rationale_for_routing": "The input fails to specify which rank invariant is meant: ordinary R (TensorRankWitness territory) or border R̄ (BorderRankWitness territory) or one of the closure-family sub-types (cactus rank, Waring rank, partition rank, analytic rank). A well-calibrated routing head should surface uncertainty rather than confidently route either way — the answer literally depends on a field of the claim that wasn't provided. Confident routing on this input (max_prob ≥ 0.7) is itself the failure mode: silently choosing for the user without flagging the ambiguity. Acceptable behaviors: (a) emit 'request_clarification' explicitly; (b) emit a routing distribution with max_prob < 0.7 spreading mass across both TensorRankWitness and BorderRankWitness; (c) emit a meta-witness 'AmbiguousRankFieldRequiresClassifier'."
+    },
+    {
+      "case_id": "ambiguous_edge_matrix_degenerate_case",
+      "case_type": "ambiguous_uncertainty_expected_due_to_degeneracy",
+      "input_prompt": "For a 2-mode tensor (i.e., an ordinary matrix), is the ordinary tensor rank equal to the border rank? If so, does the choice between TensorRankWitness and BorderRankWitness matter?",
+      "expected_witness_route": "uncertain_should_request_clarification",
+      "expected_routing_head_max_prob_ceiling": 0.7,
+      "forbidden_confident_route_either_direction": ["TensorRankWitness", "BorderRankWitness"],
+      "rationale_for_routing": "For 2-mode tensors (matrices), R = R̄ trivially (the rank locus is already closed — the variety of rank-≤-r matrices is closed in the Zariski topology). So the distinction TensorRankWitness vs BorderRankWitness is degenerate for matrices. A well-calibrated routing head should surface this — either by emitting both witnesses are valid (low-margin distribution between them) OR by emitting a meta-witness 'DegenerateMatrixCaseRankEqualsBorderRank' that resolves the ambiguity explicitly. Confidently choosing one over the other on a matrix input is technically not wrong, but it hides the fact that the question's premise (TensorRank vs BorderRank as meaningful distinct primitives) does not apply in this regime. This case tests whether the routing head recognizes degenerate-regime collapse, not just non-degenerate separation."
+    }
+  ],
+  "test_case_summary": {
+    "total_cases": 6,
+    "positive_should_route_to_tensor_rank": 1,
+    "contrapositive_should_route_to_border_rank": 3,
+    "ambiguous_uncertainty_expected": 2,
+    "design_coverage": "Tests both directions of the R vs R-bar separation (AA-013 positive + 3 contrapositives) plus 2 degenerate / under-specified inputs that test calibration discipline (uncertainty surfacing). A routing head passing all 6 cases has demonstrated robust handling of the closure-vs-locus distinction across the strict-separation, strict-failure-of-additivity, asymptotic-only, and degenerate regimes."
+  },
+  "created_at": "2026-05-13 (v0.1) / expanded 2026-05-14 (v0.2)",
+  "created_by": "ergon",
+  "expansion_authority": "T-2026-05-14 work-queue Track 4: 'expand to include two or three distractor inputs ... plus one or two ambiguous-edge inputs that should surface routing-head uncertainty'",
+  "related_tickets": [
+    "T-2026-05-13-aporia-to-ergon-aa-013-consumer-hook-fixture-and-behavior-delta-status-enum (v0.1 origin)",
+    "T-2026-05-13-aporia-to-ergon-staged-blocks-ready-fire-track1",
+    "T-2026-05-14-ergon-to-aporia-track4-fixture-expansion (this closure, P3-low)"
+  ],
+  "cross_references": [
+    "aporia/doctrine/substrate_vocabulary/primitives.md §TensorRankWitness lines 42-53 (canonical positive-case rationale)",
+    "aporia/doctrine/substrate_vocabulary/primitives.md §BorderRankWitness (canonical contrapositive-case rationale, including sub-types CactusRankWitness / WaringRankWitness / DegenerationWitness / ComputationalComplexityCertificate)",
+    "aporia/doctrine/substrate_vocabulary/anti_anchors.md AA-013 (Strassen direct-sum additivity safe zone — primary case anchor)",
+    "aporia/doctrine/substrate_vocabulary/attacks.md PATTERN_RANK_PARITY_LEAK (sentinel-violation pattern fixture defends against in both directions)",
+    "feedback_generic_to_specific_audit.md (four-layer audit pattern: AA-013 is the design-layer instance; this fixture is the consumer-hook making the routing correction executable rather than just doctrinal)"
+  ]
+}

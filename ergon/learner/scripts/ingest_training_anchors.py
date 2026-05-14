@@ -423,18 +423,37 @@ def run_ingest(
         )
         return 3
 
-    # Parse input
+    # Parse input. Accept two JSONL shapes:
+    #   (A) Wrapped: {"block_type": "...", "payload": {...fields...}, ...metadata}
+    #       (Techne's stage_substrate_blocks.py output). Non-training_anchor
+    #       block_types are silently skipped, so the same input file may be a
+    #       type-agnostic validated.jsonl and this ingester filters to just
+    #       training_anchor blocks.
+    #   (B) Flat: {"_schema_version": "...", "id": "...", ...} — fields at
+    #       top level. Used by synthetic test inputs and direct hand-authored
+    #       files.
     blocks: List[Dict[str, Any]] = []
+    skipped_block_types: Counter = Counter()
     with open(input_path, encoding="utf-8") as f:
         for idx, line in enumerate(f, 1):
             line = line.strip()
             if not line:
                 continue
             try:
-                blocks.append(json.loads(line))
+                raw = json.loads(line)
             except json.JSONDecodeError as e:
                 print(f"WARN: line {idx} JSON parse failed: {e}", file=sys.stderr)
                 continue
+            if isinstance(raw, dict) and "block_type" in raw and "payload" in raw:
+                block_type = raw.get("block_type")
+                if block_type != "training_anchor":
+                    skipped_block_types[str(block_type)] += 1
+                    continue
+                blocks.append(raw["payload"])
+            else:
+                blocks.append(raw)
+    if skipped_block_types:
+        print(f"Skipped non-training_anchor blocks: {dict(skipped_block_types)}")
 
     # Validate + ingest
     validation_failures: List[ValidationFailure] = []

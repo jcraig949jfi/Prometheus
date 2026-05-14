@@ -1,0 +1,104 @@
+{
+  "_template_version": "1.0.0",
+  "_template_source": "Mirrors aporia/docs/staged_substrate_blocks/2026-05-13/ingest_summary_template.json (gitignored scaffold); batch-specific fields adapted to today's EC rank corpus rather than yesterday's GL(3) Maass form + AA-013 corpus",
+  "_emitted_by": "ergon/learner/scripts/ingest_training_anchors.py (ergon Track 1 ingest run, 2026-05-14)",
+  "run_id": "2026-05-14_track1",
+  "source_file": "aporia/docs/staged_substrate_blocks/2026-05-14/validated.jsonl",
+  "source_pilot": "DR-S002 (LMFDB elliptic-curve rank trust-tier split)",
+  "schema_versions_seen": ["1.0.0"],
+  "records_attempted": 2,
+  "records_validated": 2,
+  "records_rejected": 0,
+  "rejection_classes": [],
+  "records_written": 2,
+  "records_destination": "ergon/learner/corpus/v1_0_tier_pending/2026-05-14/under_threshold/training_anchor_learner_records.jsonl",
+  "below_inclusion_threshold": true,
+  "below_inclusion_threshold_reason": "total_ingested=2 < 5 AND high-trust=2 ≥ 2 BUT total < 5 still fails the inclusion gate per spec §3.2 (need both total ≥ 5 AND high-trust ≥ 2); pilot smoke-test batch, not v1.0 corpus contribution",
+  "learner_records_sampled": [
+    {
+      "anchor_id": "anchor-ec_rank-001",
+      "underlying_record_hash": "249e93e664b6fc9d06b800e941f5277d0e5f4eda997069f998a11602b36b0b50",
+      "trust_tier": "analytically_proven",
+      "verification_tier": "decidable",
+      "anchor_type": "invariant_value",
+      "outcome_class": "promoted",
+      "chart_id": "elliptic_curve:invariant_value",
+      "kill_signature": ["training_anchor", "invariant_value"],
+      "bs_coverage_sidecar": [],
+      "scale_instance_count": 3000000,
+      "routing_note": "Rank ≤ 1 stratum, unconditional via mwrank + 2-descent (Kolyvagin equating analytic and algebraic rank); routes to promoted/decidable, eligible as unconditional ground-truth target"
+    },
+    {
+      "anchor_id": "anchor-ec_rank-002",
+      "underlying_record_hash": "ddcfec4870bc99aee10d18cc63e2be9ca3c6041be8fc916b41e183ef316b2942",
+      "trust_tier": "numerically_certified",
+      "verification_tier": "decidable",
+      "anchor_type": "invariant_value",
+      "outcome_class": "promoted",
+      "chart_id": "elliptic_curve:invariant_value",
+      "kill_signature": ["training_anchor", "invariant_value"],
+      "bs_coverage_sidecar": [],
+      "scale_instance_count": 800000,
+      "routing_note": "Rank ≥ 2 or Tate-Shafarevich non-trivial stratum, conditional on BSD/Parity Conjecture if descent doesn't unconditionally terminate; caveat preserved in sidecar.caveats; downstream consumer should second-gate on BSD-conditional records before using as unconditional eval target"
+    }
+  ],
+  "routing_checks": {
+    "ml_predicted_to_outcome_survived": null,
+    "ml_predicted_to_verification_conditional": null,
+    "analytically_proven_to_outcome_promoted": true,
+    "analytically_proven_to_verification_decidable": true,
+    "numerically_certified_to_outcome_promoted": true,
+    "numerically_certified_to_verification_decidable": true,
+    "trust_tier_preserved": true,
+    "anchor_type_enum_valid": true,
+    "verification_method_enum_valid": true,
+    "source_date_iso_valid": true,
+    "bs_coverage_field_recognized_when_present": null,
+    "bsd_conditional_caveat_preserved_in_sidecar": true
+  },
+  "routing_checks_notes": {
+    "ml_predicted_path_untested": "No ml_predicted blocks in today's batch (both are high-trust). The ml_predicted→survived/conditional path was exercised yesterday (2026-05-13) on anchor-maass_gl3-001; today exercises the complementary path (analytically_proven + numerically_certified → promoted/decidable).",
+    "bs_coverage_field_recognized_when_present": "Neither block carries explicit bs_coverage; v1.0.0 emitters. Regex fallback correctly returned empty for both (EC rank not in BS-001..BS-006). v1.1 explicit-bs_coverage path remains untested at runtime.",
+    "bsd_conditional_caveat_preserved_in_sidecar": "anchor-ec_rank-002's caveats field 'May rely conditionally on the Birch and Swinnerton-Dyer conjecture or the Parity Conjecture if descent machinery does not unconditionally terminate' is preserved verbatim in the LearnerRecord _training_anchor_meta.caveats sidecar field. This is the AA-019-analog discipline for elliptic curves: explicit conditionality is metadata, not silently absorbed into the decidable routing."
+  },
+  "high_value_items_present": {
+    "ec_rank_training_anchor_analytically_proven": true,
+    "ec_rank_training_anchor_numerically_certified": true,
+    "bsd_conditional_caveat_preserved": true,
+    "aa_013_smoke_test_readiness": true,
+    "aa_013_anti_anchor_in_todays_batch": false,
+    "second_coefficient_positivity_obstruction_in_todays_batch": false
+  },
+  "high_value_items_present_notes": {
+    "ec_rank_training_anchor_analytically_proven": "anchor-ec_rank-001 — 3M instance rank≤1 stratum, unconditional (Kolyvagin)",
+    "ec_rank_training_anchor_numerically_certified": "anchor-ec_rank-002 — 800K instance rank≥2-or-Sha-non-trivial stratum, BSD-conditional",
+    "bsd_conditional_caveat_preserved": "AA-019-analog discipline: trust_tier=numerically_certified routes to promoted but the BSD-conditional caveat survives in sidecar.caveats for downstream second-gating",
+    "aa_013_smoke_test_readiness": "Fixture from 2026-05-13 still exists at ergon/learner/fixtures/smoke_tests/aa_013_tensor_rank_routing.json; persisted artifact unaffected by today's ingest",
+    "aa_013_anti_anchor_in_todays_batch": "FALSE — today's batch is EC rank only; AA-013 was yesterday's batch (anti_anchor.jsonl is empty today)",
+    "second_coefficient_positivity_obstruction_in_todays_batch": "FALSE — today's batch has no primitive_proposal entries"
+  },
+  "behavior_delta_observed": "Second end-to-end substrate-shaped-pipeline-to-Learner-corpus round-trip succeeded on consecutive days. Today's 2 EC-rank training_anchor blocks ingested with correct trust-tier-aware routing (both analytically_proven and numerically_certified → promoted/decidable, complementary to yesterday's ml_predicted → survived/conditional path). The substrate-shaped pipeline thesis now has a second concrete instance, with the trust-tier-discipline matrix exercised more completely (high-trust path today; ml_predicted/conditional path yesterday). Caveat-preservation discipline confirmed: BSD-conditional language in anchor-ec_rank-002 survives intact in the LearnerRecord sidecar, available for downstream second-gating without modifying trust_tier routing.",
+  "behavior_delta_status": {
+    "_enum": ["none", "fixture_created", "eval_run", "eval_passed"],
+    "_note": "Per Aporia 2026-05-13 template + P2 ticket value-advancement rule. 'fixture_created' requires both ≥1 LearnerRecord landed AND AA-013 fixture exists at named path. 'eval_run' and 'eval_passed' gated on Learner head existing — paused per substrate-first stand-down.",
+    "value": "fixture_created"
+  },
+  "behavior_delta_status_evidence": {
+    "learner_records_landed_today": 2,
+    "learner_records_landed_cumulative_2026_05_13_to_14": 4,
+    "fixture_file_path": "ergon/learner/fixtures/smoke_tests/aa_013_tensor_rank_routing.json",
+    "fixture_file_exists": true,
+    "fixture_created_this_ingest": false,
+    "fixture_persisted_from_prior_ingest": "2026-05-13 Track 1 closure (T-2026-05-13-ergon-to-aporia-track1-fixture-created)"
+  },
+  "notes": [
+    "Wrapped-shape unwrap fix from 2026-05-13 worked without modification on today's batch — same Techne stager envelope. No ingester code changes needed today.",
+    "Cumulative state across 2 days: 4 LearnerRecords in tier_pending (2 in 2026-05-13/under_threshold, 2 in 2026-05-14/under_threshold), all below v1.0 inclusion threshold. Below-threshold-but-substrate-grade pattern holds: each batch is a smoke-test, not a corpus contribution; corpus accumulation gated on volume scaling at the substrate-shaped pipeline.",
+    "Track 2 (P vs NP anti_anchor ingest) gated on Techne registration with AA-NNN ids; not executed today. AA-XXX placeholders still present in aporia/docs/staged_substrate_blocks/2026-05-14/validated_reauthored.jsonl. Pickup tomorrow if Techne files the registration ticket.",
+    "Today's exercise of analytically_proven + numerically_certified path complements yesterday's ml_predicted path — full trust-tier matrix now exercised at least once in production."
+  ],
+  "deferred_concerns": [
+    "AA-019-analog vs explicit-anti-anchor: the BSD-conditional caveat on anchor-ec_rank-002 functions like AA-019 functioned for GL(3) Maass forms (ml_predicted carries explicit warning), but no formal anti_anchor exists pinning 'BSD-conditional rank rules CANNOT be used as unconditional ground truth'. Consider proposing such an anti_anchor (e.g. BSD_CONDITIONAL_RANK_ML_PREDICTED_VS_UNCONDITIONAL_DESCENT) for the next Aporia anti_anchor authoring cycle — would mirror AA-019's threat-vectors/mitigation pattern. Does NOT block today's ingest.",
+    "Track 2 P vs NP anti_anchor ingest pending Techne AA-NNN id registration — picks up tomorrow if registration ticket lands."
+  ]
+}

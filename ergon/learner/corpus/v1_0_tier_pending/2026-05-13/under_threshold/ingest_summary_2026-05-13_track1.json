@@ -1,0 +1,95 @@
+{
+  "_template_version": "1.0.0",
+  "_template_source": "aporia/docs/staged_substrate_blocks/2026-05-13/ingest_summary_template.json (gitignored scaffold)",
+  "_emitted_by": "ergon/learner/scripts/ingest_training_anchors.py (ergon Track 1 ingest run)",
+  "run_id": "2026-05-13_track1",
+  "source_file": "aporia/docs/staged_substrate_blocks/2026-05-13/training_anchor.jsonl",
+  "source_ticket": "T-2026-05-13-aporia-to-ergon-staged-blocks-ready-fire-track1",
+  "schema_versions_seen": ["1.0.0"],
+  "records_attempted": 2,
+  "records_validated": 2,
+  "records_rejected": 0,
+  "rejection_classes": [],
+  "records_written": 2,
+  "records_destination": "ergon/learner/corpus/v1_0_tier_pending/2026-05-13/under_threshold/training_anchor_learner_records.jsonl",
+  "below_inclusion_threshold": true,
+  "below_inclusion_threshold_reason": "total_ingested=2 < 5 AND high-trust=1 < 2; per spec §3.2 last paragraph this is a pilot smoke-test batch, not a v1.0 corpus contribution",
+  "learner_records_sampled": [
+    {
+      "anchor_id": "anchor-maass_gl3-001",
+      "underlying_record_hash": "3983a982ac0218692f571f64a9ca441d556be065bdb7678e022626376dbbde3a",
+      "trust_tier": "ml_predicted",
+      "verification_tier": "conditional",
+      "anchor_type": "classification",
+      "outcome_class": "survived",
+      "chart_id": "maass_gl3:classification",
+      "kill_signature": ["training_anchor", "classification"],
+      "bs_coverage_sidecar": [],
+      "routing_note": "AA-019 mitigation made concrete — ml_predicted routed to survived (F-gate passes, no PROMOTE) and verification_tier conditional; downstream Learner training corpus will NOT treat as ground-truth target"
+    },
+    {
+      "anchor_id": "anchor-maass_gl3-002",
+      "underlying_record_hash": "18ef72d22f39c010e9890f0b2ef06b6a372d7fd4625414a188303310a3709ca8",
+      "trust_tier": "numerically_certified",
+      "verification_tier": "decidable",
+      "anchor_type": "classification",
+      "outcome_class": "promoted",
+      "chart_id": "maass_gl3:classification",
+      "kill_signature": ["training_anchor", "classification"],
+      "bs_coverage_sidecar": [],
+      "routing_note": "AA-019 complement — numerically_certified routed to promoted + decidable; eligible as ground-truth target in Learner training corpus"
+    }
+  ],
+  "routing_checks": {
+    "ml_predicted_to_outcome_survived": true,
+    "ml_predicted_to_verification_conditional": true,
+    "trust_tier_preserved": true,
+    "anchor_type_enum_valid": true,
+    "verification_method_enum_valid": true,
+    "source_date_iso_valid": true,
+    "bs_coverage_field_recognized_when_present": null
+  },
+  "routing_checks_notes": {
+    "bs_coverage_field_recognized_when_present": "Neither of the 2 ingested blocks carries an explicit bs_coverage field (both are v1.0.0). Regex fallback ran and returned empty (GL(3) Maass form root number doesn't probe any of BS-001..BS-006). The v1.1 explicit-bs_coverage path is wired in ingest_training_anchors.py:142-153 and code-reviewed but remains untested at runtime — flag for the next cycle when an Aporia-authored v1.1 anchor lands."
+  },
+  "high_value_items_present": {
+    "aa_013_anti_anchor": true,
+    "aa_013_routing_correction_in_true_form_or_caveats": true,
+    "lmfdb_gl3_training_anchor_ml_predicted": true,
+    "lmfdb_gl3_training_anchor_numerically_certified": true,
+    "second_coefficient_positivity_obstruction": true,
+    "aa_013_smoke_test_readiness": true
+  },
+  "high_value_items_present_notes": {
+    "aa_013_anti_anchor": "staged in aporia/docs/staged_substrate_blocks/2026-05-13/anti_anchor.jsonl (1 record); not in training_anchor.jsonl directly, but present in this batch and visible to anyone consuming the staged blocks dir",
+    "aa_013_routing_correction_in_true_form_or_caveats": "AA-013 true_form names 'exact tensor rank R over the complex field' (implicit routing-correction). Explicit TensorRankWitness vs BorderRankWitness contrast lives at the vocabulary-level in aporia/doctrine/substrate_vocabulary/primitives.md (per Aporia commit e1124ec3); the deferred_concerns[1] guidance from the template is therefore satisfied at the primitives.md layer rather than within AA-013 itself",
+    "second_coefficient_positivity_obstruction": "staged in primitive_proposal.jsonl (1 record); scope-narrowing concern (positive_links_only) deferred to Techne registration per template deferred_concerns[0]",
+    "aa_013_smoke_test_readiness": "fixture created today at ergon/learner/fixtures/smoke_tests/aa_013_tensor_rank_routing.json per Aporia P2 ticket spec — file exists, schema named, advancement_requirements documented"
+  },
+  "behavior_delta_observed": "First end-to-end substrate-shaped-pipeline-to-Learner-corpus round-trip succeeded today: 2 schema-conforming training_anchor blocks (LMFDB GL(3) ml_predicted + numerically_certified pair, the AA-019 trust-tier distinction made concrete) ingested into LearnerRecord JSONL with correct trust-tier-aware routing (ml_predicted → survived/conditional, numerically_certified → promoted/decidable). AA-013 anti_anchor cross-batch presence + consumer-hook fixture creation closes the doctrine-to-fixture loop ChatGPT 2026-05-13 flagged. Pipeline plumbing all functioned; only ingester adjustment needed was wrapped-vs-flat JSONL shape unwrapping (~25 LOC at ingest_training_anchors.py parse loop). The substrate-shaped pipeline thesis (substrate volume + quality compounds into Learner-corpus growth) has its first concrete instance.",
+  "behavior_delta_status": {
+    "_enum": ["none", "fixture_created", "eval_run", "eval_passed"],
+    "_note": "Per Aporia template + P2 ticket value-advancement rule. 'fixture_created' requires both ≥1 LearnerRecord landed AND AA-013 fixture exists at named path. 'eval_run' and 'eval_passed' gated on Learner head existing — paused indefinitely per pivot/strategic_pivot_2026-05-11_substrate_volume_first.md.",
+    "value": "fixture_created"
+  },
+  "behavior_delta_status_evidence": {
+    "learner_records_landed": 2,
+    "fixture_file_path": "ergon/learner/fixtures/smoke_tests/aa_013_tensor_rank_routing.json",
+    "fixture_file_exists": true,
+    "fixture_file_named_fields_present": [
+      "fixture_id", "source_anti_anchor", "input_prompt",
+      "expected_witness_route", "forbidden_witness_route",
+      "rationale_for_routing", "evaluation_method"
+    ]
+  },
+  "notes": [
+    "Ingester needed a 25-LOC unwrap adjustment to accept Techne's stager output shape {block_type, payload: {...}, metadata...} in addition to the original flat {...} shape. Both code paths now live. Same change also lets the ingester filter a type-agnostic validated.jsonl by block_type==training_anchor, resolving the filename-scheme observation flagged in T-2026-05-13-ergon-to-techne-pilot-ingest-results.",
+    "Below-threshold batch (2 records) lands at under_threshold/ subdir per spec §3.2 — correct routing; not promoted to v1.0 corpus assembly without manual review.",
+    "v1.1 schema explicit-bs_coverage path remains untested at runtime; flag for next cycle.",
+    "Ingester smoke-test on empty validated.jsonl earlier today also passed (0→0, exit 0); both small-batch and empty-batch behaviors verified."
+  ],
+  "deferred_concerns": [
+    "Buchanan primitive scope: SecondCoefficientPositivityObstruction (staged in primitive_proposal.jsonl) must be scope-narrowed at Techne v4.0+ registration time. Per ChatGPT 2026-05-13 analysis: applies to POSITIVE LINKS / Jones polynomial, NOT generic knots. Without explicit scope-narrowing (e.g. applies_to: positive_links_only; condition_family: second_jones_coefficient_pm1_pm2), a downstream Learner could overreach to 'Jones second coefficient decides positivity'. Add scope_warning as a required_field at registration time. Does NOT block today's ingest.",
+    "AA-013 routing-correction surfaced at vocabulary level (primitives.md TensorRankWitness entry per Aporia e1124ec3), not within AA-013 prose itself. Template deferred_concerns[1] guidance satisfied via primitives.md path rather than AA-013-prose-edit path; both options were acceptable per the original framing."
+  ]
+}
