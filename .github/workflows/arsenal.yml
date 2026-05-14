@@ -39,9 +39,12 @@ jobs:
       github.event_name != 'schedule' ||
       github.event.schedule == '0 */6 * * *'
     runs-on: ubuntu-latest
-    # Bumped 45 -> 60 2026-05-14: test count grew ~+45 from claim-mining
-    # extractor work; smoke job hit 45m timeout 2026-05-14T01:09Z.
-    timeout-minutes: 60
+    # Bumped 45 -> 60 -> 90 2026-05-14:
+    #   - +45 tests from claim-mining work pushed past 45m
+    #   - 60m still tight: prometheus_math tests + techne tests both
+    #     need full minutes each (Mahler precision, etc.)
+    #   - 90m gives genuine headroom; combined matrix still ~3h budget.
+    timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:
