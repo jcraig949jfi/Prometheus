@@ -37,6 +37,7 @@ from agora.config import (  # noqa: E402
 )
 
 OUTPUT_PATH = REPO_ROOT / "pivot" / "portfolio_STATUS.md"
+JSON_OUTPUT_PATH = REPO_ROOT / "dashboard" / "state.json"
 
 # Agents we expect to see in the portfolio, with their assigned machine.
 # Keep in sync with pivot/agent_portfolio_and_monitoring_2026-05-12.md.
@@ -229,11 +230,139 @@ def render(r: redis.Redis) -> str:
     return "\n".join(lines) + "\n"
 
 
+def build_dashboard_state(r: redis.Redis) -> dict:
+    """Return JSON-serializable dict capturing current portfolio state.
+
+    Same data the markdown render() uses, exposed as structured JSON for
+    the React dashboard. Built independently so the two formats can drift
+    without coupling.
+    """
+    now = datetime.now(timezone.utc)
+
+    agents = []
+    seen = set()
+    for name, meta in EXPECTED_AGENTS.items():
+        state = agent_state(r, name)
+        seen.add(name)
+        status_label, age = liveness(state, now)
+        op = ""
+        last_status_update = None
+        key_metrics = None
+        if state:
+            blob = state.get("status_json")
+            if blob:
+                try:
+                    s = json.loads(blob)
+                    op = s.get("current_op", "")
+                    key_metrics = s.get("key_metrics")
+                except json.JSONDecodeError:
+                    pass
+            last_status_update = state.get("last_status_update")
+        machine = (state or {}).get("machine") or meta["machine"]
+        agents.append({
+            "name": name,
+            "expected": True,
+            "machine": machine,
+            "kind": meta["kind"],
+            "status": status_label,
+            "heartbeat_age_sec": age,
+            "current_op": op,
+            "last_status_update": last_status_update,
+            "key_metrics": key_metrics,
+        })
+
+    try:
+        all_keys = list(r.scan_iter(f"{AGENT_PREFIX}*"))
+    except Exception:
+        all_keys = []
+    extras = sorted({k.replace(AGENT_PREFIX, "") for k in all_keys} - seen)
+    for name in extras:
+        state = agent_state(r, name)
+        status_label, age = liveness(state, now)
+        machine = (state or {}).get("machine") or "?"
+        agents.append({
+            "name": name,
+            "expected": False,
+            "machine": machine,
+            "kind": "unknown",
+            "status": status_label,
+            "heartbeat_age_sec": age,
+            "current_op": "",
+            "last_status_update": None,
+            "key_metrics": None,
+        })
+
+    def stream_entries(stream_name, count=10):
+        try:
+            raw = r.xrevrange(stream_name, count=count)
+        except redis.ResponseError:
+            return []
+        out = []
+        for msg_id, fields in raw:
+            out.append({
+                "msg_id": msg_id,
+                "timestamp": fields.get("timestamp", msg_id),
+                "sender": fields.get("sender", "?"),
+                "machine": fields.get("machine", "?"),
+                "type": fields.get("type", "?"),
+                "subject": fields.get("subject", ""),
+                "body": (fields.get("body", "") or "")[:500],
+                "confidence": fields.get("confidence", ""),
+            })
+        return out
+
+    work_queue = {}
+    try:
+        work_queue = {
+            "queued": r.zcard("agora:work_queue") if r.exists("agora:work_queue") else 0,
+            "claimed": r.hlen("agora:work_claims") if r.exists("agora:work_claims") else 0,
+            "completed_lifetime": r.xlen("agora:work_results") if r.exists("agora:work_results") else 0,
+        }
+    except Exception:
+        pass
+
+    anomalies = []
+    for a in agents:
+        if a["expected"] and a["status"] == "DEAD":
+            anomalies.append({
+                "agent": a["name"],
+                "kind": "dead",
+                "detail": f"no heartbeat for {a['heartbeat_age_sec']}s",
+            })
+        elif a["expected"] and a["status"] == "STALE":
+            anomalies.append({
+                "agent": a["name"],
+                "kind": "stale",
+                "detail": f"heartbeat age {a['heartbeat_age_sec']}s",
+            })
+
+    return {
+        "schema_version": 1,
+        "generated_at": now.isoformat(),
+        "redis_host": f"{REDIS_HOST}:{REDIS_PORT}",
+        "heartbeat_timeout_sec": HEARTBEAT_TIMEOUT_SEC,
+        "agents": agents,
+        "discoveries": stream_entries(STREAM_DISCOVERIES, count=10),
+        "main_events": stream_entries(STREAM_MAIN, count=15),
+        "challenges": stream_entries(STREAM_CHALLENGES, count=5),
+        "work_queue": work_queue,
+        "anomalies": anomalies,
+    }
+
+
+def write_json(state: dict, path: Path):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(state, indent=2, default=str), encoding="utf-8")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Portfolio monitor — Agora-driven dashboard")
     parser.add_argument("--once", action="store_true", help="Regenerate once and exit")
     parser.add_argument("--interval-min", type=float, default=10.0, help="Refresh interval (minutes)")
     parser.add_argument("--output", type=Path, default=OUTPUT_PATH, help="Output markdown path")
+    parser.add_argument("--json-output", type=Path, default=JSON_OUTPUT_PATH, help="Output JSON path for dashboard")
+    parser.add_argument("--no-json", action="store_true", help="Skip JSON output")
+    parser.add_argument("--no-markdown", action="store_true", help="Skip markdown output")
     args = parser.parse_args()
 
     try:
@@ -245,10 +374,17 @@ def main():
 
     while True:
         try:
-            text = render(r)
-            args.output.parent.mkdir(parents=True, exist_ok=True)
-            args.output.write_text(text, encoding="utf-8")
-            print(f"[{datetime.now().isoformat()}] wrote {args.output}", flush=True)
+            wrote = []
+            if not args.no_markdown:
+                text = render(r)
+                args.output.parent.mkdir(parents=True, exist_ok=True)
+                args.output.write_text(text, encoding="utf-8")
+                wrote.append(str(args.output))
+            if not args.no_json:
+                state = build_dashboard_state(r)
+                write_json(state, args.json_output)
+                wrote.append(str(args.json_output))
+            print(f"[{datetime.now().isoformat()}] wrote {', '.join(wrote)}", flush=True)
         except Exception as e:
             print(f"[{datetime.now().isoformat()}] render error: {e}", file=sys.stderr)
 
