@@ -1,9 +1,10 @@
 """
 Noesis Daemon — Continuous tensor-based exploration engine.
+M2 SCORING VARIANT: compression primary (0.31), input sensitivity new (0.19).
 
 Runs a tournament of search strategies competing to find the highest-quality
 compositions of mathematical operations. Each cycle: strategies propose chains,
-chains execute in subprocess isolation, results are scored on 7 dimensions,
+chains execute in subprocess isolation, results are scored on 8 dimensions,
 MAP-Elites grid maintains diversity, islands enable parallel exploration.
 
 Usage:
@@ -19,6 +20,7 @@ import json
 import logging
 import math
 import multiprocessing as mp
+from concurrent.futures import ThreadPoolExecutor
 import os
 import random
 import sys
@@ -80,6 +82,7 @@ def init_db():
             score_structure DOUBLE DEFAULT 0.0,
             score_diversity DOUBLE DEFAULT 0.0,
             score_compression DOUBLE DEFAULT 0.0,
+            score_sensitivity DOUBLE DEFAULT 0.0,
             score_cheapness DOUBLE DEFAULT 0.0,
             score_dead_end DOUBLE DEFAULT 0.0,
             output_hash TEXT,
@@ -265,15 +268,190 @@ def _execute_single_chain_pooled(args):
     return _execute_chain_direct(chain, _pool_organisms, timeout=timeout)
 
 
-def _execute_chain_direct(chain, organisms, timeout=2.0):
-    """Execute a chain directly using pre-loaded organisms (for thread-based execution)."""
+# ============================================================
+# Subprocess Worker — isolated execution with hard kill on hang
+# ============================================================
+
+_WORKER_SCRIPT = r'''
+import sys, json, hashlib, time, warnings, os
+import numpy as np
+warnings.filterwarnings("ignore")
+np.seterr(all="ignore")
+sys.path.insert(0, r"''' + str(ROOT) + r'''")
+sys.path.insert(0, r"''' + str(ORGANISMS_DIR) + r'''")
+from organisms.noesis_daemon import load_all_organisms, TEST_INPUTS
+
+organisms = load_all_organisms()
+
+for line in sys.stdin:
+    line = line.strip()
+    if not line:
+        continue
+    request = json.loads(line)
+    chain = request["chain"]
+    timeout = request.get("timeout", 2.0)
+    custom_inputs = request.get("custom_inputs", None)
+    test_inputs = custom_inputs if custom_inputs else TEST_INPUTS
+    wall_deadline = time.perf_counter() + timeout
+
     successes = 0
     attempts = 0
     outputs = []
     failure_mode = None
 
-    for input_type, inputs in TEST_INPUTS.items():
+    for input_type, inputs in test_inputs.items():
+        if time.perf_counter() > wall_deadline:
+            failure_mode = failure_mode or "wall_timeout"
+            break
         for test_input in inputs:
+            if time.perf_counter() > wall_deadline:
+                failure_mode = failure_mode or "wall_timeout"
+                break
+            attempts += 1
+            try:
+                result = np.array(test_input) if isinstance(test_input, list) else test_input
+                for org_name, op_name in chain:
+                    if org_name not in organisms:
+                        raise ValueError("Unknown organism")
+                    org = organisms[org_name]
+                    t0 = time.perf_counter()
+                    result = org.execute(op_name, result)
+                    if time.perf_counter() - t0 > 0.5:
+                        raise TimeoutError("timeout")
+                    if result is None:
+                        raise ValueError("None result")
+                    if isinstance(result, (np.ndarray, np.generic)):
+                        if np.any(np.isnan(result)):
+                            raise ValueError("nan")
+                        if np.any(np.isinf(result)):
+                            raise ValueError("overflow")
+                        if isinstance(result, np.ndarray) and result.size > 500_000:
+                            raise ValueError("output_too_large")
+                successes += 1
+                if isinstance(result, np.ndarray):
+                    h = hashlib.md5(result.tobytes()).hexdigest()[:12]
+                    otype = f"ndarray_{result.shape}"
+                elif isinstance(result, (int, float, np.integer, np.floating)):
+                    h = hashlib.md5(str(float(result)).encode()).hexdigest()[:12]
+                    otype = "scalar"
+                else:
+                    h = hashlib.md5(str(result)[:500].encode()).hexdigest()[:12]
+                    otype = type(result).__name__
+                outputs.append({"hash": h, "type": otype})
+            except TimeoutError:
+                failure_mode = failure_mode or "timeout"
+            except ValueError as e:
+                msg = str(e).lower()
+                if "nan" in msg: failure_mode = failure_mode or "nan"
+                elif "overflow" in msg or "inf" in msg: failure_mode = failure_mode or "overflow"
+                else: failure_mode = failure_mode or "value_error"
+            except Exception:
+                failure_mode = failure_mode or "other_error"
+
+    out = {"chain": chain, "executed": successes > 0, "successes": successes,
+           "attempts": max(attempts, 1), "success_rate": successes / max(attempts, 1),
+           "outputs": outputs, "failure_mode": failure_mode if successes == 0 else None,
+           "execution_time_us": 0}
+    sys.stdout.write(json.dumps(out) + "\n")
+    sys.stdout.flush()
+'''
+
+import subprocess as _sp
+import queue as _queue
+import threading as _threading
+
+
+class ChainWorker:
+    """Persistent subprocess that executes chains. Auto-restarts on hang/crash."""
+
+    def __init__(self):
+        self._proc = None
+        self._reader_thread = None
+        self._q = _queue.Queue()
+        self._restarts = 0
+        self._start()
+
+    def _start(self):
+        self._proc = _sp.Popen(
+            [sys.executable, "-u", "-c", _WORKER_SCRIPT],
+            stdin=_sp.PIPE, stdout=_sp.PIPE, stderr=_sp.DEVNULL,
+        )
+        self._q = _queue.Queue()
+        self._reader_thread = _threading.Thread(target=self._reader, daemon=True)
+        self._reader_thread.start()
+
+    def _reader(self):
+        """Background thread reads lines from worker stdout into queue."""
+        try:
+            for line in self._proc.stdout:
+                self._q.put(line)
+        except Exception:
+            pass
+
+    def execute(self, chain, timeout=3.0, custom_inputs=None):
+        """Send chain, get result. Kills and restarts worker on hang."""
+        request = {"chain": chain, "timeout": timeout}
+        if custom_inputs:
+            request["custom_inputs"] = custom_inputs
+        try:
+            self._proc.stdin.write((json.dumps(request) + "\n").encode())
+            self._proc.stdin.flush()
+        except (BrokenPipeError, OSError):
+            self._restart()
+            return self._timeout_result(chain)
+
+        try:
+            line = self._q.get(timeout=timeout + 1.0)
+            return json.loads(line)
+        except (_queue.Empty, json.JSONDecodeError):
+            self._restart()
+            return self._timeout_result(chain)
+
+    def _restart(self):
+        try:
+            self._proc.kill()
+            self._proc.wait(timeout=2)
+        except Exception:
+            pass
+        self._restarts += 1
+        self._start()
+
+    def _timeout_result(self, chain):
+        return {
+            "chain": chain, "executed": False, "successes": 0,
+            "attempts": 1, "success_rate": 0, "outputs": [],
+            "failure_mode": "worker_timeout", "execution_time_us": 0,
+        }
+
+    def close(self):
+        try:
+            self._proc.kill()
+            self._proc.wait(timeout=2)
+        except Exception:
+            pass
+
+
+# Module-level blacklist, populated during init
+_slow_ops = set()
+
+
+def _execute_chain_direct(chain, organisms, timeout=2.0, custom_inputs=None):
+    """Execute a chain directly (in-process fallback for sensitivity checks)."""
+    successes = 0
+    attempts = 0
+    outputs = []
+    failure_mode = None
+    test_inputs = custom_inputs if custom_inputs is not None else TEST_INPUTS
+    wall_deadline = time.perf_counter() + timeout
+
+    for input_type, inputs in test_inputs.items():
+        if time.perf_counter() > wall_deadline:
+            failure_mode = failure_mode or "wall_timeout"
+            break
+        for test_input in inputs:
+            if time.perf_counter() > wall_deadline:
+                failure_mode = failure_mode or "wall_timeout"
+                break
             attempts += 1
             try:
                 result = np.array(test_input) if isinstance(test_input, list) else test_input
@@ -284,7 +462,7 @@ def _execute_chain_direct(chain, organisms, timeout=2.0):
                     org = organisms[org_name]
                     t0 = time.perf_counter()
                     result = org.execute(op_name, result)
-                    if time.perf_counter() - t0 > timeout:
+                    if time.perf_counter() - t0 > 0.5:
                         raise TimeoutError("timeout")
 
                     if result is None:
@@ -444,11 +622,68 @@ def _execute_single_chain(args):
 
 
 # ============================================================
+# Input Sensitivity (M2)
+# ============================================================
+
+def _perturb_inputs(scale):
+    """Create scaled version of TEST_INPUTS for sensitivity measurement."""
+    perturbed = {}
+    for input_type, inputs in TEST_INPUTS.items():
+        p_inputs = []
+        for inp in inputs:
+            if isinstance(inp, (int, float)):
+                p_inputs.append(inp * scale)
+            elif isinstance(inp, list):
+                if inp and isinstance(inp[0], list):
+                    p_inputs.append([[x * scale for x in row] for row in inp])
+                else:
+                    p_inputs.append([x * scale for x in inp])
+            else:
+                p_inputs.append(inp)
+        perturbed[input_type] = p_inputs
+    return perturbed
+
+
+def _serialize_outputs(outputs):
+    """Convert output hash list to a comparable string."""
+    return json.dumps(outputs, sort_keys=True)
+
+
+def _compute_sensitivity(chain, worker_or_organisms, original_outputs):
+    """Measure how much output changes with small input perturbations.
+
+    Returns 0.0 (all identical) to 1.0 (all different).
+    worker_or_organisms: ChainWorker (uses subprocess) or dict of organisms (in-process).
+    """
+    baseline = _serialize_outputs(original_outputs)
+    all_output_sets = [baseline]
+
+    for scale in [0.99, 1.01]:
+        perturbed = _perturb_inputs(scale)
+        try:
+            if isinstance(worker_or_organisms, ChainWorker):
+                result = worker_or_organisms.execute(chain, timeout=2.0,
+                                                     custom_inputs=perturbed)
+            else:
+                result = _execute_chain_direct(chain, worker_or_organisms,
+                                               timeout=1.0, custom_inputs=perturbed)
+            all_output_sets.append(_serialize_outputs(result["outputs"]))
+        except Exception:
+            pass
+
+    if len(all_output_sets) < 2:
+        return 0.0
+
+    unique = len(set(all_output_sets))
+    return (unique - 1) / (len(all_output_sets) - 1)  # 0=all same, 1=all different
+
+
+# ============================================================
 # Quality Scoring
 # ============================================================
 
 class QualityScorer:
-    """7-component quality scoring system."""
+    """8-component quality scoring system (M2: compression primary, sensitivity new)."""
 
     def __init__(self, op_index, all_output_hashes=None):
         self.op_index = op_index
@@ -464,8 +699,31 @@ class QualityScorer:
             downstream[op["input_type"]] += 1
         return downstream
 
+    def _compute_quality(self, scores):
+        """Compute combined quality from sub-scores using M2 weights.
+
+        M2 key differences from M1:
+        - Compression is PRIMARY signal (0.31 of remaining budget)
+        - Input sensitivity is NEW dimension (0.19)
+        - Novelty stays meaningful (0.19)
+        - Structure and diversity share the rest (0.155 each)
+        """
+        exec_weight = 0.10 if self.execution_baseline > 0.5 else 0.25
+        remaining = 1.0 - exec_weight - 0.10  # 0.10 reserved for penalties
+        quality = (
+            exec_weight * scores["execution"]
+            + remaining * 0.31 * scores["compression"]      # M2: PRIMARY
+            + remaining * 0.19 * scores.get("sensitivity", 0.0)  # M2: NEW
+            + remaining * 0.19 * scores["novelty"]
+            + remaining * 0.155 * scores["structure"]
+            + remaining * 0.155 * scores["diversity"]
+            - 0.05 * scores["cheapness"]
+            - 0.05 * scores["dead_end"]
+        )
+        return max(0.0, min(1.0, quality))
+
     def score(self, result: Dict, chain: List[Tuple[str, str]]) -> Dict:
-        """Score a chain execution result on 7 dimensions."""
+        """Score a chain execution result on 8 dimensions (M2 variant)."""
         scores = {}
 
         # 1. Execution (binary)
@@ -480,7 +738,6 @@ class QualityScorer:
         # 3. Structure (output complexity)
         if result["executed"] and result.get("outputs"):
             output_types = [o["type"] for o in result["outputs"]]
-            # Higher structure = array/matrix outputs vs scalar
             struct_score = 0.0
             for ot in output_types:
                 if "ndarray" in ot:
@@ -500,10 +757,8 @@ class QualityScorer:
         scores["diversity"] = max(0.0, 1.0 - recent_overlap / 5.0)
         self.recent_organisms.append(chain_orgs)
 
-        # 5. Compression gain (entropy reduction)
+        # 5. Compression gain (entropy reduction) — M2 PRIMARY signal
         scores["compression"] = 0.0
-        # Simplified: if we produced structured output from scalar input, that's negative compression
-        # If we compressed array to scalar, that's positive
         if result["executed"] and result.get("outputs"):
             first_input_type = chain[0][0]  # approximate
             output_types = [o["type"] for o in result["outputs"]]
@@ -523,7 +778,6 @@ class QualityScorer:
         scores["dead_end"] = 0.0
         if result["executed"] and result.get("outputs"):
             last_op = chain[-1]
-            # Find the output type of the last operation
             for op in self.op_index:
                 if op["organism"] == last_op[0] and op["op_name"] == last_op[1]:
                     out_type = op["output_type"]
@@ -531,20 +785,11 @@ class QualityScorer:
                         scores["dead_end"] = 1.0
                     break
 
-        # Combined quality
-        exec_weight = 0.10 if self.execution_baseline > 0.5 else 0.25
-        remaining = 1.0 - exec_weight - 0.10  # 0.10 for penalties
-        quality = (
-            exec_weight * scores["execution"]
-            + remaining * 0.31 * scores["novelty"]
-            + remaining * 0.19 * scores["structure"]
-            + remaining * 0.19 * scores["diversity"]
-            + remaining * 0.19 * scores["compression"]
-            - 0.05 * scores["cheapness"]
-            - 0.05 * scores["dead_end"]
-        )
+        # 8. Input sensitivity — M2 NEW dimension (filled in by main loop pass 2)
+        scores["sensitivity"] = 0.0
 
-        scores["quality"] = max(0.0, min(1.0, quality))
+        # Combined quality using M2 weights
+        scores["quality"] = self._compute_quality(scores)
         return scores
 
     def update_baseline(self, exec_rate: float):
@@ -1091,25 +1336,14 @@ def run_daemon(max_hours: float = 30.0, batch_size: int = 100,
         pass
     scorer = QualityScorer(op_index, existing_hashes)
 
-    # Process pool with persistent workers (import organisms once per worker)
-    n_workers = min(mp.cpu_count(), 4)
-    # Workers import organisms in _pool_init and keep them alive
-    pool = mp.Pool(processes=n_workers, initializer=_pool_init,
-                   maxtasksperchild=20)
-    _organisms_cache = organisms  # Keep for main-process fallback
+    # Subprocess worker — isolated process with hard kill on hang.
+    # Worker loads organisms once, executes chains on demand via stdin/stdout.
+    # If any operation hangs, worker is killed and restarted automatically.
+    _organisms_cache = organisms  # Keep for in-process sensitivity checks
+    worker = ChainWorker()
 
-    log.info(f"  Process pool: {n_workers} persistent workers (import once)")
+    log.info(f"  Execution: subprocess worker (isolated, auto-restart)")
     log.info(f"  Deadline: {max_hours:.1f} hours")
-
-    # Warm up all workers by sending one dummy task to each
-    log.info("  Warming up workers...")
-    try:
-        dummy_chains = [chains[0:1] if chains else [] for chains in
-                        [[(_pair_to_chain_static(op_index, *compat_pairs[0]))] * n_workers]]
-        warmup = pool.map(_execute_single_chain_pooled, [(compat_pairs[0], 3.0)] * n_workers)
-        log.info(f"  {n_workers} workers ready")
-    except Exception as e:
-        log.info(f"  Warm-up issue: {e}")
 
     log.info("=" * 70)
     log.info("")
@@ -1130,56 +1364,17 @@ def run_daemon(max_hours: float = 30.0, batch_size: int = 100,
             if not chains:
                 continue
 
-            # Execute chains with individual per-chain timeouts
-            # On first timeout, kill pool and restart (hung worker = dead slot)
+            # Execute chains via subprocess worker (hard kill on hang)
             results = []
-            pool_killed = False
-            futures = []
             for c in chains:
-                f = pool.apply_async(_execute_single_chain_pooled, [(c, 1.0)])
-                futures.append((c, f))
+                results.append(worker.execute(c, timeout=3.0))
 
-            for c, f in futures:
-                if pool_killed:
-                    results.append({
-                        "chain": c, "executed": False, "successes": 0,
-                        "attempts": 1, "success_rate": 0,
-                        "outputs": [], "failure_mode": "pool_killed",
-                        "execution_time_us": 0,
-                    })
-                    continue
-                try:
-                    result = f.get(timeout=3.0)  # 3s hard limit per chain
-                    results.append(result)
-                except mp.TimeoutError:
-                    # Hung worker — kill the entire pool and restart
-                    results.append({
-                        "chain": c, "executed": False, "successes": 0,
-                        "attempts": 1, "success_rate": 0,
-                        "outputs": [], "failure_mode": "timeout",
-                        "execution_time_us": 0,
-                    })
-                    try:
-                        pool.terminate()
-                        pool.join()
-                    except Exception:
-                        pass
-                    pool = mp.Pool(processes=n_workers, initializer=_pool_init,
-                                   maxtasksperchild=20)
-                    pool_killed = True
-                except Exception:
-                    results.append({
-                        "chain": c, "executed": False, "successes": 0,
-                        "attempts": 1, "success_rate": 0,
-                        "outputs": [], "failure_mode": "other_error",
-                        "execution_time_us": 0,
-                    })
-
-            # Score results
+            # Score results (M2: two-pass — base score, then sensitivity for promising chains)
             cycle_cracks = 0
             cycle_executed = 0
 
             for chain, result in zip(chains, results):
+                # Pass 1: score without sensitivity
                 scores = scorer.score(result, chain)
                 quality = scores["quality"]
                 chain_id = hashlib.md5(str(chain).encode()).hexdigest()[:16]
@@ -1187,9 +1382,20 @@ def run_daemon(max_hours: float = 30.0, batch_size: int = 100,
                 if result["executed"]:
                     cycle_executed += 1
 
+                # Pass 2: compute sensitivity for promising chains (M2)
+                if quality > 0.4 and result["executed"] and result.get("outputs"):
+                    try:
+                        sensitivity = _compute_sensitivity(
+                            chain, worker, result["outputs"])
+                        if sensitivity > 0.0:
+                            scores["sensitivity"] = sensitivity
+                            scores["quality"] = scorer._compute_quality(scores)
+                            quality = scores["quality"]
+                    except Exception:
+                        pass  # Sensitivity computation failed — keep original score
+
                 if quality >= crack_threshold:
                     cycle_cracks += 1
-                    # Live crack logging
                     crack_entry = {
                         "cycle": cycle,
                         "strategy": strategy.name,
@@ -1211,7 +1417,7 @@ def run_daemon(max_hours: float = 30.0, batch_size: int = 100,
                         if isinstance(s, MutationStrategy):
                             s.add_to_hof(chain, quality)
 
-                # Record to DuckDB
+                # Record to DuckDB (M2: includes score_sensitivity)
                 chain_steps = json.dumps(chain)
                 output_hash = result["outputs"][0]["hash"] if result.get("outputs") else None
 
@@ -1220,14 +1426,16 @@ def run_daemon(max_hours: float = 30.0, batch_size: int = 100,
                         INSERT OR REPLACE INTO compositions
                         (chain_id, chain_steps, strategy, cycle, executed,
                          quality, score_execution, score_novelty, score_structure,
-                         score_diversity, score_compression, score_cheapness,
-                         score_dead_end, output_hash, failure_mode, execution_time_us)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                         score_diversity, score_compression, score_sensitivity,
+                         score_cheapness, score_dead_end,
+                         output_hash, failure_mode, execution_time_us)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """, [
                         chain_id, chain_steps, strategy.name, cycle,
                         result["executed"], quality,
                         scores["execution"], scores["novelty"], scores["structure"],
                         scores["diversity"], scores["compression"],
+                        scores.get("sensitivity", 0.0),
                         scores["cheapness"], scores["dead_end"],
                         output_hash, result.get("failure_mode"),
                         result.get("execution_time_us", 0),
@@ -1313,10 +1521,9 @@ def run_daemon(max_hours: float = 30.0, batch_size: int = 100,
         log.info("  Interrupted by user (Ctrl+C)")
 
     finally:
-        # Cleanup pool
+        # Cleanup worker
         try:
-            pool.terminate()
-            pool.join()
+            worker.close()
         except Exception:
             pass
 
@@ -1372,11 +1579,12 @@ def generate_report(db, tournament, grid, elapsed_h, total_cycles, total_chains)
         "map_elites": grid.to_dict(),
     }
 
-    # Top 50 compositions
+    # Top 50 compositions (M2: includes compression + sensitivity sub-scores)
     try:
         rows = db.execute("""
             SELECT chain_id, chain_steps, strategy, quality, score_execution,
-                   score_novelty, score_structure, output_hash
+                   score_novelty, score_structure, score_compression,
+                   score_sensitivity, output_hash
             FROM compositions
             ORDER BY quality DESC
             LIMIT 50
@@ -1385,7 +1593,8 @@ def generate_report(db, tournament, grid, elapsed_h, total_cycles, total_chains)
             {
                 "chain_id": r[0], "chain": json.loads(r[1]), "strategy": r[2],
                 "quality": r[3], "execution": r[4], "novelty": r[5],
-                "structure": r[6], "output_hash": r[7],
+                "structure": r[6], "compression": r[7],
+                "sensitivity": r[8], "output_hash": r[9],
             }
             for r in rows
         ]
