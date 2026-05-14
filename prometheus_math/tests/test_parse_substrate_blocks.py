@@ -17,6 +17,10 @@ from pathlib import Path
 
 import pytest
 
+# parse_substrate_blocks imports pyyaml at module load. CI doesn't always
+# install pyyaml; skip the whole module rather than failing collection.
+pytest.importorskip("yaml")
+
 _APORIA_SCRIPTS = Path(__file__).resolve().parents[2] / "aporia" / "scripts"
 sys.path.insert(0, str(_APORIA_SCRIPTS))
 
