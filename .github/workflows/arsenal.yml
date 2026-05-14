@@ -39,7 +39,9 @@ jobs:
       github.event_name != 'schedule' ||
       github.event.schedule == '0 */6 * * *'
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    # Bumped 45 -> 60 2026-05-14: test count grew ~+45 from claim-mining
+    # extractor work; smoke job hit 45m timeout 2026-05-14T01:09Z.
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
@@ -118,7 +120,9 @@ jobs:
         run: |
           mkdir -p test-results
           if [ -d prometheus_math/tests ]; then
-            pytest prometheus_math/tests -v \
+            # -n auto: parallelize via pytest-xdist (installed above).
+            # Significantly reduces wall clock on the broader test suite.
+            pytest prometheus_math/tests -v -n auto \
               --junitxml=test-results/prometheus_math-py${{ matrix.python-version }}.xml \
               --tb=short || true
           else
@@ -129,7 +133,7 @@ jobs:
         if: always()
         run: |
           if [ -d techne/tests ]; then
-            pytest techne/tests -v \
+            pytest techne/tests -v -n auto \
               --junitxml=test-results/techne-py${{ matrix.python-version }}.xml \
               --tb=short || true
           else
