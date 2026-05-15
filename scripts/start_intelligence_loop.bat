@@ -18,5 +18,5 @@ REM Launch detached so this batch window can close.
 start "" "%PYTHONW%" "C:\Prometheus\scripts\intelligence_loop.py" --immediate
 
 echo Intelligence loop launched in background (pythonw, no console window).
-echo Logs: C:\Prometheus\dashboard\intelligence_loop.log
+echo Logs: C:\Prometheus\docs\intelligence_loop.log
 echo To stop: kill the pythonw.exe process via Task Manager.

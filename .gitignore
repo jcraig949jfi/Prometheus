@@ -143,14 +143,8 @@ agents/nemesis/grid/grid.json
 # Root-level TODO (personal, local only)
 /TODO.md
 
-# Dashboard auto-generated data (code is tracked; data is local-only)
-/dashboard/state.json
-/dashboard/portfolio_STATUS.md
-/dashboard/portfolio_brief.md
-/dashboard/digest_*.md
-/dashboard/portfolio_brief_*.md
-/dashboard/briefs/
-/dashboard/benchmarks/
+# Dashboard data moved to docs/ for GitHub Pages serving (2026-05-15).
+# See "Docs — local research drafts" block below for the docs/ exceptions.
 
 # Full local backup copy of the repo (local only)
 /Prometheus_data_backup/
@@ -199,8 +193,14 @@ docs/council/
 # Noesis — UNPUBLISHED RESEARCH (gitignore until ready to publish)
 noesis/
 
-# Docs — UNPUBLISHED (gitignore until ready to publish)
-docs/
+# Docs — local research drafts ignored by default; the three dashboard files
+# tracked for GitHub Pages serving from main/docs (configured in repo Settings).
+# Pattern: docs/* ignores everything inside docs/ at the top level, ! lines re-include.
+# Subdirectories (briefs/, benchmarks/, notebook_lm/, prompts/) stay ignored.
+docs/*
+!docs/index.html
+!docs/state.json
+!docs/portfolio_brief.md
 
 # Papers — UNPUBLISHED (gitignore until ready to publish)
 papers/

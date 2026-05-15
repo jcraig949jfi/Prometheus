@@ -36,8 +36,14 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SCRIPTS_DIR = REPO_ROOT / "scripts"
-LOG_PATH = REPO_ROOT / "dashboard" / "intelligence_loop.log"
+LOG_PATH = REPO_ROOT / "docs" / "intelligence_loop.log"  # docs/* gitignored except the 3 dashboard files
 LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+# Git identity used for the auto-commits. Kept local to this script to avoid
+# touching global git config; matches the noreply email pattern used elsewhere.
+GIT_AUTHOR = ("-c", "user.name=James Craig",
+              "-c", "user.email=jcraig949jfi@users.noreply.github.com")
+DASHBOARD_FILES = ["docs/state.json", "docs/portfolio_brief.md"]
 
 logging.basicConfig(
     level=logging.INFO,
@@ -61,6 +67,63 @@ except Exception as e:
     HAS_AGORA = False
     AgoraClient = None
     MessageType = None
+
+
+def push_dashboard_to_main() -> bool:
+    """Auto-commit + push docs/state.json + docs/portfolio_brief.md to main.
+
+    Idempotent: no-op when there are no changes. Logs errors and never raises.
+    Handles the remote-moved case with one pull --rebase --autostash retry.
+    Returns True if the push succeeded or there was nothing to push.
+    """
+    def run(args, timeout=60):
+        return subprocess.run(
+            ["git", *GIT_AUTHOR, *args],
+            cwd=REPO_ROOT, capture_output=True, text=True, timeout=timeout,
+        )
+
+    # Are there actual changes?
+    status = run(["status", "--porcelain", *DASHBOARD_FILES], timeout=15)
+    if status.returncode != 0:
+        log.error("  git status failed: %s", (status.stderr or "")[:200])
+        return False
+    if not status.stdout.strip():
+        log.info("  no dashboard changes — push skipped")
+        return True
+
+    # Stage + commit (--only restricts commit to these paths regardless of other staged work)
+    r = run(["add", *DASHBOARD_FILES], timeout=15)
+    if r.returncode != 0:
+        log.error("  git add failed: %s", (r.stderr or "")[:200])
+        return False
+
+    ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    msg = f"auto: portfolio update {ts}"
+    r = run(["commit", "-m", msg], timeout=15)
+    if r.returncode != 0:
+        # "nothing to commit" race condition or other commit failure
+        log.warning("  git commit rc=%d: %s", r.returncode, (r.stderr or r.stdout or "")[:200])
+        return False
+
+    # Push, with one rebase-retry on rejection
+    r = run(["push", "origin", "main"], timeout=60)
+    if r.returncode == 0:
+        log.info("  ✓ pushed dashboard update to main (%s)", msg)
+        return True
+
+    log.warning("  push failed, attempting rebase: %s", (r.stderr or "")[:200])
+    r = run(["pull", "--rebase", "--autostash"], timeout=60)
+    if r.returncode != 0:
+        log.error("  rebase failed: %s", (r.stderr or "")[:200])
+        return False
+
+    r = run(["push", "origin", "main"], timeout=60)
+    if r.returncode == 0:
+        log.info("  ✓ pushed dashboard update after rebase")
+        return True
+
+    log.error("  final push failed: %s", (r.stderr or "")[:200])
+    return False
 
 
 def run_script(name: str, args: list = None, timeout: int = 600) -> bool:
@@ -98,6 +161,8 @@ def main():
                         help="Skip daily email digest")
     parser.add_argument("--no-metis", action="store_true",
                         help="Skip LLM brief generation (structural state only)")
+    parser.add_argument("--no-push", action="store_true",
+                        help="Skip auto-commit + push of dashboard data to main (useful for testing)")
     parser.add_argument("--immediate", action="store_true",
                         help="Run the hourly cycle once on startup before settling into cadence")
     args = parser.parse_args()
@@ -139,18 +204,25 @@ def main():
         while True:
             now = datetime.now(timezone.utc)
 
-            # Hourly: monitor + metis
+            # Hourly: monitor + metis (+ optional push to main for GitHub Pages)
             if now >= next_hourly:
                 log.info("[hourly] firing portfolio cycle")
                 ok_monitor = run_script("portfolio_monitor.py", ["--once"], timeout=120)
                 ok_metis = True
                 if not args.no_metis:
                     ok_metis = run_script("metis_portfolio.py", [], timeout=300)
+
+                # Auto-publish to GitHub Pages by pushing the data files to main
+                ok_push = True
+                if not args.no_push and ok_monitor:
+                    log.info("[hourly] pushing dashboard data to main")
+                    ok_push = push_dashboard_to_main()
+
                 if agora_client:
                     try:
                         agora_client.send(
                             stream="main",
-                            subject=f"Portfolio cycle complete (mon={ok_monitor}, metis={ok_metis})",
+                            subject=f"Portfolio cycle complete (mon={ok_monitor}, metis={ok_metis}, push={ok_push})",
                             body=f"hourly tick {now.isoformat()}",
                             confidence=1.0,
                             msg_type=MessageType.ANNOUNCE,

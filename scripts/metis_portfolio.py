@@ -39,7 +39,7 @@ except ImportError as e:
     print("Check that agents/metis/src/metis.py exists and agents/eos/.env is populated.", file=sys.stderr)
     sys.exit(1)
 
-DASHBOARD_DIR = REPO_ROOT / "dashboard"
+DASHBOARD_DIR = REPO_ROOT / "docs"  # GitHub Pages serves from main/docs
 STATE_PATH = DASHBOARD_DIR / "state.json"
 BRIEF_PATH = DASHBOARD_DIR / "portfolio_brief.md"
 BRIEFS_HISTORY_DIR = DASHBOARD_DIR / "briefs"
@@ -231,18 +231,31 @@ numbers. If nothing warrants action, say so explicitly. Do not pad.
 
 
 def write_brief(brief_text: str) -> Path:
-    """Write brief to dashboard/portfolio_brief.md and a timestamped history copy."""
+    """Write brief to docs/portfolio_brief.md and a timestamped history copy.
+
+    The LLM is asked to produce its own header (title + timestamp + author).
+    We prepend a single metadata line only if it didn't, so we don't get
+    double-headers in the output.
+    """
     DASHBOARD_DIR.mkdir(parents=True, exist_ok=True)
     BRIEFS_HISTORY_DIR.mkdir(parents=True, exist_ok=True)
     now = datetime.now(timezone.utc)
     ts = now.strftime("%Y-%m-%dT%H%M%SZ")
-    header = (
-        f"# Prometheus Portfolio Brief\n"
-        f"*Generated: {now.isoformat()}*\n"
-        f"*Author: Metis (multi-machine reporter mode)*\n\n"
-        f"---\n\n"
-    )
-    content = header + brief_text + "\n"
+
+    stripped = brief_text.lstrip()
+    if stripped.startswith("# "):
+        # LLM already wrote a header; just trust it. Add a single comment line
+        # for the actual write timestamp (separate from the LLM's claimed time).
+        content = f"<!-- written by metis_portfolio.py at {now.isoformat()} -->\n{brief_text}\n"
+    else:
+        # LLM skipped a header; provide one.
+        content = (
+            f"# Prometheus Portfolio Brief\n"
+            f"*Generated: {now.isoformat()}*\n"
+            f"*Author: Metis (multi-machine reporter mode)*\n\n"
+            f"---\n\n"
+            f"{brief_text}\n"
+        )
 
     BRIEF_PATH.write_text(content, encoding="utf-8")
     history_path = BRIEFS_HISTORY_DIR / f"portfolio_brief_{ts}.md"

@@ -29,7 +29,7 @@ from email.mime.text import MIMEText
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_BRIEF = REPO_ROOT / "dashboard" / "portfolio_brief.md"
+DEFAULT_BRIEF = REPO_ROOT / "docs" / "portfolio_brief.md"  # GitHub Pages serves from main/docs
 
 
 def load_env():

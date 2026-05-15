@@ -37,7 +37,7 @@ from agora.config import (  # noqa: E402
 )
 
 OUTPUT_PATH = REPO_ROOT / "pivot" / "portfolio_STATUS.md"
-JSON_OUTPUT_PATH = REPO_ROOT / "dashboard" / "state.json"
+JSON_OUTPUT_PATH = REPO_ROOT / "docs" / "state.json"  # GitHub Pages serves from main/docs
 
 # Agents we expect to see in the portfolio, with their assigned machine.
 # Keep in sync with pivot/agent_portfolio_and_monitoring_2026-05-12.md.
