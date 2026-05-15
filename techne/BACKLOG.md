@@ -78,6 +78,36 @@ Goal: prerequisites that unlock continuous attack. Without these done, Phase 1 s
 - **Substrate-block emission:** anti_anchor field updates (last_verified + verification_source); kill ledger entries for anti_anchors that no longer survive verification (rare but expected)
 - **Mechanism:** scan `techne/registry/anti_anchors.jsonl`; for each entry where `last_verified` is older than 90 days, re-run citation_audit + spot-check substantive content claim against current literature
 
+### BL-T-031 | Phase 0 | Audit catalog stale-anchor text edits (per Techne 5-15-2026 synopsis move 4)
+- **Status:** [done — verified already landed] commit context: synthesis 2026-05-09/2026-05-10/2026-05-11 batches updated the catalog text in-place
+- **Dependencies:** none (audit only)
+- **Effort:** ~30 min (read + verify)
+- **Substrate-block emission:** none (audit)
+- **Audit findings:** All 5 named entries (T#1, T#13, T#56, T#92, T#95) carry explicit `(Updated YYYY-MM-DD per ...)` markers with full rewrites matching the Techne 5-15-2026 synopsis §2 recommendations:
+  - T#1 ω: now reads `ω < 2.371339 (ADVWXXZ 2024, arXiv:2404.16349; supersedes prior 2.371552 figure)`. Done.
+  - T#13 partition rank: full (a)/(b)/(c)/(d) subdivision per Lampert-Moshkovitz Sept 2025 NEGATIVELY-RESOLVED. Done.
+  - T#56 Hillar-Lim: corrected to arXiv:1611.01559 per Wave 1 anti-anchor verification (prior arXiv:1605.07532 was wrong). Done.
+  - T#92 GCT: full BIP occurrence-obstruction-dead update + Mignon-Ressayre + equivariant-restricted clarification. Done.
+  - T#95 Kronecker: Mulmuley PH1 falsified update + Saxl-still-open per Lee 2025 withdrawal. Done.
+- **Conclusion:** Catalog text is current. No edit work needed; this BL-T item exists as the audit confirmation.
+
+### BL-T-032 | Phase 0 → Phase 1 | PROVISIONAL marker discipline for vocabulary Layers 1/2/5 (per Ergon feedback 2026-05-15)
+- **Status:** pending — coordination with Aporia required
+- **Dependencies:** Aporia confirms whether to mark Layer 1 (primitives.md) / Layer 2 (attacks.md) / Layer 5 (composition_rules.md) entries with `_status: provisional` until Arena/kill_ledger evidence accumulates per entry (Ergon's "≥2 instances" discipline)
+- **Effort:** ~30 min Techne side IF Aporia adopts the discipline (just adds a per-entry `_status` field to the relevant doctrine docs); larger if it requires schema-level marker on the substrate_block schemas
+- **Substrate-block emission:** none (doctrine discipline)
+- **Ergon's reasoning** (`feedback_anti_gravitational_well.md` risk): "we define vocabulary that looks neat, train Learner on it, then 'discover' the Learner uses our vocabulary because we trained it to." Layer 4 (anti_anchors) + Layer 3 (patterns) escape this because every entry has empirical anchoring (citation OR observed failure mode); Layers 1/2/5 don't.
+- **Coordination ask:** file P3-low ticket to Aporia raising the discipline question + offering Techne side support (schema marker addition if wanted)
+
+### BL-T-033 | Phase 1 | LearnerRecord _vocabulary_v1_action_grammar sidecar (co-design with Ergon BL-E-037)
+- **Status:** pending — gated on co-design pass with Ergon; sidecar landing requires no contract change (additive sidecar pattern matches existing `_training_anchor_meta`)
+- **Dependencies:** Ergon ships BL-E-037 design (LearnerRecord schema extension); Techne reviews + implements
+- **Effort:** ~2-3 hours (~50 LOC schema extension + tests + closure)
+- **Substrate-block emission:** none (LearnerRecord shape extension)
+- **Per Ergon feedback:** "If the 5-layer typed grammar is supposed to be the Learner's action space, my current schema captures it only awkwardly (chart_id for Layer 1, kill_signature[0] for Layer 2, no slot for Layer 5). A clean sidecar `_vocabulary_v1_action_grammar` (same pattern as `_training_anchor_meta`) would let the grammar tokenize cleanly."
+- **Sidecar shape proposal (draft, for Ergon review):** `{layer1_primitive_refs: [str], layer2_attack_refs: [str], layer5_composition_refs: [str], canonical_status_per_ref: {ref: 'provisional'|'canonical'}}`
+- **Note:** sidecar is additive on LearnerRecord; existing call sites unaffected; Ergon's existing consumer code unaffected.
+
 ### BL-T-010 | Phase 0 | Phase 0 → Phase 1 review + closure ticket
 - **Status:** pending — fires at end of week 4 (~2026-06-12)
 - **Dependencies:** all Phase 0 backlog items at terminal state (done / gated-and-skipped / explicitly-deferred)
