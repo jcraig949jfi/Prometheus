@@ -4,7 +4,7 @@
   "title": "problem_card (v0 DRAFT)",
   "description": "DRAFT schema per pivot/arena_problem_atlas_sandbox_vision_2026-05-14.md Part 4 (Layer 5.5 Problem Atlas). A structured map of an unsolved problem with its hardness signature and the navigation primitives needed to support Arena/Sandbox infrastructure. NOT a contract change — sits alongside the 7 existing substrate_block schemas as a draft for Aporia review. Per session-prompt 2026-05-14 Track 4 (optional). Will be promoted to v1.0 only after Aporia adjudication and a 10-card MVP smoke test demonstrates the schema captures the navigation signal the Arena needs.",
   "_status": "draft",
-  "_status_note": "v0 draft. Aporia ships review notes; if approved, version bumps to 1.0.0 and _status field is removed. Do NOT use in production substrate_block emission until promoted.",
+  "_status_note": "v0 draft (currently 0.2.0; Aporia adjudicated v0.1.0 on 2026-05-15 with APPROVE + 1 schema addition (field_invariants_used) + tightened MVP smoke gate). Promotion path to v1.0.0: (1) Aporia authors 10-card MVP smoke; (2) all 6 smoke criteria pass (all 8 hardness dimensions exercised, >=1 representation_shift_witness, >=1 cross-transport candidate, >=2 conceptual_absences, all primary citations resolve, >=3 distinct domain_tags); (3) Techne lands the v1.0 wiring (drop _status field, rename problem_card_v1.json, register into validate_substrate_blocks.py + parse_substrate_blocks.py, bump _schema_version to 1.0.0); (4) coordinated commit pair from both sides. Until then, do NOT use in production substrate_block emission.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -19,7 +19,7 @@
   "properties": {
     "_schema_version": {
       "$ref": "_common_definitions.json#/$defs/schemaVersion",
-      "const": "0.1.0"
+      "const": "0.2.0"
     },
     "_status": {
       "type": "string",
@@ -149,6 +149,14 @@
       "description": "Free-form short tags for indexing (e.g. 'number_theory', 'tensor_complexity', 'topological_combinatorics'). Multiple tags allowed.",
       "type": "array",
       "items": {"type": "string", "minLength": 2, "maxLength": 60},
+      "uniqueItems": true,
+      "maxItems": 20
+    },
+    "field_invariants_used": {
+      "title": "Mathematical invariants the classification depends on",
+      "description": "Per Aporia adjudication 2026-05-15 Ask 4 STRONG YES: captures HARD-5 discipline at the per-card level. Records which specific invariants the problem's hardness_signature / known_attacks / method_gap_patterns implicitly depend on. Without this field, the substrate cannot detect cards whose claims silently conflate distinct invariants (e.g. tensor rank R vs border rank R-bar vs asymptotic rank). Each entry names the invariant + optionally cross-references a Tier-B witness primitive in aporia/doctrine/substrate_vocabulary/primitives.md.",
+      "type": "array",
+      "items": {"$ref": "#/$defs/fieldInvariantEntry"},
       "uniqueItems": true,
       "maxItems": 20
     },
@@ -350,6 +358,36 @@
         }
       }
     },
+    "fieldInvariantEntry": {
+      "title": "One mathematical invariant the card depends on",
+      "description": "Per Aporia 2026-05-15 adjudication Ask 4: machine-queryable record of which invariant a card's claims rest on. Disambiguates close-but-distinct invariants (R vs R-bar; Krull dimension vs polynomial degree; tensor rank vs slice rank vs cactus rank). schema_ref optional but strongly recommended when a Tier-B witness primitive exists in primitives.md.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["invariant_name"],
+      "properties": {
+        "invariant_name": {
+          "title": "Canonical name of the invariant",
+          "description": "Short identifier. UpperCamelCase recommended (matches primitiveName convention) but free-form short string accepted.",
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 200
+        },
+        "schema_ref": {
+          "title": "Optional cross-reference to a Tier-B witness primitive",
+          "description": "Names a primitive in aporia/doctrine/substrate_vocabulary/primitives.md when one exists (TensorRankWitness, BorderRankWitness, AsymptoticSpectrumMonotone, etc.). Empty/absent when no canonical witness primitive is registered yet.",
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 200
+        },
+        "notes": {
+          "title": "Free-form clarification",
+          "description": "Why this invariant matters for the card; what disambiguation the substrate is preserving by naming it explicitly.",
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 1500
+        }
+      }
+    },
     "musicalSignatureEntry": {
       "title": "One attack-attempt record (the musical motif)",
       "type": "object",
@@ -389,7 +427,7 @@
   },
   "examples": [
     {
-      "_schema_version": "0.1.0",
+      "_schema_version": "0.2.0",
       "_status": "draft",
       "id": "PC-XXX",
       "statement": "Determine the asymptotic value of the matrix multiplication exponent ω. The trivial lower bound is ω >= 2 (read all n^2 entries); the current upper bound is ω < 2.371339 (Alman-Duan-VW-Xu-Xu-Zhou 2024). It is conjectured but unproven that ω = 2 exactly.",
@@ -429,8 +467,19 @@
         }
       ],
       "domain_tags": ["algebraic_complexity", "tensor_decomposition"],
+      "field_invariants_used": [
+        {
+          "invariant_name": "TensorRank",
+          "schema_ref": "TensorRankWitness",
+          "notes": "Card's hardness signature presumes ordinary (exact) tensor rank R, not border rank R-bar. Substrate must reject any agent attempt to substitute border-rank arguments for tensor-rank arguments here without an explicit theorem bridging the two."
+        },
+        {
+          "invariant_name": "AsymptoticTensorRank",
+          "notes": "Asymptotic complexity exponent omega is governed by asymptotic rank of M<n>, distinct from finite-n exact rank — relevant to method_gap_pattern boundary."
+        }
+      ],
       "source_report": "Vision doc Part 4 worked example; references AA-013 + T#1.",
-      "notes": "Worked example for the v0 schema review. Real PC-001 would be filed separately."
+      "notes": "Worked example for the v0 schema review. Real PC-001 would be filed separately. v0.2.0 update: field_invariants_used populated per Aporia adjudication 2026-05-15 Ask 4 STRONG YES."
     }
   ]
 }
