@@ -65,18 +65,35 @@ actually happening across the agents.
 Produce a brief with exactly three sections:
 
 ## Act on this
-Items requiring James's intervention now. Agent stalled, credentials expired,
-work-queue backlog, decision needed before a daemon can proceed, anomaly that
-won't self-resolve. Each item: bold one-line headline, one sentence what changed,
-one sentence what to do.
+Items requiring James's intervention now. Agent that was running and crashed
+(DEAD or STALE status), credentials expired, decision needed before a daemon
+can proceed, anomaly that won't self-resolve. Each item: bold one-line
+headline, one sentence what changed, one sentence what to do.
 
 ## Watch this
 Items trending toward needing intervention. Throughput degrading, plateau
-extending, downstream consumer drifting. No action yet, but visible.
+extending, downstream consumer drifting, agent recently restarted and not
+yet steady-state. No action yet, but visible.
 
 ## For the record
 Notable activity that doesn't need attention. Forge completions, high-potential
-discoveries, milestone gens, successful checkpoint cycles.
+discoveries, milestone gens, successful checkpoint cycles, pending-deployment
+agents (MISSING status — see below).
+
+CRITICAL — agent status semantics:
+- ALIVE: registered with Agora, heartbeat within last 150s — healthy.
+- STALE: heartbeat 150-300s old — concerning, may be DEAD next cycle.
+- DEAD: heartbeat older than 300s after having been registered — actually
+  crashed or hung. THIS is an operational anomaly.
+- OFFLINE: agent cleanly shut down via disconnect(). Intentional, not an outage.
+- MISSING: agent NEVER registered. This means NOT YET DEPLOYED on its
+  assigned machine — not crashed, not in outage, not needing emergency
+  revival. MISSING is the default state for agents that haven't been
+  instrumented or launched yet. Most expected agents will be MISSING
+  during the multi-machine bring-up phase. Do NOT classify MISSING as
+  "down", "outage", "critical", or "needs restart". At most, put a single
+  summary line in "For the record": "(N) agents still pending deployment
+  on M2/M3/M4 — known revival sequence in progress."
 
 Rules:
 - Maximum 3 items per section (9 total). Compress ruthlessly.
@@ -87,6 +104,10 @@ Rules:
   in the relevant section: "No change since previous brief at <date>."
 - Numbers matter: heartbeat ages, forge counts, queue depths. Cite them.
 - Do not invent details. If state.json doesn't say it, don't claim it.
+- "Unexpected" agents (expected=false) are historical registrations from past
+  Harmonia / Aporia / Charon sessions that aren't part of the current revival
+  plan. Do not flag them as needing attention unless they're showing fresh
+  activity (recent timestamps).
 """
 
 
