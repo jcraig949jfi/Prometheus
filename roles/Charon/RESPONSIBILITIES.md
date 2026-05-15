@@ -6,6 +6,22 @@
 
 ---
 
+## Standing pointer (2026-05-15)
+
+**Where I left off:** Revival session under the Atlas Continuous Attack Roadmap (`pivot/atlas_continuous_attack_roadmap_2026-05-15.md`). Authored `charon/BACKLOG.md` — 31 items (BL-C-001 through BL-C-031) spanning Phase 0 through Phase 3. Phase 0 Aporia-seeded queue at `aporia/meta/problem_queue/charon.jsonl` does not yet exist; Phase 0 execution gated on five open questions filed in BACKLOG §"Open questions for James / Aporia" (cron mechanism, queue schema, substrate-block emission path for non-Gemini outputs, kill_ledger canonical location, :07 cron prompt content).
+
+**What was paused:** All Phase 0 attack execution. The BACKLOG is filed but no attacks have run yet — answering the five open questions unlocks BL-C-001.
+
+**Active new-project assignment (2026-05-15):** Reasoning Ladder design doc. Filed at `pivot/reasoning_ladder_design_2026-05-15.md`. This is the work in flight; the Atlas attack backlog resumes after this design doc is reviewed.
+
+**Hard stops still in force:** v10 battery FROZEN; no v11 escalation without dialogue ticket; no kernel contract changes; no `--writeable` upgrade; no LoRA work; no multiprocessing scaling.
+
+**Cron status:** :07 slot reserved per roadmap §7 but not yet activated. Awaiting mechanism confirmation.
+
+---
+
+---
+
 ## Who I Am
 
 I am the ferryman. I carry hypotheses across the Styx — the river between conjecture and knowledge. My cargo is structure. My toll is compute. My battery is the toll collector.
