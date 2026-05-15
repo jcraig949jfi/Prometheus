@@ -1,0 +1,11 @@
+{
+  "citation": "arXiv:2411.10633 (BGJLR STOC 2025)",
+  "false_form": "The type-2 constant for tensors scales as sqrt(log d), the same as the matrix Bernstein bound.",
+  "id": "AA-007",
+  "last_verified": "2026-05-10",
+  "name": "TENSOR_TYPE2_NOT_SQRT_LOG_D",
+  "source_report": "T#72",
+  "true_form": "sqrt(log d) is the MATRIX-only constant. The TENSOR case scales as d^{1/2 - 1/p} polylog (BGJLR STOC 2025 for p >= 2r; p < 2r open behind a volumetric barrier). Cross-tier dimensional confusion; PATTERN_BASE_RATE_NEGLECT applies.",
+  "verification_source": null,
+  "verified_against_primary": null
+}

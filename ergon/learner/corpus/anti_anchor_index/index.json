@@ -1,0 +1,183 @@
+{
+  "_schema_version": "0.1.0",
+  "entries": {
+    "AA-001": {
+      "citation": "arXiv:1604.06431 (BIP 2019 J. AMS)",
+      "false_form": "Bürgisser-Ikenmeyer-Panova killed GCT entirely; occurrence obstructions for det/padded-perm are still a viable path to VP vs VNP separation.",
+      "id": "AA-001",
+      "last_verified": "2026-05-11",
+      "name": "GCT_OCCURRENCE_DEAD",
+      "source_report": "T#92",
+      "true_form": "BIP 2019 (J. AMS) killed *occurrence* obstructions for (det_m, padded_perm_{n,m}, m=poly(n)) specifically. Multiplicity, vanishing-ideal, outside-orbit, and equivariant obstructions remain. Substrate must reject any agent attempt to construct an OccurrenceObstruction in this regime as a sentinel-violation.",
+      "verification_source": "Wave 1 Gemini Deep Research, prompt 01",
+      "verified_against_primary": true
+    },
+    "AA-002": {
+      "citation": "arXiv:2501.03970 (Appleby-Flammia-Kopp 2025)",
+      "false_form": "Zauner's SIC-POVM conjecture was proved unconditionally in 2025.",
+      "id": "AA-002",
+      "last_verified": "2026-05-11",
+      "name": "ZAUNER_FALSE_ANCHOR",
+      "source_report": "T#85",
+      "true_form": "Appleby-Flammia-Kopp 2025 (arXiv:2501.03970) gives a construction CONDITIONAL on the order-1 abelian Stark conjecture for real quadratic fields plus a Shintani-Faddeev modular cocycle special-value identity. Substrate must reject 'Zauner proved' without a conditional annotation naming both Stark and Shintani-Faddeev as upstream assumptions. Use full author names; never abbreviate to 'AFK' in canonical form.",
+      "verification_source": "Wave 1 Gemini Deep Research, prompt 01",
+      "verified_against_primary": true
+    },
+    "AA-003": {
+      "citation": "arXiv:1611.01559 (Shitov 2016, 'How hard is the tensor rank?')",
+      "false_form": "Hillar-Lim symmetric-tensor-rank-over-Q is open.",
+      "id": "AA-003",
+      "last_verified": "2026-05-11",
+      "name": "HILLAR_LIM_SYMRANK_Q_RESOLVED",
+      "source_report": "T#56",
+      "true_form": "Symmetric-rank over Q is RESOLVED by Shitov 2016 ('How hard is the tensor rank?', arXiv:1611.01559). The proof reduces tensor rank over an integral domain to systems of polynomial equations, then specializes to symmetric tensors over Q. Reverse-direction false-anchor: substrate must NOT show this as open. Hillar-Lim NP-hardness over R remains the standard reference.",
+      "verification_source": "Wave 1 Gemini Deep Research, prompt 01 — citation arXiv:1605.07532 was wrong (PDE paper); corrected to arXiv:1611.01559",
+      "verified_against_primary": true
+    },
+    "AA-004": {
+      "citation": "arXiv:2512.15035 (Lee 2025, WITHDRAWN); Luo-Sellke 2017 J. Algebraic Combin. (fourth power only)",
+      "false_form": "Saxl's conjecture (T#99) was solved unconditionally by Sellke 2025/26 (arXiv:2512.15035) or by Lee 2025.",
+      "id": "AA-004",
+      "last_verified": "2026-05-11",
+      "name": "SAXL_T99_FALSELY_RESOLVED",
+      "source_report": "T#95 (corrected)",
+      "true_form": "Saxl conjecture is OPEN. Lee 2025 (arXiv:2512.15035) was WITHDRAWN within 3 days (2025-12-20) due to 'mathematical gaps identified by expert reviewers' — do not cite as proof. Luo-Sellke 2017 (J. Algebraic Combin.) proved only the FOURTH-POWER relaxation. A 2022 follow-on (centre-mersenne) tightened to the CUBE. The tensor square — the conjecture proper — remains open. Substrate must NOT propagate the false 'solved' claim. Forward false-anchor: an LLM may memorize Lee's withdrawn abstract since arXiv preprint scrapers often miss withdrawal notices.",
+      "verification_source": "Wave 1 Gemini Deep Research, prompt 01 — INVERTED from prior 2026-05-10 entry which incorrectly claimed Saxl was solved. Wave 1 surfaced the Lee withdrawal and the Luo-Sellke fourth-power scope.",
+      "verified_against_primary": true
+    },
+    "AA-005": {
+      "citation": "arXiv:2602.11309 (Buczyński 2026)",
+      "false_form": "Determinantal / rank-method lower bounds on border rank R-bar(M<m>) for m x m x m matrix multiplication tensors can in principle exceed any polynomial in m.",
+      "id": "AA-005",
+      "last_verified": "2026-05-10",
+      "name": "CACTUS_BARRIER_6M_MINUS_4",
+      "source_report": "T#19",
+      "true_form": "Buczyński Feb 2026 (arXiv:2602.11309) establishes the cactus barrier: determinantal LBs on R-bar(M<m>) cannot exceed 6m - 4. Any P31 BorderRankWitness claiming r > 6m - 4 for an m x m x m tensor is auto-flagged for re-verification via P29 apolarity (NOT P31 flattenings).",
+      "verification_source": null,
+      "verified_against_primary": null
+    },
+    "AA-006": {
+      "citation": "arXiv:2603.29571",
+      "false_form": "Conjecture 16 of arXiv:2603.29571 was jointly proposed by Bandeira and Dmitriev.",
+      "id": "AA-006",
+      "last_verified": "2026-05-10",
+      "name": "LUCCA_ATTRIBUTION",
+      "source_report": "T#72",
+      "true_form": "Conjecture 16 was proposed by Lucca; Bandeira and Dmitriev are EDITORS of arXiv:2603.29571, not joint proposers. Authorship-vs-proposership distinction matters for citation hygiene.",
+      "verification_source": null,
+      "verified_against_primary": null
+    },
+    "AA-007": {
+      "citation": "arXiv:2411.10633 (BGJLR STOC 2025)",
+      "false_form": "The type-2 constant for tensors scales as sqrt(log d), the same as the matrix Bernstein bound.",
+      "id": "AA-007",
+      "last_verified": "2026-05-10",
+      "name": "TENSOR_TYPE2_NOT_SQRT_LOG_D",
+      "source_report": "T#72",
+      "true_form": "sqrt(log d) is the MATRIX-only constant. The TENSOR case scales as d^{1/2 - 1/p} polylog (BGJLR STOC 2025 for p >= 2r; p < 2r open behind a volumetric barrier). Cross-tier dimensional confusion; PATTERN_BASE_RATE_NEGLECT applies.",
+      "verification_source": null,
+      "verified_against_primary": null
+    },
+    "AA-008": {
+      "citation": "arXiv:1508.05788 (Landsberg-Ressayre 2017); Mignon-Ressayre 2004 IMRN",
+      "false_form": "Landsberg-Ressayre 2017 gives an exponential lower bound on dc(perm_n) unrestricted.",
+      "id": "AA-008",
+      "last_verified": "2026-05-10",
+      "name": "EQUIVARIANT_EXPONENTIAL_RESTRICTED",
+      "source_report": "T#92",
+      "true_form": "Landsberg-Ressayre 2017 (arXiv:1508.05788) exponential lower bound on dc(perm) is RESTRICTED to the equivariant model only. It is NOT a lower bound on dc(perm_n) unrestricted. Mignon-Ressayre n^2/2 (2004 IMRN) remains the current best for the unrestricted dc(perm_n). HARD-5 / PATTERN_RANK_PARITY_LEAK at the model-restriction layer.",
+      "verification_source": null,
+      "verified_against_primary": null
+    },
+    "AA-009": {
+      "citation": "arXiv:2601.19558 (Buczyńska-Buczyński 2026)",
+      "false_form": "Border cactus rank cr-bar is a synonym for cactus rank cr or border rank R-bar.",
+      "id": "AA-009",
+      "last_verified": "2026-05-10",
+      "name": "BORDER_CACTUS_DISTINCT_FIFTH_RANK",
+      "source_report": "T#19",
+      "true_form": "Border cactus rank cr-bar is a DISTINCT FIFTH rank invariant (Buczyńska-Buczyński Jan 2026, arXiv:2601.19558). Substrate must track at least five rank coordinates (R, R-bar, sr, cr, cr-bar) and never collapse them. RankZooSignature primitive (Tier-A++) enforces this.",
+      "verification_source": null,
+      "verified_against_primary": null
+    },
+    "AA-010": {
+      "citation": "arXiv:2411.10633 (BGJLR STOC 2025)",
+      "false_form": "The type-2 tensor constant in T#72 has the standard textbook regime structure of matrix Bernstein.",
+      "id": "AA-010",
+      "last_verified": "2026-05-10",
+      "name": "TYPE2_FIVE_REGION_RARE",
+      "source_report": "T#72",
+      "true_form": "Type-2 tensor constant has unusual five-region simultaneity (regimes: matrix_r2, p_geq_2r, p_lt_2r, p_eq_infty, plus a fifth boundary regime). Five-application convergence is RARE; Learner trained on textbook matrix Bernstein hallucinates sqrt(log d) for tensors. Tagged PATTERN_BASE_RATE_NEGLECT.",
+      "verification_source": null,
+      "verified_against_primary": null
+    },
+    "AA-011": {
+      "citation": "centre-mersenne 2022 follow-on; Luo-Sellke 2017 J. Algebraic Combin.",
+      "false_form": "The tensor cube variant of the Saxl conjecture remains open.",
+      "id": "AA-011",
+      "last_verified": "2026-05-11",
+      "name": "SAXL_CUBE_ANCHOR",
+      "source_report": "T#95 (new)",
+      "true_form": "The tensor CUBE variant (S_{ρ_n})^⊗3 was proven to contain all irreducible representations of S_N in 2022 (centre-mersenne follow-on to Luo-Sellke 2017). The Saxl conjecture proper (tensor SQUARE) remains open. Companion entry to AA-004; surfaces the precise gap that remains.",
+      "verification_source": "Wave 1 Gemini Deep Research, prompt 01 — newly discovered sub-anchor",
+      "verified_against_primary": true
+    },
+    "AA-012": {
+      "citation": "arXiv:1611.01559 (Shitov 2016, 'How hard is the tensor rank?')",
+      "false_form": "Tensor rank over Z is computable in exponential time.",
+      "id": "AA-012",
+      "last_verified": "2026-05-11",
+      "name": "TENSOR_RANK_Z_UNDECIDABLE",
+      "source_report": "T#56 (new)",
+      "true_form": "Tensor rank over Z is mathematically UNDECIDABLE (Shitov 2016, arXiv:1611.01559). This answers the 1980 Gonzalez-Ja'Ja' conjecture. The reduction goes through Hilbert's 10th problem via the equivalence between tensor rank over an integral domain and systems of polynomial equations over that domain.",
+      "verification_source": "Wave 1 Gemini Deep Research, prompt 01 — newly discovered sub-anchor",
+      "verified_against_primary": true
+    },
+    "AA-013": {
+      "citation": "10.1016/j.laa.2024.06.016",
+      "false_form": "Strassen's direct-sum additivity conjecture for small tensors (R <= 7) is verified via exhaustive computational search, applying universally across fields and rank invariants.",
+      "id": "AA-013",
+      "last_verified": "2026-05-14",
+      "name": "STRASSEN_ADDITIVITY_COMPLEX_TENSOR_RANK_BOUND_SEVEN",
+      "source_report": "Techne re-author from pilot 2026-05-13 (DR-001/DR-007/DR-231 parsed blocks; field-shape divergence corrected)",
+      "true_form": "Strassen's direct-sum additivity conjecture strictly holds for exact tensor rank R over the complex field C when both independent tensors satisfy R <= 7. The proof relies on the algebraic Alexeev-Forbes-Tsimerman substitution method with geometric repletion and digestion, not exhaustive computational search.",
+      "verification_source": "Gemini Deep Research pilot DR-001 2026-05-13 primary-source anchor; Rupniewski 2024 Linear Algebra and its Applications Vol 698 (peer-reviewed; first announced arXiv:2209.11040)",
+      "verified_against_primary": true
+    },
+    "AA-014": {
+      "citation": "10.1137/0204037",
+      "false_form": "The relativization barrier (Baker-Gill-Solovay 1975) implies that purely mathematical approaches cannot resolve P vs NP, requiring physical or logical-foundation changes.",
+      "id": "AA-014",
+      "last_verified": "2026-05-14",
+      "name": "RELATIVIZATION_BARRIER_TOTALITY",
+      "source_report": "03_dr_s001_p_vs_np_barriers_landscape_relativization_natural_pr.md",
+      "true_form": "The relativization barrier (Baker-Gill-Solovay 1975) rules out only proof strategies that hold relative to any arbitrary black-box oracle. It is formally bypassed by non-black-box techniques: arithmetization (IP = PSPACE, Shamir 1992); interactive proof systems exploiting algebraic structure of polynomial encodings; circuit-specific lower bound techniques operating directly on uniform structure. The barrier is a constraint on a proof class, not on mathematics as a whole.",
+      "verification_source": "Gemini Deep Research pilot DR-S001 2026-05-14; primary citation Baker-Gill-Solovay 1975 SIAM J. Comput. 4(4):431-442 (DOI 10.1137/0204037); cross-reference Aaronson-Wigderson 2008 'Algebrization' survey.",
+      "verified_against_primary": true
+    },
+    "AA-015": {
+      "citation": "10.1006/jcss.1997.1494",
+      "false_form": "The natural proofs barrier (Razborov-Rudich 1997) rules out all known combinatorial lower bound techniques for separating complexity classes.",
+      "id": "AA-015",
+      "last_verified": "2026-05-14",
+      "name": "NATURAL_PROOFS_UNIVERSALITY",
+      "source_report": "03_dr_s001_p_vs_np_barriers_landscape_relativization_natural_pr.md",
+      "true_form": "The natural proofs barrier (Razborov-Rudich 1997) strictly rules out proof techniques that simultaneously satisfy formal constructivity (the predicate is computable in time 2^O(n)) AND largeness (it accepts a non-negligible fraction of all functions), assuming strong pseudorandom generators exist. Bounds against weaker classes such as AC^0 are not constructive in the relevant sense and bypass it; bounds via non-constructive properties (e.g. counting or measure-theoretic arguments) also bypass it. The algebraic natural-proofs analogue (Forbes-Shpilka-Volk 2017, Grochow-Kumar-Saks-Saraf 2017) is conjectural, not proven.",
+      "verification_source": "Gemini Deep Research pilot DR-S001 2026-05-14; primary cite Razborov-Rudich 1997 JCSS 55(1):24-35 (DOI 10.1006/jcss.1997.1494); algebraic-natural-proofs follow-on Forbes-Shpilka-Volk 2017 (arXiv:1701.01717).",
+      "verified_against_primary": true
+    },
+    "AA-016": {
+      "citation": "arXiv:0710.0017",
+      "false_form": "The algebrization barrier (Aaronson-Wigderson 2008) proves that no proof technique using polynomials, algebraic geometry, or arithmetization can separate P from NP.",
+      "id": "AA-016",
+      "last_verified": "2026-05-14",
+      "name": "ALGEBRIZATION_BARRIER_TOTALITY",
+      "source_report": "03_dr_s001_p_vs_np_barriers_landscape_relativization_natural_pr.md",
+      "true_form": "The algebrization barrier (Aaronson-Wigderson 2008) rules out only proof strategies that 'algebrize' — meaning they hold true relative to the low-degree extension of an oracle treated as a black box. Specific non-black-box algebraic techniques (e.g., communication-complexity arguments not framed as oracle-relative; circuit-specific algebraic lower bounds; GCT-style geometric obstruction methods on explicit varieties) are not forbidden by the barrier. Algebrization is a constraint on a proof technique's structure, not on the use of algebra in P vs NP.",
+      "verification_source": "Gemini Deep Research pilot DR-S001 2026-05-14; primary citation Aaronson-Wigderson 2008 J. ACM (preprint arXiv:0710.0017); journal version Proc. STOC 2008 / ACM Trans. Comput. Theory 1(1):2.",
+      "verified_against_primary": true
+    }
+  },
+  "registry_entry_count": 16,
+  "registry_source": "techne/registry/anti_anchors.jsonl"
+}

@@ -15,6 +15,46 @@
 
 ---
 
+## §0.preface Corpus pointer update (2026-05-15, Atlas roadmap)
+
+**Trigger:** `pivot/atlas_continuous_attack_roadmap_2026-05-15.md` section 8 Ergon commitment 3 — update corpus pointer to reflect Phase 1's expected substrate-volume. **Design parameters STAY FROZEN; only the corpus-source pointer changes.**
+
+**Frozen (do not modify without separate adjudication):**
+- 4-condition matrix per §2.1 (base / Tier-1 LoRA / label-shuffled / format-only).
+- Eval set composition per §2.2 (KC anchors + 8 trivial-vs-open pairs + 3 tensor-domain TVO drafts + 20% held-out grouped by `episode_id`).
+- Metrics 1-7 per §2.3 (factual recall / format / false attribution / falsification-test choice / answer entropy / kill-signature consistency / decoy detection).
+- `LearnerRecord` 8-field schema (Techne contract-frozen).
+- Trust-tier discipline per AA-019 + AA-013 + new AA-014/AA-015/AA-016 (relativization / natural-proofs / algebrization barrier overreach pins).
+
+**Updated corpus pointer (Phase 1 → Phase 3 trajectory per roadmap):**
+
+The "training corpus" for the pilot LoRA expands from the original Tier-1-Lehmer-only framing (`tier_1_lehmer_enriched.py` Mahler-throughput JSONL stream, the only source available at 2026-05-11) to the **Atlas-augmented substrate-grade corpus** with the following sources accumulated through Phase 1 → Phase 3:
+
+1. **Substrate-shaped pipeline output** (`aporia/docs/staged_substrate_blocks/<date>/validated.jsonl` → ingested via `ingest_training_anchors.py`). Currently 4 LearnerRecords accumulated across 2026-05-13 (2 GL(3) Maass form anchors) and 2026-05-14 (2 EC-rank anchors), all in `corpus/v1_0_tier_pending/<date>/under_threshold/`. Steady-state Phase 1 target: ~30-50 LearnerRecords/month from substrate-shaped pilots.
+2. **Atlas problem_card v1.0 entries** (when Techne promotes from problem_card_v0 per the roadmap Phase 0 schema-evolution path). Each problem_card contributes structural metadata (hardness_signature, field_invariants_used) that the Learner can train on as routing targets. Phase 1 target: 100+ problem_cards in the Atlas.
+3. **Mined extracts** (Techne's mining pipeline output from synthesis_docs / learner_findings / kill_ledger samples / journals / fire_logs / harmonia_memory / whitepapers per roadmap Phase 0-1). Steady-state ~150-300 mined claims/week through Phase 1.
+4. **Tier-1 Lehmer enriched JSONL** (`tier_1_lehmer_enriched.py` post-Mahler-greenlight) — preserved as a sub-corpus, still trained on. Not retracted; just no longer the sole source.
+5. **AA-NNN anti_anchor index** (`ergon/learner/corpus/anti_anchor_index/index.json` — 16 entries as of 2026-05-15, including the AA-013/AA-014/AA-015/AA-016 quartet registered today). Used at corpus-assembly time for decoy injection per spec §1.4 (not at ingest time).
+6. **Sandboxed RepresentationShiftWitness candidates** from Harmonia's cross-domain bridge mining (Phase 0 revival per roadmap section 5; sandboxed firewall live as a Phase 0 critical-path prerequisite). Empty in Phase 0; first records expected by Phase 1 mid-July 2026.
+
+**Volume threshold (Phase 3 gating):** First actual LoRA training run is the Phase 3 capstone (Months 5-8, November 2026 onward per roadmap §3 Phase 3). Threshold for run: substrate corpus reaches v1.0 inclusion threshold — **≥1000 high-trust blocks** across the sources above (per roadmap §6 Phase 3 prerequisites, estimate-subject-to-Learner-architecture-revision per §9 vigilance flag). Today's accumulated 4 LearnerRecords are below threshold by 3 orders of magnitude — pilot is in pre-training "fixture_created" status per the `behavior_delta_status` enum, not eval_run / eval_passed.
+
+**Trust-tier mix expectation (Phase 1+ corpus):** trust_tier discipline is load-bearing per AA-019 and the AA-014/AA-015/AA-016 P-vs-NP overreach pins. Phase 1 corpus assembly will apply per-condition trust-tier weighting from §2.2 (decidable=1.0× sample-weight, conditional=0.5×, unknown=excluded) but ALSO apply AA-NNN cross-tagging: any LearnerRecord whose sidecar prompt_template intersects a registered anti_anchor's false_form gets tagged for downstream decoy-injection at corpus-assembly time. The tagging step itself is on `ergon/BACKLOG.md` (Phase 1 item BL-E-NNN); the index is built today.
+
+**Concrete artifacts created at 2026-05-15 to enable the pointer update:**
+- `ergon/learner/corpus/anti_anchor_index/index.json` (built by `build_anti_anchor_index.py` from the Techne registry).
+- `ergon/learner/scripts/stratify_source_report.py` (shipped per Aporia adjudication; stratification per major source for calibration claims).
+- `ergon/BACKLOG.md` (~30-item Phase 0-3 backlog tracking ingester evolution, stratification expansion, Learner corpus management, Learner spec evolution, training-experiment design docs).
+
+**What is NOT updated:**
+- §0 verification record below remains the authoritative Tier-1 commit `20d64203` verification.
+- §1 through §6 design content is unchanged.
+- The pilot is still gated on Mahler-throughput greenlight + James/Aporia compute decision (now bundled into Phase 3 month 5 onset rather than a separate decision point).
+
+**Stand-down posture preserved:** no LoRA training run kickoff until Phase 3 month 5 at earliest. The pilot LoRA design at this doc stays frozen on parameters; the corpus pointer update is documentation work, not a parameter change.
+
+---
+
 ## §0 Verification record (Ergon ↔ Techne handshake)
 
 Per `feedback_verify_upstream_attributions.md`, Ergon does NOT accept Techne's summary at face value. Ergon verified:
