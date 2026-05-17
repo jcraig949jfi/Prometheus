@@ -158,7 +158,11 @@ def main():
     parser.add_argument("--daily-minute", type=int, default=0,
                         help="Minute (0-59) within daily-hour to send (default 0)")
     parser.add_argument("--no-email", action="store_true",
-                        help="Skip daily email digest")
+                        help="Skip email digest entirely")
+    parser.add_argument("--email-every-cycle", action="store_true",
+                        help="Fire send_brief_email.py at the end of every hourly cycle "
+                             "(instead of just once per day at daily-hour). Useful when "
+                             "--hourly-min is set to a multi-hour interval (e.g. 240 = 4h cadence).")
     parser.add_argument("--no-metis", action="store_true",
                         help="Skip LLM brief generation (structural state only)")
     parser.add_argument("--no-push", action="store_true",
@@ -223,11 +227,17 @@ def main():
                     log.info("[hourly] pushing dashboard data to main")
                     ok_push = push_dashboard_to_main()
 
+                # Optional: fire email on every hourly tick (rather than once-daily)
+                ok_email_this_tick = None
+                if args.email_every_cycle and not args.no_email and ok_metis:
+                    log.info("[hourly] firing email digest (per --email-every-cycle)")
+                    ok_email_this_tick = run_script("send_brief_email.py", [], timeout=60)
+
                 if agora_client:
                     try:
                         agora_client.send(
                             stream="main",
-                            subject=f"Portfolio cycle complete (mon={ok_monitor}, metis={ok_metis}, push={ok_push})",
+                            subject=f"Portfolio cycle complete (mon={ok_monitor}, metis={ok_metis}, push={ok_push}, email={ok_email_this_tick})",
                             body=f"hourly tick {now.isoformat()}",
                             confidence=1.0,
                             msg_type=MessageType.ANNOUNCE,
@@ -242,7 +252,10 @@ def main():
                 year=today.year, month=today.month, day=today.day,
                 hour=args.daily_hour, minute=args.daily_minute, tzinfo=timezone.utc,
             )
-            if (not args.no_email and last_daily_date != today
+            # If --email-every-cycle is set, skip the daily email path
+            # (hourly path already fires email each tick).
+            if (not args.no_email and not args.email_every_cycle
+                    and last_daily_date != today
                     and now >= target_today):
                 log.info("[daily] firing email digest")
                 ok_email = run_script("send_brief_email.py", [], timeout=60)

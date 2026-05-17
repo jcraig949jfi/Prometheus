@@ -68,9 +68,21 @@ EXPECTED_AGENTS = {
     "Aletheia":   {"machine": "?",  "kind": "knowledge_graph"},
     "Eos":        {"machine": "?",  "kind": "fetch"},
     "Hermes":     {"machine": "?",  "kind": "alerting"},
-    "Pronoia":    {"machine": "?",  "kind": "scanner"},
+    "Pronoia":    {"machine": "M4", "kind": "scanner"},
     # add more as RESUME docs land
 }
+
+# Historical / unexpected agents that have registered with Agora in the past
+# (Harmonia sessions, Aporia, Charon, etc.). Listed explicitly because scan_iter
+# is unusably slow on Redis with 268K keys (most are landscape/graph/bridges).
+# Add new historical names here when they're observed.
+KNOWN_UNEXPECTED_AGENTS = [
+    "Agora", "Agora_Bootstrap", "Aporia", "aporia", "Charon", "Claude_M1",
+    "Dawn_Check", "Ergon", "Harmonia",
+    "Harmonia_M2_auditor", "Harmonia_M2_sessionA", "Harmonia_M2_sessionB",
+    "Harmonia_M2_sessionC", "Harmonia_M2_sessionD",
+    "Harmonia_M2_sessionD_reauditor", "Kairos", "Koios", "Mnemosyne", "Techne",
+]
 
 
 def connect() -> redis.Redis:
@@ -163,14 +175,15 @@ def render(r: redis.Redis) -> str:
         machine = (state or {}).get("machine") or meta["machine"]
         lines.append(f"| {name} | {machine} | {status_label} | {age_str} | {op} |")
 
-    # Surface any unexpected agents
-    try:
-        all_keys = list(r.scan_iter(f"{AGENT_PREFIX}*"))
-    except Exception:
-        all_keys = []
-    extras = sorted({k.replace(AGENT_PREFIX, "") for k in all_keys} - seen)
-    for name in extras:
+    # Surface unexpected agents from the hardcoded historical list
+    # (scan_iter is unusably slow on Redis with 268K keys; explicit lookups instead)
+    for name in KNOWN_UNEXPECTED_AGENTS:
+        if name in seen:
+            continue
         state = agent_state(r, name)
+        if state is None:
+            continue  # never registered
+        seen.add(name)
         status_label, age = liveness(state, now)
         age_str = f"{age}s" if age is not None else "-"
         machine = (state or {}).get("machine") or "?"
@@ -330,13 +343,14 @@ def build_dashboard_state(r: redis.Redis) -> dict:
             "data_source": data_source,
         })
 
-    try:
-        all_keys = list(r.scan_iter(f"{AGENT_PREFIX}*"))
-    except Exception:
-        all_keys = []
-    extras = sorted({k.replace(AGENT_PREFIX, "") for k in all_keys} - seen)
-    for name in extras:
+    # Unexpected agents via explicit list (scan_iter too slow with 268K Redis keys)
+    for name in KNOWN_UNEXPECTED_AGENTS:
+        if name in seen:
+            continue
         state = agent_state(r, name)
+        if state is None:
+            continue  # never registered
+        seen.add(name)
         status_label, age = liveness(state, now)
         machine = (state or {}).get("machine") or "?"
         agents.append({
@@ -349,6 +363,7 @@ def build_dashboard_state(r: redis.Redis) -> dict:
             "current_op": "",
             "last_status_update": None,
             "key_metrics": None,
+            "data_source": "redis",
         })
 
     def stream_entries(stream_name, count=10):
