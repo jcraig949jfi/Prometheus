@@ -162,6 +162,29 @@ function Dashboard() {
         </div>
       </header>
 
+      {state.infra_status && (
+        <div className="card p-4 mb-6" style={{background: "linear-gradient(90deg, #5b4720 0%, #3a3617 100%)", borderLeft: "4px solid #ffd966"}}>
+          <div className="font-semibold mb-2">
+            ⚠ Infrastructure Degraded — Redis: {state.infra_status.redis}
+            {state.infra_status.postgres && (
+              <span className="ml-2 text-sm text-gray-300">· Postgres: {state.infra_status.postgres}</span>
+            )}
+            {state.infra_status.fallback_mode && (
+              <span className="ml-2 text-sm text-gray-300">· fallback: {state.infra_status.fallback_mode}</span>
+            )}
+          </div>
+          <div className="text-sm text-gray-200">{state.infra_status.note}</div>
+          {state.infra_status.postgres_agent_count !== undefined && (
+            <div className="text-xs text-gray-400 mt-1">
+              {state.infra_status.postgres_agent_count} agent(s) sourced from Postgres mirror
+            </div>
+          )}
+          {state.infra_status.redis_error && (
+            <div className="text-xs text-gray-500 mt-1 font-mono">redis_error: {state.infra_status.redis_error}</div>
+          )}
+        </div>
+      )}
+
       {state.anomalies && state.anomalies.length > 0 && (
         <div className="card anomaly-banner p-4 mb-6">
           <div className="font-semibold mb-2">⚠ Anomalies ({state.anomalies.length})</div>

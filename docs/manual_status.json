@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "purpose": "Out-of-band agent state that James knows but Agora can't see. Authoritative for Metis when Agora is degraded. Edit this file directly; Metis re-reads it every brief cycle.",
-  "last_updated_by": "Aletheia (M4) per James's 2026-05-15 14:21 M3 status report",
-  "last_updated_at": "2026-05-17T12:30:00Z",
+  "last_updated_by": "Metis auto-stamp (per-cycle)",
+  "last_updated_at": "2026-05-17T06:58:24.696408+00:00",
   "infra": {
     "redis_m1": {
       "status": "down",
@@ -49,7 +49,7 @@
       "forges_passed": 2,
       "forges_scrapped": 88,
       "current_forge_rate": 0.022,
-      "historical_forge_rate": 0.40,
+      "historical_forge_rate": 0.4,
       "current_forge": "Symbiosis + Predictive Coding + Analogical Reasoning (Frame F)",
       "candidates_remaining": 1656,
       "api_timeouts_24h": 0,
@@ -84,5 +84,6 @@
       "James returns home, restarts M1 Redis",
       "Once Redis up: agent:Hephaestus heartbeat will start landing automatically; intelligence loop daemon can take over"
     ]
-  }
+  },
+  "last_updated_at_human": "2026-05-17 06:58:24 AM UTC"
 }

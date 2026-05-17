@@ -36,6 +36,16 @@ from agora.config import (  # noqa: E402
     STREAM_MAIN, STREAM_DISCOVERIES, STREAM_CHALLENGES, STREAM_TASKS,
 )
 
+# Postgres fallback for when Redis is unreachable
+sys.path.insert(0, str(REPO_ROOT / "scripts"))
+try:
+    import agora_persist
+    HAS_POSTGRES_FALLBACK = True
+except ImportError as e:
+    print(f"WARN: agora_persist unavailable ({e}); Postgres fallback disabled", file=sys.stderr)
+    HAS_POSTGRES_FALLBACK = False
+    agora_persist = None
+
 OUTPUT_PATH = REPO_ROOT / "pivot" / "portfolio_STATUS.md"
 JSON_OUTPUT_PATH = REPO_ROOT / "docs" / "state.json"  # GitHub Pages serves from main/docs
 
@@ -355,6 +365,142 @@ def write_json(state: dict, path: Path):
     path.write_text(json.dumps(state, indent=2, default=str), encoding="utf-8")
 
 
+def build_degraded_state_from_postgres(now: datetime, redis_error: str) -> dict:
+    """Build state.json from Postgres when Redis is unreachable.
+
+    Reads agora.agent_heartbeats for live data, merges with the EXPECTED_AGENTS
+    map (marking missing ones UNKNOWN), surfaces infra_status so Metis can frame
+    the brief correctly. Discoveries/main_events/challenges are empty (Redis-only
+    streams aren't mirrored to Postgres in this iteration).
+    """
+    pg_rows = []
+    pg_error = None
+    if HAS_POSTGRES_FALLBACK:
+        try:
+            pg_rows = agora_persist.read_all_agents()
+        except Exception as e:
+            pg_error = str(e)
+            print(f"[{now.isoformat()}] postgres fallback failed: {e}", file=sys.stderr)
+
+    pg_by_name = {r["agent_name"]: r for r in pg_rows}
+
+    agents = []
+    seen = set()
+    for name, meta in EXPECTED_AGENTS.items():
+        seen.add(name)
+        pg = pg_by_name.get(name)
+        if pg:
+            # Compute heartbeat age from Postgres data
+            last_hb = pg.get("last_heartbeat")
+            age = None
+            status_label = "UNKNOWN"
+            if last_hb:
+                try:
+                    last_hb_dt = datetime.fromisoformat(str(last_hb).replace("Z", "+00:00"))
+                    age = int((now - last_hb_dt).total_seconds())
+                    if age > HEARTBEAT_TIMEOUT_SEC:
+                        status_label = "DEAD"
+                    elif age > HEARTBEAT_TIMEOUT_SEC // 2:
+                        status_label = "STALE"
+                    else:
+                        status_label = "ALIVE"
+                except Exception:
+                    pass
+            status_blob = pg.get("status_json")
+            op = ""
+            key_metrics = None
+            if status_blob:
+                try:
+                    sj = status_blob if isinstance(status_blob, dict) else json.loads(status_blob)
+                    op = sj.get("current_op", "")
+                    key_metrics = sj.get("key_metrics")
+                except Exception:
+                    pass
+            agents.append({
+                "name": name,
+                "expected": True,
+                "machine": pg.get("machine") or meta["machine"],
+                "kind": meta["kind"],
+                "status": status_label,
+                "heartbeat_age_sec": age,
+                "current_op": op or "(from postgres mirror)",
+                "last_status_update": pg.get("last_status_update"),
+                "key_metrics": key_metrics,
+                "data_source": "postgres_fallback",
+            })
+        else:
+            agents.append({
+                "name": name,
+                "expected": True,
+                "machine": meta["machine"],
+                "kind": meta["kind"],
+                "status": "UNKNOWN",
+                "heartbeat_age_sec": None,
+                "current_op": "(no postgres heartbeat — see manual_status)",
+                "last_status_update": None,
+                "key_metrics": None,
+                "data_source": "no_data",
+            })
+
+    # Any unexpected agents from Postgres
+    for name, pg in pg_by_name.items():
+        if name in seen:
+            continue
+        last_hb = pg.get("last_heartbeat")
+        age = None
+        status_label = "UNKNOWN"
+        if last_hb:
+            try:
+                last_hb_dt = datetime.fromisoformat(str(last_hb).replace("Z", "+00:00"))
+                age = int((now - last_hb_dt).total_seconds())
+                status_label = "ALIVE" if age < HEARTBEAT_TIMEOUT_SEC // 2 else ("STALE" if age < HEARTBEAT_TIMEOUT_SEC else "DEAD")
+            except Exception:
+                pass
+        agents.append({
+            "name": name,
+            "expected": False,
+            "machine": pg.get("machine") or "?",
+            "kind": "unknown",
+            "status": status_label,
+            "heartbeat_age_sec": age,
+            "current_op": "",
+            "last_status_update": pg.get("last_status_update"),
+            "key_metrics": None,
+            "data_source": "postgres_fallback",
+        })
+
+    anomalies = []
+    for a in agents:
+        if a["expected"] and a["status"] == "DEAD":
+            anomalies.append({"agent": a["name"], "kind": "dead",
+                              "detail": f"no heartbeat for {a['heartbeat_age_sec']}s (from postgres)"})
+        elif a["expected"] and a["status"] == "STALE":
+            anomalies.append({"agent": a["name"], "kind": "stale",
+                              "detail": f"heartbeat age {a['heartbeat_age_sec']}s (from postgres)"})
+
+    return {
+        "schema_version": 1,
+        "generated_at": now.isoformat(),
+        "redis_host": f"{REDIS_HOST}:{REDIS_PORT}",
+        "heartbeat_timeout_sec": HEARTBEAT_TIMEOUT_SEC,
+        "infra_status": {
+            "redis": "unreachable",
+            "redis_error": redis_error,
+            "postgres": "up" if pg_rows or not pg_error else ("unreachable" if pg_error else "empty"),
+            "postgres_error": pg_error,
+            "postgres_agent_count": len(pg_rows),
+            "fallback_mode": "postgres_dual_write",
+            "note": "Redis is unreachable; agent data sourced from Postgres dual-write mirror (agora.agent_heartbeats). Streams (discoveries, main, challenges) are Redis-only and currently empty. Check docs/manual_status.json for out-of-band context.",
+        },
+        "agents": agents,
+        "discoveries": [],
+        "main_events": [],
+        "challenges": [],
+        "work_queue": {},
+        "anomalies": anomalies,
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(description="Portfolio monitor — Agora-driven dashboard")
     parser.add_argument("--once", action="store_true", help="Regenerate once and exit")
@@ -391,31 +537,14 @@ def main():
                     write_json(state, args.json_output)
                     wrote.append(str(args.json_output))
             else:
-                # Degraded mode: Redis unreachable. Preserve last-known state.json's
-                # agent inventory but mark infra status so Metis can frame it correctly.
+                # Degraded mode: Redis unreachable. Try Postgres fallback for
+                # live agent data; mark not-found agents as UNKNOWN.
                 if not args.no_json:
-                    try:
-                        prior = json.loads(args.json_output.read_text(encoding="utf-8"))
-                    except Exception:
-                        prior = {"agents": [], "discoveries": [], "main_events": [], "challenges": [],
-                                 "work_queue": {}, "anomalies": []}
                     now = datetime.now(timezone.utc)
-                    prior["schema_version"] = 1
-                    prior["generated_at"] = now.isoformat()
-                    prior["redis_host"] = f"{REDIS_HOST}:{REDIS_PORT}"
-                    prior["heartbeat_timeout_sec"] = HEARTBEAT_TIMEOUT_SEC
-                    prior["infra_status"] = {
-                        "redis": "unreachable",
-                        "redis_error": redis_error,
-                        "note": "Last-known agent inventory preserved; heartbeat ages are stale. Check docs/manual_status.json for out-of-band updates.",
-                    }
-                    # Mark all expected agents as UNKNOWN — we can't claim ALIVE/DEAD
-                    for a in prior.get("agents", []):
-                        if a.get("expected"):
-                            a["status"] = "UNKNOWN"
-                            a["current_op"] = "(redis down — see manual_status)"
-                    write_json(prior, args.json_output)
-                    wrote.append(f"{args.json_output} (degraded)")
+                    state = build_degraded_state_from_postgres(now, redis_error)
+                    write_json(state, args.json_output)
+                    pg_agents = state.get("infra_status", {}).get("postgres_agent_count", 0)
+                    wrote.append(f"{args.json_output} (degraded; pg agents={pg_agents})")
             print(f"[{datetime.now().isoformat()}] wrote {', '.join(wrote)}", flush=True)
         except Exception as e:
             print(f"[{datetime.now().isoformat()}] render error: {e}", file=sys.stderr)

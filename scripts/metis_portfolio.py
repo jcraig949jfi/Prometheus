@@ -26,6 +26,19 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
+try:
+    from zoneinfo import ZoneInfo
+    ET_TZ = ZoneInfo("America/New_York")
+except Exception:
+    ET_TZ = timezone.utc  # fallback if zoneinfo unavailable
+
+
+def human_time(dt: datetime = None) -> str:
+    """Render a datetime in YYYY-MM-DD HH:MM:SS AM/PM TZ (Eastern Time)."""
+    if dt is None:
+        dt = datetime.now(timezone.utc)
+    return dt.astimezone(ET_TZ).strftime("%Y-%m-%d %I:%M:%S %p %Z")
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 sys.path.insert(0, str(REPO_ROOT / "agents" / "metis" / "src"))
@@ -94,6 +107,27 @@ CRITICAL — agent status semantics:
   "down", "outage", "critical", or "needs restart". At most, put a single
   summary line in "For the record": "(N) agents still pending deployment
   on M2/M3/M4 — known revival sequence in progress."
+- UNKNOWN: Redis is unreachable AND no Postgres dual-write mirror row exists
+  for this agent. We genuinely don't know — could be alive, could be down.
+  Trust docs/manual_status.json's "agents" block over UNKNOWN entries for
+  any agent James has explicitly reported on out-of-band.
+
+CRITICAL — work_queue field semantics:
+The work_queue field in state.json (queued / claimed / completed_lifetime)
+refers to Harmonia's historical task-queue used by past Harmonia/Aporia
+sessions for substrate-vocabulary work. It is NOT Hephaestus's forge queue.
+Hephaestus polls Nous's responses.jsonl file directly — that's a separate
+channel not visible in state.json at all. If work_queue shows queued items
+but no agents are claiming, that's only an anomaly when Harmonia or Aporia
+are currently expected to be running. Do NOT conflate work_queue depth
+with Hephaestus's forge throughput or with any forge revival progress.
+
+TIMESTAMP FORMAT:
+If you include a "Generated:" line or any timestamp in your output, use
+the human-friendly format: YYYY-MM-DD HH:MM:SS AM/PM TIMEZONE (e.g.
+"2026-05-17 02:43:00 AM EDT"). Do NOT use ISO 8601 with microseconds and
++00:00 offset like "2026-05-17T06:43:00.000000+00:00" — that's machine
+formatting, hard to read on a phone.
 
 Rules:
 - Maximum 3 items per section (9 total). Compress ruthlessly.
@@ -254,10 +288,12 @@ def generate_brief() -> str:
 {prev_brief}
 
 --- PRODUCE THE BRIEF NOW ---
-Date: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}
+Date: {human_time()}
 
 Three sections, max 3 items each, bold headlines, name agents and machines, cite
-numbers. If nothing warrants action, say so explicitly. Do not pad.
+numbers. If nothing warrants action, say so explicitly. Do not pad. Use the
+human-friendly timestamp format from the system prompt for any Generated:/As-of:
+lines you produce.
 """
 
     return call_llm(prompt, system=SYSTEM_PROMPT)
@@ -274,17 +310,18 @@ def write_brief(brief_text: str) -> Path:
     BRIEFS_HISTORY_DIR.mkdir(parents=True, exist_ok=True)
     now = datetime.now(timezone.utc)
     ts = now.strftime("%Y-%m-%dT%H%M%SZ")
+    human = human_time(now)
 
     stripped = brief_text.lstrip()
     if stripped.startswith("# "):
         # LLM already wrote a header; just trust it. Add a single comment line
         # for the actual write timestamp (separate from the LLM's claimed time).
-        content = f"<!-- written by metis_portfolio.py at {now.isoformat()} -->\n{brief_text}\n"
+        content = f"<!-- written by metis_portfolio.py at {human} -->\n{brief_text}\n"
     else:
         # LLM skipped a header; provide one.
         content = (
             f"# Prometheus Portfolio Brief\n"
-            f"*Generated: {now.isoformat()}*\n"
+            f"*Generated: {human}*\n"
             f"*Author: Metis (multi-machine reporter mode)*\n\n"
             f"---\n\n"
             f"{brief_text}\n"
@@ -294,6 +331,29 @@ def write_brief(brief_text: str) -> Path:
     history_path = BRIEFS_HISTORY_DIR / f"portfolio_brief_{ts}.md"
     history_path.write_text(content, encoding="utf-8")
     return BRIEF_PATH
+
+
+def touch_manual_status_timestamp() -> bool:
+    """Update manual_status.json's last_updated_at to the current cycle time.
+
+    Best-effort: returns False if the file doesn't exist or isn't valid JSON.
+    Preserves all other fields; only mutates last_updated_at + an auto-set
+    last_updated_by marker so it's clear this was a Metis touch vs a manual edit.
+    """
+    manual_path = REPO_ROOT / "docs" / "manual_status.json"
+    if not manual_path.exists():
+        return False
+    try:
+        data = json.loads(manual_path.read_text(encoding="utf-8"))
+        now = datetime.now(timezone.utc)
+        data["last_updated_at"] = now.isoformat()
+        data["last_updated_at_human"] = human_time(now)
+        data["last_updated_by"] = "Metis auto-stamp (per-cycle)"
+        manual_path.write_text(json.dumps(data, indent=2, default=str) + "\n", encoding="utf-8")
+        return True
+    except Exception as e:
+        print(f"[metis] failed to auto-stamp manual_status.json: {e}", file=sys.stderr)
+        return False
 
 
 def main():
@@ -307,7 +367,8 @@ def main():
             print(f"[{datetime.now().isoformat()}] generating portfolio brief...")
             brief = generate_brief()
             path = write_brief(brief)
-            print(f"[{datetime.now().isoformat()}] wrote {path}")
+            touched = touch_manual_status_timestamp()
+            print(f"[{datetime.now().isoformat()}] wrote {path}; manual_status touched={touched}")
         except Exception as e:
             print(f"[{datetime.now().isoformat()}] error: {e}", file=sys.stderr)
 
