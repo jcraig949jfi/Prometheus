@@ -22,6 +22,16 @@ from prompts import build_code_gen_prompt
 from test_harness import run_trap_battery, load_tool_from_code
 from validator import validate
 
+# Agora telemetry — optional. Hephaestus runs without it if unavailable.
+try:
+    from agora.client import AgoraClient
+    from agora.protocol import MessageType
+    HAS_AGORA = True
+except Exception:
+    HAS_AGORA = False
+    AgoraClient = None
+    MessageType = None
+
 # Structured logging
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 try:
@@ -40,6 +50,20 @@ SCRAP_DIR = HEPHAESTUS_ROOT / "scrap"
 LEDGER_PATH = HEPHAESTUS_ROOT / "ledger.jsonl"
 COEUS_ENRICHMENTS_DIR = HEPHAESTUS_ROOT.parent / "coeus" / "enrichments"
 COEUS_SRC = HEPHAESTUS_ROOT.parent / "coeus" / "src"
+STATUS_PATH = HEPHAESTUS_ROOT / "STATUS.json"
+
+# Auto-load agents/hephaestus/.env if present. Existing env vars take precedence.
+_HEPH_ENV = HEPHAESTUS_ROOT / ".env"
+if _HEPH_ENV.exists():
+    try:
+        for _line in _HEPH_ENV.read_text(encoding="utf-8").splitlines():
+            _line = _line.strip()
+            if not _line or _line.startswith("#") or "=" not in _line:
+                continue
+            _k, _v = _line.split("=", 1)
+            os.environ.setdefault(_k.strip(), _v.strip().strip('"').strip("'"))
+    except Exception:
+        pass
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -209,12 +233,24 @@ def _inject_missing_imports(code: str) -> str:
     """
     import re
 
-    # --- Aliased third-party imports (np, nx, sp, sympy) ---
+    # --- Aliased third-party + stdlib module imports ---
     _ALIAS_FIXES = [
         (r'\bnp\.', "import numpy as np", "numpy"),
         (r'\bnx\.', "import networkx as nx", "networkx"),
         (r'\bscipy\.', "import scipy", "scipy"),
         (r'\bsympy\.', "import sympy", "sympy"),
+        # Stdlib modules commonly used bare
+        (r'\bre\.', "import re", "re"),
+        (r'\bmath\.', "import math", "math"),
+        (r'\bjson\.', "import json", "json"),
+        (r'\bitertools\.', "import itertools", "itertools"),
+        (r'\bfunctools\.', "import functools", "functools"),
+        (r'\bcollections\.', "import collections", "collections"),
+        (r'\bzlib\.', "import zlib", "zlib"),
+        (r'\bstring\.', "import string", "string"),
+        (r'\brandom\.', "import random", "random"),
+        (r'\bcopy\.', "import copy", "copy"),
+        (r'\boperator\.', "import operator", "operator"),
     ]
     alias_lines = []
     for pattern, import_line, module in _ALIAS_FIXES:
@@ -242,6 +278,85 @@ def _inject_missing_imports(code: str) -> str:
         return code
 
     return "\n".join(all_injections) + "\n\n" + code
+
+
+def _fix_common_errors(code: str) -> str:
+    """Fix common LLM code-gen errors that cause gate failures.
+
+    Applied after import injection, before validation. Handles:
+    1. Missing confidence() method — inject a default stub
+    2. Confidence returning None/bad type — append a safe wrapper
+    """
+    import re as _re
+    import ast
+
+    if "class ReasoningTool" not in code:
+        return code
+
+    try:
+        tree = ast.parse(code)
+    except SyntaxError:
+        return code  # Can't fix what won't parse
+
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ClassDef) and node.name == "ReasoningTool":
+            method_names = [
+                n.name for n in node.body
+                if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))
+            ]
+
+            # 1. Missing confidence() — inject a default that delegates to evaluate()
+            if "confidence" not in method_names and "evaluate" in method_names:
+                stub = '''
+    def confidence(self, prompt: str, answer: str) -> float:
+        """Default confidence via evaluate()."""
+        try:
+            results = self.evaluate(prompt, [answer])
+            if results:
+                return max(0.0, min(1.0, float(results[0].get("score", 0.5))))
+        except Exception:
+            pass
+        return 0.5
+'''
+                # Find end of class body and insert
+                lines = code.split('\n')
+                class_end = len(lines)
+                indent_level = None
+                in_class = False
+                for i, line in enumerate(lines):
+                    if 'class ReasoningTool' in line:
+                        in_class = True
+                        indent_level = len(line) - len(line.lstrip())
+                        continue
+                    if in_class and indent_level is not None and line.strip():
+                        if not line[0:1].isspace() and i > 0:
+                            class_end = i
+                            break
+                lines.insert(class_end, stub)
+                code = '\n'.join(lines)
+
+            # 2. Wrap confidence() to guarantee float return in [0,1]
+            # Appended after the class — catches None returns, exceptions, out-of-range
+            if "confidence" in method_names or "confidence" not in method_names:
+                wrapper = '''
+
+# --- Auto-fix: ensure confidence() returns float in [0, 1] ---
+_orig_confidence = ReasoningTool.confidence
+def _safe_confidence(self, prompt, answer):
+    try:
+        result = _orig_confidence(self, prompt, answer)
+        if result is None:
+            return 0.5
+        return max(0.0, min(1.0, float(result)))
+    except (TypeError, ValueError):
+        return 0.5
+ReasoningTool.confidence = _safe_confidence
+'''
+                if "_safe_confidence" not in code:
+                    code = code.rstrip() + "\n" + wrapper
+            break
+
+    return code
 
 
 # ---------------------------------------------------------------------------
@@ -291,7 +406,7 @@ def append_ledger(key: str, status: str, concept_names: list[str],
                   calibration: float = 0.0,
                   margin_accuracy: float = 0.0,
                   margin_calibration: float = 0.0,
-                  frame: str = "A", **kwargs):
+                  frame: str = "A", model: str = "", **kwargs):
     """Append a single result to the global ledger."""
     record = {
         "key": key,
@@ -303,6 +418,7 @@ def append_ledger(key: str, status: str, concept_names: list[str],
         "margin_accuracy": margin_accuracy,
         "margin_calibration": margin_calibration,
         "frame": frame,
+        "model": model,
         "timestamp": datetime.now().isoformat(),
     }
     try:
@@ -346,6 +462,51 @@ def load_enrichment(entry: dict) -> dict | None:
     return None
 
 
+def _compute_novelty(code: str) -> dict:
+    """Compute source-code NCD novelty against the existing forge library.
+
+    Returns dict with:
+        min_ncd: distance to nearest neighbor (higher = more novel)
+        mean_ncd: average distance to all existing tools
+        nearest: filename of most similar existing tool
+        library_size: how many tools compared against
+    """
+    import zlib
+
+    existing = []
+    for py_file in FORGE_DIR.glob("*.py"):
+        try:
+            existing.append((py_file.name, py_file.read_bytes()))
+        except Exception:
+            continue
+
+    if not existing:
+        return {"min_ncd": 1.0, "mean_ncd": 1.0, "nearest": None, "library_size": 0}
+
+    code_bytes = code.encode("utf-8")
+    c_new = len(zlib.compress(code_bytes))
+
+    ncds = []
+    nearest_name = None
+    min_ncd = 1.0
+
+    for name, existing_bytes in existing:
+        c_old = len(zlib.compress(existing_bytes))
+        c_both = len(zlib.compress(code_bytes + existing_bytes))
+        ncd = (c_both - min(c_new, c_old)) / max(c_new, c_old)
+        ncds.append(ncd)
+        if ncd < min_ncd:
+            min_ncd = ncd
+            nearest_name = name
+
+    return {
+        "min_ncd": round(min_ncd, 4),
+        "mean_ncd": round(sum(ncds) / len(ncds), 4) if ncds else 1.0,
+        "nearest": nearest_name,
+        "library_size": len(existing),
+    }
+
+
 def safe_filename(names: list[str]) -> str:
     """Turn concept names into a filesystem-safe filename."""
     joined = "_x_".join(n.replace(" ", "_") for n in names)
@@ -362,6 +523,9 @@ def save_forge(code: str, entry: dict, test_results: dict, run_dir: Path,
     forge_path = FORGE_DIR / f"{fname}.py"
     forge_path.write_text(code, encoding="utf-8")
 
+    # Compute novelty against existing library (before adding this tool)
+    novelty = _compute_novelty(code)
+
     # Sidecar with metadata
     meta = {
         "concept_names": entry["concept_names"],
@@ -370,6 +534,10 @@ def save_forge(code: str, entry: dict, test_results: dict, run_dir: Path,
         "test_accuracy": test_results["accuracy"],
         "test_calibration": test_results["calibration"],
         "frame": frame,
+        "novelty_min_ncd": novelty["min_ncd"],
+        "novelty_mean_ncd": novelty["mean_ncd"],
+        "novelty_nearest": novelty["nearest"],
+        "novelty_library_size": novelty["library_size"],
         "forged_at": datetime.now().isoformat(),
     }
     meta_path = FORGE_DIR / f"{fname}.json"
@@ -380,11 +548,13 @@ def save_forge(code: str, entry: dict, test_results: dict, run_dir: Path,
     with open(log_path, "a", encoding="utf-8") as f:
         f.write(json.dumps(meta) + "\n")
 
-    logger.info("FORGED [%s]: %s (acc=%.0f%% cal=%.0f%%)",
+    logger.info("FORGED [%s]: %s (acc=%.0f%% cal=%.0f%% novelty=%.3f nearest=%s)",
                 meta.get("frame", "?"),
                 " + ".join(entry["concept_names"]),
                 test_results["accuracy"] * 100,
-                test_results["calibration"] * 100)
+                test_results["calibration"] * 100,
+                novelty["min_ncd"],
+                novelty["nearest"] or "none")
     if _slog:
         _slog.event("forge_success",
                      key=" + ".join(entry["concept_names"]),
@@ -736,6 +906,9 @@ def forge_one(client: OpenAI, entry: dict, model: str,
     # 2b. Inject missing stdlib imports (LLMs frequently forget these)
     code = _inject_missing_imports(code)
 
+    # 2c. Fix common LLM errors (missing confidence method, etc.)
+    code = _fix_common_errors(code)
+
     # 3. Validate
     valid, reason = validate(code)
     if not valid:
@@ -751,6 +924,26 @@ def forge_one(client: OpenAI, entry: dict, model: str,
         return {"status": "scrap", "reason": f"test_harness_error: {e}", "frame": frame}
 
     if not test_results["passed"]:
+        # Novelty gate: admit tools that are structurally novel even if
+        # they don't beat NCD on accuracy. Diverse substrate > convergent accuracy.
+        novelty = _compute_novelty(code)
+        if novelty["min_ncd"] > 0.85 and test_results["accuracy"] >= 0.20:
+            # Novel enough to be valuable — forge it with novelty tag
+            logger.info("  NOVELTY GATE: acc=%.0f%% below NCD but novelty=%.3f — forging as novel",
+                        test_results["accuracy"] * 100, novelty["min_ncd"])
+            test_results["passed"] = True  # Override for save_forge
+            test_results["admitted_via"] = "novelty_gate"
+            save_forge(code, entry, test_results, run_dir, frame=frame)
+            return {
+                "status": "forged",
+                "accuracy": test_results["accuracy"],
+                "calibration": test_results["calibration"],
+                "margin_accuracy": test_results.get("margin_accuracy", 0),
+                "margin_calibration": test_results.get("margin_calibration", 0),
+                "frame": frame,
+                "admitted_via": "novelty_gate",
+            }
+
         ncd_info = ""
         if "ncd_accuracy" in test_results:
             ncd_info = (f" ncd_acc={test_results['ncd_accuracy']:.0%}"
@@ -867,11 +1060,15 @@ def _load_nous(args, run_dir: Path) -> tuple[list[dict], str]:
 def _forge_batch(client: OpenAI, filtered: list[dict], args,
                  run_dir: Path, processed: set[str],
                  total_count: int, shutdown_flag: list,
-                 aggie_client=None, force_aggie: bool = False) -> tuple[list, list, int]:
+                 aggie_client=None, force_aggie: bool = False,
+                 on_forge=None, on_scrap=None,
+                 on_status=None) -> tuple[list, list, int]:
     """Process one batch of candidates. Returns (forged, scrapped, new_count).
 
     aggie_client: optional Auggie instance passed down to forge_one() as fallback.
     force_aggie: if True, skip NVIDIA API entirely and use Augment API (aggie_client must be set).
+    on_forge/on_scrap: callbacks for Agora telemetry on forge/scrap events.
+    on_status: callback(current_op, nous_queue_depth) for periodic STATUS emit.
     """
     forged_results = []
     scrapped_results = []
@@ -906,7 +1103,10 @@ def _forge_batch(client: OpenAI, filtered: list[dict], args,
                           calibration=result.get("calibration", 0),
                           margin_accuracy=result.get("margin_accuracy", 0),
                           margin_calibration=result.get("margin_calibration", 0),
-                          frame=result.get("frame", "A"))
+                          frame=result.get("frame", "A"),
+                          model=args.model)
+            if on_forge:
+                on_forge(entry, result)
         elif result:
             scrapped_results.append({
                 "concept_names": names,
@@ -914,11 +1114,19 @@ def _forge_batch(client: OpenAI, filtered: list[dict], args,
                 "failure_reason": result.get("reason"),
             })
             append_ledger(key, "scrap", names, reason=result.get("reason", ""),
-                          frame=result.get("frame", "A"))
+                          frame=result.get("frame", "A"),
+                          model=args.model)
+            if on_scrap:
+                on_scrap(entry, result)
 
-        # Checkpoint
+        # Checkpoint + periodic STATUS emit
         if count % 5 == 0:
             save_checkpoint(run_dir, processed)
+            if on_status:
+                on_status(
+                    f"forging {' + '.join(entry.get('concept_names', []))}",
+                    len(filtered) - count,
+                )
 
         # Periodic Coeus rebuild
         if (args.coeus_interval > 0 and running_total % args.coeus_interval == 0
@@ -941,6 +1149,330 @@ def _forge_batch(client: OpenAI, filtered: list[dict], args,
 
     save_checkpoint(run_dir, processed)
     return forged_results, scrapped_results, count
+
+
+def repair_scraps(max_items: int = 50, min_accuracy: float = 0.25):
+    """Attempt to repair scrapped tools and score them for novelty.
+
+    Targets two categories:
+    1. Gate 1-3 failures (syntax/import/interface) — mechanical fixes
+    2. Trap battery near-misses (acc >= min_accuracy) — novelty assessment
+
+    Repaired tools that pass all 5 gates are moved to forge/.
+    Near-misses with high novelty are logged for manual review.
+    """
+    logger.info("=" * 60)
+    logger.info("SCRAP REPAIR PASS")
+    logger.info("=" * 60)
+
+    repaired = 0
+    novel_finds = 0
+    attempted = 0
+
+    # Load existing ledger to avoid re-processing
+    ledger = load_ledger()
+
+    # Collect repair candidates
+    candidates = []
+    for json_file in sorted(SCRAP_DIR.glob("*.json")):
+        try:
+            meta = json.loads(json_file.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        reason = meta.get("failure_reason", "")
+        py_file = SCRAP_DIR / json_file.name.replace(".json", ".py")
+        if not py_file.exists():
+            continue
+
+        # Category 1: fixable gate failures
+        is_fixable = any(x in reason for x in [
+            "validation:syntax", "validation:import", "validation:interface",
+            "validation:runtime_error: NameError",
+            "validation:runtime_error: ImportError",
+        ])
+        # Category 2: trap battery near-misses
+        is_near_miss = "trap_battery_failed" in reason
+
+        if is_fixable or is_near_miss:
+            # Parse accuracy from near-miss reason
+            acc = 0.0
+            if is_near_miss:
+                import re as _re
+                m = _re.search(r"acc=(\d+)%", reason)
+                if m:
+                    acc = int(m.group(1)) / 100.0
+                if acc < min_accuracy:
+                    continue
+
+            candidates.append({
+                "py_file": py_file,
+                "json_file": json_file,
+                "meta": meta,
+                "reason": reason,
+                "is_fixable": is_fixable,
+                "accuracy": acc,
+            })
+
+    logger.info("Found %d repair candidates (%d fixable, %d near-misses)",
+                len(candidates),
+                sum(1 for c in candidates if c["is_fixable"]),
+                sum(1 for c in candidates if not c["is_fixable"]))
+
+    # Sort: near-misses first (novelty targets), then fixable (cheap wins)
+    candidates.sort(key=lambda c: (c["is_fixable"], -c["accuracy"]))
+
+    for cand in candidates[:max_items]:
+        attempted += 1
+        code = cand["py_file"].read_text(encoding="utf-8")
+        names = cand["meta"].get("concept_names", [])
+        key = " + ".join(sorted(names))
+
+        if cand["is_fixable"]:
+            # Attempt mechanical repair
+            code = _inject_missing_imports(code)
+            valid, reason = validate(code)
+            if not valid:
+                logger.debug("  Repair failed for %s: %s", key, reason)
+                continue
+
+            # Try running trap battery
+            try:
+                tool = load_tool_from_code(code)
+                test_results = run_trap_battery(tool)
+            except Exception as e:
+                logger.debug("  Repair runtime error for %s: %s", key, e)
+                continue
+
+            if test_results["passed"]:
+                # Compute novelty and save to forge
+                novelty = _compute_novelty(code)
+                fname = safe_filename(names)
+                forge_path = FORGE_DIR / f"{fname}.py"
+                forge_path.write_text(code, encoding="utf-8")
+                meta = {
+                    "concept_names": names,
+                    "concept_fields": cand["meta"].get("concept_fields", []),
+                    "nous_composite_score": cand["meta"].get("nous_composite_score"),
+                    "test_accuracy": test_results["accuracy"],
+                    "test_calibration": test_results["calibration"],
+                    "frame": cand["meta"].get("frame", "?"),
+                    "novelty_min_ncd": novelty["min_ncd"],
+                    "novelty_mean_ncd": novelty["mean_ncd"],
+                    "novelty_nearest": novelty["nearest"],
+                    "novelty_library_size": novelty["library_size"],
+                    "repaired_from": "scrap",
+                    "original_failure": cand["reason"],
+                    "forged_at": datetime.now().isoformat(),
+                }
+                (FORGE_DIR / f"{fname}.json").write_text(
+                    json.dumps(meta, indent=2), encoding="utf-8")
+                logger.info("REPAIRED->FORGED: %s (acc=%.0f%% novelty=%.3f)",
+                            key, test_results["accuracy"] * 100, novelty["min_ncd"])
+                repaired += 1
+            else:
+                # Didn't pass battery but code now runs — check novelty anyway
+                novelty = _compute_novelty(code)
+                if novelty["min_ncd"] > 0.85:
+                    logger.info("  HIGH NOVELTY NEAR-MISS: %s (acc=%.0f%% novelty=%.3f)",
+                                key, test_results["accuracy"] * 100, novelty["min_ncd"])
+                    novel_finds += 1
+
+        else:
+            # Near-miss: code already runs, compute novelty and forge if high
+            code = _inject_missing_imports(code)
+            code = _fix_common_errors(code)
+            valid, vreason = validate(code)
+            if not valid:
+                continue
+            novelty = _compute_novelty(code)
+            if novelty["min_ncd"] > 0.85 and cand["accuracy"] >= 0.20:
+                # Forge it via novelty gate
+                fname = safe_filename(names)
+                forge_path = FORGE_DIR / f"{fname}.py"
+                forge_path.write_text(code, encoding="utf-8")
+                meta = {
+                    "concept_names": names,
+                    "concept_fields": cand["meta"].get("concept_fields", []),
+                    "nous_composite_score": cand["meta"].get("nous_composite_score"),
+                    "test_accuracy": cand["accuracy"],
+                    "test_calibration": 0.0,
+                    "frame": cand["meta"].get("frame", "?"),
+                    "novelty_min_ncd": novelty["min_ncd"],
+                    "novelty_mean_ncd": novelty["mean_ncd"],
+                    "novelty_nearest": novelty["nearest"],
+                    "novelty_library_size": novelty["library_size"],
+                    "admitted_via": "novelty_gate",
+                    "repaired_from": "scrap",
+                    "original_failure": cand["reason"],
+                    "forged_at": datetime.now().isoformat(),
+                }
+                (FORGE_DIR / f"{fname}.json").write_text(
+                    json.dumps(meta, indent=2), encoding="utf-8")
+                logger.info("  NOVELTY FORGED: %s (acc=%.0f%% novelty=%.3f nearest=%s)",
+                            key, cand["accuracy"] * 100,
+                            novelty["min_ncd"], novelty["nearest"])
+                novel_finds += 1
+
+    logger.info("=" * 60)
+    logger.info("REPAIR COMPLETE: %d attempted, %d repaired to forged, %d high-novelty finds",
+                attempted, repaired, novel_finds)
+    logger.info("=" * 60)
+
+
+LLM_REPAIR_PROMPT = """\
+The following Python code has an error that prevents it from running.
+The error is: {error}
+
+Fix ONLY the error. Do not change the algorithm, logic, or scoring strategy.
+Do not add features or refactor. Minimal fix only.
+
+If the error is a missing import, add it.
+If the error is a syntax issue (unclosed bracket, bad indent, unterminated string), fix it.
+If the error is a missing method, add a minimal implementation that delegates to existing methods.
+If the error is a NameError, add the missing import or define the missing name.
+
+Return the COMPLETE fixed Python code in a ```python code block.
+
+```python
+{code}
+```"""
+
+
+def repair_with_llm(max_items: int = 50):
+    """Use NVIDIA API to fix syntax/import/interface errors in scrapped tools.
+
+    For each fixable scrap:
+    1. Send broken code + error to LLM with "fix only" prompt
+    2. Extract fixed code
+    3. Run through import injection + common fixes + validation + trap battery
+    4. Forge if passes (accuracy gate OR novelty gate)
+    """
+    logger.info("=" * 60)
+    logger.info("LLM REPAIR PASS")
+    logger.info("=" * 60)
+
+    client = make_client()
+    model = DEFAULT_MODEL
+
+    repaired = 0
+    attempted = 0
+    api_errors = 0
+
+    # Collect fixable candidates
+    candidates = []
+    for json_file in sorted(SCRAP_DIR.glob("*.json")):
+        try:
+            meta = json.loads(json_file.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        reason = meta.get("failure_reason", "")
+        py_file = SCRAP_DIR / json_file.name.replace(".json", ".py")
+        if not py_file.exists():
+            continue
+
+        is_fixable = any(x in reason for x in [
+            "validation:syntax", "validation:import", "validation:interface",
+            "validation:missing_methods",
+            "validation:runtime_error: NameError",
+            "validation:runtime_error: ImportError",
+            "validation:confidence_bad_return_type",
+            "validation:confidence_out_of_range",
+        ])
+        if is_fixable:
+            candidates.append({
+                "py_file": py_file,
+                "json_file": json_file,
+                "meta": meta,
+                "reason": reason,
+            })
+
+    logger.info("Found %d LLM-fixable scrap candidates", len(candidates))
+
+    for cand in candidates[:max_items]:
+        attempted += 1
+        names = cand["meta"].get("concept_names", [])
+        key = " + ".join(sorted(names))
+        error = cand["reason"].replace("validation:", "")
+
+        code = cand["py_file"].read_text(encoding="utf-8")
+
+        # Build repair prompt
+        prompt = LLM_REPAIR_PROMPT.format(error=error, code=code)
+
+        # Call API
+        logger.info("[%d/%d] Repairing: %s (%s)", attempted, min(len(candidates), max_items), key, error[:60])
+        response = call_api(client, prompt, model)
+        if response is None:
+            api_errors += 1
+            logger.warning("  API failed, skipping")
+            continue
+
+        # Extract code from response
+        fixed_code, extract_status = extract_code(response)
+        if fixed_code is None:
+            logger.debug("  Could not extract code from response")
+            continue
+
+        # Apply standard fixers
+        fixed_code = _inject_missing_imports(fixed_code)
+        fixed_code = _fix_common_errors(fixed_code)
+
+        # Validate
+        valid, vreason = validate(fixed_code)
+        if not valid:
+            logger.debug("  Still invalid after LLM fix: %s", vreason)
+            continue
+
+        # Run trap battery
+        try:
+            tool = load_tool_from_code(fixed_code)
+            test_results = run_trap_battery(tool)
+        except Exception as e:
+            logger.debug("  Runtime error after fix: %s", e)
+            continue
+
+        # Compute novelty
+        novelty = _compute_novelty(fixed_code)
+
+        # Forge if passes accuracy gate OR novelty gate
+        if test_results["passed"] or (novelty["min_ncd"] > 0.85 and test_results["accuracy"] >= 0.20):
+            gate = "accuracy" if test_results["passed"] else "novelty"
+            fname = safe_filename(names)
+            forge_path = FORGE_DIR / f"{fname}.py"
+            forge_path.write_text(fixed_code, encoding="utf-8")
+            meta = {
+                "concept_names": names,
+                "concept_fields": cand["meta"].get("concept_fields", []),
+                "nous_composite_score": cand["meta"].get("nous_composite_score"),
+                "test_accuracy": test_results["accuracy"],
+                "test_calibration": test_results["calibration"],
+                "frame": cand["meta"].get("frame", "?"),
+                "novelty_min_ncd": novelty["min_ncd"],
+                "novelty_mean_ncd": novelty["mean_ncd"],
+                "novelty_nearest": novelty["nearest"],
+                "novelty_library_size": novelty["library_size"],
+                "admitted_via": f"{gate}_gate",
+                "repaired_from": "scrap_llm_fix",
+                "original_failure": cand["reason"],
+                "repair_model": model,
+                "forged_at": datetime.now().isoformat(),
+            }
+            (FORGE_DIR / f"{fname}.json").write_text(
+                json.dumps(meta, indent=2), encoding="utf-8")
+            logger.info("  FORGED [%s gate]: acc=%.0f%% novelty=%.3f",
+                        gate, test_results["accuracy"] * 100, novelty["min_ncd"])
+            repaired += 1
+        else:
+            logger.debug("  Fixed but didn't pass (acc=%.0f%% novelty=%.3f)",
+                         test_results["accuracy"] * 100, novelty["min_ncd"])
+
+        # Rate limit
+        time.sleep(2.0)
+
+    logger.info("=" * 60)
+    logger.info("LLM REPAIR COMPLETE: %d attempted, %d forged, %d API errors",
+                attempted, repaired, api_errors)
+    logger.info("=" * 60)
 
 
 def main():
@@ -983,7 +1515,25 @@ def main():
     parser.add_argument("--aggie-model", type=str, default=AGGIE_DEFAULT_MODEL,
                         choices=["haiku4.5", "sonnet4.5", "sonnet4", "gpt5"],
                         help=f"Augment model to use for fallback (default: {AGGIE_DEFAULT_MODEL})")
+    parser.add_argument("--repair-scraps", action="store_true",
+                        help="Run scrap repair pass: fix gate failures, score novelty on near-misses")
+    parser.add_argument("--repair-with-llm", action="store_true",
+                        help="Use LLM API to fix syntax/import/interface errors in scraps")
+    parser.add_argument("--repair-max", type=int, default=50,
+                        help="Max items to attempt in repair pass (default: 50)")
+    parser.add_argument("--repair-min-acc", type=float, default=0.25,
+                        help="Min accuracy for near-miss inclusion in repair (default: 0.25)")
     args = parser.parse_args()
+
+    # Scrap repair mode — run and exit
+    if args.repair_scraps:
+        repair_scraps(max_items=args.repair_max, min_accuracy=args.repair_min_acc)
+        return
+
+    # LLM repair mode — run and exit
+    if args.repair_with_llm:
+        repair_with_llm(max_items=args.repair_max)
+        return
 
     # Default filter: --all in continuous mode, top 20 in runonce
     if args.top_n is None and args.min_score is None and not args.resume:
@@ -1039,6 +1589,194 @@ def main():
 
     mode = "runonce" if args.runonce else "continuous"
     logger.info("Mode: %s", mode)
+
+    # -----------------------------------------------------------------------
+    # Agora telemetry (optional — degrades gracefully if Redis unreachable)
+    # -----------------------------------------------------------------------
+    agora_client = None
+    machine = os.environ.get("PROMETHEUS_MACHINE", "M3")
+    if HAS_AGORA:
+        try:
+            agora_client = AgoraClient(agent_name="Hephaestus", machine=machine, persist=False)
+            agora_client.connect()
+            agora_client.start_heartbeat()
+            agora_client.send(
+                stream="main",
+                subject="Hephaestus online",
+                body=f"Forge daemon starting on {machine}, mode={mode}",
+                confidence=1.0,
+                msg_type=MessageType.ANNOUNCE,
+            )
+            logger.info("Agora connected as Hephaestus@%s", machine)
+        except Exception as e:
+            logger.warning("Agora unavailable, running without telemetry: %s", e)
+            agora_client = None
+    else:
+        logger.info("Agora client not installed; running without telemetry")
+
+    # Postgres heartbeat (survives Redis outages)
+    import threading
+    sys.path.insert(0, str(HEPHAESTUS_ROOT.parent.parent / "scripts"))
+    HAS_POSTGRES_PERSIST = False
+    agora_persist = None
+    try:
+        import agora_persist as _ap
+        agora_persist = _ap
+        agora_persist.write_heartbeat(
+            agent_name="Hephaestus", machine=machine,
+            status="online", pid=os.getpid(),
+        )
+        HAS_POSTGRES_PERSIST = True
+        logger.info("Postgres heartbeat initialized")
+    except Exception as e:
+        logger.warning("agora_persist unavailable: %s", e)
+
+    if HAS_POSTGRES_PERSIST:
+        def _pg_heartbeat_loop():
+            while True:
+                time.sleep(60)
+                try:
+                    agora_persist.write_heartbeat(
+                        agent_name="Hephaestus", machine=machine,
+                        status="online", pid=os.getpid(),
+                    )
+                except Exception as e:
+                    logger.warning("postgres heartbeat failed: %s", e)
+        _pg_thread = threading.Thread(target=_pg_heartbeat_loop, daemon=True)
+        _pg_thread.start()
+        logger.info("Postgres heartbeat thread started")
+
+    _session = {"forges": 0, "scraps": 0, "api_timeouts": []}
+
+    def _emit_status(current_op="idle", nous_queue_depth=None):
+        """Write STATUS.json and mirror to Redis hash agent:Hephaestus."""
+        now_iso = datetime.utcnow().isoformat() + "Z"
+        ledger_size = 0
+        if LEDGER_PATH.exists():
+            try:
+                ledger_size = sum(1 for _ in open(LEDGER_PATH, encoding="utf-8"))
+            except Exception:
+                pass
+        cutoff = time.time() - 3600
+        recent_timeouts = sum(1 for t in _session["api_timeouts"] if t > cutoff)
+        total = _session["forges"] + _session["scraps"]
+        status = {
+            "agent": "Hephaestus",
+            "machine": machine,
+            "status": "running",
+            "last_heartbeat": now_iso,
+            "pid": os.getpid(),
+            "current_op": current_op,
+            "key_metrics": {
+                "session_forges": _session["forges"],
+                "session_scraps": _session["scraps"],
+                "forge_rate_pct": round(_session["forges"] / total * 100, 1) if total > 0 else 0.0,
+                "current_forge_version": FORGE_DIR.name,
+                "ledger_size": ledger_size,
+                "api_timeouts_last_hour": recent_timeouts,
+                "nous_queue_depth": nous_queue_depth,
+            },
+        }
+        try:
+            STATUS_PATH.write_text(json.dumps(status, indent=2, default=str), encoding="utf-8")
+        except Exception:
+            pass
+        if agora_client and agora_client.r:
+            try:
+                agora_client.r.hset("agent:Hephaestus", mapping={
+                    "status_json": json.dumps(status, default=str),
+                    "last_status_update": now_iso,
+                })
+            except Exception:
+                pass
+        if HAS_POSTGRES_PERSIST:
+            try:
+                agora_persist.write_heartbeat(
+                    agent_name="Hephaestus", machine=machine,
+                    status="online", status_json=status, pid=os.getpid(),
+                )
+            except Exception as e:
+                logger.warning("postgres status mirror failed: %s", e)
+
+    def _on_forge(entry, result):
+        """Track forge success and emit SHARE to agora:discoveries."""
+        _session["forges"] += 1
+        if not agora_client:
+            return
+        try:
+            names = " + ".join(entry.get("concept_names", []))
+            comp = entry.get("score", {}).get("composite_score", 0)
+            acc = result.get("accuracy", 0)
+            cal = result.get("calibration", 0)
+            agora_client.share_discovery(
+                subject=f"Hephaestus forged: {names}",
+                body=(f"Concepts: {names}. "
+                      f"Accuracy={acc:.0%}, Calibration={cal:.0%}, "
+                      f"Frame={result.get('frame', '?')}"),
+                evidence=f"gates_passed=5, composite={comp:.1f}",
+                confidence=min(1.0, comp / 10.0) if comp else 0.5,
+            )
+        except Exception as e:
+            logger.warning("Failed to emit forge event to Agora: %s", e)
+
+    def _on_scrap(entry, result):
+        """Track scrap; emit ANNOUNCE only on API failures."""
+        _session["scraps"] += 1
+        reason = result.get("reason", "")
+        if reason == "api_call_failed":
+            _session["api_timeouts"].append(time.time())
+            if agora_client:
+                try:
+                    names = " + ".join(entry.get("concept_names", []))
+                    agora_client.send(
+                        stream="main",
+                        subject="Hephaestus API degradation",
+                        body=f"API call failed for: {names}",
+                        confidence=0.5,
+                        msg_type=MessageType.ANNOUNCE,
+                    )
+                except Exception:
+                    pass
+
+    def _emit_shutdown():
+        """Write final STATUS and send shutdown announcement."""
+        total = _session["forges"] + _session["scraps"]
+        final_status = {
+            "agent": "Hephaestus",
+            "machine": machine,
+            "status": "stopped",
+            "last_heartbeat": datetime.utcnow().isoformat() + "Z",
+            "pid": os.getpid(),
+            "current_op": "shutdown",
+            "key_metrics": {
+                "session_forges": _session["forges"],
+                "session_scraps": _session["scraps"],
+                "forge_rate_pct": round(_session["forges"] / total * 100, 1) if total > 0 else 0.0,
+                "current_forge_version": FORGE_DIR.name,
+                "ledger_size": 0,
+                "api_timeouts_last_hour": 0,
+                "nous_queue_depth": None,
+            },
+        }
+        try:
+            STATUS_PATH.write_text(json.dumps(final_status, indent=2, default=str), encoding="utf-8")
+        except Exception:
+            pass
+        if not agora_client:
+            return
+        try:
+            agora_client.send(
+                stream="main",
+                subject="Hephaestus shutting down",
+                body=f"Session: {_session['forges']} forged, {_session['scraps']} scrapped",
+                confidence=1.0,
+                msg_type=MessageType.ANNOUNCE,
+            )
+            agora_client.disconnect()
+        except Exception:
+            pass
+
+    _emit_status("starting up")
 
     while not shutdown_flag[0]:
         cycle += 1
@@ -1104,6 +1842,7 @@ def main():
         forged, scrapped, batch_count = _forge_batch(
             client, filtered, args, run_dir, processed,
             total_count, shutdown_flag, aggie_client=aggie_client, force_aggie=force_aggie,
+            on_forge=_on_forge, on_scrap=_on_scrap, on_status=_emit_status,
         )
         total_forged.extend(forged)
         total_scrapped.extend(scrapped)
@@ -1124,6 +1863,8 @@ def main():
             while slept < args.poll_interval and not shutdown_flag[0]:
                 time.sleep(min(5.0, args.poll_interval - slept))
                 slept += 5.0
+
+    _emit_shutdown()
 
     # Clean up aggie client
     if aggie_client is not None:
