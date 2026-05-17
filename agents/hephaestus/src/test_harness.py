@@ -368,6 +368,11 @@ def run_trap_battery(tool, timeout_per_trap: float = 5.0) -> dict:
     if weighted is not None:
         result["weighted_score"] = weighted
 
+    # Per-tier accuracy breakdown (reasoning ladder R1-R6)
+    tier_breakdown = compute_tier_breakdown(tool_results["trap_results"], traps)
+    if tier_breakdown:
+        result["tier_breakdown"] = tier_breakdown
+
     return result
 
 
@@ -448,6 +453,77 @@ CATEGORY_DIFFICULTY = {
 
 DIFFICULTY_WEIGHTS = {"easy": 0.3, "medium": 0.3, "hard": 0.4}
 
+# ---------------------------------------------------------------------------
+# Reasoning Ladder Tier Mapping (R1-R5)
+# ---------------------------------------------------------------------------
+# Maps each category to the reasoning ladder tier it primarily probes.
+# See pivot/reasoning_ladder_design_2026-05-15.md for tier definitions.
+
+CATEGORY_TIER = {
+    # === R1: Rule execution (apply explicit rules, computation) ===
+    "numeric_comparison": "R1", "numeric_stated_premise": "R1",
+    "all_but_n": "R1", "fencepost": "R1", "order_of_operations": "R1",
+    "modular_arithmetic": "R1", "subject_object": "R1", "containment": "R1",
+    "direction_composition": "R1", "percentage_change_asymmetry": "R1",
+    # === R2: Multi-step deduction (chain implications, track state) ===
+    "transitivity": "R2", "chained_conditional": "R2",
+    "multi_hop_deduction": "R2", "modus_tollens": "R2",
+    "demorgan": "R2", "double_negation": "R2", "negation_scope": "R2",
+    "affirming_consequent": "R2", "affirming_consequent_numeric": "R2",
+    "denying_antecedent": "R2", "inclusion_exclusion": "R2",
+    "parallel_vs_sequential": "R2", "temporal_ordering": "R2",
+    "compositional_depth_scaling": "R2", "compositional_logic_arithmetic": "R2",
+    "causal_chain_length": "R2", "temporal_causal_ordering": "R2",
+    "temporal_sequence_reconstruction": "R2",
+    # === R3: Abstraction / pattern recognition / probabilistic reasoning ===
+    "base_rate_neglect": "R3", "conjunction_fallacy": "R3",
+    "expected_value": "R3", "conditional_probability_asymmetry": "R3",
+    "scope_ambiguity": "R3", "quantifier_inversion": "R3",
+    "false_dichotomy": "R3", "composition_fallacy": "R3",
+    "framing_effect": "R3", "subset_inversion": "R3",
+    "information_sufficiency": "R3", "regression_to_mean": "R3",
+    "garden_path": "R3", "pronoun_ambiguity": "R3", "empty_set": "R3",
+    "necessary_vs_sufficient": "R3", "vacuous_truth": "R3",
+    "validity_vs_truth": "R3",
+    # === R4: Search / planning / constraint satisfaction / complex temporal ===
+    "temporal_scheduling_conflict": "R4", "temporal_duration_across_midnight": "R4",
+    "temporal_concurrent_events": "R4", "temporal_age_reasoning": "R4",
+    "temporal_rate_of_change": "R4", "temporal_frequency_coincidence": "R4",
+    "temporal_relative_day": "R4", "rate_inverse_proportion": "R4",
+    "left_right_reversal": "R4", "compositional_multi_hop_with_distractor": "R4",
+    "compositional_arithmetic_temporal": "R4", "compositional_temporal_causal": "R4",
+    "compositional_causal_statistical": "R4", "compositional_nested_tom_logic": "R4",
+    # Tier 2 (stateful, search-like)
+    "stateful_register_machine": "R4", "constraint_satisfaction": "R4",
+    "recursive_evaluation": "R4", "multi_step_arithmetic_carried": "R4",
+    "conditional_graph_traversal": "R4", "rule_application_order": "R4",
+    "compositional_instruction_following": "R4", "stable_model_finding": "R4",
+    "temporal_interval_algebra": "R4",
+    # === R5: Counterfactual / causal reasoning ===
+    "causal_intervention": "R5", "causal_counterfactual": "R5",
+    "causal_confounding": "R5", "causal_common_cause": "R5",
+    "causal_simpson_paradox": "R5", "correlation_not_causation": "R5",
+    "post_hoc": "R5", "counterfactual_dependency": "R5",
+    "causal_necessary_sufficient_extended": "R5",
+    "bayesian_update": "R5", "defeasible_reasoning": "R5",
+    # === R6: Theory of mind / self-monitoring / meta-reasoning ===
+    "false_belief_task": "R6", "knowledge_attribution": "R6",
+    "intention_vs_outcome": "R6", "liar_detection": "R6",
+    "tom_group_knowledge": "R6", "tom_information_asymmetry": "R6",
+    "tom_intention_reading": "R6", "tom_mistaken_belief_chain": "R6",
+    "tom_perspective_shift": "R6", "tom_second_order_belief": "R6",
+    "tom_strategic_deception": "R6", "second_order_belief": "R6",
+    "confidence_calibration": "R6", "self_referential_consistency": "R6",
+    "presupposition": "R6", "survivorship_bias": "R6", "sunk_cost": "R6",
+    "argument_strength": "R6", "irrelevant_premise": "R6",
+    "premise_contradiction": "R6", "compositional_logic_tom": "R6",
+    # Tier 2 meta
+    "epistemic_belief_tracking": "R6", "information_sufficiency_t2": "R6",
+    "logical_consistency_checking": "R6", "closed_world_negation": "R6",
+    "referent_tracking_anaphora": "R6", "argument_structure_analysis": "R6",
+    "implicit_constraint_inference": "R6",
+}
+
 
 def compute_weighted_score(trap_results, traps):
     """Compute difficulty-weighted accuracy.
@@ -479,3 +555,38 @@ def compute_weighted_score(trap_results, traps):
             total_weight += weight
 
     return round(weighted / total_weight, 4) if total_weight > 0 else None
+
+
+def compute_tier_breakdown(trap_results, traps) -> dict | None:
+    """Compute per-tier (R1-R6) accuracy breakdown.
+
+    Returns dict like {"R1": {"accuracy": 0.7, "n": 20}, "R2": {...}, ...}
+    or None if tier data unavailable.
+    """
+    from collections import defaultdict
+
+    tier_correct = defaultdict(int)
+    tier_total = defaultdict(int)
+
+    for result, trap in zip(trap_results, traps):
+        cat = trap.get("category", "")
+        tier = CATEGORY_TIER.get(cat)
+        if tier is None:
+            continue
+        tier_total[tier] += 1
+        if result.get("is_correct"):
+            tier_correct[tier] += 1
+
+    if not tier_total:
+        return None
+
+    breakdown = {}
+    for tier in sorted(tier_total.keys()):
+        n = tier_total[tier]
+        correct = tier_correct[tier]
+        breakdown[tier] = {
+            "accuracy": round(correct / n, 4) if n > 0 else 0.0,
+            "correct": correct,
+            "n": n,
+        }
+    return breakdown
