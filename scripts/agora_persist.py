@@ -61,6 +61,22 @@ CREATE TABLE IF NOT EXISTS agora.agent_heartbeats (
 );
 CREATE INDEX IF NOT EXISTS idx_agent_heartbeats_last_hb
     ON agora.agent_heartbeats (last_heartbeat DESC);
+
+CREATE TABLE IF NOT EXISTS agora.intelligence_outputs (
+    id BIGSERIAL PRIMARY KEY,
+    cycle_id UUID NOT NULL,
+    stage TEXT NOT NULL,
+    success BOOLEAN NOT NULL,
+    output_path TEXT,
+    output_summary TEXT,
+    error TEXT,
+    started_at TIMESTAMPTZ NOT NULL,
+    finished_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    duration_sec REAL
+);
+CREATE INDEX IF NOT EXISTS idx_intel_outputs_cycle ON agora.intelligence_outputs (cycle_id);
+CREATE INDEX IF NOT EXISTS idx_intel_outputs_finished ON agora.intelligence_outputs (finished_at DESC);
+CREATE INDEX IF NOT EXISTS idx_intel_outputs_stage ON agora.intelligence_outputs (stage, finished_at DESC);
 """
 
 
@@ -166,14 +182,91 @@ def read_agent(agent_name: str) -> Optional[dict]:
         return None
 
 
+def log_intelligence_stage(
+    cycle_id: str,
+    stage: str,
+    success: bool,
+    output_path: Optional[str] = None,
+    output_summary: Optional[str] = None,
+    error: Optional[str] = None,
+    started_at: Optional[datetime] = None,
+) -> bool:
+    """Record one stage of an intelligence-pipeline cycle to Postgres.
+
+    cycle_id is a UUID string tying all stages of the same scan() invocation
+    together. stage is the human-readable agent name ("eos", "aletheia", etc.).
+    output_summary is a short human-readable description (paper counts, entity
+    deltas, etc.) — the email pipeline pulls this for its References section.
+
+    Best-effort: returns False on failure, never raises.
+    """
+    now = datetime.now(timezone.utc)
+    started = started_at or now
+    duration = (now - started).total_seconds() if started_at else None
+    try:
+        with _connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    INSERT INTO agora.intelligence_outputs
+                        (cycle_id, stage, success, output_path, output_summary,
+                         error, started_at, finished_at, duration_sec)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                """, (
+                    cycle_id, stage, success, output_path, output_summary,
+                    error, started, now, duration,
+                ))
+            conn.commit()
+        return True
+    except Exception as e:
+        print(f"[agora_persist] log_intelligence_stage({stage}) failed: {e}", file=sys.stderr)
+        return False
+
+
+def read_recent_intelligence_outputs(hours: int = 24, limit: int = 50) -> list:
+    """Return recent intelligence-pipeline outputs as dicts, newest first.
+
+    Used by the email pipeline to surface "today's intelligence outputs" in
+    the References section.
+    """
+    try:
+        with _connect() as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                cur.execute("""
+                    SELECT cycle_id, stage, success, output_path, output_summary,
+                           error, started_at, finished_at, duration_sec
+                    FROM agora.intelligence_outputs
+                    WHERE finished_at > NOW() - (%s || ' hours')::INTERVAL
+                    ORDER BY finished_at DESC
+                    LIMIT %s
+                """, (str(hours), limit))
+                rows = cur.fetchall()
+                out = []
+                for r in rows:
+                    d = dict(r)
+                    d["cycle_id"] = str(d["cycle_id"])
+                    for k in ("started_at", "finished_at"):
+                        if d.get(k) is not None:
+                            d[k] = d[k].isoformat()
+                    out.append(d)
+                return out
+    except Exception as e:
+        print(f"[agora_persist] read_recent_intelligence_outputs failed: {e}", file=sys.stderr)
+        return []
+
+
 if __name__ == "__main__":
-    # CLI: python scripts/agora_persist.py init   (creates schema)
-    #      python scripts/agora_persist.py list   (prints all heartbeats)
+    # CLI: python scripts/agora_persist.py init    (creates schema)
+    #      python scripts/agora_persist.py list    (prints all heartbeats)
+    #      python scripts/agora_persist.py intel   (prints recent intelligence outputs)
     if len(sys.argv) > 1 and sys.argv[1] == "init":
         init_schema()
         print(f"Schema initialized on {PG_HOST}:{PG_PORT}/{PG_DBNAME}")
     elif len(sys.argv) > 1 and sys.argv[1] == "list":
         for a in read_all_agents():
             print(f"{a['agent_name']:<25} {a['machine']:<8} {a['status']:<10} last_hb={a['last_heartbeat']}")
+    elif len(sys.argv) > 1 and sys.argv[1] == "intel":
+        for o in read_recent_intelligence_outputs(hours=48):
+            mark = "✓" if o["success"] else "✗"
+            print(f"  {mark} {o['stage']:<10} {o['finished_at']} {o.get('output_summary', '') or ''}")
     else:
-        print("Usage: python scripts/agora_persist.py [init|list]")
+        print("Usage: python scripts/agora_persist.py [init|list|intel]")

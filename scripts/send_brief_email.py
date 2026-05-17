@@ -99,6 +99,102 @@ def find_brief_mentions(brief_md: str) -> dict:
     return mentions
 
 
+def fetch_intelligence_outputs() -> list:
+    """Query agora.intelligence_outputs for the last 24h of pipeline runs.
+    Returns [] on any failure (Postgres unreachable, etc.)."""
+    try:
+        sys.path.insert(0, str(REPO_ROOT / "scripts"))
+        import agora_persist
+        return agora_persist.read_recent_intelligence_outputs(hours=24, limit=50)
+    except Exception:
+        return []
+
+
+def _path_to_github_url(path: str) -> str:
+    """Convert a local file path to its GitHub blob URL, or None if not in tracked area."""
+    if not path:
+        return None
+    norm = path.replace("\\", "/")
+    # Only docs/ + pivot/ + apollo/ + roles/ + scripts/ are tracked at top level
+    for prefix in ("docs/", "pivot/", "apollo/", "roles/", "scripts/", "whitepapers/"):
+        idx = norm.find(prefix)
+        if idx >= 0:
+            rel = norm[idx:]
+            return f"{GITHUB_BLOB}/{rel}"
+    return None
+
+
+def build_intelligence_outputs_md(rows: list) -> str:
+    """Markdown block listing recent intelligence pipeline stages, grouped by cycle."""
+    if not rows:
+        return ""
+    lines = ["", "---", "", "## Today's intelligence pipeline", ""]
+    cycles = {}
+    for r in rows:
+        cycles.setdefault(r["cycle_id"], []).append(r)
+    # Most recent cycle first (by max finished_at within cycle)
+    cycle_order = sorted(cycles.keys(),
+                         key=lambda cid: max(r["finished_at"] for r in cycles[cid]),
+                         reverse=True)
+    for cycle_id in cycle_order[:3]:
+        stages = sorted(cycles[cycle_id], key=lambda s: s["finished_at"])
+        latest = stages[-1]["finished_at"]
+        lines.append(f"**Cycle {cycle_id[:8]}** — finished {latest}")
+        lines.append("")
+        for s in stages:
+            mark = "✓" if s["success"] else "✗"
+            stage = s["stage"]
+            summary = (s.get("output_summary") or "").strip()
+            url = _path_to_github_url(s.get("output_path") or "")
+            dur = s.get("duration_sec")
+            dur_str = f" ({dur:.0f}s)" if dur else ""
+            line = f"- {mark} **{stage}**{dur_str} — {summary}" if summary else f"- {mark} **{stage}**{dur_str}"
+            if url:
+                line += f" · [view]({url})"
+            elif s.get("output_path"):
+                line += f" · `{s['output_path']}`"
+            lines.append(line)
+        lines.append("")
+    return "\n".join(lines)
+
+
+def build_intelligence_outputs_html(rows: list) -> str:
+    """HTML block listing recent intelligence pipeline stages, grouped by cycle."""
+    if not rows:
+        return ""
+    parts = []
+    parts.append('<hr style="border:none;border-top:1px solid #ccc;margin:24px 0">')
+    parts.append('<h2 style="color:#222;margin-top:24px;border-bottom:1px solid #eee;padding-bottom:4px">Today\'s intelligence pipeline</h2>')
+    cycles = {}
+    for r in rows:
+        cycles.setdefault(r["cycle_id"], []).append(r)
+    cycle_order = sorted(cycles.keys(),
+                         key=lambda cid: max(r["finished_at"] for r in cycles[cid]),
+                         reverse=True)
+    for cycle_id in cycle_order[:3]:
+        stages = sorted(cycles[cycle_id], key=lambda s: s["finished_at"])
+        latest = stages[-1]["finished_at"]
+        parts.append(f'<p style="margin:8px 0 4px 0;color:#444"><strong>Cycle {cycle_id[:8]}</strong> <span style="color:#888;font-size:12px">finished {latest}</span></p>')
+        parts.append('<ul style="margin:4px 0 8px 0;padding-left:20px">')
+        for s in stages:
+            mark = "✓" if s["success"] else "✗"
+            stage = s["stage"]
+            summary = (s.get("output_summary") or "").strip()
+            url = _path_to_github_url(s.get("output_path") or "")
+            dur = s.get("duration_sec")
+            dur_str = f" ({dur:.0f}s)" if dur else ""
+            label = f'<strong>{stage}</strong>{dur_str}'
+            if summary:
+                label += f" — {summary}"
+            if url:
+                label += f' · <a href="{url}" style="color:#0366d6">view</a>'
+            elif s.get("output_path"):
+                label += f' · <code style="font-size:11px">{s["output_path"]}</code>'
+            parts.append(f'<li style="color:{"#444" if s["success"] else "#a02020"}">{mark} {label}</li>')
+        parts.append('</ul>')
+    return "\n".join(parts)
+
+
 def build_references_md(brief_md: str) -> str:
     """Return a markdown block of follow-up links to append below the brief."""
     lines = ["", "---", "", "## References & follow-up", ""]
@@ -259,10 +355,13 @@ def main():
         sys.exit(1)
 
     brief_md = args.brief.read_text(encoding="utf-8")
+    intel_rows = fetch_intelligence_outputs()
+    intel_md = build_intelligence_outputs_md(intel_rows)
+    intel_html = build_intelligence_outputs_html(intel_rows)
     refs_md = build_references_md(brief_md)
     refs_html = build_references_html(brief_md)
-    body_md = brief_md + "\n" + refs_md
-    body_html = render_html(brief_md) + refs_html
+    body_md = brief_md + "\n" + intel_md + "\n" + refs_md
+    body_html = render_html(brief_md) + intel_html + refs_html
 
     now = datetime.now(timezone.utc)
     subject = args.subject or f"Prometheus Portfolio — {now.strftime('%Y-%m-%d %H:%M UTC')}"
