@@ -257,6 +257,17 @@ def build_dashboard_state(r: redis.Redis) -> dict:
     """
     now = datetime.now(timezone.utc)
 
+    # Pre-fetch Postgres heartbeats so we can fall back per-agent when Redis
+    # is silent for that agent (e.g., dual-write daemons that only Postgres-heartbeat,
+    # or agents whose Redis thread died during the recent outage).
+    pg_by_name = {}
+    if HAS_POSTGRES_FALLBACK:
+        try:
+            for row in agora_persist.read_all_agents():
+                pg_by_name[row["agent_name"]] = row
+        except Exception:
+            pass
+
     agents = []
     seen = set()
     for name, meta in EXPECTED_AGENTS.items():
@@ -266,17 +277,46 @@ def build_dashboard_state(r: redis.Redis) -> dict:
         op = ""
         last_status_update = None
         key_metrics = None
-        if state:
-            blob = state.get("status_json")
-            if blob:
+        data_source = "redis" if state else "no_data"
+        # If Redis has nothing for this agent, fall back to Postgres mirror.
+        if not state and name in pg_by_name:
+            pg = pg_by_name[name]
+            last_hb = pg.get("last_heartbeat")
+            if last_hb:
                 try:
-                    s = json.loads(blob)
-                    op = s.get("current_op", "")
-                    key_metrics = s.get("key_metrics")
-                except json.JSONDecodeError:
+                    last_hb_dt = datetime.fromisoformat(str(last_hb).replace("Z", "+00:00"))
+                    age = int((now - last_hb_dt).total_seconds())
+                    if age > HEARTBEAT_TIMEOUT_SEC:
+                        status_label = "DEAD"
+                    elif age > HEARTBEAT_TIMEOUT_SEC // 2:
+                        status_label = "STALE"
+                    else:
+                        status_label = "ALIVE"
+                except Exception:
                     pass
-            last_status_update = state.get("last_status_update")
-        machine = (state or {}).get("machine") or meta["machine"]
+            sj = pg.get("status_json")
+            if sj:
+                try:
+                    sj_dict = sj if isinstance(sj, dict) else json.loads(sj)
+                    op = sj_dict.get("current_op", "") or "(from postgres mirror)"
+                    key_metrics = sj_dict.get("key_metrics") or sj_dict
+                except Exception:
+                    pass
+            last_status_update = pg.get("last_status_update")
+            machine = pg.get("machine") or meta["machine"]
+            data_source = "postgres_fallback"
+        else:
+            if state:
+                blob = state.get("status_json")
+                if blob:
+                    try:
+                        s = json.loads(blob)
+                        op = s.get("current_op", "")
+                        key_metrics = s.get("key_metrics")
+                    except json.JSONDecodeError:
+                        pass
+                last_status_update = state.get("last_status_update")
+            machine = (state or {}).get("machine") or meta["machine"]
         agents.append({
             "name": name,
             "expected": True,
@@ -287,6 +327,7 @@ def build_dashboard_state(r: redis.Redis) -> dict:
             "current_op": op,
             "last_status_update": last_status_update,
             "key_metrics": key_metrics,
+            "data_source": data_source,
         })
 
     try:
