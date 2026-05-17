@@ -195,18 +195,52 @@ def build_intelligence_outputs_html(rows: list) -> str:
     return "\n".join(parts)
 
 
-def build_references_md(brief_md: str) -> str:
-    """Return a markdown block of follow-up links to append below the brief."""
-    lines = ["", "---", "", "## References & follow-up", ""]
+def build_mentions_md(brief_md: str) -> str:
+    """Inline per-agent quick-links to surface right after the brief.
+    Replaces the old 'Mentioned in this brief' subsection that was buried in References."""
     mentions = find_brief_mentions(brief_md)
-    if mentions:
-        lines.append("### Mentioned in this brief")
-        for agent, refs in mentions.items():
-            lines.append(f"")
-            lines.append(f"**{agent}**")
-            for label, url in refs:
-                lines.append(f"- [{label}]({url})")
-        lines.append("")
+    if not mentions:
+        return ""
+    lines = ["", "---", "", "## Agents mentioned above — quick links", ""]
+    for agent, refs in mentions.items():
+        link_inline = " · ".join(f"[{label}]({url})" for label, url in refs)
+        lines.append(f"- **{agent}** — {link_inline}")
+    lines.append("")
+    return "\n".join(lines)
+
+
+def build_tldr_md(state: dict) -> str:
+    """One-paragraph executive header pulled from state.json."""
+    if not state:
+        return ""
+    alive = sum(1 for a in state.get("agents", []) if a.get("status") == "ALIVE")
+    expected = sum(1 for a in state.get("agents", []) if a.get("expected"))
+    anomalies = len(state.get("anomalies") or [])
+    infra = state.get("infra_status") or {}
+    infra_note = ""
+    if infra:
+        infra_note = f" · infra: Redis {infra.get('redis', '?')}"
+        if infra.get("postgres"):
+            infra_note += f" / Postgres {infra.get('postgres')}"
+    cycles = {}
+    for r in state.get("intelligence_outputs") or []:
+        cycles.setdefault(r["cycle_id"], []).append(r)
+    last_cycle_line = ""
+    if cycles:
+        cycle_id, stages = max(cycles.items(), key=lambda kv: max(s["finished_at"] for s in kv[1]))
+        ok = sum(1 for s in stages if s["success"])
+        last_cycle_line = f" · last intel cycle {cycle_id[:8]}: {ok}/{len(stages)} stages ok"
+    lines = ["", "**TL;DR** — "
+             f"agents alive {alive}/{expected}"
+             f" · anomalies {anomalies}"
+             f"{infra_note}"
+             f"{last_cycle_line}", ""]
+    return "\n".join(lines)
+
+
+def build_references_md(brief_md: str) -> str:
+    """Return a markdown block of follow-up links to append at the bottom of the email."""
+    lines = ["", "---", "", "## References & follow-up", ""]
     for section_title, refs in STATIC_REFS:
         lines.append(f"### {section_title}")
         for label, url in refs:
@@ -217,23 +251,58 @@ def build_references_md(brief_md: str) -> str:
     return "\n".join(lines)
 
 
+def build_mentions_html(brief_md: str) -> str:
+    """Inline per-agent quick-links as HTML, placed right after the brief."""
+    mentions = find_brief_mentions(brief_md)
+    if not mentions:
+        return ""
+    parts = []
+    parts.append('<hr style="border:none;border-top:1px solid #eee;margin:16px 0">')
+    parts.append('<h3 style="color:#444;margin-top:8px">Agents mentioned above — quick links</h3>')
+    parts.append('<ul style="margin:4px 0 8px 0;padding-left:20px">')
+    for agent, refs in mentions.items():
+        links = " · ".join(
+            f'<a href="{url}" style="color:#0366d6;text-decoration:none">{label}</a>'
+            for label, url in refs
+        )
+        parts.append(f'<li><strong>{agent}</strong> — {links}</li>')
+    parts.append('</ul>')
+    return "\n".join(parts)
+
+
+def build_tldr_html(state: dict) -> str:
+    """One-line executive header pulled from state.json, rendered as HTML."""
+    if not state:
+        return ""
+    alive = sum(1 for a in state.get("agents", []) if a.get("status") == "ALIVE")
+    expected = sum(1 for a in state.get("agents", []) if a.get("expected"))
+    anomalies = len(state.get("anomalies") or [])
+    infra = state.get("infra_status") or {}
+    infra_note = ""
+    if infra:
+        infra_note = f" · infra: Redis {infra.get('redis', '?')}"
+        if infra.get("postgres"):
+            infra_note += f" / Postgres {infra.get('postgres')}"
+    cycles = {}
+    for r in state.get("intelligence_outputs") or []:
+        cycles.setdefault(r["cycle_id"], []).append(r)
+    last_cycle_line = ""
+    if cycles:
+        cycle_id, stages = max(cycles.items(), key=lambda kv: max(s["finished_at"] for s in kv[1]))
+        ok = sum(1 for s in stages if s["success"])
+        last_cycle_line = f" · last intel cycle <code>{cycle_id[:8]}</code>: {ok}/{len(stages)} stages ok"
+    return (
+        '<p style="padding:8px 12px;background:#eef;border-left:3px solid #88a;margin:0 0 16px 0;font-size:14px">'
+        f'<strong>TL;DR</strong> — agents alive {alive}/{expected} · anomalies {anomalies}{infra_note}{last_cycle_line}'
+        '</p>'
+    )
+
+
 def build_references_html(brief_md: str) -> str:
     """Return an HTML block of follow-up links, styled for email clients."""
     parts = []
     parts.append('<hr style="border:none;border-top:1px solid #ccc;margin:24px 0">')
     parts.append('<h2 style="color:#222;margin-top:24px;border-bottom:1px solid #eee;padding-bottom:4px">References &amp; follow-up</h2>')
-
-    mentions = find_brief_mentions(brief_md)
-    if mentions:
-        parts.append('<h3 style="color:#444;margin-top:16px">Mentioned in this brief</h3>')
-        for agent, refs in mentions.items():
-            parts.append(f'<p style="margin:6px 0 0 0"><strong>{agent}</strong></p>')
-            parts.append('<ul style="margin:4px 0 8px 0;padding-left:20px">')
-            for label, url in refs:
-                parts.append(
-                    f'<li><a href="{url}" style="color:#0366d6;text-decoration:none">{label}</a></li>'
-                )
-            parts.append('</ul>')
 
     for section_title, refs in STATIC_REFS:
         parts.append(f'<h3 style="color:#444;margin-top:16px">{section_title}</h3>')
@@ -355,13 +424,26 @@ def main():
         sys.exit(1)
 
     brief_md = args.brief.read_text(encoding="utf-8")
+    # TL;DR header pulled from current state.json
+    state = {}
+    state_path = REPO_ROOT / "docs" / "state.json"
+    if state_path.exists():
+        try:
+            import json as _json
+            state = _json.loads(state_path.read_text(encoding="utf-8"))
+        except Exception:
+            state = {}
+    tldr_md = build_tldr_md(state)
+    tldr_html = build_tldr_html(state)
+    mentions_md = build_mentions_md(brief_md)
+    mentions_html = build_mentions_html(brief_md)
     intel_rows = fetch_intelligence_outputs()
     intel_md = build_intelligence_outputs_md(intel_rows)
     intel_html = build_intelligence_outputs_html(intel_rows)
     refs_md = build_references_md(brief_md)
     refs_html = build_references_html(brief_md)
-    body_md = brief_md + "\n" + intel_md + "\n" + refs_md
-    body_html = render_html(brief_md) + intel_html + refs_html
+    body_md = tldr_md + "\n" + brief_md + "\n" + mentions_md + "\n" + intel_md + "\n" + refs_md
+    body_html = tldr_html + render_html(brief_md) + mentions_html + intel_html + refs_html
 
     now = datetime.now(timezone.utc)
     subject = args.subject or f"Prometheus Portfolio — {now.strftime('%Y-%m-%d %H:%M UTC')}"

@@ -346,8 +346,16 @@ def build_dashboard_state(r: redis.Redis) -> dict:
                 "detail": f"heartbeat age {a['heartbeat_age_sec']}s",
             })
 
+    # Pull recent intelligence-pipeline outputs so the dashboard/email surface them.
+    intel = []
+    if HAS_POSTGRES_FALLBACK:
+        try:
+            intel = agora_persist.read_recent_intelligence_outputs(hours=24, limit=50)
+        except Exception as e:
+            print(f"[{now.isoformat()}] intel fetch failed: {e}", file=sys.stderr)
+
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "generated_at": now.isoformat(),
         "redis_host": f"{REDIS_HOST}:{REDIS_PORT}",
         "heartbeat_timeout_sec": HEARTBEAT_TIMEOUT_SEC,
@@ -357,6 +365,7 @@ def build_dashboard_state(r: redis.Redis) -> dict:
         "challenges": stream_entries(STREAM_CHALLENGES, count=5),
         "work_queue": work_queue,
         "anomalies": anomalies,
+        "intelligence_outputs": intel,
     }
 
 
@@ -478,8 +487,17 @@ def build_degraded_state_from_postgres(now: datetime, redis_error: str) -> dict:
             anomalies.append({"agent": a["name"], "kind": "stale",
                               "detail": f"heartbeat age {a['heartbeat_age_sec']}s (from postgres)"})
 
+    # Pull recent intelligence-pipeline outputs so the dashboard/email can
+    # surface them without needing a Postgres connection of their own.
+    intel = []
+    if HAS_POSTGRES_FALLBACK:
+        try:
+            intel = agora_persist.read_recent_intelligence_outputs(hours=24, limit=50)
+        except Exception as e:
+            print(f"[{now.isoformat()}] intel fetch failed: {e}", file=sys.stderr)
+
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "generated_at": now.isoformat(),
         "redis_host": f"{REDIS_HOST}:{REDIS_PORT}",
         "heartbeat_timeout_sec": HEARTBEAT_TIMEOUT_SEC,
@@ -498,6 +516,7 @@ def build_degraded_state_from_postgres(now: datetime, redis_error: str) -> dict:
         "challenges": [],
         "work_queue": {},
         "anomalies": anomalies,
+        "intelligence_outputs": intel,
     }
 
 

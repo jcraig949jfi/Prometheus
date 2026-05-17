@@ -54,10 +54,15 @@ function statusOrder(s) {
 }
 
 function AgentRow({ a }) {
+  const docLink = AGENT_DOC_LINKS[a.name];
   return (
     <tr className="hover-row border-b border-gray-800">
       <td className="px-3 py-2">
-        <span className="font-semibold">{a.name}</span>
+        {docLink ? (
+          <a href={docLink} target="_blank" className="font-semibold hover:text-blue-400" title="open agent doc">{a.name}</a>
+        ) : (
+          <span className="font-semibold">{a.name}</span>
+        )}
         {!a.expected && <span className="ml-2 text-xs text-gray-500">(unexpected)</span>}
       </td>
       <td className={`px-3 py-2 ${machineClass(a.machine)}`}>{a.machine}</td>
@@ -67,7 +72,65 @@ function AgentRow({ a }) {
       </td>
       <td className="px-3 py-2 text-sm font-mono text-gray-400">{formatAge(a.heartbeat_age_sec)}</td>
       <td className="px-3 py-2 text-sm text-gray-300 truncate max-w-md" title={a.current_op}>{a.current_op || "—"}</td>
+      <td className="px-3 py-2 text-xs text-gray-500">
+        {a.key_metrics ? (
+          <details>
+            <summary className="cursor-pointer hover:text-gray-300">metrics</summary>
+            <pre className="text-xs mt-1 bg-gray-900 p-2 rounded" style={{whiteSpace: "pre-wrap"}}>{JSON.stringify(a.key_metrics, null, 2)}</pre>
+          </details>
+        ) : "—"}
+      </td>
     </tr>
+  );
+}
+
+const AGENT_DOC_LINKS = {
+  "Hephaestus": "https://github.com/jcraig949jfi/Prometheus/blob/main/pivot/autopsy_hephaestus_2026-05-13.md",
+  "Apollo":     "https://github.com/jcraig949jfi/Prometheus/blob/main/apollo/RESUME.md",
+  "Nous":       "https://github.com/jcraig949jfi/Prometheus/blob/main/pivot/agents_nous_resume_2026-05-13.md",
+  "Pronoia":    "https://github.com/jcraig949jfi/Prometheus/blob/main/pronoia.py",
+};
+
+function IntelligenceOutputs({ rows }) {
+  // group by cycle_id, latest cycle first
+  const cycles = {};
+  for (const r of rows) {
+    if (!cycles[r.cycle_id]) cycles[r.cycle_id] = [];
+    cycles[r.cycle_id].push(r);
+  }
+  const cycleIds = Object.keys(cycles).sort((a, b) => {
+    const aMax = Math.max(...cycles[a].map(r => new Date(r.finished_at).getTime()));
+    const bMax = Math.max(...cycles[b].map(r => new Date(r.finished_at).getTime()));
+    return bMax - aMax;
+  });
+  return (
+    <div className="space-y-3">
+      {cycleIds.slice(0, 3).map(cid => {
+        const stages = [...cycles[cid]].sort((a, b) => new Date(a.finished_at) - new Date(b.finished_at));
+        const latest = stages[stages.length - 1].finished_at;
+        return (
+          <div key={cid} className="border border-gray-800 rounded p-2">
+            <div className="text-xs text-gray-500 mb-2">
+              Cycle <span className="font-mono">{cid.slice(0, 8)}</span> · finished {latest}
+            </div>
+            <div className="space-y-1">
+              {stages.map((s, i) => {
+                const ok = s.success;
+                const dur = s.duration_sec ? ` (${Math.round(s.duration_sec)}s)` : "";
+                return (
+                  <div key={i} className="text-sm flex items-center">
+                    <span className={ok ? "text-green-400 mr-2" : "text-red-400 mr-2"}>{ok ? "✓" : "✗"}</span>
+                    <span className="font-semibold mr-2">{s.stage}</span>
+                    <span className="text-gray-500 text-xs mr-2">{dur}</span>
+                    <span className="text-gray-400 flex-1">{s.output_summary || ""}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
@@ -227,6 +290,7 @@ function Dashboard() {
               <th className="px-3 py-2 text-left">Status</th>
               <th className="px-3 py-2 text-left">HB Age</th>
               <th className="px-3 py-2 text-left">Current Op</th>
+              <th className="px-3 py-2 text-left">Metrics</th>
             </tr>
           </thead>
           <tbody>
@@ -252,9 +316,36 @@ function Dashboard() {
         </div>
       </div>
 
+      {(state.intelligence_outputs || []).length > 0 && (
+        <div className="card p-4 mb-6">
+          <div className="flex justify-between items-center mb-3">
+            <div className="text-sm font-semibold">Intelligence Pipeline (last 24h)</div>
+            <a href="https://github.com/jcraig949jfi/Prometheus/tree/main/agents" target="_blank" className="text-xs text-blue-400 hover:text-blue-300">browse agents →</a>
+          </div>
+          <IntelligenceOutputs rows={state.intelligence_outputs} />
+        </div>
+      )}
+
       <div className="card p-4">
-        <div className="text-sm font-semibold mb-2">Latest Metis Brief</div>
-        <pre className="text-xs text-gray-300 scroll-y bg-gray-900 p-3 rounded">{brief}</pre>
+        <div className="flex justify-between items-center mb-2">
+          <div className="text-sm font-semibold">Latest Metis Brief (preview)</div>
+          <a href="https://github.com/jcraig949jfi/Prometheus/blob/main/docs/portfolio_brief.md" target="_blank" className="text-xs text-blue-400 hover:text-blue-300">view full brief on GitHub →</a>
+        </div>
+        <pre className="text-xs text-gray-300 scroll-y bg-gray-900 p-3 rounded" style={{maxHeight: "300px"}}>{brief.slice(0, 1500)}{brief.length > 1500 ? "\n\n…(truncated — click 'view full brief' above)" : ""}</pre>
+      </div>
+
+      <div className="card p-4 mt-6">
+        <div className="text-sm font-semibold mb-2">Quick links</div>
+        <div className="grid grid-cols-2 gap-2 text-sm">
+          <a href="https://github.com/jcraig949jfi/Prometheus/blob/main/docs/portfolio_brief.md" target="_blank" className="text-blue-400 hover:text-blue-300">→ Latest brief (markdown)</a>
+          <a href="https://github.com/jcraig949jfi/Prometheus/blob/main/docs/manual_status.json" target="_blank" className="text-blue-400 hover:text-blue-300">→ Manual status (out-of-band)</a>
+          <a href="https://github.com/jcraig949jfi/Prometheus/blob/main/docs/state.json" target="_blank" className="text-blue-400 hover:text-blue-300">→ Raw state.json</a>
+          <a href="https://github.com/jcraig949jfi/Prometheus/commits/main" target="_blank" className="text-blue-400 hover:text-blue-300">→ Recent commits</a>
+          <a href="https://github.com/jcraig949jfi/Prometheus/blob/main/pivot/prometheus_synthesis_2026-05-14.md" target="_blank" className="text-blue-400 hover:text-blue-300">→ Prometheus synthesis (thesis)</a>
+          <a href="https://github.com/jcraig949jfi/Prometheus/blob/main/pivot/autopsy_forges_consolidated_2026-05-13.md" target="_blank" className="text-blue-400 hover:text-blue-300">→ Forge autopsies</a>
+          <a href="https://github.com/jcraig949jfi/Prometheus/tree/main/pivot" target="_blank" className="text-blue-400 hover:text-blue-300">→ All pivot docs</a>
+          <a href="https://github.com/jcraig949jfi/Prometheus/tree/main/scripts" target="_blank" className="text-blue-400 hover:text-blue-300">→ All scripts</a>
+        </div>
       </div>
 
       <footer className="mt-6 text-center text-xs text-gray-600">

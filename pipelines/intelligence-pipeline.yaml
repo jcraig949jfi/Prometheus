@@ -1,0 +1,101 @@
+schema_version: 1
+pipeline_id: intelligence-pipeline
+display_name: Intelligence Pipeline (Eos → Aletheia → Skopos → Metis-paper → Clymene)
+purpose: |
+  External-research scan: arXiv, OpenAlex, Semantic Scholar, GitHub, Tavily.
+  Indexes new papers, extracts entities into a knowledge graph, scores them
+  against research threads, synthesizes a paper-research executive brief, and
+  hoards relevant repos before they get gated. Output feeds substrate
+  vocabulary curation, Apollo's gene library, and the reporting pipeline's
+  daily email. Not bound to a specific machine; currently runs on M4 but
+  could run anywhere with the required API keys.
+
+status: active
+owner: pronoia (orchestrator script)
+
+machine_affinity:
+  preferred: [M4]
+  required: false
+
+schedule:
+  trigger: event-or-manual
+  cadence: hourly when intelligence_loop daemon runs; manual via `python pronoia.py scan` otherwise
+
+inputs:
+  - source: external://arxiv.org
+    purpose: new papers in cs.AI, cs.LG, cs.CL
+  - source: external://openalex.org
+    purpose: academic papers with citation context
+  - source: external://api.semanticscholar.org
+    purpose: TLDRs and citation graphs (free tier)
+  - source: external://github.com
+    purpose: trending repos in mech-interp / transformers / evolutionary ML
+    needs_key: GITHUB_TOKEN (currently absent — Eos skips this source gracefully)
+  - source: external://api.tavily.com
+    purpose: web intelligence (blog posts, announcements)
+    needs_key: TAVILY_API_KEY (currently absent — Eos skips gracefully)
+  - source: agents/eos/data/paper_index.json
+    purpose: dedup tracking; growth across cycles
+  - source: agents/aletheia/data/knowledge_graph.db
+    purpose: previously-extracted entities (Aletheia avoids re-extracting)
+
+outputs:
+  - target: agents/eos/reports/<date>.md
+    consumers: [aletheia, metis-paper, send_brief_email, dashboard]
+  - target: agents/eos/data/paper_index.json
+    consumers: [eos itself for dedup across cycles]
+  - target: agents/aletheia/data/knowledge_graph.db
+    consumers: [skopos, metis-paper, substrate vocabulary curators, ergon learner]
+  - target: agents/skopos/reports/<date>_alignment.md
+    consumers: [metis-paper, dashboard]
+  - target: agents/skopos/data/scores.db
+    consumers: [skopos itself across cycles, metis-paper context]
+  - target: agents/metis/briefs/<date>_brief.md
+    consumers: [send_brief_email, dashboard]
+  - target: agents/clymene/reports/<date>_hoard.md
+    consumers: [dashboard, future repository forensics]
+  - target: vault/repos/<name>
+    consumers: [reproductions, substrate work, anyone needing offline access]
+  - target: agora.intelligence_outputs
+    consumers: [send_brief_email, dashboard, future orchestrator]
+
+stages:
+  - id: eos
+    runner: agents/eos/src/eos_daemon.py
+    timeout_min: 15
+  - id: aletheia
+    runner: agents/aletheia/src/aletheia.py
+    depends_on: [eos]
+    timeout_min: 10
+  - id: skopos
+    runner: agents/skopos/src/skopos.py
+    depends_on: [aletheia]
+    timeout_min: 5
+  - id: metis-paper
+    runner: agents/metis/src/metis.py
+    depends_on: [skopos]
+    timeout_min: 5
+    notes: |
+      The original paper-research Metis. Distinct from scripts/metis_portfolio.py
+      which is the agent-state-reporting Metis (different system prompt, different
+      input source). The two share the LLM cascade helper; otherwise independent.
+  - id: clymene
+    runner: agents/clymene/src/clymene.py
+    timeout_min: 30
+    notes: 72-hour cooldown; only runs if last_run.txt is old enough.
+  - id: audit
+    runner: pronoia.py audit
+    depends_on: [eos, aletheia, skopos, metis-paper, clymene]
+    timeout_min: 2
+
+related_docs:
+  - pivot/agent_portfolio_and_monitoring_2026-05-12.md
+  - pivot/hermes_deprecation_2026-05-17.md
+
+notes: |
+  - Clymene was unblocked 2026-05-17 (pip install pyyaml on M4).
+  - Original Hermes (email delivery from this pipeline) is deprecated as of
+    2026-05-17 — see pivot/hermes_deprecation_2026-05-17.md. Email is now
+    owned by the reporting pipeline.
+  - Substrate health alert ("starvation" = <5 additions in 24h) fires from
+    pronoia.py after the cycle; check Aletheia entity growth if it persists.

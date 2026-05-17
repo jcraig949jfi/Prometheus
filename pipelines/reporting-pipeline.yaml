@@ -1,0 +1,113 @@
+schema_version: 1
+pipeline_id: reporting-pipeline
+display_name: Reporting & Aggregation Pipeline (portfolio-monitor → metis-portfolio → email + dashboard)
+purpose: |
+  Cross-pipeline, machine-agnostic observability layer. Reads from any
+  pipeline that writes to the shared substrate (Agora Redis hashes,
+  Agora Postgres tables, manual_status.json) and produces a daily-cadence
+  brief + dashboard + email. The reporting pipeline does not own any
+  underlying state — it's a consumer of everyone else's outputs. Adding a
+  new pipeline that writes to agora.agent_heartbeats and/or
+  agora.intelligence_outputs makes it automatically visible here.
+
+status: active
+owner: aletheia (M4 coordinator) / future intelligence-loop daemon
+
+machine_affinity:
+  preferred: [M4]
+  required: false
+  notes: Runs on M4 today because that's where Aletheia coordinates from. Could run anywhere with LAN reach to M1's Redis + Postgres.
+
+schedule:
+  trigger: continuous-or-cron
+  cadence: hourly portfolio cycle, daily digest email at configurable UTC hour (currently 08:00); manual cycles during the M1-Redis-outage window
+
+inputs:
+  - source: agora.streams.main
+    purpose: recent agent announcements + heartbeats
+  - source: agora.streams.discoveries
+    purpose: high-potential findings from forges and substrate work
+  - source: agora.streams.challenges
+    purpose: open adversarial reviews
+  - source: agora.agent_heartbeats
+    purpose: durable per-agent state (Redis dual-write mirror); used in Redis-degraded mode
+  - source: agora.intelligence_outputs
+    purpose: per-cycle stages from pronoia.py (Eos, Aletheia, Skopos, Metis-paper, Clymene, audit)
+  - source: docs/manual_status.json
+    purpose: out-of-band agent state James edits directly when Agora can't see it
+  - source: git log --since=24h
+    purpose: recent commit activity for the brief's context
+  - source: external://Cerebras Qwen3-235B (LLM cascade primary)
+    needs_key: CEREBRAS_API_KEY
+  - source: external://Groq Llama-3.3-70B (LLM cascade fallback)
+    needs_key: GROQ_API_KEY
+  - source: external://NVIDIA Nemotron-120B (LLM cascade tertiary)
+    needs_key: NVIDIA_API_KEY
+  - source: external://DeepSeek-V4-Flash (LLM cascade paid last-resort)
+    needs_key: DEEPSEEK_API_KEY
+  - source: external://Gmail SMTP
+    needs_key: HERMES_GMAIL_APP_PASSWORD
+
+outputs:
+  - target: docs/state.json
+    consumers: [react dashboard, send_brief_email]
+  - target: docs/portfolio_brief.md
+    consumers: [react dashboard, send_brief_email, archive]
+  - target: docs/briefs/<timestamp>.md
+    consumers: [archive only — historical brief snapshots, gitignored]
+  - target: pivot/portfolio_STATUS.md
+    consumers: [aporia chip-away portfolio doc, historical record]
+  - target: docs/manual_status.json (last_updated_at field auto-touched per cycle)
+    consumers: [next cycle of metis_portfolio reads this for freshness]
+  - target: Gmail outbound (jcraig949b@gmail.com)
+    consumers: [james — daily review]
+  - target: github.com/jcraig949jfi/Prometheus (auto-commit + push of docs/* every cycle)
+    consumers: [github pages dashboard, anyone fetching the public repo]
+
+stages:
+  - id: portfolio_monitor
+    runner: scripts/portfolio_monitor.py
+    timeout_min: 2
+    notes: |
+      Reads Agora Redis when up, Postgres mirror when Redis down. Writes
+      docs/state.json + pivot/portfolio_STATUS.md. Includes
+      intelligence_outputs from agora.intelligence_outputs.
+  - id: metis_portfolio
+    runner: scripts/metis_portfolio.py
+    depends_on: [portfolio_monitor]
+    timeout_min: 5
+    notes: |
+      LLM cascade (Cerebras → Groq → NVIDIA → DeepSeek). Reads state.json
+      + manual_status.json + git log + previous brief. Auto-touches
+      manual_status.last_updated_at after each run.
+  - id: send_brief_email
+    runner: scripts/send_brief_email.py
+    depends_on: [metis_portfolio]
+    timeout_min: 1
+    notes: |
+      Builds TL;DR header, agent mentions, intelligence_outputs section,
+      references catalog. Plain-text + HTML multipart. Skipped when
+      HERMES_ENABLED=false.
+  - id: git_publish (in intelligence_loop)
+    runner: scripts/intelligence_loop.py push_dashboard_to_main
+    depends_on: [portfolio_monitor, metis_portfolio]
+    timeout_min: 1
+    notes: |
+      Auto-commits docs/state.json + docs/portfolio_brief.md to main and
+      pushes. Auto-publishes to GitHub Pages once Pages is enabled.
+
+related_docs:
+  - pivot/dashboard_deployment_plan_2026-05-15.md
+  - pivot/agent_portfolio_and_monitoring_2026-05-12.md
+  - pivot/hermes_deprecation_2026-05-17.md
+  - pivot/prometheus_synthesis_2026-05-14.md
+  - docs/index.html (the React UI consumer)
+
+notes: |
+  - This pipeline does not own any state. It's a pure consumer + presenter.
+  - When new pipelines are added, no changes needed here as long as they
+    write to agora.agent_heartbeats / agora.intelligence_outputs. The
+    EXPECTED_AGENTS map in portfolio_monitor.py and AGENT_REFS / STATIC_REFS
+    in send_brief_email.py need light updates for new agent names + doc paths.
+  - Future: read pipeline manifests (pipelines/*.yaml) to auto-populate the
+    References section and agent-doc-link registry instead of hand-curation.

@@ -1,0 +1,101 @@
+schema_version: 1
+pipeline_id: forge-pipeline
+display_name: Forge Pipeline (Nous → Hephaestus → Nemesis)
+purpose: |
+  Substrate production from gene library — Nous mines concept triples,
+  Hephaestus forges them into deterministic Python reasoning tools through a
+  5-gate validation + 15-trap battery, Nemesis applies adversarial pressure
+  to detect Goodhart gaps. Each tool that survives is a morpheme in the
+  symbolic substrate; each scrap is a structured KillVector that carries
+  information about where reasoning fails. Both pass and kill data feed the
+  future Learner's training corpus.
+
+status: active-on-M3
+owner: hephaestus daemon (M3) + nous (M4 future) + nemesis (M3 future)
+
+machine_affinity:
+  preferred: [M3]
+  required: false
+  notes: |
+    Currently Hephaestus runs on M3. Nous historically ran on M4. Nemesis
+    historically ran alongside Hephaestus. Cross-machine handoff between
+    Nous and Hephaestus is currently file-based (responses.jsonl) and
+    therefore bound to a shared filesystem; future path is Agora streams
+    (per the Nous RESUME's Path C, defer until M2/M4 coordination is needed).
+
+schedule:
+  trigger: continuous-daemon
+  cadence: Hephaestus polls Nous output every 5 min; runs unattended.
+
+inputs:
+  - source: agents/nous/runs/<latest>/responses.jsonl
+    purpose: scored concept triples from Nous
+  - source: agents/coeus/graphs/concept_scores.json
+    purpose: Coeus priority weights for prompt enrichment
+    notes: Coeus is dormant; Hephaestus degrades to uniform weights without it.
+  - source: agents/coeus/enrichments/<combo>.json
+    purpose: per-combination Coeus enrichment directives
+  - source: agents/hephaestus/src/forge_primitives.py
+    purpose: 25 Frame H primitives (the gene library)
+  - source: external://NVIDIA Nemotron
+    needs_key: NVIDIA_API_KEY
+    purpose: large-model code generation
+  - source: external://Augment auggie-sdk
+    needs_key: AUGMENT_API_KEY (optional fallback; currently absent on M3)
+    purpose: alternative code generation provider when NVIDIA degrades
+
+outputs:
+  - target: agents/hephaestus/forge_v<N>/<tool_name>.py
+    consumers: [substrate vocabulary, apollo gene library, future learner training]
+  - target: agents/hephaestus/scrap/<tool_name>.py
+    consumers: [kill ledger geometry, future learner negative-space training]
+  - target: agents/hephaestus/ledger.jsonl
+    consumers: [coeus causal analysis, kill geometry gradient archaeology]
+  - target: agents/hephaestus/novelty_scores.json
+    consumers: [coeus, future apollo seed selection]
+  - target: agents/nemesis/grid/grid.json
+    consumers: [coeus goodhart detection, hephaestus prompt context]
+  - target: agents/nemesis/adversarial/adversarial_results.jsonl
+    consumers: [coeus dual-graph analysis, learner training as anti-Goodhart signal]
+  - target: agora.agent_heartbeats (status=Hephaestus row)
+    consumers: [reporting pipeline]
+
+stages:
+  - id: nous
+    runner: agents/nous/src/nous.py
+    machine_affinity: { preferred: [M4] }
+    timeout_min: continuous
+    notes: |
+      Generates 95 concepts × 18 fields cross-field-biased concept triples,
+      scores via NVIDIA Nemotron, writes responses.jsonl. Currently not
+      running (instrumented but not launched).
+  - id: hephaestus
+    runner: agents/hephaestus/src/hephaestus.py
+    depends_on: [nous]
+    machine_affinity: { preferred: [M3], required: false }
+    timeout_min: continuous
+    notes: |
+      Live on M3 since 2026-05-16. Forge rate 2.2% currently (tail of
+      Coeus priority distribution; was 40% historically). 5,309 ledger
+      entries as of 2026-05-17 morning.
+  - id: nemesis
+    runner: agents/nemesis/src/nemesis.py
+    depends_on: [hephaestus]
+    machine_affinity: { preferred: [M3] }
+    timeout_min: continuous
+    notes: Pure-algorithmic, no API calls; currently not running.
+
+related_docs:
+  - pivot/autopsy_hephaestus_2026-05-13.md
+  - pivot/autopsy_forges_consolidated_2026-05-13.md
+  - pivot/agents_hephaestus_resume_2026-05-12.md
+  - pivot/agents_nous_resume_2026-05-13.md
+
+notes: |
+  - Hephaestus dual-writes heartbeats to Redis + Postgres as of 2026-05-17
+    (per scripts/agora_persist.py). Survives Redis outages.
+  - Hermes (original) was the forge pipeline's email delivery; deprecated
+    2026-05-17 in favor of reporting-pipeline.yaml's send_brief_email.py.
+  - The 1,945 forged tools across 9 versions on M3 disk are the historical
+    substrate deposit; their kill ledger (4,905+ entries) is the
+    co-deposited negative-space signal.

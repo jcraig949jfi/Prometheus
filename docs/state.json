@@ -1,6 +1,6 @@
 {
-  "schema_version": 1,
-  "generated_at": "2026-05-17T07:56:34.115538+00:00",
+  "schema_version": 2,
+  "generated_at": "2026-05-17T10:36:06.259365+00:00",
   "redis_host": "192.168.1.176:6379",
   "heartbeat_timeout_sec": 300,
   "infra_status": {
@@ -8,7 +8,7 @@
     "redis_error": "Timeout connecting to server",
     "postgres": "up",
     "postgres_error": null,
-    "postgres_agent_count": 0,
+    "postgres_agent_count": 1,
     "fallback_mode": "postgres_dual_write",
     "note": "Redis is unreachable; agent data sourced from Postgres dual-write mirror (agora.agent_heartbeats). Streams (discoveries, main, challenges) are Redis-only and currently empty. Check docs/manual_status.json for out-of-band context."
   },
@@ -30,12 +30,20 @@
       "expected": true,
       "machine": "M3",
       "kind": "forge",
-      "status": "UNKNOWN",
-      "heartbeat_age_sec": null,
-      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
-      "last_status_update": null,
-      "key_metrics": null,
-      "data_source": "no_data"
+      "status": "ALIVE",
+      "heartbeat_age_sec": 54,
+      "current_op": "forging Topology + Wavelet Transforms + Sensitivity Analysis",
+      "last_status_update": "2026-05-17T06:31:45.218334-04:00",
+      "key_metrics": {
+        "ledger_size": 5324,
+        "forge_rate_pct": 0.0,
+        "session_forges": 0,
+        "session_scraps": 15,
+        "nous_queue_depth": 1327,
+        "current_forge_version": "forge",
+        "api_timeouts_last_hour": 0
+      },
+      "data_source": "postgres_fallback"
     },
     {
       "name": "Nemesis",
@@ -126,5 +134,84 @@
   "main_events": [],
   "challenges": [],
   "work_queue": {},
-  "anomalies": []
+  "anomalies": [],
+  "intelligence_outputs": [
+    {
+      "cycle_id": "c5a3539b-885c-4ab1-ac15-fac76b14b28e",
+      "stage": "audit",
+      "success": true,
+      "output_path": null,
+      "output_summary": "HEALTHY",
+      "error": null,
+      "started_at": "2026-05-17T03:54:46.112065-04:00",
+      "finished_at": "2026-05-17T03:54:46.759248-04:00",
+      "duration_sec": 0.647183
+    },
+    {
+      "cycle_id": "c5a3539b-885c-4ab1-ac15-fac76b14b28e",
+      "stage": "hermes",
+      "success": true,
+      "output_path": null,
+      "output_summary": "email sent",
+      "error": null,
+      "started_at": "2026-05-17T03:54:45.384669-04:00",
+      "finished_at": "2026-05-17T03:54:46.074318-04:00",
+      "duration_sec": 0.689649
+    },
+    {
+      "cycle_id": "c5a3539b-885c-4ab1-ac15-fac76b14b28e",
+      "stage": "clymene",
+      "success": false,
+      "output_path": null,
+      "output_summary": "skipped or no hoard",
+      "error": null,
+      "started_at": "2026-05-17T03:54:45.230157-04:00",
+      "finished_at": "2026-05-17T03:54:45.337242-04:00",
+      "duration_sec": 0.107085
+    },
+    {
+      "cycle_id": "c5a3539b-885c-4ab1-ac15-fac76b14b28e",
+      "stage": "metis",
+      "success": true,
+      "output_path": "C:\\Prometheus\\agents\\metis\\briefs\\2026-05-17_brief.md",
+      "output_summary": "brief 2026-05-17_brief.md",
+      "error": null,
+      "started_at": "2026-05-17T03:54:44.707617-04:00",
+      "finished_at": "2026-05-17T03:54:45.181058-04:00",
+      "duration_sec": 0.473441
+    },
+    {
+      "cycle_id": "c5a3539b-885c-4ab1-ac15-fac76b14b28e",
+      "stage": "skopos",
+      "success": true,
+      "output_path": "C:\\Prometheus\\agents\\skopos\\reports\\2026-05-17_alignment.md",
+      "output_summary": "alignment report 2026-05-17_alignment.md",
+      "error": null,
+      "started_at": "2026-05-17T03:54:44.494899-04:00",
+      "finished_at": "2026-05-17T03:54:44.645894-04:00",
+      "duration_sec": 0.150995
+    },
+    {
+      "cycle_id": "c5a3539b-885c-4ab1-ac15-fac76b14b28e",
+      "stage": "aletheia",
+      "success": true,
+      "output_path": "C:\\Prometheus\\agents\\aletheia\\data\\knowledge_graph.db",
+      "output_summary": "knowledge_graph.db = 424 KB",
+      "error": null,
+      "started_at": "2026-05-17T03:54:44.283631-04:00",
+      "finished_at": "2026-05-17T03:54:44.452131-04:00",
+      "duration_sec": 0.1685
+    },
+    {
+      "cycle_id": "c5a3539b-885c-4ab1-ac15-fac76b14b28e",
+      "stage": "eos",
+      "success": true,
+      "output_path": "C:\\Prometheus\\agents\\eos\\reports\\2026-05-17.md",
+      "output_summary": "digest 2026-05-17.md",
+      "error": null,
+      "started_at": "2026-05-17T03:54:43.438556-04:00",
+      "finished_at": "2026-05-17T03:54:44.237294-04:00",
+      "duration_sec": 0.798738
+    }
+  ]
 }
