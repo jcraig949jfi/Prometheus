@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "generated_at": "2026-05-17T18:55:08.863511+00:00",
+  "generated_at": "2026-05-17T19:38:41.010420+00:00",
   "redis_host": "192.168.1.176:6379",
   "heartbeat_timeout_sec": 300,
   "ideas_in_flight": [
@@ -21,25 +21,25 @@
       "machine": "M2",
       "kind": "evolutionary",
       "status": "ALIVE",
-      "heartbeat_age_sec": 51,
+      "heartbeat_age_sec": 21,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-17T14:54:17.711810-04:00",
+      "last_status_update": "2026-05-17T15:38:19.326371-04:00",
       "key_metrics": {
         "phase": "graduated",
-        "elapsed_h": 0.27,
-        "gen_time_s": 131.04,
-        "generation": 55,
+        "elapsed_h": 0.98,
+        "gen_time_s": 92.75,
+        "generation": 76,
         "ncd_weight": 1.0,
         "config_path": "configs\\config_v2d2b.yaml",
         "vram_used_mb": null,
-        "median_fitness": -0.18,
+        "median_fitness": -0.17,
         "llm_alive_count": null,
-        "map_elites_size": 13,
+        "map_elites_size": 14,
         "ablation_delta_min": 0.0,
         "last_checkpoint_at": null,
         "best_fitness_vector": [
-          -0.1,
-          -0.18,
+          -0.07,
+          -0.17,
           0.0,
           0.0,
           1.0,
@@ -56,7 +56,7 @@
       "machine": "M3",
       "kind": "forge",
       "status": "ALIVE",
-      "heartbeat_age_sec": 19,
+      "heartbeat_age_sec": 45,
       "current_op": "forging Hebbian Learning + Free Energy Principle + Normalized Compression Distance",
       "last_status_update": "2026-05-17T12:41:36.148441-04:00",
       "key_metrics": {
@@ -145,14 +145,14 @@
     {
       "name": "Pronoia",
       "expected": true,
-      "machine": "?",
+      "machine": "M4",
       "kind": "scanner",
-      "status": "MISSING",
-      "heartbeat_age_sec": null,
+      "status": "ALIVE",
+      "heartbeat_age_sec": 44,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
-      "data_source": "no_data"
+      "data_source": "redis"
     },
     {
       "name": "Agora",
@@ -160,7 +160,7 @@
       "machine": "M1",
       "kind": "unknown",
       "status": "DEAD",
-      "heartbeat_age_sec": 2173363,
+      "heartbeat_age_sec": 2175975,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null
@@ -182,7 +182,7 @@
       "machine": "M1",
       "kind": "unknown",
       "status": "DEAD",
-      "heartbeat_age_sec": 2118202,
+      "heartbeat_age_sec": 2120814,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null
@@ -193,7 +193,7 @@
       "machine": "M1",
       "kind": "unknown",
       "status": "DEAD",
-      "heartbeat_age_sec": 1548822,
+      "heartbeat_age_sec": 1551435,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null
@@ -237,7 +237,7 @@
       "machine": "M2",
       "kind": "unknown",
       "status": "DEAD",
-      "heartbeat_age_sec": 2625019,
+      "heartbeat_age_sec": 2627631,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null
@@ -281,7 +281,7 @@
       "machine": "M2",
       "kind": "unknown",
       "status": "DEAD",
-      "heartbeat_age_sec": 2173288,
+      "heartbeat_age_sec": 2175900,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null
@@ -292,7 +292,7 @@
       "machine": "M1",
       "kind": "unknown",
       "status": "DEAD",
-      "heartbeat_age_sec": 2173327,
+      "heartbeat_age_sec": 2175939,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null
@@ -314,7 +314,7 @@
       "machine": "M1-Skullport",
       "kind": "unknown",
       "status": "DEAD",
-      "heartbeat_age_sec": 1965935,
+      "heartbeat_age_sec": 1968547,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null
@@ -423,6 +423,16 @@
     }
   ],
   "main_events": [
+    {
+      "msg_id": "1779046676594-0",
+      "timestamp": "2026-05-17T19:37:56.497907+00:00",
+      "sender": "Pronoia",
+      "machine": "M4",
+      "type": "announce",
+      "subject": "Pronoia online (intelligence loop)",
+      "body": "Hourly synthesis + daily digest on M4. PID 15748.",
+      "confidence": "1.0"
+    },
     {
       "msg_id": "1776987620739-0",
       "timestamp": "2026-04-24T00:00:00+00:00",
@@ -562,16 +572,6 @@
       "subject": "Maass GL3 gradient-inversion! Batch 5 research launched: 3/20 reports saved, 3 more agents in flight",
       "body": "Ergon Maass GL3 MIXED RESULT + Batch 5 research launched.\n\nERGON MAASS GL3 (edge +0.8, bulk -0.8, n=1546):\n  This is MORE INTERESTING than any pre-reg hypothesis predicted. Dimension-driven (a) predicted uniform +0.5; we observe EDGE-POSITIVE / BULK-NEGATIVE \u2014 a within-family GRADIENT INVERSION.\n  Small n (4 quartile bins) gives p=0.2 \u2014 not statistically decisive but directionally striking.\n  \n  INTERPRETATION: Maass GL3 is on a DIFFERENT CURVE than the other families. Not purely dim(a), not bil",
       "confidence": "0.9"
-    },
-    {
-      "msg_id": "1776924765417-0",
-      "timestamp": "2026-04-23T02:40:00+00:00",
-      "sender": "Techne",
-      "machine": "M1",
-      "type": "heartbeat",
-      "subject": "Techne alive \u2014 standby",
-      "body": "Idle.",
-      "confidence": "1.0"
     }
   ],
   "challenges": [
