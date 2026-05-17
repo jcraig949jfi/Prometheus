@@ -31,6 +31,131 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_BRIEF = REPO_ROOT / "docs" / "portfolio_brief.md"  # GitHub Pages serves from main/docs
 
+# --- GitHub link catalog -----------------------------------------------------
+# Email is meant to be a router into the repo, not a self-contained report.
+# Edit this registry as new agents / docs / pivot artifacts land.
+GITHUB_REPO = "https://github.com/jcraig949jfi/Prometheus"
+GITHUB_BLOB = f"{GITHUB_REPO}/blob/main"
+GITHUB_TREE = f"{GITHUB_REPO}/tree/main"
+GITHUB_COMMITS = f"{GITHUB_REPO}/commits/main"
+PAGES_URL = "https://jcraig949jfi.github.io/Prometheus/"
+
+# Per-agent reference docs. When the brief mentions an agent, these get
+# surfaced in a "Mentioned in this brief" section above the static catalog.
+AGENT_REFS = {
+    "Hephaestus": [
+        ("Hephaestus autopsy",        f"{GITHUB_BLOB}/pivot/autopsy_hephaestus_2026-05-13.md"),
+        ("Hephaestus RESUME",         f"{GITHUB_BLOB}/pivot/agents_hephaestus_resume_2026-05-12.md"),
+    ],
+    "Apollo": [
+        ("Apollo autopsy",            f"{GITHUB_BLOB}/pivot/autopsy_apollo_2026-05-13.md"),
+        ("Apollo RESUME",             f"{GITHUB_BLOB}/apollo/RESUME.md"),
+        ("Apollo v2.1 roadmap",       f"{GITHUB_BLOB}/apollo/ROADMAP.md"),
+    ],
+    "Nous": [
+        ("Nous RESUME",               f"{GITHUB_BLOB}/pivot/agents_nous_resume_2026-05-13.md"),
+    ],
+    "Ergon": [
+        ("Forge autopsies (consolidated, covers Learner context)",
+                                       f"{GITHUB_BLOB}/pivot/autopsy_forges_consolidated_2026-05-13.md"),
+    ],
+    "Agora": [
+        ("Agora architecture (in repo)", f"{GITHUB_TREE}/roles/Agora"),
+    ],
+}
+
+# Always-on references. Top of the catalog is "Current cycle" — what this
+# email's data came from. Then project-level frame docs and activity links.
+STATIC_REFS = [
+    ("Current cycle", [
+        ("Live dashboard (GitHub Pages)",   PAGES_URL),
+        ("Latest brief",                    f"{GITHUB_BLOB}/docs/portfolio_brief.md"),
+        ("Dashboard state.json",            f"{GITHUB_BLOB}/docs/state.json"),
+        ("Manual out-of-band status",       f"{GITHUB_BLOB}/docs/manual_status.json"),
+    ]),
+    ("Project frame", [
+        ("Prometheus synthesis (thesis-level)",
+                                            f"{GITHUB_BLOB}/pivot/prometheus_synthesis_2026-05-14.md"),
+        ("Forge autopsies — consolidated",  f"{GITHUB_BLOB}/pivot/autopsy_forges_consolidated_2026-05-13.md"),
+        ("Agent portfolio + monitoring design",
+                                            f"{GITHUB_BLOB}/pivot/agent_portfolio_and_monitoring_2026-05-12.md"),
+        ("Dashboard deployment plan",       f"{GITHUB_BLOB}/pivot/dashboard_deployment_plan_2026-05-15.md"),
+    ]),
+    ("Activity", [
+        ("Recent commits on main",          GITHUB_COMMITS),
+        ("All pivot docs",                  f"{GITHUB_TREE}/pivot"),
+        ("All scripts",                     f"{GITHUB_TREE}/scripts"),
+    ]),
+]
+
+
+def find_brief_mentions(brief_md: str) -> dict:
+    """Return AGENT_REFS entries whose agent name appears in the brief text.
+    Lets the email surface relevant docs first."""
+    mentions = {}
+    for agent, refs in AGENT_REFS.items():
+        if agent in brief_md:
+            mentions[agent] = refs
+    return mentions
+
+
+def build_references_md(brief_md: str) -> str:
+    """Return a markdown block of follow-up links to append below the brief."""
+    lines = ["", "---", "", "## References & follow-up", ""]
+    mentions = find_brief_mentions(brief_md)
+    if mentions:
+        lines.append("### Mentioned in this brief")
+        for agent, refs in mentions.items():
+            lines.append(f"")
+            lines.append(f"**{agent}**")
+            for label, url in refs:
+                lines.append(f"- [{label}]({url})")
+        lines.append("")
+    for section_title, refs in STATIC_REFS:
+        lines.append(f"### {section_title}")
+        for label, url in refs:
+            lines.append(f"- [{label}]({url})")
+        lines.append("")
+    lines.append("---")
+    lines.append("*Edit `scripts/send_brief_email.py` to add/remove links from this catalog.*")
+    return "\n".join(lines)
+
+
+def build_references_html(brief_md: str) -> str:
+    """Return an HTML block of follow-up links, styled for email clients."""
+    parts = []
+    parts.append('<hr style="border:none;border-top:1px solid #ccc;margin:24px 0">')
+    parts.append('<h2 style="color:#222;margin-top:24px;border-bottom:1px solid #eee;padding-bottom:4px">References &amp; follow-up</h2>')
+
+    mentions = find_brief_mentions(brief_md)
+    if mentions:
+        parts.append('<h3 style="color:#444;margin-top:16px">Mentioned in this brief</h3>')
+        for agent, refs in mentions.items():
+            parts.append(f'<p style="margin:6px 0 0 0"><strong>{agent}</strong></p>')
+            parts.append('<ul style="margin:4px 0 8px 0;padding-left:20px">')
+            for label, url in refs:
+                parts.append(
+                    f'<li><a href="{url}" style="color:#0366d6;text-decoration:none">{label}</a></li>'
+                )
+            parts.append('</ul>')
+
+    for section_title, refs in STATIC_REFS:
+        parts.append(f'<h3 style="color:#444;margin-top:16px">{section_title}</h3>')
+        parts.append('<ul style="margin:4px 0 8px 0;padding-left:20px">')
+        for label, url in refs:
+            parts.append(
+                f'<li><a href="{url}" style="color:#0366d6;text-decoration:none">{label}</a></li>'
+            )
+        parts.append('</ul>')
+
+    parts.append('<hr style="border:none;border-top:1px solid #eee;margin:16px 0">')
+    parts.append(
+        '<p style="color:#888;font-size:11px;font-style:italic">'
+        'Edit <code>scripts/send_brief_email.py</code> to add or remove links from this catalog.'
+        '</p>'
+    )
+    return "\n".join(parts)
+
 
 def load_env():
     """Load agents/eos/.env into os.environ if present."""
@@ -133,8 +258,11 @@ def main():
               f"Run `python scripts/metis_portfolio.py` first.", file=sys.stderr)
         sys.exit(1)
 
-    body_md = args.brief.read_text(encoding="utf-8")
-    body_html = render_html(body_md)
+    brief_md = args.brief.read_text(encoding="utf-8")
+    refs_md = build_references_md(brief_md)
+    refs_html = build_references_html(brief_md)
+    body_md = brief_md + "\n" + refs_md
+    body_html = render_html(brief_md) + refs_html
 
     now = datetime.now(timezone.utc)
     subject = args.subject or f"Prometheus Portfolio — {now.strftime('%Y-%m-%d %H:%M UTC')}"
