@@ -46,6 +46,14 @@ except ImportError as e:
     HAS_POSTGRES_FALLBACK = False
     agora_persist = None
 
+# Idea capture v0: surface pivot/idea_*.md files with their status in state.json
+try:
+    import list_ideas as _list_ideas
+    HAS_IDEAS_SCANNER = True
+except ImportError:
+    HAS_IDEAS_SCANNER = False
+    _list_ideas = None
+
 OUTPUT_PATH = REPO_ROOT / "pivot" / "portfolio_STATUS.md"
 JSON_OUTPUT_PATH = REPO_ROOT / "docs" / "state.json"  # GitHub Pages serves from main/docs
 
@@ -354,11 +362,19 @@ def build_dashboard_state(r: redis.Redis) -> dict:
         except Exception as e:
             print(f"[{now.isoformat()}] intel fetch failed: {e}", file=sys.stderr)
 
+    ideas = []
+    if HAS_IDEAS_SCANNER:
+        try:
+            ideas = _list_ideas.list_ideas()
+        except Exception as e:
+            print(f"[{now.isoformat()}] ideas scan failed: {e}", file=sys.stderr)
+
     return {
-        "schema_version": 2,
+        "schema_version": 3,
         "generated_at": now.isoformat(),
         "redis_host": f"{REDIS_HOST}:{REDIS_PORT}",
         "heartbeat_timeout_sec": HEARTBEAT_TIMEOUT_SEC,
+        "ideas_in_flight": ideas,
         "agents": agents,
         "discoveries": stream_entries(STREAM_DISCOVERIES, count=10),
         "main_events": stream_entries(STREAM_MAIN, count=15),
@@ -496,11 +512,19 @@ def build_degraded_state_from_postgres(now: datetime, redis_error: str) -> dict:
         except Exception as e:
             print(f"[{now.isoformat()}] intel fetch failed: {e}", file=sys.stderr)
 
+    ideas = []
+    if HAS_IDEAS_SCANNER:
+        try:
+            ideas = _list_ideas.list_ideas()
+        except Exception as e:
+            print(f"[{now.isoformat()}] ideas scan failed: {e}", file=sys.stderr)
+
     return {
-        "schema_version": 2,
+        "schema_version": 3,
         "generated_at": now.isoformat(),
         "redis_host": f"{REDIS_HOST}:{REDIS_PORT}",
         "heartbeat_timeout_sec": HEARTBEAT_TIMEOUT_SEC,
+        "ideas_in_flight": ideas,
         "infra_status": {
             "redis": "unreachable",
             "redis_error": redis_error,

@@ -30,14 +30,17 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
-sys.path.insert(0, str(REPO_ROOT / "agents" / "metis" / "src"))
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
 try:
-    from metis import call_llm
-except ImportError as e:
-    print(f"FATAL: cannot import metis.call_llm: {e}", file=sys.stderr)
-    sys.exit(1)
+    from llm_cascade import call_llm
+except ImportError:
+    sys.path.insert(0, str(REPO_ROOT / "agents" / "metis" / "src"))
+    try:
+        from metis import call_llm
+    except ImportError as e:
+        print(f"FATAL: cannot import call_llm: {e}", file=sys.stderr)
+        sys.exit(1)
 
 try:
     from metis_portfolio import human_time

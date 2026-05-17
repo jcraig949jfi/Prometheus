@@ -165,6 +165,10 @@ def main():
                         help="Skip auto-commit + push of dashboard data to main (useful for testing)")
     parser.add_argument("--immediate", action="store_true",
                         help="Run the hourly cycle once on startup before settling into cadence")
+    parser.add_argument("--weekly-recap-hour", type=int, default=22,
+                        help="Hour (0-23) LOCAL TIME on Friday to fire weekly_recap.py (default 22, i.e. 10pm)")
+    parser.add_argument("--no-weekly-recap", action="store_true",
+                        help="Skip the Friday weekly recap")
     args = parser.parse_args()
 
     log.info("=" * 60)
@@ -198,6 +202,7 @@ def main():
     if not args.immediate:
         next_hourly += timedelta(minutes=args.hourly_min)
     last_daily_date = None  # set after first daily send
+    last_weekly_recap_date = None  # set after first weekly recap fire
 
     # ── Main tick loop ─────────────────────────────────────────────
     try:
@@ -248,6 +253,29 @@ def main():
                             stream="main",
                             subject=f"Daily digest sent (ok={ok_email})",
                             body=f"daily email at {now.isoformat()}",
+                            confidence=1.0,
+                            msg_type=MessageType.ANNOUNCE,
+                        )
+                    except Exception:
+                        pass
+
+            # Weekly: fire weekly_recap.py every Friday at args.weekly_recap_hour LOCAL TIME.
+            # weekday() returns 0=Monday ... 4=Friday ... 6=Sunday in local time.
+            local_now = datetime.now()
+            if (not args.no_weekly_recap
+                    and local_now.weekday() == 4  # Friday
+                    and local_now.hour >= args.weekly_recap_hour
+                    and last_weekly_recap_date != local_now.date()):
+                log.info("[weekly] firing weekly recap (Friday %02d:%02d local)",
+                         local_now.hour, local_now.minute)
+                ok_recap = run_script("weekly_recap.py", [], timeout=300)
+                last_weekly_recap_date = local_now.date()
+                if agora_client:
+                    try:
+                        agora_client.send(
+                            stream="main",
+                            subject=f"Weekly recap fired (ok={ok_recap})",
+                            body=f"weekly recap at {now.isoformat()}",
                             confidence=1.0,
                             msg_type=MessageType.ANNOUNCE,
                         )

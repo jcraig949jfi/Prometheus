@@ -65,6 +65,68 @@ from health import compute_health_report
 PROJECT_ROOT = Path(__file__).parent.parent.parent.resolve()
 APOLLO_DIR = Path(__file__).parent.parent.resolve()
 
+# ── Agora telemetry (Postgres dual-write) — optional, fail-soft ─────
+# Apollo writes its heartbeat to agora.agent_heartbeats so the M4 reporting
+# pipeline picks it up regardless of Redis state. Runs in a background thread
+# that reads a shared status_dict updated from the main loop.
+import threading
+
+_AGORA_SCRIPTS = str(PROJECT_ROOT / "scripts")
+if _AGORA_SCRIPTS not in sys.path:
+    sys.path.insert(0, _AGORA_SCRIPTS)
+try:
+    import agora_persist as _agora_persist
+    HAS_AGORA_PERSIST = True
+except Exception as _e:
+    print(f"[apollo] agora_persist unavailable ({_e}); running without Postgres heartbeat",
+          file=sys.stderr)
+    HAS_AGORA_PERSIST = False
+    _agora_persist = None
+
+# Shared status dict the heartbeat thread reads; main loop updates it each gen.
+APOLLO_STATUS = {
+    "generation": 0,
+    "best_fitness_vector": None,
+    "median_fitness": None,
+    "ablation_delta_min": None,
+    "population_diversity": None,
+    "vram_used_mb": None,
+    "last_checkpoint_at": None,
+    "llm_alive_count": None,
+    "compilation_success_rate": None,
+    "ncd_weight": None,
+}
+
+
+def _pg_heartbeat_loop(interval_sec: int = 60):
+    """Background thread emitting Apollo heartbeats to Postgres every N seconds.
+    Reads APOLLO_STATUS module-global; survives Postgres outages with logged warnings."""
+    if not HAS_AGORA_PERSIST:
+        return
+    machine = os.environ.get("PROMETHEUS_MACHINE", "M2")
+    pid = os.getpid()
+    while True:
+        try:
+            _agora_persist.write_heartbeat(
+                agent_name="Apollo",
+                machine=machine,
+                status="online",
+                status_json=dict(APOLLO_STATUS),
+                pid=pid,
+            )
+        except Exception as e:
+            print(f"[apollo] postgres heartbeat failed: {e}", file=sys.stderr)
+        time.sleep(interval_sec)
+
+
+def _start_pg_heartbeat():
+    """Fire-and-forget: spawn the heartbeat thread once at bootstrap."""
+    if not HAS_AGORA_PERSIST:
+        return
+    t = threading.Thread(target=_pg_heartbeat_loop, daemon=True, name="apollo-pg-heartbeat")
+    t.start()
+    print("[apollo] Postgres heartbeat thread started (60s cadence)", file=sys.stderr)
+
 
 def _resolve_path(rel_path: str, base: Path = PROJECT_ROOT) -> str:
     return str((base / rel_path).resolve())
@@ -338,6 +400,14 @@ def run_apollo(smoke_test: bool = False, config_path: str = None,
     log_info(f"Racing: {not no_racing}", stage="bootstrap")
     log_info(f"AOS: {not no_aos}", stage="bootstrap")
     log_info(f"Project root: {PROJECT_ROOT}", stage="bootstrap")
+
+    # ── Agora telemetry: start Postgres heartbeat thread ──────────────
+    # Writes agent:Apollo row to agora.agent_heartbeats every 60s so M4's
+    # reporting pipeline sees Apollo as ALIVE during evolution. Updates from
+    # the main loop go via the module-global APOLLO_STATUS dict.
+    APOLLO_STATUS["generation"] = 0
+    APOLLO_STATUS["config_path"] = config_path or "(default)"
+    _start_pg_heartbeat()
 
     # ── Task Manager ────────────────────────────────────────────────
     log_info("Initializing task manager...", stage="bootstrap")
@@ -827,6 +897,32 @@ def run_apollo(smoke_test: bool = False, config_path: str = None,
 
         gen_time = time.time() - gen_start
         elapsed_h = (time.time() - start_time) / 3600
+
+        # ── Agora telemetry: update shared status dict every generation ──
+        # The Postgres heartbeat thread reads this dict every 60s.
+        try:
+            _accs = [fv.accuracy_margin for fv in selected_fitness]
+            _abls = [fv.ablation_delta for fv in selected_fitness]
+            APOLLO_STATUS["generation"] = generation
+            APOLLO_STATUS["phase"] = phase
+            APOLLO_STATUS["best_fitness_vector"] = [
+                round(max(_accs), 4) if _accs else 0.0,
+                round(float(np.median(_accs)), 4) if _accs else 0.0,
+                round(max(_abls), 4) if _abls else 0.0,
+                round(sum(1 for a in _abls if a >= 0.20) / max(len(_abls), 1), 4),
+                round(comp_rate, 4),
+                round(archive.size, 4),
+            ]
+            APOLLO_STATUS["median_fitness"] = round(float(np.median(_accs)), 4) if _accs else 0.0
+            APOLLO_STATUS["ablation_delta_min"] = round(min(_abls), 4) if _abls else 0.0
+            APOLLO_STATUS["population_diversity"] = archive.size
+            APOLLO_STATUS["ncd_weight"] = round(ncd_w, 3)
+            APOLLO_STATUS["compilation_success_rate"] = round(comp_rate, 4)
+            APOLLO_STATUS["gen_time_s"] = round(gen_time, 2)
+            APOLLO_STATUS["elapsed_h"] = round(elapsed_h, 2)
+            APOLLO_STATUS["map_elites_size"] = me_archive.size
+        except Exception as _e:
+            pass  # never let telemetry break evolution
 
         # Console output
         if generation % 5 == 0 or generation <= 5:

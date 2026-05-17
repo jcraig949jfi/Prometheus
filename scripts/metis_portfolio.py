@@ -41,16 +41,21 @@ def human_time(dt: datetime = None) -> str:
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
-sys.path.insert(0, str(REPO_ROOT / "agents" / "metis" / "src"))
+sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
-# Importing metis triggers its .env autoload from agents/eos/.env.
-# That brings NVIDIA_API_KEY, CEREBRAS_API_KEY, GROQ_API_KEY into os.environ.
+# llm_cascade.py is the tracked extraction of Metis's LLM cascade.
+# Importing it also auto-loads agents/eos/.env (cross-pipeline shared keys).
+# Falls back to agents/metis/src/metis.py if llm_cascade is missing
+# (older deployments — the fallback can be removed in a future cleanup).
 try:
-    from metis import call_llm
-except ImportError as e:
-    print(f"FATAL: cannot import metis.call_llm: {e}", file=sys.stderr)
-    print("Check that agents/metis/src/metis.py exists and agents/eos/.env is populated.", file=sys.stderr)
-    sys.exit(1)
+    from llm_cascade import call_llm
+except ImportError:
+    sys.path.insert(0, str(REPO_ROOT / "agents" / "metis" / "src"))
+    try:
+        from metis import call_llm
+    except ImportError as e:
+        print(f"FATAL: cannot import call_llm from scripts/llm_cascade.py or agents/metis: {e}", file=sys.stderr)
+        sys.exit(1)
 
 DASHBOARD_DIR = REPO_ROOT / "docs"  # GitHub Pages serves from main/docs
 STATE_PATH = DASHBOARD_DIR / "state.json"
