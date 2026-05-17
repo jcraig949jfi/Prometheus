@@ -1,16 +1,28 @@
-# When Machines Fake Thinking: Detecting Decorative Mechanisms in LLM-Generated Reasoning Code
+# Correct for the Wrong Reason: Mechanism Knockout for LLM-Generated Reasoning Code
 
-**A case study from Project Prometheus**
+**A Hephaestus case study on decorative mechanisms in Project Prometheus**
 
 **Filed:** 2026-05-17
 **Authors:** James Craig, M3 Agent (Hephaestus operator)
-**Status:** Internal white paper for external discussion
+**Status:** White paper for external discussion
 
 ---
 
+## Thesis
+
+> Scores measure what a system achieves; ablation measures why.
+
 ## Abstract
 
-We present a case study from an automated code-generation pipeline (Hephaestus) that produces Python reasoning tools by prompting a large language model with cross-domain concept combinations. One generated tool — combining Quantum Mechanics, Neural Plasticity, and Model Checking — appeared to demonstrate R6-level theory-of-mind reasoning (50% accuracy on belief attribution, presupposition detection, and knowledge asymmetry probes). A mechanism-knockout ablation revealed that virtually all of this performance (48/50%) comes from simple regex keyword matching, not from the tool's novel computational mechanisms (Hebbian plasticity inside BFS state-space exploration). The architecturally interesting components contribute only ~2 percentage points to the theory-of-mind score, while genuinely contributing to R3-level abstraction tasks (67% accuracy). We describe the detection methodology, discuss implications for automated program synthesis, and argue that mechanism-knockout ablation should be standard practice before attributing capability claims to generated code.
+We present a case study from an automated code-generation pipeline (Hephaestus) that produces Python reasoning tools by prompting a large language model with cross-domain concept combinations. One generated tool — combining Quantum Mechanics, Neural Plasticity, and Model Checking — appeared to show an above-baseline theory-of-mind signal (50% accuracy vs 45% NCD baseline on 42 belief attribution, presupposition, and knowledge asymmetry probes). Mechanism-knockout ablation revealed a richer and more instructive picture than simple "fake vs real":
+
+- **R6 (theory of mind): decorative.** The novel Hebbian/BFS mechanism contributes +2pp (21/42 vs 20/42). Nearly all R6 performance comes from regex keyword matching on known cognitive-bias patterns.
+- **R3 (abstraction): genuine.** The mechanism contributes +28pp (24/36 vs 14/36). Hebbian constraint learning drives real performance gains on pattern recognition tasks.
+- **R5 (causal reasoning): genuine.** The mechanism contributes +31pp (8/16 vs 3/16). State-space exploration aids counterfactual reasoning.
+- **R2 (multi-step deduction): harmful.** The mechanism degrades performance by -22pp (9/40 vs 18/40). BFS state exploration actively interferes with chain tracking.
+- **R4 (search/planning): decorative.** Despite implementing BFS — a search algorithm — the mechanism contributes 0pp to search probes (5/28 vs 5/28).
+
+The tool was not a failure; the initial attribution was the failure. The forge generated a mixed organism. The battery measured aggregate behavior. Knockout discovered which organ was actually doing the work. We describe the detection methodology, survey the frontier model landscape (RLHF exacerbates this problem; CoT is demonstrably unfaithful; scale does not fix it), and argue that mechanism-knockout ablation should be standard practice before attributing capability claims to generated code.
 
 ---
 
@@ -125,58 +137,115 @@ We built a **stripped-down control tool** containing only the regex/keyword-matc
 
 No BFS. No Hebbian learning. No adjacency matrices. No state-space exploration. No "quantum-inspired" scoring. Just regex patterns and keyword heuristics — approximately 40 lines of code.
 
-### 3.3 Results
+### 3.3 Results: Full Per-Tier Mechanism Delta
 
-| Tool | R6 Accuracy | Mechanism |
-|------|-------------|-----------|
-| Full EPMC (BFS + Hebbian + meta_confidence) | **50%** (21/42) | All components active |
-| Stripped regex-only control | **48%** (20/42) | Keyword matching only |
-| **Delta** | **+2pp** | — |
+We ran both tools against all 186 probes, broken down by reasoning ladder tier:
 
-The novel mechanisms (Hebbian plasticity, BFS, "quantum" scoring) contribute approximately **2 percentage points** to R6 theory-of-mind performance. The overwhelming majority of the capability comes from regex pattern matching on known cognitive-bias keywords.
+| Tier | Full EPMC | Stripped Control | Delta | n | Interpretation |
+|------|-----------|------------------|-------|---|----------------|
+| R1 (rule execution) | 54% (13/24) | 33% (8/24) | **+21pp** | 24 | Mechanism helps |
+| R2 (multi-step deduction) | 22% (9/40) | 45% (18/40) | **-22pp** | 40 | **Mechanism HARMS** |
+| R3 (abstraction) | 67% (24/36) | 39% (14/36) | **+28pp** | 36 | **Mechanism genuinely helps** |
+| R4 (search/planning) | 18% (5/28) | 18% (5/28) | **0pp** | 28 | Decorative |
+| R5 (causal reasoning) | 50% (8/16) | 19% (3/16) | **+31pp** | 16 | **Mechanism genuinely helps** |
+| R6 (theory of mind) | 50% (21/42) | 48% (20/42) | **+2pp** | 42 | Decorative |
 
-### 3.4 Control: Where DO the novel mechanisms contribute?
+Wilson 95% confidence intervals at these sample sizes: ±10-15pp per tier. The R3 (+28pp) and R5 (+31pp) deltas exceed this margin. The R6 (+2pp) delta does not. The R2 (-22pp) degradation also exceeds the margin — the mechanism is actively harmful for chain tracking.
 
-| Tier | Full EPMC | Stripped Control | Delta |
-|------|-----------|------------------|-------|
-| R3 (abstraction) | **67%** | ~30-35% (estimated) | **+30pp+** |
-| R6 (theory of mind) | 50% | 48% | +2pp |
+### 3.4 Five Findings, Not One
 
-The Hebbian/BFS machinery genuinely contributes to R3 performance (abstraction and pattern recognition) but is decorative for R6 theory-of-mind. The cross-domain concept combination (Neural Plasticity → adaptive weights) actually works for constraint learning but doesn't help with modeling others' beliefs.
+This is a richer result than "the mechanism is fake." The mechanism is a mixed bag:
+
+**1. R6 is decorative.** The Hebbian/BFS mechanism contributes +2pp to theory-of-mind probes. The LLM embedded its training-data knowledge of presupposition traps and false-belief tasks as regex patterns. The novel architecture is not responsible.
+
+**2. R3 is genuine.** +28pp (24/36 vs 14/36) on abstraction probes. Hebbian weight updates during evaluation genuinely improve pattern recognition — the "Neural Plasticity" concept combination contributed real computational value.
+
+**3. R5 is genuine.** +31pp (8/16 vs 3/16) on causal/counterfactual probes. State-space exploration with plastic constraints aids reasoning about interventions. Note: n=16 is small; this finding needs replication with a larger R5 probe set.
+
+**4. R4 is decorative despite implementing BFS.** The tool uses breadth-first search over a state graph — an R4 mechanism — yet contributes 0pp to R4 search/planning probes (5/28 vs 5/28). The BFS explores constraint-satisfaction states but does not actually help solve constraint-satisfaction problems. The mechanism is doing something (it contributes to R3 and R5), but not what its name and structure suggest.
+
+**5. R2 is actively harmed.** -22pp (9/40 vs 18/40) on multi-step deduction. The BFS state exploration interferes with simple chain tracking. The stripped control's basic token-overlap heuristic is better at following implication chains than the full mechanism. Adding complexity made this specific capability worse.
+
+### 3.5 Mechanism Attribution Summary
+
+```
+EPMC Mechanism Attribution Card
+================================
+Concept triple: Quantum Mechanics x Neural Plasticity x Model Checking
+
+Allowed claims:
+  - EPMC contains a Hebbian/BFS mechanism that contributes +28pp to R3 abstraction
+  - EPMC contains a state-exploration mechanism that contributes +31pp to R5 causal
+    reasoning (n=16, needs replication)
+  - EPMC contains regex heuristics that solve familiar R6 ToM probes
+
+Forbidden claims:
+  - EPMC implements theory-of-mind reasoning via Hebbian plasticity
+  - EPMC's BFS mechanism contributes to search/planning capability
+  - EPMC's novel architecture is responsible for its R6 performance
+
+Caution:
+  - The mechanism actively degrades R2 multi-step deduction by -22pp
+  - Apollo should NOT compose this tool into deduction-heavy organisms
+```
 
 ---
 
-## 4. Analysis: Why This Happened
+## 4. Analysis: Why This Happened, and Why It's More Interesting Than "Fake"
 
-### 4.1 The LLM Encoded Known Patterns
+### 4.1 The LLM produced a mixed organism
 
-The generating LLM (qwen-397B) has encountered theory-of-mind tasks, presupposition traps, and cognitive biases extensively in its training data. When prompted with "Quantum Mechanics × Neural Plasticity × Model Checking" and asked to produce a reasoning tool, it generated:
+The generating LLM (qwen-397B) has encountered theory-of-mind tasks, presupposition traps, and cognitive biases extensively in its training data. When prompted with "Quantum Mechanics × Neural Plasticity × Model Checking" and asked to produce a reasoning tool, it generated two things simultaneously:
 
-1. **A novel computational architecture** (Hebbian plasticity + BFS) that genuinely implements the concept combination
-2. **AND** a set of regex patterns that detect known cognitive-bias categories from its training distribution
+1. **A novel computational architecture** (Hebbian plasticity + BFS) that genuinely implements the concept combination — and genuinely contributes to R3 abstraction (+28pp) and R5 causal reasoning (+31pp)
+2. **A set of regex patterns** that detect known cognitive-bias categories from its training distribution — and carry nearly all of the R6 theory-of-mind performance
 
-Both are present in the same tool. The first contributes to abstraction tasks. The second solves theory-of-mind probes via pattern matching that has nothing to do with the stated mechanism.
+Both are present in the same tool. They contribute to different tiers. Neither is "fake" — they are real code doing real work. The failure was in the *attribution*: assuming the impressive-looking mechanism was responsible for the impressive-looking score.
 
-### 4.2 The Decorative Mechanism Pattern
+### 4.2 The decorative mechanism pattern (refined)
 
-This is a specific failure mode we term **decorative mechanism**: architecturally sophisticated code that appears to implement a high-tier capability but whose actual performance on that tier comes from a simpler co-located heuristic.
+Our initial framing was "decorative mechanism = sophisticated code that doesn't contribute." The full ablation reveals a more nuanced pattern:
 
-The pattern:
-1. LLM generates code with both a **novel mechanism** (responds to the concept prompt) and **familiar heuristics** (responds to its training-data knowledge of what works)
-2. Validation gates pass — the code runs, produces outputs, beats baseline
-3. Tier profiling shows high scores on a capability tier
-4. But the high-tier score comes from the heuristic, not the mechanism
-5. The mechanism is genuinely novel but contributes to a *different* tier than it appears to claim
+**The mechanism-tier mismatch pattern:** A generated tool's novel mechanism contributes to *different* tiers than its aggregate score suggests.
 
-### 4.3 Why This Matters
+| What happened | What it looked like | What ablation revealed |
+|---|---|---|
+| BFS state exploration | R4 search capability | 0pp delta on R4 probes; contributes to R3/R5 instead |
+| Hebbian plasticity | R3+ adaptation | Genuinely R3 (+28pp) and R5 (+31pp) |
+| Regex presupposition detection | Part of the mechanism | Heuristic carrying R6 independently |
+| Overall 50% on R6 probes | "Theory of mind!" | 48% from regex, 2% from mechanism |
+| Overall 22% on R2 probes | "Weak at deduction" | Would be 45% WITHOUT the mechanism — it actively harms R2 |
 
-If we had not performed mechanism knockout, we would have claimed: "The forge produced a tool that combines Hebbian learning and model checking to achieve theory-of-mind reasoning." That claim would be false in the specific and true in the general — the tool *does* pass R6 probes, but not *because* of Hebbian learning.
+The full picture is not "fake mechanism" but **"mechanism doing unexpected things"**: genuinely helping on some tiers, decorative on others, and actively harmful on one.
 
-In the context of automated program synthesis and evolutionary composition systems, this has direct consequences:
+### 4.3 Why mechanisms harm some tiers
 
-- **Gene promotion decisions** must be based on mechanism-dependent performance, not raw score
-- **Compositional value** of a tool depends on what its mechanism actually contributes, not what the surrounding heuristics score
-- **Novelty claims** about generated code require causal evidence (ablation), not just correlational evidence (high scores)
+The -22pp R2 degradation deserves explanation. The BFS state-exploration mechanism processes candidate answers through a constraint graph with evolving weights. For abstraction tasks (R3), this helps — the tool discovers constraint structure in the prompt. For chain-tracking tasks (R2), the BFS introduces noise: it explores irrelevant state transitions that disrupt straightforward implication following. The stripped control's simple token-overlap heuristic is more reliable for deduction because it doesn't overthink.
+
+This is an instance of a broader pattern in machine learning: **adding complexity can degrade specific capabilities** even while improving others. In the evolutionary-composition context, this means Apollo must track per-tier contribution deltas, not just aggregate improvement.
+
+### 4.4 The attribution failure chain
+
+Without mechanism knockout, the following chain would have occurred:
+
+1. EPMC passes 5-gate validation (correct)
+2. EPMC scores 50% on R6 probes (correct measurement, wrong attribution)
+3. EPMC is tagged as "R6-capable theory-of-mind tool" (false label)
+4. EPMC is promoted to Apollo's gene library as an R6 gene (wrong promotion decision)
+5. Apollo composes EPMC into organisms expecting R6 belief-modeling behavior (organisms fail on novel ToM tasks)
+6. Apollo's failure is attributed to "composition difficulty" rather than "gene was mislabeled" (root cause hidden)
+
+Mechanism knockout at step 2 prevents the entire downstream cascade.
+
+### 4.5 What the correct attribution enables
+
+With the mechanism attribution card (§3.5), the system can:
+
+- Promote EPMC as an **R3/R5 gene** (its genuine contribution)
+- Route it AWAY from R2-heavy organisms (where it causes harm)
+- Credit the regex heuristics separately as an R1-level pattern-matching gene
+- Track whether the R5 contribution replicates on a larger probe set (n=16 is small)
+- Give Apollo accurate per-tier metadata for compositional fitness evaluation
 
 ---
 
@@ -263,7 +332,7 @@ This is the decorative mechanism problem at the model level rather than the gene
 
 ### 6.6 What DOES work: Generation + Verification pipelines
 
-The only architectures in the literature that demonstrably eliminate decorative solutions use **external verification**:
+The strongest defenses against decorative solutions appear to require external verification or ablation; output-only execution filtering is insufficient:
 
 | System | Approach | What it catches | Limitation |
 |--------|----------|-----------------|------------|
@@ -302,7 +371,7 @@ The paper argues that the gap between "code that passes tests" and "code that im
 
 ### 7.1 The decorative mechanism problem is unsolved at the frontier
 
-No current system — not GPT-4, not Claude, not Gemini — reliably generates code where the stated mechanism IS the actual mechanism. The problem is not a limitation of smaller models that frontier models have surpassed. It is a structural property of how LLMs generate code:
+We are not aware of a mainstream code-generation pipeline that standardly verifies mechanism-dependent attribution rather than output correctness alone. The problem is not a limitation of smaller models that frontier models have surpassed. It appears to be a structural property of how LLMs generate code:
 
 1. The model encodes many solution strategies in its weights
 2. When prompted, it produces a mixture of novel components (responding to the creative prompt) and familiar heuristics (from training)
@@ -411,13 +480,70 @@ The `_meta_confidence` method (regex patterns) drives R6 performance.
 The `_hebbian_update` + `_model_check` methods (novel mechanism) drive R3 performance.
 Both coexist in the same tool. Only ablation separates their contributions.
 
-## Appendix B: The Knockout Test
+## Appendix B: Full Mechanism Knockout Results
 
-```python
-# Full tool: R6 = 50% (21/42 probes correct)
-# Stripped control (regex only, no BFS/Hebbian): R6 = 48% (20/42)
-# Delta: +2 percentage points — mechanism is decorative for R6
 ```
+Tier       Full EPMC      Stripped Control    Delta    n     Status
+------     -----------    ----------------    -----    ---   ------
+R1         54% (13/24)    33% (8/24)          +21pp    24    mechanism helps
+R2         22% (9/40)     45% (18/40)         -22pp    40    MECHANISM HARMS
+R3         67% (24/36)    39% (14/36)         +28pp    36    mechanism genuinely helps
+R4         18% (5/28)     18% (5/28)          +0pp     28    decorative
+R5         50% (8/16)     19% (3/16)          +31pp    16    mechanism genuinely helps (small n)
+R6         50% (21/42)    48% (20/42)         +2pp     42    decorative
+```
+
+Wilson 95% confidence intervals at n=42: ±15pp. At n=36: ±16pp. At n=16: ±24pp.
+R3 and R5 deltas exceed CI margins. R6 delta does not. R2 degradation exceeds CI margin.
+
+## Appendix C: Mechanism Attribution Ledger Schema
+
+We propose that every forge tool carry a mechanism attribution card as part of its sidecar metadata. Schema:
+
+```json
+{
+  "tool_id": "quantum_mechanics_x_neural_plasticity_x_model_checking",
+  "concept_triple": ["Quantum Mechanics", "Neural Plasticity", "Model Checking"],
+  "claimed_mechanisms": ["hebbian_plasticity", "bfs_state_exploration", "quantum_scoring"],
+  "surface_heuristics_detected": ["presupposition_regex", "belief_keyword_matching",
+                                   "sunk_cost_keywords", "survivorship_keywords"],
+  "ablation_results": {
+    "R1": {"full": "13/24", "control": "8/24", "delta_pp": 21, "status": "mechanism_helps"},
+    "R2": {"full": "9/40", "control": "18/40", "delta_pp": -22, "status": "mechanism_harms"},
+    "R3": {"full": "24/36", "control": "14/36", "delta_pp": 28, "status": "mechanism_genuine"},
+    "R4": {"full": "5/28", "control": "5/28", "delta_pp": 0, "status": "decorative"},
+    "R5": {"full": "8/16", "control": "3/16", "delta_pp": 31, "status": "mechanism_genuine_small_n"},
+    "R6": {"full": "21/42", "control": "20/42", "delta_pp": 2, "status": "decorative"}
+  },
+  "promotion_status": "R3_R5_gene",
+  "allowed_claims": [
+    "Hebbian/BFS mechanism contributes +28pp to R3 abstraction",
+    "State-exploration mechanism contributes +31pp to R5 causal (n=16, needs replication)",
+    "Contains regex heuristics that solve familiar R6 ToM probes"
+  ],
+  "forbidden_claims": [
+    "Implements theory-of-mind reasoning via Hebbian plasticity",
+    "BFS mechanism contributes to search/planning capability",
+    "Novel architecture is responsible for R6 performance"
+  ],
+  "routing_constraints": [
+    "Do NOT compose into R2-heavy organisms (mechanism degrades deduction by -22pp)"
+  ]
+}
+```
+
+This schema prevents downstream agents from laundering false attributions back into the substrate. The `allowed_claims` and `forbidden_claims` fields encode what the ablation evidence supports, not what the code's docstring says.
+
+### Promotion Thresholds
+
+| Mechanism delta | Status | Action |
+|-----------------|--------|--------|
+| < 5pp | Decorative / heuristic-carried | Do not attribute tier capability to mechanism |
+| 5-15pp | Weak contribution | Incubator only; needs larger battery |
+| 15-25pp | Credible contribution | Eligible for provisional gene promotion if CI excludes zero |
+| > 25pp | Strong contribution | Eligible for core gene promotion |
+
+Applied to EPMC: R3 (+28pp) and R5 (+31pp) qualify as strong contributions. R6 (+2pp) is decorative. R4 (0pp) is decorative. R2 (-22pp) is a contraindication.
 
 ## Appendix C: Tier-Stratified Battery Statistics
 
