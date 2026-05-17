@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-15T10:29:09.780241+00:00",
+  "generated_at": "2026-05-17T06:44:30.253947+00:00",
   "redis_host": "192.168.1.176:6379",
   "heartbeat_timeout_sec": 300,
   "agents": [
@@ -9,9 +9,9 @@
       "expected": true,
       "machine": "M2",
       "kind": "evolutionary",
-      "status": "MISSING",
+      "status": "UNKNOWN",
       "heartbeat_age_sec": null,
-      "current_op": "",
+      "current_op": "(redis down \u2014 see manual_status)",
       "last_status_update": null,
       "key_metrics": null
     },
@@ -20,9 +20,9 @@
       "expected": true,
       "machine": "M3",
       "kind": "forge",
-      "status": "MISSING",
+      "status": "UNKNOWN",
       "heartbeat_age_sec": null,
-      "current_op": "",
+      "current_op": "(redis down \u2014 see manual_status)",
       "last_status_update": null,
       "key_metrics": null
     },
@@ -31,9 +31,9 @@
       "expected": true,
       "machine": "M3",
       "kind": "adversarial",
-      "status": "MISSING",
+      "status": "UNKNOWN",
       "heartbeat_age_sec": null,
-      "current_op": "",
+      "current_op": "(redis down \u2014 see manual_status)",
       "last_status_update": null,
       "key_metrics": null
     },
@@ -42,9 +42,9 @@
       "expected": true,
       "machine": "M4",
       "kind": "combinatorial",
-      "status": "MISSING",
+      "status": "UNKNOWN",
       "heartbeat_age_sec": null,
-      "current_op": "",
+      "current_op": "(redis down \u2014 see manual_status)",
       "last_status_update": null,
       "key_metrics": null
     },
@@ -53,9 +53,9 @@
       "expected": true,
       "machine": "?",
       "kind": "causal",
-      "status": "MISSING",
+      "status": "UNKNOWN",
       "heartbeat_age_sec": null,
-      "current_op": "",
+      "current_op": "(redis down \u2014 see manual_status)",
       "last_status_update": null,
       "key_metrics": null
     },
@@ -64,9 +64,9 @@
       "expected": true,
       "machine": "?",
       "kind": "knowledge_graph",
-      "status": "MISSING",
+      "status": "UNKNOWN",
       "heartbeat_age_sec": null,
-      "current_op": "",
+      "current_op": "(redis down \u2014 see manual_status)",
       "last_status_update": null,
       "key_metrics": null
     },
@@ -75,9 +75,9 @@
       "expected": true,
       "machine": "?",
       "kind": "fetch",
-      "status": "MISSING",
+      "status": "UNKNOWN",
       "heartbeat_age_sec": null,
-      "current_op": "",
+      "current_op": "(redis down \u2014 see manual_status)",
       "last_status_update": null,
       "key_metrics": null
     },
@@ -86,9 +86,9 @@
       "expected": true,
       "machine": "?",
       "kind": "alerting",
-      "status": "MISSING",
+      "status": "UNKNOWN",
       "heartbeat_age_sec": null,
-      "current_op": "",
+      "current_op": "(redis down \u2014 see manual_status)",
       "last_status_update": null,
       "key_metrics": null
     },
@@ -97,9 +97,9 @@
       "expected": true,
       "machine": "?",
       "kind": "scanner",
-      "status": "MISSING",
+      "status": "UNKNOWN",
       "heartbeat_age_sec": null,
-      "current_op": "",
+      "current_op": "(redis down \u2014 see manual_status)",
       "last_status_update": null,
       "key_metrics": null
     },
@@ -580,5 +580,10 @@
     "claimed": 0,
     "completed_lifetime": 81
   },
-  "anomalies": []
+  "anomalies": [],
+  "infra_status": {
+    "redis": "unreachable",
+    "redis_error": "Timeout connecting to server",
+    "note": "Last-known agent inventory preserved; heartbeat ages are stale. Check docs/manual_status.json for out-of-band updates."
+  }
 }

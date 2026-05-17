@@ -1,34 +1,36 @@
-# Prometheus Portfolio Brief
-*Generated: 2026-05-15T10:29:57.582487+00:00*
-*Author: Metis (multi-machine reporter mode)*
-
----
-
+<!-- written by metis_portfolio.py at 2026-05-17T06:44:40.078014+00:00 -->
 # Prometheus Portfolio Brief  
-*Generated: 2026-05-15T10:29:09.780241+00:00*  
+*Generated: 2026-05-17T06:44:30.253947+00:00*  
 *Author: Metis (multi-machine reporter mode)*  
 
 ---
 
 ## Act on this  
-**All expected agents still MISSING (Apollo@M2, Hephaestus@M3, Nous@M4, etc.)** – 9 expected agents show no heartbeat; full revival sequence not yet initiated.  
-Begin deployment on M2/M3/M4 per startup runbook — MISSING status confirms agents not launched, not crashed.
+**Redis on M1 down since ~2026-05-16 — Agora heartbeats blocked** – Redis service failed to auto-restart after Windows update; all agent heartbeats undeliverable.  
+Manually restart Redis on M1 upon return home today to restore Agora visibility and coordination.
 
-**Agora @ M1 DEAD (hb=1970204s)** – No change since previous brief at 2026-05-15T05:18:03.401295+00:00.  
-Central coordination remains offline for >22.8 days; requires manual restart or failover decision.
+**Hephaestus@M3 forge rate collapsed: 0.022 vs historical 0.40** – Current throughput is 5.5% of baseline; 90 items processed, 88 scrapped, only 2 passed.  
+Investigate whether Coeus is feeding tail-distribution candidates or if qwen3.5-397b-a17b model quality has drifted.
 
-**Work queue backlog: queued=126 claimed=0** – No change since previous brief at 2026-05-15T05:18:03.401295+00:00.  
-Zero agent activity; pipeline frozen until at least one Learner or Forge registers.
+**Work queue stalled: queued=126 claimed=0** – No agent has claimed work in >30 days; pipeline inert despite Hephaestus running.  
+Diagnose work distribution failure: verify if Hephaestus can access queue via fallback Postgres staging or requires Redis.
 
 ## Watch this  
-(no items)
+**Hephaestus@M3 running without heartbeat (agora_unavailable)** – Operational per manual report, but Agora shows MISSING due to Redis outage.  
+Monitor forge output and ledger growth (4905 → 4995) for continuity; expect normalization when Redis resumes.
+
+**M2 SpectreX5 offline — Apollo revival paused** – Machine powered off; Apollo cannot start despite being instrumented.  
+Track James’s revival sequence; deployment pending machine power-up and network reachability.
+
+**Hephaestus@M3 double-logging bug inflating telemetry** – Third logging handler active; non-fatal but complicates signal isolation.  
+Note during next intervention; low priority unless resource impact observed.
 
 ## For the record  
-(9) agents still pending deployment on M2/M3/M4 — known revival sequence in progress.  
-All expected agents (Apollo, Hephaestus, Nous, etc.) are MISSING by design during bring-up phase.
+(7) agents still pending deployment on M2/M3/M4 — known revival sequence in progress.  
+Apollo@M2, Nous@M4, and others remain MISSING as bring-up proceeds incrementally.
 
-**Aporia@M1 Batch 7 complete: 20 reports saved (119–138)** – Final batch executed before shutdown; stored at F:/Prometheus/aporia/docs/deep_research_batch7/.  
-No action needed.
+**Hephaestus@M3 has processed 90 candidates, 2 forges passed** – Active on M3 under manual session; using qwen/qwen3.5-397b-a17b, 1656 candidates remaining.  
+No action needed; substrate evolution continues despite infrastructure degradation.
 
-**Charon@M1 CUE surrogate test (iv) PASS: Axis 3b is arithmetic-specific (not numerology)** – Test completed on 2026-04-23; result validated discovery prior to outage.  
-No action needed.
+**No change since previous brief at 2026-05-17T06:43:04.303604+00:00** – Redis outage, agent MISSING statuses, and queue stall persist unchanged.  
+All prior observations remain valid; this brief updates context with authoritative manual status.

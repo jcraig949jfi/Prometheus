@@ -365,25 +365,57 @@ def main():
     parser.add_argument("--no-markdown", action="store_true", help="Skip markdown output")
     args = parser.parse_args()
 
+    r = None
+    redis_error = None
     try:
         r = connect()
         r.ping()
     except Exception as e:
-        print(f"FATAL: cannot reach Redis at {REDIS_HOST}:{REDIS_PORT} — {e}", file=sys.stderr)
-        sys.exit(2)
+        redis_error = str(e)
+        r = None  # ping failed, client is unusable — force degraded path
+        print(f"WARN: cannot reach Redis at {REDIS_HOST}:{REDIS_PORT} — {e}", file=sys.stderr)
+        print(f"WARN: will emit degraded state.json + skip markdown until Redis recovers", file=sys.stderr)
 
     while True:
         try:
             wrote = []
-            if not args.no_markdown:
-                text = render(r)
-                args.output.parent.mkdir(parents=True, exist_ok=True)
-                args.output.write_text(text, encoding="utf-8")
-                wrote.append(str(args.output))
-            if not args.no_json:
-                state = build_dashboard_state(r)
-                write_json(state, args.json_output)
-                wrote.append(str(args.json_output))
+            if r is not None:
+                # Normal mode: live Redis read
+                if not args.no_markdown:
+                    text = render(r)
+                    args.output.parent.mkdir(parents=True, exist_ok=True)
+                    args.output.write_text(text, encoding="utf-8")
+                    wrote.append(str(args.output))
+                if not args.no_json:
+                    state = build_dashboard_state(r)
+                    write_json(state, args.json_output)
+                    wrote.append(str(args.json_output))
+            else:
+                # Degraded mode: Redis unreachable. Preserve last-known state.json's
+                # agent inventory but mark infra status so Metis can frame it correctly.
+                if not args.no_json:
+                    try:
+                        prior = json.loads(args.json_output.read_text(encoding="utf-8"))
+                    except Exception:
+                        prior = {"agents": [], "discoveries": [], "main_events": [], "challenges": [],
+                                 "work_queue": {}, "anomalies": []}
+                    now = datetime.now(timezone.utc)
+                    prior["schema_version"] = 1
+                    prior["generated_at"] = now.isoformat()
+                    prior["redis_host"] = f"{REDIS_HOST}:{REDIS_PORT}"
+                    prior["heartbeat_timeout_sec"] = HEARTBEAT_TIMEOUT_SEC
+                    prior["infra_status"] = {
+                        "redis": "unreachable",
+                        "redis_error": redis_error,
+                        "note": "Last-known agent inventory preserved; heartbeat ages are stale. Check docs/manual_status.json for out-of-band updates.",
+                    }
+                    # Mark all expected agents as UNKNOWN — we can't claim ALIVE/DEAD
+                    for a in prior.get("agents", []):
+                        if a.get("expected"):
+                            a["status"] = "UNKNOWN"
+                            a["current_op"] = "(redis down — see manual_status)"
+                    write_json(prior, args.json_output)
+                    wrote.append(f"{args.json_output} (degraded)")
             print(f"[{datetime.now().isoformat()}] wrote {', '.join(wrote)}", flush=True)
         except Exception as e:
             print(f"[{datetime.now().isoformat()}] render error: {e}", file=sys.stderr)

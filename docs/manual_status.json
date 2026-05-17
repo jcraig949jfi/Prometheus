@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "purpose": "Out-of-band agent state that James knows but Agora can't see. Authoritative for Metis when Agora is degraded. Edit this file directly; Metis re-reads it every brief cycle.",
+  "last_updated_by": "Aletheia (M4) per James's 2026-05-15 14:21 M3 status report",
+  "last_updated_at": "2026-05-17T12:30:00Z",
+  "infra": {
+    "redis_m1": {
+      "status": "down",
+      "cause": "Windows update reboot on M1 didn't auto-restart Redis service",
+      "since": "approximately 2026-05-16",
+      "eta_recovery": "James returns home later 2026-05-17 to restart manually",
+      "impact": "agent heartbeats can't land; portfolio_monitor in degraded mode; dashboard agent table is stale"
+    },
+    "postgres_m1": {
+      "status": "up",
+      "note": "verified reachable; used as credential-staging fallback (agora.temp_secrets table)"
+    }
+  },
+  "machines": {
+    "M1_skullport": {
+      "status": "up_but_redis_down",
+      "location": "home",
+      "note": "James not at home until later today"
+    },
+    "M2_spectrex5": {
+      "status": "offline",
+      "intended_role": "Apollo evolutionary engine + Harmonia scientist batches",
+      "note": "powered off or otherwise unreachable; Apollo revival paused until M2 returns"
+    },
+    "M3_gandalf": {
+      "status": "online",
+      "intended_role": "Hephaestus forge pipeline",
+      "note": "James is driving M3 sessions via cut-and-paste from his phone"
+    },
+    "M4_aletheia": {
+      "status": "online",
+      "intended_role": "Nous + intelligence pipeline + Aletheia coordinator",
+      "note": "this machine, running the manual 30-min reporting cycle"
+    }
+  },
+  "agents": {
+    "Hephaestus": {
+      "machine": "M3",
+      "operational_status": "running",
+      "started": "approximately 2026-05-16 (4+ hours uptime as of last report)",
+      "pid": 7488,
+      "ram_mb": 178,
+      "items_processed": 90,
+      "forges_passed": 2,
+      "forges_scrapped": 88,
+      "current_forge_rate": 0.022,
+      "historical_forge_rate": 0.40,
+      "current_forge": "Symbiosis + Predictive Coding + Analogical Reasoning (Frame F)",
+      "candidates_remaining": 1656,
+      "api_timeouts_24h": 0,
+      "model": "qwen/qwen3.5-397b-a17b",
+      "ledger_growth": "4905 -> 4995",
+      "telemetry_state": "agora_unavailable (running with logged warnings; heartbeat will resume when Redis is back)",
+      "open_concerns": [
+        "low forge rate vs historical (Coeus pushing hardest-tail first OR model quality drift)",
+        "double-logging cosmetic bug (third handler attached somewhere)"
+      ]
+    },
+    "Apollo": {
+      "machine": "M2",
+      "operational_status": "offline_with_machine",
+      "note": "M2 powered off; Apollo cannot run"
+    },
+    "Nous": {
+      "machine": "M4",
+      "operational_status": "not_launched",
+      "note": "instrumented two days ago; not currently running because James focused on reporting pipeline first"
+    },
+    "IntelligencePipeline": {
+      "machine": "M4",
+      "operational_status": "running_manually",
+      "note": "Aletheia is driving 30-min reporting cycles manually because the autonomous loop daemon hasn't been started and Redis is down anyway"
+    }
+  },
+  "session_plan": {
+    "today_2026-05-17": [
+      "Manual 30-min reporting cycles (Aletheia drives, James reviews + iterates)",
+      "Continuous improvements to email body, React UI, GitHub-published content",
+      "James returns home, restarts M1 Redis",
+      "Once Redis up: agent:Hephaestus heartbeat will start landing automatically; intelligence loop daemon can take over"
+    ]
+  }
+}

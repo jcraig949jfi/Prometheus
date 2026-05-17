@@ -152,6 +152,23 @@ def portfolio_status_excerpt() -> str:
         return "(portfolio_STATUS.md unreadable)"
 
 
+def manual_status_excerpt() -> str:
+    """Return docs/manual_status.json content for out-of-band agent state.
+
+    James edits this file directly to inject what he knows that isn't visible
+    through Agora — for example, when Redis is down but he knows Hephaestus
+    is running on M3 because the M3 session reported it. Metis treats this
+    as authoritative for facts it can't otherwise verify.
+    """
+    manual_path = REPO_ROOT / "docs" / "manual_status.json"
+    if not manual_path.exists():
+        return "(no manual_status.json — Metis sees only what's in Agora)"
+    try:
+        return manual_path.read_text(encoding="utf-8")[:3000]
+    except Exception:
+        return "(manual_status.json unreadable)"
+
+
 def format_state_for_prompt(state: dict) -> str:
     """Render state.json into a compact text block for LLM consumption."""
     lines = []
@@ -208,11 +225,27 @@ def generate_brief() -> str:
     state_block = format_state_for_prompt(state)
     git_log = recent_git_log(hours=24)
     prev_brief = previous_brief_excerpt()
+    manual_status = manual_status_excerpt()
+
+    # Surface infra status (e.g., Redis down) prominently
+    infra = state.get("infra_status")
+    infra_block = ""
+    if infra:
+        infra_block = (
+            f"\n--- INFRASTRUCTURE STATUS (load-bearing) ---\n"
+            f"Redis: {infra.get('redis', 'unknown')}\n"
+            f"Note: {infra.get('note', '')}\n"
+            f"When infra status is degraded, agent statuses in state.json may be UNKNOWN — "
+            f"trust docs/manual_status.json (below) over the agent table for ground truth.\n"
+        )
 
     prompt = f"""Read Prometheus's current multi-agent state below and produce the executive brief.
-
---- CURRENT AGORA STATE (from dashboard/state.json) ---
+{infra_block}
+--- CURRENT AGORA STATE (from docs/state.json) ---
 {state_block}
+
+--- OUT-OF-BAND STATUS (from docs/manual_status.json — James's authoritative updates) ---
+{manual_status}
 
 --- LAST 24h GIT ACTIVITY ---
 {git_log}
