@@ -2566,3 +2566,111 @@ Choosing **Ergon handoff** for Fire #25 — the audit work is comprehensive enou
 - 3 audit reports on disk (corpus_health, h4_stratified, cross_catalog_h4)
 - Substrate-honesty arc: Fire #21 → #23 → #24 refined the finding from "universal" → "catalog-specific" → "parity is universal, others are catalog-specific" — exactly the kind of iterative refinement the calibration discipline is designed for
 
+
+---
+
+## Fire #25 — 2026-05-18 ~19:17Z — Ergon handoff (substrate→learner loop closed)
+
+Per Fire #24's decisions: shipped the Ergon handoff. **The substrate→learner loop is now concretely closed.** Theseus emits training-data in a schema-compliant format that Ergon's existing ingester can consume directly.
+
+### Shipped
+
+- **`theseus/handoff/ergon_handoff.py`** — exports top-N high-training-weight SHADOW records as `training_anchor` substrate_blocks. Two output formats:
+  - **Markdown** (`.md`) with fenced ```yaml + `# substrate_block: training_anchor` markers — consumable by Aporia's `parse_substrate_blocks.py` (the same pipeline Gemini Deep Research outputs feed through).
+  - **Pre-parsed JSONL** (`.jsonl`) — skips the parse step, feeds directly into `validate_substrate_blocks.py` → `ingest_training_anchors.py`.
+
+- **Schema mapping** (Theseus record → training_anchor v1.0.0):
+  - `domain`: `knots_x_elliptic_curves` (cross-catalog pair)
+  - `anchor_type`: `predicate` (relations are predicates)
+  - `prompt_template`: NL form of the relation question
+  - `expected_answer_shape`: boolean
+  - `verification_method`: `computational_certified` (substrate evaluators are deterministic)
+  - `trust_tier`: `numerically_certified` (SHADOW_CATALOG verdict from substrate; never `analytically_proven` without independent literature)
+  - `caveats`: includes the Fire #22 divides-on-zero fix note, the Fire #24 parity-is-universal finding, training_weight, etc.
+
+- **CLI**: `python -m theseus.handoff.ergon_handoff --threshold 0.5 --max-records 100`
+
+### End-to-end validation
+
+```
+1. python -m theseus.handoff.ergon_handoff --threshold 0.5 --max-records 100
+   → 100 emitted from 11,632 candidates above threshold
+
+2. python aporia/scripts/parse_substrate_blocks.py --batch-dir theseus/handoff/ergon_outbox --out /tmp/parsed
+   → "Parsed 100 substrate_block(s) ... training_anchor: 100"
+
+3. python aporia/scripts/validate_substrate_blocks.py --parsed ... --validated ... --rejected ...
+   → "Validated 100; rejected 0"
+```
+
+**100 out of 100 records pass Aporia's schema validator on the first try.** The handoff format is correct.
+
+### Sample handoff record
+
+```yaml
+# substrate_block: training_anchor
+_schema_version: 1.0.0
+id: anchor-knots_x_elliptic_curves-00001
+domain: knots_x_elliptic_curves
+anchor_type: predicate
+dataset_source: Theseus substrate engine (v0.3); generator=a1; batch=batch-20260518T173548Z-b9034c
+prompt_template: Does the relation `equal_mod_2` hold between `trace_field_class` of knots `8_2` and `rank` of elliptic_curves `9574.a1`? Return boolean.
+expected_answer_shape: "bool — True iff the relation holds for the given object pair"
+verification_method: computational_certified
+trust_tier: numerically_certified
+source_date: '2026-05-18'
+caveats: [substrate-engine-generated; parity-relations 62% structurally extensible per Fire #24; ...]
+```
+
+### Why this matters
+
+This is the moment the substrate's work becomes consumable. Until Fire #25, Theseus produced records in its own schema (TheseusRecord) — substrate-grade but not Ergon-ingester-compatible. Now there's a typed bridge: schema-compliant `training_anchor` blocks Ergon can ingest the same way it ingests Gemini Deep Research outputs.
+
+**When Ergon resumes training tonight**, Theseus's handoff directory is ready. James's concern in Fire #15 ("the consumer that matters might not exist yet") is mitigated structurally — even if Ergon isn't training NOW, the substrate's output is in the format Ergon expects.
+
+### Path through Ergon's pipeline (per training_anchor_ingestion_spec.md)
+
+1. Theseus emits → `theseus/handoff/ergon_outbox/*.md` or `*.jsonl`
+2. Aporia parses → `parsed.jsonl`
+3. Aporia validates → `validated.jsonl` (this is what Ergon reads)
+4. Ergon `ingest_training_anchors.py` → 8-field `LearnerRecord`s in v1.0 corpus
+5. Ergon eval harness uses the records for 4-condition LoRA training
+
+Steps 1-3 are now operational end-to-end. Steps 4-5 wait on Ergon's resume.
+
+### Substrate state milestone (post Fire #25)
+
+**The loop is concretely closed:**
+
+```
+[Substrate-Native Generators (29 active)]
+        ↓ emit
+[Verified TheseusRecords (250K+ per long-batch, 90% dedup)]
+        ↓ training_weight annotation
+[Per-record [0,1] weight (Fire #15, calibrated via H4 audit Fires #21-24)]
+        ↓ filter to high-weight SHADOW
+[Theseus → Ergon handoff (Fire #25, validated by Aporia's schema)]
+        ↓ ingestion path
+[Ergon training corpus → LoRA training (when Ergon resumes)]
+```
+
+Plus orchestration to M4 dashboard (Fire #16), per-batch heartbeat + log_work + discovery emission (Fires #16, #22), corpus health analyzer (Fire #19), cross-catalog audit chain (Fires #21, #23, #24).
+
+### Decisions for Fire #26
+
+Three candidates:
+
+1. **Run a long-batch (15-min) + immediately export handoff** as a single workflow. Produces ~500K records, exports top-500 as training_anchors. End-to-end demonstration.
+
+2. **Build the inverse handoff** — let Ergon's response (which records helped vs hurt) feed back into the bandit and training_weight calibration. Closes the loop in BOTH directions.
+
+3. **Spawn second autonomous loop** instance on M2 or M3 to verify the orchestration handles multi-instance Theseus (per `feedback_substrate_tester_multi_instance.md` discipline).
+
+Choosing (1) for Fire #26 — concrete end-to-end demo that proves the whole pipeline. (2) is the right Tier-2 move but requires Ergon's resume to be meaningful.
+
+### Loop discipline
+
+- Tests: 140/140 (handoff is read-only over corpus; integration validated by Aporia's existing test pipeline)
+- Output files in `theseus/handoff/ergon_outbox/` are timestamped (multiple handoffs co-exist; latest = newest timestamp)
+- yaml dependency confirmed available (used for substrate_block YAML serialization)
+
