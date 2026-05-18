@@ -2250,3 +2250,75 @@ Choosing the tamagawa_product audit for Fire #21 — substrate honesty about its
 - Code change: 5-line constant + 3-line _abs_diff_K_weight update + 7-line test bounds widening
 - Corpus health report regenerated; top-records list cleanly reflects new weights
 
+
+---
+
+## Fire #21 — 2026-05-18 ~16:33Z — H4 stratified audit (tamagawa hypothesis)
+
+Built `theseus/scoring/h4_stratified_audit.py` to test whether the H4 hierarchy holds uniformly across ec_invariants or is driven by small-range artifacts. **Substrate-honesty fire**: test the engine's own findings.
+
+### Per-relation within-range-of-ec_invariants variance
+
+| Relation | Mean rate | Range (max - min) | n_ec_invariants | Verdict |
+|---|---|---|---|---|
+| equal_mod_2 (parity) | 67.3% | **9.2 pp** | 4 | **Robustly structural** |
+| divides | 65.4% | **57.9 pp** | 4 | **PARTLY ARTIFACT** |
+| abs_diff_le_* | 52.4% | **41.1 pp** | 3 | Threshold + ec-dependent |
+| equal | 2.6% | **1.6 pp** | 3 | Robustly negligible |
+
+### The divides artifact, decomposed
+
+Per-ec_invariant divides rates reveal the mechanism:
+
+```
+rank:              174/192  = 90.6%   (rank often small {0,1,2,3,4}; trivial divisibility)
+torsion:           653/743  = 87.9%   (torsion small {1,2,3,4,6,7,12}; same effect)
+tamagawa_product:  686/1364 = 50.3%   (small-medium values)
+conductor:         641/1956 = 32.8%   (large range; "real" structural divides rate)
+```
+
+The aggregate 65% divides rate IS inflated by small-range ec_invariants. The **real structural divides rate** — when the ec value isn't trivially small — is closer to conductor's **32.8%**.
+
+### Refined substrate finding (replacing Fire #19's number)
+
+The H4 categorical-bridge hierarchy at v0.3:
+- **parity (equal_mod_2)**: ~67% robustly structural (range 9pp; uniform across all 4 ec_invariants)
+- **divides (large-range ec_invariants)**: ~33% (conductor as the cleanest reading)
+- **divides (small-range ec_invariants)**: ~88% (mostly artifact of small divisor base)
+- **equal**: ~2.6% robustly negligible
+
+This is a substantive refinement: divides's aggregate rate is bimodal across ec_invariants, with the "real" rate being lower than the 50% we baked in Fire #20.
+
+### Implication for training_weight
+
+The Fire #20 calibration of divides=0.50 was a midpoint of v0.1 (0.40) and v0.2 (0.51 aggregate). With the stratified finding, divides should be either:
+- Lowered to ~0.35 (conductor-anchored, the cleanest structural reading)
+- Made ec_invariant-aware: divides{rank, torsion}=high; divides{conductor}=low
+
+Choosing the cleaner principle: training_weight should reflect the ROBUST structural signal, not the artifact-inflated one. Plan for Fire #22: lower divides to 0.35; add ec_invariant context to the weighting if generator schemas allow.
+
+### Substrate observation: a divides-on-zero issue surfaced
+
+While inspecting `_evaluate_relation` for divides, noticed:
+
+```python
+if relation == "divides":
+    if b_val == 0:
+        return False
+    return (b_val % a_val) == 0 if a_val != 0 else False
+```
+
+Mathematically, every nonzero integer divides 0 (since 0 = 0×a). The code returns False when b_val=0. This may bias rank-related records (rank=0 is common in our BSD-rich catalog). Worth a separate fire to fix and re-measure.
+
+### Decisions for Fire #22
+
+1. **Lower divides weight to 0.35** (conductor-anchored) — substrate-honest weight reflecting robust structural signal.
+2. **Fix the divides-on-zero bug** in `_evaluate_relation` — record a smoke before/after to measure the verdict-flip impact.
+3. Both are bounded; ship together.
+
+### Loop discipline
+
+- Tests still 139/139
+- New tool `h4_stratified_audit.py` is read-only; no behavior changes this fire
+- Report `theseus/h4_stratified_audit_report.md` captures the finding
+
