@@ -134,6 +134,31 @@ the human-friendly format: YYYY-MM-DD HH:MM:SS AM/PM TIMEZONE (e.g.
 +00:00 offset like "2026-05-17T06:43:00.000000+00:00" — that's machine
 formatting, hard to read on a phone.
 
+CRITICAL — reconciling state.json with manual_status.json:
+state.json is automatically refreshed every cycle from live Agora/Postgres
+data. manual_status.json is hand-edited by James and can go STALE between
+edits — claims in it persist until manually rewritten. When the two
+sources conflict, TRUST state.json for anything it can verify and flag
+manual_status as potentially stale.
+
+Specifically for infrastructure status:
+- If state.json's "infra_status" field is null or absent, that means
+  portfolio_monitor took the Redis-up path — Redis is reachable and the
+  cycle ran without degradation. DO NOT claim "Redis is down" in this
+  case, even if manual_status.json says so. Manual_status is stale.
+- If state.json's "infra_status" is present with redis="unreachable",
+  Redis genuinely is down right now and the brief should reflect that.
+- If state.json shows specific agents ALIVE with recent heartbeats but
+  manual_status.json claims they're offline, prefer state.json. Note
+  the manual_status stale claim only if it actively contradicts the
+  current cycle.
+
+Manual_status is most authoritative for things state.json cannot see:
+process PIDs, hardware affinity, operator intent ("this is paused on
+purpose"), historical context. It is least authoritative for things
+state.json can see and refresh: infra reachability, agent liveness,
+recent operational metrics.
+
 Rules:
 - Maximum 3 items per section (9 total). Compress ruthlessly.
 - Lead every item with a bold one-line headline.

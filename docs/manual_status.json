@@ -1,89 +1,96 @@
 {
   "schema_version": 1,
-  "purpose": "Out-of-band agent state that James knows but Agora can't see. Authoritative for Metis when Agora is degraded. Edit this file directly; Metis re-reads it every brief cycle.",
+  "purpose": "Out-of-band agent state that James knows but Agora can't see. Authoritative for Metis when Agora is degraded; reconciled against state.json's infra_status when both are present. Edit this file directly; Metis re-reads it every brief cycle.",
   "last_updated_by": "Metis auto-stamp (per-cycle)",
-  "last_updated_at": "2026-05-17T19:44:00.049825+00:00",
+  "last_updated_at": "2026-05-18T07:34:00.430125+00:00",
   "infra": {
     "redis_m1": {
-      "status": "down",
-      "cause": "Windows update reboot on M1 didn't auto-restart Redis service",
-      "since": "approximately 2026-05-16",
-      "eta_recovery": "James returns home later 2026-05-17 to restart manually",
-      "impact": "agent heartbeats can't land; portfolio_monitor in degraded mode; dashboard agent table is stale"
+      "status": "up",
+      "since": "2026-05-17 evening (James restarted on M1 after returning home from vacation house)",
+      "note": "Verified reachable from M4: TCP connect ~0ms, PING True. Dashboard reads Redis as primary; Postgres dual-write mirror is the per-agent fallback when an agent's Redis hash is silent."
     },
     "postgres_m1": {
       "status": "up",
-      "note": "verified reachable; used as credential-staging fallback (agora.temp_secrets table)"
+      "note": "Hosts agora.agent_heartbeats (dual-write target for daemons), agora.intelligence_outputs (pronoia.py cycle log), agora.temp_secrets (credential staging), plus original agora.messages/decisions/open_questions tables."
     }
   },
   "machines": {
     "M1_skullport": {
-      "status": "up_but_redis_down",
+      "status": "online",
       "location": "home",
-      "note": "James not at home until later today"
+      "services": [
+        "Redis",
+        "Postgres"
+      ],
+      "note": "Both services back online after 2026-05-17 manual restart."
     },
     "M2_spectrex5": {
-      "status": "offline",
+      "status": "online",
       "intended_role": "Apollo evolutionary engine + Harmonia scientist batches",
-      "note": "powered off or otherwise unreachable; Apollo revival paused until M2 returns"
+      "note": "Powered up 2026-05-17 evening. Apollo running with Postgres dual-write instrumentation."
     },
     "M3_gandalf": {
       "status": "online",
       "intended_role": "Hephaestus forge pipeline",
-      "note": "James is driving M3 sessions via cut-and-paste from his phone"
+      "note": "Hephaestus running with Redis+Postgres dual-write."
     },
     "M4_aletheia": {
       "status": "online",
-      "intended_role": "Nous + intelligence pipeline + Aletheia coordinator",
-      "note": "this machine, running the manual 30-min reporting cycle"
+      "intended_role": "Pronoia daemon + Nous + intelligence pipeline + Aletheia coordinator",
+      "note": "intelligence_loop.py PID 13308 running continuously since 2026-05-17 15:43 EDT; --hourly-min 240 --email-every-cycle cadence (every 4 hours)."
     }
   },
   "agents": {
     "Hephaestus": {
       "machine": "M3",
       "operational_status": "running",
-      "started": "approximately 2026-05-16 (4+ hours uptime as of last report)",
-      "pid": 7488,
-      "ram_mb": 178,
-      "items_processed": 90,
-      "forges_passed": 2,
-      "forges_scrapped": 88,
-      "current_forge_rate": 0.022,
-      "historical_forge_rate": 0.4,
-      "current_forge": "Symbiosis + Predictive Coding + Analogical Reasoning (Frame F)",
-      "candidates_remaining": 1656,
-      "api_timeouts_24h": 0,
+      "started": "2026-05-16 (currently 1+ days uptime)",
       "model": "qwen/qwen3.5-397b-a17b",
-      "ledger_growth": "4905 -> 4995",
-      "telemetry_state": "agora_unavailable (running with logged warnings; heartbeat will resume when Redis is back)",
+      "telemetry_state": "dual-write (Redis hash + Postgres agora.agent_heartbeats)",
       "open_concerns": [
         "low forge rate vs historical (Coeus pushing hardest-tail first OR model quality drift)",
-        "double-logging cosmetic bug (third handler attached somewhere)"
-      ]
+        "double-logging cosmetic bug (third handler attached somewhere \u2014 non-critical)"
+      ],
+      "current_metrics_source": "see state.json agents[].key_metrics for live ledger_size, session_forges, session_scraps, nous_queue_depth, etc."
     },
     "Apollo": {
       "machine": "M2",
-      "operational_status": "offline_with_machine",
-      "note": "M2 powered off; Apollo cannot run"
+      "operational_status": "running",
+      "started": "2026-05-17 ~14:36 EDT (PID 5428)",
+      "config": "configs/config_v2d2b.yaml (50/50 Qwen+DeepSeek hybrid)",
+      "phase_at_revival": "warmup \u2192 graduated (crossed gen 50 within ~2 minutes of launch)",
+      "telemetry_state": "Postgres dual-write only (agora_persist heartbeat thread every 60s); no Redis hash write",
+      "current_metrics_source": "see state.json agents[].key_metrics for live generation, phase, best_fitness_vector, gen_time_s, compilation_success_rate, etc."
+    },
+    "Pronoia": {
+      "machine": "M4",
+      "operational_status": "running (intelligence_loop daemon)",
+      "started": "2026-05-17 15:43 EDT, PID 13308",
+      "cadence": "every 4 hours: portfolio_monitor.py --once + metis_portfolio.py + push to main + send_brief_email.py",
+      "weekly_recap": "Friday 22:00 local fires weekly_recap.py automatically",
+      "telemetry_state": "Redis hash via AgoraClient (Pronoia@M4)"
     },
     "Nous": {
       "machine": "M4",
       "operational_status": "not_launched",
-      "note": "instrumented two days ago; not currently running because James focused on reporting pipeline first"
+      "note": "Instrumented but not running. Forge pipeline can run without it via historical responses.jsonl on M3."
     },
-    "IntelligencePipeline": {
-      "machine": "M4",
-      "operational_status": "running_manually",
-      "note": "Aletheia is driving 30-min reporting cycles manually because the autonomous loop daemon hasn't been started and Redis is down anyway"
+    "Coeus": {
+      "machine": "?",
+      "operational_status": "dormant",
+      "note": "Last analysis predates current ledger. Re-running would update concept weights with 5K+ entry context."
     }
   },
-  "session_plan": {
-    "today_2026-05-17": [
-      "Manual 30-min reporting cycles (Aletheia drives, James reviews + iterates)",
-      "Continuous improvements to email body, React UI, GitHub-published content",
-      "James returns home, restarts M1 Redis",
-      "Once Redis up: agent:Hephaestus heartbeat will start landing automatically; intelligence loop daemon can take over"
-    ]
-  },
-  "last_updated_at_human": "2026-05-17 07:44:00 PM UTC"
+  "active_pipelines": [
+    "M3 Hephaestus forge \u2014 continuous substrate generation (Frame H tools)",
+    "M2 Apollo evolution \u2014 compositional organism search over Frame H gene library",
+    "M4 reporting/intelligence loop \u2014 4-hour cycle producing portfolio briefs + emails + GitHub Pages updates + weekly recap (Friday auto)"
+  ],
+  "key_open_questions": [
+    "Apollo: will compositional premise hold per the falsification conditions in pivot/apollo_value_proposition_2026-05-17.md (first checkpoint at gen 5000)?",
+    "Hephaestus: forge rate has improved or stayed low? Track ledger growth + session_forges/scraps ratio over time.",
+    "M1 Redis: 268K-key landscape data from Harmonia. Should it be archived/sharded?",
+    "Manual_status.json reconciliation with state.json.infra_status (this file's stale-override caused 2026-05-18 confusion \u2014 needs auto-reconcile logic)"
+  ],
+  "last_updated_at_human": "2026-05-18 07:34:00 AM UTC"
 }
