@@ -1,12 +1,20 @@
-"""C2 — threshold-mutation generator.
+"""C2 — threshold-mutation generator (counterfactual upgrade, Fire #3).
 
 Targets parent claims using the `abs_diff_le_K` relation and mutates K
-to nearby values, retesting. The mutation tests "is this claim BARELY
-true / BARELY false?" — a margin-aware probe.
+to boundary-adjacent values rather than random ladder picks. Each
+mutation pins down the exact threshold flip-point for the parent's
+(value_a, value_b) pair.
 
-Pulls from frontier "counterfactual augmentation" — instead of random
-parameter mutations, mutate toward the relation boundary. Future
-versions (Tier 1) will use gradient-style boundary search.
+Pulls from frontier "counterfactual augmentation" (Pearl, Kaushik et al.
+2020): instead of random perturbation, intervene on the threshold to
+land AT the relation boundary. Boundary records are exactly the
+high-info-density population D2 already prioritizes.
+
+Strategy:
+  Pick from {actual_diff, actual_diff - 1, actual_diff + 1, midpoint,
+            random_ladder_fallback}.
+  This gives 80%+ boundary-flavored mutations vs the previous random
+  Fibonacci ladder.
 """
 from __future__ import annotations
 
@@ -32,8 +40,28 @@ from theseus.generators.a1_catalog_cross_product import (
 from theseus.config import KNOTS_DB_PATH, BSD_RICH_DB_PATH
 
 
-# Threshold candidates for abs_diff_le_K mutations
+# Random-ladder fallback (used when counterfactual candidates collide)
 THRESHOLD_LADDER = (0, 1, 2, 3, 5, 8, 13, 21)
+
+
+def _counterfactual_thresholds(orig_k: int, actual_diff: int) -> list[int]:
+    """Boundary-adjacent threshold candidates for counterfactual mutation.
+
+    Returns thresholds that PROBE THE BOUNDARY of the parent's
+    (value_a, value_b) pair:
+      - actual_diff (exact boundary: claim becomes just-barely-true)
+      - actual_diff - 1 (one-step inside: claim flips to false)
+      - actual_diff + 1 (one-step outside: claim stays comfortably true)
+      - midpoint between orig_k and actual_diff (half-step)
+    Filters non-negative and != orig_k.
+    """
+    candidates = {
+        actual_diff,
+        actual_diff - 1,
+        actual_diff + 1,
+        (orig_k + actual_diff) // 2,
+    }
+    return [k for k in candidates if k >= 0 and k != orig_k]
 
 
 class C2ThresholdMutationGenerator(Generator):
@@ -104,14 +132,26 @@ class C2ThresholdMutationGenerator(Generator):
                 self.attempts += 1
                 continue
 
-            new_k = self._rng.choice(
-                [k for k in THRESHOLD_LADDER if k != orig_k]
-            )
-            new_rel = f"abs_diff_le_{new_k}"
-
             a_val = p["value_a"]
             b_val = p["value_b"]
             actual_diff = abs(a_val - b_val)
+
+            # Counterfactual: pick from boundary-adjacent candidates first;
+            # fall back to ladder if all boundary candidates collide with
+            # orig_k (e.g., already AT the boundary).
+            cf_candidates = _counterfactual_thresholds(orig_k, actual_diff)
+            if cf_candidates:
+                new_k = self._rng.choice(cf_candidates)
+                mutation_kind = "counterfactual_boundary"
+            else:
+                ladder = [k for k in THRESHOLD_LADDER if k != orig_k]
+                if not ladder:
+                    self.attempts += 1
+                    continue
+                new_k = self._rng.choice(ladder)
+                mutation_kind = "ladder_fallback"
+            new_rel = f"abs_diff_le_{new_k}"
+
             new_holds = _evaluate_relation(a_val, b_val, new_rel)
             old_holds = _evaluate_relation(a_val, b_val, p["relation"])
 
@@ -131,7 +171,7 @@ class C2ThresholdMutationGenerator(Generator):
             )
 
             canonical = (
-                f"C2_THRESH[K:{orig_k}→{new_k}] "
+                f"C2_THRESH[K:{orig_k}→{new_k},{mutation_kind}] "
                 f"{p['invariant_a']}(knot:{p['object_a']}) {new_rel} "
                 f"{p['invariant_b']}(ec:{p['object_b']}) "
                 f"| actual_diff={actual_diff} | holds={new_holds} "
@@ -145,6 +185,7 @@ class C2ThresholdMutationGenerator(Generator):
             payload["old_holds"] = old_holds
             payload["new_holds"] = new_holds
             payload["truth_flipped"] = flipped
+            payload["mutation_kind"] = mutation_kind
             payload["parent_record_id"] = parent.record_id
 
             record_id = TheseusRecord.compute_record_id(

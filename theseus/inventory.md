@@ -39,7 +39,7 @@ Status legend:
 - **C1** `c1_variable_mutation` — swap object in a verified claim — **active**
 - **C2** `c2_threshold_mutation` — vary threshold in inequality claims — **active**
 - **C3** `c3_region_slide` — slide the coordinate-chart region — **stub**
-- **C4** `c4_generalization` — drop a constraint, retest — **stub**
+- **C4** `c4_generalization` — drop a constraint, retest — **active**
 - **C5** `c5_specialization` — add a constraint, retest — **stub**
 
 ## Family D — Near-miss / kill-neighborhood (closes loop with kill_vector_navigator)
@@ -78,8 +78,8 @@ Status legend:
 
 ## Family H — Self-feeding
 
-- **H1** `h1_mutation_from_kill` — kills seed next-gen claims (elevated
-  D1) — **stub**
+- **H1** `h1_self_play_hunter` — proposer-vs-hunter self-play on
+  corpus survivors (AlphaZero pattern) — **active**
 - **H2** `h2_triangulation_protocol` — INCONCLUSIVE pathway generator — **stub**
 - **H3** `h3_learner_curiosity` — query Learner's high-uncertainty
   regions — **stub_future**
@@ -101,7 +101,7 @@ Status legend:
 
 ---
 
-## Active set (Fire #1, 8 generators): A1 + A2 + B5 + C1 + C2 + D1 + D2 + E1
+## Active set (Fire #3, 10 generators): A1 + A2 + B5 + C1 + C2 + C4 + D1 + D2 + E1 + H1
 
 Rationale (per CHARTER.md):
 - **A1** — highest throughput, no LLM cost, anti-conventional novelty

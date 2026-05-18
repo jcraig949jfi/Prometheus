@@ -39,7 +39,7 @@ GENERATOR_STATUS = {
     "c1": "active",
     "c2": "active",
     "c3": "stub",
-    "c4": "stub",
+    "c4": "active",
     "c5": "stub",
     # D — kill-neighborhood
     "d1": "active",
@@ -64,7 +64,7 @@ GENERATOR_STATUS = {
     "g4": "stub",
     "g5": "stub",
     # H — self-feeding
-    "h1": "stub",
+    "h1": "active",
     "h2": "stub",
     "h3": "stub_future",  # needs Learner
     "h4": "stub",

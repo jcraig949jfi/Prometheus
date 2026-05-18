@@ -79,8 +79,16 @@ def _evaluate_relation(a_val: int, b_val: int, relation: str) -> bool:
         if b_val == 0:
             return False
         return (b_val % a_val) == 0 if a_val != 0 else False
-    if relation == "abs_diff_le_3":
-        return abs(a_val - b_val) <= 3
+    if relation.startswith("abs_diff_le_"):
+        # Parse K from "abs_diff_le_K" (any non-negative integer).
+        # Bug fix (Fire #3): previously only the literal "abs_diff_le_3"
+        # was handled; mutated K values (from C2/C4/D2) silently
+        # evaluated to False, producing spurious kills.
+        try:
+            k = int(relation.split("_")[-1])
+            return abs(a_val - b_val) <= k
+        except ValueError:
+            return False
     return False
 
 

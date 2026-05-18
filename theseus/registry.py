@@ -16,9 +16,11 @@ from theseus.generators.a2_statistical_correlation import A2StatisticalCorrelati
 from theseus.generators.b5_conservation_law import B5ConservationLawGenerator
 from theseus.generators.c1_claim_mutation import C1ClaimMutationGenerator
 from theseus.generators.c2_threshold_mutation import C2ThresholdMutationGenerator
+from theseus.generators.c4_generalization import C4GeneralizationGenerator
 from theseus.generators.d1_kill_neighborhood import D1KillNeighborhoodGenerator
 from theseus.generators.d2_margin_bracket import D2MarginBracketGenerator
 from theseus.generators.e1_research_batch_parser import E1ResearchBatchParserGenerator
+from theseus.generators.h1_self_play_hunter import H1SelfPlayHunterGenerator
 from theseus.generators.stubs.all_stubs import (
     A3FunctionalIdentity,
     A4RatioInvariance,
@@ -28,7 +30,6 @@ from theseus.generators.stubs.all_stubs import (
     B3InverseTest,
     B4FixedPointHunt,
     C3RegionSlide,
-    C4Generalization,
     C5Specialization,
     D3TriangulationSeeds,
     D4BoundaryCrossing,
@@ -45,7 +46,6 @@ from theseus.generators.stubs.all_stubs import (
     G3ModularTransform,
     G4ReflectionDuality,
     G5ScaleInvariance,
-    H1MutationFromKill,
     H2TriangulationProtocol,
     H3LearnerCuriosity,
     H4BridgeExtension,
@@ -66,9 +66,11 @@ REGISTRY: Dict[str, Type[Generator]] = {
     "b5": B5ConservationLawGenerator,
     "c1": C1ClaimMutationGenerator,
     "c2": C2ThresholdMutationGenerator,
+    "c4": C4GeneralizationGenerator,
     "d1": D1KillNeighborhoodGenerator,
     "d2": D2MarginBracketGenerator,
     "e1": E1ResearchBatchParserGenerator,
+    "h1": H1SelfPlayHunterGenerator,
     # Stubs
     "a3": A3FunctionalIdentity,
     "a4": A4RatioInvariance,
@@ -78,7 +80,6 @@ REGISTRY: Dict[str, Type[Generator]] = {
     "b3": B3InverseTest,
     "b4": B4FixedPointHunt,
     "c3": C3RegionSlide,
-    "c4": C4Generalization,
     "c5": C5Specialization,
     "d3": D3TriangulationSeeds,
     "d4": D4BoundaryCrossing,
@@ -95,7 +96,6 @@ REGISTRY: Dict[str, Type[Generator]] = {
     "g3": G3ModularTransform,
     "g4": G4ReflectionDuality,
     "g5": G5ScaleInvariance,
-    "h1": H1MutationFromKill,
     "h2": H2TriangulationProtocol,
     "h3": H3LearnerCuriosity,
     "h4": H4BridgeExtension,

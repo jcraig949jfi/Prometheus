@@ -33,8 +33,10 @@ from theseus.emit.record_schema import TheseusRecord, Verdict
 from theseus.generators.base import Generator, GeneratorStatus
 from theseus.generators.c1_claim_mutation import C1ClaimMutationGenerator
 from theseus.generators.c2_threshold_mutation import C2ThresholdMutationGenerator
+from theseus.generators.c4_generalization import C4GeneralizationGenerator
 from theseus.generators.d1_kill_neighborhood import D1KillNeighborhoodGenerator
 from theseus.generators.d2_margin_bracket import D2MarginBracketGenerator
+from theseus.generators.h1_self_play_hunter import H1SelfPlayHunterGenerator
 from theseus.registry import REGISTRY, get_generator_class
 from theseus.scoring.metrics_schema import BatchMetrics, GeneratorMetrics
 from theseus.scoring.yield_tracker import YieldTracker
@@ -66,7 +68,15 @@ def _wire_feedback(
     """Route a newly emitted record to downstream generators that
     consume it as parent input (C1, D1)."""
     for g in generators:
-        if isinstance(g, (C1ClaimMutationGenerator, C2ThresholdMutationGenerator)):
+        if isinstance(
+            g,
+            (
+                C1ClaimMutationGenerator,
+                C2ThresholdMutationGenerator,
+                C4GeneralizationGenerator,
+                H1SelfPlayHunterGenerator,
+            ),
+        ):
             g.add_parent(record)
         elif isinstance(g, D1KillNeighborhoodGenerator):
             g.add_kill(record)
@@ -113,8 +123,14 @@ def run_batch(
     writer = CorpusWriter(batch_id=batch_id, corpus_dir=corpus_dir)
     tracker = YieldTracker()
 
-    # Round-robin tick loop
+    # Round-robin tick loop. Generators that return None on a single
+    # tick are NOT marked exhausted — they may have hit a transient
+    # parent-shortage. Only after CONSECUTIVE_NONE_THRESHOLD consecutive
+    # Nones do we mark exhausted (true exhaustion, e.g. E1 finishes
+    # mining).
+    CONSECUTIVE_NONE_THRESHOLD = 100
     exhausted = {g.generator_id: False for g in instances}
+    consecutive_nones = {g.generator_id: 0 for g in instances}
     tick_count = 0
     while time.monotonic() - started_mono < budget_s:
         if all(exhausted.values()):
@@ -133,8 +149,11 @@ def run_batch(
                 continue
             tracker.stop_generator(g.generator_id)
             if rec is None:
-                exhausted[g.generator_id] = True
+                consecutive_nones[g.generator_id] += 1
+                if consecutive_nones[g.generator_id] >= CONSECUTIVE_NONE_THRESHOLD:
+                    exhausted[g.generator_id] = True
                 continue
+            consecutive_nones[g.generator_id] = 0
             writer.write(rec)
             tracker.record_emission(rec)
             _wire_feedback(instances, rec)

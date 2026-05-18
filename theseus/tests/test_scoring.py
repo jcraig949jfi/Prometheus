@@ -1,10 +1,27 @@
-"""Tests for scoring (yield_tracker, info_density, diversity)."""
+"""Tests for scoring (yield_tracker, info_density, diversity).
+
+Diversity tests pin to Jaccard mode for deterministic semantics; the
+embedding-mode tests live in test_diversity_embedding.py.
+"""
 from __future__ import annotations
 
+import pytest
+
 from theseus.emit.record_schema import TheseusRecord, ClaimKind, Verdict
+from theseus.scoring import diversity as div_mod
 from theseus.scoring.info_density import info_density_score
-from theseus.scoring.diversity import diversity_score
+from theseus.scoring.diversity import diversity_score, use_jaccard_only
 from theseus.scoring.yield_tracker import YieldTracker
+
+
+@pytest.fixture(autouse=True)
+def _jaccard_only():
+    """Force Jaccard for diversity tests in this file."""
+    use_jaccard_only()
+    yield
+    div_mod._EMBEDDING_AVAILABLE = None
+    div_mod._EMBEDDING_MODEL = None
+    div_mod._EMBEDDING_CACHE.clear()
 
 
 def _make(verdict: str, kp: str | None = None, text: str = "x") -> TheseusRecord:

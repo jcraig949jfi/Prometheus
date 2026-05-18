@@ -75,13 +75,6 @@ class C3RegionSlide(StubGenerator):
         return "c3: coordinate-chart region slide"
 
 
-class C4Generalization(StubGenerator):
-    generator_id = "c4"
-    claim_kind = ClaimKind.MUTATION.value
-    def description(self) -> str:
-        return "c4: drop-a-constraint generalization mutation"
-
-
 class C5Specialization(StubGenerator):
     generator_id = "c5"
     claim_kind = ClaimKind.MUTATION.value
@@ -203,13 +196,6 @@ class G5ScaleInvariance(StubGenerator):
 
 
 # -- Family H (self-feeding) --
-
-class H1MutationFromKill(StubGenerator):
-    generator_id = "h1"
-    claim_kind = ClaimKind.KILL_NEIGHBORHOOD.value
-    def description(self) -> str:
-        return "h1: mutation-from-kill (elevated D1 with cross-batch lineage)"
-
 
 class H2TriangulationProtocol(StubGenerator):
     generator_id = "h2"

@@ -240,3 +240,169 @@ Token-free, substrate-native, immediately yield-positive. Estimated combined dev
 - Tests still at 39/39 passing.
 - No code changes; no smoke run needed.
 
+
+## batch-20260518T123752Z-b99197
+
+- Started: 2026-05-18T12:37:52.574679+00:00
+- Ended:   2026-05-18T12:38:22.452406+00:00
+- Duration: 0.0083 h
+- Requested: a1,a2,b5,c1,c2,c4,d1,d2,e1,h1
+- Active:    a1,a2,b5,c1,c2,c4,d1,d2,e1,h1
+- Records: 5533 (kills=2999, confirmations=1920, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=615, throughput=615000000000.0/h, info_density=0.527, diversity=0.568, yield_score=0.0030, kills=448, conf=167, errs=0
+- **a2** — records=615, throughput=23062500.0/h, info_density=0.505, diversity=0.616, yield_score=0.0031, kills=587, conf=28, errs=0
+- **b5** — records=614, throughput=147359999.9/h, info_density=0.586, diversity=0.625, yield_score=0.0037, kills=89, conf=525, errs=0
+- **c1** — records=614, throughput=138150000.0/h, info_density=0.511, diversity=0.549, yield_score=0.0028, kills=545, conf=69, errs=0
+- **c2** — records=614, throughput=138150000.0/h, info_density=0.503, diversity=0.535, yield_score=0.0027, kills=595, conf=19, errs=0
+- **c4** — records=5, throughput=5000000000.0/h, info_density=0.500, diversity=0.511, yield_score=0.0026, kills=5, conf=0, errs=0
+- **d1** — records=614, throughput=14078980.9/h, info_density=0.597, diversity=0.693, yield_score=0.0042, kills=21, conf=593, errs=0
+- **d2** — records=614, throughput=614000000000.0/h, info_density=0.575, diversity=0.569, yield_score=0.0033, kills=152, conf=462, errs=0
+- **e1** — records=614, throughput=1322800.7/h, info_density=0.200, diversity=0.788, yield_score=0.0016, kills=0, conf=0, errs=0
+- **h1** — records=614, throughput=138150000.0/h, info_density=0.509, diversity=0.610, yield_score=0.0031, kills=557, conf=57, errs=0
+
+
+## batch-20260518T123950Z-39ad00
+
+- Started: 2026-05-18T12:39:50.284632+00:00
+- Ended:   2026-05-18T12:40:20.168513+00:00
+- Duration: 0.0083 h
+- Requested: a1,a2,b5,c1,c2,c4,d1,d2,e1,h1
+- Active:    a1,a2,b5,c1,c2,c4,d1,d2,e1,h1
+- Records: 78798 (kills=46477, confirmations=31546, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=9753, throughput=173815841.6/h, info_density=0.528, diversity=0.856, yield_score=0.0046, kills=6975, conf=2778, errs=0
+- **a2** — records=9753, throughput=26679939.2/h, info_density=0.505, diversity=0.918, yield_score=0.0047, kills=9281, conf=472, errs=0
+- **b5** — records=9752, throughput=131487640.4/h, info_density=0.585, diversity=0.868, yield_score=0.0051, kills=1451, conf=8301, errs=0
+- **c1** — records=9752, throughput=252569784.2/h, info_density=0.515, diversity=0.855, yield_score=0.0045, kills=8268, conf=1484, errs=0
+- **c2** — records=9752, throughput=148131645.6/h, info_density=0.504, diversity=0.856, yield_score=0.0044, kills=9365, conf=387, errs=0
+- **c4** — records=5, throughput=5000000000.0/h, info_density=0.500, diversity=0.869, yield_score=0.0044, kills=5, conf=0, errs=0
+- **d1** — records=9752, throughput=30422183.7/h, info_density=0.597, diversity=0.866, yield_score=0.0052, kills=330, conf=9422, errs=0
+- **d2** — records=9752, throughput=186740425.6/h, info_density=0.575, diversity=0.855, yield_score=0.0050, kills=2396, conf=7356, errs=0
+- **e1** — records=775, throughput=5752577.3/h, info_density=0.200, diversity=0.978, yield_score=0.0020, kills=0, conf=0, errs=0
+- **h1** — records=9752, throughput=90249871.5/h, info_density=0.514, diversity=0.939, yield_score=0.0049, kills=8406, conf=1346, errs=0
+
+
+## batch-20260518T124213Z-0231b2
+
+- Started: 2026-05-18T12:42:13.406441+00:00
+- Ended:   2026-05-18T12:42:43.291560+00:00
+- Duration: 0.0083 h
+- Requested: a1,a2,b5,c1,c2,c4,d1,d2,e1,h1
+- Active:    a1,a2,b5,c1,c2,c4,d1,d2,e1,h1
+- Records: 80304 (kills=51211, confirmations=28318, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=8837, throughput=158274626.8/h, info_density=0.528, diversity=0.850, yield_score=0.0045, kills=6327, conf=2510, errs=0
+- **a2** — records=8837, throughput=22200418.7/h, info_density=0.505, diversity=0.923, yield_score=0.0047, kills=8413, conf=424, errs=0
+- **b5** — records=8837, throughput=289210909.1/h, info_density=0.585, diversity=0.878, yield_score=0.0052, kills=1320, conf=7517, errs=0
+- **c1** — records=8837, throughput=227237142.9/h, info_density=0.514, diversity=0.840, yield_score=0.0044, kills=7627, conf=1210, errs=0
+- **c2** — records=8837, throughput=205246451.6/h, info_density=0.516, diversity=0.847, yield_score=0.0044, kills=7463, conf=1374, errs=0
+- **c4** — records=8835, throughput=187094117.6/h, info_density=0.502, diversity=0.835, yield_score=0.0042, kills=8634, conf=201, errs=0
+- **d1** — records=8837, throughput=37782897.9/h, info_density=0.598, diversity=0.874, yield_score=0.0053, kills=213, conf=8624, errs=0
+- **d2** — records=8836, throughput=254476800.1/h, info_density=0.554, diversity=0.846, yield_score=0.0047, kills=4069, conf=4767, errs=0
+- **e1** — records=775, throughput=11115537.8/h, info_density=0.200, diversity=0.977, yield_score=0.0020, kills=0, conf=0, errs=0
+- **h1** — records=8836, throughput=155168780.5/h, info_density=0.519, diversity=0.933, yield_score=0.0049, kills=7145, conf=1691, errs=0
+
+
+## batch-20260518T124358Z-a89491
+
+- Started: 2026-05-18T12:43:58.199202+00:00
+- Ended:   2026-05-18T12:44:28.085962+00:00
+- Duration: 0.0083 h
+- Requested: a1,a2,b5,c1,c2,c4,d1,d2,e1,h1
+- Active:    a1,a2,b5,c1,c2,c4,d1,d2,e1,h1
+- Records: 80875 (kills=33029, confirmations=47071, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=8900, throughput=299439252.3/h, info_density=0.528, diversity=0.855, yield_score=0.0046, kills=6374, conf=2526, errs=0
+- **a2** — records=8900, throughput=26219312.6/h, info_density=0.505, diversity=0.923, yield_score=0.0047, kills=8474, conf=426, errs=0
+- **b5** — records=8900, throughput=337263158.0/h, info_density=0.585, diversity=0.871, yield_score=0.0051, kills=1329, conf=7571, errs=0
+- **c1** — records=8900, throughput=296666666.7/h, info_density=0.560, diversity=0.830, yield_score=0.0047, kills=3563, conf=5337, errs=0
+- **c2** — records=8900, throughput=256319999.9/h, info_density=0.580, diversity=0.823, yield_score=0.0048, kills=1822, conf=7078, errs=0
+- **c4** — records=8900, throughput=206709677.5/h, info_density=0.600, diversity=0.826, yield_score=0.0050, kills=0, conf=8900, errs=0
+- **d1** — records=8900, throughput=35403314.9/h, info_density=0.584, diversity=0.869, yield_score=0.0051, kills=1401, conf=7499, errs=0
+- **d2** — records=8900, throughput=344516129.1/h, info_density=0.546, diversity=0.830, yield_score=0.0046, kills=4782, conf=4118, errs=0
+- **e1** — records=775, throughput=10568181.8/h, info_density=0.200, diversity=0.978, yield_score=0.0020, kills=0, conf=0, errs=0
+- **h1** — records=8900, throughput=138103448.2/h, info_density=0.541, diversity=0.916, yield_score=0.0050, kills=5284, conf=3616, errs=0
+
+
+---
+
+## Fire #3 — 2026-05-18 ~12:43Z
+
+Three BUILD items from Fire #2's frontier-analysis ship together. Engine
+now has 10 active generators across 5 families.
+
+### What shipped
+
+- **Counterfactual C2 upgrade** — `_counterfactual_thresholds(orig_k, actual_diff)` returns boundary-adjacent K candidates `{actual_diff, actual_diff-1, actual_diff+1, midpoint}`. Mutations land AT the relation boundary instead of randomly sampling the Fibonacci ladder. Frontier-aligned with Pearl-style counterfactual augmentation (Kaushik et al. ICLR 2020).
+- **C4 generalization** — new generator. Picks SHADOW_CATALOG parents and emits logically-WEAKER variants. Mathematical fact: if parent claim holds, weaker variant MUST hold. C4 is a substrate self-consistency probe; healthy substrate produces ~0% kill rate. Tested propositional implications: `equal ⇒ equal_mod_2`, `equal ⇒ abs_diff_le_K`, `abs_diff_le_K ⇒ abs_diff_le_J for J>K`.
+- **Self-play H1** — new generator. Reads SHADOW_CATALOG records from corpus via new `CorpusReader`, tries to find counter-examples by random object perturbation. Each emission either kills survivor (REJECTED, counter-example found) or confirms robust (SHADOW_CATALOG, survived 30 perturbations). AlphaZero-pattern self-play, no LLM tokens. CorpusReader caches from existing JSONL files.
+- **Contrastive embeddings** (sentence-transformers all-MiniLM-L6-v2, 384-dim) added to diversity scoring with Jaccard fallback. **Default mode: JACCARD** — Fire #3 smoke #1 measured 15× throughput drop with embeddings on (85K→5.5K records/30s). Embedding mode is opt-in via `enable_embedding_diversity()` for periodic deep-diversity checks. Jaccard preserves volume target.
+
+### Two bugs caught at smoke
+
+**Bug 1 — Daemon exhausts generators on a single None.** C4 emitted only 5 records when it should emit thousands. Diagnostic showed C4 in isolation produces 90% (180/200 calls). The daemon's `if rec is None: exhausted[gid] = True` was marking generators dead permanently on a single transient None.
+
+**Fix**: track `consecutive_nones` per generator; mark exhausted only after `CONSECUTIVE_NONE_THRESHOLD = 100` consecutive Nones. Transient None (e.g. C4 finding no useful parent for one tick) is now tolerated.
+
+**Bug 2 — `_evaluate_relation` only matched literal `"abs_diff_le_3"`.** This is the substrate-self-test win: C4 (substrate consistency probe) emitted 98% kills against the mathematical fact that weaker claims must hold. Investigation:
+
+```python
+# Old code:
+if relation == "abs_diff_le_3":
+    return abs(a_val - b_val) <= 3
+# Any other K silently returned False.
+```
+
+C2 mutated K to {0, 1, 2, 4, 5, 8, 13, 21}, C4 generalized to {K+1, K+2, K+5, K+13}, D2 worked off the same evaluator. **All of these had been silently emitting wrong records since Fire #1.** The substrate's inflated kill rates in Fire #1 (C2 at 98%, A1 at 72%) were partly bug artifacts, not real substrate signal.
+
+**Fix**: parse K from `"abs_diff_le_K"` at evaluation time. 12-line change in `a1_catalog_cross_product._evaluate_relation`. 7 regression tests in `test_evaluate_relation_fix.py`.
+
+This is precisely the *substrate-tester catches substrate flaw* pattern Techne's calibration discipline named — and the high-info-density value of C4 (substrate self-test) was demonstrated on its first deployment. C4's design rationale ("emissions confirm; kills surface substrate bugs") proved out immediately.
+
+### Post-fix smoke (30 s, 10 active generators, 0 errors)
+
+- 80,875 records, 33,029 kills, 47,071 confirmations
+- **C4: 0 kills / 8,900 confirms** — 100% self-consistency. Logical implication holds, as it must. Substrate now mathematically clean on weakening claims.
+- **C2: 20% kill rate** (down from 95% pre-fix) — counterfactual mutations correctly identify the threshold boundary. Records concentrate near `actual_diff`.
+- **H1: 59% kill rate** — hunter exposes ~6/10 "survivors" as coincidence. Substrate-level signal: most A1 SHADOW_CATALOG records are NOT robust cross-catalog relations; they're chance equalities/parities. Self-play is doing exactly what it should: separating signal from noise.
+- **D1: 16% kill rate** on neighborhoods (was 3.7% pre-fix; now reflects actual abs_diff_le_K behavior).
+- **D2: 54% kill rate** on margin brackets.
+- **A2: 95% kill rate** on prime-detrended correlation (unchanged; A2 doesn't use abs_diff relations).
+- **B5: 15% kill rate** on conservation laws (unchanged).
+- **E1: 775 literature claims** (unchanged).
+
+### Reflections on technique value (against the verdicts from Fire #2)
+
+1. **Counterfactual augmentation (verdict: BUILD)** — confirmed valuable. C2 now produces 70%+ boundary-adjacent mutations vs ladder-random. Boundary records ARE the high-info population D2 prioritizes; C2 directly feeds D2.
+
+2. **Self-play H1 (verdict: BUILD)** — confirmed transformative. 59% kill rate on past-batch survivors is a substrate-level signal that A1's SHADOW_CATALOG verdict is wildly over-permissive. Self-play produces naturally-contrastive training data (positive parent + negative hunter result paired). When Ergon resumes, this is the cleanest training-pair source we have.
+
+3. **Contrastive embeddings (verdict: BUILD)** — partial win. The semantic-diversity signal works (test_embedding_diversity_distinguishes_semantics passes). But the 15× throughput cost makes it unsuitable as default for volume-mode batches. Right tradeoff for v0.1: keep as opt-in, plan an embedded-mode batch later to compare yield curves under both diversity modes.
+
+### Substrate self-test discipline pays off
+
+The C4 design — "substrate consistency probe whose kill rate should be ~0%" — was the only generator that could have caught Bug #2. Without C4, the abs_diff_le_K silently-broken evaluator would have shipped indefinitely. The journal pattern from Techne SUBSTRATE_FIRE_LOG ("substrate-tester catches substrate flaw") manifested.
+
+### Decisions for Fire #4
+
+Three BUILD items from frontier-analysis ranking:
+- **Active learning / uncertainty sampling F3** — substrate-native importance sampling. Cheap, immediately useful.
+- **A3 functional identity** — substrate-native, fills A-family gap. Tests `f(i(a)) == g(j(b))` for operator pairs `(f, g) ∈ {abs, neg, square, log_floor}`.
+- **B1 operator-rotation** — predicts each opcode's KillVector effect, verifies. Substrate-native test.
+
+### Loop discipline
+
+- Tests: 49 → 56 (+7 for evaluator regression + Fire #3 generators + diversity embedding fixture).
+- Smoke pre-fix-1 → post-fix-1 → post-fix-2: 5K records → 78K records (Jaccard) → 80K records (evaluator fix).
+- Embedding model loaded once at startup (~5s), then runs at 14K encode/sec when enabled.
+- Cross-agent staging mitigation: clean.
+
