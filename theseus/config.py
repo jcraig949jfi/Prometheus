@@ -56,16 +56,16 @@ GENERATOR_STATUS = {
     "f1": "stub",
     "f2": "active",
     "f3": "active",
-    "f4": "stub",
+    "f4": "active",
     # G — symmetry/transformation
     "g1": "stub",
     "g2": "stub",
     "g3": "stub",
     "g4": "active",
-    "g5": "stub",
+    "g5": "active",
     # H — self-feeding
     "h1": "active",
-    "h2": "stub",
+    "h2": "active",
     "h3": "stub_future",  # needs Learner
     "h4": "active",
     # I — local LLM

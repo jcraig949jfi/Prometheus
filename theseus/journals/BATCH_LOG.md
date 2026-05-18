@@ -1064,3 +1064,96 @@ Fire #11 candidate: BUILD-LATER transition. Bayesian optimization (Optuna) over 
 - Smoke: 65K records / 30 s, 0 errors with 26 generators
 - H4 cross-referenced with H1 produces the first substrate-level structural observation about object-vs-invariant axis sensitivity
 
+
+## batch-20260518T133706Z-5c3a10
+
+- Started: 2026-05-18T13:37:06.954422+00:00
+- Ended:   2026-05-18T13:37:36.831575+00:00
+- Duration: 0.0083 h
+- Requested: a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,d1,d2,d3,d4,e1,e3,f2,f3,f4,g4,g5,h1,h2,h4
+- Active:    a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,d1,d2,d3,d4,e1,e3,f2,f3,f4,g4,g5,h1,h2,h4
+- Records: 61194 (kills=31935, confirmations=26847, inconclusive=1637, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=2158, throughput=121387500.0/h, info_density=0.529, diversity=0.857, yield_score=0.0046, kills=1541, conf=617, errs=0
+- **a2** — records=2158, throughput=19087960.7/h, info_density=0.505, diversity=0.959, yield_score=0.0049, kills=2045, conf=113, errs=0
+- **a3** — records=2158, throughput=250606451.9/h, info_density=0.529, diversity=0.864, yield_score=0.0046, kills=1522, conf=636, errs=0
+- **a4** — records=2158, throughput=15475697.2/h, info_density=0.501, diversity=0.907, yield_score=0.0046, kills=2103, conf=1, errs=0
+- **a5** — records=2158, throughput=21520221.6/h, info_density=0.544, diversity=0.892, yield_score=0.0049, kills=712, conf=453, errs=0
+- **b1** — records=2158, throughput=242775000.2/h, info_density=0.600, diversity=0.929, yield_score=0.0056, kills=0, conf=2158, errs=0
+- **b2** — records=2158, throughput=250606451.5/h, info_density=0.565, diversity=0.940, yield_score=0.0054, kills=753, conf=1405, errs=0
+- **b3** — records=2158, throughput=517920000.5/h, info_density=0.542, diversity=0.956, yield_score=0.0052, kills=1253, conf=905, errs=0
+- **b4** — records=2158, throughput=2158000000000.0/h, info_density=0.525, diversity=0.955, yield_score=0.0051, kills=1611, conf=547, errs=0
+- **b5** — records=2158, throughput=123314285.7/h, info_density=0.585, diversity=0.918, yield_score=0.0054, kills=313, conf=1845, errs=0
+- **c1** — records=2158, throughput=250606451.7/h, info_density=0.538, diversity=0.871, yield_score=0.0047, kills=1345, conf=813, errs=0
+- **c2** — records=2158, throughput=125303225.7/h, info_density=0.569, diversity=0.887, yield_score=0.0051, kills=675, conf=1483, errs=0
+- **c3** — records=2158, throughput=49482802.5/h, info_density=0.543, diversity=0.863, yield_score=0.0047, kills=1235, conf=923, errs=0
+- **c4** — records=2158, throughput=84443478.3/h, info_density=0.584, diversity=0.885, yield_score=0.0052, kills=343, conf=1815, errs=0
+- **c5** — records=2158, throughput=242775000.0/h, info_density=0.539, diversity=0.877, yield_score=0.0048, kills=1310, conf=848, errs=0
+- **d1** — records=2158, throughput=20606896.6/h, info_density=0.589, diversity=0.926, yield_score=0.0055, kills=237, conf=1921, errs=0
+- **d2** — records=2158, throughput=485549999.9/h, info_density=0.549, diversity=0.885, yield_score=0.0049, kills=1101, conf=1057, errs=0
+- **d3** — records=2158, throughput=6611744.7/h, info_density=0.644, diversity=0.906, yield_score=0.0059, kills=2149, conf=0, errs=0
+- **d4** — records=2158, throughput=25060645.2/h, info_density=0.529, diversity=0.949, yield_score=0.0051, kills=1540, conf=618, errs=0
+- **e1** — records=775, throughput=8181818.2/h, info_density=0.200, diversity=0.990, yield_score=0.0020, kills=0, conf=0, errs=0
+- **e3** — records=2158, throughput=242775000.0/h, info_density=0.559, diversity=0.955, yield_score=0.0054, kills=890, conf=1268, errs=0
+- **f2** — records=2158, throughput=123314285.8/h, info_density=0.531, diversity=0.868, yield_score=0.0047, kills=1493, conf=665, errs=0
+- **f3** — records=2158, throughput=250606451.7/h, info_density=0.528, diversity=0.867, yield_score=0.0046, kills=1551, conf=607, errs=0
+- **f4** — records=2157, throughput=165217021.3/h, info_density=0.531, diversity=0.865, yield_score=0.0046, kills=1497, conf=660, errs=0
+- **g4** — records=2158, throughput=2158000000000.0/h, info_density=0.595, diversity=0.894, yield_score=0.0054, kills=114, conf=2044, errs=0
+- **g5** — records=2157, throughput=242662500.0/h, info_density=0.593, diversity=0.888, yield_score=0.0053, kills=161, conf=1996, errs=0
+- **h1** — records=2157, throughput=168808695.6/h, info_density=0.521, diversity=0.961, yield_score=0.0051, kills=1707, conf=450, errs=0
+- **h2** — records=2157, throughput=9050349.6/h, info_density=0.664, diversity=0.898, yield_score=0.0060, kills=2157, conf=0, errs=0
+- **h4** — records=2157, throughput=81738947.4/h, info_density=0.560, diversity=0.900, yield_score=0.0051, kills=577, conf=999, errs=0
+
+
+---
+
+## Fire #10 — 2026-05-18 ~13:37Z
+
+Three substrate-native stub fills. **Substrate-native generator catalog effectively complete:** 29/40 active; remaining 11 stubs all require external infrastructure (network mining, L-functions, EC-twist, local LLM, Learner).
+
+### Shipped
+
+- **F4 frontier-pursuit** — samples regions whose coverage is in `[min_cov + 1, min_cov + 3]`. Distinct from F2 (strict min) and F3 (soft inverse-weighted): F4 targets the curriculum middle-band where understanding is being actively built, neither saturated nor untouched.
+
+- **G5 scale-invariance** — tests `rel(k·a, k·b) == rel(a, b)` for k ∈ {2, 3, 5}. Maps which (relation, scale) combos preserve truth. Pure substrate observation: equal preserves under any k; divides preserves; abs_diff_le_K fails for k>1 in narrow bands.
+
+- **H2 multi-method triangulation** — variant of D3. D3 varies seeds (resampling noise); H2 varies METHOD (sample-size × polynomial-degree). Together they bound the INCONCLUSIVE→terminal pathway from two orthogonal directions. Produces step_trace populated with per-method-variant entries (process supervision).
+
+### Smoke (30 s, 29 active generators, 0 errors)
+
+- 61,194 records, 31,935 kills, 26,847 confirmations, 1,637 INCONCLUSIVE
+- **F4: 69% kill rate** — similar to F2/F3 baseline; coverage distribution analysis next fire will show whether band-targeting changes the discovery curve.
+- **G5: 7% kill rate** — relations are *mostly* scale-invariant. The 7% reject pool: abs_diff_le_K combinations where actual_diff sits in (K/k, K], scaling pushes it over the threshold.
+- **H2: 100% kill rate (2,157/2,157)** — *every* INCONCLUSIVE A4 record degrades to REJECTED when triangulated across 3 method variants. Matches D3's 99% pattern from a different angle. **Two orthogonal triangulators agreeing: A4 INCONCLUSIVE records are noise.** The substrate is empirically honest about this.
+- B1, C4 still 0 kills (self-tests clean).
+- D3 + H2 both surface as high-yield (yield_score 0.0059 / 0.0060, highest of all 29) — process-supervision step_trace blend pays off.
+
+### Substrate state milestone
+
+**29/40 generator types active (72.5% of catalog).** All substrate-native types are now operational. Remaining stubs:
+
+- **F1** — anti-recommended (uniform random pairs, low info density)
+- **G1, G2, G3** — need EC twist / L-functions / SL₂(ℤ) machinery (not in v0.1 arsenal)
+- **E2, E4, E5** — need network access (arXiv, LMFDB, Mathworld)
+- **I1-4** — need local LLM (Tier 2 deployment)
+- **J1-3** — need frontier API (Tier 3 surgical use)
+- **H3** — needs Ergon Learner trained
+
+Per the original frontier-analysis ROADMAP: substrate-native portion done; Tier 1 BUILD-LATER transitions appropriate next.
+
+### Decisions for Fire #11
+
+Tier 1 transition. Highest-yield move: **Bayesian optimization (Optuna)** for per-generator hyperparameter tuning. Currently every generator has fixed parameters (A4 sample_size=30, A5 sample_size=30, R²/KS thresholds fixed, etc.) — Optuna would tune them per-generator per-region for actual yield improvement. Single highest-leverage move for the engine's meta-controller. Affects all 29 generators.
+
+Alternative Fire #11: GFlowNet bandit replacement (BUILD-LATER #5; threshold met at 29 generators) — bigger lift (PyTorch dep, GFlowNet semantics), higher payoff at scale.
+
+Choosing Bayesian opt for Fire #11 as the more tractable + universally-applicable first move. GFlowNet can be Fire #12.
+
+### Loop discipline
+
+- Tests: 104 → 110 (+6 for F4 / G5 / H2 + step_trace round-trip from H2)
+- Smoke: 61K records / 30 s, 0 errors with 29 generators
+- H2's process-supervision step_trace (3 method-variant steps per emission) yield_score 0.0060 — currently the engine's top yield-score generator
+

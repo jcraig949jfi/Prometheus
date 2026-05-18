@@ -53,13 +53,6 @@ class F1MonteCarloRandomPairs(StubGenerator):
         return "f1: uniform-random catalog-pair sampling (anti-recommended)"
 
 
-class F4FrontierPursuit(StubGenerator):
-    generator_id = "f4"
-    claim_kind = ClaimKind.INVARIANT_EQUALITY.value
-    def description(self) -> str:
-        return "f4: frontier-pursuit at coverage boundary"
-
-
 # -- Family G (symmetry/transformation) --
 
 class G1GaloisTwist(StubGenerator):
@@ -83,21 +76,7 @@ class G3ModularTransform(StubGenerator):
         return "g3: SL_2(Z) modular-transform test"
 
 
-class G5ScaleInvariance(StubGenerator):
-    generator_id = "g5"
-    claim_kind = ClaimKind.SYMMETRY_TRANSFORM.value
-    def description(self) -> str:
-        return "g5: conformal / scaling-invariance test"
-
-
 # -- Family H (self-feeding) --
-
-class H2TriangulationProtocol(StubGenerator):
-    generator_id = "h2"
-    claim_kind = ClaimKind.KILL_NEIGHBORHOOD.value
-    def description(self) -> str:
-        return "h2: INCONCLUSIVE H5 triangulation protocol generator"
-
 
 class H3LearnerCuriosity(StubGenerator):
     generator_id = "h3"

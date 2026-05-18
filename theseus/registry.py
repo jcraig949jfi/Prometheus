@@ -34,20 +34,20 @@ from theseus.generators.e1_research_batch_parser import E1ResearchBatchParserGen
 from theseus.generators.e3_oeis_mining import E3OEISMiningGenerator
 from theseus.generators.f2_anti_frequency import F2AntiFrequencyGenerator
 from theseus.generators.f3_importance_sampling import F3ImportanceSamplingGenerator
+from theseus.generators.f4_frontier_pursuit import F4FrontierPursuitGenerator
 from theseus.generators.g4_reflection_duality import G4ReflectionDualityGenerator
+from theseus.generators.g5_scale_invariance import G5ScaleInvarianceGenerator
 from theseus.generators.h1_self_play_hunter import H1SelfPlayHunterGenerator
+from theseus.generators.h2_triangulation_protocol import H2TriangulationProtocolGenerator
 from theseus.generators.h4_bridge_extension import H4BridgeExtensionGenerator
 from theseus.generators.stubs.all_stubs import (
     E2ArxivAbstractMining,
     E4LMFDBKnowledgeMining,
     E5MathWorldWikipediaScrape,
     F1MonteCarloRandomPairs,
-    F4FrontierPursuit,
     G1GaloisTwist,
     G2FunctionalEquation,
     G3ModularTransform,
-    G5ScaleInvariance,
-    H2TriangulationProtocol,
     H3LearnerCuriosity,
     I1ConjectureParaphrasing,
     I2DomainAnalogy,
@@ -84,20 +84,20 @@ REGISTRY: Dict[str, Type[Generator]] = {
     "e3": E3OEISMiningGenerator,
     "f2": F2AntiFrequencyGenerator,
     "f3": F3ImportanceSamplingGenerator,
+    "f4": F4FrontierPursuitGenerator,
     "g4": G4ReflectionDualityGenerator,
+    "g5": G5ScaleInvarianceGenerator,
     "h1": H1SelfPlayHunterGenerator,
+    "h2": H2TriangulationProtocolGenerator,
     "h4": H4BridgeExtensionGenerator,
     # Stubs
     "e2": E2ArxivAbstractMining,
     "e4": E4LMFDBKnowledgeMining,
     "e5": E5MathWorldWikipediaScrape,
     "f1": F1MonteCarloRandomPairs,
-    "f4": F4FrontierPursuit,
     "g1": G1GaloisTwist,
     "g2": G2FunctionalEquation,
     "g3": G3ModularTransform,
-    "g5": G5ScaleInvariance,
-    "h2": H2TriangulationProtocol,
     "h3": H3LearnerCuriosity,
     "i1": I1ConjectureParaphrasing,
     "i2": I2DomainAnalogy,

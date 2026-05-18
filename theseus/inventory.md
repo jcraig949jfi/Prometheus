@@ -73,7 +73,8 @@ Status legend:
   (pick min-coverage region) — **active**
 - **F3** `f3_importance_sampling` — active-learning style sampling
   weighted ∝ 1/(1+coverage)^2 toward under-explored regions — **active**
-- **F4** `f4_frontier_pursuit` — sample at coverage boundary — **stub**
+- **F4** `f4_frontier_pursuit` — sample from coverage-frontier band
+  (mid-coverage regions) — **active**
 
 ## Family G — Symmetry / transformation
 
@@ -82,13 +83,15 @@ Status legend:
 - **G3** `g3_modular_transform` — apply `SL_2(Z)` — **stub**
 - **G4** `g4_reflection_duality` — reflection-symmetry test
   (rel(a,b) == rel(-a,b)) — **active**
-- **G5** `g5_scale_invariance` — conformal/scaling relationships — **stub**
+- **G5** `g5_scale_invariance` — test rel(k·a, k·b) == rel(a, b)
+  for k ∈ {2, 3, 5} — **active**
 
 ## Family H — Self-feeding
 
 - **H1** `h1_self_play_hunter` — proposer-vs-hunter self-play on
   corpus survivors (AlphaZero pattern) — **active**
-- **H2** `h2_triangulation_protocol` — INCONCLUSIVE pathway generator — **stub**
+- **H2** `h2_triangulation_protocol` — multi-method triangulation
+  (3 method variants over INCONCLUSIVE A4 records) — **active**
 - **H3** `h3_learner_curiosity` — query Learner's high-uncertainty
   regions — **stub_future**
 - **H4** `h4_bridge_extension` — multi-invariant bridge connectivity
@@ -110,7 +113,7 @@ Status legend:
 
 ---
 
-## Active set (Fire #9, 26 generators): 5/5 A + 5/5 B + 5/5 C + 4/4 D + 2/5 E + 2/4 F + 1/5 G + 2/4 H
+## Active set (Fire #10, 29 generators): 5/5 A + 5/5 B + 5/5 C + 4/4 D + 2/5 E + 3/4 F + 2/5 G + 3/4 H — substrate-native catalog effectively complete (remaining stubs need external infrastructure)
 
 Rationale (per CHARTER.md):
 - **A1** — highest throughput, no LLM cost, anti-conventional novelty
