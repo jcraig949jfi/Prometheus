@@ -66,7 +66,10 @@ function AgentRow({ a }) {
         {!a.expected && <span className="ml-2 text-xs text-gray-500">(unexpected)</span>}
       </td>
       <td className={`px-3 py-2 ${machineClass(a.machine)}`}>{a.machine}</td>
-      <td className="px-3 py-2 text-gray-400 text-sm">{a.kind}</td>
+      <td className="px-3 py-2 text-gray-400 text-sm" title={a.role || ""}>
+        {a.kind}
+        {a.operator && <span className="text-gray-500"> ← {a.operator}</span>}
+      </td>
       <td className="px-3 py-2">
         <span className={`pill status-${a.status}`}>{a.status}</span>
       </td>

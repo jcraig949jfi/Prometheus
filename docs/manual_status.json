@@ -79,7 +79,37 @@
       "machine": "?",
       "operational_status": "dormant",
       "note": "Last analysis predates current ledger. Re-running would update concept weights with 5K+ entry context."
+    },
+    "Aporia": {
+      "machine": "M1",
+      "kind": "operator",
+      "operational_status": "active (Claude Code session, manually driven)",
+      "role": "void detection, Deep Research dispatch, anti-anchor verification, Clio supervision",
+      "tools_supervised": ["Clio"],
+      "telemetry_state": "session_telemetry (register_session + log_work pattern)"
+    },
+    "Techne": {
+      "machine": "M1",
+      "kind": "operator",
+      "operational_status": "active (Claude Code session, manually driven)",
+      "role": "substrate generation — Σ-kernel primitives, anti-anchor curation, claim-stack verification",
+      "telemetry_state": "session_telemetry (register_session + log_work pattern)"
+    },
+    "Clio": {
+      "machine": "M1",
+      "kind": "tool",
+      "operator": "Aporia",
+      "operational_status": "running (supervised by Aporia)",
+      "role": "paper scanner across arxiv / OpenAlex / Semantic Scholar; surfaces candidate anti-anchors + voids to Aporia",
+      "note": "First example of the operator/tool architectural pattern. Aporia is the Claude agent (judgment + responsibility); Clio is the agentic mechanical component she built and supervises. Other operators (Techne) are encouraged to build tools following the Clio pattern: register under their own name, log_work via session_telemetry, store an operator field naming the supervising agent."
     }
+  },
+  "operator_tool_relationships": {
+    "doc": "Operators are Claude sessions with roles + judgment; tools are agentic mechanical components an operator builds and supervises. Surfaced in EXPECTED_AGENTS (scripts/portfolio_monitor.py) and the dashboard so the orchestration carries the relationship.",
+    "pairs": [
+      {"operator": "Aporia", "tools": ["Clio"]},
+      {"operator": "Techne", "tools": []}
+    ]
   },
   "active_pipelines": [
     "M3 Hephaestus forge \u2014 continuous substrate generation (Frame H tools)",

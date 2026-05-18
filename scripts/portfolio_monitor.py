@@ -59,16 +59,31 @@ JSON_OUTPUT_PATH = REPO_ROOT / "docs" / "state.json"  # GitHub Pages serves from
 
 # Agents we expect to see in the portfolio, with their assigned machine.
 # Keep in sync with pivot/agent_portfolio_and_monitoring_2026-05-12.md.
+# `kind` taxonomy: operator (Claude session with roles + judgment), daemon
+# (long-running process), tool (agentic mechanical component supervised by an
+# operator), pipeline-stage (one stage of an orchestrated chain).
+# `operator` (optional) names the operator agent that supervises a tool.
 EXPECTED_AGENTS = {
-    "Apollo":     {"machine": "M2", "kind": "evolutionary"},
-    "Hephaestus": {"machine": "M3", "kind": "forge"},
-    "Nemesis":    {"machine": "M3", "kind": "adversarial"},
-    "Nous":       {"machine": "M4", "kind": "combinatorial"},
-    "Coeus":      {"machine": "?",  "kind": "causal"},
-    "Aletheia":   {"machine": "?",  "kind": "knowledge_graph"},
-    "Eos":        {"machine": "?",  "kind": "fetch"},
-    "Hermes":     {"machine": "?",  "kind": "alerting"},
-    "Pronoia":    {"machine": "M4", "kind": "scanner"},
+    # Daemons (continuous background processes)
+    "Apollo":     {"machine": "M2", "kind": "daemon",    "role": "evolutionary"},
+    "Hephaestus": {"machine": "M3", "kind": "daemon",    "role": "forge"},
+    "Nemesis":    {"machine": "M3", "kind": "daemon",    "role": "adversarial"},
+    "Nous":       {"machine": "M4", "kind": "daemon",    "role": "combinatorial"},
+    "Pronoia":    {"machine": "M4", "kind": "daemon",    "role": "reporting orchestrator"},
+
+    # Operators (Claude sessions with roles + judgment, manually driven)
+    "Aporia":     {"machine": "M1", "kind": "operator",  "role": "void detection + Deep Research + Clio supervision"},
+    "Techne":     {"machine": "M1", "kind": "operator",  "role": "substrate / Σ-kernel toolsmith"},
+
+    # Tools (agentic mechanical components supervised by an operator)
+    "Clio":       {"machine": "M1", "kind": "tool",      "role": "paper scanner (arxiv/openalex/semantic-scholar)",
+                   "operator": "Aporia"},
+
+    # Pipeline-stage agents (run via pronoia.py scan; transient per cycle)
+    "Coeus":      {"machine": "?",  "kind": "pipeline-stage", "role": "causal analysis"},
+    "Aletheia":   {"machine": "?",  "kind": "pipeline-stage", "role": "knowledge graph harvester"},
+    "Eos":        {"machine": "?",  "kind": "pipeline-stage", "role": "external scanner"},
+    "Hermes":     {"machine": "?",  "kind": "pipeline-stage", "role": "alerting (deprecated — see pivot/hermes_deprecation_2026-05-17.md)"},
     # add more as RESUME docs land
 }
 
@@ -335,6 +350,8 @@ def build_dashboard_state(r: redis.Redis) -> dict:
             "expected": True,
             "machine": machine,
             "kind": meta["kind"],
+            "role": meta.get("role"),
+            "operator": meta.get("operator"),
             "status": status_label,
             "heartbeat_age_sec": age,
             "current_op": op,
@@ -502,6 +519,8 @@ def build_degraded_state_from_postgres(now: datetime, redis_error: str) -> dict:
                 "expected": True,
                 "machine": pg.get("machine") or meta["machine"],
                 "kind": meta["kind"],
+                "role": meta.get("role"),
+                "operator": meta.get("operator"),
                 "status": status_label,
                 "heartbeat_age_sec": age,
                 "current_op": op or "(from postgres mirror)",
@@ -515,6 +534,8 @@ def build_degraded_state_from_postgres(now: datetime, redis_error: str) -> dict:
                 "expected": True,
                 "machine": meta["machine"],
                 "kind": meta["kind"],
+                "role": meta.get("role"),
+                "operator": meta.get("operator"),
                 "status": "UNKNOWN",
                 "heartbeat_age_sec": None,
                 "current_op": "(no postgres heartbeat — see manual_status)",
