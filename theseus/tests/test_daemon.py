@@ -32,6 +32,7 @@ def test_run_batch_short_emits_records(isolated_paths):
         batch_hours=0.001,  # ~3.6 seconds
         seed=0,
         corpus_dir=isolated_paths / "corpus",
+        emit_telemetry=False,  # skip Postgres/Redis calls in tests
     )
     assert bm.total_records > 0
     corpus_files = list((isolated_paths / "corpus").glob("*.jsonl"))
@@ -48,6 +49,7 @@ def test_run_batch_filters_stubs(isolated_paths):
         batch_hours=0.001,
         seed=0,
         corpus_dir=isolated_paths / "corpus",
+        emit_telemetry=False,
     )
     # Only a1 ran; f1 dropped
     assert "a1" in bm.per_generator

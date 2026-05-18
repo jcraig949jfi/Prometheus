@@ -27,9 +27,16 @@ from theseus.config import (
     DEFAULT_BANDIT_EPSILON,
     DEFAULT_BATCH_HOURS,
 )
+from theseus.orchestration import (
+    register_theseus,
+    log_batch_work,
+    maybe_emit_discoveries,
+    update_lifetime_after_batch,
+)
 from theseus.bandit.epsilon_greedy import EpsilonGreedyBandit
 from theseus.emit.corpus_writer import CorpusWriter
 from theseus.emit.record_schema import TheseusRecord, Verdict
+from typing import List as _List_for_typing
 from theseus.generators.base import Generator, GeneratorStatus
 from theseus.generators.c1_claim_mutation import C1ClaimMutationGenerator
 from theseus.generators.c2_threshold_mutation import C2ThresholdMutationGenerator
@@ -102,14 +109,29 @@ def run_batch(
     seed: int = 42,
     batch_id: Optional[str] = None,
     corpus_dir: Optional[Path] = None,
+    emit_telemetry: bool = True,
 ) -> BatchMetrics:
-    """Run one batch. Returns BatchMetrics."""
+    """Run one batch. Returns BatchMetrics.
+
+    If `emit_telemetry` is True (default), calls into the orchestration
+    layer at batch start + end: register_theseus, log_batch_work, and
+    maybe_emit_discoveries for high-training-weight records.
+    """
     if batch_id is None:
         batch_id = _new_batch_id()
 
-    started_at = datetime.now(timezone.utc).isoformat()
+    started_at_iso = datetime.now(timezone.utc).isoformat()
+    started_at_dt = datetime.now(timezone.utc)
     started_mono = time.monotonic()
     budget_s = batch_hours * 3600.0
+
+    if emit_telemetry:
+        register_theseus(
+            target_generators=list(generator_ids),
+            triggered_by="schedule",
+            last_cycle_id=batch_id,
+            errors_this_cycle=[],
+        )
 
     # Filter out stubs that can't emit
     runnable = []
@@ -123,7 +145,7 @@ def run_batch(
         # Nothing to do; emit empty batch
         bm = BatchMetrics(
             batch_id=batch_id,
-            started_at=started_at,
+            started_at=started_at_iso,
             ended_at=datetime.now(timezone.utc).isoformat(),
             duration_hours=0.0,
             active_generators=list(generator_ids),
@@ -134,6 +156,9 @@ def run_batch(
     instances = _instantiate_generators(runnable, batch_id, seed)
     writer = CorpusWriter(batch_id=batch_id, corpus_dir=corpus_dir)
     tracker = YieldTracker()
+    # Track records for telemetry discovery emission (cap at 2000 to bound memory)
+    telemetry_record_sample: List[TheseusRecord] = []
+    TELEMETRY_SAMPLE_CAP = 2000
 
     # Round-robin tick loop. Generators that return None on a single
     # tick are NOT marked exhausted — they may have hit a transient
@@ -169,6 +194,11 @@ def run_batch(
             writer.write(rec)
             tracker.record_emission(rec)
             _wire_feedback(instances, rec)
+            if (
+                emit_telemetry
+                and len(telemetry_record_sample) < TELEMETRY_SAMPLE_CAP
+            ):
+                telemetry_record_sample.append(rec)
         tick_count += 1
 
     ended_at = datetime.now(timezone.utc).isoformat()
@@ -177,7 +207,7 @@ def run_batch(
     per_gen = tracker.finalize()
     bm = BatchMetrics(
         batch_id=batch_id,
-        started_at=started_at,
+        started_at=started_at_iso,
         ended_at=ended_at,
         duration_hours=duration_hours,
         active_generators=list(generator_ids),
@@ -186,6 +216,24 @@ def run_batch(
         bm.add(m)
 
     _journal_batch(bm, generator_ids, instances)
+
+    # Orchestration layer: log work, emit discoveries, update lifetime stats.
+    if emit_telemetry:
+        n_discoveries = maybe_emit_discoveries(telemetry_record_sample)
+        log_batch_work(
+            batch_metrics=bm,
+            requested_generators=list(generator_ids),
+            n_discoveries_emitted=n_discoveries,
+            started_at=started_at_dt,
+        )
+        update_lifetime_after_batch(bm, n_discoveries_emitted=n_discoveries)
+        # Re-register with refreshed status_json now that the batch is done
+        register_theseus(
+            target_generators=list(generator_ids),
+            triggered_by="schedule",
+            last_cycle_id=batch_id,
+        )
+
     return bm
 
 

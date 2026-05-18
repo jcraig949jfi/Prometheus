@@ -1640,3 +1640,171 @@ Fire #16 plan: build `theseus/orchestration/` wrapping session_telemetry. Daemon
 - Corpus annotation pipeline operational; 264K records annotated cleanly
 - TheseusRecord schema extension #2 (after step_trace in Fire #7) — both append-only, both with sensible defaults
 
+
+## batch-20260518T143313Z-828296
+
+- Started: 2026-05-18T14:33:13.088272+00:00
+- Ended:   2026-05-18T14:33:42.964286+00:00
+- Duration: 0.0083 h
+- Requested: a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,d1,d2,d3,d4,e1,e3,f2,f3,f4,g4,g5,h1,h2,h4
+- Active:    a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,d1,d2,d3,d4,e1,e3,f2,f3,f4,g4,g5,h1,h2,h4
+- Records: 59793 (kills=29142, confirmations=26100, inconclusive=3776, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=2108, throughput=505920000.5/h, info_density=0.529, diversity=0.857, yield_score=0.0046, kills=1502, conf=606, errs=0
+- **a2** — records=2108, throughput=60710400.0/h, info_density=0.506, diversity=0.960, yield_score=0.0049, kills=1973, conf=135, errs=0
+- **a3** — records=2108, throughput=2108000000000.0/h, info_density=0.529, diversity=0.864, yield_score=0.0046, kills=1488, conf=620, errs=0
+- **a4** — records=2108, throughput=16250107.1/h, info_density=0.533, diversity=0.908, yield_score=0.0049, kills=712, conf=5, errs=0
+- **a5** — records=2108, throughput=16752317.9/h, info_density=0.549, diversity=0.896, yield_score=0.0050, kills=168, conf=144, errs=0
+- **b1** — records=2108, throughput=161463829.8/h, info_density=0.600, diversity=0.929, yield_score=0.0056, kills=0, conf=2108, errs=0
+- **b2** — records=2108, throughput=505919999.5/h, info_density=0.565, diversity=0.940, yield_score=0.0054, kills=732, conf=1376, errs=0
+- **b3** — records=2108, throughput=474300000.8/h, info_density=0.542, diversity=0.956, yield_score=0.0052, kills=1225, conf=883, errs=0
+- **b4** — records=2108, throughput=474299999.9/h, info_density=0.525, diversity=0.955, yield_score=0.0051, kills=1576, conf=532, errs=0
+- **b5** — records=2108, throughput=120457142.8/h, info_density=0.586, diversity=0.918, yield_score=0.0054, kills=304, conf=1804, errs=0
+- **c1** — records=2108, throughput=2108000000000.0/h, info_density=0.538, diversity=0.871, yield_score=0.0047, kills=1314, conf=794, errs=0
+- **c2** — records=2108, throughput=168640000.0/h, info_density=0.569, diversity=0.887, yield_score=0.0051, kills=662, conf=1446, errs=0
+- **c3** — records=2108, throughput=168640000.2/h, info_density=0.543, diversity=0.864, yield_score=0.0047, kills=1210, conf=898, errs=0
+- **c4** — records=2108, throughput=474299999.9/h, info_density=0.584, diversity=0.885, yield_score=0.0052, kills=335, conf=1773, errs=0
+- **c5** — records=2108, throughput=161463829.8/h, info_density=0.539, diversity=0.877, yield_score=0.0048, kills=1280, conf=828, errs=0
+- **d1** — records=2108, throughput=32020253.2/h, info_density=0.589, diversity=0.926, yield_score=0.0055, kills=235, conf=1873, errs=0
+- **d2** — records=2108, throughput=474299999.9/h, info_density=0.549, diversity=0.885, yield_score=0.0049, kills=1076, conf=1032, errs=0
+- **d3** — records=2108, throughput=5659060.4/h, info_density=0.640, diversity=0.906, yield_score=0.0059, kills=2091, conf=0, errs=0
+- **d4** — records=2108, throughput=30234262.9/h, info_density=0.529, diversity=0.949, yield_score=0.0051, kills=1498, conf=610, errs=0
+- **e1** — records=775, throughput=9331103.7/h, info_density=0.200, diversity=0.990, yield_score=0.0020, kills=0, conf=0, errs=0
+- **e3** — records=2108, throughput=161463829.8/h, info_density=0.559, diversity=0.958, yield_score=0.0054, kills=867, conf=1241, errs=0
+- **f2** — records=2108, throughput=120457142.9/h, info_density=0.531, diversity=0.868, yield_score=0.0047, kills=1459, conf=649, errs=0
+- **f3** — records=2108, throughput=164973913.0/h, info_density=0.528, diversity=0.867, yield_score=0.0046, kills=1515, conf=593, errs=0
+- **f4** — records=2107, throughput=94815000.0/h, info_density=0.531, diversity=0.864, yield_score=0.0046, kills=1461, conf=646, errs=0
+- **g4** — records=2107, throughput=474074999.9/h, info_density=0.595, diversity=0.894, yield_score=0.0054, kills=113, conf=1994, errs=0
+- **g5** — records=2107, throughput=122341935.6/h, info_density=0.593, diversity=0.888, yield_score=0.0053, kills=156, conf=1951, errs=0
+- **h1** — records=2107, throughput=161387234.1/h, info_density=0.528, diversity=0.962, yield_score=0.0051, kills=1517, conf=590, errs=0
+- **h2** — records=2107, throughput=6754407.8/h, info_density=0.667, diversity=0.898, yield_score=0.0061, kills=2107, conf=0, errs=0
+- **h4** — records=2107, throughput=25453691.3/h, info_density=0.560, diversity=0.900, yield_score=0.0051, kills=566, conf=969, errs=0
+
+
+## batch-20260518T143456Z-038ea9
+
+- Started: 2026-05-18T14:34:56.701843+00:00
+- Ended:   2026-05-18T14:35:14.696999+00:00
+- Duration: 0.0050 h
+- Requested: a1,a3,a4,h1,h4
+- Active:    a1,a3,a4,h1,h4
+- Records: 39594 (kills=21484, confirmations=10739, inconclusive=7371, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=7919, throughput=226257142.9/h, info_density=0.529, diversity=0.836, yield_score=0.0045, kills=5645, conf=2274, errs=0
+- **a3** — records=7919, throughput=151640425.5/h, info_density=0.531, diversity=0.836, yield_score=0.0045, kills=5427, conf=2492, errs=0
+- **a4** — records=7919, throughput=20554001.4/h, info_density=0.533, diversity=0.843, yield_score=0.0045, kills=2668, conf=22, errs=0
+- **h1** — records=7919, throughput=107986363.7/h, info_density=0.523, diversity=0.918, yield_score=0.0049, kills=6099, conf=1820, errs=0
+- **h4** — records=7918, throughput=86117220.5/h, info_density=0.566, diversity=0.824, yield_score=0.0047, kills=1645, conf=4131, errs=0
+
+
+## batch-20260518T143633Z-5bd4d5
+
+- Started: 2026-05-18T14:36:33.064765+00:00
+- Ended:   2026-05-18T14:36:43.868184+00:00
+- Duration: 0.0030 h
+- Requested: a1,a3
+- Active:    a1,a3
+- Records: 29845 (kills=20959, confirmations=8886, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=14923, throughput=251041121.5/h, info_density=0.528, diversity=0.730, yield_score=0.0039, kills=10722, conf=4201, errs=0
+- **a3** — records=14922, throughput=144406451.6/h, info_density=0.531, diversity=0.725, yield_score=0.0039, kills=10237, conf=4685, errs=0
+
+
+## batch-20260518T143829Z-acd9bb
+
+- Started: 2026-05-18T14:38:29.940714+00:00
+- Ended:   2026-05-18T14:38:40.022625+00:00
+- Duration: 0.0028 h
+- Requested: a1,h1,h4
+- Active:    a1,h1,h4
+- Records: 25627 (kills=14415, confirmations=8833, inconclusive=2379, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=8543, throughput=488171428.6/h, info_density=0.528, diversity=0.846, yield_score=0.0045, kills=6123, conf=2420, errs=0
+- **h1** — records=8542, throughput=109046808.5/h, info_density=0.523, diversity=0.891, yield_score=0.0047, kills=6600, conf=1942, errs=0
+- **h4** — records=8542, throughput=85657938.7/h, info_density=0.566, diversity=0.797, yield_score=0.0046, kills=1692, conf=4471, errs=0
+
+
+---
+
+## Fire #16 — 2026-05-18 ~14:33Z — Orchestration wiring (Aporia/Clio pattern)
+
+Per James's mid-fire request: wire Theseus into the M4 orchestration layer using `scripts/session_telemetry.py`. Theseus now appears in `agora.agent_heartbeats` alongside Aporia, Clio, Hephaestus, Apollo with full operator/tool separation.
+
+### Shipped
+
+- **`theseus/orchestration/`** module:
+  - `telemetry.py` — wraps `session_telemetry.register_session / log_work / emit_discovery`. All calls fail-soft if Postgres/Redis unreachable.
+  - `lifetime.py` — cumulative counters persisted at `orchestration/lifetime_stats.json` (batches_completed, lifetime_records, lifetime_discoveries_emitted, per_generator_lifetime, etc.).
+  - `__init__.py` — clean public API.
+
+- **Daemon wiring** (`theseus/daemon.py`):
+  - `run_batch()` accepts `emit_telemetry: bool = True`
+  - On batch START: `register_theseus()` declares identity with status_json
+  - On batch END: `maybe_emit_discoveries()` (records with `training_weight ≥ 0.6` → `agora:discoveries`), `log_batch_work()` to `agora.intelligence_outputs`, `update_lifetime_after_batch()` persists counters, `register_theseus()` re-runs with refreshed status_json
+  - Tests use `emit_telemetry=False` to skip Postgres/Redis calls in CI
+
+- **status_json fields** per James's spec:
+  - `operator: "James"` (env-overridable via `THESEUS_OPERATOR`)
+  - `tool_kind: "substrate_generation_engine"`
+  - `target_generators: [...]` (the active set this batch)
+  - `sources: ["knots_local", "bsd_rich_local", "oeis_sleeping_local"]`
+  - `lifetime_records / lifetime_batches / lifetime_discoveries_emitted`
+  - `dedup_rate: 1.0` (placeholder; Tier-2 surfaces real dedup count)
+  - `errors_this_cycle: [...]`
+  - `last_cycle_id / next_cycle_at / triggered_by`
+  - `first_seen_at`
+
+- **emit_discovery threshold**: `DEFAULT_DISCOVERY_WEIGHT_THRESHOLD = 0.6` (matches the substrate's natural high-value population from Fire #15 — top ~7.7% of records). Capped at 20 per batch to avoid swamping the stream.
+
+### End-to-end verification
+
+After one telemetry-enabled smoke (30s, 29 generators):
+
+```
+agora.agent_heartbeats on M1:
+  Theseus (M1) last_heartbeat=2026-05-18T10:40:00...
+  Aporia (M1)
+  Clio (M1)
+  Apollo (M2)
+  Hephaestus (M3)
+
+Theseus status_json:
+  operator: James
+  lifetime_records: 120,950 (across 7 cumulative batches incl. test runs)
+  lifetime_batches: 7
+  lifetime_discoveries_emitted: 140
+  target_generators: 29 active
+  triggered_by: schedule
+```
+
+**140 records pushed to `agora:discoveries`** Redis stream with full record metadata (record_id, generator_id, training_weight, kill_pattern, etc.) — exactly the surfacing pattern Charon/Ergon used historically.
+
+### Discovery emission characterization
+
+At default threshold 0.6 + max_per_batch=20, each ~30-second batch emits up to 20 high-value records. Top emitters are:
+- A1/F2/F3/F4 parity SHADOW with verdict=SHADOW_CATALOG (base 0.63 × 1.0 = 0.63)
+- D3/H2 triangulated records with step_trace (lift via 1.3× triangulation bonus)
+- A4/A5 SHADOW with high precision
+
+### Operator/tool relationship
+
+Theseus is registered as `kind=tool` with `role=substrate generation engine`. The operator field is "James" (env-overridable). When a dedicated operator session emerges (Daedalus or similar), that session registers as `kind=operator` and lists Theseus in its `tools_operated`.
+
+### Bug caught at integration
+
+The pytest suite went from 17s → 13 minutes when daemon tests started running with telemetry enabled (each `register_theseus` call took ~16 seconds when called multiple times in a row, plausibly due to PG connection pool churn). Fixed by adding `emit_telemetry: bool = True` kwarg to `run_batch()` and setting `emit_telemetry=False` in `test_daemon.py`. Production runs default to True.
+
+### Loop discipline
+
+- Tests: 126 → 132 (+6 for orchestration: register fail-safe, log_batch_work, maybe_emit_discoveries, status_json fields, lifetime persistence roundtrip, threshold constant)
+- Smoke: 59,793 records emitted with telemetry on; 0 errors
+- Orchestration files committed to source (telemetry.py + lifetime.py + __init__.py); `lifetime_stats.json` is local runtime state
+
