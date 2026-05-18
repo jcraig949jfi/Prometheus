@@ -16,24 +16,24 @@ from theseus.generators.a2_statistical_correlation import A2StatisticalCorrelati
 from theseus.generators.a3_functional_identity import A3FunctionalIdentityGenerator
 from theseus.generators.a4_symbolic_regression import A4SymbolicRegressionGenerator
 from theseus.generators.b1_operator_rotation import B1OperatorRotationGenerator
+from theseus.generators.b2_composition_test import B2CompositionTestGenerator
 from theseus.generators.b5_conservation_law import B5ConservationLawGenerator
 from theseus.generators.c1_claim_mutation import C1ClaimMutationGenerator
 from theseus.generators.c2_threshold_mutation import C2ThresholdMutationGenerator
 from theseus.generators.c4_generalization import C4GeneralizationGenerator
+from theseus.generators.c5_specialization import C5SpecializationGenerator
 from theseus.generators.d1_kill_neighborhood import D1KillNeighborhoodGenerator
 from theseus.generators.d2_margin_bracket import D2MarginBracketGenerator
+from theseus.generators.d3_triangulation_seeds import D3TriangulationSeedsGenerator
 from theseus.generators.e1_research_batch_parser import E1ResearchBatchParserGenerator
 from theseus.generators.e3_oeis_mining import E3OEISMiningGenerator
 from theseus.generators.f3_importance_sampling import F3ImportanceSamplingGenerator
 from theseus.generators.h1_self_play_hunter import H1SelfPlayHunterGenerator
 from theseus.generators.stubs.all_stubs import (
     A5DistributionMatch,
-    B2CompositionTest,
     B3InverseTest,
     B4FixedPointHunt,
     C3RegionSlide,
-    C5Specialization,
-    D3TriangulationSeeds,
     D4BoundaryCrossing,
     E2ArxivAbstractMining,
     E4LMFDBKnowledgeMining,
@@ -66,24 +66,24 @@ REGISTRY: Dict[str, Type[Generator]] = {
     "a3": A3FunctionalIdentityGenerator,
     "a4": A4SymbolicRegressionGenerator,
     "b1": B1OperatorRotationGenerator,
+    "b2": B2CompositionTestGenerator,
     "b5": B5ConservationLawGenerator,
     "c1": C1ClaimMutationGenerator,
     "c2": C2ThresholdMutationGenerator,
     "c4": C4GeneralizationGenerator,
+    "c5": C5SpecializationGenerator,
     "d1": D1KillNeighborhoodGenerator,
     "d2": D2MarginBracketGenerator,
+    "d3": D3TriangulationSeedsGenerator,
     "e1": E1ResearchBatchParserGenerator,
     "e3": E3OEISMiningGenerator,
     "f3": F3ImportanceSamplingGenerator,
     "h1": H1SelfPlayHunterGenerator,
     # Stubs
     "a5": A5DistributionMatch,
-    "b2": B2CompositionTest,
     "b3": B3InverseTest,
     "b4": B4FixedPointHunt,
     "c3": C3RegionSlide,
-    "c5": C5Specialization,
-    "d3": D3TriangulationSeeds,
     "d4": D4BoundaryCrossing,
     "e2": E2ArxivAbstractMining,
     "e4": E4LMFDBKnowledgeMining,

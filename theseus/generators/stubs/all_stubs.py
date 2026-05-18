@@ -24,13 +24,6 @@ class A5DistributionMatch(StubGenerator):
 
 # -- Family B (operator-action) --
 
-class B2CompositionTest(StubGenerator):
-    generator_id = "b2"
-    claim_kind = ClaimKind.COMPOSITION_TEST.value
-    def description(self) -> str:
-        return "b2: (op1 ∘ op2)(x) == (op2 ∘ op1)(x) commutativity test"
-
-
 class B3InverseTest(StubGenerator):
     generator_id = "b3"
     claim_kind = ClaimKind.COMPOSITION_TEST.value
@@ -54,21 +47,7 @@ class C3RegionSlide(StubGenerator):
         return "c3: coordinate-chart region slide"
 
 
-class C5Specialization(StubGenerator):
-    generator_id = "c5"
-    claim_kind = ClaimKind.MUTATION.value
-    def description(self) -> str:
-        return "c5: add-a-constraint specialization mutation"
-
-
 # -- Family D (kill-neighborhood) --
-
-class D3TriangulationSeeds(StubGenerator):
-    generator_id = "d3"
-    claim_kind = ClaimKind.KILL_NEIGHBORHOOD.value
-    def description(self) -> str:
-        return "d3: INCONCLUSIVE → adjacent precision/method triangulation seeds"
-
 
 class D4BoundaryCrossing(StubGenerator):
     generator_id = "d4"

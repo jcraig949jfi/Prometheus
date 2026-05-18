@@ -27,7 +27,8 @@ Status legend:
 
 - **B1** `b1_operator_rotation` — composition-cycle test
   (mirror^n predicted vs actual; substrate self-test) — **active**
-- **B2** `b2_composition_test` — does `(op1 ∘ op2)(x) == op2(op1(x))`? — **stub**
+- **B2** `b2_composition_test` — operator-pair commutativity test
+  over integer-transform operators — **active**
 - **B3** `b3_inverse_test` — `op⁻¹(op(x)) == x` for invertibles — **stub**
 - **B4** `b4_fixed_point_hunt` — does `op(x) == x` have non-trivial
   solutions in this catalog? — **stub**
@@ -40,15 +41,16 @@ Status legend:
 - **C2** `c2_threshold_mutation` — vary threshold in inequality claims — **active**
 - **C3** `c3_region_slide` — slide the coordinate-chart region — **stub**
 - **C4** `c4_generalization` — drop a constraint, retest — **active**
-- **C5** `c5_specialization` — add a constraint, retest — **stub**
+- **C5** `c5_specialization` — strictly-stronger relation mutation
+  (boundary-pinning) — **active**
 
 ## Family D — Near-miss / kill-neighborhood (closes loop with kill_vector_navigator)
 
 - **D1** `d1_kill_neighborhood` — kills become seeds via navigator — **active**
 - **D2** `d2_margin_bracket` — claims at minimum distance from kill
   threshold — **active**
-- **D3** `d3_triangulation_seeds` — INCONCLUSIVE → adjacent precision/
-  method siblings — **stub**
+- **D3** `d3_triangulation_seeds` — MCTS-flavored multi-resample on
+  INCONCLUSIVE records (Polu/Sutskever pattern) — **active**
 - **D4** `d4_boundary_crossing` — minimum-distance (PASS, KILL) pairs — **stub**
 
 ## Family E — Literature mining (existing content)
@@ -102,7 +104,7 @@ Status legend:
 
 ---
 
-## Active set (Fire #5, 15 generators): A1 + A2 + A3 + A4 + B1 + B5 + C1 + C2 + C4 + D1 + D2 + E1 + E3 + F3 + H1
+## Active set (Fire #6, 18 generators): A1 + A2 + A3 + A4 + B1 + B2 + B5 + C1 + C2 + C4 + C5 + D1 + D2 + D3 + E1 + E3 + F3 + H1
 
 Rationale (per CHARTER.md):
 - **A1** — highest throughput, no LLM cost, anti-conventional novelty

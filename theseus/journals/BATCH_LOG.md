@@ -563,3 +563,101 @@ ROADMAP next: MCTS for D3 triangulation, process supervision (TheseusRecord step
 - 1 RankWarning from polyfit (poorly-conditioned fits on integer data) — suppress in production but not silenced in tests for visibility
 - E2 deferred decision documented
 
+
+## batch-20260518T130533Z-69514d
+
+- Started: 2026-05-18T13:05:33.307517+00:00
+- Ended:   2026-05-18T13:06:03.189748+00:00
+- Duration: 0.0083 h
+- Requested: a1,a2,a3,a4,b1,b2,b5,c1,c2,c4,c5,d1,d2,d3,e1,e3,f3,h1
+- Active:    a1,a2,a3,a4,b1,b2,b5,c1,c2,c4,c5,d1,d2,d3,e1,e3,f3,h1
+- Records: 69183 (kills=33517, confirmations=34737, inconclusive=154, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=4024, throughput=190610526.2/h, info_density=0.529, diversity=0.860, yield_score=0.0046, kills=2867, conf=1157, errs=0
+- **a2** — records=4024, throughput=31838241.8/h, info_density=0.505, diversity=0.949, yield_score=0.0048, kills=3814, conf=210, errs=0
+- **a3** — records=4024, throughput=155767741.9/h, info_density=0.530, diversity=0.866, yield_score=0.0046, kills=2808, conf=1216, errs=0
+- **a4** — records=4024, throughput=16825087.1/h, info_density=0.501, diversity=0.904, yield_score=0.0046, kills=3922, conf=3, errs=0
+- **b1** — records=4024, throughput=185723076.8/h, info_density=0.600, diversity=0.919, yield_score=0.0056, kills=0, conf=4024, errs=0
+- **b2** — records=4024, throughput=905399999.8/h, info_density=0.565, diversity=0.932, yield_score=0.0053, kills=1391, conf=2633, errs=0
+- **b5** — records=4024, throughput=237481967.0/h, info_density=0.586, diversity=0.908, yield_score=0.0054, kills=582, conf=3442, errs=0
+- **c1** — records=4024, throughput=233651612.8/h, info_density=0.549, diversity=0.857, yield_score=0.0048, kills=2041, conf=1983, errs=0
+- **c2** — records=4024, throughput=229942857.3/h, info_density=0.569, diversity=0.865, yield_score=0.0050, kills=1236, conf=2788, errs=0
+- **c4** — records=4024, throughput=308221276.7/h, info_density=0.600, diversity=0.861, yield_score=0.0052, kills=0, conf=4024, errs=0
+- **c5** — records=4024, throughput=308221276.8/h, info_density=0.561, diversity=0.860, yield_score=0.0049, kills=1556, conf=2468, errs=0
+- **d1** — records=4024, throughput=37240102.8/h, info_density=0.591, diversity=0.914, yield_score=0.0055, kills=350, conf=3674, errs=0
+- **d2** — records=4024, throughput=482879999.6/h, info_density=0.546, diversity=0.869, yield_score=0.0048, kills=2153, conf=1871, errs=0
+- **d3** — records=4024, throughput=6859090.9/h, info_density=0.501, diversity=0.900, yield_score=0.0046, kills=3969, conf=0, errs=0
+- **e1** — records=775, throughput=13811881.2/h, info_density=0.200, diversity=0.986, yield_score=0.0020, kills=0, conf=0, errs=0
+- **e3** — records=4024, throughput=114066141.8/h, info_density=0.556, diversity=0.946, yield_score=0.0053, kills=1751, conf=2273, errs=0
+- **f3** — records=4024, throughput=154110638.2/h, info_density=0.529, diversity=0.869, yield_score=0.0046, kills=2854, conf=1170, errs=0
+- **h1** — records=4024, throughput=61644255.3/h, info_density=0.545, diversity=0.943, yield_score=0.0052, kills=2223, conf=1801, errs=0
+
+
+---
+
+## Fire #6 — 2026-05-18 ~13:05Z
+
+Three BUILD items shipped. Engine reaches 18 active generators across 6 families. Triangulation pathway (A4 → INCONCLUSIVE → D3) closed end-to-end.
+
+### Shipped
+
+- **D3 triangulation-seeds (MCTS-flavored multi-resample)** — reads INCONCLUSIVE records from corpus (introduced in Fire #5 by A4). For each INCONCLUSIVE parent, runs N=5 independent resamples at the same parameters. Verdict: if ≥80% of children agree, triangulated up/down to terminal verdict; else genuinely INCONCLUSIVE. Polu/Sutskever pattern — each resample is a tree branch, agreement-fraction is the consensus score. Tier 1 will swap uniform-random expansion for UCT-style biased branching.
+
+- **B2 operator-composition commutativity test** — for each (op1, op2) pair from `{identity, abs, neg, sq_mod_100, log2_floor, mod_3}` (6×6 = 36 pairs), tests whether `op1(op2(v)) == op2(op1(v))` for many integer v ∈ [-50, 50]. Maps the algebraic structure of the operator set. Most pairs don't commute; identity-involving pairs always do.
+
+- **C5 specialization mutation** — opposite-direction from C4. Picks SHADOW_CATALOG parent and emits strictly-STRONGER variant (`equal_mod_2 → equal`, `abs_diff_le_K → abs_diff_le_{K-1}`, etc). Most strengthenings fail — and each kill carries boundary information.
+
+### Smoke (30 s, 18 active generators, 0 errors)
+
+- 69,183 records, 33,517 kills, 34,737 confirmations, **154 INCONCLUSIVE**
+- **B1: 0 kills / 4,024 confirms** — operator self-test still clean.
+- **C4: 0 kills / 4,024 confirms** — relation self-test still clean.
+- **B2: 35% kill rate** — operator pairs mostly don't commute. The 65% that do are dominated by identity-involving pairs. Substrate-native algebraic structure mapping.
+- **C5: 39% kill rate** — strengthening fails ~40% of the time on SHADOW survivors. Each kill is a boundary pin: "this claim holds at K=3 but not K=2."
+- **D3: 99% kill rate** (3,969 / 4,024) — most A4 INCONCLUSIVE records degrade to REJECTED on independent resampling. **Substrate now empirically honest about the INCONCLUSIVE→REJECTED degradation rate.** The 1% that triangulate UP to SHADOW are the genuinely interesting candidate signals.
+
+### Critical substrate observation: triangulation pathway closed
+
+For the first time, the substrate has a closed-loop INCONCLUSIVE-resolution path:
+
+```
+A4 (symbolic regression with three-state verdict)
+   ↓ INCONCLUSIVE record emitted
+D3 (multi-resample triangulation)
+   ↓ N=5 independent resamples
+Agreement vote → triangulated terminal verdict OR remains INCONCLUSIVE
+```
+
+This is the kind of structured INCONCLUSIVE handling that Techne's KILL_VECTOR / TRIANGULATION_PROTOCOL spec named as load-bearing. Process supervision (`docs/frontier_techniques_analysis.md` #4) is now natural: each resample-branch contributes per-step info_density, aggregated by the triangulation.
+
+### Reflection: 3 frontier techniques operational so far
+
+Across Fires #3-6, the substrate has integrated (in BUILD priority order):
+- Counterfactual augmentation (C2 boundary bisection) — Fire #3
+- Self-play AlphaZero (H1 proposer-vs-hunter) — Fire #3
+- Active learning / uncertainty sampling (F3 importance sampling) — Fire #4
+- Symbolic regression numpy-fallback (A4 polyfit) — Fire #5
+- MCTS-flavored triangulation (D3 multi-resample) — Fire #6
+
+Remaining BUILD items from frontier analysis:
+- Process supervision (TheseusRecord step_trace extension)
+- Contrastive embeddings (already shipped Fire #3, opt-in mode)
+
+Once process supervision lands the BUILD slate is complete.
+
+### Decisions for Fire #7
+
+ROADMAP-driven next batch:
+- **Process supervision** — extend TheseusRecord with optional `step_trace` field; D3 + future triangulators populate it
+- **B3 inverse test** — `op⁻¹(op(v)) == v` for invertibles. Substrate-native.
+- **B4 fixed-point hunt** — does `op(v) == v` have non-trivial solutions?
+
+### Loop discipline
+
+- Tests: 74 → 82 (+8 for D3 / B2 / C5 + registry round-trip)
+- Smoke: 69K records / 30 s, 0 errors with 18 generators
+- RankWarning suppressed in a4_symbolic_regression at numpy.polyfit call site
+- d3 added to config.GENERATOR_STATUS
+

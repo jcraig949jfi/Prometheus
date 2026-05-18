@@ -34,8 +34,10 @@ from theseus.generators.base import Generator, GeneratorStatus
 from theseus.generators.c1_claim_mutation import C1ClaimMutationGenerator
 from theseus.generators.c2_threshold_mutation import C2ThresholdMutationGenerator
 from theseus.generators.c4_generalization import C4GeneralizationGenerator
+from theseus.generators.c5_specialization import C5SpecializationGenerator
 from theseus.generators.d1_kill_neighborhood import D1KillNeighborhoodGenerator
 from theseus.generators.d2_margin_bracket import D2MarginBracketGenerator
+from theseus.generators.d3_triangulation_seeds import D3TriangulationSeedsGenerator
 from theseus.generators.h1_self_play_hunter import H1SelfPlayHunterGenerator
 from theseus.registry import REGISTRY, get_generator_class
 from theseus.scoring.metrics_schema import BatchMetrics, GeneratorMetrics
@@ -74,6 +76,8 @@ def _wire_feedback(
                 C1ClaimMutationGenerator,
                 C2ThresholdMutationGenerator,
                 C4GeneralizationGenerator,
+                C5SpecializationGenerator,
+                D3TriangulationSeedsGenerator,
                 H1SelfPlayHunterGenerator,
             ),
         ):

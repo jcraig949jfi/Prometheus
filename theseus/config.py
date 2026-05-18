@@ -31,7 +31,7 @@ GENERATOR_STATUS = {
     "a5": "stub",
     # B — operator-action
     "b1": "active",
-    "b2": "stub",
+    "b2": "active",
     "b3": "stub",
     "b4": "stub",
     "b5": "active",
@@ -40,11 +40,11 @@ GENERATOR_STATUS = {
     "c2": "active",
     "c3": "stub",
     "c4": "active",
-    "c5": "stub",
+    "c5": "active",
     # D — kill-neighborhood
     "d1": "active",
     "d2": "active",
-    "d3": "stub",
+    "d3": "active",
     "d4": "stub",
     # E — literature mining
     "e1": "active",

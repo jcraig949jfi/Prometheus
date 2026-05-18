@@ -56,8 +56,12 @@ def _polyfit_r2(
     available for stability, else closed-form for degree<=2.
     """
     try:
+        import warnings
         import numpy as np  # type: ignore
-        coeffs = np.polyfit(xs, ys, degree).tolist()
+        with warnings.catch_warnings():
+            # RankWarning is expected on poorly-conditioned integer data
+            warnings.simplefilter("ignore")
+            coeffs = np.polyfit(xs, ys, degree).tolist()
         # R² = 1 - SS_res / SS_tot
         y_pred = [_poly_eval(coeffs, x) for x in xs]
         ss_res = sum((y - yp) ** 2 for y, yp in zip(ys, y_pred))
