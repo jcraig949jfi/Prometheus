@@ -18,8 +18,8 @@ Status legend:
   mandatory prime-detrending — **active**
 - **A3** `a3_functional_identity` — does `f(i(a)) == g(j(b))` hold for
   some operator pair `(f, g)`? — **active**
-- **A4** `a4_ratio_invariance` — is `i(a) / j(b)` constant across a
-  sub-population? — **stub**
+- **A4** `a4_symbolic_regression` — numpy polyfit cross-catalog
+  symbolic regression (degrees 1/2/3, R²≥0.7→SHADOW) — **active**
 - **A5** `a5_distribution_match` — does the distribution of `i` over
   catalog A match `j` over catalog B (KS test)? — **stub**
 
@@ -55,7 +55,8 @@ Status legend:
 
 - **E1** `e1_research_batch_parser` — mines `deep_research_batch*/` — **active**
 - **E2** `e2_arxiv_abstract_mining` — pulls claims from arXiv abstracts — **stub**
-- **E3** `e3_oeis_comment_mining` — 1M+ informal OEIS sequence claims — **stub**
+- **E3** `e3_oeis_mining` — OEIS sequence-property mining from local
+  dump (212 sequences × 5 properties, token-free) — **active**
 - **E4** `e4_lmfdb_knowledge_mining` — LMFDB knowledge nodes — **stub**
 - **E5** `e5_mathworld_wikipedia_scrape` — conjecture-list scrape — **stub**
 
@@ -101,7 +102,7 @@ Status legend:
 
 ---
 
-## Active set (Fire #4, 13 generators): A1 + A2 + A3 + B1 + B5 + C1 + C2 + C4 + D1 + D2 + E1 + F3 + H1
+## Active set (Fire #5, 15 generators): A1 + A2 + A3 + A4 + B1 + B5 + C1 + C2 + C4 + D1 + D2 + E1 + E3 + F3 + H1
 
 Rationale (per CHARTER.md):
 - **A1** — highest throughput, no LLM cost, anti-conventional novelty

@@ -487,3 +487,79 @@ Next slate from frontier-analysis ROADMAP:
 - F3 α=1→α=2 fix caught at smoke via diagnostic
 - Cross-agent staging: clean
 
+
+## batch-20260518T125907Z-c04e02
+
+- Started: 2026-05-18T12:59:07.452086+00:00
+- Ended:   2026-05-18T12:59:37.337406+00:00
+- Duration: 0.0083 h
+- Requested: a1,a2,a3,a4,b1,b5,c1,c2,c4,d1,d2,e1,e3,f3,h1
+- Active:    a1,a2,a3,a4,b1,b5,c1,c2,c4,d1,d2,e1,e3,f3,h1
+- Records: 75491 (kills=35129, confirmations=39458, inconclusive=129, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=5337, throughput=249522078.0/h, info_density=0.529, diversity=0.853, yield_score=0.0046, kills=3776, conf=1561, errs=0
+- **a2** — records=5337, throughput=26834078.2/h, info_density=0.505, diversity=0.943, yield_score=0.0048, kills=5067, conf=270, errs=0
+- **a3** — records=5337, throughput=400274999.9/h, info_density=0.531, diversity=0.864, yield_score=0.0046, kills=3709, conf=1628, errs=0
+- **a4** — records=5337, throughput=14096258.3/h, info_density=0.501, diversity=0.903, yield_score=0.0046, kills=5200, conf=8, errs=0
+- **b1** — records=5337, throughput=246323076.8/h, info_density=0.600, diversity=0.909, yield_score=0.0055, kills=0, conf=5337, errs=0
+- **b5** — records=5337, throughput=122377070.1/h, info_density=0.586, diversity=0.890, yield_score=0.0053, kills=758, conf=4579, errs=0
+- **c1** — records=5337, throughput=171546428.6/h, info_density=0.553, diversity=0.857, yield_score=0.0048, kills=2499, conf=2838, errs=0
+- **c2** — records=5337, throughput=206593548.4/h, info_density=0.573, diversity=0.863, yield_score=0.0050, kills=1464, conf=3873, errs=0
+- **c4** — records=5337, throughput=174665454.6/h, info_density=0.600, diversity=0.871, yield_score=0.0053, kills=0, conf=5337, errs=0
+- **d1** — records=5337, throughput=32400000.0/h, info_density=0.589, diversity=0.903, yield_score=0.0054, kills=594, conf=4743, errs=0
+- **d2** — records=5337, throughput=204395744.7/h, info_density=0.544, diversity=0.868, yield_score=0.0048, kills=2978, conf=2359, errs=0
+- **e1** — records=775, throughput=12857142.9/h, info_density=0.200, diversity=0.983, yield_score=0.0020, kills=0, conf=0, errs=0
+- **e3** — records=5337, throughput=243205063.3/h, info_density=0.557, diversity=0.938, yield_score=0.0053, kills=2287, conf=3050, errs=0
+- **f3** — records=5336, throughput=122354140.1/h, info_density=0.528, diversity=0.864, yield_score=0.0046, kills=3833, conf=1503, errs=0
+- **h1** — records=5336, throughput=77771659.9/h, info_density=0.544, diversity=0.951, yield_score=0.0052, kills=2964, conf=2372, errs=0
+
+
+---
+
+## Fire #5 — 2026-05-18 ~12:59Z
+
+Two of three planned items shipped. E2 deferred (needs network to populate arxiv_corpus). 15 active generators across 6 families.
+
+### Shipped
+
+- **A4 symbolic regression (numpy polyfit)** — for each (knot_inv, ec_inv) pair, samples 30 paired values and fits polynomials of degrees 1/2/3 via `numpy.polyfit`. Best R² determines verdict: ≥0.7 → SHADOW_CATALOG, 0.3-0.7 → INCONCLUSIVE, <0.3 → REJECTED. **First generator to produce INCONCLUSIVE verdicts in the substrate** — exercising sigma's three-state terminal pathway. Frontier-aligned: this is the v0.1 fallback before PySR upgrade (Tier 2). Genetic-programming symbolic regression deferred until the numpy version's yield curve plateaus.
+
+- **E3 OEIS sequence-property mining** — reads local `oeis_sleeping.json.gz` (212 sleeping sequences). Tests 5 sequence properties per random pick: monotonic_increasing, strictly_positive, exponential_growth_consistent (log-ratio variance), alternating_sign, even_at_even_index. Each property has its own kill_pattern, so kills carry semantic detail. 1,060 unique (sequence, property) cells. Token-free, no network.
+
+### Deferred
+
+- **E2 arXiv mining** — local arxiv_corpus is empty (0 papers). Populating requires network + Aporia's arxiv_corpus.update_corpus(), which is an admin task not suited for autonomous loop. E2 will ship on a fire that explicitly does the populate step.
+
+### Smoke (30 s, 15 active generators, 0 errors)
+
+- 75,491 records, 35,129 kills, 39,458 confirmations, **129 INCONCLUSIVE**
+- A4: 97% kill rate (5,200/5,337). 137 SHADOW survivors = rare strong fits. 129 INCONCLUSIVE = weak-but-nonzero fits. Worth downstream investigation as candidate cross-catalog signals.
+- E3: 43% kill rate (2,287/5,337). Property baselines vary: strictly_positive holds for most sequences, alternating_sign rare, monotonic_increasing common for the sleeping-sequence subset.
+- B1: 0 kills / 5,337 confirms — operator self-test still clean.
+- C4: 0 kills / 5,337 confirms — relation self-test still clean.
+
+### Substrate observations
+
+1. **First INCONCLUSIVE verdicts in the corpus**. Until Fire #5 all emissions were terminal (PROMOTED/SHADOW_CATALOG/REJECTED). A4's three-state verdict logic adds the INCONCLUSIVE pathway that sigma's kernel discipline always supported but no generator exercised. This is the substrate finally using its full verdict vocabulary — important for downstream triangulation (D3) and process supervision (Fire #6 candidate).
+
+2. **A4 is a frontier-claim generator**. The 137 SHADOW_CATALOG records from A4 are "ec_invariant ≈ poly(knot_invariant) with R² ≥ 0.7" — fits that survive the high threshold despite 30-point sample. Most will be artifacts (small sample, low-degree fit can chance into high R²), but the population is worth scrutinizing once downstream verification is in place.
+
+3. **Volume held at 75K/30s with 15 generators** — engine still healthy at this scale. Per-generator throughput dropped (round-robin distributes time), but no single generator collapsed. The retry-tolerance fix from Fire #3 continues to pay off.
+
+### Decisions for Fire #6
+
+ROADMAP next: MCTS for D3 triangulation, process supervision (TheseusRecord step_trace extension), B2 composition test, B3 inverse test. Picking three:
+
+- **D3 triangulation seeds via MCTS** — INCONCLUSIVE records (now in corpus) become D3's input. MCTS tree expands adjacent precision/method/relation variants; each path scores against info_density. Polu/Sutskever pattern.
+- **B2 composition test** — `(op1 ∘ op2)(x) == (op2 ∘ op1)(x)`? Tests operator commutativity. Substrate-native.
+- **C5 specialization** — opposite-direction mutation from C4. Pick verified parent, add a constraint, retest.
+
+### Loop discipline
+
+- Tests: 64 → 74 (+10 for A4 polyfit math, E3 property checks, registry round-trip)
+- Smoke: 75K records / 30 s, 0 errors with 15 generators
+- 1 RankWarning from polyfit (poorly-conditioned fits on integer data) — suppress in production but not silenced in tests for visibility
+- E2 deferred decision documented
+

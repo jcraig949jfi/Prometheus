@@ -27,7 +27,7 @@ GENERATOR_STATUS = {
     "a1": "active",
     "a2": "active",
     "a3": "active",
-    "a4": "stub",
+    "a4": "active",
     "a5": "stub",
     # B — operator-action
     "b1": "active",
@@ -49,7 +49,7 @@ GENERATOR_STATUS = {
     # E — literature mining
     "e1": "active",
     "e2": "stub",
-    "e3": "stub",
+    "e3": "active",
     "e4": "stub",
     "e5": "stub",
     # F — probabilistic

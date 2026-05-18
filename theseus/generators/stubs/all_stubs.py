@@ -15,13 +15,6 @@ from theseus.generators.base import StubGenerator, GeneratorStatus
 
 # -- Family A (catalog cross-product) --
 
-class A4RatioInvariance(StubGenerator):
-    generator_id = "a4"
-    claim_kind = ClaimKind.RATIO_INVARIANCE.value
-    def description(self) -> str:
-        return "a4: i(a)/j(b) constant-across-population test"
-
-
 class A5DistributionMatch(StubGenerator):
     generator_id = "a5"
     claim_kind = ClaimKind.DISTRIBUTION_MATCH.value
@@ -91,13 +84,6 @@ class E2ArxivAbstractMining(StubGenerator):
     claim_kind = ClaimKind.LITERATURE_MINED.value
     def description(self) -> str:
         return "e2: arXiv abstract mining (paperswithcode/semantic-scholar)"
-
-
-class E3OEISCommentMining(StubGenerator):
-    generator_id = "e3"
-    claim_kind = ClaimKind.LITERATURE_MINED.value
-    def description(self) -> str:
-        return "e3: OEIS sequence-comment mining (1M+ informal claims)"
 
 
 class E4LMFDBKnowledgeMining(StubGenerator):
