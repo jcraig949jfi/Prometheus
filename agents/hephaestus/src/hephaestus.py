@@ -280,12 +280,55 @@ def _inject_missing_imports(code: str) -> str:
     return "\n".join(all_injections) + "\n\n" + code
 
 
+def _sanitize_unicode(code: str) -> str:
+    """Replace non-ASCII characters that crash Windows cp1252 encoding.
+
+    LLMs frequently emit Unicode math symbols (≥, ≈, →, ∈, etc.) in
+    strings and comments. These crash on Windows when written to files
+    or printed to console with cp1252 encoding.
+    """
+    replacements = {
+        "\u2248": "~=",   # ≈
+        "\u2265": ">=",   # ≥
+        "\u2264": "<=",   # ≤
+        "\u2260": "!=",   # ≠
+        "\u2192": "->",   # →
+        "\u2190": "<-",   # ←
+        "\u2208": "in",   # ∈
+        "\u2209": "not in",  # ∉
+        "\u221e": "inf",  # ∞
+        "\u00d7": "*",    # ×
+        "\u00f7": "/",    # ÷
+        "\u2212": "-",    # −
+        "\u03b1": "alpha",  # α
+        "\u03b2": "beta",   # β
+        "\u03b3": "gamma",  # γ
+        "\u03b4": "delta",  # δ
+        "\u03b5": "epsilon",  # ε
+        "\u03bb": "lambda_",  # λ
+        "\u03c0": "pi",   # π
+        "\u03c3": "sigma",  # σ
+        "\u03c4": "tau",   # τ
+        "\u2026": "...",  # …
+        "\u201c": '"',    # "
+        "\u201d": '"',    # "
+        "\u2018": "'",    # '
+        "\u2019": "'",    # '
+    }
+    for char, replacement in replacements.items():
+        code = code.replace(char, replacement)
+    # Catch any remaining non-ASCII in string literals/comments
+    # (leave actual Python identifiers alone)
+    return code
+
+
 def _fix_common_errors(code: str) -> str:
     """Fix common LLM code-gen errors that cause gate failures.
 
-    Applied after import injection, before validation. Handles:
+    Applied after import injection and Unicode sanitization. Handles:
     1. Missing confidence() method — inject a default stub
     2. Confidence returning None/bad type — append a safe wrapper
+    3. Evaluate returning None — append a safe wrapper
     """
     import re as _re
     import ast
@@ -354,6 +397,26 @@ ReasoningTool.confidence = _safe_confidence
 '''
                 if "_safe_confidence" not in code:
                     code = code.rstrip() + "\n" + wrapper
+
+            # 3. Wrap evaluate() to guarantee list[dict] return
+            eval_wrapper = '''
+
+# --- Auto-fix: ensure evaluate() returns list[dict] ---
+_orig_evaluate = ReasoningTool.evaluate
+def _safe_evaluate(self, prompt, candidates):
+    try:
+        result = _orig_evaluate(self, prompt, candidates)
+        if result is None:
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        if not isinstance(result, list):
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        return result
+    except Exception:
+        return [{"candidate": c, "score": 0.5, "reasoning": "error"} for c in candidates]
+ReasoningTool.evaluate = _safe_evaluate
+'''
+            if "_safe_evaluate" not in code:
+                code = code.rstrip() + "\n" + eval_wrapper
             break
 
     return code
@@ -903,10 +966,13 @@ def forge_one(client: OpenAI, entry: dict, model: str,
         save_scrap(None, entry, extract_status, run_dir, frame=frame)
         return {"status": "scrap", "reason": extract_status, "frame": frame}
 
-    # 2b. Inject missing stdlib imports (LLMs frequently forget these)
+    # 2b. Sanitize Unicode (LLMs emit math symbols that crash Windows cp1252)
+    code = _sanitize_unicode(code)
+
+    # 2c. Inject missing stdlib imports (LLMs frequently forget these)
     code = _inject_missing_imports(code)
 
-    # 2c. Fix common LLM errors (missing confidence method, etc.)
+    # 2d. Fix common LLM errors (missing confidence method, etc.)
     code = _fix_common_errors(code)
 
     # 3. Validate
@@ -1338,6 +1404,288 @@ Return the COMPLETE fixed Python code in a ```python code block.
 ```"""
 
 
+DEEP_INSPECT_PROMPT = """\
+You are evaluating a Python reasoning tool for novelty of its computational strategy.
+This tool scored {accuracy}% accuracy on a reasoning battery — close to but below
+the {baseline}% baseline. The question is not whether it's accurate, but whether
+its MECHANISM is genuinely novel and worth preserving.
+
+The tool was generated from these concepts: {concepts}
+
+Here is the code:
+
+```python
+{code}
+```
+
+Here is its tier profile (accuracy per reasoning tier):
+{tier_profile}
+
+Evaluate the following (be brutally honest, no flattery):
+
+1. MECHANISM DESCRIPTION: In 2-3 sentences, what computational strategy does this
+   code actually implement? Not what the docstring says — what does the code DO?
+
+2. NOVELTY ASSESSMENT: Is this a genuinely unusual approach, or is it a standard
+   pattern (regex + NCD + keyword matching) with cosmetic complexity?
+   Rate: NOVEL / STANDARD / COSMETIC
+
+3. TIER-MECHANISM MATCH: Does the code's mechanism match its strongest tier?
+   (e.g., if it scores best on R3 abstraction, does the code actually do abstraction?)
+   Rate: GENUINE / DECORATIVE / UNKNOWN
+
+4. COMPOSITION VALUE: Would this tool add something unique if composed with others?
+   What specific capability would it contribute that a regex-based tool cannot?
+   Rate: HIGH / MODERATE / LOW
+
+5. VERDICT: Should this near-miss be admitted to the forge library despite
+   not beating the accuracy baseline?
+   Answer: ADMIT / REJECT / NEEDS_LARGER_BATTERY
+
+Respond with exactly these 5 sections."""
+
+
+def inspect_near_misses(max_items: int = 20):
+    """Deep inspection of near-miss scraps using tier profiling + LLM assessment.
+
+    For each near-miss (accuracy >= 35%, failed the accuracy gate, failed the
+    novelty NCD gate):
+    1. Run tier profile (which tiers does it excel on?)
+    2. Compute failure rarity (does it solve problems others don't?)
+    3. If tier profile or rarity shows signal, send to LLM for mechanism assessment
+    4. Admit tools the LLM rates as NOVEL + GENUINE + (HIGH or MODERATE)
+    """
+    import re as _re
+
+    logger.info("=" * 60)
+    logger.info("DEEP NEAR-MISS INSPECTION")
+    logger.info("=" * 60)
+
+    client = make_client()
+    model = DEFAULT_MODEL
+
+    # Load the expanded battery for tier profiling
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    try:
+        from trap_generator_extended import generate_full_battery
+        battery = generate_full_battery(n_per_category=2, seed=42)
+    except ImportError:
+        logger.error("Extended battery unavailable, cannot run deep inspection")
+        return
+
+    from test_harness import _run_battery, _NCDBaseline, CATEGORY_TIER
+
+    ncd_tool = _NCDBaseline()
+    ncd_results = _run_battery(ncd_tool, battery)
+    ncd_baseline_acc = ncd_results["accuracy"]
+
+    # Collect existing library correct-answer sets for rarity scoring
+    library_correct = []
+    for py_file in FORGE_DIR.glob("*.py"):
+        if py_file.name.startswith("_"):
+            continue
+        try:
+            tool = load_tool_from_code(py_file.read_text(encoding="utf-8"))
+            results = _run_battery(tool, battery)
+            correct_set = set()
+            for j, r in enumerate(results["trap_results"]):
+                if r.get("is_correct"):
+                    correct_set.add(j)
+            library_correct.append(correct_set)
+        except Exception:
+            continue
+
+    logger.info("Library profiled: %d tools for rarity comparison", len(library_correct))
+
+    # Count how many library tools solve each probe
+    probe_solve_count = [0] * len(battery)
+    for cs in library_correct:
+        for idx in cs:
+            probe_solve_count[idx] += 1
+
+    # Collect near-miss candidates from scrap
+    candidates = []
+    for json_file in sorted(SCRAP_DIR.glob("*.json")):
+        try:
+            meta = json.loads(json_file.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        reason = meta.get("failure_reason", "")
+        if "trap_battery_failed" not in reason:
+            continue
+        m = _re.search(r"acc=(\d+)%", reason)
+        if not m:
+            continue
+        acc = int(m.group(1))
+        if acc < 35:
+            continue
+        py_file = SCRAP_DIR / json_file.name.replace(".json", ".py")
+        if not py_file.exists():
+            continue
+        candidates.append({
+            "py_file": py_file, "meta": meta, "accuracy": acc / 100.0,
+        })
+
+    candidates.sort(key=lambda c: -c["accuracy"])
+    logger.info("Found %d near-miss candidates (>=35%% accuracy)", len(candidates))
+
+    inspected = 0
+    admitted = 0
+
+    for cand in candidates[:max_items]:
+        names = cand["meta"].get("concept_names", [])
+        key = " + ".join(sorted(names))
+
+        code = cand["py_file"].read_text(encoding="utf-8")
+        code = _sanitize_unicode(code)
+        code = _inject_missing_imports(code)
+        code = _fix_common_errors(code)
+
+        # Validate
+        valid, vreason = validate(code)
+        if not valid:
+            continue
+
+        # Run tier profile
+        try:
+            tool = load_tool_from_code(code)
+            results = _run_battery(tool, battery)
+        except Exception:
+            continue
+
+        # Compute tier profile
+        from collections import defaultdict
+        tier_correct = defaultdict(int)
+        tier_total = defaultdict(int)
+        correct_set = set()
+        for j, (r, trap) in enumerate(zip(results["trap_results"], battery)):
+            tier = CATEGORY_TIER.get(trap.get("category", ""))
+            if tier:
+                tier_total[tier] += 1
+                if r.get("is_correct"):
+                    tier_correct[tier] += 1
+                    correct_set.add(j)
+
+        tier_profile = {}
+        for tier in sorted(tier_total.keys()):
+            n = tier_total[tier]
+            tier_profile[tier] = round(tier_correct[tier] / n, 2) if n > 0 else 0.0
+
+        # Compute rarity score
+        if correct_set:
+            rarities = [1.0 / max(probe_solve_count[idx], 1) for idx in correct_set]
+            rarity = sum(rarities) / len(rarities)
+        else:
+            rarity = 0.0
+
+        # Check for signal: excels on underrepresented tier OR solves rare problems
+        best_tier = max(tier_profile.items(), key=lambda x: x[1]) if tier_profile else ("?", 0)
+        has_signal = (
+            (best_tier[0] in ("R4", "R5") and best_tier[1] >= 0.35)  # Strong on hard tiers
+            or rarity > 0.015  # Solves rare problems
+            or (best_tier[1] >= 0.50)  # Very strong on any tier
+        )
+
+        if not has_signal:
+            continue
+
+        inspected += 1
+        logger.info("[%d] Inspecting: %s (acc=%.0f%%, best=%s=%.0f%%, rarity=%.4f)",
+                    inspected, key, cand["accuracy"] * 100,
+                    best_tier[0], best_tier[1] * 100, rarity)
+
+        # Send to LLM for mechanism assessment
+        tier_str = ", ".join(f"{t}={v:.0%}" for t, v in sorted(tier_profile.items()))
+        prompt = DEEP_INSPECT_PROMPT.format(
+            accuracy=f"{cand['accuracy']*100:.0f}",
+            baseline=f"{ncd_baseline_acc*100:.0f}",
+            concepts=", ".join(names),
+            code=code[:3000],  # Truncate for API limits
+            tier_profile=tier_str,
+        )
+
+        response = call_api(client, prompt, model)
+        if response is None:
+            logger.warning("  API failed, skipping")
+            continue
+
+        # Parse verdict — trust the LLM's ADMIT/REJECT and extract ratings
+        response_lower = response.lower()
+
+        # Extract ratings from each section
+        def _extract_rating(section_name, positive_words, negative_words):
+            if section_name not in response_lower:
+                return "unknown"
+            chunk = response_lower.split(section_name)[1][:200]
+            for w in positive_words:
+                if w in chunk:
+                    return w
+            for w in negative_words:
+                if w in chunk:
+                    return w
+            return "unknown"
+
+        novelty = _extract_rating("novelty assessment",
+                                  ["novel"], ["standard", "cosmetic"])
+        genuineness = _extract_rating("tier-mechanism match",
+                                      ["genuine"], ["decorative", "unknown"])
+        composition = _extract_rating("composition value",
+                                      ["high", "moderate"], ["low"])
+
+        # Verdict: ADMIT if LLM says admit, OR if novel+genuine, OR if high composition
+        verdict_section = response_lower.split("verdict")[1][:200] if "verdict" in response_lower else ""
+        llm_admits = "admit" in verdict_section and "reject" not in verdict_section
+        should_admit = (
+            llm_admits
+            or (novelty == "novel" and genuineness == "genuine")
+            or (novelty == "novel" and composition in ("high", "moderate"))
+        )
+
+        logger.info("  LLM: novelty=%s genuine=%s composition=%s verdict=%s",
+                    novelty, genuineness, composition,
+                    "ADMIT" if llm_admits else "REJECT")
+
+        if should_admit:
+            # Forge it
+            novelty = _compute_novelty(code)
+            fname = safe_filename(names)
+            forge_path = FORGE_DIR / f"{fname}.py"
+            forge_path.write_text(code, encoding="utf-8")
+            meta = {
+                "concept_names": names,
+                "concept_fields": cand["meta"].get("concept_fields", []),
+                "nous_composite_score": cand["meta"].get("nous_composite_score"),
+                "test_accuracy": results["accuracy"],
+                "test_calibration": results["calibration"],
+                "frame": cand["meta"].get("frame", "?"),
+                "novelty_min_ncd": novelty["min_ncd"],
+                "novelty_mean_ncd": novelty["mean_ncd"],
+                "novelty_nearest": novelty["nearest"],
+                "novelty_library_size": novelty["library_size"],
+                "tier_profile": tier_profile,
+                "rarity_score": round(rarity, 4),
+                "admitted_via": "deep_inspection",
+                "llm_assessment": response[:500],
+                "repaired_from": "scrap",
+                "original_failure": cand["meta"].get("failure_reason", ""),
+                "forged_at": datetime.now().isoformat(),
+            }
+            (FORGE_DIR / f"{fname}.json").write_text(
+                json.dumps(meta, indent=2), encoding="utf-8")
+            logger.info("  DEEP INSPECTION FORGED: %s (acc=%.0f%% %s=%.0f%% rarity=%.4f)",
+                        key, results["accuracy"] * 100,
+                        best_tier[0], best_tier[1] * 100, rarity)
+            admitted += 1
+        else:
+            logger.info("  Rejected: %s", key[:60])
+
+        time.sleep(2.0)
+
+    logger.info("=" * 60)
+    logger.info("DEEP INSPECTION COMPLETE: %d inspected, %d admitted", inspected, admitted)
+    logger.info("=" * 60)
+
+
 def repair_with_llm(max_items: int = 50):
     """Use NVIDIA API to fix syntax/import/interface errors in scrapped tools.
 
@@ -1519,6 +1867,8 @@ def main():
                         help="Run scrap repair pass: fix gate failures, score novelty on near-misses")
     parser.add_argument("--repair-with-llm", action="store_true",
                         help="Use LLM API to fix syntax/import/interface errors in scraps")
+    parser.add_argument("--inspect-near-misses", action="store_true",
+                        help="Deep inspection of near-miss scraps: tier profile + LLM mechanism assessment")
     parser.add_argument("--repair-max", type=int, default=50,
                         help="Max items to attempt in repair pass (default: 50)")
     parser.add_argument("--repair-min-acc", type=float, default=0.25,
@@ -1533,6 +1883,11 @@ def main():
     # LLM repair mode — run and exit
     if args.repair_with_llm:
         repair_with_llm(max_items=args.repair_max)
+        return
+
+    # Deep near-miss inspection — run and exit
+    if args.inspect_near_misses:
+        inspect_near_misses(max_items=args.repair_max)
         return
 
     # Default filter: --all in continuous mode, top 20 in runonce
