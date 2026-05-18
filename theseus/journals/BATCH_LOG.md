@@ -2420,3 +2420,73 @@ Choosing the Ergon handoff for Fire #23 — concrete deliverable + closes the ga
 - Math bug fixed; legacy bias documented
 - Substrate-state version bumped to v0.3 (weights file)
 
+
+---
+
+## Fire #23 — 2026-05-18 ~17:45Z — Cross-catalog H4 audit (knot × genus-2)
+
+Per James's redirect: stronger validation than seed-replication is **catalog-pair replication.** Built `theseus/scoring/cross_catalog_h4_audit.py` parametrized over catalog pairs. Ran on knot × genus-2 (vs reference knot × EC).
+
+### Results (n=8,000 random pair tests)
+
+| relation | knot × EC (ref) | knot × genus-2 | drift |
+|---|---|---|---|
+| equal | 2.6% | **10.0%** | +7.4pp |
+| equal_mod_2 (parity) | 67% | **54.8%** | -12.2pp |
+| divides | 51% aggregate | **56.2%** | +5.2pp |
+| abs_diff_le_3 | 65% | 51.2% | -13.8pp |
+
+### MAJOR SUBSTRATE-HONESTY FINDING
+
+The H4 hierarchy `parity > divides > equal` that we confirmed across two seeds (Fires #13-14) and refined via stratified audit (Fire #21) **does NOT cleanly replicate on a different catalog pair**.
+
+Specifically:
+1. **On knot × genus-2, divides slightly edges parity** (56.2% > 54.8%). Hierarchy ordering is *not preserved*.
+2. **Equal jumped 4×** (2.6% → 10.0%). Likely driven by genus-2's small-range invariants — `disc_sign ∈ {-1, 0, 1}`, `torsion_order` ∈ {1..N small}, etc. Inflates strict-equality matches in a way EC's larger-range invariants don't.
+3. **Parity dropped ~12pp** from 67% to 55%.
+
+### What this means
+
+The earlier "substrate finding" that parity-relations are universally most-extensible was **catalog-pair-specific**. The substrate-honesty work surfaced an important limitation:
+
+- **Per-(catalog_a, catalog_b) per-relation rates** are more honest than universal per-relation rates
+- The H4 finding on knot × EC is REAL for that pair — it's just not a UNIVERSAL math fact
+- Ergon training-value weights should be (catalog_a, catalog_b)-aware, not pure-relation-aware
+
+### Why this is a substrate-honesty WIN, not a setback
+
+The Fire #21 stratified audit caught one calibration error (divides aggregate inflated by small-range ec_invariants). Fire #23 catches another (parity hierarchy is catalog-pair-specific). Both surface BEFORE Ergon ingests; the substrate is doing exactly what it should — catching its own overgeneralizations.
+
+If we'd shipped the universal parity > divides > equal claim to Ergon, the Learner would have trained on weights that misrepresent the actual cross-catalog structure on non-EC catalogs.
+
+### Implications for training_weight v0.4
+
+Three options for the next refresh:
+
+1. **Drop universal per-relation weights**; compute (catalog_a, catalog_b, relation)-conditional rates. More accurate but multiplies the calibration surface area by N_catalog_pairs.
+
+2. **Use averaged rates across all available catalog pairs** as a conservative midpoint. Less precise but simpler.
+
+3. **Pin training_weight to knot × EC rates** (our most-tested pair) and note the catalog-specificity in docs. Cheapest; acceptable for v0.1 Ergon.
+
+Recommend option 2 for Fire #24 (average across pairs once we audit 2-3 more pairs), with option 3 as the immediate fallback if we only have knot × EC + knot × genus-2 audits.
+
+### Stratified analysis (genus-2 ec_invariants)
+
+Top per-(parent_inv_b, relation) rates from the knot × genus-2 audit — surfaces which genus-2 invariants drive the equal-rate up:
+
+- `disc_sign` (2-value ∈ {-1, 0, +1}) — would drive both equal AND parity rates artificially. Worth filtering out for cleaner comparison.
+- Will inspect the stratified breakdown in the report file.
+
+### Decisions for Fire #24
+
+1. **Audit a third catalog pair** — knot × modular_forms (both have integer invariants). If pattern again differs from knot × EC, we have strong evidence H4 is genuinely catalog-pair-specific. If it matches knot × EC OR knot × genus-2, we learn the partition.
+2. **Filter out disc_sign and other 2-3-value categorical "invariants"** for cleaner comparison — these break the integer-relation framing.
+3. **Update training_weight v0.4** based on the cross-catalog averages.
+
+### Loop discipline
+
+- Tests still 140/140 (audit is read-only)
+- New tool `cross_catalog_h4_audit.py` parametrized over any two catalogs in CATALOG_INVARIANTS
+- Report `theseus/cross_catalog_h4_report.md` captures the finding
+
