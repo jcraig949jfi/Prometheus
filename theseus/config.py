@@ -32,8 +32,8 @@ GENERATOR_STATUS = {
     # B — operator-action
     "b1": "active",
     "b2": "active",
-    "b3": "stub",
-    "b4": "stub",
+    "b3": "active",
+    "b4": "active",
     "b5": "active",
     # C — mutation
     "c1": "active",

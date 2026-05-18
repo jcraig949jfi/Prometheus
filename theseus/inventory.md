@@ -29,9 +29,10 @@ Status legend:
   (mirror^n predicted vs actual; substrate self-test) — **active**
 - **B2** `b2_composition_test` — operator-pair commutativity test
   over integer-transform operators — **active**
-- **B3** `b3_inverse_test` — `op⁻¹(op(x)) == x` for invertibles — **stub**
-- **B4** `b4_fixed_point_hunt` — does `op(x) == x` have non-trivial
-  solutions in this catalog? — **stub**
+- **B3** `b3_inverse_test` — self-inverse property test at v
+  (op(op(v)) == v?) over integer-transform operators — **active**
+- **B4** `b4_fixed_point_hunt` — fixed-point hunt
+  (op(v) == v?) over integer-transform operators — **active**
 - **B5** `b5_conservation_law` — is invariant `I` preserved under
   operator `op`? — **active**
 
@@ -104,7 +105,7 @@ Status legend:
 
 ---
 
-## Active set (Fire #6, 18 generators): A1 + A2 + A3 + A4 + B1 + B2 + B5 + C1 + C2 + C4 + C5 + D1 + D2 + D3 + E1 + E3 + F3 + H1
+## Active set (Fire #7, 20 generators): A1 + A2 + A3 + A4 + B1 + B2 + B3 + B4 + B5 + C1 + C2 + C4 + C5 + D1 + D2 + D3 + E1 + E3 + F3 + H1
 
 Rationale (per CHARTER.md):
 - **A1** — highest throughput, no LLM cost, anti-conventional novelty

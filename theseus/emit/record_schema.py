@@ -15,7 +15,7 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import dataclass, field, asdict
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 from enum import Enum
 
 
@@ -48,6 +48,34 @@ class Verdict(str, Enum):
     REJECTED = "REJECTED"
     INCONCLUSIVE = "INCONCLUSIVE"
     UNVERIFIED = "UNVERIFIED"
+
+
+@dataclass(frozen=True)
+class StepRecord:
+    """One step in a multi-step verification path (process supervision).
+
+    Used by triangulation generators (D3) and future MCTS / tree-search
+    generators. Each step has its own info-density score; the aggregated
+    record's score blends them.
+
+    Pulls from frontier "process supervision" (Lightman et al. OpenAI
+    2023 "Let's Verify Step by Step"): step-level reward outperforms
+    outcome-only reward for math reasoning. The substrate's analogue:
+    info-density-per-step gives finer training signal than terminal-
+    verdict-only.
+    """
+
+    step_id: str  # e.g. "step_0", "step_1"
+    step_kind: str  # "resample", "precision_increase", "method_switch", etc
+    step_method: str
+    step_input: Dict[str, Any] = field(default_factory=dict)
+    step_output: Dict[str, Any] = field(default_factory=dict)
+    step_info_density: float = 0.5  # 0..1
+    step_precision_dps: Optional[int] = None
+    step_convergence: Optional[str] = None
+
+    def to_dict(self) -> Dict[str, Any]:
+        return asdict(self)
 
 
 @dataclass(frozen=True)
@@ -89,6 +117,13 @@ class TheseusRecord:
     info_density: Optional[float] = None
     diversity_score: Optional[float] = None
     novelty_estimate: Optional[float] = None
+
+    # --- Process supervision (Fire #7) ---
+    # Optional list of step-record dicts (StepRecord.to_dict() shape).
+    # Triangulation / MCTS generators populate this; old records leave
+    # None. info_density_score uses step_info_density mean when present
+    # (additive enhancement over terminal-verdict scoring).
+    step_trace: Optional[List[Dict[str, Any]]] = None
 
     # --- Free-form extras ---
     extras: Dict[str, Any] = field(default_factory=dict)

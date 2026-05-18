@@ -24,20 +24,6 @@ class A5DistributionMatch(StubGenerator):
 
 # -- Family B (operator-action) --
 
-class B3InverseTest(StubGenerator):
-    generator_id = "b3"
-    claim_kind = ClaimKind.COMPOSITION_TEST.value
-    def description(self) -> str:
-        return "b3: op^-1(op(x)) == x inverse test (for invertibles)"
-
-
-class B4FixedPointHunt(StubGenerator):
-    generator_id = "b4"
-    claim_kind = ClaimKind.OPERATOR_ROTATION.value
-    def description(self) -> str:
-        return "b4: op(x) == x non-trivial fixed-point hunt"
-
-
 # -- Family C (mutation) --
 
 class C3RegionSlide(StubGenerator):

@@ -17,6 +17,8 @@ from theseus.generators.a3_functional_identity import A3FunctionalIdentityGenera
 from theseus.generators.a4_symbolic_regression import A4SymbolicRegressionGenerator
 from theseus.generators.b1_operator_rotation import B1OperatorRotationGenerator
 from theseus.generators.b2_composition_test import B2CompositionTestGenerator
+from theseus.generators.b3_inverse_test import B3InverseTestGenerator
+from theseus.generators.b4_fixed_point_hunt import B4FixedPointHuntGenerator
 from theseus.generators.b5_conservation_law import B5ConservationLawGenerator
 from theseus.generators.c1_claim_mutation import C1ClaimMutationGenerator
 from theseus.generators.c2_threshold_mutation import C2ThresholdMutationGenerator
@@ -31,8 +33,6 @@ from theseus.generators.f3_importance_sampling import F3ImportanceSamplingGenera
 from theseus.generators.h1_self_play_hunter import H1SelfPlayHunterGenerator
 from theseus.generators.stubs.all_stubs import (
     A5DistributionMatch,
-    B3InverseTest,
-    B4FixedPointHunt,
     C3RegionSlide,
     D4BoundaryCrossing,
     E2ArxivAbstractMining,
@@ -67,6 +67,8 @@ REGISTRY: Dict[str, Type[Generator]] = {
     "a4": A4SymbolicRegressionGenerator,
     "b1": B1OperatorRotationGenerator,
     "b2": B2CompositionTestGenerator,
+    "b3": B3InverseTestGenerator,
+    "b4": B4FixedPointHuntGenerator,
     "b5": B5ConservationLawGenerator,
     "c1": C1ClaimMutationGenerator,
     "c2": C2ThresholdMutationGenerator,
@@ -81,8 +83,6 @@ REGISTRY: Dict[str, Type[Generator]] = {
     "h1": H1SelfPlayHunterGenerator,
     # Stubs
     "a5": A5DistributionMatch,
-    "b3": B3InverseTest,
-    "b4": B4FixedPointHunt,
     "c3": C3RegionSlide,
     "d4": D4BoundaryCrossing,
     "e2": E2ArxivAbstractMining,

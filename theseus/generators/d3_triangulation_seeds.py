@@ -35,6 +35,7 @@ from theseus.emit.record_schema import (
     TheseusRecord,
     ClaimKind,
     Verdict,
+    StepRecord,
 )
 from theseus.generators.base import Generator, GeneratorStatus
 from theseus.generators.a1_catalog_cross_product import (
@@ -169,9 +170,11 @@ class D3TriangulationSeedsGenerator(Generator):
             ei = p["ec_invariant"]
             parent_degree = p.get("best_degree", 2)
 
-            # MCTS tree expansion: N independent resamples
+            # MCTS tree expansion: N independent resamples.
+            # Each resample is a step in the process-supervised trace.
             child_r2s: List[float] = []
             child_verdicts: List[str] = []
+            step_trace: List[dict] = []
             for branch_idx in range(self._n_branches):
                 child_seed = self._rng.randint(0, 2**31)
                 r2 = self._resample_polyfit(
@@ -179,8 +182,31 @@ class D3TriangulationSeedsGenerator(Generator):
                 )
                 if r2 is None:
                     continue
+                child_v = self._r2_to_verdict(r2)
                 child_r2s.append(r2)
-                child_verdicts.append(self._r2_to_verdict(r2))
+                child_verdicts.append(child_v)
+                # Step info-density: strong fits (high |R²| from 0.5)
+                # carry more info; INCONCLUSIVE mid-range carries less.
+                step_info = min(1.0, abs(r2 - 0.5) * 2.0)
+                step_trace.append(
+                    StepRecord(
+                        step_id=f"step_{branch_idx}",
+                        step_kind="resample",
+                        step_method="numpy_polyfit",
+                        step_input={
+                            "knot_invariant": ki,
+                            "ec_invariant": ei,
+                            "polynomial_degree": parent_degree,
+                            "child_seed": child_seed,
+                        },
+                        step_output={
+                            "r2": r2,
+                            "child_verdict": child_v,
+                        },
+                        step_info_density=step_info,
+                        step_convergence="exact",
+                    ).to_dict()
+                )
 
             if len(child_verdicts) < 2:
                 self.attempts += 1
@@ -246,8 +272,9 @@ class D3TriangulationSeedsGenerator(Generator):
                 parent_record_id=parent.record_id,
                 method="mcts_multi_resample_polyfit",
                 convergence_status="triangulated" if agreement >= 0.8 else "boundary",
+                step_trace=step_trace,
                 extras={
-                    "frontier_technique": "mcts_inconclusive_triangulation",
+                    "frontier_technique": "mcts_inconclusive_triangulation_with_process_supervision",
                     "agreement_threshold": 0.8,
                 },
             )

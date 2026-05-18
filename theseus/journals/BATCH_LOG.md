@@ -661,3 +661,98 @@ ROADMAP-driven next batch:
 - RankWarning suppressed in a4_symbolic_regression at numpy.polyfit call site
 - d3 added to config.GENERATOR_STATUS
 
+
+## batch-20260518T131159Z-d6de8f
+
+- Started: 2026-05-18T13:11:59.433237+00:00
+- Ended:   2026-05-18T13:12:29.308562+00:00
+- Duration: 0.0083 h
+- Requested: a1,a2,a3,a4,b1,b2,b3,b4,b5,c1,c2,c4,c5,d1,d2,d3,e1,e3,f3,h1
+- Active:    a1,a2,a3,a4,b1,b2,b3,b4,b5,c1,c2,c4,c5,d1,d2,d3,e1,e3,f3,h1
+- Records: 70412 (kills=36944, confirmations=32543, inconclusive=150, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=3666, throughput=425729032.4/h, info_density=0.529, diversity=0.869, yield_score=0.0046, kills=2614, conf=1052, errs=0
+- **a2** — records=3666, throughput=20057142.9/h, info_density=0.505, diversity=0.952, yield_score=0.0049, kills=3475, conf=191, errs=0
+- **a3** — records=3665, throughput=121045871.6/h, info_density=0.530, diversity=0.874, yield_score=0.0047, kills=2569, conf=1096, errs=0
+- **a4** — records=3665, throughput=15130733.9/h, info_density=0.501, diversity=0.913, yield_score=0.0046, kills=3573, conf=2, errs=0
+- **b1** — records=3665, throughput=286826086.9/h, info_density=0.600, diversity=0.922, yield_score=0.0056, kills=0, conf=3665, errs=0
+- **b2** — records=3665, throughput=3665000000000.0/h, info_density=0.566, diversity=0.926, yield_score=0.0053, kills=1262, conf=2403, errs=0
+- **b3** — records=3665, throughput=209428571.4/h, info_density=0.542, diversity=0.943, yield_score=0.0052, kills=2109, conf=1556, errs=0
+- **b4** — records=3665, throughput=141870967.8/h, info_density=0.526, diversity=0.942, yield_score=0.0050, kills=2729, conf=936, errs=0
+- **b5** — records=3665, throughput=209428571.3/h, info_density=0.586, diversity=0.913, yield_score=0.0054, kills=506, conf=3159, errs=0
+- **c1** — records=3665, throughput=169153846.1/h, info_density=0.551, diversity=0.874, yield_score=0.0049, kills=1786, conf=1879, errs=0
+- **c2** — records=3665, throughput=119945454.6/h, info_density=0.568, diversity=0.884, yield_score=0.0051, kills=1182, conf=2483, errs=0
+- **c4** — records=3665, throughput=209428571.3/h, info_density=0.600, diversity=0.882, yield_score=0.0053, kills=0, conf=3665, errs=0
+- **c5** — records=3665, throughput=3665000000000.0/h, info_density=0.558, diversity=0.877, yield_score=0.0049, kills=1556, conf=2109, errs=0
+- **d1** — records=3665, throughput=30471131.6/h, info_density=0.583, diversity=0.917, yield_score=0.0054, kills=606, conf=3059, errs=0
+- **d2** — records=3665, throughput=216295081.9/h, info_density=0.544, diversity=0.879, yield_score=0.0048, kills=2045, conf=1620, errs=0
+- **d3** — records=3665, throughput=6794026.8/h, info_density=0.635, diversity=0.914, yield_score=0.0059, kills=3605, conf=0, errs=0
+- **e1** — records=775, throughput=14919786.1/h, info_density=0.200, diversity=0.987, yield_score=0.0020, kills=0, conf=0, errs=0
+- **e3** — records=3665, throughput=209428571.4/h, info_density=0.557, diversity=0.951, yield_score=0.0054, kills=1562, conf=2103, errs=0
+- **f3** — records=3665, throughput=169153846.2/h, info_density=0.530, diversity=0.880, yield_score=0.0047, kills=2560, conf=1105, errs=0
+- **h1** — records=3665, throughput=169153846.1/h, info_density=0.513, diversity=0.953, yield_score=0.0049, kills=3205, conf=460, errs=0
+
+
+---
+
+## Fire #7 — 2026-05-18 ~13:12Z
+
+Three BUILD items shipped. Engine at 20 active generators across 6 families. **Fire #2 frontier-analysis BUILD slate is now COMPLETE.**
+
+### Shipped
+
+- **Process supervision (TheseusRecord.step_trace + StepRecord dataclass)** — schema extension. TheseusRecord gains optional `step_trace: List[Dict[str, Any]]` field. StepRecord helper dataclass for clean construction. `info_density_score` now blends terminal-verdict score with step-trace mean (60/40 weighting). D3 updated to populate step_trace from each resample. Each step carries `step_info_density = min(1.0, abs(r2 - 0.5) * 2.0)` — strong fits (high |r2−0.5|) carry more info; mid-range INCONCLUSIVE values carry less. Frontier-aligned: Lightman et al. OpenAI 2023 "Let's Verify Step by Step."
+
+- **B3 inverse test** — `op(op(v)) == v?` for each operator at integer v. Maps the self-inverse subdomain of each operator. Identity + neg are globally self-inverse; abs is self-inverse on v ≥ 0; others are not.
+
+- **B4 fixed-point hunt** — `op(v) == v?` for each (op, v) pair. Maps the per-operator fixed-point set. Identity has trivially-everything; neg has only 0; mod_3 has {0,1,2}; etc. B2 + B3 + B4 together fully map the algebra.
+
+### Smoke (30 s, 20 active generators, 0 errors)
+
+- 70,412 records, 36,944 kills, 32,543 confirmations, **150 INCONCLUSIVE**
+- **D3 info_density: 0.501 → 0.635** (process supervision blend at work). Highest yield_score (0.0059) of any active generator this fire — step-trace lifts the score appropriately.
+- **B3: 58% kill rate** — self-inverse fails for most (op, v) combos. neg / identity / abs-on-positive provide the 42% confirmations.
+- **B4: 75% kill rate** — fixed points are rare. The 25% confirmations are identity emissions + small-v on operators with finite fixed-point sets.
+- B1 + C4 still 0 kills (substrate self-tests clean).
+
+### MILESTONE: Frontier-analysis BUILD slate complete
+
+Across Fires #3-7, all 7 BUILD techniques from `docs/frontier_techniques_analysis.md` now operational:
+
+| Technique | Verdict | Status | Fire |
+|---|---|---|---|
+| Counterfactual augmentation | BUILD | ✅ C2 boundary bisection + C4/C5 lattice | #3, #6 |
+| Symbolic regression | BUILD | ✅ A4 numpy polyfit fallback | #5 |
+| MCTS triangulation | BUILD | ✅ D3 multi-resample | #6 |
+| Process supervision | BUILD | ✅ step_trace + info_density blend | #7 |
+| Active learning | BUILD | ✅ F3 importance sampling | #4 |
+| Self-play | BUILD | ✅ H1 proposer-vs-hunter | #3 |
+| Contrastive embeddings | BUILD | ✅ sentence-transformers opt-in | #3 |
+
+### Substrate state
+
+- 20/40 generator types active (50% of the catalog)
+- 6/10 families have ≥1 active generator (A, B, C, D, E, F, H; missing G symmetry, I LLM-Tier2, J frontier-API)
+- 3 substrate self-tests (B1 mirror^n, B3 self-inverse on neg/identity, C4 logical implication) — substrate immune system in place
+- Triangulation pathway closed: A4 INCONCLUSIVE → D3 multi-resample → terminal verdict + step_trace
+- Volume: ~70-80K records / 30 s sustained at scale; 0 errors across 4 consecutive fires
+
+### Decisions for Fire #8
+
+With BUILD slate complete, next priorities are BUILD-LATER items and substrate-native stub fills. Selected:
+
+- **A5 distribution match** — KS-test cross-catalog invariant distributions. Substrate-native, no network.
+- **C3 region slide** — perturb the coordinate-chart region (object subspace) for an existing claim. Substrate-native mutation.
+- **D4 boundary crossing** — given verified (PASS, KILL) pairs from prior batches, find minimum-distance pairs that bracket the relation boundary. Closes loop with kill_vector concept.
+
+Fire #9 candidate (Tier 1 transition): GFlowNet bandit (BUILD-LATER #5, threshold met now that 15+ generators are active) OR Bayesian-optimization-based hyperparameter tuning (BUILD-LATER #11) — pick based on which addresses the bigger Fire #8 yield gap.
+
+### Loop discipline
+
+- Tests: 82 → 90 (+8 for step_trace round-trip, info_density blend, B3 / B4 properties)
+- Smoke: 70K records / 30 s, 0 errors with 20 generators
+- TheseusRecord schema extended append-only (step_trace is Optional)
+- D3 backward compatible (records without step_trace still parse)
+

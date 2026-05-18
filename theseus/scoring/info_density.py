@@ -28,7 +28,28 @@ SPECIFIC_KILL_PATTERNS = {
 
 
 def info_density_score(record: TheseusRecord) -> float:
-    """Return 0..1 info-density score for a record."""
+    """Return 0..1 info-density score for a record.
+
+    If the record carries a step_trace (process-supervised), blends
+    terminal-verdict score with the mean step_info_density. This is
+    the additive enhancement Fire #7 introduces — triangulation /
+    MCTS records benefit from step-level scoring without breaking
+    older terminal-only records.
+    """
+    terminal_score = _terminal_verdict_score(record)
+    if record.step_trace:
+        step_scores = [
+            float(s.get("step_info_density", 0.5)) for s in record.step_trace
+        ]
+        if step_scores:
+            step_mean = sum(step_scores) / len(step_scores)
+            # 60/40 blend: terminal carries more weight (final verdict is
+            # the ground truth), but step trace lifts info-rich paths.
+            return 0.6 * terminal_score + 0.4 * step_mean
+    return terminal_score
+
+
+def _terminal_verdict_score(record: TheseusRecord) -> float:
     v = record.verdict
 
     if v == Verdict.REJECTED.value:
