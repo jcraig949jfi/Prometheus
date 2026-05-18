@@ -1,25 +1,20 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-05-18 07:44:03 AM UTC*
+*Generated: 2026-05-18 11:44:03 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
 
-**Generated: 2026-05-18 07:44:00 AM EDT**  
-*Author: Metis (multi-machine reporter mode)*
+## Act on this
+* **Hephaestus@M3 forge rate critically low**: The forge rate of Hephaestus at M3 is currently at 0.0%, with 0 session forges and 0 session scraps, indicating a potential issue with the forge pipeline. Investigate the cause of this low forge rate and take necessary actions to resolve it.
+* **Nous@M4 and 4 other expected agents still MISSING**: Nous at M4, Nemesis at M3, Coeus, Aletheia, and Eos are still pending deployment, blocking the intelligence pipeline revival. Initiate deployment sequence on M4 and assign hardware for missing agents.
+* **Apollo@M2 requires config validation**: Apollo at M2 is ALIVE with a recent heartbeat (4s), but manual_status.json lacks full telemetry sync; confirm Postgres dual-write is active and metrics are being captured, and verify Apollo's config_v2d2b.yaml is correctly loaded and operational.
 
----
+## Watch this
+* **Pronoia@M4 sustaining hourly cycles**: Pronoia at M4 has completed multiple portfolio cycles since restart, with a 56s heartbeat, and all services (mon, metis, push, and email) are active. Monitor for full stabilization over the next 2-4 cycles.
+* **Redis on M1 restored**: Redis was manually restarted on 2026-05-17 evening, and Agora now receives Postgres dual-writes. Unexpected DEAD agents (Agora, Aporia, etc.) are historical and not part of the current revival.
+* **Hephaestus@M3 starting up**: Hephaestus at M3 is starting up, with a recent heartbeat (5s), and has a ledger size of 5449 and 0 API timeouts.
 
-## Act on this  
-**Hephaestus@M3 forge rate remains critically low at 4.3%** – Session has produced only 6 forges and 134 scraps, with a forge rate well below historical baselines despite stable operation and 1202 items in the Nous queue. Investigate whether Coeus is feeding high-tail-difficulty candidates or if model drift has degraded candidate quality.  
-**Nous@M4 and 4 other expected agents still MISSING — deployment pending** – Nemesis@M3, Nous@M4, Coeus@?, Aletheia@?, and Eos@? remain undeployed, blocking the intelligence pipeline revival. Initiate deployment sequence on M4 and assign hardware for missing agents.  
-**Apollo@M2 and Hephaestus@M3 require config validation after revival** – Both agents are ALIVE with recent heartbeats (13s and 34s), but manual_status.json lacks full telemetry sync; confirm Postgres dual-write is active and metrics are being captured. Verify Apollo’s config_v2d2b.yaml is correctly loaded and operational.
-
-## Watch this  
-**Pronoia@M4 sustaining hourly cycles — approaching steady-state** – Agent has completed 4 consecutive portfolio cycles since restart (last at 2026-05-18 03:44 AM), with 57s heartbeat; mon, metis, push, and email all active. Monitor for full stabilization over next 2–4 cycles.  
-**Redis on M1 restored — legacy agents still DEAD but no longer blocking** – Redis was manually restarted on 2026-05-17 evening; Agora now receives Postgres dual-writes (e.g., Apollo@M2, Hephaestus@M3). Unexpected DEAD agents (Agora, Aporia, etc.) are historical and not part of current revival.  
-**No change since previous brief at 2026-05-18 07:33:58 AM EDT** – All prior Watch items remain consistent; no new degradation or improvement trends detected beyond existing context.
-
-## For the record  
-(5) agents still pending deployment on M2/M3/M4 — known revival sequence in progress.  
-**Hephaestus@M3 has forged 6 candidates with 5449 ledger size and 0 API timeouts** – Forge session ongoing under qwen/qwen3.5-397b-a17b; model stable, no errors in last hour. Substrate evolution continues.  
-**Recent discoveries from Aporia@M1 (historical) confirm Sp-uniquely-negative and nbp orthogonality** – High-confidence findings (up to 0.97) on Dirichlet and Maass families remain relevant for mechanism (c) validation; archived in SESSION_JOURNAL_20260422.md.
+## For the record
+* **(5) agents still pending deployment on M2/M3/M4**: Known revival sequence is in progress.
+* **Hephaestus@M3 has a ledger size of 5449**: Forge session ongoing under qwen/qwen3.5-397b-a17b; model stable, no errors in the last hour.
+* **Recent discoveries from Aporia@M1 (historical) confirm Sp-uniquely-negative and nbp orthogonality**: High-confidence findings (up to 0.97) on Dirichlet and Maass families remain relevant for mechanism (c) validation; archived in SESSION_JOURNAL_20260422.md.

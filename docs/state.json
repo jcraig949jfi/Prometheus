@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "generated_at": "2026-05-18T07:43:59.854147+00:00",
+  "generated_at": "2026-05-18T11:44:00.279600+00:00",
   "redis_host": "192.168.1.176:6379",
   "heartbeat_timeout_sec": 300,
   "ideas_in_flight": [
@@ -21,27 +21,27 @@
       "machine": "M2",
       "kind": "evolutionary",
       "status": "ALIVE",
-      "heartbeat_age_sec": 13,
+      "heartbeat_age_sec": 4,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-18T03:43:46.213807-04:00",
+      "last_status_update": "2026-05-18T07:43:55.667717-04:00",
       "key_metrics": {
         "phase": "main",
-        "elapsed_h": 13.11,
-        "gen_time_s": 106.22,
-        "generation": 311,
+        "elapsed_h": 17.13,
+        "gen_time_s": 75.25,
+        "generation": 400,
         "ncd_weight": 0.5,
         "config_path": "configs\\config_v2d2b.yaml",
         "vram_used_mb": null,
-        "median_fitness": 0.07,
+        "median_fitness": 0.09,
         "llm_alive_count": null,
         "map_elites_size": 14,
         "ablation_delta_min": 0.0,
         "last_checkpoint_at": null,
         "best_fitness_vector": [
-          0.15,
-          0.07,
+          0.175,
+          0.09,
           0.8,
-          0.84,
+          0.92,
           1.0,
           500
         ],
@@ -56,19 +56,19 @@
       "machine": "M3",
       "kind": "forge",
       "status": "ALIVE",
-      "heartbeat_age_sec": 34,
-      "current_op": "forging Hebbian Learning + Free Energy Principle + Normalized Compression Distance",
-      "last_status_update": "2026-05-17T12:41:36.148441-04:00",
+      "heartbeat_age_sec": 5,
+      "current_op": "starting up",
+      "last_status_update": "2026-05-18T11:20:55.110793Z",
       "key_metrics": {
-        "ledger_size": 5449,
-        "forge_rate_pct": 4.3,
-        "session_forges": 6,
-        "session_scraps": 134,
-        "nous_queue_depth": 1202,
+        "session_forges": 0,
+        "session_scraps": 0,
+        "forge_rate_pct": 0.0,
         "current_forge_version": "forge",
-        "api_timeouts_last_hour": 0
+        "ledger_size": 5449,
+        "api_timeouts_last_hour": 0,
+        "nous_queue_depth": null
       },
-      "data_source": "postgres_fallback"
+      "data_source": "redis"
     },
     {
       "name": "Nemesis",
@@ -148,7 +148,7 @@
       "machine": "M4",
       "kind": "scanner",
       "status": "ALIVE",
-      "heartbeat_age_sec": 57,
+      "heartbeat_age_sec": 56,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -160,7 +160,7 @@
       "machine": "M1",
       "kind": "unknown",
       "status": "DEAD",
-      "heartbeat_age_sec": 2219494,
+      "heartbeat_age_sec": 2233894,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -184,7 +184,7 @@
       "machine": "M1",
       "kind": "unknown",
       "status": "DEAD",
-      "heartbeat_age_sec": 2164333,
+      "heartbeat_age_sec": 2178734,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -196,7 +196,7 @@
       "machine": "M1-Skullport",
       "kind": "unknown",
       "status": "DEAD",
-      "heartbeat_age_sec": 2012066,
+      "heartbeat_age_sec": 2026466,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -208,7 +208,7 @@
       "machine": "M1",
       "kind": "unknown",
       "status": "DEAD",
-      "heartbeat_age_sec": 1594953,
+      "heartbeat_age_sec": 1609354,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -256,7 +256,7 @@
       "machine": "M2",
       "kind": "unknown",
       "status": "DEAD",
-      "heartbeat_age_sec": 2671150,
+      "heartbeat_age_sec": 2685550,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -304,7 +304,7 @@
       "machine": "M2",
       "kind": "unknown",
       "status": "DEAD",
-      "heartbeat_age_sec": 2219419,
+      "heartbeat_age_sec": 2233820,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -316,7 +316,7 @@
       "machine": "M1",
       "kind": "unknown",
       "status": "DEAD",
-      "heartbeat_age_sec": 2219457,
+      "heartbeat_age_sec": 2233858,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -438,6 +438,26 @@
     }
   ],
   "main_events": [
+    {
+      "msg_id": "1779103254679-0",
+      "timestamp": "2026-05-18T11:20:55.017036+00:00",
+      "sender": "Hephaestus",
+      "machine": "M3",
+      "type": "announce",
+      "subject": "Hephaestus online",
+      "body": "Forge daemon starting on M3, mode=continuous",
+      "confidence": "1.0"
+    },
+    {
+      "msg_id": "1779090248560-0",
+      "timestamp": "2026-05-18T07:44:08.484821+00:00",
+      "sender": "Pronoia",
+      "machine": "M4",
+      "type": "announce",
+      "subject": "Portfolio cycle complete (mon=True, metis=True, push=True, email=True)",
+      "body": "hourly tick 2026-05-18T07:43:58.299639+00:00",
+      "confidence": "1.0"
+    },
     {
       "msg_id": "1779075847456-0",
       "timestamp": "2026-05-18T03:44:07.367763+00:00",
@@ -567,26 +587,6 @@
       "subject": "Ergon stopping loop per James. Journal updated with all 24 findings across 3 bursts.",
       "body": "Journal at roles/Ergon/SESSION_JOURNAL_20260422.md contains all 24 findings from three bursts across the session:\n  Burst 1: 9 findings (HANDOFF queue execution, F011 initial reframes)\n  Burst 2: 10 findings (F011 expansion, Katz-Sarnak diagnostic, paper axes)\n  Burst 3: 4 findings (Dirichlet, Maass GL3, paper artifacts)\n\nFinal contributions to F011 paper:\n  - 7 artifacts in ergon/results/paper_artifacts/ (3 figures data, 1 LaTeX table, 2 supplements, 1 z_1 histogram CSV)\n  - Universality ruler ",
       "confidence": "1.0"
-    },
-    {
-      "msg_id": "1776925582074-0",
-      "timestamp": "2026-04-23T02:50:00+00:00",
-      "sender": "Techne",
-      "machine": "M1",
-      "type": "announce",
-      "subject": "Techne standing down \u2014 session journal finalized",
-      "body": "James stopped the loop. Final session state:\n\n  techne/TECHNE_SESSION_2026-04-22.md updated with late-cycle bug fixes\n  (knot_shape_field false-fit guard, 6_1 before/after verification) and\n  the post-session standby arc summary.\n\nSession tally:\n  - 7 \u2192 21 tools forged (net 14 new)\n  - 22 REQs fulfilled (incl. 3 Aporia mid-session additions)\n  - 1 REQ open (REQ-008 Khovanov, deferred on dep weight)\n  - 14 test files, ~145 assertions, all green\n  - 1 bug report received + fixed (Ergon knot_shape_",
-      "confidence": "1.0"
-    },
-    {
-      "msg_id": "1776925579225-0",
-      "timestamp": "2026-04-23T06:26:19.224451+00:00",
-      "sender": "Charon",
-      "machine": "M1",
-      "type": "share",
-      "subject": "CUE surrogate (test iv): PASS. No consistent +\u03c1 on CUE; Axis 3b is arithmetic-specific not generic numerology",
-      "body": "@Aporia: CUE SURROGATE (test iv) RESULT. AXIS 3b PASSES.\n\nSetup: 10K pure-random U(40) samples, artificial nbp assigned uniformly\n(Poisson(3.5) clipped to [1,6]), 24-gap local normalization, Spearman across\n6 nbp bins (~1400-2100 samples each).\n\nSPEARMAN(artificial_nbp, variance_per_k):\n  gap1:  rho = -0.26  p = 0.62\n  gap4:  rho = -0.71  p = 0.11\n  gap8:  rho = -0.14  p = 0.79\n  gap16: rho = -0.89  p = 0.02 (marginally negative)\n  gap24: rho = +0.26  p = 0.62\n\nRESULT: NO CONSISTENT POSITIVE \u03c1 a",
-      "confidence": "0.9"
     }
   ],
   "challenges": [
@@ -647,83 +647,5 @@
     "completed_lifetime": 81
   },
   "anomalies": [],
-  "intelligence_outputs": [
-    {
-      "cycle_id": "c5a3539b-885c-4ab1-ac15-fac76b14b28e",
-      "stage": "audit",
-      "success": true,
-      "output_path": null,
-      "output_summary": "HEALTHY",
-      "error": null,
-      "started_at": "2026-05-17T03:54:46.112065-04:00",
-      "finished_at": "2026-05-17T03:54:46.759248-04:00",
-      "duration_sec": 0.647183
-    },
-    {
-      "cycle_id": "c5a3539b-885c-4ab1-ac15-fac76b14b28e",
-      "stage": "hermes",
-      "success": true,
-      "output_path": null,
-      "output_summary": "email sent",
-      "error": null,
-      "started_at": "2026-05-17T03:54:45.384669-04:00",
-      "finished_at": "2026-05-17T03:54:46.074318-04:00",
-      "duration_sec": 0.689649
-    },
-    {
-      "cycle_id": "c5a3539b-885c-4ab1-ac15-fac76b14b28e",
-      "stage": "clymene",
-      "success": false,
-      "output_path": null,
-      "output_summary": "skipped or no hoard",
-      "error": null,
-      "started_at": "2026-05-17T03:54:45.230157-04:00",
-      "finished_at": "2026-05-17T03:54:45.337242-04:00",
-      "duration_sec": 0.107085
-    },
-    {
-      "cycle_id": "c5a3539b-885c-4ab1-ac15-fac76b14b28e",
-      "stage": "metis",
-      "success": true,
-      "output_path": "C:\\Prometheus\\agents\\metis\\briefs\\2026-05-17_brief.md",
-      "output_summary": "brief 2026-05-17_brief.md",
-      "error": null,
-      "started_at": "2026-05-17T03:54:44.707617-04:00",
-      "finished_at": "2026-05-17T03:54:45.181058-04:00",
-      "duration_sec": 0.473441
-    },
-    {
-      "cycle_id": "c5a3539b-885c-4ab1-ac15-fac76b14b28e",
-      "stage": "skopos",
-      "success": true,
-      "output_path": "C:\\Prometheus\\agents\\skopos\\reports\\2026-05-17_alignment.md",
-      "output_summary": "alignment report 2026-05-17_alignment.md",
-      "error": null,
-      "started_at": "2026-05-17T03:54:44.494899-04:00",
-      "finished_at": "2026-05-17T03:54:44.645894-04:00",
-      "duration_sec": 0.150995
-    },
-    {
-      "cycle_id": "c5a3539b-885c-4ab1-ac15-fac76b14b28e",
-      "stage": "aletheia",
-      "success": true,
-      "output_path": "C:\\Prometheus\\agents\\aletheia\\data\\knowledge_graph.db",
-      "output_summary": "knowledge_graph.db = 424 KB",
-      "error": null,
-      "started_at": "2026-05-17T03:54:44.283631-04:00",
-      "finished_at": "2026-05-17T03:54:44.452131-04:00",
-      "duration_sec": 0.1685
-    },
-    {
-      "cycle_id": "c5a3539b-885c-4ab1-ac15-fac76b14b28e",
-      "stage": "eos",
-      "success": true,
-      "output_path": "C:\\Prometheus\\agents\\eos\\reports\\2026-05-17.md",
-      "output_summary": "digest 2026-05-17.md",
-      "error": null,
-      "started_at": "2026-05-17T03:54:43.438556-04:00",
-      "finished_at": "2026-05-17T03:54:44.237294-04:00",
-      "duration_sec": 0.798738
-    }
-  ]
+  "intelligence_outputs": []
 }
