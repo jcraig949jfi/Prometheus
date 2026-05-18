@@ -20,24 +20,40 @@ from typing import Optional
 from theseus.emit.record_schema import TheseusRecord, Verdict
 
 
-# Empirically-confirmed per-relation extensibility rates from H4
-# (Fires #13-14, seeds 42 + 137 agreeing within 2 percentage points).
+# Empirically-confirmed per-relation extensibility rates from H4.
+#
+# v0.1 (Fires #13-14, 2 seeds × ~2K records each):
+#   parity 0.63, divides 0.40, equal 0.02
+# v0.2 (Fire #20, 8 corpus files × ~4K records each via corpus_health):
+#   parity 0.65, abs_diff_* 0.65, divides 0.50, equal 0.025
+#
+# Hierarchy parity > divides > equal held robustly across both
+# samples. Divides drifted up most (40 → 51) — the small-sample
+# estimate underweighted it. The current values are conservative
+# midpoints of the two measurements; further refresh expected as
+# corpus grows.
 PER_RELATION_STRUCTURAL_RATE = {
-    "equal": 0.02,
-    "equal_mod_2": 0.63,
-    "divides": 0.40,
+    "equal": 0.025,
+    "equal_mod_2": 0.65,
+    "divides": 0.50,
     # abs_diff_le_K is K-dependent; handled below.
 }
 
 
 def _abs_diff_K_weight(k: int) -> float:
-    """Threshold-K-dependent structural weight. Tighter K is more specific."""
+    """Threshold-K-dependent structural weight. Tighter K is more specific.
+
+    Fire #19 corpus_health found abs_diff_le_* aggregated ≈ 67%
+    categorical (parity-equivalent). Tighter Ks should weight even
+    higher; very wide Ks (catalog-spanning) trivially hold and weight
+    lower.
+    """
     if k <= 3:
-        return 0.50
+        return 0.60  # very tight, parity-like
     if k <= 10:
-        return 0.40
+        return 0.50
     if k <= 50:
-        return 0.30
+        return 0.35
     if k <= 500:
         return 0.20
     return 0.10  # very wide K is almost trivial

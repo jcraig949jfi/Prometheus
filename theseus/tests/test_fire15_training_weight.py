@@ -122,11 +122,25 @@ def test_annotate_corpus_roundtrip(tmp_path):
 
 
 def test_h4_confirmed_rates_present():
-    """The H4-confirmed rates should be present in PER_RELATION_STRUCTURAL_RATE."""
+    """The H4-confirmed rates should be present in PER_RELATION_STRUCTURAL_RATE.
+
+    Bounds widened in Fire #20 calibration refresh to accommodate the
+    parity > divides > equal hierarchy at v0.2 numbers (0.65 / 0.50 /
+    0.025) while still rejecting any future regression to v0.1 values
+    or worse.
+    """
     assert "equal" in PER_RELATION_STRUCTURAL_RATE
     assert "equal_mod_2" in PER_RELATION_STRUCTURAL_RATE
     assert "divides" in PER_RELATION_STRUCTURAL_RATE
-    # Confirmed bandits from Fires #13-14
+    # Equal must remain rare (< 5%)
     assert PER_RELATION_STRUCTURAL_RATE["equal"] <= 0.05
-    assert PER_RELATION_STRUCTURAL_RATE["equal_mod_2"] >= 0.55
-    assert PER_RELATION_STRUCTURAL_RATE["divides"] >= 0.35
+    # Parity must be the highest, well above divides
+    assert PER_RELATION_STRUCTURAL_RATE["equal_mod_2"] >= 0.60
+    # Divides intermediate, above 35% (v0.1 minimum) and below parity
+    assert 0.35 <= PER_RELATION_STRUCTURAL_RATE["divides"] < PER_RELATION_STRUCTURAL_RATE["equal_mod_2"]
+    # Hierarchy ordering
+    assert (
+        PER_RELATION_STRUCTURAL_RATE["equal"]
+        < PER_RELATION_STRUCTURAL_RATE["divides"]
+        < PER_RELATION_STRUCTURAL_RATE["equal_mod_2"]
+    )

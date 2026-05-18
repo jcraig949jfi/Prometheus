@@ -2186,3 +2186,67 @@ The substrate is now self-monitoring. James's recent question ("how are we deter
 - Output `theseus/corpus_health_report.md` is regeneratable; not source-controlled (or could be — minor decision)
 - Updated James's substrate-question answer with concrete empirical numbers from 8 batches
 
+
+---
+
+## Fire #20 — 2026-05-18 ~16:23Z — training_weight calibration refresh
+
+Updated `PER_RELATION_STRUCTURAL_RATE` with Fire #19's larger-scale H4 measurements. Re-annotated representative corpus file. Updated tests + hierarchy assertion.
+
+### Before vs after
+
+| Relation | v0.1 (Fires #13-14) | v0.2 (Fire #20) | Rationale |
+|---|---|---|---|
+| equal | 0.02 | 0.025 | Stable across both measurements |
+| equal_mod_2 | 0.63 | 0.65 | Drifted 63→67 at scale; midpoint |
+| divides | 0.40 | 0.50 | Drifted 40→51; significant correction |
+| abs_diff_le_3 (tight) | 0.50 | 0.60 | Bumped to match parity at small K |
+| abs_diff_le_10 | 0.40 | 0.50 |  |
+| abs_diff_le_50 | 0.30 | 0.35 |  |
+
+### Test hierarchy assertion added
+
+Bounds widened to accept v0.2 numbers while still asserting:
+- `equal < divides < equal_mod_2` (the structural hierarchy is the load-bearing invariant)
+- `equal ≤ 5%` (must remain rare)
+- `equal_mod_2 ≥ 60%` (must remain dominant)
+- `divides ≥ 35%` (must remain above the v0.1 floor)
+
+If a future corpus refresh shifts these out of bounds, the test fails — protecting against unprincipled calibration drift.
+
+### Top high-weight records after refresh (top 5 by training_weight)
+
+All `0.6500` — exactly `parity × 1.0 SHADOW = 0.65` (no triangulation bonus on A1/C1/C3 records):
+
+1. `c1 | MUT[a]: trace_field_class(knot:8_3) equal_mod_2 tamagawa_product(ec:8528.h4) | 6 vs 4 | holds=True`
+2. `c3 | C3_SLIDE[b:torsion→rank]: crossing_number(knot:8_21) equal_mod_2 rank(ec:4845.b1) | 8 vs 0 | holds=True`
+3. `a1 | determinant(knot:7_7) equal_mod_2 torsion(ec:9702.bn2) | 21 vs 1 | holds=True` ← BOTH ODD
+4. `c1 | MUT[a]: trace_field_class(knot:8_9) equal_mod_2 tamagawa_product(ec:5334.a1) | 6 vs 8 | holds=True`
+5. `c3 | C3_SLIDE[b:conductor→torsion]: trace_field_class(knot:10_152) equal_mod_2 torsion(ec:990.e3) | 6 vs 6 | holds=True`
+
+All five are parity-SHADOW (both even or both odd). C3-slide variants tell us the bridge holds across ec_invariant substitution — exactly what H4 measures structurally. These are Ergon's natural top training examples.
+
+### Substrate observation: tamagawa_product reappears
+
+The Fire #13 corpus analysis flagged `tamagawa_product` as dominating A4 SHADOW (suspected small-range artifact). It also appears in 3 of the top 5 records here — likely the same effect: tamagawa products are typically small even integers, so parity matches with knot integer invariants are easier to find than for `rank` or `conductor`. Worth a follow-up: do the parity matches involving tamagawa_product H4-extend at the same rate as non-tamagawa ones?
+
+### Verdict ratio shift
+
+The corpus_health report shows:
+- 64.7% REJECTED (Fire #19) → similar after refresh (verdict counts don't change; only weights do)
+- Weight distribution now shifts toward 0.6+ slightly more (more records hit the parity 0.65 ceiling)
+
+### Decisions for Fire #21
+
+Two concrete options surfaced by the analysis:
+1. **tamagawa_product-stratified H4 audit** — re-run H4 categorical-rate analysis splitting records into "involves tamagawa_product" vs "doesn't". Test whether the parity-extensibility result is uniform across ec_invariants or driven by small-range artifacts.
+2. **Build the Ergon handoff format** — export top-N high-weight records to a JSON file Ergon's ingester can consume directly. Closes the substrate→learner loop concretely.
+
+Choosing the tamagawa_product audit for Fire #21 — substrate honesty about its own findings, exactly the calibration discipline the engine was designed for.
+
+### Loop discipline
+
+- Tests: 139 → 139 (test hierarchy assertion widened, not added; still 139 cases passing)
+- Code change: 5-line constant + 3-line _abs_diff_K_weight update + 7-line test bounds widening
+- Corpus health report regenerated; top-records list cleanly reflects new weights
+
