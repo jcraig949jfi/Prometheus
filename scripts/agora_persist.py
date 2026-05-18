@@ -120,6 +120,12 @@ CREATE TABLE IF NOT EXISTS agora.clio_claim_extractions (
     sigma_submitted_at TIMESTAMPTZ,
     sigma_submission_error TEXT
 );
+-- v0.5: LLM-suggested kill_path (paper-aware epistemic posture, per James
+-- 2026-05-18 "don't kill claims the paper says shouldn't be killed").
+-- Submitter prefers this when present; falls back to claim_type template
+-- otherwise. Added via ALTER for idempotent schema evolution.
+ALTER TABLE agora.clio_claim_extractions
+    ADD COLUMN IF NOT EXISTS kill_path_suggestion TEXT;
 CREATE INDEX IF NOT EXISTS idx_clio_extractions_paper ON agora.clio_claim_extractions (paper_id);
 CREATE INDEX IF NOT EXISTS idx_clio_extractions_unsubmitted
     ON agora.clio_claim_extractions (extracted_at)
@@ -437,6 +443,7 @@ def write_clio_claim_extraction(
     confidence: Optional[float] = None,
     extractor_model: Optional[str] = None,
     raw_llm_response: Optional[str] = None,
+    kill_path_suggestion: Optional[str] = None,
 ) -> Optional[int]:
     """Write one extracted claim. Returns extraction id (BIGSERIAL) or None on failure."""
     try:
@@ -446,13 +453,15 @@ def write_clio_claim_extraction(
                     INSERT INTO agora.clio_claim_extractions
                         (paper_id, claim_index, claim_text, claim_type,
                          paradigm_hint, open_problem_hint, falsifiable,
-                         confidence, extractor_model, raw_llm_response)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                         confidence, extractor_model, raw_llm_response,
+                         kill_path_suggestion)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                     RETURNING id
                 """, (
                     paper_id, claim_index, claim_text, claim_type,
                     paradigm_hint, open_problem_hint, falsifiable,
                     confidence, extractor_model, raw_llm_response,
+                    kill_path_suggestion,
                 ))
                 row = cur.fetchone()
             conn.commit()
@@ -471,6 +480,7 @@ def read_unsubmitted_extractions(limit: int = 10) -> list:
                     SELECT e.id, e.paper_id, e.claim_index, e.claim_text,
                            e.claim_type, e.paradigm_hint, e.open_problem_hint,
                            e.falsifiable, e.confidence, e.extracted_at,
+                           e.kill_path_suggestion,
                            p.external_id AS paper_external_id,
                            p.title AS paper_title,
                            p.url AS paper_url,

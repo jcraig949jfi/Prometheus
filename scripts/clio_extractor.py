@@ -105,7 +105,17 @@ def build_extraction_prompt(paper: dict) -> str:
         '  - "paradigm_hint": one of P01-P31 if a known paradigm is exercised, else null\n'
         '  - "open_problem_hint": free-text reference to a known open problem, else null\n'
         '  - "falsifiable": true|false — can this be killed by counterexample/computation?\n'
-        '  - "confidence": 0.0-1.0 — confidence that the paper actually establishes this\n\n'
+        '  - "confidence": 0.0-1.0 — confidence that the paper actually establishes this\n'
+        '  - "kill_path": a SPECIFIC action a falsification battery could take to invalidate '
+        'the claim. CRITICAL: the action must respect the paper\'s epistemic posture. '
+        'A theorem with a published proof is killed by exposing a flaw in the proof or by '
+        'showing the hypotheses don\'t hold in the claimed application — NOT by "finding a '
+        'counterexample" (which can\'t exist if the proof is sound). A conjecture is killed '
+        'by a counterexample. An empirical claim is killed by replication failure. A '
+        'construction is killed by demonstrating the constructed object lacks claimed '
+        'properties. An erratum is killed by verifying the corrected statement is itself '
+        'sound. Be specific to THIS claim and THIS paper. If you cannot articulate a real '
+        'kill path that the paper would itself accept as legitimate, return null.\n\n'
         f"{PARADIGM_LEGEND}\n\n"
         'Respond with exactly: {"claims": [<claim>, <claim>, ...]}\n'
         'If no falsifiable claims are present, return {"claims": []}.'
@@ -193,6 +203,16 @@ def parse_extraction_response(text: str) -> list[dict]:
                 conf = max(0.0, min(1.0, conf))
         except (TypeError, ValueError):
             conf = None
+        # kill_path: LLM-suggested paper-aware kill_path. Defensive: only
+        # accept non-empty strings within reasonable length; otherwise None
+        # so the submitter falls through to the claim_type template.
+        kp = c.get("kill_path")
+        if isinstance(kp, str):
+            kp = kp.strip()
+            if not kp or len(kp) > 600:
+                kp = None
+        else:
+            kp = None
         out.append({
             "claim_text": claim_text.strip(),
             "claim_type": ct,
@@ -200,6 +220,7 @@ def parse_extraction_response(text: str) -> list[dict]:
             "open_problem_hint": op,
             "falsifiable": f,
             "confidence": conf,
+            "kill_path": kp,
         })
     return out
 
@@ -267,6 +288,7 @@ def run_extraction_batch(
                     confidence=claim.get("confidence"),
                     extractor_model=extractor_model_label,
                     raw_llm_response=raw[:8000],  # cap on what we store
+                    kill_path_suggestion=claim.get("kill_path"),
                 )
                 stats["claims_extracted"] += 1
             stats["papers_processed"] += 1

@@ -148,6 +148,46 @@ def test_build_claim_args_kill_path_must_be_string():
     assert isinstance(args["kill_path"], str)
 
 
+def test_build_claim_args_prefers_llm_kill_path_suggestion():
+    """v0.5: when LLM provided a paper-aware kill_path, use it over template."""
+    custom_kp = "expose flaw in the proof of Lemma 3.2 or invalidate the totally-real assumption"
+    ext = dict(SAMPLE_EXTRACTION, kill_path_suggestion=custom_kp)
+    args = clio_submitter.build_claim_args(ext)
+    assert args["kill_path"] == custom_kp
+    assert args["evidence"]["kill_path_source"] == "llm"
+
+
+def test_build_claim_args_falls_back_to_template_when_no_llm_kp():
+    """Missing kill_path_suggestion -> claim_type template."""
+    ext = dict(SAMPLE_EXTRACTION)
+    ext.pop("kill_path_suggestion", None)
+    args = clio_submitter.build_claim_args(ext)
+    assert args["kill_path"] == clio_submitter.kill_path_for("theorem")
+    assert args["evidence"]["kill_path_source"] == "template"
+
+
+def test_build_claim_args_falls_back_when_llm_kp_empty_string():
+    ext = dict(SAMPLE_EXTRACTION, kill_path_suggestion="   ")
+    args = clio_submitter.build_claim_args(ext)
+    assert args["evidence"]["kill_path_source"] == "template"
+
+
+def test_build_claim_args_falls_back_when_llm_kp_none():
+    ext = dict(SAMPLE_EXTRACTION, kill_path_suggestion=None)
+    args = clio_submitter.build_claim_args(ext)
+    assert args["evidence"]["kill_path_source"] == "template"
+
+
+def test_build_claim_args_llm_kp_for_theorem_avoids_template_counterexample_trap():
+    """The canary case: theorem with LLM kill_path that does NOT include
+    'counterexample' overrides the template (which does include it)."""
+    proof_aware_kp = "expose a gap in the published proof"
+    ext = dict(SAMPLE_EXTRACTION, claim_type="theorem", kill_path_suggestion=proof_aware_kp)
+    args = clio_submitter.build_claim_args(ext)
+    assert "counterexample" not in args["kill_path"].lower()
+    assert "proof" in args["kill_path"].lower()
+
+
 def test_build_claim_args_evidence_carries_paper_metadata():
     args = clio_submitter.build_claim_args(SAMPLE_EXTRACTION)
     ev = args["evidence"]

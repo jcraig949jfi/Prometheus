@@ -286,12 +286,31 @@ def _collect_failure_modes(cur, hours: int) -> dict:
     """, (str(hours),))
     theorem_submitted = cur.fetchone()[0]
 
+    # v0.5: kill_path_llm_provided_pct — fraction of extractions where the LLM
+    # supplied a paper-aware kill_path (vs falling through to the template).
+    # Rising trend = LLM is doing the epistemic-posture work; falling = template
+    # is carrying more load (canary will rise if the template is inappropriate).
+    cur.execute("""
+        SELECT COUNT(*) FROM agora.clio_claim_extractions
+        WHERE extracted_at > NOW() - (%s || ' hours')::INTERVAL
+    """, (str(hours),))
+    extractions_total = cur.fetchone()[0]
+    cur.execute("""
+        SELECT COUNT(*) FROM agora.clio_claim_extractions
+        WHERE extracted_at > NOW() - (%s || ' hours')::INTERVAL
+          AND kill_path_suggestion IS NOT NULL
+          AND length(kill_path_suggestion) > 0
+    """, (str(hours),))
+    extractions_with_llm_kp = cur.fetchone()[0]
+
     return {
         "sigma_submission_error_count": sigma_errors,
         "sigma_submission_error_pct": _pct(sigma_errors, sigma_submitted + sigma_errors),
         "theorem_claims_submitted_24h": theorem_submitted,
         "theorem_with_counterexample_kill_path_pct":
             _pct(theorem_with_counterexample_kill, theorem_submitted),
+        "kill_path_llm_provided_pct":
+            _pct(extractions_with_llm_kp, extractions_total),
     }
 
 

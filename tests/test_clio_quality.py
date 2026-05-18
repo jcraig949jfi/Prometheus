@@ -207,10 +207,13 @@ def test_compute_quality_snapshot_with_mocks():
         # _collect_diversity — query rows
         [("query A", 10, 25), ("query B", 8, 16)],
         # _collect_failure_modes — sigma errors / submitted / theorem-counterex / theorem-submitted
+        # / extractions_total / extractions_with_llm_kp (v0.5)
         [(2,)],
         [(530,)],
         [(210,)],
         [(210,)],
+        [(540,)],
+        [(420,)],
     ]
 
     def connect_fn():
@@ -247,6 +250,8 @@ def test_compute_quality_snapshot_with_mocks():
     assert snap["sigma_submission_error_count"] == 2
     assert snap["theorem_claims_submitted_24h"] == 210
     assert snap["theorem_with_counterexample_kill_path_pct"] == 100.0
+    # v0.5: kill_path_llm_provided_pct (420/540)
+    assert snap["kill_path_llm_provided_pct"] == round(100 * 420 / 540, 2)
 
 
 # ---------------------------------------------------------------------------

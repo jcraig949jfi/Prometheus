@@ -80,6 +80,7 @@ def test_parse_well_formed_json():
             "open_problem_hint": "Schinzel-Zassenhaus conjecture",
             "falsifiable": True,
             "confidence": 0.85,
+            "kill_path": "expose a gap in the proof of Lemma 3.2 or show the totally-real assumption is needed",
         }
     ])
     claims = clio_extractor.parse_extraction_response(text)
@@ -90,6 +91,45 @@ def test_parse_well_formed_json():
     assert c["paradigm_hint"] == "P12"
     assert c["falsifiable"] is True
     assert c["confidence"] == 0.85
+    # v0.5: kill_path roundtrips
+    assert c["kill_path"] is not None
+    assert "Lemma 3.2" in c["kill_path"]
+
+
+def test_parse_missing_kill_path_returns_none():
+    """v0.5: extractions without LLM kill_path get None; submitter falls back to template."""
+    text = _wrap([{"claim_text": "X.", "claim_type": "theorem"}])
+    claims = clio_extractor.parse_extraction_response(text)
+    assert claims[0]["kill_path"] is None
+
+
+def test_parse_kill_path_too_long_rejected():
+    """Defensive: extremely long kill_paths get None to keep the field bounded."""
+    text = _wrap([{"claim_text": "X.", "kill_path": "X" * 700}])
+    claims = clio_extractor.parse_extraction_response(text)
+    assert claims[0]["kill_path"] is None
+
+
+def test_parse_kill_path_empty_returns_none():
+    text = _wrap([{"claim_text": "X.", "kill_path": "   "}])
+    claims = clio_extractor.parse_extraction_response(text)
+    assert claims[0]["kill_path"] is None
+
+
+def test_parse_kill_path_non_string_rejected():
+    text = _wrap([{"claim_text": "X.", "kill_path": 42}])
+    claims = clio_extractor.parse_extraction_response(text)
+    assert claims[0]["kill_path"] is None
+
+
+def test_prompt_includes_kill_path_guidance():
+    """v0.5: prompt must explicitly tell LLM about epistemic posture so it
+    doesn't suggest 'find counterexample' for theorems with sound proofs."""
+    prompt = clio_extractor.build_extraction_prompt(SAMPLE_PAPER)
+    assert "kill_path" in prompt
+    # The prompt should mention the inappropriate-for-theorems pattern
+    assert "counterexample" in prompt.lower()
+    assert "epistemic" in prompt.lower() or "proof" in prompt.lower()
 
 
 def test_parse_empty_claims_list():

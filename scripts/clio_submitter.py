@@ -107,6 +107,20 @@ def build_claim_args(extraction: dict) -> dict:
 
     paper_url = extraction.get("paper_url") or None
     paper_abstract = extraction.get("paper_abstract") or ""
+
+    # v0.5: prefer LLM-suggested kill_path (paper-aware, epistemic-posture-respecting)
+    # over the static claim_type template. Falls back when LLM didn't provide one
+    # or provided a non-string. The fallback covers most cases at acceptable
+    # quality; the suggestion handles the cases the template gets wrong (e.g.
+    # theorems where "find counterexample" is inappropriate per James 2026-05-18).
+    llm_kp = extraction.get("kill_path_suggestion")
+    if isinstance(llm_kp, str) and llm_kp.strip():
+        kill_path = llm_kp.strip()
+        kill_path_source = "llm"
+    else:
+        kill_path = kill_path_for(extraction.get("claim_type"))
+        kill_path_source = "template"
+
     evidence = {
         "source_paper_title": paper_title,
         "source_paper_url": paper_url,
@@ -118,8 +132,8 @@ def build_claim_args(extraction: dict) -> dict:
         "paradigm_hint": extraction.get("paradigm_hint"),
         "open_problem_hint": extraction.get("open_problem_hint"),
         "extractor_confidence": extraction.get("confidence"),
+        "kill_path_source": kill_path_source,
     }
-    kill_path = kill_path_for(extraction.get("claim_type"))
     return {
         "target_name": target_name,
         "hypothesis": hypothesis,
