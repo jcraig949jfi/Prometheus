@@ -103,7 +103,11 @@ class A5DistributionMatchGenerator(Generator):
         self._rng = random.Random(seed)
         self._knots = _load_catalog(KNOTS_DB_PATH)
         self._ecs = _load_catalog(BSD_RICH_DB_PATH)
-        self._n = sample_size
+        from theseus.optimization.config_overrides import get_overrides_for
+        ov = get_overrides_for("a5")
+        self._n = int(ov.get("sample_size", sample_size))
+        self._ks_good = float(ov.get("KS_GOOD", KS_GOOD))
+        self._ks_weak = float(ov.get("KS_WEAK", KS_WEAK))
 
     def description(self) -> str:
         return (
@@ -142,10 +146,10 @@ class A5DistributionMatchGenerator(Generator):
             ys_z = _standardize(ys)
             d_stat, p_val = _ks_two_sample(xs_z, ys_z)
 
-            if d_stat < KS_GOOD and p_val > 0.05:
+            if d_stat < self._ks_good and p_val > 0.05:
                 verdict = Verdict.SHADOW_CATALOG.value
                 kill_pattern = None
-            elif d_stat < KS_WEAK:
+            elif d_stat < self._ks_weak:
                 verdict = Verdict.INCONCLUSIVE.value
                 kill_pattern = None
             else:

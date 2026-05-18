@@ -125,7 +125,12 @@ class A4SymbolicRegressionGenerator(Generator):
         self._rng = random.Random(seed)
         self._knots = _load_catalog(KNOTS_DB_PATH)
         self._ecs = _load_catalog(BSD_RICH_DB_PATH)
-        self._n = sample_size
+        # Apply tuned overrides if present
+        from theseus.optimization.config_overrides import get_overrides_for
+        ov = get_overrides_for("a4")
+        self._n = int(ov.get("sample_size", sample_size))
+        self._strong_r2 = float(ov.get("STRONG_R2", STRONG_R2))
+        self._weak_r2 = float(ov.get("WEAK_R2", WEAK_R2))
 
     def description(self) -> str:
         return (
@@ -176,15 +181,15 @@ class A4SymbolicRegressionGenerator(Generator):
             if best_r2 < -10:  # all fits failed
                 continue
 
-            if best_r2 >= STRONG_R2:
+            if best_r2 >= self._strong_r2:
                 verdict = Verdict.SHADOW_CATALOG.value
                 kill_pattern = None
-            elif best_r2 >= WEAK_R2:
+            elif best_r2 >= self._weak_r2:
                 verdict = Verdict.INCONCLUSIVE.value
                 kill_pattern = None
             else:
                 verdict = Verdict.REJECTED.value
-                kill_pattern = f"a4_polyfit_r2_below_{WEAK_R2}"
+                kill_pattern = f"a4_polyfit_r2_below_{self._weak_r2}"
 
             coeffs_str = ",".join(f"{c:.4g}" for c in best_coeffs)
             canonical = (
@@ -199,8 +204,8 @@ class A4SymbolicRegressionGenerator(Generator):
                 "best_degree": best_degree,
                 "best_r2": best_r2,
                 "best_coeffs": best_coeffs,
-                "strong_threshold": STRONG_R2,
-                "weak_threshold": WEAK_R2,
+                "strong_threshold": self._strong_r2,
+                "weak_threshold": self._weak_r2,
             }
             record_id = TheseusRecord.compute_record_id(
                 canonical_claim_text=canonical,

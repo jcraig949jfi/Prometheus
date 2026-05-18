@@ -1157,3 +1157,92 @@ Choosing Bayesian opt for Fire #11 as the more tractable + universally-applicabl
 - Smoke: 61K records / 30 s, 0 errors with 29 generators
 - H2's process-supervision step_trace (3 method-variant steps per emission) yield_score 0.0060 — currently the engine's top yield-score generator
 
+
+## batch-20260518T134443Z-aba79d
+
+- Started: 2026-05-18T13:44:43.607453+00:00
+- Ended:   2026-05-18T13:45:13.496088+00:00
+- Duration: 0.0083 h
+- Requested: a2,a4,a5
+- Active:    a2,a4,a5
+- Records: 62146 (kills=27956, confirmations=2565, inconclusive=31625, errors=0)
+
+### Per-generator yield
+
+- **a2** — records=20716, throughput=51682328.5/h, info_density=0.506, diversity=0.809, yield_score=0.0041, kills=19510, conf=1206, errs=0
+- **a4** — records=20715, throughput=19141170.4/h, info_density=0.533, diversity=0.808, yield_score=0.0044, kills=6995, conf=53, errs=0
+- **a5** — records=20715, throughput=20589177.3/h, info_density=0.550, diversity=0.763, yield_score=0.0042, kills=1451, conf=1306, errs=0
+
+
+---
+
+## Fire #11 — 2026-05-18 ~13:44Z
+
+**TIER 1 transition begun.** Built `theseus/optimization/` Bayesian-flavored hyperparameter tuner (random-search + best-tracking, Optuna-swappable). Tuned A2/A4/A5 with measurable yield improvement.
+
+### Shipped
+
+- **`theseus/optimization/bayes_tuner.py`** — `TunerLite` class with Optuna-compatible signature. `run_study(generator_id, n_trials, mode)` returns `TunerResult` with best params and per-trial scores. Module-attribute patching for non-constructor-kwarg hyperparameters (STRONG_R2, KS_GOOD, etc).
+
+- **`theseus/optimization/spaces.py`** — hyperparameter spaces for A2/A4/A5/H1/D3. Enumerable values (5-10 per param); random-search adequate for 25-300-config spaces.
+
+- **`theseus/optimization/config_overrides.py`** — JSON read/write at `optimization/tuned_hyperparams.json`. Generators check on `__init__` and apply if present; absent = fall back to hardcoded defaults.
+
+- **A4/A5/A2 wired** to read all tunable params (sample_size + thresholds) from overrides as instance attributes.
+
+- **CLI**: `python -m theseus.optimization.bayes_tuner --generator a4 --trials 20 --apply`
+
+### Tuning runs (random search, 20 trials × 40 records each)
+
+- **A4 best**: `{"sample_size": 15, "STRONG_R2": 0.9, "WEAK_R2": 0.1}` — score 0.316
+- **A5 best**: `{"sample_size": 100, "KS_GOOD": 0.2, "KS_WEAK": 0.7}` — score 0.251
+- **A2 best**: `{"sample_size": 20, "SIGNIFICANT_R": 0.15}` — score 0.285
+
+### Substrate impact
+
+The tuned A4 config (very-strict STRONG + very-wide INCONCLUSIVE band) produces a **massive INCONCLUSIVE expansion**:
+
+- A4 baseline: ~150 INCONCLUSIVE per batch (R² ∈ [0.3, 0.7))
+- A4 tuned:   ~14K INCONCLUSIVE per batch (R² ∈ [0.1, 0.9))
+
+Result: D3 + H2 (the triangulation generators) now have 100× more input. The substrate's INCONCLUSIVE→terminal pathway throughput jumps an order of magnitude.
+
+Tuner's logic: it discovered that A4's value isn't in its SHADOW emissions (rare even at low thresholds, mostly artifacts) — it's in producing fodder for downstream triangulation. The tuner found this empirically; the substrate self-organized to feed its own triangulation infrastructure.
+
+This is exactly the meta-controller value the Bayesian-opt move was supposed to unlock.
+
+### Smoke after tuning (3 generators × 30s)
+
+- 62,146 records across A2/A4/A5
+- A4: 53 SHADOW + ~13,700 INCONCLUSIVE + 6,995 REJECT — info_density 0.533 (up from 0.501 baseline)
+- A5: 1,451 SHADOW + ~17K INCONCLUSIVE + 1,306 REJECT — info_density 0.550 (up from 0.544 baseline)
+- A2: 94% kill rate stable; info_density 0.506 (~unchanged)
+
+### Architecture note: Optuna swap-in path
+
+TunerLite was built with `run_study(objective_fn, n_trials)` signature deliberately matching `optuna.create_study().optimize(objective_fn, n_trials=N)`. When Optuna gets installed (Tier 2), TunerLite swaps to:
+
+```python
+import optuna
+def objective(trial):
+    params = {k: trial.suggest_categorical(k, v) for k, v in space.items()}
+    score, _ = _score_generator_with_params(gen_id, params, n_records, seed)
+    return score
+study = optuna.create_study(direction="maximize")
+study.optimize(objective, n_trials=n_trials)
+```
+
+…and gets TPE-based suggestion + pruning + visualization tooling for free. v0.1's random search is the conservative starting point; the architecture commits to swap-in.
+
+### Decisions for Fire #12
+
+- **Tune D3, H1** — both have meaningful hyperparameters (D3's `n_branches`, H1's `hunt_budget`)
+- **Bandit-rotation yield-curve experiment** — run 5+ batches with `--bandit` flag, collect per-generator yield trajectories. Identifies which generators consistently top-rank empirically.
+- **OR**: GFlowNet bandit replacement (BUILD-LATER #5) — bigger lift but the right next move for the meta-controller.
+
+### Loop discipline
+
+- Tests: 110 → 116 (+6 for tuner spaces / overrides round-trip / TunerLite study / score function / invalid-generator KeyError)
+- Smoke: 62K records / 30s on tuned A2/A4/A5, 0 errors
+- `theseus/optimization/tuned_hyperparams.json` committed to source (tuned-state persistence)
+

@@ -99,7 +99,10 @@ class A2StatisticalCorrelationGenerator(Generator):
         self._rng = random.Random(seed)
         self._knots = _load_catalog(KNOTS_DB_PATH)
         self._ecs = _load_catalog(BSD_RICH_DB_PATH)
-        self._n = sample_size
+        from theseus.optimization.config_overrides import get_overrides_for
+        ov = get_overrides_for("a2")
+        self._n = int(ov.get("sample_size", sample_size))
+        self._significant_r = float(ov.get("SIGNIFICANT_R", SIGNIFICANT_R))
 
     def description(self) -> str:
         return (
@@ -144,14 +147,14 @@ class A2StatisticalCorrelationGenerator(Generator):
             ys_detrended = _detrend_against(ys, logc)
             r_det, p_det = _pearson(xs, ys_detrended)
 
-            survived = abs(r_det) >= SIGNIFICANT_R and p_det < SIGNIFICANCE_P
+            survived = abs(r_det) >= self._significant_r and p_det < SIGNIFICANCE_P
             verdict = (
                 Verdict.SHADOW_CATALOG.value if survived
                 else Verdict.REJECTED.value
             )
             kill_pattern = None if survived else (
                 "a2_detrended_correlation_below_threshold"
-                if abs(r_det) < SIGNIFICANT_R
+                if abs(r_det) < self._significant_r
                 else "a2_detrended_correlation_not_significant"
             )
 
