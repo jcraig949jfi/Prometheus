@@ -276,6 +276,33 @@ def render(r: redis.Redis) -> str:
     return "\n".join(lines) + "\n"
 
 
+def _self_reported_taxonomy(blob) -> dict:
+    """Lift kind / role / operator off an agent's own status_json blob.
+
+    Lets autonomously-registered tools surface with proper taxonomy before
+    EXPECTED_AGENTS is updated (e.g. when Techne registers a new tool she
+    built per the Clio pattern, with operator='Techne' in its blob).
+
+    Accepts either a dict (Postgres JSONB) or a JSON string (Redis hash).
+    Returns {} on any parse failure.
+    """
+    if not blob:
+        return {}
+    if isinstance(blob, str):
+        try:
+            blob = json.loads(blob)
+        except (json.JSONDecodeError, TypeError):
+            return {}
+    if not isinstance(blob, dict):
+        return {}
+    out = {}
+    for k in ("kind", "role", "operator"):
+        v = blob.get(k)
+        if v:
+            out[k] = v
+    return out
+
+
 def build_dashboard_state(r: redis.Redis) -> dict:
     """Return JSON-serializable dict capturing current portfolio state.
 
@@ -370,11 +397,14 @@ def build_dashboard_state(r: redis.Redis) -> dict:
         seen.add(name)
         status_label, age = liveness(state, now)
         machine = (state or {}).get("machine") or "?"
+        self_meta = _self_reported_taxonomy((state or {}).get("status_json"))
         agents.append({
             "name": name,
             "expected": False,
             "machine": machine,
-            "kind": "unknown",
+            "kind": self_meta.get("kind", "unknown"),
+            "role": self_meta.get("role"),
+            "operator": self_meta.get("operator"),
             "status": status_label,
             "heartbeat_age_sec": age,
             "current_op": "",
@@ -558,11 +588,14 @@ def build_degraded_state_from_postgres(now: datetime, redis_error: str) -> dict:
                 status_label = "ALIVE" if age < HEARTBEAT_TIMEOUT_SEC // 2 else ("STALE" if age < HEARTBEAT_TIMEOUT_SEC else "DEAD")
             except Exception:
                 pass
+        self_meta = _self_reported_taxonomy(pg.get("status_json"))
         agents.append({
             "name": name,
             "expected": False,
             "machine": pg.get("machine") or "?",
-            "kind": "unknown",
+            "kind": self_meta.get("kind", "unknown"),
+            "role": self_meta.get("role"),
+            "operator": self_meta.get("operator"),
             "status": status_label,
             "heartbeat_age_sec": age,
             "current_op": "",

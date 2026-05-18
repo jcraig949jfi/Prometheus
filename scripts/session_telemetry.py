@@ -56,6 +56,8 @@ def register_session(
     name: str,
     machine: str = None,
     role: str = "",
+    kind: str = "claude_code_session",
+    operator: Optional[str] = None,
     status_json: Optional[dict] = None,
 ) -> bool:
     """Register / refresh a session's agora.agent_heartbeats row.
@@ -64,6 +66,11 @@ def register_session(
     which keeps the session showing ALIVE on the dashboard (5-min timeout).
     Call at session start, then again every few minutes during long work
     blocks, then once more at end with status="offline" via end_session().
+
+    `kind` and `operator` are surfaced into the dashboard's agent row, so a
+    tool built by Techne (following the Clio pattern) can self-identify with
+    e.g. kind="tool", operator="Techne" and the orchestration will show the
+    supervisor relationship without anyone having to update EXPECTED_AGENTS.
     """
     if not HAS_PERSIST:
         return False
@@ -72,8 +79,10 @@ def register_session(
         "session_cycle_id": _SESSION_CYCLE_ID,
         "session_started_at": _SESSION_STARTED_AT.isoformat(),
         "role": role,
-        "kind": "claude_code_session",
+        "kind": kind,
     }
+    if operator:
+        blob["operator"] = operator
     if status_json:
         blob.update(status_json)
     return agora_persist.write_heartbeat(

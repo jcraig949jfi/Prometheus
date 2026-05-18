@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "generated_at": "2026-05-18T14:05:32.633405+00:00",
+  "generated_at": "2026-05-18T14:19:48.164847+00:00",
   "redis_host": "localhost:6379",
   "heartbeat_timeout_sec": 300,
   "ideas_in_flight": [
@@ -19,7 +19,7 @@
     "redis_error": "Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.",
     "postgres": "up",
     "postgres_error": null,
-    "postgres_agent_count": 4,
+    "postgres_agent_count": 6,
     "fallback_mode": "postgres_dual_write",
     "note": "Redis is unreachable; agent data sourced from Postgres dual-write mirror (agora.agent_heartbeats). Streams (discoveries, main, challenges) are Redis-only and currently empty. Check docs/manual_status.json for out-of-band context."
   },
@@ -32,9 +32,9 @@
       "role": "evolutionary",
       "operator": null,
       "status": "ALIVE",
-      "heartbeat_age_sec": 31,
+      "heartbeat_age_sec": 46,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-18T10:05:01.294011-04:00",
+      "last_status_update": "2026-05-18T10:19:01.794650-04:00",
       "key_metrics": null,
       "data_source": "postgres_fallback"
     },
@@ -46,7 +46,7 @@
       "role": "forge",
       "operator": null,
       "status": "ALIVE",
-      "heartbeat_age_sec": 28,
+      "heartbeat_age_sec": 43,
       "current_op": "forging Self-Organized Criticality + Abstract Interpretation + Satisfiability",
       "last_status_update": "2026-05-18T09:12:35.220448-04:00",
       "key_metrics": {
@@ -109,12 +109,12 @@
       "kind": "operator",
       "role": "void detection + Deep Research + Clio supervision",
       "operator": null,
-      "status": "UNKNOWN",
-      "heartbeat_age_sec": null,
-      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
-      "last_status_update": null,
+      "status": "STALE",
+      "heartbeat_age_sec": 245,
+      "current_op": "(from postgres mirror)",
+      "last_status_update": "2026-05-18T10:15:42.578880-04:00",
       "key_metrics": null,
-      "data_source": "no_data"
+      "data_source": "postgres_fallback"
     },
     {
       "name": "Techne",
@@ -137,10 +137,10 @@
       "kind": "tool",
       "role": "paper scanner (arxiv/openalex/semantic-scholar)",
       "operator": "Aporia",
-      "status": "DEAD",
-      "heartbeat_age_sec": 468,
+      "status": "ALIVE",
+      "heartbeat_age_sec": 3,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-18T09:57:43.904757-04:00",
+      "last_status_update": "2026-05-18T10:19:45.048664-04:00",
       "key_metrics": null,
       "data_source": "postgres_fallback"
     },
@@ -204,11 +204,27 @@
       "name": "Clio-test",
       "expected": false,
       "machine": "M1",
-      "kind": "unknown",
-      "status": "DEAD",
-      "heartbeat_age_sec": 473,
+      "kind": "tool",
+      "role": null,
+      "operator": "Aporia",
+      "status": "ALIVE",
+      "heartbeat_age_sec": 20,
       "current_op": "",
-      "last_status_update": "2026-05-18T09:57:38.656972-04:00",
+      "last_status_update": "2026-05-18T10:19:27.458602-04:00",
+      "key_metrics": null,
+      "data_source": "postgres_fallback"
+    },
+    {
+      "name": "Theseus",
+      "expected": false,
+      "machine": "M1",
+      "kind": "tool",
+      "role": "substrate generation engine (catalog-cross-product, mutation, triangulation, self-play, symbolic regression) with bayesian hyperparameter tuning + per-record training-value annotation",
+      "operator": "James",
+      "status": "ALIVE",
+      "heartbeat_age_sec": 34,
+      "current_op": "",
+      "last_status_update": "2026-05-18T10:19:14.132574-04:00",
       "key_metrics": null,
       "data_source": "postgres_fallback"
     }
@@ -219,10 +235,143 @@
   "work_queue": {},
   "anomalies": [
     {
-      "agent": "Clio",
-      "kind": "dead",
-      "detail": "no heartbeat for 468s (from postgres)"
+      "agent": "Aporia",
+      "kind": "stale",
+      "detail": "heartbeat age 245s (from postgres)"
     }
   ],
-  "intelligence_outputs": []
+  "intelligence_outputs": [
+    {
+      "cycle_id": "9fe159f4-9d02-4b79-9bfe-0c50fcbf03b3",
+      "stage": "paper_scan_cycle",
+      "success": true,
+      "output_path": null,
+      "output_summary": "1 queries, 2 papers retrieved, 2 new after dedup, 0s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
+      "error": null,
+      "started_at": "2026-05-18T10:19:27.409643-04:00",
+      "finished_at": "2026-05-18T10:19:27.476731-04:00",
+      "duration_sec": 0.067088
+    },
+    {
+      "cycle_id": "b3131364-3763-40cb-a1e6-8c7d7e32d90f",
+      "stage": "paper_scan_cycle",
+      "success": true,
+      "output_path": null,
+      "output_summary": "1 queries, 2 papers retrieved, 2 new after dedup, 0s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
+      "error": null,
+      "started_at": "2026-05-18T10:19:27.202171-04:00",
+      "finished_at": "2026-05-18T10:19:27.275600-04:00",
+      "duration_sec": 0.073429
+    },
+    {
+      "cycle_id": "f16442b8-d3e3-4381-bfb1-fe5cacba2661",
+      "stage": "paper_scan_cycle",
+      "success": true,
+      "output_path": null,
+      "output_summary": "1 queries, 2 papers retrieved, 1 new after dedup, 0s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
+      "error": null,
+      "started_at": "2026-05-18T10:19:27.106883-04:00",
+      "finished_at": "2026-05-18T10:19:27.180038-04:00",
+      "duration_sec": 0.073155
+    },
+    {
+      "cycle_id": "75efbd94-613f-4910-9e85-426ae6564838",
+      "stage": "paper_scan_cycle",
+      "success": true,
+      "output_path": null,
+      "output_summary": "1 queries, 2 papers retrieved, 2 new after dedup, 0s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
+      "error": null,
+      "started_at": "2026-05-18T10:19:27.001289-04:00",
+      "finished_at": "2026-05-18T10:19:27.085707-04:00",
+      "duration_sec": 0.084418
+    },
+    {
+      "cycle_id": "099865d9-7c29-4ef7-9c6f-a7b88cfa9555",
+      "stage": "paper_scan_cycle",
+      "success": true,
+      "output_path": null,
+      "output_summary": "1 queries, 2 papers retrieved, 2 new after dedup, 0s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
+      "error": null,
+      "started_at": "2026-05-18T10:16:00.707131-04:00",
+      "finished_at": "2026-05-18T10:16:00.784150-04:00",
+      "duration_sec": 0.077019
+    },
+    {
+      "cycle_id": "9a0d599f-73a9-445c-8917-1c63a571e940",
+      "stage": "paper_scan_cycle",
+      "success": true,
+      "output_path": null,
+      "output_summary": "1 queries, 2 papers retrieved, 2 new after dedup, 0s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
+      "error": null,
+      "started_at": "2026-05-18T10:16:00.614098-04:00",
+      "finished_at": "2026-05-18T10:16:00.685992-04:00",
+      "duration_sec": 0.071894
+    },
+    {
+      "cycle_id": "8aeb4ed2-028c-40ec-b80a-c384ecff0233",
+      "stage": "paper_scan_cycle",
+      "success": true,
+      "output_path": null,
+      "output_summary": "1 queries, 2 papers retrieved, 1 new after dedup, 0s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
+      "error": null,
+      "started_at": "2026-05-18T10:16:00.516165-04:00",
+      "finished_at": "2026-05-18T10:16:00.592980-04:00",
+      "duration_sec": 0.076815
+    },
+    {
+      "cycle_id": "60049f2a-0bad-4653-998b-d544e6c3782b",
+      "stage": "paper_scan_cycle",
+      "success": true,
+      "output_path": null,
+      "output_summary": "1 queries, 2 papers retrieved, 2 new after dedup, 0s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
+      "error": null,
+      "started_at": "2026-05-18T10:16:00.305405-04:00",
+      "finished_at": "2026-05-18T10:16:00.378355-04:00",
+      "duration_sec": 0.07295
+    },
+    {
+      "cycle_id": "49a1d9bf-657c-41aa-a848-062e2a9a204c",
+      "stage": "sigma_migrations_applied",
+      "success": true,
+      "output_path": null,
+      "output_summary": "Applied sigma_kernel migrations 001-005 against prometheus_fire. 7 tables (symbols/claims/capabilities/bindings/evaluations/refinements/residuals) live. Clio submitter --backend postgres works via env-var bridge. 9 Clio claims now in sigma.claims.",
+      "error": null,
+      "started_at": "2026-05-18T10:15:42.653359-04:00",
+      "finished_at": "2026-05-18T10:15:42.653359-04:00",
+      "duration_sec": null
+    },
+    {
+      "cycle_id": "7f0008ae-cc45-40c7-912f-a51dab55e7f8",
+      "stage": "aletheia_feedback_implemented",
+      "success": true,
+      "output_path": null,
+      "output_summary": "M4 Aletheia feedback: session_telemetry.py with register_session/log_work/emit_discovery; Clio heartbeat enriched with operator/target_domains/sources/lifetime_papers_indexed/dedup_rate/errors_this_cycle/next_cycle_at/triggered_by; agora.intelligence_outputs.agent column added; Aporia registered as operator with tools_operated=[Clio].",
+      "error": null,
+      "started_at": "2026-05-18T10:15:42.635200-04:00",
+      "finished_at": "2026-05-18T10:15:42.635200-04:00",
+      "duration_sec": null
+    },
+    {
+      "cycle_id": "dc1e2fa1-6505-46c9-a32f-63a28b5fc9a8",
+      "stage": "clio_v0.4_quality_shipped",
+      "success": true,
+      "output_path": null,
+      "output_summary": "Clio v0.4 quality observability + daemon hook shipped (commit 1b368b40). 80 tests green. Canary firing at theorem_with_counterexample_kill_path_pct=33.33%.",
+      "error": null,
+      "started_at": "2026-05-18T10:15:42.607058-04:00",
+      "finished_at": "2026-05-18T10:15:42.607058-04:00",
+      "duration_sec": null
+    },
+    {
+      "cycle_id": "20c2863d-dc17-4a68-97e6-b51eb6aba91a",
+      "stage": "paper_scan_cycle",
+      "success": true,
+      "output_path": null,
+      "output_summary": "13 queries, 185 papers retrieved, 0 new after dedup, 47s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
+      "error": null,
+      "started_at": "2026-05-18T10:14:55.469864-04:00",
+      "finished_at": "2026-05-18T10:15:42.155302-04:00",
+      "duration_sec": 46.685436
+    }
+  ]
 }
