@@ -47,3 +47,17 @@ def test_other_relations_unaffected():
     assert _evaluate_relation(3, 8, "equal_mod_2") is False
     assert _evaluate_relation(2, 8, "divides") is True
     assert _evaluate_relation(3, 8, "divides") is False
+
+
+def test_divides_with_zero_fire22():
+    """Fire #22 fix: divides(a, 0) is True for nonzero a (since 0 = 0*a)."""
+    # Every nonzero a divides 0
+    assert _evaluate_relation(2, 0, "divides") is True
+    assert _evaluate_relation(1, 0, "divides") is True
+    assert _evaluate_relation(-3, 0, "divides") is True
+    assert _evaluate_relation(7, 0, "divides") is True
+    # 0 doesn't divide any nonzero number
+    assert _evaluate_relation(0, 5, "divides") is False
+    assert _evaluate_relation(0, -3, "divides") is False
+    # Convention: 0 divides 0
+    assert _evaluate_relation(0, 0, "divides") is True

@@ -24,18 +24,23 @@ from theseus.emit.record_schema import TheseusRecord, Verdict
 #
 # v0.1 (Fires #13-14, 2 seeds × ~2K records each):
 #   parity 0.63, divides 0.40, equal 0.02
-# v0.2 (Fire #20, 8 corpus files × ~4K records each via corpus_health):
+# v0.2 (Fire #20, 8 corpus files via corpus_health):
 #   parity 0.65, abs_diff_* 0.65, divides 0.50, equal 0.025
+# v0.3 (Fire #21 stratified audit + Fire #22 anchoring):
+#   parity 0.65 (robust ±9pp across ec_invariants),
+#   divides 0.35 (conductor-anchored; aggregate 50% was inflated by
+#       small-range invariants — rank 91%, torsion 88%, tamagawa 50%,
+#       conductor 33% — only conductor reflects real structural rate),
+#   equal 0.025 (robust ±2pp).
 #
-# Hierarchy parity > divides > equal held robustly across both
-# samples. Divides drifted up most (40 → 51) — the small-sample
-# estimate underweighted it. The current values are conservative
-# midpoints of the two measurements; further refresh expected as
-# corpus grows.
+# Hierarchy parity > divides > equal holds at every measurement.
+# Anchoring divides on the high-range invariant (conductor) is the
+# substrate-honest call: the small-range invariants' high rates are
+# trivial-divisibility artifacts, not structural bridges.
 PER_RELATION_STRUCTURAL_RATE = {
     "equal": 0.025,
     "equal_mod_2": 0.65,
-    "divides": 0.50,
+    "divides": 0.35,
     # abs_diff_le_K is K-dependent; handled below.
 }
 

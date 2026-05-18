@@ -76,9 +76,15 @@ def _evaluate_relation(a_val: int, b_val: int, relation: str) -> bool:
     if relation == "equal_mod_2":
         return (a_val % 2) == (b_val % 2)
     if relation == "divides":
-        if b_val == 0:
-            return False
-        return (b_val % a_val) == 0 if a_val != 0 else False
+        # divides(a, b) = "does a divide b?". Mathematically:
+        # - Every nonzero a divides 0 (since 0 = 0*a). FIRE #22 FIX:
+        #   previously this returned False for b_val=0, biasing rank=0
+        #   records (common in our BSD-rich catalog) toward REJECTED.
+        # - 0 divides nothing (except 0 itself by convention here:
+        #   divides(0, 0) → True since 0 == 0*anything is vacuously OK).
+        if a_val == 0:
+            return b_val == 0
+        return (b_val % a_val) == 0
     if relation.startswith("abs_diff_le_"):
         # Parse K from "abs_diff_le_K" (any non-negative integer).
         # Bug fix (Fire #3): previously only the literal "abs_diff_le_3"

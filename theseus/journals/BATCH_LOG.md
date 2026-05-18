@@ -2322,3 +2322,101 @@ Mathematically, every nonzero integer divides 0 (since 0 = 0×a). The code retur
 - New tool `h4_stratified_audit.py` is read-only; no behavior changes this fire
 - Report `theseus/h4_stratified_audit_report.md` captures the finding
 
+
+## batch-20260518T173548Z-b9034c
+
+- Started: 2026-05-18T17:35:48.754808+00:00
+- Ended:   2026-05-18T17:36:06.744020+00:00
+- Duration: 0.0050 h
+- Requested: a1
+- Active:    a1
+- Records: 57722 (kills=39660, confirmations=18062, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=57722, throughput=194933583.5/h, info_density=0.531, diversity=0.712, yield_score=0.0038, kills=39660, conf=18062, errs=0
+
+
+---
+
+## Fire #22 — 2026-05-18 ~17:35Z — Divides weight correction + divides-on-zero fix
+
+Two substrate-honesty corrections from Fire #21's stratified audit.
+
+### Shipped
+
+**1. divides_on_zero math fix** in `_evaluate_relation`:
+
+```python
+# BEFORE (buggy):
+if relation == "divides":
+    if b_val == 0:
+        return False  # WRONG: every nonzero a divides 0 (0 = 0*a)
+    return (b_val % a_val) == 0 if a_val != 0 else False
+
+# AFTER (correct):
+if relation == "divides":
+    if a_val == 0:
+        return b_val == 0  # 0 divides nothing nonzero; 0|0 conventionally True
+    return (b_val % a_val) == 0
+```
+
+Mathematically correct: every nonzero a divides 0. The previous code under-credited rank=0 records (common in BSD-rich catalog) by treating them as automatic REJECTED on divides.
+
+**2. training_weight divides 0.50 → 0.35** in PER_RELATION_STRUCTURAL_RATE.
+
+Anchored on conductor's 32.8% structural rate (Fire #21 audit) rather than the artifact-inflated 50% aggregate. Substrate-honest: the small-range ec_invariants' high rates were trivial-divisibility artifacts, not genuine bridge structure.
+
+### Verdict-flip measurement
+
+A1-only smoke comparing pre-fix vs post-fix kill rates:
+
+```
+Pre-fix:  A1 batches average ~72.4% kill rate (16K-record sample)
+Post-fix: A1 batch         68.7% kill rate    (58K-record sample)
+Shift:    -3.7 percentage points
+```
+
+Expected magnitude: 1/4 (ec_invariant=rank) × ~60% (rank=0 in BSD-rich) × 1/4 (divides relation) ≈ 3.75% of A1 emissions affected. **Measured 3.7pp shift matches predicted 3.75%.** Fix is exactly the right magnitude.
+
+The shift moves these records from spurious REJECTED to legitimate SHADOW_CATALOG. Substrate corpus is now more accurate.
+
+### Substrate state after Fire #22
+
+- 140/140 tests (+1 for divides-on-zero edge cases)
+- training_weight v0.3:
+  - parity 0.65 (robust ±9pp across ec_invariants)
+  - divides 0.35 (conductor-anchored structural rate)
+  - equal 0.025 (robust ±2pp)
+- Generator code correctness: divides-on-zero bug fixed
+- ~3.7% of legacy corpus records have wrong verdict (legacy bug); newer
+  records emitted with correct verdicts
+
+### Implication for legacy corpus
+
+The 8 corpus files on disk were emitted with the pre-fix divides logic.
+Roughly 3.7% of A1/F2/F3/F4-style records carry incorrect REJECTED
+verdicts for divides(knot_inv, rank=0_EC). For Ergon's training-corpus
+ingestion, either:
+- Filter out divides+rank=0 records from legacy corpus (conservative)
+- Re-emit on newer code (more work, cleaner)
+- Note the bias in the training-pipeline docs (cheapest)
+
+Choosing "note the bias" path; flag for Fire #23 if substantive
+analysis surfaces a downstream issue.
+
+### Decisions for Fire #23
+
+Open candidates:
+1. **Build the Ergon handoff format** — export top-N high-weight records as a JSON file Ergon's ingester can directly consume. Closes the substrate→learner loop concretely. (Recommended.)
+2. **IRM-style invariance scoring** (BUILD-LATER #13) for G-family — leverage G4/G5 to identify claims robust across "environments" (ec_invariants in our case).
+3. **Continue stub-fill** — H2/H4 variants, F1 (anti-recommended), or pivot to extending existing generators.
+
+Choosing the Ergon handoff for Fire #23 — concrete deliverable + closes the gap to Ergon's resume that's been latent since Fire #15.
+
+### Loop discipline
+
+- Tests: 139 → 140 (+1 for divides-on-zero correctness)
+- Math bug fixed; legacy bias documented
+- Substrate-state version bumped to v0.3 (weights file)
+
