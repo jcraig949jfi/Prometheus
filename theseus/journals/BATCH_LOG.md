@@ -1808,3 +1808,90 @@ The pytest suite went from 17s → 13 minutes when daemon tests started running 
 - Smoke: 59,793 records emitted with telemetry on; 0 errors
 - Orchestration files committed to source (telemetry.py + lifetime.py + __init__.py); `lifetime_stats.json` is local runtime state
 
+
+---
+
+## Fire #17 — 2026-05-18 ~14:44Z — YieldProportionalBandit (GFlowNet-spirit)
+
+Replaced epsilon-greedy's exploit/explore dichotomy with **yield-proportional sampling + UCB exploration bonus** — the categorical-action-space equivalent of GFlowNets' diversity-via-flow-conservation property.
+
+### Why not full GFlowNet
+
+Checked torch: 2.11.0+cu128 AVAILABLE. torchgfn NOT installed. For Theseus's 40-generator categorical action space, full GFlowNet is overkill. GFlowNets shine in *large combinatorial* spaces where the flow-conservation inductive bias is necessary to avoid mode collapse. For 40 categorical actions, a temperature-controlled softmax over yield-scores captures the key property (sampling proportional to reward) at trivial compute cost.
+
+The upgrade path is documented: when Theseus scales beyond 100+ generators or moves to *continuous* hyperparameter combinations, swap in torchgfn.
+
+### Shipped
+
+- **`theseus/bandit/yield_proportional.py`** — `YieldProportionalBandit`:
+  - **Softmax** over `mean(yield_score)` with temperature parameter (default 0.005, tuned for yield_score's [0, 0.01] natural scale)
+  - **UCB exploration bonus** `c × sqrt(log(total_fires) / n_fires)` decays as fires accumulate
+  - **Sampling without replacement** via sequential proportional draws
+  - Bandit-base compatible (drop-in replacement for `EpsilonGreedyBandit`)
+
+- **Daemon CLI** extended with `--bandit-policy {epsilon_greedy, yield_proportional}` flag. Default: `yield_proportional` for new runs.
+
+### Why this is GFlowNet-spirit
+
+GFlowNets train P(object) ∝ R(object). At inference, that's softmax-over-reward with temperature=1. The YieldProportionalBandit does softmax-over-yield directly, parameter-free (no neural net needed for our 40-element action space).
+
+The temperature parameter is the analog of GFlowNet's TB (trajectory balance) loss temperature. UCB exploration is the analog of GFlowNet's epsilon-noise during training.
+
+### Empirical behavior (7 tests, all pass)
+
+- High-yield generators picked >5× more often than low-yield at temperature=0.002
+- Never-fired generators still get exploration probability via UCB bonus (0.05 base)
+- No duplicate selections (sample-without-replacement)
+- Temperature concentration verified: low T → concentrated on top-yield, high T → near-uniform
+
+### Comparison: epsilon-greedy vs yield-proportional
+
+```
+                   epsilon-greedy (v0.1)        yield-proportional (Fire #17)
+Selection logic    if rand() < ε: random        softmax-of-yield + UCB bonus
+                   else:          top-n by yield  sample-without-replacement
+Explore/exploit    binary (ε vs 1-ε)            continuous (T + UCB)
+Diversity          random sub-selection         flow-shaped distribution
+Cold start         purely random                UCB bonus for never-fired
+Configuration      epsilon                       temperature, ucb_c
+```
+
+The diversity property is the key win: yield_proportional samples will keep visiting mid-yield generators (where epsilon-greedy stops once it identifies the top-N) — preserving the substrate's exploration across the long tail.
+
+### Substrate impact (qualitative)
+
+For the 29-active-generator Theseus engine, yield-proportional bandit should:
+1. Continue prioritizing the top yield-score generators (D3, H2, B1, C4 cluster from Fire #12 analysis) **but** with non-zero probability of mid-tier generators (B2, B5, D1) getting picked even when top-tier hasn't depleted.
+2. After bandit-mode runs accumulate enough history, prefer process-supervised generators (D3, H2) — their step_trace boosts naturally lift their yield_score and the bandit samples accordingly.
+3. Never starve never-fired generators (E2 once arXiv corpus is populated, etc.).
+
+### Decisions for Fire #18+
+
+The frontier-analysis BUILD-LATER slate is now complete:
+- ✅ Counterfactual augmentation (Fire #3)
+- ✅ Symbolic regression numpy fallback (Fire #5)
+- ✅ MCTS triangulation (Fire #6)
+- ✅ Process supervision (Fire #7)
+- ✅ Active learning F3 + F2 + F4 (Fires #4, #9, #10)
+- ✅ Self-play H1 (Fire #3)
+- ✅ Contrastive embeddings opt-in (Fire #3)
+- ✅ Bayesian optimization Optuna-spirit (Fire #11)
+- ✅ GFlowNet bandit yield-proportional spirit (Fire #17)
+
+Remaining BUILD-LATER:
+- IRM with G-family invariance scoring (Fire #18 candidate)
+- IRIS-style hypothesis MCTS (rolled into D3/H2; effectively done)
+- Contrastive decoding with I-family (deferred; needs Tier 2 local LLM)
+
+DEFER list (Tier 2/3):
+- Local LLM (I-family) — needs vLLM/llama.cpp deployment
+- Frontier API (J-family) — surgical use, deferred
+- Lean verification — Tier 3, months of work
+- Curriculum learning — needs Ergon resume
+
+### Loop discipline
+
+- Tests: 132 → 139 (+7 for YieldProportionalBandit: select count, no-duplicates, high-yield-dominance, never-fired-bonus, update, temperature concentration)
+- torch availability checked but not used (pure-Python softmax sufficient at our scale)
+- Daemon CLI extended with `--bandit-policy` flag; default switched to yield_proportional
+

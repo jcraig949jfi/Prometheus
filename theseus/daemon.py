@@ -34,6 +34,7 @@ from theseus.orchestration import (
     update_lifetime_after_batch,
 )
 from theseus.bandit.epsilon_greedy import EpsilonGreedyBandit
+from theseus.bandit.yield_proportional import YieldProportionalBandit
 from theseus.emit.corpus_writer import CorpusWriter
 from theseus.emit.record_schema import TheseusRecord, Verdict
 from typing import List as _List_for_typing
@@ -337,10 +338,19 @@ def main() -> None:
         action="store_true",
         help="After each batch, let the bandit pick the next active set.",
     )
+    p.add_argument(
+        "--bandit-policy",
+        choices=("epsilon_greedy", "yield_proportional"),
+        default="yield_proportional",
+        help="Bandit policy. Default: yield_proportional (GFlowNet-spirit).",
+    )
     args = p.parse_args()
 
     gids = [g.strip() for g in args.generators.split(",") if g.strip()]
-    bandit = EpsilonGreedyBandit(epsilon=DEFAULT_BANDIT_EPSILON, seed=args.seed)
+    if args.bandit_policy == "yield_proportional":
+        bandit = YieldProportionalBandit(seed=args.seed)
+    else:
+        bandit = EpsilonGreedyBandit(epsilon=DEFAULT_BANDIT_EPSILON, seed=args.seed)
     history: Dict[str, List[GeneratorMetrics]] = {}
 
     for i in range(args.batches):
