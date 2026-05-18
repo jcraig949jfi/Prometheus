@@ -241,7 +241,12 @@ def export_for_ergon(
         md_lines.append(yaml.safe_dump(payload, sort_keys=False, default_flow_style=False).rstrip())
         md_lines.append("```")
         md_lines.append("")
-        # Append the pre-parsed JSONL entry
+        # Append the pre-parsed JSONL entry with catalog_pair metadata
+        # (Fire #30 — per-pair weighting awareness for the consumer).
+        p_payload = r.claim_payload
+        catalog_pair = (
+            f"{p_payload.get('catalog_a', '?')}_x_{p_payload.get('catalog_b', '?')}"
+        )
         parsed_records.append({
             "block_type": "training_anchor",
             "payload": payload,
@@ -249,6 +254,8 @@ def export_for_ergon(
             "source_record_id": r.record_id,
             "source_generator_id": r.generator_id,
             "source_training_weight": round(w, 4),
+            "source_catalog_pair": catalog_pair,
+            "source_relation": p_payload.get("relation"),
             "extracted_at": datetime.now(timezone.utc).isoformat(),
         })
         n_emitted += 1

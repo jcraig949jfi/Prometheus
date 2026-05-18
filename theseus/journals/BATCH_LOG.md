@@ -3019,3 +3019,83 @@ Without explicit direction, slowing the loop further (2-hour cadence) since the 
 - 1 new bundle in `inbox/` from this fire's smoke (50 records)
 - Working tree's `ergon_outbox/` now 3 partitions + 1 fresh bundle
 
+
+---
+
+## Fire #30 — 2026-05-18 ~23:15Z — catalog_pair metadata + mock consumer
+
+Three tight items shipped while waiting on James's A/B/C cadence decision and Ergon's continuous-consumer agent landing.
+
+### 1. catalog_pair + relation metadata on pre-parsed JSONL
+
+Each record in `inbox/*.jsonl` now carries:
+- `source_catalog_pair`: e.g., `"knot_x_ec"` — derived from the originating Theseus record's payload
+- `source_relation`: e.g., `"equal_mod_2"` — the relation type for per-relation weighting
+
+Ergon's consumer can filter or weight per-catalog-pair AND per-relation without re-parsing the embedded YAML payload. Directly addresses Fire #28's finding that the H4 hierarchy is catalog-pair-specific.
+
+### 2. mock_consumer.py — reference implementation
+
+`theseus/handoff/mock_consumer.py` is a working reference of the producer-side contract from the consumer's POV. Not production; demonstrates protocol so Ergon's real continuous-ingestion agent has something to validate against.
+
+Behavior:
+- Globs `inbox/*.complete` — only bundles with a sentinel are read
+- Validates JSONL (5 required `payload` fields: `_schema_version`, `id`, `domain`, `anchor_type`, `prompt_template`, `trust_tier`)
+- On success: atomic-moves all 3 files to `consumed/`
+- On validation failure: atomic-moves to `rejected/`
+- Skips `.tmp` files (orphaned mid-write states)
+- Idempotent: re-running on empty inbox = no-op
+- `--dry-run` mode reports without moving
+- `--watch` mode polls every 30s
+
+```
+python -m theseus.handoff.mock_consumer --dry-run
+  → [TS] OK theseus_training_anchors_20260518T221002Z (50 records) DRY-RUN -> consumed [ok]
+```
+
+### 3. Fresh inbox bundle
+
+Generated `theseus_training_anchors_20260518T231551Z.{md,jsonl,complete}` — 100 records with the new metadata fields. Inbox now has 2 bundles totaling 150 anchors awaiting Ergon's continuous consumer:
+
+```
+inbox/
+  theseus_training_anchors_20260518T221002Z.{md,jsonl,complete}  (50)
+  theseus_training_anchors_20260518T231551Z.{md,jsonl,complete}  (100)
+```
+
+### Tests added (9)
+
+- discover_finds_ready_bundle
+- discover_skips_bundle_without_complete (mid-write defense)
+- validate_bundle_ok
+- validate_bundle_rejects_missing_payload
+- consume_moves_bundle_to_consumed
+- consume_dry_run_does_not_move
+- consume_idempotent_on_empty_inbox
+- consume_skips_tmp_files
+- rejected_bundle_routes_to_rejected
+
+Full suite: 147 → 156 (+9).
+
+### Substrate state
+
+Producer-side contract now fully:
+- Atomic write protocol (Fire #29)
+- Partitioned outbox (Fire #29)
+- Completion sentinels (Fire #29)
+- CONTRACT.md spec (Fire #29)
+- catalog_pair + relation metadata (Fire #30)
+- Reference consumer implementation (Fire #30)
+- 16 contract tests (Fire #29: 7 producer + Fire #30: 9 consumer-via-mock)
+
+Ergon's continuous agent has a stable, tested, documented contract.
+
+### Decisions for Fire #31
+
+Same as Fire #29's hold: awaiting one of
+- James's call on continuous-emission cadence (A/B/C)
+- Ergon's continuous-consumer agent landing
+- Other direction
+
+Slowing loop further; nothing more to ship without external input.
+
