@@ -30,7 +30,7 @@ import urllib.parse
 import urllib.request
 import uuid
 import xml.etree.ElementTree as ET
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Callable, Optional
 
@@ -57,6 +57,13 @@ try:
     HAS_QUALITY = True
 except Exception:
     HAS_QUALITY = False
+
+# session_telemetry — log_work + emit_discovery wrappers (Aletheia 2026-05-18 feedback)
+try:
+    import session_telemetry
+    HAS_TELEMETRY = True
+except Exception:
+    HAS_TELEMETRY = False
 
 logging.basicConfig(
     level=logging.INFO,
@@ -285,21 +292,62 @@ def emit_heartbeat(config: dict, status_json: dict) -> None:
 # Main cycle
 # ---------------------------------------------------------------------------
 
+def _derive_target_domains(queries: list) -> list:
+    """Pull unique tag strings off the configured queries.
+
+    config queries can carry an optional `tags` list (see clio_config.yaml);
+    those are the substrate-priority domain labels we expose in status_json.
+    """
+    domains: list = []
+    seen: set = set()
+    for q in queries or []:
+        for t in q.get("tags") or []:
+            if t not in seen:
+                seen.add(t)
+                domains.append(t)
+    return domains
+
+
+def _high_relevance_threshold(paper: dict) -> bool:
+    """Heuristic for the agora:discoveries stream emission (Aletheia feedback).
+
+    A paper is 'high-relevance' for v0.4.5 if its title or abstract suggests
+    falsification/withdrawal content (anti-anchor signal — the highest-value
+    substrate type per project_falsification_routing_learner) OR mentions a
+    Tier-1 substrate keyword cluster. Tuned conservatively so the stream
+    doesn't drown the dashboard.
+    """
+    text = ((paper.get("title") or "") + " " + (paper.get("abstract") or "")).lower()
+    falsification_signals = ("withdrawn", "counterexample to ", "erratum",
+                              "disproved", "is false", "retracted")
+    if any(s in text for s in falsification_signals):
+        return True
+    # Tier-1 substrate clusters (sourced from attack_angle_taxonomy P22/P27/P29/P31)
+    tier1 = ("polynomial method", "border rank", "secant variety",
+             "tensor decomposition", "modularity lifting")
+    hits = sum(1 for s in tier1 if s in text)
+    return hits >= 2
+
+
 def run_cycle(
     config: dict,
     paper_index: Optional[PaperIndex] = None,
     fetcher: Optional[Callable[[str], bytes]] = None,
     persister: Optional[Callable[[dict, str, str], bool]] = None,
+    triggered_by: str = "schedule",
 ) -> dict:
     """One full mining cycle. Returns stats dict.
 
-    Injectable paper_index/fetcher/persister for tests.
+    Injectable paper_index/fetcher/persister for tests. triggered_by labels
+    the source of the cycle ("schedule", "aporia_request", "manual") so the
+    brief can distinguish autonomous from operator-driven activity.
     """
     cycle_id = str(uuid.uuid4())
     started = datetime.now(timezone.utc)
     queries = config.get("arxiv_queries", [])
     min_interval = float(config.get("arxiv_min_interval_sec", 3.5))
     timeout = int(config.get("http_timeout_sec", 30))
+    interval_sec = int(config.get("scan_interval_sec", 3600))
 
     if paper_index is None:
         idx_path = REPO_ROOT / config.get("paper_index_path", "data/clio/paper_index.json")
@@ -309,6 +357,9 @@ def run_cycle(
     total_found = 0
     total_new = 0
     per_query_stats = []
+    sources_scanned: set = set()
+    errors_this_cycle: list = []
+    discoveries_emitted = 0
 
     for i, qcfg in enumerate(queries):
         query = qcfg["query"]
@@ -316,7 +367,17 @@ def run_cycle(
         if i > 0:
             time.sleep(min_interval)  # polite arxiv pacing
         log.info(f"Query {i+1}/{len(queries)}: {query[:80]}")
-        papers = scan_arxiv_query(query, max_n, fetcher=fetcher, timeout=timeout)
+        try:
+            papers = scan_arxiv_query(query, max_n, fetcher=fetcher, timeout=timeout)
+            sources_scanned.add("arxiv")
+        except Exception as e:  # defensive: scan_arxiv_query already catches, but cover all
+            errors_this_cycle.append({
+                "endpoint": "arxiv",
+                "query": query[:80],
+                "error": f"{type(e).__name__}: {e}"[:300],
+                "at": datetime.now(timezone.utc).isoformat(),
+            })
+            papers = []
         total_found += len(papers)
         new_this_query = 0
         for p in papers:
@@ -327,6 +388,26 @@ def run_cycle(
             if ok:
                 total_new += 1
                 new_this_query += 1
+                # Aletheia 2026-05-18: emit high-relevance finds to agora:discoveries
+                if HAS_TELEMETRY and _high_relevance_threshold(p):
+                    try:
+                        eid = session_telemetry.emit_discovery(
+                            sender=config.get("agent_name", "Clio"),
+                            subject=f"High-relevance paper: {p.get('title','')[:140]}",
+                            body=(p.get("abstract") or "")[:600],
+                            machine=config.get("machine", "M1"),
+                            type_="share",
+                            confidence=0.8,
+                            extras={
+                                "external_id": p.get("external_id"),
+                                "url": p.get("url"),
+                                "query_matched": query,
+                            },
+                        )
+                        if eid:
+                            discoveries_emitted += 1
+                    except Exception as e:
+                        log.debug(f"emit_discovery failed (non-fatal): {e}")
         per_query_stats.append({
             "query": query,
             "found": len(papers),
@@ -338,6 +419,7 @@ def run_cycle(
 
     finished = datetime.now(timezone.utc)
     duration_sec = (finished - started).total_seconds()
+    next_cycle_at = (finished + timedelta(seconds=interval_sec)).isoformat()
     stats = {
         "cycle_id": cycle_id,
         "started_at": started.isoformat(),
@@ -346,13 +428,12 @@ def run_cycle(
         "queries_run": len(queries),
         "papers_found": total_found,
         "papers_new": total_new,
+        "errors_this_cycle": errors_this_cycle,
+        "discoveries_emitted": discoveries_emitted,
         "per_query": per_query_stats,
     }
 
     # Quality snapshot (best-effort; never blocks the cycle on PG/quality failures).
-    # Computes a 24h window over agora.clio_papers + agora.clio_claim_extractions,
-    # persists to agora.clio_quality_snapshots, and merges headline numbers into
-    # the heartbeat status_json so the dashboard + Metis brief surface them.
     quality_headline = None
     if HAS_QUALITY and HAS_PG:
         try:
@@ -377,8 +458,14 @@ def run_cycle(
         except Exception as e:
             log.warning(f"quality snapshot failed (non-fatal): {e}")
 
-    # Heartbeat: short status_json (full per_query stays in memory/log).
-    # Quality headline merges into status_json under a 'quality' key.
+    # Lifetime counts (cumulative across all cycles since boot) — Aletheia field
+    # `lifetime_papers_indexed`. Held in paper_index size since that index is
+    # the authoritative dedup record across cycle restarts.
+    lifetime_papers_indexed = len(paper_index.index)
+
+    # Enriched heartbeat per Aletheia 2026-05-18 feedback.
+    # New fields: operator, target_domains, sources, lifetime_papers_indexed,
+    #             dedup_rate, errors_this_cycle, next_cycle_at, triggered_by.
     hb_status = {
         "cycle_id": cycle_id,
         "queries_run": len(queries),
@@ -386,10 +473,45 @@ def run_cycle(
         "papers_new": total_new,
         "duration_sec": stats["duration_sec"],
         "last_cycle_at": finished.isoformat(),
+        # Aletheia enrichment:
+        "operator": config.get("operator", "Aporia"),
+        "kind": "tool",
+        "target_domains": _derive_target_domains(queries),
+        "sources": sorted(sources_scanned),
+        "lifetime_papers_indexed": lifetime_papers_indexed,
+        "dedup_rate": round(total_new / total_found, 4) if total_found else 0.0,
+        "errors_this_cycle": errors_this_cycle,
+        "next_cycle_at": next_cycle_at,
+        "triggered_by": triggered_by,
+        "discoveries_emitted": discoveries_emitted,
     }
     if quality_headline:
         hb_status["quality"] = quality_headline
     emit_heartbeat(config, hb_status)
+
+    # Aletheia 2026-05-18: log_work per cycle into agora.intelligence_outputs.
+    # Heartbeat says "alive"; log_work says "did this useful thing." The brief
+    # walks log_work for a navigable timeline.
+    if HAS_TELEMETRY:
+        try:
+            err_count = len(errors_this_cycle)
+            session_telemetry.log_work(
+                stage="paper_scan_cycle",
+                agent=config.get("agent_name", "Clio"),
+                summary=(
+                    f"{len(queries)} queries, {total_found} papers retrieved, "
+                    f"{total_new} new after dedup, {stats['duration_sec']:.0f}s duration. "
+                    f"Sources: {','.join(sorted(sources_scanned)) or 'none'}. "
+                    f"Errors: {err_count}. Discoveries emitted: {discoveries_emitted}. "
+                    f"Triggered by: {triggered_by}."
+                ),
+                success=(err_count == 0),
+                cycle_id=cycle_id,
+                started_at=started,
+                error=(json.dumps(errors_this_cycle, default=str) if errors_this_cycle else None),
+            )
+        except Exception as e:
+            log.warning(f"log_work failed (non-fatal): {e}")
 
     log.info(f"Cycle complete: found={total_found}, new={total_new}, dur={stats['duration_sec']}s, id={cycle_id[:8]}")
     return stats

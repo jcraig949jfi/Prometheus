@@ -74,9 +74,14 @@ CREATE TABLE IF NOT EXISTS agora.intelligence_outputs (
     finished_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     duration_sec REAL
 );
+-- agent column added 2026-05-18 per Aletheia (M4) feedback so the brief can
+-- cleanly filter by agent ("show me Aporia's events", "show me Clio's events")
+-- without LIKE pattern matching on stage. Backfills as NULL for existing rows.
+ALTER TABLE agora.intelligence_outputs ADD COLUMN IF NOT EXISTS agent TEXT;
 CREATE INDEX IF NOT EXISTS idx_intel_outputs_cycle ON agora.intelligence_outputs (cycle_id);
 CREATE INDEX IF NOT EXISTS idx_intel_outputs_finished ON agora.intelligence_outputs (finished_at DESC);
 CREATE INDEX IF NOT EXISTS idx_intel_outputs_stage ON agora.intelligence_outputs (stage, finished_at DESC);
+CREATE INDEX IF NOT EXISTS idx_intel_outputs_agent ON agora.intelligence_outputs (agent, finished_at DESC);
 
 CREATE TABLE IF NOT EXISTS agora.clio_papers (
     id BIGSERIAL PRIMARY KEY,
@@ -243,13 +248,15 @@ def log_intelligence_stage(
     output_summary: Optional[str] = None,
     error: Optional[str] = None,
     started_at: Optional[datetime] = None,
+    agent: Optional[str] = None,
 ) -> bool:
     """Record one stage of an intelligence-pipeline cycle to Postgres.
 
     cycle_id is a UUID string tying all stages of the same scan() invocation
-    together. stage is the human-readable agent name ("eos", "aletheia", etc.).
-    output_summary is a short human-readable description (paper counts, entity
-    deltas, etc.) — the email pipeline pulls this for its References section.
+    together. stage is the event name. agent is the producer's identity
+    ("Clio", "Aporia", "Eos", "Metis", ...) — added 2026-05-18 per Aletheia
+    feedback so the brief can cleanly filter by agent without LIKE-pattern
+    matching.
 
     Best-effort: returns False on failure, never raises.
     """
@@ -261,12 +268,12 @@ def log_intelligence_stage(
             with conn.cursor() as cur:
                 cur.execute("""
                     INSERT INTO agora.intelligence_outputs
-                        (cycle_id, stage, success, output_path, output_summary,
-                         error, started_at, finished_at, duration_sec)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                        (cycle_id, stage, agent, success, output_path,
+                         output_summary, error, started_at, finished_at, duration_sec)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """, (
-                    cycle_id, stage, success, output_path, output_summary,
-                    error, started, now, duration,
+                    cycle_id, stage, agent, success, output_path,
+                    output_summary, error, started, now, duration,
                 ))
             conn.commit()
         return True
