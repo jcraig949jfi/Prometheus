@@ -77,6 +77,30 @@ CREATE TABLE IF NOT EXISTS agora.intelligence_outputs (
 CREATE INDEX IF NOT EXISTS idx_intel_outputs_cycle ON agora.intelligence_outputs (cycle_id);
 CREATE INDEX IF NOT EXISTS idx_intel_outputs_finished ON agora.intelligence_outputs (finished_at DESC);
 CREATE INDEX IF NOT EXISTS idx_intel_outputs_stage ON agora.intelligence_outputs (stage, finished_at DESC);
+
+CREATE TABLE IF NOT EXISTS agora.eos_findings (
+    id BIGSERIAL PRIMARY KEY,
+    found_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    source TEXT NOT NULL,
+    item_type TEXT NOT NULL,
+    external_id TEXT,
+    title TEXT,
+    summary TEXT,
+    url TEXT,
+    authors TEXT[],
+    keywords_matched TEXT[],
+    categories TEXT[],
+    relevance_score INTEGER,
+    relevance_reason TEXT,
+    cited_by INTEGER,
+    pub_date DATE,
+    raw_json JSONB,
+    scan_cycle_id UUID
+);
+CREATE INDEX IF NOT EXISTS idx_eos_findings_found ON agora.eos_findings (found_at DESC);
+CREATE INDEX IF NOT EXISTS idx_eos_findings_source ON agora.eos_findings (source, found_at DESC);
+CREATE INDEX IF NOT EXISTS idx_eos_findings_relevance ON agora.eos_findings (relevance_score DESC NULLS LAST, found_at DESC);
+CREATE INDEX IF NOT EXISTS idx_eos_findings_keywords ON agora.eos_findings USING GIN (keywords_matched);
 """
 
 
@@ -254,10 +278,110 @@ def read_recent_intelligence_outputs(hours: int = 24, limit: int = 50) -> list:
         return []
 
 
+def write_eos_finding(
+    source: str,
+    item_type: str,
+    title: str,
+    external_id: Optional[str] = None,
+    summary: Optional[str] = None,
+    url: Optional[str] = None,
+    authors: Optional[list] = None,
+    keywords_matched: Optional[list] = None,
+    categories: Optional[list] = None,
+    relevance_score: Optional[int] = None,
+    relevance_reason: Optional[str] = None,
+    cited_by: Optional[int] = None,
+    pub_date: Optional[str] = None,
+    raw_json: Optional[dict] = None,
+    scan_cycle_id: Optional[str] = None,
+) -> bool:
+    """Write one Eos finding (paper/repo/news) to the central table.
+
+    Called from eos_daemon on M4. Read from any machine via read_recent_eos_findings.
+    Best-effort: returns False on failure, never raises.
+    """
+    try:
+        with _connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    INSERT INTO agora.eos_findings
+                        (source, item_type, external_id, title, summary, url,
+                         authors, keywords_matched, categories,
+                         relevance_score, relevance_reason, cited_by, pub_date,
+                         raw_json, scan_cycle_id)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                """, (
+                    source, item_type, external_id, title, summary, url,
+                    authors or [], keywords_matched or [], categories or [],
+                    relevance_score, relevance_reason, cited_by,
+                    pub_date if pub_date else None,
+                    json.dumps(raw_json, default=str) if raw_json else None,
+                    scan_cycle_id,
+                ))
+            conn.commit()
+        return True
+    except Exception as e:
+        print(f"[agora_persist] write_eos_finding({source}/{title[:40] if title else '?'}) failed: {e}", file=sys.stderr)
+        return False
+
+
+def read_recent_eos_findings(
+    hours: int = 24,
+    source: Optional[str] = None,
+    min_relevance: Optional[int] = None,
+    keyword: Optional[str] = None,
+    limit: int = 100,
+) -> list:
+    """Return recent Eos findings as dicts, newest first.
+
+    Filters: source (e.g. 'arxiv'), min_relevance (score floor),
+    keyword (matches any element of keywords_matched).
+    """
+    try:
+        with _connect() as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                sql = """
+                    SELECT id, found_at, source, item_type, external_id, title,
+                           summary, url, authors, keywords_matched, categories,
+                           relevance_score, relevance_reason, cited_by, pub_date,
+                           raw_json, scan_cycle_id
+                    FROM agora.eos_findings
+                    WHERE found_at > NOW() - (%s || ' hours')::INTERVAL
+                """
+                params = [str(hours)]
+                if source:
+                    sql += " AND source = %s"
+                    params.append(source)
+                if min_relevance is not None:
+                    sql += " AND relevance_score >= %s"
+                    params.append(min_relevance)
+                if keyword:
+                    sql += " AND %s = ANY(keywords_matched)"
+                    params.append(keyword)
+                sql += " ORDER BY found_at DESC LIMIT %s"
+                params.append(limit)
+                cur.execute(sql, params)
+                rows = cur.fetchall()
+                out = []
+                for r in rows:
+                    d = dict(r)
+                    for k in ("found_at", "pub_date"):
+                        if d.get(k) is not None:
+                            d[k] = d[k].isoformat()
+                    if d.get("scan_cycle_id") is not None:
+                        d["scan_cycle_id"] = str(d["scan_cycle_id"])
+                    out.append(d)
+                return out
+    except Exception as e:
+        print(f"[agora_persist] read_recent_eos_findings failed: {e}", file=sys.stderr)
+        return []
+
+
 if __name__ == "__main__":
-    # CLI: python scripts/agora_persist.py init    (creates schema)
-    #      python scripts/agora_persist.py list    (prints all heartbeats)
-    #      python scripts/agora_persist.py intel   (prints recent intelligence outputs)
+    # CLI: python scripts/agora_persist.py init       (creates schema)
+    #      python scripts/agora_persist.py list       (prints all heartbeats)
+    #      python scripts/agora_persist.py intel      (prints recent intelligence outputs)
+    #      python scripts/agora_persist.py findings   (prints recent eos findings)
     if len(sys.argv) > 1 and sys.argv[1] == "init":
         init_schema()
         print(f"Schema initialized on {PG_HOST}:{PG_PORT}/{PG_DBNAME}")
@@ -268,5 +392,12 @@ if __name__ == "__main__":
         for o in read_recent_intelligence_outputs(hours=48):
             mark = "✓" if o["success"] else "✗"
             print(f"  {mark} {o['stage']:<10} {o['finished_at']} {o.get('output_summary', '') or ''}")
+    elif len(sys.argv) > 1 and sys.argv[1] == "findings":
+        hours = int(sys.argv[2]) if len(sys.argv) > 2 else 24
+        for f in read_recent_eos_findings(hours=hours, limit=30):
+            score = f.get("relevance_score")
+            score_str = f"[{score}]" if score is not None else "[-]"
+            kw = ",".join((f.get("keywords_matched") or [])[:2])
+            print(f"  {score_str} {f['source']:<18} {f.get('item_type','?'):<5} {(f.get('title') or '')[:70]:<70} kw={kw}")
     else:
-        print("Usage: python scripts/agora_persist.py [init|list|intel]")
+        print("Usage: python scripts/agora_persist.py [init|list|intel|findings]")
