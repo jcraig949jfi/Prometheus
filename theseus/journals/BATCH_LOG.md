@@ -2674,3 +2674,138 @@ Choosing (1) for Fire #26 — concrete end-to-end demo that proves the whole pip
 - Output files in `theseus/handoff/ergon_outbox/` are timestamped (multiple handoffs co-exist; latest = newest timestamp)
 - yaml dependency confirmed available (used for substrate_block YAML serialization)
 
+
+## batch-20260518T195105Z-43a075
+
+- Started: 2026-05-18T19:51:05.651200+00:00
+- Ended:   2026-05-18T19:56:04.450533+00:00
+- Duration: 0.0830 h
+- Requested: a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,d1,d2,d3,d4,e1,e3,f2,f3,f4,g4,g5,h1,h2,h4
+- Active:    a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,d1,d2,d3,d4,e1,e3,f2,f3,f4,g4,g5,h1,h2,h4
+- Records: 606598 (kills=294817, confirmations=272023, inconclusive=38983, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=21638, throughput=185468571.4/h, info_density=0.531, diversity=0.857, yield_score=0.0046, kills=14943, conf=6695, errs=0
+- **a2** — records=21638, throughput=35536861.3/h, info_density=0.506, diversity=0.960, yield_score=0.0049, kills=20390, conf=1248, errs=0
+- **a3** — records=21638, throughput=183718868.0/h, info_density=0.536, diversity=0.864, yield_score=0.0047, kills=13752, conf=7886, errs=0
+- **a4** — records=21638, throughput=17858046.8/h, info_density=0.533, diversity=0.908, yield_score=0.0049, kills=7314, conf=62, errs=0
+- **a5** — records=21638, throughput=16021554.9/h, info_density=0.550, diversity=0.896, yield_score=0.0050, kills=1400, conf=1427, errs=0
+- **b1** — records=21638, throughput=237490243.9/h, info_density=0.600, diversity=0.928, yield_score=0.0056, kills=0, conf=21638, errs=0
+- **b2** — records=21638, throughput=452888372.0/h, info_density=0.565, diversity=0.939, yield_score=0.0054, kills=7530, conf=14108, errs=0
+- **b3** — records=21638, throughput=331475744.6/h, info_density=0.543, diversity=0.956, yield_score=0.0052, kills=12385, conf=9253, errs=0
+- **b4** — records=21637, throughput=383710344.9/h, info_density=0.526, diversity=0.955, yield_score=0.0051, kills=15972, conf=5665, errs=0
+- **b5** — records=21637, throughput=204982105.2/h, info_density=0.586, diversity=0.917, yield_score=0.0054, kills=3085, conf=18552, errs=0
+- **c1** — records=21637, throughput=357308256.8/h, info_density=0.541, diversity=0.871, yield_score=0.0048, kills=12809, conf=8828, errs=0
+- **c2** — records=21637, throughput=134996880.4/h, info_density=0.567, diversity=0.889, yield_score=0.0051, kills=7113, conf=14524, errs=0
+- **c3** — records=21637, throughput=65566666.7/h, info_density=0.548, diversity=0.865, yield_score=0.0048, kills=11179, conf=10458, errs=0
+- **c4** — records=21636, throughput=155468263.5/h, info_density=0.584, diversity=0.885, yield_score=0.0052, kills=3453, conf=18183, errs=0
+- **c5** — records=21637, throughput=208270588.2/h, info_density=0.538, diversity=0.876, yield_score=0.0048, kills=13353, conf=8284, errs=0
+- **d1** — records=21637, throughput=31370600.1/h, info_density=0.590, diversity=0.926, yield_score=0.0055, kills=2259, conf=19378, errs=0
+- **d2** — records=21637, throughput=310331474.2/h, info_density=0.545, diversity=0.886, yield_score=0.0049, kills=11849, conf=9788, errs=0
+- **d3** — records=21637, throughput=6234947.6/h, info_density=0.640, diversity=0.907, yield_score=0.0059, kills=21511, conf=0, errs=0
+- **d4** — records=21637, throughput=5899212.4/h, info_density=0.520, diversity=0.952, yield_score=0.0050, kills=17248, conf=4389, errs=0
+- **e1** — records=775, throughput=13543689.3/h, info_density=0.200, diversity=0.990, yield_score=0.0020, kills=0, conf=0, errs=0
+- **e3** — records=21637, throughput=292831579.0/h, info_density=0.558, diversity=0.958, yield_score=0.0054, kills=9076, conf=12561, errs=0
+- **f2** — records=21627, throughput=142075182.5/h, info_density=0.534, diversity=0.869, yield_score=0.0047, kills=14195, conf=7432, errs=0
+- **f3** — records=21637, throughput=80551396.1/h, info_density=0.533, diversity=0.868, yield_score=0.0047, kills=14587, conf=7050, errs=0
+- **f4** — records=21627, throughput=69702059.1/h, info_density=0.534, diversity=0.869, yield_score=0.0047, kills=14190, conf=7437, errs=0
+- **g4** — records=21637, throughput=121708125.0/h, info_density=0.595, diversity=0.893, yield_score=0.0054, kills=1163, conf=20474, errs=0
+- **g5** — records=21637, throughput=177433257.4/h, info_density=0.592, diversity=0.887, yield_score=0.0053, kills=1711, conf=19926, errs=0
+- **h1** — records=21637, throughput=121328972.0/h, info_density=0.528, diversity=0.962, yield_score=0.0051, kills=15656, conf=5981, errs=0
+- **h2** — records=21637, throughput=6392023.6/h, info_density=0.668, diversity=0.899, yield_score=0.0061, kills=21632, conf=0, errs=0
+- **h4** — records=21637, throughput=44612371.1/h, info_density=0.563, diversity=0.901, yield_score=0.0051, kills=5062, conf=10796, errs=0
+
+
+---
+
+## Fire #26 — 2026-05-18 ~20:02Z — Long-batch + handoff end-to-end demo
+
+5-minute long-batch with all 29 active generators, telemetry on, followed by Ergon handoff + Aporia parse + validate. Full pipeline exercised under load.
+
+### Long-batch results
+
+```
+python -m theseus.daemon --batch-hours 0.083 \
+  --generators a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,\
+               d1,d2,d3,d4,e1,e3,f2,f3,f4,g4,g5,h1,h2,h4 \
+  --seed 999
+```
+
+- **606,598 records emitted** (294,817 kills, 272,023 confirmations)
+- 5-minute wall time → ~7.3M records/hour sustained
+- 0 errors across all 29 generators
+
+### Handoff results
+
+```
+python -m theseus.handoff.ergon_handoff --threshold 0.5 --max-records 500
+```
+
+- 93,943 candidates above threshold (across all corpus files)
+- 500 records emitted as training_anchor blocks
+- Markdown + pre-parsed JSONL written to `theseus/handoff/ergon_outbox/theseus_training_anchors_20260518T200232Z.{md,jsonl}`
+
+### End-to-end validation
+
+```
+Parse  (Aporia parse_substrate_blocks):  600/600 substrate blocks
+Validate (Aporia validate_substrate_blocks): 600/600 validated, 0 rejected
+```
+
+(The 600 is 500 from this fire + 100 from Fire #25 still in outbox; the directory accumulates across handoffs.)
+
+### Substrate state (post Fire #26)
+
+```
+Theseus on M1 (agora.agent_heartbeats):
+  lifetime_records:             1,552,566
+  lifetime_batches:              18
+  lifetime_discoveries_emitted:  340
+
+theseus/handoff/ergon_outbox/:
+  theseus_training_anchors_20260518T191651Z.md/jsonl  (100 records, Fire #25)
+  theseus_training_anchors_20260518T200232Z.md/jsonl  (500 records, Fire #26)
+  → 600 schema-validated training_anchors ready for Ergon ingestion
+```
+
+### Substrate finding: throughput at scale
+
+The engine sustained ~7.3M records/hour over the 5-minute batch, comparable to the bursty per-30s rate. Volume target is no longer a concern — the substrate can produce orders of magnitude more material than any reasonable Ergon ingestion cycle.
+
+### The pipeline is operational
+
+The complete substrate→learner workflow runs as a single end-to-end sequence:
+
+```
+generate (~7M records/hour)
+  → annotate per-record training_weight
+  → handoff filter (training_weight ≥ 0.5)
+  → schema-compliant training_anchor markdown
+  → Aporia parse (passes)
+  → Aporia validate (passes)
+  → ready for Ergon ingestion
+```
+
+Every step has been verified end-to-end. No manual intervention needed between layers.
+
+### Decisions for Fire #27
+
+Loop has now reached 25 fires of autonomous work. The substrate is operationally complete (29 generators, full frontier-analysis BUILD-LATER slate, orchestration wired, audit chain consolidated, Ergon handoff functioning end-to-end). Natural next moves:
+
+1. **Pause for human direction** — slow the loop substantially. James has been engaging intermittently; the engine is now in a stable state where the autonomous loop's marginal value drops compared to human-directed work.
+
+2. **Audit another catalog pair** (knot × OEIS-sleeping, knot × mock_theta) for further H4 stability evidence. Tier-2 confirmation.
+
+3. **Build inverse handoff** — once Ergon ingests, his training_value signal feeds back into the bandit / training_weight. Requires Ergon's resume.
+
+4. **Stub-fill the remaining 11** (G1/G2/G3 EC twist / L-fn / modular; E2/E4/E5 network mining; I1-4 local LLM; J1-3 frontier API; H3 needs Learner). Each requires external infrastructure.
+
+Choosing **option 1** for Fire #27 — slow the loop cadence to 1 hour, leave room for James's direction or for him to inspect the Ergon handoff outputs.
+
+### Loop discipline
+
+- Tests: 140/140 (no new tests; Fire #26 is a workflow demo)
+- 2 handoff files in outbox totaling 600 schema-validated training_anchors
+- 25 autonomous fires complete since the original "lets loop" invitation; engine in stable operational state
+
