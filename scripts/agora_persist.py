@@ -121,6 +121,15 @@ CREATE INDEX IF NOT EXISTS idx_clio_extractions_unsubmitted
     WHERE sigma_claim_id IS NULL;
 CREATE INDEX IF NOT EXISTS idx_clio_extractions_extracted_at
     ON agora.clio_claim_extractions (extracted_at DESC);
+
+CREATE TABLE IF NOT EXISTS agora.clio_quality_snapshots (
+    id BIGSERIAL PRIMARY KEY,
+    snapshot_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    window_hours INTEGER NOT NULL,
+    metrics JSONB NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_clio_quality_snapshot_at
+    ON agora.clio_quality_snapshots (snapshot_at DESC);
 """
 
 
@@ -513,12 +522,54 @@ def mark_extraction_submission_error(extraction_id: int, error: str) -> bool:
         return False
 
 
+def write_clio_quality_snapshot(window_hours: int, metrics: dict) -> Optional[int]:
+    """Persist one quality snapshot row. Returns snapshot id or None on failure."""
+    try:
+        with _connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    INSERT INTO agora.clio_quality_snapshots (window_hours, metrics)
+                    VALUES (%s, %s) RETURNING id
+                """, (window_hours, json.dumps(metrics, default=str)))
+                row = cur.fetchone()
+            conn.commit()
+        return row[0] if row else None
+    except Exception as e:
+        print(f"[agora_persist] write_clio_quality_snapshot failed: {e}", file=sys.stderr)
+        return None
+
+
+def read_recent_clio_quality_snapshots(limit: int = 24) -> list:
+    """Return recent quality snapshots, newest first."""
+    try:
+        with _connect() as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                cur.execute("""
+                    SELECT id, snapshot_at, window_hours, metrics
+                    FROM agora.clio_quality_snapshots
+                    ORDER BY snapshot_at DESC
+                    LIMIT %s
+                """, (limit,))
+                rows = cur.fetchall()
+                out = []
+                for r in rows:
+                    d = dict(r)
+                    if d.get("snapshot_at") is not None:
+                        d["snapshot_at"] = d["snapshot_at"].isoformat()
+                    out.append(d)
+                return out
+    except Exception as e:
+        print(f"[agora_persist] read_recent_clio_quality_snapshots failed: {e}", file=sys.stderr)
+        return []
+
+
 if __name__ == "__main__":
     # CLI: python scripts/agora_persist.py init     (creates schema)
     #      python scripts/agora_persist.py list     (prints all heartbeats)
     #      python scripts/agora_persist.py intel    (prints recent intelligence outputs)
     #      python scripts/agora_persist.py clio     (prints recent clio papers)
     #      python scripts/agora_persist.py extract  (prints recent claim extractions)
+    #      python scripts/agora_persist.py quality  (prints recent quality snapshots)
     if len(sys.argv) > 1 and sys.argv[1] == "init":
         init_schema()
         print(f"Schema initialized on {PG_HOST}:{PG_PORT}/{PG_DBNAME}")
@@ -540,6 +591,21 @@ if __name__ == "__main__":
             q = _safe((p.get("query_matched") or "")[:40])
             t = _safe((p.get("title") or "")[:70])
             print(f"  {p['found_at']}  {t:<70}  q={q}")
+    elif len(sys.argv) > 1 and sys.argv[1] == "quality":
+        limit = int(sys.argv[2]) if len(sys.argv) > 2 else 10
+        snapshots = read_recent_clio_quality_snapshots(limit=limit)
+        if not snapshots:
+            print("(no quality snapshots yet — run scripts/clio_quality.py --snapshot)")
+        for s in snapshots:
+            m = s["metrics"]
+            if isinstance(m, str):
+                m = json.loads(m)
+            print(f"  {s['snapshot_at']}  win={s['window_hours']}h"
+                  f"  papers={m.get('papers_24h',0)}"
+                  f"  claims={m.get('claims_extracted_24h',0)}"
+                  f"  submitted={m.get('claims_submitted_24h',0)}"
+                  f"  paradigm_cov={m.get('paradigm_coverage_count',0)}"
+                  f"  conf_p50={m.get('confidence_p50','-')}")
     elif len(sys.argv) > 1 and sys.argv[1] == "extract":
         # Print recent claim extractions
         enc = sys.stdout.encoding or "utf-8"
@@ -568,4 +634,4 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"extract list failed: {e}", file=sys.stderr)
     else:
-        print("Usage: python scripts/agora_persist.py [init|list|intel|clio|extract]")
+        print("Usage: python scripts/agora_persist.py [init|list|intel|clio|extract|quality]")

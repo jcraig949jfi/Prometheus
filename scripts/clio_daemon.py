@@ -51,6 +51,13 @@ try:
 except Exception:
     HAS_PG = False
 
+# Quality observability — best-effort; never blocks the mining cycle
+try:
+    import clio_quality
+    HAS_QUALITY = True
+except Exception:
+    HAS_QUALITY = False
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [CLIO] %(message)s",
@@ -342,15 +349,47 @@ def run_cycle(
         "per_query": per_query_stats,
     }
 
-    # Heartbeat: short status_json (full per_query stays in memory/log)
-    emit_heartbeat(config, {
+    # Quality snapshot (best-effort; never blocks the cycle on PG/quality failures).
+    # Computes a 24h window over agora.clio_papers + agora.clio_claim_extractions,
+    # persists to agora.clio_quality_snapshots, and merges headline numbers into
+    # the heartbeat status_json so the dashboard + Metis brief surface them.
+    quality_headline = None
+    if HAS_QUALITY and HAS_PG:
+        try:
+            snap = clio_quality.compute_quality_snapshot(window_hours=24)
+            sid = agora_persist.write_clio_quality_snapshot(24, snap)
+            quality_headline = {
+                k: snap.get(k) for k in (
+                    "papers_24h", "claims_extracted_24h", "claims_submitted_24h",
+                    "claims_per_paper_mean", "paradigm_coverage_count",
+                    "paradigm_hint_pct", "falsifiable_pct",
+                    "confidence_mean", "confidence_p50",
+                    "sigma_submission_error_pct",
+                    "theorem_with_counterexample_kill_path_pct",
+                )
+            }
+            quality_headline["snapshot_id"] = sid
+            log.info(f"quality snapshot id={sid}: "
+                     f"papers={snap.get('papers_24h')}, "
+                     f"claims={snap.get('claims_extracted_24h')}, "
+                     f"paradigms={snap.get('paradigm_coverage_count')}, "
+                     f"conf_p50={snap.get('confidence_p50')}")
+        except Exception as e:
+            log.warning(f"quality snapshot failed (non-fatal): {e}")
+
+    # Heartbeat: short status_json (full per_query stays in memory/log).
+    # Quality headline merges into status_json under a 'quality' key.
+    hb_status = {
         "cycle_id": cycle_id,
         "queries_run": len(queries),
         "papers_found": total_found,
         "papers_new": total_new,
         "duration_sec": stats["duration_sec"],
         "last_cycle_at": finished.isoformat(),
-    })
+    }
+    if quality_headline:
+        hb_status["quality"] = quality_headline
+    emit_heartbeat(config, hb_status)
 
     log.info(f"Cycle complete: found={total_found}, new={total_new}, dur={stats['duration_sec']}s, id={cycle_id[:8]}")
     return stats
