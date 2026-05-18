@@ -159,6 +159,20 @@ purpose"), historical context. It is least authoritative for things
 state.json can see and refresh: infra reachability, agent liveness,
 recent operational metrics.
 
+CRITICAL — Deep Research reports:
+state.json's `deep_research` field surfaces a high-value pipeline run by an
+Aporia-supervised tool. We get a fixed budget of 20 DR tokens per day; each
+spent token produces one research report. These reports are the highest-density
+intelligence output in the system. When `deep_research.reports` is non-empty,
+ALWAYS surface received reports somewhere in the brief — at minimum under
+"For the record" with the report summary verbatim, ideally elevated to
+"Act on this" if the summary suggests a decision is pending James's attention
+(e.g., a verified anti-anchor that contradicts a published claim, a void
+identified, a tool-spec recommendation). Cite the report's `output_path` so
+James can read the full text. The `deep_research.budget` field tells you
+how much budget remains today — if utilization is unusually low or unusually
+high, mention it in "Watch this".
+
 Rules:
 - Maximum 3 items per section (9 total). Compress ruthlessly.
 - Lead every item with a bold one-line headline.

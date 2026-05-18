@@ -276,6 +276,79 @@ def render(r: redis.Redis) -> str:
     return "\n".join(lines) + "\n"
 
 
+def _parse_blob(blob):
+    """Normalize a status_json source (Redis JSON string or Postgres dict) to dict."""
+    if not blob:
+        return None
+    if isinstance(blob, str):
+        try:
+            return json.loads(blob)
+        except (json.JSONDecodeError, TypeError):
+            return None
+    if isinstance(blob, dict):
+        return blob
+    return None
+
+
+def _build_deep_research_view(intel_rows: list, agent_blobs: list) -> dict:
+    """Surface Deep Research activity for the dashboard + email.
+
+    Aporia's new DR-token agent uses session_telemetry.log_work with stages
+    starting with "deep_research_" (e.g. deep_research_dispatched,
+    deep_research_received). Budget is reported in its status_json blob under
+    a `deep_research_budget` key with {used, budget, remaining, as_of}.
+
+    Returns a dict with reports (past 24h), counts, and current budget.
+    Empty/None values are fine — the dashboard renders defensively.
+    """
+    reports = []
+    dispatch_count = 0
+    for r in intel_rows or []:
+        stage = (r.get("stage") or "")
+        if not stage.startswith("deep_research_"):
+            continue
+        if stage == "deep_research_dispatched":
+            dispatch_count += 1
+        reports.append({
+            "stage": stage,
+            "summary": r.get("output_summary") or "",
+            "output_path": r.get("output_path"),
+            "finished_at": r.get("finished_at"),
+            "cycle_id": r.get("cycle_id"),
+            "success": r.get("success", True),
+        })
+
+    received_count = sum(1 for r in reports if r["stage"] == "deep_research_received")
+
+    budget = None
+    for name, blob in agent_blobs:
+        parsed = _parse_blob(blob)
+        if not parsed:
+            continue
+        b = parsed.get("deep_research_budget")
+        if isinstance(b, dict) and ("budget" in b or "used" in b):
+            used = b.get("used")
+            limit = b.get("budget")
+            remaining = b.get("remaining")
+            if remaining is None and used is not None and limit is not None:
+                remaining = limit - used
+            budget = {
+                "agent": name,
+                "used": used,
+                "budget": limit,
+                "remaining": remaining,
+                "as_of": b.get("as_of"),
+            }
+            break
+
+    return {
+        "reports": reports,
+        "report_count_24h": received_count,
+        "dispatch_count_24h": dispatch_count,
+        "budget": budget,
+    }
+
+
 def _self_reported_taxonomy(blob) -> dict:
     """Lift kind / role / operator off an agent's own status_json blob.
 
@@ -465,6 +538,24 @@ def build_dashboard_state(r: redis.Redis) -> dict:
         except Exception as e:
             print(f"[{now.isoformat()}] intel fetch failed: {e}", file=sys.stderr)
 
+    # Collect raw status_json blobs (Redis hash takes precedence, PG fallback)
+    # so the Deep Research view can read deep_research_budget from any agent.
+    agent_blobs = []
+    for a in agents:
+        name = a["name"]
+        blob = None
+        try:
+            redis_state = agent_state(r, name)
+            if redis_state:
+                blob = redis_state.get("status_json")
+        except Exception:
+            pass
+        if blob is None and name in pg_by_name:
+            blob = pg_by_name[name].get("status_json")
+        agent_blobs.append((name, blob))
+
+    deep_research = _build_deep_research_view(intel, agent_blobs)
+
     ideas = []
     if HAS_IDEAS_SCANNER:
         try:
@@ -485,6 +576,7 @@ def build_dashboard_state(r: redis.Redis) -> dict:
         "work_queue": work_queue,
         "anomalies": anomalies,
         "intelligence_outputs": intel,
+        "deep_research": deep_research,
     }
 
 
@@ -622,6 +714,9 @@ def build_degraded_state_from_postgres(now: datetime, redis_error: str) -> dict:
         except Exception as e:
             print(f"[{now.isoformat()}] intel fetch failed: {e}", file=sys.stderr)
 
+    agent_blobs = [(name, pg.get("status_json")) for name, pg in pg_by_name.items()]
+    deep_research = _build_deep_research_view(intel, agent_blobs)
+
     ideas = []
     if HAS_IDEAS_SCANNER:
         try:
@@ -651,6 +746,7 @@ def build_degraded_state_from_postgres(now: datetime, redis_error: str) -> dict:
         "work_queue": {},
         "anomalies": anomalies,
         "intelligence_outputs": intel,
+        "deep_research": deep_research,
     }
 
 
