@@ -266,13 +266,21 @@ def git_commit_and_push_report(repo_rel_path: str, title: str) -> bool:
 # ---------------------------------------------------------------------------
 
 def emit_pythia_heartbeat(rate_limited_at: Optional[str] = None) -> None:
-    """Compose Pythia's status_json with budget + queue counts."""
+    """Compose Pythia's status_json with budget + queue counts.
+
+    Conforms to Aletheia 2026-05-18 convention (pivot/deep_research_agent_conventions_2026-05-18.md):
+    a `deep_research_budget` dict at the top of status_json so portfolio_monitor
+    renders the budget bar on the dashboard and the email TL;DR gains the
+    "· DR X/20" segment. Re-called every tick so the heartbeat stays fresh
+    and `used` reflects current consumption.
+    """
     if not HAS_TELEMETRY:
         return
     counts = agora_persist.count_research_today() if HAS_PG else {}
     today_complete = counts.get("complete", 0)
     today_failed = counts.get("failed", 0)
     today_rate_limited = counts.get("rate_limited", 0)
+    today_dispatched = counts.get("dispatched", 0) + counts.get("in_progress", 0)
     in_flight = len(agora_persist.get_in_flight_research()) if HAS_PG else 0
     pending = 0
     if HAS_PG:
@@ -283,25 +291,34 @@ def emit_pythia_heartbeat(rate_limited_at: Optional[str] = None) -> None:
                     pending = cur.fetchone()[0]
         except Exception:
             pass
-    budget_remaining = max(0, DAILY_BUDGET - (today_complete + in_flight))
+    used = today_complete + today_dispatched + today_failed + today_rate_limited
+    budget_remaining = max(0, DAILY_BUDGET - used)
+    now_iso = datetime.now(timezone.utc).isoformat()
     status_json = {
+        # Canonical block — Aletheia's portfolio_monitor reads exactly these keys
+        "deep_research_budget": {
+            "used": used,
+            "budget": DAILY_BUDGET,
+            "remaining": budget_remaining,
+            "as_of": now_iso,
+        },
+        # Auxiliary fields (helpful for the dashboard panel, not strictly required)
         "queue_pending": pending,
         "in_flight": in_flight,
         "completed_today": today_complete,
         "failed_today": today_failed,
         "rate_limited_today": today_rate_limited,
-        "daily_budget": DAILY_BUDGET,
-        "budget_remaining": budget_remaining,
         "max_concurrent": MAX_CONCURRENT,
         "model": AGENT_MODEL,
     }
     if rate_limited_at:
         status_json["last_rate_limited_at"] = rate_limited_at
     session_telemetry.register_session(
-        agent_name="Pythia", machine="M1",
-        role="Gemini Deep Research dispatcher (Oracle of Delphi)",
+        name="Pythia", machine="M1",
+        role="deep research report producer (20 tokens/day budget)",
         kind="tool",
-        status_json={**status_json, "operator": "Aporia"},
+        operator="Aporia",
+        status_json=status_json,
     )
 
 
@@ -350,10 +367,21 @@ def run_tick(dry_run: bool = False) -> dict:
             stats["completed"] += 1
             log.info(f"complete row={row['id']} -> {url}")
             if HAS_TELEMETRY:
+                # Aletheia 2026-05-18 convention: stage='deep_research_received'
+                # so portfolio_monitor + email DR section pick it up. summary
+                # carries 1-2 sentences of the report's content (first 240 chars
+                # of the actual text — better than "Report ready: …" but cheap;
+                # future tuning will have an LLM extract the key finding).
+                report_text = (result["text"] or "").strip()
+                first_para = report_text.split("\n\n", 1)[0] if report_text else ""
+                excerpt = (first_para[:280] + "...") if len(first_para) > 280 else first_para
+                if not excerpt:
+                    excerpt = f"DR-{full_row.get('queue_ref') or full_row.get('id')}: {full_row.get('title','')[:120]}"
                 session_telemetry.log_work(
-                    stage="dr_report_completed", agent="Pythia",
-                    summary=f"Report ready: {full_row.get('title','')[:120]}. URL: {url}",
-                    output_path=str(abs_path),
+                    stage="deep_research_received",
+                    agent="Pythia",
+                    summary=excerpt,
+                    output_path=rel_path,  # repo-relative, posix — clickable
                 )
         elif result["status"] == "failed":
             agora_persist.mark_research_failed(row["id"], result["error"] or "unknown")
@@ -383,9 +411,16 @@ def run_tick(dry_run: bool = False) -> dict:
             stats["dispatched"] += 1
             log.info(f"dispatched row={row['id']} iid={res['interaction_id']} ({row.get('title','')[:60]})")
             if HAS_TELEMETRY:
+                # Aletheia 2026-05-18 convention: stage='deep_research_dispatched'.
+                # summary is 1-2 sentences naming the topic + claim being researched.
+                ref = row.get("queue_ref") or f"row{row['id']}"
+                tier = row.get("tier") or "?"
+                title = row.get("title", "")[:160]
                 session_telemetry.log_work(
-                    stage="dr_dispatched", agent="Pythia",
-                    summary=f"Dispatched: {row.get('title','')[:120]} (iid={res['interaction_id']})",
+                    stage="deep_research_dispatched",
+                    agent="Pythia",
+                    summary=f"{ref} [T{tier}]: {title}",
+                    output_path=None,
                 )
         else:
             if res["quota"]:
@@ -394,21 +429,19 @@ def run_tick(dry_run: bool = False) -> dict:
                 log.warning(f"QUOTA hit on row={row['id']}: {res['error']}")
                 if HAS_TELEMETRY:
                     session_telemetry.log_work(
-                        stage="dr_quota_hit", agent="Pythia",
+                        stage="deep_research_quota_hit", agent="Pythia",
                         summary=f"Quota detected at {rate_limited_at}: {res['error'][:200]}",
                         success=False, error=res["error"],
                     )
                 break  # stop dispatching this tick
             else:
-                # Non-quota failure: bump attempt count via mark_failed-then-reset-to-pending
-                # is overkill; for now mark failed with the error message and operator can
-                # re-enqueue. Simpler model; retries are explicit.
+                # Non-quota failure: mark failed; operator can re-enqueue.
                 agora_persist.mark_research_failed(row["id"], res["error"], status="failed")
                 stats["failed"] += 1
                 log.warning(f"dispatch failed row={row['id']}: {res['error']}")
                 if HAS_TELEMETRY:
                     session_telemetry.log_work(
-                        stage="dr_dispatch_failed", agent="Pythia",
+                        stage="deep_research_dispatch_failed", agent="Pythia",
                         summary=f"Dispatch failed for row {row['id']}: {res['error'][:200]}",
                         success=False, error=res["error"],
                     )
