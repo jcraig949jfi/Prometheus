@@ -1571,3 +1571,72 @@ Choosing training-value annotation as Fire #15 — directly serves the Ergon-res
 - Two corpus files now disk-resident (seed=42 + seed=137, 340 MB + ~350 MB) — gitignored
 - First seed-independent substrate finding shipped to the journal
 
+
+---
+
+## Fire #15 — 2026-05-18 ~14:06Z — Per-relation training-value annotation
+
+Implemented `theseus/scoring/training_weight.py` applying H4-confirmed weights + verdict + triangulation bonus. Added `training_weight: Optional[float]` field to TheseusRecord. Annotated the Fire #14 seed=137 corpus end-to-end.
+
+### Shipped
+
+- **`theseus/scoring/training_weight.py`** — `training_weight(record)` returns scalar in [0, 1]. Combines:
+  - **Base weight** from `PER_RELATION_STRUCTURAL_RATE` (H4-confirmed): equal=0.02, equal_mod_2=0.63, divides=0.40. abs_diff_le_K uses K-tiered weights (K≤3 → 0.50; K≤500 → 0.20; >500 → 0.10). Non-A1-shape records use claim_kind defaults.
+  - **Verdict multiplier**: PROMOTED 1.5, SHADOW 1.0, INCONCLUSIVE 0.6, REJECTED 0.4-0.7 (specific kill_patterns get 0.7, generic 0.4), UNVERIFIED 0.1.
+  - **Triangulation bonus**: ×1.3 for records with step_trace populated.
+  - Clamped to [0, 1].
+
+- **`annotate_corpus(input_path)`** — reads corpus JSONL, adds `training_weight` to each record, writes annotated output. Returns aggregate stats.
+
+- **TheseusRecord schema extended** with optional `training_weight: Optional[float] = None`. Append-only; backward compatible.
+
+- **CLI**: `python -m theseus.scoring.training_weight <corpus.jsonl>`.
+
+### Annotation results (Fire #14 seed=137 corpus, 264,967 records)
+
+```
+weight_mean: 0.28
+weight_min:  0.008
+weight_max:  0.63
+distribution:
+  <0.2     80,851  (30.5%)
+  0.2-0.4  100,070 (37.8%)
+  0.4-0.6   63,668 (24.0%)
+  0.6-0.8   20,378 ( 7.7%)
+  >=0.8          0 ( 0.0%)
+```
+
+Mean weight 0.28 means most records are mid-low value — exactly what we expect: REJECTED records dominate the corpus and carry ~0.4 multiplier on already-modest base weights. The 20K records ≥0.6 are the substrate's high-value training subset (parity-SHADOW + triangulation-step_trace combos).
+
+No records hit ≥0.8 because PROMOTED is the only verdict that pushes weights that high, and the substrate has never minted a PROMOTED record (would require independent literature verification).
+
+### Training-corpus implications
+
+The annotation reveals the substrate's natural training-value distribution. For Ergon's resume, the highest-value training subset is:
+
+1. **~20K records in [0.6, 0.8)** — parity-SHADOW with step_trace, or A4 SHADOW from triangulation-supervised paths
+2. **~64K in [0.4, 0.6)** — divides-SHADOW, specific-kill REJECTED with parent-bridge structure
+3. **~100K in [0.2, 0.4)** — most generic REJECTED + INCONCLUSIVE
+4. **~81K in [0, 0.2)** — UNVERIFIED literature + equality coincidences
+
+A weighted sampler over this distribution would feed Ergon's training with the high-info-density tail at the front of the curriculum.
+
+### User-requested orchestration wiring (Fire #16)
+
+User clarified Theseus should wire into the new orchestration layer (M4-side Aletheia). Found `scripts/session_telemetry.py` with the exact APIs needed:
+- `register_session(name, machine, role, status_json)` — register/heartbeat
+- `log_work(event_type, summary, success, ...)` — per-cycle work events
+- `emit_discovery(...)` — xadd to agora:discoveries for high-relevance finds
+
+Fire #16 plan: build `theseus/orchestration/` wrapping session_telemetry. Daemon should:
+- Register Theseus as a TOOL (operator=James for now; later Daedalus or whoever)
+- Call `log_work("theseus_batch_complete", ...)` per fire with summary stats
+- Enrich status_json with: operator, target_generators, lifetime_records, dedup_rate, errors_this_cycle, next_cycle_at, triggered_by
+- `emit_discovery(...)` for records with training_weight ≥ 0.6
+
+### Loop discipline
+
+- Tests: 116 → 126 (+10 for training_weight per-relation correctness, annotation roundtrip, schema field, K-tier abs_diff)
+- Corpus annotation pipeline operational; 264K records annotated cleanly
+- TheseusRecord schema extension #2 (after step_trace in Fire #7) — both append-only, both with sensible defaults
+

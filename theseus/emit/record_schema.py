@@ -117,6 +117,11 @@ class TheseusRecord:
     info_density: Optional[float] = None
     diversity_score: Optional[float] = None
     novelty_estimate: Optional[float] = None
+    # Per-record training-value weight (Fire #15). Computed via
+    # theseus.scoring.training_weight.training_weight(). May be populated
+    # at emit-time (live) or via annotate_corpus (batch). Optional so
+    # older records don't need backfill.
+    training_weight: Optional[float] = None
 
     # --- Process supervision (Fire #7) ---
     # Optional list of step-record dicts (StepRecord.to_dict() shape).
