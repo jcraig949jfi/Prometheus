@@ -26,11 +26,11 @@ GENERATOR_STATUS = {
     # A — catalog-cross-product
     "a1": "active",
     "a2": "active",
-    "a3": "stub",
+    "a3": "active",
     "a4": "stub",
     "a5": "stub",
     # B — operator-action
-    "b1": "stub",
+    "b1": "active",
     "b2": "stub",
     "b3": "stub",
     "b4": "stub",
@@ -55,7 +55,7 @@ GENERATOR_STATUS = {
     # F — probabilistic
     "f1": "stub",
     "f2": "stub",
-    "f3": "stub",
+    "f3": "active",
     "f4": "stub",
     # G — symmetry/transformation
     "g1": "stub",

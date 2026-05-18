@@ -13,6 +13,8 @@ from typing import Dict, Type
 from theseus.generators.base import Generator
 from theseus.generators.a1_catalog_cross_product import A1CatalogCrossProductGenerator
 from theseus.generators.a2_statistical_correlation import A2StatisticalCorrelationGenerator
+from theseus.generators.a3_functional_identity import A3FunctionalIdentityGenerator
+from theseus.generators.b1_operator_rotation import B1OperatorRotationGenerator
 from theseus.generators.b5_conservation_law import B5ConservationLawGenerator
 from theseus.generators.c1_claim_mutation import C1ClaimMutationGenerator
 from theseus.generators.c2_threshold_mutation import C2ThresholdMutationGenerator
@@ -20,12 +22,11 @@ from theseus.generators.c4_generalization import C4GeneralizationGenerator
 from theseus.generators.d1_kill_neighborhood import D1KillNeighborhoodGenerator
 from theseus.generators.d2_margin_bracket import D2MarginBracketGenerator
 from theseus.generators.e1_research_batch_parser import E1ResearchBatchParserGenerator
+from theseus.generators.f3_importance_sampling import F3ImportanceSamplingGenerator
 from theseus.generators.h1_self_play_hunter import H1SelfPlayHunterGenerator
 from theseus.generators.stubs.all_stubs import (
-    A3FunctionalIdentity,
     A4RatioInvariance,
     A5DistributionMatch,
-    B1OperatorRotation,
     B2CompositionTest,
     B3InverseTest,
     B4FixedPointHunt,
@@ -39,7 +40,6 @@ from theseus.generators.stubs.all_stubs import (
     E5MathWorldWikipediaScrape,
     F1MonteCarloRandomPairs,
     F2AntiFrequencySampling,
-    F3ImportanceSampling,
     F4FrontierPursuit,
     G1GaloisTwist,
     G2FunctionalEquation,
@@ -63,6 +63,8 @@ REGISTRY: Dict[str, Type[Generator]] = {
     # Active
     "a1": A1CatalogCrossProductGenerator,
     "a2": A2StatisticalCorrelationGenerator,
+    "a3": A3FunctionalIdentityGenerator,
+    "b1": B1OperatorRotationGenerator,
     "b5": B5ConservationLawGenerator,
     "c1": C1ClaimMutationGenerator,
     "c2": C2ThresholdMutationGenerator,
@@ -70,12 +72,11 @@ REGISTRY: Dict[str, Type[Generator]] = {
     "d1": D1KillNeighborhoodGenerator,
     "d2": D2MarginBracketGenerator,
     "e1": E1ResearchBatchParserGenerator,
+    "f3": F3ImportanceSamplingGenerator,
     "h1": H1SelfPlayHunterGenerator,
     # Stubs
-    "a3": A3FunctionalIdentity,
     "a4": A4RatioInvariance,
     "a5": A5DistributionMatch,
-    "b1": B1OperatorRotation,
     "b2": B2CompositionTest,
     "b3": B3InverseTest,
     "b4": B4FixedPointHunt,
@@ -89,7 +90,6 @@ REGISTRY: Dict[str, Type[Generator]] = {
     "e5": E5MathWorldWikipediaScrape,
     "f1": F1MonteCarloRandomPairs,
     "f2": F2AntiFrequencySampling,
-    "f3": F3ImportanceSampling,
     "f4": F4FrontierPursuit,
     "g1": G1GaloisTwist,
     "g2": G2FunctionalEquation,

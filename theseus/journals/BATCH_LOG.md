@@ -406,3 +406,84 @@ Three BUILD items from frontier-analysis ranking:
 - Embedding model loaded once at startup (~5s), then runs at 14K encode/sec when enabled.
 - Cross-agent staging mitigation: clean.
 
+
+## batch-20260518T125124Z-bf4869
+
+- Started: 2026-05-18T12:51:24.776597+00:00
+- Ended:   2026-05-18T12:51:54.657023+00:00
+- Duration: 0.0083 h
+- Requested: a1,a2,a3,b1,b5,c1,c2,c4,d1,d2,e1,f3,h1
+- Active:    a1,a2,a3,b1,b5,c1,c2,c4,d1,d2,e1,f3,h1
+- Records: 80398 (kills=35525, confirmations=44098, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=6636, throughput=157168421.0/h, info_density=0.529, diversity=0.843, yield_score=0.0045, kills=4740, conf=1896, errs=0
+- **a2** — records=6636, throughput=20900787.4/h, info_density=0.505, diversity=0.940, yield_score=0.0048, kills=6309, conf=327, errs=0
+- **a3** — records=6636, throughput=167060139.8/h, info_density=0.531, diversity=0.852, yield_score=0.0046, kills=4597, conf=2039, errs=0
+- **b1** — records=6635, throughput=385258064.3/h, info_density=0.600, diversity=0.897, yield_score=0.0054, kills=0, conf=6635, errs=0
+- **b5** — records=6635, throughput=310207792.2/h, info_density=0.586, diversity=0.876, yield_score=0.0052, kills=923, conf=5712, errs=0
+- **c1** — records=6635, throughput=508212766.1/h, info_density=0.549, diversity=0.848, yield_score=0.0047, kills=3401, conf=3234, errs=0
+- **c2** — records=6635, throughput=137275862.0/h, info_density=0.572, diversity=0.853, yield_score=0.0049, kills=1842, conf=4793, errs=0
+- **c4** — records=6635, throughput=746437499.8/h, info_density=0.600, diversity=0.862, yield_score=0.0052, kills=0, conf=6635, errs=0
+- **d1** — records=6635, throughput=38217600.0/h, info_density=0.589, diversity=0.890, yield_score=0.0053, kills=744, conf=5891, errs=0
+- **d2** — records=6635, throughput=770516128.6/h, info_density=0.544, diversity=0.859, yield_score=0.0047, kills=3693, conf=2942, errs=0
+- **e1** — records=775, throughput=11772151.9/h, info_density=0.200, diversity=0.984, yield_score=0.0020, kills=0, conf=0, errs=0
+- **f3** — records=6635, throughput=170614285.7/h, info_density=0.529, diversity=0.853, yield_score=0.0046, kills=4726, conf=1909, errs=0
+- **h1** — records=6635, throughput=109568807.3/h, info_density=0.531, diversity=0.951, yield_score=0.0051, kills=4550, conf=2085, errs=0
+
+
+---
+
+## Fire #4 — 2026-05-18 ~12:51Z
+
+Three BUILD items from frontier-analysis Fire #4 slate. Engine reaches 13 active generators across 6 families.
+
+### What shipped
+
+- **F3 importance-sampling** — active-learning generator that maintains per-region coverage counts and biases sampling toward under-explored (knot_inv, ec_inv, relation) regions via `weight ∝ 1/(1+coverage)^α`. Initial α=1 produced near-uniform variance (3.37 vs Poisson 3.23 at n=1000); diagnostic surfaced this immediately. Bumped α=2 → stdev 2.64 (~18% below uniform Poisson). Bias detectable but modest; Thompson sampling Tier 1 will outperform. Frontier-aligned: Settles 2009 active learning.
+
+- **A3 functional-identity** — extends A1's claim space with operator pairs `(f, g) ∈ {identity, abs, neg, sq_mod_100, log2_floor, mod_3}^2`. Tests `f(i(a)) RELATION g(j(b))` rather than raw `i(a) RELATION j(b)`. First step toward A4 symbolic-regression (next-fire candidate).
+
+- **B1 operator-rotation** — composition-cycle test for knot mirror: predicts `mirror^n` effect on integer invariants (signature flips for odd n, preserves for even; other invariants preserved for all n) and verifies against actual computed values. Substrate self-test parallel to C4 — healthy substrate produces ~0% kill rate. Like C4, designed so that ANY emission with REJECTED verdict signals a substrate bug.
+
+### Smoke results (30 s, 13 active generators, 0 errors)
+
+- 80,398 records, 35,525 kills, 44,098 confirmations
+- **B1: 0 kills / 6,635 confirms** — substrate's operator model is self-consistent (mirror^n behaves as predicted). No bugs in the modeled mirror operator.
+- **A3: 69% kill rate** — most random operator-pair compositions don't satisfy random relations. Expected. The 31% confirmations include interesting cases like `(identity, mod_3)` finding parity-like cross-catalog matches.
+- **F3: 71% kill rate** — similar to A1 (72%), as expected; F3 samples the same claim space, just with biased region coverage. The discriminator is `region_coverage_at_emit` metadata.
+- **C4: 0 kills / 6,635 confirms** — substrate self-consistency maintained from Fire #3.
+- **H1: 69% kill rate** — proposer-vs-hunter continues to expose ~69% of past survivors as coincidence.
+- All other generators (A1, A2, B5, C1, C2, D1, D2, E1) maintain Fire #3 baseline profiles.
+
+### Reflection on Fire #4 techniques (vs Fire #2 verdicts)
+
+1. **Active learning (verdict: BUILD)** — partial win. v0.1 implementation works but bias is modest. Tier-1 should swap to Thompson sampling or upper-confidence-bound for stronger directed exploration. The α=2 finding documents that ANY active-learning component needs hyperparameter tuning; uniform-vs-active comparison is only meaningful when bias is strong.
+
+2. **Functional identity A3 (substrate-native)** — landed clean. The operator-pair search space (6×6=36 op combos × 4 relations × 6 knot inv × 4 EC inv = 3,456 region cells) is a 36× expansion of A1's claim space without LLM cost.
+
+3. **Operator-rotation B1 (substrate self-test)** — landed clean. Second substrate self-test now in place (B1 + C4 cover operator and relation consistency respectively). The substrate now has TWO independent self-test generators; any future evaluator/operator bug should surface immediately on the next smoke.
+
+### Substrate observation: two self-tests now in place
+
+C4 + B1 are both ~0%-kill-rate generators by mathematical fact. Together they assert:
+- C4: "weaker logical claims hold whenever stronger ones do" (relation evaluator consistency)
+- B1: "operator composition cycles match predicted algebra" (operator implementation consistency)
+
+This is the substrate's immune system. Fire #3 demonstrated its value when C4 caught the abs_diff_le_K evaluator bug; future fires now have a continuous-time check.
+
+### Decisions for Fire #5
+
+Next slate from frontier-analysis ROADMAP:
+- **A4 symbolic regression** (numpy polynomial-fit fallback v0.1; PySR upgrade Tier 2)
+- **E2 arXiv mining** (populate local arxiv_corpus first, then mine titles+abstracts)
+- **E3 OEIS comment mining** (1M+ informal sequence claims, token-free)
+
+### Loop discipline
+
+- Tests: 56 → 64 (+8 for Fire #4: F3 sampling, A3 ops, B1 mirror^n math, registry round-trip)
+- Smoke: 80K records / 30 s, 0 errors, with 13 active generators
+- F3 α=1→α=2 fix caught at smoke via diagnostic
+- Cross-agent staging: clean
+

@@ -15,13 +15,6 @@ from theseus.generators.base import StubGenerator, GeneratorStatus
 
 # -- Family A (catalog cross-product) --
 
-class A3FunctionalIdentity(StubGenerator):
-    generator_id = "a3"
-    claim_kind = ClaimKind.FUNCTIONAL_IDENTITY.value
-    def description(self) -> str:
-        return "a3: f(i(a)) == g(j(b)) functional identity test"
-
-
 class A4RatioInvariance(StubGenerator):
     generator_id = "a4"
     claim_kind = ClaimKind.RATIO_INVARIANCE.value
@@ -37,13 +30,6 @@ class A5DistributionMatch(StubGenerator):
 
 
 # -- Family B (operator-action) --
-
-class B1OperatorRotation(StubGenerator):
-    generator_id = "b1"
-    claim_kind = ClaimKind.OPERATOR_ROTATION.value
-    def description(self) -> str:
-        return "b1: operator-rotation kill-vector prediction test"
-
 
 class B2CompositionTest(StubGenerator):
     generator_id = "b2"
@@ -142,13 +128,6 @@ class F2AntiFrequencySampling(StubGenerator):
     claim_kind = ClaimKind.INVARIANT_EQUALITY.value
     def description(self) -> str:
         return "f2: anti-frequency stratified sampling of under-tested regions"
-
-
-class F3ImportanceSampling(StubGenerator):
-    generator_id = "f3"
-    claim_kind = ClaimKind.INVARIANT_EQUALITY.value
-    def description(self) -> str:
-        return "f3: importance-sampling into known-interesting regions"
 
 
 class F4FrontierPursuit(StubGenerator):

@@ -17,7 +17,7 @@ Status legend:
 - **A2** `a2_statistical_correlation` — correlation across pairs with
   mandatory prime-detrending — **active**
 - **A3** `a3_functional_identity` — does `f(i(a)) == g(j(b))` hold for
-  some operator pair `(f, g)`? — **stub**
+  some operator pair `(f, g)`? — **active**
 - **A4** `a4_ratio_invariance` — is `i(a) / j(b)` constant across a
   sub-population? — **stub**
 - **A5** `a5_distribution_match` — does the distribution of `i` over
@@ -25,8 +25,8 @@ Status legend:
 
 ## Family B — Operator-action (sigma's own opcodes)
 
-- **B1** `b1_operator_rotation` — predict each opcode's KillVector
-  effect, verify — **stub**
+- **B1** `b1_operator_rotation` — composition-cycle test
+  (mirror^n predicted vs actual; substrate self-test) — **active**
 - **B2** `b2_composition_test` — does `(op1 ∘ op2)(x) == op2(op1(x))`? — **stub**
 - **B3** `b3_inverse_test` — `op⁻¹(op(x)) == x` for invertibles — **stub**
 - **B4** `b4_fixed_point_hunt` — does `op(x) == x` have non-trivial
@@ -64,8 +64,8 @@ Status legend:
 - **F1** `f1_monte_carlo_random_pairs` — uniform random catalog pairs — **stub**
   *(anti-recommended without weighting; low info density)*
 - **F2** `f2_anti_frequency_sampling` — weight under-tested regions — **stub**
-- **F3** `f3_importance_sampling` — bias toward known-interesting
-  regions (Lehmer-band-like) — **stub**
+- **F3** `f3_importance_sampling` — active-learning style sampling
+  weighted ∝ 1/(1+coverage)^2 toward under-explored regions — **active**
 - **F4** `f4_frontier_pursuit` — sample at coverage boundary — **stub**
 
 ## Family G — Symmetry / transformation
@@ -101,7 +101,7 @@ Status legend:
 
 ---
 
-## Active set (Fire #3, 10 generators): A1 + A2 + B5 + C1 + C2 + C4 + D1 + D2 + E1 + H1
+## Active set (Fire #4, 13 generators): A1 + A2 + A3 + B1 + B5 + C1 + C2 + C4 + D1 + D2 + E1 + F3 + H1
 
 Rationale (per CHARTER.md):
 - **A1** — highest throughput, no LLM cost, anti-conventional novelty
