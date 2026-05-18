@@ -1,6 +1,6 @@
 # Cross-Catalog H4 Audit Report
 
-Generated: 2026-05-18T18:39:53.314966+00:00
+Generated: 2026-05-18T21:06:35.033037+00:00
 
 ## Reference (knot × EC, from corpus_health Fire #19)
 
@@ -78,6 +78,34 @@ Generated: 2026-05-18T18:39:53.314966+00:00
 | a_p_5 | equal_mod_2 | 89/149 = 59.7% |
 | weight | equal_mod_2 | 106/189 = 56.1% |
 | char_order | equal_mod_2 | 42/135 = 31.1% |
+
+## Audit: knot × oeis_sleeping (n=8,000)
+
+### Aggregate rates
+
+| relation | categorical / held | rate |
+|---|---|---|
+| equal | 0 / 57 | 0.0% |
+| equal_mod_2 | 457 / 1030 | 44.4% |
+| divides | 281 / 601 | 46.8% |
+| abs_diff_le_3 | 0 / 400 | 0.0% |
+
+### Stratified by parent_inv_b
+
+| parent_inv_b | relation | rate |
+|---|---|---|
+| first_value | abs_diff_le_3 | 0/202 = 0.0% |
+| second_value | abs_diff_le_3 | 0/181 = 0.0% |
+| first_value | divides | 43/61 = 70.5% |
+| second_value | divides | 75/123 = 61.0% |
+| a_number_int | divides | 67/131 = 51.1% |
+| seq_len | divides | 96/286 = 33.6% |
+| second_value | equal | 0/27 = 0.0% |
+| first_value | equal | 0/30 = 0.0% |
+| a_number_int | equal_mod_2 | 161/281 = 57.3% |
+| second_value | equal_mod_2 | 102/222 = 45.9% |
+| seq_len | equal_mod_2 | 123/307 = 40.1% |
+| first_value | equal_mod_2 | 71/220 = 32.3% |
 
 ## Replication verdict
 

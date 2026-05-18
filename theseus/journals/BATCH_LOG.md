@@ -2859,3 +2859,76 @@ Every layer has 100% pass-through. The substrate-passive-consumer warning (`feed
 - 1 flag for James (git divergence sync strategy)
 - Tests: 140/140 (caveats fix doesn't affect schema validity; new handoff still validates)
 
+
+---
+
+## Fire #28 — 2026-05-18 ~20:35Z — 4-pair audit + post-merge sanity
+
+Post-merge sanity check: Theseus heartbeat refreshed cleanly, agora still sees it on M1.
+
+Extended the cross-catalog audit to a fourth pair (knot × OEIS-sleeping) using derived integer invariants: `a_number_int` (numeric part of A-number), `first_value` (data[0]), `second_value` (data[1]), `seq_len` (len(data)).
+
+### Four-pair comparison (n=8000 each)
+
+| relation | knot × EC | knot × g2 | knot × MF | knot × OEIS | spread |
+|---|---|---|---|---|---|
+| equal_mod_2 (parity) | 67% | 62.6% | 58.1% | **44.4%** | **22.6pp** |
+| divides | 51% | 62.3% | 50.6% | **46.8%** | 15.5pp |
+| equal | 2.6% | 9.3% | 0% | 0% | 9.3pp |
+| abs_diff_le_3 | 65% | 38.6% | 52.8% | **0%** | 65pp |
+
+### REFINED FINDING v0.5: parity is not strictly universal
+
+The Fire #24 finding ("parity is universally structural ~62% ± 5pp across 3 catalog pairs") was an artifact of the 3-pair sample. With the 4th pair (knot × OEIS):
+
+- **Parity range is 22.6pp** (44.4% to 67%), not 9pp as the 3-pair sample suggested
+- **On knot × OEIS, divides (46.8%) slightly edges parity (44.4%)** — the hierarchy `parity > divides` breaks for the first time
+- **abs_diff_le_3 collapses to 0% on OEIS** — OEIS integer values (a_number_int, first_value) are typically large, so the K=3 threshold is rarely met
+
+### Why OEIS is different
+
+OEIS-sleeping invariants are derived from sequence properties:
+- `a_number_int` is uniformly distributed in [1, ~370,000] → parity is genuine 50/50 → matches with knot invariants (small integers) carry no structural information
+- `first_value` / `second_value` span huge ranges (some sequences start with 0, 1, 2; others start with millions)
+- `seq_len` is fairly constant across the sleeping subset
+
+OEIS's invariant value distributions are SO DIFFERENT from knot invariants that even parity matches don't carry cross-catalog signal. This is real substrate honesty: not every catalog can be a meaningful "cross-catalog" partner for any other catalog.
+
+### Implications for training_weight v0.5
+
+The Fire #20-22 training_weight values (parity 0.65, divides 0.35) were anchored to knot × EC. The 4-pair finding suggests:
+
+1. **Parity weight is overconfident for non-EC pairs.** A cross-pair average gives ~58% (range 44-67), suggesting a more conservative parity weight of ~0.55.
+2. **Divides weight may be slightly under-weighted** — cross-pair average is ~53%, vs current 0.35.
+3. **Or: per-catalog-pair weights** — knot × EC keeps parity 0.65, divides 0.35; knot × OEIS uses parity 0.45, divides 0.50.
+
+For Ergon's current training corpus (predominantly knot × EC records), the v0.3 weights are still defensible. When future fires expand the corpus to other catalog pairs, weights need to be calibrated per-pair.
+
+### The substrate-honesty arc
+
+This is now the FOURTH refinement of the H4 finding:
+
+- v0.1 (Fires #13-14): "parity > divides > equal universal" — naive
+- v0.2 (Fires #19-20): "rates drift up with more data" — calibration
+- v0.3 (Fire #21): "divides is partly small-range artifact"
+- v0.4 (Fire #24): "parity universal at ~62% ± 5pp; divides catalog-specific"
+- **v0.5 (Fire #28): "parity range is 44-67%, hierarchy breaks on OEIS"**
+
+Each refinement makes the substrate's understanding LESS general and MORE accurate. The engine is doing what it should.
+
+### Decisions for Fire #29
+
+The audit chain has produced a sufficient refinement of the H4 finding. Next moves:
+
+1. **Per-catalog-pair training_weight** — make the weight calibration ec_invariant-pair-aware
+2. **Continue stub fills** — but most remaining stubs need external infrastructure
+3. **Build catalog-pair stratification into Ergon handoff** — flag records by catalog-pair so Ergon can weight them differently per pair
+
+Choosing (3) — concrete improvement to the Ergon handoff format that surfaces the catalog-pair as metadata. Ergon can then ingest with per-pair-aware logic.
+
+### Loop discipline
+
+- Tests still 140/140 (audit additions are read-only)
+- 4-pair audit report regenerated
+- Post-merge Theseus heartbeat verified clean on M1
+

@@ -76,6 +76,12 @@ CATALOG_INVARIANTS = {
         "a_p_3",  # coefficient at p=3 (a_p[1])
         "a_p_5",  # coefficient at p=5 (a_p[2])
     ),
+    "oeis_sleeping": (
+        "a_number_int",  # numeric part of A-number (e.g., 45 for A000045)
+        "first_value",   # data[0]
+        "second_value",  # data[1]
+        "seq_len",       # len(data) at time of dump
+    ),
 }
 
 
@@ -99,6 +105,23 @@ def _get_invariant(obj: Dict[str, Any], catalog: str, inv: str) -> Optional[int]
             ap = obj.get("a_p") or []
             idx = _MF_AP_INDEX[inv]
             v = ap[idx] if idx < len(ap) else None
+        else:
+            v = obj.get(inv)
+    elif catalog == "oeis_sleeping":
+        if inv == "a_number_int":
+            num_str = obj.get("a_number", "")
+            try:
+                v = int(num_str[1:]) if num_str.startswith("A") else None
+            except (ValueError, IndexError):
+                v = None
+        elif inv == "first_value":
+            data = obj.get("data") or []
+            v = data[0] if len(data) >= 1 else None
+        elif inv == "second_value":
+            data = obj.get("data") or []
+            v = data[1] if len(data) >= 2 else None
+        elif inv == "seq_len":
+            v = len(obj.get("data") or [])
         else:
             v = obj.get(inv)
     else:
@@ -336,6 +359,7 @@ def main() -> None:
     knots = _load_catalog_entries(REPO_ROOT / "prometheus_math/databases/knots.json.gz")
     genus2 = _load_catalog_entries(REPO_ROOT / "prometheus_math/databases/genus2.json.gz")
     mf = _load_catalog_entries(REPO_ROOT / "prometheus_math/databases/modular_forms.json.gz")
+    oeis = _load_catalog_entries(REPO_ROOT / "prometheus_math/databases/oeis_sleeping.json.gz")
 
     # Reference: from Fire #19 corpus_health
     reference = {
@@ -349,6 +373,7 @@ def main() -> None:
     for cat_b_name, cat_b_entries in (
         ("genus2", genus2),
         ("modular_forms", mf),
+        ("oeis_sleeping", oeis),
     ):
         print(f"[cross-cat] Auditing knot × {cat_b_name} (n={args.n_samples})...")
         audit = audit_catalog_pair(
