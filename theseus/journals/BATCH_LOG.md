@@ -2932,3 +2932,90 @@ Choosing (3) — concrete improvement to the Ergon handoff format that surfaces 
 - 4-pair audit report regenerated
 - Post-merge Theseus heartbeat verified clean on M1
 
+
+---
+
+## Fire #29 — 2026-05-18 ~22:10Z — Continuous-consumer producer-side prep
+
+Per James's signal that Ergon will build a continuous-ingestion agent: tightened the producer side so the consumer has a stable contract to pin against. Continuous-emission scheduling deferred (James to pick between options A/B/C).
+
+### Shipped
+
+- **Atomic writes** via `Path.replace()`:
+  1. `<name>.md.tmp` written
+  2. `<name>.jsonl.tmp` written
+  3. Atomic rename `.md.tmp` → `.md`
+  4. Atomic rename `.jsonl.tmp` → `.jsonl`
+  5. Zero-byte `.complete` sentinel written LAST
+
+  Consumers wait for `.complete` before reading. Atomic on both POSIX and Windows.
+
+- **Partitioned outbox**:
+  - `inbox/` — producer writes here
+  - `consumed/` — consumer moves bundles here after successful ingest
+  - `rejected/` — consumer moves bundles here on validation failure
+
+  All three partitions pre-created by the producer on every emission. Migrated the 4 pre-Fire-#29 bundles (already ingested by Ergon) into `consumed/` to keep the layout clean.
+
+- **`theseus/handoff/CONTRACT.md`** — full producer-side spec:
+  - Atomic write protocol (5-step sequence)
+  - File naming pattern (`theseus_training_anchors_<UTC>.{md,jsonl,complete}`)
+  - Consumer responsibilities (read only when `.complete` exists; move to `consumed/` or `rejected/` after ingest)
+  - Idempotency model (per-anchor `id` is bundle-local; global dedup uses `underlying_record_hash` per Ergon's spec, or the `source_record_id` field on the pre-parsed JSONL)
+  - Schema versioning (current v1.0.0; Theseus will bump to v1.1.0 when bs_coverage support lands)
+  - 5 failure modes the consumer should handle
+
+### Verification
+
+```
+python -m theseus.handoff.ergon_handoff --threshold 0.5 --max-records 50
+  → 3 files in inbox/: .md, .jsonl, .complete
+  → 0 .tmp files left
+  → 50 records in JSONL
+
+python aporia/scripts/parse_substrate_blocks.py --batch-dir inbox/
+  → 50/50 parsed
+
+python aporia/scripts/validate_substrate_blocks.py
+  → 50/50 validated, 0 rejected
+```
+
+Aporia's existing validation pipeline works against the partitioned layout unchanged (it just globs *.md / *.jsonl recursively).
+
+### Tests added (7)
+
+- partitions_created_on_emission
+- three_files_per_bundle (md + jsonl + complete with shared stem)
+- complete_sentinel_is_zero_byte
+- no_tmp_files_left_after_emission
+- bundle_lands_in_inbox
+- jsonl_record_count_matches_emitted
+- two_consecutive_emissions_distinct_timestamps
+
+All 7 pass; full suite 140 → 147.
+
+### Continuous-emission decision still pending
+
+Three options surfaced to James:
+- **A**: cron-style daemon (every N min: 2-min batch + handoff)
+- **B**: background loop in `theseus.daemon` (auto-handoff after every Nth batch)
+- **C**: external orchestration (Aletheia on M4 schedules)
+
+This fire ships ONLY the producer-side contract. When James picks the cadence model, the implementation drops in cleanly onto the existing partition layout.
+
+### Decisions for Fire #30
+
+Hold for one of:
+- James's decision on A/B/C → implement continuous emission
+- Ergon's continuous-consumer agent surfacing → respond to any contract gaps
+- Other direction
+
+Without explicit direction, slowing the loop further (2-hour cadence) since the producer side is now consumer-ready and Ergon-side work is the bottleneck.
+
+### Loop discipline
+
+- Tests: 140 → 147 (+7 for atomic write / partition / sentinel)
+- 4 legacy bundles migrated from root to `consumed/`
+- 1 new bundle in `inbox/` from this fire's smoke (50 records)
+- Working tree's `ergon_outbox/` now 3 partitions + 1 fresh bundle
+

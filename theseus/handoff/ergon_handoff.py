@@ -27,6 +27,9 @@ from theseus.scoring.training_weight import training_weight
 
 
 HANDOFF_DIR = THESEUS_ROOT / "handoff" / "ergon_outbox"
+INBOX_SUBDIR = "inbox"        # producer writes here; consumer reads
+CONSUMED_SUBDIR = "consumed"  # consumer moves files here after ingest
+REJECTED_SUBDIR = "rejected"  # consumer moves files here on validation failure
 DEFAULT_WEIGHT_THRESHOLD = 0.5
 DEFAULT_MAX_RECORDS = 500
 
@@ -159,8 +162,29 @@ def export_for_ergon(
     verdict_filter: Tuple[str, ...] = (Verdict.SHADOW_CATALOG.value, Verdict.PROMOTED.value),
 ) -> Dict[str, Any]:
     """Walk corpus, pick top-N by training_weight (above threshold),
-    write Markdown + JSONL outputs to output_dir."""
-    output_dir.mkdir(parents=True, exist_ok=True)
+    write Markdown + JSONL outputs atomically to output_dir/inbox/.
+
+    Producer-side contract for the continuous Ergon consumer:
+      - Files land in output_dir/inbox/.
+      - Each emission writes 3 files:
+          theseus_training_anchors_<UTC>.md      (markdown blocks)
+          theseus_training_anchors_<UTC>.jsonl   (pre-parsed records)
+          theseus_training_anchors_<UTC>.complete (zero-byte sentinel)
+      - The .complete sentinel is written LAST, after both data files
+        have been atomically renamed into place. Consumers should
+        require its presence before reading the bundle.
+      - Atomic writes: data is written to <name>.tmp then Path.replace()
+        renames atomically (also atomic on Windows).
+      - Consumer responsibility: after ingestion, move all 3 files to
+        output_dir/consumed/ (or output_dir/rejected/ on failure).
+      - Idempotency: each anchor's `id` field is a stable hash; consumers
+        can dedupe by id regardless of filename.
+    """
+    inbox_dir = output_dir / INBOX_SUBDIR
+    inbox_dir.mkdir(parents=True, exist_ok=True)
+    # Pre-create the partition siblings so the consumer doesn't have to.
+    (output_dir / CONSUMED_SUBDIR).mkdir(parents=True, exist_ok=True)
+    (output_dir / REJECTED_SUBDIR).mkdir(parents=True, exist_ok=True)
 
     # Score and rank candidates
     candidates: List[Tuple[float, Dict[str, Any]]] = []
@@ -180,8 +204,11 @@ def export_for_ergon(
 
     # Synthesize training_anchor blocks
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    md_path = output_dir / f"theseus_training_anchors_{timestamp}.md"
-    jsonl_path = output_dir / f"theseus_training_anchors_{timestamp}.jsonl"
+    md_path = inbox_dir / f"theseus_training_anchors_{timestamp}.md"
+    jsonl_path = inbox_dir / f"theseus_training_anchors_{timestamp}.jsonl"
+    complete_path = inbox_dir / f"theseus_training_anchors_{timestamp}.complete"
+    md_tmp = inbox_dir / f"theseus_training_anchors_{timestamp}.md.tmp"
+    jsonl_tmp = inbox_dir / f"theseus_training_anchors_{timestamp}.jsonl.tmp"
 
     md_lines = [
         "# Theseus → Ergon Training Anchor Handoff",
@@ -226,16 +253,25 @@ def export_for_ergon(
         })
         n_emitted += 1
 
-    md_path.write_text("\n".join(md_lines) + "\n", encoding="utf-8")
-    with jsonl_path.open("w", encoding="utf-8") as f:
+    # Atomic write: data → .tmp → .replace() (atomic rename) → .complete
+    # sentinel written LAST. Consumers wait for .complete before reading.
+    md_tmp.write_text("\n".join(md_lines) + "\n", encoding="utf-8")
+    with jsonl_tmp.open("w", encoding="utf-8") as f:
         for r in parsed_records:
             f.write(json.dumps(r) + "\n")
+    md_tmp.replace(md_path)
+    jsonl_tmp.replace(jsonl_path)
+    # Completion sentinel — zero-byte file written after both data files
+    # are in place. Consumer reads only when this exists.
+    complete_path.write_text("", encoding="utf-8")
 
     return {
         "n_candidates_scanned": len(candidates),
         "n_emitted": n_emitted,
+        "inbox_dir": str(inbox_dir),
         "markdown_path": str(md_path),
         "jsonl_path": str(jsonl_path),
+        "complete_marker": str(complete_path),
         "weight_threshold": weight_threshold,
         "max_records": max_records,
     }
