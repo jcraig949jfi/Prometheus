@@ -15,6 +15,7 @@ from theseus.generators.a1_catalog_cross_product import A1CatalogCrossProductGen
 from theseus.generators.a2_statistical_correlation import A2StatisticalCorrelationGenerator
 from theseus.generators.a3_functional_identity import A3FunctionalIdentityGenerator
 from theseus.generators.a4_symbolic_regression import A4SymbolicRegressionGenerator
+from theseus.generators.a5_distribution_match import A5DistributionMatchGenerator
 from theseus.generators.b1_operator_rotation import B1OperatorRotationGenerator
 from theseus.generators.b2_composition_test import B2CompositionTestGenerator
 from theseus.generators.b3_inverse_test import B3InverseTestGenerator
@@ -22,19 +23,18 @@ from theseus.generators.b4_fixed_point_hunt import B4FixedPointHuntGenerator
 from theseus.generators.b5_conservation_law import B5ConservationLawGenerator
 from theseus.generators.c1_claim_mutation import C1ClaimMutationGenerator
 from theseus.generators.c2_threshold_mutation import C2ThresholdMutationGenerator
+from theseus.generators.c3_region_slide import C3RegionSlideGenerator
 from theseus.generators.c4_generalization import C4GeneralizationGenerator
 from theseus.generators.c5_specialization import C5SpecializationGenerator
 from theseus.generators.d1_kill_neighborhood import D1KillNeighborhoodGenerator
 from theseus.generators.d2_margin_bracket import D2MarginBracketGenerator
 from theseus.generators.d3_triangulation_seeds import D3TriangulationSeedsGenerator
+from theseus.generators.d4_boundary_crossing import D4BoundaryCrossingGenerator
 from theseus.generators.e1_research_batch_parser import E1ResearchBatchParserGenerator
 from theseus.generators.e3_oeis_mining import E3OEISMiningGenerator
 from theseus.generators.f3_importance_sampling import F3ImportanceSamplingGenerator
 from theseus.generators.h1_self_play_hunter import H1SelfPlayHunterGenerator
 from theseus.generators.stubs.all_stubs import (
-    A5DistributionMatch,
-    C3RegionSlide,
-    D4BoundaryCrossing,
     E2ArxivAbstractMining,
     E4LMFDBKnowledgeMining,
     E5MathWorldWikipediaScrape,
@@ -65,6 +65,7 @@ REGISTRY: Dict[str, Type[Generator]] = {
     "a2": A2StatisticalCorrelationGenerator,
     "a3": A3FunctionalIdentityGenerator,
     "a4": A4SymbolicRegressionGenerator,
+    "a5": A5DistributionMatchGenerator,
     "b1": B1OperatorRotationGenerator,
     "b2": B2CompositionTestGenerator,
     "b3": B3InverseTestGenerator,
@@ -72,19 +73,18 @@ REGISTRY: Dict[str, Type[Generator]] = {
     "b5": B5ConservationLawGenerator,
     "c1": C1ClaimMutationGenerator,
     "c2": C2ThresholdMutationGenerator,
+    "c3": C3RegionSlideGenerator,
     "c4": C4GeneralizationGenerator,
     "c5": C5SpecializationGenerator,
     "d1": D1KillNeighborhoodGenerator,
     "d2": D2MarginBracketGenerator,
     "d3": D3TriangulationSeedsGenerator,
+    "d4": D4BoundaryCrossingGenerator,
     "e1": E1ResearchBatchParserGenerator,
     "e3": E3OEISMiningGenerator,
     "f3": F3ImportanceSamplingGenerator,
     "h1": H1SelfPlayHunterGenerator,
     # Stubs
-    "a5": A5DistributionMatch,
-    "c3": C3RegionSlide,
-    "d4": D4BoundaryCrossing,
     "e2": E2ArxivAbstractMining,
     "e4": E4LMFDBKnowledgeMining,
     "e5": E5MathWorldWikipediaScrape,

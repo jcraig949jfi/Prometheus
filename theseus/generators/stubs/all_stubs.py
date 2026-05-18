@@ -15,32 +15,11 @@ from theseus.generators.base import StubGenerator, GeneratorStatus
 
 # -- Family A (catalog cross-product) --
 
-class A5DistributionMatch(StubGenerator):
-    generator_id = "a5"
-    claim_kind = ClaimKind.DISTRIBUTION_MATCH.value
-    def description(self) -> str:
-        return "a5: cross-catalog invariant distribution KS-match"
-
-
 # -- Family B (operator-action) --
 
 # -- Family C (mutation) --
 
-class C3RegionSlide(StubGenerator):
-    generator_id = "c3"
-    claim_kind = ClaimKind.MUTATION.value
-    def description(self) -> str:
-        return "c3: coordinate-chart region slide"
-
-
 # -- Family D (kill-neighborhood) --
-
-class D4BoundaryCrossing(StubGenerator):
-    generator_id = "d4"
-    claim_kind = ClaimKind.KILL_NEIGHBORHOOD.value
-    def description(self) -> str:
-        return "d4: minimum-distance (PASS, KILL) boundary pair generation"
-
 
 # -- Family E (literature mining) --
 

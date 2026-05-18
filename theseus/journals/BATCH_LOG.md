@@ -756,3 +756,215 @@ Fire #9 candidate (Tier 1 transition): GFlowNet bandit (BUILD-LATER #5, threshol
 - TheseusRecord schema extended append-only (step_trace is Optional)
 - D3 backward compatible (records without step_trace still parse)
 
+
+## batch-20260518T131935Z-ae03c2
+
+- Started: 2026-05-18T13:19:35.640386+00:00
+- Ended:   2026-05-18T13:20:05.520508+00:00
+- Duration: 0.0083 h
+- Requested: a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,d1,d2,d3,d4,e1,e3,f3,h1
+- Active:    a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,d1,d2,d3,d4,e1,e3,f3,h1
+- Records: 69721 (kills=34051, confirmations=33305, inconclusive=1590, errors=2164)
+
+### Per-generator yield
+
+- **a1** — records=3233, throughput=187722580.7/h, info_density=0.529, diversity=0.866, yield_score=0.0046, kills=2300, conf=933, errs=0
+- **a2** — records=3233, throughput=25523684.2/h, info_density=0.505, diversity=0.949, yield_score=0.0048, kills=3066, conf=167, errs=0
+- **a3** — records=3233, throughput=727424999.9/h, info_density=0.530, diversity=0.872, yield_score=0.0047, kills=2274, conf=959, errs=0
+- **a4** — records=3233, throughput=12421344.7/h, info_density=0.501, diversity=0.909, yield_score=0.0046, kills=3148, conf=2, errs=0
+- **a5** — records=3233, throughput=41716129.0/h, info_density=0.544, diversity=0.888, yield_score=0.0049, kills=1055, conf=683, errs=0
+- **b1** — records=3233, throughput=727424999.9/h, info_density=0.600, diversity=0.923, yield_score=0.0056, kills=0, conf=3233, errs=0
+- **b2** — records=3232, throughput=247557446.9/h, info_density=0.564, diversity=0.925, yield_score=0.0053, kills=1153, conf=2079, errs=0
+- **b3** — records=3232, throughput=375329032.0/h, info_density=0.542, diversity=0.944, yield_score=0.0052, kills=1887, conf=1345, errs=0
+- **b4** — records=3232, throughput=247557446.7/h, info_density=0.527, diversity=0.943, yield_score=0.0050, kills=2363, conf=869, errs=0
+- **b5** — records=3232, throughput=363600000.3/h, info_density=0.586, diversity=0.912, yield_score=0.0054, kills=456, conf=2776, errs=0
+- **c1** — records=3232, throughput=145440000.0/h, info_density=0.554, diversity=0.868, yield_score=0.0049, kills=1471, conf=1761, errs=0
+- **c2** — records=3232, throughput=252939130.3/h, info_density=0.572, diversity=0.877, yield_score=0.0051, kills=889, conf=2343, errs=0
+- **c3** — records=3232, throughput=74109554.1/h, info_density=0.558, diversity=0.856, yield_score=0.0048, kills=1349, conf=1883, errs=0
+- **c4** — records=3232, throughput=363600000.3/h, info_density=0.600, diversity=0.870, yield_score=0.0053, kills=0, conf=3232, errs=0
+- **c5** — records=3232, throughput=184685714.3/h, info_density=0.566, diversity=0.867, yield_score=0.0050, kills=1093, conf=2139, errs=0
+- **d1** — records=3232, throughput=49723076.9/h, info_density=0.591, diversity=0.917, yield_score=0.0055, kills=306, conf=2926, errs=0
+- **d2** — records=3232, throughput=3232000000000.0/h, info_density=0.543, diversity=0.870, yield_score=0.0048, kills=1855, conf=1377, errs=0
+- **d3** — records=3232, throughput=6482005.6/h, info_density=0.644, diversity=0.905, yield_score=0.0059, kills=3220, conf=0, errs=0
+- **d4** — records=1068, throughput=10198408.5/h, info_density=0.526, diversity=0.944, yield_score=0.0050, kills=794, conf=274, errs=2164
+- **e1** — records=775, throughput=8885350.3/h, info_density=0.200, diversity=0.986, yield_score=0.0020, kills=0, conf=0, errs=0
+- **e3** — records=3232, throughput=252939130.6/h, info_density=0.558, diversity=0.948, yield_score=0.0053, kills=1362, conf=1870, errs=0
+- **f3** — records=3232, throughput=184685714.2/h, info_density=0.530, diversity=0.873, yield_score=0.0047, kills=2252, conf=980, errs=0
+- **h1** — records=3232, throughput=83706474.8/h, info_density=0.546, diversity=0.949, yield_score=0.0052, kills=1758, conf=1474, errs=0
+
+
+## batch-20260518T132028Z-5512ce
+
+- Started: 2026-05-18T13:20:28.290147+00:00
+- Ended:   2026-05-18T13:20:30.098132+00:00
+- Duration: 0.0005 h
+- Requested: a1,d4
+- Active:    a1,d4
+- Records: 4795 (kills=3490, confirmations=1305, inconclusive=0, errors=1554)
+
+### Per-generator yield
+
+- **a1** — records=3175, throughput=714374999.9/h, info_density=0.529, diversity=0.788, yield_score=0.0042, kills=2259, conf=916, errs=0
+- **d4** — records=1620, throughput=17002915.5/h, info_density=0.524, diversity=0.861, yield_score=0.0046, kills=1231, conf=389, errs=1554
+
+
+## batch-20260518T132129Z-ec41e1
+
+- Started: 2026-05-18T13:21:29.752803+00:00
+- Ended:   2026-05-18T13:21:59.643854+00:00
+- Duration: 0.0083 h
+- Requested: a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,d1,d2,d3,d4,e1,e3,f3,h1
+- Active:    a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,d1,d2,d3,d4,e1,e3,f3,h1
+- Records: 67645 (kills=33206, confirmations=32130, inconclusive=1534, errors=1659)
+
+### Per-generator yield
+
+- **a1** — records=3115, throughput=183836065.6/h, info_density=0.529, diversity=0.867, yield_score=0.0046, kills=2211, conf=904, errs=0
+- **a2** — records=3115, throughput=30145161.3/h, info_density=0.505, diversity=0.950, yield_score=0.0048, kills=2950, conf=165, errs=0
+- **a3** — records=3115, throughput=120580645.2/h, info_density=0.530, diversity=0.872, yield_score=0.0047, kills=2190, conf=925, errs=0
+- **a4** — records=3115, throughput=13271005.9/h, info_density=0.501, diversity=0.910, yield_score=0.0046, kills=3037, conf=1, errs=0
+- **a5** — records=3115, throughput=39347368.4/h, info_density=0.544, diversity=0.889, yield_score=0.0049, kills=1015, conf=655, errs=0
+- **b1** — records=3115, throughput=177999999.9/h, info_density=0.600, diversity=0.923, yield_score=0.0056, kills=0, conf=3115, errs=0
+- **b2** — records=3115, throughput=700874999.9/h, info_density=0.564, diversity=0.925, yield_score=0.0053, kills=1115, conf=2000, errs=0
+- **b3** — records=3115, throughput=3115000000000.0/h, info_density=0.542, diversity=0.944, yield_score=0.0052, kills=1818, conf=1297, errs=0
+- **b4** — records=3115, throughput=3115000000000.0/h, info_density=0.526, diversity=0.943, yield_score=0.0050, kills=2291, conf=824, errs=0
+- **b5** — records=3115, throughput=180870967.7/h, info_density=0.586, diversity=0.912, yield_score=0.0054, kills=450, conf=2665, errs=0
+- **c1** — records=3115, throughput=89712000.0/h, info_density=0.554, diversity=0.869, yield_score=0.0049, kills=1419, conf=1696, errs=0
+- **c2** — records=3115, throughput=119297872.4/h, info_density=0.573, diversity=0.878, yield_score=0.0051, kills=854, conf=2261, errs=0
+- **c3** — records=3115, throughput=64820809.2/h, info_density=0.558, diversity=0.856, yield_score=0.0048, kills=1302, conf=1813, errs=0
+- **c4** — records=3115, throughput=101027027.0/h, info_density=0.600, diversity=0.870, yield_score=0.0053, kills=0, conf=3115, errs=0
+- **c5** — records=3115, throughput=3115000000000.0/h, info_density=0.566, diversity=0.867, yield_score=0.0050, kills=1057, conf=2058, errs=0
+- **d1** — records=3115, throughput=34293578.0/h, info_density=0.591, diversity=0.917, yield_score=0.0055, kills=291, conf=2824, errs=0
+- **d2** — records=3115, throughput=89712000.0/h, info_density=0.543, diversity=0.871, yield_score=0.0048, kills=1782, conf=1333, errs=0
+- **d3** — records=3115, throughput=7258252.4/h, info_density=0.644, diversity=0.905, yield_score=0.0059, kills=3103, conf=0, errs=0
+- **d4** — records=1456, throughput=13440000.0/h, info_density=0.521, diversity=0.945, yield_score=0.0050, kills=1147, conf=309, errs=1659
+- **e1** — records=775, throughput=17770700.6/h, info_density=0.200, diversity=0.986, yield_score=0.0020, kills=0, conf=0, errs=0
+- **e3** — records=3115, throughput=238595744.7/h, info_density=0.558, diversity=0.949, yield_score=0.0053, kills=1309, conf=1806, errs=0
+- **f3** — records=3115, throughput=120580645.1/h, info_density=0.531, diversity=0.874, yield_score=0.0047, kills=2164, conf=951, errs=0
+- **h1** — records=3114, throughput=78946478.9/h, info_density=0.545, diversity=0.949, yield_score=0.0052, kills=1701, conf=1413, errs=0
+
+
+## batch-20260518T132217Z-879cd3
+
+- Started: 2026-05-18T13:22:17.573376+00:00
+- Ended:   2026-05-18T13:22:21.174099+00:00
+- Duration: 0.0010 h
+- Requested: a1,d4
+- Active:    a1,d4
+- Records: 9715 (kills=6991, confirmations=2724, inconclusive=0, errors=938)
+
+### Per-generator yield
+
+- **a1** — records=5327, throughput=201865263.3/h, info_density=0.529, diversity=0.814, yield_score=0.0044, kills=3771, conf=1556, errs=0
+- **d4** — records=4388, throughput=43758448.8/h, info_density=0.527, diversity=0.836, yield_score=0.0044, kills=3220, conf=1168, errs=938
+
+
+## batch-20260518T132251Z-c050b5
+
+- Started: 2026-05-18T13:22:51.421766+00:00
+- Ended:   2026-05-18T13:22:55.017352+00:00
+- Duration: 0.0010 h
+- Requested: a1,d4
+- Active:    a1,d4
+- Records: 9668 (kills=6927, confirmations=2741, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=4834, throughput=280683870.8/h, info_density=0.529, diversity=0.825, yield_score=0.0044, kills=3444, conf=1390, errs=0
+- **d4** — records=4834, throughput=40005517.2/h, info_density=0.528, diversity=0.823, yield_score=0.0044, kills=3483, conf=1351, errs=0
+
+
+## batch-20260518T132321Z-172a2a
+
+- Started: 2026-05-18T13:23:21.838141+00:00
+- Ended:   2026-05-18T13:23:51.720010+00:00
+- Duration: 0.0083 h
+- Requested: a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,d1,d2,d3,d4,e1,e3,f3,h1
+- Active:    a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,d1,d2,d3,d4,e1,e3,f3,h1
+- Records: 69242 (kills=34395, confirmations=32540, inconclusive=1532, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=3113, throughput=121813043.4/h, info_density=0.529, diversity=0.869, yield_score=0.0046, kills=2209, conf=904, errs=0
+- **a2** — records=3113, throughput=27739604.0/h, info_density=0.505, diversity=0.950, yield_score=0.0048, kills=2948, conf=165, errs=0
+- **a3** — records=3113, throughput=238442553.1/h, info_density=0.530, diversity=0.874, yield_score=0.0047, kills=2189, conf=924, errs=0
+- **a4** — records=3112, throughput=18128155.3/h, info_density=0.501, diversity=0.911, yield_score=0.0046, kills=3034, conf=1, errs=0
+- **a5** — records=3112, throughput=27662222.2/h, info_density=0.544, diversity=0.889, yield_score=0.0049, kills=1014, conf=655, errs=0
+- **b1** — records=3112, throughput=361393548.5/h, info_density=0.600, diversity=0.924, yield_score=0.0056, kills=0, conf=3112, errs=0
+- **b2** — records=3112, throughput=350099999.9/h, info_density=0.564, diversity=0.925, yield_score=0.0053, kills=1114, conf=1998, errs=0
+- **b3** — records=3112, throughput=361393548.5/h, info_density=0.542, diversity=0.944, yield_score=0.0052, kills=1816, conf=1296, errs=0
+- **b4** — records=3112, throughput=238365957.6/h, info_density=0.526, diversity=0.943, yield_score=0.0050, kills=2289, conf=823, errs=0
+- **b5** — records=3112, throughput=180696774.3/h, info_density=0.586, diversity=0.913, yield_score=0.0054, kills=450, conf=2662, errs=0
+- **c1** — records=3112, throughput=3112000000000.0/h, info_density=0.554, diversity=0.870, yield_score=0.0049, kills=1417, conf=1695, errs=0
+- **c2** — records=3112, throughput=238365957.5/h, info_density=0.573, diversity=0.878, yield_score=0.0051, kills=853, conf=2259, errs=0
+- **c3** — records=3112, throughput=120464516.1/h, info_density=0.558, diversity=0.857, yield_score=0.0048, kills=1301, conf=1811, errs=0
+- **c4** — records=3112, throughput=103733333.3/h, info_density=0.600, diversity=0.870, yield_score=0.0053, kills=0, conf=3112, errs=0
+- **c5** — records=3112, throughput=361393548.2/h, info_density=0.566, diversity=0.866, yield_score=0.0050, kills=1054, conf=2058, errs=0
+- **d1** — records=3112, throughput=29795744.7/h, info_density=0.591, diversity=0.917, yield_score=0.0055, kills=291, conf=2821, errs=0
+- **d2** — records=3112, throughput=361393548.2/h, info_density=0.543, diversity=0.871, yield_score=0.0048, kills=1782, conf=1330, errs=0
+- **d3** — records=3112, throughput=6464627.8/h, info_density=0.644, diversity=0.906, yield_score=0.0059, kills=3100, conf=0, errs=0
+- **d4** — records=3112, throughput=25636613.3/h, info_density=0.524, diversity=0.939, yield_score=0.0050, kills=2364, conf=748, errs=0
+- **e1** — records=775, throughput=9858657.2/h, info_density=0.200, diversity=0.986, yield_score=0.0020, kills=0, conf=0, errs=0
+- **e3** — records=3112, throughput=186720000.1/h, info_density=0.558, diversity=0.950, yield_score=0.0054, kills=1307, conf=1805, errs=0
+- **f3** — records=3112, throughput=180696774.3/h, info_density=0.530, diversity=0.878, yield_score=0.0047, kills=2163, conf=949, errs=0
+- **h1** — records=3112, throughput=89625600.0/h, info_density=0.545, diversity=0.949, yield_score=0.0052, kills=1700, conf=1412, errs=0
+
+
+---
+
+## Fire #8 — 2026-05-18 ~13:21Z
+
+Three substrate-native stub fills. Engine at 23 active generators with **5/5 A, 5/5 B, 5/5 C, 4/4 D families complete**.
+
+### Shipped
+
+- **A5 distribution-match (KS-test, standardized)** — for each (knot_inv, ec_inv) pair, samples 30 values from each catalog, standardizes via z-score, runs two-sample KS test. SHADOW if D < 0.3 AND p > 0.05; INCONCLUSIVE if 0.3 ≤ D < 0.5; REJECTED otherwise. Pure-Python KS (Smirnov asymptotic p-value); no scipy dependency.
+
+- **C3 region-slide** — picks SHADOW_CATALOG parent, slides ONE invariant slot to a different choice in the same catalog, keeps objects + relation fixed. Orthogonal to C1 (swap object), C2 (swap threshold), C4 (weaken relation), C5 (strengthen relation). C-family mutation lattice is now 5D: object, threshold, relation strength (both directions), invariant slot.
+
+- **D4 boundary-crossing pairs** — reads SHADOW + REJECTED records from corpus, groups by (relation, invariant_a, invariant_b) signature, emits (PASS, KILL) pair records with euclidean distance ε between value-pairs. Tight pairs (ε ≤ 2) are the sharpest boundary surfaces; loose pairs are weaker brackets.
+
+### Two bugs caught at smoke
+
+**Bug 1 — D4 add_parent filter too permissive.** D1 records carry value_a/value_b but use parent_object/neighbor_object instead of object_a/object_b. D4 accepted them via add_parent → KeyError('object_a') on 2,164 emissions. Fix: extend the needed-keys filter to require object_a + object_b.
+
+**Bug 2 — defaultdict empty-list pollution.** The cap-growth loop accessed `self._passes[sig]` and `self._kills[sig]` for sig that was just appended-to-only-one-of-them. defaultdict access created an empty list in the OTHER dict; that empty list survived the matched_sigs check (`if self._kills.get(s)` is truthy for empty list? no, empty list is falsy — so this was actually OK on the kill side). The real bug was the reverse: appending to KILLS, then defaultdict access creating an empty PASSES list, which then DID get picked by matched_sigs (because the kill list was truthy). Then `rng.choice(empty_passes)` → IndexError. Fix: touch only the dict we appended to. Belt-and-braces: matched_sigs now explicitly checks both lists are truthy.
+
+### Smoke post-fix (30 s, 23 active generators, 0 errors)
+
+- 69,242 records (34,395 kills, 32,540 confirmations, 1,532 INCONCLUSIVE)
+- A5: 32% kill rate — most cross-catalog standardized distributions DO match shape after z-scoring. Surprising? Could be sample-size artifact (only 30 from each side). Worth follow-up.
+- C3: 42% kill rate — invariant-slot slides break the relation for ~half of parents. Maps invariant-substitutability.
+- D4: 76% kill rate — most PASS/KILL pairs are LOOSE (ε > 2). The 24% tight-bracket records are the substrate's sharpest boundary surfaces.
+- B1, C4: 0 kills (self-tests clean).
+- All other generators stable.
+
+### Substrate state milestone
+
+23/40 generator types active (58% of the catalog). Families:
+- **5/5 A** — catalog-cross-product family complete
+- **5/5 B** — operator-action family complete
+- **5/5 C** — mutation family complete
+- **4/4 D** — kill-neighborhood family complete
+- **2/5 E** — literature mining (E2/E4/E5 deferred — need network/external)
+- **1/4 F** — probabilistic (F1/F2/F4 stub)
+- **0/5 G** — symmetry/transformation (untouched family)
+- **1/4 H** — self-feeding (H1 self-play active; H2/H3/H4 stub)
+- **0/4 I** — local LLM Tier 2 (deferred)
+- **0/3 J** — frontier API Tier 3 (deferred)
+
+The substrate-native portion of the catalog is now COMPLETE for families A, B, C, D. Remaining substrate-native work: F (probabilistic sampling), G (symmetry), H2/H4. Tier 1 transition (GFlowNet, Bayesian opt) is the BUILD-LATER frontier work that becomes appropriate now.
+
+### Decisions for Fire #9
+
+Three substrate-native fills to round out coverage:
+- **F2 anti-frequency stratified sampling** — complement to F3 importance sampling.
+- **G4 reflection duality** — substrate-native G-family entry point. Tests x↔-x, sign-reflection invariance.
+- **H4 bridge extension** — given verified X↔Y, propose X↔Z (extending a survived A1 SHADOW to a third invariant).
+
+### Loop discipline
+
+- Tests: 90 → 97 (+7 for A5 / C3 / D4 + KS-test math)
+- Smoke pre-fix: 2,164 errors. Post-fix-1: 1,659 errors. Post-fix-2: 0 errors.
+- D4 defaultdict bug caught at smoke matches the Techne SUBSTRATE_FIRE_LOG "bug caught at smoke" discipline. Reverse direction this time: a subtle Python idiom (defaultdict + cap-growth) failed in a non-obvious way; trace + minimal repro identified it.
+

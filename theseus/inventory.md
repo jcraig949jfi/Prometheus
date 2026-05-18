@@ -20,8 +20,8 @@ Status legend:
   some operator pair `(f, g)`? — **active**
 - **A4** `a4_symbolic_regression` — numpy polyfit cross-catalog
   symbolic regression (degrees 1/2/3, R²≥0.7→SHADOW) — **active**
-- **A5** `a5_distribution_match` — does the distribution of `i` over
-  catalog A match `j` over catalog B (KS test)? — **stub**
+- **A5** `a5_distribution_match` — KS-test on standardized cross-catalog
+  invariant distributions (shape-match, not scale-match) — **active**
 
 ## Family B — Operator-action (sigma's own opcodes)
 
@@ -40,7 +40,8 @@ Status legend:
 
 - **C1** `c1_variable_mutation` — swap object in a verified claim — **active**
 - **C2** `c2_threshold_mutation` — vary threshold in inequality claims — **active**
-- **C3** `c3_region_slide` — slide the coordinate-chart region — **stub**
+- **C3** `c3_region_slide` — invariant-slot slide mutation (different
+  invariant, same objects) — **active**
 - **C4** `c4_generalization` — drop a constraint, retest — **active**
 - **C5** `c5_specialization` — strictly-stronger relation mutation
   (boundary-pinning) — **active**
@@ -52,7 +53,8 @@ Status legend:
   threshold — **active**
 - **D3** `d3_triangulation_seeds` — MCTS-flavored multi-resample on
   INCONCLUSIVE records (Polu/Sutskever pattern) — **active**
-- **D4** `d4_boundary_crossing` — minimum-distance (PASS, KILL) pairs — **stub**
+- **D4** `d4_boundary_crossing` — minimum-distance (PASS, KILL) pair
+  brackets from corpus — **active**
 
 ## Family E — Literature mining (existing content)
 
@@ -105,7 +107,7 @@ Status legend:
 
 ---
 
-## Active set (Fire #7, 20 generators): A1 + A2 + A3 + A4 + B1 + B2 + B3 + B4 + B5 + C1 + C2 + C4 + C5 + D1 + D2 + D3 + E1 + E3 + F3 + H1
+## Active set (Fire #8, 23 generators): A1+A2+A3+A4+A5 (5/5 A) + B1+B2+B3+B4+B5 (5/5 B) + C1+C2+C3+C4+C5 (5/5 C) + D1+D2+D3+D4 (4/4 D) + E1+E3 (2/5 E) + F3 (1/4 F) + H1 (1/4 H)
 
 Rationale (per CHARTER.md):
 - **A1** — highest throughput, no LLM cost, anti-conventional novelty
