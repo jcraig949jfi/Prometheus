@@ -63,7 +63,9 @@ class H1SelfPlayHunterGenerator(Generator):
         self._rng = random.Random(seed)
         self._corpus_dir = corpus_dir if corpus_dir is not None else CORPUS_DIR
         self._reader = CorpusReader(self._corpus_dir)
-        self._hunt_budget = hunt_budget
+        from theseus.optimization.config_overrides import get_overrides_for
+        ov = get_overrides_for("h1")
+        self._hunt_budget = int(ov.get("hunt_budget", hunt_budget))
         self._survivor_buffer = survivor_buffer
         self._knots = _load_catalog(KNOTS_DB_PATH)
         self._ecs = _load_catalog(BSD_RICH_DB_PATH)

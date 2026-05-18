@@ -72,7 +72,9 @@ class D3TriangulationSeedsGenerator(Generator):
         self._rng = random.Random(seed)
         self._corpus_dir = corpus_dir if corpus_dir is not None else CORPUS_DIR
         self._reader = CorpusReader(self._corpus_dir)
-        self._n_branches = n_branches
+        from theseus.optimization.config_overrides import get_overrides_for
+        ov = get_overrides_for("d3")
+        self._n_branches = int(ov.get("n_branches", n_branches))
         self._buffer = buffer_size
         self._knots = _load_catalog(KNOTS_DB_PATH)
         self._ecs = _load_catalog(BSD_RICH_DB_PATH)

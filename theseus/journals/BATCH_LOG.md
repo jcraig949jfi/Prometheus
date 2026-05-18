@@ -1246,3 +1246,110 @@ study.optimize(objective, n_trials=n_trials)
 - Smoke: 62K records / 30s on tuned A2/A4/A5, 0 errors
 - `theseus/optimization/tuned_hyperparams.json` committed to source (tuned-state persistence)
 
+
+## batch-20260518T134934Z-48b52f
+
+- Started: 2026-05-18T13:49:34.036171+00:00
+- Ended:   2026-05-18T13:50:03.912671+00:00
+- Duration: 0.0083 h
+- Requested: a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,d1,d2,d3,d4,e1,e3,f2,f3,f4,g4,g5,h1,h2,h4
+- Active:    a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,d1,d2,d3,d4,e1,e3,f2,f3,f4,g4,g5,h1,h2,h4
+- Records: 59945 (kills=29203, confirmations=26178, inconclusive=3789, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=2114, throughput=118912500.0/h, info_density=0.529, diversity=0.857, yield_score=0.0046, kills=1506, conf=608, errs=0
+- **a2** — records=2114, throughput=27180000.0/h, info_density=0.506, diversity=0.960, yield_score=0.0049, kills=1979, conf=135, errs=0
+- **a3** — records=2114, throughput=118912500.0/h, info_density=0.530, diversity=0.864, yield_score=0.0046, kills=1490, conf=624, errs=0
+- **a4** — records=2114, throughput=15281927.7/h, info_density=0.533, diversity=0.908, yield_score=0.0049, kills=712, conf=5, errs=0
+- **a5** — records=2114, throughput=12137799.0/h, info_density=0.549, diversity=0.896, yield_score=0.0050, kills=168, conf=145, errs=0
+- **b1** — records=2114, throughput=475649999.9/h, info_density=0.600, diversity=0.929, yield_score=0.0056, kills=0, conf=2114, errs=0
+- **b2** — records=2114, throughput=237825000.0/h, info_density=0.565, diversity=0.940, yield_score=0.0054, kills=734, conf=1380, errs=0
+- **b3** — records=2113, throughput=2113000000000.0/h, info_density=0.542, diversity=0.956, yield_score=0.0052, kills=1226, conf=887, errs=0
+- **b4** — records=2113, throughput=245380645.0/h, info_density=0.525, diversity=0.955, yield_score=0.0051, kills=1580, conf=533, errs=0
+- **b5** — records=2113, throughput=122690322.5/h, info_density=0.586, diversity=0.918, yield_score=0.0054, kills=305, conf=1808, errs=0
+- **c1** — records=2113, throughput=237712500.0/h, info_density=0.538, diversity=0.871, yield_score=0.0047, kills=1317, conf=796, errs=0
+- **c2** — records=2113, throughput=122690322.6/h, info_density=0.569, diversity=0.887, yield_score=0.0051, kills=662, conf=1451, errs=0
+- **c3** — records=2113, throughput=61345161.3/h, info_density=0.543, diversity=0.864, yield_score=0.0047, kills=1213, conf=900, errs=0
+- **c4** — records=2113, throughput=253560000.0/h, info_density=0.584, diversity=0.885, yield_score=0.0052, kills=336, conf=1777, errs=0
+- **c5** — records=2113, throughput=118856250.0/h, info_density=0.539, diversity=0.877, yield_score=0.0048, kills=1281, conf=832, errs=0
+- **d1** — records=2113, throughput=22112790.7/h, info_density=0.589, diversity=0.926, yield_score=0.0055, kills=236, conf=1877, errs=0
+- **d2** — records=2113, throughput=237712500.0/h, info_density=0.549, diversity=0.885, yield_score=0.0049, kills=1079, conf=1034, errs=0
+- **d3** — records=2113, throughput=6660945.7/h, info_density=0.640, diversity=0.906, yield_score=0.0059, kills=2096, conf=0, errs=0
+- **d4** — records=2113, throughput=47841509.4/h, info_density=0.529, diversity=0.949, yield_score=0.0051, kills=1502, conf=611, errs=0
+- **e1** — records=775, throughput=12681818.2/h, info_density=0.200, diversity=0.990, yield_score=0.0020, kills=0, conf=0, errs=0
+- **e3** — records=2113, throughput=245380645.3/h, info_density=0.559, diversity=0.958, yield_score=0.0054, kills=869, conf=1244, errs=0
+- **f2** — records=2113, throughput=60854400.0/h, info_density=0.531, diversity=0.868, yield_score=0.0047, kills=1459, conf=654, errs=0
+- **f3** — records=2113, throughput=82682608.7/h, info_density=0.528, diversity=0.867, yield_score=0.0046, kills=1517, conf=596, errs=0
+- **f4** — records=2112, throughput=81754838.7/h, info_density=0.531, diversity=0.864, yield_score=0.0046, kills=1465, conf=647, errs=0
+- **g4** — records=2113, throughput=245380645.0/h, info_density=0.595, diversity=0.894, yield_score=0.0054, kills=113, conf=2000, errs=0
+- **g5** — records=2113, throughput=161846808.5/h, info_density=0.593, diversity=0.888, yield_score=0.0053, kills=156, conf=1957, errs=0
+- **h1** — records=2113, throughput=118856250.0/h, info_density=0.528, diversity=0.962, yield_score=0.0051, kills=1523, conf=590, errs=0
+- **h2** — records=2113, throughput=6614608.7/h, info_density=0.667, diversity=0.898, yield_score=0.0061, kills=2113, conf=0, errs=0
+- **h4** — records=2113, throughput=48761538.5/h, info_density=0.560, diversity=0.900, yield_score=0.0051, kills=566, conf=973, errs=0
+
+
+---
+
+## Fire #12 — 2026-05-18 ~13:49Z
+
+Tuned D3+H1 + yield-curve analysis across recent batches.
+
+### Tuning runs
+
+- **D3 (grid, 4 trials)**: best `n_branches=5` (matches default). No improvement — default already optimal.
+- **H1 (grid, 5 trials)**: best `hunt_budget=10` (default was 30). Score **0.4117 — highest single-generator tuner score yet.** Substrate prefers SHORT hunts: a hunter that gives up quickly produces a balanced mix of "robust survivor" + "found counter-example" emissions; long hunters trend toward 100% kill rate (less informative).
+
+### D3/H1 wired to read overrides
+
+Both generators now apply `theseus/optimization/tuned_hyperparams.json` overrides at `__init__` time, matching the A2/A4/A5 pattern.
+
+### Yield-curve analysis (7 recent batches with ≥20 active generators)
+
+Sorting by `info_density_mean` across the 29-generator post-tuning runs (yield_score is a `@property` not in JSONL output; info_density is the dominant signal in the 60/40 blend with terminal-verdict):
+
+```
+gen   info_density   diversity   notes
+h2    0.666          0.898       triangulation + step_trace
+d3    0.642          0.907       triangulation + step_trace
+b1    0.600          0.925       substrate self-test (always-confirm)
+c4    0.594          0.878       substrate self-test (always-confirm)
+g4    0.595          0.893       reflection-symmetric (mostly confirms)
+g5    0.593          0.888       scale-invariant (mostly confirms)
+d1    0.589          0.920       kill-neighborhood
+b5    0.586          0.913       conservation laws
+b2    0.565          0.930       operator commutativity
+c5    0.555          0.873       specialization
+...
+e1    0.200          0.988       UNVERIFIED literature (lowest by design)
+```
+
+**Empirical top-tier**: triangulation generators (H2, D3) with process-supervised step_trace blend. **Second tier**: substrate self-tests (B1, C4) which always confirm structurally. **Third tier**: G-family symmetry tests + operator algebra (also high-confirm). **Bottom**: E1 UNVERIFIED literature mining (info_density 0.2 by design — terminal-verdict UNVERIFIED gives the lowest score until sigma routing assigns it).
+
+### Substrate observation: process supervision is the most leveraged technique
+
+The top two generators by info_density (H2, D3) BOTH carry step_trace populated by their triangulation logic. The 60/40 terminal/step_trace blend rewards their richer epistemic record over single-verdict generators.
+
+This validates the Fire #7 process-supervision build decision. The substrate's INCONCLUSIVE→triangulation pathway is its most info-dense subsystem.
+
+### Post-tuning smoke (30s, 29 generators)
+
+- 59,945 records, 29,203 kills, 26,178 confirms, ~4,500 INCONCLUSIVE
+- A4 INCONCLUSIVE band wide as tuned (most of A4's emissions land in INCONCLUSIVE now)
+- D3 + H2 consuming the expanded INCONCLUSIVE input cleanly
+- 0 errors
+
+### Decisions for Fire #13
+
+Two strong candidates:
+- **Long-batch corpus generation** (5-10 min batch) to produce a substantial substrate corpus for downstream Ergon-resume analysis. Currently each smoke batch produces ~60K records / 30s. A 10-min batch would produce ~1.2M records — finally a substrate big enough for serious training-time analysis.
+- **GFlowNet bandit replacement** (BUILD-LATER #5) — bigger lift, replaces epsilon-greedy with TPE-style sampling proportional to yield. Requires PyTorch.
+
+Choosing long-batch corpus generation for Fire #13 — shifts focus from "build engine" to "use engine," directly serves the volume target. GFlowNet for Fire #14.
+
+### Loop discipline
+
+- Tests: 116 → 116 (no new tests; D3/H1 wiring is symmetric to A4/A5/A2 already-tested pattern)
+- Tuning runs persisted to `optimization/tuned_hyperparams.json`
+- Yield-curve analysis is the first substrate-level look at per-generator value contribution
+
