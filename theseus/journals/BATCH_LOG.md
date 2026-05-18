@@ -171,3 +171,72 @@ Ranked by how directly they plug into the existing engine:
 - Tests pass: 34 → 39 (+5 for A2/C2/D2 smoke + registry round-trip).
 - Smoke pre/post fix delta: 8,855 errors → 0. Pattern matches the Techne SUBSTRATE_FIRE_LOG "bug caught at smoke" discipline.
 
+
+---
+
+## Fire #2 — 2026-05-18 ~12:30Z (research dive, not generator-fill)
+
+**Redirected from original plan** (E2/A3/B1 stub-fill) to deep analysis of all 17 frontier techniques surfaced in Fire #1. User direction: "explore all of those techniques, understand them, determine whether they would add value."
+
+### Deliverable
+
+`theseus/docs/frontier_techniques_analysis.md` — decision document covering 17 techniques (10 from Fire #1 + 7 honorable mentions). Each gets: technical summary, Theseus fit, cost estimate (Low/Medium/High/Very-High), value estimate, and explicit verdict (BUILD / BUILD-LATER / DEFER / DROP).
+
+### Verdict distribution
+
+- **BUILD** (next 1-3 fires): 7 techniques
+  - Counterfactual augmentation (C-family upgrade)
+  - Symbolic regression (A4, numpy fallback v0.1)
+  - MCTS (D3 triangulation)
+  - Process supervision (TheseusRecord step_trace extension)
+  - Active learning (F3 importance sampling)
+  - Self-play proposer-vs-hunter (new H1)
+  - Contrastive embeddings (diversity scoring replacement)
+
+- **BUILD-LATER** (Tier 1): 5 techniques
+  - GFlowNets (once 15+ generators active)
+  - Bayesian optimization (per-region hyperparameter tuning)
+  - IRM (with G-family)
+  - IRIS-style hypothesis MCTS (rolled into D3/H2)
+  - Contrastive decoding (with I-family LLM)
+
+- **DEFER**: 3 techniques
+  - Curriculum learning (depends on Ergon resume)
+  - Lean verification (Tier 3, months out)
+  - Discrete diffusion (track, don't build)
+
+- **DROP**: 2 techniques
+  - Neural Theorem Proving as standalone (subsumed by MCTS+Lean)
+  - Quantization-aware precision_dps (premature optimization)
+
+### Key decisions
+
+1. **Anti-AI-to-AI-inflation rule remains hard**. Learned-model components (GFlowNet, contrastive embeddings, symbolic regression) are SUBORDINATE to substrate-native generation. They shape yield; they do not propose primary claims. Local LLM (Family I) ships in Tier 2 as paraphraser only. Frontier API (Family J) is surgical-only forever.
+
+2. **Token-free preference codified**. Anything that costs API tokens gets deferred until token-free arsenal plateaus. Concrete: PySR ships before any LLM call.
+
+3. **Volume-target alignment**. v0.1 hits ~85K records / 30 s. Techniques that improve yield-PER-RECORD (info_density, diversity) get priority over techniques that improve throughput.
+
+4. **Ergon-paused awareness** baked into verdicts. Techniques whose value depends on a trained Learner (curriculum learning, H3 learner-curiosity) are DEFERRED until Ergon resumes. `feedback_substrate_passive_consumer_warning.md` discipline.
+
+### ROADMAP.md updated
+
+Fire-by-fire build queue rewritten with the new prioritization. Tier 4 (post-Ergon-resume) now explicitly includes curriculum learning + H3 learner-curiosity, paired with yield-score calibration against real training_value.
+
+### Decisions for Fire #3
+
+Three BUILD-now items to ship together:
+- **Counterfactual augmentation in C2** — replace random ladder choice with binary-search bisection toward the relation boundary
+- **Contrastive embeddings for diversity** — sentence-transformers / all-MiniLM-L6-v2 replaces Jaccard
+- **Self-play H1 generator** — proposer-vs-hunter on existing A1 survivors
+
+Token-free, substrate-native, immediately yield-positive. Estimated combined dev: 12-18h.
+
+### Loop discipline check
+
+- 0 generator stubs filled this fire — intentional. Fire #2 is research-dive.
+- 1 new doc shipped (`docs/frontier_techniques_analysis.md`)
+- 1 doc updated (`ROADMAP.md`)
+- Tests still at 39/39 passing.
+- No code changes; no smoke run needed.
+
