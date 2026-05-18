@@ -197,11 +197,39 @@ def run_submission_batch(
 # Kernel factory
 # ---------------------------------------------------------------------------
 
+def _bridge_postgres_env_vars() -> None:
+    """If PROMETHEUS_FIRE_* aren't set but AGORA_POSTGRES_* are, bridge them.
+
+    Sigma kernel's Postgres adapter uses thesauros.prometheus_data.pool which
+    reads PROMETHEUS_FIRE_HOST/PORT/USER/PASSWORD. agora_persist uses
+    AGORA_POSTGRES_*. Same physical DB, different naming. Bridge silently so
+    `--backend postgres` works without manual env-var management.
+    """
+    import os
+    bridge_map = [
+        ("PROMETHEUS_FIRE_HOST", "AGORA_POSTGRES_HOST"),
+        ("PROMETHEUS_FIRE_PORT", "AGORA_POSTGRES_PORT"),
+        ("PROMETHEUS_FIRE_USER", "AGORA_POSTGRES_USER"),
+        ("PROMETHEUS_FIRE_PASSWORD", "AGORA_POSTGRES_PASSWORD"),
+    ]
+    for fire_key, agora_key in bridge_map:
+        if not os.environ.get(fire_key):
+            v = os.environ.get(agora_key)
+            if v is not None:
+                os.environ[fire_key] = v
+    # Defaults (match agora_persist defaults if neither set)
+    os.environ.setdefault("PROMETHEUS_FIRE_HOST", "192.168.1.176")
+    os.environ.setdefault("PROMETHEUS_FIRE_PORT", "5432")
+    os.environ.setdefault("PROMETHEUS_FIRE_USER", "postgres")
+    os.environ.setdefault("PROMETHEUS_FIRE_PASSWORD", "prometheus")
+
+
 def build_kernel(backend: str = "sqlite", db_path: Optional[str] = None):
     """Construct a SigmaKernel instance.
 
     sqlite default path: data/clio/sigma_claims.db (cross-process linearity on M1).
-    postgres requires Mnemosyne to have applied 001_create_sigma_schema.sql.
+    postgres uses the prometheus_fire / sigma schema. Migrations 001-005 must
+    be applied (006 is no-op); see sigma_kernel/migrations/.
     """
     if not HAS_SIGMA:
         raise RuntimeError("sigma_kernel unavailable on this machine")
@@ -212,6 +240,7 @@ def build_kernel(backend: str = "sqlite", db_path: Optional[str] = None):
             db_path = str(data_dir / "sigma_claims.db")
         return SigmaKernel(db_path, backend="sqlite")
     elif backend == "postgres":
+        _bridge_postgres_env_vars()
         return SigmaKernel(backend="postgres")
     else:
         raise ValueError(f"unknown backend {backend!r}")
