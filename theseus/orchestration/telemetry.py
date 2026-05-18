@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import os
 import sys
+import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -134,12 +135,17 @@ def log_batch_work(
             f"Active generators: {','.join(active)}. "
             f"Discoveries emitted: {n_discoveries_emitted}."
         )
+        # agora.intelligence_outputs requires UUID cycle_id; Theseus's
+        # batch_id is a free-form string. Derive deterministic UUIDv5 so
+        # the cycle is stable while satisfying the schema.
+        cycle_uuid = str(uuid.uuid5(uuid.NAMESPACE_OID, batch_metrics.batch_id))
+        summary = f"[{batch_metrics.batch_id}] {summary}"
         return bool(session_telemetry.log_work(
             stage="theseus_batch_complete",
             summary=summary,
             agent=THESEUS_AGENT_NAME,
             success=(batch_metrics.total_errors == 0),
-            cycle_id=batch_metrics.batch_id,
+            cycle_id=cycle_uuid,
             started_at=started_at,
         ))
     except Exception as e:
