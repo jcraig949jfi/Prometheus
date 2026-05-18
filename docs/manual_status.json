@@ -2,7 +2,7 @@
   "schema_version": 1,
   "purpose": "Out-of-band agent state that James knows but Agora can't see. Authoritative for Metis when Agora is degraded; reconciled against state.json's infra_status when both are present. Edit this file directly; Metis re-reads it every brief cycle.",
   "last_updated_by": "Metis auto-stamp (per-cycle)",
-  "last_updated_at": "2026-05-18T07:34:00.430125+00:00",
+  "last_updated_at": "2026-05-18T11:44:03.771107+00:00",
   "infra": {
     "redis_m1": {
       "status": "up",
@@ -47,8 +47,8 @@
       "started": "2026-05-16 (currently 1+ days uptime)",
       "model": "qwen/qwen3.5-397b-a17b",
       "telemetry_state": "dual-write (Redis hash + Postgres agora.agent_heartbeats)",
+      "forge_rate_context": "The current ~4% forge rate is BY DESIGN, not a problem. The battery of validation tests was recently expanded to make passing harder \u2014 fewer noisy/weak tools get through. Low forge rate = stronger substrate quality, not 'critically low throughput'. Do NOT flag forge_rate < 10% as an Act item; report it as healthy substrate selection pressure (For the record at most).",
       "open_concerns": [
-        "low forge rate vs historical (Coeus pushing hardest-tail first OR model quality drift)",
         "double-logging cosmetic bug (third handler attached somewhere \u2014 non-critical)"
       ],
       "current_metrics_source": "see state.json agents[].key_metrics for live ledger_size, session_forges, session_scraps, nous_queue_depth, etc."
@@ -92,5 +92,5 @@
     "M1 Redis: 268K-key landscape data from Harmonia. Should it be archived/sharded?",
     "Manual_status.json reconciliation with state.json.infra_status (this file's stale-override caused 2026-05-18 confusion \u2014 needs auto-reconcile logic)"
   ],
-  "last_updated_at_human": "2026-05-18 07:34:00 AM UTC"
+  "last_updated_at_human": "2026-05-18 11:44:03 AM UTC"
 }
