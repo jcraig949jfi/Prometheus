@@ -52,6 +52,7 @@ def _iter_corpus_records(corpus_dir: Path) -> Iterable[Dict[str, Any]]:
 def _theseus_record_to_training_anchor(
     record: TheseusRecord,
     anchor_index: int,
+    computed_weight: Optional[float] = None,
 ) -> Dict[str, Any]:
     """Map a Theseus record into a training_anchor block payload."""
     p = record.claim_payload
@@ -97,6 +98,13 @@ def _theseus_record_to_training_anchor(
     }
     trust_tier = trust_tier_map.get(record.verdict, "numerically_certified")
 
+    # Fire #27 fix (Ergon ticket-back): record.training_weight is only
+    # set by annotate_corpus(), not at emission time. The handoff scores
+    # records fresh via training_weight() — pass that value in here so
+    # the caveats string matches source_training_weight in the outer
+    # JSONL output.
+    if computed_weight is None:
+        computed_weight = float(record.training_weight or 0.0)
     caveats = (
         "Substrate-engine-generated training anchor. Verification is "
         "computational (relation evaluator over integer invariants), "
@@ -104,7 +112,7 @@ def _theseus_record_to_training_anchor(
         "(equal_mod_2) relations are ~62% structurally extensible across "
         "catalog pairs; divides/abs_diff_le_K rates are catalog-specific; "
         "equality is mostly small-range artifact. Relation type for this "
-        f"anchor: `{rel}`. Training weight: {(record.training_weight or 0.0):.3f}. "
+        f"anchor: `{rel}`. Training weight: {computed_weight:.3f}. "
         "Per Fire #22, divides-on-zero was a known bug fixed; this anchor "
         "was emitted on the fixed code path."
     )
@@ -197,7 +205,7 @@ def export_for_ergon(
             r = TheseusRecord(**r_dict)
         except (TypeError, ValueError):
             continue
-        payload = _theseus_record_to_training_anchor(r, idx)
+        payload = _theseus_record_to_training_anchor(r, idx, computed_weight=w)
         # Append the fenced markdown block
         md_lines.append("```yaml")
         md_lines.append("# substrate_block: training_anchor")

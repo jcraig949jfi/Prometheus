@@ -2809,3 +2809,53 @@ Choosing **option 1** for Fire #27 — slow the loop cadence to 1 hour, leave ro
 - 2 handoff files in outbox totaling 600 schema-validated training_anchors
 - 25 autonomous fires complete since the original "lets loop" invitation; engine in stable operational state
 
+
+---
+
+## Fire #27 — 2026-05-18 ~20:25Z — Ergon ingestion closed loop + ticket-backs
+
+**Ergon ingested 600/600 cleanly.** Output at `ergon/learner/corpus/v1_0_tier_pending/2026-05-18/training_anchor_learner_records.jsonl`. `log_work theseus_handoff_ingested` posted to agora.intelligence_outputs (agent=Ergon, success=True). STATUS.md updated with Theseus added to upstream-sources list.
+
+**The substrate→learner loop is closed end-to-end with real ingestion.** First Theseus records will land in Ergon's eval harness alongside the existing Gemini Deep Research training_anchors.
+
+### Two ticket-backs from Ergon
+
+**Ticket-back 1: Caveats stringification bug — FIXED THIS FIRE**
+
+Diagnosis: `record.training_weight` is only populated by `annotate_corpus()`, not at emission time. When records flow corpus → handoff WITHOUT annotation, the caveats string defaults to "Training weight: 0.000" while the outer `source_training_weight` field IS computed fresh (showed 0.65). Hence the mismatch Ergon flagged.
+
+Fix: pass `computed_weight=w` into `_theseus_record_to_training_anchor()`; use it inside the caveats string. Verified on fresh handoff: caveats now reads "Training weight: 0.650" matching the outer field.
+
+**Ticket-back 2: BS-coverage backfill for cross-catalog domains — DEFERRED**
+
+All 600 records landed with no `bs_coverage` field (we emit at schema v1.0.0; bs_coverage is v1.1.0). Ergon notes this is logged alongside the existing BL-E-002 (P-vs-NP regex backfill). Not a defect; a follow-up.
+
+Tracked in this journal as Theseus follow-up. When BS-NNN mapping is designed for cross-catalog topics (knots_x_elliptic_curves likely covers BS-NNNN involving knot-EC bridges, modular forms, etc.), Theseus can bump to schema v1.1.0 and populate `bs_coverage: [...]` per anchor. Until then, Ergon's heuristic mapping applies.
+
+### Git divergence flagged by Ergon
+
+**37 local vs 23 remote, not fast-forwardable.** Ergon's ingestion landed locally only; awaiting James's sync-strategy direction before push. I have NOT touched the divergence — it requires human decision (rebase, merge, or branch-and-PR). Flagging for James's direction.
+
+### Substrate state
+
+The loop is now genuinely closed with REAL Ergon consumption:
+
+```
+Theseus (M1, 1.55M lifetime records)
+  → handoff (600 training_anchor blocks)
+    → Aporia parse (600/600)
+      → Aporia validate (600/600)
+        → Ergon ingest (600/600 promoted)
+          → ergon/learner/corpus/v1_0_tier_pending/2026-05-18/
+            → ready for LoRA training cycle
+```
+
+Every layer has 100% pass-through. The substrate-passive-consumer warning (`feedback_substrate_passive_consumer_warning.md`) is structurally addressed: there IS now a consumer consuming.
+
+### Loop discipline
+
+- 1 bug fix shipped (caveats stringification, Ergon-ticket-back-1 resolved)
+- 1 follow-up tracked (BS-coverage backfill, deferred awaiting design)
+- 1 flag for James (git divergence sync strategy)
+- Tests: 140/140 (caveats fix doesn't affect schema validity; new handoff still validates)
+
