@@ -2034,3 +2034,155 @@ The Theseus engine is now fully operational with:
 - 3+ new corpus files on disk (~365 MB total, gitignored)
 - batches.jsonl has 4 new bandit-rotated entries with rotated `requested_generators` field showing the bandit's choices
 
+
+## batch-20260518T150429Z-e7276a
+
+- Started: 2026-05-18T15:04:29.838602+00:00
+- Ended:   2026-05-18T15:05:29.948728+00:00
+- Duration: 0.0167 h
+- Requested: d2,g1,i3,b2,i2,g3,f4,c2
+- Active:    d2,b2,f4,c2
+- Records: 203548 (kills=77710, confirmations=125838, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **b2** — records=50896, throughput=388189830.5/h, info_density=0.565, diversity=0.847, yield_score=0.0048, kills=17584, conf=33312, errs=0
+- **c2** — records=50895, throughput=168402573.5/h, info_density=0.566, diversity=0.808, yield_score=0.0046, kills=17403, conf=33492, errs=0
+- **d2** — records=50896, throughput=250308196.7/h, info_density=0.585, diversity=0.780, yield_score=0.0046, kills=7555, conf=43341, errs=0
+- **f4** — records=50861, throughput=104688164.7/h, info_density=0.531, diversity=0.809, yield_score=0.0043, kills=35168, conf=15693, errs=0
+
+
+## batch-20260518T151213Z-627be2
+
+- Started: 2026-05-18T15:12:13.892683+00:00
+- Ended:   2026-05-18T15:12:23.974093+00:00
+- Duration: 0.0028 h
+- Requested: a1,h4
+- Active:    a1,h4
+- Records: 28236 (kills=13050, confirmations=11476, inconclusive=3710, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=14118, throughput=148610526.3/h, info_density=0.528, diversity=0.786, yield_score=0.0042, kills=10183, conf=3935, errs=0
+- **h4** — records=14118, throughput=81450000.0/h, info_density=0.567, diversity=0.736, yield_score=0.0042, kills=2867, conf=7541, errs=0
+
+
+## batch-20260518T151353Z-aab13b
+
+- Started: 2026-05-18T15:13:53.741191+00:00
+- Ended:   2026-05-18T15:14:03.831813+00:00
+- Duration: 0.0028 h
+- Requested: a1,h4
+- Active:    a1,h4
+- Records: 28488 (kills=13159, confirmations=11579, inconclusive=3750, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=14244, throughput=173237837.9/h, info_density=0.528, diversity=0.786, yield_score=0.0042, kills=10280, conf=3964, errs=0
+- **h4** — records=14244, throughput=99184526.1/h, info_density=0.567, diversity=0.736, yield_score=0.0042, kills=2879, conf=7615, errs=0
+
+
+## batch-20260518T151528Z-400b29
+
+- Started: 2026-05-18T15:15:28.007634+00:00
+- Ended:   2026-05-18T15:15:33.049053+00:00
+- Duration: 0.0014 h
+- Requested: a1
+- Active:    a1
+- Records: 16091 (kills=11639, confirmations=4452, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=16091, throughput=242374895.5/h, info_density=0.528, diversity=0.710, yield_score=0.0038, kills=11639, conf=4452, errs=0
+
+
+## batch-20260518T151926Z-8ea29a
+
+- Started: 2026-05-18T15:19:26.868589+00:00
+- Ended:   2026-05-18T15:19:31.903734+00:00
+- Duration: 0.0014 h
+- Requested: a1
+- Active:    a1
+- Records: 16926 (kills=12246, confirmations=4680, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=16926, throughput=229073684.2/h, info_density=0.528, diversity=0.710, yield_score=0.0038, kills=12246, conf=4680, errs=0
+
+
+---
+
+## Fire #19 — 2026-05-18 ~15:55Z — corpus_health analyzer
+
+Built `theseus/scoring/corpus_health.py` to empirically inspect the accumulated substrate corpus across all batch files. Use the engine to inspect the engine.
+
+### Shipped
+
+- **`theseus/scoring/corpus_health.py`** — scans all corpus JSONL files, computes:
+  - Cross-batch dedup rate (unique record_ids / total emissions)
+  - Per-verdict distribution
+  - H4 categorical-bridge rates per parent relation
+  - Per-generator record counts
+  - Top-N records by training_weight (Ergon training candidates)
+  - Verdict evolution across batches (chronological)
+- Writes `theseus/corpus_health_report.md`
+- CLI: `python -m theseus.scoring.corpus_health [--print]`
+
+### First report findings (8 corpus files, 434K emissions / 394K unique)
+
+**Cross-batch dedup**: 90.9% unique across batches. ~9% of emissions are duplicates from re-running same generators across runs — healthy diversity.
+
+**Verdict distribution**:
+- REJECTED: 255,375 (64.7%)
+- SHADOW_CATALOG: 125,222 (31.7%)
+- INCONCLUSIVE: 14,026 (3.6%)
+
+**H4 cross-catalog extensibility re-confirmed at larger scale** (8 batches vs prior 2-seed):
+
+| Relation | Fires #13-14 (n≈2K each) | Fire #19 (n≈4K each) | Drift |
+|---|---|---|---|
+| equal_mod_2 | ~63% | **67.2%** | +4 pp |
+| abs_diff_le_* | (not aggregated) | 67.0% | — |
+| divides | ~40% | **50.7%** | **+11 pp** |
+| equal | ~2% | 2.4% | +0.4 pp |
+
+Hierarchy **parity > abs_diff > divides > equal** holds. Notable: **divides drifted up by ~11 percentage points** with more data. The earlier 40% estimate may have been low — at the larger sample size, divides shows meaningfully more cross-catalog structure than the 2-seed analysis suggested.
+
+**Implication for training_weight**: The baked-in weights (parity=0.63, divides=0.40, equal=0.02) are now ~10% off for `divides`. Worth a future Fire-#20 weight-refresh to (parity=0.65, divides=0.50, equal=0.025) once we have one more confirmation batch.
+
+**Top high-weight records (top 5 of 25 retained)**:
+
+1. `0.6300 | c1 | SHADOW_CATALOG` — `MUT[a]:trace_field_class(knot:8_3) equal_mod_2 tamagawa_product(ec:8528.h4) | 6 vs 4 | holds=True`
+2. (and similar parity-SHADOW C1/A1 records with triangulation lift)
+
+The top-25 set are concrete Ergon training candidates — each one a substrate-vetted high-value example.
+
+**Per-generator volume distribution**:
+- A1: 71,984 records (highest — workhorse)
+- F4: 50,861
+- C1: 40,858
+- C3: 33,049, F3: 32,698, A3: 32,694, A2: 30,004
+- A4: 14,759, D3: 14,896, H2: 14,616
+- Down to A5 / D1 / B1 / E3 / C4 / H1 in the 100s-2000s range
+
+H1 has only 379 records because it bootstraps slowly when corpus_dir is reset each smoke. In production with persistent corpus, H1 would dominate.
+
+### Why this matters
+
+The substrate is now self-monitoring. James's recent question ("how are we determining quality training data?") gets a navigable answer in the report:
+- Per-relation H4 rates show which claim types are categorical vs coincidental
+- Top-N by training_weight gives concrete records to inspect
+- Verdict evolution across batches reveals whether the substrate is converging on a stable distribution
+
+### Decisions for Fire #20
+
+- **Weight refresh** based on new H4 rates: parity 0.63→0.65, divides 0.40→0.50. Small change but honest update.
+- **Add per-relation rate to the corpus health report** as a continuous tracker (each batch's contribution to the global rate).
+- Run a larger long-batch with the bandit running across all 29 active generators to grow the corpus further.
+
+### Loop discipline
+
+- Tests still 139/139 (no new code paths to test; corpus_health is read-only inspection)
+- Output `theseus/corpus_health_report.md` is regeneratable; not source-controlled (or could be — minor decision)
+- Updated James's substrate-question answer with concrete empirical numbers from 8 batches
+
