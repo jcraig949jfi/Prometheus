@@ -1353,3 +1353,124 @@ Choosing long-batch corpus generation for Fire #13 — shifts focus from "build 
 - Tuning runs persisted to `optimization/tuned_hyperparams.json`
 - Yield-curve analysis is the first substrate-level look at per-generator value contribution
 
+
+## batch-20260518T135317Z-00a180
+
+- Started: 2026-05-18T13:53:17.030448+00:00
+- Ended:   2026-05-18T13:56:17.016454+00:00
+- Duration: 0.0500 h
+- Requested: a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,d1,d2,d3,d4,e1,e3,f2,f3,f4,g4,g5,h1,h2,h4
+- Active:    a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,d1,d2,d3,d4,e1,e3,f2,f3,f4,g4,g5,h1,h2,h4
+- Records: 359227 (kills=177578, confirmations=157847, inconclusive=23027, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=12803, throughput=222660869.6/h, info_density=0.528, diversity=0.857, yield_score=0.0046, kills=9190, conf=3613, errs=0
+- **a2** — records=12803, throughput=45634455.5/h, info_density=0.506, diversity=0.960, yield_score=0.0049, kills=12013, conf=790, errs=0
+- **a3** — records=12803, throughput=173273684.2/h, info_density=0.531, diversity=0.864, yield_score=0.0046, kills=8809, conf=3994, errs=0
+- **a4** — records=12803, throughput=19325283.0/h, info_density=0.534, diversity=0.908, yield_score=0.0049, kills=4224, conf=29, errs=0
+- **a5** — records=12803, throughput=15052514.7/h, info_density=0.550, diversity=0.896, yield_score=0.0050, kills=912, conf=851, errs=0
+- **b1** — records=12803, throughput=245163829.9/h, info_density=0.600, diversity=0.928, yield_score=0.0056, kills=0, conf=12803, errs=0
+- **b2** — records=12803, throughput=194475949.3/h, info_density=0.565, diversity=0.939, yield_score=0.0054, kills=4525, conf=8278, errs=0
+- **b3** — records=12803, throughput=266420809.2/h, info_density=0.542, diversity=0.956, yield_score=0.0052, kills=7389, conf=5414, errs=0
+- **b4** — records=12803, throughput=291713924.1/h, info_density=0.526, diversity=0.955, yield_score=0.0051, kills=9489, conf=3314, errs=0
+- **b5** — records=12803, throughput=210460274.0/h, info_density=0.586, diversity=0.918, yield_score=0.0054, kills=1836, conf=10967, errs=0
+- **c1** — records=12803, throughput=211425688.1/h, info_density=0.538, diversity=0.871, yield_score=0.0047, kills=7950, conf=4853, errs=0
+- **c2** — records=12802, throughput=177942857.1/h, info_density=0.568, diversity=0.888, yield_score=0.0051, kills=4146, conf=8656, errs=0
+- **c3** — records=12802, throughput=53341666.7/h, info_density=0.544, diversity=0.864, yield_score=0.0048, kills=7128, conf=5674, errs=0
+- **c4** — records=12802, throughput=173913962.3/h, info_density=0.584, diversity=0.885, yield_score=0.0052, kills=2018, conf=10784, errs=0
+- **c5** — records=12802, throughput=185089156.6/h, info_density=0.540, diversity=0.876, yield_score=0.0048, kills=7637, conf=5165, errs=0
+- **d1** — records=12802, throughput=32478646.9/h, info_density=0.590, diversity=0.926, yield_score=0.0055, kills=1277, conf=11525, errs=0
+- **d2** — records=12802, throughput=197799141.6/h, info_density=0.546, diversity=0.886, yield_score=0.0049, kills=6956, conf=5846, errs=0
+- **d3** — records=12802, throughput=5884474.0/h, info_density=0.640, diversity=0.906, yield_score=0.0059, kills=12735, conf=0, errs=0
+- **d4** — records=12802, throughput=7130929.9/h, info_density=0.521, diversity=0.952, yield_score=0.0050, kills=10100, conf=2702, errs=0
+- **e1** — records=775, throughput=10410447.8/h, info_density=0.200, diversity=0.990, yield_score=0.0020, kills=0, conf=0, errs=0
+- **e3** — records=12802, throughput=173913962.3/h, info_density=0.558, diversity=0.958, yield_score=0.0054, kills=5434, conf=7368, errs=0
+- **f2** — records=12797, throughput=123179679.1/h, info_density=0.531, diversity=0.869, yield_score=0.0047, kills=8841, conf=3956, errs=0
+- **f3** — records=12802, throughput=82151871.6/h, info_density=0.529, diversity=0.868, yield_score=0.0046, kills=9093, conf=3709, errs=0
+- **f4** — records=12792, throughput=113988118.8/h, info_density=0.531, diversity=0.869, yield_score=0.0047, kills=8784, conf=4008, errs=0
+- **g4** — records=12802, throughput=162278873.2/h, info_density=0.595, diversity=0.893, yield_score=0.0054, kills=651, conf=12151, errs=0
+- **g5** — records=12802, throughput=147715384.6/h, info_density=0.592, diversity=0.887, yield_score=0.0053, kills=965, conf=11837, errs=0
+- **h1** — records=12802, throughput=117569387.7/h, info_density=0.528, diversity=0.962, yield_score=0.0051, kills=9272, conf=3530, errs=0
+- **h2** — records=12802, throughput=6699694.7/h, info_density=0.668, diversity=0.898, yield_score=0.0061, kills=12800, conf=0, errs=0
+- **h4** — records=12802, throughput=39661962.1/h, info_density=0.560, diversity=0.900, yield_score=0.0051, kills=3404, conf=6030, errs=0
+
+
+---
+
+## Fire #13 — 2026-05-18 ~13:53Z — Long-batch corpus generation
+
+3-minute batch, 29 generators, tuned params. Produced first substantial substrate corpus + first cross-catalog structural finding.
+
+### Corpus statistics
+
+- **359,227 emissions** in 3 minutes (extrapolates to ~7.2M/hour)
+- 251,275 unique records after intra-batch dedup (108K duplicates skipped, ~30% dedup rate)
+- 340.5 MB JSONL on disk
+- 0 errors across 29 generators
+
+### Verdict distribution (251K unique records)
+
+- REJECTED: 140,224 (55.8%) — kills
+- SHADOW_CATALOG: 97,266 (38.7%) — survivors
+- INCONCLUSIVE: 13,010 (5.2%) — boundary
+- UNVERIFIED: 775 (0.3%) — E1 literature (by design)
+
+### Process-supervised records (step_trace populated)
+
+- 24,054 records carry step_trace (D3 + H2 emissions)
+- 0 of them are SHADOW_CATALOG — every triangulated record either resolved to REJECTED (most) or stayed INCONCLUSIVE (boundary)
+- **The substrate is empirically honest: A4's polynomial-fit INCONCLUSIVE region is virtually ALL noise. Triangulation never finds a hidden gem there.**
+
+### A4 SHADOW candidates (rare strong polynomial fits)
+
+29 A4 SHADOW records emerged from ~75K A4 emissions (0.04% of A4's work):
+- 16 with R²=1.0 (likely degree-3 interpolating through 4 points; small-sample artifacts)
+- 13 with R²=0.9 (more substantive but still small-sample)
+- **26/29 involve `tamagawa_product` on the EC side** — uniquely well-fit by knot integer invariants in this catalog
+- Tamagawa products in our 1000-EC sample are typically small (1, 2, 3, 4, 6, ...), making them inherently easy to polyfit to small-range knot invariants. Probably a small-range artifact, but worth flagging for downstream verification.
+
+### MAJOR SUBSTRATE FINDING: H4 bridge-extensibility by relation
+
+H4 (multi-arrow bridge extension) reveals which cross-catalog relations have CATEGORICAL STRUCTURE vs COINCIDENTAL STRUCTURE:
+
+```
+equal:        24/1302 = 1.8%  categorical (almost always isolated)
+equal_mod_2:  1584/2531 = 62.6%  categorical (parity is structural!)
+divides:      816/2022 = 40.4%  categorical (intermediate)
+abs_diff_le_K: most ≈ 100% per individual K (sample-size confounded by C2 mutations)
+```
+
+This is a substrate-level structural insight. Some claims worth highlighting:
+
+1. **`equal` is essentially ALWAYS a coincidence.** When `signature(K) == rank(E)` holds for a specific pair, it does NOT generalize to other ec_invariants 98% of the time. The substrate is teaching us: cross-catalog integer equality is anecdotal, not structural.
+
+2. **`equal_mod_2` (parity match) is THE highest-extensibility relation.** When two values share parity, OTHER pairs of (same knot, different ec invariant) values also share parity 62.6% of the time. Parity has *real* cross-catalog structure.
+
+3. **`divides` (40%) is intermediate** — sometimes structural, sometimes coincidental.
+
+This is exactly the kind of substrate-finding the Theseus engine was built to surface: structural-versus-coincidental discrimination via systematic perturbation. Aligned with the Fire #9 observation that relations are invariant-robust but object-fragile.
+
+### Why this matters for downstream training (Ergon resume)
+
+When Ergon's Learner trains on this corpus, it should preserve:
+- **High-weight signal**: parity-based cross-catalog claims (equal_mod_2 records)
+- **Medium-weight signal**: divides-based claims (40% structural)
+- **Low-weight signal**: equality-based claims (98% coincidental — almost noise)
+
+Training-value calibration of the corpus should match these per-relation extensibility rates.
+
+### Decisions for Fire #14
+
+- **Per-relation training-value reweighting** — assign training weights to records based on H4 extensibility per relation. Annotate the corpus.
+- **OR**: GFlowNet bandit replacement (BUILD-LATER #5) — still pending.
+- **OR**: Repeat long-batch with a SECOND seed (cross-batch reproducibility check on the structural findings).
+
+Choosing the reproducibility check first (Fire #14) — the H4 finding is novel and high-value but should be replicated across seeds before downstream weighting commits to it.
+
+### Loop discipline
+
+- Corpus retained on disk for downstream analysis: 340 MB, gitignored
+- Tests: still 116/116
+- First substantive substrate-level finding from the engine: parity > divides > equal in cross-catalog structure
+
