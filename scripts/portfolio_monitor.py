@@ -59,18 +59,45 @@ JSON_OUTPUT_PATH = REPO_ROOT / "docs" / "state.json"  # GitHub Pages serves from
 
 # Agents we expect to see in the portfolio, with their assigned machine.
 # Keep in sync with pivot/agent_portfolio_and_monitoring_2026-05-12.md.
+# `kind` taxonomy: operator (Claude session with roles + judgment), daemon
+# (long-running process), tool (agentic mechanical component supervised by an
+# operator), pipeline-stage (one stage of an orchestrated chain).
+# `operator` (optional) names the operator agent that supervises a tool.
 EXPECTED_AGENTS = {
-    "Apollo":     {"machine": "M2", "kind": "evolutionary"},
-    "Hephaestus": {"machine": "M3", "kind": "forge"},
-    "Nemesis":    {"machine": "M3", "kind": "adversarial"},
-    "Nous":       {"machine": "M4", "kind": "combinatorial"},
-    "Coeus":      {"machine": "?",  "kind": "causal"},
-    "Aletheia":   {"machine": "?",  "kind": "knowledge_graph"},
-    "Eos":        {"machine": "?",  "kind": "fetch"},
-    "Hermes":     {"machine": "?",  "kind": "alerting"},
-    "Pronoia":    {"machine": "?",  "kind": "scanner"},
+    # Daemons (continuous background processes)
+    "Apollo":     {"machine": "M2", "kind": "daemon",    "role": "evolutionary"},
+    "Hephaestus": {"machine": "M3", "kind": "daemon",    "role": "forge"},
+    "Nemesis":    {"machine": "M3", "kind": "daemon",    "role": "adversarial"},
+    "Nous":       {"machine": "M4", "kind": "daemon",    "role": "combinatorial"},
+    "Pronoia":    {"machine": "M4", "kind": "daemon",    "role": "reporting orchestrator"},
+
+    # Operators (Claude sessions with roles + judgment, manually driven)
+    "Aporia":     {"machine": "M1", "kind": "operator",  "role": "void detection + Deep Research + Clio supervision"},
+    "Techne":     {"machine": "M1", "kind": "operator",  "role": "substrate / Σ-kernel toolsmith"},
+
+    # Tools (agentic mechanical components supervised by an operator)
+    "Clio":       {"machine": "M1", "kind": "tool",      "role": "paper scanner (arxiv/openalex/semantic-scholar)",
+                   "operator": "Aporia"},
+
+    # Pipeline-stage agents (run via pronoia.py scan; transient per cycle)
+    "Coeus":      {"machine": "?",  "kind": "pipeline-stage", "role": "causal analysis"},
+    "Aletheia":   {"machine": "?",  "kind": "pipeline-stage", "role": "knowledge graph harvester"},
+    "Eos":        {"machine": "?",  "kind": "pipeline-stage", "role": "external scanner"},
+    "Hermes":     {"machine": "?",  "kind": "pipeline-stage", "role": "alerting (deprecated — see pivot/hermes_deprecation_2026-05-17.md)"},
     # add more as RESUME docs land
 }
+
+# Historical / unexpected agents that have registered with Agora in the past
+# (Harmonia sessions, Aporia, Charon, etc.). Listed explicitly because scan_iter
+# is unusably slow on Redis with 268K keys (most are landscape/graph/bridges).
+# Add new historical names here when they're observed.
+KNOWN_UNEXPECTED_AGENTS = [
+    "Agora", "Agora_Bootstrap", "Aporia", "aporia", "Charon", "Claude_M1",
+    "Dawn_Check", "Ergon", "Harmonia",
+    "Harmonia_M2_auditor", "Harmonia_M2_sessionA", "Harmonia_M2_sessionB",
+    "Harmonia_M2_sessionC", "Harmonia_M2_sessionD",
+    "Harmonia_M2_sessionD_reauditor", "Kairos", "Koios", "Mnemosyne", "Techne",
+]
 
 
 def connect() -> redis.Redis:
@@ -163,14 +190,15 @@ def render(r: redis.Redis) -> str:
         machine = (state or {}).get("machine") or meta["machine"]
         lines.append(f"| {name} | {machine} | {status_label} | {age_str} | {op} |")
 
-    # Surface any unexpected agents
-    try:
-        all_keys = list(r.scan_iter(f"{AGENT_PREFIX}*"))
-    except Exception:
-        all_keys = []
-    extras = sorted({k.replace(AGENT_PREFIX, "") for k in all_keys} - seen)
-    for name in extras:
+    # Surface unexpected agents from the hardcoded historical list
+    # (scan_iter is unusably slow on Redis with 268K keys; explicit lookups instead)
+    for name in KNOWN_UNEXPECTED_AGENTS:
+        if name in seen:
+            continue
         state = agent_state(r, name)
+        if state is None:
+            continue  # never registered
+        seen.add(name)
         status_label, age = liveness(state, now)
         age_str = f"{age}s" if age is not None else "-"
         machine = (state or {}).get("machine") or "?"
@@ -248,6 +276,106 @@ def render(r: redis.Redis) -> str:
     return "\n".join(lines) + "\n"
 
 
+def _parse_blob(blob):
+    """Normalize a status_json source (Redis JSON string or Postgres dict) to dict."""
+    if not blob:
+        return None
+    if isinstance(blob, str):
+        try:
+            return json.loads(blob)
+        except (json.JSONDecodeError, TypeError):
+            return None
+    if isinstance(blob, dict):
+        return blob
+    return None
+
+
+def _build_deep_research_view(intel_rows: list, agent_blobs: list) -> dict:
+    """Surface Deep Research activity for the dashboard + email.
+
+    Aporia's new DR-token agent uses session_telemetry.log_work with stages
+    starting with "deep_research_" (e.g. deep_research_dispatched,
+    deep_research_received). Budget is reported in its status_json blob under
+    a `deep_research_budget` key with {used, budget, remaining, as_of}.
+
+    Returns a dict with reports (past 24h), counts, and current budget.
+    Empty/None values are fine — the dashboard renders defensively.
+    """
+    reports = []
+    dispatch_count = 0
+    for r in intel_rows or []:
+        stage = (r.get("stage") or "")
+        if not stage.startswith("deep_research_"):
+            continue
+        if stage == "deep_research_dispatched":
+            dispatch_count += 1
+        reports.append({
+            "stage": stage,
+            "summary": r.get("output_summary") or "",
+            "output_path": r.get("output_path"),
+            "finished_at": r.get("finished_at"),
+            "cycle_id": r.get("cycle_id"),
+            "success": r.get("success", True),
+        })
+
+    received_count = sum(1 for r in reports if r["stage"] == "deep_research_received")
+
+    budget = None
+    for name, blob in agent_blobs:
+        parsed = _parse_blob(blob)
+        if not parsed:
+            continue
+        b = parsed.get("deep_research_budget")
+        if isinstance(b, dict) and ("budget" in b or "used" in b):
+            used = b.get("used")
+            limit = b.get("budget")
+            remaining = b.get("remaining")
+            if remaining is None and used is not None and limit is not None:
+                remaining = limit - used
+            budget = {
+                "agent": name,
+                "used": used,
+                "budget": limit,
+                "remaining": remaining,
+                "as_of": b.get("as_of"),
+            }
+            break
+
+    return {
+        "reports": reports,
+        "report_count_24h": received_count,
+        "dispatch_count_24h": dispatch_count,
+        "budget": budget,
+    }
+
+
+def _self_reported_taxonomy(blob) -> dict:
+    """Lift kind / role / operator off an agent's own status_json blob.
+
+    Lets autonomously-registered tools surface with proper taxonomy before
+    EXPECTED_AGENTS is updated (e.g. when Techne registers a new tool she
+    built per the Clio pattern, with operator='Techne' in its blob).
+
+    Accepts either a dict (Postgres JSONB) or a JSON string (Redis hash).
+    Returns {} on any parse failure.
+    """
+    if not blob:
+        return {}
+    if isinstance(blob, str):
+        try:
+            blob = json.loads(blob)
+        except (json.JSONDecodeError, TypeError):
+            return {}
+    if not isinstance(blob, dict):
+        return {}
+    out = {}
+    for k in ("kind", "role", "operator"):
+        v = blob.get(k)
+        if v:
+            out[k] = v
+    return out
+
+
 def build_dashboard_state(r: redis.Redis) -> dict:
     """Return JSON-serializable dict capturing current portfolio state.
 
@@ -256,6 +384,17 @@ def build_dashboard_state(r: redis.Redis) -> dict:
     without coupling.
     """
     now = datetime.now(timezone.utc)
+
+    # Pre-fetch Postgres heartbeats so we can fall back per-agent when Redis
+    # is silent for that agent (e.g., dual-write daemons that only Postgres-heartbeat,
+    # or agents whose Redis thread died during the recent outage).
+    pg_by_name = {}
+    if HAS_POSTGRES_FALLBACK:
+        try:
+            for row in agora_persist.read_all_agents():
+                pg_by_name[row["agent_name"]] = row
+        except Exception:
+            pass
 
     agents = []
     seen = set()
@@ -266,48 +405,85 @@ def build_dashboard_state(r: redis.Redis) -> dict:
         op = ""
         last_status_update = None
         key_metrics = None
-        if state:
-            blob = state.get("status_json")
-            if blob:
+        data_source = "redis" if state else "no_data"
+        # If Redis has nothing for this agent, fall back to Postgres mirror.
+        if not state and name in pg_by_name:
+            pg = pg_by_name[name]
+            last_hb = pg.get("last_heartbeat")
+            if last_hb:
                 try:
-                    s = json.loads(blob)
-                    op = s.get("current_op", "")
-                    key_metrics = s.get("key_metrics")
-                except json.JSONDecodeError:
+                    last_hb_dt = datetime.fromisoformat(str(last_hb).replace("Z", "+00:00"))
+                    age = int((now - last_hb_dt).total_seconds())
+                    if age > HEARTBEAT_TIMEOUT_SEC:
+                        status_label = "DEAD"
+                    elif age > HEARTBEAT_TIMEOUT_SEC // 2:
+                        status_label = "STALE"
+                    else:
+                        status_label = "ALIVE"
+                except Exception:
                     pass
-            last_status_update = state.get("last_status_update")
-        machine = (state or {}).get("machine") or meta["machine"]
+            sj = pg.get("status_json")
+            if sj:
+                try:
+                    sj_dict = sj if isinstance(sj, dict) else json.loads(sj)
+                    op = sj_dict.get("current_op", "") or "(from postgres mirror)"
+                    key_metrics = sj_dict.get("key_metrics") or sj_dict
+                except Exception:
+                    pass
+            last_status_update = pg.get("last_status_update")
+            machine = pg.get("machine") or meta["machine"]
+            data_source = "postgres_fallback"
+        else:
+            if state:
+                blob = state.get("status_json")
+                if blob:
+                    try:
+                        s = json.loads(blob)
+                        op = s.get("current_op", "")
+                        key_metrics = s.get("key_metrics")
+                    except json.JSONDecodeError:
+                        pass
+                last_status_update = state.get("last_status_update")
+            machine = (state or {}).get("machine") or meta["machine"]
         agents.append({
             "name": name,
             "expected": True,
             "machine": machine,
             "kind": meta["kind"],
+            "role": meta.get("role"),
+            "operator": meta.get("operator"),
             "status": status_label,
             "heartbeat_age_sec": age,
             "current_op": op,
             "last_status_update": last_status_update,
             "key_metrics": key_metrics,
+            "data_source": data_source,
         })
 
-    try:
-        all_keys = list(r.scan_iter(f"{AGENT_PREFIX}*"))
-    except Exception:
-        all_keys = []
-    extras = sorted({k.replace(AGENT_PREFIX, "") for k in all_keys} - seen)
-    for name in extras:
+    # Unexpected agents via explicit list (scan_iter too slow with 268K Redis keys)
+    for name in KNOWN_UNEXPECTED_AGENTS:
+        if name in seen:
+            continue
         state = agent_state(r, name)
+        if state is None:
+            continue  # never registered
+        seen.add(name)
         status_label, age = liveness(state, now)
         machine = (state or {}).get("machine") or "?"
+        self_meta = _self_reported_taxonomy((state or {}).get("status_json"))
         agents.append({
             "name": name,
             "expected": False,
             "machine": machine,
-            "kind": "unknown",
+            "kind": self_meta.get("kind", "unknown"),
+            "role": self_meta.get("role"),
+            "operator": self_meta.get("operator"),
             "status": status_label,
             "heartbeat_age_sec": age,
             "current_op": "",
             "last_status_update": None,
             "key_metrics": None,
+            "data_source": "redis",
         })
 
     def stream_entries(stream_name, count=10):
@@ -362,6 +538,24 @@ def build_dashboard_state(r: redis.Redis) -> dict:
         except Exception as e:
             print(f"[{now.isoformat()}] intel fetch failed: {e}", file=sys.stderr)
 
+    # Collect raw status_json blobs (Redis hash takes precedence, PG fallback)
+    # so the Deep Research view can read deep_research_budget from any agent.
+    agent_blobs = []
+    for a in agents:
+        name = a["name"]
+        blob = None
+        try:
+            redis_state = agent_state(r, name)
+            if redis_state:
+                blob = redis_state.get("status_json")
+        except Exception:
+            pass
+        if blob is None and name in pg_by_name:
+            blob = pg_by_name[name].get("status_json")
+        agent_blobs.append((name, blob))
+
+    deep_research = _build_deep_research_view(intel, agent_blobs)
+
     ideas = []
     if HAS_IDEAS_SCANNER:
         try:
@@ -382,6 +576,7 @@ def build_dashboard_state(r: redis.Redis) -> dict:
         "work_queue": work_queue,
         "anomalies": anomalies,
         "intelligence_outputs": intel,
+        "deep_research": deep_research,
     }
 
 
@@ -446,6 +641,8 @@ def build_degraded_state_from_postgres(now: datetime, redis_error: str) -> dict:
                 "expected": True,
                 "machine": pg.get("machine") or meta["machine"],
                 "kind": meta["kind"],
+                "role": meta.get("role"),
+                "operator": meta.get("operator"),
                 "status": status_label,
                 "heartbeat_age_sec": age,
                 "current_op": op or "(from postgres mirror)",
@@ -459,6 +656,8 @@ def build_degraded_state_from_postgres(now: datetime, redis_error: str) -> dict:
                 "expected": True,
                 "machine": meta["machine"],
                 "kind": meta["kind"],
+                "role": meta.get("role"),
+                "operator": meta.get("operator"),
                 "status": "UNKNOWN",
                 "heartbeat_age_sec": None,
                 "current_op": "(no postgres heartbeat — see manual_status)",
@@ -481,11 +680,14 @@ def build_degraded_state_from_postgres(now: datetime, redis_error: str) -> dict:
                 status_label = "ALIVE" if age < HEARTBEAT_TIMEOUT_SEC // 2 else ("STALE" if age < HEARTBEAT_TIMEOUT_SEC else "DEAD")
             except Exception:
                 pass
+        self_meta = _self_reported_taxonomy(pg.get("status_json"))
         agents.append({
             "name": name,
             "expected": False,
             "machine": pg.get("machine") or "?",
-            "kind": "unknown",
+            "kind": self_meta.get("kind", "unknown"),
+            "role": self_meta.get("role"),
+            "operator": self_meta.get("operator"),
             "status": status_label,
             "heartbeat_age_sec": age,
             "current_op": "",
@@ -511,6 +713,9 @@ def build_degraded_state_from_postgres(now: datetime, redis_error: str) -> dict:
             intel = agora_persist.read_recent_intelligence_outputs(hours=24, limit=50)
         except Exception as e:
             print(f"[{now.isoformat()}] intel fetch failed: {e}", file=sys.stderr)
+
+    agent_blobs = [(name, pg.get("status_json")) for name, pg in pg_by_name.items()]
+    deep_research = _build_deep_research_view(intel, agent_blobs)
 
     ideas = []
     if HAS_IDEAS_SCANNER:
@@ -541,6 +746,7 @@ def build_degraded_state_from_postgres(now: datetime, redis_error: str) -> dict:
         "work_queue": {},
         "anomalies": anomalies,
         "intelligence_outputs": intel,
+        "deep_research": deep_research,
     }
 
 

@@ -1,28 +1,34 @@
 """
-session_telemetry.py — operator + daemon session telemetry helpers
+session_telemetry.py — session + tool + operator telemetry helpers.
 
-Wraps agora_persist + Redis streams for two patterns Aletheia (M4) asked
-for 2026-05-18 to make agents/operators uniformly visible in the brief:
+Two patterns supported (merged from local + remote in 2026-05-18 sync):
 
-  register_session(name, machine, role, kind, ...)
-      Identity declaration. Wraps write_heartbeat with operator-friendly
-      fields (role, kind: "operator" | "tool" | "daemon", tools_operated).
+  - SESSION-SCOPE: Claude Code sessions register themselves and log work.
+    Module-global _SESSION_CYCLE_ID groups all calls from one process.
 
-  log_work(stage, summary, agent=, success=, ...)
-      Per-event work record into agora.intelligence_outputs. Distinct
-      from heartbeats: heartbeat says "alive"; log_work says "did this
-      useful thing." The brief reads both.
+      register_session("Techne", "M1", role="substrate work")
+      log_work("anti_anchor_curation", "added 3 new anti-anchors", success=True)
+      end_session("Techne", "M1")
 
-  emit_discovery(sender, subject, body, confidence=, type_="share")
-      Pushes a high-relevance event onto agora:discoveries (Redis stream).
-      The dashboard's streams view surfaces it immediately without waiting
-      for the next brief. Falls back silently if Redis unreachable.
+  - TOOL/AGENT-SCOPE: long-running tools or daemons (Theseus, Clio) register
+    explicit agent names and log work attributed to them, plus stream
+    discoveries for high-relevance events.
 
-All three are best-effort, fail-soft. None blocks the caller.
+      register_session(agent_name="Theseus", machine="M1", kind="tool",
+                       operator="James", status_json={...})
+      log_work("theseus_batch_complete", summary=..., agent="Theseus",
+               cycle_id=batch_uuid, started_at=batch_started)
+      emit_discovery("Theseus", subject="High-value record", body=..., confidence=0.65)
+
+All helpers are fail-soft: return False / None when Postgres or Redis is
+unreachable. Safe to call from any context.
+
+For long-running daemons that need a background heartbeat thread, use
+agora_persist.write_heartbeat directly (Hephaestus / Apollo / Pronoia pattern).
 """
-import json
 import os
 import sys
+import time
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
@@ -38,8 +44,12 @@ if str(_REPO_ROOT) not in sys.path:
 try:
     import agora_persist
     HAS_PG = True
-except Exception:
+    HAS_PERSIST = True  # back-compat alias
+except Exception as e:
+    print(f"[session_telemetry] agora_persist unavailable ({e})", file=sys.stderr)
     HAS_PG = False
+    HAS_PERSIST = False
+    agora_persist = None
 
 try:
     import redis as _redis
@@ -47,11 +57,7 @@ try:
 except Exception:
     HAS_REDIS = False
 
-# The Agora Redis on this project lives at 192.168.1.176 (same host as
-# prometheus_fire Postgres). Other scripts in this repo (harmonia_conductor,
-# authorize_and_seed, post_agora_status, etc.) set AGORA_REDIS_HOST to that
-# value explicitly. We bridge here: env-var first, otherwise the project's
-# canonical host. Same posture as scripts/clio_submitter._bridge_postgres_env_vars().
+# Agora Redis config (M1 deployment defaults with env-var override).
 os.environ.setdefault("AGORA_REDIS_HOST", "192.168.1.176")
 os.environ.setdefault("AGORA_REDIS_PORT", "6379")
 os.environ.setdefault("AGORA_REDIS_PASSWORD", "prometheus")
@@ -69,6 +75,10 @@ except Exception:
     def get_redis_password():
         return os.environ.get("AGORA_REDIS_PASSWORD", "prometheus")
 
+
+# Module-global session cycle_id (for session-scope log_work grouping).
+_SESSION_CYCLE_ID = str(uuid.uuid4())
+_SESSION_STARTED_AT = datetime.now(timezone.utc)
 
 _redis_client = None
 
@@ -99,41 +109,56 @@ def _get_redis():
 # ---------------------------------------------------------------------------
 
 def register_session(
-    agent_name: str,
-    machine: str = "M1",
+    name: Optional[str] = None,
+    machine: Optional[str] = None,
     role: str = "",
-    kind: str = "daemon",
+    kind: str = "claude_code_session",
     status: str = "online",
+    operator: Optional[str] = None,
     status_json: Optional[dict] = None,
     tools_operated: Optional[list] = None,
+    agent_name: Optional[str] = None,  # back-compat alias for `name`
 ) -> bool:
-    """Declare an agent or operator identity. Wraps write_heartbeat.
+    """Register / refresh an agent's agora.agent_heartbeats row.
 
-    kind in {"operator", "tool", "daemon"}.
-      - "operator": a Claude session with judgment + roles (e.g., Aporia)
-      - "tool": a mechanical agentic component an operator supervises
-      - "daemon": a long-lived process (Eos, Metis, Pronoia, etc.)
+    `name` (or `agent_name` kwarg, back-compat) is the displayed identity.
+    `kind` ∈ {"operator", "tool", "daemon", "claude_code_session"}.
+      - operator: a Claude session with judgment + roles (Aporia)
+      - tool:     a mechanical component an operator supervises (Clio, Theseus)
+      - daemon:   long-lived process (Eos, Metis, Pronoia)
+      - claude_code_session: short-lived interactive session (default)
+    `operator`: name of the supervising operator (for tools).
+    `tools_operated`: list of supervised tool names (for operators).
 
-    tools_operated is the operator's children — used by the dashboard to
-    show the operator → tool relationship visually.
-
+    Idempotent: refreshes last_heartbeat each call.
     Best-effort: returns False on PG failure.
     """
     if not HAS_PG:
         return False
-    sj = dict(status_json or {})
-    sj.setdefault("role", role)
-    sj.setdefault("kind", kind)
+    agent = name or agent_name
+    if not agent:
+        raise TypeError("register_session requires `name` (or `agent_name`)")
+    machine = machine or os.environ.get("PROMETHEUS_MACHINE", "M1")
+    blob = {
+        "session_cycle_id": _SESSION_CYCLE_ID,
+        "session_started_at": _SESSION_STARTED_AT.isoformat(),
+        "role": role,
+        "kind": kind,
+    }
+    if operator:
+        blob["operator"] = operator
     if tools_operated is not None:
-        sj["tools_operated"] = list(tools_operated)
-    sj.setdefault("registered_at", datetime.now(timezone.utc).isoformat())
+        blob["tools_operated"] = list(tools_operated)
+    if status_json:
+        blob.update(status_json)
+    blob.setdefault("registered_at", datetime.now(timezone.utc).isoformat())
     return agora_persist.write_heartbeat(
-        agent_name=agent_name,
+        agent_name=agent,
         machine=machine,
         status=status,
-        status_json=sj,
+        status_json=blob,
         pid=os.getpid(),
-        connected_at=datetime.now(timezone.utc),
+        connected_at=_SESSION_STARTED_AT,
     )
 
 
@@ -144,39 +169,39 @@ def register_session(
 def log_work(
     stage: str,
     summary: str = "",
-    agent: Optional[str] = None,
     success: bool = True,
-    error: Optional[str] = None,
     output_path: Optional[str] = None,
-    started_at: Optional[datetime] = None,
+    error: Optional[str] = None,
     cycle_id: Optional[str] = None,
+    agent: Optional[str] = None,
+    started_at: Optional[datetime] = None,
 ) -> bool:
     """Record one work event into agora.intelligence_outputs.
 
-    cycle_id groups related events (e.g., all stages of one pipeline scan);
-    if not provided, a fresh one is minted so the event is standalone.
-
-    The agent field identifies the producer ("Clio", "Aporia", etc.) for
-    the brief's per-agent timeline.
+    `cycle_id`: groups events; defaults to module-global session cycle.
+                Tools can pass a per-batch UUID to thread their own cycles.
+    `agent`:    optional explicit producer name (for multi-agent tools).
+                Defaults to None → joined to session via cycle_id.
+    `started_at`: optional explicit start time (enables duration calc).
 
     Best-effort: returns False on PG failure.
     """
     if not HAS_PG:
         return False
     return agora_persist.log_intelligence_stage(
-        cycle_id=cycle_id or str(uuid.uuid4()),
+        cycle_id=cycle_id or _SESSION_CYCLE_ID,
         stage=stage,
         success=success,
         output_path=output_path,
         output_summary=summary,
         error=error,
-        started_at=started_at,
+        started_at=started_at or _SESSION_STARTED_AT,
         agent=agent,
     )
 
 
 # ---------------------------------------------------------------------------
-# emit_discovery — Redis stream push to agora:discoveries
+# emit_discovery — Redis stream push
 # ---------------------------------------------------------------------------
 
 def emit_discovery(
@@ -190,12 +215,10 @@ def emit_discovery(
 ) -> Optional[str]:
     """Push a high-relevance event onto agora:discoveries (Redis stream).
 
-    Returns the stream entry ID on success, None on failure (Redis down,
-    not installed, etc.). Fail-soft — callers should not gate behavior on
-    success.
-
-    Pattern matches Charon/Ergon historical usage: a structured event the
-    dashboard surfaces immediately without waiting for the next brief.
+    Returns the stream entry ID on success; None on failure (Redis down,
+    not installed, etc.). Fail-soft. Pattern matches Charon/Ergon historical
+    usage: a structured event the dashboard surfaces immediately without
+    waiting for the next brief.
     """
     r = _get_redis()
     if r is None:
@@ -212,7 +235,6 @@ def emit_discovery(
         if confidence is not None:
             fields["confidence"] = str(round(float(confidence), 3))
         if extras:
-            # Coerce extras to strings for Redis hash field values
             for k, v in extras.items():
                 if v is None:
                     continue
@@ -220,8 +242,26 @@ def emit_discovery(
         entry_id = r.xadd(STREAM_DISCOVERIES, fields)
         return entry_id
     except Exception as e:
-        print(f"[session_telemetry] emit_discovery failed (non-fatal): {e}", file=sys.stderr)
+        print(f"[session_telemetry] emit_discovery failed (non-fatal): {e}",
+              file=sys.stderr)
         return None
+
+
+# ---------------------------------------------------------------------------
+# end_session
+# ---------------------------------------------------------------------------
+
+def end_session(name: str, machine: Optional[str] = None) -> bool:
+    """Mark a session as offline before exit. Optional but tidy."""
+    if not HAS_PG:
+        return False
+    machine = machine or os.environ.get("PROMETHEUS_MACHINE", "?")
+    return agora_persist.write_heartbeat(
+        agent_name=name,
+        machine=machine,
+        status="offline",
+        pid=os.getpid(),
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -229,13 +269,30 @@ def emit_discovery(
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    # CLI: python scripts/session_telemetry.py probe
-    if len(sys.argv) > 1 and sys.argv[1] == "probe":
+    import argparse
+    p = argparse.ArgumentParser()
+    sub = p.add_subparsers(dest="cmd")
+    sub.add_parser("probe")
+    s1 = sub.add_parser("register")
+    s1.add_argument("name"); s1.add_argument("machine")
+    s1.add_argument("role", nargs="?", default="")
+    s2 = sub.add_parser("log")
+    s2.add_argument("stage"); s2.add_argument("summary", nargs="?", default="")
+    s3 = sub.add_parser("end")
+    s3.add_argument("name"); s3.add_argument("machine")
+    args = p.parse_args()
+    if args.cmd == "probe":
         print(f"HAS_PG:    {HAS_PG}")
         print(f"HAS_REDIS: {HAS_REDIS}")
         r = _get_redis()
         print(f"Redis ping: {'OK' if r else 'FAIL'}")
         if r:
             print(f"  host={REDIS_HOST}, port={REDIS_PORT}, db={REDIS_DB}")
+    elif args.cmd == "register":
+        print(register_session(args.name, args.machine, role=args.role))
+    elif args.cmd == "log":
+        print(log_work(args.stage, summary=args.summary))
+    elif args.cmd == "end":
+        print(end_session(args.name, args.machine))
     else:
-        print("Usage: python scripts/session_telemetry.py probe")
+        p.print_help()

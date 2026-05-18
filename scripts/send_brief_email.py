@@ -271,6 +271,99 @@ def build_mentions_md(brief_md: str) -> str:
     return "\n".join(lines)
 
 
+def _dr_tldr_fragment(state: dict) -> str:
+    """Short ' · DR X/20 · N reports today' string, or empty if no DR signal."""
+    dr = state.get("deep_research") or {}
+    budget = dr.get("budget") or {}
+    received = dr.get("report_count_24h") or 0
+    dispatched = dr.get("dispatch_count_24h") or 0
+    if not budget and received == 0 and dispatched == 0:
+        return ""
+    parts = []
+    if budget.get("budget") is not None:
+        parts.append(f"DR {budget.get('used', 0)}/{budget['budget']}")
+    if received or dispatched:
+        parts.append(f"{received} received / {dispatched} dispatched")
+    return " · " + " · ".join(parts) if parts else ""
+
+
+def build_deep_research_md(state: dict) -> str:
+    """Dedicated Deep Research section for the email body (markdown)."""
+    dr = state.get("deep_research") or {}
+    reports = dr.get("reports") or []
+    budget = dr.get("budget")
+    if not reports and not budget:
+        return ""
+    lines = ["", "---", "", "## Deep Research (past 24h)", ""]
+    if budget:
+        used = budget.get("used", 0)
+        total = budget.get("budget", 20)
+        remaining = budget.get("remaining", max(0, total - used) if used is not None else None)
+        agent = budget.get("agent") or "?"
+        lines.append(f"**Budget:** {used} / {total} tokens used today · {remaining} remaining · reporter: `{agent}`")
+        lines.append("")
+    if not reports:
+        lines.append("*(no DR events logged in last 24h yet)*")
+        lines.append("")
+        return "\n".join(lines)
+    for r in reports:
+        tag = (r.get("stage") or "").replace("deep_research_", "")
+        summary = r.get("output_summary") or r.get("summary") or "(no summary)"
+        path = r.get("output_path")
+        ts = r.get("finished_at") or ""
+        line = f"- **{tag}** · {ts} — {summary}"
+        if path:
+            line += f"  [`{path}`](https://github.com/jcraig949jfi/Prometheus/blob/main/{path})"
+        lines.append(line)
+    lines.append("")
+    return "\n".join(lines)
+
+
+def build_deep_research_html(state: dict) -> str:
+    """Dedicated Deep Research section for the email body (HTML)."""
+    dr = state.get("deep_research") or {}
+    reports = dr.get("reports") or []
+    budget = dr.get("budget")
+    if not reports and not budget:
+        return ""
+    parts = []
+    parts.append('<hr style="border:none;border-top:1px solid #ccc;margin:24px 0">')
+    parts.append('<h2 style="color:#222;margin-top:24px;border-bottom:1px solid #eee;padding-bottom:4px">Deep Research (past 24h)</h2>')
+    if budget:
+        used = budget.get("used", 0)
+        total = budget.get("budget", 20)
+        remaining = budget.get("remaining", max(0, total - used) if used is not None else None)
+        pct = int(round(100 * used / total)) if total else 0
+        bar_color = "#16a34a" if pct < 60 else "#ca8a04" if pct < 90 else "#dc2626"
+        agent = budget.get("agent") or "?"
+        parts.append(
+            f'<div style="margin:8px 0 16px 0;font-size:14px">'
+            f'<strong>Budget:</strong> {used} / {total} tokens used · {remaining} remaining · reporter: <code>{agent}</code>'
+            f'<div style="margin-top:4px;width:200px;height:6px;background:#eee;border-radius:3px">'
+            f'<div style="width:{pct}%;height:6px;background:{bar_color};border-radius:3px"></div></div>'
+            f'</div>'
+        )
+    if not reports:
+        parts.append('<p style="color:#666;font-style:italic">(no DR events logged in last 24h yet)</p>')
+        return "\n".join(parts)
+    parts.append('<ul style="margin:4px 0 8px 0;padding-left:20px">')
+    for r in reports:
+        tag = (r.get("stage") or "").replace("deep_research_", "")
+        summary = r.get("output_summary") or r.get("summary") or "(no summary)"
+        path = r.get("output_path")
+        ts = r.get("finished_at") or ""
+        path_html = ""
+        if path:
+            path_html = f' &middot; <a href="https://github.com/jcraig949jfi/Prometheus/blob/main/{path}" style="color:#0366d6;text-decoration:none"><code>{path}</code></a>'
+        parts.append(
+            f'<li style="margin:6px 0"><strong>{tag}</strong> '
+            f'<span style="color:#888;font-size:12px">{ts}</span><br>'
+            f'<span style="color:#333">{summary}</span>{path_html}</li>'
+        )
+    parts.append('</ul>')
+    return "\n".join(parts)
+
+
 def build_tldr_md(state: dict) -> str:
     """One-paragraph executive header pulled from state.json."""
     if not state:
@@ -296,7 +389,8 @@ def build_tldr_md(state: dict) -> str:
              f"agents alive {alive}/{expected}"
              f" · anomalies {anomalies}"
              f"{infra_note}"
-             f"{last_cycle_line}", ""]
+             f"{last_cycle_line}"
+             f"{_dr_tldr_fragment(state)}", ""]
     return "\n".join(lines)
 
 
@@ -355,7 +449,7 @@ def build_tldr_html(state: dict) -> str:
         last_cycle_line = f" · last intel cycle <code>{cycle_id[:8]}</code>: {ok}/{len(stages)} stages ok"
     return (
         '<p style="padding:8px 12px;background:#eef;border-left:3px solid #88a;margin:0 0 16px 0;font-size:14px">'
-        f'<strong>TL;DR</strong> — agents alive {alive}/{expected} · anomalies {anomalies}{infra_note}{last_cycle_line}'
+        f'<strong>TL;DR</strong> — agents alive {alive}/{expected} · anomalies {anomalies}{infra_note}{last_cycle_line}{_dr_tldr_fragment(state)}'
         '</p>'
     )
 
@@ -502,14 +596,19 @@ def main():
     intel_rows = fetch_intelligence_outputs()
     intel_md = build_intelligence_outputs_md(intel_rows)
     intel_html = build_intelligence_outputs_html(intel_rows)
-    # Pythia DR reports — clickable URLs to GitHub
+    # Pythia DR reports — clickable URLs to GitHub (local feature)
     research_rows = fetch_pythia_research_reports(hours=4)
     research_md = build_research_reports_md(research_rows)
     research_html = build_research_reports_html(research_rows)
+    # Deep Research surfacing — budget + reports past 24h (remote feature)
+    dr_md = build_deep_research_md(state)
+    dr_html = build_deep_research_html(state)
     refs_md = build_references_md(brief_md)
     refs_html = build_references_html(brief_md)
-    body_md = tldr_md + "\n" + brief_md + "\n" + mentions_md + "\n" + research_md + "\n" + intel_md + "\n" + refs_md
-    body_html = tldr_html + render_html(brief_md) + mentions_html + research_html + intel_html + refs_html
+    body_md = (tldr_md + "\n" + brief_md + "\n" + mentions_md + "\n"
+               + research_md + "\n" + dr_md + "\n" + intel_md + "\n" + refs_md)
+    body_html = (tldr_html + render_html(brief_md) + mentions_html
+                 + research_html + dr_html + intel_html + refs_html)
 
     now = datetime.now(timezone.utc)
     subject = args.subject or f"Prometheus Portfolio — {now.strftime('%Y-%m-%d %H:%M UTC')}"

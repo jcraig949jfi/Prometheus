@@ -1,42 +1,55 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-05-17 04:14:19 PM UTC*
+*Generated: 2026-05-18 07:44:00 PM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
 
-**Generated: 2026-05-17 12:14:18 PM EDT**
+**Generated: 2026-05-18 07:43:59 PM EDT**
 
 ---
 
-## Act on this  
-**Redis on M1 down since ~2026-05-16 — Agora heartbeats blocked** – Redis service failed to auto-restart after Windows update; all agent heartbeats undeliverable.  
-Manually restart Redis on M1 upon return home today to restore Agora visibility and coordination.
+## Act on this
 
-**Hephaestus@M3 forge rate collapsed: 0.022 vs historical 0.40** – Current throughput is 5.5% of baseline; 90 items processed, 88 scrapped, only 2 passed.  
-Investigate whether Coeus is feeding tail-distribution candidates or if qwen3.5-397b-a17b model quality has drifted.
+**Aporia @ M1 crashed — heartbeat dead for 25.5 days**  
+Aporia has been DEAD since 2026-04-23 (hb=2207532s), with no recent activity despite being an expected operator.  
+James must decide whether to revive Aporia or formally deprecate it in favor of current pipeline agents.
 
-**Work queue stalled: queued=0 claimed=0 — but Hephaestus not consuming via Postgres fallback** – Despite Redis outage, work could be pulled from Postgres staging; no consumption observed.  
-Verify if Hephaestus has fallback logic enabled or if manual queue injection to M4 is needed to resume substrate evolution.
+**Clio @ M1 crashed — heartbeat expired 8.5 minutes ago**  
+Clio transitioned from STALE to DEAD (hb=508s), indicating a hard crash or hang in the tool execution loop.  
+Investigate Clio’s runtime logs on M1 and restart or replace the agent if no self-recovery occurs within 10 minutes.
 
----
-
-## Watch this  
-**Hephaestus@M3 running without heartbeat (agora_unavailable)** – Operational per manual report, but Agora shows UNKNOWN due to Redis outage.  
-Monitor forge output and ledger growth (4905 → 5439) for continuity; expect normalization when Redis resumes.
-
-**M2 SpectreX5 offline — Apollo revival paused** – Machine powered off; Apollo cannot start despite being instrumented.  
-Track James’s revival sequence; deployment pending machine power-up and network reachability.
-
-**Hephaestus@M3 double-logging bug inflating telemetry** – Third logging handler active; non-fatal but complicates signal isolation.  
-Note during next intervention; low priority unless resource impact observed.
+**Redis unreachable on M1 — state.json infra_status missing, but manual_status claims up**  
+state.json lacks infra_status, implying Redis was reachable during this cycle, but manual_status.json (last updated 15:47 UTC) claims Redis is up after 2026-05-17 restart.  
+Reconcile: trust state.json’s implicit Redis-up signal; manual_status is stale. No action unless future cycles show infra_status=unreachable.
 
 ---
 
-## For the record  
-(7) agents still pending deployment on M2/M3/M4 — known revival sequence in progress.
+## Watch this
 
-**Hephaestus@M3 has processed 90 candidates, 2 forges passed, ledger now 5439** – Active on M3 under manual session; using qwen/qwen3.5-397b-a17b, 1656 candidates remaining.  
-No action needed; substrate evolution continues despite infrastructure degradation.
+**Hephaestus forge rate sustained at 2.7% — low by volume, but intentional per manual_status**  
+Hephaestus forged 2 valid tools in session (session_forges=2, scraps=73), with forge_rate_pct=2.7 and a deep validation battery active.  
+Monitor for consistency: low rate is expected due to tightened filters, but prolonged stagnation below 2% may require recalibration.
 
-**No change since previous brief at 2026-05-17 06:36:06 AM EDT** – Redis outage, agent UNKNOWN statuses, and queue stall persist unchanged.  
-All prior observations remain valid; this brief updates context with authoritative manual status.
+**Apollo generation stalled at gen 548 — no progress in 25 hours**  
+Apollo has been at generation 548 for 25.06 hours (elapsed_h), with no new gen increment despite ALIVE status and recent heartbeat.  
+Verify if Apollo is stuck in evaluation or intentionally paused; compare with config_v2d2b.yaml for expected cadence.
+
+**Pronoia @ M4 steady but email cadence mismatched**  
+Pronoia reports hourly cycles in main stream, but manual_status specifies --email-every-cycle every 4 hours.  
+Confirm intended behavior: current logs show 4-hourly email pattern (last at 15:47), so likely correct, but verify no misconfiguration.
+
+---
+
+## For the record
+
+**Hephaestus forged: Holography Principle + Nash Equilibrium + Abstract Interpretation (conf=0.633)**  
+Recent high-confidence triple-concept forge completed, indicating active cross-domain synthesis in the substrate.  
+Forge occurred at 2026-05-18 19:26:26 UTC, part of ongoing M3 continuous mode operation.
+
+**Nemesis, Nous, Techne, Coeus, Aletheia, Eos, Hermes still pending deployment — 7 agents MISSING**  
+All MISSING agents are expected pipeline components not yet launched; this is part of the known revival sequence.  
+No outage: MISSING status reflects pre-deployment state, not failure.
+
+**No change since previous brief at 2026-05-18 03:47:37 PM UTC**  
+All previously noted issues (Aporia DEAD, Clio DEAD, Hephaestus low forge rate, Apollo stall) remain consistent with last cycle.  
+No new anomalies introduced; system state is stable but incomplete.
