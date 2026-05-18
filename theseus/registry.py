@@ -12,12 +12,14 @@ from typing import Dict, Type
 
 from theseus.generators.base import Generator
 from theseus.generators.a1_catalog_cross_product import A1CatalogCrossProductGenerator
+from theseus.generators.a2_statistical_correlation import A2StatisticalCorrelationGenerator
 from theseus.generators.b5_conservation_law import B5ConservationLawGenerator
 from theseus.generators.c1_claim_mutation import C1ClaimMutationGenerator
+from theseus.generators.c2_threshold_mutation import C2ThresholdMutationGenerator
 from theseus.generators.d1_kill_neighborhood import D1KillNeighborhoodGenerator
+from theseus.generators.d2_margin_bracket import D2MarginBracketGenerator
 from theseus.generators.e1_research_batch_parser import E1ResearchBatchParserGenerator
 from theseus.generators.stubs.all_stubs import (
-    A2StatisticalCorrelation,
     A3FunctionalIdentity,
     A4RatioInvariance,
     A5DistributionMatch,
@@ -25,11 +27,9 @@ from theseus.generators.stubs.all_stubs import (
     B2CompositionTest,
     B3InverseTest,
     B4FixedPointHunt,
-    C2ThresholdMutation,
     C3RegionSlide,
     C4Generalization,
     C5Specialization,
-    D2MarginBracket,
     D3TriangulationSeeds,
     D4BoundaryCrossing,
     E2ArxivAbstractMining,
@@ -60,14 +60,16 @@ from theseus.generators.stubs.all_stubs import (
 
 
 REGISTRY: Dict[str, Type[Generator]] = {
-    # Active (v0.1)
+    # Active
     "a1": A1CatalogCrossProductGenerator,
+    "a2": A2StatisticalCorrelationGenerator,
     "b5": B5ConservationLawGenerator,
     "c1": C1ClaimMutationGenerator,
+    "c2": C2ThresholdMutationGenerator,
     "d1": D1KillNeighborhoodGenerator,
+    "d2": D2MarginBracketGenerator,
     "e1": E1ResearchBatchParserGenerator,
     # Stubs
-    "a2": A2StatisticalCorrelation,
     "a3": A3FunctionalIdentity,
     "a4": A4RatioInvariance,
     "a5": A5DistributionMatch,
@@ -75,11 +77,9 @@ REGISTRY: Dict[str, Type[Generator]] = {
     "b2": B2CompositionTest,
     "b3": B3InverseTest,
     "b4": B4FixedPointHunt,
-    "c2": C2ThresholdMutation,
     "c3": C3RegionSlide,
     "c4": C4Generalization,
     "c5": C5Specialization,
-    "d2": D2MarginBracket,
     "d3": D3TriangulationSeeds,
     "d4": D4BoundaryCrossing,
     "e2": E2ArxivAbstractMining,

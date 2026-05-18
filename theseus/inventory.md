@@ -15,7 +15,7 @@ Status legend:
 - **A1** `a1_catalog_cross_product` — pairwise invariant equality across
   catalogs (knot × EC, NF × MF, etc.) — **active**
 - **A2** `a2_statistical_correlation` — correlation across pairs with
-  mandatory prime-detrending — **stub**
+  mandatory prime-detrending — **active**
 - **A3** `a3_functional_identity` — does `f(i(a)) == g(j(b))` hold for
   some operator pair `(f, g)`? — **stub**
 - **A4** `a4_ratio_invariance` — is `i(a) / j(b)` constant across a
@@ -37,7 +37,7 @@ Status legend:
 ## Family C — Mutation (perturb existing verified claims)
 
 - **C1** `c1_variable_mutation` — swap object in a verified claim — **active**
-- **C2** `c2_threshold_mutation` — vary threshold in inequality claims — **stub**
+- **C2** `c2_threshold_mutation` — vary threshold in inequality claims — **active**
 - **C3** `c3_region_slide` — slide the coordinate-chart region — **stub**
 - **C4** `c4_generalization` — drop a constraint, retest — **stub**
 - **C5** `c5_specialization` — add a constraint, retest — **stub**
@@ -46,7 +46,7 @@ Status legend:
 
 - **D1** `d1_kill_neighborhood` — kills become seeds via navigator — **active**
 - **D2** `d2_margin_bracket` — claims at minimum distance from kill
-  threshold — **stub**
+  threshold — **active**
 - **D3** `d3_triangulation_seeds` — INCONCLUSIVE → adjacent precision/
   method siblings — **stub**
 - **D4** `d4_boundary_crossing` — minimum-distance (PASS, KILL) pairs — **stub**
@@ -101,7 +101,7 @@ Status legend:
 
 ---
 
-## Active set: A1 + B5 + C1 + D1 + E1
+## Active set (Fire #1, 8 generators): A1 + A2 + B5 + C1 + C2 + D1 + D2 + E1
 
 Rationale (per CHARTER.md):
 - **A1** — highest throughput, no LLM cost, anti-conventional novelty

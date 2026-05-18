@@ -4,6 +4,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Dict, List
 
+# field() is used below
+
 
 @dataclass
 class GeneratorMetrics:
@@ -27,6 +29,7 @@ class GeneratorMetrics:
     confirmations: int = 0
     inconclusive: int = 0
     errors: int = 0
+    error_messages: List[str] = field(default_factory=list)
 
     @property
     def yield_score(self) -> float:

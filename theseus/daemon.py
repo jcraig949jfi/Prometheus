@@ -32,7 +32,9 @@ from theseus.emit.corpus_writer import CorpusWriter
 from theseus.emit.record_schema import TheseusRecord, Verdict
 from theseus.generators.base import Generator, GeneratorStatus
 from theseus.generators.c1_claim_mutation import C1ClaimMutationGenerator
+from theseus.generators.c2_threshold_mutation import C2ThresholdMutationGenerator
 from theseus.generators.d1_kill_neighborhood import D1KillNeighborhoodGenerator
+from theseus.generators.d2_margin_bracket import D2MarginBracketGenerator
 from theseus.registry import REGISTRY, get_generator_class
 from theseus.scoring.metrics_schema import BatchMetrics, GeneratorMetrics
 from theseus.scoring.yield_tracker import YieldTracker
@@ -64,10 +66,12 @@ def _wire_feedback(
     """Route a newly emitted record to downstream generators that
     consume it as parent input (C1, D1)."""
     for g in generators:
-        if isinstance(g, C1ClaimMutationGenerator):
+        if isinstance(g, (C1ClaimMutationGenerator, C2ThresholdMutationGenerator)):
             g.add_parent(record)
         elif isinstance(g, D1KillNeighborhoodGenerator):
             g.add_kill(record)
+        elif isinstance(g, D2MarginBracketGenerator):
+            g.add_parent(record)
 
 
 def run_batch(

@@ -25,7 +25,7 @@ GENUS2_DB_PATH = REPO_ROOT / "prometheus_math" / "databases" / "genus2.json.gz"
 GENERATOR_STATUS = {
     # A — catalog-cross-product
     "a1": "active",
-    "a2": "stub",
+    "a2": "active",
     "a3": "stub",
     "a4": "stub",
     "a5": "stub",
@@ -37,13 +37,13 @@ GENERATOR_STATUS = {
     "b5": "active",
     # C — mutation
     "c1": "active",
-    "c2": "stub",
+    "c2": "active",
     "c3": "stub",
     "c4": "stub",
     "c5": "stub",
     # D — kill-neighborhood
     "d1": "active",
-    "d2": "stub",
+    "d2": "active",
     "d3": "stub",
     "d4": "stub",
     # E — literature mining

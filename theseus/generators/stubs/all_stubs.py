@@ -15,13 +15,6 @@ from theseus.generators.base import StubGenerator, GeneratorStatus
 
 # -- Family A (catalog cross-product) --
 
-class A2StatisticalCorrelation(StubGenerator):
-    generator_id = "a2"
-    claim_kind = ClaimKind.STATISTICAL_CORRELATION.value
-    def description(self) -> str:
-        return "a2: cross-catalog statistical correlation (with prime-detrending)"
-
-
 class A3FunctionalIdentity(StubGenerator):
     generator_id = "a3"
     claim_kind = ClaimKind.FUNCTIONAL_IDENTITY.value
@@ -75,13 +68,6 @@ class B4FixedPointHunt(StubGenerator):
 
 # -- Family C (mutation) --
 
-class C2ThresholdMutation(StubGenerator):
-    generator_id = "c2"
-    claim_kind = ClaimKind.MUTATION.value
-    def description(self) -> str:
-        return "c2: threshold-mutation on inequality claims"
-
-
 class C3RegionSlide(StubGenerator):
     generator_id = "c3"
     claim_kind = ClaimKind.MUTATION.value
@@ -104,13 +90,6 @@ class C5Specialization(StubGenerator):
 
 
 # -- Family D (kill-neighborhood) --
-
-class D2MarginBracket(StubGenerator):
-    generator_id = "d2"
-    claim_kind = ClaimKind.KILL_NEIGHBORHOOD.value
-    def description(self) -> str:
-        return "d2: near-threshold margin-bracket claim generation"
-
 
 class D3TriangulationSeeds(StubGenerator):
     generator_id = "d3"

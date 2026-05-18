@@ -79,8 +79,17 @@ class D1KillNeighborhoodGenerator(Generator):
         )
 
     def add_kill(self, record: TheseusRecord) -> None:
-        """Hook for daemon to feed kill records back as parent kills."""
-        if record.verdict == Verdict.REJECTED.value:
+        """Hook for daemon to feed kill records back as parent kills.
+
+        Filters to A1-shaped payloads (must have relation, object_a,
+        value_b, invariant_a/b) so next() can navigate without KeyError.
+        """
+        if record.verdict != Verdict.REJECTED.value:
+            return
+        p = record.claim_payload
+        needed = ("relation", "object_a", "value_b",
+                  "invariant_a", "invariant_b")
+        if all(k in p for k in needed):
             self._parent_kills.append(record)
 
     def _find_kill_parent(self) -> Optional[TheseusRecord]:

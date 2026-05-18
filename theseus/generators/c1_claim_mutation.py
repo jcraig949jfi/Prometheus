@@ -62,11 +62,20 @@ class C1ClaimMutationGenerator(Generator):
         )
 
     def add_parent(self, record: TheseusRecord) -> None:
-        """Hook for daemon to feed verified records back as parent claims."""
-        if record.verdict in (
+        """Hook for daemon to feed verified records back as parent claims.
+
+        Filters to A1-shaped payloads (must have relation, object_a/b,
+        value_a/b, invariant_a/b) so next() can mutate without KeyError.
+        """
+        if record.verdict not in (
             Verdict.SHADOW_CATALOG.value,
             Verdict.REJECTED.value,
         ):
+            return
+        p = record.claim_payload
+        needed = ("relation", "object_a", "object_b",
+                  "value_a", "value_b", "invariant_a", "invariant_b")
+        if all(k in p for k in needed):
             self._parents.append(record)
 
     def _bootstrap_parent(self) -> Optional[TheseusRecord]:

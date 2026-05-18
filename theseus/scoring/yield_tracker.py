@@ -72,6 +72,9 @@ class YieldTracker:
             )
         m = self.metrics[generator_id]
         m.errors += 1
+        # Keep first 5 error messages per generator for diagnostics
+        if len(m.error_messages) < 5:
+            m.error_messages.append(msg)
 
     def finalize(self) -> Dict[str, GeneratorMetrics]:
         """Compute final throughput / yield_score for each generator."""
