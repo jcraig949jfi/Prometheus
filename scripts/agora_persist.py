@@ -97,6 +97,30 @@ CREATE INDEX IF NOT EXISTS idx_clio_papers_found ON agora.clio_papers (found_at 
 CREATE INDEX IF NOT EXISTS idx_clio_papers_query ON agora.clio_papers (query_matched, found_at DESC);
 CREATE INDEX IF NOT EXISTS idx_clio_papers_external ON agora.clio_papers (source, external_id);
 CREATE INDEX IF NOT EXISTS idx_clio_papers_cycle ON agora.clio_papers (cycle_id);
+
+CREATE TABLE IF NOT EXISTS agora.clio_claim_extractions (
+    id BIGSERIAL PRIMARY KEY,
+    paper_id BIGINT NOT NULL REFERENCES agora.clio_papers(id) ON DELETE CASCADE,
+    extracted_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    claim_index INTEGER NOT NULL,
+    claim_text TEXT NOT NULL,
+    claim_type TEXT,
+    paradigm_hint TEXT,
+    open_problem_hint TEXT,
+    falsifiable BOOLEAN,
+    confidence REAL,
+    extractor_model TEXT,
+    raw_llm_response TEXT,
+    sigma_claim_id TEXT,
+    sigma_submitted_at TIMESTAMPTZ,
+    sigma_submission_error TEXT
+);
+CREATE INDEX IF NOT EXISTS idx_clio_extractions_paper ON agora.clio_claim_extractions (paper_id);
+CREATE INDEX IF NOT EXISTS idx_clio_extractions_unsubmitted
+    ON agora.clio_claim_extractions (extracted_at)
+    WHERE sigma_claim_id IS NULL;
+CREATE INDEX IF NOT EXISTS idx_clio_extractions_extracted_at
+    ON agora.clio_claim_extractions (extracted_at DESC);
 """
 
 
@@ -354,11 +378,147 @@ def read_recent_clio_papers(
         return []
 
 
+def read_unextracted_papers(limit: int = 10) -> list:
+    """Papers in clio_papers with no row in clio_claim_extractions yet, oldest first.
+
+    Used by clio_extractor to pull the next batch needing LLM extraction.
+    """
+    try:
+        with _connect() as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                cur.execute("""
+                    SELECT p.id, p.source, p.external_id, p.title, p.abstract,
+                           p.url, p.authors, p.arxiv_categories, p.pub_date,
+                           p.query_matched, p.found_at
+                    FROM agora.clio_papers p
+                    LEFT JOIN agora.clio_claim_extractions e ON e.paper_id = p.id
+                    WHERE e.paper_id IS NULL
+                    ORDER BY p.found_at ASC
+                    LIMIT %s
+                """, (limit,))
+                rows = cur.fetchall()
+                out = []
+                for r in rows:
+                    d = dict(r)
+                    for k in ("found_at", "pub_date"):
+                        if d.get(k) is not None:
+                            d[k] = d[k].isoformat()
+                    out.append(d)
+                return out
+    except Exception as e:
+        print(f"[agora_persist] read_unextracted_papers failed: {e}", file=sys.stderr)
+        return []
+
+
+def write_clio_claim_extraction(
+    paper_id: int,
+    claim_index: int,
+    claim_text: str,
+    claim_type: Optional[str] = None,
+    paradigm_hint: Optional[str] = None,
+    open_problem_hint: Optional[str] = None,
+    falsifiable: Optional[bool] = None,
+    confidence: Optional[float] = None,
+    extractor_model: Optional[str] = None,
+    raw_llm_response: Optional[str] = None,
+) -> Optional[int]:
+    """Write one extracted claim. Returns extraction id (BIGSERIAL) or None on failure."""
+    try:
+        with _connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    INSERT INTO agora.clio_claim_extractions
+                        (paper_id, claim_index, claim_text, claim_type,
+                         paradigm_hint, open_problem_hint, falsifiable,
+                         confidence, extractor_model, raw_llm_response)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    RETURNING id
+                """, (
+                    paper_id, claim_index, claim_text, claim_type,
+                    paradigm_hint, open_problem_hint, falsifiable,
+                    confidence, extractor_model, raw_llm_response,
+                ))
+                row = cur.fetchone()
+            conn.commit()
+        return row[0] if row else None
+    except Exception as e:
+        print(f"[agora_persist] write_clio_claim_extraction(paper={paper_id}) failed: {e}", file=sys.stderr)
+        return None
+
+
+def read_unsubmitted_extractions(limit: int = 10) -> list:
+    """Extractions with no sigma_claim_id yet. Used by clio_submitter."""
+    try:
+        with _connect() as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                cur.execute("""
+                    SELECT e.id, e.paper_id, e.claim_index, e.claim_text,
+                           e.claim_type, e.paradigm_hint, e.open_problem_hint,
+                           e.falsifiable, e.confidence, e.extracted_at,
+                           p.external_id AS paper_external_id,
+                           p.title AS paper_title,
+                           p.url AS paper_url,
+                           p.abstract AS paper_abstract
+                    FROM agora.clio_claim_extractions e
+                    JOIN agora.clio_papers p ON p.id = e.paper_id
+                    WHERE e.sigma_claim_id IS NULL
+                    ORDER BY e.extracted_at ASC
+                    LIMIT %s
+                """, (limit,))
+                rows = cur.fetchall()
+                out = []
+                for r in rows:
+                    d = dict(r)
+                    if d.get("extracted_at") is not None:
+                        d["extracted_at"] = d["extracted_at"].isoformat()
+                    out.append(d)
+                return out
+    except Exception as e:
+        print(f"[agora_persist] read_unsubmitted_extractions failed: {e}", file=sys.stderr)
+        return []
+
+
+def mark_extraction_submitted(extraction_id: int, sigma_claim_id: str) -> bool:
+    """Record successful Sigma submission. Returns True on success."""
+    try:
+        with _connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    UPDATE agora.clio_claim_extractions
+                    SET sigma_claim_id = %s, sigma_submitted_at = NOW(),
+                        sigma_submission_error = NULL
+                    WHERE id = %s
+                """, (sigma_claim_id, extraction_id))
+            conn.commit()
+        return True
+    except Exception as e:
+        print(f"[agora_persist] mark_extraction_submitted({extraction_id}) failed: {e}", file=sys.stderr)
+        return False
+
+
+def mark_extraction_submission_error(extraction_id: int, error: str) -> bool:
+    """Record a Sigma submission failure (truncates error to 1000 chars)."""
+    try:
+        with _connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    UPDATE agora.clio_claim_extractions
+                    SET sigma_submission_error = %s
+                    WHERE id = %s
+                """, (error[:1000], extraction_id))
+            conn.commit()
+        return True
+    except Exception as e:
+        print(f"[agora_persist] mark_extraction_submission_error({extraction_id}) failed: {e}", file=sys.stderr)
+        return False
+
+
 if __name__ == "__main__":
-    # CLI: python scripts/agora_persist.py init    (creates schema)
-    #      python scripts/agora_persist.py list    (prints all heartbeats)
-    #      python scripts/agora_persist.py intel   (prints recent intelligence outputs)
-    #      python scripts/agora_persist.py clio    (prints recent clio papers)
+    # CLI: python scripts/agora_persist.py init     (creates schema)
+    #      python scripts/agora_persist.py list     (prints all heartbeats)
+    #      python scripts/agora_persist.py intel    (prints recent intelligence outputs)
+    #      python scripts/agora_persist.py clio     (prints recent clio papers)
+    #      python scripts/agora_persist.py extract  (prints recent claim extractions)
     if len(sys.argv) > 1 and sys.argv[1] == "init":
         init_schema()
         print(f"Schema initialized on {PG_HOST}:{PG_PORT}/{PG_DBNAME}")
@@ -380,5 +540,32 @@ if __name__ == "__main__":
             q = _safe((p.get("query_matched") or "")[:40])
             t = _safe((p.get("title") or "")[:70])
             print(f"  {p['found_at']}  {t:<70}  q={q}")
+    elif len(sys.argv) > 1 and sys.argv[1] == "extract":
+        # Print recent claim extractions
+        enc = sys.stdout.encoding or "utf-8"
+        def _safe(s: str) -> str:
+            return (s or "").encode(enc, errors="replace").decode(enc, errors="replace")
+        try:
+            with _connect() as conn:
+                with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                    cur.execute("""
+                        SELECT e.id, e.paper_id, e.claim_index, e.claim_text,
+                               e.claim_type, e.confidence, e.sigma_claim_id,
+                               p.title AS paper_title
+                        FROM agora.clio_claim_extractions e
+                        JOIN agora.clio_papers p ON p.id = e.paper_id
+                        ORDER BY e.extracted_at DESC
+                        LIMIT 30
+                    """)
+                    rows = cur.fetchall()
+                    for r in rows:
+                        sym = "S" if r["sigma_claim_id"] else "."
+                        ct = (r.get("claim_type") or "?")[:10]
+                        conf = r.get("confidence")
+                        conf_str = f"{conf:.2f}" if conf is not None else "----"
+                        text = _safe((r.get("claim_text") or "")[:70])
+                        print(f"  {sym} #{r['id']:>4} [{ct:<10}] c={conf_str}  {text}")
+        except Exception as e:
+            print(f"extract list failed: {e}", file=sys.stderr)
     else:
-        print("Usage: python scripts/agora_persist.py [init|list|intel|clio]")
+        print("Usage: python scripts/agora_persist.py [init|list|intel|clio|extract]")
