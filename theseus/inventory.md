@@ -69,7 +69,8 @@ Status legend:
 
 - **F1** `f1_monte_carlo_random_pairs` — uniform random catalog pairs — **stub**
   *(anti-recommended without weighting; low info density)*
-- **F2** `f2_anti_frequency_sampling` — weight under-tested regions — **stub**
+- **F2** `f2_anti_frequency_sampling` — strict anti-frequency
+  (pick min-coverage region) — **active**
 - **F3** `f3_importance_sampling` — active-learning style sampling
   weighted ∝ 1/(1+coverage)^2 toward under-explored regions — **active**
 - **F4** `f4_frontier_pursuit` — sample at coverage boundary — **stub**
@@ -79,7 +80,8 @@ Status legend:
 - **G1** `g1_galois_twist` — apply Galois action, test invariance — **stub**
 - **G2** `g2_functional_equation` — `L(s) ↔ L(k-s)` symmetry — **stub**
 - **G3** `g3_modular_transform` — apply `SL_2(Z)` — **stub**
-- **G4** `g4_reflection_duality` — `x ↔ -x`, `ζ ↔ ζ̄` — **stub**
+- **G4** `g4_reflection_duality` — reflection-symmetry test
+  (rel(a,b) == rel(-a,b)) — **active**
 - **G5** `g5_scale_invariance` — conformal/scaling relationships — **stub**
 
 ## Family H — Self-feeding
@@ -89,7 +91,8 @@ Status legend:
 - **H2** `h2_triangulation_protocol` — INCONCLUSIVE pathway generator — **stub**
 - **H3** `h3_learner_curiosity` — query Learner's high-uncertainty
   regions — **stub_future**
-- **H4** `h4_bridge_extension` — verified X↔Y extends to X↔Z — **stub**
+- **H4** `h4_bridge_extension` — multi-invariant bridge connectivity
+  test (3 new ec_invariants per parent) — **active**
 
 ## Family I — Local LLM (3B-4B on 16GB VRAM)
 
@@ -107,7 +110,7 @@ Status legend:
 
 ---
 
-## Active set (Fire #8, 23 generators): A1+A2+A3+A4+A5 (5/5 A) + B1+B2+B3+B4+B5 (5/5 B) + C1+C2+C3+C4+C5 (5/5 C) + D1+D2+D3+D4 (4/4 D) + E1+E3 (2/5 E) + F3 (1/4 F) + H1 (1/4 H)
+## Active set (Fire #9, 26 generators): 5/5 A + 5/5 B + 5/5 C + 4/4 D + 2/5 E + 2/4 F + 1/5 G + 2/4 H
 
 Rationale (per CHARTER.md):
 - **A1** — highest throughput, no LLM cost, anti-conventional novelty

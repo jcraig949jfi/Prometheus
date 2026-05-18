@@ -53,13 +53,6 @@ class F1MonteCarloRandomPairs(StubGenerator):
         return "f1: uniform-random catalog-pair sampling (anti-recommended)"
 
 
-class F2AntiFrequencySampling(StubGenerator):
-    generator_id = "f2"
-    claim_kind = ClaimKind.INVARIANT_EQUALITY.value
-    def description(self) -> str:
-        return "f2: anti-frequency stratified sampling of under-tested regions"
-
-
 class F4FrontierPursuit(StubGenerator):
     generator_id = "f4"
     claim_kind = ClaimKind.INVARIANT_EQUALITY.value
@@ -90,13 +83,6 @@ class G3ModularTransform(StubGenerator):
         return "g3: SL_2(Z) modular-transform test"
 
 
-class G4ReflectionDuality(StubGenerator):
-    generator_id = "g4"
-    claim_kind = ClaimKind.SYMMETRY_TRANSFORM.value
-    def description(self) -> str:
-        return "g4: x↔-x, ζ↔ζ̄ reflection-duality"
-
-
 class G5ScaleInvariance(StubGenerator):
     generator_id = "g5"
     claim_kind = ClaimKind.SYMMETRY_TRANSFORM.value
@@ -119,13 +105,6 @@ class H3LearnerCuriosity(StubGenerator):
     status = GeneratorStatus.STUB_FUTURE
     def description(self) -> str:
         return "h3: Learner-curiosity (FUTURE — depends on Ergon resume)"
-
-
-class H4BridgeExtension(StubGenerator):
-    generator_id = "h4"
-    claim_kind = ClaimKind.BRIDGE_EXTENSION.value
-    def description(self) -> str:
-        return "h4: verified X↔Y → propose X↔Z bridge extension"
 
 
 # -- Family I (local LLM, Tier 2) --

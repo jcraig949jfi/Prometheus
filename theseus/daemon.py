@@ -41,6 +41,7 @@ from theseus.generators.d2_margin_bracket import D2MarginBracketGenerator
 from theseus.generators.d3_triangulation_seeds import D3TriangulationSeedsGenerator
 from theseus.generators.d4_boundary_crossing import D4BoundaryCrossingGenerator
 from theseus.generators.h1_self_play_hunter import H1SelfPlayHunterGenerator
+from theseus.generators.h4_bridge_extension import H4BridgeExtensionGenerator
 from theseus.registry import REGISTRY, get_generator_class
 from theseus.scoring.metrics_schema import BatchMetrics, GeneratorMetrics
 from theseus.scoring.yield_tracker import YieldTracker
@@ -83,6 +84,7 @@ def _wire_feedback(
                 D3TriangulationSeedsGenerator,
                 D4BoundaryCrossingGenerator,
                 H1SelfPlayHunterGenerator,
+                H4BridgeExtensionGenerator,
             ),
         ):
             g.add_parent(record)

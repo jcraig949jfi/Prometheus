@@ -968,3 +968,99 @@ Three substrate-native fills to round out coverage:
 - Smoke pre-fix: 2,164 errors. Post-fix-1: 1,659 errors. Post-fix-2: 0 errors.
 - D4 defaultdict bug caught at smoke matches the Techne SUBSTRATE_FIRE_LOG "bug caught at smoke" discipline. Reverse direction this time: a subtle Python idiom (defaultdict + cap-growth) failed in a non-obvious way; trace + minimal repro identified it.
 
+
+## batch-20260518T133037Z-001fc3
+
+- Started: 2026-05-18T13:30:37.052040+00:00
+- Ended:   2026-05-18T13:31:06.931341+00:00
+- Duration: 0.0083 h
+- Requested: a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,d1,d2,d3,d4,e1,e3,f2,f3,g4,h1,h4
+- Active:    a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,d1,d2,d3,d4,e1,e3,f2,f3,g4,h1,h4
+- Records: 65797 (kills=32879, confirmations=30264, inconclusive=1879, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=2601, throughput=123205263.1/h, info_density=0.529, diversity=0.860, yield_score=0.0046, kills=1851, conf=750, errs=0
+- **a2** — records=2601, throughput=19426556.0/h, info_density=0.505, diversity=0.953, yield_score=0.0049, kills=2464, conf=137, errs=0
+- **a3** — records=2601, throughput=302051612.7/h, info_density=0.529, diversity=0.869, yield_score=0.0046, kills=1839, conf=762, errs=0
+- **a4** — records=2601, throughput=12020025.7/h, info_density=0.501, diversity=0.911, yield_score=0.0046, kills=2537, conf=1, errs=0
+- **a5** — records=2601, throughput=27378947.4/h, info_density=0.544, diversity=0.893, yield_score=0.0049, kills=844, conf=553, errs=0
+- **b1** — records=2601, throughput=292612500.2/h, info_density=0.600, diversity=0.924, yield_score=0.0056, kills=0, conf=2601, errs=0
+- **b2** — records=2601, throughput=85904587.1/h, info_density=0.564, diversity=0.930, yield_score=0.0053, kills=929, conf=1672, errs=0
+- **b3** — records=2601, throughput=120046153.9/h, info_density=0.541, diversity=0.949, yield_score=0.0052, kills=1525, conf=1076, errs=0
+- **b4** — records=2601, throughput=2601000000000.0/h, info_density=0.526, diversity=0.950, yield_score=0.0050, kills=1924, conf=677, errs=0
+- **b5** — records=2601, throughput=195075000.0/h, info_density=0.586, diversity=0.909, yield_score=0.0054, kills=377, conf=2224, errs=0
+- **c1** — records=2601, throughput=585224999.9/h, info_density=0.543, diversity=0.867, yield_score=0.0048, kills=1483, conf=1118, errs=0
+- **c2** — records=2601, throughput=120046153.9/h, info_density=0.571, diversity=0.883, yield_score=0.0051, kills=752, conf=1849, errs=0
+- **c3** — records=2601, throughput=53813793.1/h, info_density=0.550, diversity=0.863, yield_score=0.0048, kills=1292, conf=1309, errs=0
+- **c4** — records=2601, throughput=624239999.4/h, info_density=0.592, diversity=0.883, yield_score=0.0053, kills=209, conf=2392, errs=0
+- **c5** — records=2601, throughput=292612499.9/h, info_density=0.551, diversity=0.879, yield_score=0.0049, kills=1278, conf=1323, errs=0
+- **d1** — records=2601, throughput=59263291.2/h, info_density=0.591, diversity=0.920, yield_score=0.0055, kills=228, conf=2373, errs=0
+- **d2** — records=2601, throughput=292612500.2/h, info_density=0.543, diversity=0.885, yield_score=0.0049, kills=1478, conf=1123, errs=0
+- **d3** — records=2601, throughput=6659744.0/h, info_density=0.644, diversity=0.909, yield_score=0.0059, kills=2591, conf=0, errs=0
+- **d4** — records=2601, throughput=26010000.0/h, info_density=0.523, diversity=0.948, yield_score=0.0050, kills=1998, conf=603, errs=0
+- **e1** — records=775, throughput=21796875.0/h, info_density=0.200, diversity=0.990, yield_score=0.0020, kills=0, conf=0, errs=0
+- **e3** — records=2601, throughput=199225532.0/h, info_density=0.558, diversity=0.951, yield_score=0.0054, kills=1081, conf=1520, errs=0
+- **f2** — records=2601, throughput=85904587.1/h, info_density=0.531, diversity=0.867, yield_score=0.0046, kills=1801, conf=800, errs=0
+- **f3** — records=2601, throughput=151025806.4/h, info_density=0.528, diversity=0.868, yield_score=0.0046, kills=1870, conf=731, errs=0
+- **g4** — records=2600, throughput=301935483.7/h, info_density=0.594, diversity=0.892, yield_score=0.0054, kills=143, conf=2457, errs=0
+- **h1** — records=2600, throughput=100645161.3/h, info_density=0.528, diversity=0.959, yield_score=0.0051, kills=1866, conf=734, errs=0
+- **h4** — records=2600, throughput=65454545.5/h, info_density=0.568, diversity=0.902, yield_score=0.0052, kills=519, conf=1479, errs=0
+
+
+---
+
+## Fire #9 — 2026-05-18 ~13:30Z
+
+Three substrate-native stub fills. Engine at 26 active generators. **Major substrate finding from H4.**
+
+### Shipped
+
+- **F2 strict anti-frequency** — picks the MIN-coverage region every emission (with random tie-break). Extreme-bias anchor; pairs with F3's soft 1/(1+c)^2 bias to bracket the active-learning spectrum.
+
+- **G4 reflection duality** — tests whether `rel(value_a, value_b) == rel(-value_a, value_b)`. Maps which (relation, invariant) combos exhibit knot-side sign-reflection symmetry. Substrate-native G-family entry point.
+
+- **H4 bridge extension (multi-invariant)** — for a SHADOW parent, tests whether 3 OTHER ec_invariants ALSO satisfy the relation with the same knot value. SHADOW if ≥2 extensions hold (categorical structure), INCONCLUSIVE if 1, REJECTED if 0 (isolated). Distinguishes coincidental SHADOW from genuinely-structured bridges.
+
+### Smoke (30 s, 26 active generators, 0 errors)
+
+- 65,797 records, 32,879 kills, 30,264 confirmations, 1,879 INCONCLUSIVE
+- **F2: 69% kill rate** — comparable to A1/F3 baseline (same claim space, different sampling). F2 strict bias produces near-uniform coverage as designed.
+- **G4: 5% kill rate** (143 / 2,600) — relations are MOSTLY symmetric under knot-side sign reflection. Makes structural sense: `equal_mod_2` and `abs_diff_le_K` are inherently absolute-value-flavored on the knot side. The 5% reject pool is exactly the relations that DON'T have this symmetry (`divides` mostly).
+- **H4: 20% kill rate** (519 / 2,600) — **80% of A1 SHADOW relations are extensible to additional ec_invariants.**
+- B1, C4 still 0 kills (self-tests).
+- D3 still highest yield_score (0.0059 with step_trace boost).
+
+### MAJOR SUBSTRATE FINDING: relations are invariant-robust but object-fragile
+
+Cross-referencing two fire's findings:
+- **H1 (Fire #3)**: 59% of A1 SHADOW survivors fail under random OBJECT perturbation.
+- **H4 (Fire #9)**: 80% of A1 SHADOW survivors hold under multi-INVARIANT extension.
+
+This asymmetry is a substrate-level result, not noise. The interpretation: A1's SHADOW_CATALOG verdicts capture relations that depend more on the SPECIFIC OBJECTS than on the SPECIFIC INVARIANTS. If a knot K and EC E satisfy `signature(K) abs_diff_le_3 rank(E)`, then they also tend to satisfy `signature(K) abs_diff_le_3 conductor(E)` (high probability) — but a different knot K' and EC E' usually DON'T satisfy any version.
+
+This is a meaningful asymmetry for downstream training: the corpus's training value lies in the (object_a, object_b) pairings, not in the (invariant_a, invariant_b) pairings. Ergon's Learner should preserve object identity in its episodes and treat invariant choice as a softer dimension.
+
+### Substrate state milestone
+
+26/40 generators active (65% of catalog). 1 family complete (G partial; 1/5).
+- 5/5 A, 5/5 B, 5/5 C, 4/4 D — substrate-native catalog-cross-product/operator/mutation/kill-neighborhood complete
+- 2/5 E, 2/4 F, 1/5 G, 2/4 H — partial coverage
+- 0/4 I (Tier 2 LLM), 0/3 J (Tier 3 API) — deferred
+
+Substrate-native remaining: F1 (anti-recommended), F4 (variant), G1/G2/G3/G5 (need EC-twist/L-fn/modular machinery), H2 (variant of D3). H3 deferred (needs Ergon).
+
+### Decisions for Fire #10
+
+- **F4 frontier-pursuit** — coverage-boundary sampler. Variant of F2/F3 anchoring a different bias.
+- **H2 triangulation-protocol** — variant of D3 focused on operator-failure paths rather than resample paths.
+- **G5 scale-invariance** — test rel(2·a, 2·b) == rel(a, b)?
+
+Fire #11 candidate: BUILD-LATER transition. Bayesian optimization (Optuna) over generator hyperparameters — single highest-yield move for the engine's meta-controller, affects all 26 generators.
+
+### Loop discipline
+
+- Tests: 97 → 104 (+7 for F2 / G4 / H4 + Verdict mapping)
+- Smoke: 65K records / 30 s, 0 errors with 26 generators
+- H4 cross-referenced with H1 produces the first substrate-level structural observation about object-vs-invariant axis sensitivity
+

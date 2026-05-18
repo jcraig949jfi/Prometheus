@@ -54,20 +54,20 @@ GENERATOR_STATUS = {
     "e5": "stub",
     # F — probabilistic
     "f1": "stub",
-    "f2": "stub",
+    "f2": "active",
     "f3": "active",
     "f4": "stub",
     # G — symmetry/transformation
     "g1": "stub",
     "g2": "stub",
     "g3": "stub",
-    "g4": "stub",
+    "g4": "active",
     "g5": "stub",
     # H — self-feeding
     "h1": "active",
     "h2": "stub",
     "h3": "stub_future",  # needs Learner
-    "h4": "stub",
+    "h4": "active",
     # I — local LLM
     "i1": "stub_tier2",
     "i2": "stub_tier2",

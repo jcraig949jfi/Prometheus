@@ -32,23 +32,23 @@ from theseus.generators.d3_triangulation_seeds import D3TriangulationSeedsGenera
 from theseus.generators.d4_boundary_crossing import D4BoundaryCrossingGenerator
 from theseus.generators.e1_research_batch_parser import E1ResearchBatchParserGenerator
 from theseus.generators.e3_oeis_mining import E3OEISMiningGenerator
+from theseus.generators.f2_anti_frequency import F2AntiFrequencyGenerator
 from theseus.generators.f3_importance_sampling import F3ImportanceSamplingGenerator
+from theseus.generators.g4_reflection_duality import G4ReflectionDualityGenerator
 from theseus.generators.h1_self_play_hunter import H1SelfPlayHunterGenerator
+from theseus.generators.h4_bridge_extension import H4BridgeExtensionGenerator
 from theseus.generators.stubs.all_stubs import (
     E2ArxivAbstractMining,
     E4LMFDBKnowledgeMining,
     E5MathWorldWikipediaScrape,
     F1MonteCarloRandomPairs,
-    F2AntiFrequencySampling,
     F4FrontierPursuit,
     G1GaloisTwist,
     G2FunctionalEquation,
     G3ModularTransform,
-    G4ReflectionDuality,
     G5ScaleInvariance,
     H2TriangulationProtocol,
     H3LearnerCuriosity,
-    H4BridgeExtension,
     I1ConjectureParaphrasing,
     I2DomainAnalogy,
     I3CounterExampleProposer,
@@ -82,23 +82,23 @@ REGISTRY: Dict[str, Type[Generator]] = {
     "d4": D4BoundaryCrossingGenerator,
     "e1": E1ResearchBatchParserGenerator,
     "e3": E3OEISMiningGenerator,
+    "f2": F2AntiFrequencyGenerator,
     "f3": F3ImportanceSamplingGenerator,
+    "g4": G4ReflectionDualityGenerator,
     "h1": H1SelfPlayHunterGenerator,
+    "h4": H4BridgeExtensionGenerator,
     # Stubs
     "e2": E2ArxivAbstractMining,
     "e4": E4LMFDBKnowledgeMining,
     "e5": E5MathWorldWikipediaScrape,
     "f1": F1MonteCarloRandomPairs,
-    "f2": F2AntiFrequencySampling,
     "f4": F4FrontierPursuit,
     "g1": G1GaloisTwist,
     "g2": G2FunctionalEquation,
     "g3": G3ModularTransform,
-    "g4": G4ReflectionDuality,
     "g5": G5ScaleInvariance,
     "h2": H2TriangulationProtocol,
     "h3": H3LearnerCuriosity,
-    "h4": H4BridgeExtension,
     "i1": I1ConjectureParaphrasing,
     "i2": I2DomainAnalogy,
     "i3": I3CounterExampleProposer,
