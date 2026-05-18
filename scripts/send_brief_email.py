@@ -195,6 +195,68 @@ def build_intelligence_outputs_html(rows: list) -> str:
     return "\n".join(parts)
 
 
+def fetch_pythia_research_reports(hours: int = 4) -> list:
+    """Recent Pythia / Gemini Deep Research reports for the email."""
+    try:
+        sys.path.insert(0, str(REPO_ROOT / "scripts"))
+        import agora_persist
+        if hasattr(agora_persist, "read_recent_completed_research"):
+            return agora_persist.read_recent_completed_research(hours=hours, limit=20)
+    except Exception as e:
+        print(f"fetch_pythia_research_reports failed: {e}", file=sys.stderr)
+    return []
+
+
+def build_research_reports_md(rows: list) -> str:
+    """Markdown block listing recent DR reports with clickable GitHub URLs."""
+    if not rows:
+        return ""
+    lines = ["", "---", "",
+             f"## Deep Research reports (last {len(rows)} completed via Pythia)",
+             "",
+             "_Clickable links open the report on GitHub (mobile-friendly)._",
+             ""]
+    for r in rows:
+        title = r.get("title") or "(untitled)"
+        url = r.get("report_github_url") or ""
+        tier = r.get("tier") or "?"
+        when = r.get("completed_at") or ""
+        if url:
+            lines.append(f"- [{title}]({url}) — T{tier} · completed {when}")
+        else:
+            lines.append(f"- {title} — T{tier} · completed {when} _(URL not yet pushed)_")
+    lines.append("")
+    return "\n".join(lines)
+
+
+def build_research_reports_html(rows: list) -> str:
+    """HTML block listing recent DR reports with clickable GitHub URLs."""
+    if not rows:
+        return ""
+    parts = []
+    parts.append('<hr style="border:none;border-top:1px solid #ccc;margin:24px 0">')
+    parts.append(f'<h2 style="color:#222;margin-top:24px;border-bottom:1px solid #eee;padding-bottom:4px">Deep Research reports (last {len(rows)} via Pythia)</h2>')
+    parts.append('<p style="color:#666;font-size:13px;margin:4px 0 8px 0"><em>Tap a title to open the full report on GitHub.</em></p>')
+    parts.append('<ul style="margin:4px 0 8px 0;padding-left:20px">')
+    for r in rows:
+        title = (r.get("title") or "(untitled)").replace("<", "&lt;").replace(">", "&gt;")
+        url = r.get("report_github_url") or ""
+        tier = r.get("tier") or "?"
+        when = r.get("completed_at") or ""
+        if url:
+            parts.append(
+                f'<li><a href="{url}" style="color:#0366d6;font-weight:600">{title}</a>'
+                f' <span style="color:#888;font-size:12px">— T{tier} · completed {when}</span></li>'
+            )
+        else:
+            parts.append(
+                f'<li>{title} <span style="color:#888;font-size:12px">— T{tier} · completed {when}'
+                f' (URL pending push)</span></li>'
+            )
+    parts.append('</ul>')
+    return "\n".join(parts)
+
+
 def build_mentions_md(brief_md: str) -> str:
     """Inline per-agent quick-links to surface right after the brief.
     Replaces the old 'Mentioned in this brief' subsection that was buried in References."""
@@ -440,10 +502,14 @@ def main():
     intel_rows = fetch_intelligence_outputs()
     intel_md = build_intelligence_outputs_md(intel_rows)
     intel_html = build_intelligence_outputs_html(intel_rows)
+    # Pythia DR reports — clickable URLs to GitHub
+    research_rows = fetch_pythia_research_reports(hours=4)
+    research_md = build_research_reports_md(research_rows)
+    research_html = build_research_reports_html(research_rows)
     refs_md = build_references_md(brief_md)
     refs_html = build_references_html(brief_md)
-    body_md = tldr_md + "\n" + brief_md + "\n" + mentions_md + "\n" + intel_md + "\n" + refs_md
-    body_html = tldr_html + render_html(brief_md) + mentions_html + intel_html + refs_html
+    body_md = tldr_md + "\n" + brief_md + "\n" + mentions_md + "\n" + research_md + "\n" + intel_md + "\n" + refs_md
+    body_html = tldr_html + render_html(brief_md) + mentions_html + research_html + intel_html + refs_html
 
     now = datetime.now(timezone.utc)
     subject = args.subject or f"Prometheus Portfolio — {now.strftime('%Y-%m-%d %H:%M UTC')}"

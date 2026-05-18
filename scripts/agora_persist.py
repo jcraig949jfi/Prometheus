@@ -141,6 +141,43 @@ CREATE TABLE IF NOT EXISTS agora.clio_quality_snapshots (
 );
 CREATE INDEX IF NOT EXISTS idx_clio_quality_snapshot_at
     ON agora.clio_quality_snapshots (snapshot_at DESC);
+
+-- Pythia (Oracle of Delphi) — Gemini Deep Research dispatch queue.
+-- Aporia (or James, via Aporia) enqueues research requests; Pythia daemon
+-- maintains up to 3 concurrent in-flight Gemini interactions, polls for
+-- completion, persists report file, marks row complete with a clickable
+-- GitHub URL the brief includes in the 4-hour email.
+CREATE TABLE IF NOT EXISTS agora.research_queue (
+    id BIGSERIAL PRIMARY KEY,
+    queue_ref TEXT,
+    requested_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    requested_by TEXT NOT NULL DEFAULT 'Aporia',
+    priority INTEGER NOT NULL DEFAULT 5,
+    tier TEXT,
+    title TEXT NOT NULL,
+    prompt_text TEXT NOT NULL,
+    target_substrate_type TEXT,
+    tags JSONB,
+    status TEXT NOT NULL DEFAULT 'pending',
+    dispatched_at TIMESTAMPTZ,
+    completed_at TIMESTAMPTZ,
+    interaction_id TEXT,
+    report_path TEXT,
+    report_github_url TEXT,
+    report_summary TEXT,
+    error TEXT,
+    dispatch_attempt_count INTEGER NOT NULL DEFAULT 0,
+    last_attempt_at TIMESTAMPTZ,
+    elapsed_sec REAL
+);
+CREATE INDEX IF NOT EXISTS idx_research_queue_status_priority
+    ON agora.research_queue (status, priority, requested_at);
+CREATE INDEX IF NOT EXISTS idx_research_queue_pending
+    ON agora.research_queue (priority, requested_at) WHERE status = 'pending';
+CREATE INDEX IF NOT EXISTS idx_research_queue_dispatched
+    ON agora.research_queue (dispatched_at) WHERE status IN ('dispatched', 'in_progress');
+CREATE INDEX IF NOT EXISTS idx_research_queue_completed
+    ON agora.research_queue (completed_at DESC) WHERE status = 'complete';
 """
 
 
@@ -577,6 +614,197 @@ def read_recent_clio_quality_snapshots(limit: int = 24) -> list:
                 return out
     except Exception as e:
         print(f"[agora_persist] read_recent_clio_quality_snapshots failed: {e}", file=sys.stderr)
+        return []
+
+
+def enqueue_research(
+    title: str,
+    prompt_text: str,
+    requested_by: str = "Aporia",
+    priority: int = 5,
+    tier: Optional[str] = None,
+    queue_ref: Optional[str] = None,
+    target_substrate_type: Optional[str] = None,
+    tags: Optional[dict] = None,
+) -> Optional[int]:
+    """Insert a research request into agora.research_queue. Returns row id."""
+    try:
+        with _connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    INSERT INTO agora.research_queue
+                        (queue_ref, requested_by, priority, tier, title,
+                         prompt_text, target_substrate_type, tags)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                    RETURNING id
+                """, (
+                    queue_ref, requested_by, priority, tier, title,
+                    prompt_text, target_substrate_type,
+                    json.dumps(tags) if tags else None,
+                ))
+                row = cur.fetchone()
+            conn.commit()
+        return row[0] if row else None
+    except Exception as e:
+        print(f"[agora_persist] enqueue_research failed: {e}", file=sys.stderr)
+        return None
+
+
+def next_pending_research(limit: int = 3) -> list:
+    """Highest-priority pending requests, oldest first within priority."""
+    try:
+        with _connect() as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                cur.execute("""
+                    SELECT id, queue_ref, title, prompt_text, priority, tier,
+                           target_substrate_type, requested_by, requested_at, tags
+                    FROM agora.research_queue
+                    WHERE status = 'pending'
+                    ORDER BY priority ASC, requested_at ASC
+                    LIMIT %s
+                """, (limit,))
+                rows = cur.fetchall()
+                out = []
+                for r in rows:
+                    d = dict(r)
+                    if d.get("requested_at"):
+                        d["requested_at"] = d["requested_at"].isoformat()
+                    out.append(d)
+                return out
+    except Exception as e:
+        print(f"[agora_persist] next_pending_research failed: {e}", file=sys.stderr)
+        return []
+
+
+def get_in_flight_research() -> list:
+    """Rows currently dispatched / in_progress (not yet complete/failed)."""
+    try:
+        with _connect() as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                cur.execute("""
+                    SELECT id, queue_ref, title, interaction_id, dispatched_at,
+                           dispatch_attempt_count, status
+                    FROM agora.research_queue
+                    WHERE status IN ('dispatched', 'in_progress')
+                    ORDER BY dispatched_at ASC
+                """)
+                rows = cur.fetchall()
+                out = []
+                for r in rows:
+                    d = dict(r)
+                    if d.get("dispatched_at"):
+                        d["dispatched_at"] = d["dispatched_at"].isoformat()
+                    out.append(d)
+                return out
+    except Exception as e:
+        print(f"[agora_persist] get_in_flight_research failed: {e}", file=sys.stderr)
+        return []
+
+
+def mark_research_dispatched(row_id: int, interaction_id: str) -> bool:
+    """Transition pending -> dispatched + record interaction_id."""
+    try:
+        with _connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    UPDATE agora.research_queue
+                    SET status = 'dispatched', dispatched_at = NOW(),
+                        interaction_id = %s,
+                        dispatch_attempt_count = dispatch_attempt_count + 1,
+                        last_attempt_at = NOW()
+                    WHERE id = %s
+                """, (interaction_id, row_id))
+            conn.commit()
+        return True
+    except Exception as e:
+        print(f"[agora_persist] mark_research_dispatched({row_id}) failed: {e}", file=sys.stderr)
+        return False
+
+
+def mark_research_complete(
+    row_id: int,
+    report_path: str,
+    report_github_url: str,
+    report_summary: Optional[str] = None,
+    elapsed_sec: Optional[float] = None,
+) -> bool:
+    """Transition dispatched -> complete with the saved report path + URL."""
+    try:
+        with _connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    UPDATE agora.research_queue
+                    SET status = 'complete', completed_at = NOW(),
+                        report_path = %s, report_github_url = %s,
+                        report_summary = %s, elapsed_sec = %s
+                    WHERE id = %s
+                """, (report_path, report_github_url, report_summary, elapsed_sec, row_id))
+            conn.commit()
+        return True
+    except Exception as e:
+        print(f"[agora_persist] mark_research_complete({row_id}) failed: {e}", file=sys.stderr)
+        return False
+
+
+def mark_research_failed(row_id: int, error: str, status: str = "failed") -> bool:
+    """Transition dispatched -> failed | rate_limited."""
+    try:
+        with _connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    UPDATE agora.research_queue
+                    SET status = %s, error = %s, last_attempt_at = NOW()
+                    WHERE id = %s
+                """, (status, (error or "")[:2000], row_id))
+            conn.commit()
+        return True
+    except Exception as e:
+        print(f"[agora_persist] mark_research_failed({row_id}) failed: {e}", file=sys.stderr)
+        return False
+
+
+def count_research_today(timezone: str = "UTC") -> dict:
+    """Per-status counts of research rows for the current UTC day."""
+    try:
+        with _connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    SELECT status, COUNT(*)
+                    FROM agora.research_queue
+                    WHERE DATE(COALESCE(dispatched_at, requested_at) AT TIME ZONE %s)
+                          = DATE(NOW() AT TIME ZONE %s)
+                    GROUP BY status
+                """, (timezone, timezone))
+                return {row[0]: row[1] for row in cur.fetchall()}
+    except Exception as e:
+        print(f"[agora_persist] count_research_today failed: {e}", file=sys.stderr)
+        return {}
+
+
+def read_recent_completed_research(hours: int = 4, limit: int = 50) -> list:
+    """For the brief email: research reports completed in last N hours."""
+    try:
+        with _connect() as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                cur.execute("""
+                    SELECT id, title, report_github_url, report_path,
+                           report_summary, completed_at, tier, priority
+                    FROM agora.research_queue
+                    WHERE status = 'complete'
+                      AND completed_at > NOW() - (%s || ' hours')::INTERVAL
+                    ORDER BY completed_at DESC
+                    LIMIT %s
+                """, (str(hours), limit))
+                rows = cur.fetchall()
+                out = []
+                for r in rows:
+                    d = dict(r)
+                    if d.get("completed_at"):
+                        d["completed_at"] = d["completed_at"].isoformat()
+                    out.append(d)
+                return out
+    except Exception as e:
+        print(f"[agora_persist] read_recent_completed_research failed: {e}", file=sys.stderr)
         return []
 
 
