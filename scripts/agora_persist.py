@@ -77,6 +77,26 @@ CREATE TABLE IF NOT EXISTS agora.intelligence_outputs (
 CREATE INDEX IF NOT EXISTS idx_intel_outputs_cycle ON agora.intelligence_outputs (cycle_id);
 CREATE INDEX IF NOT EXISTS idx_intel_outputs_finished ON agora.intelligence_outputs (finished_at DESC);
 CREATE INDEX IF NOT EXISTS idx_intel_outputs_stage ON agora.intelligence_outputs (stage, finished_at DESC);
+
+CREATE TABLE IF NOT EXISTS agora.clio_papers (
+    id BIGSERIAL PRIMARY KEY,
+    found_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    source TEXT NOT NULL,
+    external_id TEXT,
+    title TEXT,
+    abstract TEXT,
+    url TEXT,
+    authors TEXT[],
+    query_matched TEXT,
+    arxiv_categories TEXT[],
+    pub_date DATE,
+    cycle_id UUID,
+    raw_json JSONB
+);
+CREATE INDEX IF NOT EXISTS idx_clio_papers_found ON agora.clio_papers (found_at DESC);
+CREATE INDEX IF NOT EXISTS idx_clio_papers_query ON agora.clio_papers (query_matched, found_at DESC);
+CREATE INDEX IF NOT EXISTS idx_clio_papers_external ON agora.clio_papers (source, external_id);
+CREATE INDEX IF NOT EXISTS idx_clio_papers_cycle ON agora.clio_papers (cycle_id);
 """
 
 
@@ -254,10 +274,91 @@ def read_recent_intelligence_outputs(hours: int = 24, limit: int = 50) -> list:
         return []
 
 
+def write_clio_paper(
+    source: str,
+    title: str,
+    external_id: Optional[str] = None,
+    abstract: Optional[str] = None,
+    url: Optional[str] = None,
+    authors: Optional[list] = None,
+    query_matched: Optional[str] = None,
+    arxiv_categories: Optional[list] = None,
+    pub_date: Optional[str] = None,
+    cycle_id: Optional[str] = None,
+    raw_json: Optional[dict] = None,
+) -> bool:
+    """Write one Clio-mined paper to agora.clio_papers. Best-effort.
+
+    Cross-machine readable. Clio runs on M1 (for now); any consumer with
+    Postgres access can SELECT from agora.clio_papers.
+    """
+    try:
+        with _connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    INSERT INTO agora.clio_papers
+                        (source, external_id, title, abstract, url, authors,
+                         query_matched, arxiv_categories, pub_date,
+                         cycle_id, raw_json)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                """, (
+                    source, external_id, title, abstract, url,
+                    authors or [], query_matched, arxiv_categories or [],
+                    pub_date if pub_date else None,
+                    cycle_id,
+                    json.dumps(raw_json, default=str) if raw_json else None,
+                ))
+            conn.commit()
+        return True
+    except Exception as e:
+        print(f"[agora_persist] write_clio_paper({source}/{(title or '')[:40]}) failed: {e}", file=sys.stderr)
+        return False
+
+
+def read_recent_clio_papers(
+    hours: int = 24,
+    query_matched: Optional[str] = None,
+    limit: int = 100,
+) -> list:
+    """Return recent Clio-mined papers as dicts, newest first."""
+    try:
+        with _connect() as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                sql = """
+                    SELECT id, found_at, source, external_id, title, abstract, url,
+                           authors, query_matched, arxiv_categories, pub_date,
+                           cycle_id, raw_json
+                    FROM agora.clio_papers
+                    WHERE found_at > NOW() - (%s || ' hours')::INTERVAL
+                """
+                params = [str(hours)]
+                if query_matched:
+                    sql += " AND query_matched = %s"
+                    params.append(query_matched)
+                sql += " ORDER BY found_at DESC LIMIT %s"
+                params.append(limit)
+                cur.execute(sql, params)
+                rows = cur.fetchall()
+                out = []
+                for r in rows:
+                    d = dict(r)
+                    for k in ("found_at", "pub_date"):
+                        if d.get(k) is not None:
+                            d[k] = d[k].isoformat()
+                    if d.get("cycle_id") is not None:
+                        d["cycle_id"] = str(d["cycle_id"])
+                    out.append(d)
+                return out
+    except Exception as e:
+        print(f"[agora_persist] read_recent_clio_papers failed: {e}", file=sys.stderr)
+        return []
+
+
 if __name__ == "__main__":
     # CLI: python scripts/agora_persist.py init    (creates schema)
     #      python scripts/agora_persist.py list    (prints all heartbeats)
     #      python scripts/agora_persist.py intel   (prints recent intelligence outputs)
+    #      python scripts/agora_persist.py clio    (prints recent clio papers)
     if len(sys.argv) > 1 and sys.argv[1] == "init":
         init_schema()
         print(f"Schema initialized on {PG_HOST}:{PG_PORT}/{PG_DBNAME}")
@@ -268,5 +369,16 @@ if __name__ == "__main__":
         for o in read_recent_intelligence_outputs(hours=48):
             mark = "✓" if o["success"] else "✗"
             print(f"  {mark} {o['stage']:<10} {o['finished_at']} {o.get('output_summary', '') or ''}")
+    elif len(sys.argv) > 1 and sys.argv[1] == "clio":
+        hours = int(sys.argv[2]) if len(sys.argv) > 2 else 24
+        # Some platforms (Windows cp1252) can't render arbitrary Unicode from
+        # paper titles. Encode-safe before printing so the CLI is robust.
+        enc = sys.stdout.encoding or "utf-8"
+        def _safe(s: str) -> str:
+            return (s or "").encode(enc, errors="replace").decode(enc, errors="replace")
+        for p in read_recent_clio_papers(hours=hours, limit=30):
+            q = _safe((p.get("query_matched") or "")[:40])
+            t = _safe((p.get("title") or "")[:70])
+            print(f"  {p['found_at']}  {t:<70}  q={q}")
     else:
-        print("Usage: python scripts/agora_persist.py [init|list|intel]")
+        print("Usage: python scripts/agora_persist.py [init|list|intel|clio]")

@@ -1,0 +1,90 @@
+# Clio — Substrate paper-mining daemon
+#
+# Muse of history. Mines substrate-priority papers from arXiv (and later
+# S2/OpenAlex), persists to agora.clio_papers, emits heartbeat to agora.
+#
+# v0.1 scope: arxiv-only, no LLM extraction, no Sigma submission yet.
+# Layered in subsequent versions per fail-early-fail-often discipline.
+
+agent_name: "Clio"
+machine: "M1"
+
+# Cycle cadence (seconds). Start tight (hourly) per James 2026-05-18 directive.
+# Loosen if rate-limit pressure or low-yield signal emerges.
+scan_interval_sec: 3600
+
+# Persistence
+paper_index_path: "data/clio/paper_index.json"
+
+# arXiv queries — each is a search expression in arXiv API syntax.
+# `priority` is informational for now; v0.2 may use it for rate-limit fairness.
+# Substrate-priority topics chosen per:
+#   - aporia/docs/attack_angle_taxonomy.md (30 paradigms P01-P31)
+#   - aporia/mathematics/tensor_open_problems_v1.md (tensor priority)
+#   - active falsification-routing-first thesis (project_falsification_routing_learner)
+arxiv_queries:
+  # Tier 1 — tensor mathematics (project_tensor_first priority)
+  - query: 'all:"tensor decomposition" AND (cat:math.NA OR cat:math.AG OR cat:math-ph)'
+    max_results: 20
+    priority: 1
+    tags: ["tensor", "P15", "P27"]
+  - query: 'all:"border rank" AND (cat:math.AG OR cat:math.AC)'
+    max_results: 15
+    priority: 1
+    tags: ["tensor", "P29"]
+  - query: 'all:"secant variety" AND cat:math.AG'
+    max_results: 15
+    priority: 1
+    tags: ["tensor", "P31"]
+  - query: 'all:"tensor network" AND (cat:math-ph OR cat:quant-ph)'
+    max_results: 15
+    priority: 1
+    tags: ["tensor", "P30"]
+
+  # Tier 1 — paradigm-active number theory
+  - query: 'all:"Mahler measure" AND cat:math.NT'
+    max_results: 15
+    priority: 1
+    tags: ["NT", "F014:P040"]
+  - query: 'all:"modularity lifting" AND cat:math.NT'
+    max_results: 15
+    priority: 1
+    tags: ["NT", "P01"]
+  - query: 'all:"Sato-Tate" AND cat:math.NT'
+    max_results: 15
+    priority: 1
+    tags: ["NT", "P16"]
+  - query: 'all:"BSD conjecture" AND cat:math.NT'
+    max_results: 15
+    priority: 1
+    tags: ["NT", "F011"]
+
+  # Tier 2 — combinatorics / polynomial method
+  - query: 'all:"polynomial method" AND (cat:math.CO OR cat:math.NT)'
+    max_results: 15
+    priority: 2
+    tags: ["CO", "P22", "P27"]
+  - query: 'all:"cap set" AND cat:math.CO'
+    max_results: 10
+    priority: 2
+    tags: ["CO", "P27"]
+
+  # Tier 2 — falsification signal hunt
+  - query: 'all:"withdrawn" AND (cat:math.NT OR cat:math.AG OR cat:math.CO)'
+    max_results: 10
+    priority: 2
+    tags: ["falsification", "anti-anchor"]
+  - query: 'all:"counterexample" AND (cat:math.NT OR cat:math.AG OR cat:math.CO)'
+    max_results: 15
+    priority: 2
+    tags: ["falsification"]
+  - query: 'all:"erratum" AND (cat:math.NT OR cat:math.AG)'
+    max_results: 10
+    priority: 2
+    tags: ["falsification"]
+
+# arXiv API rate limit (request interval seconds; 3s = safe per arxiv docs)
+arxiv_min_interval_sec: 3.5
+
+# HTTP timeouts
+http_timeout_sec: 30
