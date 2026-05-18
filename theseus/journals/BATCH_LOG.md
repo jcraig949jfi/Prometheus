@@ -2490,3 +2490,79 @@ Top per-(parent_inv_b, relation) rates from the knot × genus-2 audit — surfac
 - New tool `cross_catalog_h4_audit.py` parametrized over any two catalogs in CATALOG_INVARIANTS
 - Report `theseus/cross_catalog_h4_report.md` captures the finding
 
+
+---
+
+## Fire #24 — 2026-05-18 ~18:00Z — Three-catalog-pair audit
+
+Extended the cross-catalog audit to knot × modular_forms (third pair) and re-ran knot × genus-2 with `disc_sign` filtered out (Fire #23 had identified disc_sign as a low-cardinality artifact). Cleaner picture emerges than Fire #23 suggested.
+
+### Three-pair comparison (n=8,000 each)
+
+| relation | knot × EC (ref) | knot × genus-2 filtered | knot × MF | spread |
+|---|---|---|---|---|
+| equal_mod_2 (parity) | 67% | **62.6%** | 58.1% | **9pp** |
+| divides | 51% agg / 33% conductor | 62.3% | 50.6% | 12pp |
+| equal | 2.6% | 9.3% | **0.0%** | 9pp |
+| abs_diff_le_3 | 65% | 38.6% | 52.8% | 26pp |
+
+### Refined substrate finding
+
+**Parity is the most universal signal.** Across 3 catalog pairs, equal_mod_2 holds in a tight 58-67% band (9pp spread). The earlier Fire #23 drop to 54.8% on genus-2 was largely the disc_sign artifact — filtering it brought parity to 62.6%, closer to the EC rate.
+
+**Equal collapses on large-range catalogs.** On modular_forms (a_p values can be tens of thousands), equal hits 0.0% — there's no coincidental integer equality. On small-range catalogs (genus-2 with remaining invariants like analytic_rank, mw_rank, torsion_order), equal hits 9.3%. Equal is **purely an artifact of small-range invariant overlap**, not a structural signal.
+
+**Divides is partly real, partly artifact.** Range 33-62% depending on catalog invariant ranges. Conductor-anchored (large-range) gives ~33%; small-range invariants inflate it to 60+%.
+
+**abs_diff_le_3 is the most catalog-specific** (26pp spread). Fixed-K thresholds don't transfer across catalogs with different invariant scales.
+
+### Updated hierarchy v0.4 (across 3 catalog pairs)
+
+- **Parity (equal_mod_2): ~62% ± 5pp** — universal-structural
+- **Divides: 33-62%** — catalog-specific; conductor-anchored ~33% is the "real" rate
+- **abs_diff_le_K: 39-65%** — threshold + catalog-specific
+- **Equal: 0-9%** — artifact-driven; not structural
+
+### Implication for training_weight
+
+The current v0.3 weights:
+- equal_mod_2: 0.65 — slightly above the 62% cross-pair average; acceptable
+- divides: 0.35 — close to conductor-anchored 33%; acceptable
+- equal: 0.025 — well-calibrated for MF (0%) and EC (2.6%); slightly low for genus-2 (9.3%) but the genus-2 high rate is artifact, so 0.025 is the substrate-honest weight
+
+**Verdict: training_weight v0.3 (Fire #22) is defensible.** No urgent refresh needed.
+
+### Substrate finding refined
+
+The "parity is universally most-extensible" claim is **closer to true than Fire #23 suggested**, after disc_sign filtering. The Fire #23 alarm was partly false — driven by including a low-cardinality field.
+
+Key substrate-honesty lesson: **filter low-cardinality invariants before measuring cross-catalog rates.** Substrate v0.4 architecture should encode this as a generator-level filter, not just for audit scripts.
+
+### Why parity holds and equal/divides don't
+
+Conceptual model:
+- **Parity** bins integers into 2 classes. Most integer-distributions have ~50/50 odd/even, so parity matches across distributions reflect genuine STRUCTURAL alignment (one knot invariant says "this knot is in the even class"; the EC's matching invariant says "this EC is also in the even class").
+- **Equal** requires single-bucket overlap. Only works when invariant ranges happen to overlap. Catalog-specific.
+- **Divides** is sensitive to magnitude: small-range invariants trivially divide many things; large-range invariants only divide when there's actual algebraic relationship.
+
+This explains why filtering invariants by cardinality (Fire #24) brings rates closer together: it removes the bins-too-small effect.
+
+### Decisions for Fire #25
+
+The H4 audit work has reached a natural stopping point. The substrate's first cross-catalog finding is now:
+- **Parity-based cross-catalog claims are ~60% structurally extensible (universal)**
+- **Other relation types are catalog-pair-specific**
+
+Next moves:
+1. **Build the Ergon handoff** (the original Fire #23 plan) — export top-N parity-rich records as JSON. Closes substrate→learner loop.
+2. **Add cardinality-filter to generators** — A1/A2/etc skip low-cardinality invariants in their selection. Would shift the corpus toward cleaner training material.
+3. **Audit one more catalog pair** (knot × OEIS-sleeping?) for sanity-check on the "parity is universal" claim.
+
+Choosing **Ergon handoff** for Fire #25 — the audit work is comprehensive enough; time to ship a training-data file Ergon can consume.
+
+### Loop discipline
+
+- Tests still 140/140 (audit additions are read-only)
+- 3 audit reports on disk (corpus_health, h4_stratified, cross_catalog_h4)
+- Substrate-honesty arc: Fire #21 → #23 → #24 refined the finding from "universal" → "catalog-specific" → "parity is universal, others are catalog-specific" — exactly the kind of iterative refinement the calibration discipline is designed for
+

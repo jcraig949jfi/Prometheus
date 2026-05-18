@@ -1,6 +1,6 @@
 # Cross-Catalog H4 Audit Report
 
-Generated: 2026-05-18T18:06:23.273636+00:00
+Generated: 2026-05-18T18:39:53.314966+00:00
 
 ## Reference (knot × EC, from corpus_health Fire #19)
 
@@ -17,37 +17,70 @@ Generated: 2026-05-18T18:06:23.273636+00:00
 
 | relation | categorical / held | rate |
 |---|---|---|
-| equal | 10 / 100 | 10.0% |
-| equal_mod_2 | 534 / 974 | 54.8% |
-| divides | 323 / 575 | 56.2% |
-| abs_diff_le_3 | 270 / 527 | 51.2% |
+| equal | 11 / 118 | 9.3% |
+| equal_mod_2 | 616 / 984 | 62.6% |
+| divides | 413 / 663 | 62.3% |
+| abs_diff_le_3 | 188 / 487 | 38.6% |
 
 ### Stratified by parent_inv_b
 
 | parent_inv_b | relation | rate |
 |---|---|---|
-| mw_rank | abs_diff_le_3 | 84/150 = 56.0% |
-| analytic_rank | abs_diff_le_3 | 72/136 = 52.9% |
-| torsion_order | abs_diff_le_3 | 63/131 = 48.1% |
-| disc_sign | abs_diff_le_3 | 51/110 = 46.4% |
-| disc_sign | divides | 20/20 = 100.0% |
-| torsion_order | divides | 53/59 = 89.8% |
-| conductor | divides | 73/135 = 54.1% |
-| abs_disc | divides | 55/105 = 52.4% |
-| mw_rank | divides | 66/136 = 48.5% |
-| analytic_rank | divides | 56/120 = 46.7% |
-| mw_rank | equal | 5/29 = 17.2% |
-| analytic_rank | equal | 3/28 = 10.7% |
-| torsion_order | equal | 0/28 = 0.0% |
-| conductor | equal_mod_2 | 120/167 = 71.9% |
-| abs_disc | equal_mod_2 | 119/182 = 65.4% |
-| analytic_rank | equal_mod_2 | 87/160 = 54.4% |
-| torsion_order | equal_mod_2 | 90/171 = 52.6% |
-| mw_rank | equal_mod_2 | 84/170 = 49.4% |
-| disc_sign | equal_mod_2 | 34/124 = 27.4% |
+| analytic_rank | abs_diff_le_3 | 65/150 = 43.3% |
+| torsion_order | abs_diff_le_3 | 65/172 = 37.8% |
+| mw_rank | abs_diff_le_3 | 58/165 = 35.2% |
+| torsion_order | divides | 60/73 = 82.2% |
+| abs_disc | divides | 84/123 = 68.3% |
+| conductor | divides | 78/127 = 61.4% |
+| analytic_rank | divides | 97/169 = 57.4% |
+| mw_rank | divides | 94/171 = 55.0% |
+| torsion_order | equal | 5/41 = 12.2% |
+| analytic_rank | equal | 3/32 = 9.4% |
+| mw_rank | equal | 3/45 = 6.7% |
+| abs_disc | equal_mod_2 | 131/186 = 70.4% |
+| conductor | equal_mod_2 | 146/208 = 70.2% |
+| mw_rank | equal_mod_2 | 128/206 = 62.1% |
+| analytic_rank | equal_mod_2 | 117/201 = 58.2% |
+| torsion_order | equal_mod_2 | 94/183 = 51.4% |
+
+## Audit: knot × modular_forms (n=8,000)
+
+### Aggregate rates
+
+| relation | categorical / held | rate |
+|---|---|---|
+| equal | 0 / 99 | 0.0% |
+| equal_mod_2 | 556 / 957 | 58.1% |
+| divides | 397 / 784 | 50.6% |
+| abs_diff_le_3 | 289 / 547 | 52.8% |
+
+### Stratified by parent_inv_b
+
+| parent_inv_b | relation | rate |
+|---|---|---|
+| a_p_5 | abs_diff_le_3 | 52/73 = 71.2% |
+| a_p_3 | abs_diff_le_3 | 67/106 = 63.2% |
+| a_p_2 | abs_diff_le_3 | 56/99 = 56.6% |
+| char_order | abs_diff_le_3 | 59/131 = 45.0% |
+| weight | abs_diff_le_3 | 55/135 = 40.7% |
+| char_order | divides | 34/35 = 97.1% |
+| weight | divides | 67/104 = 64.4% |
+| level | divides | 90/161 = 55.9% |
+| a_p_5 | divides | 76/146 = 52.1% |
+| a_p_2 | divides | 72/187 = 38.5% |
+| a_p_3 | divides | 58/151 = 38.4% |
+| a_p_2 | equal | 0/20 = 0.0% |
+| weight | equal | 0/31 = 0.0% |
+| char_order | equal | 0/27 = 0.0% |
+| level | equal_mod_2 | 110/162 = 67.9% |
+| a_p_2 | equal_mod_2 | 105/161 = 65.2% |
+| a_p_3 | equal_mod_2 | 104/161 = 64.6% |
+| a_p_5 | equal_mod_2 | 89/149 = 59.7% |
+| weight | equal_mod_2 | 106/189 = 56.1% |
+| char_order | equal_mod_2 | 42/135 = 31.1% |
 
 ## Replication verdict
 
-- **equal_mod_2**: ref 67.2% vs new 54.8% (drift -12.4pp) → DIFFERS
-- **divides**: ref 50.7% vs new 56.2% (drift +5.5pp) → REPLICATES
-- **equal**: ref 2.6% vs new 10.0% (drift +7.4pp) → REPLICATES
+- **equal_mod_2**: ref 67.2% vs new 62.6% (drift -4.6pp) → REPLICATES
+- **divides**: ref 50.7% vs new 62.3% (drift +11.6pp) → DIFFERS
+- **equal**: ref 2.6% vs new 9.3% (drift +6.7pp) → REPLICATES

@@ -43,7 +43,9 @@ def _load_catalog_entries(path: Path) -> List[Dict[str, Any]]:
     return list(data.get("entries", []))
 
 
-# Per-catalog integer-invariant lists
+# Per-catalog integer-invariant lists. Fire #24 filtered out
+# `disc_sign` (∈ {-1, 0, +1}) from genus-2 since its 3-value range
+# inflated equality+parity rates artifactually.
 CATALOG_INVARIANTS = {
     "knot": (
         "crossing_number",
@@ -62,12 +64,22 @@ CATALOG_INVARIANTS = {
     "genus2": (
         "conductor",
         "abs_disc",
-        "disc_sign",
         "analytic_rank",
         "mw_rank",
         "torsion_order",
     ),
+    "modular_forms": (
+        "level",
+        "weight",
+        "char_order",
+        "a_p_2",  # coefficient at p=2 (synthesized from a_p[0])
+        "a_p_3",  # coefficient at p=3 (a_p[1])
+        "a_p_5",  # coefficient at p=5 (a_p[2])
+    ),
 }
+
+
+_MF_AP_INDEX = {"a_p_2": 0, "a_p_3": 1, "a_p_5": 2}
 
 
 def _get_invariant(obj: Dict[str, Any], catalog: str, inv: str) -> Optional[int]:
@@ -82,6 +94,13 @@ def _get_invariant(obj: Dict[str, Any], catalog: str, inv: str) -> Optional[int]
             v = obj.get("rich", {}).get(inv)
     elif catalog == "genus2":
         v = obj.get(inv)
+    elif catalog == "modular_forms":
+        if inv in _MF_AP_INDEX:
+            ap = obj.get("a_p") or []
+            idx = _MF_AP_INDEX[inv]
+            v = ap[idx] if idx < len(ap) else None
+        else:
+            v = obj.get(inv)
     else:
         v = obj.get(inv)
     if isinstance(v, (int, float)) and v == int(v):
@@ -316,6 +335,7 @@ def main() -> None:
     # Load catalogs
     knots = _load_catalog_entries(REPO_ROOT / "prometheus_math/databases/knots.json.gz")
     genus2 = _load_catalog_entries(REPO_ROOT / "prometheus_math/databases/genus2.json.gz")
+    mf = _load_catalog_entries(REPO_ROOT / "prometheus_math/databases/modular_forms.json.gz")
 
     # Reference: from Fire #19 corpus_health
     reference = {
@@ -325,17 +345,24 @@ def main() -> None:
         "abs_diff_le_3": 0.65,  # using abs_diff_le_* aggregate as proxy
     }
 
-    print(f"[cross-cat] Auditing knot × genus2 (n={args.n_samples})...")
-    audit = audit_catalog_pair(
-        "knot", knots, "genus2", genus2,
-        n_samples=args.n_samples, seed=args.seed,
-    )
-    report = render_comparison([audit], reference)
+    audits = []
+    for cat_b_name, cat_b_entries in (
+        ("genus2", genus2),
+        ("modular_forms", mf),
+    ):
+        print(f"[cross-cat] Auditing knot × {cat_b_name} (n={args.n_samples})...")
+        audit = audit_catalog_pair(
+            "knot", knots, cat_b_name, cat_b_entries,
+            n_samples=args.n_samples, seed=args.seed,
+        )
+        audits.append(audit)
+        for rel, r in audit["relation_aggregate"].items():
+            print(f"[cross-cat] {cat_b_name:<14} {rel:<15} held={r['parent_held']:<6} cat={r['categorical']:<6} rate={100*r['rate']:5.1f}%")
+
+    report = render_comparison(audits, reference)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(report, encoding="utf-8")
     print(f"[cross-cat] Wrote {args.output}")
-    for rel, r in audit["relation_aggregate"].items():
-        print(f"[cross-cat] {rel:<15} held={r['parent_held']:<6} cat={r['categorical']:<6} rate={100*r['rate']:5.1f}%")
 
 
 if __name__ == "__main__":
