@@ -692,8 +692,20 @@ human/conductor review._
                 self.log.exception(f"write_artifact (dry) failed: {e}")
                 stats["errors"] += 1
 
-        # Optional Pythia DR seed (one per tick max)
-        if (not dry_run) and proposed:
+        # Optional Pythia DR seed — gated by a self-imposed daily cap so
+        # Argos doesn't saturate Pythia's 20-30/day budget. The cap is
+        # advisory; raise via state file `dr_daily_cap.json` if intentional.
+        dr_seeded_state: list = self.load_state("dr_seeded", default=[]) or []
+        today = datetime.now(timezone.utc).date().isoformat()
+        seeded_today = sum(
+            1 for e in dr_seeded_state
+            if str(e.get("ts", ""))[:10] == today
+        )
+        dr_cap = int(self.load_state("dr_daily_cap", default=3) or 3)
+        dr_quota_remaining = max(0, dr_cap - seeded_today)
+        stats["dr_seeded_today"] = seeded_today
+        stats["dr_quota_remaining"] = dr_quota_remaining
+        if (not dry_run) and proposed and dr_quota_remaining > 0:
             try:
                 dr_title = f"Argos lens fingerprint: {chosen.get('title') or pid}"
                 dr_prompt = self._build_dr_prompt(chosen, proposed)
@@ -710,9 +722,6 @@ human/conductor review._
                 )
                 if row_id is not None:
                     stats["dr_seeded"] = True
-                    dr_seeded_state: list = (
-                        self.load_state("dr_seeded", default=[]) or []
-                    )
                     dr_seeded_state.append({
                         "problem_id": pid,
                         "queue_row_id": row_id,
