@@ -29,7 +29,13 @@ LEDGER_CANDIDATES: list[Path] = [
 ]
 
 # Sampling caps so a huge ledger doesn't blow MVP-tick budget.
-MAX_RECORDS_PER_TICK = 5000
+# Raised 5000 → 50000 (Techne 2026-05-19) so multi-batch corpora are
+# represented even when per-batch sizes are uneven. The instrument's
+# sampling strategy is itself part of the analysis: alphabetical-then-
+# fill iteration on multi-shard corpora produces sampling-window
+# artifacts (see charon/agents/hecate/TECHNE_PROMPT_2026-05-19.md
+# retraction note for the original incident).
+MAX_RECORDS_PER_TICK = 50000
 N_PERMUTATIONS = 200
 MIN_CLUSTER_SIZE = 5
 MI_DRIFT_THRESHOLD = 2.0
@@ -66,24 +72,102 @@ def _iter_jsonl(path: Path) -> Iterator[dict]:
         return
 
 
-def _harvest_records(corpus_dir: Path, max_records: int) -> list[dict]:
-    """Read jsonl[.gz] records from a directory. Returns first max_records."""
+def _harvest_records(corpus_dir: Path, max_records: int) -> tuple[list[dict], dict]:
+    """Read jsonl[.gz] records from a directory with stratified sampling.
+
+    Sampling strategy (post-Techne-2026-05-19 retraction):
+    - Files sorted by mtime descending — newest batches first.
+    - Per-file cap = ceil(max_records / n_files) so every batch contributes.
+    - Second pass after the per-file cap loop fills remaining budget from
+      whichever files still had records to give (the chronologically newest
+      get the second-pass headroom first).
+
+    Alphabetical-then-fill iteration on multi-shard corpora produces
+    sampling-window artifacts — the original Hecate v0.1 hit this and
+    misreported a monoculture finding that was actually an artifact of
+    reading only the chronologically-first 54MB batch. Stratifying
+    avoids that.
+
+    Returns (records, sampling_context). sampling_context names every
+    file inspected, its per-file take, and the global cap, so the artifact
+    consumer can audit the data selection separately from the analysis.
+    """
     out: list[dict] = []
+    sampling_context: dict = {
+        "corpus_dir": str(corpus_dir),
+        "max_records_budget": max_records,
+        "files_seen": [],
+        "files_n": 0,
+        "per_file_cap": None,
+        "exhausted_budget": False,
+    }
     if not corpus_dir.exists():
-        return out
+        return out, sampling_context
     if corpus_dir.is_file():
         files = [corpus_dir]
     else:
-        files = sorted(corpus_dir.glob("*.jsonl.gz")) + sorted(corpus_dir.glob("*.jsonl"))
+        all_files = list(corpus_dir.glob("*.jsonl.gz")) + list(corpus_dir.glob("*.jsonl"))
+        # mtime descending — newest first
+        try:
+            files = sorted(all_files, key=lambda p: p.stat().st_mtime, reverse=True)
+        except Exception:
+            files = sorted(all_files)
+    n_files = max(1, len(files))
+    # Ceil division so per_file_cap * n_files >= max_records and stratification
+    # actually fills the budget when each file has enough records.
+    per_file_cap = max(1, (max_records + n_files - 1) // n_files)
+    sampling_context["files_n"] = n_files
+    sampling_context["per_file_cap"] = per_file_cap
+
+    per_file_taken: dict[str, int] = {}
+    # Pass 1: per-file cap. Every file gets a fair share.
     for p in files:
         if len(out) >= max_records:
             break
         iterator = _iter_jsonl_gz(p) if p.suffix == ".gz" else _iter_jsonl(p)
+        taken = 0
         for rec in iterator:
             if len(out) >= max_records:
                 break
+            if taken >= per_file_cap:
+                break
             out.append(rec)
-    return out
+            taken += 1
+        per_file_taken[str(p)] = taken
+
+    # Pass 2: if budget not filled, top up from files that still have records
+    # (those whose per-file cap was below their actual record count).
+    if len(out) < max_records:
+        for p in files:
+            if len(out) >= max_records:
+                break
+            already = per_file_taken.get(str(p), 0)
+            if already < per_file_cap:
+                # File was exhausted before hitting the per-file cap — skip
+                # (no more records to give).
+                continue
+            iterator = _iter_jsonl_gz(p) if p.suffix == ".gz" else _iter_jsonl(p)
+            # Skip the records we already took.
+            skip = already
+            for rec in iterator:
+                if skip > 0:
+                    skip -= 1
+                    continue
+                if len(out) >= max_records:
+                    break
+                out.append(rec)
+                per_file_taken[str(p)] = per_file_taken.get(str(p), 0) + 1
+
+    sampling_context["exhausted_budget"] = len(out) >= max_records
+    sampling_context["total_records_taken"] = len(out)
+    sampling_context["files_seen"] = [
+        {
+            "file": str(p.name) if hasattr(p, "name") else str(p),
+            "records_taken": per_file_taken.get(str(p), 0),
+        }
+        for p in files
+    ]
+    return out, sampling_context
 
 
 def _entropy(counts: list[int]) -> float:
@@ -161,7 +245,7 @@ class HecateAgent(CharonAgent):
     # ---- analysis ---------------------------------------------------------
 
     def _analyze(self, ledger_dir: Path) -> dict:
-        records = _harvest_records(ledger_dir, MAX_RECORDS_PER_TICK)
+        records, sampling_context = _harvest_records(ledger_dir, MAX_RECORDS_PER_TICK)
         # Extract (kill_pattern, generator_id) pairs from records that have
         # both. Records without a kill_pattern (PROMOTED, UNVERIFIED) get
         # bucketed as "PROMOTED" / "UNVERIFIED" so the analysis still
@@ -216,6 +300,7 @@ class HecateAgent(CharonAgent):
             "mi_z": round(mi_z, 3),
             "clusters_at_or_above_min_size": clusters[:10],
             "n_permutations": N_PERMUTATIONS,
+            "sampling_context": sampling_context,
         }
 
     # ---- artifact writers -------------------------------------------------
@@ -247,6 +332,26 @@ class HecateAgent(CharonAgent):
             lines.append("")
             lines.append(alarm)
             lines.append("")
+        # Sampling context — what data this analysis is over, separate from
+        # the analysis itself. Lets a future reader audit data selection
+        # independently from inference. Added 2026-05-19 after Hecate v0.1
+        # misreported a monoculture artifact as a substrate finding because
+        # the alphabetical-iteration sampler only ever read the chronologically
+        # first 54MB batch.
+        sc = analysis.get("sampling_context", {}) or {}
+        lines.append("## Sampling context")
+        lines.append("")
+        lines.append(f"- max_records_budget: {sc.get('max_records_budget')}")
+        lines.append(f"- files_n: {sc.get('files_n')}")
+        lines.append(f"- per_file_cap: {sc.get('per_file_cap')}")
+        lines.append(f"- exhausted_budget: {sc.get('exhausted_budget')}")
+        lines.append(f"- total_records_taken: {sc.get('total_records_taken')}")
+        lines.append("")
+        lines.append("### Files seen (mtime descending)")
+        lines.append("")
+        for f in sc.get("files_seen", []):
+            lines.append(f"- `{f['file']}` — {f['records_taken']} records")
+        lines.append("")
         lines.append("## Verdict distribution")
         lines.append("")
         for v, c in analysis["verdict_distribution"].items():
