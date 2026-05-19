@@ -408,6 +408,68 @@ class HecateAgent(CharonAgent):
         fname = f"self_audit_null_{utc}.md"
         return self.write_artifact(fname, f"# Hecate SELF_AUDIT_NULL\n\n- reason: {reason}\n- at: {datetime.now(timezone.utc).isoformat()}\n")
 
+    # ---- DR prompt builder (substrate A — retraction patterns) -----------
+
+    def _build_dr_prompt(self, top_pattern: str, top_generator: str) -> str:
+        """Retraction-pattern survey grounded in this tick's dominant
+        kill_pattern + generator. Per doctrine §6 Hecate row."""
+        return (
+            f"Hecate (Charon swarm, continuous gradient archaeology over "
+            f"the kill ledger) is mining retraction-pattern signal adjacent "
+            f"to dominant kill_pattern `{top_pattern}` (top generator: "
+            f"`{top_generator}`). Substrate type A (patterned cases that "
+            f"feed gradient archaeology).\n\n"
+            f"Survey 2024-2026 mathematical retractions / withdrawals / "
+            f"errata adjacent to the technique class implied by "
+            f"`{top_pattern}`. Group findings by failure mode:\n"
+            f"- computation error (numerical, symbolic, or computer-algebra)\n"
+            f"- gap in proof (lemma quietly assumed)\n"
+            f"- prior art collision (the result was already known)\n"
+            f"- hypothesis failure (the result is true but the proof's "
+            f"hypotheses don't hold in the claimed generality)\n\n"
+            f"For each retraction case: arXiv ID + DOI (REQUIRED), the "
+            f"failure-mode classification, the kill_pattern signature "
+            f"this case would have produced inside a v10-class battery, "
+            f"and any signal that distinguishes this kind of failure from "
+            f"the others (so we can refine the kill_pattern taxonomy).\n\n"
+            f"Verification criterion: each retraction must cite both the "
+            f"original arXiv preprint and the retraction notice / "
+            f"superseding paper. Generic 'this paper has known issues' "
+            f"is NOT substrate-grade.\n\n"
+            f"Landing path: Hecate's gradient_archaeology artifact "
+            f"(`charon/agents/hecate/artifacts/gradient_archaeology_*.md`) "
+            f"— the retraction-pattern groupings refine the kill_pattern "
+            f"taxonomy and feed primitive_proposal candidates."
+        )
+
+    def _emit_dr_intake(self, notification: dict) -> Optional[Path]:
+        utc = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        row_id = notification.get("row_id", "noid")
+        fname = f"dr_intake_{row_id}_{utc}.md"
+        lines = [
+            f"# Hecate DR intake — row {row_id}",
+            "",
+            f"- received_at: {datetime.now(timezone.utc).isoformat()}",
+            f"- substrate_type: A (retraction patterns)",
+            f"- title: {notification.get('title', 'n/a')}",
+            f"- report_url: {notification.get('report_github_url', 'n/a')}",
+            f"- completed_at: {notification.get('completed_at', 'n/a')}",
+            "",
+            "## Summary (Pythia)",
+            "",
+            notification.get("summary", "_(no summary)_"),
+            "",
+            "## Downstream action",
+            "",
+            "Cross-reference each retraction case's kill_pattern signature "
+            "against the current kill_ledger cluster geometry. Strong "
+            "matches refine the kill_pattern taxonomy; novel patterns "
+            "become primitive_proposal candidates filed against "
+            "techne/registry/.",
+            "",
+        ]
+        return self.write_artifact(fname, "\n".join(lines))
+
     # ---- alarm tracking --------------------------------------------------
 
     def _update_alarm_state(self, mi_z: float) -> Optional[str]:
@@ -441,11 +503,28 @@ class HecateAgent(CharonAgent):
             "mi_observed": None,
             "mi_z": None,
             "alarm": False,
+            "dr_inbox_processed": 0,
+            "dr_seeded": False,
         }
         artifacts: list[str] = []
 
+        # ---- DR inbox processing ----
+        if not dry_run:
+            for note in self._process_dr_inbox():
+                try:
+                    out = self._emit_dr_intake(note)
+                    if out is not None:
+                        artifacts.append(str(out))
+                        stats["artifacts_written"] += 1
+                    self._mark_dr_processed(note)
+                    stats["dr_inbox_processed"] += 1
+                except Exception as e:
+                    self.log.exception(f"dr_inbox processing failed: {e}")
+                    stats["errors"] += 1
+
         backlog = self.self_generate_backlog()
         stats["backlog_remaining"] = max(0, len(backlog) - 1)
+        analysis_cached: Optional[dict] = None
 
         if not backlog:
             try:
@@ -466,6 +545,7 @@ class HecateAgent(CharonAgent):
                     stats["items_processed"] += 1
                 else:
                     analysis = self._analyze(ledger_dir)
+                    analysis_cached = analysis
                     stats["total_records"] = analysis["total_records"]
                     stats["mi_observed"] = analysis["mi_observed"]
                     stats["mi_z"] = analysis["mi_z"]
@@ -479,13 +559,45 @@ class HecateAgent(CharonAgent):
                 self.log.exception(f"gradient archaeology failed: {e}")
                 stats["errors"] += 1
 
+        # ---- Pythia DR enqueue (retraction-pattern hunt grounded in this tick) ----
+        if (not dry_run) and analysis_cached is not None:
+            top_patterns = analysis_cached.get("top_kill_patterns") or []
+            top_generators = analysis_cached.get("top_generators") or []
+            if top_patterns and top_generators:
+                top_pattern = top_patterns[0][0]
+                top_generator = top_generators[0][0]
+                dr_result = self._dr_enqueue_if_quota(
+                    title=f"Hecate retraction-pattern survey: kill_pattern `{top_pattern}`",
+                    prompt=self._build_dr_prompt(top_pattern, top_generator),
+                    recent_coverage_keywords=["Hecate", top_pattern],
+                    substrate_type="A",
+                    tags={"top_kill_pattern": top_pattern, "top_generator": top_generator},
+                )
+                stats.update({
+                    "dr_seeded": dr_result["dr_seeded"],
+                    "dr_seeded_today": dr_result["dr_seeded_today"],
+                    "dr_quota_remaining": dr_result["dr_quota_remaining"],
+                    "dr_skipped_reason": dr_result["dr_skipped_reason"],
+                    "dr_row_id": dr_result["dr_row_id"],
+                    "dr_top_pattern": top_pattern,
+                })
+
+        if not dry_run:
+            self._emit_dr_discipline_adoption(
+                daily_cap=3,
+                substrate_types=["A"],
+                builder_ref="charon/agents/hecate/daemon.py:_build_dr_prompt",
+            )
+
         summary = (
             f"ledger={stats['ledger_found']} "
             f"records={stats['total_records']} "
             f"mi={stats['mi_observed']} mi_z={stats['mi_z']} "
             f"alarm={stats['alarm']} "
             f"artifacts={stats['artifacts_written']} "
-            f"errors={stats['errors']}"
+            f"errors={stats['errors']} "
+            f"dr_seeded={stats.get('dr_seeded')} "
+            f"dr_inbox={stats['dr_inbox_processed']}"
         )
         self.log_work(
             "hecate_tick_complete",

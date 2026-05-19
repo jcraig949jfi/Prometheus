@@ -257,6 +257,83 @@ class AcheronAgent(CharonAgent):
         fname = f"self_audit_null_{utc}.md"
         return self.write_artifact(fname, f"# Acheron SELF_AUDIT_NULL\n\n- reason: {reason}\n- at: {datetime.now(timezone.utc).isoformat()}\n")
 
+    # ---- DR prompt builder (substrate A — coordinate collisions) ---------
+
+    def _build_dr_prompt(self, term_focus: str) -> str:
+        """Coordinate-collision candidate hunt, per doctrine §6 Acheron row.
+
+        `term_focus` is a HARD-5-risk term Acheron's dictionary already
+        watches — Pythia is asked to surface primary-literature cases
+        where that same term names two non-isomorphic coordinate systems
+        with conflicting reported invariants.
+        """
+        return (
+            f"Acheron (Charon swarm, HARD-5 coordinate-collision detector) "
+            f"is hunting primary-literature cases of coordinate collision "
+            f"around the term `{term_focus}`. Substrate type A "
+            f"(collision-as-falsification signal).\n\n"
+            f"Identify three to five 2024-2026 primary-literature cases "
+            f"where the term `{term_focus}` (or a near-paraphrase) is used "
+            f"in two or more distinct, non-isomorphic coordinate systems "
+            f"within the same paper, the same proof, or two adjacent "
+            f"papers in the same citation neighborhood. For each:\n"
+            f"- the two (or more) coordinate systems being conflated\n"
+            f"- the arXiv ID + DOI of the paper(s)\n"
+            f"- the specific invariant or quantity whose reported value "
+            f"changes under the alternative coordinate (the falsification "
+            f"signal)\n"
+            f"- whether the collision has been flagged in any erratum, "
+            f"comment paper, or correction\n\n"
+            f"Verification criterion: every case must cite arXiv ID + DOI "
+            f"and quote the line in which both coordinates appear. "
+            f"Generic 'authors use X loosely' is NOT a substrate-grade "
+            f"finding — the collision must be specific enough that the "
+            f"reported invariant differs across the two coordinates.\n\n"
+            f"Landing path: Acheron's collision_candidate intake "
+            f"(`charon/agents/acheron/artifacts/collision_candidate_*.md`). "
+            f"Strong candidates feed Iris's adjudication and may produce "
+            f"catalog_edit candidates against "
+            f"`aporia/doctrine/substrate_vocabulary/`."
+        )
+
+    def _emit_dr_intake(self, notification: dict) -> Optional[Path]:
+        utc = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        row_id = notification.get("row_id", "noid")
+        fname = f"dr_intake_{row_id}_{utc}.md"
+        lines = [
+            f"# Acheron DR intake — row {row_id}",
+            "",
+            f"- received_at: {datetime.now(timezone.utc).isoformat()}",
+            f"- substrate_type: A (coordinate collisions)",
+            f"- title: {notification.get('title', 'n/a')}",
+            f"- report_url: {notification.get('report_github_url', 'n/a')}",
+            f"- completed_at: {notification.get('completed_at', 'n/a')}",
+            "",
+            "## Summary (Pythia)",
+            "",
+            notification.get("summary", "_(no summary)_"),
+            "",
+            "## Downstream action",
+            "",
+            "Extract the cited collision cases. Each becomes a "
+            "collision_candidate artifact with provenance pointing to the "
+            "primary-source paper(s). Iris adjudicates whether the "
+            "collision warrants a catalog_edit against the substrate "
+            "vocabulary.",
+            "",
+        ]
+        return self.write_artifact(fname, "\n".join(lines))
+
+    def _pick_dr_term_focus(self) -> Optional[str]:
+        """Rotate through the coordinate_dictionary terms, picking the
+        least-recently-DR'd one. Returns None if all 8 terms have been
+        fired within the recent-coverage window.
+        """
+        last_dr = self.load_state("dr_term_last_fired", default={}) or {}
+        candidates = [entry["term"] for entry in COORDINATE_DICTIONARY]
+        ranked = sorted(candidates, key=lambda t: last_dr.get(t, "0000"))
+        return ranked[0] if ranked else None
+
     # ---- run_tick ---------------------------------------------------------
 
     def run_tick(self, dry_run: bool = False) -> dict:
@@ -267,8 +344,24 @@ class AcheronAgent(CharonAgent):
             "backlog_remaining": 0,
             "file_scanned": None,
             "collisions_found": 0,
+            "dr_inbox_processed": 0,
+            "dr_seeded": False,
         }
         artifacts: list[str] = []
+
+        # ---- DR inbox processing ----
+        if not dry_run:
+            for note in self._process_dr_inbox():
+                try:
+                    out = self._emit_dr_intake(note)
+                    if out is not None:
+                        artifacts.append(str(out))
+                        stats["artifacts_written"] += 1
+                    self._mark_dr_processed(note)
+                    stats["dr_inbox_processed"] += 1
+                except Exception as e:
+                    self.log.exception(f"dr_inbox processing failed: {e}")
+                    stats["errors"] += 1
 
         backlog = self.self_generate_backlog()
         stats["backlog_remaining"] = max(0, len(backlog) - MAX_FILES_PER_TICK)
@@ -314,11 +407,43 @@ class AcheronAgent(CharonAgent):
                     self.log.exception(f"scan failed for {item['rel']}: {e}")
                     stats["errors"] += 1
 
+        # ---- Pythia DR enqueue (rotate through coordinate_dictionary terms) ----
+        if not dry_run:
+            term_focus = self._pick_dr_term_focus()
+            if term_focus:
+                dr_result = self._dr_enqueue_if_quota(
+                    title=f"Acheron coordinate-collision hunt: term `{term_focus}`",
+                    prompt=self._build_dr_prompt(term_focus),
+                    recent_coverage_keywords=["Acheron", term_focus],
+                    substrate_type="A",
+                    tags={"term_focus": term_focus},
+                )
+                stats.update({
+                    "dr_seeded": dr_result["dr_seeded"],
+                    "dr_seeded_today": dr_result["dr_seeded_today"],
+                    "dr_quota_remaining": dr_result["dr_quota_remaining"],
+                    "dr_skipped_reason": dr_result["dr_skipped_reason"],
+                    "dr_row_id": dr_result["dr_row_id"],
+                    "dr_term_focus": term_focus,
+                })
+                if dr_result["dr_seeded"]:
+                    last_dr = self.load_state("dr_term_last_fired", default={}) or {}
+                    last_dr[term_focus] = datetime.now(timezone.utc).isoformat()
+                    self.save_state("dr_term_last_fired", last_dr)
+
+            self._emit_dr_discipline_adoption(
+                daily_cap=3,
+                substrate_types=["A"],
+                builder_ref="charon/agents/acheron/daemon.py:_build_dr_prompt",
+            )
+
         summary = (
             f"file={stats['file_scanned']} "
             f"collisions={stats['collisions_found']} "
             f"artifacts={stats['artifacts_written']} "
-            f"errors={stats['errors']}"
+            f"errors={stats['errors']} "
+            f"dr_seeded={stats.get('dr_seeded')} "
+            f"dr_inbox={stats['dr_inbox_processed']}"
         )
         self.log_work(
             "acheron_tick_complete",

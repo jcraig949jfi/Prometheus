@@ -223,6 +223,64 @@ class MorosAgent(CharonAgent):
         fname = f"self_audit_null_{utc}.md"
         return self.write_artifact(fname, f"# Moros SELF_AUDIT_NULL\n\n- reason: {reason}\n- at: {datetime.now(timezone.utc).isoformat()}\n")
 
+    # ---- DR prompt builder (substrate A/B/C — cross-pollination) --------
+
+    def _build_dr_prompt(self, artifact_rel: str) -> str:
+        """Cross-pollination candidate hunt grounded in the artifact Moros
+        is currently cross-pollinating. Per doctrine §6 Moros row."""
+        return (
+            f"Moros (Charon swarm, cross-pollination automator) is "
+            f"adversarially cross-pollinating the load-bearing artifact "
+            f"`{artifact_rel}`. Substrate type A/B/C (cross-fertilization).\n\n"
+            f"Identify three to five 2025-2026 primary-literature results "
+            f"from domains adjacent to the substantive content of the "
+            f"artifact whose **technique** might transfer to extend, "
+            f"refute, or sharpen the artifact's core claims. For each:\n"
+            f"- the source-domain claim or technique (name + arXiv ID + DOI)\n"
+            f"- a specific target-domain claim in the artifact this would "
+            f"attack or extend (quote or paraphrase the line)\n"
+            f"- the mechanical step needed to transfer (functor? base "
+            f"change? coordinate translation? specialization?)\n"
+            f"- a falsification or sharpening outcome that would be "
+            f"observed if the transfer succeeds\n\n"
+            f"Verification criterion: source-domain claim must cite "
+            f"arXiv ID + DOI (post-2024). Target-domain claim must "
+            f"quote a specific line from the artifact (not paraphrase). "
+            f"Transfer mechanism must be concrete enough that a domain "
+            f"expert could attempt the move in one paper-week.\n\n"
+            f"Landing path: Moros feedback artifact "
+            f"(`pivot/feedback_<artifact-slug>_<date>.md`); strongest "
+            f"transfers become PATTERN_* candidates filed against the "
+            f"substrate vocabulary."
+        )
+
+    def _emit_dr_intake(self, notification: dict) -> Optional[Path]:
+        utc = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        row_id = notification.get("row_id", "noid")
+        fname = f"dr_intake_{row_id}_{utc}.md"
+        lines = [
+            f"# Moros DR intake — row {row_id}",
+            "",
+            f"- received_at: {datetime.now(timezone.utc).isoformat()}",
+            f"- substrate_type: A/B/C (cross-pollination)",
+            f"- title: {notification.get('title', 'n/a')}",
+            f"- report_url: {notification.get('report_github_url', 'n/a')}",
+            f"- completed_at: {notification.get('completed_at', 'n/a')}",
+            "",
+            "## Summary (Pythia)",
+            "",
+            notification.get("summary", "_(no summary)_"),
+            "",
+            "## Downstream action",
+            "",
+            "Extract each transfer candidate into the cross-pollination "
+            "feedback file for the corresponding artifact. PATTERN_* "
+            "candidates promote to harmonia/memory/pattern_library.md "
+            "via Phylax review.",
+            "",
+        ]
+        return self.write_artifact(fname, "\n".join(lines))
+
     # ---- run_tick ---------------------------------------------------------
 
     def run_tick(self, dry_run: bool = False) -> dict:
@@ -233,11 +291,28 @@ class MorosAgent(CharonAgent):
             "backlog_remaining": 0,
             "artifact_targeted": None,
             "critique_obtained": False,
+            "dr_inbox_processed": 0,
+            "dr_seeded": False,
         }
         artifacts: list[str] = []
 
+        # ---- DR inbox processing ----
+        if not dry_run:
+            for note in self._process_dr_inbox():
+                try:
+                    out = self._emit_dr_intake(note)
+                    if out is not None:
+                        artifacts.append(str(out))
+                        stats["artifacts_written"] += 1
+                    self._mark_dr_processed(note)
+                    stats["dr_inbox_processed"] += 1
+                except Exception as e:
+                    self.log.exception(f"dr_inbox processing failed: {e}")
+                    stats["errors"] += 1
+
         backlog = self.self_generate_backlog()
         stats["backlog_remaining"] = max(0, len(backlog) - 1)
+        chosen_artifact: Optional[dict] = backlog[0] if backlog else None
 
         if not backlog:
             try:
@@ -283,11 +358,37 @@ class MorosAgent(CharonAgent):
                 self.log.exception(f"cross-pollination failed for {item['rel']}: {e}")
                 stats["errors"] += 1
 
+        # ---- Pythia DR enqueue (cross-pollination grounded in this artifact) ----
+        if (not dry_run) and chosen_artifact is not None:
+            dr_result = self._dr_enqueue_if_quota(
+                title=f"Moros cross-pollination: {chosen_artifact['rel']}",
+                prompt=self._build_dr_prompt(chosen_artifact["rel"]),
+                recent_coverage_keywords=["Moros", chosen_artifact["rel"]],
+                substrate_type="A",
+                tags={"artifact_path": chosen_artifact["rel"]},
+            )
+            stats.update({
+                "dr_seeded": dr_result["dr_seeded"],
+                "dr_seeded_today": dr_result["dr_seeded_today"],
+                "dr_quota_remaining": dr_result["dr_quota_remaining"],
+                "dr_skipped_reason": dr_result["dr_skipped_reason"],
+                "dr_row_id": dr_result["dr_row_id"],
+            })
+
+        if not dry_run:
+            self._emit_dr_discipline_adoption(
+                daily_cap=3,
+                substrate_types=["A", "B", "C"],
+                builder_ref="charon/agents/moros/daemon.py:_build_dr_prompt",
+            )
+
         summary = (
             f"artifact={stats['artifact_targeted']} "
             f"critique={stats['critique_obtained']} "
             f"artifacts={stats['artifacts_written']} "
-            f"errors={stats['errors']}"
+            f"errors={stats['errors']} "
+            f"dr_seeded={stats.get('dr_seeded')} "
+            f"dr_inbox={stats['dr_inbox_processed']}"
         )
         self.log_work(
             "moros_tick_complete",

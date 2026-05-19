@@ -246,6 +246,71 @@ class LetheAgent(CharonAgent):
         fname = f"self_audit_null_{utc}.md"
         return self.write_artifact(fname, f"# Lethe SELF_AUDIT_NULL\n\n- reason: {reason}\n- at: {datetime.now(timezone.utc).isoformat()}\n")
 
+    # ---- DR prompt builder (substrate A — anti-anchor candidates) --------
+
+    def _build_dr_prompt(self, conjecture: dict) -> str:
+        """Forward false-anchor hunt prompt, per doctrine §6 Lethe row."""
+        cid = conjecture["id"]
+        prompt_text = conjecture.get("prompt", "")
+        true_form = conjecture.get("true_form_summary", "")
+        citation = conjecture.get("citation", "")
+        return (
+            f"Lethe (Charon swarm, anti-anchor miner) is hunting "
+            f"forward false-anchor candidates adjacent to `{cid}`. "
+            f"Substrate type A (anti-anchor candidates).\n\n"
+            f"Anchor context: the registered conjecture is the subject of "
+            f"the following LLM probe: \"{prompt_text}\". The registered "
+            f"true-form summary is: \"{true_form}\". Registered primary "
+            f"citation: {citation}.\n\n"
+            f"Forward false-anchor hunt: identify three claims appearing "
+            f"in arXiv preprints or journal articles from 2024-2026 of the "
+            f"form 'X solved Y' (where Y is adjacent to `{cid}` or its "
+            f"sub-problems) that have since been **retracted, "
+            f"contested, formally disputed, or quietly superseded by a "
+            f"contrary primary-source result**. For each:\n"
+            f"- the original false-form claim text (paraphrased fairly)\n"
+            f"- the arXiv ID + DOI of the original (REQUIRED)\n"
+            f"- the arXiv ID + DOI of the retraction / counter-result "
+            f"(REQUIRED)\n"
+            f"- whether the false-form is in the modal-LLM-emission "
+            f"distribution (i.e. would a 2024-cutoff LLM still emit it?)\n\n"
+            f"Verification criterion: BOTH citations must be primary-source "
+            f"(arXiv ID with retraction-date metadata, or journal DOI). "
+            f"Reject any 'X solved Y' candidate where the only counter-"
+            f"signal is a blog post, talk slides, or unpublished commentary.\n\n"
+            f"Landing path: Lethe's anti_anchor_candidate intake "
+            f"(`charon/agents/lethe/artifacts/anti_anchor_candidate_*.md`). "
+            f"Strong candidates promote to `techne/registry/anti_anchors.jsonl` "
+            f"via Phylax review."
+        )
+
+    def _emit_dr_intake(self, notification: dict) -> Optional[Path]:
+        utc = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        row_id = notification.get("row_id", "noid")
+        fname = f"dr_intake_{row_id}_{utc}.md"
+        lines = [
+            f"# Lethe DR intake — row {row_id}",
+            "",
+            f"- received_at: {datetime.now(timezone.utc).isoformat()}",
+            f"- substrate_type: A (anti-anchor candidates)",
+            f"- title: {notification.get('title', 'n/a')}",
+            f"- report_url: {notification.get('report_github_url', 'n/a')}",
+            f"- completed_at: {notification.get('completed_at', 'n/a')}",
+            "",
+            "## Summary (Pythia)",
+            "",
+            notification.get("summary", "_(no summary)_"),
+            "",
+            "## Downstream action",
+            "",
+            "Extract the three primary-source-cited candidate false-forms "
+            "and write them as anti_anchor_candidate_*.md artifacts with "
+            "emit_rate=1.0 (DR-confirmed; not LLM-probe-detected). Promote "
+            "candidates to techne/registry/anti_anchors.jsonl via Phylax review.",
+            "",
+        ]
+        return self.write_artifact(fname, "\n".join(lines))
+
     # ---- run_tick ---------------------------------------------------------
 
     def run_tick(self, dry_run: bool = False) -> dict:
@@ -257,12 +322,29 @@ class LetheAgent(CharonAgent):
             "conjecture_probed": None,
             "emit_rate": None,
             "candidate_fired": False,
+            "dr_inbox_processed": 0,
+            "dr_seeded": False,
         }
         artifacts: list[str] = []
+
+        # ---- DR inbox processing ----
+        if not dry_run:
+            for note in self._process_dr_inbox():
+                try:
+                    out = self._emit_dr_intake(note)
+                    if out is not None:
+                        artifacts.append(str(out))
+                        stats["artifacts_written"] += 1
+                    self._mark_dr_processed(note)
+                    stats["dr_inbox_processed"] += 1
+                except Exception as e:
+                    self.log.exception(f"dr_inbox processing failed: {e}")
+                    stats["errors"] += 1
 
         backlog = self.self_generate_backlog()
         stats["backlog_remaining"] = max(0, len(backlog) - 1)
 
+        chosen_conjecture: Optional[dict] = None
         if not backlog:
             try:
                 if not dry_run:
@@ -275,6 +357,7 @@ class LetheAgent(CharonAgent):
                 stats["errors"] += 1
         else:
             conjecture = backlog[0]
+            chosen_conjecture = conjecture
             stats["conjecture_probed"] = conjecture["id"]
             try:
                 if dry_run:
@@ -318,12 +401,38 @@ class LetheAgent(CharonAgent):
                 self.log.exception(f"probe failed for {conjecture['id']}: {e}")
                 stats["errors"] += 1
 
+        # ---- Pythia DR enqueue (forward false-anchor hunt) ----
+        if (not dry_run) and chosen_conjecture is not None:
+            dr_result = self._dr_enqueue_if_quota(
+                title=f"Lethe forward false-anchor hunt: {chosen_conjecture['id']}",
+                prompt=self._build_dr_prompt(chosen_conjecture),
+                recent_coverage_keywords=["Lethe", chosen_conjecture["id"]],
+                substrate_type="A",
+                tags={"conjecture_id": chosen_conjecture["id"]},
+            )
+            stats.update({
+                "dr_seeded": dr_result["dr_seeded"],
+                "dr_seeded_today": dr_result["dr_seeded_today"],
+                "dr_quota_remaining": dr_result["dr_quota_remaining"],
+                "dr_skipped_reason": dr_result["dr_skipped_reason"],
+                "dr_row_id": dr_result["dr_row_id"],
+            })
+
+        if not dry_run:
+            self._emit_dr_discipline_adoption(
+                daily_cap=3,
+                substrate_types=["A"],
+                builder_ref="charon/agents/lethe/daemon.py:_build_dr_prompt",
+            )
+
         summary = (
             f"conjecture={stats['conjecture_probed']} "
             f"emit_rate={stats['emit_rate']} "
             f"candidate={stats['candidate_fired']} "
             f"artifacts={stats['artifacts_written']} "
-            f"errors={stats['errors']}"
+            f"errors={stats['errors']} "
+            f"dr_seeded={stats.get('dr_seeded')} "
+            f"dr_inbox={stats['dr_inbox_processed']}"
         )
         self.log_work(
             "lethe_tick_complete",
