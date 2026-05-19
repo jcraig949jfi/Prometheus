@@ -45,6 +45,65 @@ except Exception:
     session_telemetry = None  # type: ignore
     HAS_TELEMETRY = False
 
+PID_FILE = _REPO_ROOT / "charon" / "agents" / "_swarm.pid"
+
+
+def _pid_alive(pid: int) -> bool:
+    """Cross-platform liveness check. Returns False on any uncertainty.
+    Pattern lifted verbatim from scripts/harmonia_loop.py (commit ba0893ec)."""
+    if pid <= 0:
+        return False
+    if os.name == "nt":
+        import ctypes
+        PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+        h = ctypes.windll.kernel32.OpenProcess(
+            PROCESS_QUERY_LIMITED_INFORMATION, False, pid
+        )
+        if not h:
+            return False
+        exit_code = ctypes.c_ulong()
+        ok = ctypes.windll.kernel32.GetExitCodeProcess(
+            h, ctypes.byref(exit_code)
+        )
+        ctypes.windll.kernel32.CloseHandle(h)
+        return bool(ok) and exit_code.value == 259  # STILL_ACTIVE
+    try:
+        os.kill(pid, 0)
+        return True
+    except OSError:
+        return False
+
+
+def _acquire_single_instance_lock(loop_mode: bool) -> None:
+    """Refuse to start a second --loop daemon. Single-tick invocations
+    (no --loop, no --status) bypass the lock so /loop and one-off
+    debugging stay friction-free."""
+    if not loop_mode:
+        return
+    if PID_FILE.exists():
+        try:
+            old_pid = int(PID_FILE.read_text(encoding="utf-8").strip())
+        except Exception:
+            old_pid = -1
+        if old_pid > 0 and _pid_alive(old_pid):
+            print(
+                f"[CHARON_LOOP] another --loop daemon already running "
+                f"(pid={old_pid}, lock={PID_FILE}). Refusing to start.",
+                file=sys.stderr,
+            )
+            sys.exit(2)
+    PID_FILE.parent.mkdir(parents=True, exist_ok=True)
+    PID_FILE.write_text(str(os.getpid()), encoding="utf-8")
+
+
+def _release_single_instance_lock() -> None:
+    try:
+        if PID_FILE.exists() and PID_FILE.read_text(encoding="utf-8").strip() == str(os.getpid()):
+            PID_FILE.unlink()
+    except Exception:
+        pass
+
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [CHARON_LOOP] %(message)s",
@@ -160,18 +219,23 @@ def main() -> int:
         print(json.dumps(state, indent=2, default=str))
         return 0
 
+    _acquire_single_instance_lock(loop_mode=args.loop)
+
     if args.loop:
-        log.info(f"self-loop mode, interval={args.interval}s "
+        log.info(f"self-loop mode, interval={args.interval}s pid={os.getpid()} "
                  f"(use Claude Code /loop for the recommended path)")
-        while True:
-            try:
-                run_once(force_agent=args.agent, dry_run=args.dry_run)
-            except KeyboardInterrupt:
-                log.info("interrupted")
-                return 0
-            except Exception as e:
-                log.exception(f"tick failed: {e}")
-            time.sleep(args.interval)
+        try:
+            while True:
+                try:
+                    run_once(force_agent=args.agent, dry_run=args.dry_run)
+                except KeyboardInterrupt:
+                    log.info("interrupted")
+                    return 0
+                except Exception as e:
+                    log.exception(f"tick failed: {e}")
+                time.sleep(args.interval)
+        finally:
+            _release_single_instance_lock()
 
     record = run_once(force_agent=args.agent, dry_run=args.dry_run)
     print(json.dumps(record, indent=2, default=str))
