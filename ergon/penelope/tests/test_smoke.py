@@ -19,22 +19,35 @@ from ergon.penelope.orchestration import lifetime as lt
 
 
 def test_registered_sources_have_names_and_scanners():
-    assert {s.name for s in REGISTERED_SOURCES} == {"theseus", "aporia_staged"}
+    assert {s.name for s in REGISTERED_SOURCES} == {"theseus", "aporia_staged", "techne_mined"}
     for src in REGISTERED_SOURCES:
         result = src.scanner()
         assert isinstance(result, list)
         for p in result:
             assert isinstance(p, Path)
+        assert src.runner_type in {"training_anchor", "claim_batch"}
 
 
-def test_discover_candidates_returns_source_path_tuples():
+def test_discover_candidates_returns_source_path_runner_tuples():
     candidates = discover_candidates()
     assert isinstance(candidates, list)
     for item in candidates:
-        assert len(item) == 2
-        source_name, path = item
+        assert len(item) == 3
+        source_name, path, runner_type = item
         assert isinstance(source_name, str)
         assert isinstance(path, Path)
+        assert runner_type in {"training_anchor", "claim_batch"}
+
+
+def test_techne_mined_source_finds_claim_jsonls():
+    """Sanity: scan_techne_mined returns the per-category claim files (if any
+    exist on disk). At minimum, the scanner should not crash and should
+    return claim-category-named files when they exist."""
+    from ergon.penelope.sources import scan_techne_mined
+    result = scan_techne_mined()
+    for p in result:
+        assert p.name in {"boundary.jsonl", "frontier_survey.jsonl", "substrate_self.jsonl"}
+        assert p.stat().st_size > 0
 
 
 def test_theseus_outbox_excludes_combined_intermediates():

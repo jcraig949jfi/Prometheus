@@ -21,13 +21,15 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 import time
 import uuid
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Iterator, List, Optional, Tuple
 
 from ergon.penelope import config as cfg
 from ergon.penelope.orchestration import (
@@ -50,6 +52,68 @@ def _new_batch_id() -> str:
     return f"penelope-{ts}-{uuid.uuid4().hex[:6]}"
 
 
+class _LockHeldError(RuntimeError):
+    """Raised when another Penelope instance is already running."""
+
+
+@contextmanager
+def _single_instance_lock(lockfile: Path) -> Iterator[None]:
+    """Cross-platform exclusive file lock. Blocks a second daemon from
+    running concurrently with the first — overlapping runs produce
+    duplicate ledger entries because both instances load the same empty
+    pre-batch state at startup.
+    """
+    lockfile.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        fd = os.open(str(lockfile), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+    except FileExistsError:
+        # Stale lock detection: if the recorded PID is gone, reclaim.
+        try:
+            with open(lockfile, "r", encoding="utf-8") as f:
+                content = f.read().strip()
+            recorded_pid = int(content.split()[0]) if content else -1
+        except (OSError, ValueError):
+            recorded_pid = -1
+        if recorded_pid > 0 and not _pid_alive(recorded_pid):
+            lockfile.unlink(missing_ok=True)
+            fd = os.open(str(lockfile), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+        else:
+            raise _LockHeldError(
+                f"another Penelope instance is running (pid={recorded_pid}); "
+                f"remove {lockfile} only if you're sure no daemon is active"
+            )
+    try:
+        os.write(fd, f"{os.getpid()} {datetime.now(timezone.utc).isoformat()}\n".encode("utf-8"))
+        os.close(fd)
+        yield
+    finally:
+        lockfile.unlink(missing_ok=True)
+
+
+def _pid_alive(pid: int) -> bool:
+    """Best-effort live-pid check. Windows-friendly."""
+    if pid <= 0:
+        return False
+    if sys.platform == "win32":
+        try:
+            import ctypes
+            PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+            handle = ctypes.windll.kernel32.OpenProcess(
+                PROCESS_QUERY_LIMITED_INFORMATION, False, pid,
+            )
+            if handle == 0:
+                return False
+            ctypes.windll.kernel32.CloseHandle(handle)
+            return True
+        except Exception:
+            return False
+    try:
+        os.kill(pid, 0)
+        return True
+    except (OSError, ProcessLookupError):
+        return False
+
+
 def _today_batch_date() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
@@ -57,20 +121,18 @@ def _today_batch_date() -> str:
 def _per_file_output_dir(source: str, input_path: Path) -> Path:
     """Per-file output root so concurrent ingests don't clobber each other.
 
-    Discriminator = parent-dir-name + stem. Aporia stages identically-named
-    files across date dirs (`2026-05-13/training_anchor.jsonl`,
-    `2026-05-14/training_anchor.jsonl`), so stem alone is not unique.
+    Discriminator = grandparent-dir + parent-dir + stem. Aporia stages
+    identically-named files across date dirs, and Techne's mining pipeline
+    writes per-category jsonls (boundary/frontier_survey/substrate_self)
+    under per-extractor subdirs under date dirs — so we need enough of the
+    path to keep all of them distinct.
     """
-    discriminator = f"{input_path.parent.name}__{input_path.stem}"
+    discriminator = f"{input_path.parent.parent.name}__{input_path.parent.name}__{input_path.stem}"
     return cfg.CORPUS_DIR / "by_file" / source / discriminator
 
 
-def _run_ingest_subprocess(input_path: Path, source: str, batch_date: str) -> Dict[str, Any]:
-    """Invoke ergon/learner/scripts/ingest_training_anchors.py on one file.
-
-    Returns a parsed-summary dict with keys:
-      ingested, dropped, validation_failures, by_domain, ok, stderr_tail.
-    """
+def _run_training_anchor_ingest(input_path: Path, source: str, batch_date: str) -> Dict[str, Any]:
+    """Dispatch to ergon/learner/scripts/ingest_training_anchors.py."""
     output_dir = _per_file_output_dir(source, input_path)
     cmd = [
         sys.executable,
@@ -88,6 +150,7 @@ def _run_ingest_subprocess(input_path: Path, source: str, batch_date: str) -> Di
     )
     out: Dict[str, Any] = {
         "ok": proc.returncode == 0,
+        "runner": "training_anchor",
         "ingested": 0,
         "dropped": 0,
         "validation_failures": 0,
@@ -119,6 +182,84 @@ def _run_ingest_subprocess(input_path: Path, source: str, batch_date: str) -> Di
             except (json.JSONDecodeError, IndexError):
                 pass
     return out
+
+
+def _run_claim_batch(input_path: Path, source: str, batch_date: str) -> Dict[str, Any]:
+    """Dispatch to prometheus_math.substrate_generation.tier_1_claim_runner.
+
+    Maps the claim-runner's summary fields onto Penelope's common shape:
+      n_learner_records → ingested
+      permanent_failure_count → validation_failures (proxy: claims that
+        failed verifier dispatch are the analog of validation-failed blocks)
+      transient_failure_count → dropped (proxy: same input may be
+        re-attempted in a future batch if/when verifiers come online)
+    """
+    output_dir = _per_file_output_dir(source, input_path) / batch_date
+    output_dir.mkdir(parents=True, exist_ok=True)
+    out_jsonl = output_dir / "claim_learner_records.jsonl"
+    out_summary = output_dir / "run_summary.json"
+
+    cmd = [
+        sys.executable,
+        "-m", cfg.CLAIM_RUNNER_MODULE,
+        "--claim-batch", str(input_path),
+        "--out-jsonl", str(out_jsonl),
+        "--out-summary", str(out_summary),
+        # Per-file ingest is naturally single-category (boundary OR
+        # frontier_survey OR substrate_self). Quality Rule A requires
+        # ≥3 categories per batch — that's a hand-curation rule, not
+        # an ingest-loop rule. Enforcement belongs at corpus assembly
+        # (BL-E-012 promotion gate), not at per-file pickup.
+        "--no-quality-rules",
+    ]
+    proc = subprocess.run(
+        cmd,
+        capture_output=True,
+        text=True,
+        cwd=str(cfg.REPO_ROOT),
+    )
+    out: Dict[str, Any] = {
+        "ok": proc.returncode == 0,
+        "runner": "claim_batch",
+        "ingested": 0,
+        "dropped": 0,
+        "validation_failures": 0,
+        "by_domain": {},
+        "stderr_tail": (proc.stderr or "").splitlines()[-10:],
+    }
+    if out_summary.exists():
+        try:
+            summary = json.loads(out_summary.read_text(encoding="utf-8"))
+            out["ingested"] = int(summary.get("n_learner_records", 0))
+            out["dropped"] = int(summary.get("transient_failure_count", 0))
+            out["validation_failures"] = int(summary.get("permanent_failure_count", 0))
+            # Use claim_category as a stand-in for "by_domain" lifetime breakdown
+            verdicts = summary.get("actual_verdict_distribution", {})
+            out["by_domain"] = {f"claim:{k}": int(v) for k, v in verdicts.items()}
+        except (json.JSONDecodeError, OSError, ValueError):
+            pass
+    return out
+
+
+_RUNNER_DISPATCH = {
+    "training_anchor": _run_training_anchor_ingest,
+    "claim_batch": _run_claim_batch,
+}
+
+
+def _run_ingest_subprocess(input_path: Path, source: str, batch_date: str, runner_type: str) -> Dict[str, Any]:
+    runner = _RUNNER_DISPATCH.get(runner_type)
+    if runner is None:
+        return {
+            "ok": False,
+            "runner": runner_type,
+            "ingested": 0,
+            "dropped": 0,
+            "validation_failures": 0,
+            "by_domain": {},
+            "stderr_tail": [f"no runner registered for runner_type={runner_type!r}"],
+        }
+    return runner(input_path, source, batch_date)
 
 
 def _journal_batch(batch_id: str, summary: Dict[str, Any], per_file: List[Dict[str, Any]]) -> None:
@@ -212,7 +353,7 @@ def run_batch(emit_telemetry: bool = True) -> Dict[str, Any]:
 
     batch_date = _today_batch_date()
 
-    for source_name, path in candidates:
+    for source_name, path, runner_type in candidates:
         if source_name not in sources_scanned:
             sources_scanned.append(source_name)
         try:
@@ -227,7 +368,7 @@ def run_batch(emit_telemetry: bool = True) -> Dict[str, Any]:
             continue
 
         try:
-            result = _run_ingest_subprocess(path, source_name, batch_date)
+            result = _run_ingest_subprocess(path, source_name, batch_date, runner_type)
         except Exception as e:
             files_failed += 1
             errors.append(f"ingest-exception {path}: {e}")
@@ -355,29 +496,34 @@ def main() -> None:
     args = p.parse_args()
 
     emit = not args.no_telemetry
-    if args.once or (args.batches is None and not args.forever):
-        summary = run_batch(emit_telemetry=emit)
-        _print_summary(summary)
-        return
+    try:
+        with _single_instance_lock(cfg.LOCKFILE_PATH):
+            if args.once or (args.batches is None and not args.forever):
+                summary = run_batch(emit_telemetry=emit)
+                _print_summary(summary)
+                return
 
-    if args.forever:
-        i = 0
-        while True:
-            i += 1
-            print(f"[penelope] Batch {i} starting (forever mode)")
-            summary = run_batch(emit_telemetry=emit)
-            _print_summary(summary)
-            print(f"[penelope] Sleeping {args.interval}s")
-            time.sleep(args.interval)
-        return
+            if args.forever:
+                i = 0
+                while True:
+                    i += 1
+                    print(f"[penelope] Batch {i} starting (forever mode)")
+                    summary = run_batch(emit_telemetry=emit)
+                    _print_summary(summary)
+                    print(f"[penelope] Sleeping {args.interval}s")
+                    time.sleep(args.interval)
+                return
 
-    for i in range(args.batches):
-        print(f"[penelope] Batch {i + 1}/{args.batches}")
-        summary = run_batch(emit_telemetry=emit)
-        _print_summary(summary)
-        if i + 1 < args.batches:
-            print(f"[penelope] Sleeping {args.interval}s")
-            time.sleep(args.interval)
+            for i in range(args.batches):
+                print(f"[penelope] Batch {i + 1}/{args.batches}")
+                summary = run_batch(emit_telemetry=emit)
+                _print_summary(summary)
+                if i + 1 < args.batches:
+                    print(f"[penelope] Sleeping {args.interval}s")
+                    time.sleep(args.interval)
+    except _LockHeldError as e:
+        print(f"[penelope] lock-held, exiting: {e}", file=sys.stderr)
+        sys.exit(2)
 
 
 def _print_summary(s: Dict[str, Any]) -> None:
