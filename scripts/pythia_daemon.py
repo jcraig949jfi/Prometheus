@@ -95,12 +95,19 @@ log = logging.getLogger("pythia")
 
 
 AGENT_MODEL = "deep-research-pro-preview-12-2025"
-# DAILY_BUDGET is now the DISPLAY default (Aletheia's dashboard reads
-# deep_research_budget.budget from heartbeat). Dispatch no longer gates on
-# it — we let Gemini decide when we've hit the real ceiling, and learn that
-# ceiling empirically. _THROTTLE.observed_daily_ceiling updates on first
-# quota hit and overrides the display value.
-DAILY_BUDGET = 20
+# Gemini's May 18 2026 platform update replaced fixed daily-count caps with
+# COMPUTE-BASED limits over 5h rolling windows + weekly aggregates. AI Pro
+# tier (confirmed via dashboard 2026-05-19) gets 4× standard allowance.
+# We can't query Google's remaining-compute number from the API, but we
+# can track our own dispatch counts over the same windows for proxy.
+#
+# DAILY_BUDGET is kept as a legacy field for back-compat with any consumer
+# that still reads it, but is no longer a hard gate. Real ceilings are
+# observed empirically via quota events (still rare under AI Pro).
+WINDOW_HOURS = 5             # Gemini's compute-window refresh cadence
+WEEKLY_RESET_DAY = "Monday"  # James's dashboard: weekly resets at 8:29 AM Mon
+TIER = "AI_Pro"              # 4× standard compute allowance
+DAILY_BUDGET = 20            # legacy label; see compute_window_label() below
 MAX_CONCURRENT = 3
 QUOTA_KEYWORDS = ("RESOURCE_EXHAUSTED", "quota", "429", "rate limit",
                   "rate_limit", "exceeded")
@@ -132,6 +139,27 @@ def _compute_next_retry(consecutive: int) -> datetime:
     delay = BACKOFF_DELAYS_SEC[idx] if idx >= 0 else BACKOFF_DELAYS_SEC[0]
     delay = min(delay, MAX_RETRY_INTERVAL_SEC)
     return now + timedelta(seconds=delay)
+
+
+def _count_dispatched_in_window(hours: int) -> int:
+    """Count agora.research_queue rows dispatched within the last N hours.
+
+    Used to track 5h-rolling-window and weekly compute consumption proxies
+    under Gemini's compute-based usage system (May 18 2026 platform update).
+    """
+    if not HAS_PG:
+        return 0
+    try:
+        with agora_persist._connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    SELECT COUNT(*) FROM agora.research_queue
+                    WHERE dispatched_at IS NOT NULL
+                      AND dispatched_at > NOW() - (%s || ' hours')::INTERVAL
+                """, (str(hours),))
+                return cur.fetchone()[0]
+    except Exception:
+        return 0
 
 
 # ---------------------------------------------------------------------------
@@ -325,17 +353,38 @@ def emit_pythia_heartbeat(rate_limited_at: Optional[str] = None) -> None:
         except Exception:
             pass
     used = today_complete + today_dispatched + today_failed + today_rate_limited
-    # Use observed ceiling when known; fall back to default for the dashboard.
-    effective_budget = _THROTTLE["observed_daily_ceiling"] or DAILY_BUDGET
-    budget_remaining = max(0, effective_budget - used)
+
+    # Gemini compute-based windows (post 2026-05-18 platform update).
+    # AI Pro tier confirmed via dashboard 2026-05-19: 4× standard allowance,
+    # 5h rolling windows, weekly aggregate resets Monday 8:29 AM.
+    count_5h = _count_dispatched_in_window(WINDOW_HOURS)
+    count_weekly = _count_dispatched_in_window(24 * 7)
+    # Use observed quota-event ceiling when known; otherwise emit a string
+    # label so the dashboard doesn't render misleading "23 / 20 = clamped".
+    if _THROTTLE["observed_daily_ceiling"]:
+        effective_budget = _THROTTLE["observed_daily_ceiling"]
+        budget_remaining = max(0, effective_budget - count_5h)
+    else:
+        effective_budget = f"compute-based ({TIER}, {WINDOW_HOURS}h window)"
+        budget_remaining = "unknown (compute-based; no quota event observed)"
     now_iso = datetime.now(timezone.utc).isoformat()
     status_json = {
         # Canonical block — Aletheia's portfolio_monitor reads exactly these keys
         "deep_research_budget": {
-            "used": used,
-            "budget": effective_budget,
+            "used": count_5h,                # now means: dispatches in last 5h window
+            "budget": effective_budget,      # string label until quota-event reveals number
             "remaining": budget_remaining,
             "as_of": now_iso,
+            "basis": "compute_window_5h",    # so consumers know what 'used' means
+            "tier": TIER,
+        },
+        # New 2026-05-19 compute tracking
+        "compute_tracking": {
+            "count_5h_window": count_5h,
+            "count_weekly": count_weekly,
+            "window_hours": WINDOW_HOURS,
+            "tier": TIER,
+            "weekly_resets": "Monday 8:29 AM (dashboard-confirmed)",
         },
         # Throttle/backoff state — visible to the dashboard for debugging.
         "throttle": {
@@ -344,14 +393,15 @@ def emit_pythia_heartbeat(rate_limited_at: Optional[str] = None) -> None:
             "last_rate_limited_at": _THROTTLE["last_rate_limited_at"],
             "next_retry_after": _THROTTLE["next_retry_after"],
             "last_reset_detected_at": _THROTTLE["last_reset_detected_at"],
-            "daily_count_at_first_quota": _THROTTLE["daily_count_at_first_quota"],
+            # renamed: not a daily count under compute-based system
+            "count_at_first_quota_in_5h_window": _THROTTLE["daily_count_at_first_quota"],
         },
         # Auxiliary fields (helpful for the dashboard panel, not strictly required)
         "queue_pending": pending,
         "in_flight": in_flight,
-        "completed_today": today_complete,
-        "failed_today": today_failed,
-        "rate_limited_today": today_rate_limited,
+        "completed_today_utc": today_complete,
+        "failed_today_utc": today_failed,
+        "rate_limited_today_utc": today_rate_limited,
         "max_concurrent": MAX_CONCURRENT,
         "model": AGENT_MODEL,
     }
@@ -359,7 +409,7 @@ def emit_pythia_heartbeat(rate_limited_at: Optional[str] = None) -> None:
         status_json["last_rate_limited_at"] = rate_limited_at
     session_telemetry.register_session(
         name="Pythia", machine="M1",
-        role="deep research report producer (empirical-budget discovery in progress)",
+        role=f"deep research report producer (compute-based, {TIER} tier, {WINDOW_HOURS}h window)",
         kind="tool",
         operator="Aporia",
         status_json=status_json,
