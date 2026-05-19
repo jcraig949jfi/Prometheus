@@ -124,74 +124,59 @@ def _path_to_github_url(path: str) -> str:
     return None
 
 
+def _exclude_dr_events(rows: list) -> list:
+    """DR events have their own dedicated section; don't duplicate them here."""
+    return [r for r in rows if not (r.get("stage") or "").startswith("deep_research_")]
+
+
 def build_intelligence_outputs_md(rows: list) -> str:
-    """Markdown block listing recent intelligence pipeline stages, grouped by cycle."""
+    """One line per cycle. DR events excluded (their own section)."""
+    rows = _exclude_dr_events(rows)
     if not rows:
         return ""
-    lines = ["", "---", "", "## Today's intelligence pipeline", ""]
     cycles = {}
     for r in rows:
         cycles.setdefault(r["cycle_id"], []).append(r)
-    # Most recent cycle first (by max finished_at within cycle)
     cycle_order = sorted(cycles.keys(),
                          key=lambda cid: max(r["finished_at"] for r in cycles[cid]),
                          reverse=True)
-    for cycle_id in cycle_order[:3]:
-        stages = sorted(cycles[cycle_id], key=lambda s: s["finished_at"])
-        latest = stages[-1]["finished_at"]
-        lines.append(f"**Cycle {cycle_id[:8]}** — finished {latest}")
-        lines.append("")
-        for s in stages:
-            mark = "✓" if s["success"] else "✗"
-            stage = s["stage"]
-            summary = (s.get("output_summary") or "").strip()
-            url = _path_to_github_url(s.get("output_path") or "")
-            dur = s.get("duration_sec")
-            dur_str = f" ({dur:.0f}s)" if dur else ""
-            line = f"- {mark} **{stage}**{dur_str} — {summary}" if summary else f"- {mark} **{stage}**{dur_str}"
-            if url:
-                line += f" · [view]({url})"
-            elif s.get("output_path"):
-                line += f" · `{s['output_path']}`"
-            lines.append(line)
-        lines.append("")
+    lines = ["", "---", "", "## Recent pipeline cycles", ""]
+    for cycle_id in cycle_order[:5]:
+        stages = cycles[cycle_id]
+        ok = sum(1 for s in stages if s["success"])
+        stage_names = ", ".join(sorted({s["stage"] for s in stages}))
+        latest = max(s["finished_at"] for s in stages)
+        lines.append(f"- `{cycle_id[:8]}` {ok}/{len(stages)} ok — {stage_names} _(at {latest})_")
+    lines.append("")
     return "\n".join(lines)
 
 
 def build_intelligence_outputs_html(rows: list) -> str:
-    """HTML block listing recent intelligence pipeline stages, grouped by cycle."""
+    """One line per cycle. DR events excluded (their own section)."""
+    rows = _exclude_dr_events(rows)
     if not rows:
         return ""
-    parts = []
-    parts.append('<hr style="border:none;border-top:1px solid #ccc;margin:24px 0">')
-    parts.append('<h2 style="color:#222;margin-top:24px;border-bottom:1px solid #eee;padding-bottom:4px">Today\'s intelligence pipeline</h2>')
     cycles = {}
     for r in rows:
         cycles.setdefault(r["cycle_id"], []).append(r)
     cycle_order = sorted(cycles.keys(),
                          key=lambda cid: max(r["finished_at"] for r in cycles[cid]),
                          reverse=True)
-    for cycle_id in cycle_order[:3]:
-        stages = sorted(cycles[cycle_id], key=lambda s: s["finished_at"])
-        latest = stages[-1]["finished_at"]
-        parts.append(f'<p style="margin:8px 0 4px 0;color:#444"><strong>Cycle {cycle_id[:8]}</strong> <span style="color:#888;font-size:12px">finished {latest}</span></p>')
-        parts.append('<ul style="margin:4px 0 8px 0;padding-left:20px">')
-        for s in stages:
-            mark = "✓" if s["success"] else "✗"
-            stage = s["stage"]
-            summary = (s.get("output_summary") or "").strip()
-            url = _path_to_github_url(s.get("output_path") or "")
-            dur = s.get("duration_sec")
-            dur_str = f" ({dur:.0f}s)" if dur else ""
-            label = f'<strong>{stage}</strong>{dur_str}'
-            if summary:
-                label += f" — {summary}"
-            if url:
-                label += f' · <a href="{url}" style="color:#0366d6">view</a>'
-            elif s.get("output_path"):
-                label += f' · <code style="font-size:11px">{s["output_path"]}</code>'
-            parts.append(f'<li style="color:{"#444" if s["success"] else "#a02020"}">{mark} {label}</li>')
-        parts.append('</ul>')
+    parts = []
+    parts.append('<hr style="border:none;border-top:1px solid #ccc;margin:24px 0">')
+    parts.append('<h2 style="color:#222;margin-top:24px;border-bottom:1px solid #eee;padding-bottom:4px">Recent pipeline cycles</h2>')
+    parts.append('<ul style="margin:4px 0 8px 0;padding-left:20px;font-size:13px">')
+    for cycle_id in cycle_order[:5]:
+        stages = cycles[cycle_id]
+        ok = sum(1 for s in stages if s["success"])
+        stage_names = ", ".join(sorted({s["stage"] for s in stages}))
+        latest = max(s["finished_at"] for s in stages)
+        color = "#444" if ok == len(stages) else "#a02020"
+        parts.append(
+            f'<li style="color:{color}"><code>{cycle_id[:8]}</code> {ok}/{len(stages)} ok '
+            f'&mdash; {stage_names} <span style="color:#888">({latest})</span></li>'
+        )
+    parts.append('</ul>')
     return "\n".join(parts)
 
 
@@ -225,44 +210,69 @@ def _dr_tldr_fragment(state: dict) -> str:
     return " · " + " · ".join(parts) if parts else ""
 
 
+_DR_REPORTS_IN_EMAIL = 10
+
+
+def _short_summary(text: str, limit: int = 140) -> str:
+    """Collapse multi-line summaries to a single tight line."""
+    if not text:
+        return ""
+    s = " ".join(text.split())  # collapse whitespace incl. newlines
+    s = s.lstrip("# *-")
+    if len(s) > limit:
+        s = s[:limit].rsplit(" ", 1)[0] + "…"
+    return s
+
+
 def build_deep_research_md(state: dict) -> str:
-    """Dedicated Deep Research section for the email body (markdown)."""
+    """Brief Deep Research section — received reports only, capped."""
     dr = state.get("deep_research") or {}
     reports = dr.get("reports") or []
     budget = dr.get("budget")
-    if not reports and not budget:
+    received = [r for r in reports if (r.get("stage") or "") == "deep_research_received"]
+    dispatched = dr.get("dispatch_count_24h") or sum(
+        1 for r in reports if (r.get("stage") or "") == "deep_research_dispatched"
+    )
+    if not received and not budget:
         return ""
     lines = ["", "---", "", "## Deep Research (past 24h)", ""]
     if budget:
         used = budget.get("used", 0)
         total = budget.get("budget", 20)
-        remaining = budget.get("remaining", max(0, total - used) if used is not None else None)
+        remaining = budget.get("remaining")
+        if remaining is None and used is not None and total is not None:
+            remaining = total - used
         agent = budget.get("agent") or "?"
-        lines.append(f"**Budget:** {used} / {total} tokens used today · {remaining} remaining · reporter: `{agent}`")
+        over = " (over budget)" if used is not None and total is not None and used > total else ""
+        lines.append(f"**Budget:** {used}/{total} tokens{over} · {len(received)} received · {dispatched} dispatched · via `{agent}`")
         lines.append("")
-    if not reports:
-        lines.append("*(no DR events logged in last 24h yet)*")
+    if not received:
+        lines.append("*(no completed reports in last 24h yet)*")
         lines.append("")
         return "\n".join(lines)
-    for r in reports:
-        tag = (r.get("stage") or "").replace("deep_research_", "")
-        summary = r.get("output_summary") or r.get("summary") or "(no summary)"
+    for r in received[:_DR_REPORTS_IN_EMAIL]:
+        summary = _short_summary(r.get("output_summary") or r.get("summary") or "(no summary)", 140)
         path = r.get("output_path")
-        ts = r.get("finished_at") or ""
-        line = f"- **{tag}** · {ts} — {summary}"
         if path:
-            line += f"  [`{path}`](https://github.com/jcraig949jfi/Prometheus/blob/main/{path})"
-        lines.append(line)
+            lines.append(f"- [{summary}](https://github.com/jcraig949jfi/Prometheus/blob/main/{path})")
+        else:
+            lines.append(f"- {summary}")
+    if len(received) > _DR_REPORTS_IN_EMAIL:
+        lines.append(f"- *…and {len(received) - _DR_REPORTS_IN_EMAIL} more on the dashboard*")
     lines.append("")
     return "\n".join(lines)
 
 
 def build_deep_research_html(state: dict) -> str:
-    """Dedicated Deep Research section for the email body (HTML)."""
+    """Brief Deep Research section — received reports only, capped (HTML)."""
     dr = state.get("deep_research") or {}
     reports = dr.get("reports") or []
     budget = dr.get("budget")
-    if not reports and not budget:
+    received = [r for r in reports if (r.get("stage") or "") == "deep_research_received"]
+    dispatched = dr.get("dispatch_count_24h") or sum(
+        1 for r in reports if (r.get("stage") or "") == "deep_research_dispatched"
+    )
+    if not received and not budget:
         return ""
     parts = []
     parts.append('<hr style="border:none;border-top:1px solid #ccc;margin:24px 0">')
@@ -270,34 +280,33 @@ def build_deep_research_html(state: dict) -> str:
     if budget:
         used = budget.get("used", 0)
         total = budget.get("budget", 20)
-        remaining = budget.get("remaining", max(0, total - used) if used is not None else None)
-        pct = int(round(100 * used / total)) if total else 0
-        bar_color = "#16a34a" if pct < 60 else "#ca8a04" if pct < 90 else "#dc2626"
+        remaining = budget.get("remaining")
+        if remaining is None and used is not None and total is not None:
+            remaining = total - used
         agent = budget.get("agent") or "?"
+        over = ' <span style="color:#dc2626">(over budget)</span>' if used is not None and total is not None and used > total else ""
         parts.append(
-            f'<div style="margin:8px 0 16px 0;font-size:14px">'
-            f'<strong>Budget:</strong> {used} / {total} tokens used · {remaining} remaining · reporter: <code>{agent}</code>'
-            f'<div style="margin-top:4px;width:200px;height:6px;background:#eee;border-radius:3px">'
-            f'<div style="width:{pct}%;height:6px;background:{bar_color};border-radius:3px"></div></div>'
-            f'</div>'
+            f'<p style="margin:8px 0 12px 0;font-size:14px;color:#444">'
+            f'<strong>Budget:</strong> {used}/{total} tokens{over} &middot; '
+            f'{len(received)} received &middot; {dispatched} dispatched &middot; '
+            f'via <code>{agent}</code></p>'
         )
-    if not reports:
-        parts.append('<p style="color:#666;font-style:italic">(no DR events logged in last 24h yet)</p>')
+    if not received:
+        parts.append('<p style="color:#666;font-style:italic">(no completed reports in last 24h yet)</p>')
         return "\n".join(parts)
     parts.append('<ul style="margin:4px 0 8px 0;padding-left:20px">')
-    for r in reports:
-        tag = (r.get("stage") or "").replace("deep_research_", "")
-        summary = r.get("output_summary") or r.get("summary") or "(no summary)"
+    for r in received[:_DR_REPORTS_IN_EMAIL]:
+        summary = _short_summary(r.get("output_summary") or r.get("summary") or "(no summary)", 140)
         path = r.get("output_path")
-        ts = r.get("finished_at") or ""
-        path_html = ""
         if path:
-            path_html = f' &middot; <a href="https://github.com/jcraig949jfi/Prometheus/blob/main/{path}" style="color:#0366d6;text-decoration:none"><code>{path}</code></a>'
-        parts.append(
-            f'<li style="margin:6px 0"><strong>{tag}</strong> '
-            f'<span style="color:#888;font-size:12px">{ts}</span><br>'
-            f'<span style="color:#333">{summary}</span>{path_html}</li>'
-        )
+            parts.append(
+                f'<li style="margin:4px 0"><a href="https://github.com/jcraig949jfi/Prometheus/blob/main/{path}" '
+                f'style="color:#0366d6;text-decoration:none">{summary}</a></li>'
+            )
+        else:
+            parts.append(f'<li style="margin:4px 0;color:#333">{summary}</li>')
+    if len(received) > _DR_REPORTS_IN_EMAIL:
+        parts.append(f'<li style="color:#888;font-style:italic">…and {len(received) - _DR_REPORTS_IN_EMAIL} more on the dashboard</li>')
     parts.append('</ul>')
     return "\n".join(parts)
 
@@ -518,6 +527,14 @@ def main():
         sys.exit(1)
 
     brief_md = args.brief.read_text(encoding="utf-8")
+    # Defense-in-depth: strip any LLM chain-of-thought preamble that leaked
+    # through the brief file, in case metis_portfolio's own strip missed it.
+    try:
+        sys.path.insert(0, str(REPO_ROOT / "scripts"))
+        from metis_portfolio import _strip_chain_of_thought
+        brief_md = _strip_chain_of_thought(brief_md)
+    except Exception:
+        pass
     # TL;DR header pulled from current state.json
     state = {}
     state_path = REPO_ROOT / "docs" / "state.json"

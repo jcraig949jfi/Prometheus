@@ -159,6 +159,15 @@ purpose"), historical context. It is least authoritative for things
 state.json can see and refresh: infra reachability, agent liveness,
 recent operational metrics.
 
+CRITICAL — output discipline:
+You are producing the FINAL brief, not narrating your reasoning. NEVER include
+phrases like "We are given...", "Let me check", "Steps:", "Now let's...",
+"However, note:", "Wait:", "Actually...", or any commentary about what you're
+about to do. Output ONLY the three sections. Start the output with the literal
+header "## Act on this" — nothing before it. No preamble, no scratchpad, no
+self-correction. If you need to think, do it silently. The reader sees only
+what you write.
+
 CRITICAL — Deep Research reports:
 state.json's `deep_research` field surfaces a high-value pipeline run by an
 Aporia-supervised tool. We get a fixed budget of 20 DR tokens per day; each
@@ -340,7 +349,43 @@ human-friendly timestamp format from the system prompt for any Generated:/As-of:
 lines you produce.
 """
 
-    return call_llm(prompt, system=SYSTEM_PROMPT)
+    raw = call_llm(prompt, system=SYSTEM_PROMPT)
+    return _strip_chain_of_thought(raw)
+
+
+def _strip_chain_of_thought(text: str) -> str:
+    """Remove preamble before the first 'Act on this' section header.
+
+    LLMs occasionally leak their scratchpad into the brief body ("We are given
+    the current state...", "Let me check:", "Steps:"). The brief is supposed
+    to start with the Act/Watch/For-the-record headers. Strategy:
+      1. If we find a proper '## Act on this' header, drop everything before it.
+      2. If we find 'Act on this' anywhere (bold, plain, in a longer phrase),
+         drop everything before that line and add the proper header.
+      3. If neither is present, the brief is unrecoverable garbage — return a
+         placeholder so the email ships clean text rather than raw scratchpad.
+    """
+    if not text:
+        return text
+    import re
+    # Best case: proper section header
+    for pat in (r"^##\s+Act on this\b", r"^\*\*Act on this\*\*", r"^###\s+Act on this\b"):
+        m = re.search(pat, text, re.MULTILINE | re.IGNORECASE)
+        if m:
+            return text[m.start():].lstrip()
+    # Fallback: bare "Act on this" mention — promote to a header
+    m = re.search(r"^.*Act on this.*$", text, re.MULTILINE | re.IGNORECASE)
+    if m:
+        # Drop everything before this line; replace the line with a header
+        after = text[m.end():].lstrip()
+        return "## Act on this\n\n" + after if after else "## Act on this\n\n*(brief unreadable — see dashboard)*"
+    # Unrecoverable
+    return (
+        "## Act on this\n\n"
+        "*(Metis output was unparseable — chain-of-thought leak with no section "
+        "headers. See the live dashboard at https://jcraig949jfi.github.io/Prometheus/ "
+        "for current state.)*\n"
+    )
 
 
 def write_brief(brief_text: str) -> Path:
