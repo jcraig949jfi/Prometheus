@@ -82,16 +82,48 @@ MODELS = [
     {"id": "meta/llama-4-maverick-17b-128e-instruct", "tag": "llama4-maverick-17B", "category": "arch"},
     {"id": "meta/llama-3.3-70b-instruct", "tag": "llama-3.3-70B", "category": "arch"},
     {"id": "google/gemma-4-31b-it", "tag": "gemma4-31B", "category": "arch"},
+    # --- DeepSeek (paid API, different training lineage) ---
+    {"id": "deepseek-chat", "tag": "deepseek-v3-paid", "category": "frontier",
+     "provider": "deepseek"},
+    {"id": "deepseek-reasoner", "tag": "deepseek-r1-paid", "category": "reasoning",
+     "provider": "deepseek"},
+    # --- GitHub Models (free tier) ---
+    {"id": "gpt-4o-mini", "tag": "gpt4o-mini-github", "category": "arch",
+     "provider": "github"},
+    {"id": "Mistral-large-2411", "tag": "mistral-large-github", "category": "large",
+     "provider": "github"},
+    {"id": "Phi-4", "tag": "phi4-github", "category": "arch",
+     "provider": "github"},
 ]
 
+# ---------------------------------------------------------------------------
+# Provider client factories
+# ---------------------------------------------------------------------------
 
-def _make_client():
-    api_key = os.environ.get("NVIDIA_API_KEY")
+_PROVIDERS = {
+    "nvidia": {
+        "base_url": "https://integrate.api.nvidia.com/v1",
+        "env_key": "NVIDIA_API_KEY",
+    },
+    "deepseek": {
+        "base_url": "https://api.deepseek.com/v1",
+        "env_key": "DEEPSEEK_API_KEY",
+    },
+    "github": {
+        "base_url": "https://models.inference.ai.azure.com",
+        "env_key": "GITHUB_TOKEN",
+    },
+}
+
+
+def _make_client(provider: str = "nvidia"):
+    cfg = _PROVIDERS.get(provider, _PROVIDERS["nvidia"])
+    api_key = os.environ.get(cfg["env_key"])
     if not api_key:
-        log.error("NVIDIA_API_KEY not set")
-        sys.exit(1)
+        log.error("%s not set (needed for %s provider)", cfg["env_key"], provider)
+        return None
     return OpenAI(
-        base_url=os.environ.get("NVIDIA_API_ENDPOINT", "https://integrate.api.nvidia.com/v1"),
+        base_url=cfg["base_url"],
         api_key=api_key,
         timeout=180.0,
     )
@@ -179,7 +211,7 @@ def freeze_candidates(n=100):
 # ---------------------------------------------------------------------------
 
 def generate_from_model(model_id: str, model_tag: str, candidates: list,
-                        max_items: int = 100):
+                        max_items: int = 100, provider: str = "nvidia"):
     """Generate reasoning tools from a single model. Store raw code only."""
     output_dir = SWEEP_DIR / model_tag
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -195,7 +227,10 @@ def generate_from_model(model_id: str, model_tag: str, candidates: list,
                 except Exception:
                     pass
 
-    client = _make_client()
+    client = _make_client(provider)
+    if client is None:
+        log.error("Cannot create client for %s — skipping", model_tag)
+        return 0, 0
     generated = 0
     failed = 0
 
@@ -467,20 +502,29 @@ def main():
         if args.model:
             # Find model in MODELS list or use raw ID
             tag = args.model.split("/")[-1][:30]
+            provider = "nvidia"
             for m in MODELS:
                 if m["id"] == args.model:
                     tag = m["tag"]
+                    provider = m.get("provider", "nvidia")
                     break
-            generate_from_model(args.model, tag, candidates, max_items=args.max)
+            generate_from_model(args.model, tag, candidates,
+                                max_items=args.max, provider=provider)
         else:
             # Run all models
             for m in MODELS:
+                provider = m.get("provider", "nvidia")
+                # Skip if provider key not available
+                cfg = _PROVIDERS.get(provider, _PROVIDERS["nvidia"])
+                if not os.environ.get(cfg["env_key"]):
+                    log.warning("Skipping %s — %s not set", m["tag"], cfg["env_key"])
+                    continue
                 log.info("=" * 60)
-                log.info("Starting model: %s (%s)", m["tag"], m["id"])
+                log.info("Starting model: %s (%s) [%s]", m["tag"], m["id"], provider)
                 log.info("=" * 60)
                 try:
                     generate_from_model(m["id"], m["tag"], candidates,
-                                        max_items=args.max)
+                                        max_items=args.max, provider=provider)
                 except Exception as e:
                     log.error("Model %s failed: %s", m["tag"], e)
                 time.sleep(5.0)
