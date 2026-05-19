@@ -75,13 +75,19 @@ def _verdict_multiplier(record: TheseusRecord) -> float:
         return 0.6
     if v == Verdict.REJECTED.value:
         # Specific kill patterns carry more info than generic kills.
+        # Fire #33: boosted from (0.7 / 0.4) → (1.0 / 0.6) to reflect
+        # the falsification-routing-learner direction (memory:
+        # project_falsification_routing_learner.md, feedback_assume_wrong.md
+        # — "kills are the most valuable output"). Specific kills are
+        # now at parity with SHADOW confirmations; generic kills carry
+        # moderate value.
         kp = record.kill_pattern or ""
         if any(s in kp for s in (
             "specific", "violated", "boundary", "F1_triggered",
             "F6_triggered", "F9_triggered", "F11_triggered",
         )):
-            return 0.7
-        return 0.4
+            return 1.0
+        return 0.6
     if v == Verdict.UNVERIFIED.value:
         return 0.1
     return 0.3

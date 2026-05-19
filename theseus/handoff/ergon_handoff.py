@@ -154,12 +154,20 @@ def _theseus_record_to_training_anchor(
     }
 
 
+DEFAULT_FALSIFY_SHARE = 0.20
+
+
 def export_for_ergon(
     corpus_dir: Path = CORPUS_DIR,
     output_dir: Path = HANDOFF_DIR,
     weight_threshold: float = DEFAULT_WEIGHT_THRESHOLD,
     max_records: int = DEFAULT_MAX_RECORDS,
-    verdict_filter: Tuple[str, ...] = (Verdict.SHADOW_CATALOG.value, Verdict.PROMOTED.value),
+    verdict_filter: Tuple[str, ...] = (
+        Verdict.SHADOW_CATALOG.value,
+        Verdict.PROMOTED.value,
+        Verdict.REJECTED.value,  # Fire #33: open gate to falsifications
+    ),
+    falsify_share: float = DEFAULT_FALSIFY_SHARE,
 ) -> Dict[str, Any]:
     """Walk corpus, pick top-N by training_weight (above threshold),
     write Markdown + JSONL outputs atomically to output_dir/inbox/.
@@ -214,7 +222,34 @@ def export_for_ergon(
             continue
         candidates.append((w_boosted, r_dict))
     candidates.sort(key=lambda x: -x[0])
-    selected = candidates[:max_records]
+
+    # Fire #33: enforce a falsify-share floor so Ergon's training diet
+    # always contains negative examples (REJECTED-verdict records).
+    # The substrate doctrine — "kills are the most valuable output"
+    # (feedback_assume_wrong.md), falsification-routing-first
+    # (project_falsification_routing_learner.md) — requires negative
+    # examples for the learner to ever route correctly. Without a
+    # quota, the weight-only ranking drains them to ~0% even after
+    # v_mult boost.
+    falsify_target = (
+        int(max_records * max(0.0, min(1.0, falsify_share)))
+        if falsify_share > 0 else 0
+    )
+    falsify_pool = [
+        c for c in candidates
+        if c[1].get("verdict") == Verdict.REJECTED.value
+    ]
+    other_pool = [
+        c for c in candidates
+        if c[1].get("verdict") != Verdict.REJECTED.value
+    ]
+    n_falsify_used = min(falsify_target, len(falsify_pool))
+    n_other_used = max_records - n_falsify_used
+    selected = (
+        other_pool[:n_other_used] + falsify_pool[:n_falsify_used]
+    )
+    # Re-sort merged set by weight for stable downstream ordering
+    selected.sort(key=lambda x: -x[0])
 
     # Synthesize training_anchor blocks
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -311,6 +346,11 @@ def main() -> None:
     parser.add_argument("--output-dir", type=Path, default=HANDOFF_DIR)
     parser.add_argument("--threshold", type=float, default=DEFAULT_WEIGHT_THRESHOLD)
     parser.add_argument("--max-records", type=int, default=DEFAULT_MAX_RECORDS)
+    parser.add_argument(
+        "--falsify-share", type=float, default=DEFAULT_FALSIFY_SHARE,
+        help="Fraction of bundle reserved for REJECTED-verdict (falsify) "
+             "records. Default 0.20. Set 0 to disable the quota.",
+    )
     args = parser.parse_args()
 
     stats = export_for_ergon(
@@ -318,6 +358,7 @@ def main() -> None:
         output_dir=args.output_dir,
         weight_threshold=args.threshold,
         max_records=args.max_records,
+        falsify_share=args.falsify_share,
     )
     print(json.dumps(stats, indent=2))
 

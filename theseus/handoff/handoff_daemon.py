@@ -41,6 +41,7 @@ from theseus.handoff.ergon_handoff import (
     INBOX_SUBDIR,
     DEFAULT_WEIGHT_THRESHOLD,
     DEFAULT_MAX_RECORDS,
+    DEFAULT_FALSIFY_SHARE,
     export_for_ergon,
 )
 
@@ -117,6 +118,7 @@ def run_cycle(
     compact_after_minutes: int,
     corpus_dir: Path,
     inbox_dir: Path,
+    falsify_share: float = DEFAULT_FALSIFY_SHARE,
 ) -> dict:
     """One emit + compact pass. Returns a summary dict for logging."""
     summary = {
@@ -132,6 +134,7 @@ def run_cycle(
             output_dir=inbox_dir.parent,  # ergon_outbox/, function appends /inbox
             weight_threshold=emit_weight_threshold,
             max_records=emit_max_records,
+            falsify_share=falsify_share,
         )
         summary["emit"] = {
             "ok": True,
@@ -190,6 +193,11 @@ def main() -> int:
         help=f"Min training_weight. Default {DEFAULT_WEIGHT_THRESHOLD}.",
     )
     p.add_argument(
+        "--falsify-share", type=float, default=DEFAULT_FALSIFY_SHARE,
+        help=f"Fraction of bundle reserved for falsifications (REJECTED). "
+             f"Default {DEFAULT_FALSIFY_SHARE}. Set 0 to disable.",
+    )
+    p.add_argument(
         "--cycles", type=int, default=0,
         help="Exit after N emissions. 0 = run forever. Default 0.",
     )
@@ -217,6 +225,7 @@ def main() -> int:
             compact_after_minutes=args.compact_after_min,
             corpus_dir=args.corpus_dir,
             inbox_dir=args.inbox_dir,
+            falsify_share=args.falsify_share,
         )
         emit = summary["emit"]
         comp = summary["compaction"]

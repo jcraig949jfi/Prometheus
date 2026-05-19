@@ -3296,3 +3296,113 @@ Both stdout-redirected to `theseus/journals/*.log`.
 - Retention policy for `consumed/` and `rejected/` partitions.
 - Per-phase weighting on the consumer side (still open from Fire #31).
 
+## Fire #33 — 2026-05-19 ~10:50Z — Falsification quota: open the gate to REJECTED records
+
+### Trigger
+
+Closed-loop check confirmed Ergon is ingesting bundles routinely.
+Audit of three consecutive consumed bundles showed:
+
+- 500 records/bundle, 100% completeness=1.0 (Fire #31 boost works)
+- Phase mix: claim 40%, evaluate 38%, promote 21%, **falsify 0%**
+- Verdict mix: 100% SHADOW_CATALOG, **0% REJECTED**
+
+Ergon's training diet had zero negative examples. That conflicts with
+two load-bearing doctrines:
+- `feedback_assume_wrong.md`: "kills are the most valuable output"
+- `project_falsification_routing_learner.md`: "v1.0 trains
+  falsification-routing first, NOT theorem-answering"
+
+The substrate is 57% REJECTED-verdict (kills outnumber confirmations
+1.5:1) yet zero kills reach the learner. The Learner can't ever
+route to kills if he never sees what one looks like.
+
+### Root cause
+
+Three structural barriers stacked:
+1. **Verdict filter** in `ergon_handoff.py` defaulted to
+   `(SHADOW_CATALOG, PROMOTED)` — REJECTED was excluded at the gate.
+2. **v_mult for REJECTED** was 0.7/0.4 (specific/generic), below the
+   SHADOW=1.0 baseline. Even if the filter opened, REJECTED records
+   couldn't compete on weight.
+3. **No quota** — weight-ranked selection naturally drains the
+   weaker-weighted side. Without a floor, falsify share collapses
+   to 0 deterministically.
+
+### What shipped
+
+- `theseus/scoring/training_weight.py`: boosted REJECTED v_mult
+  - specific kill_pattern: 0.7 → **1.0** (parity with SHADOW)
+  - generic kill_pattern: 0.4 → **0.6** (still ranked below specific)
+  Ordering preserved (specific > generic; existing Fire #15 test holds).
+- `theseus/handoff/ergon_handoff.py`:
+  - Default `verdict_filter` now includes `REJECTED`.
+  - New `falsify_share` parameter (default `0.20`). After scoring
+    candidates, the bundle is composed from two pools (REJECTED vs
+    other) so the negative-example floor is guaranteed regardless
+    of weight ranking.
+  - CLI: `--falsify-share` flag plumbed through.
+- `theseus/handoff/handoff_daemon.py`: `--falsify-share` plumbed
+  through; passed into `run_cycle` and `export_for_ergon`.
+- `theseus/tests/test_fire33_falsify_share.py` (NEW, 8 tests):
+  v_mult boost, ordering preservation, parity-with-shadow,
+  quota at default 20%, quota disabled at 0%, REJECTED present
+  in default filter, pool-smaller-than-quota fallback.
+
+### Conceptual nuance discovered
+
+Initial smoke confused two different signals:
+- **Phase** (generator-role) — D1-D4 + H1/H2 are falsify-phase
+- **Verdict** (claim outcome) — REJECTED is the kill verdict
+
+A REJECTED record can come from ANY generator (A1, C1, etc.). The
+quota acts on **verdict** (the actual negative-example signal), not
+**phase** (the chain-role metadata). The first smoke bundle shows
+100 REJECTED records, all sourced from C-family generators that
+emit kills as part of their normal output — phase=claim, verdict=REJECTED.
+That's the correct mix: the underlying claim was killed; Ergon sees
+that the relation does NOT hold for this pair.
+
+### Smoke result (live corpus, post-cache-clear)
+
+```
+emit: 500 records / 9.7M scanned, 3.6M passing threshold
+quota: falsify_target=100, falsify_pool=2.1M, other_pool=1.5M
+selected verdicts: SHADOW_CATALOG=400, REJECTED=100
+```
+
+Cross-tab in latest bundle:
+- g4/SHADOW=85, g5/SHADOW=85, h4/SHADOW=82, c3/SHADOW=79
+- c4/REJECTED=45, c1/REJECTED=41, c2/REJECTED=14
+- c1/SHADOW=42, c4/SHADOW=27
+
+Ergon now sees 100 explicit "this relation does NOT hold" anchors
+per 500-record bundle, drawn top-by-weight from a 2.1M-record pool
+of REJECTED candidates.
+
+### Tests
+
+Pre-fire (Fire #32): 173 passing
+Post-fire: 181 passing (+8 falsify-quota tests; 0 regressions)
+Delta: +8
+
+### Live daemons after this fire
+
+- `theseus.daemon` — corpus generator (running since Fire #32 prep)
+- `theseus.handoff.handoff_daemon` (PID 10948) — restarted with
+  `--falsify-share 0.20` so all future bundles carry the kill floor
+
+### Open for Fire #34+
+
+- Audit downstream effect on Ergon's training after he ingests a
+  few falsify-floor bundles. Does kill-routing improve?
+- Consider extending the floor to PROMOTED records too (currently
+  no per-verdict cap on the "other" pool — H4 promotions might
+  dominate).
+- D/H records (true falsify-phase generators) still don't make
+  the cut because their `kill_neighborhood`-kind base weight is
+  modest. May want a separate D/H share if process-supervision
+  data from those generators is wanted.
+
+
+
