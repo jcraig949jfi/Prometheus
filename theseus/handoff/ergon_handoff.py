@@ -23,6 +23,7 @@ from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 from theseus.config import CORPUS_DIR, THESEUS_ROOT
 from theseus.emit.record_schema import TheseusRecord, Verdict
+from theseus.handoff.episodes import assign_episodes, classify_phase
 from theseus.scoring.training_weight import training_weight
 
 
@@ -186,7 +187,15 @@ def export_for_ergon(
     (output_dir / CONSUMED_SUBDIR).mkdir(parents=True, exist_ok=True)
     (output_dir / REJECTED_SUBDIR).mkdir(parents=True, exist_ok=True)
 
-    # Score and rank candidates
+    # Build episode index up-front (Fire #31): single corpus walk that
+    # lets us attach episode_id + phase + completeness to every record.
+    # Cost: ~few seconds on a 1M-record corpus.
+    record_to_episode, episode_meta = assign_episodes(corpus_dir)
+
+    # Score and rank candidates. Fire #31: apply episode-completeness
+    # bonus so multi-phase chains surface above single-phase records of
+    # equal raw weight. Bonus = 1 + 0.5 * completeness → 4-phase gets
+    # 1.5x, single-phase gets 1.125x (basically baseline).
     candidates: List[Tuple[float, Dict[str, Any]]] = []
     for r_dict in _iter_corpus_records(corpus_dir):
         if r_dict.get("verdict") not in verdict_filter:
@@ -195,10 +204,16 @@ def export_for_ergon(
             r = TheseusRecord(**r_dict)
         except (TypeError, ValueError):
             continue
-        w = training_weight(r)
-        if w < weight_threshold:
+        w_raw = training_weight(r)
+        ep_id = record_to_episode.get(r.record_id)
+        ep_completeness = (
+            episode_meta.get(ep_id, {}).get("completeness", 0.0)
+            if ep_id else 0.0
+        )
+        w_boosted = min(1.0, w_raw * (1.0 + 0.5 * ep_completeness))
+        if w_boosted < weight_threshold:
             continue
-        candidates.append((w, r_dict))
+        candidates.append((w_boosted, r_dict))
     candidates.sort(key=lambda x: -x[0])
     selected = candidates[:max_records]
 
@@ -247,6 +262,9 @@ def export_for_ergon(
         catalog_pair = (
             f"{p_payload.get('catalog_a', '?')}_x_{p_payload.get('catalog_b', '?')}"
         )
+        # Fire #31 episode metadata
+        ep_id = record_to_episode.get(r.record_id)
+        ep_meta = episode_meta.get(ep_id, {}) if ep_id else {}
         parsed_records.append({
             "block_type": "training_anchor",
             "payload": payload,
@@ -256,6 +274,10 @@ def export_for_ergon(
             "source_training_weight": round(w, 4),
             "source_catalog_pair": catalog_pair,
             "source_relation": p_payload.get("relation"),
+            "source_episode_id": ep_id,
+            "source_episode_phase": classify_phase(r.generator_id),
+            "source_episode_completeness": ep_meta.get("completeness", 0.0),
+            "source_episode_distinct_phases": ep_meta.get("distinct_phases", []),
             "extracted_at": datetime.now(timezone.utc).isoformat(),
         })
         n_emitted += 1

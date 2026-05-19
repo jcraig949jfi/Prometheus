@@ -3099,3 +3099,114 @@ Same as Fire #29's hold: awaiting one of
 
 Slowing loop further; nothing more to ship without external input.
 
+## Fire #31 — 2026-05-18 ~01:30Z — Multi-phase episode composer
+
+### Trigger
+
+James: "Is there anything we can try to upgrade the quality of the
+substrate further or should we just keep generating quantity?"
+
+Recommendation: a multi-phase **episode composer** that groups
+related records (claim → falsify → promote → evaluate) into named
+episodes, then scores records by the completeness of the episode
+they belong to. This is a quality move — the substrate already has
+parent_record_id chains in payloads; the composer makes those chains
+addressable and uses them to boost training_weight for records that
+sit inside a fully-verified episode.
+
+### What shipped
+
+- `theseus/handoff/episodes.py` (NEW): generator → phase mapping
+  (`_GENERATOR_PHASE_MAP`), parent/child indexing, root-walking, and
+  episode assignment. Returns `episode_meta` with `distinct_phases`,
+  `phase_counts`, and `completeness ∈ {0.25, 0.5, 0.75, 1.0}`.
+- `theseus/handoff/ergon_handoff.py` (MOD): JSONL records now carry
+  `source_episode_id`, `source_episode_phase`,
+  `source_episode_completeness`, `source_episode_distinct_phases`.
+  Candidate scoring applies a multiplier:
+  ```
+  w_boosted = min(1.0, w_raw * (1.0 + 0.5 * ep_completeness))
+  ```
+  Four-phase episodes get a 1.5× weight boost; single-phase get 1.125×.
+- `theseus/tests/test_fire31_episodes.py` (NEW): 9 tests covering
+  classify_phase, parent-child index, chain-root walking, full
+  episode assignment with mixed completeness, summary stats, empty
+  corpus, and phantom-parent fallback.
+
+### Phase mapping (v0.1)
+
+- **claim** — A1-A5 (catalog-cross-product), C1-C5 (mutation),
+  E1/E3 (literature mining), F2-F4 (probabilistic), B5 (operator-action)
+- **falsify** — D1-D4 (kill-neighborhood), H1/H2 (hunters)
+- **promote** — H4 (cross-catalog bridge extension)
+- **evaluate** — B1-B4 (operator-action evaluators), G4/G5 (symmetry)
+
+Initial mapping put B/G into claim+promote which made 4-phase episodes
+structurally impossible. Refining B1-B4/G4/G5 into evaluate produced
+the first 1,956 four-phase episodes in the existing corpus.
+
+### Episode census (existing 472,728-record corpus)
+
+- 273,952 total episodes
+- 227,006 single-phase (completeness=0.25)
+- 36,686 two-phase (completeness=0.50)
+- 8,304 three-phase (completeness=0.75)
+- 1,956 four-phase (completeness=1.0)
+
+### Quality effect on top-100 selection
+
+Before boost (Fire #30):
+- 100/100 claim phase
+- 89% completeness=0.25, 11% completeness=0.50
+
+After boost (Fire #31):
+- 100/100 completeness=1.0 (all four-phase)
+- Phase mix: evaluate:51, claim:31, promote:16, falsify:2
+
+The substrate now feeds Ergon training anchors that come from
+verified-across-all-four-phases episodes by default. Evaluate-phase
+records (substrate self-tests) dominate the mix because they carry
+high baseline info_density (0.6); Ergon can re-weight per-phase
+downstream if desired.
+
+### Schema validation
+
+Fresh bundle `theseus_training_anchors_20260519T012527Z.md`:
+- Parsed: 100/100 blocks → training_anchor
+- Validated: 100/100 against schema v1.0.0
+- Rejected: 0
+
+The four new `source_episode_*` fields ride in the JSONL companion
+file only (not the markdown anchor body), so schema v1.0.0 is
+preserved — no version bump needed.
+
+### Tests
+
+Pre-fire (Fire #30): 156 passing
+Post-fire: 165 passing (+9 new episode tests; 0 regressions)
+Delta: +9
+
+### What this buys Ergon
+
+When Ergon's continuous consumer reads the JSONL, each record now
+carries the completeness signal. He can:
+1. Filter to completeness ≥ 0.75 if he wants only thoroughly-verified
+   training data.
+2. Use distinct_phases as a stratification key for curriculum
+   construction.
+3. Trace any anchor back to its full episode siblings via
+   source_episode_id (deterministic UUID5 of root_record_id).
+
+### Open questions for Fire #32+
+
+- Per-phase weighting on the consumer side (evaluate-heavy mix may
+  not be optimal training signal for the learner).
+- Per-catalog-pair training_weight calibration (still deferred from
+  Fire #28).
+- Continuous-emission cadence decision (Fire #29 hold).
+
+### Schedule wakeup
+
+Fire #31 closes a clean quality-upgrade unit. Loop holds for
+external input as in Fire #29.
+
