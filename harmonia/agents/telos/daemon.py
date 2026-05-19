@@ -413,12 +413,34 @@ class TelosAgent(HarmoniaAgent):
 
         # Top-3 audit actions: pick the first three not-applied lenses,
         # prefer ones with a toolkit entry (richer descriptions).
+        # Exclude lenses already proposed in prior ticks for this F-ID
+        # (anti-duplicate-artifact discipline). When the pool exhausts,
+        # rotate back through (state key `proposed_history[fid]` is reset
+        # by emitting a single PROPOSAL_POOL_EXHAUSTED artifact and clearing).
+        proposed_history_all: dict = self.load_state(
+            "proposed_history", default={}
+        ) or {}
+        already_proposed = set(proposed_history_all.get(fid, []))
+        candidates_after_dedup = [
+            s for s in not_applied if s not in already_proposed
+        ]
+        if not candidates_after_dedup:
+            # Pool exhausted — clear and start the rotation over, but emit
+            # a sentinel artifact for this tick so the conductor sees the
+            # full-coverage signal.
+            stats["proposal_pool_exhausted"] = True
+            proposed_history_all[fid] = []
+            self.save_state("proposed_history", proposed_history_all)
+            candidates_after_dedup = not_applied
         ranked_lenses = sorted(
-            not_applied,
+            candidates_after_dedup,
             key=lambda s: (s not in toolkit_by_sym, s),
         )
         proposed = ranked_lenses[:3]
         stats["lenses_proposed"] = len(proposed)
+        if not dry_run and proposed:
+            proposed_history_all.setdefault(fid, []).extend(proposed)
+            self.save_state("proposed_history", proposed_history_all)
 
         now_iso = self._now_iso()
         artifact_name = f"revive_{fid}_{now_iso}.md"
