@@ -78,6 +78,9 @@ EXPECTED_AGENTS = {
     # Tools (agentic mechanical components supervised by an operator)
     "Clio":       {"machine": "M1", "kind": "tool",      "role": "paper scanner (arxiv/openalex/semantic-scholar)",
                    "operator": "Aporia"},
+    "Pythia":     {"machine": "M1", "kind": "tool",      "role": "deep research report producer (20 tokens/day)",
+                   "operator": "Aporia"},
+    "Calliope":   {"machine": "M4", "kind": "tool",      "role": "daily NotebookLM narrative synthesizer"},
 
     # Pipeline-stage agents (run via pronoia.py scan; transient per cycle)
     "Coeus":      {"machine": "?",  "kind": "pipeline-stage", "role": "causal analysis"},
