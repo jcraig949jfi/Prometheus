@@ -38,7 +38,8 @@ def _bucket_relation(rel: str) -> str:
 
 def analyze_corpus(corpus_dir: Path = CORPUS_DIR) -> Dict[str, Any]:
     """Walk all JSONLs in corpus_dir; return structured stats."""
-    files = sorted(corpus_dir.glob("*.jsonl"), key=lambda p: p.name)
+    from theseus.emit.corpus_files import iter_batch_paths
+    files = iter_batch_paths(corpus_dir)
 
     # Global counters
     n_total_emissions = 0
@@ -66,9 +67,10 @@ def analyze_corpus(corpus_dir: Path = CORPUS_DIR) -> Dict[str, Any]:
     # Per-batch verdict distribution
     per_batch: Dict[str, Counter] = defaultdict(Counter)
 
+    from theseus.emit.corpus_files import open_batch
     for jf in files:
         try:
-            with jf.open(encoding="utf-8") as f:
+            with open_batch(jf) as f:
                 for line in f:
                     line = line.strip()
                     if not line:

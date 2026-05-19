@@ -85,11 +85,10 @@ def _walk_corpus(corpus_dir: Path) -> Iterable[Dict[str, Any]]:
     """Stream records from all corpus jsonl files (skips .annotated.jsonl)."""
     if not corpus_dir.is_dir():
         return
-    for jf in sorted(corpus_dir.glob("*.jsonl")):
-        if "annotated" in jf.name:
-            continue
+    from theseus.emit.corpus_files import iter_batch_paths, open_batch
+    for jf in iter_batch_paths(corpus_dir):
         try:
-            with jf.open(encoding="utf-8") as f:
+            with open_batch(jf) as f:
                 for line in f:
                     line = line.strip()
                     if not line:

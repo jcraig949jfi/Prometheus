@@ -3210,3 +3210,89 @@ carries the completeness signal. He can:
 Fire #31 closes a clean quality-upgrade unit. Loop holds for
 external input as in Fire #29.
 
+
+## batch-20260519T065455Z-a9bcdd
+
+- Started: 2026-05-19T06:54:55.218644+00:00
+- Ended:   2026-05-19T08:24:55.127256+00:00
+- Duration: 1.5000 h
+- Requested: a1,b5,c1,d1,e1
+- Active:    a1,b5,c1,d1,e1
+- Records: 20590004 (kills=8279484, confirmations=12309745, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **a1** — records=5147308, throughput=329252110.9/h, info_density=0.531, diversity=0.813, yield_score=0.0044, kills=3549279, conf=1598029, errs=0
+- **b5** — records=5147307, throughput=205326491.4/h, info_density=0.586, diversity=0.790, yield_score=0.0047, kills=742509, conf=4404798, errs=0
+- **c1** — records=5147307, throughput=302891647.3/h, info_density=0.531, diversity=0.807, yield_score=0.0043, kills=3568346, conf=1578961, errs=0
+- **d1** — records=5147307, throughput=34989313.0/h, info_density=0.592, diversity=0.789, yield_score=0.0047, kills=419350, conf=4727957, errs=0
+- **e1** — records=775, throughput=1608996.5/h, info_density=0.200, diversity=0.966, yield_score=0.0020, kills=0, conf=0, errs=0
+
+## Fire #32 — 2026-05-19 ~09:22Z — Periodic handoff + corpus compaction
+
+### Trigger
+
+After restarting `theseus.daemon` ~02:54Z, the corpus grew to 9.2 GB
+in two batches. James: "Set up a periodic handoff. That's a lot of
+GB of files. We're going to run out of disk space."
+
+At 100 GB/day raw, F:\ (2.6 TB free) lasts ~1 month. Two needs:
+1. Periodic emission — Ergon is waiting; producer was manual-only.
+2. Disk relief — JSONL gzip ratio is ~10×.
+
+### What shipped
+
+- `theseus/emit/corpus_files.py` (NEW) — uniform corpus access for
+  `.jsonl` and `.jsonl.gz`. Helpers: `iter_batch_paths`,
+  `open_batch`, `iter_batch_lines`.
+- Refactored 5 read sites: `corpus_reader.py`, `episodes.py`,
+  `ergon_handoff.py`, `corpus_health.py`, `h4_stratified_audit.py`.
+- `theseus/handoff/handoff_daemon.py` (NEW) — single loop that
+  emits every N minutes AND compresses idle batches:
+  - `--emit-interval-min` (default 30)
+  - `--compact-after-min` (default 15; 0 disables)
+  - SIGINT/SIGTERM clean shutdown
+- `theseus/tests/test_fire32_corpus_compaction.py` (NEW, 8 tests).
+
+### Compaction protocol
+
+- Compress only batches whose mtime is older than the watermark
+  (prevents racing with the live writer).
+- Skip if `.jsonl.gz` sibling already exists (idempotent).
+- Atomic: write `.jsonl.gz.tmp` → `Path.replace()` → unlink original.
+- Episode composer + ergon_handoff transparently read mixed corpus.
+
+### Smoke result
+
+One cycle against the live corpus:
+
+- **Emit**: 100 records → fresh bundle in inbox
+- **Compaction**: 3 closed batches compressed
+- **Freed**: 6.86 GB
+- **Disk**: 9.2 GB → 3.5 GB
+
+Per-batch ratios:
+- `batch-20260519T065455Z` 7.08 GB → 764 MB (9.3×)
+- `batch-20260518T195105Z` 574 MB → 76 MB (7.5×)
+- `batch-20260518T173548Z` 54 MB → 4.6 MB (11.7×)
+
+At 100 GB/day raw → ~10 GB/day after compaction → ~36 months runway.
+
+### Tests
+
+Pre-fire: 165 passing
+Post-fire: 173 passing (+8 compaction tests; 0 regressions)
+
+### Live daemons
+
+- `theseus.daemon` — corpus generator (1.5h batches, bandit) since ~02:54Z
+- `theseus.handoff.handoff_daemon` — emit + compact (30/15 min) since ~09:22Z
+
+Both stdout-redirected to `theseus/journals/*.log`.
+
+### Open for Fire #33+
+
+- Audit freed-disk trajectory after 24 h of paired operation.
+- Retention policy for `consumed/` and `rejected/` partitions.
+- Per-phase weighting on the consumer side (still open from Fire #31).
+

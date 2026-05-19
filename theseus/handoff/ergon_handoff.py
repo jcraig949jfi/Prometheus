@@ -36,11 +36,10 @@ DEFAULT_MAX_RECORDS = 500
 
 
 def _iter_corpus_records(corpus_dir: Path) -> Iterable[Dict[str, Any]]:
-    for jf in sorted(corpus_dir.glob("*.jsonl")):
-        if "annotated" in jf.name:
-            continue
+    from theseus.emit.corpus_files import iter_batch_paths, open_batch
+    for jf in iter_batch_paths(corpus_dir):
         try:
-            with jf.open(encoding="utf-8") as f:
+            with open_batch(jf) as f:
                 for line in f:
                     line = line.strip()
                     if not line:

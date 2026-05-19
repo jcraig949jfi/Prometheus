@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Iterator, List, Optional
 
 from theseus.config import CORPUS_DIR
+from theseus.emit.corpus_files import iter_batch_paths, open_batch
 from theseus.emit.record_schema import TheseusRecord, Verdict
 
 
@@ -29,13 +30,10 @@ class CorpusReader:
         """Yield records from all matching corpus files in modtime order."""
         if not self.corpus_dir.exists():
             return
-        files = sorted(
-            self.corpus_dir.glob(f"{batch_id_pattern}.jsonl"),
-            key=lambda p: p.stat().st_mtime,
-        )
+        files = iter_batch_paths(self.corpus_dir, batch_id_pattern)
         for jf in files:
             try:
-                with jf.open(encoding="utf-8") as f:
+                with open_batch(jf) as f:
                     for line in f:
                         line = line.strip()
                         if not line:

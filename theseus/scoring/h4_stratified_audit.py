@@ -35,7 +35,8 @@ def _bucket_relation(rel: str) -> str:
 
 def stratified_audit(corpus_dir: Path = CORPUS_DIR) -> Dict[str, Any]:
     """Walk all H4 records; stratify by (parent_ec_invariant, relation)."""
-    files = sorted(corpus_dir.glob("*.jsonl"))
+    from theseus.emit.corpus_files import iter_batch_paths
+    files = iter_batch_paths(corpus_dir)
 
     # (ec_inv, relation) -> {"shadow": n, "total": n}
     by_pair: Dict[tuple, Dict[str, int]] = defaultdict(
@@ -47,11 +48,10 @@ def stratified_audit(corpus_dir: Path = CORPUS_DIR) -> Dict[str, Any]:
     )
     n_h4_records = 0
 
+    from theseus.emit.corpus_files import open_batch
     for jf in files:
-        if "annotated" in jf.name:
-            continue
         try:
-            with jf.open(encoding="utf-8") as f:
+            with open_batch(jf) as f:
                 for line in f:
                     line = line.strip()
                     if not line:
