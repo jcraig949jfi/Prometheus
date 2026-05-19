@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "generated_at": "2026-05-19T03:44:00.251496+00:00",
+  "generated_at": "2026-05-19T07:44:00.204347+00:00",
   "redis_host": "192.168.1.176:6379",
   "heartbeat_timeout_sec": 300,
   "ideas_in_flight": [
@@ -23,27 +23,27 @@
       "role": "evolutionary",
       "operator": null,
       "status": "ALIVE",
-      "heartbeat_age_sec": 29,
+      "heartbeat_age_sec": 19,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-18T23:43:30.869497-04:00",
+      "last_status_update": "2026-05-19T03:43:40.472144-04:00",
       "key_metrics": {
         "phase": "main",
-        "elapsed_h": 33.11,
-        "gen_time_s": 103.77,
-        "generation": 682,
+        "elapsed_h": 37.13,
+        "gen_time_s": 97.95,
+        "generation": 763,
         "ncd_weight": 0.0,
         "config_path": "configs\\config_v2d2b.yaml",
         "vram_used_mb": null,
-        "median_fitness": 0.34,
+        "median_fitness": 0.33,
         "llm_alive_count": null,
         "map_elites_size": 14,
         "ablation_delta_min": 0.0,
         "last_checkpoint_at": null,
         "best_fitness_vector": [
-          0.44,
-          0.34,
-          0.82,
-          0.8,
+          0.43,
+          0.33,
+          0.86,
+          0.78,
           1.0,
           500
         ],
@@ -60,17 +60,17 @@
       "role": "forge",
       "operator": null,
       "status": "ALIVE",
-      "heartbeat_age_sec": 2,
-      "current_op": "forging Graph Theory + Differentiable Programming + Symbiosis",
-      "last_status_update": "2026-05-19T03:32:13.407138Z",
+      "heartbeat_age_sec": 25,
+      "current_op": "forging Gauge Theory + Normalized Compression Distance + Satisfiability",
+      "last_status_update": "2026-05-19T07:31:15.014379Z",
       "key_metrics": {
-        "session_forges": 6,
-        "session_scraps": 219,
-        "forge_rate_pct": 2.7,
+        "session_forges": 8,
+        "session_scraps": 307,
+        "forge_rate_pct": 2.5,
         "current_forge_version": "forge",
-        "ledger_size": 5674,
+        "ledger_size": 5764,
         "api_timeouts_last_hour": 0,
-        "nous_queue_depth": 977
+        "nous_queue_depth": 887
       },
       "data_source": "redis"
     },
@@ -110,7 +110,7 @@
       "role": "reporting orchestrator",
       "operator": null,
       "status": "ALIVE",
-      "heartbeat_age_sec": 49,
+      "heartbeat_age_sec": 48,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -124,7 +124,7 @@
       "role": "void detection + Deep Research + Clio supervision",
       "operator": null,
       "status": "DEAD",
-      "heartbeat_age_sec": 2236334,
+      "heartbeat_age_sec": 2250734,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -152,14 +152,14 @@
       "role": "paper scanner (arxiv/openalex/semantic-scholar)",
       "operator": "Aporia",
       "status": "DEAD",
-      "heartbeat_age_sec": 2285,
+      "heartbeat_age_sec": 1915,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-18T23:05:54.442047-04:00",
+      "last_status_update": "2026-05-19T03:12:04.273874-04:00",
       "key_metrics": {
         "kind": "tool",
         "quality": {
           "papers_24h": 187,
-          "snapshot_id": 40,
+          "snapshot_id": 48,
           "confidence_p50": 0.9,
           "confidence_mean": 0.871,
           "falsifiable_pct": 99.26,
@@ -174,16 +174,16 @@
         "sources": [
           "arxiv"
         ],
-        "cycle_id": "32cb14ed-bcfd-4a91-800c-de262c355b1c",
+        "cycle_id": "7243bb8e-3e8f-49bd-861a-c6c6f1997362",
         "operator": "Aporia",
         "dedup_rate": 0.0,
         "papers_new": 0,
         "queries_run": 13,
-        "duration_sec": 61.6,
+        "duration_sec": 47.63,
         "papers_found": 185,
         "triggered_by": "schedule",
-        "last_cycle_at": "2026-05-19T03:05:54.381682+00:00",
-        "next_cycle_at": "2026-05-19T04:05:54.381682+00:00",
+        "last_cycle_at": "2026-05-19T07:12:04.220639+00:00",
+        "next_cycle_at": "2026-05-19T08:12:04.220639+00:00",
         "target_domains": [
           "tensor",
           "P15",
@@ -204,6 +204,60 @@
         "errors_this_cycle": [],
         "discoveries_emitted": 0,
         "lifetime_papers_indexed": 187
+      },
+      "data_source": "postgres_fallback"
+    },
+    {
+      "name": "Pythia",
+      "expected": true,
+      "machine": "M1",
+      "kind": "tool",
+      "role": "deep research report producer (20 tokens/day)",
+      "operator": "Aporia",
+      "status": "ALIVE",
+      "heartbeat_age_sec": 8,
+      "current_op": "(from postgres mirror)",
+      "last_status_update": "2026-05-19T03:43:51.835927-04:00",
+      "key_metrics": {
+        "kind": "tool",
+        "role": "deep research report producer (20 tokens/day budget)",
+        "model": "deep-research-pro-preview-12-2025",
+        "operator": "Aporia",
+        "in_flight": 0,
+        "failed_today": 0,
+        "queue_pending": 0,
+        "registered_at": "2026-05-19T07:43:51.835927+00:00",
+        "max_concurrent": 3,
+        "completed_today": 1,
+        "session_cycle_id": "7d14b648-c33d-41d8-a70b-b12210004eea",
+        "rate_limited_today": 0,
+        "session_started_at": "2026-05-18T20:56:23.912864+00:00",
+        "deep_research_budget": {
+          "used": 1,
+          "as_of": "2026-05-19T07:43:51.835927+00:00",
+          "budget": 20,
+          "remaining": 19
+        }
+      },
+      "data_source": "postgres_fallback"
+    },
+    {
+      "name": "Calliope",
+      "expected": true,
+      "machine": "M4",
+      "kind": "tool",
+      "role": "daily NotebookLM narrative synthesizer",
+      "operator": null,
+      "status": "DEAD",
+      "heartbeat_age_sec": 12180,
+      "current_op": "(from postgres mirror)",
+      "last_status_update": "2026-05-19T00:20:59.542580-04:00",
+      "key_metrics": {
+        "kind": "tool",
+        "role": "daily NotebookLM narrative synthesizer",
+        "registered_at": "2026-05-19T04:20:59.542580+00:00",
+        "session_cycle_id": "0829c00f-43e8-4652-9f81-cf2d08d6d3ee",
+        "session_started_at": "2026-05-19T04:20:59.542580+00:00"
       },
       "data_source": "postgres_fallback"
     },
@@ -271,7 +325,7 @@
       "role": null,
       "operator": null,
       "status": "DEAD",
-      "heartbeat_age_sec": 2291494,
+      "heartbeat_age_sec": 2305894,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -299,7 +353,7 @@
       "role": null,
       "operator": null,
       "status": "DEAD",
-      "heartbeat_age_sec": 2084066,
+      "heartbeat_age_sec": 2098466,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -313,7 +367,7 @@
       "role": null,
       "operator": null,
       "status": "DEAD",
-      "heartbeat_age_sec": 1666954,
+      "heartbeat_age_sec": 1681354,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -369,7 +423,7 @@
       "role": null,
       "operator": null,
       "status": "DEAD",
-      "heartbeat_age_sec": 2743150,
+      "heartbeat_age_sec": 2757550,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -425,7 +479,7 @@
       "role": null,
       "operator": null,
       "status": "DEAD",
-      "heartbeat_age_sec": 2291420,
+      "heartbeat_age_sec": 2305820,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -439,7 +493,7 @@
       "role": null,
       "operator": null,
       "status": "DEAD",
-      "heartbeat_age_sec": 2291458,
+      "heartbeat_age_sec": 2305858,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -461,6 +515,26 @@
     }
   ],
   "discoveries": [
+    {
+      "msg_id": "1779173854137-0",
+      "timestamp": "2026-05-19T06:57:34.233048+00:00",
+      "sender": "Hephaestus",
+      "machine": "M3",
+      "type": "share",
+      "subject": "Hephaestus forged: Information Theory + Gauge Theory + Sensitivity Analysis",
+      "body": "Concepts: Information Theory + Gauge Theory + Sensitivity Analysis. Accuracy=34%, Calibration=0%, Frame=H",
+      "confidence": "0.6"
+    },
+    {
+      "msg_id": "1779165404114-0",
+      "timestamp": "2026-05-19T04:36:45.533154+00:00",
+      "sender": "Hephaestus",
+      "machine": "M3",
+      "type": "share",
+      "subject": "Hephaestus forged: Prime Number Theory + Type Theory + Abstract Interpretation",
+      "body": "Concepts: Prime Number Theory + Type Theory + Abstract Interpretation. Accuracy=33%, Calibration=4%, Frame=C",
+      "confidence": "0.633"
+    },
     {
       "msg_id": "1779149493075-0",
       "timestamp": "2026-05-19T00:11:34.210443+00:00",
@@ -540,29 +614,19 @@
       "subject": "V5 permutation null confirms SB ranking is non-random (N=10K shuffles)",
       "body": "Followup to 1776926646455-0. Shuffled subdomain labels 10K times across 482 problems, recomputed per-subdomain mean SB. Top ranks (knot_theory +0.25, anal_NT +0.125) hit p<0.0001; bottom (alg_geom -0.33, group_theory -0.25) hit p>0.9999. Caveat: SB is quantized at 1/8 intervals so literal p=0 reflects both discreteness and signal; the direction is secure, the magnitude less so. Saved aporia/mathematics/v5_permutation_null.json. Compliant with feedback_permutation_null.",
       "confidence": "0.8"
-    },
-    {
-      "msg_id": "1776926646455-0",
-      "timestamp": "2026-04-23T06:41:00+00:00",
-      "sender": "Aporia",
-      "machine": "M1",
-      "type": "share",
-      "subject": "V5 SB sweep cross-confirms silent islands: knot theory top SB=+0.25, AG bottom SB=-0.33",
-      "body": "V5 Sleeping Beauty sweep on 482-problem frontier_tensor. Score = fingerprint_density - bridge_density. Per-subdomain rank: knot theory top (SB=+0.25, 4 problems), analytic NT CPNT second (+0.125, 12 problems), algebraic geometry bottom (-0.33). This is problem-level evidence for project_silent_islands: knot problems carry structure WITHOUT cross-domain bridges, exactly the dataset-level pattern. Top individual: Jones polynomial unknot-detection (MATH-0332, test=1.0). Saved to aporia/mathematics/",
-      "confidence": "0.7"
-    },
-    {
-      "msg_id": "1776924611113-0",
-      "timestamp": "2026-04-23T06:10:11.113139+00:00",
-      "sender": "Ergon",
-      "machine": "M1",
-      "type": "share",
-      "subject": "Maass GL3 degree-3 capstone: edge rho=+0.8 (suggests dim-driven), bulk rho=-0.8 (Sp-like). Small n, p=0.2",
-      "body": "Maass GL3 capstone with spectral-parameter stratification (since level-1 precludes nbp). Hypothesis (a) gets PARTIAL SUPPORT but small-n noisy.\n\nDATA: 1,546 GL3 Maass L-functions, 1350 parsed with 8 gaps, matched-GUE null.\nSTRATIFIED by |sp1|+|sp2| quartiles (sp = spectral parameters from origin path), since level=1 and nbp=0 for all.\n\nPOOLED Maass GL3 at 8-gap norm (compared to other families):\n   k     deg-3 Maass    deg-2 EC    deg-2 MF    deg-4 G2C\n   1      -79.3%        +7.7%       -53.7% ",
-      "confidence": "0.82"
     }
   ],
   "main_events": [
+    {
+      "msg_id": "1779162266286-0",
+      "timestamp": "2026-05-19T03:44:26.209267+00:00",
+      "sender": "Pronoia",
+      "machine": "M4",
+      "type": "announce",
+      "subject": "Portfolio cycle complete (mon=True, metis=True, push=True, email=True)",
+      "body": "hourly tick 2026-05-19T03:43:58.308066+00:00",
+      "confidence": "1.0"
+    },
     {
       "msg_id": "1779147851053-0",
       "timestamp": "2026-05-18T23:44:10.972522+00:00",
@@ -702,16 +766,6 @@
       "subject": "Batch 6 complete: 21 operator-level research reports saved (98-118)",
       "body": "Batch 6 fully executed per James greenlight. Reports 98-118 at F:/Prometheus/aporia/docs/deep_research_batch6/. Tier 1 (operator tensor #118, Hecke orbits #98, g2 Euler #113), Tier 2 (Serre g=2 #102, Newton strat #103, Belyi genus #112, Bianchi BC #104), Tier 3 (isogeny diameter #100, Heegner #105, Ceresa #106, Stark units #107, BSD ratio #116, Shimura #101, HMF congruences #99), and long-tail (cusp cohomology #108, Rogers-Ramanujan #109, K3 Mahler #110, Farey #111, Sato-Tate rank-2 #114, noncon",
       "confidence": "1.0"
-    },
-    {
-      "msg_id": "1776940143046-0",
-      "timestamp": "2026-04-23T16:30:00+00:00",
-      "sender": "Aporia",
-      "machine": "M1",
-      "type": "announce",
-      "subject": "Aporia loop stopping per James. Cron cancelled. Session journal intact.",
-      "body": "Aporia 6-min loop stopping per James directive. Cron 14605f75 cancelled. Run summary: 73 ticks T85-T158, 3 substantive outputs (V5 SB sweep, N=10K permutation null, V5 x attackability shortlist), 20-report Batch 5 saved, Batch 6 seeds drafted (aporia/docs/deep_research_batch6_seeds.md), TLDR_20260422.md extended with April-23 addendum. 70 consecutive silent ticks post-share (team stood down). Loop state at roles/Aporia/loop_state.json. Ready to disconnect.",
-      "confidence": "1.0"
     }
   ],
   "challenges": [
@@ -775,15 +829,284 @@
     {
       "agent": "Aporia",
       "kind": "dead",
-      "detail": "no heartbeat for 2236334s"
+      "detail": "no heartbeat for 2250734s"
     },
     {
       "agent": "Clio",
       "kind": "dead",
-      "detail": "no heartbeat for 2285s"
+      "detail": "no heartbeat for 1915s"
+    },
+    {
+      "agent": "Calliope",
+      "kind": "dead",
+      "detail": "no heartbeat for 12180s"
     }
   ],
   "intelligence_outputs": [
+    {
+      "cycle_id": "13e267a6-fbb0-56d5-bc31-b34ca30770cc",
+      "stage": "penelope_batch_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "[penelope-20260519T074308Z-dbfbca] files: 0 ingested, 13 dup-skip, 0 failed. records: 0 ingested, 0 dropped, 0 validation_failures. sources: none. domains: none.",
+      "error": null,
+      "started_at": "2026-05-19T03:43:08.573868-04:00",
+      "finished_at": "2026-05-19T03:43:08.602953-04:00",
+      "duration_sec": 0.029085
+    },
+    {
+      "cycle_id": "e0af0c02-3234-5fb2-885f-015ae86d94a6",
+      "stage": "penelope_batch_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "[penelope-20260519T072809Z-300991] files: 0 ingested, 13 dup-skip, 0 failed. records: 0 ingested, 0 dropped, 0 validation_failures. sources: none. domains: none.",
+      "error": null,
+      "started_at": "2026-05-19T03:28:09.570805-04:00",
+      "finished_at": "2026-05-19T03:28:09.601864-04:00",
+      "duration_sec": 0.031059
+    },
+    {
+      "cycle_id": "a2863f40-71a8-5e73-97b4-4657c5bbd102",
+      "stage": "penelope_batch_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "[penelope-20260519T071317Z-7ccd09] files: 0 ingested, 13 dup-skip, 0 failed. records: 0 ingested, 0 dropped, 0 validation_failures. sources: none. domains: none.",
+      "error": null,
+      "started_at": "2026-05-19T03:13:17.936655-04:00",
+      "finished_at": "2026-05-19T03:13:17.964717-04:00",
+      "duration_sec": 0.028062
+    },
+    {
+      "cycle_id": "7243bb8e-3e8f-49bd-861a-c6c6f1997362",
+      "stage": "paper_scan_cycle",
+      "success": true,
+      "output_path": null,
+      "output_summary": "13 queries, 185 papers retrieved, 0 new after dedup, 48s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
+      "error": null,
+      "started_at": "2026-05-19T03:11:16.587940-04:00",
+      "finished_at": "2026-05-19T03:12:04.299873-04:00",
+      "duration_sec": 47.711933
+    },
+    {
+      "cycle_id": "b9a9f51a-4ade-5f2c-b671-6633dd9cde1b",
+      "stage": "penelope_batch_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "[penelope-20260519T065809Z-aa5e5a] files: 0 ingested, 13 dup-skip, 0 failed. records: 0 ingested, 0 dropped, 0 validation_failures. sources: none. domains: none.",
+      "error": null,
+      "started_at": "2026-05-19T02:58:09.509605-04:00",
+      "finished_at": "2026-05-19T02:58:09.641679-04:00",
+      "duration_sec": 0.132074
+    },
+    {
+      "cycle_id": "1756c0e1-b02b-44a2-8bb3-fb148b23e615",
+      "stage": "paper_scan_cycle",
+      "success": true,
+      "output_path": null,
+      "output_summary": "13 queries, 185 papers retrieved, 0 new after dedup, 51s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
+      "error": null,
+      "started_at": "2026-05-19T02:52:52.719433-04:00",
+      "finished_at": "2026-05-19T02:53:43.357705-04:00",
+      "duration_sec": 50.63827
+    },
+    {
+      "cycle_id": "91cd3201-d5f1-5c7a-8906-4aa78fca8116",
+      "stage": "penelope_batch_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "[penelope-20260519T064316Z-920083] files: 0 ingested, 13 dup-skip, 0 failed. records: 0 ingested, 0 dropped, 0 validation_failures. sources: none. domains: none.",
+      "error": null,
+      "started_at": "2026-05-19T02:43:16.177308-04:00",
+      "finished_at": "2026-05-19T02:43:16.209490-04:00",
+      "duration_sec": 0.032182
+    },
+    {
+      "cycle_id": "3c85235c-d39a-5ea3-b64c-8644f98097ff",
+      "stage": "penelope_batch_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "[penelope-20260519T062809Z-a02126] files: 0 ingested, 13 dup-skip, 0 failed. records: 0 ingested, 0 dropped, 0 validation_failures. sources: none. domains: none.",
+      "error": null,
+      "started_at": "2026-05-19T02:28:09.297783-04:00",
+      "finished_at": "2026-05-19T02:28:09.329863-04:00",
+      "duration_sec": 0.03208
+    },
+    {
+      "cycle_id": "a99c1023-abaf-5ef8-82e7-7b73bc5903be",
+      "stage": "penelope_batch_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "[penelope-20260519T061319Z-f1d431] files: 0 ingested, 13 dup-skip, 0 failed. records: 0 ingested, 0 dropped, 0 validation_failures. sources: none. domains: none.",
+      "error": null,
+      "started_at": "2026-05-19T02:13:19.412918-04:00",
+      "finished_at": "2026-05-19T02:13:19.442886-04:00",
+      "duration_sec": 0.029968
+    },
+    {
+      "cycle_id": "ded34983-0d51-4dad-8d37-5ce938a21872",
+      "stage": "paper_scan_cycle",
+      "success": true,
+      "output_path": null,
+      "output_summary": "13 queries, 155 papers retrieved, 0 new after dedup, 92s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
+      "error": null,
+      "started_at": "2026-05-19T02:09:44.314470-04:00",
+      "finished_at": "2026-05-19T02:11:16.632869-04:00",
+      "duration_sec": 92.3184
+    },
+    {
+      "cycle_id": "8cf071a7-e377-5f02-8a88-f3481b19f049",
+      "stage": "penelope_batch_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "[penelope-20260519T055809Z-713777] files: 0 ingested, 13 dup-skip, 0 failed. records: 0 ingested, 0 dropped, 0 validation_failures. sources: none. domains: none.",
+      "error": null,
+      "started_at": "2026-05-19T01:58:09.786882-04:00",
+      "finished_at": "2026-05-19T01:58:09.815880-04:00",
+      "duration_sec": 0.028998
+    },
+    {
+      "cycle_id": "b07283bb-bf61-42c8-8a6d-86dea110d38c",
+      "stage": "paper_scan_cycle",
+      "success": true,
+      "output_path": null,
+      "output_summary": "13 queries, 185 papers retrieved, 0 new after dedup, 48s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
+      "error": null,
+      "started_at": "2026-05-19T01:52:04.761139-04:00",
+      "finished_at": "2026-05-19T01:52:52.778901-04:00",
+      "duration_sec": 48.01776
+    },
+    {
+      "cycle_id": "ed620ae8-0192-5765-aa65-097415d71ee5",
+      "stage": "penelope_batch_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "[penelope-20260519T054312Z-3e12fd] files: 0 ingested, 13 dup-skip, 0 failed. records: 0 ingested, 0 dropped, 0 validation_failures. sources: none. domains: none.",
+      "error": null,
+      "started_at": "2026-05-19T01:43:12.538393-04:00",
+      "finished_at": "2026-05-19T01:43:12.573126-04:00",
+      "duration_sec": 0.034733
+    },
+    {
+      "cycle_id": "22729da3-186e-5666-99ba-d47661977846",
+      "stage": "penelope_batch_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "[penelope-20260519T052809Z-fbfa84] files: 0 ingested, 13 dup-skip, 0 failed. records: 0 ingested, 0 dropped, 0 validation_failures. sources: none. domains: none.",
+      "error": null,
+      "started_at": "2026-05-19T01:28:09.621994-04:00",
+      "finished_at": "2026-05-19T01:28:09.646994-04:00",
+      "duration_sec": 0.025
+    },
+    {
+      "cycle_id": "8fa9ea6d-c158-5652-92c1-fd95834a688b",
+      "stage": "penelope_batch_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "[penelope-20260519T051313Z-3d6780] files: 0 ingested, 13 dup-skip, 0 failed. records: 0 ingested, 0 dropped, 0 validation_failures. sources: none. domains: none.",
+      "error": null,
+      "started_at": "2026-05-19T01:13:13.850011-04:00",
+      "finished_at": "2026-05-19T01:13:13.874219-04:00",
+      "duration_sec": 0.024208
+    },
+    {
+      "cycle_id": "c068d01e-bc91-4cd1-b601-1229a24cc818",
+      "stage": "paper_scan_cycle",
+      "success": true,
+      "output_path": null,
+      "output_summary": "13 queries, 165 papers retrieved, 0 new after dedup, 121s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
+      "error": null,
+      "started_at": "2026-05-19T01:07:43.044273-04:00",
+      "finished_at": "2026-05-19T01:09:44.374856-04:00",
+      "duration_sec": 121.33058
+    },
+    {
+      "cycle_id": "3160bf70-8e0d-574b-9ef4-250bb58b679a",
+      "stage": "penelope_batch_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "[penelope-20260519T045809Z-ecf2f2] files: 0 ingested, 13 dup-skip, 0 failed. records: 0 ingested, 0 dropped, 0 validation_failures. sources: none. domains: none.",
+      "error": null,
+      "started_at": "2026-05-19T00:58:09.139329-04:00",
+      "finished_at": "2026-05-19T00:58:09.168393-04:00",
+      "duration_sec": 0.029064
+    },
+    {
+      "cycle_id": "c151d7c7-ad59-43d6-b751-e37c444296cc",
+      "stage": "paper_scan_cycle",
+      "success": true,
+      "output_path": null,
+      "output_summary": "13 queries, 25 papers retrieved, 0 new after dedup, 242s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
+      "error": null,
+      "started_at": "2026-05-19T00:48:02.448412-04:00",
+      "finished_at": "2026-05-19T00:52:04.821052-04:00",
+      "duration_sec": 242.37263
+    },
+    {
+      "cycle_id": "0f6df3de-9615-5649-8bd3-88990bc954a7",
+      "stage": "penelope_batch_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "[penelope-20260519T044312Z-c43380] files: 0 ingested, 13 dup-skip, 0 failed. records: 0 ingested, 0 dropped, 0 validation_failures. sources: none. domains: none.",
+      "error": null,
+      "started_at": "2026-05-19T00:43:12.211426-04:00",
+      "finished_at": "2026-05-19T00:43:12.240460-04:00",
+      "duration_sec": 0.029034
+    },
+    {
+      "cycle_id": "5e4288d8-e37b-59a8-93a7-cdb7c4413b13",
+      "stage": "penelope_batch_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "[penelope-20260519T042900Z-890495] files: 0 ingested, 13 dup-skip, 0 failed. records: 0 ingested, 0 dropped, 0 validation_failures. sources: none. domains: none.",
+      "error": null,
+      "started_at": "2026-05-19T00:29:00.540148-04:00",
+      "finished_at": "2026-05-19T00:29:00.575215-04:00",
+      "duration_sec": 0.035067
+    },
+    {
+      "cycle_id": "0829c00f-43e8-4652-9f81-cf2d08d6d3ee",
+      "stage": "calliope_daily_narrative",
+      "success": true,
+      "output_path": "docs/notebook_lm/calliope_daily_2026-05-19.md",
+      "output_summary": "daily NotebookLM narrative (24h): 84 commits, 21 DR reports, 7 new pivot docs",
+      "error": null,
+      "started_at": "2026-05-19T00:20:59.542580-04:00",
+      "finished_at": "2026-05-19T00:21:02.219378-04:00",
+      "duration_sec": 2.676798
+    },
+    {
+      "cycle_id": "c3ea7842-2426-4aab-ad93-449328d9ebf5",
+      "stage": "calliope_daily_narrative",
+      "success": true,
+      "output_path": "docs/notebook_lm/calliope_daily_2026-05-19.md",
+      "output_summary": "daily NotebookLM narrative (24h): 0 commits, 21 DR reports, 7 new pivot docs",
+      "error": null,
+      "started_at": "2026-05-19T00:20:45.975969-04:00",
+      "finished_at": "2026-05-19T00:20:48.192252-04:00",
+      "duration_sec": 2.216283
+    },
+    {
+      "cycle_id": "e986fc7b-be33-4507-b640-341afa633d9c",
+      "stage": "paper_scan_cycle",
+      "success": true,
+      "output_path": null,
+      "output_summary": "13 queries, 40 papers retrieved, 0 new after dedup, 109s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
+      "error": null,
+      "started_at": "2026-05-19T00:05:54.429443-04:00",
+      "finished_at": "2026-05-19T00:07:43.075009-04:00",
+      "duration_sec": 108.64557
+    },
+    {
+      "cycle_id": "d7ad5d88-7792-477f-81c3-388084d3be84",
+      "stage": "paper_scan_cycle",
+      "success": true,
+      "output_path": null,
+      "output_summary": "13 queries, 15 papers retrieved, 0 new after dedup, 108s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
+      "error": null,
+      "started_at": "2026-05-18T23:46:14.431385-04:00",
+      "finished_at": "2026-05-18T23:48:02.473852-04:00",
+      "duration_sec": 108.042465
+    },
     {
       "cycle_id": "32cb14ed-bcfd-4a91-800c-de262c355b1c",
       "stage": "paper_scan_cycle",
@@ -1069,270 +1392,6 @@
       "started_at": "2026-05-18T16:56:23.917863-04:00",
       "finished_at": "2026-05-18T16:57:10.647105-04:00",
       "duration_sec": 46.72924
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_dispatched",
-      "success": true,
-      "output_path": null,
-      "output_summary": "DR-066 [T2]: T#27 Special line bundles on multiprojective spaces",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.860322-04:00",
-      "duration_sec": 1.182414
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_dispatched",
-      "success": true,
-      "output_path": null,
-      "output_summary": "DR-065 [T2]: T#25 Sharp Lp approximate symmetric rank bounds",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.834342-04:00",
-      "duration_sec": 1.156434
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_dispatched",
-      "success": true,
-      "output_path": null,
-      "output_summary": "DR-064 [T2]: T#18 Subspace rank / generalized secant theory (AH analogue)",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.816339-04:00",
-      "duration_sec": 1.138431
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_received",
-      "success": true,
-      "output_path": "aporia/docs/deep_research_reports/2026-05-18/00017_t_17_asymptotic_subrank_of_explicit_tensors_small_skew_cw_ha.md",
-      "output_summary": "*   **Asymptotic Subrank and Rank:** The asymptotic subrank and rank of tensors are fundamental metrics in algebraic complexity theory, governing the computational cost and intrinsic value of tensor transformations, particularly for matrix multiplication algorithms. *   **Coppers...",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.785616-04:00",
-      "duration_sec": 1.107708
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_dispatched",
-      "success": true,
-      "output_path": null,
-      "output_summary": "DR-063 [T2]: T#17 Asymptotic subrank of explicit tensors (small/skew CW + Hadamard)",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.743603-04:00",
-      "duration_sec": 1.065695
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_received",
-      "success": true,
-      "output_path": "aporia/docs/deep_research_reports/2026-05-18/00016_t_16_subrank_rank_duality_asymptotic_spectrum_cvz_universal_.md",
-      "output_summary": "*   Research suggests that understanding the asymptotic complexity of tensors is one of the most central problems in algebraic complexity theory, directly dictating the theoretical limits of matrix multiplication algorithms. *   It seems clear that the concepts of **tensor rank**...",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.724553-04:00",
-      "duration_sec": 1.046645
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_dispatched",
-      "success": true,
-      "output_path": null,
-      "output_summary": "DR-062 [T2]: T#16 Subrank-rank duality / asymptotic spectrum (CVZ universal points)",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.693361-04:00",
-      "duration_sec": 1.015453
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_received",
-      "success": true,
-      "output_path": "aporia/docs/deep_research_reports/2026-05-18/00015_t_15_slice_rank_method_optimality_beyond_f_3_composite_modul.md",
-      "output_summary": "*   The slice-rank method, formulated by Terence Tao as a symmetric abstraction of the Croot-Lev-Pach (CLP) polynomial method, fundamentally revolutionized extremal combinatorics and finite geometry. *   While initially applied to the cap-set problem in $\\mathbb{F}_3^n$, extendin...",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.666243-04:00",
-      "duration_sec": 0.988335
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_dispatched",
-      "success": true,
-      "output_path": null,
-      "output_summary": "DR-061 [T2]: T#15 Slice-rank method optimality beyond F_3 (composite moduli)",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.617388-04:00",
-      "duration_sec": 0.93948
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_received",
-      "success": true,
-      "output_path": "aporia/docs/deep_research_reports/2026-05-18/00014_t_14_geometric_rank_vs_partition_rank_polynomial_vs_linear_c.md",
-      "output_summary": "- **Research indicates** that the mathematical relationship between partition rank and analytic rank\u2014a central open problem in additive combinatorics and tensor complexity\u2014transitioned from initially impractical Ackermann-type dependencies to robust polynomial bounds. - **It appe...",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.597509-04:00",
-      "duration_sec": 0.919601
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_dispatched",
-      "success": true,
-      "output_path": null,
-      "output_summary": "DR-060 [T2]: T#14 Geometric rank vs partition rank polynomial-vs-linear comparison",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.567399-04:00",
-      "duration_sec": 0.889491
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_received",
-      "success": true,
-      "output_path": "aporia/docs/deep_research_reports/2026-05-18/00013_t_12_super_linear_tensor_rank_lbs_for_explicit_order_3_tenso.md",
-      "output_summary": "*   **Fundamental Discrepancy:** While matrix rank is computationally tractable via Singular Value Decomposition (SVD), computing the rank of tensors of order 3 and higher is rigorously proven to be NP-hard. *   **Raz's Breakthrough:** Ran Raz (2010) established a profound theore...",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.543162-04:00",
-      "duration_sec": 0.865254
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_dispatched",
-      "success": true,
-      "output_path": null,
-      "output_summary": "DR-059 [T2]: T#12 Super-linear tensor-rank LBs for explicit order-3 tensors (Raz)",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.489581-04:00",
-      "duration_sec": 0.811673
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_received",
-      "success": true,
-      "output_path": "aporia/docs/deep_research_reports/2026-05-18/00012_t_11_limits_of_the_laser_method_ambainis_filmus_le_gall_barr.md",
-      "output_summary": "*   The Ambainis-Filmus-Le Gall (AFLG) barrier represents a fundamental mathematical limitation on the ability of the Coppersmith-Winograd algorithm and its direct derivatives to achieve the theoretical optimum of $\\omega = 2$ for the matrix multiplication exponent. *   Research ...",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.466711-04:00",
-      "duration_sec": 0.788803
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_dispatched",
-      "success": true,
-      "output_path": null,
-      "output_summary": "DR-058 [T2]: T#11 Limits of the laser method (Ambainis-Filmus-Le Gall barrier)",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.420818-04:00",
-      "duration_sec": 0.74291
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_received",
-      "success": true,
-      "output_path": "aporia/docs/deep_research_reports/2026-05-18/00011_t_10_bini_style_degeneration_sequence_length_epsilon_expansi.md",
-      "output_summary": "The mathematical framework surrounding **Bini-style degeneration**, **sequence length**, and **epsilon-expansion control** represents a profound intersection of algebraic complexity theory, numerical linear algebra, and theoretical physics. At its core, Bini-style degeneration le...",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.400563-04:00",
-      "duration_sec": 0.722655
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_dispatched",
-      "success": true,
-      "output_path": null,
-      "output_summary": "DR-057 [T2]: T#10 Bini-style degeneration sequence length / epsilon-expansion control",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.353644-04:00",
-      "duration_sec": 0.675736
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_received",
-      "success": true,
-      "output_path": "aporia/docs/deep_research_reports/2026-05-18/00010_t_9_restriction_pre_order_on_small_3x3x3_tensors.md",
-      "output_summary": "*   **Key Points:** *   The restriction pre-order is a foundational mathematical framework used to compare the relative complexity of tensors by determining if one tensor can be linearly transformed into another. *   Small tensors, particularly of dimensions 3x3x3, serve as the c...",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.333644-04:00",
-      "duration_sec": 0.655736
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_dispatched",
-      "success": true,
-      "output_path": null,
-      "output_summary": "DR-056 [T2]: T#9 Restriction pre-order on small (3x3x3) tensors",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.277691-04:00",
-      "duration_sec": 0.599783
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_received",
-      "success": true,
-      "output_path": "aporia/docs/deep_research_reports/2026-05-18/00009_forward_false_anchor_hunt_low_dim_topology_2025_2026_x_solve.md",
-      "output_summary": "- It seems likely that public claims suggesting artificial intelligence has broadly \"solved\" the **Andrews-Curtis conjecture** are overstated; evidence indicates that researchers have instead used reinforcement learning and automated deduction to successfully eliminate long-stand...",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.255684-04:00",
-      "duration_sec": 0.577776
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_dispatched",
-      "success": true,
-      "output_path": null,
-      "output_summary": "DR-050 [T1]: Forward false-anchor hunt: low-dim topology 2025-2026 'X solved Y' claims (Andrews-Curtis, slice-ribbon, etc.)",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.228682-04:00",
-      "duration_sec": 0.550774
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_received",
-      "success": true,
-      "output_path": "aporia/docs/deep_research_reports/2026-05-18/00008_forward_false_anchor_hunt_algebraic_geometry_2025_2026_x_sol.md",
-      "output_summary": "*   The 2025\u20132026 academic period has witnessed a surge in \"X solved Y\" claims within algebraic geometry, driven by the integration of Artificial Intelligence (AI) and the importation of string theory techniques into classical rationality problems. *   A major, highly publicized ...",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.105466-04:00",
-      "duration_sec": 0.427558
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_dispatched",
-      "success": true,
-      "output_path": null,
-      "output_summary": "DR-049 [T1]: Forward false-anchor hunt: algebraic geometry 2025-2026 'X solved Y' claims",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.079260-04:00",
-      "duration_sec": 0.401352
-    },
-    {
-      "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-      "stage": "deep_research_received",
-      "success": true,
-      "output_path": "aporia/docs/deep_research_reports/2026-05-18/00007_forward_false_anchor_hunt_analytic_number_theory_2025_2026_x.md",
-      "output_summary": "- **Research suggests** that the years 2025 and 2026 have witnessed an unprecedented surge in unverified or partially verified claims regarding the resolution of historic problems in analytic number theory, including the Riemann Hypothesis, the Collatz Conjecture, the Goldbach Co...",
-      "error": null,
-      "started_at": "2026-05-18T16:56:05.677908-04:00",
-      "finished_at": "2026-05-18T16:56:06.056144-04:00",
-      "duration_sec": 0.378236
     }
   ],
   "deep_research": {
@@ -1408,202 +1467,16 @@
         "finished_at": "2026-05-18T16:58:30.364462-04:00",
         "cycle_id": "7d14b648-c33d-41d8-a70b-b12210004eea",
         "success": true
-      },
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "DR-066 [T2]: T#27 Special line bundles on multiprojective spaces",
-        "output_path": null,
-        "finished_at": "2026-05-18T16:56:06.860322-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "DR-065 [T2]: T#25 Sharp Lp approximate symmetric rank bounds",
-        "output_path": null,
-        "finished_at": "2026-05-18T16:56:06.834342-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "DR-064 [T2]: T#18 Subspace rank / generalized secant theory (AH analogue)",
-        "output_path": null,
-        "finished_at": "2026-05-18T16:56:06.816339-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_received",
-        "summary": "*   **Asymptotic Subrank and Rank:** The asymptotic subrank and rank of tensors are fundamental metrics in algebraic complexity theory, governing the computational cost and intrinsic value of tensor transformations, particularly for matrix multiplication algorithms. *   **Coppers...",
-        "output_path": "aporia/docs/deep_research_reports/2026-05-18/00017_t_17_asymptotic_subrank_of_explicit_tensors_small_skew_cw_ha.md",
-        "finished_at": "2026-05-18T16:56:06.785616-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "DR-063 [T2]: T#17 Asymptotic subrank of explicit tensors (small/skew CW + Hadamard)",
-        "output_path": null,
-        "finished_at": "2026-05-18T16:56:06.743603-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_received",
-        "summary": "*   Research suggests that understanding the asymptotic complexity of tensors is one of the most central problems in algebraic complexity theory, directly dictating the theoretical limits of matrix multiplication algorithms. *   It seems clear that the concepts of **tensor rank**...",
-        "output_path": "aporia/docs/deep_research_reports/2026-05-18/00016_t_16_subrank_rank_duality_asymptotic_spectrum_cvz_universal_.md",
-        "finished_at": "2026-05-18T16:56:06.724553-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "DR-062 [T2]: T#16 Subrank-rank duality / asymptotic spectrum (CVZ universal points)",
-        "output_path": null,
-        "finished_at": "2026-05-18T16:56:06.693361-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_received",
-        "summary": "*   The slice-rank method, formulated by Terence Tao as a symmetric abstraction of the Croot-Lev-Pach (CLP) polynomial method, fundamentally revolutionized extremal combinatorics and finite geometry. *   While initially applied to the cap-set problem in $\\mathbb{F}_3^n$, extendin...",
-        "output_path": "aporia/docs/deep_research_reports/2026-05-18/00015_t_15_slice_rank_method_optimality_beyond_f_3_composite_modul.md",
-        "finished_at": "2026-05-18T16:56:06.666243-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "DR-061 [T2]: T#15 Slice-rank method optimality beyond F_3 (composite moduli)",
-        "output_path": null,
-        "finished_at": "2026-05-18T16:56:06.617388-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_received",
-        "summary": "- **Research indicates** that the mathematical relationship between partition rank and analytic rank\u2014a central open problem in additive combinatorics and tensor complexity\u2014transitioned from initially impractical Ackermann-type dependencies to robust polynomial bounds. - **It appe...",
-        "output_path": "aporia/docs/deep_research_reports/2026-05-18/00014_t_14_geometric_rank_vs_partition_rank_polynomial_vs_linear_c.md",
-        "finished_at": "2026-05-18T16:56:06.597509-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "DR-060 [T2]: T#14 Geometric rank vs partition rank polynomial-vs-linear comparison",
-        "output_path": null,
-        "finished_at": "2026-05-18T16:56:06.567399-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_received",
-        "summary": "*   **Fundamental Discrepancy:** While matrix rank is computationally tractable via Singular Value Decomposition (SVD), computing the rank of tensors of order 3 and higher is rigorously proven to be NP-hard. *   **Raz's Breakthrough:** Ran Raz (2010) established a profound theore...",
-        "output_path": "aporia/docs/deep_research_reports/2026-05-18/00013_t_12_super_linear_tensor_rank_lbs_for_explicit_order_3_tenso.md",
-        "finished_at": "2026-05-18T16:56:06.543162-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "DR-059 [T2]: T#12 Super-linear tensor-rank LBs for explicit order-3 tensors (Raz)",
-        "output_path": null,
-        "finished_at": "2026-05-18T16:56:06.489581-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_received",
-        "summary": "*   The Ambainis-Filmus-Le Gall (AFLG) barrier represents a fundamental mathematical limitation on the ability of the Coppersmith-Winograd algorithm and its direct derivatives to achieve the theoretical optimum of $\\omega = 2$ for the matrix multiplication exponent. *   Research ...",
-        "output_path": "aporia/docs/deep_research_reports/2026-05-18/00012_t_11_limits_of_the_laser_method_ambainis_filmus_le_gall_barr.md",
-        "finished_at": "2026-05-18T16:56:06.466711-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "DR-058 [T2]: T#11 Limits of the laser method (Ambainis-Filmus-Le Gall barrier)",
-        "output_path": null,
-        "finished_at": "2026-05-18T16:56:06.420818-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_received",
-        "summary": "The mathematical framework surrounding **Bini-style degeneration**, **sequence length**, and **epsilon-expansion control** represents a profound intersection of algebraic complexity theory, numerical linear algebra, and theoretical physics. At its core, Bini-style degeneration le...",
-        "output_path": "aporia/docs/deep_research_reports/2026-05-18/00011_t_10_bini_style_degeneration_sequence_length_epsilon_expansi.md",
-        "finished_at": "2026-05-18T16:56:06.400563-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "DR-057 [T2]: T#10 Bini-style degeneration sequence length / epsilon-expansion control",
-        "output_path": null,
-        "finished_at": "2026-05-18T16:56:06.353644-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_received",
-        "summary": "*   **Key Points:** *   The restriction pre-order is a foundational mathematical framework used to compare the relative complexity of tensors by determining if one tensor can be linearly transformed into another. *   Small tensors, particularly of dimensions 3x3x3, serve as the c...",
-        "output_path": "aporia/docs/deep_research_reports/2026-05-18/00010_t_9_restriction_pre_order_on_small_3x3x3_tensors.md",
-        "finished_at": "2026-05-18T16:56:06.333644-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "DR-056 [T2]: T#9 Restriction pre-order on small (3x3x3) tensors",
-        "output_path": null,
-        "finished_at": "2026-05-18T16:56:06.277691-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_received",
-        "summary": "- It seems likely that public claims suggesting artificial intelligence has broadly \"solved\" the **Andrews-Curtis conjecture** are overstated; evidence indicates that researchers have instead used reinforcement learning and automated deduction to successfully eliminate long-stand...",
-        "output_path": "aporia/docs/deep_research_reports/2026-05-18/00009_forward_false_anchor_hunt_low_dim_topology_2025_2026_x_solve.md",
-        "finished_at": "2026-05-18T16:56:06.255684-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "DR-050 [T1]: Forward false-anchor hunt: low-dim topology 2025-2026 'X solved Y' claims (Andrews-Curtis, slice-ribbon, etc.)",
-        "output_path": null,
-        "finished_at": "2026-05-18T16:56:06.228682-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_received",
-        "summary": "*   The 2025\u20132026 academic period has witnessed a surge in \"X solved Y\" claims within algebraic geometry, driven by the integration of Artificial Intelligence (AI) and the importation of string theory techniques into classical rationality problems. *   A major, highly publicized ...",
-        "output_path": "aporia/docs/deep_research_reports/2026-05-18/00008_forward_false_anchor_hunt_algebraic_geometry_2025_2026_x_sol.md",
-        "finished_at": "2026-05-18T16:56:06.105466-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "DR-049 [T1]: Forward false-anchor hunt: algebraic geometry 2025-2026 'X solved Y' claims",
-        "output_path": null,
-        "finished_at": "2026-05-18T16:56:06.079260-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
-      },
-      {
-        "stage": "deep_research_received",
-        "summary": "- **Research suggests** that the years 2025 and 2026 have witnessed an unprecedented surge in unverified or partially verified claims regarding the resolution of historic problems in analytic number theory, including the Riemann Hypothesis, the Collatz Conjecture, the Goldbach Co...",
-        "output_path": "aporia/docs/deep_research_reports/2026-05-18/00007_forward_false_anchor_hunt_analytic_number_theory_2025_2026_x.md",
-        "finished_at": "2026-05-18T16:56:06.056144-04:00",
-        "cycle_id": "f2c8c0a2-3043-42f1-8f31-a4a61459539b",
-        "success": true
       }
     ],
-    "report_count_24h": 17,
-    "dispatch_count_24h": 16,
-    "budget": null
+    "report_count_24h": 6,
+    "dispatch_count_24h": 3,
+    "budget": {
+      "agent": "Pythia",
+      "used": 1,
+      "budget": 20,
+      "remaining": 19,
+      "as_of": "2026-05-19T07:43:51.835927+00:00"
+    }
   }
 }
