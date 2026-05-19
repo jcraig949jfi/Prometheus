@@ -15,7 +15,7 @@ from __future__ import annotations
 import json
 import re
 import subprocess
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Optional
 
@@ -222,6 +222,183 @@ class PhylaxAgent(HarmoniaAgent):
             count += 1
         return count
 
+    # ---- Pythia DR enqueue (per Aporia doctrine 2026-05-19) ---------------
+
+    def _build_dr_prompt(
+        self,
+        verdict: str,
+        event: dict,
+        adjacency_hits: list[dict],
+        p30: dict,
+    ) -> str:
+        """Discipline-doctrine compliant DR prompt for promotion-adjacency verification.
+
+        Compliance with the five requirements (Aporia doctrine §3):
+          1. Names requester explicitly in prompt body
+          2. Specifies substrate type (A = falsification data / anti-anchor)
+          3. Sets verification criterion (arXiv ID + DOI + distinguish retracted form)
+          4. Pre-declares landing path (retraction_registry.md OR anti_anchors.jsonl)
+          5. Recency check enforced at the call site via dr_recent_topics state
+        """
+        claim_text = (event.get("blob") or "")[:600]
+        top_hit = adjacency_hits[0] if adjacency_hits else {}
+        retraction_title = top_hit.get("retraction_title", "—")
+        jaccard = top_hit.get("score", 0.0)
+        was = top_hit.get("was_excerpt", "")
+        mech = top_hit.get("mechanism_excerpt", "")
+        anchor = top_hit.get("anchor", "")
+        today_iso = datetime.now(timezone.utc).date().isoformat()
+        return (
+            f"Requester: **Phylax** (Harmonia swarm, M2) — pre-promotion gate + "
+            f"retraction-adjacency sentinel.\n"
+            f"Substrate type: **A** (falsification data / anti-anchor verification).\n"
+            f"Landing path: append findings to "
+            f"`D:\\Prometheus\\harmonia\\memory\\retraction_registry.md` if the "
+            f"prior retraction needs re-statement or update, OR file as anti-anchor "
+            f"candidate at `D:\\Prometheus\\techne\\registry\\anti_anchors.jsonl` "
+            f"if the literature has materially moved.\n\n"
+            f"## Background\n"
+            f"Phylax flagged a new candidate claim adjacent (Jaccard {jaccard:.2f}) "
+            f"to a known retraction:\n"
+            f"- Retracted entry: **{retraction_title}**\n"
+            f"- Anchor: `{anchor}`\n"
+            f"- Was: {was}\n"
+            f"- Mechanism: {mech}\n\n"
+            f"The candidate claim (excerpt):\n"
+            f"```\n{claim_text}\n```\n\n"
+            f"Phylax's Pattern-30 sketch graded this "
+            f"**{p30.get('name','UNDETERMINED')}** "
+            f"({p30.get('reasoning','no automated reasoning available')}).\n\n"
+            f"## Question\n"
+            f"Has the primary mathematical / scientific literature **since 2024-01** "
+            f"(a) re-confirmed the prior retraction, (b) overturned the retraction "
+            f"with a new proof / construction / counterexample, or (c) added a "
+            f"new degree-of-freedom that changes the algebraic-coupling diagnosis?\n\n"
+            f"## Verification criterion (doctrine §3.3)\n"
+            f"For each cited result, provide: primary source (**arXiv ID + DOI** "
+            f"when available), publication date, the specific claim or theorem "
+            f"statement, and explicitly distinguish whether the new work "
+            f"addresses the **exact retracted form** vs a **weaker / restated "
+            f"form**. Reject sources older than 2024-01 unless they are the "
+            f"primary source the retraction was originally based on (in which "
+            f"case quote the relevant passage).\n\n"
+            f"## Anti-recency-collision (doctrine §3.5)\n"
+            f"Phylax has not enqueued a DR on retraction anchor `{anchor}` "
+            f"in the last 7 days (tracked in `dr_recent_topics` state). If "
+            f"Aporia's queue has covered this anchor recently, please reply "
+            f"with `RECENT_COVERAGE — see DR <id>` as the first line so Phylax "
+            f"can suppress future re-fires for this anchor.\n\n"
+            f"Phylax artifact this came from: "
+            f"`D:\\Prometheus\\harmonia\\agents\\phylax\\artifacts\\verdict_"
+            f"{event.get('source','inbound')}_*` (timestamp around {today_iso})."
+        )
+
+    def _maybe_enqueue_dr(
+        self,
+        verdict: str,
+        event: dict,
+        adjacency_hits: list[dict],
+        p30: dict,
+        stats: dict,
+        dry_run: bool,
+    ) -> Optional[int]:
+        """Cap-aware Pythia DR enqueue for flag/block verdicts. Returns row_id or None.
+
+        Gate stack:
+        - Only enqueue for verdict in ('flag','block') with non-empty adjacency
+        - Daily cap (default 3/day, override via `dr_daily_cap.json` state file)
+        - 7-day recency check on the retraction anchor (avoid re-firing)
+        - dry_run short-circuits before any side effect
+        """
+        if dry_run:
+            return None
+        if verdict not in ("flag", "block"):
+            return None
+        if not adjacency_hits:
+            return None
+
+        dr_seeded = self.load_state("dr_seeded", default=[]) or []
+        today = datetime.now(timezone.utc).date().isoformat()
+        seeded_today = sum(
+            1 for e in dr_seeded
+            if str(e.get("ts", ""))[:10] == today
+        )
+        dr_cap = int(self.load_state("dr_daily_cap", default=3) or 3)
+        dr_quota_remaining = max(0, dr_cap - seeded_today)
+        stats["dr_seeded_today"] = seeded_today
+        stats["dr_quota_remaining"] = dr_quota_remaining
+        if dr_quota_remaining <= 0:
+            return None
+
+        dr_recent_topics = self.load_state("dr_recent_topics", default=[]) or []
+        cutoff_iso = (
+            datetime.now(timezone.utc) - timedelta(days=7)
+        ).isoformat()
+        dr_recent_topics = [
+            t for t in dr_recent_topics
+            if str(t.get("ts", "")) > cutoff_iso
+        ]
+        # Recency key is the retraction-title slug (entry-level granularity),
+        # not the file path — otherwise the 7-day suppression would block all
+        # retraction DRs after the first one.
+        top_title = adjacency_hits[0].get("retraction_title", "")
+        recency_key = re.sub(r"[^A-Za-z0-9]+", "_", top_title.lower()).strip("_")[:80]
+        recent_keys = {t.get("recency_key", "") for t in dr_recent_topics}
+        if not recency_key or recency_key in recent_keys:
+            stats["dr_skipped_recent"] = stats.get("dr_skipped_recent", 0) + 1
+            return None
+        top_anchor = adjacency_hits[0].get("anchor", "")
+
+        try:
+            top_title = adjacency_hits[0].get(
+                "retraction_title", "adjacent retraction"
+            )
+            title = f"Phylax verify: {top_title}"[:200]
+            prompt = self._build_dr_prompt(
+                verdict, event, adjacency_hits, p30
+            )
+            row_id = self.pythia_enqueue_dr(
+                title=title,
+                prompt=prompt,
+                priority=4,
+                tier="T4",
+                tags={
+                    "source": "harmonia_agent:phylax",
+                    "substrate_type": "A",
+                    "anchor": top_anchor,
+                    "verdict": verdict,
+                    "jaccard": round(adjacency_hits[0].get("score", 0.0), 3),
+                },
+            )
+            if row_id is not None:
+                now_iso = datetime.now(timezone.utc).isoformat()
+                dr_seeded.append({
+                    "anchor": top_anchor,
+                    "queue_row_id": row_id,
+                    "ts": now_iso,
+                    "verdict": verdict,
+                })
+                self.save_state("dr_seeded", dr_seeded)
+                dr_recent_topics.append({
+                    "anchor": top_anchor,
+                    "recency_key": recency_key,
+                    "row_id": row_id,
+                    "ts": now_iso,
+                })
+                self.save_state("dr_recent_topics", dr_recent_topics)
+                stats["dr_seeded"] = stats.get("dr_seeded", 0) + 1
+                stats["dr_quota_remaining"] = max(0, dr_quota_remaining - 1)
+                stats["dr_last_row_id"] = row_id
+                self.log.info(
+                    f"DR enqueued anchor={top_anchor} verdict={verdict} "
+                    f"row_id={row_id}"
+                )
+            return row_id
+        except Exception as e:
+            self.log.warning(f"pythia_enqueue_dr path failed: {e}")
+            stats["errors"] += 1
+            return None
+
     # ---- envelope writer --------------------------------------------------
 
     def _write_envelope(
@@ -341,6 +518,13 @@ class PhylaxAgent(HarmoniaAgent):
             "blob": text[:400],
         }
         out = self._write_envelope(event, claim_text, adjacency_hits, p30, kind="reaudit")
+        verdict = self._verdict(adjacency_hits, p30)
+        # The caller (run_tick reaudit branch) doesn't surface a stats dict
+        # here; pass an ephemeral one. Real telemetry stays inside run_tick.
+        ephemeral_stats: dict = {}
+        self._maybe_enqueue_dr(
+            verdict, event, adjacency_hits, p30, ephemeral_stats, dry_run=False
+        )
         audited = self.load_state("symbol_last_audit", {}) or {}
         audited[symbol] = datetime.now(timezone.utc).isoformat()
         self.save_state("symbol_last_audit", audited)
@@ -382,6 +566,9 @@ class PhylaxAgent(HarmoniaAgent):
                 stats["verdicts"][verdict] = stats["verdicts"].get(verdict, 0) + 1
                 artifacts.append(str(out))
                 new_seen.append(str(ev["msg_id"]))
+                self._maybe_enqueue_dr(
+                    verdict, ev, adjacency_hits, p30, stats, dry_run
+                )
                 if ev.get("source") == "git" and last_commit_to_save is None:
                     last_commit_to_save = str(ev["msg_id"])
             except Exception as e:
