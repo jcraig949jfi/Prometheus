@@ -1,0 +1,10 @@
+# Runtime state — do not commit
+_rotation_state.json
+*/state/
+*/artifacts/
+
+# Python bytecode (top-level rule overridden by harmonia/agents/** negation;
+# re-exclude here)
+__pycache__/
+**/__pycache__/
+*.pyc
