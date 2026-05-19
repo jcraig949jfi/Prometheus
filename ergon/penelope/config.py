@@ -17,6 +17,9 @@ CLAIM_RUNNER_MODULE = "prometheus_math.substrate_generation.tier_1_claim_runner"
 CORPUS_DIR = REPO_ROOT / "ergon" / "learner" / "corpus" / "v1_0_tier_pending"
 
 THESEUS_OUTBOX = REPO_ROOT / "theseus" / "handoff" / "ergon_outbox"
+THESEUS_INBOX = THESEUS_OUTBOX / "inbox"
+THESEUS_CONSUMED = THESEUS_OUTBOX / "consumed"
+THESEUS_REJECTED = THESEUS_OUTBOX / "rejected"
 APORIA_STAGED_ROOT = REPO_ROOT / "aporia" / "docs" / "staged_substrate_blocks"
 TECHNE_MINED_ROOT = REPO_ROOT / "aporia" / "docs" / "mined_substrate_blocks"
 

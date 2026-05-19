@@ -20,6 +20,7 @@ from typing import Callable, List, Tuple
 from ergon.penelope.config import (
     APORIA_STAGED_ROOT,
     TECHNE_MINED_ROOT,
+    THESEUS_INBOX,
     THESEUS_OUTBOX,
 )
 
@@ -32,17 +33,33 @@ class Source:
 
 
 def scan_theseus_outbox() -> List[Path]:
-    """Theseus handoff bundles: theseus/handoff/ergon_outbox/*.jsonl.
+    """Theseus handoff bundles per theseus/handoff/CONTRACT.md.
 
-    Excludes _combined_*.jsonl intermediates (Theseus-internal
-    concatenations that duplicate the per-bundle files).
+    The producer writes bundles to `inbox/` with a `.complete` zero-byte
+    sentinel that is written LAST. We only return jsonls whose matching
+    `.complete` exists — guarantees both data files (.md + .jsonl) are
+    fully flushed before consumption.
+
+    After ingest, the daemon is responsible for moving the 3 files
+    (.md / .jsonl / .complete) to `consumed/` or `rejected/`. That move
+    is the per-Theseus post-ingest step, not part of scanning.
+
+    Falls back to the legacy flat layout if `inbox/` does not exist yet
+    (so older Theseus deployments still work).
     """
-    if not THESEUS_OUTBOX.exists():
+    base = THESEUS_INBOX if THESEUS_INBOX.exists() else THESEUS_OUTBOX
+    if not base.exists():
         return []
     out: List[Path] = []
-    for p in THESEUS_OUTBOX.glob("*.jsonl"):
+    for p in base.glob("*.jsonl"):
         if p.name.startswith("_combined_"):
             continue
+        if p.name.endswith(".tmp"):
+            continue
+        if base is THESEUS_INBOX:
+            sentinel = p.with_suffix(".complete")
+            if not sentinel.exists():
+                continue
         out.append(p)
     out.sort(key=lambda p: p.stat().st_mtime)
     return out

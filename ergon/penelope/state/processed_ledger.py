@@ -82,11 +82,17 @@ def make_entry(
     validation_failures: int,
     result: str,
     notes: str = "",
+    sha256: Optional[str] = None,
+    size_bytes: Optional[int] = None,
 ) -> LedgerEntry:
+    """Ledger entry. Pre-computed sha256 / size_bytes can be passed in for
+    cases where the file has already moved (e.g., Theseus consumed/) by
+    the time the entry is built — re-hashing would FileNotFoundError.
+    """
     return LedgerEntry(
         path=str(file_path),
-        sha256=sha256_of_file(file_path),
-        size_bytes=file_path.stat().st_size,
+        sha256=sha256 if sha256 is not None else sha256_of_file(file_path),
+        size_bytes=size_bytes if size_bytes is not None else file_path.stat().st_size,
         source=source,
         ingested_at=datetime.now(timezone.utc).isoformat(),
         batch_id=batch_id,

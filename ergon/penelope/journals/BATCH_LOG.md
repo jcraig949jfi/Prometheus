@@ -173,3 +173,186 @@
 - Sources: {}
 - Domains: {}
 
+
+## penelope-20260519T042900Z-890495
+
+- Started: 2026-05-19T04:29:00.540148+00:00
+- Ended:   2026-05-19T04:29:00.575215+00:00
+- Duration: 0.05 s
+- Files: 0 ingested, 13 dup-skip, 0 failed
+- Records: 0 ingested, 0 dropped, 0 validation_failures
+- Sources: {}
+- Domains: {}
+
+
+## penelope-20260519T044312Z-c43380
+
+- Started: 2026-05-19T04:43:12.211426+00:00
+- Ended:   2026-05-19T04:43:12.239459+00:00
+- Duration: 0.03 s
+- Files: 0 ingested, 13 dup-skip, 0 failed
+- Records: 0 ingested, 0 dropped, 0 validation_failures
+- Sources: {}
+- Domains: {}
+
+
+## penelope-20260519T045809Z-ecf2f2
+
+- Started: 2026-05-19T04:58:09.139329+00:00
+- Ended:   2026-05-19T04:58:09.168393+00:00
+- Duration: 0.01 s
+- Files: 0 ingested, 13 dup-skip, 0 failed
+- Records: 0 ingested, 0 dropped, 0 validation_failures
+- Sources: {}
+- Domains: {}
+
+
+## penelope-20260519T051313Z-3d6780
+
+- Started: 2026-05-19T05:13:13.850011+00:00
+- Ended:   2026-05-19T05:13:13.874219+00:00
+- Duration: 0.03 s
+- Files: 0 ingested, 13 dup-skip, 0 failed
+- Records: 0 ingested, 0 dropped, 0 validation_failures
+- Sources: {}
+- Domains: {}
+
+
+## penelope-20260519T052809Z-fbfa84
+
+- Started: 2026-05-19T05:28:09.621994+00:00
+- Ended:   2026-05-19T05:28:09.645994+00:00
+- Duration: 0.02 s
+- Files: 0 ingested, 13 dup-skip, 0 failed
+- Records: 0 ingested, 0 dropped, 0 validation_failures
+- Sources: {}
+- Domains: {}
+
+
+## penelope-20260519T054312Z-3e12fd
+
+- Started: 2026-05-19T05:43:12.538393+00:00
+- Ended:   2026-05-19T05:43:12.573126+00:00
+- Duration: 0.03 s
+- Files: 0 ingested, 13 dup-skip, 0 failed
+- Records: 0 ingested, 0 dropped, 0 validation_failures
+- Sources: {}
+- Domains: {}
+
+
+## penelope-20260519T055809Z-713777
+
+- Started: 2026-05-19T05:58:09.786882+00:00
+- Ended:   2026-05-19T05:58:09.815880+00:00
+- Duration: 0.03 s
+- Files: 0 ingested, 13 dup-skip, 0 failed
+- Records: 0 ingested, 0 dropped, 0 validation_failures
+- Sources: {}
+- Domains: {}
+
+
+## penelope-20260519T061319Z-f1d431
+
+- Started: 2026-05-19T06:13:19.412918+00:00
+- Ended:   2026-05-19T06:13:19.441885+00:00
+- Duration: 0.03 s
+- Files: 0 ingested, 13 dup-skip, 0 failed
+- Records: 0 ingested, 0 dropped, 0 validation_failures
+- Sources: {}
+- Domains: {}
+
+
+## penelope-20260519T062809Z-a02126
+
+- Started: 2026-05-19T06:28:09.297783+00:00
+- Ended:   2026-05-19T06:28:09.328863+00:00
+- Duration: 0.03 s
+- Files: 0 ingested, 13 dup-skip, 0 failed
+- Records: 0 ingested, 0 dropped, 0 validation_failures
+- Sources: {}
+- Domains: {}
+
+
+## penelope-20260519T064316Z-920083
+
+- Started: 2026-05-19T06:43:16.177308+00:00
+- Ended:   2026-05-19T06:43:16.208492+00:00
+- Duration: 0.03 s
+- Files: 0 ingested, 13 dup-skip, 0 failed
+- Records: 0 ingested, 0 dropped, 0 validation_failures
+- Sources: {}
+- Domains: {}
+
+
+## penelope-20260519T065809Z-aa5e5a
+
+- Started: 2026-05-19T06:58:09.509605+00:00
+- Ended:   2026-05-19T06:58:09.640678+00:00
+- Duration: 0.14 s
+- Files: 0 ingested, 13 dup-skip, 0 failed
+- Records: 0 ingested, 0 dropped, 0 validation_failures
+- Sources: {}
+- Domains: {}
+
+
+## penelope-20260519T071317Z-7ccd09
+
+- Started: 2026-05-19T07:13:17.936655+00:00
+- Ended:   2026-05-19T07:13:17.964717+00:00
+- Duration: 0.03 s
+- Files: 0 ingested, 13 dup-skip, 0 failed
+- Records: 0 ingested, 0 dropped, 0 validation_failures
+- Sources: {}
+- Domains: {}
+
+
+## penelope-20260519T072809Z-300991
+
+- Started: 2026-05-19T07:28:09.570805+00:00
+- Ended:   2026-05-19T07:28:09.600864+00:00
+- Duration: 0.03 s
+- Files: 0 ingested, 13 dup-skip, 0 failed
+- Records: 0 ingested, 0 dropped, 0 validation_failures
+- Sources: {}
+- Domains: {}
+
+
+## penelope-20260519T074308Z-dbfbca
+
+- Started: 2026-05-19T07:43:08.573868+00:00
+- Ended:   2026-05-19T07:43:08.602953+00:00
+- Duration: 0.03 s
+- Files: 0 ingested, 13 dup-skip, 0 failed
+- Records: 0 ingested, 0 dropped, 0 validation_failures
+- Sources: {}
+- Domains: {}
+
+
+## penelope-20260519T075816Z-14c495
+
+- Started: 2026-05-19T07:58:16.873854+00:00
+- Ended:   2026-05-19T07:58:16.898265+00:00
+- Duration: 0.02 s
+- Files: 0 ingested, 13 dup-skip, 0 failed
+- Records: 0 ingested, 0 dropped, 0 validation_failures
+- Sources: {}
+- Domains: {}
+
+
+## penelope-20260519T082324Z-6a134f
+
+- Started: 2026-05-19T08:23:24.834065+00:00
+- Ended:   2026-05-19T08:24:27.217481+00:00
+- Duration: 62.38 s
+- Files: 4 ingested, 13 dup-skip, 0 failed
+- Records: 400 ingested, 0 dropped, 0 validation_failures
+- Sources: {'theseus': 400}
+- Domains: {'knots_x_elliptic_curves': 400}
+
+### Per-file detail
+
+- `F:\Prometheus\theseus\handoff\ergon_outbox\inbox\theseus_training_anchors_20260518T231551Z.jsonl` (theseus): success — 100 records (0 dropped, 0 vfails)
+- `F:\Prometheus\theseus\handoff\ergon_outbox\inbox\theseus_training_anchors_20260519T012413Z.jsonl` (theseus): success — 100 records (0 dropped, 0 vfails)
+- `F:\Prometheus\theseus\handoff\ergon_outbox\inbox\theseus_training_anchors_20260519T012527Z.jsonl` (theseus): success — 100 records (0 dropped, 0 vfails)
+- `F:\Prometheus\theseus\handoff\ergon_outbox\inbox\theseus_training_anchors_20260519T012628Z.jsonl` (theseus): success — 100 records (0 dropped, 0 vfails)
+

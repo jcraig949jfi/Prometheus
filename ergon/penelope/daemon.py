@@ -31,6 +31,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Iterator, List, Optional, Tuple
 
+import shutil
+
 from ergon.penelope import config as cfg
 from ergon.penelope.orchestration import (
     register_penelope,
@@ -247,6 +249,40 @@ _RUNNER_DISPATCH = {
 }
 
 
+def _theseus_post_ingest_move(input_path: Path, success: bool) -> Optional[str]:
+    """Implement the consumer-side move per theseus/handoff/CONTRACT.md §"Consumer responsibilities".
+
+    On success: move (.md, .jsonl, .complete) to `consumed/`.
+    On failure: move all three to `rejected/`.
+    Returns a one-line note (None on no-op, error string on partial failure).
+    """
+    if input_path.parent != cfg.THESEUS_INBOX:
+        # Legacy flat layout — no move convention applies.
+        return None
+    target_dir = cfg.THESEUS_CONSUMED if success else cfg.THESEUS_REJECTED
+    target_dir.mkdir(parents=True, exist_ok=True)
+    stem = input_path.stem  # strips .jsonl
+    siblings = [
+        input_path,
+        input_path.with_suffix(".md"),
+        input_path.with_suffix(".complete"),
+    ]
+    moved: List[str] = []
+    errors: List[str] = []
+    for src in siblings:
+        if not src.exists():
+            continue
+        dst = target_dir / src.name
+        try:
+            shutil.move(str(src), str(dst))
+            moved.append(src.name)
+        except OSError as e:
+            errors.append(f"{src.name}: {e}")
+    if errors:
+        return f"partial-move({stem}): " + "; ".join(errors)
+    return None
+
+
 def _run_ingest_subprocess(input_path: Path, source: str, batch_date: str, runner_type: str) -> Dict[str, Any]:
     runner = _RUNNER_DISPATCH.get(runner_type)
     if runner is None:
@@ -319,8 +355,31 @@ def _render_batch_md(batch_id: str, summary: Dict[str, Any], per_file: List[Dict
     return "\n".join(lines) + "\n"
 
 
+def _try_git_fast_forward() -> Optional[str]:
+    """Best-effort `git pull --ff-only` so cross-machine substrate syncs.
+
+    Returns a one-line status note for the journal (None on success, error
+    string on failure). Fail-soft: a diverged branch just means Penelope
+    works on local state this tick. No retry, no merge attempt.
+    """
+    try:
+        proc = subprocess.run(
+            ["git", "pull", "--ff-only"],
+            capture_output=True,
+            text=True,
+            cwd=str(cfg.REPO_ROOT),
+            timeout=30,
+        )
+        if proc.returncode != 0:
+            tail = (proc.stderr or proc.stdout or "").strip().splitlines()
+            return tail[-1][:200] if tail else "non-zero exit"
+        return None
+    except (subprocess.TimeoutExpired, OSError) as e:
+        return f"git-pull-exception: {type(e).__name__}: {str(e)[:120]}"
+
+
 def run_batch(emit_telemetry: bool = True) -> Dict[str, Any]:
-    """Run one Penelope batch: scan → ingest unprocessed → telemetry.
+    """Run one Penelope batch: pull → scan → ingest unprocessed → telemetry.
 
     Returns a summary dict consumed by lifetime-stats merging and the
     daemon's outer loop.
@@ -331,6 +390,10 @@ def run_batch(emit_telemetry: bool = True) -> Dict[str, Any]:
     started_mono = time.monotonic()
     sources_scanned: List[str] = []
     errors: List[str] = []
+
+    git_pull_note = _try_git_fast_forward()
+    if git_pull_note:
+        errors.append(f"git-pull: {git_pull_note}")
 
     if emit_telemetry:
         register_penelope(
@@ -358,6 +421,7 @@ def run_batch(emit_telemetry: bool = True) -> Dict[str, Any]:
             sources_scanned.append(source_name)
         try:
             sha = sha256_of_file(path)
+            size_bytes = path.stat().st_size
         except OSError as e:
             files_failed += 1
             errors.append(f"hash-failed {path}: {e}")
@@ -389,6 +453,13 @@ def run_batch(emit_telemetry: bool = True) -> Dict[str, Any]:
             files_failed += 1
             tail = " | ".join(result.get("stderr_tail", []))[:300]
             errors.append(f"ingest-failed {path}: {tail}")
+            move_note = (
+                _theseus_post_ingest_move(path, success=False)
+                if source_name == "theseus"
+                else None
+            )
+            if move_note:
+                errors.append(move_note)
             entry = make_entry(
                 file_path=path,
                 source=source_name,
@@ -398,6 +469,8 @@ def run_batch(emit_telemetry: bool = True) -> Dict[str, Any]:
                 validation_failures=result["validation_failures"],
                 result="failed",
                 notes=tail,
+                sha256=sha,
+                size_bytes=size_bytes,
             )
             append_entry(entry)
             per_file_records.append({
@@ -419,6 +492,14 @@ def run_batch(emit_telemetry: bool = True) -> Dict[str, Any]:
         for dom, n in result.get("by_domain", {}).items():
             per_domain[dom] = per_domain.get(dom, 0) + int(n)
 
+        move_note = (
+            _theseus_post_ingest_move(path, success=True)
+            if source_name == "theseus"
+            else None
+        )
+        if move_note:
+            errors.append(move_note)
+
         entry = make_entry(
             file_path=path,
             source=source_name,
@@ -427,6 +508,9 @@ def run_batch(emit_telemetry: bool = True) -> Dict[str, Any]:
             n_records_dropped=result["dropped"],
             validation_failures=result["validation_failures"],
             result="success",
+            notes=("moved-to-consumed" if source_name == "theseus" and not move_note else ""),
+            sha256=sha,
+            size_bytes=size_bytes,
         )
         append_entry(entry)
         per_file_records.append({
