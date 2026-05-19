@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "generated_at": "2026-05-19T11:43:58.713888+00:00",
+  "generated_at": "2026-05-19T15:44:00.442051+00:00",
   "redis_host": "192.168.1.176:6379",
   "heartbeat_timeout_sec": 300,
   "ideas_in_flight": [
@@ -23,27 +23,27 @@
       "role": "evolutionary",
       "operator": null,
       "status": "ALIVE",
-      "heartbeat_age_sec": 7,
+      "heartbeat_age_sec": 58,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-19T07:43:51.085759-04:00",
+      "last_status_update": "2026-05-19T11:43:01.716731-04:00",
       "key_metrics": {
         "phase": "main",
-        "elapsed_h": 1.55,
-        "gen_time_s": 80.33,
-        "generation": 884,
+        "elapsed_h": 5.54,
+        "gen_time_s": 205.94,
+        "generation": 1059,
         "ncd_weight": 0.0,
         "config_path": "configs\\config_v2d2b.yaml",
         "vram_used_mb": null,
-        "median_fitness": 0.3,
+        "median_fitness": 0.335,
         "llm_alive_count": null,
         "map_elites_size": 2,
         "ablation_delta_min": 0.0,
         "last_checkpoint_at": null,
         "best_fitness_vector": [
-          0.43,
-          0.3,
-          0.78,
-          0.74,
+          0.44,
+          0.335,
+          0.8,
+          0.62,
           1.0,
           500
         ],
@@ -60,17 +60,17 @@
       "role": "forge",
       "operator": null,
       "status": "ALIVE",
-      "heartbeat_age_sec": 22,
-      "current_op": "forging Attention Mechanisms + Neuromodulation + Satisfiability",
-      "last_status_update": "2026-05-19T11:34:49.263912Z",
+      "heartbeat_age_sec": 23,
+      "current_op": "forging Measure Theory + Feedback Control + Normalized Compression Distance",
+      "last_status_update": "2026-05-19T15:42:07.468456Z",
       "key_metrics": {
-        "session_forges": 9,
-        "session_scraps": 371,
-        "forge_rate_pct": 2.4,
+        "session_forges": 12,
+        "session_scraps": 443,
+        "forge_rate_pct": 2.6,
         "current_forge_version": "forge",
-        "ledger_size": 5829,
+        "ledger_size": 5904,
         "api_timeouts_last_hour": 0,
-        "nous_queue_depth": 822
+        "nous_queue_depth": 747
       },
       "data_source": "redis"
     },
@@ -124,7 +124,7 @@
       "role": "void detection + Deep Research + Clio supervision",
       "operator": null,
       "status": "DEAD",
-      "heartbeat_age_sec": 2265132,
+      "heartbeat_age_sec": 2279534,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -151,39 +151,39 @@
       "kind": "tool",
       "role": "paper scanner (arxiv/openalex/semantic-scholar)",
       "operator": "Aporia",
-      "status": "DEAD",
-      "heartbeat_age_sec": 1336,
+      "status": "ALIVE",
+      "heartbeat_age_sec": 82,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-19T07:21:42.367235-04:00",
+      "last_status_update": "2026-05-19T11:42:37.494132-04:00",
       "key_metrics": {
         "kind": "tool",
         "quality": {
           "papers_24h": 187,
-          "snapshot_id": 55,
+          "snapshot_id": 60,
           "confidence_p50": 0.9,
-          "confidence_mean": 0.871,
-          "falsifiable_pct": 99.26,
-          "paradigm_hint_pct": 97.96,
-          "claims_extracted_24h": 538,
-          "claims_submitted_24h": 538,
-          "claims_per_paper_mean": 2.877,
+          "confidence_mean": 0.876,
+          "falsifiable_pct": 99.33,
+          "paradigm_hint_pct": 95.86,
+          "claims_extracted_24h": 748,
+          "claims_submitted_24h": 748,
+          "claims_per_paper_mean": 2.972,
           "paradigm_coverage_count": 27,
           "sigma_submission_error_pct": 0.0,
-          "theorem_with_counterexample_kill_path_pct": 9.38
+          "theorem_with_counterexample_kill_path_pct": 7.89
         },
         "sources": [
           "arxiv"
         ],
-        "cycle_id": "518c7f50-38e7-4c1a-b316-21f085baee34",
+        "cycle_id": "b24e80a5-5771-491f-84ff-95f2260a343b",
         "operator": "Aporia",
         "dedup_rate": 0.0,
         "papers_new": 0,
         "queries_run": 13,
-        "duration_sec": 50.21,
+        "duration_sec": 51.26,
         "papers_found": 185,
         "triggered_by": "schedule",
-        "last_cycle_at": "2026-05-19T11:21:42.135608+00:00",
-        "next_cycle_at": "2026-05-19T12:21:42.135608+00:00",
+        "last_cycle_at": "2026-05-19T15:42:37.351258+00:00",
+        "next_cycle_at": "2026-05-19T16:42:37.351258+00:00",
         "target_domains": [
           "tensor",
           "P15",
@@ -203,7 +203,7 @@
         ],
         "errors_this_cycle": [],
         "discoveries_emitted": 0,
-        "lifetime_papers_indexed": 187
+        "lifetime_papers_indexed": 181
       },
       "data_source": "postgres_fallback"
     },
@@ -217,10 +217,10 @@
       "status": "ALIVE",
       "heartbeat_age_sec": 10,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-19T07:43:48.663941-04:00",
+      "last_status_update": "2026-05-19T11:43:49.985974-04:00",
       "key_metrics": {
         "kind": "tool",
-        "role": "deep research report producer (empirical-budget discovery in progress)",
+        "role": "deep research report producer (compute-based, AI_Pro tier, 5h window)",
         "model": "deep-research-pro-preview-12-2025",
         "operator": "Aporia",
         "throttle": {
@@ -229,23 +229,32 @@
           "last_rate_limited_at": null,
           "last_reset_detected_at": null,
           "consecutive_rate_limits": 0,
-          "daily_count_at_first_quota": null
+          "count_at_first_quota_in_5h_window": null
         },
         "in_flight": 3,
-        "failed_today": 0,
-        "queue_pending": 169,
-        "registered_at": "2026-05-19T11:43:48.663941+00:00",
+        "queue_pending": 172,
+        "registered_at": "2026-05-19T15:43:49.985974+00:00",
         "max_concurrent": 3,
-        "completed_today": 34,
-        "session_cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-        "rate_limited_today": 0,
-        "session_started_at": "2026-05-19T09:16:23.879492+00:00",
+        "compute_tracking": {
+          "tier": "AI_Pro",
+          "count_weekly": 67,
+          "window_hours": 5,
+          "weekly_resets": "Monday 8:29 AM (dashboard-confirmed)",
+          "count_5h_window": 21
+        },
+        "failed_today_utc": 0,
+        "session_cycle_id": "e6dc1fa5-4c88-4a5e-aed0-3e3d8ec365d7",
+        "session_started_at": "2026-05-19T12:36:05.611396+00:00",
+        "completed_today_utc": 44,
         "deep_research_budget": {
-          "used": 37,
-          "as_of": "2026-05-19T11:43:48.663941+00:00",
-          "budget": 20,
-          "remaining": 0
-        }
+          "tier": "AI_Pro",
+          "used": 21,
+          "as_of": "2026-05-19T15:43:49.985974+00:00",
+          "basis": "compute_window_5h",
+          "budget": "compute-based (AI_Pro, 5h window)",
+          "remaining": "unknown (compute-based; no quota event observed)"
+        },
+        "rate_limited_today_utc": 0
       },
       "data_source": "postgres_fallback"
     },
@@ -257,7 +266,7 @@
       "role": "daily NotebookLM narrative synthesizer",
       "operator": null,
       "status": "DEAD",
-      "heartbeat_age_sec": 26579,
+      "heartbeat_age_sec": 40980,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-19T00:20:59.542580-04:00",
       "key_metrics": {
@@ -333,7 +342,7 @@
       "role": null,
       "operator": null,
       "status": "DEAD",
-      "heartbeat_age_sec": 2320293,
+      "heartbeat_age_sec": 2334695,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -361,7 +370,7 @@
       "role": null,
       "operator": null,
       "status": "DEAD",
-      "heartbeat_age_sec": 2112865,
+      "heartbeat_age_sec": 2127267,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -375,7 +384,7 @@
       "role": null,
       "operator": null,
       "status": "DEAD",
-      "heartbeat_age_sec": 1695752,
+      "heartbeat_age_sec": 1710154,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -431,7 +440,7 @@
       "role": null,
       "operator": null,
       "status": "DEAD",
-      "heartbeat_age_sec": 2771949,
+      "heartbeat_age_sec": 2786350,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -487,7 +496,7 @@
       "role": null,
       "operator": null,
       "status": "DEAD",
-      "heartbeat_age_sec": 2320218,
+      "heartbeat_age_sec": 2334620,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -501,7 +510,7 @@
       "role": null,
       "operator": null,
       "status": "DEAD",
-      "heartbeat_age_sec": 2320256,
+      "heartbeat_age_sec": 2334658,
       "current_op": "",
       "last_status_update": null,
       "key_metrics": null,
@@ -523,6 +532,36 @@
     }
   ],
   "discoveries": [
+    {
+      "msg_id": "1779202596367-0",
+      "timestamp": "2026-05-19T14:56:36.936413+00:00",
+      "sender": "Hephaestus",
+      "machine": "M3",
+      "type": "share",
+      "subject": "Hephaestus forged: Topology + Adaptive Control + Counterfactual Reasoning",
+      "body": "Concepts: Topology + Adaptive Control + Counterfactual Reasoning. Accuracy=34%, Calibration=0%, Frame=F",
+      "confidence": "0.6"
+    },
+    {
+      "msg_id": "1779197728506-0",
+      "timestamp": "2026-05-19T13:35:28.998677+00:00",
+      "sender": "Hephaestus",
+      "machine": "M3",
+      "type": "share",
+      "subject": "Hephaestus forged: Dynamical Systems + Cellular Automata + Mechanism Design",
+      "body": "Concepts: Dynamical Systems + Cellular Automata + Mechanism Design. Accuracy=32%, Calibration=19%, Frame=B",
+      "confidence": "0.533"
+    },
+    {
+      "msg_id": "1779194655186-0",
+      "timestamp": "2026-05-19T12:44:15.627670+00:00",
+      "sender": "Hephaestus",
+      "machine": "M3",
+      "type": "share",
+      "subject": "Hephaestus forged: Fourier Transforms + Predictive Coding + Theory of Mind",
+      "body": "Concepts: Fourier Transforms + Predictive Coding + Theory of Mind. Accuracy=35%, Calibration=0%, Frame=E",
+      "confidence": "0.6"
+    },
     {
       "msg_id": "1779187432892-0",
       "timestamp": "2026-05-19T10:43:53.202109+00:00",
@@ -592,39 +631,19 @@
       "subject": "Hephaestus forged: Spectral Analysis + Neuromodulation + Model Checking",
       "body": "Concepts: Spectral Analysis + Neuromodulation + Model Checking. Accuracy=35%, Calibration=0%, Frame=D",
       "confidence": "0.533"
-    },
-    {
-      "msg_id": "1779132385195-0",
-      "timestamp": "2026-05-18T19:26:26.038584+00:00",
-      "sender": "Hephaestus",
-      "machine": "M3",
-      "type": "share",
-      "subject": "Hephaestus forged: Holography Principle + Nash Equilibrium + Abstract Interpretation",
-      "body": "Concepts: Holography Principle + Nash Equilibrium + Abstract Interpretation. Accuracy=34%, Calibration=0%, Frame=F",
-      "confidence": "0.633"
-    },
-    {
-      "msg_id": "1779112339132-0",
-      "timestamp": "2026-05-18T13:52:19.641840+00:00",
-      "sender": "Hephaestus",
-      "machine": "M3",
-      "type": "share",
-      "subject": "Hephaestus forged: Morphogenesis + Spectral Analysis + Maximum Entropy",
-      "body": "Concepts: Morphogenesis + Spectral Analysis + Maximum Entropy. Accuracy=31%, Calibration=18%, Frame=B",
-      "confidence": "0.633"
-    },
-    {
-      "msg_id": "1776927040629-0",
-      "timestamp": "2026-04-23T06:53:00+00:00",
-      "sender": "Aporia",
-      "machine": "M1",
-      "type": "share",
-      "subject": "V5 x attackability shortlist: 14 problems; knot cluster is uncovered discovery target",
-      "body": "Intersected V5 SB sweep with attackability (criteria: sb>0.1, test>0.5). 14 problems pass, two clusters: (A) 4 knot theory (Jones unknot detection, slice-ribbon, Vassiliev, volume) SB=+0.25 test 0.67-1.00 attack 1.30-1.95; (B) 10 analytic NT (pair correlation x2, CPNT 3/4/6/7/11/13/15/17) SB=+0.125 test=1.0 attack=7.65. Cluster B overlaps Batch 5 (#91 Mertens=CPNT15, #97 Ulam relates to CPNT11). Cluster A is uncovered \u2014 4 knot problems are Aporia-specific discovery recommendation. Saved aporia/m",
-      "confidence": "0.75"
     }
   ],
   "main_events": [
+    {
+      "msg_id": "1779191163473-0",
+      "timestamp": "2026-05-19T11:46:03.396732+00:00",
+      "sender": "Pronoia",
+      "machine": "M4",
+      "type": "announce",
+      "subject": "Portfolio cycle complete (mon=True, metis=True, push=True, email=True)",
+      "body": "hourly tick 2026-05-19T11:43:58.311246+00:00",
+      "confidence": "1.0"
+    },
     {
       "msg_id": "1779176652184-0",
       "timestamp": "2026-05-19T07:44:12.106416+00:00",
@@ -764,16 +783,6 @@
       "subject": "Pronoia online (intelligence loop)",
       "body": "Hourly synthesis + daily digest on M4. PID 15748.",
       "confidence": "1.0"
-    },
-    {
-      "msg_id": "1776987620739-0",
-      "timestamp": "2026-04-24T00:00:00+00:00",
-      "sender": "Aporia",
-      "machine": "M1",
-      "type": "announce",
-      "subject": "Batch 7 complete: 20 operator-transport / motivic / rare-structure reports saved (119-138)",
-      "body": "Batch 7 fully executed per James greenlight. Reports 119-138 at F:/Prometheus/aporia/docs/deep_research_batch7/. Three new fronts: (1) cross-domain operator transport (#119 Hecke-Frobenius, #120 p-adic L, #121 motivic-Faltings), (2) motivic/K-theoretic (#136 Beilinson regulator, #134 Gottsche, #133 HGM), (3) rare structure (#122 mock modular, #123 knot concordance, #125 dynamics, #131 Siegel g=3, #132 local Langlands). Plus RMT extensions (#126 Sha, #127 M_6/M_8, #128 Selberg), class-field theor",
-      "confidence": "1.0"
     }
   ],
   "challenges": [
@@ -837,670 +846,576 @@
     {
       "agent": "Aporia",
       "kind": "dead",
-      "detail": "no heartbeat for 2265132s"
-    },
-    {
-      "agent": "Clio",
-      "kind": "dead",
-      "detail": "no heartbeat for 1336s"
+      "detail": "no heartbeat for 2279534s"
     },
     {
       "agent": "Calliope",
       "kind": "dead",
-      "detail": "no heartbeat for 26579s"
+      "detail": "no heartbeat for 40980s"
     }
   ],
   "intelligence_outputs": [
     {
-      "cycle_id": "3bf0d65f-fea1-5393-9fcf-3a265ad5bf0f",
-      "stage": "penelope_batch_complete",
-      "success": true,
-      "output_path": null,
-      "output_summary": "[penelope-20260519T114310Z-d5309b] files: 0 ingested, 13 dup-skip, 0 failed. records: 0 ingested, 0 dropped, 0 validation_failures. sources: none. domains: none.",
-      "error": null,
-      "started_at": "2026-05-19T07:43:10.204489-04:00",
-      "finished_at": "2026-05-19T07:43:38.475353-04:00",
-      "duration_sec": 28.270864
-    },
-    {
-      "cycle_id": "19f6b22a-7992-4941-a665-f0993433dd80",
-      "stage": "iris_tick_complete",
-      "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\iris\\artifacts\\scan_tick_20260519T114252Z.md",
-      "output_summary": "scanned 18 files (cursor 22->40/104); clusters tracked=645; new_candidates=0; artifacts=1",
-      "error": null,
-      "started_at": "2026-05-19T07:42:52.209009-04:00",
-      "finished_at": "2026-05-19T07:42:52.223691-04:00",
-      "duration_sec": 0.014682
-    },
-    {
-      "cycle_id": "c514ffe7-46e6-4259-bef6-98f9cb2f1750",
-      "stage": "sophia_tick_complete",
-      "success": true,
-      "output_path": null,
-      "output_summary": "pair=CHANNEL_CAPACITY@v1xF011 anchor=F001 ops=10 specimens=14 backlog_remaining=132",
-      "error": null,
-      "started_at": "2026-05-19T07:41:22.109439-04:00",
-      "finished_at": "2026-05-19T07:41:22.137457-04:00",
-      "duration_sec": 0.028018
-    },
-    {
-      "cycle_id": "c514ffe7-46e6-4259-bef6-98f9cb2f1750",
-      "stage": "sophia_proposal_written",
-      "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\sophia\\artifacts\\proposal_CHANNEL_CAPACITY_at_v1_x_F011_20260519T114122Z.md",
-      "output_summary": "CHANNEL_CAPACITY@v1xF011 (anchor=F001); deepseek=no",
-      "error": null,
-      "started_at": "2026-05-19T07:41:22.109439-04:00",
-      "finished_at": "2026-05-19T07:41:22.110661-04:00",
-      "duration_sec": 0.001222
-    },
-    {
-      "cycle_id": "9bd659cd-90b2-4362-baa5-bb5b6915a75c",
-      "stage": "phylax_tick_complete",
-      "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\phylax\\artifacts\\verdict_reaudit_AXIS_CLASS_20260519T113952Z.md",
-      "output_summary": "processed=1 artifacts=1 errors=0 verdicts={'pass': 0, 'flag': 0, 'block': 0}",
-      "error": null,
-      "started_at": "2026-05-19T07:39:51.928465-04:00",
-      "finished_at": "2026-05-19T07:39:52.031555-04:00",
-      "duration_sec": 0.10309
-    },
-    {
-      "cycle_id": "c93830ba-9741-4efb-93f8-97acc6f63811",
-      "stage": "telos_tick_complete",
-      "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\telos\\artifacts\\revive_F011_20260519T113821Z.md",
-      "output_summary": "revive task for F011 stalled 30d (threshold 14d); 32 lenses unapplied, 3 proposed",
-      "error": null,
-      "started_at": "2026-05-19T07:38:21.679057-04:00",
-      "finished_at": "2026-05-19T07:38:21.752269-04:00",
-      "duration_sec": 0.073212
-    },
-    {
-      "cycle_id": "2edfeed8-1ffc-4c4c-acd8-63ea37ecf175",
-      "stage": "argos_tick_complete",
-      "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\argos\\artifacts\\lens_catalog_astro-0005_20260519T113651Z.md",
-      "output_summary": "problem=ASTRO-0005 proposed=['STANCE_DYNAMICAL_SYSTEMS@v1', 'STANCE_INFORMATION_THEORY@v1', 'STANCE_RENORMALIZATION_GROUP@v1'] dr_seeded=False artifacts=1",
-      "error": null,
-      "started_at": "2026-05-19T07:36:51.480089-04:00",
-      "finished_at": "2026-05-19T07:36:51.490877-04:00",
-      "duration_sec": 0.010788
-    },
-    {
-      "cycle_id": "9ea8ea89-a01b-4494-98ac-e936d70faca9",
-      "stage": "iris_tick_complete",
-      "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\iris\\artifacts\\scan_tick_20260519T113521Z.md",
-      "output_summary": "scanned 18 files (cursor 4->22/104); clusters tracked=645; new_candidates=0; artifacts=1",
-      "error": null,
-      "started_at": "2026-05-19T07:35:21.273025-04:00",
-      "finished_at": "2026-05-19T07:35:21.288655-04:00",
-      "duration_sec": 0.01563
-    },
-    {
-      "cycle_id": "656402a4-8b83-4f0f-8343-69a3676bd30d",
+      "cycle_id": "9ae749cf-1299-4c7e-b037-12253500a04e",
       "stage": "hecate_tick_complete",
       "success": true,
-      "output_path": "F:\\Prometheus\\charon\\agents\\hecate\\artifacts\\gradient_archaeology_20260519T113459Z.md",
-      "output_summary": "ledger=theseus\\corpus records=5000 mi=0.0 mi_z=0.0 alarm=False artifacts=1 errors=0",
+      "output_path": "F:\\Prometheus\\charon\\agents\\hecate\\artifacts\\gradient_archaeology_20260519T154357Z.md",
+      "output_summary": "ledger=theseus\\corpus records=50000 mi=2.2678 mi_z=986.467 alarm=False artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
       "error": null,
-      "started_at": "2026-05-19T07:34:58.611155-04:00",
-      "finished_at": "2026-05-19T07:34:59.153369-04:00",
-      "duration_sec": 0.542214
+      "started_at": "2026-05-19T11:43:49.303532-04:00",
+      "finished_at": "2026-05-19T11:43:57.056641-04:00",
+      "duration_sec": 7.753109
     },
     {
-      "cycle_id": "6cecf1c8-eadc-4fa7-88ac-a0df5e76c71b",
-      "stage": "moros_tick_complete",
-      "success": true,
-      "output_path": "F:\\Prometheus\\charon\\agents\\moros\\artifacts\\self_audit_null_20260519T113458Z.md",
-      "output_summary": "artifact=pivot\\model_sweep_results_2026-05-19.md critique=False artifacts=1 errors=0",
-      "error": null,
-      "started_at": "2026-05-19T07:34:56.443468-04:00",
-      "finished_at": "2026-05-19T07:34:58.107287-04:00",
-      "duration_sec": 1.663819
-    },
-    {
-      "cycle_id": "44494044-f4dc-4935-949a-922cc0df7649",
-      "stage": "acheron_tick_complete",
-      "success": true,
-      "output_path": "F:\\Prometheus\\charon\\agents\\acheron\\artifacts\\clean_scan_roles_PipelineOrchestrator_athena_forge__20260519T113455Z.md",
-      "output_summary": "file=roles\\PipelineOrchestrator\\athena_forge_status_20260329.md collisions=0 artifacts=1 errors=0",
-      "error": null,
-      "started_at": "2026-05-19T07:34:55.082143-04:00",
-      "finished_at": "2026-05-19T07:34:55.928221-04:00",
-      "duration_sec": 0.846078
-    },
-    {
-      "cycle_id": "e21da86a-232b-42df-9c3e-6b9b257bac27",
-      "stage": "lethe_tick_complete",
-      "success": true,
-      "output_path": "F:\\Prometheus\\charon\\agents\\lethe\\artifacts\\self_audit_null_20260519T113454Z.md",
-      "output_summary": "conjecture=schinzel_zassenhaus emit_rate=0.0 candidate=False artifacts=1 errors=0",
-      "error": null,
-      "started_at": "2026-05-19T07:34:50.457523-04:00",
-      "finished_at": "2026-05-19T07:34:54.511291-04:00",
-      "duration_sec": 4.053768
-    },
-    {
-      "cycle_id": "6a466dc1-ca54-48f0-a0bf-77857dd190fe",
-      "stage": "stygian_tick_complete",
-      "success": true,
-      "output_path": "F:\\Prometheus\\charon\\agents\\stygian\\artifacts\\attack_plan_BL-C-001_20260519T113446Z.md",
-      "output_summary": "problem=BL-C-001 processed=1 artifacts=1 errors=0",
-      "error": null,
-      "started_at": "2026-05-19T07:34:46.574212-04:00",
-      "finished_at": "2026-05-19T07:34:46.575212-04:00",
-      "duration_sec": 0.001
-    },
-    {
-      "cycle_id": "2e02e800-15e0-4cef-940e-cac9029d5c88",
-      "stage": "stygian_tick_complete",
-      "success": true,
-      "output_path": null,
-      "output_summary": "problem=BL-C-001 processed=1 artifacts=0 errors=0",
-      "error": null,
-      "started_at": "2026-05-19T07:34:42.305494-04:00",
-      "finished_at": "2026-05-19T07:34:42.305494-04:00",
-      "duration_sec": 0.0
-    },
-    {
-      "cycle_id": "ca9193c3-3b26-43f5-9c40-05801cebb07f",
-      "stage": "sophia_tick_complete",
-      "success": true,
-      "output_path": null,
-      "output_summary": "pair=CHANNEL_CAPACITY@v1xF009 anchor=F009 ops=10 specimens=14 backlog_remaining=133",
-      "error": null,
-      "started_at": "2026-05-19T07:33:51.070931-04:00",
-      "finished_at": "2026-05-19T07:33:51.098355-04:00",
-      "duration_sec": 0.027424
-    },
-    {
-      "cycle_id": "ca9193c3-3b26-43f5-9c40-05801cebb07f",
-      "stage": "sophia_proposal_written",
-      "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\sophia\\artifacts\\proposal_CHANNEL_CAPACITY_at_v1_x_F009_20260519T113351Z.md",
-      "output_summary": "CHANNEL_CAPACITY@v1xF009 (anchor=F009); deepseek=no",
-      "error": null,
-      "started_at": "2026-05-19T07:33:51.070931-04:00",
-      "finished_at": "2026-05-19T07:33:51.072148-04:00",
-      "duration_sec": 0.001217
-    },
-    {
-      "cycle_id": "36ad16fe-7158-42f7-97b7-0d8ed2e46f16",
-      "stage": "argos_tick_complete",
-      "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\argos\\artifacts\\dryrun_lens_catalog_astro-0005_20260519T113341Z.md",
-      "output_summary": "problem=ASTRO-0005 proposed=['STANCE_DYNAMICAL_SYSTEMS@v1', 'STANCE_INFORMATION_THEORY@v1', 'STANCE_RENORMALIZATION_GROUP@v1'] dr_seeded=False artifacts=1",
-      "error": null,
-      "started_at": "2026-05-19T07:33:41.858316-04:00",
-      "finished_at": "2026-05-19T07:33:41.872895-04:00",
-      "duration_sec": 0.014579
-    },
-    {
-      "cycle_id": "f43dc58a-2b15-4d20-955d-dc68ee28354b",
-      "stage": "phylax_tick_complete",
-      "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\phylax\\artifacts\\verdict_reaudit_agora_drafts_20260429_20260519T113330Z.md",
-      "output_summary": "processed=1 artifacts=1 errors=0 verdicts={'pass': 0, 'flag': 0, 'block': 0}",
-      "error": null,
-      "started_at": "2026-05-19T07:33:30.281988-04:00",
-      "finished_at": "2026-05-19T07:33:30.351788-04:00",
-      "duration_sec": 0.0698
-    },
-    {
-      "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-      "stage": "deep_research_dispatched",
-      "success": true,
-      "output_path": null,
-      "output_summary": "LAD-01 [TT1]: LAD-01: R3-R5 transitions in published proofs",
-      "error": null,
-      "started_at": "2026-05-19T05:16:23.879492-04:00",
-      "finished_at": "2026-05-19T07:33:15.901131-04:00",
-      "duration_sec": 8212.021
-    },
-    {
-      "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-      "stage": "deep_research_received",
-      "success": true,
-      "output_path": "aporia/docs/deep_research_reports/2026-05-19/00057_para_p30_tensor_networks_meet_machine_learning_2025.md",
-      "output_summary": "# Comprehensive Analysis of Tensor-Network Methods Intersecting Machine Learning (2024\u20132026)",
-      "error": null,
-      "started_at": "2026-05-19T05:16:23.879492-04:00",
-      "finished_at": "2026-05-19T07:33:15.039887-04:00",
-      "duration_sec": 8211.16
-    },
-    {
-      "cycle_id": "3afc8ee1-db99-4f49-ae90-fd26b98c3b69",
-      "stage": "telos_tick_complete",
-      "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\telos\\artifacts\\revive_F014_20260519T113200Z.md",
-      "output_summary": "revive task for F014 stalled 31d (threshold 14d); 34 lenses unapplied, 3 proposed",
-      "error": null,
-      "started_at": "2026-05-19T07:32:00.094916-04:00",
-      "finished_at": "2026-05-19T07:32:00.113803-04:00",
-      "duration_sec": 0.018887
-    },
-    {
-      "cycle_id": "cbb1b4ef-686c-49cd-a252-b02d400bc7a3",
-      "stage": "argos_tick_complete",
-      "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\argos\\artifacts\\lens_catalog_astro-0004_20260519T113029Z.md",
-      "output_summary": "problem=ASTRO-0004 proposed=['STANCE_DYNAMICAL_SYSTEMS@v1', 'STANCE_INFORMATION_THEORY@v1', 'STANCE_RENORMALIZATION_GROUP@v1'] dr_seeded=True artifacts=1",
-      "error": null,
-      "started_at": "2026-05-19T07:30:29.969454-04:00",
-      "finished_at": "2026-05-19T07:30:30.031044-04:00",
-      "duration_sec": 0.06159
-    },
-    {
-      "cycle_id": "f05705a5-398d-47bf-8589-268fb32702bc",
-      "stage": "iris_tick_complete",
-      "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\iris\\artifacts\\scan_tick_20260519T112859Z.md",
-      "output_summary": "scanned 18 files (cursor 90->4/104); clusters tracked=645; new_candidates=0; artifacts=1",
-      "error": null,
-      "started_at": "2026-05-19T07:28:59.854177-04:00",
-      "finished_at": "2026-05-19T07:28:59.891269-04:00",
-      "duration_sec": 0.037092
-    },
-    {
-      "cycle_id": "9a034af5-01c7-5222-b5c1-a472fbd24110",
+      "cycle_id": "a3d394a8-22b2-507e-ad3a-48623970fb93",
       "stage": "penelope_batch_complete",
       "success": true,
       "output_path": null,
-      "output_summary": "[penelope-20260519T112816Z-6e5e5f] files: 0 ingested, 13 dup-skip, 0 failed. records: 0 ingested, 0 dropped, 0 validation_failures. sources: none. domains: none.",
+      "output_summary": "[penelope-20260519T154314Z-56f57a] files: 1 ingested, 0 dup-skip, 0 failed. records: 1000 ingested, 0 dropped, 0 validation_failures. sources: theseus. domains: knots_x_elliptic_curves.",
       "error": null,
-      "started_at": "2026-05-19T07:28:16.703178-04:00",
-      "finished_at": "2026-05-19T07:28:17.031636-04:00",
-      "duration_sec": 0.328458
+      "started_at": "2026-05-19T11:43:14.507969-04:00",
+      "finished_at": "2026-05-19T11:43:43.265159-04:00",
+      "duration_sec": 28.75719
     },
     {
-      "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-      "stage": "deep_research_dispatched",
-      "success": true,
-      "output_path": null,
-      "output_summary": "PARA-P30 [TT1]: PARA-P30: Tensor networks meet machine learning 2025",
-      "error": null,
-      "started_at": "2026-05-19T05:16:23.879492-04:00",
-      "finished_at": "2026-05-19T07:27:56.113793-04:00",
-      "duration_sec": 7892.2344
-    },
-    {
-      "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-      "stage": "deep_research_received",
-      "success": true,
-      "output_path": "aporia/docs/deep_research_reports/2026-05-19/00056_para_p25_recent_pivotal_negative_result_catalog.md",
-      "output_summary": "# Catalog of Paradigm-Shifting Negative Results in Mathematics (2022\u20132026)",
-      "error": null,
-      "started_at": "2026-05-19T05:16:23.879492-04:00",
-      "finished_at": "2026-05-19T07:27:55.361559-04:00",
-      "duration_sec": 7891.482
-    },
-    {
-      "cycle_id": "c6d6b151-33e9-4e60-863e-57671c4308cc",
-      "stage": "sophia_tick_complete",
-      "success": true,
-      "output_path": null,
-      "output_summary": "pair=CHANNEL_CAPACITY@v1xF008 anchor=F008 ops=10 specimens=14 backlog_remaining=134",
-      "error": null,
-      "started_at": "2026-05-19T07:27:29.657354-04:00",
-      "finished_at": "2026-05-19T07:27:29.684575-04:00",
-      "duration_sec": 0.027221
-    },
-    {
-      "cycle_id": "c6d6b151-33e9-4e60-863e-57671c4308cc",
-      "stage": "sophia_proposal_written",
-      "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\sophia\\artifacts\\proposal_CHANNEL_CAPACITY_at_v1_x_F008_20260519T112729Z.md",
-      "output_summary": "CHANNEL_CAPACITY@v1xF008 (anchor=F008); deepseek=no",
-      "error": null,
-      "started_at": "2026-05-19T07:27:29.657354-04:00",
-      "finished_at": "2026-05-19T07:27:29.659184-04:00",
-      "duration_sec": 0.00183
-    },
-    {
-      "cycle_id": "e13a98d2-bdce-46f7-a882-c85c9cda1404",
-      "stage": "phylax_tick_complete",
-      "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\phylax\\artifacts\\verdict_inbound_cc727f2f4f16494fe0130573219efa1e775e3b61_20260519T112559Z.md",
-      "output_summary": "processed=5 artifacts=5 errors=0 verdicts={'pass': 5, 'flag': 0, 'block': 0}",
-      "error": null,
-      "started_at": "2026-05-19T07:25:58.073163-04:00",
-      "finished_at": "2026-05-19T07:25:59.587536-04:00",
-      "duration_sec": 1.514373
-    },
-    {
-      "cycle_id": "4806e609-6875-4081-abd0-74d11c754abb",
-      "stage": "telos_tick_complete",
-      "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\telos\\artifacts\\revive_F011_20260519T112427Z.md",
-      "output_summary": "revive task for F011 stalled 30d (threshold 14d); 32 lenses unapplied, 3 proposed",
-      "error": null,
-      "started_at": "2026-05-19T07:24:27.912152-04:00",
-      "finished_at": "2026-05-19T07:24:27.991669-04:00",
-      "duration_sec": 0.079517
-    },
-    {
-      "cycle_id": "d37b6c31-1a2d-452e-9bab-a5fb37dcf218",
+      "cycle_id": "04c20ac6-8f71-41a4-90cc-598b33df1469",
       "stage": "argos_tick_complete",
       "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\argos\\artifacts\\lens_catalog_astro-0003_20260519T112257Z.md",
-      "output_summary": "problem=ASTRO-0003 proposed=['STANCE_DYNAMICAL_SYSTEMS@v1', 'STANCE_INFORMATION_THEORY@v1', 'STANCE_RENORMALIZATION_GROUP@v1'] dr_seeded=True artifacts=1",
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\argos\\artifacts\\lens_catalog_bio-0002_20260519T154341Z.md",
+      "output_summary": "problem=BIO-0002 proposed=['STANCE_DYNAMICAL_SYSTEMS@v1', 'STANCE_INFORMATION_THEORY@v1', 'STANCE_RENORMALIZATION_GROUP@v1'] dr_seeded=False artifacts=1",
       "error": null,
-      "started_at": "2026-05-19T07:22:57.687095-04:00",
-      "finished_at": "2026-05-19T07:22:57.727426-04:00",
-      "duration_sec": 0.040331
+      "started_at": "2026-05-19T11:43:41.609577-04:00",
+      "finished_at": "2026-05-19T11:43:41.620794-04:00",
+      "duration_sec": 0.011217
     },
     {
-      "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-      "stage": "deep_research_dispatched",
-      "success": true,
-      "output_path": null,
-      "output_summary": "PARA-P25 [TT1]: PARA-P25: Recent pivotal-negative-result catalog",
-      "error": null,
-      "started_at": "2026-05-19T05:16:23.879492-04:00",
-      "finished_at": "2026-05-19T07:22:37.446593-04:00",
-      "duration_sec": 7573.567
-    },
-    {
-      "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-      "stage": "deep_research_received",
-      "success": true,
-      "output_path": "aporia/docs/deep_research_reports/2026-05-19/00055_para_p22_polynomial_method_on_signed_graphs_since_huang.md",
-      "output_summary": "# Extensions of Huang's Signed-Graph Polynomial Method (2019\u20132026): Generalizations and Resolved Conjectures in Complexity and Combinatorics",
-      "error": null,
-      "started_at": "2026-05-19T05:16:23.879492-04:00",
-      "finished_at": "2026-05-19T07:22:36.904876-04:00",
-      "duration_sec": 7573.0254
-    },
-    {
-      "cycle_id": "518c7f50-38e7-4c1a-b316-21f085baee34",
+      "cycle_id": "b24e80a5-5771-491f-84ff-95f2260a343b",
       "stage": "paper_scan_cycle",
       "success": true,
       "output_path": null,
-      "output_summary": "13 queries, 185 papers retrieved, 0 new after dedup, 50s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
+      "output_summary": "13 queries, 185 papers retrieved, 0 new after dedup, 51s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
       "error": null,
-      "started_at": "2026-05-19T07:20:51.928734-04:00",
-      "finished_at": "2026-05-19T07:21:42.490742-04:00",
-      "duration_sec": 50.562008
+      "started_at": "2026-05-19T11:41:46.094395-04:00",
+      "finished_at": "2026-05-19T11:42:37.509863-04:00",
+      "duration_sec": 51.415466
     },
     {
-      "cycle_id": "069e7d67-c008-43ec-aeac-8373100071e9",
+      "cycle_id": "58bc994a-f9e3-4bcf-b9d6-cb1c3330d039",
       "stage": "iris_tick_complete",
       "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\iris\\artifacts\\scan_tick_20260519T112127Z.md",
-      "output_summary": "scanned 18 files (cursor 72->90/104); clusters tracked=598; new_candidates=0; artifacts=1",
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\iris\\artifacts\\scan_tick_20260519T154211Z.md",
+      "output_summary": "scanned 18 files (cursor 46->64/104); clusters tracked=645; new_candidates=0; artifacts=1",
       "error": null,
-      "started_at": "2026-05-19T07:21:27.581884-04:00",
-      "finished_at": "2026-05-19T07:21:27.609912-04:00",
-      "duration_sec": 0.028028
+      "started_at": "2026-05-19T11:42:11.394525-04:00",
+      "finished_at": "2026-05-19T11:42:11.411357-04:00",
+      "duration_sec": 0.016832
     },
     {
-      "cycle_id": "a5bb5d63-d3f2-4114-9e8e-0017048ed67e",
+      "cycle_id": "6ae33777-4ec8-4459-b3ec-da369268679c",
       "stage": "sophia_tick_complete",
       "success": true,
       "output_path": null,
-      "output_summary": "pair=CHANNEL_CAPACITY@v1xF005 anchor=F005 ops=10 specimens=14 backlog_remaining=135",
+      "output_summary": "pair=CRITICAL_EXPONENT@v1xF002 anchor=F002 ops=10 specimens=14 backlog_remaining=96",
       "error": null,
-      "started_at": "2026-05-19T07:19:57.495260-04:00",
-      "finished_at": "2026-05-19T07:19:57.519119-04:00",
-      "duration_sec": 0.023859
+      "started_at": "2026-05-19T11:40:41.295938-04:00",
+      "finished_at": "2026-05-19T11:40:41.320069-04:00",
+      "duration_sec": 0.024131
     },
     {
-      "cycle_id": "a5bb5d63-d3f2-4114-9e8e-0017048ed67e",
+      "cycle_id": "6ae33777-4ec8-4459-b3ec-da369268679c",
       "stage": "sophia_proposal_written",
       "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\sophia\\artifacts\\proposal_CHANNEL_CAPACITY_at_v1_x_F005_20260519T111957Z.md",
-      "output_summary": "CHANNEL_CAPACITY@v1xF005 (anchor=F005); deepseek=no",
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\sophia\\artifacts\\proposal_CRITICAL_EXPONENT_at_v1_x_F002_20260519T154041Z.md",
+      "output_summary": "CRITICAL_EXPONENT@v1xF002 (anchor=F002); deepseek=no",
       "error": null,
-      "started_at": "2026-05-19T07:19:57.495260-04:00",
-      "finished_at": "2026-05-19T07:19:57.496603-04:00",
-      "duration_sec": 0.001343
+      "started_at": "2026-05-19T11:40:41.295938-04:00",
+      "finished_at": "2026-05-19T11:40:41.296999-04:00",
+      "duration_sec": 0.001061
     },
     {
-      "cycle_id": "4a4329d7-1cd9-4a16-8ed7-8225877060a1",
+      "cycle_id": "be2ae641-c047-4ec8-9c96-1bfec96d2b97",
+      "stage": "moros_tick_complete",
+      "success": true,
+      "output_path": "F:\\Prometheus\\charon\\agents\\moros\\artifacts\\self_audit_null_20260519T153949Z.md",
+      "output_summary": "artifact=aporia\\doctrine\\dr_prompt_discipline.md critique=False artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
+      "error": null,
+      "started_at": "2026-05-19T11:39:48.313554-04:00",
+      "finished_at": "2026-05-19T11:39:49.174440-04:00",
+      "duration_sec": 0.860886
+    },
+    {
+      "cycle_id": "627d2e6f-ad34-42ac-877f-f349e58f58f8",
       "stage": "phylax_tick_complete",
       "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\phylax\\artifacts\\verdict_inbound_1777465632405-0_20260519T111827Z.md",
-      "output_summary": "processed=3 artifacts=3 errors=0 verdicts={'pass': 3, 'flag': 0, 'block': 0}",
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\phylax\\artifacts\\verdict_reaudit_TOOL_SMITH_NORMAL_FORM_20260519T153911Z.md",
+      "output_summary": "processed=1 artifacts=1 errors=0 verdicts={'pass': 0, 'flag': 0, 'block': 0}",
       "error": null,
-      "started_at": "2026-05-19T07:18:27.311727-04:00",
-      "finished_at": "2026-05-19T07:18:27.320994-04:00",
-      "duration_sec": 0.009267
+      "started_at": "2026-05-19T11:39:10.950677-04:00",
+      "finished_at": "2026-05-19T11:39:11.096008-04:00",
+      "duration_sec": 0.145331
     },
     {
-      "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-      "stage": "deep_research_dispatched",
-      "success": true,
-      "output_path": null,
-      "output_summary": "PARA-P22 [TT1]: PARA-P22: Polynomial method on signed graphs since Huang",
-      "error": null,
-      "started_at": "2026-05-19T05:16:23.879492-04:00",
-      "finished_at": "2026-05-19T07:17:20.159842-04:00",
-      "duration_sec": 7256.2803
-    },
-    {
-      "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-      "stage": "deep_research_received",
-      "success": true,
-      "output_path": "aporia/docs/deep_research_reports/2026-05-19/00054_para_p18_infinity_categories_in_number_theory.md",
-      "output_summary": "# Recent Applications of Infinity-Categorical Methods to Number Theory (2024-2026)",
-      "error": null,
-      "started_at": "2026-05-19T05:16:23.879492-04:00",
-      "finished_at": "2026-05-19T07:17:19.466236-04:00",
-      "duration_sec": 7255.587
-    },
-    {
-      "cycle_id": "a2d5f358-bde0-4420-a5a6-5ac7daeb0cc2",
+      "cycle_id": "87a17e88-438d-4fec-8b00-29ac0b3d6a6b",
       "stage": "telos_tick_complete",
       "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\telos\\artifacts\\revive_F014_20260519T111657Z.md",
-      "output_summary": "revive task for F014 stalled 31d (threshold 14d); 34 lenses unapplied, 3 proposed",
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\telos\\artifacts\\revive_F011_20260519T153740Z.md",
+      "output_summary": "revive task for F011 stalled 30d (threshold 14d); 32 lenses unapplied, 3 proposed",
       "error": null,
-      "started_at": "2026-05-19T07:16:57.003550-04:00",
-      "finished_at": "2026-05-19T07:16:57.132916-04:00",
-      "duration_sec": 0.129366
+      "started_at": "2026-05-19T11:37:40.753297-04:00",
+      "finished_at": "2026-05-19T11:37:40.789747-04:00",
+      "duration_sec": 0.03645
     },
     {
-      "cycle_id": "a0498372-a5a3-49c3-8707-0d345fadf57a",
+      "cycle_id": "5bc68d60-d5e6-466a-9cbf-52abd411f7f8",
       "stage": "argos_tick_complete",
       "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\argos\\artifacts\\lens_catalog_astro-0002_20260519T111526Z.md",
-      "output_summary": "problem=ASTRO-0002 proposed=['STANCE_DYNAMICAL_SYSTEMS@v1', 'STANCE_INFORMATION_THEORY@v1', 'STANCE_RENORMALIZATION_GROUP@v1'] dr_seeded=True artifacts=1",
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\argos\\artifacts\\lens_catalog_bio-0001_20260519T153610Z.md",
+      "output_summary": "problem=BIO-0001 proposed=['STANCE_DYNAMICAL_SYSTEMS@v1', 'STANCE_INFORMATION_THEORY@v1', 'STANCE_RENORMALIZATION_GROUP@v1'] dr_seeded=False artifacts=1",
       "error": null,
-      "started_at": "2026-05-19T07:15:26.788895-04:00",
-      "finished_at": "2026-05-19T07:15:26.824864-04:00",
-      "duration_sec": 0.035969
+      "started_at": "2026-05-19T11:36:10.627022-04:00",
+      "finished_at": "2026-05-19T11:36:10.638050-04:00",
+      "duration_sec": 0.011028
     },
     {
-      "cycle_id": "65542c51-369c-4313-8f90-97610818aa63",
+      "cycle_id": "3adc8a23-3f0e-4709-aa7e-9eb6d47f655b",
+      "stage": "acheron_tick_complete",
+      "success": true,
+      "output_path": "F:\\Prometheus\\charon\\agents\\acheron\\artifacts\\clean_scan_roles_PipelineOrchestrator_RESPONSIBILIT_20260519T153548Z.md",
+      "output_summary": "file=roles\\PipelineOrchestrator\\RESPONSIBILITIES.md collisions=0 artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
+      "error": null,
+      "started_at": "2026-05-19T11:35:47.367622-04:00",
+      "finished_at": "2026-05-19T11:35:48.124382-04:00",
+      "duration_sec": 0.75676
+    },
+    {
+      "cycle_id": "e8d2649f-9160-4f69-bd59-2ae6337f7b31",
       "stage": "iris_tick_complete",
       "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\iris\\artifacts\\scan_tick_20260519T111356Z.md",
-      "output_summary": "scanned 18 files (cursor 54->72/104); clusters tracked=456; new_candidates=0; artifacts=1",
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\iris\\artifacts\\scan_tick_20260519T153440Z.md",
+      "output_summary": "scanned 18 files (cursor 28->46/104); clusters tracked=645; new_candidates=0; artifacts=1",
       "error": null,
-      "started_at": "2026-05-19T07:13:56.518072-04:00",
-      "finished_at": "2026-05-19T07:13:56.542548-04:00",
-      "duration_sec": 0.024476
+      "started_at": "2026-05-19T11:34:40.431004-04:00",
+      "finished_at": "2026-05-19T11:34:40.444837-04:00",
+      "duration_sec": 0.013833
     },
     {
-      "cycle_id": "f7d8641c-8c5a-5691-bdca-3fede25de00c",
+      "cycle_id": "76ee4563-24d1-494a-9275-9a09fe8416e9",
+      "stage": "sophia_tick_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "pair=CRITICAL_EXPONENT@v1xF001 anchor=F001 ops=10 specimens=14 backlog_remaining=97",
+      "error": null,
+      "started_at": "2026-05-19T11:33:10.318488-04:00",
+      "finished_at": "2026-05-19T11:33:10.351268-04:00",
+      "duration_sec": 0.03278
+    },
+    {
+      "cycle_id": "76ee4563-24d1-494a-9275-9a09fe8416e9",
+      "stage": "sophia_proposal_written",
+      "success": true,
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\sophia\\artifacts\\proposal_CRITICAL_EXPONENT_at_v1_x_F001_20260519T153310Z.md",
+      "output_summary": "CRITICAL_EXPONENT@v1xF001 (anchor=F001); deepseek=no",
+      "error": null,
+      "started_at": "2026-05-19T11:33:10.318488-04:00",
+      "finished_at": "2026-05-19T11:33:10.319484-04:00",
+      "duration_sec": 0.000996
+    },
+    {
+      "cycle_id": "6efc9e6f-c384-59d8-889d-b44db43c5daf",
+      "stage": "theseus_batch_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "[batch-20260519T135527Z-a03302] 8781284 records (3529837 kills, 5250672 confirms, 0 inconclusive, 0 errors), 5400s duration. Active generators: a1,b5,c1,d1,e1. Discoveries emitted: 20.",
+      "error": null,
+      "started_at": "2026-05-19T09:55:27.534081-04:00",
+      "finished_at": "2026-05-19T11:31:53.042528-04:00",
+      "duration_sec": 5785.5083
+    },
+    {
+      "cycle_id": "371cf26a-cfd1-4526-8f46-29e7af55a421",
+      "stage": "lethe_tick_complete",
+      "success": true,
+      "output_path": "F:\\Prometheus\\charon\\agents\\lethe\\artifacts\\self_audit_null_20260519T153146Z.md",
+      "output_summary": "conjecture=sensitivity_conjecture emit_rate=0.0 candidate=False artifacts=1 errors=0 dr_seeded=True dr_inbox=0",
+      "error": null,
+      "started_at": "2026-05-19T11:31:44.016736-04:00",
+      "finished_at": "2026-05-19T11:31:47.168678-04:00",
+      "duration_sec": 3.151942
+    },
+    {
+      "cycle_id": "582e1a94-e229-41fb-83b6-ae05bffe9738",
+      "stage": "phylax_tick_complete",
+      "success": true,
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\phylax\\artifacts\\verdict_reaudit_TOOL_SELMER_RANK_20260519T153140Z.md",
+      "output_summary": "processed=1 artifacts=1 errors=0 verdicts={'pass': 0, 'flag': 0, 'block': 0}",
+      "error": null,
+      "started_at": "2026-05-19T11:31:40.139553-04:00",
+      "finished_at": "2026-05-19T11:31:40.221112-04:00",
+      "duration_sec": 0.081559
+    },
+    {
+      "cycle_id": "ec144f46-4195-4cb8-b10e-8b738763863e",
+      "stage": "telos_tick_complete",
+      "success": true,
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\telos\\artifacts\\revive_F014_20260519T153009Z.md",
+      "output_summary": "revive task for F014 stalled 31d (threshold 14d); 34 lenses unapplied, 3 proposed",
+      "error": null,
+      "started_at": "2026-05-19T11:30:09.882759-04:00",
+      "finished_at": "2026-05-19T11:30:09.933556-04:00",
+      "duration_sec": 0.050797
+    },
+    {
+      "cycle_id": "e69978cc-7837-4591-a3fb-cd9f97c91b37",
+      "stage": "argos_tick_complete",
+      "success": true,
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\argos\\artifacts\\lens_catalog_astro-0040_20260519T152839Z.md",
+      "output_summary": "problem=ASTRO-0040 proposed=['STANCE_DYNAMICAL_SYSTEMS@v1', 'STANCE_INFORMATION_THEORY@v1', 'STANCE_RENORMALIZATION_GROUP@v1'] dr_seeded=False artifacts=1",
+      "error": null,
+      "started_at": "2026-05-19T11:28:39.747632-04:00",
+      "finished_at": "2026-05-19T11:28:39.765069-04:00",
+      "duration_sec": 0.017437
+    },
+    {
+      "cycle_id": "37b9726a-eba1-5739-8916-474c8936f589",
       "stage": "penelope_batch_complete",
       "success": true,
       "output_path": null,
-      "output_summary": "[penelope-20260519T111310Z-7c794e] files: 1 ingested, 13 dup-skip, 0 failed. records: 500 ingested, 0 dropped, 0 validation_failures. sources: theseus. domains: knots_x_elliptic_curves.",
+      "output_summary": "[penelope-20260519T152812Z-45a8d3] files: 0 ingested, 0 dup-skip, 0 failed. records: 0 ingested, 0 dropped, 0 validation_failures. sources: none. domains: none.",
       "error": null,
-      "started_at": "2026-05-19T07:13:10.012515-04:00",
-      "finished_at": "2026-05-19T07:13:27.635116-04:00",
-      "duration_sec": 17.6226
+      "started_at": "2026-05-19T11:28:12.176540-04:00",
+      "finished_at": "2026-05-19T11:28:14.067479-04:00",
+      "duration_sec": 1.890939
     },
     {
-      "cycle_id": "4a0a7525-4ab4-4ca6-8a39-993498c84b4b",
+      "cycle_id": "3fda023a-f04d-4303-9f65-db80c408cfa5",
+      "stage": "stygian_tick_complete",
+      "success": true,
+      "output_path": "F:\\Prometheus\\charon\\agents\\stygian\\artifacts\\attack_plan_BL-C-009_20260519T152743Z.md",
+      "output_summary": "problem=BL-C-009 processed=1 artifacts=1 errors=0 dr_inbox=0 dr_seeded=False dr_quota_remaining=0",
+      "error": null,
+      "started_at": "2026-05-19T11:27:43.626861-04:00",
+      "finished_at": "2026-05-19T11:27:43.754551-04:00",
+      "duration_sec": 0.12769
+    },
+    {
+      "cycle_id": "a4661a9f-16d2-4185-81e8-74eb36f8b6cb",
+      "stage": "iris_tick_complete",
+      "success": true,
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\iris\\artifacts\\scan_tick_20260519T152709Z.md",
+      "output_summary": "scanned 18 files (cursor 10->28/104); clusters tracked=645; new_candidates=0; artifacts=1",
+      "error": null,
+      "started_at": "2026-05-19T11:27:09.608828-04:00",
+      "finished_at": "2026-05-19T11:27:09.651298-04:00",
+      "duration_sec": 0.04247
+    },
+    {
+      "cycle_id": "677670d0-bb7a-46d7-b71d-8903be33fccf",
       "stage": "sophia_tick_complete",
       "success": true,
       "output_path": null,
-      "output_summary": "pair=CHANNEL_CAPACITY@v1xF004 anchor=F004 ops=10 specimens=14 backlog_remaining=136",
+      "output_summary": "pair=CONTROLLABILITY_RANK@v1xF045 anchor=F001 ops=10 specimens=14 backlog_remaining=98",
       "error": null,
-      "started_at": "2026-05-19T07:12:26.421816-04:00",
-      "finished_at": "2026-05-19T07:12:26.449182-04:00",
-      "duration_sec": 0.027366
+      "started_at": "2026-05-19T11:25:39.497942-04:00",
+      "finished_at": "2026-05-19T11:25:39.533989-04:00",
+      "duration_sec": 0.036047
     },
     {
-      "cycle_id": "4a0a7525-4ab4-4ca6-8a39-993498c84b4b",
+      "cycle_id": "677670d0-bb7a-46d7-b71d-8903be33fccf",
       "stage": "sophia_proposal_written",
       "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\sophia\\artifacts\\proposal_CHANNEL_CAPACITY_at_v1_x_F004_20260519T111226Z.md",
-      "output_summary": "CHANNEL_CAPACITY@v1xF004 (anchor=F004); deepseek=no",
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\sophia\\artifacts\\proposal_CONTROLLABILITY_RANK_at_v1_x_F045_20260519T152539Z.md",
+      "output_summary": "CONTROLLABILITY_RANK@v1xF045 (anchor=F001); deepseek=no",
       "error": null,
-      "started_at": "2026-05-19T07:12:26.421816-04:00",
-      "finished_at": "2026-05-19T07:12:26.423548-04:00",
-      "duration_sec": 0.001732
+      "started_at": "2026-05-19T11:25:39.497942-04:00",
+      "finished_at": "2026-05-19T11:25:39.498976-04:00",
+      "duration_sec": 0.001034
     },
     {
-      "cycle_id": "22813864-7664-484a-889e-f7f974d3886d",
+      "cycle_id": "db2a6a96-8b18-4814-a018-ba0f91ea40d4",
       "stage": "phylax_tick_complete",
       "success": true,
-      "output_path": "D:\\Prometheus\\harmonia\\agents\\phylax\\artifacts\\verdict_inbound_1777463616601-0_20260519T111056Z.md",
-      "output_summary": "processed=5 artifacts=5 errors=0 verdicts={'pass': 5, 'flag': 0, 'block': 0}",
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\phylax\\artifacts\\verdict_reaudit_TOOL_REGULATOR_20260519T152409Z.md",
+      "output_summary": "processed=1 artifacts=1 errors=0 verdicts={'pass': 0, 'flag': 0, 'block': 0}",
       "error": null,
-      "started_at": "2026-05-19T07:10:56.251374-04:00",
-      "finished_at": "2026-05-19T07:10:56.337309-04:00",
-      "duration_sec": 0.085935
+      "started_at": "2026-05-19T11:24:09.311676-04:00",
+      "finished_at": "2026-05-19T11:24:09.376370-04:00",
+      "duration_sec": 0.064694
     },
     {
-      "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-      "stage": "deep_research_dispatched",
+      "cycle_id": "bc42428c-e9e0-4ed3-a696-85cecc698493",
+      "stage": "hecate_tick_complete",
+      "success": true,
+      "output_path": "F:\\Prometheus\\charon\\agents\\hecate\\artifacts\\gradient_archaeology_20260519T152343Z.md",
+      "output_summary": "ledger=theseus\\corpus records=50000 mi=2.4996 mi_z=952.812 alarm=False artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
+      "error": null,
+      "started_at": "2026-05-19T11:23:38.432394-04:00",
+      "finished_at": "2026-05-19T11:23:43.292140-04:00",
+      "duration_sec": 4.859746
+    },
+    {
+      "cycle_id": "12432935-6433-4745-8e7a-8762aac59729",
+      "stage": "telos_tick_complete",
+      "success": true,
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\telos\\artifacts\\revive_F011_20260519T152239Z.md",
+      "output_summary": "revive task for F011 stalled 30d (threshold 14d); 32 lenses unapplied, 3 proposed",
+      "error": null,
+      "started_at": "2026-05-19T11:22:39.086264-04:00",
+      "finished_at": "2026-05-19T11:22:39.105295-04:00",
+      "duration_sec": 0.019031
+    },
+    {
+      "cycle_id": "7cd8a6b0-b17f-41fa-836a-503adf54838b",
+      "stage": "argos_tick_complete",
+      "success": true,
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\argos\\artifacts\\lens_catalog_astro-0039_20260519T152109Z.md",
+      "output_summary": "problem=ASTRO-0039 proposed=['STANCE_DYNAMICAL_SYSTEMS@v1', 'STANCE_INFORMATION_THEORY@v1', 'STANCE_RENORMALIZATION_GROUP@v1'] dr_seeded=False artifacts=1",
+      "error": null,
+      "started_at": "2026-05-19T11:21:08.989834-04:00",
+      "finished_at": "2026-05-19T11:21:09.007408-04:00",
+      "duration_sec": 0.017574
+    },
+    {
+      "cycle_id": "c0f4b03d-b9b2-433f-a618-d1006415d4b7",
+      "stage": "iris_tick_complete",
+      "success": true,
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\iris\\artifacts\\scan_tick_20260519T151938Z.md",
+      "output_summary": "scanned 18 files (cursor 96->10/104); clusters tracked=645; new_candidates=0; artifacts=1",
+      "error": null,
+      "started_at": "2026-05-19T11:19:38.901920-04:00",
+      "finished_at": "2026-05-19T11:19:38.920525-04:00",
+      "duration_sec": 0.018605
+    },
+    {
+      "cycle_id": "f1290481-005a-4268-98ef-98e0d6a751a6",
+      "stage": "moros_tick_complete",
+      "success": true,
+      "output_path": "F:\\Prometheus\\charon\\agents\\moros\\artifacts\\self_audit_null_20260519T151938Z.md",
+      "output_summary": "artifact=aporia\\doctrine\\dr_prompt_discipline.md critique=False artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
+      "error": null,
+      "started_at": "2026-05-19T11:19:37.234939-04:00",
+      "finished_at": "2026-05-19T11:19:38.231091-04:00",
+      "duration_sec": 0.996152
+    },
+    {
+      "cycle_id": "9ea59903-1371-4d34-8889-93420c7cab63",
+      "stage": "sophia_tick_complete",
       "success": true,
       "output_path": null,
-      "output_summary": "PARA-P18 [TT1]: PARA-P18: Infinity-categories in number theory",
+      "output_summary": "pair=CONTROLLABILITY_RANK@v1xF044 anchor=F001 ops=10 specimens=14 backlog_remaining=99",
       "error": null,
-      "started_at": "2026-05-19T05:16:23.879492-04:00",
-      "finished_at": "2026-05-19T07:09:56.291461-04:00",
-      "duration_sec": 6812.412
+      "started_at": "2026-05-19T11:18:08.590555-04:00",
+      "finished_at": "2026-05-19T11:18:08.720554-04:00",
+      "duration_sec": 0.129999
     },
     {
-      "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-      "stage": "deep_research_received",
+      "cycle_id": "9ea59903-1371-4d34-8889-93420c7cab63",
+      "stage": "sophia_proposal_written",
       "success": true,
-      "output_path": "aporia/docs/deep_research_reports/2026-05-19/00053_para_p16_bhargava_style_techniques_2025.md",
-      "output_summary": "# Bhargava-Shankar-Style Arithmetic Statistics Techniques (2024-2026): Selmer-Group Distributions, Average Ranks, and Geometry-of-Numbers Extensions",
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\sophia\\artifacts\\proposal_CONTROLLABILITY_RANK_at_v1_x_F044_20260519T151808Z.md",
+      "output_summary": "CONTROLLABILITY_RANK@v1xF044 (anchor=F001); deepseek=no",
       "error": null,
-      "started_at": "2026-05-19T05:16:23.879492-04:00",
-      "finished_at": "2026-05-19T07:09:55.615753-04:00",
-      "duration_sec": 6811.7363
+      "started_at": "2026-05-19T11:18:08.590555-04:00",
+      "finished_at": "2026-05-19T11:18:08.592880-04:00",
+      "duration_sec": 0.002325
     },
     {
-      "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-      "stage": "deep_research_dispatched",
+      "cycle_id": "378eca49-0fc9-4413-b2dc-a90306e9faca",
+      "stage": "phylax_tick_complete",
+      "success": true,
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\phylax\\artifacts\\verdict_reaudit_TOOL_LLL_REDUCTION_20260519T151638Z.md",
+      "output_summary": "processed=1 artifacts=1 errors=0 verdicts={'pass': 0, 'flag': 0, 'block': 0}",
+      "error": null,
+      "started_at": "2026-05-19T11:16:38.378999-04:00",
+      "finished_at": "2026-05-19T11:16:38.474060-04:00",
+      "duration_sec": 0.095061
+    },
+    {
+      "cycle_id": "675d799a-c433-442a-ba38-54fa8d609143",
+      "stage": "acheron_tick_complete",
+      "success": true,
+      "output_path": "F:\\Prometheus\\charon\\agents\\acheron\\artifacts\\clean_scan_roles_PipelineOrchestrator_journal_20260_20260519T151536Z.md",
+      "output_summary": "file=roles\\PipelineOrchestrator\\journal_20260402.md collisions=0 artifacts=1 errors=0 dr_seeded=True dr_inbox=0",
+      "error": null,
+      "started_at": "2026-05-19T11:15:33.717300-04:00",
+      "finished_at": "2026-05-19T11:15:37.065882-04:00",
+      "duration_sec": 3.348582
+    },
+    {
+      "cycle_id": "410d3269-2f0d-4a80-b4de-da92fe41f47b",
+      "stage": "telos_tick_complete",
+      "success": true,
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\telos\\artifacts\\revive_F014_20260519T151508Z.md",
+      "output_summary": "revive task for F014 stalled 31d (threshold 14d); 34 lenses unapplied, 3 proposed",
+      "error": null,
+      "started_at": "2026-05-19T11:15:08.240269-04:00",
+      "finished_at": "2026-05-19T11:15:08.297802-04:00",
+      "duration_sec": 0.057533
+    },
+    {
+      "cycle_id": "c571556a-cadf-5cc9-a025-36490099c673",
+      "stage": "penelope_batch_complete",
       "success": true,
       "output_path": null,
-      "output_summary": "PARA-P16 [TT1]: PARA-P16: Bhargava-style techniques 2025",
+      "output_summary": "[penelope-20260519T151324Z-0e4498] files: 1 ingested, 0 dup-skip, 0 failed. records: 1000 ingested, 0 dropped, 0 validation_failures. sources: theseus. domains: knots_x_elliptic_curves.",
       "error": null,
-      "started_at": "2026-05-19T05:16:23.879492-04:00",
-      "finished_at": "2026-05-19T07:05:42.615817-04:00",
-      "duration_sec": 6558.7363
+      "started_at": "2026-05-19T11:13:24.346236-04:00",
+      "finished_at": "2026-05-19T11:13:54.801433-04:00",
+      "duration_sec": 30.455196
+    },
+    {
+      "cycle_id": "19aa3d53-a125-452a-9671-b2cb70431928",
+      "stage": "argos_tick_complete",
+      "success": true,
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\argos\\artifacts\\lens_catalog_astro-0038_20260519T151338Z.md",
+      "output_summary": "problem=ASTRO-0038 proposed=['STANCE_DYNAMICAL_SYSTEMS@v1', 'STANCE_INFORMATION_THEORY@v1', 'STANCE_RENORMALIZATION_GROUP@v1'] dr_seeded=False artifacts=1",
+      "error": null,
+      "started_at": "2026-05-19T11:13:38.146420-04:00",
+      "finished_at": "2026-05-19T11:13:38.156309-04:00",
+      "duration_sec": 0.009889
+    },
+    {
+      "cycle_id": "02fdf2c1-413b-406d-ae32-1f8a3834ad1e",
+      "stage": "iris_tick_complete",
+      "success": true,
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\iris\\artifacts\\scan_tick_20260519T151207Z.md",
+      "output_summary": "scanned 18 files (cursor 78->96/104); clusters tracked=645; new_candidates=0; artifacts=1",
+      "error": null,
+      "started_at": "2026-05-19T11:12:07.926583-04:00",
+      "finished_at": "2026-05-19T11:12:07.996995-04:00",
+      "duration_sec": 0.070412
+    },
+    {
+      "cycle_id": "953b0ec2-353a-4afc-b6c3-a2d381b83e53",
+      "stage": "lethe_tick_complete",
+      "success": true,
+      "output_path": "F:\\Prometheus\\charon\\agents\\lethe\\artifacts\\self_audit_null_20260519T151133Z.md",
+      "output_summary": "conjecture=saxl_conjecture emit_rate=0.0 candidate=False artifacts=1 errors=0 dr_seeded=True dr_inbox=0",
+      "error": null,
+      "started_at": "2026-05-19T11:11:28.126571-04:00",
+      "finished_at": "2026-05-19T11:11:33.462188-04:00",
+      "duration_sec": 5.335617
+    },
+    {
+      "cycle_id": "5e335415-b0ec-4dc5-a878-136aabdead1e",
+      "stage": "sophia_tick_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "pair=CONTROLLABILITY_RANK@v1xF041a anchor=F001 ops=10 specimens=14 backlog_remaining=100",
+      "error": null,
+      "started_at": "2026-05-19T11:10:37.801169-04:00",
+      "finished_at": "2026-05-19T11:10:37.839361-04:00",
+      "duration_sec": 0.038192
+    },
+    {
+      "cycle_id": "5e335415-b0ec-4dc5-a878-136aabdead1e",
+      "stage": "sophia_proposal_written",
+      "success": true,
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\sophia\\artifacts\\proposal_CONTROLLABILITY_RANK_at_v1_x_F041a_20260519T151037Z.md",
+      "output_summary": "CONTROLLABILITY_RANK@v1xF041a (anchor=F001); deepseek=no",
+      "error": null,
+      "started_at": "2026-05-19T11:10:37.801169-04:00",
+      "finished_at": "2026-05-19T11:10:37.802862-04:00",
+      "duration_sec": 0.001693
+    },
+    {
+      "cycle_id": "1cc17d80-18e1-47f9-97e0-9b8c1cdeb16e",
+      "stage": "phylax_tick_complete",
+      "success": true,
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\phylax\\artifacts\\verdict_reaudit_TOOL_KNOT_SHAPE_FIELD_20260519T150907Z.md",
+      "output_summary": "processed=1 artifacts=1 errors=0 verdicts={'pass': 0, 'flag': 0, 'block': 0}",
+      "error": null,
+      "started_at": "2026-05-19T11:09:07.406616-04:00",
+      "finished_at": "2026-05-19T11:09:07.502040-04:00",
+      "duration_sec": 0.095424
+    },
+    {
+      "cycle_id": "1a13b896-e2e7-4a82-8081-4112b69d6659",
+      "stage": "telos_tick_complete",
+      "success": true,
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\telos\\artifacts\\revive_F011_20260519T150737Z.md",
+      "output_summary": "revive task for F011 stalled 30d (threshold 14d); 32 lenses unapplied, 3 proposed",
+      "error": null,
+      "started_at": "2026-05-19T11:07:37.314213-04:00",
+      "finished_at": "2026-05-19T11:07:37.332717-04:00",
+      "duration_sec": 0.018504
+    },
+    {
+      "cycle_id": "5a3f734b-710d-4b7e-9f12-9b37bb454e30",
+      "stage": "stygian_tick_complete",
+      "success": true,
+      "output_path": "F:\\Prometheus\\charon\\agents\\stygian\\artifacts\\attack_plan_BL-C-008_20260519T150727Z.md",
+      "output_summary": "problem=BL-C-008 processed=1 artifacts=1 errors=0 dr_inbox=0 dr_seeded=True dr_quota_remaining=1",
+      "error": null,
+      "started_at": "2026-05-19T11:07:27.092655-04:00",
+      "finished_at": "2026-05-19T11:07:27.171435-04:00",
+      "duration_sec": 0.07878
+    },
+    {
+      "cycle_id": "2d1f3123-05d0-4d15-82b7-702829277185",
+      "stage": "argos_tick_complete",
+      "success": true,
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\argos\\artifacts\\lens_catalog_astro-0037_20260519T150607Z.md",
+      "output_summary": "problem=ASTRO-0037 proposed=['STANCE_DYNAMICAL_SYSTEMS@v1', 'STANCE_INFORMATION_THEORY@v1', 'STANCE_RENORMALIZATION_GROUP@v1'] dr_seeded=False artifacts=1",
+      "error": null,
+      "started_at": "2026-05-19T11:06:07.050495-04:00",
+      "finished_at": "2026-05-19T11:06:07.063653-04:00",
+      "duration_sec": 0.013158
+    },
+    {
+      "cycle_id": "066e9174-8636-48ba-bad3-2eea7ecc5792",
+      "stage": "iris_tick_complete",
+      "success": true,
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\iris\\artifacts\\scan_tick_20260519T150436Z.md",
+      "output_summary": "scanned 18 files (cursor 60->78/104); clusters tracked=645; new_candidates=0; artifacts=1",
+      "error": null,
+      "started_at": "2026-05-19T11:04:36.958006-04:00",
+      "finished_at": "2026-05-19T11:04:36.977611-04:00",
+      "duration_sec": 0.019605
+    },
+    {
+      "cycle_id": "0d337eb3-d88f-468a-8218-414e9dd106eb",
+      "stage": "hecate_tick_complete",
+      "success": true,
+      "output_path": "F:\\Prometheus\\charon\\agents\\hecate\\artifacts\\gradient_archaeology_20260519T150326Z.md",
+      "output_summary": "ledger=theseus\\corpus records=50000 mi=2.4996 mi_z=952.812 alarm=False artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
+      "error": null,
+      "started_at": "2026-05-19T11:03:22.714593-04:00",
+      "finished_at": "2026-05-19T11:03:26.854175-04:00",
+      "duration_sec": 4.139582
+    },
+    {
+      "cycle_id": "f7e44652-a4dd-4bd4-bf4b-8e97dbca8be8",
+      "stage": "sophia_tick_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "pair=CONTROLLABILITY_RANK@v1xF015 anchor=F001 ops=10 specimens=14 backlog_remaining=101",
+      "error": null,
+      "started_at": "2026-05-19T11:03:06.695529-04:00",
+      "finished_at": "2026-05-19T11:03:06.827333-04:00",
+      "duration_sec": 0.131804
+    },
+    {
+      "cycle_id": "f7e44652-a4dd-4bd4-bf4b-8e97dbca8be8",
+      "stage": "sophia_proposal_written",
+      "success": true,
+      "output_path": "D:\\Prometheus\\harmonia\\agents\\sophia\\artifacts\\proposal_CONTROLLABILITY_RANK_at_v1_x_F015_20260519T150306Z.md",
+      "output_summary": "CONTROLLABILITY_RANK@v1xF015 (anchor=F001); deepseek=no",
+      "error": null,
+      "started_at": "2026-05-19T11:03:06.695529-04:00",
+      "finished_at": "2026-05-19T11:03:06.697352-04:00",
+      "duration_sec": 0.001823
     }
   ],
   "deep_research": {
-    "reports": [
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "LAD-01 [TT1]: LAD-01: R3-R5 transitions in published proofs",
-        "output_path": null,
-        "finished_at": "2026-05-19T07:33:15.901131-04:00",
-        "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-        "success": true
-      },
-      {
-        "stage": "deep_research_received",
-        "summary": "# Comprehensive Analysis of Tensor-Network Methods Intersecting Machine Learning (2024\u20132026)",
-        "output_path": "aporia/docs/deep_research_reports/2026-05-19/00057_para_p30_tensor_networks_meet_machine_learning_2025.md",
-        "finished_at": "2026-05-19T07:33:15.039887-04:00",
-        "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-        "success": true
-      },
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "PARA-P30 [TT1]: PARA-P30: Tensor networks meet machine learning 2025",
-        "output_path": null,
-        "finished_at": "2026-05-19T07:27:56.113793-04:00",
-        "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-        "success": true
-      },
-      {
-        "stage": "deep_research_received",
-        "summary": "# Catalog of Paradigm-Shifting Negative Results in Mathematics (2022\u20132026)",
-        "output_path": "aporia/docs/deep_research_reports/2026-05-19/00056_para_p25_recent_pivotal_negative_result_catalog.md",
-        "finished_at": "2026-05-19T07:27:55.361559-04:00",
-        "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-        "success": true
-      },
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "PARA-P25 [TT1]: PARA-P25: Recent pivotal-negative-result catalog",
-        "output_path": null,
-        "finished_at": "2026-05-19T07:22:37.446593-04:00",
-        "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-        "success": true
-      },
-      {
-        "stage": "deep_research_received",
-        "summary": "# Extensions of Huang's Signed-Graph Polynomial Method (2019\u20132026): Generalizations and Resolved Conjectures in Complexity and Combinatorics",
-        "output_path": "aporia/docs/deep_research_reports/2026-05-19/00055_para_p22_polynomial_method_on_signed_graphs_since_huang.md",
-        "finished_at": "2026-05-19T07:22:36.904876-04:00",
-        "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-        "success": true
-      },
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "PARA-P22 [TT1]: PARA-P22: Polynomial method on signed graphs since Huang",
-        "output_path": null,
-        "finished_at": "2026-05-19T07:17:20.159842-04:00",
-        "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-        "success": true
-      },
-      {
-        "stage": "deep_research_received",
-        "summary": "# Recent Applications of Infinity-Categorical Methods to Number Theory (2024-2026)",
-        "output_path": "aporia/docs/deep_research_reports/2026-05-19/00054_para_p18_infinity_categories_in_number_theory.md",
-        "finished_at": "2026-05-19T07:17:19.466236-04:00",
-        "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-        "success": true
-      },
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "PARA-P18 [TT1]: PARA-P18: Infinity-categories in number theory",
-        "output_path": null,
-        "finished_at": "2026-05-19T07:09:56.291461-04:00",
-        "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-        "success": true
-      },
-      {
-        "stage": "deep_research_received",
-        "summary": "# Bhargava-Shankar-Style Arithmetic Statistics Techniques (2024-2026): Selmer-Group Distributions, Average Ranks, and Geometry-of-Numbers Extensions",
-        "output_path": "aporia/docs/deep_research_reports/2026-05-19/00053_para_p16_bhargava_style_techniques_2025.md",
-        "finished_at": "2026-05-19T07:09:55.615753-04:00",
-        "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-        "success": true
-      },
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "PARA-P16 [TT1]: PARA-P16: Bhargava-style techniques 2025",
-        "output_path": null,
-        "finished_at": "2026-05-19T07:05:42.615817-04:00",
-        "cycle_id": "1dad6127-025b-4c1c-8905-dc32d78ba075",
-        "success": true
-      }
-    ],
-    "report_count_24h": 5,
-    "dispatch_count_24h": 6,
+    "reports": [],
+    "report_count_24h": 0,
+    "dispatch_count_24h": 0,
     "budget": {
       "agent": "Pythia",
-      "used": 37,
-      "budget": 20,
-      "remaining": 0,
-      "as_of": "2026-05-19T11:43:48.663941+00:00"
+      "used": 21,
+      "budget": "compute-based (AI_Pro, 5h window)",
+      "remaining": "unknown (compute-based; no quota event observed)",
+      "as_of": "2026-05-19T15:43:49.985974+00:00"
     }
   }
 }
