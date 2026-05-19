@@ -87,23 +87,61 @@ def gather_intel_outputs(hours: int) -> list:
         return []
 
 
-def gather_recent_commits(hours: int) -> list:
+_COMMIT_SENTINEL = "===CALLIOPE-COMMIT==="
+
+
+def gather_recent_commits(hours: int, max_body_chars: int = 400,
+                          max_files_per_commit: int = 8) -> list:
+    """Return commits in window with subject, body, and changed-file stats.
+
+    Each commit includes a list of (file, insertions, deletions) tuples so the
+    LLM can describe what was actually modified, not just the subject line.
+    """
     try:
+        fmt = f"{_COMMIT_SENTINEL}%H%x09%s%x09%an%x09%aI%n%b"
         out = subprocess.run(
-            ["git", "log", f"--since={hours} hours ago",
-             "--pretty=format:%H%x09%s%x09%an%x09%aI", "--no-merges"],
-            cwd=REPO_ROOT, capture_output=True, text=True, timeout=15,
+            ["git", "log", f"--since={hours} hours ago", "--no-merges",
+             f"--pretty=format:{fmt}", "--numstat"],
+            cwd=REPO_ROOT, capture_output=True, text=True, timeout=30,
+            encoding="utf-8", errors="replace",
         )
         commits = []
-        for line in out.stdout.strip().splitlines():
-            parts = line.split("\t")
-            if len(parts) >= 4:
-                sha, subject, author, iso = parts[:4]
-                commits.append({
-                    "sha": sha, "short": sha[:8], "subject": subject,
-                    "author": author, "iso": iso,
-                    "url": f"{GITHUB_COMMIT}/{sha}",
-                })
+        chunks = out.stdout.split(_COMMIT_SENTINEL)
+        for chunk in chunks:
+            chunk = chunk.strip("\n")
+            if not chunk:
+                continue
+            head, _, rest = chunk.partition("\n")
+            parts = head.split("\t")
+            if len(parts) < 4:
+                continue
+            sha, subject, author, iso = parts[:4]
+            body_lines = []
+            file_rows = []
+            for line in rest.split("\n"):
+                if not line.strip():
+                    continue
+                tabs = line.split("\t")
+                if len(tabs) == 3 and (tabs[0].isdigit() or tabs[0] == "-") \
+                        and (tabs[1].isdigit() or tabs[1] == "-"):
+                    ins = int(tabs[0]) if tabs[0].isdigit() else None
+                    dels = int(tabs[1]) if tabs[1].isdigit() else None
+                    file_rows.append({"path": tabs[2], "ins": ins, "dels": dels})
+                else:
+                    body_lines.append(line)
+            body = "\n".join(body_lines).strip()
+            if len(body) > max_body_chars:
+                body = body[:max_body_chars].rsplit(" ", 1)[0] + "…"
+            total_ins = sum(f["ins"] for f in file_rows if f["ins"] is not None)
+            total_dels = sum(f["dels"] for f in file_rows if f["dels"] is not None)
+            commits.append({
+                "sha": sha, "short": sha[:8], "subject": subject, "body": body,
+                "author": author, "iso": iso,
+                "url": f"{GITHUB_COMMIT}/{sha}",
+                "files": file_rows[:max_files_per_commit],
+                "files_total": len(file_rows),
+                "insertions": total_ins, "deletions": total_dels,
+            })
         return commits
     except Exception as e:
         print(f"[calliope] git log failed: {e}", file=sys.stderr)
@@ -226,12 +264,27 @@ def build_context_block(intel, commits, pivots, dr_reports, state, hours) -> str
             lines.append(f"- {d['title']} — {d['url']}")
     lines.append("")
 
-    lines.append("## Commits to main")
+    lines.append("## Commits to main (with bodies and file changes)")
     if not commits:
         lines.append("- (none in window)")
     else:
         for c in commits[:40]:
-            lines.append(f"- {c['short']}: {c['subject']} ({c['author']}, {c['iso']}) [{c['url']}]")
+            lines.append(f"- {c['short']}: {c['subject']} ({c['author']}, {c['iso']}) "
+                         f"[{c['url']}] · +{c['insertions']}/-{c['deletions']} across "
+                         f"{c['files_total']} file(s)")
+            if c.get("body"):
+                body_inline = c["body"].replace("\n", " ").strip()
+                lines.append(f"    body: {body_inline}")
+            if c.get("files"):
+                file_summary = ", ".join(
+                    f"{f['path']} (+{f['ins'] if f['ins'] is not None else '?'}/-"
+                    f"{f['dels'] if f['dels'] is not None else '?'})"
+                    for f in c["files"]
+                )
+                extra = ""
+                if c["files_total"] > len(c["files"]):
+                    extra = f" … +{c['files_total'] - len(c['files'])} more"
+                lines.append(f"    files: {file_summary}{extra}")
     return "\n".join(lines)
 
 
