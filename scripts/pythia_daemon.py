@@ -40,7 +40,7 @@ import subprocess
 import sys
 import time
 import traceback
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Optional
 
@@ -95,10 +95,43 @@ log = logging.getLogger("pythia")
 
 
 AGENT_MODEL = "deep-research-pro-preview-12-2025"
+# DAILY_BUDGET is now the DISPLAY default (Aletheia's dashboard reads
+# deep_research_budget.budget from heartbeat). Dispatch no longer gates on
+# it — we let Gemini decide when we've hit the real ceiling, and learn that
+# ceiling empirically. _THROTTLE.observed_daily_ceiling updates on first
+# quota hit and overrides the display value.
 DAILY_BUDGET = 20
 MAX_CONCURRENT = 3
 QUOTA_KEYWORDS = ("RESOURCE_EXHAUSTED", "quota", "429", "rate limit",
                   "rate_limit", "exceeded")
+
+# Exponential backoff schedule on rate-limit. After each consecutive
+# rate-limited dispatch attempt, wait this many seconds. Capped at 1 hour
+# so we always probe at least once per hour to capture the reset.
+BACKOFF_DELAYS_SEC = [5 * 60, 15 * 60, 30 * 60, 60 * 60]  # 5m, 15m, 30m, 60m
+MAX_RETRY_INTERVAL_SEC = 60 * 60  # never wait more than 1 hour
+
+# In-memory throttle state. Survives across run_tick calls within one
+# daemon process. On daemon restart, state defaults to NORMAL — the next
+# dispatch will probe and re-enter backoff if quota is still exhausted.
+_THROTTLE = {
+    "mode": "normal",                       # "normal" | "backoff"
+    "consecutive_rate_limits": 0,
+    "last_rate_limited_at": None,           # ISO timestamp
+    "next_retry_after": None,               # ISO timestamp; daemon idles past this
+    "last_reset_detected_at": None,         # ISO timestamp; first success after backoff
+    "observed_daily_ceiling": None,         # int; counts at last quota-hit moment
+    "daily_count_at_first_quota": None,     # for the empirical-limit record
+}
+
+
+def _compute_next_retry(consecutive: int) -> datetime:
+    """Backoff schedule with 1-hour ceiling so we always probe hourly."""
+    now = datetime.now(timezone.utc)
+    idx = min(consecutive - 1, len(BACKOFF_DELAYS_SEC) - 1)
+    delay = BACKOFF_DELAYS_SEC[idx] if idx >= 0 else BACKOFF_DELAYS_SEC[0]
+    delay = min(delay, MAX_RETRY_INTERVAL_SEC)
+    return now + timedelta(seconds=delay)
 
 
 # ---------------------------------------------------------------------------
@@ -292,15 +325,26 @@ def emit_pythia_heartbeat(rate_limited_at: Optional[str] = None) -> None:
         except Exception:
             pass
     used = today_complete + today_dispatched + today_failed + today_rate_limited
-    budget_remaining = max(0, DAILY_BUDGET - used)
+    # Use observed ceiling when known; fall back to default for the dashboard.
+    effective_budget = _THROTTLE["observed_daily_ceiling"] or DAILY_BUDGET
+    budget_remaining = max(0, effective_budget - used)
     now_iso = datetime.now(timezone.utc).isoformat()
     status_json = {
         # Canonical block — Aletheia's portfolio_monitor reads exactly these keys
         "deep_research_budget": {
             "used": used,
-            "budget": DAILY_BUDGET,
+            "budget": effective_budget,
             "remaining": budget_remaining,
             "as_of": now_iso,
+        },
+        # Throttle/backoff state — visible to the dashboard for debugging.
+        "throttle": {
+            "mode": _THROTTLE["mode"],
+            "consecutive_rate_limits": _THROTTLE["consecutive_rate_limits"],
+            "last_rate_limited_at": _THROTTLE["last_rate_limited_at"],
+            "next_retry_after": _THROTTLE["next_retry_after"],
+            "last_reset_detected_at": _THROTTLE["last_reset_detected_at"],
+            "daily_count_at_first_quota": _THROTTLE["daily_count_at_first_quota"],
         },
         # Auxiliary fields (helpful for the dashboard panel, not strictly required)
         "queue_pending": pending,
@@ -315,7 +359,7 @@ def emit_pythia_heartbeat(rate_limited_at: Optional[str] = None) -> None:
         status_json["last_rate_limited_at"] = rate_limited_at
     session_telemetry.register_session(
         name="Pythia", machine="M1",
-        role="deep research report producer (20 tokens/day budget)",
+        role="deep research report producer (empirical-budget discovery in progress)",
         kind="tool",
         operator="Aporia",
         status_json=status_json,
@@ -389,15 +433,32 @@ def run_tick(dry_run: bool = False) -> dict:
             log.warning(f"failed row={row['id']}: {result['error']}")
         # else 'running' / 'unknown' — leave for next tick
 
-    # 2. Dispatch up to MAX_CONCURRENT - currently in-flight, respecting daily budget
+    # 2. Throttle gate: if in backoff state and next_retry_after hasn't elapsed, idle.
+    now = datetime.now(timezone.utc)
+    if _THROTTLE["mode"] == "backoff" and _THROTTLE["next_retry_after"]:
+        try:
+            nra = datetime.fromisoformat(_THROTTLE["next_retry_after"])
+            if now < nra:
+                wait_sec = (nra - now).total_seconds()
+                log.info(f"in backoff (consecutive={_THROTTLE['consecutive_rate_limits']}), "
+                         f"next retry at {nra.isoformat()} (in {wait_sec:.0f}s); skipping dispatch")
+                emit_pythia_heartbeat(rate_limited_at)
+                return stats
+            else:
+                log.info(f"backoff window elapsed; probing for reset")
+        except Exception:
+            # malformed timestamp — reset state and probe
+            _THROTTLE["next_retry_after"] = None
+
+    # 3. Dispatch up to MAX_CONCURRENT - currently in-flight. NO daily-budget gate;
+    # let Gemini decide when we've hit the real ceiling.
     current_in_flight = len(agora_persist.get_in_flight_research())
-    counts = agora_persist.count_research_today()
-    completed_today = counts.get("complete", 0)
-    budget_used = completed_today + current_in_flight
-    slots = min(MAX_CONCURRENT - current_in_flight, DAILY_BUDGET - budget_used)
+    slots = MAX_CONCURRENT - current_in_flight
+    # In backoff-probe mode, dispatch only one to avoid burning a burst of
+    # quota-rejected attempts if the limit hasn't reset yet.
+    if _THROTTLE["mode"] == "backoff":
+        slots = min(slots, 1)
     if slots <= 0:
-        if budget_used >= DAILY_BUDGET:
-            log.info(f"daily budget reached ({budget_used}/{DAILY_BUDGET}); idle dispatch")
         emit_pythia_heartbeat(rate_limited_at)
         return stats
     pending = agora_persist.next_pending_research(limit=slots)
@@ -410,6 +471,27 @@ def run_tick(dry_run: bool = False) -> dict:
             agora_persist.mark_research_dispatched(row["id"], res["interaction_id"])
             stats["dispatched"] += 1
             log.info(f"dispatched row={row['id']} iid={res['interaction_id']} ({row.get('title','')[:60]})")
+            # Reset detection: if we were in backoff and this dispatch succeeded,
+            # we've crossed the reset threshold. Record it before clearing state.
+            if _THROTTLE["mode"] == "backoff":
+                reset_at = datetime.now(timezone.utc).isoformat()
+                _THROTTLE["last_reset_detected_at"] = reset_at
+                log.info(f"!!! RATE-LIMIT RESET DETECTED at {reset_at} "
+                         f"(was limited at {_THROTTLE['last_rate_limited_at']}, "
+                         f"consecutive count was {_THROTTLE['consecutive_rate_limits']})")
+                if HAS_TELEMETRY:
+                    session_telemetry.log_work(
+                        stage="deep_research_rate_limit_reset_detected",
+                        agent="Pythia",
+                        summary=(f"Reset detected at {reset_at}. Last quota at "
+                                 f"{_THROTTLE['last_rate_limited_at']}. "
+                                 f"Backoff iterations: {_THROTTLE['consecutive_rate_limits']}. "
+                                 f"Empirical daily ceiling appears to be "
+                                 f"{_THROTTLE['daily_count_at_first_quota']}."),
+                    )
+                _THROTTLE["mode"] = "normal"
+                _THROTTLE["consecutive_rate_limits"] = 0
+                _THROTTLE["next_retry_after"] = None
             if HAS_TELEMETRY:
                 # Aletheia 2026-05-18 convention: stage='deep_research_dispatched'.
                 # summary is 1-2 sentences naming the topic + claim being researched.
@@ -426,12 +508,30 @@ def run_tick(dry_run: bool = False) -> dict:
             if res["quota"]:
                 stats["rate_limited"] = True
                 rate_limited_at = datetime.now(timezone.utc).isoformat()
-                log.warning(f"QUOTA hit on row={row['id']}: {res['error']}")
+                # Enter / deepen backoff
+                _THROTTLE["mode"] = "backoff"
+                _THROTTLE["consecutive_rate_limits"] += 1
+                _THROTTLE["last_rate_limited_at"] = rate_limited_at
+                _THROTTLE["next_retry_after"] = _compute_next_retry(
+                    _THROTTLE["consecutive_rate_limits"]).isoformat()
+                # Record empirical ceiling on first quota event
+                if _THROTTLE["daily_count_at_first_quota"] is None:
+                    counts_now = agora_persist.count_research_today()
+                    successful_today = counts_now.get("complete", 0) + len(agora_persist.get_in_flight_research())
+                    _THROTTLE["daily_count_at_first_quota"] = successful_today
+                    _THROTTLE["observed_daily_ceiling"] = successful_today
+                    log.warning(f"!!! FIRST QUOTA HIT — empirical daily ceiling = {successful_today} successful dispatches")
+                log.warning(f"QUOTA hit on row={row['id']} (consecutive={_THROTTLE['consecutive_rate_limits']}, "
+                            f"next retry {_THROTTLE['next_retry_after']}): {res['error']}")
                 if HAS_TELEMETRY:
                     session_telemetry.log_work(
                         stage="deep_research_quota_hit", agent="Pythia",
-                        summary=f"Quota detected at {rate_limited_at}: {res['error'][:200]}",
-                        success=False, error=res["error"],
+                        summary=(f"Quota hit at {rate_limited_at} (consecutive #"
+                                 f"{_THROTTLE['consecutive_rate_limits']}); "
+                                 f"backoff until {_THROTTLE['next_retry_after']}. "
+                                 f"Empirical daily ceiling: "
+                                 f"{_THROTTLE['daily_count_at_first_quota']} successful."),
+                        success=False, error=res["error"][:500],
                     )
                 break  # stop dispatching this tick
             else:
