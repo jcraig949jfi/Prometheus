@@ -107,12 +107,43 @@ class CharonAgent(HarmoniaAgent):
         re-fire unless an anti-anchor flag specifically demands re-
         verification." Caller decides whether to skip.
 
-        Falls back to False (allow enqueue) when Postgres is unavailable —
-        we'd rather burn a duplicate occasionally than block all enqueues
-        on a connectivity hiccup.
+        Two-phase check:
+        1. Local `dr_seeded` state — every enqueue this agent has made
+           lands here with timestamp + target_keywords. Catches pending /
+           dispatched / in-progress rows that Postgres-completed-only
+           queries miss. This is the dominant case during active ticks.
+        2. Postgres `read_recent_completed_research` — catches completed
+           rows whose state has been pruned locally OR which were
+           enqueued by a different process / a different agent.
+
+        Falls back to False (allow enqueue) on connectivity errors —
+        better to burn a duplicate than block all enqueues.
         """
         if not keywords:
             return False
+        needles = [k.lower() for k in keywords if k]
+        if not needles:
+            return False
+
+        # Phase 1: local state (catches pending/in-flight)
+        try:
+            history = self.load_state("dr_seeded", default=[]) or []
+            cutoff = datetime.now(timezone.utc) - timedelta(days=days)
+            for entry in history:
+                try:
+                    ts = datetime.fromisoformat(str(entry.get("ts", "")).replace("Z", "+00:00"))
+                except Exception:
+                    continue
+                if ts < cutoff:
+                    continue
+                target_kw = entry.get("target_keywords") or []
+                haystack = (" ".join(str(k) for k in target_kw)).lower()
+                if all(n in haystack for n in needles):
+                    return True
+        except Exception as e:
+            self.log.warning(f"recent_dr_coverage local-state check failed: {e}")
+
+        # Phase 2: Postgres completed (catches cross-process / cross-agent)
         try:
             import agora_persist  # type: ignore
         except Exception:
@@ -123,9 +154,6 @@ class CharonAgent(HarmoniaAgent):
             )
         except Exception as e:
             self.log.warning(f"recent_dr_coverage query failed: {e}")
-            return False
-        needles = [k.lower() for k in keywords if k]
-        if not needles:
             return False
         for row in recent or []:
             haystack = " ".join(
