@@ -111,6 +111,22 @@ logging.basicConfig(
 log = logging.getLogger("harmonia_loop")
 
 STATE_PATH = _REPO_ROOT / "harmonia" / "agents" / "_rotation_state.json"
+JSONL_LOG = _REPO_ROOT / "harmonia" / "agents" / "_logs" / "ticks.jsonl"
+
+
+def _append_jsonl_tick(record: dict) -> None:
+    """Append a tick record to the lifetime JSONL log.
+
+    The rotation_state.json history is capped at 200 entries (rolling
+    window). This append-only JSONL preserves every tick for lifetime
+    metrics (pool-exhaust counts, per-agent yield histograms, etc).
+    """
+    try:
+        JSONL_LOG.parent.mkdir(parents=True, exist_ok=True)
+        with open(JSONL_LOG, "a", encoding="utf-8") as f:
+            f.write(json.dumps(record, default=str) + "\n")
+    except Exception as e:
+        log.warning(f"jsonl tick log append failed: {e}")
 
 
 def _load_rotation_state() -> dict:
@@ -192,6 +208,7 @@ def run_once(force_agent: str | None = None, dry_run: bool = False) -> dict:
     state["history"] = state["history"][-200:]  # cap
     if not force_agent:
         _save_rotation_state(state)
+    _append_jsonl_tick(record)
     _emit_loop_heartbeat(record)
     log.info(f"agent {name} done in {elapsed:.1f}s: {stats}")
     return record

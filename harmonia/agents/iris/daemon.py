@@ -21,12 +21,28 @@ from harmonia.agents._base import HarmoniaAgent
 
 REPO_ROOT = Path(r"D:\Prometheus")
 
-# Source directories. Iris scans .md files at depth-1 in each.
-SOURCE_DIRS: list[Path] = [
-    REPO_ROOT / "harmonia" / "memory",
-    REPO_ROOT / "harmonia" / "docs",
-    REPO_ROOT / "roles" / "Harmonia",
+# Source directories. Each tuple is (path, recursive). Recursive sources
+# are walked with rglob; non-recursive sources only scan depth-1.
+#
+# Harmonia's internal corpus saturated at 645 clusters / 1 threshold-crosser
+# (16+ consecutive observations confirmed). External corpora below give Iris
+# 100x the candidate phrase pool — the corpus IS the backlog, and the corpus
+# is now bigger.
+SOURCE_DIRS: list[tuple[Path, bool]] = [
+    (REPO_ROOT / "harmonia" / "memory", False),
+    (REPO_ROOT / "harmonia" / "docs", False),
+    (REPO_ROOT / "roles" / "Harmonia", False),
+    # External — Pythia DR reports are nested by date
+    (REPO_ROOT / "aporia" / "docs" / "deep_research_reports", True),
+    # External — cartography docs (depth-1; the data/ subdirs are gitignored)
+    (REPO_ROOT / "cartography" / "docs", False),
+    # External — prometheus_math (depth-1 .md only)
+    (REPO_ROOT / "prometheus_math", False),
 ]
+
+# Hard cap on enumerated corpus size to bound per-tick scan cost. If
+# the corpus grows beyond this, oldest-modified files get truncated.
+MAX_CORPUS_SIZE = 10000
 
 # Files whose name contains any of these substrings are excluded.
 # (Belt and suspenders — we never want to even open key material.)
@@ -105,19 +121,39 @@ def _safe_name(name: str) -> bool:
 
 
 def _enumerate_corpus() -> list[Path]:
-    """Deterministic sorted list of absolute paths across SOURCE_DIRS."""
+    """Deterministic sorted list of absolute paths across SOURCE_DIRS.
+
+    Each (path, recursive) tuple is walked either at depth-1 (glob) or
+    recursively (rglob). Result is clamped to MAX_CORPUS_SIZE — if the
+    enumerated set exceeds the cap, the oldest-modified files are
+    dropped first.
+    """
     out: list[Path] = []
-    for d in SOURCE_DIRS:
+    for d, recursive in SOURCE_DIRS:
         if not d.exists():
             continue
         try:
-            # depth-1: glob (not rglob)
-            for p in d.glob("*.md"):
+            it = d.rglob("*.md") if recursive else d.glob("*.md")
+            for p in it:
                 if p.is_file() and _safe_name(p.name):
                     out.append(p.resolve())
         except Exception:
             continue
-    # sort by absolute path string for determinism
+    # Dedupe (rglob can re-visit if SOURCE_DIRS overlap)
+    seen: set = set()
+    deduped: list[Path] = []
+    for p in out:
+        s = str(p)
+        if s in seen:
+            continue
+        seen.add(s)
+        deduped.append(p)
+    out = deduped
+    # Clamp to MAX_CORPUS_SIZE — keep newest by mtime
+    if len(out) > MAX_CORPUS_SIZE:
+        out.sort(key=lambda p: p.stat().st_mtime if p.exists() else 0,
+                 reverse=True)
+        out = out[:MAX_CORPUS_SIZE]
     out.sort(key=lambda p: str(p).lower())
     return out
 

@@ -26,6 +26,7 @@ SYMBOLS_DIR = HARMONIA_MEMORY / "symbols"
 RETRACTION_REGISTRY = HARMONIA_MEMORY / "retraction_registry.md"
 PATTERN_LIBRARY = HARMONIA_MEMORY / "pattern_library.md"
 SYMBOLS_INDEX = SYMBOLS_DIR / "INDEX.md"
+DR_REPORTS_ROOT = REPO_ROOT / "aporia" / "docs" / "deep_research_reports"
 
 # Candidate sync streams in priority order (spec lists agora:sync; the
 # repo's canonical helper writes agora:harmonia_sync, so we tail both).
@@ -94,6 +95,55 @@ class PhylaxAgent(HarmoniaAgent):
                         "blob": blob,
                     })
         return hits
+
+    def _scan_dr_reports(self, limit: int = 25) -> list[dict]:
+        """Treat each new Pythia DR report as a candidate claim.
+
+        Pythia DR reports are fresh primary-literature findings — exactly
+        the surface where new claims adjacent to known retractions would
+        surface. We hash-pin which reports we've audited so we only fire
+        adjacency checks on genuinely-new ones.
+
+        Returns list of pseudo-events with msg_id = the report file path
+        (stable, deduplicated by `seen_promotion_ids` state).
+        """
+        if not DR_REPORTS_ROOT.exists():
+            return []
+        seen_ids = set(self.load_state("seen_promotion_ids", []) or [])
+        out: list[dict] = []
+        try:
+            paths = sorted(
+                DR_REPORTS_ROOT.rglob("*.md"),
+                key=lambda p: p.stat().st_mtime,
+                reverse=True,
+            )[:limit * 2]  # over-fetch; many may be already-seen
+        except Exception as e:
+            self.log.warning(f"DR-report enumeration failed: {e}")
+            return []
+        for p in paths:
+            msg_id = f"dr:{p.relative_to(REPO_ROOT).as_posix()}"
+            if msg_id in seen_ids:
+                continue
+            try:
+                text = p.read_text(encoding="utf-8", errors="ignore")
+            except Exception:
+                continue
+            # Use first ~1500 chars (title + summary + first content) as
+            # the claim surface for adjacency checks. Full report text
+            # would dominate token-overlap calculations.
+            blob = text[:1500]
+            out.append({
+                "source": "dr_report",
+                "msg_id": msg_id,
+                "fields": {
+                    "path": str(p),
+                    "rel_path": p.relative_to(REPO_ROOT).as_posix(),
+                },
+                "blob": blob,
+            })
+            if len(out) >= limit:
+                break
+        return out
 
     def _scan_git_promotions(self, limit: int = 50) -> list[dict]:
         last_seen = self.load_state("last_seen_commit", None)
@@ -542,9 +592,15 @@ class PhylaxAgent(HarmoniaAgent):
         }
         artifacts: list[str] = []
 
+        # Inbound sources, in priority order. DR-report scan inserted as
+        # the third tier so Phylax always has fresh primary-literature
+        # claims to audit even when both the sync stream and recent git
+        # log are quiet.
         events = self._scan_sync_streams()
         if not events:
             events = self._scan_git_promotions()
+        if not events:
+            events = self._scan_dr_reports()
 
         seen_ids = set(self.load_state("seen_promotion_ids", []) or [])
         new_seen: list[str] = []
