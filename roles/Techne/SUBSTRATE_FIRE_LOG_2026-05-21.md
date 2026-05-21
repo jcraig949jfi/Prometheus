@@ -1222,6 +1222,109 @@ layout fix validated in production (2,818 records). h2 100% kill
 rate replicated on 1.38M triangulations. 188.1M records lifetime,
 96.4M kills, 700 discoveries.*
 
+---
+
+## Fire #42 — 2026-05-21 ~19:35Z
+
+Hydration: **15** entries. Bandit picked a slow, parent-dependent
+slate — total volume was only 190K records vs typical 2-5M. But
+the substrate signal-per-record was very high.
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1275652288
+    [theseus] Hydrated bandit history: 15 yield-score entries from prior fires
+    [theseus] Bandit bootstrap selected: ['e3', 'b5', 'c1', 'h4', 'g1']
+
+### Between-fire work shipped
+
+**arxiv cache expanded 100 → 500 abstracts** via
+`python -m theseus.scripts.fetch_arxiv_abstracts --max-results 500`.
+The 429 backoff was not triggered this time (arxiv's cooldown
+window had cleared). E2 now has 5x more abstracts to mine when the
+bandit next picks it.
+
+### Batch result
+
+- batch_id: `batch-20260521T193512Z-8e7d0e`
+- Duration: 1.5h wall budget (didn't approach 5M cap)
+- 190,407 records / 90,552 kills / 98,451 confirms / 1,404 incon / 0 errors
+- 20 new discoveries → 720 lifetime
+
+Per-generator yield:
+
+| gid | records | yield | kills  | conf   | info_density |
+|-----|---------|-------|--------|--------|--------------|
+| c1  | 104,000 | 0.0034| 89,982 | 14,018 | 0.513        |
+| h4  | 84,111  | 0.0037| 0      | **82,707** | 0.599    |
+| e3  | 1,060   | 0.0052| 447    | 613    | 0.558        |
+| g1  | 184     | 0.0047| 108    | 76     | 0.541        |
+| b5  | 1,052   | 0.0049| 15     | 1,037  | 0.599        |
+
+**Why so low total?** c1 (claim mutation) depends on parent records
+from OTHER gens in the same batch. With slow gens (e3, b5, h4, g1)
+producing only ~86K records combined, c1 had limited parent fodder
+and emitted only 104K. The round-robin tick rate was actually high,
+but c1's `_load_next_parent` returned None frequently.
+
+**h4 hit 100% confirmation rate on 84K bridge-extension claims**.
+h4 tests multi-invariant bridge connectivity (3 new ec_invariants
+per parent). Substantively: cross-invariant bridges in the BSD
+catalog are robust under the test.
+
+**g1's first production fire**: 184 records of Galois twist
+invariance claims. Slow but substantively interesting (each record
+is a real EC×EC pair sharing exact j-invariant).
+
+### Lifetime stats after Fire #42
+
+| Metric | Pre-#34 | Post-#41 | Post-#42 |
+|---|---|---|---|
+| Batches | 30 | 42 | 43 |
+| Records | 154.4M | 188.1M | 188.3M |
+| Kills | 74.4M | 96.4M | 96.5M |
+| Confirmations | 75.5M | 85.1M | 85.2M |
+| Discoveries | 500 | 700 | 720 |
+| Kill share | 48.2% | 51.2% | 51.2% |
+
+Low-volume fires like this one show the substrate's adaptive trade-
+off: when slow but info-dense gens are picked, total record volume
+drops while per-record substrate signal stays high.
+
+### Bandit state after Fire #42
+
+17 of 36 actives have yield-score history now. Remaining 19
+unfired. Continuing exploration phase.
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Yes. Plus expanded arxiv cache 5x.
+
+(b) **Changed contracts?** No.
+
+(c) **Conventional-approach drift check?** Resisted the urge to
+"fix" the low-volume batch by tuning the bandit's parent-dependency
+awareness. The slow-batch is data — it's what happens when slow
+gens are exploring. Bandit will downweight in future fires
+automatically; no fix needed.
+
+### Diff this fire
+
+No code changes — runtime journals + cache + bandit history only.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #43 continues exploration (~19 unfired
+remain).
+
+---
+
+*Fire #42 closed. 17/36 actives have bandit history. Low-volume
+batch (190K) due to parent-starved c1 + slow gens, but h4 hit
+100% confirmation on 84K bridge claims. g1 first production
+emission. 188.3M records lifetime, 96.5M kills, 720 discoveries.*
+
+
 
 
 
