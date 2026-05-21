@@ -97,3 +97,38 @@ def test_e1_extracts_claim_pattern(tmp_path):
     assert r.generator_id == "e1"
     assert r.verdict == Verdict.UNVERIFIED.value
     assert "Theorem" in r.canonical_claim_text
+
+
+def test_e1_flat_file_layout(tmp_path):
+    """E1 should mine deep_research_batch*.md files at root (not just dirs).
+
+    Fire #38 fix: original iterator only walked deep_research_batch*/
+    directories, missing the current aporia/docs flat layout.
+    """
+    (tmp_path / "deep_research_batch1.md").write_text(
+        "Background. Conjecture: every L-function has analytic continuation.",
+        encoding="utf-8",
+    )
+    g = E1ResearchBatchParserGenerator(batch_id="t", root=tmp_path)
+    r = g.next()
+    assert r is not None
+    assert r.generator_id == "e1"
+    assert "Conjecture" in r.canonical_claim_text
+
+
+def test_e1_deep_research_reports_subdirs(tmp_path):
+    """E1 should recurse into deep_research_reports/YYYY-MM-DD/*.md.
+
+    Fire #38 fix: third layout variant in aporia/docs.
+    """
+    daily = tmp_path / "deep_research_reports" / "2026-05-21"
+    daily.mkdir(parents=True)
+    (daily / "00001_survey.md").write_text(
+        "Background. Theorem: the Selberg trace formula admits a refinement.",
+        encoding="utf-8",
+    )
+    g = E1ResearchBatchParserGenerator(batch_id="t", root=tmp_path)
+    r = g.next()
+    assert r is not None
+    assert r.generator_id == "e1"
+    assert "Theorem" in r.canonical_claim_text

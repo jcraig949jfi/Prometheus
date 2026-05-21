@@ -43,12 +43,37 @@ MIN_CLAIM_LEN = 30
 
 
 def _iter_batch_files(root: Path) -> Iterator[Path]:
-    """Yield .md files from deep_research_batch* directories under root."""
+    """Yield .md files from the deep-research corpora under root.
+
+    Handles three layout variants observed in aporia/docs:
+    - Flat files: deep_research_batch{N,_seeds,...}.md directly under root
+    - Legacy: deep_research_batch*/ directories containing .md files
+    - Current: deep_research_reports/YYYY-MM-DD/*.md daily subdirs
+
+    Fire #38 fix: the iterator originally only handled the legacy dir
+    form, missing 77 files in the current layout. E1's lifetime emission
+    was stuck at 3100 records (from pre-layout-change runs).
+    """
     if not root.exists():
         return
     for child in root.iterdir():
+        # Flat .md files at root, deep_research_batch*.md
+        if (
+            child.is_file()
+            and child.suffix == ".md"
+            and child.name.startswith("deep_research_batch")
+        ):
+            yield child
+            continue
+        # Legacy: deep_research_batch*/ directories with nested .md files
         if child.is_dir() and child.name.startswith("deep_research_batch"):
             yield from child.glob("*.md")
+            continue
+        # Current: deep_research_reports/YYYY-MM-DD/*.md
+        if child.is_dir() and child.name == "deep_research_reports":
+            for date_dir in child.iterdir():
+                if date_dir.is_dir():
+                    yield from date_dir.glob("*.md")
 
 
 def _extract_claims_from_text(text: str) -> List[str]:
