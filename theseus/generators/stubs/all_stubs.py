@@ -39,11 +39,7 @@ from theseus.generators.base import StubGenerator, GeneratorStatus
 
 # -- Family G (symmetry/transformation) --
 
-class G1GaloisTwist(StubGenerator):
-    generator_id = "g1"
-    claim_kind = ClaimKind.SYMMETRY_TRANSFORM.value
-    def description(self) -> str:
-        return "g1: Galois-twist invariance test"
+# G1 was lifted to theseus/generators/g1_galois_twist.py
 
 
 class G2FunctionalEquation(StubGenerator):
