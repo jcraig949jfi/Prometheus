@@ -57,6 +57,16 @@ def test_daemon_run_batch_respects_record_cap(tmp_path, monkeypatch):
 
     # Force a low cap so we hit it quickly.
     monkeypatch.setattr(cfg, "PER_BATCH_RECORD_CAP", 200)
+    # Redirect the journal paths so the test doesn't pollute the real
+    # BATCH_LOG.md / batches.jsonl. Each invocation otherwise appends a
+    # "batch-cap-test" entry visible in production stats summaries.
+    monkeypatch.setattr(cfg, "JOURNAL_DIR", tmp_path / "journal")
+    monkeypatch.setattr(
+        cfg, "BATCH_LOG_PATH", tmp_path / "journal" / "BATCH_LOG.md"
+    )
+    monkeypatch.setattr(
+        cfg, "BATCHES_JSONL_PATH", tmp_path / "journal" / "batches.jsonl"
+    )
 
     bm = run_batch(
         generator_ids=["b3"],
