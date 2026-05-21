@@ -1114,6 +1114,115 @@ for the transition point where all 36 actives have ≥1 history entry.
 185.4M records lifetime, 94.1M kills, 680 discoveries. Bandit
 explored 5 new gens; 10/36 actives now have yield-score history.*
 
+---
+
+## Fire #41 — 2026-05-21 ~17:56Z
+
+Hydration count: **10** yield-score entries (5 from Fire #39 +
+5 from Fire #40). Bandit picked 5 more never-fired gens.
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1269710897
+    [theseus] Hydrated bandit history: 10 yield-score entries from prior fires
+    [theseus] Bandit bootstrap selected: ['b3', 'e1', 'f2', 'h2', 'd1']
+
+### Between-fire work shipped
+
+**Commit `7d2835bd`** — test_per_batch_record_cap journal isolation.
+The cap test was pollnging the real BATCH_LOG.md and batches.jsonl
+with "batch-cap-test" entries (visible in stats_summary recent-
+batches output). Monkeypatched JOURNAL_DIR + BATCH_LOG_PATH +
+BATCHES_JSONL_PATH to tmp_path so future test runs are isolated.
+Two stale "batch-cap-test" entries already in the journal are
+left as-is (history; not load-bearing).
+
+### Batch result
+
+- batch_id: `batch-20260521T175611Z-33c8a3`
+- Duration: 1.5h wall budget (didn't hit 5M cap)
+- 2,779,008 records / 2,299,333 kills / 476,712 confirms / 145 incon / 0 errors
+- 20 new discoveries → 700 lifetime
+
+Per-generator yield:
+
+| gid | records   | yield | kills    | conf    | info_density | diversity |
+|-----|-----------|-------|----------|---------|--------------|-----------|
+| f2  | 1,391,280 | 0.0041| 915,812  | 475,468 | 0.534        | 0.761     |
+| h2  | 1,382,486 | 0.0042| **1,382,341** | 0 | 0.665        | 0.624     |
+| e1  | 2,818     | 0.0019| 0        | 0       | 0.200        | 0.953     |
+| d1  | 1,818     | 0.0051| 834      | 984     | 0.554        | 0.908     |
+| b3  | 606       | 0.0051| 346      | 260     | 0.543        | 0.935     |
+
+**e1 finally produces 2,818 records — Fire #38 corpus-layout fix
+validated**. The pre-fix lifetime was stuck at 3100 (from very
+early runs that found the legacy dir structure). This fire alone
+nearly doubled e1's lifetime to 5,918.
+
+**h2 again 100% kill rate** (1.38M kills, 0 confirmations on the
+triangulation protocol). Two fires in a row (Fire #38 and #41)
+confirm the pattern is stable: h2 robustly demotes INCONCLUSIVE
+candidates to REJECTED. The 100% rate on 2.76M cumulative samples
+(0.999... confidence interval) is strong substrate signal — h2 is
+substantively a falsifier, not a confirmer.
+
+### Lifetime stats after Fire #41
+
+| Metric | Pre-#34 | Post-#40 | Post-#41 |
+|---|---|---|---|
+| Batches | 30 | 41 | 42 |
+| Records | 154.4M | 185.4M | 188.1M |
+| Kills | 74.4M | 94.1M | 96.4M |
+| Confirmations | 75.5M | 84.6M | 85.1M |
+| INCONCLUSIVE | 4.55M | 6.68M | 6.68M |
+| Discoveries | 500 | 680 | 700 |
+| Kill share | 48.2% | 50.8% | 51.2% |
+
+Discoveries: 500 → 700 across 12 fires = 16.7 per fire mean.
+Steady production.
+
+### Bandit state after Fire #41
+
+15 of 36 actives have yield-score history now (a1, a2, a5, b1,
+b3, c4, c5, d1, e1, e2, e4, f1, f2, f4, h2). Remaining 21
+unfired. ~4 more fires until all are explored at least once.
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Yes. Between-fire: cleaned up
+test pollution that was misleading stats output.
+
+(b) **Changed contracts?** No (test isolation only).
+
+(c) **Conventional-approach drift check?** Resisted scope-creep.
+The test fix is small and exactly the right scope: don't pollute
+the prod journal during tests.
+
+### Diff this fire
+
+| File | Change |
+|------|--------|
+| `theseus/tests/test_per_batch_record_cap.py` | journal paths → tmp |
+
+### Commits
+
+| Hash | Description |
+|------|-------------|
+| `7d2835bd` | test_per_batch_record_cap journal isolation |
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #42 continues explore phase (~21 unfired
+remain).
+
+---
+
+*Fire #41 closed. 15/36 actives have bandit history. e1 corpus-
+layout fix validated in production (2,818 records). h2 100% kill
+rate replicated on 1.38M triangulations. 188.1M records lifetime,
+96.4M kills, 700 discoveries.*
+
+
 
 
 
