@@ -15,6 +15,11 @@ DEFAULT_BATCH_HOURS = 1.0
 DEFAULT_ACTIVE_GENERATORS = ("a1", "b5", "c1", "d1", "e1")
 DEFAULT_BANDIT_EPSILON = 0.2
 
+# Per-batch record cap. Caps memory growth in dedup structures.
+# b3 once emitted 28M records in 1.5h and exhausted RAM (5 MemoryError
+# events on 2026-05-20). 5M keeps dedup state under ~500MB.
+PER_BATCH_RECORD_CAP = 5_000_000
+
 # Where generators look for inputs. Repo-relative.
 DEEP_RESEARCH_BATCH_GLOB = REPO_ROOT / "aporia" / "docs"  # batch_* subdirs
 KNOTS_DB_PATH = REPO_ROOT / "prometheus_math" / "databases" / "knots.json.gz"

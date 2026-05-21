@@ -14,11 +14,17 @@ running in 5 separate daemon threads.
 from __future__ import annotations
 
 import abc
+from collections import deque
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Iterator, List, Optional
 
 from theseus.emit.record_schema import TheseusRecord
+
+
+# Bound on the per-generator `emitted` ring. Capped to prevent unbounded
+# memory growth in high-throughput batches (b3 OOM, 2026-05-20).
+_EMITTED_RING_MAXLEN = 2000
 
 
 class GeneratorStatus(str, Enum):
@@ -55,7 +61,10 @@ class Generator(abc.ABC):
     def __init__(self, batch_id: str) -> None:
         self.batch_id = batch_id
         self.attempts = 0
-        self.emitted: List[str] = []  # record_ids emitted this instance
+        # Bounded ring (last N record_ids). Generators .append() to it but
+        # never read prior contents; an unbounded list was the proximate
+        # cause of b3 OOM on 2026-05-20 (28M strings ~ 2GB).
+        self.emitted: deque[str] = deque(maxlen=_EMITTED_RING_MAXLEN)
 
     @abc.abstractmethod
     def description(self) -> str:

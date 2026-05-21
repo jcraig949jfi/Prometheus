@@ -51,7 +51,7 @@ from theseus.generators.d4_boundary_crossing import D4BoundaryCrossingGenerator
 from theseus.generators.h1_self_play_hunter import H1SelfPlayHunterGenerator
 from theseus.generators.h2_triangulation_protocol import H2TriangulationProtocolGenerator
 from theseus.generators.h4_bridge_extension import H4BridgeExtensionGenerator
-from theseus.registry import REGISTRY, get_generator_class
+from theseus.registry import REGISTRY, get_generator_class, list_active
 from theseus.scoring.metrics_schema import BatchMetrics, GeneratorMetrics
 from theseus.scoring.yield_tracker import YieldTracker
 
@@ -170,13 +170,18 @@ def run_batch(
     exhausted = {g.generator_id: False for g in instances}
     consecutive_nones = {g.generator_id: 0 for g in instances}
     tick_count = 0
+    total_records_written = 0
     while time.monotonic() - started_mono < budget_s:
         if all(exhausted.values()):
+            break
+        if total_records_written >= cfg.PER_BATCH_RECORD_CAP:
             break
         for g in instances:
             if exhausted[g.generator_id]:
                 continue
             if time.monotonic() - started_mono >= budget_s:
+                break
+            if total_records_written >= cfg.PER_BATCH_RECORD_CAP:
                 break
             tracker.start_generator(g.generator_id)
             try:
@@ -192,14 +197,15 @@ def run_batch(
                     exhausted[g.generator_id] = True
                 continue
             consecutive_nones[g.generator_id] = 0
-            writer.write(rec)
-            tracker.record_emission(rec)
-            _wire_feedback(instances, rec)
-            if (
-                emit_telemetry
-                and len(telemetry_record_sample) < TELEMETRY_SAMPLE_CAP
-            ):
-                telemetry_record_sample.append(rec)
+            if writer.write(rec):
+                total_records_written += 1
+                tracker.record_emission(rec)
+                _wire_feedback(instances, rec)
+                if (
+                    emit_telemetry
+                    and len(telemetry_record_sample) < TELEMETRY_SAMPLE_CAP
+                ):
+                    telemetry_record_sample.append(rec)
         tick_count += 1
 
     ended_at = datetime.now(timezone.utc).isoformat()
@@ -371,7 +377,7 @@ def main() -> None:
 
         if args.bandit and i + 1 < args.batches:
             gids = bandit.select(
-                available=list(REGISTRY.keys()),
+                available=list_active(),
                 history=history,
                 n=len(gids),
             )
