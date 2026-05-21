@@ -58,14 +58,14 @@ def fetch_and_append(cache_path: Path = CACHE_PATH) -> int:
         with conn.cursor() as cur:
             cur.execute(
                 """
-                SELECT id, title, content, cat, authors, last_saved
+                SELECT id, title, content, cat, authors
                 FROM kwl_knowls
                 WHERE status = 1 AND content IS NOT NULL AND content <> ''
                 """
             )
             rows = cur.fetchall()
             with cache_path.open("a", encoding="utf-8") as f:
-                for kid, title, content, cat, authors, last_saved in rows:
+                for kid, title, content, cat, authors in rows:
                     if kid in existing:
                         continue
                     rec = {
@@ -74,9 +74,6 @@ def fetch_and_append(cache_path: Path = CACHE_PATH) -> int:
                         "content": content or "",
                         "category": cat or "",
                         "authors": list(authors) if authors else [],
-                        "last_saved": (
-                            last_saved.isoformat() if last_saved else None
-                        ),
                         "fetched_at": datetime.now(timezone.utc).isoformat(),
                     }
                     f.write(json.dumps(rec, sort_keys=True) + "\n")

@@ -20,6 +20,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Set
 
+import urllib.parse
+
 import requests
 
 from theseus.config import THESEUS_ROOT
@@ -112,7 +114,11 @@ def _existing_titles(path: Path) -> Set[str]:
 
 
 def fetch_one(title: str, timeout: float = 10.0) -> dict | None:
-    url = f"{API}/{title}"
+    # Wikipedia's REST API requires URL-encoded paths. Without quoting
+    # apostrophes, en-dashes, and non-ASCII (Erdős, Pólya, Cramér...)
+    # the request returns 404. Pass safe='' so the / in any sub-paths
+    # would be encoded (we don't have any, but defensive).
+    url = f"{API}/{urllib.parse.quote(title, safe='')}"
     try:
         r = requests.get(url, headers=HEADERS, timeout=timeout)
     except requests.RequestException:

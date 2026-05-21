@@ -342,7 +342,13 @@ def main() -> None:
     p.add_argument(
         "--bandit",
         action="store_true",
-        help="After each batch, let the bandit pick the next active set.",
+        help=(
+            "Use the bandit to select the active generator set. When set, "
+            "the bandit picks the FIRST batch's set too (UCB explores "
+            "actives uniformly with empty history); --generators is "
+            "ignored. Without --bandit, --generators is the literal set "
+            "and the bandit only picks between subsequent batches."
+        ),
     )
     p.add_argument(
         "--bandit-policy",
@@ -358,6 +364,20 @@ def main() -> None:
     else:
         bandit = EpsilonGreedyBandit(epsilon=DEFAULT_BANDIT_EPSILON, seed=args.seed)
     history: Dict[str, List[GeneratorMetrics]] = {}
+
+    # When --bandit is set, the bandit picks the FIRST batch's set too.
+    # Previously this was a no-op with --batches 1 because selection was
+    # gated on i+1<args.batches. With empty history, the bandit's UCB
+    # exploration bonus treats never-fired actives uniformly, so this is
+    # effectively uniform-sampling-from-actives on the first invocation
+    # and yield-driven once history accumulates across daemon runs.
+    if args.bandit:
+        gids = bandit.select(
+            available=list_active(),
+            history=history,
+            n=len(gids),
+        )
+        print(f"[theseus] Bandit bootstrap selected: {gids}")
 
     for i in range(args.batches):
         print(f"[theseus] Starting batch {i + 1}/{args.batches} with {gids}")
