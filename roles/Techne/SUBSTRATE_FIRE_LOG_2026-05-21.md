@@ -1001,6 +1001,120 @@ emission (233 records from 1059 cached LMFDB knowls). Bandit
 history persisted (5 entries). 180.4M records lifetime, 92.3M
 kills, 51.2% cumulative kill share.*
 
+---
+
+## Fire #40 — 2026-05-21 ~16:37Z
+
+**First cross-fire-learning batch.** Bandit hydrated 5 yield-score
+entries from Fire #39's persisted state — and chose to explore 5 NEW
+gens (no overlap with the previously-fired set). The UCB exploration
+bonus for never-fired actives drove selection.
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1264977750
+    [theseus] Hydrated bandit history: 5 yield-score entries from prior fires
+    [theseus] Bandit bootstrap selected: ['c5', 'e2', 'f1', 'c4', 'f4']
+
+Previously fired (a1, a2, a5, b1, e4): NOT picked.
+New picks (c5, e2, f1, c4, f4): all 5 were never-fired before.
+
+This is the bandit doing the right thing — it explores all 36 actives
+before exploiting yields. Once every gen has been fired at least
+once, the UCB bonus decays and yield-driven selection takes over.
+
+### Batch result
+
+- batch_id: `batch-20260521T163718Z-3b8e83`
+- Duration: 1.15h (hit cap, didn't quite reach wall budget)
+- 5,000,000 records / 1,732,317 kills / 2,385,780 confirms / 881,812 incon / 0 errors
+- 20 new discoveries → 680 lifetime
+
+Per-generator yield:
+
+| gid | records   | yield | kills    | conf    | incon   | info_density |
+|-----|-----------|-------|----------|---------|---------|--------------|
+| f4  | 1,627,986 | 0.0041| 1,072,021| 555,965 | 0       | 0.534        |
+| f1  | 1,520,459 | 0.0045| 444,443  | 194,204 | 881,812 | 0.542        |
+| c4  | 975,021   | 0.0049| 0        | **975,021** | 0   | 0.600        |
+| c5  | 876,443   | 0.0047| 215,853  | 660,590 | 0       | 0.575        |
+| e2  | 91        | 0.0020| 0        | 0       | 0       | 0.200        |
+
+**c4 hit 100% confirmation rate on 975K records** — generalization
+preserves truth, as predicted by the mathematical foundation (if
+P(x) is true and we drop a constraint, the relaxed predicate is
+still true when restricted to the original domain).
+
+**e2 emitted 91 records** — first fire to actually mine arxiv
+abstracts in production. Cache (100 abstracts × ~regex hits per
+abstract) gave us 91 unique substrate records.
+
+**f1 INCONCLUSIVE share is 58%** of its emissions — null baseline
+working as designed.
+
+### Bandit state after Fire #40
+
+bandit_history.json now has 10 gens with yield-score histories
+(5 from Fire #39 + 5 new from this fire). Remaining 26 actives
+still unfired. Fire #41 will likely explore ~5 more never-fired
+gens. After Fire #42-#43, all 36 actives should have at least one
+fire under their belt, and from there the bandit transitions from
+explore-dominated to exploit-dominated.
+
+### Lifetime stats after Fire #40
+
+| Metric | Pre-#34 | Post-#39 | Post-#40 |
+|---|---|---|---|
+| Batches | 30 | 40 | 41 |
+| Records | 154.4M | 180.4M | 185.4M |
+| Kills | 74.4M | 92.3M | 94.1M |
+| Confirmations | 75.5M | 82.2M | 84.6M |
+| INCONCLUSIVE | 4.55M | 5.79M | 6.68M |
+| Discoveries | 500 | 660 | 680 |
+| Kill share | 48.2% | 51.2% | 50.8% |
+
+Kill share dipped from 51.2% → 50.8% because Fire #40 was
+confirmation-heavy (c4 100% conf + c5 75% conf). Healthy
+fluctuation; not a regression.
+
+### Self-review
+
+(a) **Did I solve THIS fire's task?** Solved. Batch ran, journaled,
+committed. No between-fire algorithm/infra work this fire — I
+considered G6 Hecke multiplicativity and bandit-UCB tuning but
+correctly judged both as deferred (G6 needs data the catalog doesn't
+expose; UCB self-tunes once all gens have fired).
+
+(b) **Did I change contracts?** No.
+
+(c) **Conventional-approach drift check?** Resisted the urge to
+build more between-fire infra (G6 generator, bandit-UCB tuning).
+Per feedback_take_a_stand: ship what's clear, defer what isn't.
+The current state — bandit exploring all actives systematically —
+is exactly the substrate-honest pattern.
+
+### Diff this fire
+
+No code changes — purely runtime journals + bandit history persist.
+
+### Commits (chronological)
+
+| Hash | Description |
+|------|-------------|
+| (this fire's close-only commit) | Fire #40 journal + bandit history v2 |
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #41 continues the explore phase. Watching
+for the transition point where all 36 actives have ≥1 history entry.
+
+---
+
+*Fire #40 closed. Cross-fire learning live. 36 of 40 active.
+185.4M records lifetime, 94.1M kills, 680 discoveries. Bandit
+explored 5 new gens; 10/36 actives now have yield-score history.*
+
+
 
 
 
