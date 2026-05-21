@@ -31,7 +31,11 @@ from theseus.generators.d2_margin_bracket import D2MarginBracketGenerator
 from theseus.generators.d3_triangulation_seeds import D3TriangulationSeedsGenerator
 from theseus.generators.d4_boundary_crossing import D4BoundaryCrossingGenerator
 from theseus.generators.e1_research_batch_parser import E1ResearchBatchParserGenerator
+from theseus.generators.e2_arxiv_abstract_mining import E2ArxivAbstractMiningGenerator
 from theseus.generators.e3_oeis_mining import E3OEISMiningGenerator
+from theseus.generators.e4_lmfdb_knowledge_mining import E4LMFDBKnowledgeMiningGenerator
+from theseus.generators.e5_mathworld_wikipedia_scrape import E5MathWorldWikipediaScrapeGenerator
+from theseus.generators.f1_monte_carlo_random_pairs import F1MonteCarloRandomPairsGenerator
 from theseus.generators.f2_anti_frequency import F2AntiFrequencyGenerator
 from theseus.generators.f3_importance_sampling import F3ImportanceSamplingGenerator
 from theseus.generators.f4_frontier_pursuit import F4FrontierPursuitGenerator
@@ -41,10 +45,6 @@ from theseus.generators.h1_self_play_hunter import H1SelfPlayHunterGenerator
 from theseus.generators.h2_triangulation_protocol import H2TriangulationProtocolGenerator
 from theseus.generators.h4_bridge_extension import H4BridgeExtensionGenerator
 from theseus.generators.stubs.all_stubs import (
-    E2ArxivAbstractMining,
-    E4LMFDBKnowledgeMining,
-    E5MathWorldWikipediaScrape,
-    F1MonteCarloRandomPairs,
     G1GaloisTwist,
     G2FunctionalEquation,
     G3ModularTransform,
@@ -81,7 +81,11 @@ REGISTRY: Dict[str, Type[Generator]] = {
     "d3": D3TriangulationSeedsGenerator,
     "d4": D4BoundaryCrossingGenerator,
     "e1": E1ResearchBatchParserGenerator,
+    "e2": E2ArxivAbstractMiningGenerator,
     "e3": E3OEISMiningGenerator,
+    "e4": E4LMFDBKnowledgeMiningGenerator,
+    "e5": E5MathWorldWikipediaScrapeGenerator,
+    "f1": F1MonteCarloRandomPairsGenerator,
     "f2": F2AntiFrequencyGenerator,
     "f3": F3ImportanceSamplingGenerator,
     "f4": F4FrontierPursuitGenerator,
@@ -91,10 +95,6 @@ REGISTRY: Dict[str, Type[Generator]] = {
     "h2": H2TriangulationProtocolGenerator,
     "h4": H4BridgeExtensionGenerator,
     # Stubs
-    "e2": E2ArxivAbstractMining,
-    "e4": E4LMFDBKnowledgeMining,
-    "e5": E5MathWorldWikipediaScrape,
-    "f1": F1MonteCarloRandomPairs,
     "g1": G1GaloisTwist,
     "g2": G2FunctionalEquation,
     "g3": G3ModularTransform,

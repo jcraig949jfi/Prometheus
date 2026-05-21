@@ -53,12 +53,12 @@ GENERATOR_STATUS = {
     "d4": "active",
     # E — literature mining
     "e1": "active",
-    "e2": "stub",
+    "e2": "active",
     "e3": "active",
-    "e4": "stub",
-    "e5": "stub",
+    "e4": "active",
+    "e5": "active",
     # F — probabilistic
-    "f1": "stub",
+    "f1": "active",
     "f2": "active",
     "f3": "active",
     "f4": "active",

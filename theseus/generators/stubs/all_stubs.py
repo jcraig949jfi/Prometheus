@@ -23,34 +23,18 @@ from theseus.generators.base import StubGenerator, GeneratorStatus
 
 # -- Family E (literature mining) --
 
-class E2ArxivAbstractMining(StubGenerator):
-    generator_id = "e2"
-    claim_kind = ClaimKind.LITERATURE_MINED.value
-    def description(self) -> str:
-        return "e2: arXiv abstract mining (paperswithcode/semantic-scholar)"
+# E2 was lifted to theseus/generators/e2_arxiv_abstract_mining.py
 
 
-class E4LMFDBKnowledgeMining(StubGenerator):
-    generator_id = "e4"
-    claim_kind = ClaimKind.LITERATURE_MINED.value
-    def description(self) -> str:
-        return "e4: LMFDB knowledge-node mining"
+# E4 was lifted to theseus/generators/e4_lmfdb_knowledge_mining.py
 
 
-class E5MathWorldWikipediaScrape(StubGenerator):
-    generator_id = "e5"
-    claim_kind = ClaimKind.LITERATURE_MINED.value
-    def description(self) -> str:
-        return "e5: Mathworld/Wikipedia conjecture-list scrape"
+# E5 was lifted to theseus/generators/e5_mathworld_wikipedia_scrape.py
 
 
 # -- Family F (probabilistic) --
 
-class F1MonteCarloRandomPairs(StubGenerator):
-    generator_id = "f1"
-    claim_kind = ClaimKind.INVARIANT_EQUALITY.value
-    def description(self) -> str:
-        return "f1: uniform-random catalog-pair sampling (anti-recommended)"
+# F1 was lifted to theseus/generators/f1_monte_carlo_random_pairs.py
 
 
 # -- Family G (symmetry/transformation) --
