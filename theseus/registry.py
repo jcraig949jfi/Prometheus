@@ -38,6 +38,7 @@ from theseus.generators.e5_mathworld_wikipedia_scrape import E5MathWorldWikipedi
 from theseus.generators.f1_monte_carlo_random_pairs import F1MonteCarloRandomPairsGenerator
 from theseus.generators.g1_galois_twist import G1GaloisTwistGenerator
 from theseus.generators.g2_functional_equation import G2FunctionalEquationGenerator
+from theseus.generators.g3_modular_transform import G3ModularTransformGenerator
 from theseus.generators.f2_anti_frequency import F2AntiFrequencyGenerator
 from theseus.generators.f3_importance_sampling import F3ImportanceSamplingGenerator
 from theseus.generators.f4_frontier_pursuit import F4FrontierPursuitGenerator
@@ -47,7 +48,6 @@ from theseus.generators.h1_self_play_hunter import H1SelfPlayHunterGenerator
 from theseus.generators.h2_triangulation_protocol import H2TriangulationProtocolGenerator
 from theseus.generators.h4_bridge_extension import H4BridgeExtensionGenerator
 from theseus.generators.stubs.all_stubs import (
-    G3ModularTransform,
     H3LearnerCuriosity,
     I1ConjectureParaphrasing,
     I2DomainAnalogy,
@@ -88,6 +88,7 @@ REGISTRY: Dict[str, Type[Generator]] = {
     "f1": F1MonteCarloRandomPairsGenerator,
     "g1": G1GaloisTwistGenerator,
     "g2": G2FunctionalEquationGenerator,
+    "g3": G3ModularTransformGenerator,
     "f2": F2AntiFrequencyGenerator,
     "f3": F3ImportanceSamplingGenerator,
     "f4": F4FrontierPursuitGenerator,
@@ -97,7 +98,6 @@ REGISTRY: Dict[str, Type[Generator]] = {
     "h2": H2TriangulationProtocolGenerator,
     "h4": H4BridgeExtensionGenerator,
     # Stubs
-    "g3": G3ModularTransform,
     "h3": H3LearnerCuriosity,
     "i1": I1ConjectureParaphrasing,
     "i2": I2DomainAnalogy,

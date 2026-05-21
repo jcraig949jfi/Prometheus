@@ -65,7 +65,7 @@ GENERATOR_STATUS = {
     # G — symmetry/transformation
     "g1": "active",
     "g2": "active",
-    "g3": "stub",
+    "g3": "active",
     "g4": "active",
     "g5": "active",
     # H — self-feeding

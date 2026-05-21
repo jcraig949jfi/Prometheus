@@ -45,11 +45,7 @@ from theseus.generators.base import StubGenerator, GeneratorStatus
 # G2 was lifted to theseus/generators/g2_functional_equation.py
 
 
-class G3ModularTransform(StubGenerator):
-    generator_id = "g3"
-    claim_kind = ClaimKind.SYMMETRY_TRANSFORM.value
-    def description(self) -> str:
-        return "g3: SL_2(Z) modular-transform test"
+# G3 was lifted to theseus/generators/g3_modular_transform.py
 
 
 # -- Family H (self-feeding) --
