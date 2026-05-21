@@ -1,0 +1,178 @@
+# Class field theory effective constructions (Shimura, Stark) 2024-2026
+
+**Pythia queue id:** 172
+**Tier:** 2
+**Priority:** 5
+**Requested by:** Aporia
+**Agent:** deep-research-pro-preview-12-2025
+**Interaction ID:** v1_ChdOemtQYXFHREF1TzJfdU1QNDQ2U3VBNBIXTnprUGFxR0RBdU8yX3VNUDQ0NlN1QTQ
+**Elapsed:** 249s
+**Completed at:** 2026-05-21T17:00:33.478031+00:00
+
+---
+
+# Explicit Class Field Theory and Effective Constructions: Advances in the Shimura and Stark Programs (2024–2026)
+
+*   **Key Points:**
+    *   Research indicates that a monumental breakthrough in Hilbert's 12th Problem has been achieved for totally real fields. Samit Dasgupta and Mahesh Kakde have provided a \(p\)-adic solution by proving the integral Gross-Stark conjecture and providing exact analytic formulas for Brumer-Stark units [cite: 1, 2]. 
+    *   The Brumer-Stark conjecture, which posits that a generalized Stickelberger element annihilates the ideal class group of a CM abelian extension of a totally real field, has now been proven unconditionally over \(\mathbb{Z}[1/2]\) and subsequently over \(\mathbb{Z}\) [cite: 3, 4].
+    *   Matthew H. L. Honnor has recently established the equality of three competing conjectural formulas (involving Shintani domains and Eisenstein cocycles) for Brumer-Stark units, thus removing previous ambiguities and verifying conjectures related to the Gross-Regulator matrix [cite: 5, 6].
+    *   The theory of explicit constructions is actively expanding beyond number fields. Recent publications (2024) have developed explicit class field theory for rank 2 orders in real quadratic function fields using quantum modular invariants [cite: 7].
+    *   Ongoing international seminars, workshops, and American Mathematical Society (AMS) meetings spanning 2024 to 2026 demonstrate that explicit class field theory, \(p\)-adic deformations of automorphic forms, and the generalized Stark conjectures remain at the absolute frontier of modern arithmetic geometry [cite: 8, 9].
+
+The fundamental problem of algebraic number theory is to classify and explicitly construct the field extensions of a given algebraic number field. Class field theory, developed in the late 19th and early 20th centuries, provides a magnificent conceptual answer for abelian extensions, mapping them to generalized ideal class groups via the Artin reciprocity map. However, this classical formulation is purely existential; it does not generate the elements of these fields. Hilbert's 12th Problem asked mathematicians to find explicit analytic functions whose special values generate these abelian extensions, just as the exponential function generates cyclotomic fields over the rational numbers, and modular and elliptic functions generate class fields over imaginary quadratic fields. 
+
+For nearly a century, the extensions of Kronecker's *Jugendtraum* to broader classes of fields—such as totally real fields and general CM fields—remained elusive. Complex multiplication (CM) provided powerful tools, largely shepherded by Goro Shimura, but failed to yield explicit generators for fields without CM structures. The landscape shifted when Harold Stark proposed a new perspective utilizing the leading Taylor coefficients of Artin \(L\)-functions at \(s=0\). While Stark's original conjectures focused on Archimedean (complex) absolute values, subsequent \(p\)-adic refinements by Benedict Gross, Henri Darmon, and Samit Dasgupta redefined the boundaries of the problem. Between 2024 and 2026, the culmination of these \(p\)-adic approaches has generated profound, unconditional results. Through the synthesis of group ring valued Hilbert modular forms, Ribet's method, and advanced \(p\)-adic integration techniques, number theorists have finally established effective, analytic constructions for the maximal abelian extensions of totally real fields. This report provides an exhaustive review of these extraordinary developments, analyzing the theoretical underpinnings, the proofs of the Brumer-Stark and Gross-Stark conjectures, the resolution of competing mathematical formulas, and the vibrant trajectory of the field extending into 2026.
+
+## Introduction: The Genesis of Explicit Class Field Theory
+
+The historical and conceptual foundation of explicit class field theory is inextricably linked to Hilbert's 12th Problem, presented at the 1900 International Congress of Mathematicians. The problem asks for the explicit construction of the maximal abelian extension \(K^{ab}\) of an arbitrary number field \(K\) [cite: 10]. 
+
+### The Kronecker-Weber Theorem and Complex Multiplication
+
+To understand the magnitude of this problem, one must first look at the field of rational numbers, \(\mathbb{Q}\). The Kronecker-Weber theorem states that every finite abelian extension of \(\mathbb{Q}\) is contained in a cyclotomic field \(\mathbb{Q}(\zeta_n)\), where \(\zeta_n\) is a primitive \(n\)-th root of unity [cite: 10]. Analytically, these extensions are generated by evaluating the exponential function \(e^{2\pi i z}\) at rational arguments \(z \in \mathbb{Q}\) [cite: 10, 11]. 
+
+The next simplest case is when \(K\) is an imaginary quadratic field, \(K = \mathbb{Q}(\sqrt{-d})\) for some positive integer \(d\). Here, the theory of complex multiplication (CM) successfully resolves the problem. The maximal abelian extension of an imaginary quadratic field can be explicitly generated by adjoining the special values of the modular \(j\)-invariant, \(j(\tau)\), and the values of the Weierstrass \(\wp\)-function at torsion points of the corresponding elliptic curve with complex multiplication by the ring of integers \(\mathcal{O}_K\) [cite: 10]. The values of these specific transcendental functions evaluated at CM points provide the exact algebraic integers required to construct the ray class fields [cite: 10, 12].
+
+### The Limits of Classical Analyticity
+
+Hilbert speculated that for a general base field \(K\), there should exist appropriate analogues of the exponential or elliptic modular functions whose special values would yield the class fields of \(K\) [cite: 9, 10]. However, the literal interpretation of Hilbert's vision has met with severe limitations. It is now known that for most number fields, the maximal abelian extension cannot be generated merely by adjoining special values of classical complex analytic functions in the manner of singular moduli [cite: 10]. The classical theory of complex multiplication naturally extends to the broader class of CM fields (totally imaginary quadratic extensions of totally real fields), a monumental generalization largely developed by Goro Shimura [cite: 10]. Shimura's reciprocity law characterizes the Galois action on special points of Shimura varieties, effectively linking abelian class field theory to the algebraic geometry of higher-dimensional abelian varieties [cite: 13, 14]. 
+
+Despite Shimura's vast generalizations, the explicit construction of abelian extensions for fields outside the CM framework—most notably, totally real fields—remained utterly intractable using complex analytic functions [cite: 15]. This fundamental barrier necessitated a paradigm shift: moving from complex analysis to \(p\)-adic analysis, and from special values of modular functions to the derivatives of \(L\)-functions. 
+
+## The Brumer-Stark Conjecture: Bridging Analytic and Algebraic Number Theory
+
+In the 1970s, Harold Stark proposed a revolutionary approach to explicit class field theory [cite: 9]. Rather than looking for new transcendental functions, Stark postulated that the generators of abelian extensions (now known as Stark units) could be extracted from the leading coefficients of Artin \(L\)-functions at \(s = 0\) [cite: 9, 16]. 
+
+### Formulation of the Conjecture
+
+Stark's conjectures were generalized by Armand Brumer, who drew inspiration from Stickelberger's classical theorem on the factorization of Gauss sums and the annihilation of ideal class groups of cyclotomic fields [cite: 17, 18]. These perspectives were synthesized by John Tate into what is now known as the Brumer-Stark conjecture [cite: 19].
+
+Let \(F\) be a totally real number field of degree \(n\), and let \(H\) be a finite abelian CM extension of \(F\) with Galois group \(G = \text{Gal}(H/F)\) [cite: 4, 17]. Let \(S\) be a finite set of places of \(F\) containing all Archimedean places and all prime ideals that ramify in \(H/F\). Let \(T\) be an auxiliary finite set of places of \(F\), disjoint from \(S\), satisfying standard minor conditions to ensure the removal of torsion (e.g., \(T\) contains at least two primes of different residue characteristics) [cite: 5, 20].
+
+One defines the \(S\)-imprimitive, \(T\)-smoothed partial zeta function for a group element \(\sigma \in G\) as \(\zeta_{S,T}(H/F, \sigma, s)\). The Stickelberger element is defined in the complex group ring \(\mathbb{C}[G]\) as:
+\[ \Theta_{S,T}^{H/F} = \sum_{\sigma \in G} \zeta_{S,T}(H/F, \sigma, 0) \sigma^{-1} \]
+Deep theorems by Siegel, Shintani, Deligne-Ribet, and Cassou-Noguès ensure that \(\Theta_{S,T}^{H/F}\) actually resides in the integral group ring \(\mathbb{Z}[G]\) [cite: 18, 21]. 
+
+The Brumer-Stark conjecture asserts that this Stickelberger element annihilates the \(T\)-smoothed ideal class group of \(H\). More explicitly, if \(\mathfrak{P}\) is a prime ideal in \(H\) lying above a prime \(\mathfrak{p}\) in \(F\) that splits completely in \(H\), the conjecture states there exists a \(p\)-unit \(u_T \in H^\times\) (where \(|u_T|_v = 1\) for all places \(v\) not dividing \(\mathfrak{p}\)) such that:
+1. \(u_T \equiv 1 \pmod T\)
+2. For all \(\sigma \in G\), the valuation of its Galois conjugates is exactly prescribed by the zeta function: \(\text{ord}_\mathfrak{P}(u_T^\sigma) = \zeta_{S,T}(H/F, \sigma, 0)\) [cite: 5, 6].
+
+### The \(p\)-adic Refinements: Gross and Dasgupta
+
+While the Brumer-Stark conjecture predicts the *valuations* of the unit \(u_T\) at primes above \(\mathfrak{p}\), it leaves the actual element ambiguous up to multiplication by roots of unity and units in the totally real field. In the 1980s, Benedict Gross formulated a \(p\)-adic analogue of Stark's conjecture [cite: 9, 22]. Gross's conjecture relates the first derivative of the \(p\)-adic \(L\)-function associated to a totally odd character \(\chi\) to the \(p\)-adic logarithm of a \(p\)-unit in the extension cut out by \(\chi\) [cite: 15]. 
+
+Because the \(p\)-adic \(L\)-functions in Gross's conjecture are intimately tied to Galois modules via the Iwasawa Main Conjecture, these \(p\)-adic formulations proved highly amenable to algebraic attack [cite: 9]. In 2006, Samit Dasgupta refined Gross's work by proposing an exact \(p\)-adic analytic formula for the Brumer-Stark units themselves, effectively providing a conjectural \(p\)-adic solution to Hilbert's 12th Problem for totally real fields [cite: 22].
+
+## The Dasgupta-Kakde Breakthrough (2024): Unconditional Proofs and Exact Formulas
+
+Between 2021 and 2024, the landscape of explicit class field theory was permanently altered by the joint work of Samit Dasgupta and Mahesh Kakde. Their research culminated in major publications (such as their 2024 article in the *Duke Mathematical Journal*) that unconditionally resolved the integral Gross-Stark conjecture and the Brumer-Stark conjecture [cite: 15, 23]. 
+
+### Proving the Brumer-Stark Conjecture
+
+Dasgupta and Kakde's initial breakthrough was the proof of the Brumer-Stark conjecture "away from 2," meaning the conjecture holds after tensoring the relevant modules with \(\mathbb{Z}[1/2]\) [cite: 4]. They accomplished this by generalizing Ribet's method, which traditionally uses congruences between cusp forms and Eisenstein series to construct unramified extensions of number fields [cite: 4, 19]. 
+
+In their revolutionary approach, Dasgupta and Kakde utilized group ring valued Hilbert modular forms, originally introduced by Wiles [cite: 4]. They constructed congruences between cusp forms and Eisenstein series that are far stronger than typically expected. These "higher congruences" arise as algebraic shadows of the trivial zeroes of \(p\)-adic \(L\)-functions [cite: 4]. The strength of these congruences was essential to proving that the Galois cohomology classes they constructed were unramified at \(p\), thereby yielding the correct Fitting ideals [cite: 4].
+
+Specifically, they constructed a novel Galois module \(\nabla_{\mathcal{L}}\) that incorporates an integral version of the Greenberg-Stevens \(\mathcal{L}\)-invariant into the theory of Ritter-Weiss modules. By reinterpreting Gross's conjecture as the vanishing of the Fitting ideal of \(\nabla_{\mathcal{L}}\), they achieved their proof [cite: 2]. 
+
+Subsequently, in highly intricate follow-up work, Dasgupta, Kakde, Silliman, and Wang extended this proof to encompass the prime 2, giving a complete proof of the Brumer-Stark conjecture over \(\mathbb{Z}\) [cite: 3]. The primary conceptual difficulty at \(p=2\) was the "residually indistinguishable case" of Ribet's method, which required profound new cohomological vanishing theorems for algebraic groups [cite: 3]. This integral proof also implies the minus part of the Equivariant Tamagawa Number Conjecture (ETNC) for the Tate motive associated to \(H/F\) [cite: 3].
+
+### A \(p\)-adic Solution to Hilbert's 12th Problem
+
+The most striking consequence of proving the integral Gross-Stark conjecture is its application to explicit class field theory. Dasgupta demonstrated that their proof implies an exact \(p\)-adic analytic formula for the Brumer-Stark units up to a bounded root of unity error [cite: 1, 2]. 
+
+This formula acts as a "real multiplication" analogue of Shimura's celebrated reciprocity law from the theory of complex multiplication [cite: 1, 2]. Dasgupta and Kakde proved that these analytically constructed Brumer-Stark units, combined with \(n-1\) other easily described elements (which are merely square roots of specific elements of the base field \(F\)), unconditionally generate the maximal abelian extension of the totally real field \(F\) [cite: 1, 2].
+
+As highlighted in ICMS 2024 and AMS 2026 conference abstracts, this constitutes a definitive \(p\)-adic solution to Hilbert's 12th Problem for totally real fields [cite: 8, 9]. The philosophical shift is notable: whereas Hilbert envisioned evaluating a complex analytic function at a special point, the modern solution requires \(p\)-adic integration of locally analytic functions [cite: 2]. Though the topology and analytic machinery have changed, the spirit of explicitly constructing abelian extensions via analytic data intrinsic to the ground field has been triumphantly realized [cite: 8].
+
+## Resolving the Root of Unity Ambiguity: The Equality of Three Conjectural Formulas
+
+While the Dasgupta-Kakde theorem proved that the analytic formula generates the correct units up to a root of unity, establishing the exact formula without any ambiguity remained a central problem. Over the course of 15 years, different cohomological and geometric approaches led to the proposal of *three* distinct conjectural formulas for the Brumer-Stark units, introduced primarily by Dasgupta and Michael Spieß [cite: 5, 6]. 
+
+Between 2022 and 2026, Matthew H. L. Honnor successfully proved the absolute equality of these three formulas in a series of highly technical papers [cite: 5, 15]. Because the first formula was known to evaluate to the exact Brumer-Stark unit (up to a root of unity) due to Dasgupta and Kakde's results, Honnor's equality theorem definitively verifies the validity of the other two formulas and eliminates the root of unity ambiguity [cite: 5, 24].
+
+### The Three Formulas
+
+1.  **Formula \(u_1\) (Shintani and Cassou-Noguès Domains):** The first formula, \(u_1(\sigma)\), is defined using the geometry of Shintani cones and Colmez domains. A Shintani domain \(\mathcal{D}\) allows for the expression of the partial zeta functions \(\zeta_{S,T}(H/F, \mathfrak{b}, 0)\) as finite sums over specific fractional ideals [cite: 5]. The integration over these domains using \(p\)-adic measures yields \(u_1\), representing the direct analytic formulation of the unit [cite: 5, 6].
+2.  **Formula \(u_2\) (Cohomological/Eisenstein Cocycle I):** Proposed by Dasgupta and Spieß, this formula is deeply cohomological. It evaluates an Eisenstein cocycle on the general linear group \(\text{GL}_n\) against specific homology classes associated to the totally real field \(F\) [cite: 5, 24]. 
+3.  **Formula \(u_3\) (Cohomological/Eisenstein Cocycle II):** A variant of the second formula, \(u_3\) was proposed to directly interface with the Gross-Regulator matrix. The Gross-Regulator matrix is a fundamental object in \(p\)-adic Iwasawa theory, whose determinant dictates the \(p\)-adic class number formula [cite: 5].
+
+### Impact of Honnor's Proof
+
+Honnor's theorem states that \(u_1 = u_2 = u_3\) in the module \(\mathcal{F}_\mathfrak{p}^\times \otimes \mathbb{Z}[G]\) [cite: 5, 6]. The proof involves translating the geometric decomposition of Shintani cones (where a Colmez domain is written as a finite disjoint union of Shintani cones \(\mathcal{D} = \sqcup C_i\)) into the language of group cohomology, showing that the integration over these topological spaces matches the evaluation of the Eisenstein cocycle [cite: 6]. 
+
+A profound corollary of establishing \(u_3\) is that it resolves a long-standing conjecture regarding the principal minors of the Gross-Regulator matrix. By validating \(u_3\), Honnor essentially proved the conjecture for the diagonal entries of this matrix, linking explicit class field theory directly to the deep structural invariants of \(p\)-adic \(L\)-functions [cite: 5, 6]. 
+
+## Expanding the Horizon: Function Fields and Higher Rank Orders
+
+While massive strides have been made for number fields over \(\mathbb{Q}\), explicit class field theory is simultaneously advancing in the realm of global function fields (fields of rational functions over a finite field curve). The arithmetic of function fields often parallels that of number fields, but characteristic \(p\) introduces unique structures, such as Drinfeld modules and Anderson \(t\)-motives, which replace elliptic curves and abelian varieties.
+
+In a pivotal July 2024 paper, L. Demangos and T.M. Gendron developed an explicit class field theory for non-maximal orders in global function fields [cite: 7]. Classical Hayes theory provides the analogue of cyclotomic and CM extensions by adjoining the torsion points of sign-normalized rank 1 Drinfeld modules. Demangos and Gendron generalized this to arbitrary rank 1 orders in any global function field, establishing an "orders version" of Shimura's Main Theorem of Complex Multiplication [cite: 7].
+
+Even more strikingly, they extended their results to **Real Multiplication (RM)** for rank 2 orders in real quadratic function fields. Real multiplication in characteristic zero has been historically intractable because totally real fields lack the complex structures that make CM abelian varieties geometrically accessible. However, in the function field setting, Demangos and Gendron successfully utilized values of the **quantum modular invariant** to generate the Hilbert class field of a rank 2 order contained in the integral closure of \(\mathbb{F}_q[T]\) [cite: 7]. This demonstrates that the search for explicit class field theory is evolving rapidly into higher-rank non-commutative and quantum modular domains.
+
+## Effective Class Number Problems and Stark's Brauer-Siegel Generalization
+
+Parallel to the construction of class fields is the task of explicitly determining the fields that possess specific class numbers. The Gauss class number problem asks for a complete list of imaginary quadratic fields with a given class number \(h_K = n\). The theorem of Goldfeld and Gross-Zagier provided an effective lower bound on the class number:
+\[ h_K > \frac{1}{55} \log |D| \prod_{p|D} \left(1 - \frac{2\sqrt{p}}{p+1}\right) \]
+While this establishes that the list of fields for a given \(h_K\) is finite, the resultant bounds for the discriminant \(|D|\) are astronomically large, meaning the "effective" nature of the bound does not immediately imply "practical" computability [cite: 25].
+
+In the period spanning 2024–2026, researchers are combining Stark's historical conjectures with new effective algorithms to tighten these bounds. Stark had originally proved an effective, substantially stronger version of the Brauer-Siegel theorem for families of almost normal number fields that do not contain quadratic subfields [cite: 26]. The Brauer-Siegel theorem governs the asymptotic behavior of the product of the class number and the regulator as the discriminant grows. 
+
+Recent literature (highlighted by proofs around the generalized Brauer-Siegel (GBS) conjecture formulated by Tsfasman and Vlăduţ) builds upon Stark's effective bounds to show that for any integer \(h \in \mathbb{N}\), there are only finitely many CM-fields with relative class number \(h\) [cite: 26]. For specific families (such as almost normal fields with solvable Galois closures), Stark's conjecture on class numbers has been explicitly proven for fields of degree \(\geq 6\) [cite: 26]. 
+
+Computationally, this theory is being actively ported into computer algebra systems. The 2025 PARI/GP Ateliers highlight extensive ongoing work to parallelize and implement effective algorithms for local class field theory, \(p\)-adic polylogarithms, and the computation of Stark units, turning these deep theoretical constructs into computable data structures [cite: 27].
+
+## The Academic Landscape: 2024–2026 Seminars and Conferences
+
+The verification of the Brumer-Stark and Gross-Stark conjectures has triggered an avalanche of academic activity. An analysis of mathematical conferences, specialized seminars, and syllabi from 2024 through 2026 illustrates the intense focus on this topic.
+
+1.  **ICMS Workshop on Hilbert's 12th Problem (June 2024):** Held at the Bayes Centre in Edinburgh and organized by Henri Darmon, Benedict Gross, and Adebisi Agboola, this workshop was dedicated to taking stock of Dasgupta and Kakde's \(p\)-adic solution to Hilbert's 12th problem [cite: 9]. The presentations deeply explored \(p\)-adic and tame deformations of Hilbert modular Eisenstein series [cite: 9].
+2.  **Columbia Automorphic Forms and Arithmetic Seminar (2025-2026):** Explicit class field theory remains a dominant subject at Columbia University. In April 2025, Samit Dasgupta presented "The Brumer-Stark conjecture and Explicit Class Field Theory" [cite: 28]. The Spring 2026 schedule includes talks by Giada Grossi on automorphic periods for Hilbert modular forms, and Robin Zhang on Stark conjectures for cyclotomic extensions of complex cubic fields [cite: 29].
+3.  **Joint Athens-Atlanta Number Theory Seminar (2025-2026):** Across the academic years 2025 and 2026, topics related to Stark's conjectures, arithmetic holonomy, and explicit class field theory have been heavily featured. Presentations regularly emphasize how Dasgupta and Kakde's proof of exact formulas resolves the decades-old search for canonical elements in CM abelian extensions of totally real fields [cite: 30]. 
+4.  **American Mathematical Society (AMS) Spring 2026 Southeastern Sectional Meeting:** An Invited Address by Samit Dasgupta is scheduled for March 2026, specifically focusing on the intersection of explicit class field theory and the special values of \(L\)-functions [cite: 8]. The abstract explicitly notes that the Brumer-Stark units, along with other easily written explicit elements, generate the maximal abelian extension of a totally real field, representing the state-of-the-art consensus in the mathematical community [cite: 8].
+5.  **Graduate Curricula (2025-2026):** Top-tier institutions are immediately absorbing these breakthroughs into graduate education. Syllabi for the 2025-2026 academic year at the University of Toronto (MAT1105HF) and the University of British Columbia (MATH 613) specifically list explicit class field theory, Stark's conjectures, and Eichler-Shimura correspondences as core advanced topics [cite: 31, 32].
+
+## Conclusion
+
+The years 2024 to 2026 mark a golden era for algebraic number theory. Hilbert's 12th Problem, once viewed primarily through the lens of complex analytic functions and Shimura varieties, has found a spectacular resolution for totally real fields via \(p\)-adic integration and the modularity of Galois representations. 
+
+The unconditional proofs of the Brumer-Stark conjecture and the integral Gross-Stark conjecture by Samit Dasgupta and Mahesh Kakde represent a watershed moment. By utilizing group ring valued Hilbert modular forms and advanced techniques in Ribet's method, they successfully isolated the exact analytic quantities that explicitly generate the maximal abelian extensions of totally real number fields [cite: 2, 4]. 
+
+Concurrently, Matthew Honnor's rigorous equalization of the three competing conjectural formulas for these units has removed lingering theoretical ambiguities, cementing the connection between the geometry of Shintani cones, Eisenstein cocycles, and the Gross-Regulator matrix [cite: 5, 6]. As these theories expand further into function fields and non-commutative geometry [cite: 7], and as computational number theorists embed these algorithms into robust software ecosystems [cite: 25, 27], the explicit generation of class fields transitions from a 120-year-old dream into a computable, effective reality.
+
+**Sources:**
+1. [projecteuclid.org](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHEuRq3lyCMCCbFkOFRZkb8z0eXOMIFM1FzHmClntYeohjl3WFuzahu1EcasiDE61rfDuMxgQS5lyfpNzZ60crPpr2GuMo-wafu_tw0a7sZJbFxOpsRbBSfTEorJSOlr22Z1zB5l438yVZV0Qv94p8ddxEAwUyrMwqWMntYRDUViLDoHkjSL1Nu-sHoCi6JeZvYPSjcsrg_Ak5pTzj7Zigg5I5vLwFhjZN_dTIGqpuuGFVsbsFDJ411eyZ2zycPi2-DSbAxE5PttrbcfEL0MqLiPQNo4W5pzg2g9kYB)
+2. [iisc.ac.in](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE7NwRfvFD6eacAVl3JbBwCaGNVJIbYJlpa6Oe2cARlh9qQAEPoosW-CUZgzKjAAUepCEpTONb1n7gQZM7XQCsGQiPygcrd55hQ7PjCgsp0RlnjFQjH6_QJW3krLNqDBtCovQ==)
+3. [duke.edu](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFQZixJG8K3r7yQfvaHmz7aKPuXLDKmzF3-nZ1HQBfS-RAI82fFkC6la0-CDjUQSH_e6VAELFfFnLRgXdca7PswGPglQJ1B58OhRL834m_IKkILsd1uW_FrQedlhdZ1ex5-FCcSBx9IpdMHN8x-UhzuKoH-oQA=)
+4. [princeton.edu](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEYtA6-F_7H7CiyqvGkluB2-btWCRzS_AA5n6nC582HLvyS-jYuzQWJfDAza8uTW1VQWCc_F9CkA3JkbEzxl0yETM2Y0izOFb_zTyN6phBoZz71TmzernGKQ6Ib5B7mmEunhHKsNO4=)
+5. [duke.edu](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFgSadrDmBznyTcF83nzH5hcsH3BiWyBx0vjKHnFTvsO1EPpT5fzlIo9RHOdYa_SKI8_eR1CnOmaRxLzpsW1c8t8uOcYZojhznDZZC8Bo836t4L_X-kwlusazkE0UkhwL02wtIEiGqtlft_gc09SwI=)
+6. [arxiv.org](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEruPhHHbcKk_P_4P2NnQM4FgvYyoye60Qj9_X408L8YBJhi2ZCDv9G86yB3vqNW0V32MoiqMV9DVbw430PnHfF_MyZU3whUyZrBVeXCv7kwIvsc7XvIw==)
+7. [arxiv.org](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHaoupTWxKiIZmcVFzsCwJhrpY5vHsyMtsS9_eg0oQXlVlW3cqQhaA1dSvLGHBIzTzhOirq9eKKS2ZerZsxWbg6T3u1LSMKf7vk46M9d_GAM2FSDXFz5A==)
+8. [ams.org](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEha19NrVle5acAFE8dqyV1j6OG-d4gi6B_1hdWmYw-xzF-mWIyyWdn8yg_MSAqsA0IJyYDAgSLI0_QFJwLFrWXCygj23B_tRWO1YVb-v4cLyP7eaT-Reg-ETVi5Yesf7DzCLiXxnPoh7Tcfv9ZOOt2WRGmh06lrXV3_Ws=)
+9. [icms.ac.uk](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEgnbVtISc9YMaSGWCr6oUSjMsf6Q1f-NJVy4jlYLay4lBsVyRBMpuByY195mFawKv6CfJxEXJPkFCjKU_MhcI4iCtyy5J_XXYl5WyCsPNf8uW_cZ9L6-0oaHvCVxLbE7LpAOqCmbmpvEYpCgN8vRKjvyszASCsGwYTWz8r4MLj5wgbaA==)
+10. [wikipedia.org](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHfOSrwaZmfJblzyakuRTKqAxGnduNK7VOJVs0Am6Bs5Jw6qbFMwf__SxOmqviXa2zgJAp5o8VFQVBjJ2A0vbN83I_oxOkHUDuu539-gRwgXYHER675n_2YMlV8FupR5KYKUo2o8QcGPQ7sDiMJ0Fk=)
+11. [youtube.com](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEndEbTHkomtUJy9u34_mNd9AwrAD35VLjZF2PQ5_ZExi-OiHZhJ_HF3qoW1af2kYHM0ZgJ2OjiL5AFiawIaJnKg23BSrLcslmjEz87lQf5rcDV85FOvl3et0bZhWIHb7w1)
+12. [mdpi.com](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHeWz9OConKkgMPkuU_SDJHuLAxsjCZ-FGVsOXvIhNV_3rB7f25V2aHc3zYERbGyuQTfui1LZi1jgLSBiwotVKAA4F97HoXTIzEDPN0J3YDTlPftvyUf5OWbLK6YRcPwQ==)
+13. [mathoverflow.net](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFHlmwr5icEcKVlMKQgF_Xs340Uc-E8Ce5O2EyhA6ErnBxYWUh6BtMyyFQQLr9ZkPXqkpnroYyfRt93RcKo_gSeJB14SBKDND7F7OtfF77sDgB9W5TSqb7XxaGrhWvg-cQINjzQgzYsZ3CVVyvLM--7qEXI-c8uuqdIz1IAC_ry9CCAymOggOlx6EvLo-1ptwYUbwz6cvj9FNP10xWt)
+14. [brooksroberts.org](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEY4Qjk7Tiqj_Q_M7bOa9tGiHrUEq2RqECmbTQgvdZlJEaGoVnpJRb7SPlAR4K3s0po9YlBUXBrbmmcNblDpIp-F1gArb4IIpWhbC-aYV1zRu2rvCbdHxP1nq--etElzdn-74t77mvx)
+15. [researchgate.net](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGBqZ-YuuEbTp6VLSAlAMZOUvS_ICI7X8GLl3kdQosJEljU-4LH6SEfppNF2nfEi5oA5RrzWsvWfmWle94rMCOy4Ie_-WIS6OvXHcN5YmOkWmYqQU7HAifEVIfuTu-KAZhvmKYN_5rT1P7FGt9M3ItA9M1lSf9j6V2DkA6NcNJnMMLVUafP5EmJGvyV4_a1bHRxs8Dr5HZwWe9Z-g==)
+16. [icts.res.in](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEyWOquoUXbL8M2cIxyPQOrZXbfUyLxCAqaWxFrCR4-yIL_G0hCEmcVXTmp3lUJW4L0CbyAqNHo0VVXwt38grX3luot2X7xQb_HvUJUm6ZRA1jC85-i9keWBr3lYg6VMvaD4zHBIr7G8hjj_F2z2iCTt8VyrbkvjPMu9uvT3DCeklZ3)
+17. [ems.press](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGxsApcZXuJPIgkjbDA0riXRjDn7Sqk5NMDFDxjDHsCddFQBashnoLzHCtdTaX7J2dLk1doLxwiXc3BVTv5YsNhIebT5fHnP2mNtbycdTH4VbD1UJSzMizaMmF725vmVoHK)
+18. [wikipedia.org](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQERTMI6DlrFA7xp_KAW_xWta6dp3Cvvre7-_uGZ97xQ6TZ3-5Uyu0-89if7C3VA1U9FOqsJ-NmwMCnMpJWxIWT7uFLKT-IKT94OsNWsJJUbV0k5l68Rp06eSP0qCxbCpzYxMHDaEIPxhrPIEyvUuCon5C48)
+19. [arxiv.org](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFLEEfh8ntlcaK5FJh_VcvizQS5dcc8Rcpi2gVgNrmgy64fHUOEWpUwYQjhCZK9HchSPq5opkBVpLyYSV171PnyuNGpaL68WNewqajDj3-RWHn9kKRDgw==)
+20. [ems.press](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHB3xSvAFhJeXq1JvW3NyoTiWXJNO6NDgzTMphhCq_5_bdf5oYGO25RICF8vpJ9hX1cNyxgy9YAClvabhXDBR-R8s0Zz7XllR9AmeT9dn8ddXYtv3qpB97rjtqQ6YWsUQWYDbI0Lwb_dg==)
+21. [duke.edu](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGSMrY_49Ztl1m7U027dgDMOgHzrCNwv2Gc4mRIhuDshxipo2bznDMQI_Z2Oz7cMRjLqfxTQYeRn6q1EwQyWRE2XimGjmmjGf2gmU_bEksIWoB65809ClJPzPgbA9w00BecFAfEhZDbrLiZlXrlTsJrcBiDEWC4cSKNL34=)
+22. [infosysprize.org](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHu3Cf1197uQg_8IUU1A-X4y3rH2ZwhdEE286q8Gon4nz7wwy2vrCR4L60i7J4cT_LHROh4V1t6-Z3bkdRMRg-h3IEBBn0hmGe-QkN7XVfv-6eWgLQKY5UM8ME2Vcneb5SIZEmR4Cgo_j6HhLXkLsCI7r-Y6qLRig==)
+23. [duke.edu](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHDnPgdZgE-Yd_mOJHd9e9qwjJNpiU6EHpsJxJF_AygTsXN30TMzvpeAjH0zcZYqiEuQkI2nAtnDdl77dVrJP_YELhgms9PfjuamOT4viMDAlEIX_3k8Bp2Z_OoL60e9XHI-yv3-9Ex1ZMYa7tFF_EtHdE=)
+24. [cambridge.org](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFe_a4cc5eN6Eqtj8Y-OtEh4izEPsrgjb06wHfABAYxNDrAv2WAKba89jXjLmFF_jlcIPWQjdakd5CEQ0dofRl5B9rrM2WLjPSgbHisy4QA4fFAAYNiBMSZxlR7XD-IlDFlmZCaGPfzsheaK4Fqopdm4lcMSvWJtjq7RejkX8FYibAGnVUcZIf17UunaflWz3vlDC-L8IooIEEP9Dmd1ZI2HcLQ8QE3UzIA_1YSxaIGZW-zSjvVEkf1MHGidZJyGquZ--APppaJyr1wLT703tiK1gmjHaHibXUWG8IzI_g4OZ-PAFrPZrIY8EEvWw==)
+25. [mathoverflow.net](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHhqGcGfQ-0nW_8A7aoJMbW38YYquBf7QHEVQNqZnLu0CuILOj8BD5239_oLwEDaFQCG8EiPu0IcL_CTIRGbVmgj5ELluqP5S5y2_OhJ7-oWjN-YbJTlNELUcOp5P_di5CjHWHyvvW-iDwj5mVFsSo9RSuA6WfU4NppzOv3DB0f74-BE4jlaP0qV1BHITOzHRpAZQK5TKawZkcTs2qs_7VZM_eE1AKW760SylpmH3Es)
+26. [cambridge.org](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEp_AJibP0VLnqWJQ_hoiMWCWYP7ddW4RSeyWGbnGmHNMAqyUkc3XTeScQoGVsydRwb1XXeMqt3VJPMMfkKIU4p3Pi6YXZx6_AoQk4lwlI7Ov6Hgx07UQChYhBBbTtENcLi24UYoTgJoGRRpRS-aktRPOtLkcntla9cwQU6Ll_S0H5yllbTEWOXUcSfmB3RbxkbM1p83fSQnSgaKbqD-GwNP9uz7wdGHmWX5kx001TgTivXGsHtHDzJjkyVbLodhkcvpSpOoXo8y5UbVS8XFYSaf8LPQCDjLs2Cvf7Nm0Cxnw0sF9jhGdg2xtltTU5EFMHoLOLJLGrhZn2Lj2UY3XJ1173PfGc=)
+27. [u-bordeaux.fr](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHO9_6c4Yqw3cX3MWAE-qw4BkZPXpsipY9PRTSdxisHstBKnHktr4K-IMhnvcWgHmjEGG2fAnJ6uiAKAIMvnbV6r4jeuOKXmew0ndFIuZlQDK8cRGY-gYqn540GmJcqn7bMQA8P_eRV1Q8=)
+28. [github.io](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF1uNjTOe793g20H_Un6lVH3RTRnSDRf9AWnOqJi9fCZe95fYYcKnALolGrYcqpskVfcsBApb7ABSVuDluGrJP0vdJShQkX46ZRbou6V2L3fMwWODjT76ldpG79x0U=)
+29. [github.io](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHfpIqMumYZJzI0bZUvAuulyO67YEofZ86_nMvCI0M12f_xgDPp_uGuU8E82HxICvTahivWr-S7Tsl2lvRVsMy-EwUka-0c1mkPE1j3IendP4im11yc)
+30. [uga.edu](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEMU3_tiorAs6QEKpFqNjGGD5yruA1RAbY_jQeuXg5a7Y5oWuUGUITsFhtz9adsgStUrHJoD1OaC--0RQJVjAFRNeuN-NX1hy5yAonUbb0BX9VpxzpKwGjR_4Xat9Bj31RJp2DbuBiWe2c43I_34J_LO7bwQFpbEY_filyptHiuNoh_9pSC0cBuya3f6MMdH5w=)
+31. [ubc.ca](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHn85eQ2MBIKgfjUOfFYVPWwzlFtVfuxzCGUZHBsXFzqDA_lm0RMAZwVYiUBHs3ME0TFV3itauWZKxDEocMbgdlPGdM0SYjHw5RSBvo80PI4g9yVh_AvVUF2u_OO0ePWx4X5-Q_zmaDlkOC6ju-FB3SpQpxXIdH)
+32. [utoronto.ca](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEcGB0e-w_t2P4-E-bDO_LbWjkP4RBoE59WfSbZWK74xYlDloGRachdk4VN3B3VUzyAHZoRoT0gsj-B8yWnG6zW_oE9RsAhQGN2gLY_32XY1-dA6QeOj672BdG5Ah-xL0zl3KiUagsX0hNIZkVDnGRo0wd0eC2cGr_9yM1UtgM5VfQigV9vZGRKpo3wBkCKkWdO)
+
