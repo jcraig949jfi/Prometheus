@@ -1,5 +1,5 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-05-21 07:44:25 AM UTC*
+*Generated: 2026-05-21 11:44:29 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
@@ -10,7 +10,7 @@ Redis remains unreachable despite manual_status.json claiming it's up, forcing r
 Verify Redis process on M1 skullport and restore connectivity to re-enable real-time streams and Agora pub/sub.
 
 **Aporia @ M1 is DEAD — deep research pipeline halted**  
-Aporia has been dead for 235,721s (~2.73 days), with no heartbeat and no recent activity, halting deep research orchestration.  
+Aporia has been dead for 250,125s (~2.89 days), with no heartbeat and no recent activity, halting deep research orchestration.  
 Restart Aporia daemon on M1 or reassign DR-prompt control to an active operator to resume daily deep research.
 
 **Nemesis @ M3, Nous @ M4, Pronoia @ M4 remain UNKNOWN — pipeline gaps persist**  
@@ -22,25 +22,25 @@ Confirm deployment and process state on M3/M4 — delay blocks full loop closure
 The 2.3% forge rate (12 forges, 513 scraps) reflects strong selection pressure from expanded validation tests, not throughput failure.  
 Continue monitoring; per manual_status, low rate is healthy substrate curation.
 
-**deep_research.budget=20/20 — no utilization in 2.73 days due to Aporia outage**  
+**deep_research.budget=20/20 — no utilization in 2.89 days due to Aporia outage**  
 Zero deep research reports generated since Aporia went DEAD; full daily budget remains unspent.  
 Budget stagnation will continue until Aporia or alternate DR controller is restored.
 
-**No change since previous brief at 2026-05-21 03:44:30 AM UTC**  
+**No change since previous brief at 2026-05-21 07:44:25 AM UTC**  
 All other agent and infrastructure statuses unchanged from last cycle; no new trends detected.  
 Maintain current observation posture.
 
 ## For the record  
 **Apollo @ M2 and Hephaestus @ M3 confirmed ALIVE with recent heartbeats**  
-Apollo (hb=5s) and Hephaestus (hb=18s) are actively running on M2 and M3 respectively, driving evolution and forging.  
+Apollo (hb=57s) and Hephaestus (hb=20s) are actively running on M2 and M3 respectively, driving evolution and forging.  
 Core substrate production is now operational.
 
 **(7) expected agents still UNKNOWN or DEAD — part of known revival sequence**  
 Techne, Coeus, Aletheia, Eos, Hermes remain UNKNOWN; Clio, Pythia, Calliope DEAD.  
 Status aligns with current phase — no emergency, revival in progress.
 
-**Unexpected Harmonia-era tools active on M2 — Phylax STALE, others ALIVE or DEAD**  
-Harmonia_Loop, Argos ALIVE (hbs 42s); Iris ALIVE (132s); Charon_Loop, Hecate, Sophia STALE (200–222s); Phylax and 6 others DEAD (312s to 92,763s).  
+**Unexpected Harmonia-era tools active on M2 — Harmonia_Loop and Argos STALE, others DEAD**  
+Harmonia_Loop, Argos STALE (hb=164s); Iris, Hecate STALE (254–258s); Sophia and 8 others DEAD (344s to 1551s); Charon_Loop, Stygian ALIVE (17s).  
 Likely residual test processes; no action needed unless they interfere.
 
-Generated: 2026-05-21 07:44:24 AM UTC
+Generated: 2026-05-21 11:44:28 AM UTC
