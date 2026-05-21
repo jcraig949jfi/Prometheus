@@ -37,7 +37,13 @@ except Exception:
 
 DEFAULT_DISCOVERY_WEIGHT_THRESHOLD = 0.6  # high-value records to surface
 THESEUS_AGENT_NAME = "Theseus"
-THESEUS_OPERATOR = os.environ.get("THESEUS_OPERATOR", "James")
+# Operator default: Techne (the agent that operates Theseus). Theseus is
+# itself a tool (kind=tool); Techne is the kind=operator session that
+# runs the daemon, journals fires, and ships new generators. The prior
+# default of "James" was a vestige from before the role distinction was
+# made — fixed 2026-05-21 per
+# pivot/session_telemetry_prompts_techne_aporia_2026-05-18.md.
+THESEUS_OPERATOR = os.environ.get("THESEUS_OPERATOR", "Techne")
 THESEUS_MACHINE = os.environ.get("THESEUS_MACHINE", "M1")
 
 

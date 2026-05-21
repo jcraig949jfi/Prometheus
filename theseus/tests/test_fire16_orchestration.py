@@ -92,7 +92,7 @@ def test_status_json_has_required_fields():
     ]
     for k in required:
         assert k in sj, f"status_json missing required field: {k}"
-    assert sj["operator"] == "James"  # default per env-var
+    assert sj["operator"] == "Techne"  # default per env-var (changed 2026-05-21)
     assert sj["target_generators"] == ["a1", "b5"]
     assert sj["dedup_rate"] == 0.7
 
