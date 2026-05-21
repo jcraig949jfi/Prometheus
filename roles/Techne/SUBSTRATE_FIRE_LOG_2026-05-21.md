@@ -708,5 +708,167 @@ working (each fire now picks a different 5-active set). 174.6M
 records lifetime, 87.3M kills, 620 discoveries to handoff. Race-
 condition fix means E2 will actually emit next fire it's picked.*
 
+---
+
+## Fire #38 — 2026-05-21 ~13:17Z
+
+First fire to hit the WALL-TIME budget instead of the record cap.
+Bandit picked slow, kill-heavy gens; the 1.5h wall budget terminated
+at 1.81M records (vs 5M cap that prior fires hit). Substrate-grade
+information density was the HIGHEST observed yet — h2 emitted
+99.99% kills.
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1252995983
+    [theseus] Bandit bootstrap selected: ['h2', 'c5', 'b5', 'c4', 'd4']
+
+A pure substrate-investigation slate:
+- h2: triangulation protocol (INCONCLUSIVE → kill or confirm)
+- c5: specialization (boundary-pinning)
+- c4: generalization (drop a constraint, retest)
+- d4: boundary crossing (minimum-distance pair brackets)
+- b5: conservation law
+
+These are sophisticated gens that emit slower than a1/c1 but with
+much higher info-density per emission.
+
+### Between-fire work shipped
+
+**Commit `8c7f2fce`** — E1 iterator fixed for current corpus layout.
+Original code only handled `deep_research_batch*/` directories. Now
+handles flat `deep_research_batch*.md` files AND the
+`deep_research_reports/YYYY-MM-DD/*.md` daily-subdir layout. 77 files
+visible to E1 (vs 0 before fix). Lifetime E1 emission was stuck at
+3100 from pre-layout-change runs.
+
+**Commit `6ab96d83`** — Bandit history persistence across fires.
+Until this commit, every daemon invocation reseeded the bandit with
+empty history. Cross-fire learning impossible. With persistence:
+- Fire end → persist_bandit() → bandit_history.json (gitignored)
+- Fire start → hydrate_bandit() → load yield-score history
+- bandit.select() now uses real yield curves from prior fires
+
+Fire #38 ran the OLD code (commits landed mid-batch). Fire #39 will
+be the first with cross-fire bandit learning.
+
+### Batch result
+
+- batch_id: `batch-20260521T131736Z-f35ec2`
+- Duration: 1.5h (wall budget — NOT record cap)
+- 1,811,724 records (well below 5M cap)
+- 1,786,123 kills / 25,410 confirmations / 191 inconclusive / 0 errors
+- 20 new discoveries → 640 lifetime
+- **99.4% KILL RATE** — highest of any fire so far
+
+Per-generator yield:
+
+| gid | records   | yield_score | kills    | conf   | info_density |
+|-----|-----------|-------------|----------|--------|--------------|
+| h2  | 1,773,478 | 0.0024      | 1,773,286| 1      | **0.665**    |
+| d4  | 16,965    | 0.0047      | 12,818   | 4,147  | 0.524        |
+| c4  | 11,560    | 0.0055      | 0        | 11,560 | 0.600        |
+| c5  | 8,669     | 0.0055      | 4        | 8,665  | 0.600        |
+| b5  | 1,052     | 0.0053      | 15       | 1,037  | 0.599        |
+
+**h2's 99.99% kill rate is the substrate's headline finding for this
+batch**. h2 does multi-method triangulation on INCONCLUSIVE A4
+records — its job is to test hypotheses that the substrate has been
+unable to terminally classify. The 99.99% kill rate means: nearly
+every INCONCLUSIVE that h2 examined gets demoted to REJECTED by
+triangulation. This is *exactly* the workflow Aporia and Techne
+designed it for, and the volume confirms it scales.
+
+**c4 and c5 inverse pattern**: c4 (generalization) emitted 0 kills /
+11.5K confirmations. c5 (specialization) emitted 4 kills / 8.7K
+confirmations. Generalizing claims preserves truth, specializing
+sometimes breaks it. Substrate-confirming priors.
+
+### Cap-vs-wall regime shift
+
+| Fire | Termination | Records | Time |
+|------|-------------|---------|------|
+| #34  | cap         | 5.0M    | 37 min |
+| #35  | cap         | 5.0M    | 52 min |
+| #36  | cap         | 5.0M    | 44 min |
+| #37  | cap         | 5.0M    | 53 min |
+| #38  | **wall**    | 1.8M    | 90 min |
+
+Wall-budget batches signal that the bandit picked gens whose
+throughput × budget < cap. That's not a bug — it's the substrate
+investing wall-time in info-dense gens rather than churning out
+records from fast gens. h2's 0.665 info_density >> a1's 0.531;
+fewer records but more substrate signal per record.
+
+### Lifetime stats after Fire #38
+
+| Metric | Pre-#34 | Post-#37 | Post-#38 |
+|---|---|---|---|
+| Batches | 30 | 38 | 39 |
+| Records | 154.4M | 174.6M | 176.4M |
+| Kills | 74.4M | 87.3M | 89.1M |
+| Confirmations | 75.5M | 81.5M | 81.5M |
+| INCONCLUSIVE | 4.55M | 5.79M | 5.79M |
+| Discoveries | 500 | 620 | 640 |
+| Cumulative kill share | 48.2% | 50.0% | 50.5% |
+
+Kill share crossing 50% lifetime is a substrate-development
+milestone. Means the substrate is now in net-falsification mode —
+emitting more kills than confirmations — which is consistent with
+the design intent (kills are first-class output per Charter Standing
+Order 4).
+
+### Self-review
+
+(a) **Did I solve THIS fire's task?** Solved. Batch ran, journaled,
+committed. Plus shipped TWO real bugs found between fires (E1
+corpus-layout mismatch, bandit history reset every invocation).
+
+(b) **Did I change contracts?** E1's iterator now sees more files
+(strictly more permissive — same behavior for old layout). Bandit
+hydration is additive on top of existing init.
+
+(c) **Conventional-approach drift check?**
+- Resisted designing a "proper" stateful bandit class with disk
+  persistence as a feature. Just kept it as a simple JSON dump/load.
+  Per feedback_take_a_stand: ship the working thing.
+- The cap-vs-wall regime shift is data, not a problem. Resisted
+  the urge to "tune the cap higher so all fires hit cap." That'd
+  bias the substrate against slow gens. Substrate is correctly
+  trading wall-time for info-density.
+
+### Diff this fire
+
+| File | Change |
+|------|--------|
+| `theseus/generators/e1_research_batch_parser.py` | 3-layout iterator |
+| `theseus/orchestration/bandit_state.py` | NEW persistence helpers |
+| `theseus/daemon.py` | hydrate at start, persist at end |
+| `theseus/.gitignore` | + bandit_history.json |
+| `theseus/tests/test_generators.py` | 2 new E1 layout tests |
+| `theseus/tests/test_bandit_persistence.py` | NEW (10 tests) |
+
+### Commits (chronological)
+
+| Hash | Description |
+|------|-------------|
+| `8c7f2fce` | E1 iterator → current aporia/docs corpus layout |
+| `6ab96d83` | Bandit history persistence across fires |
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #39 will be the FIRST cross-fire-learning
+batch — bandit hydrates from Fires #34-#38 yield history. Expected:
+high-info-density gens (h2 at 0.665, c4/c5 at 0.600, g3 at 0.600)
+get picked preferentially over low-info-density baselines.
+
+---
+
+*Fire #38 closed. 36 of 40 generators ACTIVE. Wall-budget regime
+discovered: high-info-density gens trade volume for substrate signal.
+176.4M records lifetime, 89.1M kills. h2's 99.99% kill rate on
+1.77M triangulations is the substrate's headline this fire.*
+
+
 
 
