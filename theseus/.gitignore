@@ -11,6 +11,9 @@ cache/arxiv/*.jsonl
 cache/lmfdb/*.jsonl
 cache/conjectures/*.jsonl
 
+# Bandit history (yield-score persistence across fires). Runtime state.
+orchestration/bandit_history.json
+
 # Python bytecode
 __pycache__/
 *.pyc

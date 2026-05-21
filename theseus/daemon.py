@@ -33,6 +33,7 @@ from theseus.orchestration import (
     maybe_emit_discoveries,
     update_lifetime_after_batch,
 )
+from theseus.orchestration.bandit_state import hydrate_bandit, persist_bandit
 from theseus.bandit.epsilon_greedy import EpsilonGreedyBandit
 from theseus.bandit.yield_proportional import YieldProportionalBandit
 from theseus.emit.corpus_writer import CorpusWriter
@@ -386,12 +387,24 @@ def main() -> None:
         bandit = EpsilonGreedyBandit(epsilon=DEFAULT_BANDIT_EPSILON, seed=args.seed)
     history: Dict[str, List[GeneratorMetrics]] = {}
 
+    # Hydrate bandit history from prior daemon invocations. This makes
+    # cross-fire learning real: Fire #N+1's bandit knows yield curves
+    # from Fires #1..N. Without this, every invocation starts with
+    # empty history and the bandit can't actually prefer high-yield
+    # gens over low-yield ones across fires.
+    if args.bandit:
+        n_hydrated = hydrate_bandit(bandit)
+        if n_hydrated > 0:
+            print(
+                f"[theseus] Hydrated bandit history: "
+                f"{n_hydrated} yield-score entries from prior fires"
+            )
+
     # When --bandit is set, the bandit picks the FIRST batch's set too.
     # Previously this was a no-op with --batches 1 because selection was
     # gated on i+1<args.batches. With empty history, the bandit's UCB
-    # exploration bonus treats never-fired actives uniformly, so this is
-    # effectively uniform-sampling-from-actives on the first invocation
-    # and yield-driven once history accumulates across daemon runs.
+    # exploration bonus treats never-fired actives uniformly. With
+    # hydrated history, yield-driven selection kicks in immediately.
     if args.bandit:
         gids = bandit.select(
             available=list_active(),
@@ -423,6 +436,10 @@ def main() -> None:
                 n=len(gids),
             )
             print(f"[theseus] Bandit selected next active set: {gids}")
+
+    # Persist bandit history for the next daemon invocation.
+    if args.bandit:
+        persist_bandit(bandit)
 
 
 if __name__ == "__main__":
