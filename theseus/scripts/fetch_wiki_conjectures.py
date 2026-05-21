@@ -34,7 +34,8 @@ CACHE_PATH = CACHE_DIR / "wiki_conjectures.jsonl"
 
 # Curated seed list of conjecture/theorem pages. The fetcher reads from
 # Wikipedia's REST API which returns the page summary (lead paragraph).
-# Extend this list as the corpus grows.
+# Extended in Fire #37 with proper Wikipedia title forms for the ones
+# that 404'd in the initial Fire #35 fetch.
 CONJECTURE_PAGES = (
     # Number theory
     "Riemann_hypothesis",
@@ -42,12 +43,12 @@ CONJECTURE_PAGES = (
     "Goldbach's_conjecture",
     "Twin_prime_conjecture",
     "Collatz_conjecture",
-    "ABC_conjecture",
+    "Abc_conjecture",  # Wikipedia uses lowercase 'abc'
     "Hodge_conjecture",
     "Modularity_theorem",
-    "Mordell_conjecture",
+    "Faltings's_theorem",  # was Mordell_conjecture pre-proof; now this
     "Catalan's_conjecture",
-    "Beal's_conjecture",
+    "Beal_conjecture",  # no apostrophe in canonical title
     "Erdős–Straus_conjecture",
     "Lehmer's_conjecture",
     "Sato–Tate_conjecture",
@@ -56,36 +57,72 @@ CONJECTURE_PAGES = (
     "Langlands_program",
     "Stark_conjectures",
     "Bloch–Kato_conjecture",
+    "Sylvester–Gallai_theorem",
+    "Green–Tao_theorem",
+    "Fermat's_Last_Theorem",
+    "Wieferich_prime",
+    "Mertens_conjecture",
+    "Pólya_conjecture",
+    "Schinzel's_hypothesis_H",
+    "Bunyakovsky_conjecture",
+    "Bateman–Horn_conjecture",
+    "Elliott–Halberstam_conjecture",
+    "Lang's_conjecture",
+    "Class_number_problem",
+    "Generalized_Riemann_hypothesis",
+    "Riemann–Roch_theorem",
     # Algebraic geometry
     "Standard_conjectures_on_algebraic_cycles",
     "Weil_conjectures",
     "Resolution_of_singularities",
     "Minimal_model_program",
     "Iitaka_conjecture",
+    "Mumford_conjecture",
+    "Beilinson_conjectures",
+    "Deligne's_conjecture_on_special_values_of_L-functions",
     # Topology
     "Poincaré_conjecture",
-    "Smooth_Poincaré_conjecture",
     "Geometrization_conjecture",
     "Whitehead_conjecture",
     "Volume_conjecture",
+    "Novikov_conjecture",
+    "Borel_conjecture",
+    "Baum–Connes_conjecture",
     # Combinatorics
-    "Erdős–Faber–Lovász_conjecture",
     "Erdős–Ko–Rado_theorem",
     "Hadwiger_conjecture",
     "Four_color_theorem",
+    "Erdős_conjecture_on_arithmetic_progressions",
+    "Kakeya_conjecture",
+    "Union-closed_sets_conjecture",
     # Modular forms / L-functions
     "Maeda's_conjecture",
-    "Lehmer's_totient_problem",
-    "Generalized_Riemann_hypothesis",
+    "Selberg_class",
+    "L-function",
+    "Modular_form",
     # Analytic number theory
-    "Polignac's_conjecture",
     "Cramér's_conjecture",
     "Firoozbakht's_conjecture",
     "Andrica's_conjecture",
-    # Diophantine
-    "Pillai's_conjecture",
-    "Erdős_conjecture_on_arithmetic_progressions",
-    "Green–Tao_theorem",
+    "Mertens_theorem",
+    # Group theory
+    "Burnside_problem",
+    "Restricted_Burnside_problem",
+    "Kervaire_invariant",
+    "Inverse_Galois_problem",
+    # Function theory
+    "Bieberbach_conjecture",
+    "Brennan_conjecture",
+    # Miscellany
+    "Continuum_hypothesis",
+    "Halting_problem",
+    "P_versus_NP_problem",
+    "Yang–Mills_existence_and_mass_gap",
+    "Navier–Stokes_existence_and_smoothness",
+    "Hilbert's_problems",
+    "Hilbert's_sixteenth_problem",
+    "Hilbert's_eighth_problem",
+    "Schanuel's_conjecture",
 )
 
 API = "https://en.wikipedia.org/api/rest_v1/page/summary"
