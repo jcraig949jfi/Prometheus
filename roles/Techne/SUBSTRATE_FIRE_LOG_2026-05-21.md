@@ -1424,6 +1424,97 @@ records — the "remaining 11" objective is shipped on the
 implementable side. 193.3M records lifetime, 98.2M kills, 740
 discoveries.*
 
+---
+
+## Fire #44 — 2026-05-21 ~22:32Z
+
+Lifetime kills crossed 100M. Bandit picked 5 more never-fired
+actives; explore phase ~75% done.
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1286265763
+    [theseus] Hydrated bandit history: 25 yield-score entries from prior fires
+    [theseus] Bandit bootstrap selected: ['c2', 'f3', 'a3', 'd2', 'h1']
+
+### Batch result
+
+- batch_id: `batch-20260521T223206Z-5d2886`
+- Duration: 1.09h (hit 5M cap)
+- 5,000,000 records / 3,189,063 kills / 1,810,937 confirms / 0 incon / 0 errors
+- 20 new discoveries → 760 lifetime
+
+Per-generator yield:
+
+| gid | records   | yield | kills    | conf    | info_density |
+|-----|-----------|-------|----------|---------|--------------|
+| f3  | 1,347,885 | 0.0044| 908,184  | 439,701 | 0.533        |
+| a3  | 1,342,216 | 0.0044| 852,811  | 489,405 | 0.536        |
+| h1  | 1,217,111 | 0.0048| **1,031,650** | 185,461 | 0.515  |
+| c2  | 671,780   | 0.0048| 254,627  | 417,153 | 0.562        |
+| d2  | 421,008   | 0.0049| 141,791  | 279,217 | 0.566        |
+
+**h1 (self-play hunter) hit 85% kill rate**: AlphaZero-pattern
+proposer-vs-hunter dynamics on corpus survivors. The hunter
+robustly falsifies proposer claims. Substrate-meaningful — self-
+play on substrate is real falsification, not adversarial inflation.
+
+### Milestone: **lifetime kills crossed 100M**
+
+| Metric | Pre-#34 | Post-#43 | Post-#44 |
+|---|---|---|---|
+| Batches | 30 | 44 | 45 |
+| Records | 154.4M | 193.3M | 198.3M |
+| Kills | 74.4M | 98.2M | **101.4M** |
+| Confirmations | 75.5M | 88.4M | 90.2M |
+| Discoveries | 500 | 740 | 760 |
+| Kill share | 48.2% | 50.8% | 51.1% |
+
+Across the 11 fires this session (Fires #34-#44), Theseus emitted
+**27M kills, 14.7M confirmations, 260 discoveries** beyond the
+pre-session state. The 100M-kill milestone reflects the substrate's
+core falsification engine working at production scale.
+
+### Bandit state after Fire #44
+
+26 of 36 actives have yield-score history (after Fire #44 added
+c2, f3, a3, d2, h1 — d2 was fired in Fire #37 but pre-persistence,
+so this is its first persisted entry).
+
+Remaining 10 unfired: a4, b2, b4, c5(?), c3, d3, d4, e3(?), f3(?),
+g4, g5(?), h4(?) — wait, several are fired now. Let me list
+actually-unfired in bandit history: a4, b2, b4, d3, d4, g4 (6
+counting fingers + others fire-only-pre-persistence). About 5-6
+fires of pure-explore remaining before bandit transitions to
+exploit-dominated.
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Yes.
+
+(b) **Changed contracts?** No.
+
+(c) **Conventional-approach drift check?** Resisted writing
+between-fire code. The substrate is in the explore-tail phase
+where every fire adds 5 more gens to the bandit's mental model.
+No fix needed — letting the explore phase complete.
+
+### Diff this fire
+
+No code changes. Runtime journals + bandit history only.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #45 continues explore. ~6 unfired
+actives remain.
+
+---
+
+*Fire #44 closed. Lifetime kills crossed 100M. h1 self-play hunter
+85% kill rate. 26/36 actives have bandit history. 198.3M records
+lifetime, 101.4M kills, 760 discoveries.*
+
+
 
 
 
