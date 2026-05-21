@@ -21,6 +21,7 @@ from typing import Iterable, Set
 import arxiv
 
 from theseus.config import THESEUS_ROOT
+from theseus.scripts._backoff import sleep_for_retry, is_rate_limited
 
 
 CACHE_DIR = THESEUS_ROOT / "cache" / "arxiv"
@@ -55,8 +56,21 @@ def fetch_and_append(
     query: str = DEFAULT_QUERY,
     max_results: int = 500,
     cache_path: Path = CACHE_PATH,
+    max_429_attempts: int = 6,
 ) -> int:
-    """Fetch up to max_results abstracts matching query; append novel ones."""
+    """Fetch up to max_results abstracts matching query; append novel ones.
+
+    Wraps the arxiv client iterator in 429-aware exponential backoff.
+    arxiv's own num_retries uses delay_seconds=3.0 retries, far too
+    short for arxiv's 5-10 min cooldown window. We catch arxiv.HTTPError
+    with status_code 429 and sleep base_delay * 2^attempt (capped at
+    600s) before resuming the iteration.
+
+    The iterator is restartable: arxiv.Client.results is a generator
+    that can be re-entered after a sleep without losing position
+    (server-side pagination resumes from start because we keep `start=0`
+    in the search and skip already-appended IDs via the existing set).
+    """
     cache_path.parent.mkdir(parents=True, exist_ok=True)
     existing = _existing_ids(cache_path)
 
@@ -69,22 +83,51 @@ def fetch_and_append(
     )
 
     appended = 0
+    attempt = 0
     with cache_path.open("a", encoding="utf-8") as f:
-        for r in client.results(search):
-            aid = r.entry_id.rsplit("/", 1)[-1]
-            if aid in existing:
+        while True:
+            try:
+                for r in client.results(search):
+                    aid = r.entry_id.rsplit("/", 1)[-1]
+                    if aid in existing:
+                        continue
+                    rec = {
+                        "arxiv_id": aid,
+                        "title": r.title or "",
+                        "abstract": r.summary or "",
+                        "categories": list(r.categories or []),
+                        "published": (
+                            r.published.isoformat() if r.published else None
+                        ),
+                        "fetched_at": datetime.now(timezone.utc).isoformat(),
+                    }
+                    f.write(json.dumps(rec, sort_keys=True) + "\n")
+                    existing.add(aid)
+                    appended += 1
+                # Iterator exhausted cleanly.
+                break
+            except Exception as exc:
+                is_rl, retry_after = is_rate_limited(exc)
+                if not is_rl:
+                    raise
+                attempt += 1
+                if attempt > max_429_attempts:
+                    print(
+                        f"[fetch_arxiv_abstracts] gave up after "
+                        f"{max_429_attempts} 429 retries; "
+                        f"{appended} abstracts saved so far"
+                    )
+                    break
+                sleep_for_retry(
+                    attempt=attempt - 1,
+                    base_delay=60.0,  # arxiv cooldown is multi-minute
+                    cap=600.0,
+                    retry_after=retry_after,
+                )
+                # Re-enter the outer while; client.results(search) is a
+                # generator that gives us a fresh iteration from start=0.
+                # The existing-ids set prevents duplicate writes.
                 continue
-            rec = {
-                "arxiv_id": aid,
-                "title": r.title or "",
-                "abstract": r.summary or "",
-                "categories": list(r.categories or []),
-                "published": r.published.isoformat() if r.published else None,
-                "fetched_at": datetime.now(timezone.utc).isoformat(),
-            }
-            f.write(json.dumps(rec, sort_keys=True) + "\n")
-            existing.add(aid)
-            appended += 1
     return appended
 
 

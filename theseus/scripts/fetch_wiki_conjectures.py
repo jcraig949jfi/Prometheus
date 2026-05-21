@@ -25,6 +25,7 @@ import urllib.parse
 import requests
 
 from theseus.config import THESEUS_ROOT
+from theseus.scripts._backoff import is_rate_limited, sleep_for_retry
 
 
 CACHE_DIR = THESEUS_ROOT / "cache" / "conjectures"
@@ -113,29 +114,55 @@ def _existing_titles(path: Path) -> Set[str]:
     return out
 
 
-def fetch_one(title: str, timeout: float = 10.0) -> dict | None:
+def fetch_one(
+    title: str,
+    timeout: float = 10.0,
+    max_429_attempts: int = 5,
+) -> dict | None:
     # Wikipedia's REST API requires URL-encoded paths. Without quoting
     # apostrophes, en-dashes, and non-ASCII (Erdős, Pólya, Cramér...)
     # the request returns 404. Pass safe='' so the / in any sub-paths
     # would be encoded (we don't have any, but defensive).
     url = f"{API}/{urllib.parse.quote(title, safe='')}"
-    try:
-        r = requests.get(url, headers=HEADERS, timeout=timeout)
-    except requests.RequestException:
+    # 429-aware retry loop. Honor Retry-After header when present.
+    for attempt in range(max_429_attempts):
+        try:
+            r = requests.get(url, headers=HEADERS, timeout=timeout)
+        except requests.RequestException:
+            return None
+        if r.status_code == 200:
+            j = r.json()
+            extract = j.get("extract", "") or ""
+            if not extract:
+                return None
+            return {
+                "title": title,
+                "extract": extract,
+                "url": j.get("content_urls", {})
+                       .get("desktop", {}).get("page", ""),
+                "categories": [],
+                "fetched_at": datetime.now(timezone.utc).isoformat(),
+            }
+        if r.status_code in (429, 503):
+            retry_after = None
+            ra = r.headers.get("Retry-After")
+            if ra:
+                try:
+                    retry_after = float(ra)
+                except (TypeError, ValueError):
+                    pass
+            if attempt + 1 >= max_429_attempts:
+                return None
+            sleep_for_retry(
+                attempt=attempt,
+                base_delay=10.0,  # Wikipedia recovers quickly
+                cap=120.0,
+                retry_after=retry_after,
+            )
+            continue
+        # Other status (404 etc.): give up on this title.
         return None
-    if r.status_code != 200:
-        return None
-    j = r.json()
-    extract = j.get("extract", "") or ""
-    if not extract:
-        return None
-    return {
-        "title": title,
-        "extract": extract,
-        "url": j.get("content_urls", {}).get("desktop", {}).get("page", ""),
-        "categories": [],  # not in summary API; could extend with categories API
-        "fetched_at": datetime.now(timezone.utc).isoformat(),
-    }
+    return None
 
 
 def fetch_and_append(
