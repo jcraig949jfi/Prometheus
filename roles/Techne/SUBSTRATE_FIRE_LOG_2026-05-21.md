@@ -1324,6 +1324,107 @@ batch (190K) due to parent-starved c1 + slow gens, but h4 hit
 100% confirmation on 84K bridge claims. g1 first production
 emission. 188.3M records lifetime, 96.5M kills, 720 discoveries.*
 
+---
+
+## Fire #43 — 2026-05-21 ~21:14Z
+
+Hydration: **20** entries. Bandit picked g-family-heavy slate.
+Substantive milestone: **g2 first production emission** — the last
+of the 7 new algorithms from Fire #34 to get real exposure.
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1281611752
+    [theseus] Hydrated bandit history: 20 yield-score entries from prior fires
+    [theseus] Bandit bootstrap selected: ['g3', 'g5', 'c3', 'g2', 'e5']
+
+### Batch result
+
+- batch_id: `batch-20260521T211432Z-6e86fa`
+- Duration: 1.14h (hit cap, not wall)
+- 5,000,000 records / 1,740,078 kills / 3,256,801 confirms / 0 incon / 0 errors
+- 20 new discoveries → 740 lifetime
+
+Per-generator yield:
+
+| gid | records   | yield | kills    | conf       | info_density |
+|-----|-----------|-------|----------|------------|--------------|
+| g5  | 2,565,631 | 0.0044| 199,487  | **2,366,144** | 0.592    |
+| c3  | 2,411,248 | 0.0042| 1,540,591| 870,657    | 0.536        |
+| g3  | 20,000    | 0.0051| 0        | 20,000     | 0.600        |
+| g2  | **3,000** | 0.0018| 0        | 0          | 0.200        |
+| e5  | 121       | 0.0020| 0        | 0          | 0.200        |
+
+**g5 hit 92.2% confirmation rate** on 2.57M scale-invariance tests
+— scale-invariance under k ∈ {2, 3, 5} preserves catalog relations
+for the vast majority. The 7.8% kills are substrate-meaningful: not
+all relations survive scaling.
+
+**g2 first production fire**: 3,000 functional-equation UNVERIFIED
+claims emitted per the design (sigma verifies downstream). All
+**seven new algorithms** from Fire #34 have now produced records
+in production:
+- e2 (arxiv): 91 records lifetime
+- e4 (lmfdb): 233 records lifetime
+- e5 (wiki): 160 records lifetime
+- f1 (monte carlo): 3.67M records lifetime
+- g1 (galois twist): 184 records lifetime
+- g2 (functional eq): 3,000 records lifetime
+- g3 (hasse bound): 60,000 records lifetime
+
+The "remaining 11" project from when James asked "we were at 29 of
+40" is **complete on the implementable side**: all 7 plain stubs
+shipped + 4 deferred i1-i4 (Tier-2 LLM, awaiting model deployment).
+Theseus is at 36 of 40 ACTIVE = 90% of the planned generator menu.
+
+### Lifetime stats after Fire #43
+
+| Metric | Pre-#34 | Post-#42 | Post-#43 |
+|---|---|---|---|
+| Batches | 30 | 43 | 44 |
+| Records | 154.4M | 188.3M | 193.3M |
+| Kills | 74.4M | 96.5M | 98.2M |
+| Confirmations | 75.5M | 85.2M | 88.4M |
+| Discoveries | 500 | 720 | 740 |
+| Kill share | 48.2% | 51.2% | 50.8% |
+
+### Bandit state after Fire #43
+
+22 of 36 actives have yield-score history (after g3 became a
+repeat-fired entry). Remaining 14 unfired. About 3 more fires
+until full coverage.
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Yes. No between-fire code changes
+this fire — the substrate is in healthy steady state.
+
+(b) **Changed contracts?** No.
+
+(c) **Conventional-approach drift check?** Resisted continuing to
+generate "improvements" for marginal gains. The 7-algorithm shipment
+from Fire #34 is now demonstrated end-to-end with lifetime records
+for each. That's a clean milestone.
+
+### Diff this fire
+
+No code changes. Runtime journals + bandit history only.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #44 continues explore (14 unfired actives).
+After ~3 more fires, all 36 actives should have ≥1 yield entry and
+the bandit will transition to exploit-dominated selection.
+
+---
+
+*Fire #43 closed. 22/36 actives have bandit history. All 7 new
+algorithms from Fire #34 (E2/E4/E5/F1/G1/G2/G3) have production
+records — the "remaining 11" objective is shipped on the
+implementable side. 193.3M records lifetime, 98.2M kills, 740
+discoveries.*
+
+
 
 
 
