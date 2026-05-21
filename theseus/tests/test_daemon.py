@@ -44,13 +44,16 @@ def test_run_batch_short_emits_records(isolated_paths):
 
 
 def test_run_batch_filters_stubs(isolated_paths):
+    # Use a known-stub gid. F1 was a stub at the time this test was
+    # written but is active since Fire #34 (2026-05-21); i1 is Tier-2
+    # LLM, deferred indefinitely per Charter, so a safe perma-stub.
     bm = run_batch(
-        generator_ids=["a1", "f1"],
+        generator_ids=["a1", "i1"],
         batch_hours=0.001,
         seed=0,
         corpus_dir=isolated_paths / "corpus",
         emit_telemetry=False,
     )
-    # Only a1 ran; f1 dropped
+    # Only a1 ran; i1 dropped
     assert "a1" in bm.per_generator
-    assert "f1" not in bm.per_generator
+    assert "i1" not in bm.per_generator
