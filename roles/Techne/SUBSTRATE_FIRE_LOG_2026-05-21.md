@@ -405,3 +405,145 @@ g2/g3) a chance at sampling.
 *Fire #35 closed. 36 of 40 generators ACTIVE. Caches populated
 (LMFDB 1059, Wiki 18, arxiv pending 429 cooldown). Loop healthy.*
 
+---
+
+## Fire #36 — 2026-05-21 ~11:18Z
+
+First fire with the bandit-bootstrap fix live AND the first to actually
+rotate generators. Substantial milestone: the substrate is no longer
+running the same default set every fire.
+
+### Pre-fire situation
+
+- Bandit bootstrap fix (commit `1bc10e53` from Fire #35) makes
+  --bandit pick the first batch's gens
+- Caches populated from Fire #35: LMFDB 1059 knowls, Wiki 18 pages
+- Discovery this fire: --seed defaulted to 42, so even with bootstrap
+  the bandit would pick the SAME 5 gens every fire (reseeded fresh,
+  empty history each invocation → deterministic uniform-from-actives)
+
+### Between-fire work
+
+**Commit `afcf33f2`** — daemon `--seed` defaults to None, auto-derived
+from `int(time.time() * 1000) % (2**31)` when unset. Without this,
+Fire #36's first bootstrap and Fire #37's first bootstrap would have
+picked identical gens. 4 unit tests.
+
+**Commit `38dbbec5`** — `test_daemon::test_run_batch_filters_stubs`
+asserted f1 gets filtered. F1 was lifted to active in Fire #34, so
+the assertion was stale. Switched the test's stub-canary to i1
+(Tier-2 LLM, perma-stub).
+
+Also investigated the "hung 6GB test sweep" from Fire #34: not a hang,
+just a slow sweep — many fire-N tests run real daemon batches with
+sub-second batch_hours which still take real wall time. A 42-test
+subset ran cleanly in 22.7 min (`bmuim20jm`). Mystery closed; no
+substrate corruption.
+
+### Batch result — the big one
+
+The bandit bootstrap picked:
+
+    [theseus] Bandit bootstrap selected: ['e5', 'a1', 'c1', 'b4', 'g3']
+
+Two new actives in the slate: **e5** (Wikipedia, just shipped Fire
+#34) and **g3** (SL_2(Z) Hasse-bound, just shipped Fire #34). Plus
+b4 (fixed-point hunt) which the round-robin had been starving in
+prior fires.
+
+| gid | records   | throughput/h | info_density | diversity | yield_score | kills    | conf      |
+|-----|-----------|--------------|--------------|-----------|-------------|----------|-----------|
+| a1  | 2,284,904 | 170.7M       | 0.531        | 0.727     | 0.0039      | 1.58M    | 709K      |
+| c1  | 2,694,451 | 145.9M       | 0.531        | 0.706     | 0.0038      | 1.87M    | 826K      |
+| g3  | 20,000    | 1.36M        | **0.600**    | 0.832     | **0.0050**  | 0        | 20,000    |
+| b4  | 606       | 39K          | 0.526        | 0.919     | 0.0049      | 446      | 160       |
+| e5  | 39        | 2.26M        | 0.200        | 0.971     | 0.0020      | 0        | 0         |
+
+Key observations:
+- **g3 yield_score 0.0050** — joint-top with the other H-tier
+  Hecke/conservation-law generators. Hasse-bound test is structurally
+  high-yield: every emission is a real claim with high info_density
+  (0.600, the highest in this batch), 100% SHADOW_CATALOG confirmations
+  (Hasse is a theorem — zero kills as expected), and very diverse
+  (different EC × different prime per record).
+- **g3 20,000 records is the bandit-rotated headline**: the substrate
+  generated 20K substantive Hecke-algebra claims grounded in the
+  modular form theory of LMFDB ECs, all UNVERIFIED of course — sigma
+  routes them downstream.
+- e5 emitted 39 records from the Wiki cache of 18 pages. ~2 records
+  per page on average — consistent with Wikipedia summary lengths.
+- b4 (fixed-point hunt) emitted 606. Wallflower in default rotation;
+  now gets exercise.
+- a1+c1 still dominated at 99.5% of records (5M cap is volume-cap,
+  not info-density-cap).
+- Verdict tally: 3,444,265 kills / 1,555,696 confirmations / 0
+  inconclusive / 0 errors. Discoveries to handoff: 20 (lifetime 600).
+
+Duration: 0.73h (44 min) — between Fire #34's 37 min and Fire #35's
+52 min.
+
+### Lifetime stats after Fire #36
+
+| Metric | Pre-Fire #34 | Post-Fire #35 | Post-Fire #36 |
+|---|---|---|---|
+| Batches | 30 | 36 | 37 |
+| Records | 154.4M | 164.6M | 169.6M |
+| Kills | 74.4M | 81.4M | 84.8M |
+| Confirmations | 75.5M | 78.6M | 80.2M |
+| Discoveries to handoff | 500 | 580 | 600 |
+| New-active records (E2+E4+E5+F1+G1+G2+G3) | 0 | 0 | 20,039 |
+
+First fire where the seven new-active gens collectively produced
+records (20,039 from g3+e5; other 5 not picked in this rotation).
+
+### Self-review
+
+(a) **Did I solve THIS fire's task?** Solved: ran one batch (5M
+records, 44 min wall), bandit bootstrap selected a genuinely new set,
+journaled, committed. Plus fixed a related bug (cross-fire seed
+determinism) that the user hadn't asked about but I noticed from
+comparing Fire #34 and Fire #35 metrics.
+
+(b) **Did I change any contract?** `--seed` default changed from 42
+to None (auto-derived). Behavior shift: consecutive invocations
+without --seed now use different seeds. Explicit --seed N still
+reproducible. Help text + auto-seed print line make this visible.
+
+(c) **Conventional-approach drift check?**
+- Auto-seed-from-time is the conventional thing to do. Right call.
+- Test investigation cleanup (the "hung" sweep) — resisted the urge
+  to "rewrite the test infrastructure"; just identified the slow-
+  but-correct behavior and documented it.
+- DID NOT touch substrate primitives. DID NOT introduce LLM-tier
+  shortcuts. Bandit's UCB exploration is mathematically grounded
+  rather than heuristic-decked.
+
+### Diff this fire
+
+| File | Change |
+|------|--------|
+| `theseus/daemon.py` | --seed default → None, auto-derived from time |
+| `theseus/tests/test_daemon.py` | stub-canary i1 not f1 |
+| `theseus/tests/test_daemon_seed.py` | NEW (4 tests) |
+
+### Commits (chronological)
+
+| Hash | Description |
+|------|-------------|
+| `afcf33f2` | Auto-seed daemon by default |
+| `38dbbec5` | test_daemon: fix stub-filter regression after F1 promotion |
+
+### Schedule wakeup
+
+`delaySeconds=120` (2 min). Fire #37 starts with a fresh time-seed,
+so the bandit picks a DIFFERENT 5-active set from the 36 actives.
+This is the first cross-fire rotation that will actually rotate.
+
+---
+
+*Fire #36 closed. 36 of 40 generators ACTIVE. Bandit bootstrap +
+seed-rotation live; first batch with new actives in the slate
+(e5, g3, b4 all picked + emitted). 20,039 new-active records.
+Loop healthy and substantively diversifying.*
+
+
