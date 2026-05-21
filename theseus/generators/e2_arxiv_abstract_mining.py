@@ -111,6 +111,10 @@ class E2ArxivAbstractMiningGenerator(Generator):
             try:
                 rec = next(self._iter)
             except StopIteration:
+                # Reset iterator so that if the cache file is populated
+                # mid-batch (race with fetcher), the next call picks up
+                # the new content rather than staying stuck at empty.
+                self._iter = None
                 return False
             text = " ".join(
                 str(rec.get(k, "")) for k in ("title", "abstract")

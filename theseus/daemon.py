@@ -166,7 +166,14 @@ def run_batch(
     # parent-shortage. Only after CONSECUTIVE_NONE_THRESHOLD consecutive
     # Nones do we mark exhausted (true exhaustion, e.g. E1 finishes
     # mining).
-    CONSECUTIVE_NONE_THRESHOLD = 100
+    # Consecutive-None exhaustion threshold. Set high so cache-based
+    # gens (E1/E2/E4/E5) survive race conditions where the cache file
+    # gets populated mid-batch (e.g. user runs fetcher in parallel
+    # with the batch). At ~1k ticks/sec, 100k = 100 seconds of pure
+    # Nones before exhaustion — long enough for any realistic cache
+    # fetch to complete. Fire #37 surfaced this race: e2 emitted 0
+    # despite the arxiv fetcher cache showing up 30 sec into the run.
+    CONSECUTIVE_NONE_THRESHOLD = 100_000
     exhausted = {g.generator_id: False for g in instances}
     consecutive_nones = {g.generator_id: 0 for g in instances}
     tick_count = 0

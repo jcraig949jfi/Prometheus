@@ -121,6 +121,8 @@ class E4LMFDBKnowledgeMiningGenerator(Generator):
             try:
                 rec = next(self._iter)
             except StopIteration:
+                # Reset iter so race-with-fetcher recovers (see E2 note).
+                self._iter = None
                 return False
             text = " ".join(
                 str(rec.get(k, "")) for k in ("title", "content")

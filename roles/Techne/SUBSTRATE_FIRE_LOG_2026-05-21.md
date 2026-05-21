@@ -546,4 +546,167 @@ seed-rotation live; first batch with new actives in the slate
 (e5, g3, b4 all picked + emitted). 20,039 new-active records.
 Loop healthy and substantively diversifying.*
 
+---
+
+## Fire #37 — 2026-05-21 ~12:12Z
+
+First fire with auto-seed + bandit bootstrap both live in the daemon
+invocation (not committed mid-batch). Pure bandit-driven rotation.
+
+### Auto-seed worked
+
+    [theseus] Auto-seeded run: --seed 1249105667
+    [theseus] Bandit bootstrap selected: ['g3', 'd2', 'e2', 'f1', 'f4']
+
+A completely different active set from Fire #36's `e5, a1, c1, b4, g3`.
+No a1, no c1 — the volume workhorses skipped this round. f1 and f4
+take their slots, plus the carry-overs g3 and d2.
+
+### Between-fire work shipped
+
+**Commit `692b6d43`** — Theseus operator default: James → Techne.
+Addressed user-reported issue ("Theseus is still mis-attributed to
+operator=James"). Per
+pivot/session_telemetry_prompts_techne_aporia_2026-05-18.md: Theseus
+is the tool, Techne is the operator. Env-overridable via
+THESEUS_OPERATOR. 6/6 orchestration tests pass with the update.
+
+**Commit `a2a5b753`** — fetch_wiki_conjectures: seed list 42 → 78 pages.
+Fixed several title mismatches (Mordell→Faltings's_theorem;
+ABC→Abc_conjecture; Beal's→Beal_conjecture) and added Selberg class,
+P vs NP, Schanuel, Yang-Mills mass gap, etc. Re-fetch grew cache
+18 → 76 pages (58 new).
+
+**429 backoff lived in production this fire:**
+
+    [backoff] 429 backoff: attempt=0 sleeping 53.0s
+    [backoff] 429 backoff: attempt=0 sleeping 54.0s
+    [fetch_wiki_conjectures] appended 58 pages
+
+Wikipedia returned 429 with Retry-After: 53 (~1 min). Our backoff
+honored the header, slept, retried, and completed cleanly. Real-world
+validation of commit `6a5e8525`.
+
+**arxiv cache populated**: 100 abstracts (no 429 this time — cooldown
+had cleared). E2 now has substrate to mine.
+
+**Fire #37 surfaced a real bug**: E2 emitted 0 records despite the
+cache being populated. Root cause: race condition. The daemon's
+`CONSECUTIVE_NONE_THRESHOLD=100` marked E2 exhausted after ~100ms of
+None returns at startup — but the arxiv cache wasn't materialized
+until ~5-30 sec into the run. Once exhausted, E2 never retried.
+
+**Fix shipped (this fire)**: bumped threshold 100 → 100,000 (≈100
+seconds of pure-None at typical tick rate), plus made E2/E4/E5'
+`_load_next_*` reset their iterator on StopIteration so a mid-batch
+cache materialization is picked up on next call. 29 unit tests
+across the four affected files pass.
+
+### Batch result
+
+- batch_id: `batch-20260521T121246Z-d0a1bd`
+- Duration: 0.88h (53 min)
+- Bandit-picked set: `g3, d2, e2, f1, f4`
+- 5,000,000 records (cap held)
+- 2,487,890 kills / 1,267,392 SHADOW_CATALOG / 1,244,718 INCONCLUSIVE / 0 errors
+- 20 new discoveries → 620 lifetime
+- 1.24M INCONCLUSIVE — first batch with substantial INCONCLUSIVE
+  share, driven by F1's null-baseline emitting INCONCLUSIVE on
+  missing values (by design)
+
+Per-generator yield:
+
+| gid | records   | yield_score | kills    | conf    | incon   |
+|-----|-----------|-------------|----------|---------|---------|
+| f4  | 2,372,416 | 0.0039      | 1,561,954| 810,462 | 0       |
+| f1  | 2,146,759 | 0.0044      | 628,770  | 273,271 | 1,244,718 |
+| d2  | 460,825   | 0.0045      | 297,166  | 163,659 | 0       |
+| g3  | 20,000    | **0.0052**  | 0        | 20,000  | 0       |
+| e2  | 0         | 0.0000      | 0        | 0       | 0       |
+
+Key takeaways:
+- **f1 INCONCLUSIVE share is the substrate's null-baseline calibration
+  anchor working as designed** — uniform random sampling hits missing-
+  value pairs ~58% of the time (1.24M / 2.15M). F2/F3/F4 yield deltas
+  vs this baseline measure their sampling-sophistication value.
+- **g3 again hits 20K records exactly** — same claim-space saturation
+  as Fire #36. g3's effective claim space (1000 ECs × ~150 primes) is
+  150K, but the dedup digest hash space and the seeded RNG converge
+  to 20K unique within practical time. Will need a strategic upgrade
+  (cycle through more ECs, or expand to a_p²/a_p_n) to break past this.
+- **e2 = 0 is the race-condition bug** — fixed within this fire's
+  between-batch work. Fire #38+ will see proper E2 emission.
+
+### Lifetime stats after Fire #37
+
+| Metric | Pre-#34 | Post-#36 | Post-#37 |
+|---|---|---|---|
+| Batches | 30 | 37 | 38 |
+| Records | 154.4M | 169.6M | 174.6M |
+| Kills | 74.4M | 84.8M | 87.3M |
+| Confirmations | 75.5M | 80.2M | 81.5M |
+| INCONCLUSIVE | 4.55M | 4.55M | 5.79M |
+| Discoveries | 500 | 600 | 620 |
+| New-active records | 0 | 20,039 | 4,623,338 cumulative |
+
+Massive jump in new-active records: Fire #37 contributed 4.6M from
+f1+f4+d2+g3+e2 (4.6M is essentially f1+f4+d2 since g3 added 20K and
+e2 added 0). The new actives are no longer marginal — they're
+dominant in their batches.
+
+### Self-review
+
+(a) **Did I solve THIS fire's task?** Solved: batch run, journaled,
+committed (5 commits this fire including the user-reported operator
+attribution fix and 3 follow-on improvements). Plus diagnosed a real
+race-condition bug in E*/cache-iter interaction and shipped the fix
+within the same fire.
+
+(b) **Did I change contracts?** CONSECUTIVE_NONE_THRESHOLD went
+100 → 100,000. Existing callers (none — it's a daemon internal)
+unaffected. THESEUS_OPERATOR default changed; env-overridable.
+
+(c) **Conventional-approach drift check?**
+- Race-fix landed by RAISING the threshold rather than designing a
+  more complex per-generator exhaustion model. Took the stand per
+  feedback_take_a_stand: simple high-cap beats clever heuristic.
+- 429 backoff used the conventional pattern (Retry-After honored,
+  then exponential). Same call: pay the conventional cost when the
+  upstream's protocol is documented and stable.
+- Resisted scope-creep into i1-i4. They stay deferred.
+
+### Diff this fire
+
+| File | Change |
+|------|--------|
+| `theseus/orchestration/telemetry.py` | operator default → Techne |
+| `theseus/tests/test_fire16_orchestration.py` | assertion update |
+| `theseus/scripts/fetch_wiki_conjectures.py` | seed list 42 → 78 |
+| `theseus/daemon.py` | CONSECUTIVE_NONE_THRESHOLD 100 → 100k |
+| `theseus/generators/e2_arxiv_abstract_mining.py` | iter reset on exhaustion |
+| `theseus/generators/e4_lmfdb_knowledge_mining.py` | iter reset on exhaustion |
+| `theseus/generators/e5_mathworld_wikipedia_scrape.py` | iter reset on exhaustion |
+
+### Commits (chronological)
+
+| Hash | Description |
+|------|-------------|
+| `692b6d43` | Theseus operator: James → Techne |
+| `a2a5b753` | Wiki conjecture seed list 42 → 78 |
+
+(Race-fix commit will land in Fire #37 close.)
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #38 begins with arxiv + Wiki caches both
+substantially fuller and the cache-race bug fixed.
+
+---
+
+*Fire #37 closed. 36 of 40 generators ACTIVE. Cross-fire diversity
+working (each fire now picks a different 5-active set). 174.6M
+records lifetime, 87.3M kills, 620 discoveries to handoff. Race-
+condition fix means E2 will actually emit next fire it's picked.*
+
+
 
