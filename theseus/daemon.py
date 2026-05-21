@@ -331,7 +331,13 @@ def main() -> None:
     p.add_argument(
         "--seed",
         type=int,
-        default=42,
+        default=None,
+        help=(
+            "Random seed for generator sampling AND bandit selection. "
+            "If unset, derived from the current time so consecutive "
+            "daemon invocations rotate the active set. Pass an explicit "
+            "integer for reproducible cross-invocation runs."
+        ),
     )
     p.add_argument(
         "--batches",
@@ -357,6 +363,14 @@ def main() -> None:
         help="Bandit policy. Default: yield_proportional (GFlowNet-spirit).",
     )
     args = p.parse_args()
+
+    # Default seed to a time-based value so consecutive daemon
+    # invocations rotate the active set instead of picking the same
+    # generators every fire. Without this, --seed 42 → identical
+    # bandit picks across Fire #N and Fire #N+1.
+    if args.seed is None:
+        args.seed = int(time.time() * 1000) % (2 ** 31)
+        print(f"[theseus] Auto-seeded run: --seed {args.seed}")
 
     gids = [g.strip() for g in args.generators.split(",") if g.strip()]
     if args.bandit_policy == "yield_proportional":
