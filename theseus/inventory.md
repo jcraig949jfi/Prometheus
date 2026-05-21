@@ -59,16 +59,23 @@ Status legend:
 ## Family E — Literature mining (existing content)
 
 - **E1** `e1_research_batch_parser` — mines `deep_research_batch*/` — **active**
-- **E2** `e2_arxiv_abstract_mining` — pulls claims from arXiv abstracts — **stub**
+- **E2** `e2_arxiv_abstract_mining` — arXiv math abstracts via offline
+  cache populated by `theseus.scripts.fetch_arxiv_abstracts`,
+  regex-extracts {conjecture, theorem, if-and-only-if, ...} — **active** (Fire #34)
 - **E3** `e3_oeis_mining` — OEIS sequence-property mining from local
   dump (212 sequences × 5 properties, token-free) — **active**
-- **E4** `e4_lmfdb_knowledge_mining` — LMFDB knowledge nodes — **stub**
-- **E5** `e5_mathworld_wikipedia_scrape` — conjecture-list scrape — **stub**
+- **E4** `e4_lmfdb_knowledge_mining` — LMFDB `kwl_knowls` Postgres
+  mirror cache via `theseus.scripts.fetch_lmfdb_knowls`,
+  TeX-stripped regex-extraction — **active** (Fire #34)
+- **E5** `e5_mathworld_wikipedia_scrape` — Wikipedia REST API summary
+  over 42-page curated seed list via
+  `theseus.scripts.fetch_wiki_conjectures` — **active** (Fire #34)
 
 ## Family F — Probabilistic / distributional
 
-- **F1** `f1_monte_carlo_random_pairs` — uniform random catalog pairs — **stub**
-  *(anti-recommended without weighting; low info density)*
+- **F1** `f1_monte_carlo_random_pairs` — uniform random catalog pairs
+  (NULL BASELINE; INCONCLUSIVE on missing values; calibration anchor
+  for F2/F3/F4 yield deltas) — **active** (Fire #34)
 - **F2** `f2_anti_frequency_sampling` — strict anti-frequency
   (pick min-coverage region) — **active**
 - **F3** `f3_importance_sampling` — active-learning style sampling
@@ -78,9 +85,15 @@ Status legend:
 
 ## Family G — Symmetry / transformation
 
-- **G1** `g1_galois_twist` — apply Galois action, test invariance — **stub**
-- **G2** `g2_functional_equation` — `L(s) ↔ L(k-s)` symmetry — **stub**
-- **G3** `g3_modular_transform` — apply `SL_2(Z)` — **stub**
+- **G1** `g1_galois_twist` — exact-Fraction j-invariant grouping for
+  EC quadratic-twist equivalence classes; invariant-equality tests
+  across twist pairs — **active** (Fire #34)
+- **G2** `g2_functional_equation` — emits per-EC FE claims
+  `Λ(s) = ε·Λ(2−s)` at sample s-values; verdict=UNVERIFIED routes
+  to sigma's L-function FE verifier — **active** (Fire #34)
+- **G3** `g3_modular_transform` — exact-integer Hasse-bound test
+  `|a_p|² ≤ 4p` via `a_p` catalog arrays (SL_2(Z) Hecke-eigenvalue
+  consequence) — **active** (Fire #34)
 - **G4** `g4_reflection_duality` — reflection-symmetry test
   (rel(a,b) == rel(-a,b)) — **active**
 - **G5** `g5_scale_invariance` — test rel(k·a, k·b) == rel(a, b)
@@ -113,7 +126,7 @@ Status legend:
 
 ---
 
-## Active set (Fire #10, 29 generators): 5/5 A + 5/5 B + 5/5 C + 4/4 D + 2/5 E + 3/4 F + 2/5 G + 3/4 H — substrate-native catalog effectively complete (remaining stubs need external infrastructure)
+## Active set (Fire #34, 36 generators): 5/5 A + 5/5 B + 5/5 C + 4/4 D + 5/5 E + 4/4 F + 5/5 G + 3/4 H — full substrate-native + literature-mining coverage; only Tier-2/Tier-3 LLM-augmented + Learner-feedback generators remain inactive
 
 Rationale (per CHARTER.md):
 - **A1** — highest throughput, no LLM cost, anti-conventional novelty
