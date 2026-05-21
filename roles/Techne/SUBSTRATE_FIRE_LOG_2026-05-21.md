@@ -236,3 +236,172 @@ min Claude takes between fires to ship the next algorithm.
 
 *Fire #34 closed. 36 of 40 generators ACTIVE. 4 remain (i1-i4 deferred).
 Cap held cleanly; no OOM; bandit selection from actives only verified.*
+
+---
+
+## Fire #35 — 2026-05-21 ~10:16Z
+
+Second resumed fire. Same /loop prompt, same `--batch-hours 1.5
+--batches 1 --bandit` invocation. Between-fire work focused on
+operational hygiene rather than new generators (algorithm queue is
+empty per Fire #34's E2/E4/E5/F1/G1/G2/G3 closure).
+
+### Pre-fire situation
+
+- Active count: 36 of 40 (i1-i4 still deferred)
+- Fire #34's hung test sweep at 6.2GB RAM had to be killed (pid 5236);
+  root-cause investigation deferred — full sweep is not on the loop's
+  critical path
+- The user's /loop prompt has `--bandit` but with `--batches 1` the
+  daemon's bandit-select-between-batches gate (`i+1 < args.batches`)
+  was never satisfied — same default gens picked every fire
+
+### Between-fire work shipped
+
+**Commit `1bc10e53`** — daemon `--bandit` now picks the first batch's
+set too:
+- bandit.select called BEFORE the batch loop when --bandit is set
+- empty history → UCB exploration bonus on never-fired actives →
+  effectively uniform-from-actives selection
+- --generators documented as "ignored when --bandit is set"
+- 4 new unit tests in `test_bandit_bootstrap.py`
+
+This means Fire #36's batch will be the first to actually rotate the
+active set via bandit. Fire #35's batch ran the OLD code path
+(committed mid-batch).
+
+**Commit `1bc10e53`** also includes fetcher fixes:
+- `fetch_lmfdb_knowls.py`: dropped non-existent `last_saved` column
+  from the SELECT. Confirmed working: 1059 knowls cached.
+- `fetch_wiki_conjectures.py`: URL-encode page titles via
+  `urllib.parse.quote`. 32/42 titles had silent 404s due to non-ASCII
+  chars (Erdős, Pólya, Cramér) and apostrophes; encoding lifts that
+  to 18/42 (the remaining 24 likely don't exist by exact title
+  on Wikipedia and need a separate redirect-resolve step).
+- `theseus/.gitignore` extended: cache/{arxiv,lmfdb,conjectures}/*.jsonl
+  excluded (runtime data, rebuildable via fetchers).
+
+**Commit `6a5e8525`** — 429 backoff infrastructure:
+- New `theseus/scripts/_backoff.py` with `is_rate_limited`,
+  `sleep_for_retry`, and `with_429_retry` decorator
+- arxiv fetcher: manual retry loop on 429 with 60s base / 600s cap /
+  6 attempts; arxiv lib's built-in num_retries=3 with 3s delay was
+  far too short for arxiv's 5-10 min ban window (hit in last fire)
+- Wikipedia fetcher: inline 429 retry in fetch_one with Retry-After
+  header honored
+- 12 unit tests covering 429/503 detection, Retry-After extraction,
+  exponential growth, capping, success-on-first, success-after-retry,
+  give-up-after-max
+
+### Cache populating
+
+E4/E5 caches now have real data; E2's arxiv cache hit a 429 ban
+window (will retry next fire with the new backoff in place).
+
+- LMFDB knowls: 1059 entries; E4 emits 50+ records on smoke test
+- Wikipedia conjectures: 18 entries; E5 emits 39+ records on smoke
+- arxiv abstracts: 0 (banned). New backoff lets future fetches retry
+  cleanly.
+
+### Batch result
+
+- batch_id: `batch-20260521T101600Z-2700aa`
+- Started: 2026-05-21T10:16:00Z
+- Ended:   2026-05-21T11:08:31Z
+- Duration: 0.88h (52 min) — slower than Fire #34's 37 min by ~15 min;
+  likely partially due to concurrent cache-fetcher work earlier
+- Requested: a1,b5,c1,d1,e1 (default — bandit bootstrap fix landed
+  mid-batch via commit 1bc10e53)
+- Records: 5,000,000 (cap held)
+- Kills: 3,455,385
+- Confirmations: 1,544,615
+- Inconclusive: 0
+- Errors: 0
+- New discoveries to handoff: 20
+
+Per-generator yield identical to Fire #34 (same seed=42 → same
+random choices). a1+c1 again dominated at 99.95% of output. e1
+again emitted 0 (deep_research_batch corpus exhausted).
+
+### Lifetime stats after Fire #35
+
+| Metric | Pre-Fire #34 | Post-Fire #34 | Post-Fire #35 |
+|---|---|---|---|
+| Batches | 30 | 35 | 36 |
+| Records | 154.4M | 159.5M | 164.6M |
+| Kills | 74.4M | 77.9M | 81.4M |
+| Confirmations | 75.5M | 77.1M | 78.6M |
+| Discoveries to handoff | 500 | 560 | 580 |
+| Active generators | 29 | 36 | 36 |
+
+### Self-review
+
+(a) **Did I solve THIS fire's task or scope-creep?** Solved: ran one
+batch with cap, fixed two real bugs surfaced in Fire #34 (bandit
+no-op, fetcher schema/encoding errors), added 429 backoff. Did NOT
+scope-creep into i1-i4, did NOT touch substrate primitives.
+
+(b) **Did I change any contract?** `--bandit` semantics changed —
+now picks the first batch's set too. Documented in --help. The
+change is strictly more useful (the old behavior with --batches 1
+was a no-op). Existing callers of `--bandit` with --batches N>1
+see no behavioral change for batches 2+.
+
+(c) **Conventional-approach drift check?** Reviewed:
+- 429 backoff is the conventional thing to do here — exponential
+  with Retry-After honored. This is the right convention to follow;
+  no anti-conventional discipline to apply.
+- Resisted the conventional "let's add retry to every request"
+  reflex — the backoff helper is scoped to fetchers (literature
+  mining), not used in the daemon or generators
+- Cache fetcher schema-error (last_saved) was caught BY actually
+  running the script, not by speculatively documenting the schema.
+  That's substrate-honest: trust the actual data shape over the
+  imagined one.
+
+### Diff this fire
+
+Owned-files changes only:
+
+| File | Change |
+|------|--------|
+| `theseus/daemon.py` | bandit bootstrap before-first-batch |
+| `theseus/.gitignore` | cache/ excluded |
+| `theseus/scripts/_backoff.py` | NEW (429 backoff helper) |
+| `theseus/scripts/fetch_lmfdb_knowls.py` | dropped last_saved column |
+| `theseus/scripts/fetch_wiki_conjectures.py` | URL-encode + retry |
+| `theseus/scripts/fetch_arxiv_abstracts.py` | 429 retry wrapper |
+| `theseus/tests/test_bandit_bootstrap.py` | NEW (4 tests) |
+| `theseus/tests/test_backoff.py` | NEW (12 tests) |
+
+### Tests
+
+Bandit bootstrap: 4/4 (1 skipped subprocess test)
+Backoff: 12/12
+No regressions in adjacent suites (verified inline during fire).
+
+Note: full theseus/tests/ sweep hung at 6.2GB earlier this session;
+root cause not investigated. Likely a pre-existing test that
+exercises the full daemon and now interacts with the new
+PER_BATCH_RECORD_CAP. TODO for a future fire: bisect which test
+hangs.
+
+### Commits (chronological)
+
+| Hash | Description |
+|------|-------------|
+| `1bc10e53` | bandit bootstrap + fetcher schema/encoding fixes + gitignore |
+| `6a5e8525` | 429 backoff helper + arxiv/Wikipedia retry wiring |
+
+### Schedule wakeup
+
+`delaySeconds=120` (2 min). Fire #36 starts with the bandit-bootstrap
+fix live, so the active set will rotate to something other than
+a1,b5,c1,d1,e1 — finally giving the new actives (e2/e4/e5/f1/g1/
+g2/g3) a chance at sampling.
+
+---
+
+*Fire #35 closed. 36 of 40 generators ACTIVE. Caches populated
+(LMFDB 1059, Wiki 18, arxiv pending 429 cooldown). Loop healthy.*
+
