@@ -869,6 +869,139 @@ discovered: high-info-density gens trade volume for substrate signal.
 176.4M records lifetime, 89.1M kills. h2's 99.99% kill rate on
 1.77M triangulations is the substrate's headline this fire.*
 
+---
+
+## Fire #39 — 2026-05-21 ~14:57Z
+
+First fire to write bandit_history.json. Fire #40+ will be first to
+read it (cross-fire learning).
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1258982475
+    [theseus] Bandit bootstrap selected: ['b1', 'a1', 'a2', 'e4', 'a5']
+
+A-family heavy slate + b1 (operator rotation) + e4 (LMFDB knowls
+mining, first appearance in a production batch).
+
+### Between-fire work shipped
+
+**Commit (this fire)** — theseus.scripts.stats_summary CLI for
+at-a-glance loop visibility. Reads lifetime_stats.json,
+bandit_history.json, batches.jsonl, and cache file sizes. Outputs
+a one-screen text or JSON summary. 7 unit tests.
+
+Current at-a-glance: 40 batches / 180.4M records / 92.3M kills /
+660 discoveries / 51.2% lifetime kill share.
+
+### Batch result
+
+- batch_id: `batch-20260521T145723Z-848bed`
+- Duration: 1.5h wall budget (didn't hit 5M cap)
+- 3,989,042 records / 3,264,623 kills / 720,755 confirms / 3,431 incon
+- 20 new discoveries → 660 lifetime
+- 81.9% kill share for this batch
+
+Per-generator yield:
+
+| gid | records   | yield | kills    | conf    | info_density |
+|-----|-----------|-------|----------|---------|--------------|
+| a2  | 2,124,724 | 0.0038| 1,981,688| 143,036 | 0.507        |
+| a1  | 1,857,617 | 0.0046| 1,281,272| 576,345 | 0.531        |
+| a5  | 5,128     | 0.0048| 1,663    | 34      | 0.534        |
+| b1  | 1,340     | 0.0053| 0        | 1,340   | 0.600        |
+| e4  | 233       | **0.0019** | 0   | 0       | 0.200        |
+
+**a2's 93.3% kill rate is substantive**: statistical correlation
+across catalog pairs (with prime-detrending) mostly REJECTS — meaning
+random cross-catalog correlations are mostly NOT robust under
+detrending. Substrate working as designed (Charter Standing Order
+4: kills are first-class output).
+
+**e4 emitted 233 records** — first fire to exercise the LMFDB
+knowls cache (1059 entries) in a production batch. The cache-race
+fix from Fire #37 worked: e4 didn't get prematurely exhausted.
+
+**e4's yield_score 0.0019 is the lowest of any gen this fire** but
+that's the bandit formula penalty for `learner_delta_steps=99`
+(default for literature-mining gens). The substrate VALUE of
+literature-mined claims may be higher than the formula reflects.
+Bandit calibration is per-charter deferred until Ergon resumes.
+
+### Bandit history persistence VALIDATED
+
+After Fire #39 ended:
+
+    $ cat theseus/orchestration/bandit_history.json
+    {
+      "version": 1,
+      "yield_scores": {
+        "a1": [0.0046], "a2": [0.0038], "a5": [0.0048],
+        "b1": [0.0053], "e4": [0.0019]
+      }
+    }
+
+5 yield-score entries, one per gen picked this fire. Fire #40's
+daemon startup will hydrate this into the bandit's `_history` dict
+and `bandit.select` will see real yield data for the first time.
+
+Expected Fire #40 behavior: softmax-over-yield with low temperature
+0.005 → the bandit will preferentially pick gens with higher
+historical yield (b1 at 0.0053 > a5 0.0048 > a1 0.0046 > a2 0.0038
+> e4 0.0019). Plus UCB bonus for the 31 never-fired actives.
+
+### Lifetime stats after Fire #39
+
+| Metric | Pre-#34 | Post-#38 | Post-#39 |
+|---|---|---|---|
+| Batches | 30 | 39 | 40 |
+| Records | 154.4M | 176.4M | 180.4M |
+| Kills | 74.4M | 89.1M | 92.3M |
+| Confirmations | 75.5M | 81.5M | 82.2M |
+| Discoveries | 500 | 640 | 660 |
+| Cumulative kill share | 48.2% | 50.5% | 51.2% |
+
+### Self-review
+
+(a) **Did I solve THIS fire's task?** Solved. Plus shipped a
+visibility tool (stats_summary CLI) the user will benefit from each
+future fire.
+
+(b) **Did I change contracts?** No code contracts. The stats CLI is
+purely additive; runtime opt-in.
+
+(c) **Conventional-approach drift check?** stats_summary follows
+the conventional dashboard-CLI pattern (read state, render text/JSON,
+no interactive deps). Appropriate convention. Resisted the urge to
+build a "proper" Click-based CLI with subcommands — argparse +
+one main() is the substrate-honest baseline.
+
+### Diff this fire
+
+| File | Change |
+|------|--------|
+| `theseus/scripts/stats_summary.py` | NEW (CLI) |
+| `theseus/tests/test_stats_summary.py` | NEW (7 tests) |
+
+### Commits (chronological)
+
+| Hash | Description |
+|------|-------------|
+| (this fire's stats_summary commit) | stats_summary CLI + 7 tests |
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #40 is the FIRST batch to hydrate bandit
+history from disk. Cross-fire learning officially begins.
+
+---
+
+*Fire #39 closed. 36 of 40 generators ACTIVE. e4 first production
+emission (233 records from 1059 cached LMFDB knowls). Bandit
+history persisted (5 entries). 180.4M records lifetime, 92.3M
+kills, 51.2% cumulative kill share.*
+
+
 
 
 
