@@ -42,11 +42,7 @@ from theseus.generators.base import StubGenerator, GeneratorStatus
 # G1 was lifted to theseus/generators/g1_galois_twist.py
 
 
-class G2FunctionalEquation(StubGenerator):
-    generator_id = "g2"
-    claim_kind = ClaimKind.SYMMETRY_TRANSFORM.value
-    def description(self) -> str:
-        return "g2: L(s) ↔ L(k-s) functional-equation symmetry"
+# G2 was lifted to theseus/generators/g2_functional_equation.py
 
 
 class G3ModularTransform(StubGenerator):
