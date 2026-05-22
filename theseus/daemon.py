@@ -287,6 +287,18 @@ def run_batch(
                     bm.per_generator[gid].novelty_signatures = n
         except Exception:
             pass  # best-effort; never break the loop
+        # Fire #62: populate lifetime_saturation per gen so the bandit
+        # sees a stable accumulated exploration signal instead of
+        # single-batch novelty rates (which Fire #61 falsified as
+        # too noisy). Probe is read after flush so it reflects this
+        # batch's contribution too.
+        try:
+            for gid in bm.per_generator.keys():
+                sat = SIGNATURE_INDEX.saturation_score(gid)
+                if sat is not None:
+                    bm.per_generator[gid].lifetime_saturation = sat
+        except Exception:
+            pass  # best-effort; never break the loop
         if n_total > 0:
             # Also compute discovery-role-only novelty (exclude
             # TAUTOLOGY_CONTROL, NULL_BASELINE, INFRA_DIAGNOSTIC per

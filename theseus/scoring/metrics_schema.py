@@ -45,25 +45,41 @@ class GeneratorMetrics:
     # *many records*. Default 0 = no signal (legacy / pre-#59 history).
     novelty_signatures: int = 0
 
+    # Fire #62: lifetime exploration premium. 1 - (unique_sigs /
+    # total_seen) from the signature_index. Probed at flush time by
+    # daemon; cached here for serialization into the journal AND for
+    # use in yield_score. c5 at ~9% lifetime saturation gets boost
+    # `1 + alpha × 0.91`; saturated gens get boost ~1x. This is the
+    # signal that lets the bandit actually distinguish explorers
+    # from recyclers — single-batch novelty was too noisy.
+    lifetime_saturation: float = -1.0  # -1.0 = unknown (legacy / no probe)
+
     @property
     def yield_score(self) -> float:
         """Collapsed score for bandit.
 
-        Fire #60 formula (extending Fire #59):
+        Fire #62 formula (replaces Fire #59 rate-based):
           base = info_density × diversity × (1 / learner_delta_steps)
-          novelty_rate = novelty_signatures / max(records_emitted, 1)
-          score = base × (1 + 10 × novelty_rate) × (1 - 0.5 × dup_rate)
+          exploration_boost = 1 + 5 × max(0, 1 - lifetime_saturation)
+                              when lifetime_saturation in [0, 1]
+                              else 1 (no signal)
+          score = base × exploration_boost × (1 - 0.5 × dup_rate)
 
-        Rationale:
-        - Novelty bonus (Fire #59): rewards gens contributing new shapes,
-          not just records.
-        - Dup-rate penalty (Fire #60): downweights saturated gens (d1
-          hit 99.9% dup in Fire #59) without zeroing them out — at
-          100% dup the multiplier is 0.5, so the gen still gets some
-          exploration probability and can recover if its source
-          catalog refreshes.
-        - Backwards-compatible: novelty=0 + dup_rate=0 (defaults)
-          reproduce the base score exactly.
+        Rationale (per Fire #61 falsification):
+        - Rate-based novelty was too weak: 35 novel / 1.3M records
+          gave boost 1.0003 — invisible to bandit hydration.
+        - Lifetime saturation is a stable, accumulated signal: c5 at
+          9% sat means it's CONSISTENTLY producing new shapes (not
+          just one good batch).
+        - 5x scale: c5 (sat=0.09) → boost 1 + 5×0.91 = 5.55x.
+          Saturated gens (sat=1.0) → boost 1.0. The bandit gets a
+          clear differentiator.
+        - Backwards-compatible: lifetime_saturation default -1 (legacy
+          history) reproduces the pre-#62 base × (1 - 0.5 × dup_rate)
+          score.
+
+        novelty_signatures field is preserved (informational; written
+        to journal) but no longer drives the score.
         """
         steps = max(self.learner_delta_steps, 1)
         base = (
@@ -71,13 +87,13 @@ class GeneratorMetrics:
             * max(self.diversity_mean, 0.01)
             / steps
         )
-        if self.records_emitted > 0:
-            novelty_rate = self.novelty_signatures / self.records_emitted
+        # Exploration premium from lifetime saturation
+        if 0.0 <= self.lifetime_saturation <= 1.0:
+            exploration_boost = 1.0 + 5.0 * (1.0 - self.lifetime_saturation)
         else:
-            novelty_rate = 0.0
-        novelty_mult = 1.0 + 10.0 * novelty_rate
+            exploration_boost = 1.0  # no signal yet
         saturation_mult = max(0.0, 1.0 - 0.5 * self.dup_rate)
-        return base * novelty_mult * saturation_mult
+        return base * exploration_boost * saturation_mult
 
 
 @dataclass
