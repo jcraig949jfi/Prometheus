@@ -34,6 +34,7 @@ from theseus.orchestration import (
     update_lifetime_after_batch,
 )
 from theseus.orchestration.bandit_state import hydrate_bandit, persist_bandit
+from theseus.scoring.demand_signals import INSTANCE as DEMAND_LOG
 from theseus.bandit.epsilon_greedy import EpsilonGreedyBandit
 from theseus.bandit.yield_proportional import YieldProportionalBandit
 from theseus.emit.corpus_writer import CorpusWriter
@@ -121,6 +122,10 @@ def run_batch(
     """
     if batch_id is None:
         batch_id = _new_batch_id()
+
+    # Per-batch demand-signal log; generators record missing-primitive
+    # events into this sink for the weekly "wanted primitives" report.
+    DEMAND_LOG.reset(batch_id)
 
     started_at_iso = datetime.now(timezone.utc).isoformat()
     started_at_dt = datetime.now(timezone.utc)
@@ -249,6 +254,15 @@ def run_batch(
             f"[theseus] SATURATION WARNING: "
             + ", ".join(f"{gid}@{rate*100:.0f}%" for gid, rate in saturated)
             + " — claim space exhausted; bandit should downweight."
+        )
+
+    # Flush demand-signal log to per-batch JSONL.
+    demand_path = DEMAND_LOG.flush()
+    if demand_path is not None:
+        total_signals = len(DEMAND_LOG)
+        print(
+            f"[theseus] Demand signals logged: {total_signals} events -> "
+            f"{demand_path.name}"
         )
 
     _journal_batch(bm, generator_ids, instances)

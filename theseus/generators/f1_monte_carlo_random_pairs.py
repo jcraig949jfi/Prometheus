@@ -108,6 +108,21 @@ class F1MonteCarloRandomPairsGenerator(Generator):
         self.attempts += 1
 
         if a_val is None or b_val is None:
+            # Log demand signal: which catalog field was missing.
+            try:
+                from theseus.scoring.demand_signals import INSTANCE
+                if a_val is None:
+                    INSTANCE.record(
+                        generator_id="f1", kind="missing_int_field",
+                        signature=("knot", ki),
+                    )
+                if b_val is None:
+                    INSTANCE.record(
+                        generator_id="f1", kind="missing_int_field",
+                        signature=("ec", ei),
+                    )
+            except Exception:
+                pass
             # INCONCLUSIVE: value missing or non-numeric. Still emit so the
             # yield score reflects the cost of uniform sampling.
             canonical = (

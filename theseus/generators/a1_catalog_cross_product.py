@@ -55,18 +55,41 @@ def _load_catalog(path) -> List[Dict[str, Any]]:
     return list(data.get("entries", []))
 
 
-def _get_int(obj: Dict[str, Any], key: str) -> Optional[int]:
-    """Safely fetch an integer invariant; handles nested EC schema."""
+def _get_int(
+    obj: Dict[str, Any],
+    key: str,
+    demand_log_gen: Optional[str] = None,
+    demand_log_catalog: Optional[str] = None,
+) -> Optional[int]:
+    """Safely fetch an integer invariant; handles nested EC schema.
+
+    When demand_log_gen + demand_log_catalog are passed, missing keys
+    are logged to the demand-signal sink for the "wanted primitives"
+    weekly report (Techne persona idea #1).
+    """
     if key in obj:
         v = obj[key]
-        return int(v) if isinstance(v, (int, float)) and v == int(v) else None
-    # EC entries have nested base/rich
-    if "base" in obj and key in obj["base"]:
+        if isinstance(v, (int, float)) and v == int(v):
+            return int(v)
+    elif "base" in obj and key in obj["base"]:
         v = obj["base"][key]
-        return int(v) if isinstance(v, (int, float)) and v == int(v) else None
-    if "rich" in obj and key in obj["rich"]:
+        if isinstance(v, (int, float)) and v == int(v):
+            return int(v)
+    elif "rich" in obj and key in obj["rich"]:
         v = obj["rich"][key]
-        return int(v) if isinstance(v, (int, float)) and v == int(v) else None
+        if isinstance(v, (int, float)) and v == int(v):
+            return int(v)
+    # Missing or non-integer; log demand signal if instrumented.
+    if demand_log_gen is not None and demand_log_catalog is not None:
+        try:
+            from theseus.scoring.demand_signals import INSTANCE
+            INSTANCE.record(
+                generator_id=demand_log_gen,
+                kind="missing_int_invariant",
+                signature=(demand_log_catalog, key),
+            )
+        except Exception:
+            pass  # demand logging is best-effort, never break the generator
     return None
 
 
@@ -140,8 +163,8 @@ class A1CatalogCrossProductGenerator(Generator):
             ei = self._rng.choice(EC_INTEGER_INVARIANTS)
             rel = self._rng.choice(RELATIONS)
 
-            a_val = _get_int(k, ki)
-            b_val = _get_int(e, ei)
+            a_val = _get_int(k, ki, demand_log_gen="a1", demand_log_catalog="knot")
+            b_val = _get_int(e, ei, demand_log_gen="a1", demand_log_catalog="ec")
             if a_val is None or b_val is None:
                 self.attempts += 1
                 continue

@@ -127,6 +127,16 @@ class G1GaloisTwistGenerator(Generator):
 
     def next(self) -> Optional[TheseusRecord]:
         if not self._groups:
+            # No twist-pair groups in catalog — substrate is asking for
+            # more ECs sharing j-invariants.
+            try:
+                from theseus.scoring.demand_signals import INSTANCE
+                INSTANCE.record(
+                    generator_id="g1", kind="no_twist_pairs",
+                    signature=("ec", "j_invariant_class"),
+                )
+            except Exception:
+                pass
             return None
         for _ in range(20):
             j_val, idxs = self._rng.choice(self._groups)
