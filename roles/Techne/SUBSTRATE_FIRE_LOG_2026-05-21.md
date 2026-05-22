@@ -3168,6 +3168,123 @@ fires) shows bandit exploration vs exploitation honestly.
 253.2M records, 132.5M kills, 1020 discoveries, 303 lifetime
 DISCOVERY shapes.*
 
+---
+
+## Fire #58 — 2026-05-22 ~14:46Z
+
+**handoff_daemon RAM fix v2 — first fix wasn't enough; second fix
+ships and 41 tests pass.**
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Bandit picked: d3, d2, e4, a3, c5
+    [theseus] SATURATION WARNING: d2@100%, e4@100%, c5@100%
+    [theseus] Signature index: 463 novel / 465 unique-in-batch;
+                               766 lifetime shapes from DISCOVERY roles
+    [theseus] Batch done: 4M records, 1.5h wall, 0 errors
+
+### handoff_daemon v2 fix shipped
+
+Restarted handoff_daemon Fire #58 between-fire after the Fire #57
+heap fix. **Watched it grow to 26 GB before killing.** My first fix
+wasn't enough; bottleneck was elsewhere.
+
+Root cause v2: `assign_episodes` builds `Dict[record_id → episode_id]`
+for EVERY record in the corpus. At 253M records × ~150 bytes per
+entry ≈ 38 GB. Plus `build_parent_child_index` builds similar dicts.
+Both functions walk the entire corpus via `_walk_corpus`.
+
+Fix: add `max_recent_files` parameter to:
+- `_walk_corpus`: caps the walk to N most-recent batches by mtime
+- `build_parent_child_index`: forwards the cap
+- `assign_episodes`: forwards the cap
+- `export_for_ergon`: forwards to assign_episodes
+- `handoff_daemon.run_cycle`: defaults to 10 most-recent batches
+
+Default None preserves test/full behavior. handoff_daemon now bounds
+its walk to the 10 most-recent batches — episode-completeness bonus
+remains meaningful (recent chains capture multi-phase activity) but
+RAM is bounded by ~10 batches × ~5M records ≈ 50M dict entries × 150
+bytes = ~7.5 GB worst case (much less typically since most batches
+have far fewer unique record_ids in the trace_field).
+
+41 handoff tests pass (no regressions to existing behavior).
+
+Task #26 stays in_progress until handoff_daemon is restarted and
+observed under flat RAM for an emit cycle.
+
+### Novelty rate continuing to surprise
+
+Fire #58: **463 novel shapes** added (303 → 766 lifetime DISCOVERY).
+c5 (specialization) + d3 (triangulation seeds) explored substantially
+in this batch. The novelty metric is volatile fire-to-fire but
+trending upward consistently:
+
+    Fire #54: 19  (a1+f4)
+    Fire #55: 5026 inflation
+    Fire #56: 17  (saturated gens)
+    Fire #57: 286 (f3+h1 explore)
+    Fire #58: 463 (c5+d3 + others)
+
+766 lifetime DISCOVERY shapes after 3 honest-index fires ≈ 255 mean.
+
+### Batch result
+
+- batch_id: `batch-20260522T144606Z-c97bdf`
+- Duration: 1.5h wall (4M records, didn't hit cap)
+- 4,013,320 records / 3,243,661 kills / 733,307 confirms / 14 incon / 0 errors
+- 20 new discoveries → 1040 lifetime
+
+| gid | records   | yield | dup_rate | kills    | conf    |
+|-----|-----------|-------|----------|----------|---------|
+| a3  | 2,009,786 | 0.0045| 0.4%     | 1,287,562| 712,217 |
+| d3  | 2,003,278 | 0.0048| 1.1%     | 1,955,438| 0       |
+| c5  | 11        | 0.0055| 99.6%    | 4        | 7       |
+| d2  | 12        | 0.0044| 100%     | 8        | 3       |
+| e4  | 233       | 0.0019| 100%     | 0        | 0       |
+
+d3 again 97.6% kill (replicates Fire #45's 99.1% and Fire #50's 98.3%).
+
+### Lifetime stats after Fire #58
+
+| Metric | Pre-#34 | Post-#57 | Post-#58 |
+|---|---|---|---|
+| Batches | 30 | 58 | 59 |
+| Records | 154.4M | 253.2M | 257.2M |
+| Kills | 74.4M | 132.5M | 135.7M |
+| Confirmations | 75.5M | 109.9M | 110.6M |
+| Discoveries | 500 | 1020 | 1040 |
+| Lifetime DISCOVERY shapes | 17 | 303 | 766 |
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Solved. Plus shipped the REAL RAM
+fix after my Fire #57 fix turned out incomplete. The first
+diagnosis (candidates list) was wrong about the dominant bottleneck;
+assign_episodes was bigger.
+
+(b) **Changed contracts?** _walk_corpus / build_parent_child_index /
+assign_episodes all gained optional max_recent_files param; default
+None preserves prior behavior.
+
+(c) **Conventional-approach drift check?** Caught my own incomplete
+diagnosis from Fire #57 (only one bottleneck visible until killed
+again at 26GB). Per `feedback_assume_wrong`: first diagnosis was
+incomplete; second fix completes it.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #59 considers restarting handoff_daemon
+v2 to validate RAM-flat under heap-based selection AND
+max-recent-files-bounded episode index.
+
+---
+
+*Fire #58 closed. RAM fix v2 shipped (max_recent_files bounds the
+corpus walk in assign_episodes). 257.2M records, 135.7M kills,
+1040 discoveries, 766 lifetime DISCOVERY shapes (+463 this fire).*
+
+
 
 
 

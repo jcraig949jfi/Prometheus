@@ -23,6 +23,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
+from typing import Optional
+
 from theseus.config import CORPUS_DIR, THESEUS_ROOT
 from theseus.emit.record_schema import TheseusRecord, Verdict
 from theseus.handoff.episodes import assign_episodes, classify_phase
@@ -170,6 +172,7 @@ def export_for_ergon(
         Verdict.REJECTED.value,  # Fire #33: open gate to falsifications
     ),
     falsify_share: float = DEFAULT_FALSIFY_SHARE,
+    max_recent_files: Optional[int] = None,
 ) -> Dict[str, Any]:
     """Walk corpus, pick top-N by training_weight (above threshold),
     write Markdown + JSONL outputs atomically to output_dir/inbox/.
@@ -198,8 +201,13 @@ def export_for_ergon(
 
     # Build episode index up-front (Fire #31): single corpus walk that
     # lets us attach episode_id + phase + completeness to every record.
-    # Cost: ~few seconds on a 1M-record corpus.
-    record_to_episode, episode_meta = assign_episodes(corpus_dir)
+    # Fire #58: max_recent_files bounds RAM. At 250M lifetime records
+    # the full walk built a 38 GB dict; daemons should pass a small N
+    # (e.g. 10 most-recent batches). Default None preserves test/full
+    # behavior; callers responsible for the cap.
+    record_to_episode, episode_meta = assign_episodes(
+        corpus_dir, max_recent_files=max_recent_files
+    )
 
     # Score + rank candidates with BOUNDED HEAPS per pool. Fire #57 fix:
     # the prior list-then-sort approach accumulated EVERY above-threshold

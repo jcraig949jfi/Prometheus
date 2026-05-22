@@ -81,12 +81,28 @@ def _episode_id_for_root(root_record_id: str) -> str:
     return h.hexdigest()
 
 
-def _walk_corpus(corpus_dir: Path) -> Iterable[Dict[str, Any]]:
-    """Stream records from all corpus jsonl files (skips .annotated.jsonl)."""
+def _walk_corpus(
+    corpus_dir: Path,
+    max_recent_files: Optional[int] = None,
+) -> Iterable[Dict[str, Any]]:
+    """Stream records from corpus jsonl files (skips .annotated.jsonl).
+
+    Fire #58 fix: at 250M+ records the build_parent_child_index +
+    assign_episodes pair built dicts of every record_id → ~38 GB RAM.
+    `max_recent_files` caps the walk to N most-recent batches (by mtime),
+    bounding RAM to ~max_recent_files × per-batch-record-count.
+    Default None preserves current full-walk behavior for tests + small
+    corpora.
+    """
     if not corpus_dir.is_dir():
         return
     from theseus.emit.corpus_files import iter_batch_paths, open_batch
-    for jf in iter_batch_paths(corpus_dir):
+    paths = iter_batch_paths(corpus_dir)
+    if max_recent_files is not None and max_recent_files > 0:
+        paths = sorted(paths, key=lambda p: p.stat().st_mtime, reverse=True)
+        paths = paths[:max_recent_files]
+        paths = sorted(paths, key=lambda p: p.name)  # restore chronological
+    for jf in paths:
         try:
             with open_batch(jf) as f:
                 for line in f:
@@ -103,16 +119,20 @@ def _walk_corpus(corpus_dir: Path) -> Iterable[Dict[str, Any]]:
 
 def build_parent_child_index(
     corpus_dir: Path = CORPUS_DIR,
+    max_recent_files: Optional[int] = None,
 ) -> Tuple[Dict[str, str], Dict[str, List[str]]]:
     """Return (record_id → parent_id, record_id → list of child_ids).
 
     Only includes records whose claim_payload's `parent_record_id` is also
     present in the corpus. Standalone records (no parent in corpus) become
     chain roots.
+
+    Fire #58 RAM fix: pass max_recent_files to bound the walk. At 250M+
+    records the dict hit ~25 GB.
     """
     all_ids: set = set()
     parent_of: Dict[str, str] = {}
-    for r in _walk_corpus(corpus_dir):
+    for r in _walk_corpus(corpus_dir, max_recent_files=max_recent_files):
         rid = r.get("record_id")
         if not rid:
             continue
@@ -147,19 +167,26 @@ def find_chain_root(record_id: str, parent_of: Dict[str, str]) -> str:
 
 def assign_episodes(
     corpus_dir: Path = CORPUS_DIR,
+    max_recent_files: Optional[int] = None,
 ) -> Tuple[Dict[str, str], Dict[str, Dict[str, Any]]]:
     """Return:
-      - record_id → episode_id (every record in the corpus)
+      - record_id → episode_id (every record in the recent corpus)
       - episode_id → {
             root_record_id, phase_counts: {phase: n},
             n_records, completeness, distinct_phases
         }
+
+    Fire #58 RAM fix: max_recent_files caps the corpus walk. At 250M+
+    records the dict hit ~38 GB. Default None preserves full-walk for
+    tests; daemon passes a small N.
     """
-    parent_of, _children = build_parent_child_index(corpus_dir)
+    parent_of, _children = build_parent_child_index(
+        corpus_dir, max_recent_files=max_recent_files
+    )
     record_to_episode: Dict[str, str] = {}
     episode_meta: Dict[str, Dict[str, Any]] = {}
 
-    for r in _walk_corpus(corpus_dir):
+    for r in _walk_corpus(corpus_dir, max_recent_files=max_recent_files):
         rid = r.get("record_id")
         if not rid:
             continue

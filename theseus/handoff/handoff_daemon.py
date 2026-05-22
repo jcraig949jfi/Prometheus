@@ -119,8 +119,15 @@ def run_cycle(
     corpus_dir: Path,
     inbox_dir: Path,
     falsify_share: float = DEFAULT_FALSIFY_SHARE,
+    max_recent_files: int = 10,
 ) -> dict:
-    """One emit + compact pass. Returns a summary dict for logging."""
+    """One emit + compact pass. Returns a summary dict for logging.
+
+    Fire #58: max_recent_files caps the corpus walk in assign_episodes
+    to bound RAM. Without this, the daemon hits 16-26 GB at 250M-record
+    corpus. 10 most-recent batches is plenty for episode-completeness
+    bonus (recent chains capture the multi-phase activity).
+    """
     summary = {
         "started_at": _utc_now(),
         "emit": None,
@@ -135,6 +142,7 @@ def run_cycle(
             weight_threshold=emit_weight_threshold,
             max_records=emit_max_records,
             falsify_share=falsify_share,
+            max_recent_files=max_recent_files,
         )
         summary["emit"] = {
             "ok": True,
