@@ -16,6 +16,8 @@ training data Ergon can consume without manual translation.
 from __future__ import annotations
 
 import argparse
+import heapq
+import itertools
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -199,11 +201,26 @@ def export_for_ergon(
     # Cost: ~few seconds on a 1M-record corpus.
     record_to_episode, episode_meta = assign_episodes(corpus_dir)
 
-    # Score and rank candidates. Fire #31: apply episode-completeness
-    # bonus so multi-phase chains surface above single-phase records of
-    # equal raw weight. Bonus = 1 + 0.5 * completeness → 4-phase gets
-    # 1.5x, single-phase gets 1.125x (basically baseline).
-    candidates: List[Tuple[float, Dict[str, Any]]] = []
+    # Score + rank candidates with BOUNDED HEAPS per pool. Fire #57 fix:
+    # the prior list-then-sort approach accumulated EVERY above-threshold
+    # record from the entire corpus into memory before truncating to
+    # max_records — at 250M lifetime records this hit 16GB and killed the
+    # handoff_daemon (Fire #56 task #27). With two bounded min-heaps
+    # (falsify_pool size N_falsify, other_pool size N_other), memory is
+    # O(max_records) ≈ 500 dicts regardless of corpus size.
+    falsify_target = (
+        int(max_records * max(0.0, min(1.0, falsify_share)))
+        if falsify_share > 0 else 0
+    )
+    n_other_target = max_records - falsify_target
+
+    # Min-heap of (weight, tie_breaker, record_dict). Smallest is at heap[0].
+    # When heap reaches max size, smallest gets popped on each new push.
+    falsify_heap: List[Tuple[float, int, Dict[str, Any]]] = []
+    other_heap: List[Tuple[float, int, Dict[str, Any]]] = []
+    counter = itertools.count()  # stable tie-breaker for equal weights
+    n_candidates_scanned = 0  # backward-compat with prior list-len return
+
     for r_dict in _iter_corpus_records(corpus_dir):
         if r_dict.get("verdict") not in verdict_filter:
             continue
@@ -220,8 +237,23 @@ def export_for_ergon(
         w_boosted = min(1.0, w_raw * (1.0 + 0.5 * ep_completeness))
         if w_boosted < weight_threshold:
             continue
-        candidates.append((w_boosted, r_dict))
-    candidates.sort(key=lambda x: -x[0])
+        n_candidates_scanned += 1
+        is_falsify = r_dict.get("verdict") == Verdict.REJECTED.value
+        target_heap = falsify_heap if is_falsify else other_heap
+        # Both heaps sized to max_records — when falsify pool is short,
+        # other pool backfills. Memory bounded by 2*max_records ≈ 1000
+        # dicts even with corpora at 250M+ records.
+        target_size = max_records
+        entry = (w_boosted, next(counter), r_dict)
+        if len(target_heap) < target_size:
+            heapq.heappush(target_heap, entry)
+        elif entry > target_heap[0]:
+            heapq.heappushpop(target_heap, entry)
+        # else: smaller than the smallest top-N; drop immediately
+
+    # Drain heaps to descending-weight lists (largest first)
+    falsify_sorted = sorted(falsify_heap, key=lambda x: -x[0])
+    other_sorted = sorted(other_heap, key=lambda x: -x[0])
 
     # Fire #33: enforce a falsify-share floor so Ergon's training diet
     # always contains negative examples (REJECTED-verdict records).
@@ -231,23 +263,12 @@ def export_for_ergon(
     # examples for the learner to ever route correctly. Without a
     # quota, the weight-only ranking drains them to ~0% even after
     # v_mult boost.
-    falsify_target = (
-        int(max_records * max(0.0, min(1.0, falsify_share)))
-        if falsify_share > 0 else 0
-    )
-    falsify_pool = [
-        c for c in candidates
-        if c[1].get("verdict") == Verdict.REJECTED.value
-    ]
-    other_pool = [
-        c for c in candidates
-        if c[1].get("verdict") != Verdict.REJECTED.value
-    ]
-    n_falsify_used = min(falsify_target, len(falsify_pool))
+    n_falsify_used = min(falsify_target, len(falsify_sorted))
     n_other_used = max_records - n_falsify_used
-    selected = (
-        other_pool[:n_other_used] + falsify_pool[:n_falsify_used]
-    )
+    selected = [
+        (w, r) for (w, _, r) in
+        (other_sorted[:n_other_used] + falsify_sorted[:n_falsify_used])
+    ]
     # Re-sort merged set by weight for stable downstream ordering
     selected.sort(key=lambda x: -x[0])
 
@@ -329,7 +350,7 @@ def export_for_ergon(
     complete_path.write_text("", encoding="utf-8")
 
     return {
-        "n_candidates_scanned": len(candidates),
+        "n_candidates_scanned": n_candidates_scanned,
         "n_emitted": n_emitted,
         "inbox_dir": str(inbox_dir),
         "markdown_path": str(md_path),
