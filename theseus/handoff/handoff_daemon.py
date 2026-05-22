@@ -119,14 +119,21 @@ def run_cycle(
     corpus_dir: Path,
     inbox_dir: Path,
     falsify_share: float = DEFAULT_FALSIFY_SHARE,
-    max_recent_files: int = 10,
+    max_recent_files: int = 3,
 ) -> dict:
     """One emit + compact pass. Returns a summary dict for logging.
 
-    Fire #58: max_recent_files caps the corpus walk in assign_episodes
-    to bound RAM. Without this, the daemon hits 16-26 GB at 250M-record
-    corpus. 10 most-recent batches is plenty for episode-completeness
-    bonus (recent chains capture the multi-phase activity).
+    Fire #58/#59: max_recent_files caps the corpus walk in
+    assign_episodes to bound RAM. Without this, the daemon hits
+    16-26 GB at 250M-record corpus.
+
+    Fire #59 retune: default lowered from 10 → 3. Per-batch record
+    cap was raised to 5M mid-week, so 10-file walk = 50M records ×
+    multiple dicts ≈ 18+ GB (validated by Fire #59 background
+    handoff_daemon hitting 18.57 GB). 3 files ≈ 15M records ≈ 5 GB
+    worst case. Recent chains are where the live work is anyway —
+    episodes older than ~30 min of fire cycles don't add training
+    signal because Penelope has already consumed them.
     """
     summary = {
         "started_at": _utc_now(),

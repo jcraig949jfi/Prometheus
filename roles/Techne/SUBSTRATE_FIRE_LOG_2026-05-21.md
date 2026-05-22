@@ -3284,6 +3284,164 @@ max-recent-files-bounded episode index.
 corpus walk in assign_episodes). 257.2M records, 135.7M kills,
 1040 discoveries, 766 lifetime DISCOVERY shapes (+463 this fire).*
 
+---
+
+## Fire #59 — 2026-05-22 ~16:30Z
+
+**Novelty-aware bandit yield_score shipped between-fire. RAM v2 fix
+validated as insufficient at default=10; v3 ships default=3.**
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1350946177
+    [theseus] Hydrated bandit history: 100 yield-score entries from prior fires
+    [theseus] Bandit bootstrap selected: ['a4', 'a2', 'c3', 'f2', 'd1']
+    [theseus] SATURATION WARNING: d1@100% — claim space exhausted
+    [theseus] Signature index: 285 novel shapes / 285 unique-in-batch;
+                               1051 lifetime shapes from DISCOVERY roles
+    [theseus] Batch done: 5M records (cap hit), 1.03h wall, 0 errors
+
+### Between-fire: novelty-aware yield_score
+
+Pre-#59 yield_score was novelty-blind:
+
+    score = info_density × diversity / learner_delta_steps
+
+`learner_delta_steps=99` (the default when Learner isn't actively
+training) makes the divisor a no-signal constant. So the bandit
+picked based on volume — d3 produced 2M records with high
+shape-dup, while c5/f3/h1 produced fewer but more novel shapes.
+
+Post-#59:
+
+    novelty_rate = novelty_signatures / max(records_emitted, 1)
+    score = base × (1 + 10 × novelty_rate)
+
+10x scale chosen so a 10% novelty rate doubles the score (matching
+the observed ~1-10% range for exploring gens). Backwards-compatible:
+zero novelty (default + legacy history) reproduces the base score
+exactly.
+
+Plumbing:
+- `GeneratorMetrics` gains `novelty_signatures: int = 0`
+- `SignatureIndex.flush()` populates `_last_flush_novel_by_gen` dict
+- `SignatureIndex.last_flush_novel_by_gen()` exposes it
+- daemon, after `SIGNATURE_INDEX.flush()`, routes per-gen novelty
+  into `bm.per_generator[gid].novelty_signatures` (best-effort)
+
+Tests: 33 pass (9 new + 24 regression-stable). Bandit suite
+0 regressions.
+
+This addresses the advisory board's "yield-score and bandit are
+still novelty-blind" critique. The role-aware split (separate
+synthetic-explore vs literature-exploit arms) is a bigger fire.
+
+### handoff_daemon RAM v3 — fix the fix
+
+Restarted handoff_daemon Fire #59 between-fire to validate Fire #58's
+v2 fix (max_recent_files=10). **It hit 18.57 GB before completing
+the first emit cycle, and was still climbing.** Killed it.
+
+Diagnosis: per-batch record cap was raised to 5M mid-week. So
+"10 most-recent batches" now means 50M records × multiple dicts
+(all_ids set + parent_of dict + record_to_episode dict). At ~120
+bytes/string × 3 dicts × 50M = ~18 GB. Plus the walk is called
+twice (build_parent_child_index + assign_episodes both call
+_walk_corpus), so the working set doubles momentarily.
+
+Fix v3: lower default `max_recent_files` from 10 → 3 in
+`handoff_daemon.run_cycle`. 3 batches × 5M records × 3 dicts × 120B
+≈ 5.4 GB worst case. Recent chains are where the live work is
+anyway — episodes older than ~30 min of fire cycles don't add
+training signal because Penelope has already consumed them.
+
+25 handoff tests pass.
+
+Task #26 stays in_progress until handoff_daemon is restarted under
+v3 cap and observed under flat RAM for a full emit+compact cycle.
+
+### Batch result
+
+- batch_id: `batch-20260522T163006Z-c73dc5`
+- Duration: 1.03h wall (5M cap hit)
+- 5,000,000 records / 2,946,294 kills / 1,150,717 confirms / 903K incon / 0 errors
+- 20 new discoveries → 1060 lifetime
+- 285 novel shapes (Discovery roles only) → 1051 lifetime shapes
+
+Per-gen:
+
+    a2: 1,264,399 records 11% dup, 93% kill rate
+    a4: 1,305,760 records  8% dup
+    c3: 1,008,423 records 29% dup, 43% kill / 57% confirm
+    d1:     1,807 records 99.9% dup — SATURATED
+    f2: 1,419,611 records  0% dup, 66% kill
+
+**Per-gen novelty signatures = 0 for all gens** because the running
+daemon was started BEFORE the novelty-plumbing patch shipped — code
+was already loaded into memory. Per-gen attribution kicks in
+starting Fire #60.
+
+### Lifetime stats after Fire #59
+
+| Metric | Pre-#34 | Post-#58 | Post-#59 |
+|---|---|---|---|
+| Batches | 30 | 59 | 60 |
+| Records | 154.4M | 257.2M | 262.2M |
+| Kills | 74.4M | 135.7M | 138.7M |
+| Confirmations | 75.5M | 110.6M | 111.8M |
+| Discoveries | 500 | 1040 | 1060 |
+| Lifetime DISCOVERY shapes | 17 | 766 | 1051 |
+
+Novelty trajectory:
+
+    Fire #54: 19   (a1+f4)
+    Fire #55: 5026 (INFLATION)
+    Fire #56: 17   (saturated gens)
+    Fire #57: 286  (f3+h1 explore)
+    Fire #58: 463  (c5+d3 explore)
+    Fire #59: 285  (a4+a2+c3+f2 explore)
+
+3-fire honest-index running mean: ~344 novel shapes per fire.
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Solved. Plus shipped two non-trivial
+patches: novelty-aware yield_score AND a tighter handoff_daemon cap.
+
+(b) **Changed contracts?** GeneratorMetrics gains a non-breaking
+field with default 0. SignatureIndex gains a new accessor.
+handoff_daemon default cap tightens but param is still supported.
+No test regressions.
+
+(c) **Conventional-approach drift check?** Caught my own incomplete
+Fire #58 fix when the new daemon hit 18 GB. Honest: this is two
+incomplete fixes in a row (Fire #57 candidates-list → Fire #58
+episode-index → Fire #59 cap-tightening). Per `feedback_assume_wrong`:
+each failure made the fix sharper. The cap=3 is empirically grounded
+(in the actual observed per-batch record growth) rather than
+theoretical.
+
+(d) **Memory check on conventional bandit framing:** UCB +
+softmax-over-yield is conventional. The novelty-rate addition is
+the deliberately-different part — it weighs *exploration-shape-rate*
+not just *records-per-second*. Aligned with
+`feedback_anti_gravitational_well`: the LLM gravitational pull is
+"more records = better"; the substrate-specific framing is "new
+shapes = better."
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #60 will be the first fire with
+novelty-aware yield_score actually consuming non-zero per-gen
+attribution. Bandit pick should bias toward exploring gens.
+
+---
+
+*Fire #59 closed. Novelty-aware yield_score shipped (Fire #60 first
+to see effect). handoff_daemon RAM cap tightened 10→3. 262.2M
+records, 138.7M kills, 1060 discoveries, 1051 lifetime DISCOVERY
+shapes (+285 this fire).*
+
 
 
 
