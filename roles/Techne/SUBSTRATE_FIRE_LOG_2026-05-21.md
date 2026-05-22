@@ -2171,6 +2171,151 @@ events (substrate's clearest actionable request). mathlib
 extractor produced 15,448 candidates — the catalog-expansion
 backbone. 223.3M records lifetime, 113.7M kills, 860 discoveries.*
 
+---
+
+## Fire #50 — 2026-05-22 ~05:07Z
+
+**mathlib score-and-select shipped; advisory board feedback received
+and replanned remaining fires.**
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1309975493
+    [theseus] Hydrated bandit history: 55 yield-score entries from prior fires
+    [theseus] Bandit bootstrap selected: ['a3', 'f4', 'e1', 'h2', 'd3']
+
+### h2 99.99% kill rate THIRD replication
+
+| fire | h2 records | kill rate |
+|------|-----------|-----------|
+| #38  | 1,773,478 | 99.99%    |
+| #41  | 1,382,486 | 99.99%    |
+| #50  | 1,251,263 | 99.99%    |
+
+I had been celebrating this as "substrate-meaningful triangulation
+robustness." Per the advisory board's convergent critique today, this
+is exactly the signature of **manufactured kills via inapplicability**:
+if h2's triangulation methods don't apply to the claim's coordinate
+space, the "kill" is a type-mismatch, not a falsification. The
+near-perfect kill rate across three independent fires on independent
+random samples is suspicious, not confirmatory.
+
+Fire #51 will pivot to an h2 applicability audit instead of the
+planned mathlib YAML stubs (Claude's recommendation, ratified by
+Gemini and ChatGPT).
+
+### Between-fire work shipped (Idea #2 score-and-select)
+
+**mathlib score-and-select** (commit `<scorer commit>`):
+- 15,448 raw candidates → curated top-200 with hybrid scoring
+- Stratified by domain (NT 70 + AG 50 + RT 40 + FT 25 + G 15)
+- Sample top pick: `fermatLastTheoremThree_of_three_dvd_only_c`
+- 12 unit tests
+- Output committed at
+  techne/handoff/mathlib_primitive_candidates_top200.jsonl (52KB)
+
+**Advisory board feedback** received from Claude/Gemini/ChatGPT
+on the Q&A I posted. Convergent kills on FIVE of my celebrated
+findings:
+- yield_score objective is internal proxies, not Learner value
+- c4 100% confirmation rate is tautology, zero info bits
+- **h2 99.99% kill rate is likely applicability-failure, not falsification**
+- bandit's learner_delta_steps=99 default punishes literature-mining
+  (the only gens reaching outside the closed cross-product)
+- mathlib should lift def declarations (primitives), not theorems (claims)
+
+The convergence checks out per `feedback_ai_to_ai_inflation`: three
+independent AIs killed my celebrated metrics rather than amplifying
+them. That's substrate-honest critique, not co-amplification.
+
+### Replanned priority for next fires (replacing mathlib YAML stubs)
+
+- **Fire #51**: h2 applicability audit — pose 100 mathlib-proven
+  theorems as Theseus claims, run only h2. Pre-register: mark h2 as
+  "applicability filter not falsifier" if kill rate on known-true
+  claims > 20%. (Claude's recommendation; one fire; highest
+  info-density-per-hour.)
+- **Fire #52**: persistent cross-batch signature index — sqlite
+  store keyed on (gen_id, normalized_signature, verdict). Becomes
+  the substrate memory. Penelope_dup_rate against this. Without
+  this every other metric is per-batch-blind. (ChatGPT.)
+- **Fire #53**: c4 retitled to `TAUTOLOGY-CONTROL`, excluded from
+  discovery stats. Kept as alive-monitor. (One genuine pushback
+  vs the board: removing c4 entirely loses the alive-monitor;
+  relabeling preserves diagnostic value.)
+- **Fire #54**: bandit reformulation — split into "synthetic
+  explore" + "literature exploit" arms. Source-quality prior
+  (mathlib > LMFDB > arxiv > Wikipedia) replaces
+  learner_delta_steps=99 floor.
+- **Fire #55+**: mathlib pivot — throw out top-200 theorem JSONL.
+  Re-extract `def` declarations + theorem hypotheses as executable
+  primitive schemas (hypotheses + emitted relation + falsification
+  hook). 20 hand-authored beats 200 inert.
+- **Continuous**: handoff canonicalization — JSONL schema +
+  unresolved-P0/P1 watcher. Move from "later cleanup" to now.
+
+### Batch result
+
+- batch_id: `batch-20260522T050716Z-09bb4c`
+- Duration: 1.41h (5M cap)
+- 5,000,000 records / 4,088,926 kills / 884,656 confirms / 21,655 incon / 0 errors
+- 20 new discoveries → 880 lifetime
+
+Per-generator yield:
+
+| gid | records   | yield | dup_rate | kills      | conf    |
+|-----|-----------|-------|----------|------------|---------|
+| f4  | 1,254,216 | 0.0043| 0.0%     | 825,421    | 428,795 |
+| h2  | 1,251,263 | 0.0049| 0.3%     | **1,251,136** | 1   |
+| a3  | 1,249,872 | 0.0045| 0.4%     | 794,012    | 455,860 |
+| d3  | 1,239,886 | 0.0047| 1.2%     | 1,218,357  | 0       |
+| e1  | 4,763     | 0.0019| 0.0%     | 0          | 0       |
+
+h2 again. The audit cannot wait.
+
+### Lifetime stats after Fire #50
+
+| Metric | Pre-#34 | Post-#49 | Post-#50 |
+|---|---|---|---|
+| Batches | 30 | 50 | 51 |
+| Records | 154.4M | 223.3M | 228.3M |
+| Kills | 74.4M | 113.7M | 117.8M |
+| Confirmations | 75.5M | 100.9M | 101.8M |
+| Discoveries | 500 | 860 | 880 |
+| Kill share | 48.2% | 50.9% | 51.6% |
+
+But per the advisory board: lifetime stats are operational metrics,
+not epistemic ones. The next milestone is not 300M records or 150M
+kills. It is unique Penelope-accepted structural signatures per
+million records vs baseline.
+
+### Self-review (revised per advisory board reframe)
+
+(a) **Solved THIS fire's task?** Yes operationally. Per advisory
+board: probably ran the loop harder rather than shipped value.
+
+(b) **Changed contracts?** No this fire.
+
+(c) **Conventional-approach drift check?** The original between-fire
+plan (mathlib YAML stubs) would have continued optimizing the wrong
+objective. Replanning per the convergent critique IS the
+anti-conventional response — kill the celebrated metrics, redirect.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #51 is the h2 audit — pre-registered
+falsifiable test: kill rate on known-true claims > 20% → h2
+relabeled, contributions excluded from substrate-meaningful tallies.
+
+---
+
+*Fire #50 closed. Advisory board convergent feedback received and
+internalized. h2 99.99% replicated a third time — celebrated finding
+becomes prime audit suspect. Next fire pivots from mathlib YAML
+stubs to h2 audit. 228.3M records, 117.8M kills, 880 discoveries.
+But these are operational, not epistemic.*
+
+
 
 
 
