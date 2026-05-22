@@ -278,6 +278,15 @@ def run_batch(
     # buffer was in-memory; sqlite write happens here).
     try:
         n_novel, n_total = SIGNATURE_INDEX.flush()
+        # Fire #59: route per-gen novelty back into BatchMetrics so
+        # yield_score is novelty-aware on the next bandit pick.
+        try:
+            novel_by_gen = SIGNATURE_INDEX.last_flush_novel_by_gen()
+            for gid, n in novel_by_gen.items():
+                if gid in bm.per_generator:
+                    bm.per_generator[gid].novelty_signatures = n
+        except Exception:
+            pass  # best-effort; never break the loop
         if n_total > 0:
             # Also compute discovery-role-only novelty (exclude
             # TAUTOLOGY_CONTROL, NULL_BASELINE, INFRA_DIAGNOSTIC per

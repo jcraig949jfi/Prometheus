@@ -211,6 +211,12 @@ class SignatureIndex:
         # flush() writes it to sqlite in a single transaction.
         # {signature: (generator_id, verdict_class, claim_kind, count, batch_id)}
         self._buffer: Dict[str, Tuple[str, str, str, int, str]] = {}
+        # Per-gen breakdown of cross-batch-novel signatures, populated
+        # by flush(). Cleared at the start of each flush.
+        # Lets the daemon route novelty back into yield_score so the
+        # bandit can prefer gens that contribute *new* shapes rather
+        # than gens that contribute *many* records.
+        self._last_flush_novel_by_gen: Dict[str, int] = {}
 
     @contextmanager
     def _conn(self) -> Iterator[sqlite3.Connection]:
@@ -251,6 +257,9 @@ class SignatureIndex:
         Should be called once at batch end. Safe to call with empty
         buffer (no-op).
         """
+        # Reset per-gen novelty breakdown for this flush. Even on
+        # empty-buffer return, downstream callers see a fresh dict.
+        self._last_flush_novel_by_gen = {}
         if not self._buffer:
             return (0, 0)
         now = datetime.now(timezone.utc).isoformat()
@@ -272,6 +281,9 @@ class SignatureIndex:
                         (sig, gid, vc, ck, now, now, cnt, batch_id, batch_id),
                     )
                     n_novel += 1
+                    self._last_flush_novel_by_gen[gid] = (
+                        self._last_flush_novel_by_gen.get(gid, 0) + 1
+                    )
                 else:
                     c.execute(
                         "UPDATE signatures SET seen_count = seen_count + ?, "
@@ -281,6 +293,13 @@ class SignatureIndex:
                     )
         self._buffer.clear()
         return (n_novel, n_total)
+
+    def last_flush_novel_by_gen(self) -> Dict[str, int]:
+        """Return per-generator novel-signature count from the most-recent
+        flush(). Empty dict if no flush has occurred or no novelty.
+        Used by the daemon to feed novelty back into yield_score.
+        """
+        return dict(self._last_flush_novel_by_gen)
 
     def record_many(self, records: Iterator[TheseusRecord]) -> Tuple[int, int]:
         """Buffer-then-flush helper; returns (n_novel, n_total)."""

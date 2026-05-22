@@ -317,3 +317,52 @@ def test_index_top_signatures_sorted_by_count(tmp_path):
     assert len(top) == 2
     assert top[0]["seen_count"] == 5
     assert top[1]["seen_count"] == 2
+
+
+def test_last_flush_novel_by_gen_attributes_novelty(tmp_path):
+    """Fire #59: per-gen novel-signature breakdown drives novelty-aware
+    bandit yield_score."""
+    idx = SignatureIndex(path=tmp_path / "idx.sqlite")
+    # a1 emits 2 novel shapes
+    idx.record(_mk({
+        "catalog_a": "knot", "invariant_a": "x",
+        "catalog_b": "ec", "invariant_b": "y", "relation": "equal",
+    }, generator_id="a1"))
+    idx.record(_mk({
+        "catalog_a": "knot", "invariant_a": "z",
+        "catalog_b": "ec", "invariant_b": "w", "relation": "divides",
+    }, generator_id="a1"))
+    # c5 emits 1 novel shape
+    idx.record(_mk({
+        "catalog_a": "knot", "invariant_a": "p",
+        "catalog_b": "mf", "invariant_b": "q", "relation": "equal",
+    }, generator_id="c5"))
+    idx.flush()
+    per_gen = idx.last_flush_novel_by_gen()
+    assert per_gen.get("a1") == 2
+    assert per_gen.get("c5") == 1
+
+
+def test_last_flush_novel_by_gen_resets_on_each_flush(tmp_path):
+    """Per-gen novelty breakdown is reset on each flush; second flush
+    of repeats yields 0 novel for the gen."""
+    idx = SignatureIndex(path=tmp_path / "idx.sqlite")
+    idx.record(_mk({
+        "catalog_a": "knot", "invariant_a": "x",
+        "catalog_b": "ec", "invariant_b": "y", "relation": "equal",
+    }, generator_id="a1"))
+    idx.flush()
+    assert idx.last_flush_novel_by_gen() == {"a1": 1}
+    # Same shape again: 0 novel
+    idx.record(_mk({
+        "catalog_a": "knot", "invariant_a": "x",
+        "catalog_b": "ec", "invariant_b": "y", "relation": "equal",
+    }, generator_id="a1"))
+    idx.flush()
+    assert idx.last_flush_novel_by_gen() == {}
+
+
+def test_last_flush_novel_by_gen_empty_before_any_flush(tmp_path):
+    """Fresh index returns empty dict from last_flush_novel_by_gen."""
+    idx = SignatureIndex(path=tmp_path / "idx.sqlite")
+    assert idx.last_flush_novel_by_gen() == {}

@@ -38,17 +38,41 @@ class GeneratorMetrics:
     dup_rate: float = 0.0  # 0..1, fraction of attempted emits that
                             # were duplicates of earlier in-batch records
 
+    # Fire #59: novelty contribution. Number of cross-batch-novel
+    # signatures (per signature_index) attributed to this gen in
+    # the batch that produced these metrics. Lets the bandit prefer
+    # gens that contribute *new shapes* over gens that merely produce
+    # *many records*. Default 0 = no signal (legacy / pre-#59 history).
+    novelty_signatures: int = 0
+
     @property
     def yield_score(self) -> float:
-        """Collapsed score for bandit. v0.1 formula:
-        info_density × diversity × (1 / learner_delta_steps)
+        """Collapsed score for bandit.
+
+        Fire #59 formula:
+          base = info_density × diversity × (1 / learner_delta_steps)
+          novelty_rate = novelty_signatures / max(records_emitted, 1)
+          score = base × (1 + 10 × novelty_rate)
+
+        Rationale: pre-#59 score was novelty-blind, so the bandit
+        favored high-record-volume gens (d3 = 97% kill, 99% shape-dup
+        in lifetime) over genuinely-exploring gens (c5/f3/h1). The
+        multiplier (1 + 10x) is non-zero so legacy histories where
+        novelty_signatures=0 still produce a usable score; the 10x
+        scale matches the ~1-10% novelty-rate range observed for
+        exploring gens.
         """
         steps = max(self.learner_delta_steps, 1)
-        return (
+        base = (
             self.info_density_mean
             * max(self.diversity_mean, 0.01)
             / steps
         )
+        if self.records_emitted > 0:
+            novelty_rate = self.novelty_signatures / self.records_emitted
+        else:
+            novelty_rate = 0.0
+        return base * (1.0 + 10.0 * novelty_rate)
 
 
 @dataclass
