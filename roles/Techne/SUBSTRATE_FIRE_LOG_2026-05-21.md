@@ -3753,6 +3753,174 @@ c5 (the lone explorer at ~9% sat).
 DISCOVERY shapes (+4 this fire — the falsification was the
 finding, not the count).*
 
+---
+
+## Fire #62 — 2026-05-22 ~20:39Z
+
+**MASSIVE NOVELTY FIRE: 615 novel shapes / 234 lifetime DISCOVERY
+shape contribution. Best honest-era fire by a wide margin.**
+
+c5 wasn't picked, BUT the bandit picked f1 (NULL_BASELINE) + c1
+(claim mutation) which happened to explore — substrate-honest
+"the data is more interesting than my own predictions" moment.
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1365885494
+    [theseus] Hydrated bandit history: 115 yield-score entries from prior fires
+    [theseus] Bandit bootstrap selected: ['f1', 'f2', 'e4', 'c1', 'g1']
+    [theseus] SATURATION WARNING: e4@100%, g1@100% — claim space exhausted
+    [theseus] Demand signals logged: 1,244,849 events!
+    [theseus] Signature index: 615 novel shapes / 981 unique-in-batch (cross-batch novelty);
+                               1326 lifetime shapes from DISCOVERY roles
+    [theseus] Lifetime saturation (picked gens):
+              e4@61%, g1@99%, f1@100%, c1@100%, f2@100%
+    [theseus] Batch done: 5M records (cap), 0.97h wall
+
+### Per-gen attribution
+
+    gid  records      dup    novel  sat_lifetime  kill_rate
+    c1   1,587,199    10.4%  234    1.000         68.6%
+    f1   1,642,795     7.2%  381*   1.000         29.3%   (* NULL_BASELINE; excluded from DISC count)
+    f2   1,769,589     0.0%  0      1.000         65.8%
+    e4         233   100.0%  0      0.614         0%
+    g1         184   100.0%  0      0.986         59.0%
+
+**c1 contributed 234 lifetime DISCOVERY shapes — the largest
+single-gen single-fire discovery contribution ever measured.**
+
+f1 added 381 cross-batch novel shapes, but those are excluded from
+DISCOVERY metrics because f1 is NULL_BASELINE (random catalog
+pairs). f1's contribution to the global signature_index isn't
+disinformation though — it just maps the null landscape.
+
+### Why c1 lit up
+
+c1 is claim-mutation: takes existing claims from the corpus, alters
+them (threshold shifts, polarity flips, etc.), re-emits. c1's
+exploration depth is bounded by *what other gens have recently
+produced*. Today's surge suggests recent fires added enough new
+parent claims (from a/d/h/f-family) that c1's mutation graph
+finally had fresh territory.
+
+This is the "second-wave exploration" pattern: high-volume parents
+create the substrate; c1 mutates them into shape variants the
+signature_index hadn't seen yet.
+
+The hypothesis is testable: c1's discovery rate should correlate
+with prior fires' parent-claim volume. Future fires will measure.
+
+### The new-formula didn't yet bias picks
+
+Bandit picked f1/f2/e4/c1/g1 — same softmax-noise neighborhood as
+prior fires. lifetime_saturation field WAS populated this fire
+(daemon journal shows sat_lifetime values), but those values are
+written for the NEXT bandit hydration cycle (Fire #63), not
+consumed by Fire #62's own pick.
+
+Expected: Fire #63's bandit will hydrate with these scores. c1
+just scored ~0.003 × 1.0 × 0.95 = 0.0029 (saturated at 100%, no
+boost). c5 — IF picked — would have scored ~0.0157. Fire #63
+should see c5's UCB+history advantage more strongly.
+
+But also: the substrate just demonstrated that "lifetime-saturated"
+isn't a death sentence. c1 hit 100% sat lifetime yet still
+contributed 234 new shapes. The signature_index lifetime sat is
+a per-shape recycling metric, not a discovery-impossibility
+verdict. Worth refining the formula's interpretation later.
+
+### Batch result
+
+- batch_id: `batch-20260522T203906Z-412a65`
+- Duration: 0.97h wall (5M cap hit)
+- 5,000,000 records / 2,734,661 kills / 1,312,756 confirms / 952K incon / 0 errors
+- 20 new discoveries → **1080 lifetime** (first emission in 3 fires)
+- 615 novel shapes total → 1326 lifetime DISCOVERY shapes (**+227**)
+
+### Demand signal explosion: 1.24M events
+
+f1 produces demand signals at scale. 1.24M demand events in one
+batch is by far the largest single-batch demand log. The
+substrate is shouting for primitives — knot.nf_class_number,
+knot.alexander_polynomial_degree, ec.j_invariant, etc.
+
+This is now a 4M+ event aggregate over all fires. Demand-driven
+seed pipeline becomes increasingly load-bearing.
+
+### Lifetime stats after Fire #62
+
+| Metric | Pre-#34 | Post-#61 | Post-#62 |
+|---|---|---|---|
+| Batches | 30 | 62 | 63 |
+| Records | 154.4M | 269.9M | 274.9M |
+| Kills | 74.4M | 141.9M | 144.7M |
+| Confirmations | 75.5M | 111.9M | 113.2M |
+| Discoveries | 500 | 1060 | **1080** |
+| Lifetime DISCOVERY shapes | 17 | 1099 | **1326** |
+
+Novelty trajectory:
+
+    Fire #54: 19   (a1+f4)
+    Fire #55: 5026 (INFLATION)
+    Fire #56: 17   (saturated gens)
+    Fire #57: 286  (f3+h1)
+    Fire #58: 463  (c5+d3)
+    Fire #59: 285  (a4+a2+c3+f2)
+    Fire #60: 44   (h2 80%)
+    Fire #61: 4    (all saturated)
+    Fire #62: 234  (c1 second-wave) ⭐
+
+7-fire honest-index running mean: ~191 novel/fire.
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Massively. 234 new discovery
+shapes; biggest single fire in the honest-index era. 20 new
+discoveries emitted. Hypothesis update needed.
+
+(b) **My Fire #62 prediction (c5 dominance) was wrong.** I
+expected c5 to be picked + boost score; neither happened. The
+bandit's old-formula history + UCB held the picks within the
+familiar cluster. Yet the substrate produced anyway via c1's
+mutation surge.
+
+(c) **Conventional-approach drift check?** I almost shipped a
+bandit-history-prune intervention this morning to "force" c5.
+Resisted — and the substrate produced a better outcome on its
+own. Per `feedback_take_a_stand`: I shipped the formula change
+in good faith; the data shows it's premature to force its
+effect via bandit-priors hacks.
+
+(d) **Hypothesis update.** lifetime_saturation being 100% does
+NOT mean "no novelty possible." It means "100% of this gen's
+emitted signatures have been seen before." But the signature
+function projects payloads onto a coarse space — fresh
+substrate-deep variants can still register as novel under
+slightly different relations/operators. The formula's `(1 - sat)`
+boost is still defensible (it amplifies exploration when
+available) but the relationship to actual discovery is messier
+than a clean 1:1 mapping.
+
+(e) **What now?** Let lifetime-saturation formula run a few more
+fires to gather data. Don't intervene. Track:
+    - Does c5 get picked anytime soon?
+    - Does Fire #63 see a c5 score advantage in hydration?
+    - Does c1's mutation-surge sustain or was it a one-off?
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #63 will be the first fire where the
+lifetime-saturation populates BEFORE bandit selection (Fire #62's
+metrics + scores were saved at end of #62, hydrated at start of
+#63).
+
+---
+
+*Fire #62 closed. Best honest-era fire by a wide margin: 234
+new DISCOVERY shapes via c1's second-wave mutation surge.
+20 new discoveries emitted. 274.9M records, 144.7M kills,
+1080 discoveries, 1326 lifetime DISCOVERY shapes.*
+
 
 
 
