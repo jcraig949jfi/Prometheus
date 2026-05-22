@@ -2443,6 +2443,151 @@ preserved. 6 new wanted-primitive signals surfaced (4 genuinely
 missing + 2 parser-rejected). 900 lifetime discoveries milestone.
 233.3M records, 120.7M kills.*
 
+---
+
+## Fire #52 — 2026-05-22 ~07:25Z
+
+**Signature index shipped; corpus compaction freed 95.66 GB;
+Aporia handoff loop closed end-to-end.**
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1318269537
+    [theseus] Hydrated bandit history: 65 yield-score entries from prior fires
+    [theseus] Bandit bootstrap selected: ['d4', 'a1', 'c2', 'e1', 'e3']
+    [theseus] SATURATION WARNING: d4@85%, e3@100%
+    [theseus] Demand signals logged: 223,573 events
+
+### Between-fire work shipped
+
+**Persistent cross-batch signature index** (commit `<sig index commit>`):
+- `theseus/orchestration/signature_index.py` — SQLite-backed substrate
+  memory. Per-gen-family `compute_signature(record)` extracts the
+  CLAIM SHAPE (strips instance-specific info: which knot, which EC,
+  which value). Sample shapes:
+    A/F:  `{rel}:{cat_a}.{inv_a}|{cat_b}.{inv_b}:{verdict_class}`
+    G3:   `hasse:p_{small|mid|large}:{verdict_class}`
+    E*:   `lit:{source_dir}:{verdict_class}`
+- daemon wires `SIGNATURE_INDEX.record(rec)` after successful write
+- saturation_score per-gen, top_signatures, summary queries
+- 16 unit tests, gitignored sqlite (regenerable from corpus)
+
+Addresses the most-load-bearing advisory board critique: without
+persistent cross-batch shape tracking, every metric was per-batch-
+blind and the substrate had no memory of what it had already tested.
+Fire #53 will be the first to populate the index in production.
+
+### Disk hygiene — 95.66 GB freed
+
+Corpus directory had grown to 108GB. The handoff_daemon (which does
+`compress_batch` on idle-15-min jsonl → jsonl.gz, ~10x ratio) stopped
+when the OS locked up 2026-05-20 and was never restarted.
+
+One-off compaction this fire:
+    106.7 GB → 11.04 GB (saved 95.66 GB)
+    22 batches × ~10% retention (JSONL compresses ~10x)
+    Skipped currently-running batch
+
+Follow-up task (#26): restart handoff_daemon as persistent background
+process alongside main Theseus daemon. Without it, corpus grows
+~5-10GB per batch (~50-100GB/day at current fire cadence).
+
+### Aporia handoff loop CLOSED END-TO-END
+
+User reported: Aporia processed the T-2026-05-22-techne-self-claims-001
+ticket I filed Fire #46. Triage result:
+- 48 received, **0 verifiable as-written**
+- 5 abstracted into adjacent literature queries dispatched to Pythia
+- 43 marked Prometheus-internal (workflow/architecture language)
+
+This validates the cross-agent handoff channel works (JSONL inbox
+format was sufficient) but also surfaces real-substrate critique
+of my self-claim scanner: it caught quantitative-LOOKING patterns
+from project-design docs, not falsifiable research claims. Aporia
+gave a sharp actionable fix:
+
+> "Filter additions: require (a) named external math object, OR
+> (b) citation, OR (c) numerical bound with units from outside
+> Prometheus. Discard claims with internal markers
+> (Techne|Aporia|Ergon|Charon|Pythia|kill_path|substrate|pivot/...)
+> unless math content survives stripping."
+
+Real-yield went from 0/48 to 5/48 only via Aporia's manual
+abstraction. The scanner improvement would raise this closer to 1.0.
+Queued for a between-fire slot.
+
+5 Pythia DR queries dispatched on abstracted versions of my claims:
+- TSC-01: Reward sparsity bounds in compositional RL
+- TSC-02: Uniform polynomial enumeration in-band hit rates for Lehmer
+- TSC-03: Predictive feature engineering for BSD rank ML
+- TSC-04: Proof-redundancy / independence-class taxonomies
+- TSC-05: Active sampling vs uniform enumeration for falsification
+
+Verdict-back tickets will arrive in my inbox when reports complete.
+The demand-supply loop closed.
+
+### Batch result
+
+- batch_id: `batch-20260522T072530Z-44dc49`
+- Duration: 1.5h (wall budget, not cap)
+- 2,065,058 records / 1,185,419 kills / 874,819 confirms / 0 incon / 0 errors
+- 20 new discoveries → 920 lifetime
+
+Per-generator yield (signature index didn't populate this batch —
+commit landed mid-batch; Fire #53 first):
+
+| gid | records   | yield | dup_rate | kills    | conf    |
+|-----|-----------|-------|----------|----------|---------|
+| a1  | 1,169,586 | 0.0042| 14.3%    | 806,336  | 363,250 |
+| c2  | 682,341   | 0.0044| **50.0%**| 259,803  | 422,538 |
+| d4  | 207,251   | 0.0051| **84.8%**| 118,833  | 88,418  |
+| e1  | 4,820     | 0.0019| 0.0%     | 0        | 0       |
+| e3  | 1,060     | 0.0053| **99.9%**| 447      | 613     |
+
+The bandit's exploit phase is mature now: 3 of 5 picked gens
+(c2, d4, e3) are in mid-to-high saturation. Bandit will continue
+picking based on historical yield until those gens' actual yield
+drops materially.
+
+### Lifetime stats after Fire #52
+
+| Metric | Pre-#34 | Post-#51 | Post-#52 |
+|---|---|---|---|
+| Batches | 30 | 52 | 53 |
+| Records | 154.4M | 233.3M | 235.4M |
+| Kills | 74.4M | 120.7M | 121.9M |
+| Confirmations | 75.5M | 102.8M | 103.7M |
+| Discoveries | 500 | 900 | 920 |
+| Kill share | 48.2% | 51.7% | 51.8% |
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Yes plus 3 substantive between-fire
+items (signature index, disk cleanup, Aporia handoff closure).
+
+(b) **Changed contracts?** Signature index is purely additive
+(opt-in via daemon wiring; gitignored runtime data).
+
+(c) **Conventional-approach drift check?** The one-off compaction
+was the right call vs "leave the daemon for a future fire" —
+freeing 95GB of disk immediately while flagging the persistent fix
+as task #26. Anti-conventional: don't wait for the "right" daemon
+restart when the runtime fix is one command.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #53 first batch to populate signature
+index. Between-fire: c4 retitle to TAUTOLOGY-CONTROL per advisory
+board (preserve as alive-monitor, exclude from discovery stats).
+
+---
+
+*Fire #52 closed. Substantive milestone: signature index shipped
+(cross-batch substrate memory) + 95.66GB disk freed + Aporia
+handoff loop closed end-to-end. 235.4M records, 121.9M kills, 920
+discoveries.*
+
+
 
 
 
