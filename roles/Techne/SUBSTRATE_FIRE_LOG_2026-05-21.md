@@ -3921,6 +3921,154 @@ new DISCOVERY shapes via c1's second-wave mutation surge.
 20 new discoveries emitted. 274.9M records, 144.7M kills,
 1080 discoveries, 1326 lifetime DISCOVERY shapes.*
 
+---
+
+## Fire #63 — 2026-05-22 ~21:47Z
+
+**h2 picked for 2nd time post-Fire-#60 — new formula starting to
+bias toward identified explorers. But 16 novel shapes total; h2
+itself only contributed 3 (now saturated in its prior regions).
+b4 surprise-contributor with 11.**
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1369966947
+    [theseus] Hydrated bandit history: 120 yield-score entries from prior fires
+    [theseus] Bandit bootstrap selected: ['d2', 'h2', 'b4', 'h1', 'd4']
+    [theseus] SATURATION WARNING: b4@100%, d4@99%
+    [theseus] Demand signals logged: 920,259 events
+    [theseus] Signature index: 16 novel shapes / 96 unique-in-batch;
+                               1342 lifetime DISCOVERY shapes
+    [theseus] Lifetime saturation (picked gens):
+              b4@98%, d4@100%, h1@100%, h2@100%, d2@100%
+    [theseus] Batch done: 2.66M records, 1.5h wall (wall budget hit)
+
+### Per-gen attribution
+
+    gid  records      dup     novel  sat_lt  kill_rate
+    b4         606   100.0%   11     0.982   73.6%  ← surprise contributor
+    d2     781,530    44.2%   0      1.000   65.5%
+    d4      16,979    98.8%   2      1.000   75.6%
+    h1     456,576    67.5%   0      1.000   99.6%
+    h2   1,402,226     0.1%   3      1.000   99.99%
+
+**b4 (fixed-point hunt) contributed 11 of 16 novel shapes** (69%).
+Even at 98% lifetime saturation, b4 found new fixed points by
+visiting (operator, value) combinations not previously sampled.
+
+h2 only added 3 — its prior 35-shape contribution (Fire #60) had
+saturated its preferred regions. h2's 99.99% kill rate stays
+intact; it's now mostly confirming previously-found shapes.
+
+### The bandit's score data is propagating
+
+This is the second post-Fire-#60 pick for h2. The new-formula
+yield_score for h2's Fire #60 history (when it contributed 35
+novel) was higher than other recent entries. Bandit hydration in
+Fire #63 saw that signal and pulled h2 back into the pick set.
+
+c5 still hasn't been picked since Fire #58. Its history is frozen
+at n=2 old-formula entries. UCB bonus alone isn't pulling it
+into the top-5. May need explicit nudge in a future fire.
+
+### lifetime_saturation refinement (per Fire #62 hypothesis)
+
+The Fire #62 finding stands: sat=100% doesn't mean "no novelty
+possible." b4 just demonstrated again — at 98% sat it still
+contributed 69% of the fire's novel shapes. The signature
+function projects onto coarse space; novel sub-variants slip
+through.
+
+But the formula's (1 - sat) boost still does the right thing
+DIRECTIONALLY: gens with lower sat get higher boost. b4 at 98%
+gets boost ~1.1; a hypothetical c5 at 9% would get boost ~5.55.
+The boost direction is correct; the magnitude calibration is
+where uncertainty lives.
+
+Holding off on formula re-tuning until 3+ more fires of data.
+
+### Batch result
+
+- batch_id: `batch-20260522T214707Z-4c21ce`
+- Duration: 1.5h wall (didn't hit 5M cap)
+- 2,657,917 records / 2,382,139 kills / 275,647 confirms / 131 incon / 0 errors
+- 20 new discoveries → 1100 lifetime (continuing the emission streak)
+- 16 novel shapes (Discovery roles) → 1342 lifetime shapes (+16)
+
+### Demand signals: 920K events
+
+Down from Fire #62's 1.24M but still substantial. The substrate
+keeps shouting for primitives.
+
+(The top-3 demand print shipped between Fire #62 and #63 will
+first appear in Fire #64 since the daemon process running this
+fire was started pre-patch.)
+
+### handoff_daemon v3 4th cycle (during Fire #63)
+
+- 1 cycle / 66 min / freed 4.9 GB disk / clean exit
+- Total session compaction: ~50 GB across 4 cycles
+
+### Lifetime stats after Fire #63
+
+| Metric | Pre-#34 | Post-#62 | Post-#63 |
+|---|---|---|---|
+| Batches | 30 | 63 | 64 |
+| Records | 154.4M | 274.9M | 277.5M |
+| Kills | 74.4M | 144.7M | 147.0M |
+| Confirmations | 75.5M | 113.2M | 113.5M |
+| Discoveries | 500 | 1080 | **1100** |
+| Lifetime DISCOVERY shapes | 17 | 1326 | 1342 |
+
+Novelty trajectory:
+
+    Fire #57: 286  (f3+h1)
+    Fire #58: 463  (c5+d3)
+    Fire #59: 285
+    Fire #60: 44   (h2 80%)
+    Fire #61: 4
+    Fire #62: 234  (c1 second-wave) ⭐
+    Fire #63: 16   (b4 surprise 69%)
+
+8-fire honest-index running mean: ~167 novel/fire. Variance
+substantial — mean is increasingly dominated by Fire #62's
+outlier surge.
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Solved. 20 new discoveries
+emitted. Modest novel count (16) but b4 surprise contribution
+extends the pattern: even "saturated" gens can deliver under
+the right conditions.
+
+(b) **Did the new formula prove out?** Partially. h2 was picked
+for the 2nd time post-Fire-#60 — that's the formula doing what
+it was designed to do (re-pick previously-attributed explorers).
+But h2 contributed less this time (3 vs 35), suggesting
+contributors saturate quickly within their preferred regions.
+
+(c) **What about c5?** Still not picked. n=2 history is too small
+for the bandit to push it forward, even with UCB bonus. Will
+likely require an explicit intervention if I want to see c5
+under the new formula. Holding back per
+`feedback_take_a_stand` until 3+ more fires of natural data.
+
+(d) **Conventional-approach drift check?** Memory says "the data
+is more interesting than my predictions" (Fire #62 lesson). b4's
+surprise contribution is another instance of that pattern.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #64 will be the first fire showing the
+top-3 demand-signal print in its output.
+
+---
+
+*Fire #63 closed. h2 + b4 dominated novelty (h2 from new-formula
+bias, b4 by surprise). 20 new discoveries emitted (streak now
+3 fires). 277.5M records, 147.0M kills, 1100 discoveries, 1342
+lifetime DISCOVERY shapes.*
+
 
 
 
