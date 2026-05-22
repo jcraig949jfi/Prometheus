@@ -14,11 +14,12 @@ import json
 import math
 import random
 from collections import Counter
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Iterator, Optional
 
 from charon.agents._base import CharonAgent
+from charon.agents._shared_queues import stygian_priority_queue
 from harmonia.agents._base import REPO_ROOT
 
 
@@ -470,6 +471,52 @@ class HecateAgent(CharonAgent):
         ]
         return self.write_artifact(fname, "\n".join(lines))
 
+    # ---- stygian-priority queue feed -------------------------------------
+
+    def _feed_stygian_priority(self, analysis: dict) -> int:
+        """Walk this tick's clusters_at_or_above_min_size; enqueue any
+        kill_pattern not seen in the last 24h as a Stygian attack target.
+
+        Producer-side dedup keeps the queue tight: we don't want to flood
+        Stygian with the same kill_pattern every 20-minute rotation when
+        the cluster geometry hasn't actually changed.
+        """
+        clusters = analysis.get("clusters_at_or_above_min_size") or []
+        if not clusters:
+            return 0
+        mi_z = float(analysis.get("mi_z") or 0.0)
+        # Only emit when MI signal is meaningfully above null (don't feed
+        # Stygian noise during decay states; alarm already fires if mi_z
+        # drops, so this gating is the operational corollary).
+        if mi_z < MI_DRIFT_THRESHOLD:
+            return 0
+        queue = stygian_priority_queue()
+        cutoff = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat()
+        recent_kps = queue.recent_keys("kill_pattern", cutoff)
+        n_emitted = 0
+        for cluster in clusters:
+            kp = cluster.get("kill_pattern")
+            if not kp or kp in recent_kps:
+                continue
+            top_gens = cluster.get("top_generators") or []
+            top_gen = top_gens[0][0] if top_gens else "unknown"
+            queue.append({
+                "source": "hecate",
+                "kill_pattern": kp,
+                "cluster_size": int(cluster.get("size") or 0),
+                "top_generator": top_gen,
+                "mi_z": round(mi_z, 3),
+                "mi_observed": float(analysis.get("mi_observed") or 0.0),
+                "hecate_ledger_dir": analysis.get("ledger_dir"),
+            })
+            n_emitted += 1
+        if n_emitted:
+            self.log.info(
+                f"stygian-priority: enqueued {n_emitted} cluster(s) "
+                f"(mi_z={mi_z:.2f}); recent_kps_skipped={len(recent_kps)}"
+            )
+        return n_emitted
+
     # ---- alarm tracking --------------------------------------------------
 
     def _update_alarm_state(self, mi_z: float) -> Optional[str]:
@@ -557,6 +604,19 @@ class HecateAgent(CharonAgent):
                     stats["artifacts_written"] += 1
             except Exception as e:
                 self.log.exception(f"gradient archaeology failed: {e}")
+                stats["errors"] += 1
+
+        # ---- Stygian-priority queue feed (closed-loop edge) -------------
+        # Per Stand #1 (2026-05-21): when a kill_pattern cluster crosses the
+        # MIN_CLUSTER_SIZE threshold with high mi_z, enqueue it as a
+        # high-priority attack target for Stygian. Closed-loop: Hecate finds
+        # the cluster, Stygian validates with the v10 battery, the kill row
+        # grows the ledger, next Hecate analysis sees the refined geometry.
+        if (not dry_run) and analysis_cached is not None:
+            try:
+                self._feed_stygian_priority(analysis_cached)
+            except Exception as e:
+                self.log.exception(f"stygian-priority queue feed failed: {e}")
                 stats["errors"] += 1
 
         # ---- Pythia DR enqueue (retraction-pattern hunt grounded in this tick) ----

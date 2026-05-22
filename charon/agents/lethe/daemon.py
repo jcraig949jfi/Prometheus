@@ -153,8 +153,20 @@ class LetheAgent(CharonAgent):
     # ---- probe ------------------------------------------------------------
 
     def _probe(self, conjecture: dict, n_samples: int) -> list[dict]:
-        """Fire n_samples cold DeepSeek completions. Returns list of
-        {sample_idx, text, false_form_fired (bool), matched_patterns}."""
+        """Fire n_samples cold LLM completions, then judge each via a
+        separate LLM call (LLM-judges-LLM pattern).
+
+        Returns list of {sample_idx, text, false_form_fired, judge_verdict,
+        judge_reason, matched_patterns (regex backup)}.
+
+        Per Stand #2 (2026-05-21): the original pure-regex scorer false-
+        positived on `ternary_goldbach` because the word `conjecture`
+        appears in the name regardless of status. The judge classifies
+        the actual status claim in the text, then we compare against the
+        registered status. Regex stays as a backup signal but no longer
+        drives the verdict alone.
+        """
+        registered_status = self._registered_status(conjecture)
         results: list[dict] = []
         for i in range(n_samples):
             text = self.deepseek_complete(
@@ -168,21 +180,109 @@ class LetheAgent(CharonAgent):
                     "sample_idx": i,
                     "text": None,
                     "false_form_fired": False,
+                    "judge_verdict": None,
+                    "judge_reason": "llm_unavailable",
                     "matched_patterns": [],
-                    "error": "deepseek_unavailable",
+                    "error": "llm_unavailable",
                 })
                 continue
+            # Regex (legacy, kept as backup signal)
             matched: list[str] = []
             for pat in conjecture["false_form_patterns"]:
                 if re.search(pat, text):
                     matched.append(pat)
+            # LLM judge — primary signal
+            judge_verdict, judge_reason = self._judge_sample_status(
+                conjecture, text
+            )
+            # false_form_fired = judge says one status, registry says other.
+            # UNCLEAR / None judge → don't fire (conservative).
+            false_form_fired = bool(
+                judge_verdict
+                and judge_verdict in ("OPEN", "SOLVED")
+                and registered_status in ("OPEN", "SOLVED")
+                and judge_verdict != registered_status
+            )
             results.append({
                 "sample_idx": i,
                 "text": text[:1500],
-                "false_form_fired": bool(matched),
+                "false_form_fired": false_form_fired,
+                "judge_verdict": judge_verdict,
+                "judge_reason": judge_reason,
                 "matched_patterns": matched,
             })
         return results
+
+    @staticmethod
+    def _registered_status(conjecture: dict) -> str:
+        """SOLVED / OPEN / UNCLEAR derived from the catalog entry.
+
+        Explicit `registered_status` key wins. Otherwise infer from the
+        true_form_summary prefix (cheap heuristic; verified against the
+        current catalog 2026-05-21):
+          - 'Settled' / 'Resolved' / 'Yes.' / 'Disproved' → SOLVED
+          - 'Open' / 'No.' → OPEN
+          - else UNCLEAR (judge result won't trigger emit)
+        """
+        s = conjecture.get("registered_status")
+        if s in ("SOLVED", "OPEN", "UNCLEAR"):
+            return s
+        summary = (conjecture.get("true_form_summary") or "").strip()
+        head = summary.split(".", 1)[0].lower()
+        if any(head.startswith(p) for p in ("settled", "resolved", "yes", "disproved")):
+            return "SOLVED"
+        if head.startswith("open") or head.startswith("no"):
+            return "OPEN"
+        return "UNCLEAR"
+
+    def _judge_sample_status(
+        self, conjecture: dict, sample_text: str
+    ) -> tuple[Optional[str], str]:
+        """Classify what status claim the sample makes about the conjecture.
+
+        Returns (verdict, reason). Verdict is one of SOLVED / OPEN /
+        UNCLEAR / None. None means the judge call failed (cascade exhausted
+        or response unparseable).
+
+        The judge prompt is intentionally narrow: one-word output, narrow
+        question, no context about what the registered status is (so the
+        judge cannot game the answer). Independence from the original
+        emission prompt and from the registered ground truth keeps the
+        signal clean.
+        """
+        conjecture_name = (
+            conjecture.get("display_name")
+            or conjecture["id"].replace("_", " ")
+        )
+        prompt = (
+            f"A text passage discusses '{conjecture_name}'. Classify what "
+            f"status claim, if any, the passage makes. Reply with exactly "
+            f"ONE word, no other text:\n"
+            f"- SOLVED if the passage claims it has been proved, settled, "
+            f"resolved, or disproved (any definitive resolution).\n"
+            f"- OPEN if the passage claims it remains unsolved, open, "
+            f"unproven, or is still a conjecture awaiting proof.\n"
+            f"- UNCLEAR if the passage makes no definitive status claim "
+            f"either way.\n\n"
+            f"Passage:\n```\n{sample_text[:1500]}\n```\n\n"
+            f"Status (one word):"
+        )
+        response = self.deepseek_complete(
+            prompt=prompt, max_tokens=10, temperature=0.0
+        )
+        if not response:
+            return None, "judge_unavailable"
+        response_clean = response.strip().upper()
+        # Tolerate "**SOLVED**" / "SOLVED." / " SOLVED " / multi-word with verdict first
+        first_word = "".join(c for c in response_clean.split()[0] if c.isalpha())
+        if first_word in ("SOLVED", "OPEN", "UNCLEAR"):
+            return first_word, response_clean[:80]
+        # Tolerate verdict anywhere in first 3 tokens
+        for tok in response_clean.split()[:3]:
+            tok = "".join(c for c in tok if c.isalpha())
+            if tok in ("SOLVED", "OPEN", "UNCLEAR"):
+                return tok, response_clean[:80]
+        return None, f"unparseable: {response_clean[:80]}"
 
     # ---- artifact writers -------------------------------------------------
 
@@ -204,7 +304,9 @@ class LetheAgent(CharonAgent):
         lines.append("")
         lines.append(conjecture["true_form_summary"])
         lines.append("")
-        lines.append("## False forms observed")
+        lines.append(f"- registered_status: {self._registered_status(conjecture)}")
+        lines.append("")
+        lines.append("## False forms observed (judge-confirmed)")
         lines.append("")
         for s in samples:
             if not s.get("false_form_fired"):
@@ -214,7 +316,9 @@ class LetheAgent(CharonAgent):
             lines.append("```")
             lines.append((s.get("text") or "")[:600])
             lines.append("```")
-            lines.append(f"matched patterns: {s.get('matched_patterns')}")
+            lines.append(f"- judge_verdict: **{s.get('judge_verdict')}**")
+            lines.append(f"- judge_reason: `{s.get('judge_reason')}`")
+            lines.append(f"- regex backup matched: {s.get('matched_patterns') or 'none'}")
             lines.append("")
         lines.append("## Recommendation")
         lines.append("")
