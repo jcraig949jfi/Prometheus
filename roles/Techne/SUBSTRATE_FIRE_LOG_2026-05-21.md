@@ -2019,6 +2019,159 @@ telemetry hits e4+b2; symbol-pair miner surfaces 24 candidate
 composite primitives. Lifetime 218.3M records, 111.1M kills,
 840 discoveries.*
 
+---
+
+## Fire #49 — 2026-05-22 ~04:07Z
+
+**First fire with demand signals firing in production.** AND the
+mathlib extractor (idea #2 step 1) shipped between batches. 5 of 5
+persona ideas now have shipped components.
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1306370338
+    [theseus] Hydrated bandit history: 50 yield-score entries from prior fires
+    [theseus] Bandit bootstrap selected: ['e5', 'h4', 'a4', 'a3', 'a2']
+    [theseus] SATURATION WARNING: e5@100% — claim space exhausted; bandit should downweight.
+    [theseus] Demand signals logged: 709316 events -> demand_batch-20260522T040710Z-42aee0.jsonl
+
+### First wanted-primitive surfaced
+
+Demand report after Fire #49:
+
+    count  gen   kind                    signature
+    709316  a1   missing_int_invariant   knot/nf_class_number
+
+**709,316 demand events** — A1 (running as h4's internal seed gen
+for parent-record production) tried to read `knot.nf_class_number`
+709K times and got None every time. The catalog has knots but
+their nf_class_number field is empty/missing for most entries.
+
+**Action item**: substrate is literally asking for a
+`knot.nf_class_number` computation primitive. Compute the class
+number of each knot's trace field, populate the catalog field,
+and 709K wasted retries per batch disappear.
+
+(Note: a1 not in this batch's picked set — the demand signal
+comes from h4's internal `self._seed_gen = A1CatalogCrossProductGenerator(...)`
+which produces parent records for bridge-extension. Many generators
+use A1-as-seed for parent feed. The instrumentation captures that
+chain correctly.)
+
+### Between-fire work shipped (Idea #2 — extract step)
+
+**mathlib4 signature extractor** (commit `<mathlib-commit>`):
+- `theseus/scripts/mathlib_signature_extractor.py` — walks
+  cartography/mathlib/mathlib4_source/Mathlib/ under math-substrate-
+  relevant subdirs (NumberTheory, AlgebraicGeometry/EllipticCurve,
+  RingTheory, FieldTheory, Geometry)
+- 3 regex patterns: `theorem|lemma ... :=`, `theorem|lemma ... :`,
+  `def ... : type :=`
+- Output: techne/handoff/mathlib_primitive_candidates.jsonl (3MB,
+  gitignored — regenerable)
+- First production run: **15,448 candidates** from 1,124 files
+    - RingTheory:    7,989
+    - NumberTheory:  3,358
+    - Geometry:      2,096
+    - FieldTheory:   1,359
+    - EllipticCurve:   646
+  All split as 10,384 theorems + 4,248 lemmas + 816 defs.
+- 8 unit tests
+
+**This is the catalog-expansion swing.** 77x expansion of potential
+claim space vs current saturated cross-product. Fires #50-#52 will:
+- #50: score candidates by import-graph centrality + dedupe
+- #51: cut 15K → top 200, format as primitive YAML stubs
+- #52: hand-author specs for top 20
+
+### 5 of 5 Techne persona ideas now have shipped components
+
+- ✅ #1 Primitive demand sensor (Fire #47) — **first signal Fire #49**:
+     knot/nf_class_number = 709K demand events
+- ✅ #2 mathlib4 extractor (Fire #49) — 15,448 candidates extracted;
+     scoring + spec authoring are subsequent fires
+- ✅ #3 Symbol-pair miner (Fire #48) — 24 composite-primitive
+     candidates surfaced
+- ✅ #4 Saturation telemetry (Fire #46) — dup_rate per gen visible;
+     surfaces b5/d2/e4/b2/e5 saturation across recent fires
+- ✅ #5 Self-claim verification + Aporia ticket (Fire #46) — 48
+     candidate claims filed for Aporia → Pythia DR dispatch
+
+### Batch result
+
+- batch_id: `batch-20260522T040710Z-42aee0`
+- Duration: 0.77h (5M cap)
+- 5,000,000 records / 2,570,151 kills / 1,231,670 confirms / 1,198,058 incon / 0 errors
+- 20 new discoveries → 860 lifetime
+
+Per-generator yield:
+
+| gid | records   | yield | dup_rate | kills    | conf     | incon     |
+|-----|-----------|-------|----------|----------|----------|-----------|
+| a3  | 1,335,322 | 0.0046| 0.4%     | 848,084  | 487,238  | 0         |
+| a4  | 1,235,651 | 0.0045| 7.9%     | 377,893  | 4,048    | 853,710   |
+| h4  | 1,234,051 | 0.0048| 8.0%     | 227,974  | 661,729  | 344,348   |
+| a2  | 1,194,855 | 0.0044| 10.9%    | 1,116,200| 78,655   | 0         |
+| e5  | 121       | 0.0020| **100%** | 0        | 0        | 0         |
+
+a4's 853K INCONCLUSIVE is symbolic-regression-fails-to-converge
+(substrate-honest signal). a2's 93.4% kill rate replicates Fire #39's
+93.3% (statistical correlation reliably REJECTS random cross-catalog
+correlations under prime-detrending).
+
+### Lifetime stats after Fire #49
+
+| Metric | Pre-#34 | Post-#48 | Post-#49 |
+|---|---|---|---|
+| Batches | 30 | 49 | 50 |
+| Records | 154.4M | 218.3M | 223.3M |
+| Kills | 74.4M | 111.1M | 113.7M |
+| Confirmations | 75.5M | 99.6M | 100.9M |
+| INCONCLUSIVE | 4.55M | 7.58M | 8.78M |
+| Discoveries | 500 | 840 | 860 |
+| Kill share | 48.2% | 50.9% | 50.9% |
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Yes. Plus extract step of #2.
+
+(b) **Changed contracts?** No.
+
+(c) **Conventional-approach drift check?** Resisted designing a
+complex scoring system for the 15K candidates this fire — that's
+fire #50's work. Just shipped the extractor and let the raw 15K
+sit. Per "take a stand": extract, observe, then act.
+
+### Diff this fire
+
+| File | Change |
+|------|--------|
+| `theseus/scripts/mathlib_signature_extractor.py` | NEW |
+| `theseus/tests/test_mathlib_signature_extractor.py` | NEW (8 tests) |
+| `theseus/.gitignore` | + mathlib_primitive_candidates note |
+| `.gitignore` | + techne/handoff/mathlib_primitive_candidates.jsonl |
+
+### Commits this fire
+
+| Hash | Description |
+|------|-------------|
+| `b2a50d63` | Primitive demand sensor (Fire #47 — shipped earlier) |
+| `<mathlib commit>` | mathlib4 signature extractor (Fire #49) |
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #50 will score mathlib candidates by
+centrality + cut 15K → top 200.
+
+---
+
+*Fire #49 closed. 5 of 5 Techne persona ideas have shipped
+components. First demand signal: knot/nf_class_number = 709K
+events (substrate's clearest actionable request). mathlib
+extractor produced 15,448 candidates — the catalog-expansion
+backbone. 223.3M records lifetime, 113.7M kills, 860 discoveries.*
+
+
 
 
 
