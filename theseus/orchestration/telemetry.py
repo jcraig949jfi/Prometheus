@@ -170,13 +170,33 @@ def maybe_emit_discoveries(
 
     Caps at max_per_batch to avoid swamping the stream when a batch has
     thousands of high-weight records.
+
+    Per advisory board Fire #53: records from NULL_BASELINE,
+    TAUTOLOGY_CONTROL, or INFRA_DIAGNOSTIC generators are skipped
+    regardless of training_weight — those roles produce records whose
+    weight is structurally inflated by the formula but carry near-zero
+    info for the Learner. The role exclusion is enforced via the
+    generator class registry.
     """
     if not HAS_TELEMETRY:
         return 0
+    # Build the gen → role map once
+    try:
+        from theseus.registry import REGISTRY
+        from theseus.generators.base import NON_DISCOVERY_ROLES
+        non_discovery_gids = {
+            gid for gid, cls in REGISTRY.items()
+            if getattr(cls, "role", None) in NON_DISCOVERY_ROLES
+        }
+    except Exception:
+        non_discovery_gids = set()
+
     n_emitted = 0
     # Score + sort by weight descending; take top-K above threshold
     weighted: List = []
     for r in records:
+        if r.generator_id in non_discovery_gids:
+            continue  # role-excluded; not a real discovery candidate
         try:
             w = training_weight(r)
         except Exception:

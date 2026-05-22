@@ -29,7 +29,7 @@ from theseus.generators.a1_catalog_cross_product import (
     _label,
     RELATIONS,
 )
-from theseus.generators.base import Generator, GeneratorStatus
+from theseus.generators.base import Generator, GeneratorStatus, GeneratorRole
 
 
 # Wider net than A1: includes non-integer fields. F1 will skip non-numeric
@@ -71,6 +71,12 @@ class F1MonteCarloRandomPairsGenerator(Generator):
     generator_id = "f1"
     claim_kind = ClaimKind.INVARIANT_EQUALITY.value
     status = GeneratorStatus.ACTIVE
+    # Per advisory board Fire #53: f1 IS the null baseline by design.
+    # Its yield curve calibrates what F2/F3/F4 sophistication adds.
+    # Emissions are uniform-random claims with no sampling intelligence;
+    # excluded from substrate discovery stats but kept active as the
+    # calibration anchor.
+    role = GeneratorRole.NULL_BASELINE
 
     def __init__(self, batch_id: str, seed: int = 1024) -> None:
         super().__init__(batch_id)

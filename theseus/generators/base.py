@@ -36,6 +36,45 @@ class GeneratorStatus(str, Enum):
     EXHAUSTED = "exhausted"
 
 
+class GeneratorRole(str, Enum):
+    """Substrate-meaningful contribution class per advisory board (Fire #53).
+
+    DISCOVERY        — emissions count toward lifetime discoveries and
+                       carry substrate-novel claims worth Learner training.
+                       Default for most generators.
+    FALSIFICATION    — emissions are kills carrying real falsification
+                       signal (not applicability filter or tautology).
+    BOUNDARY_MAPPING — emissions trace catalog boundaries / near-misses;
+                       moderately discovery-worthy.
+    NULL_BASELINE    — explicit null-distribution / uniform random;
+                       baseline for measuring sophistication, not for
+                       Learner training. F1 by design.
+    TAUTOLOGY_CONTROL — emissions are tautologies by construction
+                       (e.g. c4 generalization 100% confirmation rate);
+                       kept as alive-monitor but EXCLUDED from discovery
+                       stats. Per advisory board Fire #53: kills my
+                       celebrated c4 finding while preserving the tool.
+    INFRA_DIAGNOSTIC — emissions are infrastructure self-tests; not
+                       substrate output.
+    """
+    DISCOVERY = "discovery"
+    FALSIFICATION = "falsification"
+    BOUNDARY_MAPPING = "boundary_mapping"
+    NULL_BASELINE = "null_baseline"
+    TAUTOLOGY_CONTROL = "tautology_control"
+    INFRA_DIAGNOSTIC = "infra_diagnostic"
+
+
+# Roles excluded from discovery stats — per advisory board, these
+# emissions can be valid as alive-monitors but should not count toward
+# lifetime discoveries because they carry near-zero info for the Learner.
+NON_DISCOVERY_ROLES = frozenset({
+    GeneratorRole.NULL_BASELINE,
+    GeneratorRole.TAUTOLOGY_CONTROL,
+    GeneratorRole.INFRA_DIAGNOSTIC,
+})
+
+
 @dataclass
 class GeneratorResult:
     """Summary of one generator's contribution to a batch."""
@@ -57,6 +96,11 @@ class Generator(abc.ABC):
     generator_id: str = "UNDEFINED"
     claim_kind: str = "UNDEFINED"
     status: GeneratorStatus = GeneratorStatus.STUB
+    # Role classification — controls whether emissions count as
+    # substrate discoveries. Default DISCOVERY; override per-gen to
+    # NULL_BASELINE / TAUTOLOGY_CONTROL / etc. Per advisory board
+    # Fire #53.
+    role: GeneratorRole = GeneratorRole.DISCOVERY
 
     def __init__(self, batch_id: str) -> None:
         self.batch_id = batch_id

@@ -28,7 +28,7 @@ from theseus.emit.record_schema import (
     ClaimKind,
     Verdict,
 )
-from theseus.generators.base import Generator, GeneratorStatus
+from theseus.generators.base import Generator, GeneratorStatus, GeneratorRole
 from theseus.generators.a1_catalog_cross_product import (
     A1CatalogCrossProductGenerator,
     _evaluate_relation,
@@ -55,6 +55,15 @@ class C4GeneralizationGenerator(Generator):
     generator_id = "c4"
     claim_kind = ClaimKind.MUTATION.value
     status = GeneratorStatus.ACTIVE
+    # Per advisory board Fire #53 critique: c4 generalizes by dropping
+    # constraints, which trivially preserves truth (∀x P(x) ⊢ ∃x P(x)).
+    # 100% confirmation rate observed across Fires #38-#46 with 975K+
+    # records is therefore tautology, not substrate discovery. Reclassed
+    # as TAUTOLOGY_CONTROL: stays in production as alive-monitor (any
+    # REJECTED emission would be a relation-evaluator bug, high info)
+    # but excluded from substrate discovery stats. One pushback vs the
+    # board's "ablate entirely": the alive-monitor value is real.
+    role = GeneratorRole.TAUTOLOGY_CONTROL
 
     def __init__(
         self,
