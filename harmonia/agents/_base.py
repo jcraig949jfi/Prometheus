@@ -36,6 +36,7 @@ SCRIPTS_DIR = REPO_ROOT / "scripts"
 HARMONIA_DIR = REPO_ROOT / "harmonia"
 AGENTS_DIR = HARMONIA_DIR / "agents"
 
+
 for p in (str(REPO_ROOT), str(SCRIPTS_DIR)):
     if p not in sys.path:
         sys.path.insert(0, p)
@@ -233,24 +234,36 @@ class HarmoniaAgent(ABC):
         max_tokens: int = 600,
         temperature: float = 0.6,
     ) -> Optional[str]:
-        """Synchronous DeepSeek chat completion. Returns None on any failure."""
-        client = _deepseek_client()
-        if client is None:
+        """LLM completion via the free-tier-first cascade.
+
+        Routes through `scripts.llm_cascade.call_llm` which tries:
+        Cerebras Qwen3-235B → Groq Llama-3.3-70B → NVIDIA Nemotron-120B
+        → DeepSeek-V4-Flash (paid). DeepSeek is now the last-resort
+        fallback, so DeepSeek 402 alone no longer breaks LLM-dependent
+        agents — the free providers above pick up the slack.
+
+        Returns None if every provider in the cascade fails. The
+        `model` arg is preserved for backwards compatibility but is
+        ignored; the cascade picks one model per provider.
+        """
+        try:
+            from llm_cascade import call_llm  # type: ignore
+        except Exception as e:
+            self.log.warning(f"llm_cascade import failed: {e}")
             return None
         try:
-            msgs = []
-            if system:
-                msgs.append({"role": "system", "content": system})
-            msgs.append({"role": "user", "content": prompt})
-            resp = client.chat.completions.create(
-                model=model, messages=msgs,
-                max_tokens=max_tokens, temperature=temperature,
-                timeout=120,
+            text = call_llm(
+                prompt,
+                system=system or "",
+                max_tokens=max_tokens,
+                temperature=temperature,
             )
-            return resp.choices[0].message.content or ""
         except Exception as e:
-            self.log.warning(f"deepseek_complete failed: {e}")
+            self.log.warning(f"llm cascade call failed: {e}")
             return None
+        if not text or "(LLM cascade failed" in text:
+            return None
+        return text
 
     def pythia_enqueue_dr(
         self,

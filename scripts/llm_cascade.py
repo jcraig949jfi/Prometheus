@@ -73,6 +73,12 @@ def _build_providers() -> list:
             "model": "llama-3.3-70b-versatile",
         },
         {
+            "name": "GitHub Models gpt-4o-mini",
+            "endpoint": "https://models.inference.ai.azure.com",
+            "key": os.environ.get("GITHUB_TOKEN"),
+            "model": os.environ.get("GITHUB_MODELS_MODEL", "gpt-4o-mini"),
+        },
+        {
             "name": "NVIDIA Nemotron-120B",
             "endpoint": os.environ.get("NVIDIA_API_ENDPOINT", "https://integrate.api.nvidia.com/v1"),
             "key": os.environ.get("NVIDIA_API_KEY"),
