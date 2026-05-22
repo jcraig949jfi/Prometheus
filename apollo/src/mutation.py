@@ -486,10 +486,20 @@ def parameter_mutation(organism: Organism, sigma: float = 0.1) -> Organism:
 
 
 def drift(organism: Organism, sigma: float = 0.02) -> Organism:
-    """Small Gaussian perturbation on ALL parameters."""
+    """Small Gaussian perturbation on ALL parameters.
+
+    2026-05-22 fix: APPEND to mutations_applied instead of replacing.
+    The previous implementation wiped LLM/route/wiring/swap provenance
+    because drift is called on every offspring AFTER mutate_batch in
+    apollo.py:produce_offspring. That made llm_alive read 0 for ~870 gens
+    of Granite production even though 9,089 LLM mutations were created.
+    """
     child = organism.clone()
     child.lineage.parent_ids = [organism.genome_id]
-    child.lineage.mutations_applied = ['drift']
+    # Preserve existing mutation lineage (e.g. ['route_mutation_llm_batch',
+    # 'annealed']) and append 'drift' so the LLM provenance survives.
+    existing = list(child.lineage.mutations_applied)
+    child.lineage.mutations_applied = existing + ['drift']
 
     for key, old_val in child.parameters.items():
         noise = random.gauss(0, sigma * max(abs(old_val), 0.01))

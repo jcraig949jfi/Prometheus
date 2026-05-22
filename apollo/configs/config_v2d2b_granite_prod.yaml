@@ -1,13 +1,22 @@
 # ============================================================
-# APOLLO v2_d2b — 50/50 Qwen+DeepSeek (Replica B)
+# APOLLO v2_d2b — Granite-3.0-2B production (post-bakeoff 2026-05-19)
 # ============================================================
-# Same config as v2_d2 but different island_id = different seed.
-# Tests reproducibility of v2_d2's results.
-# ============================================================
+# Bake-off (2026-05-19) compared 4 mutation LLMs against Apollo's code
+# validator. Granite-3.0-2B-Instruct produced 30x more LLM-successful
+# mutations per gen than Qwen-7B-Coder (the canonical model), with a 61%
+# route-mutation validation rate vs Qwen's 1%. Wall-clock per gen is ~50x
+# slower, but per-hour meaningful-mutation rate is ~7x higher.
+#
+# Apollo's primary LLM at port 8800 is now Granite (via llm_server_alt.py).
+# This config continues the production lineage in run_v2d2b/ from the
+# latest checkpoint (gen 1770 as of 2026-05-20).
+#
+# llm_model below is COSMETIC — actual model is whatever is hosted at the
+# server URL Apollo connects to. We keep the field for log compatibility.
 
 apollo:
-  island_id: "beta-v2d2b"
-  instance_name: "Apollo-Beta v2d2b (50/50 Replica)"
+  island_id: "beta-v2d2b-granite"
+  instance_name: "Apollo-Beta v2d2b (Granite-2B post-bakeoff)"
 
   primitives_dir: "agents/hephaestus/src"
   trap_generator: "agents/hephaestus/src/trap_generator.py"
@@ -62,7 +71,9 @@ apollo:
 
   sandbox_timeout_seconds: 0.5
 
-  llm_model: "Qwen/Qwen2.5-Coder-7B-Instruct"
+  # Cosmetic — actual model is determined by what runs at the URL Apollo
+  # connects to at port 8800. We host Granite via llm_server_alt.py.
+  llm_model: "ibm-granite/granite-3.0-2b-instruct"
   llm_device: "cuda"
   llm_max_tokens: 512
   llm_temperature: 0.7
@@ -76,9 +87,9 @@ apollo:
   annealing_rounds: 10
   aos_accuracy_only_until: 300
 
-  # NOTE: DeepSeek API account depleted 2026-05-19; ratio=0 disables alt LLM
-  # for the pure-Qwen bake-off baseline. The key below is left in-place for
-  # now but is non-functional. TODO: rotate + move to env (DEEPSEEK_API_KEY).
-  deepseek_api_key: "sk-0c89bfe76fa241f38573b5386931147a"
+  # No alt LLM in production — single Granite on the 16GB GPU
+  alt_llm_url: ""
+  alt_llm_ratio: 0.0
+  deepseek_api_key: ""
   deepseek_ratio: 0.0
   deepseek_model: "deepseek-chat"

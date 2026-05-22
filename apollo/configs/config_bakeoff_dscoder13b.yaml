@@ -1,13 +1,12 @@
 # ============================================================
-# APOLLO v2_d2b — 50/50 Qwen+DeepSeek (Replica B)
+# APOLLO bake-off candidate: Qwen-7B + Phi-4-mini (2026-05-19)
 # ============================================================
-# Same config as v2_d2 but different island_id = different seed.
-# Tests reproducibility of v2_d2's results.
-# ============================================================
+# Same architecture as config_v2d2b.yaml; only the alt-LLM slot
+# and run dirs differ.
 
 apollo:
-  island_id: "beta-v2d2b"
-  instance_name: "Apollo-Beta v2d2b (50/50 Replica)"
+  island_id: "bakeoff-dscoder13b"
+  instance_name: "Apollo bake-off (DeepSeek-Coder-1.3B alt @ 50%)"
 
   primitives_dir: "agents/hephaestus/src"
   trap_generator: "agents/hephaestus/src/trap_generator.py"
@@ -16,11 +15,11 @@ apollo:
     - "forge/candidates/*gem*.py"
     - "agents/hephaestus/forge_v7/*specialist*.py"
 
-  log_dir: "run_v2d2b/logs"
-  checkpoint_dir: "run_v2d2b/checkpoints"
-  lineage_dir: "run_v2d2b/lineage"
-  graveyard_dir: "run_v2d2b/graveyard"
-  dashboard_dir: "run_v2d2b/dashboard"
+  log_dir: "run_v2d2b_dscoder13b/logs"
+  checkpoint_dir: "run_v2d2b_dscoder13b/checkpoints"
+  lineage_dir: "run_v2d2b_dscoder13b/lineage"
+  graveyard_dir: "run_v2d2b_dscoder13b/graveyard"
+  dashboard_dir: "run_v2d2b_dscoder13b/dashboard"
 
   shared_pool: "\\\\SKULLPORT\\skullport_shared\\apollo_pool"
 
@@ -71,14 +70,16 @@ apollo:
   checkpoint_interval: 10
   checkpoint_keep_last: 5
   held_out_eval_interval: 10
-  max_generations: 50000
+  max_generations: 1511  # bake-off slice: 20 gens from checkpoint 1490
 
   annealing_rounds: 10
   aos_accuracy_only_until: 300
 
-  # NOTE: DeepSeek API account depleted 2026-05-19; ratio=0 disables alt LLM
-  # for the pure-Qwen bake-off baseline. The key below is left in-place for
-  # now but is non-functional. TODO: rotate + move to env (DEEPSEEK_API_KEY).
-  deepseek_api_key: "sk-0c89bfe76fa241f38573b5386931147a"
+  # Bake-off alt LLM (2026-05-19): second local HTTP server hosting Phi-4-mini
+  alt_llm_url: ""
+  alt_llm_ratio: 0.0
+
+  # DeepSeek depleted; ratio=0 disables
+  deepseek_api_key: ""
   deepseek_ratio: 0.0
   deepseek_model: "deepseek-chat"

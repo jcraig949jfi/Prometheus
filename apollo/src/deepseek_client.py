@@ -59,10 +59,25 @@ class DeepSeekClient:
             )
             return ""
 
-    def generate_batch(self, prompts, max_tokens=512, temperature=0.7):
-        """Generate text from multiple prompts. DeepSeek API doesn't support
-        true batching, so we call sequentially but could be threaded later."""
-        return [self.generate(p, max_tokens, temperature) for p in prompts]
+    def generate_batch(self, prompts, max_tokens=512, temperature=0.7,
+                       max_workers: int = 8):
+        """Generate text from multiple prompts. DeepSeek API has no batch
+        endpoint, so we fan calls out via a ThreadPoolExecutor. Paid accounts
+        handle 8 concurrent connections comfortably."""
+        if not prompts:
+            return []
+        from concurrent.futures import ThreadPoolExecutor
+        results = [""] * len(prompts)
+        with ThreadPoolExecutor(max_workers=min(max_workers, len(prompts))) as ex:
+            futures = {ex.submit(self.generate, p, max_tokens, temperature): i
+                       for i, p in enumerate(prompts)}
+            for fut in futures:
+                i = futures[fut]
+                try:
+                    results[i] = fut.result()
+                except Exception:
+                    results[i] = ""
+        return results
 
     def is_available(self):
         """Check if DeepSeek API is reachable."""
