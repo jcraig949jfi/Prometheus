@@ -6,6 +6,10 @@ journals/daemon_*.log
 journals/handoff_daemon_*.log
 journals/demand_*.jsonl
 
+# mathlib import staging artifact (3MB+, regenerable via
+# theseus.scripts.mathlib_signature_extractor). Curated top-200
+# subset will land as a separate committed artifact.
+
 # Offline caches for literature-mining generators (E2, E4, E5).
 # Rebuild via theseus.scripts.fetch_* CLI modules.
 cache/arxiv/*.jsonl
