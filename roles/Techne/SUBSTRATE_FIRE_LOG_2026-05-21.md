@@ -1904,6 +1904,122 @@ substrate self-reports the gen most needing catalog expansion.
 #4 saturation telemetry, #5 self-claim verification with Aporia
 ticket). Lifetime 213.3M records, 108.3M kills, 820 discoveries.*
 
+---
+
+## Fire #48 — 2026-05-22 ~03:08Z
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1302836461
+    [theseus] Hydrated bandit history: 45 yield-score entries from prior fires
+    [theseus] Bandit bootstrap selected: ['g5', 'e4', 'b2', 'h1', 'a3']
+    [theseus] SATURATION WARNING: e4@100%, b2@100% — claim space
+    exhausted; bandit should downweight.
+
+Two more saturation hits: e4 (LMFDB knowls cache exhausted at 233
+unique records) and b2 (composition test exhausted at 3636 unique).
+Three of the last two fires have caught saturating gens:
+- Fire #47: b5@99.9%, d2@75%
+- Fire #48: e4@100%, b2@100%
+
+The saturation telemetry is mapping the substrate's exhausted regions
+batch by batch.
+
+### Between-fire work shipped (Idea #3)
+
+**Symbol-pair co-occurrence miner** (commits `<miner+tests>`, `d299c366`):
+- `theseus/scripts/symbol_pair_miner.py` — extracts (catalog.invariant_a,
+  catalog.invariant_b) pairs from records' claim_payload, aggregates
+  counts + verdict_breakdown + info_density_mean per pair
+- 10 unit tests
+- First production run against 500K records from 5 recent batches:
+  surfaced **24 candidate pairs**, all with mixed verdict patterns
+  (~30-40% kill rate range)
+- Most-preserved bridges: `ec.rank × knot.three_genus` (28% kills),
+  `ec.rank × knot.signature` (28% kills)
+- Most-broken bridges: `ec.tamagawa_product × knot.determinant`
+  (44% kills), `ec.torsion × knot.determinant` (42% kills)
+- Output: `pivot/composite_primitive_candidates_2026-05-22.md`
+
+**4 of 5 Techne persona ideas shipped this session**:
+- ✅ #1 Primitive demand sensor (Fire #47)
+- ✅ #3 Symbol-pair co-occurrence miner (this fire)
+- ✅ #4 Saturation telemetry (Fire #46)
+- ✅ #5 Self-claim verification + Aporia ticket (Fire #46)
+
+Remaining: **#2 mathlib4 importer** (multi-fire build — the
+catalog-expansion swing that actually fixes b5/b2/e4/d2 saturation
+by adding new primitive vocabulary).
+
+### Batch result
+
+- batch_id: `batch-20260522T030817Z-21ff03`
+- Duration: 0.83h (5M cap)
+- 5,000,000 records / 2,833,603 kills / 2,166,164 confirms / 0 incon / 0 errors
+- 20 new discoveries → 840 lifetime
+
+Per-generator yield:
+
+| gid | records   | yield | dup_rate | kills      | conf      |
+|-----|-----------|-------|----------|------------|-----------|
+| a3  | 1,705,921 | 0.0046| 0.5%     | 1,083,531  | 622,390   |
+| h1  | 1,684,827 | 0.0045| 1.8%     | **1,623,588** | 61,239 |
+| g5  | 1,605,383 | 0.0049| 6.4%     | 125,220    | 1,480,163 |
+| b2  | 3,636     | 0.0051| **99.8%**| 1,264      | 2,372     |
+| e4  | 233       | 0.0019| **100%** | 0          | 0         |
+
+**h1 (self-play hunter) hit 96.4% kill rate** on 1.68M records.
+Replicates Fire #44's 85% — h1 is consistently a high-kill-rate
+falsifier across multiple fires. Substrate-meaningful.
+
+**g5 (scale invariance) hit 92.2% confirmation rate** on 1.6M
+records. Replicates Fire #46's 92.2% — scale invariance is robust.
+
+### Lifetime stats after Fire #48
+
+| Metric | Pre-#34 | Post-#47 | Post-#48 |
+|---|---|---|---|
+| Batches | 30 | 48 | 49 |
+| Records | 154.4M | 213.3M | 218.3M |
+| Kills | 74.4M | 108.3M | 111.1M |
+| Confirmations | 75.5M | 97.5M | 99.6M |
+| Discoveries | 500 | 820 | 840 |
+| Kill share | 48.2% | 50.8% | 50.9% |
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Yes. Shipped idea #3 plus the
+first composite-primitive candidates report.
+
+(b) **Changed contracts?** No.
+
+(c) **Conventional-approach drift check?** Resisted scaling the
+miner up — 500K records sampled across 5 batches is enough to
+surface 24 substrate-meaningful pairs. Diminishing returns past
+that. The signal is clear; act on it (mathlib import) rather than
+re-mining at finer resolution.
+
+### Diff this fire
+
+| File | Change |
+|------|--------|
+| `theseus/scripts/symbol_pair_miner.py` | NEW (miner + CLI) |
+| `theseus/tests/test_symbol_pair_miner.py` | NEW (10 tests) |
+| `pivot/composite_primitive_candidates_2026-05-22.md` | NEW (first report) |
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #49 will begin the #2 mathlib4 importer
+multi-fire build — the substrate-honest fix for saturation.
+
+---
+
+*Fire #48 closed. 4 of 5 Techne persona ideas shipped. Saturation
+telemetry hits e4+b2; symbol-pair miner surfaces 24 candidate
+composite primitives. Lifetime 218.3M records, 111.1M kills,
+840 discoveries.*
+
+
 
 
 
