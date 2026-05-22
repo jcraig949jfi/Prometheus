@@ -89,6 +89,45 @@ def test_scan_writes_jsonl(tmp_path, monkeypatch):
     assert all("pattern_kind" in c for c in parsed)
 
 
+def test_aporia_filter_rejects_prometheus_internal():
+    """Internal-only claim with no external math anchor → rejected."""
+    from theseus.scripts.scan_synthesis_claims import _passes_aporia_filters
+    claim = "Techne fire #34 ships 7 new algorithms; substrate v2.3 is stable."
+    assert _passes_aporia_filters(claim) is False
+
+
+def test_aporia_filter_accepts_externally_anchored():
+    """Claim referencing Lehmer / theorem / arXiv passes."""
+    from theseus.scripts.scan_synthesis_claims import _passes_aporia_filters
+    assert _passes_aporia_filters(
+        "We expect Lehmer enumerations are ~99% in-band uninformative."
+    )
+    assert _passes_aporia_filters(
+        "The Riemann hypothesis remains open for ζ(s)."
+    )
+    assert _passes_aporia_filters(
+        "Per arXiv:2401.12345 the bound is 5 < n < 100."
+    )
+
+
+def test_aporia_filter_internal_marker_with_external_anchor_survives():
+    """Techne mentioned but core math is external → strip + accept."""
+    from theseus.scripts.scan_synthesis_claims import _passes_aporia_filters
+    claim = (
+        "Per Techne fire #34, the Riemann hypothesis ζ(s) zeros constrain "
+        "Lehmer's conjecture to 95% of cases."
+    )
+    assert _passes_aporia_filters(claim) is True
+
+
+def test_aporia_filter_no_anchor_rejected_even_when_clean():
+    """Pure workflow claim with NO Prometheus markers AND no external anchor
+    → still rejected. We want external substantiation, not just clean text."""
+    from theseus.scripts.scan_synthesis_claims import _passes_aporia_filters
+    claim = "We plan to ship 5 new modules over the next 2 weeks."
+    assert _passes_aporia_filters(claim) is False
+
+
 def test_scan_excludes_meta_analysis_docs(tmp_path, monkeypatch):
     """meta_analysis_* and feedback_* docs should be excluded — they're
     ABOUT Techne work, not Techne claims."""

@@ -9,6 +9,25 @@ verified by Aporia, which strengthens future substrate."
 Output: techne/handoff/aporia_outbox/techne_self_claims_<date>.jsonl
 plus one ticket filed to aporia/meta/queue/aporia_inbox.jsonl asking
 Aporia to dispatch via Pythia.
+
+Fire #54 update per Aporia's 2026-05-22 feedback on the first batch
+(48 claims received, 0 verifiable as-written, all Prometheus-internal):
+Two new filters added before a candidate is emitted:
+
+  (a) Reject if the claim text contains a Prometheus-internal marker
+      (Techne / Aporia / Ergon / Charon / Pythia / kill_path /
+       navigator / substrate / pivot/ / tier / fire #...) UNLESS the
+      math content survives stripping those markers.
+  (b) Require at least one of:
+      - a named external math object (theorem / conjecture / lemma /
+        a specific function-class / named identity)
+      - a citation pattern (arXiv:, DOI:, Author Year)
+      - a numerical bound with units or named constants from outside
+        Prometheus
+
+The first batch had real-yield 0/48 → 5/48 only via Aporia's manual
+abstraction. With these filters the scanner aims for ≥0.5 real-yield
+on the surviving candidates rather than dumping 48 internal claims.
 """
 from __future__ import annotations
 
@@ -76,8 +95,14 @@ def _claim_id(text: str) -> str:
     return f"techne-claim-{h}"
 
 
-def _extract_claims_from_text(text: str, source_path: Path) -> List[dict]:
-    """Extract quantitative claim candidates from a markdown doc."""
+def _extract_claims_from_text(
+    text: str, source_path: Path, apply_aporia_filters: bool = True,
+) -> List[dict]:
+    """Extract quantitative claim candidates from a markdown doc.
+
+    apply_aporia_filters (default True): require external anchor and
+    not be Prometheus-internal-only. Disable for raw-extract debugging.
+    """
     seen = set()
     claims: List[dict] = []
     for pat in QUANTITATIVE_PATTERNS:
@@ -87,6 +112,8 @@ def _extract_claims_from_text(text: str, source_path: Path) -> List[dict]:
             if len(normalized) < 30 or len(normalized) > 600:
                 continue
             if normalized in seen:
+                continue
+            if apply_aporia_filters and not _passes_aporia_filters(normalized):
                 continue
             seen.add(normalized)
             try:
@@ -103,6 +130,87 @@ def _extract_claims_from_text(text: str, source_path: Path) -> List[dict]:
                 "pattern_kind": _classify_pattern(normalized),
             })
     return claims
+
+
+# Prometheus-internal markers that almost always signal workflow /
+# architecture / personality language, not verifiable research claims.
+# Per Aporia 2026-05-22 feedback.
+PROMETHEUS_INTERNAL_MARKERS = (
+    "Techne", "Aporia", "Ergon", "Charon", "Harmonia", "Pythia", "Clio",
+    "Sophia", "Iris", "Argos", "Telos", "Phylax", "Penelope", "Theseus",
+    "Apollo", "Rhea", "Athena", "Daedalus", "Hephaestus", "Nous",
+    "Hecate", "Stygian", "Lethe", "Acheron", "Moros", "Sigma",
+    "kill_path", "kill_vector", "navigator", "substrate", "pivot/",
+    "tier ", "fire #", "fire#", "anti-anchor", "AA-", "T-2026-",
+    "F#", "GATE(", "CLAIM(", "FALSIFY(", "PROMOTE(", "Prometheus",
+    "Mnemosyne", "Agora", "MAP-Elites",
+)
+
+# Patterns that anchor a claim to external math: theorem / conjecture
+# names; citations; named constants/functions outside Prometheus.
+EXTERNAL_ANCHOR_PATTERNS = (
+    re.compile(r"\b(Riemann|Birch|Swinnerton-Dyer|Goldbach|Collatz|Hodge|"
+               r"Wiles|Modularity|Mordell|Catalan|Faltings|Beal|Lehmer|"
+               r"Sato[-\s]?Tate|Vojta|Tate|Langlands|Stark|Bloch[-\s]?Kato|"
+               r"Weil|Poincar[ée]|Whitehead|Hadwiger|Erd[oő]s|Polignac|"
+               r"Cram[ée]r|Firoozbakht|Andrica|Pillai|Selberg|Maeda|"
+               r"Bunyakovsky|Bateman|Elliott|Halberstam|Schinzel|Vinogradov|"
+               r"Hardy|Ramanujan|Galois|Hecke|Kummer|Iwasawa|Mazur|"
+               r"Conway|Atiyah|Singer|Grothendieck|Bombieri|Tao|Zhang|"
+               r"Maynard|Helfgott)\b"),
+    re.compile(r"\b(theorem|conjecture|lemma|hypothesis|proposition|"
+               r"corollary)\b", re.IGNORECASE),
+    re.compile(r"\barXiv:\s*\d{4}\.\d{4,5}\b"),
+    re.compile(r"\bdoi[:\s]+10\.\d{4,9}/\S+\b", re.IGNORECASE),
+    re.compile(r"\b[A-Z][a-z]+\s+\(\d{4}\)\b"),  # Author (Year)
+    re.compile(r"\b[A-Z][a-z]+\s+\d{4}\b"),  # Author Year
+    re.compile(r"\b(pi|tau|gamma|zeta|chi|sigma|lambda|delta|epsilon|"
+               r"omega|phi|psi|Euler|Mahler|Bernoulli|Catalan)['s]?\s+"
+               r"(constant|function|number)\b", re.IGNORECASE),
+    re.compile(r"\b(elliptic\s+curve|modular\s+form|number\s+field|"
+               r"L[-\s]?function|knot|braid|prime|polynomial)\b",
+               re.IGNORECASE),
+)
+
+
+def _has_external_anchor(claim: str) -> bool:
+    """True if the claim references named external math objects, citations,
+    or named constants/functions from outside Prometheus."""
+    for pat in EXTERNAL_ANCHOR_PATTERNS:
+        if pat.search(claim):
+            return True
+    return False
+
+
+def _is_prometheus_internal(claim: str) -> bool:
+    """True if claim text contains Prometheus-internal markers. Used to
+    veto unless the math content survives stripping the markers."""
+    lc = claim.lower()
+    return any(marker.lower() in lc for marker in PROMETHEUS_INTERNAL_MARKERS)
+
+
+def _strip_internal_markers(claim: str) -> str:
+    """Remove Prometheus-internal markers from claim text."""
+    out = claim
+    for m in PROMETHEUS_INTERNAL_MARKERS:
+        out = re.sub(re.escape(m), " ", out, flags=re.IGNORECASE)
+    return " ".join(out.split())
+
+
+def _passes_aporia_filters(claim: str) -> bool:
+    """Returns True iff the claim survives both Aporia-suggested filters:
+    (a) prometheus-internal markers don't dominate, (b) external anchor
+    present.
+    """
+    # If the claim has external anchor in its raw form, accept.
+    if _has_external_anchor(claim):
+        if not _is_prometheus_internal(claim):
+            return True
+        # Internal markers present; require anchor to survive stripping
+        stripped = _strip_internal_markers(claim)
+        return _has_external_anchor(stripped) and len(stripped) >= 30
+    # No external anchor → reject as workflow/internal-only language
+    return False
 
 
 def _classify_pattern(claim: str) -> str:
