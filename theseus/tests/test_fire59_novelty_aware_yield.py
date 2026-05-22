@@ -90,3 +90,79 @@ def test_novelty_signatures_serializable_via_dataclass():
     d = asdict(m)
     assert d["novelty_signatures"] == 147
     assert d["records_emitted"] == 2_009_786
+
+
+# ---------- Fire #60: dup-rate penalty ----------
+
+
+def _mk_full(
+    gid: str,
+    records: int,
+    novel: int = 0,
+    dup_rate: float = 0.0,
+    info: float = 0.5,
+    div: float = 0.5,
+    steps: int = 1,
+) -> GeneratorMetrics:
+    return GeneratorMetrics(
+        generator_id=gid,
+        records_emitted=records,
+        info_density_mean=info,
+        diversity_mean=div,
+        learner_delta_steps=steps,
+        novelty_signatures=novel,
+        dup_rate=dup_rate,
+    )
+
+
+def test_zero_dup_rate_does_not_penalize():
+    """dup_rate=0 (default) leaves the Fire #59 score unchanged."""
+    m = _mk_full("a", records=100, novel=0, dup_rate=0.0)
+    # base = 0.25; novelty=1.0; dup_mult = 1.0
+    assert abs(m.yield_score - 0.25) < 1e-9
+
+
+def test_full_saturation_halves_score():
+    """dup_rate=1.0 (fully saturated) → 0.5x multiplier on otherwise
+    identical score. Saturated gens still get some exploration."""
+    m = _mk_full("d1", records=1807, novel=0, dup_rate=1.0)
+    # base = 0.25; novelty=1.0; dup_mult = 0.5 → 0.125
+    assert abs(m.yield_score - 0.125) < 1e-9
+
+
+def test_half_dup_rate_three_quarter_score():
+    """50% dup → 0.75 multiplier."""
+    m = _mk_full("c3", records=1000, novel=0, dup_rate=0.5)
+    # base = 0.25 × 0.75 = 0.1875
+    assert abs(m.yield_score - 0.1875) < 1e-9
+
+
+def test_dup_penalty_caps_at_zero():
+    """dup_rate > 1.0 (shouldn't happen but be defensive) doesn't
+    yield a negative score."""
+    m = _mk_full("bad", records=100, novel=0, dup_rate=3.0)
+    assert m.yield_score >= 0.0
+
+
+def test_novelty_bonus_and_dup_penalty_compose():
+    """A gen with both 10% novelty rate AND 50% dup_rate:
+       base × (1 + 10×0.1) × (1 - 0.5×0.5) = base × 2 × 0.75 = base × 1.5
+    """
+    m = _mk_full("explorer_partial_sat", records=100, novel=10, dup_rate=0.5)
+    # base = 0.25 → 0.25 × 1.5 = 0.375
+    assert abs(m.yield_score - 0.375) < 1e-9
+
+
+def test_bandit_downweights_saturated_arm():
+    """Bandit over 200 picks should favor the unsaturated arm even
+    when raw record count is identical."""
+    b = YieldProportionalBandit(seed=7, temperature=0.05, ucb_c=0.0)
+    fresh = _mk_full("fresh", records=100, dup_rate=0.0)
+    sat = _mk_full("sat", records=100, dup_rate=1.0)
+    b.update({"fresh": fresh, "sat": sat})
+    picks = []
+    for _ in range(200):
+        picks.extend(b.select(["fresh", "sat"], history={}, n=1))
+    assert picks.count("fresh") > 120, (
+        f"fresh picked {picks.count('fresh')}/200 — penalty too weak"
+    )

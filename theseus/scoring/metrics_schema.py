@@ -49,18 +49,21 @@ class GeneratorMetrics:
     def yield_score(self) -> float:
         """Collapsed score for bandit.
 
-        Fire #59 formula:
+        Fire #60 formula (extending Fire #59):
           base = info_density × diversity × (1 / learner_delta_steps)
           novelty_rate = novelty_signatures / max(records_emitted, 1)
-          score = base × (1 + 10 × novelty_rate)
+          score = base × (1 + 10 × novelty_rate) × (1 - 0.5 × dup_rate)
 
-        Rationale: pre-#59 score was novelty-blind, so the bandit
-        favored high-record-volume gens (d3 = 97% kill, 99% shape-dup
-        in lifetime) over genuinely-exploring gens (c5/f3/h1). The
-        multiplier (1 + 10x) is non-zero so legacy histories where
-        novelty_signatures=0 still produce a usable score; the 10x
-        scale matches the ~1-10% novelty-rate range observed for
-        exploring gens.
+        Rationale:
+        - Novelty bonus (Fire #59): rewards gens contributing new shapes,
+          not just records.
+        - Dup-rate penalty (Fire #60): downweights saturated gens (d1
+          hit 99.9% dup in Fire #59) without zeroing them out — at
+          100% dup the multiplier is 0.5, so the gen still gets some
+          exploration probability and can recover if its source
+          catalog refreshes.
+        - Backwards-compatible: novelty=0 + dup_rate=0 (defaults)
+          reproduce the base score exactly.
         """
         steps = max(self.learner_delta_steps, 1)
         base = (
@@ -72,7 +75,9 @@ class GeneratorMetrics:
             novelty_rate = self.novelty_signatures / self.records_emitted
         else:
             novelty_rate = 0.0
-        return base * (1.0 + 10.0 * novelty_rate)
+        novelty_mult = 1.0 + 10.0 * novelty_rate
+        saturation_mult = max(0.0, 1.0 - 0.5 * self.dup_rate)
+        return base * novelty_mult * saturation_mult
 
 
 @dataclass
