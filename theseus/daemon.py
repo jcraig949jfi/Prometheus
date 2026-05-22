@@ -311,6 +311,27 @@ def run_batch(
                     f"[theseus] Signature index: {n_novel} novel shapes / "
                     f"{n_total} unique-in-batch"
                 )
+        # Fire #60: surface LIFETIME signature-saturation per gen
+        # used this fire. Lifetime sat = 1 - (unique_sigs / total_seen)
+        # in the cross-batch index. Probe of current index showed
+        # most gens at ~100% sat (shape-recycling) while c5 sits at
+        # ~9% (genuinely exploring). Printing all picked gens sorted
+        # ascending makes the structural-saturation pattern visible
+        # per-fire — bandit can't fix what isn't surfaced.
+        try:
+            pairs = []
+            for gid in generator_ids:
+                sat = SIGNATURE_INDEX.saturation_score(gid)
+                if sat is not None:
+                    pairs.append((gid, sat))
+            if pairs:
+                pairs.sort(key=lambda x: x[1])  # ascending: explorers first
+                print(
+                    f"[theseus] Lifetime saturation (picked gens): "
+                    + ", ".join(f"{gid}@{sat*100:.0f}%" for gid, sat in pairs)
+                )
+        except Exception:
+            pass
     except Exception as e:
         print(f"[theseus] signature flush failed (non-fatal): {e}")
 
