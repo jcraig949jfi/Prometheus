@@ -37,7 +37,7 @@ from theseus.generators.a1_catalog_cross_product import (
     _load_catalog,
     _label,
 )
-from theseus.generators.base import Generator, GeneratorStatus
+from theseus.generators.base import Generator, GeneratorStatus, GeneratorRole
 
 
 def _sieve_primes(n: int) -> List[int]:
@@ -85,6 +85,13 @@ class G3ModularTransformGenerator(Generator):
     generator_id = "g3"
     claim_kind = ClaimKind.SYMMETRY_TRANSFORM.value
     status = GeneratorStatus.ACTIVE
+    # Fire #61 reclassification: g3 tests |a_p| ≤ 2√p (Hasse bound,
+    # a theorem). Predicted behavior is 100% confirm; any KILL would
+    # be a Weil-conjecture-collapse alarm (preserve as alive-monitor).
+    # Lifetime 120K records / 0 kills / 0 novel shapes through Fire
+    # #60 — never contributed to DISCOVERY novelty index. Same role
+    # class as c4: keep firing, exclude from discovery stats.
+    role = GeneratorRole.TAUTOLOGY_CONTROL
 
     def __init__(self, batch_id: str, seed: int = 8192) -> None:
         super().__init__(batch_id)
