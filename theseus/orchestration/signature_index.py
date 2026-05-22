@@ -72,12 +72,36 @@ def _verdict_class(verdict: str) -> str:
     return "UNVERIFIED"
 
 
+def _coarsen_relation(rel: str) -> str:
+    """Bucket abs_diff_le_K to coarse classes so K=39 vs K=40 collapse.
+
+    Per Fire #55 finding: c4 produced 2,211 "unique" shapes that were
+    all abs_diff_le_K variants (K from 34-49+). Same RELATION at
+    different precision thresholds is not substrate-novel; same shape.
+    """
+    if rel.startswith("abs_diff_le_"):
+        try:
+            k = int(rel.split("_")[-1])
+        except ValueError:
+            return rel
+        if k <= 3:
+            return "abs_diff_le_tight"
+        if k <= 10:
+            return "abs_diff_le_mid"
+        return "abs_diff_le_wide"
+    return rel
+
+
 def compute_signature(record: TheseusRecord) -> str:
     """Derive the claim-shape signature from a record.
 
     Strips instance-specific info (which knot, which EC, which value)
     leaving the CLAIM TEMPLATE. Same shape across many records means
     the substrate has been testing the same hypothesis at scale.
+
+    Fire #55 update: abs_diff_le_K relations are coarsened to 3 buckets
+    (tight/mid/wide) — each K-value was previously a distinct shape,
+    inflating c4/c1 "novelty" counts.
     """
     gid = record.generator_id
     kind = record.claim_kind
@@ -86,7 +110,7 @@ def compute_signature(record: TheseusRecord) -> str:
 
     # Family A (catalog cross-product), F (probabilistic): paired catalog+invariant
     if {"catalog_a", "invariant_a", "catalog_b", "invariant_b"}.issubset(payload):
-        rel = payload.get("relation", "?")
+        rel = _coarsen_relation(payload.get("relation", "?"))
         cat_a = payload.get("catalog_a", "?")
         inv_a = payload.get("invariant_a", "?")
         cat_b = payload.get("catalog_b", "?")
@@ -273,6 +297,29 @@ class SignatureIndex:
                 gid: {"n_unique_signatures": n_unique, "total_seen": total}
                 for gid, n_unique, total in cur.fetchall()
             }
+
+    def count_unique_signatures_for_roles(
+        self,
+        non_discovery_gids: set,
+    ) -> int:
+        """Count unique signatures EXCLUDING records from non-discovery
+        roles (TAUTOLOGY_CONTROL, NULL_BASELINE, INFRA_DIAGNOSTIC).
+
+        Per advisory board: substrate discovery novelty should not be
+        inflated by tautology-control or null-baseline emissions even
+        if they produce many shape variants.
+        """
+        with self._conn() as c:
+            if not non_discovery_gids:
+                cur = c.execute("SELECT COUNT(*) FROM signatures")
+                return cur.fetchone()[0]
+            placeholders = ",".join(["?"] * len(non_discovery_gids))
+            cur = c.execute(
+                f"SELECT COUNT(*) FROM signatures "
+                f"WHERE generator_id NOT IN ({placeholders})",
+                tuple(non_discovery_gids),
+            )
+            return cur.fetchone()[0]
 
     def saturation_score(self, generator_id: str) -> Optional[float]:
         """Estimate generator's saturation: 1 - (n_unique / total_seen).

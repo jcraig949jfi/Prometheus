@@ -2837,6 +2837,118 @@ claim shapes / 186 unique-in-batch = 10.2% novelty rate.
 Internally corroborates Penelope's 90% downstream duplicate report.
 240.4M records, 125.3M kills, 960 discoveries.*
 
+---
+
+## Fire #55 — 2026-05-22 ~11:33Z
+
+**Headline metric refined: signature inflation diagnosed and fixed.**
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Bandit picked: e3, c4, c1, f1, g3
+    [theseus] Signature index: 5026 novel shapes / 5026 unique-in-batch
+    [theseus] SATURATION WARNING: e3@100%, g3@99%
+    [theseus] Demand signals: 1,308,635 events
+    [theseus] Batch done: 5M cap at 0.52h, 0 errors
+
+The 5026 jump from Fire #54's 19 was **measurement-instrument inflation**,
+not real substrate novelty:
+
+- c4 produced 2,211 "unique" shapes — all `abs_diff_le_K` variants
+  with K from 34-49+ (e.g. K=39, K=40, K=41 each a distinct
+  signature)
+- c1 produced 2,431 "unique" shapes — same pattern
+- Each K-threshold is technically a different relation, but
+  substrate-wise they're the same shape at different precision
+
+Plus: c4 is TAUTOLOGY_CONTROL — its records shouldn't count toward
+substrate novelty regardless of shape variance.
+
+### Two coupled fixes shipped this fire
+
+**(1) `_coarsen_relation()` buckets abs_diff_le_K into tight/mid/wide**
+  - K ≤ 3:  abs_diff_le_tight
+  - K ≤ 10: abs_diff_le_mid
+  - K > 10: abs_diff_le_wide
+  - Compute_signature uses this. c4's 2,211 shapes → ~6 (3 buckets × 2 verdicts).
+
+**(2) `count_unique_signatures_for_roles()` excludes non-discovery roles**
+  - Filters TAUTOLOGY_CONTROL, NULL_BASELINE, INFRA_DIAGNOSTIC by gid
+  - Daemon now prints BOTH counts:
+    - Total novel shapes per batch
+    - Lifetime shapes from DISCOVERY roles only
+
+Signature index sqlite wiped (was 5,392 rows of inflated count).
+Fire #56 rebuilds with corrected signatures. Loss of cross-batch
+memory ≈ 1 batch worth — acceptable; we hadn't yet used the index
+for routing decisions.
+
+20 sig-index tests (4 new on coarsen + role filter). All pass.
+
+### Batch yield
+
+- batch_id: `batch-20260522T113314Z-e6132f`
+- 5,000,000 records in 31 min
+- 914,383 kills / 3,089,026 confirms / 996,591 incon / 0 errors
+- 20 new discoveries → 980 lifetime
+- Buffer fix worked (Fire #55 fast despite hitting 5M of bandit-
+  picked mixed-saturation gens)
+
+### Pre-fire signature-index inspection (substantive snapshot)
+
+Before today's wipe, the signature index showed:
+  366 total unique shapes (across all 54 fires + 240M records)
+  a1:    176 unique / 4.01M records
+  f4:    167 unique / 4.4K records (frontier pursuit by design)
+  b2-b5,d2,d3,g2-g3,h2: 1-10 unique each (small claim spaces)
+
+a1's 176 / theoretical-max ~192 = **92% catalog × invariant ×
+relation × verdict coverage**. a1 is near-fully saturated. The
+volume metrics never showed this; the shape count makes it
+unambiguous.
+
+### Lifetime stats after Fire #55
+
+| Metric | Pre-#34 | Post-#54 | Post-#55 |
+|---|---|---|---|
+| Batches | 30 | 55 | 56 |
+| Records | 154.4M | 240.4M | 245.4M |
+| Kills | 74.4M | 125.3M | 126.2M |
+| Discoveries | 500 | 960 | 980 |
+
+20 fires from session start. **+480 discoveries total. Approaching
+1000-discovery milestone**.
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Yes. Plus diagnosed + fixed the
+measurement-instrument inflation that would have made the new
+metric noisy.
+
+(b) **Changed contracts?** SignatureIndex sqlite was wiped (data
+loss, but it was 1 batch of populated data and the metric was
+inflated anyway).
+
+(c) **Conventional-approach drift check?** The 5026 "novel shapes"
+number was tempting to celebrate. Honest diagnosis: it was
+inflation. Per `feedback_assume_wrong`: kills on my own framings
+are the most valuable output, including on measurement instruments
+I just shipped.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #56 will be the first batch with the
+corrected signatures — should produce a HONEST novelty count that
+reflects actual structural exploration.
+
+---
+
+*Fire #55 closed. Signature inflation diagnosed: c4/c1's 5026
+"novel shapes" were abs_diff_le_K variants (same shape at different
+K). Coarsen + role-filter fixes shipped. 245.4M records, 126.2M
+kills, 980 discoveries (1000 milestone next fire).*
+
+
 
 
 

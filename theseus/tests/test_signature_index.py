@@ -10,6 +10,7 @@ from theseus.orchestration.signature_index import (
     SignatureIndex,
     compute_signature,
     _verdict_class,
+    _coarsen_relation,
 )
 
 
@@ -82,6 +83,37 @@ def test_signature_distinguishes_verdict_class():
         "catalog_b": "ec", "invariant_b": "y", "relation": "equal",
     }, verdict=Verdict.SHADOW_CATALOG.value)
     assert compute_signature(r1) != compute_signature(r2)
+
+
+def test_coarsen_abs_diff_le_K_tight_mid_wide():
+    """K-buckets: ≤3 → tight, ≤10 → mid, >10 → wide."""
+    assert _coarsen_relation("abs_diff_le_1") == "abs_diff_le_tight"
+    assert _coarsen_relation("abs_diff_le_3") == "abs_diff_le_tight"
+    assert _coarsen_relation("abs_diff_le_5") == "abs_diff_le_mid"
+    assert _coarsen_relation("abs_diff_le_10") == "abs_diff_le_mid"
+    assert _coarsen_relation("abs_diff_le_30") == "abs_diff_le_wide"
+    assert _coarsen_relation("abs_diff_le_100") == "abs_diff_le_wide"
+
+
+def test_coarsen_passes_through_other_relations():
+    assert _coarsen_relation("equal") == "equal"
+    assert _coarsen_relation("divides") == "divides"
+    assert _coarsen_relation("equal_mod_2") == "equal_mod_2"
+
+
+def test_signature_abs_diff_le_K_collapses_to_bucket():
+    """Different K values in same bucket should produce same signature."""
+    r1 = _mk({
+        "catalog_a": "knot", "invariant_a": "x",
+        "catalog_b": "ec", "invariant_b": "y",
+        "relation": "abs_diff_le_35",
+    })
+    r2 = _mk({
+        "catalog_a": "knot", "invariant_a": "x",
+        "catalog_b": "ec", "invariant_b": "y",
+        "relation": "abs_diff_le_47",  # different K, same wide bucket
+    })
+    assert compute_signature(r1) == compute_signature(r2)
 
 
 def test_signature_canonical_order():
@@ -240,6 +272,30 @@ def test_index_saturation_score(tmp_path):
     # 1 unique / 10 total = 0.1 unique → 0.9 saturated
     assert score is not None
     assert abs(score - 0.9) < 1e-9
+
+
+def test_count_unique_signatures_for_roles_excludes_non_discovery(tmp_path):
+    """Pass set of non-discovery generator_ids; their signatures don't count."""
+    idx = SignatureIndex(path=tmp_path / "idx.sqlite")
+    # 3 shapes from a1 (DISCOVERY)
+    for rel in ("equal", "divides", "equal_mod_2"):
+        idx.record(_mk({
+            "catalog_a": "knot", "invariant_a": "x",
+            "catalog_b": "ec", "invariant_b": "y", "relation": rel,
+        }, generator_id="a1"))
+    # 2 shapes from c4 (TAUTOLOGY_CONTROL — exclude)
+    for rel in ("equal", "divides"):
+        idx.record(_mk({
+            "catalog_a": "knot", "invariant_a": "x",
+            "catalog_b": "ec", "invariant_b": "y", "relation": rel,
+        }, generator_id="c4"))
+    idx.flush()
+    # Total includes both
+    assert idx.count_signatures() == 5
+    # Excluding c4 from non-discovery gids drops it
+    assert idx.count_unique_signatures_for_roles({"c4"}) == 3
+    # Empty exclusion = total
+    assert idx.count_unique_signatures_for_roles(set()) == 5
 
 
 def test_index_top_signatures_sorted_by_count(tmp_path):

@@ -279,10 +279,29 @@ def run_batch(
     try:
         n_novel, n_total = SIGNATURE_INDEX.flush()
         if n_total > 0:
-            print(
-                f"[theseus] Signature index: {n_novel} novel shapes / "
-                f"{n_total} unique-in-batch (cross-batch novelty)"
-            )
+            # Also compute discovery-role-only novelty (exclude
+            # TAUTOLOGY_CONTROL, NULL_BASELINE, INFRA_DIAGNOSTIC per
+            # Fire #55 advisory).
+            try:
+                from theseus.registry import REGISTRY
+                from theseus.generators.base import NON_DISCOVERY_ROLES
+                non_discovery_gids = {
+                    gid for gid, cls in REGISTRY.items()
+                    if getattr(cls, "role", None) in NON_DISCOVERY_ROLES
+                }
+                novel_disc = SIGNATURE_INDEX.count_unique_signatures_for_roles(
+                    non_discovery_gids
+                )
+                print(
+                    f"[theseus] Signature index: {n_novel} novel shapes / "
+                    f"{n_total} unique-in-batch (cross-batch novelty); "
+                    f"{novel_disc} lifetime shapes from DISCOVERY roles"
+                )
+            except Exception:
+                print(
+                    f"[theseus] Signature index: {n_novel} novel shapes / "
+                    f"{n_total} unique-in-batch"
+                )
     except Exception as e:
         print(f"[theseus] signature flush failed (non-fatal): {e}")
 
