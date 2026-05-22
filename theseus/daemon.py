@@ -34,6 +34,7 @@ from theseus.orchestration import (
     update_lifetime_after_batch,
 )
 from theseus.orchestration.bandit_state import hydrate_bandit, persist_bandit
+from theseus.orchestration.signature_index import INSTANCE as SIGNATURE_INDEX
 from theseus.scoring.demand_signals import INSTANCE as DEMAND_LOG
 from theseus.bandit.epsilon_greedy import EpsilonGreedyBandit
 from theseus.bandit.yield_proportional import YieldProportionalBandit
@@ -214,6 +215,14 @@ def run_batch(
                 total_records_written += 1
                 tracker.record_emission(rec)
                 _wire_feedback(instances, rec)
+                # Cross-batch signature index — tracks whether this
+                # record's CLAIM SHAPE has been seen before. Penelope's
+                # 90% downstream dup report reflects shape repetition,
+                # not record_id repetition.
+                try:
+                    SIGNATURE_INDEX.record(rec)
+                except Exception:
+                    pass  # best-effort; never break the loop
                 if (
                     emit_telemetry
                     and len(telemetry_record_sample) < TELEMETRY_SAMPLE_CAP
