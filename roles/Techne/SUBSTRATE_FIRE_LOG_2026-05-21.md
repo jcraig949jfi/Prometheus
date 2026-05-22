@@ -3595,6 +3595,164 @@ v3 validated: cap=3 stable, 34.9 GB disk freed. 264.9M records,
 140.4M kills, 1060 discoveries, 1095 lifetime DISCOVERY shapes
 (+44 this fire).*
 
+---
+
+## Fire #61 — 2026-05-22 ~19:15Z
+
+**FINDING: the Fire #59 novelty bonus formula is too weak in
+practice. Bandit ignored h2 (Fire #60's identified explorer) and
+picked saturated gens. Only 4 novel shapes — lowest of recent
+fires.**
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1360845416
+    [theseus] Hydrated bandit history: 110 yield-score entries from prior fires
+    [theseus] Bandit bootstrap selected: ['g1', 'e3', 'g3', 'a4', 'b2']
+    [theseus] SATURATION WARNING: g1@100%, e3@100%, g3@100%, b2@100% — claim space exhausted
+    [theseus] Signature index: 4 novel shapes / 77 unique-in-batch;
+                               1099 lifetime shapes from DISCOVERY roles
+    [theseus] Lifetime saturation (picked gens):
+              g1@98%, e3@100%, b2@100%, g3@100%, a4@100%
+    [theseus] Batch done: 5M records (cap), 1.28h wall
+
+### The honest measurement: novelty bonus is too weak
+
+Per-gen Fire #61 attribution:
+
+    gid  records      dup    novel  kill_rate
+    a4   4,975,120    12.5%  0      29.7%
+    b2   3,636        99.9%  2      34.8%
+    e3   1,060        100%   2      42.2%
+    g1   184          100%   0      58.7%
+    g3   20,000       99.6%  0      0%
+
+Computed `yield_score` per gen this fire (using the new formula):
+
+    a4: 0.00299  (volume + low dup but 0 novel)
+    e3: 0.00265
+    b2: 0.00259
+    g3: 0.00256
+    g1: 0.00246
+
+All scores cluster within 20% of each other. The novelty bonus
+`(1 + 10 × novelty_signatures/records)` produces:
+- h2 in Fire #60: 35/1.33M = 0.000026 → bonus 1.0003 (no signal!)
+- a4 in Fire #60: 1/1.23M = 0.0000008 → bonus 1.0
+- b2 in Fire #61: 2/3636 = 0.00055 → bonus 1.005
+
+The rate signal is **drowned out by base score noise**. h2's
+single-batch novelty contribution wasn't enough to move its
+50-fire mean.
+
+### The lifetime saturation print confirms it
+
+This was the first fire showing the new print (commit 9ca3490a):
+
+    Lifetime saturation (picked gens): g1@98%, e3@100%, b2@100%, g3@100%, a4@100%
+
+Every picked gen is at 98%+ lifetime saturation. The earlier probe
+showed c5 alone at ~9%. **The bandit knows the saturation pattern
+(via signature_index) but isn't using it for scoring.**
+
+### Two diagnosed issues for Fire #62 between-fire
+
+**Issue 1: Rate-based novelty bonus has wrong scale.** A gen
+producing 35 novel shapes in 1.3M records gets boost 1.0003. We
+care about absolute exploration contribution, not rate.
+
+**Issue 2: Single-batch novelty diluted across 50-fire history.**
+Even if I bump the multiplier, one good batch among 50 mediocre
+ones can't pull the mean enough. The score should reflect
+lifetime exploration, not single-batch.
+
+Plan for Fire #62 between-fire:
+- Switch to lifetime-saturation-driven score adjustment
+- `score = base × (1 + alpha × (1 - saturation_score)) × (1 - 0.5 × dup_rate)`
+- Probe signature_index for lifetime saturation per gen; non-saturated
+  gens (c5 at 9% sat) get up to (1 + alpha × 0.91) boost
+- This gives c5 a SIGNIFICANT lifetime boost the bandit can't ignore
+
+### Batch result
+
+- batch_id: `batch-20260522T191505Z-1521ed`
+- Duration: 1.28h wall (5M cap)
+- 5,000,000 records / 1,479,675 kills / 39,603 confirms / 3.48M incon / 0 errors
+- 0 new discoveries → 1060 lifetime (unchanged)
+- 4 novel shapes (Discovery roles) → 1099 lifetime shapes
+
+3.48M inconclusive is unusual — likely a4 emitting most of those.
+Worth investigating later.
+
+### Between-fire shipped this fire (before Fire #61 closed)
+
+Two role reclassifications:
+- **`240c40a1`**: g3 → TAUTOLOGY_CONTROL (Hasse bound is a theorem)
+- **`fc4b077c`**: b1 → INFRA_DIAGNOSTIC (operator self-test)
+
+Non-discovery gens after these: b1, c4, f1, g3 (4 total).
+Fire #62's discovery-novelty count will exclude these.
+
+### Lifetime stats after Fire #61
+
+| Metric | Pre-#34 | Post-#60 | Post-#61 |
+|---|---|---|---|
+| Batches | 30 | 61 | 62 |
+| Records | 154.4M | 264.9M | 269.9M |
+| Kills | 74.4M | 140.4M | 141.9M |
+| Confirmations | 75.5M | 111.9M | 111.9M |
+| Discoveries | 500 | 1060 | 1060 |
+| Lifetime DISCOVERY shapes | 17 | 1095 | 1099 |
+
+Novelty trajectory:
+
+    Fire #54: 19   (a1+f4)
+    Fire #55: 5026 (INFLATION)
+    Fire #56: 17   (saturated gens)
+    Fire #57: 286  (f3+h1)
+    Fire #58: 463  (c5+d3)
+    Fire #59: 285  (a4+a2+c3+f2)
+    Fire #60: 44   (h2 80%)
+    Fire #61: 4    (all saturated picks)
+
+5-fire honest-index running mean: ~216 novel/fire. Variance high.
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Fire ran; metrics surfaced the
+formula problem. Substrate-honest finding > raw output: the
+novelty bonus needs a stronger lever.
+
+(b) **Did the fix hold?** Fire #59 architecture (per-gen novelty
+attribution) IS WORKING. The signature_index correctly attributes
+shapes. The formula consuming the signal is what's underweighted.
+Half-fix.
+
+(c) **Conventional-approach drift check?** Tempting to add UCB
+weighting tweaks. Resisting — the right move is to read the
+signature_index's lifetime saturation directly. That data is
+already collected; just need to plumb it into yield_score.
+
+(d) **Memory check:** Per `feedback_take_a_stand` — I shipped
+the Fire #59/60 formula in good faith. Fire #61 falsified my
+prediction (rate-based was enough). Honest reaction: update the
+formula. Per `feedback_assume_wrong`: my novelty-bonus tuning
+was wrong; the lifetime-saturation signal is the right one.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #62 between-fire ships the lifetime-
+saturation-driven yield score. Bandit pick should heavily favor
+c5 (the lone explorer at ~9% sat).
+
+---
+
+*Fire #61 closed. Falsified my own Fire #59 novelty-bonus formula
+— rate-based is too weak. Lifetime-saturation lever ships next.
+269.9M records, 141.9M kills, 1060 discoveries, 1099 lifetime
+DISCOVERY shapes (+4 this fire — the falsification was the
+finding, not the count).*
+
 
 
 
