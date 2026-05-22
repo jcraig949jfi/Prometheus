@@ -3057,6 +3057,118 @@ shapes/batch confirms ~10% rate. h2 99.99% replicates 5th time
 (calibrated, measures noise floor). handoff_daemon RAM-bloated +
 killed; investigation queued. 248.2M records, 128.7M kills.*
 
+---
+
+## Fire #57 — 2026-05-22 ~13:57Z
+
+**handoff_daemon RAM bloat root-caused + fixed.** And the novelty
+metric showed its first big variation across fires:
+
+    Fire #56 (a2/c1/d2/g1/h2 — mostly saturated): 17 novel shapes
+    Fire #57 (f3/g3/b3/e5/h1 — exploring gens): 286 novel shapes
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Bandit picked: f3, g3, b3, e5, h1
+    [theseus] SATURATION WARNING: g3@99%, b3@100%, e5@100%
+    [theseus] Signature index: 286 novel / 286 unique-in-batch;
+                               303 lifetime shapes from DISCOVERY roles
+
+### Between-fire work shipped: handoff_daemon fix (commit `baafa284`)
+
+Root cause of Fire #56's 16GB bloat: `export_for_ergon` accumulated
+EVERY above-weight-threshold record from the entire 250M-record
+corpus into a Python list before sorting + truncating to 500.
+
+Fix: bounded min-heaps per pool (falsify_heap, other_heap), each
+sized to max_records. Per-record: push if room, else compare to
+heap[0] and push-pop if larger, else drop. Memory bounded by
+~2 × max_records ≈ 1000 dicts regardless of corpus size.
+
+Edge case handled: when falsify pool is short of its quota, other
+pool backfills. Both heaps sized to max_records (not
+max_records - falsify_target) so backfill has records to draw from.
+
+41 handoff tests pass: handoff_atomic, mock_consumer, episodes,
+corpus_compaction, falsify_share.
+
+Task #27 closed. Task #26 stays open until handoff_daemon is
+restarted and observed running under flat RAM for >2h.
+
+### Novelty metric showed its bimodal character
+
+Fire #54 (a1+f4 picked): 19 novel — moderate
+Fire #56 (a2+c1+d2+g1+h2 picked, all saturated): 17 novel
+Fire #57 (f3+h1+g3+b3+e5 picked, two exploring gens): **286 novel**
+
+The bandit's pick determines whether a fire is exploration or
+exploitation. Saturated gens (b5, b3, g1, g3, d2 etc.) produce
+near-zero novelty; exploring gens (f3 importance sampling, h1
+self-play, f4 frontier pursuit) produce 50-200+ novel shapes each.
+
+This is the substrate's REAL signal-yield-per-fire, not the
+volume-proxy I was using before. 303 lifetime DISCOVERY shapes
+after 2 fires of populated honest-index = ~150 shapes/fire mean,
+but with high variance.
+
+### Batch result
+
+- batch_id: `batch-20260522T135709Z-86321d`
+- Duration: 0.65h (5M cap, fast)
+- 5,000,000 records / 3,825,937 kills / 1,173,942 confirms / 0 incon / 0 errors
+- 20 new discoveries → 1020 lifetime
+
+| gid | records   | yield | dup_rate | kills      | conf      |
+|-----|-----------|-------|----------|------------|-----------|
+| f3  | 2,691,299 | 0.0043| 0.0%     | 1,813,808  | 877,491   |
+| h1  | 2,287,974 | 0.0045| 15.0%    | 2,011,783  | 276,191   |
+| g3  | 20,000    | 0.0052| 99.3%    | 0          | 20,000    |
+| b3  | 606       | 0.0051| 100%     | 346        | 260       |
+| e5  | 121       | 0.0020| 100%     | 0          | 0         |
+
+f3 + h1 carry 99.6% of the batch. h1 87.9% kill rate (replicates
+Fire #44 + Fire #48). f3 67.4% kills (mid-range, typical for
+importance-sampled cross-catalog claims).
+
+### Lifetime stats after Fire #57
+
+| Metric | Pre-#34 | Post-#56 | Post-#57 |
+|---|---|---|---|
+| Batches | 30 | 57 | 58 |
+| Records | 154.4M | 248.2M | 253.2M |
+| Kills | 74.4M | 128.7M | 132.5M |
+| Confirmations | 75.5M | 108.7M | 109.9M |
+| Discoveries | 500 | 1000 | 1020 |
+| Lifetime DISCOVERY shapes | n/a | 17 | 303 |
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Yes plus closed task #27.
+
+(b) **Changed contracts?** ergon_handoff's internal selection
+mechanism changed (list → heaps). Result dicts have same shape.
+n_candidates_scanned still returned. All callers unaffected.
+
+(c) **Conventional-approach drift check?** The heap-based fix is
+the textbook top-K approach. Resisted designing something fancier
+(e.g. quantile sketches). For max_records=500 a heap is the right
+tool.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #58 may opportunistically restart
+handoff_daemon to validate flat RAM under the new heap-based
+selection.
+
+---
+
+*Fire #57 closed. handoff_daemon RAM fix shipped (heap-based
+selection). Novelty metric variation (17 → 286 across consecutive
+fires) shows bandit exploration vs exploitation honestly.
+253.2M records, 132.5M kills, 1020 discoveries, 303 lifetime
+DISCOVERY shapes.*
+
+
 
 
 
