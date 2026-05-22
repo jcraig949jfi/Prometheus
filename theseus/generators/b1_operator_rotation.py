@@ -23,6 +23,7 @@ import random
 from datetime import datetime, timezone
 from typing import Dict, List, Optional
 
+from theseus.generators.base import GeneratorRole
 from theseus.config import KNOTS_DB_PATH
 from theseus.emit.record_schema import (
     TheseusRecord,
@@ -85,6 +86,14 @@ class B1OperatorRotationGenerator(Generator):
     generator_id = "b1"
     claim_kind = ClaimKind.OPERATOR_ROTATION.value
     status = GeneratorStatus.ACTIVE
+    # Fire #61 reclassification: docstring self-identifies b1 as
+    # "substrate self-test like C4 — predicted == actual is a
+    # mathematical fact on healthy operator implementations. Any
+    # REJECTED emission signals a bug in the operator model." That
+    # makes b1 an INFRA_DIAGNOSTIC (any kill = substrate bug, not
+    # math discovery). Keep firing as alive-monitor; exclude from
+    # discovery novelty stats.
+    role = GeneratorRole.INFRA_DIAGNOSTIC
 
     def __init__(self, batch_id: str, seed: int = 32) -> None:
         super().__init__(batch_id)
