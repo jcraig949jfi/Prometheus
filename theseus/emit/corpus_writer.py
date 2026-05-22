@@ -1,11 +1,18 @@
 """CorpusWriter — JSONL append to per-batch corpus files.
 
 One file per batch: theseus/corpus/<batch_id>.jsonl
+
+Tracks per-generator dup vs unique counts so saturation telemetry can
+surface when a generator's claim space is saturated (high dup rate).
+Penelope downstream reports 90% duplicates on her ingest — this writer's
+per-gen dup_rate makes that visible from the Theseus side too instead
+of being one-way reporting.
 """
 from __future__ import annotations
 
+from collections import defaultdict
 from pathlib import Path
-from typing import Iterable, Set
+from typing import Dict, Iterable, Set
 
 from theseus.config import CORPUS_DIR
 from theseus.emit.record_schema import TheseusRecord
@@ -32,18 +39,25 @@ class CorpusWriter:
         self._seen: Set[int] = set()
         self.records_written = 0
         self.duplicates_skipped = 0
+        # Per-generator dup vs unique counts. Surfaces saturation when
+        # a generator's claim space is exhausted (high dup rate).
+        self.unique_by_gen: Dict[str, int] = defaultdict(int)
+        self.duplicates_by_gen: Dict[str, int] = defaultdict(int)
 
     def write(self, record: TheseusRecord) -> bool:
         """Append record if not already seen this batch. Returns True iff
         the record was written (False = duplicate skipped)."""
         key = _digest_key(record.record_id)
+        gid = record.generator_id
         if key in self._seen:
             self.duplicates_skipped += 1
+            self.duplicates_by_gen[gid] += 1
             return False
         self._seen.add(key)
         with self.path.open("a", encoding="utf-8") as f:
             f.write(record.to_jsonl() + "\n")
         self.records_written += 1
+        self.unique_by_gen[gid] += 1
         return True
 
     def write_many(self, records: Iterable[TheseusRecord]) -> int:
@@ -53,3 +67,20 @@ class CorpusWriter:
             if self.write(r):
                 n += 1
         return n
+
+    def dup_rate_by_gen(self) -> Dict[str, float]:
+        """Per-generator duplicate rate within this batch.
+
+        Returns {gid: dup_rate} where dup_rate = dups / (unique + dups).
+        Generators that didn't emit any records this batch are omitted.
+        """
+        out: Dict[str, float] = {}
+        all_gens = set(self.unique_by_gen) | set(self.duplicates_by_gen)
+        for gid in all_gens:
+            u = self.unique_by_gen.get(gid, 0)
+            d = self.duplicates_by_gen.get(gid, 0)
+            total = u + d
+            if total == 0:
+                continue
+            out[gid] = d / total
+        return out

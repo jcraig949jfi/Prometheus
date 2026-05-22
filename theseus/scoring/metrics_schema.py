@@ -31,6 +31,13 @@ class GeneratorMetrics:
     errors: int = 0
     error_messages: List[str] = field(default_factory=list)
 
+    # Saturation telemetry (Fire #46): dup_rate within this batch's
+    # in-process dedup. High dup_rate = generator's claim space
+    # exhausted; bandit will downweight in next fire. Surfaces the
+    # saturation Penelope reports downstream as 90% duplicates.
+    dup_rate: float = 0.0  # 0..1, fraction of attempted emits that
+                            # were duplicates of earlier in-batch records
+
     @property
     def yield_score(self) -> float:
         """Collapsed score for bandit. v0.1 formula:

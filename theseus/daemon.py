@@ -220,6 +220,12 @@ def run_batch(
     duration_hours = (time.monotonic() - started_mono) / 3600.0
 
     per_gen = tracker.finalize()
+    # Fold writer's per-gen dup_rate into the metrics so downstream
+    # consumers (journal, dashboard, bandit history) see saturation.
+    dup_rates = writer.dup_rate_by_gen()
+    for gid, m in per_gen.items():
+        m.dup_rate = dup_rates.get(gid, 0.0)
+
     bm = BatchMetrics(
         batch_id=batch_id,
         started_at=started_at_iso,
@@ -229,6 +235,21 @@ def run_batch(
     )
     for m in per_gen.values():
         bm.add(m)
+
+    # Saturation warning: gens with dup_rate > 0.70 within a batch are
+    # exhausting their claim space. Per persona_seed_prompts_2026-05-21.md
+    # Techne idea #4: makes the saturation Penelope reports (90% dups
+    # downstream) visible from the Theseus side too.
+    saturated = [
+        (gid, m.dup_rate) for gid, m in per_gen.items()
+        if m.dup_rate >= 0.70 and m.records_emitted + writer.duplicates_by_gen.get(gid, 0) >= 100
+    ]
+    if saturated:
+        print(
+            f"[theseus] SATURATION WARNING: "
+            + ", ".join(f"{gid}@{rate*100:.0f}%" for gid, rate in saturated)
+            + " — claim space exhausted; bandit should downweight."
+        )
 
     _journal_batch(bm, generator_ids, instances)
 
@@ -316,6 +337,7 @@ def _render_batch_md(
             f"info_density={m.info_density_mean:.3f}, "
             f"diversity={m.diversity_mean:.3f}, "
             f"yield_score={m.yield_score:.4f}, "
+            f"dup_rate={m.dup_rate:.3f}, "
             f"kills={m.kills}, conf={m.confirmations}, errs={m.errors}"
         )
     lines.append("")
