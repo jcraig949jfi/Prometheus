@@ -2315,6 +2315,135 @@ becomes prime audit suspect. Next fire pivots from mathlib YAML
 stubs to h2 audit. 228.3M records, 117.8M kills, 880 discoveries.
 But these are operational, not epistemic.*
 
+---
+
+## Fire #51 — 2026-05-22 ~06:42Z
+
+**h2 audit shipped + 6 new demand primitives surfaced + 900
+discoveries milestone.**
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1315679389
+    [theseus] Hydrated bandit history: 60 yield-score entries from prior fires
+    [theseus] Bandit bootstrap selected: ['f4', 'g2', 'f1', 'h1', 'e1']
+    [theseus] SATURATION WARNING: g2@100% — claim space exhausted
+    [theseus] Demand signals logged: 1,263,114 events
+
+### h2 audit: VERDICT h2_CALIBRATED_OK (commit `<h2 audit commit>`)
+
+Pre-registered falsifiable test executed:
+  Synthesize (xs, ys) datasets at known r² ∈ {0.99, 0.95, 0.9, 0.8,
+  0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.01}. Pass through h2's exact
+  `_polyfit_r2` + `_r2_to_verdict` mapping. Tally verdicts per level.
+
+Result:
+  true r² = 0.99 → kill rate 0.0%, confirm rate 100%
+  true r² = 0.95 → kill rate 0.0%, confirm rate 100%
+  true r² = 0.90 → kill rate 0.0%, confirm rate (high)
+  true r² = 0.50 → kill rate climbs as expected
+  true r² = 0.01 → kill rate 100% (correct on noise)
+
+Mean kill rate at r² ≥ 0.9: **0.0%** — well below 20% pre-registered
+threshold. **h2's verdict mapping IS calibrated.**
+
+**Revised interpretation**: h2 stays in production but reframed.
+The 99.99% production kill rate is NOT a falsifier-misfiring pathology;
+it's correct measurement of the null distribution. h2 INDEPENDENTLY
+samples (knot, ec) pairs from catalogs — by construction, those
+samples carry no cross-catalog signal, so the polynomial fit
+correctly rejects.
+
+h2 contributions are reclassified from "robust falsification" to
+"null-distribution calibration anchor." Same tool, different framing.
+This is itself a substrate-meaningful kill: kills MY framing while
+preserving h2's correctness. Kills are first-class output (Charter
+Standing Order 4) — including kills on the audit-runner's own
+celebrated findings.
+
+### Demand sensor expanded to 7 distinct wanted primitives
+
+After Fire #51, the running demand-report aggregate:
+
+  count    gen   signature
+  711,333  a1    knot/nf_class_number
+  257,314  f1    ec/discriminant
+  256,787  f1    ec/j_invariant
+  223,773  f1    knot/alexander_polynomial_degree
+  207,507  f1    knot/hyperbolic_volume
+  189,463  f1    knot/nf_class_number
+  128,270  f1    ec/regulator
+
+Two categories surface:
+1. **In catalog but parser rejects** (data is there; just non-integer
+   storage): ec/discriminant (probably float), ec/j_invariant (stored
+   as `j_invariant_log` in BSD-rich, the int-getter returns None)
+2. **Genuinely missing values**: knot/alexander_polynomial_degree,
+   knot/hyperbolic_volume, knot/nf_class_number, ec/regulator
+
+The first category is **cheap to fix** (parser change or compute from
+stored fields). The second category needs computation or LMFDB
+pull-down. Both produce direct substrate-novel records when filled —
+not volume-on-saturated-space, but new structural coordinates per
+knot/EC.
+
+### Batch result
+
+- batch_id: `batch-20260522T064219Z-624a7e`
+- Duration: 0.56h (5M cap, fast)
+- 5,000,000 records / 2,956,495 kills / 1,071,098 confirms / 964,590 incon / 0 errors
+- 20 new discoveries → **900 lifetime milestone**
+
+Per-generator yield:
+
+| gid | records   | yield | dup_rate | kills    | conf      |
+|-----|-----------|-------|----------|----------|-----------|
+| f4  | 1,795,908 | 0.0043| 0.0%     | 1,182,104| 613,804   |
+| f1  | 1,664,995 | 0.0046| 7.3%     | 488,120  | 212,285   |
+| h1  | 1,531,280 | 0.0047| 14.8%    | 1,286,271| 245,009   |
+| e1  | 4,817     | 0.0019| 0.0%     | 0        | 0         |
+| g2  | 3,000     | 0.0018| **99.8%**| 0        | 0         |
+
+h1 again 84% kill rate (replicates Fire #44 85%).
+
+### Lifetime stats after Fire #51
+
+| Metric | Pre-#34 | Post-#50 | Post-#51 |
+|---|---|---|---|
+| Batches | 30 | 51 | 52 |
+| Records | 154.4M | 228.3M | 233.3M |
+| Kills | 74.4M | 117.8M | 120.7M |
+| Confirmations | 75.5M | 101.8M | 102.8M |
+| Discoveries | 500 | 880 | **900** |
+| Kill share | 48.2% | 51.6% | 51.7% |
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Yes. Audit shipped per advisory
+board priority. Pre-registered test executed, verdict reproducible.
+
+(b) **Changed contracts?** No.
+
+(c) **Conventional-approach drift check?** The audit kept what was
+correct (h2's calibration) while killing what was wrong (my
+celebrating framing of h2 as a substrate-meaningful falsifier).
+That's the right pattern per `feedback_assume_wrong`: kills on my
+own framings are more valuable than confirmations.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #52: persistent cross-batch signature
+index (sqlite) per ChatGPT's recommendation. Without it every
+metric is per-batch-blind.
+
+---
+
+*Fire #51 closed. h2 audit verdict h2_CALIBRATED_OK; reframed but
+preserved. 6 new wanted-primitive signals surfaced (4 genuinely
+missing + 2 parser-rejected). 900 lifetime discoveries milestone.
+233.3M records, 120.7M kills.*
+
+
 
 
 
