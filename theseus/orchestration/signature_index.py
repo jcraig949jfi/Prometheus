@@ -122,6 +122,27 @@ def compute_signature(record: TheseusRecord) -> str:
             a, b = b, a
         return f"{gid}:{rel}:{a}|{b}:{vclass}"
 
+    # Family D + H (triangulation, kill-neighborhood, self-play):
+    # uses {knot_invariant, ec_invariant} directly (no catalog prefix).
+    # Fire #56 fix per cross-batch novelty inflation diagnosis: these
+    # were collapsing to fallback `{gid}:{kind}:{vclass}` signatures.
+    if "knot_invariant" in payload and "ec_invariant" in payload:
+        ki = payload.get("knot_invariant", "?")
+        ei = payload.get("ec_invariant", "?")
+        degree = payload.get("polynomial_degree")
+        if degree is not None:
+            return f"{gid}:tri:knot.{ki}|ec.{ei}:deg{degree}:{vclass}"
+        return f"{gid}:tri:knot.{ki}|ec.{ei}:{vclass}"
+
+    # h1 self-play: invariant_a/invariant_b without catalog prefix
+    if "invariant_a" in payload and "invariant_b" in payload and "hunter_varied_side" in payload:
+        ia = payload.get("invariant_a", "?")
+        ib = payload.get("invariant_b", "?")
+        side = payload.get("hunter_varied_side", "?")
+        # Canonical order
+        a, b = (ia, ib) if ia <= ib else (ib, ia)
+        return f"{gid}:hunt:{a}|{b}:varied_{side}:{vclass}"
+
     # Family B (operator-action), some C: (operator, invariant) or operator-only
     if "operator" in payload:
         op = payload.get("operator", "?")
