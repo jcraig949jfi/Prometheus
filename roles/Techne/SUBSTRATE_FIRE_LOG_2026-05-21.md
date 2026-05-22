@@ -1618,6 +1618,154 @@ substrate volume saturated on closed catalog; need to expand
 primitive space (mathlib import is the next real swing) instead
 of optimizing how we mine the existing space.*
 
+---
+
+## Fire #46 — 2026-05-22 ~01:09Z
+
+Bandit's yield-driven **exploit phase begins**: picked g4 (yield
+0.0051) and g5 (0.0044) — both high-confirmation symmetry gens
+already in history. First fire where the bandit started preferring
+known-good actives over exploring new ones.
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1295707272
+    [theseus] Hydrated bandit history: 35 yield-score entries from prior fires
+    [theseus] Bandit bootstrap selected: ['b2', 'g5', 'b1', 'g4', 'd1']
+
+### Between-fire work shipped (large)
+
+User directive this fire: "I'd do all 5" (referencing
+persona_seed_prompts_2026-05-21.md Techne section). Shipped 2 of
+the 5 this fire:
+
+**Idea #4 — Saturation telemetry** (commit `017f8315`)
+- CorpusWriter now tracks `unique_by_gen` + `duplicates_by_gen`
+- GeneratorMetrics gains `dup_rate` field
+- daemon prints SATURATION WARNING when any gen ≥70% dup on 100+ emits
+- 7 unit tests
+- Fire #46 batch ran with OLD code (committed mid-batch); Fire #47
+  is first to surface dup_rate per gen in the journal
+
+**Idea #5 — Self-claim verification** (commits `<scanner+ticket>`, `6a229b89`)
+- `theseus/scripts/scan_synthesis_claims.py`: 5 regex patterns
+  (conjecture, implication, numeric_bound, ratio/fold/magnitude,
+  rate/percentage) over Techne synthesis docs
+- First run: 13 files scanned → **48 candidate claims** (24
+  rate/percentage, 18 numeric_bound, 4 implication, 1 conjecture,
+  1 other)
+- Output: `techne/handoff/aporia_outbox/techne_self_claims_2026-05-22.jsonl`
+- Aporia ticket filed: `T-2026-05-22-techne-self-claims-001` with
+  triage-dispatch-verdict-back spec
+- Paste-ready prompt for Aporia at
+  `pivot/techne_to_aporia_prompt_2026-05-22.md` (direct-delivery
+  channel if inbox loop doesn't pick up)
+- Closes the demand-supply loop: Techne synthesis claims become
+  next-best demand source (Penelope's 90% downstream dups +
+  Fire #46 saturation telemetry both confirm closed-catalog
+  saturation; new demand must come from outside the catalog)
+- 11 unit tests for the scanner
+
+Remaining for future fires (per user "I'd do all 5"):
+- Fire #47: #1 primitive demand sensor
+- Fire #48: #3 symbol-pair co-occurrence miner
+- Fires #49-#50+: #2 mathlib4 importer (the big swing — 200 new
+  primitives; the real fix for catalog saturation)
+
+### Batch result
+
+- batch_id: `batch-20260522T010927Z-83ca71`
+- Duration: 0.75h (5M cap hit fast — symmetry gens are high-throughput)
+- 5,000,000 records / 337,951 kills / 4,662,049 confirms / 0 incon / 0 errors
+- 20 new discoveries → 800 lifetime
+
+Per-generator yield:
+
+| gid | records   | yield | kills    | conf       | info_density |
+|-----|-----------|-------|----------|------------|--------------|
+| g5  | 2,774,453 | 0.0042| 216,124  | **2,558,329** | 0.592    |
+| g4  | 2,219,194 | 0.0043| 119,905  | **2,099,289** | 0.595    |
+| b2  | 3,636     | 0.0051| 1,264    | 2,372      | 0.565        |
+| d1  | 1,377     | 0.0050| 658      | 719        | 0.552        |
+| b1  | 1,340     | 0.0052| 0        | 1,340      | 0.600        |
+
+**Confirmation-skewed batch**: 6.8% kill rate (lowest yet this
+session) vs Fire #38's 99.4% kill rate. The pendulum swings
+because bandit exploits high-yield gens, and the highest-yield
+gens this round happened to be confirmation-heavy (g4/g5 symmetry
+preservers). Not a regression — substrate signal type varies by
+which gens the bandit prefers.
+
+### Lifetime milestone: 800 discoveries
+
+| Metric | Pre-#34 | Post-#45 | Post-#46 |
+|---|---|---|---|
+| Batches | 30 | 46 | 47 |
+| Records | 154.4M | 203.3M | 208.3M |
+| Kills | 74.4M | 104.1M | 104.4M |
+| Confirmations | 75.5M | 91.7M | 96.3M |
+| Discoveries | 500 | 780 | **800** |
+| Kill share | 48.2% | 51.2% | 50.1% |
+
+800 lifetime discoveries — milestone. Session contributed
+300 (500 → 800) across 13 fires = 23/fire mean.
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Yes — plus shipped 2 of the 5
+Techne persona ideas as between-fire work (#4 + #5).
+
+(b) **Changed contracts?** Yes:
+- CorpusWriter.write() now also updates unique_by_gen + duplicates_by_gen
+  (additive; existing callers unaffected since attributes initialize to {})
+- GeneratorMetrics gains dup_rate field (additive default=0)
+- daemon prints SATURATION WARNING text (additive stdout)
+None of these break existing serialization/deserialization.
+
+(c) **Conventional-approach drift check?**
+- Saturation telemetry uses the simplest possible metric (in-batch
+  dup_rate). Resisted designing cross-batch persistent dedup, which
+  would be a bigger change. Per "take a stand": ship the simple
+  version that closes the visible gap.
+- Self-claim ticket took the stand of "just file it; Aporia can act
+  or not" rather than asking the user to approve every claim.
+
+### Diff this fire (substantial)
+
+| File | Change |
+|------|--------|
+| `theseus/emit/corpus_writer.py` | per-gen unique/dup tracking |
+| `theseus/scoring/metrics_schema.py` | + dup_rate field |
+| `theseus/daemon.py` | wire dup_rate, SATURATION WARNING, journal line |
+| `theseus/tests/test_saturation_telemetry.py` | NEW (7 tests) |
+| `theseus/scripts/scan_synthesis_claims.py` | NEW (scanner) |
+| `theseus/tests/test_scan_synthesis_claims.py` | NEW (11 tests) |
+| `techne/handoff/aporia_outbox/techne_self_claims_2026-05-22.jsonl` | NEW (48 claims) |
+| `aporia/meta/queue/aporia_inbox.jsonl` | + T-...-techne-self-claims-001 ticket |
+| `pivot/techne_to_aporia_prompt_2026-05-22.md` | NEW (paste-ready) |
+
+### Commits this fire
+
+| Hash | Description |
+|------|-------------|
+| `017f8315` | Saturation telemetry per Techne persona #4 |
+| `<scanner+ticket commit>` | Self-claim scanner + Aporia ticket |
+| `6a229b89` | Paste-ready Techne→Aporia prompt |
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #47 will be first batch with saturation
+telemetry visible in journal output. Between-fire: ship idea #1
+(primitive demand sensor).
+
+---
+
+*Fire #46 closed. Bandit exploit phase begins (g4/g5 yield-driven
+picks). 800 lifetime discoveries milestone. 2 of 5 Techne persona
+ideas shipped this fire (saturation telemetry + self-claim
+verification with Aporia ticket).*
+
+
 
 
 
