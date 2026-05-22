@@ -3442,6 +3442,159 @@ to see effect). handoff_daemon RAM cap tightened 10→3. 262.2M
 records, 138.7M kills, 1060 discoveries, 1051 lifetime DISCOVERY
 shapes (+285 this fire).*
 
+---
+
+## Fire #60 — 2026-05-22 ~17:40Z
+
+**First fire with novelty-aware yield_score live. Bandit
+attribution finally working — h2 isolated as the explorer (35 of
+44 novel shapes, 80%). handoff_daemon v3 validated end-to-end.**
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1355191513
+    [theseus] Hydrated bandit history: 105 yield-score entries from prior fires
+    [theseus] Bandit bootstrap selected: ['a4', 'h2', 'c1', 'g3', 'b1']
+    [theseus] SATURATION WARNING: c1@92%, g3@99%, b1@100% — claim space exhausted
+    [theseus] Signature index: 44 novel shapes / 106 unique-in-batch (cross-batch novelty);
+                               1095 lifetime shapes from DISCOVERY roles
+    [theseus] Batch done: 2.68M records, 1.5h wall (wall budget hit, not cap)
+
+### Per-gen novelty attribution (FIRST time non-zero)
+
+    gid  records      dup_rate  novelty_sigs  kill_rate
+    a4   1,228,842    7.9%      1             30.6%
+    h2   1,330,792    0.2%      35            ⭐ 99.99%
+    c1     103,999   92.2%      2             52.0%
+    g3      20,000   98.5%      0             0%
+    b1       1,340   99.9%      6             0%
+
+**h2 contributed 35 of 44 novel shapes (80%)**. That's a 0.0026%
+novelty rate (h2 is mostly recycling) but it's at least exploring.
+h2's 99.99% kill rate ALSO confirms it's a strong falsifier — when
+h2 hunts a triangulation, the triangulation almost always fails.
+
+a4 high volume + 1 novel = the volume-without-exploration pattern
+the Fire #59 patch was designed to penalize. Fire #61's bandit
+will see a4's tiny novelty_signatures and downweight it.
+
+g3 with 20K records / 0 novel / 98% dup = next-up retirement
+candidate. Its claim space is essentially exhausted.
+
+### Between-fire shipped this fire
+
+Three patches between Fire #59 close and Fire #60 close:
+
+**Patch A** (`dda1ecbb`): dup-rate penalty in yield_score:
+  score = base × novelty_mult × (1 - 0.5 × dup_rate)
+d1@99.9% dup now scores 0.5× (was unpenalized). 6 new tests.
+
+**Patch B** (`9ca3490a`): lifetime-saturation print per fire.
+Live probe of signature_index showed almost all gens at ~100%
+lifetime sat; c5 alone at ~9%. The new line surfaces this:
+  [theseus] Lifetime saturation (picked gens):
+            c5@9%, a2@100%, c3@100%, ...
+First effect lands in Fire #61 (the running daemon for Fire #60
+was started before this commit).
+
+**handoff_daemon v3 VALIDATED** (Fire #59 morning commit
+`25409d76`): I restarted it during Fire #60 batch with cap=3.
+1 cycle completed cleanly in ~67 min:
+- Emitted 500 records → Penelope inbox
+- Compacted 8 batches → **freed 34.9 GB disk**
+- Peak RAM observed mid-flight: 7.35 GB (vs 18.57 GB on v2)
+
+Task #26 closed.
+
+### Substrate honesty signal — c5 is the lonely explorer
+
+The lifetime saturation probe revealed:
+
+    c5: ~9% lifetime sat (genuinely novel each batch)
+    All others: ~100% lifetime sat (shape-recycling)
+
+c5 contributed 463 of 766 lifetime DISCOVERY shapes through Fire
+#58 (60%). Fire #60 didn't pick c5, but the data is clear: c5
+alone has been carrying the novelty index.
+
+This is the kind of finding the substrate machinery is designed
+to surface. Per `feedback_substrate_passive_consumer_warning`:
+behavior delta = Fire #61's bandit should pick c5 substantially
+more often once the novelty bonus + dup-rate penalty propagate.
+
+### Batch result
+
+- batch_id: `batch-20260522T174052Z-1b9147`
+- Duration: 1.5h wall (wall budget hit, NOT 5M cap)
+- 2,684,973 records / 1,760,481 kills / 75,116 confirms / 849K incon / 0 errors
+- 0 new discoveries → 1060 lifetime (unchanged)
+- 44 novel shapes (Discovery roles) → 1095 lifetime shapes
+
+### Lifetime stats after Fire #60
+
+| Metric | Pre-#34 | Post-#59 | Post-#60 |
+|---|---|---|---|
+| Batches | 30 | 60 | 61 |
+| Records | 154.4M | 262.2M | 264.9M |
+| Kills | 74.4M | 138.7M | 140.4M |
+| Confirmations | 75.5M | 111.8M | 111.9M |
+| Discoveries | 500 | 1060 | 1060 |
+| Lifetime DISCOVERY shapes | 17 | 1051 | 1095 |
+
+Novelty trajectory:
+
+    Fire #54: 19   (a1+f4)
+    Fire #55: 5026 (INFLATION)
+    Fire #56: 17   (saturated gens)
+    Fire #57: 286  (f3+h1)
+    Fire #58: 463  (c5+d3)
+    Fire #59: 285  (a4+a2+c3+f2)
+    Fire #60: 44   (h2 carrying 80%)
+
+4-fire honest-index running mean (excl. #55): ~270 novel shapes
+per fire. Variance high — depends entirely on whether bandit
+picked an exploration-capable gen.
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Solved + shipped 3 between-fire
+patches (dup penalty / lifetime-sat print / handoff_daemon
+validation). First fire to actually produce per-gen novelty
+attribution, validating the Fire #59 architecture.
+
+(b) **Changed contracts?** No new contracts. All Fire #60 patches
+are observability/scoring tweaks with backwards-compat defaults.
+
+(c) **Conventional-approach drift check?** The "h2 explored,
+everything else recycled" finding is exactly the substrate-honest
+output the operator needs. Per `feedback_assume_wrong`: the
+novelty rate dropped 285 → 44, NOT a celebration. It's the
+truth — Fire #60's bandit picked mostly saturated gens. The
+data is now telling us what we already suspected.
+
+(d) **Memory check on conventional bandit framing:** I was tempted
+to over-engineer demand-signal routing this fire. Resisted —
+shipping observability + scoring was the higher-yield move.
+Demand routing is a multi-fire investment (catalog enrichment
+pipeline).
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #61 will be the first fire where:
+1. Both novelty-bonus AND dup-rate-penalty are in the bandit
+   hydration data (5 gens worth of attribution).
+2. The lifetime-saturation print appears in the batch output.
+3. Bandit should bias more heavily toward h2 (and away from
+   a4 + g3 + c1 + b1).
+
+---
+
+*Fire #60 closed. First fire with per-gen novelty attribution.
+h2 isolated as 80% of novel-shape contributor. handoff_daemon
+v3 validated: cap=3 stable, 34.9 GB disk freed. 264.9M records,
+140.4M kills, 1060 discoveries, 1095 lifetime DISCOVERY shapes
+(+44 this fire).*
+
 
 
 
