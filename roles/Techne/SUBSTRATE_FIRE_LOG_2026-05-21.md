@@ -2948,6 +2948,116 @@ reflects actual structural exploration.
 K). Coarsen + role-filter fixes shipped. 245.4M records, 126.2M
 kills, 980 discoveries (1000 milestone next fire).*
 
+---
+
+## Fire #56 — 2026-05-22 ~12:15Z
+
+**MILESTONE: 1000 lifetime discoveries.** Started session at 500.
+
+**Honest novelty count: 17 novel shapes.** Consistent with substrate
+at ~10% per-batch novelty rate; matches Fire #54's 19 (pre-Fire-#55
+inflation).
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Bandit picked: d2, c1, g1, a2, h2
+    [theseus] SATURATION WARNING: c1@90%, g1@100%
+    [theseus] Demand signals: 687,121 events
+    [theseus] Signature index: 17 novel shapes / 17 unique-in-batch;
+              17 lifetime shapes from DISCOVERY roles
+    [theseus] Batch done: 2,761,266 records in 1.5h wall, 0 errors
+
+### Honest novelty trajectory
+
+| Fire | Reported | Note |
+|------|----------|------|
+| #54  | 19       | original, pre-coarsen, no role filter |
+| #55  | 5026     | inflation: c4 K-variants + c1 K-variants |
+| #56  | **17**   | post-coarsen, role-filtered |
+
+The substrate's per-batch novelty is **~17-20 NEW claim shapes** —
+not 5026. Penelope's 90% downstream duplicate report aligns.
+
+### Between-fire work shipped
+
+**D/H signature extractors** (commit `f9dc0c52`):
+- d3/h2 (triangulation): `{gid}:tri:knot.{ki}|ec.{ei}:deg{N}:{vclass}`
+- h1 (self-play): `{gid}:hunt:{inv_a}|{inv_b}:varied_{side}:{vclass}`
+- Previously D/H records collapsed to `{gid}:{kind}:{vclass}` fallback
+  (e.g. h2 showed 1 unique shape across 4456 records)
+
+**handoff_daemon started + killed**:
+- Started Fire #56 between-fire per task #26 (ongoing compression +
+  Penelope emit, every 30 min)
+- Ran 1.5h; hit **16 GB RAM**. Suspected cause: Penelope bundle
+  generator loads whole jsonl batches (~5GB each) into memory rather
+  than streaming
+- Killed; task #27 filed to investigate
+- Compression still needed for ongoing growth; one-off compactions
+  per fire is the temporary workaround
+
+### h2 audit verdict holds (5th replication)
+
+h2 emitted 1.05M records this fire, 99.99% kill rate (1,047,583
+kills / 1 confirmation). Per Fire #51 audit (h2_CALIBRATED_OK):
+h2's verdict mapping is correct; the kill rate measures the null
+distribution of cross-catalog polynomial fits. Not falsification.
+
+### Batch result
+
+- batch_id: `batch-20260522T121514Z-555ac5`
+- Duration: 1.5h wall budget
+- 2,761,266 records / 2,416,634 kills / 344,522 confirms / 110 incon / 0 errors
+- 20 new discoveries → **1000 lifetime milestone**
+
+| gid | records   | yield | dup_rate | kills      | conf    |
+|-----|-----------|-------|----------|------------|---------|
+| h2  | 1,047,694 | 0.0048| 0.2%     | **1,047,583** | 1   |
+| a2  | 941,080   | 0.0042| 10.4%    | 879,603    | 61,477  |
+| d2  | 668,315   | 0.0044| 36.2%    | 437,744    | 230,571 |
+| c1  | 103,993   | 0.0046| **90.1%**| 51,596     | 52,397  |
+| g1  | 184       | 0.0048| 100%     | 108        | 76      |
+
+a2 at 93.5% kill rate replicates 2 prior fires (statistical
+correlation reliably REJECTS random cross-catalog correlations).
+
+### Lifetime stats after Fire #56
+
+| Metric | Pre-#34 | Post-#55 | Post-#56 |
+|---|---|---|---|
+| Batches | 30 | 56 | 57 |
+| Records | 154.4M | 245.4M | 248.2M |
+| Kills | 74.4M | 126.2M | 128.7M |
+| Confirmations | 75.5M | 108.4M | 108.7M |
+| **Discoveries** | 500 | 980 | **1000** |
+| Kill share | 48.2% | 51.4% | 51.8% |
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Yes. Plus shipped D/H extractors
+that complete the signature coverage of all major gen families.
+
+(b) **Changed contracts?** No.
+
+(c) **Conventional-approach drift check?** The handoff_daemon bloat
+was caught fast (within 1.5h, before it eated all RAM). Resisted
+the urge to "fix it inline" — task #27 filed to investigate
+properly. The compression problem is real but not urgent enough to
+block Fire #57+; one-off compactions handle it.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #57 keeps measuring honest novel-shape
+rate per fire as headline metric.
+
+---
+
+*Fire #56 closed. 1000-discovery milestone. Honest novelty: 17
+shapes/batch confirms ~10% rate. h2 99.99% replicates 5th time
+(calibrated, measures noise floor). handoff_daemon RAM-bloated +
+killed; investigation queued. 248.2M records, 128.7M kills.*
+
+
 
 
 
