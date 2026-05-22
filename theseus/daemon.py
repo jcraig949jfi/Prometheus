@@ -273,6 +273,19 @@ def run_batch(
             f"[theseus] Demand signals logged: {total_signals} events -> "
             f"{demand_path.name}"
         )
+        # Fire #63: surface the substrate's top-3 wanted primitives
+        # in every fire's output. The substrate-shouting-for-X signal
+        # was previously only visible via the demand_report CLI; now
+        # it lands in the journal automatically.
+        try:
+            top = []
+            for rec in DEMAND_LOG.summary()[:3]:
+                sig = "/".join(rec["signature"]) if rec["signature"] else "(empty)"
+                top.append(f"{rec['count']:,}× {sig}")
+            if top:
+                print(f"[theseus] Top demand: " + " | ".join(top))
+        except Exception:
+            pass  # best-effort; never break the loop
 
     # Flush signature index buffer in single transaction (hot-path
     # buffer was in-memory; sqlite write happens here).
