@@ -1765,6 +1765,146 @@ picks). 800 lifetime discoveries milestone. 2 of 5 Techne persona
 ideas shipped this fire (saturation telemetry + self-claim
 verification with Aporia ticket).*
 
+---
+
+## Fire #47 — 2026-05-22 ~02:04Z
+
+**Saturation telemetry vindicated in production.** First batch with
+the dup_rate field live, and it surfaced exactly the saturation
+signal Penelope's downstream report was hinting at.
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1299007018
+    [theseus] Hydrated bandit history: 40 yield-score entries from prior fires
+    [theseus] Bandit bootstrap selected: ['b5', 'd2', 'f4', 'c1', 'd3']
+
+### THE saturation moment
+
+After the batch ran with the new code:
+
+    [theseus] SATURATION WARNING: b5@100%, d2@75% — claim space
+    exhausted; bandit should downweight.
+
+Journal entry per gen (dup_rate now in the schema):
+
+| gid | records   | yield | **dup_rate** | kills    | conf      | info_density |
+|-----|-----------|-------|--------------|----------|-----------|--------------|
+| d3  | 1,574,720 | 0.0047| **1.1%**     | 1,546,690| 0         | 0.649        |
+| f4  | 1,590,677 | 0.0042| **0.0%**     | 1,047,127| 543,550   | 0.534        |
+| c1  | 1,427,962 | 0.0043| **10.3%**    | 975,015  | 452,947   | 0.532        |
+| d2  | 405,589   | 0.0046| **74.5%**    | 264,428  | 141,161   | 0.535        |
+| b5  | 1,052     | 0.0052| **99.9%**    | 15       | 1,037     | 0.599        |
+
+**b5's claim space is fully exhausted**: 99.9% dup_rate means for
+every emission that gets through dedup, ~1000 attempts get rejected.
+b5's combinatorial space (operators × invariants × catalogs) is tiny
+and we've sampled it to saturation. Bandit picked b5 because its
+historical yield_score is high (0.0052) — but the recent yield is
+generated on a shrinking pool of new unique records.
+
+**d2 at 74.5% dup_rate** = approaching saturation but not yet.
+
+**d3 at 1.1% dup_rate, f4 at 0.0%** = healthy, fresh substrate.
+
+This is the **first time the substrate self-reports which gens to
+downweight**, closing the one-way reporting gap with Penelope. The
+bandit's persistence will accumulate b5's yield drop over future
+fires; eventually b5 will get exploit-phase-downweighted away.
+
+### Between-fire work shipped (Idea #1)
+
+**Primitive demand sensor** (commit `<demand-sensor-commit>`):
+- `theseus/scoring/demand_signals.py` — DemandSignalLog singleton
+- A1's `_get_int` instrumented: logs `("missing_int_invariant", catalog, key)`
+- F1: logs `("missing_int_field", catalog, key)` on INCONCLUSIVE path
+- G1: logs `("no_twist_pairs", "ec", "j_invariant_class")` when group
+  empty
+- daemon: DEMAND_LOG.reset(batch_id) at start, .flush() before
+  journal write; demand_<batch_id>.jsonl gitignored as runtime
+- `theseus/scripts/demand_report.py` — aggregation CLI; text or
+  markdown weekly "wanted primitives" report
+- 10 unit tests
+
+Fire #47 ran with OLD code (demand sensor committed mid-batch).
+Fire #48 will be first to emit demand signals.
+
+### Batch result
+
+- batch_id: `batch-20260522T020427Z-58489e`
+- Duration: 0.91h (5M cap)
+- 5,000,000 records / 3,833,275 kills / 1,138,695 confirms / 28,030 incon / 0 errors
+- 20 new discoveries → 820 lifetime
+- Kill share: 76.7% — pendulum swing back from Fire #46's 6.8%
+
+Substantive notes:
+- **d3 (triangulation seeds) 98.2% kill rate** — replicated
+  again (Fire #45 was 99.1%). Triangulation is consistently a
+  high-kill-rate falsifier.
+- **f4 (frontier pursuit) hits 0% dup_rate** — frontier sampling
+  by definition explores under-covered regions, so dedup almost
+  never triggers. Most info-positive gen this fire.
+- **b5 saturation is the headline** — needs catalog expansion
+  (mathlib import is the right swing).
+
+### Lifetime stats after Fire #47
+
+| Metric | Pre-#34 | Post-#46 | Post-#47 |
+|---|---|---|---|
+| Batches | 30 | 47 | 48 |
+| Records | 154.4M | 208.3M | 213.3M |
+| Kills | 74.4M | 104.4M | 108.3M |
+| Confirmations | 75.5M | 96.3M | 97.5M |
+| Discoveries | 500 | 800 | 820 |
+| Kill share | 48.2% | 50.1% | 50.8% |
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Yes. Shipped persona idea #1.
+
+(b) **Changed contracts?** Yes additively: a1's _get_int gained
+optional demand-log kwargs (default None, backward compatible).
+DemandSignalLog is new infrastructure.
+
+(c) **Conventional-approach drift check?** Took the stand of
+instrumenting only the 3 gens with the most natural failure modes
+(A1, F1, G1) rather than retrofitting every gen. Demand signal
+expansion can happen incrementally as needs surface.
+
+### Diff this fire
+
+| File | Change |
+|------|--------|
+| `theseus/scoring/demand_signals.py` | NEW (DemandSignalLog) |
+| `theseus/scripts/demand_report.py` | NEW (aggregation CLI) |
+| `theseus/tests/test_demand_signals.py` | NEW (10 tests) |
+| `theseus/.gitignore` | + demand_*.jsonl |
+| `theseus/daemon.py` | DEMAND_LOG reset+flush wiring |
+| `theseus/generators/a1_catalog_cross_product.py` | _get_int demand args |
+| `theseus/generators/f1_monte_carlo_random_pairs.py` | demand log on INCONCLUSIVE |
+| `theseus/generators/g1_galois_twist.py` | demand log when no twist pairs |
+
+### Commits this fire
+
+| Hash | Description |
+|------|-------------|
+| `<demand sensor commit>` | Primitive demand sensor (Techne persona #1) |
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #48: first batch with demand signals
+emitted; between-fire ships idea #3 (symbol-pair co-occurrence
+miner).
+
+---
+
+*Fire #47 closed. Saturation telemetry vindicated: b5@99.9% dup_rate,
+substrate self-reports the gen most needing catalog expansion.
+3 of 5 Techne persona ideas shipped this session (#1 demand sensor,
+#4 saturation telemetry, #5 self-claim verification with Aporia
+ticket). Lifetime 213.3M records, 108.3M kills, 820 discoveries.*
+
+
 
 
 
