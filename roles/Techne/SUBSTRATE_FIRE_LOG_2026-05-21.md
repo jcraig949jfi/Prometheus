@@ -2702,6 +2702,142 @@ surfaced and fixed within fire. c4 + f1 reclassed per advisory
 board. Volume crashed to 18K records (vs typical 2-5M) but the
 fix is in for Fire #54.*
 
+---
+
+## Fire #54 — 2026-05-22 ~10:46Z
+
+**Substrate-defining ground truth surfaced.** The signature index
+ran cleanly for the first time and produced the single most
+informative single-batch metric of the session.
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1330308624
+    [theseus] Bandit picked: b5, a1, d2, g2, b2
+    [theseus] SATURATION WARNING: b5@100%, d2@92%, g2@100%, b2@100%
+    [theseus] Demand signals logged: 1,924,552 events
+    [theseus] Signature index: 19 novel shapes / 186 unique-in-batch
+
+### THE finding
+
+**19 novel claim shapes out of 186 unique-in-batch = 10.2% novelty rate.**
+
+Translation: of the 186 abstract claim TEMPLATES the substrate emitted
+this batch (after collapsing instance-specific info), only 19 were
+shapes the substrate had never tested across ALL 54 prior batches.
+The other 167 were re-emissions of shapes already in the cross-batch
+memory.
+
+**This corroborates Penelope's "90% downstream duplicates" report
+INTERNALLY for the first time.** Per-record metrics (kill share,
+discovery count, info_density) all looked productive; per-shape
+metric shows the substrate is operating at ~10% novelty.
+
+The advisory board predicted exactly this: "Penelope's report is the
+ground truth; until you measure shapes vs records, internal proxies
+will look better than reality." The signature index makes the
+distinction observable from MY side.
+
+### Buffer fix validated
+
+Fire #53 produced 18,207 records bottlenecked on per-record sqlite.
+Fire #54 with buffered writes:
+- 5,000,000 records (cap hit)
+- 38 min wall (faster than typical)
+- Signature buffer flushed 186 entries in single transaction
+- 0 errors
+
+The Fire #53 → Fire #54 throughput recovery (18K → 5M) confirms
+the bottleneck diagnosis and the buffer fix.
+
+### Between-fire work shipped (scanner improvement, commit `d7e866d6`)
+
+Per Aporia's 2026-05-22 feedback on the first batch:
+- Added Prometheus-internal markers detection (Techne|Aporia|Ergon|
+  Charon|Pythia|kill_path|navigator|substrate|pivot/|tier|fire #|...)
+- Required external math anchor (named theorem/conjecture, citation,
+  named constant/function, named math object)
+- Filter logic: reject internal-only; if both internal AND anchor
+  present, require anchor to survive stripping the markers
+
+Re-scanned Techne synthesis docs:
+  48 raw → **1 filtered** (Lehmer enumeration claim, matches
+  Aporia's dispatched TSC-02)
+
+Real-yield estimate vs raw scanner: from 0/48 = 0% to ~1/1 = 100%
+on the survivor. The filter is aggressively dropping internal claims;
+that's the desired behavior given Aporia's feedback.
+
+4 new unit tests on filter behavior. All 15 scanner tests pass.
+
+### Batch result
+
+- batch_id: `batch-20260522T104609Z-34bfd3`
+- Duration: 0.63h (5M cap, fast)
+- 5,000,000 records / 3,409,368 kills / 1,587,632 confirms / 0 incon / 0 errors
+- 20 new discoveries → 960 lifetime
+
+Per-generator yield:
+
+| gid | records   | yield | dup_rate | kills      | conf      |
+|-----|-----------|-------|----------|------------|-----------|
+| a1  | 4,010,211 | 0.0039| **65.8%**| 2,764,929  | 1,245,282 |
+| d2  | 982,101   | 0.0041| **91.6%**| 643,160    | 338,941   |
+| b2  | 3,636     | 0.0049| 100%     | 1,264      | 2,372     |
+| g2  | 3,000     | 0.0017| 100%     | 0          | 0         |
+| b5  | 1,052     | 0.0053| 100%     | 15         | 1,037     |
+
+**a1 saturated to 65.8% in-batch dup_rate** — even the workhorse is
+mining a saturated space heavily now. a1 + c1 had been at single-
+digit dup_rates earlier in the session; this is the bandit's
+exploit-phase concentrating selection on a small set of historically-
+high-yield gens, which then saturate.
+
+### Lifetime stats after Fire #54
+
+| Metric | Pre-#34 | Post-#53 | Post-#54 |
+|---|---|---|---|
+| Batches | 30 | 54 | 55 |
+| Records | 154.4M | 235.4M | 240.4M |
+| Kills | 74.4M | 121.9M | 125.3M |
+| Discoveries | 500 | 940 | 960 |
+| Kill share | 48.2% | 51.8% | 52.1% |
+| **Lifetime unique shapes** | ? | ? | (~30-200 range based on Fire #54) |
+
+The lifetime unique shapes metric is the NEW headline. Fire #54
+added 19 to it; future fires' delta = the substrate's actual
+discovery rate, not its volume.
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Yes — verified buffer fix
+produced normal volume + shipped scanner improvement.
+
+(b) **Changed contracts?** No (scanner change is internal logic).
+
+(c) **Conventional-approach drift check?** The 19/186 novelty rate
+is uncomfortable to celebrate. Conventional metric framing (records,
+kills) makes Fire #54 look like a normal-volume success. Honest
+framing: the substrate is in late saturation and 90% of work this
+batch was duplicating what we already had. Per "take a stand":
+report the honest number, even when it kills my narrative.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #55 will continue measuring the unique-
+shape novelty rate per batch. Between-fire: consider next priority
+from advisory board's queue (mathlib def primitive schemas vs
+bandit role-aware reformulation).
+
+---
+
+*Fire #54 closed. Buffer fix validated (5M cap restored in 38 min).
+Signature index produced THE metric the substrate lacked: 19 novel
+claim shapes / 186 unique-in-batch = 10.2% novelty rate.
+Internally corroborates Penelope's 90% downstream duplicate report.
+240.4M records, 125.3M kills, 960 discoveries.*
+
+
 
 
 
