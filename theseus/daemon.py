@@ -274,6 +274,18 @@ def run_batch(
             f"{demand_path.name}"
         )
 
+    # Flush signature index buffer in single transaction (hot-path
+    # buffer was in-memory; sqlite write happens here).
+    try:
+        n_novel, n_total = SIGNATURE_INDEX.flush()
+        if n_total > 0:
+            print(
+                f"[theseus] Signature index: {n_novel} novel shapes / "
+                f"{n_total} unique-in-batch (cross-batch novelty)"
+            )
+    except Exception as e:
+        print(f"[theseus] signature flush failed (non-fatal): {e}")
+
     _journal_batch(bm, generator_ids, instances)
 
     # Orchestration layer: log work, emit discoveries, update lifetime stats.

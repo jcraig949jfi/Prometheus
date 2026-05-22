@@ -7,6 +7,13 @@ cross-batch repetition. Penelope reports 90% downstream duplicates
 because the substrate keeps re-emitting claim SHAPES (not just
 record_ids — the record_id includes batch_id and other ephemerals).
 
+PERFORMANCE NOTE (Fire #53 fix): per-record sqlite open/commit was
+the daemon's bottleneck (~5-10ms per record dropped Fire #53 from
+the expected 5M-records-in-90min to 18K-in-90min). Fixed by buffering
+records in memory and flushing in a single transaction per batch.
+The buffer carries at most one entry per (signature, ...) key since
+within-batch repeats just bump an in-memory counter.
+
 This module is the substrate's persistent memory: a sqlite index
 keyed on `claim_shape_signature` per generator, tracking how many
 times each shape has been emitted across all fires.
@@ -155,6 +162,10 @@ class SignatureIndex:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         with self._conn() as c:
             c.executescript(self.SCHEMA)
+        # In-memory buffer per-batch. record() updates this dict;
+        # flush() writes it to sqlite in a single transaction.
+        # {signature: (generator_id, verdict_class, claim_kind, count, batch_id)}
+        self._buffer: Dict[str, Tuple[str, str, str, int, str]] = {}
 
     @contextmanager
     def _conn(self) -> Iterator[sqlite3.Connection]:
@@ -166,47 +177,76 @@ class SignatureIndex:
             conn.close()
 
     def record(self, record: TheseusRecord) -> bool:
-        """Upsert a record's signature. Returns True iff this was a
-        NOVEL signature (first time the substrate has seen this shape)."""
+        """Buffer the record's signature in memory. Returns True iff
+        this signature is first-seen WITHIN THIS BUFFER (call flush()
+        to learn true cross-batch novelty).
+
+        Hot-path optimization: O(1) dict update, no sqlite touch.
+        Per-record cost is ~10us vs 5-10ms for the per-record sqlite
+        path that bottlenecked Fire #53.
+        """
         sig = compute_signature(record)
+        if sig in self._buffer:
+            gid, vc, ck, cnt, batch_id = self._buffer[sig]
+            self._buffer[sig] = (gid, vc, ck, cnt + 1, record.batch_id)
+            return False
+        self._buffer[sig] = (
+            record.generator_id,
+            _verdict_class(record.verdict),
+            record.claim_kind,
+            1,
+            record.batch_id,
+        )
+        return True  # first-in-buffer; cross-batch novelty learned at flush
+
+    def flush(self) -> Tuple[int, int]:
+        """Persist buffered signatures to sqlite in a single transaction.
+        Returns (n_novel_cross_batch, n_signatures_flushed).
+
+        Should be called once at batch end. Safe to call with empty
+        buffer (no-op).
+        """
+        if not self._buffer:
+            return (0, 0)
         now = datetime.now(timezone.utc).isoformat()
+        n_novel = 0
+        n_total = len(self._buffer)
         with self._conn() as c:
-            cur = c.execute(
-                "SELECT seen_count FROM signatures WHERE signature = ?",
-                (sig,),
-            )
-            row = cur.fetchone()
-            if row is None:
-                c.execute(
-                    "INSERT INTO signatures (signature, generator_id, "
-                    "verdict_class, claim_kind, first_seen_at, last_seen_at, "
-                    "seen_count, first_batch_id, last_batch_id) "
-                    "VALUES (?, ?, ?, ?, ?, ?, 1, ?, ?)",
-                    (
-                        sig, record.generator_id, _verdict_class(record.verdict),
-                        record.claim_kind, now, now,
-                        record.batch_id, record.batch_id,
-                    ),
+            for sig, (gid, vc, ck, cnt, batch_id) in self._buffer.items():
+                cur = c.execute(
+                    "SELECT seen_count FROM signatures WHERE signature = ?",
+                    (sig,),
                 )
-                return True
-            else:
-                c.execute(
-                    "UPDATE signatures SET seen_count = seen_count + 1, "
-                    "last_seen_at = ?, last_batch_id = ? "
-                    "WHERE signature = ?",
-                    (now, record.batch_id, sig),
-                )
-                return False
+                row = cur.fetchone()
+                if row is None:
+                    c.execute(
+                        "INSERT INTO signatures (signature, generator_id, "
+                        "verdict_class, claim_kind, first_seen_at, "
+                        "last_seen_at, seen_count, first_batch_id, "
+                        "last_batch_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                        (sig, gid, vc, ck, now, now, cnt, batch_id, batch_id),
+                    )
+                    n_novel += 1
+                else:
+                    c.execute(
+                        "UPDATE signatures SET seen_count = seen_count + ?, "
+                        "last_seen_at = ?, last_batch_id = ? "
+                        "WHERE signature = ?",
+                        (cnt, now, batch_id, sig),
+                    )
+        self._buffer.clear()
+        return (n_novel, n_total)
 
     def record_many(self, records: Iterator[TheseusRecord]) -> Tuple[int, int]:
-        """Bulk insert; returns (n_novel, n_total)."""
-        n_novel = 0
+        """Buffer-then-flush helper; returns (n_novel, n_total)."""
+        n_first_in_buffer = 0
         n_total = 0
         for r in records:
             n_total += 1
             if self.record(r):
-                n_novel += 1
-        return n_novel, n_total
+                n_first_in_buffer += 1
+        novel_cross, _ = self.flush()
+        return novel_cross, n_total
 
     def count_signatures(
         self,

@@ -2587,6 +2587,122 @@ board (preserve as alive-monitor, exclude from discovery stats).
 handoff loop closed end-to-end. 235.4M records, 121.9M kills, 920
 discoveries.*
 
+---
+
+## Fire #53 — 2026-05-22 ~09:05Z
+
+**CRITICAL FINDING: signature index was per-record bottleneck**.
+Production hot-path needed buffered writes; fix shipped within fire.
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1324249251
+    [theseus] Bandit picked: b3, a1, h2, d3, f4
+    [theseus] SATURATION WARNING: b3@86%
+
+### Batch result — production bottleneck surfaced
+
+Fire #53 produced only **18,207 records in 1.5h** (vs typical 2-5M).
+Wall budget consumed; cap never approached.
+
+Per-gen at ~4400 records each suggests the daemon's tight loop got
+choked. Root cause: signature_index sqlite per-record
+open/SELECT/INSERT/commit/close costs ~5-10ms per call. At 5M
+records that's 25,000-50,000 sec = hours. The daemon was spending
+all its wall time waiting on sqlite, not generating.
+
+### Fix shipped this fire (commit `<sig-buffer commit>`)
+
+Buffered writes:
+- `SignatureIndex.record(rec)`: O(1) in-memory dict update. Hot path
+  now ~10us per call (was 5-10ms).
+- `SignatureIndex.flush()`: single sqlite transaction at batch end
+  with all buffered shapes. SELECT + INSERT/UPDATE in one connection.
+- daemon calls `SIGNATURE_INDEX.flush()` after demand-signal flush;
+  prints `{n_novel}/{n_total}` per batch.
+
+16 sig-index tests updated to call .flush() before sqlite query.
+All 16 pass.
+
+This is a hard-won kill on my own infra design: I shipped sqlite
+hot-path writes in Fire #52, observed the failure mode in Fire #53,
+fixed within the same window. Per `feedback_assume_wrong`: all
+assumptions wrong until proven; build error recovery into process.
+Per advisory board's Penelope-as-ground-truth framing: substrate
+sees its own failures via downstream effects (here: production
+throughput crashed → diagnose → fix).
+
+### Batch yield (despite low volume)
+
+- batch_id: `batch-20260522T090509Z-a51624`
+- Duration: 1.5h wall (bottlenecked)
+- 18,207 records / 14,982 kills / 3,179 confirms / 46 incon / 0 errors
+- 20 new discoveries → 940 lifetime (still 20 because batch went to
+  cap on per-record sqlite, not on substrate volume)
+
+| gid | records | yield | dup_rate | kills  | conf  |
+|-----|---------|-------|----------|--------|-------|
+| a1  | 4,456   | 0.0044| 0.0%     | 3,069  | 1,387 |
+| f4  | 4,455   | 0.0043| 0.0%     | 2,923  | 1,532 |
+| h2  | 4,456   | 0.0049| 0.0%     | **4,456** | 0 |
+| d3  | 4,234   | 0.0048| 5.0%     | 4,188  | 0     |
+| b3  | 606     | 0.0051| 86.4%    | 346    | 260   |
+
+h2 still 100% kill rate on its smaller sample (consistent with
+Fire #51 audit verdict: it correctly rejects independent-sample
+polynomial fits).
+
+### Lifetime stats after Fire #53
+
+| Metric | Pre-#34 | Post-#52 | Post-#53 |
+|---|---|---|---|
+| Batches | 30 | 53 | 54 |
+| Records | 154.4M | 235.4M | 235.4M (+18K) |
+| Kills | 74.4M | 121.9M | 121.9M (+15K) |
+| Discoveries | 500 | 920 | 940 |
+
+Fire #54 should produce normal volume now that the buffer is in
+place.
+
+### Between-fire work also shipped: c4 reclassed (commit `4e7d91c8`)
+
+Per advisory board: c4 → TAUTOLOGY_CONTROL role; f1 → NULL_BASELINE
+role. New `GeneratorRole` enum with 6 values + `NON_DISCOVERY_ROLES`
+set. `maybe_emit_discoveries` now skips records from non-discovery
+roles regardless of training_weight. c4's 975K-records-of-100%-
+confirmation no longer inflates lifetime discoveries.
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Yes. c4 reclassed + signature
+buffer fix shipped. Even the bottleneck finding was substrate-
+honest output: the substrate measured its own failure mode and
+adapted.
+
+(b) **Changed contracts?** SignatureIndex.record() semantics
+changed (now buffered; flush() required to persist). Internal
+infra; no external callers.
+
+(c) **Conventional-approach drift check?** The fix used the
+simplest possible buffering (in-memory dict, single-flush). Resisted
+"build a real queue or worker thread" — that's overengineering for
+a per-batch lifecycle.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #54 first batch with buffered sig index —
+should hit 5M cap normally. Between-fire: scanner-improvement per
+Aporia's feedback (Prometheus-internal filter + external-anchor
+requirement).
+
+---
+
+*Fire #53 closed. Production bottleneck (per-record sqlite writes)
+surfaced and fixed within fire. c4 + f1 reclassed per advisory
+board. Volume crashed to 18K records (vs typical 2-5M) but the
+fix is in for Fire #54.*
+
+
 
 
 

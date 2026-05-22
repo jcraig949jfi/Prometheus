@@ -194,12 +194,14 @@ def test_index_count_signatures_per_gen(tmp_path):
             "relation": rel,
         }, generator_id="a1")
         idx.record(r)
+    idx.flush()
     r_b = _mk(
         {"operator": "neg", "input_value": 1},
         generator_id="b3",
         claim_kind=ClaimKind.COMPOSITION_TEST.value,
     )
     idx.record(r_b)
+    idx.flush()
     assert idx.count_signatures("a1") == 3
     assert idx.count_signatures("b3") == 1
     assert idx.count_signatures() == 4
@@ -218,6 +220,7 @@ def test_index_summary_by_gen(tmp_path):
             "catalog_a": "knot", "invariant_a": "x",
             "catalog_b": "ec", "invariant_b": "y", "relation": "divides",
         }, generator_id="a1"))
+    idx.flush()
     summary = idx.summary_by_gen()
     assert "a1" in summary
     assert summary["a1"]["n_unique_signatures"] == 2
@@ -232,6 +235,7 @@ def test_index_saturation_score(tmp_path):
             "catalog_a": "knot", "invariant_a": "x",
             "catalog_b": "ec", "invariant_b": "y", "relation": "equal",
         }, generator_id="a1"))
+    idx.flush()
     score = idx.saturation_score("a1")
     # 1 unique / 10 total = 0.1 unique → 0.9 saturated
     assert score is not None
@@ -252,6 +256,7 @@ def test_index_top_signatures_sorted_by_count(tmp_path):
             "catalog_a": "knot", "invariant_a": "z",
             "catalog_b": "ec", "invariant_b": "w", "relation": "divides",
         }, generator_id="a1"))
+    idx.flush()
     top = idx.top_signatures(n=2)
     assert len(top) == 2
     assert top[0]["seen_count"] == 5
