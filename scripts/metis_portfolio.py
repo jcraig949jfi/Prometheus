@@ -214,6 +214,19 @@ James can read the full text. The `deep_research.budget` field tells you
 how much budget remains today — if utilization is unusually low or unusually
 high, mention it in "Watch this".
 
+CRITICAL — outage-line format:
+When reporting an agent outage (DEAD / STALE / crashed / unresponsive),
+ALWAYS include the supervising persona and a short description of what
+the agent does in the headline or first sentence. The agents block above
+provides this as `[supervised by X · role: Y]`. Use it.
+
+  WRONG:  "Clio (M1) has been dead for 273,214s (~3.2 days)"
+  RIGHT:  "Clio (M1, supervised by Aporia, paper scanner) has been DEAD
+          for 273,214s (~3.2 days)"
+
+Same for STALE / UNKNOWN — include supervisor + role. This lets James know
+who owns the fix and why the outage matters in one read.
+
 Rules:
 - Maximum 3 items per section (9 total). Compress ruthlessly.
 - Lead every item with a bold one-line headline.
@@ -332,9 +345,20 @@ def format_state_for_prompt(state: dict) -> str:
         age = a.get("heartbeat_age_sec")
         age_str = f"{age}s" if age is not None else "no-hb"
         op = (a.get("current_op") or "")[:80]
+        # Supervising persona + role attached to every agent row so the LLM
+        # can include them whenever it mentions the agent (especially in
+        # outage reports). Format: "supervised by X" / "role: Y".
+        supervisor = a.get("operator")
+        role = a.get("role")
+        meta = []
+        if supervisor:
+            meta.append(f"supervised by {supervisor}")
+        if role:
+            meta.append(f"role: {role}")
+        meta_str = f" [{' · '.join(meta)}]" if meta else ""
         lines.append(
             f"  {marker} {a.get('name')} @ {a.get('machine')} ({kind}): "
-            f"{a.get('status')} (hb={age_str}) {op}"
+            f"{a.get('status')} (hb={age_str}) {op}{meta_str}"
         )
         km = a.get("key_metrics")
         if km:
@@ -451,6 +475,23 @@ def _has_chain_of_thought_leak(text: str) -> bool:
     return hits >= 2
 
 
+def _agent_context_phrase(agent: dict) -> str:
+    """Return ', supervised by X, role description' for outage-line headlines.
+
+    Returns '' if neither supervisor nor role is set. Designed to be
+    appended to the agent name in outage reports so each headline names
+    who owns the fix and what's broken in one read.
+    """
+    parts = []
+    sup = agent.get("operator")
+    role = agent.get("role")
+    if sup:
+        parts.append(f"supervised by {sup}")
+    if role:
+        parts.append(role)
+    return f", {', '.join(parts)}" if parts else ""
+
+
 def _deterministic_brief(state: dict, manual_status: str) -> str:
     """Fallback brief synthesized directly from state.json + manual_status.
 
@@ -489,7 +530,8 @@ def _deterministic_brief(state: dict, manual_status: str) -> str:
         acts += 1
     for d in dead_daemons[:3 - acts]:
         age = d.get("heartbeat_age_sec") or 0
-        lines.append(f"**{d['name']} @ {d.get('machine', '?')} DEAD — daemon stopped**")
+        ctx = _agent_context_phrase(d)
+        lines.append(f"**{d['name']} @ {d.get('machine', '?')}{ctx} — DEAD, daemon stopped**")
         lines.append(f"No heartbeat for {age // 60}min ({age}s). Was last ALIVE at "
                      f"{d.get('last_status_update', 'unknown')}.")
         lines.append(f"Investigate the process on {d.get('machine', '?')} and restart, or kill watchdog if intentional.")
@@ -520,7 +562,8 @@ def _deterministic_brief(state: dict, manual_status: str) -> str:
             lines.append("")
             watches += 1
     for d in (stale_daemons + unknown_daemons)[:max(0, 3 - watches)]:
-        lines.append(f"**{d['name']} @ {d.get('machine', '?')} {d['status']} — possible upcoming intervention**")
+        ctx = _agent_context_phrase(d)
+        lines.append(f"**{d['name']} @ {d.get('machine', '?')}{ctx} — {d['status']}, possible upcoming intervention**")
         lines.append(f"heartbeat age {d.get('heartbeat_age_sec', 'no-hb')} — may transition to DEAD next cycle.")
         lines.append(f"Watch for next cycle; intervene if no recovery.")
         lines.append("")
