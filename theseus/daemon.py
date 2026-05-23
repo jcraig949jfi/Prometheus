@@ -168,21 +168,40 @@ def run_batch(
     telemetry_record_sample: List[TheseusRecord] = []
     TELEMETRY_SAMPLE_CAP = 2000
 
+    # Fire #70: structured heartbeat logging. Fire #70 stalled silently
+    # for 60+ minutes consuming 50% CPU + 15 GB RAM with only 4 records
+    # written (all in the first second). The daemon had zero observability
+    # into what was happening. HeartbeatLogger snapshots every 30 seconds
+    # to a per-batch JSONL + tees to stdout, capturing per-gen tick rates,
+    # consecutive-Nones, slow-next() durations, and process RSS.
+    from theseus.orchestration.heartbeat import HeartbeatLogger
+    heartbeat = HeartbeatLogger(
+        batch_id=batch_id,
+        journal_dir=cfg.JOURNAL_DIR,
+        interval_seconds=30.0,
+        slow_next_threshold_seconds=5.0,
+    )
+    heartbeat.start([g.generator_id for g in instances])
+
     # Round-robin tick loop. Generators that return None on a single
     # tick are NOT marked exhausted — they may have hit a transient
-    # parent-shortage. Only after CONSECUTIVE_NONE_THRESHOLD consecutive
-    # Nones do we mark exhausted (true exhaustion, e.g. E1 finishes
-    # mining).
-    # Consecutive-None exhaustion threshold. Set high so cache-based
-    # gens (E1/E2/E4/E5) survive race conditions where the cache file
-    # gets populated mid-batch (e.g. user runs fetcher in parallel
-    # with the batch). At ~1k ticks/sec, 100k = 100 seconds of pure
-    # Nones before exhaustion — long enough for any realistic cache
-    # fetch to complete. Fire #37 surfaced this race: e2 emitted 0
-    # despite the arxiv fetcher cache showing up 30 sec into the run.
-    CONSECUTIVE_NONE_THRESHOLD = 100_000
+    # parent-shortage. Exhaustion uses BOTH count AND time thresholds:
+    # whichever fires first marks the gen exhausted.
+    #
+    # Fire #70 lesson: the previous count-only threshold (100,000)
+    # assumed ~1k ticks/sec. When next() calls are slow (some gens
+    # do polynomial fits or catalog scans per call), tick rate drops
+    # to 10s/sec or even slower. At low tick rates, 100,000 ticks
+    # could take HOURS while emitting zero records.
+    #
+    # Time threshold (90 seconds without emission) catches stalls
+    # regardless of tick rate. Count threshold (10,000 nones) catches
+    # fast-spinning gens that should be marked exhausted quickly.
+    CONSECUTIVE_NONE_THRESHOLD = 10_000
+    TIME_SINCE_EMIT_THRESHOLD_S = 90.0
     exhausted = {g.generator_id: False for g in instances}
     consecutive_nones = {g.generator_id: 0 for g in instances}
+    last_emit_mono = {g.generator_id: time.monotonic() for g in instances}
     tick_count = 0
     total_records_written = 0
     while time.monotonic() - started_mono < budget_s:
@@ -199,18 +218,27 @@ def run_batch(
                 break
             tracker.start_generator(g.generator_id)
             try:
-                rec = g.next()
+                with heartbeat.tick(g.generator_id):
+                    rec = g.next()
             except Exception as exc:
                 tracker.record_error(g.generator_id, repr(exc))
+                heartbeat.record_error(g.generator_id)
                 tracker.stop_generator(g.generator_id)
                 continue
             tracker.stop_generator(g.generator_id)
+            heartbeat.record_result(g.generator_id, rec)
             if rec is None:
                 consecutive_nones[g.generator_id] += 1
-                if consecutive_nones[g.generator_id] >= CONSECUTIVE_NONE_THRESHOLD:
+                time_since_emit = time.monotonic() - last_emit_mono[g.generator_id]
+                if (
+                    consecutive_nones[g.generator_id] >= CONSECUTIVE_NONE_THRESHOLD
+                    or time_since_emit >= TIME_SINCE_EMIT_THRESHOLD_S
+                ):
                     exhausted[g.generator_id] = True
+                    heartbeat.mark_exhausted(g.generator_id)
                 continue
             consecutive_nones[g.generator_id] = 0
+            last_emit_mono[g.generator_id] = time.monotonic()
             if writer.write(rec):
                 total_records_written += 1
                 tracker.record_emission(rec)
@@ -229,6 +257,9 @@ def run_batch(
                 ):
                     telemetry_record_sample.append(rec)
         tick_count += 1
+        heartbeat.maybe_snapshot(tick_count, total_records_written)
+    heartbeat.final_snapshot(tick_count, total_records_written)
+    heartbeat.close()
 
     ended_at = datetime.now(timezone.utc).isoformat()
     duration_hours = (time.monotonic() - started_mono) / 3600.0
