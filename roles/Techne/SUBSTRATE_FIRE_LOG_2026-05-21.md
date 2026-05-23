@@ -4226,6 +4226,179 @@ Fire #65 — first deliberate intervention after 4 fires of c5
 absence. 281.1M records, 150.5M kills, 1100 discoveries, 1348
 lifetime DISCOVERY shapes.*
 
+---
+
+## Fire #65 — 2026-05-23 ~01:01Z
+
+**g4 revealed as third "second-wave" explorer (131 of 137 novel
+shapes, 96%). c5 STILL not picked despite priors — bandit
+temperature too high. Discovery streak resumed (+20 emissions).**
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1381604911
+    [theseus] Hydrated bandit history: 133 yield-score entries from prior fires
+    [theseus] Bandit bootstrap selected: ['a2', 'b5', 'g4', 'b4', 'h4']
+    [theseus] SATURATION WARNING: b5@100%, b4@100%
+    [theseus] Signature index: 137 novel shapes / 192 unique-in-batch;
+                               1485 lifetime DISCOVERY shapes (+137!)
+    [theseus] Lifetime saturation (picked gens):
+              b4@99%, b5@100%, g4@100%, a2@100%, h4@100%
+    [theseus] Batch done: 5M records (cap), 0.97h wall
+
+### Per-gen attribution
+
+    gid  records      dup    novel  sat_lt  kill_rate
+    g4   1,590,859    20.0%  131    1.000   5.4%    ← 96% of fire's novelty
+    h4   1,657,424    16.6%  3      1.000   45.6%
+    a2   1,750,059    12.0%  0      1.000   93.4%
+    b5         1,052  99.9%  3      0.997   1.4%
+    b4           606 100.0%  0      0.994   73.6%
+
+**g4 (reflection-duality) just joined the second-wave explorer
+club.** 131 novel shapes — third-largest single-gen single-fire
+contribution after c1's 234 (#62) and Fire #58's c5+d3 combined.
+
+g4 tests whether cross-catalog relations are invariant under
+sign-reflection. Each (knot, EC, knot_inv, ec_inv, relation,
+reflection_test) combination is a distinct claim. Apparently
+many of those produced new shapes.
+
+Note: g4's lifetime_sat=1.000 yet it contributed massively. This
+is the THIRD instance of the "saturated-but-still-exploring"
+pattern (c1#62, b4#63, g4#65). The signature function is
+fundamentally coarser than each gen's actual claim space.
+
+### c5 STILL NOT PICKED
+
+Even with priors:
+    c5 history: n=5, mean=0.01180, last 3 entries 0.01664 each
+    Effective score with UCB: 0.01362 + 0.001 = ~0.014
+    Other gens: 0.004-0.005 + UCB ≈ 0.005
+
+Score ratio: c5 ~3x. Should be picked. But the bandit's softmax
+with temp=0.005 still gives c5 only ~16% probability per draw.
+Across 5 sequential-without-replacement draws, c5's pick prob is
+~50-60%. Fire #65 was unlucky.
+
+This is a tunable parameter. Options:
+1. Lower softmax temperature (more deterministic picks)
+2. Run priors-inject AGAIN (push c5 to n=8, mean ~0.014)
+3. Accept the noise and let it settle over many fires
+
+Holding off on tuning the temperature for now — the substrate is
+producing well even without c5 picks. Will inject more priors
+only if c5 misses Fire #66 too.
+
+### What about the new `--inject-explorer-priors` flag?
+
+Shipped this fire (commit 74f99dcd) but Fire #65's daemon was
+started BEFORE that commit. So this fire ran without the flag.
+Fire #66 will be the first fire that uses it (the user's /loop
+prompt was updated to include the flag).
+
+The flag has built-in idempotency: skips gens with n >= 8 history
+entries. c5 currently n=5 (will become n=8 after Fire #66's
+priors injection + Fire #66's score appending). After that,
+future fires will skip injection for c5 — letting organic
+history take over.
+
+### Demand signals + Top-3 print
+
+Demand output line was missing from this fire's stdout (same as
+Fire #64 — empty demand log this batch). a2/b5/g4/b4/h4 don't
+emit invariant-fishing demand signals. Need f1/c1/a1-family
+picks for demand-rich fires.
+
+### Batch result
+
+- batch_id: `batch-20260523T010105Z-b0c1f4`
+- Duration: 0.97h wall (5M cap hit)
+- 5,000,000 records / 2,476,388 kills / 2,098,044 confirms / 425K incon / 0 errors
+- 20 new discoveries → **1120 lifetime** (streak resumed)
+- 137 novel shapes → 1485 lifetime DISCOVERY shapes (+137)
+
+### Lifetime stats after Fire #65
+
+| Metric | Pre-#34 | Post-#64 | Post-#65 |
+|---|---|---|---|
+| Batches | 30 | 65 | 66 |
+| Records | 154.4M | 281.1M | 286.1M |
+| Kills | 74.4M | 150.5M | 153.0M |
+| Confirmations | 75.5M | 113.5M | 115.6M |
+| Discoveries | 500 | 1100 | **1120** |
+| Lifetime DISCOVERY shapes | 17 | 1348 | **1485** |
+
+Novelty trajectory:
+
+    Fire #57: 286
+    Fire #58: 463
+    Fire #59: 285
+    Fire #60: 44
+    Fire #61: 4
+    Fire #62: 234  (c1 second-wave) ⭐
+    Fire #63: 16
+    Fire #64: 6
+    Fire #65: 137  (g4 second-wave) ⭐
+
+10-fire honest-index running mean: ~148 novel/fire.
+Sum of last 4: 234+16+6+137 = 393 → ~98/fire recent mean.
+
+### The "second-wave explorer" pattern
+
+c1#62 (234) → b4#63 (11/16) → g4#65 (131/137). Three different
+gens, three different fires, three "saturated" gens revealing
+fresh exploration capacity. Pattern:
+
+- Their lifetime_saturation reads 100% (or near)
+- But they emit NOVEL shapes when picked
+- The signature function is COARSER than the actual claim space
+- Each gen has a deep, narrow claim space; signature collapses
+  many records to the same shape but new corners exist
+
+Implication for next iteration: lifetime_saturation is a NOISY
+explorer indicator. The new formula's boost favors c5 (truly
+low sat) but doesn't help these surprise-exploring gens. They
+just need to keep being picked occasionally and they'll deliver.
+
+The bandit's UCB exploration is already doing this naturally.
+The new formula's main job is keeping c5 in rotation; the rest
+is randomness + UCB.
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Massively. 137 novel + 20
+discoveries emitted. Streak resumed.
+
+(b) **Did my c5 intervention work?** Partially. c5 didn't get
+picked but the substrate produced anyway. The intervention was
+still right to ship (it'll work eventually); just not on the
+first try.
+
+(c) **Conventional-approach drift check?** Tempted to lower
+temperature, but resisting — the bandit's existing settings
+worked here. The substrate is producing 137 novel/fire from
+unexpected gens. Forcing c5 might suppress the unexpected
+exploration that's been happening.
+
+(d) **Hypothesis adjustment.** Maybe c5 isn't the only target.
+The signature function collapses too aggressively, hiding
+exploration in MANY gens. Better strategy: cycle through
+diverse gens via the bandit's softmax noise; eventually each
+gen's "second wave" reveals.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #66 will be the first fire with
+--inject-explorer-priors enabled in the daemon invocation.
+
+---
+
+*Fire #65 closed. g4 = third second-wave explorer (131 novel
+shapes). c5 still unpicked but substrate productive anyway.
+20 new discoveries emitted. 286.1M records, 153.0M kills, 1120
+discoveries, 1485 lifetime DISCOVERY shapes.*
+
 
 
 
