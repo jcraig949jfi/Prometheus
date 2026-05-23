@@ -361,9 +361,25 @@ class SignatureIndex:
             )
             return cur.fetchone()[0]
 
-    def saturation_score(self, generator_id: str) -> Optional[float]:
+    def saturation_score(
+        self,
+        generator_id: str,
+        min_total_seen: int = 1000,
+    ) -> Optional[float]:
         """Estimate generator's saturation: 1 - (n_unique / total_seen).
-        Returns None if total_seen=0. High = saturated."""
+        Returns None if total_seen < min_total_seen (insufficient sample
+        size for a reliable estimate). High = saturated.
+
+        Fire #67 lesson: c5 had sat=9% from total_seen=22 (n=2 prior
+        fires) — a statistical regression-to-mean artifact, not real
+        exploration. Once c5 fired at scale (60K records), saturation
+        immediately jumped to 100%.
+
+        Default `min_total_seen=1000` prevents this. Callers can lower
+        the threshold for diagnostic queries but the yield_score path
+        uses the default — a gen needs to have actually run substantially
+        before the bandit trusts the saturation estimate.
+        """
         with self._conn() as c:
             cur = c.execute(
                 "SELECT COUNT(*), SUM(seen_count) FROM signatures "
@@ -371,7 +387,7 @@ class SignatureIndex:
                 (generator_id,),
             )
             n_unique, total = cur.fetchone()
-            if not total or total == 0:
+            if not total or total < min_total_seen:
                 return None
             return 1.0 - (n_unique / total)
 

@@ -268,10 +268,33 @@ def test_index_saturation_score(tmp_path):
             "catalog_b": "ec", "invariant_b": "y", "relation": "equal",
         }, generator_id="a1"))
     idx.flush()
-    score = idx.saturation_score("a1")
+    # Default min_total_seen=1000 returns None at 10 total
+    assert idx.saturation_score("a1") is None
+    # With lower threshold, the score is computable
+    score = idx.saturation_score("a1", min_total_seen=1)
     # 1 unique / 10 total = 0.1 unique → 0.9 saturated
     assert score is not None
     assert abs(score - 0.9) < 1e-9
+
+
+def test_saturation_score_returns_none_at_low_sample_size(tmp_path):
+    """Fire #67 lesson: c5 had sat=9% from total_seen=22 — regression-
+    to-mean artifact. Default min_total_seen=1000 prevents trusting
+    low-sample estimates."""
+    idx = SignatureIndex(path=tmp_path / "idx.sqlite")
+    # 22 records from c5 (Fire #67 scenario)
+    for i in range(22):
+        rel = "equal" if i < 20 else "divides"
+        idx.record(_mk({
+            "catalog_a": "knot", "invariant_a": "x",
+            "catalog_b": "ec", "invariant_b": "y", "relation": rel,
+        }, generator_id="c5"))
+    idx.flush()
+    # Default threshold: not enough sample
+    assert idx.saturation_score("c5") is None
+    # Explicit lower threshold: estimate is available but caveat emptor
+    score = idx.saturation_score("c5", min_total_seen=1)
+    assert score is not None  # 2 unique / 22 total = sat ~0.91
 
 
 def test_count_unique_signatures_for_roles_excludes_non_discovery(tmp_path):
