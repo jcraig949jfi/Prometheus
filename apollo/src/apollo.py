@@ -152,6 +152,15 @@ def compile_and_validate(organism: Organism) -> tuple:
     cr = compile_organism(organism)
     if not cr.success:
         return None, False
+    # 2026-05-22 — log wiring type mismatches (warn-mode, doesn't block).
+    # See primitive_types.check_organism_wiring for what's flagged.
+    if cr.type_warnings:
+        for w in cr.type_warnings:
+            log_debug(
+                f"TYPE_MISMATCH {w['primitive']}.{w['param_name']} expects {w['target_type']} got {w['source_type']} (source={w['source']})",
+                stage="type_check",
+                data=w,
+            )
     return cr.source_code, True
 
 
