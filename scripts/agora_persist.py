@@ -178,6 +178,40 @@ CREATE INDEX IF NOT EXISTS idx_research_queue_dispatched
     ON agora.research_queue (dispatched_at) WHERE status IN ('dispatched', 'in_progress');
 CREATE INDEX IF NOT EXISTS idx_research_queue_completed
     ON agora.research_queue (completed_at DESC) WHERE status = 'complete';
+
+-- GPU reservation system (2026-05-23). Per-machine, cross-machine-visible
+-- locks with TTL. Atomicity guaranteed by the partial unique index:
+-- at most one (machine, gpu_id) row may be in status='active' with
+-- released_at IS NULL at a time. Race losers get a unique-constraint
+-- violation; the acquire helper catches it and returns None.
+--
+-- TTL semantics: expires_at is the failsafe. Holders should renew_gpu()
+-- periodically (e.g., every TTL/3) while still using the GPU. Dead
+-- holders get evicted by sweep_expired_gpu_reservations() — called
+-- lazily by every acquire_gpu() call, so no separate sweep daemon is
+-- needed.
+CREATE TABLE IF NOT EXISTS agora.gpu_reservations (
+    id BIGSERIAL PRIMARY KEY,
+    machine TEXT NOT NULL,
+    gpu_id TEXT NOT NULL,
+    holder TEXT NOT NULL,
+    holder_pid INTEGER,
+    purpose TEXT,
+    reserved_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    expires_at TIMESTAMPTZ NOT NULL,
+    last_renewed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    released_at TIMESTAMPTZ,
+    status TEXT NOT NULL DEFAULT 'active',
+    tags JSONB
+);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_gpu_reservations_one_active_per_slot
+    ON agora.gpu_reservations (machine, gpu_id)
+    WHERE status = 'active' AND released_at IS NULL;
+CREATE INDEX IF NOT EXISTS idx_gpu_reservations_expires
+    ON agora.gpu_reservations (expires_at)
+    WHERE status = 'active';
+CREATE INDEX IF NOT EXISTS idx_gpu_reservations_machine_status
+    ON agora.gpu_reservations (machine, status);
 """
 
 
@@ -847,6 +881,200 @@ def mark_research_timed_out(
     except Exception as e:
         print(f"[agora_persist] mark_research_timed_out({row_id}) failed: {e}", file=sys.stderr)
         return {"action": "error", "attempt_count": 0, "error": str(e)}
+
+
+# ---------------------------------------------------------------------------
+# GPU reservation system (2026-05-23)
+#
+# Per-machine cross-machine-visible GPU locks with TTL. Atomicity is enforced
+# by the partial unique index on (machine, gpu_id) where status='active' AND
+# released_at IS NULL. Race losers see psycopg2.IntegrityError; the acquire
+# helper catches it and returns None.
+# ---------------------------------------------------------------------------
+
+def sweep_expired_gpu_reservations() -> int:
+    """Mark all past-TTL active reservations as 'expired'. Called lazily by
+    acquire_gpu so dead holders free their slots without a separate sweeper.
+    Returns count swept."""
+    try:
+        with _connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    UPDATE agora.gpu_reservations
+                       SET status = 'expired',
+                           released_at = NOW()
+                     WHERE status = 'active'
+                       AND released_at IS NULL
+                       AND expires_at <= NOW()
+                """)
+                n = cur.rowcount
+            conn.commit()
+        return n or 0
+    except Exception as e:
+        print(f"[agora_persist] sweep_expired_gpu_reservations failed: {e}", file=sys.stderr)
+        return 0
+
+
+def acquire_gpu(
+    machine: str,
+    gpu_id: str,
+    holder: str,
+    purpose: Optional[str] = None,
+    ttl_seconds: int = 3600,
+    holder_pid: Optional[int] = None,
+    tags: Optional[dict] = None,
+) -> Optional[dict]:
+    """Try to reserve (machine, gpu_id) for `holder` for `ttl_seconds`.
+
+    Returns reservation row dict on success, None if already held by another
+    or on error. Sweeps expired reservations first so dead holders free slots.
+
+    Race semantics: the partial unique index on (machine, gpu_id) where
+    status='active' AND released_at IS NULL guarantees at most one active
+    reservation per slot. Concurrent INSERTs lose to UniqueViolation; the
+    loser sees None.
+    """
+    sweep_expired_gpu_reservations()
+    try:
+        with _connect() as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                cur.execute("""
+                    INSERT INTO agora.gpu_reservations
+                        (machine, gpu_id, holder, holder_pid, purpose,
+                         expires_at, tags)
+                    VALUES
+                        (%s, %s, %s, %s, %s,
+                         NOW() + (%s || ' seconds')::interval, %s)
+                    RETURNING id, machine, gpu_id, holder, holder_pid, purpose,
+                              reserved_at, expires_at, last_renewed_at, status
+                """, (machine, gpu_id, holder, holder_pid, purpose,
+                      str(int(ttl_seconds)),
+                      psycopg2.extras.Json(tags) if tags else None))
+                row = cur.fetchone()
+            conn.commit()
+        return dict(row) if row else None
+    except psycopg2.errors.UniqueViolation:
+        # Slot already held by an active reservation; not an error.
+        return None
+    except Exception as e:
+        print(f"[agora_persist] acquire_gpu({machine},{gpu_id}) failed: {e}", file=sys.stderr)
+        return None
+
+
+def release_gpu(reservation_id: int, holder: str) -> bool:
+    """Release a reservation. Only succeeds if holder matches — protects
+    against accidental release by another agent's mistake.
+    Returns True on successful release, False on holder mismatch or error."""
+    try:
+        with _connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    UPDATE agora.gpu_reservations
+                       SET status = 'released', released_at = NOW()
+                     WHERE id = %s
+                       AND holder = %s
+                       AND status = 'active'
+                       AND released_at IS NULL
+                """, (reservation_id, holder))
+                n = cur.rowcount
+            conn.commit()
+        return n == 1
+    except Exception as e:
+        print(f"[agora_persist] release_gpu({reservation_id}) failed: {e}", file=sys.stderr)
+        return False
+
+
+def renew_gpu(reservation_id: int, holder: str, ttl_seconds: int = 3600) -> bool:
+    """Extend TTL on an active reservation. Only succeeds if holder matches AND
+    the reservation hasn't already been swept to 'expired'. Returns False if
+    the holder lost the slot to a sweep — caller should re-acquire."""
+    try:
+        with _connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    UPDATE agora.gpu_reservations
+                       SET expires_at = NOW() + (%s || ' seconds')::interval,
+                           last_renewed_at = NOW()
+                     WHERE id = %s
+                       AND holder = %s
+                       AND status = 'active'
+                       AND released_at IS NULL
+                """, (str(int(ttl_seconds)), reservation_id, holder))
+                n = cur.rowcount
+            conn.commit()
+        return n == 1
+    except Exception as e:
+        print(f"[agora_persist] renew_gpu({reservation_id}) failed: {e}", file=sys.stderr)
+        return False
+
+
+def list_gpu_reservations(
+    machine: Optional[str] = None,
+    status: Optional[str] = "active",
+    include_released: bool = False,
+    limit: int = 100,
+) -> list:
+    """List reservations. Default: active rows across all machines.
+    Pass status=None to list all, machine to filter."""
+    try:
+        with _connect() as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                where = []
+                args: list = []
+                if status:
+                    where.append("status = %s")
+                    args.append(status)
+                if machine:
+                    where.append("machine = %s")
+                    args.append(machine)
+                if status == "active" and not include_released:
+                    where.append("released_at IS NULL")
+                sql = "SELECT * FROM agora.gpu_reservations"
+                if where:
+                    sql += " WHERE " + " AND ".join(where)
+                sql += " ORDER BY reserved_at DESC LIMIT %s"
+                args.append(limit)
+                cur.execute(sql, tuple(args))
+                rows = cur.fetchall()
+                out = []
+                for r in rows:
+                    d = dict(r)
+                    for k in ("reserved_at", "expires_at", "last_renewed_at", "released_at"):
+                        if d.get(k):
+                            d[k] = d[k].isoformat()
+                    out.append(d)
+                return out
+    except Exception as e:
+        print(f"[agora_persist] list_gpu_reservations failed: {e}", file=sys.stderr)
+        return []
+
+
+def force_release_gpu(reservation_id: int, by: str, reason: str) -> bool:
+    """Administrative override — release a reservation regardless of holder.
+    Use sparingly; the holder check exists for a reason. Records the override
+    in tags so the action is auditable."""
+    try:
+        with _connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    UPDATE agora.gpu_reservations
+                       SET status = 'released',
+                           released_at = NOW(),
+                           tags = COALESCE(tags, '{}'::jsonb) || jsonb_build_object(
+                               'force_released_by', %s::text,
+                               'force_release_reason', %s::text,
+                               'force_released_at', NOW()::text
+                           )
+                     WHERE id = %s
+                       AND status = 'active'
+                       AND released_at IS NULL
+                """, (by, reason, reservation_id))
+                n = cur.rowcount
+            conn.commit()
+        return n == 1
+    except Exception as e:
+        print(f"[agora_persist] force_release_gpu({reservation_id}) failed: {e}", file=sys.stderr)
+        return False
 
 
 def count_research_today(timezone: str = "UTC") -> dict:

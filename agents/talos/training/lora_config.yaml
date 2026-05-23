@@ -99,3 +99,22 @@ eval_gate:
     target_4_pushback:  0.15
   pass_threshold_delta_pp: 10   # checkpoint must beat base by >= 10 abs pp
   target_4_required_delta_pp: 20  # load-bearing test — see eval/README.md
+
+# GPU reservation (per cross-machine GPU lock system shipped 2026-05-23 at
+# scripts/gpu_reservation.py + agora_persist helpers). Phase-1 training MUST
+# acquire a reservation before starting, renew while running, release on
+# completion or crash. Without the lock, two trainers can collide on a GPU.
+gpu_reservation:
+  required: true
+  default_ttl_seconds: 14400          # 4 hours per training run
+  renew_interval_seconds: 1800        # renew every 30 min while training
+  holder_name: "Talos"                # who appears in the reservation row
+  acquire_purpose_template: "Talos LoRA Phase 1 (run_id={run_id})"
+  # Pseudocode the trainer should follow:
+  #   from agora_persist import acquire_gpu, renew_gpu, release_gpu
+  #   res = acquire_gpu(machine, gpu_id, holder="Talos", purpose=..., ttl_seconds=14400)
+  #   if not res: bail (GPU held by another); see scripts/gpu_reservation.py list
+  #   try:
+  #       train_with_periodic_renew(res, renew_every=1800)
+  #   finally:
+  #       release_gpu(res['id'], holder="Talos")
