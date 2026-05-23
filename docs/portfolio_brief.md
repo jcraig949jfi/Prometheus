@@ -1,46 +1,45 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-05-23 08:29:49 AM UTC*
+*Generated: 2026-05-23 09:05:21 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
 
 ## Act on this  
-**Redis is unreachable on M1 — telemetry degraded**  
-Redis remains unreachable per state.json, forcing reliance on Postgres dual-write; real-time streams (discoveries, main, challenges) are offline despite manual_status.json claiming Redis is up.  
-Verify Redis process on M1 skullport and restore connectivity to re-enable Agora pub/sub and stream ingestion.
+**Redis reachability conflict: manual_status overrides state.json**  
+The infrastructure status in state.json claims Redis is unreachable, but manual_status.json confirms Redis on M1 is up and verified from M4 — trust manual_status as authoritative for infra when state.json is degraded.  
+James must reconcile the monitoring discrepancy: either update state.json’s infra_status to reflect Redis-up or investigate why portfolio_monitor misclassified it.
 
-**Aporia @ M1 is DEAD — deep research pipeline halted**  
-Aporia has been dead for 411,245s (~4.76 days), with no heartbeat and no recent activity, halting deep research orchestration.  
-Restart Aporia daemon on M1 or reassign DR-prompt control to an active operator to resume daily deep research.
+**Clio and Calliope daemons crashed on M1 and M4**  
+Clio (M1) has been dead for 273,214s (~3.2 days) and Calliope (M4) for 362,238s (~4.2 days), both with no recent heartbeats — these are operational outages requiring revival.  
+Restart both agents and verify their integration with the current Pronoia/Nous pipeline; confirm no dependency drift occurred during downtime.
 
-**Nemesis @ M3, Nous @ M4, Pronoia @ M4 remain UNKNOWN — pipeline gaps persist**  
-All three agents show no Postgres heartbeat despite M3/M4 being online and Hephaestus/intelligence_loop running; critical for falsification and learning.  
-Confirm deployment and process state on M3/M4 — delay blocks full loop closure.
+**Nemesis, Nous, Coeus, Aletheia, Eos, Hermes unresponsive on M3/M4**  
+Six expected daemons show UNKNOWN status due to missing Postgres heartbeats — but manual_status confirms M3 and M4 are online with Hephaestus and Pronoia running.  
+Investigate why these agents are not dual-writing heartbeats: check local process liveness, credential validity, and Postgres connectivity on M3/M4.
 
 ## Watch this  
-**Hephaestus forge rate at 1.1% — low but by design per expanded validation suite**  
-Forge rate is 1.1% with 2 session forges and 183 scraps; manual_status confirms stricter validation is intentional to improve substrate quality.  
-Monitor for sustained low throughput; do not escalate unless forge_rate drops to 0 with no explanation.
+**Hephaestus forge rate at 1.1% — within design tolerance**  
+Despite low session_forges (2) vs. scraps (183), the forge rate is intentionally constrained by expanded validation tests per manual_status; this reflects selection pressure, not failure.  
+Monitor for sustained drop below 1% or sudden spike above 5% that could indicate test imbalance.
 
-**deep_research.budget=20/20 — no utilization in 4.76 days due to Aporia outage**  
-Zero deep research reports generated since Aporia went DEAD; full daily budget remains unspent.  
-Budget stagnation will continue until Aporia or alternate DR controller is restored.
+**Stale/unexpected tools on M2/SKULLPORT may indicate residual state**  
+Charon_Loop (STALE, hb=241s) and Acheron (STALE, hb=241s) plus multiple DEAD tools (Lethe, Stygian, etc.) suggest prior Harmonia/Charon sessions were not cleanly terminated.  
+No action needed unless they consume resources or interfere with Apollo; otherwise, clean up during next maintenance window.
 
-**No change since previous brief at 2026-05-23 07:44:28 AM EDT**  
-All agent and infrastructure statuses unchanged from last cycle; no new trends detected.  
-Maintain current observation posture.
+**Deep Research utilization not reflected in work_queue**  
+Git logs show four recent Pythia DR reports (HYP-2026-05-23-001, HECATE-a1, etc.), indicating Aporia is active — but work_queue shows 0 queued/claimed.  
+This is expected: Hephaestus uses Nous.responses.jsonl, not Harmonia’s work_queue. Confirm DR token budget remains intact (20/day).
 
 ## For the record  
-**Apollo @ M2 and Hephaestus @ M3 confirmed ALIVE with recent heartbeats**  
-Apollo (hb=30s) and Hephaestus (hb=3s) are actively running on M2 and M3 respectively, driving evolution and forging.  
-Core substrate production is now operational.
+**Apollo (M2) and Hephaestus (M3) confirmed ALIVE with active forging**  
+Apollo heartbeat at 59s, Hephaestus at 29s — both dual-writing to Postgres; Hephaestus currently forging Gauge Theory, Apoptosis, Feedback Control.  
+Ledger size at 6,177; no API timeouts in last hour.
 
-**(7) expected agents still UNKNOWN or DEAD — part of known revival sequence**  
-Techne, Coeus, Aletheia, Eos, Hermes remain UNKNOWN; Clio, Calliope DEAD.  
-Status aligns with current phase — no emergency, revival in progress.
+**Pronoia (M4) idle but registered, awaiting cycle trigger**  
+Heartbeat at 12s; manual_status confirms intelligence_loop.py running since 2026-05-17 — operating on 4-hour cadence (--hourly-min 240).  
+No cycles today yet; next due within 4 hours.
 
-**Pythia @ M1 generated 20 DR reports in last 24h — full deep research output**  
-Despite Aporia's outage, Pythia produced 20 high-value research reports via alternate invocation (e.g., direct or Theseus-triggered).  
-Reports cover TSC-01 to TSC-05, HECATE-a2/h2 surveys, Moros cross-pollination, and Lethe false-anchor hunts — full list in git history.
-
-Generated: 2026-05-23 08:29:48 AM EDT
+**12 unexpected agents still DEAD from prior sessions — known cleanup backlog**  
+Includes Ergon, Harmonia_Loop, Phylax, Telos, and others on M1/M2/SKULLPORT; all with heartbeats >24 hours old.  
+These are not part of current revival sequence; will be addressed in scheduled maintenance.  
+(Generated: 2026-05-23 09:05:16 AM UTC)

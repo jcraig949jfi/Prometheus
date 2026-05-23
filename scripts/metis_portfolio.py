@@ -170,6 +170,27 @@ purpose"), historical context. It is least authoritative for things
 state.json can see and refresh: infra reachability, agent liveness,
 recent operational metrics.
 
+CRITICAL — personas are NOT failed daemons:
+Agents with kind='operator' (Aporia, Techne, and any future persona) are
+Claude Code sessions a human drives, NOT background daemons. Their
+Postgres heartbeat going stale just means the human's session is idle —
+the persona is alive on the human's terms, not on the orchestration's
+5-minute heartbeat budget.
+
+- NEVER flag operator-kind agents as DEAD, STALE, or "pipeline halted".
+- NEVER recommend "restart Aporia daemon" or similar — there is no daemon.
+- Do NOT count operator-kind agents in the agents-alive ratio.
+- Do NOT include operator-kind agents in Act on this OR Watch this just
+  because their heartbeat is old.
+- A persona's activity is visible through their TOOLS' log_work events
+  (e.g. Pythia firing DR dispatches signals Aporia is driving). Report
+  persona activity only as a positive signal in For the record if their
+  supervised tools are producing — never as an anomaly when they're not.
+
+If you see an operator-kind agent flagged as DEAD/STALE in the state.json,
+silently exclude it from your anomaly accounting. The dashboard tracks
+them for completeness; the brief should not.
+
 CRITICAL — output discipline:
 You are producing the FINAL brief, not narrating your reasoning. NEVER include
 phrases like "We are given...", "Let me check", "Steps:", "Now let's...",
@@ -230,12 +251,27 @@ def recent_git_log(hours: int = 24) -> str:
 
 
 def previous_brief_excerpt() -> str:
-    """Return the previous brief's content (or 'none' if first run)."""
+    """Return the previous brief's content (or 'none' if first run).
+
+    A LOUD warning header is prepended so the LLM treats this as historical
+    context that the CURRENT state may have invalidated. Past LLM runs have
+    copy-pasted agent statuses from this excerpt that the live state.json
+    already contradicted — the warning steers them toward state-supremacy.
+    """
     if not BRIEF_PATH.exists():
         return "(no previous brief — this is the first run)"
     try:
-        text = BRIEF_PATH.read_text(encoding="utf-8")
-        return text[:3000]
+        text = BRIEF_PATH.read_text(encoding="utf-8")[:3000]
+        warning = (
+            "*** WARNING: The previous brief below is HISTORICAL. It may "
+            "contain agent statuses that the current state.json now "
+            "contradicts (agents that recovered, daemons that restarted, "
+            "etc.). When the current state and this prior brief disagree, "
+            "TRUST the current state always. Never repeat a status claim "
+            "from this prior brief without first verifying it against the "
+            "current AGENTS table. ***\n\n"
+        )
+        return warning + text
     except Exception:
         return "(previous brief unreadable)"
 
@@ -268,7 +304,13 @@ def manual_status_excerpt() -> str:
 
 
 def format_state_for_prompt(state: dict) -> str:
-    """Render state.json into a compact text block for LLM consumption."""
+    """Render state.json into a compact text block for LLM consumption.
+
+    Operator-kind agents (personas — Aporia, Techne, etc.) are intentionally
+    rendered as 'persona session, idle status not anomalous' regardless of
+    their heartbeat age, so the LLM does not flag them as failed daemons.
+    Personas live in human-driven Claude Code sessions, not background loops.
+    """
     lines = []
     lines.append(f"Generated: {state.get('generated_at')}")
     lines.append(f"Redis: {state.get('redis_host')}")
@@ -276,12 +318,22 @@ def format_state_for_prompt(state: dict) -> str:
     lines.append("")
     lines.append("AGENTS:")
     for a in state.get("agents", []):
+        kind = a.get("kind") or "?"
+        # Personas: hide heartbeat staleness from the LLM. Show only kind+role.
+        if kind == "operator":
+            role = a.get("role", "")
+            lines.append(
+                f"  [persona] {a.get('name')} @ {a.get('machine')} "
+                f"({kind}): human-driven Claude Code session — idle/active "
+                f"state is out of scope for anomaly reporting. role: {role}"
+            )
+            continue
         marker = "[expected]" if a.get("expected") else "[unexpected]"
         age = a.get("heartbeat_age_sec")
         age_str = f"{age}s" if age is not None else "no-hb"
         op = (a.get("current_op") or "")[:80]
         lines.append(
-            f"  {marker} {a.get('name')} @ {a.get('machine')} ({a.get('kind')}): "
+            f"  {marker} {a.get('name')} @ {a.get('machine')} ({kind}): "
             f"{a.get('status')} (hb={age_str}) {op}"
         )
         km = a.get("key_metrics")
@@ -308,7 +360,11 @@ def format_state_for_prompt(state: dict) -> str:
     lines.append(f"WORK QUEUE: queued={wq.get('queued', 0)} claimed={wq.get('claimed', 0)} "
                  f"completed_lifetime={wq.get('completed_lifetime', 0)}")
     lines.append("")
-    anoms = state.get("anomalies", [])
+    # Filter out anomalies on persona (operator-kind) agents — their stale
+    # heartbeats are session-idle, not failures.
+    persona_names = {a["name"] for a in state.get("agents", [])
+                     if a.get("kind") == "operator"}
+    anoms = [an for an in state.get("anomalies", []) if an.get("agent") not in persona_names]
     if anoms:
         lines.append("ANOMALIES:")
         for an in anoms:
@@ -361,7 +417,141 @@ lines you produce.
 """
 
     raw = call_llm(prompt, system=SYSTEM_PROMPT)
-    return _strip_chain_of_thought(raw)
+    stripped = _strip_chain_of_thought(raw)
+    # If the LLM dumped chain-of-thought under the Act-on-this header
+    # (Nemotron's habit), the strip can't help — fall back to a
+    # deterministic template synthesized directly from state.json.
+    if _has_chain_of_thought_leak(stripped):
+        print("[metis] LLM output flagged as chain-of-thought leak — using deterministic fallback",
+              file=sys.stderr)
+        return _deterministic_brief(state, manual_status)
+    return stripped
+
+
+_COT_LEAK_MARKERS = (
+    "let me", "however,", "however note", "but note:", "looking at",
+    "let's look at", "let's see", "the problem says", "as noted earlier",
+    "first, note", "we must trust", "according to the rules",
+    "this is confusing", "given that the", "since we don't see",
+    "we assume", "we don't see an", "this is likely coming",
+)
+
+
+def _has_chain_of_thought_leak(text: str) -> bool:
+    """True if LLM body shows chain-of-thought reasoning markers above threshold.
+
+    Used to fall back to a deterministic template when the LLM cascade
+    produces verbose scratchpad instead of a clean three-section brief.
+    """
+    if not text:
+        return False
+    lower = text.lower()
+    hits = sum(1 for m in _COT_LEAK_MARKERS if m in lower)
+    # Two or more reasoning markers → almost certainly leaked
+    return hits >= 2
+
+
+def _deterministic_brief(state: dict, manual_status: str) -> str:
+    """Fallback brief synthesized directly from state.json + manual_status.
+
+    Used when the LLM cascade returns garbage. Produces the same three-section
+    structure (Act / Watch / For the record) using simple rules over the
+    structured state, no LLM in the loop. Bias toward terseness.
+    """
+    lines = []
+
+    # Categorize agents
+    expected = [a for a in state.get("agents", []) if a.get("expected")]
+    dead_daemons = [a for a in expected
+                    if a.get("kind") == "daemon" and a.get("status") in ("DEAD",)]
+    stale_daemons = [a for a in expected
+                     if a.get("kind") == "daemon" and a.get("status") == "STALE"]
+    unknown_daemons = [a for a in expected
+                       if a.get("kind") == "daemon" and a.get("status") == "UNKNOWN"]
+    # Personas excluded (operator-kind) — not anomalies
+    infra = state.get("infra_status") or {}
+    redis_status = infra.get("redis") if infra else "(state.json reports up)"
+
+    dr = state.get("deep_research") or {}
+    budget = dr.get("budget") or {}
+    received = dr.get("report_count_24h", 0)
+    dispatched = dr.get("dispatch_count_24h", 0)
+
+    lines.append("## Act on this")
+    lines.append("")
+    acts = 0
+    if redis_status == "unreachable":
+        lines.append(f"**Redis unreachable from M4 — telemetry degraded**")
+        lines.append(f"Portfolio_monitor fell back to Postgres dual-write. Streams (discoveries, main, challenges) "
+                     f"are empty until Redis returns. {infra.get('postgres_agent_count', 0)} agents sourced from PG.")
+        lines.append(f"Restore Redis on M1 to re-enable Agora pub/sub.")
+        lines.append("")
+        acts += 1
+    for d in dead_daemons[:3 - acts]:
+        age = d.get("heartbeat_age_sec") or 0
+        lines.append(f"**{d['name']} @ {d.get('machine', '?')} DEAD — daemon stopped**")
+        lines.append(f"No heartbeat for {age // 60}min ({age}s). Was last ALIVE at "
+                     f"{d.get('last_status_update', 'unknown')}.")
+        lines.append(f"Investigate the process on {d.get('machine', '?')} and restart, or kill watchdog if intentional.")
+        lines.append("")
+        acts += 1
+    if acts == 0:
+        lines.append("*(no daemons require intervention)*")
+        lines.append("")
+
+    lines.append("## Watch this")
+    lines.append("")
+    watches = 0
+    if budget:
+        used = budget.get("used")
+        total = budget.get("budget")
+        numeric = isinstance(used, (int, float)) and isinstance(total, (int, float))
+        if numeric and total > 0 and used / total > 0.8:
+            lines.append(f"**Deep Research budget {used}/{total} — nearly exhausted**")
+            lines.append(f"Pythia has used {used} of {total} tokens. Cap risks blocking dispatches at UTC midnight reset.")
+            lines.append(f"Throttle non-essential DR dispatches or wait for reset.")
+            lines.append("")
+            watches += 1
+        if received == 0 and dispatched == 0:
+            lines.append(f"**No Deep Research dispatched or received in last 24h**")
+            lines.append(f"DR pipeline idle. Either Pythia's queue is empty or upstream "
+                         f"intent (Aporia tickets) hasn't been refilled.")
+            lines.append(f"Check Pythia queue depth; refill DR ticket inbox if dry.")
+            lines.append("")
+            watches += 1
+    for d in (stale_daemons + unknown_daemons)[:max(0, 3 - watches)]:
+        lines.append(f"**{d['name']} @ {d.get('machine', '?')} {d['status']} — possible upcoming intervention**")
+        lines.append(f"heartbeat age {d.get('heartbeat_age_sec', 'no-hb')} — may transition to DEAD next cycle.")
+        lines.append(f"Watch for next cycle; intervene if no recovery.")
+        lines.append("")
+        watches += 1
+    if watches == 0:
+        lines.append("*(nothing trending toward intervention)*")
+        lines.append("")
+
+    lines.append("## For the record")
+    lines.append("")
+    alive_tools = [a for a in state.get("agents", []) if a.get("status") == "ALIVE" and a.get("kind") in ("daemon", "tool")]
+    lines.append(f"**{len(alive_tools)} agents ALIVE** "
+                 f"({', '.join(a['name'] for a in alive_tools[:10])}"
+                 f"{'…' if len(alive_tools) > 10 else ''}).")
+    lines.append("")
+    if received > 0:
+        lines.append(f"**Deep Research: {received} reports received, {dispatched} dispatched** in last 24h "
+                     f"(budget {budget.get('used', '?')}/{budget.get('budget', '?')}).")
+        lines.append("")
+    anomalies = state.get("anomalies") or []
+    # Filter persona anomalies out
+    persona_names = {a["name"] for a in state.get("agents", []) if a.get("kind") == "operator"}
+    real_anoms = [an for an in anomalies if an.get("agent") not in persona_names]
+    if real_anoms:
+        lines.append(f"**Anomalies tracked:** {len(real_anoms)} "
+                     f"({', '.join(an.get('agent') for an in real_anoms[:5])}).")
+        lines.append("")
+    lines.append("---")
+    lines.append("*Brief generated by deterministic fallback (LLM cascade output flagged as scratchpad-leak).*")
+
+    return "\n".join(lines)
 
 
 def _strip_chain_of_thought(text: str) -> str:
