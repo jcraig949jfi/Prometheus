@@ -11,3 +11,10 @@ __pycache__/
 
 # Single-instance lock file
 _swarm.pid
+
+# Runtime streams under _logs/ — JSONL + daemon logs are local-only.
+# Reviewable artifacts (weekly reports, taint sweep reports) ARE tracked.
+_logs/*.jsonl
+_logs/*.log
+_logs/swarm.stderr.log
+_logs/taint_sweeps_completed.json
