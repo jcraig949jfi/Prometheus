@@ -5371,6 +5371,134 @@ density. a5's claims may be high-novelty but low-density.
 emitted. 311.4M records, 173.1M kills, 1197 discoveries,
 1950 lifetime DISCOVERY shapes.*
 
+---
+
+## Fire #73 — 2026-05-23 ~11:24Z
+
+**c2 = 8th second-wave explorer (105 novel shapes, 100% of
+fire). Lifetime DISCOVERY shapes crossed 2000. C-family gens
+(c1+c2+c5) all explorers via different mutation strategies.**
+
+### Auto-seed + bandit + heartbeat
+
+    [theseus] Bandit bootstrap selected: ['a3', 'b5', 'c2', 'd1', 'f4']
+    (heartbeat: 115 snapshots, tick rate 575/s, RSS linear 75→4336MB)
+    [theseus] SATURATION WARNING: b5@100%, d1@95%
+    [theseus] Top demand: 1× knot/nf_class_number
+    [theseus] Signature index: 105 novel / 478 unique-in-batch;
+                               2055 lifetime DISCOVERY shapes (+105)
+    [theseus] Batch done: 5M records (cap), 57 min wall
+
+### Per-gen attribution — c2 the new explorer
+
+    gid  records      dup     novel  kill_rate
+    c2     954,608   51.8%   105    37.8%   ← 100% of fire's novelty
+    a3   1,966,805    0.6%    0     63.5%
+    f4   1,978,110    0.0%    0     65.8%
+    d1      99,425   95.0%    0     19.5%
+    b5       1,052  100.0%    0      1.4%
+
+**c2 contributed all 105 novel shapes at 0.011% rate** —
+similar to c1 (0.015%) and other c-family mutation gens.
+
+### Eight second-wave explorers identified
+
+    Fire #62: c1  (claim_mutation)        — 234 novel
+    Fire #63: b4  (fixed_point_hunt)      —  11 novel
+    Fire #65: g4  (reflection_duality)    — 131 novel
+    Fire #66: a1  (catalog_cross_product) — 176 novel
+    Fire #66: f4  (frontier_pursuit)      — 175 novel
+    Fire #68: c5  (specialization)        —  68 novel
+    Fire #72: a5  (distribution_match)    —  38 novel
+    Fire #73: c2  (threshold_mutation)    — 105 novel  ← NEW
+
+C-family pattern: c1 + c2 + c5 all explorers via different
+mutation operators. Bandit has cycled through ~75% of the
+catalog-driven gens now; pattern of "every gen has latent
+exploration capacity" looks robust.
+
+### Lifetime DISCOVERY shapes crossed 2000
+
+After Fire #58 (start of honest era): 17 shapes
+After Fire #73: 2055 shapes
+
+That's a 121x growth over 16 fires — average 127 novel/fire.
+
+### RAM growth pattern (heartbeat-observed)
+
+Fire #73's RAM grew linearly with records: 75 → 4336 MB
+(~75 MB per 1M records). Different from Fire #71 (434 MB at 5M)
+— the gen mix determines how much memory the in-batch
+signature_index buffer consumes.
+
+The buffer is one entry per UNIQUE signature. Mutation-heavy
+gens (c1, c2) produce many distinct shape templates; cross-
+product gens (a1, a3, f4) produce fewer. Hence the 10x RAM
+swing.
+
+This is **not a leak** — buffer drops back to baseline after
+end-of-batch sqlite flush. But noting it for future
+optimization: incremental-flush mid-batch could bound peak
+RAM and let bigger gens run safely.
+
+### Discovery streak resumed
+
+20 new discoveries → 1217 lifetime. The 105 novel c2 shapes
+were promote-able (high-density combinatorial claims) unlike
+a5's distribution-match low-density claims.
+
+Streak: 7 of last 8 fires emit ≥20 discoveries.
+
+### Heartbeat health
+
+115 snapshots, all clean. Tick rate stable at 575/s.
+
+### Batch result
+
+- batch_id: `batch-20260523T112406Z-fd7654`
+- Duration: 57 min wall (5M cap hit)
+- 5,000,000 records / 2,931,495 kills / 2,068,505 confirms / 0 incon / 0 errors
+- 20 new discoveries → **1217 lifetime**
+- 105 novel shapes → **2055 lifetime DISCOVERY shapes** (+105)
+
+### Lifetime stats after Fire #73
+
+| Metric | Pre-#34 | Post-#72 | Post-#73 |
+|---|---|---|---|
+| Batches | 30 | 72 | 73 |
+| Records | 154.4M | 311.4M | 316.4M |
+| Kills | 74.4M | 173.1M | 176.0M |
+| Confirmations | 75.5M | 120.8M | 122.9M |
+| Discoveries | 500 | 1197 | **1217** |
+| Lifetime DISCOVERY shapes | 17 | 1950 | **2055** |
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Yes. Another second-wave
+explorer identified (c2). Discovery streak resumed.
+
+(b) **What's notable?** c2 + c1 + c5 are all in the c-family
+(claim mutation). All 3 are explorers. The mutation operator
+is the active discovery mechanism: take an existing claim, vary
+one slot (invariant pair, threshold, region), emit. New
+combinations generate new signature templates.
+
+(c) **What's the RAM finding mean?** Mutation-heavy gens are
+memory-hungry. Cross-product gens are memory-light. The
+substrate has a natural trade-off: explorers cost more RAM.
+Future optimization: incremental signature_index flush.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #74 normal.
+
+---
+
+*Fire #73 closed. c2 = 8th second-wave explorer (105 novel).
+Lifetime DISCOVERY shapes crossed 2000 (2055). 20 discoveries
+emitted (streak resumed). 316.4M records, 176.0M kills, 1217
+discoveries, 2055 lifetime DISCOVERY shapes.*
+
 
 
 
