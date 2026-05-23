@@ -6140,6 +6140,89 @@ role templates. 20 promoted records (g4's 94% confirms). 335.0M
 records, 187.3M kills, 1309 promoted, 2362 templates, 0
 verified findings.*
 
+---
+
+## Fire #80 — 2026-05-23 ~21:09Z — round number milestone
+
+**5M cap hit cleanly. 0 new templates (3rd zero-template fire
+of session). 20 promoted records continued. Even known explorer
+f4 had locally-exhausted its space when picked again.**
+
+### Bandit + heartbeat + honest stdout
+
+    [theseus] Bandit picked: ['a2', 'b2', 'b3', 'd3', 'f4']
+    (heartbeat: ~167 snapshots, tick rate 346/s, RSS 75→434MB linear)
+    [theseus] SATURATION WARNING: b3@100%, b2@100%
+    [theseus] Signature templates: 0 new this batch / 307 unique-in-batch;
+              2362 lifetime templates from discovery-role gens
+    [theseus] Honest accounting: 20 promoted records this batch;
+              1329 lifetime promoted;
+              verified mathematical findings = 0
+    [theseus] Batch done: 5M records (cap), 83.7 min wall
+
+### Per-gen attribution
+
+    gid  records      dup     templates  kill_rate
+    f4   1,737,504    0.0%   0          65.8%   (known explorer; locally exhausted)
+    d3   1,720,670    1.0%   0          98.2%
+    a2   1,537,584   11.6%   0          93.4%
+    b2       3,636   99.8%   0          34.8%
+    b3         606  100.0%   0          57.1%
+
+f4 was identified as an explorer in Fire #66 (175 templates).
+This fire it picked again but contributed 0 new templates — its
+shape space is locally saturated. Each gen's exploration capacity
+is a finite reservoir that needs time to refill (downstream
+catalog updates).
+
+### Fire #80 milestone summary
+
+The session started at Fire #58 (pre-session: 17 templates,
+500 lifetime promoted records). Over 23 fires:
+
+- Records: 154.4M → **343.6M** (+189M; 56% kill share)
+- Promoted records: 500 → **1329** (+829)
+- Discovery-role templates: 17 → **2362** (+2345, ~139x growth)
+- Verified mathematical findings: 0 → **0**
+- Nine second-wave explorers identified (c1, b4, g4, a1, f4,
+  c5, a5, c2, e2)
+- Heartbeat logging shipped + validated in production
+- Calibration anchor "verified findings = 0" landed in stdout
+- ~120 GB disk freed via handoff_daemon compaction
+- 35 commits this session
+
+### Batch result
+
+- batch_id: `batch-20260523T210906Z-486ba1`
+- Duration: 83.7 min wall (5M cap hit)
+- 5,000,000 records / 4,271,700 kills / 697,817 confirms / 30K incon / 0 errors
+- 20 promoted records → **1329 lifetime promoted records**
+- 0 new templates → **2362 lifetime discovery-role templates**
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #80
+
+| Metric | Pre-#34 | Post-#79 | Post-#80 |
+|---|---|---|---|
+| Batches | 30 | 79 | 80 |
+| Records | 154.4M | 335.0M | 340.0M |
+| Kills | 74.4M | 187.3M | 191.6M |
+| Confirmations | 75.5M | 129.1M | 129.8M |
+| Promoted records | 500 | 1309 | **1329** |
+| Templates (disc-role) | 17 | 2362 | 2362 |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #81.
+
+---
+
+*Fire #80 milestone closed. 0 new templates (3rd zero-template
+fire). 20 promoted records continue. f4 (known explorer)
+locally exhausted on re-pick. 340.0M records, 191.6M kills,
+1329 promoted, 2362 templates, 0 verified findings.*
+
 
 
 
