@@ -34,9 +34,21 @@ class FitnessVector:
     ablation_details: dict = field(default_factory=dict)
 
     def as_array(self) -> np.ndarray:
-        """Return the 6 Pareto objectives as numpy array."""
+        """Return the 6 Pareto objectives as numpy array.
+
+        2026-05-22 — when ablation_delta < 0 (any primitive in the organism
+        is harmful — removing it improves accuracy), cap the apparent
+        accuracy_margin at 0 for NSGA-III selection. This removes the
+        decorative-primitive Goodhart from the Pareto front without killing
+        organisms outright. They can still survive on diversity, novelty,
+        generalization, or parsimony. Raw fields stay accurate for logging;
+        only the Pareto-array view is penalized.
+        """
+        effective_acc = self.accuracy_margin
+        if self.ablation_delta < 0:
+            effective_acc = min(self.accuracy_margin, 0.0)
         arr = np.array([
-            self.accuracy_margin,
+            effective_acc,
             self.calibration,
             self.ablation_delta,
             self.generalization,
