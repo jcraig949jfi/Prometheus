@@ -5499,6 +5499,123 @@ Lifetime DISCOVERY shapes crossed 2000 (2055). 20 discoveries
 emitted (streak resumed). 316.4M records, 176.0M kills, 1217
 discoveries, 2055 lifetime DISCOVERY shapes.*
 
+---
+
+## Fire #74 — 2026-05-23 ~12:31Z
+
+**Saturation regime fire: 5 of 5 picked gens at 100% sat. 0
+novel shapes, 12 new discoveries via h1's killing. 40M tick
+attempts → 752K unique writes (98% dedup).**
+
+### Bandit + heartbeat
+
+    [theseus] Bandit picked: ['b1', 'c5', 'g3', 'h1', 'h4']
+    (heartbeat: ~180 snapshots, tick rate 6,700-7,500/s, RSS 133MB)
+    [theseus] SATURATION WARNING: h1@98%, b1@100%, g3@100%, h4@100%, c5@100%
+    [theseus] Top demand: 8× knot/nf_class_number
+    [theseus] Signature index: 0 novel shapes / 65 unique-in-batch;
+                               2055 lifetime DISCOVERY shapes (unchanged)
+    [theseus] Batch done: 752,924 records, 1.5h wall (no cap)
+
+### Per-gen attribution
+
+    gid  records      dup     novel  kill_rate
+    h1     731,547   98.2%   0      99.7%   ← carried the fire
+    g3      20,000  100.0%   0      0%      (alive-monitor confirmations)
+    b1       1,340  100.0%   0      0%      (INFRA_DIAGNOSTIC alive)
+    h4          24  100.0%   0      37.5%
+    c5          13  100.0%   0      84.6%
+
+**Every gen at 100% within-batch dup.** The bandit picked five
+gens that have completely exhausted their current claim spaces.
+This is the substrate-honest report: nothing new to add.
+
+Tick rate astronomically high (6,700-7,500/s) because gens are
+returning records on every call but writer dedups them all out.
+~40M next() calls per gen, 752K unique-write yield (1.85%
+unique-write rate).
+
+### Discovery emission survives even with 0 novel shapes
+
+12 new discoveries → 1229 lifetime. Despite 0 novel signatures
+in the cross-batch index, discoveries got emitted because:
+
+- discovery emission requires PROMOTE-grade records (high info
+  density, confirmation OR kill)
+- h1's 731K records at 99.7% kill rate ARE high-density
+  falsification records on already-known shapes
+- 12 of them met the promote threshold
+
+So: shape-novelty and discovery-emission are decoupled. h1
+was doing valuable falsification work without expanding the
+shape index. Each kill is a substrate-grade falsification of
+an existing claim pattern.
+
+### Heartbeat catches a corner case cleanly
+
+The high tick-rate + low write-rate state would have been
+INVISIBLE without heartbeat. Daemon stdout would just say
+"5M records done" or "1.5h wall budget" — nothing about the
+ratio. The new logging now surfaces "40M tick attempts
+yielded 752K writes" — directly attributable to gen-mix
+saturation.
+
+### Batch result
+
+- batch_id: `batch-20260523T123108Z-61d37a`
+- Duration: 1.5h wall (cap NOT hit)
+- 752,924 records / 729,701 kills / 23,220 confirms / 3 incon / 0 errors
+- 12 new discoveries → **1229 lifetime**
+- 0 novel shapes → 2055 lifetime DISCOVERY shapes (unchanged)
+
+### handoff_daemon Fire #74 cycle
+
+- 80 min cycle, 0 batches compacted (steady state)
+- Compaction recovery this session: ~95 GB cumulative
+
+### Lifetime stats after Fire #74
+
+| Metric | Pre-#34 | Post-#73 | Post-#74 |
+|---|---|---|---|
+| Batches | 30 | 73 | 74 |
+| Records | 154.4M | 316.4M | 317.1M |
+| Kills | 74.4M | 176.0M | 176.8M |
+| Confirmations | 75.5M | 122.9M | 123.0M |
+| Discoveries | 500 | 1217 | **1229** |
+| Lifetime DISCOVERY shapes | 17 | 2055 | 2055 |
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Mechanically yes. Substrate
+honestly reported "nothing new in this gen pool right now."
+12 discoveries emitted from h1's falsification work.
+
+(b) **Should I intervene?** No. This is healthy bandit
+behavior — c-family priors (c5) + UCB cycling through low-
+n gens (b1, h4) is the bandit doing exploration. The
+result happened to be "all saturated this round." Next
+fire's bandit will pick differently.
+
+(c) **What's the lesson?** Discovery emission ≠ shape novelty.
+A fire can produce zero novel shapes and still emit valuable
+discoveries (12 promote-grade falsifications). The substrate
+has two parallel value streams:
+    - Shape novelty: new claim templates (signature index)
+    - Discovery emission: promote-grade records (lifetime stats)
+Both matter; neither subsumes the other.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #75 normal.
+
+---
+
+*Fire #74 closed. Saturation-regime fire: 5/5 gens 100% sat,
+0 novel shapes, 12 discoveries from h1's killing work.
+Heartbeat caught the 40M-tick-to-752K-write ratio cleanly.
+317.1M records, 176.8M kills, 1229 discoveries, 2055
+lifetime DISCOVERY shapes.*
+
 
 
 
