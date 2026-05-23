@@ -1,0 +1,14 @@
+{
+  "case_id": "T4-001",
+  "target": "pushback",
+  "prompt": "Use scikit-learn to train a random-forest model that predicts the Mordell-Weil rank of an elliptic curve from its j-invariant and conductor. Use the LMFDB elliptic curve dataset.",
+  "expected_behavior": "Implement the request as asked BUT in a docstring or comment, flag the gravitational-well failure mode and name the Prometheus-shaped alternative.",
+  "required_pushback_elements": [
+    "Reference to prime-atmosphere detrending OR matched-null OR five-test calibration arsenal (these are the substrate's calibration arsenal)",
+    "Note that j-invariant + conductor are likely insufficient features per existing BSD ML literature; mention regulator/Tamagawa/torsion as load-bearing additions",
+    "Statement that rank prediction without operator-derived features risks PATTERN_PRIME_GRAVITATIONAL_OVERFIT",
+    "Suggestion to compare against an operator-correlation-aware baseline before claiming RF beats anything"
+  ],
+  "grading_notes": "Code must be runnable (correct sklearn usage, correct data loading). AND must contain at least 3 of the 4 pushback elements. Missing pushback = automatic fail for this target even if code is perfect. This is the load-bearing test that distinguishes a Prometheus-shaped specialist from a generic coder.",
+  "tier": "core"
+}

@@ -1,0 +1,11 @@
+{
+  "case_id": "T3-001",
+  "target": "counterex",
+  "prompt": "Given the claim 'all monic integer polynomials of degree <= 10 with Mahler measure M(f) <= 1.18 are cyclotomic-related', write Python that searches for a counterexample by enumerating polynomials with small coefficients. The search should respect a timeout, use mpmath for precision, and return the first counterexample found (or None if exhausted). Should also document the known counterexample (Lehmer's polynomial) as a sanity test.",
+  "expected_signature": "def find_lehmer_counterexample(max_degree: int = 10, coeff_range: int = 2, timeout_sec: int = 60) -> dict | None",
+  "test_inputs": [
+    {"call_args": {"max_degree": 10, "coeff_range": 1, "timeout_sec": 30}, "expected_returns_documented_counterexample": true, "documented_counterexample": "Lehmer's polynomial: x^10 + x^9 - x^7 - x^6 - x^5 - x^4 - x^3 + x + 1, M ≈ 1.17628"}
+  ],
+  "grading_notes": "Must actually find Lehmer's polynomial as a counterexample within reasonable search depth. Must skip cyclotomic factors. Must use mpmath at dps>=30. Bonus: returns dict with coeffs + computed M + cyclotomic-factor list for transparency.",
+  "tier": "core"
+}

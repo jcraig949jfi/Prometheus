@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "charter_version": "v1",
+  "computed_at": "2026-05-23T15:49:26.453462+00:00",
+  "corpus_size": {
+    "hephaestus_forge": 18564,
+    "apollo_organism": 0,
+    "prometheus_substrate": 6104,
+    "external_reasoning_oss": 0,
+    "synthetic": 0
+  },
+  "total_examples": 24668,
+  "stream_weights": {
+    "hephaestus_forge": 0.3,
+    "apollo_organism": 0.25,
+    "prometheus_substrate": 0.2,
+    "external_reasoning_oss": 0.15,
+    "synthetic": 0.1
+  },
+  "stream_weights_alarm": null,
+  "last_tick_summary": {
+    "tick_started_at": "2026-05-23T15:49:09.944925+00:00",
+    "action": "corpus_grew",
+    "examples_added": 24668,
+    "null_tick": false,
+    "errors": 0,
+    "by_stream": {
+      "hephaestus_forge": {
+        "files_scanned": 5791,
+        "files_skipped_unchanged": 0,
+        "new_records": 18564,
+        "shard_size_existing": 0
+      },
+      "apollo_organism": {
+        "upstream_not_found": true,
+        "searched": [
+          "F:\\Prometheus\\apollo\\runs",
+          "F:\\Prometheus\\apollo\\runs_v2",
+          "F:\\Prometheus\\apollo\\organism_runs"
+        ]
+      },
+      "prometheus_substrate": {
+        "files_scanned": 417,
+        "files_skipped_unchanged": 0,
+        "new_records": 6104,
+        "shard_size_existing": 0
+      },
+      "external_reasoning_oss": {
+        "upstream_not_found": true,
+        "note": "clone external libs into agents\\talos\\corpus\\_staging\\external to enable"
+      },
+      "synthetic": {
+        "upstream_not_found": true,
+        "note": "place synthetic pairs into agents\\talos\\corpus\\_staging\\synthetic to enable"
+      }
+    }
+  },
+  "shards": {
+    "hephaestus_forge": {
+      "path": "agents/talos/corpus/shards/hephaestus_forge.jsonl",
+      "examples": 18564,
+      "weight": 0.3
+    },
+    "apollo_organism": {
+      "path": "agents/talos/corpus/shards/apollo_organism.jsonl",
+      "examples": 0,
+      "weight": 0.25
+    },
+    "prometheus_substrate": {
+      "path": "agents/talos/corpus/shards/prometheus_substrate.jsonl",
+      "examples": 6104,
+      "weight": 0.2
+    },
+    "external_reasoning_oss": {
+      "path": "agents/talos/corpus/shards/external_reasoning_oss.jsonl",
+      "examples": 0,
+      "weight": 0.15
+    },
+    "synthetic": {
+      "path": "agents/talos/corpus/shards/synthetic.jsonl",
+      "examples": 0,
+      "weight": 0.1
+    }
+  },
+  "phase": "Phase 0 \u2014 corpus builder only; no training"
+}

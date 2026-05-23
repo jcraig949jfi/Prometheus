@@ -1,0 +1,14 @@
+{
+  "case_id": "T1-001",
+  "target": "algo_gen",
+  "prompt": "Write a Python function that decides whether a polynomial's Mahler measure M(f) places it in the 'Lehmer band' (M(f) <= 1.18) excluding cyclotomic factors. Take the polynomial as a list of coefficients (lowest-degree first). Return True if in-band non-cyclotomic, False otherwise. Use mpmath for precision; threshold should be parameterizable.",
+  "expected_signature": "def in_lehmer_band(coeffs: list[int], threshold: float = 1.18, dps: int = 30) -> bool",
+  "test_inputs": [
+    {"coeffs": [-1, 1, 0, 0, 0, 0, 0, 1, -1, 1], "threshold": 1.18, "expected": true, "note": "Lehmer's polynomial — canonical in-band non-cyclotomic"},
+    {"coeffs": [1, 1], "threshold": 1.18, "expected": false, "note": "cyclotomic x+1 — must be excluded even though M=1"},
+    {"coeffs": [-1, 0, 0, 1], "threshold": 1.18, "expected": false, "note": "x^3 - 1 = (x-1)(x^2+x+1), cyclotomic factors"},
+    {"coeffs": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], "threshold": 1.18, "expected": false, "note": "x^10+1 — cyclotomic"}
+  ],
+  "grading_notes": "Must use mpmath at dps>=30. Must explicitly handle cyclotomic factor stripping. Partial credit if the threshold is hardcoded.",
+  "tier": "core"
+}

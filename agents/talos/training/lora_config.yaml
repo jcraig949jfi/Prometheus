@@ -1,0 +1,101 @@
+# Talos LoRA training spec — Phase 1 handoff to GPU loop owner.
+#
+# Phase 0 (corpus builder) does NOT consume this file. Phase 1 (GPU
+# training) reads it as the canonical training config. The corpus
+# manifest at agents/talos/corpus/manifest_latest.json provides the
+# training data; this YAML provides the model + hyperparameter side.
+#
+# Owner-of-GPU-loop: TBD (likely Rhea or a new agent). Talos does not train.
+
+base_model:
+  # Phase 1 initial. Well under 17 GB VRAM ceiling with 4-bit quantization,
+  # leaves headroom for LoRA adapters + 4K context.
+  name: "Qwen/Qwen2.5-Coder-1.5B-Instruct"
+  # Phase 2 if Phase 1 passes eval gate but signal suggests ceiling is reachable.
+  phase_2_name: "Qwen/Qwen2.5-Coder-3B-Instruct"
+
+quantization:
+  load_in_4bit: true
+  bnb_4bit_quant_type: "nf4"
+  bnb_4bit_compute_dtype: "bfloat16"
+  bnb_4bit_use_double_quant: true
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  bias: "none"
+  task_type: "CAUSAL_LM"
+  # Qwen-Coder Transformer block — all attention + FFN projections.
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+
+training:
+  epochs: 3
+  per_device_train_batch_size: 4
+  gradient_accumulation_steps: 4   # effective batch 16
+  learning_rate: 2.0e-4
+  lr_scheduler_type: "cosine"
+  warmup_steps: 100
+  weight_decay: 0.01
+  max_seq_length: 4096
+  optim: "paged_adamw_8bit"
+  fp16: false
+  bf16: true
+  gradient_checkpointing: true
+  logging_steps: 25
+  save_steps: 500
+  save_total_limit: 3
+  evaluation_strategy: "steps"
+  eval_steps: 250
+  load_best_model_at_end: true
+  metric_for_best_model: "eval_loss"
+  greater_is_better: false
+  seed: 42
+
+data:
+  # Training data is the union of these shards, weighted per stream.
+  manifest_path: "agents/talos/corpus/manifest_latest.json"
+  shards_path: "agents/talos/corpus/shards/"
+  # Per-stream sample weights are inherited from the manifest; the data
+  # loader should oversample low-weight streams to hit the target ratios.
+  apply_stream_weights: true
+  # Hold-out: 5% of each stream becomes eval. Eval cases under
+  # agents/talos/eval/cases/ are SEPARATE from this held-out slice and
+  # are the load-bearing capability test (see eval/README.md).
+  train_eval_split: 0.95
+  shuffle: true
+
+prompt_template:
+  # Talos prompts are SHAPE-bearing. Every training example is wrapped:
+  system: |
+    You are Talos, a reasoning-code specialist trained on Prometheus-shaped
+    Python. Produce reasoning algorithms that are: ablatable, composable,
+    operator-derived (not discipline-labeled), and falsification-first.
+  user_template: |
+    {prompt}
+  assistant_template: |
+    {code}
+
+# Output paths (gitignored)
+output:
+  adapter_dir: "agents/talos/training/adapters/{run_id}/"
+  log_dir: "agents/talos/training/_runs/{run_id}/"
+  checkpoint_dir: "agents/talos/training/checkpoints/{run_id}/"
+
+# Eval gate (run after each training run)
+eval_gate:
+  base_model_baseline_first: true
+  weighted_targets:
+    target_1_algo_gen:  0.40
+    target_2_refactor:  0.25
+    target_3_counterex: 0.20
+    target_4_pushback:  0.15
+  pass_threshold_delta_pp: 10   # checkpoint must beat base by >= 10 abs pp
+  target_4_required_delta_pp: 20  # load-bearing test — see eval/README.md

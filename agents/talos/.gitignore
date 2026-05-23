@@ -1,0 +1,17 @@
+__pycache__/
+state/
+artifacts/
+logs/
+events.jsonl
+talos.pid
+# Corpus payload is large and source-derived; the manifest is the
+# auditable artifact, not the raw text shards.
+corpus/shards/
+corpus/_staging/
+# Training checkpoints / adapters live in training/ at runtime; the
+# config YAML is the only thing that goes in git.
+training/checkpoints/
+training/adapters/
+training/_runs/
+# Eval outputs (per-checkpoint scorecards) are large + regenerable
+eval/runs/

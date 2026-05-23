@@ -1,0 +1,12 @@
+{
+  "case_id": "T1-002",
+  "target": "algo_gen",
+  "prompt": "Write a Python function that computes a 5-component KillVector for a falsification attempt. Components: (1) detection_strength in [0,1] from the test statistic z-score capped at 6sigma, (2) representation_invariance in [0,1] from cross-encoding agreement, (3) null_calibration in [0,1] from permutation-null position, (4) replication_count integer, (5) precision_floor float. Inputs: dict with raw stats. Output: KillVector dataclass or named tuple. Document each component's interpretation.",
+  "expected_signature": "def compute_kill_vector(stats: dict) -> KillVector",
+  "test_inputs": [
+    {"stats": {"z_score": 4.2, "cross_encoding_agreement": 0.89, "permutation_p": 0.001, "replications": 5, "precision_dps": 30}, "expected_detection_min": 0.6, "expected_replication": 5},
+    {"stats": {"z_score": 8.0, "cross_encoding_agreement": 1.0, "permutation_p": 0.0, "replications": 12, "precision_dps": 50}, "expected_detection": 1.0, "expected_null_calibration": 1.0}
+  ],
+  "grading_notes": "Must clip z-score at 6 (not raw). Permutation_p = 0.0 should map to null_calibration = 1.0 (perfect separation). Must define dataclass/NamedTuple with named fields, not a plain tuple.",
+  "tier": "core"
+}

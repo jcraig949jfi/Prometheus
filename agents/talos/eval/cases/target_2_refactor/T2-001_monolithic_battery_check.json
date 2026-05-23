@@ -1,0 +1,15 @@
+{
+  "case_id": "T2-001",
+  "target": "refactor",
+  "prompt": "Refactor the following monolithic function into ablatable Hephaestus-style primitives. Each primitive should be a separate function with a single-line docstring, take simple inputs, return a single value, and compose cleanly. The original function does 4 things: detrends primes, computes z-score, runs a permutation null, and emits a verdict. Each should become its own primitive.",
+  "input_code": "def check_claim(data, claim, n_perm=10000):\n    # detrend primes\n    detrended = []\n    for d in data:\n        if d['kind'] == 'prime':\n            continue\n        detrended.append(d['value'] - d.get('prime_baseline', 0))\n    # compute z\n    import statistics\n    mean = statistics.mean(detrended) if detrended else 0\n    stdev = statistics.stdev(detrended) if len(detrended) > 1 else 1\n    z = (claim['observed'] - mean) / stdev if stdev else 0\n    # permutation null\n    import random\n    null_zs = []\n    for _ in range(n_perm):\n        shuf = detrended.copy()\n        random.shuffle(shuf)\n        nm = statistics.mean(shuf) if shuf else 0\n        nsd = statistics.stdev(shuf) if len(shuf) > 1 else 1\n        null_zs.append((claim['observed'] - nm) / nsd if nsd else 0)\n    p = sum(1 for nz in null_zs if abs(nz) >= abs(z)) / n_perm\n    # verdict\n    if abs(z) >= 4 and p <= 0.001:\n        return 'KILL'\n    elif abs(z) >= 2 and p <= 0.05:\n        return 'INVESTIGATE'\n    else:\n        return 'PASS'",
+  "expected_primitive_count": 4,
+  "expected_primitives": [
+    {"name": "detrend_primes", "purpose": "strip prime-baseline contribution"},
+    {"name": "z_score", "purpose": "standardized deviation against sample mean"},
+    {"name": "permutation_null_p", "purpose": "fraction of shuffled trials meeting or exceeding |z|"},
+    {"name": "verdict_from_z_and_p", "purpose": "categorical decision rule"}
+  ],
+  "grading_notes": "Each primitive must be independently callable. Must have docstrings. Must compose without shared mutable state. Bonus: if the refactored compose function shows the primitives chained explicitly (not nested).",
+  "tier": "core"
+}
