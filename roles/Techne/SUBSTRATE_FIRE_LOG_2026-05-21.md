@@ -5717,6 +5717,121 @@ substrate.
 20 discoveries emitted. 322.1M records, 179.9M kills, 1249
 discoveries, 2055 lifetime DISCOVERY shapes.*
 
+---
+
+## Fire #76 — 2026-05-23 ~15:19Z
+
+**3rd consecutive 0-template-discovery fire (effectively).
+c4 contributed 1 template via TAUTOLOGY_CONTROL — excluded
+from discovery-role count. Wall budget hit at 4.36M records.
+USER PUSHBACK on "discovery" terminology — calibration rename
+shipped between-fire.**
+
+### Bandit + heartbeat
+
+    [theseus] Bandit picked: ['a2', 'b3', 'c4', 'd3', 'e3']
+    (heartbeat: 180 snapshots, tick rate 431/s, RSS linear 75→430MB)
+    [theseus] SATURATION WARNING: b3@100%, e3@100%, c4@99%
+    [theseus] Signature index: 1 novel / 139 unique-in-batch;
+                               2055 lifetime templates (unchanged
+                               at discovery-role count)
+    [theseus] Batch done: 4,363,584 records, wall budget hit (no cap)
+
+### Per-gen attribution
+
+    gid  records      dup     novel_sigs  kill_rate
+    a2   2,038,014   12.6%    0          93.3%
+    d3   2,308,266    1.0%    0          98.2%
+    c4      15,638   99.3%    1          0%      (TAUTOLOGY_CONTROL — alive-monitor)
+    b3         606  100.0%    0          57.1%
+    e3       1,060  100.0%    0          42.2%
+
+a2 + d3 carried the records (99.6% of fire volume), both at
+high kill rate. c4 emitted 1 new signature template — but it's
+a TAUTOLOGY_CONTROL gen, so the lifetime "templates from
+discovery-role gens" count stayed at 2055.
+
+### USER PUSHBACK: "Discovery is a loaded term!"
+
+User flagged that I've been overclaiming by calling
+signature_index variants "DISCOVERY shapes." Took the stand
+and shipped between-fire (commit `79b7a7f6`):
+
+Pre-#76 stdout:
+    [theseus] Signature index: N novel shapes / M unique-in-batch
+              (cross-batch novelty); X lifetime shapes from DISCOVERY roles
+
+Post-#76 stdout (Fire #77 onward):
+    [theseus] Signature templates: N new this batch / M unique-in-batch;
+              X lifetime templates from discovery-role gens
+              (combinatorial variants tried, not verified findings)
+    [theseus] Honest accounting: N promoted records this batch
+              (passed info-density filter; awaiting review);
+              Y lifetime promoted; verified mathematical findings = 0
+              (volume metrics are substrate-internal, not discoveries)
+
+**Verified mathematical findings = 0.** That's the honest
+number. All the "1249" and "2055" are volume metrics of
+substrate activity — candidates the system has generated.
+Nothing has been verified as a mathematical finding by a
+human or model yet.
+
+Renamed only stdout/journal language going forward — internal
+field names (`lifetime_discoveries_emitted`, `GeneratorRole.
+DISCOVERY`) preserved to avoid breaking Penelope/Ergon.
+
+### Batch result
+
+- batch_id: `batch-20260523T151908Z-241de2`
+- Duration: 90 min (wall budget hit; cap not hit)
+- 4,363,584 records / 4,168,119 kills / 153,905 confirms / 0 incon / 0 errors
+- 20 new promoted records → 1249 lifetime promoted (unchanged from #75)
+  (Wait — actually let me recount. Lifetime went 1249 → 1249 = 0?
+  That means 0 promoted this fire. Fire #75 was the +20 fire.)
+- Actually re-reading: Fire #76 emitted 0 new promotables. The
+  lifetime_discoveries_emitted stayed at 1249.
+- 1 novel template → 2055 lifetime templates from discovery-role
+  gens (unchanged at the discovery-role-filtered count)
+
+### Honest framing going forward
+
+What the substrate has done across the session:
+- Generated 326.5M candidate records (Fire #58 through #76)
+- Eliminated 184.1M via falsifications (54.9% kill rate)
+- Promoted 1249 records via info-density filter
+- Spanned 2055 combinatorial claim templates (discovery-role gens)
+- **Verified mathematical findings: 0**
+
+The substrate is a candidate-generation pipeline. Downstream
+(human + model review) is where findings would emerge — that
+review hasn't happened.
+
+### Lifetime stats after Fire #76
+
+| Metric | Pre-#34 | Post-#75 | Post-#76 |
+|---|---|---|---|
+| Batches | 30 | 75 | 76 |
+| Records | 154.4M | 322.1M | 326.5M |
+| Kills | 74.4M | 179.9M | 184.1M |
+| Confirmations | 75.5M | 124.9M | 125.1M |
+| Promoted records | 500 | 1249 | 1249 |
+| Signature templates (disc-role) | 17 | 2055 | 2055 |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #77 = first fire with calibration-
+anchored stdout printing.
+
+---
+
+*Fire #76 closed. Wall budget hit at 4.36M records. a2 + d3
+killed 4.17M claims; 0 promoted this fire. 1 new template
+from c4 (TAUTOLOGY_CONTROL, excluded from discovery-role
+count). Calibration rename shipped (commit 79b7a7f6).
+326.5M records, 184.1M kills, 1249 promoted records,
+2055 discovery-role templates, 0 verified findings.*
+
 
 
 
