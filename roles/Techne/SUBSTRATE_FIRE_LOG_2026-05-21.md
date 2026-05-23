@@ -5832,6 +5832,107 @@ count). Calibration rename shipped (commit 79b7a7f6).
 326.5M records, 184.1M kills, 1249 promoted records,
 2055 discovery-role templates, 0 verified findings.*
 
+---
+
+## Fire #77 — 2026-05-23 ~16:53Z
+
+**Calibration-anchored stdout landed perfectly. c5 = 31 new
+templates (confirming explorer hypothesis from #68 and falsifying
+my own #67 over-correction). Demand signal pivoted to ec invariants.**
+
+### Bandit + heartbeat + first honest-naming stdout
+
+    [theseus] Bandit picked: ['a2', 'c5', 'd2', 'f1', 'g1']
+    [heartbeat: ~100 snapshots, tick rate 800/s, RSS linear 75→1206MB]
+    [theseus] SATURATION WARNING: d2@87%, g1@100%, c5@85%
+    [theseus] Demand signals logged: 1,703,652 events
+    [theseus] Top demand: 346,653× ec/j_invariant
+                        | 346,064× ec/discriminant
+                        | 303,209× knot/alexander_polynomial_degree
+    [theseus] Signature templates: 31 new this batch / 543 unique-in-batch;
+              2086 lifetime templates from discovery-role gens
+              (combinatorial variants tried, not verified findings)
+    [theseus] Lifetime saturation (picked gens): all @ 100%
+    [theseus] Honest accounting: 20 promoted records this batch
+              (passed info-density filter; awaiting review);
+              1269 lifetime promoted;
+              verified mathematical findings = 0
+              (volume metrics are substrate-internal, not discoveries)
+    [theseus] Batch done: 5M records (cap), 50 min wall
+
+### Per-gen attribution
+
+    gid  records      dup     templates  kill_rate
+    c5     372,582   84.6%   31         64.2%   ← 100% of fire's novelty
+    a2   2,115,365   12.7%    0         93.3%
+    f1   2,188,143    9.7%    0         29.3%   (NULL_BASELINE — excluded)
+    d2     323,726   86.6%    0         38.6%
+    g1         184  100.0%    0         58.7%
+
+**c5 contributed all 31 new signature templates from 372K records
+(0.0083% rate)** — same explorer-class yield as Fire #68's 68/733K
+= 0.0093%. c5 IS a second-wave explorer; my Fire #67 conclusion
+was the over-correction (Fire #68 finding stands).
+
+### Demand signal PIVOT
+
+Pre-#77 demand-top reports: dominated by `knot/nf_class_number`
+(millions of events per batch via a1).
+
+Fire #77: dominant demand is now `ec/j_invariant`, `ec/discriminant`,
+`knot/alexander_polynomial_degree`. Why? f1 was picked this fire
+(NULL_BASELINE, random EC × knot pairings). f1 hits MANY different
+missing invariants across the ec catalog, not just nf_class_number.
+
+The substrate's "wanted primitives" board now shows a broader
+demand surface. Demand-driven seed pipeline (if built) would
+need to populate multiple invariants, not just one.
+
+### Calibration anchor confirmed working
+
+The stdout now reads honestly:
+- "31 new this batch / 543 unique-in-batch" (not "31 novel
+  shapes")
+- "2086 lifetime templates from discovery-role gens
+  (combinatorial variants tried, not verified findings)"
+- "verified mathematical findings = 0 (volume metrics are
+  substrate-internal, not discoveries)"
+
+Going forward all fire journal entries will use this language.
+
+### Batch result
+
+- batch_id: `batch-20260523T165306Z-bf46ee`
+- Duration: 50 min wall (5M cap hit FAST)
+- 5,000,000 records / 2,979,137 kills / 752,797 confirms / 1.27M incon / 0 errors
+- 20 promoted records → **1269 lifetime promoted**
+- 31 new templates → **2086 lifetime discovery-role templates**
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #77
+
+| Metric | Pre-#34 | Post-#76 | Post-#77 |
+|---|---|---|---|
+| Batches | 30 | 76 | 77 |
+| Records | 154.4M | 326.5M | 331.5M |
+| Kills | 74.4M | 184.1M | 187.1M |
+| Confirmations | 75.5M | 125.1M | 125.8M |
+| Promoted records | 500 | 1249 | **1269** |
+| Templates (disc-role) | 17 | 2055 | **2086** |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #78.
+
+---
+
+*Fire #77 closed. c5 = 31 new templates (confirming explorer
+class). Demand pivot to ec invariants via f1. Calibration anchor
+"verified findings = 0" landed in stdout as designed. 331.5M
+records, 187.1M kills, 1269 promoted records, 2086 discovery-
+role templates, 0 verified findings.*
+
 
 
 
