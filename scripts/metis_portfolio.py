@@ -57,6 +57,17 @@ except ImportError:
         print(f"FATAL: cannot import call_llm from scripts/llm_cascade.py or agents/metis: {e}", file=sys.stderr)
         sys.exit(1)
 
+# Shared orchestration logging (fail-soft)
+try:
+    from orchestration_logging import get_logger, emit_event
+    _olog = get_logger("metis_portfolio")
+except Exception:
+    import logging as _logging
+    _olog = _logging.getLogger("metis_portfolio")
+    _olog.addHandler(_logging.StreamHandler(sys.stdout))
+    _olog.setLevel(_logging.INFO)
+    def emit_event(*a, **kw): return False
+
 DASHBOARD_DIR = REPO_ROOT / "docs"  # GitHub Pages serves from main/docs
 STATE_PATH = DASHBOARD_DIR / "state.json"
 BRIEF_PATH = DASHBOARD_DIR / "portfolio_brief.md"
@@ -452,14 +463,38 @@ def main():
     args = parser.parse_args()
 
     while True:
+        start = time.monotonic()
         try:
             print(f"[{datetime.now().isoformat()}] generating portfolio brief...")
+            _olog.info("generating portfolio brief")
             brief = generate_brief()
             path = write_brief(brief)
             touched = touch_manual_status_timestamp()
-            print(f"[{datetime.now().isoformat()}] wrote {path}; manual_status touched={touched}")
+            dur = time.monotonic() - start
+            msg = f"wrote {path}; manual_status touched={touched}"
+            print(f"[{datetime.now().isoformat()}] {msg}")
+            _olog.info("%s (%.1fs)", msg, dur)
+            # Distinguish "real brief" from "LLM-cascade-failed placeholder"
+            brief_unparseable = isinstance(brief, str) and "Metis output was unparseable" in brief
+            llm_failed = isinstance(brief, str) and "LLM cascade failed" in brief.lower()
+            emit_event(
+                "metis_brief_generated",
+                summary=(f"brief written ({dur:.1f}s)"
+                         + (" — LLM cascade failed; placeholder content" if llm_failed else "")
+                         + (" — unparseable LLM output stripped" if brief_unparseable else "")),
+                success=not (brief_unparseable or llm_failed),
+                output_path=str(path.relative_to(REPO_ROOT)) if path.is_absolute() else str(path),
+                agent="Pronoia",
+                duration_sec=dur,
+            )
         except Exception as e:
-            print(f"[{datetime.now().isoformat()}] error: {e}", file=sys.stderr)
+            err = str(e)
+            print(f"[{datetime.now().isoformat()}] error: {err}", file=sys.stderr)
+            _olog.error("brief generation failed: %s", err)
+            emit_event("metis_brief_generated",
+                       summary=f"brief generation failed: {err[:200]}",
+                       success=False, error=err[:500], agent="Pronoia",
+                       duration_sec=time.monotonic() - start)
 
         if args.loop is None:
             return

@@ -26,6 +26,17 @@ except ImportError:
     print("ERROR: redis package required. pip install redis", file=sys.stderr)
     sys.exit(1)
 
+# Shared orchestration logging (fail-soft if telemetry stack unreachable)
+try:
+    from orchestration_logging import get_logger, emit_event
+    _olog = get_logger("portfolio_monitor")
+except Exception:
+    import logging as _logging
+    _olog = _logging.getLogger("portfolio_monitor")
+    _olog.addHandler(_logging.StreamHandler(sys.stdout))
+    _olog.setLevel(_logging.INFO)
+    def emit_event(*a, **kw): return False
+
 # Make agora.* importable when run from repo root or scripts/
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
@@ -797,9 +808,28 @@ def main():
                     write_json(state, args.json_output)
                     pg_agents = state.get("infra_status", {}).get("postgres_agent_count", 0)
                     wrote.append(f"{args.json_output} (degraded; pg agents={pg_agents})")
-            print(f"[{datetime.now().isoformat()}] wrote {', '.join(wrote)}", flush=True)
+            msg = f"wrote {', '.join(wrote)}"
+            print(f"[{datetime.now().isoformat()}] {msg}", flush=True)
+            _olog.info(msg)
+            agent_count = 0
+            try:
+                agent_count = len(state.get("agents", [])) if 'state' in locals() else 0
+            except Exception:
+                pass
+            emit_event(
+                "portfolio_monitor_run",
+                summary=f"{msg} | agents={agent_count} mode={'degraded' if r is None else 'redis'}",
+                success=True,
+                output_path=str(args.json_output.relative_to(REPO_ROOT)) if args.json_output.is_absolute() else str(args.json_output),
+                agent="Pronoia",
+            )
         except Exception as e:
-            print(f"[{datetime.now().isoformat()}] render error: {e}", file=sys.stderr)
+            err = str(e)
+            print(f"[{datetime.now().isoformat()}] render error: {err}", file=sys.stderr)
+            _olog.error("render error: %s", err)
+            emit_event("portfolio_monitor_run",
+                       summary=f"render error: {err[:200]}",
+                       success=False, error=err[:500], agent="Pronoia")
 
         if args.once:
             return

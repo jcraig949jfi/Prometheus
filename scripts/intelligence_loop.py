@@ -39,6 +39,16 @@ SCRIPTS_DIR = REPO_ROOT / "scripts"
 LOG_PATH = REPO_ROOT / "docs" / "intelligence_loop.log"  # docs/* gitignored except the 3 dashboard files
 LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
 
+# Orchestration event emission (fail-soft if Postgres unreachable).
+sys.path.insert(0, str(REPO_ROOT / "scripts"))
+try:
+    from orchestration_logging import emit_event, new_cycle_id
+    HAS_EVENTS = True
+except Exception as _e:
+    HAS_EVENTS = False
+    def emit_event(*a, **kw): return False  # type: ignore[no-redef]
+    def new_cycle_id(): import uuid; return uuid.uuid4().hex  # type: ignore[no-redef]
+
 # Git identity used for the auto-commits. Kept local to this script to avoid
 # touching global git config; matches the noreply email pattern used elsewhere.
 GIT_AUTHOR = ("-c", "user.name=James Craig",
@@ -126,27 +136,38 @@ def push_dashboard_to_main() -> bool:
     return False
 
 
-def run_script(name: str, args: list = None, timeout: int = 600) -> bool:
-    """Run a sibling script in a subprocess. Inherits env. Returns True on success."""
+def run_script(name: str, args: list = None, timeout: int = 600) -> tuple[bool, float, str]:
+    """Run a sibling script in a subprocess. Returns (ok, duration_sec, tail_line).
+
+    The current cycle_id is inherited via the PROMETHEUS_CYCLE_ID env var so
+    child scripts that emit log_work events thread into the same dashboard
+    cycle grouping.
+    """
     cmd = [sys.executable, str(SCRIPTS_DIR / name)] + (args or [])
     log.info("→ %s %s", name, " ".join(args or []))
+    start = time.monotonic()
     try:
         result = subprocess.run(
             cmd, cwd=REPO_ROOT, capture_output=True, text=True, timeout=timeout,
+            env={**os.environ},  # inherits PROMETHEUS_CYCLE_ID set by caller
         )
+        dur = time.monotonic() - start
         if result.returncode == 0:
-            tail = (result.stdout or "").strip().splitlines()[-1:]
-            log.info("  ✓ %s exit 0 %s", name, tail[0] if tail else "")
-            return True
-        log.error("  ✗ %s exit %d stderr=%s", name, result.returncode,
-                  (result.stderr or "")[:300])
-        return False
+            tail_lines = (result.stdout or "").strip().splitlines()[-1:]
+            tail = tail_lines[0] if tail_lines else ""
+            log.info("  ✓ %s exit 0 (%.1fs) %s", name, dur, tail)
+            return True, dur, tail
+        err = (result.stderr or "")[:300]
+        log.error("  ✗ %s exit %d (%.1fs) stderr=%s", name, result.returncode, dur, err)
+        return False, dur, err
     except subprocess.TimeoutExpired:
-        log.error("  ✗ %s timed out after %ds", name, timeout)
-        return False
+        dur = time.monotonic() - start
+        log.error("  ✗ %s timed out after %.1fs", name, dur)
+        return False, dur, f"timeout after {timeout}s"
     except Exception as e:
+        dur = time.monotonic() - start
         log.error("  ✗ %s exception: %s", name, e)
-        return False
+        return False, dur, str(e)
 
 
 def main():
@@ -215,35 +236,71 @@ def main():
 
             # Hourly: monitor + metis (+ optional push to main for GitHub Pages)
             if now >= next_hourly:
-                log.info("[hourly] firing portfolio cycle")
-                ok_monitor = run_script("portfolio_monitor.py", ["--once"], timeout=120)
+                cycle_id = new_cycle_id()
+                os.environ["PROMETHEUS_CYCLE_ID"] = cycle_id
+                cycle_start = time.monotonic()
+                log.info("[hourly] firing portfolio cycle (cycle_id=%s)", cycle_id[:8])
+                emit_event("pronoia_cycle_started",
+                           summary=f"Pronoia hourly cycle (interval={args.hourly_min:.0f}min)",
+                           agent="Pronoia", cycle_id=cycle_id)
+
+                ok_monitor, mon_dur, mon_tail = run_script("portfolio_monitor.py", ["--once"], timeout=120)
+                emit_event("pronoia_portfolio_refresh",
+                           summary=f"portfolio_monitor.py {'ok' if ok_monitor else 'FAILED'} ({mon_dur:.1f}s) — {mon_tail[:160]}",
+                           success=ok_monitor, output_path="docs/state.json" if ok_monitor else None,
+                           agent="Pronoia", cycle_id=cycle_id, duration_sec=mon_dur)
+
                 ok_metis = True
+                metis_dur = 0.0
+                metis_tail = ""
                 if not args.no_metis:
-                    ok_metis = run_script("metis_portfolio.py", [], timeout=300)
+                    ok_metis, metis_dur, metis_tail = run_script("metis_portfolio.py", [], timeout=300)
+                    emit_event("pronoia_brief_generated",
+                               summary=f"metis_portfolio.py {'ok' if ok_metis else 'FAILED'} ({metis_dur:.1f}s) — {metis_tail[:160]}",
+                               success=ok_metis,
+                               output_path="docs/portfolio_brief.md" if ok_metis else None,
+                               agent="Pronoia", cycle_id=cycle_id, duration_sec=metis_dur)
 
                 # Auto-publish to GitHub Pages by pushing the data files to main
                 ok_push = True
                 if not args.no_push and ok_monitor:
                     log.info("[hourly] pushing dashboard data to main")
+                    push_start = time.monotonic()
                     ok_push = push_dashboard_to_main()
+                    emit_event("pronoia_dashboard_pushed",
+                               summary=f"git push {'ok' if ok_push else 'FAILED'} ({time.monotonic() - push_start:.1f}s)",
+                               success=ok_push, agent="Pronoia", cycle_id=cycle_id,
+                               duration_sec=time.monotonic() - push_start)
 
                 # Optional: fire email on every hourly tick (rather than once-daily)
                 ok_email_this_tick = None
                 if args.email_every_cycle and not args.no_email and ok_metis:
                     log.info("[hourly] firing email digest (per --email-every-cycle)")
-                    ok_email_this_tick = run_script("send_brief_email.py", [], timeout=60)
+                    ok_email_this_tick, email_dur, email_tail = run_script("send_brief_email.py", [], timeout=60)
+                    emit_event("pronoia_email_dispatched",
+                               summary=f"send_brief_email.py {'ok' if ok_email_this_tick else 'FAILED'} ({email_dur:.1f}s) — {email_tail[:160]}",
+                               success=bool(ok_email_this_tick),
+                               agent="Pronoia", cycle_id=cycle_id, duration_sec=email_dur)
+
+                cycle_dur = time.monotonic() - cycle_start
+                emit_event("pronoia_cycle_complete",
+                           summary=f"cycle {cycle_id[:8]} done in {cycle_dur:.1f}s — "
+                                   f"monitor={ok_monitor} metis={ok_metis} push={ok_push} email={ok_email_this_tick}",
+                           success=ok_monitor and ok_metis and ok_push,
+                           agent="Pronoia", cycle_id=cycle_id, duration_sec=cycle_dur)
 
                 if agora_client:
                     try:
                         agora_client.send(
                             stream="main",
                             subject=f"Portfolio cycle complete (mon={ok_monitor}, metis={ok_metis}, push={ok_push}, email={ok_email_this_tick})",
-                            body=f"hourly tick {now.isoformat()}",
+                            body=f"hourly tick {now.isoformat()} cycle_id={cycle_id[:8]} duration={cycle_dur:.1f}s",
                             confidence=1.0,
                             msg_type=MessageType.ANNOUNCE,
                         )
                     except Exception:
                         pass
+                os.environ.pop("PROMETHEUS_CYCLE_ID", None)
                 next_hourly = now + timedelta(minutes=args.hourly_min)
 
             # Daily: email
@@ -258,7 +315,14 @@ def main():
                     and last_daily_date != today
                     and now >= target_today):
                 log.info("[daily] firing email digest")
-                ok_email = run_script("send_brief_email.py", [], timeout=60)
+                cycle_id = new_cycle_id()
+                os.environ["PROMETHEUS_CYCLE_ID"] = cycle_id
+                ok_email, email_dur, email_tail = run_script("send_brief_email.py", [], timeout=60)
+                emit_event("pronoia_email_dispatched",
+                           summary=f"daily send_brief_email.py {'ok' if ok_email else 'FAILED'} ({email_dur:.1f}s) — {email_tail[:160]}",
+                           success=bool(ok_email), agent="Pronoia",
+                           cycle_id=cycle_id, duration_sec=email_dur)
+                os.environ.pop("PROMETHEUS_CYCLE_ID", None)
                 last_daily_date = today
                 if agora_client:
                     try:
@@ -281,7 +345,14 @@ def main():
                     and last_weekly_recap_date != local_now.date()):
                 log.info("[weekly] firing weekly recap (Friday %02d:%02d local)",
                          local_now.hour, local_now.minute)
-                ok_recap = run_script("weekly_recap.py", [], timeout=300)
+                cycle_id = new_cycle_id()
+                os.environ["PROMETHEUS_CYCLE_ID"] = cycle_id
+                ok_recap, recap_dur, recap_tail = run_script("weekly_recap.py", [], timeout=300)
+                emit_event("pronoia_weekly_recap",
+                           summary=f"weekly_recap.py {'ok' if ok_recap else 'FAILED'} ({recap_dur:.1f}s) — {recap_tail[:160]}",
+                           success=bool(ok_recap), agent="Pronoia",
+                           cycle_id=cycle_id, duration_sec=recap_dur)
+                os.environ.pop("PROMETHEUS_CYCLE_ID", None)
                 last_weekly_recap_date = local_now.date()
                 if agora_client:
                     try:
