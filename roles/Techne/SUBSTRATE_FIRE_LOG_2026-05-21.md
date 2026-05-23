@@ -4399,6 +4399,176 @@ shapes). c5 still unpicked but substrate productive anyway.
 20 new discoveries emitted. 286.1M records, 153.0M kills, 1120
 discoveries, 1485 lifetime DISCOVERY shapes.*
 
+---
+
+## Fire #66 — 2026-05-23 ~02:09Z
+
+**352 NOVEL SHAPES — second-best honest-era fire after Fire #58.
+a1 + f4 each contributed ~176 (50/50 split). c5 STILL not
+picked but substrate is on fire anyway. Two NEW second-wave
+explorers identified.**
+
+### Auto-seed + priors flag + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1385685715
+    [priors] Found 1 candidate explorer gens:
+      c5: sat=9.1%  prior_score=0.01664  mean: 0.01180 -> 0.01444  (n: 5 -> 8)
+    [priors] Persisted 1 × 3 entries to bandit_history.json
+    [theseus] Injected explorer priors for 1 gens
+    [theseus] Hydrated bandit history: 141 yield-score entries from prior fires
+    [theseus] Bandit bootstrap selected: ['c1', 'h1', 'a3', 'a1', 'f4']
+    [theseus] Demand signals logged: 173,186 events
+    [theseus] Top demand: 173,186× knot/nf_class_number   ← first time visible!
+    [theseus] Signature index: 352 novel shapes / 764 unique-in-batch;
+                               1837 lifetime DISCOVERY shapes (+352!)
+    [theseus] Lifetime saturation (picked gens):
+              a1@100%, f4@100%, c1@100%, a3@100%, h1@100%
+    [theseus] Batch done: 5M records (cap), 0.80h wall
+
+### --inject-explorer-priors flag WORKED
+
+First fire with the daemon flag. c5 history pushed from n=5 to
+n=8 (mean 0.01180 → 0.01444). Idempotency safeguard will skip
+c5 on future runs since n=8 = threshold.
+
+But c5 STILL didn't get picked. Softmax with temp=0.005 + UCB
+remains too noisy for c5's 3x score advantage to dominate
+5-draws-without-replacement. The intervention is technically
+working (c5's score is now substantially elevated) but the
+bandit's sampling doesn't surface it.
+
+This is now a temperature-tuning question. Holding off — the
+substrate is producing massively without c5.
+
+### Per-gen attribution
+
+    gid  records      dup    novel  sat_lt  kill_rate
+    a1     934,910   11.3%   176    1.000   68.9%   ← NEW explorer
+    f4   1,053,835    0.0%   175    1.000   65.9%   ← NEW explorer
+    c1     986,157    6.5%   1      1.000   68.6%
+    h1     974,292    7.6%   0      1.000   83.0%
+    a3   1,050,806    0.3%   0      1.000   63.6%
+
+**a1 and f4 each contributed ~176 of 352 novel shapes (50/50).**
+Two NEW second-wave explorers in one fire. This brings the
+total to FIVE gens that have revealed second-wave capacity:
+
+    Fire #62: c1 (234 novel)
+    Fire #63: b4 (11/16)
+    Fire #65: g4 (131/137)
+    Fire #66: a1 (176)
+    Fire #66: f4 (175)
+
+All five had lifetime_saturation = 100%. The signature function
+is fundamentally coarser than each gen's actual claim space.
+
+### Top demand print finally appeared!
+
+    [theseus] Top demand: 173,186× knot/nf_class_number
+
+a1 emitted 173K demand-signal events this batch (all for the
+same primitive). That's because a1 cross-product-iterates over
+knot × ec catalogs and finds knot.nf_class_number is missing
+~173K times.
+
+Demand-driven seed pipeline becomes a clearer priority each
+fire that includes a1/f1.
+
+### Substrate-honest pattern crystallizing
+
+5-fire window: #62=234, #63=16, #64=6, #65=137, #66=352.
+Total: 745 novel shapes over 5 fires = ~149/fire mean.
+
+Pattern: gens reveal second-wave capacity when picked, especially
+high-volume catalog-driven gens (a1, c1, f4, g4). The bandit's
+exploration noise is doing its job — cycling through gens such
+that each one's "deep but narrow" claim space gets visited.
+
+**My intervention attempt (c5 priors) was unnecessary for
+productivity.** The substrate organic exploration via bandit
+softmax noise already finds latent explorers. I should not have
+forced c5 — but the data is also self-correcting (c5 priors are
+idempotent now, won't grow further).
+
+Per `feedback_assume_wrong`: my intervention model
+(c5-is-the-only-explorer) was falsified by 5 different gens
+revealing second-wave capacity. The right framing: substrate
+distribution-tail exploration is robust; the bandit's noise IS
+the explorer.
+
+### Batch result
+
+- batch_id: `batch-20260523T020906Z-99b6c9`
+- Duration: 0.80h wall (5M cap hit)
+- 5,000,000 records / 3,491,402 kills / 1,508,598 confirms / 0 incon / 0 errors
+- 20 new discoveries → **1140 lifetime** (4th consecutive emit-20 fire)
+- 352 novel shapes → 1837 lifetime DISCOVERY shapes (+352)
+
+### Lifetime stats after Fire #66
+
+| Metric | Pre-#34 | Post-#65 | Post-#66 |
+|---|---|---|---|
+| Batches | 30 | 66 | 67 |
+| Records | 154.4M | 286.1M | 291.1M |
+| Kills | 74.4M | 153.0M | 156.5M |
+| Confirmations | 75.5M | 115.6M | 117.1M |
+| Discoveries | 500 | 1120 | **1140** |
+| Lifetime DISCOVERY shapes | 17 | 1485 | **1837** |
+
+Novelty trajectory:
+
+    Fire #57: 286
+    Fire #58: 463  ⭐ best
+    Fire #59: 285
+    Fire #60: 44
+    Fire #61: 4
+    Fire #62: 234  (c1)
+    Fire #63: 16   (b4)
+    Fire #64: 6
+    Fire #65: 137  (g4)
+    Fire #66: 352  (a1+f4) ⭐ 2nd best
+
+11-fire honest-index running mean: **167 novel/fire**.
+Cumulative lifetime DISCOVERY shapes growth: 17 → 1837 (108x).
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Massively. 352 novel shapes.
+20 discoveries emitted (4-fire streak now). Two NEW second-wave
+explorers identified (a1, f4).
+
+(b) **Did --inject-explorer-priors work?** Mechanically yes;
+strategically irrelevant. c5 still wasn't picked. But the
+flag is safe (idempotency held). Will skip c5 on subsequent
+fires.
+
+(c) **Conventional-approach drift check?** I was too narrowly
+focused on c5 across the last 5 fires. The data showed many
+gens have latent exploration — not just c5. My pattern-of-one
+was wrong. Per `feedback_assume_wrong`: the 5-gen evidence
+falsified the c5-monopoly model.
+
+(d) **Memory check.** Per `feedback_substrate_passive_consumer_warning`:
+the observability prints (saturation warning, lifetime sat,
+top demand) are paying off. Each fire's output now tells me
+what was picked + how saturated + what's demanded — three
+substrate-honest signals. The c1+a1+f4+g4+b4 pattern only
+became visible because the per-gen novelty attribution lands
+in the journal.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #67 expected to follow current
+trajectory — bandit will cycle through second-wave explorers.
+
+---
+
+*Fire #66 closed. 352 novel shapes (2nd-best honest era). a1+f4
+new second-wave explorers (5 total now). c5 priors flag worked
+mechanically but c5 still not picked. 20 new discoveries
+emitted (4-fire streak). 291.1M records, 156.5M kills, 1140
+discoveries, 1837 lifetime DISCOVERY shapes.*
+
 
 
 
