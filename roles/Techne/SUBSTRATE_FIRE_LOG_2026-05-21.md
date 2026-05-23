@@ -4750,6 +4750,166 @@ on a false premise. Self-correcting going forward. 291.4M
 records, 156.5M kills, 1151 discoveries, 1841 lifetime
 DISCOVERY shapes.*
 
+---
+
+## Fire #68 — 2026-05-23 ~04:44Z
+
+**MY FIRE #67 CONCLUSION ALSO FALSIFIED. c5 contributed 68 of
+69 novel shapes (98.6%) at 733K records. c5 IS a second-wave
+explorer — Fire #67's tiny sample misled me again.**
+
+### Auto-seed + (now-protected) priors + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1394985514
+    [priors] No gens below sat threshold 0.50; nothing to inject.  ← gating works
+    [theseus] Hydrated bandit history: 151 yield-score entries
+    [theseus] Bandit bootstrap selected: ['f3', 'b4', 'e4', 'f4', 'c5']
+    [theseus] SATURATION WARNING: b4@100%, e4@100%
+    [theseus] Signature index: 69 novel shapes / 622 unique-in-batch;
+                               1910 lifetime DISCOVERY shapes (+69)
+    [theseus] Lifetime saturation (picked gens):
+              e4@74%, b4@100%, c5@100%, f4@100%, f3@100%
+    [theseus] Batch done: 5M records (cap), 1.5h+ wall
+
+### Per-gen attribution — c5 is the explorer
+
+    gid  records      dup     novel  sat_lt  kill_rate
+    c5     733,159    65.6%   68     1.000   67.1%   ← 98.6% of fire's novelty
+    f4   2,132,371     0.0%   1      1.000   65.8%
+    f3   2,133,631     0.0%   0      1.000   67.4%
+    b4         606   100.0%   0      0.995   73.6%
+    e4         233   100.0%   0      0.742   0%
+
+**c5 emitted 68 novel shapes — same explorer-class novelty rate
+as a1 (0.019%), f4-#66 (0.017%), c1 (0.015%), g4 (0.008%):**
+
+    c5  : 68 novel / 733K   = 0.0093%
+    g4  : 131 novel / 1.59M = 0.0082%
+    c1  : 234 novel / 1.59M = 0.0147%
+    a1  : 176 novel / 935K  = 0.0188%
+    f4  : 175 novel / 1.05M = 0.0167%
+    b4  :  11 novel / 606   = 1.815% (tiny denom, high rate)
+
+c5's per-record novelty rate is consistent with other
+second-wave explorers. **It IS one of them. My Fire #67
+conclusion was over-corrected.**
+
+### The actual truth: nuanced
+
+Both things are true:
+
+1. **The pre-#67 sat=9% estimate was unreliable.** Sample size
+   (total_seen=22) was way too small for a stable saturation
+   measurement.
+
+2. **But c5 IS an explorer in the same sense as c1, g4, a1, f4.**
+   When fired at scale, c5 contributes novel shapes at the same
+   per-record rate. It's not uniquely special, but it's also
+   not non-contributing.
+
+My Fire #67 framing "c5 isn't special; the 9% was a mirage" was
+correct on point (1) but over-extrapolated to point (2). I
+killed too much.
+
+Per `feedback_assume_wrong`: TWO over-corrections in two fires.
+The data is teaching me to be less categorical. Things are
+gradient, not binary.
+
+### What the c5 priors intervention actually did
+
+In retrospect:
+- Mechanically: forced c5 picks despite weak signal
+- Strategically: forced exploration of a useful explorer
+- Side effect: total_seen gating now prevents future tiny-sample
+  false positives (good safeguard regardless of c5 outcome)
+
+The intervention was based on a flawed premise but produced
+a useful outcome (c5 picked in Fires #67-#68, contributed
+~72 novel shapes total). Lucky alignment, not vindication.
+
+### Discovery streak resumed: +20
+
+20 new discoveries → 1171 lifetime. Streak: 5 of last 6 fires
+emitted 20 (only #64 missed at 0; #67 had 11).
+
+### Batch result
+
+- batch_id: `batch-20260523T044406Z-b7a7a5`
+- Duration: 1.5h wall (5M cap hit)
+- 5,000,000 records / 3,332,798 kills / 1,666,969 confirms / 0 incon / 0 errors
+- 20 new discoveries → **1171 lifetime**
+- 69 novel shapes → 1910 lifetime DISCOVERY shapes (+69)
+
+### Lifetime stats after Fire #68
+
+| Metric | Pre-#34 | Post-#67 | Post-#68 |
+|---|---|---|---|
+| Batches | 30 | 68 | 69 |
+| Records | 154.4M | 291.4M | 296.4M |
+| Kills | 74.4M | 156.5M | 159.9M |
+| Confirmations | 75.5M | 117.4M | 119.0M |
+| Discoveries | 500 | 1151 | **1171** |
+| Lifetime DISCOVERY shapes | 17 | 1841 | **1910** |
+
+Novelty trajectory:
+
+    Fire #57: 286   Fire #62: 234 ⭐
+    Fire #58: 463 ⭐  Fire #63: 16
+    Fire #59: 285   Fire #64: 6
+    Fire #60: 44    Fire #65: 137
+    Fire #61: 4     Fire #66: 352 ⭐2
+                    Fire #67: 4    (c5 1st pick at scale)
+                    Fire #68: 69   (c5 2nd pick — real)
+
+13-fire honest-index running mean: 145 novel/fire.
+
+### Between-fire shipped: total_seen gating (commit f47e9ba0)
+
+Direct response to Fire #67's (mistaken!) falsification:
+- `saturation_score(min_total_seen=1000)` returns None below threshold
+- Prevents future tiny-sample c5-like false reads
+- bandit_priors_inject now uses gated estimates
+
+Ironic timing: I shipped the gating fix RIGHT before Fire #68
+revealed my falsification was itself wrong. The fix is still
+correct (low-sample saturation IS unreliable) but the c5-isn't-
+special framing was over-corrected.
+
+### Self-review
+
+(a) **Solved THIS fire's task?** 69 novel + 20 discoveries.
+And surfaced a deeper lesson about over-correction.
+
+(b) **How do I know when to trust a falsification?** The Fire
+#67 frame "c5 doesn't explore at scale" came from one sample
+(60K records, 4 novel = 0.007% rate). Fire #68 confirms that
+rate (68/733K = 0.009%) but at a scale where 68 IS meaningful.
+LESSON: one fire of data isn't enough to kill a hypothesis,
+just to provisionally update it.
+
+(c) **Conventional-approach drift check?** Per `feedback_anti_
+gravitational_well`: I have been swinging between extremes
+(c5-is-uniquely-special → c5-isn't-special → c5-IS-an-explorer).
+The substrate-honest framing: **most "saturated" gens are
+latent explorers; the bandit's cycling finds them; my
+forcing was unnecessary**. That stands.
+
+(d) **What now?** Stop iterating on the formula based on
+single-fire data points. Let 5-10 fires accumulate before any
+more intervention.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #69 = standard observation.
+
+---
+
+*Fire #68 closed. MY OWN FIRE #67 FALSIFICATION WAS ITSELF
+over-corrected. c5 = second-wave explorer in same class as
+c1/g4/a1/f4. 20 new discoveries emitted. 296.4M records,
+159.9M kills, 1171 discoveries, 1910 lifetime DISCOVERY
+shapes.*
+
 
 
 
