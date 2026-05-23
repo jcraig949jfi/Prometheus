@@ -26,6 +26,13 @@ from harmonia.agents._base import REPO_ROOT
 
 BACKLOG_PATH = REPO_ROOT / "charon" / "BACKLOG.md"
 
+# Every Nth backlog tick forces SEED_PROBLEMS rotation (skips queue).
+# At N=3 with the 20-min rotation cycle, BL-C-* problems land roughly
+# every 60 min even when Hecate's stygian_priority queue is saturated.
+# Set to 1 to disable the queue entirely; set to a large N to deprioritize
+# SEED rotation. See self_generate_backlog docstring for rationale.
+SEED_FORCE_EVERY_N = 3
+
 # Parsed inline from BL-C-001..010 (charon/BACKLOG.md). Keeping this as a
 # typed table rather than re-parsing the markdown each tick — the BACKLOG
 # is the source of truth, this is the operational snapshot.
@@ -136,18 +143,33 @@ class StygianAgent(CharonAgent):
         """Backlog source, in priority order:
           1. Hecate-fed stygian_priority queue (closed-loop edge from
              gradient archaeology — synthetic 'problems' wrapping each
-             unconsumed kill_pattern cluster).
+             unconsumed kill_pattern cluster). Skipped on forced-SEED
+             ticks (see SEED_FORCE_EVERY_N).
           2. SEED_PROBLEMS rotation (round-robin by last-attempted-at ASC,
-             static fallback when the queue is empty).
+             static curated work; always appended after queue rows so
+             the queue can drain).
+
+        Forced-SEED interleave: every SEED_FORCE_EVERY_N tick, the queue
+        is skipped entirely so curated SEED_PROBLEMS get rotation
+        pressure even when Hecate keeps the queue saturated. Without
+        this, opportunistic queue work (e.g., HECATE-* meta-tests
+        without registered loaders) starves the curated BL-C-* roster
+        indefinitely. Counter persists in agent state so the cadence
+        survives daemon restarts.
         """
+        counter = int(self.load_state("backlog_tick_counter", 0) or 0) + 1
+        self.save_state("backlog_tick_counter", counter)
+        force_seed = (counter % SEED_FORCE_EVERY_N == 0)
+
         ranked: list[dict] = []
-        try:
-            queue = stygian_priority_queue()
-            queue_rows = queue.read_unconsumed(limit=10, sort_key="cluster_size")
-            for r in queue_rows:
-                ranked.append(self._wrap_queue_row_as_problem(r))
-        except Exception as e:
-            self.log.warning(f"stygian_priority queue read failed: {e}")
+        if not force_seed:
+            try:
+                queue = stygian_priority_queue()
+                queue_rows = queue.read_unconsumed(limit=10, sort_key="cluster_size")
+                for r in queue_rows:
+                    ranked.append(self._wrap_queue_row_as_problem(r))
+            except Exception as e:
+                self.log.warning(f"stygian_priority queue read failed: {e}")
 
         last = self.load_state("last_attempted", {}) or {}
 
@@ -410,6 +432,13 @@ class StygianAgent(CharonAgent):
             stats["problem_attempted"] = problem["id"]
             queue_row_id = problem.get("_queue_row_id")
             stats["from_queue"] = bool(queue_row_id)
+            # Surface the interleave counter so we can audit cadence
+            stats["backlog_tick_counter"] = int(
+                self.load_state("backlog_tick_counter", 0) or 0
+            )
+            stats["force_seed_tick"] = (
+                stats["backlog_tick_counter"] % SEED_FORCE_EVERY_N == 0
+            )
             try:
                 if dry_run:
                     stats["items_processed"] += 1
