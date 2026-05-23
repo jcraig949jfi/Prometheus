@@ -5616,6 +5616,107 @@ Heartbeat caught the 40M-tick-to-752K-write ratio cleanly.
 317.1M records, 176.8M kills, 1229 discoveries, 2055
 lifetime DISCOVERY shapes.*
 
+---
+
+## Fire #75 — 2026-05-23 ~14:08Z
+
+**a3 carried 99.97% of records (5M cap). 0 novel shapes but
+20 discoveries emitted via confirmations.**
+
+### Bandit + heartbeat
+
+    [theseus] Bandit picked: ['a3', 'b3', 'b4', 'c5', 'h4']
+    (heartbeat: 124 snapshots, tick rate 1,365/s, RSS 75→415MB linear)
+    [theseus] SATURATION WARNING: c5@100%, b3@100%, b4@100%, h4@100%
+    [theseus] Signature index: 0 novel shapes / 218 unique-in-batch;
+                               2055 lifetime DISCOVERY shapes (unchanged)
+    [theseus] Batch done: 5M records (cap), 62 min wall
+
+### Per-gen attribution
+
+    gid  records      dup     novel  kill_rate
+    a3   4,998,770    1.6%   0      63.5%   ← 99.97% of fire's volume
+    b3         606  100.0%   0      57.1%
+    b4         606  100.0%   0      73.6%
+    c5           5  100.0%   0      60.0%
+    h4          13  100.0%   0      92.3%
+
+a3 (functional_identity) is high-volume cross-product gen that
+has been picked frequently. Its signature space is essentially
+exhausted (0 novel shapes from 5M records). But 36.5%
+confirmations + 63.5% kills = balanced verdict distribution at
+scale, generating promotable records.
+
+### 20 discoveries from confirmations
+
+20 new discoveries → 1249 lifetime. Despite 0 novel shapes, the
+discovery emission streak continues — same pattern as Fire #74:
+high-volume kills/confirms on known shapes produce promote-grade
+records.
+
+Streak: 8 of last 10 fires emitted 20 discoveries (just #67=11,
+#69=5, #72=1, #74=12 dipped below).
+
+### Lifetime DISCOVERY shapes unchanged 2 fires in a row
+
+Fire #74: 0 novel
+Fire #75: 0 novel
+
+The bandit is in a saturation-pick streak. Out of recent picks
+{b1, c5, g3, h1, h4, a3, b3, b4} only a3 produced any unique
+records — and even those were all of known shapes.
+
+C5 priors continue to waste a slot per fire (5 records emitted
+this time). The mechanism is decaying but slowly: c5 has
+acquired ~5 real low-score entries since #67. With 8 prior
+synthetic entries averaging 0.014, mean drift toward true rate
+takes ~10+ more picks.
+
+### Batch result
+
+- batch_id: `batch-20260523T140806Z-24769e`
+- Duration: 62 min wall (5M cap hit)
+- 5,000,000 records / 3,175,630 kills / 1,824,370 confirms / 0 incon / 0 errors
+- 20 new discoveries → **1249 lifetime**
+- 0 novel shapes → 2055 lifetime DISCOVERY shapes (unchanged)
+
+### Lifetime stats after Fire #75
+
+| Metric | Pre-#34 | Post-#74 | Post-#75 |
+|---|---|---|---|
+| Batches | 30 | 74 | 75 |
+| Records | 154.4M | 317.1M | 322.1M |
+| Kills | 74.4M | 176.8M | 179.9M |
+| Confirmations | 75.5M | 123.0M | 124.9M |
+| Discoveries | 500 | 1229 | **1249** |
+| Lifetime DISCOVERY shapes | 17 | 2055 | 2055 |
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Yes. 20 discoveries despite
+0 novel shapes — confirms Fire #74's lesson about decoupled
+streams.
+
+(b) **What's the recent trend?** Last 2 fires have 0 novel
+shapes. Bandit picking has cycled to a saturated regime. The
+8 known explorers haven't been picked in those fires (mix
+was b1/c5/g3/h1/h4/a3/b3/b4 across both — c5 is in there but
+exhausted).
+
+(c) **Should I intervene?** No. Bandit will rotate back to
+explorers as their UCB exploration bonus accrues. Trust the
+substrate.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #76.
+
+---
+
+*Fire #75 closed. a3 dominated (5M records). 0 novel shapes but
+20 discoveries emitted. 322.1M records, 179.9M kills, 1249
+discoveries, 2055 lifetime DISCOVERY shapes.*
+
 
 
 
