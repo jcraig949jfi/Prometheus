@@ -501,6 +501,19 @@ def main() -> None:
         default="yield_proportional",
         help="Bandit policy. Default: yield_proportional (GFlowNet-spirit).",
     )
+    p.add_argument(
+        "--inject-explorer-priors",
+        action="store_true",
+        help=(
+            "Before hydrating bandit history, inject synthetic priors for "
+            "gens whose lifetime_saturation is below 50%%. Bootstraps "
+            "exploration when UCB+softmax aren't strong enough to surface "
+            "low-history explorers (e.g., c5 at 9%% sat with n=2 history). "
+            "Synthetic scores reflect what the lifetime-saturation yield "
+            "formula would produce given the gen's actual sat. "
+            "See theseus.scripts.bandit_priors_inject for the standalone CLI."
+        ),
+    )
     args = p.parse_args()
 
     # Default seed to a time-based value so consecutive daemon
@@ -524,6 +537,21 @@ def main() -> None:
     # empty history and the bandit can't actually prefer high-yield
     # gens over low-yield ones across fires.
     if args.bandit:
+        # Fire #65: optionally inject explorer priors BEFORE hydration
+        # so the synthetic scores land in the disk history first, then
+        # get loaded together with the real history.
+        if args.inject_explorer_priors:
+            try:
+                from theseus.scripts.bandit_priors_inject import inject
+                n_explorers = inject(
+                    threshold=0.5, base=0.003, n_copies=3, dry_run=False,
+                )
+                if n_explorers > 0:
+                    print(
+                        f"[theseus] Injected explorer priors for {n_explorers} gens"
+                    )
+            except Exception as e:
+                print(f"[theseus] explorer priors injection failed (non-fatal): {e}")
         n_hydrated = hydrate_bandit(bandit)
         if n_hydrated > 0:
             print(

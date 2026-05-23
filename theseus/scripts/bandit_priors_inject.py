@@ -63,12 +63,20 @@ def inject(
     base: float = 0.003,
     n_copies: int = 3,
     dry_run: bool = False,
+    skip_if_n_above: int = 8,
 ) -> int:
     """Inject priors into bandit history. Returns count of gens patched.
 
     `n_copies` controls how many synthetic entries to append per gen.
     More copies = stronger bias. 3 is enough to pull the mean
     meaningfully without erasing real history.
+
+    `skip_if_n_above` makes this safe for repeated invocation (e.g.,
+    via daemon's --inject-explorer-priors flag every fire): if a gen
+    already has >= N history entries, the priors injection is skipped
+    for that gen on the assumption that organic history is sufficient.
+    Default 8 ≈ 3 prior fires of natural picks (the bandit's recent
+    window dominates the mean).
     """
     priors = compute_priors(threshold=threshold, base=base)
     if not priors:
@@ -76,11 +84,18 @@ def inject(
               f"nothing to inject.")
         return 0
     history = load_history()
-    print(f"[priors] Found {len(priors)} explorer gens:")
+    n_patched = 0
+    print(f"[priors] Found {len(priors)} candidate explorer gens:")
     for gid, score in priors.items():
         existing = history.get(gid, [])
-        mean_before = sum(existing) / len(existing) if existing else 0.0
         n_before = len(existing)
+        if n_before >= skip_if_n_above:
+            print(
+                f"  {gid}: sat={SIGNATURE_INDEX.saturation_score(gid)*100:.1f}%  "
+                f"SKIP (n={n_before} >= {skip_if_n_above}, organic history sufficient)"
+            )
+            continue
+        mean_before = sum(existing) / n_before if existing else 0.0
         new_entries = [score] * n_copies
         if not dry_run:
             history.setdefault(gid, []).extend(new_entries)
@@ -93,12 +108,15 @@ def inject(
             f"mean: {mean_before:.5f} -> {mean_after:.5f}  "
             f"(n: {n_before} -> {n_after})"
         )
+        n_patched += 1
     if dry_run:
         print("[priors] DRY RUN — no changes persisted.")
-    else:
+    elif n_patched > 0:
         save_history(history)
-        print(f"[priors] Persisted {len(priors)} × {n_copies} entries to bandit_history.json")
-    return len(priors)
+        print(f"[priors] Persisted {n_patched} × {n_copies} entries to bandit_history.json")
+    else:
+        print("[priors] All candidate gens already have organic history; no changes.")
+    return n_patched
 
 
 def main() -> int:
@@ -120,6 +138,11 @@ def main() -> int:
         help="Copies of the synthetic score to inject per gen. Default 3.",
     )
     p.add_argument(
+        "--skip-if-n-above", type=int, default=8,
+        help="Skip gens that already have >= N history entries. Makes "
+             "repeated invocation safe. Default 8.",
+    )
+    p.add_argument(
         "--dry-run", action="store_true",
         help="Show what would be injected without persisting.",
     )
@@ -128,6 +151,7 @@ def main() -> int:
         threshold=args.threshold,
         base=args.base,
         n_copies=args.copies,
+        skip_if_n_above=args.skip_if_n_above,
         dry_run=args.dry_run,
     )
     return 0 if n >= 0 else 1
