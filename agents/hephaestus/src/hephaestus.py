@@ -146,11 +146,55 @@ def call_aggie_api(aggie_client, prompt: str) -> str | None:
         return None
 
 
+def _call_with_hard_timeout(client, model, prompt, timeout_sec=300):
+    """Call the API with a hard thread-based timeout.
+
+    The OpenAI client's httpx timeout can fail to fire if the server
+    accepts the connection but hangs during response streaming. This
+    wrapper uses a daemon thread + Event to guarantee we return within
+    timeout_sec, regardless of what the HTTP layer does.
+    """
+    import threading
+
+    result = [None]
+    error = [None]
+    done = threading.Event()
+
+    def _worker():
+        try:
+            resp = client.chat.completions.create(
+                model=model,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0.4,
+                max_tokens=4096,
+            )
+            result[0] = resp.choices[0].message.content
+        except Exception as e:
+            error[0] = e
+        finally:
+            done.set()
+
+    t = threading.Thread(target=_worker, daemon=True)
+    t.start()
+    if not done.wait(timeout=timeout_sec):
+        # Hard timeout — thread is abandoned (daemon, will die with process)
+        raise TimeoutError(f"API call exceeded hard timeout of {timeout_sec}s")
+    if error[0] is not None:
+        raise error[0]
+    return result[0]
+
+
 def call_api(client: OpenAI, prompt: str, model: str,
-             max_retries: int = 5, backoff_base: float = 2.0) -> str | None:
-    """Call API with exponential backoff. Returns None only on non-retryable errors."""
+             max_retries: int = 3, backoff_base: float = 2.0,
+             hard_timeout: int = 300) -> str | None:
+    """Call API with exponential backoff and hard per-call timeout.
+
+    Each individual API call is wrapped in a thread with a hard timeout
+    (default 300s = 5 min). If the server hangs, we abandon the call
+    and retry or give up. Max total time = max_retries * hard_timeout.
+    """
     import random
-    
+
     def is_retryable(err_str: str) -> bool:
         """Determine if an error should trigger retry vs immediate failure."""
         err_lower = err_str.lower()
@@ -164,34 +208,36 @@ def call_api(client: OpenAI, prompt: str, model: str,
             return False
         # Default: retry (better to retry once than lose gold)
         return True
-    
+
     for attempt in range(max_retries):
         try:
-            resp = client.chat.completions.create(
-                model=model,
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0.4,
-                max_tokens=4096,
-            )
-            return resp.choices[0].message.content
+            content = _call_with_hard_timeout(client, model, prompt,
+                                              timeout_sec=hard_timeout)
+            return content
+        except TimeoutError:
+            logger.warning("Hard timeout (%ds) on attempt %d/%d",
+                          hard_timeout, attempt + 1, max_retries)
+            if attempt < max_retries - 1:
+                wait = backoff_base ** attempt + random.uniform(0, 1)
+                time.sleep(wait)
+            continue
         except Exception as e:
             err = str(e)
-            
+
             if not is_retryable(err):
                 logger.error("Non-retryable API error: %s", err)
                 return None
-            
+
             if attempt < max_retries - 1:
-                # Exponential backoff with jitter: base^attempt + random jitter
                 wait = backoff_base ** attempt
-                jitter = random.uniform(0, wait * 0.1)  # 0-10% jitter
+                jitter = random.uniform(0, wait * 0.1)
                 total_wait = wait + jitter
                 logger.warning("API error (retryable), backoff %.2fs (attempt %d/%d): %s",
                              total_wait, attempt + 1, max_retries, err)
                 time.sleep(total_wait)
             else:
                 logger.error("API error after %d retries (last: %s)", max_retries, err)
-    
+
     return None
 
 
@@ -880,12 +926,15 @@ def filter_results(results: list[dict], top_n: int | None = None,
 
 def forge_one_with_retry(client: OpenAI, entry: dict, model: str,
                          run_dir: Path, max_item_retries: int = 3,
-                         aggie_client=None, force_aggie: bool = False) -> dict | None:
+                         aggie_client=None, force_aggie: bool = False,
+                         max_wall_time: int = 600) -> dict | None:
     """Attempt to forge an item multiple times with backoff on API failures.
 
     This wrapper retries at the item level when API failures occur, giving the
     API time to recover before discarding the item. Permanent failures (bad code,
-    validation errors) are not retried.
+    validation errors) are not retried. Total wall-clock time is capped at
+    max_wall_time seconds (default 10 min) to prevent one item from blocking
+    the forge indefinitely.
 
     aggie_client: optional Auggie instance used as fallback inside forge_one()
                   when the NVIDIA call fails.  Only set when --use-aggie-api is active.
@@ -893,7 +942,16 @@ def forge_one_with_retry(client: OpenAI, entry: dict, model: str,
     """
     import random
 
+    start_time = time.time()
+
     for attempt in range(max_item_retries):
+        # Wall-clock cap
+        if time.time() - start_time > max_wall_time:
+            names = entry.get("concept_names", [])
+            logger.warning("Wall-clock cap (%ds) reached for %s, skipping",
+                          max_wall_time, " + ".join(names))
+            return {"status": "scrap", "reason": "wall_clock_timeout", "frame": "?"}
+
         result = forge_one(client, entry, model, run_dir, aggie_client=aggie_client, force_aggie=force_aggie)
 
         # If successful or permanent failure, return immediately

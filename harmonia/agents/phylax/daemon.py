@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import json
 import re
+import shutil
 import subprocess
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -146,6 +147,10 @@ class PhylaxAgent(HarmoniaAgent):
         return out
 
     def _scan_git_promotions(self, limit: int = 50) -> list[dict]:
+        # Skip silently if git isn't on PATH (e.g., running under cmd.exe
+        # rather than Git-Bash). Avoids one WinError 2 per tick.
+        if shutil.which("git") is None:
+            return []
         last_seen = self.load_state("last_seen_commit", None)
         cmd = [
             "git", "-C", str(REPO_ROOT), "log",

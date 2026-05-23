@@ -152,6 +152,15 @@ def compile_and_validate(organism: Organism) -> tuple:
     cr = compile_organism(organism)
     if not cr.success:
         return None, False
+    # 2026-05-22 — log wiring type mismatches (warn-mode, doesn't block).
+    # See primitive_types.check_organism_wiring for what's flagged.
+    if cr.type_warnings:
+        for w in cr.type_warnings:
+            log_debug(
+                f"TYPE_MISMATCH {w['primitive']}.{w['param_name']} expects {w['target_type']} got {w['source_type']} (source={w['source']})",
+                stage="type_check",
+                data=w,
+            )
     return cr.source_code, True
 
 
@@ -494,10 +503,39 @@ def run_apollo(smoke_test: bool = False, config_path: str = None,
                 )
                 llm_mutator.set_client(client)
 
+                # Optional alt LLM via local HTTP server (bake-off path, 2026-05-19)
+                # Set alt_llm_url + alt_llm_ratio in the config to enable a
+                # second local model running on a different port. Mutually
+                # exclusive with deepseek_*; alt_llm_url wins if both are set.
+                alt_llm_url = config.get("alt_llm_url", None)
+                alt_llm_ratio = config.get("alt_llm_ratio", 0.0)
+                if alt_llm_url and alt_llm_ratio > 0:
+                    try:
+                        from llm_client import LLMClient as _AltLLMClient
+                        alt_client = _AltLLMClient(base_url=alt_llm_url)
+                        if alt_client.is_available():
+                            alt_health = alt_client.health()
+                            llm_mutator.set_alt_client(alt_client, ratio=alt_llm_ratio)
+                            log_info(
+                                f"Alt local LLM enabled: {alt_health.get('model','?')} "
+                                f"at {alt_llm_url} | {alt_llm_ratio:.0%} of calls | "
+                                f"VRAM={alt_health.get('vram_allocated_gb','?')}GB",
+                                stage="bootstrap",
+                            )
+                        else:
+                            log_warning(
+                                f"Alt LLM at {alt_llm_url} not reachable; falling back to Qwen-only",
+                                stage="bootstrap",
+                            )
+                    except Exception as e:
+                        log_warning(f"Alt LLM setup failed: {e}. Using Qwen only.", stage="bootstrap")
+
                 # Optional: DeepSeek API as alternative LLM (50/50 split)
+                # NOTE: superseded by alt_llm_url in bake-off mode. Only fires
+                # if alt_llm_url is unset AND deepseek_ratio > 0.
                 deepseek_key = config.get("deepseek_api_key", None)
                 deepseek_ratio = config.get("deepseek_ratio", 0.0)
-                if deepseek_key and deepseek_ratio > 0:
+                if not (alt_llm_url and alt_llm_ratio > 0) and deepseek_key and deepseek_ratio > 0:
                     try:
                         from deepseek_client import DeepSeekClient
                         ds_client = DeepSeekClient(

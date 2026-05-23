@@ -13,6 +13,7 @@ import textwrap
 from dataclasses import dataclass
 
 from genome import Organism, ALL_PRIMITIVES, get_primitive_signature
+from primitive_types import check_organism_wiring
 
 
 @dataclass
@@ -20,6 +21,11 @@ class CompilationResult:
     success: bool
     source_code: str = ""
     error: str = ""
+    type_warnings: list = None  # populated by 2026-05-22 type-discipline pass
+
+    def __post_init__(self):
+        if self.type_warnings is None:
+            self.type_warnings = []
 
 
 def compile_organism(organism: Organism) -> CompilationResult:
@@ -64,7 +70,12 @@ def compile_organism(organism: Organism) -> CompilationResult:
     except SyntaxError as e:
         return CompilationResult(False, error=f"Generated code syntax error: {e}")
 
-    return CompilationResult(True, source_code=source)
+    # 2026-05-22 type-discipline pass: warn (don't fail) on wiring type mismatches.
+    # The dominant elite recipe at gen 2960 wired fencepost_count's int output
+    # into bayesian_update's probability inputs silently. This makes it visible.
+    type_warnings = check_organism_wiring(organism)
+
+    return CompilationResult(True, source_code=source, type_warnings=type_warnings)
 
 
 def _generate_source(organism: Organism, topo_order: list[str]) -> str:

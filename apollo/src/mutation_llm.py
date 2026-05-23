@@ -218,39 +218,50 @@ class LLMMutator:
 
         # Server mode: route through HTTP client in small chunks
         if self._client is not None:
-            CHUNK_SIZE = 6  # Balance throughput vs OOM risk
-            all_results = []
-            for chunk_start in range(0, len(prompts), CHUNK_SIZE):
-                chunk = prompts[chunk_start:chunk_start + CHUNK_SIZE]
-                chunk_chars = sum(len(p) for p in chunk)
-                ct0 = time.time()
-                try:
-                    results = self._client.generate_batch(
-                        chunk, max_tokens=self.max_tokens,
-                        temperature=self.temperature
-                    )
-                    celapsed = time.time() - ct0
-                    chunk_out_chars = sum(len(r) for r in results)
-                    log_debug(
-                        f"LLM call: batch({len(chunk)}) | {chunk_chars}ch in | {chunk_out_chars}ch out | {celapsed:.1f}s | ok",
-                        stage="llm",
-                        data={"prompt_chars": chunk_chars, "output_chars": chunk_out_chars,
-                              "elapsed_s": round(celapsed, 2), "success": True, "mode": "batch",
-                              "n_prompts": len(chunk)}
-                    )
-                    all_results.extend(results)
-                except Exception:
-                    celapsed = time.time() - ct0
-                    log_debug(
-                        f"LLM call: batch({len(chunk)}) | {chunk_chars}ch in | {celapsed:.1f}s | fail -> singles",
-                        stage="llm",
-                        data={"prompt_chars": chunk_chars, "elapsed_s": round(celapsed, 2),
-                              "success": False, "mode": "batch", "n_prompts": len(chunk)}
-                    )
-                    # Fallback: process this chunk one at a time
-                    for p in chunk:
-                        all_results.append(self._generate(p))
-            return all_results
+            CHUNK_SIZE = 12  # v2c-fix 2026-05-19: was 6; bumped after profile showed LLM I/O dominates
+
+            # ── Hybrid routing fix (v2c regression repair) ─────────────
+            # The v2c batch path was Qwen-only; alt_client ratio was ignored.
+            # Split prompts by ratio, run Qwen + DeepSeek concurrently.
+            if self._alt_client is not None and self._alt_ratio > 0:
+                import random as _random
+                from concurrent.futures import ThreadPoolExecutor as _TPE
+
+                qwen_idx, alt_idx = [], []
+                for i in range(len(prompts)):
+                    if _random.random() < self._alt_ratio:
+                        alt_idx.append(i)
+                    else:
+                        qwen_idx.append(i)
+
+                results = [""] * len(prompts)
+                hyb_t0 = time.time()
+                with _TPE(max_workers=2) as ex:
+                    f_qwen = ex.submit(self._qwen_chunked_generate,
+                                       [prompts[i] for i in qwen_idx],
+                                       CHUNK_SIZE) if qwen_idx else None
+                    f_alt = ex.submit(self._alt_client.generate_batch,
+                                      [prompts[i] for i in alt_idx],
+                                      self.max_tokens, self.temperature) if alt_idx else None
+                    if f_qwen:
+                        qres = f_qwen.result()
+                        for j, i in enumerate(qwen_idx):
+                            results[i] = qres[j] if j < len(qres) else ""
+                    if f_alt:
+                        ares = f_alt.result()
+                        for j, i in enumerate(alt_idx):
+                            results[i] = ares[j] if j < len(ares) else ""
+                log_debug(
+                    f"LLM call: hybrid_batch({len(prompts)}) | qwen={len(qwen_idx)} alt={len(alt_idx)} | {time.time()-hyb_t0:.1f}s",
+                    stage="llm",
+                    data={"n_prompts": len(prompts), "n_qwen": len(qwen_idx),
+                          "n_alt": len(alt_idx), "elapsed_s": round(time.time()-hyb_t0, 2),
+                          "mode": "hybrid_batch"}
+                )
+                return results
+
+            # Pure Qwen path (no alt_client configured)
+            return self._qwen_chunked_generate(prompts, CHUNK_SIZE)
 
         # Local batched generation
         texts = []
@@ -310,6 +321,43 @@ class LLMMutator:
             for prompt in prompts:
                 results.append(self._generate(prompt))
             return results
+
+    def _qwen_chunked_generate(self, prompts: list, chunk_size: int) -> list:
+        """Chunked HTTP call to the Qwen LLM server. Extracted so it can run
+        in parallel with the alt_client in the hybrid batch path."""
+        if not prompts:
+            return []
+        all_results = []
+        for chunk_start in range(0, len(prompts), chunk_size):
+            chunk = prompts[chunk_start:chunk_start + chunk_size]
+            chunk_chars = sum(len(p) for p in chunk)
+            ct0 = time.time()
+            try:
+                results = self._client.generate_batch(
+                    chunk, max_tokens=self.max_tokens,
+                    temperature=self.temperature
+                )
+                celapsed = time.time() - ct0
+                chunk_out_chars = sum(len(r) for r in results)
+                log_debug(
+                    f"LLM call: qwen_batch({len(chunk)}) | {chunk_chars}ch in | {chunk_out_chars}ch out | {celapsed:.1f}s | ok",
+                    stage="llm",
+                    data={"prompt_chars": chunk_chars, "output_chars": chunk_out_chars,
+                          "elapsed_s": round(celapsed, 2), "success": True, "mode": "qwen_batch",
+                          "n_prompts": len(chunk)}
+                )
+                all_results.extend(results)
+            except Exception:
+                celapsed = time.time() - ct0
+                log_debug(
+                    f"LLM call: qwen_batch({len(chunk)}) | {chunk_chars}ch in | {celapsed:.1f}s | fail -> singles",
+                    stage="llm",
+                    data={"prompt_chars": chunk_chars, "elapsed_s": round(celapsed, 2),
+                          "success": False, "mode": "qwen_batch", "n_prompts": len(chunk)}
+                )
+                for p in chunk:
+                    all_results.append(self._generate(p))
+        return all_results
 
     # ------------------------------------------------------------------
     # Route mutation

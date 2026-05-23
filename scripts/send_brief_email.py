@@ -31,6 +31,18 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_BRIEF = REPO_ROOT / "docs" / "portfolio_brief.md"  # GitHub Pages serves from main/docs
 
+# Shared orchestration logging (fail-soft)
+sys.path.insert(0, str(REPO_ROOT / "scripts"))
+try:
+    from orchestration_logging import get_logger, emit_event
+    _olog = get_logger("send_brief_email")
+except Exception:
+    import logging as _logging
+    _olog = _logging.getLogger("send_brief_email")
+    _olog.addHandler(_logging.StreamHandler(sys.stdout))
+    _olog.setLevel(_logging.INFO)
+    def emit_event(*a, **kw): return False
+
 # --- GitHub link catalog -----------------------------------------------------
 # Email is meant to be a router into the repo, not a self-contained report.
 # Edit this registry as new agents / docs / pivot artifacts land.
@@ -240,10 +252,14 @@ def build_deep_research_md(state: dict) -> str:
         used = budget.get("used", 0)
         total = budget.get("budget", 20)
         remaining = budget.get("remaining")
-        if remaining is None and used is not None and total is not None:
+        # Pythia may report budget as either an int (token-based) or a string
+        # like "compute-based (AI_Pro, 5h window)" (compute-based metering).
+        # Only attempt arithmetic when both sides are numeric.
+        numeric_budget = isinstance(used, (int, float)) and isinstance(total, (int, float))
+        if remaining is None and numeric_budget:
             remaining = total - used
         agent = budget.get("agent") or "?"
-        over = " (over budget)" if used is not None and total is not None and used > total else ""
+        over = " (over budget)" if numeric_budget and used > total else ""
         lines.append(f"**Budget:** {used}/{total} tokens{over} · {len(received)} received · {dispatched} dispatched · via `{agent}`")
         lines.append("")
     if not received:
@@ -281,10 +297,11 @@ def build_deep_research_html(state: dict) -> str:
         used = budget.get("used", 0)
         total = budget.get("budget", 20)
         remaining = budget.get("remaining")
-        if remaining is None and used is not None and total is not None:
+        numeric_budget = isinstance(used, (int, float)) and isinstance(total, (int, float))
+        if remaining is None and numeric_budget:
             remaining = total - used
         agent = budget.get("agent") or "?"
-        over = ' <span style="color:#dc2626">(over budget)</span>' if used is not None and total is not None and used > total else ""
+        over = ' <span style="color:#dc2626">(over budget)</span>' if numeric_budget and used > total else ""
         parts.append(
             f'<p style="margin:8px 0 12px 0;font-size:14px;color:#444">'
             f'<strong>Budget:</strong> {used}/{total} tokens{over} &middot; '
@@ -581,18 +598,41 @@ def main():
         print(body_md[:500])
         return
 
+    import time as _time
+    send_start = _time.monotonic()
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=30) as smtp:
             smtp.login(sender, password)
             smtp.sendmail(sender, [recipient], msg.as_string())
-        print(f"[{now.isoformat()}] sent '{subject}' to {recipient}")
+        dur = _time.monotonic() - send_start
+        msg_out = f"sent '{subject}' to {recipient} (body={len(body_md)}/{len(body_html)} md/html chars)"
+        print(f"[{now.isoformat()}] {msg_out}")
+        _olog.info("%s (%.1fs)", msg_out, dur)
+        emit_event(
+            "email_dispatched",
+            summary=f"{msg_out} | {dur:.1f}s",
+            success=True,
+            output_path=str(args.brief.relative_to(REPO_ROOT)) if args.brief.is_absolute() else str(args.brief),
+            agent="Pronoia",
+            duration_sec=dur,
+        )
     except smtplib.SMTPAuthenticationError as e:
-        print(f"AUTH FAIL: {e}. Check that HERMES_GMAIL_APP_PASSWORD is a Gmail App "
+        err = str(e)
+        print(f"AUTH FAIL: {err}. Check that HERMES_GMAIL_APP_PASSWORD is a Gmail App "
               f"Password (not your normal account password) and that 2FA is enabled "
               f"on the account.", file=sys.stderr)
+        _olog.error("AUTH FAIL: %s", err)
+        emit_event("email_dispatched",
+                   summary=f"AUTH FAIL: {err[:200]}",
+                   success=False, error=err[:500], agent="Pronoia")
         sys.exit(2)
     except Exception as e:
-        print(f"SEND FAIL: {e}", file=sys.stderr)
+        err = str(e)
+        print(f"SEND FAIL: {err}", file=sys.stderr)
+        _olog.error("SEND FAIL: %s", err)
+        emit_event("email_dispatched",
+                   summary=f"SEND FAIL: {err[:200]}",
+                   success=False, error=err[:500], agent="Pronoia")
         sys.exit(3)
 
 

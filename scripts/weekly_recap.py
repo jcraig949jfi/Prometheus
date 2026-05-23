@@ -42,6 +42,17 @@ except ImportError:
         print(f"FATAL: cannot import call_llm: {e}", file=sys.stderr)
         sys.exit(1)
 
+# Shared orchestration logging (fail-soft)
+try:
+    from orchestration_logging import get_logger, emit_event
+    _olog = get_logger("weekly_recap")
+except Exception:
+    import logging as _logging
+    _olog = _logging.getLogger("weekly_recap")
+    _olog.addHandler(_logging.StreamHandler(sys.stdout))
+    _olog.setLevel(_logging.INFO)
+    def emit_event(*a, **kw): return False
+
 try:
     from metis_portfolio import human_time
 except ImportError:
@@ -390,6 +401,16 @@ Output the NotebookLM script now.
         print(f"[{now.isoformat()}] wrote {audio_path}")
 
     print(f"[{now.isoformat()}] done.")
+    _olog.info("recap_path=%s audio_path=%s",
+               str(recap_path),
+               str(audio_path) if 'audio_path' in locals() else "(none)")
+    emit_event(
+        "weekly_recap_generated",
+        summary=f"weekly recap + NotebookLM audio script for {args.days}d window",
+        success=True,
+        output_path=str(recap_path.relative_to(REPO_ROOT)) if recap_path.is_absolute() else str(recap_path),
+        agent="Pronoia",
+    )
 
 
 if __name__ == "__main__":
