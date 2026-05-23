@@ -5933,6 +5933,90 @@ class). Demand pivot to ec invariants via f1. Calibration anchor
 records, 187.1M kills, 1269 promoted records, 2086 discovery-
 role templates, 0 verified findings.*
 
+---
+
+## Fire #78 — 2026-05-23 ~17:52Z
+
+**Extreme saturation regime: 89K records in 90 min wall. 99%+
+dedup per gen. But 5 new discovery-role templates emerged from
+c2+c5 anyway, plus 20 promoted records from c4's confirms.**
+
+### Bandit + heartbeat + honest stdout
+
+    [theseus] Bandit picked: ['b5', 'c2', 'c4', 'c5', 'e4']
+    (heartbeat: ~180 snapshots, tick rate 1840/s, RSS 75→236MB)
+    [theseus] SATURATION WARNING: c5@100%, b5@100%, c4@100%, c2@100%, e4@100%
+    [theseus] Signature templates: 9 new this batch / 204 unique-in-batch;
+              2091 lifetime templates from discovery-role gens
+    [theseus] Honest accounting: 20 promoted records this batch;
+              1289 lifetime promoted;
+              verified mathematical findings = 0
+    [theseus] Batch done: 89,149 records, 90 min wall
+
+### Per-gen attribution
+
+    gid  records   dup     templates  kill_rate  notes
+    c4    31,955  99.7%   4          0%         (TAUTOLOGY — excluded from disc-role count)
+    c2    31,923  99.7%   1          25.0%      (discovery-role)
+    c5    23,986  99.8%   4          0%         (discovery-role explorer)
+    b5     1,052 100.0%   0           1.4%
+    e4       233 100.0%   0           0%
+
+Net new discovery-role templates: c2(1) + c5(4) = **5**.
+Lifetime disc-role count: 2086 → 2091 (matches).
+c4's 4 templates went into the overall index but not the
+discovery-role count, exactly as the role-filter is designed.
+
+### 90% confirmation rate at scale
+
+8K kills + 81K confirms = 90.7% confirm rate. The substrate is
+emitting heavily-confirmable claims this fire (most c4 alive-
+monitor + c2/c5 mutations of already-confirmed patterns).
+
+20 promoted records emerged from the 81K confirms — they passed
+the info-density filter. Adds to 1269 → 1289 lifetime promoted.
+
+### Heartbeat caught the saturation cleanly
+
+- 9.96M next() calls per gen → 89K writes (0.89% write rate)
+- Without heartbeat, only the end-of-batch counts would surface
+  this. The new logging shows the 10M-tick spinning in real time
+
+### Batch result (honest framing)
+
+- batch_id: `batch-20260523T175206Z-c686b0`
+- Duration: 90 min wall (cap NOT hit; 89K records)
+- 89,149 records / 8,006 kills / 80,910 confirms / 233 incon / 0 errors
+- 20 promoted records (passing info-density filter, awaiting
+  review) → **1289 lifetime promoted records**
+- 9 new signature templates this batch / 5 from discovery-role
+  gens → **2091 lifetime discovery-role templates**
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #78
+
+| Metric | Pre-#34 | Post-#77 | Post-#78 |
+|---|---|---|---|
+| Batches | 30 | 77 | 78 |
+| Records | 154.4M | 331.5M | 331.6M |
+| Kills | 74.4M | 187.1M | 187.1M |
+| Confirmations | 75.5M | 125.8M | 125.9M |
+| Promoted records | 500 | 1269 | **1289** |
+| Templates (disc-role) | 17 | 2086 | **2091** |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #79.
+
+---
+
+*Fire #78 closed. Extreme saturation (89K records / 9.96M next()
+calls per gen = 99% dedup). c2 + c5 + c4 each contributed 1-4
+templates; 5 disc-role + 4 tautology = 9 total. 20 promoted
+records. 331.6M records, 187.1M kills, 1289 promoted, 2091
+discovery-role templates, 0 verified findings.*
+
 
 
 
