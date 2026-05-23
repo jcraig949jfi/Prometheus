@@ -125,8 +125,42 @@ class PaperIndex:
             "papers": self.index,
         }
         tmp = self.path.with_suffix(self.path.suffix + ".tmp")
-        tmp.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
-        tmp.replace(self.path)
+        # MemoryError-tolerant save: under system-wide memory pressure even
+        # small allocations can fail. The 2026-05-20 Clio death was a
+        # MemoryError here that killed the daemon for 3+ days. Catch +
+        # retry once with streaming write (no monolithic dumps string);
+        # if still failing, log loudly and skip this save — next cycle
+        # will retry. Index updates are idempotent; missing one save
+        # only delays dedup, doesn't corrupt state.
+        for attempt in (1, 2):
+            try:
+                if attempt == 1:
+                    tmp.write_text(
+                        json.dumps(payload, indent=2, ensure_ascii=False),
+                        encoding="utf-8",
+                    )
+                else:
+                    # Streaming fallback — avoid the monolithic dumps string
+                    import io
+                    with tmp.open("w", encoding="utf-8") as f:
+                        json.dump(payload, f, indent=2, ensure_ascii=False)
+                tmp.replace(self.path)
+                return
+            except MemoryError:
+                log.warning(
+                    f"paper_index.save() MemoryError on attempt {attempt}; "
+                    f"index size={len(self.index)} papers; "
+                    f"{'retrying with streaming write' if attempt == 1 else 'giving up this cycle'}"
+                )
+                # Clean partial tmp before retry
+                try:
+                    if tmp.exists():
+                        tmp.unlink()
+                except Exception:
+                    pass
+            except Exception as e:
+                log.error(f"paper_index.save() failed: {type(e).__name__}: {e}")
+                return
 
     @staticmethod
     def fingerprint(paper: dict) -> str:

@@ -24,7 +24,7 @@ Sorted by persona, then by activity recency. `LC` = last commit · `LE` = last l
 | Agent | Machine | Kind | Owner | Status | Last commit | Last event | Notes |
 |---|---|---|---|---|---|---|---|
 | Aporia | M1 | persona | — | DEAD 2.9d | 2026-05-19 — DR-discipline doctrine | — | source of intent for Pythia + Clio; **chokepoint** |
-| Clio | M1 | tool | Aporia | DEAD 1.3d | 2026-05-18 — Theseus fire #16 wiring | 2026-05-18 — `clio_v0.4_quality_shipped` | paper scanning stopped 3 days ago |
+| Clio | M1 | tool | Aporia | **ALIVE 2026-05-23** | 2026-05-23 — MemoryError hardening + .bat launcher | 2026-05-23 05:16 — first post-restart cycle ticking (2+2+1 new papers in first 5 queries) | died 2026-05-20 10:20 with MemoryError (Theseus leak window); restarted detached 2026-05-23 05:16; save() now MemoryError-tolerant with streaming fallback |
 | Clio-test | M1 | tool | Aporia | DEAD | — | — | leftover dup row from initial registration; safe to drop |
 | Pythia | M1 | tool | Aporia | **ALIVE** | **2026-05-21 07:40 — ISL-04 Bianchi modular forms** | **2026-05-21 07:44 — DR dispatched** | recovered from 25h gap; in-flight-timeout + auto-retry + abandon-after-N shipped 2026-05-21 |
 | **Hypatia** | M1 | tool | Aporia | **ALIVE** | **2026-05-23 — built** | **2026-05-23 04:33 — `hypatia_dispatch` HYP-2026-05-23-001 (MATH-0001 → row 352)** | D-track curator: 1 problem/day from 537-catalog → typed-D DR (proof decomposition with R1-R5 ladder) for Ergon worked-solutions corpus |
