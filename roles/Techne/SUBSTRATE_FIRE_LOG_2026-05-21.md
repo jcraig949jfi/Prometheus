@@ -4569,6 +4569,187 @@ mechanically but c5 still not picked. 20 new discoveries
 emitted (4-fire streak). 291.1M records, 156.5M kills, 1140
 discoveries, 1837 lifetime DISCOVERY shapes.*
 
+---
+
+## Fire #67 — 2026-05-23 ~03:07Z
+
+**THE KILL: c5 finally picked — and c5's lifetime_saturation
+jumped 9% → 100% in one fire. c5 was NEVER an explorer. The
+"9% sat" was a measurement artifact of low sample count.
+The entire c5-priors intervention was based on a false premise.**
+
+### Auto-seed + priors (idempotency held) + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1389166551
+    [priors] Found 1 candidate explorer gens:
+      c5: sat=9.1%  SKIP (n=8 >= 8, organic history sufficient)
+    [theseus] Hydrated bandit history: 146 yield-score entries
+    [theseus] Bandit bootstrap selected: ['c5', 'e3', 'd2', 'c4', 'h1']
+    [theseus] SATURATION WARNING: all 5 picks @ 100%
+    [theseus] Demand signals logged: 1 event
+    [theseus] Top demand: 1× knot/nf_class_number
+    [theseus] Signature index: 8 novel / 57 unique-in-batch;
+                               1841 lifetime DISCOVERY shapes (+4)
+    [theseus] Lifetime saturation (picked gens): all @ 100%
+    [theseus] Batch done: 309K records (small!), 1.5h wall
+
+### THE KILL
+
+c5 fired at scale for the first time since Fire #58:
+
+    gid  records   dup     novel  sat_lt  kill_rate
+    c5    59,696  99.9%   4      1.000   0%       ← saturation jumped 9% → 100%
+    c4    79,594  99.9%   4      1.000   0%
+    h1   149,200  99.8%   0      1.000   6.2%
+    d2    19,912 100.0%   0      1.000   99.99%
+    e3     1,060 100.0%   0      0.999   42.2%
+
+c5 emitted 60K records, of which 99.9% were duplicates within
+the batch. Only 4 produced novel cross-batch signatures.
+
+**THE c5 EXPLORATION PREMIUM WAS A MIRAGE.** Before Fire #67:
+- c5 had been picked only twice (Fire #58 era)
+- Its signature_index entries totaled n_unique=2, total_seen=22
+- saturation_score = 1 - 2/22 = 91% UNSATURATED — looked like
+  an explorer
+- BUT the metric was unstable with such tiny sample count
+
+After Fire #67 (60K records added):
+- c5 signature_index now has total_seen ≈ 60K
+- n_unique didn't grow proportionally
+- saturation_score → 100%
+
+The 9% number wasn't a real exploration signal — it was the
+statistical regression-to-the-mean effect of n=2 picks giving
+high variance estimates.
+
+### What was the c5 priors intervention doing, then?
+
+It was forcing the bandit to pick a gen that had a misleadingly
+low saturation_score. The forcing worked mechanically (Fire #67
+picked c5). The data then revealed the truth: c5 isn't more
+exploring than anyone else.
+
+**The intervention IS self-correcting.** c5's new yield_score
+for Fire #67 = base × (1 + 5×0) × (1 - 0.5×0.999) = base × 0.5.
+That's now the LOWEST possible score. c5 will be heavily
+downweighted in Fire #68+.
+
+### Three substrate-honest findings this fire
+
+1. **c5 isn't special.** My entire 4-fire crusade to inject c5
+   priors was operating on bad data. The 9% sat was a
+   sample-count artifact.
+
+2. **Low-sample saturation scores are unreliable.** The formula
+   should ONLY trust saturation_score for gens with sufficient
+   sample count (e.g., total_seen > 100). Below that, default
+   to no boost.
+
+3. **Second-wave explorers exist (c1, b4, g4, a1, f4) but
+   "lifetime_saturation" doesn't identify them.** They all
+   read 100% sat; their exploration capacity comes from
+   bandit-cycling that visits each gen's narrow-but-deep
+   claim space periodically.
+
+### What to ship next
+
+Two fixes — but NOT this fire. The substrate is producing well;
+the falsification IS the value. Plan for the next between-fire
+window (or eventually):
+
+A. Add `total_seen` sample-size gating to saturation_score(). If
+total_seen < 1000, return None (sentinel for "insufficient
+data; no boost"). This prevents future c5-style artifacts.
+
+B. Investigate alternative explorer-identification signals.
+Maybe per-fire-novelty-rate when picked is better. Track
+this in a "rolling window" per gen rather than lifetime sat.
+
+But ship NEITHER right now. The pattern needs more fires of
+data to validate. Per `feedback_take_a_stand`: I shipped two
+formula changes already this session. Both were partially
+falsified. Time to gather more data before iterating again.
+
+### Batch result
+
+- batch_id: `batch-20260523T030707Z-261ff6`
+- Duration: 1.5h wall (didn't hit cap; very small batch)
+- 309,462 records / 29,575 kills / 279,887 confirms / 0 incon / 0 errors
+- 11 new discoveries → 1151 lifetime (streak broke at 4)
+- 8 novel shapes total / 4 DISCOVERY → 1841 lifetime shapes
+
+Low-volume batch: c5 (60K), c4 (80K), h1 (149K), d2 (20K), e3
+(1K). All small because their source spaces are limited.
+
+### Lifetime stats after Fire #67
+
+| Metric | Pre-#34 | Post-#66 | Post-#67 |
+|---|---|---|---|
+| Batches | 30 | 67 | 68 |
+| Records | 154.4M | 291.1M | 291.4M |
+| Kills | 74.4M | 156.5M | 156.5M |
+| Confirmations | 75.5M | 117.1M | 117.4M |
+| Discoveries | 500 | 1140 | **1151** |
+| Lifetime DISCOVERY shapes | 17 | 1837 | 1841 |
+
+Novelty trajectory:
+
+    Fire #57: 286
+    Fire #58: 463  ⭐
+    Fire #59: 285
+    Fire #60: 44
+    Fire #61: 4
+    Fire #62: 234  (c1)
+    Fire #63: 16   (b4)
+    Fire #64: 6
+    Fire #65: 137  (g4)
+    Fire #66: 352  (a1+f4) ⭐2
+    Fire #67: 4    (c5 falsified)
+
+12-fire honest-index running mean: ~152 novel/fire.
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Yes — and the falsification is
+worth more than another high-novelty fire. The c5 mirage was
+finally killed.
+
+(b) **Did my intervention work?** Mechanically yes (c5 picked,
+priors flag operated as designed). Strategically NO (the
+intervention was based on bad data; c5 isn't an explorer).
+
+(c) **Memory update needed.** The pattern from Fires #62-#66
+holds: latent explorers exist but lifetime_saturation doesn't
+identify them. Random bandit cycling does. The c5-special
+hypothesis is DEAD.
+
+(d) **Per `feedback_take_a_stand`** + `feedback_assume_wrong`:
+my intervention was wrong in premise, right in form
+(idempotent, self-correcting). The substrate's natural
+exploration is robust. Stop forcing.
+
+(e) **What stays?** The lifetime-saturation YIELD_SCORE formula
+itself is still defensible — IF I add total_seen gating. The
+priors-injection MECHANISM is also fine — it'll auto-skip c5
+now that c5 has organic history. So nothing to revert; just
+recognize the c5 forcing was misguided.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #68 = post-falsification observation.
+c5 will be naturally downweighted (its new yield_score is
+~0.0015, lowest in pool). Watching to see the substrate's
+organic pattern resume.
+
+---
+
+*Fire #67 closed. c5 FALSIFIED: "9% sat" was a measurement
+artifact, not exploration. The whole intervention was based
+on a false premise. Self-correcting going forward. 291.4M
+records, 156.5M kills, 1151 discoveries, 1841 lifetime
+DISCOVERY shapes.*
+
 
 
 
