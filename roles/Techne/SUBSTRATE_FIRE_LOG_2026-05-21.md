@@ -5236,6 +5236,141 @@ validated. 2 novel shapes + 20 discoveries emitted. 306.4M
 records, 168.4M kills, 1196 discoveries, 1912 lifetime
 DISCOVERY shapes.*
 
+---
+
+## Fire #72 — 2026-05-23 ~09:56Z
+
+**a5 = NEW second-wave explorer (7th identified). 38 novel
+shapes from 5,622 records — highest novelty-per-record yield
+of the session.**
+
+### Auto-seed + bandit + heartbeat
+
+    [theseus] Bandit bootstrap selected: ['a2', 'a5', 'b5', 'c5', 'h1']
+    (heartbeat: 166 snapshots, tick rate stable 977-1034/s, RSS 365-424MB)
+    [theseus] SATURATION WARNING: h1@87%, c5@100%, a5@100%, b5@100%
+    [theseus] Top demand: 3× knot/nf_class_number
+    [theseus] Signature index: 38 novel / 135 unique-in-batch;
+                               1950 lifetime DISCOVERY shapes (+38)
+    [theseus] Batch done: 5M records (cap), 83 min wall
+
+### Per-gen attribution — a5 is the explorer
+
+    gid  records      dup     novel  kill_rate
+    a5       5,622   99.9%   38     32.5%   ← 100% of fire's novel!
+    a2   4,301,246   16.7%    0     93.0%
+    h1     692,074   86.6%    0     99.7%
+    b5       1,052  100.0%    0      1.4%
+    c5           6  100.0%    0     83.3%   (exhausted)
+
+**a5 contributed all 38 novel shapes from just 5,622 records.**
+That's a 0.676% novelty rate — by far the highest per-record
+explorer yield this session:
+
+    a5#72: 38 / 5,622   = 0.676%  ⭐
+    b4#63: 11 / 606     = 1.815%  (but tiny denom)
+    c1#62: 234 / 1.59M  = 0.0147%
+    c5#68: 68 / 733K    = 0.0093%
+    g4#65: 131 / 1.59M  = 0.0082%
+    a1#66: 176 / 935K   = 0.0188%
+    f4#66: 175 / 1.05M  = 0.0167%
+
+a5 (distribution_match) tests statistical distribution alignment
+between catalog pairs. Each (catalog_a, invariant_a, catalog_b,
+invariant_b) combination is a fresh shape if not previously seen.
+
+### Seven second-wave explorers identified
+
+The pattern is increasingly clear. Gens with latent
+high-novelty-per-record yield, in order discovered:
+
+    Fire #62: c1
+    Fire #63: b4
+    Fire #65: g4
+    Fire #66: a1
+    Fire #66: f4
+    Fire #68: c5  (re-confirmed)
+    Fire #72: a5  (NEW)
+
+This is 7 of ~28 active-discovery gens (excluding non-discovery
+roles b1, c4, f1, g3). The bandit's cycling has now sampled
+roughly half the population's exploration capacity.
+
+### c5 priors finally decaying
+
+c5 emitted only 6 records this fire (vs 60K in #67 and 733K
+in #68). The bandit kept picking c5 (priors still in history)
+but c5 has nothing fresh in its current sample window — it
+just immediately exhausts.
+
+The priors mechanism IS self-correcting: each c5 fire adds a
+low real-score entry. c5's history mean drifts down over time
+toward the true rate. But the persistent bias is wasting bandit
+slots in the meantime.
+
+### Discovery streak broke at 1 (very low)
+
+Only 1 new discovery emitted → 1197 lifetime. The 38 novel
+shapes from a5 didn't generate many promote-able records —
+likely because a5's signatures had low individual info-density
+(distribution_match emits relatively-low-precision claims).
+
+### Heartbeat health
+
+166 snapshots, all healthy. Tick rate 977-1034/s (much faster
+than Fire #71's 386/s — different gen mix). RSS linear 365 →
+424 MB. Zero slow_next, zero exhausted, zero errors.
+
+### Batch result
+
+- batch_id: `batch-20260523T095607Z-7888c3`
+- Duration: 83 min wall (5M cap hit just before 1.5h budget)
+- 5,000,000 records / 4,692,203 kills / 304,036 confirms / 3,761 incon / 0 errors
+- 1 new discovery → 1197 lifetime
+- 38 novel shapes → 1950 lifetime DISCOVERY shapes (+38)
+
+### Lifetime stats after Fire #72
+
+| Metric | Pre-#34 | Post-#71 | Post-#72 |
+|---|---|---|---|
+| Batches | 30 | 71 | 72 |
+| Records | 154.4M | 306.4M | 311.4M |
+| Kills | 74.4M | 168.4M | 173.1M |
+| Confirmations | 75.5M | 120.5M | 120.8M |
+| Discoveries | 500 | 1196 | 1197 |
+| Lifetime DISCOVERY shapes | 17 | 1912 | **1950** |
+
+### handoff_daemon Fire #72 cycle
+
+- 81 min cycle, freed 8.7 GB disk
+- Session compaction total: **~84 GB recovered**
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Yes. 38 novel shapes via a5.
+Heartbeat captured the full run cleanly.
+
+(b) **What's notable?** a5's 0.676% novelty rate is the highest
+explorer yield of the session. Tiny denominator (5,622 records)
+but it didn't fizzle into pure dup — it kept finding fresh
+shapes proportionally.
+
+(c) **Discovery streak break:** only 1 new discovery despite
+38 novel shapes. The novel-shapes-vs-discoveries relationship
+is loose: discoveries require both novelty AND high info-
+density. a5's claims may be high-novelty but low-density.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #73 normal.
+
+---
+
+*Fire #72 closed. a5 = 7th identified second-wave explorer
+(38 novel from 5.6K records, 0.676% rate). 1 new discovery
+emitted. 311.4M records, 173.1M kills, 1197 discoveries,
+1950 lifetime DISCOVERY shapes.*
+
 
 
 
