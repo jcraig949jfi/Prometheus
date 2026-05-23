@@ -34,9 +34,9 @@ $trigger.Repetition = (New-ScheduledTaskTrigger -Once -At (Get-Date) -Repetition
 
 $settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -DontStopOnIdleEnd -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -RestartCount 3 -RestartInterval (New-TimeSpan -Minutes 1)
 
-$principal = New-ScheduledTaskPrincipal -UserId "$env:USERDOMAIN\$env:USERNAME" -LogonType S4U -RunLevel Limited
+$principal = New-ScheduledTaskPrincipal -UserId "$env:USERDOMAIN\$env:USERNAME" -LogonType Interactive -RunLevel Limited
 
-Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger -Settings $settings -Principal $principal -Description "Restart Prometheus intelligence_loop.py if it is not running"
+$result = Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger -Settings $settings -Principal $principal -Description "Restart Prometheus intelligence_loop.py if it is not running" -ErrorAction Stop
 
 Write-Host ""
 Write-Host "Registered scheduled task '$TaskName'."
