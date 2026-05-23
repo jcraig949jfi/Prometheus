@@ -8,11 +8,11 @@
 
 | Persona | Tools supervised | Status of persona | Active tools (substantive output in last 24h) |
 |---|---|---|---|
-| **Aporia** (M1) | Clio, Pythia | DEAD 2.9 days | Pythia (recovering — first dispatch in 25h fired ~4 min ago) |
+| **Aporia** (M1) | Clio, Pythia, **Hypatia**, **Atalanta** | active (this session) | Pythia (live), Hypatia (just launched, D-track dispatching), Atalanta (upstream_not_found sentinel — Apollo path needs wiring) |
 | **Techne** (M1) | Theseus (mis-attrib `James`) | never heartbeated PG | Theseus (Fire #34 just landed) |
 | **Harmonia** (M2) | Phylax, Sophia, Iris, Argos, Telos, Harmonia_Loop | not registered; loop ALIVE | all 5 ticking; **Sophia stopped writing proposals**, others producing artifacts |
 | **Charon** (M2/M1?) | Stygian, Lethe, Acheron, Moros, Hecate, Charon_Loop | not registered; loop ALIVE | all 5 ticking; mostly empty-result loops |
-| **Ergon** (?) | Penelope | not registered | Penelope ticking, 90% drop in batch volume vs prior 24h |
+| **Ergon** (?) | Penelope, **Pheme** | not registered | Penelope ticking, 90% drop in batch volume vs prior 24h; Pheme (just launched, demand voicer — upstream_not_found sentinel pending Ergon eval-root wiring) |
 | _(unsupervised)_ | Apollo, Hephaestus, Calliope, Pronoia, Metis, Nemesis, Nous | n/a | Apollo + Hephaestus daemons ALIVE; Calliope on-demand |
 
 ---
@@ -26,7 +26,9 @@ Sorted by persona, then by activity recency. `LC` = last commit · `LE` = last l
 | Aporia | M1 | persona | — | DEAD 2.9d | 2026-05-19 — DR-discipline doctrine | — | source of intent for Pythia + Clio; **chokepoint** |
 | Clio | M1 | tool | Aporia | DEAD 1.3d | 2026-05-18 — Theseus fire #16 wiring | 2026-05-18 — `clio_v0.4_quality_shipped` | paper scanning stopped 3 days ago |
 | Clio-test | M1 | tool | Aporia | DEAD | — | — | leftover dup row from initial registration; safe to drop |
-| Pythia | M1 | tool | Aporia | **ALIVE** | **2026-05-21 07:40 — ISL-04 Bianchi modular forms** | **2026-05-21 07:44 — DR dispatched** | recovered from 25h gap |
+| Pythia | M1 | tool | Aporia | **ALIVE** | **2026-05-21 07:40 — ISL-04 Bianchi modular forms** | **2026-05-21 07:44 — DR dispatched** | recovered from 25h gap; in-flight-timeout + auto-retry + abandon-after-N shipped 2026-05-21 |
+| **Hypatia** | M1 | tool | Aporia | **ALIVE** | **2026-05-23 — built** | **2026-05-23 04:33 — `hypatia_dispatch` HYP-2026-05-23-001 (MATH-0001 → row 352)** | D-track curator: 1 problem/day from 537-catalog → typed-D DR (proof decomposition with R1-R5 ladder) for Ergon worked-solutions corpus |
+| **Atalanta** | M1 | tool | Aporia | **ALIVE** (upstream_not_found) | **2026-05-23 — built** | **2026-05-23 04:33 — `atalanta_upstream_not_found`** | E-track primitive hunter: reads Apollo organisms, fires Type-E DR for high-reuse / unnamed-composite candidates. Needs `APOLLO_RUN_ROOTS` wired to actual Apollo output path |
 | Techne | M1 | persona | — | never PG | 2026-05-19 — Hecate v0.2 (retract Techne ticket) | — | supervises Theseus |
 | Theseus | M1 | tool | Techne (currently `James`) | DEAD 26m | **2026-05-21 05:45 — Fire #34 inventory** | 2026-05-21 07:13 — `theseus_batch_complete` | substrate generation engine; mis-attributed |
 | Harmonia | M2 | persona | — | not reg | 2026-05-19 22:22 — swarm launcher | — | supervises 6-tool swarm |
@@ -45,6 +47,7 @@ Sorted by persona, then by activity recency. `LC` = last commit · `LE` = last l
 | Moros | M2? | tool | Charon | DEAD 9m | 2026-05-19 — swarm v0.1 | 2026-05-21 07:35 — `moros_tick_complete` | swarm member |
 | Ergon | ? | persona | — | not reg | 2026-05-18 — Penelope v0.1 | — | supervises Penelope |
 | Penelope | M2 | tool | Ergon | DEAD 23m | 2026-05-19 — v0.3 Fire #29 compliance | 2026-05-21 07:21 — `penelope_batch_complete` | substrate ingest loop; 76→7 batches |
+| **Pheme** | M1 | tool | Ergon | **ALIVE** (upstream_not_found) | **2026-05-23 — built** | **2026-05-23 04:33 — `pheme_upstream_not_found`** | Demand voicer: scans Ergon eval output → publishes per-pattern failure-rate profile → biases Hypatia/Atalanta selection toward Learner deficits. Closes supply-demand loop. Needs `EVAL_ROOTS` wired |
 | Apollo | M2 | daemon | — | **ALIVE 57s** | 2026-05-18 — Hephaestus roadmap (touched apollo) | — (uses own heartbeat thread, no log_work) | evolutionary search; grinding |
 | Hephaestus | M3 | daemon | — | **ALIVE 20s** | 2026-05-18 — v2 roadmap | — (uses own heartbeat thread, no log_work) | forge; grinding |
 | Pronoia | M4 | daemon | — | UNKNOWN | — (no commits) | — | reporting orchestrator; running per `auto: portfolio update` commits every 4h |
@@ -62,11 +65,11 @@ Sorted by persona, then by activity recency. `LC` = last commit · `LE` = last l
 ## 3. Detail by persona
 
 ### Aporia (M1 · Claude Code session)
-- **Identity**: void detection, Deep Research dispatch, anti-anchor verification, Clio supervision
-- **Tools**: Clio (paper scanner) · Pythia (DR producer)
-- **Substantive output last 7 days**: DR-prompt-discipline doctrine doc; 16 Pythia DR reports (most landed 5/19 morning); Clio v0.4
-- **Substantive output last 24h**: Pythia recovered ~4 min ago after 25-hour gap; before that, nothing
-- **Notes**: persona DEAD on dashboard because Aporia's Claude Code session hasn't been driving. Pythia and Clio loop on existing tickets but exhaust their queues without persona-driven refills.
+- **Identity**: void detection, Deep Research dispatch, anti-anchor verification, Clio supervision, typed-DR substrate production
+- **Tools**: Clio (paper scanner) · Pythia (DR producer) · **Hypatia (D-track curator, new 2026-05-23)** · **Atalanta (E-track primitive hunter, new 2026-05-23)**
+- **Substantive output last 7 days**: DR-prompt-discipline doctrine; Pythia in-flight-timeout hardening (90 min default, max-retries=2, requeue-then-abandon); 52-candidate follow-up miner + dispatch; Techne self-claims triage (5 abstracted DRs); 184 DR reports completed 5/21-5/22; **typed-DR substrate pivot doc + 3 new agents shipped 2026-05-23**
+- **Substantive output last 24h**: Hypatia first dispatch HYP-2026-05-23-001 (MATH-0001, row 352); Atalanta + Pheme launched (sentinel ticks pending upstream wiring)
+- **Notes**: pivot to typed-DR substrate production (A/B/C/D/E by target) is live. Hypatia owns D; Atalanta owns E; A/B/C remain Aporia + Lethe + Sophia ad-hoc. Pheme (operator=Ergon) provides demand signal. See `pivot/persona_seed_prompts_2026-05-21.md` for the broader plan that motivated these.
 
 ### Techne (M1 · Claude Code session)
 - **Identity**: substrate generation / Σ-kernel toolsmith
@@ -90,9 +93,10 @@ Sorted by persona, then by activity recency. `LC` = last commit · `LE` = last l
 
 ### Ergon (machine TBD · Claude Code session)
 - **Identity**: Learner-corpus consumer / training corpus orchestrator
-- **Tools**: Penelope (substrate ingest loop)
+- **Tools**: Penelope (substrate ingest loop) · **Pheme (demand voicer, new 2026-05-23)**
 - **Substantive output last 7 days**: Penelope v0.1 → v0.3 evolution (Fire #29 contract compliance, git pull integration)
 - **Substantive output last 24h**: 7 batch_complete events (down from 76 prior 24h). Latest: "0 ingested, 13 dup-skip" — Penelope is finding only duplicates, meaning upstream Theseus isn't producing new substrate fast enough.
+- **Pheme (new)**: lives at `agents/pheme/` but operator=Ergon. Scans Ergon eval output, computes per-pattern failure-rate profile, publishes to `agents/pheme/artifacts/demand_latest.json`. Currently fires `upstream_not_found` sentinel every tick — needs `EVAL_ROOTS` (default tries `ergon/learner/evals`, `ergon/evals`, `ergon/diagnostic_c/eval_runs`) wired to wherever Ergon actually writes eval results.
 
 ---
 

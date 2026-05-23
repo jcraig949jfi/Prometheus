@@ -112,6 +112,17 @@ MAX_CONCURRENT = 3
 QUOTA_KEYWORDS = ("RESOURCE_EXHAUSTED", "quota", "429", "rate limit",
                   "rate_limit", "exceeded")
 
+# In-flight wall-clock timeout. Gemini DR jobs normally complete in 4-13
+# minutes. If a row has been in_progress beyond IN_FLIGHT_TIMEOUT_MIN, we
+# treat the Gemini interaction as stuck and either requeue (back of its
+# priority band, fresh interaction on next dispatch) or abandon after
+# MAX_RETRIES retries. Prevents zombie in-flight rows from permanently
+# consuming MAX_CONCURRENT slots. Both values overridable via CLI flags
+# and run_tick() args; module defaults match the 2026-05-21 incident
+# remediation (3 rows stuck ~50h, blocking Ergon priority-1 row 274).
+IN_FLIGHT_TIMEOUT_MIN = 90
+MAX_RETRIES = 2
+
 # Exponential backoff schedule on rate-limit. After each consecutive
 # rate-limited dispatch attempt, wait this many seconds. Capped at 1 hour
 # so we always probe at least once per hour to capture the reset.
@@ -481,7 +492,49 @@ def run_tick(dry_run: bool = False) -> dict:
             agora_persist.mark_research_failed(row["id"], result["error"] or "unknown")
             stats["failed"] += 1
             log.warning(f"failed row={row['id']}: {result['error']}")
-        # else 'running' / 'unknown' — leave for next tick
+        else:
+            # 'running' / 'unknown' — leave for next tick UNLESS the
+            # in-flight wall-clock exceeds IN_FLIGHT_TIMEOUT_MIN. In that
+            # case the Gemini interaction is almost certainly stuck and
+            # would consume a MAX_CONCURRENT slot forever (see 2026-05-21
+            # incident: 3 rows stuck ~50h blocking the entire queue).
+            dispatched_at = row.get("dispatched_at")
+            age_sec = 0.0
+            try:
+                if dispatched_at:
+                    dt = datetime.fromisoformat(dispatched_at.replace("Z", "+00:00"))
+                    age_sec = (datetime.now(timezone.utc) - dt).total_seconds()
+            except Exception:
+                age_sec = 0.0
+            if age_sec > IN_FLIGHT_TIMEOUT_MIN * 60:
+                if dry_run:
+                    log.info(f"[dry-run] would time out row={row['id']} "
+                             f"(age={int(age_sec)}s > {IN_FLIGHT_TIMEOUT_MIN}m)")
+                    continue
+                outcome = agora_persist.mark_research_timed_out(
+                    row_id=row["id"], max_retries=MAX_RETRIES,
+                    prior_interaction_id=iid, dispatch_age_seconds=age_sec,
+                )
+                stats.setdefault("timed_out", 0)
+                stats["timed_out"] += 1
+                stats.setdefault("requeued", 0)
+                stats.setdefault("abandoned", 0)
+                stats[outcome["action"]] = stats.get(outcome["action"], 0) + 1
+                log.warning(
+                    f"in-flight timeout row={row['id']} age={int(age_sec)}s "
+                    f"attempts={outcome.get('attempt_count')} "
+                    f"-> {outcome['action']} (iid={iid})"
+                )
+                if HAS_TELEMETRY:
+                    session_telemetry.log_work(
+                        stage="deep_research_timed_out",
+                        agent="Pythia",
+                        summary=(f"Row {row['id']} timed out after "
+                                 f"{int(age_sec/60)}min (limit {IN_FLIGHT_TIMEOUT_MIN}m); "
+                                 f"action={outcome['action']} attempts={outcome.get('attempt_count')}"),
+                        success=False,
+                        error=f"in_flight_timeout iid={iid}",
+                    )
 
     # 2. Throttle gate: if in backoff state and next_retry_after hasn't elapsed, idle.
     now = datetime.now(timezone.utc)
@@ -697,6 +750,7 @@ def seed_from_default_queue(n: int = 21) -> int:
 # ---------------------------------------------------------------------------
 
 def main():
+    global IN_FLIGHT_TIMEOUT_MIN, MAX_RETRIES
     ap = argparse.ArgumentParser(description="Pythia — Gemini Deep Research dispatch daemon")
     sub = ap.add_subparsers(dest="cmd")
 
@@ -715,8 +769,15 @@ def main():
     ap.add_argument("--loop", action="store_true", help="loop with --interval delay")
     ap.add_argument("--interval", type=int, default=60, help="loop interval seconds")
     ap.add_argument("--dry-run", action="store_true", help="don't actually dispatch")
+    ap.add_argument("--in-flight-timeout-min", type=int, default=IN_FLIGHT_TIMEOUT_MIN,
+                    help=f"requeue/abandon in-flight rows older than this (default {IN_FLIGHT_TIMEOUT_MIN}m)")
+    ap.add_argument("--max-retries", type=int, default=MAX_RETRIES,
+                    help=f"max requeues per row before abandon (default {MAX_RETRIES})")
 
     args = ap.parse_args()
+
+    IN_FLIGHT_TIMEOUT_MIN = args.in_flight_timeout_min
+    MAX_RETRIES = args.max_retries
 
     if not HAS_PG:
         log.error("agora_persist unavailable")

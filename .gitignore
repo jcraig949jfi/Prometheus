@@ -169,13 +169,23 @@ mnemosyne/
 aethon/
 arcanum/
 aspen/
-agents/
+# agents/ subdirs ignored by default; explicit re-includes below. Using
+# `agents/*` (not `agents/`) so individual subdirs can be re-included —
+# git refuses to re-include items inside a fully-excluded directory.
+agents/*
 # Harmonia child-agent swarm lives under harmonia/agents/ — re-included
 !harmonia/agents/
 !harmonia/agents/**
 # Charon child-agent swarm lives under charon/agents/ — re-included
 !charon/agents/
 !charon/agents/**
+# Aporia-operated peer agents (Hypatia D-track, Atalanta E-track) and
+# Ergon-operated demand voicer (Pheme) live under agents/ — re-included
+# 2026-05-23. Per-agent .gitignore inside each dir excludes runtime state
+# (state/, artifacts/, logs/, events.jsonl, *.pid).
+!agents/hypatia/
+!agents/atalanta/
+!agents/pheme/
 roles/*/SESSION_JOURNAL_*.md
 roles/*/TLDR_*.md
 roles/*/loop_state.json

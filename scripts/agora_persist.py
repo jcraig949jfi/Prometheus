@@ -763,6 +763,92 @@ def mark_research_failed(row_id: int, error: str, status: str = "failed") -> boo
         return False
 
 
+def mark_research_timed_out(
+    row_id: int,
+    max_retries: int = 2,
+    prior_interaction_id: Optional[str] = None,
+    dispatch_age_seconds: Optional[float] = None,
+) -> dict:
+    """Handle an in-flight row that exceeded the per-job wall-clock timeout.
+
+    Decision rule (uses existing dispatch_attempt_count column; no schema change):
+      - If dispatch_attempt_count > max_retries: mark 'abandoned' (no more retries).
+      - Else: requeue (status='pending', interaction_id=NULL, dispatched_at=NULL,
+        requested_at=NOW() to land at the back of its own priority band).
+
+    In both cases, append the stale interaction_id + age to tags.timeout_history
+    so we can audit Gemini-side stuck-job patterns.
+
+    Returns: {action: 'abandoned'|'requeued'|'missing'|'error',
+              attempt_count: int, error?: str}
+    """
+    import json as _json
+    try:
+        with _connect() as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                cur.execute("""
+                    SELECT dispatch_attempt_count, tags
+                      FROM agora.research_queue
+                     WHERE id = %s FOR UPDATE
+                """, (row_id,))
+                r = cur.fetchone()
+                if not r:
+                    return {"action": "missing", "attempt_count": 0}
+                attempt = r["dispatch_attempt_count"] or 0
+                tags = dict(r["tags"] or {})
+                history = list(tags.get("timeout_history") or [])
+                history.append({
+                    "interaction_id": prior_interaction_id,
+                    "dispatch_age_seconds": int(dispatch_age_seconds or 0),
+                    "timed_out_at": datetime.now(timezone.utc).isoformat(),
+                    "attempt": attempt,
+                })
+                tags["timeout_history"] = history
+
+                # `attempt` is the total dispatches so far (the original +
+                # any retries already performed). If we've already dispatched
+                # max_retries+1 times, abandon.
+                if attempt > max_retries:
+                    tags["abandon_reason"] = "in_flight_timeout_max_retries_exceeded"
+                    cur.execute("""
+                        UPDATE agora.research_queue
+                           SET status = 'abandoned',
+                               error = %s,
+                               tags = %s,
+                               last_attempt_at = NOW()
+                         WHERE id = %s
+                    """, (
+                        f"in-flight timeout after {attempt} dispatches; "
+                        f"last iid={prior_interaction_id}"[:2000],
+                        psycopg2.extras.Json(tags),
+                        row_id,
+                    ))
+                    conn.commit()
+                    return {"action": "abandoned", "attempt_count": attempt}
+                else:
+                    cur.execute("""
+                        UPDATE agora.research_queue
+                           SET status = 'pending',
+                               interaction_id = NULL,
+                               dispatched_at = NULL,
+                               requested_at = NOW(),
+                               tags = %s,
+                               error = %s,
+                               last_attempt_at = NOW()
+                         WHERE id = %s
+                    """, (
+                        psycopg2.extras.Json(tags),
+                        f"in-flight timeout (attempt {attempt}); requeued. "
+                        f"prior iid={prior_interaction_id}"[:2000],
+                        row_id,
+                    ))
+                    conn.commit()
+                    return {"action": "requeued", "attempt_count": attempt}
+    except Exception as e:
+        print(f"[agora_persist] mark_research_timed_out({row_id}) failed: {e}", file=sys.stderr)
+        return {"action": "error", "attempt_count": 0, "error": str(e)}
+
+
 def count_research_today(timezone: str = "UTC") -> dict:
     """Per-status counts of research rows for the current UTC day."""
     try:
