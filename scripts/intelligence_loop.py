@@ -49,6 +49,82 @@ except Exception as _e:
     def emit_event(*a, **kw): return False  # type: ignore[no-redef]
     def new_cycle_id(): import uuid; return uuid.uuid4().hex  # type: ignore[no-redef]
 
+# Postgres dual-write heartbeat for Pronoia. The Agora client publishes
+# heartbeats to Redis; this thread mirrors them to agora.agent_heartbeats
+# so Pronoia appears as ALIVE in the dashboard's Postgres-fallback view
+# (matches the dual-write pattern Hephaestus + Apollo use).
+try:
+    import agora_persist
+    HAS_PG = True
+except Exception as _e:
+    HAS_PG = False
+    agora_persist = None  # type: ignore[assignment]
+
+# Shared state for the heartbeat thread (mutated at each cycle boundary).
+import threading as _threading
+PRONOIA_STATE = {
+    "started_at": datetime.now(timezone.utc).isoformat(),
+    "kind": "daemon",
+    "role": "reporting orchestrator (intelligence_loop)",
+    "current_op": "idle",
+    "cycles_today": 0,
+    "last_cycle_id": None,
+    "last_cycle_finished_at": None,
+    "last_cycle_duration_sec": None,
+    "last_cycle_ok": None,
+}
+_HEARTBEAT_STOP = _threading.Event()
+
+
+def _start_pronoia_pg_heartbeat(machine: str, interval_sec: int = 60) -> _threading.Thread | None:
+    """Spawn a daemon thread that dual-writes Pronoia's heartbeat to Postgres.
+
+    Fail-soft: if agora_persist or Postgres is unreachable, logs once and
+    skips subsequent writes silently. Reads state from the module-level
+    PRONOIA_STATE dict so cycle handlers can update current_op / counters
+    without coordinating with this thread.
+    """
+    if not HAS_PG:
+        log.warning("agora_persist unavailable — Pronoia will not dual-write to Postgres")
+        return None
+
+    def loop():
+        consecutive_failures = 0
+        while not _HEARTBEAT_STOP.is_set():
+            try:
+                started = datetime.fromisoformat(PRONOIA_STATE["started_at"])
+                uptime_sec = (datetime.now(timezone.utc) - started).total_seconds()
+                blob = {
+                    **PRONOIA_STATE,
+                    "uptime_sec": int(uptime_sec),
+                    "pid": os.getpid(),
+                    "key_metrics": {
+                        "cycles_today": PRONOIA_STATE.get("cycles_today", 0),
+                        "last_cycle_duration_sec": PRONOIA_STATE.get("last_cycle_duration_sec"),
+                        "last_cycle_ok": PRONOIA_STATE.get("last_cycle_ok"),
+                    },
+                }
+                agora_persist.write_heartbeat(
+                    agent_name="Pronoia",
+                    machine=machine,
+                    status="online",
+                    status_json=blob,
+                    pid=os.getpid(),
+                    connected_at=started,
+                )
+                consecutive_failures = 0
+            except Exception as e:
+                consecutive_failures += 1
+                if consecutive_failures == 1 or consecutive_failures % 30 == 0:
+                    log.warning("Pronoia PG heartbeat failed (count=%d): %s",
+                                consecutive_failures, e)
+            _HEARTBEAT_STOP.wait(interval_sec)
+
+    t = _threading.Thread(target=loop, name="pronoia-pg-heartbeat", daemon=True)
+    t.start()
+    log.info("Pronoia PG heartbeat thread started (interval=%ds)", interval_sec)
+    return t
+
 # Git identity used for the auto-commits. Kept local to this script to avoid
 # touching global git config; matches the noreply email pattern used elsewhere.
 GIT_AUTHOR = ("-c", "user.name=James Craig",
@@ -202,9 +278,12 @@ def main():
              args.hourly_min, args.daily_hour, args.daily_minute)
     log.info("=" * 60)
 
+    # ── Postgres dual-write heartbeat thread (mirrors Pronoia state to Postgres) ──
+    machine = os.environ.get("PROMETHEUS_MACHINE", "M4")
+    pg_heartbeat_thread = _start_pronoia_pg_heartbeat(machine=machine, interval_sec=60)
+
     # ── Agora connection ───────────────────────────────────────────
     agora_client = None
-    machine = os.environ.get("PROMETHEUS_MACHINE", "M4")
     if HAS_AGORA:
         try:
             agora_client = AgoraClient(agent_name="Pronoia", machine=machine, persist=False)
@@ -239,6 +318,8 @@ def main():
                 cycle_id = new_cycle_id()
                 os.environ["PROMETHEUS_CYCLE_ID"] = cycle_id
                 cycle_start = time.monotonic()
+                PRONOIA_STATE["current_op"] = f"cycle {cycle_id[:8]} firing"
+                PRONOIA_STATE["last_cycle_id"] = cycle_id
                 log.info("[hourly] firing portfolio cycle (cycle_id=%s)", cycle_id[:8])
                 emit_event("pronoia_cycle_started",
                            summary=f"Pronoia hourly cycle (interval={args.hourly_min:.0f}min)",
@@ -283,11 +364,19 @@ def main():
                                agent="Pronoia", cycle_id=cycle_id, duration_sec=email_dur)
 
                 cycle_dur = time.monotonic() - cycle_start
+                cycle_ok = ok_monitor and ok_metis and ok_push
                 emit_event("pronoia_cycle_complete",
                            summary=f"cycle {cycle_id[:8]} done in {cycle_dur:.1f}s — "
                                    f"monitor={ok_monitor} metis={ok_metis} push={ok_push} email={ok_email_this_tick}",
-                           success=ok_monitor and ok_metis and ok_push,
+                           success=cycle_ok,
                            agent="Pronoia", cycle_id=cycle_id, duration_sec=cycle_dur)
+
+                # Update heartbeat state so the next PG write reflects cycle progress
+                PRONOIA_STATE["current_op"] = f"idle (last cycle {cycle_id[:8]} {'ok' if cycle_ok else 'FAILED'})"
+                PRONOIA_STATE["cycles_today"] = PRONOIA_STATE.get("cycles_today", 0) + 1
+                PRONOIA_STATE["last_cycle_finished_at"] = datetime.now(timezone.utc).isoformat()
+                PRONOIA_STATE["last_cycle_duration_sec"] = round(cycle_dur, 2)
+                PRONOIA_STATE["last_cycle_ok"] = cycle_ok
 
                 if agora_client:
                     try:
@@ -373,6 +462,19 @@ def main():
     except KeyboardInterrupt:
         log.info("SIGINT received — shutting down")
     finally:
+        # Stop the PG heartbeat thread and mark Pronoia offline so the
+        # dashboard reflects the clean shutdown immediately rather than
+        # waiting for the 5-min heartbeat timeout.
+        _HEARTBEAT_STOP.set()
+        if HAS_PG:
+            try:
+                agora_persist.write_heartbeat(
+                    agent_name="Pronoia", machine=machine, status="offline",
+                    status_json={**PRONOIA_STATE, "current_op": "clean shutdown"},
+                    pid=os.getpid(),
+                )
+            except Exception as e:
+                log.warning("Pronoia offline-mark to PG failed: %s", e)
         if agora_client:
             try:
                 agora_client.send(stream="main", subject="Pronoia shutting down",
