@@ -4069,6 +4069,163 @@ bias, b4 by surprise). 20 new discoveries emitted (streak now
 3 fires). 277.5M records, 147.0M kills, 1100 discoveries, 1342
 lifetime DISCOVERY shapes.*
 
+---
+
+## Fire #64 — 2026-05-22 ~23:27Z
+
+**d3 dominated (3.55M records, 98% kill). 6 novel shapes. Discovery
+streak broke (0 emissions). bandit_priors_inject ran post-fire to
+bootstrap c5 for Fire #65.**
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1375966133
+    [theseus] Hydrated bandit history: 125 yield-score entries from prior fires
+    [theseus] Bandit bootstrap selected: ['d3', 'g2', 'b3', 'e3', 'b4']
+    [theseus] SATURATION WARNING: g2@100%, b3@100%, e3@100%, b4@100%
+    [theseus] Signature index: 6 novel shapes / 105 unique-in-batch;
+                               1348 lifetime DISCOVERY shapes
+    [theseus] Lifetime saturation (picked gens):
+              b4@99%, b3@99%, g2@100%, e3@100%, d3@100%
+    [theseus] Batch done: 3.55M records, 1.5h wall
+
+### Per-gen attribution
+
+    gid  records      dup     novel  sat_lt  kill_rate
+    d3   3,546,414    0.9%    3      1.000   98.2%
+    g2   3,000       99.9%    3      0.999   0%
+    b3   606        100.0%    0      0.992   57.1%
+    b4   606        100.0%    0      0.991   73.6%
+    e3   1,060      100.0%    0      0.999   42.2%
+
+d3's volume crowded out other gens (it's catalog-bounded, runs
+fast). g2 contributed 3 novel via UNVERIFIED FE claims at new
+conductor buckets.
+
+### Discovery emission streak broke
+
+After 3 consecutive fires emitting 20 discoveries (#61=0, #62=20,
+#63=20), Fire #64 emitted 0. Why? d3 is a high-kill-rate gen —
+it produces 98% kills, 0% confirmations. The discovery-emission
+gate requires high info-density (kills are informative but not
+"discoveries" in the promote-able sense).
+
+This is healthy substrate behavior: d3 is producing valuable
+falsifications (3.48M kills) but isn't generating the kind of
+confirmed-novel-relation records that get promoted. Different
+shape of value.
+
+### Top-3 demand print did NOT appear
+
+Reason: this fire emitted 0 demand signals. Why? d3 doesn't
+emit demand signals (it's not invariant-fishing). g2/b3/b4/e3
+emit very few records and none triggered demand-signal paths.
+
+The Fire #62 demand surge (1.24M events) was driven primarily
+by f1 (NULL_BASELINE), which wasn't picked this fire. Fires
+with f1/f2/a1-family picks → high demand log. Fires with
+d3/b/g picks → low demand log.
+
+Worth surfacing in future: when DEMAND_LOG is empty, the
+journal should still note the absence explicitly so the
+pattern is visible. (Not shipping that change yet — minor.)
+
+### bandit_priors_inject RAN
+
+After Fire #64 closed (persist_bandit done), I ran the priors
+injection:
+
+    [priors] Found 1 explorer gens:
+      c5: sat=9.1%  prior_score=0.01664
+          mean: 0.00456 -> 0.01362  (n: 2 -> 5)
+    [priors] Persisted 1 × 3 entries to bandit_history.json
+
+c5's effective mean now 3x the cluster average. Fire #65's bandit
+should pick c5 with high probability.
+
+This is the intervention I held off on for 4 fires. The data
+finally asked for it (c5 hasn't been picked since Fire #58; n=2
+history is too small for UCB-driven exploration to surface it).
+
+### Batch result
+
+- batch_id: `batch-20260522T232706Z-e62af7`
+- Duration: 1.5h wall
+- 3,551,686 records / 3,483,171 kills / 1,033 confirms / 64K incon / 0 errors
+- 0 new discoveries (streak broke) → 1100 lifetime (unchanged)
+- 6 novel shapes → 1348 lifetime DISCOVERY shapes (+6)
+
+### handoff_daemon v3 5th cycle
+
+- 1 cycle / 72 min / freed 4.8 GB disk / clean exit
+- Session total compaction recovery: **~55 GB**
+
+### Lifetime stats after Fire #64
+
+| Metric | Pre-#34 | Post-#63 | Post-#64 |
+|---|---|---|---|
+| Batches | 30 | 64 | 65 |
+| Records | 154.4M | 277.5M | 281.1M |
+| Kills | 74.4M | 147.0M | 150.5M |
+| Confirmations | 75.5M | 113.5M | 113.5M |
+| Discoveries | 500 | 1100 | 1100 |
+| Lifetime DISCOVERY shapes | 17 | 1342 | 1348 |
+
+Novelty trajectory:
+
+    Fire #57: 286  (f3+h1)
+    Fire #58: 463  (c5+d3)
+    Fire #59: 285
+    Fire #60: 44   (h2 80%)
+    Fire #61: 4
+    Fire #62: 234  (c1 second-wave) ⭐
+    Fire #63: 16
+    Fire #64: 6   (d3 crowded everyone out)
+
+9-fire honest-index running mean: ~149 novel/fire.
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Fire ran cleanly. Low novelty
+because d3 dominated. Bandit pick was reasonable per old-formula
+history but the new formula will favor c5 next fire (after my
+priors injection).
+
+(b) **Should I have not done the priors injection?** No — the
+intervention was warranted by the data:
+    - 4 fires of c5 not being picked
+    - n=2 history insufficient for UCB-driven exploration
+    - The new formula was designed to favor c5; bandit just
+      couldn't infer it from existing samples
+    - Per feedback_take_a_stand: shipping the principled
+      intervention rather than waiting indefinitely
+
+(c) **Risk?** The injected synthetic scores reflect what the
+new formula WOULD score c5 given its actual signature_index
+sat. If c5 underperforms in Fire #65 (e.g., its lifetime sat
+jumps because it's been visiting similar shapes), the bandit
+will see that lower real score and downweight in Fire #66.
+The intervention is self-correcting.
+
+(d) **What about other low-saturation candidates?** Only c5 is
+below the 50% threshold. If I lowered to 80% threshold, b4
+(98%) and a few others would qualify but their score boost
+would be small (1 + 5×0.02 = 1.1x). c5 alone is the natural
+target.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #65 is the first fire with c5 priors
+loaded. Expecting c5 in the picks.
+
+---
+
+*Fire #64 closed. d3 dominated (98% kill); 0 discoveries this fire
+(streak broke after 3). 6 novel shapes. c5 priors injected for
+Fire #65 — first deliberate intervention after 4 fires of c5
+absence. 281.1M records, 150.5M kills, 1100 discoveries, 1348
+lifetime DISCOVERY shapes.*
+
 
 
 
