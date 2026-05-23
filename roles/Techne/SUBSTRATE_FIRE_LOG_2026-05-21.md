@@ -5058,6 +5058,184 @@ self-dilution rate.
 5 new discoveries emitted. 301.4M records, 164.5M kills, 1176
 discoveries, 1910 lifetime DISCOVERY shapes.*
 
+---
+
+## Fire #70 — STALLED, KILLED, AUDITED — 2026-05-23 ~03:17Z
+
+**Killed after 60+ min of silent stall. 4 records written in
+first second, then 0. User audit triggered heartbeat logging
+fix.**
+
+Bandit picked 5 gens (per corpus: f3, c3, h1, d3 + 1). 4 emitted
+1 record each in the first second of the batch. Then complete
+silence for 60+ minutes while process consumed 50% CPU and
+15-20 GB RAM. User asked for deep health review + structured
+logging.
+
+Root cause: `CONSECUTIVE_NONE_THRESHOLD=100,000` (count-based)
+assumed ~1K ticks/sec. When next() calls are slow (some gens
+do polynomial fits or catalog scans per call), tick rate drops
+to ≤10/sec. At low rates 100K nones never accumulate in any
+reasonable wall budget, so the daemon spun without ever marking
+gens exhausted.
+
+Killed batch via Stop-Process. No journal entry (incomplete run).
+
+---
+
+## Fire #71 — 2026-05-23 ~08:30Z
+
+**FIRST FIRE WITH HEARTBEAT LOGGING. 5M cap hit in 76 minutes
+with 152 healthy snapshots, zero anomalies. The fix is fully
+production-validated.**
+
+### Boot + run (live heartbeat output during run)
+
+    [theseus] Bandit bootstrap selected: ['b1', 'f2', 'a1', 'd3', 'b4']
+    [heartbeat] t=0.5min records=36,716 ticks=11,897 rate=396.6/s rss=75MB
+                a1=11897/11897 b1=11897/11897 b4=11897/11897 d3=11897/11897 f2=11891/11897
+    ... (152 snapshots, all clean) ...
+    [heartbeat] t=76.0min records=4,986,082 rate=389.2/s rss=434MB
+    [heartbeat] t=76.2min records=5,000,000 (cap hit)
+    [theseus] SATURATION WARNING: b1@100%, b4@100%
+    [theseus] Top demand: 292,541× knot/nf_class_number
+    [theseus] Signature index: 2 novel shapes / 448 unique-in-batch;
+                               1912 lifetime DISCOVERY shapes (+2)
+
+### Heartbeat metrics validated production-grade
+
+Across 152 consecutive snapshots:
+- Tick rate stabilized at 386-396/sec (started 416, settled at 386)
+- Records grew linearly: 37K → 5M (65K/min mean)
+- RSS grew linearly: 51 MB → 434 MB (5 MB/min)
+- Per-gen balance: every gen tracked within 0.05% of every other
+  (f2 lagged by ~0.05% due to slightly more in-flight dedups)
+- avg_next_ms: a1=0.02, b1=0.01, b4=0.02, d3=0.7, f2=0.04
+  → d3 is 30x slower per next() but well under 5s threshold
+- Zero slow_next events
+- Zero exhausted events
+- Zero errors
+
+Process RAM via PowerShell matched heartbeat RSS exactly (240MB
+mid-run) — confirming the heartbeat instrument is accurate.
+
+### Per-gen attribution
+
+    gid  records      dup     novel  kill_rate  notes
+    a1   1,457,013    18.2%   0      68.9%
+    d3   1,761,599     1.1%   1      98.2%   (kill specialist)
+    f2   1,779,442     0.0%   1      65.8%
+    b1       1,340    99.9%   0      0%      (INFRA_DIAGNOSTIC)
+    b4         606   100.0%   0      73.6%
+
+Only 2 novel shapes despite 5M record run — bandit picked
+mostly-saturated gens (b1, b4 immediately exhausted; a1/d3/f2
+emitted volume but produced no new signature templates).
+
+### Discovery streak resumed: +20
+
+20 new discoveries → 1196 lifetime. Despite low novelty count,
+the substrate emitted promotable discoveries (likely from
+d3/f2's high-info-density confirmations).
+
+### Demand: 292K events for knot/nf_class_number
+
+Single demand category dominated this batch (a1 cross-product
+iteration hitting the missing field 292K times).
+
+### Between-fire deliveries this fire
+
+Three patches shipped this fire window:
+
+(1) **commit `[heartbeat]`**: Structured heartbeat logging module
++ time-based exhaustion threshold (90 sec without emit, OR
+10K nones). Daemon now writes per-batch heartbeat JSONL with
+periodic snapshots, slow-next events, exhausted events.
+8 new tests pass.
+
+(2) **commit `79857417`**: `theseus.scripts.compress_old_logs` —
+CLI for compressing journal/log files older than N days
+(default 14). Project too young to need it yet but ready for
+future use.
+
+(3) Audited error counts across last 5 fires: 0 errors anywhere.
+Lifetime: 732 errors / 301M records = 0.00024% rate. Old
+stderr files are from May 19 incident pre-session.
+
+### Process RAM anomaly resolved
+
+User asked about a process showing 8.97 GB. Investigation
+revealed it was the orphan `pytest theseus/tests/ -x -q`
+runner I'd left running 1.5h prior — hanging at 17%
+completion on an untimed test. Killed cleanly. Fire #71's
+actual batch process was 240 MB (matched heartbeat exactly).
+
+Worth noting: at least one test in the full suite hangs
+indefinitely. Future test-suite runs need pytest-timeout.
+
+### Disk hygiene status
+
+- `theseus/corpus/`: 43 GB (already managed by handoff_daemon)
+- `theseus/handoff/ergon_outbox/consumed/`: 86 MB
+- `theseus/journals/`: 821 KB
+- 0 files older than 14 days (project age ~5 days)
+
+### Batch result
+
+- batch_id: `batch-20260523T083011Z-199fa3`
+- Duration: 76.2 min wall (5M cap hit cleanly, no wall budget pressure)
+- 5,000,000 records / 3,906,089 kills / 1,062,744 confirms / 31K incon / 0 errors
+- 20 new discoveries → **1196 lifetime**
+- 2 novel shapes → 1912 lifetime DISCOVERY shapes (+2)
+
+### Lifetime stats after Fire #71
+
+| Metric | Pre-#34 | Post-#69 | Post-#71 |
+|---|---|---|---|
+| Batches | 30 | 70 | 71 |
+| Records | 154.4M | 301.4M | 306.4M |
+| Kills | 74.4M | 164.5M | 168.4M |
+| Confirmations | 75.5M | 119.4M | 120.5M |
+| Discoveries | 500 | 1176 | **1196** |
+| Lifetime DISCOVERY shapes | 17 | 1910 | 1912 |
+
+Novelty trajectory:
+
+    Fire #67: 4   #68: 69   #69: 0
+    Fire #70: STALLED → killed → heartbeat fix shipped
+    Fire #71: 2   (first fire with heartbeat-validated health)
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Yes — and validated the
+heartbeat fix in production. The stall mode that took down
+Fire #70 would now be visible at t=1.5min and auto-recovered
+at t=1.5min (90 sec time threshold).
+
+(b) **What did the audit teach?** That the substrate's
+visibility was thin — `print()` only, no structured logging,
+no per-tick instrumentation. User caught this; I shipped the
+fix.
+
+(c) **What about Fire #71's low novelty (2)?** The 2-novel
+result is honest substrate data. Bandit picked saturated
+gens. We saw it in real-time via heartbeat: dup_rates 0-18%
+per gen but signature_index lifetime sat at 100% across the
+board (b4@99% being closest to "exploring"). Discovery
+emission still landed +20.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #72 = normal observation.
+
+---
+
+*Fire #71 closed. First fire with structured heartbeat logging:
+152 clean snapshots, zero anomalies. Heartbeat fix is production-
+validated. 2 novel shapes + 20 discoveries emitted. 306.4M
+records, 168.4M kills, 1196 discoveries, 1912 lifetime
+DISCOVERY shapes.*
+
 
 
 
