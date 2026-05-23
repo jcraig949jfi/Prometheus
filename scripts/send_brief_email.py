@@ -252,10 +252,14 @@ def build_deep_research_md(state: dict) -> str:
         used = budget.get("used", 0)
         total = budget.get("budget", 20)
         remaining = budget.get("remaining")
-        if remaining is None and used is not None and total is not None:
+        # Pythia may report budget as either an int (token-based) or a string
+        # like "compute-based (AI_Pro, 5h window)" (compute-based metering).
+        # Only attempt arithmetic when both sides are numeric.
+        numeric_budget = isinstance(used, (int, float)) and isinstance(total, (int, float))
+        if remaining is None and numeric_budget:
             remaining = total - used
         agent = budget.get("agent") or "?"
-        over = " (over budget)" if used is not None and total is not None and used > total else ""
+        over = " (over budget)" if numeric_budget and used > total else ""
         lines.append(f"**Budget:** {used}/{total} tokens{over} · {len(received)} received · {dispatched} dispatched · via `{agent}`")
         lines.append("")
     if not received:
@@ -293,10 +297,11 @@ def build_deep_research_html(state: dict) -> str:
         used = budget.get("used", 0)
         total = budget.get("budget", 20)
         remaining = budget.get("remaining")
-        if remaining is None and used is not None and total is not None:
+        numeric_budget = isinstance(used, (int, float)) and isinstance(total, (int, float))
+        if remaining is None and numeric_budget:
             remaining = total - used
         agent = budget.get("agent") or "?"
-        over = ' <span style="color:#dc2626">(over budget)</span>' if used is not None and total is not None and used > total else ""
+        over = ' <span style="color:#dc2626">(over budget)</span>' if numeric_budget and used > total else ""
         parts.append(
             f'<p style="margin:8px 0 12px 0;font-size:14px;color:#444">'
             f'<strong>Budget:</strong> {used}/{total} tokens{over} &middot; '
