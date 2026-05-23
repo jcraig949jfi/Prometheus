@@ -6017,6 +6017,129 @@ templates; 5 disc-role + 4 tautology = 9 total. 20 promoted
 records. 331.6M records, 187.1M kills, 1289 promoted, 2091
 discovery-role templates, 0 verified findings.*
 
+---
+
+## Fire #79 — 2026-05-23 ~19:29Z
+
+**MAJOR: e2 = 9th second-wave explorer with HIGHEST novelty
+rate observed (63.4%). +271 lifetime discovery-role templates
+in a single fire. g4 carried the volume with 94% confirm rate.**
+
+### Bandit + heartbeat + honest stdout
+
+    [theseus] Bandit picked: ['a5', 'b3', 'e2', 'g2', 'g4']
+    (heartbeat: ~180 snapshots, tick rate 1262/s, RSS 75→340MB)
+    [theseus] SATURATION WARNING: e2@100%, g2@100%, b3@100%, a5@100%
+    [theseus] Signature templates: 271 new this batch / 453 unique-in-batch;
+              2362 lifetime templates from discovery-role gens
+              (combinatorial variants tried, not verified findings)
+    [theseus] Honest accounting: 20 promoted records this batch;
+              1309 lifetime promoted;
+              verified mathematical findings = 0
+    [theseus] Batch done: 3.42M records, 90 min wall
+
+### Per-gen attribution — e2 the explorer
+
+    gid  records      dup     templates  kill_rate  notes
+    e2         424   100%     269        0%         ← 63.4% novelty rate!
+    g4   3,413,092   49.9%   1          5.4%       ← 94% confirm at scale
+    a5       5,778    99.9%   1          32.5%
+    g2       3,000   100%     0          0%
+    b3         606   100%     0          57.1%
+
+**e2 contributed 269 of 271 new templates (99.3%) from only 424
+records.** That's a 63.4% per-record novelty rate — by far
+the highest of the session:
+
+    e2#79: 269 / 424     = 63.4%   ⭐
+    b4#63:  11 / 606     =  1.815%
+    a5#72:  38 / 5,622   =  0.676%
+    a1#66: 176 / 935K    =  0.019%
+    c1#62: 234 / 1.59M   =  0.015%
+    c2#73: 105 / 955K    =  0.011%
+    f4#66: 175 / 1.05M   =  0.017%
+    c5#68:  68 / 733K    =  0.009%
+    g4#65: 131 / 1.59M   =  0.008%
+
+e2 = arxiv abstract mining. Each unique sentence pattern from
+the abstract cache produces a distinct claim signature. The
+cache holds 500 abstracts; e2 parses out ~hundreds of distinct
+"if-and-only-if" / "theorem" / "we prove" sentence shapes per
+fire when picked.
+
+e2 had only 91 records lifetime before this fire (essentially
+stub-like in earlier fires). The bandit's exploration
+finally surfaced its latent template diversity.
+
+### Nine second-wave explorers identified
+
+    Fire #62: c1  (claim_mutation)        — 234 templates
+    Fire #63: b4  (fixed_point_hunt)      —  11 templates  (1.8%)
+    Fire #65: g4  (reflection_duality)    — 131 templates
+    Fire #66: a1  (catalog_cross_product) — 176 templates
+    Fire #66: f4  (frontier_pursuit)      — 175 templates
+    Fire #68: c5  (specialization)        —  68 templates
+    Fire #72: a5  (distribution_match)    —  38 templates
+    Fire #73: c2  (threshold_mutation)    — 105 templates
+    Fire #79: e2  (arxiv_abstract_mining) — 269 templates ⭐ NEW
+                                            (63.4% rate)
+
+9 of ~28 active-discovery gens have now demonstrated latent
+template-generation capacity when picked.
+
+### g4 carried the falsification volume
+
+g4 emitted 3.41M records (99.7% of fire volume) at 94% confirm
+rate. That's mass cross-catalog reflection-duality testing on
+already-known invariant pairs. 20 promoted records came from
+g4's high-info confirms.
+
+### Honest accounting
+
+The lifetime discovery-role template count of 2362 means:
+**the substrate has tried 2362 distinct combinatorial claim
+templates from gens not classified as tautology/null/infra.**
+
+Not 2362 mathematical discoveries. Not 2362 findings. 2362
+SHAPE VARIANTS of "X-related-to-Y" hypotheses. Verified
+findings = 0.
+
+### Batch result (honest framing)
+
+- batch_id: `batch-20260523T192959Z-8f19eb`
+- Duration: 90 min wall (cap NOT hit)
+- 3,422,900 records / 186,169 kills / 3,229,440 confirms / 7,291 incon / 0 errors
+- 20 promoted records (passing info-density filter, awaiting
+  review) → **1309 lifetime promoted records**
+- 271 new templates this batch → **2362 lifetime discovery-role
+  templates** (+271, largest single-fire template addition since
+  Fire #58)
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #79
+
+| Metric | Pre-#34 | Post-#78 | Post-#79 |
+|---|---|---|---|
+| Batches | 30 | 78 | 79 |
+| Records | 154.4M | 331.6M | 335.0M |
+| Kills | 74.4M | 187.1M | 187.3M |
+| Confirmations | 75.5M | 125.9M | 129.1M |
+| Promoted records | 500 | 1289 | **1309** |
+| Templates (disc-role) | 17 | 2091 | **2362** |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #80 = round-number milestone.
+
+---
+
+*Fire #79 closed. e2 = 9th second-wave explorer at 63.4% novelty
+rate (highest yet). 271 new templates → 2362 lifetime discovery-
+role templates. 20 promoted records (g4's 94% confirms). 335.0M
+records, 187.3M kills, 1309 promoted, 2362 templates, 0
+verified findings.*
+
 
 
 
