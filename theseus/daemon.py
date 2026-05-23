@@ -357,15 +357,21 @@ def run_batch(
                 novel_disc = SIGNATURE_INDEX.count_unique_signatures_for_roles(
                     non_discovery_gids
                 )
+                # Fire #76 calibration: rename misleading "shapes" /
+                # "DISCOVERY" terms. These are signature TEMPLATES
+                # (combinatorial variants of claim form) from gens
+                # whose role isn't tautology/null/infra — NOT
+                # mathematical discoveries. Honest naming:
                 print(
-                    f"[theseus] Signature index: {n_novel} novel shapes / "
-                    f"{n_total} unique-in-batch (cross-batch novelty); "
-                    f"{novel_disc} lifetime shapes from DISCOVERY roles"
+                    f"[theseus] Signature templates: {n_novel} new this batch "
+                    f"/ {n_total} unique-in-batch; "
+                    f"{novel_disc} lifetime templates from discovery-role gens "
+                    f"(combinatorial variants tried, not verified findings)"
                 )
             except Exception:
                 print(
-                    f"[theseus] Signature index: {n_novel} novel shapes / "
-                    f"{n_total} unique-in-batch"
+                    f"[theseus] Signature templates: {n_novel} new this batch "
+                    f"/ {n_total} unique-in-batch"
                 )
         # Fire #60: surface LIFETIME signature-saturation per gen
         # used this fire. Lifetime sat = 1 - (unique_sigs / total_seen)
@@ -409,6 +415,25 @@ def run_batch(
             triggered_by="schedule",
             last_cycle_id=batch_id,
         )
+        # Fire #76 calibration anchor. "discoveries_emitted" is a SAMPLING
+        # metric (records passing a promote-filter, written to a per-fire
+        # jsonl for downstream review). NOT verified mathematical findings.
+        # Anchoring this every fire so the substrate's actual scientific
+        # output (= 0 verified findings, none reviewed by a human or model
+        # yet) never gets confused with the volume metrics.
+        try:
+            from theseus.orchestration.lifetime import load_lifetime_stats
+            ls = load_lifetime_stats()
+            print(
+                f"[theseus] Honest accounting: "
+                f"{n_discoveries} promoted records this batch "
+                f"(passed info-density filter; awaiting review); "
+                f"{ls.get('lifetime_discoveries_emitted', 0)} lifetime promoted; "
+                f"verified mathematical findings = 0 "
+                f"(volume metrics are substrate-internal, not discoveries)"
+            )
+        except Exception:
+            pass
 
     return bm
 
