@@ -4910,6 +4910,154 @@ c1/g4/a1/f4. 20 new discoveries emitted. 296.4M records,
 159.9M kills, 1171 discoveries, 1910 lifetime DISCOVERY
 shapes.*
 
+---
+
+## Fire #69 — 2026-05-23 ~05:59Z
+
+**FIRST 0-NOVEL FIRE in honest era. a2 dominated (5M records,
+93% kill). c5 picked AGAIN but emitted only 8 records (claim
+space exhausted in its current window). Streak broken.**
+
+### Auto-seed + bandit bootstrap
+
+    [theseus] Auto-seeded run: --seed 1399519265
+    [priors] No gens below sat threshold 0.50; nothing to inject.
+    [theseus] Hydrated bandit history: 156 yield-score entries
+    [theseus] Bandit bootstrap selected: ['e3', 'e5', 'c5', 'h4', 'a2']
+    [theseus] SATURATION WARNING: e3@100%, e5@100%, c5@100%, h4@100%
+    [theseus] Demand signals logged: 2 events
+    [theseus] Top demand: 2× knot/nf_class_number
+    [theseus] Signature index: 0 novel / 111 unique-in-batch;
+                               1910 lifetime DISCOVERY shapes (unchanged)
+    [theseus] Lifetime saturation (picked gens): all @ 100%
+    [theseus] Batch done: 5M records (cap), 1.5h wall
+
+### Per-gen attribution
+
+    gid  records      dup     novel  sat_lt  kill_rate
+    a2   4,998,799    17.8%   0      1.000   92.9%   ← carried the fire
+    c5         8     100.0%   0      1.000   87.5%   ← priors-inflated, exhausted
+    h4        12     100.0%   0      1.000   8.3%
+    e5       121     100.0%   0      -1.000  0%
+    e3      1,060    100.0%   0      1.000   42.2%
+
+a2 = 99.98% of fire's records. 4.64M kills + 355K confirms = the
+substrate's largest falsification batch this session. But 0 novel
+shapes — a2's signature space is fully covered.
+
+### The c5 priors creating waste
+
+c5 picked but emitted only 8 records before exhausting its
+current sample window. The synthetic priors I injected (mean
+~0.014) still inflate c5's history above other gens, so the
+bandit keeps picking c5 even though c5 has nothing new to say
+in this round.
+
+History decay: each new c5 pick adds one ~0.001 entry,
+diluting the priors. With 8 prior entries at 0.01664 and ~3
+real entries at 0.001, mean is still ~0.012. Will take
+many more fires to normalize.
+
+Lessons:
+1. The synthetic-priors mechanism creates persistent bias
+2. c5's gen logic has internal sample-exhaustion (consecutive-
+   Nones threshold). Once exhausted, c5 returns ~0 records
+   per fire until... when? Unclear. Possibly a state reset
+   issue.
+3. Wasted slot — c5 took a bandit pick that could have gone
+   to a more productive gen.
+
+Per `feedback_anti_gravitational_well`: I want to remove the
+c5 priors. But that's the THIRD iteration on this same
+intervention in 3 fires. STOP iterating. Just let it settle.
+
+### What about a2's 93% kill rate?
+
+a2 (statistical correlation) hit a record-volume kill batch:
+4.64M kills out of 5M records. That's the substrate doing what
+it's designed to do: efficient falsification at scale.
+
+No new discoveries from a2 (familiar shape territory) but
+substantial falsification value. Worth noting: a2 is the only
+gen this session to scale to 5M+ records in a single batch
+with high kill rate.
+
+### Discovery streak ended
+
+5 new discoveries → 1176 lifetime. Lowest emission this session.
+Streak of "5/6 fires at 20" broken.
+
+Pattern: discovery emission requires high-information records
+(promote-able). 99% kills + 0% confirms doesn't generate
+discoveries; a2 produced kills + 7% confirms but probably no
+PROMOTE-grade signal.
+
+### Batch result
+
+- batch_id: `batch-20260523T055939Z-638f16`
+- Duration: 1.5h wall (5M cap hit)
+- 5,000,000 records / 4,644,140 kills / 355,732 confirms / 128 incon / 0 errors
+- 5 new discoveries → 1176 lifetime
+- 0 novel shapes → 1910 lifetime DISCOVERY shapes (unchanged)
+
+### Lifetime stats after Fire #69
+
+| Metric | Pre-#34 | Post-#68 | Post-#69 |
+|---|---|---|---|
+| Batches | 30 | 69 | 70 |
+| Records | 154.4M | 296.4M | 301.4M |
+| Kills | 74.4M | 159.9M | 164.5M |
+| Confirmations | 75.5M | 119.0M | 119.4M |
+| Discoveries | 500 | 1171 | **1176** |
+| Lifetime DISCOVERY shapes | 17 | 1910 | 1910 |
+
+Novelty trajectory:
+
+    Fire #57: 286   Fire #62: 234
+    Fire #58: 463 ⭐  Fire #63: 16
+    Fire #59: 285   Fire #64: 6
+    Fire #60: 44    Fire #65: 137
+    Fire #61: 4     Fire #66: 352 ⭐2
+                    Fire #67: 4
+                    Fire #68: 69
+                    Fire #69: 0    (first 0-novel fire)
+
+14-fire honest-index running mean: 135 novel/fire.
+
+### Self-review
+
+(a) **Solved THIS fire's task?** Mechanically yes (5M records
+written, 5 discoveries emitted). Novel-shape count 0. Largest
+falsification batch of the session (a2 4.64M kills).
+
+(b) **Did the priors create waste?** Yes. c5 picked but produced
+nothing. The priors-inflated mean is biasing the bandit toward
+a gen that has temporarily exhausted itself.
+
+(c) **Should I remove the priors?** Tempted but resisting. Per
+`feedback_anti_gravitational_well`: this would be the third
+iteration on the same intervention in 3 fires. Stop. Let the
+data accumulate. Each c5 pick adds a low real-score entry
+that gradually dilutes the priors.
+
+(d) **What's the actual lesson?** Synthetic priors are tricky
+across multiple fires. The intervention worked initially but
+the persistent bias outlives its usefulness. Future
+interventions should consider how long the bias persists vs
+how long we want it to.
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #70 = round number; will track c5's
+self-dilution rate.
+
+---
+
+*Fire #69 closed. First 0-novel fire. a2 dominated falsification
+(4.64M kills). c5 priors creating waste (8 records, 0 novel).
+5 new discoveries emitted. 301.4M records, 164.5M kills, 1176
+discoveries, 1910 lifetime DISCOVERY shapes.*
+
 
 
 
