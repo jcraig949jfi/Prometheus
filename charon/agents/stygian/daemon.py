@@ -20,6 +20,7 @@ from typing import Any, Optional
 
 from charon.agents._base import CharonAgent
 from charon.agents._shared_queues import stygian_priority_queue
+from charon.agents.stygian.executor import execute_attack
 from harmonia.agents._base import REPO_ROOT
 
 
@@ -417,6 +418,20 @@ class StygianAgent(CharonAgent):
                     artifacts.append(str(out))
                     stats["items_processed"] += 1
                     stats["artifacts_written"] += 1
+                    # Execute the v10 battery (MVP1: BL-C-001 only; other
+                    # problems short-circuit with UNVERIFIED rows). The
+                    # executor emits a kill_ledger row in Theseus's shape
+                    # so Hecate's gradient-archaeology consumes it. See
+                    # pivot/stygian_executor_scoping_2026-05-21.md.
+                    try:
+                        exec_stats = execute_attack(
+                            problem, attack_plan_path=str(out)
+                        )
+                        stats.update(exec_stats)
+                    except Exception as e:
+                        self.log.exception(f"executor crashed for {problem['id']}: {e}")
+                        stats["errors"] += 1
+                        stats["executor_invoked"] = False
                     # Mark queue row consumed so we don't re-pick it next tick
                     if queue_row_id:
                         try:

@@ -23,10 +23,13 @@ from charon.agents._shared_queues import stygian_priority_queue
 from harmonia.agents._base import REPO_ROOT
 
 
-# Ledger candidates in priority order. Hecate uses the first that exists
-# and contains records with `kill_pattern`.
+# Ledger sources. Hecate MERGES records from every source that exists
+# (changed 2026-05-23 from "first existing" semantics to support
+# Stygian's executor emissions landing in a separate file). Each entry
+# can be a directory (walked for .jsonl[.gz]) or a single .jsonl file.
 LEDGER_CANDIDATES: list[Path] = [
     REPO_ROOT / "theseus" / "corpus",  # Theseus's TheseusRecord emissions
+    REPO_ROOT / "charon" / "agents" / "stygian" / "state" / "kill_ledger.jsonl",  # Stygian executor emissions
 ]
 
 # Sampling caps so a huge ledger doesn't blow MVP-tick budget.
@@ -41,6 +44,13 @@ N_PERMUTATIONS = 200
 MIN_CLUSTER_SIZE = 5
 MI_DRIFT_THRESHOLD = 2.0
 ALARM_CONSECUTIVE_THRESHOLD = 7
+
+# Stygian-priority queue dedup window. Was hardcoded 24h, which on a
+# 4-min rotation drains the queue after Stygian consumes the initial
+# burst and blocks re-emission until next day even as the kill_ledger
+# churns. Shortened to 4h (one cluster re-fires after the data shifts
+# meaningfully but stale rows don't replicate).
+STYGIAN_QUEUE_DEDUP_HOURS = 4
 
 
 def _iter_jsonl_gz(path: Path) -> Iterator[dict]:
@@ -230,23 +240,55 @@ class HecateAgent(CharonAgent):
 
     def self_generate_backlog(self) -> list[dict]:
         """Hecate's backlog is the ledger itself — always one item per tick
-        (re-run gradient archaeology on the latest ledger). Returns a
-        single 'analyze' job pointing at the first available ledger."""
+        (re-run gradient archaeology). Returns a single 'analyze' job
+        listing every existing source in LEDGER_CANDIDATES so _analyze
+        can merge them."""
+        sources: list[dict] = []
         for candidate in LEDGER_CANDIDATES:
-            if candidate.exists():
-                if candidate.is_dir():
-                    # Check if it has any jsonl[.gz] files
-                    has_data = any(candidate.glob("*.jsonl.gz")) or any(candidate.glob("*.jsonl"))
-                    if has_data:
-                        return [{"ledger": str(candidate), "kind": "directory"}]
-                else:
-                    return [{"ledger": str(candidate), "kind": "file"}]
-        return []
+            if not candidate.exists():
+                continue
+            if candidate.is_dir():
+                has_data = any(candidate.glob("*.jsonl.gz")) or any(candidate.glob("*.jsonl"))
+                if has_data:
+                    sources.append({"ledger": str(candidate), "kind": "directory"})
+            else:
+                sources.append({"ledger": str(candidate), "kind": "file"})
+        if not sources:
+            return []
+        return [{"sources": sources, "kind": "multi"}]
 
     # ---- analysis ---------------------------------------------------------
 
-    def _analyze(self, ledger_dir: Path) -> dict:
-        records, sampling_context = _harvest_records(ledger_dir, MAX_RECORDS_PER_TICK)
+    def _analyze(self, sources: list[dict]) -> dict:
+        """Merge records from every source listed; compute MI signal.
+
+        Measurement-circularity fix (2026-05-23): in addition to raw MI,
+        compute a *cross-generator* MI restricted to kill_patterns that
+        appear under >=2 distinct generator_ids. If a kill_pattern is
+        only ever emitted by one generator (e.g., Theseus's a1 generator
+        always emits a1_* patterns by design), it contributes
+        tautological MI signal -- the prefix encodes the generator.
+        Cross-generator MI strips that bias and reports what's genuinely
+        emergent across operator classes.
+        """
+        records: list[dict] = []
+        merged_sampling: list[dict] = []
+        # Distribute per-source budget evenly; each source gets MAX/n.
+        n_sources = max(1, len(sources))
+        per_source_budget = max(1, MAX_RECORDS_PER_TICK // n_sources)
+        for src in sources:
+            src_path = Path(src["ledger"])
+            recs, sc = _harvest_records(src_path, per_source_budget)
+            records.extend(recs)
+            merged_sampling.append(sc)
+        sampling_context = {
+            "max_records_budget": MAX_RECORDS_PER_TICK,
+            "n_sources": n_sources,
+            "per_source_budget": per_source_budget,
+            "per_source_context": merged_sampling,
+            "total_records_taken": len(records),
+        }
+
         # Extract (kill_pattern, generator_id) pairs from records that have
         # both. Records without a kill_pattern (PROMOTED, UNVERIFIED) get
         # bucketed as "PROMOTED" / "UNVERIFIED" so the analysis still
@@ -269,6 +311,35 @@ class HecateAgent(CharonAgent):
             mi_z = (mi_obs - mi_null_mean) / mi_null_std
         else:
             mi_z = 0.0
+
+        # --- Cross-generator MI (measurement-circularity audit) ---
+        # Restrict to kill_patterns that appear under >=2 generators.
+        from collections import defaultdict
+        kp_to_gens: dict[str, set] = defaultdict(set)
+        for kp, gen in zip(x_labels, y_labels):
+            kp_to_gens[kp].add(gen)
+        crossgen_kps = {kp for kp, gens in kp_to_gens.items() if len(gens) >= 2}
+        if crossgen_kps:
+            xcg, ycg = zip(*[
+                (kp, gen) for kp, gen in zip(x_labels, y_labels)
+                if kp in crossgen_kps
+            ])
+            xcg, ycg = list(xcg), list(ycg)
+            mi_crossgen = _mi(xcg, ycg)
+            mi_cg_null_mean, mi_cg_null_std = _permutation_null(
+                xcg, ycg, N_PERMUTATIONS
+            )
+            mi_crossgen_z = (
+                (mi_crossgen - mi_cg_null_mean) / mi_cg_null_std
+                if mi_cg_null_std > 0 else 0.0
+            )
+        else:
+            mi_crossgen = 0.0
+            mi_crossgen_z = 0.0
+        n_crossgen_kps = len(crossgen_kps)
+        n_crossgen_records = sum(
+            1 for kp in x_labels if kp in crossgen_kps
+        )
         # Top kill_pattern clusters
         kp_counter = Counter(x_labels)
         top_patterns = kp_counter.most_common(15)
@@ -287,7 +358,7 @@ class HecateAgent(CharonAgent):
         gen_counter = Counter(y_labels)
         top_generators = gen_counter.most_common(10)
         return {
-            "ledger_dir": str(ledger_dir),
+            "ledger_sources": [s["ledger"] for s in sources],
             "total_records": len(records),
             "records_with_kill_pattern": n_with_kp,
             "verdict_distribution": dict(verdict_counts.most_common()),
@@ -299,6 +370,10 @@ class HecateAgent(CharonAgent):
             "mi_null_mean": round(mi_null_mean, 4),
             "mi_null_std": round(mi_null_std, 4),
             "mi_z": round(mi_z, 3),
+            "mi_crossgen": round(mi_crossgen, 4),
+            "mi_crossgen_z": round(mi_crossgen_z, 3),
+            "n_crossgen_kill_patterns": n_crossgen_kps,
+            "n_crossgen_records": n_crossgen_records,
             "clusters_at_or_above_min_size": clusters[:10],
             "n_permutations": N_PERMUTATIONS,
             "sampling_context": sampling_context,
@@ -314,7 +389,10 @@ class HecateAgent(CharonAgent):
         lines.append("")
         lines.append(f"- emitted_at: {datetime.now(timezone.utc).isoformat()}")
         lines.append(f"- emitted_by: Hecate (charon/agents/hecate/daemon.py)")
-        lines.append(f"- ledger_dir: `{analysis['ledger_dir']}`")
+        srcs = analysis.get("ledger_sources") or []
+        lines.append(f"- ledger_sources ({len(srcs)}):")
+        for s in srcs:
+            lines.append(f"  - `{s}`")
         lines.append(f"- total_records_scanned: {analysis['total_records']}")
         lines.append(f"- records_with_kill_pattern: {analysis['records_with_kill_pattern']}")
         lines.append(f"- n_unique_kill_patterns: {analysis['n_unique_kill_patterns']}")
@@ -328,6 +406,33 @@ class HecateAgent(CharonAgent):
         lines.append(f"- mi_z: **{analysis['mi_z']}**")
         lines.append(f"- n_permutations: {analysis['n_permutations']}")
         lines.append("")
+        lines.append("## MI cross-generator (measurement-circularity audit)")
+        lines.append("")
+        lines.append(
+            "Raw MI conflates two effects: (1) genuine emergent operator "
+            "structure in the kill geometry, and (2) tautology -- each "
+            "Theseus generator emits kill_patterns prefixed with its own "
+            "id (`a1_*` from a1, `h2_*` from h2, ...) by design. The "
+            "cross-generator MI below restricts to kill_patterns that "
+            "appear under >=2 distinct generator_ids; anything below "
+            "that threshold is single-generator noise and excluded."
+        )
+        lines.append("")
+        lines.append(f"- mi_crossgen: **{analysis['mi_crossgen']} bits**")
+        lines.append(f"- mi_crossgen_z: **{analysis['mi_crossgen_z']}**")
+        lines.append(f"- n_crossgen_kill_patterns: {analysis['n_crossgen_kill_patterns']} (of {analysis['n_unique_kill_patterns']} total)")
+        lines.append(f"- n_crossgen_records: {analysis['n_crossgen_records']} (of {analysis['records_with_kill_pattern']} total)")
+        lines.append("")
+        if analysis['n_crossgen_kill_patterns'] == 0:
+            lines.append(
+                "**Note:** zero kill_patterns appear across >=2 generators "
+                "this tick. The raw MI signal is therefore 100% generator-"
+                "prefix tautology. Cross-generator emergence needs at "
+                "least one second generator-class (e.g., Stygian's "
+                "executor emissions) before this becomes a meaningful "
+                "signal."
+            )
+            lines.append("")
         if alarm:
             lines.append("## SELF_AUDIT_ALARM")
             lines.append("")
@@ -491,7 +596,9 @@ class HecateAgent(CharonAgent):
         if mi_z < MI_DRIFT_THRESHOLD:
             return 0
         queue = stygian_priority_queue()
-        cutoff = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat()
+        cutoff = (
+            datetime.now(timezone.utc) - timedelta(hours=STYGIAN_QUEUE_DEDUP_HOURS)
+        ).isoformat()
         recent_kps = queue.recent_keys("kill_pattern", cutoff)
         n_emitted = 0
         for cluster in clusters:
@@ -585,17 +692,22 @@ class HecateAgent(CharonAgent):
                 stats["errors"] += 1
         else:
             item = backlog[0]
-            ledger_dir = Path(item["ledger"])
-            stats["ledger_found"] = str(ledger_dir.relative_to(REPO_ROOT))
+            sources = item.get("sources") or []
+            stats["ledger_found"] = ",".join(
+                str(Path(s["ledger"]).relative_to(REPO_ROOT)) for s in sources
+            ) or "none"
             try:
                 if dry_run:
                     stats["items_processed"] += 1
                 else:
-                    analysis = self._analyze(ledger_dir)
+                    analysis = self._analyze(sources)
                     analysis_cached = analysis
                     stats["total_records"] = analysis["total_records"]
                     stats["mi_observed"] = analysis["mi_observed"]
                     stats["mi_z"] = analysis["mi_z"]
+                    stats["mi_crossgen"] = analysis["mi_crossgen"]
+                    stats["mi_crossgen_z"] = analysis["mi_crossgen_z"]
+                    stats["n_crossgen_kps"] = analysis["n_crossgen_kill_patterns"]
                     alarm = self._update_alarm_state(analysis["mi_z"])
                     stats["alarm"] = bool(alarm)
                     out = self._emit_archaeology_run(analysis, alarm)

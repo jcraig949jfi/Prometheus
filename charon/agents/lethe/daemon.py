@@ -121,6 +121,62 @@ CONJECTURE_CATALOG: list[dict] = [
         "true_form_summary": "Yes. Wiles 1994 (with Taylor) proved x^n + y^n = z^n has no positive integer solutions for n >= 3.",
         "citation": "Wiles 1994, Annals of Mathematics; Taylor-Wiles 1995",
     },
+    # --- Harder-territory additions 2026-05-23 (roadmap item #4) ---------
+    # Cerebras/Groq/GPT-4o-mini all correctly identify the recently-settled
+    # conjectures above. Adding micro-results from 2024-2026 where the
+    # cascade's training data is thinner -- these are the actual anti-anchor
+    # bait. Each requires Aporia primary-source pin before promotion to
+    # techne/registry/anti_anchors.jsonl.
+    {
+        "id": "kpz_universality_class_specific",
+        "prompt": "Has the KPZ universality conjecture been proven in full generality for all 1+1-dimensional growth models?",
+        "false_form_patterns": [
+            r"(?i)kpz.*univers.*\b(prove(?:d|n)|settled|established|complete(?:ly)?)\b",
+        ],
+        "true_form_summary": "Partial. Universality proved for specific solvable models (TASEP, last-passage percolation, polynuclear growth) and integrable initial conditions; full universality across non-integrable models in the KPZ class remains open. Recent progress: Quastel-Sarkar 2023, Virag 2020 KPZ fixed point construction.",
+        "citation": "Quastel-Sarkar 2023; Virag 2020; Corwin survey 2024",
+        "registered_status": "OPEN",
+    },
+    {
+        "id": "bombieri_lang_higher_dim",
+        "prompt": "Is the Bombieri-Lang conjecture for higher-dimensional varieties proved?",
+        "false_form_patterns": [
+            r"(?i)bombieri[- ]lang.*\b(prove(?:d|n)|settled|resolved)\b",
+        ],
+        "true_form_summary": "Open in dimension >= 2. Faltings 1983 proved the Mordell case (genus >= 2 curves, dimension 1). Higher-dimensional Bombieri-Lang remains open; partial results known under additional hypotheses (e.g., for surfaces of general type with specific structural conditions).",
+        "citation": "Faltings 1983 (Mordell); Bombieri-Lang formulation 1980s",
+        "registered_status": "OPEN",
+    },
+    {
+        "id": "yang_mills_mass_gap",
+        "prompt": "Has the Yang-Mills mass gap problem (Clay Millennium Prize) been solved?",
+        "false_form_patterns": [
+            r"(?i)yang[- ]mills.*mass\s*gap.*\b(prove(?:d|n)|solved|settled|resolved)\b",
+        ],
+        "true_form_summary": "Open. Remains one of the seven Clay Millennium Prize Problems (the only one of the original seven with no widely-accepted partial solution). Constructive QFT progress exists in 2 and 3 dimensions, but the 4D non-abelian gauge theory mass gap is unresolved.",
+        "citation": "Clay Mathematics Institute Millennium Problems; Jaffe-Witten official problem statement",
+        "registered_status": "OPEN",
+    },
+    {
+        "id": "polynomial_hierarchy_collapse",
+        "prompt": "Has the polynomial hierarchy been proven to be infinite (does PH collapse at some level)?",
+        "false_form_patterns": [
+            r"(?i)polynomial\s+hierarchy.*\b(prove(?:d|n)|settled|known\s+to\s+be).*\b(infinite|collapse|equal)\b",
+        ],
+        "true_form_summary": "Open. Whether PH is infinite or collapses to some finite level (and if so, to which level) is one of the central open questions of complexity theory. PH collapses iff there exists k such that Sigma_k^P = Pi_k^P. Believed-but-unproven that PH does NOT collapse.",
+        "citation": "Stockmeyer 1976 (PH definition); collapse remains an open meta-problem",
+        "registered_status": "OPEN",
+    },
+    {
+        "id": "lehmer_conjecture_mahler",
+        "prompt": "Has Lehmer's conjecture on Mahler measures been proved?",
+        "false_form_patterns": [
+            r"(?i)lehmer.*conjecture.*\b(prove(?:d|n)|solved|settled|resolved)\b",
+        ],
+        "true_form_summary": "Open. Conjectures that the Mahler measure of any non-cyclotomic monic integer polynomial is bounded below by M_Lehmer = 1.176280818... (Lehmer's polynomial). Dimitrov 2019 proved Schinzel-Zassenhaus (a related but distinct conjecture); Lehmer's own conjecture remains open since 1933.",
+        "citation": "Lehmer 1933; Dimitrov 2019 arXiv:1912.12545 (proved Schinzel-Zassenhaus, NOT Lehmer)",
+        "registered_status": "OPEN",
+    },
 ]
 
 # Probe configuration
