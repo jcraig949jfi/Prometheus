@@ -7276,6 +7276,81 @@ volume-saturated-gen" combo that the cooldown couldn't avoid.
 IS data-driven (falsifies prior claim). 384.7M records, 218.9M
 kills, 1529 promoted, 2575 templates, 0 verified findings.*
 
+---
+
+## Fire #92 — 2026-05-24 ~12:49Z — 3rd throttled
+
+**2.24M records / 24 min / 0 templates / 20 promoted. Promotes
+resumed after #91's 0. Balanced 4-gen distribution (b4/c3/d4/f3/f4
+≈585K each except b4 saturated). 65% kill / 35% confirm.**
+
+### Bandit + heartbeat
+
+    [theseus] Bandit picked: ['b4', 'c3', 'd4', 'f3', 'f4']
+    (heartbeat: 48 snapshots, tick rate 407/s, RSS 75→1271MB)
+    [theseus] SATURATION WARNING: b4@100%
+    [theseus] Signature templates: 0 new this batch / 364 unique-in-batch;
+              2575 lifetime templates (unchanged)
+    [theseus] Honest accounting: 20 promoted records this batch;
+              1549 lifetime promoted;
+              verified mathematical findings = 0
+    [theseus] Batch done: 2.24M records, 24 min wall
+
+### Per-gen attribution
+
+    gid  records   dup     templates  kill_rate
+    f3   585,898    0.0%   0          67.4%
+    f4   585,578    0.0%   0          65.8%
+    d4   584,110    0.3%   0          79.1%
+    c3   484,326   17.3%   0          44.3%
+    b4       606  100.0%   0          73.6%
+
+Balanced 4-gen distribution. Promotes resumed (20 → 1549 lifetime).
+
+### Throttle yield curve (5 fires now)
+
+    Fire #88 (full):     5.00M records → 20 promoted, 0 templates
+    Fire #89 (full):     5.00M records → 20 promoted, 1 template
+    Fire #90 (throttled):  63K records → 20 promoted, 2 templates
+    Fire #91 (throttled): 1.92M records →  0 promoted, 0 templates
+    Fire #92 (throttled): 2.24M records → 20 promoted, 0 templates
+
+Throttled-fire variance is wide (63K → 2.24M records). Promote
+yield: usually 20, sometimes 0. The bandit's exploration + the
+gen-mix lottery dominates. The 1-hour idle is the real benefit
+to other agents.
+
+### Batch result
+
+- batch_id: `batch-20260524T124925Z-329d9f`
+- Duration: 24 min wall (throttle target)
+- 2,240,518 records / 1,457,639 kills / 782,879 confirms / 0 incon / 0 errors
+- 20 promoted records → **1549 lifetime promoted**
+- 0 new templates → 2575 lifetime discovery-role templates
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #92
+
+| Metric | Pre-#34 | Post-#91 | Post-#92 |
+|---|---|---|---|
+| Batches | 30 | 91 | 92 |
+| Records | 154.4M | 384.7M | 386.9M |
+| Kills | 74.4M | 218.9M | 220.4M |
+| Confirmations | 75.5M | 145.7M | 146.5M |
+| Promoted records | 500 | 1529 | **1549** |
+| Templates (disc-role) | 17 | 2575 | 2575 |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=3600`.
+
+---
+
+*Fire #92 throttled = 2.24M records / 20 promoted / 0 templates.
+Balanced gen distribution, promotes resumed. 386.9M records,
+220.4M kills, 1549 promoted, 2575 templates, 0 verified findings.*
+
 
 
 
