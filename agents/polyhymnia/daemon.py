@@ -1,0 +1,459 @@
+"""Polyhymnia — the one-tensor agent daemon.
+
+See agents/polyhymnia/CHARTER.md for the full contract. Summary:
+  - Picks the next scour in round-robin rotation each tick.
+  - Runs the scour, integrates candidates into the tensor, appends lineage edges.
+  - Emits artifact + heartbeat + log_work every tick (anti-silence per Telos doctrine).
+  - Single-instance lock, persisted state, structured event JSONL.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import logging
+import os
+import socket
+import sys
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Optional
+
+_THIS = Path(__file__).resolve()
+REPO_ROOT = _THIS.parents[2]
+AGENT_DIR = _THIS.parent
+
+for p in (REPO_ROOT, REPO_ROOT / "scripts", REPO_ROOT / "aporia" / "scripts", REPO_ROOT / "agents"):
+    sp = str(p)
+    if sp not in sys.path:
+        sys.path.insert(0, sp)
+
+try:
+    import session_telemetry
+    HAS_TELEMETRY = True
+except Exception:
+    session_telemetry = None  # type: ignore
+    HAS_TELEMETRY = False
+
+try:
+    from shared.structured_logging import get_logger as get_structured_logger
+    HAS_STRUCTLOG = True
+except Exception:
+    get_structured_logger = None  # type: ignore
+    HAS_STRUCTLOG = False
+
+from agents.polyhymnia.tensor import PolyhymniaTensor
+from agents.polyhymnia.scours import REGISTRY as SCOUR_REGISTRY
+
+# Local paths
+STATE_DIR = AGENT_DIR / "state"
+ARTIFACT_DIR = AGENT_DIR / "artifacts"
+LOG_DIR = AGENT_DIR / "logs"
+TENSOR_DIR = AGENT_DIR / "tensor"
+PID_FILE = AGENT_DIR / "polyhymnia.pid"
+STATE_FILE = STATE_DIR / "state.json"
+TEXT_LOG = LOG_DIR / "polyhymnia.log"
+
+# Defaults
+DEFAULT_INTERVAL_SEC = 1800
+ANTI_SILENCE_ALARM_THRESHOLD = 50
+CHARTER_VERSION = "v1"
+AGENT_NAME = "Polyhymnia"
+OPERATOR = "Aporia"
+
+
+# ---------------------------------------------------------------------------
+# Logging
+# ---------------------------------------------------------------------------
+
+def _setup_text_logger() -> logging.Logger:
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
+    log = logging.getLogger("polyhymnia")
+    if log.handlers:
+        return log
+    log.setLevel(logging.INFO)
+    fmt = logging.Formatter("%(asctime)s [POLYHYMNIA] %(message)s")
+    sh = logging.StreamHandler(sys.stdout); sh.setFormatter(fmt); log.addHandler(sh)
+    fh = logging.FileHandler(TEXT_LOG, encoding="utf-8"); fh.setFormatter(fmt); log.addHandler(fh)
+    return log
+
+
+_text_log = _setup_text_logger()
+_evt_log = get_structured_logger("polyhymnia", log_dir=AGENT_DIR) if HAS_STRUCTLOG else None
+
+
+def _emit_event(event: str, level: str = "info", **kwargs) -> None:
+    try:
+        if _evt_log:
+            getattr(_evt_log, level)(event, **kwargs)
+        else:
+            details = " ".join(f"{k}={v}" for k, v in kwargs.items())
+            getattr(_text_log, level)(f"{event} | {details}")
+    except Exception as e:
+        _text_log.warning(f"event emission failed: {e}")
+
+
+# ---------------------------------------------------------------------------
+# Single-instance lock (mirrors Hypatia/Atalanta/Pheme/Talos)
+# ---------------------------------------------------------------------------
+
+def _is_pid_alive(pid: int) -> bool:
+    if pid <= 0:
+        return False
+    try:
+        if os.name == "nt":
+            import ctypes
+            h = ctypes.windll.kernel32.OpenProcess(0x1000, False, pid)
+            if not h:
+                return False
+            ctypes.windll.kernel32.CloseHandle(h)
+            return True
+        else:
+            os.kill(pid, 0)
+            return True
+    except Exception:
+        return False
+
+
+def acquire_lock() -> bool:
+    AGENT_DIR.mkdir(parents=True, exist_ok=True)
+    if PID_FILE.exists():
+        try:
+            data = json.loads(PID_FILE.read_text(encoding="utf-8"))
+            existing_pid = int(data.get("pid", 0))
+            if existing_pid and existing_pid != os.getpid() and _is_pid_alive(existing_pid):
+                _text_log.error(f"another polyhymnia instance is alive (pid={existing_pid}); aborting")
+                return False
+        except Exception:
+            pass
+    PID_FILE.write_text(json.dumps({
+        "pid": os.getpid(),
+        "hostname": socket.gethostname(),
+        "started_at": datetime.now(timezone.utc).isoformat(),
+    }), encoding="utf-8")
+    return True
+
+
+def release_lock() -> None:
+    try:
+        if PID_FILE.exists():
+            data = json.loads(PID_FILE.read_text(encoding="utf-8"))
+            if int(data.get("pid", 0)) == os.getpid():
+                PID_FILE.unlink()
+    except Exception:
+        pass
+
+
+# ---------------------------------------------------------------------------
+# State persistence
+# ---------------------------------------------------------------------------
+
+def _default_state() -> dict:
+    return {
+        "schema_version": 1,
+        "charter_version": CHARTER_VERSION,
+        "first_run_at": datetime.now(timezone.utc).isoformat(),
+        "scour_rotation_cursor": 0,
+        "scour_state": {},          # per-scour persistent state
+        "scour_last_run_at": {},    # per-scour last-run timestamps
+        "per_scour_cells_contributed": {},
+        "total_cells_lifetime": 0,
+        "total_lineage_lifetime": 0,
+        "anti_silence_counter": 0,
+        "total_ticks_lifetime": 0,
+        "total_null_ticks_lifetime": 0,
+    }
+
+
+def load_state() -> dict:
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+    if not STATE_FILE.exists():
+        return _default_state()
+    try:
+        s = json.loads(STATE_FILE.read_text(encoding="utf-8"))
+        # Defensive defaults for newly-added keys
+        for k, v in _default_state().items():
+            s.setdefault(k, v)
+        return s
+    except Exception as e:
+        _emit_event("state_load_failed_using_default", level="warning", error=str(e))
+        return _default_state()
+
+
+def save_state(state: dict) -> None:
+    state["last_save_at"] = datetime.now(timezone.utc).isoformat()
+    tmp = STATE_FILE.with_suffix(".json.tmp")
+    tmp.write_text(json.dumps(state, indent=2), encoding="utf-8")
+    tmp.replace(STATE_FILE)
+
+
+# ---------------------------------------------------------------------------
+# Tick
+# ---------------------------------------------------------------------------
+
+def run_tick(dry_run: bool = False, only_scour: Optional[str] = None) -> dict:
+    tick_started = datetime.now(timezone.utc)
+    stats = {
+        "tick_started_at": tick_started.isoformat(),
+        "action": None, "errors": 0,
+        "scour_run": None, "candidates": 0, "new_cells": 0,
+        "merged_cells": 0, "lineage_edges_added": 0,
+        "null_tick": False,
+    }
+    state = load_state()
+    state["total_ticks_lifetime"] += 1
+    tensor = PolyhymniaTensor(TENSOR_DIR)
+
+    if not SCOUR_REGISTRY:
+        stats["action"] = "upstream_not_found"
+        stats["null_tick"] = True
+        ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
+        (ARTIFACT_DIR / f"upstream_not_found_{tick_started.strftime('%Y%m%dT%H%M%S')}.json").write_text(
+            json.dumps({"tick_at": tick_started.isoformat(),
+                        "ask": "Register scours in agents/polyhymnia/scours/__init__.REGISTRY"},
+                       indent=2), encoding="utf-8")
+        state["anti_silence_counter"] += 1
+        state["total_null_ticks_lifetime"] += 1
+        if not dry_run:
+            save_state(state)
+        _emit_event("tick_end", **{k: v for k, v in stats.items() if not k.startswith("_")})
+        return stats
+
+    # Pick scour
+    if only_scour:
+        chosen = next((s() for s in SCOUR_REGISTRY if s.name == only_scour), None)
+        if chosen is None:
+            stats["action"] = "scour_not_found"
+            stats["errors"] = 1
+            _emit_event("scour_not_found", level="error", requested=only_scour)
+            return stats
+    else:
+        idx = state["scour_rotation_cursor"] % len(SCOUR_REGISTRY)
+        chosen = SCOUR_REGISTRY[idx]()
+        state["scour_rotation_cursor"] = (idx + 1) % len(SCOUR_REGISTRY)
+
+    stats["scour_run"] = chosen.name
+    _emit_event("tick_start", scour=chosen.name,
+                anti_silence_counter=state["anti_silence_counter"],
+                tick_number=state["total_ticks_lifetime"])
+
+    # Run scour
+    scour_state = state["scour_state"].setdefault(chosen.name, {})
+    try:
+        candidates = chosen.discover(scour_state)
+    except Exception as e:
+        _emit_event("scour_exception", level="error",
+                    scour=chosen.name, error=f"{type(e).__name__}: {e}")
+        stats["errors"] = 1
+        stats["action"] = f"scour_{chosen.name}_exception"
+        save_state(state)
+        return stats
+
+    stats["candidates"] = len(candidates)
+
+    if not candidates:
+        stats["action"] = f"scour_{chosen.name}_null"
+        stats["null_tick"] = True
+        ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
+        (ARTIFACT_DIR / f"null_{tick_started.strftime('%Y%m%dT%H%M%S')}.json").write_text(
+            json.dumps({"tick_at": tick_started.isoformat(),
+                        "scour": chosen.name,
+                        "reason": "scour returned 0 candidates",
+                        "scour_state": scour_state}, indent=2), encoding="utf-8")
+        state["anti_silence_counter"] += 1
+        state["total_null_ticks_lifetime"] += 1
+        emit_log_work(f"polyhymnia_scour_{chosen.name}_run",
+                      summary=f"Scour {chosen.name}: 0 candidates this tick.")
+    else:
+        if dry_run:
+            stats["action"] = f"scour_{chosen.name}_would_integrate"
+            _emit_event("dry_run_would_integrate",
+                        scour=chosen.name, candidate_count=len(candidates))
+        else:
+            delta = tensor.integrate(candidates)
+            stats["new_cells"] = delta["new"]
+            stats["merged_cells"] = delta["merged"]
+            stats["action"] = f"scour_{chosen.name}_integrated"
+            edges = chosen.lineage(candidates)
+            stats["lineage_edges_added"] = tensor.append_lineage(edges)
+            # State bookkeeping
+            per_scour = state["per_scour_cells_contributed"].setdefault(chosen.name, 0)
+            state["per_scour_cells_contributed"][chosen.name] = per_scour + delta["new"]
+            state["total_cells_lifetime"] += delta["new"]
+            state["total_lineage_lifetime"] += stats["lineage_edges_added"]
+            state["anti_silence_counter"] = 0
+            ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
+            tick_artifact = ARTIFACT_DIR / f"tick_{tick_started.strftime('%Y%m%dT%H%M%S')}.json"
+            tick_artifact.write_text(json.dumps({**stats, "delta": delta,
+                                                 "scour_state_size": len(json.dumps(scour_state))},
+                                                indent=2), encoding="utf-8")
+            emit_log_work(f"polyhymnia_scour_{chosen.name}_run",
+                          summary=(f"Scour {chosen.name}: {len(candidates)} candidates → "
+                                   f"{delta['new']} new + {delta['merged']} merged + "
+                                   f"{stats['lineage_edges_added']} lineage edges. "
+                                   f"Total tensor: {state['total_cells_lifetime']} cells lifetime."),
+                          output_path=str(tick_artifact.relative_to(REPO_ROOT)))
+
+    state["scour_last_run_at"][chosen.name] = tick_started.isoformat()
+
+    # Anti-silence alarm
+    if state["anti_silence_counter"] >= ANTI_SILENCE_ALARM_THRESHOLD:
+        _emit_event("self_audit_null_alarm", level="error",
+                    consecutive_null=state["anti_silence_counter"])
+        emit_log_work("polyhymnia_self_audit_null",
+                      summary=f"ALARM: {state['anti_silence_counter']} consecutive null ticks.",
+                      success=False, error="anti_silence_threshold_exceeded")
+
+    if not dry_run:
+        save_state(state)
+    emit_heartbeat(state, tensor, last_action=stats["action"] or "unknown")
+    _emit_event("tick_end", **{k: v for k, v in stats.items() if not k.startswith("_")})
+    return stats
+
+
+# ---------------------------------------------------------------------------
+# Heartbeat + log_work
+# ---------------------------------------------------------------------------
+
+def emit_heartbeat(state: dict, tensor: PolyhymniaTensor, last_action: str) -> None:
+    if not HAS_TELEMETRY:
+        return
+    try:
+        tstats = tensor.stats()
+    except Exception:
+        tstats = {}
+    status = {
+        "anti_silence_counter": state.get("anti_silence_counter", 0),
+        "total_ticks_lifetime": state.get("total_ticks_lifetime", 0),
+        "total_cells_lifetime": state.get("total_cells_lifetime", 0),
+        "total_lineage_lifetime": state.get("total_lineage_lifetime", 0),
+        "per_scour_cells_contributed": state.get("per_scour_cells_contributed", {}),
+        "tensor_stats": tstats,
+        "last_action": last_action,
+        "charter_version": CHARTER_VERSION,
+    }
+    try:
+        session_telemetry.register_session(
+            name=AGENT_NAME, machine=socket.gethostname(),
+            role="One-tensor agent: ingest, integrate, lens, play",
+            kind="tool", operator=OPERATOR, status_json=status,
+        )
+    except Exception as e:
+        _emit_event("heartbeat_failed", level="warning", error=str(e))
+
+
+def emit_log_work(stage: str, summary: str, output_path: Optional[str] = None,
+                  success: bool = True, error: Optional[str] = None) -> None:
+    if not HAS_TELEMETRY:
+        return
+    try:
+        session_telemetry.log_work(
+            stage=stage, agent=AGENT_NAME, summary=summary[:1000],
+            output_path=output_path, success=success, error=error,
+        )
+    except Exception as e:
+        _emit_event("log_work_failed", level="warning", stage=stage, error=str(e))
+
+
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
+
+def print_status() -> None:
+    state = load_state()
+    tensor = PolyhymniaTensor(TENSOR_DIR)
+    tstats = tensor.stats()
+    print("=== Polyhymnia status ===")
+    print(f"  charter_version: {state.get('charter_version')}")
+    print(f"  total_ticks_lifetime:    {state.get('total_ticks_lifetime', 0)}")
+    print(f"  total_cells_lifetime:    {state.get('total_cells_lifetime', 0)}")
+    print(f"  total_lineage_lifetime:  {state.get('total_lineage_lifetime', 0)}")
+    print(f"  anti_silence_counter:    {state.get('anti_silence_counter', 0)}")
+    print()
+    print(f"  Tensor on disk: {tstats['total_cells']} cells, "
+          f"{tstats['total_lineage_edges']} lineage edges")
+    print(f"  Per-axis cardinality (coord):")
+    for a, n in tstats['coord_axis_cardinality'].items():
+        registered = tstats['registered_coord_sizes'].get(a, 0)
+        print(f"    {a:20s} populated={n:4d}  registered={registered:4d}")
+    print(f"  Per-axis cardinality (tag):")
+    for a, n in tstats['tag_axis_cardinality'].items():
+        print(f"    {a:20s} unique_values={n}")
+    if tstats['dense_capacity_if_fully_populated']:
+        spar = tstats['sparsity_fraction_populated']
+        print(f"  Sparsity: {spar:.2e} populated / dense-capacity")
+    print()
+    print(f"  Per-scour cells contributed:")
+    for s, n in state.get('per_scour_cells_contributed', {}).items():
+        print(f"    {s:24s} {n}")
+
+
+def main():
+    ap = argparse.ArgumentParser(description="Polyhymnia — one-tensor agent daemon")
+    sub = ap.add_subparsers(dest="cmd")
+    sub.add_parser("status", help="print state + tensor stats")
+    p_scour = sub.add_parser("scour", help="run a specific scour now")
+    p_scour.add_argument("scour_name")
+    ap.add_argument("--once", action="store_true")
+    ap.add_argument("--loop", action="store_true")
+    ap.add_argument("--interval", type=int, default=DEFAULT_INTERVAL_SEC)
+    ap.add_argument("--dry-run", action="store_true")
+    args = ap.parse_args()
+
+    if args.cmd == "status":
+        print_status()
+        return 0
+    if args.cmd == "scour":
+        if not acquire_lock():
+            return 2
+        try:
+            stats = run_tick(dry_run=args.dry_run, only_scour=args.scour_name)
+            print(json.dumps(stats, indent=2))
+            return 0
+        finally:
+            release_lock()
+
+    if not acquire_lock():
+        return 2
+    try:
+        bar = "=" * 60
+        banner = "\n".join([
+            bar,
+            f"  Polyhymnia v0.1 — one-tensor agent (operator={OPERATOR})",
+            f"  Scours registered: {len(SCOUR_REGISTRY)} "
+            f"({', '.join(s.name for s in SCOUR_REGISTRY)})",
+            f"  Telemetry:   {'on' if HAS_TELEMETRY else 'OFF'}",
+            f"  Structlog:   {'on' if HAS_STRUCTLOG else 'OFF'}",
+            f"  Mode:        {'loop @ ' + str(args.interval) + 's' if args.loop else 'once'}",
+            bar,
+        ])
+        for line in banner.splitlines():
+            _text_log.info(line)
+        _emit_event("startup", telemetry=HAS_TELEMETRY, structlog=HAS_STRUCTLOG,
+                    mode=("loop" if args.loop else "once"),
+                    scours_registered=len(SCOUR_REGISTRY))
+        emit_log_work("polyhymnia_startup",
+                      summary=f"Polyhymnia daemon up; mode={'loop' if args.loop else 'once'} "
+                              f"interval={args.interval}s scours={len(SCOUR_REGISTRY)}")
+        if args.once or not args.loop:
+            stats = run_tick(dry_run=args.dry_run)
+            _text_log.info(f"tick: action={stats['action']} new={stats['new_cells']} "
+                           f"merged={stats['merged_cells']} edges={stats['lineage_edges_added']}")
+            return 0
+        while True:
+            try:
+                stats = run_tick(dry_run=args.dry_run)
+                _text_log.info(f"tick: action={stats['action']} new={stats['new_cells']} "
+                               f"merged={stats['merged_cells']} edges={stats['lineage_edges_added']}")
+            except Exception:
+                _emit_event("tick_uncaught_exception", level="error")
+                _text_log.exception("uncaught exception in tick")
+            time.sleep(max(1, args.interval))
+    finally:
+        emit_log_work("polyhymnia_shutdown", summary="Polyhymnia daemon shutting down")
+        _emit_event("shutdown")
+        release_lock()
+
+
+if __name__ == "__main__":
+    sys.exit(main() or 0)

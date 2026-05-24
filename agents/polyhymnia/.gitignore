@@ -1,0 +1,14 @@
+__pycache__/
+state/
+artifacts/
+logs/
+events.jsonl
+polyhymnia.pid
+# The tensor body (cells + lineage) is too large + churn-heavy for git;
+# the axes/ registries + the schema docs are the auditable artifacts.
+tensor/cells.jsonl
+tensor/lineage.jsonl
+tensor/_staging/
+tensor/_index_*.sqlite
+# Scour scratch
+scours/_cache/
