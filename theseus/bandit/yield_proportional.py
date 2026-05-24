@@ -44,11 +44,27 @@ class YieldProportionalBandit(Bandit):
         temperature: float = 0.005,
         ucb_c: float = 1.0,
         seed: Optional[int] = None,
+        cooldown_window: int = 3,
+        cooldown_multiplier: float = 0.3,
     ) -> None:
+        """
+        cooldown_window: gens picked within last N fires get downweighted.
+                         Default 3 — matches observed "finite refillable
+                         reservoir" pattern where re-picks 1-2 fires after
+                         a burst yield ~0 templates.
+        cooldown_multiplier: score multiplier for recently-picked gens.
+                             Default 0.3 — strong downweight that allows
+                             pick if other options are even weaker.
+        """
         self.temperature = temperature
         self.ucb_c = ucb_c
+        self.cooldown_window = cooldown_window
+        self.cooldown_multiplier = cooldown_multiplier
         self._rng = random.Random(seed)
         self._history: Dict[str, List[float]] = {}
+        # Set externally before select() — maps gid → fires-since-last-pick.
+        # If empty, no cooldown is applied (preserves legacy behavior).
+        self._pick_recency: Dict[str, int] = {}
 
     def select(
         self,
@@ -86,7 +102,18 @@ class YieldProportionalBandit(Bandit):
                 ucb = self.ucb_c * math.sqrt(log_total / n_g) * 0.001
             else:
                 ucb = 0.0
-            scores[gid] = means[gid] + ucb
+            score = means[gid] + ucb
+            # Fire #83: cooldown multiplier for recently-picked gens.
+            # Per the "finite refillable reservoir" pattern (f4#66→#80,
+            # e2#79→#81, g4#65→#82 all 0-template re-picks), gens
+            # picked within last `cooldown_window` fires are penalized
+            # so the bandit avoids wasting yield on locally-exhausted
+            # explorers. Has no effect if _pick_recency is empty.
+            if self._pick_recency and gid in self._pick_recency:
+                fires_since = self._pick_recency[gid]
+                if fires_since < self.cooldown_window:
+                    score *= self.cooldown_multiplier
+            scores[gid] = score
 
         # Softmax with temperature
         T = max(self.temperature, 1e-6)

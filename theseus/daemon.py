@@ -33,7 +33,12 @@ from theseus.orchestration import (
     maybe_emit_discoveries,
     update_lifetime_after_batch,
 )
-from theseus.orchestration.bandit_state import hydrate_bandit, persist_bandit
+from theseus.orchestration.bandit_state import (
+    hydrate_bandit,
+    persist_bandit,
+    load_pick_recency,
+    fires_since_last_pick,
+)
 from theseus.orchestration.signature_index import INSTANCE as SIGNATURE_INDEX
 from theseus.scoring.demand_signals import INSTANCE as DEMAND_LOG
 from theseus.bandit.epsilon_greedy import EpsilonGreedyBandit
@@ -614,6 +619,31 @@ def main() -> None:
                 f"[theseus] Hydrated bandit history: "
                 f"{n_hydrated} yield-score entries from prior fires"
             )
+        # Fire #83: load per-gen pick recency for cooldown logic.
+        # YieldProportionalBandit reads _pick_recency in select();
+        # gens picked within last `cooldown_window` fires (default 3)
+        # get score multiplied by 0.3.
+        try:
+            counter, last_picked = load_pick_recency()
+            recency_map = {
+                gid: fires_since_last_pick(gid, counter, last_picked)
+                for gid in list_active()
+            }
+            # Only attach for YieldProportionalBandit (which knows the field)
+            if hasattr(bandit, "_pick_recency"):
+                bandit._pick_recency = recency_map
+                n_in_cooldown = sum(
+                    1 for v in recency_map.values()
+                    if v < getattr(bandit, "cooldown_window", 3)
+                )
+                if n_in_cooldown > 0:
+                    print(
+                        f"[theseus] Bandit cooldown active: {n_in_cooldown} gens "
+                        f"picked within last {getattr(bandit, 'cooldown_window', 3)} "
+                        f"fires (downweighted by {getattr(bandit, 'cooldown_multiplier', 0.3)}x)"
+                    )
+        except Exception as e:
+            print(f"[theseus] cooldown load failed (non-fatal): {e}")
 
     # When --bandit is set, the bandit picks the FIRST batch's set too.
     # Previously this was a no-op with --batches 1 because selection was
@@ -652,9 +682,12 @@ def main() -> None:
             )
             print(f"[theseus] Bandit selected next active set: {gids}")
 
-    # Persist bandit history for the next daemon invocation.
+    # Persist bandit history + pick-recency for the next daemon invocation.
+    # `gids` is the list of gen_ids actually picked this fire — updates
+    # `last_picked_at` per the schema-v2 recency tracking so Fire #N+1
+    # can apply cooldown.
     if args.bandit:
-        persist_bandit(bandit)
+        persist_bandit(bandit, picked_this_fire=gids)
 
 
 if __name__ == "__main__":
