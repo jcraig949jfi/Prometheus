@@ -6223,6 +6223,96 @@ fire). 20 promoted records continue. f4 (known explorer)
 locally exhausted on re-pick. 340.0M records, 191.6M kills,
 1329 promoted, 2362 templates, 0 verified findings.*
 
+---
+
+## Fire #81 — 2026-05-23 ~22:42Z
+
+**e2 confirmed locally exhausted on re-pick (424 records / 0
+templates) — 2nd instance of the "finite refillable reservoir"
+pattern. d3 carried with 98% kill rate. 20 promoted records.**
+
+### Bandit + heartbeat + honest stdout
+
+    [theseus] Bandit picked: ['b1', 'c3', 'c5', 'd3', 'e2']
+    (heartbeat: 180 snapshots, tick rate 532/s, RSS 75→341MB)
+    [theseus] SATURATION WARNING: b1@100%, c5@100%, c3@100%, e2@100%
+    [theseus] Signature templates: 2 new this batch / 359 unique-in-batch;
+              2364 lifetime templates from discovery-role gens
+    [theseus] Honest accounting: 20 promoted records this batch;
+              1349 lifetime promoted;
+              verified mathematical findings = 0
+    [theseus] Batch done: 2.85M records, 90 min wall
+
+### Per-gen attribution
+
+    gid  records      dup     templates  kill_rate
+    d3   2,844,406    0.9%   1          98.2%   ← carried fire
+    e2         424   100%    0          0%      ← LOCALLY EXHAUSTED
+    c5          10   100%    1          100%
+    b1       1,340   100%    0          0%
+    c3          63   100%    0          42.9%
+
+**e2 LOCALLY EXHAUSTED on re-pick.** Same pattern as f4 in
+Fire #80:
+
+    f4#66: 175 templates (first pick at scale)
+    f4#80:   0 templates (re-pick — locally exhausted)
+
+    e2#79: 269 templates (first pick at scale)
+    e2#81:   0 templates (re-pick — locally exhausted)
+
+**Two instances now of the "finite refillable reservoir"
+pattern.** Each gen has a deep-but-finite claim-space at any
+given moment. When picked first time at scale, it bursts;
+re-pick immediately after yields nothing.
+
+Implication: discovery-role template growth is **bursty** by
+design. The bandit cycles through gens; each visit cashes in
+the gen's accumulated novelty since the last visit. Frequency
+of picks should be tuned to refill rate of each gen's source
+(catalog updates, cache fetches, parent-claim accumulation).
+
+### d3 the falsifier
+
+d3 emitted 2.84M records at 98.2% kill rate. 1 new template
+(d3's triangulation signature variants are finite but big).
+0 confirmations — pure falsification work.
+
+20 promoted records came from the small 1,376 confirms across
+b1/c3 — high-density survivors.
+
+### Batch result
+
+- batch_id: `batch-20260523T224209Z-ad3d6d`
+- Duration: 90 min wall (cap NOT hit)
+- 2,846,243 records / 2,793,066 kills / 1,376 confirms / 51,801 incon / 0 errors
+- 20 promoted records → **1349 lifetime promoted**
+- 2 new templates → **2364 lifetime discovery-role templates**
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #81
+
+| Metric | Pre-#34 | Post-#80 | Post-#81 |
+|---|---|---|---|
+| Batches | 30 | 80 | 81 |
+| Records | 154.4M | 340.0M | 342.8M |
+| Kills | 74.4M | 191.6M | 194.4M |
+| Confirmations | 75.5M | 129.8M | 129.8M |
+| Promoted records | 500 | 1329 | **1349** |
+| Templates (disc-role) | 17 | 2362 | **2364** |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #82.
+
+---
+
+*Fire #81 closed. e2 confirms "finite refillable reservoir"
+pattern (424 records / 0 templates on re-pick). d3 carried 98%
+kill rate. 342.8M records, 194.4M kills, 1349 promoted, 2364
+templates, 0 verified findings.*
+
 
 
 
