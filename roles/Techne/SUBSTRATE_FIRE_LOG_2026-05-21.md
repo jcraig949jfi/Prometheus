@@ -7549,6 +7549,64 @@ Real fire count = 95 (1 partial + 94 journaled).
 promoted / 0 templates. 391.2M records, 222.7M kills, 1589
 promoted, 2575 templates, 0 verified findings.*
 
+---
+
+## Fire #96 — 2026-05-24 ~16:53Z — 6th throttled
+
+**2.03M records / 24 min / 1 template (a4) / 20 promoted. a3+a4
+carried 99.8% of records. Normal completion.**
+
+### Picks + key metrics
+
+    Bandit picked: ['a3', 'a4', 'b2', 'c5', 'g1']
+    [heartbeat: 48 snapshots, full t=24.0min]
+    Signature templates: 1 new this batch (2576 lifetime, +1)
+    Honest accounting: 20 promoted records → 1609 lifetime
+    verified mathematical findings = 0
+
+### Per-gen attribution
+
+    gid  records      dup     templates  kill_rate
+    a3   1,050,732    0.3%   0          63.6%
+    a4     978,079    7.2%   1          30.7%
+    b2       3,636   99.7%   0          34.8%
+    c5           4  100.0%   0          0%       (4 records — c5 exhausted)
+    g1         184  100.0%   0          58.7%
+
+a4 contributed 1 new template — small drip continues. c5 emitted
+just 4 records this fire (very deep saturation in current state).
+
+### Batch result
+
+- batch_id: `batch-20260524T165308Z-e88303`
+- Duration: 24 min wall
+- 2,032,635 records / 970,368 kills / 387,565 confirms / 674,702 incon / 0 errors
+- 20 promoted records → **1609 lifetime promoted**
+- 1 new template → **2576 lifetime discovery-role templates** (+1)
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #96
+
+| Metric | Pre-#34 | Post-#95 | Post-#96 |
+|---|---|---|---|
+| Batches journaled | 30 | 94 | 95 |
+| Records | 154.4M | 391.2M | 393.3M |
+| Kills | 74.4M | 222.7M | 223.7M |
+| Confirmations | 75.5M | 148.4M | 148.8M |
+| Promoted records | 500 | 1589 | **1609** |
+| Templates (disc-role) | 17 | 2575 | **2576** |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=3600`.
+
+---
+
+*Fire #96 throttled = 2.03M records / 20 promoted / 1 template
+(a4). 393.3M records, 223.7M kills, 1609 promoted, 2576
+templates, 0 verified findings.*
+
 
 
 
