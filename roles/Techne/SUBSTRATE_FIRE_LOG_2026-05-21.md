@@ -6962,6 +6962,81 @@ Diminishing returns empirically confirmed. 372.8M records,
 210.2M kills, 1469 promoted, 2572 templates, 0 verified
 findings.*
 
+---
+
+## Fire #88 — 2026-05-24 ~07:04Z
+
+**Final fire at full cadence. After this fire: 75% throttle
+applied per user direction. Audit report shipped to user
+(pivot/techne_substrate_audit_2026-05-24.md). 5th zero-template
+fire in 9.**
+
+### Bandit picks + heartbeat
+
+    [theseus] Bandit picked: ['a4', 'b1', 'e3', 'f3', 'h1']
+    (heartbeat: ~120 snapshots, tick rate 508/s, RSS 75→433MB)
+    [theseus] Signature templates: 0 new this batch / 291 unique-in-batch;
+              2572 lifetime templates from discovery-role gens
+    [theseus] Honest accounting: 20 promoted records this batch;
+              1489 lifetime promoted;
+              verified mathematical findings = 0
+    [theseus] Batch done: 5M records (cap), 59 min wall
+
+### Per-gen attribution
+
+    gid  records      dup     templates  kill_rate
+    f3   1,809,813    0.0%   0          67.5%
+    h1   1,536,625   15.1%   0          87.9%
+    a4   1,651,162    8.8%   0          30.3%
+    b1       1,340   99.9%   0          0%      (INFRA_DIAGNOSTIC)
+    e3       1,060   99.9%   0          42.2%
+
+### Throttle applied for Fire #89+
+
+Per user direction: cut quantity gen by 75%.
+
+Plan:
+- `--batch-hours 0.4` (was 1.5) → ~24 min batches, ~25% records per fire
+- Wakeup delay 3600s (was 120s) → 1h idle between fires
+- New cycle: ~84 min vs ~92 min, but only ~25% records per cycle
+- Net volume cut: ~75%
+
+Audit report shipped: pivot/techne_substrate_audit_2026-05-24.md
+Contains 10 questions for frontier-model advisory board.
+
+### Batch result
+
+- batch_id: `batch-20260524T070415Z-5f0111`
+- Duration: 59 min wall (5M cap hit)
+- 5,000,000 records / 3,073,491 kills / 781,476 confirms / 1.15M incon / 0 errors
+- 20 promoted records → **1489 lifetime promoted**
+- 0 new templates → 2572 lifetime discovery-role templates (unchanged)
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #88
+
+| Metric | Pre-#34 | Post-#87 | Post-#88 |
+|---|---|---|---|
+| Batches | 30 | 87 | 88 |
+| Records | 154.4M | 372.8M | 377.8M |
+| Kills | 74.4M | 210.2M | 213.3M |
+| Confirmations | 75.5M | 143.5M | 144.3M |
+| Promoted records | 500 | 1469 | **1489** |
+| Templates (disc-role) | 17 | 2572 | 2572 |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=3600`. Fire #89 begins throttled phase
+(--batch-hours 0.4).
+
+---
+
+*Fire #88 closed. Final fire at full cadence. 5M records / 0
+new templates / 20 promoted. Throttle (75% volume cut) applied
+for Fire #89 onward. 377.8M records, 213.3M kills, 1489
+promoted, 2572 templates, 0 verified findings.*
+
 
 
 
