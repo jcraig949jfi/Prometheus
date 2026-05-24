@@ -7487,6 +7487,68 @@ revealed the truncation immediately.
 entry written. External-cause exit suspected. Lifetime stats
 unchanged. Continuing to Fire #95.*
 
+---
+
+## Fire #95 — 2026-05-24 ~16:22Z — Recovered, ran normally
+
+**Full 24-min batch completed. 2.34M records / 20 promoted /
+0 templates. Fire #94's premature exit was an isolated event,
+not recurring.**
+
+### Bandit + heartbeat (48 snapshots, full duration)
+
+    [theseus] Bandit picked: ['a3', 'b5', 'f2', 'g1', 'g3']
+    [heartbeat] t=24.0min → 2,336,217 records ✓ (full target)
+    [theseus] SATURATION WARNING: g1@100%, b5@100%, g3@98%
+    [theseus] Signature templates: 0 new / 378 unique-in-batch;
+              2575 lifetime templates (unchanged)
+    [theseus] Honest accounting: 20 promoted records;
+              1589 lifetime promoted;
+              verified mathematical findings = 0
+
+### Per-gen attribution
+
+    gid  records      dup     templates  kill_rate
+    f2   1,159,410    0.0%   0          65.9%
+    a3   1,155,571    0.4%   0          63.5%
+    g3      20,000   98.3%   0          0%       (TAUTOLOGY — alive-monitor)
+    b5       1,052   99.9%   0          1.4%
+    g1         184  100.0%   0          58.7%
+
+### Batch result
+
+- batch_id: `batch-20260524T162229Z-e5ff27`
+- Duration: 24 min wall (throttle target)
+- 2,336,217 records / 1,497,643 kills / 838,574 confirms / 0 incon / 0 errors
+- 20 promoted records → **1589 lifetime promoted**
+- 0 new templates → 2575 lifetime discovery-role templates
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #95
+
+| Metric | Pre-#34 | Post-#93 | Post-#95 |
+|---|---|---|---|
+| Batches journaled | 30 | 93 | 94 |
+| Records | 154.4M | 388.8M | 391.2M |
+| Kills | 74.4M | 221.2M | 222.7M |
+| Confirmations | 75.5M | 147.5M | 148.4M |
+| Promoted records | 500 | 1569 | **1589** |
+| Templates (disc-role) | 17 | 2575 | 2575 |
+| **Verified findings** | **0** | **0** | **0** |
+
+Note: batches journaled = 94 (skipped #94 due to partial run).
+Real fire count = 95 (1 partial + 94 journaled).
+
+### Schedule wakeup
+
+`delaySeconds=3600`.
+
+---
+
+*Fire #95 throttled, normal completion. 2.34M records / 20
+promoted / 0 templates. 391.2M records, 222.7M kills, 1589
+promoted, 2575 templates, 0 verified findings.*
+
 
 
 
