@@ -4,7 +4,7 @@ discover() (and optionally lineage())."""
 from __future__ import annotations
 
 from typing import Any
-from ..tensor import CandidateCell, LineageEdge
+from ..tensor import CandidateTessera, LineageEdge
 
 
 class Scour:
@@ -14,9 +14,9 @@ class Scour:
     interval_hint_sec: int = 1800       # daemon respects this when rotating
     min_seconds_between_runs: int = 60  # rate-limit politeness
 
-    def discover(self, state: dict) -> list[CandidateCell]:
-        """Pull from the source. Return candidate cells. The integrator
-        will compute cell_ids and merge/append.
+    def discover(self, state: dict) -> list[CandidateTessera]:
+        """Pull from the source. Return candidate tesserae. The integrator
+        will compute tessera_ids and merge/append.
 
         `state` is the scour's persistent state — a dict the daemon
         passes in and saves whatever you write back to it (under
@@ -25,12 +25,12 @@ class Scour:
         """
         raise NotImplementedError
 
-    def lineage(self, candidates: list[CandidateCell]) -> list[LineageEdge]:
+    def lineage(self, candidates: list[CandidateTessera]) -> list[LineageEdge]:
         """Optional: emit lineage edges. Default = none.
 
-        Note: lineage edges reference cell_ids, but cell_ids aren't
+        Note: lineage edges reference tessera_ids, but tessera_ids aren't
         computed until integrate-time. If you want to emit edges, the
         usual pattern is to emit them in a follow-up tick after the
-        cells you're connecting are already in the tensor.
+        tesserae you're connecting are already in the tensor.
         """
         return []

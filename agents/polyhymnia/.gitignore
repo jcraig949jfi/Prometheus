@@ -4,8 +4,9 @@ artifacts/
 logs/
 events.jsonl
 polyhymnia.pid
-# The tensor body (cells + lineage) is too large + churn-heavy for git;
-# the axes/ registries + the schema docs are the auditable artifacts.
+# The Omnitensor body (tesserae + lineage) is too large + churn-heavy for
+# git; the axes/ registries + the schema docs are the auditable artifacts.
+tensor/tesserae.jsonl
 tensor/cells.jsonl
 tensor/lineage.jsonl
 tensor/_staging/

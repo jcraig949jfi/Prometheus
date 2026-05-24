@@ -156,8 +156,8 @@ def _default_state() -> dict:
         "scour_rotation_cursor": 0,
         "scour_state": {},          # per-scour persistent state
         "scour_last_run_at": {},    # per-scour last-run timestamps
-        "per_scour_cells_contributed": {},
-        "total_cells_lifetime": 0,
+        "per_scour_tesserae_contributed": {},
+        "total_tesserae_lifetime": 0,
         "total_lineage_lifetime": 0,
         "anti_silence_counter": 0,
         "total_ticks_lifetime": 0,
@@ -196,8 +196,8 @@ def run_tick(dry_run: bool = False, only_scour: Optional[str] = None) -> dict:
     stats = {
         "tick_started_at": tick_started.isoformat(),
         "action": None, "errors": 0,
-        "scour_run": None, "candidates": 0, "new_cells": 0,
-        "merged_cells": 0, "lineage_edges_added": 0,
+        "scour_run": None, "candidates": 0, "new_tesserae": 0,
+        "merged_tesserae": 0, "lineage_edges_added": 0,
         "null_tick": False,
     }
     state = load_state()
@@ -271,15 +271,15 @@ def run_tick(dry_run: bool = False, only_scour: Optional[str] = None) -> dict:
                         scour=chosen.name, candidate_count=len(candidates))
         else:
             delta = tensor.integrate(candidates)
-            stats["new_cells"] = delta["new"]
-            stats["merged_cells"] = delta["merged"]
+            stats["new_tesserae"] = delta["new"]
+            stats["merged_tesserae"] = delta["merged"]
             stats["action"] = f"scour_{chosen.name}_integrated"
             edges = chosen.lineage(candidates)
             stats["lineage_edges_added"] = tensor.append_lineage(edges)
             # State bookkeeping
-            per_scour = state["per_scour_cells_contributed"].setdefault(chosen.name, 0)
-            state["per_scour_cells_contributed"][chosen.name] = per_scour + delta["new"]
-            state["total_cells_lifetime"] += delta["new"]
+            per_scour = state["per_scour_tesserae_contributed"].setdefault(chosen.name, 0)
+            state["per_scour_tesserae_contributed"][chosen.name] = per_scour + delta["new"]
+            state["total_tesserae_lifetime"] += delta["new"]
             state["total_lineage_lifetime"] += stats["lineage_edges_added"]
             state["anti_silence_counter"] = 0
             ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
@@ -291,7 +291,7 @@ def run_tick(dry_run: bool = False, only_scour: Optional[str] = None) -> dict:
                           summary=(f"Scour {chosen.name}: {len(candidates)} candidates → "
                                    f"{delta['new']} new + {delta['merged']} merged + "
                                    f"{stats['lineage_edges_added']} lineage edges. "
-                                   f"Total tensor: {state['total_cells_lifetime']} cells lifetime."),
+                                   f"Total tensor: {state['total_tesserae_lifetime']} cells lifetime."),
                           output_path=str(tick_artifact.relative_to(REPO_ROOT)))
 
     state["scour_last_run_at"][chosen.name] = tick_started.isoformat()
@@ -325,9 +325,9 @@ def emit_heartbeat(state: dict, tensor: PolyhymniaTensor, last_action: str) -> N
     status = {
         "anti_silence_counter": state.get("anti_silence_counter", 0),
         "total_ticks_lifetime": state.get("total_ticks_lifetime", 0),
-        "total_cells_lifetime": state.get("total_cells_lifetime", 0),
+        "total_tesserae_lifetime": state.get("total_tesserae_lifetime", 0),
         "total_lineage_lifetime": state.get("total_lineage_lifetime", 0),
-        "per_scour_cells_contributed": state.get("per_scour_cells_contributed", {}),
+        "per_scour_tesserae_contributed": state.get("per_scour_tesserae_contributed", {}),
         "tensor_stats": tstats,
         "last_action": last_action,
         "charter_version": CHARTER_VERSION,
@@ -366,7 +366,7 @@ def print_status() -> None:
     print("=== Polyhymnia status ===")
     print(f"  charter_version: {state.get('charter_version')}")
     print(f"  total_ticks_lifetime:    {state.get('total_ticks_lifetime', 0)}")
-    print(f"  total_cells_lifetime:    {state.get('total_cells_lifetime', 0)}")
+    print(f"  total_tesserae_lifetime:    {state.get('total_tesserae_lifetime', 0)}")
     print(f"  total_lineage_lifetime:  {state.get('total_lineage_lifetime', 0)}")
     print(f"  anti_silence_counter:    {state.get('anti_silence_counter', 0)}")
     print()
@@ -383,15 +383,53 @@ def print_status() -> None:
         spar = tstats['sparsity_fraction_populated']
         print(f"  Sparsity: {spar:.2e} populated / dense-capacity")
     print()
-    print(f"  Per-scour cells contributed:")
-    for s, n in state.get('per_scour_cells_contributed', {}).items():
+    print(f"  Per-scour tesserae contributed:")
+    for s, n in state.get('per_scour_tesserae_contributed', {}).items():
         print(f"    {s:24s} {n}")
+
+
+def print_awaken() -> None:
+    """Sacred ritual — print the Omnitensor's mass and motto. Cheerful
+    extradimensional librarian voice (ChatGPT 2026-05-24 contribution)."""
+    tensor = PolyhymniaTensor(TENSOR_DIR)
+    tstats = tensor.stats()
+    n = tstats['total_tesserae']
+    print()
+    print("            T H E   O M N I T E N S O R")
+    print("                    awakens.")
+    print()
+    print("  Sacred rule:")
+    print("    There is only one tensor.")
+    print()
+    print("  Current mass:")
+    print(f"    {n:>7} tesserae")
+    print(f"    {tstats['total_lineage_edges']:>7} lineage edges")
+    print(f"    {sum(tstats['registered_coord_sizes'].values()):>7} registered axis values "
+          f"across {len(tstats['registered_coord_sizes'])} coord axes")
+    print(f"    {sum(tstats['tag_axis_cardinality'].values()):>7} unique tag values "
+          f"across {len(tstats['tag_axis_cardinality'])} tag axes")
+    print()
+    print("  Hunger:")
+    print("    papers, formulas, code, datasets, problems, myths,")
+    print("    notations, fringe, every loosely-tensor-shaped thing.")
+    print()
+    print("  Polyhymnia speaks:")
+    if n == 0:
+        print("    I am empty. Feed me.")
+    elif n < 1000:
+        print("    I have begun. Bring more.")
+    elif n < 10000:
+        print("    I grow. Keep the scours running.")
+    else:
+        print("    I am hungry still. There is no limit.")
+    print()
 
 
 def main():
     ap = argparse.ArgumentParser(description="Polyhymnia — one-tensor agent daemon")
     sub = ap.add_subparsers(dest="cmd")
     sub.add_parser("status", help="print state + tensor stats")
+    sub.add_parser("awaken", help="ritual: print the Omnitensor's mass + motto")
     p_scour = sub.add_parser("scour", help="run a specific scour now")
     p_scour.add_argument("scour_name")
     ap.add_argument("--once", action="store_true")
@@ -402,6 +440,9 @@ def main():
 
     if args.cmd == "status":
         print_status()
+        return 0
+    if args.cmd == "awaken":
+        print_awaken()
         return 0
     if args.cmd == "scour":
         if not acquire_lock():
@@ -419,7 +460,8 @@ def main():
         bar = "=" * 60
         banner = "\n".join([
             bar,
-            f"  Polyhymnia v0.1 — one-tensor agent (operator={OPERATOR})",
+            f"  Polyhymnia v0.2 — keeper of the Omnitensor (operator={OPERATOR})",
+            f"  Sacred rule: there is only one tensor.",
             f"  Scours registered: {len(SCOUR_REGISTRY)} "
             f"({', '.join(s.name for s in SCOUR_REGISTRY)})",
             f"  Telemetry:   {'on' if HAS_TELEMETRY else 'OFF'}",
@@ -437,14 +479,14 @@ def main():
                               f"interval={args.interval}s scours={len(SCOUR_REGISTRY)}")
         if args.once or not args.loop:
             stats = run_tick(dry_run=args.dry_run)
-            _text_log.info(f"tick: action={stats['action']} new={stats['new_cells']} "
-                           f"merged={stats['merged_cells']} edges={stats['lineage_edges_added']}")
+            _text_log.info(f"tick: action={stats['action']} new={stats['new_tesserae']} "
+                           f"merged={stats['merged_tesserae']} edges={stats['lineage_edges_added']}")
             return 0
         while True:
             try:
                 stats = run_tick(dry_run=args.dry_run)
-                _text_log.info(f"tick: action={stats['action']} new={stats['new_cells']} "
-                               f"merged={stats['merged_cells']} edges={stats['lineage_edges_added']}")
+                _text_log.info(f"tick: action={stats['action']} new={stats['new_tesserae']} "
+                               f"merged={stats['merged_tesserae']} edges={stats['lineage_edges_added']}")
             except Exception:
                 _emit_event("tick_uncaught_exception", level="error")
                 _text_log.exception("uncaught exception in tick")
