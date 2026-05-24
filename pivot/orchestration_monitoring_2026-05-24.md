@@ -301,7 +301,17 @@ Apollo: 7.44h stale, climbing. Healthcheck-M4 fired 11:56 on schedule. Failures:
 
 Scheduling a 30-min wakeup to land at 12:57 EDT (8 min after 12:49 cycle) to catch this hour's cycle event chain.
 
-### Hour 11 — pending
+### Hour 11 — 2026-05-24 12:59 EDT — clean cycle caught
+
+**12:49 cycle: clean.** Cycle 934d611c, 33.4s total, all 6 boundary events ok. Metis fast (1.9s). Email sent.
+
+**Apollo flagged again** (7.8h DEAD, supervised by Harmonia hallucination still present). **Clio newly flagged** at 59.5min stale (Aporia, paper scanner — correctly attributed this time, so the supervisor-format IS working when EXPECTED_AGENTS has the operator field set correctly). Calliope no longer in brief (3-item cap), so the "invoke-on-demand false-flag" issue is intermittent but real.
+
+**Apollo: 7.97h stale.** Climbing on schedule. No recovery.
+
+**Steady-state otherwise**: 4 failures (same Atalanta/Pheme), probes 59/59/59/58, machine snapshots unchanged. Daemons alive.
+
+Ready for hour 12 roadmap synthesis.
 
 ### Hour 12 — final synthesis + roadmap
 
