@@ -3,6 +3,12 @@ _rotation_state.json
 */state/
 */artifacts/
 
+# Calibration anchors + template-suppression seeds are config, not runtime
+# state — re-include so they ship with the swarm.
+!*/state/calibration_positive.json
+!*/state/calibration_negative.json
+!*/state/known_template_spans.json
+
 # Python bytecode (top-level rule overridden by harmonia/agents/** negation;
 # re-exclude here)
 __pycache__/

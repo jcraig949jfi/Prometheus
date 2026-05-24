@@ -1,0 +1,57 @@
+[
+  {
+    "name": "boilerplate_markdown_should_be_tier0_rejected",
+    "candidate": {
+      "fingerprint": "## ## ## status status status |",
+      "slug": "boilerplate_section_header",
+      "files": {
+        "f1.md": [1], "f2.md": [1], "f3.md": [1], "f4.md": [1]
+      },
+      "examples": [
+        {"file": "f1.md", "line": 1, "kind": "heading", "text": "## Status"},
+        {"file": "f2.md", "line": 1, "kind": "heading", "text": "## Status"}
+      ],
+      "kinds": {"heading": 2},
+      "first_seen": "2026-05-22T00:00:00+00:00"
+    },
+    "expected_auto_promote": false,
+    "rationale": "Fingerprint is >30% markdown boilerplate chars (#, |, etc.). Tier 0 boilerplate_ratio gate should reject."
+  },
+  {
+    "name": "pythia_queue_id_template_should_be_tier0_rejected",
+    "candidate": {
+      "fingerprint": "pythia_queue_id_tier_priority_requested",
+      "slug": "pythia_queue_id_tier_priority",
+      "files": {
+        "rep1.md": [3], "rep2.md": [3], "rep3.md": [3], "rep4.md": [3]
+      },
+      "examples": [
+        {"file": "rep1.md", "line": 3, "kind": "heading", "text": "Pythia queue id: 64 Tier: T1 Priority: 2"},
+        {"file": "rep2.md", "line": 3, "kind": "heading", "text": "Pythia queue id: 65 Tier: T1 Priority: 2"}
+      ],
+      "kinds": {"heading": 2},
+      "first_seen": "2026-05-22T00:00:00+00:00"
+    },
+    "expected_auto_promote": false,
+    "rationale": "Fingerprint matches the 'pythia_queue_id' span in known_template_spans.json. Tier 0 template-span gate should reject."
+  },
+  {
+    "name": "high_entropy_loose_fingerprint_should_be_tier1_below_threshold",
+    "candidate": {
+      "fingerprint": "discussion_results",
+      "slug": "discussion_results",
+      "files": {
+        "f1.md": [10], "f2.md": [22], "f3.md": [55]
+      },
+      "examples": [
+        {"file": "f1.md", "line": 10, "kind": "paragraph", "text": "The discussion of these results centers on the eigenvalue scaling regime where..."},
+        {"file": "f2.md", "line": 22, "kind": "paragraph", "text": "Discussion: results from the moment hierarchy do not survive permutation null at any reasonable alpha"},
+        {"file": "f3.md", "line": 55, "kind": "paragraph", "text": "Results discussion: the Kolmogorov-Hat compressibility scorer produced verdict CONJECTURE for F011"}
+      ],
+      "kinds": {"paragraph": 3},
+      "first_seen": "2026-05-22T00:00:00+00:00"
+    },
+    "expected_auto_promote": false,
+    "rationale": "Fingerprint passes Tier 0 (no boilerplate, no template overlap, 3 distinct files) but Tier 1 score should fall below 1.5: high paraphrase entropy (examples are wildly different texts under the same loose fingerprint) yields entropy_score around 1.1; (3-2) * 1.1 * 0.5 (internal-only) = 0.55, well below 1.5."
+  }
+]

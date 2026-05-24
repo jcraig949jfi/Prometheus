@@ -425,6 +425,26 @@ class IrisAgent(HarmoniaAgent):
                     self.log.warning(f"artifact write failed for {fp}: {e}")
                     stats["errors"] += 1
 
+        # 4b. Auto-promote (Phase 1) -- runs the candidate clusters through
+        # the IrisPipeline scoring primitive and, for survivors, appends to
+        # CANDIDATES.md + writes kill-path + emits yield row + events.
+        # Idempotent: each cluster auto-promotes at most once because the
+        # kill-path file remembers slugs already promoted.
+        stats["auto_promoted_count"] = 0
+        if not dry_run and newly_crossed_this_tick:
+            try:
+                from harmonia.agents.iris._pipeline import autopromote_clusters
+                yids = autopromote_clusters(
+                    clusters, newly_crossed_this_tick,
+                    tick_id=self._cycle_id, dry_run=False,
+                )
+                stats["auto_promoted_count"] = len(yids)
+                if yids:
+                    stats["auto_promoted_yield_ids"] = yids
+            except Exception as e:
+                self.log.warning(f"autopromote_clusters failed: {e}")
+                stats["errors"] += 1
+
         # 5. Zero new clusters → still emit an audit scan-tick artifact.
         if (
             not newly_crossed_this_tick

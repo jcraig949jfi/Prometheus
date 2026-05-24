@@ -1,0 +1,25 @@
+[
+  {
+    "name": "block_shuffle_null_replay_cross_corpus",
+    "candidate": {
+      "fingerprint": "block_shuffle_null_replay",
+      "slug": "block_shuffle_null_replay",
+      "files": {
+        "D:\\Prometheus\\harmonia\\memory\\pattern_library.md": [142],
+        "D:\\Prometheus\\harmonia\\memory\\methodology_toolkit.md": [88],
+        "D:\\Prometheus\\harmonia\\memory\\retraction_registry.md": [203],
+        "D:\\Prometheus\\aporia\\docs\\deep_research_reports\\2026-05-21\\00104_block_shuffle_methodology.md": [56]
+      },
+      "examples": [
+        {"file": "harmonia/memory/pattern_library.md", "line": 142, "kind": "heading", "text": "Block-shuffle null replay protocol"},
+        {"file": "harmonia/memory/methodology_toolkit.md", "line": 88, "kind": "heading", "text": "Block shuffle null replay (Pattern 21)"},
+        {"file": "harmonia/memory/retraction_registry.md", "line": 203, "kind": "paragraph", "text": "Block-shuffle null replay protocol was used to confirm the retraction"},
+        {"file": "aporia/docs/deep_research_reports/.../00104_block_shuffle_methodology.md", "line": 56, "kind": "paragraph", "text": "Block shuffle null replay is the canonical Pattern 21 null"}
+      ],
+      "kinds": {"heading": 2, "paragraph": 2},
+      "first_seen": "2026-05-22T12:00:00+00:00"
+    },
+    "expected_auto_promote": true,
+    "rationale": "Cross-corpus (Harmonia internal + Pythia DR), low paraphrase entropy (consistent phrasing), no boilerplate, not template-spammed, 4 distinct files -- should easily clear the 1.5 threshold."
+  }
+]
