@@ -293,7 +293,13 @@ This is the orchestration working as designed — the 3.8h-stale heartbeat trigg
 
 Apollo 6.58h stale. Healthcheck-M4 fired 10:56 on schedule. 8 failures, all known Atalanta/Pheme. Probes 59/59/59/58 across M1/M2/M3/M4 (perfect cadence). M1 mem 41.8%, M3 disk 60.0%, M2 GPU vram 3.6% — no machine showing new trends. Pronoia daemons alive. No new candidate issues.
 
-### Hour 10 — pending
+### Hour 10 — 2026-05-24 12:27 EDT — phase-alignment miss #3
+
+12:49 cycle hasn't fired yet (22 min away). I miscalculated the schedule: 11:36 + 50min = 12:26, which is 23 min BEFORE the cycle, not after. The fundamental constraint is the 3600s (60min) max wakeup delay vs the cycle's 4h cadence anchored at xx:49 — if last wakeup is at xx:36 or earlier, the 60-min max ceiling can't reach xx:50. **Adding to roadmap as concrete fix**: wakeup-scheduler logic for monitoring should compute the next expected cycle time and pick the smaller of (60min, cycle_time + small_buffer).
+
+Apollo: 7.44h stale, climbing. Healthcheck-M4 fired 11:56 on schedule. Failures: 8, all known Atalanta/Pheme. Probes 59/59/59/58. Snapshot: M1 cpu 15.3% mem 34.5% disk 31.5%; M2 cpu 0.9% gpu 3.6% (dead); M3 cpu 26% disk 60%; M4 cpu 3.3% mem 32.5%.
+
+Scheduling a 30-min wakeup to land at 12:57 EDT (8 min after 12:49 cycle) to catch this hour's cycle event chain.
 
 ### Hour 11 — pending
 
