@@ -101,7 +101,42 @@ These are real signals — Atalanta (Aporia tool) and Pheme (Ergon tool) need th
 - [ ] **Atalanta/Pheme upstream wiring overdue** — both tools have been alarming for days. Worth a paste-prompt for Aporia and Ergon to set the env vars and restart.
 - [ ] **M1 memory growth rate watch** — if M1 mem goes from 56→62 each hour, it'll OOM in ~5 hours. Probably just Postgres warming caches but worth tracking.
 
-### Hour 3 — pending
+### Hour 3 — 2026-05-24 06:03 EDT — **M1 MEMORY ESCALATION**
+
+**Pipeline status:** daemons alive (intel_loop 25h uptime, probe 175min). No Pronoia cycle this hour (next at 08:49).
+
+**⚠ M1 memory escalating fast.** Trajectory from machine_probes:
+- 02:55 baseline: 56.6%
+- 04:00 hour 1: 56.6% (flat)
+- 05:00 hour 2: 62.1% (+5.5pp/hr)
+- 05:51: 63.7%
+- 05:55: 71.2% (**+7.5pp in 4 min**)
+- 05:58: 71.9%
+- 06:01: 80.8% (**+9.6pp in 6 min**)
+- 06:03 now: **82.1%** (25.9 / 31.6 GB used)
+
+If the rate of the last 10 minutes sustains (~3pp/min), M1 hits OOM in ~6 minutes. Most likely cause: a specific process loaded a large dataset (Pythia DR batch? Postgres VACUUM? Theseus batch?) — not a steady leak. The big jump from 71→81% in 6 min is the tell.
+
+**M1 OOMing would take down Postgres + Redis, which would block the entire orchestration** (Pronoia would lose dual-write, Pythia would lose its queue table, all `log_work` events would be lost). Worth investigating *now* if you can — `ssh skullport` and look at top processes.
+
+**M2 GPU VRAM dropped 74% → 3.6%.** Apollo's evolutionary search appears to have stopped or paused. M2 looks idle (CPU 1.6%, mem 24.4%). Worth checking — might be a graceful generation rollover, might be a crash.
+
+**Other machines: stable.**
+| Machine | CPU | Mem | Disk | GPU VRAM |
+|---|---|---|---|---|
+| M1 | 13.6% | **82.1%** ⚠ | 31.6% | 5.1% |
+| M2 | 1.6% | 24.4% | 7.0% | 3.6% ↓ (was 74%) |
+| M3 | 25.0% | 24.6% | 59.9% | 5.2% |
+| M4 | 8.0% | 31.1% | 17.2% | 0.0% |
+
+**Healthcheck**: 05:56 fire OK, next at 06:56.
+
+**Failures this hour: 8** — same Atalanta + Pheme upstream_not_found alarms. Counts ticked from 50-51 → 52-53 (consistent, not escalating).
+
+**Candidate issues added:**
+- [ ] **CRITICAL: machine_probe top-N-procs**: probe should capture top processes by memory so we can identify what's eating M1's RAM without ssh-ing into the machine. This was the gap I felt immediately when M1 spiked.
+- [ ] **Threshold-based PushNotification**: M1 mem at 82% should have alerted James in real-time, not wait for the 08:49 email. Add a "soft alarm" rule that fires `success=False` `machine_health_alarm` events at 80% threshold.
+- [ ] **Apollo M2 idle-status detection**: GPU VRAM dropping from 74→3.6% in one cycle is either a graceful generation end or a crash. Need to disambiguate via Apollo's heartbeat key_metrics (last cycle ago, last fitness).
 
 ### Hour 4 — pending
 
