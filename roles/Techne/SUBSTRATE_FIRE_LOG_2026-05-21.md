@@ -7678,6 +7678,53 @@ follow-up list.
 e1 stalled again (3rd documented). 394.6M records, 224.7M kills,
 1629 promoted, 2577 templates, 0 verified findings.*
 
+---
+
+## Fire #98 — 2026-05-24 ~19:55Z — 8th throttled
+
+**2.25M records / 24 min / 1 template (f2) / 20 promoted.
+Bandit picked: b1, e5, f2, f4, h4.**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate  notes
+    f2   801,579   1          65.8%
+    f4   801,616   0          65.8%      (paired with f2, similar shape)
+    h4   644,979   0          16.6%      (mostly confirms)
+    b1     1,340   0          0%         (INFRA_DIAGNOSTIC)
+    e5       121   0          0%
+
+### Batch result
+
+- batch_id: `batch-20260524T195509Z-44684c`
+- Duration: 24 min wall
+- 2,249,635 records / 1,162,159 kills / 913,450 confirms / 174K incon / 0 errors
+- 20 promoted records → **1649 lifetime promoted**
+- 1 new template (f2) → **2578 lifetime discovery-role templates** (+1)
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #98
+
+| Metric | Pre-#34 | Post-#97 | Post-#98 |
+|---|---|---|---|
+| Batches journaled | 30 | 96 | 97 |
+| Records | 154.4M | 394.6M | 396.9M |
+| Kills | 74.4M | 224.7M | 225.9M |
+| Confirmations | 75.5M | 149.0M | 149.9M |
+| Promoted records | 500 | 1629 | **1649** |
+| Templates (disc-role) | 17 | 2577 | **2578** |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=3600`.
+
+---
+
+*Fire #98 throttled = 2.25M records / 20 promoted / 1 template
+(f2). 396.9M records, 225.9M kills, 1649 promoted, 2578
+templates, 0 verified findings.*
+
 
 
 
