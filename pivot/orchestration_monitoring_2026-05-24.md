@@ -204,7 +204,30 @@ Apollo's own heartbeat (separate from probe) would resolve this, but Apollo uses
 - [ ] **CRITICAL: Apollo down for 2.5h with no alert.** Apollo's heartbeat staleness should fire an Act-on-this anomaly in the next Metis brief (08:49 cycle). If it doesn't, the brief filter is missing the rule. Add: "any daemon-kind agent with heartbeat >10min stale = Act-on-this."
 - [ ] **Apollo silent-crash detection**: Apollo's `key_metrics` (last `generation`, last `phase`) would tell us when it last advanced. If `gen_time_s` last update + 10 minutes < now, it crashed even if the heartbeat thread is somehow still firing.
 
-### Hour 6 — pending
+### Hour 6 — 2026-05-24 08:40 EDT
+
+**Pronoia 08:49 cycle hasn't fired yet** — wakeup landed 9 min early. Will be visible at hour 7. Same timing gap as hour 5's miss (I underestimated the offset).
+
+**Apollo still dead, deteriorating.** Heartbeat now 13,157s (3.65h) stale, was 2.62h at hour 5. Climbing at ~1h per monitoring cycle (i.e., heartbeat write never resumed). Row `status` field still says "online" because that's whatever the last `write_heartbeat` set — `status` is a snapshot field, not a derived one. Real liveness has to come from `last_heartbeat` age, not the `status` column.
+
+**M2 still flatlined** — GPU vram 3.6%, util 0%, CPU 0.7%. No recovery.
+
+**Daemons alive**: intel_loop 27.9h uptime, probe 5.5h uptime.
+
+**Failures last 70min: 12** — Atalanta + Pheme alarms still pinging every ~25 min (3 of each in 70min vs 2 of each at hour 5; small uptick consistent with both tools self-auditing more frequently as their null counts grow).
+
+**Latest snapshot per machine:**
+| Machine | CPU | Mem | Disk | GPU VRAM |
+|---|---|---|---|---|
+| M1 | 11.9% | 42.7% | 31.5% | 5.1% |
+| M2 | 0.7% | 24.5% | 7.0% | 3.6% (Apollo dead) |
+| M3 | 25.0% | 25.4% | 60.0% | 5.2% |
+| M4 | 3.7% | 31.6% | 17.2% | 0.0% |
+
+**Candidate issues confirmed/added:**
+- [ ] **Pronoia status field is misleading**: when the dual-write heartbeat thread crashes, the row's `status` field stays at whatever was last written. Either change `status` to a derived field (compute from `last_heartbeat` age) OR add a separate background process that flips agents to "stale" when their PG heartbeat is too old.
+- [ ] **Monitoring wakeup phase-alignment**: my hourly wakeups are landing 9 min before the Pronoia cycle each time. The fix is trivial (offset by 10 min) but it's a real lesson — when polling a periodic event, align the poll to fire AFTER the expected event, not before.
+- [ ] **Apollo deathwatch**: 3.7h crashed, no auto-restart, no alert from Metis (next brief at 08:49 will be the test). Apollo needs a watchdog like the intelligence_loop has.
 
 ### Hour 7 — pending
 
