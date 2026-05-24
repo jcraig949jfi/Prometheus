@@ -6616,6 +6616,117 @@ Fire #85. c4 contributed 62 templates (alive-monitor confirms,
 excluded from disc-role). 357.8M records, 202.1M kills, 1409
 promoted, 2509 templates, 0 verified findings.*
 
+---
+
+## Fire #85 — 2026-05-24 ~03:45Z — COOLDOWN LIVE
+
+**Cooldown stdout visible for first time. 5/5 Fire #84 picks
+correctly avoided. c5 = 60 new templates (its 3rd documented
+explorer instance). Two NEW reservoir-exhaustion instances:
+g5 (#83→#85:0) and a5 (#72→#85:0).**
+
+### Bandit + heartbeat + COOLDOWN STDOUT
+
+    [theseus] Bandit cooldown active: 5 gens picked within last 3 fires
+              (downweighted by 0.3x)
+    [theseus] Bandit bootstrap selected: ['c5', 'f3', 'g5', 'c2', 'a5']
+    (heartbeat: ~120 snapshots, tick rate 454/s, RSS 75→5656MB)
+    [theseus] SATURATION WARNING: a5@100%
+    [theseus] Signature templates: 61 new this batch / 606 unique-in-batch;
+              2570 lifetime templates from discovery-role gens
+    [theseus] Honest accounting: 20 promoted records this batch;
+              1429 lifetime promoted;
+              verified mathematical findings = 0
+    [theseus] Batch done: 5M records (cap), 58 min wall
+
+### Cooldown effect ANALYSIS
+
+Fire #84 picks: {a1, c3, c4, d3, e3}
+Fire #85 cooldown set (last 3 fires unique picks): also includes
+{a3, b5, c5, e1, f2, f4, g1, g4, g5} from #82+#83
+Fire #85 picks: {c5, f3, g5, c2, a5}
+
+Breakdown:
+- a1, c3, c4, d3, e3: ALL AVOIDED (Fire #84 picks) ✓
+- c5, g5: still picked despite being in cooldown window
+- a5: picked, but was picked in #72 (13 fires ago, OUT of window) ✓
+- f3, c2: out of cooldown, fresh picks ✓
+
+**Cooldown works as a downweight, NOT a hard block.** c5 and g5
+were in cooldown but their score × 0.3 still beat the softmax
+threshold. To make cooldown stricter would need either a smaller
+multiplier (0.1?) or a longer window.
+
+For now: cooldown effectively prevents 1-fire re-picks but
+doesn't block 2-3-fire re-picks. Acceptable behavior — the
+substrate still gets to validate "is this gen refilled?" by
+occasional re-pick.
+
+### Per-gen attribution — c5 explorer hat-trick
+
+    gid  records      dup     templates  kill_rate
+    c5     901,709   43.4%   60         82.8%    ← 98% of fire's novelty
+    c2   1,003,526   37.0%    1         38.5%
+    f3   1,592,176    0.0%    0         67.4%
+    g5   1,497,778    5.9%    0          7.8%    ← LOCALLY EXHAUSTED (was 139 in #83)
+    a5       4,811   99.7%    0         32.1%   ← LOCALLY EXHAUSTED (was 38 in #72)
+
+**c5's third explorer instance (98% of fire's novelty):**
+    c5#68:  68 templates  (first pick at scale)
+    c5#77:  31 templates  (2nd pick)
+    c5#85:  60 templates  (3rd pick — still producing!)
+
+c5's per-pick rate is consistent at 0.005-0.009%. Unlike f4/e2/g4
+which exhausted on first re-pick, c5 keeps producing across
+multiple picks. **c5's source (specialization mutations) has a
+larger refill rate** than the others.
+
+### Reservoir-exhaustion pattern grows to 5 instances
+
+    1. f4#66:175 → f4#80:0 → f4#82:0
+    2. e2#79:269 → e2#81:0
+    3. g4#65:131 → g4#82:0
+    4. g5#83:139 → g5#85:0    ← NEW
+    5. a5#72:38  → a5#85:0    ← NEW
+
+5-of-5 confirmed. The pattern holds across mutation, literature,
+symmetry, distribution-matching, and frontier gens. c5 stands
+out as the EXCEPTION (refill rate > pick rate).
+
+### Batch result
+
+- batch_id: `batch-20260524T034510Z-84a552`
+- Duration: 58 min wall (5M cap hit)
+- 5,000,000 records / 2,323,657 kills / 2,673,112 confirms / 3,231 incon / 0 errors
+- 20 promoted records → **1429 lifetime promoted**
+- 61 new templates (60 from c5) → **2570 lifetime discovery-role templates**
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #85
+
+| Metric | Pre-#34 | Post-#84 | Post-#85 |
+|---|---|---|---|
+| Batches | 30 | 84 | 85 |
+| Records | 154.4M | 357.8M | 362.8M |
+| Kills | 74.4M | 202.1M | 204.4M |
+| Confirmations | 75.5M | 137.1M | 139.8M |
+| Promoted records | 500 | 1409 | **1429** |
+| Templates (disc-role) | 17 | 2509 | **2570** |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #86. Cooldown set now includes #85's
+picks (c5, f3, g5, c2, a5).
+
+---
+
+*Fire #85 closed. Cooldown stdout visible (5 gens avoided).
+c5 third explorer instance (60 templates). g5 + a5 confirm
+reservoir-exhaustion pattern (now 5 instances; only c5 is
+exception). 362.8M records, 204.4M kills, 1429 promoted,
+2570 templates, 0 verified findings.*
+
 
 
 
