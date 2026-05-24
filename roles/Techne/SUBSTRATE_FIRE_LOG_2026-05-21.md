@@ -7773,6 +7773,75 @@ saturation — 9.6M next() calls per gen but only 335K writes
 Deep saturation pull. 397.2M records, 226.1M kills, 1669
 promoted, 2578 templates, 0 verified findings.*
 
+---
+
+## Fire #100 — 2026-05-24 ~22:57Z — HUNG IN next() — KILLED
+
+**Process consumed 8 GB RAM and 31 min of CPU but never produced
+a snapshot or new corpus records. Hung inside gen.next() loop
+where heartbeat can't see.**
+
+### Diagnosis
+
+- batch_start event written (picks: g5, f3, g3, d2, h2)
+- 0 periodic snapshots in heartbeat
+- Corpus file: 4,330 bytes (just file header)
+- Process state: Responding=True, 1 thread, 8.12 GB RAM,
+  1873s CPU time
+- File last touched at 18:57 — no progress for 31 minutes
+
+The heartbeat catches stalls in the OUTER round-robin loop
+(consecutive-Nones → time-based exhaustion). It does NOT catch
+hangs INSIDE a single gen.next() call. Some gen entered an
+infinite loop or massive compute and the daemon's main thread
+got stuck there.
+
+Can't identify the offending gen without instrumentation — the
+single-threaded daemon round-robin starts with g5 alphabetically,
+but could have been a later gen if g5 returned first.
+
+### Action: killed via Stop-Process
+
+Per audit conclusion (substrate is mature, focus on review),
+NOT shipping a fix for this hung-next bug now. Adding to the
+post-throttle follow-up list:
+
+1. Reclassify e1 as STUB-or-EXHAUSTED (stalls every fire)
+2. Add per-next() timeout wrapper (catches hung-next bugs)
+3. Review the 1669 promoted records
+
+### Fire #100 is the THIRD failure mode caught this session
+
+- Fire #70: outer-loop stall (count-threshold too high)
+  → fixed via time-threshold + heartbeat
+- Fire #94: clean exit at t=3min (external cause, OS event)
+  → no fix needed; not recurring
+- Fire #100: hung inside next() (8 GB RAM, no progress)
+  → no fix this session; manual kill required
+
+### Lifetime stats unchanged (no journal entry for Fire #100)
+
+| Metric | Post-#99 |
+|---|---|
+| Batches journaled | 98 (Fire #100 not journaled) |
+| Records | 397.2M |
+| Kills | 226.1M |
+| Promoted records | 1669 |
+| Templates (disc-role) | 2578 |
+| **Verified findings** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=3600`. Fire #101 will retry; if it hangs same
+way, that's a pattern that needs investigation.
+
+---
+
+*Fire #100 HUNG INSIDE next() — killed manually. 8 GB RAM, no
+snapshots, no progress. Heartbeat can't see in-next hangs. New
+follow-up: per-next timeout wrapper. Lifetime stats unchanged
+at 1669 promoted / 2578 templates / 0 verified findings.*
+
 
 
 
