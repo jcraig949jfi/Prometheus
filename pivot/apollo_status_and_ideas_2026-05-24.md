@@ -351,3 +351,57 @@ Claude asked: "Was the 10K-gen falsification timer about bounding compute spend 
 Per the convergent feedback, Apollo's role has shifted from "candidate compositional-discovery engine" to "ecology testbed + failure-data producer." That's not a demotion; it's a more honest framing of what Apollo has actually demonstrated capacity for. The next branch is explicit about testing whether *any* ecological intervention surfaces real composition — and using Apollo's documented failure modes to bootstrap Ergon in parallel.
 
 **The hardest truth in the reviews** (per ChatGPT) is that the primitives may be features, not operators — answer-producing heuristics rather than typed state transformations. If that's right, the entire Frame H gene library needs to be re-cast against a blackboard interface before composition-meaning is even definable for Apollo's genome representation. We're testing this hypothesis with a prototype now; that work in flight.
+
+---
+
+## Update — blackboard prototype results (added 2026-05-24, evening)
+
+The prototype is done (`apollo/scripts/blackboard_prototype.py`). Hand-written typed-state composition tested on 160 trap-battery tasks. Two findings, both important.
+
+### Finding 1: ChatGPT was right — representation matters
+
+Comparing four approaches on the same task pool:
+
+| Composition | Accuracy |
+|---|---|
+| B1 first candidate (random baseline) | 20.0% |
+| B2 longest candidate (dumb surface heuristic) | **51.9%** |
+| B3 numbers-only argmax | 28.7% |
+| C1 blackboard numeric pipeline | 35.0% |
+| C2 blackboard transitivity pipeline | 26.3% |
+| **C3 blackboard meta-dispatch (hand-written)** | **41.2%** |
+| (Apollo evolved elite, gen 2960, reference) | **~36.0%** |
+
+The hand-written blackboard composition beats Apollo's evolved gen-3551 elite by **+5pp**. More importantly, per-category breakdown shows the *exact* compositional behavior we want:
+
+| Category | Blackboard score | Why |
+|---|---|---|
+| transitivity | **15/15** | parse names→relations→closure→max-entity |
+| numeric_stated_premise | **15/15** | parse numbers→argmax→match candidate |
+| numeric_comparison | **5/5** | parse numbers→compare→Yes/No |
+| temporal_ordering | 5/5 | falls through to transitivity |
+| all_but_n | 5/5 | numeric pipeline catches this |
+| vacuous_truth | 5/5 | |
+| double_negation | 4/5 | |
+| affirming_consequent / denying_antecedent / modus_tollens | **0/5** | (no logic primitives implemented) |
+| correlation/post_hoc | 0/5 | (no causal primitives implemented) |
+| pronoun/garden_path/scope | 0/5 | (no parsing primitives implemented) |
+
+When the composition has typed primitives matching a category, it scores perfectly or near-perfectly. When it doesn't, it scores zero — *clean failure, not faked success*. That's the compositional shape Apollo has never produced.
+
+### Finding 2: The trap battery itself has a Goodhart hole
+
+"Pick the longest candidate" scores 51.9% — better than every other approach including the blackboard. That's not because longest-answer is reasoning; it's because the trap battery's candidate construction systematically makes correct answers longer than wrong ones (likely "Cannot be determined" and similar are placed as distractors that are *almost-as-long*, and "Yes" / "No" candidates skew the average).
+
+**Implications:**
+- Apollo's evolved organisms at 36% may have been getting credit for shallow surface features (answer length, candidate position) rather than reasoning. The gen-3551 corpus is doubly contaminated as training data: collapsed ecology + trap-battery shallow-feature exploits.
+- Any evolved composition will compete against this 52% baseline. Without sanitizing the trap battery, Branch C compositions may plateau against the longest-answer hack the same way Apollo did.
+- This is a *separate* fixable issue from representation.
+
+### Implications for the plan
+
+1. **Branch C should be on the blackboard genome.** The prototype is empirical evidence that typed-state composition is more expressive than output-wiring DAG. Design doc at [`pivot/apollo_branch_c_blackboard_design_2026-05-24.md`](apollo_branch_c_blackboard_design_2026-05-24.md).
+2. **Trap battery audit needed before Branch C runs.** Detect and fix the longest-candidate Goodhart hole. Otherwise we evolve compositions that compete against a shallow hack instead of against reasoning.
+3. **The gen-3551 corpus is more contaminated than we thought.** For Ergon training (Consumer #3), the failures encode *two* layers of artifact: collapsed-ecology Goodhart + trap-battery-design shallowness. Provenance labeling needs to capture both.
+
+The state-blackboard prototype was the cheapest experiment we could have run to make Branch C decisions concrete. ChatGPT's "hardest truth" framing turned out to be the most-leverage finding in the entire review batch.
