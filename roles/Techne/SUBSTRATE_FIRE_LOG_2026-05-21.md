@@ -7191,6 +7191,91 @@ promoted. Cooldown effective (4 of 5 recent picks avoided).
 382.8M records, 217.1M kills, 1529 promoted, 2575 templates,
 0 verified findings.*
 
+---
+
+## Fire #91 — 2026-05-24 ~11:23Z — 2nd throttled
+
+**a2 carried 1.91M records (93% kill) in 24 min. 0 new templates.
+FIRST 0-promoted fire — falsifies "20/fire is steady-state."**
+
+### Bandit + heartbeat
+
+    [theseus] Bandit picked: ['a2', 'b2', 'b3', 'b5', 'g1']
+    (heartbeat: 48 snapshots, tick rate 1513/s, RSS 198→206MB)
+    [theseus] SATURATION WARNING: b2@100%, b3@100%, b5@100%, g1@100%
+    [theseus] Signature templates: 0 new this batch / 67 unique-in-batch;
+              2575 lifetime templates (unchanged)
+    [theseus] Honest accounting: 0 promoted records this batch;
+              1529 lifetime promoted;
+              verified mathematical findings = 0
+    [theseus] Batch done: 1.92M records, 0.4h wall
+
+### Per-gen attribution
+
+    gid  records      dup     templates  kill_rate
+    a2   1,910,012   12.3%   0          93.3%
+    b2       3,636   99.8%   0          34.8%
+    b3         606  100.0%   0          57.1%
+    b5       1,052  100.0%   0          1.4%
+    g1         184  100.0%   0          58.7%
+
+### 0-promoted is a NEW failure mode
+
+Pre-#91, every fire produced ~20 promoted records (filter-driven,
+~one batch slice from each emerging discovery). Fire #91: 0.
+
+Why? a2's claims are statistical correlations between catalog
+invariants. At this saturation, NONE of a2's 1.91M records had
+high enough info-density to pass the promote filter. The other
+gens emitted too few records to matter.
+
+This **falsifies my earlier audit claim** that "promote rate is
+gen-driven, not data-driven." It IS data-driven when the gen
+mix produces only well-trodden shapes. Fire #91 is the first
+data point showing 0/5M promote-rate (or in this case 0/1.92M).
+
+### Throttle yield comparison
+
+    Fire #89 (full):    5M records, 20 promoted, 1 template
+    Fire #90 (throttled): 63K records, 20 promoted, 2 templates
+    Fire #91 (throttled): 1.92M records, 0 promoted, 0 templates
+
+Throttled volume varies wildly (63K to 1.92M) depending on which
+gens dedup fast vs which keep emitting. a2 in #91 was a "big-
+volume-saturated-gen" combo that the cooldown couldn't avoid.
+
+### Batch result
+
+- batch_id: `batch-20260524T112318Z-5b165c`
+- Duration: 24 min wall (throttle target)
+- 1,915,490 records / 1,783,527 kills / 131,963 confirms / 0 incon / 0 errors
+- 0 promoted records → **1529 lifetime promoted (unchanged)**
+- 0 new templates → 2575 lifetime discovery-role templates (unchanged)
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #91
+
+| Metric | Pre-#34 | Post-#90 | Post-#91 |
+|---|---|---|---|
+| Batches | 30 | 90 | 91 |
+| Records | 154.4M | 382.8M | 384.7M |
+| Kills | 74.4M | 217.1M | 218.9M |
+| Confirmations | 75.5M | 145.6M | 145.7M |
+| Promoted records | 500 | 1529 | 1529 |
+| Templates (disc-role) | 17 | 2575 | 2575 |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=3600`.
+
+---
+
+*Fire #91 throttled = 1.92M records / 24 min / 0 templates /
+0 promoted. New low. a2-dominated saturated fire. Promote-rate
+IS data-driven (falsifies prior claim). 384.7M records, 218.9M
+kills, 1529 promoted, 2575 templates, 0 verified findings.*
+
 
 
 
