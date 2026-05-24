@@ -12,12 +12,42 @@ one-page brief.
 """
 from __future__ import annotations
 
+import hashlib
 import re
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
 from harmonia.agents._base import HarmoniaAgent, REPO_ROOT
+
+# Structured-event emitter — graceful degrade if _scorer.py is broken.
+try:
+    from harmonia.agents._scorer import emit_event, EVENT_TICK_COMPLETE
+    HAS_EVENT_EMIT = True
+except Exception:
+    HAS_EVENT_EMIT = False
+
+# Lines / substrings stripped before hashing meta-task bodies to detect
+# saturation-no-op. Any line matching one of these is excluded; the
+# remaining content is the "stable" portion of the artifact.
+_TS_LINE_RE = re.compile(r"^\*\*UTC\*\*:", re.IGNORECASE)
+_COMPOSED_AT_LINE_RE = re.compile(r"^-\s*\*\*Composed at:\*\*", re.IGNORECASE)
+_ISO_DATETIME_RE = re.compile(r"\d{4}-\d{2}-\d{2}T\d{2}:?\d{2}:?\d{2}Z?")
+
+
+def _meta_task_content_hash(body: str) -> str:
+    """SHA-256 the meta-task body with timestamps stripped, so two ticks
+    whose only difference is the UTC stamp hash identical."""
+    cleaned_lines = []
+    for line in body.splitlines():
+        if _TS_LINE_RE.match(line.strip()):
+            continue
+        if _COMPOSED_AT_LINE_RE.match(line.strip()):
+            continue
+        # Strip any inline ISO-8601 datetime tokens (e.g. provenance line).
+        cleaned_lines.append(_ISO_DATETIME_RE.sub("<TS>", line))
+    cleaned = "\n".join(cleaned_lines)
+    return hashlib.sha256(cleaned.encode("utf-8")).hexdigest()
 
 
 # ---- file targets (absolute, drive-letter-qualified) ----------------------
@@ -298,7 +328,13 @@ class SophiaAgent(HarmoniaAgent):
             "specimen_count": len(specimens),
         }]
 
-    def _emit_meta_task(self, meta: dict, utc_iso: str) -> Path:
+    def _compose_meta_task(self, meta: dict, utc_iso: str) -> tuple[str, str]:
+        """Build the meta-task body and filename without writing to disk.
+
+        Returns ``(body, filename)``. Split out from ``_emit_meta_task`` so
+        the saturation-no-op gate can hash the body before deciding whether
+        to write.
+        """
         deepseek_draft = self.deepseek_complete(
             prompt=(
                 "Draft ONE candidate entry for the Prometheus methodology "
@@ -345,6 +381,13 @@ class SophiaAgent(HarmoniaAgent):
         else:
             body += "*(DeepSeek unavailable — no draft this tick.)*\n"
         filename = f"meta_expand_toolkit_{utc_iso.replace(':', '').replace('-', '')}.md"
+        return body, filename
+
+    def _emit_meta_task(self, meta: dict, utc_iso: str) -> Path:
+        """Compose + write a meta-task artifact. Retained for any external
+        callers; the saturated branch in ``run_tick`` uses
+        ``_compose_meta_task`` directly so it can hash-and-skip."""
+        body, filename = self._compose_meta_task(meta, utc_iso)
         return self.write_artifact(filename, body)
 
     # ------------------------------------------------------------------
@@ -399,22 +442,114 @@ class SophiaAgent(HarmoniaAgent):
         stats["backlog_remaining"] = max(0, len(untried) - 1)
 
         if not untried:
-            # 7. Backlog self-gen.
+            # 7. Backlog self-gen + saturation-no-op gate.
             backlog = self.self_generate_backlog()
-            self.log.info(f"product exhausted ({total} tried); emitting meta-task")
-            if not dry_run:
-                path = self._emit_meta_task(backlog[0], utc_iso)
-                stats["artifacts_written"] += 1
-                self.log_work(
-                    "sophia_backlog_meta_task",
-                    f"toolkit-expansion meta-task drafted: {path}",
-                    output_path=str(path),
-                )
-            else:
+            self.log.info(f"product exhausted ({total} tried); evaluating meta-task")
+
+            # Build the candidate body (and its stable hash) up-front so we
+            # can decide whether this tick would be byte-identical to the
+            # last meta-task written. Re-emit conditions: (a) no last hash,
+            # (b) toolkit mtime newer than last-write, (c) tried_pairs was
+            # reset (count differs from last-write snapshot).
+            last_hash_state = self.load_state("last_meta_task_hash", default={}) or {}
+            last_hash = last_hash_state.get("hash")
+            last_written_at = last_hash_state.get("written_at")
+            last_tried_count = last_hash_state.get("tried_count")
+            toolkit_mtime = None
+            try:
+                toolkit_mtime = TOOLKIT_PATH.stat().st_mtime
+            except Exception:
+                toolkit_mtime = None
+            state_changed = False
+            if last_hash is None:
+                state_changed = True  # first meta-task of the episode
+            elif last_tried_count is not None and last_tried_count != len(tried_set):
+                state_changed = True  # tried_pairs reset or grew
+            elif (toolkit_mtime is not None
+                  and last_hash_state.get("toolkit_mtime") is not None
+                  and toolkit_mtime > last_hash_state["toolkit_mtime"]):
+                state_changed = True  # methodology toolkit edited
+
+            if dry_run:
+                # Dry-run never writes a meta-task and never updates hash state.
                 self.log_work(
                     "sophia_backlog_meta_task_dry",
                     "would emit toolkit-expansion meta-task (dry-run)",
                 )
+                stats["pair_proposed"] = None
+                self.log_work(
+                    "sophia_tick_complete",
+                    f"exhausted; ops={len(ops)} specimens={len(specimens)} "
+                    f"tried={len(tried_set)} (dry-run)",
+                )
+                return stats
+
+            # Build the body (this calls deepseek; may be empty on failure).
+            body, filename = self._compose_meta_task(backlog[0], utc_iso)
+            candidate_hash = _meta_task_content_hash(body)
+
+            would_be_duplicate = (
+                (not state_changed)
+                and last_hash is not None
+                and candidate_hash == last_hash
+            )
+
+            if would_be_duplicate:
+                # Saturation no-op: skip the write entirely.
+                stats["artifacts_written"] = 0
+                stats["items_processed"] = 0
+                stats["skipped_reason"] = "saturation_no_op"
+                stats["pair_proposed"] = None
+                self.log.info(
+                    f"saturation no-op: meta-task identical to last "
+                    f"(hash={candidate_hash[:12]}); skipping write"
+                )
+                self.log_work(
+                    "sophia_saturation_no_op",
+                    f"skipped duplicate meta-task hash={candidate_hash[:12]}",
+                )
+                if HAS_EVENT_EMIT:
+                    try:
+                        emit_event(
+                            EVENT_TICK_COMPLETE,
+                            {
+                                "dry_run": dry_run,
+                                "skipped": True,
+                                "reason": "saturation_no_op",
+                                "artifacts_written": 0,
+                                "items_processed": 0,
+                                "content_hash": candidate_hash[:12],
+                                "agent": self.name,
+                            },
+                            agent=self.name,
+                            tick_id=self._cycle_id,
+                        )
+                    except Exception as e:
+                        self.log.warning(
+                            f"emit_event(saturation_no_op) failed: {e}"
+                        )
+                self.log_work(
+                    "sophia_tick_complete",
+                    f"saturation_no_op; ops={len(ops)} specimens={len(specimens)} "
+                    f"tried={len(tried_set)}",
+                )
+                return stats
+
+            # First meta-task of episode (or state changed) — write it.
+            path = self.write_artifact(filename, body)
+            stats["artifacts_written"] += 1
+            self.save_state("last_meta_task_hash", {
+                "hash": candidate_hash,
+                "written_at": utc_iso,
+                "tried_count": len(tried_set),
+                "toolkit_mtime": toolkit_mtime,
+                "artifact_path": str(path),
+            })
+            self.log_work(
+                "sophia_backlog_meta_task",
+                f"toolkit-expansion meta-task drafted: {path}",
+                output_path=str(path),
+            )
             stats["pair_proposed"] = None
             self.log_work(
                 "sophia_tick_complete",

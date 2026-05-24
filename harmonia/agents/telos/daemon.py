@@ -17,6 +17,7 @@ Never a silent tick. Proposal only — Telos never mutates the ledger.
 """
 from __future__ import annotations
 
+import json
 import re
 import sys
 from datetime import datetime, timezone, date as _date
@@ -40,6 +41,15 @@ SYMBOLS_INDEX = REPO_ROOT / "harmonia" / "memory" / "symbols" / "INDEX.md"
 RETRACTION_REGISTRY = REPO_ROOT / "harmonia" / "memory" / "retraction_registry.md"
 
 DEFAULT_STALL_THRESHOLD_DAYS = 14
+
+# Patch 4 (Phase-1.5 ship): weighted-round-robin F-ID selection.
+# Default top-N = 3 stalled F-IDs participate in each window; weights
+# proportional to stall_days; per-FID pick counter rotates every
+# WINDOW_SIZE picks so under-served F-IDs catch up. See state files:
+#   D:\Prometheus\harmonia\agents\telos\state\telos_top_n_config.json
+#   D:\Prometheus\harmonia\agents\telos\state\telos_pick_counts.json
+DEFAULT_TOP_N = 3
+DEFAULT_WINDOW_SIZE = 50
 
 DATE_RE = re.compile(r"(\d{4}-\d{2}-\d{2})")
 # F-ID rows look like:  | **F011** | live_specimen ... | last_audit | open_q | cross_refs |
@@ -337,7 +347,11 @@ class TelosAgent(HarmoniaAgent):
         # --- pick most-stalled live_specimen past threshold -----------------
 
         today = datetime.now(timezone.utc).date()
-        ranked: list[tuple[int, bool, dict, Optional[_date]]] = []
+        # First pass: build the FULL ranked list of stall-eligible
+        # live_specimen rows WITHOUT applying the anti-greedy filter.
+        # The anti-greedy `last_picked` rule is preserved below as a
+        # safety net AFTER the weighted-round-robin pick.
+        ranked_all: list[tuple[int, bool, dict, Optional[_date]]] = []
         for r in live_rows:
             # Telos targets `live_specimen` rows only — calibration_refinement
             # / killed_* / data_frontier rows in this section are skipped.
@@ -350,20 +364,21 @@ class TelosAgent(HarmoniaAgent):
             stall_days = (today - d).days if d else 9_999
             if stall_days < threshold:
                 continue
-            if last_picked and r["fid"] == last_picked:
-                # anti-greedy: skip last picked (rotate)
-                continue
             has_open = bool(
                 r["open_questions"]
                 and r["open_questions"].strip() not in {"", "—", "-"}
             )
-            ranked.append((stall_days, has_open, r, d))
+            ranked_all.append((stall_days, has_open, r, d))
         # Sort by stall_days desc, then prefer has_open
-        ranked.sort(key=lambda t: (-t[0], not t[1]))
-        stats["backlog_remaining"] = max(0, len(ranked) - 1)
+        ranked_all.sort(key=lambda t: (-t[0], not t[1]))
+        stats["backlog_remaining"] = max(0, len(ranked_all) - 1)
+        # Expose ranked F-ID list for downstream introspection /
+        # smoke-tests (see Patch 4 — weighted-round-robin selection).
+        stats["ranked_fids"] = [t[2]["fid"] for t in ranked_all]
 
-        if ranked:
-            stall_days, has_open, row, audit_date = ranked[0]
+        if ranked_all:
+            picked_idx = self._weighted_rr_pick(ranked_all, last_picked)
+            stall_days, has_open, row, audit_date = ranked_all[picked_idx]
             return self._handle_revive(
                 stats, dry_run, row, stall_days, audit_date,
                 candidate_lenses, toolkit_entries, promoted_symbols,
@@ -390,6 +405,152 @@ class TelosAgent(HarmoniaAgent):
                     f"({threshold}d) and all killed F-IDs already revisited"),
             threshold=threshold,
         )
+
+    # ---- Patch 4: weighted round-robin F-ID picker -----------------------
+
+    def _load_top_n(self) -> int:
+        """Read `D:\\Prometheus\\harmonia\\agents\\telos\\state\\telos_top_n_config.json`.
+
+        Falls back to DEFAULT_TOP_N when the file is missing or invalid.
+        Schema: {"top_n": 3}
+        """
+        cfg_path = self.state_dir / "telos_top_n_config.json"
+        if not cfg_path.exists():
+            return DEFAULT_TOP_N
+        try:
+            data = json.loads(cfg_path.read_text(encoding="utf-8"))
+            n = int(data.get("top_n", DEFAULT_TOP_N))
+            return max(1, n)
+        except Exception:
+            return DEFAULT_TOP_N
+
+    def _load_pick_counts(self) -> dict:
+        """Read `D:\\Prometheus\\harmonia\\agents\\telos\\state\\telos_pick_counts.json`.
+
+        Schema:
+          {"window_size": 50,
+           "picks_in_window": {fid: int, ...},
+           "window_started_at": "<iso>"}
+        Missing file -> fresh empty window.
+        """
+        path = self.state_dir / "telos_pick_counts.json"
+        if not path.exists():
+            return {
+                "window_size": DEFAULT_WINDOW_SIZE,
+                "picks_in_window": {},
+                "window_started_at": datetime.now(timezone.utc).isoformat(),
+            }
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            data.setdefault("window_size", DEFAULT_WINDOW_SIZE)
+            data.setdefault("picks_in_window", {})
+            data.setdefault(
+                "window_started_at",
+                datetime.now(timezone.utc).isoformat(),
+            )
+            return data
+        except Exception:
+            return {
+                "window_size": DEFAULT_WINDOW_SIZE,
+                "picks_in_window": {},
+                "window_started_at": datetime.now(timezone.utc).isoformat(),
+            }
+
+    def _save_pick_counts(self, data: dict) -> None:
+        path = self.state_dir / "telos_pick_counts.json"
+        try:
+            path.write_text(
+                json.dumps(data, indent=2, default=str), encoding="utf-8"
+            )
+        except Exception as e:
+            self.log.warning(f"save telos_pick_counts.json failed: {e}")
+
+    def _weighted_rr_pick(
+        self,
+        ranked_all: list,
+        last_picked: Optional[str],
+    ) -> int:
+        """Pick an index into `ranked_all` using weighted round-robin
+        across the top-N stalled F-IDs. Returns the chosen index.
+
+        Algorithm (Patch 4):
+          1. Take top-N from ranked_all (already sorted by -stall_days).
+          2. Weights = stall_days[fid] / sum(stall_days in top_n).
+          3. Maintain per-FID `picks_in_window` (state file). Compute
+             deserved_share = weight * window_size. Pick the FID with
+             the largest deficit (deserved_share - picks_so_far).
+          4. Reset window when sum(picks_in_window) >= window_size.
+          5. Fallback to ranked_all[0] when top_n == 1 OR only one
+             candidate exists. Anti-greedy `last_picked` check is
+             applied as a safety net AFTER weighted pick.
+        """
+        top_n = self._load_top_n()
+
+        # Fallback to original behavior when top_n forced to 1 OR only
+        # one stall-eligible specimen exists.
+        if top_n <= 1 or len(ranked_all) <= 1:
+            for i, t in enumerate(ranked_all):
+                fid = t[2]["fid"]
+                if last_picked and fid == last_picked and len(ranked_all) > 1:
+                    continue
+                return i
+            return 0
+
+        top = ranked_all[: min(top_n, len(ranked_all))]
+        top_fids = [t[2]["fid"] for t in top]
+        stall_by_fid = {t[2]["fid"]: max(1, t[0]) for t in top}
+        total_stall = sum(stall_by_fid.values()) or 1
+        weights = {fid: stall_by_fid[fid] / total_stall for fid in top_fids}
+
+        counts_state = self._load_pick_counts()
+        window_size = int(counts_state.get("window_size", DEFAULT_WINDOW_SIZE))
+        picks_in_window = dict(counts_state.get("picks_in_window", {}))
+
+        # Reset window when full (or oversize from a prior top-N change).
+        if sum(picks_in_window.values()) >= window_size:
+            picks_in_window = {}
+            counts_state["picks_in_window"] = {}
+            counts_state["window_started_at"] = datetime.now(
+                timezone.utc
+            ).isoformat()
+
+        # Compute deficit per top-N FID; pick the largest deficit.
+        deficits: list[tuple[float, str]] = []
+        for fid in top_fids:
+            deserved = weights[fid] * window_size
+            picked = int(picks_in_window.get(fid, 0))
+            deficits.append((deserved - picked, fid))
+        # Sort: largest deficit first; ties broken by stall_days desc
+        # (which is already top_fids order).
+        deficits.sort(key=lambda x: (-x[0], top_fids.index(x[1])))
+
+        chosen_fid: Optional[str] = None
+        for deficit, fid in deficits:
+            # Safety-net anti-greedy: skip last_picked if any alternative
+            # remains in the deficit list.
+            if (
+                last_picked
+                and fid == last_picked
+                and len(deficits) > 1
+                and any(f != last_picked for _, f in deficits)
+            ):
+                continue
+            chosen_fid = fid
+            break
+        if chosen_fid is None:
+            chosen_fid = deficits[0][1]
+
+        # Update window counter and persist.
+        picks_in_window[chosen_fid] = int(picks_in_window.get(chosen_fid, 0)) + 1
+        counts_state["picks_in_window"] = picks_in_window
+        counts_state["window_size"] = window_size
+        self._save_pick_counts(counts_state)
+
+        # Return the index of chosen_fid in ranked_all.
+        for i, t in enumerate(ranked_all):
+            if t[2]["fid"] == chosen_fid:
+                return i
+        return 0
 
     # ---- handlers --------------------------------------------------------
 

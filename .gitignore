@@ -328,3 +328,13 @@ harmonia/sandbox_drafts/
 prometheus/play_space/
 techne/handoff/mathlib_primitive_candidates.jsonl
 theseus/orchestration/signature_index.sqlite
+
+# 2026-05-24: Apollo run artifacts exceed GitHub's 100MB file limit.
+# These are runtime logs/checkpoints; data is reproducible from a fresh run.
+apollo/run_v2d2b/logs/*.jsonl
+apollo/run_v2d2b/dashboard/*.jsonl
+apollo/run_v2d2b/lineage/*.jsonl
+apollo/run_v2d2b/graveyard/*.jsonl
+apollo/run_v2d2b/checkpoints/*.pkl
+apollo/run_v2d2b_*/
+apollo/.hf_cache/
