@@ -101,6 +101,48 @@ def make_client() -> OpenAI:
     return OpenAI(base_url=API_BASE, api_key=api_key, timeout=120.0)
 
 
+# GitHub Models fallback (free tier, separate endpoint)
+_GITHUB_CLIENT = None
+GITHUB_MODEL = "gpt-4o-mini"
+
+
+def _get_github_client():
+    global _GITHUB_CLIENT
+    if _GITHUB_CLIENT is not None:
+        return _GITHUB_CLIENT
+    token = os.environ.get("GITHUB_TOKEN")
+    if not token:
+        return None
+    _GITHUB_CLIENT = OpenAI(
+        base_url="https://models.inference.ai.azure.com",
+        api_key=token, timeout=90.0,
+    )
+    return _GITHUB_CLIENT
+
+
+def call_api_with_fallback(client: OpenAI, prompt: str, model: str,
+                           **kwargs) -> tuple[str | None, str]:
+    """Try NVIDIA primary, fall back to GitHub Models if it fails.
+
+    Returns (response_text, model_used).
+    """
+    # Try NVIDIA primary
+    response = call_api(client, prompt, model, **kwargs)
+    if response is not None:
+        return response, model
+
+    # Try GitHub fallback
+    gh_client = _get_github_client()
+    if gh_client is not None:
+        logger.info("  NVIDIA failed, trying GitHub Models (%s)...", GITHUB_MODEL)
+        response = call_api(gh_client, prompt, GITHUB_MODEL,
+                            max_retries=2, hard_timeout=90)
+        if response is not None:
+            return response, GITHUB_MODEL
+
+    return None, model
+
+
 def make_aggie_client(model: str = AGGIE_DEFAULT_MODEL):
     """Create an auggie-sdk Auggie instance for use as NVIDIA API fallback.
 
@@ -1008,9 +1050,9 @@ def forge_one(client: OpenAI, entry: dict, model: str,
         logger.info("  Using Augment API (force-aggie mode)")
         raw_response = call_aggie_api(aggie_client, prompt)
     else:
-        # Normal path: try NVIDIA first
-        raw_response = call_api(client, prompt, model)
-        # 1b. Augment API fallback — only when NVIDIA failed AND flag is active
+        # Normal path: try NVIDIA first, then GitHub Models fallback
+        raw_response, model_used = call_api_with_fallback(client, prompt, model)
+        # 1b. Augment API fallback — only when both NVIDIA and GitHub failed
         if raw_response is None and aggie_client is not None:
             raw_response = call_aggie_api(aggie_client, prompt)
 
@@ -1893,7 +1935,7 @@ def main():
                         help="Minimum composite score threshold")
     parser.add_argument("--model", type=str, default=DEFAULT_MODEL,
                         help="Model to use for code generation")
-    parser.add_argument("--delay", type=float, default=3.0,
+    parser.add_argument("--delay", type=float, default=10.0,
                         help="Seconds between API calls")
     parser.add_argument("--all", action="store_true",
                         help="Process all non-unproductive results (no score filter)")
