@@ -39,6 +39,18 @@ SKIP_DIRS = {"feedback", "meta_analysis"}
 MAX_ARTIFACT_BYTES = 30_000  # truncate huge docs to fit DeepSeek context
 LOOKBACK_DAYS = 30
 
+# Multi-provider fan-out (CHARTER §6: 3-5 frontier model responses).
+# N=3 trades coverage vs latency: at ~5s per cascade call, 3 calls in
+# sequence stays within tick budget. Bump to 4-5 once Pythia-style
+# parallel dispatch ships.
+FANOUT_N_MODELS = 3
+
+# Convergence threshold for PATTERN_* candidate emission. When N
+# providers' critiques share >= this fraction of bullet-head tokens,
+# emit a primitive_proposal candidate (the structural defect is
+# convergent across models, not single-provider noise).
+CONVERGENCE_PATTERN_THRESHOLD = 0.40
+
 
 def _safe_slug(text: str, max_len: int = 50) -> str:
     s = re.sub(r"[^A-Za-z0-9_.-]", "_", text)
@@ -138,6 +150,8 @@ class MorosAgent(CharonAgent):
     # ---- dispatch ---------------------------------------------------------
 
     def _critique(self, artifact_path: Path) -> Optional[str]:
+        """Legacy single-provider critique. Retained for any caller; the
+        production path uses _critique_fanout below."""
         try:
             text = artifact_path.read_text(encoding="utf-8", errors="ignore")
         except Exception as e:
@@ -158,65 +172,317 @@ class MorosAgent(CharonAgent):
             temperature=0.5,
         )
 
+    def _critique_fanout(self, artifact_path: Path) -> list[dict]:
+        """Multi-provider cross-pollination. Fires up to FANOUT_N_MODELS
+        cascade calls, each excluding previously-served providers, so
+        successive responses come from distinct frontier models.
+
+        Returns list of {provider, critique_text, ok} dicts in fire order.
+        Empty list if the artifact read failed.
+        """
+        try:
+            text = artifact_path.read_text(encoding="utf-8", errors="ignore")
+        except Exception as e:
+            self.log.warning(f"critique read failed {artifact_path}: {e}")
+            return []
+        truncated = text[:MAX_ARTIFACT_BYTES]
+        truncation_note = ""
+        if len(text) > MAX_ARTIFACT_BYTES:
+            truncation_note = f"\n\n[truncated to first {MAX_ARTIFACT_BYTES} chars; original length {len(text)}]"
+        prompt = (
+            f"Artifact: `{artifact_path.relative_to(REPO_ROOT)}`\n\n"
+            f"```\n{truncated}{truncation_note}\n```\n"
+        )
+
+        try:
+            from llm_cascade import call_llm_with_provider  # type: ignore
+        except Exception as e:
+            self.log.warning(f"llm_cascade import failed in fanout: {e}")
+            return []
+
+        results: list[dict] = []
+        excluded: list[str] = []
+        for i in range(FANOUT_N_MODELS):
+            critique, provider = call_llm_with_provider(
+                prompt,
+                system=CRITIQUE_SYSTEM,
+                max_tokens=900,
+                temperature=0.5,
+                exclude_providers=excluded,
+            )
+            ok = bool(
+                provider
+                and critique
+                and "(LLM cascade failed" not in critique
+            )
+            results.append({
+                "provider": provider or f"<failed_call_{i}>",
+                "critique": critique if ok else None,
+                "ok": ok,
+            })
+            if provider:
+                excluded.append(provider)
+        return results
+
+    @staticmethod
+    def _extract_bullet_heads(critique: str) -> list[str]:
+        """Pull the head clause from each bullet in a critique. Bullets
+        recognized by leading -, *, or 1. style. Returns lowercased head
+        clauses for naive overlap analysis."""
+        if not critique:
+            return []
+        heads: list[str] = []
+        for line in critique.splitlines():
+            stripped = line.strip()
+            if not stripped:
+                continue
+            # Match bullet markers
+            m = re.match(r"^(?:[-*]|\d+[.)])\s+(.+)$", stripped)
+            if not m:
+                continue
+            head = m.group(1)
+            # Take the first ~12 words of the bullet (the head clause)
+            words = head.split()[:12]
+            heads.append(" ".join(words).lower())
+        return heads
+
+    @staticmethod
+    def _tokens(text: str) -> set[str]:
+        """Lowercase content tokens of length >=5 (filters stopwords without
+        a list). Used for cross-critique overlap scoring."""
+        return {
+            t.strip(".,;:!?()[]{}'\"`")
+            for t in text.lower().split()
+            if len(t.strip(".,;:!?()[]{}'\"`")) >= 5
+        }
+
+    def _convergence_analysis(self, fanout_results: list[dict]) -> dict:
+        """Compute pairwise Jaccard overlap on bullet-head token sets
+        across the N critiques. Returns a structured summary suitable
+        for the artifact + PATTERN_* threshold checking.
+        """
+        ok_results = [r for r in fanout_results if r.get("ok")]
+        n_ok = len(ok_results)
+        if n_ok < 2:
+            return {
+                "n_models_ok": n_ok,
+                "pairwise_jaccards": [],
+                "shared_tokens_3plus": [],
+                "shared_tokens_2plus": [],
+                "max_pairwise_jaccard": 0.0,
+                "convergence_score": 0.0,
+                "pattern_candidate": False,
+            }
+        # Per-model token sets (over bullet heads)
+        per_model: list[set] = []
+        for r in ok_results:
+            heads = self._extract_bullet_heads(r["critique"])
+            head_text = " ".join(heads)
+            per_model.append(self._tokens(head_text))
+        # Pairwise Jaccard
+        pairs = []
+        for i in range(n_ok):
+            for j in range(i + 1, n_ok):
+                a, b = per_model[i], per_model[j]
+                if not (a or b):
+                    j_score = 0.0
+                else:
+                    j_score = len(a & b) / max(1, len(a | b))
+                pairs.append({
+                    "i": i, "j": j,
+                    "providers": [ok_results[i]["provider"], ok_results[j]["provider"]],
+                    "jaccard": round(j_score, 3),
+                })
+        max_j = max((p["jaccard"] for p in pairs), default=0.0)
+        # Tokens that appear in >=2 and >=3 critiques
+        from collections import Counter
+        token_appearances: Counter = Counter()
+        for tokens in per_model:
+            for t in tokens:
+                token_appearances[t] += 1
+        shared_2plus = sorted(
+            [t for t, c in token_appearances.items() if c >= 2],
+            key=lambda x: -token_appearances[x],
+        )[:30]
+        shared_3plus = sorted(
+            [t for t, c in token_appearances.items() if c >= 3],
+            key=lambda x: -token_appearances[x],
+        )[:30]
+        # Convergence score: fraction of total distinct tokens that
+        # appear in >=2 critiques. Bounded [0, 1].
+        total_distinct = len(token_appearances)
+        convergence_score = (
+            len(shared_2plus) / total_distinct if total_distinct else 0.0
+        )
+        pattern_candidate = (
+            convergence_score >= CONVERGENCE_PATTERN_THRESHOLD and n_ok >= 3
+        )
+        return {
+            "n_models_ok": n_ok,
+            "pairwise_jaccards": pairs,
+            "shared_tokens_3plus": shared_3plus,
+            "shared_tokens_2plus": shared_2plus,
+            "max_pairwise_jaccard": round(max_j, 3),
+            "convergence_score": round(convergence_score, 3),
+            "pattern_candidate": pattern_candidate,
+        }
+
     # ---- artifact writers -------------------------------------------------
 
-    def _write_feedback(self, item: dict, critique: str) -> Path:
+    def _write_feedback(
+        self, item: dict, fanout: list[dict], convergence: dict
+    ) -> Path:
+        """Multi-provider feedback artifact. Per-provider critiques in
+        separate sections; convergence summary at the bottom."""
         date_slug = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         artifact_slug = _safe_slug(Path(item["rel"]).stem)
         fname = f"feedback_{artifact_slug}_{date_slug}.md"
-        # Write under pivot/ (mirroring the manual cross-pollination convention).
         out_path = REPO_ROOT / "pivot" / fname
         out_path.parent.mkdir(parents=True, exist_ok=True)
+        ok_providers = [r["provider"] for r in fanout if r.get("ok")]
         lines: list[str] = []
         lines.append(f"# Cross-pollination feedback — `{item['rel']}`")
         lines.append("")
         lines.append(f"- generated_at: {datetime.now(timezone.utc).isoformat()}")
         lines.append(f"- generated_by: Moros (charon/agents/moros/daemon.py)")
-        lines.append(f"- model: deepseek-chat")
-        lines.append(f"- system_prompt: adversarial-review (5-8 bullet critique)")
+        lines.append(f"- fanout_n_attempted: {len(fanout)}")
+        lines.append(f"- fanout_n_ok: {len(ok_providers)}")
+        lines.append(f"- providers_consulted: {ok_providers}")
         lines.append(f"- artifact_size_bytes: {Path(item['path']).stat().st_size}")
         lines.append("")
-        lines.append("## Raw critique")
-        lines.append("")
-        lines.append(critique)
-        lines.append("")
+        for i, r in enumerate(fanout, 1):
+            lines.append(f"## Critique {i} — {r['provider']}")
+            lines.append("")
+            if r.get("ok"):
+                lines.append(r["critique"])
+            else:
+                lines.append(f"_(cascade call {i} failed; provider returned no usable text)_")
+            lines.append("")
         lines.append("---")
         lines.append("")
-        lines.append("*MVP cross-pollination: single-model (DeepSeek). Multi-model cascade (Claude + GPT + Gemini + DeepSeek) lands when budget is greenlit. See `roles/Charon/CHARTER.md` §6.*")
+        lines.append(
+            f"*v0.2 multi-provider cross-pollination per CHARTER §6. "
+            f"Convergence analysis in companion meta_analysis_*.md.*"
+        )
         out_path.write_text("\n".join(lines), encoding="utf-8")
         return out_path
 
-    def _write_meta_analysis(self, item: dict, feedback_path: Path) -> Path:
+    def _write_meta_analysis(
+        self, item: dict, feedback_path: Path, convergence: dict
+    ) -> Path:
+        """Real convergence triage now (not stub). Pairwise Jaccard,
+        shared-token analysis, PATTERN_* candidate flag."""
         date_slug = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         artifact_slug = _safe_slug(Path(item["rel"]).stem)
         fname = f"meta_analysis_{artifact_slug}_{date_slug}.md"
         out_path = REPO_ROOT / "pivot" / fname
         out_path.parent.mkdir(parents=True, exist_ok=True)
+        n_ok = convergence["n_models_ok"]
         lines: list[str] = []
         lines.append(f"# Cross-pollination meta-analysis — `{item['rel']}`")
         lines.append("")
         lines.append(f"- generated_at: {datetime.now(timezone.utc).isoformat()}")
         lines.append(f"- feedback_source: `{feedback_path.relative_to(REPO_ROOT)}`")
-        lines.append(f"- models_consulted: [deepseek-chat]")
-        lines.append(f"- convergence_n_models: 1 (MVP — multi-model cascade deferred to v0.2)")
+        lines.append(f"- n_models_ok: {n_ok}")
+        lines.append(f"- convergence_score: **{convergence['convergence_score']}**  (PATTERN_* threshold: {CONVERGENCE_PATTERN_THRESHOLD})")
+        lines.append(f"- max_pairwise_jaccard: {convergence['max_pairwise_jaccard']}")
+        lines.append(f"- pattern_candidate_emitted: {convergence['pattern_candidate']}")
         lines.append("")
-        lines.append("## Triage")
+        lines.append("## Pairwise Jaccard (bullet-head token overlap)")
         lines.append("")
-        lines.append("MVP convergence triage cannot run on a single model (convergence requires N ≥ 2). This stub records the cross-pollination event; human or Phylax-class review categorizes the critique into:")
+        if not convergence["pairwise_jaccards"]:
+            lines.append("_(insufficient OK critiques for pairwise comparison)_")
+        else:
+            for p in convergence["pairwise_jaccards"]:
+                providers = " ↔ ".join(p["providers"])
+                lines.append(f"- {providers}: **{p['jaccard']}**")
         lines.append("")
-        lines.append("- **high-convergence (≥3 models)** — substrate-grade revisions, fold into artifact in-place")
-        lines.append("- **medium-convergence (2 models)** — note for review")
-        lines.append("- **singleton-signal** — record, don't act unilaterally")
+        lines.append(f"## Shared tokens (≥3 critiques)")
         lines.append("")
-        lines.append("## Next steps")
+        if convergence["shared_tokens_3plus"]:
+            lines.append(", ".join(f"`{t}`" for t in convergence["shared_tokens_3plus"][:20]))
+        else:
+            lines.append("_(no tokens appear across ≥3 critiques)_")
         lines.append("")
-        lines.append("1. Read the feedback artifact at the link above.")
-        lines.append("2. If a PATTERN_* candidate emerges (a structural failure mode generalizable across artifacts), file under `harmonia/memory/pattern_library.md` for Phylax.")
-        lines.append("3. If the critique surfaces a HARD-5 violation, route to Acheron's collision-candidate adjudication.")
-        lines.append("4. Once 2+ additional model responses are gathered (v0.2 multi-model cascade), re-run this meta-analysis with proper convergence triage.")
+        lines.append(f"## Shared tokens (≥2 critiques)")
+        lines.append("")
+        if convergence["shared_tokens_2plus"]:
+            lines.append(", ".join(f"`{t}`" for t in convergence["shared_tokens_2plus"][:30]))
+        else:
+            lines.append("_(no tokens shared across ≥2 critiques)_")
+        lines.append("")
+        lines.append("## Triage interpretation")
+        lines.append("")
+        if convergence["pattern_candidate"]:
+            lines.append(
+                f"**PATTERN candidate fired** (convergence_score {convergence['convergence_score']} "
+                f">= threshold {CONVERGENCE_PATTERN_THRESHOLD}, n_ok={n_ok} models). "
+                f"See `pattern_candidate_*.md` companion artifact for the "
+                f"structured proposal to file against `harmonia/memory/pattern_library.md`."
+            )
+        elif n_ok >= 2:
+            lines.append(
+                f"Sub-threshold convergence ({convergence['convergence_score']} < {CONVERGENCE_PATTERN_THRESHOLD}). "
+                f"Critiques agree on some token-level features but not enough "
+                f"to claim a structural defect generalizable across artifacts. "
+                f"Record-only; no PATTERN_* candidate filed."
+            )
+        else:
+            lines.append(
+                f"Single-provider only (n_ok={n_ok}); convergence cannot be computed. "
+                f"Cascade exhausted or rate-limited; review feedback artifact manually."
+            )
         lines.append("")
         out_path.write_text("\n".join(lines), encoding="utf-8")
         return out_path
+
+    def _emit_pattern_candidate(
+        self, item: dict, fanout: list[dict], convergence: dict
+    ) -> Optional[Path]:
+        """Emit a PATTERN_* candidate artifact when fanout convergence
+        crosses the threshold. Structured for Phylax-class review +
+        eventual landing in harmonia/memory/pattern_library.md."""
+        try:
+            utc = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+            artifact_slug = _safe_slug(Path(item["rel"]).stem)
+            fname = f"pattern_candidate_{artifact_slug}_{utc}.md"
+            ok_providers = [r["provider"] for r in fanout if r.get("ok")]
+            lines = [
+                f"# PATTERN candidate — `{item['rel']}`",
+                "",
+                f"- emitted_at: {datetime.now(timezone.utc).isoformat()}",
+                f"- emitted_by: Moros (charon/agents/moros/daemon.py)",
+                f"- source_artifact: `{item['rel']}`",
+                f"- convergence_score: {convergence['convergence_score']}",
+                f"- max_pairwise_jaccard: {convergence['max_pairwise_jaccard']}",
+                f"- n_models_ok: {convergence['n_models_ok']}",
+                f"- providers: {ok_providers}",
+                "",
+                "## Convergent critique tokens (≥3 models)",
+                "",
+                ", ".join(f"`{t}`" for t in convergence["shared_tokens_3plus"][:30])
+                or "_(none)_",
+                "",
+                "## Recommendation",
+                "",
+                "Surface to Phylax for adjudication. If the convergent "
+                "critique tokens identify a structural failure mode "
+                "(not just shared rhetoric), promote to "
+                "`harmonia/memory/pattern_library.md` as a substrate-level "
+                "PATTERN_* entry. If the tokens reflect surface-level "
+                "vocabulary overlap (e.g., shared technical terminology "
+                "from the artifact itself), reject as false-convergence.",
+                "",
+                "## Companion artifacts",
+                "",
+                f"- feedback: `pivot/feedback_{artifact_slug}_*.md`",
+                f"- meta_analysis: `pivot/meta_analysis_{artifact_slug}_*.md`",
+                "",
+            ]
+            return self.write_artifact(fname, "\n".join(lines))
+        except Exception as e:
+            self.log.warning(f"pattern_candidate emit failed: {e}")
+            return None
 
     def _emit_self_audit_null(self, reason: str) -> Path:
         utc = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -331,20 +597,37 @@ class MorosAgent(CharonAgent):
                 if dry_run:
                     stats["items_processed"] += 1
                 else:
-                    critique = self._critique(Path(item["path"]))
-                    if not critique:
-                        out = self._emit_self_audit_null(f"DeepSeek unavailable for {item['rel']}")
+                    fanout = self._critique_fanout(Path(item["path"]))
+                    n_ok = sum(1 for r in fanout if r.get("ok"))
+                    stats["fanout_n_attempted"] = len(fanout)
+                    stats["fanout_n_ok"] = n_ok
+                    stats["fanout_providers"] = [
+                        r["provider"] for r in fanout if r.get("ok")
+                    ]
+                    if n_ok == 0:
+                        out = self._emit_self_audit_null(
+                            f"cascade exhausted for {item['rel']} ({len(fanout)} attempts, 0 ok)"
+                        )
                         artifacts.append(str(out))
                         stats["artifacts_written"] += 1
                         stats["items_processed"] += 1
                     else:
                         stats["critique_obtained"] = True
-                        fb_path = self._write_feedback(item, critique)
+                        convergence = self._convergence_analysis(fanout)
+                        stats["convergence_score"] = convergence["convergence_score"]
+                        stats["pattern_candidate"] = convergence["pattern_candidate"]
+                        stats["max_pairwise_jaccard"] = convergence["max_pairwise_jaccard"]
+                        fb_path = self._write_feedback(item, fanout, convergence)
                         artifacts.append(str(fb_path))
-                        meta_path = self._write_meta_analysis(item, fb_path)
+                        meta_path = self._write_meta_analysis(item, fb_path, convergence)
                         artifacts.append(str(meta_path))
                         stats["items_processed"] += 1
                         stats["artifacts_written"] += 2
+                        if convergence["pattern_candidate"]:
+                            patt_path = self._emit_pattern_candidate(item, fanout, convergence)
+                            if patt_path is not None:
+                                artifacts.append(str(patt_path))
+                                stats["artifacts_written"] += 1
                         # Mark processed
                         processed = self.load_state("processed_artifacts", {}) or {}
                         processed[item["rel"]] = {
@@ -352,6 +635,8 @@ class MorosAgent(CharonAgent):
                             "processed_at": datetime.now(timezone.utc).isoformat(),
                             "feedback_path": str(fb_path.relative_to(REPO_ROOT)),
                             "meta_analysis_path": str(meta_path.relative_to(REPO_ROOT)),
+                            "n_models_ok": n_ok,
+                            "convergence_score": convergence["convergence_score"],
                         }
                         self.save_state("processed_artifacts", processed)
             except Exception as e:

@@ -94,14 +94,39 @@ def _build_providers() -> list:
 
 
 def call_llm(prompt: str, system: str = "", max_tokens: int = 4000,
-             temperature: float = 0.3, timeout: int = 240) -> str:
+             temperature: float = 0.3, timeout: int = 240,
+             exclude_providers: Optional[list[str]] = None) -> str:
     """Try the cascade; return text from the first provider that succeeds.
-    Returns "(LLM cascade failed)" if all providers fail."""
+    Returns "(LLM cascade failed)" if all providers fail.
+
+    `exclude_providers`: list of provider names (matching the cascade's
+    `name` field) to skip. Used by Moros's multi-provider fan-out to
+    ensure each successive call hits a different model.
+    """
+    text, _provider = call_llm_with_provider(
+        prompt, system=system, max_tokens=max_tokens,
+        temperature=temperature, timeout=timeout,
+        exclude_providers=exclude_providers,
+    )
+    return text
+
+
+def call_llm_with_provider(
+    prompt: str, system: str = "", max_tokens: int = 4000,
+    temperature: float = 0.3, timeout: int = 240,
+    exclude_providers: Optional[list[str]] = None,
+) -> tuple[str, Optional[str]]:
+    """Cascade variant returning (text, provider_name). Provider name is
+    None when the cascade failed. Used by callers that need to know
+    which model served the response (e.g., multi-provider fan-out)."""
     providers = _build_providers()
     ctx = _get_ssl_context()
+    excludes = set(exclude_providers or [])
 
     for provider in providers:
         if not provider["key"]:
+            continue
+        if provider["name"] in excludes:
             continue
         log.info(f"Trying {provider['name']}...")
         messages = []
@@ -134,13 +159,13 @@ def call_llm(prompt: str, system: str = "", max_tokens: int = 4000,
                 text = (msg.get("content") or msg.get("reasoning_content") or "").strip()
                 if text:
                     log.info(f"Response from {provider['name']} ({len(text)} chars)")
-                    return text
+                    return text, provider["name"]
         except Exception as e:
             log.warning(f"{provider['name']} failed: {e}")
             continue
 
     log.error("All LLM providers in cascade failed")
-    return "(LLM cascade failed — no provider returned text)"
+    return "(LLM cascade failed — no provider returned text)", None
 
 
 if __name__ == "__main__":

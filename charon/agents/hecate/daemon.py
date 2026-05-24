@@ -30,6 +30,7 @@ from harmonia.agents._base import REPO_ROOT
 LEDGER_CANDIDATES: list[Path] = [
     REPO_ROOT / "theseus" / "corpus",  # Theseus's TheseusRecord emissions
     REPO_ROOT / "charon" / "agents" / "stygian" / "state" / "kill_ledger.jsonl",  # Stygian executor emissions
+    REPO_ROOT / "charon" / "agents" / "pollux" / "state" / "kill_ledger.jsonl",   # Pollux scan emissions (v0.5)
 ]
 
 # Sampling caps so a huge ledger doesn't blow MVP-tick budget.

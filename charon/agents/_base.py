@@ -294,4 +294,10 @@ def get_charon_agent(name: str) -> CharonAgent:
     if name == "hecate":
         from charon.agents.hecate.daemon import HecateAgent
         return HecateAgent()
+    if name == "nephele":
+        from charon.agents.nephele.daemon import NepheleAgent
+        return NepheleAgent()
+    if name == "pollux":
+        from charon.agents.pollux.daemon import PolluxAgent
+        return PolluxAgent()
     raise ValueError(f"unknown charon agent: {name}")
