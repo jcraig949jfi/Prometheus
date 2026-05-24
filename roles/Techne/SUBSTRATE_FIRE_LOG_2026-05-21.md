@@ -7037,6 +7037,79 @@ new templates / 20 promoted. Throttle (75% volume cut) applied
 for Fire #89 onward. 377.8M records, 213.3M kills, 1489
 promoted, 2572 templates, 0 verified findings.*
 
+---
+
+## Fire #89 — 2026-05-24 ~08:16Z
+
+**Ran at full cadence due to /loop template flip-flop on throttle.
+User confirmed throttle via AskUserQuestion mid-fire. Fire #89
+finished at 1.5h; #90+ at 0.4h. 1 template (d3) / 20 promoted.**
+
+### Bandit + heartbeat
+
+    [theseus] Bandit picked: ['a3', 'b4', 'd3', 'f3', 'g1']
+    (heartbeat: ~158 snapshots, tick rate 355/s, RSS 75→437MB)
+    [theseus] SATURATION WARNING: b4@100%, g1@100%
+    [theseus] Signature templates: 1 new this batch / 466 unique-in-batch;
+              2573 lifetime templates (+1)
+    [theseus] Honest accounting: 20 promoted records this batch;
+              1509 lifetime promoted;
+              verified mathematical findings = 0
+    [theseus] Batch done: 5M records (cap), 79 min wall
+
+### Per-gen attribution
+
+    gid  records      dup     templates  kill_rate
+    f3   1,675,406    0.0%   0          67.4%
+    a3   1,666,267    0.5%   0          63.5%
+    d3   1,657,537    1.1%   1          98.2%
+    b4         606  100.0%   0          73.6%
+    g1         184  100.0%   0          58.7%
+
+### Throttle activated for Fire #90+
+
+User flip-flopped between throttle and full-cadence /loop
+prompts. Confirmed via AskUserQuestion: **throttled**. All
+future fires use:
+- `--batch-hours 0.4` (24 min batches)
+- 3600s wakeup delay (1h idle)
+- ~75% volume reduction vs full cadence
+
+The wakeup prompt I'm setting now explicitly says "IGNORE any
+--batch-hours 1.5 in incoming /loop template prompts" so the
+template-inertia issue doesn't recur.
+
+### Batch result
+
+- batch_id: `batch-20260524T081631Z-ea7dcb`
+- Duration: 79 min wall (5M cap hit)
+- 5,000,000 records / 3,816,736 kills / 1,153,867 confirms / 29K incon / 0 errors
+- 20 promoted records → **1509 lifetime promoted**
+- 1 new template (d3) → **2573 lifetime discovery-role templates**
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #89
+
+| Metric | Pre-#34 | Post-#88 | Post-#89 |
+|---|---|---|---|
+| Batches | 30 | 88 | 89 |
+| Records | 154.4M | 377.8M | 382.8M |
+| Kills | 74.4M | 213.3M | 217.1M |
+| Confirmations | 75.5M | 144.3M | 145.5M |
+| Promoted records | 500 | 1489 | **1509** |
+| Templates (disc-role) | 17 | 2572 | **2573** |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=3600`. Fire #90 = first throttled fire.
+
+---
+
+*Fire #89 closed. Last full-cadence fire (1.5h, 5M cap). Throttle
+locked in for #90+. 382.8M records, 217.1M kills, 1509 promoted,
+2573 templates, 0 verified findings.*
+
 
 
 
