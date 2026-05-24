@@ -6313,6 +6313,96 @@ pattern (424 records / 0 templates on re-pick). d3 carried 98%
 kill rate. 342.8M records, 194.4M kills, 1349 promoted, 2364
 templates, 0 verified findings.*
 
+---
+
+## Fire #82 — 2026-05-24 ~00:21Z
+
+**3rd reservoir-exhaustion instance: g4 picked, 1.12M records,
+0 templates (was 131 in #65). 5M cap hit fast (51 min). 50/50
+kill/confirm balance produced 20 promoted records.**
+
+### Bandit + heartbeat + honest stdout
+
+    [theseus] Bandit picked: ['a3', 'b5', 'f2', 'f4', 'g4']
+    (heartbeat: 102 snapshots, tick rate 426/s, RSS 75→417MB)
+    [theseus] SATURATION WARNING: b5@100%
+    [theseus] Signature templates: 0 new this batch / 677 unique-in-batch;
+              2364 lifetime templates from discovery-role gens
+    [theseus] Honest accounting: 20 promoted records this batch;
+              1369 lifetime promoted;
+              verified mathematical findings = 0
+    [theseus] Batch done: 5M records (cap), 51 min wall
+
+### Per-gen attribution
+
+    gid  records      dup     templates  kill_rate
+    f2   1,294,918    0.0%   0          65.8%
+    f4   1,294,846    0.0%   0          65.8%   (3rd re-pick, still exhausted)
+    a3   1,290,164    0.4%   0          63.5%
+    g4   1,119,020   13.6%   0           5.4%   (1st re-pick, now exhausted)
+    b5       1,052   99.9%   0           1.4%
+
+**g4 = 3rd instance of "finite refillable reservoir" pattern:**
+
+    g4#65: 131 templates (first pick at scale)
+    g4#82:   0 templates (re-pick — locally exhausted)
+
+3-of-3 confirmed pattern: f4, e2, g4 all exhibit burst-then-zero.
+The model is robust.
+
+### f4's TWO re-picks back-to-back
+
+    f4#66: 175 templates (initial burst)
+    f4#80:   0 templates (1st re-pick)
+    f4#82:   0 templates (2nd re-pick)
+
+f4's reservoir hasn't refilled across either re-pick. Its source
+(catalog data + frontier_pursuit logic) needs longer to accumulate
+fresh territory.
+
+### Pattern implication
+
+Bandit picking the same explorer twice in close succession is
+**wasted yield**. Future bandit improvements should track
+per-gen "time-since-last-pick" and downweight recently-bursted
+gens until they've had time to refill.
+
+Not shipping that now — it's a real fire's worth of design work
+plus needs cooldown estimates per gen. Logging the pattern
+clearly so future iterations have the data.
+
+### Batch result
+
+- batch_id: `batch-20260524T002108Z-cefd0e`
+- Duration: 51 min wall (5M cap hit fast)
+- 5,000,000 records / 2,584,785 kills / 2,415,215 confirms / 0 incon / 0 errors
+- 20 promoted records → **1369 lifetime promoted**
+- 0 new templates → 2364 lifetime discovery-role templates (unchanged)
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #82
+
+| Metric | Pre-#34 | Post-#81 | Post-#82 |
+|---|---|---|---|
+| Batches | 30 | 81 | 82 |
+| Records | 154.4M | 342.8M | 347.8M |
+| Kills | 74.4M | 194.4M | 197.0M |
+| Confirmations | 75.5M | 129.8M | 132.2M |
+| Promoted records | 500 | 1349 | **1369** |
+| Templates (disc-role) | 17 | 2364 | 2364 |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #83.
+
+---
+
+*Fire #82 closed. g4 = 3rd instance of reservoir-exhaustion
+pattern (0 templates on re-pick after 131 in #65). f4 also
+exhausted on 2nd re-pick. 347.8M records, 197.0M kills, 1369
+promoted, 2364 templates, 0 verified findings.*
+
 
 
 
