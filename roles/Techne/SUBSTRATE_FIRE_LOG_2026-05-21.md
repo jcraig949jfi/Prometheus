@@ -6727,6 +6727,140 @@ reservoir-exhaustion pattern (now 5 instances; only c5 is
 exception). 362.8M records, 204.4M kills, 1429 promoted,
 2570 templates, 0 verified findings.*
 
+---
+
+## Fire #86 — 2026-05-24 ~04:53Z
+
+**c1 re-picked after 24-fire gap, contributed only 2 templates
+(was 234 in #62) — challenges the reservoir-refill model.
+Heartbeat caught e1 stalling 46 min AGAIN. Cooldown partially
+effective.**
+
+### Bandit picks (cooldown partial)
+
+    [theseus] Bandit picked: ['c1', 'c3', 'a1', 'e1', 'd1']
+
+Cooldown recency analysis:
+- c1: not in #83-#85 → FRESH pick (last picked Fire #62, 24 fires ago)
+- c3: in #84 (1 fire ago) → SHOULD be in cooldown but still picked
+- a1: in #84 (1 fire ago) → SHOULD be in cooldown but still picked
+- e1: in #83 (3 fires ago) → at cooldown window edge
+- d1: not in #83-#85 → FRESH pick
+
+Cooldown DID prevent {c4, d3, e3, c5, f3, g5, c2, a5} from
+being picked (Fire #84 + #85's recent set). But c3 and a1
+slipped through despite being 1 fire ago. The 0.3x multiplier
+isn't strong enough when their scores dominate.
+
+### Per-gen attribution
+
+    gid  records      dup     templates  kill_rate
+    c1   1,773,228   13.2%   2          61.2%   ← was 234 in #62; only 2 now
+    a1   1,623,892   20.5%   0          69.0%
+    c3   1,596,039   21.8%   0          42.9%
+    e1       5,014    0.0%   0          0%      (STALLED 46 min)
+    d1       1,827   99.9%   0          46.1%
+
+### c1 RE-PICK CHALLENGES RESERVOIR-REFILL THEORY
+
+c1#62: 234 templates (initial burst)
+c1#86: 2 templates (after 24 fires of NOT being picked)
+
+If the reservoir refilled over 24 fires, c1 should have produced
+substantial templates. Instead it produced only 2.
+
+**Updated model:** explorer gens have a FIXED-SIZE template
+reservoir that gets drained on first pick at scale. The
+reservoir doesn't really "refill" via wall-clock time. Refill
+would require:
+- Upstream catalogs being expanded (more EC + knot data)
+- Other gens producing new PARENT claims that c1 can mutate
+
+Since neither has happened in the last 24 fires (catalogs static,
+no major parent injection), c1's reservoir stayed empty.
+
+**Implication for the cooldown design:** the 3-fire cooldown window
+is too short. The actual refill rate for most gens is much longer
+(or never, without upstream changes). c5 is the EXCEPTION because
+its specialization-mutation has a continually-refilling source
+(parent-claim accumulation from other gens).
+
+### Heartbeat caught e1 stalling AGAIN
+
+    e1=5,014/15,014:stalled2760s
+
+e1 emitted 5K records early then went silent for 46 min — same
+pattern as Fire #83 (e1 stalled 48 min). e1's source data is
+EXHAUSTED after ~5K records.
+
+Pre-Fire-#70-fix this would have been invisible. The :stalled
+tag flags it every snapshot. e1 deserves either: source
+expansion, or status reclassification (semi-stub with hard cap).
+
+### Substrate-honest reframe
+
+The "10 explorer gens identified" finding from #79-#83 may be
+weaker than I thought. Most of those gens contributed ONE big
+burst then went to zero. The substrate's template-generation
+capacity is FIXED, not refillable:
+
+    Templates accumulated by gen across all picks:
+    c1:  234 + 1 + 2 = 237   (saturated after 1-2 picks)
+    g4:  131 + 0 = 131
+    a1:  176 + 0 = 176
+    f4:  175 + 0 + 0 = 175
+    e2:  269 + 0 = 269
+    a5:   38 + 0 = 38
+    c2:  105 + 1 = 106
+    e1:    0 in all picks (effectively a stub)
+    g5:  139 + 0 = 139
+    c5:   68 + 31 + 60 = 159   (the EXCEPTION — still producing)
+
+Only c5 shows sustained yield across picks. The other "explorers"
+were one-burst-and-done. The substrate's TOTAL template space is
+bounded by:
+- catalog size (EC × knot pairs)
+- claim_kind × relation enumeration
+- gen-specific operator variety
+
+Once each gen has been picked once, its contribution is mostly
+done. The bandit should optimize for FRESH gens, not repeatedly
+picking known-bursters.
+
+### Batch result
+
+- batch_id: `batch-20260524T045308Z-8aff33`
+- Duration: 46 min wall (5M cap hit FAST)
+- 5,000,000 records / 2,891,838 kills / 2,103,148 confirms / 5,014 incon / 0 errors
+- 20 promoted records → **1449 lifetime promoted**
+- 2 new templates (both c1) → **2572 lifetime discovery-role templates**
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #86
+
+| Metric | Pre-#34 | Post-#85 | Post-#86 |
+|---|---|---|---|
+| Batches | 30 | 85 | 86 |
+| Records | 154.4M | 362.8M | 367.8M |
+| Kills | 74.4M | 204.4M | 207.3M |
+| Confirmations | 75.5M | 139.8M | 141.9M |
+| Promoted records | 500 | 1429 | **1449** |
+| Templates (disc-role) | 17 | 2570 | **2572** |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #87.
+
+---
+
+*Fire #86 closed. c1 re-pick contributed only 2 templates after
+24-fire gap (challenges reservoir-refill model). Updated theory:
+fixed-size reservoirs that don't refill without upstream catalog
+changes. Only c5 is the exception. e1 stalled 46 min again
+(source exhausted). 367.8M records, 207.3M kills, 1449 promoted,
+2572 templates, 0 verified findings.*
+
 
 
 
