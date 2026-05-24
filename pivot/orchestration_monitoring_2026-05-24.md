@@ -267,7 +267,27 @@ This is the orchestration working as designed — the 3.8h-stale heartbeat trigg
 - [ ] **Invoke-on-demand tool exclusion**: brief should not flag DEAD on kind=tool agents whose `current_op` says "(no postgres heartbeat — see manual_status)" or which are known invoke-on-demand. Calliope is the canonical example.
 - [ ] **Supervisor field strict-mode**: when EXPECTED_AGENTS has no `operator` field for an agent, the brief should say "no supervisor" rather than hallucinating one (e.g., "Apollo supervised by Harmonia" — Harmonia doesn't supervise Apollo).
 
-### Hour 8 — pending
+### Hour 8 — 2026-05-24 10:34 EDT — quiet hour
+
+**Apollo: 5.55h stale, no recovery.** Climbing exactly 1h per monitoring cycle = heartbeat thread definitively dead, no auto-restart mechanism. Will be ~7h stale by the next 12:49 cycle when Metis will re-flag it.
+
+**Daemons alive**: intel_loop 29.8h uptime, probe 7.4h uptime.
+
+**Healthcheck**: 09:56 fired on schedule. Next 10:56 (post-wakeup).
+
+**Failures: 8** — identical pattern to every hour (2 each of pheme_self_audit_null, pheme_upstream_not_found, atalanta_self_audit_null, atalanta_upstream_not_found). **No new stage types.** The drumbeat is reliable.
+
+**Probes**: 235 rows last hour (~59/machine — perfect cadence). M1 GPU showed 8% util this hour (mild activity); M2/M4 idle GPU; M3 unchanged.
+
+**Latest snapshot per machine:**
+| Machine | CPU | Mem | Disk | GPU VRAM | GPU util |
+|---|---|---|---|---|---|
+| M1 | 15.5% | 44.0% | 31.5% | 5.1% | 8.0% |
+| M2 | 0.4% | 24.4% | 7.0% | 3.6% | 0.0% (Apollo dead) |
+| M3 | 25.2% | 25.3% | 60.0% | 5.2% | 0.0% |
+| M4 | 0.4% | 32.0% | 17.2% | 0.0% | 0.0% |
+
+**No new candidate issues** — this hour is confirmation that the steady-state pipeline is stable (Pronoia firing every 4h on schedule, probes flowing, healthchecks firing) and the only outstanding problem is Apollo-down (already on the roadmap).
 
 ### Hour 9 — pending
 
