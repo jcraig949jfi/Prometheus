@@ -343,6 +343,11 @@ Requirements:
 # ---------------------------------------------------------------------------
 
 MODELS = [
+    # GitHub Models first (free, separate endpoint, no NVIDIA contention)
+    {"id": "gpt-4o-mini", "timeout": 90,
+     "base_url": "https://models.inference.ai.azure.com",
+     "api_key_env": "GITHUB_TOKEN"},
+    # NVIDIA fallback
     {"id": "meta/llama-3.3-70b-instruct", "timeout": 60},
     {"id": "meta/llama-4-maverick-17b-128e-instruct", "timeout": 60},
     {"id": "qwen/qwen3-next-80b-a3b-instruct", "timeout": 90},
@@ -350,19 +355,24 @@ MODELS = [
 ]
 
 
-def _make_client(timeout=120):
-    key = os.environ.get("NVIDIA_API_KEY")
+def _make_client(timeout=120, base_url=None, api_key_env="NVIDIA_API_KEY"):
+    key = os.environ.get(api_key_env)
     if not key:
-        log.error("NVIDIA_API_KEY not set")
         return None
-    return OpenAI(base_url="https://integrate.api.nvidia.com/v1",
-                  api_key=key, timeout=float(timeout))
+    return OpenAI(
+        base_url=base_url or "https://integrate.api.nvidia.com/v1",
+        api_key=key, timeout=float(timeout),
+    )
 
 
 def _call_with_fallback(prompt):
     """Try models in order, fall back on failure."""
     for m in MODELS:
-        client = _make_client(timeout=m["timeout"])
+        client = _make_client(
+            timeout=m["timeout"],
+            base_url=m.get("base_url"),
+            api_key_env=m.get("api_key_env", "NVIDIA_API_KEY"),
+        )
         if client is None:
             continue
         try:
@@ -378,6 +388,26 @@ def _call_with_fallback(prompt):
 # ---------------------------------------------------------------------------
 # Behavioral evaluation
 # ---------------------------------------------------------------------------
+
+def _run_with_timeout(fn, args, timeout_sec=5):
+    """Run a function with a hard timeout. Returns result or None."""
+    import threading
+    result = [None]
+    done = threading.Event()
+
+    def _worker():
+        try:
+            result[0] = fn(*args)
+        except Exception:
+            pass
+        finally:
+            done.set()
+
+    t = threading.Thread(target=_worker, daemon=True)
+    t.start()
+    done.wait(timeout=timeout_sec)
+    return result[0]
+
 
 def evaluate_tool(tool, battery=None) -> dict:
     """Run a tool against the mixed battery. Return per-category results."""
@@ -395,8 +425,11 @@ def evaluate_tool(tool, battery=None) -> dict:
         category_total[cat] = category_total.get(cat, 0) + 1
         total += 1
 
+        # Hard 5s timeout per problem — tools that hang on eval() get skipped
+        ranked = _run_with_timeout(
+            tool.evaluate, (problem["prompt"], problem["candidates"]), timeout_sec=5
+        )
         try:
-            ranked = tool.evaluate(problem["prompt"], problem["candidates"])
             if ranked and ranked[0].get("candidate") == problem["correct"]:
                 correct_total += 1
                 category_correct[cat] = category_correct.get(cat, 0) + 1

@@ -93,6 +93,12 @@ EXPECTED_AGENTS = {
                    "operator": "Aporia"},
     "Calliope":   {"machine": "M4", "kind": "tool",      "role": "daily NotebookLM narrative synthesizer"},
 
+    # Healthchecks (per-machine resource snapshots, hourly via local scheduler)
+    "HealthCheck-M1": {"machine": "M1", "kind": "healthcheck", "role": "M1 CPU/mem/disk snapshot (hourly)"},
+    "HealthCheck-M2": {"machine": "M2", "kind": "healthcheck", "role": "M2 CPU/mem/disk snapshot (hourly)"},
+    "HealthCheck-M3": {"machine": "M3", "kind": "healthcheck", "role": "M3 CPU/mem/disk snapshot (hourly)"},
+    "HealthCheck-M4": {"machine": "M4", "kind": "healthcheck", "role": "M4 CPU/mem/disk snapshot (hourly)"},
+
     # Pipeline-stage agents (run via pronoia.py scan; transient per cycle)
     "Coeus":      {"machine": "?",  "kind": "pipeline-stage", "role": "causal analysis"},
     "Aletheia":   {"machine": "?",  "kind": "pipeline-stage", "role": "knowledge graph harvester"},
