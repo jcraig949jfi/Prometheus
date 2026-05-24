@@ -1,5 +1,5 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-05-24 12:49:01 AM UTC*
+*Generated: 2026-05-24 04:48:57 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
@@ -10,12 +10,12 @@
 Redis is unreachable from M4; portfolio_monitor fell back to Postgres dual-write. Streams (discoveries, main, challenges) are empty.  
 Restore Redis on M1 to re-enable Agora pub/sub and stream resumption.
 
-**Clio (M1, supervised by Aporia, paper scanner) has been DEAD for 997s (~16.6 min)**  
-Heartbeat last seen 997s ago; agent is unresponsive despite recent MemoryError hardening.  
+**Clio (M1, supervised by Aporia, paper scanner) has been DEAD for 677s (~11.3 min)**  
+Heartbeat last seen 677s ago; agent is unresponsive despite recent MemoryError hardening.  
 Investigate Clio process state and restart if necessary — pending Aporia’s supervision.
 
-**Calliope (M4, daily NotebookLM narrative synthesizer) has been DEAD for 419,280s (~4.85 days)**  
-No heartbeat in over 4 days; agent not contributing to daily narrative synthesis.  
+**Calliope (M4, daily NotebookLM narrative synthesizer) has been DEAD for 433,676s (~5.0 days)**  
+No heartbeat in over 5 days; agent not contributing to daily narrative synthesis.  
 Determine if revival is required or deprecation intended — no recent activity indicates stalled output.
 
 ## Watch this
@@ -38,7 +38,7 @@ Confirm intended selection pressure — low rate is expected, not anomalous.
 Reports: ERG-02 (substrate alternatives), kpz_universality_class_spec, yang_mills_mass_gap, bombieri_lang_higher_dim, HYP-2026-05-23-001 (proof decomposition), plus Moros cross-pollination analysis. Full texts available via output_path in git logs.
 
 **Apollo (M2) and Hephaestus (M3) operational with dual-write telemetry**  
-Both core daemons ALIVE with sub-10s heartbeats; Pronoia (M4) also ALIVE, cycling every ~2.4 min.
+Both core daemons ALIVE with sub-60s heartbeats; Pronoia (M4) also ALIVE, cycling every ~40s.
 
 **(17) unexpected agents still pending revival — known legacy state**  
 Including Ergon, Theseus, Penelope, and Charon swarm; most DEAD/STALE from prior runs. No action required unless reactivation initiated.
