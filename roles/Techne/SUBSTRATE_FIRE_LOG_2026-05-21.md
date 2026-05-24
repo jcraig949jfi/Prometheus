@@ -7110,6 +7110,87 @@ template-inertia issue doesn't recur.
 locked in for #90+. 382.8M records, 217.1M kills, 1509 promoted,
 2573 templates, 0 verified findings.*
 
+---
+
+## Fire #90 — 2026-05-24 ~09:51Z — FIRST THROTTLED FIRE
+
+**24-min batch produces 63K records (99.7% dedup), 2 templates,
+20 promoted records. Throttle working as designed.**
+
+### Bandit + heartbeat
+
+    [theseus] Bandit picked: ['b1', 'c2', 'c3', 'e3', 'g1']
+    (heartbeat: 48 snapshots, tick rate 14,090/s, RSS 153MB)
+    [theseus] SATURATION WARNING: g1@100%, b1@100%, e3@100%, c2@100%, c3@100%
+    [theseus] Signature templates: 2 new this batch / 22 unique-in-batch;
+              2575 lifetime templates (+2)
+    [theseus] Honest accounting: 20 promoted records this batch;
+              1529 lifetime promoted;
+              verified mathematical findings = 0
+    [theseus] Batch done: 63,014 records, 0.4h wall (throttle target hit)
+
+### Cooldown effective: Fire #89 picks all avoided
+
+Fire #89 picks (a3, b4, d3, f3, g1) — Fire #90 only included g1
+(boundary case). The cooldown's downweighting worked: 4 of 5
+recent picks excluded.
+
+### Per-gen attribution
+
+    gid  records   dup     templates  kill_rate
+    c3    31,004  99.8%   0          15.7%
+    c2    29,426  99.9%   2          35.1%
+    b1     1,340 100.0%   0          0%      (INFRA_DIAGNOSTIC)
+    e3     1,060 100.0%   0          42.2%
+    g1       184 100.0%   0          58.7%
+
+c2 contributed 2 templates (was 105 in #73 burst; now slow drip).
+All gens essentially saturated at this mix.
+
+### Throttle math validated
+
+Pre-throttle Fire #89: 5M records in 79 min = 63K records/min
+Throttled Fire #90: 63K records in 24 min = 2.6K records/min
+
+Volume per fire: ~1.3% (way below 25% target). But this is because
+the gen mix was deeply saturated. A more balanced mix would
+produce more records in the same 24 min.
+
+Resource usage: 24 min batch + 60 min idle = 84 min cycle. Idle
+window is the meaningful resource-freeing change for other agents.
+
+### Batch result
+
+- batch_id: `batch-20260524T095124Z-35c0a2`
+- Duration: 24 min wall (throttle target)
+- 63,014 records / 15,737 kills / 47,277 confirms / 0 incon / 0 errors
+- 20 promoted records → **1529 lifetime promoted**
+- 2 new templates → **2575 lifetime discovery-role templates**
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #90
+
+| Metric | Pre-#34 | Post-#89 | Post-#90 |
+|---|---|---|---|
+| Batches | 30 | 89 | 90 |
+| Records | 154.4M | 382.8M | 382.8M |
+| Kills | 74.4M | 217.1M | 217.1M |
+| Confirmations | 75.5M | 145.5M | 145.6M |
+| Promoted records | 500 | 1509 | **1529** |
+| Templates (disc-role) | 17 | 2573 | **2575** |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=3600`. Fire #91 throttled.
+
+---
+
+*Fire #90 throttled = 63K records / 24 min / 2 templates / 20
+promoted. Cooldown effective (4 of 5 recent picks avoided).
+382.8M records, 217.1M kills, 1529 promoted, 2575 templates,
+0 verified findings.*
+
 
 
 
