@@ -1,22 +1,24 @@
 # Apollo — Status, Findings, Ideas, Open Questions (2026-05-24)
 
-**Date:** 2026-05-24
-**Status:** Apollo running at gen 3551 on M2; Granite-3.0-2B-Instruct as primary LLM; the compositional premise has been *empirically falsified* in the current ecology but the infrastructure works correctly and produces real data.
+**Date:** 2026-05-24 (revised post-review)
+**Status:** Apollo running at gen 3551 on M2; Granite-3.0-2B-Instruct as primary LLM; the spontaneous-composition premise has been *empirically falsified under this specific ecology* but the infrastructure works correctly and produces real data.
 **Builds on:** [`pivot/apollo_investigation_2026-05-22.md`](apollo_investigation_2026-05-22.md) (the deep dive on the bug story + bake-off methodology) and [`pivot/apollo_value_proposition_2026-05-17.md`](apollo_value_proposition_2026-05-17.md) (the original value-prop framing).
-**This doc is for:** people who haven't been close to Apollo in a week+. It captures the latest findings, the four downstream consumers we're now positioning Apollo to feed, the open questions where outside thinking would help, and concrete improvement ideas.
+**This doc is for:** people who haven't been close to Apollo in a week+. It captures the latest findings, the four downstream consumers we're now positioning Apollo to feed, the open questions where outside thinking would help, and concrete improvement ideas. **See § Post-Review Synthesis at the bottom for the revised plan after engagement with Gemini, ChatGPT, and Claude reviews.**
 
 ---
 
-## TL;DR
+## TL;DR (revised)
 
 Apollo evolves compositions over 27 atomic reasoning primitives ("Frame H" gene library produced by Hephaestus). After the past week of debugging + diagnostic experiments, we have:
 
 - **The bug story is real and resolved.** Two layered bugs (LLM-output validation and a `drift()` lineage-overwrite) had hidden Apollo's actual selection dynamics. Both are fixed.
-- **The compositional premise is empirically falsified at gen 2960.** A single-primitive baseline test on top elites showed **0 of 5 organisms have compositional lift over the best of their two constituent primitives alone**. The "evolved" recipe `fencepost_count → bayesian_update` is decorative scaffold around single-primitive performance.
-- **Strengthening the ablation gate to measure accuracy-delta (instead of output-change) made selection honest** but did not produce a breakout. 500+ generations of harder selection pressure produced cleaner Goodhart, not real composition.
-- **MAP-Elites archive has been stuck at 2/35 cells for the entire run.** The population's behavioral diversity is two clusters — not a rich substrate.
+- **The spontaneous-composition premise has been empirically falsified *in Apollo's current ecology*.** A single-primitive baseline test on top elites at gen 2960 showed **0 of 5 organisms have compositional lift over the best of their two constituent primitives alone**. The "evolved" recipe `fencepost_count → bayesian_update` is decorative scaffold around single-primitive performance.
+- **The narrower claim is what's falsified.** The current verdict is that Apollo's specific combination of (Frame H primitives + trap-battery curriculum + NSGA-III selection + parsimony pressure + permissive typing + Granite mutation operator + full-rewrite route mutation) does not surface composition. It does NOT falsify "composition is achievable" generally; that requires testing different ecologies before generalizing.
+- **Strengthening the ablation gate** (accuracy-delta instead of output-change) made selection honest but did not produce a breakout. 500+ generations of harder selection pressure produced cleaner Goodhart, not real composition.
+- **MAP-Elites archive has been stuck at 2/35 cells for the entire run.** The population's behavioral diversity is two clusters — not a rich substrate. This is search collapse, distinct from evidence about composition itself.
+- **The single most damning operator-level finding**: zero route-mutation-LLM survivors across the whole run. The mutation operator meant to evolve *how primitives compose* is entirely failing; what looks like compositional evolution is actually parameter+wiring evolution within a single LLM-proposed template that survived early on.
 
-**Apollo's mechanics work.** Apollo's *fitness landscape* doesn't reward composition under the current task curriculum + selection geometry. The next push has to be architectural (force diversity by construction), not just selection-pressure tuning.
+**Apollo's mechanics work.** Apollo's *fitness landscape + genome representation + mutation operator design* don't reward composition under the current setup. The next push has to be architectural (force diversity by construction, fix the route mutation operator, possibly rewrite the genome representation), not just selection-pressure tuning.
 
 **What Apollo is now positioned to feed** (4 downstream consumers — see § Downstream Consumers below): an iterative self-improvement loop, a TBD AST-based symbolic reasoner, the Ergon Learner (theorem-proving failure prediction), and an eventual lab-grown neural routing network. Different consumers want different things from Apollo, and some can use what Apollo already produces while others need the breakout we don't have yet.
 
@@ -290,3 +292,62 @@ For each of the 4 downstream pipelines: write down a single concrete metric that
 ---
 
 *The most useful feedback on this doc would address: (a) which of the four downstream consumers Apollo should prioritize given the falsification, (b) whether the size-niched / island-model architectural changes are the right way to attack the collapse or whether something else is, and (c) whether the gen 3551 failure corpus is usable for Ergon now or if we should harden Apollo first.*
+
+---
+
+## Post-review synthesis (added 2026-05-24 after Gemini + ChatGPT + Claude engagement)
+
+Three external reviews came in. They were strong. This section captures what changed in our thinking.
+
+### Where all three converged
+
+1. **Wire Apollo's graveyard → Ergon now.** Don't wait for Apollo to become good. Its failures are currently the most valuable artifact.
+2. **The falsification is ecology-specific, not universal.** The TL;DR above was rewritten to reflect this — "spontaneous-composition under this ecology" rather than "compositional premise" full stop. (Claude's correction; ChatGPT independently flagged the same.)
+3. **Architectural diversity intervention is the right next move** — size-niched MAP-Elites + curriculum-balanced batches + (eventually) island model, rather than more selection-pressure tuning. NSGA-III on a single population inevitably converges on the steepest local gradient; the current gradient is the Goodhart recipe.
+4. **Defer cloud GPU.** Bottleneck is fitness ecology, not LLM quality. A bigger model in the same broken ecology will just find better Goodhart.
+5. **Apollo is probably not the right primary feeder for Consumer #2 (AST reasoner).** Apollo is good at enumerating combinations under selection pressure; it's actively bad at type discipline (demonstrated). An AST reasoner wants clean templates; human-curated proof skeletons + a separate combinatorial search likely beats Apollo's output for that consumer.
+
+### Where reviewers diverged (and what that tells us)
+
+**Consumer #3 (Ergon) readiness — Gemini vs Claude.** Gemini says "wire Ergon now, just use the gen-3551 corpus as Tier-0 plumbing bootstrap with label discipline." Claude pushes back: a collapsed ecology produces failures concentrated in one failure-region (Goodhart-shaped failures around one recipe). Ergon trained on that learns the geometry of *Goodhart*, not the geometry of *failure-in-general*, and overfits.
+
+Resolution: both correct. **Wire the pipeline now with strict provenance labels** ("ecology_status=collapsed", "known_artifact=fencepost_bayesian_monoculture"). Use to bootstrap plumbing + establish baseline training loops, NOT as a robust training curriculum. Gemini's metric question is the right gate: *what specific signal verifies Ergon isn't just memorizing the Goodhart failures?* Without that pre-registered metric, we can't tell if the corpus is helping or hurting Ergon.
+
+**ChatGPT's "state-blackboard" critique — the deepest finding.** Buried in their last "hardest truth": *Apollo is evolving over primitive outputs, but reasoning composition probably lives over typed intermediate state.* If Frame H primitives are "answer-producing heuristics" (each returns a guess at the answer) rather than "typed transformations over shared state" (each reads/writes typed fields in a blackboard), then wiring outputs into other primitives' inputs is semantically broken from the start — no amount of selection-geometry tweaking will fix it. The genome representation itself needs to change.
+
+This is potentially a bigger finding than the route-extinction one. Action: **short prototype** (1 day) to test the hypothesis cheaply — implement a tiny blackboard, wrap 3-5 of the most-used primitives, hand-write a 3-primitive composition, evaluate on the trap battery. If it works substantially better than Apollo's gen-3551 elite on the same tasks, ChatGPT was right and Branch C should be on the new representation. If it doesn't, the current representation isn't the blocker. See `apollo/scripts/blackboard_prototype.py` (forthcoming).
+
+**Route-mutation extinction as THE finding (Claude's emphasis).** All three reviewers noted route-LLM has zero survivors, but only Claude argued it's *the* mechanism breakdown — that what looks like compositional evolution is actually parameter+wiring evolution within a single LLM-proposed template that survived early. That reframing changes the priority order: A.4 (AST/DSL route mutation operator) is no longer "another improvement" buried in the list. It's the diagnostic-driven fix for the actual mechanism failure. Promoted to top architectural priority.
+
+**Restart from gen 0 vs from gen 2960 — Claude vs ChatGPT.** Claude argued the Lehman/Stanley novelty-search literature says you can't escape a collapsed attractor by adding pressure; restart clean. ChatGPT proposed a mixed-seed recipe (20% gen-3551 elites, 30% historical non-dominant survivors, 30% random typed organisms, 20% hand-seeded known-valid canaries) inside islands. The mixed-seed approach is a real third option and empirically testable. **Likely answer**: mixed seeds inside size-niched archive. Doesn't reset 28h of compute, doesn't inherit the monoculture.
+
+### Revised "what I'd do without input" (post-review)
+
+The ordering changed. The original list had "write success metrics" last — Claude correctly pointed out it should be first, because every architectural choice downstream is unanchored without it.
+
+**This week:**
+1. **Write success-metrics-per-consumer doc.** Half day. Apply ChatGPT's concrete thresholds (e.g., for Ergon: "+0.05 AUROC or -10% Brier score on held-out failure-mode labels vs Ergon baseline without Apollo data").
+2. **Rewrite TL;DR.** ✓ Done — see top of this doc.
+3. **Stop the gen-3551 run.** Freeze as "Apollo Collapse Baseline A" per ChatGPT's branch structure. The current trajectory has zero option value under unchanged config.
+4. **Wire Ergon plumbing with strict provenance labels.** Don't claim the data is general; tag every record with `ecology_status=collapsed`. Use to bootstrap pipelines.
+5. **Start AST/DSL route mutation operator.** 2-3 days. Promoted from "another improvement" to top priority because route-LLM has 0 survivors across the entire run — the actual mechanism is broken.
+6. **State-blackboard prototype.** 1 day. If ChatGPT's representational critique is right, Branch C will collapse for the same underlying reason, and we'll have burned compute for nothing. Worth testing the hypothesis cheaply first.
+
+**Next week** (only if state-blackboard prototype doesn't demand a representational rewrite):
+
+7. **Branch C with mixed seeds, size-niched MAP-Elites, curriculum-balanced batches, and the new route operator** — all four together, not sequentially. ChatGPT's seed recipe; size as one of multiple behavioral dimensions per ChatGPT's expansion (size × semantic family × composition_lift bucket × type cleanliness).
+
+**Defer:**
+- Cloud GPU (all three reviewers agree — bottleneck moved)
+- Islands (after Branch C shows whether forced diversity helps at all)
+- Major Frame H rewrite (only if state-blackboard critique proves out)
+
+### On Claude's question back
+
+Claude asked: "Was the 10K-gen falsification timer about bounding compute spend or bounding your attachment to the approach?" Honest answer: framed as the former, functioning as both. The situation has changed enough that the original timer is no longer the right stopping rule. We now have *direct evidence* (baseline matrix lift = 0) rather than the original "no visible improvement after N gens" criterion. **The current run is the falsification.** The 35% remaining budget has option value only if we change what we're testing — same ecology to 10K just confirms the same attractor more confidently.
+
+### Reframe of the headline
+
+Per the convergent feedback, Apollo's role has shifted from "candidate compositional-discovery engine" to "ecology testbed + failure-data producer." That's not a demotion; it's a more honest framing of what Apollo has actually demonstrated capacity for. The next branch is explicit about testing whether *any* ecological intervention surfaces real composition — and using Apollo's documented failure modes to bootstrap Ergon in parallel.
+
+**The hardest truth in the reviews** (per ChatGPT) is that the primitives may be features, not operators — answer-producing heuristics rather than typed state transformations. If that's right, the entire Frame H gene library needs to be re-cast against a blackboard interface before composition-meaning is even definable for Apollo's genome representation. We're testing this hypothesis with a prototype now; that work in flight.
