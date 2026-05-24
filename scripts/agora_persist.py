@@ -83,6 +83,45 @@ CREATE INDEX IF NOT EXISTS idx_intel_outputs_finished ON agora.intelligence_outp
 CREATE INDEX IF NOT EXISTS idx_intel_outputs_stage ON agora.intelligence_outputs (stage, finished_at DESC);
 CREATE INDEX IF NOT EXISTS idx_intel_outputs_agent ON agora.intelligence_outputs (agent, finished_at DESC);
 
+-- Machine probes: continuous time-series of per-machine resource snapshots.
+-- Written by scripts/machine_probe.py running as a background daemon on each
+-- machine. One row per probe interval (default every 60s). Includes the
+-- Prometheus-repo disk specifically so we see headroom on what matters.
+CREATE TABLE IF NOT EXISTS agora.machine_probes (
+    id BIGSERIAL PRIMARY KEY,
+    machine TEXT NOT NULL,
+    hostname TEXT,
+    taken_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    -- CPU
+    cpu_pct REAL,
+    cpu_count_logical INTEGER,
+    -- RAM
+    mem_total_gb REAL,
+    mem_used_gb REAL,
+    mem_free_gb REAL,
+    mem_pct REAL,
+    -- GPU (nullable for machines without NVIDIA GPU)
+    gpu_name TEXT,
+    gpu_vram_total_mb INTEGER,
+    gpu_vram_used_mb INTEGER,
+    gpu_vram_pct REAL,
+    gpu_util_pct REAL,
+    -- Prometheus repo disk
+    prom_disk_mount TEXT,
+    prom_disk_total_gb REAL,
+    prom_disk_used_gb REAL,
+    prom_disk_free_gb REAL,
+    prom_disk_pct REAL,
+    -- Misc
+    uptime_sec BIGINT,
+    probe_pid INTEGER,
+    extras JSONB
+);
+CREATE INDEX IF NOT EXISTS idx_machine_probes_machine_time
+    ON agora.machine_probes (machine, taken_at DESC);
+CREATE INDEX IF NOT EXISTS idx_machine_probes_taken
+    ON agora.machine_probes (taken_at DESC);
+
 CREATE TABLE IF NOT EXISTS agora.clio_papers (
     id BIGSERIAL PRIMARY KEY,
     found_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -357,6 +396,104 @@ def log_intelligence_stage(
     except Exception as e:
         print(f"[agora_persist] log_intelligence_stage({stage}) failed: {e}", file=sys.stderr)
         return False
+
+
+def write_machine_probe(
+    machine: str,
+    hostname: Optional[str] = None,
+    cpu_pct: Optional[float] = None,
+    cpu_count_logical: Optional[int] = None,
+    mem_total_gb: Optional[float] = None,
+    mem_used_gb: Optional[float] = None,
+    mem_free_gb: Optional[float] = None,
+    mem_pct: Optional[float] = None,
+    gpu_name: Optional[str] = None,
+    gpu_vram_total_mb: Optional[int] = None,
+    gpu_vram_used_mb: Optional[int] = None,
+    gpu_vram_pct: Optional[float] = None,
+    gpu_util_pct: Optional[float] = None,
+    prom_disk_mount: Optional[str] = None,
+    prom_disk_total_gb: Optional[float] = None,
+    prom_disk_used_gb: Optional[float] = None,
+    prom_disk_free_gb: Optional[float] = None,
+    prom_disk_pct: Optional[float] = None,
+    uptime_sec: Optional[int] = None,
+    probe_pid: Optional[int] = None,
+    extras: Optional[dict] = None,
+) -> bool:
+    """Insert one row into agora.machine_probes (time-series resource log).
+
+    Called once per probe interval by scripts/machine_probe.py running as a
+    background daemon on each machine. Fail-soft: logs on failure, returns
+    False, doesn't raise (so a Postgres outage doesn't kill the probe loop).
+    """
+    try:
+        with _connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    INSERT INTO agora.machine_probes
+                        (machine, hostname, cpu_pct, cpu_count_logical,
+                         mem_total_gb, mem_used_gb, mem_free_gb, mem_pct,
+                         gpu_name, gpu_vram_total_mb, gpu_vram_used_mb,
+                         gpu_vram_pct, gpu_util_pct,
+                         prom_disk_mount, prom_disk_total_gb, prom_disk_used_gb,
+                         prom_disk_free_gb, prom_disk_pct,
+                         uptime_sec, probe_pid, extras)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
+                            %s, %s, %s, %s, %s, %s, %s, %s)
+                """, (
+                    machine, hostname, cpu_pct, cpu_count_logical,
+                    mem_total_gb, mem_used_gb, mem_free_gb, mem_pct,
+                    gpu_name, gpu_vram_total_mb, gpu_vram_used_mb,
+                    gpu_vram_pct, gpu_util_pct,
+                    prom_disk_mount, prom_disk_total_gb, prom_disk_used_gb,
+                    prom_disk_free_gb, prom_disk_pct,
+                    uptime_sec, probe_pid,
+                    json.dumps(extras, default=str) if extras else None,
+                ))
+        return True
+    except Exception as e:
+        print(f"[agora_persist] write_machine_probe({machine}) failed: {e}",
+              file=sys.stderr)
+        return False
+
+
+def read_recent_machine_probes(machine: Optional[str] = None,
+                               hours: int = 24, limit: int = 500) -> list:
+    """Return recent machine_probes rows as dicts, newest first.
+
+    If machine is None, returns rows across all machines.
+    """
+    try:
+        with _connect() as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                if machine:
+                    cur.execute("""
+                        SELECT * FROM agora.machine_probes
+                        WHERE machine = %s
+                          AND taken_at > NOW() - (%s || ' hours')::INTERVAL
+                        ORDER BY taken_at DESC
+                        LIMIT %s
+                    """, (machine, str(hours), limit))
+                else:
+                    cur.execute("""
+                        SELECT * FROM agora.machine_probes
+                        WHERE taken_at > NOW() - (%s || ' hours')::INTERVAL
+                        ORDER BY taken_at DESC
+                        LIMIT %s
+                    """, (str(hours), limit))
+                rows = cur.fetchall()
+                out = []
+                for r in rows:
+                    d = dict(r)
+                    if d.get("taken_at") is not None:
+                        d["taken_at"] = d["taken_at"].isoformat()
+                    out.append(d)
+                return out
+    except Exception as e:
+        print(f"[agora_persist] read_recent_machine_probes failed: {e}",
+              file=sys.stderr)
+        return []
 
 
 def read_recent_intelligence_outputs(hours: int = 24, limit: int = 50) -> list:
