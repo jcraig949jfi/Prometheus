@@ -289,7 +289,9 @@ This is the orchestration working as designed — the 3.8h-stale heartbeat trigg
 
 **No new candidate issues** — this hour is confirmation that the steady-state pipeline is stable (Pronoia firing every 4h on schedule, probes flowing, healthchecks firing) and the only outstanding problem is Apollo-down (already on the roadmap).
 
-### Hour 9 — pending
+### Hour 9 — 2026-05-24 11:36 EDT — steady-state
+
+Apollo 6.58h stale. Healthcheck-M4 fired 10:56 on schedule. 8 failures, all known Atalanta/Pheme. Probes 59/59/59/58 across M1/M2/M3/M4 (perfect cadence). M1 mem 41.8%, M3 disk 60.0%, M2 GPU vram 3.6% — no machine showing new trends. Pronoia daemons alive. No new candidate issues.
 
 ### Hour 10 — pending
 
