@@ -7351,6 +7351,65 @@ to other agents.
 Balanced gen distribution, promotes resumed. 386.9M records,
 220.4M kills, 1549 promoted, 2575 templates, 0 verified findings.*
 
+---
+
+## Fire #93 — 2026-05-24 ~14:20Z — 4th throttled
+
+**1.93M records / 24 min / 0 templates / 20 promoted. Balanced
+5-gen distribution with 44% kill / 50% confirm split. g5 + h4
+high confirm rate (92% / 39%).**
+
+### Bandit + heartbeat
+
+    [theseus] Bandit picked: ['b5', 'c1', 'f2', 'g5', 'h4']
+    (heartbeat: 48 snapshots, tick rate 348/s, RSS 75→2210MB)
+    [theseus] SATURATION WARNING: b5@100%
+    [theseus] Signature templates: 0 new this batch / 492 unique-in-batch;
+              2575 lifetime templates (unchanged)
+    [theseus] Honest accounting: 20 promoted records this batch;
+              1569 lifetime promoted;
+              verified mathematical findings = 0
+
+### Per-gen attribution
+
+    gid  records   dup     templates  kill_rate  notes
+    f2   501,350   0.0%   0          65.8%
+    g5   491,957   1.9%   0           7.7%      (92% confirm)
+    c1   484,776   3.4%   0          68.5%
+    h4   453,331   9.6%   0          34.7%
+    b5     1,052  99.8%   0          1.4%
+
+### Batch result
+
+- batch_id: `batch-20260524T142008Z-f90774`
+- Duration: 24 min wall
+- 1,932,466 records / 857,451 kills / 957,253 confirms / 117,762 incon / 0 errors
+- 20 promoted records → **1569 lifetime promoted**
+- 0 new templates → 2575 lifetime discovery-role templates
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #93
+
+| Metric | Pre-#34 | Post-#92 | Post-#93 |
+|---|---|---|---|
+| Batches | 30 | 92 | 93 |
+| Records | 154.4M | 386.9M | 388.8M |
+| Kills | 74.4M | 220.4M | 221.2M |
+| Confirmations | 75.5M | 146.5M | 147.5M |
+| Promoted records | 500 | 1549 | **1569** |
+| Templates (disc-role) | 17 | 2575 | 2575 |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=3600`.
+
+---
+
+*Fire #93 throttled = 1.93M records / 20 promoted. 388.8M
+records, 221.2M kills, 1569 promoted, 2575 templates, 0
+verified findings.*
+
 
 
 
