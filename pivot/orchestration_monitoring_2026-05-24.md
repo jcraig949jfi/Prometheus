@@ -68,7 +68,38 @@
 - [ ] **machine_probe self-deduplication**: write a lockfile at startup; if present and the PID inside is alive, log + exit. Prevents double-daemons after manual launches collide with scheduler.
 - [ ] **M3 disk trend monitoring**: when prom_disk_pct climbs >1% per day, surface in brief.
 
-### Hour 2 — pending
+### Hour 2 — 2026-05-24 05:00 EDT
+
+**Pronoia 04:49 cycle: clean end-to-end.** First post-orchestration-logging cycle to show all timing data:
+- cycle_started 04:48:31 → cycle_complete 04:49:13 (42.1s total)
+- portfolio_refresh 27.8s · brief_generated 2.5s · dashboard_pushed 9.4s · email_dispatched 2.0s
+- Metis fast (2.5s) — no Nemotron fallthrough this cycle
+
+**Healthcheck**: fired 04:56:48 on schedule. M4 CPU 3.0%, mem 31.5%, disk unchanged.
+
+**machine_probes**: 234 rows last hour, ~58-59 per machine (1/min as designed). Per-machine current state:
+
+| Machine | CPU | Mem | Disk | GPU VRAM | Mem delta vs hour 1 |
+|---|---|---|---|---|---|
+| M1 | 14.3% | **62.1%** | 31.5% | 5.1% | **+5.5pp** (was 56.6%) |
+| M2 | 9.3% | 37.2% | 7.0% | 74.0% | +2.4pp |
+| M3 | 26.0% | 24.7% | 59.9% | 5.2% | +0.3pp |
+| M4 | 1.6% | 31.3% | 17.2% | 0.0% | +0.8pp |
+
+**New observations:**
+- **M1 memory climbing** — 56.6% → 62.1% in 60 min. If sustained, could matter (M1 hosts Postgres + Redis + Pythia). Watch.
+- **M3 disk unchanged** at 59.9% — not climbing as I worried last hour.
+
+**Failures last 70min: 8** — all from Atalanta and Pheme self-audit alarms (50+/51+ consecutive null ticks). Sample:
+- `atalanta_upstream_not_found`: "Apollo runs root not found; checked F:\Prometheus\apollo\runs, F:\Prometheus\apollo\runs_v2…"
+- `pheme_upstream_not_found`: "Ergon eval root not found; checked F:\Prometheus\ergon\learner\evals…"
+- Both also firing `*_self_audit_null` alarms
+
+These are real signals — Atalanta (Aporia tool) and Pheme (Ergon tool) need their upstream paths wired (`APOLLO_RUN_ROOTS`, `EVAL_ROOTS` env vars). Per the 2026-05-21 roster doc they were already flagged as "upstream_not_found pending wiring." Still pending.
+
+**Candidate issues added:**
+- [ ] **Atalanta/Pheme upstream wiring overdue** — both tools have been alarming for days. Worth a paste-prompt for Aporia and Ergon to set the env vars and restart.
+- [ ] **M1 memory growth rate watch** — if M1 mem goes from 56→62 each hour, it'll OOM in ~5 hours. Probably just Postgres warming caches but worth tracking.
 
 ### Hour 3 — pending
 
