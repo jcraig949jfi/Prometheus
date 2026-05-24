@@ -6519,6 +6519,103 @@ Fire #70 fix). Cooldown patch ships for Fire #84+. 352.8M
 records, 199.3M kills, 1389 promoted, 2509 templates, 0
 verified findings.*
 
+---
+
+## Fire #84 — 2026-05-24 ~02:19Z
+
+**Schema v2 migration fire. Cooldown writes pick recency for
+first time but doesn't yet APPLY (Fire #85 will). 5M cap hit
+in 76 min. c4's 62 alive-monitor templates excluded from
+disc-role count.**
+
+### Bandit + heartbeat + honest stdout
+
+    [theseus] Bandit picked: ['c4', 'c3', 'a1', 'd3', 'e3']
+    (heartbeat: ~155 snapshots, tick rate 333/s, RSS 75→3555MB)
+    [theseus] SATURATION WARNING: e3@100%
+    [theseus] Top demand: 251,977× knot/nf_class_number
+    [theseus] Signature templates: 62 new this batch / 331 unique-in-batch;
+              2509 lifetime templates from discovery-role gens
+              (unchanged at disc-role count)
+    [theseus] Honest accounting: 20 promoted records this batch;
+              1409 lifetime promoted;
+              verified mathematical findings = 0
+    [theseus] Batch done: 5M records (cap), 76 min wall
+
+### Per-gen attribution
+
+    gid  records      dup     templates  kill_rate  notes
+    d3   1,511,415    1.1%   0          98.2%
+    a1   1,285,527   15.9%   0          68.9%
+    c3   1,222,194   20.0%   0          30.5%
+    c4     979,804   35.9%   62         0%         (TAUTOLOGY — excluded from disc-role)
+    e3       1,060   99.9%   0          42.2%
+
+c4's 62 templates went into the overall signature index but NOT
+the discovery-role count (TAUTOLOGY_CONTROL is excluded by
+design). Lifetime discovery-role templates stayed at 2509.
+
+### Cooldown patch: schema-migration fire (effect lands #85)
+
+bandit_history.json was v1 going into this fire. The new
+persist_bandit() wrote the FIRST v2 entry at fire end:
+
+    version: 2
+    fire_counter: 1
+    last_picked_at: {a1: 1, c3: 1, c4: 1, d3: 1, e3: 1}
+
+Fire #85 will be the FIRST fire to LOAD that recency data
+and apply cooldown downweighting. Expected behavior:
+- gens picked in Fire #84 (a1, c3, c4, d3, e3) score × 0.3
+- everyone else scores normally
+- bandit will likely cycle to NEW gens
+
+The "Bandit cooldown active: N gens" stdout line didn't
+appear in Fire #84 because recency was empty going in
+(only just got written at fire end).
+
+### Heartbeat health
+
+155 snapshots, all clean. Tick rate stable 333/s. RSS climbed
+75 → 3555 MB linearly (mutation-heavy gens: c4 family produces
+many unique sig templates → in-memory signature_index buffer
+grows). Same pattern as Fire #73.
+
+### Batch result
+
+- batch_id: `batch-20260524T021909Z-8c7cd5`
+- Duration: 76 min wall (5M cap hit)
+- 5,000,000 records / 2,744,559 kills / 2,228,565 confirms / 27K incon / 0 errors
+- 20 promoted records → **1409 lifetime promoted**
+- 62 new templates (all c4 TAUTOLOGY) → 2509 lifetime discovery-role
+  templates (unchanged)
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #84
+
+| Metric | Pre-#34 | Post-#83 | Post-#84 |
+|---|---|---|---|
+| Batches | 30 | 83 | 84 |
+| Records | 154.4M | 352.8M | 357.8M |
+| Kills | 74.4M | 199.3M | 202.1M |
+| Confirmations | 75.5M | 134.9M | 137.1M |
+| Promoted records | 500 | 1389 | **1409** |
+| Templates (disc-role) | 17 | 2509 | 2509 |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #85 = FIRST fire with cooldown active.
+Expected: bandit avoids a1/c3/c4/d3/e3 (just-picked) in favor of
+other actives.
+
+---
+
+*Fire #84 closed. Schema v2 migration; cooldown effect lands
+Fire #85. c4 contributed 62 templates (alive-monitor confirms,
+excluded from disc-role). 357.8M records, 202.1M kills, 1409
+promoted, 2509 templates, 0 verified findings.*
+
 
 
 
