@@ -6861,6 +6861,107 @@ changes. Only c5 is the exception. e1 stalled 46 min again
 (source exhausted). 367.8M records, 207.3M kills, 1449 promoted,
 2572 templates, 0 verified findings.*
 
+---
+
+## Fire #87 — 2026-05-24 ~05:49Z
+
+**e2's 3rd pick confirms FIXED reservoir: 0 templates again
+(after #79:269 → #81:0 → #87:0). 0 templates this fire = 4th
+zero-template fire in 8 fires. Diminishing returns confirmed
+empirically. 20 promoted records steady-state.**
+
+### Bandit + heartbeat
+
+    [theseus] Bandit picked: ['a2', 'd2', 'e2', 'g3', 'h4']
+    (heartbeat: ~130 snapshots, tick rate 586/s, RSS 75→420MB)
+    [theseus] SATURATION WARNING: g3@99%, e2@100%
+    [theseus] Demand signals logged: 2,739,714 events!  (highest yet)
+    [theseus] Top demand: 2,739,714× knot/nf_class_number
+    [theseus] Signature templates: 0 new this batch / 319 unique-in-batch;
+              2572 lifetime templates from discovery-role gens
+    [theseus] Honest accounting: 20 promoted records this batch;
+              1469 lifetime promoted;
+              verified mathematical findings = 0
+    [theseus] Batch done: 5M records (cap), 66 min wall
+
+### Per-gen attribution
+
+    gid  records      dup     templates  kill_rate
+    a2   2,023,572   12.5%   0          93.3%
+    h4   2,008,752   13.2%   0          18.5%   (53.5% confirm rate)
+    d2     947,252   58.9%   0          65.5%
+    g3      20,000   99.1%   0          0%      (TAUTOLOGY — alive-monitor)
+    e2         424  100.0%   0          0%     ← CONFIRMED: still empty
+
+### e2 3-of-3 confirms FIXED reservoir
+
+    e2#79: 269 templates (first pick at scale)
+    e2#81:   0 templates (1st re-pick)
+    e2#87:   0 templates (2nd re-pick, 6 fires later)
+
+Six fires of "rest" did NOT refill e2's reservoir. The arxiv
+abstract cache (500 abstracts) is exhausted in template-space.
+Until the cache is expanded, e2 will contribute 0.
+
+### Diminishing returns — confirmed empirically
+
+Template growth pace this session:
+
+    Fires #58→#66 ( 9 fires): +721 templates  (~80/fire)
+    Fires #67→#75 ( 9 fires): +1267 templates  (~141/fire)  — e2#79 outlier
+    Fires #76→#86 (11 fires): +517 templates  (~47/fire)
+    Fires #82→#87 ( 6 fires): +63 templates  (~10/fire)  ← STARVED
+
+The substrate's template-space coverage is saturating. Most
+gens are one-burst-and-done. Continued running at current
+cadence will produce:
+- ~20 promoted records per fire (steady-state)
+- 5-20 new templates per fire (diminishing)
+- 0 verified findings (review pipeline gap)
+
+Per audit recommendation: the bottleneck has shifted from
+generation diversity to downstream review. 1469 promoted
+records await review; 0 reviewed.
+
+### Demand signal explosion: 2.74M events!
+
+h4 generated 2.7M demand events for knot/nf_class_number this
+fire. Highest single-fire demand log yet. The substrate's
+"wanted primitives" signal is ROARING.
+
+### Batch result
+
+- batch_id: `batch-20260524T054907Z-ca63eb`
+- Duration: 66 min wall (5M cap hit)
+- 5,000,000 records / 2,880,108 kills / 1,557,078 confirms / 562K incon / 0 errors
+- 20 promoted records → **1469 lifetime promoted**
+- 0 new templates → 2572 lifetime discovery-role templates (unchanged)
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #87
+
+| Metric | Pre-#34 | Post-#86 | Post-#87 |
+|---|---|---|---|
+| Batches | 30 | 86 | 87 |
+| Records | 154.4M | 367.8M | 372.8M |
+| Kills | 74.4M | 207.3M | 210.2M |
+| Confirmations | 75.5M | 141.9M | 143.5M |
+| Promoted records | 500 | 1449 | **1469** |
+| Templates (disc-role) | 17 | 2572 | 2572 |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #88.
+
+---
+
+*Fire #87 closed. e2 3rd pick = 0 templates (FIXED reservoir
+confirmed). 4th zero-template fire in 8. 20 promoted records.
+Diminishing returns empirically confirmed. 372.8M records,
+210.2M kills, 1469 promoted, 2572 templates, 0 verified
+findings.*
+
 
 
 
