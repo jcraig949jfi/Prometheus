@@ -229,7 +229,43 @@ Apollo's own heartbeat (separate from probe) would resolve this, but Apollo uses
 - [ ] **Monitoring wakeup phase-alignment**: my hourly wakeups are landing 9 min before the Pronoia cycle each time. The fix is trivial (offset by 10 min) but it's a real lesson — when polling a periodic event, align the poll to fire AFTER the expected event, not before.
 - [ ] **Apollo deathwatch**: 3.7h crashed, no auto-restart, no alert from Metis (next brief at 08:49 will be the test). Apollo needs a watchdog like the intelligence_loop has.
 
-### Hour 7 — pending
+### Hour 7 — 2026-05-24 09:32 EDT — **APOLLO FLAGGED CORRECTLY**
+
+**08:49 cycle: clean.** Cycle d79f8af1 completed in 34.4s. All 6 events ok. Metis was fast (1.5s — Cerebras or Groq succeeded, no Nemotron fallthrough).
+
+**Metis brief flagged Apollo in Act-on-this**, in the new format I wired:
+> "**Apollo (M2, supervised by Harmonia, evolutionary engine) has been DEAD for 13,662s (~3.8 hours)**
+> Heartbeat last seen 13,662s ago; agent unresponsive despite M2 confirmed online and Apollo previously running.
+> Investigate Apollo process state on M2 and restart under Harmonia's supervision."
+
+This is the orchestration working as designed — the 3.8h-stale heartbeat triggered an anomaly, the new format surfaced the supervisor + role, and James gets an actionable Act-on-this item in the email.
+
+**Apollo current status**: heartbeat 4.52h stale, still climbing. Crash confirmed. No auto-restart.
+
+**Pythia DR utilization flagged in Watch-this**: "No Deep Research dispatched in last 8h — 15 of 20 daily tokens remaining". Real signal — Aporia's queue may be empty.
+
+**Brief quality issues caught:**
+
+1. **Calliope falsely flagged as DEAD** — "Calliope (M4, daily NotebookLM narrative synthesizer) has been DEAD for 462,478s (~5.3 days)." Calliope is invoke-on-demand (not a daemon); DEAD between runs is normal. Metis is applying the daemon-DEAD rule to tools. Needs a `kind=tool AND invoke_on_demand=true` exclusion.
+
+2. **Apollo `supervised by Harmonia` attribution may be wrong.** Apollo is `kind=daemon` with no operator field in EXPECTED_AGENTS. Metis hallucinated the supervisor — either because Apollo and Harmonia both live on M2, or because the manual_status doc mentions Harmonia. Either way, daemons without an operator should be reported as unsupervised (or with "no supervisor" explicitly), not assigned to whoever else lives nearby.
+
+**Daemons alive**: intel_loop 27.9h, probe 5.5h.
+
+**Failures last 60min: 8** — same Atalanta/Pheme pattern, no new alarm types.
+
+**Latest snapshot per machine:**
+| Machine | CPU | Mem | Disk | GPU VRAM |
+|---|---|---|---|---|
+| M1 | 8.0% | 35.7% | 31.6% | 5.1% |
+| M2 | 0.1% | 24.6% | 7.0% | 3.6% (Apollo dead 4.5h) |
+| M3 | 25.0% | 25.2% | 60.0% | 5.2% |
+| M4 | 0.2% | 31.8% | 17.2% | 0.0% |
+
+**Candidate issues confirmed/added:**
+- [x] **Outage-line format** (supervisor + role) — confirmed working end-to-end. Move from "candidate" to "shipped" in the final roadmap.
+- [ ] **Invoke-on-demand tool exclusion**: brief should not flag DEAD on kind=tool agents whose `current_op` says "(no postgres heartbeat — see manual_status)" or which are known invoke-on-demand. Calliope is the canonical example.
+- [ ] **Supervisor field strict-mode**: when EXPECTED_AGENTS has no `operator` field for an agent, the brief should say "no supervisor" rather than hallucinating one (e.g., "Apollo supervised by Harmonia" — Harmonia doesn't supervise Apollo).
 
 ### Hour 8 — pending
 
