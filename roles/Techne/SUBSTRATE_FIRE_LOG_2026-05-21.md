@@ -7725,6 +7725,54 @@ Bandit picked: b1, e5, f2, f4, h4.**
 (f2). 396.9M records, 225.9M kills, 1649 promoted, 2578
 templates, 0 verified findings.*
 
+---
+
+## Fire #99 — 2026-05-24 ~21:26Z — 9th throttled
+
+**335K records / 24 min / 0 templates / 20 promoted. Heavy
+saturation — 9.6M next() calls per gen but only 335K writes
+(96.5% dedup). All 5 picks at 100% sat.**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    d4   144,848   0          38.0%
+    c1   104,000   0          86.5%
+    h4    84,003   0          55.9%
+    b1     1,340   0          0%      (INFRA_DIAGNOSTIC)
+    b5     1,052   0          1.4%
+
+### Batch result
+
+- batch_id: `batch-20260524T212607Z-911469`
+- Duration: 24 min wall
+- 335,243 records / 192,004 kills / 110,118 confirms / 33K incon / 0 errors
+- 20 promoted records → **1669 lifetime promoted**
+- 0 new templates → 2578 lifetime discovery-role templates
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #99
+
+| Metric | Pre-#34 | Post-#98 | Post-#99 |
+|---|---|---|---|
+| Batches journaled | 30 | 97 | 98 |
+| Records | 154.4M | 396.9M | 397.2M |
+| Kills | 74.4M | 225.9M | 226.1M |
+| Confirmations | 75.5M | 149.9M | 150.0M |
+| Promoted records | 500 | 1649 | **1669** |
+| Templates (disc-role) | 17 | 2578 | 2578 |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=3600`.
+
+---
+
+*Fire #99 throttled = 335K records / 20 promoted / 0 templates.
+Deep saturation pull. 397.2M records, 226.1M kills, 1669
+promoted, 2578 templates, 0 verified findings.*
+
 
 
 
