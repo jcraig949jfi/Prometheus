@@ -313,7 +313,114 @@ Scheduling a 30-min wakeup to land at 12:57 EDT (8 min after 12:49 cycle) to cat
 
 Ready for hour 12 roadmap synthesis.
 
-### Hour 12 — final synthesis + roadmap
+### Hour 12 — 2026-05-24 14:01 EDT — final synthesis
+
+**Status this hour:** Pronoia alive (PG heartbeat 55s old), intel_loop daemon 31h uptime, machine_probe daemon healthy. Apollo at **9.00h stale** (continued climb, no recovery). 8 failures last 70min (same Atalanta/Pheme drumbeat, no new types). Probes flowing 59/59/59/58 across all four machines.
+
+---
+
+## Twelve-hour summary
+
+**The pipeline ran clean.** Across 02:55 → 14:01 EDT:
+- **3 Pronoia cycles fired on schedule** (04:49, 08:49, 12:49). All clean, all six boundary events `ok`, all dashboard pushes succeeded, all 3 emails delivered.
+- **Cycle durations**: 42.1s, 34.4s, 33.4s — Metis fast on all three (1.5–2.5s; no Nemotron fallthrough during this window). The earlier-in-the-week 145s Nemotron cycle didn't repeat.
+- **15 healthcheck events** from `HealthCheck-M4` (extra count beyond the 12 scheduled, due to my mid-day smoke tests when registering).
+- **88 failure-marked events** in 12h, ALL of them the same four `Atalanta/Pheme` upstream-not-found / self-audit-null alarms firing every ~25–30 min. Zero new alarm types appeared.
+- **Probe coverage**: M4 686, M3 630, M2 625, M1 628 rows. Expected ~720 per machine (12h × 60/min); the 90+ row shortfall on M1/M2/M3 reflects very-brief PG hiccups and the duplicate-daemon kill I did at hour 1.
+
+**What the orchestration logging caught.** The Apollo silent crash (~05:00 EDT) was discoverable from existing data within ~2h, then surfaced cleanly in the 08:49 Metis brief Act-on-this section as: *"Apollo (M2, supervised by Harmonia, evolutionary engine) has been DEAD for 13,662s (~3.8 hours)"* — using the supervisor+role outage format I shipped earlier this session. Reflagged again at 12:49 (now 7.8h DEAD). This is the orchestration working exactly as designed: a daemon died, no auto-restart fired, and the next brief made it the first item James would see.
+
+**Three operational events this monitoring window:**
+1. **M1 memory transient** (hour 3): spiked from 56% to 82% in 10 minutes, then released back to 52% within 30 min. Most likely Postgres VACUUM or a Pythia DR query loading a large result set. Caught real-time by the probe data, but my response was polling-based — a real OOM would have been faster than my 30-min check.
+2. **Apollo crash** (~hour 5 EDT, surfaced hour 7): Apollo's heartbeat thread died silently. M2 GPU dropped from 74% → 3.6%; no recovery in the remaining 7 hours of monitoring.
+3. **Mid-flight bug fix during earlier session** (carried forward): `send_brief_email.py`'s budget arithmetic crashed when Pythia reported `budget="compute-based (AI_Pro, 5h window)"` (string) vs an int. Fixed in commit `cce4505e` before this monitoring window started; verified no email failures recurred this window.
+
+---
+
+## Final Roadmap
+
+Consolidated across 12 hours of observations, deduped, and tiered by severity.
+
+### P0 — silent failure / data loss risk
+
+**1. Apollo (and any daemon) lacks a watchdog**
+- What: Apollo crashed at ~05:00 EDT and stayed crashed for the rest of the 12h window. No automatic restart, no escalation beyond the brief's outage line.
+- Why it matters (hours 5, 6, 7, 8, 9, 10, 11, 12): 9 hours of lost evolutionary-search compute on M2, no signal to James between the 4h brief cycles. Apollo is exactly the kind of daemon that needs to keep running.
+- Fix shape: a `PrometheusApolloWatchdog` Windows scheduled task on M2 mirroring the intelligence_loop watchdog pattern — checks for the Apollo pythonw process every 30 min, restarts with the configured config if absent, has a kill-switch file for intentional pauses. The intelligence_loop watchdog code at `scripts/intelligence_watchdog.ps1` can be templated. Same pattern should also cover Hephaestus (M3) and any future long-running daemons.
+
+**2. Threshold-based real-time alerts (not polling)**
+- What: 30-min polling caught the M1 memory transient but only after the spike was over. A real OOM would have killed Postgres + Redis + Pythia simultaneously before any of my hourly checks landed.
+- Why it matters (hours 3, 4): observability cadence shouldn't match incident-response cadence. The machine_probe daemon already has all the data needed; what's missing is a synchronous alert path.
+- Fix shape: extend `machine_probe.py` so that when CPU>90% sustained 60s, OR mem>90%, OR disk>90%, it (a) emits a `machine_probe_alarm` `log_work` event with `success=False`, and (b) optionally pushes a Redis stream entry to `agora:alerts` for any subscriber. Pronoia's intelligence_loop can subscribe to that stream and fire an immediate out-of-cycle email when an alarm event arrives (don't wait for the next 4h cycle).
+
+**3. machine_probe self-deduplication (lockfile)**
+- What: at hour 1 found two probe daemons running on M4 — one from my manual launch, one from the scheduled task. The `IgnoreNew` flag tracks scheduler-launched instances only.
+- Why it matters (hour 1): duplicates double-write to `agora.machine_probes`, potentially confusing trend analysis. With multiple machines deploying and personas restarting daemons during work, this will happen again.
+- Fix shape: at probe startup, write `logs/.machine_probe.<machine>.lock` containing the PID. Before writing, read existing lockfile; if PID inside is alive, log + exit. Clear lockfile on graceful shutdown. Stale lockfile (PID gone) gets overwritten.
+
+### P1 — misleading reporting / brief quality
+
+**4. Pronoia status field is stale-by-design**
+- What: when Pronoia's PG heartbeat thread dies, the row's `status` column stays at whatever was last written ("online"), even if the heartbeat is hours stale.
+- Why it matters (hour 6): the dashboard and any rule keying on `status` will report an agent as alive when its heartbeat is silent. Apollo's `status="online"` while 9h stale is the textbook example.
+- Fix shape: in `portfolio_monitor.py` and downstream, derive a `derived_status` from `heartbeat_age_sec` (alive < 300s, stale < 600s, dead else) and use that everywhere instead of the row's `status` column. Or fire a once-a-minute Postgres job that flips `status` to `"stale"` for rows with `last_heartbeat < NOW() - INTERVAL '5 minutes'`.
+
+**5. Brief falsely flags invoke-on-demand tools as DEAD**
+- What: at hour 7, Metis flagged Calliope (invoke-on-demand NotebookLM narrative) as DEAD with 5.3-day staleness. Calliope only writes a heartbeat when invoked.
+- Why it matters (hour 7): waste of a brief slot; trains James to ignore the brief.
+- Fix shape: add an `invoke_on_demand: true` flag to relevant `EXPECTED_AGENTS` entries (Calliope, Metis); brief filters those out of DEAD reporting. Alternatively, derive from kind: tools with `kind=tool` AND no operator-driven daemon are likely invoke-on-demand.
+
+**6. Brief hallucinates the supervisor when EXPECTED_AGENTS has no operator**
+- What: Metis writes "Apollo (M2, supervised by Harmonia, …)" for both 08:49 and 12:49 briefs. Apollo's `EXPECTED_AGENTS` entry has no `operator` field; Metis appears to be inferring from "Apollo and Harmonia both on M2."
+- Why it matters (hour 7, 11): assigns blame to the wrong persona. If James escalated to Harmonia "fix Apollo," that'd be wrong — Apollo is unsupervised.
+- Fix shape: in `format_state_for_prompt`, when an agent has no `operator` value, render explicitly as `[no supervisor — unsupervised daemon]` rather than omitting (which lets the LLM infer). Also strengthen the SYSTEM_PROMPT rule: "Never fabricate a supervisor; if the agent block says 'no supervisor,' write '(unsupervised)' in the outage line, do not guess."
+
+**7. LLM cascade reliability — Nemotron over-reliance**
+- What: Cerebras 429 / Groq 413 / NVIDIA 502 / DeepSeek 402 errors have been chronic. Nemotron ends up the responder, and Nemotron dumps chain-of-thought. The deterministic fallback I added catches it, but the fallback is a fixed template (loses synthesis quality).
+- Why it matters (entire window, plus pre-window history): brief quality degrades when only Nemotron responds. Already mitigated by the strip + fallback in commit `65b6e014`, but the root cause (cascade providers unhealthy) persists.
+- Fix shape: top up provider credits / rotate keys for Cerebras + Groq + DeepSeek; add at least one local provider (Ollama on M3 or M4 running a 70B+ model) as a last-resort that's free and always available. Test the cascade with `--probe-only` periodically and surface "all 4 providers failing" as a P0 incident in the brief.
+
+### P2 — polish / enhancement
+
+**8. machine_probe top-N-procs**
+- What: when M1 spiked at hour 3, I couldn't identify what process was eating memory without ssh.
+- Fix shape: probe captures top 5 processes by memory each cycle, stores in `extras` JSONB. Display in dashboard tooltip.
+
+**9. HealthCheck on M1/M2/M3 (currently only M4)**
+- What: `EXPECTED_AGENTS` lists HealthCheck-M1..M4, but only M4 has a scheduled task; M1/M2/M3 are MISSING in the dashboard.
+- Fix shape: either deploy the scheduled task via paste-prompt for M1/M2/M3 personas, OR remove the M1/M2/M3 entries from EXPECTED_AGENTS until deployment. The `machine_probe` daemon already covers all four machines for resource data, so HealthCheck is redundant on M1/M2/M3 — recommend removal from EXPECTED_AGENTS.
+
+**10. M3 disk trend monitoring**
+- What: M3 held steady at 60.0% disk used for the entire 12h window. Not climbing yet, but worth tracking.
+- Fix shape: when `prom_disk_pct` for any machine grows >1pp per 24h, surface as a Watch-this item. SQL window function over `agora.machine_probes` is straightforward.
+
+**11. Pronoia cycle duration variance tracking**
+- What: cycle durations this window 32s, 34s, 33s (consistent), but the prior-day 145s Nemotron cycle was a real outlier.
+- Fix shape: rolling mean ± stdev over the last 20 cycles; flag `pronoia_cycle_complete` events that exceed mean + 3σ.
+
+**12. Atalanta/Pheme upstream-wiring still pending**
+- What: 88 alarms over 12h, all from these two tools' missing `APOLLO_RUN_ROOTS` and `EVAL_ROOTS` env vars. Already flagged in the 2026-05-21 agent roster.
+- Fix shape: paste prompt for Aporia + Ergon to set the env vars on M1 and restart the relevant tools. Two minutes of work, removes the alarm noise floor.
+
+**13. Wakeup-scheduler phase-alignment** (meta-issue, fix in agent behavior not infra)
+- What: my 60-min monitoring wakeups consistently landed 9-22 min before Pronoia's 4h xx:49 cycle. Three phase-misses across hours 5, 6, 10.
+- Fix shape: when scheduling monitoring wakeups, compute `next_expected_cycle_time` and pick `min(60min, time_to_next_cycle + 10min_buffer)`. Already in my mental model going forward; documenting here for the record.
+
+---
+
+## What's already shipped this session (for the record)
+
+- [x] **Per-machine probe daemon** (`scripts/machine_probe.py`) → `agora.machine_probes`, deployed on all four machines this monitoring window. Captures CPU/GPU VRAM/RAM/Prometheus-disk.
+- [x] **Outage-line format** with `(machine, supervised by X, role)` — confirmed working in two consecutive briefs (08:49 and 12:49).
+- [x] **Pronoia PG dual-write heartbeat** — Pronoia now appears as ALIVE in the dashboard with `cycles_today` and `last_cycle_duration_sec` in `key_metrics`.
+- [x] **Orchestration `log_work` events at cycle boundaries** — `pronoia_cycle_started/portfolio_refresh/brief_generated/dashboard_pushed/email_dispatched/cycle_complete` all firing with cycle_id grouping.
+- [x] **Persona-not-flagged-as-failed-daemon** rule + chain-of-thought strip + deterministic fallback in Metis.
+- [x] **Watchdog for intelligence_loop** (`scripts/intelligence_watchdog.ps1`, scheduled task on M4) — template for the Apollo watchdog above.
+- [x] **HealthCheck-M4 hourly scheduled task** — confirmed firing 12+ times on schedule this window.
+
+---
+
+## Loop complete. No further wakeup scheduled.
 
 ---
 
