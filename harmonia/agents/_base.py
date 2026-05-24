@@ -340,8 +340,33 @@ class HarmoniaAgent(ABC):
 
     def tick(self, dry_run: bool = False) -> dict:
         """Public entry-point — wraps run_tick with telemetry bookkeeping."""
+        # Lazy import of structured-event emitter so a broken _scorer.py
+        # cannot break the swarm tick wrapper. Graceful degradation.
+        try:
+            from harmonia.agents._scorer import (
+                emit_event,
+                EVENT_TICK_START,
+                EVENT_TICK_COMPLETE,
+            )
+            HAS_EVENT_EMIT = True
+        except Exception:
+            HAS_EVENT_EMIT = False
+
         self._cycle_id = str(uuid.uuid4())
         self._tick_started_at = datetime.now(timezone.utc)
+        if HAS_EVENT_EMIT:
+            try:
+                emit_event(
+                    EVENT_TICK_START,
+                    {
+                        "dry_run": dry_run,
+                        "agent": self.name,
+                    },
+                    agent=self.name,
+                    tick_id=self._cycle_id,
+                )
+            except Exception as e:
+                self.log.warning(f"emit_event(tick_start) failed: {e}")
         t0 = time.time()
         try:
             stats = self.run_tick(dry_run=dry_run) or {}
@@ -351,6 +376,23 @@ class HarmoniaAgent(ABC):
         elapsed = time.time() - t0
         stats["elapsed_sec"] = round(elapsed, 2)
         stats["tick_id"] = self._cycle_id
+        if HAS_EVENT_EMIT:
+            try:
+                emit_event(
+                    EVENT_TICK_COMPLETE,
+                    {
+                        "dry_run": dry_run,
+                        "elapsed_sec": stats.get("elapsed_sec"),
+                        "errors": stats.get("errors", 0),
+                        "items_processed": stats.get("items_processed"),
+                        "artifacts_written": stats.get("artifacts_written"),
+                        "stats_keys": sorted(stats.keys())[:20],
+                    },
+                    agent=self.name,
+                    tick_id=self._cycle_id,
+                )
+            except Exception as e:
+                self.log.warning(f"emit_event(tick_complete) failed: {e}")
         # Heartbeat snapshot
         self.heartbeat({
             "last_tick_at": datetime.now(timezone.utc).isoformat(),

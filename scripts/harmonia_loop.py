@@ -112,6 +112,57 @@ log = logging.getLogger("harmonia_loop")
 
 STATE_PATH = _REPO_ROOT / "harmonia" / "agents" / "_rotation_state.json"
 JSONL_LOG = _REPO_ROOT / "harmonia" / "agents" / "_logs" / "ticks.jsonl"
+# D:\Prometheus\harmonia\agents\_rotation_weights.json — per-agent stride
+# config. stride=N means "this agent ticks once every N rotation cycles".
+# Missing-from-config defaults to 1 (tick every cycle). Missing file =
+# everyone strides at 1 (round-robin baseline preserved).
+WEIGHTS_PATH = _REPO_ROOT / "harmonia" / "agents" / "_rotation_weights.json"
+# Sentinel large initial value for ticks_since_last_pick so the first
+# rotation walk always honors stride (any agent is "due").
+_TICKS_INIT_HIGH = 100
+_UNKNOWN_WEIGHTS_WARNED: set[str] = set()
+
+
+def _load_rotation_weights() -> dict[str, int]:
+    """Load per-agent stride config. Returns {agent: stride_int}.
+
+    Gracefully defaults missing/corrupt file to all-1 (today's
+    round-robin behavior). Unknown agents in the file are dropped with
+    a one-shot warning.
+    """
+    weights: dict[str, int] = {a: 1 for a in AGENT_NAMES}
+    if not WEIGHTS_PATH.exists():
+        return weights
+    try:
+        raw = json.loads(WEIGHTS_PATH.read_text(encoding="utf-8"))
+    except Exception as e:
+        log.warning(
+            f"rotation weights load failed ({WEIGHTS_PATH}): {e} -- "
+            f"falling back to all-stride-1"
+        )
+        return weights
+    if not isinstance(raw, dict):
+        log.warning(
+            f"rotation weights file is not a dict ({WEIGHTS_PATH}) -- "
+            f"falling back to all-stride-1"
+        )
+        return weights
+    for k, v in raw.items():
+        agent = str(k).lower()
+        if agent not in AGENT_NAMES:
+            if agent not in _UNKNOWN_WEIGHTS_WARNED:
+                log.warning(f"unknown agent '{agent}' in rotation weights -- ignored")
+                _UNKNOWN_WEIGHTS_WARNED.add(agent)
+            continue
+        try:
+            stride = int(v)
+        except (TypeError, ValueError):
+            log.warning(f"non-integer stride for '{agent}' ({v!r}) -- using 1")
+            stride = 1
+        if stride < 1:
+            stride = 1
+        weights[agent] = stride
+    return weights
 
 
 def _append_jsonl_tick(record: dict) -> None:
@@ -154,11 +205,63 @@ def _pick_next_agent(force: str | None) -> tuple[str, dict]:
         if name not in AGENT_NAMES:
             raise SystemExit(f"unknown agent '{force}' "
                              f"(valid: {AGENT_NAMES})")
+        # Forced pick bypasses stride logic entirely; do not mutate the
+        # ticks_since_last_pick counters so the natural rotation cadence
+        # resumes cleanly on the next non-forced call.
         return name, state
-    idx = int(state.get("next_index", 0)) % len(AGENT_NAMES)
-    name = AGENT_NAMES[idx]
-    state["next_index"] = (idx + 1) % len(AGENT_NAMES)
-    return name, state
+
+    weights = _load_rotation_weights()
+
+    # Per-agent "ticks since this agent was last picked" counter. First
+    # run initializes every agent high so the first rotation walk works
+    # normally regardless of stride.
+    raw_ticks = state.get("ticks_since_last_pick")
+    if not isinstance(raw_ticks, dict):
+        raw_ticks = {}
+    ticks: dict[str, int] = {}
+    for a in AGENT_NAMES:
+        try:
+            ticks[a] = int(raw_ticks.get(a, _TICKS_INIT_HIGH))
+        except (TypeError, ValueError):
+            ticks[a] = _TICKS_INIT_HIGH
+
+    # Every agent's wait counter advances by 1 each call.
+    for a in AGENT_NAMES:
+        ticks[a] += 1
+
+    # Walk round-robin starting at next_index; pick the first candidate
+    # whose stride has elapsed. Cap at 2 * len(AGENT_NAMES) iterations
+    # to guarantee termination if config is broken.
+    start_idx = int(state.get("next_index", 0)) % len(AGENT_NAMES)
+    n = len(AGENT_NAMES)
+    cap = 2 * n
+    chosen_name: str | None = None
+    chosen_idx: int = start_idx
+    for step in range(cap):
+        candidate_idx = (start_idx + step) % n
+        candidate = AGENT_NAMES[candidate_idx]
+        stride = weights.get(candidate, 1)
+        if ticks[candidate] >= stride:
+            chosen_name = candidate
+            chosen_idx = candidate_idx
+            break
+
+    if chosen_name is None:
+        # All strides too large vs counters; fall back to start_idx pick
+        # so the swarm never freezes. Should be unreachable when at least
+        # one stride <= _TICKS_INIT_HIGH, but guard anyway.
+        chosen_name = AGENT_NAMES[start_idx]
+        chosen_idx = start_idx
+        log.warning(
+            "rotation walk found no due agent within cap; falling back "
+            f"to next_index={start_idx} ({chosen_name})"
+        )
+
+    # Picked agent's counter resets; advance next_index past it.
+    ticks[chosen_name] = 0
+    state["ticks_since_last_pick"] = ticks
+    state["next_index"] = (chosen_idx + 1) % n
+    return chosen_name, state
 
 
 def _emit_loop_heartbeat(last_run: dict) -> None:
