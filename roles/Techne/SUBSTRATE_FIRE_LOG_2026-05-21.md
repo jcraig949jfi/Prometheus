@@ -6403,6 +6403,122 @@ pattern (0 templates on re-pick after 131 in #65). f4 also
 exhausted on 2nd re-pick. 347.8M records, 197.0M kills, 1369
 promoted, 2364 templates, 0 verified findings.*
 
+---
+
+## Fire #83 — 2026-05-24 ~01:21Z
+
+**g5 = 10TH second-wave explorer (139 templates from 1.97M
+records). Heartbeat caught e1 STALLED cleanly for 48 minutes.
+5M cap in 49 min (fast). Cooldown patch shipped between fires.**
+
+### Bandit + heartbeat (caught a stall in the wild!)
+
+    [theseus] Bandit picked: ['a3', 'c5', 'e1', 'g1', 'g5']
+    [heartbeat: t=48.6min, 5M cap hit, RSS 75→2439MB]
+    [heartbeat] e1=4,966/14,966:stalled2900s    ← STALL CAUGHT
+    [theseus] SATURATION WARNING: g1@100%
+    [theseus] Signature templates: 145 new this batch;
+              2509 lifetime templates from discovery-role gens
+    [theseus] Honest accounting: 20 promoted records this batch;
+              1389 lifetime promoted;
+              verified mathematical findings = 0
+    [theseus] Batch done: 5M records (cap), 49 min wall
+
+### Per-gen attribution — g5 the new explorer
+
+    gid  records      dup     templates  kill_rate
+    g5   1,972,919    7.9%   139        7.8%      ← NEW EXPLORER
+    a3   2,127,393    0.7%    0         63.5%
+    c5     894,538   58.2%    5         89.0%
+    e1       4,966    0.0%    1          0%       (STALLED — see below)
+    g1         184  100.0%    0         58.7%
+
+**g5 (scale_invariance) contributed 139 of 145 new templates
+(96%) from 1.97M records.** That's 0.007% novelty rate — same
+explorer-class yield as other g-family gens (g4 in #65).
+
+Ten second-wave explorers identified now:
+
+    Fire #62: c1  (claim_mutation)         — 234 templates
+    Fire #63: b4  (fixed_point_hunt)       —  11 templates
+    Fire #65: g4  (reflection_duality)     — 131 templates
+    Fire #66: a1  (catalog_cross_product)  — 176 templates
+    Fire #66: f4  (frontier_pursuit)       — 175 templates
+    Fire #68: c5  (specialization)         —  68 templates
+    Fire #72: a5  (distribution_match)     —  38 templates
+    Fire #73: c2  (threshold_mutation)     — 105 templates
+    Fire #79: e2  (arxiv_abstract_mining)  — 269 templates  (63.4%!)
+    Fire #83: g5  (scale_invariance)       — 139 templates  ← NEW
+
+10 of ~28 active-discovery gens have demonstrated latent
+template-generation capacity when actually picked at scale.
+
+### HEARTBEAT CAUGHT A STALL: e1 silent for 48 minutes
+
+    e1=4,966/14,966:stalled2900s
+
+e1 (research_batch_parser) emitted 4,966 records early then
+went silent for 2,900 seconds (48 minutes). The heartbeat's
+:stalled<seconds>s tag flagged this in every snapshot during
+the stall.
+
+This is exactly what the Fire #70 incident response was for.
+Pre-heartbeat, this would have been invisible — the daemon
+would just show "batch done" at the end with no signal of
+the stall.
+
+The TIME_SINCE_EMIT_THRESHOLD_S=90 didn't fire because the
+batch hit its 5M cap first via the other gens. So e1 ran
+silently but didn't block the daemon.
+
+Note: e1's ticks counter says 14,966 — meaning the daemon was
+still CALLING e1.next() (Nones counting toward exhaustion
+threshold). Tick count was just being throttled by the round-
+robin loop. The other gens were emitting fast enough that
+e1 only got called ~5K times beyond its initial emissions.
+
+### Cooldown patch shipped between fires (commit 296d0fc0)
+
+Direct response to 3-of-3 reservoir-exhaustion pattern. Fire
+#83 was started BEFORE this commit landed; Fire #84 will be
+the first fire with cooldown active. Recently-picked gens
+(f4, e2, g4) will be downweighted for 3 fires after their
+last pick.
+
+### Batch result
+
+- batch_id: `batch-20260524T012115Z-722906`
+- Duration: 49 min wall (5M cap hit fast)
+- 5,000,000 records / 2,300,944 kills / 2,694,090 confirms / 4,966 incon / 0 errors
+- 20 promoted records → **1389 lifetime promoted**
+- 145 new templates → **2509 lifetime discovery-role templates**
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #83
+
+| Metric | Pre-#34 | Post-#82 | Post-#83 |
+|---|---|---|---|
+| Batches | 30 | 82 | 83 |
+| Records | 154.4M | 347.8M | 352.8M |
+| Kills | 74.4M | 197.0M | 199.3M |
+| Confirmations | 75.5M | 132.2M | 134.9M |
+| Promoted records | 500 | 1369 | **1389** |
+| Templates (disc-role) | 17 | 2364 | **2509** |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=120`. Fire #84 will be first fire with cooldown
+active.
+
+---
+
+*Fire #83 closed. g5 = 10th second-wave explorer (139 templates).
+Heartbeat caught e1 stalling for 48 minutes (validates the
+Fire #70 fix). Cooldown patch ships for Fire #84+. 352.8M
+records, 199.3M kills, 1389 promoted, 2509 templates, 0
+verified findings.*
+
 
 
 
