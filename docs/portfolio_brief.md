@@ -1,5 +1,5 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-05-24 04:48:57 AM UTC*
+*Generated: 2026-05-24 08:49:01 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
@@ -10,35 +10,35 @@
 Redis is unreachable from M4; portfolio_monitor fell back to Postgres dual-write. Streams (discoveries, main, challenges) are empty.  
 Restore Redis on M1 to re-enable Agora pub/sub and stream resumption.
 
-**Clio (M1, supervised by Aporia, paper scanner) has been DEAD for 677s (~11.3 min)**  
-Heartbeat last seen 677s ago; agent is unresponsive despite recent MemoryError hardening.  
-Investigate Clio process state and restart if necessary — pending Aporia’s supervision.
+**Clio (M1, supervised by Aporia, paper scanner) has been DEAD for 332s (~5.5 min)**  
+Heartbeat last seen 332s ago; agent unresponsive despite recent MemoryError hardening.  
+Investigate Clio process state and restart under Aporia’s supervision.
 
-**Calliope (M4, daily NotebookLM narrative synthesizer) has been DEAD for 433,676s (~5.0 days)**  
-No heartbeat in over 5 days; agent not contributing to daily narrative synthesis.  
-Determine if revival is required or deprecation intended — no recent activity indicates stalled output.
+**Calliope (M4, daily NotebookLM narrative synthesizer) has been DEAD for 448,079s (~5.2 days)**  
+No heartbeat in over 5 days; agent not contributing to narrative synthesis.  
+Confirm deprecation intent or initiate revival — no recent activity observed.
 
 ## Watch this
 
-**No Deep Research dispatched or received in last 24h**  
-Pythia shows no DR report activity since prior brief; 0 of 20 daily tokens visibly spent.  
-Verify Aporia’s DR ticket queue — low utilization suggests intent or delivery blockage.
+**No Deep Research dispatched in last 4h — 15 of 20 daily tokens remaining**  
+Pythia’s DR output has paused since last brief; only 5 reports issued today despite active Aporia session.  
+Monitor for new DR triggers — low utilization may indicate queue blockage or intent shift.
 
 **Nemesis @ M3 (adversarial) and Nous @ M4 (combinatorial) remain UNKNOWN**  
-Both agents lack Postgres heartbeats; status uncertain due to Redis outage.  
-Monitor next cycle — if still UNKNOWN without manual confirmation, escalate.
+Both agents lack Postgres heartbeats; Redis outage prevents confirmation of liveness.  
+Verify status via manual_status.json next cycle — if still UNKNOWN, escalate.
 
-**Hephaestus forge rate at 1.1% — sustained low throughput by design**  
-Current forge rate reflects tightened validation battery; 2 forges, 183 scraps in session.  
-Confirm intended selection pressure — low rate is expected, not anomalous.
+**Hephaestus forge rate at 0.0% — session forges = 0, scraps = 0 (by design)**  
+Current session shows no forges or scraps; consistent with tightened validation battery.  
+Confirm intended stasis — low activity is expected, not anomalous.
 
 ## For the record
 
 **Pythia produced 5 Deep Research reports in last 24h**  
-Reports: ERG-02 (substrate alternatives), kpz_universality_class_spec, yang_mills_mass_gap, bombieri_lang_higher_dim, HYP-2026-05-23-001 (proof decomposition), plus Moros cross-pollination analysis. Full texts available via output_path in git logs.
+Reports: Argos lens fingerprint (Cramér-Granville), Stygian surveys (HECATE-f4_frontier_equal_, BL-C-004, HECATE-c1_mut_equal_mod_2), Lethe hunts (lehmer_conjecture_mahler, polynomial_hierarchy_collapse, kpz_universality_class_spec, yang_mills_mass_gap, bombieri_lang_higher_dim), Moros cross-pollination (gpu_reservation_system, apollo_investigation), ERG-02 substrate alternatives. Full texts in git logs.
 
-**Apollo (M2) and Hephaestus (M3) operational with dual-write telemetry**  
-Both core daemons ALIVE with sub-60s heartbeats; Pronoia (M4) also ALIVE, cycling every ~40s.
+**Apollo (M2) and Pronoia (M4) ALIVE with sub-60s heartbeats; Hephaestus (M3) starting up**  
+Apollo hb=44s, Pronoia hb=12s, Hephaestus hb=0s — all daemons responsive with dual-write telemetry.
 
 **(17) unexpected agents still pending revival — known legacy state**  
-Including Ergon, Theseus, Penelope, and Charon swarm; most DEAD/STALE from prior runs. No action required unless reactivation initiated.
+Including Ergon, Theseus, Penelope, Charon swarm (Stygian, Lethe, etc.); all DEAD/STALE from prior runs. No action required unless reactivation initiated.
