@@ -138,7 +138,36 @@ If the rate of the last 10 minutes sustains (~3pp/min), M1 hits OOM in ~6 minute
 - [ ] **Threshold-based PushNotification**: M1 mem at 82% should have alerted James in real-time, not wait for the 08:49 email. Add a "soft alarm" rule that fires `success=False` `machine_health_alarm` events at 80% threshold.
 - [ ] **Apollo M2 idle-status detection**: GPU VRAM dropping from 74→3.6% in one cycle is either a graceful generation end or a crash. Need to disambiguate via Apollo's heartbeat key_metrics (last cycle ago, last fitness).
 
-### Hour 4 — pending
+### Hour 4 — 2026-05-24 06:36 EDT (accelerated 30-min check)
+
+**M1 memory RECOVERED — was a transient.** Postgres + Redis still reachable; M1 mem dropped from 82.1% (06:03) to 52.6% (06:35). Rock-flat at 52.5% for the last 15 minutes. Most likely cause was a Postgres VACUUM or a Pythia DR query that briefly loaded a large result set, then released. Not a leak — the memory was returned cleanly. **False alarm averted.**
+
+**Lesson captured for the roadmap**: my 30-min response cadence caught the recovery, but a real OOM would have been faster than 30 min. The orchestration needs threshold-based real-time alerts at 90%/95%, not polling.
+
+**M2 Apollo still idle.** GPU VRAM = 3.6% util = 0%, CPU near zero for 10+ consecutive minutes. This is sustained, not transient. Apollo either:
+- Finished a generation cycle and is waiting for the next trigger
+- Crashed silently mid-run
+- Was stopped by James
+
+Apollo's own heartbeat (separate from probe) would resolve this, but Apollo uses its own dual-write thread, not session_telemetry, so it doesn't show on the per-machine probe pulse. Need to cross-reference Apollo's `agora.agent_heartbeats` row.
+
+**Probes still flowing**: M1 59, M2 59, M3 58, M4 58 per hour. Cadence consistent.
+
+**Latest snapshot per machine:**
+| Machine | CPU | Mem | Disk | GPU VRAM |
+|---|---|---|---|---|
+| M1 | 9.2% | 52.6% (recovered) | 31.4% | 5.1% |
+| M2 | 1.1% | 24.4% | 7.0% | 3.6% (Apollo idle) |
+| M3 | 25.0% | 25.1% | 60.0% | 5.2% |
+| M4 | 1.2% | 31.2% | 17.2% | 0.0% |
+
+**Failures last 35min: 4** — only Atalanta + Pheme (same as every cycle).
+
+**Returning to hourly cadence for hour 5.**
+
+**Candidate issues confirmed/added:**
+- [x] **Threshold-based real-time alerts** (mem >90%, disk >90%, etc.) — was speculative last hour, confirmed essential this hour. A 30-min polling cadence is OK for monitoring but useless for OOM avoidance.
+- [ ] **Apollo heartbeat cross-reference**: when M2 probe shows idle GPU, the brief should also query Apollo's agora.agent_heartbeats row to disambiguate "Apollo done with cycle" vs "Apollo crashed."
 
 ### Hour 5 — pending
 
