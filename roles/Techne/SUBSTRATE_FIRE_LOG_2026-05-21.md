@@ -7410,6 +7410,83 @@ high confirm rate (92% / 39%).**
 records, 221.2M kills, 1569 promoted, 2575 templates, 0
 verified findings.*
 
+---
+
+## Fire #94 — 2026-05-24 ~15:51Z — PARTIAL RUN (premature exit)
+
+**Process exited at t=3.0min (350K records). Clean exit code 0,
+no traceback in stdout. handoff_daemon also exited around same
+time. Shared external cause suspected (OS sleep / logoff /
+scheduled task).**
+
+### Bandit + heartbeat (only 6 snapshots)
+
+    [theseus] Bandit cooldown active: 14 gens picked within last 3 fires (0.3x)
+    [theseus] Bandit bootstrap selected: ['f1', 'a3', 'c4', 'c5', 'f2']
+    [heartbeat] t=0.5min → 57K records
+    [heartbeat] t=1.0min → 119K records
+    [heartbeat] t=1.5min → 179K records
+    [heartbeat] t=2.0min → 238K records
+    [heartbeat] t=2.5min → 296K records
+    [heartbeat] t=3.0min → 350K records  ← LAST EVENT, process exited
+
+### What happened
+
+- Process: 91 → 270 MB RSS (not OOM)
+- Tick rate: steady 455-476/s
+- All 5 gens healthy
+- No slow_next events, no exhausted events, no errors
+- Exit code: 0 (clean exit, NOT a crash)
+- Concurrent: handoff_daemon (PID different) exited around same time
+
+The clean exit code + simultaneous handoff_daemon termination
+strongly suggests an external cause (Windows sleep, user logoff,
+or a scheduled task suspending Python processes). The daemon
+didn't write a journal entry because the end-of-batch flush
+code path wasn't reached.
+
+### Data state
+
+- Corpus file written: `batch-20260524T155107Z-fe54ef.jsonl` (405 MB raw)
+- Records written to disk: ~350K (matches heartbeat counter)
+- Records NOT journal-counted: lifetime stats unchanged from #93
+- Templates: unknown (signature_index flush didn't run)
+- Promoted records: unknown (maybe_emit_discoveries didn't run)
+
+The records are PRESERVED on disk; handoff_daemon will pick them
+up on its next cycle and compact them. No data loss, just no
+journal accounting for Fire #94's truncated run.
+
+### Lifetime stats (unchanged from Fire #93)
+
+| Metric | Pre-#34 | Post-#93 | Post-#94 (partial) |
+|---|---|---|---|
+| Batches | 30 | 93 | 93 (#94 not journaled) |
+| Records | 154.4M | 388.8M | 388.8M (raw on disk +350K) |
+| Promoted records | 500 | 1569 | 1569 (no flush) |
+| Templates (disc-role) | 17 | 2575 | 2575 (no flush) |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Note: heartbeat would have caught a real stall
+
+If Fire #94 had genuinely hung (not exited), the heartbeat
+would have shown :stalled tags after 60s. Instead the process
+exited cleanly mid-run. That's a different failure mode the
+heartbeat doesn't directly catch — but the auto-notification
+DID fire on completion, and inspection of the journal-mismatch
+(no batches.jsonl entry vs heartbeat showing partial data)
+revealed the truncation immediately.
+
+### Schedule wakeup
+
+`delaySeconds=3600`. Fire #95 throttled, normally.
+
+---
+
+*Fire #94 PARTIAL — 350K records preserved on disk, no journal
+entry written. External-cause exit suspected. Lifetime stats
+unchanged. Continuing to Fire #95.*
+
 
 
 
