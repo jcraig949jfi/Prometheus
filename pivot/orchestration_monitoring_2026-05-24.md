@@ -38,7 +38,35 @@
 
 (populated as wakeups fire — each entry is short: deltas from baseline, anomalies, candidate fixes/enhancements)
 
-### Hour 1 — pending
+### Hour 1 — 2026-05-24 04:00 EDT
+
+**Pipeline status:** intelligence_loop PID 17396 alive (5d22h uptime). Watchdog healthy. Last cycle 00:49 EDT; next ~04:49 EDT.
+
+**Healthcheck status:** PrometheusHealthCheckM4 scheduled task firing on schedule (last 03:56:48, next 04:56:45, no missed runs, exit code 0).
+
+**Major positive surprise — machine_probe deployed to all 4 machines.** James (or the personas) ran the paste-ready prompt. In the last 2 hours `agora.machine_probes` accumulated:
+
+| Machine | Probes/2h | Latest CPU | Latest Mem | Latest Disk | Latest GPU VRAM |
+|---|---|---|---|---|---|
+| M1 | 36 | 14.1% | 56.6% | 31.5% | 5.1% |
+| M2 | 33 | 7.9% | 34.8% | 7.0% | **74.0%** (Apollo active) |
+| M3 | 39 | 25.2% | 24.4% | **59.9%** (highest) | 5.2% |
+| M4 | 92 | 6.1% | 30.5% | 17.2% | 0.0% |
+
+**Observations:**
+- M2 GPU VRAM at 74% — Apollo's evolutionary search actively using GPU. Healthy signal.
+- M3 disk at 59.9% used (free space declining as forge accumulates substrate?). Worth tracking trend over the 12h window.
+- M1 memory at 56.6% — moderate but expected with Postgres + Redis + Pythia.
+
+**Issue caught + fixed mid-cycle**: at hour 1 wakeup, found **two** machine_probe processes running on M4 (PID 14236 from manual launch, PID 6460 from scheduled task). The IgnoreNew flag only tracks instances the scheduler itself started, not manually-spawned ones. Killed PID 14236 (manually-launched). Adds candidate-issue: probe daemon should self-detect and refuse to start if another instance is already running (lockfile pattern).
+
+**Failures/anomalies:** none.
+
+**Pronoia cycles this hour:** 0 (expected; 4h cadence anchored at xx:49).
+
+**Candidate issues added:**
+- [ ] **machine_probe self-deduplication**: write a lockfile at startup; if present and the PID inside is alive, log + exit. Prevents double-daemons after manual launches collide with scheduler.
+- [ ] **M3 disk trend monitoring**: when prom_disk_pct climbs >1% per day, surface in brief.
 
 ### Hour 2 — pending
 
