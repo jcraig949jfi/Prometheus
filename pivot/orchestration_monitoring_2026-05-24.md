@@ -169,7 +169,40 @@ Apollo's own heartbeat (separate from probe) would resolve this, but Apollo uses
 - [x] **Threshold-based real-time alerts** (mem >90%, disk >90%, etc.) — was speculative last hour, confirmed essential this hour. A 30-min polling cadence is OK for monitoring but useless for OOM avoidance.
 - [ ] **Apollo heartbeat cross-reference**: when M2 probe shows idle GPU, the brief should also query Apollo's agora.agent_heartbeats row to disambiguate "Apollo done with cycle" vs "Apollo crashed."
 
-### Hour 5 — pending
+### Hour 5 — 2026-05-24 07:38 EDT
+
+**Apollo is dead.** Apollo's `agora.agent_heartbeats` row shows `last_heartbeat` 9,444s (2h 38min) ago. Apollo's daemon-thread heartbeat is supposed to fire every 60s, so 2.5h silence = daemon process crashed or heartbeat thread died. This confirms what the M2 probe was showing earlier (GPU VRAM 74% → 3.6% sustained):
+
+- Apollo's heartbeat: last update ~05:00 EDT
+- M2 GPU dropped to 3.6% somewhere around the same time
+- M2 has been at ~1% CPU / 24% mem ever since — machine itself is fine, just no Apollo workload
+
+**This was discoverable from the existing data**, but only by cross-referencing Apollo's heartbeat with the M2 probe. Adding to roadmap: Metis should fire "Apollo heartbeat stale" as an Act-on-this item when Apollo's PG heartbeat is >10 min old.
+
+**M1 memory: stable, healthy.** Hour range 32.3% to 55.1%, latest 43.2%. The 82% spike at hour 3 was definitively transient. No anomaly.
+
+**M2 idle confirmed.** GPU VRAM 3.6% (sustained), util 0%, CPU 0.6%. M2 has been almost entirely idle for ~2.5h.
+
+**Pronoia 08:49 cycle hasn't fired yet.** I misread my own monitoring prompt — next cycle is at 08:49 EDT (~1h from now), not by this hour. Will catch it at hour 6.
+
+**Other observations:**
+- Healthcheck-M4 fired at 06:56 on schedule (next 07:56)
+- Daemons healthy: intel_loop 1611min uptime, probe 270min uptime
+- Probes flowing from all 4 machines at ~58-59/hour
+
+**Latest snapshot per machine:**
+| Machine | CPU | Mem | Disk | GPU VRAM | Notes |
+|---|---|---|---|---|---|
+| M1 | 12.4% | 43.2% (recovered) | 31.5% | 5.1% | |
+| M2 | 0.6% | 24.4% | 7.0% | 3.6% | **Apollo dead 2.5h** |
+| M3 | 25.2% | 25.0% | 60.0% | 5.2% | |
+| M4 | 3.9% | 31.5% | 17.2% | 0.0% | |
+
+**Failures last 70min: 8** — same Atalanta/Pheme upstream-not-found pattern. No new alarm types.
+
+**Candidate issues added:**
+- [ ] **CRITICAL: Apollo down for 2.5h with no alert.** Apollo's heartbeat staleness should fire an Act-on-this anomaly in the next Metis brief (08:49 cycle). If it doesn't, the brief filter is missing the rule. Add: "any daemon-kind agent with heartbeat >10min stale = Act-on-this."
+- [ ] **Apollo silent-crash detection**: Apollo's `key_metrics` (last `generation`, last `phase`) would tell us when it last advanced. If `gen_time_s` last update + 10 minutes < now, it crashed even if the heartbeat thread is somehow still firing.
 
 ### Hour 6 — pending
 
