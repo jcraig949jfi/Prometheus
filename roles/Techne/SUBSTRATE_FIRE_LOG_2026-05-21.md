@@ -7607,6 +7607,77 @@ just 4 records this fire (very deep saturation in current state).
 (a4). 393.3M records, 223.7M kills, 1609 promoted, 2576
 templates, 0 verified findings.*
 
+---
+
+## Fire #97 — 2026-05-24 ~18:24Z — 7th throttled
+
+**1.26M records / 24 min / 1 template (d3) / 20 promoted.
+Heartbeat caught e1 stalling AGAIN (3rd time across #83, #86, #97).**
+
+### Picks + key metrics
+
+    Bandit picked: ['a3', 'b5', 'c3', 'd3', 'e1']
+    [heartbeat: e1=5,099/15,099:stalled1416s]  ← 3rd documented stall
+    Signature templates: 1 new (2577 lifetime, +1)
+    Honest accounting: 20 promoted → 1629 lifetime
+    verified mathematical findings = 0
+
+### Per-gen attribution
+
+    gid  records   dup     templates  kill_rate
+    a3   632,249    0.2%   0          63.7%
+    d3   623,724    1.6%   1          98.3%
+    e1     5,099    0.0%   0          0%      (STALLED at 23.6 min)
+    b5     1,052   99.8%   0          1.4%
+    c3        71  100.0%   0          46.5%
+
+### e1 stalling pattern documented across 3 fires
+
+    Fire #83: e1 stalled 48 min
+    Fire #86: e1 stalled 46 min
+    Fire #97: e1 stalled 24 min (caught at end-of-batch)
+
+e1 emits ~5K records then runs out of source data. The
+research_batch_parser cache is permanently exhausted. Same as
+the pattern noted earlier — e1 is effectively a stub-with-
+finite-output.
+
+Worth a follow-up: reclassify e1 to a different status (maybe
+STUB-or-EXHAUSTED) so the bandit doesn't keep picking it.
+NOT shipping that change now — adding to the post-throttle
+follow-up list.
+
+### Batch result
+
+- batch_id: `batch-20260524T182423Z-97ff53`
+- Duration: 24 min wall
+- 1,262,195 records / 1,015,979 kills / 230,716 confirms / 15K incon / 0 errors
+- 20 promoted records → **1629 lifetime promoted**
+- 1 new template (d3) → **2577 lifetime discovery-role templates** (+1)
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #97
+
+| Metric | Pre-#34 | Post-#96 | Post-#97 |
+|---|---|---|---|
+| Batches journaled | 30 | 95 | 96 |
+| Records | 154.4M | 393.3M | 394.6M |
+| Kills | 74.4M | 223.7M | 224.7M |
+| Confirmations | 75.5M | 148.8M | 149.0M |
+| Promoted records | 500 | 1609 | **1629** |
+| Templates (disc-role) | 17 | 2576 | **2577** |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=3600`.
+
+---
+
+*Fire #97 throttled = 1.26M records / 20 promoted / 1 template.
+e1 stalled again (3rd documented). 394.6M records, 224.7M kills,
+1629 promoted, 2577 templates, 0 verified findings.*
+
 
 
 
