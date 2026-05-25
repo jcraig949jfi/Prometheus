@@ -9186,6 +9186,52 @@ Lifetime: 123 batches journaled / 456.6M records / 258.8M kills /
 456.6M records, 258.8M kills, 2111 promoted, 2643 templates,
 0 verified findings.*
 
+---
+
+## Fire #129 — 2026-05-25 ~22:58Z
+
+**3.08M records / 24 min / 0 templates / 20 promoted.
+Mix a1/b2/b5/c5/d4. d4 + a1 dominant. Tick rate 1035/s.
+batch_end clean.**
+
+### Per-gen attribution
+
+    gid  records     templates  kill_rate
+    d4   1,401,902   0          67.5%
+    a1   1,259,240   0          69.0%
+    c5     412,422   0          68.3%
+    b2       3,636   0          34.8%
+    b5       1,052   0           1.4%
+
+### Batch result
+
+- batch_id: `batch-20260525T225805Z-685b4f`
+- Duration: 24 min wall, 1035/s tick rate
+- 3,078,252 records / 2,098,252 kills / 980,000 confirms / 0 errors
+- 20 promoted records → **2131 lifetime promoted**
+- 0 new templates → 2643 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+- batch_end ✓ (RSS 1004MB)
+
+Lifetime: 124 batches journaled / 459.7M records / 260.9M kills /
+2131 promoted / 2643 templates / 0 verified findings.
+
+Top demand: knot/nf_class_number (244K events).
+
+### Notable
+
+- d4 ran fine with new scan cap (commit 7ea519ef) — 1.4M
+  records, 67.5% kill rate, no stall.
+- c5 (specialization, "second-wave explorer") emitted 412K
+  records this fire but 0 templates — possibly tapping
+  already-saturated parent claims.
+
+---
+
+*Fire #129 throttled = 3.08M records / 20 promoted / 0 templates.
+459.7M records, 260.9M kills, 2131 promoted, 2643 templates,
+0 verified findings.*
+
 
 
 
