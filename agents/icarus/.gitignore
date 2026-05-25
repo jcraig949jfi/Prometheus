@@ -1,0 +1,44 @@
+# Runtime control flags + lock
+state/_icarus.pid
+state/pause.flag
+state/resume.flag
+state/kill.flag
+
+# Runtime state -- mutable; not tracked
+state/seen_inbox_files.json
+state/seen_chimera_responses.json
+state/seen_frontier_responses.json
+state/strategy_log.md
+state/composition_attempts.jsonl
+state/complexity_history.jsonl
+state/dr_recent_topics.json
+state/claude_token_usage_*.json
+
+# Generated cycle dirs (everything after cycle_000 is auto-generated;
+# kept locally for forensic value; not synced to remote)
+cycles/cycle_001/
+cycles/cycle_002/
+cycles/cycle_003/
+cycles/cycle_004/
+cycles/cycle_005/
+cycles/cycle_006/
+cycles/cycle_007/
+cycles/cycle_008/
+cycles/cycle_009/
+cycles/cycle_0[1-9][0-9]/
+cycles/cycle_[1-9][0-9][0-9]/
+
+# Chimera outbox / inbox -- ephemeral coordination, not tracked
+chimera_outbox/*.md
+chimera_inbox/*.md
+frontier_outbox/*.md
+frontier_inbox/*.md
+
+# Wisdom is auto-generated; tracked content seeded only by Phase 1+
+wisdom/wisdom.md
+wisdom/anti_patterns.jsonl
+
+# Python
+__pycache__/
+**/__pycache__/
+*.pyc
