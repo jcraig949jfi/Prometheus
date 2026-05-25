@@ -8854,6 +8854,56 @@ Lifetime: 116 batches journaled / 437.5M records / 247.7M kills /
 437.5M records, 247.7M kills, 1991 promoted, 2642 templates,
 0 verified findings. batch_end ✓*
 
+---
+
+## Fire #122 — 2026-05-25 ~19:23Z — **0 PROMOTED (FIRST!)**
+
+**0.71M records / 24 min / 1 template / 0 promoted. h1
+dominant (697K records, 99.7% kill rate). Tick rate
+3678/s — RECORD. First fire of session with 0 promoted
+records.**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    h1   697,035   0          99.7%
+    a5     5,677   1          32.7%
+    b2     3,636   0          34.8%
+    b1     1,340   0           0.0%
+    c2         7   0          28.6%
+
+### Batch result
+
+- batch_id: `batch-20260525T192305Z-e967ae`
+- Duration: 24 min wall, **3678/s tick rate** (vs prior peak 1001/s)
+- 707,695 records / 698,374 kills / 5,536 confirms / 0 errors
+- **0 promoted records this batch** (h1's REJECTED records carry
+  lower training_weight, none cleared 0.6 threshold)
+- +1 template from a5 → 2643 lifetime
+- **Verified mathematical findings: 0**
+
+Lifetime: 117 batches journaled / 438.2M records / 248.4M kills /
+**1991 promoted (unchanged)** / 2643 templates / 0 verified findings.
+
+### Notable — corroborates triage finding
+
+Fire #121 triage (commit 1321ba7c) showed promoted records
+are dominated by f2/g4 parity tautologies on SHADOW_CATALOG.
+**Fire #122 = no f2/g4 picked + h1 kill-storm = 0 promoted.**
+
+This is direct evidence: when the picked-gens mix excludes
+parity-tautology emitters, the promote-count drops to zero.
+Confirms that 1991 lifetime promoted ≠ 1991 findings.
+
+Tick rate 3678/s likely from h1's fast catalog-pair checks
+when in kill mode (no expensive corpus loads).
+
+---
+
+*Fire #122 throttled = 0.71M records / 0 promoted / 1 template.
+438.2M records, 248.4M kills, 1991 promoted (unchanged), 2643
+templates, 0 verified findings.*
+
 
 
 
