@@ -55,6 +55,9 @@ from lineage import (
     clone_from_stable, freeze_cycle, mark_stable, record_outcome,
 )
 import improve as improve_mod
+import patcher
+import tdd_runner
+import falsifier as falsifier_mod
 
 
 # ---------------------------------------------------------------------------
@@ -255,6 +258,12 @@ def run_cycle(
             encoding="utf-8",
         )
 
+    # Step 1b: apply the diff to the cycle's code dir (Phase 1a)
+    apply_result = {"applied": False, "reason": "no_diff", "files_changed": []}
+    if diff_text.strip():
+        apply_result = patcher.apply_diff(diff_text, new_cycle_dir / "code")
+        _append_cycle_log(n, "step_1b_apply_diff", apply_result)
+
     # Step 2: external ingestion (Phase 0 stubs)
     _append_cycle_log(n, "step_2_external_ingestion", {
         "dr_enqueued": 0,
@@ -268,9 +277,40 @@ def run_cycle(
         "phases_so_far": ["step_0_clone", "step_1_improve", "step_2_external_ingestion"],
     })
 
-    # Step 4: TDD (stubbed Phase 0)
-    tdd_result = _run_tdd_stub(n, new_cycle_dir, tier_target)
+    # Step 4: TDD (Phase 1a -- real pytest invocation)
+    if apply_result.get("applied") or not diff_text.strip():
+        tdd_result = tdd_runner.run_all_tests(
+            source_dir=new_cycle_dir / "code",
+            cycle_n=n,
+            tier_target=tier_target,
+        )
+    else:
+        tdd_result = {
+            "all_passed": False,
+            "per_source": {},
+            "note": "diff_apply_failed_skipping_tdd",
+            "regression_clean": False,
+        }
     _append_cycle_log(n, "step_4_tdd", tdd_result)
+
+    # Step 4b: Falsifier review (Phase 1b)
+    falsifier_result = None
+    if tdd_result.get("all_passed") and apply_result.get("applied"):
+        try:
+            falsifier_result = falsifier_mod.run_falsifier_review(
+                cycle_n=n,
+                source_dir=new_cycle_dir / "code",
+                tier_challenge={
+                    "tier": tier_target,
+                    "falsification_test": _ladder_falsification_test(tier_target),
+                },
+                proposed_diff=diff_text,
+                icarus_improve_backend=improve_result.get("backend_used", "unknown"),
+            )
+        except Exception as e:
+            log.warning(f"falsifier raised: {e}")
+            falsifier_result = {"verdict": "inconclusive", "diagnosis": f"falsifier_error: {e}"}
+        _append_cycle_log(n, "step_4b_falsifier", falsifier_result)
 
     # Step 5: frontier review emit + inbox scan (stubbed Phase 0)
     _append_cycle_log(n, "step_5_frontier", {
@@ -281,11 +321,15 @@ def run_cycle(
 
     # Step 6: freeze + stability decision
     decision, reason = _decide_outcome(
-        improve_result, tdd_result, force_park=force_park, force_stable=force_stable,
+        improve_result, tdd_result, apply_result, falsifier_result,
+        force_park=force_park, force_stable=force_stable,
     )
     record_outcome(n, decision=decision, reason=reason, details={
         "improve_backend": improve_result.get("backend_used"),
         "tdd_all_passed": tdd_result.get("all_passed"),
+        "diff_applied": apply_result.get("applied"),
+        "files_changed": apply_result.get("files_changed", []),
+        "falsifier_verdict": (falsifier_result or {}).get("verdict"),
     })
 
     # Freeze the cycle directory
@@ -327,7 +371,8 @@ def _emit_complete(tick_id, started_at, n, decision, stats) -> dict:
     }
 
 
-def _decide_outcome(improve_result, tdd_result, force_park, force_stable):
+def _decide_outcome(improve_result, tdd_result, apply_result, falsifier_result,
+                     force_park, force_stable):
     if force_park:
         return "park", "force_park_flag"
     if force_stable:
@@ -337,9 +382,13 @@ def _decide_outcome(improve_result, tdd_result, force_park, force_stable):
         return "park", f"improve_no_diff_backend={backend}"
     if not improve_result.get("diff"):
         return "park", "empty_diff"
+    if not apply_result.get("applied"):
+        return "park", f"diff_apply_failed: {apply_result.get('reason', '?')}"
     if not tdd_result.get("all_passed"):
         return "park", "tdd_failed"
-    return "mark_stable", "tdd_passed"
+    if falsifier_result and falsifier_result.get("verdict") == "rejected":
+        return "park", f"falsifier_rejected: {falsifier_result.get('diagnosis', '')[:200]}"
+    return "mark_stable", "tdd_passed_falsifier_ok"
 
 
 def _ladder_falsification_test(tier: str) -> str:
