@@ -109,12 +109,21 @@ class D4BoundaryCrossingGenerator(Generator):
             if len(self._kills[sig]) > self._buffer:
                 self._kills[sig] = self._kills[sig][-self._buffer:]
 
+    # Fire #118 audit: same vulnerability as h2/d3 — if matching records
+    # are sparse, the existing buffer-sum cap won't stop iteration before
+    # scanning all 415M+ corpus records. Add a hard scan cap.
+    LOAD_CORPUS_SCAN_CAP = 200_000
+
     def _load_corpus(self) -> None:
         if self._loaded:
             return
         needed = ("value_a", "value_b", "object_a", "object_b")
         try:
+            scanned = 0
             for r in self._reader.iter_records():
+                scanned += 1
+                if scanned > self.LOAD_CORPUS_SCAN_CAP:
+                    break
                 sig = self._record_signature(r)
                 if sig is None:
                     continue

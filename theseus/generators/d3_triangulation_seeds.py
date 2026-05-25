@@ -91,11 +91,20 @@ class D3TriangulationSeedsGenerator(Generator):
             f"INCONCLUSIVE records; {self._n_branches} branches per tree)"
         )
 
+    # Fire #118 audit: same vulnerability as h2 — if INCONCLUSIVE records
+    # become sparse in the corpus, the existing pool-size cap won't stop
+    # iteration before scanning all 415M+ records. Add a hard scan cap.
+    LOAD_INCONCLUSIVE_SCAN_CAP = 200_000
+
     def _load_inconclusive(self) -> None:
         if self._loaded:
             return
         try:
+            scanned = 0
             for r in self._reader.iter_records():
+                scanned += 1
+                if scanned > self.LOAD_INCONCLUSIVE_SCAN_CAP:
+                    break
                 if r.verdict == Verdict.INCONCLUSIVE.value:
                     p = r.claim_payload
                     if "knot_invariant" in p and "ec_invariant" in p:
