@@ -9047,6 +9047,49 @@ patch. Surfaced as a new strategic option pending user input.
 447.8M records, 254.2M kills, 2051 promoted, 2643 templates,
 0 verified findings.*
 
+---
+
+## Fire #126 — 2026-05-25 ~21:25Z
+
+**2.94M records / 24 min / 0 templates / 20 promoted.
+Mix b2/e3/g3/g5/h1 — h1 + g5 dominant, both burned ~1.45M.
+g3 (TAUTOLOGY_CONTROL) capped at 20K.**
+
+### Per-gen attribution
+
+    gid  records     templates  kill_rate  role
+    h1   1,486,136   0          96.4%      DISCOVERY
+    g5   1,426,822   0           7.8%      DISCOVERY
+    g3      20,000   0           0.0%      TAUTOLOGY_CONTROL
+    b2       3,636   0          34.8%      DISCOVERY
+    e3       1,060   0          42.2%      DISCOVERY
+
+### Batch result
+
+- batch_id: `batch-20260525T212505Z-c400dd`
+- Duration: 24 min wall, 1050/s tick rate
+- 2,937,654 records / 1,544,758 kills / 1,392,896 confirms / 0 errors
+- 20 promoted records → **2071 lifetime promoted**
+- 0 new templates → 2643 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+- **batch_end ✓** (exit_reason=time_budget, 1.51M ticks, RSS 328MB)
+
+Lifetime: 121 batches journaled / 450.7M records / 255.8M kills /
+2071 promoted / 2643 templates / 0 verified findings.
+
+### Notable
+
+- h1 kill-storm again (96% kill rate, 1.43M kills)
+- g5 confirm-heavy (92% pass rate) — produces equal_mod_2-style
+  weak relations on SHADOW_CATALOG that pass the promote filter
+- 450M records crossed this fire
+
+---
+
+*Fire #126 throttled = 2.94M records / 20 promoted / 0 templates.
+450.7M records, 255.8M kills, 2071 promoted, 2643 templates,
+0 verified findings.*
+
 
 
 
