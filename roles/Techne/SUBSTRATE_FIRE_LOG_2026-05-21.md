@@ -8994,6 +8994,59 @@ Top demand back to knot/nf_class_number (203K events).
 444.7M records, 252.2M kills, 2031 promoted, 2643 templates,
 0 verified findings.*
 
+---
+
+## Fire #125 — 2026-05-25 ~20:53Z
+
+**3.04M records / 24 min / 0 templates / 20 promoted.
+Mix a1/a3/b2/b5/d1 — a-family trio dominant. Tick rate
+1157/s. batch_end clean.**
+
+### Per-gen attribution
+
+    gid  records     templates  kill_rate
+    a3   1,656,968   0          63.6%
+    a1   1,380,369   0          69.0%
+    b2       3,636   0          34.8%
+    d1       1,825   0          46.1%
+    b5       1,052   0           1.4%
+
+### Batch result
+
+- batch_id: `batch-20260525T205314Z-606375`
+- Duration: 24 min wall, 1157/s tick rate
+- 3,043,850 records / 2,007,582 kills / 1,036,268 confirms / 0 errors
+- 20 promoted records → **2051 lifetime promoted**
+- 0 new templates → 2643 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+
+Lifetime: 120 batches journaled / 447.8M records / 254.2M kills /
+2051 promoted / 2643 templates / 0 verified findings.
+
+Top demand: knot/nf_class_number (272K events).
+
+### Note on H4 scoring tension
+
+Investigated training_weight.py while waiting on Fire #125.
+The equal_mod_2 weight of 0.65 is set INTENTIONALLY high per
+H4 finding (Fires #13-14, #20, #21-22): parity has 65%
+extensibility, treated as structural by the framework.
+
+Triage finding (commit 1321ba7c) showed these records ARE
+visually trivial. The conflict is "extensibility" (current
+scoring axis) vs "information content" (what Learner training
+arguably needs).
+
+Backed off unilateral training_weight change — this is a
+load-bearing semantic choice tied to H4 framework, not a quick
+patch. Surfaced as a new strategic option pending user input.
+
+---
+
+*Fire #125 throttled = 3.04M records / 20 promoted / 0 templates.
+447.8M records, 254.2M kills, 2051 promoted, 2643 templates,
+0 verified findings.*
+
 
 
 
