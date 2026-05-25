@@ -8416,6 +8416,129 @@ Top demand still **knot/nf_class_number** (153K events).
 418.3M records, 237.5M kills, 1831 promoted, 2595 templates,
 0 verified findings.*
 
+---
+
+## Fire #112 — 2026-05-25 ~14:09Z — **SILENT CRASH**
+
+**0 records / 31 min hung / no heartbeat past batch_start.**
+
+### Failure mode (new variant)
+
+- Picked gens: h2/f1/b1/c5/f3
+- Heartbeat JSONL contains exactly 1 line: `batch_start` at t=0
+- stdout 0 bytes
+- No `theseus.daemon` python process in process list at kill time
+- TaskStop succeeded on the wrapper task even though daemon
+  process had already vanished
+
+### Diagnosis
+
+Daemon process silently exited (or crashed during gen
+initialization) AFTER the heartbeat thread emitted batch_start
+but BEFORE the main loop began ticking. The heartbeat-thread
+init succeeded; the main thread never resumed.
+
+This is a **new failure variant**:
+- Fire #70: hung 60 min, heartbeat OK, records still emitting
+  → fixed by time-based exhaustion threshold
+- Fire #100: hung inside next(), main loop frozen, heartbeat
+  thread also frozen → manual kill required
+- **Fire #112: silent main-thread exit after init**, heartbeat
+  thread alive at start but receives no further events
+
+### Workaround
+
+Retry as Fire #113.
+
+### Follow-up (added to backlog)
+
+- Wrap gen __init__ / first-next call in try/except with
+  explicit stderr emit
+- Add `batch_end` heartbeat event with elapsed/records — if
+  main thread exits cleanly we'd see it; absence = crash signal
+- Consider standalone process-exit hook (atexit) that flushes
+  current state to heartbeat before death
+
+---
+
+## Fire #113 — 2026-05-25 ~14:41Z (Fire #112 retry)
+
+**2.38M records / 24 min / 0 templates / 20 promoted.
+Notable confirms > kills ratio (1.49M / 0.89M = 1.7x) — first
+time in many fires. g4/g5 kill-rates only 5-8% (vs 65-69%
+typical), driving confirm-heavy mix.**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    f2   615,114   0          65.8%
+    g5   601,059   0           7.7%
+    c1   592,146   0          68.7%
+    g4   573,167   0           5.4%
+    d1     1,891   0          48.0%
+
+### Batch result
+
+- batch_id: `batch-20260525T144122Z-ebeebf`
+- Duration: 24 min wall (427/s tick rate — lower than #111's 647)
+- 2,383,377 records / 889,916 kills / 1,493,461 confirms / 0 errors
+- 20 promoted records → **1851 lifetime promoted**
+- 0 new templates → 2595 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+
+Lifetime: 109 batches journaled / 420.7M records / 238.4M kills /
+1851 promoted / 2595 templates / 0 verified findings.
+
+g4/g5 (graph-coloring-ish) had very high confirm rates — claims
+mostly validate rather than falsify. Worth flagging as a
+characterization signal (these gens produce "easy" claims).
+
+---
+
+*Fire #113 throttled = 2.38M records / 20 promoted / 0 templates.
+420.7M records, 238.4M kills, 1851 promoted, 2595 templates,
+0 verified findings.*
+
+---
+
+## Fire #114 — 2026-05-25 ~15:12Z
+
+**2.60M records / 24 min / 0 templates / 20 promoted.
+a-family trio (a1/a2/a3) burned hot together. e1 stalled
+at 5132 records (1415s — confirmed reservoir-exhausted).
+a2 kill-rate 93% — highest falsification rate seen.**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    a3   927,245   0          63.6%
+    a1   836,278   0          69.0%
+    a2   835,431   0          93.4%
+    e1     5,132   0           0.0%  (stalled)
+    b4       606   0          73.6%
+
+### Batch result
+
+- batch_id: `batch-20260525T151207Z-f5defc`
+- Duration: 24 min wall (646/s tick rate)
+- 2,604,692 records / 1,948,038 kills / 651,522 confirms / 0 errors
+- 20 promoted records → **1871 lifetime promoted**
+- 0 new templates → 2595 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+
+Lifetime: 110 batches journaled / 423.3M records / 240.4M kills /
+1871 promoted / 2595 templates / 0 verified findings.
+
+e1 stall confirmed once more (4th fire in a row with same
+~5K-record reservoir exhaustion). Reclassification long
+overdue.
+
+---
+
+*Fire #114 throttled = 2.60M records / 20 promoted / 0 templates.
+423.3M records, 240.4M kills, 1871 promoted, 2595 templates,
+0 verified findings.*
+
 
 
 
