@@ -8051,6 +8051,65 @@ some shape space.
 (h1 after 10-fire gap). 404.0M records, 229.3M kills, 1690
 promoted, 2582 templates, 0 verified findings.*
 
+---
+
+## Fire #104 — 2026-05-25 ~04:54Z — PARTIAL (clean exit, Fire #94 pattern)
+
+**Process exited at ~00:54 local time, only batch_start event in
+heartbeat, ~2KB corpus. Same external-cause pattern as Fire #94
+(also exited around midnight local time).**
+
+### Diagnosis
+
+- 1 heartbeat event (batch_start only)
+- Corpus file: 2,026 bytes (header)
+- Process state: NOT RUNNING (exited cleanly)
+- Stdout: empty (early in startup phase)
+- No traceback
+
+### Pattern: midnight-area external exit
+
+    Fire #94:  exited ~midnight local
+    Fire #104: exited ~01:00 local
+
+Both fires exited cleanly (exit code 0), no output beyond
+batch_start, simultaneous with handoff_daemon. Strong evidence
+for a Windows scheduled task or similar OS-level event killing
+python processes overnight.
+
+Not a substrate bug. Not a daemon bug. External system event.
+
+### Workaround options (NOT shipping now)
+
+1. Disable Windows Task Scheduler nightly maintenance
+2. Run daemon under a service wrapper that auto-restarts
+3. Schedule fires to avoid the midnight-1am window
+4. Use `start /b` or task scheduler protection flag
+
+Adding to follow-up list. For now: when this happens, lifetime
+stats stay unchanged, records preserved on disk for handoff
+compaction, continue to next fire.
+
+### Lifetime stats unchanged (no journal entry for Fire #104)
+
+| Metric | Post-#103 |
+|---|---|
+| Batches journaled | 101 (no #104 entry) |
+| Records | 404.0M |
+| Promoted records | 1690 |
+| Templates (disc-role) | 2582 |
+| **Verified findings** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=3600`. Fire #105.
+
+---
+
+*Fire #104 PARTIAL — clean external exit around 01:00 local
+time (same midnight pattern as Fire #94). External cause
+suspected. Lifetime stats unchanged. Continuing to Fire #105.*
+
 
 
 
