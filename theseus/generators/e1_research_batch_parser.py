@@ -24,7 +24,7 @@ from theseus.emit.record_schema import (
     ClaimKind,
     Verdict,
 )
-from theseus.generators.base import Generator, GeneratorStatus
+from theseus.generators.base import Generator, GeneratorStatus, GeneratorRole
 
 
 # Patterns that suggest claim-like statements
@@ -95,7 +95,15 @@ def _extract_claims_from_text(text: str) -> List[str]:
 class E1ResearchBatchParserGenerator(Generator):
     generator_id = "e1"
     claim_kind = ClaimKind.LITERATURE_MINED.value
-    status = GeneratorStatus.ACTIVE
+    # Reclassified Fire #115 after 4 consecutive ~5K-record/1415s
+    # stall fires (#83, #86, #97, #107, #114). Reservoir of deep-
+    # research markdown is finite; emits ~5K records then stalls
+    # the daemon waiting on consec_nones threshold. Set to EXHAUSTED
+    # so daemon.py:154 runnable filter excludes it. Re-enable
+    # manually (status = ACTIVE) when new deep_research_reports/
+    # batches land.
+    status = GeneratorStatus.EXHAUSTED
+    role = GeneratorRole.BOUNDARY_MAPPING
 
     def __init__(
         self,
