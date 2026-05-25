@@ -264,6 +264,18 @@ def run_batch(
         tick_count += 1
         heartbeat.maybe_snapshot(tick_count, total_records_written)
     heartbeat.final_snapshot(tick_count, total_records_written)
+    # Mark clean batch completion. Absence of batch_end in the JSONL
+    # post-hoc indicates a silent crash (Fire #112-class failure).
+    exit_reason = (
+        "all_exhausted" if all(exhausted.values())
+        else "record_cap" if total_records_written >= cfg.PER_BATCH_RECORD_CAP
+        else "time_budget"
+    )
+    heartbeat.batch_end(
+        tick_count=tick_count,
+        records_written=total_records_written,
+        exit_reason=exit_reason,
+    )
     heartbeat.close()
 
     ended_at = datetime.now(timezone.utc).isoformat()

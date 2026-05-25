@@ -250,6 +250,32 @@ class HeartbeatLogger:
     def final_snapshot(self, tick_count: int, records_written: int) -> None:
         self._snapshot(tick_count, records_written, kind="final")
 
+    def batch_end(
+        self,
+        tick_count: int,
+        records_written: int,
+        kills: int = 0,
+        confirmations: int = 0,
+        exit_reason: str = "normal",
+    ) -> None:
+        """Emit a batch_end event marking clean batch completion.
+
+        Absence of this event in the JSONL = the process exited
+        unexpectedly (silent crash like Fires #112 / #116 pre-fix).
+        Presence + correct counts = clean shutdown.
+        """
+        elapsed = time.monotonic() - self._start_mono
+        self._write({
+            "event": "batch_end",
+            "elapsed_s": round(elapsed, 2),
+            "tick_count": tick_count,
+            "records_written": records_written,
+            "kills": kills,
+            "confirmations": confirmations,
+            "exit_reason": exit_reason,
+            "process_rss_mb": round(_process_rss_mb(), 1),
+        })
+
     def _snapshot(self, tick_count: int, records_written: int, kind: str) -> None:
         self._snapshot_count += 1
         elapsed = time.monotonic() - self._start_mono
