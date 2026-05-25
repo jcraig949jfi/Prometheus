@@ -8182,6 +8182,39 @@ throttle in the meantime.
 Frontier synthesis shipped. 405.4M records, 229.9M kills, 1711
 promoted, 2583 templates, 0 verified findings.*
 
+---
+
+## Fire #106 — 2026-05-25 ~06:59Z
+
+**1.21M records / 24 min / 0 templates / 20 promoted.**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    g5   423,851   0           7.8%      (92% confirm)
+    d3   422,847   0          98.4%      (0 conf — pure falsifier)
+    h4   364,611   0          47.4%
+    d1       894   0          47.4%
+    e4       233   0          0%
+
+### Batch result
+
+- batch_id: `batch-20260525T065907Z-e57067`
+- Duration: 24 min wall
+- 1,212,436 records / 622,304 kills / 492,264 confirms / 97,868 incon / 0 errors
+- 20 promoted records → **1731 lifetime promoted**
+- 0 new templates → 2583 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+
+Lifetime: 103 batches journaled / 406.6M records / 230.5M kills /
+1731 promoted / 2583 templates / 0 verified findings.
+
+---
+
+*Fire #106 throttled = 1.21M records / 20 promoted / 0 templates.
+406.6M records, 230.5M kills, 1731 promoted, 2583 templates,
+0 verified findings.*
+
 
 
 
