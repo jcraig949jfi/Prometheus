@@ -52,33 +52,37 @@ def apply_diff(diff_text: str, target_dir: Path) -> dict:
             tmp.write("\n")
 
     try:
-        # git apply -p1 strips the leading a/ b/ prefixes; --unsafe-paths
-        # lets us write outside the current repo's tree.
+        # git apply -p1 strips the leading a/ b/ prefixes.
+        # --recount tells git to recompute hunk line counts (LLM-generated
+        # @@ headers are frequently wrong).
         # --whitespace=fix tolerates minor whitespace issues.
-        result = subprocess.run(
-            ["git", "apply", "-p1", "--unsafe-paths", "--whitespace=fix",
-             "--ignore-space-change", str(tmp_path)],
-            cwd=str(target_dir),
-            capture_output=True, text=True, timeout=30,
-        )
-        if result.returncode != 0:
-            # Try without --ignore-space-change; sometimes that flag rejects
-            # legit diffs
-            result2 = subprocess.run(
-                ["git", "apply", "-p1", "--unsafe-paths", "--whitespace=fix",
-                 str(tmp_path)],
-                cwd=str(target_dir),
+        # Try chain: most-tolerant first, then fall back if it rejects.
+        attempts = [
+            ["git", "apply", "-p1", "--unsafe-paths", "--recount",
+             "--whitespace=fix", "--ignore-space-change", str(tmp_path)],
+            ["git", "apply", "-p1", "--unsafe-paths", "--recount",
+             "--whitespace=fix", str(tmp_path)],
+            ["git", "apply", "-p1", "--unsafe-paths",
+             "--whitespace=fix", "--ignore-space-change", str(tmp_path)],
+            ["git", "apply", "-p1", "--unsafe-paths",
+             "--whitespace=fix", str(tmp_path)],
+        ]
+        result = None
+        for argv in attempts:
+            result = subprocess.run(
+                argv, cwd=str(target_dir),
                 capture_output=True, text=True, timeout=30,
             )
-            if result2.returncode == 0:
-                result = result2
-            else:
-                return {
-                    "applied": False, "method": "git_apply",
-                    "stdout": result.stdout, "stderr": result.stderr,
-                    "files_changed": [],
-                    "reason": f"git_apply_failed: {result.stderr[:300]}",
-                }
+            if result.returncode == 0:
+                break
+        if result is None or result.returncode != 0:
+            return {
+                "applied": False, "method": "git_apply",
+                "stdout": (result.stdout if result else ""),
+                "stderr": (result.stderr if result else "no_attempts"),
+                "files_changed": [],
+                "reason": f"git_apply_failed: {(result.stderr if result else '?')[:300]}",
+            }
 
         # Get list of files changed (parse diff for ---/+++ lines)
         files_changed = _extract_files_from_diff(diff_text)

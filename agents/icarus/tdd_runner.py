@@ -56,10 +56,13 @@ def run_all_tests(
         "frontier_supplied": _run_pytest(frontier_tests, source_dir, cycle_n, "frontier_supplied"),
     }
 
-    all_passed = all(
-        r["failed"] == 0 and r["errors"] == 0
-        for r in results.values()
-    )
+    total_passed = sum(r["passed"] for r in results.values())
+    total_failed = sum(r["failed"] for r in results.values())
+    total_errors = sum(r["errors"] for r in results.values())
+
+    # A vacuous "0 passed, 0 failed" is NOT a real pass. Require at least one
+    # test to actually have run AND no failures.
+    all_passed = (total_passed > 0 and total_failed == 0 and total_errors == 0)
 
     # Lower-tier regression check (spec v0.2 #14)
     regression_clean = _check_lower_tier_regression(
@@ -92,7 +95,7 @@ def run_all_tests(
 
 def _empty_result(report_path: Path, reason: str) -> dict:
     return {
-        "all_passed": True,  # vacuously
+        "all_passed": False,  # vacuous-pass is no longer treated as pass
         "per_source": {
             "tier_falsification": {"passed": 0, "failed": 0, "errors": 0, "skipped": 0},
             "generated": {"passed": 0, "failed": 0, "errors": 0, "skipped": 0},
@@ -110,15 +113,16 @@ def _run_pytest(test_files: list[Path], source_dir: Path, cycle_n: int,
     if not test_files:
         return {"passed": 0, "failed": 0, "errors": 0, "skipped": 0}
 
-    # Run pytest as subprocess to isolate; capture JSON-report-like output
-    # via -q + parse summary. We use a simple approach: count test outcomes
-    # from the verbose output.
-    args = ["python", "-m", "pytest", "-v", "--tb=line", "--no-header"]
+    # Run pytest as subprocess to isolate; capture stdout + stderr; parse
+    # the summary line. Important: cwd must be the cycle's code/ dir so the
+    # test's `from reasoner import Reasoner` resolves.
+    args = ["python", "-m", "pytest", "-v", "--tb=line", "--no-header",
+            "--import-mode=importlib"]
     args.extend(str(p) for p in test_files)
     try:
         proc = subprocess.run(
             args, capture_output=True, text=True, timeout=120,
-            cwd=str(source_dir.parent),
+            cwd=str(source_dir),   # code/ -- where reasoner.py lives
         )
         return _parse_pytest_output(proc.stdout + proc.stderr)
     except subprocess.TimeoutExpired:
