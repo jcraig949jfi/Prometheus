@@ -8215,6 +8215,55 @@ Lifetime: 103 batches journaled / 406.6M records / 230.5M kills /
 406.6M records, 230.5M kills, 1731 promoted, 2583 templates,
 0 verified findings.*
 
+---
+
+## Fire #107 — 2026-05-25 ~08:32Z
+
+**2.69M records / 24 min / 0 templates / 20 promoted. a3+f1 carried.
+e1 STALLED for the 4th time (#83, #86, #97, #107).**
+
+### Per-gen attribution
+
+    gid  records      templates  kill_rate
+    a3   1,378,217   0          63.5%
+    f1   1,305,202   0          29.2%      (NULL_BASELINE)
+    e1       5,115   0          0%         (STALLED 24 min)
+    b2       3,636   0          34.8%
+    b3         606   0          57.1%
+
+### e1 stall pattern confirmed (4th time)
+
+    Fire #83:  e1 stalled 48 min
+    Fire #86:  e1 stalled 46 min
+    Fire #97:  e1 stalled 24 min
+    Fire #107: e1 stalled 24 min
+
+e1's source (research_batch_parser cache) is permanently
+exhausted at ~5K records. Should be reclassified to STUB
+status to remove from bandit pool. On follow-up list.
+
+### Demand: 974K events; same top 3 (ec/j_invariant, ec/discriminant, knot/alexander_polynomial_degree)
+
+The substrate's wanted-primitives signal is consistent.
+
+### Batch result
+
+- batch_id: `batch-20260525T083213Z-c09377`
+- Duration: 24 min wall
+- 2,692,776 records / 1,258,827 kills / 672,285 confirms / 762K incon / 0 errors
+- 20 promoted records → **1751 lifetime promoted**
+- 0 new templates → 2583 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+
+Lifetime: 104 batches journaled / 409.3M records / 231.8M kills /
+1751 promoted / 2583 templates / 0 verified findings.
+
+---
+
+*Fire #107 throttled = 2.69M records / 20 promoted / 0 templates.
+e1 stalled 4th time. 409.3M records, 231.8M kills, 1751
+promoted, 2583 templates, 0 verified findings.*
+
 
 
 
