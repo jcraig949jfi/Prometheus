@@ -29,6 +29,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+import threading
 import time
 from collections import defaultdict
 from contextlib import contextmanager
@@ -98,6 +99,8 @@ class HeartbeatLogger:
         interval_seconds: float = 30.0,
         slow_next_threshold_seconds: float = 5.0,
         tee_stdout: bool = True,
+        watchdog_stall_threshold_seconds: float = 60.0,
+        watchdog_poll_seconds: float = 10.0,
     ) -> None:
         self.batch_id = batch_id
         self.path = journal_dir / f"heartbeat_{batch_id}.jsonl"
@@ -105,15 +108,29 @@ class HeartbeatLogger:
         self.interval = interval_seconds
         self.slow_threshold = slow_next_threshold_seconds
         self.tee_stdout = tee_stdout
+        self.watchdog_stall_threshold = watchdog_stall_threshold_seconds
+        self.watchdog_poll_seconds = watchdog_poll_seconds
         self._gen_stats: Dict[str, GenStats] = defaultdict(GenStats)
         self._start_mono: float = 0.0
         self._last_snapshot_mono: float = 0.0
         self._snapshot_count: int = 0
         self._fh = None  # opened in start()
+        # Watchdog: independent thread that detects main-loop stalls (e.g.
+        # hung-in-next() bugs like Fires #100/#112/#116). The inline
+        # heartbeat snapshots are scheduled by maybe_snapshot() at the end
+        # of each tick — if a single .next() call hangs, no snapshot fires.
+        # The watchdog runs in its own thread and writes a stall event
+        # when no tick activity for watchdog_stall_threshold seconds.
+        self._write_lock = threading.Lock()
+        self._last_tick_at: float = 0.0
+        self._last_stall_warning_at: float = 0.0
+        self._watchdog_thread: Optional[threading.Thread] = None
+        self._watchdog_stop = threading.Event()
 
     def start(self, generator_ids: List[str]) -> None:
         self._start_mono = time.monotonic()
         self._last_snapshot_mono = self._start_mono
+        self._last_tick_at = self._start_mono
         for gid in generator_ids:
             self._gen_stats[gid]  # touch to create default entry
         self._fh = self.path.open("w", encoding="utf-8")
@@ -124,11 +141,61 @@ class HeartbeatLogger:
             "generator_ids": list(generator_ids),
             "process_rss_mb": _process_rss_mb(),
         })
+        # Spawn watchdog thread AFTER batch_start is written
+        self._watchdog_stop.clear()
+        self._watchdog_thread = threading.Thread(
+            target=self._watchdog_loop,
+            name=f"hb-watchdog-{self.batch_id}",
+            daemon=True,
+        )
+        self._watchdog_thread.start()
+
+    def _watchdog_loop(self) -> None:
+        """Background thread: detect main-loop stalls.
+
+        Polls every watchdog_poll_seconds. If the main thread hasn't
+        called tick() in > watchdog_stall_threshold seconds, write a
+        stall event to the JSONL. Re-warns every threshold-interval
+        thereafter so single warnings don't get lost in long stalls.
+        """
+        while not self._watchdog_stop.is_set():
+            self._watchdog_stop.wait(self.watchdog_poll_seconds)
+            if self._watchdog_stop.is_set():
+                return
+            now = time.monotonic()
+            since_tick = now - self._last_tick_at
+            if since_tick < self.watchdog_stall_threshold:
+                continue
+            # Rate-limit warnings: at most once per stall_threshold seconds
+            if now - self._last_stall_warning_at < self.watchdog_stall_threshold:
+                continue
+            self._last_stall_warning_at = now
+            # Find which gen was last ticked (best-effort attribution)
+            last_gen = None
+            last_call_at = 0.0
+            for gid, gs in self._gen_stats.items():
+                if gs.last_call_at and gs.last_call_at > last_call_at:
+                    last_call_at = gs.last_call_at
+                    last_gen = gid
+            self._write({
+                "event": "watchdog_stall",
+                "elapsed_s": round(now - self._start_mono, 2),
+                "seconds_since_last_tick": round(since_tick, 1),
+                "last_ticked_gen": last_gen,
+                "process_rss_mb": round(_process_rss_mb(), 1),
+            })
+            if self.tee_stdout:
+                print(
+                    f"[watchdog] STALL: no tick for {since_tick:.0f}s "
+                    f"(last gen: {last_gen}, rss={_process_rss_mb():.0f}MB)",
+                    flush=True,
+                )
 
     @contextmanager
     def tick(self, generator_id: str) -> Iterator[None]:
         """Wrap a single gen.next() call. Records duration + slow warnings."""
         t0 = time.monotonic()
+        self._last_tick_at = t0  # watchdog: I'm alive
         gs = self._gen_stats[generator_id]
         gs.tick_count += 1
         gs.last_call_at = t0
@@ -248,10 +315,19 @@ class HeartbeatLogger:
     def _write(self, payload: dict) -> None:
         if self._fh is None:
             return
-        self._fh.write(json.dumps(payload, sort_keys=True) + "\n")
-        self._fh.flush()
+        with self._write_lock:
+            if self._fh is None:
+                return
+            self._fh.write(json.dumps(payload, sort_keys=True) + "\n")
+            self._fh.flush()
 
     def close(self) -> None:
+        # Stop watchdog first to avoid writes after fh close
+        self._watchdog_stop.set()
+        if self._watchdog_thread is not None:
+            self._watchdog_thread.join(timeout=2.0)
+            self._watchdog_thread = None
         if self._fh is not None:
-            self._fh.close()
-            self._fh = None
+            with self._write_lock:
+                self._fh.close()
+                self._fh = None
