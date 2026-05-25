@@ -26,11 +26,13 @@ no I/O between snapshots; one append per tick interval.
 """
 from __future__ import annotations
 
+import atexit
 import json
 import os
 import sys
 import threading
 import time
+import traceback
 from collections import defaultdict
 from contextlib import contextmanager
 from dataclasses import dataclass, field
@@ -126,6 +128,10 @@ class HeartbeatLogger:
         self._last_stall_warning_at: float = 0.0
         self._watchdog_thread: Optional[threading.Thread] = None
         self._watchdog_stop = threading.Event()
+        # atexit hook: if the process exits without batch_end being called
+        # (uncaught exception, sys.exit, signal), emit a process_exit event
+        # so the JSONL distinguishes "crashed mid-batch" from "clean finish".
+        self._batch_ended = False
 
     def start(self, generator_ids: List[str]) -> None:
         self._start_mono = time.monotonic()
@@ -149,6 +155,37 @@ class HeartbeatLogger:
             daemon=True,
         )
         self._watchdog_thread.start()
+        # Register atexit hook so a crashed process still flushes an
+        # exit marker. The hook runs in the main interpreter exit path
+        # AFTER the watchdog daemon thread is gone.
+        atexit.register(self._atexit_emit)
+
+    def _atexit_emit(self) -> None:
+        """Emit process_exit event if batch_end was never called.
+
+        Runs during Python interpreter shutdown. Safe to call even if
+        the file handle was already closed.
+        """
+        if self._batch_ended:
+            return
+        if self._fh is None:
+            return
+        try:
+            elapsed = time.monotonic() - self._start_mono
+            exc_type, exc_val, exc_tb = sys.exc_info()
+            payload = {
+                "event": "process_exit",
+                "elapsed_s": round(elapsed, 2),
+                "reason": "atexit_without_batch_end",
+                "process_rss_mb": round(_process_rss_mb(), 1),
+            }
+            if exc_type is not None:
+                payload["exception_type"] = exc_type.__name__
+                payload["exception_msg"] = str(exc_val) if exc_val else ""
+            self._write(payload)
+        except Exception:
+            # Never raise during interpreter shutdown
+            pass
 
     def _watchdog_loop(self) -> None:
         """Background thread: detect main-loop stalls.
@@ -275,6 +312,7 @@ class HeartbeatLogger:
             "exit_reason": exit_reason,
             "process_rss_mb": round(_process_rss_mb(), 1),
         })
+        self._batch_ended = True
 
     def _snapshot(self, tick_count: int, records_written: int, kind: str) -> None:
         self._snapshot_count += 1
