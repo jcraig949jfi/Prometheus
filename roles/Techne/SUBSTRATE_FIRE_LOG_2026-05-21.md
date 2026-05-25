@@ -8667,6 +8667,52 @@ Lifetime: 112 batches journaled / 427.7M records / 242.8M kills /
 427.7M records, 242.8M kills, 1911 promoted, 2595 templates,
 0 verified findings.*
 
+---
+
+## Fire #118 — 2026-05-25 ~17:17Z
+
+**2.81M records / 24 min / 0 templates / 20 promoted.
+NEW PEAK: 1001/s tick rate (vs prior peak 865/s, Fire #115).
+All-discovery-role mix: a1/a4/d2/e3/g1.**
+
+### Per-gen attribution
+
+    gid  records     templates  kill_rate
+    a4   1,325,405   0          30.5%
+    a1   1,224,781   0          68.9%
+    d2     257,495   0          65.6%
+    e3       1,060   0          42.2%
+    g1         184   0          58.7%
+
+### Batch result
+
+- batch_id: `batch-20260525T171705Z-43b869`
+- Duration: 24 min wall, **1001/s tick rate** (new record)
+- 2,808,925 records / 1,418,114 kills / 473,798 confirms / 0 errors
+- 20 promoted records → **1931 lifetime promoted**
+- 0 new templates → 2595 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+
+Lifetime: 113 batches journaled / 430.5M records / 244.2M kills /
+1931 promoted / 2595 templates / 0 verified findings.
+
+### Notable
+
+- Tick rate trajectory: 423 → 646 → 865 → 1001/s — over the
+  past 5 fires. Likely correlated with e1 removal + h2 fix
+  removing slow-init overhead from gen pool.
+- g1 emitted only 184 records — exotic-reservoir gen, very
+  low throughput when picked.
+- Top demand back to knot/nf_class_number (237K events) — last
+  fire's collapse to "1 event" was anomalous (likely picked-gens
+  artifact).
+
+---
+
+*Fire #118 throttled = 2.81M records / 20 promoted / 0 templates.
+430.5M records, 244.2M kills, 1931 promoted, 2595 templates,
+0 verified findings.*
+
 
 
 
