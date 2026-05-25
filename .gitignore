@@ -188,6 +188,8 @@ agents/*
 !agents/pheme/
 !agents/talos/
 !agents/polyhymnia/
+# Shared library code used by multiple agents (SelfImprovingDaemon mixin, etc.)
+!agents/_shared/
 roles/*/SESSION_JOURNAL_*.md
 roles/*/TLDR_*.md
 roles/*/loop_state.json

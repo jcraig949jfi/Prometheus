@@ -44,6 +44,9 @@ except Exception:
 
 from agents.polyhymnia.tensor import PolyhymniaTensor
 from agents.polyhymnia.scours import REGISTRY as SCOUR_REGISTRY
+from agents._shared.self_improving import (
+    SelfImprovingDaemon, Adaptation, HealthSample,
+)
 
 # Local paths
 STATE_DIR = AGENT_DIR / "state"
@@ -52,7 +55,9 @@ LOG_DIR = AGENT_DIR / "logs"
 TENSOR_DIR = AGENT_DIR / "tensor"
 PID_FILE = AGENT_DIR / "polyhymnia.pid"
 STATE_FILE = STATE_DIR / "state.json"
+SI_STATE_FILE = STATE_DIR / "self_improvement.json"
 TEXT_LOG = LOG_DIR / "polyhymnia.log"
+APORIA_INBOX = REPO_ROOT / "aporia" / "meta" / "queue" / "aporia_inbox.jsonl"
 
 # Defaults
 DEFAULT_INTERVAL_SEC = 1800
@@ -162,6 +167,8 @@ def _default_state() -> dict:
         "anti_silence_counter": 0,
         "total_ticks_lifetime": 0,
         "total_null_ticks_lifetime": 0,
+        # Sliding window of recent tick outcomes — fuel for SelfImprover.measure_health.
+        "recent_tick_outcomes": [],   # list of {at, new_tesserae, null_tick}
     }
 
 
@@ -185,6 +192,127 @@ def save_state(state: dict) -> None:
     tmp = STATE_FILE.with_suffix(".json.tmp")
     tmp.write_text(json.dumps(state, indent=2), encoding="utf-8")
     tmp.replace(STATE_FILE)
+
+
+# ---------------------------------------------------------------------------
+# Self-improvement layer (SelfImprovingDaemon adoption)
+# ---------------------------------------------------------------------------
+
+def _adapt_drop_mtime_cache(agent, agent_state):
+    """Adaptation: clear prometheus_self's path-mtime cache so the next tick
+    forces a full rescan. Snapshot the cleared values for revert."""
+    scour_state = agent_state.get("scour_state", {}).get("prometheus_self", {})
+    snapshot = dict(scour_state.get("path_mtimes", {}))
+    scour_state["path_mtimes"] = {}
+    return snapshot
+
+
+def _revert_drop_mtime_cache(agent, agent_state, snapshot):
+    if snapshot:
+        agent_state.setdefault("scour_state", {}).setdefault(
+            "prometheus_self", {})["path_mtimes"] = snapshot
+
+
+def _adapt_stub_log_only(name):
+    """Build a no-op adaptation that just logs. Used for placeholders that
+    document the menu growth path without doing fake work."""
+    def _apply(agent, agent_state):
+        _emit_event("self_improvement_stub_applied", level="info", stub=name)
+        return None
+    def _revert(agent, agent_state, snapshot):
+        pass
+    return _apply, _revert
+
+
+class PolyhymniaSelfImprover(SelfImprovingDaemon):
+    """Self-improvement layer for Polyhymnia. Composition-style: instantiated
+    once at module level; called from inside run_tick."""
+
+    AGENT_NAME_FOR_TICKETS = "Polyhymnia"
+    SELF_SUMMON_INBOX_PATH = APORIA_INBOX
+    HEALTH_WINDOW_TICKS = 10
+    STAGNATION_THRESHOLD = 0.35
+    EXPERIMENT_OBSERVATION_TICKS = 2     # short — Polyhymnia ticks slowly
+    MAX_MUTATIONS_PER_DAY = 3            # conservative for v1
+
+    # The Polyhymnia menu (v1). Two real adaptations; rest stubbed to document
+    # the menu-growth path. As v2 ships, stubs become real apply()s.
+    _stub1_apply, _stub1_revert = _adapt_stub_log_only("EXPAND_KW_RE_v1_placeholder")
+    _stub2_apply, _stub2_revert = _adapt_stub_log_only("EXPAND_PATHS_v1_placeholder")
+    _stub3_apply, _stub3_revert = _adapt_stub_log_only("EXPAND_FILE_TYPES_v1_placeholder")
+    _stub4_apply, _stub4_revert = _adapt_stub_log_only("SPAWN_SIBLING_SCOUR_v1_placeholder")
+    _stub5_apply, _stub5_revert = _adapt_stub_log_only("MODE_PIVOT_GAME_GEN_v1_placeholder")
+
+    ADAPTATION_MENU = [
+        Adaptation(
+            name="DROP_MTIME_CACHE",
+            description="Clear prometheus_self path-mtime cache → next tick does full rescan",
+            cost="one_tick",
+            reversibility="manual_via_revert",
+            apply=_adapt_drop_mtime_cache,
+            revert=_revert_drop_mtime_cache,
+        ),
+        Adaptation(
+            name="EXPAND_KW_RE",
+            description="Auto-mine top-5 free_tags from existing tesserae, add to KW_RE",
+            cost="trivial", reversibility="manual_via_revert",
+            apply=_stub1_apply, revert=_stub1_revert,
+        ),
+        Adaptation(
+            name="EXPAND_PATHS",
+            description="Add prometheus_data/, vault/, archive/, journal/, docs/ to WALK_ROOTS",
+            cost="one_tick", reversibility="manual_via_revert",
+            apply=_stub2_apply, revert=_stub2_revert,
+        ),
+        Adaptation(
+            name="EXPAND_FILE_TYPES",
+            description="Also walk *.md, *.yaml, *.json (currently only *.py)",
+            cost="medium", reversibility="manual_via_revert",
+            apply=_stub3_apply, revert=_stub3_revert,
+        ),
+        Adaptation(
+            name="SPAWN_SIBLING_SCOUR",
+            description="Auto-generate scours/<new_name>.py from template for a new source",
+            cost="high", reversibility="manual_via_revert",
+            apply=_stub4_apply, revert=_stub4_revert,
+            requires_human_approval=True,    # spawning code is the dangerous one
+        ),
+        Adaptation(
+            name="MODE_PIVOT_GAME_GEN",
+            description="Stop extracting; for N ticks, query existing tesserae and emit games",
+            cost="medium", reversibility="manual_via_revert",
+            apply=_stub5_apply, revert=_stub5_revert,
+        ),
+    ]
+
+    def measure_health(self, tick_stats: dict, agent_state: dict) -> HealthSample:
+        recent = agent_state.get("recent_tick_outcomes", [])[-self.HEALTH_WINDOW_TICKS:]
+        if not recent:
+            # No history yet — call it healthy until we have data
+            return HealthSample(null_rate=0.0, diversity=0.5,
+                                downstream_consumption=0.0, novelty=0.5)
+        n = len(recent)
+        nulls = sum(1 for o in recent if o.get("null_tick"))
+        new_total = sum(o.get("new_tesserae", 0) for o in recent)
+        null_rate = nulls / n
+        # Diversity proxy: did we add new tesserae across multiple ticks
+        # (not all concentrated in one productive tick)?
+        productive_ticks = sum(1 for o in recent if o.get("new_tesserae", 0) > 0)
+        diversity = productive_ticks / n
+        # Downstream consumption: not wired yet. 0 for now.
+        downstream = 0.0
+        # Novelty proxy: ratio of new vs total contributed
+        novelty = min(1.0, new_total / max(1, n * 100))   # 100 new per tick = saturated novelty
+        return HealthSample(
+            null_rate=null_rate, diversity=diversity,
+            downstream_consumption=downstream, novelty=novelty,
+            extras={"recent_ticks": n, "recent_nulls": nulls,
+                    "recent_new_tesserae": new_total},
+        )
+
+
+# Singleton — instantiated once
+_SI = PolyhymniaSelfImprover()
 
 
 # ---------------------------------------------------------------------------
@@ -304,10 +432,39 @@ def run_tick(dry_run: bool = False, only_scour: Optional[str] = None) -> dict:
                       summary=f"ALARM: {state['anti_silence_counter']} consecutive null ticks.",
                       success=False, error="anti_silence_threshold_exceeded")
 
+    # Track this tick in the sliding window for SelfImprover's measure_health.
+    state["recent_tick_outcomes"].append({
+        "at": tick_started.isoformat(),
+        "new_tesserae": stats.get("new_tesserae", 0),
+        "null_tick": stats.get("null_tick", False),
+    })
+    # Trim to last HEALTH_WINDOW_TICKS
+    state["recent_tick_outcomes"] = state["recent_tick_outcomes"][-_SI.HEALTH_WINDOW_TICKS:]
+
+    # Self-improvement cycle. The mixin handles its own state file, so even
+    # if this tick is a dry-run we still measure (cheap) but don't apply.
+    if not dry_run:
+        try:
+            si_result = _SI.run_self_improvement_cycle(
+                tick_stats=stats,
+                agent_state=state,
+                shared_state_path=SI_STATE_FILE,
+            )
+            stats["self_improvement"] = si_result
+            _emit_event("self_improvement_cycle", **si_result)
+            if si_result.get("action") not in ("skipped", "observing"):
+                emit_log_work(
+                    "polyhymnia_self_improvement",
+                    summary=f"SI: {si_result.get('action')} adaptation={si_result.get('adaptation')} "
+                            f"reason={si_result.get('reason') or ''}",
+                )
+        except Exception as e:
+            _emit_event("self_improvement_exception", level="error", error=str(e))
+
     if not dry_run:
         save_state(state)
     emit_heartbeat(state, tensor, last_action=stats["action"] or "unknown")
-    _emit_event("tick_end", **{k: v for k, v in stats.items() if not k.startswith("_")})
+    _emit_event("tick_end", **{k: v for k, v in stats.items() if not k.startswith("_") and not isinstance(v, dict)})
     return stats
 
 
