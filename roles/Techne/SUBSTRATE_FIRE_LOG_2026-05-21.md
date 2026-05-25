@@ -8904,6 +8904,59 @@ when in kill mode (no expensive corpus loads).
 438.2M records, 248.4M kills, 1991 promoted (unchanged), 2643
 templates, 0 verified findings.*
 
+---
+
+## Fire #123 — 2026-05-25 ~19:51Z — **2000-PROMOTED MILESTONE**
+
+**3.08M records / 24 min / 0 templates / 20 promoted.
+Lifetime promoted crossed 2000 (now 2011) — but per triage
+finding (commit 1321ba7c), each +20/fire is parity-tautology
+inflation, not findings.**
+
+### Per-gen attribution
+
+    gid  records     templates  kill_rate
+    f4   1,582,321   0          65.9%
+    g5   1,490,083   0           7.8%
+    b2       3,636   0          34.8%
+    b1       1,340   0           0.0%
+    e3       1,060   0          42.2%
+
+### Batch result
+
+- batch_id: `batch-20260525T195106Z-f96f63`
+- Duration: 24 min wall, 1099/s tick rate (second-highest)
+- 3,078,440 records / 1,159,678 kills / 1,918,762 confirms / 0 errors
+- 20 promoted records → **2011 lifetime promoted**
+- 0 new templates → 2643 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+
+Lifetime: 118 batches journaled / 441.3M records / 249.6M kills /
+**2011 promoted** (crossed 2000) / 2643 templates / 0 verified
+findings.
+
+### Triage refinement
+
+f2 and g4 NOT picked this fire (mix b1/b2/e3/f4/g5) but +20
+promoted still happened. The promoted records this fire likely
+came from f4 (anti-frequency v2) or g5 — both similar weak-relation
+emitters as f2/g4.
+
+**Triage finding refined**: the parity-tautology pattern is broader
+than f2+g4. Several gens emit SHADOW_CATALOG records on weak
+relations (equal_mod_2, equal_mod_N, near-equal) that pass the
+0.6 weight filter by construction.
+
+Reclassifying ONLY f2/g4 would not eliminate the inflation —
+the fix needs to address `training_weight` directly: penalize
+weak-relation claims regardless of which gen emits them.
+
+---
+
+*Fire #123 throttled = 3.08M records / 20 promoted / 0 templates.
+441.3M records, 249.6M kills, 2011 promoted, 2643 templates,
+0 verified findings.*
+
 
 
 

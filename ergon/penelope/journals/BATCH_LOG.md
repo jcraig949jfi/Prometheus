@@ -2970,3 +2970,23 @@
 - Sources: {}
 - Domains: {}
 
+
+## penelope-20260525T195237Z-c490b4
+
+- Started: 2026-05-25T19:52:37.996232+00:00
+- Ended:   2026-05-25T19:54:26.096454+00:00
+- Duration: 108.11 s
+- Files: 6 ingested, 0 dup-skip, 0 failed
+- Records: 3000 ingested, 0 dropped, 0 validation_failures
+- Sources: {'theseus': 3000}
+- Domains: {'knots_x_elliptic_curves': 3000}
+
+### Per-file detail
+
+- `F:\Prometheus\theseus\handoff\ergon_outbox\inbox\theseus_training_anchors_20260525T095816Z.jsonl` (theseus): success — 500 records (0 dropped, 0 vfails)
+- `F:\Prometheus\theseus\handoff\ergon_outbox\inbox\theseus_training_anchors_20260525T113012Z.jsonl` (theseus): success — 500 records (0 dropped, 0 vfails)
+- `F:\Prometheus\theseus\handoff\ergon_outbox\inbox\theseus_training_anchors_20260525T130147Z.jsonl` (theseus): success — 500 records (0 dropped, 0 vfails)
+- `F:\Prometheus\theseus\handoff\ergon_outbox\inbox\theseus_training_anchors_20260525T150240Z.jsonl` (theseus): success — 500 records (0 dropped, 0 vfails)
+- `F:\Prometheus\theseus\handoff\ergon_outbox\inbox\theseus_training_anchors_20260525T153902Z.jsonl` (theseus): success — 500 records (0 dropped, 0 vfails)
+- `F:\Prometheus\theseus\handoff\ergon_outbox\inbox\theseus_training_anchors_20260525T161220Z.jsonl` (theseus): success — 500 records (0 dropped, 0 vfails)
+
