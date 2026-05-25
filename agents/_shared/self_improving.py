@@ -75,6 +75,13 @@ except Exception:
     record_kept_mutation = None  # type: ignore
     query_borrowable_mutations = None  # type: ignore
 
+try:
+    from agents._shared.void_detector import voids_for_agent
+    HAS_VOID_DETECTOR = True
+except Exception:
+    HAS_VOID_DETECTOR = False
+    voids_for_agent = None  # type: ignore
+
 log = logging.getLogger("self_improving")
 
 
@@ -172,6 +179,13 @@ class SelfImprovingDaemon:
     CURRENT_FAILURE_MODES: list[str] = []       # e.g. ["high_null_rate"]
     BORROW_REGISTRY: bool = True
     BORROWED_REQUIRES_APPROVAL: bool = True
+
+    # v2d.1 — void-derived adaptations. When the agent's own menu + borrowed
+    # menu are exhausted, the lattice detector surfaces "compatible-shape
+    # agents kept X but you haven't tried it" predictions as menu items.
+    # Requires the void_detector module to be importable.
+    READ_VOIDS: bool = True
+    VOID_MIN_CONFIDENCE: float = 0.10
 
     # Stagnation signature shipped with every kept mutation we record back
     # to the registry. Subclass override if your failure mode is specific.
@@ -372,54 +386,99 @@ class SelfImprovingDaemon:
                 "delta": delta}
 
     def _effective_menu(self) -> list[Adaptation]:
-        """Subclass's ADAPTATION_MENU + borrowed-from-registry items.
-        Borrowed items are wrapped to require human approval the first
-        time, since cross-agent transfer is the risky path."""
+        """Subclass's ADAPTATION_MENU + borrowed-from-registry items +
+        void-derived predictions (v2d.1). Borrowed and void items are
+        wrapped to require human approval, since both need code porting
+        from elsewhere.
+
+        Order in the returned list (and order picked by _pick_next_adaptation):
+          1. Native (in this agent's own ADAPTATION_MENU)
+          2. Borrowed — proven kept by another compatible-shape agent
+          3. Void — predicted from geometric inference over the lattice
+        """
         own = list(self.ADAPTATION_MENU)
-        if not (HAS_MUTATION_REGISTRY and self.BORROW_REGISTRY):
-            return own
-        try:
-            borrowables = query_borrowable_mutations(
-                requesting_agent=self.AGENT_NAME_FOR_TICKETS,
-                agent_traits=list(self.AGENT_TRAITS),
-                current_failure_modes=list(self.CURRENT_FAILURE_MODES),
-            )
-        except Exception as e:
-            log.warning(f"borrowable-mutations query failed: {e}")
-            return own
-        # Don't duplicate own menu items by name
         own_names = {a.name for a in own}
-        for row in borrowables:
-            name = row.get("adaptation_name")
-            if name in own_names:
-                continue
-            # Wrap as a placeholder Adaptation. Its apply()/revert() raise
-            # NotImplementedError — borrowed mutations can't actually be
-            # applied automatically because the code lives in the source
-            # agent's module. The mixin will catch the raise and file an
-            # approval-request ticket asking a human to either (a) port
-            # the code over, or (b) approve a sandboxed eval. This is
-            # intentionally conservative for v2a.
-            def _borrow_apply_factory(src_module, src_name, src_agent):
-                def _apply(agent, agent_state):
-                    raise NotImplementedError(
-                        f"Borrowed adaptation {src_name} from {src_agent} "
-                        f"({src_module}) requires port-or-sandbox decision — "
-                        "file approval ticket and implement in this agent's module."
-                    )
-                return _apply
-            adapt = Adaptation(
-                name=f"BORROWED__{name}",
-                description=(f"Borrowed from {row.get('agent_name')}: {name} "
-                             f"(delta_composite={row.get('delta_composite'):+.2f})"),
-                cost=row.get("cost", "unknown"),
-                reversibility="never",   # can't execute without porting
-                apply=_borrow_apply_factory(row.get("module_source", ""),
-                                            name, row.get("agent_name", "")),
-                revert=None,
-                requires_human_approval=True,
-            )
-            own.append(adapt)
+
+        # v2a — borrowed mutations from the cross-agent registry
+        if HAS_MUTATION_REGISTRY and self.BORROW_REGISTRY:
+            try:
+                borrowables = query_borrowable_mutations(
+                    requesting_agent=self.AGENT_NAME_FOR_TICKETS,
+                    agent_traits=list(self.AGENT_TRAITS),
+                    current_failure_modes=list(self.CURRENT_FAILURE_MODES),
+                )
+            except Exception as e:
+                log.warning(f"borrowable-mutations query failed: {e}")
+                borrowables = []
+            for row in borrowables:
+                name = row.get("adaptation_name")
+                if name in own_names:
+                    continue
+                def _borrow_apply_factory(src_module, src_name, src_agent):
+                    def _apply(agent, agent_state):
+                        raise NotImplementedError(
+                            f"Borrowed adaptation {src_name} from {src_agent} "
+                            f"({src_module}) requires port-or-sandbox decision — "
+                            "file approval ticket and implement in this agent's module."
+                        )
+                    return _apply
+                own.append(Adaptation(
+                    name=f"BORROWED__{name}",
+                    description=(f"Borrowed from {row.get('agent_name')}: {name} "
+                                 f"(delta_composite={row.get('delta_composite'):+.2f})"),
+                    cost=row.get("cost", "unknown"),
+                    reversibility="never",
+                    apply=_borrow_apply_factory(row.get("module_source", ""),
+                                                name, row.get("agent_name", "")),
+                    revert=None,
+                    requires_human_approval=True,
+                ))
+
+        # v2d.1 — void-derived adaptations
+        if HAS_VOID_DETECTOR and self.READ_VOIDS:
+            try:
+                voids = voids_for_agent(
+                    agent_traits=list(self.AGENT_TRAITS),
+                    current_failure_modes=list(self.CURRENT_FAILURE_MODES),
+                    min_confidence=self.VOID_MIN_CONFIDENCE,
+                )
+            except Exception as e:
+                log.warning(f"voids_for_agent query failed: {e}")
+                voids = []
+            menu_names = {a.name for a in own}
+            for v in voids:
+                wrapped_name = f"VOID__{v.adaptation_name}"
+                borrowed_name = f"BORROWED__{v.adaptation_name}"
+                # Skip if already covered by native or borrowed
+                if (v.adaptation_name in own_names
+                        or wrapped_name in menu_names
+                        or borrowed_name in menu_names):
+                    continue
+                neighbor_agents = sorted(set(
+                    r.get("agent_name", "?") for r in v.evidence_neighbors
+                ))
+                def _void_apply_factory(adapt_name, rationale, neighbors):
+                    def _apply(agent, agent_state):
+                        raise NotImplementedError(
+                            f"Void-predicted adaptation {adapt_name}: {rationale} "
+                            f"Evidence neighbors: {neighbors[:3]}. Requires port + "
+                            "approval — implement in this agent's module."
+                        )
+                    return _apply
+                own.append(Adaptation(
+                    name=wrapped_name,
+                    description=(f"Void prediction: {v.adaptation_name} "
+                                 f"(pred Δ={v.predicted_delta_composite:+.2f}, "
+                                 f"conf={v.confidence:.2f}, "
+                                 f"from {len(v.evidence_neighbors)} neighbor(s))"),
+                    cost="unknown",
+                    reversibility="never",
+                    apply=_void_apply_factory(v.adaptation_name, v.rationale,
+                                              neighbor_agents),
+                    revert=None,
+                    requires_human_approval=True,
+                ))
+                menu_names.add(wrapped_name)
         return own
 
     def _pick_next_adaptation(self, si_state: dict) -> Optional[Adaptation]:
@@ -445,10 +504,19 @@ class SelfImprovingDaemon:
         effective = self._effective_menu()
         candidates = [a for a in effective if a.name not in tried_recently]
         if candidates:
-            # Prefer native (non-borrowed) first; within each tier, prefer cheap.
+            # Tier order:
+            #   0 = native (proven for this exact shape)
+            #   1 = BORROWED__ (proven for compatible shape elsewhere)
+            #   2 = VOID__ (predicted from geometric inference)
+            # Within each tier, prefer cheap cost.
             def _sort_key(a):
-                is_borrowed = a.name.startswith("BORROWED__")
-                return (1 if is_borrowed else 0, cost_order.get(a.cost, 99))
+                if a.name.startswith("VOID__"):
+                    tier = 2
+                elif a.name.startswith("BORROWED__"):
+                    tier = 1
+                else:
+                    tier = 0
+                return (tier, cost_order.get(a.cost, 99))
             candidates.sort(key=_sort_key)
             return candidates[0]
         # All tried recently. Wall.
