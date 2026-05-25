@@ -93,15 +93,29 @@ class H2TriangulationProtocolGenerator(Generator):
         if "knot_invariant" in p and "ec_invariant" in p:
             self._inconclusive_parents.append(record)
 
+    # Fire #116/#112 fix: corpus grew to 415M+ records, iterating the
+    # full corpus on first .next() call could run for hours and freezes
+    # the daemon's heartbeat (which is inline, not threaded). Cap the
+    # scan at LOAD_INCONCLUSIVE_SCAN_CAP records and the parent-pool
+    # at LOAD_INCONCLUSIVE_PARENT_CAP to bound init time.
+    LOAD_INCONCLUSIVE_SCAN_CAP = 200_000
+    LOAD_INCONCLUSIVE_PARENT_CAP = 5_000
+
     def _load_inconclusive(self) -> None:
         if self._loaded:
             return
         try:
+            scanned = 0
             for r in self._reader.iter_records():
+                scanned += 1
+                if scanned > self.LOAD_INCONCLUSIVE_SCAN_CAP:
+                    break
                 if r.verdict == Verdict.INCONCLUSIVE.value:
                     p = r.claim_payload
                     if "knot_invariant" in p and "ec_invariant" in p:
                         self._inconclusive_parents.append(r)
+                        if len(self._inconclusive_parents) >= self.LOAD_INCONCLUSIVE_PARENT_CAP:
+                            break
         except Exception:
             pass
         self._loaded = True
