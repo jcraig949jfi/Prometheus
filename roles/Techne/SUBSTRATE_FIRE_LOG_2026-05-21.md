@@ -9137,6 +9137,55 @@ Lifetime: 122 batches journaled / 453.1M records / 256.8M kills /
 453.1M records, 256.8M kills, 2091 promoted, 2643 templates,
 0 verified findings.*
 
+---
+
+## Fire #128 — 2026-05-25 ~22:27Z — **F-FAMILY TRIO**
+
+**3.43M records / 24 min / 0 templates / 20 promoted.
+Mix c1/f2/f3/f4/h4 — first time all three f-family gens
+picked together. Tick rate 492/s. RSS 4.1GB (high — h4
+caching).**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    f3   709,266   0          67.4%
+    f4   708,861   0          65.8%
+    f2   708,857   0          65.8%
+    c1   674,740   0          68.1%
+    h4   629,854   0          17.1%
+
+### Batch result
+
+- batch_id: `batch-20260525T222705Z-3e244a`
+- Duration: 24 min wall, 492/s tick rate
+- 3,431,578 records / 1,978,416 kills / 1,281,114 confirms / 0 errors
+- 20 promoted records → **2111 lifetime promoted**
+- 0 new templates → 2643 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+- batch_end ✓ (RSS 4.1GB at finish — highest of session)
+
+Lifetime: 123 batches journaled / 456.6M records / 258.8M kills /
+2111 promoted / 2643 templates / 0 verified findings.
+
+### Notable
+
+- All three f-family gens (f2, f3, f4) burned in lockstep at
+  ~709K records each. Per triage, f2 and f4 both emit weak
+  relations; promoted records this fire likely concentrated
+  there.
+- h4 (bridge_extension) consumed memory heavily — 4.1GB RSS
+  is highest seen. Worth flagging.
+- Demand signal collapsed to 1 event (similar to Fire #117 —
+  picked-gens artifact when no high-demand catalog gen is in
+  the mix).
+
+---
+
+*Fire #128 throttled = 3.43M records / 20 promoted / 0 templates.
+456.6M records, 258.8M kills, 2111 promoted, 2643 templates,
+0 verified findings.*
+
 
 
 
