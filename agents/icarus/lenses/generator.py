@@ -1,0 +1,149 @@
+"""
+Generator lens -- proposes a concrete diff with rationale.
+
+Successor to the old improve.propose_diff(). Reads upstream Diagnostician
++ Historian reports before proposing so it can target the most-acute gap.
+
+Model preference: Claude Sonnet (best at code-diff generation in our toolbox).
+"""
+from __future__ import annotations
+
+import json
+from datetime import datetime, timezone
+
+from lenses._base import Lens, LensReport, CycleContext, SCORING_AXES
+from lenses._llm import call_llm, extract_json_block, clamp_axis
+
+
+GENERATOR_SYSTEM = (
+    "You are the Generator lens for Icarus, a self-improving agent climbing "
+    "the Prometheus Reasoning Ladder (R0-R12). Your role: propose ONE concrete "
+    "unified-diff change to Icarus's reasoner code that moves it toward the "
+    "current tier target.\n\n"
+    "STRICT CONSTRAINTS:\n"
+    "1. Diff must be <=100 lines.\n"
+    "2. Diff must be valid unified-diff format that `git apply -p1` will accept. "
+    "Reproduce CONTEXT LINES EXACTLY from the source -- do not paraphrase or "
+    "modify them. If you cannot reproduce a context line verbatim, omit it.\n"
+    "3. Only modify reasoner.py, strategy.py, or files under tests/generated/. "
+    "Never modify daemon.py, lineage.py, improve.py, lenses/, falsifier.py, "
+    "ladder.py.\n"
+    "4. No defensive wrappers / broad try/except / scaffolding designed to "
+    "mask failure. Make a real reasoning change.\n\n"
+    "You will be given upstream lens reports (Diagnostician, Historian). "
+    "Use them: target the gap Diagnostician identified, avoid the patterns "
+    "Historian flagged as recurring failure modes.\n\n"
+    "OUTPUT (strict JSON, no prose around it):\n"
+    "{\n"
+    '  "diff": "<unified diff as a single string with \\n line breaks>",\n'
+    '  "rationale": "<2-4 sentences explaining the change>",\n'
+    '  "axes": {\n'
+    '    "tier_proximity": <0.0-1.0>,\n'
+    '    "novelty": <0.0-1.0>,\n'
+    '    "regression_risk": <0.0-1.0>,  (1.0 = LOW risk, 0.0 = HIGH risk)\n'
+    '    "structural_simplicity": <0.0-1.0>,\n'
+    '    "evidence_quality": <0.0-1.0>\n'
+    "  },\n"
+    '  "confidence": <0.0-1.0>,\n'
+    '  "key_observations": [<2-4 short strings>]\n'
+    "}\n"
+)
+
+
+class GeneratorLens(Lens):
+    name = "generator"
+    model_preference = "claude_sonnet"
+
+    def observe(self, ctx: CycleContext) -> LensReport:
+        source = _read_source(ctx.source_dir)
+        diag_summary = _lens_excerpt(ctx.diagnostician_report)
+        hist_summary = _lens_excerpt(ctx.historian_report)
+
+        user_prompt = (
+            f"## Tier challenge\n"
+            f"Tier target: {ctx.tier_target}\n"
+            f"Falsification test: {ctx.tier_challenge.get('falsification_test', '?')}\n\n"
+            f"## Diagnostician's read\n{diag_summary}\n\n"
+            f"## Historian's read\n{hist_summary}\n\n"
+            f"## Current reasoner source\n```python\n{source}\n```\n\n"
+            f"Propose one diff."
+        )
+
+        result = call_llm(
+            preference=self.model_preference,
+            system=GENERATOR_SYSTEM,
+            user=user_prompt,
+            max_tokens=3500,
+        )
+        text = result.get("text", "")
+        parsed = extract_json_block(text)
+        if not parsed:
+            return LensReport.empty_with_error(
+                lens_name=self.name, cycle_n=ctx.cycle_n,
+                error="generator_response_not_json",
+                model_used=result.get("model_used", "unknown"),
+            )
+
+        diff = parsed.get("diff", "")
+        rationale = parsed.get("rationale", "")
+        axes = {a: clamp_axis(parsed.get("axes", {}).get(a, 0.5))
+                for a in SCORING_AXES}
+        confidence = clamp_axis(parsed.get("confidence", 0.5))
+        observations = parsed.get("key_observations", []) or []
+        if not isinstance(observations, list):
+            observations = [str(observations)]
+
+        # The diff goes in suggested_actions[0] so the panel can extract it
+        return LensReport(
+            lens_name=self.name,
+            model_used=result.get("model_used", "unknown"),
+            cycle_n=ctx.cycle_n,
+            ts=_now_iso(),
+            qualitative_summary=rationale,
+            axes=axes,
+            confidence=confidence,
+            key_observations=[str(o)[:300] for o in observations[:6]],
+            suggested_actions=[diff],  # [0] is the diff
+            raw_response_excerpt=text[:500],
+            tokens_used=result.get("tokens_used", 0),
+            cost_estimate_usd=result.get("cost_estimate_usd", 0.0),
+        )
+
+
+def _read_source(source_dir, max_chars: int = 6000) -> str:
+    if not source_dir.exists():
+        return ""
+    chunks = []
+    total = 0
+    for p in sorted(source_dir.rglob("*.py")):
+        if "__pycache__" in str(p) or "/tests/" in str(p).replace("\\", "/"):
+            continue
+        try:
+            text = p.read_text(encoding="utf-8", errors="ignore")
+        except Exception:
+            continue
+        rel = p.relative_to(source_dir)
+        snippet = f"\n--- {rel} ---\n{text}\n"
+        if total + len(snippet) > max_chars:
+            chunks.append(f"\n--- {rel} ---\n[truncated]\n")
+            break
+        chunks.append(snippet)
+        total += len(snippet)
+    return "".join(chunks)
+
+
+def _lens_excerpt(report) -> str:
+    if report is None:
+        return "_(no report available)_"
+    if report.error:
+        return f"_(lens error: {report.error})_"
+    obs = "\n".join(f"- {o}" for o in report.key_observations[:4])
+    return (
+        f"Summary: {report.qualitative_summary[:400]}\n"
+        f"Confidence: {report.confidence:.2f}\n"
+        f"{obs}"
+    )
+
+
+def _now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
