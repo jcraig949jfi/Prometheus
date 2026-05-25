@@ -8713,6 +8713,53 @@ Lifetime: 113 batches journaled / 430.5M records / 244.2M kills /
 430.5M records, 244.2M kills, 1931 promoted, 2595 templates,
 0 verified findings.*
 
+---
+
+## Fire #119 — 2026-05-25 ~17:49Z — **+39 TEMPLATES (FIRST IN MANY FIRES)**
+
+**1.65M records / 24 min / 39 templates / 20 promoted.
+c2 (claim_mutation) found 39 new signature templates — first
+non-zero template count since Fire #108 (d3 burst of +12).**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    f1   645,068   0          29.4%
+    a4   623,555   0          31.1%
+    c2   234,202   39         37.8%   ← new templates
+    d4   150,477   0          59.1%
+    b1     1,340   0           0.0%
+
+### Batch result
+
+- batch_id: `batch-20260525T174904Z-1f1327`
+- Duration: 24 min wall, 460/s tick rate
+- 1,654,642 records / 560,869 kills / 292,814 confirms / 0 errors
+- 20 promoted records → **1951 lifetime promoted**
+- **+39 new templates → 2634 lifetime disc-role templates** (was
+  stuck at 2595 for many fires)
+- **Verified mathematical findings: 0** (templates ≠ findings)
+
+Lifetime: 114 batches journaled / 432.1M records / 244.8M kills /
+1951 promoted / 2634 templates / 0 verified findings.
+
+### Notable
+
+- c2 (claim_mutation) hit a fresh seam — 39/234K = 0.017%
+  novelty rate, modest but non-zero
+- d4 worked fine with new corpus-scan cap (cap shipped this
+  session, commit 7ea519ef)
+- Top demand again EC-flavored: ec/j_invariant (94K) +
+  ec/discriminant (94K) + knot/alexander_polynomial_degree (82K)
+- Fire #117's demand-collapse → confirmed picked-gens artifact;
+  Fire #119 (with different mix) is back to high-volume demand
+
+---
+
+*Fire #119 throttled = 1.65M records / 20 promoted / 39 templates.
+432.1M records, 244.8M kills, 1951 promoted, 2634 templates,
+0 verified findings.*
+
 
 
 
