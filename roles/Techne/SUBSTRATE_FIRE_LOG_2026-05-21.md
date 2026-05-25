@@ -7842,6 +7842,79 @@ snapshots, no progress. Heartbeat can't see in-next hangs. New
 follow-up: per-next timeout wrapper. Lifetime stats unchanged
 at 1669 promoted / 2578 templates / 0 verified findings.*
 
+---
+
+## Fire #101 — 2026-05-25 ~00:31Z — Recovered, ran normally
+
+**1.74M records / 24 min / 0 templates / 1 promoted record.
+Fire #100 hang was indeed gen-mix specific (g5/f3/g3/d2/h2);
+different gen mix here ran cleanly.**
+
+### Picks + metrics
+
+    Bandit picked: ['a4', 'a2', 'b1', 'e3', 'c5']
+    [heartbeat: 48 snapshots, full duration]
+    Signature templates: 0 new (2578 lifetime unchanged)
+    Honest accounting: 1 promoted record → 1670 lifetime (low)
+    verified mathematical findings = 0
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    a4   885,720   0          30.8%
+    a2   855,096   0          93.4%
+    b1     1,340   0          0%      (INFRA_DIAGNOSTIC)
+    e3     1,060   0          42.2%
+    c5         6   0          83.3%   (deeply exhausted)
+
+Only 1 promoted record this fire — bottom of the data-driven
+variance range (#91 had 0, most fires have 20). a2's 93% kill
+rate on 855K records didn't produce promote-worthy density.
+
+### Bandit didn't hang on different mix
+
+The Fire #100 hang correlates with the specific {g5, f3, g3,
+d2, h2} pick set. Fire #101 with {a4, a2, b1, e3, c5} ran
+cleanly. Possible triggers:
+- Specific gen with infinite loop in next() (one of g5/f3/g3/d2/h2)
+- Interaction between two gens (e.g., signature_index lock)
+- Memory state at start (was 7.8 GB; throttled-fire heap pressure)
+
+Need per-next() instrumentation to identify. On the follow-up
+list. For now, the pattern is RARE (1 hang in 12 throttled fires).
+
+### Batch result
+
+- batch_id: `batch-20260525T003106Z-1ad6b4`
+- Duration: 24 min wall
+- 1,743,222 records / 1,072,461 kills / 60,828 confirms / 610K incon / 0 errors
+- 1 promoted record → **1670 lifetime promoted** (low)
+- 0 new templates → 2578 lifetime discovery-role templates
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #101
+
+| Metric | Pre-#34 | Post-#99 | Post-#101 |
+|---|---|---|---|
+| Batches journaled | 30 | 98 | 99 |
+| Records | 154.4M | 397.2M | 399.0M |
+| Kills | 74.4M | 226.1M | 227.2M |
+| Confirmations | 75.5M | 150.0M | 150.1M |
+| Promoted records | 500 | 1669 | **1670** |
+| Templates (disc-role) | 17 | 2578 | 2578 |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=3600`.
+
+---
+
+*Fire #101 throttled, ran cleanly. 1.74M records / 1 promoted /
+0 templates. Confirms Fire #100 hang was gen-mix specific.
+399.0M records, 227.2M kills, 1670 promoted, 2578 templates,
+0 verified findings.*
+
 
 
 
