@@ -5,6 +5,9 @@ state/resume.flag
 state/kill.flag
 
 # Runtime state -- mutable; not tracked
+# (iteration_n + last_stable_cycle default to 0/000 if missing -- see lineage.py)
+state/iteration_n.json
+state/last_stable_cycle.json
 state/seen_inbox_files.json
 state/seen_chimera_responses.json
 state/seen_frontier_responses.json
