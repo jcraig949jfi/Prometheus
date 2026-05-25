@@ -8539,6 +8539,53 @@ overdue.
 423.3M records, 240.4M kills, 1871 promoted, 2595 templates,
 0 verified findings.*
 
+---
+
+## Fire #115 — 2026-05-25 ~15:44Z (post e1-disable)
+
+**2.44M records / 24 min / 0 templates / 20 promoted. e1 NOT
+picked (reclassification working). Tick rate 865/s — HIGHEST
+EVER, +33% vs Fire #114's 646/s. e1 stall was hogging 24min
+of call-stack time.**
+
+### Per-gen attribution
+
+    gid  records     templates  kill_rate  role
+    a3   1,241,325   0          63.6%      DISCOVERY
+    f1   1,181,537   0          29.2%      NULL_BASELINE
+    g3      20,000   0           0.0%      TAUTOLOGY_CONTROL
+    b1       1,340   0           0.0%      INFRA_DIAGNOSTIC
+    e5         121   0           0.0%      DISCOVERY (web scraper)
+
+### Batch result
+
+- batch_id: `batch-20260525T154406Z-a8ea7d`
+- Duration: 24 min wall, **865/s tick rate** (new record)
+- 2,444,323 records / 1,134,093 kills / 624,612 confirms / 0 errors
+- 20 promoted records → **1891 lifetime promoted**
+- 0 new templates → 2595 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+
+Lifetime: 111 batches journaled / 425.8M records / 241.5M kills /
+1891 promoted / 2595 templates / 0 verified findings.
+
+### Notable
+
+- **Top demand shifted:** ec/discriminant (178K) + ec/j_invariant
+  (178K) + knot/alexander_polynomial_degree (156K). First time
+  in many fires that knot/nf_class_number is NOT on top. e5+b1+g3
+  pulled the demand distribution.
+- Demand signal volume: 877K events (vs 153K Fire #114) — a3 + f1
+  + control-role gens emit broader metadata claims.
+- e1 reclassification validation: tick-rate +33%, no stall events
+  in heartbeat. **Backlog item paid measurable dividend.**
+
+---
+
+*Fire #115 throttled = 2.44M records / 20 promoted / 0 templates.
+425.8M records, 241.5M kills, 1891 promoted, 2595 templates,
+0 verified findings.*
+
 
 
 
