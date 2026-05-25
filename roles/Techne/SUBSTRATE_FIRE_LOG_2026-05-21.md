@@ -7988,6 +7988,69 @@ f1 carried with 2.06M demand events for ec/knot primitives.
 100-batches-journaled milestone. 401.6M records, 227.9M kills,
 1670 promoted, 2578 templates, 0 verified findings.*
 
+---
+
+## Fire #103 — 2026-05-25 ~03:23Z
+
+**2.38M records / 24 min / 4 new templates (h1!) / 20 promoted.
+Balanced 5-gen pick: a1/a3/f2/g5/h1, each ~475-486K records.**
+
+### Picks + metrics
+
+    Bandit picked: ['a1', 'a3', 'f2', 'g5', 'h1']
+    [heartbeat: 48 snapshots, full duration]
+    Signature templates: 4 new (h1) → 2582 lifetime (+4)
+    Honest accounting: 20 promoted records → 1690 lifetime
+    verified mathematical findings = 0
+    Top demand: 79,458 knot/nf_class_number
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    f2   486,019   0          65.8%
+    a3   485,460   0          63.5%
+    g5   477,228   0           7.8%      (92% confirm)
+    h1   472,025   4          89.4%      ← 4 templates
+    a1   459,768   0          69.0%
+
+h1 contributed 4 new templates — first non-zero template emission
+in several fires. h1 = self_play_hunter. Last picked: Fire #93
+(had 0 templates). After 10-fire gap, h1 produced 4 fresh
+shapes. Modest example of the "fixed reservoir" model where
+upstream catalog updates from intervening fires can refill
+some shape space.
+
+### Batch result
+
+- batch_id: `batch-20260525T032308Z-767a21`
+- Duration: 24 min wall
+- 2,380,500 records / 1,404,588 kills / 975,912 confirms / 0 incon / 0 errors
+- 20 promoted records → **1690 lifetime promoted**
+- 4 new templates (h1) → **2582 lifetime discovery-role templates** (+4)
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #103
+
+| Metric | Pre-#34 | Post-#102 | Post-#103 |
+|---|---|---|---|
+| Batches journaled | 30 | 100 | 101 |
+| Records | 154.4M | 401.6M | 404.0M |
+| Kills | 74.4M | 227.9M | 229.3M |
+| Confirmations | 75.5M | 150.5M | 151.5M |
+| Promoted records | 500 | 1670 | **1690** |
+| Templates (disc-role) | 17 | 2578 | **2582** |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=3600`.
+
+---
+
+*Fire #103 throttled = 2.38M records / 20 promoted / 4 templates
+(h1 after 10-fire gap). 404.0M records, 229.3M kills, 1690
+promoted, 2582 templates, 0 verified findings.*
+
 
 
 
