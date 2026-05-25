@@ -148,6 +148,23 @@ def execute_attack(problem: dict, attack_plan_path: Optional[str] = None) -> dic
             stats=stats,
         )
 
+    # ---- POLLUX-* survivor validation: deferred ---------------------
+    # Pollux fed a PROMOTED pair into the queue (survived mean-spacing
+    # normalization). The right v10 attack is to load the same pair's
+    # values and run test_distribution / test_correlation on them. A
+    # dedicated loader belongs in loaders/pollux_survivor.py; for now
+    # we emit a typed UNVERIFIED row so Pollux's contribution to the
+    # ledger is visible and Hecate sees a 'stygian saw pollux's pair'
+    # entry.
+    if problem_id.startswith("POLLUX-"):
+        return _emit_short_circuit_row(
+            problem=problem,
+            attack_plan_path=attack_plan_path,
+            kill_pattern="stygian_pollux_survivor_loader_pending",
+            reason="pollux_survivor_loader_not_yet_implemented",
+            stats=stats,
+        )
+
     # ---- BL-C-* with no loader: short-circuit -----------------------
     loader = get_loader(problem_id)
     if loader is None:

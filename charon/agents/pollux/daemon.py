@@ -31,11 +31,12 @@ from __future__ import annotations
 
 import hashlib
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Optional
 
 from charon.agents._base import CharonAgent
+from charon.agents._shared_queues import stygian_priority_queue
 from harmonia.agents._base import REPO_ROOT
 
 
@@ -45,10 +46,9 @@ POLLUX_KILL_LEDGER = (
     REPO_ROOT / "charon" / "agents" / "pollux" / "state" / "kill_ledger.jsonl"
 )
 
-# Test-pair rotation. Each tick scans ONE pair; pairs round-robin via
-# rotation_idx state. Pair definitions are (subset_a_spec, subset_b_spec)
-# where each spec is a dict consumed by _load_subset().
-TEST_PAIRS: list[dict] = [
+# Active test-pair rotation (small; mutated as pairs settle/promote).
+# Initial seed: 4 within-Mahler subset pairs.
+SEED_PAIRS: list[dict] = [
     {
         "name": "deg10_vs_deg12",
         "a": {"kind": "mahler_by_degree", "degree": 10},
@@ -74,6 +74,50 @@ TEST_PAIRS: list[dict] = [
         "rationale": "Smyth-extremal floor vs everything-else; tests floor-vs-interior shape contrast.",
     },
 ]
+
+# Candidate-pool pairs to draw from when SEED entries settle. Each draw
+# adds genuinely-new substrate ground (cross-degree-class, larger-vs-
+# smaller, even-vs-odd-degree, narrow-band slices). When the within-
+# Mahler pool runs out, future v0.7+ work adds cross-database pairs
+# (Mahler vs OEIS sleeping, Mahler vs knots, etc.).
+CANDIDATE_POOL: list[dict] = [
+    {
+        "name": "deg18_vs_deg20",
+        "a": {"kind": "mahler_by_degree", "degree": 18},
+        "b": {"kind": "mahler_by_degree", "degree": 20},
+        "rationale": "Higher-degree adjacent pair; extends the deg10-12 / deg14-16 sequence to test for monotone trend in correlation survival.",
+    },
+    {
+        "name": "even_deg_vs_odd_deg",
+        "a": {"kind": "mahler_by_degree_parity", "parity": "even"},
+        "b": {"kind": "mahler_by_degree_parity", "parity": "odd"},
+        "rationale": "Degree parity affects polynomial structure (cyclotomic-vs-non, signed roots, etc.); tests whether parity contrast shapes the M distribution.",
+    },
+    {
+        "name": "small_deg_vs_large_deg",
+        "a": {"kind": "mahler_degree_range", "min_deg": 2, "max_deg": 8},
+        "b": {"kind": "mahler_degree_range", "min_deg": 16, "max_deg": 30},
+        "rationale": "Low-degree vs high-degree bands; tests scale-of-degree effect on M distribution shape.",
+    },
+    {
+        "name": "narrow_band_1.10_1.20_vs_1.30_1.50",
+        "a": {"kind": "mahler_M_range", "M_min": 1.10, "M_max": 1.20},
+        "b": {"kind": "mahler_M_range", "M_min": 1.30, "M_max": 1.50},
+        "rationale": "Lehmer-adjacent band vs interior band; tests whether Lehmer-floor neighborhood has distinct shape from the bulk spectrum.",
+    },
+    {
+        "name": "lehmer_witness_neighborhood",
+        "a": {"kind": "mahler_M_range", "M_min": 1.0001, "M_max": 1.20},
+        "b": {"kind": "mahler_M_range", "M_min": 1.20, "M_max": 1.50},
+        "rationale": "Floor neighborhood vs immediate interior; tests whether the Lehmer-conjectured infimum imposes structural pressure on the distribution shape.",
+    },
+]
+
+# Settle policy: after N consecutive scans return the same verdict, the
+# pair is 'settled' and rotates out (its claim has been re-confirmed
+# enough times that further scans add no signal). Tracked via state
+# field 'pair_history'.
+SETTLE_THRESHOLD = 5
 
 # Correlation thresholds for verdict classification
 CORR_SIGNIFICANT = 0.30  # |spearman| >= this is "real correlation"
@@ -128,6 +172,37 @@ def _load_subset(spec: dict) -> tuple[list[float], str]:
             ]
             values = [float(e["mahler_measure"]) for e in entries]
             return values, f"Non-Smyth-extremal entries (n={len(values)})"
+        elif kind == "mahler_by_degree_parity":
+            parity = spec.get("parity", "even").lower()
+            target_mod = 0 if parity == "even" else 1
+            entries = [
+                e for e in all_below(2.0)
+                if e.get("degree") is not None
+                and e.get("mahler_measure") is not None
+                and (int(e["degree"]) % 2) == target_mod
+            ]
+            values = [float(e["mahler_measure"]) for e in entries]
+            return values, f"Mossinghoff {parity}-degree entries (n={len(values)})"
+        elif kind == "mahler_degree_range":
+            lo, hi = int(spec.get("min_deg", 0)), int(spec.get("max_deg", 999))
+            entries = [
+                e for e in all_below(2.0)
+                if e.get("degree") is not None
+                and e.get("mahler_measure") is not None
+                and lo <= int(e["degree"]) <= hi
+            ]
+            values = [float(e["mahler_measure"]) for e in entries]
+            return values, f"Mossinghoff entries deg in [{lo},{hi}] (n={len(values)})"
+        elif kind == "mahler_M_range":
+            mlo = float(spec.get("M_min", 1.0))
+            mhi = float(spec.get("M_max", 2.0))
+            entries = [
+                e for e in all_below(mhi)
+                if e.get("mahler_measure") is not None
+                and mlo <= float(e["mahler_measure"]) <= mhi
+            ]
+            values = [float(e["mahler_measure"]) for e in entries]
+            return values, f"Mossinghoff entries M in [{mlo:.3f},{mhi:.3f}] (n={len(values)})"
         else:
             return [], f"unknown subset kind: {kind}"
     except Exception as e:
@@ -212,16 +287,72 @@ class PolluxAgent(CharonAgent):
     name = "Pollux"
     role = "numerical-coincidence scanner (cross-database correlation under normalization)"
 
+    # ---- dynamic pair management (patch 4 2026-05-25) ---------------
+
+    def _active_pairs(self) -> list[dict]:
+        """Active rotation list. First call seeds from SEED_PAIRS; later
+        ticks pull from state, mutated as pairs settle."""
+        ap = self.load_state("active_pairs", None)
+        if ap is None:
+            self.save_state("active_pairs", SEED_PAIRS)
+            return list(SEED_PAIRS)
+        return list(ap)
+
+    def _record_verdict_and_check_settle(self, pair_name: str, verdict: str) -> bool:
+        """Append verdict to pair_history; return True if pair is now
+        settled (>= SETTLE_THRESHOLD consecutive identical verdicts)."""
+        history = self.load_state("pair_history", {}) or {}
+        ph = history.get(pair_name, [])
+        ph.append(verdict)
+        ph = ph[-SETTLE_THRESHOLD * 2:]  # cap stored history
+        history[pair_name] = ph
+        self.save_state("pair_history", history)
+        recent = ph[-SETTLE_THRESHOLD:]
+        return (
+            len(recent) >= SETTLE_THRESHOLD
+            and all(v == recent[0] for v in recent)
+            and recent[0] in ("PROMOTED", "REJECTED")
+        )
+
+    def _promote_settled_replace(self, settled_name: str, verdict: str) -> Optional[dict]:
+        """Move settled pair to settled list; pull next candidate from
+        CANDIDATE_POOL to replace it in the active rotation. Returns the
+        new candidate pair if one was promoted, else None (pool exhausted)."""
+        settled = self.load_state("settled_pairs", []) or []
+        settled.append({
+            "name": settled_name,
+            "verdict": verdict,
+            "settled_at": datetime.now(timezone.utc).isoformat(),
+            "n_confirmations": SETTLE_THRESHOLD,
+        })
+        self.save_state("settled_pairs", settled)
+
+        cand_idx = int(self.load_state("candidate_pool_idx", 0) or 0)
+        if cand_idx >= len(CANDIDATE_POOL):
+            return None
+        new_pair = CANDIDATE_POOL[cand_idx]
+        self.save_state("candidate_pool_idx", cand_idx + 1)
+
+        active = self._active_pairs()
+        active = [p for p in active if p.get("name") != settled_name]
+        active.append(new_pair)
+        self.save_state("active_pairs", active)
+        return new_pair
+
     def self_generate_backlog(self) -> list[dict]:
-        """Always one item: scan the next pair in rotation."""
+        """Always one item: scan the next pair in active rotation."""
+        active = self._active_pairs()
+        if not active:
+            return []
         idx = int(self.load_state("pair_rotation_idx", 0) or 0)
-        pair = TEST_PAIRS[idx % len(TEST_PAIRS)]
+        pair = active[idx % len(active)]
         return [{"pair": pair, "idx": idx}]
 
     def _pick_and_advance(self) -> dict:
+        active = self._active_pairs()
         idx = int(self.load_state("pair_rotation_idx", 0) or 0)
-        pair = TEST_PAIRS[idx % len(TEST_PAIRS)]
-        self.save_state("pair_rotation_idx", (idx + 1) % len(TEST_PAIRS))
+        pair = active[idx % len(active)]
+        self.save_state("pair_rotation_idx", (idx + 1) % max(1, len(active)))
         return pair
 
     def _emit_artifact(self, pair: dict, result: dict) -> Path:
@@ -372,6 +503,69 @@ class PolluxAgent(CharonAgent):
         }
         _emit_kill_ledger_row(row)
         stats["kill_ledger_row_id"] = rid
+
+        # ---- Settle check (patch 4 2026-05-25): demote consistent-verdict
+        # pairs after SETTLE_THRESHOLD consecutive confirmations and pull
+        # the next candidate from CANDIDATE_POOL to replace them. Stops
+        # Pollux from re-confirming the same 4 finite outcomes forever.
+        is_settled = self._record_verdict_and_check_settle(pair["name"], verdict)
+        stats["pair_settled_this_tick"] = is_settled
+        if is_settled:
+            new_pair = self._promote_settled_replace(pair["name"], verdict)
+            if new_pair:
+                stats["new_candidate_promoted"] = new_pair["name"]
+                self.log.info(
+                    f"settled '{pair['name']}' ({verdict} x{SETTLE_THRESHOLD}); "
+                    f"promoted new candidate '{new_pair['name']}' from pool"
+                )
+            else:
+                stats["new_candidate_promoted"] = None
+                self.log.info(
+                    f"settled '{pair['name']}' ({verdict} x{SETTLE_THRESHOLD}); "
+                    f"CANDIDATE_POOL exhausted -- active rotation shrunk"
+                )
+
+        # ---- PROMOTED -> Stygian queue (closed-loop edge, patch 2 2026-05-25) -
+        # When mean-spacing-normalization survives, the pair carries genuine
+        # shape signal. Hand off to Stygian's v10 battery as a higher-tier
+        # validation. Provenance preserved so Stygian's attack_plan can
+        # cite the originating Pollux scan.
+        if verdict == "PROMOTED":
+            try:
+                queue = stygian_priority_queue()
+                # Dedup: only enqueue if this pair hasn't been queued in
+                # the last 24h (a perpetually-PROMOTED pair shouldn't
+                # spam the queue every rotation).
+                recent_cutoff = (
+                    datetime.now(timezone.utc) - timedelta(hours=24)
+                ).isoformat()
+                recent_pairs = queue.recent_keys("kill_pattern", recent_cutoff)
+                pollux_key = f"pollux_survives_{pair['name']}"
+                if pollux_key not in recent_pairs:
+                    queue.append({
+                        "source": "pollux",
+                        "kill_pattern": pollux_key,
+                        "cluster_size": n,  # n_paired records
+                        "top_generator": "pollux",
+                        "mi_z": None,
+                        "mi_observed": None,
+                        "pollux_pair_name": pair["name"],
+                        "pollux_corr_raw": stats["corr_raw"],
+                        "pollux_corr_norm": stats["corr_norm"],
+                        "pollux_subset_a_desc": a_desc,
+                        "pollux_subset_b_desc": b_desc,
+                        "pollux_ledger_row_id": rid,
+                        "rationale": pair["rationale"],
+                    })
+                    stats["promoted_to_stygian_queue"] = True
+                else:
+                    stats["promoted_to_stygian_queue"] = False
+                    stats["queue_skip_reason"] = "recent_dedup"
+            except Exception as e:
+                self.log.warning(f"stygian_priority enqueue failed: {e}")
+                stats["promoted_to_stygian_queue"] = False
+                stats["queue_skip_reason"] = f"enqueue_error: {e}"
+
         stats["items_processed"] += 1
         self.log_work(
             "pollux_tick_complete",

@@ -182,25 +182,64 @@ class StygianAgent(CharonAgent):
     def _wrap_queue_row_as_problem(self, row: dict) -> dict:
         """Convert a stygian_priority queue row into a problem-shaped dict
         that _emit_attack_plan can consume. The provenance fields survive
-        on the dict so the artifact can cite the originating Hecate row."""
+        on the dict so the artifact can cite the originating queue row.
+
+        Source-aware id prefix so the executor routes correctly:
+          - hecate-sourced -> 'HECATE-<kp>' (executor short-circuits;
+            HECATE-meta-test loader deferred to v0.6+)
+          - pollux-sourced -> 'POLLUX-<pair_name>' (executor short-
+            circuits same way; POLLUX-meta-test loader could ship later
+            but for now Stygian's value is the attack_plan + provenance)
+          - default -> 'QUEUE-<kp>'
+        """
+        source = row.get("source", "unknown")
         kp = row.get("kill_pattern", "unknown")
-        return {
-            "id": f"HECATE-{kp}",
-            "name": f"Hecate-emergent kill_pattern: {kp}",
-            "hardness": "EMERGENT_CLUSTER",
-            "domain": "kill_ledger_geometry",
-            "attack_vector": (
+        if source == "pollux":
+            pair_name = row.get("pollux_pair_name", "?")
+            prob_id = f"POLLUX-{pair_name}"
+            name = (
+                f"Pollux survivor pair: {pair_name} "
+                f"({row.get('pollux_subset_a_desc', '')} vs "
+                f"{row.get('pollux_subset_b_desc', '')})"
+            )
+            attack_vector = (
+                f"v10 battery on the survivor-correlation Pollux flagged: "
+                f"raw spearman {row.get('pollux_corr_raw')}, "
+                f"normalized spearman {row.get('pollux_corr_norm')} "
+                f"on n={row.get('cluster_size')} paired records. "
+                f"Goal: does the correlation that survived mean-spacing "
+                f"normalization also survive F1-F14 + F15-F23 testing, or "
+                f"does the battery surface a confound Pollux's two-test "
+                f"normalization missed?"
+            )
+            hardness = "POLLUX_SURVIVOR"
+        elif source == "hecate":
+            prob_id = f"HECATE-{kp}"
+            name = f"Hecate-emergent kill_pattern: {kp}"
+            attack_vector = (
                 f"v10 battery against kill_pattern `{kp}` (cluster size "
                 f"{row.get('cluster_size')}, mi_z {row.get('mi_z')}). "
                 f"Goal: does the emergent cluster survive when attacked as "
                 f"a first-class kill_pattern, or does it dissolve under "
                 f"battery-class verification? Top generator: "
                 f"`{row.get('top_generator', 'unknown')}`."
-            ),
+            )
+            hardness = "EMERGENT_CLUSTER"
+        else:
+            prob_id = f"QUEUE-{kp}"
+            name = f"queue-fed problem from {source}: {kp}"
+            attack_vector = f"v10 battery against opportunistic queue target {kp}"
+            hardness = "QUEUE_OPPORTUNISTIC"
+        return {
+            "id": prob_id,
+            "name": name,
+            "hardness": hardness,
+            "domain": "kill_ledger_geometry",
+            "attack_vector": attack_vector,
             "modal_llm_error": None,
-            "hard5_collision_risk": "potential — cluster may collide with existing kill_pattern primitives",
+            "hard5_collision_risk": f"potential -- {source} payload may collide with existing kill_pattern primitives",
             "_queue_row_id": row.get("id"),
-            "_queue_source": row.get("source"),
+            "_queue_source": source,
             "_queue_payload": row,
         }
 

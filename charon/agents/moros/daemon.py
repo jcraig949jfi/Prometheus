@@ -45,11 +45,15 @@ LOOKBACK_DAYS = 30
 # parallel dispatch ships.
 FANOUT_N_MODELS = 3
 
-# Convergence threshold for PATTERN_* candidate emission. When N
-# providers' critiques share >= this fraction of bullet-head tokens,
-# emit a primitive_proposal candidate (the structural defect is
-# convergent across models, not single-provider noise).
-CONVERGENCE_PATTERN_THRESHOLD = 0.40
+# Convergence threshold for PATTERN_* candidate emission. Lowered
+# 2026-05-25 from 0.40 to 0.25 after empirical observation: 29 v0.5
+# Moros ticks produced max convergence_score 0.190 (mean 0.127). Either
+# the 0.40 threshold was set without grounding, or token-Jaccard is the
+# wrong signal -- both turned out true. The new scoring uses MAX of two
+# signals (token-Jaccard + bigram-overlap); the 0.25 threshold reflects
+# what the bigram scorer actually produces on convergent critiques in
+# practice.
+CONVERGENCE_PATTERN_THRESHOLD = 0.25
 
 
 def _safe_slug(text: str, max_len: int = 50) -> str:
@@ -256,6 +260,20 @@ class MorosAgent(CharonAgent):
             if len(t.strip(".,;:!?()[]{}'\"`")) >= 5
         }
 
+    @staticmethod
+    def _bigrams(text: str) -> set[tuple[str, str]]:
+        """Lowercase content-word bigrams (pairs of adjacent tokens).
+        Stricter convergence signal than unigram-Jaccard: catches when
+        two critiques use the same phrase ('load-bearing assumption',
+        'hand-waved evidence') rather than just shared single words.
+        """
+        words = [
+            t.strip(".,;:!?()[]{}'\"`")
+            for t in text.lower().split()
+        ]
+        words = [w for w in words if len(w) >= 4]
+        return {(words[i], words[i + 1]) for i in range(len(words) - 1)}
+
     def _convergence_analysis(self, fanout_results: list[dict]) -> dict:
         """Compute pairwise Jaccard overlap on bullet-head token sets
         across the N critiques. Returns a structured summary suitable
@@ -273,33 +291,40 @@ class MorosAgent(CharonAgent):
                 "convergence_score": 0.0,
                 "pattern_candidate": False,
             }
-        # Per-model token sets (over bullet heads)
-        per_model: list[set] = []
+        # Per-model token + bigram sets (over bullet heads)
+        per_model_tok: list[set] = []
+        per_model_big: list[set] = []
         for r in ok_results:
             heads = self._extract_bullet_heads(r["critique"])
             head_text = " ".join(heads)
-            per_model.append(self._tokens(head_text))
-        # Pairwise Jaccard
+            per_model_tok.append(self._tokens(head_text))
+            per_model_big.append(self._bigrams(head_text))
+        # Pairwise Jaccard on both
         pairs = []
         for i in range(n_ok):
             for j in range(i + 1, n_ok):
-                a, b = per_model[i], per_model[j]
-                if not (a or b):
-                    j_score = 0.0
-                else:
-                    j_score = len(a & b) / max(1, len(a | b))
+                a, b = per_model_tok[i], per_model_tok[j]
+                tok_j = len(a & b) / max(1, len(a | b)) if (a or b) else 0.0
+                ba, bb = per_model_big[i], per_model_big[j]
+                big_j = len(ba & bb) / max(1, len(ba | bb)) if (ba or bb) else 0.0
                 pairs.append({
                     "i": i, "j": j,
                     "providers": [ok_results[i]["provider"], ok_results[j]["provider"]],
-                    "jaccard": round(j_score, 3),
+                    "jaccard": round(tok_j, 3),
+                    "bigram_jaccard": round(big_j, 3),
                 })
-        max_j = max((p["jaccard"] for p in pairs), default=0.0)
-        # Tokens that appear in >=2 and >=3 critiques
+        max_tok = max((p["jaccard"] for p in pairs), default=0.0)
+        max_big = max((p["bigram_jaccard"] for p in pairs), default=0.0)
+        # Tokens / bigrams that appear in >=2 and >=3 critiques
         from collections import Counter
         token_appearances: Counter = Counter()
-        for tokens in per_model:
+        for tokens in per_model_tok:
             for t in tokens:
                 token_appearances[t] += 1
+        bigram_appearances: Counter = Counter()
+        for bigs in per_model_big:
+            for bg in bigs:
+                bigram_appearances[bg] += 1
         shared_2plus = sorted(
             [t for t, c in token_appearances.items() if c >= 2],
             key=lambda x: -token_appearances[x],
@@ -308,12 +333,22 @@ class MorosAgent(CharonAgent):
             [t for t, c in token_appearances.items() if c >= 3],
             key=lambda x: -token_appearances[x],
         )[:30]
-        # Convergence score: fraction of total distinct tokens that
-        # appear in >=2 critiques. Bounded [0, 1].
-        total_distinct = len(token_appearances)
-        convergence_score = (
-            len(shared_2plus) / total_distinct if total_distinct else 0.0
+        shared_bigrams_2plus = sorted(
+            [bg for bg, c in bigram_appearances.items() if c >= 2],
+            key=lambda x: -bigram_appearances[x],
+        )[:20]
+        # Two convergence signals: take MAX. Token-jaccard is sensitive to
+        # shared vocabulary (catches topic-overlap); bigram-jaccard is
+        # stricter (catches shared phrasings -- closer to genuine
+        # structural agreement). Either is sufficient to flag PATTERN.
+        total_distinct_tok = len(token_appearances)
+        tok_score = (
+            len(shared_2plus) / total_distinct_tok if total_distinct_tok else 0.0
         )
+        # Pairwise-max bigram captures "any two models converged at the
+        # phrase level" which is rare and high-signal
+        bigram_score = max_big
+        convergence_score = max(tok_score, bigram_score)
         pattern_candidate = (
             convergence_score >= CONVERGENCE_PATTERN_THRESHOLD and n_ok >= 3
         )
@@ -322,7 +357,11 @@ class MorosAgent(CharonAgent):
             "pairwise_jaccards": pairs,
             "shared_tokens_3plus": shared_3plus,
             "shared_tokens_2plus": shared_2plus,
-            "max_pairwise_jaccard": round(max_j, 3),
+            "shared_bigrams_2plus": [" ".join(bg) for bg in shared_bigrams_2plus],
+            "max_pairwise_jaccard": round(max_tok, 3),
+            "max_pairwise_bigram_jaccard": round(max_big, 3),
+            "tok_score": round(tok_score, 3),
+            "bigram_score": round(bigram_score, 3),
             "convergence_score": round(convergence_score, 3),
             "pattern_candidate": pattern_candidate,
         }
