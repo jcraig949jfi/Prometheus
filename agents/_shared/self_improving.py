@@ -64,6 +64,17 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Callable, Optional
 
+try:
+    from agents._shared.mutation_registry import (
+        record_kept_mutation,
+        query_borrowable_mutations,
+    )
+    HAS_MUTATION_REGISTRY = True
+except Exception:
+    HAS_MUTATION_REGISTRY = False
+    record_kept_mutation = None  # type: ignore
+    query_borrowable_mutations = None  # type: ignore
+
 log = logging.getLogger("self_improving")
 
 
@@ -150,6 +161,24 @@ class SelfImprovingDaemon:
     # Self-summon target inbox (for escalation when menu exhausted)
     SELF_SUMMON_INBOX_PATH: Optional[Path] = None
     AGENT_NAME_FOR_TICKETS: str = "unknown_agent"
+
+    # v2a: cross-agent mutation borrowing. Subclass declares its structural
+    # traits + which failure modes it's currently seeing. The mixin queries
+    # the shared registry on init and offers matching mutations as borrowed
+    # menu items (alongside the agent's own ADAPTATION_MENU). Each borrowed
+    # mutation is wrapped to require human approval the first time, since
+    # cross-agent transfer is the riskiest path.
+    AGENT_TRAITS: list[str] = []                # e.g. ["daemon", "scour_based"]
+    CURRENT_FAILURE_MODES: list[str] = []       # e.g. ["high_null_rate"]
+    BORROW_REGISTRY: bool = True
+    BORROWED_REQUIRES_APPROVAL: bool = True
+
+    # Stagnation signature shipped with every kept mutation we record back
+    # to the registry. Subclass override if your failure mode is specific.
+    STAGNATION_SIGNATURE: dict = field(default_factory=lambda: {
+        "primary_failure_mode": "low_composite_health",
+        "preconditions": [],
+    })
 
     # ---- subclass surface ---------------------------------------------------
 
@@ -282,11 +311,39 @@ class SelfImprovingDaemon:
         exp["finished_at"] = datetime.now(timezone.utc).isoformat()
         delta = current_composite - exp["baseline_health"]
         # Find the adaptation object
-        adaptation = next((a for a in self.ADAPTATION_MENU
+        adaptation = next((a for a in self._effective_menu()
                            if a.name == exp["adaptation_name"]), None)
         keep = delta > 0.05  # require meaningful improvement
         if keep:
             exp["outcome"] = "kept"
+            # v2a: emit the directional pointer to the shared registry.
+            # Every kept mutation becomes a vector in mutation-space that
+            # subsequent agents can borrow + that v2d void-detection will
+            # use to find unexplored productive coordinates.
+            if HAS_MUTATION_REGISTRY and self.BORROW_REGISTRY:
+                try:
+                    delta_per_axis = {
+                        k: (current_raw.get(k, 0) - exp.get("baseline_composite", {}).get(k, 0))
+                        for k in ("null_rate", "diversity",
+                                  "downstream_consumption", "novelty")
+                    }
+                    rid = record_kept_mutation(
+                        agent_name=self.AGENT_NAME_FOR_TICKETS,
+                        adaptation_name=exp["adaptation_name"],
+                        applied_at=exp["started_at"],
+                        baseline_composite=exp["baseline_health"],
+                        post_composite=current_composite,
+                        delta_per_axis=delta_per_axis,
+                        agent_traits=list(self.AGENT_TRAITS),
+                        addresses_failure_modes=list(self.CURRENT_FAILURE_MODES),
+                        stagnation_signature=dict(self.STAGNATION_SIGNATURE),
+                        module_source=f"{self.__class__.__module__}:{self.__class__.__name__}",
+                        cost=adaptation.cost if adaptation else "unknown",
+                        reversibility=adaptation.reversibility if adaptation else "unknown",
+                    )
+                    exp["registry_id"] = rid
+                except Exception as e:
+                    log.warning(f"failed to record kept mutation to registry: {e}")
         else:
             exp["outcome"] = "reverted"
             if adaptation and adaptation.revert:
@@ -314,12 +371,65 @@ class SelfImprovingDaemon:
                 "outcome": exp["outcome"],
                 "delta": delta}
 
+    def _effective_menu(self) -> list[Adaptation]:
+        """Subclass's ADAPTATION_MENU + borrowed-from-registry items.
+        Borrowed items are wrapped to require human approval the first
+        time, since cross-agent transfer is the risky path."""
+        own = list(self.ADAPTATION_MENU)
+        if not (HAS_MUTATION_REGISTRY and self.BORROW_REGISTRY):
+            return own
+        try:
+            borrowables = query_borrowable_mutations(
+                requesting_agent=self.AGENT_NAME_FOR_TICKETS,
+                agent_traits=list(self.AGENT_TRAITS),
+                current_failure_modes=list(self.CURRENT_FAILURE_MODES),
+            )
+        except Exception as e:
+            log.warning(f"borrowable-mutations query failed: {e}")
+            return own
+        # Don't duplicate own menu items by name
+        own_names = {a.name for a in own}
+        for row in borrowables:
+            name = row.get("adaptation_name")
+            if name in own_names:
+                continue
+            # Wrap as a placeholder Adaptation. Its apply()/revert() raise
+            # NotImplementedError — borrowed mutations can't actually be
+            # applied automatically because the code lives in the source
+            # agent's module. The mixin will catch the raise and file an
+            # approval-request ticket asking a human to either (a) port
+            # the code over, or (b) approve a sandboxed eval. This is
+            # intentionally conservative for v2a.
+            def _borrow_apply_factory(src_module, src_name, src_agent):
+                def _apply(agent, agent_state):
+                    raise NotImplementedError(
+                        f"Borrowed adaptation {src_name} from {src_agent} "
+                        f"({src_module}) requires port-or-sandbox decision — "
+                        "file approval ticket and implement in this agent's module."
+                    )
+                return _apply
+            adapt = Adaptation(
+                name=f"BORROWED__{name}",
+                description=(f"Borrowed from {row.get('agent_name')}: {name} "
+                             f"(delta_composite={row.get('delta_composite'):+.2f})"),
+                cost=row.get("cost", "unknown"),
+                reversibility="never",   # can't execute without porting
+                apply=_borrow_apply_factory(row.get("module_source", ""),
+                                            name, row.get("agent_name", "")),
+                revert=None,
+                requires_human_approval=True,
+            )
+            own.append(adapt)
+        return own
+
     def _pick_next_adaptation(self, si_state: dict) -> Optional[Adaptation]:
         """Pick the next adaptation to try.
 
         Strategy: prefer never-tried; then prefer cheap; then prefer
-        not-recently-applied. Returns None if the menu is fully exhausted
-        recently (gen-N wall hit)."""
+        not-recently-applied. Borrowed (from registry) adaptations come
+        last because they need human approval and can't auto-apply.
+        Returns None if the effective menu is fully exhausted recently
+        (gen-N wall hit)."""
         tried_recently: set = set()
         cutoff = datetime.now(timezone.utc) - timedelta(days=7)
         for entry in si_state.get("mutation_log", [])[-50:]:
@@ -331,11 +441,15 @@ class SelfImprovingDaemon:
                 continue
 
         cost_order = {"zero": 0, "trivial": 1, "one_tick": 2,
-                      "medium": 3, "high": 4}
-        # Prefer untried + cheap
-        candidates = [a for a in self.ADAPTATION_MENU if a.name not in tried_recently]
+                      "medium": 3, "high": 4, "unknown": 5}
+        effective = self._effective_menu()
+        candidates = [a for a in effective if a.name not in tried_recently]
         if candidates:
-            candidates.sort(key=lambda a: cost_order.get(a.cost, 99))
+            # Prefer native (non-borrowed) first; within each tier, prefer cheap.
+            def _sort_key(a):
+                is_borrowed = a.name.startswith("BORROWED__")
+                return (1 if is_borrowed else 0, cost_order.get(a.cost, 99))
+            candidates.sort(key=_sort_key)
             return candidates[0]
         # All tried recently. Wall.
         return None

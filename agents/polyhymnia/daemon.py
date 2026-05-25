@@ -235,6 +235,20 @@ class PolyhymniaSelfImprover(SelfImprovingDaemon):
     EXPERIMENT_OBSERVATION_TICKS = 2     # short — Polyhymnia ticks slowly
     MAX_MUTATIONS_PER_DAY = 3            # conservative for v1
 
+    # v2a — structural traits + current failure mode for cross-agent borrowing.
+    # When other scour-based mtime-cached agents register kept mutations,
+    # Polyhymnia's effective menu grows to include them.
+    AGENT_TRAITS = [
+        "daemon", "scour_based", "mtime_cached", "repository_walk",
+        "tessera_emitter", "periodic_tick", "content_addressed",
+    ]
+    CURRENT_FAILURE_MODES = ["high_null_rate", "upstream_idempotency_ceiling"]
+    STAGNATION_SIGNATURE = {
+        "primary_failure_mode": "high_null_rate",
+        "preconditions": ["repository_walk", "file_extension_filter",
+                          "mtime_cached", "scour_based"],
+    }
+
     # The Polyhymnia menu (v1). Two real adaptations; rest stubbed to document
     # the menu-growth path. As v2 ships, stubs become real apply()s.
     _stub1_apply, _stub1_revert = _adapt_stub_log_only("EXPAND_KW_RE_v1_placeholder")
