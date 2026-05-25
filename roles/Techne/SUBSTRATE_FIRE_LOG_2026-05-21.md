@@ -8586,6 +8586,87 @@ Lifetime: 111 batches journaled / 425.8M records / 241.5M kills /
 425.8M records, 241.5M kills, 1891 promoted, 2595 templates,
 0 verified findings.*
 
+---
+
+## Fire #116 — 2026-05-25 ~16:15Z — **HUNG (h2 cause identified)**
+
+**0 records / 29 min hung / PID alive, heartbeat frozen.**
+
+Same silent-stall pattern as Fire #112. Common gen: **h2**.
+
+### Root cause (NEW DIAGNOSIS, commit 4c3dd52b)
+
+`h2._load_inconclusive()` iterated the ENTIRE corpus on first
+.next() call. Corpus has grown 415M+ records; the operation
+took a few seconds when h2 was written but is now hours.
+
+Heartbeat is INLINE (not threaded) — slow single .next() blocks
+all observability. Hence Fire #112 and #116 looked like silent
+crashes; they were actually slow-init hangs.
+
+### Fix shipped
+
+Capped scan at 200K records / parent pool at 5K. Smoke test:
+- init: 0.22s
+- _load_inconclusive: 2.17s (was hours-or-hung)
+- 5000 parents loaded
+
+### Follow-ups
+
+- Heartbeat → threaded (so slow .next() doesn't hide stalls)
+- Per-next() timeout wrapper (Fire #100 + this)
+- Audit OTHER gens with corpus-wide iteration: c1, c5, e5 candidates
+
+### Fire #112 reclassified
+
+Fire #112's "silent crash" was the same h2 slow-init hang. The
+process disappeared because... actually, the process WAS alive
+during Fire #116 (PID 24088 found in process list). For Fire
+#112 we never checked process list at kill time — likely also
+alive but our process-search filter missed it.
+
+---
+
+## Fire #117 — 2026-05-25 ~16:46Z (post h2 cap)
+
+**1.88M records / 24 min / 0 templates / 20 promoted.
+Gens b1/d3/e3/f3/h4 — no h2 picked. Healthy run.**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    f3   709,161   0          67.4%
+    d3   698,053   0          98.4%
+    h4   469,513   0          17.5%
+    b1     1,340   0           0.0%
+    e3     1,060   0          42.2%
+
+### Batch result
+
+- batch_id: `batch-20260525T164631Z-5e3bf6`
+- Duration: 24 min wall, 492/s tick rate
+- 1,879,127 records / 1,247,327 kills / 491,422 confirms / 0 errors
+- 20 promoted records → **1911 lifetime promoted**
+- 0 new templates → 2595 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+
+Lifetime: 112 batches journaled / 427.7M records / 242.8M kills /
+1911 promoted / 2595 templates / 0 verified findings.
+
+### Notable
+
+- d3 (triangulation_seeds) — 98% kill rate, dominant falsifier
+  this fire
+- Demand signal volume collapsed to 1 event — strange, will
+  flag for investigation. May be related to d3+f3 mix having
+  fewer unsatisfied catalog-key signals.
+
+---
+
+*Fire #117 throttled = 1.88M records / 20 promoted / 0 templates.
+427.7M records, 242.8M kills, 1911 promoted, 2595 templates,
+0 verified findings.*
+
 
 
 
