@@ -8760,6 +8760,54 @@ Lifetime: 114 batches journaled / 432.1M records / 244.8M kills /
 432.1M records, 244.8M kills, 1951 promoted, 2634 templates,
 0 verified findings.*
 
+---
+
+## Fire #120 — 2026-05-25 ~18:20Z — **+101 RAW TEMPLATES / +8 disc-role**
+
+**3.16M records / 24 min / 8 disc-role templates / 20 promoted.
+TWO consecutive non-zero-template fires after the long zero streak.
+c4 emitted 93 templates (TAUTOLOGY_CONTROL — filtered from lifetime
+disc-role count) and c5 emitted 8 (DISCOVERY role).**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate  role
+    a3   752,166   0          63.6%      DISCOVERY
+    g5   732,379   0           7.8%      DISCOVERY
+    h1   693,910   0          70.7%      DISCOVERY
+    c4   533,516   93         27.7%      TAUTOLOGY_CONTROL
+    c5   452,384   8          49.9%      DISCOVERY ← novel
+
+### Batch result
+
+- batch_id: `batch-20260525T182005Z-9a7b82`
+- Duration: 24 min wall, 524/s tick rate
+- 3,164,355 records / 1,400,369 kills / 1,763,986 confirms / 0 errors
+- 20 promoted records → **1971 lifetime promoted**
+- **+8 disc-role templates → 2642 lifetime** (+101 raw, 93 control-filtered)
+- **Verified mathematical findings: 0**
+
+Lifetime: 115 batches journaled / 435.2M records / 246.2M kills /
+1971 promoted / 2642 templates / 0 verified findings.
+
+### Notable
+
+- **Two-fire template streak**: Fire #119 (c2: 39) + Fire #120
+  (c5: 8 disc + c4: 93 control). c-family gens are hitting
+  fresh seams.
+- c4's 93 templates correctly filtered as TAUTOLOGY_CONTROL —
+  the role classifications shipped Fire #53 are paying off
+  (else this would have inflated disc-count by 12x).
+- batch_end heartbeat event (commit 78c98906) was NOT in this
+  fire's JSONL — Fire #120 launched before that commit. Fire #121
+  will be the first with batch_end.
+
+---
+
+*Fire #120 throttled = 3.16M records / 20 promoted / 8 disc-role templates.
+435.2M records, 246.2M kills, 1971 promoted, 2642 templates,
+0 verified findings.*
+
 
 
 
