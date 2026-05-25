@@ -9090,6 +9090,53 @@ Lifetime: 121 batches journaled / 450.7M records / 255.8M kills /
 450.7M records, 255.8M kills, 2071 promoted, 2643 templates,
 0 verified findings.*
 
+---
+
+## Fire #127 — 2026-05-25 ~21:56Z
+
+**2.37M records / 24 min / 0 templates / 20 promoted.
+Mix a4/b4/c1/d2/g1. Demand-signal volume jumped to 1.03M
+events (vs 200-300K typical) — c1 contributed heavily.**
+
+### Per-gen attribution
+
+    gid  records     templates  kill_rate
+    a4   1,440,279   0          30.4%
+    d2     823,322   0          65.5%
+    c1     104,000   0          39.1%
+    b4         606   0          73.6%
+    g1         184   0          58.7%
+
+### Batch result
+
+- batch_id: `batch-20260525T215605Z-0a6c10`
+- Duration: 24 min wall, 1091/s tick rate
+- 2,368,391 records / 1,018,347 kills / 352,425 confirms / 0 errors
+- 20 promoted records → **2091 lifetime promoted**
+- 0 new templates → 2643 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+- **batch_end ✓** (exit_reason=time_budget, 1.57M ticks, RSS 368MB)
+
+Lifetime: 122 batches journaled / 453.1M records / 256.8M kills /
+2091 promoted / 2643 templates / 0 verified findings.
+
+### Notable
+
+- **Demand-signal volume surge**: 1.03M events this fire vs
+  200-300K typical. Likely from c1 (claim_mutation) emitting
+  high-cardinality demand metadata. All top demand still
+  knot/nf_class_number (1.03M events — 100%).
+- a4 again dominant in records (1.44M); d2 second (823K).
+- Top demand confirms the unmet content need: substrate has
+  no source for knot/nf_class_number values, so every claim
+  involving them registers as "demand."
+
+---
+
+*Fire #127 throttled = 2.37M records / 20 promoted / 0 templates.
+453.1M records, 256.8M kills, 2091 promoted, 2643 templates,
+0 verified findings.*
+
 
 
 
