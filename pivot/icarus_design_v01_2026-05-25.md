@@ -1,165 +1,165 @@
-# Daedalus — Self-Improving Reasoning Ladder Climber
+# Icarus — Experimental Self-Improving Reasoning Ladder Climber
 
-**Status:** DRAFT v0.1 — internal review + open for frontier-model feedback
+**Status:** DRAFT v0.1 — experimental, not foundational. Open for frontier-model review.
 **Date:** 2026-05-25
 **Author:** Harmonia (Claude Code agent), with James Craig
-**Audience:** Future-Daedalus self; reviewers (internal + frontier); James
-**Companion:** `pivot/daedalus_frontier_review_prompt_2026-05-25.md` (paste-ready prompt for ChatGPT / Claude / Gemini)
+**Audience:** Future-Icarus self; reviewers (internal + frontier); James
+**Companion:** `pivot/icarus_frontier_review_prompt_2026-05-25.md` (paste-ready prompt for ChatGPT / Claude / Gemini)
 
 ---
 
 ## TL;DR
 
-Daedalus is a self-improving agent that runs continuously in a five-step loop, attempting on every iteration to improve its own code, generate better test cases, ingest deep research, exploit existing substrate (Hephaestus Forge), and emit a paste-ready review prompt for frontier models. The target it climbs toward is **the Prometheus Reasoning Ladder** (R0 → R12, per `pivot/reasoning_ladder_v01_2026-05-24.md`). It begins at R1 (local operation), builds code that survives R1's falsification test, then targets R2, then R3, indefinitely.
+Icarus is an **experimental** self-improving agent that runs continuously in a five-step loop, attempting on every iteration to improve its own code, generate better test cases, ingest deep research, exploit existing substrate (Hephaestus Forge), and emit a paste-ready review prompt for frontier models. The target it climbs toward is the Prometheus Reasoning Ladder (R0 → R12 per `pivot/reasoning_ladder_v01_2026-05-24.md`). It begins at R1, builds code that survives R1's falsification test, then targets R2, then R3.
 
-The agent does NOT block on external review. James curates the agent's frontier-model review prompts (emits to an output directory), sends them to GPT/Claude/Gemini, and writes responses back as markdown files in an inbox directory; Daedalus consumes those between iterations. Frontier feedback is **asynchronous and optional** — the loop never waits.
+**It is named Icarus deliberately: this is experimental, the fall is expected, and the design assumes frequent breakage.** James built a similar agent before; each iteration cloned the prior stable version and froze the old; revert was constant and useful. Icarus inherits that lineage discipline: **every cycle is a frozen snapshot, and the agent always starts the next cycle from the last *stable* snapshot, not from the most recent attempt.**
 
-Code-generation quality from the local LLM is expected to be poor. **James intervenes periodically by pausing the agent, cleaning the code, then resuming.** State persists across pauses. The loop is designed to bog down and get progressively more complex; managing that complexity is part of the strategic assessment per cycle.
+The agent does NOT block on external review. James curates frontier prompts (output directory), sends them to GPT/Claude/Gemini, and writes responses back as markdown files (inbox directory); Icarus consumes those between iterations. **Frontier feedback is asynchronous and optional — the loop never waits.**
 
-Daedalus is named for the master craftsman of Greek myth. The Icarus story is the cautionary note: ambition without limit is what kills the project. Built-in adversarial tests and anti-gaming probes are how Daedalus avoids Icarus's fate.
+Code-generation quality from the local LLM is expected to be poor. **James intervenes periodically by pausing the agent, cleaning the code, then resuming.** The combination of (a) immutable frozen lineage + (b) pause/resume + (c) revert-to-stable-by-pointer-update is what lets breakage be recoverable instead of catastrophic.
+
+Icarus is named for the mortal who flew too close to the sun. We expect him to fall. The frozen lineage is how he gets back up.
 
 ---
 
-## 1. Why Daedalus exists
+## 1. Why Icarus exists
 
 ### 1.1 The gap in the current swarm
 
 Prometheus already has:
-- **Hephaestus** producing atomic reasoning primitives (~1,960 tools across forge/ to forge_v9, ~2% admission rate per concept-combo)
-- **Apollo** composing those primitives into evolutionary organisms (current actual tier: R2 with one fake-R9 trick that got falsified by the single-primitive baseline test 2026-05-24)
+- **Hephaestus** producing atomic reasoning primitives (~1,960 tools across forge/ to forge_v9, ~2% admission rate)
+- **Apollo** composing those primitives into evolutionary organisms (current actual tier: R2 with one fake-R9 trick falsified by the single-primitive baseline test on 2026-05-24)
 - **Ergon** designed to predict failure modes
-- **Harmonia** as the substrate architect with five child-agents (Phylax/Sophia/Iris/Argos/Telos) on auto-promotion pipelines
-- **Charon** as the falsification battery operator
+- **Harmonia** as substrate architect with the 5-child swarm (Phylax/Sophia/Iris/Argos/Telos) on auto-promotion pipelines
+- **Charon** as falsification battery operator
 - **Aporia** running the daily Pythia Deep Research dispatch
 - **The Reasoning Ladder** (R0-R12) as the explicit target taxonomy
 
-What's missing: **an agent whose explicit task is to consume the substrate output, propose new substrate code, and iteratively climb the ladder.** Apollo evolves compositions of Hephaestus's primitives. Apollo's current ceiling under perturbation is R2. Daedalus exists to push *past* Apollo's ceiling by writing new code (not just recombining), incorporating ideas from outside the project (DR + OSS), and submitting itself to falsification on every loop.
+What's missing: **an experimental agent whose explicit task is to consume substrate output, propose new substrate code, and iteratively climb the ladder under falsification discipline.** Apollo evolves compositions. Apollo's current ceiling is R2. Icarus exists to push past it by writing new code (not just recombining), incorporating ideas from outside the project (DR + OSS), and submitting itself to falsification every loop.
+
+Crucially: this is *experimental*. We don't yet know whether direct LLM-guided code-gen with strict falsification can climb the ladder at all. The agent is the experiment. If it fails (which is the likely outcome), we learn what breaks and try again.
 
 ### 1.2 The target
 
-The target is the falsification-test-passing tier of the Reasoning Ladder. Tier assignment is not "produces R9-shaped output"; it is "**survives R9's falsification test consistently across perturbations**." Concretely:
+Tier assignment is not "produces R9-shaped output"; it is "**survives R9's falsification test consistently across perturbations**." Concretely:
 
-- **R1 (Local operation)** — apply one known operation correctly across structurally-identical problems with variables renamed. *This is Daedalus's starting line.*
+- **R1 (Local operation)** — apply one known operation correctly across structurally-identical problems with variables renamed. *Icarus's starting line.*
 - **R2 (Multi-step execution)** — chain operations when order is supplied; survive insertion of one irrelevant distractor step.
-- **R3 (Constraint maintenance)** — track multiple constraints; reject candidates that violate any one. Survives injection of an inconsistent constraint.
-- **...** (up through R12: Open-ended research behavior — generates, tests, repairs, accumulates claims under falsification)
+- **R3 (Constraint maintenance)** — track multiple constraints; reject inconsistent candidates.
+- **...** up through R12
 
-Each tier carries an explicit falsification test (see `pivot/reasoning_ladder_v01_2026-05-24.md` §The ladder). Daedalus's success criterion per cycle is: **does the change I made move me closer to passing the next-tier falsification test, without breaking the prior-tier ones?**
+Each tier carries an explicit falsification test (see `pivot/reasoning_ladder_v01_2026-05-24.md` §The ladder). **Icarus's success per cycle is: did the change move closer to passing the next-tier falsification test, without breaking the prior-tier ones?**
 
-### 1.3 What Daedalus is NOT
+### 1.3 What Icarus is NOT
 
-- Not an LLM wrapper that asks GPT to write better code (the local code-gen is intentionally local and weak).
-- Not a competition with Apollo. Apollo evolves compositions; Daedalus writes new code. They're complementary.
-- Not autonomous against James's review. The agent runs, but James curates code quality, prompts to frontier, and the inbox.
+- Not foundational. Experimental. **If it breaks, we revert; if it fails to climb, we kill it and learn.**
+- Not an LLM wrapper around GPT; local code-gen is intentionally local and weak.
+- Not a competition with Apollo (Apollo evolves; Icarus writes new code; they're complementary).
+- Not autonomous against James's review.
 - Not a replacement for Hephaestus or Charon. It consumes both as substrate.
 
 ---
 
 ## 2. The 5-step loop (per iteration)
 
-One iteration of Daedalus does these five things in order. Each step has a defined output that the next step or the next iteration can consume.
-
 ```
 +-------------------------------------------------------------------+
-| Daedalus loop iteration N                                         |
+| Icarus loop iteration N                                           |
 +-------------------------------------------------------------------+
 |                                                                   |
+|  0. (implicit) CLONE last-stable. Iteration N begins by cloning   |
+|     the most recent STABLE cycle's frozen snapshot into           |
+|     cycles/cycle_<N>/code/. The working tree is the clone.        |
+|                                                                   |
 |  1. SELF-CODE EVAL                                                |
-|     Read own source (sandbox copy); ask local LLM "what should    |
-|     I change for the current ladder-tier challenge?" Emit a       |
-|     proposed-diff artifact.                                       |
+|     Read the cloned source; ask local LLM "what should I change   |
+|     for the current ladder-tier challenge?" Emit a proposed-diff  |
+|     artifact at cycles/cycle_<N>/diff.patch.                      |
 |                                                                   |
 |  2. EXTERNAL INGESTION (three sub-steps in parallel)              |
 |     2a. DR: enqueue 1-3 Pythia DR requests (substrate type C/D)   |
-|         for topics relevant to current tier challenge.            |
+|         for topics relevant to the current tier challenge.        |
 |     2b. OSS: search GitHub/HuggingFace for code that solves       |
-|         analogous problems; pull excerpts into a candidates dir.  |
+|         analogous problems.                                       |
 |     2c. FORGE: scan Hephaestus's most-recent ledger entries +     |
-|         forge/forge_vN/ libraries for primitives that match the   |
-|         current tier-challenge signature.                         |
+|         forge_vN/ libraries for primitives matching the tier.     |
 |                                                                   |
 |  3. ENRICHED LOGGING                                              |
-|     Emit a structured `cycle_<N>.jsonl` record with: tier         |
-|     attempted, baseline metrics, candidate diffs considered,      |
-|     external sources ingested, test outcomes, complexity delta,   |
-|     adversarial-probe results, score components, decision (keep / |
-|     park / regress).                                              |
+|     Emit cycles/cycle_<N>/log.jsonl with tier attempted, baseline |
+|     metrics, diff considered, sources ingested, test outcomes,    |
+|     complexity delta, adversarial-probe results, score, decision. |
 |                                                                   |
 |  4. TDD                                                           |
-|     Generate or refine test cases for the current tier challenge. |
-|     Run them: red -> green -> refactor. Each tier has its         |
-|     falsification test (built-in) + Daedalus-generated tests +    |
-|     James/frontier-supplied tests. All three sets must pass.      |
+|     Apply diff to cycle_<N>/code/ in place. Run all 3 test sets:  |
+|     built-in tier falsification, Icarus-generated, frontier-      |
+|     supplied. Red -> green -> refactor. The diff stays only if    |
+|     all three sets pass + adversarial probes pass + complexity    |
+|     check passes.                                                 |
 |                                                                   |
 |  5. FRONTIER REVIEW EMIT + INBOX SCAN                             |
-|     Write `frontier_outbox/cycle_<N>_review_request.md` — a       |
-|     paste-ready prompt asking for code review + improvement       |
-|     ideas. Scan `frontier_inbox/*.md` for new responses from      |
-|     prior cycles' requests; ingest any new ones into the          |
-|     candidates pool for cycle N+1.                                |
+|     Write frontier_outbox/cycle_<N>_review_request.md. Scan       |
+|     frontier_inbox/*.md for new responses from prior cycles;      |
+|     ingest into next cycle's pool.                                |
+|                                                                   |
+|  6. (implicit) FREEZE + STABILITY DECISION                        |
+|     The cycle dir cycles/cycle_<N>/ becomes immutable.            |
+|     If passed: update state/last_stable_cycle.json -> N. Next     |
+|       iteration clones from N.                                    |
+|     If failed: state/last_stable_cycle.json unchanged. Next       |
+|       iteration clones from the same prior stable. Cycle N stays  |
+|       frozen for forensics.                                       |
 |                                                                   |
 +-------------------------------------------------------------------+
             |
             v
-   Persist state, sleep T seconds, increment N, repeat
+   Increment N, sleep T seconds, repeat
 ```
 
-**Critical property: nothing in this loop blocks on frontier-model responses.** Step 5 emits the prompt and scans the inbox; if no inbox response is present, cycle N+1 proceeds with the in-house ingestion (DR + OSS + Forge + self-eval). Frontier feedback is opportunistic enrichment.
+**Critical properties:**
+1. **Every cycle is a frozen snapshot.** Disk usage grows; that's intentional. Trade space for forensic clarity.
+2. **The `last_stable` pointer is the single source of truth** for what code Icarus is "currently running" — it's where the daemon starts the NEXT cycle from. James can update the pointer to roll back to any frozen cycle.
+3. **Nothing in this loop blocks on frontier-model responses.**
+4. **Failures don't accumulate.** A failed cycle freezes for forensics but doesn't pollute the lineage of stable versions.
 
-### 2.1 Step 1 — Self-code evaluation (local LLM)
+### 2.1 Step 0 — Clone last-stable (implicit, top of every iteration)
 
-**Input:** the agent's own source tree at `agents/daedalus/`, plus the current tier challenge (e.g., "pass R2's falsification test on the current task battery").
+Read `state/last_stable_cycle.json` → say it points to cycle 47. Copy `cycles/cycle_47/code/` → `cycles/cycle_<N>/code/`. Write `cycles/cycle_<N>/parent.json` with `{"parent_cycle": 47, "cloned_at": "..."}`.
 
-**Mechanism:** invoke a local code-gen LLM (default: Qwen2.5-Coder-7B via Ollama on M2's RTX 5060 Ti VRAM headroom; fallback: llm_cascade.py over Cerebras/Groq/NVIDIA/DeepSeek for retries). The prompt asks: *"Given the current source, the current tier target, and the recent failure logs, propose a diff that would move the agent toward passing the next-tier falsification test. Limit diff to ≤100 lines. Return as unified diff."*
+If `last_stable_cycle.json` is missing (first run), clone from a bootstrap `cycle_000/code/` shipped as initial substrate.
 
-**Output:** `cycle_<N>/proposed_diff.patch` plus a sibling `proposed_diff_rationale.md`. The diff is NOT applied yet — it's a candidate.
+### 2.2 Step 1 — Self-code evaluation (local LLM)
 
-**Expected quality:** poor. Local code-gen at the 7B-13B scale produces syntactic errors, hallucinated APIs, and wrong reasoning more often than not. James's intervention loop (§7) is the human-in-the-loop quality gate.
+**Input:** the source at `cycles/cycle_<N>/code/`, plus the current tier challenge.
 
-### 2.2 Step 2 — External ingestion
+**Mechanism:** local code-gen LLM (default Qwen2.5-Coder-7B via Ollama on M2's RTX 5060 Ti; fallback `scripts/llm_cascade.py`). Prompt: *"Given the current source, the current tier target, and recent failure logs, propose a diff that would move toward passing the next-tier falsification test. Limit diff to ≤100 lines. Return as unified diff."*
+
+**Output:** `cycles/cycle_<N>/diff.patch` + `diff_rationale.md`. The diff is NOT applied yet.
+
+**Expected quality:** poor. TDD + adversarial probes catch most failures. James's intervention is the human-quality fallback.
+
+### 2.3 Step 2 — External ingestion
 
 #### 2.2a Deep Research via Pythia
 
-**Input:** the current tier challenge + the recent failure log + Daedalus's "open questions" state file.
-
-**Mechanism:** generate 1-3 Pythia DR enqueue calls per cycle (capped by a per-day budget in `state/dr_daily_cap.json`, default 5). Doctrine-compliant per `aporia/doctrine/dr_prompt_discipline.md`:
-- Requester: "Daedalus" (named in body)
-- Substrate type: C (paradigm refinement) or D (step decomposition), depending on tier
-- Verification criterion: "produce a working code sketch in a named language with citations to primary publications since 2024-01"
-- Landing path: `agents/daedalus/incoming_research/<dr_id>_<topic>.md`
-- Recency check via `state/dr_recent_topics.json` (7-day suppression)
-
-**Output:** zero-to-three rows in `agora.research_queue` from this cycle. Reports land asynchronously in `aporia/docs/deep_research_reports/<date>/` once Pythia dispatches; Daedalus scans for new reports tagged with `requested_by=Daedalus` at the start of each future cycle.
+1-3 doctrine-compliant DR enqueues per cycle, capped 5/day via `state/dr_daily_cap.json`. Requester="Icarus" in body per Aporia's doctrine. Reports land asynchronously in `aporia/docs/deep_research_reports/<date>/`; subsequent cycles ingest tagged reports.
 
 #### 2.2b Open-source code research
 
-**Input:** keywords derived from current tier challenge.
-
-**Mechanism:** use the GitHub API + HuggingFace API (existing keys in `keys.py`) to search for repositories with names/descriptions matching the keywords. For each top result (up to 5), fetch a representative source file. Save to `agents/daedalus/incoming_oss/<repo_slug>_<file>.<ext>`.
-
-**Output:** OSS snippets that the self-eval step in cycle N+1 can read.
-
-**Risks:** licensing (don't copy GPL code into the repo verbatim — extract patterns, not literal code), and noisy hits. Code is treated as *idea source*, not as drop-in implementation. Diffs in step 1 cite OSS sources by URL but don't paste them.
+GitHub + HuggingFace API search; top-5 results pulled into `cycles/cycle_<N>/incoming_oss/`. Licensing discipline: treat as idea source not literal-copy; cite by URL in diff rationale.
 
 #### 2.2c Hephaestus Forge consumer
 
-**Input:** the Hephaestus forge ledger (`agents/hephaestus/forge_v9/STATUS.json` plus the JSONL ledger files) and the most-recent forge libraries.
+Scan `agents/hephaestus/forge_v9/STATUS.json` + ledger; pull primitives whose declared tier matches current challenge or whose `min_ncd > 0.85`. Import to `cycles/cycle_<N>/code/imported_primitives/`.
 
-**Mechanism:** scan for new tools added since `state/last_forge_ledger_seen.json`. For each new tool, parse its declared tier + Hephaestus's accuracy/novelty scores. Tools whose declared tier matches Daedalus's current challenge OR whose `min_ncd` > 0.85 against existing imports get pulled into `agents/daedalus/imported_primitives/<tool_id>.py`.
+### 2.4 Step 3 — Enriched logging
 
-**Output:** importable primitive modules Daedalus's code can `from agents.daedalus.imported_primitives.X import ReasoningTool`.
+`cycles/cycle_<N>/log.jsonl` — append one row per phase. Plus structured events via `emit_event` from `harmonia/agents/_scorer.py` so swarm-wide events.jsonl includes Icarus traffic.
 
-**Why this matters:** Hephaestus's 1,960+ tools are pre-validated atomic reasoners. Daedalus should not rebuild what the Forge already shipped; it should compose Forge primitives into higher-tier reasoning. This is the same composition pattern Apollo uses, except Daedalus writes the composition code by hand (with local LLM help) rather than evolving it.
-
-### 2.3 Step 3 — Enriched logging
-
-**Output per cycle:** `agents/daedalus/cycles/cycle_<N>.jsonl` — append one row per "phase" of the cycle (self-eval, dr-enqueued, oss-ingested, forge-imported, tdd-run, diff-applied, decision). Also emit structured events via `emit_event` (Harmonia's `_scorer.py` helper) so events.jsonl is the shared swarm-wide log.
-
-**Schema** (one row per phase, JSONL):
 ```json
 {
-  "cycle_id": "daedalus-cycle-001",
+  "cycle_id": "icarus-cycle-001",
   "iteration_n": 1,
+  "parent_cycle": "icarus-cycle-000",
   "phase": "self_eval",
   "ts": "2026-05-25T...",
   "tier_target": "R2",
@@ -174,283 +174,293 @@ One iteration of Daedalus does these five things in order. Each step has a defin
 }
 ```
 
-**Why structured logging matters:** James is reviewing periodically. The structured logs let him reconstruct "what did Daedalus try, why, and what happened" without re-running. Also: every cycle's log feeds the maturation tracking — diminishing returns visible when the same tier stays the target for >N cycles without metric movement.
-
-### 2.4 Step 4 — TDD
+### 2.5 Step 4 — TDD
 
 **Three test sources, all must pass:**
 
-1. **Built-in tier-falsification tests.** Each Reasoning Ladder tier has a defined falsification test (per `pivot/reasoning_ladder_v01_2026-05-24.md` §The ladder). Daedalus ships with the R1-R12 tests as `agents/daedalus/tests/tier_<N>_falsification.py`. The "current tier challenge" passes when the corresponding test passes consistently across perturbations.
-2. **Daedalus-generated tests.** Each cycle, the local LLM is also asked to generate ≥1 new test case for the current tier challenge — adversarial inputs, edge cases, perturbations. Generated tests land in `agents/daedalus/tests/generated/cycle_<N>_test_<slug>.py`.
-3. **Frontier-supplied tests.** When James routes a frontier-model response with test suggestions, those land as `agents/daedalus/tests/frontier_supplied/<reviewer>_<date>_test_<slug>.py`.
+1. **Built-in tier-falsification tests** — `cycles/cycle_<N>/code/tests/tier_<N>_falsification.py` per the ladder definitions.
+2. **Icarus-generated tests** — local LLM asked to generate ≥1 new test case per cycle; lands in `cycles/cycle_<N>/code/tests/generated/`.
+3. **Frontier-supplied tests** — from inbox: `tests/frontier_supplied/<reviewer>_<date>_test_<slug>.py`.
 
-**The TDD discipline:** every cycle is red → green → refactor.
-- **Red:** at least one test must fail before the diff is applied (otherwise there's nothing to fix — emit a `no_red_state` event and skip the diff).
-- **Green:** after the diff, all three test sources must pass.
-- **Refactor:** if a passing diff increases complexity (LOC, cyclomatic complexity, dependency count) beyond a threshold without improving the tier-pass rate, the diff is rolled back. This is the complexity-management discipline.
+**Red → green → refactor.** Diff applied to `cycles/cycle_<N>/code/` in-place. If any test set / adversarial probe / complexity guard fails → roll back the diff inside the cycle (cycle_<N>/code/ stays as the pristine clone) AND mark `parked`. All pass → mark `mark_stable` candidate.
 
-### 2.5 Step 5 — Frontier review emit + inbox scan
+### 2.6 Step 5 — Frontier review emit + inbox scan
 
-**Output to outbox:** `agents/daedalus/frontier_outbox/cycle_<N>_review_request.md` — a paste-ready prompt containing:
-- The current source diff Daedalus is considering
-- The tier target + recent failure modes
-- The metrics before/after the diff (if applied) or just before (if not yet applied)
-- 2-4 specific questions a frontier reviewer should answer
+**Outbox:** `agents/icarus/frontier_outbox/cycle_<N>_review_request.md` — paste-ready prompt with current diff, tier target, recent failure modes, metrics, 2-4 specific questions. James curates and sends to frontier models at his pace.
 
-James curates these prompts and sends them to ChatGPT / Claude / Gemini at his pace.
+**Inbox:** `agents/icarus/frontier_inbox/<reviewer>_<date>_response.md` — markdown James writes with reviewer responses. Scanner runs at start of each cycle; new files (per `state/seen_inbox_files.json`) parsed:
+- Tests → `tests/frontier_supplied/`
+- Code → `incoming_research/frontier/`
+- Strategy → `state/strategy_log.md`
 
-**Input from inbox:** `agents/daedalus/frontier_inbox/<reviewer>_<date>_response.md` — markdown files James writes with reviewer responses. Daedalus scans this directory at the start of each cycle; new files (per `state/seen_inbox_files.json`) get parsed and:
-- Test suggestions → moved to `tests/frontier_supplied/`
-- Code suggestions → moved to `incoming_research/frontier/` (treated as another OSS-equivalent source)
-- Strategy suggestions → appended to `state/strategy_log.md` for the next cycle's self-eval to consider
+**Loop never waits.** If inbox empty, next cycle proceeds with in-house ingestion only.
 
-**Critical: the cycle never waits for inbox responses.** If the inbox is empty, cycle N+1 still runs. Inbox feedback enriches future cycles opportunistically.
+### 2.7 Step 6 — Freeze + stability decision (implicit)
 
----
+After steps 1-5 complete, the cycle dir is made read-only (POSIX chmod, Windows ACL, or convention enforced in code). Then:
 
-## 3. Strategy framework
-
-### 3.1 Combinatorial primitive composition
-
-Hephaestus has ~1,960 tools. Composing 2 of them = ~2M pairs; composing 3 = ~4B triples. Daedalus does not exhaustively enumerate. Instead:
-
-- The current tier challenge dictates a **shape** (e.g., R3 wants "multi-step + constraint maintenance")
-- Daedalus selects 2-5 primitives whose declared tier + ablation deltas match the shape
-- Local LLM proposes wiring code (the composition graph)
-- TDD verifies the composition passes the tier falsification test
-
-**Tracked in:** `state/composition_attempts.jsonl` — every (primitives, shape, outcome) tuple.
-
-### 3.2 Adversarial / anti-gaming
-
-The Apollo gen-3551 lesson: a composition can look R9-shaped but fail R9's falsification test (the single-primitive baseline test). Daedalus runs the same falsification tests Apollo got bitten by, on its own output, every cycle:
-
-- **Single-primitive baseline test:** if Daedalus produces a composition X with score S on the current tier challenge, does the best-single-primitive in X also score ≥ S? If yes, X is decorative, not load-bearing.
-- **Random-wiring baseline:** rewire the same primitives randomly; does the score collapse? If not, the wiring is decorative.
-- **Ablation:** remove one primitive at a time; does the score drop by more than the ablation's expected contribution? If not, that primitive is decorative.
-- **Perturbation:** apply the standard tier-N falsification perturbation (paraphrase, distractor, inconsistent constraint, etc.). The composition must survive.
-
-If any adversarial test fails, the composition is **parked** (not committed) with a `parked_reason` log entry. James's review reads the parked list to find patterns.
-
-### 3.3 Concept-from-DR scoring + parking
-
-DR reports land in `aporia/docs/deep_research_reports/`. Daedalus reads them, extracts proposed concepts (regex + section heading parse: "Method," "Algorithm," "Approach"), and for each concept:
-
-- Constructs a minimal-viable implementation sketch (local LLM)
-- Runs the TDD battery against the sketch
-- Scores: `(tier_lift × novelty) - (complexity × parsimony_weight)`
-- **High score** (≥ a threshold): graduates to active candidate, gets added to the next cycle's diff consideration
-- **Low score:** parked at `parked_concepts/<dr_id>_<concept_slug>.md` with metrics + reason. Reviewable; not deleted.
-
-### 3.4 Complexity management
-
-Each cycle records:
-- **LOC delta**: change in total lines of agent source (excluding tests)
-- **Cyclomatic complexity delta**: aggregate complexity of changed functions (via radon or similar)
-- **Import-graph delta**: nodes + edges added to the agent's internal call graph
-- **Test-runtime delta**: seconds to run the full TDD battery
-
-When any complexity metric exceeds 1.5× its 30-cycle moving average without a corresponding tier-lift, the diff is rolled back AND a `complexity_alarm` event fires. The agent does not run wider tests or seek further improvements at the current tier until the complexity budget is reclaimed (refactor cycle).
-
-This is the explicit Icarus safeguard — Daedalus cannot just keep adding wings.
+- **decision = `mark_stable`**: write `state/last_stable_cycle.json` with cycle ID = N. Next iteration clones from N.
+- **decision = `park`**: leave pointer unchanged. Next iteration clones from same prior stable. Cycle N stays frozen as forensic record.
+- **decision = `regress`** (delayed-evaluation signal arrived marking change harmful): alert James; mark prior versions revertable.
 
 ---
 
-## 4. State and file layout
+## 3. Lineage + revert mechanism
+
+The new architectural piece James contributed from prior experience.
+
+### 3.1 Disk layout
 
 ```
-agents/daedalus/
-├── README.md                         (operator-facing brief)
-├── CHARTER.md                        (this design doc, eventually summarized)
-├── daemon.py                         (the loop entry-point)
-├── self_eval.py                      (Step 1)
-├── dr_consumer.py                    (Step 2a)
-├── oss_consumer.py                   (Step 2b)
-├── forge_consumer.py                 (Step 2c)
-├── tdd_runner.py                     (Step 4)
-├── outbox_writer.py                  (Step 5 outbox)
-├── inbox_consumer.py                 (Step 5 inbox)
-├── adversarial.py                    (anti-gaming + ablation probes)
-├── ladder.py                         (R0-R12 tier definitions + falsification tests)
-├── complexity.py                     (complexity-delta tracking)
-├── tests/
-│   ├── tier_R0_falsification.py
-│   ├── tier_R1_falsification.py
+agents/icarus/
+├── cycles/
+│   ├── cycle_000/             # bootstrap skeleton (Phase 0 commit)
+│   │   ├── code/              # full source tree
+│   │   ├── parent.json        # null or "bootstrap"
+│   │   ├── diff.patch         # empty
+│   │   ├── log.jsonl
+│   │   ├── outcome.json       # {"decision": "mark_stable"}
+│   │   └── meta.json
+│   ├── cycle_001/
+│   │   ├── code/              # clone of cycle_000/code/ + cycle 1's diff if applied
+│   │   ├── parent.json        # {"parent_cycle": "000"}
+│   │   ├── diff.patch
+│   │   ├── log.jsonl
+│   │   ├── outcome.json       # {"decision": "park", "reason": "..."}
+│   │   ├── tests_run.jsonl
+│   │   └── meta.json
+│   ├── cycle_002/
+│   │   ├── code/              # clone of cycle_000/code/ (because 001 parked)
+│   │   └── ...
 │   ├── ...
-│   ├── tier_R12_falsification.py
-│   ├── generated/                    (cycle_<N>_test_*.py)
-│   └── frontier_supplied/            (<reviewer>_<date>_test_*.py)
-├── cycles/                           (cycle_<N>.jsonl — structured per-phase log)
-├── proposed_diffs/                   (per-cycle proposed_diff.patch + rationale)
-├── incoming_research/                (DR reports tagged for Daedalus)
-├── incoming_oss/                     (OSS code snippets)
-├── imported_primitives/              (Hephaestus tools Daedalus chose to wrap)
-├── parked_concepts/                  (low-scoring DR/OSS concepts with rationale)
-├── frontier_outbox/                  (cycle_<N>_review_request.md)
-├── frontier_inbox/                   (<reviewer>_<date>_response.md from James)
-├── state/                            (JSON state files — gitignored runtime)
+│   └── cycle_<N>/             # currently-running cycle
+├── state/
 │   ├── iteration_n.json
+│   ├── last_stable_cycle.json
 │   ├── tier_currently_passing.json
 │   ├── tier_target.json
-│   ├── seen_inbox_files.json
-│   ├── last_forge_ledger_seen.json
-│   ├── dr_recent_topics.json
-│   ├── dr_daily_cap.json
 │   ├── strategy_log.md
-│   ├── composition_attempts.jsonl
-│   ├── complexity_history.jsonl
-│   ├── pause.flag                    (presence = pause at end of cycle)
-│   └── resume.flag                   (presence = clear pause)
+│   ├── seen_inbox_files.json
+│   ├── pause.flag
+│   ├── resume.flag
+│   └── kill.flag
+├── frontier_outbox/
+├── frontier_inbox/
+└── README.md
 ```
+
+### 3.2 Stability promotion criteria
+
+A cycle becomes the new stable iff ALL of:
+
+1. All three TDD test sets pass.
+2. All adversarial probes pass (single-primitive baseline, random-wiring, ablation, perturbation).
+3. Complexity guard passes (LOC, cyclomatic, import-graph deltas within 1.5× moving avg).
+4. At least one metric improved vs the parent cycle (no-ops don't promote).
+5. Diff applied cleanly (no merge conflicts).
+
+If ANY fail → `park`. Cycle directory frozen but `last_stable_cycle` does not advance.
+
+### 3.3 Revert mechanism
+
+**Three revert paths:**
+
+1. **Automatic** — failed cycle auto-reverts (next cycle clones from unchanged stable).
+2. **Manual single-step** — James writes new `state/last_stable_cycle.json` pointing to an older cycle. Effectively rolls back N stable promotions.
+3. **Manual fork** — James copies an older cycle dir to a new name (`cycles/cycle_047_fork/`), edits freely, repoints `last_stable_cycle.json` to the fork. Lineage forks.
+
+`parent.json` in each cycle gives chain back to bootstrap. `git log`-like traversal via `parent_cycle` references reveals "how did the current stable evolve."
+
+### 3.4 Forensic value of frozen-failed cycles
+
+Cycles parked (decision=`park`) are NOT deleted. Full source + diff + log + tests_run record stays on disk. To find patterns:
+
+```bash
+grep -l '"decision": "park"' D:/Prometheus/agents/icarus/cycles/*/outcome.json
+```
+
+This is the forensic record that lets us learn from failures rather than regenerate them.
+
+### 3.5 Disk-usage discipline
+
+Per-cycle: ~500KB-2MB (clone of source up to 5,000 LOC hard cap). At 1,000 cycles = ~1-2 GB. Acceptable for months.
+
+**Compression policy (v0.2):** parked cycles >30 days tarball to `cycles/_archived/<year-month>.tar.gz`. Stable cycles never archived (always available for revert).
+
+**Pruning policy (deferred):** if disk >10 GB, oldest 50% of parked cycles archive. No stable cycle pruned without James's explicit approval.
 
 ---
 
-## 5. Pause / resume protocol (James's intervention loop)
+## 4. Strategy framework
 
-### 5.1 When James wants to intervene
+### 4.1 Combinatorial primitive composition
 
-He writes a `pause.flag` file to `agents/daedalus/state/`. Daedalus checks for this at the start of every cycle. If present, it:
+Hephaestus has ~1,960 tools. Icarus selects 2-5 primitives per cycle whose declared tier matches the shape; local LLM proposes wiring code; TDD verifies. Tracked in `state/composition_attempts.jsonl` AND each cycle's `meta.json`. Failure patterns accumulate across the lineage, viewable by grep on parked cycles.
 
-1. Completes the cycle's current step (don't leave a half-applied diff)
-2. Emits a `paused` event to events.jsonl + writes a `paused_at_cycle_<N>.md` summary
-3. Halts the loop (sleeps until `resume.flag` appears)
+### 4.2 Adversarial / anti-gaming
+
+Every cycle runs:
+- **Single-primitive baseline test** (the Apollo gen-3551 lesson)
+- **Random-wiring baseline**
+- **Ablation**
+- **Perturbation** (tier-specific)
+
+Failures park. The lineage forensics show which primitives recur in parked cycles — signal of "compositional surface without compositional substance."
+
+### 4.3 Concept-from-DR scoring + parking
+
+DR reports → minimal-viable implementation sketch (local LLM) → TDD against sketch → score. High-score graduates to next cycle's diff consideration. Low-score parked at `cycles/cycle_<N>/parked_concepts/`.
+
+### 4.4 Complexity management
+
+Each cycle records LOC, cyclomatic, import-graph, test-runtime deltas. 1.5× 30-cycle-moving-average alarm rolls back the cycle and parks. Hard cap: 5,000 LOC for v0.1.
+
+The Icarus name is intentional: we expect the agent to fly higher than safe at some point. The frozen lineage + revert mechanism catches the fall.
+
+---
+
+## 5. Pause / resume / revert protocol
+
+### 5.1 Pause
+
+James writes `state/pause.flag`. Icarus checks at start of every cycle. If present:
+1. Complete current cycle's freeze step
+2. Emit `paused` event
+3. Sleep until `resume.flag` appears
 
 ### 5.2 During pause
 
-James freely edits:
-- The agent's source files (`daemon.py`, `self_eval.py`, etc.)
-- The test battery
-- The strategy log
-- The parked concepts
+James freely edits any cycle's `code/` dir. **Important:** edits to a frozen cycle invalidate its frozen status. Convention: either (a) copy the cycle to a new name (`cycle_047_jfork_001`) and edit the copy, OR (b) edit the *current working* cycle and re-run TDD step.
 
-State files (iteration counter, tier target, etc.) survive pauses. James can also reset state by hand-editing those files.
+The pointer `last_stable_cycle.json` is itself mutable; James can repoint without editing any cycle.
 
-### 5.3 When James resumes
+### 5.3 Resume
 
-He writes a `resume.flag` file (or deletes `pause.flag`). Daedalus picks up at the next cycle increment. The first action of the resume cycle: read the new strategy_log.md + run the full TDD battery to confirm James's edits didn't break anything (a "post-intervention checkpoint" event fires).
+James writes `resume.flag` (or deletes `pause.flag`). First action of resume cycle: re-read `last_stable_cycle.json`, run full TDD + adversarial pass on the pointed-to cycle's code to confirm James's edits/repointing didn't break anything. A `post_intervention_checkpoint` event fires.
+
+### 5.4 Revert (no pause needed for pointer changes)
+
+James writes new value to `state/last_stable_cycle.json`. Currently-running cycle completes naturally; next cycle starts from new pointer. No daemon restart required.
+
+### 5.5 Hard kill
+
+`state/kill.flag` → Icarus halts immediately, current cycle parked, no further cycles. Resurrect by deleting `kill.flag` + writing `resume.flag`.
 
 ---
 
 ## 6. Interfaces with existing Prometheus systems
 
-| System | How Daedalus uses it |
+| System | How Icarus uses it |
 |---|---|
-| **Pythia** (`scripts/pythia_daemon.py` + `agora.research_queue`) | Daedalus enqueues 1-3 DR rows per cycle; doctrine-compliant; capped 5/day |
-| **Hephaestus Forge** (`agents/hephaestus/forge_v[1-9]/`) | Consumer; reads STATUS.json + ledger; imports primitives matching current tier |
-| **`harmonia/agents/_scorer.py`** | Reuses `emit_event` + `append_yield_row` for structured logging into the swarm-wide events.jsonl / yields.jsonl |
-| **`scripts/harmonia_audit.py`** | The daily swarm audit will surface Daedalus's tick health + diminishing returns (Daedalus emits the same tick_start/tick_complete events) |
-| **Charon's falsification battery** | Daedalus's adversarial probes (§3.2) reuse Charon's perturbation primitives where applicable |
+| **Pythia** | 1-3 doctrine-compliant DR rows per cycle; capped 5/day |
+| **Hephaestus Forge** | Consumer; reads STATUS.json + ledger; imports tier-matching primitives |
+| **`harmonia/agents/_scorer.py`** | Reuses `emit_event` for structured logging into swarm-wide events.jsonl |
+| **`scripts/harmonia_audit.py`** | Daily swarm audit surfaces Icarus's tick health (same tick_start/tick_complete events) |
+| **Charon's falsification battery** | Adversarial probes reuse Charon's perturbation primitives |
 | **`keys.get_key()`** | GitHub, HuggingFace, DeepSeek, OpenAI, Anthropic, Gemini API keys |
-| **Local LLM** | Default Qwen2.5-Coder-7B via Ollama on M2's GPU; fallback `scripts/llm_cascade.py` (Cerebras/Groq/NVIDIA/DeepSeek) |
-| **`scripts/machine_probe.py`** (per-machine resource probe) | Daedalus checks the latest M2 probe row before launching heavy local-LLM tasks; refuses to start if GPU VRAM > 90% (Hephaestus headroom protection) |
+| **Local LLM** | Default Qwen2.5-Coder-7B via Ollama on M2; fallback `scripts/llm_cascade.py` |
+| **`scripts/machine_probe.py`** | Icarus checks latest M2 probe row before launching heavy local-LLM; refuses if GPU VRAM > 90% |
 
 ---
 
 ## 7. Quality safeguards and known risks
 
-### 7.1 The local-LLM-is-weak failure mode
+### 7.1 Local LLM produces broken code
 
-**Expected behavior:** local code-gen produces broken Python, hallucinated APIs, reasoning errors. The TDD gate (§2.4) catches most of these — broken Python fails to parse, hallucinated APIs fail at import, reasoning errors fail the tier tests.
-
-**Mitigation:** every cycle's diff is applied to a sandboxed copy of the source (`agents/daedalus/sandbox/`), tests run there, and only if the sandbox passes does the change land in `agents/daedalus/` proper. The sandbox is rebuilt from main on each cycle so partial-failure state doesn't accumulate.
-
-**James's intervention** is the human-quality gate. Expected cadence: 1 review pass per 1-3 days during the early cycles, scaling back as the agent matures (or stalling if it doesn't).
+**Expected.** TDD catches most. Failed cycles park; lineage keeps the unchanged-stable pointer. **Frequent failure is the design assumption, not a bug.**
 
 ### 7.2 Runaway code-gen
 
-The agent's source could grow unboundedly if the complexity guard fails. The complexity-alarm threshold (1.5× 30-cycle moving average) is the soft brake. The hard brake: total LOC of `agents/daedalus/` excluding tests must stay under 5,000 LOC for v0.1. Exceeding triggers an automatic pause until James reviews.
+Complexity-alarm 1.5× 30-cycle moving avg. Hard LOC cap 5,000. Exceeding triggers automatic pause.
 
 ### 7.3 Ladder gaming
 
-A composition can superficially pass the tier-N test but fail under perturbation (Apollo's gen-3551 lesson). The adversarial probes (§3.2) run every cycle. A composition that passes the falsification test but fails the single-primitive-baseline or random-wiring tests is parked, not committed.
+Adversarial probes every cycle. Compositions passing headline test but failing single-primitive-baseline or random-wiring → parked.
 
 ### 7.4 Frontier-input poisoning
 
-James's curation of frontier inputs is itself a trust boundary. A malicious or simply wrong frontier response could inject broken tests or broken code suggestions. Mitigation: frontier-supplied tests and code go through the same TDD gate; if they cause the battery to fail, they're moved to `parked_frontier_responses/` with a rationale.
+Frontier-supplied tests + code go through same TDD gate. Broken responses park.
 
 ### 7.5 DR-quota exhaustion
 
-Daedalus shares Pythia's daily DR budget with Argos (Harmonia swarm), Charon's swarm (Stygian/Lethe/etc.), Aporia herself, and Phylax. The capped budget (5/day default for Daedalus, configurable) prevents Daedalus from starving the rest of the mesh.
+Icarus shares Pythia's budget with Argos, Charon's swarm, Aporia, Phylax. Capped 5/day prevents starvation.
 
-### 7.6 Hephaestus-tool drift
+### 7.6 Disk-usage runaway
 
-The Hephaestus forge keeps producing new tools (~2% admission rate × continuous run). Daedalus's `last_forge_ledger_seen.json` pointer keeps up. If the forge versions a tool (forge_v9/X.py replaces forge_v8/X.py), Daedalus uses the newer version on next cycle; the older imported_primitive gets garbage-collected after 7 days unused.
+1-2 GB at 1,000 cycles. Manageable for months. v0.2 compression deferred.
+
+### 7.7 Revert-thrashing
+
+Many cycles in a row parking = pointer stuck. Not a bug — it's the agent failing to climb. Diminishing-returns alarm (`harmonia_audit.py` surfaces) flags this.
+
+### 7.8 Lineage-explosion (cycle dirs proliferate)
+
+Daemon bug could create cycles rapidly without freezing. Mitigation: each cycle atomic — either completes (freeze + decision) or directory removed on daemon-restart recovery. `iteration_n.json` is canonical counter; on restart, daemon checks `cycles/cycle_<N>/outcome.json` — if missing, cycle incomplete and discarded.
 
 ---
 
 ## 8. Sequenced rollout
 
-### Phase 0 (week 1): skeleton + R1 baseline
+### Phase 0 (week 1): skeleton + R1 baseline + lineage mechanism
 
-- Ship `daemon.py` + the 5-step loop scaffolding (each step is a stub that emits events and proceeds)
-- Ship `ladder.py` with the R0 + R1 + R2 falsification tests (the rest come later as we climb)
-- Ship `complexity.py` with LOC + cyclomatic-complexity tracking
-- Ship `adversarial.py` with the single-primitive baseline + random-wiring test
-- Initial source size: ~800 LOC including stubs
-- Smoke: 5 cycles of skeleton (no actual diffs applied) to verify the loop holds, structured logs land, frontier_outbox writes, inbox scan handles empty state
+- Ship `agents/icarus/cycles/cycle_000/` as bootstrap skeleton
+- Ship `daemon.py` + 5-step loop
+- Ship `cycles/cycle_000/code/ladder.py` with R0 + R1 + R2 falsification tests
+- Ship `complexity.py`, `adversarial.py`, `tdd_runner.py`
+- **Critically:** ship the clone-and-freeze mechanism. First 5 cycles exercise stability promotion + parking + revert paths end-to-end with no actual diffs (just no-op cycles)
+- Bootstrap size: ~800 LOC including stubs
+- Smoke: 10 cycles, expect 8-10 to park (local LLM produces broken diffs), 0-2 to mark stable. Validate parked freeze, stable advance, manual mark-stable.
 
 ### Phase 1 (weeks 2-3): R1 → R2
 
-- Hook up the local LLM (Ollama Qwen2.5-Coder-7B) for self-eval
-- Hook up Pythia DR enqueue with 5/day cap
+- Hook up Ollama for self-eval
+- Hook up Pythia DR
 - Hook up Hephaestus forge consumer
-- Run continuously; James review every 2-3 days
-- Success criteria: Daedalus consistently passes R1's falsification test across ≥5 cycles, and R2's falsification test in at least 30% of cycles
+- James review every 2-3 days; pattern is "look at recent parked cycles + decide if parking was correct + un-park any that should have promoted"
+- Success: ≥5 consecutive cycles pass R1 falsification; ≥30% pass R2
 
 ### Phase 2 (weeks 4-6): R2 → R3
 
-- OSS-code consumer comes online
-- Adversarial probes run every cycle
-- Frontier-inbox feedback loop active (James curating prompts at his pace)
-- Success criteria: R2 passes ≥80% of cycles; R3 passes ≥30%
+- OSS consumer comes online
+- Frontier-inbox feedback active (James curating prompts at his pace)
+- Success: R2 ≥80%; R3 ≥30%
 
 ### Phase 3 (weeks 7+): R3 → R4 → R5 → ...
 
-- Each tier transition gets ≥2 weeks
-- Complexity per tier expected to grow ~30%
-- Combinatorial strategies (composing Hephaestus primitives in graph patterns) come into play heavily from R5+
-- Neural-network strategies (Daedalus writes a small NN to do representation routing) become available from R8+ when the complexity budget supports it
-- GANN / evolutionary strategies from R9+ where they're most natural
+- Each tier transition ≥2 weeks
+- Complexity per tier expected ~30% growth; budget will be exercised
+- Combinatorial strategies dominant from R5+
+- Neural-network strategies (Icarus writes a small NN) available from R8+ when complexity budget supports it
 
 ### Indefinite
 
-The agent runs continuously. The point is not to "finish R12" — it is to **establish a discipline of falsification-tested self-improvement at sustained cadence**. If the agent stalls at a tier for >4 weeks without delta, James pauses, reviews, redirects.
+Agent runs continuously. Point: **establish a discipline of falsification-tested self-improvement with full forensic lineage at sustained cadence**. Stalled >4 weeks without delta → pause, review parked patterns, redirect.
 
 ---
 
 ## 9. Open questions (for frontier review)
 
-These are the questions James will route to ChatGPT / Claude / Gemini via the frontier-prompt companion document. The agent itself starts running on a Phase-0 skeleton; the frontier responses enrich subsequent cycles.
-
-1. **Tier transitions.** What is the right signal that Daedalus has "consistently passed" tier N and should target N+1? (Cycle count? Perturbation breadth? Cross-validation against a held-out test set?)
-
-2. **Adversarial discipline.** The Apollo gen-3551 lesson showed that a single falsification test (single-primitive baseline) catches a class of fake-tier output. Are there other falsification tests that should be baked into every cycle, not just at tier transitions?
-
-3. **Local LLM quality.** What's the smallest local model that produces *useful* (not just non-broken) code-gen output for self-improvement tasks at this scope? Are there fine-tuning data sources that would make a 7B model competitive for this niche?
-
-4. **Combinatorial strategy at R5+.** Once Daedalus is composing 5+ Hephaestus primitives, the search space is large. What policy should govern primitive selection — beam search? bandit? something else? How does this interact with the agent's TDD discipline?
-
-5. **Complexity vs depth.** The complexity-alarm threshold (1.5× 30-cycle moving average) is a guess. What's the right way to balance "necessary complexity at higher tiers" vs "Icarus growth that needs to be reined in"?
-
-6. **Frontier feedback latency.** What's the right cadence for James to curate frontier prompts? Once per cycle? Once per tier transition? When the agent emits a `frontier_review_recommended` event because it has reached a strategic decision point?
-
-7. **State sharing across pauses.** When James intervenes and rewrites a chunk of Daedalus's source, the agent's prior cycles' learning is partially invalidated. How should the agent reconcile pre-pause and post-pause state? Reset some metrics, preserve others?
-
-8. **Neural-network strategy gates.** When does it become correct for Daedalus to write its own neural network (small transformer for routing, or GANN, or RL agent) as part of its self-improvement? What signals justify the complexity cost?
-
-9. **Park-and-revisit.** Concepts and compositions that score poorly are parked with rationale. Should there be a periodic "revisit parked" sweep, or are parks permanent unless James un-parks them?
-
-10. **Coexistence with Apollo.** Apollo is also climbing the ladder via evolutionary composition; Daedalus is climbing it via direct code-gen + curation. When (if ever) should these two be coupled — e.g., Apollo's elites become Daedalus's primitive imports, or Daedalus's solutions become Apollo's seed candidates?
+1. **Tier transitions.** What signal indicates Icarus has "consistently passed" tier N?
+2. **Adversarial discipline.** Beyond the 4 current probes, what other falsification tests should be every-cycle?
+3. **Local LLM quality.** Smallest local model that produces *useful* code-gen at this scope?
+4. **Combinatorial strategy at R5+.** Beam search? MCTS? Bandit? Hybrid?
+5. **Complexity vs depth.** Better heuristic than 1.5× 30-cycle moving avg?
+6. **Frontier feedback latency.** Curation cadence?
+7. **Lineage state reconciliation.** What survives a revert vs gets reset?
+8. **Neural-network strategy gates.** When is it correct for Icarus to write its own NN?
+9. **Park-and-revisit.** Periodic revisit, or permanent unless un-parked?
+10. **Coexistence with Apollo.** Coupling? Adversarial? Cross-validation?
+11. **(NEW) Lineage explosion + pruning.** Retention policy for parked cycles?
 
 ---
 
 ## 10. What v0.1 explicitly does NOT include
 
-- **Daedalus does not modify Hephaestus, Apollo, or any other agent's code.** It only modifies its own.
-- **It does not auto-promote to substrate vocabulary.** Promotion of Daedalus-developed code to formal Prometheus substrate (anti-anchors, AXIS_CLASS, etc.) is human-gated via James's review.
-- **It does not run on M1 / M3 / M4.** Single-machine (M2). Cross-machine coordination is a v0.2 question.
-- **It does not chase R6+ in v0.1.** The first 3-4 weeks target R1 → R2 → R3 with the apparatus. Higher tiers are deferred until the loop discipline is proven.
-- **It does not bypass the Reasoning Ladder's falsification discipline.** Every tier claim requires its specific falsification test to pass. No exceptions.
+- Icarus does not modify Hephaestus, Apollo, or any other agent's code.
+- Auto-promotion to substrate vocabulary is human-gated.
+- Single-machine (M2) scope.
+- No R6+ in v0.1.
+- Does not bypass the Reasoning Ladder's falsification discipline.
 
 ---
 
@@ -458,24 +468,24 @@ These are the questions James will route to ChatGPT / Claude / Gemini via the fr
 
 | Term | Meaning |
 |---|---|
-| **Daedalus** | This agent — master craftsman of Greek myth who built the Labyrinth and made wings for Icarus. |
-| **Reasoning Ladder** | The R0-R12 tier sequence per `pivot/reasoning_ladder_v01_2026-05-24.md`. |
-| **Falsification test** | The specific perturbation or comparison that confirms a system actually occupies a tier (vs producing tier-shaped output without passing the test). |
-| **Cycle** | One iteration of Daedalus's 5-step loop. |
-| **Sandbox** | `agents/daedalus/sandbox/` — copy of the agent's source where proposed diffs are tested before landing in main. |
-| **Parked** | A concept or composition that didn't score high enough, archived with rationale. Not deleted; available for future revisit. |
-| **Frontier outbox/inbox** | Directories Daedalus writes prompts to / James writes responses to. Asynchronous; no blocking. |
-| **Local LLM** | Code-gen model running on M2's GPU (Ollama Qwen2.5-Coder-7B default). Quality expected to be poor; James intervenes periodically. |
-| **Complexity alarm** | Automatic guardrail that triggers a rollback if any complexity metric exceeds 1.5× the 30-cycle moving average without a tier-lift. |
-| **Tier challenge** | The current target — the next ladder tier Daedalus is trying to pass. |
-| **Tier currently passing** | The highest tier Daedalus has consistently passed (typically tier-target - 1). |
+| **Icarus** | This agent — the mortal who flew too close to the sun. Named because we expect breakage; the frozen lineage is how we recover. |
+| **Reasoning Ladder** | R0-R12 per `pivot/reasoning_ladder_v01_2026-05-24.md`. |
+| **Falsification test** | Specific perturbation/comparison that confirms a system actually occupies a tier. |
+| **Cycle** | One iteration, frozen at end as `cycles/cycle_<N>/`. |
+| **Stable** | A cycle whose diff passed all gates AND advanced `last_stable_cycle`. |
+| **Parked** | A frozen cycle that did NOT promote. Kept for forensics. |
+| **Last-stable pointer** | `state/last_stable_cycle.json` — where the next iteration clones from. James can repoint to revert. |
+| **Frontier outbox/inbox** | Async dirs for prompt/response exchange. |
+| **Local LLM** | Default Ollama Qwen2.5-Coder-7B on M2's GPU. Quality expected poor. |
+| **Complexity alarm** | Automatic rollback when any metric exceeds 1.5× 30-cycle moving average without tier-lift. |
+| **Tier challenge** | Current target — next ladder tier Icarus tries to pass. |
 
 ---
 
 ## 12. Changelog
 
-- **v0.1 (2026-05-25)** — Initial design draft for internal + frontier review. Sequenced rollout (Phase 0-3), 5-step loop, strategy framework, pause/resume protocol, integration points with existing Prometheus systems, 10 open questions for frontier review.
+- **v0.1 (2026-05-25)** — Initial design. Renamed from Daedalus → Icarus per James direction ("experimental, not foundational; expect the fall"). Added the **immutable-cycle-lineage mechanism** (clone-from-stable, freeze-each-cycle, revert-by-pointer-update) inspired by James's prior implementation where this discipline made breakage recoverable.
 
 ---
 
-*End of v0.1. Companion: `pivot/daedalus_frontier_review_prompt_2026-05-25.md` (paste-ready prompt for frontier models).*
+*End of v0.1. Companion: `pivot/icarus_frontier_review_prompt_2026-05-25.md` (paste-ready prompt for frontier models).*
