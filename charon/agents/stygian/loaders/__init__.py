@@ -65,6 +65,7 @@ class BatteryLoaderResult(TypedDict, total=False):
 # data-module imports unless the loader is actually invoked).
 LOADER_REGISTRY: dict[str, str] = {
     "BL-C-001": "charon.agents.stygian.loaders.bl_c_001_lehmer",
+    "BL-C-002": "charon.agents.stygian.loaders.bl_c_002_bsd_rank",
 }
 
 
