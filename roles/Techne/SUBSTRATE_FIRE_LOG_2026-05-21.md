@@ -7915,6 +7915,79 @@ list. For now, the pattern is RARE (1 hang in 12 throttled fires).
 399.0M records, 227.2M kills, 1670 promoted, 2578 templates,
 0 verified findings.*
 
+---
+
+## Fire #102 — 2026-05-25 ~01:57Z
+
+**2.59M records / 24 min / 0 templates / 0 promoted. f1 carried
+99.8% of fire as NULL_BASELINE. 2.06M demand events for missing
+primitives — strongest signal this session.**
+
+### Picks + metrics
+
+    Bandit picked: ['b4', 'b5', 'f1', 'g1', 'g2']
+    [heartbeat: 48 snapshots, full duration]
+    Signature templates: 2 new (f1, NULL_BASELINE — excluded)
+                         → 2578 lifetime disc-role templates (unchanged)
+    Honest accounting: 0 promoted records → 1670 lifetime (unchanged)
+    verified mathematical findings = 0
+
+### Per-gen attribution
+
+    gid  records      templates  kill_rate
+    f1   2,589,939   2          29.3%      (NULL_BASELINE — excluded)
+    g2       3,000   0          0%
+    b5       1,052   0          1.4%
+    b4         606   0          73.6%
+    g1         184   0          58.7%
+
+### Demand signal explosion: 2.06M events
+
+f1's NULL_BASELINE random pairs revealed the substrate's
+strongest "wanted primitives" signal yet:
+
+    419,286× ec/j_invariant
+    418,481× ec/discriminant
+    365,976× knot/alexander_polynomial_degree
+
+Total demand events: 2,061,124 — second-highest single-fire
+since Fire #87 (2.74M). These are CONSISTENTLY the same 3-4
+top requests across all f1 picks.
+
+### Batch result
+
+- batch_id: `batch-20260525T015709Z-ebbe6e`
+- Duration: 24 min wall
+- 2,594,781 records / 758,064 kills / 331,595 confirms / 1.51M incon / 0 errors
+- 0 promoted records → **1670 lifetime promoted** (unchanged)
+- 2 templates from f1 (NULL_BASELINE excluded) → 2578 disc-role (unchanged)
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #102
+
+| Metric | Pre-#34 | Post-#101 | Post-#102 |
+|---|---|---|---|
+| Batches journaled | 30 | 99 | 100 |
+| Records | 154.4M | 399.0M | 401.6M |
+| Kills | 74.4M | 227.2M | 227.9M |
+| Confirmations | 75.5M | 150.1M | 150.5M |
+| Promoted records | 500 | 1670 | 1670 |
+| Templates (disc-role) | 17 | 2578 | 2578 |
+| **Verified findings** | **0** | **0** | **0** |
+
+100 batches journaled milestone reached.
+
+### Schedule wakeup
+
+`delaySeconds=3600`.
+
+---
+
+*Fire #102 = 2.59M records / 0 promoted / 0 disc-role templates.
+f1 carried with 2.06M demand events for ec/knot primitives.
+100-batches-journaled milestone. 401.6M records, 227.9M kills,
+1670 promoted, 2578 templates, 0 verified findings.*
+
 
 
 
