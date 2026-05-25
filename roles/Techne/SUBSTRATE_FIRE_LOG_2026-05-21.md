@@ -9232,6 +9232,50 @@ Top demand: knot/nf_class_number (244K events).
 459.7M records, 260.9M kills, 2131 promoted, 2643 templates,
 0 verified findings.*
 
+---
+
+## Fire #130 — 2026-05-25 ~23:29Z
+
+**3.50M records / 24 min / 0 templates / 20 promoted.
+Mix c1/c3/d2/f2/f4 — f2+f4 in lockstep again. Tick rate
+584/s. RSS 4.7GB (high, h4-like cache pattern in c3/c1).**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    f2   840,440   0          65.8%
+    f4   840,368   0          65.8%
+    c1   790,347   0          63.2%
+    c3   715,657   0          44.6%
+    d2   315,480   0          62.9%
+
+### Batch result
+
+- batch_id: `batch-20260525T232906Z-2bd2e6`
+- Duration: 24 min wall, 584/s tick rate
+- 3,502,292 records / 2,123,477 kills / 1,378,815 confirms / 0 errors
+- 20 promoted records → **2151 lifetime promoted**
+- 0 new templates → 2643 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+- batch_end ✓ (RSS 4.7GB)
+
+Lifetime: 125 batches journaled / 463.2M records / 263.0M kills /
+2151 promoted / 2643 templates / 0 verified findings.
+
+### Notable
+
+- Same f2+f4 lockstep pattern as Fire #128 (~840K each, 65.8% kill).
+- Bandit appears to alternate between a-family heavy fires and
+  c/f-family heavy fires.
+- c3 (region_slide) emerged with 715K — first big c3 burn in
+  many fires.
+
+---
+
+*Fire #130 throttled = 3.50M records / 20 promoted / 0 templates.
+463.2M records, 263.0M kills, 2151 promoted, 2643 templates,
+0 verified findings.*
+
 
 
 
