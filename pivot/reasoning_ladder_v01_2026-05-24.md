@@ -7,7 +7,11 @@
 
 ---
 
-## The core doctrine
+## The core doctrines
+
+**Two doctrines, equal weight.** Doctrine #1 governs *how a tier is claimed*; Doctrine #2 governs *how a tier is read from observation*. Both must hold for a reading to be meaningful.
+
+### Doctrine #1 — Falsification-first tier claims
 
 **A system does not occupy a reasoning tier because its output resembles that tier. It occupies the tier only if the relevant mechanism survives perturbation, beats lower-tier baselines, and fails in the tier-predicted way.**
 
@@ -16,6 +20,41 @@ This is the falsification-first principle applied to reasoning evaluation. Three
 1. **Every tier claim requires a falsification test.** "This system reasons compositionally" is meaningless without a test that would break the claim. Apollo's baseline matrix is one such test — random wiring matched the elite, so the elite is not compositional.
 2. **Tiers are predictions about failure modes, not just success modes.** A tier-N system should fail in tier-N-shaped ways, not just succeed at tier-N-shaped tasks. Bloom's taxonomy classifies successful behaviors; we classify the kind of failure the system can recover from.
 3. **Tier assignments are observation-conditional.** "Tier R5 on substrate X" is meaningful; "Tier R5" alone is not. A system's reasoning level is a function of (gene library × task curriculum × selection geometry × evaluator), and changing any of those changes the reading.
+
+### Doctrine #2 — Failure-signature reading (gradient over verdict)
+
+**Reasoning capability is read from the *gradient of failure*, not the binary of success. Every measurement instrument has error; every "passing" system fails in shaped ways and every "failing" system fails in shaped ways. The shape encodes the underlying mechanism. The discipline is to MINE the error structure, not collapse it into a summary statistic.**
+
+Prometheus does not write papers; it does not produce pass/fail tables to publish. Its deliverable is a substrate of structured artifacts (Apollo organisms, Hephaestus primitives, Ergon failure-routes, eventual Learner). The pass/fail summary destroys exactly the information the next iteration needs.
+
+Physical analog: "I measured g = 9.8 m/s²" is a number; "I measured g = 9.81 ± 0.03 m/s² where the error is dominated by stopwatch reaction-time, quantified by N repeated trials" is reasoning. The error structure carries information the point-estimate cannot. Same discipline applies to reasoning measurements.
+
+Three operational consequences:
+
+1. **Every diagnostic in this project must report the SHAPE of failure**, not just whether the test passed. The verdict-line at the bottom of a script is a triage signal, not the result. The result is the structured failure breakdown above it.
+2. **N "failing" cases are N findings, not one.** If an ablation reveals 4 decorative slots, those are 4 distinct signatures pointing to 4 distinct corrections — not one "MIXED" verdict.
+3. **Even passing systems are read by their residual failure shape.** A system that scores 95% has 5% structure — that 5% is the gradient pointing toward what to improve next. Don't celebrate the 95%; mine the 5%.
+
+### Worked example — the 2026-05-25 null-slot ablation
+
+Eight slots tested on the blackboard prototype. Verdict-line said "4 load-bearing, 4 decorative, MIXED." That summary lost everything. The four "decorative" slots had four distinct signatures, each a separate Branch C design correction:
+
+| Slot | Signature | Lesson |
+|---|---|---|
+| `max_value` | **Recompute-bypass** — scorer declared reads but recomputed from upstream | Wrapper protocol must enforce *declared-reads-must-be-actual-reads* via static verification |
+| `transitive_closure` | **Side-output** — op writes 3 slots in one step; only 1 load-bearing | Operators that write multiple slots are doing too much; split into atomic single-output ops |
+| `names` | **Redundant-encoding** — parser wrote two views of the same data | Parsers must write canonical reps; no redundant slots recoverable from another |
+| `candidate_scores` | **Atomic-with-output** — written on same step as `selected_answer`; test can't separate them | The null-slot instrument has a methodological blind spot for atomic writes; need a complementary corruption-during-step test |
+
+Four findings. Four moves. The summary statistic threw the gradient away.
+
+### How the doctrines combine
+
+A tier-N reading requires both:
+- *Doctrine #1:* The mechanism survives perturbation + beats lower-tier baselines + fails in tier-predicted way.
+- *Doctrine #2:* The failure signature for that tier is characterized — *how* it fails, not just *that* it does.
+
+A system can pass Doctrine #1's tests but fail to have its failure-signature documented; that reading is incomplete. Branch C's experiment was redesigned around this — every promoted organism carries not just an ablation score but the *signature* of every slot's load-bearingness (recompute-bypass, side-output, redundant-encoding, atomic-with-output, or genuinely load-bearing). That signature is the artifact, not the score.
 
 ## Why a ladder at all
 
@@ -32,7 +71,9 @@ This is v0.1. It will be wrong in places. Revising as we learn.
 
 ## The ladder
 
-The ladder has **a primary tier sequence (R0-R12)** that captures the spine of "what kind of reasoning is happening." Each tier carries a **falsification test** — the specific perturbation or comparison that decides whether the system actually occupies it. The ladder also identifies **three orthogonal dimensions** (failure repair depth, representation mobility, epistemic humility) that cut across the primary tiers; these are tier-modifying axes, not replacement tiers.
+The ladder has **two co-equal axes** that together place a system: the **R-axis** (depth of reasoning mechanism) and the **F-axis** (depth of failure-signature diagnosis). The R-axis says "what kind of mechanism is at work"; the F-axis says "what shape do its failures take" — and both readings must exist for the placement to be meaningful (per Doctrine #2). The ladder also identifies **two diagonal dimensions** (M for representation mobility, H for epistemic humility) that show up at any (R, F) position and modify the reading.
+
+This is a v0.1 revision of an earlier v0.0 framing where F/M/H were all "orthogonal" to R. The 2026-05-25 null-slot ablation experience moved F to co-equal — the failure signature is not a modifier of the reasoning tier; it IS the reading.
 
 ### Primary tier sequence
 
@@ -74,13 +115,9 @@ The tests are perturbation-based or comparison-based by design. **Each one is so
 
 ---
 
-## Three orthogonal dimensions
+## The F-axis (co-equal with R) — failure transformation depth
 
-The primary tier captures depth of reasoning. These three axes capture different qualities at any tier:
-
-### Dimension F — Failure transformation depth
-
-What kind of failure can the system recover from? Adapted from external review (2026-05-24).
+**Per Doctrine #2, F is co-equal with R, not orthogonal.** A reading like "Apollo gen-3551 is R2" is incomplete; the meaningful reading is "Apollo gen-3551 is at (R2, F0): multi-step execution with no failure-detection capacity, fails silently into decorative scaffolds." Every (R, F) pair is a distinct reading; together they describe both *what* the mechanism does and *what its errors tell us*. Adapted from external review (2026-05-24).
 
 ```
 F0  — Cannot detect failure
@@ -96,7 +133,11 @@ F8  — Epistemic repair: identifies why its own evidence was misleading
 
 A system at primary tier R6 + failure dimension F3 is "fixes one step when given a wrong proof." A system at primary tier R8 + F6 is "re-encodes the problem when the current representation has hit its limit."
 
-**This dimension is where Ergon's target lives.** Ergon's near-term north star is roughly F3-F6: detect + classify failures, predict required repair class.
+**This axis is where Ergon's target lives.** Ergon's near-term north star is roughly F3-F6: detect + classify failures, predict required repair class. Note that F is the *signature-mining* axis itself — it captures how deeply a system can read the gradient of its own errors, which is exactly Doctrine #2 made internal to the system.
+
+## Two diagonal dimensions (modifiers, can appear at any R×F position)
+
+These two dimensions are not co-equal axes; they shift the interpretation of an (R, F) reading without independently placing the system.
 
 ### Dimension M — Representation mobility
 
