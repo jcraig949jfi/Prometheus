@@ -8264,6 +8264,52 @@ Lifetime: 104 batches journaled / 409.3M records / 231.8M kills /
 e1 stalled 4th time. 409.3M records, 231.8M kills, 1751
 promoted, 2583 templates, 0 verified findings.*
 
+---
+
+## Fire #108 — 2026-05-25 ~10:03Z — d3 BURST
+
+**1.22M records / 24 min / 12 templates (d3) / 20 promoted.
+Biggest single-fire template burst since throttle activated
+(Fire #90). d3 (triangulation_seeds) usually emits 0-1
+templates; this fire +12.**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    d3   416,024   12         99.1%      ← BURST
+    g4   396,793   0           5.4%
+    a4   395,483   0          31.4%
+    a5     3,879   0          31.7%
+    g2     3,000   0           0%
+
+d3's 12-template burst is anomalous for this gen. Plausible
+causes:
+- Refill from upstream: intervening fires added new parent
+  claims d3 can triangulate
+- Stochastic: lucky sampling of unexplored (knot, ec, polynomial
+  degree) combinations
+
+Need more d3 picks to discriminate. If the burst repeats, refill
+hypothesis stands; if it returns to 0-1 baseline, stochastic.
+
+### Batch result
+
+- batch_id: `batch-20260525T100309Z-607b11`
+- Duration: 24 min wall
+- 1,215,179 records / 558,893 kills / 376,683 confirms / 279K incon / 0 errors
+- 20 promoted records → **1771 lifetime promoted**
+- 12 new templates → **2595 lifetime disc-role templates** (+12)
+- **Verified mathematical findings: 0**
+
+Lifetime: 105 batches journaled / 410.5M records / 232.4M kills /
+1771 promoted / 2595 templates / 0 verified findings.
+
+---
+
+*Fire #108 throttled = 1.22M records / 20 promoted / 12 templates
+(d3 burst). 410.5M records, 232.4M kills, 1771 promoted, 2595
+templates, 0 verified findings.*
+
 
 
 
