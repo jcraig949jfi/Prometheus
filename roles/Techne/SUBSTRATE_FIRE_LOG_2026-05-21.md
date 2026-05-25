@@ -8957,6 +8957,43 @@ weak-relation claims regardless of which gen emits them.
 441.3M records, 249.6M kills, 2011 promoted, 2643 templates,
 0 verified findings.*
 
+---
+
+## Fire #124 — 2026-05-25 ~20:22Z
+
+**3.44M records / 24 min / 0 templates / 20 promoted.
+Mix a1/a2/b1/e3/f2 — f2 included (tautology emitter
+per triage). a2 hit 93% kill rate.**
+
+### Per-gen attribution
+
+    gid  records     templates  kill_rate
+    f2   1,243,955   0          65.8%
+    a2   1,111,163   0          93.4%
+    a1   1,080,241   0          68.9%
+    b1       1,340   0           0.0%
+    e3       1,060   0          42.2%
+
+### Batch result
+
+- batch_id: `batch-20260525T202208Z-2fb909`
+- Duration: 24 min wall, 864/s tick rate
+- 3,437,759 records / 2,601,922 kills / 835,837 confirms / 0 errors
+- 20 promoted records → **2031 lifetime promoted**
+- 0 new templates → 2643 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+
+Lifetime: 119 batches journaled / 444.7M records / 252.2M kills /
+2031 promoted / 2643 templates / 0 verified findings.
+
+Top demand back to knot/nf_class_number (203K events).
+
+---
+
+*Fire #124 throttled = 3.44M records / 20 promoted / 0 templates.
+444.7M records, 252.2M kills, 2031 promoted, 2643 templates,
+0 verified findings.*
+
 
 
 
