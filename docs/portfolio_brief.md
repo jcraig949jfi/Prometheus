@@ -1,17 +1,17 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-05-25 04:49:06 AM UTC*
+*Generated: 2026-05-25 08:49:00 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
 
 ## Act on this
 
-**Apollo (M2, supervised by Harmonia, evolutionary engine) has been DEAD for 71,265s (~19.8 hours)**  
-Heartbeat last seen 71,265 seconds ago; agent remains unresponsive despite M2 confirmed online and Postgres dual-write active.  
+**Apollo (M2, supervised by Harmonia, evolutionary engine) has been DEAD for 85,662s (~23.8 hours)**  
+Heartbeat last seen 85,662 seconds ago; agent remains unresponsive despite M2 confirmed online and Postgres dual-write active.  
 Investigate Apollo process on M2 and restart under Harmonia’s supervision.
 
-**Clio (M1, supervised by Aporia, paper scanner) has been DEAD for 2,424s (~40.4 minutes)**  
-No heartbeat in 2,424 seconds; primary paper ingestion pipeline remains halted.  
+**Clio (M1, supervised by Aporia, paper scanner) has been DEAD for 1,815s (~30.3 minutes)**  
+No heartbeat in 1,815 seconds; primary paper ingestion pipeline remains halted.  
 Confirm Clio process state on M1 and restart under Aporia’s supervision.
 
 **Redis unreachable per state.json — streams offline, telemetry degraded**  
@@ -34,12 +34,12 @@ Confirm intended stasis — low activity is expected, not anomalous.
 
 ## For the record
 
-**Pronoia (M4, reporting orchestrator) ALIVE with hb=45s — cycle 9a108489 completed successfully**  
-Completed 10 cycles today; last cycle duration 38.72s, status OK — reporting pipeline functional.
+**Pronoia (M4, reporting orchestrator) ALIVE with hb=24s — cycle 82a96783 completed successfully**  
+Completed 11 cycles today; last cycle duration 41.34s, status OK — reporting pipeline functional.
 
 **Redis status conflict: state.json says unreachable, manual_status.json says up**  
 manual_status.json confirms Redis reachable from M4 since 2026-05-17; state.json infra_status may be stale.  
 Trust manual_status until proven otherwise — Redis likely operational.
 
 **(17) unexpected agents still pending revival — known legacy state**  
-Including Theseus, Penelope, Charon swarm (Stygian, Lethe, Acheron, etc.), Ergon tools (Talos, Pheme); all DEAD/STALE from prior runs. No action required unless reactivation initiated. Generated: 2026-05-25 04:49:00 AM EDT
+Including Theseus, Penelope, Charon swarm (Stygian, Lethe, Acheron, etc.), Ergon tools (Talos, Pheme); all DEAD/STALE from prior runs. No action required unless reactivation initiated. Generated: 2026-05-25 08:48:59 AM EDT
