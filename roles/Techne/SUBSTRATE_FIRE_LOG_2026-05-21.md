@@ -8379,6 +8379,43 @@ Lifetime: 107 batches journaled / 415.2M records / 235.5M kills /
 415.2M records, 235.5M kills, 1811 promoted, 2595 templates,
 0 verified findings.*
 
+---
+
+## Fire #111 — 2026-05-25 ~13:38Z
+
+**3.04M records / 24 min / 0 templates / 20 promoted. New
+mix: a1/b3/d2/f2/f3 — bandit picked f2/f3 for the first
+time in many fires; both burned hot at full saturation.**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    f3   933,713   0          67.4%
+    f2   933,210   0          65.8%
+    a1   838,819   0          68.9%
+    d2   329,074   0          65.1%
+    b3       606   0          57.1%
+
+### Batch result
+
+- batch_id: `batch-20260525T133811Z-327c47`
+- Duration: 24 min wall (647/s tick rate — higher than #110)
+- 3,035,422 records / 2,036,022 kills / 999,400 confirms / 0 errors
+- 20 promoted records → **1831 lifetime promoted**
+- 0 new templates → 2595 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+
+Lifetime: 108 batches journaled / 418.3M records / 237.5M kills /
+1831 promoted / 2595 templates / 0 verified findings.
+
+Top demand still **knot/nf_class_number** (153K events).
+
+---
+
+*Fire #111 throttled = 3.04M records / 20 promoted / 0 templates.
+418.3M records, 237.5M kills, 1831 promoted, 2595 templates,
+0 verified findings.*
+
 
 
 
