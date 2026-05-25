@@ -8345,6 +8345,40 @@ Lifetime: 106 batches journaled / 412.8M records / 234.1M kills /
 412.8M records, 234.1M kills, 1791 promoted, 2595 templates,
 0 verified findings.*
 
+---
+
+## Fire #110 — 2026-05-25 ~13:05Z
+
+**2.45M records / 24 min / 0 templates / 20 promoted. Balanced
+5-gen mix: a1/c1/e3/f4/h4.**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    f4   656,482   0          65.8%
+    c1   629,384   0          68.7%
+    a1   608,569   0          69.0%
+    h4   558,548   0          17.6%
+    e3     1,060   0          42.2%
+
+### Batch result
+
+- batch_id: `batch-20260525T130510Z-f317ec`
+- Duration: 24 min wall
+- 2,454,043 records / 1,383,121 kills / 916,983 confirms / 154K incon / 0 errors
+- 20 promoted records → **1811 lifetime promoted**
+- 0 new templates → 2595 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+
+Lifetime: 107 batches journaled / 415.2M records / 235.5M kills /
+1811 promoted / 2595 templates / 0 verified findings.
+
+---
+
+*Fire #110 throttled = 2.45M records / 20 promoted / 0 templates.
+415.2M records, 235.5M kills, 1811 promoted, 2595 templates,
+0 verified findings.*
+
 
 
 
