@@ -370,7 +370,7 @@ def print_status() -> None:
     print(f"  total_lineage_lifetime:  {state.get('total_lineage_lifetime', 0)}")
     print(f"  anti_silence_counter:    {state.get('anti_silence_counter', 0)}")
     print()
-    print(f"  Tensor on disk: {tstats['total_cells']} cells, "
+    print(f"  Omnitensor on disk: {tstats['total_tesserae']} tesserae, "
           f"{tstats['total_lineage_edges']} lineage edges")
     print(f"  Per-axis cardinality (coord):")
     for a, n in tstats['coord_axis_cardinality'].items():
