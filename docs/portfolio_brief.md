@@ -1,22 +1,22 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-05-25 12:49:02 AM UTC*
+*Generated: 2026-05-25 04:49:06 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
 
 ## Act on this
 
-**Apollo (M2, supervised by Harmonia, evolutionary engine) has been DEAD for 56,865s (~15.8 hours)**  
-Heartbeat last seen 56,865 seconds ago; agent remains unresponsive despite M2 online and Postgres dual-write active.  
+**Apollo (M2, supervised by Harmonia, evolutionary engine) has been DEAD for 71,265s (~19.8 hours)**  
+Heartbeat last seen 71,265 seconds ago; agent remains unresponsive despite M2 confirmed online and Postgres dual-write active.  
 Investigate Apollo process on M2 and restart under Harmonia’s supervision.
 
-**Clio (M1, supervised by Aporia, paper scanner) has been DEAD for 3,156s (~52.6 minutes)**  
-No heartbeat in 3,156 seconds; primary paper ingestion pipeline remains halted.  
+**Clio (M1, supervised by Aporia, paper scanner) has been DEAD for 2,424s (~40.4 minutes)**  
+No heartbeat in 2,424 seconds; primary paper ingestion pipeline remains halted.  
 Confirm Clio process state on M1 and restart under Aporia’s supervision.
 
-**Redis unreachable — telemetry degraded, streams offline**  
-Redis is unreachable from M4; Agora pub/sub and streams (discoveries, main, challenges) are inactive.  
-Restore Redis on M1 to re-enable real-time telemetry and stream processing.
+**Redis unreachable per state.json — streams offline, telemetry degraded**  
+Redis is reported unreachable from M4; Agora pub/sub and streams (discoveries, main, challenges) are inactive.  
+Restore Redis connectivity on M1 to re-enable real-time telemetry — note: manual_status.json claims Redis is up, but state.json contradicts this; verify reachability independently.
 
 ## Watch this
 
@@ -34,12 +34,12 @@ Confirm intended stasis — low activity is expected, not anomalous.
 
 ## For the record
 
-**Pronoia (M4, reporting orchestrator) ALIVE with hb=4s — cycle 9a108489 fired successfully**  
-Completed 9 cycles today; last cycle duration 43.03s, status OK — reporting pipeline functional.
+**Pronoia (M4, reporting orchestrator) ALIVE with hb=45s — cycle 9a108489 completed successfully**  
+Completed 10 cycles today; last cycle duration 38.72s, status OK — reporting pipeline functional.
 
-**Redis is actually UP per manual_status.json — state.json infra_status is stale**  
-manual_status.json confirms Redis reachable from M4; state.json Redis unreachable flag is incorrect.  
-Trust Redis as operational; telemetry degradation claim in state.json is outdated.
+**Redis status conflict: state.json says unreachable, manual_status.json says up**  
+manual_status.json confirms Redis reachable from M4 since 2026-05-17; state.json infra_status may be stale.  
+Trust manual_status until proven otherwise — Redis likely operational.
 
 **(17) unexpected agents still pending revival — known legacy state**  
-Including Theseus, Penelope, Charon swarm (Stygian, Lethe, Acheron, etc.), Ergon tools (Talos, Pheme); all DEAD/STALE from prior runs. No action required unless reactivation initiated. Generated: 2026-05-25 12:49:00 AM UTC
+Including Theseus, Penelope, Charon swarm (Stygian, Lethe, Acheron, etc.), Ergon tools (Talos, Pheme); all DEAD/STALE from prior runs. No action required unless reactivation initiated. Generated: 2026-05-25 04:49:00 AM EDT
