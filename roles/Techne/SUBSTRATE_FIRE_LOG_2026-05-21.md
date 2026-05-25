@@ -8808,6 +8808,52 @@ Lifetime: 115 batches journaled / 435.2M records / 246.2M kills /
 435.2M records, 246.2M kills, 1971 promoted, 2642 templates,
 0 verified findings.*
 
+---
+
+## Fire #121 — 2026-05-25 ~18:52Z (first with batch_end)
+
+**2.26M records / 24 min / 0 templates / 20 promoted.
+First fire to emit batch_end heartbeat event (exit_reason=
+time_budget). Mix d3/f2/g1/g4/h1.**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    f2   580,132   0          65.8%
+    d3   571,394   0          98.3%
+    h1   561,275   0          90.9%
+    g4   543,014   0           5.4%
+    g1       184   0          58.7%
+
+### Batch result
+
+- batch_id: `batch-20260525T185205Z-0b3b1f`
+- Duration: 24 min wall, 403/s tick rate (slower — h1+d3 do
+  more per-tick work)
+- 2,255,999 records / 1,483,155 kills / 763,269 confirms / 0 errors
+- 20 promoted records → **1991 lifetime promoted**
+- 0 new templates → 2642 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+- **batch_end emitted**: exit_reason="time_budget", 580K ticks,
+  2.26M records, RSS 257MB
+
+Lifetime: 116 batches journaled / 437.5M records / 247.7M kills /
+1991 promoted / 2642 templates / 0 verified findings.
+
+### Notable
+
+- d3 + h1 again dominant falsifiers (98%, 91% kill rates).
+- batch_end + new heartbeat events working end-to-end. Future
+  silent crashes will be detectable by their absence.
+- 1991 promoted is approaching the 2000 milestone but still
+  0 verified findings (ratio remains 0%).
+
+---
+
+*Fire #121 throttled = 2.26M records / 20 promoted / 0 templates.
+437.5M records, 247.7M kills, 1991 promoted, 2642 templates,
+0 verified findings. batch_end ✓*
+
 
 
 
