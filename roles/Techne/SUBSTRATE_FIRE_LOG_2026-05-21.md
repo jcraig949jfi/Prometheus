@@ -8310,6 +8310,41 @@ Lifetime: 105 batches journaled / 410.5M records / 232.4M kills /
 (d3 burst). 410.5M records, 232.4M kills, 1771 promoted, 2595
 templates, 0 verified findings.*
 
+---
+
+## Fire #109 — 2026-05-25 ~11:34Z
+
+**2.35M records / 24 min / 0 templates / 20 promoted. Balanced
+3-gen mix (a1/d4/f3). d3 NOT picked this fire — can't confirm
+or reject burst-replicates hypothesis yet.**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    f3   730,909   0          67.4%
+    d4   723,113   0          78.9%
+    a1   671,798   0          68.9%
+    d2   218,449   0          65.4%
+    g2     3,000   0           0%
+
+### Batch result
+
+- batch_id: `batch-20260525T113410Z-1eed67`
+- Duration: 24 min wall
+- 2,347,269 records / 1,668,994 kills / 675,275 confirms / 3K incon / 0 errors
+- 20 promoted records → **1791 lifetime promoted**
+- 0 new templates → 2595 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+
+Lifetime: 106 batches journaled / 412.8M records / 234.1M kills /
+1791 promoted / 2595 templates / 0 verified findings.
+
+---
+
+*Fire #109 throttled = 2.35M records / 20 promoted / 0 templates.
+412.8M records, 234.1M kills, 1791 promoted, 2595 templates,
+0 verified findings.*
+
 
 
 
