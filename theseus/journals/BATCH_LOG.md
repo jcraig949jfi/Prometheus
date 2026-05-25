@@ -5009,3 +5009,37 @@ Delta: +8
 - **g5** — records=477228, throughput=128220076.1/h, info_density=0.592, diversity=0.833, yield_score=0.0049, dup_rate=0.019, kills=37051, conf=440177, errs=0
 - **h1** — records=472025, throughput=108076702.9/h, info_density=0.511, diversity=0.922, yield_score=0.0047, dup_rate=0.029, kills=421889, conf=50136, errs=0
 
+
+## batch-20260525T045409Z-d817a9
+
+- Started: 2026-05-25T04:54:09.687804+00:00
+- Ended:   2026-05-25T06:47:47.764607+00:00
+- Duration: 1.8939 h
+- Requested: g3,c1,h2,b5,h4
+- Active:    g3,c1,h2,b5,h4
+- Records: 3 (kills=2, confirmations=1, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **c1** — records=1, throughput=1000000000.0/h, info_density=0.500, diversity=0.889, yield_score=0.0045, dup_rate=0.000, kills=1, conf=0, errs=0
+- **g3** — records=1, throughput=1000000000.0/h, info_density=0.600, diversity=1.000, yield_score=0.0061, dup_rate=0.000, kills=0, conf=1, errs=0
+- **h2** — records=1, throughput=0.5/h, info_density=0.684, diversity=0.915, yield_score=0.0063, dup_rate=0.000, kills=1, conf=0, errs=0
+
+
+## batch-20260525T062727Z-dadf67
+
+- Started: 2026-05-25T06:27:27.418786+00:00
+- Ended:   2026-05-25T06:51:27.427396+00:00
+- Duration: 0.4000 h
+- Requested: c2,d3,e5,d2,g4
+- Active:    c2,d3,e5,d2,g4
+- Records: 1383248 (kills=663019, confirmations=712292, inconclusive=7816, errors=0)
+
+### Per-generator yield
+
+- **c2** — records=256050, throughput=55378792.4/h, info_density=0.562, diversity=0.838, yield_score=0.0036, dup_rate=0.488, kills=97529, conf=158521, errs=0
+- **d2** — records=163724, throughput=49442697.8/h, info_density=0.566, diversity=0.847, yield_score=0.0032, dup_rate=0.673, kills=56014, conf=107710, errs=0
+- **d3** — records=491438, throughput=4927629.8/h, info_density=0.648, diversity=0.707, yield_score=0.0046, dup_rate=0.018, kills=483622, conf=0, errs=0
+- **e5** — records=121, throughput=14010.5/h, info_density=0.200, diversity=0.969, yield_score=0.0010, dup_rate=1.000, kills=0, conf=0, errs=0
+- **g4** — records=471915, throughput=150238238.4/h, info_density=0.595, diversity=0.797, yield_score=0.0047, dup_rate=0.057, kills=25854, conf=446061, errs=0
+

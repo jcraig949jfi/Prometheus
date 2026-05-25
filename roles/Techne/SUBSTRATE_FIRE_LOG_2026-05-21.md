@@ -8110,6 +8110,78 @@ compaction, continue to next fire.
 time (same midnight pattern as Fire #94). External cause
 suspected. Lifetime stats unchanged. Continuing to Fire #105.*
 
+---
+
+## Fire #105 — 2026-05-25 ~06:27Z — Frontier synthesis ships
+
+**1.38M records / 24 min / 1 template (d3) / 20 promoted.
+Throttled steady-state. Three frontier responses synthesized
+to action plan; user decision pending.**
+
+### Picks + metrics
+
+    Bandit picked: ['c2', 'd2', 'd3', 'e5', 'g4']
+    Signature templates: 1 new (d3) → 2583 lifetime (+1)
+    Honest accounting: 20 promoted → 1711 lifetime
+    verified mathematical findings = 0
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    d3   491,438   1          98.4%
+    g4   471,915   0           5.5%      (95% confirm)
+    c2   256,050   0          38.1%
+    d2   163,724   0          34.2%
+    e5       121   0          0%
+
+### Frontier synthesis shipped (commit c936328b)
+
+ChatGPT/Gemini/DeepSeek converged on:
+- Stop scaling Theseus
+- Two-loop architecture (training-substrate + discovery-candidate)
+- Build demand-driven catalog refill
+- Triage promoted records before more generation
+- Autoformalization (Lean 4 + aesop) as promote→verify gate
+
+Disagreed sharply on:
+- knot/nf_class_number priority (ChatGPT: SKIP; Gemini: BUILD FIRST)
+- substrate's product (falsification-corpus vs 228M kills vs neural-symbolic)
+- urgency (HALT NOW vs 48h-experiment vs full pivot)
+
+Awaiting user decision on path. Loop continues at 25%
+throttle in the meantime.
+
+### Batch result
+
+- batch_id: `batch-20260525T062727Z-dadf67`
+- Duration: 24 min wall
+- 1,383,248 records / 663,019 kills / 712,292 confirms / 7,937 incon / 0 errors
+- 20 promoted records → **1711 lifetime promoted**
+- 1 new template → **2583 lifetime discovery-role templates** (+1)
+- **Verified mathematical findings: 0**
+
+### Lifetime stats after Fire #105
+
+| Metric | Pre-#34 | Post-#103 | Post-#105 |
+|---|---|---|---|
+| Batches journaled | 30 | 101 | 102 |
+| Records | 154.4M | 404.0M | 405.4M |
+| Kills | 74.4M | 229.3M | 229.9M |
+| Confirmations | 75.5M | 151.5M | 152.2M |
+| Promoted records | 500 | 1690 | **1711** |
+| Templates (disc-role) | 17 | 2582 | **2583** |
+| **Verified findings** | **0** | **0** | **0** |
+
+### Schedule wakeup
+
+`delaySeconds=3600`.
+
+---
+
+*Fire #105 throttled = 1.38M records / 20 promoted / 1 template.
+Frontier synthesis shipped. 405.4M records, 229.9M kills, 1711
+promoted, 2583 templates, 0 verified findings.*
+
 
 
 
