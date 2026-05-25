@@ -54,10 +54,10 @@ from lineage import (
     last_stable_cycle_id, last_stable_cycle_n,
     clone_from_stable, freeze_cycle, mark_stable, record_outcome,
 )
-import improve as improve_mod
 import patcher
 import tdd_runner
-import falsifier as falsifier_mod
+from lenses._base import CycleContext
+from lenses._panel import run_lens_panel
 
 
 # ---------------------------------------------------------------------------
@@ -185,15 +185,15 @@ def run_cycle(
     force_park: bool = False,
     force_stable: bool = False,
 ) -> dict:
-    """Execute one Icarus cycle. Returns the cycle's outcome dict."""
+    """Execute one Icarus cycle via the lens panel (Phase 2 architecture).
+    Returns the cycle's outcome dict."""
     tick_id = f"icarus-tick-{uuid.uuid4().hex[:12]}"
     started_at = datetime.now(timezone.utc)
 
     emit_event(
         "tick_start",
         {"agent": "Icarus", "dry_run": False},
-        agent="Icarus",
-        tick_id=tick_id,
+        agent="Icarus", tick_id=tick_id,
     )
 
     # Step 0: clone last-stable into new cycle dir
@@ -207,145 +207,92 @@ def run_cycle(
         return _emit_complete(tick_id, started_at, n, "park", {})
 
     tier_target = _read_json(STATE_DIR / "tier_target.json", {"tier": "R1"}).get("tier", "R1")
-    failure_context = _build_failure_context()
 
     _append_cycle_log(n, "step_0_clone", {
         "parent_cycle": last_stable_cycle_id(),
         "tier_target": tier_target,
     })
 
-    # Step 1: self-code-eval
-    if force_park:
-        improve_result = {"backend_used": "force_park", "diff": None, "rationale": "force_park flag set"}
-    elif force_stable:
-        improve_result = {"backend_used": "force_stable", "diff": "", "rationale": "force_stable flag set"}
-    else:
-        try:
-            improve_result = improve_mod.propose_diff(
-                cycle_n=n,
-                source_dir=new_cycle_dir / "code",
-                tier_challenge={
-                    "tier": tier_target,
-                    "falsification_test": _ladder_falsification_test(tier_target),
-                },
-                failure_context=failure_context,
-                wisdom=_load_wisdom(),
-                backend="auto",
-            )
-        except Exception as e:
-            log.exception(f"improve.propose_diff failed: {e}")
-            improve_result = {"backend_used": "error", "diff": None,
-                              "rationale": f"propose_diff_failed: {e}"}
+    # Test-only fast paths
+    if force_park or force_stable:
+        decision = "park" if force_park else "mark_stable"
+        reason = "force_park_flag" if force_park else "force_stable_flag"
+        record_outcome(n, decision=decision, reason=reason,
+                       details={"forced": True})
+        freeze_cycle(n)
+        if decision == "mark_stable":
+            mark_stable(n)
+        return _emit_complete(tick_id, started_at, n, decision,
+                               {"reason": reason, "forced": True})
 
-    _append_cycle_log(n, "step_1_improve", {
-        "backend_used": improve_result.get("backend_used"),
-        "diff_lines": len((improve_result.get("diff") or "").splitlines()),
-        "rationale_excerpt": (improve_result.get("rationale") or "")[:300],
-        "tokens_used": improve_result.get("tokens_used"),
-        "cost_usd": improve_result.get("cost_estimate_usd"),
-    })
-
-    # Write the diff artifact
-    diff_text = improve_result.get("diff") or ""
-    rationale_text = improve_result.get("rationale") or ""
-    if diff_text or improve_result.get("backend_used") == "chimera_pending":
-        (new_cycle_dir / "diff.patch").write_text(diff_text, encoding="utf-8")
-        (new_cycle_dir / "diff_rationale.md").write_text(
-            f"# Cycle {n} Improve() rationale\n\n"
-            f"**Backend:** {improve_result.get('backend_used')}\n"
-            f"**Model:** {improve_result.get('model_used', 'n/a')}\n\n"
-            f"{rationale_text}\n",
-            encoding="utf-8",
-        )
-
-    # Step 1b: apply the diff to the cycle's code dir (Phase 1a)
-    apply_result = {"applied": False, "reason": "no_diff", "files_changed": []}
-    if diff_text.strip():
-        apply_result = patcher.apply_diff(diff_text, new_cycle_dir / "code")
-        _append_cycle_log(n, "step_1b_apply_diff", apply_result)
-
-    # Step 2: external ingestion (Phase 0 stubs)
-    _append_cycle_log(n, "step_2_external_ingestion", {
-        "dr_enqueued": 0,
-        "oss_pulled": 0,
-        "forge_imported": 0,
-        "note": "phase_0_stub_no_external_ingestion",
-    })
-
-    # Step 3: enriched logging (already happening per-phase; this is a checkpoint)
-    _append_cycle_log(n, "step_3_log_checkpoint", {
-        "phases_so_far": ["step_0_clone", "step_1_improve", "step_2_external_ingestion"],
-    })
-
-    # Step 4: TDD (Phase 1a -- real pytest invocation)
-    if apply_result.get("applied") or not diff_text.strip():
-        tdd_result = tdd_runner.run_all_tests(
-            source_dir=new_cycle_dir / "code",
-            cycle_n=n,
-            tier_target=tier_target,
-        )
-    else:
-        tdd_result = {
-            "all_passed": False,
-            "per_source": {},
-            "note": "diff_apply_failed_skipping_tdd",
-            "regression_clean": False,
-        }
-    _append_cycle_log(n, "step_4_tdd", tdd_result)
-
-    # Step 4b: Falsifier review (Phase 1b)
-    falsifier_result = None
-    if tdd_result.get("all_passed") and apply_result.get("applied"):
-        try:
-            falsifier_result = falsifier_mod.run_falsifier_review(
-                cycle_n=n,
-                source_dir=new_cycle_dir / "code",
-                tier_challenge={
-                    "tier": tier_target,
-                    "falsification_test": _ladder_falsification_test(tier_target),
-                },
-                proposed_diff=diff_text,
-                icarus_improve_backend=improve_result.get("backend_used", "unknown"),
-            )
-        except Exception as e:
-            log.warning(f"falsifier raised: {e}")
-            falsifier_result = {"verdict": "inconclusive", "diagnosis": f"falsifier_error: {e}"}
-        _append_cycle_log(n, "step_4b_falsifier", falsifier_result)
-
-    # Step 5: frontier review emit + inbox scan (stubbed Phase 0)
-    _append_cycle_log(n, "step_5_frontier", {
-        "outbox_written": False,
-        "inbox_consumed": 0,
-        "note": "phase_0_stub",
-    })
-
-    # Step 6: freeze + stability decision
-    decision, reason = _decide_outcome(
-        improve_result, tdd_result, apply_result, falsifier_result,
-        force_park=force_park, force_stable=force_stable,
+    # Build CycleContext
+    failure_context = _build_failure_context()
+    ctx = CycleContext(
+        cycle_n=n,
+        source_dir=new_cycle_dir / "code",
+        tier_target=tier_target,
+        tier_challenge={
+            "tier": tier_target,
+            "falsification_test": _ladder_falsification_test(tier_target),
+        },
+        last_stable_id=last_stable_cycle_id(),
+        recent_parks=failure_context.get("recent_parks", []),
+        wisdom=_load_wisdom(),
     )
-    record_outcome(n, decision=decision, reason=reason, details={
-        "improve_backend": improve_result.get("backend_used"),
-        "tdd_all_passed": tdd_result.get("all_passed"),
-        "diff_applied": apply_result.get("applied"),
-        "files_changed": apply_result.get("files_changed", []),
-        "falsifier_verdict": (falsifier_result or {}).get("verdict"),
+
+    # Run the lens panel (phase A through F)
+    try:
+        panel_result = run_lens_panel(
+            ctx=ctx,
+            cycle_dir=new_cycle_dir,
+            apply_fn=patcher.apply_diff,
+            tdd_fn=tdd_runner.run_all_tests,
+            emit_event_fn=emit_event,
+        )
+    except Exception as e:
+        log.exception(f"lens panel raised: {e}")
+        record_outcome(n, decision="park", reason=f"panel_crashed: {e}")
+        freeze_cycle(n)
+        return _emit_complete(tick_id, started_at, n, "park",
+                               {"reason": f"panel_crashed: {e}"})
+
+    # Persist the proposed diff artifact (Generator's output)
+    if ctx.proposed_diff:
+        (new_cycle_dir / "diff.patch").write_text(ctx.proposed_diff, encoding="utf-8")
+
+    # Log a checkpoint for each panel phase
+    _append_cycle_log(n, "panel_complete", {
+        "decision": panel_result["decision"],
+        "load_bearing_lens": panel_result["load_bearing_lens"],
+        "agreement_patterns": panel_result["agreement_patterns"],
+        "axes_summary": panel_result["axes_summary"],
     })
 
-    # Freeze the cycle directory
-    freeze_cycle(n)
+    # Record multi-axis outcome
+    decision = panel_result["decision"]
+    rationale = panel_result["rationale"]
+    record_outcome(n, decision=decision, reason=rationale[:300], details={
+        "schema_version": "v2_lens_panel",
+        "load_bearing_lens": panel_result["load_bearing_lens"],
+        "axes_summary": panel_result["axes_summary"],
+        "agreement_patterns": panel_result["agreement_patterns"],
+        "diff_applied": (panel_result.get("apply_result") or {}).get("applied"),
+        "files_changed": (panel_result.get("apply_result") or {}).get("files_changed", []),
+        "tdd_all_passed": (panel_result.get("tdd_result") or {}).get("all_passed"),
+    })
 
-    # Advance pointer if stable
+    freeze_cycle(n)
     if decision == "mark_stable":
         mark_stable(n)
-        log.info(f"cycle {n} MARK_STABLE (pointer advanced)")
-    elif decision == "park":
-        log.info(f"cycle {n} PARK (pointer unchanged at {last_stable_cycle_id()}): {reason}")
+        log.info(f"cycle {n} MARK_STABLE (pointer advanced) "
+                 f"[load_bearing={panel_result['load_bearing_lens']}]")
+    else:
+        log.info(f"cycle {n} PARK (pointer unchanged at {last_stable_cycle_id()}) "
+                 f"[load_bearing={panel_result['load_bearing_lens']}]")
 
     return _emit_complete(tick_id, started_at, n, decision, {
-        "improve_backend": improve_result.get("backend_used"),
-        "tdd_all_passed": tdd_result.get("all_passed"),
-        "reason": reason,
+        "load_bearing_lens": panel_result["load_bearing_lens"],
+        "rationale": rationale[:200],
     })
 
 
@@ -371,24 +318,8 @@ def _emit_complete(tick_id, started_at, n, decision, stats) -> dict:
     }
 
 
-def _decide_outcome(improve_result, tdd_result, apply_result, falsifier_result,
-                     force_park, force_stable):
-    if force_park:
-        return "park", "force_park_flag"
-    if force_stable:
-        return "mark_stable", "force_stable_flag"
-    backend = improve_result.get("backend_used")
-    if backend in ("chimera_pending", "no_op", "error"):
-        return "park", f"improve_no_diff_backend={backend}"
-    if not improve_result.get("diff"):
-        return "park", "empty_diff"
-    if not apply_result.get("applied"):
-        return "park", f"diff_apply_failed: {apply_result.get('reason', '?')}"
-    if not tdd_result.get("all_passed"):
-        return "park", "tdd_failed"
-    if falsifier_result and falsifier_result.get("verdict") == "rejected":
-        return "park", f"falsifier_rejected: {falsifier_result.get('diagnosis', '')[:200]}"
-    return "mark_stable", "tdd_passed_falsifier_ok"
+# _decide_outcome removed -- replaced by lens panel Integrator's load-bearing
+# citation (per James's lenses-over-mono-solutions principle).
 
 
 def _ladder_falsification_test(tier: str) -> str:
