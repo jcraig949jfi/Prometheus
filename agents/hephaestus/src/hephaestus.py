@@ -990,6 +990,215 @@ def filter_results(results: list[dict], top_n: int | None = None,
     return filtered
 
 
+GATE_REPAIR_PROMPT = """\
+The following Python code has an error that prevents it from running.
+The error is: {error}
+
+Fix ONLY the error. Do not change the algorithm, logic, or scoring strategy.
+Minimal fix only. Return the COMPLETE fixed Python code in a ```python block.
+
+```python
+{code}
+```"""
+
+BATTERY_REPAIR_PROMPT = """\
+The following Python ReasoningTool scores {accuracy}% accuracy but needs to beat {baseline}%.
+It gets these specific problems WRONG:
+
+{failing_traps}
+
+Fix the scoring logic so these problems are answered correctly.
+Do NOT break the problems it already gets right.
+Return the COMPLETE fixed Python code in a ```python block.
+
+```python
+{code}
+```"""
+
+
+def forge_one_with_refinement(client: OpenAI, entry: dict, model: str,
+                               run_dir: Path, max_gate_rounds: int = 3,
+                               max_battery_rounds: int = 2,
+                               aggie_client=None, force_aggie: bool = False) -> dict | None:
+    """Forge with inline LLM repair. Instead of scrapping on first failure,
+    sends the error back to the LLM for immediate refinement.
+
+    Gate failures (syntax/import/interface/runtime): up to max_gate_rounds fixes.
+    Battery near-misses (acc >= 30%): up to max_battery_rounds fixes with failing traps.
+
+    Returns the same dict as forge_one, plus 'refinement_rounds' count.
+    """
+    names = entry.get("concept_names", [])
+    score_data = entry.get("score", {})
+    ratings = score_data.get("ratings", {})
+    response_text = entry.get("response_text", "")
+
+    logger.info("Forging (with refinement): %s (composite=%.1f)",
+                " + ".join(names), score_data.get("composite_score", 0))
+
+    # 0. Load Coeus enrichment
+    enrichment = load_enrichment(entry)
+    from prompts import select_frame
+    frame = select_frame()
+    prompt = build_code_gen_prompt(names, response_text, ratings,
+                                   enrichment=enrichment, frame=frame)
+
+    # 1. Initial generation
+    if force_aggie and aggie_client is not None:
+        raw_response = call_aggie_api(aggie_client, prompt)
+    else:
+        raw_response, _ = call_api_with_fallback(client, prompt, model)
+        if raw_response is None and aggie_client is not None:
+            raw_response = call_aggie_api(aggie_client, prompt)
+
+    if raw_response is None:
+        save_scrap(None, entry, "api_call_failed", run_dir, frame=frame)
+        return {"status": "scrap", "reason": "api_call_failed", "frame": frame}
+
+    code, extract_status = extract_code(raw_response)
+    if code is None:
+        save_scrap(None, entry, extract_status, run_dir, frame=frame)
+        return {"status": "scrap", "reason": extract_status, "frame": frame}
+
+    refinement_rounds = 0
+
+    # 2. Gate refinement loop
+    for gate_round in range(max_gate_rounds + 1):
+        code = _sanitize_unicode(code)
+        code = _inject_missing_imports(code)
+        code = _fix_common_errors(code)
+
+        valid, reason = validate(code)
+        if valid:
+            break
+
+        if gate_round >= max_gate_rounds:
+            save_scrap(code, entry, f"validation:{reason}", run_dir, frame=frame)
+            return {"status": "scrap", "reason": f"validation:{reason}",
+                    "frame": frame, "refinement_rounds": refinement_rounds}
+
+        # Send error back to LLM for repair
+        refinement_rounds += 1
+        logger.info("  Gate fix round %d: %s", refinement_rounds, reason[:60])
+        repair_prompt = GATE_REPAIR_PROMPT.format(error=reason, code=code)
+        repair_response, _ = call_api_with_fallback(client, repair_prompt, model)
+        if repair_response is None:
+            save_scrap(code, entry, f"validation:{reason}", run_dir, frame=frame)
+            return {"status": "scrap", "reason": f"validation:{reason}",
+                    "frame": frame, "refinement_rounds": refinement_rounds}
+
+        new_code, _ = extract_code(repair_response)
+        if new_code is None:
+            save_scrap(code, entry, f"validation:{reason}", run_dir, frame=frame)
+            return {"status": "scrap", "reason": f"validation:{reason}",
+                    "frame": frame, "refinement_rounds": refinement_rounds}
+        code = new_code
+
+    # 3. Run trap battery
+    try:
+        tool = load_tool_from_code(code)
+        test_results = run_trap_battery(tool)
+    except Exception as e:
+        save_scrap(code, entry, f"test_harness_error: {e}", run_dir, frame=frame)
+        return {"status": "scrap", "reason": f"test_harness_error: {e}",
+                "frame": frame, "refinement_rounds": refinement_rounds}
+
+    # 4. Battery refinement loop (near-misses only)
+    for battery_round in range(max_battery_rounds):
+        if test_results["passed"]:
+            break
+
+        acc = test_results["accuracy"]
+        if acc < 0.30:
+            break  # Too far from baseline, not worth refining
+
+        # Collect failing traps
+        failing = []
+        for tr in test_results.get("trap_results", []):
+            if not tr.get("is_correct"):
+                failing.append(f"Q: {tr.get('prompt', '?')[:80]}")
+                failing.append(f"   Correct: {tr.get('correct', '?')}  "
+                              f"Tool picked: {tr.get('top_candidate', '?')}")
+        if not failing:
+            break
+
+        refinement_rounds += 1
+        ncd_acc = test_results.get("ncd_accuracy", 0.42)
+        logger.info("  Battery fix round %d: acc=%.0f%% (need >%.0f%%)",
+                    refinement_rounds, acc * 100, ncd_acc * 100)
+
+        repair_prompt = BATTERY_REPAIR_PROMPT.format(
+            accuracy=f"{acc*100:.0f}",
+            baseline=f"{ncd_acc*100:.0f}",
+            failing_traps="\n".join(failing[:20]),  # Limit to 20 failing traps
+            code=code,
+        )
+        repair_response, _ = call_api_with_fallback(client, repair_prompt, model)
+        if repair_response is None:
+            break
+
+        new_code, _ = extract_code(repair_response)
+        if new_code is None:
+            break
+
+        new_code = _sanitize_unicode(new_code)
+        new_code = _inject_missing_imports(new_code)
+        new_code = _fix_common_errors(new_code)
+        valid, reason = validate(new_code)
+        if not valid:
+            break  # Repair broke the code — keep original
+
+        try:
+            tool = load_tool_from_code(new_code)
+            new_results = run_trap_battery(tool)
+        except Exception:
+            break  # Repair broke runtime — keep original
+
+        # Only accept if accuracy improved
+        if new_results["accuracy"] > test_results["accuracy"]:
+            logger.info("  Battery fix improved: %.0f%% -> %.0f%%",
+                        test_results["accuracy"] * 100, new_results["accuracy"] * 100)
+            code = new_code
+            test_results = new_results
+        else:
+            logger.info("  Battery fix didn't improve (%.0f%% -> %.0f%%), keeping original",
+                        test_results["accuracy"] * 100, new_results["accuracy"] * 100)
+            break
+
+    # 5. Check novelty gate + save
+    if not test_results["passed"]:
+        novelty = _compute_novelty(code)
+        if novelty["min_ncd"] > 0.85 and test_results["accuracy"] >= 0.20:
+            logger.info("  NOVELTY GATE (after %d refinements): acc=%.0f%% novelty=%.3f",
+                        refinement_rounds, test_results["accuracy"] * 100, novelty["min_ncd"])
+            test_results["passed"] = True
+            test_results["admitted_via"] = "novelty_gate"
+
+    if test_results.get("passed"):
+        save_forge(code, entry, test_results, run_dir, frame=frame)
+        return {
+            "status": "forged",
+            "accuracy": test_results["accuracy"],
+            "calibration": test_results["calibration"],
+            "margin_accuracy": test_results.get("margin_accuracy", 0),
+            "margin_calibration": test_results.get("margin_calibration", 0),
+            "frame": frame,
+            "refinement_rounds": refinement_rounds,
+            "admitted_via": test_results.get("admitted_via", "accuracy_gate"),
+        }
+
+    # Scrap
+    ncd_info = ""
+    if "ncd_accuracy" in test_results:
+        ncd_info = (f" ncd_acc={test_results['ncd_accuracy']:.0%}"
+                    f" ncd_cal={test_results['ncd_calibration']:.0%}")
+    reason = (f"trap_battery_failed (acc={test_results['accuracy']:.0%} "
+              f"cal={test_results['calibration']:.0%}{ncd_info})")
+    save_scrap(code, entry, reason, run_dir, frame=frame)
+    return {"status": "scrap", "reason": reason, "frame": frame,
+            "refinement_rounds": refinement_rounds}
+
+
 def forge_one_with_retry(client: OpenAI, entry: dict, model: str,
                          run_dir: Path, max_item_retries: int = 3,
                          aggie_client=None, force_aggie: bool = False,
@@ -1272,9 +1481,14 @@ def _forge_batch(client: OpenAI, filtered: list[dict], args,
         if key in processed:
             continue
 
-        result = forge_one_with_retry(client, entry, args.model, run_dir,
-                                      max_item_retries=3, aggie_client=aggie_client,
-                                      force_aggie=force_aggie)
+        if getattr(args, 'refine', False):
+            result = forge_one_with_refinement(client, entry, args.model, run_dir,
+                                               aggie_client=aggie_client,
+                                               force_aggie=force_aggie)
+        else:
+            result = forge_one_with_retry(client, entry, args.model, run_dir,
+                                          max_item_retries=3, aggie_client=aggie_client,
+                                          force_aggie=force_aggie)
 
         processed.add(key)
         count += 1
@@ -1993,6 +2207,9 @@ def main():
                         help="Use LLM API to fix syntax/import/interface errors in scraps")
     parser.add_argument("--inspect-near-misses", action="store_true",
                         help="Deep inspection of near-miss scraps: tier profile + LLM mechanism assessment")
+    parser.add_argument("--refine", action="store_true",
+                        help="Enable inline LLM refinement: fix gate failures and near-misses "
+                             "before scrapping (costs extra API calls per candidate)")
     parser.add_argument("--repair-max", type=int, default=50,
                         help="Max items to attempt in repair pass (default: 50)")
     parser.add_argument("--repair-min-acc", type=float, default=0.25,
