@@ -120,26 +120,50 @@ def _get_github_client():
     return _GITHUB_CLIENT
 
 
+_FALLBACK_MODELS = [
+    # (base_url, api_key_env, model_id, label, timeout)
+    (API_BASE, "NVIDIA_API_KEY", "meta/llama-3.3-70b-instruct", "llama-3.3", 60),
+    (API_BASE, "NVIDIA_API_KEY", "meta/llama-4-maverick-17b-128e-instruct", "maverick", 60),
+    ("https://models.inference.ai.azure.com", "GITHUB_TOKEN", "gpt-4o-mini", "github", 90),
+    (API_BASE, "NVIDIA_API_KEY", "qwen/qwen3.5-397b-a17b", "qwen-397B", 120),
+]
+
+
 def call_api_with_fallback(client: OpenAI, prompt: str, model: str,
                            **kwargs) -> tuple[str | None, str]:
-    """Try NVIDIA primary, fall back to GitHub Models if it fails.
+    """Try primary model, then rotate through fallbacks on failure.
 
     Returns (response_text, model_used).
     """
     # Try NVIDIA primary
+    logger.debug("  Trying primary: %s", model)
     response = call_api(client, prompt, model, **kwargs)
     if response is not None:
         return response, model
 
-    # Try GitHub fallback
-    gh_client = _get_github_client()
-    if gh_client is not None:
-        logger.info("  NVIDIA failed, trying GitHub Models (%s)...", GITHUB_MODEL)
-        response = call_api(gh_client, prompt, GITHUB_MODEL,
-                            max_retries=2, hard_timeout=90)
-        if response is not None:
-            return response, GITHUB_MODEL
+    logger.info("  Primary (%s) failed, trying fallback chain...", model)
 
+    # Try fallback chain
+    for base_url, key_env, fallback_model, label, timeout in _FALLBACK_MODELS:
+        if fallback_model == model:
+            continue  # Skip the one that just failed
+        api_key = os.environ.get(key_env)
+        if not api_key:
+            continue
+        try:
+            fb_client = OpenAI(base_url=base_url, api_key=api_key,
+                               timeout=float(timeout))
+            logger.info("  Trying fallback: %s (%s)", label, fallback_model)
+            response = call_api(fb_client, prompt, fallback_model,
+                                max_retries=2, hard_timeout=timeout + 30)
+            if response is not None:
+                logger.info("  Fallback %s succeeded", label)
+                return response, fallback_model
+        except Exception as e:
+            logger.warning("  Fallback %s failed: %s", label, str(e)[:60])
+            continue
+
+    logger.warning("  All models in fallback chain failed")
     return None, model
 
 
