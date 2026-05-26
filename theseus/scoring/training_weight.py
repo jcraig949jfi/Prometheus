@@ -45,6 +45,63 @@ PER_RELATION_STRUCTURAL_RATE = {
 }
 
 
+# Information-content multiplier per relation (Fire #141, 2026-05-26).
+# Triage finding (pivot/techne_promoted_record_triage_2026-05-25.md):
+# H4's PER_RELATION_STRUCTURAL_RATE measures EXTENSIBILITY — how often
+# the relation holds across the catalog. equal_mod_2 = 0.65 because
+# parity is extensible. But triage showed the resulting promoted
+# records are visually trivial: random integer pairings happen to
+# share parity 50% of the time by chance, and "X equal_mod_2 -X" is
+# a tautology by construction.
+#
+# Extensibility ≠ information content. A relation that holds 90% of
+# the time across the catalog is HIGHLY extensible but carries LOW
+# information about specific records. A relation that holds 2% of the
+# time is LOW extensibility but each instance carries HIGH information
+# (it picks out something specific).
+#
+# This multiplier scales the extensibility rate by the relation's
+# information-content potential, so the composite weight reflects
+# Learner-training value rather than catalog statistics.
+#
+# Calibrated to ensure parity-equality records (current dominant
+# promoted-record type) fall below the 0.6 promote threshold:
+#   equal_mod_2 base 0.65 × info 0.30 = 0.195 → below threshold ✓
+#   equal       base 0.025 × info 1.0 = 0.025 → still below ✓
+#   divides     base 0.35 × info 0.70 = 0.245 → below threshold
+#   tighter     base 0.60 × info 0.55 = 0.33  → below threshold
+PER_RELATION_INFO_CONTENT = {
+    "equal": 1.00,         # rare-equality is high-info (only 2.5% hold)
+    "equal_mod_2": 0.30,   # parity is trivial-by-construction
+    "divides": 0.70,       # divisibility carries arithmetic structure
+}
+
+
+def _info_content_multiplier(rel: str) -> float:
+    """Information-content scaling factor per relation.
+
+    See PER_RELATION_INFO_CONTENT docstring. Returns 1.0 for
+    relations not in the table (default: no penalty).
+    """
+    if rel in PER_RELATION_INFO_CONTENT:
+        return PER_RELATION_INFO_CONTENT[rel]
+    if rel.startswith("abs_diff_le_"):
+        try:
+            k = int(rel.split("_")[-1])
+        except ValueError:
+            return 1.0
+        # Tighter K is more specific → more info-bearing.
+        # Wider K approaches parity-tautology territory.
+        if k <= 3:
+            return 0.55
+        if k <= 10:
+            return 0.50
+        if k <= 50:
+            return 0.40
+        return 0.30
+    return 1.0
+
+
 def _abs_diff_K_weight(k: int) -> float:
     """Threshold-K-dependent structural weight. Tighter K is more specific.
 
@@ -101,16 +158,28 @@ def _triangulation_bonus(record: TheseusRecord) -> float:
 
 
 def _base_weight(record: TheseusRecord) -> float:
-    """Per-relation structural extensibility weight (H4 finding)."""
+    """Per-relation weight: H4 extensibility × info-content multiplier.
+
+    H4 framework (PER_RELATION_STRUCTURAL_RATE) captures how often a
+    relation holds across the catalog. Info-content multiplier
+    (Fire #141) scales by the relation's Learner-training value:
+    high-extensibility but low-info relations (parity, wide
+    abs_diff) are downweighted so they don't dominate the promote
+    pile with trivial coincidences.
+
+    See triage report:
+    pivot/techne_promoted_record_triage_2026-05-25.md
+    """
     rel = record.claim_payload.get("relation", "")
+    info_mult = _info_content_multiplier(rel)
     if rel in PER_RELATION_STRUCTURAL_RATE:
-        return PER_RELATION_STRUCTURAL_RATE[rel]
+        return PER_RELATION_STRUCTURAL_RATE[rel] * info_mult
     if rel.startswith("abs_diff_le_"):
         try:
             k = int(rel.split("_")[-1])
-            return _abs_diff_K_weight(k)
+            return _abs_diff_K_weight(k) * info_mult
         except ValueError:
-            return 0.25
+            return 0.25 * info_mult
     # Non-A1-shape records (B/D/E/G/H families): use a kind-based default.
     kind = record.claim_kind
     if kind in (

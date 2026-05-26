@@ -35,18 +35,47 @@ def _make(verdict: str, relation: str, kind: str = "invariant_equality",
 
 
 def test_parity_higher_than_equal():
-    """Parity (62.6% structural) outweighs equality (1.8%) at SHADOW."""
+    """Parity outweighs equality at SHADOW.
+
+    Pre-Fire-#141: parity (62.6% structural) > equal (1.8%).
+    Post-Fire-#141: parity (0.65 × 0.3 info = 0.195) is still
+    higher than equal (0.025 × 1.0 info = 0.025), but the gap
+    narrowed substantially. Info-content multiplier penalizes
+    parity for trivial-by-construction nature.
+    """
     parity = _make(Verdict.SHADOW_CATALOG.value, "equal_mod_2")
     equal = _make(Verdict.SHADOW_CATALOG.value, "equal")
     assert training_weight(parity) > training_weight(equal)
 
 
-def test_divides_intermediate():
-    """divides (~40%) sits between equal (~2%) and parity (~63%)."""
+def test_divides_above_parity_post_info_fix():
+    """Fire #141 info-content fix inverts the H4 extensibility hierarchy.
+
+    H4 extensibility: parity 65% > divides 35% > equal 2.5%.
+    Post-fix info-weighted: divides 0.245 > parity 0.195 > equal 0.025.
+
+    Rationale: parity is HIGHLY extensible but mathematically
+    trivial; divisibility is LESS extensible but carries
+    arithmetic structure. For Learner-training value (the actual
+    use of training_weight), divides > parity. See triage report
+    pivot/techne_promoted_record_triage_2026-05-25.md.
+    """
     parity = training_weight(_make(Verdict.SHADOW_CATALOG.value, "equal_mod_2"))
     div = training_weight(_make(Verdict.SHADOW_CATALOG.value, "divides"))
     equal = training_weight(_make(Verdict.SHADOW_CATALOG.value, "equal"))
-    assert equal < div < parity
+    assert equal < parity < div  # info-weighted hierarchy
+
+
+def test_parity_shadow_below_promote_threshold():
+    """Fire #141: parity equality should not auto-promote.
+
+    Before fix: 0.65 × 1.0 = 0.650 → above 0.6 threshold → promoted.
+    After fix:  0.65 × 0.3 × 1.0 = 0.195 → below threshold → not promoted.
+    This eliminates the parity-tautology inflation of promoted count
+    documented in pivot/techne_promoted_record_triage_2026-05-25.md.
+    """
+    parity_shadow = _make(Verdict.SHADOW_CATALOG.value, "equal_mod_2")
+    assert training_weight(parity_shadow) < 0.6
 
 
 def test_unverified_low_weight():
