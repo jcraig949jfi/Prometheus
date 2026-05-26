@@ -14,4 +14,4 @@ there.
 Design doc: `charon/agents/DESIGN_2026-05-19.md`.
 """
 
-AGENT_NAMES = ["stygian", "lethe", "acheron", "moros", "hecate", "nephele", "pollux", "hephaestus"]
+AGENT_NAMES = ["stygian", "lethe", "acheron", "moros", "hecate", "nephele", "pollux", "erebos"]

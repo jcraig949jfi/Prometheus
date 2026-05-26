@@ -1,56 +1,30 @@
-"""Hephaestus -- forger / composer agent (Charon swarm v0.7).
+"""Erebos -- composer/forger agent (Charon swarm v0.8).
 
-Per-tick algorithm (MVP):
-  1. Scan Stygian's local kill_ledger for PROMOTED rows in the last
-     7 days (Stygian PROMOTED means a v10 battery verdict that
-     SURVIVED). Currently rare -- only Lehmer + BSD produce real
-     verdicts -- but the count grows as loaders ship.
-  2. Scan Pollux's local kill_ledger for PROMOTED rows in the last
-     7 days (Pollux PROMOTED means a pair-correlation survived
-     mean-spacing normalization).
-  3. Read Hecate's most recent cross-generator canonical patterns
-     (from her latest gradient_archaeology_*.md artifact).
-  4. Compose ONE intersection-claim per tick by picking the highest-
-     priority untried (Stygian, Pollux) pair and synthesizing the
-     candidate-claim: "Stygian's claim X holds when restricted to
-     the subset Y that Pollux's pair survived."
-  5. Emit:
-     a. A hephaestus/artifacts/composed_claim_*.md artifact with
-        the structured claim + provenance.
-     b. A kill_ledger row in Theseus shape with generator_id=
-        "hephaestus", kill_pattern="hephaestus_composed_claim_pending",
-        verdict="UNVERIFIED" (battery hasn't run on the composed
-        claim yet).
-     c. A stygian_priority queue row so Stygian picks it up next
-        rotation cycle (will short-circuit with
-        "stygian_hephaestus_composed_loader_pending" until a
-        composed-claim loader ships in a later session).
-  6. Mark the (Stygian, Pollux) pair as tried in state so we
-     iterate through novel combinations.
+Plugin-host pattern per pivot/erebos_25_archetypes_spec_2026-05-26.md.
 
-Why this is substrate-grade and not another scanner:
-- Inputs are TWO independent agents' PROMOTED verdicts (not raw
-  source data the prior agents already see).
-- Output is a NEW candidate-claim that didn't exist before this
-  tick: "X restricted to Y." The composed claim is structurally
-  more constrained than either parent claim.
-- Stygian's downstream battery attack on the composed claim is the
-  test of whether the composition is substantively meaningful or a
-  product of pure coincidence.
+Per-tick:
+  1. Build SwarmState snapshot from Stygian + Pollux + Erebos
+     ledgers + Hecate's latest cross-gen patterns.
+  2. Pick the next applicable plugin via round-robin (skipping
+     non-applicable).
+  3. Plugin.generate(state) -> ComposedClaim or None.
+  4. If ComposedClaim emitted:
+     a. Write a composed_claim_*.md artifact.
+     b. Append a kill_ledger row in Theseus shape
+        (generator_id='erebos', kill_pattern from plugin spec).
+     c. Enqueue to stygian_priority for v10 battery attack (Stygian
+        will short-circuit until composition-aware loader ships in
+        v0.11+).
+     d. Mark the (plugin_id, parent_ids) tuple as tried in state.
 
-Limitations of MVP:
-- Only handles 2-way (Stygian + Pollux) compositions. 3-way
-  (Stygian + Pollux + Hecate-canonical-pattern) deferred to v0.8.
-- The "restriction" is currently a textual claim, not a loader-
-  executable filter. Stygian will short-circuit until a per-
-  composition loader exists. Future composer-aware Stygian loader
-  could programmatically construct the restricted dataset.
-- No HECATE-* or LETHE-* inputs yet (those agents don't currently
-  emit PROMOTED-class rows; Lethe v2 may change this).
+Generator plugins live under charon/agents/erebos/generators/.
+Currently registered: G01 Intersection, G02 Contrast.
+
+Renamed from Hephaestus 2026-05-26 (name collision with the existing
+agents/hephaestus/ Forge -- 357+ forged tools, RLVF pipeline).
 """
 from __future__ import annotations
 
-import gzip
 import hashlib
 import json
 import re
@@ -60,25 +34,27 @@ from typing import Any, Optional
 
 from charon.agents._base import CharonAgent
 from charon.agents._shared_queues import stygian_priority_queue
+from charon.agents.erebos.generators import (
+    REGISTRY,
+    next_plugin_round_robin,
+)
+from charon.agents.erebos.generators._base import ComposedClaim, SwarmState
 from harmonia.agents._base import REPO_ROOT
 
 
-# Input ledgers Hephaestus reads (only PROMOTED rows used for composition)
+# Input ledgers Erebos reads
 STYGIAN_LEDGER = (
     REPO_ROOT / "charon" / "agents" / "stygian" / "state" / "kill_ledger.jsonl"
 )
 POLLUX_LEDGER = (
     REPO_ROOT / "charon" / "agents" / "pollux" / "state" / "kill_ledger.jsonl"
 )
-HEPHAESTUS_LEDGER = (
-    REPO_ROOT / "charon" / "agents" / "hephaestus" / "state" / "kill_ledger.jsonl"
+EREBOS_LEDGER = (
+    REPO_ROOT / "charon" / "agents" / "erebos" / "state" / "kill_ledger.jsonl"
 )
-
-# How far back to read promoted rows (avoids re-composing on ancient verdicts)
-LOOKBACK_DAYS = 7
-
-# Pythia inbox dir
 HECATE_ARTIFACT_DIR = REPO_ROOT / "charon" / "agents" / "hecate" / "artifacts"
+
+LOOKBACK_DAYS = 7
 
 
 def _read_jsonl(path: Path) -> list[dict]:
@@ -101,19 +77,18 @@ def _read_jsonl(path: Path) -> list[dict]:
 
 
 def _filter_substantive_recent(rows: list[dict], lookback_days: int) -> list[dict]:
-    """Substantive = PROMOTED (clean survival) OR UNVERIFIED-with-battery
-    (battery ran and produced sub-test results without a clean REJECTED).
-    Excludes REJECTED (claim killed) and stygian_*_pending short-circuits
-    (no battery results to compose against)."""
+    """Substantive = PROMOTED OR UNVERIFIED-with-real-battery-output OR
+    REJECTED (G02 Contrast needs REJECTED rows). Excludes pure
+    short-circuit rows (kill_pattern ending in _pending /
+    _loader_pending / _skipped)."""
     cutoff = (
         datetime.now(timezone.utc) - timedelta(days=lookback_days)
     ).isoformat()
     out = []
     for r in rows:
         verdict = r.get("verdict")
-        if verdict not in ("PROMOTED", "UNVERIFIED"):
+        if verdict not in ("PROMOTED", "UNVERIFIED", "REJECTED"):
             continue
-        # Exclude short-circuit UNVERIFIED rows (no real battery output)
         kp = r.get("kill_pattern") or ""
         if kp.endswith("_pending") or kp.endswith("_skipped") or kp.endswith("_loader_pending"):
             continue
@@ -124,15 +99,11 @@ def _filter_substantive_recent(rows: list[dict], lookback_days: int) -> list[dic
 
 
 def _read_latest_hecate_crossgen() -> list[str]:
-    """Scan the most recent Hecate gradient_archaeology artifact for
-    its 'crossgen_canonical_kp_top' list. Best-effort regex parse;
-    returns [] if no recent artifact or pattern not found."""
     if not HECATE_ARTIFACT_DIR.exists():
         return []
     artifacts = sorted(
         HECATE_ARTIFACT_DIR.glob("gradient_archaeology_*.md"),
-        key=lambda p: p.stat().st_mtime,
-        reverse=True,
+        key=lambda p: p.stat().st_mtime, reverse=True,
     )
     if not artifacts:
         return []
@@ -140,17 +111,13 @@ def _read_latest_hecate_crossgen() -> list[str]:
         text = artifacts[0].read_text(encoding="utf-8", errors="ignore")
     except Exception:
         return []
-    # Find the "Top canonical ... cross-generator patterns" section and
-    # extract the bullet lines below it.
     m = re.search(
         r"Top canonical[^\n]*cross-generator patterns.*?\n\n((?:- `[^`]+`\n)+)",
-        text,
-        re.DOTALL,
+        text, re.DOTALL,
     )
     if not m:
         return []
-    block = m.group(1)
-    return re.findall(r"- `([^`]+)`", block)
+    return re.findall(r"- `([^`]+)`", m.group(1))
 
 
 def _content_hash(obj: dict) -> str:
@@ -159,226 +126,174 @@ def _content_hash(obj: dict) -> str:
 
 
 def _emit_to_ledger(row: dict) -> Path:
-    HEPHAESTUS_LEDGER.parent.mkdir(parents=True, exist_ok=True)
-    with HEPHAESTUS_LEDGER.open("a", encoding="utf-8") as f:
+    EREBOS_LEDGER.parent.mkdir(parents=True, exist_ok=True)
+    with EREBOS_LEDGER.open("a", encoding="utf-8") as f:
         f.write(json.dumps(row, ensure_ascii=False) + "\n")
-    return HEPHAESTUS_LEDGER
+    return EREBOS_LEDGER
 
 
-class HephaestusAgent(CharonAgent):
-    """Composer/forger agent. Per-tick: read Stygian PROMOTED + Pollux
-    PROMOTED + Hecate cross-gen patterns; synthesize one intersection-
-    claim; emit ledger row + stygian_priority queue row."""
+class ErebosAgent(CharonAgent):
+    """Composer/forger agent (plugin host)."""
 
-    name = "Hephaestus"
-    role = "composer/forger (generates intersection-claims from Stygian + Pollux PROMOTED)"
+    name = "Erebos"
+    role = "composer/forger -- plugin host for 25 hypothesis-generator archetypes"
 
     def self_generate_backlog(self) -> list[dict]:
-        """Always one item: attempt one composition this tick."""
         return [{"action": "compose"}]
 
-    # ---- composition logic ------------------------------------------
-
-    def _pick_uncomposed_pair(
-        self, stygian_rows: list[dict], pollux_rows: list[dict]
-    ) -> Optional[tuple[dict, dict]]:
-        """Find the highest-priority (Stygian-row, Pollux-row) pair we
-        haven't composed yet. 'Tried' set persists in state."""
-        if not stygian_rows or not pollux_rows:
-            return None
+    def _build_swarm_state(self) -> SwarmState:
+        stygian = _filter_substantive_recent(_read_jsonl(STYGIAN_LEDGER), LOOKBACK_DAYS)
+        pollux = _filter_substantive_recent(_read_jsonl(POLLUX_LEDGER), LOOKBACK_DAYS)
+        self_ledger = _read_jsonl(EREBOS_LEDGER)
+        crossgen = _read_latest_hecate_crossgen()
         tried = set(self.load_state("tried_pairs", []) or [])
-        # Iterate by (s_emitted_at DESC, p_emitted_at DESC) so newest
-        # combinations get priority. Skip combinations we've already
-        # composed.
-        s_sorted = sorted(
-            stygian_rows, key=lambda r: r.get("emitted_at", ""), reverse=True
+        tick_counter = int(self.load_state("tick_counter", 0) or 0) + 1
+        self.save_state("tick_counter", tick_counter)
+        return SwarmState(
+            stygian_substantive=stygian,
+            pollux_substantive=pollux,
+            hecate_crossgen_canonical=crossgen,
+            erebos_self_ledger=self_ledger,
+            tried_pairs=tried,
+            tick_counter=tick_counter,
         )
-        p_sorted = sorted(
-            pollux_rows, key=lambda r: r.get("emitted_at", ""), reverse=True
-        )
-        for s in s_sorted:
-            for p in p_sorted:
-                key = f"{s.get('record_id', '')}|{p.get('record_id', '')}"
-                if key in tried:
-                    continue
-                return (s, p)
-        return None
 
-    def _mark_pair_tried(self, s_row: dict, p_row: dict) -> None:
+    def _mark_tried(self, plugin_id: str, claim: ComposedClaim) -> None:
         tried = set(self.load_state("tried_pairs", []) or [])
-        key = f"{s_row.get('record_id', '')}|{p_row.get('record_id', '')}"
+        parent_ids = "|".join(claim.parent_record_ids)
+        key = f"{plugin_id}|{parent_ids}"
         tried.add(key)
-        # Cap the set so it doesn't grow unbounded
-        if len(tried) > 1000:
-            tried = set(list(tried)[-1000:])
+        if len(tried) > 2000:
+            tried = set(list(tried)[-2000:])
         self.save_state("tried_pairs", list(tried))
-
-    def _synthesize_composed_claim(
-        self, s_row: dict, p_row: dict, crossgen_patterns: list[str]
-    ) -> dict:
-        """Build the composed-claim payload: 'Stygian claim X restricted
-        to Pollux survivor subset Y, with cross-gen context Z.'"""
-        s_claim = s_row.get("canonical_claim_text", "")
-        s_problem_id = (s_row.get("claim_payload") or {}).get("problem_id", "?")
-        p_claim = p_row.get("canonical_claim_text", "")
-        p_pair_name = (p_row.get("claim_payload") or {}).get("pair_name", "?")
-        p_subset_a = (p_row.get("extras") or {}).get("subset_a_desc", "?")
-        p_subset_b = (p_row.get("extras") or {}).get("subset_b_desc", "?")
-
-        composed_id = f"HEPH-{s_problem_id}-x-{p_pair_name}"
-        composition_text = (
-            f"Composed intersection-claim {composed_id}: "
-            f"The structural claim from Stygian's PROMOTED verdict on "
-            f"`{s_problem_id}` (\"{s_claim[:200]}\") is hypothesized to "
-            f"hold when restricted to the Pollux-PROMOTED subset pair "
-            f"`{p_pair_name}` (subset A: {p_subset_a}; subset B: "
-            f"{p_subset_b}). The substantive test is whether the "
-            f"restricted-subset version of the Stygian claim survives "
-            f"its own v10 battery -- if yes, the intersection is "
-            f"non-trivial and the two parent observations have a "
-            f"shared structural basis. If no, the intersection is "
-            f"coincidental and the parent verdicts were independent."
-        )
-        if crossgen_patterns:
-            composition_text += (
-                f" Hecate cross-generator context (top canonical patterns "
-                f"this tick): {crossgen_patterns[:5]}."
-            )
-        return {
-            "composed_id": composed_id,
-            "composition_text": composition_text,
-            "stygian_record_id": s_row.get("record_id"),
-            "stygian_problem_id": s_problem_id,
-            "stygian_claim": s_claim,
-            "pollux_record_id": p_row.get("record_id"),
-            "pollux_pair_name": p_pair_name,
-            "pollux_corr_raw": (p_row.get("kill_vector") or {}).get("corr_raw"),
-            "pollux_corr_norm": (p_row.get("kill_vector") or {}).get("corr_norm"),
-            "hecate_crossgen_patterns": crossgen_patterns[:5],
-        }
 
     # ---- artifact + ledger + queue emission -------------------------
 
-    def _emit_composed_claim_artifact(self, composed: dict) -> Path:
+    def _emit_composed_claim_artifact(self, claim: ComposedClaim, plugin) -> Path:
         utc = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-        cid = composed["composed_id"]
-        # Filename-safe slug
-        slug = re.sub(r"[^A-Za-z0-9_.-]", "_", cid)[:60]
+        slug = re.sub(r"[^A-Za-z0-9_.-]", "_", claim.composed_id)[:60]
         fname = f"composed_claim_{slug}_{utc}.md"
-        body_lines = [
-            f"# Hephaestus composed claim -- {cid}",
+        lines = [
+            f"# Erebos composed claim -- {claim.composed_id}",
             "",
             f"- emitted_at: {datetime.now(timezone.utc).isoformat()}",
-            f"- emitted_by: Hephaestus (charon/agents/hephaestus/daemon.py)",
+            f"- emitted_by: Erebos (charon/agents/erebos/daemon.py)",
+            f"- plugin: `{plugin.id}` ({plugin.name})",
+            f"- spec_phase: {plugin.spec_phase}",
+            f"- feasibility_tier: {plugin.feasibility_tier}",
             "",
-            "## Composition",
+            "## Output claim",
             "",
-            composed["composition_text"],
+            claim.output_claim_text,
             "",
-            "## Parent verdicts",
+            "## Six-field Erebos spec",
             "",
-            f"### Stygian PROMOTED ({composed['stygian_problem_id']})",
+            "### Input / Provenance",
             "",
-            f"- record_id: `{composed['stygian_record_id']}`",
-            f"- claim: {composed['stygian_claim'][:500]}",
+            "```json",
+            json.dumps(claim.input_provenance, indent=2, ensure_ascii=False, default=str),
+            "```",
             "",
-            f"### Pollux PROMOTED ({composed['pollux_pair_name']})",
+            "### Transformation",
             "",
-            f"- record_id: `{composed['pollux_record_id']}`",
-            f"- corr_raw: {composed['pollux_corr_raw']}",
-            f"- corr_norm: {composed['pollux_corr_norm']}",
+            claim.transformation_description,
+            "",
+            "### Falsification route",
+            "",
+            claim.falsification_route,
+            "",
+            "### Expected kill pattern",
+            "",
+            f"`{claim.expected_kill_pattern}`",
+            "",
+            "### Loader feasibility note",
+            "",
+            claim.loader_feasibility_note,
+            "",
+            "## Routing metadata",
+            "",
+            f"- parent_record_ids: {claim.parent_record_ids}",
+            f"- composition_payload keys: {list(claim.composition_payload.keys())}",
             "",
         ]
-        if composed.get("hecate_crossgen_patterns"):
-            body_lines += [
-                "## Hecate cross-generator context",
-                "",
-            ]
-            for p in composed["hecate_crossgen_patterns"]:
-                body_lines.append(f"- `{p}`")
-            body_lines.append("")
-        body_lines += [
-            "## Downstream action",
-            "",
-            "Enqueued to stygian_priority for v10 battery validation. "
-            "Stygian will currently short-circuit with "
-            "kill_pattern=stygian_hephaestus_composed_loader_pending "
-            "until a per-composition loader ships. The composed-claim "
-            "artifact alone is substrate-grade: it captures a new "
-            "candidate intersection that didn't exist before this tick.",
-            "",
-        ]
-        return self.write_artifact(fname, "\n".join(body_lines))
+        return self.write_artifact(fname, "\n".join(lines))
 
-    def _emit_kill_ledger_row(self, composed: dict) -> str:
+    def _emit_kill_ledger_row(self, claim: ComposedClaim, plugin) -> str:
         now_iso = datetime.now(timezone.utc).isoformat()
         payload = {
-            "composed_id": composed["composed_id"],
-            "stygian_record_id": composed["stygian_record_id"],
-            "pollux_record_id": composed["pollux_record_id"],
+            "plugin_id": plugin.id,
+            "composed_id": claim.composed_id,
+            "parent_record_ids": claim.parent_record_ids,
             "emitted_at": now_iso,
         }
         rid = _content_hash(payload)
+        kp = f"erebos_{plugin.id}_pending"
         row = {
-            "batch_id": f"hephaestus-{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}",
+            "batch_id": f"erebos-{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}",
             "record_id": rid,
-            "canonical_claim_text": composed["composition_text"][:500],
-            "claim_kind": "hephaestus_composed_claim",
+            "canonical_claim_text": claim.output_claim_text[:500],
+            "claim_kind": f"erebos_{plugin.id}_claim",
             "claim_payload": {
-                "composed_id": composed["composed_id"],
-                "stygian_problem_id": composed["stygian_problem_id"],
-                "pollux_pair_name": composed["pollux_pair_name"],
+                "plugin_id": plugin.id,
+                "plugin_name": plugin.name,
+                "spec_phase": plugin.spec_phase,
+                "composed_id": claim.composed_id,
+                "expected_kill_pattern": claim.expected_kill_pattern,
+                "loader_feasibility_note": claim.loader_feasibility_note,
             },
             "convergence_status": "composed",
             "diversity_score": None,
             "emitted_at": now_iso,
             "extras": {
-                "stygian_record_id": composed["stygian_record_id"],
-                "pollux_record_id": composed["pollux_record_id"],
-                "hecate_crossgen_patterns": composed["hecate_crossgen_patterns"],
-                "pollux_corr_raw": composed["pollux_corr_raw"],
-                "pollux_corr_norm": composed["pollux_corr_norm"],
+                "input_provenance": claim.input_provenance,
+                "transformation_description": claim.transformation_description,
+                "falsification_route": claim.falsification_route,
+                "composition_payload": claim.composition_payload,
+                "plugin_extras": claim.extras,
             },
-            "generator_id": "hephaestus",  # 4th non-Theseus operator class
+            "generator_id": "erebos",
             "info_density": None,
-            "kill_pattern": "hephaestus_composed_claim_pending",
+            "kill_pattern": kp,
             "kill_vector": None,
-            "method": "intersection_composition",
+            "method": f"erebos_{plugin.id}",
             "novelty_estimate": None,
-            "parent_record_id": composed["stygian_record_id"],
+            "parent_record_id": claim.parent_record_ids[0] if claim.parent_record_ids else None,
             "precision_dps": None,
             "sigma_claim_id": None,
             "sigma_symbol_ref": None,
             "step_trace": None,
             "training_weight": None,
-            "verdict": "UNVERIFIED",  # battery hasn't run on composed claim yet
+            "verdict": "UNVERIFIED",
         }
         _emit_to_ledger(row)
         return rid
 
-    def _enqueue_to_stygian(self, composed: dict, ledger_row_id: str) -> bool:
+    def _enqueue_to_stygian(
+        self, claim: ComposedClaim, plugin, ledger_row_id: str
+    ) -> bool:
         try:
             queue = stygian_priority_queue()
-            # Dedup: only enqueue once per composed_id within 24h
             recent_cutoff = (
                 datetime.now(timezone.utc) - timedelta(hours=24)
             ).isoformat()
             recent_kps = queue.recent_keys("kill_pattern", recent_cutoff)
-            key = f"hephaestus_composed_{composed['composed_id']}"
-            if key in recent_kps:
+            queue_kp = f"erebos_{plugin.id}_{claim.composed_id}"
+            if queue_kp in recent_kps:
                 return False
             queue.append({
-                "source": "hephaestus",
-                "kill_pattern": key,
+                "source": "erebos",
+                "kill_pattern": queue_kp,
                 "cluster_size": None,
-                "top_generator": "hephaestus",
+                "top_generator": "erebos",
                 "mi_z": None,
                 "mi_observed": None,
-                "hephaestus_composed_id": composed["composed_id"],
-                "hephaestus_stygian_record_id": composed["stygian_record_id"],
-                "hephaestus_pollux_record_id": composed["pollux_record_id"],
-                "hephaestus_ledger_row_id": ledger_row_id,
-                "rationale": composed["composition_text"][:300],
+                "erebos_plugin_id": plugin.id,
+                "erebos_composed_id": claim.composed_id,
+                "erebos_expected_kill_pattern": claim.expected_kill_pattern,
+                "erebos_falsification_route": claim.falsification_route,
+                "erebos_ledger_row_id": ledger_row_id,
+                "parent_record_ids": claim.parent_record_ids,
+                "rationale": claim.output_claim_text[:300],
             })
             return True
         except Exception as e:
@@ -389,15 +304,14 @@ class HephaestusAgent(CharonAgent):
         utc = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
         fname = f"self_audit_null_{utc}.md"
         body = (
-            f"# Hephaestus SELF_AUDIT_NULL\n\n"
+            f"# Erebos SELF_AUDIT_NULL\n\n"
             f"- reason: {reason}\n"
             f"- at: {datetime.now(timezone.utc).isoformat()}\n\n"
-            f"Hephaestus requires at least one PROMOTED row from each of "
-            f"Stygian and Pollux in the last {LOOKBACK_DAYS} days to "
-            f"compose an intersection-claim. When either source is empty, "
-            f"the composer no-ops with this artifact. Pollux promotes "
-            f"more frequently than Stygian (which is bottlenecked by "
-            f"loader coverage); the typical null cause is Stygian-empty.\n"
+            f"Erebos's plugin host found no applicable plugin this tick. "
+            f"Causes: (a) Stygian + Pollux substantive-row pools empty in "
+            f"last {LOOKBACK_DAYS} days; (b) all applicable plugin x "
+            f"parent-row pairs already composed (tried_pairs set saturates "
+            f"the available combinatorial space).\n"
         )
         return self.write_artifact(fname, body)
 
@@ -413,29 +327,26 @@ class HephaestusAgent(CharonAgent):
             "pollux_substantive_recent": 0,
             "crossgen_patterns_found": 0,
             "composed": False,
+            "plugin_id": None,
             "composed_id": None,
             "ledger_row_id": None,
             "enqueued_to_stygian": False,
             "skip_reason": None,
         }
 
-        stygian_rows = _filter_substantive_recent(
-            _read_jsonl(STYGIAN_LEDGER), LOOKBACK_DAYS
-        )
-        pollux_rows = _filter_substantive_recent(
-            _read_jsonl(POLLUX_LEDGER), LOOKBACK_DAYS
-        )
-        crossgen = _read_latest_hecate_crossgen()
-        stats["stygian_substantive_recent"] = len(stygian_rows)
-        stats["pollux_substantive_recent"] = len(pollux_rows)
-        stats["crossgen_patterns_found"] = len(crossgen)
+        state = self._build_swarm_state()
+        stats["stygian_substantive_recent"] = len(state.stygian_substantive)
+        stats["pollux_substantive_recent"] = len(state.pollux_substantive)
+        stats["crossgen_patterns_found"] = len(state.hecate_crossgen_canonical)
 
         if dry_run:
             stats["items_processed"] += 1
             return stats
 
-        if not stygian_rows:
-            stats["skip_reason"] = "no_recent_stygian_substantive"
+        last_plugin_id = self.load_state("last_plugin_id", None)
+        plugin = next_plugin_round_robin(state, last_plugin_id)
+        if plugin is None:
+            stats["skip_reason"] = "no_applicable_plugin"
             try:
                 self._emit_self_audit_null(stats["skip_reason"])
                 stats["artifacts_written"] += 1
@@ -443,41 +354,34 @@ class HephaestusAgent(CharonAgent):
                 self.log.warning(f"self_audit_null emit failed: {e}")
                 stats["errors"] += 1
             stats["items_processed"] += 1
+            self.log_work(
+                "erebos_tick_complete",
+                summary=f"skip ({stats['skip_reason']})",
+                success=stats["errors"] == 0,
+            )
             return stats
-        if not pollux_rows:
-            stats["skip_reason"] = "no_recent_pollux_substantive"
+
+        stats["plugin_id"] = plugin.id
+        claim = plugin.generate(state)
+        if claim is None:
+            stats["skip_reason"] = f"{plugin.id}_returned_none"
             try:
                 self._emit_self_audit_null(stats["skip_reason"])
                 stats["artifacts_written"] += 1
-            except Exception as e:
-                self.log.warning(f"self_audit_null emit failed: {e}")
+            except Exception:
                 stats["errors"] += 1
             stats["items_processed"] += 1
             return stats
 
-        pair = self._pick_uncomposed_pair(stygian_rows, pollux_rows)
-        if not pair:
-            stats["skip_reason"] = "all_pairs_already_composed"
-            try:
-                self._emit_self_audit_null(stats["skip_reason"])
-                stats["artifacts_written"] += 1
-            except Exception as e:
-                self.log.warning(f"self_audit_null emit failed: {e}")
-                stats["errors"] += 1
-            stats["items_processed"] += 1
-            return stats
-
-        s_row, p_row = pair
-        composed = self._synthesize_composed_claim(s_row, p_row, crossgen)
         try:
-            self._emit_composed_claim_artifact(composed)
+            self._emit_composed_claim_artifact(claim, plugin)
             stats["artifacts_written"] += 1
         except Exception as e:
             self.log.exception(f"composed-claim artifact emit failed: {e}")
             stats["errors"] += 1
 
         try:
-            rid = self._emit_kill_ledger_row(composed)
+            rid = self._emit_kill_ledger_row(claim, plugin)
             stats["ledger_row_id"] = rid
         except Exception as e:
             self.log.exception(f"kill_ledger emit failed: {e}")
@@ -486,21 +390,21 @@ class HephaestusAgent(CharonAgent):
 
         if rid is not None:
             stats["enqueued_to_stygian"] = self._enqueue_to_stygian(
-                composed, rid
+                claim, plugin, rid
             )
 
-        self._mark_pair_tried(s_row, p_row)
+        self._mark_tried(plugin.id, claim)
+        self.save_state("last_plugin_id", plugin.id)
         stats["composed"] = True
-        stats["composed_id"] = composed["composed_id"]
+        stats["composed_id"] = claim.composed_id
         stats["items_processed"] += 1
 
         self.log_work(
-            "hephaestus_tick_complete",
+            "erebos_tick_complete",
             summary=(
-                f"composed={stats['composed_id']} "
+                f"plugin={plugin.id} composed={claim.composed_id} "
                 f"stygian_recent={stats['stygian_substantive_recent']} "
                 f"pollux_recent={stats['pollux_substantive_recent']} "
-                f"crossgen={stats['crossgen_patterns_found']} "
                 f"enqueued={stats['enqueued_to_stygian']}"
             ),
             success=stats["errors"] == 0,

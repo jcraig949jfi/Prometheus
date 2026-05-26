@@ -194,17 +194,17 @@ class StygianAgent(CharonAgent):
         """
         source = row.get("source", "unknown")
         kp = row.get("kill_pattern", "unknown")
-        if source == "hephaestus":
-            composed_id = row.get("hephaestus_composed_id", "?")
-            prob_id = f"HEPHAESTUS-{composed_id}"
-            name = f"Hephaestus composed intersection-claim: {composed_id}"
+        if source == "erebos":
+            composed_id = row.get("erebos_composed_id", "?")
+            prob_id = f"EREBOS-{composed_id}"
+            name = f"Erebos composed intersection-claim: {composed_id}"
             attack_vector = (
-                f"v10 battery on the Hephaestus-composed intersection-"
+                f"v10 battery on the Erebos-composed intersection-"
                 f"claim {composed_id}. The composer paired a Stygian "
                 f"PROMOTED row (record_id "
-                f"`{row.get('hephaestus_stygian_record_id')}`) with a "
+                f"`{row.get('erebos_stygian_record_id')}`) with a "
                 f"Pollux PROMOTED row (record_id "
-                f"`{row.get('hephaestus_pollux_record_id')}`) into a "
+                f"`{row.get('erebos_pollux_record_id')}`) into a "
                 f"restricted-subset claim. Goal: does the composition "
                 f"survive battery validation, or do the parent verdicts "
                 f"turn out to be independent (composition coincidental)?"

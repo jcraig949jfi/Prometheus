@@ -31,7 +31,7 @@ LEDGER_CANDIDATES: list[Path] = [
     REPO_ROOT / "theseus" / "corpus",  # Theseus's TheseusRecord emissions
     REPO_ROOT / "charon" / "agents" / "stygian" / "state" / "kill_ledger.jsonl",  # Stygian executor emissions
     REPO_ROOT / "charon" / "agents" / "pollux" / "state" / "kill_ledger.jsonl",   # Pollux scan emissions (v0.5)
-    REPO_ROOT / "charon" / "agents" / "hephaestus" / "state" / "kill_ledger.jsonl",  # Hephaestus composed-claim emissions (v0.7)
+    REPO_ROOT / "charon" / "agents" / "erebos" / "state" / "kill_ledger.jsonl",  # Erebos composed-claim emissions (v0.8, renamed from hephaestus 2026-05-26)
 ]
 
 # Sampling caps so a huge ledger doesn't blow MVP-tick budget.

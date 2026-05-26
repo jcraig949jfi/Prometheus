@@ -148,20 +148,20 @@ def execute_attack(problem: dict, attack_plan_path: Optional[str] = None) -> dic
             stats=stats,
         )
 
-    # ---- HEPHAESTUS-* composed-claim validation: deferred -----------
-    # Hephaestus composed an intersection-claim (Stygian-PROMOTED
+    # ---- EREBOS-* composed-claim validation: deferred -----------
+    # Erebos composed an intersection-claim (Stygian-PROMOTED
     # restricted to Pollux-PROMOTED subset). Validation needs a
     # composition-aware loader that programmatically constructs the
     # restricted dataset and runs the appropriate distribution /
     # correlation tests. Per Charon swarm v0.7 plan: composition
     # loader lands in v0.8+. Short-circuit emits a typed UNVERIFIED
     # row so Hecate sees the composer's contribution to the ledger.
-    if problem_id.startswith("HEPHAESTUS-"):
+    if problem_id.startswith("EREBOS-"):
         return _emit_short_circuit_row(
             problem=problem,
             attack_plan_path=attack_plan_path,
-            kill_pattern="stygian_hephaestus_composed_loader_pending",
-            reason="hephaestus_composition_loader_not_yet_implemented",
+            kill_pattern="stygian_erebos_composed_loader_pending",
+            reason="erebos_composition_loader_not_yet_implemented",
             stats=stats,
         )
 
