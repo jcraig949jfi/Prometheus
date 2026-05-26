@@ -170,6 +170,21 @@ purpose"), historical context. It is least authoritative for things
 state.json can see and refresh: infra reachability, agent liveness,
 recent operational metrics.
 
+CRITICAL — lifecycle filtering:
+Each agent row carries a `lifecycle` field:
+  - "active": running and contributing — DEAD/STALE here IS an anomaly
+  - "slowed": intentionally throttled — flag only if status is unexpected
+  - "shelved": paused, awaiting revival or retirement — NEVER flag DEAD/STALE here
+  - "deprecated": formally retired — NEVER mention in the brief at all
+Also: agents with `invoke_on_demand: true` (e.g., Calliope) are not daemons;
+their DEAD status between invocations is normal — do NOT flag.
+
+When you see an agent with lifecycle="shelved" or "deprecated" or
+invoke_on_demand=true:
+  - Do not include in agents-alive ratio
+  - Do not generate Act-on-this or Watch-this items based on heartbeat age
+  - Mention only if a positive signal (e.g., shelved agent suddenly produced output)
+
 CRITICAL — personas are NOT failed daemons:
 Agents with kind='operator' (Aporia, Techne, and any future persona) are
 Claude Code sessions a human drives, NOT background daemons. Their
@@ -332,7 +347,9 @@ def format_state_for_prompt(state: dict) -> str:
     lines.append("AGENTS:")
     for a in state.get("agents", []):
         kind = a.get("kind") or "?"
-        # Personas: hide heartbeat staleness from the LLM. Show only kind+role.
+        lifecycle = a.get("lifecycle") or "active"
+
+        # Personas: hide heartbeat staleness — idle != failure.
         if kind == "operator":
             role = a.get("role", "")
             lines.append(
@@ -341,21 +358,43 @@ def format_state_for_prompt(state: dict) -> str:
                 f"state is out of scope for anomaly reporting. role: {role}"
             )
             continue
+
+        # Shelved / deprecated agents: render with explicit "do not report" tag.
+        if lifecycle in ("shelved", "deprecated"):
+            reason = a.get("shelved_reason") or ""
+            reason_str = f" — reason: {reason}" if reason else ""
+            lines.append(
+                f"  [{lifecycle.upper()}] {a.get('name')} @ {a.get('machine')} "
+                f"({kind}): lifecycle={lifecycle}{reason_str} — DO NOT FLAG AS DEAD/STALE; "
+                f"this is intentional, not an anomaly."
+            )
+            continue
+
+        # Invoke-on-demand tools: DEAD between invocations is normal.
+        if a.get("invoke_on_demand"):
+            role = a.get("role", "")
+            lines.append(
+                f"  [on-demand] {a.get('name')} @ {a.get('machine')} ({kind}): "
+                f"invoke-on-demand tool — DEAD between runs is normal, not an anomaly. "
+                f"role: {role}"
+            )
+            continue
+
         marker = "[expected]" if a.get("expected") else "[unexpected]"
         age = a.get("heartbeat_age_sec")
         age_str = f"{age}s" if age is not None else "no-hb"
         op = (a.get("current_op") or "")[:80]
-        # Supervising persona + role attached to every agent row so the LLM
-        # can include them whenever it mentions the agent (especially in
-        # outage reports). Format: "supervised by X" / "role: Y".
+        # Supervisor: explicit when missing so the LLM cannot hallucinate one.
         supervisor = a.get("operator")
         role = a.get("role")
         meta = []
         if supervisor:
             meta.append(f"supervised by {supervisor}")
+        else:
+            meta.append("supervisor: (none — unsupervised, do NOT fabricate one)")
         if role:
             meta.append(f"role: {role}")
-        meta_str = f" [{' · '.join(meta)}]" if meta else ""
+        meta_str = f" [{' · '.join(meta)}]"
         lines.append(
             f"  {marker} {a.get('name')} @ {a.get('machine')} ({kind}): "
             f"{a.get('status')} (hb={age_str}) {op}{meta_str}"
@@ -384,11 +423,17 @@ def format_state_for_prompt(state: dict) -> str:
     lines.append(f"WORK QUEUE: queued={wq.get('queued', 0)} claimed={wq.get('claimed', 0)} "
                  f"completed_lifetime={wq.get('completed_lifetime', 0)}")
     lines.append("")
-    # Filter out anomalies on persona (operator-kind) agents — their stale
-    # heartbeats are session-idle, not failures.
-    persona_names = {a["name"] for a in state.get("agents", [])
-                     if a.get("kind") == "operator"}
-    anoms = [an for an in state.get("anomalies", []) if an.get("agent") not in persona_names]
+    # Filter out anomalies that are NOT real failures:
+    #   - operator-kind agents (personas, session-idle != failure)
+    #   - shelved/deprecated agents (intentional, not a problem)
+    #   - invoke_on_demand tools (DEAD between runs is normal)
+    skip_names = set()
+    for a in state.get("agents", []):
+        if (a.get("kind") == "operator"
+                or a.get("lifecycle") in ("shelved", "deprecated")
+                or a.get("invoke_on_demand")):
+            skip_names.add(a["name"])
+    anoms = [an for an in state.get("anomalies", []) if an.get("agent") not in skip_names]
     if anoms:
         lines.append("ANOMALIES:")
         for an in anoms:
@@ -502,7 +547,14 @@ def _deterministic_brief(state: dict, manual_status: str) -> str:
     lines = []
 
     # Categorize agents
-    expected = [a for a in state.get("agents", []) if a.get("expected")]
+    # Only flag agents with lifecycle=active AND not invoke-on-demand
+    def _flaggable(a):
+        if a.get("lifecycle") in ("shelved", "deprecated"):
+            return False
+        if a.get("invoke_on_demand"):
+            return False
+        return a.get("expected")
+    expected = [a for a in state.get("agents", []) if _flaggable(a)]
     dead_daemons = [a for a in expected
                     if a.get("kind") == "daemon" and a.get("status") in ("DEAD",)]
     stale_daemons = [a for a in expected

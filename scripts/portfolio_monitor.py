@@ -74,37 +74,120 @@ JSON_OUTPUT_PATH = REPO_ROOT / "docs" / "state.json"  # GitHub Pages serves from
 # (long-running process), tool (agentic mechanical component supervised by an
 # operator), pipeline-stage (one stage of an orchestrated chain).
 # `operator` (optional) names the operator agent that supervises a tool.
+# `lifecycle` field accommodates Prometheus's growth + retirement pattern:
+#   "active"     — running and contributing
+#   "slowed"     — intentionally throttled (e.g., budget constraints)
+#   "shelved"    — paused, awaiting revival or final retirement decision
+#   "deprecated" — formally retired, kept only for historical reference
+# Lifecycle drives brief filtering: shelved/deprecated agents do NOT generate
+# DEAD/STALE anomalies. Use `scripts/agent_roster.py` to regenerate the
+# canonical roster doc against this dict + live PG data.
 EXPECTED_AGENTS = {
-    # Daemons (continuous background processes)
-    "Apollo":     {"machine": "M2", "kind": "daemon",    "role": "evolutionary"},
-    "Hephaestus": {"machine": "M3", "kind": "daemon",    "role": "forge"},
-    "Nemesis":    {"machine": "M3", "kind": "daemon",    "role": "adversarial"},
-    "Nous":       {"machine": "M4", "kind": "daemon",    "role": "combinatorial"},
-    "Pronoia":    {"machine": "M4", "kind": "daemon",    "role": "reporting orchestrator"},
+    # ── Daemons (continuous background processes) ────────────────────
+    "Apollo":     {"machine": "M2", "kind": "daemon", "role": "evolutionary search engine (genetic; one of the few non-LLM variance sources)",
+                   "lifecycle": "shelved", "shelved_reason": "crashed 2026-05-24, no auto-restart; needs watchdog"},
+    "Hephaestus": {"machine": "M3", "kind": "daemon", "role": "forge — substrate generator with falsification battery",
+                   "lifecycle": "active"},
+    "Nemesis":    {"machine": "M3", "kind": "daemon", "role": "adversarial pre-promotion tester",
+                   "lifecycle": "shelved", "shelved_reason": "never deployed"},
+    "Nous":       {"machine": "M4", "kind": "daemon", "role": "combinatorial substrate seeder for Hephaestus",
+                   "lifecycle": "shelved", "shelved_reason": "never deployed; Hephaestus reads responses.jsonl directly"},
+    "Pronoia":    {"machine": "M4", "kind": "daemon", "role": "reporting orchestrator (intelligence_loop)",
+                   "lifecycle": "active"},
 
-    # Operators (Claude sessions with roles + judgment, manually driven)
-    "Aporia":     {"machine": "M1", "kind": "operator",  "role": "void detection + Deep Research + Clio supervision"},
-    "Techne":     {"machine": "M1", "kind": "operator",  "role": "substrate / Σ-kernel toolsmith"},
+    # ── Operators / Personas (Claude Code sessions; PG registration optional) ──
+    "Aporia":     {"machine": "M1", "kind": "operator", "role": "void detection + Deep Research dispatch + tool supervision",
+                   "lifecycle": "active"},
+    "Techne":     {"machine": "M1", "kind": "operator", "role": "substrate / Σ-kernel toolsmith",
+                   "lifecycle": "active"},
+    "Ergon":      {"machine": "M1", "kind": "operator", "role": "Learner-corpus consumer + ingest pipeline supervisor",
+                   "lifecycle": "active"},
+    "Harmonia":   {"machine": "M2", "kind": "operator", "role": "scientist swarm orchestrator (Phylax/Sophia/Iris/Argos/Telos)",
+                   "lifecycle": "shelved", "shelved_reason": "session ended ~2026-05-24; swarm all stale since"},
+    "Charon":     {"machine": "M2", "kind": "operator", "role": "falsification swarm orchestrator (ferryman)",
+                   "lifecycle": "active"},
 
-    # Tools (agentic mechanical components supervised by an operator)
-    "Clio":       {"machine": "M1", "kind": "tool",      "role": "paper scanner (arxiv/openalex/semantic-scholar)",
-                   "operator": "Aporia"},
-    "Pythia":     {"machine": "M1", "kind": "tool",      "role": "deep research report producer (20 tokens/day)",
-                   "operator": "Aporia"},
-    "Calliope":   {"machine": "M4", "kind": "tool",      "role": "daily NotebookLM narrative synthesizer"},
+    # ── Aporia's tools ─────────────────────────────────────────────────
+    "Clio":       {"machine": "M1", "kind": "tool", "role": "paper scanner (arxiv/openalex/semantic-scholar)",
+                   "operator": "Aporia", "lifecycle": "active"},
+    "Pythia":     {"machine": "M1", "kind": "tool", "role": "deep research report producer (~20 tokens/day)",
+                   "operator": "Aporia", "lifecycle": "active"},
+    "Hypatia":    {"machine": "M1", "kind": "tool", "role": "D-track curator (proof decomposition with R1-R5 ladder)",
+                   "operator": "Aporia", "lifecycle": "active"},
+    "Atalanta":   {"machine": "M1", "kind": "tool", "role": "E-track primitive hunter (reads Apollo organisms)",
+                   "operator": "Aporia", "lifecycle": "active"},
+    "Polyhymnia": {"machine": "M1", "kind": "tool", "role": "Aporia-supervised tool (recent addition)",
+                   "operator": "Aporia", "lifecycle": "active"},
 
-    # Healthchecks (per-machine resource snapshots, hourly via local scheduler)
-    "HealthCheck-M1": {"machine": "M1", "kind": "healthcheck", "role": "M1 CPU/mem/disk snapshot (hourly)"},
-    "HealthCheck-M2": {"machine": "M2", "kind": "healthcheck", "role": "M2 CPU/mem/disk snapshot (hourly)"},
-    "HealthCheck-M3": {"machine": "M3", "kind": "healthcheck", "role": "M3 CPU/mem/disk snapshot (hourly)"},
-    "HealthCheck-M4": {"machine": "M4", "kind": "healthcheck", "role": "M4 CPU/mem/disk snapshot (hourly)"},
+    # ── Techne's tools ─────────────────────────────────────────────────
+    "Theseus":    {"machine": "M1", "kind": "tool", "role": "substrate generation engine (catalog cross-product, mutation, triangulation, self-play)",
+                   "operator": "Techne", "lifecycle": "active"},
 
-    # Pipeline-stage agents (run via pronoia.py scan; transient per cycle)
-    "Coeus":      {"machine": "?",  "kind": "pipeline-stage", "role": "causal analysis"},
-    "Aletheia":   {"machine": "?",  "kind": "pipeline-stage", "role": "knowledge graph harvester"},
-    "Eos":        {"machine": "?",  "kind": "pipeline-stage", "role": "external scanner"},
-    "Hermes":     {"machine": "?",  "kind": "pipeline-stage", "role": "alerting (deprecated — see pivot/hermes_deprecation_2026-05-17.md)"},
-    # add more as RESUME docs land
+    # ── Ergon's tools ──────────────────────────────────────────────────
+    "Penelope":   {"machine": "M2", "kind": "tool", "role": "substrate ingest loop — Learner-corpus consumer",
+                   "operator": "Ergon", "lifecycle": "active"},
+    "Pheme":      {"machine": "M1", "kind": "tool", "role": "demand voicer — publishes per-pattern Learner-deficit profile",
+                   "operator": "Ergon", "lifecycle": "active"},
+    "Talos":      {"machine": "M1", "kind": "tool", "role": "Ergon-supervised tool (recent addition)",
+                   "operator": "Ergon", "lifecycle": "active"},
+
+    # ── Harmonia's swarm (currently shelved with the persona) ─────────
+    "Harmonia_Loop": {"machine": "M2", "kind": "tool", "role": "rotation orchestrator for Harmonia swarm",
+                      "operator": "Harmonia", "lifecycle": "shelved"},
+    "Argos":      {"machine": "M2", "kind": "tool", "role": "lens-fingerprint accretion",
+                   "operator": "Harmonia", "lifecycle": "shelved"},
+    "Iris":       {"machine": "M2", "kind": "tool", "role": "prose-to-symbol compressor",
+                   "operator": "Harmonia", "lifecycle": "shelved"},
+    "Phylax":     {"machine": "M2", "kind": "tool", "role": "pre-promotion gate + retraction-adjacency sentinel",
+                   "operator": "Harmonia", "lifecycle": "shelved"},
+    "Sophia":     {"machine": "M2", "kind": "tool", "role": "coordinate-system scout (closed-loop axis-space invention)",
+                   "operator": "Harmonia", "lifecycle": "shelved"},
+    "Telos":      {"machine": "M2", "kind": "tool", "role": "stalled-specimen reviver / negative-space patroller",
+                   "operator": "Harmonia", "lifecycle": "shelved"},
+
+    # ── Charon's swarm ─────────────────────────────────────────────────
+    "Charon_Loop": {"machine": "M2", "kind": "tool", "role": "rotation orchestrator for Charon swarm",
+                    "operator": "Charon", "lifecycle": "active"},
+    "Stygian":    {"machine": "M2", "kind": "tool", "role": "Charon swarm member — kill-tier falsifier",
+                   "operator": "Charon", "lifecycle": "active"},
+    "Lethe":      {"machine": "M2", "kind": "tool", "role": "Charon swarm member — conjecture-loop falsifier",
+                   "operator": "Charon", "lifecycle": "active"},
+    "Acheron":    {"machine": "M2", "kind": "tool", "role": "Charon swarm member — boundary-condition falsifier",
+                   "operator": "Charon", "lifecycle": "active"},
+    "Moros":      {"machine": "M2", "kind": "tool", "role": "Charon swarm member — critic + sharper-battery designer",
+                   "operator": "Charon", "lifecycle": "active"},
+    "Hecate":     {"machine": "M2", "kind": "tool", "role": "Charon swarm member — stratified sampling + Techne ticket retraction",
+                   "operator": "Charon", "lifecycle": "active"},
+    "Nephele":    {"machine": "M2", "kind": "tool", "role": "Charon swarm member (recent addition)",
+                   "operator": "Charon", "lifecycle": "active"},
+    "Erebos":     {"machine": "M2", "kind": "tool", "role": "Charon swarm member (recent addition)",
+                   "operator": "Charon", "lifecycle": "active"},
+    "Pollux":     {"machine": "M2", "kind": "tool", "role": "Charon swarm member (recent addition)",
+                   "operator": "Charon", "lifecycle": "active"},
+
+    # ── Reporting-tier tools (M4, invoke-on-demand) ───────────────────
+    "Calliope":   {"machine": "M4", "kind": "tool", "role": "daily NotebookLM narrative synthesizer (invoke-on-demand)",
+                   "lifecycle": "active", "invoke_on_demand": True},
+
+    # ── Healthchecks (per-machine, hourly via local scheduler) ────────
+    "HealthCheck-M1": {"machine": "M1", "kind": "healthcheck", "role": "M1 CPU/mem/disk snapshot (hourly)",
+                       "lifecycle": "shelved", "shelved_reason": "not deployed on M1; machine_probe covers resource data"},
+    "HealthCheck-M2": {"machine": "M2", "kind": "healthcheck", "role": "M2 CPU/mem/disk snapshot (hourly)",
+                       "lifecycle": "shelved", "shelved_reason": "not deployed on M2"},
+    "HealthCheck-M3": {"machine": "M3", "kind": "healthcheck", "role": "M3 CPU/mem/disk snapshot (hourly)",
+                       "lifecycle": "shelved", "shelved_reason": "not deployed on M3"},
+    "HealthCheck-M4": {"machine": "M4", "kind": "healthcheck", "role": "M4 CPU/mem/disk snapshot (hourly)",
+                       "lifecycle": "active"},
+
+    # ── Pipeline-stage agents (run via pronoia.py scan; transient per cycle) ──
+    "Coeus":      {"machine": "?", "kind": "pipeline-stage", "role": "causal analysis",
+                   "lifecycle": "shelved", "shelved_reason": "concept weights predate current ledger"},
+    "Aletheia":   {"machine": "?", "kind": "pipeline-stage", "role": "knowledge graph harvester",
+                   "lifecycle": "active"},
+    "Eos":        {"machine": "?", "kind": "pipeline-stage", "role": "external scanner",
+                   "lifecycle": "active"},
+    "Hermes":     {"machine": "?", "kind": "pipeline-stage", "role": "alerting",
+                   "lifecycle": "deprecated", "shelved_reason": "see pivot/hermes_deprecation_2026-05-17.md"},
 }
 
 # Historical / unexpected agents that have registered with Agora in the past
@@ -472,6 +555,8 @@ def build_dashboard_state(r: redis.Redis) -> dict:
             "kind": meta["kind"],
             "role": meta.get("role"),
             "operator": meta.get("operator"),
+            "lifecycle": meta.get("lifecycle", "active"),
+            "invoke_on_demand": meta.get("invoke_on_demand", False),
             "status": status_label,
             "heartbeat_age_sec": age,
             "current_op": op,
@@ -663,6 +748,8 @@ def build_degraded_state_from_postgres(now: datetime, redis_error: str) -> dict:
                 "kind": meta["kind"],
                 "role": meta.get("role"),
                 "operator": meta.get("operator"),
+            "lifecycle": meta.get("lifecycle", "active"),
+            "invoke_on_demand": meta.get("invoke_on_demand", False),
                 "status": status_label,
                 "heartbeat_age_sec": age,
                 "current_op": op or "(from postgres mirror)",
@@ -678,6 +765,8 @@ def build_degraded_state_from_postgres(now: datetime, redis_error: str) -> dict:
                 "kind": meta["kind"],
                 "role": meta.get("role"),
                 "operator": meta.get("operator"),
+            "lifecycle": meta.get("lifecycle", "active"),
+            "invoke_on_demand": meta.get("invoke_on_demand", False),
                 "status": "UNKNOWN",
                 "heartbeat_age_sec": None,
                 "current_op": "(no postgres heartbeat — see manual_status)",
