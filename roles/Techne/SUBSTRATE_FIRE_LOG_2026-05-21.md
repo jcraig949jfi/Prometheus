@@ -9467,6 +9467,56 @@ and 5K parents. Fire #134:
 473.4M records, 269.1M kills, 2231 promoted, 2643 templates,
 0 verified findings.*
 
+---
+
+## Fire #135 — 2026-05-26 ~02:01Z — **1.59M DEMAND EVENTS**
+
+**2.14M records / 24 min / 0 templates / 20 promoted.
+Mix a5/d1/d2/h1/h4. Demand signal volume jumped to
+1.59M events — second-highest seen. h4 dominant (1.04M
+records).**
+
+### Per-gen attribution
+
+    gid  records     templates  kill_rate
+    h4   1,038,871   0          18.5%
+    d2     690,158   0          65.5%
+    h1     401,949   0          99.6%
+    a5       4,574   0          32.3%
+    d1       1,819   0          45.9%
+
+### Batch result
+
+- batch_id: `batch-20260526T020105Z-753002`
+- Duration: 24 min wall, 773/s tick rate
+- 2,137,371 records / 1,047,340 kills / 796,717 confirms / 0 errors
+- 20 promoted records → **2251 lifetime promoted**
+- 0 new templates → 2643 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+- batch_end ✓
+
+Lifetime: 130 batches journaled / 475.6M records / 270.1M kills /
+2251 promoted / 2643 templates / 0 verified findings.
+
+### Notable
+
+- **1.59M demand events** all for knot/nf_class_number —
+  even higher than Fire #127's 1.03M. Substrate is now
+  generating millions of demand signals per fire for a
+  catalog field it can't provide. Strong signal for
+  fetch_daemon strategic option.
+- h4 (bridge_extension) burned 1.04M records this fire (was
+  629K last time it was picked). Memory remained low (236MB)
+  unlike Fire #128's 4.1GB. Different cache pattern.
+- h1 again hit 99.6% kill rate (kill-storm gen).
+- 130-batch milestone passed.
+
+---
+
+*Fire #135 throttled = 2.14M records / 20 promoted / 0 templates.
+475.6M records, 270.1M kills, 2251 promoted, 2643 templates,
+0 verified findings.*
+
 
 
 
