@@ -9643,6 +9643,49 @@ Lifetime: 133 batches journaled / 482.9M records / 274.4M kills /
 482.9M records, 274.4M kills, 2311 promoted, 2643 templates,
 0 verified findings.*
 
+---
+
+## Fire #139 — 2026-05-26 ~04:05Z
+
+**2.32M records / 24 min / 0 templates / 20 promoted.
+Mix a2/b3/f4/h1/h2. h2 clean again (330K records,
+99.98% kill rate). High kill-rate fire overall (83.6%).**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    f4   731,057   0          65.9%
+    a2   659,981   0          93.5%
+    h1   595,157   0          85.2%
+    h2   330,014   0          99.98%
+    b3       606   0          57.1%
+
+### Batch result
+
+- batch_id: `batch-20260526T040504Z-2d3850`
+- Duration: 24 min wall, 508/s tick rate
+- 2,316,815 records / 1,935,866 kills / 380,890 confirms / 0 errors
+- 20 promoted records → **2331 lifetime promoted**
+- 0 new templates → 2643 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+- batch_end ✓
+
+Lifetime: 134 batches journaled / 485.2M records / 276.4M kills /
+2331 promoted / 2643 templates / 0 verified findings.
+
+### Notable
+
+- 83.6% overall kill rate — high. a2 + h1 + h2 all aggressive
+  falsifiers this fire.
+- h2 again ran clean (second post-fix appearance after #134).
+- f4 in mix → likely emitter of the 20 promoted parity records.
+
+---
+
+*Fire #139 throttled = 2.32M records / 20 promoted / 0 templates.
+485.2M records, 276.4M kills, 2331 promoted, 2643 templates,
+0 verified findings.*
+
 
 
 
