@@ -9321,6 +9321,54 @@ Lifetime: 126 batches journaled / 466.5M records / 264.2M kills /
 466.5M records, 264.2M kills, 2171 promoted, 2643 templates,
 0 verified findings.*
 
+---
+
+## Fire #132 — 2026-05-26 ~00:29Z — **e2 PICKED (84% sat)**
+
+**2.20M records / 24 min / 0 templates / 20 promoted.
+Mix c1/c3/d3/e2/f4. e2 at 84% saturation — first
+under-100% pick in many fires (real explorer territory).
+d3 still 98.4% kill rate with new scan cap.**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate  sat
+    f4   583,025   0          65.8%      100%
+    d3   573,589   0          98.4%      100%
+    c1   555,392   0          59.9%      100%
+    c3   489,115   0          42.4%      100%
+    e2       424   0           0.0%      84% ← under-sat
+
+### Batch result
+
+- batch_id: `batch-20260526T002934Z-ee9808`
+- Duration: 24 min wall, 405/s tick rate
+- 2,201,545 records / 1,488,221 kills / 703,741 confirms / 0 errors
+- 20 promoted records → **2191 lifetime promoted**
+- 0 new templates → 2643 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+- batch_end ✓
+
+Lifetime: 127 batches journaled / 468.8M records / 265.7M kills /
+2191 promoted / 2643 templates / 0 verified findings.
+
+### Notable
+
+- e2 was at 84% lifetime saturation — bandit correctly picked
+  it as the only under-100% gen in the picked-set. Explorer-prior
+  injection working as designed.
+- However e2 only emitted 424 records — its reservoir burns
+  fast despite "explorer" status. Similar to b5/g1 small-reservoir
+  pattern.
+- d3 ran clean with new 200K scan cap (commit 7ea519ef) — 573K
+  records, 98.4% kill rate, no stall events.
+
+---
+
+*Fire #132 throttled = 2.20M records / 20 promoted / 0 templates.
+468.8M records, 265.7M kills, 2191 promoted, 2643 templates,
+0 verified findings.*
+
 
 
 
