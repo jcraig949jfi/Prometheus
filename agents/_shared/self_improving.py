@@ -82,6 +82,13 @@ except Exception:
     HAS_VOID_DETECTOR = False
     voids_for_agent = None  # type: ignore
 
+try:
+    from agents._shared.compositional_mutations import generate_compound_adaptations
+    HAS_COMPOSITIONAL = True
+except Exception:
+    HAS_COMPOSITIONAL = False
+    generate_compound_adaptations = None  # type: ignore
+
 log = logging.getLogger("self_improving")
 
 
@@ -186,6 +193,13 @@ class SelfImprovingDaemon:
     # Requires the void_detector module to be importable.
     READ_VOIDS: bool = True
     VOID_MIN_CONFIDENCE: float = 0.10
+
+    # v2b — compositional auto-generated mutations. When the atomic native
+    # menu is exhausted, generate compound adaptations (apply A1 then A2)
+    # as a polynomial menu-growth mechanism. Only atomic-native pairs;
+    # borrowed/void atoms are skipped (they're placeholders).
+    COMPOSE_MUTATIONS: bool = True
+    COMPOSITIONAL_MAX_CHAIN: int = 2
 
     # Stagnation signature shipped with every kept mutation we record back
     # to the registry. Subclass override if your failure mode is specific.
@@ -399,6 +413,22 @@ class SelfImprovingDaemon:
         own = list(self.ADAPTATION_MENU)
         own_names = {a.name for a in own}
 
+        # v2b — compositional mutations from the agent's own atomic menu.
+        # Polynomial menu-growth: N atoms → up to N*(N-1) ordered pairs.
+        # Inserted between native and borrowed because compounds use
+        # locally-validated atoms (lower risk than cross-agent transfer).
+        if HAS_COMPOSITIONAL and self.COMPOSE_MUTATIONS:
+            try:
+                compounds = generate_compound_adaptations(
+                    own, max_chain=self.COMPOSITIONAL_MAX_CHAIN,
+                )
+                for c in compounds:
+                    if c.name not in own_names:
+                        own.append(c)
+                        own_names.add(c.name)
+            except Exception as e:
+                log.warning(f"compositional generation failed: {e}")
+
         # v2a — borrowed mutations from the cross-agent registry
         if HAS_MUTATION_REGISTRY and self.BORROW_REGISTRY:
             try:
@@ -506,13 +536,16 @@ class SelfImprovingDaemon:
         if candidates:
             # Tier order:
             #   0 = native (proven for this exact shape)
-            #   1 = BORROWED__ (proven for compatible shape elsewhere)
-            #   2 = VOID__ (predicted from geometric inference)
+            #   1 = COMPOUND__ (auto-composed pair of native atoms)
+            #   2 = BORROWED__ (proven for compatible shape elsewhere)
+            #   3 = VOID__ (predicted from geometric inference)
             # Within each tier, prefer cheap cost.
             def _sort_key(a):
                 if a.name.startswith("VOID__"):
-                    tier = 2
+                    tier = 3
                 elif a.name.startswith("BORROWED__"):
+                    tier = 2
+                elif a.name.startswith("COMPOUND__"):
                     tier = 1
                 else:
                     tier = 0
