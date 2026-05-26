@@ -96,6 +96,18 @@ except Exception:
     HAS_LLM_PROPOSALS = False
     executable_llm_proposals = None  # type: ignore
 
+try:
+    from agents._shared.lineage import (
+        LineageEntry, record_lineage, propose_child_scaffold, generation_of,
+    )
+    HAS_LINEAGE = True
+except Exception:
+    HAS_LINEAGE = False
+    LineageEntry = None  # type: ignore
+    record_lineage = None  # type: ignore
+    propose_child_scaffold = None  # type: ignore
+    generation_of = None  # type: ignore
+
 log = logging.getLogger("self_improving")
 
 
@@ -214,6 +226,18 @@ class SelfImprovingDaemon:
     # trust gate is the human approval after sandbox pass.
     READ_LLM_PROPOSALS: bool = True
 
+    # v3 — generational handoff. When the agent fires repeated self-summon
+    # tickets without resolution (no kept mutation since first summon),
+    # author a child agent with mutated charter and hibernate self.
+    # Substrate is the lineage, not the single agent (feedback_gen_30_wall).
+    HANDOFF_ENABLED: bool = True
+    HANDOFF_REPEATED_SUMMONS_THRESHOLD: int = 3
+    HANDOFF_LOOKBACK_DAYS: int = 14
+    PARENT_MISSION_FOR_CHILD: str = (
+        "[parent mission not declared on subclass — override "
+        "PARENT_MISSION_FOR_CHILD to seed lineage with your mission text]"
+    )
+
     # Stagnation signature shipped with every kept mutation we record back
     # to the registry. Subclass override if your failure mode is specific.
     STAGNATION_SIGNATURE: dict = field(default_factory=lambda: {
@@ -243,6 +267,18 @@ class SelfImprovingDaemon:
         the self-improvement layer did this tick (or skipped)."""
         result = {"action": "skipped", "reason": None}
         si_state = _load_si_state(shared_state_path)
+
+        # v3: if the agent has hibernated (after generational handoff),
+        # short-circuit. The child agent runs its own cycle in its own
+        # state file. Parent stays in the codebase as historical record
+        # but stops mutating.
+        if si_state.get("hibernated"):
+            return {
+                "action": "skipped",
+                "reason": "hibernated_after_handoff",
+                "child_agent": si_state.get("child_agent_name"),
+                "hibernated_at": si_state.get("hibernated_at"),
+            }
 
         # Measure health every tick
         health = self.measure_health(tick_stats, agent_state)
@@ -281,10 +317,24 @@ class SelfImprovingDaemon:
             # Menu exhausted (gen-N wall). Self-summon.
             self._emit_self_summon_ticket(si_state)
             si_state["last_escalation_at"] = datetime.now(timezone.utc).isoformat()
-            result = {"action": "self_summon_emitted",
-                      "reason": "adaptation_menu_exhausted_under_stagnation"}
+            si_state.setdefault("self_summons_log", []).append({
+                "at": si_state["last_escalation_at"],
+                "menu_size_at_time": len(self._effective_menu()),
+            })
+            # v3 — handoff trigger: repeated self-summons without resolution
+            handoff_payload = None
+            if self.HANDOFF_ENABLED and self._should_handoff(si_state):
+                handoff_payload = self._propose_handoff(si_state)
             _save_si_state(shared_state_path, si_state)
-            return result
+            if handoff_payload:
+                return {"action": "generational_handoff_proposed",
+                        "reason": "repeated_self_summons_without_resolution",
+                        "child_agent": handoff_payload.get("child_name"),
+                        "generation": handoff_payload.get("generation"),
+                        "axis_failures_addressed": handoff_payload.get(
+                            "axis_failures_addressed", [])}
+            return {"action": "self_summon_emitted",
+                    "reason": "adaptation_menu_exhausted_under_stagnation"}
 
         if adaptation.requires_human_approval:
             self._emit_approval_request_ticket(adaptation, si_state)
@@ -633,6 +683,156 @@ class SelfImprovingDaemon:
                 continue
         return n
 
+    # ---- v3 generational handoff -------------------------------------------
+
+    def _should_handoff(self, si_state: dict) -> bool:
+        """Decide whether to author a child + retire. Triggers when:
+          (a) the agent has fired >= HANDOFF_REPEATED_SUMMONS_THRESHOLD
+              self-summons within HANDOFF_LOOKBACK_DAYS, AND
+          (b) no experiment was 'kept' since the FIRST of those summons.
+
+        Reasoning: a single self-summon is the agent asking for help; if
+        the human responds by extending the menu, a kept mutation should
+        follow. When N summons fire with no kept mutation between them,
+        the menu growth machinery is itself saturated and no human/LLM
+        intervention has unlocked the wall. Only generational handoff
+        (mutated charter + child agent) escapes that fixed point."""
+        if not HAS_LINEAGE:
+            return False
+        summons = si_state.get("self_summons_log", []) or []
+        if len(summons) < self.HANDOFF_REPEATED_SUMMONS_THRESHOLD:
+            return False
+        cutoff = datetime.now(timezone.utc) - timedelta(days=self.HANDOFF_LOOKBACK_DAYS)
+        recent_summons = []
+        for s in summons:
+            try:
+                dt = datetime.fromisoformat(s["at"].replace("Z", "+00:00"))
+                if dt >= cutoff:
+                    recent_summons.append(dt)
+            except Exception:
+                continue
+        if len(recent_summons) < self.HANDOFF_REPEATED_SUMMONS_THRESHOLD:
+            return False
+        first_recent = min(recent_summons)
+        # Was anything kept after the first recent summon?
+        for exp in si_state.get("completed_experiments", []) or []:
+            if exp.get("outcome") != "kept":
+                continue
+            try:
+                fdt = datetime.fromisoformat(
+                    exp.get("finished_at", "").replace("Z", "+00:00"))
+                if fdt >= first_recent:
+                    return False
+            except Exception:
+                continue
+        return True
+
+    def _propose_handoff(self, si_state: dict) -> Optional[dict]:
+        """Author the child scaffold, append a lineage entry, write a draft
+        CHARTER.md beside the lineage file, file a handoff ticket, and
+        hibernate the parent. Returns the scaffold dict for the caller to
+        surface in the cycle's return value."""
+        if not HAS_LINEAGE:
+            return None
+        try:
+            parent_gen = generation_of(self.AGENT_NAME_FOR_TICKETS)
+            scaffold = propose_child_scaffold(
+                parent_agent=self.AGENT_NAME_FOR_TICKETS,
+                parent_traits=list(self.AGENT_TRAITS),
+                parent_failure_modes=list(self.CURRENT_FAILURE_MODES),
+                parent_generation=parent_gen,
+                si_state=si_state,
+                parent_mission=self.PARENT_MISSION_FOR_CHILD,
+            )
+            entry = LineageEntry(
+                parent_agent=self.AGENT_NAME_FOR_TICKETS,
+                child_agent=scaffold["child_name"],
+                generation=scaffold["generation"],
+                retirement_reason=scaffold["retirement_reason"],
+                parent_traits=list(self.AGENT_TRAITS),
+                child_traits=scaffold["child_traits"],
+                parent_failure_modes=list(self.CURRENT_FAILURE_MODES),
+                child_failure_modes=scaffold["child_failure_modes"],
+                suggested_adaptations=scaffold["suggested_adaptations"],
+                charter_skeleton=scaffold["charter_skeleton"],
+                born_at=datetime.now(timezone.utc).isoformat(),
+                notes=(f"axis_failures_addressed="
+                       f"{scaffold['axis_failures_addressed']}; "
+                       f"iter1_scaffold (deterministic template, no LLM)"),
+            )
+            record_lineage(entry)
+            # Write draft CHARTER.md next to lineage.jsonl for human review
+            from agents._shared.lineage import LINEAGE_PATH
+            drafts_dir = LINEAGE_PATH.parent / "child_drafts"
+            drafts_dir.mkdir(parents=True, exist_ok=True)
+            draft_path = drafts_dir / f"{scaffold['child_name']}_CHARTER.md"
+            draft_path.write_text(scaffold["charter_skeleton"], encoding="utf-8")
+            # File handoff ticket
+            self._emit_handoff_ticket(scaffold, draft_path)
+            # Hibernate
+            si_state["hibernated"] = True
+            si_state["hibernated_at"] = datetime.now(timezone.utc).isoformat()
+            si_state["child_agent_name"] = scaffold["child_name"]
+            si_state["handoff_reason"] = scaffold["retirement_reason"]
+            log.warning(
+                f"{self.AGENT_NAME_FOR_TICKETS}: generational handoff to "
+                f"{scaffold['child_name']} (gen {scaffold['generation']}); "
+                f"parent hibernated.")
+            return scaffold
+        except Exception as e:
+            log.error(f"handoff proposal failed: {e}")
+            return None
+
+    def _emit_handoff_ticket(self, scaffold: dict, draft_charter_path: Path) -> None:
+        """Notify operators that a generational handoff has been proposed.
+        The child does NOT auto-spawn — iter 2 will add LLM-authored mission
+        + daemon.py; until then, the draft CHARTER + scaffold dict is the
+        human-actionable artifact."""
+        if not self.SELF_SUMMON_INBOX_PATH:
+            return
+        ticket = {
+            "id": (f"T-{datetime.now(timezone.utc).strftime('%Y-%m-%d')}"
+                   f"-{self.AGENT_NAME_FOR_TICKETS}-handoff-"
+                   f"g{scaffold['generation']}"),
+            "source": self.AGENT_NAME_FOR_TICKETS,
+            "target": "aporia",
+            "type": "self-improvement-generational-handoff",
+            "priority": "P1-high",
+            "title": (f"{self.AGENT_NAME_FOR_TICKETS}: handoff to "
+                      f"{scaffold['child_name']} (gen {scaffold['generation']}) "
+                      f"— menu exhausted across repeated summons"),
+            "payload": {
+                "parent": self.AGENT_NAME_FOR_TICKETS,
+                "parent_generation": scaffold["parent_generation"],
+                "child": scaffold["child_name"],
+                "child_generation": scaffold["generation"],
+                "child_traits": scaffold["child_traits"],
+                "child_failure_modes": scaffold["child_failure_modes"],
+                "axis_failures_addressed": scaffold["axis_failures_addressed"],
+                "suggested_adaptations": scaffold["suggested_adaptations"],
+                "draft_charter_path": str(draft_charter_path),
+                "ask": (
+                    "Parent has repeatedly self-summoned without breaking "
+                    "stagnation. A child scaffold has been authored and a "
+                    "draft CHARTER written. Decide: (a) instantiate the "
+                    "child agent (port the draft charter, build daemon.py, "
+                    "wire to substrate), (b) extend parent's menu by hand "
+                    "and un-hibernate, or (c) retire the lineage."
+                ),
+            },
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "created_by": self.AGENT_NAME_FOR_TICKETS,
+            "status": "OPEN",
+        }
+        try:
+            self.SELF_SUMMON_INBOX_PATH.parent.mkdir(parents=True, exist_ok=True)
+            with self.SELF_SUMMON_INBOX_PATH.open("a", encoding="utf-8") as f:
+                f.write(json.dumps(ticket, ensure_ascii=False) + "\n")
+        except Exception as e:
+            log.error(f"handoff ticket emission failed: {e}")
+
+    # ---- self-summon / approval tickets ------------------------------------
+
     def _emit_self_summon_ticket(self, si_state: dict) -> None:
         """When the menu is exhausted under stagnation, file a ticket to
         the configured inbox. This is the agent saying:
@@ -721,6 +921,11 @@ def _default_si_state() -> dict:
         "completed_experiments": [],   # archived Experiment dicts
         "failed_adaptations": [],      # adaptations whose apply() raised
         "last_escalation_at": None,    # when self_summon was last fired
+        "self_summons_log": [],        # v3: list of {at, menu_size_at_time}
+        "hibernated": False,           # v3: True after generational handoff
+        "hibernated_at": None,         # v3: when handoff fired
+        "child_agent_name": None,      # v3: scaffolded child's name
+        "handoff_reason": None,        # v3: why parent retired
     }
 
 
