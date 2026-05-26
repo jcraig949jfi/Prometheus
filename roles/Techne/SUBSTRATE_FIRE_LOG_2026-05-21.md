@@ -9686,6 +9686,61 @@ Lifetime: 134 batches journaled / 485.2M records / 276.4M kills /
 485.2M records, 276.4M kills, 2331 promoted, 2643 templates,
 0 verified findings.*
 
+---
+
+## Fire #140 — 2026-05-26 ~04:36Z — **140-FIRE MILESTONE**
+
+**2.00M records / 24 min / 0 templates / 20 promoted.
+Mix a4/b2/c2/c4/h4. a4 solo-dominant (1.81M / 90.6%).
+Tick rate 1381/s — third-highest of session.**
+
+### Per-gen attribution
+
+    gid  records     templates  kill_rate
+    a4   1,808,588   0          30.3%
+    h4     152,840   0           0.0%
+    c4      15,239   0           0.0%
+    c2      15,215   0          25.0%
+    b2       3,636   0          34.8%
+
+### Batch result
+
+- batch_id: `batch-20260526T043605Z-82daaa`
+- Duration: 24 min wall, 1381/s tick rate
+- 1,995,518 records / 553,297 kills / 164,250 confirms / 0 errors
+- 20 promoted records → **2351 lifetime promoted**
+- 0 new templates → 2643 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+- batch_end ✓
+
+Lifetime: 135 batches journaled / 487.2M records / 277.0M kills /
+2351 promoted / 2643 templates / 0 verified findings.
+
+### 140-fire arc summary
+
+This session has now traversed 140 fires from a starting point
+post-#58 lockup recovery. Headline trajectory:
+
+- **Throughput**: 423 → 1099 → 1381 → 3678/s peak post-fixes
+- **Backlog burndown today (2026-05-25)**: 7 items shipped
+  (e1, h2, d3/d4, watchdog, batch_end, atexit, triage)
+- **Operational findings**: silent-crash modes characterized
+  and patched; reservoir-fixed pattern confirmed across many
+  gens; explorer-prior injection observed working with under-
+  saturated picks
+- **Scientific findings**: 0 (verified mathematical findings
+  remains 0 — promoted records are parity tautologies per
+  triage; 4 strategic options remain pending from user)
+
+The substrate is OPERATIONALLY healthy and SCIENTIFICALLY
+stalled. Awaiting strategic direction.
+
+---
+
+*Fire #140 throttled = 2.00M records / 20 promoted / 0 templates.
+487.2M records, 277.0M kills, 2351 promoted, 2643 templates,
+0 verified findings.*
+
 
 
 
