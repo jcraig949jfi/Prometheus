@@ -89,6 +89,13 @@ except Exception:
     HAS_COMPOSITIONAL = False
     generate_compound_adaptations = None  # type: ignore
 
+try:
+    from agents._shared.llm_sandbox import executable_llm_proposals
+    HAS_LLM_PROPOSALS = True
+except Exception:
+    HAS_LLM_PROPOSALS = False
+    executable_llm_proposals = None  # type: ignore
+
 log = logging.getLogger("self_improving")
 
 
@@ -200,6 +207,12 @@ class SelfImprovingDaemon:
     # borrowed/void atoms are skipped (they're placeholders).
     COMPOSE_MUTATIONS: bool = True
     COMPOSITIONAL_MAX_CHAIN: int = 2
+
+    # v2c — LLM-authored mutations (Tier 4). Surfaces approved+sandboxed
+    # proposals from the audit log as runnable menu items. The code itself
+    # is executed in-process via exec() with SAFE_BUILTINS restriction —
+    # trust gate is the human approval after sandbox pass.
+    READ_LLM_PROPOSALS: bool = True
 
     # Stagnation signature shipped with every kept mutation we record back
     # to the registry. Subclass override if your failure mode is specific.
@@ -464,6 +477,56 @@ class SelfImprovingDaemon:
                     requires_human_approval=True,
                 ))
 
+        # v2c iter 3 — LLM-authored Tier 4 (approved + sandbox-passed only)
+        if HAS_LLM_PROPOSALS and self.READ_LLM_PROPOSALS:
+            try:
+                approved = executable_llm_proposals(self.AGENT_NAME_FOR_TICKETS)
+            except Exception as e:
+                log.warning(f"executable_llm_proposals query failed: {e}")
+                approved = []
+            for row in approved:
+                name = row.get("name") or row.get("proposal_id", "unknown")
+                wrapped_name = f"LLM__{name}"
+                if wrapped_name in own_names:
+                    continue
+                apply_code = row.get("apply_code") or ""
+                revert_code = row.get("revert_code") or ""
+                if not apply_code or not revert_code:
+                    continue
+                # Build apply/revert callables that exec the LLM code in a
+                # restricted namespace against the REAL agent + state. The
+                # exec()s here are NOT subprocess-isolated — once human
+                # approved (after sandbox passed), we trust the code enough
+                # to run it in-process. Failures still rolled back by the
+                # mixin's experiment loop on apply_failed.
+                def _make_llm_apply(code):
+                    def _apply(agent, agent_state):
+                        from agents._shared._sandbox_worker import SAFE_BUILTINS
+                        ns = {"__builtins__": SAFE_BUILTINS}
+                        exec(compile(code, "<llm_apply_live>", "exec"), ns)
+                        return ns["apply"](agent, agent_state)
+                    return _apply
+
+                def _make_llm_revert(code):
+                    def _revert(agent, agent_state, snapshot):
+                        from agents._shared._sandbox_worker import SAFE_BUILTINS
+                        ns = {"__builtins__": SAFE_BUILTINS}
+                        exec(compile(code, "<llm_revert_live>", "exec"), ns)
+                        return ns["revert"](agent, agent_state, snapshot)
+                    return _revert
+
+                own.append(Adaptation(
+                    name=wrapped_name,
+                    description=(f"LLM-authored ({row.get('llm_model', 'unknown')}): "
+                                 f"{row.get('description', name)}"),
+                    cost=row.get("cost", "unknown"),
+                    reversibility=row.get("reversibility", "manual_via_revert"),
+                    apply=_make_llm_apply(apply_code),
+                    revert=_make_llm_revert(revert_code),
+                    requires_human_approval=False,   # already approved (filter requirement)
+                ))
+                own_names.add(wrapped_name)
+
         # v2d.1 — void-derived adaptations
         if HAS_VOID_DETECTOR and self.READ_VOIDS:
             try:
@@ -535,13 +598,16 @@ class SelfImprovingDaemon:
         candidates = [a for a in effective if a.name not in tried_recently]
         if candidates:
             # Tier order:
-            #   0 = native (proven for this exact shape)
-            #   1 = COMPOUND__ (auto-composed pair of native atoms)
-            #   2 = BORROWED__ (proven for compatible shape elsewhere)
-            #   3 = VOID__ (predicted from geometric inference)
+            #   0 = native           (proven for this exact shape)
+            #   1 = COMPOUND__       (auto-composed pair of native atoms)
+            #   2 = BORROWED__       (proven for compatible shape elsewhere)
+            #   3 = VOID__           (predicted from geometric inference)
+            #   4 = LLM__            (approved+sandboxed LLM-authored, last resort)
             # Within each tier, prefer cheap cost.
             def _sort_key(a):
-                if a.name.startswith("VOID__"):
+                if a.name.startswith("LLM__"):
+                    tier = 4
+                elif a.name.startswith("VOID__"):
                     tier = 3
                 elif a.name.startswith("BORROWED__"):
                     tier = 2

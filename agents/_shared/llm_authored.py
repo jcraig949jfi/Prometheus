@@ -63,6 +63,14 @@ except Exception:
     HAS_LLM_CASCADE = False
     call_llm_with_provider = None  # type: ignore
 
+try:
+    from agents._shared.llm_sandbox import sandbox_test, mark_sandbox_result_in_audit
+    HAS_SANDBOX = True
+except Exception:
+    HAS_SANDBOX = False
+    sandbox_test = None  # type: ignore
+    mark_sandbox_result_in_audit = None  # type: ignore
+
 log = logging.getLogger("llm_authored")
 
 # Rate limiting — per-agent default. Subclasses can raise this once
@@ -382,7 +390,7 @@ def propose_llm_mutation(
         reversibility=reversibility,
         apply_code=apply_code,
         revert_code=revert_code,
-        sandbox_status="untested",   # iter 3 will flip to passed/failed
+        sandbox_status="untested",
         safety_violations=safety_violations,
         human_approval="pending",
     )
@@ -390,4 +398,77 @@ def propose_llm_mutation(
         append_to_audit_log(proposal, audit_path)
     except Exception as e:
         log.warning(f"audit log append failed: {e}")
+
+    # v2c iter 3: auto-sandbox proposals that pass static safety
+    if (HAS_SANDBOX and parse_succeeded and not safety_violations
+            and apply_code and revert_code):
+        try:
+            sb_result = sandbox_test(
+                apply_code=apply_code, revert_code=revert_code,
+                mock_agent_dict={
+                    "name": agent_name, "traits": list(agent_traits),
+                    "purpose": agent_purpose,
+                },
+                mock_state_dict={},  # caller can pass a realistic mock later
+                timeout_sec=10,
+            )
+            sandbox_status = "passed" if sb_result.passed else "sandbox_failed"
+            proposal.sandbox_status = sandbox_status
+            try:
+                mark_sandbox_result_in_audit(
+                    proposal.proposal_id, sandbox_status,
+                    error=sb_result.error, audit_path=audit_path)
+            except Exception as e:
+                log.warning(f"sandbox result mark failed: {e}")
+        except Exception as e:
+            log.warning(f"sandbox invocation failed: {e}")
+
     return proposal
+
+
+def file_approval_ticket(
+    proposal: LLMAuthoredProposal,
+    inbox_path: Path,
+) -> bool:
+    """File an approval-request ticket to the operator's inbox. Called after
+    a proposal passes sandbox. Human flips human_approval='approved' in
+    the audit log to make the proposal executable as Tier 4 menu item."""
+    ticket = {
+        "id": f"T-{datetime.now(timezone.utc).strftime('%Y-%m-%d')}-{proposal.agent_name}-llm-mutation-{proposal.proposal_id[:8]}",
+        "source": proposal.agent_name,
+        "target": "aporia",
+        "type": "llm-authored-mutation-approval",
+        "priority": "P2-medium",
+        "title": f"{proposal.agent_name}: LLM-authored mutation {proposal.name} awaits approval",
+        "payload": {
+            "proposal_id": proposal.proposal_id,
+            "agent_name": proposal.agent_name,
+            "name": proposal.name,
+            "description": proposal.description,
+            "hypothesis": proposal.hypothesis,
+            "cost": proposal.cost,
+            "llm_model": proposal.llm_model,
+            "sandbox_status": proposal.sandbox_status,
+            "safety_violations": proposal.safety_violations,
+            "apply_code": proposal.apply_code,
+            "revert_code": proposal.revert_code,
+            "ask": (
+                "Review code + approve by setting human_approval='approved' "
+                "on this proposal_id in the audit log "
+                f"(agents/_shared/llm_authored_mutations_audit.jsonl). "
+                "After approval, the agent's SelfImprovingDaemon will surface "
+                "the mutation as a Tier 4 menu item executable against real state."
+            ),
+        },
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "created_by": proposal.agent_name,
+        "status": "OPEN",
+    }
+    try:
+        inbox_path.parent.mkdir(parents=True, exist_ok=True)
+        with inbox_path.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(ticket, ensure_ascii=False) + "\n")
+        return True
+    except Exception as e:
+        log.error(f"approval-ticket file failed: {e}")
+        return False
