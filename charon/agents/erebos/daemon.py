@@ -32,8 +32,16 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Optional
 
+import time
+import uuid
+
 from charon.agents._base import CharonAgent
 from charon.agents._shared_queues import stygian_priority_queue
+from charon.agents.erebos._logging import (
+    GeneratorTickLog,
+    emit_tick_log,
+    hash_falsification_route,
+)
 from charon.agents.erebos.generators import (
     REGISTRY,
     next_plugin_round_robin,
@@ -333,45 +341,87 @@ class ErebosAgent(CharonAgent):
             "enqueued_to_stygian": False,
             "skip_reason": None,
         }
+        # Per-plugin structured log (DNA P4). Populated through the
+        # tick + emitted at the end regardless of outcome.
+        tick_t0 = time.time()
+        tick_id = uuid.uuid4().hex[:16]
+        tick_log = GeneratorTickLog(
+            ts=datetime.now(timezone.utc).isoformat(),
+            plugin_id="<unset>",
+            tick_id=tick_id,
+            applicable=False,
+        )
 
         state = self._build_swarm_state()
         stats["stygian_substantive_recent"] = len(state.stygian_substantive)
         stats["pollux_substantive_recent"] = len(state.pollux_substantive)
         stats["crossgen_patterns_found"] = len(state.hecate_crossgen_canonical)
+        tick_log.inputs_summary = {
+            "stygian_substantive": len(state.stygian_substantive),
+            "pollux_substantive": len(state.pollux_substantive),
+            "crossgen_patterns": len(state.hecate_crossgen_canonical),
+            "tried_pairs_size": len(state.tried_pairs),
+        }
 
         if dry_run:
             stats["items_processed"] += 1
+            tick_log.elapsed_ms = (time.time() - tick_t0) * 1000
+            emit_tick_log(tick_log)
             return stats
 
         last_plugin_id = self.load_state("last_plugin_id", None)
         plugin = next_plugin_round_robin(state, last_plugin_id)
         if plugin is None:
             stats["skip_reason"] = "no_applicable_plugin"
+            tick_log.plugin_id = "no_applicable_plugin"
+            tick_log.applicable = False
+            tick_log.transformation_path = "skip:no_applicable"
+            tick_log.error = None
             try:
                 self._emit_self_audit_null(stats["skip_reason"])
                 stats["artifacts_written"] += 1
             except Exception as e:
                 self.log.warning(f"self_audit_null emit failed: {e}")
                 stats["errors"] += 1
+                tick_log.error = f"self_audit_null_emit_failed: {e}"
             stats["items_processed"] += 1
             self.log_work(
                 "erebos_tick_complete",
                 summary=f"skip ({stats['skip_reason']})",
                 success=stats["errors"] == 0,
             )
+            tick_log.elapsed_ms = (time.time() - tick_t0) * 1000
+            emit_tick_log(tick_log)
             return stats
 
         stats["plugin_id"] = plugin.id
+        tick_log.plugin_id = plugin.id
+        tick_log.applicable = True
+
         claim = plugin.generate(state)
         if claim is None:
             stats["skip_reason"] = f"{plugin.id}_returned_none"
+            tick_log.transformation_path = "skip:plugin_returned_none"
             try:
                 self._emit_self_audit_null(stats["skip_reason"])
                 stats["artifacts_written"] += 1
-            except Exception:
+            except Exception as e:
                 stats["errors"] += 1
+                tick_log.error = f"self_audit_null_emit_failed: {e}"
             stats["items_processed"] += 1
+            tick_log.elapsed_ms = (time.time() - tick_t0) * 1000
+            emit_tick_log(tick_log)
             return stats
+
+        # Plugin generated a claim
+        tick_log.generated = True
+        tick_log.composed_id = claim.composed_id
+        tick_log.parent_record_ids = list(claim.parent_record_ids)
+        tick_log.transformation_path = claim.transformation_description[:200]
+        tick_log.expected_kill_pattern = claim.expected_kill_pattern
+        tick_log.falsification_route_hash = hash_falsification_route(
+            claim.falsification_route
+        )
 
         try:
             self._emit_composed_claim_artifact(claim, plugin)
@@ -379,6 +429,7 @@ class ErebosAgent(CharonAgent):
         except Exception as e:
             self.log.exception(f"composed-claim artifact emit failed: {e}")
             stats["errors"] += 1
+            tick_log.error = f"composed_claim_artifact_failed: {e}"
 
         try:
             rid = self._emit_kill_ledger_row(claim, plugin)
@@ -386,6 +437,7 @@ class ErebosAgent(CharonAgent):
         except Exception as e:
             self.log.exception(f"kill_ledger emit failed: {e}")
             stats["errors"] += 1
+            tick_log.error = f"kill_ledger_emit_failed: {e}"
             rid = None
 
         if rid is not None:
@@ -409,4 +461,6 @@ class ErebosAgent(CharonAgent):
             ),
             success=stats["errors"] == 0,
         )
+        tick_log.elapsed_ms = (time.time() - tick_t0) * 1000
+        emit_tick_log(tick_log)
         return stats
