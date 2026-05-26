@@ -5583,3 +5583,21 @@ Delta: +8
 - **f4** — records=607138, throughput=78832027.7/h, info_density=0.534, diversity=0.772, yield_score=0.0042, dup_rate=0.000, kills=399487, conf=207651, errs=0
 - **g4** — records=566675, throughput=214019093.6/h, info_density=0.595, diversity=0.802, yield_score=0.0047, dup_rate=0.067, kills=30573, conf=536102, errs=0
 
+
+## batch-20260526T033405Z-a1f3af
+
+- Started: 2026-05-26T03:34:05.244718+00:00
+- Ended:   2026-05-26T03:58:05.213760+00:00
+- Duration: 0.4000 h
+- Requested: e2,e4,f3,c3,c2
+- Active:    e2,e4,f3,c3,c2
+- Records: 2234164 (kills=1113039, confirmations=1120468, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **c2** — records=589356, throughput=101822796.0/h, info_density=0.564, diversity=0.783, yield_score=0.0037, dup_rate=0.357, kills=209583, conf=379773, errs=0
+- **c3** — records=727620, throughput=75169512.4/h, info_density=0.561, diversity=0.764, yield_score=0.0039, dup_rate=0.206, kills=286037, conf=441583, errs=0
+- **e2** — records=424, throughput=12285.1/h, info_density=0.200, diversity=0.954, yield_score=0.0016, dup_rate=1.000, kills=0, conf=0, errs=0
+- **e4** — records=233, throughput=2442.7/h, info_density=0.200, diversity=0.945, yield_score=0.0016, dup_rate=1.000, kills=0, conf=0, errs=0
+- **f3** — records=916531, throughput=104776336.1/h, info_density=0.533, diversity=0.756, yield_score=0.0041, dup_rate=0.000, kills=617419, conf=299112, errs=0
+

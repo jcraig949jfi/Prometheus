@@ -9597,6 +9597,52 @@ recent fires).
 480.7M records, 273.3M kills, 2291 promoted, 2643 templates,
 0 verified findings.*
 
+---
+
+## Fire #138 — 2026-05-26 ~03:34Z — **TWO UNDER-SAT EXPLORERS**
+
+**2.23M records / 24 min / 0 templates / 20 promoted.
+Mix c2/c3/e2/e4/f3. e2 AND e4 both at 87% saturation —
+bandit picked two under-100% gens (first time in long
+while). Both small-reservoir (424, 233 records).**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate  sat
+    f3   916,531   0          67.4%      100%
+    c3   727,620   0          39.3%      100%
+    c2   589,356   0          35.6%      100%
+    e2       424   0           0.0%       87% ← under-sat
+    e4       233   0           0.0%       87% ← under-sat
+
+### Batch result
+
+- batch_id: `batch-20260526T033405Z-a1f3af`
+- Duration: 24 min wall, 637/s tick rate
+- 2,234,164 records / 1,113,039 kills / 1,120,468 confirms / 0 errors
+- 20 promoted records → **2311 lifetime promoted**
+- 0 new templates → 2643 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+- batch_end ✓
+
+Lifetime: 133 batches journaled / 482.9M records / 274.4M kills /
+2311 promoted / 2643 templates / 0 verified findings.
+
+### Notable
+
+- TWO under-saturated explorers picked simultaneously — first
+  in many fires. Both e2 and e4 hit reservoir-fixed limits
+  fast (<500 records each). The "explorer reservoir is shallow"
+  pattern (b5/g1-class) confirmed for e-family.
+- 24min RSS climbed steadily 320 → 2.6GB. Some gen here is
+  accumulating memory — worth flagging if pattern persists.
+
+---
+
+*Fire #138 throttled = 2.23M records / 20 promoted / 0 templates.
+482.9M records, 274.4M kills, 2311 promoted, 2643 templates,
+0 verified findings.*
+
 
 
 
