@@ -9741,6 +9741,82 @@ stalled. Awaiting strategic direction.
 487.2M records, 277.0M kills, 2351 promoted, 2643 templates,
 0 verified findings.*
 
+---
+
+## Fire #141 — 2026-05-26 ~05:07Z — **LOOP HALT (USER DIRECTION)**
+
+**32K records / 24 min / 1 template / 0 promoted. All small-
+reservoir gens. Tick rate 4171/s — NEW SESSION PEAK.
+Last fire under old training_weight; LOOP HALTED after this.**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate  role
+    c4   24,794   0           0.0%      TAUTOLOGY_CONTROL
+    a5    5,714   1          32.4%      DISCOVERY ← new template
+    e3    1,060   0          42.2%      DISCOVERY
+    b3      606   0          57.1%      DISCOVERY
+    e5      121   0           0.0%      DISCOVERY (scraper)
+
+### Batch result
+
+- batch_id: `batch-20260526T050705Z-8db8a0`
+- Duration: 24 min wall, **4171/s tick rate** (new session peak)
+- 32,295 records / 2,646 kills / 25,703 confirms / 0 errors
+- 0 promoted records → **2351 lifetime promoted** (unchanged)
+- +1 template (a5) → 2644 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+- batch_end ✓ (RSS 94MB — very low)
+
+Lifetime: 136 batches journaled / 487.2M records / 277.0M kills /
+2351 promoted (unchanged) / 2644 templates / 0 verified findings.
+
+### USER DIRECTION (post-fire)
+
+User responded "Do #1 and #3":
+- **#1 = training_weight fix** — shipped commit ed50b9bb
+  - Added PER_RELATION_INFO_CONTENT multiplier
+  - equal_mod_2: 0.65 base × 0.30 info = 0.195 (was 0.65)
+  - Validation: high-weight count 49,131 → 0 on same sample
+  - 11/11 tests pass (with H4 hierarchy explicitly noted as
+    intentionally inverted at weight level)
+- **#3 = halt-now** — middle-ground per frontier synthesis line 145
+  - No further wakeup scheduled
+  - handoff_daemon (if running) continues
+  - Awaiting user direction for next phase (frontier synthesis
+    steps 2-5: fetch_daemon, triage, autoformalization gate,
+    Path A vs Path B decision)
+
+### Session arc (Fires #58-#141, throttled subset #109-#141)
+
+**Operational shipped:**
+- e1 reclassified EXHAUSTED (+33% tick rate)
+- h2 corpus-scan cap (silent-hang fix, validated Fire #134)
+- d3/d4 defensive caps (preventive)
+- Threaded heartbeat watchdog (commit a92c364c)
+- batch_end heartbeat event (commit 78c98906)
+- atexit crash detection (commit 4a0fece6)
+- Promoted-record triage report (commit 1321ba7c)
+- training_weight info-content multiplier (commit ed50b9bb)
+
+**Throughput trajectory**: 423 → 1099 → 1381 → 3678 → 4171/s
+
+**Strategic status**:
+- Substrate operationally healthy
+- Loop halted at 136 batches, 487M records, 0 verified findings
+- Triage finding actioned via training_weight fix
+- 4 frontier-synthesis next steps await user direction:
+  - Step 2: Build fetch_daemon
+  - Step 3: 300-record stratified triage
+  - Step 4: Lean 4 autoformalization gate
+  - Step 5: Path A (evolutionary) vs Path B (neural-symbolic)
+
+---
+
+*Fire #141 throttled = 32K records / 0 promoted / 1 template.
+487.2M records, 277.0M kills, 2351 promoted, 2644 templates,
+0 verified findings. **LOOP HALTED post-#141 per user direction.***
+
 
 
 
