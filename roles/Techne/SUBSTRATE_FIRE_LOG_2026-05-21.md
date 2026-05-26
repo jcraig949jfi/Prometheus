@@ -9369,6 +9369,52 @@ Lifetime: 127 batches journaled / 468.8M records / 265.7M kills /
 468.8M records, 265.7M kills, 2191 promoted, 2643 templates,
 0 verified findings.*
 
+---
+
+## Fire #133 — 2026-05-26 ~00:59Z — **A3 SOLO BURN**
+
+**2.94M records / 24 min / 0 templates / 20 promoted.
+a3 emitted 2.94M of the 2.94M total — 99.9% from one gen.
+Tick rate 2061/s, second-highest of session. The other
+4 picked gens (b1/b3/e3/g1) all small-reservoir, totalled
+~3.2K records.**
+
+### Per-gen attribution
+
+    gid  records     templates  kill_rate
+    a3   2,939,388   0          63.6%
+    b1       1,340   0           0.0%
+    e3       1,060   0          42.2%
+    b3         606   0          57.1%
+    g1         184   0          58.7%
+
+### Batch result
+
+- batch_id: `batch-20260526T005954Z-9a54f4`
+- Duration: 24 min wall, **2061/s tick rate** (2nd peak after #122)
+- 2,942,578 records / 1,869,824 kills / 1,072,754 confirms / 0 errors
+- 20 promoted records → **2211 lifetime promoted**
+- 0 new templates → 2643 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+- batch_end ✓
+
+Lifetime: 128 batches journaled / 471.8M records / 267.6M kills /
+2211 promoted / 2643 templates / 0 verified findings.
+
+### Notable
+
+- a3 dominance: 99.9% of records from a single gen. Bandit
+  + cooldown didn't redistribute because the small-reservoir
+  gens hit their walls fast and a3 absorbed the rest.
+- Tick rate 2061/s reflects this — a3's next() is very fast
+  when warm.
+
+---
+
+*Fire #133 throttled = 2.94M records / 20 promoted / 0 templates.
+471.8M records, 267.6M kills, 2211 promoted, 2643 templates,
+0 verified findings.*
+
 
 
 
