@@ -1,6 +1,6 @@
 # Erebos plugin review -- g01_intersection
 
-**Date:** 2026-05-26T10:36:52.847517+00:00
+**Date:** 2026-05-26T16:50:09.186996+00:00
 **Window:** last 7 days
 **Source:** `charon/agents/erebos/logs/g01_intersection_*.jsonl`
 **DNA reference:** P5 (continuous review cycle)
@@ -18,21 +18,21 @@
 
 ## Tick stats
 
-- total ticks: 3
-- applicable: 3
-- generated: 3
+- total ticks: 5
+- applicable: 5
+- generated: 5
 - errors: 0
-- distinct composed_ids: 3
-- elapsed_ms mean / p95: 96.1 / 65.0
+- distinct composed_ids: 5
+- elapsed_ms mean / p95: 85.5 / 70.0
 - falsification_route_hash distinct: 1
 
 ## Transformation paths (top)
 
-- `Extract subject from Stygian claim; restrict to Pollux PROMOTED pair's subset(s)` -- 3
+- `Extract subject from Stygian claim; restrict to Pollux PROMOTED pair's subset(s)` -- 5
 
 ## Expected kill patterns emitted
 
-- `base_rate_failure` (matches declared) -- 3
+- `base_rate_failure` (matches declared) -- 5
 
 ---
 

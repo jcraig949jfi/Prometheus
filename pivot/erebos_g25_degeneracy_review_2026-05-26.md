@@ -1,6 +1,6 @@
 # Erebos plugin review -- g25_degeneracy
 
-**Date:** 2026-05-26T10:36:53.067543+00:00
+**Date:** 2026-05-26T16:50:09.215995+00:00
 **Window:** last 7 days
 **Source:** `charon/agents/erebos/logs/g25_degeneracy_*.jsonl`
 **DNA reference:** P5 (continuous review cycle)
@@ -18,21 +18,22 @@
 
 ## Tick stats
 
-- total ticks: 2
-- applicable: 2
-- generated: 2
+- total ticks: 4
+- applicable: 4
+- generated: 4
 - errors: 0
-- distinct composed_ids: 1
-- elapsed_ms mean / p95: 114.2 / 67.3
-- falsification_route_hash distinct: 1
+- distinct composed_ids: 2
+- elapsed_ms mean / p95: 117.6 / 161.1
+- falsification_route_hash distinct: 2
 
 ## Transformation paths (top)
 
-- `Substitute parent claim's object with the registered degenerate state for `BL-C-` -- 2
+- `Substitute parent claim's object with the registered degenerate state for `BL-C-` -- 3
+- `Substitute parent claim's object with the registered degenerate state for `BL-C-` -- 1
 
 ## Expected kill patterns emitted
 
-- `division_by_zero_or_type_error` (matches declared) -- 2
+- `division_by_zero_or_type_error` (matches declared) -- 4
 
 ---
 

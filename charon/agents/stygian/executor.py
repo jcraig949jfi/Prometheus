@@ -161,6 +161,9 @@ def execute_attack(problem: dict, attack_plan_path: Optional[str] = None) -> dic
             # @register side-effects. Add new composition loaders here
             # as they ship.
             import charon.agents.stygian.loaders.composition_g02_lehmer_salem  # noqa: F401
+            import charon.agents.stygian.loaders.composition_g09_lehmer_ablation  # noqa: F401
+            import charon.agents.stygian.loaders.composition_g25_lehmer_degenerate  # noqa: F401
+            import charon.agents.stygian.loaders.composition_g02_g04_lehmer_tightened  # noqa: F401
             from charon.agents.stygian.loaders._composition import find_loader
         except Exception as e:
             return _emit_short_circuit_row(

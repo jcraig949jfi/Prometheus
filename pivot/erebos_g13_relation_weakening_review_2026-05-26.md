@@ -1,6 +1,6 @@
 # Erebos plugin review -- g13_relation_weakening
 
-**Date:** 2026-05-26T10:36:52.866518+00:00
+**Date:** 2026-05-26T16:50:09.204993+00:00
 **Window:** last 7 days
 **Source:** `charon/agents/erebos/logs/g13_relation_weakening_*.jsonl`
 **DNA reference:** P5 (continuous review cycle)
@@ -18,21 +18,21 @@
 
 ## Tick stats
 
-- total ticks: 2
-- applicable: 2
-- generated: 2
+- total ticks: 3
+- applicable: 3
+- generated: 3
 - errors: 0
-- distinct composed_ids: 2
-- elapsed_ms mean / p95: 66.5 / 62.0
+- distinct composed_ids: 3
+- elapsed_ms mean / p95: 68.3 / 71.0
 - falsification_route_hash distinct: 1
 
 ## Transformation paths (top)
 
-- `Detect strongest predicate in parent text (`exact_equality` rank 5); descend one` -- 2
+- `Detect strongest predicate in parent text (`exact_equality` rank 5); descend one` -- 3
 
 ## Expected kill patterns emitted
 
-- `predicate_weakened_to_triviality` (matches declared) -- 2
+- `predicate_weakened_to_triviality` (matches declared) -- 3
 
 ---
 

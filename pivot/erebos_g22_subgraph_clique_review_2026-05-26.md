@@ -1,6 +1,6 @@
 # Erebos plugin review -- g22_subgraph_clique
 
-**Date:** 2026-05-26T10:36:52.871517+00:00
+**Date:** 2026-05-26T16:50:09.210995+00:00
 **Window:** last 7 days
 **Source:** `charon/agents/erebos/logs/g22_subgraph_clique_*.jsonl`
 **DNA reference:** P5 (continuous review cycle)
@@ -18,21 +18,21 @@
 
 ## Tick stats
 
-- total ticks: 1
-- applicable: 1
-- generated: 1
+- total ticks: 3
+- applicable: 3
+- generated: 3
 - errors: 0
-- distinct composed_ids: 1
-- elapsed_ms mean / p95: 71.0 / 71.0
+- distinct composed_ids: 3
+- elapsed_ms mean / p95: 88.6 / 71.0
 - falsification_route_hash distinct: 1
 
 ## Transformation paths (top)
 
-- `Build payload-key Jaccard graph over Erebos self-ledger; greedy clique-detection` -- 1
+- `Build payload-key Jaccard graph over Erebos self-ledger; greedy clique-detection` -- 3
 
 ## Expected kill patterns emitted
 
-- `counterexample_breaks_master_unification` (matches declared) -- 1
+- `counterexample_breaks_master_unification` (matches declared) -- 3
 
 ---
 

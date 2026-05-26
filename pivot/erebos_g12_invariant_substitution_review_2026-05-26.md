@@ -1,6 +1,6 @@
 # Erebos plugin review -- g12_invariant_substitution
 
-**Date:** 2026-05-26T10:36:52.861518+00:00
+**Date:** 2026-05-26T16:50:09.200994+00:00
 **Window:** last 7 days
 **Source:** `charon/agents/erebos/logs/g12_invariant_substitution_*.jsonl`
 **DNA reference:** P5 (continuous review cycle)
@@ -18,21 +18,22 @@
 
 ## Tick stats
 
-- total ticks: 3
-- applicable: 3
-- generated: 3
+- total ticks: 4
+- applicable: 4
+- generated: 4
 - errors: 0
-- distinct composed_ids: 3
-- elapsed_ms mean / p95: 59.1 / 58.0
-- falsification_route_hash distinct: 1
+- distinct composed_ids: 4
+- elapsed_ms mean / p95: 63.1 / 61.3
+- falsification_route_hash distinct: 2
 
 ## Transformation paths (top)
 
 - `Substitute `salem_class` -> `smyth_extremal` (similarity 0.70) in parent claim t` -- 3
+- `Substitute `degree` -> `cyclotomic_flag` (similarity 0.60) in parent claim text.` -- 1
 
 ## Expected kill patterns emitted
 
-- `syntactic_or_semantic_failure` (matches declared) -- 3
+- `syntactic_or_semantic_failure` (matches declared) -- 4
 
 ---
 
