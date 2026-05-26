@@ -227,7 +227,19 @@ TEXT_BATTERY = [
      "candidates": ["Yes", "No", "Maybe"], "correct": "No", "category": "modus_tollens"},
 ]
 
-FULL_BATTERY = PUZZLE_BATTERY + TEXT_BATTERY
+# Static battery (hand-crafted, fixed)
+STATIC_BATTERY = PUZZLE_BATTERY + TEXT_BATTERY
+
+# Full battery: static + generated (fresh puzzles every run)
+try:
+    from puzzle_gen import generate_battery as _gen_puzzles
+    _GENERATED = _gen_puzzles(n=30, seed=42)
+    FULL_BATTERY = STATIC_BATTERY + _GENERATED
+    logging.getLogger("diversity_forge").info(
+        "Battery: %d static + %d generated = %d total",
+        len(STATIC_BATTERY), len(_GENERATED), len(FULL_BATTERY))
+except ImportError:
+    FULL_BATTERY = STATIC_BATTERY
 
 # ---------------------------------------------------------------------------
 # Prompt templates for diversity — one per "island"
