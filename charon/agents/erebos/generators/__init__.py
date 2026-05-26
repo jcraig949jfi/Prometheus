@@ -33,14 +33,19 @@ from charon.agents.erebos.generators.g01_intersection import IntersectionGenerat
 from charon.agents.erebos.generators.g02_contrast import ContrastGenerator
 from charon.agents.erebos.generators.g03_failure_neighborhood import FailureNeighborhoodGenerator
 from charon.agents.erebos.generators.g04_survivor_tightening import SurvivorTighteningGenerator
+from charon.agents.erebos.generators.g07_analogy import AnalogyGenerator
 from charon.agents.erebos.generators.g09_projection_collapse import ProjectionCollapseGenerator
+from charon.agents.erebos.generators.g10_boundary import BoundaryGenerator
 from charon.agents.erebos.generators.g11_exception_miner import ExceptionMinerGenerator
 from charon.agents.erebos.generators.g12_invariant_substitution import InvariantSubstitutionGenerator
 from charon.agents.erebos.generators.g13_relation_weakening import RelationWeakeningGenerator
 from charon.agents.erebos.generators.g14_relation_strengthening import RelationStrengtheningGenerator
 from charon.agents.erebos.generators.g15_cross_gen_mi import CrossGenMIGenerator
+from charon.agents.erebos.generators.g17_causal_intervention import CausalInterventionGenerator
 from charon.agents.erebos.generators.g18_minimal_counterexample import MinimalCounterexampleGenerator
+from charon.agents.erebos.generators.g20_instrument_disagreement import InstrumentDisagreementGenerator
 from charon.agents.erebos.generators.g22_subgraph_clique import SubgraphCliqueGenerator
+from charon.agents.erebos.generators.g23_asymptotic_limit import AsymptoticLimitGenerator
 from charon.agents.erebos.generators.g24_symmetry_twist import SymmetryTwistGenerator
 from charon.agents.erebos.generators.g25_degeneracy import DegeneracyGenerator
 
@@ -51,17 +56,22 @@ _PLUGINS: list[GeneratorPlugin] = [
     IntersectionGenerator(),           # Phase 1, Tier S
     ContrastGenerator(),               # Phase 1, Tier S
     ProjectionCollapseGenerator(),     # Phase 2, Tier S
+    InstrumentDisagreementGenerator(), # Phase 4, Tier S (new v0.13)
     InvariantSubstitutionGenerator(),  # Phase 3, Tier A
     RelationWeakeningGenerator(),      # Phase 3, Tier A
     RelationStrengtheningGenerator(),  # Phase 3, Tier A
     SubgraphCliqueGenerator(),         # Phase 5, Tier A
-    SymmetryTwistGenerator(),          # Phase 5, Tier A (new v0.12)
+    SymmetryTwistGenerator(),          # Phase 5, Tier A
     DegeneracyGenerator(),             # Phase 5, Tier A
-    FailureNeighborhoodGenerator(),    # Phase 1, Tier B (new v0.12)
+    FailureNeighborhoodGenerator(),    # Phase 1, Tier B
     SurvivorTighteningGenerator(),     # Phase 1, Tier B
-    ExceptionMinerGenerator(),         # Phase 3, Tier B (new v0.12)
-    CrossGenMIGenerator(),             # Phase 3, Tier B (new v0.12)
-    MinimalCounterexampleGenerator(),  # Phase 4, Tier B (new v0.12)
+    BoundaryGenerator(),               # Phase 2, Tier B (new v0.13)
+    ExceptionMinerGenerator(),         # Phase 3, Tier B
+    CrossGenMIGenerator(),             # Phase 3, Tier B
+    CausalInterventionGenerator(),     # Phase 4, Tier B (new v0.13)
+    MinimalCounterexampleGenerator(),  # Phase 4, Tier B
+    AsymptoticLimitGenerator(),        # Phase 5, Tier B (new v0.13)
+    AnalogyGenerator(),                # Phase 2, Tier C (new v0.13 MVP)
 ]
 
 REGISTRY: dict[str, GeneratorPlugin] = {p.id: p for p in _PLUGINS}
