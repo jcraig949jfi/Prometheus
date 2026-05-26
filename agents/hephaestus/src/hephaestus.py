@@ -682,6 +682,148 @@ def _compute_novelty(code: str) -> dict:
     }
 
 
+BEHAVIORAL_VECTORS_PATH = HEPHAESTUS_ROOT / "behavioral_vectors.json"
+_behavioral_cache = None  # Lazy-loaded
+
+
+def _get_behavioral_battery():
+    """Get a compact stable battery for behavioral fingerprinting.
+
+    Uses 15 static traps only (not generated puzzles) to keep the
+    cache build fast. 15 problems × 5s timeout = max 75s per tool.
+    """
+    from test_harness import TRAPS
+    return TRAPS
+
+
+def _get_answer_vector(tool, battery):
+    """Run tool on battery, return answer vector (which candidate it picks)."""
+    import threading
+    answers = []
+    for problem in battery:
+        result = [None]
+        done = threading.Event()
+
+        def _run():
+            try:
+                ranked = tool.evaluate(problem["prompt"], problem["candidates"])
+                if ranked:
+                    result[0] = ranked[0].get("candidate", "")
+            except Exception:
+                pass
+            finally:
+                done.set()
+
+        t = threading.Thread(target=_run, daemon=True)
+        t.start()
+        done.wait(timeout=5)
+        answers.append(result[0] or "")
+    return answers
+
+
+def _load_behavioral_cache():
+    """Load or build the behavioral vector cache for the library."""
+    global _behavioral_cache
+
+    if _behavioral_cache is not None:
+        return _behavioral_cache
+
+    # Try loading from disk
+    if BEHAVIORAL_VECTORS_PATH.exists():
+        try:
+            data = json.loads(BEHAVIORAL_VECTORS_PATH.read_text(encoding="utf-8"))
+            if data.get("battery_hash") and data.get("vectors"):
+                _behavioral_cache = data
+                return _behavioral_cache
+        except Exception:
+            pass
+
+    # Build fresh — sample up to 50 tools for speed
+    battery = _get_behavioral_battery()
+    battery_hash = str(len(battery))
+
+    vectors = {}
+    import random as _rng
+    all_files = sorted(FORGE_DIR.glob("*.py"))
+    sample = all_files[:50] if len(all_files) <= 50 else _rng.Random(42).sample(all_files, 50)
+    logger.info("Building behavioral cache: %d tools x %d problems...", len(sample), len(battery))
+    for py_file in sample:
+        if py_file.name.startswith("_"):
+            continue
+        try:
+            tool = load_tool_from_code(py_file.read_text(encoding="utf-8"))
+            vec = _get_answer_vector(tool, battery)
+            vectors[py_file.name] = vec
+        except Exception:
+            continue
+
+    _behavioral_cache = {
+        "battery_hash": battery_hash,
+        "vectors": vectors,
+        "built_at": datetime.now().isoformat(),
+    }
+
+    # Save to disk
+    try:
+        BEHAVIORAL_VECTORS_PATH.write_text(
+            json.dumps(_behavioral_cache, indent=2), encoding="utf-8")
+    except Exception:
+        pass
+
+    return _behavioral_cache
+
+
+def compute_behavioral_novelty(tool, code: str = None) -> dict:
+    """Compute behavioral NCD: how different are this tool's ANSWERS from
+    existing library tools' answers on the same battery.
+
+    Unlike source-code NCD which measures syntax similarity, behavioral NCD
+    measures whether the tool solves different problems. Two tools with
+    identical code structure but different answer patterns score as different.
+    Two tools with different code but identical answers score as same.
+
+    Returns dict with:
+        behavioral_min_ncd: distance to nearest behavioral neighbor
+        behavioral_mean_ncd: average behavioral distance
+        behavioral_nearest: filename of most behaviorally similar tool
+        library_size: how many tools compared
+    """
+    import zlib
+
+    battery = _get_behavioral_battery()
+    new_vec = _get_answer_vector(tool, battery)
+    new_bytes = "|".join(new_vec).encode("utf-8")
+    c_new = len(zlib.compress(new_bytes))
+
+    cache = _load_behavioral_cache()
+    vectors = cache.get("vectors", {})
+
+    if not vectors:
+        return {"behavioral_min_ncd": 1.0, "behavioral_mean_ncd": 1.0,
+                "behavioral_nearest": None, "library_size": 0}
+
+    ncds = []
+    nearest_name = None
+    min_ncd = 1.0
+
+    for name, vec in vectors.items():
+        old_bytes = "|".join(vec).encode("utf-8")
+        c_old = len(zlib.compress(old_bytes))
+        c_both = len(zlib.compress(new_bytes + b"|||" + old_bytes))
+        ncd = (c_both - min(c_new, c_old)) / max(c_new, c_old)
+        ncds.append(ncd)
+        if ncd < min_ncd:
+            min_ncd = ncd
+            nearest_name = name
+
+    return {
+        "behavioral_min_ncd": round(min_ncd, 4),
+        "behavioral_mean_ncd": round(sum(ncds) / len(ncds), 4) if ncds else 1.0,
+        "behavioral_nearest": nearest_name,
+        "library_size": len(vectors),
+    }
+
+
 def safe_filename(names: list[str]) -> str:
     """Turn concept names into a filesystem-safe filename."""
     joined = "_x_".join(n.replace(" ", "_") for n in names)
@@ -1168,11 +1310,22 @@ def forge_one_with_refinement(client: OpenAI, entry: dict, model: str,
     # 5. Check novelty gate + save
     if not test_results["passed"]:
         novelty = _compute_novelty(code)
-        if novelty["min_ncd"] > 0.85 and test_results["accuracy"] >= 0.20:
-            logger.info("  NOVELTY GATE (after %d refinements): acc=%.0f%% novelty=%.3f",
-                        refinement_rounds, test_results["accuracy"] * 100, novelty["min_ncd"])
+        behavioral = {"behavioral_min_ncd": 0}
+        try:
+            tool_for_behav = load_tool_from_code(code)
+            behavioral = compute_behavioral_novelty(tool_for_behav, code)
+        except Exception:
+            pass
+        source_novel = novelty["min_ncd"] > 0.85
+        behav_novel = behavioral.get("behavioral_min_ncd", 0) > 0.70
+        if (source_novel or behav_novel) and test_results["accuracy"] >= 0.20:
+            gate_type = "source+behavioral" if (source_novel and behav_novel) else ("behavioral" if behav_novel else "source")
+            logger.info("  NOVELTY GATE [%s] (after %d refinements): acc=%.0f%% src=%.3f behav=%.3f",
+                        gate_type, refinement_rounds,
+                        test_results["accuracy"] * 100,
+                        novelty["min_ncd"], behavioral.get("behavioral_min_ncd", 0))
             test_results["passed"] = True
-            test_results["admitted_via"] = "novelty_gate"
+            test_results["admitted_via"] = f"novelty_gate_{gate_type}"
 
     if test_results.get("passed"):
         save_forge(code, entry, test_results, run_dir, frame=frame)
@@ -1326,12 +1479,22 @@ def forge_one(client: OpenAI, entry: dict, model: str,
         # Novelty gate: admit tools that are structurally novel even if
         # they don't beat NCD on accuracy. Diverse substrate > convergent accuracy.
         novelty = _compute_novelty(code)
-        if novelty["min_ncd"] > 0.85 and test_results["accuracy"] >= 0.20:
-            # Novel enough to be valuable — forge it with novelty tag
-            logger.info("  NOVELTY GATE: acc=%.0f%% below NCD but novelty=%.3f — forging as novel",
-                        test_results["accuracy"] * 100, novelty["min_ncd"])
+        # Also check behavioral novelty (does it solve different problems?)
+        behavioral = {"behavioral_min_ncd": 0}
+        try:
+            tool_for_behav = load_tool_from_code(code)
+            behavioral = compute_behavioral_novelty(tool_for_behav, code)
+        except Exception:
+            pass
+        source_novel = novelty["min_ncd"] > 0.85
+        behav_novel = behavioral.get("behavioral_min_ncd", 0) > 0.70
+        if (source_novel or behav_novel) and test_results["accuracy"] >= 0.20:
+            gate_type = "source+behavioral" if (source_novel and behav_novel) else ("behavioral" if behav_novel else "source")
+            logger.info("  NOVELTY GATE [%s]: acc=%.0f%% src=%.3f behav=%.3f — forging as novel",
+                        gate_type, test_results["accuracy"] * 100,
+                        novelty["min_ncd"], behavioral.get("behavioral_min_ncd", 0))
             test_results["passed"] = True  # Override for save_forge
-            test_results["admitted_via"] = "novelty_gate"
+            test_results["admitted_via"] = f"novelty_gate_{gate_type}"
             save_forge(code, entry, test_results, run_dir, frame=frame)
             return {
                 "status": "forged",
