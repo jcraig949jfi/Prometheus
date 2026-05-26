@@ -9517,6 +9517,48 @@ Lifetime: 130 batches journaled / 475.6M records / 270.1M kills /
 475.6M records, 270.1M kills, 2251 promoted, 2643 templates,
 0 verified findings.*
 
+---
+
+## Fire #136 — 2026-05-26 ~02:32Z
+
+**2.93M records / 24 min / 0 templates / 20 promoted.
+Mix b4/c5/d4/e3/f4 — d4+f4 dominant (~1.27M each).
+Tick rate 917/s.**
+
+### Per-gen attribution
+
+    gid  records     templates  kill_rate
+    f4   1,319,515   0          65.8%
+    d4   1,242,657   0          67.0%
+    c5     363,541   0          64.3%
+    e3       1,060   0          42.2%
+    b4         606   0          73.6%
+
+### Batch result
+
+- batch_id: `batch-20260526T023205Z-cee713`
+- Duration: 24 min wall, 917/s tick rate
+- 2,927,379 records / 1,935,502 kills / 991,877 confirms / 0 errors
+- 20 promoted records → **2271 lifetime promoted**
+- 0 new templates → 2643 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+- batch_end ✓
+
+Lifetime: 131 batches journaled / 478.5M records / 272.0M kills /
+2271 promoted / 2643 templates / 0 verified findings.
+
+### Notable
+
+- d4 hit 1.24M records — second-largest d4 burn of session.
+  New scan cap (commit 7ea519ef) handles fine.
+- f4 + d4 in lockstep at ~1.27M each.
+
+---
+
+*Fire #136 throttled = 2.93M records / 20 promoted / 0 templates.
+478.5M records, 272.0M kills, 2271 promoted, 2643 templates,
+0 verified findings.*
+
 
 
 
