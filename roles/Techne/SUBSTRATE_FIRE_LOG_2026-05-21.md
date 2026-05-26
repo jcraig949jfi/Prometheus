@@ -9276,6 +9276,51 @@ Lifetime: 125 batches journaled / 463.2M records / 263.0M kills /
 463.2M records, 263.0M kills, 2151 promoted, 2643 templates,
 0 verified findings.*
 
+---
+
+## Fire #131 — 2026-05-25 ~23:59Z — **CROSSING TO 2026-05-26**
+
+**3.24M records / 24 min / 0 templates / 20 promoted.
+Mix c4/c5/e5/f2/g3 — heavy on TAUTOLOGY_CONTROL (c4+g3,
+~895K records combined). f2 dominant at 1.57M.**
+
+### Per-gen attribution
+
+    gid  records     templates  kill_rate  role
+    f2   1,565,438   0          65.8%      DISCOVERY (parity emitter)
+    c4     875,691   0           0.0%      TAUTOLOGY_CONTROL
+    c5     778,404   0          21.1%      DISCOVERY
+    g3      20,000   0           0.0%      TAUTOLOGY_CONTROL
+    e5         121   0           0.0%      DISCOVERY (scraper)
+
+### Batch result
+
+- batch_id: `batch-20260525T235923Z-c521d7`
+- Duration: 24 min wall, 1087/s tick rate
+- 3,239,654 records / 1,194,163 kills / 2,045,370 confirms / 0 errors
+- 20 promoted records → **2171 lifetime promoted**
+- 0 new templates → 2643 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+- batch_end ✓
+
+Lifetime: 126 batches journaled / 466.5M records / 264.2M kills /
+2171 promoted / 2643 templates / 0 verified findings.
+
+### Notable
+
+- Confirms > Kills (2.05M vs 1.19M) — c4 (TAUTOLOGY_CONTROL) is
+  by-construction 100% confirmation, pulled the average up.
+- Despite TAUTOLOGY_CONTROL gens being ~895K records this fire,
+  they're correctly filtered from disc-role template count
+  (still 2643). Filter mechanism works as designed.
+- 20 promoted came from f2/c5 — same parity-emitter pattern.
+
+---
+
+*Fire #131 throttled = 3.24M records / 20 promoted / 0 templates.
+466.5M records, 264.2M kills, 2171 promoted, 2643 templates,
+0 verified findings.*
+
 
 
 
