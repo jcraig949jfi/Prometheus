@@ -9415,6 +9415,58 @@ Lifetime: 128 batches journaled / 471.8M records / 267.6M kills /
 471.8M records, 267.6M kills, 2211 promoted, 2643 templates,
 0 verified findings.*
 
+---
+
+## Fire #134 — 2026-05-26 ~01:30Z — **h2 CAP VALIDATED END-TO-END**
+
+**1.62M records / 24 min / 0 templates / 20 promoted.
+h2 picked and ran CLEAN — 421,564 records, 100% kill rate,
+no hang. First successful h2 fire after #112/#116 hung-then-fixed.**
+
+### Per-gen attribution
+
+    gid  records     templates  kill_rate
+    a2   1,178,791   0          93.4%
+    h2     421,564   0          99.98%  ← clean run
+    c4       9,126   0           0.0%
+    c2       6,853   0           0.0%
+    b5       1,052   0           1.4%
+
+### Batch result
+
+- batch_id: `batch-20260526T013001Z-78287e`
+- Duration: 24 min wall, 918/s tick rate
+- 1,617,386 records / 1,522,798 kills / 94,494 confirms / 0 errors
+- 20 promoted records → **2231 lifetime promoted**
+- 0 new templates → 2643 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+- batch_end ✓
+
+Lifetime: 129 batches journaled / 473.4M records / 269.1M kills /
+2231 promoted / 2643 templates / 0 verified findings.
+
+### h2 fix validated end-to-end
+
+After Fires #112 (silent crash) and #116 (29min hang), commit
+**4c3dd52b** capped `_load_inconclusive` at 200K corpus records
+and 5K parents. Fire #134:
+- h2's max_next_s = 2.109s (well within tolerance)
+- 421K records emitted, no slow_next or watchdog_stall events
+- Heartbeat snapshots regular throughout
+- batch_end clean
+
+**The cap works in production.** Pattern validated:
+- h2's heavy first-next() corpus scan was the bottleneck
+- 200K records is enough to find 5K INCONCLUSIVE parents
+- Generator function unaffected (99.98% kill rate matches pre-hang
+  expected behavior).
+
+---
+
+*Fire #134 throttled = 1.62M records / 20 promoted / 0 templates.
+473.4M records, 269.1M kills, 2231 promoted, 2643 templates,
+0 verified findings.*
+
 
 
 
