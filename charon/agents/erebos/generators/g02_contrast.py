@@ -108,6 +108,7 @@ class ContrastGenerator:
     name = "Contrast Generator"
     spec_phase = 1
     feasibility_tier = "S"
+    reasoning_tier = "R5"  # DNA P10: causal moderation hypothesis
     expected_kill_pattern = "permutation_null"
 
     def applicable(self, state: SwarmState) -> bool:

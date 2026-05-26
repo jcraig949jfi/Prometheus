@@ -33,6 +33,7 @@ class IntersectionGenerator:
     name = "Intersection Composer"
     spec_phase = 1
     feasibility_tier = "S"
+    reasoning_tier = "R3"  # DNA P10: abstraction (MDL compression of two claims)
     expected_kill_pattern = "base_rate_failure"
 
     def applicable(self, state: SwarmState) -> bool:

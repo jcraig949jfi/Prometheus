@@ -31,12 +31,19 @@ from charon.agents.erebos.generators._base import (
 )
 from charon.agents.erebos.generators.g01_intersection import IntersectionGenerator
 from charon.agents.erebos.generators.g02_contrast import ContrastGenerator
+from charon.agents.erebos.generators.g09_projection_collapse import ProjectionCollapseGenerator
+from charon.agents.erebos.generators.g12_invariant_substitution import InvariantSubstitutionGenerator
+from charon.agents.erebos.generators.g25_degeneracy import DegeneracyGenerator
 
 # Order matters for round-robin tie-break: lower-tier (S before A)
-# get priority. Within a tier, spec_phase order.
+# get priority. Within a tier, spec_phase order. v0.9 ordering:
+# Tier S first (G01, G02, G09); then Tier A (G12, G25).
 _PLUGINS: list[GeneratorPlugin] = [
-    IntersectionGenerator(),
-    ContrastGenerator(),
+    IntersectionGenerator(),     # Phase 1, Tier S
+    ContrastGenerator(),         # Phase 1, Tier S
+    ProjectionCollapseGenerator(),  # Phase 2, Tier S
+    InvariantSubstitutionGenerator(),  # Phase 3, Tier A
+    DegeneracyGenerator(),       # Phase 5, Tier A
 ]
 
 REGISTRY: dict[str, GeneratorPlugin] = {p.id: p for p in _PLUGINS}
