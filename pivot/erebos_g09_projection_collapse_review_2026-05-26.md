@@ -1,6 +1,6 @@
 # Erebos plugin review -- g09_projection_collapse
 
-**Date:** 2026-05-26T10:04:32.360018+00:00
+**Date:** 2026-05-26T10:36:52.857517+00:00
 **Window:** last 7 days
 **Source:** `charon/agents/erebos/logs/g09_projection_collapse_*.jsonl`
 **DNA reference:** P5 (continuous review cycle)
@@ -18,21 +18,21 @@
 
 ## Tick stats
 
-- total ticks: 1
-- applicable: 1
-- generated: 1
+- total ticks: 3
+- applicable: 3
+- generated: 3
 - errors: 0
 - distinct composed_ids: 1
-- elapsed_ms mean / p95: 52.0 / 52.0
+- elapsed_ms mean / p95: 56.0 / 57.0
 - falsification_route_hash distinct: 1
 
 ## Transformation paths (top)
 
-- `Extract numeric fields from parent composition_payload (2 found); pick max-absol` -- 1
+- `Extract numeric fields from parent composition_payload (2 found); pick max-absol` -- 3
 
 ## Expected kill patterns emitted
 
-- `residual_survival` (matches declared) -- 1
+- `residual_survival` (matches declared) -- 3
 
 ---
 

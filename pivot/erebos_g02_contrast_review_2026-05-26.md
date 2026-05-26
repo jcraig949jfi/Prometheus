@@ -1,6 +1,6 @@
 # Erebos plugin review -- g02_contrast
 
-**Date:** 2026-05-26T10:04:32.356018+00:00
+**Date:** 2026-05-26T10:36:52.852518+00:00
 **Window:** last 7 days
 **Source:** `charon/agents/erebos/logs/g02_contrast_*.jsonl`
 **DNA reference:** P5 (continuous review cycle)
@@ -12,27 +12,27 @@
 ## Plugin metadata (declared)
 
 - expected_kill_pattern: `permutation_null`
-- reasoning_tier: <unknown>
+- reasoning_tier: R5
 - spec_phase: 1
 - feasibility_tier: S
 
 ## Tick stats
 
-- total ticks: 1
-- applicable: 1
-- generated: 1
+- total ticks: 2
+- applicable: 2
+- generated: 2
 - errors: 0
 - distinct composed_ids: 1
-- elapsed_ms mean / p95: 58.0 / 58.0
+- elapsed_ms mean / p95: 61.0 / 58.0
 - falsification_route_hash distinct: 1
 
 ## Transformation paths (top)
 
-- `Split parent dataset by binary categorical `salem_vs_non_salem`; compute per-gro` -- 1
+- `Split parent dataset by binary categorical `salem_vs_non_salem`; compute per-gro` -- 2
 
 ## Expected kill patterns emitted
 
-- `permutation_null` (matches declared) -- 1
+- `permutation_null` (matches declared) -- 2
 
 ---
 

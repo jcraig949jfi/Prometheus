@@ -31,19 +31,28 @@ from charon.agents.erebos.generators._base import (
 )
 from charon.agents.erebos.generators.g01_intersection import IntersectionGenerator
 from charon.agents.erebos.generators.g02_contrast import ContrastGenerator
+from charon.agents.erebos.generators.g04_survivor_tightening import SurvivorTighteningGenerator
 from charon.agents.erebos.generators.g09_projection_collapse import ProjectionCollapseGenerator
 from charon.agents.erebos.generators.g12_invariant_substitution import InvariantSubstitutionGenerator
+from charon.agents.erebos.generators.g13_relation_weakening import RelationWeakeningGenerator
+from charon.agents.erebos.generators.g14_relation_strengthening import RelationStrengtheningGenerator
+from charon.agents.erebos.generators.g22_subgraph_clique import SubgraphCliqueGenerator
 from charon.agents.erebos.generators.g25_degeneracy import DegeneracyGenerator
 
 # Order matters for round-robin tie-break: lower-tier (S before A)
-# get priority. Within a tier, spec_phase order. v0.9 ordering:
-# Tier S first (G01, G02, G09); then Tier A (G12, G25).
+# get priority. Within a tier, spec_phase order. v0.10 ordering:
+# Tier S first (G01, G02, G09); then Tier A (G12, G13, G14, G22, G25);
+# then Tier B (G04).
 _PLUGINS: list[GeneratorPlugin] = [
-    IntersectionGenerator(),     # Phase 1, Tier S
-    ContrastGenerator(),         # Phase 1, Tier S
-    ProjectionCollapseGenerator(),  # Phase 2, Tier S
+    IntersectionGenerator(),           # Phase 1, Tier S
+    ContrastGenerator(),               # Phase 1, Tier S
+    ProjectionCollapseGenerator(),     # Phase 2, Tier S
     InvariantSubstitutionGenerator(),  # Phase 3, Tier A
-    DegeneracyGenerator(),       # Phase 5, Tier A
+    RelationWeakeningGenerator(),      # Phase 3, Tier A
+    RelationStrengtheningGenerator(),  # Phase 3, Tier A
+    SubgraphCliqueGenerator(),         # Phase 5, Tier A
+    DegeneracyGenerator(),             # Phase 5, Tier A
+    SurvivorTighteningGenerator(),     # Phase 1, Tier B
 ]
 
 REGISTRY: dict[str, GeneratorPlugin] = {p.id: p for p in _PLUGINS}

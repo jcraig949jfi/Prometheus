@@ -148,20 +148,44 @@ def execute_attack(problem: dict, attack_plan_path: Optional[str] = None) -> dic
             stats=stats,
         )
 
-    # ---- EREBOS-* composed-claim validation: deferred -----------
-    # Erebos composed an intersection-claim (Stygian-PROMOTED
-    # restricted to Pollux-PROMOTED subset). Validation needs a
-    # composition-aware loader that programmatically constructs the
-    # restricted dataset and runs the appropriate distribution /
-    # correlation tests. Per Charon swarm v0.7 plan: composition
-    # loader lands in v0.8+. Short-circuit emits a typed UNVERIFIED
-    # row so Hecate sees the composer's contribution to the ledger.
+    # ---- EREBOS-* composed-claim validation -------------------------
+    # v0.10 SPIKE (task #37): composition-aware loaders. Protocol in
+    # charon/agents/stygian/loaders/_composition.py + concrete loaders
+    # registered via @register decorator. If a loader is registered
+    # for THIS specific Erebos composition payload, run it; otherwise
+    # fall through to short-circuit (UNVERIFIED row so Hecate still
+    # sees the composer's contribution to the ledger).
     if problem_id.startswith("EREBOS-"):
-        return _emit_short_circuit_row(
+        try:
+            # Force-import the composition loader module(s) to trigger
+            # @register side-effects. Add new composition loaders here
+            # as they ship.
+            import charon.agents.stygian.loaders.composition_g02_lehmer_salem  # noqa: F401
+            from charon.agents.stygian.loaders._composition import find_loader
+        except Exception as e:
+            return _emit_short_circuit_row(
+                problem=problem,
+                attack_plan_path=attack_plan_path,
+                kill_pattern="stygian_erebos_composition_import_failed",
+                reason=f"composition_loader_module_import: {e}",
+                stats=stats,
+            )
+        queue_payload = problem.get("_queue_payload", {}) or {}
+        loader = find_loader(queue_payload)
+        if loader is None:
+            return _emit_short_circuit_row(
+                problem=problem,
+                attack_plan_path=attack_plan_path,
+                kill_pattern="stygian_erebos_composed_loader_pending",
+                reason="no_composition_loader_for_this_erebos_payload",
+                stats=stats,
+            )
+        # Composition loader exists -- run it end-to-end
+        return _execute_composition_attack(
             problem=problem,
             attack_plan_path=attack_plan_path,
-            kill_pattern="stygian_erebos_composed_loader_pending",
-            reason="erebos_composition_loader_not_yet_implemented",
+            loader=loader,
+            queue_payload=queue_payload,
             stats=stats,
         )
 
@@ -319,6 +343,96 @@ def execute_attack(problem: dict, attack_plan_path: Optional[str] = None) -> dic
         "novelty_estimate": None,
         "parent_record_id": None,
         "precision_dps": None,
+        "sigma_claim_id": None,
+        "sigma_symbol_ref": None,
+        "step_trace": None,
+        "training_weight": None,
+        "verdict": verdict,
+    }
+    _emit_kill_ledger_row(row)
+    stats["kill_ledger_row_id"] = record_id
+    return stats
+
+
+def _execute_composition_attack(
+    problem: dict,
+    attack_plan_path: Optional[str],
+    loader,
+    queue_payload: dict,
+    stats: dict,
+) -> dict:
+    """Run a composition-aware loader end-to-end; emit a kill_ledger
+    row with the loader's verdict. Per v0.10 SPIKE (task #37); first
+    EREBOS-* row to get a REAL battery verdict instead of short-
+    circuit short_circuit."""
+    stats["executor_invoked"] = True
+    stats["battery_mode"] = "composition"
+    stats["composition_loader_id"] = getattr(loader, "composition_id", "?")
+    t0 = time.time()
+    try:
+        result_dict = loader.build_battery_input(queue_payload)
+    except Exception as e:
+        return _emit_short_circuit_row(
+            problem=problem,
+            attack_plan_path=attack_plan_path,
+            kill_pattern="stygian_composition_loader_exception",
+            reason=f"composition_loader_exception: {e}",
+            stats=stats,
+        )
+    elapsed = time.time() - t0
+    stats["battery_elapsed_sec"] = round(elapsed, 3)
+
+    result = result_dict.get("result", {}) or {}
+    verdict = result.get("verdict", "UNVERIFIED")
+    kill_pattern = result.get("kill_pattern")
+    stats["battery_verdict"] = verdict
+    if kill_pattern:
+        stats["battery_kill_pattern"] = kill_pattern
+
+    now_iso = datetime.now(timezone.utc).isoformat()
+    composed_id = result_dict.get("composed_id", problem.get("id", "?"))
+    payload_hash_input = {
+        "composed_id": composed_id,
+        "loader_id": loader.composition_id,
+        "verdict": verdict,
+        "result": result,
+        "emitted_at": now_iso,
+    }
+    record_id = _record_id(payload_hash_input)
+    row = {
+        "batch_id": f"stygian-comp-{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}",
+        "record_id": record_id,
+        "canonical_claim_text": result_dict.get("claim", "")[:500],
+        "claim_kind": "stygian_composition_attack",
+        "claim_payload": {
+            "problem_id": problem.get("id"),
+            "composed_id": composed_id,
+            "composition_loader_id": loader.composition_id,
+            "data_source": result_dict.get("data_source", ""),
+        },
+        "convergence_status": "composition_validated",
+        "diversity_score": None,
+        "emitted_at": now_iso,
+        "extras": {
+            "attack_plan_path": attack_plan_path,
+            "queue_row_id": problem.get("_queue_row_id"),
+            "queue_source": problem.get("_queue_source"),
+            "composition_result": result,
+            "notes": result_dict.get("notes", ""),
+            "battery_elapsed_sec": stats["battery_elapsed_sec"],
+        },
+        "generator_id": "stygian",
+        "info_density": None,
+        "kill_pattern": kill_pattern,  # None on PROMOTED, else the failure mode
+        "kill_vector": {
+            "loader_id": loader.composition_id,
+            "verdict": verdict,
+            "result": result,
+        },
+        "method": f"composition_{loader.composition_id}",
+        "novelty_estimate": None,
+        "parent_record_id": queue_payload.get("erebos_ledger_row_id"),
+        "precision_dps": 4,
         "sigma_claim_id": None,
         "sigma_symbol_ref": None,
         "step_trace": None,

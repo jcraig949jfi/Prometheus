@@ -1,6 +1,6 @@
 # Erebos plugin review -- g01_intersection
 
-**Date:** 2026-05-26T10:04:32.351016+00:00
+**Date:** 2026-05-26T10:36:52.847517+00:00
 **Window:** last 7 days
 **Source:** `charon/agents/erebos/logs/g01_intersection_*.jsonl`
 **DNA reference:** P5 (continuous review cycle)
@@ -12,27 +12,27 @@
 ## Plugin metadata (declared)
 
 - expected_kill_pattern: `base_rate_failure`
-- reasoning_tier: <unknown>
+- reasoning_tier: R3
 - spec_phase: 1
 - feasibility_tier: S
 
 ## Tick stats
 
-- total ticks: 2
-- applicable: 2
-- generated: 2
+- total ticks: 3
+- applicable: 3
+- generated: 3
 - errors: 0
-- distinct composed_ids: 2
-- elapsed_ms mean / p95: 55.5 / 46.0
+- distinct composed_ids: 3
+- elapsed_ms mean / p95: 96.1 / 65.0
 - falsification_route_hash distinct: 1
 
 ## Transformation paths (top)
 
-- `Extract subject from Stygian claim; restrict to Pollux PROMOTED pair's subset(s)` -- 2
+- `Extract subject from Stygian claim; restrict to Pollux PROMOTED pair's subset(s)` -- 3
 
 ## Expected kill patterns emitted
 
-- `base_rate_failure` (matches declared) -- 2
+- `base_rate_failure` (matches declared) -- 3
 
 ---
 
