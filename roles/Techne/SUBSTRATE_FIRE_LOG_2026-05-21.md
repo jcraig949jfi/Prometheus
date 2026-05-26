@@ -9559,6 +9559,44 @@ Lifetime: 131 batches journaled / 478.5M records / 272.0M kills /
 478.5M records, 272.0M kills, 2271 promoted, 2643 templates,
 0 verified findings.*
 
+---
+
+## Fire #137 — 2026-05-26 ~03:03Z
+
+**2.17M records / 24 min / 0 templates / 20 promoted.
+Mix a1/a5/d3/f4/g4. Tick rate 422/s.**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    f4   607,138   0          65.8%
+    g4   566,675   0           5.4%
+    a1   566,477   0          69.0%
+    d3   424,648   0          98.4%
+    a5     4,145   0          31.7%
+
+### Batch result
+
+- batch_id: `batch-20260526T030305Z-af8585`
+- Duration: 24 min wall, 422/s tick rate
+- 2,169,083 records / 1,239,777 kills / 919,585 confirms / 0 errors
+- 20 promoted records → **2291 lifetime promoted**
+- 0 new templates → 2643 lifetime disc-role templates
+- **Verified mathematical findings: 0**
+- batch_end ✓ (RSS 244MB)
+
+Lifetime: 132 batches journaled / 480.7M records / 273.3M kills /
+2291 promoted / 2643 templates / 0 verified findings.
+
+Top demand: knot/nf_class_number (99K events — lower than
+recent fires).
+
+---
+
+*Fire #137 throttled = 2.17M records / 20 promoted / 0 templates.
+480.7M records, 273.3M kills, 2291 promoted, 2643 templates,
+0 verified findings.*
+
 
 
 
