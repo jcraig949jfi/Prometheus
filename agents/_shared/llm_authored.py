@@ -41,6 +41,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import logging
+import re
+import sys
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -48,6 +51,19 @@ from typing import Optional
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_AUDIT_LOG = REPO_ROOT / "agents" / "_shared" / "llm_authored_mutations_audit.jsonl"
+
+# Soft import of the existing LLM cascade (DeepSeek + 4 fallbacks).
+_SCRIPTS_DIR = REPO_ROOT / "scripts"
+if str(_SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS_DIR))
+try:
+    from llm_cascade import call_llm_with_provider
+    HAS_LLM_CASCADE = True
+except Exception:
+    HAS_LLM_CASCADE = False
+    call_llm_with_provider = None  # type: ignore
+
+log = logging.getLogger("llm_authored")
 
 # Rate limiting — per-agent default. Subclasses can raise this once
 # v2c iter 3+ ships with the sandbox executor.
@@ -205,6 +221,53 @@ def count_today_proposals_for_agent(agent_name: str,
 # The public API (v2c iter 1: stub; iter 2: real LLM call)
 # ---------------------------------------------------------------------------
 
+def _extract_json_from_response(text: str) -> Optional[dict]:
+    """LLMs often wrap JSON in ```json ... ``` fences or include preamble.
+    Try a few extraction strategies before giving up."""
+    if not text:
+        return None
+    # Strategy 1: raw JSON parse
+    try:
+        return json.loads(text)
+    except (json.JSONDecodeError, ValueError):
+        pass
+    # Strategy 2: extract from ```json ... ``` fence
+    m = re.search(r"```(?:json)?\s*(\{.*?\})\s*```", text, re.DOTALL)
+    if m:
+        try:
+            return json.loads(m.group(1))
+        except (json.JSONDecodeError, ValueError):
+            pass
+    # Strategy 3: find first balanced {...} block
+    start = text.find("{")
+    if start >= 0:
+        depth = 0
+        in_str = False
+        esc = False
+        for i, ch in enumerate(text[start:], start):
+            if esc:
+                esc = False
+                continue
+            if ch == "\\" and in_str:
+                esc = True
+                continue
+            if ch == '"':
+                in_str = not in_str
+                continue
+            if in_str:
+                continue
+            if ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth == 0:
+                    try:
+                        return json.loads(text[start:i + 1])
+                    except (json.JSONDecodeError, ValueError):
+                        return None
+    return None
+
+
 def propose_llm_mutation(
     *,
     agent_name: str,
@@ -219,26 +282,34 @@ def propose_llm_mutation(
     borrowed_names: list[str],
     void_names: list[str],
     max_per_day: int = DEFAULT_MAX_LLM_PROPOSALS_PER_DAY,
-    llm_model_hint: str = "claude-opus",
+    llm_timeout_sec: int = 120,
+    llm_max_tokens: int = 1500,
+    llm_temperature: float = 0.4,
     audit_path: Optional[Path] = None,
+    dry_run: bool = False,
 ) -> Optional[LLMAuthoredProposal]:
     """Ask an LLM for one new mutation tailored to this agent's stagnation.
 
-    v2c iteration 1 (this stub): always returns None — no LLM call yet.
-    Documents the call surface and contract. Real LLM wiring lands in
-    iteration 2; sandbox + mixin integration in iteration 3.
+    v2c iteration 2: REAL LLM call via the llm_cascade.call_llm_with_provider
+    pipeline (DeepSeek primary, 4 fallbacks). Parses JSON response, runs
+    static safety check, appends to audit log. Returns the proposal
+    regardless of safety violations (caller decides). Does NOT sandbox-execute
+    or apply — that's iter 3.
 
-    Returns None if:
+    Returns None when:
+      - LLM cascade unavailable (import failed)
       - Rate limit hit (count_today_proposals_for_agent >= max_per_day)
-      - LLM call failed
-      - Response parse failed (caller logs the failure)
-      - v2c iter 1 stub: always
+      - All providers in cascade failed
+      - dry_run=True (returns None for testing without burning quota)
     """
-    # Rate limit
-    if count_today_proposals_for_agent(agent_name, audit_path) >= max_per_day:
+    if not HAS_LLM_CASCADE:
+        log.warning("llm_cascade not importable; v2c LLM call disabled")
         return None
 
-    # Render prompt (used in iter 2; recorded for audit even now)
+    if count_today_proposals_for_agent(agent_name, audit_path) >= max_per_day:
+        log.info(f"{agent_name}: LLM proposal rate limit hit ({max_per_day}/day)")
+        return None
+
     prompt = PROMPT_TEMPLATE.format(
         agent_name=agent_name,
         agent_purpose=agent_purpose,
@@ -249,13 +320,74 @@ def propose_llm_mutation(
         history_n=len(health_history),
         health_history=health_history[-5:],
         native_names=native_names,
-        compound_names=compound_names[:10],   # truncate for prompt size
+        compound_names=compound_names[:10],
         borrowed_names=borrowed_names[:10],
         void_names=void_names[:10],
     )
     prompt_hash = hashlib.sha256(prompt.encode("utf-8")).hexdigest()[:16]
+    now = datetime.now(timezone.utc).isoformat()
+    proposal_id = hashlib.sha256(
+        f"{agent_name}|{prompt_hash}|{now}".encode()
+    ).hexdigest()[:16]
 
-    # v2c iter 1 stub: do not actually fire the LLM call.
-    # Returning None means "no proposal this tick — propagates as exhausted
-    # to the mixin, which fires self-summon ticket as usual."
-    return None
+    if dry_run:
+        return None
+
+    # Fire the cascade
+    try:
+        raw_text, provider = call_llm_with_provider(
+            prompt=prompt,
+            system=("You are an adversarial mutation designer. Output ONLY the "
+                    "JSON object specified. No prose outside it."),
+            max_tokens=llm_max_tokens,
+            temperature=llm_temperature,
+            timeout=llm_timeout_sec,
+        )
+    except Exception as e:
+        log.error(f"LLM cascade raised: {e}")
+        return None
+
+    if not raw_text or raw_text.startswith("(LLM cascade failed"):
+        log.warning(f"LLM cascade returned no usable text: {raw_text[:80]}")
+        return None
+
+    parsed = _extract_json_from_response(raw_text)
+    parse_succeeded = parsed is not None and isinstance(parsed, dict)
+    parsed_safe = parsed if parse_succeeded else {}
+
+    name = str(parsed_safe.get("name", "")).strip()
+    description = str(parsed_safe.get("description", "")).strip()
+    hypothesis = str(parsed_safe.get("hypothesis", "")).strip()
+    cost = str(parsed_safe.get("cost", "unknown")).strip()
+    reversibility = str(parsed_safe.get("reversibility", "unknown")).strip()
+    apply_code = str(parsed_safe.get("apply_code", "")).strip()
+    revert_code = str(parsed_safe.get("revert_code", "")).strip()
+
+    safety_violations = (static_safety_check(apply_code, revert_code)
+                         if (apply_code or revert_code) else [])
+
+    proposal = LLMAuthoredProposal(
+        proposal_id=proposal_id,
+        agent_name=agent_name,
+        proposed_at=now,
+        prompt_hash=prompt_hash,
+        llm_model=provider or "unknown",
+        raw_response=raw_text[:5000],
+        parsed=parsed_safe,
+        parse_succeeded=parse_succeeded,
+        name=name,
+        description=description,
+        hypothesis=hypothesis,
+        cost=cost,
+        reversibility=reversibility,
+        apply_code=apply_code,
+        revert_code=revert_code,
+        sandbox_status="untested",   # iter 3 will flip to passed/failed
+        safety_violations=safety_violations,
+        human_approval="pending",
+    )
+    try:
+        append_to_audit_log(proposal, audit_path)
+    except Exception as e:
+        log.warning(f"audit log append failed: {e}")
+    return proposal
