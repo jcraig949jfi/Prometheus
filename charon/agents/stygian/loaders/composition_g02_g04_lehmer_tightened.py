@@ -183,8 +183,13 @@ class G02G04LehmerTightenedLoader:
         if plugin_id != "g04_survivor_tightening":
             return False
         composed_id = queue_payload.get("erebos_composed_id", "") or ""
-        # G04 emission whose parent is a G02 Salem-Lehmer composition,
-        # OR a direct Lehmer-context G04 tightening
+        # Match: G04 emission whose parent is a G02 Salem-Lehmer
+        # composition AT THE FULL-CATALOG SCOPE (no specific band
+        # marker). Newer band-restricted loaders (e.g.,
+        # lehmer_band_1_30_to_1_50) handle their own variants and
+        # should not be intercepted by this generic-tightening loader.
+        if "lehmer_band_" in composed_id:
+            return False  # let band-specific loader handle
         return "BL-C-001" in composed_id or "salem" in composed_id.lower()
 
     def build_battery_input(self, queue_payload: dict) -> dict:

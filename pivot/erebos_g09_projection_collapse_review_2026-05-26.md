@@ -1,6 +1,6 @@
 # Erebos plugin review -- g09_projection_collapse
 
-**Date:** 2026-05-26T16:50:09.195996+00:00
+**Date:** 2026-05-26T17:01:18.612253+00:00
 **Window:** last 7 days
 **Source:** `charon/agents/erebos/logs/g09_projection_collapse_*.jsonl`
 **DNA reference:** P5 (continuous review cycle)

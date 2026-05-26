@@ -1,6 +1,6 @@
 # Erebos plugin review -- g13_relation_weakening
 
-**Date:** 2026-05-26T16:50:09.204993+00:00
+**Date:** 2026-05-26T17:01:18.613247+00:00
 **Window:** last 7 days
 **Source:** `charon/agents/erebos/logs/g13_relation_weakening_*.jsonl`
 **DNA reference:** P5 (continuous review cycle)
