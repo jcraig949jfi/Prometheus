@@ -171,6 +171,7 @@ def execute_attack(problem: dict, attack_plan_path: Optional[str] = None) -> dic
             import charon.agents.stygian.loaders.composition_g10_lehmer_threshold_sweep  # noqa: F401
             import charon.agents.stygian.loaders.composition_g11_mahler_boolean_cube  # noqa: F401
             import charon.agents.stygian.loaders.composition_g11_v2_lehmer_degree_minima  # noqa: F401
+            import charon.agents.stygian.loaders.composition_g11_v3_direct_min_verification  # noqa: F401
             import charon.agents.stygian.loaders.composition_g15_ledger_mi  # noqa: F401
             import charon.agents.stygian.loaders.composition_g15_v2_real_verdict_mi  # noqa: F401
             import charon.agents.stygian.loaders.composition_g16_lehmer_extremum  # noqa: F401
