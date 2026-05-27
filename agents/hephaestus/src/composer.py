@@ -265,16 +265,36 @@ class NegationEngine:
         if has_neg and conditionals:
             for ante, conseq in conditionals:
                 ante_l, conseq_l = ante.lower(), conseq.lower()
-                # Check if prompt negates the consequent
-                neg_patterns = [f"not {conseq_l}", f"{conseq_l} is not", f"no {conseq_l}"]
+                neg_patterns = [f"not {conseq_l}", f"{conseq_l} is not",
+                                f"no {conseq_l}", f"{conseq_l} is false"]
                 if any(np in prompt.lower() for np in neg_patterns):
-                    # Modus tollens: P is false
                     if "no" in cand_lower or "not" in cand_lower or cand_lower == "no":
                         return 0.9, f"modus_tollens:not_{ante_l}"
                     elif "yes" in cand_lower or cand_lower == "yes":
                         return 0.1, f"modus_tollens:contradicts"
 
-        # Simple negation: prompt says "not X", candidate says X
+        # Affirming consequent fallacy: "If P then Q. Q. Therefore P?" -> Cannot determine
+        # But NOT modus ponens: "If P then Q. P. Therefore Q?" -> Yes
+        if conditionals and not has_neg:
+            for ante, conseq in conditionals:
+                ante_l, conseq_l = ante.lower(), conseq.lower()
+                prompt_l = prompt.lower()
+                # Only trigger affirming consequent if prompt states Q (consequent) is true
+                # AND asks about P (antecedent). NOT if prompt states P is true.
+                if (f"it is the case that {conseq_l}" in prompt_l
+                    or f"{conseq_l} is true" in prompt_l
+                    or f"{conseq_l} is the case" in prompt_l):
+                    # Consequent affirmed — this is the fallacy
+                    if "cannot" in cand_lower or "determine" in cand_lower:
+                        return 0.8, "affirming_consequent:cannot_determine"
+                elif (f"it is the case that {ante_l}" in prompt_l
+                      or f"{ante_l} is true" in prompt_l
+                      or f"{ante_l}" in prompt_l):
+                    # Antecedent affirmed — this is modus ponens (valid)
+                    if "yes" in cand_lower:
+                        return 0.8, "modus_ponens:yes"
+
+        # Simple negation
         if has_neg:
             if "yes" in cand_lower and ("not" in prompt.lower() or "no " in prompt.lower()):
                 return 0.3, "negation_conflict"
@@ -282,6 +302,256 @@ class NegationEngine:
                 return 0.7, "negation_aligned"
 
         return 0.5, "no_negation_signal"
+
+
+class SequenceEngine:
+    """R3: Detect and extrapolate numerical sequences."""
+
+    def score(self, parsed: dict, candidate: str) -> tuple[float, str]:
+        numbers = parsed.get("numbers", [])
+        prompt = parsed.get("raw", "")
+
+        try:
+            cand_val = float(candidate.replace("$", "").replace("%", ""))
+        except (ValueError, TypeError):
+            return 0.5, "non_numeric_candidate"
+
+        # Need at least 3 numbers to detect a sequence
+        if len(numbers) < 3:
+            return 0.5, "too_few_numbers"
+
+        seq = numbers
+
+        # Check arithmetic: constant difference
+        diffs = [seq[i+1] - seq[i] for i in range(len(seq)-1)]
+        if len(set(round(d, 6) for d in diffs)) == 1 and diffs[0] != 0:
+            predicted = seq[-1] + diffs[0]
+            if abs(cand_val - predicted) < 0.01:
+                return 1.0, f"arithmetic:diff={diffs[0]},next={predicted}"
+            return 0.0, f"arithmetic:expected={predicted}"
+
+        # Check geometric: constant ratio
+        if all(s != 0 for s in seq[:-1]):
+            ratios = [seq[i+1] / seq[i] for i in range(len(seq)-1)]
+            if len(set(round(r, 6) for r in ratios)) == 1 and ratios[0] != 1:
+                predicted = seq[-1] * ratios[0]
+                if abs(cand_val - predicted) < 0.01:
+                    return 1.0, f"geometric:ratio={ratios[0]},next={predicted}"
+                return 0.0, f"geometric:expected={predicted}"
+
+        # Check fibonacci-like: each = sum of previous two
+        is_fib = all(abs(seq[i] - (seq[i-1] + seq[i-2])) < 0.01
+                      for i in range(2, len(seq)))
+        if is_fib and len(seq) >= 3:
+            predicted = seq[-1] + seq[-2]
+            if abs(cand_val - predicted) < 0.01:
+                return 1.0, f"fibonacci:next={predicted}"
+            return 0.0, f"fibonacci:expected={predicted}"
+
+        # Check power: values are base^1, base^2, ...
+        if seq[0] > 0:
+            base = seq[1] / seq[0] if seq[0] != 0 else 0
+            if base > 1:
+                is_power = all(abs(seq[i] - seq[0] * (base ** i)) < 0.01
+                               for i in range(len(seq)))
+                if is_power:
+                    predicted = seq[0] * (base ** len(seq))
+                    if abs(cand_val - predicted) < 0.01:
+                        return 1.0, f"power:base={base},next={predicted}"
+                    return 0.0, f"power:expected={predicted}"
+
+        # Check second differences (quadratic)
+        if len(diffs) >= 2:
+            dd = [diffs[i+1] - diffs[i] for i in range(len(diffs)-1)]
+            if len(set(round(d, 6) for d in dd)) == 1 and dd[0] != 0:
+                next_diff = diffs[-1] + dd[0]
+                predicted = seq[-1] + next_diff
+                if abs(cand_val - predicted) < 0.01:
+                    return 1.0, f"quadratic:next={predicted}"
+                return 0.0, f"quadratic:expected={predicted}"
+
+        return 0.5, "no_sequence_pattern"
+
+
+class StateEngine:
+    """R4: Simulate state machines, register operations, and stack operations."""
+
+    _STATE_TRANS = re.compile(
+        r"[Ss]tate\s+(\w+)\s*\+?\s*input\s*'?(\w)'?\s*->\s*[Ss]tate\s+(\w+)")
+    _REGISTER = re.compile(r"(\w)=(\w)([+\-*/])(\d+)")
+    _START_VAL = re.compile(r"(?:start|begin|initial).*?(\w)\s*=\s*(-?\d+)", re.I)
+    _PUSH = re.compile(r"[Pp]ush\s+(\d+)")
+    _POP = re.compile(r"[Pp]op")
+    _INPUT_SEQ = re.compile(r"input\s+sequence[:\s]+([01]+)", re.I)
+    _START_STATE = re.compile(r"[Ss]tarting\s+(?:in\s+)?[Ss]tate\s+(\w+)")
+
+    def score(self, parsed: dict, candidate: str) -> tuple[float, str]:
+        prompt = parsed.get("raw", "")
+        if len(prompt) > 2000:
+            return 0.5, "prompt_too_long"
+        cand_lower = candidate.strip()
+
+        # Try state machine simulation
+        transitions = self._STATE_TRANS.findall(prompt)
+        if transitions:
+            return self._simulate_state_machine(prompt, transitions, cand_lower)
+
+        # Try register machine
+        start_match = self._START_VAL.search(prompt)
+        ops = self._REGISTER.findall(prompt)
+        if start_match and ops:
+            return self._simulate_register(prompt, start_match, ops, cand_lower)
+
+        # Try stack operations
+        pushes = self._PUSH.findall(prompt)
+        pops = self._POP.findall(prompt)
+        if pushes:
+            return self._simulate_stack(prompt, cand_lower)
+
+        # Try step-by-step computation: "Start with x=N. Step 1: x=x+M..."
+        if "step" in prompt.lower() and "x=" in prompt.lower():
+            return self._simulate_steps(prompt, cand_lower)
+
+        return 0.5, "no_state_signal"
+
+    def _simulate_state_machine(self, prompt, transitions, candidate):
+        # Build transition table
+        table = {}
+        for state, inp, next_state in transitions:
+            table.setdefault(state, {})[inp] = next_state
+
+        # Find start state and input sequence
+        start = self._START_STATE.search(prompt)
+        seq = self._INPUT_SEQ.search(prompt)
+        if not start or not seq:
+            return 0.5, "incomplete_state_machine"
+
+        current = start.group(1)
+        for symbol in seq.group(1):
+            if current in table and symbol in table[current]:
+                current = table[current][symbol]
+            else:
+                return 0.5, f"undefined_transition:{current},{symbol}"
+
+        if candidate == current:
+            return 1.0, f"state_machine:final={current}"
+        return 0.0, f"state_machine:expected={current},got={candidate}"
+
+    def _simulate_register(self, prompt, start_match, ops, candidate):
+        var = start_match.group(1)
+        value = int(start_match.group(2))
+
+        for _, _, op, operand in ops:
+            n = int(operand)
+            if op == '+': value += n
+            elif op == '-': value -= n
+            elif op == '*': value *= n
+            elif op == '/' and n != 0: value = value // n
+
+        try:
+            if abs(float(candidate) - value) < 0.01:
+                return 1.0, f"register:result={value}"
+            return 0.0, f"register:expected={value}"
+        except ValueError:
+            return 0.5, "register:non_numeric_candidate"
+
+    def _simulate_stack(self, prompt, candidate):
+        stack = []
+        # Process operations in order
+        for token in re.finditer(r"(?:Push|Pop)\s*(\d*)", prompt, re.I):
+            text = token.group(0).strip().lower()
+            if text.startswith("push"):
+                val = token.group(1)
+                if val:
+                    stack.append(int(val))
+            elif text.startswith("pop") and stack:
+                stack.pop()
+
+        if not stack:
+            return 0.5, "empty_stack"
+
+        top = str(stack[-1])
+        if candidate == top:
+            return 1.0, f"stack:top={top}"
+        return 0.0, f"stack:expected={top}"
+
+    def _simulate_steps(self, prompt, candidate):
+        # Parse "Start with x=N. Step K: x=x+M."
+        start = re.search(r"x\s*=\s*(-?\d+)", prompt)
+        if not start:
+            return 0.5, "no_start_value"
+        value = int(start.group(1))
+
+        steps = re.findall(r"[Ss]tep\s+\d+:\s*x\s*=\s*x\s*([+\-*/])\s*(\d+)", prompt)
+        for op, operand in steps:
+            n = int(operand)
+            if op == '+': value += n
+            elif op == '-': value -= n
+            elif op == '*': value *= n
+            elif op == '/' and n != 0: value = value // n
+
+        try:
+            if abs(float(candidate) - value) < 0.01:
+                return 1.0, f"steps:result={value}"
+            return 0.0, f"steps:expected={value}"
+        except ValueError:
+            return 0.5, "steps:non_numeric_candidate"
+
+
+class CausalEngine:
+    """R5: Causal reasoning — distinguish correlation from causation."""
+
+    _CAUSES = re.compile(r"(\w[\w\s]*?)\s+(?:causes|leads\s+to|results\s+in)\s+(\w[\w\s]*?)(?:\.|,|$)", re.I)
+    _CORRELATION = re.compile(r"(?:correlat|associat|linked|related)", re.I)
+
+    def score(self, parsed: dict, candidate: str) -> tuple[float, str]:
+        prompt = parsed.get("raw", "")
+        cand_lower = candidate.lower()
+
+        # Check for correlation-vs-causation framing
+        has_correlation_language = bool(self._CORRELATION.search(prompt))
+        causal_edges = self._CAUSES.findall(prompt)
+
+        # Key pattern: "correlation" in prompt -> answer is "Cannot determine" / "No"
+        if has_correlation_language:
+            if "can we conclude" in prompt.lower() or "does" in prompt.lower():
+                if "cannot" in cand_lower or "no" in cand_lower:
+                    return 0.9, "correlation_not_causation"
+                elif "yes" in cand_lower:
+                    return 0.1, "correlation_fallacy"
+
+        # Build causal DAG
+        if causal_edges:
+            dag = defaultdict(set)
+            for cause, effect in causal_edges:
+                dag[cause.strip().lower()].add(effect.strip().lower())
+
+            # Check if multiple causes lead to same effect (common effect)
+            effects = defaultdict(list)
+            for cause, effs in dag.items():
+                for e in effs:
+                    effects[e].append(cause)
+
+            # Common-effect pattern: "X causes Z. Y causes Z. Z observed. Did X happen?"
+            for effect, causes in effects.items():
+                if len(causes) > 1 and effect in prompt.lower():
+                    # Multiple causes -> cannot determine which one
+                    if "cannot" in cand_lower or "no" in cand_lower:
+                        return 0.8, f"common_effect:{effect}"
+
+            # Direct causation check
+            for cause, effs in dag.items():
+                if cause in prompt.lower():
+                    for e in effs:
+                        if e in cand_lower or cand_lower in e:
+                            return 0.7, f"causal_path:{cause}->{e}"
+
+        # Post-hoc fallacy: "X happened before Y. Did X cause Y?"
+        if "before" in prompt.lower() and "cause" in prompt.lower():
+            if "cannot" in cand_lower or "no" in cand_lower:
+                return 0.8, "post_hoc_fallacy"
+
+        return 0.5, "no_causal_signal"
 
 
 # ---------------------------------------------------------------------------
@@ -299,10 +569,13 @@ class ComposedReasoningTool:
     def __init__(self):
         self.parser = TextParser()
         self.engines = [
-            (0.25, "chain", ForwardChainEngine()),
-            (0.25, "order", OrderingEngine()),
-            (0.30, "compute", ComputationEngine()),
-            (0.20, "negate", NegationEngine()),
+            (0.15, "chain", ForwardChainEngine()),
+            (0.15, "order", OrderingEngine()),
+            (0.20, "compute", ComputationEngine()),
+            (0.10, "negate", NegationEngine()),
+            (0.15, "sequence", SequenceEngine()),
+            (0.15, "state", StateEngine()),
+            (0.10, "causal", CausalEngine()),
         ]
 
     def evaluate(self, prompt: str, candidates: list[str]) -> list[dict]:
@@ -315,7 +588,10 @@ class ComposedReasoningTool:
             reasons = []
 
             for weight, name, engine in self.engines:
-                score, reason = engine.score(parsed, candidate)
+                try:
+                    score, reason = engine.score(parsed, candidate)
+                except Exception:
+                    score, reason = 0.5, "engine_error"
                 if score != 0.5:  # Non-default = engine has signal
                     total_score += weight * score
                     total_weight += weight
