@@ -110,6 +110,44 @@ def run_g17_lehmer_label_shuffle() -> dict:
     null_median = nulls_sorted[len(nulls_sorted) // 2]
     null_p95 = nulls_sorted[int(0.95 * (len(nulls_sorted) - 1))]
 
+    # ITER-18 refinement: multi-threshold sweep to identify the
+    # phase-transition M where intervention transitions from
+    # severable (PROMOTED) to surviving (REJECTED). Uses a smaller
+    # n_perm per point to keep total cost reasonable.
+    sweep_thresholds = [1.20, 1.22, 1.24, 1.26, 1.28, 1.30, 1.32, 1.34, 1.36, 1.38, 1.40]
+    sweep: list[dict] = []
+    phase_transition_M: float | None = None
+    prev_outcome: str | None = None
+    for t in sweep_thresholds:
+        ss = survival_fraction(salem, t)
+        sns = survival_fraction(non_salem, t)
+        obs_t = abs(ss - sns)
+        nulls_t = permutation_null_divergence(
+            pooled, n_a=len(salem), threshold=t,
+            n_perm=200, seed=PERMUTATION_SEED,
+        )
+        nulls_t_sorted = sorted(nulls_t)
+        p95_t = nulls_t_sorted[int(0.95 * (len(nulls_t_sorted) - 1))]
+        # Mark outcome: "survives" (intervention fails) vs "severable"
+        outcome = (
+            "survives" if (obs_t > SURVIVAL_THRESHOLD and obs_t > p95_t)
+            else "severable"
+        )
+        sweep.append({
+            "threshold": round(t, 4),
+            "observed_divergence": round(obs_t, 4),
+            "null_p95": round(p95_t, 4),
+            "surv_salem": round(ss, 4),
+            "surv_non_salem": round(sns, 4),
+            "outcome": outcome,
+        })
+        # Phase transition: first threshold where outcome switches
+        # from severable to survives
+        if (prev_outcome == "severable" and outcome == "survives"
+                and phase_transition_M is None):
+            phase_transition_M = t
+        prev_outcome = outcome
+
     if observed > SURVIVAL_THRESHOLD and observed > null_p95:
         # G17's intervention was meaningful BUT the correlation was
         # so structural it survives. Report as REJECTED with G17's
@@ -136,6 +174,16 @@ def run_g17_lehmer_label_shuffle() -> dict:
             f"spurious."
         )
 
+    sweep_addendum = ""
+    if phase_transition_M is not None:
+        sweep_addendum = (
+            f" Multi-threshold sweep identified phase-transition M = "
+            f"{phase_transition_M:.4f}: below this, intervention "
+            f"severs the correlation; at or above, the correlation "
+            f"survives. Salem moderation emerges sharply at this "
+            f"threshold."
+        )
+
     return {
         "verdict": verdict,
         "kill_pattern": kp,
@@ -150,7 +198,9 @@ def run_g17_lehmer_label_shuffle() -> dict:
         "survival_M_threshold": SURVIVAL_M_THRESHOLD,
         "permutation_n": PERMUTATION_N,
         "permutation_seed": PERMUTATION_SEED,
-        "notes": notes,
+        "threshold_sweep": sweep,
+        "phase_transition_M": phase_transition_M,
+        "notes": notes + sweep_addendum,
     }
 
 
