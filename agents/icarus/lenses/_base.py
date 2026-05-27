@@ -91,6 +91,11 @@ class CycleContext:
     last_stable_id: str
     recent_parks: list[dict] = field(default_factory=list)
     wisdom: str = ""
+    # Variation-seeding signal. One of: "minimal", "structural", "exploratory".
+    # Generator + Diagnostician inject a strategy-specific suffix into their
+    # prompts. Rotating per cycle exposes which kinds of moves the panel
+    # rewards/punishes -- empirical data for the v3 design.
+    cycle_strategy: str = "structural"
 
     # Populated as the panel runs:
     diagnostician_report: Optional[LensReport] = None

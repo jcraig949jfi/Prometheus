@@ -50,6 +50,28 @@ GENERATOR_SYSTEM = (
 )
 
 
+_STRATEGY_MODIFIERS = {
+    "minimal": (
+        "STRATEGY for this cycle: MINIMAL. The smallest possible diff that "
+        "moves toward the tier target. Bias toward 1-3 line changes. If the "
+        "current code is already close, a clarifying docstring or one new "
+        "test counts. Prefer evidence-building over architecture change."
+    ),
+    "structural": (
+        "STRATEGY for this cycle: STRUCTURAL. Address the underlying mechanism "
+        "the Diagnostician identified. Acceptable to add or refactor methods, "
+        "as long as the diff stays under 100 lines and existing tests still "
+        "pass. Aim for a load-bearing improvement, not just a clarification."
+    ),
+    "exploratory": (
+        "STRATEGY for this cycle: EXPLORATORY. Try a representation shift "
+        "or a different decomposition than the obvious one. Acceptable to "
+        "experiment with structure even if benefit is uncertain. Skeptic "
+        "and TDD will catch errors -- the goal is to expose new ground."
+    ),
+}
+
+
 class GeneratorLens(Lens):
     name = "generator"
     model_preference = "claude_sonnet"
@@ -58,8 +80,12 @@ class GeneratorLens(Lens):
         source = _read_source(ctx.source_dir)
         diag_summary = _lens_excerpt(ctx.diagnostician_report)
         hist_summary = _lens_excerpt(ctx.historian_report)
+        strategy_modifier = _STRATEGY_MODIFIERS.get(
+            ctx.cycle_strategy, _STRATEGY_MODIFIERS["structural"]
+        )
 
         user_prompt = (
+            f"## Cycle strategy\n{strategy_modifier}\n\n"
             f"## Tier challenge\n"
             f"Tier target: {ctx.tier_target}\n"
             f"Falsification test: {ctx.tier_challenge.get('falsification_test', '?')}\n\n"

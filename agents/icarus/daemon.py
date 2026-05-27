@@ -227,6 +227,7 @@ def run_cycle(
 
     # Build CycleContext
     failure_context = _build_failure_context()
+    cycle_strategy = ("minimal", "structural", "exploratory")[n % 3]
     ctx = CycleContext(
         cycle_n=n,
         source_dir=new_cycle_dir / "code",
@@ -238,7 +239,9 @@ def run_cycle(
         last_stable_id=last_stable_cycle_id(),
         recent_parks=failure_context.get("recent_parks", []),
         wisdom=_load_wisdom(),
+        cycle_strategy=cycle_strategy,
     )
+    log.info(f"  strategy={cycle_strategy} tier_target={tier_target}")
 
     # Run the lens panel (phase A through F)
     try:
