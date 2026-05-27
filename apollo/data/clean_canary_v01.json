@@ -1,0 +1,571 @@
+{
+  "version": "v01",
+  "n_tasks": 50,
+  "by_category": {
+    "numeric_comparison": 10,
+    "numeric_stated_premise": 10,
+    "transitivity": 10,
+    "all_but_n": 5,
+    "temporal_ordering": 5,
+    "vacuous_truth": 5,
+    "consistency_check": 5
+  },
+  "audit": {
+    "n_tasks_where_longest_is_correct": 7,
+    "n_tasks_where_shortest_is_correct": 10,
+    "longest_candidate_chance_rate": 0.14,
+    "shortest_candidate_chance_rate": 0.2
+  },
+  "tasks": [
+    {
+      "category": "numeric_comparison",
+      "prompt": "Is 3.06 larger than 5.92?",
+      "candidates": [
+        "No as stated as stated precise",
+        "Yes precisely as stated specif",
+        "Insufficient information speci",
+        "Cannot be determined as stated"
+      ],
+      "correct": "No as stated as stated precise"
+    },
+    {
+      "category": "numeric_comparison",
+      "prompt": "Is 39.09 larger than 51.59?",
+      "candidates": [
+        "Cannot be determined as stated",
+        "Yes unambiguously precisely in",
+        "Insufficient information speci",
+        "No in this case by definition"
+      ],
+      "correct": "No in this case by definition"
+    },
+    {
+      "category": "numeric_comparison",
+      "prompt": "Is 37.75 larger than 6.78?",
+      "candidates": [
+        "No in this case precisely exac",
+        "Cannot be determined as stated",
+        "Yes exactly specifically in th",
+        "Insufficient information unamb"
+      ],
+      "correct": "Yes exactly specifically in th"
+    },
+    {
+      "category": "numeric_comparison",
+      "prompt": "Is 21.74 larger than 98.9?",
+      "candidates": [
+        "Cannot be determined as stated",
+        "No as stated precisely exactly",
+        "Insufficient information in th",
+        "Yes unambiguously by definitio"
+      ],
+      "correct": "No as stated precisely exactly"
+    },
+    {
+      "category": "numeric_comparison",
+      "prompt": "Is 44.69 larger than 96.4?",
+      "candidates": [
+        "Cannot be determined exactly i",
+        "Insufficient information speci",
+        "Yes by definition by definitio",
+        "No unambiguously precisely in"
+      ],
+      "correct": "No unambiguously precisely in"
+    },
+    {
+      "category": "numeric_comparison",
+      "prompt": "Is 13.45 larger than 47.56?",
+      "candidates": [
+        "Insufficient information preci",
+        "Yes in this case specifically",
+        "No precisely in this case prec",
+        "Cannot be determined specifica"
+      ],
+      "correct": "No precisely in this case prec"
+    },
+    {
+      "category": "numeric_comparison",
+      "prompt": "Is 84.83 larger than 89.76?",
+      "candidates": [
+        "Insufficient information unamb",
+        "Yes exactly in this case exact",
+        "Cannot be determined exactly s",
+        "No exactly in this case in thi"
+      ],
+      "correct": "No exactly in this case in thi"
+    },
+    {
+      "category": "numeric_comparison",
+      "prompt": "Is 29.85 larger than 49.37?",
+      "candidates": [
+        "Cannot be determined unambiguo",
+        "Yes precisely precisely precis",
+        "No by definition precisely exa",
+        "Insufficient information speci"
+      ],
+      "correct": "No by definition precisely exa"
+    },
+    {
+      "category": "numeric_comparison",
+      "prompt": "Is 88.68 larger than 67.23?",
+      "candidates": [
+        "No precisely precisely by defi",
+        "Insufficient information as st",
+        "Yes in this case in this case",
+        "Cannot be determined by defini"
+      ],
+      "correct": "Yes in this case in this case"
+    },
+    {
+      "category": "numeric_comparison",
+      "prompt": "Is 75.36 larger than 10.72?",
+      "candidates": [
+        "Insufficient information by de",
+        "Yes unambiguously specifically",
+        "Cannot be determined specifica",
+        "No by definition as stated in"
+      ],
+      "correct": "Yes unambiguously specifically"
+    },
+    {
+      "category": "numeric_stated_premise",
+      "prompt": "3.0 is less than 80.74. Which number is larger?",
+      "candidates": [
+        "They are equal by definition a",
+        "80.74 specifically exactly spe",
+        "3.0 by definition precisely as",
+        "Cannot be determined in this c"
+      ],
+      "correct": "80.74 specifically exactly spe"
+    },
+    {
+      "category": "numeric_stated_premise",
+      "prompt": "48.62 is less than 89.1. Which number is larger?",
+      "candidates": [
+        "Cannot be determined specifica",
+        "48.62 by definition specifical",
+        "89.1 exactly by definition exa",
+        "They are equal unambiguously b"
+      ],
+      "correct": "89.1 exactly by definition exa"
+    },
+    {
+      "category": "numeric_stated_premise",
+      "prompt": "32.29 is less than 73.75. Which number is larger?",
+      "candidates": [
+        "73.75 as stated specifically a",
+        "They are equal as stated by de",
+        "32.29 in this case by definiti",
+        "Cannot be determined specifica"
+      ],
+      "correct": "73.75 as stated specifically a"
+    },
+    {
+      "category": "numeric_stated_premise",
+      "prompt": "9.91 is less than 56.28. Which number is larger?",
+      "candidates": [
+        "56.28 exactly specifically spe",
+        "They are equal precisely unamb",
+        "Cannot be determined unambiguo",
+        "9.91 specifically in this case"
+      ],
+      "correct": "56.28 exactly specifically spe"
+    },
+    {
+      "category": "numeric_stated_premise",
+      "prompt": "60.66 is less than 85.62. Which number is larger?",
+      "candidates": [
+        "They are equal unambiguously b",
+        "60.66 as stated specifically i",
+        "Cannot be determined as stated",
+        "85.62 precisely by definition"
+      ],
+      "correct": "85.62 precisely by definition"
+    },
+    {
+      "category": "numeric_stated_premise",
+      "prompt": "75.64 is less than 92.65. Which number is larger?",
+      "candidates": [
+        "75.64 unambiguously by definit",
+        "They are equal in this case as",
+        "Cannot be determined precisely",
+        "92.65 precisely unambiguously"
+      ],
+      "correct": "92.65 precisely unambiguously"
+    },
+    {
+      "category": "numeric_stated_premise",
+      "prompt": "30.25 is less than 88.04. Which number is larger?",
+      "candidates": [
+        "Cannot be determined by defini",
+        "30.25 specifically unambiguous",
+        "88.04 specifically precisely i",
+        "They are equal specifically in"
+      ],
+      "correct": "88.04 specifically precisely i"
+    },
+    {
+      "category": "numeric_stated_premise",
+      "prompt": "42.2 is less than 69.6. Which number is larger?",
+      "candidates": [
+        "69.6 by definition specificall",
+        "They are equal in this case in",
+        "42.2 as stated unambiguously b",
+        "Cannot be determined in this c"
+      ],
+      "correct": "69.6 by definition specificall"
+    },
+    {
+      "category": "numeric_stated_premise",
+      "prompt": "10.22 is less than 32.51. Which number is larger?",
+      "candidates": [
+        "Cannot be determined as stated",
+        "32.51 specifically precisely i",
+        "10.22 by definition specifical",
+        "They are equal by definition s"
+      ],
+      "correct": "32.51 specifically precisely i"
+    },
+    {
+      "category": "numeric_stated_premise",
+      "prompt": "54.47 is less than 90.11. Which number is larger?",
+      "candidates": [
+        "90.11 unambiguously by definit",
+        "Cannot be determined by defini",
+        "They are equal exactly by defi",
+        "54.47 specifically by definiti"
+      ],
+      "correct": "90.11 unambiguously by definit"
+    },
+    {
+      "category": "transitivity",
+      "prompt": "Frank is taller than Carol, and Carol is taller than Eve, and Eve is taller than Dave. Who is tallest?",
+      "candidates": [
+        "Dave specifical",
+        "Alice in this c",
+        "Eve unambiguous",
+        "Frank specifica"
+      ],
+      "correct": "Frank specifica"
+    },
+    {
+      "category": "transitivity",
+      "prompt": "Frank is taller than Alice, and Alice is taller than Dave, and Bob is taller than Frank. Who is tallest?",
+      "candidates": [
+        "Carol in this c",
+        "Bob exactly as",
+        "Alice specifica",
+        "Dave in this ca"
+      ],
+      "correct": "Bob exactly as"
+    },
+    {
+      "category": "transitivity",
+      "prompt": "Grace is taller than Bob, and Eve is taller than Grace. Who is tallest?",
+      "candidates": [
+        "Eve specificall",
+        "Bob unambiguous",
+        "Grace in this c",
+        "Alice by defini"
+      ],
+      "correct": "Eve specificall"
+    },
+    {
+      "category": "transitivity",
+      "prompt": "Bob is taller than Grace, and Carol is taller than Bob, and Grace is taller than Hank. Who is tallest?",
+      "candidates": [
+        "Alice by defini",
+        "Hank as stated",
+        "Carol by defini",
+        "Grace as stated"
+      ],
+      "correct": "Carol by defini"
+    },
+    {
+      "category": "transitivity",
+      "prompt": "Dave is taller than Alice, and Hank is taller than Carol, and Alice is taller than Hank. Who is tallest?",
+      "candidates": [
+        "Carol as stated",
+        "Alice precisely",
+        "Hank unambiguou",
+        "Dave in this ca"
+      ],
+      "correct": "Dave in this ca"
+    },
+    {
+      "category": "transitivity",
+      "prompt": "Dave is taller than Frank, and Frank is taller than Bob, and Bob is taller than Carol, and Hank is taller than Dave. Who is tallest?",
+      "candidates": [
+        "Alice in this c",
+        "Hank unambiguou",
+        "Carol precisely",
+        "Frank unambiguo"
+      ],
+      "correct": "Hank unambiguou"
+    },
+    {
+      "category": "transitivity",
+      "prompt": "Grace is taller than Frank, and Hank is taller than Eve, and Frank is taller than Carol, and Eve is taller than Grace. Who is tallest?",
+      "candidates": [
+        "Carol specifica",
+        "Alice unambiguo",
+        "Hank in this ca",
+        "Grace exactly e"
+      ],
+      "correct": "Hank in this ca"
+    },
+    {
+      "category": "transitivity",
+      "prompt": "Frank is taller than Alice, and Eve is taller than Dave, and Alice is taller than Hank, and Dave is taller than Frank. Who is tallest?",
+      "candidates": [
+        "Frank in this c",
+        "Hank as stated",
+        "Eve specificall",
+        "Alice as stated"
+      ],
+      "correct": "Eve specificall"
+    },
+    {
+      "category": "transitivity",
+      "prompt": "Frank is taller than Dave, and Dave is taller than Alice, and Eve is taller than Carol, and Carol is taller than Frank. Who is tallest?",
+      "candidates": [
+        "Eve exactly pre",
+        "Bob by definiti",
+        "Alice precisely",
+        "Frank specifica"
+      ],
+      "correct": "Eve exactly pre"
+    },
+    {
+      "category": "transitivity",
+      "prompt": "Dave is taller than Alice, and Carol is taller than Dave, and Alice is taller than Grace. Who is tallest?",
+      "candidates": [
+        "Grace exactly a",
+        "Alice by defini",
+        "Bob in this cas",
+        "Carol by defini"
+      ],
+      "correct": "Carol by defini"
+    },
+    {
+      "category": "all_but_n",
+      "prompt": "There were 15 items. 1 were removed. How many remain?",
+      "candidates": [
+        "1 exactly unambiguou",
+        "13 exactly specifica",
+        "14 precisely by defi",
+        "15 exactly unambiguo"
+      ],
+      "correct": "14 precisely by defi"
+    },
+    {
+      "category": "all_but_n",
+      "prompt": "There were 49 items. 1 were removed. How many remain?",
+      "candidates": [
+        "1 precisely as state",
+        "47 specifically by d",
+        "49 exactly exactly a",
+        "48 in this case exac"
+      ],
+      "correct": "48 in this case exac"
+    },
+    {
+      "category": "all_but_n",
+      "prompt": "There were 5 items. 2 were removed. How many remain?",
+      "candidates": [
+        "2 exactly in this ca",
+        "3 by definition unam",
+        "4 exactly by definit",
+        "5 by definition prec"
+      ],
+      "correct": "3 by definition unam"
+    },
+    {
+      "category": "all_but_n",
+      "prompt": "There were 10 items. 5 were removed. How many remain?",
+      "candidates": [
+        "4 unambiguously prec",
+        "5 precisely precisel",
+        "6 in this case speci",
+        "10 precisely specifi"
+      ],
+      "correct": "5 precisely precisel"
+    },
+    {
+      "category": "all_but_n",
+      "prompt": "There were 13 items. 11 were removed. How many remain?",
+      "candidates": [
+        "3 as stated specific",
+        "2 specifically as st",
+        "1 as stated by defin",
+        "11 exactly as stated"
+      ],
+      "correct": "2 specifically as st"
+    },
+    {
+      "category": "temporal_ordering",
+      "prompt": "sunrise happened before lunchtime, and dawn happened before sunrise, and dusk happened before dawn. What happened first?",
+      "candidates": [
+        "dusk unambiguously",
+        "lunchtime unambigu",
+        "dawn unambiguously",
+        "sunrise specifical"
+      ],
+      "correct": "dusk unambiguously"
+    },
+    {
+      "category": "temporal_ordering",
+      "prompt": "sunset happened before dusk, and lunchtime happened before midnight, and midnight happened before sunset. What happened first?",
+      "candidates": [
+        "lunchtime unambigu",
+        "midnight unambiguo",
+        "dusk exactly exact",
+        "sunset unambiguous"
+      ],
+      "correct": "lunchtime unambigu"
+    },
+    {
+      "category": "temporal_ordering",
+      "prompt": "sunset happened before dusk, and dawn happened before sunset. What happened first?",
+      "candidates": [
+        "dusk as stated exa",
+        "sunset by definiti",
+        "nothing in this ca",
+        "dawn precisely in"
+      ],
+      "correct": "dawn precisely in"
+    },
+    {
+      "category": "temporal_ordering",
+      "prompt": "midnight happened before dawn, and dusk happened before sunrise, and sunrise happened before midnight. What happened first?",
+      "candidates": [
+        "dusk in this case",
+        "midnight unambiguo",
+        "dawn by definition",
+        "sunrise specifical"
+      ],
+      "correct": "dusk in this case"
+    },
+    {
+      "category": "temporal_ordering",
+      "prompt": "tea time happened before midnight, and lunchtime happened before dawn, and midnight happened before lunchtime. What happened first?",
+      "candidates": [
+        "dawn precisely in",
+        "lunchtime specific",
+        "midnight exactly e",
+        "tea time as stated"
+      ],
+      "correct": "tea time as stated"
+    },
+    {
+      "category": "vacuous_truth",
+      "prompt": "Every element of the empty set is even. True?",
+      "candidates": [
+        "Depends on context as stated b",
+        "Yes in this case precisely in",
+        "Cannot be determined by defini",
+        "No exactly as stated exactly i"
+      ],
+      "correct": "Yes in this case precisely in"
+    },
+    {
+      "category": "vacuous_truth",
+      "prompt": "If there are no flying pigs, are all flying pigs pink?",
+      "candidates": [
+        "Depends on context in this cas",
+        "No in this case precisely exac",
+        "Yes as stated as stated precis",
+        "Cannot be determined by defini"
+      ],
+      "correct": "Yes as stated as stated precis"
+    },
+    {
+      "category": "vacuous_truth",
+      "prompt": "If there are no flying pigs, are all flying pigs pink?",
+      "candidates": [
+        "Yes exactly exactly by definit",
+        "Cannot be determined by defini",
+        "No specifically in this case u",
+        "Depends on context unambiguous"
+      ],
+      "correct": "Yes exactly exactly by definit"
+    },
+    {
+      "category": "vacuous_truth",
+      "prompt": "If there are no flying pigs, are all flying pigs pink?",
+      "candidates": [
+        "Yes unambiguously in this case",
+        "Cannot be determined in this c",
+        "No precisely precisely in this",
+        "Depends on context specificall"
+      ],
+      "correct": "Yes unambiguously in this case"
+    },
+    {
+      "category": "vacuous_truth",
+      "prompt": "Every element of the empty set is even. True?",
+      "candidates": [
+        "No by definition unambiguously",
+        "Cannot be determined specifica",
+        "Yes in this case exactly exact",
+        "Depends on context specificall"
+      ],
+      "correct": "Yes in this case exactly exact"
+    },
+    {
+      "category": "consistency_check",
+      "prompt": "A is taller than B, B is taller than C, and A is taller than C. Are these consistent?",
+      "candidates": [
+        "Depends on interpretation in t",
+        "Yes specifically exactly unamb",
+        "No unambiguously specifically",
+        "Cannot be determined in this c"
+      ],
+      "correct": "Yes specifically exactly unamb"
+    },
+    {
+      "category": "consistency_check",
+      "prompt": "A is taller than B, B is taller than C, and A is taller than C. Are these consistent?",
+      "candidates": [
+        "No by definition in this case",
+        "Depends on interpretation as s",
+        "Cannot be determined in this c",
+        "Yes precisely by definition ex"
+      ],
+      "correct": "Yes precisely by definition ex"
+    },
+    {
+      "category": "consistency_check",
+      "prompt": "A is taller than B, B is taller than C, and A is taller than C. Are these consistent?",
+      "candidates": [
+        "No unambiguously by definition",
+        "Cannot be determined specifica",
+        "Yes unambiguously as stated by",
+        "Depends on interpretation as s"
+      ],
+      "correct": "Yes unambiguously as stated by"
+    },
+    {
+      "category": "consistency_check",
+      "prompt": "A is taller than B, B is taller than C, and C is taller than A. Are these consistent?",
+      "candidates": [
+        "No in this case unambiguously",
+        "Depends on interpretation exac",
+        "Cannot be determined exactly p",
+        "Yes as stated specifically in"
+      ],
+      "correct": "No in this case unambiguously"
+    },
+    {
+      "category": "consistency_check",
+      "prompt": "A is taller than B, B is taller than C, and C is taller than A. Are these consistent?",
+      "candidates": [
+        "Cannot be determined unambiguo",
+        "Depends on interpretation as s",
+        "No by definition as stated spe",
+        "Yes specifically as stated una"
+      ],
+      "correct": "No by definition as stated spe"
+    }
+  ]
+}

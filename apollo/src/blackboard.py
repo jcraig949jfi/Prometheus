@@ -191,3 +191,158 @@ def compile_check(pipeline: list[BlackboardOp]) -> tuple[bool, list[str]]:
         for w in op.writes:
             written.add(w)
     return (len(errors) == 0, errors)
+
+
+# ── 2026-05-27 Phase 0 — wrapper protocol corrections ────────────────
+# Per the 2026-05-25 null-slot ablation signature analysis, four
+# corrections are baked into the protocol so the LLM mutation operator
+# (Phase 1) can't easily produce decorative organisms:
+#   - declared-reads-must-be-actual-reads (catches recompute-bypass)
+#   - one-write-per-op preferred (catches side-output)
+#   - no-redundant-encoding (catches redundant-encoding)
+#   - mid-step corruption test (catches atomic-with-output)
+
+
+import ast
+import inspect
+
+
+def verify_declared_reads_are_actual_reads(op: BlackboardOp) -> list[dict]:
+    """Static AST check: does the op's source actually reference state.X
+    for each declared read X? Returns a list of signature warnings.
+
+    Signature emitted: "recompute-bypass" if a declared read is never
+    referenced as state.X in the source. The op may be recomputing the
+    value from upstream slots, defeating the typed-state discipline.
+    """
+    warnings = []
+    try:
+        src = inspect.getsource(op.fn)
+        tree = ast.parse(src.strip())
+    except (OSError, TypeError, IndentationError):
+        return warnings  # built-ins / dynamic; can't verify
+    referenced = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name) \
+                and node.value.id in ("state", "s"):
+            referenced.add(node.attr)
+    for r in op.reads:
+        if r not in referenced:
+            warnings.append({
+                "op": op.name,
+                "signature": "recompute-bypass",
+                "slot": r,
+                "lesson": f"op declares it reads '{r}' but source never references state.{r}; "
+                          f"the value may be recomputed from upstream slots, defeating typed-state discipline",
+            })
+    return warnings
+
+
+def verify_single_output_preferred(op: BlackboardOp, hard_limit: int = 4) -> list[dict]:
+    """Side-output check: ops that write many slots should be split.
+
+    Soft warn at >=2 writes; hard fail at >=hard_limit. Atomic
+    output ops (e.g. terminal scorers writing candidate_scores +
+    selected_answer) are exempt by convention if the op name starts
+    with 'score_' or 'select_'.
+    """
+    warnings = []
+    is_terminal = op.name.startswith(("score_", "select_"))
+    n = len(op.writes)
+    if n >= 2 and not is_terminal:
+        warnings.append({
+            "op": op.name,
+            "signature": "side-output",
+            "n_writes": n,
+            "writes": list(op.writes),
+            "lesson": f"op writes {n} slots in one step; consider splitting into "
+                      f"atomic single-output ops so data flow is visible at the genome level",
+        })
+    if n >= hard_limit:
+        warnings[-1]["severity"] = "hard"
+    return warnings
+
+
+def verify_no_redundant_encoding(pipeline: list[BlackboardOp]) -> list[dict]:
+    """Detect parser/producer ops that write multiple slots which are
+    likely redundant views of the same source data.
+
+    Heuristic: an op that writes ≥2 slots from the same "encoding group"
+    is flagged. Encoding groups are hand-declared below.
+    """
+    REDUNDANT_GROUPS = [
+        # (slot_a, slot_b, lesson) — if an op writes both, the second is
+        # likely recoverable from the first
+        {"names", "relations"},  # names is recoverable from relations entries
+    ]
+    warnings = []
+    for op in pipeline:
+        ws = set(op.writes)
+        for group in REDUNDANT_GROUPS:
+            overlap = ws & group
+            if len(overlap) >= 2:
+                warnings.append({
+                    "op": op.name,
+                    "signature": "redundant-encoding",
+                    "slots": list(overlap),
+                    "lesson": f"op writes {sorted(overlap)} but one is recoverable from the other; "
+                              f"prefer the canonical representation",
+                })
+    return warnings
+
+
+def mid_step_corruption_test(op: BlackboardOp, state: BlackboardState,
+                             corrupt_slot: str,
+                             corrupted_value=None) -> dict:
+    """Run the op once normally, once with `corrupt_slot` corrupted DURING
+    execution (i.e. corrupted on input before the op reads it). Returns
+    a signature dict.
+
+    This is the complementary instrument for atomic-with-output cases
+    where the standard null-slot ablation can't separate the slot from
+    the output (because they're written in the same step). By corrupting
+    the input rather than the output, we expose whether the op actually
+    READS the slot.
+    """
+    import copy as _copy
+    # Baseline run
+    s1 = _copy.deepcopy(state)
+    s1 = op(s1)
+    baseline_outputs = {w: getattr(s1, w, None) for w in op.writes}
+    # Corrupted run
+    s2 = _copy.deepcopy(state)
+    if hasattr(s2, corrupt_slot):
+        setattr(s2, corrupt_slot, corrupted_value if corrupted_value is not None else
+                type(getattr(s2, corrupt_slot, None))() if getattr(s2, corrupt_slot, None) is not None
+                else None)
+    s2 = op(s2)
+    corrupted_outputs = {w: getattr(s2, w, None) for w in op.writes}
+    # Diff
+    differs = {w: (baseline_outputs[w] != corrupted_outputs[w]) for w in op.writes}
+    return {
+        "op": op.name,
+        "corrupted_slot": corrupt_slot,
+        "any_output_differs": any(differs.values()),
+        "outputs_diff": differs,
+        "signature": "load-bearing-input" if any(differs.values()) else "decorative-input",
+        "lesson": ("op reads the corrupted slot meaningfully" if any(differs.values())
+                   else "op does not actually read the corrupted slot; declared read may be decorative"),
+    }
+
+
+def audit_pipeline(pipeline: list[BlackboardOp]) -> dict:
+    """Full Phase-0 pipeline audit. Returns a dict of signatures + lessons,
+    NOT a pass/fail verdict. Per Doctrine #2."""
+    signatures = {
+        "recompute_bypass": [],
+        "side_output": [],
+        "redundant_encoding": [],
+        "compile_check_errors": [],
+    }
+    ok, errors = compile_check(pipeline)
+    signatures["compile_check_errors"] = errors
+    for op in pipeline:
+        signatures["recompute_bypass"].extend(verify_declared_reads_are_actual_reads(op))
+        signatures["side_output"].extend(verify_single_output_preferred(op))
+    signatures["redundant_encoding"].extend(verify_no_redundant_encoding(pipeline))
+    return signatures
