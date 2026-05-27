@@ -100,7 +100,7 @@ def run_g23_lehmer_degree_decay() -> dict:
             ),
         }
 
-    # Log-log fit
+    # Log-log fit for the canonical 1/N hypothesis
     xs = [math.log(d) for d, _ in points]
     ys = [math.log(err) for _, err in points]
     fit = _linear_regression(xs, ys)
@@ -114,6 +114,36 @@ def run_g23_lehmer_degree_decay() -> dict:
 
     slope = fit["slope"]
     r2 = fit["r_squared"]
+
+    # Multi-law comparison (ITER-17 refinement): fit error vs
+    # 1/N, 1/log(N), 1/sqrt(N), constant, exp(-N) and pick best
+    # R^2. The result tells us which decay law actually fits the
+    # data even when 1/N is rejected.
+    candidate_laws = []
+    for name, transform in [
+        ("1/N",        lambda d: 1.0 / d),
+        ("1/log(N)",   lambda d: 1.0 / math.log(d)),
+        ("1/sqrt(N)",  lambda d: 1.0 / math.sqrt(d)),
+        ("constant",   lambda d: 1.0),
+        ("exp(-N/10)", lambda d: math.exp(-d / 10.0)),
+    ]:
+        try:
+            features = [transform(d) for d, _ in points]
+            errors = [err for _, err in points]
+            law_fit = _linear_regression(features, errors)
+            if law_fit is not None:
+                candidate_laws.append({
+                    "name": name,
+                    "slope": round(law_fit["slope"], 6),
+                    "intercept": round(law_fit["intercept"], 6),
+                    "r_squared": round(law_fit["r_squared"], 4),
+                })
+        except (ValueError, ZeroDivisionError):
+            continue
+    # Best-fit law by R^2 descending (tiebreaker: shorter name first
+    # for stable test output)
+    candidate_laws.sort(key=lambda f: (-f["r_squared"], f["name"]))
+    best_law = candidate_laws[0] if candidate_laws else None
 
     # Classify
     if abs(slope - (-1.0)) <= DECAY_SLOPE_TOLERANCE:
@@ -146,6 +176,18 @@ def run_g23_lehmer_degree_decay() -> dict:
             f"-- worth investigating the actual exponent."
         )
 
+    # If the chosen verdict is REJECTED but a multi-law best-fit
+    # has substantially better R^2 than the log-log 1/N fit,
+    # surface it in the notes for downstream investigation.
+    multi_law_addendum = ""
+    if best_law is not None and best_law["r_squared"] > r2 + 0.05:
+        multi_law_addendum = (
+            f" Multi-law best fit: {best_law['name']} "
+            f"(R^2={best_law['r_squared']:.4f}, vs log-log 1/N "
+            f"R^2={r2:.4f}). Decay shape is NOT 1/N but is well-"
+            f"described by {best_law['name']}."
+        )
+
     return {
         "verdict": verdict,
         "kill_pattern": kp,
@@ -156,7 +198,9 @@ def run_g23_lehmer_degree_decay() -> dict:
         "r_squared": round(r2, 4),
         "decay_slope_tolerance": DECAY_SLOPE_TOLERANCE,
         "points_head": [(d, round(e, 6)) for d, e in points[:10]],
-        "notes": notes,
+        "candidate_laws": candidate_laws,
+        "best_fit_law": best_law,
+        "notes": notes + multi_law_addendum,
     }
 
 
