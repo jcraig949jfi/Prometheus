@@ -167,6 +167,10 @@ def execute_attack(problem: dict, attack_plan_path: Optional[str] = None) -> dic
             import charon.agents.stygian.loaders.composition_g02_g04_lehmer_band_high  # noqa: F401
             import charon.agents.stygian.loaders.composition_g02_lehmer_smyth  # noqa: F401
             import charon.agents.stygian.loaders.composition_g02_lehmer_degree_parity  # noqa: F401
+            import charon.agents.stygian.loaders.composition_g03_lehmer_neighborhood  # noqa: F401
+            import charon.agents.stygian.loaders.composition_g10_lehmer_threshold_sweep  # noqa: F401
+            import charon.agents.stygian.loaders.composition_g16_lehmer_extremum  # noqa: F401
+            import charon.agents.stygian.loaders.composition_g19_ledger_transitivity  # noqa: F401
             from charon.agents.stygian.loaders._composition import find_loader
         except Exception as e:
             return _emit_short_circuit_row(

@@ -33,6 +33,8 @@ from charon.agents.erebos.generators.g01_intersection import IntersectionGenerat
 from charon.agents.erebos.generators.g02_contrast import ContrastGenerator
 from charon.agents.erebos.generators.g03_failure_neighborhood import FailureNeighborhoodGenerator
 from charon.agents.erebos.generators.g04_survivor_tightening import SurvivorTighteningGenerator
+from charon.agents.erebos.generators.g05_confound_swap import ConfoundSwapGenerator
+from charon.agents.erebos.generators.g06_null_space import NullSpaceGenerator
 from charon.agents.erebos.generators.g07_analogy import AnalogyGenerator
 from charon.agents.erebos.generators.g08_dimensional_lift import DimensionalLiftGenerator
 from charon.agents.erebos.generators.g09_projection_collapse import ProjectionCollapseGenerator
@@ -77,9 +79,11 @@ _PLUGINS: list[GeneratorPlugin] = [
     MinimalCounterexampleGenerator(),  # Phase 4, Tier B
     AsymptoticLimitGenerator(),        # Phase 5, Tier B
     AnalogyGenerator(),                # Phase 2, Tier C
-    AntiAnchorGenerator(),             # Phase 4, Tier C (new v0.14)
-    ProofObligationGenerator(),        # Phase 4, Tier C (new v0.14)
-    IsomorphismFunctorGenerator(),     # Phase 5, Tier C (new v0.14)
+    AntiAnchorGenerator(),             # Phase 4, Tier C
+    ProofObligationGenerator(),        # Phase 4, Tier C
+    IsomorphismFunctorGenerator(),     # Phase 5, Tier C
+    ConfoundSwapGenerator(),           # Phase 1, Tier C (new v0.15)
+    NullSpaceGenerator(),              # Phase 2, Tier C (new v0.15)
 ]
 
 REGISTRY: dict[str, GeneratorPlugin] = {p.id: p for p in _PLUGINS}
