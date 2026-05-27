@@ -172,6 +172,7 @@ def execute_attack(problem: dict, attack_plan_path: Optional[str] = None) -> dic
             import charon.agents.stygian.loaders.composition_g11_mahler_boolean_cube  # noqa: F401
             import charon.agents.stygian.loaders.composition_g11_v2_lehmer_degree_minima  # noqa: F401
             import charon.agents.stygian.loaders.composition_g11_v3_direct_min_verification  # noqa: F401
+            import charon.agents.stygian.loaders.composition_g11_v4_palindromic_cube  # noqa: F401
             import charon.agents.stygian.loaders.composition_g15_ledger_mi  # noqa: F401
             import charon.agents.stygian.loaders.composition_g15_v2_real_verdict_mi  # noqa: F401
             import charon.agents.stygian.loaders.composition_g16_lehmer_extremum  # noqa: F401
@@ -180,6 +181,7 @@ def execute_attack(problem: dict, attack_plan_path: Optional[str] = None) -> dic
             import charon.agents.stygian.loaders.composition_g19_ledger_transitivity  # noqa: F401
             import charon.agents.stygian.loaders.composition_g23_lehmer_degree_decay  # noqa: F401
             import charon.agents.stygian.loaders.composition_g24_lehmer_x_flip  # noqa: F401
+            import charon.agents.stygian.loaders.composition_g24_v2_reciprocal_audit  # noqa: F401
             from charon.agents.stygian.loaders._composition import find_loader
         except Exception as e:
             return _emit_short_circuit_row(

@@ -141,6 +141,30 @@ def run_g16_lehmer_extremum(adversarial_M: float, param_key: str) -> dict:
         }
 
     band_survival = survival_fraction(band, M_LEHMER)
+
+    # ITER-19 refinement: compute a permutation null over the band
+    # for robustness. Compare band survival against survival under
+    # random subsamples of the FULL catalog with the same N. If
+    # band survival is significantly different from a same-size
+    # subsample of the catalog, the band's behavior is genuinely
+    # local; if not, the band looks like an arbitrary subsample.
+    all_catalog_M = [float(e["mahler_measure"]) for e in entries]
+    import random
+    rng = random.Random(42)
+    n_perm = 500
+    null_survivals = []
+    for _ in range(n_perm):
+        sample = rng.sample(all_catalog_M, n_band)
+        null_survivals.append(survival_fraction(sample, M_LEHMER))
+    null_survivals_sorted = sorted(null_survivals)
+    null_p05 = null_survivals_sorted[int(0.05 * (len(null_survivals_sorted) - 1))]
+    null_p95 = null_survivals_sorted[int(0.95 * (len(null_survivals_sorted) - 1))]
+    # Band is "structurally different" from catalog-bulk if its
+    # survival falls OUTSIDE the null 90% central mass.
+    band_is_structurally_different = (
+        band_survival < null_p05 or band_survival > null_p95
+    )
+
     if band_survival >= ANCHOR_SURVIVAL_THRESHOLD:
         verdict = "REJECTED"
         kp = "conjecture_survives_adversarial_attack"
@@ -162,6 +186,15 @@ def run_g16_lehmer_extremum(adversarial_M: float, param_key: str) -> dict:
             f"evidence the parent's PROMOTED status was regime-local."
         )
 
+    # Append permutation-null context to notes so consumers know
+    # whether the verdict is null-robust
+    notes += (
+        f" Permutation null over {n_perm} catalog subsamples of size "
+        f"{n_band}: null central 90% mass = [{null_p05:.4f}, "
+        f"{null_p95:.4f}]. Band survival is "
+        f"{'STRUCTURALLY DIFFERENT' if band_is_structurally_different else 'within null mass'}."
+    )
+
     return {
         "verdict": verdict,
         "kill_pattern": kp,
@@ -172,6 +205,10 @@ def run_g16_lehmer_extremum(adversarial_M: float, param_key: str) -> dict:
         "band_width": BAND_WIDTH,
         "n_band": n_band,
         "band_survival": round(band_survival, 4),
+        "null_p05": round(null_p05, 4),
+        "null_p95": round(null_p95, 4),
+        "band_is_structurally_different": band_is_structurally_different,
+        "permutation_n": n_perm,
         "anchor_survival_threshold": ANCHOR_SURVIVAL_THRESHOLD,
         "notes": notes,
     }
