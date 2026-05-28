@@ -10436,6 +10436,54 @@ Lifetime: 149 batches journaled / 504.2M records / 288.0M kills /
 504.2M records, 288.0M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #155 — 2026-05-28 ~10:35Z — **4 NEW GENS / 193 KILLS**
+
+**17K records / 24 min / 0 templates / 0 promoted. Mix d4 (old)
++ 4 NEW real gens contributing structured kills.**
+
+### Per-gen attribution
+
+    gid  records  kills   notes
+    d4   16,979   12,835  old (boundary-crossing)
+    z1      200      118  NEW (commute-break)
+    v1      181       72  NEW (perturbation-break)
+    q1       45        2  NEW (mod-p concentration)
+    y1        2        1  NEW (analogy-break)
+
+### Structured kills from new gens
+
+193 named kills × 4 mechanism classes in a single fire:
+- `z1_operators_dont_commute_on_*` × 118
+- `v1_perturbation_breaks_property_*` × 72
+- `q1_modular_structure_changes_at_p*` × 2
+- `y1_analogy_breaks_at_gap_*` × 1
+
+### Batch result
+
+- batch_id: `batch-20260528T103541Z-1300bc`
+- 17,407 records / 13,028 kills / 4,379 confirms / 0 errors
+- 0 promoted (11th consecutive)
+- batch_end ✓
+
+Lifetime: 150 batches journaled / 504.2M records / 288.0M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **150-batch milestone** journaled (after Penelope rotation)
+- 11 consecutive 0-promoted fires
+- This is the textbook desired mix: high mechanism diversity
+  (z1 + v1 + q1 + y1 simultaneously) producing structured
+  Learner-grade negatives
+
+---
+
+*Fire #155 throttled = 17K records / 0 promoted / 0 templates.
+504.2M records, 288.0M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
