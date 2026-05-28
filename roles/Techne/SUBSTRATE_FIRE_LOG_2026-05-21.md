@@ -11500,6 +11500,46 @@ Lifetime: 176 batches journaled / 554.7M records / 312.2M kills /
 554.7M records, 312.2M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #182 — 2026-05-28 ~21:41Z — **n1 emits 908 disagreement records**
+
+**1.87M records / 24 min / 0 templates / 0 promoted. Mix
+a5/d1/g3/g5/n1 — g5 dominant, n1 emitted 908 verifier-disagreement
+records.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    g5   1,846,211  143,143  old (scale_invariance, 7.8% kill)
+    g3      20,000        0  TAUTOLOGY_CONTROL
+    a5       5,010    1,633  old
+    n1         908        0  NEW (verifier disagreement records, UNVERIFIED)
+    d1         918      425  old (kill_neighborhood)
+
+### Batch result
+
+- batch_id: `batch-20260528T214111Z-43ad86`
+- 1,873,047 records / 145,201 kills / 1,727,846 confirms / 0 errors
+- 0 promoted (38th consecutive)
+- batch_end ✓
+
+Lifetime: 177 batches journaled / 556.5M records / 312.3M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- n1 produced 908 verifier-disagreement records — substrate's
+  most informationally-dense meta-claims (verifier_a ≠ verifier_b
+  on the same input)
+- 38 consecutive 0-promoted
+
+---
+
+*Fire #182 throttled = 1.87M records / 0 promoted / 0 templates.
+556.5M records, 312.3M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
