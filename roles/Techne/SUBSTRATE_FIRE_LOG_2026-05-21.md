@@ -10860,6 +10860,43 @@ Lifetime: 160 batches journaled / 527.4M records / 299.0M kills /
 527.4M records, 299.0M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #166 — 2026-05-28 ~15:06Z
+
+**3.00M records / 24 min / 0 templates / 0 promoted. Mix
+d2/f4/g3/h4/x1. x1 contributed 8 partial-view inflation kills.**
+
+### Per-gen attribution
+
+    gid  records    kills      notes
+    f4   1,626,081  1,070,402  old (anti-frequency)
+    h4   1,092,792    180,369  old (bridge_extension)
+    d2     264,937    172,289  old (margin_bracket)
+    g3      20,000          0  TAUTOLOGY_CONTROL
+    x1          10          8  NEW (partial-view inflation, 80% kill)
+
+### Batch result
+
+- batch_id: `batch-20260528T150632Z-33d7ad`
+- 3,003,820 records / 1,423,068 kills / 1,580,752 confirms / 0 errors
+- 0 promoted (22nd consecutive)
+- batch_end ✓
+
+Lifetime: 161 batches journaled / 530.4M records / 300.4M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **300M lifetime kills milestone** crossed (was 299M)
+- 22 consecutive 0-promoted
+
+---
+
+*Fire #166 throttled = 3.00M records / 0 promoted / 0 templates.
+530.4M records, 300.4M kills, 2351 promoted, 2671 templates,
+0 verified findings. **300M lifetime kills milestone.***
+
 
 
 
