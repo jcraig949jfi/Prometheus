@@ -1,66 +1,72 @@
-"""BB1 — false dichotomy generator (stub, Stage 23).
+"""BB1 — false dichotomy generator (REAL, Stage 32).
 
-Emits claims demonstrating that ≥3 distinct categories exist in
-contexts where a binary distinction is commonly assumed.
+For each "naive binary" claim, counts the ACTUAL number of
+distinct categories in the catalog. Emits kill record when
+the catalog reveals ≥ 3 categories where binary was assumed.
 
-From Sphinx domain J (Common Sense). Plan: pivot/techne_15gen_plan_2026-05-28.md
+From Sphinx domain J (Common Sense).
 """
 from __future__ import annotations
 
+import gzip
+import json
+from collections import Counter
 from datetime import datetime, timezone
-from typing import Optional, List, Dict, Any
+from typing import Optional, List, Dict, Any, Callable
 
+from theseus.config import KNOTS_DB_PATH, BSD_RICH_DB_PATH
 from theseus.emit.record_schema import TheseusRecord, ClaimKind, Verdict
 from theseus.generators.base import Generator, GeneratorStatus, GeneratorRole
 
 
-DICHOTOMY_CLAIMS: List[Dict[str, Any]] = [
+def _load_catalog(path) -> List[dict]:
+    p = str(path)
+    if p.endswith(".gz"):
+        with gzip.open(path, "rt", encoding="utf-8") as f:
+            data = json.load(f)
+    else:
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+    return data.get("entries", []) if isinstance(data, dict) else data
+
+
+# Each probe: (id, domain, naive_binary, fine_classifier, expected_max).
+# fine_classifier returns a string label per object.
+DICHOTOMY_PROBES = [
     {
-        "id": "ec_reduction_not_binary",
-        "naive_binary": "good vs bad reduction",
-        "actual_categories": (
-            "good, multiplicative (split / non-split), "
-            "additive (potentially good / potentially multiplicative)"
-        ),
-        "category_count": 5,
-        "rationale": (
-            "Kodaira/Néron classification: ≥5 reduction types"
-        ),
+        "id": "ec_torsion_categories",
+        "domain": "ec",
+        "naive_binary": "EC torsion is trivial-or-nontrivial",
+        "fine_classifier": lambda o: f"Z/{(o.get('rich') or {}).get('torsion', 0)}Z",
+        "expected_binary_count": 2,
     },
     {
-        "id": "knot_amphichirality_not_binary",
-        "naive_binary": "amphichiral vs chiral",
-        "actual_categories": (
-            "positive amphichiral, negative amphichiral, "
-            "fully amphichiral, chiral"
-        ),
-        "category_count": 4,
-        "rationale": (
-            "amphichirality has direction (positive/negative) and full vs "
-            "partial; binary split misses structure"
-        ),
+        "id": "knot_signature_categories",
+        "domain": "knot",
+        "naive_binary": "knot signature is zero-or-nonzero",
+        "fine_classifier": lambda o: f"sig={o.get('signature')}",
+        "expected_binary_count": 2,
     },
     {
-        "id": "ec_torsion_classification_15_groups",
-        "naive_binary": "trivial torsion vs nontrivial torsion",
-        "actual_categories": (
-            "Mazur's 15 distinct torsion structures: Z/n for n ∈ {1..10,12} "
-            "and Z/2×Z/2n for n ∈ {1..4}"
-        ),
-        "category_count": 15,
-        "rationale": "Mazur's theorem enumerates exactly 15 groups",
+        "id": "ec_rank_categories",
+        "domain": "ec",
+        "naive_binary": "EC rank is zero-or-positive",
+        "fine_classifier": lambda o: f"rank={(o.get('base') or {}).get('rank')}",
+        "expected_binary_count": 2,
     },
     {
-        "id": "knot_genus_not_binary",
-        "naive_binary": "genus-0 (unknot) vs genus-positive",
-        "actual_categories": (
-            "genus 0, 1, 2, 3, ..., ∞ (countable)"
-        ),
-        "category_count": -1,  # infinite
-        "rationale": (
-            "knot genus is a non-negative integer; the binary "
-            "trivial/nontrivial split flattens a Z-graded invariant"
-        ),
+        "id": "knot_three_genus_categories",
+        "domain": "knot",
+        "naive_binary": "knot three_genus is zero-or-positive",
+        "fine_classifier": lambda o: f"g={o.get('three_genus')}",
+        "expected_binary_count": 2,
+    },
+    {
+        "id": "ec_tamagawa_categories",
+        "domain": "ec",
+        "naive_binary": "EC tamagawa is one-or-not",
+        "fine_classifier": lambda o: f"c={(o.get('rich') or {}).get('tamagawa_product')}",
+        "expected_binary_count": 2,
     },
 ]
 
@@ -73,41 +79,71 @@ class Bb1FalseDichotomyGenerator(Generator):
 
     def __init__(self, batch_id: str) -> None:
         super().__init__(batch_id)
+        try:
+            self._knots = _load_catalog(KNOTS_DB_PATH)
+        except Exception:
+            self._knots = []
+        try:
+            self._ecs = _load_catalog(BSD_RICH_DB_PATH)
+        except Exception:
+            self._ecs = []
         self._cursor = 0
 
     def description(self) -> str:
-        return f"bb1: false_dichotomy ({len(DICHOTOMY_CLAIMS)} claims)"
+        return f"bb1: false_dichotomy (real) — {len(DICHOTOMY_PROBES)} catalog category counts"
 
     def next(self) -> Optional[TheseusRecord]:
-        if self._cursor >= len(DICHOTOMY_CLAIMS):
-            return None
-        c = DICHOTOMY_CLAIMS[self._cursor]
-        self._cursor += 1
-        self.attempts += 1
-        ncat = (
-            str(c["category_count"]) if c["category_count"] >= 0
-            else "countably infinite"
-        )
-        canonical = (
-            f"BB1_FALSE_DI[{c['id']}] '{c['naive_binary']}' actually has "
-            f"{ncat} categories: {c['actual_categories']}"
-        )
-        record_id = TheseusRecord.compute_record_id(canonical, self.generator_id)
-        self.emitted.append(record_id)
-        return TheseusRecord(
-            record_id=record_id,
-            generator_id=self.generator_id,
-            batch_id=self.batch_id,
-            emitted_at=datetime.now(timezone.utc).isoformat(),
-            claim_kind=self.claim_kind,
-            claim_payload={
-                "claim_id": c["id"],
-                "naive_binary": c["naive_binary"],
-                "actual_categories": c["actual_categories"],
-                "category_count": c["category_count"],
-                "rationale": c["rationale"],
-                "logical_form": "false_dichotomy",
-            },
-            canonical_claim_text=canonical,
-            verdict=Verdict.UNVERIFIED.value,
-        )
+        while self._cursor < len(DICHOTOMY_PROBES):
+            p = DICHOTOMY_PROBES[self._cursor]
+            self._cursor += 1
+            self.attempts += 1
+            catalog = self._knots if p["domain"] == "knot" else self._ecs
+            categories = Counter()
+            for o in catalog:
+                try:
+                    cat = p["fine_classifier"](o)
+                    if cat is not None and "None" not in str(cat):
+                        categories[cat] += 1
+                except Exception:
+                    continue
+            n_categories = len(categories)
+            top_5 = categories.most_common(5)
+            if n_categories > p["expected_binary_count"]:
+                verdict = Verdict.REJECTED.value
+                kill_pattern = f"bb1_false_dichotomy_revealed_{n_categories}_categories"
+                outcome = (
+                    f"NAIVE binary is FALSE: {n_categories} actual categories. "
+                    f"Top: {top_5}"
+                )
+            else:
+                verdict = Verdict.SHADOW_CATALOG.value
+                kill_pattern = None
+                outcome = (
+                    f"binary holds: {n_categories} categories observed "
+                    f"(≤ {p['expected_binary_count']})"
+                )
+            canonical = (
+                f"BB1_FALSE_DI[{p['id']}] '{p['naive_binary']}' — {outcome}"
+            )
+            record_id = TheseusRecord.compute_record_id(canonical, self.generator_id)
+            self.emitted.append(record_id)
+            return TheseusRecord(
+                record_id=record_id,
+                generator_id=self.generator_id,
+                batch_id=self.batch_id,
+                emitted_at=datetime.now(timezone.utc).isoformat(),
+                claim_kind=self.claim_kind,
+                claim_payload={
+                    "probe_id": p["id"],
+                    "naive_binary": p["naive_binary"],
+                    "actual_category_count": n_categories,
+                    "top_categories": top_5,
+                    "expected_binary_count": p["expected_binary_count"],
+                    "logical_form": "false_dichotomy",
+                    "outcome": outcome,
+                },
+                canonical_claim_text=canonical,
+                verdict=verdict,
+                kill_pattern=kill_pattern,
+            )
+        return None
