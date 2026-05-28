@@ -10068,6 +10068,61 @@ Lifetime: 141 batches journaled / 491.1M records / 279.1M kills /
 491.1M records, 279.1M kills, 2351 promoted, 2670 templates,
 0 verified findings. **10 of 15 newcomers validated in bandit pool.***
 
+---
+
+## Fire #147 — 2026-05-28 ~07:39Z — **15-of-15 NEWCOMERS COMPLETE**
+
+**17 records / <10 sec. Bandit picked aa1/p1/r1/t1/v1 — the
+EXACT remaining 5 second-batch stubs.**
+
+### Three-fire sweep summary
+
+    Fire #145: bb1, l2, m2, x1, z1   (5)
+    Fire #146: q1, s1, u1, w1, y1    (5)
+    Fire #147: aa1, p1, r1, t1, v1   (5)
+
+**ALL 15 second-batch new gens picked across 3 consecutive fires.**
+The explorer-prior + cooldown logic walked the newcomer pool
+cleanly: every newcomer received a real bandit pick within 3 fires
+of registration.
+
+### Per-gen attribution
+
+    gid  records  shape
+    p1   4        modus_ponens_chain
+    r1   4        subset_relation
+    aa1  3        confidence_calibration
+    t1   3        multi_hop_deduction
+    v1   3        counterfactual_invariance
+
+### Batch result
+
+- batch_id: `batch-20260528T073932Z-f5b2ab`
+- 17 records / 0 kills / 0 confirms / 0 errors
+- 0 promoted, 0 new templates
+
+Lifetime: 142 batches journaled / 491.1M records / 279.1M kills /
+2351 promoted / 2670 templates / 0 verified findings.
+
+### Validates the loop discipline
+
+After 3 fires (each <10 sec wall), every one of the 15 new gen
+families has been picked by the bandit at least once. Confirms:
+1. Registry update integrated cleanly
+2. Bandit + explorer-prior + cooldown composes correctly across
+   a 55-gen pool
+3. All 20 new gen families (5 first-batch + 15 second-batch) are
+   now live in the substrate's day-to-day rotation
+
+Next fire (#148) will see cooldown push the bandit back toward
+old gens.
+
+---
+
+*Fire #147 throttled = 17 records / 0 promoted / 0 templates.
+491.1M records, 279.1M kills, 2351 promoted, 2670 templates,
+0 verified findings. **20-of-20 new gens validated in bandit pool.***
+
 
 
 
