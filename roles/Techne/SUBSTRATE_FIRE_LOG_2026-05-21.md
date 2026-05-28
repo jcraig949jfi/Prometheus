@@ -10743,6 +10743,38 @@ Lifetime: 157 batches journaled / 521.3M records / 296.5M kills /
 521.3M records, 296.5M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #163 — 2026-05-28 ~13:52Z
+
+**3.24M records / 24 min / 0 templates / 0 promoted. Mix
+c2/e5/f1/g5/t1. f1+g5 dominant.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    g5   1,250,944   97,191  old (scale_invariance, 7.8% kill)
+    f1   1,244,067  364,519  old (monte-carlo)
+    c2     745,491  284,336  old (threshold_mutation)
+    t1         252        0  NEW (multi-hop heuristic chains pass)
+    e5         121        0  stub (mathworld scrape)
+
+### Batch result
+
+- batch_id: `batch-20260528T135225Z-6b67cc`
+- 3,240,875 records / 746,046 kills / 2,494,829 confirms / 0 errors
+- 0 promoted (19th consecutive)
+- batch_end ✓
+
+Lifetime: 158 batches journaled / 524.5M records / 297.3M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+---
+
+*Fire #163 throttled = 3.24M records / 0 promoted / 0 templates.
+524.5M records, 297.3M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
