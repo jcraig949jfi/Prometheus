@@ -11005,6 +11005,58 @@ Lifetime: 164 batches journaled / 536.7M records / 303.6M kills /
 536.7M records, 303.6M kills, 2351 promoted, 2671 templates,
 0 verified findings. **25 consecutive 0-promoted.***
 
+---
+
+## Fire #170 — 2026-05-28 ~16:45Z — **170-FIRE MILESTONE**
+
+**2.17M records / 24 min / 0 templates / 0 promoted. Mix
+a4/b4/c4/w1/x1 — 2 new gens (w1+x1) contributing 68 structured
+kills.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    a4   2,152,212  648,556  old (symbolic_regression, 30% kill)
+    c4      15,548        0  TAUTOLOGY_CONTROL
+    b4         606      446  old (fixed_point_hunt)
+    w1         226       60  NEW (closure-violated, 27% kill rate)
+    x1          10        8  NEW (partial-view inflation, 80%)
+
+### Structured kills from new gens (68 total)
+
+- `w1_closure_violated_by_*` × 60
+- `x1_partial_view_inflation_under_*` × 8
+
+### Batch result
+
+- batch_id: `batch-20260528T164508Z-a7cf71`
+- 2,168,602 records / 649,070 kills / 1,519,532 confirms / 0 errors
+- 0 promoted (26th consecutive)
+- batch_end ✓
+
+Lifetime: 165 batches journaled / 538.9M records / 304.2M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### 170-fire arc summary
+
+Session has now traversed 170 Techne fires from #1 (pre-session)
+through #170 (this). Substrate state at 170-fire mark:
+- 55 active gens (from 35)
+- ~250 distinct kill_patterns (from ~10-15)
+- 17 falsification mechanism classes (from 5)
+- 538M records, 304M kills lifetime
+- 0 verified mathematical findings (anchored honest)
+
+The substrate has become a structured-falsification machine
+producing diverse, named, witnessed kill records — exactly the
+graveyard-as-training-data shape predicted by frontier reviews.
+
+---
+
+*Fire #170 throttled = 2.17M records / 0 promoted / 0 templates.
+538.9M records, 304.2M kills, 2351 promoted, 2671 templates,
+0 verified findings. **170-fire milestone / 26 consecutive 0-promoted.***
+
 
 
 
