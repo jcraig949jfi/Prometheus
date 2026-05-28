@@ -10671,6 +10671,46 @@ Lifetime: 155 batches journaled / 517.6M records / 294.6M kills /
 517.6M records, 294.6M kills, 2351 promoted, 2671 templates,
 0 verified findings. **160-fire milestone.***
 
+---
+
+## Fire #161 — 2026-05-28 ~13:03Z — **98.6% kill rate again**
+
+**905K records / 24 min / 0 templates / 0 promoted. Mix
+a5/d1/d3/h2/x1. d3+h2 dominate at ~99.9% kill rates.
+x1 contributed 8/10 partial-view inflation kills.**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    d3   519,150  510,451  old, 98.3% kill
+    h2   380,211  379,985  old, post-cap 99.94% kill
+    a5     4,255    1,355  old, small reservoir
+    d1     1,808      824  old
+    x1        10        8  NEW (partial_view_inflation, 80% kill)
+
+### Batch result
+
+- batch_id: `batch-20260528T130307Z-31f143`
+- 905,434 records / 892,623 kills / 12,803 confirms / 0 errors
+- 0 promoted (17th consecutive)
+- batch_end ✓
+
+Lifetime: 156 batches journaled / 518.5M records / 295.5M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 98.6% overall kill rate
+- x1 hit 80% (8/10 partial-view probes show full catalog
+  inflates beyond bounded view)
+- 17 consecutive 0-promoted fires
+
+---
+
+*Fire #161 throttled = 905K records / 0 promoted / 0 templates.
+518.5M records, 295.5M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
