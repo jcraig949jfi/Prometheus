@@ -11373,6 +11373,43 @@ Lifetime: 173 batches journaled / 549.9M records / 309.3M kills /
 549.9M records, 309.3M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #179 — 2026-05-28 ~20:27Z — **550M LIFETIME RECORDS CROSSED**
+
+**3.54M records / 24 min / 0 templates / 0 promoted. Mix
+a1/f4/g4/t1/u1 — heavy old-gen burn.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    f4   1,299,905  855,026  old (anti-frequency, 65.8% kill)
+    g4   1,121,857   60,346  old (reflection_duality)
+    a1   1,121,792  773,218  old (catalog cross_product, 69%)
+    t1         252        0  NEW (multi-hop pass)
+    u1           2        0  NEW (no swap-distinguish)
+
+### Batch result
+
+- batch_id: `batch-20260528T202729Z-78503a`
+- 3,543,808 records / 1,688,590 kills / 1,855,218 confirms / 0 errors
+- 0 promoted (35th consecutive)
+- batch_end ✓
+
+Lifetime: 174 batches journaled / **553.4M records** / 311.0M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **550M lifetime records milestone** (now 553M)
+- 35 consecutive 0-promoted
+
+---
+
+*Fire #179 throttled = 3.54M records / 0 promoted / 0 templates.
+553.4M records, 311.0M kills, 2351 promoted, 2671 templates,
+0 verified findings. **550M lifetime milestone.***
+
 
 
 
