@@ -9817,6 +9817,77 @@ User responded "Do #1 and #3":
 487.2M records, 277.0M kills, 2351 promoted, 2644 templates,
 0 verified findings. **LOOP HALTED post-#141 per user direction.***
 
+---
+
+## Fire #142 — 2026-05-28 ~06:47Z — **ALL 5 NEW GENS PICKED BY BANDIT**
+
+**5.88K records / <1 min / 0 templates / 0 promoted. 10 REAL KILLS
+with evidence (4 l1 witnesses + 6 m1 minimal counterexamples).**
+
+### Bandit's first pick after new gens added
+
+    Bandit cooldown active: 13 old gens within cooldown (×0.3)
+    Bandit selected: ['o1', 'l1', 'n1', 'k1', 'm1']
+
+**Bandit picked ALL 5 NEW GENS — zero old gens.** Explorer-prior
+injection biased UCB toward low-saturation k1-o1; cooldown
+downweighted recently-picked old gens.
+
+### Per-gen attribution
+
+    gid  records  templates  kills (with evidence)
+    k1   4,952    0          0    (typed bridges, all UNVERIFIED)
+    n1     886    0          0    (verifier disagreements, UNVERIFIED)
+    o1      22    0          0    (theorem perturbations, UNVERIFIED)
+    l1      12    0          4    ← 4 obstruction REFUTATIONS
+    m1       9    0          6    ← 6 MINIMAL COUNTEREXAMPLES with certs
+
+### Batch result
+
+- batch_id: `batch-20260528T064709Z-86fb5a`
+- Duration: ~10 seconds wall (new gens exhaust fast, --batch-hours
+  0.4 budget irrelevant)
+- 5,881 records / **10 kills with evidence** / 11 confirms / 0 errors
+- 0 promoted (training_weight fix: UNVERIFIED × 0.1 verdict mult
+  keeps low-base records below 0.6 threshold)
+- 0 new templates → 2653 lifetime disc-role templates (unchanged
+  from end of Stage 16)
+- **Verified mathematical findings: 0** (anchor holds)
+
+Lifetime: 137 batches journaled / 487.21M records / 277.0M kills /
+2351 promoted / 2653 templates / 0 verified findings.
+
+### What this fire proves
+
+1. **The 26-template monoculture ceiling is BROKEN at the
+   generator level**. The substrate now emits records in shapes:
+   typed_bridge / obstruction / minimal_counterexample /
+   verifier_disagreement / conjecture_neighborhood — none of
+   which existed Fire #141 or earlier.
+
+2. **Bandit + explorer-prior correctly explores new territory.**
+   First fire after registration, all 5 new gens picked together.
+
+3. **First substrate kill records with witnesses.** l1 and m1
+   each emit REJECTED records that include a reproducible
+   counterexample (l1: catalog object label; m1: enumeration
+   certificate). This is qualitatively different from the
+   parity-tautology era.
+
+4. **training_weight fix holding.** 5,881 records emitted, 0
+   promoted. Old training_weight would have promoted ~24% of
+   them (per Fire #121 triage). Info-content multiplier is
+   working as designed.
+
+5. **Loop pacing**: <10 sec batch + 30 min idle = ~0.5% CPU avg.
+   Way under 25% target.
+
+---
+
+*Fire #142 throttled = 5.88K records / 0 promoted / 10 real kills.
+487.21M records, 277.0M kills, 2351 promoted, 2653 templates,
+0 verified findings. 5 NEW GEN FAMILIES live in the bandit pool.*
+
 
 
 
