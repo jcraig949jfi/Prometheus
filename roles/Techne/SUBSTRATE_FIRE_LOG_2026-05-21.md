@@ -11057,6 +11057,38 @@ graveyard-as-training-data shape predicted by frontier reviews.
 538.9M records, 304.2M kills, 2351 promoted, 2671 templates,
 0 verified findings. **170-fire milestone / 26 consecutive 0-promoted.***
 
+---
+
+## Fire #171 — 2026-05-28 ~17:09Z
+
+**1.60M records / 24 min / 0 templates / 0 promoted. Mix
+a1/b4/d3/e2/e5 — all old gens this fire.**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    d3   832,215  817,878  old (triangulation, 98.3% kill)
+    a1   765,790  528,278  old (catalog cross_product, 69%)
+    b4       606      446  old (fixed_point_hunt)
+    e2       424        0  stub (arxiv-mining)
+    e5       121        0  stub (mathworld)
+
+### Batch result
+
+- batch_id: `batch-20260528T170951Z-2d09e1`
+- 1,599,156 records / 1,346,602 kills / 252,554 confirms / 0 errors
+- 0 promoted (27th consecutive)
+- batch_end ✓
+
+Lifetime: 166 batches journaled / 540.5M records / 305.5M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+---
+
+*Fire #171 throttled = 1.60M records / 0 promoted / 0 templates.
+540.5M records, 305.5M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
