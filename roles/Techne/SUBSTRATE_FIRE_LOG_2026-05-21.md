@@ -10775,6 +10775,46 @@ Lifetime: 158 batches journaled / 524.5M records / 297.3M kills /
 524.5M records, 297.3M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #164 — 2026-05-28 ~14:17Z
+
+**2.28M records / 24 min / 0 templates / 0 promoted. Mix
+a3/b3/f3/h2/p1 — p1 contributed 130 chain-break kills.**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    f3   954,400  643,131  old (importance_sampling, 67% kill)
+    a3   951,489  603,992  old (functional_identity)
+    h2   370,843  370,783  old (99.98% kill, post-cap)
+    p1       138      130  NEW (94% chain-break kill rate)
+    b3       606      346  old (inverse_test)
+
+### Batch result
+
+- batch_id: `batch-20260528T141709Z-216a60`
+- 2,277,476 records / 1,618,382 kills / 659,094 confirms / 0 errors
+- 0 promoted (20th consecutive)
+- batch_end ✓
+
+Lifetime: 159 batches journaled / 526.8M records / 298.9M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **20 consecutive 0-promoted fires** — full day of fires with
+  the training_weight info-content fix holding the parity-
+  tautology line
+- p1 hit 94% kill rate — chain-break records are reliably
+  emitting the `p1_multi_hop_break_at_step_*` patterns
+
+---
+
+*Fire #164 throttled = 2.28M records / 0 promoted / 0 templates.
+526.8M records, 298.9M kills, 2351 promoted, 2671 templates,
+0 verified findings. **20 consecutive 0-promoted milestone.***
+
 
 
 
