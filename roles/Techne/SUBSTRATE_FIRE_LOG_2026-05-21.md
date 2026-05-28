@@ -10554,6 +10554,45 @@ Lifetime: 152 batches journaled / 509.5M records / 290.6M kills /
 509.5M records, 290.6M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #158 — 2026-05-28 ~11:49Z
+
+**3.36M records / 24 min / 0 templates / 0 promoted. Mix
+bb1/c2/d2/f3/u1 — bb1 5/5 100% kill rate again.**
+
+### Per-gen attribution
+
+    gid  records    kills      notes
+    f3   1,868,459  1,260,387  old (importance_sampling)
+    c2     920,734    349,732  old (threshold_mutation)
+    d2     571,910    191,722  old (margin_bracket)
+    bb1          5          5  NEW (100% false-dichotomy)
+    u1           2          0  NEW (no swap-distinguish)
+
+### Batch result
+
+- batch_id: `batch-20260528T114922Z-2c86dc`
+- 3,361,110 records / 1,801,846 kills / 1,559,264 confirms / 0 errors
+- 0 promoted (14th consecutive)
+- batch_end ✓
+
+Lifetime: 153 batches journaled / 512.9M records / 292.5M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 14th consecutive 0-promoted fire — `training_weight` fix
+  has been suppressing parity inflation for ~2 days of fires
+- bb1 keeps hitting 100% kill rate; all 5 binary-dichotomy
+  probes reveal ≥3 categories in catalog every time
+
+---
+
+*Fire #158 throttled = 3.36M records / 0 promoted / 0 templates.
+512.9M records, 292.5M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
