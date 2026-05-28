@@ -255,6 +255,64 @@ aware loader, every plugin is on probation but un-falsifiable. The
 loader's existence promotes plugins from "unfalsifiable MVP" to
 "empirical instrument."
 
+### P13. Two-layer separation with durable seam artifact (added v3 2026-05-27)
+
+The substrate operates as TWO architecturally-separate layers connected
+by a durable typed artifact. Layer 1 is per-emission falsification —
+traditional statistical machinery, permutation nulls, predicate
+checks, theorem-prover calls. Use the BEST traditional methods
+available; sharp Layer-1 generators produce high-quality failure
+data with diminished noise. Layer 2 is the cross-emission
+accumulator — the kill_ledger as queryable failure geometry, the
+kill_pattern registry as routing policy, tensor operations over
+accumulated residue. The seam between them is the `ComposedClaim`
+artifact, gated by `_residue_eligibility.py` so that not every
+per-emission failure crosses (some are exhaust, logged but not
+promoted to substrate residue).
+
+**Operational consequence #1 (Layer 1):** plugin retrofits that
+upgrade statistical methods (Westfall-Young max-T over single
+shuffle; NOTEARS over argmax|value|; BOCPD over max/mean ratio;
+Z3 over regex; Kohlenbach proof mining over operator-walking) are
+explicitly endorsed. Layer 1 quality is load-bearing. Do not
+neglect it because it is "traditional."
+
+**Operational consequence #2 (seam):** every emission MUST commit
+to its eligibility status. The four eligibility criteria (per the
+doctrine doc and `_residue_eligibility.py`):
+1. Changes the future probability distribution over which plugin
+   should fire next.
+2. Localizes a previously-unknown boundary in (data, inquiry) space.
+3. Falsifies a previously-held assumption about a kill_pattern's
+   observable signature.
+4. Adds rank to the failure tensor.
+
+Failures meeting none of these are exhaust. Logged separately.
+NOT consumed by routing.
+
+**Operational consequence #3 (Layer 2):** the kill_ledger is
+NOT a write-only audit log. It is a navigable structure that
+future plugins MUST be able to query. Every field on `ComposedClaim`
+must have at least one downstream consumer (a plugin that reads it,
+a loader that routes on it, a test that asserts on it). A field
+with no consumer is decoration; strip it.
+
+**Operational consequence #4 (the seam is where the architecture
+lives):** Prometheus's distinctive claim is structural. Traditional
+ML collapses Layer 1 and Layer 2 into one operation (gradient
+update). Prometheus separates them. The durable typed artifact at
+the seam is what makes failure metabolizable rather than consumed.
+This is the line that must be defended against the gravity well
+of "just do better statistics in the loss function."
+
+**Falsifiability of P13:** the doctrine's pre-committed kill is:
+if at ITER-100 the substrate cannot demonstrate that Layer 2 adds
+measurable value over a Layer-1-only baseline on the Sprint-1
+ablation experiments, P13 has failed and the architecture is
+re-opened.
+
+Reading: `pivot/erebos_doctrine_v1_2026-05-27.md`.
+
 ---
 
 ## DNA in code form
