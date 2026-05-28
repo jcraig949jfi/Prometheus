@@ -11663,6 +11663,38 @@ Lifetime: 180 batches journaled / 560.4M records / 313.8M kills /
 560.4M records, 313.8M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #186 — 2026-05-28 ~23:19Z
+
+**1.74M records / 24 min / 0 templates / 0 promoted. Mix
+d2/e2/f3/h2/y1 — 74.6% kill rate.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    f3   1,141,270  769,298  old (importance_sampling, 67% kill)
+    h2     399,282  399,194  old (99.98% post-cap)
+    d2     203,048  132,402  old (margin_bracket)
+    e2         424        0  stub (arxiv-mining)
+    y1           2        1  NEW (analogy-break kill)
+
+### Batch result
+
+- batch_id: `batch-20260528T231923Z-ce00ee`
+- 1,744,026 records / 1,300,895 kills / 443,131 confirms / 0 errors
+- 0 promoted (42nd consecutive)
+- batch_end ✓
+
+Lifetime: 181 batches journaled / 562.2M records / 315.1M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+---
+
+*Fire #186 throttled = 1.74M records / 0 promoted / 0 templates.
+562.2M records, 315.1M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
