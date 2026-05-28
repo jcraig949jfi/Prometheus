@@ -11540,6 +11540,54 @@ Lifetime: 177 batches journaled / 556.5M records / 312.3M kills /
 556.5M records, 312.3M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #183 — 2026-05-28 ~22:05Z — **4 NEW GENS / 89 STRUCTURED KILLS**
+
+**124K records / 24 min / 0 templates / 0 promoted. Mix
+bb1/c4/l1/v1/x1 — 4 NEW gens emit 89 structured kills.**
+
+### Per-gen attribution
+
+    gid  records   kills  notes
+    c4   124,231   0      TAUTOLOGY_CONTROL (filler)
+    v1       181  72      NEW (perturbation-break)
+    l1        12   4      NEW (obstruction-refuted)
+    x1        10   8      NEW (partial-view inflation)
+    bb1        5   5      NEW (100% false-dichotomy)
+
+### Structured kills from new gens (89 total)
+
+- `v1_perturbation_breaks_property_*` × 72
+- `x1_partial_view_inflation_*` × 8
+- `bb1_false_dichotomy_revealed_*_categories` × 5
+- `l1_obstruction_refuted_by_witness` × 4
+
+Disc-role-only kill density: **89 kills / 208 disc records = 42.8%**.
+
+### Batch result
+
+- batch_id: `batch-20260528T220543Z-99eb1c`
+- 124,439 records / 89 kills / 124,350 confirms / 0 errors
+- 0 promoted (39th consecutive)
+- batch_end ✓
+
+Lifetime: 178 batches journaled / 556.6M records / 312.3M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 4 of 5 picks are NEW gens — the most newcomer-heavy fire
+  since the second-batch sweep
+- 4 different mechanism classes contributing simultaneously
+- 39 consecutive 0-promoted
+
+---
+
+*Fire #183 throttled = 124K records / 0 promoted / 0 templates.
+556.6M records, 312.3M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
