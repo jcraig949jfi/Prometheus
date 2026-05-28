@@ -183,6 +183,7 @@ def execute_attack(problem: dict, attack_plan_path: Optional[str] = None) -> dic
             import charon.agents.stygian.loaders.composition_g19_ledger_transitivity  # noqa: F401
             import charon.agents.stygian.loaders.composition_g19_v2_recursive_obligations  # noqa: F401
             import charon.agents.stygian.loaders.composition_g23_lehmer_degree_decay  # noqa: F401
+            import charon.agents.stygian.loaders.composition_g23_lehmer_degree_decay_bootstrap  # noqa: F401
             import charon.agents.stygian.loaders.composition_g24_lehmer_x_flip  # noqa: F401
             import charon.agents.stygian.loaders.composition_g24_v2_reciprocal_audit  # noqa: F401
             from charon.agents.stygian.loaders._composition import find_loader
