@@ -10484,6 +10484,44 @@ Lifetime: 150 batches journaled / 504.2M records / 288.0M kills /
 504.2M records, 288.0M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #156 — 2026-05-28 ~11:00Z
+
+**3.35M records / 24 min / 0 templates / 0 promoted. Mix
+b4/bb1/c3/f3/g3 — bb1 emitted 5/5 false-dichotomy kills.**
+
+### Per-gen attribution
+
+    gid  records    kills      notes
+    f3   1,960,418  1,321,548  old (importance_sampling)
+    c3   1,368,956    588,916  old (region_slide)
+    g3      20,000          0  TAUTOLOGY_CONTROL
+    b4         606        446  old (fixed_point_hunt)
+    bb1          5          5  NEW (false_dichotomy_revealed, 100% kill)
+
+### Batch result
+
+- batch_id: `batch-20260528T110017Z-56fdfa`
+- 3,349,985 records / 1,910,915 kills / 1,419,071 confirms / 0 errors
+- 0 promoted (12th consecutive)
+- batch_end ✓
+
+Lifetime: 151 batches journaled / 507.5M records / 289.9M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- bb1 hit **5/5 = 100% kill rate** — every binary-dichotomy
+  probe revealed ≥ 3 distinct categories in the catalog
+- 12th consecutive 0-promoted fire
+
+---
+
+*Fire #156 throttled = 3.35M records / 0 promoted / 0 templates.
+507.5M records, 289.9M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
