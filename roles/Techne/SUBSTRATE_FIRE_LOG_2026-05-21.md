@@ -10169,6 +10169,51 @@ Lifetime: 143 batches journaled / 494.5M records / 281.4M kills /
 494.5M records, 281.4M kills, 2351 promoted, 2670 templates,
 0 verified findings.*
 
+---
+
+## Fire #149 — 2026-05-28 ~08:04Z — **NEW KILL PATTERNS IN LIVE BANDIT**
+
+**455K records / 24 min / 1 template (h2) / 0 promoted. Mix
+a5/c4/h2/p1/y1 — 2 new real gens contributing structured
+kills alongside old gens.**
+
+### Per-gen attribution
+
+    gid  records   templates  kills   notes
+    h2   436,460   1          99.97%  old (post-fix-cap)
+    c4    13,750   0           0.0%   TAUTOLOGY_CONTROL
+    a5     4,912   0          32.1%   old
+    p1       138   0          94.2%   NEW (130 chain-break kills)
+    y1         2   0          50.0%   NEW (1 analogy-break kill)
+
+### Kill patterns produced this fire
+
+- `p1_multi_hop_break_at_step_*` × 130
+- `y1_analogy_breaks_at_gap_*` × 1
+- Plus h2's standard kill_neighborhood patterns × 436K
+
+This is the first fire where structured-kill-pattern records
+from the new real gens appear ALONGSIDE the high-volume old
+gens in the live bandit-managed pool.
+
+### Batch result
+
+- batch_id: `batch-20260528T080458Z-8bdfb4`
+- Duration: 24 min, 1033/s peak tick rate
+- 455,262 records / 438,047 kills / 13,793 confirms / 0 errors
+- 0 promoted (5th consecutive)
+- +1 template (h2) → 2671 lifetime
+- batch_end ✓
+
+Lifetime: 144 batches journaled / 495M records / 281.8M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+---
+
+*Fire #149 throttled = 455K records / 0 promoted / 1 template.
+495M records, 281.8M kills, 2351 promoted, 2671 templates,
+0 verified findings. **131 NEW STRUCTURED KILLS from p1+y1.***
+
 
 
 
