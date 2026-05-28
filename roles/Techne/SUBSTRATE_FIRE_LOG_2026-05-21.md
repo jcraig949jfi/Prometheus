@@ -11588,6 +11588,43 @@ Lifetime: 178 batches journaled / 556.6M records / 312.3M kills /
 556.6M records, 312.3M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #184 — 2026-05-28 ~22:30Z
+
+**1.66M records / 24 min / 0 templates / 0 promoted. Mix
+d3/g1/h4/x1/z1 — d3+h4 dominant + x1+z1 new gens.**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    d3   847,156  832,787  old (98.3% kill)
+    h4   814,065  151,283  old (bridge_extension)
+    z1       200      118  NEW (commute-break)
+    x1        10        8  NEW (partial-view inflation)
+    g1       184      108  old (small reservoir)
+
+### Batch result
+
+- batch_id: `batch-20260528T223020Z-ea8616`
+- 1,661,615 records / 984,304 kills / 677,311 confirms / 0 errors
+- 0 promoted (40th consecutive)
+- batch_end ✓
+
+Lifetime: 179 batches journaled / 558.3M records / 313.3M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **40 consecutive 0-promoted milestone**
+- z1+x1 contributed 126 structured kills (118+8)
+
+---
+
+*Fire #184 throttled = 1.66M records / 0 promoted / 0 templates.
+558.3M records, 313.3M kills, 2351 promoted, 2671 templates,
+0 verified findings. **40 consecutive 0-promoted milestone.***
+
 
 
 
