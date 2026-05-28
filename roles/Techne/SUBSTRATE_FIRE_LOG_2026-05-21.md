@@ -11462,6 +11462,44 @@ this becomes useful Learner training data is the open question.
 554.0M records, 311.5M kills, 2351 promoted, 2671 templates,
 0 verified findings. **180-fire milestone / 99.86% kill rate.***
 
+---
+
+## Fire #181 — 2026-05-28 ~21:16Z
+
+**732K records / 24 min / 0 templates / 0 promoted. Mix
+c2/h1/h4/m2/t1 — h1 solo-dominant, 99.7% kill rate.**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    h1   731,619  729,782  old (self-play hunter, 99.7% kill)
+    t1       252        0  NEW (multi-hop pass)
+    h4        31        0  old
+    c2         7        2  old
+    m2         5        1  NEW (universal-violated)
+
+### Batch result
+
+- batch_id: `batch-20260528T211638Z-c41435`
+- 731,914 records / 729,785 kills / 2,129 confirms / 0 errors
+- 0 promoted (37th consecutive)
+- batch_end ✓
+
+Lifetime: 176 batches journaled / 554.7M records / 312.2M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 99.7% kill rate
+- 37 consecutive 0-promoted
+- m2 contributed 1 universal-lemma-violated kill
+
+---
+
+*Fire #181 throttled = 732K records / 0 promoted / 0 templates.
+554.7M records, 312.2M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
