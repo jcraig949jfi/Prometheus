@@ -1,65 +1,86 @@
-"""L2 — formalization-skeleton generator (stub, Stage 18).
+"""L2 — formalization-skeleton generator (REAL, Stage 31).
 
-Emits claims pre-formatted as Lean 4 lemma skeletons ready for
-the autoformalization gate. Distinguished from k1 (typed paths):
-l2 emits the FULL typed-lemma statement in formal-skeleton form,
-suitable to hand to aesop / simp.
+Generates Lean 4 lemma skeletons grounded in real catalog objects.
+For each (template × object), substitutes catalog facts into the
+skeleton's holes and emits the resulting skeleton.
 
-Plan: pivot/techne_15gen_plan_2026-05-28.md
+Currently no autoformalization gate exists in-process — these
+records are emitted UNVERIFIED for downstream Lean processing.
 """
 from __future__ import annotations
 
+import gzip
+import json
 from datetime import datetime, timezone
 from typing import Optional, List, Dict, Any
 
+from theseus.config import KNOTS_DB_PATH, BSD_RICH_DB_PATH
 from theseus.emit.record_schema import TheseusRecord, ClaimKind, Verdict
 from theseus.generators.base import Generator, GeneratorStatus, GeneratorRole
 
 
-SKELETONS: List[Dict[str, Any]] = [
+def _load_catalog(path) -> List[dict]:
+    p = str(path)
+    if p.endswith(".gz"):
+        with gzip.open(path, "rt", encoding="utf-8") as f:
+            data = json.load(f)
+    else:
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+    return data.get("entries", []) if isinstance(data, dict) else data
+
+
+SKELETON_TEMPLATES = [
     {
-        "id": "ec_torsion_finite",
-        "lean_skeleton": (
-            "theorem ec_torsion_finite (E : EllipticCurve Q) :\n"
-            "  Finite (E.torsionSubgroup Q) := by\n"
-            "  exact?"
+        "id": "ec_torsion_size_lemma",
+        "domain": "ec",
+        "needs": ["label", "torsion"],
+        "extractor": lambda o: ((o.get("base") or {}).get("label"), (o.get("rich") or {}).get("torsion")),
+        "render": lambda label, t: (
+            f"theorem ec_torsion_size_{label.replace('.', '_').replace('-', '_')} :\n"
+            f"  ∃ E : EllipticCurve Q, E.label = \"{label}\" ∧ "
+            f"Nat.card E.torsionSubgroup = {t} := by\n"
+            f"  exact?  -- requires LMFDB lookup tactic"
         ),
-        "imports": ["Mathlib.NumberTheory.EllipticCurve"],
-        "tactics_hint": ["exact?", "aesop"],
-        "summary": "torsion subgroup of EC/Q is finite",
+        "tactics_hint": ["exact?"],
     },
     {
-        "id": "knot_alexander_polynomial_at_one",
-        "lean_skeleton": (
-            "theorem alexander_at_one (K : Knot) :\n"
-            "  K.alexander.eval 1 = 1 := by\n"
-            "  exact?"
+        "id": "knot_signature_lemma",
+        "domain": "knot",
+        "needs": ["name", "signature"],
+        "extractor": lambda o: (o.get("name"), o.get("signature")),
+        "render": lambda name, s: (
+            f"theorem knot_signature_{name.replace('_', '_under_')} :\n"
+            f"  Knot.signature (Knot.named \"{name}\") = {s} := by\n"
+            f"  decide  -- computable invariant"
         ),
-        "imports": ["Mathlib.Topology.Knots"],
-        "tactics_hint": ["exact?", "simp"],
-        "summary": "Δ_K(1) = 1 for any knot K",
+        "tactics_hint": ["decide"],
     },
     {
-        "id": "prime_irreducible",
-        "lean_skeleton": (
-            "theorem prime_irreducible (n : ℕ) (h : n.Prime) :\n"
-            "  Irreducible n := by\n"
-            "  exact h.irreducible"
+        "id": "ec_rank_at_least_lemma",
+        "domain": "ec",
+        "needs": ["label", "rank"],
+        "extractor": lambda o: ((o.get("base") or {}).get("label"), (o.get("base") or {}).get("rank")),
+        "render": lambda label, r: (
+            f"theorem ec_rank_at_least_{label.replace('.', '_').replace('-', '_')} :\n"
+            f"  ∀ E : EllipticCurve Q, E.label = \"{label}\" → "
+            f"E.rank ≥ {r} := by\n"
+            f"  intro E hE\n"
+            f"  rw [hE]; exact?"
         ),
-        "imports": ["Mathlib.RingTheory.Prime"],
-        "tactics_hint": ["exact h.irreducible"],
-        "summary": "primes in Z are irreducible",
+        "tactics_hint": ["intro", "rw", "exact?"],
     },
     {
-        "id": "ec_l_function_holomorphic",
-        "lean_skeleton": (
-            "theorem ec_l_holomorphic (E : EllipticCurve Q) :\n"
-            "  AnalyticOn ℂ E.lFunction := by\n"
-            "  sorry  -- modularity required"
+        "id": "knot_determinant_lemma",
+        "domain": "knot",
+        "needs": ["name", "determinant"],
+        "extractor": lambda o: (o.get("name"), o.get("determinant")),
+        "render": lambda name, d: (
+            f"theorem knot_determinant_{name.replace('_', '_under_')} :\n"
+            f"  Knot.det (Knot.named \"{name}\") = {d} := by\n"
+            f"  decide"
         ),
-        "imports": ["Mathlib.NumberTheory.LFunction"],
-        "tactics_hint": ["sorry"],
-        "summary": "L-function of EC/Q is holomorphic (modularity)",
+        "tactics_hint": ["decide"],
     },
 ]
 
@@ -70,20 +91,46 @@ class L2FormalizationSkeletonGenerator(Generator):
     status = GeneratorStatus.ACTIVE
     role = GeneratorRole.DISCOVERY
 
+    MAX_PER_TEMPLATE = 60
+
     def __init__(self, batch_id: str) -> None:
         super().__init__(batch_id)
+        try:
+            self._knots = _load_catalog(KNOTS_DB_PATH)
+        except Exception:
+            self._knots = []
+        try:
+            self._ecs = _load_catalog(BSD_RICH_DB_PATH)
+        except Exception:
+            self._ecs = []
+        self._queue: List[Dict[str, Any]] = []
+        for tpl in SKELETON_TEMPLATES:
+            catalog = self._knots if tpl["domain"] == "knot" else self._ecs
+            for obj in catalog[: self.MAX_PER_TEMPLATE]:
+                try:
+                    vals = tpl["extractor"](obj)
+                    if any(v is None for v in vals):
+                        continue
+                except Exception:
+                    continue
+                self._queue.append({"template": tpl, "obj": obj, "vals": vals})
         self._cursor = 0
 
     def description(self) -> str:
-        return f"l2: formalization_skeleton ({len(SKELETONS)} Lean 4 skeletons)"
+        return f"l2: formalization_skeleton (real) — {len(self._queue)} skeletons"
 
     def next(self) -> Optional[TheseusRecord]:
-        if self._cursor >= len(SKELETONS):
+        if self._cursor >= len(self._queue):
             return None
-        s = SKELETONS[self._cursor]
+        item = self._queue[self._cursor]
         self._cursor += 1
         self.attempts += 1
-        canonical = f"L2_FORMSKELETON[{s['id']}] {s['summary']}"
+        tpl, obj, vals = item["template"], item["obj"], item["vals"]
+        try:
+            lean_code = tpl["render"](*vals)
+        except Exception:
+            return self.next()  # skip and continue
+        canonical = f"L2_FORMSKELETON[{tpl['id']}] generated for {vals[0]}"
         record_id = TheseusRecord.compute_record_id(canonical, self.generator_id)
         self.emitted.append(record_id)
         return TheseusRecord(
@@ -93,10 +140,10 @@ class L2FormalizationSkeletonGenerator(Generator):
             emitted_at=datetime.now(timezone.utc).isoformat(),
             claim_kind=self.claim_kind,
             claim_payload={
-                "skeleton_id": s["id"],
-                "lean_skeleton": s["lean_skeleton"],
-                "imports": s["imports"],
-                "tactics_hint": s["tactics_hint"],
+                "skeleton_id": tpl["id"],
+                "lean_skeleton": lean_code,
+                "tactics_hint": tpl["tactics_hint"],
+                "catalog_object": vals[0],
                 "logical_form": "formalization_skeleton",
             },
             canonical_claim_text=canonical,
