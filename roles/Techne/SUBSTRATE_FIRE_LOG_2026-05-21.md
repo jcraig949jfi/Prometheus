@@ -11136,6 +11136,50 @@ Lifetime: 167 batches journaled / 540.5M records / 305.5M kills /
 540.5M records, 305.5M kills, 2351 promoted, 2671 templates,
 0 verified findings. **Quality-only fire.***
 
+---
+
+## Fire #173 — 2026-05-28 ~17:59Z — **z1 DOMINATES 118 COMMUTE-BREAKS**
+
+**435 records / 24 min / 0 templates / 0 promoted. Mix
+c2/d2/l2/u1/z1 — second consecutive quality-only fire.**
+
+### Per-gen attribution
+
+    gid  records  kills  notes
+    l2   224      0      NEW (Lean 4 skeletons, all UNVERIFIED)
+    z1   200      118    NEW (commute-break kills, 59% kill rate)
+    c2     6      2      old (tiny)
+    d2     3      0      old (tiny)
+    u1     2      0      NEW (no swap-distinguish)
+
+### Structured records from new gens
+
+- `z1_operators_dont_commute_on_*` × 118
+- `l2_formalization_skeleton` × 224 (UNVERIFIED, awaiting Lean gate)
+
+### Batch result
+
+- batch_id: `batch-20260528T175920Z-d2c16f`
+- 435 records / 120 kills / 315 confirms / 0 errors
+- 0 promoted (29th consecutive)
+- batch_end ✓
+
+Lifetime: 168 batches journaled / 540.5M records / 305.5M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- z1 alone produced 98% of this fire's kills (118/120)
+- 27.6% kill density (118/435) — quality-only mode again
+- 29 consecutive 0-promoted
+- 4 of 5 picks were new gens (l2/u1/z1 + bb1 absent this time)
+
+---
+
+*Fire #173 throttled = 435 records / 0 promoted / 0 templates.
+540.5M records, 305.5M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
