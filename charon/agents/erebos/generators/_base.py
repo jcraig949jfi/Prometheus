@@ -68,6 +68,16 @@ class ComposedClaim:
     # is structurally enforced via duck-typing at consumer sites.
     predicate_handle: Optional[Any] = None
 
+    # v3 Phase 0 ITER-27: epistemic-economy cost/value prices per emission.
+    # value_per_tick = sum(info_gain * reuse_value) / sum(costs).
+    # generation_cost is set by the daemon when wrapping plugin.generate();
+    # falsification_cost is set when the loader executes; information_gain
+    # and reuse_value are computed post-hoc by _value_metrics.
+    generation_cost_seconds: float = 0.0
+    falsification_cost_seconds: Optional[float] = None
+    information_gain_nats: Optional[float] = None
+    reuse_value_count: int = 0
+
 
 class GeneratorPlugin(Protocol):
     """Plugin contract. Implementations live in g<NN>_<name>.py."""
