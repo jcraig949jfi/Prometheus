@@ -587,6 +587,17 @@ def main() -> None:
             "See theseus.scripts.bandit_priors_inject for the standalone CLI."
         ),
     )
+    p.add_argument(
+        "--only",
+        type=str,
+        default=None,
+        help=(
+            "Run ONLY the specified comma-separated gens, bypassing the "
+            "bandit. Use for isolation fires (e.g., --only k1 to validate "
+            "a single gen's claim shape). Overrides --bandit and "
+            "--generators. Added Stage 7 of techne_5gen_plan_2026-05-27.md."
+        ),
+    )
     args = p.parse_args()
 
     # Default seed to a time-based value so consecutive daemon
@@ -657,12 +668,24 @@ def main() -> None:
         except Exception as e:
             print(f"[theseus] cooldown load failed (non-fatal): {e}")
 
+    # --only overrides everything: isolation-fire mode for validating
+    # a single gen's claim shape without bandit interference.
+    if args.only:
+        only_gids = [g.strip() for g in args.only.split(",") if g.strip()]
+        unknown = [g for g in only_gids if g not in list_active()]
+        if unknown:
+            raise SystemExit(
+                f"--only specified unknown/non-active gens: {unknown}. "
+                f"Active gens: {sorted(list_active())}"
+            )
+        gids = only_gids
+        print(f"[theseus] --only mode: running {gids} in isolation (bandit bypassed)")
     # When --bandit is set, the bandit picks the FIRST batch's set too.
     # Previously this was a no-op with --batches 1 because selection was
     # gated on i+1<args.batches. With empty history, the bandit's UCB
     # exploration bonus treats never-fired actives uniformly. With
     # hydrated history, yield-driven selection kicks in immediately.
-    if args.bandit:
+    elif args.bandit:
         gids = bandit.select(
             available=list_active(),
             history=history,

@@ -47,6 +47,17 @@ from theseus.generators.g5_scale_invariance import G5ScaleInvarianceGenerator
 from theseus.generators.h1_self_play_hunter import H1SelfPlayHunterGenerator
 from theseus.generators.h2_triangulation_protocol import H2TriangulationProtocolGenerator
 from theseus.generators.h4_bridge_extension import H4BridgeExtensionGenerator
+# Fire #142 (2026-05-27) — 5 new gens to break the 26-template monoculture.
+# See pivot/techne_5gen_plan_2026-05-27.md.
+from theseus.generators.k1_typed_bridge import K1TypedBridgeGenerator
+from theseus.generators.l1_obstruction import L1ObstructionGenerator
+from theseus.generators.m1_minimal_counterexample import (
+    M1MinimalCounterexampleGenerator,
+)
+from theseus.generators.n1_active_disagreement import N1ActiveDisagreementGenerator
+from theseus.generators.o1_conjecture_neighborhood import (
+    O1ConjectureNeighborhoodGenerator,
+)
 from theseus.generators.stubs.all_stubs import (
     H3LearnerCuriosity,
     I1ConjectureParaphrasing,
@@ -97,7 +108,14 @@ REGISTRY: Dict[str, Type[Generator]] = {
     "h1": H1SelfPlayHunterGenerator,
     "h2": H2TriangulationProtocolGenerator,
     "h4": H4BridgeExtensionGenerator,
-    # Stubs
+    # Fire #142 monoculture-breakers (active stubs — emit fixed N records
+    # then exhaust; iterated to useful versions per Stage 8 fire results)
+    "k1": K1TypedBridgeGenerator,
+    "l1": L1ObstructionGenerator,
+    "m1": M1MinimalCounterexampleGenerator,
+    "n1": N1ActiveDisagreementGenerator,
+    "o1": O1ConjectureNeighborhoodGenerator,
+    # Stubs (placeholder, never emit)
     "h3": H3LearnerCuriosity,
     "i1": I1ConjectureParaphrasing,
     "i2": I2DomainAnalogy,
