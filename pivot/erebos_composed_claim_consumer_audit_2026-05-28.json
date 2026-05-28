@@ -1,0 +1,1121 @@
+{
+  "fields": [
+    {
+      "field": "plugin_id",
+      "n_producers_prod": 71,
+      "n_consumers_prod": 5,
+      "n_producers_test": 37,
+      "n_consumers_test": 4,
+      "n_mentions": 9,
+      "seam_debt_score": 0,
+      "sample_producers_prod": [
+        {
+          "path": "charon/agents/erebos/_quarantine.py",
+          "lineno": 70,
+          "line": "plugin_id=\"g01_intersection\","
+        },
+        {
+          "path": "charon/agents/erebos/_quarantine.py",
+          "lineno": 76,
+          "line": "plugin_id=\"g05_confound_swap\","
+        },
+        {
+          "path": "charon/agents/erebos/_quarantine.py",
+          "lineno": 82,
+          "line": "plugin_id=\"g06_null_space\","
+        },
+        {
+          "path": "charon/agents/erebos/_quarantine.py",
+          "lineno": 88,
+          "line": "plugin_id=\"g12_invariant_substitution\","
+        },
+        {
+          "path": "charon/agents/erebos/_quarantine.py",
+          "lineno": 94,
+          "line": "plugin_id=\"g13_relation_weakening\","
+        }
+      ],
+      "sample_consumers_prod": [
+        {
+          "path": "charon/agents/erebos/_logging.py",
+          "lineno": 62,
+          "line": "p = _log_path_for(row.plugin_id)"
+        },
+        {
+          "path": "charon/agents/erebos/_logging.py",
+          "lineno": 68,
+          "line": "return _log_path_for(row.plugin_id)"
+        },
+        {
+          "path": "charon/agents/erebos/_quarantine.py",
+          "lineno": 48,
+          "line": "f\"QuarantineRule {self.plugin_id!r}: invalid \""
+        },
+        {
+          "path": "charon/agents/erebos/_quarantine.py",
+          "lineno": 54,
+          "line": "f\"QuarantineRule {self.plugin_id!r}: unblock_criterion \""
+        },
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 397,
+          "line": "stats[\"plugin_id\"] = plugin.id"
+        }
+      ],
+      "sample_producers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_g09_projection_collapse.py",
+          "lineno": 32,
+          "line": "\"plugin_id\": \"g01_intersection\","
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g11_exception_miner.py",
+          "lineno": 27,
+          "line": "\"claim_payload\": {\"plugin_id\": plugin, \"composed_id\": f\"EREBOS-{rid}\"},"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g22_subgraph_clique.py",
+          "lineno": 33,
+          "line": "\"plugin_id\": plugin_id,"
+        }
+      ],
+      "sample_consumers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_quarantine.py",
+          "lineno": 51,
+          "line": "rule.plugin_id for rule in QUARANTINE_RULES.values()"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_quarantine.py",
+          "lineno": 62,
+          "line": "rule.plugin_id for rule in QUARANTINE_RULES.values()"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_quarantine.py",
+          "lineno": 71,
+          "line": "rule.plugin_id for rule in QUARANTINE_RULES.values()"
+        }
+      ]
+    },
+    {
+      "field": "composed_id",
+      "n_producers_prod": 138,
+      "n_consumers_prod": 4,
+      "n_producers_test": 10,
+      "n_consumers_test": 23,
+      "n_mentions": 8,
+      "seam_debt_score": 0,
+      "sample_producers_prod": [
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 233,
+          "line": "\"composed_id\": claim.composed_id,"
+        },
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 248,
+          "line": "\"composed_id\": claim.composed_id,"
+        },
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 299,
+          "line": "\"erebos_composed_id\": claim.composed_id,"
+        },
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 339,
+          "line": "\"composed_id\": None,"
+        },
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 418,
+          "line": "tick_log.composed_id = claim.composed_id"
+        }
+      ],
+      "sample_consumers_prod": [
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 182,
+          "line": "slug = re.sub(r\"[^A-Za-z0-9_.-]\", \"_\", claim.composed_id)[:60]"
+        },
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 288,
+          "line": "queue_kp = f\"erebos_{plugin.id}_{claim.composed_id}\""
+        },
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 451,
+          "line": "stats[\"composed_id\"] = claim.composed_id"
+        },
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 457,
+          "line": "f\"plugin={plugin.id} composed={claim.composed_id} \""
+        }
+      ],
+      "sample_producers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_g09_projection_collapse.py",
+          "lineno": 33,
+          "line": "\"composed_id\": f\"EREBOS-G01-test-{record_id}\","
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g11_exception_miner.py",
+          "lineno": 27,
+          "line": "\"claim_payload\": {\"plugin_id\": plugin, \"composed_id\": f\"EREBOS-{rid}\"},"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g22_subgraph_clique.py",
+          "lineno": 34,
+          "line": "\"composed_id\": f\"EREBOS-X-{record_id}\","
+        }
+      ],
+      "sample_consumers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_g01_intersection.py",
+          "lineno": 91,
+          "line": "assert claim.composed_id.startswith(\"EREBOS-G01-\")"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g02_contrast.py",
+          "lineno": 114,
+          "line": "assert claim.composed_id.startswith(\"EREBOS-G02-\")"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g02_contrast.py",
+          "lineno": 122,
+          "line": "assert \"cm_vs_non_cm\" in claim.composed_id"
+        }
+      ]
+    },
+    {
+      "field": "input_provenance",
+      "n_producers_prod": 26,
+      "n_consumers_prod": 1,
+      "n_producers_test": 5,
+      "n_consumers_test": 23,
+      "n_mentions": 2,
+      "seam_debt_score": 0,
+      "sample_producers_prod": [
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 256,
+          "line": "\"input_provenance\": claim.input_provenance,"
+        },
+        {
+          "path": "charon/agents/erebos/generators/g01_intersection.py",
+          "lineno": 101,
+          "line": "input_provenance={"
+        },
+        {
+          "path": "charon/agents/erebos/generators/g02_contrast.py",
+          "lineno": 178,
+          "line": "input_provenance={"
+        },
+        {
+          "path": "charon/agents/erebos/generators/g03_failure_neighborhood.py",
+          "lineno": 162,
+          "line": "input_provenance={"
+        },
+        {
+          "path": "charon/agents/erebos/generators/g04_survivor_tightening.py",
+          "lineno": 191,
+          "line": "input_provenance={"
+        }
+      ],
+      "sample_consumers_prod": [
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 202,
+          "line": "json.dumps(claim.input_provenance, indent=2, ensure_ascii=False, default=str),"
+        }
+      ],
+      "sample_producers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_g25_degeneracy.py",
+          "lineno": 29,
+          "line": "\"input_provenance\": {"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_predicate_handles.py",
+          "lineno": 194,
+          "line": "input_provenance={},"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_predicate_handles.py",
+          "lineno": 211,
+          "line": "input_provenance={},"
+        }
+      ],
+      "sample_consumers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_g01_intersection.py",
+          "lineno": 74,
+          "line": "assert claim.input_provenance, \"input_provenance must be populated\""
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g02_contrast.py",
+          "lineno": 99,
+          "line": "assert claim.input_provenance"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g02_contrast.py",
+          "lineno": 123,
+          "line": "assert claim.input_provenance.get(\"split_name\") == \"cm_vs_non_cm\""
+        }
+      ]
+    },
+    {
+      "field": "transformation_description",
+      "n_producers_prod": 26,
+      "n_consumers_prod": 2,
+      "n_producers_test": 4,
+      "n_consumers_test": 14,
+      "n_mentions": 0,
+      "seam_debt_score": 0,
+      "sample_producers_prod": [
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 257,
+          "line": "\"transformation_description\": claim.transformation_description,"
+        },
+        {
+          "path": "charon/agents/erebos/generators/g01_intersection.py",
+          "lineno": 108,
+          "line": "transformation_description=("
+        },
+        {
+          "path": "charon/agents/erebos/generators/g02_contrast.py",
+          "lineno": 186,
+          "line": "transformation_description=("
+        },
+        {
+          "path": "charon/agents/erebos/generators/g03_failure_neighborhood.py",
+          "lineno": 172,
+          "line": "transformation_description=("
+        },
+        {
+          "path": "charon/agents/erebos/generators/g04_survivor_tightening.py",
+          "lineno": 200,
+          "line": "transformation_description=("
+        }
+      ],
+      "sample_consumers_prod": [
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 207,
+          "line": "claim.transformation_description,"
+        },
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 420,
+          "line": "tick_log.transformation_path = claim.transformation_description[:200]"
+        }
+      ],
+      "sample_producers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_predicate_handles.py",
+          "lineno": 195,
+          "line": "transformation_description=\"t\","
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_predicate_handles.py",
+          "lineno": 212,
+          "line": "transformation_description=\"t\","
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_value_metrics.py",
+          "lineno": 279,
+          "line": "transformation_description=\"t\","
+        }
+      ],
+      "sample_consumers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_g01_intersection.py",
+          "lineno": 75,
+          "line": "assert claim.transformation_description.strip()"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g02_contrast.py",
+          "lineno": 100,
+          "line": "assert claim.transformation_description.strip()"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g03_failure_neighborhood.py",
+          "lineno": 94,
+          "line": "assert claim.transformation_description.strip()"
+        }
+      ]
+    },
+    {
+      "field": "output_claim_text",
+      "n_producers_prod": 25,
+      "n_consumers_prod": 3,
+      "n_producers_test": 4,
+      "n_consumers_test": 16,
+      "n_mentions": 0,
+      "seam_debt_score": 0,
+      "sample_producers_prod": [
+        {
+          "path": "charon/agents/erebos/generators/g01_intersection.py",
+          "lineno": 112,
+          "line": "output_claim_text=composition_text,"
+        },
+        {
+          "path": "charon/agents/erebos/generators/g02_contrast.py",
+          "lineno": 192,
+          "line": "output_claim_text=composition_text,"
+        },
+        {
+          "path": "charon/agents/erebos/generators/g03_failure_neighborhood.py",
+          "lineno": 179,
+          "line": "output_claim_text=composition_text,"
+        },
+        {
+          "path": "charon/agents/erebos/generators/g04_survivor_tightening.py",
+          "lineno": 206,
+          "line": "output_claim_text=composition_text,"
+        },
+        {
+          "path": "charon/agents/erebos/generators/g05_confound_swap.py",
+          "lineno": 194,
+          "line": "output_claim_text=composition_text,"
+        }
+      ],
+      "sample_consumers_prod": [
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 195,
+          "line": "claim.output_claim_text,"
+        },
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 242,
+          "line": "\"canonical_claim_text\": claim.output_claim_text[:500],"
+        },
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 304,
+          "line": "\"rationale\": claim.output_claim_text[:300],"
+        }
+      ],
+      "sample_producers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_predicate_handles.py",
+          "lineno": 196,
+          "line": "output_claim_text=\"claim\","
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_predicate_handles.py",
+          "lineno": 213,
+          "line": "output_claim_text=\"claim\","
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_value_metrics.py",
+          "lineno": 280,
+          "line": "output_claim_text=\"claim\","
+        }
+      ],
+      "sample_consumers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_g01_intersection.py",
+          "lineno": 76,
+          "line": "assert claim.output_claim_text.strip()"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g02_contrast.py",
+          "lineno": 101,
+          "line": "assert claim.output_claim_text.strip()"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g03_failure_neighborhood.py",
+          "lineno": 95,
+          "line": "assert claim.output_claim_text.strip()"
+        }
+      ]
+    },
+    {
+      "field": "falsification_route",
+      "n_producers_prod": 27,
+      "n_consumers_prod": 2,
+      "n_producers_test": 4,
+      "n_consumers_test": 19,
+      "n_mentions": 0,
+      "seam_debt_score": 0,
+      "sample_producers_prod": [
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 258,
+          "line": "\"falsification_route\": claim.falsification_route,"
+        },
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 301,
+          "line": "\"erebos_falsification_route\": claim.falsification_route,"
+        },
+        {
+          "path": "charon/agents/erebos/generators/g01_intersection.py",
+          "lineno": 113,
+          "line": "falsification_route=("
+        },
+        {
+          "path": "charon/agents/erebos/generators/g02_contrast.py",
+          "lineno": 193,
+          "line": "falsification_route=("
+        },
+        {
+          "path": "charon/agents/erebos/generators/g03_failure_neighborhood.py",
+          "lineno": 180,
+          "line": "falsification_route=("
+        }
+      ],
+      "sample_consumers_prod": [
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 211,
+          "line": "claim.falsification_route,"
+        },
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 423,
+          "line": "claim.falsification_route"
+        }
+      ],
+      "sample_producers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_predicate_handles.py",
+          "lineno": 197,
+          "line": "falsification_route=\"f\","
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_predicate_handles.py",
+          "lineno": 214,
+          "line": "falsification_route=\"f\","
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_value_metrics.py",
+          "lineno": 281,
+          "line": "falsification_route=\"f\","
+        }
+      ],
+      "sample_consumers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_g01_intersection.py",
+          "lineno": 77,
+          "line": "assert claim.falsification_route.strip()"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g01_intersection.py",
+          "lineno": 143,
+          "line": "fr = claim.falsification_route.lower()"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g02_contrast.py",
+          "lineno": 102,
+          "line": "assert claim.falsification_route.strip()"
+        }
+      ]
+    },
+    {
+      "field": "expected_kill_pattern",
+      "n_producers_prod": 53,
+      "n_consumers_prod": 2,
+      "n_producers_test": 4,
+      "n_consumers_test": 6,
+      "n_mentions": 27,
+      "seam_debt_score": 0,
+      "sample_producers_prod": [
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 249,
+          "line": "\"expected_kill_pattern\": claim.expected_kill_pattern,"
+        },
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 300,
+          "line": "\"erebos_expected_kill_pattern\": claim.expected_kill_pattern,"
+        },
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 421,
+          "line": "tick_log.expected_kill_pattern = claim.expected_kill_pattern"
+        },
+        {
+          "path": "charon/agents/erebos/generators/g01_intersection.py",
+          "lineno": 37,
+          "line": "expected_kill_pattern = \"base_rate_failure\""
+        },
+        {
+          "path": "charon/agents/erebos/generators/g01_intersection.py",
+          "lineno": 121,
+          "line": "expected_kill_pattern=\"base_rate_failure\","
+        }
+      ],
+      "sample_consumers_prod": [
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 215,
+          "line": "f\"`{claim.expected_kill_pattern}`\","
+        },
+        {
+          "path": "charon/agents/erebos/review.py",
+          "lineno": 142,
+          "line": "declared_kp = plugin.expected_kill_pattern if plugin else \"<unknown>\""
+        }
+      ],
+      "sample_producers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_predicate_handles.py",
+          "lineno": 198,
+          "line": "expected_kill_pattern=\"kp\","
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_predicate_handles.py",
+          "lineno": 215,
+          "line": "expected_kill_pattern=\"kp\","
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_value_metrics.py",
+          "lineno": 282,
+          "line": "expected_kill_pattern=\"kp\","
+        }
+      ],
+      "sample_consumers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_g01_intersection.py",
+          "lineno": 78,
+          "line": "assert claim.expected_kill_pattern.strip()"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g02_contrast.py",
+          "lineno": 103,
+          "line": "assert claim.expected_kill_pattern.strip()"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g09_projection_collapse.py",
+          "lineno": 147,
+          "line": "assert claim.expected_kill_pattern.strip()"
+        }
+      ]
+    },
+    {
+      "field": "loader_feasibility_note",
+      "n_producers_prod": 26,
+      "n_consumers_prod": 1,
+      "n_producers_test": 4,
+      "n_consumers_test": 6,
+      "n_mentions": 0,
+      "seam_debt_score": 0,
+      "sample_producers_prod": [
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 250,
+          "line": "\"loader_feasibility_note\": claim.loader_feasibility_note,"
+        },
+        {
+          "path": "charon/agents/erebos/generators/g01_intersection.py",
+          "lineno": 122,
+          "line": "loader_feasibility_note=("
+        },
+        {
+          "path": "charon/agents/erebos/generators/g02_contrast.py",
+          "lineno": 204,
+          "line": "loader_feasibility_note=("
+        },
+        {
+          "path": "charon/agents/erebos/generators/g03_failure_neighborhood.py",
+          "lineno": 192,
+          "line": "loader_feasibility_note=("
+        },
+        {
+          "path": "charon/agents/erebos/generators/g04_survivor_tightening.py",
+          "lineno": 217,
+          "line": "loader_feasibility_note=("
+        }
+      ],
+      "sample_consumers_prod": [
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 219,
+          "line": "claim.loader_feasibility_note,"
+        }
+      ],
+      "sample_producers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_predicate_handles.py",
+          "lineno": 199,
+          "line": "loader_feasibility_note=\"n\","
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_predicate_handles.py",
+          "lineno": 216,
+          "line": "loader_feasibility_note=\"n\","
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_value_metrics.py",
+          "lineno": 283,
+          "line": "loader_feasibility_note=\"n\","
+        }
+      ],
+      "sample_consumers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_g01_intersection.py",
+          "lineno": 79,
+          "line": "assert claim.loader_feasibility_note.strip()"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g02_contrast.py",
+          "lineno": 104,
+          "line": "assert claim.loader_feasibility_note.strip()"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g09_projection_collapse.py",
+          "lineno": 148,
+          "line": "assert claim.loader_feasibility_note.strip()"
+        }
+      ]
+    },
+    {
+      "field": "parent_record_ids",
+      "n_producers_prod": 29,
+      "n_consumers_prod": 2,
+      "n_producers_test": 21,
+      "n_consumers_test": 12,
+      "n_mentions": 13,
+      "seam_debt_score": 0,
+      "sample_producers_prod": [
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 223,
+          "line": "f\"- parent_record_ids: {claim.parent_record_ids}\","
+        },
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 234,
+          "line": "\"parent_record_ids\": claim.parent_record_ids,"
+        },
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 303,
+          "line": "\"parent_record_ids\": claim.parent_record_ids,"
+        },
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 419,
+          "line": "tick_log.parent_record_ids = list(claim.parent_record_ids)"
+        },
+        {
+          "path": "charon/agents/erebos/generators/g01_intersection.py",
+          "lineno": 128,
+          "line": "parent_record_ids=["
+        }
+      ],
+      "sample_consumers_prod": [
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 171,
+          "line": "parent_ids = \"|\".join(claim.parent_record_ids)"
+        },
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 268,
+          "line": "\"parent_record_id\": claim.parent_record_ids[0] if claim.parent_record_ids else None,"
+        }
+      ],
+      "sample_producers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_g19_proof_obligation.py",
+          "lineno": 26,
+          "line": "\"parent_record_ids\": parents,"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g19_proof_obligation.py",
+          "lineno": 27,
+          "line": "\"composition_payload\": {\"parent_record_ids\": parents},"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_value_metrics.py",
+          "lineno": 161,
+          "line": "\"parent_record_ids\": [],"
+        }
+      ],
+      "sample_consumers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_g01_intersection.py",
+          "lineno": 103,
+          "line": "assert len(claim.parent_record_ids) == 2"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g01_intersection.py",
+          "lineno": 104,
+          "line": "assert claim.parent_record_ids[0] in ["
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g01_intersection.py",
+          "lineno": 107,
+          "line": "assert claim.parent_record_ids[1] in ["
+        }
+      ]
+    },
+    {
+      "field": "composition_payload",
+      "n_producers_prod": 26,
+      "n_consumers_prod": 1,
+      "n_producers_test": 11,
+      "n_consumers_test": 24,
+      "n_mentions": 16,
+      "seam_debt_score": 0,
+      "sample_producers_prod": [
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 259,
+          "line": "\"composition_payload\": claim.composition_payload,"
+        },
+        {
+          "path": "charon/agents/erebos/generators/g01_intersection.py",
+          "lineno": 132,
+          "line": "composition_payload={"
+        },
+        {
+          "path": "charon/agents/erebos/generators/g02_contrast.py",
+          "lineno": 213,
+          "line": "composition_payload={"
+        },
+        {
+          "path": "charon/agents/erebos/generators/g03_failure_neighborhood.py",
+          "lineno": 199,
+          "line": "composition_payload={"
+        },
+        {
+          "path": "charon/agents/erebos/generators/g04_survivor_tightening.py",
+          "lineno": 225,
+          "line": "composition_payload={"
+        }
+      ],
+      "sample_consumers_prod": [
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 224,
+          "line": "f\"- composition_payload keys: {list(claim.composition_payload.keys())}\","
+        }
+      ],
+      "sample_producers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_g04_survivor_tightening.py",
+          "lineno": 29,
+          "line": "\"extras\": {\"composition_payload\": {}},"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g09_projection_collapse.py",
+          "lineno": 35,
+          "line": "\"extras\": {\"composition_payload\": payload},"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g10_boundary.py",
+          "lineno": 21,
+          "line": "\"claim_payload\": {}, \"extras\": {\"composition_payload\": payload},"
+        }
+      ],
+      "sample_consumers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_g04_survivor_tightening.py",
+          "lineno": 117,
+          "line": "assert claim.composition_payload[\"tightened_value\"] == 0.90"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g04_survivor_tightening.py",
+          "lineno": 118,
+          "line": "assert claim.composition_payload[\"observed_value\"] == 0.85"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_g05_confound_swap.py",
+          "lineno": 104,
+          "line": "assert claim.composition_payload[\"candidate_confound_key\"] == \"pl.confound\""
+        }
+      ]
+    },
+    {
+      "field": "extras",
+      "n_producers_prod": 73,
+      "n_consumers_prod": 30,
+      "n_producers_test": 54,
+      "n_consumers_test": 0,
+      "n_mentions": 8,
+      "seam_debt_score": 0,
+      "sample_producers_prod": [
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 255,
+          "line": "\"extras\": {"
+        },
+        {
+          "path": "charon/agents/erebos/daemon.py",
+          "lineno": 260,
+          "line": "\"plugin_extras\": claim.extras,"
+        },
+        {
+          "path": "charon/agents/erebos/generators/g01_intersection.py",
+          "lineno": 139,
+          "line": "extras={\"crossgen_context\": crossgen},"
+        },
+        {
+          "path": "charon/agents/erebos/generators/g02_contrast.py",
+          "lineno": 219,
+          "line": "extras={\"is_generic_split\": is_generic},"
+        },
+        {
+          "path": "charon/agents/erebos/generators/g03_failure_neighborhood.py",
+          "lineno": 205,
+          "line": "extras={\"direction\": \"weaken_arithmetic\"},"
+        }
+      ],
+      "sample_consumers_prod": [
+        {
+          "path": "charon/src/build_graph.py",
+          "lineno": 17,
+          "line": "import psycopg2.extras"
+        },
+        {
+          "path": "charon/src/build_graph.py",
+          "lineno": 68,
+          "line": "cur = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)"
+        },
+        {
+          "path": "charon/src/ingest.py",
+          "lineno": 26,
+          "line": "import psycopg2.extras"
+        },
+        {
+          "path": "charon/src/ingest.py",
+          "lineno": 174,
+          "line": "pg_cur = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)"
+        },
+        {
+          "path": "charon/src/ingest.py",
+          "lineno": 309,
+          "line": "pg_cur = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)"
+        }
+      ],
+      "sample_producers_test": [
+        {
+          "path": "charon/agents/erebos/tests/_fixtures.py",
+          "lineno": 35,
+          "line": "\"extras\": {},"
+        },
+        {
+          "path": "charon/agents/erebos/tests/_fixtures.py",
+          "lineno": 53,
+          "line": "\"extras\": {},"
+        },
+        {
+          "path": "charon/agents/erebos/tests/_fixtures.py",
+          "lineno": 76,
+          "line": "\"extras\": {"
+        }
+      ],
+      "sample_consumers_test": []
+    },
+    {
+      "field": "predicate_handle",
+      "n_producers_prod": 0,
+      "n_consumers_prod": 1,
+      "n_producers_test": 2,
+      "n_consumers_test": 5,
+      "n_mentions": 1,
+      "seam_debt_score": 0,
+      "sample_producers_prod": [],
+      "sample_consumers_prod": [
+        {
+          "path": "charon/agents/erebos/_residue_eligibility.py",
+          "lineno": 124,
+          "line": "sorted input_provenance JSON, or claim.predicate_handle."
+        }
+      ],
+      "sample_producers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_predicate_handles.py",
+          "lineno": 217,
+          "line": "predicate_handle=h,"
+        },
+        {
+          "path": "charon/agents/stygian/tests/test_phase0_integration.py",
+          "lineno": 118,
+          "line": "predicate_handle=handle,"
+        }
+      ],
+      "sample_consumers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_predicate_handles.py",
+          "lineno": 201,
+          "line": "assert claim.predicate_handle is None"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_predicate_handles.py",
+          "lineno": 219,
+          "line": "assert claim.predicate_handle is h"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_predicate_handles.py",
+          "lineno": 220,
+          "line": "assert claim.predicate_handle.handle_type == \"mahler_polynomial\""
+        }
+      ]
+    },
+    {
+      "field": "generation_cost_seconds",
+      "n_producers_prod": 0,
+      "n_consumers_prod": 0,
+      "n_producers_test": 12,
+      "n_consumers_test": 0,
+      "n_mentions": 4,
+      "seam_debt_score": 0,
+      "sample_producers_prod": [],
+      "sample_consumers_prod": [],
+      "sample_producers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_value_metrics.py",
+          "lineno": 44,
+          "line": "\"generation_cost_seconds\": 0.0,"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_value_metrics.py",
+          "lineno": 54,
+          "line": "\"generation_cost_seconds\": 1.0,"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_value_metrics.py",
+          "lineno": 67,
+          "line": "\"generation_cost_seconds\": 1.0,"
+        }
+      ],
+      "sample_consumers_test": []
+    },
+    {
+      "field": "falsification_cost_seconds",
+      "n_producers_prod": 0,
+      "n_consumers_prod": 0,
+      "n_producers_test": 13,
+      "n_consumers_test": 1,
+      "n_mentions": 2,
+      "seam_debt_score": 0,
+      "sample_producers_prod": [],
+      "sample_consumers_prod": [],
+      "sample_producers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_value_metrics.py",
+          "lineno": 45,
+          "line": "\"falsification_cost_seconds\": 0.0,"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_value_metrics.py",
+          "lineno": 55,
+          "line": "\"falsification_cost_seconds\": 1.0,"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_value_metrics.py",
+          "lineno": 69,
+          "line": "row_cheap = {**base, \"falsification_cost_seconds\": 1.0}"
+        }
+      ],
+      "sample_consumers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_value_metrics.py",
+          "lineno": 286,
+          "line": "assert claim.falsification_cost_seconds is None"
+        }
+      ]
+    },
+    {
+      "field": "information_gain_nats",
+      "n_producers_prod": 0,
+      "n_consumers_prod": 0,
+      "n_producers_test": 13,
+      "n_consumers_test": 1,
+      "n_mentions": 2,
+      "seam_debt_score": 0,
+      "sample_producers_prod": [],
+      "sample_consumers_prod": [],
+      "sample_producers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_value_metrics.py",
+          "lineno": 42,
+          "line": "\"information_gain_nats\": 1.0,"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_value_metrics.py",
+          "lineno": 57,
+          "line": "row_low = {**base, \"information_gain_nats\": 0.1}"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_value_metrics.py",
+          "lineno": 58,
+          "line": "row_high = {**base, \"information_gain_nats\": 1.0}"
+        }
+      ],
+      "sample_consumers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_value_metrics.py",
+          "lineno": 287,
+          "line": "assert claim.information_gain_nats is None"
+        }
+      ]
+    },
+    {
+      "field": "reuse_value_count",
+      "n_producers_prod": 0,
+      "n_consumers_prod": 0,
+      "n_producers_test": 12,
+      "n_consumers_test": 0,
+      "n_mentions": 3,
+      "seam_debt_score": 0,
+      "sample_producers_prod": [],
+      "sample_consumers_prod": [],
+      "sample_producers_test": [
+        {
+          "path": "charon/agents/erebos/tests/test_value_metrics.py",
+          "lineno": 43,
+          "line": "\"reuse_value_count\": 5,"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_value_metrics.py",
+          "lineno": 53,
+          "line": "\"reuse_value_count\": 3,"
+        },
+        {
+          "path": "charon/agents/erebos/tests/test_value_metrics.py",
+          "lineno": 66,
+          "line": "\"reuse_value_count\": 2,"
+        }
+      ],
+      "sample_consumers_test": []
+    }
+  ],
+  "summary": {
+    "n_fields": 16,
+    "n_seam_debt_candidates": 0,
+    "n_with_consumers": 12,
+    "n_zero_use_in_production": 4,
+    "seam_debt_field_names": [],
+    "healthy_field_names": [
+      "plugin_id",
+      "composed_id",
+      "input_provenance",
+      "transformation_description",
+      "output_claim_text",
+      "falsification_route",
+      "expected_kill_pattern",
+      "loader_feasibility_note",
+      "parent_record_ids",
+      "composition_payload",
+      "extras",
+      "predicate_handle"
+    ],
+    "zero_use_field_names": [
+      "generation_cost_seconds",
+      "falsification_cost_seconds",
+      "information_gain_nats",
+      "reuse_value_count"
+    ]
+  }
+}
