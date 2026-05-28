@@ -11180,6 +11180,44 @@ Lifetime: 168 batches journaled / 540.5M records / 305.5M kills /
 540.5M records, 305.5M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #174 — 2026-05-28 ~18:24Z
+
+**1.90M records / 24 min / 0 templates / 0 promoted. Mix
+f2/g1/h2/s1/t1 — back to volume mode with 2 new gens contributing.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    f2   1,464,929  964,003  old (anti-frequency)
+    h2     438,178  438,046  old (99.97% kill, post-cap)
+    s1         375       16  NEW (triangle inequality)
+    t1         252        0  NEW (multi-hop, all pass)
+    g1         184      108  old (small reservoir)
+
+### Batch result
+
+- batch_id: `batch-20260528T182407Z-386a93`
+- 1,903,918 records / 1,402,173 kills / 501,745 confirms / 0 errors
+- 0 promoted (30th consecutive)
+- batch_end ✓
+
+Lifetime: 169 batches journaled / 542.4M records / 306.9M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **30 consecutive 0-promoted fires milestone**
+- Mixed mode: 2 new gens (s1+t1) + 3 old gens; bandit cycling
+  between quality-only and volume-mixed fires cleanly
+
+---
+
+*Fire #174 throttled = 1.90M records / 0 promoted / 0 templates.
+542.4M records, 306.9M kills, 2351 promoted, 2671 templates,
+0 verified findings. **30 consecutive 0-promoted milestone.***
+
 
 
 
