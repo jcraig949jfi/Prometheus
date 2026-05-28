@@ -5655,3 +5655,73 @@ Delta: +8
 - **e3** — records=1060, throughput=59073.0/h, info_density=0.558, diversity=0.903, yield_score=0.0025, dup_rate=1.000, kills=447, conf=613, errs=0
 - **e5** — records=121, throughput=1846.3/h, info_density=0.200, diversity=0.967, yield_score=0.0010, dup_rate=1.000, kills=0, conf=0, errs=0
 
+
+## batch-20260528T015915Z-9cbb26
+
+- Started: 2026-05-28T01:59:15.459197+00:00
+- Ended:   2026-05-28T01:59:15.510197+00:00
+- Duration: 0.0000 h
+- Requested: k1
+- Active:    k1
+- Records: 4 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **k1** — records=4, throughput=900000.0/h, info_density=0.200, diversity=0.887, yield_score=0.0018, dup_rate=0.000, kills=0, conf=0, errs=0
+
+
+## batch-20260528T015932Z-00d638
+
+- Started: 2026-05-28T01:59:32.346016+00:00
+- Ended:   2026-05-28T01:59:32.388015+00:00
+- Duration: 0.0000 h
+- Requested: l1
+- Active:    l1
+- Records: 4 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **l1** — records=4, throughput=4000000000.0/h, info_density=0.200, diversity=0.829, yield_score=0.0017, dup_rate=0.000, kills=0, conf=0, errs=0
+
+
+## batch-20260528T015933Z-7524b4
+
+- Started: 2026-05-28T01:59:33.358424+00:00
+- Ended:   2026-05-28T01:59:33.400423+00:00
+- Duration: 0.0000 h
+- Requested: m1
+- Active:    m1
+- Records: 3 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **m1** — records=3, throughput=3000000000.0/h, info_density=0.200, diversity=0.902, yield_score=0.0018, dup_rate=0.000, kills=0, conf=0, errs=0
+
+
+## batch-20260528T015934Z-d37c86
+
+- Started: 2026-05-28T01:59:34.352999+00:00
+- Ended:   2026-05-28T01:59:34.398997+00:00
+- Duration: 0.0000 h
+- Requested: n1
+- Active:    n1
+- Records: 3 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **n1** — records=3, throughput=3000000000.0/h, info_density=0.200, diversity=0.881, yield_score=0.0018, dup_rate=0.000, kills=0, conf=0, errs=0
+
+
+## batch-20260528T015935Z-ea81e3
+
+- Started: 2026-05-28T01:59:35.071202+00:00
+- Ended:   2026-05-28T01:59:35.113201+00:00
+- Duration: 0.0000 h
+- Requested: o1
+- Active:    o1
+- Records: 4 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **o1** — records=4, throughput=4000000000.0/h, info_density=0.200, diversity=0.927, yield_score=0.0019, dup_rate=0.000, kills=0, conf=0, errs=0
+
