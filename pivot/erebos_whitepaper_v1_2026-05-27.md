@@ -176,23 +176,35 @@ Each event was caught BEFORE the result escaped to a finding doc, BEFORE the wro
 
 ---
 
-## 5. The Mahler-spectrum proof of concept — seven triangulated findings
+## 5. The Mahler-spectrum proof of concept — substrate findings + catalog findings (v3 reclassification)
 
-The substrate's empirical evidence comes from the Mahler-spectrum domain, where the Mossinghoff catalog provides 8596 non-cyclotomic polynomials with computed Mahler measures. Eleven of the 22 composition loaders target this domain. The result: **seven distinct phenomena, each verified by at least one independent loader**, three of them triangulated by 3-4 independent instruments:
+**v3 Phase 0 ITER-29 reclassification applied.** Per the convergent 4-frontier-model critique that "none of the 7 findings is novel to primary literature," the substrate's evidence base is now classified by the three-tier system (substrate / catalog / mathematical / literature-grade). Full rationale per finding: `pivot/erebos_finding_reclassification_2026-05-27.md`.
 
-| Phenomenon | First observed | Triangulating instruments |
-|---|---|---|
-| Salem-class moderates Lehmer-bound survival | ITER-4 | G02 contrast, G04 band, G17 intervention, G17-sweep |
-| Salem moderation extends to band [1.30, 1.50] | ITER-5 | G04 band_high, G17 intervention |
-| Documented Salem cluster boundary detected | ITER-10 | G10 smoothness ratio, G11 v1/v2/v4 cube cells, G17-sweep phase transition |
-| Mossinghoff catalog passes symmetry audits | ITER-10, ITER-19 | G24 v1 (x→−x, 200/200), G24 v2 (x→1/x, 200/200) |
-| Degree-minima concentrate in non-Salem cells | ITER-13 | G11 v2, G11 v3, G11 v4 |
-| 1/log(N) decay law for minimum-Mahler-by-degree | ITER-17 | G23 multi-law fit |
-| Salem-moderation phase transition at M=1.26 | ITER-18 | G17 multi-threshold sweep |
+The substrate's empirical evidence comes from the Mahler-spectrum domain, where the Mossinghoff catalog provides 8596 non-cyclotomic polynomials with computed Mahler measures. Eleven of the 22 composition loaders target this domain. The result:
 
-Two of the seven (the 1/log(N) law and the M=1.26 phase transition) emerged from loader refinement work, not new-loader development. They were the byproduct of making the existing instruments better — exactly the navigable-residue pattern the substrate was designed to produce.
+- **2 substrate findings** (G10 boundary detection + G15 ledger-MI self-audit) — proves the substrate-side INSTRUMENT noticed structure.
+- **6 catalog findings** (Salem moderation at threshold M_Lehmer + extended to band [1.30, 1.50]; degree-minima concentration in non-Salem cells; 1/log(N) decay law; phase transition at M=1.26; palindromic-Salem equivalence) — reveals enumeration / annotation bias in the Mossinghoff catalog.
+- **0 mathematical findings.**
+- **0 literature-grade findings.**
 
-A bonus observation, surfaced in ITER-19 via G11 v4 cross-tab: **palindromicity is catalog-equivalent to Salem-class in Mossinghoff (P(salem | palindromic) = 0.9999)**. This is not a new theorem about Mahler measures — it is a structural fact about the catalog enumerator's choices. The substrate detected the equivalence without being told to look. That kind of incidental finding is what a navigable-residue substrate is supposed to produce; an LLM continuing patterns would never notice.
+| Finding | First observed | Triangulating instruments | v3 tier |
+|---|---|---|---|
+| G10 detects Salem cluster boundary | ITER-10 | G10 smoothness ratio | **substrate** |
+| G15 ledger MI self-audit | ITER-13 | G15 v1+v2 | **substrate** |
+| Salem-class moderates Lehmer-bound survival | ITER-4 | G02 contrast, G04 band, G17 intervention | **catalog** |
+| Salem moderation extends to [1.30, 1.50] | ITER-5 | G04 band_high, G17 intervention | **catalog** |
+| Degree-minima concentrate in non-Salem cells | ITER-13 | G11 v2, G11 v3, G11 v4 | **catalog** |
+| 1/log(N) decay law for minimum-Mahler-by-degree | ITER-17 | G23 multi-law fit | **catalog** |
+| Salem-moderation phase transition at M=1.26 | ITER-18 | G17 multi-threshold sweep | **catalog** |
+| Palindromic ≡ Salem-class in Mossinghoff | ITER-19 | G11 v4 cross-tab | **catalog** |
+
+**The substrate has demonstrated that its loader infrastructure produces empirically-routed verdicts; it has NOT yet demonstrated that those verdicts surface mathematics that primary literature would call novel.** This is the v3 framing replacing v1's "seven triangulated phenomena."
+
+Two of the eight findings (the 1/log(N) law and the M=1.26 phase transition) emerged from loader refinement work, not new-loader development. They are the byproduct of making the existing instruments better — exactly the navigable-residue pattern the substrate was designed to produce — but they remain *catalog* findings until cross-domain triangulation (Phase 1 BSD MVP loader + Sprint-1 ablation A8) provides evidence they generalize.
+
+A bonus observation, surfaced in ITER-19 via G11 v4 cross-tab: **palindromicity is catalog-equivalent to Salem-class in Mossinghoff (P(salem | palindromic) = 0.9999)**. This is explicitly NOT a new theorem about Mahler measures — it is a structural fact about the catalog enumerator's choices. The substrate detected the equivalence without being told to look. The honest framing: this is a *catalog finding* the substrate produced incidentally, not a mathematical discovery. An LLM continuing patterns would never notice; that is a real substrate property, but it does not by itself elevate the finding's tier.
+
+Mossinghoff catalog symmetry audits (G24 v1 x→−x + v2 x→1/x, 200/200 pass each) are reclassified as **instrument validation**, not findings — they prove the catalog computation is internally consistent under known mathematical symmetries, which is necessary but not finding-worthy.
 
 ---
 
