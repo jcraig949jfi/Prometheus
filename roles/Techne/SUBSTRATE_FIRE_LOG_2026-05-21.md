@@ -10711,6 +10711,38 @@ Lifetime: 156 batches journaled / 518.5M records / 295.5M kills /
 518.5M records, 295.5M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #162 — 2026-05-28 ~13:27Z
+
+**2.74M records / 24 min / 0 templates / 0 promoted. Mix
+d2/h4/q1/t1/u1 — 3 new gens (q1+t1+u1) emitting; q1 contributed 2 kills.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    h4   1,823,108  337,814  old (bridge_extension)
+    d2     916,191  599,632  old (margin_bracket)
+    t1         252        0  NEW (multi_hop, heuristics all passed)
+    q1          45        2  NEW (mod-p concentration kills)
+    u1           2        0  NEW (no swap-distinguish)
+
+### Batch result
+
+- batch_id: `batch-20260528T132747Z-b07e99`
+- 2,739,598 records / 937,448 kills / 1,802,150 confirms / 0 errors
+- 0 promoted (18th consecutive)
+- batch_end ✓
+
+Lifetime: 157 batches journaled / 521.3M records / 296.5M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+---
+
+*Fire #162 throttled = 2.74M records / 0 promoted / 0 templates.
+521.3M records, 296.5M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
