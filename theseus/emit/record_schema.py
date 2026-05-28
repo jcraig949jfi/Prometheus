@@ -43,6 +43,23 @@ class ClaimKind(str, Enum):
     MINIMAL_COUNTEREXAMPLE = "minimal_counterexample"
     VERIFIER_DISAGREEMENT = "verifier_disagreement"
     CONJECTURE_NEIGHBORHOOD = "conjecture_neighborhood"
+    # 2026-05-28 — 15 more shapes from ChatGPT remainder + Sphinx
+    # reasoning ontology. See pivot/techne_15gen_plan_2026-05-28.md.
+    FORMALIZATION_SKELETON = "formalization_skeleton"   # l2
+    CORPUS_COMPRESSION = "corpus_compression"           # m2
+    MODUS_PONENS_CHAIN = "modus_ponens_chain"           # p1
+    MODULAR_VARYING_P = "modular_varying_p"             # q1
+    SUBSET_RELATION = "subset_relation"                 # r1
+    TRIANGLE_INEQUALITY = "triangle_inequality"         # s1
+    MULTI_HOP_DEDUCTION = "multi_hop_deduction"         # t1
+    QUANTIFIER_SWAP = "quantifier_swap"                 # u1
+    COUNTERFACTUAL_INVARIANCE = "counterfactual_invariance"  # v1
+    CLOSURE_UNDER_OPERATION = "closure_under_operation"  # w1
+    PARTIAL_INFORMATION = "partial_information"         # x1
+    ANALOGICAL_TRANSFER = "analogical_transfer"         # y1
+    ORDER_DEPENDENCE = "order_dependence"               # z1
+    CONFIDENCE_CALIBRATION = "confidence_calibration"   # aa1
+    FALSE_DICHOTOMY = "false_dichotomy"                 # bb1
     OTHER = "other"
 
 
