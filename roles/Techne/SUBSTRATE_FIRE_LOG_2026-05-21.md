@@ -10815,6 +10815,51 @@ Lifetime: 159 batches journaled / 526.8M records / 298.9M kills /
 526.8M records, 298.9M kills, 2351 promoted, 2671 templates,
 0 verified findings. **20 consecutive 0-promoted milestone.***
 
+---
+
+## Fire #165 — 2026-05-28 ~14:41Z — **3 NEW GENS / 79 STRUCTURED KILLS**
+
+**554K records / 24 min / 0 templates / 0 promoted. Mix
+bb1/c3/c4/r1/v1 — 3 new real gens contributing structured kills.**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    c3   352,237   50,605  old (region_slide, 14% kill)
+    c4   201,890        0  TAUTOLOGY_CONTROL
+    v1       181       72  NEW (perturbation-break, 40% kill)
+    r1         8        2  NEW (subset_relation_violated, 25% kill)
+    bb1        5        5  NEW (false-dichotomy 100% kill)
+
+### Structured kills from new gens (79 total)
+
+- `v1_perturbation_breaks_property_*` × 72
+- `bb1_false_dichotomy_revealed_*_categories` × 5
+- `r1_subset_relation_violated_at_*` × 2
+
+### Batch result
+
+- batch_id: `batch-20260528T144149Z-060812`
+- 554,321 records / 50,684 kills / 503,637 confirms / 0 errors
+- 0 promoted (21st consecutive)
+- batch_end ✓
+
+Lifetime: 160 batches journaled / 527.4M records / 299.0M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 21 consecutive 0-promoted
+- **160 batches journaled milestone**
+- v1 + bb1 + r1 simultaneously emitting structured kills =
+  another "textbook" mix of mechanism diversity in one fire
+
+---
+
+*Fire #165 throttled = 554K records / 0 promoted / 0 templates.
+527.4M records, 299.0M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
