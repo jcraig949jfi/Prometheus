@@ -10395,6 +10395,47 @@ Lifetime: 148 batches journaled / 501.0M records / 286.0M kills /
 501.0M records, 286.0M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #154 — 2026-05-28 ~10:11Z
+
+**3.22M records / 24 min / 0 templates / 0 promoted. a3 solo
+dominance (3.12M records), 3 new real gens contributing 9
+structured kills.**
+
+### Per-gen attribution
+
+    gid  records    kills      notes
+    a3   3,120,270  1,983,777  old (a-family, 63.6% kill)
+    c1     104,000     55,982  old (claim mutation)
+    l1          12          4  NEW (obstruction-refuted)
+    aa1          5          4  NEW (calibration-miscalibrated)
+    m2           5          1  NEW (universal-violated)
+
+### Batch result
+
+- batch_id: `batch-20260528T101109Z-c230ce`
+- 3,224,292 records / 2,039,768 kills / 1,184,524 confirms / 0 errors
+- 0 promoted (10th consecutive)
+- batch_end ✓
+
+Lifetime: 149 batches journaled / 504.2M records / 288.0M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- aa1 hit 4/5 kills = 80% kill rate — confidence-calibration probes
+  are finding miscalibration consistently (stated rates vs catalog
+  reality are off by > 0.15)
+- 9 structured kills total from new gens this fire; old a3 dominance
+  continues providing volume
+
+---
+
+*Fire #154 throttled = 3.22M records / 0 promoted / 0 templates.
+504.2M records, 288.0M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
