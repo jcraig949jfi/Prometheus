@@ -89,9 +89,24 @@ _PLUGINS: list[GeneratorPlugin] = [
 REGISTRY: dict[str, GeneratorPlugin] = {p.id: p for p in _PLUGINS}
 
 
-def applicable_plugins(state: SwarmState) -> list[GeneratorPlugin]:
-    """Return list of plugins whose applicable(state) is True."""
-    return [p for p in _PLUGINS if p.applicable(state)]
+def applicable_plugins(
+    state: SwarmState, *, include_quarantined: bool = False
+) -> list[GeneratorPlugin]:
+    """Return list of plugins whose applicable(state) is True.
+
+    v3 Phase 0 ITER-28: quarantined plugins are filtered OUT of
+    production runs (include_quarantined=False). Test fixtures can
+    set include_quarantined=True to invoke quarantined plugins
+    explicitly.
+    """
+    # Lazy import to avoid circular: _quarantine lives in same package
+    from charon.agents.erebos._quarantine import is_quarantined
+    if include_quarantined:
+        return [p for p in _PLUGINS if p.applicable(state)]
+    return [
+        p for p in _PLUGINS
+        if not is_quarantined(p.id) and p.applicable(state)
+    ]
 
 
 def next_plugin_round_robin(
