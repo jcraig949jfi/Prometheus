@@ -40,6 +40,11 @@ class GeneratorTickLog:
     elapsed_ms: float = 0.0
     plugin_extras: dict = field(default_factory=dict)
 
+    # Phase 1B ITER-37: cost-instrumentation daemon wire. Populated by
+    # _cost_instrumentation.time_plugin_generate(); cross-references
+    # claim.generation_cost_seconds (same value).
+    generation_cost_seconds: float = 0.0
+
 
 def hash_falsification_route(text: str) -> str:
     """sha256(text)[:16] for change-detection across plugin versions."""

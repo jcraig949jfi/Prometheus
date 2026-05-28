@@ -408,6 +408,16 @@ def _execute_composition_attack(
     elapsed = time.time() - t0
     stats["battery_elapsed_sec"] = round(elapsed, 3)
 
+    # Phase 1B ITER-37: cost-instrumentation wire. Propagate the
+    # already-measured loader-execution elapsed time into the result
+    # dict under the canonical field name so downstream (erebos
+    # kill_ledger row builder) can read it back onto the originating
+    # ComposedClaim.
+    from charon.agents.erebos._cost_instrumentation import (
+        populate_falsification_cost,
+    )
+    populate_falsification_cost(result_dict, elapsed)
+
     result = result_dict.get("result", {}) or {}
     verdict = result.get("verdict", "UNVERIFIED")
     kill_pattern = result.get("kill_pattern")

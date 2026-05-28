@@ -398,7 +398,11 @@ class ErebosAgent(CharonAgent):
         tick_log.plugin_id = plugin.id
         tick_log.applicable = True
 
-        claim = plugin.generate(state)
+        from charon.agents.erebos._cost_instrumentation import (
+            time_plugin_generate,
+        )
+        claim, generate_elapsed = time_plugin_generate(plugin, state)
+        tick_log.generation_cost_seconds = round(generate_elapsed, 6)
         if claim is None:
             stats["skip_reason"] = f"{plugin.id}_returned_none"
             tick_log.transformation_path = "skip:plugin_returned_none"
