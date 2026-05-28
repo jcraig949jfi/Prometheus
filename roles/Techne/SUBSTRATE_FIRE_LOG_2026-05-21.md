@@ -10027,6 +10027,47 @@ Lifetime: 140 batches journaled / 491.1M records / 279.1M kills /
 491.1M records, 279.1M kills, 2351 promoted, 2670 templates,
 0 verified findings. **5 of 15 new gens validated in live bandit pool.***
 
+---
+
+## Fire #146 — 2026-05-28 ~07:39Z — **5 MORE NEWCOMERS PICKED**
+
+**17 records / <10 sec. Bandit picked q1/s1/u1/w1/y1 — the
+second wave of second-batch stubs. 10 of 15 newcomers now
+validated in live bandit pool across Fires #145+#146.**
+
+### Per-gen attribution
+
+    gid  records  shape
+    s1   4        triangle_inequality
+    w1   4        closure_under_operation
+    q1   3        modular_varying_p
+    u1   3        quantifier_swap
+    y1   3        analogical_transfer
+
+Still cooling-down on second-batch picks: bb1, l2, m2, x1, z1
+(picked Fire #145).
+
+### Remaining never-picked second-batch gens (5 of 15)
+
+aa1, p1, r1, t1, v1 — expected to surface in Fire #147 if the
+explorer-prior + cooldown pattern continues.
+
+### Batch result
+
+- batch_id: `batch-20260528T073900Z-519cfa`
+- 17 records / 0 kills / 0 confirms / 0 errors
+- 0 promoted
+- 0 new templates this fire (already-registered shapes)
+
+Lifetime: 141 batches journaled / 491.1M records / 279.1M kills /
+2351 promoted / 2670 templates / 0 verified findings.
+
+---
+
+*Fire #146 throttled = 17 records / 0 promoted / 0 templates.
+491.1M records, 279.1M kills, 2351 promoted, 2670 templates,
+0 verified findings. **10 of 15 newcomers validated in bandit pool.***
+
 
 
 
