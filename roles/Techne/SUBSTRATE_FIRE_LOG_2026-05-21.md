@@ -11294,6 +11294,46 @@ Lifetime: 171 batches journaled / 545.2M records / 307.4M kills /
 545.2M records, 307.4M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #177 — 2026-05-28 ~19:38Z — **95.7% KILL RATE**
+
+**1.73M records / 24 min / 0 templates / 0 promoted. Mix
+a2/d3/k1/m1/o1 — 3 first-batch new gens (k1+m1+o1) +
+2 old high-kill gens (a2+d3).**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    d3   902,817  887,259  old (98.3% kill)
+    a2   821,513  767,665  old (93.4% kill)
+    k1     4,952        0  NEW (typed bridges, UNVERIFIED)
+    o1        22        0  NEW (perturbations, UNVERIFIED)
+    m1         9        6  NEW (minimal-counterexample kills)
+
+### Batch result
+
+- batch_id: `batch-20260528T193817Z-be8cfa`
+- 1,729,313 records / 1,654,930 kills / 74,383 confirms / 0 errors
+- 0 promoted (33rd consecutive)
+- batch_end ✓
+
+Lifetime: 172 batches journaled / 546.9M records / 309.1M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 95.7% overall kill rate
+- 33 consecutive 0-promoted
+- 3 of the 5 first-batch new gens (k1+m1+o1) picked together —
+  bandit cycling them back in after old-gen burnout
+
+---
+
+*Fire #177 throttled = 1.73M records / 0 promoted / 0 templates.
+546.9M records, 309.1M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
