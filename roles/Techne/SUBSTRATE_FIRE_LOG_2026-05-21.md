@@ -11256,6 +11256,44 @@ Lifetime: 170 batches journaled / 545.1M records / 307.4M kills /
 545.1M records, 307.4M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #176 — 2026-05-28 ~19:13Z
+
+**72K records / 24 min / 0 templates / 0 promoted. Mix
+b2/b3/c4/g1/w1 — w1 contributed 60 closure-violation kills.**
+
+### Per-gen attribution
+
+    gid  records  kills  notes
+    c4   67,483   0      TAUTOLOGY_CONTROL
+    b2    3,636   1,264  old (composition_test)
+    b3      606     346  old (inverse_test)
+    w1      226    60    NEW (closure violations on EC torsion/rank etc)
+    g1      184    108   old (small reservoir)
+
+### Batch result
+
+- batch_id: `batch-20260528T191339Z-bda719`
+- 72,135 records / 1,778 kills / 70,357 confirms / 0 errors
+- 0 promoted (32nd consecutive)
+- batch_end ✓
+
+Lifetime: 171 batches journaled / 545.2M records / 307.4M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- Low total volume (72K vs typical 1-3M) but w1 contributed
+  60 named closure-violation kills
+- 32 consecutive 0-promoted
+
+---
+
+*Fire #176 throttled = 72K records / 0 promoted / 0 templates.
+545.2M records, 307.4M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
