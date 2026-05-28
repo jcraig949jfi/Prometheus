@@ -10593,6 +10593,46 @@ Lifetime: 153 batches journaled / 512.9M records / 292.5M kills /
 512.9M records, 292.5M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #159 — 2026-05-28 ~12:13Z
+
+**1.56M records / 24 min / 0 templates / 0 promoted. Mix
+e4/g2/g4/l1/s1 — 3 new gens (l1+s1+...) contributing kills.**
+
+### Per-gen attribution
+
+    gid  records    kills   notes
+    g4   1,551,774  83,930  old (reflection_duality, 5.4% kill)
+    g2       3,000       0  old (functional_equation)
+    e4         233       0  stub (arxiv-mining)
+    s1         375      20  NEW (triangle inequality on squared metric)
+    l1          12       4  NEW (obstruction-refuted)
+
+### Batch result
+
+- batch_id: `batch-20260528T121354Z-84ca1f`
+- 1,555,394 records / 83,954 kills / 1,471,440 confirms / 0 errors
+- 0 promoted (15th consecutive)
+- batch_end ✓
+
+Lifetime: 154 batches journaled / 514.5M records / 292.6M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 15 consecutive 0-promoted fires
+- s1 contributed 20 squared-metric triangle-inequality kills
+  (real metric failure under quadratic distance)
+- High confirm:kill ratio (94.6% confirm) — g4's reflection
+  duality usually confirms
+
+---
+
+*Fire #159 throttled = 1.56M records / 0 promoted / 0 templates.
+514.5M records, 292.6M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
