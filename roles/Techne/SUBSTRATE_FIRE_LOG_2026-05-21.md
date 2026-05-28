@@ -10522,6 +10522,38 @@ Lifetime: 151 batches journaled / 507.5M records / 289.9M kills /
 507.5M records, 289.9M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #157 — 2026-05-28 ~11:24Z
+
+**1.99M records / 24 min / 0 templates / 0 promoted. Mix c4/f1/h2
++ 2 new gens (m1+u1). m1 contributed 6 minimal-counterexample kills.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    f1   1,054,464  309,074  old (monte-carlo random pairs)
+    c4     536,669        0  TAUTOLOGY_CONTROL
+    h2     394,987  394,901  old (99.97% kill, post-cap)
+    m1           9        6  NEW (minimal_counterexample_found)
+    u1           2        0  NEW (quantifier_swap, both agreed this run)
+
+### Batch result
+
+- batch_id: `batch-20260528T112449Z-95aa0c`
+- 1,986,131 records / 703,981 kills / 1,257,148 confirms / 0 errors
+- 0 promoted (13th consecutive)
+- batch_end ✓
+
+Lifetime: 152 batches journaled / 509.5M records / 290.6M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+---
+
+*Fire #157 throttled = 1.99M records / 0 promoted / 0 templates.
+509.5M records, 290.6M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
