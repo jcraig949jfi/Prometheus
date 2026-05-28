@@ -11334,6 +11334,45 @@ Lifetime: 172 batches journaled / 546.9M records / 309.1M kills /
 546.9M records, 309.1M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #178 — 2026-05-28 ~20:02Z
+
+**2.97M records / 24 min / 0 templates / 0 promoted. Mix
+g1/g3/g4/q1/z1 — g4 dominant volume + 2 new gens kills.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    g4   2,948,086  158,892  old (reflection_duality, 5.4% kill)
+    g3      20,000        0  TAUTOLOGY_CONTROL
+    z1         200      118  NEW (commute-break, 59% kill)
+    q1          45        2  NEW (mod-p kills)
+    g1         184      108  old (small reservoir)
+
+### Batch result
+
+- batch_id: `batch-20260528T200256Z-a1115a`
+- 2,968,515 records / 159,120 kills / 2,809,395 confirms / 0 errors
+- 0 promoted (34th consecutive)
+- batch_end ✓
+
+Lifetime: 173 batches journaled / 549.9M records / 309.3M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **549.9M records — approaching 550M lifetime**
+- 34 consecutive 0-promoted
+- z1 + q1 contributed 120 structured kills (118 commute-break +
+  2 mod-p concentration)
+
+---
+
+*Fire #178 throttled = 2.97M records / 0 promoted / 0 templates.
+549.9M records, 309.3M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
