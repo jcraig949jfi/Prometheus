@@ -10313,6 +10313,46 @@ Lifetime: 146 batches journaled / 499.2M records / 284.6M kills /
 499.2M records, 284.6M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #152 — 2026-05-28 ~09:21Z — **501M LIFETIME RECORDS CROSSED**
+
+**1.88M records / 24 min / 0 templates / 0 promoted. Mix
+e4/f2/f4/h2/y1 — 3 of the new gens (e4 stub, h2 real, y1 real).**
+
+### Per-gen attribution
+
+    gid  records  kill_rate  notes
+    f4   771,914  65.8%      old (anti-frequency)
+    f2   771,948  65.8%      old (anti-frequency)
+    h2   338,445  99.98%     old (post-cap, near-full kill rate)
+    e4       233   0.0%      stub (research-mining)
+    y1         2  50.0%      NEW (1 analogy-break kill)
+
+### Batch result
+
+- batch_id: `batch-20260528T092150Z-7d39f2`
+- 1,882,542 records / 1,354,471 kills / 528,069 confirms / 0 errors
+- 0 promoted (8th consecutive)
+- batch_end ✓
+
+Lifetime: 147 batches journaled / **501.0M records** / 286.0M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Milestone
+
+**501.0M lifetime records crossed.** Half a billion substrate
+emissions over the full project history. 0 verified mathematical
+findings throughout. The substrate's value, if any, is in the
+structured-falsification graveyard now — 250+ named kill_patterns
+× ~284M total kills.
+
+---
+
+*Fire #152 throttled = 1.88M records / 0 promoted / 0 templates.
+501.0M records, 286.0M kills, 2351 promoted, 2671 templates,
+0 verified findings. **500M lifetime milestone.***
+
 
 
 
