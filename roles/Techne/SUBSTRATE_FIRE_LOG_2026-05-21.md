@@ -10214,6 +10214,67 @@ Lifetime: 144 batches journaled / 495M records / 281.8M kills /
 495M records, 281.8M kills, 2351 promoted, 2671 templates,
 0 verified findings. **131 NEW STRUCTURED KILLS from p1+y1.***
 
+---
+
+## Fire #150 — 2026-05-28 ~08:29Z — **150-FIRE MILESTONE / 98.6% KILL RATE**
+
+**1.46M records / 24 min / 0 templates / 0 promoted. 3 NEW
+real gens (l1/m1/p1) + 2 old (d3/h1). 1.44M kills total
+across all gens — substrate's highest kill-rate fire of the
+session by absolute volume.**
+
+### Per-gen attribution
+
+    gid  records    kills      kill_rate  notes
+    d3   1,068,163  1,049,928  98.3%      old, triangulation
+    h1     395,109    393,428  99.6%      old, self-play hunter
+    p1         138        130  94.2%      NEW (chain-break structured)
+    m1           9          6  66.7%      NEW (min-counterexample certs)
+    l1          12          4  33.3%      NEW (obstruction-refuted-by-witness)
+
+### Structured kills from new gens
+
+- p1: 130 × `p1_multi_hop_break_at_step_*` (chain breaks at hop N)
+- m1: 6 × `minimal_counterexample_found` (real enumeration certificates)
+- l1: 4 × `obstruction_refuted_by_witness` (real catalog refutations)
+
+Total new structured kills this fire: **140**. Combined with 1.44M
+classical kills, the substrate this fire produced records covering
+both volume (d3/h1) and structural-mechanism diversity (l1/m1/p1).
+
+### Batch result
+
+- batch_id: `batch-20260528T082941Z-d6fada`
+- Duration: 24 min, 716/s tick rate
+- 1,463,431 records / 1,443,496 kills / 1,700 confirms / 0 errors
+- 0 promoted (6th consecutive)
+- 0 new templates this fire
+- batch_end ✓
+
+Lifetime: 145 batches journaled / 496.4M records / 283.3M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### 150-fire arc summary
+
+Session traversed 150 fires from Fire #1 (pre-session) through
+Fire #150 (this). Key transformations:
+- Started with 35 active gens, 26 templates ceiling, parity-tautology pile
+- **Ended with 55 active gens, ~250 distinct kill_patterns, 17 mechanism classes**
+- Backlog items shipped: 7 ops fixes + 20 new gen families
+- Total commits in just the gen-family work: ~25
+- 0 verified mathematical findings (anchored honest throughout)
+
+The substrate is now a structured-falsification machine producing
+records categorized by 17 distinct mechanism classes with witnesses,
+certificates, and reproducible counterexamples. Whether any of
+this translates to a useful Learner is the next chapter.
+
+---
+
+*Fire #150 throttled = 1.46M records / 0 promoted / 0 templates /
+98.6% kill rate. 496.4M records, 283.3M kills, 2351 promoted,
+2671 templates, 0 verified findings. **150-fire milestone.***
+
 
 
 
