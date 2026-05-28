@@ -5725,3 +5725,73 @@ Delta: +8
 
 - **o1** — records=4, throughput=4000000000.0/h, info_density=0.200, diversity=0.927, yield_score=0.0019, dup_rate=0.000, kills=0, conf=0, errs=0
 
+
+## batch-20260528T062201Z-2ae1d6
+
+- Started: 2026-05-28T06:22:01.116214+00:00
+- Ended:   2026-05-28T06:22:03.413994+00:00
+- Duration: 0.0006 h
+- Requested: k1
+- Active:    k1
+- Records: 4952 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **k1** — records=4952, throughput=282971428.2/h, info_density=0.200, diversity=0.458, yield_score=0.0009, dup_rate=0.000, kills=0, conf=0, errs=0
+
+
+## batch-20260528T062203Z-40af07
+
+- Started: 2026-05-28T06:22:03.876367+00:00
+- Ended:   2026-05-28T06:22:03.930366+00:00
+- Duration: 0.0000 h
+- Requested: l1
+- Active:    l1
+- Records: 12 (kills=4, confirmations=8, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **l1** — records=12, throughput=2880000.0/h, info_density=0.567, diversity=0.755, yield_score=0.0043, dup_rate=0.000, kills=4, conf=8, errs=0
+
+
+## batch-20260528T062204Z-437f34
+
+- Started: 2026-05-28T06:22:04.417201+00:00
+- Ended:   2026-05-28T06:22:04.471198+00:00
+- Duration: 0.0000 h
+- Requested: m1
+- Active:    m1
+- Records: 9 (kills=6, confirmations=3, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **m1** — records=9, throughput=2160000.0/h, info_density=0.533, diversity=0.609, yield_score=0.0033, dup_rate=0.000, kills=6, conf=3, errs=0
+
+
+## batch-20260528T062204Z-881312
+
+- Started: 2026-05-28T06:22:04.899890+00:00
+- Ended:   2026-05-28T06:22:05.248887+00:00
+- Duration: 0.0001 h
+- Requested: n1
+- Active:    n1
+- Records: 914 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **n1** — records=914, throughput=205650000.7/h, info_density=0.200, diversity=0.592, yield_score=0.0012, dup_rate=0.000, kills=0, conf=0, errs=0
+
+
+## batch-20260528T062205Z-8b1759
+
+- Started: 2026-05-28T06:22:05.700337+00:00
+- Ended:   2026-05-28T06:22:05.746337+00:00
+- Duration: 0.0000 h
+- Requested: o1
+- Active:    o1
+- Records: 22 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **o1** — records=22, throughput=4950000.0/h, info_density=0.200, diversity=0.806, yield_score=0.0016, dup_rate=0.000, kills=0, conf=0, errs=0
+
