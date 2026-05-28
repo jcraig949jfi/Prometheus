@@ -133,3 +133,81 @@ def next_plugin_round_robin(
         if candidate in applicable:
             return candidate
     return applicable[0]
+
+
+def _routing_action_to_plugin_id(
+    routing_action: str,
+) -> Optional[str]:
+    """Map a kill_pattern_registry routing_action string to a plugin id.
+
+    routing_action strings follow the convention `g<NN>_<descriptor>`
+    (e.g. "g11_with_monte_carlo_g_test", "g25_v2_data_inquiry_
+    precondition"). Match the leading `g<NN>_` prefix against the
+    plugin id prefix (`gNN_`).
+
+    Returns:
+        The matching plugin id (e.g. "g11_exception_miner") or None
+        if no plugin matches the prefix. The "none_claim_survives"
+        sentinel and any non-`gNN_*` action return None — caller
+        should fall back to round-robin.
+    """
+    if not routing_action or not routing_action.startswith("g"):
+        return None
+    # Extract leading "gNN_" prefix
+    parts = routing_action.split("_", 1)
+    if len(parts) < 2:
+        return None
+    prefix = parts[0] + "_"  # e.g. "g11_"
+    if not prefix[1:-1].isdigit():
+        return None
+    # Match against plugin ids starting with this prefix
+    for p in _PLUGINS:
+        if p.id.startswith(prefix):
+            return p.id
+    return None
+
+
+def next_plugin_kp_routed(
+    state: SwarmState,
+    last_plugin_id: Optional[str],
+    last_kill_pattern: Optional[str],
+) -> Optional[GeneratorPlugin]:
+    """Pick the next plugin per kill_pattern routing semantics.
+
+    Per Erebos v3 §4.4 + Phase 0 retrospective + Doctrine v1.0
+    Layer 1/Seam/Layer 2 routing: when the last verdict carried a
+    registered kill_pattern, use kill_pattern_registry.
+    routing_action_for(kp) to pick the next plugin. Falls back to
+    round-robin when:
+      - no kill_pattern was supplied,
+      - the kill_pattern is not in the registry,
+      - the routing_action doesn't resolve to a known plugin,
+      - the routed plugin is quarantined,
+      - the routed plugin is not applicable to current state.
+
+    Args:
+        state: SwarmState snapshot.
+        last_plugin_id: most recent plugin id, used as round-robin
+            fallback anchor.
+        last_kill_pattern: kp from the most recent ledger entry, or
+            None if no prior kp / fresh start.
+
+    Returns:
+        Selected plugin (kp-routed if possible, else round-robin),
+        or None if no plugin is applicable this tick.
+    """
+    # Lazy imports keep generators/__init__.py free of erebos-package
+    # circular dependencies at module-load time.
+    from charon.agents.erebos._kill_pattern_registry import routing_action_for
+    from charon.agents.erebos._quarantine import is_quarantined
+
+    if last_kill_pattern:
+        action = routing_action_for(last_kill_pattern)
+        if action is not None:
+            target_id = _routing_action_to_plugin_id(action)
+            if target_id and not is_quarantined(target_id):
+                target_plugin = REGISTRY.get(target_id)
+                if target_plugin is not None and target_plugin.applicable(state):
+                    return target_plugin
+    # Fall back to round-robin
+    return next_plugin_round_robin(state, last_plugin_id)

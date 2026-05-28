@@ -370,7 +370,13 @@ class ErebosAgent(CharonAgent):
             return stats
 
         last_plugin_id = self.load_state("last_plugin_id", None)
-        plugin = next_plugin_round_robin(state, last_plugin_id)
+        # Phase 1B ITER-38: kp-routed plugin selection. Falls back
+        # to round-robin when no last_kill_pattern is set, the kp
+        # is unregistered, the routed plugin is quarantined, or the
+        # routed plugin is not applicable to current state.
+        last_kill_pattern = self.load_state("last_kill_pattern", None)
+        from charon.agents.erebos.generators import next_plugin_kp_routed
+        plugin = next_plugin_kp_routed(state, last_plugin_id, last_kill_pattern)
         if plugin is None:
             stats["skip_reason"] = "no_applicable_plugin"
             tick_log.plugin_id = "no_applicable_plugin"
@@ -451,6 +457,13 @@ class ErebosAgent(CharonAgent):
 
         self._mark_tried(plugin.id, claim)
         self.save_state("last_plugin_id", plugin.id)
+        # Phase 1B ITER-38: persist the plugin's predicted kill_pattern
+        # so next tick's next_plugin_kp_routed() can drive selection
+        # through kill_pattern_registry.routing_action_for(kp).
+        # Predicted kp is the MVP routing signal -- a future iteration
+        # may read the actual loader verdict back from the ledger.
+        if claim.expected_kill_pattern:
+            self.save_state("last_kill_pattern", claim.expected_kill_pattern)
         stats["composed"] = True
         stats["composed_id"] = claim.composed_id
         stats["items_processed"] += 1
