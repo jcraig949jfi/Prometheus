@@ -10123,6 +10123,52 @@ old gens.
 491.1M records, 279.1M kills, 2351 promoted, 2670 templates,
 0 verified findings. **20-of-20 new gens validated in bandit pool.***
 
+---
+
+## Fire #148 — 2026-05-28 ~07:40Z — OLD GENS RETURN + REAL l1
+
+**3.38M records / 24 min / 0 promoted. Mix a1/c5/f2/g1/l1.
+Cooldown pushed all 20 newcomers down; old gens picked up the
+bulk. l1 (real) emitted its 12 obstruction records with 4
+real witness-refutation kills.**
+
+### Per-gen attribution
+
+    gid  records     templates  kill_rate  notes
+    f2   1,518,877   0          65.8%      old
+    a1   1,279,212   0          69.0%      old
+    c5     577,640   0          67.5%      old
+    g1         184   0          58.7%      old (small reservoir)
+    l1          12   0          33.3%      NEW (4 real witness kills)
+
+### Batch result
+
+- batch_id: `batch-20260528T074011Z-7b6998`
+- Duration: 24 min wall, 962/s peak tick rate
+- 3,375,925 records / 2,271,319 kills / 1,104,606 confirms / 0 errors
+- 0 promoted (4th consecutive — training_weight fix still holding)
+- 0 new templates (existing kinds)
+- batch_end ✓
+
+Lifetime: 143 batches journaled / 494.5M records / 281.4M kills /
+2351 promoted / 2670 templates / 0 verified findings.
+
+### Notable
+
+- **Cooldown pattern verified**: after the 3-fire newcomer sweep
+  (#145-#147 picked all 20 new gens), Fire #148 cycled back to
+  old gens, with l1 the only newcomer surviving the downweight.
+- l1's 12 records included 4 real REJECTED records with
+  `kill_pattern=obstruction_refuted_by_witness` — the real
+  upgrade is paying off.
+- a1/c5/f2 saturated kill production (2.27M kills total).
+
+---
+
+*Fire #148 throttled = 3.38M records / 0 promoted / 0 templates.
+494.5M records, 281.4M kills, 2351 promoted, 2670 templates,
+0 verified findings.*
+
 
 
 
