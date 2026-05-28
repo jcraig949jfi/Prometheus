@@ -55,13 +55,15 @@ class LensReport:
     error: Optional[str] = None  # if lens failed to produce a real report
     tokens_used: int = 0
     cost_estimate_usd: float = 0.0
+    extra: dict = field(default_factory=dict)  # lens-specific structured payload
 
     def to_dict(self) -> dict:
         return asdict(self)
 
     @classmethod
     def from_dict(cls, d: dict) -> "LensReport":
-        return cls(**d)
+        known = {f for f in cls.__dataclass_fields__}  # type: ignore
+        return cls(**{k: v for k, v in d.items() if k in known})
 
     @classmethod
     def empty_with_error(cls, lens_name: str, cycle_n: int, error: str,
@@ -105,8 +107,12 @@ class CycleContext:
     diff_applied: bool = False
     apply_result: Optional[dict] = None
     tdd_result: Optional[dict] = None
+    contract_report: Optional[dict] = None       # deterministic Contract Lens output
+    contract_lens_report: Optional[LensReport] = None
     skeptic_report: Optional[LensReport] = None
     integrator_report: Optional[LensReport] = None
+    # Open Skeptic/Contract debts inherited from prior cycles (mandatory follow-up)
+    open_debts: list = field(default_factory=list)
 
 
 class Lens(ABC):

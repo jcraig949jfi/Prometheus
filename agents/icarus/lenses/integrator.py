@@ -25,37 +25,48 @@ from lenses._llm import call_llm, extract_json_block, clamp_axis
 
 
 INTEGRATOR_SYSTEM = (
-    "You are the Integrator lens for Icarus. You have 4 lens reports + "
-    "infrastructure measurements (diff apply + TDD). Your job: synthesize a "
-    "recommendation and CITE which lens carried the most weight in your "
-    "decision.\n\n"
+    "You are the Integrator lens for Icarus, a failure-to-representation "
+    "instrumentation harness. You have lens reports + infrastructure "
+    "measurements (diff apply + TDD) + a DETERMINISTIC Contract Lens result. "
+    "Your job: synthesize a recommendation, cite the load-bearing lens, AND "
+    "emit a typed training object so this cycle becomes reusable substrate.\n\n"
     "STRICT RULES:\n"
     "1. Decision is binary: 'mark_stable' OR 'park'.\n"
-    "2. You MUST identify the single lens whose perspective was most load-"
-    "bearing for your decision. State it explicitly.\n"
-    "3. If the Skeptic returned a minority_position, you MUST address it -- "
-    "either explicitly defend against it or honor it.\n"
-    "4. Do not rubber-stamp positive consensus. If Skeptic objected and you "
-    "still vote mark_stable, explain why the objection isn't load-bearing.\n"
-    "5. Park if TDD failed, regardless of other lens votes.\n\n"
+    "2. You MUST identify the single load-bearing lens. State it explicitly.\n"
+    "3. If the Skeptic returned a minority_position OR the Contract Lens "
+    "found a violation, you MUST address it. The Contract Lens is "
+    "DETERMINISTIC -- if it reports a contract_violation, that finding is a "
+    "fact, not an opinion. You may still promote, but only by explicitly "
+    "acknowledging the debt; it will be recorded and the next cycle will be "
+    "FORCED to write a regression test for it.\n"
+    "4. Do not rubber-stamp positive consensus.\n"
+    "5. Park if TDD failed, regardless of other votes.\n"
+    "6. Emit the training_enrichment object honestly. improvement_kind must "
+    "distinguish 'capability' (a new tier dimension genuinely passes) from "
+    "'test_weakness' (promoted because tests are vacuous/easy) from "
+    "'metric_shaped' (tests added that lock current behavior; docstring "
+    "claims without demonstration). Be self-critical: most cycles are NOT "
+    "pure capability gains.\n\n"
     "OUTPUT (strict JSON):\n"
     "{\n"
     '  "decision": "mark_stable" | "park",\n'
-    '  "load_bearing_lens": "generator" | "diagnostician" | "historian" '
-    '| "skeptic",\n'
-    '  "load_bearing_rationale": "<2-3 sentences on why that lens drove the decision>",\n'
-    '  "minority_response": "<how you handled Skeptic minority position, '
-    'or \\"no_minority\\" if none>",\n'
-    '  "qualitative_summary": "<3-5 sentences synthesizing the panel>",\n'
-    '  "axes": {\n'
-    '    "tier_proximity": <0.0-1.0; your synthesized estimate>,\n'
-    '    "novelty": <0.0-1.0>,\n'
-    '    "regression_risk": <0.0-1.0; 1=LOW risk>,\n'
-    '    "structural_simplicity": <0.0-1.0>,\n'
-    '    "evidence_quality": <0.0-1.0>\n'
-    "  },\n"
+    '  "load_bearing_lens": "generator"|"diagnostician"|"historian"|"skeptic"|"contract",\n'
+    '  "load_bearing_rationale": "<2-3 sentences>",\n'
+    '  "minority_response": "<how you handled Skeptic/Contract concern, or \\"no_minority\\">",\n'
+    '  "qualitative_summary": "<3-5 sentences>",\n'
+    '  "axes": {"tier_proximity": <0-1>, "novelty": <0-1>, "regression_risk": <0-1; 1=LOW risk>, "structural_simplicity": <0-1>, "evidence_quality": <0-1>},\n'
     '  "confidence": <0.0-1.0>,\n'
-    '  "key_observations": [<2-5 short strings>]\n'
+    '  "key_observations": [<2-5 short strings>],\n'
+    '  "training_enrichment": {\n'
+    '    "proposal_type": "reasoner_logic_change|batch_orchestration_change|new_method|representation_shift|test_addition|docstring_change|refactor|no_change|unknown",\n'
+    '    "failure_subclass": "<one of the curated subclasses, or none>",\n'
+    '    "nearby_survivor": "<what move WOULD have survived, or null>",\n'
+    '    "future_tier_risk": [<tier ids this change threatens, e.g. \\"R3\\">],\n'
+    '    "regression_test_to_write": "<the test that would expose the concern, or null>",\n'
+    '    "representation_change_hint": "<what representation change would make the right move cheap, or null>",\n'
+    '    "improvement_kind": "capability|test_weakness|metric_shaped|none",\n'
+    '    "improvement_rationale": "<1-2 sentences justifying improvement_kind>"\n'
+    "  }\n"
     "}\n"
 )
 
@@ -71,28 +82,37 @@ class IntegratorLens(Lens):
             ("diagnostician", ctx.diagnostician_report),
             ("historian", ctx.historian_report),
             ("generator", ctx.generator_report),
+            ("contract", ctx.contract_lens_report),
             ("skeptic", ctx.skeptic_report),
         ):
             upstream.append(_lens_block(lens_name, lens_report))
 
         apply_summary = json.dumps(ctx.apply_result or {}, default=str)[:400]
         tdd_summary = json.dumps(ctx.tdd_result or {}, default=str)[:400]
+        contract_summary = json.dumps(ctx.contract_report or {}, default=str)[:600]
+        debts_summary = (
+            json.dumps(ctx.open_debts, default=str)[:600]
+            if ctx.open_debts else "none"
+        )
 
         # Pre-compute panel-wide summary for the integrator's reference
         reports_in_panel = [r for r in (
             ctx.diagnostician_report, ctx.historian_report,
-            ctx.generator_report, ctx.skeptic_report,
+            ctx.generator_report, ctx.contract_lens_report, ctx.skeptic_report,
         ) if r is not None]
         agreement = lens_agreement_patterns(reports_in_panel)
 
         user_prompt = (
-            f"## Cycle\nN={ctx.cycle_n}, tier={ctx.tier_target}\n\n"
+            f"## Cycle\nN={ctx.cycle_n}, tier={ctx.tier_target}, strategy={ctx.cycle_strategy}\n\n"
             f"## Lens reports\n" + "\n\n".join(upstream) + "\n\n"
             f"## Infrastructure: diff apply\n{apply_summary}\n\n"
             f"## Infrastructure: TDD\n{tdd_summary}\n\n"
+            f"## DETERMINISTIC Contract Lens report (this is fact, not opinion)\n{contract_summary}\n\n"
+            f"## Open debts inherited from prior cycles (must be addressed)\n{debts_summary}\n\n"
             f"## Pre-computed panel axis agreement\n"
-            f"{json.dumps(agreement, indent=2, default=str)[:1500]}\n\n"
-            f"Synthesize."
+            f"{json.dumps(agreement, indent=2, default=str)[:1200]}\n\n"
+            f"Synthesize. Emit the training_enrichment honestly -- be self-critical "
+            f"about improvement_kind."
         )
 
         result = call_llm(
@@ -127,7 +147,7 @@ class IntegratorLens(Lens):
         if decision not in ("mark_stable", "park"):
             decision = "park"
         load_bearing = str(parsed.get("load_bearing_lens", "diagnostician")).strip().lower()
-        if load_bearing not in ("generator", "diagnostician", "historian", "skeptic"):
+        if load_bearing not in ("generator", "diagnostician", "historian", "skeptic", "contract"):
             load_bearing = "diagnostician"
 
         axes = {a: clamp_axis(parsed.get("axes", {}).get(a, 0.5))
@@ -144,6 +164,8 @@ class IntegratorLens(Lens):
                      parsed.get("load_bearing_rationale", "")[:300],
                      parsed.get("minority_response", "")[:300]]
 
+        enrichment = parsed.get("training_enrichment", {}) or {}
+
         return LensReport(
             lens_name=self.name,
             model_used=result.get("model_used", "unknown"),
@@ -157,6 +179,11 @@ class IntegratorLens(Lens):
             raw_response_excerpt=text[:500],
             tokens_used=result.get("tokens_used", 0),
             cost_estimate_usd=result.get("cost_estimate_usd", 0.0),
+            extra={
+                "training_enrichment": enrichment,
+                "minority_response": parsed.get("minority_response", ""),
+                "load_bearing_rationale": parsed.get("load_bearing_rationale", ""),
+            },
         )
 
 

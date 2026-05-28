@@ -84,8 +84,11 @@ class GeneratorLens(Lens):
             ctx.cycle_strategy, _STRATEGY_MODIFIERS["structural"]
         )
 
+        debt_block = _debt_block(ctx.open_debts)
+
         user_prompt = (
             f"## Cycle strategy\n{strategy_modifier}\n\n"
+            f"{debt_block}"
             f"## Tier challenge\n"
             f"Tier target: {ctx.tier_target}\n"
             f"Falsification test: {ctx.tier_challenge.get('falsification_test', '?')}\n\n"
@@ -156,6 +159,24 @@ def _read_source(source_dir, max_chars: int = 6000) -> str:
         chunks.append(snippet)
         total += len(snippet)
     return "".join(chunks)
+
+
+def _debt_block(open_debts: list) -> str:
+    """Render open debts as a MANDATORY-action block for the Generator."""
+    if not open_debts:
+        return ""
+    lines = [
+        "## OPEN DEBTS (mandatory follow-up -- a prior cycle promoted despite "
+        "these concerns; you MUST write a regression test addressing one of "
+        "them this cycle, in tests/generated/, OR your diff should explicitly "
+        "fix the underlying issue):"
+    ]
+    for d in open_debts[:5]:
+        lines.append(
+            f"- [{d.get('source')}] {d.get('concern', '')[:200]} "
+            f"(suggested test: {d.get('regression_test_to_write') or 'unspecified'})"
+        )
+    return "\n".join(lines) + "\n\n"
 
 
 def _lens_excerpt(report) -> str:

@@ -56,6 +56,8 @@ from lineage import (
 )
 import patcher
 import tdd_runner
+import taxonomy
+import debt_ledger
 from lenses._base import CycleContext
 from lenses._panel import run_lens_panel
 
@@ -228,6 +230,7 @@ def run_cycle(
     # Build CycleContext
     failure_context = _build_failure_context()
     cycle_strategy = ("minimal", "structural", "exploratory")[n % 3]
+    open_debts = debt_ledger.open_debts()
     ctx = CycleContext(
         cycle_n=n,
         source_dir=new_cycle_dir / "code",
@@ -240,8 +243,10 @@ def run_cycle(
         recent_parks=failure_context.get("recent_parks", []),
         wisdom=_load_wisdom(),
         cycle_strategy=cycle_strategy,
+        open_debts=open_debts,
     )
-    log.info(f"  strategy={cycle_strategy} tier_target={tier_target}")
+    log.info(f"  strategy={cycle_strategy} tier_target={tier_target} "
+             f"open_debts={len(open_debts)}")
 
     # Run the lens panel (phase A through F)
     try:
@@ -274,29 +279,100 @@ def run_cycle(
     # Record multi-axis outcome
     decision = panel_result["decision"]
     rationale = panel_result["rationale"]
+    load_bearing = panel_result["load_bearing_lens"]
+    apply_result = panel_result.get("apply_result") or {}
+    tdd_result = panel_result.get("tdd_result") or {}
+    contract_report = ctx.contract_report or {}
+    skeptic_dict = ctx.skeptic_report.to_dict() if ctx.skeptic_report else None
+    integ_extra = ctx.integrator_report.extra if ctx.integrator_report else {}
+
+    # Build the typed training object (the reusable artifact every cycle emits)
+    training_obj = taxonomy.build_training_object(
+        cycle_n=n,
+        tier_target=tier_target,
+        strategy=cycle_strategy,
+        decision=decision,
+        apply_result=apply_result,
+        tdd_result=tdd_result,
+        skeptic_report=skeptic_dict,
+        contract_report=contract_report,
+        integrator_report=integ_extra,
+        load_bearing_lens=load_bearing,
+    )
+    taxonomy.write_training_object(training_obj, new_cycle_dir)
+
+    # Debt accounting: record new debts when promoting despite a concern;
+    # attempt to close debts when tests were added.
+    tests_before = _stable_tests_run()
+    tests_after = training_obj.tests_run
+    if decision == "mark_stable":
+        # contract violation that survived into promotion -> debt
+        if contract_report.get("contract_violation"):
+            debt_ledger.record_debt(
+                cycle=n,
+                concern=(contract_report.get("violations") or [{}])[0].get("detail", "contract violation"),
+                regression_test_to_write=training_obj.regression_test_to_write,
+                source="contract",
+                future_tier_risk=training_obj.future_tier_risk,
+            )
+        # skeptic minority that survived into promotion -> debt
+        elif skeptic_dict and skeptic_dict.get("minority_position"):
+            debt_ledger.record_debt(
+                cycle=n,
+                concern=skeptic_dict.get("minority_position"),
+                regression_test_to_write=training_obj.regression_test_to_write,
+                source="skeptic",
+                future_tier_risk=training_obj.future_tier_risk,
+            )
+    closed = debt_ledger.attempt_auto_close(
+        cycle=n, tests_run_before=tests_before, tests_run_after=tests_after,
+    )
+
     record_outcome(n, decision=decision, reason=rationale[:300], details={
-        "schema_version": "v2_lens_panel",
-        "load_bearing_lens": panel_result["load_bearing_lens"],
+        "schema_version": "v3_typed_residue",
+        "load_bearing_lens": load_bearing,
         "axes_summary": panel_result["axes_summary"],
         "agreement_patterns": panel_result["agreement_patterns"],
-        "diff_applied": (panel_result.get("apply_result") or {}).get("applied"),
-        "files_changed": (panel_result.get("apply_result") or {}).get("files_changed", []),
-        "tdd_all_passed": (panel_result.get("tdd_result") or {}).get("all_passed"),
+        "diff_applied": apply_result.get("applied"),
+        "files_changed": apply_result.get("files_changed", []),
+        "tdd_all_passed": tdd_result.get("all_passed"),
+        "contract_violation": contract_report.get("contract_violation", False),
+        "failure_class": training_obj.failure_class,
+        "improvement_kind": training_obj.improvement_kind,
+        "debts_closed": closed,
+        "open_debts_after": len(debt_ledger.open_debts()),
     })
 
     freeze_cycle(n)
     if decision == "mark_stable":
         mark_stable(n)
-        log.info(f"cycle {n} MARK_STABLE (pointer advanced) "
-                 f"[load_bearing={panel_result['load_bearing_lens']}]")
+        log.info(f"cycle {n} MARK_STABLE [lb={load_bearing}] "
+                 f"class={training_obj.failure_class} kind={training_obj.improvement_kind} "
+                 f"contract_viol={contract_report.get('contract_violation', False)} "
+                 f"debts_closed={len(closed)}")
     else:
-        log.info(f"cycle {n} PARK (pointer unchanged at {last_stable_cycle_id()}) "
-                 f"[load_bearing={panel_result['load_bearing_lens']}]")
+        log.info(f"cycle {n} PARK [lb={load_bearing}] "
+                 f"class={training_obj.failure_class} (stable still {last_stable_cycle_id()})")
 
     return _emit_complete(tick_id, started_at, n, decision, {
-        "load_bearing_lens": panel_result["load_bearing_lens"],
-        "rationale": rationale[:200],
+        "load_bearing_lens": load_bearing,
+        "failure_class": training_obj.failure_class,
+        "improvement_kind": training_obj.improvement_kind,
+        "contract_violation": contract_report.get("contract_violation", False),
     })
+
+
+def _stable_tests_run() -> int:
+    """Read the last-stable cycle's training object to get its tests_run,
+    for debt auto-close delta. Defaults to 0 if unavailable."""
+    try:
+        stable_dir = cycle_path(last_stable_cycle_n())
+        to = stable_dir / "training_object.json"
+        if to.exists():
+            return int(json.loads(to.read_text(encoding="utf-8")).get("tests_run", 0))
+    except Exception:
+        pass
+    return 0
 
 
 def _emit_complete(tick_id, started_at, n, decision, stats) -> dict:

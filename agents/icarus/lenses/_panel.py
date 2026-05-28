@@ -38,6 +38,7 @@ from lenses.historian import HistorianLens
 from lenses.generator import GeneratorLens
 from lenses.skeptic import SkepticLens
 from lenses.integrator import IntegratorLens
+from lenses.contract import ContractLens
 
 
 def _now_iso() -> str:
@@ -125,6 +126,30 @@ def run_lens_panel(
     ctx.tdd_result = tdd_result
     _emit(emit_event_fn, "phase_d_complete", ctx.cycle_n, {
         "all_passed": tdd_result.get("all_passed"),
+    })
+
+    # ---- Phase D.5: Contract Lens (deterministic, runs whenever a diff applied) ----
+    if ctx.diff_applied:
+        contract_lens_report = _safe_observe(ContractLens(), ctx)
+        # The raw machine-readable report is in suggested_actions[0]
+        try:
+            import json as _json
+            ctx.contract_report = _json.loads(contract_lens_report.suggested_actions[0])
+        except Exception:
+            ctx.contract_report = None
+    else:
+        contract_lens_report = LensReport(
+            lens_name="contract", model_used="deterministic",
+            cycle_n=ctx.cycle_n, ts=_now_iso(),
+            qualitative_summary="Contract check skipped: no diff applied.",
+            axes={a: 0.5 for a in SCORING_AXES}, confidence=1.0,
+        )
+        ctx.contract_report = None
+    ctx.contract_lens_report = contract_lens_report
+    lens_reports["contract"] = contract_lens_report
+    write_lens_report(contract_lens_report, cycle_dir)
+    _emit(emit_event_fn, "phase_d5_complete", ctx.cycle_n, {
+        "contract_violation": (ctx.contract_report or {}).get("contract_violation"),
     })
 
     # ---- Phase E: Skeptic (only if there's something to be skeptical about) ----
