@@ -11625,6 +11625,44 @@ Lifetime: 179 batches journaled / 558.3M records / 313.3M kills /
 558.3M records, 313.3M kills, 2351 promoted, 2671 templates,
 0 verified findings. **40 consecutive 0-promoted milestone.***
 
+---
+
+## Fire #185 — 2026-05-28 ~22:54Z
+
+**2.05M records / 24 min / 0 templates / 0 promoted. Mix
+aa1/e4/f1/g1/h4 — aa1 4/5 calibration kills.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    f1   1,383,200  404,791  old (monte_carlo)
+    h4     664,327  136,790  old (bridge_extension)
+    e4         233        0  stub (arxiv-mining)
+    g1         184      108  old (small reservoir)
+    aa1          5        4  NEW (confidence-miscalibrated, 80%)
+
+### Batch result
+
+- batch_id: `batch-20260528T225451Z-1405bc`
+- 2,047,949 records / 541,693 kills / 1,506,256 confirms / 0 errors
+- 0 promoted (41st consecutive)
+- batch_end ✓
+
+Lifetime: 180 batches journaled / 560.4M records / 313.8M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **180 batches journaled milestone** (Penelope side)
+- aa1 80% calibration miscalibration kill rate
+- 41 consecutive 0-promoted
+
+---
+
+*Fire #185 throttled = 2.05M records / 0 promoted / 0 templates.
+560.4M records, 313.8M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
