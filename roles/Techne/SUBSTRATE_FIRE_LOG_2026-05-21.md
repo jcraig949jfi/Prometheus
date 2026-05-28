@@ -9888,6 +9888,52 @@ Lifetime: 137 batches journaled / 487.21M records / 277.0M kills /
 487.21M records, 277.0M kills, 2351 promoted, 2653 templates,
 0 verified findings. 5 NEW GEN FAMILIES live in the bandit pool.*
 
+---
+
+## Fire #143 — 2026-05-28 ~06:48Z
+
+**2.12M records / 24 min / 2 templates (h2) / 0 promoted.
+Mix b3/c5/g4/g5/h2 — bandit cooldown correctly downweighted
+the 5 new gens picked in Fire #142.**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    g5   700,155   0           7.8%
+    g4   662,719   0           5.4%
+    c5   433,315   0          90.8%
+    h2   326,988   2          99.99%  ← templates
+    b3       606   0          57.1%
+
+### Batch result
+
+- batch_id: `batch-20260528T064838Z-328be4`
+- Duration: 24 min wall, 500/s tick rate
+- 2,123,783 records / 811,209 kills / 1,312,530 confirms / 0 errors
+- 0 promoted records → 2351 lifetime promoted (unchanged)
+- +2 new disc-role templates → 2655 lifetime templates
+- **Verified mathematical findings: 0**
+- batch_end ✓
+
+Lifetime: 138 batches journaled / 489.3M records / 277.8M kills /
+2351 promoted / 2655 templates / 0 verified findings.
+
+### Notable
+
+- **Second consecutive 0-promoted fire**. Pre-Fire-#141 fix this
+  would have promoted 20 parity records. Info-content multiplier
+  is solidly preventing inflation.
+- h2 ran clean with the corpus-scan cap (commit 4c3dd52b, 326K
+  records, 99.99% kill rate)
+- c5 also high kill (90.8%) — second-wave explorer continuing
+  to produce kills
+
+---
+
+*Fire #143 throttled = 2.12M records / 0 promoted / 2 templates.
+489.3M records, 277.8M kills, 2351 promoted, 2655 templates,
+0 verified findings.*
+
 
 
 
