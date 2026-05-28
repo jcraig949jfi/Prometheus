@@ -9934,6 +9934,44 @@ Lifetime: 138 batches journaled / 489.3M records / 277.8M kills /
 489.3M records, 277.8M kills, 2351 promoted, 2655 templates,
 0 verified findings.*
 
+---
+
+## Fire #144 — 2026-05-28 ~07:13Z
+
+**1.77M records / 24 min / 0 templates / 0 promoted. Mix
+b1/b2/d4/e5/f4 (old gens only — fire launched before
+the 15-gen registry update). Lifetime templates +15
+schema-driven (2655 → 2670).**
+
+### Per-gen attribution
+
+    gid  records   templates  kill_rate
+    f4   891,527   0          65.8%
+    d4   878,265   0          78.8%
+    b2     3,636   0          34.8%
+    b1     1,340   0           0.0%
+    e5       121   0           0.0%
+
+### Batch result
+
+- batch_id: `batch-20260528T071330Z-202ce7`
+- Duration: 24 min wall, 620/s tick rate
+- 1,774,889 records / 1,279,578 kills / 495,190 confirms / 0 errors
+- 0 promoted (3rd consecutive)
+- 0 new disc-role templates THIS fire, but lifetime jumped
+  +15 because the registry update added 15 ClaimKind values to
+  the discoverable template set
+- batch_end ✓
+
+Lifetime: 139 batches journaled / 491.1M records / 279.1M kills /
+2351 promoted / **2670 templates** / 0 verified findings.
+
+---
+
+*Fire #144 throttled = 1.77M records / 0 promoted / 0 templates.
+491.1M records, 279.1M kills, 2351 promoted, 2670 templates,
+0 verified findings. Next fire = FIRST with 55-gen pool active.*
+
 
 
 
