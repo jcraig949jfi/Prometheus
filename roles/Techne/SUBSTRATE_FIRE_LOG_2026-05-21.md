@@ -9972,6 +9972,61 @@ Lifetime: 139 batches journaled / 491.1M records / 279.1M kills /
 491.1M records, 279.1M kills, 2351 promoted, 2670 templates,
 0 verified findings. Next fire = FIRST with 55-gen pool active.*
 
+---
+
+## Fire #145 — 2026-05-28 ~07:38Z — **5 NEW SECOND-BATCH GENS PICKED**
+
+**18 records / <10 sec / 0 templates / 0 promoted. Bandit
+picked bb1/l2/m2/x1/z1 — all five from the second batch.
+Same "newcomer sweep" pattern as Fire #142.**
+
+### Bandit's first pick after 15-gen registry
+
+    Bandit cooldown active: 15 gens picked within last 3 fires (×0.3)
+    Bandit selected: ['bb1', 'l2', 'z1', 'x1', 'm2']
+
+All five from the 15 second-batch stubs. The explorer-prior
+injection biased UCB toward the new low-saturation entrants;
+cooldown downweighted gens picked in Fires #142-144.
+
+### Per-gen attribution
+
+    gid  records  shape
+    bb1  4        false_dichotomy
+    l2   4        formalization_skeleton
+    z1   4        order_dependence
+    x1   3        partial_information
+    m2   3        corpus_compression
+
+### Batch result
+
+- batch_id: `batch-20260528T073805Z-a05694`
+- Duration: ~10 sec (stub gens exhaust fast — 3-4 records each)
+- 18 records / 0 kills / 0 confirms / 0 errors / all UNVERIFIED
+- 0 promoted (stubs all UNVERIFIED, 0.1 verdict multiplier)
+- 0 new templates this fire
+
+Lifetime: 140 batches journaled / 491.1M records / 279.1M kills /
+2351 promoted / 2670 templates / 0 verified findings.
+
+### What this proves
+
+1. **The 55-gen pool is operational.** All registry + schema +
+   bandit + cooldown logic composes correctly.
+2. **Explorer-prior + cooldown does its job.** Just like Fire #142
+   picked all 5 first-batch new gens, Fire #145 picked 5 of the 15
+   second-batch new gens. Pattern repeatable.
+3. **Bandit's coverage scope is working.** Of the 15 newcomers, 5
+   were picked this fire. Over the next ~3 fires, the bandit
+   should cycle through the remaining 10 (assuming cooldown logic
+   stays consistent).
+
+---
+
+*Fire #145 throttled = 18 records / 0 promoted / 0 templates.
+491.1M records, 279.1M kills, 2351 promoted, 2670 templates,
+0 verified findings. **5 of 15 new gens validated in live bandit pool.***
+
 
 
 
