@@ -30,7 +30,7 @@ if str(ICARUS_DIR) not in sys.path:
     sys.path.insert(0, str(ICARUS_DIR))
 
 from lenses._base import (
-    Lens, LensReport, CycleContext,
+    Lens, LensReport, CycleContext, SCORING_AXES,
     write_lens_report, axes_summary, lens_agreement_patterns,
 )
 from lenses.diagnostician import DiagnosticianLens

@@ -260,7 +260,27 @@ def run_cycle(
         )
     except Exception as e:
         log.exception(f"lens panel raised: {e}")
-        record_outcome(n, decision="park", reason=f"panel_crashed: {e}")
+        # Even a panel crash must leave residue -- failure is the primary
+        # product. Emit a minimal training object before exiting.
+        try:
+            crash_obj = taxonomy.build_training_object(
+                cycle_n=n, tier_target=tier_target, strategy=cycle_strategy,
+                decision="park",
+                apply_result=ctx.apply_result or {},
+                tdd_result=ctx.tdd_result or {},
+                skeptic_report=None,
+                contract_report=ctx.contract_report or {},
+                integrator_report={},
+                load_bearing_lens="panel_crash",
+            )
+            crash_obj.failure_class = "panel_error"
+            crash_obj.failure_subclass = "unparseable_lens_output"
+            crash_obj.improvement_rationale = f"panel_crashed: {e}"
+            taxonomy.write_training_object(crash_obj, new_cycle_dir)
+        except Exception as e2:
+            log.warning(f"crash training-object emit failed: {e2}")
+        record_outcome(n, decision="park", reason=f"panel_crashed: {e}",
+                       details={"failure_class": "panel_error"})
         freeze_cycle(n)
         return _emit_complete(tick_id, started_at, n, "park",
                                {"reason": f"panel_crashed: {e}"})
