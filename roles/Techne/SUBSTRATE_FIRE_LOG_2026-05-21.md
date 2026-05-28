@@ -11089,6 +11089,53 @@ Lifetime: 166 batches journaled / 540.5M records / 305.5M kills /
 540.5M records, 305.5M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #172 — 2026-05-28 ~17:34Z — **ALL 5 GENS THIN-RESERVOIR**
+
+**433 records / 24 min / 0 templates / 0 promoted. All 5 picks
+were thin-reservoir gens. 27 structured kills from new gens
+(l1+m1+s1) alone.**
+
+### Per-gen attribution
+
+    gid  records  kills  notes
+    s1   375      17     NEW (triangle-inequality squared-metric)
+    c3   21       15     old (region_slide, small reservoir)
+    d1   16        7     old (kill_neighborhood, small)
+    l1   12        4     NEW (obstruction-refuted, all witnesses)
+    m1    9        6     NEW (minimal-counterexample certificates)
+
+### Structured kills from new gens (27 total)
+
+- `s1_triangle_inequality_broken_on_triple` × 17
+- `m1_minimal_counterexample_found` × 6
+- `l1_obstruction_refuted_by_witness` × 4
+
+### Batch result
+
+- batch_id: `batch-20260528T173433Z-66674f`
+- 433 records / 49 kills / 384 confirms / 0 errors
+- 0 promoted (28th consecutive)
+- batch_end ✓
+
+Lifetime: 167 batches journaled / 540.5M records / 305.5M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **First Techne fire** with zero gens contributing volume —
+  every pick was a small-reservoir gen
+- 27 structured kills / 433 records = ~6% structured-kill density
+  (vs ~100K kills / 2.5M records ≈ 4% kill density in average fire)
+- 28 consecutive 0-promoted
+
+---
+
+*Fire #172 throttled = 433 records / 0 promoted / 0 templates.
+540.5M records, 305.5M kills, 2351 promoted, 2671 templates,
+0 verified findings. **Quality-only fire.***
+
 
 
 
