@@ -11218,6 +11218,44 @@ Lifetime: 169 batches journaled / 542.4M records / 306.9M kills /
 542.4M records, 306.9M kills, 2351 promoted, 2671 templates,
 0 verified findings. **30 consecutive 0-promoted milestone.***
 
+---
+
+## Fire #175 — 2026-05-28 ~18:48Z — **h4 SOLO BURN (99.96%)**
+
+**2.69M records / 24 min / 0 templates / 0 promoted. Mix
+b4/h4/s1/t1/u1 — h4 solo-dominated at 2.69M records.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    h4   2,692,734  498,329  old (99.96% of total volume)
+    b4         606      446  old (fixed_point_hunt)
+    s1         375       11  NEW (triangle inequality)
+    t1         252        0  NEW (multi-hop pass)
+    u1           2        0  NEW (no swap-distinguish)
+
+### Batch result
+
+- batch_id: `batch-20260528T184859Z-56176b`
+- 2,693,969 records / 498,786 kills / 2,195,183 confirms / 0 errors
+- 0 promoted (31st consecutive)
+- batch_end ✓
+
+Lifetime: 170 batches journaled / 545.1M records / 307.4M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **170 batches journaled milestone** (Penelope side)
+- h4 emitted 99.96% of this fire's records solo
+- 31 consecutive 0-promoted
+
+---
+
+*Fire #175 throttled = 2.69M records / 0 promoted / 0 templates.
+545.1M records, 307.4M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
