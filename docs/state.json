@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "generated_at": "2026-05-28T01:15:10.963587+00:00",
+  "generated_at": "2026-05-28T05:15:12.175415+00:00",
   "redis_host": "192.168.1.176:6379",
   "heartbeat_timeout_sec": 300,
   "ideas_in_flight": [
@@ -34,7 +34,7 @@
       "lifecycle": "shelved",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 317635,
+      "heartbeat_age_sec": 332036,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-24T05:01:15.568994-04:00",
       "key_metrics": null,
@@ -50,15 +50,15 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "ALIVE",
-      "heartbeat_age_sec": 21,
-      "current_op": "forging Kalman Filtering + Neural Oscillations + Maximum Entropy",
-      "last_status_update": "2026-05-27T21:03:43.964337-04:00",
+      "heartbeat_age_sec": 12,
+      "current_op": "forging Fourier Transforms + Statistical Mechanics + Holography Principle",
+      "last_status_update": "2026-05-28T01:10:09.120482-04:00",
       "key_metrics": {
-        "ledger_size": 6607,
+        "ledger_size": 6642,
         "forge_rate_pct": 0.7,
         "session_forges": 3,
-        "session_scraps": 417,
-        "nous_queue_depth": 54,
+        "session_scraps": 452,
+        "nous_queue_depth": 19,
         "current_forge_version": "forge",
         "api_timeouts_last_hour": 0
       },
@@ -106,13 +106,13 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "ALIVE",
-      "heartbeat_age_sec": 13,
-      "current_op": "cycle 904c36f7 firing",
-      "last_status_update": "2026-05-27T21:14:57.835243-04:00",
+      "heartbeat_age_sec": 56,
+      "current_op": "idle (last cycle 904c36f7 ok)",
+      "last_status_update": "2026-05-28T01:14:15.554160-04:00",
       "key_metrics": {
-        "cycles_today": 2,
+        "cycles_today": 3,
         "last_cycle_ok": true,
-        "last_cycle_duration_sec": 255.83
+        "last_cycle_duration_sec": 191.89
       },
       "data_source": "postgres_fallback"
     },
@@ -126,7 +126,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 817168,
+      "heartbeat_age_sec": 831569,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-18T10:15:42.578880-04:00",
       "key_metrics": null,
@@ -158,7 +158,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 115669,
+      "heartbeat_age_sec": 130070,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-26T13:07:21.655030-04:00",
       "key_metrics": null,
@@ -206,9 +206,9 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 2190,
+      "heartbeat_age_sec": 1861,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-27T20:38:40.667529-04:00",
+      "last_status_update": "2026-05-28T00:44:10.915648-04:00",
       "key_metrics": null,
       "data_source": "postgres_fallback"
     },
@@ -222,9 +222,9 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "ALIVE",
-      "heartbeat_age_sec": 4,
+      "heartbeat_age_sec": 9,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-27T21:15:06.369639-04:00",
+      "last_status_update": "2026-05-28T01:15:02.321219-04:00",
       "key_metrics": null,
       "data_source": "postgres_fallback"
     },
@@ -238,9 +238,9 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 2079,
+      "heartbeat_age_sec": 2081,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-27T20:40:31.074510-04:00",
+      "last_status_update": "2026-05-28T00:40:31.167951-04:00",
       "key_metrics": null,
       "data_source": "postgres_fallback"
     },
@@ -256,7 +256,7 @@
       "status": "STALE",
       "heartbeat_age_sec": 275,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-27T21:10:35.705485-04:00",
+      "last_status_update": "2026-05-28T01:10:36.546021-04:00",
       "key_metrics": null,
       "data_source": "postgres_fallback"
     },
@@ -270,9 +270,9 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "ALIVE",
-      "heartbeat_age_sec": 69,
+      "heartbeat_age_sec": 35,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-27T21:14:01.394507-04:00",
+      "last_status_update": "2026-05-28T01:14:36.832671-04:00",
       "key_metrics": null,
       "data_source": "postgres_fallback"
     },
@@ -286,9 +286,9 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 157444,
+      "heartbeat_age_sec": 11736,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-26T01:31:05.969315-04:00",
+      "last_status_update": "2026-05-27T21:59:35.250751-04:00",
       "key_metrics": null,
       "data_source": "postgres_fallback"
     },
@@ -302,7 +302,7 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 89631,
+      "heartbeat_age_sec": 104033,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-26T20:21:19.122826-04:00",
       "key_metrics": null,
@@ -320,7 +320,7 @@
       "status": "STALE",
       "heartbeat_age_sec": 276,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-27T21:10:34.665745-04:00",
+      "last_status_update": "2026-05-28T01:10:35.683391-04:00",
       "key_metrics": null,
       "data_source": "postgres_fallback"
     },
@@ -334,9 +334,9 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 1273,
+      "heartbeat_age_sec": 1272,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-27T20:53:57.665132-04:00",
+      "last_status_update": "2026-05-28T00:53:59.615779-04:00",
       "key_metrics": null,
       "data_source": "postgres_fallback"
     },
@@ -350,7 +350,7 @@
       "lifecycle": "shelved",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 317658,
+      "heartbeat_age_sec": 332060,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-24T05:00:52.067590-04:00",
       "key_metrics": null,
@@ -366,7 +366,7 @@
       "lifecycle": "shelved",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 318127,
+      "heartbeat_age_sec": 332529,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-24T04:53:03.105014-04:00",
       "key_metrics": null,
@@ -382,7 +382,7 @@
       "lifecycle": "shelved",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 318218,
+      "heartbeat_age_sec": 332619,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-24T04:51:32.912336-04:00",
       "key_metrics": null,
@@ -398,7 +398,7 @@
       "lifecycle": "shelved",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 317751,
+      "heartbeat_age_sec": 332152,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-24T04:59:19.856520-04:00",
       "key_metrics": null,
@@ -414,7 +414,7 @@
       "lifecycle": "shelved",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 317658,
+      "heartbeat_age_sec": 332060,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-24T05:00:52.043882-04:00",
       "key_metrics": null,
@@ -430,7 +430,7 @@
       "lifecycle": "shelved",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 317894,
+      "heartbeat_age_sec": 332296,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-24T04:56:55.967806-04:00",
       "key_metrics": null,
@@ -445,10 +445,10 @@
       "operator": "Charon",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "STALE",
-      "heartbeat_age_sec": 225,
+      "status": "ALIVE",
+      "heartbeat_age_sec": 81,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-27T21:11:25.218492-04:00",
+      "last_status_update": "2026-05-28T01:13:50.612034-04:00",
       "key_metrics": null,
       "data_source": "postgres_fallback"
     },
@@ -461,10 +461,10 @@
       "operator": "Charon",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 1724,
+      "status": "ALIVE",
+      "heartbeat_age_sec": 81,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-27T20:46:26.695808-04:00",
+      "last_status_update": "2026-05-28T01:13:50.581845-04:00",
       "key_metrics": null,
       "data_source": "postgres_fallback"
     },
@@ -478,9 +478,9 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 1474,
+      "heartbeat_age_sec": 1798,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-27T20:50:36.876235-04:00",
+      "last_status_update": "2026-05-28T00:45:13.345226-04:00",
       "key_metrics": null,
       "data_source": "postgres_fallback"
     },
@@ -494,9 +494,9 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 1233,
+      "heartbeat_age_sec": 1558,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-27T20:54:37.228030-04:00",
+      "last_status_update": "2026-05-28T00:49:13.684478-04:00",
       "key_metrics": null,
       "data_source": "postgres_fallback"
     },
@@ -510,9 +510,9 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 947,
+      "heartbeat_age_sec": 1283,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-27T20:59:23.692090-04:00",
+      "last_status_update": "2026-05-28T00:53:48.951722-04:00",
       "key_metrics": null,
       "data_source": "postgres_fallback"
     },
@@ -526,9 +526,9 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 706,
+      "heartbeat_age_sec": 1042,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-27T21:03:24.531255-04:00",
+      "last_status_update": "2026-05-28T00:57:49.889818-04:00",
       "key_metrics": null,
       "data_source": "postgres_fallback"
     },
@@ -542,9 +542,9 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 466,
+      "heartbeat_age_sec": 802,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-27T21:07:24.716199-04:00",
+      "last_status_update": "2026-05-28T01:01:49.979321-04:00",
       "key_metrics": null,
       "data_source": "postgres_fallback"
     },
@@ -558,9 +558,9 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 1964,
+      "heartbeat_age_sec": 321,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-27T20:42:26.586945-04:00",
+      "last_status_update": "2026-05-28T01:09:50.386938-04:00",
       "key_metrics": null,
       "data_source": "postgres_fallback"
     },
@@ -573,10 +573,10 @@
       "operator": "Charon",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "STALE",
-      "heartbeat_age_sec": 225,
+      "status": "DEAD",
+      "heartbeat_age_sec": 561,
       "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-27T21:11:25.183493-04:00",
+      "last_status_update": "2026-05-28T01:05:50.248551-04:00",
       "key_metrics": null,
       "data_source": "postgres_fallback"
     },
@@ -590,7 +590,7 @@
       "lifecycle": "active",
       "invoke_on_demand": true,
       "status": "DEAD",
-      "heartbeat_age_sec": 766451,
+      "heartbeat_age_sec": 780852,
       "current_op": "(from postgres mirror)",
       "last_status_update": "2026-05-19T00:20:59.542580-04:00",
       "key_metrics": null,
@@ -654,16 +654,16 @@
       "lifecycle": "active",
       "invoke_on_demand": false,
       "status": "DEAD",
-      "heartbeat_age_sec": 1101,
-      "current_op": "machine=M4 cpu=7.8% mem=49.8% (15.88/31.86GB) disk=[C:\\ 17.3% (787.7GB free); E:\\ 11.5% (843.4GB free)] uptime=357h",
-      "last_status_update": "2026-05-27T20:56:48.987624-04:00",
+      "heartbeat_age_sec": 1103,
+      "current_op": "machine=M4 cpu=4.5% mem=50.8% (16.2/31.86GB) disk=[C:\\ 17.4% (786.9GB free); E:\\ 11.5% (843.4GB free)] uptime=361h",
+      "last_status_update": "2026-05-28T00:56:49.009684-04:00",
       "key_metrics": {
-        "cpu_pct": 7.8,
-        "mem_pct": 49.8,
-        "mem_free_gb": 15.98,
-        "uptime_hours": 357,
-        "disk_root_pct": 17.3,
-        "disk_root_free_gb": 787.7
+        "cpu_pct": 4.5,
+        "mem_pct": 50.8,
+        "mem_free_gb": 15.67,
+        "uptime_hours": 361,
+        "disk_root_pct": 17.4,
+        "disk_root_free_gb": 786.9
       },
       "data_source": "postgres_fallback"
     },
@@ -739,7 +739,7 @@
       "role": "per-machine resource snapshot (harry1)",
       "operator": null,
       "status": "DEAD",
-      "heartbeat_age_sec": 325213,
+      "heartbeat_age_sec": 339614,
       "current_op": "",
       "last_status_update": "2026-05-24T02:54:57.298952-04:00",
       "key_metrics": null,
@@ -753,7 +753,7 @@
       "role": null,
       "operator": "Aporia",
       "status": "DEAD",
-      "heartbeat_age_sec": 816943,
+      "heartbeat_age_sec": 831344,
       "current_op": "",
       "last_status_update": "2026-05-18T10:19:27.458602-04:00",
       "key_metrics": null,
@@ -768,27 +768,27 @@
     {
       "agent": "Apollo",
       "kind": "dead",
-      "detail": "no heartbeat for 317635s (from postgres)"
+      "detail": "no heartbeat for 332036s (from postgres)"
     },
     {
       "agent": "Aporia",
       "kind": "dead",
-      "detail": "no heartbeat for 817168s (from postgres)"
+      "detail": "no heartbeat for 831569s (from postgres)"
     },
     {
       "agent": "Ergon",
       "kind": "dead",
-      "detail": "no heartbeat for 115669s (from postgres)"
+      "detail": "no heartbeat for 130070s (from postgres)"
     },
     {
       "agent": "Clio",
       "kind": "dead",
-      "detail": "no heartbeat for 2190s (from postgres)"
+      "detail": "no heartbeat for 1861s (from postgres)"
     },
     {
       "agent": "Hypatia",
       "kind": "dead",
-      "detail": "no heartbeat for 2079s (from postgres)"
+      "detail": "no heartbeat for 2081s (from postgres)"
     },
     {
       "agent": "Atalanta",
@@ -798,12 +798,12 @@
     {
       "agent": "Theseus",
       "kind": "dead",
-      "detail": "no heartbeat for 157444s (from postgres)"
+      "detail": "no heartbeat for 11736s (from postgres)"
     },
     {
       "agent": "Penelope",
       "kind": "dead",
-      "detail": "no heartbeat for 89631s (from postgres)"
+      "detail": "no heartbeat for 104033s (from postgres)"
     },
     {
       "agent": "Pheme",
@@ -813,105 +813,95 @@
     {
       "agent": "Talos",
       "kind": "dead",
-      "detail": "no heartbeat for 1273s (from postgres)"
+      "detail": "no heartbeat for 1272s (from postgres)"
     },
     {
       "agent": "Harmonia_Loop",
       "kind": "dead",
-      "detail": "no heartbeat for 317658s (from postgres)"
+      "detail": "no heartbeat for 332060s (from postgres)"
     },
     {
       "agent": "Argos",
       "kind": "dead",
-      "detail": "no heartbeat for 318127s (from postgres)"
+      "detail": "no heartbeat for 332529s (from postgres)"
     },
     {
       "agent": "Iris",
       "kind": "dead",
-      "detail": "no heartbeat for 318218s (from postgres)"
+      "detail": "no heartbeat for 332619s (from postgres)"
     },
     {
       "agent": "Phylax",
       "kind": "dead",
-      "detail": "no heartbeat for 317751s (from postgres)"
+      "detail": "no heartbeat for 332152s (from postgres)"
     },
     {
       "agent": "Sophia",
       "kind": "dead",
-      "detail": "no heartbeat for 317658s (from postgres)"
+      "detail": "no heartbeat for 332060s (from postgres)"
     },
     {
       "agent": "Telos",
       "kind": "dead",
-      "detail": "no heartbeat for 317894s (from postgres)"
-    },
-    {
-      "agent": "Charon_Loop",
-      "kind": "stale",
-      "detail": "heartbeat age 225s (from postgres)"
-    },
-    {
-      "agent": "Stygian",
-      "kind": "dead",
-      "detail": "no heartbeat for 1724s (from postgres)"
+      "detail": "no heartbeat for 332296s (from postgres)"
     },
     {
       "agent": "Lethe",
       "kind": "dead",
-      "detail": "no heartbeat for 1474s (from postgres)"
+      "detail": "no heartbeat for 1798s (from postgres)"
     },
     {
       "agent": "Acheron",
       "kind": "dead",
-      "detail": "no heartbeat for 1233s (from postgres)"
+      "detail": "no heartbeat for 1558s (from postgres)"
     },
     {
       "agent": "Moros",
       "kind": "dead",
-      "detail": "no heartbeat for 947s (from postgres)"
+      "detail": "no heartbeat for 1283s (from postgres)"
     },
     {
       "agent": "Hecate",
       "kind": "dead",
-      "detail": "no heartbeat for 706s (from postgres)"
+      "detail": "no heartbeat for 1042s (from postgres)"
     },
     {
       "agent": "Nephele",
       "kind": "dead",
-      "detail": "no heartbeat for 466s (from postgres)"
+      "detail": "no heartbeat for 802s (from postgres)"
     },
     {
       "agent": "Erebos",
       "kind": "dead",
-      "detail": "no heartbeat for 1964s (from postgres)"
+      "detail": "no heartbeat for 321s (from postgres)"
     },
     {
       "agent": "Pollux",
-      "kind": "stale",
-      "detail": "heartbeat age 225s (from postgres)"
+      "kind": "dead",
+      "detail": "no heartbeat for 561s (from postgres)"
     },
     {
       "agent": "Calliope",
       "kind": "dead",
-      "detail": "no heartbeat for 766451s (from postgres)"
+      "detail": "no heartbeat for 780852s (from postgres)"
     },
     {
       "agent": "HealthCheck-M4",
       "kind": "dead",
-      "detail": "no heartbeat for 1101s (from postgres)"
+      "detail": "no heartbeat for 1103s (from postgres)"
     }
   ],
   "intelligence_outputs": [
     {
-      "cycle_id": "904c36f7-0a07-4ba1-9126-a83ceecb3095",
+      "cycle_id": "9551ce98-b211-4f98-8ea1-867a6dc1fd24",
       "stage": "pronoia_cycle_started",
       "success": true,
       "output_path": null,
       "output_summary": "Pronoia hourly cycle (interval=240min)",
       "error": null,
       "started_at": "2026-05-27T09:13:06.426701-04:00",
-      "finished_at": "2026-05-27T21:14:41.846157-04:00",
-      "duration_sec": 43295.418
+      "finished_at": "2026-05-28T01:14:41.847876-04:00",
+      "duration_sec": 57695.42
     },
     {
       "cycle_id": "def88492-225b-4f38-bfc8-bfb3b6e39e79",
@@ -921,8 +911,8 @@
       "output_summary": "SI: approval_requested adaptation=SPAWN_SIBLING_SCOUR reason=",
       "error": null,
       "started_at": "2026-05-25T07:41:31.022397-04:00",
-      "finished_at": "2026-05-27T21:14:01.284511-04:00",
-      "duration_sec": 221550.27
+      "finished_at": "2026-05-28T01:14:36.708068-04:00",
+      "duration_sec": 235985.69
     },
     {
       "cycle_id": "def88492-225b-4f38-bfc8-bfb3b6e39e79",
@@ -932,338 +922,162 @@
       "output_summary": "Scour prometheus_self: 0 candidates this tick.",
       "error": null,
       "started_at": "2026-05-25T07:41:31.022397-04:00",
-      "finished_at": "2026-05-27T21:14:01.115303-04:00",
-      "duration_sec": 221550.1
+      "finished_at": "2026-05-28T01:14:36.668070-04:00",
+      "duration_sec": 235985.64
     },
     {
-      "cycle_id": "5541285c-6dba-4b9f-a208-b6e5fa56b101",
-      "stage": "pollux_tick_complete",
+      "cycle_id": "a6e301e8-00e5-4237-bd8f-47e524773428",
+      "stage": "stygian_tick_complete",
       "success": true,
-      "output_path": null,
-      "output_summary": "pair=deg18_vs_deg20 kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.04",
+      "output_path": "F:\\Prometheus\\charon\\agents\\stygian\\artifacts\\attack_plan_BL-C-010_20260528T051350Z.md",
+      "output_summary": "problem=BL-C-010 processed=1 artifacts=1 errors=0 dr_inbox=0 dr_seeded=False dr_quota_remaining=3",
       "error": null,
-      "started_at": "2026-05-27T21:11:24.781506-04:00",
-      "finished_at": "2026-05-27T21:11:25.159710-04:00",
-      "duration_sec": 0.378204
+      "started_at": "2026-05-28T01:13:50.445835-04:00",
+      "finished_at": "2026-05-28T01:13:50.452834-04:00",
+      "duration_sec": 0.006999
     },
     {
       "cycle_id": "3c21a6d7-5d72-46b4-b7e5-deee064046ab",
       "stage": "atalanta_self_audit_null",
       "success": false,
       "output_path": null,
-      "output_summary": "ALARM: 228 consecutive null ticks. Apollo upstream likely dead or thresholds too high.",
+      "output_summary": "ALARM: 236 consecutive null ticks. Apollo upstream likely dead or thresholds too high.",
       "error": "anti_silence_threshold_exceeded",
       "started_at": "2026-05-23T04:39:46.648725-04:00",
-      "finished_at": "2026-05-27T21:10:35.685485-04:00",
-      "duration_sec": 405049.03
+      "finished_at": "2026-05-28T01:10:36.527020-04:00",
+      "duration_sec": 419449.88
     },
     {
       "cycle_id": "3c21a6d7-5d72-46b4-b7e5-deee064046ab",
       "stage": "atalanta_upstream_not_found",
       "success": false,
-      "output_path": "agents\\atalanta\\artifacts\\upstream_not_found_20260528T011035.json",
+      "output_path": "agents\\atalanta\\artifacts\\upstream_not_found_20260528T051036.json",
       "output_summary": "Apollo runs root not found; checked: F:\\Prometheus\\apollo\\runs, F:\\Prometheus\\apollo\\runs_v2, F:\\Prometheus\\apollo\\organism_runs",
       "error": "apollo_root_not_configured",
       "started_at": "2026-05-23T04:39:46.648725-04:00",
-      "finished_at": "2026-05-27T21:10:35.552918-04:00",
-      "duration_sec": 405048.9
+      "finished_at": "2026-05-28T01:10:36.506020-04:00",
+      "duration_sec": 419449.84
     },
     {
       "cycle_id": "7b8d4473-8f49-4d8e-a87d-c0f4660d8b70",
       "stage": "pheme_self_audit_null",
       "success": false,
       "output_path": null,
-      "output_summary": "ALARM: 228 consecutive null ticks. Eval upstream likely dead.",
+      "output_summary": "ALARM: 236 consecutive null ticks. Eval upstream likely dead.",
       "error": "anti_silence_threshold_exceeded",
       "started_at": "2026-05-23T04:39:46.648725-04:00",
-      "finished_at": "2026-05-27T21:10:34.639747-04:00",
-      "duration_sec": 405048.0
+      "finished_at": "2026-05-28T01:10:35.651913-04:00",
+      "duration_sec": 419449.0
     },
     {
       "cycle_id": "7b8d4473-8f49-4d8e-a87d-c0f4660d8b70",
       "stage": "pheme_upstream_not_found",
       "success": false,
-      "output_path": "agents\\pheme\\artifacts\\upstream_not_found_20260528T011034.json",
+      "output_path": "agents\\pheme\\artifacts\\upstream_not_found_20260528T051035.json",
       "output_summary": "Ergon eval root not found; checked: F:\\Prometheus\\ergon\\learner\\evals, F:\\Prometheus\\ergon\\evals, F:\\Prometheus\\ergon\\diagnostic_c\\eval_runs",
       "error": "eval_root_not_configured",
       "started_at": "2026-05-23T04:39:46.648725-04:00",
-      "finished_at": "2026-05-27T21:10:34.618746-04:00",
-      "duration_sec": 405047.97
+      "finished_at": "2026-05-28T01:10:35.631910-04:00",
+      "duration_sec": 419448.97
     },
     {
-      "cycle_id": "605f8c31-a3e2-4723-8c1b-0f409c49ea02",
-      "stage": "nephele_tick_complete",
-      "success": true,
-      "output_path": null,
-      "output_summary": "skip (clio_active_0.48h_ago)",
-      "error": null,
-      "started_at": "2026-05-27T21:07:24.694200-04:00",
-      "finished_at": "2026-05-27T21:07:24.695201-04:00",
-      "duration_sec": 0.001001
-    },
-    {
-      "cycle_id": "b67f8578-41cf-46e8-b01c-ba75a215a96f",
-      "stage": "hecate_tick_complete",
-      "success": true,
-      "output_path": "F:\\Prometheus\\charon\\agents\\hecate\\artifacts\\gradient_archaeology_20260528T010324Z.md",
-      "output_summary": "ledger=theseus\\corpus,charon\\agents\\stygian\\state\\kill_ledger.jsonl,charon\\agents\\pollux\\state\\kill_ledger.jsonl,charon\\agents\\erebos\\state\\kill_ledger.jsonl records=13050 mi=4.6354 mi_z=424.495 alarm=False artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
-      "error": null,
-      "started_at": "2026-05-27T21:03:23.750259-04:00",
-      "finished_at": "2026-05-27T21:03:24.505255-04:00",
-      "duration_sec": 0.754996
-    },
-    {
-      "cycle_id": "c8805055-9dfe-4775-bd4e-273f47513948",
-      "stage": "deep_research_dispatched",
-      "success": true,
-      "output_path": null,
-      "output_summary": "row391 [TT5]: Moros cross-pollination: pivot\\erebos_finding_reclassification_2026-05-27.md",
-      "error": null,
-      "started_at": "2026-05-22T01:53:42.868414-04:00",
-      "finished_at": "2026-05-27T20:59:49.896150-04:00",
-      "duration_sec": 500767.03
-    },
-    {
-      "cycle_id": "631a57e9-3574-45a8-8c69-96aa639a5583",
-      "stage": "moros_tick_complete",
-      "success": true,
-      "output_path": "F:\\Prometheus\\pivot\\feedback_erebos_finding_reclassification_2026-05-27_2026-05-28.md",
-      "output_summary": "artifact=pivot\\erebos_finding_reclassification_2026-05-27.md critique=True artifacts=2 errors=0 dr_seeded=True dr_inbox=0",
-      "error": null,
-      "started_at": "2026-05-27T20:58:37.294555-04:00",
-      "finished_at": "2026-05-27T20:59:23.566823-04:00",
-      "duration_sec": 46.272266
-    },
-    {
-      "cycle_id": "094d2334-d00b-4729-a373-69ecf9a4b7bb",
-      "stage": "machine_health_m4",
-      "success": true,
-      "output_path": null,
-      "output_summary": "machine=M4 cpu=7.8% mem=49.8% (15.88/31.86GB) disk=[C:\\ 17.3% (787.7GB free); E:\\ 11.5% (843.4GB free)] uptime=357h",
-      "error": null,
-      "started_at": "2026-05-27T20:56:47.618870-04:00",
-      "finished_at": "2026-05-27T20:56:49.048207-04:00",
-      "duration_sec": 1.429337
-    },
-    {
-      "cycle_id": "16202b46-3ce4-41d3-bed4-d5ebf0efd2eb",
-      "stage": "acheron_tick_complete",
-      "success": true,
-      "output_path": "F:\\Prometheus\\charon\\agents\\acheron\\artifacts\\clean_scan_aporia_docs_deep_research_reports_2026-0_20260528T005437Z.md",
-      "output_summary": "file=aporia\\docs\\deep_research_reports\\2026-05-21\\00107_t_66_z_eigenvalue_distribution_random_tensor_spectral_theory.md collisions=0 artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
-      "error": null,
-      "started_at": "2026-05-27T20:54:37.045553-04:00",
-      "finished_at": "2026-05-27T20:54:37.201200-04:00",
-      "duration_sec": 0.155647
-    },
-    {
-      "cycle_id": "507d5d8e-f94d-4f4f-9145-4bdc84190b93",
-      "stage": "talos_null_tick",
-      "success": true,
-      "output_path": "agents\\talos\\artifacts\\null_20260528T005357.json",
-      "output_summary": "No new content in any stream. Corpus: 24796 examples.",
-      "error": null,
-      "started_at": "2026-05-23T11:50:23.066425-04:00",
-      "finished_at": "2026-05-27T20:53:57.637133-04:00",
-      "duration_sec": 378214.56
-    },
-    {
-      "cycle_id": "3149af43-915e-4301-9c0e-5e51ffb68252",
-      "stage": "lethe_tick_complete",
-      "success": true,
-      "output_path": "F:\\Prometheus\\charon\\agents\\lethe\\artifacts\\null_probe_bounded_gaps_vs_twin_primes_20260528T005036Z.md",
-      "output_summary": "conjecture=bounded_gaps_vs_twin_primes emit_rate=0.0 candidate=False artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
-      "error": null,
-      "started_at": "2026-05-27T20:50:26.761395-04:00",
-      "finished_at": "2026-05-27T20:50:36.856237-04:00",
-      "duration_sec": 10.094842
-    },
-    {
-      "cycle_id": "33506c3e-d08b-4312-9fbf-259c14c11562",
-      "stage": "stygian_tick_complete",
-      "success": true,
-      "output_path": "F:\\Prometheus\\charon\\agents\\stygian\\artifacts\\attack_plan_HECATE-stygian_hecate_meta_test_not_yet_implemented_20260528T004626Z.md",
-      "output_summary": "problem=HECATE-stygian_hecate_meta_test_not_yet_implemented processed=1 artifacts=1 errors=0 dr_inbox=0 dr_seeded=False dr_quota_remaining=3",
-      "error": null,
-      "started_at": "2026-05-27T20:46:26.651427-04:00",
-      "finished_at": "2026-05-27T20:46:26.672807-04:00",
-      "duration_sec": 0.02138
-    },
-    {
-      "cycle_id": "def88492-225b-4f38-bfc8-bfb3b6e39e79",
-      "stage": "polyhymnia_self_improvement",
-      "success": true,
-      "output_path": null,
-      "output_summary": "SI: approval_requested adaptation=SPAWN_SIBLING_SCOUR reason=",
-      "error": null,
-      "started_at": "2026-05-25T07:41:31.022397-04:00",
-      "finished_at": "2026-05-27T20:43:56.849487-04:00",
-      "duration_sec": 219745.83
-    },
-    {
-      "cycle_id": "def88492-225b-4f38-bfc8-bfb3b6e39e79",
-      "stage": "polyhymnia_scour_prometheus_self_run",
-      "success": true,
-      "output_path": "agents\\polyhymnia\\artifacts\\tick_20260528T004352.json",
-      "output_summary": "Scour prometheus_self: 15 candidates \u2192 2 new + 13 merged + 0 lineage edges. Total tensor: 2303 cells lifetime.",
-      "error": null,
-      "started_at": "2026-05-25T07:41:31.022397-04:00",
-      "finished_at": "2026-05-27T20:43:56.809485-04:00",
-      "duration_sec": 219745.78
-    },
-    {
-      "cycle_id": "40de5867-a310-4fde-a43d-3ed1ab7784dd",
+      "cycle_id": "7eee1d50-d828-4f2d-a9c8-d4fbe46052cc",
       "stage": "erebos_tick_complete",
       "success": true,
       "output_path": null,
-      "output_summary": "plugin=g12_invariant_substitution composed=EREBOS-G12-sub_salem_class_to_smyth_extremal-from_erebos_c8a92622fc78 stygian_recent=257 pollux_recent=172 enqueued=True",
+      "output_summary": "plugin=g01_intersection composed=EREBOS-G01-HECATE-stygian_hecate_meta_test_not_yet_implemented-x-lehmer_witness_neighborhood stygian_recent=265 pollux_recent=180 enqueued=True",
       "error": null,
-      "started_at": "2026-05-27T20:42:26.504445-04:00",
-      "finished_at": "2026-05-27T20:42:26.554446-04:00",
-      "duration_sec": 0.050001
+      "started_at": "2026-05-28T01:09:50.314936-04:00",
+      "finished_at": "2026-05-28T01:09:50.364936-04:00",
+      "duration_sec": 0.05
     },
     {
-      "cycle_id": "3c21a6d7-5d72-46b4-b7e5-deee064046ab",
-      "stage": "atalanta_self_audit_null",
-      "success": false,
-      "output_path": null,
-      "output_summary": "ALARM: 227 consecutive null ticks. Apollo upstream likely dead or thresholds too high.",
-      "error": "anti_silence_threshold_exceeded",
-      "started_at": "2026-05-23T04:39:46.648725-04:00",
-      "finished_at": "2026-05-27T20:40:35.412775-04:00",
-      "duration_sec": 403248.75
-    },
-    {
-      "cycle_id": "3c21a6d7-5d72-46b4-b7e5-deee064046ab",
-      "stage": "atalanta_upstream_not_found",
-      "success": false,
-      "output_path": "agents\\atalanta\\artifacts\\upstream_not_found_20260528T004035.json",
-      "output_summary": "Apollo runs root not found; checked: F:\\Prometheus\\apollo\\runs, F:\\Prometheus\\apollo\\runs_v2, F:\\Prometheus\\apollo\\organism_runs",
-      "error": "apollo_root_not_configured",
-      "started_at": "2026-05-23T04:39:46.648725-04:00",
-      "finished_at": "2026-05-27T20:40:35.391773-04:00",
-      "duration_sec": 403248.75
-    },
-    {
-      "cycle_id": "7b8d4473-8f49-4d8e-a87d-c0f4660d8b70",
-      "stage": "pheme_self_audit_null",
-      "success": false,
-      "output_path": null,
-      "output_summary": "ALARM: 227 consecutive null ticks. Eval upstream likely dead.",
-      "error": "anti_silence_threshold_exceeded",
-      "started_at": "2026-05-23T04:39:46.648725-04:00",
-      "finished_at": "2026-05-27T20:40:34.495628-04:00",
-      "duration_sec": 403247.84
-    },
-    {
-      "cycle_id": "7b8d4473-8f49-4d8e-a87d-c0f4660d8b70",
-      "stage": "pheme_upstream_not_found",
-      "success": false,
-      "output_path": "agents\\pheme\\artifacts\\upstream_not_found_20260528T004034.json",
-      "output_summary": "Ergon eval root not found; checked: F:\\Prometheus\\ergon\\learner\\evals, F:\\Prometheus\\ergon\\evals, F:\\Prometheus\\ergon\\diagnostic_c\\eval_runs",
-      "error": "eval_root_not_configured",
-      "started_at": "2026-05-23T04:39:46.648725-04:00",
-      "finished_at": "2026-05-27T20:40:34.474625-04:00",
-      "duration_sec": 403247.8
-    },
-    {
-      "cycle_id": "20ec7ae5-7b0b-4653-a062-6ad9739f932e",
-      "stage": "hypatia_null_tick",
-      "success": true,
-      "output_path": "agents\\hypatia\\artifacts\\null_20260528T004031.json",
-      "output_summary": "Within 24h cooldown; next pick at 2026-05-28T08:40:30.671046+00:00",
-      "error": null,
-      "started_at": "2026-05-23T04:39:46.648725-04:00",
-      "finished_at": "2026-05-27T20:40:31.054510-04:00",
-      "duration_sec": 403244.4
-    },
-    {
-      "cycle_id": "a8475079-68b5-4fd4-b30a-60494d44fed8",
-      "stage": "paper_scan_cycle",
-      "success": true,
-      "output_path": null,
-      "output_summary": "13 queries, 45 papers retrieved, 0 new after dedup, 214s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
-      "error": null,
-      "started_at": "2026-05-27T20:35:06.205161-04:00",
-      "finished_at": "2026-05-27T20:38:40.804532-04:00",
-      "duration_sec": 214.59937
-    },
-    {
-      "cycle_id": "1f78b34f-f54e-4d84-8ee2-6c0eb1f61ea7",
+      "cycle_id": "cceab43d-7f7b-4ab7-972a-b373485f0bbe",
       "stage": "pollux_tick_complete",
       "success": true,
       "output_path": null,
       "output_summary": "pair=lehmer_witness_neighborhood kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0519",
       "error": null,
-      "started_at": "2026-05-27T20:38:26.191220-04:00",
-      "finished_at": "2026-05-27T20:38:26.407767-04:00",
-      "duration_sec": 0.216547
+      "started_at": "2026-05-28T01:05:50.046554-04:00",
+      "finished_at": "2026-05-28T01:05:50.227553-04:00",
+      "duration_sec": 0.180999
     },
     {
-      "cycle_id": "54165ffb-5acb-4322-a880-483abaf88d6a",
+      "cycle_id": "c1a7e2b5-83ce-486b-a97b-9a3acb438249",
       "stage": "nephele_tick_complete",
       "success": true,
       "output_path": null,
-      "output_summary": "skip (clio_active_0.99h_ago)",
+      "output_summary": "skip (clio_active_0.29h_ago)",
       "error": null,
-      "started_at": "2026-05-27T20:34:26.100393-04:00",
-      "finished_at": "2026-05-27T20:34:26.100393-04:00",
-      "duration_sec": 0.0
+      "started_at": "2026-05-28T01:01:49.946331-04:00",
+      "finished_at": "2026-05-28T01:01:49.947331-04:00",
+      "duration_sec": 0.001
     },
     {
-      "cycle_id": "2439699c-dc29-4c2f-86ef-c265db096966",
+      "cycle_id": "8b499035-d98b-49f7-90cc-fc1e5cd49146",
       "stage": "hecate_tick_complete",
       "success": true,
-      "output_path": "F:\\Prometheus\\charon\\agents\\hecate\\artifacts\\gradient_archaeology_20260528T003025Z.md",
-      "output_summary": "ledger=theseus\\corpus,charon\\agents\\stygian\\state\\kill_ledger.jsonl,charon\\agents\\pollux\\state\\kill_ledger.jsonl,charon\\agents\\erebos\\state\\kill_ledger.jsonl records=13047 mi=4.6352 mi_z=416.612 alarm=False artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
+      "output_path": "F:\\Prometheus\\charon\\agents\\hecate\\artifacts\\gradient_archaeology_20260528T045749Z.md",
+      "output_summary": "ledger=theseus\\corpus,charon\\agents\\stygian\\state\\kill_ledger.jsonl,charon\\agents\\pollux\\state\\kill_ledger.jsonl,charon\\agents\\erebos\\state\\kill_ledger.jsonl records=13071 mi=4.6351 mi_z=442.317 alarm=False artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
       "error": null,
-      "started_at": "2026-05-27T20:30:23.010739-04:00",
-      "finished_at": "2026-05-27T20:30:26.019767-04:00",
-      "duration_sec": 3.009028
+      "started_at": "2026-05-28T00:57:49.019386-04:00",
+      "finished_at": "2026-05-28T00:57:49.869821-04:00",
+      "duration_sec": 0.850435
     },
     {
-      "cycle_id": "c8805055-9dfe-4775-bd4e-273f47513948",
-      "stage": "deep_research_dispatched",
+      "cycle_id": "3db64b60-9a55-41bb-8522-07ac694e089e",
+      "stage": "machine_health_m4",
       "success": true,
       "output_path": null,
-      "output_summary": "row390 [TT5]: Moros cross-pollination: pivot\\erebos_phase0_retrospective_2026-05-27.md",
+      "output_summary": "machine=M4 cpu=4.5% mem=50.8% (16.2/31.86GB) disk=[C:\\ 17.4% (786.9GB free); E:\\ 11.5% (843.4GB free)] uptime=361h",
       "error": null,
-      "started_at": "2026-05-22T01:53:42.868414-04:00",
-      "finished_at": "2026-05-27T20:26:26.706519-04:00",
-      "duration_sec": 498763.84
+      "started_at": "2026-05-28T00:56:47.644498-04:00",
+      "finished_at": "2026-05-28T00:56:49.057922-04:00",
+      "duration_sec": 1.413424
     },
     {
-      "cycle_id": "3cf74f4a-f2c8-4505-aa37-8d652b3c29b2",
+      "cycle_id": "507d5d8e-f94d-4f4f-9145-4bdc84190b93",
+      "stage": "talos_null_tick",
+      "success": true,
+      "output_path": "agents\\talos\\artifacts\\null_20260528T045359.json",
+      "output_summary": "No new content in any stream. Corpus: 24796 examples.",
+      "error": null,
+      "started_at": "2026-05-23T11:50:23.066425-04:00",
+      "finished_at": "2026-05-28T00:53:59.586779-04:00",
+      "duration_sec": 392616.53
+    },
+    {
+      "cycle_id": "3c7a957c-5d48-4654-a7ca-a99f3d639763",
       "stage": "moros_tick_complete",
       "success": true,
-      "output_path": "F:\\Prometheus\\pivot\\feedback_erebos_phase0_retrospective_2026-05-27_2026-05-28.md",
-      "output_summary": "artifact=pivot\\erebos_phase0_retrospective_2026-05-27.md critique=True artifacts=2 errors=0 dr_seeded=True dr_inbox=0",
+      "output_path": "F:\\Prometheus\\pivot\\feedback_reasoning_ladder_v01_addendum_layer_seam_2026-05-2_2026-05-28.md",
+      "output_summary": "artifact=pivot\\reasoning_ladder_v01_addendum_layer_seam_2026-05-27.md critique=True artifacts=2 errors=0 dr_seeded=False dr_inbox=0",
       "error": null,
-      "started_at": "2026-05-27T20:25:25.238230-04:00",
-      "finished_at": "2026-05-27T20:26:22.919273-04:00",
-      "duration_sec": 57.68104
+      "started_at": "2026-05-28T00:53:13.750447-04:00",
+      "finished_at": "2026-05-28T00:53:48.927216-04:00",
+      "duration_sec": 35.17677
     },
     {
-      "cycle_id": "05fda8bf-e00a-41dd-83de-b6fcf291a83c",
+      "cycle_id": "2c58942f-0719-4abe-96d8-5139061a080e",
       "stage": "acheron_tick_complete",
       "success": true,
-      "output_path": "F:\\Prometheus\\charon\\agents\\acheron\\artifacts\\clean_scan_aporia_docs_deep_research_reports_2026-0_20260528T002125Z.md",
-      "output_summary": "file=aporia\\docs\\deep_research_reports\\2026-05-21\\00106_t_65_geometric_multiplicity_for_tensor_eigenvalues.md collisions=0 artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
+      "output_path": "F:\\Prometheus\\charon\\agents\\acheron\\artifacts\\clean_scan_aporia_docs_deep_research_reports_2026-0_20260528T044913Z.md",
+      "output_summary": "file=aporia\\docs\\deep_research_reports\\2026-05-21\\00114_t_76_peps_contraction_complexity_p_hard_exact.md collisions=0 artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
       "error": null,
-      "started_at": "2026-05-27T20:21:24.911833-04:00",
-      "finished_at": "2026-05-27T20:21:25.060836-04:00",
-      "duration_sec": 0.149003
+      "started_at": "2026-05-28T00:49:13.413297-04:00",
+      "finished_at": "2026-05-28T00:49:13.664784-04:00",
+      "duration_sec": 0.251487
     },
     {
-      "cycle_id": "8a12c4d9-28ec-4cc6-9fc3-64ff0de16d23",
+      "cycle_id": "ecdf742c-46fe-4e5b-a30a-edcc290e4d75",
       "stage": "lethe_tick_complete",
       "success": true,
-      "output_path": "F:\\Prometheus\\charon\\agents\\lethe\\artifacts\\null_probe_sensitivity_conjecture_20260528T001724Z.md",
-      "output_summary": "conjecture=sensitivity_conjecture emit_rate=0.25 candidate=False artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
+      "output_path": "F:\\Prometheus\\charon\\agents\\lethe\\artifacts\\null_probe_lehmer_conjecture_mahler_20260528T044513Z.md",
+      "output_summary": "conjecture=lehmer_conjecture_mahler emit_rate=0.0 candidate=False artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
       "error": null,
-      "started_at": "2026-05-27T20:17:11.789209-04:00",
-      "finished_at": "2026-05-27T20:17:24.828851-04:00",
-      "duration_sec": 13.039642
+      "started_at": "2026-05-28T00:44:59.989046-04:00",
+      "finished_at": "2026-05-28T00:45:13.325225-04:00",
+      "duration_sec": 13.336179
     },
     {
       "cycle_id": "def88492-225b-4f38-bfc8-bfb3b6e39e79",
@@ -1273,173 +1087,162 @@
       "output_summary": "SI: approval_requested adaptation=SPAWN_SIBLING_SCOUR reason=",
       "error": null,
       "started_at": "2026-05-25T07:41:31.022397-04:00",
-      "finished_at": "2026-05-27T20:13:52.114338-04:00",
-      "duration_sec": 217941.1
+      "finished_at": "2026-05-28T00:44:32.411241-04:00",
+      "duration_sec": 234181.39
     },
     {
       "cycle_id": "def88492-225b-4f38-bfc8-bfb3b6e39e79",
       "stage": "polyhymnia_scour_prometheus_self_run",
       "success": true,
-      "output_path": "agents\\polyhymnia\\artifacts\\tick_20260528T001333.json",
-      "output_summary": "Scour prometheus_self: 18 candidates \u2192 5 new + 13 merged + 0 lineage edges. Total tensor: 2301 cells lifetime.",
+      "output_path": null,
+      "output_summary": "Scour prometheus_self: 0 candidates this tick.",
       "error": null,
       "started_at": "2026-05-25T07:41:31.022397-04:00",
-      "finished_at": "2026-05-27T20:13:52.074339-04:00",
-      "duration_sec": 217941.05
+      "finished_at": "2026-05-28T00:44:32.267566-04:00",
+      "duration_sec": 234181.25
     },
     {
-      "cycle_id": "ff1de2c7-1336-453a-b70c-aec25fb4e540",
+      "cycle_id": "2b2f9b28-34ba-4e7e-bbc1-f07521d84221",
+      "stage": "paper_scan_cycle",
+      "success": true,
+      "output_path": null,
+      "output_summary": "13 queries, 185 papers retrieved, 0 new after dedup, 51s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
+      "error": null,
+      "started_at": "2026-05-28T00:43:19.600713-04:00",
+      "finished_at": "2026-05-28T00:44:10.934221-04:00",
+      "duration_sec": 51.333508
+    },
+    {
+      "cycle_id": "e95b00a2-7d77-4ecc-81c3-e6729fa377bd",
       "stage": "stygian_tick_complete",
       "success": true,
-      "output_path": "F:\\Prometheus\\charon\\agents\\stygian\\artifacts\\attack_plan_BL-C-007_20260528T001311Z.md",
-      "output_summary": "problem=BL-C-007 processed=1 artifacts=1 errors=0 dr_inbox=0 dr_seeded=False dr_quota_remaining=3",
+      "output_path": "F:\\Prometheus\\charon\\agents\\stygian\\artifacts\\attack_plan_HECATE-stygian_hecate_meta_test_not_yet_implemented_20260528T044059Z.md",
+      "output_summary": "problem=HECATE-stygian_hecate_meta_test_not_yet_implemented processed=1 artifacts=1 errors=0 dr_inbox=0 dr_seeded=False dr_quota_remaining=3",
       "error": null,
-      "started_at": "2026-05-27T20:13:11.503106-04:00",
-      "finished_at": "2026-05-27T20:13:11.643699-04:00",
-      "duration_sec": 0.140593
+      "started_at": "2026-05-28T00:40:59.902907-04:00",
+      "finished_at": "2026-05-28T00:40:59.914905-04:00",
+      "duration_sec": 0.011998
     },
     {
       "cycle_id": "3c21a6d7-5d72-46b4-b7e5-deee064046ab",
       "stage": "atalanta_self_audit_null",
       "success": false,
       "output_path": null,
-      "output_summary": "ALARM: 226 consecutive null ticks. Apollo upstream likely dead or thresholds too high.",
+      "output_summary": "ALARM: 235 consecutive null ticks. Apollo upstream likely dead or thresholds too high.",
       "error": "anti_silence_threshold_exceeded",
       "started_at": "2026-05-23T04:39:46.648725-04:00",
-      "finished_at": "2026-05-27T20:10:35.365250-04:00",
-      "duration_sec": 401448.72
+      "finished_at": "2026-05-28T00:40:36.381344-04:00",
+      "duration_sec": 417649.72
     },
     {
       "cycle_id": "3c21a6d7-5d72-46b4-b7e5-deee064046ab",
       "stage": "atalanta_upstream_not_found",
       "success": false,
-      "output_path": "agents\\atalanta\\artifacts\\upstream_not_found_20260528T001035.json",
+      "output_path": "agents\\atalanta\\artifacts\\upstream_not_found_20260528T044036.json",
       "output_summary": "Apollo runs root not found; checked: F:\\Prometheus\\apollo\\runs, F:\\Prometheus\\apollo\\runs_v2, F:\\Prometheus\\apollo\\organism_runs",
       "error": "apollo_root_not_configured",
       "started_at": "2026-05-23T04:39:46.648725-04:00",
-      "finished_at": "2026-05-27T20:10:35.343252-04:00",
-      "duration_sec": 401448.7
+      "finished_at": "2026-05-28T00:40:36.360421-04:00",
+      "duration_sec": 417649.72
     },
     {
       "cycle_id": "7b8d4473-8f49-4d8e-a87d-c0f4660d8b70",
       "stage": "pheme_self_audit_null",
       "success": false,
       "output_path": null,
-      "output_summary": "ALARM: 226 consecutive null ticks. Eval upstream likely dead.",
+      "output_summary": "ALARM: 235 consecutive null ticks. Eval upstream likely dead.",
       "error": "anti_silence_threshold_exceeded",
       "started_at": "2026-05-23T04:39:46.648725-04:00",
-      "finished_at": "2026-05-27T20:10:34.390762-04:00",
-      "duration_sec": 401447.75
+      "finished_at": "2026-05-28T00:40:35.543866-04:00",
+      "duration_sec": 417648.9
     },
     {
       "cycle_id": "7b8d4473-8f49-4d8e-a87d-c0f4660d8b70",
       "stage": "pheme_upstream_not_found",
       "success": false,
-      "output_path": "agents\\pheme\\artifacts\\upstream_not_found_20260528T001034.json",
+      "output_path": "agents\\pheme\\artifacts\\upstream_not_found_20260528T044035.json",
       "output_summary": "Ergon eval root not found; checked: F:\\Prometheus\\ergon\\learner\\evals, F:\\Prometheus\\ergon\\evals, F:\\Prometheus\\ergon\\diagnostic_c\\eval_runs",
       "error": "eval_root_not_configured",
       "started_at": "2026-05-23T04:39:46.648725-04:00",
-      "finished_at": "2026-05-27T20:10:34.367764-04:00",
-      "duration_sec": 401447.72
+      "finished_at": "2026-05-28T00:40:35.522868-04:00",
+      "duration_sec": 417648.88
     },
     {
-      "cycle_id": "f227a7d1-9544-4792-9f18-03d74af1f6a1",
+      "cycle_id": "20ec7ae5-7b0b-4653-a062-6ad9739f932e",
+      "stage": "hypatia_null_tick",
+      "success": true,
+      "output_path": "agents\\hypatia\\artifacts\\null_20260528T044031.json",
+      "output_summary": "Within 24h cooldown; next pick at 2026-05-28T08:40:30.671046+00:00",
+      "error": null,
+      "started_at": "2026-05-23T04:39:46.648725-04:00",
+      "finished_at": "2026-05-28T00:40:31.146950-04:00",
+      "duration_sec": 417644.5
+    },
+    {
+      "cycle_id": "7048ad3f-420a-439f-aa6d-be8604e22554",
       "stage": "erebos_tick_complete",
       "success": true,
       "output_path": null,
-      "output_summary": "plugin=g09_projection_collapse composed=EREBOS-G09-collapse_to-permutation_n-from-EREBOS-G02-BL-C-001-x-salem_vs_non_salem stygian_recent=256 pollux_recent=171 enqueued=True",
+      "output_summary": "plugin=g15_cross_gen_mi composed=EREBOS-G15-latent_violated-cgkps_4 stygian_recent=264 pollux_recent=179 enqueued=False",
       "error": null,
-      "started_at": "2026-05-27T20:09:11.366692-04:00",
-      "finished_at": "2026-05-27T20:09:11.412692-04:00",
-      "duration_sec": 0.046
+      "started_at": "2026-05-28T00:36:59.660938-04:00",
+      "finished_at": "2026-05-28T00:36:59.710949-04:00",
+      "duration_sec": 0.050011
     },
     {
-      "cycle_id": "0dab65f6-aa4c-430f-81ad-55644f762c4f",
+      "cycle_id": "0b914383-2aaa-40f1-b530-7eb446771d0c",
       "stage": "pollux_tick_complete",
       "success": true,
       "output_path": null,
       "output_summary": "pair=narrow_band_1.10_1.20_vs_1.30_1.50 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.6922",
       "error": null,
-      "started_at": "2026-05-27T20:05:11.075973-04:00",
-      "finished_at": "2026-05-27T20:05:11.268969-04:00",
-      "duration_sec": 0.192996
+      "started_at": "2026-05-28T00:32:59.379602-04:00",
+      "finished_at": "2026-05-28T00:32:59.565600-04:00",
+      "duration_sec": 0.185998
     },
     {
-      "cycle_id": "c79e0229-f79c-4bfc-9501-9a7ddb12055f",
+      "cycle_id": "b4b28849-b048-42e6-b866-55cc42622440",
       "stage": "nephele_tick_complete",
       "success": true,
       "output_path": null,
-      "output_summary": "skip (clio_active_0.43h_ago)",
+      "output_summary": "skip (clio_active_0.76h_ago)",
       "error": null,
-      "started_at": "2026-05-27T20:01:10.902571-04:00",
-      "finished_at": "2026-05-27T20:01:10.903572-04:00",
+      "started_at": "2026-05-28T00:28:59.184810-04:00",
+      "finished_at": "2026-05-28T00:28:59.185811-04:00",
       "duration_sec": 0.001001
     },
     {
-      "cycle_id": "5564ed4c-2b5b-4d1f-985e-7b7b3fd9543f",
+      "cycle_id": "28dca399-f4db-4e9d-83b0-29317ee80a79",
       "stage": "hecate_tick_complete",
       "success": true,
-      "output_path": "F:\\Prometheus\\charon\\agents\\hecate\\artifacts\\gradient_archaeology_20260527T235710Z.md",
-      "output_summary": "ledger=theseus\\corpus,charon\\agents\\stygian\\state\\kill_ledger.jsonl,charon\\agents\\pollux\\state\\kill_ledger.jsonl,charon\\agents\\erebos\\state\\kill_ledger.jsonl records=13044 mi=4.6349 mi_z=402.951 alarm=False artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
+      "output_path": "F:\\Prometheus\\charon\\agents\\hecate\\artifacts\\gradient_archaeology_20260528T042459Z.md",
+      "output_summary": "ledger=theseus\\corpus,charon\\agents\\stygian\\state\\kill_ledger.jsonl,charon\\agents\\pollux\\state\\kill_ledger.jsonl,charon\\agents\\erebos\\state\\kill_ledger.jsonl records=13068 mi=4.6349 mi_z=430.887 alarm=False artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
       "error": null,
-      "started_at": "2026-05-27T19:57:10.018353-04:00",
-      "finished_at": "2026-05-27T19:57:10.808978-04:00",
-      "duration_sec": 0.790625
+      "started_at": "2026-05-28T00:24:58.351894-04:00",
+      "finished_at": "2026-05-28T00:24:59.103395-04:00",
+      "duration_sec": 0.751501
     },
     {
-      "cycle_id": "42752e84-7edd-41ee-ad50-18fd0060887d",
-      "stage": "machine_health_m4",
-      "success": true,
-      "output_path": null,
-      "output_summary": "machine=M4 cpu=2.2% mem=49.6% (15.82/31.86GB) disk=[C:\\ 17.3% (787.7GB free); E:\\ 11.5% (843.4GB free)] uptime=356h",
-      "error": null,
-      "started_at": "2026-05-27T19:56:47.671379-04:00",
-      "finished_at": "2026-05-27T19:56:49.077390-04:00",
-      "duration_sec": 1.406011
-    },
-    {
-      "cycle_id": "507d5d8e-f94d-4f4f-9145-4bdc84190b93",
-      "stage": "talos_null_tick",
-      "success": true,
-      "output_path": "agents\\talos\\artifacts\\null_20260527T235356.json",
-      "output_summary": "No new content in any stream. Corpus: 24796 examples.",
-      "error": null,
-      "started_at": "2026-05-23T11:50:23.066425-04:00",
-      "finished_at": "2026-05-27T19:53:57.057341-04:00",
-      "duration_sec": 374614.0
-    },
-    {
-      "cycle_id": "b173d3cd-a14e-4fc3-97fd-1c8c872f2b98",
+      "cycle_id": "b79965a9-b5d4-474f-90c6-c2be399c22c1",
       "stage": "moros_tick_complete",
       "success": true,
-      "output_path": "F:\\Prometheus\\pivot\\feedback_erebos_substrate_finding_iter18_g17_salem_phase_tr_2026-05-27.md",
-      "output_summary": "artifact=pivot\\erebos_substrate_finding_iter18_g17_salem_phase_transition_2026-05-26.md critique=True artifacts=2 errors=0 dr_seeded=False dr_inbox=0",
+      "output_path": "F:\\Prometheus\\pivot\\feedback_erebos_v3_roadmap_v2_layer_seam_2026-05-27_2026-05-28.md",
+      "output_summary": "artifact=pivot\\erebos_v3_roadmap_v2_layer_seam_2026-05-27.md critique=True artifacts=2 errors=0 dr_seeded=False dr_inbox=0",
       "error": null,
-      "started_at": "2026-05-27T19:52:39.546284-04:00",
-      "finished_at": "2026-05-27T19:53:09.931332-04:00",
-      "duration_sec": 30.385048
+      "started_at": "2026-05-28T00:19:21.996838-04:00",
+      "finished_at": "2026-05-28T00:20:58.265300-04:00",
+      "duration_sec": 96.26846
     },
     {
-      "cycle_id": "57c36c7a-d005-4556-9e72-b9cd3250f0f8",
+      "cycle_id": "0a74f516-ab8c-4e84-a4eb-f90f242d4d4c",
       "stage": "acheron_tick_complete",
       "success": true,
-      "output_path": "F:\\Prometheus\\charon\\agents\\acheron\\artifacts\\clean_scan_aporia_docs_deep_research_reports_2026-0_20260527T234839Z.md",
-      "output_summary": "file=aporia\\docs\\deep_research_reports\\2026-05-21\\00105_t_64_number_of_real_eigenvalues_of_symmetric_tensors_cartwri.md collisions=0 artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
+      "output_path": "F:\\Prometheus\\charon\\agents\\acheron\\artifacts\\clean_scan_aporia_docs_deep_research_reports_2026-0_20260528T041521Z.md",
+      "output_summary": "file=aporia\\docs\\deep_research_reports\\2026-05-21\\00113_t_75_area_law_conditions_for_quantum_systems.md collisions=0 artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
       "error": null,
-      "started_at": "2026-05-27T19:48:39.310068-04:00",
-      "finished_at": "2026-05-27T19:48:39.450103-04:00",
-      "duration_sec": 0.140035
-    },
-    {
-      "cycle_id": "7657cd67-f0cf-4e25-9faa-4a2b52db7487",
-      "stage": "lethe_tick_complete",
-      "success": true,
-      "output_path": "F:\\Prometheus\\charon\\agents\\lethe\\artifacts\\null_probe_saxl_conjecture_20260527T234439Z.md",
-      "output_summary": "conjecture=saxl_conjecture emit_rate=0.0 candidate=False artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
-      "error": null,
-      "started_at": "2026-05-27T19:44:31.394763-04:00",
-      "finished_at": "2026-05-27T19:44:39.219219-04:00",
-      "duration_sec": 7.824456
+      "started_at": "2026-05-28T00:15:21.663796-04:00",
+      "finished_at": "2026-05-28T00:15:21.805875-04:00",
+      "duration_sec": 0.142079
     },
     {
       "cycle_id": "def88492-225b-4f38-bfc8-bfb3b6e39e79",
@@ -1449,37 +1252,207 @@
       "output_summary": "SI: approval_requested adaptation=SPAWN_SIBLING_SCOUR reason=",
       "error": null,
       "started_at": "2026-05-25T07:41:31.022397-04:00",
-      "finished_at": "2026-05-27T19:43:33.867658-04:00",
-      "duration_sec": 216122.84
+      "finished_at": "2026-05-28T00:14:28.189310-04:00",
+      "duration_sec": 232377.17
+    },
+    {
+      "cycle_id": "def88492-225b-4f38-bfc8-bfb3b6e39e79",
+      "stage": "polyhymnia_scour_prometheus_self_run",
+      "success": true,
+      "output_path": null,
+      "output_summary": "Scour prometheus_self: 0 candidates this tick.",
+      "error": null,
+      "started_at": "2026-05-25T07:41:31.022397-04:00",
+      "finished_at": "2026-05-28T00:14:27.745979-04:00",
+      "duration_sec": 232376.72
+    },
+    {
+      "cycle_id": "cf9eb7a6-506a-4c28-a07c-479a215807d5",
+      "stage": "lethe_tick_complete",
+      "success": true,
+      "output_path": "F:\\Prometheus\\charon\\agents\\lethe\\artifacts\\null_probe_polynomial_hierarchy_collapse_20260528T041121Z.md",
+      "output_summary": "conjecture=polynomial_hierarchy_collapse emit_rate=0.0 candidate=False artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
+      "error": null,
+      "started_at": "2026-05-28T00:11:03.309628-04:00",
+      "finished_at": "2026-05-28T00:11:21.580233-04:00",
+      "duration_sec": 18.270605
+    },
+    {
+      "cycle_id": "3c21a6d7-5d72-46b4-b7e5-deee064046ab",
+      "stage": "atalanta_self_audit_null",
+      "success": false,
+      "output_path": null,
+      "output_summary": "ALARM: 234 consecutive null ticks. Apollo upstream likely dead or thresholds too high.",
+      "error": "anti_silence_threshold_exceeded",
+      "started_at": "2026-05-23T04:39:46.648725-04:00",
+      "finished_at": "2026-05-28T00:10:36.278374-04:00",
+      "duration_sec": 415849.62
+    },
+    {
+      "cycle_id": "3c21a6d7-5d72-46b4-b7e5-deee064046ab",
+      "stage": "atalanta_upstream_not_found",
+      "success": false,
+      "output_path": "agents\\atalanta\\artifacts\\upstream_not_found_20260528T041036.json",
+      "output_summary": "Apollo runs root not found; checked: F:\\Prometheus\\apollo\\runs, F:\\Prometheus\\apollo\\runs_v2, F:\\Prometheus\\apollo\\organism_runs",
+      "error": "apollo_root_not_configured",
+      "started_at": "2026-05-23T04:39:46.648725-04:00",
+      "finished_at": "2026-05-28T00:10:36.258371-04:00",
+      "duration_sec": 415849.62
+    },
+    {
+      "cycle_id": "7b8d4473-8f49-4d8e-a87d-c0f4660d8b70",
+      "stage": "pheme_self_audit_null",
+      "success": false,
+      "output_path": null,
+      "output_summary": "ALARM: 234 consecutive null ticks. Eval upstream likely dead.",
+      "error": "anti_silence_threshold_exceeded",
+      "started_at": "2026-05-23T04:39:46.648725-04:00",
+      "finished_at": "2026-05-28T00:10:35.409922-04:00",
+      "duration_sec": 415848.75
+    },
+    {
+      "cycle_id": "7b8d4473-8f49-4d8e-a87d-c0f4660d8b70",
+      "stage": "pheme_upstream_not_found",
+      "success": false,
+      "output_path": "agents\\pheme\\artifacts\\upstream_not_found_20260528T041035.json",
+      "output_summary": "Ergon eval root not found; checked: F:\\Prometheus\\ergon\\learner\\evals, F:\\Prometheus\\ergon\\evals, F:\\Prometheus\\ergon\\diagnostic_c\\eval_runs",
+      "error": "eval_root_not_configured",
+      "started_at": "2026-05-23T04:39:46.648725-04:00",
+      "finished_at": "2026-05-28T00:10:35.286942-04:00",
+      "duration_sec": 415848.62
+    },
+    {
+      "cycle_id": "1eac7705-cfaf-4837-9e1b-6cc9acf5e8af",
+      "stage": "stygian_tick_complete",
+      "success": true,
+      "output_path": "F:\\Prometheus\\charon\\agents\\stygian\\artifacts\\attack_plan_HECATE-a2_detrended_correlation_not_significant_20260528T040703Z.md",
+      "output_summary": "problem=HECATE-a2_detrended_correlation_not_significant processed=1 artifacts=1 errors=0 dr_inbox=0 dr_seeded=False dr_quota_remaining=3",
+      "error": null,
+      "started_at": "2026-05-28T00:07:03.210013-04:00",
+      "finished_at": "2026-05-28T00:07:03.222040-04:00",
+      "duration_sec": 0.012027
+    },
+    {
+      "cycle_id": "85d40981-3460-4494-bc3a-5e936075e497",
+      "stage": "erebos_tick_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "plugin=g03_failure_neighborhood composed=EREBOS-G03-weaken_arith_equality_to_arith_strict_inequality-stygian_1988aeaf906a stygian_recent=263 pollux_recent=178 enqueued=False",
+      "error": null,
+      "started_at": "2026-05-28T00:03:03.068469-04:00",
+      "finished_at": "2026-05-28T00:03:03.122468-04:00",
+      "duration_sec": 0.053999
+    },
+    {
+      "cycle_id": "9daea9dd-7006-4fd1-b70d-67ca3ea55283",
+      "stage": "pollux_tick_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "pair=even_deg_vs_odd_deg kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0817",
+      "error": null,
+      "started_at": "2026-05-27T23:59:02.602728-04:00",
+      "finished_at": "2026-05-27T23:59:02.973155-04:00",
+      "duration_sec": 0.370427
+    },
+    {
+      "cycle_id": "0fc0a612-47bf-4fde-8783-e316f0f3a3e0",
+      "stage": "machine_health_m4",
+      "success": true,
+      "output_path": null,
+      "output_summary": "machine=M4 cpu=3.1% mem=51.1% (16.29/31.86GB) disk=[C:\\ 17.4% (786.9GB free); E:\\ 11.5% (843.4GB free)] uptime=360h",
+      "error": null,
+      "started_at": "2026-05-27T23:56:47.662707-04:00",
+      "finished_at": "2026-05-27T23:56:49.061305-04:00",
+      "duration_sec": 1.398598
+    },
+    {
+      "cycle_id": "2140b8cb-83b5-45ee-8d6b-1bf7b191a5b9",
+      "stage": "nephele_tick_complete",
+      "success": true,
+      "output_path": null,
+      "output_summary": "skip (clio_active_0.20h_ago)",
+      "error": null,
+      "started_at": "2026-05-27T23:55:02.409582-04:00",
+      "finished_at": "2026-05-27T23:55:02.410584-04:00",
+      "duration_sec": 0.001002
+    },
+    {
+      "cycle_id": "507d5d8e-f94d-4f4f-9145-4bdc84190b93",
+      "stage": "talos_null_tick",
+      "success": true,
+      "output_path": "agents\\talos\\artifacts\\null_20260528T035358.json",
+      "output_summary": "No new content in any stream. Corpus: 24796 examples.",
+      "error": null,
+      "started_at": "2026-05-23T11:50:23.066425-04:00",
+      "finished_at": "2026-05-27T23:53:59.148554-04:00",
+      "duration_sec": 389016.1
+    },
+    {
+      "cycle_id": "069a1c2a-6ac3-4e3e-81da-2dd2bcdfe2a1",
+      "stage": "hecate_tick_complete",
+      "success": true,
+      "output_path": "F:\\Prometheus\\charon\\agents\\hecate\\artifacts\\gradient_archaeology_20260528T035102Z.md",
+      "output_summary": "ledger=theseus\\corpus,charon\\agents\\stygian\\state\\kill_ledger.jsonl,charon\\agents\\pollux\\state\\kill_ledger.jsonl,charon\\agents\\erebos\\state\\kill_ledger.jsonl records=13065 mi=4.6346 mi_z=414.434 alarm=False artifacts=1 errors=0 dr_seeded=False dr_inbox=0",
+      "error": null,
+      "started_at": "2026-05-27T23:51:01.468420-04:00",
+      "finished_at": "2026-05-27T23:51:02.226248-04:00",
+      "duration_sec": 0.757828
+    },
+    {
+      "cycle_id": "16d14dbe-db13-4629-a85d-5253e30572d8",
+      "stage": "moros_tick_complete",
+      "success": true,
+      "output_path": "F:\\Prometheus\\pivot\\feedback_erebos_doctrine_v1_2026-05-27_2026-05-28.md",
+      "output_summary": "artifact=pivot\\erebos_doctrine_v1_2026-05-27.md critique=True artifacts=2 errors=0 dr_seeded=False dr_inbox=0",
+      "error": null,
+      "started_at": "2026-05-27T23:45:59.633218-04:00",
+      "finished_at": "2026-05-27T23:47:01.380077-04:00",
+      "duration_sec": 61.74686
+    },
+    {
+      "cycle_id": "def88492-225b-4f38-bfc8-bfb3b6e39e79",
+      "stage": "polyhymnia_self_improvement",
+      "success": true,
+      "output_path": null,
+      "output_summary": "SI: approval_requested adaptation=SPAWN_SIBLING_SCOUR reason=",
+      "error": null,
+      "started_at": "2026-05-25T07:41:31.022397-04:00",
+      "finished_at": "2026-05-27T23:44:23.497319-04:00",
+      "duration_sec": 230572.47
+    },
+    {
+      "cycle_id": "def88492-225b-4f38-bfc8-bfb3b6e39e79",
+      "stage": "polyhymnia_scour_prometheus_self_run",
+      "success": true,
+      "output_path": null,
+      "output_summary": "Scour prometheus_self: 0 candidates this tick.",
+      "error": null,
+      "started_at": "2026-05-25T07:41:31.022397-04:00",
+      "finished_at": "2026-05-27T23:44:23.455319-04:00",
+      "duration_sec": 230572.44
+    },
+    {
+      "cycle_id": "ca6506b5-5a00-4c90-8fb0-72f7d7674c48",
+      "stage": "paper_scan_cycle",
+      "success": true,
+      "output_path": null,
+      "output_summary": "13 queries, 185 papers retrieved, 5 new after dedup, 62s duration. Sources: arxiv. Errors: 0. Discoveries emitted: 0. Triggered by: schedule.",
+      "error": null,
+      "started_at": "2026-05-27T23:42:17.095107-04:00",
+      "finished_at": "2026-05-27T23:43:19.650092-04:00",
+      "duration_sec": 62.554985
     }
   ],
   "deep_research": {
-    "reports": [
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "row391 [TT5]: Moros cross-pollination: pivot\\erebos_finding_reclassification_2026-05-27.md",
-        "output_path": null,
-        "finished_at": "2026-05-27T20:59:49.896150-04:00",
-        "cycle_id": "c8805055-9dfe-4775-bd4e-273f47513948",
-        "success": true
-      },
-      {
-        "stage": "deep_research_dispatched",
-        "summary": "row390 [TT5]: Moros cross-pollination: pivot\\erebos_phase0_retrospective_2026-05-27.md",
-        "output_path": null,
-        "finished_at": "2026-05-27T20:26:26.706519-04:00",
-        "cycle_id": "c8805055-9dfe-4775-bd4e-273f47513948",
-        "success": true
-      }
-    ],
+    "reports": [],
     "report_count_24h": 0,
-    "dispatch_count_24h": 2,
+    "dispatch_count_24h": 0,
     "budget": {
       "agent": "Pythia",
-      "used": 2,
+      "used": 3,
       "budget": "compute-based (AI_Pro, 5h window)",
       "remaining": "unknown (compute-based; no quota event observed)",
-      "as_of": "2026-05-28T01:15:06.369639+00:00"
+      "as_of": "2026-05-28T05:15:02.321219+00:00"
     }
   }
 }
