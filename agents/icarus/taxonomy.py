@@ -184,6 +184,11 @@ def classify_deterministic_spine(
             failure_class = "tdd_vacuous"
             failure_subclass = "zero_tests_collected"
             detected_by = "tdd"
+        elif (tdd_result or {}).get("goodhart_flag"):
+            # Passed visible tests but FAILED the blind holdout oracle.
+            failure_class = "metric_shaped"
+            failure_subclass = "test_passes_by_construction"
+            detected_by = "holdout"
         elif not tdd_passed:
             failure_class = "tdd_failed"
             failure_subclass = "assertion_failed"

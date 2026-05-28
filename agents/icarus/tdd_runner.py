@@ -54,6 +54,8 @@ def run_all_tests(
         "tier_falsification": _run_pytest(tier_tests, source_dir, cycle_n, "tier_falsification"),
         "generated": _run_pytest(generated_tests, source_dir, cycle_n, "generated"),
         "frontier_supplied": _run_pytest(frontier_tests, source_dir, cycle_n, "frontier_supplied"),
+        # Q9: blind holdout oracle -- frozen, never seen by the Generator
+        "holdout": _run_holdout(source_dir, tier_target),
     }
 
     total_passed = sum(r["passed"] for r in results.values())
@@ -63,6 +65,11 @@ def run_all_tests(
     # A vacuous "0 passed, 0 failed" is NOT a real pass. Require at least one
     # test to actually have run AND no failures.
     all_passed = (total_passed > 0 and total_failed == 0 and total_errors == 0)
+
+    # Holdout failures are the blind-oracle signal -- track separately so the
+    # training object can distinguish "passed visible, failed blind" (Goodhart).
+    holdout = results["holdout"]
+    holdout_clean = (holdout["failed"] == 0 and holdout["errors"] == 0)
 
     # Lower-tier regression check (spec v0.2 #14)
     regression_clean = _check_lower_tier_regression(
@@ -76,6 +83,7 @@ def run_all_tests(
         "tier_target": tier_target,
         "all_passed": all_passed,
         "regression_clean": regression_clean,
+        "holdout_clean": holdout_clean,
         "per_source": results,
         "ts": datetime.now(timezone.utc).isoformat(),
     }
@@ -86,10 +94,14 @@ def run_all_tests(
         print(f"[tdd] report append failed: {e}", file=sys.stderr)
 
     return {
-        "all_passed": all_passed and regression_clean,
+        # Holdout is a HARD gate: a cycle that fails the blind oracle has not
+        # actually reached the tier, no matter what its visible tests say.
+        "all_passed": all_passed and regression_clean and holdout_clean,
         "per_source": results,
         "report_path": str(report_path),
         "regression_clean": regression_clean,
+        "holdout_clean": holdout_clean,
+        "goodhart_flag": (all_passed and regression_clean and not holdout_clean),
     }
 
 
@@ -105,6 +117,45 @@ def _empty_result(report_path: Path, reason: str) -> dict:
         "regression_clean": True,
         "note": reason,
     }
+
+
+_HOLDOUT_DIR = Path(r"D:\Prometheus\agents\icarus\holdout")
+
+# Which holdout suites apply at each tier target (cumulative: higher tiers
+# also run lower-tier holdouts as regression).
+_HOLDOUT_BY_TIER = {
+    "R0": ["test_holdout_R1.py"],   # R0 has no dedicated holdout; R1 covers basics
+    "R1": ["test_holdout_R1.py"],
+    "R2": ["test_holdout_R1.py", "test_holdout_R2.py"],
+    "R3": ["test_holdout_R1.py", "test_holdout_R2.py"],
+}
+
+
+def _run_holdout(source_dir: Path, tier_target: str) -> dict:
+    """Q9: run the BLIND holdout oracle against the candidate. The holdout
+    tests live in a frozen dir outside any cycle; they locate the candidate
+    via ICARUS_CANDIDATE_DIR. Tier-matched + cumulative."""
+    import os
+    suites = _HOLDOUT_BY_TIER.get(tier_target, ["test_holdout_R1.py"])
+    files = [_HOLDOUT_DIR / s for s in suites if (_HOLDOUT_DIR / s).exists()]
+    if not files:
+        return {"passed": 0, "failed": 0, "errors": 0, "skipped": 0, "note": "no_holdout"}
+
+    args = ["python", "-m", "pytest", "-q", "--tb=no", "--no-header",
+            "--import-mode=importlib"]
+    args.extend(str(p) for p in files)
+    env = dict(os.environ)
+    env["ICARUS_CANDIDATE_DIR"] = str(source_dir)
+    try:
+        proc = subprocess.run(
+            args, capture_output=True, text=True, timeout=120,
+            cwd=str(_HOLDOUT_DIR), env=env,
+        )
+        return _parse_pytest_output(proc.stdout + proc.stderr)
+    except subprocess.TimeoutExpired:
+        return {"passed": 0, "failed": 0, "errors": len(files), "skipped": 0, "note": "holdout_timeout"}
+    except Exception as e:
+        return {"passed": 0, "failed": 0, "errors": len(files), "skipped": 0, "note": f"holdout_error: {e}"}
 
 
 def _run_pytest(test_files: list[Path], source_dir: Path, cycle_n: int,

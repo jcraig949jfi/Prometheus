@@ -58,6 +58,7 @@ import patcher
 import tdd_runner
 import taxonomy
 import debt_ledger
+import ablation
 from lenses._base import CycleContext
 from lenses._panel import run_lens_panel
 
@@ -286,6 +287,21 @@ def run_cycle(
     skeptic_dict = ctx.skeptic_report.to_dict() if ctx.skeptic_report else None
     integ_extra = ctx.integrator_report.extra if ctx.integrator_report else {}
 
+    # Q12 ablation: oracle-verified capability check (candidate vs parent on
+    # the blind holdout). This OVERRIDES the LLM Integrator's self-reported
+    # improvement_kind with a non-gameable verdict.
+    ablation_result = None
+    if apply_result.get("applied"):
+        try:
+            ablation_result = ablation.check_decorative(
+                candidate_dir=new_cycle_dir / "code",
+                parent_dir=cycle_path(last_stable_cycle_n()) / "code",
+                tier_target=tier_target,
+            )
+            _append_cycle_log(n, "ablation", ablation_result)
+        except Exception as e:
+            log.warning(f"ablation failed: {e}")
+
     # Build the typed training object (the reusable artifact every cycle emits)
     training_obj = taxonomy.build_training_object(
         cycle_n=n,
@@ -299,6 +315,10 @@ def run_cycle(
         integrator_report=integ_extra,
         load_bearing_lens=load_bearing,
     )
+    # Override improvement_kind with the oracle-verified ablation verdict
+    if ablation_result is not None:
+        training_obj.improvement_kind = ablation_result["improvement_kind"]
+        training_obj.improvement_rationale = ablation_result["detail"]
     taxonomy.write_training_object(training_obj, new_cycle_dir)
 
     # Debt accounting: record new debts when promoting despite a concern;
