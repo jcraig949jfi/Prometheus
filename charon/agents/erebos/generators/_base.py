@@ -61,6 +61,13 @@ class ComposedClaim:
     composition_payload: dict = field(default_factory=dict)
     extras: dict = field(default_factory=dict)
 
+    # v3 Phase 0 ITER-25: optional machine-evaluable substrate alongside
+    # claim text. M3 -> M4 representation lift on the Reasoning Ladder.
+    # See charon/agents/erebos/generators/_predicate_handles.py
+    # Type kept as Any to avoid a circular import; PredicateHandle protocol
+    # is structurally enforced via duck-typing at consumer sites.
+    predicate_handle: Optional[Any] = None
+
 
 class GeneratorPlugin(Protocol):
     """Plugin contract. Implementations live in g<NN>_<name>.py."""
