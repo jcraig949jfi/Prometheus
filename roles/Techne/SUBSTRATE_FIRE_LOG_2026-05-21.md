@@ -10275,6 +10275,44 @@ this translates to a useful Learner is the next chapter.
 98.6% kill rate. 496.4M records, 283.3M kills, 2351 promoted,
 2671 templates, 0 verified findings. **150-fire milestone.***
 
+---
+
+## Fire #151 — 2026-05-28 ~08:54Z
+
+**2.77M records / 24 min / 0 templates / 0 promoted. Mix
+c2/g5/h1/h4/q1. q1 (NEW) contributed 2 mod-p concentration kills.**
+
+### Per-gen attribution
+
+    gid  records   kill_rate
+    h1   811,110   93.0%  old (self-play hunter)
+    g5   804,631    7.8%  old
+    h4   730,870   39.0%  old (bridge extension)
+    c2   421,563   38.2%  old (claim mutation)
+    q1        45    4.4%  NEW (modular_varying_p, 2 mod-p kills)
+
+### Batch result
+
+- batch_id: `batch-20260528T085439Z-09bd4a`
+- 2,768,219 records / 1,263,510 kills / 1,504,709 confirms / 0 errors
+- 0 promoted (7th consecutive)
+- batch_end ✓
+
+Lifetime: 146 batches journaled / 499.2M records / 284.6M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- Approaching the **500M lifetime records** milestone (now 499.2M)
+- q1 contributed structured mod-p concentration kills with
+  `q1_modular_structure_changes_at_p<N>` patterns
+
+---
+
+*Fire #151 throttled = 2.77M records / 0 promoted / 0 templates.
+499.2M records, 284.6M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
