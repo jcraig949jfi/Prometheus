@@ -11410,6 +11410,58 @@ Lifetime: 174 batches journaled / **553.4M records** / 311.0M kills /
 553.4M records, 311.0M kills, 2351 promoted, 2671 templates,
 0 verified findings. **550M lifetime milestone.***
 
+---
+
+## Fire #180 — 2026-05-28 ~20:52Z — **180-FIRE MILESTONE / 99.86% KILL RATE**
+
+**546K records / 24 min / 0 templates / 0 promoted. Mix
+c2/h2/o1/s1/w1 — h2 99.96% kill + 2 new gens contributing
+78 structured kills.**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    h2   545,760  545,538  old (99.96% kill, post-cap)
+    s1       375       18  NEW (triangle inequality squared)
+    w1       226       60  NEW (closure violations)
+    o1        22        0  NEW (perturbations, UNVERIFIED)
+    c2        14        6  old (small)
+
+### Structured kills from new gens (78 total)
+
+- `w1_closure_violated_by_*` × 60
+- `s1_triangle_inequality_broken_on_triple` × 18
+
+### Batch result
+
+- batch_id: `batch-20260528T205200Z-948a2a`
+- 546,397 records / 545,622 kills / 775 confirms / 0 errors
+- 0 promoted (36th consecutive)
+- batch_end ✓
+
+Lifetime: 175 batches journaled / 554.0M records / 311.5M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### 180-fire arc summary
+
+Session reached 180 fires. Substrate state:
+- 55 active gens (was 35 at session start)
+- ~250 distinct kill_patterns (was ~10-15)
+- 17 mechanism classes (was 5)
+- 554M records, 311M kills lifetime
+- **0 verified mathematical findings** (anchored honest)
+- **36 consecutive 0-promoted fires** since training_weight fix
+
+The substrate produces high kill-rate fires (99.86% this one)
+with structured Learner-grade kill_pattern attribution. Whether
+this becomes useful Learner training data is the open question.
+
+---
+
+*Fire #180 throttled = 546K records / 0 promoted / 0 templates.
+554.0M records, 311.5M kills, 2351 promoted, 2671 templates,
+0 verified findings. **180-fire milestone / 99.86% kill rate.***
+
 
 
 
