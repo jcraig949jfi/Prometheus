@@ -10633,6 +10633,44 @@ Lifetime: 154 batches journaled / 514.5M records / 292.6M kills /
 514.5M records, 292.6M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #160 — 2026-05-28 ~12:38Z — **160-FIRE MILESTONE**
+
+**3.10M records / 24 min / 0 templates / 0 promoted. Mix
+c5/d4/f2/f4/o1 — heavy old-gen burn + o1 hand-coded perturbations.**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    f2   927,722  610,984  old (anti-frequency)
+    f4   927,710  610,909  old (anti-frequency)
+    d4   879,200  592,000  old (boundary_crossing, with cap)
+    c5   366,942  241,616  old (specialization)
+    o1        22        0  NEW (conjecture-neighborhood, all UNVERIFIED)
+
+### Batch result
+
+- batch_id: `batch-20260528T123834Z-91afe8`
+- 3,101,596 records / 2,055,509 kills / 1,046,087 confirms / 0 errors
+- 0 promoted (16th consecutive)
+- batch_end ✓
+
+Lifetime: 155 batches journaled / 517.6M records / 294.6M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- f2+f4 lockstep again at 927K records each (anti-frequency twins)
+- 16 consecutive 0-promoted fires
+- 160-fire milestone (Techne fires count)
+
+---
+
+*Fire #160 throttled = 3.10M records / 0 promoted / 0 templates.
+517.6M records, 294.6M kills, 2351 promoted, 2671 templates,
+0 verified findings. **160-fire milestone.***
+
 
 
 
