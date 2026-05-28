@@ -35,6 +35,14 @@ class ClaimKind(str, Enum):
     LITERATURE_MINED = "literature_mined"
     SYMMETRY_TRANSFORM = "symmetry_transform"
     BRIDGE_EXTENSION = "bridge_extension"
+    # Fire #142 (2026-05-27) — 5 new claim shapes to break the
+    # 26-template monoculture ceiling. See
+    # pivot/techne_5gen_plan_2026-05-27.md.
+    TYPED_BRIDGE = "typed_bridge"
+    OBSTRUCTION = "obstruction"
+    MINIMAL_COUNTEREXAMPLE = "minimal_counterexample"
+    VERIFIER_DISAGREEMENT = "verifier_disagreement"
+    CONJECTURE_NEIGHBORHOOD = "conjecture_neighborhood"
     OTHER = "other"
 
 
