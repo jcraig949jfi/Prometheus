@@ -10967,6 +10967,44 @@ Lifetime: 163 batches journaled / 534.8M records / 302.3M kills /
 534.8M records, 302.3M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #169 — 2026-05-28 ~16:20Z
+
+**1.90M records / 24 min / 0 templates / 0 promoted. Mix
+bb1/d3/d4/f3/h4 — bb1 100% kill rate again.**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    f3   522,463  352,934  old (importance_sampling)
+    d4   515,858  405,385  old (with cap, 78.6% kill)
+    d3   512,799  504,579  old (triangulation, 98.4% kill)
+    h4   345,152   60,117  old (bridge_extension)
+    bb1        5        5  NEW (100% false-dichotomy)
+
+### Batch result
+
+- batch_id: `batch-20260528T162028Z-baff89`
+- 1,896,277 records / 1,323,020 kills / 573,257 confirms / 0 errors
+- 0 promoted (25th consecutive)
+- batch_end ✓
+
+Lifetime: 164 batches journaled / 536.7M records / 303.6M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **25 consecutive 0-promoted milestone**
+- bb1 100% kill yet again — every fire that picks bb1
+  reveals false binary dichotomies in the catalog
+
+---
+
+*Fire #169 throttled = 1.90M records / 0 promoted / 0 templates.
+536.7M records, 303.6M kills, 2351 promoted, 2671 templates,
+0 verified findings. **25 consecutive 0-promoted.***
+
 
 
 
