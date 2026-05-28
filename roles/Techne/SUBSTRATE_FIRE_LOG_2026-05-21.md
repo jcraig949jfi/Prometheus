@@ -10897,6 +10897,44 @@ Lifetime: 161 batches journaled / 530.4M records / 300.4M kills /
 530.4M records, 300.4M kills, 2351 promoted, 2671 templates,
 0 verified findings. **300M lifetime kills milestone.***
 
+---
+
+## Fire #167 — 2026-05-28 ~15:31Z — **OLD GENS ONLY**
+
+**2.40M records / 24 min / 0 templates / 0 promoted. Mix
+b1/d1/e2/f1/h4 — all old gens. New gens deep in cooldown.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    f1   1,613,646  472,614  old (monte_carlo random pairs)
+    h4     781,668  158,114  old (bridge_extension)
+    d1       1,807      823  old (kill_neighborhood)
+    b1       1,340        0  INFRA_DIAGNOSTIC
+    e2         424        0  stub (arxiv-mining)
+
+### Batch result
+
+- batch_id: `batch-20260528T153112Z-b50f6a`
+- 2,398,885 records / 631,551 kills / 1,767,334 confirms / 0 errors
+- 0 promoted (23rd consecutive)
+- batch_end ✓
+
+Lifetime: 162 batches journaled / 532.8M records / 301.0M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- All 5 picks are old gens — cooldown deeply suppressed the 20
+  recently-picked new gens for this fire
+- 23 consecutive 0-promoted
+
+---
+
+*Fire #167 throttled = 2.40M records / 0 promoted / 0 templates.
+532.8M records, 301.0M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
