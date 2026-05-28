@@ -10353,6 +10353,48 @@ structured-falsification graveyard now — 250+ named kill_patterns
 501.0M records, 286.0M kills, 2351 promoted, 2671 templates,
 0 verified findings. **500M lifetime milestone.***
 
+---
+
+## Fire #153 — 2026-05-28 ~09:46Z — **248 STRUCTURED KILLS from p1+z1**
+
+**5.45K records / ~10 sec / 0 templates / 0 promoted. Tiny fire
+by volume (small-reservoir gens), but 248 structured kills from
+two new gens.**
+
+### Per-gen attribution
+
+    gid  records  kills  notes
+    b2   3,636    1,264  old (composition_test, small reservoir)
+    b5   1,052       15  old (conservation_law, tiny burn)
+    e2     424        0  old (arxiv-mining stub)
+    p1     138      130  NEW (chain-break: p1_multi_hop_break_at_step_*)
+    z1     200      118  NEW (commute-break: z1_operators_dont_commute_on_*)
+
+### Batch result
+
+- batch_id: `batch-20260528T094635Z-2fd4e0`
+- ~10 seconds wall
+- 5,450 records / 1,527 kills / 3,923 confirms / 0 errors
+- 0 promoted (9th consecutive)
+- batch_end ✓
+
+Lifetime: 148 batches journaled / 501.0M records / 286.0M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 248 structured kills × {chain-break, commute-break} =
+  significant kill_pattern diversity for the Learner training
+- Tiny total volume (5K records) but high signal density —
+  this is the kind of "quality over quantity" the substrate
+  was supposed to produce post-monoculture-break
+
+---
+
+*Fire #153 throttled = 5.45K records / 0 promoted / 0 templates.
+501.0M records, 286.0M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
