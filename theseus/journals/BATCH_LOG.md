@@ -5831,3 +5831,213 @@ Delta: +8
 - **g5** — records=700155, throughput=177879887.1/h, info_density=0.592, diversity=0.769, yield_score=0.0045, dup_rate=0.028, kills=54661, conf=645494, errs=0
 - **h2** — records=326988, throughput=3546486.2/h, info_density=0.658, diversity=0.810, yield_score=0.0039, dup_rate=0.546, kills=326943, conf=1, errs=0
 
+
+## batch-20260528T072644Z-b253f1
+
+- Started: 2026-05-28T07:26:44.401901+00:00
+- Ended:   2026-05-28T07:26:44.561900+00:00
+- Duration: 0.0000 h
+- Requested: l2
+- Active:    l2
+- Records: 4 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **l2** — records=4, throughput=4000000000.0/h, info_density=0.200, diversity=0.927, yield_score=0.0019, dup_rate=0.000, kills=0, conf=0, errs=0
+
+
+## batch-20260528T072645Z-362d38
+
+- Started: 2026-05-28T07:26:45.109398+00:00
+- Ended:   2026-05-28T07:26:45.153397+00:00
+- Duration: 0.0000 h
+- Requested: m2
+- Active:    m2
+- Records: 3 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **m2** — records=3, throughput=3000000000.0/h, info_density=0.200, diversity=0.935, yield_score=0.0019, dup_rate=0.000, kills=0, conf=0, errs=0
+
+
+## batch-20260528T072645Z-1f29b3
+
+- Started: 2026-05-28T07:26:45.966384+00:00
+- Ended:   2026-05-28T07:26:46.014383+00:00
+- Duration: 0.0000 h
+- Requested: p1
+- Active:    p1
+- Records: 4 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **p1** — records=4, throughput=4000000000.0/h, info_density=0.200, diversity=0.934, yield_score=0.0019, dup_rate=0.000, kills=0, conf=0, errs=0
+
+
+## batch-20260528T072646Z-e1953d
+
+- Started: 2026-05-28T07:26:46.675371+00:00
+- Ended:   2026-05-28T07:26:46.717371+00:00
+- Duration: 0.0000 h
+- Requested: q1
+- Active:    q1
+- Records: 3 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **q1** — records=3, throughput=3000000000.0/h, info_density=0.200, diversity=0.841, yield_score=0.0017, dup_rate=0.000, kills=0, conf=0, errs=0
+
+
+## batch-20260528T072647Z-64761b
+
+- Started: 2026-05-28T07:26:47.362360+00:00
+- Ended:   2026-05-28T07:26:47.515358+00:00
+- Duration: 0.0000 h
+- Requested: r1
+- Active:    r1
+- Records: 4 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **r1** — records=4, throughput=900000.0/h, info_density=0.200, diversity=0.881, yield_score=0.0018, dup_rate=0.000, kills=0, conf=0, errs=0
+
+
+## batch-20260528T072648Z-34aa81
+
+- Started: 2026-05-28T07:26:48.059349+00:00
+- Ended:   2026-05-28T07:26:48.207346+00:00
+- Duration: 0.0000 h
+- Requested: s1
+- Active:    s1
+- Records: 4 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **s1** — records=4, throughput=4000000000.0/h, info_density=0.200, diversity=0.726, yield_score=0.0015, dup_rate=0.000, kills=0, conf=0, errs=0
+
+
+## batch-20260528T072648Z-27260d
+
+- Started: 2026-05-28T07:26:48.854334+00:00
+- Ended:   2026-05-28T07:26:48.895343+00:00
+- Duration: 0.0000 h
+- Requested: t1
+- Active:    t1
+- Records: 3 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **t1** — records=3, throughput=3000000000.0/h, info_density=0.200, diversity=0.921, yield_score=0.0019, dup_rate=0.000, kills=0, conf=0, errs=0
+
+
+## batch-20260528T072649Z-40ec3b
+
+- Started: 2026-05-28T07:26:49.443327+00:00
+- Ended:   2026-05-28T07:26:49.592841+00:00
+- Duration: 0.0000 h
+- Requested: u1
+- Active:    u1
+- Records: 3 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **u1** — records=3, throughput=675000.0/h, info_density=0.200, diversity=0.846, yield_score=0.0017, dup_rate=0.000, kills=0, conf=0, errs=0
+
+
+## batch-20260528T072650Z-e3d00a
+
+- Started: 2026-05-28T07:26:50.151832+00:00
+- Ended:   2026-05-28T07:26:50.193853+00:00
+- Duration: 0.0000 h
+- Requested: v1
+- Active:    v1
+- Records: 3 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **v1** — records=3, throughput=675000.0/h, info_density=0.200, diversity=0.882, yield_score=0.0018, dup_rate=0.000, kills=0, conf=0, errs=0
+
+
+## batch-20260528T072650Z-a728db
+
+- Started: 2026-05-28T07:26:50.840843+00:00
+- Ended:   2026-05-28T07:26:50.882843+00:00
+- Duration: 0.0000 h
+- Requested: w1
+- Active:    w1
+- Records: 4 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **w1** — records=4, throughput=900000.0/h, info_density=0.200, diversity=0.867, yield_score=0.0018, dup_rate=0.000, kills=0, conf=0, errs=0
+
+
+## batch-20260528T072651Z-36f0aa
+
+- Started: 2026-05-28T07:26:51.430570+00:00
+- Ended:   2026-05-28T07:26:51.473573+00:00
+- Duration: 0.0000 h
+- Requested: x1
+- Active:    x1
+- Records: 3 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **x1** — records=3, throughput=675000.0/h, info_density=0.200, diversity=0.914, yield_score=0.0018, dup_rate=0.000, kills=0, conf=0, errs=0
+
+
+## batch-20260528T072651Z-aa9395
+
+- Started: 2026-05-28T07:26:51.975093+00:00
+- Ended:   2026-05-28T07:26:52.020094+00:00
+- Duration: 0.0000 h
+- Requested: y1
+- Active:    y1
+- Records: 3 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **y1** — records=3, throughput=3000000000.0/h, info_density=0.200, diversity=0.889, yield_score=0.0018, dup_rate=0.000, kills=0, conf=0, errs=0
+
+
+## batch-20260528T072652Z-9a0b24
+
+- Started: 2026-05-28T07:26:52.527083+00:00
+- Ended:   2026-05-28T07:26:52.568083+00:00
+- Duration: 0.0000 h
+- Requested: z1
+- Active:    z1
+- Records: 4 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **z1** — records=4, throughput=4000000000.0/h, info_density=0.200, diversity=0.866, yield_score=0.0017, dup_rate=0.000, kills=0, conf=0, errs=0
+
+
+## batch-20260528T072653Z-ba77b6
+
+- Started: 2026-05-28T07:26:53.144804+00:00
+- Ended:   2026-05-28T07:26:53.187800+00:00
+- Duration: 0.0000 h
+- Requested: aa1
+- Active:    aa1
+- Records: 3 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **aa1** — records=3, throughput=675000.0/h, info_density=0.200, diversity=0.825, yield_score=0.0017, dup_rate=0.000, kills=0, conf=0, errs=0
+
+
+## batch-20260528T072653Z-6a148f
+
+- Started: 2026-05-28T07:26:53.760791+00:00
+- Ended:   2026-05-28T07:26:53.917789+00:00
+- Duration: 0.0000 h
+- Requested: bb1
+- Active:    bb1
+- Records: 4 (kills=0, confirmations=0, inconclusive=0, errors=0)
+
+### Per-generator yield
+
+- **bb1** — records=4, throughput=4000000000.0/h, info_density=0.200, diversity=0.843, yield_score=0.0017, dup_rate=0.000, kills=0, conf=0, errs=0
+

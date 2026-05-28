@@ -58,6 +58,23 @@ from theseus.generators.n1_active_disagreement import N1ActiveDisagreementGenera
 from theseus.generators.o1_conjecture_neighborhood import (
     O1ConjectureNeighborhoodGenerator,
 )
+# 2026-05-28 — 15 more gens from ChatGPT remainder + Sphinx ontology.
+# See pivot/techne_15gen_plan_2026-05-28.md.
+from theseus.generators.l2_formalization_skeleton import L2FormalizationSkeletonGenerator
+from theseus.generators.m2_compression import M2CompressionGenerator
+from theseus.generators.p1_modus_ponens_chain import P1ModusPonensChainGenerator
+from theseus.generators.q1_modular_varying_p import Q1ModularVaryingPGenerator
+from theseus.generators.r1_subset_relation import R1SubsetRelationGenerator
+from theseus.generators.s1_triangle_inequality import S1TriangleInequalityGenerator
+from theseus.generators.t1_multi_hop_deduction import T1MultiHopDeductionGenerator
+from theseus.generators.u1_quantifier_swap import U1QuantifierSwapGenerator
+from theseus.generators.v1_counterfactual_invariance import V1CounterfactualInvarianceGenerator
+from theseus.generators.w1_closure_under_operation import W1ClosureUnderOperationGenerator
+from theseus.generators.x1_partial_information import X1PartialInformationGenerator
+from theseus.generators.y1_analogical_transfer import Y1AnalogicalTransferGenerator
+from theseus.generators.z1_order_dependence import Z1OrderDependenceGenerator
+from theseus.generators.aa1_confidence_calibration import Aa1ConfidenceCalibrationGenerator
+from theseus.generators.bb1_false_dichotomy import Bb1FalseDichotomyGenerator
 from theseus.generators.stubs.all_stubs import (
     H3LearnerCuriosity,
     I1ConjectureParaphrasing,
@@ -108,13 +125,28 @@ REGISTRY: Dict[str, Type[Generator]] = {
     "h1": H1SelfPlayHunterGenerator,
     "h2": H2TriangulationProtocolGenerator,
     "h4": H4BridgeExtensionGenerator,
-    # Fire #142 monoculture-breakers (active stubs — emit fixed N records
-    # then exhaust; iterated to useful versions per Stage 8 fire results)
+    # Fire #142 monoculture-breakers (real, Stages 11-15)
     "k1": K1TypedBridgeGenerator,
     "l1": L1ObstructionGenerator,
     "m1": M1MinimalCounterexampleGenerator,
     "n1": N1ActiveDisagreementGenerator,
     "o1": O1ConjectureNeighborhoodGenerator,
+    # 2026-05-28 second batch — ChatGPT remainder + Sphinx ontology (stubs)
+    "l2": L2FormalizationSkeletonGenerator,
+    "m2": M2CompressionGenerator,
+    "p1": P1ModusPonensChainGenerator,
+    "q1": Q1ModularVaryingPGenerator,
+    "r1": R1SubsetRelationGenerator,
+    "s1": S1TriangleInequalityGenerator,
+    "t1": T1MultiHopDeductionGenerator,
+    "u1": U1QuantifierSwapGenerator,
+    "v1": V1CounterfactualInvarianceGenerator,
+    "w1": W1ClosureUnderOperationGenerator,
+    "x1": X1PartialInformationGenerator,
+    "y1": Y1AnalogicalTransferGenerator,
+    "z1": Z1OrderDependenceGenerator,
+    "aa1": Aa1ConfidenceCalibrationGenerator,
+    "bb1": Bb1FalseDichotomyGenerator,
     # Stubs (placeholder, never emit)
     "h3": H3LearnerCuriosity,
     "i1": I1ConjectureParaphrasing,
