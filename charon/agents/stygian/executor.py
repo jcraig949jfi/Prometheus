@@ -167,6 +167,7 @@ def execute_attack(problem: dict, attack_plan_path: Optional[str] = None) -> dic
             import charon.agents.stygian.loaders.composition_g02_g04_lehmer_band_high  # noqa: F401
             import charon.agents.stygian.loaders.composition_g02_lehmer_smyth  # noqa: F401
             import charon.agents.stygian.loaders.composition_g02_lehmer_degree_parity  # noqa: F401
+            import charon.agents.stygian.loaders.composition_g02_lehmer_multi_binary_wy  # noqa: F401
             import charon.agents.stygian.loaders.composition_g03_lehmer_neighborhood  # noqa: F401
             import charon.agents.stygian.loaders.composition_g10_lehmer_threshold_sweep  # noqa: F401
             import charon.agents.stygian.loaders.composition_g11_mahler_boolean_cube  # noqa: F401
