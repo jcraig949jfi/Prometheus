@@ -12675,6 +12675,44 @@ Lifetime: 205 batches journaled / 614.5M records / 343.9M kills /
 614.5M records, 343.9M kills, 2351 promoted, 2671 templates,
 0 verified findings. **210-fire milestone.***
 
+---
+
+## Fire #211 — 2026-05-29 ~09:33Z
+
+**514K records / 24 min / 0 templates / 0 promoted. Mix
+b4/bb1/c4/e2/h2 — h2 dominant 99.97% kill. bb1 5/5 100% kill.**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    h2   497,630  497,455  old (post-cap, 99.97% kill)
+    c4    15,038        0  TAUTOLOGY_CONTROL
+    b4       606      446  old (fixed_point_hunt)
+    e2       424        0  stub (arxiv-mining)
+    bb1        5        5  NEW (100% false-dichotomy)
+
+### Batch result
+
+- batch_id: `batch-20260529T093353Z-11b241`
+- 513,703 records / 497,906 kills / 15,797 confirms / 0 errors
+- 0 promoted (67th consecutive)
+- batch_end ✓
+
+Lifetime: 206 batches journaled / 615.0M records / 344.4M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 67 consecutive 0-promoted
+- 96.92% overall kill rate
+- bb1 hit 5/5 false-dichotomy kills yet again
+
+---
+
+*Fire #211 throttled = 514K records / 0 promoted / 0 templates.
+615.0M records, 344.4M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
