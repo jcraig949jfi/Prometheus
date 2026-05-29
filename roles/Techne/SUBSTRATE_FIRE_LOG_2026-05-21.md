@@ -12403,6 +12403,44 @@ Lifetime: 198 batches journaled / **599.0M records** / 338.2M kills /
 599.0M records, 338.2M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #204 — 2026-05-29 ~06:41Z — **601.3M LIFETIME RECORDS / 600M MILESTONE**
+
+**2.22M records / 24 min / 0 templates / 0 promoted. a4 solo
+dominant (2.22M records, 30% kill).**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    a4   2,223,391  671,013  old (symbolic_regression, 30% kill)
+    b4         606      446  old (fixed_point_hunt)
+    l2         224        0  NEW (Lean 4 skeletons)
+    o1          22        0  NEW (perturbations)
+    aa1          5        4  NEW (calibration miscalibrated)
+
+### Batch result
+
+- batch_id: `batch-20260529T064130Z-fb0ec1`
+- 2,224,248 records / 671,463 kills / 1,552,785 confirms / 0 errors
+- 0 promoted (60th consecutive)
+- batch_end ✓
+
+Lifetime: 199 batches journaled / **601.3M records** / 338.9M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Milestones
+
+- **600M lifetime records crossed** (now 601.3M)
+- **60 consecutive 0-promoted milestone**
+- aa1 contributed 4 calibration kills (80%)
+
+---
+
+*Fire #204 throttled = 2.22M records / 0 promoted / 0 templates.
+601.3M records, 338.9M kills, 2351 promoted, 2671 templates,
+0 verified findings. **600M lifetime records + 60 consecutive 0-promoted.***
+
 
 
 
