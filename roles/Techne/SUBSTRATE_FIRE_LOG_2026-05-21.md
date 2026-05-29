@@ -13513,6 +13513,44 @@ Lifetime: 226 batches journaled / 645.8M records / 360.0M kills /
 645.8M records, 360.0M kills, 2351 promoted, 2671 templates,
 0 verified findings. **360M lifetime kills.***
 
+---
+
+## Fire #232 — 2026-05-29 ~18:11Z — **f2 SOLO BURN**
+
+**3.22M records / 24 min / 0 templates / 0 promoted. f2 solo
+dominant (99.83% of records).**
+
+### Per-gen attribution
+
+    gid  records    kills      notes
+    f2   3,211,071  2,114,245  old (anti-frequency, 65.8% kill)
+    k1       4,952          0  NEW (typed bridges)
+    b4         606        446  old (fixed_point_hunt)
+    e5         121          0  stub (mathworld)
+    q1          45          2  NEW (mod-p concentration)
+
+### Batch result
+
+- batch_id: `batch-20260529T181103Z-d8fa14`
+- 3,216,795 records / 2,114,693 kills / 1,102,102 confirms / 0 errors
+- 0 promoted (88th consecutive)
+- batch_end ✓
+
+Lifetime: 227 batches journaled / 649.0M records / 362.1M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 88 consecutive 0-promoted
+- f2 alone produced 99.83% of records and 99.98% of kills
+- k1 emitted 4952 typed-bridge records (UNVERIFIED)
+
+---
+
+*Fire #232 throttled = 3.22M records / 0 promoted / 0 templates.
+649.0M records, 362.1M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
