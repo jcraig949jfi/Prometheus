@@ -59,6 +59,7 @@ import tdd_runner
 import taxonomy
 import debt_ledger
 import ablation
+import ladder_eval
 from lenses._base import CycleContext
 from lenses._panel import run_lens_panel
 
@@ -180,6 +181,11 @@ def _read_json(path: Path, default):
         return default
 
 
+def _write_json(path: Path, data) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, indent=2, default=str), encoding="utf-8")
+
+
 # ---------------------------------------------------------------------------
 # The 5-step cycle
 # ---------------------------------------------------------------------------
@@ -255,7 +261,7 @@ def run_cycle(
             ctx=ctx,
             cycle_dir=new_cycle_dir,
             apply_fn=patcher.apply_diff,
-            tdd_fn=tdd_runner.run_all_tests,
+            tdd_fn=ladder_eval.run_ladder_tests,  # climb Harmonia B's real ladder
             emit_event_fn=emit_event,
         )
     except Exception as e:
@@ -307,17 +313,32 @@ def run_cycle(
     skeptic_dict = ctx.skeptic_report.to_dict() if ctx.skeptic_report else None
     integ_extra = ctx.integrator_report.extra if ctx.integrator_report else {}
 
-    # Q12 ablation: oracle-verified capability check (candidate vs parent on
-    # the blind holdout). This OVERRIDES the LLM Integrator's self-reported
-    # improvement_kind with a non-gameable verdict.
+    # Q12 ablation: oracle-verified capability check. Capability gain is defined
+    # non-gameably as a holdout-frontier advance on Harmonia B's ladder
+    # (candidate vs parent), graded by the deterministic verifier lens.
     ablation_result = None
     if apply_result.get("applied"):
         try:
-            ablation_result = ablation.check_decorative(
-                candidate_dir=new_cycle_dir / "code",
-                parent_dir=cycle_path(last_stable_cycle_n()) / "code",
-                tier_target=tier_target,
-            )
+            cand = ladder_eval.holdout_frontier(new_cycle_dir / "code")
+            parent = ladder_eval.holdout_frontier(cycle_path(last_stable_cycle_n()) / "code")
+            delta = cand["holdout_pass_count"] - parent["holdout_pass_count"]
+            ablation_result = {
+                "candidate_frontier": cand["frontier"],
+                "parent_frontier": parent["frontier"],
+                "candidate_holdout_passed": cand["holdout_pass_count"],
+                "parent_holdout_passed": parent["holdout_pass_count"],
+                "delta": delta,
+                "capability_gain": delta > 0,
+                "improvement_kind": (
+                    "capability" if delta > 0
+                    else ("metric_shaped" if cand["holdout_pass_count"] > 0 else "none")
+                ),
+                "detail": (
+                    f"holdout tiers passed: candidate={cand['holdout_pass_count']} "
+                    f"(frontier {cand['frontier']}) vs parent={parent['holdout_pass_count']} "
+                    f"(frontier {parent['frontier']}), delta={delta}"
+                ),
+            }
             _append_cycle_log(n, "ablation", ablation_result)
         except Exception as e:
             log.warning(f"ablation failed: {e}")
@@ -386,10 +407,14 @@ def run_cycle(
     freeze_cycle(n)
     if decision == "mark_stable":
         mark_stable(n)
+        # Ladder advancement: if the candidate cleared the current tier target
+        # on the held-out oracle, advance to the next tier so Icarus climbs
+        # rather than re-passing the same rung.
+        advanced = _maybe_advance_tier(tier_target, ablation_result)
         log.info(f"cycle {n} MARK_STABLE [lb={load_bearing}] "
                  f"class={training_obj.failure_class} kind={training_obj.improvement_kind} "
-                 f"contract_viol={contract_report.get('contract_violation', False)} "
-                 f"debts_closed={len(closed)}")
+                 f"frontier={ (ablation_result or {}).get('candidate_frontier') }"
+                 + (f" -> tier_target ADVANCED to {advanced}" if advanced else ""))
     else:
         log.info(f"cycle {n} PARK [lb={load_bearing}] "
                  f"class={training_obj.failure_class} (stable still {last_stable_cycle_id()})")
@@ -441,15 +466,58 @@ def _emit_complete(tick_id, started_at, n, decision, stats) -> dict:
 # citation (per James's lenses-over-mono-solutions principle).
 
 
+# Harmonia B testable-ladder tier descriptions (operation | kill test | artifact).
+# Source: harmonia/memory/architecture/reasoning_ladder_testable.md
+_HARMONIA_TIERS = {
+    "R0": "Pattern match that SURVIVES isomorphism. probe.kind=linear; must solve "
+          "clean AND isomorphic/renamed/fractional-coefficient rewrites. Kill: "
+          "isomorphic rewrite breaks it.",
+    "R1": "Local rule application incl. domain legality. probe.kind=quadratic; solve "
+          "factorable quadratics AND return [] for no-real-root (disc<0) cases -- do "
+          "NOT hallucinate real roots. Kill: report roots that do not exist.",
+    "R2": "Constraint tracking. probe.kind=sqrt, sqrt(x+a)=x-b: square both sides, "
+          "then REJECT extraneous roots by checking the original equation / domain "
+          "(x-b>=0, x+a>=0). Kill: extraneous_root_not_rejected.",
+    "R3": "Multi-step composition. probe.kind=rational, (x^2-r^2)/(x-r)=x+r: cancel "
+          "but EXCLUDE the singular value x=r. Return 'all_x_except_excluded'. Kill: "
+          "excluded_value_missed.",
+    "R5": "Invariant detection. probe.kind=invariant, board tiling: decide tileable "
+          "via color/area parity. [open frontier -- no reference reasoner passes]",
+    "R6": "Counterexample search. probe.kind=conjecture: search a structured range "
+          "for counterexamples; do not overgeneralize from small examples (n^2+n+41 "
+          "trap). Kill: overgeneralized_from_examples.",
+    "R7": "Proof repair. probe.kind=proof_repair: return the 1-indexed first invalid "
+          "step (0 if valid). [open frontier -- no reference reasoner passes]",
+}
+
+
 def _ladder_falsification_test(tier: str) -> str:
-    """Look up the falsification-test description from ladder.py without
-    crashing if ladder isn't importable yet."""
-    try:
-        sys.path.insert(0, str(ICARUS_DIR))
-        from ladder import get_tier
-        return get_tier(tier).falsification_test
-    except Exception:
-        return "(ladder.py not importable; using placeholder)"
+    """Harmonia B tier description -- what the reasoner must DO + the kill test."""
+    return _HARMONIA_TIERS.get(tier, f"(no description for {tier})")
+
+
+# Ladder order Icarus climbs (R4/R8-R12 not yet generated by the harness).
+_TIER_PROGRESSION = ["R0", "R1", "R2", "R3", "R5", "R6", "R7"]
+
+
+def _maybe_advance_tier(tier_target: str, ablation_result: Optional[dict]) -> Optional[str]:
+    """If the candidate's held-out frontier reached the current tier target,
+    advance tier_target to the next rung. Returns the new tier or None."""
+    if not ablation_result:
+        return None
+    frontier = ablation_result.get("candidate_frontier")
+    if frontier != tier_target:
+        return None  # cleared a different/lower tier, not the target
+    if tier_target not in _TIER_PROGRESSION:
+        return None
+    idx = _TIER_PROGRESSION.index(tier_target)
+    if idx + 1 >= len(_TIER_PROGRESSION):
+        return None  # at the top of the generated ladder
+    nxt = _TIER_PROGRESSION[idx + 1]
+    _write_json(STATE_DIR / "tier_target.json", {"tier": nxt, "set_at": _now_iso(),
+                                                  "advanced_from": tier_target})
+    _write_json(STATE_DIR / "tier_currently_passing.json", {"tier": tier_target})
+    return nxt
 
 
 def _build_failure_context() -> dict:
