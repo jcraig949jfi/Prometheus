@@ -12841,6 +12841,44 @@ Lifetime: 209 batches journaled / 619.2M records / 345.7M kills /
 619.2M records, 345.7M kills, 2351 promoted, 2671 templates,
 0 verified findings. **70 consecutive 0-promoted milestone.***
 
+---
+
+## Fire #215 — 2026-05-29 ~11:12Z
+
+**2.76M records / 24 min / 0 templates / 0 promoted. Mix
+a4/c3/f4/q1/s1 — a4+c3+f4 triple + q1+s1 small contributions.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    f4   1,037,796  683,574  old (anti-frequency)
+    a4     963,838  296,780  old (symbolic_regression)
+    c3     753,247  322,230  old (region_slide)
+    s1         375       14  NEW (triangle inequality)
+    q1          45        2  NEW (mod-p concentration)
+
+### Batch result
+
+- batch_id: `batch-20260529T111216Z-5fc846`
+- 2,755,301 records / 1,302,600 kills / 1,452,701 confirms / 0 errors
+- 0 promoted (71st consecutive)
+- batch_end ✓
+
+Lifetime: 210 batches journaled / 621.9M records / 347.0M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 71 consecutive 0-promoted
+- 620M lifetime records crossed
+- s1+q1 contributed 16 structured kills
+
+---
+
+*Fire #215 throttled = 2.76M records / 0 promoted / 0 templates.
+621.9M records, 347.0M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
