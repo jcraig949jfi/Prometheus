@@ -12752,6 +12752,52 @@ Lifetime: 207 batches journaled / 618.2M records / 344.7M kills /
 618.2M records, 344.7M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #213 — 2026-05-29 ~10:22Z — **4 NEW GENS / 195 STRUCTURED KILLS**
+
+**6.4K records / 24 min / 0 templates / 0 promoted. Mix
+bb1/e3/k1/v1/z1 — 4 new gens contribute 195 structured kills.
+Quality-only fire.**
+
+### Per-gen attribution
+
+    gid  records  kills  notes
+    k1   4,952    0      NEW (typed bridges, UNVERIFIED)
+    e3   1,060    447    old (small reservoir)
+    z1     200    118    NEW (commute-break, 59%)
+    v1     181    72     NEW (perturbation-break, 40%)
+    bb1      5    5      NEW (100% false-dichotomy)
+
+### Structured kills from new gens (195 total)
+
+- `z1_operators_dont_commute_on_*` × 118
+- `v1_perturbation_breaks_property_*` × 72
+- `bb1_false_dichotomy_revealed_*_categories` × 5
+
+### Batch result
+
+- batch_id: `batch-20260529T102257Z-fcb6f6`
+- 6,398 records / 642 kills / 5,756 confirms / 0 errors
+- 0 promoted (69th consecutive)
+- batch_end ✓
+
+Lifetime: 208 batches journaled / 618.2M records / 344.7M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 69 consecutive 0-promoted
+- 195 structured kills / 6,393 disc-role records = **3% disc-kill
+  density** (with new mechanism breadth)
+- 4 new gens picked simultaneously — newcomer-heavy fire
+
+---
+
+*Fire #213 throttled = 6.4K records / 0 promoted / 0 templates.
+618.2M records, 344.7M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
