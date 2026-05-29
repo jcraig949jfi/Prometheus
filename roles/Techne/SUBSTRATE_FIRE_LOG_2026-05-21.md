@@ -12183,6 +12183,44 @@ Lifetime: 193 batches journaled / 584.6M records / 330.7M kills /
 584.6M records, 330.7M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #199 — 2026-05-29 ~04:38Z — **a3+f3+f4 TRIPLE LOCKSTEP AGAIN**
+
+**3.43M records / 24 min / 0 templates / 0 promoted. Mix
+a3/aa1/f3/f4/x1 — same triple lockstep as Fire #198 + 2 new gens.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    f3   1,143,784  770,848  old (importance_sampling)
+    f4   1,143,159  752,738  old (anti-frequency)
+    a3   1,139,525  723,995  old (functional_identity)
+    x1          10        8  NEW (partial-view inflation, 80%)
+    aa1          5        4  NEW (calibration miscalibrated, 80%)
+
+### Batch result
+
+- batch_id: `batch-20260529T043827Z-48279a`
+- 3,426,483 records / 2,247,593 kills / 1,178,890 confirms / 0 errors
+- 0 promoted (55th consecutive)
+- batch_end ✓
+
+Lifetime: 194 batches journaled / 588.1M records / 332.9M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- Second consecutive a3+f3+f4 triple-lockstep fire
+- 55 consecutive 0-promoted
+- aa1+x1 contributed 12 structured kills
+
+---
+
+*Fire #199 throttled = 3.43M records / 0 promoted / 0 templates.
+588.1M records, 332.9M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
