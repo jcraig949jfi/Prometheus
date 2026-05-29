@@ -176,7 +176,7 @@ class GeneratorLens(Lens):
         )
 
 
-def _read_source(source_dir, max_chars: int = 6000) -> str:
+def _read_source(source_dir, max_chars: int = 30000) -> str:
     if not source_dir.exists():
         return ""
     chunks = []

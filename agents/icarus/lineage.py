@@ -104,6 +104,16 @@ def clone_from_stable(target_cycle_n: int) -> Path:
     dst_code = target_path / "code"
     if src_code.exists():
         shutil.copytree(src_code, dst_code, dirs_exist_ok=False)
+        # The clone is the WORKING COPY -- it must be writable. copytree
+        # inherits the frozen parent's read-only attributes, which would make
+        # the candidate's reasoner.py unwritable (full-file edits fail with
+        # PermissionError). Clear read-only on every cloned file.
+        for f in dst_code.rglob("*"):
+            if f.is_file():
+                try:
+                    f.chmod(stat.S_IWRITE | stat.S_IREAD)
+                except Exception:
+                    pass
     else:
         dst_code.mkdir(exist_ok=False)
 
