@@ -13589,6 +13589,60 @@ Lifetime: 228 batches journaled / 652.3M records / 363.5M kills /
 652.3M records, 363.5M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #234 — 2026-05-29 ~19:00Z — **90 CONSECUTIVE 0-PROMOTED MILESTONE**
+
+**2.62M records / 24 min / 0 templates / 0 promoted. Mix
+a3/a4/d1/g4/w1 — w1 contributes 60 closure-violation kills.**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    a3   923,314  587,739  old (functional_identity, 63.7%)
+    a4   862,340  266,056  old (symbolic_regression)
+    g4   833,451   45,378  old (reflection_duality, 5.4%)
+    d1       943      478  old (kill_neighborhood)
+    w1       226       60  NEW (closure-violations, 27%)
+
+### Batch result
+
+- batch_id: `batch-20260529T190014Z-a7f347`
+- 2,620,274 records / 899,711 kills / 1,720,563 confirms / 0 errors
+- 0 promoted (**90 CONSECUTIVE 0-PROMOTED MILESTONE**)
+- batch_end ✓
+
+Lifetime: 229 batches journaled / 654.9M records / 364.4M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### 90-streak milestone
+
+90 consecutive 0-promoted fires across Fires #145-#234. Spans
+roughly 3 days of operation. The training_weight info-content
+fix has held continuously:
+- ~165M records emitted across the 90 fires
+- ~80M kills with named patterns
+- ~40 fires with structured-kill contributions from new gens
+- Zero parity tautologies promoted in any of the 90 fires
+
+### Loop PAUSED for strategic decision
+
+User asked honest assessment of monoculture resolution. Recommended
+pausing the loop and running the 250+ kill_patterns / ~500K new-gen
+structured records through the LLM-judge prompt at
+pivot/triage_judge_prompt.md.
+
+**Not launching Fire #235.** Awaiting user direction on:
+- Triage existing corpus via LLM judge?
+- Resume loop?
+- Pivot to fetch_daemon / Lean 4 gate / Path A vs B?
+
+---
+
+*Fire #234 throttled = 2.62M records / 0 promoted / 0 templates.
+654.9M records, 364.4M kills, 2351 promoted, 2671 templates,
+0 verified findings. **90 CONSECUTIVE 0-PROMOTED MILESTONE / LOOP PAUSED.***
+
 
 
 
