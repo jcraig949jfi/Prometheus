@@ -12637,6 +12637,44 @@ Lifetime: 204 batches journaled / 613.2M records / 343.9M kills /
 613.2M records, 343.9M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #210 — 2026-05-29 ~09:09Z — **210-FIRE MILESTONE**
+
+**1.25M records / 24 min / 0 templates / 0 promoted. Mix
+d1/e2/e4/g3/g4 — all old gens. g4 dominant. 5.4% kill rate.**
+
+### Per-gen attribution
+
+    gid  records    kills   notes
+    g4   1,231,776  66,900  old (reflection_duality, 5.4%)
+    g3      20,000      0   TAUTOLOGY_CONTROL
+    d1         962    484   old (kill_neighborhood)
+    e2         424      0   stub (arxiv-mining)
+    e4         233      0   stub (lmfdb-mining)
+
+### Batch result
+
+- batch_id: `batch-20260529T090912Z-1a047b`
+- 1,253,395 records / 67,384 kills / 1,186,011 confirms / 0 errors
+- 0 promoted (66th consecutive)
+- batch_end ✓
+
+Lifetime: 205 batches journaled / 614.5M records / 343.9M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **210-fire milestone**
+- 66 consecutive 0-promoted
+- All 5 picks old gens — new gens deep in cooldown
+
+---
+
+*Fire #210 throttled = 1.25M records / 0 promoted / 0 templates.
+614.5M records, 343.9M kills, 2351 promoted, 2671 templates,
+0 verified findings. **210-fire milestone.***
+
 
 
 
