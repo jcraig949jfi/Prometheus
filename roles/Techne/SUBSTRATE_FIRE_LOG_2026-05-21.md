@@ -12365,6 +12365,44 @@ Lifetime: 197 batches journaled / 595.0M records / 335.4M kills /
 595.0M records, 335.4M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #203 — 2026-05-29 ~06:16Z — **600M LIFETIME RECORDS CROSSED**
+
+**4.04M records / 24 min / 0 templates / 0 promoted. Mix
+a1/aa1/c1/u1/x1 — c1+a1 dominant duo + 3 new gens.**
+
+### Per-gen attribution
+
+    gid  records    kills      notes
+    c1   2,147,661  1,490,819  old (claim_mutation, 69.4%)
+    a1   1,890,238  1,303,012  old (catalog cross_product, 69%)
+    x1          10          8  NEW (partial-view inflation)
+    aa1          5          4  NEW (calibration miscalibrated)
+    u1           2          0  NEW (no swap-distinguish)
+
+### Batch result
+
+- batch_id: `batch-20260529T061655Z-00a000`
+- 4,037,916 records / 2,793,843 kills / 1,244,073 confirms / 0 errors
+- 0 promoted (59th consecutive)
+- batch_end ✓
+
+Lifetime: 198 batches journaled / **599.0M records** / 338.2M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **Approaching 600M lifetime records milestone** (599.0M)
+- 59 consecutive 0-promoted
+- aa1+x1 contributed 12 structured kills
+
+---
+
+*Fire #203 throttled = 4.04M records / 0 promoted / 0 templates.
+599.0M records, 338.2M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
