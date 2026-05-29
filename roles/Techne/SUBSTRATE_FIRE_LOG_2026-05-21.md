@@ -11695,6 +11695,44 @@ Lifetime: 181 batches journaled / 562.2M records / 315.1M kills /
 562.2M records, 315.1M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #187 — 2026-05-28 ~23:43Z
+
+**3.21M records / 24 min / 0 templates / 0 promoted. a3 solo
+dominant (3.2M records, 64% kill). 2 new gens contributed
+24 structured kills.**
+
+### Per-gen attribution
+
+    gid  records    kills      notes
+    a3   3,207,673  2,037,873  old (functional_identity, 64% kill)
+    b1       1,340          0  INFRA_DIAGNOSTIC
+    s1         375         20  NEW (triangle inequality)
+    aa1          5          4  NEW (calibration miscalibrated, 80%)
+    u1           2          0  NEW (no swap-distinguish)
+
+### Batch result
+
+- batch_id: `batch-20260528T234351Z-999d2b`
+- 3,209,395 records / 2,037,897 kills / 1,171,498 confirms / 0 errors
+- 0 promoted (43rd consecutive)
+- batch_end ✓
+
+Lifetime: 182 batches journaled / 565.4M records / 317.2M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 43 consecutive 0-promoted
+- s1+aa1 contributed 24 structured kills
+
+---
+
+*Fire #187 throttled = 3.21M records / 0 promoted / 0 templates.
+565.4M records, 317.2M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
