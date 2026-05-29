@@ -13237,6 +13237,44 @@ fix has now held continuously for two and a half days across:
 636.8M records, 356.1M kills, 2351 promoted, 2671 templates,
 0 verified findings. **80 CONSECUTIVE 0-PROMOTED MILESTONE.***
 
+---
+
+## Fire #225 — 2026-05-29 ~15:19Z — **97.68% kill rate**
+
+**977K records / 24 min / 0 templates / 0 promoted. Mix
+a5/b2/c3/d3/z1 — d3 dominant + z1 contributes 118 kills.**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    d3   968,816  951,691  old (triangulation, 98.2% kill)
+    a5     4,570    1,475  old (distribution_match)
+    b2     3,636    1,264  old (composition_test)
+    z1       200      118  NEW (commute-break, 59%)
+    c3        56       24  old (small)
+
+### Batch result
+
+- batch_id: `batch-20260529T151902Z-6f7d10`
+- 977,278 records / 954,572 kills / 22,706 confirms / 0 errors
+- 0 promoted (81st consecutive)
+- batch_end ✓
+
+Lifetime: 220 batches journaled / 637.7M records / 357.0M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **220 batches Penelope-journaled milestone**
+- 81 consecutive 0-promoted
+- z1 contributed 118 commute-break kills
+
+---
+
+*Fire #225 throttled = 977K records / 0 promoted / 0 templates.
+637.7M records, 357.0M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
