@@ -13551,6 +13551,44 @@ Lifetime: 227 batches journaled / 649.0M records / 362.1M kills /
 649.0M records, 362.1M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #233 — 2026-05-29 ~18:35Z
+
+**3.29M records / 24 min / 0 templates / 0 promoted. Mix
+c4/f4/g3/o1/r1 — f4 dominant + c4+g3 TAUTOLOGY_CONTROL.**
+
+### Per-gen attribution
+
+    gid  records    kills      notes
+    f4   2,048,866  1,347,597  old (anti-frequency, 65.8%)
+    c4   1,221,239          0  TAUTOLOGY_CONTROL
+    g3      20,000          0  TAUTOLOGY_CONTROL
+    o1          22          0  NEW (perturbations, UNVERIFIED)
+    r1           8          2  NEW (subset-violation)
+
+### Batch result
+
+- batch_id: `batch-20260529T183538Z-1d2400`
+- 3,290,135 records / 1,347,599 kills / 1,942,536 confirms / 0 errors
+- 0 promoted (89th consecutive)
+- batch_end ✓
+
+Lifetime: 228 batches journaled / 652.3M records / 363.5M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 89 consecutive 0-promoted
+- Heavy TAUTOLOGY_CONTROL fire (c4 1.2M, g3 20K)
+- r1 contributed 2 subset-violation kills
+
+---
+
+*Fire #233 throttled = 3.29M records / 0 promoted / 0 templates.
+652.3M records, 363.5M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
