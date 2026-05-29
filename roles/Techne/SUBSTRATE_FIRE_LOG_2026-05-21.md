@@ -12289,6 +12289,45 @@ new corpus.
 591.0M records, 334.3M kills, 2351 promoted, 2671 templates,
 0 verified findings. **200-FIRE MILESTONE / 56 consecutive 0-promoted.***
 
+---
+
+## Fire #201 — 2026-05-29 ~05:27Z
+
+**445K records / 24 min / 0 templates / 0 promoted. Mix
+a5/e3/h2/n1/p1 — h2 dominant + 2 new gens contribute 130 kills.**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    h2   438,034  437,920  old (post-cap, 99.97% kill)
+    a5     4,947    1,597  old
+    e3     1,060      447  old
+    n1       929        0  NEW (verifier disagreements)
+    p1       138      130  NEW (chain-break, 94% kill)
+
+### Batch result
+
+- batch_id: `batch-20260529T052745Z-def1b9`
+- 445,108 records / 440,094 kills / 5,014 confirms / 0 errors
+- 0 promoted (57th consecutive)
+- batch_end ✓
+
+Lifetime: 196 batches journaled / 591.5M records / 334.7M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 57 consecutive 0-promoted
+- p1+n1 contributed 130 chain-break kills + 929 verifier-disagreement
+  records
+- 98.87% overall kill rate
+
+---
+
+*Fire #201 throttled = 445K records / 0 promoted / 0 templates.
+591.5M records, 334.7M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
