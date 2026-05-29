@@ -12104,6 +12104,46 @@ Lifetime: 191 batches journaled / 580.6M records / 327.9M kills /
 580.6M records, 327.9M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #197 — 2026-05-29 ~03:49Z — **99.9% kill rate / 3 new gens**
+
+**538K records / 24 min / 0 templates / 0 promoted. Mix
+c3/h2/m2/q1/s1 — h2 99.96% kill + 3 new gens contribute 15
+structured kills.**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    h2   537,766  537,535  old (post-cap, 99.96% kill)
+    s1       375       12  NEW (triangle inequality)
+    c3        50       34  old (region_slide, scarce)
+    q1        45        2  NEW (mod-p concentration)
+    m2         5        1  NEW (universal-violated)
+
+### Batch result
+
+- batch_id: `batch-20260529T034919Z-79402e`
+- 538,241 records / 537,584 kills / 657 confirms / 0 errors
+- 0 promoted (53rd consecutive)
+- batch_end ✓
+
+Lifetime: 192 batches journaled / 581.2M records / 328.5M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 99.88% overall kill rate
+- 53 consecutive 0-promoted
+- s1+q1+m2 contributed 15 structured kills across 3 mechanism
+  classes
+
+---
+
+*Fire #197 throttled = 538K records / 0 promoted / 0 templates.
+581.2M records, 328.5M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
