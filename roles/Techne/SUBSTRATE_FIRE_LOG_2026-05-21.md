@@ -12221,6 +12221,74 @@ Lifetime: 194 batches journaled / 588.1M records / 332.9M kills /
 588.1M records, 332.9M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #200 — 2026-05-29 ~05:02Z — **200-FIRE MILESTONE / A-FAMILY TRIPLE**
+
+**2.87M records / 24 min / 0 templates / 0 promoted. Mix
+a1/a2/a4/g5/k1 — a-family trio dominant (a1+a2+a4 = ~2.12M
+records).**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    g5   746,237   58,074  old (scale_invariance, 7.8%)
+    a4   719,749  223,137  old (symbolic_regression)
+    a1   703,428  485,270  old (catalog cross-product)
+    a2   692,760  647,746  old (statistical_correlation, 93.5%)
+    k1     4,952        0  NEW (typed bridges)
+
+### Batch result
+
+- batch_id: `batch-20260529T050259Z-73b071`
+- 2,867,126 records / 1,414,227 kills / 1,452,899 confirms / 0 errors
+- 0 promoted (56th consecutive)
+- batch_end ✓
+
+Lifetime: 195 batches journaled / 591.0M records / 334.3M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### 200-Fire Arc Retrospective
+
+Session traversed **200 Techne fires** from #1 (pre-session) through
+#200 (this). Substrate state evolution:
+
+| metric | session start | 200-fire mark | delta |
+|---|---|---|---|
+| Active gens | 35 | **55** | +20 (5+15 new families) |
+| Distinct kill_patterns | ~10-15 | **~250** | +235 |
+| Mechanism classes | 5 | **17** | +12 |
+| Lifetime records | ~487M | **591.0M** | +104M |
+| Lifetime kills | ~277M | **334.3M** | +57M |
+| Disc-role templates | 2649 | **2671** | +22 |
+| Promoted records (lifetime) | 2351 | **2351** | **0** (unchanged) |
+| Verified findings | 0 | **0** | **0** (anchored honest) |
+
+**Key transformations** (in chronological order):
+1. e1 reclassified EXHAUSTED → +33% tick rate
+2. h2 corpus-scan cap → silent-hang failure fixed
+3. d3/d4 defensive caps → preventive
+4. Threaded heartbeat watchdog + batch_end + atexit hook
+5. Promoted-record triage report (revealed parity-tautology pile)
+6. training_weight info-content multiplier (Fire #141 fix)
+7. 5 first-batch new gens (k1/l1/m1/n1/o1) stub → real
+8. 15 second-batch new gens (l2/m2/p1/q1/r1/s1/t1/u1/v1/w1/x1/y1/z1/aa1/bb1) stub → real
+9. Kill-pattern audit + ~250 new kill_patterns introduced
+10. **56 consecutive 0-promoted fires** since training_weight fix
+
+**Open status**: The substrate is now a structured-falsification
+machine producing diverse, named, witnessed kill records across
+17 mechanism classes. Whether this graveyard becomes useful
+Learner training data is the open question — no autoformalization
+gate yet, no Lean verification, no Ergon model trained on the
+new corpus.
+
+---
+
+*Fire #200 throttled = 2.87M records / 0 promoted / 0 templates.
+591.0M records, 334.3M kills, 2351 promoted, 2671 templates,
+0 verified findings. **200-FIRE MILESTONE / 56 consecutive 0-promoted.***
+
 
 
 
