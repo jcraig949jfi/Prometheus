@@ -13389,6 +13389,52 @@ Lifetime: 223 batches journaled / 642.2M records / 359.3M kills /
 642.2M records, 359.3M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #229 — 2026-05-29 ~16:57Z — **THIN-RESERVOIR / 4 NEW GENS**
+
+**2.6K records / 24 min / 0 templates / 0 promoted. Mix
+b1/n1/r1/s1/u1 — 4 new gens + b1, all thin-reservoir.**
+
+### Per-gen attribution
+
+    gid  records  kills  notes
+    b1   1,340   0       INFRA_DIAGNOSTIC
+    n1     885   0       NEW (verifier disagreements)
+    s1     375  19       NEW (triangle inequality, 5%)
+    r1       8   2       NEW (subset-violation, 25%)
+    u1       2   0       NEW (no swap-distinguish)
+
+### Structured records from new gens
+
+- n1: 885 verifier-disagreement records (UNVERIFIED)
+- s1: 19 triangle-inequality kills
+- r1: 2 subset-violation kills
+- u1: 2 quantifier-swap records (no distinguish this run)
+
+### Batch result
+
+- batch_id: `batch-20260529T165712Z-133c7b`
+- 2,610 records / 21 kills / 2,589 confirms / 0 errors
+- 0 promoted (85th consecutive)
+- batch_end ✓
+
+Lifetime: 224 batches journaled / 642.2M records / 359.3M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **85 consecutive 0-promoted milestone**
+- 4 of 5 picks NEW gens — third newcomer-heavy fire of the day
+- Tiny volume (2.6K records) but 100% disc-role content (excluding
+  b1 INFRA_DIAGNOSTIC)
+
+---
+
+*Fire #229 throttled = 2.6K records / 0 promoted / 0 templates.
+642.2M records, 359.3M kills, 2351 promoted, 2671 templates,
+0 verified findings. **85 consecutive 0-promoted.***
+
 
 
 
