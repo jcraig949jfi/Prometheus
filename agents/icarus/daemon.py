@@ -238,6 +238,14 @@ def run_cycle(
     failure_context = _build_failure_context()
     cycle_strategy = ("minimal", "structural", "exploratory")[n % 3]
     open_debts = debt_ledger.open_debts()
+    # Failure-direction: proactive probe schema for this tier + the prior
+    # cycle's actual candidate exception (failure must emit direction).
+    try:
+        import tier_oracle
+        tier_probe_schema = tier_oracle.probe_schema(tier_target)
+    except Exception:
+        tier_probe_schema = None
+    last_failure_direction = _read_json(STATE_DIR / "last_failure_direction.json", None)
     ctx = CycleContext(
         cycle_n=n,
         source_dir=new_cycle_dir / "code",
@@ -251,6 +259,8 @@ def run_cycle(
         wisdom=_load_wisdom(),
         cycle_strategy=cycle_strategy,
         open_debts=open_debts,
+        tier_probe_schema=tier_probe_schema,
+        last_failure_direction=last_failure_direction,
     )
     log.info(f"  strategy={cycle_strategy} tier_target={tier_target} "
              f"open_debts={len(open_debts)}")
@@ -294,6 +304,12 @@ def run_cycle(
     # Persist the proposed diff artifact (Generator's output)
     if ctx.proposed_diff:
         (new_cycle_dir / "diff.patch").write_text(ctx.proposed_diff, encoding="utf-8")
+
+    # Persist this cycle's failure-direction so the NEXT cycle's Generator sees
+    # the actual exception (failure emits direction across cycles).
+    fd = (panel_result.get("tdd_result") or {}).get("failure_direction")
+    if fd:
+        _write_json(STATE_DIR / "last_failure_direction.json", fd)
 
     # Log a checkpoint for each panel phase
     _append_cycle_log(n, "panel_complete", {

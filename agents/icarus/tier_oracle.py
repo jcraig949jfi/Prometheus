@@ -74,6 +74,33 @@ def generate_probes(tier: str, seed: int, n_per: Optional[int] = None) -> list:
     return _GENERATORS[tier](rng)
 
 
+def probe_schema(tier: str, seed: int = 20260529) -> dict:
+    """Return the probe.data schema for a tier so the Generator knows which
+    fields to read. Different tiers carry different keys (R0/R1 use 'expr';
+    R2 uses 'a','b','eq'; R3 uses 'num','den','rhs','excluded'; etc.). Failing
+    to read the right key is a silent KeyError -- surfacing the schema makes
+    the failure emit direction (and prevents the schema-guess entirely)."""
+    try:
+        probes = generate_probes(tier, seed, n_per=1)
+    except Exception as e:
+        return {"tier": tier, "error": str(e)}
+    if not probes:
+        return {"tier": tier, "error": "no_probes"}
+    p = probes[0]
+    fields = {}
+    for k, v in p.data.items():
+        rep = repr(v)
+        fields[k] = {"type": type(v).__name__, "sample": rep[:80]}
+    return {
+        "tier": tier,
+        "kind": p.kind,
+        "versions": ["clean", "iso", "adversarial", "transfer"],
+        "data_fields": fields,
+        "ground_truth_type": type(p.ground_truth).__name__,
+        "ground_truth_sample": repr(p.ground_truth)[:80],
+    }
+
+
 def _grade_probe(probe, answer, trace: dict) -> tuple[bool, Optional[str]]:
     """Grade one (probe, answer) deterministically. Prefer the verifier lens
     (substitution/eval, hard to fool); fall back to the harness grader for

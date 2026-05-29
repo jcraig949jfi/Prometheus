@@ -45,7 +45,7 @@ def _lower_tiers(tier_target: str) -> list[str]:
 
 
 _SUBPROCESS = r'''
-import json, sys
+import json, sys, traceback
 sys.path.insert(0, r"{repo}")
 sys.path.insert(0, r"{icarus}")
 sys.path.insert(0, r"{src}")
@@ -53,13 +53,32 @@ try:
     import tier_oracle
     from reasoner import reason
 except Exception as e:
-    print(json.dumps({{"import_error": str(e)}})); sys.exit(0)
+    print(json.dumps({{"import_error": traceback.format_exc()[-1500:]}})); sys.exit(0)
 
 tier_target = "{tier}"
 train_seed, holdout_seed, n_per = {train}, {holdout}, {nper}
 tiers_to_score = {tiers}
 
 out = {{"per_tier": {{}}}}
+# Failure direction: capture the candidate's ACTUAL exception on the TARGET
+# tier (the first one), plus the target tier's probe schema, so a crashed or
+# wrong-field reasoner emits direction to the next Generator instead of a
+# silent tdd_failed.
+fd = {{"target_tier": tier_target, "probe_schema": tier_oracle.probe_schema(tier_target),
+       "candidate_exception": None, "exception_on_version": None}}
+try:
+    tprobes = tier_oracle.generate_probes(tier_target, holdout_seed, n_per=n_per)
+    for pr in tprobes:
+        try:
+            reason(pr)
+        except Exception:
+            fd["candidate_exception"] = traceback.format_exc()[-1200:]
+            fd["exception_on_version"] = pr.version
+            break
+except Exception as e:
+    fd["probe_gen_error"] = str(e)
+out["failure_direction"] = fd
+
 for t in tiers_to_score:
     try:
         train = tier_oracle.score_reasoner(reason, t, train_seed, n_per=n_per)
@@ -135,6 +154,7 @@ def run_ladder_tests(source_dir: Path, cycle_n: int, tier_target: str) -> dict:
         "holdout_pass": holdout_pass,
         "kill_patterns": target.get("kill_patterns", {}),
         "per_tier": per_tier,
+        "failure_direction": data.get("failure_direction", {}),
         "note": "ladder_eval(tier_oracle)",
     }
 

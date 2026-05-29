@@ -99,6 +99,7 @@ class GeneratorLens(Lens):
         )
 
         debt_block = _debt_block(ctx.open_debts)
+        direction_block = _failure_direction_block(ctx)
 
         user_prompt = (
             f"## Cycle strategy\n{strategy_modifier}\n\n"
@@ -106,6 +107,7 @@ class GeneratorLens(Lens):
             f"## Tier challenge\n"
             f"Tier target: {ctx.tier_target}\n"
             f"Falsification test: {ctx.tier_challenge.get('falsification_test', '?')}\n\n"
+            f"{direction_block}"
             f"## Diagnostician's read\n{diag_summary}\n\n"
             f"## Historian's read\n{hist_summary}\n\n"
             f"## Current reasoner source\n```python\n{source}\n```\n\n"
@@ -173,6 +175,37 @@ def _read_source(source_dir, max_chars: int = 6000) -> str:
         chunks.append(snippet)
         total += len(snippet)
     return "".join(chunks)
+
+
+def _failure_direction_block(ctx) -> str:
+    """Render the probe schema (proactive) + prior-cycle candidate exception
+    (reactive). This is how failure emits direction: the Generator sees the
+    exact fields the current tier's probe carries and the actual error the last
+    attempt hit, instead of guessing the schema and silently KeyError-ing."""
+    parts = []
+    schema = getattr(ctx, "tier_probe_schema", None)
+    if schema and not schema.get("error"):
+        fields = schema.get("data_fields", {})
+        field_lines = "\n".join(
+            f"    probe.data['{k}']  -> {v['type']}  e.g. {v['sample']}"
+            for k, v in fields.items()
+        )
+        parts.append(
+            f"## Probe schema for {schema.get('tier')} (kind='{schema.get('kind')}') "
+            f"-- READ THESE EXACT FIELDS\n"
+            f"probe.version in {schema.get('versions')}\n"
+            f"{field_lines}\n"
+            f"  expected answer type: {schema.get('ground_truth_type')} "
+            f"e.g. {schema.get('ground_truth_sample')}\n"
+        )
+    fd = getattr(ctx, "last_failure_direction", None)
+    if fd and fd.get("candidate_exception"):
+        parts.append(
+            f"## Last attempt's ACTUAL error (fix this exact failure)\n"
+            f"On a '{fd.get('exception_on_version')}' probe, the reasoner raised:\n"
+            f"```\n{fd.get('candidate_exception')}\n```\n"
+        )
+    return ("\n".join(parts) + "\n") if parts else ""
 
 
 def _debt_block(open_debts: list) -> str:

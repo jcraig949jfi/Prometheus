@@ -98,6 +98,12 @@ class CycleContext:
     # prompts. Rotating per cycle exposes which kinds of moves the panel
     # rewards/punishes -- empirical data for the v3 design.
     cycle_strategy: str = "structural"
+    # Failure-direction (failure must emit direction): the current tier's probe
+    # schema (proactive) + the prior cycle's actual candidate exception
+    # (reactive). Surfaced to the Generator so a crash/wrong-field becomes a
+    # navigable signal instead of a silent tdd_failed.
+    tier_probe_schema: Optional[dict] = None
+    last_failure_direction: Optional[dict] = None
 
     # Populated as the panel runs:
     diagnostician_report: Optional[LensReport] = None
