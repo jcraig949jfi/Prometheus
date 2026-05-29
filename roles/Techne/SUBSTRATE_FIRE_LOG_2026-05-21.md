@@ -12911,6 +12911,43 @@ Lifetime: 211 batches journaled / 623.4M records / 347.7M kills /
 623.4M records, 347.7M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #217 — 2026-05-29 ~12:01Z
+
+**3.38M records / 24 min / 0 templates / 0 promoted. Mix
+aa1/c5/f3/g5/k1 — f3+g5+c5 triple dominant.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    f3   1,375,666  927,688  old (importance_sampling, 67%)
+    g5   1,304,729  101,356  old (scale_invariance, 7.8%)
+    c5     694,770  577,073  old (specialization, 83%)
+    k1       4,952        0  NEW (typed bridges)
+    aa1          5        4  NEW (calibration miscalibrated)
+
+### Batch result
+
+- batch_id: `batch-20260529T120115Z-090c69`
+- 3,380,122 records / 1,606,121 kills / 1,774,001 confirms / 0 errors
+- 0 promoted (73rd consecutive)
+- batch_end ✓
+
+Lifetime: 212 batches journaled / 626.8M records / 349.3M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 73 consecutive 0-promoted
+- aa1 contributed 4 calibration-miscalibrated kills
+
+---
+
+*Fire #217 throttled = 3.38M records / 0 promoted / 0 templates.
+626.8M records, 349.3M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
