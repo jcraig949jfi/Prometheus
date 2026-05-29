@@ -91,13 +91,19 @@ def probe_schema(tier: str, seed: int = 20260529) -> dict:
     for k, v in p.data.items():
         rep = repr(v)
         fields[k] = {"type": type(v).__name__, "sample": rep[:80]}
+    # We surface the INPUT structure only. We deliberately do NOT expose
+    # probe.ground_truth: (1) it is a cheat-vector (the Generator must derive
+    # the answer, not mimic it), and (2) for some tiers the ground_truth field
+    # is descriptive and differs from the answer token the grader expects
+    # (R3's grader wants the string "all_x_except_excluded", not the
+    # {identity_except: r} ground_truth) -- showing it actively misleads.
+    # The required OUTPUT format lives in the tier description (tier_challenge),
+    # which is the legitimate place for it.
     return {
         "tier": tier,
         "kind": p.kind,
         "versions": ["clean", "iso", "adversarial", "transfer"],
         "data_fields": fields,
-        "ground_truth_type": type(p.ground_truth).__name__,
-        "ground_truth_sample": repr(p.ground_truth)[:80],
     }
 
 

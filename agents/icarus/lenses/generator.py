@@ -192,11 +192,11 @@ def _failure_direction_block(ctx) -> str:
         )
         parts.append(
             f"## Probe schema for {schema.get('tier')} (kind='{schema.get('kind')}') "
-            f"-- READ THESE EXACT FIELDS\n"
+            f"-- READ THESE EXACT INPUT FIELDS\n"
             f"probe.version in {schema.get('versions')}\n"
             f"{field_lines}\n"
-            f"  expected answer type: {schema.get('ground_truth_type')} "
-            f"e.g. {schema.get('ground_truth_sample')}\n"
+            f"(For the required OUTPUT/answer format, follow the Tier challenge "
+            f"description above -- do NOT read probe.ground_truth.)\n"
         )
     fd = getattr(ctx, "last_failure_direction", None)
     if fd and fd.get("candidate_exception"):
