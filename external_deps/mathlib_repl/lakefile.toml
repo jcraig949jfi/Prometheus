@@ -1,0 +1,12 @@
+# Bridge project: depends on both lean-repl and mathlib4 via local paths.
+# From here, `lake exe repl` brings up a REPL with all of Mathlib importable.
+name = "mathlib_repl_bridge"
+defaultTargets = []
+
+[[require]]
+name = "REPL"
+path = "../repl"
+
+[[require]]
+name = "mathlib"
+path = "../mathlib4"

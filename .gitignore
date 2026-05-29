@@ -346,3 +346,11 @@ apollo/.hf_cache/
 apollo/run_branch_c/*.log
 apollo/run_branch_c/*.jsonl
 apollo/run_branch_c/checkpoints/*.json
+
+# External Lean ecosystem dependencies: cloned upstream repos + Lake build outputs.
+# Track only our own thin bridge project files (external_deps/mathlib_repl/lakefile.toml
+# + lean-toolchain); the rest is reproducible via scripts/build_mathlib_repl.bat.
+external_deps/repl/
+external_deps/mathlib4/
+external_deps/mathlib_repl/.lake/
+external_deps/mathlib_repl/lake-manifest.json
