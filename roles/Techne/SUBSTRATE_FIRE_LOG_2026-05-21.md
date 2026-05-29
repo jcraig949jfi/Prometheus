@@ -11733,6 +11733,44 @@ Lifetime: 182 batches journaled / 565.4M records / 317.2M kills /
 565.4M records, 317.2M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #188 — 2026-05-29 ~00:08Z — **MIDNIGHT UTC CROSSED**
+
+**2.25M records / 24 min / 0 templates / 0 promoted. Mix
+a2/b2/f4/h1/h2 — all 5 picks are old gens. 83.5% kill rate.**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    f4   706,155  465,027  old (anti-frequency, 65.8% kill)
+    a2   637,805  595,909  old (statistical_corr, 93.4% kill)
+    h1   574,979  489,747  old (self-play hunter, 85.2%)
+    h2   324,507  324,446  old (post-cap, 99.98%)
+    b2     3,636    1,264  old (composition_test)
+
+### Batch result
+
+- batch_id: `batch-20260529T000823Z-bd9637`
+- 2,247,082 records / 1,876,393 kills / 370,689 confirms / 0 errors
+- 0 promoted (44th consecutive)
+- batch_end ✓
+
+Lifetime: 183 batches journaled / 567.6M records / 319.1M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **Midnight UTC crossed** (Fire #1 of 2026-05-29)
+- 44 consecutive 0-promoted
+- All 5 picks old — new gens deep in cooldown again
+
+---
+
+*Fire #188 throttled = 2.25M records / 0 promoted / 0 templates.
+567.6M records, 319.1M kills, 2351 promoted, 2671 templates,
+0 verified findings. **Midnight UTC.***
+
 
 
 
