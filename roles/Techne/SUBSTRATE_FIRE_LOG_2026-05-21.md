@@ -11808,6 +11808,47 @@ Lifetime: 184 batches journaled / 570.7M records / 321.2M kills /
 570.7M records, 321.2M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #190 — 2026-05-29 ~00:57Z — **190-FIRE MILESTONE / THIN-RESERVOIR**
+
+**1.6K records / 24 min / 0 templates / 0 promoted. Mix
+b1/c3/d1/w1/x1 — all thin-reservoir gens, 2 new gens emit 68
+structured kills.**
+
+### Per-gen attribution
+
+    gid  records  kills  notes
+    b1   1,340    0      INFRA_DIAGNOSTIC
+    w1     226    60     NEW (closure-violations)
+    x1      10    8      NEW (partial-view inflation, 80%)
+    c3      49    31     old (region_slide, scarce)
+    d1       7    0      old (kill_neighborhood, scarce)
+
+### Batch result
+
+- batch_id: `batch-20260529T005726Z-c9b28e`
+- 1,632 records / 99 kills / 1,533 confirms / 0 errors
+- 0 promoted (46th consecutive)
+- batch_end ✓
+
+Lifetime: 185 batches journaled / 570.7M records / 321.2M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **190-fire milestone**
+- 1.6K records total — smallest fire of the session
+- 68 structured kills from w1+x1 (closure + partial-view)
+- **42% disc-role kill density** (excluding b1 INFRA_DIAGNOSTIC)
+- 46 consecutive 0-promoted
+
+---
+
+*Fire #190 throttled = 1.6K records / 0 promoted / 0 templates.
+570.7M records, 321.2M kills, 2351 promoted, 2671 templates,
+0 verified findings. **190-fire milestone.***
+
 
 
 
