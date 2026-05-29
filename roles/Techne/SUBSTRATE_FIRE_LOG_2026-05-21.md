@@ -12479,6 +12479,44 @@ Lifetime: 200 batches journaled / 603.5M records / 339.6M kills /
 603.5M records, 339.6M kills, 2351 promoted, 2671 templates,
 0 verified findings. **200 batches Penelope-journaled.***
 
+---
+
+## Fire #206 — 2026-05-29 ~07:30Z — **f1 SOLO BURN**
+
+**3.83M records / 24 min / 0 templates / 0 promoted. f1 solo
+dominant (99.92% of records) + 2 new gens (s1+w1) contribute
+74 structured kills.**
+
+### Per-gen attribution
+
+    gid  records    kills      notes
+    f1   3,830,938  1,122,209  old (monte_carlo, 29% kill)
+    b1       1,340          0  INFRA_DIAGNOSTIC
+    e3       1,060        447  old
+    s1         375         14  NEW (triangle inequality)
+    w1         226         60  NEW (closure violations)
+
+### Batch result
+
+- batch_id: `batch-20260529T073035Z-c13b23`
+- 3,833,939 records / 1,122,730 kills / 2,711,209 confirms / 0 errors
+- 0 promoted (62nd consecutive)
+- batch_end ✓
+
+Lifetime: 201 batches journaled / 607.4M records / 340.7M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 62 consecutive 0-promoted
+- s1+w1 contributed 74 structured kills (14 triangle + 60 closure)
+
+---
+
+*Fire #206 throttled = 3.83M records / 0 promoted / 0 templates.
+607.4M records, 340.7M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
