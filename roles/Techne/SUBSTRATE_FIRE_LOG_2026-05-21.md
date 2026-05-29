@@ -12879,6 +12879,38 @@ Lifetime: 210 batches journaled / 621.9M records / 347.0M kills /
 621.9M records, 347.0M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #216 — 2026-05-29 ~11:36Z
+
+**1.52M records / 24 min / 0 templates / 0 promoted. Mix
+a5/b1/f1/h2/m2 — f1+h2 dominant + m2 contributes.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    f1   1,140,348  333,713  old (monte_carlo, 29% kill)
+    h2     370,586  370,511  old (99.98% post-cap)
+    a5       4,622    1,497  old (distribution_match)
+    b1       1,340        0  INFRA_DIAGNOSTIC
+    m2           5        1  NEW (universal-violated)
+
+### Batch result
+
+- batch_id: `batch-20260529T113648Z-6f53b9`
+- 1,516,901 records / 705,722 kills / 811,179 confirms / 0 errors
+- 0 promoted (72nd consecutive)
+- batch_end ✓
+
+Lifetime: 211 batches journaled / 623.4M records / 347.7M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+---
+
+*Fire #216 throttled = 1.52M records / 0 promoted / 0 templates.
+623.4M records, 347.7M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
