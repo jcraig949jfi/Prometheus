@@ -289,10 +289,35 @@ def n_distinct_real_shapes(archive, threshold=0.05):
     return n
 
 
+def dump_archive(archive, run_dir, gen):
+    """Write the whole archive to a checkpoint. The portfolio is the artifact,
+    not a single best organism. Called periodically so a multi-day run is
+    crash-safe."""
+    ckpt = Path(run_dir) / "checkpoints" / f"branch_c_gen_{gen:06d}.json"
+    archive_dump = []
+    for d, e in archive.items():
+        archive_dump.append({
+            "terminal_scorer": d[0],
+            "load_bearing_core": sorted(d[1]),
+            "pipeline": e["org"].pipeline,
+            "lineage": e["org"].lineage,
+            "acc": round(e["fitness"]["acc"], 3),
+            "comp_lift": round(e["fitness"]["comp_lift"], 3),
+            "causal_composition_score": round(e["fitness"]["causal_composition_score"], 3),
+            "n_load_bearing": e["fitness"]["n_load_bearing"],
+        })
+    archive_dump.sort(key=lambda x: x["causal_composition_score"], reverse=True)
+    with open(ckpt, "w", encoding="utf-8") as f:
+        json.dump({"gen": gen, "n_cells": len(archive),
+                   "distinct_real_shapes": n_distinct_real_shapes(archive),
+                   "archive": archive_dump}, f, indent=2)
+    return archive_dump
+
+
 # ── Main loop ─────────────────────────────────────────────────────────
 
 def evolve(gens=200, pop_size=20, mode="deterministic", seed=20260529,
-           run_dir=None, log_every=10):
+           run_dir=None, log_every=10, checkpoint_every=50):
     random.seed(seed)
     canary_path = Path(__file__).parent.parent / "data" / "clean_canary_v01.json"
     with open(canary_path, "r", encoding="utf-8") as f:
@@ -406,25 +431,12 @@ def evolve(gens=200, pop_size=20, mode="deterministic", seed=20260529,
                   f"comp_lift={best_f['comp_lift']:+.3f} ccs={best_f['causal_composition_score']:.3f} "
                   f"lb={best_f['n_load_bearing']} viab={viability:.2f} | {time.time()-t0:.0f}s")
 
+        # Periodic crash-safe checkpoint of the whole archive
+        if gen % checkpoint_every == 0:
+            dump_archive(archive, run_dir, gen)
+
     # Final checkpoint — the whole archive (the portfolio is the artifact)
-    ckpt = run_dir / "checkpoints" / f"branch_c_gen_{gens:06d}.json"
-    archive_dump = []
-    for d, e in archive.items():
-        archive_dump.append({
-            "terminal_scorer": d[0],
-            "body_ops": sorted(d[1]),
-            "pipeline": e["org"].pipeline,
-            "lineage": e["org"].lineage,
-            "acc": round(e["fitness"]["acc"], 3),
-            "comp_lift": round(e["fitness"]["comp_lift"], 3),
-            "causal_composition_score": round(e["fitness"]["causal_composition_score"], 3),
-            "n_load_bearing": e["fitness"]["n_load_bearing"],
-        })
-    archive_dump.sort(key=lambda x: x["causal_composition_score"], reverse=True)
-    with open(ckpt, "w", encoding="utf-8") as f:
-        json.dump({"gen": gens, "n_cells": len(archive),
-                   "distinct_real_shapes": n_distinct_real_shapes(archive),
-                   "archive": archive_dump}, f, indent=2)
+    archive_dump = dump_archive(archive, run_dir, gens)
 
     print()
     print(f"Archive: {len(archive)} cells, {n_distinct_real_shapes(archive)} distinct real shapes")
@@ -441,8 +453,11 @@ def main():
     ap.add_argument("--gens", type=int, default=200)
     ap.add_argument("--pop", type=int, default=20)
     ap.add_argument("--mode", default="deterministic", choices=["deterministic", "llm"])
+    ap.add_argument("--checkpoint-every", type=int, default=50)
+    ap.add_argument("--run-dir", default=None)
     args = ap.parse_args()
-    evolve(gens=args.gens, pop_size=args.pop, mode=args.mode)
+    evolve(gens=args.gens, pop_size=args.pop, mode=args.mode,
+           checkpoint_every=args.checkpoint_every, run_dir=args.run_dir)
 
 
 if __name__ == "__main__":
