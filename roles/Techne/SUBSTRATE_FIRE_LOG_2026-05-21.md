@@ -11849,6 +11849,45 @@ Lifetime: 185 batches journaled / 570.7M records / 321.2M kills /
 570.7M records, 321.2M kills, 2351 promoted, 2671 templates,
 0 verified findings. **190-fire milestone.***
 
+---
+
+## Fire #191 — 2026-05-29 ~01:21Z — **f3 SOLO BURN / n1+q1 ALSO**
+
+**3.63M records / 24 min / 0 templates / 0 promoted. f3 solo-
+dominant (99.95% of records). n1 + q1 + o1 also picked.**
+
+### Per-gen attribution
+
+    gid  records    kills      notes
+    f3   3,624,226  2,443,035  old (importance_sampling, 67% kill)
+    b5       1,052         15  old (small reservoir)
+    n1         866          0  NEW (verifier disagreements)
+    q1          45          2  NEW (mod-p concentration)
+    o1          22          0  NEW (conjecture perturbations)
+
+### Batch result
+
+- batch_id: `batch-20260529T012158Z-0a758d`
+- 3,626,211 records / 2,443,052 kills / 1,183,159 confirms / 0 errors
+- 0 promoted (47th consecutive)
+- batch_end ✓
+
+Lifetime: 186 batches journaled / 574.3M records / 323.6M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 47 consecutive 0-promoted
+- 3 new gens (n1+o1+q1) cycled back from cooldown
+- n1 emitted 866 verifier-disagreement records (UNVERIFIED but
+  high meta-information density)
+
+---
+
+*Fire #191 throttled = 3.63M records / 0 promoted / 0 templates.
+574.3M records, 323.6M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
