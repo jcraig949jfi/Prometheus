@@ -12713,6 +12713,45 @@ Lifetime: 206 batches journaled / 615.0M records / 344.4M kills /
 615.0M records, 344.4M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #212 — 2026-05-29 ~09:58Z
+
+**3.21M records / 24 min / 0 templates / 0 promoted. g5 solo
+dominant (99.99% of records) + 4 new gens (m1+m2+t1+u1).**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    g5   3,213,577  249,879  old (scale_invariance, 7.8% kill)
+    t1         252        0  NEW (multi-hop pass)
+    m1           9        6  NEW (minimal-counterexample, 67%)
+    m2           5        1  NEW (universal-violated)
+    u1           2        0  NEW (no swap-distinguish)
+
+### Batch result
+
+- batch_id: `batch-20260529T095826Z-021c3e`
+- 3,213,845 records / 249,886 kills / 2,963,959 confirms / 0 errors
+- 0 promoted (68th consecutive)
+- batch_end ✓
+
+Lifetime: 207 batches journaled / 618.2M records / 344.7M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 68 consecutive 0-promoted
+- 4 new gens picked simultaneously contributing 7 structured
+  kills (m1: 6 + m2: 1)
+- 618M lifetime records crossed
+
+---
+
+*Fire #212 throttled = 3.21M records / 0 promoted / 0 templates.
+618.2M records, 344.7M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
