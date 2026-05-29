@@ -11933,6 +11933,44 @@ Lifetime: 187 batches journaled / 574.3M records / 323.6M kills /
 574.3M records, 323.6M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #193 — 2026-05-29 ~02:11Z — **77.6% kill rate**
+
+**2.92M records / 24 min / 0 templates / 0 promoted. Mix
+a2/a3/b3/b5/c2 — all old gens. a-family duo dominant.**
+
+### Per-gen attribution
+
+    gid  records    kills      notes
+    a3   1,542,512    980,567  old (functional_identity)
+    a2   1,375,086  1,284,306  old (statistical_corr, 93.4%)
+    b5       1,052         15  old (small reservoir)
+    b3         606        346  old (inverse_test)
+    c2           7          2  old (small)
+
+### Batch result
+
+- batch_id: `batch-20260529T021104Z-35542d`
+- 2,919,263 records / 2,265,236 kills / 654,027 confirms / 0 errors
+- 0 promoted (49th consecutive)
+- batch_end ✓
+
+Lifetime: 188 batches journaled / 577.2M records / 325.9M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 77.6% kill rate
+- 49 consecutive 0-promoted (one shy of 50)
+- All 5 picks old gens
+
+---
+
+*Fire #193 throttled = 2.92M records / 0 promoted / 0 templates.
+577.2M records, 325.9M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
