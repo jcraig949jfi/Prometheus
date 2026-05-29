@@ -12061,6 +12061,49 @@ Lifetime: 190 batches journaled / 580.6M records / 327.9M kills /
 580.6M records, 327.9M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #196 — 2026-05-29 ~03:24Z — **3 NEW GENS / 66 STRUCTURED KILLS**
+
+**21K records / 24 min / 0 templates / 0 promoted. Mix
+d4/g2/m1/n1/w1 — 3 new real gens contributing structured kills.**
+
+### Per-gen attribution
+
+    gid  records  kills   notes
+    d4   16,979  12,835  old (boundary_crossing, 75.6% kill)
+    g2    3,000      0   old (functional_equation)
+    n1      889      0   NEW (verifier disagreement records)
+    w1      226     60   NEW (closure-violations)
+    m1        9      6   NEW (minimal-counterexample certs)
+
+### Structured kills from new gens (66 total)
+
+- `w1_closure_violated_by_*` × 60
+- `m1_minimal_counterexample_found` × 6
+
+### Batch result
+
+- batch_id: `batch-20260529T032447Z-872cd0`
+- 21,103 records / 12,901 kills / 8,202 confirms / 0 errors
+- 0 promoted (52nd consecutive)
+- batch_end ✓
+
+Lifetime: 191 batches journaled / 580.6M records / 327.9M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 52 consecutive 0-promoted
+- n1 emitted 889 verifier-disagreement records (UNVERIFIED but
+  high meta-information density)
+
+---
+
+*Fire #196 throttled = 21K records / 0 promoted / 0 templates.
+580.6M records, 327.9M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
