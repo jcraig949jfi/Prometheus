@@ -12441,6 +12441,44 @@ Lifetime: 199 batches journaled / **601.3M records** / 338.9M kills /
 601.3M records, 338.9M kills, 2351 promoted, 2671 templates,
 0 verified findings. **600M lifetime records + 60 consecutive 0-promoted.***
 
+---
+
+## Fire #205 — 2026-05-29 ~07:06Z
+
+**2.20M records / 24 min / 0 templates / 0 promoted. Mix
+bb1/c5/d1/e5/g5 — c5+g5 dominant + bb1 100% kills.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    g5   1,507,133  117,394  old (scale_invariance, 7.8%)
+    c5     687,476  612,332  old (specialization, 89% kill)
+    d1       2,374      917  old
+    e5         121        0  stub (mathworld)
+    bb1          5        5  NEW (100% false-dichotomy)
+
+### Batch result
+
+- batch_id: `batch-20260529T070601Z-6b1f41`
+- 2,197,109 records / 730,648 kills / 1,466,461 confirms / 0 errors
+- 0 promoted (61st consecutive)
+- batch_end ✓
+
+Lifetime: 200 batches journaled / 603.5M records / 339.6M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **200 batches journaled milestone** (Penelope side)
+- 61 consecutive 0-promoted
+- bb1 5/5 = 100% false-dichotomy kills again
+
+---
+
+*Fire #205 throttled = 2.20M records / 0 promoted / 0 templates.
+603.5M records, 339.6M kills, 2351 promoted, 2671 templates,
+0 verified findings. **200 batches Penelope-journaled.***
+
 
 
 
