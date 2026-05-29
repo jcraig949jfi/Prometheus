@@ -12328,6 +12328,43 @@ Lifetime: 196 batches journaled / 591.5M records / 334.7M kills /
 591.5M records, 334.7M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #202 — 2026-05-29 ~05:52Z
+
+**3.46M records / 24 min / 0 templates / 0 promoted. Mix
+c2/c4/f1/l1/o1 — f1 dominant + l1 contributes 4 obstruction kills.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    f1   1,707,258  499,544  old (monte_carlo, 29% kill)
+    c4     887,170        0  TAUTOLOGY_CONTROL
+    c2     862,158  234,175  old (threshold_mutation, 27% kill)
+    o1          22        0  NEW (perturbations, UNVERIFIED)
+    l1          12        4  NEW (obstruction-refuted-by-witness)
+
+### Batch result
+
+- batch_id: `batch-20260529T055219Z-703e4a`
+- 3,456,620 records / 733,723 kills / 2,722,897 confirms / 0 errors
+- 0 promoted (58th consecutive)
+- batch_end ✓
+
+Lifetime: 197 batches journaled / 595.0M records / 335.4M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 58 consecutive 0-promoted
+- 595M lifetime records — approaching 600M
+
+---
+
+*Fire #202 throttled = 3.46M records / 0 promoted / 0 templates.
+595.0M records, 335.4M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
