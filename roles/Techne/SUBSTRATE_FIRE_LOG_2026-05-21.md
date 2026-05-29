@@ -12948,6 +12948,44 @@ Lifetime: 212 batches journaled / 626.8M records / 349.3M kills /
 626.8M records, 349.3M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #218 — 2026-05-29 ~12:25Z
+
+**1.51M records / 24 min / 0 templates / 0 promoted. Mix
+e2/e4/f3/p1/q1 — f3 dominant + p1+q1 contribute 132 kills.**
+
+### Per-gen attribution
+
+    gid  records    kills      notes
+    f3   1,512,359  1,019,341  old (importance_sampling, 67%)
+    p1         138        130  NEW (chain-break, 94%)
+    q1          45          2  NEW (mod-p concentration)
+    e2         424          0  stub (arxiv-mining)
+    e4         233          0  stub (lmfdb-mining)
+
+### Batch result
+
+- batch_id: `batch-20260529T122550Z-61f798`
+- 1,513,199 records / 1,019,473 kills / 493,726 confirms / 0 errors
+- 0 promoted (74th consecutive)
+- batch_end ✓
+
+Lifetime: 213 batches journaled / 628.4M records / 350.3M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 74 consecutive 0-promoted
+- p1+q1 contributed 132 structured kills (130 chain-break + 2 mod-p)
+- **350M lifetime kills milestone crossed**
+
+---
+
+*Fire #218 throttled = 1.51M records / 0 promoted / 0 templates.
+628.4M records, 350.3M kills, 2351 promoted, 2671 templates,
+0 verified findings. **350M lifetime kills milestone.***
+
 
 
 
