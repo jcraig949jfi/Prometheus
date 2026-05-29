@@ -26,8 +26,13 @@ from pathlib import Path
 ICARUS = Path(r"D:\Prometheus\agents\icarus")
 REPO = Path(r"D:\Prometheus")
 
-TRAIN_SEED = 20260529
-HOLDOUT_SEED = 778901234
+import os
+
+# Climb seeds. Overridable via env (ICARUS_TRAIN_SEED / ICARUS_HOLDOUT_SEED) so
+# the whole climb can be re-run against a DIFFERENT probe stream to test loop
+# robustness (ensemble invariance of the process, not just the artifact).
+TRAIN_SEED = int(os.environ.get("ICARUS_TRAIN_SEED", "20260529"))
+HOLDOUT_SEED = int(os.environ.get("ICARUS_HOLDOUT_SEED", "778901234"))
 N_PER = 8  # probes per (tier, version); 4 versions => 32 probes/tier
 
 # Tier order for regression (lower tiers must keep passing).
