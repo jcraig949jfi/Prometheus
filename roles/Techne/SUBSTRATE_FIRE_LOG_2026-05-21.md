@@ -13352,6 +13352,43 @@ Lifetime: 222 batches journaled / 640.4M records / 358.0M kills /
 640.4M records, 358.0M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #228 — 2026-05-29 ~16:32Z
+
+**1.76M records / 24 min / 0 templates / 0 promoted. Mix
+a3/b3/c2/h2/w1 — a3+h2 dominant + w1 contributes 60 closure kills.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    a3   1,339,416  850,834  old (functional_identity, 64%)
+    h2     424,158  424,062  old (post-cap, 99.98%)
+    b3         606      346  old (inverse_test)
+    w1         226       60  NEW (closure violations)
+    c2          10        4  old (small)
+
+### Batch result
+
+- batch_id: `batch-20260529T163241Z-7d7442`
+- 1,764,416 records / 1,275,306 kills / 489,110 confirms / 0 errors
+- 0 promoted (84th consecutive)
+- batch_end ✓
+
+Lifetime: 223 batches journaled / 642.2M records / 359.3M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 84 consecutive 0-promoted
+- w1 contributed 60 closure-violation kills
+
+---
+
+*Fire #228 throttled = 1.76M records / 0 promoted / 0 templates.
+642.2M records, 359.3M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
