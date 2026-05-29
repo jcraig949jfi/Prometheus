@@ -223,6 +223,39 @@ def _reorder_breakage(pipeline, tasks):
     return _evaluate(reordered, tasks)
 
 
+# Registry of all ops for the random-compatible-op null
+def _all_ops():
+    from blackboard_ops import (parse_numbers, parse_question_target, op_numeric_argmax,
+                                score_by_max_value)
+    from blackboard_ops_v2 import (op_aggregate_quantities, entity_counter,
+                                   evidence_updater, distribution_reducer)
+    return [parse_numbers, parse_question_target, parse_names_and_relations, parse_ordinal,
+            parse_box_items, op_build_ordering, op_transitive_closure, op_numeric_argmax,
+            op_aggregate_quantities, entity_counter, evidence_updater, distribution_reducer]
+
+
+def _random_compatible_op_null(pipeline, tasks, n_trials=5):
+    """Replace each NON-TERMINAL op with a random op of the same write-signature
+    class (so downstream still receives a slot), keep pipeline length, evaluate.
+
+    A real composition should BEAT this null — if random type-compatible ops
+    do as well, the specific ops aren't doing meaningful work (the structure
+    is carrying the signal, not the operators)."""
+    pool = _all_ops()
+    accs = []
+    for _ in range(n_trials):
+        mutated = []
+        for i, op in enumerate(pipeline):
+            if i == len(pipeline) - 1:  # keep terminal scorer
+                mutated.append(op)
+                continue
+            # candidates: ops whose writes overlap this op's writes
+            compat = [o for o in pool if set(o.writes) & set(op.writes) and o.name != op.name]
+            mutated.append(RNG.choice(compat) if compat else op)
+        accs.append(_evaluate(mutated, tasks))
+    return sum(accs) / max(len(accs), 1)
+
+
 def run_gauntlet(name, pipeline, tasks, intermediate_slot):
     print(f"=== {name} ===")
     # Type audit
@@ -259,6 +292,11 @@ def run_gauntlet(name, pipeline, tasks, intermediate_slot):
         print(f"  [reorder breakage]  acc={reorder:.3f}  drop={reorder_drop:+.3f}  "
               f"({'breaks as predicted' if reorder_drop >= 0.05 else 'does not break'})")
 
+    random_op = _random_compatible_op_null(pipeline, tasks)
+    random_op_drop = baseline - random_op
+    print(f"  [random-op null]    acc={random_op:.3f}  drop={random_op_drop:+.3f}  "
+          f"({'beats null as predicted' if random_op_drop >= 0.10 else 'DOES NOT beat null — structure carries signal, not ops'})")
+
     # Causal intermediate slot check (the key gate)
     from dataflow_fitness import compute_dataflow_fitness
     df = compute_dataflow_fitness(pipeline, tasks)
@@ -266,12 +304,13 @@ def run_gauntlet(name, pipeline, tasks, intermediate_slot):
     print(f"  [dataflow]          load_bearing_ratio={df['load_bearing_ratio']:.3f}  "
           f"load-bearing slots={load_bearing}")
 
-    # Gauntlet pass conditions
+    # Gauntlet pass conditions (now includes both nulls)
     passes_lift = comp_lift >= 0.10
     passes_shuffled = shuffled_drop >= 0.10
+    passes_random_op = random_op_drop >= 0.10
     passes_intermediate = intermediate_slot in load_bearing
     print(f"  [GATE] comp_lift>=0.10: {passes_lift} | shuffled-null breaks: {passes_shuffled} | "
-          f"'{intermediate_slot}' load-bearing: {passes_intermediate}")
+          f"random-op-null beaten: {passes_random_op} | '{intermediate_slot}' load-bearing: {passes_intermediate}")
     print()
     return {
         "name": name,
@@ -280,10 +319,11 @@ def run_gauntlet(name, pipeline, tasks, intermediate_slot):
         "terminal": terminal,
         "comp_lift": comp_lift,
         "shuffled_drop": shuffled_drop,
+        "random_op_drop": random_op_drop,
         "reorder_drop": (baseline - reorder) if reorder is not None else None,
         "load_bearing_slots": load_bearing,
         "intermediate_load_bearing": passes_intermediate,
-        "passes": passes_lift and passes_shuffled and passes_intermediate,
+        "passes": passes_lift and passes_shuffled and passes_random_op and passes_intermediate,
     }
 
 
