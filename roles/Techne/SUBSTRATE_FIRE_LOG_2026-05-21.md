@@ -13474,6 +13474,45 @@ Lifetime: 225 batches journaled / 645.3M records / 359.5M kills /
 645.3M records, 359.5M kills, 2351 promoted, 2671 templates,
 0 verified findings. **230-fire milestone.***
 
+---
+
+## Fire #231 — 2026-05-29 ~17:46Z — **99.91% kill rate**
+
+**527K records / 24 min / 0 templates / 0 promoted. Mix
+c2/h2/h4/l2/y1 — h2 dominant + 2 new gens contribute.**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    h2   526,690  526,486  old (post-cap, 99.96% kill)
+    l2       224        0  NEW (Lean 4 skeletons, UNVERIFIED)
+    h4        31        0  old
+    c2         7        2  old (small)
+    y1         2        1  NEW (analogy-break)
+
+### Batch result
+
+- batch_id: `batch-20260529T174630Z-1a4881`
+- 526,954 records / 526,489 kills / 465 confirms / 0 errors
+- 0 promoted (87th consecutive)
+- batch_end ✓
+
+Lifetime: 226 batches journaled / 645.8M records / 360.0M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 99.91% kill rate
+- 87 consecutive 0-promoted
+- **360M lifetime kills crossed**
+- l2 emitted 224 Lean 4 skeletons (UNVERIFIED — awaiting Lean gate)
+
+---
+
+*Fire #231 throttled = 527K records / 0 promoted / 0 templates.
+645.8M records, 360.0M kills, 2351 promoted, 2671 templates,
+0 verified findings. **360M lifetime kills.***
+
 
 
 
