@@ -12798,6 +12798,49 @@ Lifetime: 208 batches journaled / 618.2M records / 344.7M kills /
 618.2M records, 344.7M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #214 — 2026-05-29 ~10:47Z — **98.24% kill rate**
+
+**949K records / 24 min / 0 templates / 0 promoted. Mix
+b3/d3/e4/p1/w1 — d3 dominant + p1+w1 contribute 190 structured kills.**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    d3   947,614  931,547  old (triangulation, 98.3% kill)
+    b3       606      346  old (inverse_test)
+    e4       233        0  stub (lmfdb-mining)
+    p1       138      130  NEW (chain-break, 94%)
+    w1       226       60  NEW (closure-violations, 27%)
+
+### Structured kills from new gens (190 total)
+
+- `p1_multi_hop_break_at_step_*` × 130
+- `w1_closure_violated_by_*` × 60
+
+### Batch result
+
+- batch_id: `batch-20260529T104732Z-d7a63e`
+- 948,817 records / 932,083 kills / 16,734 confirms / 0 errors
+- 0 promoted (70th consecutive)
+- batch_end ✓
+
+Lifetime: 209 batches journaled / 619.2M records / 345.7M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **70 consecutive 0-promoted milestone**
+- 98.24% overall kill rate
+- p1+w1 contributed 190 structured kills across 2 mechanism classes
+
+---
+
+*Fire #214 throttled = 949K records / 0 promoted / 0 templates.
+619.2M records, 345.7M kills, 2351 promoted, 2671 templates,
+0 verified findings. **70 consecutive 0-promoted milestone.***
+
 
 
 
