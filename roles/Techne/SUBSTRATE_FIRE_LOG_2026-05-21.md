@@ -13104,6 +13104,51 @@ Lifetime: 216 batches journaled / 633.5M records / 354.4M kills /
 633.5M records, 354.4M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #222 — 2026-05-29 ~14:04Z — **99.81% kill rate / 3 new gens**
+
+**547K records / 24 min / 0 templates / 0 promoted. Mix
+e3/h2/l1/p1/w1 — h2 dominant + 3 new gens contribute 194 structured kills.**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    h2   545,539  545,298  old (post-cap, 99.96% kill)
+    e3     1,060      447  old (small reservoir)
+    w1       226       60  NEW (closure violations)
+    p1       138      130  NEW (chain-break, 94%)
+    l1        12        4  NEW (obstruction-refuted)
+
+### Structured kills from new gens (194 total)
+
+- `p1_multi_hop_break_at_step_*` × 130
+- `w1_closure_violated_by_*` × 60
+- `l1_obstruction_refuted_by_witness` × 4
+
+### Batch result
+
+- batch_id: `batch-20260529T140403Z-88762b`
+- 546,975 records / 545,939 kills / 1,036 confirms / 0 errors
+- 0 promoted (78th consecutive)
+- batch_end ✓
+
+Lifetime: 217 batches journaled / 634.0M records / 354.9M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 99.81% kill rate
+- 78 consecutive 0-promoted
+- 3 new mechanism classes simultaneously (chain-break / closure /
+  obstruction)
+
+---
+
+*Fire #222 throttled = 547K records / 0 promoted / 0 templates.
+634.0M records, 354.9M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
