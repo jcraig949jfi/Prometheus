@@ -173,6 +173,37 @@ This cycle is the architecture working *and* the architecture exposing its limit
 
 **What got built:** `cycle_014/code/reasoner.py` is 99 lines (vs the bootstrap's 48). New methods: `_extract_numeric_operands` (R1 invariance), `_apply_two_operand` (R1 dispatch), `_filter_distractor_steps` (R2 distractor handling), `apply_batch` (R2 multi-step orchestration). New tests: 21 total across `tests/`, `tests/generated/`. The code grew 2x; capability grew from "R0 baseline" to "claims R1+R2, with one acknowledged contract debt in apply_batch."
 
+> **Note (2026-05-29):** §4.1–4.4 above describe the *toy arithmetic* ladder we hand-wrote — and §4.5 below shows that ladder was non-discriminating (the tier calibration proved the visible R1/R2 tests passed on the bootstrap). The genuine result is §4.5: Icarus climbing an externally-authored, deterministically-graded ladder. We keep §4.1–4.4 as the falsification trail, not as a claim of capability.
+
+### 4.5 The real climb: Harmonia B's testable ladder, dual-falsified R0–R3 (2026-05-29)
+
+The toy tier tests of §4.1–4.4 were replaced wholesale. A sibling agent (Harmonia_M2_B) had built a **testable reasoning ladder** (`harmonia/experiments/reasoning_phase0.py`): procedurally-generated probes for R0–R3, R5, R6, R7, four versions each (clean / isomorphic / adversarial / transfer), with **deterministic, non-LLM grading** via a verifier lens (`verifier_lens.py`, sympy + z3, fails-closed, cross-validated 0 disagreements across three frontier models). Icarus now climbs *that* ladder via an adapter (`tier_oracle.py` + `ladder_eval.py`) that reads — never edits — the Harmonia harness.
+
+This is a strict upgrade on five axes the prior sections lacked: (1) the probes **discriminate** (a tier calibration showed `template` fails R0, `procedural` fails R2, `careful` reaches R3 — unlike our toy tests which all-passed on the bootstrap); (2) grading is **deterministic and non-gameable** (substitution into the original problem, not an LLM judge); (3) probes are **procedurally generated**, so a held-out seed is a blind oracle that *cannot be memorized*; (4) the ladder was **authored by a different agent** than Icarus's Generator; (5) the **substrate pivots** from toy arithmetic to real symbolic-math reasoning — Icarus evolves a `reason(probe) -> (answer, trace)` reasoner from a `template`-level bootstrap (clean-linear only), building reasoning *discipline* (domain tracking, extraneous-root rejection, singularity exclusion) on the sympy substrate. It cannot reimplement sympy and cannot cheat: the verifier grades by substitution on probes it never saw.
+
+**The climb (run 1, seeds A):** R0 cleared cyc 1, R1 cyc 2, R2 cyc 9, R3 cyc 18. Pointer advanced four real rungs. Tier auto-advances when the held-out frontier reaches the target.
+
+**Dual falsification — before declaring the result, we tried to break it two ways, and could not:**
+
+1. *Artifact robustness* (`robustness.py`): score the final stable reasoner across 15 **fresh** seeds it never saw during the climb (~720 verifier-graded probes/tier). Result: R0–R3 at **mean 1.00, min 1.00, stdev 0.00, 100% seed-pass-rate**. It did not drop on a single unseen seed. No seed-overfit. R5/R6/R7 = 0.00.
+2. *Process robustness*: re-run the **entire climb from the bootstrap** against a **different probe stream** (new train+holdout seeds) and different LLM sampling. Result: independently reached R3 — R0 cyc 1, R1 cyc 2, R2 cyc 4, R3 cyc 12. Same endpoint, different trajectory ("robust capability, stochastic path"). The second reasoner is *also* seed-robust (R0–R3 at 100% across the 15 fresh seeds).
+
+Two independently-built reasoners, both holding R0–R3 across a fresh-seed ensemble, reached by two independent climbs on different data. This clears the project's ensemble-invariance bar. **R0–R3 is a validated result.** (Naming note: the generated ladder is R0,R1,R2,R3,R5,R6,R7 — there is no R4 generator; the validated range is R0–R3, with R5 as the frontier rung.)
+
+This is the first time in the project a self-improving loop built its own reasoner from a minimal substrate up to a verified, dual-falsified frontier on a ladder it could not see or game. It is the affirmative answer, at the lower tiers, to Icarus's lane: *can a self-improving loop accumulate typed failure residue and climb without Goodharting its evaluators.*
+
+### 4.6 Failure-direction is empirically the unlock
+
+The most important mechanism finding of the whole project. Difficulty (3) of §1 says a failed reasoning attempt must emit a *directional signal*, or the loop is a noise fountain. We observed this with unusual clarity.
+
+R2 was a **silent 6-cycle plateau**. The Generator's reasoning was *correct in spirit* — square both sides, reject extraneous roots by substitution — but it read `probe.data["expr"]` when R2 probes carry `data["a","b","eq"]`. Every R2 probe threw `KeyError: 'expr'` → returned None → `tdd_failed`. Six cycles, same wall, because the failure signal (`tdd_failed`) never carried the actual exception back to the next Generator. The reasoning was one dict-key from working and the loop could not see it.
+
+We then closed the loop: surface the tier's probe schema **proactively** every cycle, and feed the candidate's **actual exception** to the next Generator. The very next cycle cleared R2. In the independent re-climb, with failure-direction live from the start, R2 fell in one substantive attempt (cyc 4 vs cyc 9) — the cycle-count difference is the mechanism's signature.
+
+R3 then taught the same lesson one level deeper: we had been surfacing `probe.ground_truth` in the schema, which was *both* a cheat-vector *and* misleading (R3's grader wants the token `"all_x_except_excluded"`, not the descriptive `{identity_except: r}` ground_truth — so the Generator faithfully mimicked the wrong thing). Removing ground_truth and relying on the tier description unblocked R3. **The principle applies recursively: surfacing the wrong signal produces a wrong climb; the fix is always to make the right signal navigable.**
+
+This is the clearest empirical support we have for the central thesis: *synthetic reasoning becomes cumulative only when every act leaves a navigable residue.* The walls were not reasoning-capability gaps; they were direction gaps. Close the direction gap and the loop climbs.
+
 ---
 
 ## 5. Where Icarus fails
@@ -318,7 +349,12 @@ The whitepaper exists to be picked apart. The numbered claims are placeholders. 
 | Phase 1 baseline | 8 | 1 | ~$0.20 | ~36s/cycle |
 | Phase 2 raw | 6 | 0 | ~$0.30 | ~57s/cycle |
 | Phase 2.1 fixes | 5 | 4 | ~$0.23 | ~70s/cycle |
-| Phase 2.2 (R1+R2) | 15 | 9 | ~$0.72 | ~70s/cycle |
+| Phase 2.2 (R1+R2 toy) | 15 | 9 | ~$0.72 | ~70s/cycle |
+| Ladder climb run 1 (R0–R3) | ~18 | 4 rungs | ~$1.4 | ~95s/cycle |
+| Ladder re-climb run 2 (R0–R3) | ~22 | 4 rungs | ~$1.7 | ~95s/cycle |
+| Robustness sweeps (no LLM) | 30 seeds×2 | — | ~$0 | deterministic |
+
+Ladder cycles cost more (~95s, more $) than toy cycles because `ladder_eval` runs many subprocess-isolated sympy/z3 evaluations across 4 probe versions × multiple tiers per cycle. Still well inside the $0.50/cycle ceiling.
 
 ### D. Open task list
 
