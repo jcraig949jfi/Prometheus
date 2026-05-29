@@ -13149,6 +13149,43 @@ Lifetime: 217 batches journaled / 634.0M records / 354.9M kills /
 634.0M records, 354.9M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #223 — 2026-05-29 ~14:28Z
+
+**1.66M records / 24 min / 0 templates / 0 promoted. Mix
+aa1/g1/g4/h2/m2 — g4 dominant + h2 post-cap + aa1+m2 contribute.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    g4   1,226,493   66,421  old (reflection_duality, 5.4%)
+    h2     437,081  436,946  old (post-cap, 99.97% kill)
+    g1         184      108  old (small reservoir)
+    aa1          5        4  NEW (calibration miscalibrated)
+    m2           5        1  NEW (universal-violated)
+
+### Batch result
+
+- batch_id: `batch-20260529T142838Z-4be4ac`
+- 1,663,768 records / 503,480 kills / 1,160,288 confirms / 0 errors
+- 0 promoted (79th consecutive)
+- batch_end ✓
+
+Lifetime: 218 batches journaled / 635.7M records / 355.4M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 79 consecutive 0-promoted
+- aa1+m2 contributed 5 structured kills
+
+---
+
+*Fire #223 throttled = 1.66M records / 0 promoted / 0 templates.
+635.7M records, 355.4M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
