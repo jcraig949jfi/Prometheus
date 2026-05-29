@@ -1,5 +1,5 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-05-29 05:18:24 PM UTC*
+*Generated: 2026-05-29 09:17:22 PM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
@@ -12,13 +12,11 @@ Restore Redis on M1 to re-enable Agora pub/sub.
 
 ## Watch this
 
-**No Deep Research dispatched or received in last 24h**
-DR pipeline idle. Either Pythia's queue is empty or upstream intent (Aporia tickets) hasn't been refilled.
-Check Pythia queue depth; refill DR ticket inbox if dry.
+*(nothing trending toward intervention)*
 
 ## For the record
 
-**5 agents ALIVE** (Hephaestus, Pronoia, Pythia, Charon_Loop, Pollux).
+**5 agents ALIVE** (Hephaestus, Pronoia, Pythia, Charon_Loop, Erebos).
 
 **Anomalies tracked:** 24 (Apollo, Clio, Hypatia, Atalanta, Polyhymnia).
 
