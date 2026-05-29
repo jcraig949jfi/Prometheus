@@ -11771,6 +11771,43 @@ Lifetime: 183 batches journaled / 567.6M records / 319.1M kills /
 567.6M records, 319.1M kills, 2351 promoted, 2671 templates,
 0 verified findings. **Midnight UTC.***
 
+---
+
+## Fire #189 — 2026-05-29 ~00:32Z
+
+**3.03M records / 24 min / 0 templates / 0 promoted. Mix
+a1/d1/d4/f2/t1. Three old big gens dominant.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    f2   1,048,888  690,853  old (anti-frequency)
+    d4   1,043,003  821,954  old (boundary_crossing, 78.8%)
+    a1     931,130  641,517  old (catalog cross_product)
+    d1       1,810      826  old (kill_neighborhood)
+    t1         252        0  NEW (multi-hop pass)
+
+### Batch result
+
+- batch_id: `batch-20260529T003254Z-5774cd`
+- 3,025,083 records / 2,155,150 kills / 869,933 confirms / 0 errors
+- 0 promoted (45th consecutive)
+- batch_end ✓
+
+Lifetime: 184 batches journaled / 570.7M records / 321.2M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 45 consecutive 0-promoted
+- 570M lifetime records crossed
+
+---
+
+*Fire #189 throttled = 3.03M records / 0 promoted / 0 templates.
+570.7M records, 321.2M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
