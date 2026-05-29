@@ -13024,6 +13024,44 @@ Lifetime: 214 batches journaled / 630.9M records / 352.3M kills /
 630.9M records, 352.3M kills, 2351 promoted, 2671 templates,
 0 verified findings. **75 consecutive 0-promoted milestone.***
 
+---
+
+## Fire #220 — 2026-05-29 ~13:14Z — **220-FIRE MILESTONE / 75.5% kill rate**
+
+**1.90M records / 24 min / 0 templates / 0 promoted. Mix
+a1/d2/e3/h2/w1 — a1+h2 dominant + w1 contributes 60 kills.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    a1   1,207,779  832,092  old (catalog cross_product, 69%)
+    h2     432,571  432,474  old (99.98% post-cap)
+    d2     254,199  166,474  old (margin_bracket)
+    e3       1,060      447  old
+    w1         226       60  NEW (closure violations)
+
+### Batch result
+
+- batch_id: `batch-20260529T131457Z-535c43`
+- 1,895,835 records / 1,431,547 kills / 464,288 confirms / 0 errors
+- 0 promoted (76th consecutive)
+- batch_end ✓
+
+Lifetime: 215 batches journaled / 632.8M records / 353.7M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **220-fire milestone**
+- 76 consecutive 0-promoted
+- w1 contributed 60 closure-violation kills
+
+---
+
+*Fire #220 throttled = 1.90M records / 0 promoted / 0 templates.
+632.8M records, 353.7M kills, 2351 promoted, 2671 templates,
+0 verified findings. **220-fire milestone.***
+
 
 
 
