@@ -12594,6 +12594,49 @@ Lifetime: 203 batches journaled / 613.2M records / 343.8M kills /
 613.2M records, 343.8M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #209 — 2026-05-29 ~08:44Z — **3 NEW GENS / 68 STRUCTURED KILLS**
+
+**22K records / 24 min / 0 templates / 0 promoted. Mix
+c2/d4/k1/w1/x1 — d4 dominant + 3 new gens.**
+
+### Per-gen attribution
+
+    gid  records  kills   notes
+    d4   16,979  12,835  old (boundary_crossing)
+    k1    4,952      0   NEW (typed bridges, UNVERIFIED)
+    w1      226     60   NEW (closure violations)
+    c2       22     10   old (small)
+    x1       10      8   NEW (partial-view inflation)
+
+### Structured kills from new gens (68 total)
+
+- `w1_closure_violated_by_*` × 60
+- `x1_partial_view_inflation_*` × 8
+
+### Batch result
+
+- batch_id: `batch-20260529T084428Z-f23811`
+- 22,189 records / 12,913 kills / 9,276 confirms / 0 errors
+- 0 promoted (65th consecutive)
+- batch_end ✓
+
+Lifetime: 204 batches journaled / 613.2M records / 343.9M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 65 consecutive 0-promoted
+- k1 emitted 4952 typed-bridge records (UNVERIFIED — Lean gate
+  needed)
+
+---
+
+*Fire #209 throttled = 22K records / 0 promoted / 0 templates.
+613.2M records, 343.9M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
