@@ -111,6 +111,54 @@ def apply_diff(diff_text: str, target_dir: Path) -> dict:
             pass
 
 
+_ALLOWED_FULL_FILES = {"reasoner.py", "strategy.py"}
+
+
+def write_full_files(files: dict, target_dir: Path) -> dict:
+    """Write complete file contents directly (full-file edit mode), bypassing
+    unified-diff application. The Generator repeatedly tries to rewrite the
+    whole reasoner but mis-frames it as a create-file diff that can't apply;
+    full-file mode meets it where it is and eliminates the diff-apply
+    brittleness entirely. Only reasoner.py / strategy.py are writable (the
+    mutability boundary). The regression check downstream catches dropped tiers.
+    """
+    if not files:
+        return {"applied": False, "method": "full_file", "reason": "no_files",
+                "files_changed": [], "stdout": "", "stderr": ""}
+    if not target_dir.exists():
+        return {"applied": False, "method": "full_file",
+                "reason": f"target_missing: {target_dir}",
+                "files_changed": [], "stdout": "", "stderr": ""}
+    written = []
+    for fname, content in files.items():
+        base = Path(fname).name
+        if base not in _ALLOWED_FULL_FILES:
+            return {"applied": False, "method": "full_file",
+                    "reason": f"file_outside_mutability_boundary: {fname}",
+                    "files_changed": written, "stdout": "", "stderr": ""}
+        if not isinstance(content, str) or not content.strip():
+            return {"applied": False, "method": "full_file",
+                    "reason": f"empty_content: {fname}",
+                    "files_changed": written, "stdout": "", "stderr": ""}
+        # Must be valid Python -- fail closed on a syntactically broken rewrite.
+        import ast
+        try:
+            ast.parse(content)
+        except SyntaxError as e:
+            return {"applied": False, "method": "full_file",
+                    "reason": f"syntax_error in {fname}: {e}",
+                    "files_changed": written, "stdout": "", "stderr": ""}
+        try:
+            (target_dir / base).write_text(content, encoding="utf-8")
+            written.append(base)
+        except Exception as e:
+            return {"applied": False, "method": "full_file",
+                    "reason": f"write_failed {fname}: {e}",
+                    "files_changed": written, "stdout": "", "stderr": ""}
+    return {"applied": True, "method": "full_file", "reason": "ok",
+            "files_changed": written, "stdout": "", "stderr": ""}
+
+
 def _extract_files_from_diff(diff_text: str) -> list[str]:
     """Walk the diff and pull out file paths from +++ lines."""
     files = []

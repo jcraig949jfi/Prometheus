@@ -39,22 +39,29 @@ GENERATOR_SYSTEM = (
     "2. Diff must be valid unified-diff format that `git apply -p1` will accept. "
     "Reproduce CONTEXT LINES EXACTLY from the source -- do not paraphrase or "
     "modify them. If you cannot reproduce a context line verbatim, omit it.\n"
-    "3. Only modify reasoner.py or strategy.py. Never modify daemon.py, "
-    "lineage.py, lenses/, ladder.py, tier_oracle.py, ladder_eval.py.\n"
+    "3. You may only rewrite reasoner.py (and optionally strategy.py). Never "
+    "touch daemon.py, lineage.py, lenses/, ladder.py, tier_oracle.py, "
+    "ladder_eval.py.\n"
     "4. No defensive wrappers / broad try/except / scaffolding that masks "
     "failure. Make a real reasoning change. Do NOT special-case probe.version "
     "or read probe.ground_truth -- the held-out grader will catch it.\n\n"
-    "REUSABLE PRIMITIVES: strategy.py may already contain reusable primitive "
-    "functions. Prefer importing and COMPOSING them (e.g. `from strategy import "
-    "color_counts`) over reimplementing logic inside reasoner.py. Composing a "
-    "few small primitives is usually a cleaner, smaller diff than a monolithic "
-    "new method.\n\n"
+    "EDIT MODE -- FULL FILE (important):\n"
+    "Return the COMPLETE new contents of reasoner.py, not a diff. (Unified "
+    "diffs were the bottleneck: rewrites mis-framed as create-file patches "
+    "failed to apply.) CRITICAL: your reasoner.py must PRESERVE every tier "
+    "branch the current reasoner already handles (R0 linear, R1 quadratic, R2 "
+    "sqrt, R3 rational, ...) AND add/extend the branch for the current tier "
+    "target. Dropping a previously-passing tier is a regression that will park "
+    "the cycle -- include ALL existing capability plus the new move.\n\n"
+    "REUSABLE PRIMITIVES: strategy.py may contain reusable primitives. Prefer "
+    "`from strategy import color_counts` etc. over reimplementing.\n\n"
     "You will be given upstream lens reports (Diagnostician, Historian) + the "
-    "kill_patterns from the last attempt. Target the gap; avoid recurring "
-    "failure modes.\n\n"
+    "kill_patterns from the last attempt + the FULL current reasoner source. "
+    "Target the gap; avoid recurring failure modes.\n\n"
     "OUTPUT (strict JSON, no prose around it):\n"
     "{\n"
-    '  "diff": "<unified diff as a single string with \\n line breaks>",\n'
+    '  "reasoner_py": "<COMPLETE new contents of reasoner.py as one string>",\n'
+    '  "strategy_py": "<optional: complete new strategy.py, or omit/null>",\n'
     '  "rationale": "<2-4 sentences explaining the change>",\n'
     '  "axes": {\n'
     '    "tier_proximity": <0.0-1.0>,\n'
@@ -115,15 +122,17 @@ class GeneratorLens(Lens):
             f"{direction_block}"
             f"## Diagnostician's read\n{diag_summary}\n\n"
             f"## Historian's read\n{hist_summary}\n\n"
-            f"## Current reasoner source\n```python\n{source}\n```\n\n"
-            f"Propose one diff."
+            f"## Current reasoner source (return the COMPLETE new version)\n"
+            f"```python\n{source}\n```\n\n"
+            f"Return the complete new reasoner.py (preserving all existing tier "
+            f"branches and adding/extending the current target)."
         )
 
         result = call_llm(
             preference=self.model_preference,
             system=GENERATOR_SYSTEM,
             user=user_prompt,
-            max_tokens=3500,
+            max_tokens=6000,  # full-file output needs more room than a diff
         )
         text = result.get("text", "")
         parsed = extract_json_block(text)
@@ -134,6 +143,13 @@ class GeneratorLens(Lens):
                 model_used=result.get("model_used", "unknown"),
             )
 
+        # Full-file edit mode (primary). Fall back to diff if a model still
+        # returns one.
+        full_files = {}
+        if parsed.get("reasoner_py"):
+            full_files["reasoner.py"] = parsed["reasoner_py"]
+        if parsed.get("strategy_py"):
+            full_files["strategy.py"] = parsed["strategy_py"]
         diff = parsed.get("diff", "")
         rationale = parsed.get("rationale", "")
         axes = {a: clamp_axis(parsed.get("axes", {}).get(a, 0.5))
@@ -143,7 +159,6 @@ class GeneratorLens(Lens):
         if not isinstance(observations, list):
             observations = [str(observations)]
 
-        # The diff goes in suggested_actions[0] so the panel can extract it
         return LensReport(
             lens_name=self.name,
             model_used=result.get("model_used", "unknown"),
@@ -153,7 +168,8 @@ class GeneratorLens(Lens):
             axes=axes,
             confidence=confidence,
             key_observations=[str(o)[:300] for o in observations[:6]],
-            suggested_actions=[diff],  # [0] is the diff
+            extra={"full_files": full_files} if full_files else {},
+            suggested_actions=[diff],  # [0] = diff fallback
             raw_response_excerpt=text[:500],
             tokens_used=result.get("tokens_used", 0),
             cost_estimate_usd=result.get("cost_estimate_usd", 0.0),

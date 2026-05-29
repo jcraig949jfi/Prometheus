@@ -90,17 +90,23 @@ def run_lens_panel(
     ctx.generator_report = gen_report
     lens_reports["generator"] = gen_report
     write_lens_report(gen_report, cycle_dir)
-    # Extract proposed diff from generator
+    # Extract proposed edit from generator: prefer full-file mode (it meets the
+    # Generator where it actually operates -- wholesale reasoner rewrites -- and
+    # eliminates unified-diff apply brittleness), fall back to diff.
+    ctx.proposed_full_files = (gen_report.extra or {}).get("full_files") or None
     ctx.proposed_diff = (gen_report.suggested_actions[0]
                          if gen_report.suggested_actions else "")
     _emit(emit_event_fn, "phase_b_complete", ctx.cycle_n, {
-        "diff_lines": len((ctx.proposed_diff or "").splitlines()),
+        "mode": "full_file" if ctx.proposed_full_files else "diff",
         "gen_confidence": gen_report.confidence,
     })
 
-    # ---- Phase C: apply diff --------------------------------------------
-    apply_result = {"applied": False, "reason": "no_diff", "files_changed": []}
-    if ctx.proposed_diff and ctx.proposed_diff.strip():
+    # ---- Phase C: apply the edit ----------------------------------------
+    apply_result = {"applied": False, "reason": "no_edit", "files_changed": []}
+    if ctx.proposed_full_files:
+        import patcher
+        apply_result = patcher.write_full_files(ctx.proposed_full_files, ctx.source_dir)
+    elif ctx.proposed_diff and ctx.proposed_diff.strip():
         apply_result = apply_fn(ctx.proposed_diff, ctx.source_dir)
     ctx.apply_result = apply_result
     ctx.diff_applied = bool(apply_result.get("applied"))

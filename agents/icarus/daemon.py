@@ -301,8 +301,15 @@ def run_cycle(
         return _emit_complete(tick_id, started_at, n, "park",
                                {"reason": f"panel_crashed: {e}"})
 
-    # Persist the proposed diff artifact (Generator's output)
-    if ctx.proposed_diff:
+    # Persist the proposed edit artifact (Generator's output)
+    if ctx.proposed_full_files:
+        for fname, content in ctx.proposed_full_files.items():
+            try:
+                (new_cycle_dir / f"proposed_{Path(fname).name}").write_text(
+                    content, encoding="utf-8")
+            except Exception:
+                pass
+    elif ctx.proposed_diff:
         (new_cycle_dir / "diff.patch").write_text(ctx.proposed_diff, encoding="utf-8")
 
     # Persist this cycle's failure-direction so the NEXT cycle's Generator sees

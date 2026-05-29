@@ -110,6 +110,7 @@ class CycleContext:
     historian_report: Optional[LensReport] = None
     generator_report: Optional[LensReport] = None
     proposed_diff: Optional[str] = None
+    proposed_full_files: Optional[dict] = None  # {filename: content} full-file edit mode
     diff_applied: bool = False
     apply_result: Optional[dict] = None
     tdd_result: Optional[dict] = None
