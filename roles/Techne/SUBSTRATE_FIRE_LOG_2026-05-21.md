@@ -12022,6 +12022,45 @@ old-gen-only).
 577.2M records, 325.9M kills, 2351 promoted, 2671 templates,
 0 verified findings. **50 CONSECUTIVE 0-PROMOTED MILESTONE.***
 
+---
+
+## Fire #195 — 2026-05-29 ~03:00Z
+
+**3.41M records / 24 min / 0 templates / 0 promoted. Mix
+c3/f3/g2/k1/m2 — f3 dominant + 2 new gens (k1+m2).**
+
+### Per-gen attribution
+
+    gid  records    kills      notes
+    f3   2,006,347  1,353,486  old (importance_sampling, 67% kill)
+    c3   1,395,630    601,576  old (region_slide, 43% kill)
+    k1       4,952          0  NEW (typed bridges, all UNVERIFIED)
+    g2       3,000          0  old (functional_equation)
+    m2           5          1  NEW (universal-violated)
+
+### Batch result
+
+- batch_id: `batch-20260529T030015Z-954211`
+- 3,409,934 records / 1,955,063 kills / 1,454,871 confirms / 0 errors
+- 0 promoted (51st consecutive)
+- batch_end ✓
+
+Lifetime: 190 batches journaled / 580.6M records / 327.9M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 51 consecutive 0-promoted
+- **580M lifetime records crossed**
+- k1 emitted ~5K typed-bridge records (UNVERIFIED — Lean gate
+  needed for verification)
+
+---
+
+*Fire #195 throttled = 3.41M records / 0 promoted / 0 templates.
+580.6M records, 327.9M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
