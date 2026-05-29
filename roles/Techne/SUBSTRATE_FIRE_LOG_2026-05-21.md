@@ -12986,6 +12986,44 @@ Lifetime: 213 batches journaled / 628.4M records / 350.3M kills /
 628.4M records, 350.3M kills, 2351 promoted, 2671 templates,
 0 verified findings. **350M lifetime kills milestone.***
 
+---
+
+## Fire #219 — 2026-05-29 ~12:50Z — **82.8% kill rate / c1 SOLO BURN**
+
+**2.47M records / 24 min / 0 templates / 0 promoted. Mix
+aa1/c1/c5/d2/t1 — c1 dominant solo burn (89% kill rate).**
+
+### Per-gen attribution
+
+    gid  records    kills      notes
+    c1   2,098,666  1,870,467  old (claim_mutation, 89% kill)
+    d2     312,022    141,173  old (margin_bracket)
+    c5      57,605     33,431  old (specialization)
+    t1         252          0  NEW (multi-hop pass)
+    aa1          5          4  NEW (calibration miscalibrated)
+
+### Batch result
+
+- batch_id: `batch-20260529T125022Z-377bee`
+- 2,468,550 records / 2,045,075 kills / 423,475 confirms / 0 errors
+- 0 promoted (75th consecutive)
+- batch_end ✓
+
+Lifetime: 214 batches journaled / 630.9M records / 352.3M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **75 consecutive 0-promoted milestone**
+- 82.8% overall kill rate
+- c1 alone produced 91% of records and 91% of kills
+
+---
+
+*Fire #219 throttled = 2.47M records / 0 promoted / 0 templates.
+630.9M records, 352.3M kills, 2351 promoted, 2671 templates,
+0 verified findings. **75 consecutive 0-promoted milestone.***
+
 
 
 
