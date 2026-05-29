@@ -11971,6 +11971,57 @@ Lifetime: 188 batches journaled / 577.2M records / 325.9M kills /
 577.2M records, 325.9M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #194 — 2026-05-29 ~02:35Z — **50 CONSECUTIVE 0-PROMOTED MILESTONE**
+
+**4.2K records / 24 min / 0 templates / 0 promoted. Mix
+b2/bb1/g1/l2/p1 — 3 new gens contributing 135 structured kills.**
+
+### Per-gen attribution
+
+    gid  records  kills  notes
+    b2   3,636   1,264  old (composition_test)
+    l2     224       0  NEW (Lean 4 skeletons, UNVERIFIED)
+    g1     184     108  old (small reservoir)
+    p1     138     130  NEW (chain-break, 94% kill)
+    bb1      5       5  NEW (false-dichotomy, 100%)
+
+### Structured kills from new gens (135 total)
+
+- `p1_multi_hop_break_at_step_*` × 130
+- `bb1_false_dichotomy_revealed_*_categories` × 5
+
+### Batch result
+
+- batch_id: `batch-20260529T023535Z-31bb2f`
+- 4,187 records / 1,507 kills / 2,680 confirms / 0 errors
+- 0 promoted (**50th consecutive milestone**)
+- batch_end ✓
+
+Lifetime: 189 batches journaled / 577.2M records / 325.9M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### 50-streak summary
+
+**50 consecutive 0-promoted fires.** Across this 50-fire arc
+(Fires #145-#194):
+- Total records: ~70M emitted
+- Total kills: ~30M with named patterns
+- Total fires with structured-kill contributions from new gens: ~25
+- **Zero parity tautologies promoted** in any of these 50 fires
+
+The training_weight info-content fix has held continuously
+for two full days of operation, surviving every kind of
+fire mix (volume-heavy, quality-only, newcomer sweeps,
+old-gen-only).
+
+---
+
+*Fire #194 throttled = 4.2K records / 0 promoted / 0 templates.
+577.2M records, 325.9M kills, 2351 promoted, 2671 templates,
+0 verified findings. **50 CONSECUTIVE 0-PROMOTED MILESTONE.***
+
 
 
 
