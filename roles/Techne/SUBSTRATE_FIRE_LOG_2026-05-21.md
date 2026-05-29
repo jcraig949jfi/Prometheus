@@ -11888,6 +11888,51 @@ Lifetime: 186 batches journaled / 574.3M records / 323.6M kills /
 574.3M records, 323.6M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #192 — 2026-05-29 ~01:46Z — **3 NEW GENS / QUALITY-ONLY**
+
+**3.6K records / 24 min / 0 templates / 0 promoted. Mix
+e4/g2/r1/s1/x1 — 3 new gens contribute 26 structured kills.**
+
+### Per-gen attribution
+
+    gid  records  kills  notes
+    g2   3,000   0      old (functional_equation)
+    s1     375   16     NEW (triangle inequality)
+    e4     233   0      stub (arxiv-mining)
+    x1      10   8      NEW (partial-view inflation, 80%)
+    r1       8   2      NEW (subset-violation, 25%)
+
+### Structured kills (26 total)
+
+- `s1_triangle_inequality_broken_on_triple` × 16
+- `x1_partial_view_inflation_under_*` × 8
+- `r1_subset_relation_violated_at_*` × 2
+
+### Batch result
+
+- batch_id: `batch-20260529T014631Z-be3a61`
+- 3,626 records / 26 kills / 3,600 confirms / 0 errors
+- 0 promoted (48th consecutive)
+- batch_end ✓
+
+Lifetime: 187 batches journaled / 574.3M records / 323.6M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- Third quality-only fire of this arc
+- 26 structured kills / 626 disc-role records = **4.2% disc-kill
+  density** (excluding g2 + e4)
+- 48 consecutive 0-promoted
+
+---
+
+*Fire #192 throttled = 3.6K records / 0 promoted / 0 templates.
+574.3M records, 323.6M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
