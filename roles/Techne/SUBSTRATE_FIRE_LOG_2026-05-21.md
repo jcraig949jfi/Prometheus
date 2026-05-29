@@ -12556,6 +12556,44 @@ Lifetime: 202 batches journaled / 609.3M records / 341.9M kills /
 609.3M records, 341.9M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #208 — 2026-05-29 ~08:19Z
+
+**3.87M records / 24 min / 0 templates / 0 promoted. Mix
+aa1/f1/f3/m1/y1 — f1+f3 dominant + 3 new gens contributing 11 kills.**
+
+### Per-gen attribution
+
+    gid  records    kills      notes
+    f3   2,017,332  1,360,087  old (importance_sampling, 67% kill)
+    f1   1,852,042    542,373  old (monte_carlo, 29%)
+    m1           9          6  NEW (minimal-counterexample, 67%)
+    aa1          5          4  NEW (calibration miscalibrated, 80%)
+    y1           2          1  NEW (analogy-break)
+
+### Batch result
+
+- batch_id: `batch-20260529T081954Z-14210c`
+- 3,869,390 records / 1,902,471 kills / 1,966,919 confirms / 0 errors
+- 0 promoted (64th consecutive)
+- batch_end ✓
+
+Lifetime: 203 batches journaled / 613.2M records / 343.8M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 64 consecutive 0-promoted
+- 3 new mechanism classes contributing simultaneously (m1+aa1+y1)
+- 49% overall kill rate
+
+---
+
+*Fire #208 throttled = 3.87M records / 0 promoted / 0 templates.
+613.2M records, 343.8M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
