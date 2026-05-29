@@ -13275,6 +13275,45 @@ Lifetime: 220 batches journaled / 637.7M records / 357.0M kills /
 637.7M records, 357.0M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #226 — 2026-05-29 ~15:43Z — **THIN-RESERVOIR / 3 NEW GENS**
+
+**3K records / 24 min / 0 templates / 0 promoted. Mix
+b3/b5/n1/t1/w1 — all thin-reservoir gens, 3 new gens contribute 60 kills.**
+
+### Per-gen attribution
+
+    gid  records  kills  notes
+    b5   1,052   15      old (conservation_law)
+    n1     896    0      NEW (verifier disagreements)
+    b3     606  346      old (inverse_test)
+    t1     252    0      NEW (multi-hop pass)
+    w1     226   60      NEW (closure violations)
+
+### Batch result
+
+- batch_id: `batch-20260529T154336Z-4757a5`
+- 3,032 records / 421 kills / 2,611 confirms / 0 errors
+- 0 promoted (82nd consecutive)
+- batch_end ✓
+
+Lifetime: 221 batches journaled / 637.7M records / 357.0M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 82 consecutive 0-promoted
+- All 5 picks were thin-reservoir gens (4th such fire of session)
+- n1 emitted 896 verifier-disagreement records (UNVERIFIED)
+- w1 contributed 60 closure-violation kills
+
+---
+
+*Fire #226 throttled = 3K records / 0 promoted / 0 templates.
+637.7M records, 357.0M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
