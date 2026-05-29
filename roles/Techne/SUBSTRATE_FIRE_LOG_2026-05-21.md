@@ -12144,6 +12144,45 @@ Lifetime: 192 batches journaled / 581.2M records / 328.5M kills /
 581.2M records, 328.5M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #198 — 2026-05-29 ~04:13Z — **f-family TRIPLE LOCKSTEP**
+
+**3.31M records / 24 min / 0 templates / 0 promoted. Mix
+a3/f3/f4/g1/z1 — a3+f3+f4 triple lockstep at ~1.1M each.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    f3   1,105,333  745,139  old (importance_sampling)
+    f4   1,104,692  726,667  old (anti-frequency)
+    a3   1,101,423  699,496  old (functional_identity)
+    g1         184      108  old (small reservoir)
+    z1         200      118  NEW (commute-break, 59% kill)
+
+### Batch result
+
+- batch_id: `batch-20260529T041351Z-0c021d`
+- 3,311,832 records / 2,171,528 kills / 1,140,304 confirms / 0 errors
+- 0 promoted (54th consecutive)
+- batch_end ✓
+
+Lifetime: 193 batches journaled / 584.6M records / 330.7M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- a3+f3+f4 triple lockstep — bandit picked all three big-volume
+  gens together
+- 54 consecutive 0-promoted
+- z1 contributed 118 commute-break kills
+
+---
+
+*Fire #198 throttled = 3.31M records / 0 promoted / 0 templates.
+584.6M records, 330.7M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
