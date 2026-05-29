@@ -13186,6 +13186,57 @@ Lifetime: 218 batches journaled / 635.7M records / 355.4M kills /
 635.7M records, 355.4M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #224 — 2026-05-29 ~14:54Z — **80 CONSECUTIVE 0-PROMOTED MILESTONE**
+
+**1.07M records / 24 min / 0 templates / 0 promoted. Mix
+bb1/d2/r1/x1/z1 — d2 dominant + 4 NEW gens contribute 133 structured kills.**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    d2   1,072,000  701,932  old (margin_bracket, 65.5% kill)
+    z1         200      118  NEW (commute-break, 59%)
+    x1          10        8  NEW (partial-view inflation)
+    r1           8        2  NEW (subset-violation)
+    bb1          5        5  NEW (100% false-dichotomy)
+
+### Structured kills from new gens (133 total)
+
+- `z1_operators_dont_commute_on_*` × 118
+- `x1_partial_view_inflation_*` × 8
+- `bb1_false_dichotomy_revealed_*_categories` × 5
+- `r1_subset_relation_violated_at_*` × 2
+
+### Batch result
+
+- batch_id: `batch-20260529T145420Z-a29923`
+- 1,072,223 records / 702,065 kills / 370,158 confirms / 0 errors
+- 0 promoted (**80th consecutive milestone**)
+- batch_end ✓
+
+Lifetime: 219 batches journaled / 636.8M records / 356.1M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### 80-streak summary
+
+**80 consecutive 0-promoted fires.** training_weight info-content
+fix has now held continuously for two and a half days across:
+- ~140M records emitted
+- ~60M kills (with named patterns)
+- 30+ fires with new-gen contributions
+- Many quality-only fires (3-50K records) and many volume-heavy
+  (3M+ records)
+- All 20 new mechanism classes hit at least once
+- **Zero parity tautologies promoted in any of the 80 fires**
+
+---
+
+*Fire #224 throttled = 1.07M records / 0 promoted / 0 templates.
+636.8M records, 356.1M kills, 2351 promoted, 2671 templates,
+0 verified findings. **80 CONSECUTIVE 0-PROMOTED MILESTONE.***
+
 
 
 
