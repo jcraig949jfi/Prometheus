@@ -13435,6 +13435,45 @@ Lifetime: 224 batches journaled / 642.2M records / 359.3M kills /
 642.2M records, 359.3M kills, 2351 promoted, 2671 templates,
 0 verified findings. **85 consecutive 0-promoted.***
 
+---
+
+## Fire #230 — 2026-05-29 ~17:21Z — **230-FIRE MILESTONE**
+
+**3.12M records / 24 min / 0 templates / 0 promoted. Mix
+b5/e3/g4/g5/k1 — g5+g4 duo dominant. Low kill rate (6.7%).**
+
+### Per-gen attribution
+
+    gid  records    kills    notes
+    g5   1,660,149  129,259  old (scale_invariance, 7.8%)
+    g4   1,454,878   78,537  old (reflection_duality, 5.4%)
+    e3       1,060      447  old (small)
+    b5       1,052       15  old (small)
+    k1       4,952        0  NEW (typed bridges)
+
+### Batch result
+
+- batch_id: `batch-20260529T172152Z-1b5344`
+- 3,122,091 records / 208,258 kills / 2,913,833 confirms / 0 errors
+- 0 promoted (86th consecutive)
+- batch_end ✓
+
+Lifetime: 225 batches journaled / 645.3M records / 359.5M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- **230-fire milestone**
+- 86 consecutive 0-promoted
+- 6.7% kill rate (low — g4+g5 both confirm-heavy gens)
+- k1 emitted 4952 typed-bridge records (UNVERIFIED)
+
+---
+
+*Fire #230 throttled = 3.12M records / 0 promoted / 0 templates.
+645.3M records, 359.5M kills, 2351 promoted, 2671 templates,
+0 verified findings. **230-fire milestone.***
+
 
 
 
