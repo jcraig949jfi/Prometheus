@@ -13314,6 +13314,44 @@ Lifetime: 221 batches journaled / 637.7M records / 357.0M kills /
 637.7M records, 357.0M kills, 2351 promoted, 2671 templates,
 0 verified findings.*
 
+---
+
+## Fire #227 — 2026-05-29 ~16:08Z
+
+**2.65M records / 24 min / 0 templates / 0 promoted. Mix
+a1/c4/e4/f4/h4 — f4+a1+h4 dominant, c4 TAUTOLOGY_CONTROL.**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    f4   757,192  499,100  old (anti-frequency, 65.9%)
+    a1   694,336  478,931  old (catalog cross_product, 69%)
+    h4   673,441   62,889  old (bridge_extension, 9.3%)
+    c4   520,823        0  TAUTOLOGY_CONTROL
+    e4       233        0  stub (lmfdb-mining)
+
+### Batch result
+
+- batch_id: `batch-20260529T160808Z-5249e7`
+- 2,646,025 records / 1,040,920 kills / 1,605,105 confirms / 0 errors
+- 0 promoted (83rd consecutive)
+- batch_end ✓
+
+Lifetime: 222 batches journaled / 640.4M records / 358.0M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 83 consecutive 0-promoted
+- 640M lifetime records crossed
+- All-old-gen fire (no new gens picked)
+
+---
+
+*Fire #227 throttled = 2.65M records / 0 promoted / 0 templates.
+640.4M records, 358.0M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
