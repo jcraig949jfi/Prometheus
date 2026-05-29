@@ -13062,6 +13062,48 @@ Lifetime: 215 batches journaled / 632.8M records / 353.7M kills /
 632.8M records, 353.7M kills, 2351 promoted, 2671 templates,
 0 verified findings. **220-fire milestone.***
 
+---
+
+## Fire #221 — 2026-05-29 ~13:39Z — **99.28% kill rate**
+
+**726K records / 24 min / 0 templates / 0 promoted. Mix
+b2/d1/h1/v1/x1 — h1 99.75% kill + v1+x1 contribute 80 structured kills.**
+
+### Per-gen attribution
+
+    gid  records  kills    notes
+    h1   720,798  719,008  old (self-play hunter, 99.75% kill)
+    b2     3,636    1,264  old (composition_test)
+    d1     1,864      880  old (kill_neighborhood)
+    v1       181       72  NEW (perturbation-break, 40%)
+    x1        10        8  NEW (partial-view inflation, 80%)
+
+### Structured kills from new gens (80 total)
+
+- `v1_perturbation_breaks_property_*` × 72
+- `x1_partial_view_inflation_*` × 8
+
+### Batch result
+
+- batch_id: `batch-20260529T133930Z-e63ee2`
+- 726,489 records / 721,232 kills / 5,257 confirms / 0 errors
+- 0 promoted (77th consecutive)
+- batch_end ✓
+
+Lifetime: 216 batches journaled / 633.5M records / 354.4M kills /
+2351 promoted / 2671 templates / 0 verified findings.
+
+### Notable
+
+- 99.28% kill rate (highest of the session by absolute volume × rate)
+- 77 consecutive 0-promoted
+
+---
+
+*Fire #221 throttled = 726K records / 0 promoted / 0 templates.
+633.5M records, 354.4M kills, 2351 promoted, 2671 templates,
+0 verified findings.*
+
 
 
 
