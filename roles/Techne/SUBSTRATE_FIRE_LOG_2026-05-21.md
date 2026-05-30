@@ -13644,6 +13644,28 @@ pivot/triage_judge_prompt.md.
 0 verified findings. **90 CONSECUTIVE 0-PROMOTED MILESTONE / LOOP PAUSED.***
 
 
+## Fire #235 — 2026-05-30 — LOOP RESUMED post-kill-topography work
+
+**Substrate changes since Fire #234:**
+1. h2 kill_pattern refactored from flat `h2_method_triangulated_reject`
+   (87K kills, 1 pattern, 44% corpus opaque) to structured
+   `h2_triangulated_<agreement>_<ki>_<ei>_methods_<tag>_rejected`
+   (smoke fire: 1 → 30 patterns in 500 records, cap ~336 distinct).
+2. a3 lattice void mining ran exhaustively (144 cells × 2000 samples).
+   Finding: 0 candidate non-trivial identities — all strong-rate cells
+   are codomain-bounded triviality; all anti-id cells are cross-scale
+   "equal" mismatches. Lattice has no hidden algebraic structure
+   visible at this depth. Pruning recommendation logged but not yet
+   applied (deferred — current focus is corpus richness via h2).
+
+**Run config (unchanged):** `python -m theseus.daemon --batch-hours 0.4
+--bandit --inject-explorer-priors`. CPU at 6.2% of total (16-core box),
+13.6% system-wide. Within ≤25% target.
+
+**Awaiting:** batch result; will validate that h2 now emits the new
+structured kill_pattern shape into the corpus.
+
+
 
 
 
