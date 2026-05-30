@@ -72,6 +72,12 @@ REAL_LEDGER_PATHS = [
     Path("charon/agents/erebos/state/kill_ledger.jsonl"),
     Path("charon/agents/stygian/state/kill_ledger.jsonl"),
 ]
+# Phase 3.B enrichment file (separate from production state).
+# When present, included automatically -- the smoke re-runs over
+# combined production + enriched residue.
+ENRICHED_LEDGER_PATH = Path(
+    "charon/agents/erebos/state/kill_ledger_enriched.jsonl"
+)
 SEED = 1031
 MIN_REAL_ROWS = 100   # protocol minimum
 MOTIF_MIN_COUNT = 3
@@ -148,9 +154,12 @@ def _normalize_row(row: dict) -> Optional[dict]:
     }
 
 
-def _load_real_rows() -> list[dict]:
+def _load_real_rows(include_enriched: bool = True) -> list[dict]:
+    paths = list(REAL_LEDGER_PATHS)
+    if include_enriched and ENRICHED_LEDGER_PATH.exists():
+        paths.append(ENRICHED_LEDGER_PATH)
     rows: list[dict] = []
-    for p in REAL_LEDGER_PATHS:
+    for p in paths:
         if not p.exists():
             continue
         with open(p) as f:
