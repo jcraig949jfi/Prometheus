@@ -32,9 +32,39 @@ errors when it tries to use the bad statement — and the fix is local to one
 function. The Lean-side helper survives as a fallback if `#check` parsing
 turns out to be load-bearing brittle.
 
-Falsifiable: if `extract_theorem_statement` works for the first walk_1
-theorem we try but fails on >20% of the first 50 we try, the stand is wrong
-and we build the Lean-side helper.
+Falsifiable (revised 2026-05-30 after frontier review): every extracted
+type-string is immediately validated against the Lean kernel via
+`example : <extracted> := by exact @<full_name>`. If validation fails,
+the extraction is wrong; the engine never sees a bad goal. The original
+"fails on >20% of first 50" falsifier is replaced by this per-call
+kernel check, which fires before BFS spends a single tactic call.
+Stand is wrong if `#check` parse succeeds but the kernel-validator
+rejects on >20% of the first 50 — then we build the Lean-side helper.
+
+### Stand 1.5 — Forbidden-self-reference guard (added 2026-05-30).
+
+Behaviour delta: every walk_1 BFS run is parameterized by the original
+theorem's `full_name`, and the engine rejects any candidate tactic whose
+text contains that name (or known aliases). Rejection is silent and
+recorded as `error_detail="self_reference_blocked"`. Closure by
+`exact <self_name>` would be false success: re-stating
+`Quiver.Path.toList_injective` as `example : <type> := by sorry` inside
+a session that already `import`-ed `Mathlib.Combinatorics.Quiver.Path`
+means the original is in scope, and the engine could close trivially
+without measuring proof search at all.
+
+Why this stand: the failure mode is structurally false-success, not
+false-failure. Without the guard, the substrate would report closures
+that the doctrine would treat as scorer wins, when in fact the engine
+just rediscovered the theorem in its own context. The Lean repl issue
+tracker has a documented case of "REPL accepts incorrect proofs" via
+self-reference; even if patched in v4.30.0, the broader vulnerability
+class is real.
+
+Falsifiable: build the guard, then run with it disabled on the same 5
+smoke-test theorems. If closure rate doesn't change, the guard is
+unnecessary on this corpus; if it does, the prior runs were
+contaminated.
 
 ### Stand 2 — Session pooling is built second, before scorer wiring.
 
@@ -53,6 +83,18 @@ measurement schedule. Pool-first is two days of work that buy us 50× speedup
 on the actually-interesting measurement. Per `feedback_infrastructure`,
 don't over-harden — the pool is small (~100 lines), no fancy backpressure,
 no LRU eviction. Fixed size, blocking checkout, restart-on-crash.
+
+Day-one telemetry (added 2026-05-30 after frontier review): exactly one
+field — a per-session rolling latency histogram keyed by request type
+(`Command` / `ProofStep` / `FileCommand`) and outcome
+(`success` / `error` / `timeout` / `crash`). Not "all telemetry" — just
+this. It surfaces the most likely actual failure mode of a session pool,
+which is not crash-restart but silent slow-failure via degraded workers
+(a Lean process that remains `is_alive() == True` but stops returning
+useful responses). If p95 latency rises monotonically by >3× across a
+run, or one worker accounts for >50% of timeouts, the pool kills that
+worker. No latency histogram → no way to distinguish "pool is fine"
+from "pool is silently poisoning the experiment."
 
 Falsifiable: if 50 walk_1 theorems still take >30 min on warm pool, the
 bottleneck is somewhere else (probably per-tactic overhead) and the pool
@@ -81,6 +123,38 @@ Falsifiable: if PRM v0 alone gives a closure rate ≤ random-tactic-order
 baseline on walk_1, the head's training distribution does not transfer to
 BFS scoring (separate from its prediction accuracy), and the substrate's
 scorer-routing assumption was wrong.
+
+**Measurement matrix (added 2026-05-30 after frontier review).** PRM v0
+is NOT measured against a single random baseline. It is measured against
+a 4-cell matrix of candidate-pool compositions on the same 50 theorems:
+
+1. **Oracle step-local** — at each search node at depth k, candidates =
+   `[winning_tactic_step_k] + siblings_step_k`. This is the substrate-hygiene
+   ceiling: if the engine cannot close proofs given the original tactic
+   at the right depth, the bottleneck is extraction / pooling / state
+   replay, not the scorer.
+2. **All-step global** — at every node, candidates = union of all step
+   pools. Branching factor ~4×proof_length. Expected closure rate
+   5-20% with heavy variance; Lean's tactic rejection does the pruning.
+3. **Prefix-window** — at node depth k, candidates from steps k-1, k, k+1.
+   Compromise between (1) and (2).
+4. **Generic tactic pool** — a small fixed list (`rfl`, `simp`, `aesop`,
+   `decide`, `omega`, `trivial`, `exact?`). No walk_1 dependence.
+   Establishes the floor for "what does Lean's default tactic library
+   close on this corpus."
+
+PRM v0 is then applied as a scorer to each pool. The interesting comparisons
+are PRM_v0-on-pool-N vs unscored-pool-N for each N. PRM v0 winning on
+pool 4 (generic) but losing on pool 2 (all-step global) is a different
+result than the reverse, and the matrix design protects against
+falsely killing PRM v0 due to candidate-pool damage.
+
+**Primary decision criterion (replaces "does PRM v0 beat random").** Does
+oracle step-local (pool 1) close a meaningful fraction (>50%) of the 50
+theorems? If yes, the substrate measures proof search, and PRM v0
+results on pools 2-4 are interpretable. If no, the substrate is below
+measurement-grade, and the next iteration debugs extraction/pooling/state
+replay — not the scorer.
 
 ### Stand 4 — Defer Isabelle / Coq / Z3 adapters until Walk-Z measurement validates the substrate.
 
@@ -122,28 +196,43 @@ but we do trust it (test_08 covers it).
 Falsifiable: if 3+ consecutive Walk-Z batch runs die mid-run on different
 crash signatures, the watchdog *is* mandatory and the stand was wrong.
 
-## Order of execution
+## Order of execution (revised 2026-05-30 after frontier review)
 
-Strict sequence, no parallelism:
+Strict sequence, no parallelism. Two inserts relative to the original
+order: the kernel validator after Stand 1, and the self-reference guard
+before the first smoke test.
 
-1. Stand 1 (theorem-statement extraction).
-2. Smoke test: drive the engine over `Quiver.Path.toList_injective` from
-   the walk_1 record using the `[winning_tactic] + siblings` candidate
-   pool. Verify it closes.
-3. Stand 2 (session pool).
-4. Smoke test: 5 walk_1 theorems back-to-back through the pool, verify
-   ≤ 1 × Mathlib cold-import cost.
-5. Stand 3 (PRM v0 wired as Scorer).
-6. The actual Walk-Z measurement: 50 walk_1 theorems, three runs
-   (random-order baseline / PRM v0 / oracle = winning-tactic-first),
-   record closure rate.
-7. Decide on Stands 4-5 based on what step 6 surfaced.
+1. Stand 1 (`#check` theorem-statement extraction).
+2. **Kernel validator**: every extraction immediately followed by
+   `example : <extracted> := by exact @<full_name>`. Bad extractions
+   become loud kernel rejections before BFS spends a single call.
+3. Stand 1.5 (forbidden-self-reference guard installed in the engine's
+   candidate filter).
+4. **Smoke test 1**: drive the engine over `Quiver.Path.toList_injective`.
+   Verify it closes. Verify that disabling the guard does NOT inflate
+   closure rate (if it does, prior runs were contaminated; investigate).
+5. Stand 2 (session pool, latency histogram from day one).
+6. **Smoke test 2**: 5 walk_1 theorems back-to-back through the pool,
+   verify ≤ 1 × Mathlib cold-import cost and no monotonic p95 latency
+   drift across the run.
+7. Stand 3 (PRM v0 wired as Scorer).
+8. **Substrate-hygiene check (primary)**: run the 50-theorem corpus
+   with oracle step-local pool (matrix cell 1), unscored. Does closure
+   rate exceed 50%?
+   - If **no**: substrate is below measurement-grade. STOP. Debug
+     extraction / pooling / state replay. Do NOT proceed to step 9.
+   - If **yes**: substrate measures proof search. Proceed.
+9. **Walk-Z measurement matrix**: run the full 4-pool × {unscored,
+   PRM_v0} = 8-cell matrix on the same 50 theorems. The interesting
+   comparisons are PRM_v0-on-pool-N vs unscored-pool-N for each N.
+10. Decide on Stands 4-5 based on what steps 8-9 surfaced.
 
-If step 6 closes <20% of theorems even with the oracle scorer, the bottleneck
-is not the scorer — it's some load-bearing assumption in the substrate
-(per-tactic timeout, proof-state-id reuse, candidate pool composition, or
-the `#check` extractor); the next iteration is debugging that, not
-generalizing the substrate.
+If step 8 fails (oracle step-local fails to close >50%), the bottleneck
+is some load-bearing assumption in the substrate — per-tactic timeout,
+proof-state-id reuse, the kernel-validator's coverage of the extraction
+edge-cases, or the candidate-pool composition itself. The next iteration
+is debugging that, not generalizing the substrate, not training new
+scorers, not building Layer 3.
 
 ## What I am explicitly NOT doing
 
@@ -156,10 +245,44 @@ To make the suppression visible:
 - **No expansion to non-Lean proof systems.** Per Stand 4.
 - **No tooling / observability layer.** Per `feedback_infrastructure`, the
   speed-of-thought + HITL loop is already the accelerator; adding telemetry
-  before there are runs to telemeter would slow us down.
+  before there are runs to telemeter would slow us down. The lone
+  exception, the per-session latency histogram, is added because the
+  frontier review made the specific failure mode it catches (silent slow
+  worker poisoning) load-bearing for interpreting the matrix result.
 - **No re-design of the doctrine doc in response to Moros's frontier
   critique.** Per `feedback_llm_convergence_is_gravity_amplifier`, that
   critique is a warning signal, not a directive. The frontier-review
   artifact below is the legitimate place to engage with it.
+- **No `UNKNOWN`/`INCONCLUSIVE` SearchOutcome enum value, yet.** The
+  frontier review correctly identifies this as load-bearing for SMT
+  adapters. Since Stand 4 defers SMT adapters until Walk-Z validates,
+  the enum value is deferred too. Adding it now would be the same
+  premature-abstraction failure mode Stand 4 protects against.
+- **No `AutoLeanServer`-style watchdog.** Stand 5 stands. The frontier
+  review's framing (LeanInteract's existence as evidence the watchdog is
+  mandatory) is exactly the upstream-corpus echo
+  `feedback_llm_convergence_is_gravity_amplifier` warns against. The
+  review's specific recommendation (latency histogram from day one) is
+  absorbed under Stand 2; the broader watchdog framing is not.
+
+## Frontier-review absorption record (2026-05-30)
+
+Recording what was absorbed from the frontier review of the prompt packet
+in `pivot/lean_substrate_frontier_review_2026-05-30.md`, to make the
+delta auditable:
+
+- Stand 1 falsifier replaced with kernel validator (`example := by exact @name`).
+- Stand 1.5 added (forbidden-self-reference guard).
+- Stand 2 amended with latency histogram as day-one telemetry.
+- Stand 3 measurement design replaced by 4-pool × 2-scorer matrix, with
+  oracle step-local closure rate >50% as the primary substrate-hygiene
+  gate.
+- Order of execution rewritten with kernel-validator and self-reference-guard
+  inserts, and the hygiene gate as step 8.
+- `UNKNOWN` outcome explicitly listed under "not doing yet" with reason.
+- `AutoLeanServer` framing pushed back on, recommendation absorbed.
+- "State overloading" Moros critique acknowledged as substrate-genuine
+  but down-prioritized (typed fields in code already disambiguate; doc
+  cleanup is opportunity-cost, not behavior delta).
 
 — Ergon, 2026-05-30
