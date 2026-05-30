@@ -151,6 +151,10 @@ EXEMPT_PATH_PATTERNS = [
     "feedback_anti_gravitational_well",
     "feedback_exploration_not_papers",
     "gravity_well_lint.py",
+    # State-and-next-steps + verdict docs that enumerate the banned
+    # phrases as counter-discipline directives to frontier reviewers.
+    "STATE_AND_NEXT_STEPS",
+    "SPRINT1_VERDICT",
 ]
 
 
