@@ -86,3 +86,47 @@ def test_f4_g5_h2_registered_as_active():
     assert "f4" in actives
     assert "g5" in actives
     assert "h2" in actives
+
+
+def test_h2_kill_pattern_is_structured():
+    """h2 must emit witness-bearing kill_patterns, not the old opaque flat string.
+
+    Pre-refactor: 87K kills → 1 pattern (h2_method_triangulated_reject) → 44% of
+    corpus volume opaque to Learner. Post-refactor: pattern encodes agreement
+    class + (knot_invariant, ec_invariant) witness + method-vote subset.
+    """
+    g = H2TriangulationProtocolGenerator(batch_id="t", seed=42)
+    rejected = []
+    for _ in range(200):
+        r = g.next()
+        if r is None:
+            continue
+        if r.verdict == "REJECTED":
+            rejected.append(r)
+            if len(rejected) >= 5:
+                break
+    if not rejected:
+        pytest.skip("h2 did not produce REJECTED records under bootstrap; tests "
+                    "of structured-kill-pattern shape skipped — relies on parent "
+                    "INCONCLUSIVE volume")
+    for r in rejected:
+        assert r.kill_pattern is not None
+        # Must not be the legacy flat label
+        assert r.kill_pattern != "h2_method_triangulated_reject", (
+            f"h2 still emitting legacy opaque kill_pattern: {r.kill_pattern}"
+        )
+        # Must encode agreement class
+        assert ("unanimous" in r.kill_pattern
+                or "majority" in r.kill_pattern), r.kill_pattern
+        # Must include the knot_invariant and ec_invariant as witness coords
+        p = r.claim_payload
+        ki = p["knot_invariant"]
+        ei = p["ec_invariant"]
+        assert ki in r.kill_pattern, (
+            f"kill_pattern {r.kill_pattern} missing knot_invariant {ki}"
+        )
+        assert ei in r.kill_pattern, (
+            f"kill_pattern {r.kill_pattern} missing ec_invariant {ei}"
+        )
+        # Must end with _rejected
+        assert r.kill_pattern.endswith("_rejected"), r.kill_pattern

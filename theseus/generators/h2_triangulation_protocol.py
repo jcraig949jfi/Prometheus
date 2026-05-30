@@ -218,10 +218,34 @@ class H2TriangulationProtocolGenerator(Generator):
 
             if agreement >= 2 / 3:
                 triangulated = top_v
-                kill_pattern = (
-                    None if triangulated != Verdict.REJECTED.value
-                    else f"h2_method_triangulated_reject"
-                )
+                if triangulated != Verdict.REJECTED.value:
+                    kill_pattern = None
+                else:
+                    # Structured kill_pattern: encode agreement class +
+                    # (knot_invariant, ec_invariant) witness so the
+                    # Learner gets a directional pointer to which
+                    # invariant pair the methods triangulated against.
+                    # Previous flat "h2_method_triangulated_reject" was
+                    # opaque (44% of corpus volume → 1 pattern).
+                    agreement_class = (
+                        "unanimous" if top_n == len(child_verdicts)
+                        else "majority"
+                    )
+                    # Method-disagreement subclass: which methods voted
+                    # REJECTED (linear/quadratic/cubic). The split is
+                    # itself a structural signal — if only the cubic
+                    # rejects, the parent is "almost linearizable"; if
+                    # all reject, it's structurally noise.
+                    rej_methods = sorted({
+                        METHOD_VARIANTS[i][0]
+                        for i, v in enumerate(child_verdicts)
+                        if v == Verdict.REJECTED.value
+                    })
+                    method_tag = "_".join(m[0] for m in rej_methods)  # l/q/c
+                    kill_pattern = (
+                        f"h2_triangulated_{agreement_class}_"
+                        f"{ki}_{ei}_methods_{method_tag}_rejected"
+                    )
             else:
                 triangulated = Verdict.INCONCLUSIVE.value
                 kill_pattern = None
