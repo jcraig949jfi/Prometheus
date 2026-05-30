@@ -41,6 +41,14 @@ kernel check, which fires before BFS spends a single tactic call.
 Stand is wrong if `#check` parse succeeds but the kernel-validator
 rejects on >20% of the first 50 — then we build the Lean-side helper.
 
+**Extraction contract (added 2026-05-30 round 2).** The substrate's
+extraction success criterion is **kernel-equivalent target reconstruction**,
+not faithful pretty-print recovery. If the extracted type elaborates and
+`exact @full_name` closes it, the substrate may use it; textual mismatch
+with the original source is not a failure unless it changes proof-search
+behaviour. This prevents future-Ergon from chasing cosmetic pretty-printer
+drift across Lean / Mathlib version bumps as if it were a bug.
+
 ### Stand 1.5 — Forbidden-self-reference guard (added 2026-05-30).
 
 Behaviour delta: every walk_1 BFS run is parameterized by the original
@@ -52,6 +60,26 @@ recorded as `error_detail="self_reference_blocked"`. Closure by
 a session that already `import`-ed `Mathlib.Combinatorics.Quiver.Path`
 means the original is in scope, and the engine could close trivially
 without measuring proof search at all.
+
+**Guard scope (added 2026-05-30 round 2).** Literal substring matching
+on the full name is a placebo against attack surfaces that are
+substrate-genuine, not theoretical. Specifically, the guard MUST reject
+the following levels at ship time:
+
+1. `exact <full_name>` and `exact @<full_name>`
+2. `apply <full_name>` and `apply @<full_name>`
+3. `simpa using <full_name>` (and `simp [<full_name>]`, `rw [<full_name>]`,
+   any `term`-position invocation through tactic combinators)
+4. Namespace-stripped suffix forms when `open <namespace>` is in effect
+   (e.g. `toList_injective` when `Quiver.Path` is open). Implemented by
+   regex over the full-name's trailing identifier under any prefix from
+   the current `open` set.
+
+Two further levels — (5) environment-alias lookup, (6) post-normalization
+of LLM-generated candidates — are NOT shipped speculatively. They cost a
+Lean-side query and a tactic-name canonicalization pass respectively.
+Both are added only if smoke test 4 (adversarial self-reference test) or
+the contamination smoke test detects leakage past levels 1-4.
 
 Why this stand: the failure mode is structurally false-success, not
 false-failure. Without the guard, the substrate would report closures
@@ -99,6 +127,23 @@ from "pool is silently poisoning the experiment."
 Falsifiable: if 50 walk_1 theorems still take >30 min on warm pool, the
 bottleneck is somewhere else (probably per-tactic overhead) and the pool
 isn't the right intervention.
+
+**State-contamination invariant (added 2026-05-30 round 2).** Each theorem
+run in a warm session must execute in a fresh namespace/state context.
+The pool may reuse imported Mathlib state across theorems, but must NOT
+reuse theorem-local declarations, `set_option` mutations, `open`/`namespace`
+state, abbreviations, or proof state from the previous theorem. Practical
+implementation: each theorem run starts from a known-good `env` id
+(the post-`import Mathlib.Tactic` env captured at session boot), not the
+env produced by the previous theorem's commands. This is a one-line
+discipline on top of lean-repl's env semantics, not a separate mechanism.
+
+Smoke test (added as new step 7 in execution order): theorem A defines
+a deliberately toxic local alias / `set_option` mutation / `notation`
+declaration. Theorem B runs against the same warm session and asserts
+that A's pollution is invisible (the alias does not resolve, the option
+is at its default, etc.). If B sees A's state, the pool's env-rebase
+discipline is broken and must be fixed before the 50-theorem run.
 
 ### Stand 3 — Wire the existing PRM v0 head as the first real `Scorer`. Defer the other three heads.
 
@@ -156,6 +201,38 @@ results on pools 2-4 are interpretable. If no, the substrate is below
 measurement-grade, and the next iteration debugs extraction/pooling/state
 replay — not the scorer.
 
+**Hygiene-gate sub-criteria (added 2026-05-30 round 2).** The 50%
+closure rate is necessary but not sufficient. The substrate-hygiene
+gate also requires:
+
+1. ≥90% of failed theorems produce a classified failure reason
+   (`session_crashed`, `frontier_empty`, `max_nodes_exhausted`,
+   `self_reference_blocked`, `extraction_invalid`, etc.) — not opaque
+   timeouts.
+2. ≤10% of theorems fail due to infrastructure (timeout / crash /
+   contamination) rather than Lean proof failure. If infrastructure
+   is the dominant failure mode, fix that before reading the scorer
+   numbers.
+3. ≥5 manually inspected oracle failures have a root-cause label
+   (extraction wrong / candidate-pool wrong / engine budget wrong /
+   genuine proof-search hard case). This forces the human in the loop
+   to actually look at failure shape, not just count.
+
+A 51% closure rate with 30% infrastructure failures and no inspected
+root-cause labels is scientifically muddy and does not pass the gate.
+
+**Interpretation boundary (added 2026-05-30 round 2).** A positive
+PRM v0 result on pools 1-3 validates scorer-guided routing over
+*proof-trace-derived candidate pools*. The candidates in those pools
+were generated from the closed proof of each theorem; PRM v0 was
+trained on traces from the same corpus. Pools 1-3 are therefore
+in-distribution-adjacent evaluation, not open-ended theorem proving.
+Only pool 4 (the generic stock-Lean tactic pool) gives a weak signal
+about scorer-guided proof search on theorems whose candidate pool
+contains no walk_1 leakage. This is named explicitly so a positive PRM
+v0 result on pools 1-3 cannot be silently inflated into "PRM v0 closes
+open-ended theorems."
+
 ### Stand 4 — Defer Isabelle / Coq / Z3 adapters until Walk-Z measurement validates the substrate.
 
 Behaviour delta: I do not start any new ProofSystem adapter. The
@@ -173,10 +250,24 @@ research strategy, not coordination — but only after the lead agent (Ergon)
 shows the design is sound by closing its own use case. The cross-prover
 generalization is a stand to take *after* the first measurement, not before.
 
-Falsifiable: if a parallel agent (Hephaestus? Charon?) takes a credible
-shot at a non-Lean adapter and ships it before Walk-Z measurement lands,
-that is evidence the substrate is more general than I claimed and the
-stand is wrong.
+Falsifiable (two complementary falsifiers, added/revised 2026-05-30
+round 2):
+
+- **External signal**: if a parallel agent (Hephaestus? Charon?) takes
+  a credible shot at a non-Lean adapter and ships it before Walk-Z
+  measurement lands, that is evidence the substrate is general enough
+  to deserve earlier abstraction. Caveat: this is correlational — a
+  parallel agent might also have ignored the doctrine, built a shallow
+  adapter, or solved a different problem. Use as a triggering signal
+  for deeper review, not as a settled refutation.
+- **Internal signal (stronger)**: if the Lean implementation hard-codes
+  assumptions about tactic state, kernel validation, or search outcomes
+  that later force a rewrite of the `ProofSystem` abstraction before a
+  second backend can be attempted, the substrate was not actually
+  proof-system-agnostic and the stand was wrong. This is detectable
+  from inside Ergon's own work — the symptom is "I had to change Layer 2
+  to make Layer 1 work," which never happens in a properly portable
+  design.
 
 ### Stand 5 — AutoLeanServer-style watchdog is built only after the first crash is observed in a Walk-Z batch.
 
@@ -185,52 +276,82 @@ allowed to die on the first crash; the post-mortem decides whether the
 watchdog wrapper or some narrower intervention (e.g. retry-once on a
 specific error message class) is the right fix.
 
-Why this stand: the doctrine doc inherited from LeanInteract claims
-"AutoLeanServer-style watchdog is mandatory, not optional." That is their
-empirical claim, not ours. Our `SessionCrashed` surface area is small; the
-worst-case is `LeanSessionPool` notices a dead worker and replaces it,
-which is one new method, not a wrapper class. Building the watchdog first
-is the move I'd make if I didn't trust our `SessionCrashed` plumbing —
-but we do trust it (test_08 covers it).
+Why this stand (reframed 2026-05-30 round 2): the principle is "build
+the smallest infrastructure that solves the observed problem." The pool
+(Stand 2) already provides worker replacement, latency telemetry, and
+crash classification. A full watchdog wrapper is a layer above that. We
+escalate to a watchdog only if specific failure modes appear that the
+pool cannot handle — not pre-emptively, and not because the upstream
+LeanInteract ecosystem ships one.
 
-Falsifiable: if 3+ consecutive Walk-Z batch runs die mid-run on different
-crash signatures, the watchdog *is* mandatory and the stand was wrong.
+Falsifiable (tightened 2026-05-30 round 2): a watchdog becomes mandatory
+if any one of the following happens during the Walk-Z measurement runs:
 
-## Order of execution (revised 2026-05-30 after frontier review)
+1. Two full-batch failures from Lean process death.
+2. One unrecoverable hang that survives the pool's per-tactic timeout
+   path (i.e. the process is alive but no longer responding, and
+   `taskkill /F /T` does not restore service to the pool).
+3. Crash recovery via pool worker replacement corrupts later theorem
+   results (the symptom would be: theorem N+1's outcome differs based
+   on whether N succeeded or crashed).
+4. More than 10% of theorem attempts end in infrastructure failure
+   rather than Lean proof failure.
 
-Strict sequence, no parallelism. Two inserts relative to the original
-order: the kernel validator after Stand 1, and the self-reference guard
-before the first smoke test.
+The original "3+ consecutive batch runs die on different crash signatures"
+falsifier was too lenient — it required three separate batches' worth of
+infrastructure loss before the principle changed. The four criteria above
+make the escalation reactive to the first observed pattern, not the
+third.
+
+## Order of execution (revised 2026-05-30 round 2 after second frontier review)
+
+Strict sequence, no parallelism. Four inserts relative to the original
+order: kernel validator (step 2), self-reference guard (step 3),
+adversarial self-reference test (step 4), state-contamination test
+(step 8). The two inserted smoke tests cost a few hours and protect
+the two contamination channels most likely to create false confidence.
 
 1. Stand 1 (`#check` theorem-statement extraction).
 2. **Kernel validator**: every extraction immediately followed by
    `example : <extracted> := by exact @<full_name>`. Bad extractions
    become loud kernel rejections before BFS spends a single call.
-3. Stand 1.5 (forbidden-self-reference guard installed in the engine's
-   candidate filter).
-4. **Smoke test 1**: drive the engine over `Quiver.Path.toList_injective`.
+3. Stand 1.5 (forbidden-self-reference guard at levels 1-4: literal,
+   `@`-prefixed, common tactic wrappers, namespace-stripped suffix).
+4. **Adversarial self-reference test (added 2026-05-30 round 2)**:
+   inject `exact <name>`, `apply @<name>`, `simpa using <name>`,
+   `rw [<name>]`, and namespace-stripped variants as candidates; verify
+   all are blocked at the guard before reaching the engine.
+5. **Smoke test 1**: drive the engine over `Quiver.Path.toList_injective`.
    Verify it closes. Verify that disabling the guard does NOT inflate
    closure rate (if it does, prior runs were contaminated; investigate).
-5. Stand 2 (session pool, latency histogram from day one).
-6. **Smoke test 2**: 5 walk_1 theorems back-to-back through the pool,
+6. Stand 2 (session pool, latency histogram from day one,
+   env-rebase-per-theorem discipline).
+7. **State-contamination test (added 2026-05-30 round 2)**: theorem A
+   defines a deliberately toxic local alias / `set_option` mutation /
+   `notation` declaration; theorem B runs in the same warm session and
+   asserts the pollution is invisible. If B sees A's state, the
+   env-rebase discipline is broken; fix before step 8.
+8. **Smoke test 2**: 5 walk_1 theorems back-to-back through the pool,
    verify ≤ 1 × Mathlib cold-import cost and no monotonic p95 latency
    drift across the run.
-7. Stand 3 (PRM v0 wired as Scorer).
-8. **Substrate-hygiene check (primary)**: run the 50-theorem corpus
-   with oracle step-local pool (matrix cell 1), unscored. Does closure
-   rate exceed 50%?
-   - If **no**: substrate is below measurement-grade. STOP. Debug
-     extraction / pooling / state replay. Do NOT proceed to step 9.
-   - If **yes**: substrate measures proof search. Proceed.
-9. **Walk-Z measurement matrix**: run the full 4-pool × {unscored,
-   PRM_v0} = 8-cell matrix on the same 50 theorems. The interesting
-   comparisons are PRM_v0-on-pool-N vs unscored-pool-N for each N.
-10. Decide on Stands 4-5 based on what steps 8-9 surfaced.
+9. Stand 3 (PRM v0 wired as Scorer).
+10. **Substrate-hygiene check (primary)**: run the 50-theorem corpus
+    with oracle step-local pool (matrix cell 1), unscored. Three
+    sub-criteria must all pass (closure >50% / ≥90% classified failures
+    / ≤10% infrastructure-failures / ≥5 manually-root-caused oracle
+    failures — see Stand 3 hygiene-gate sub-criteria).
+    - If any sub-criterion fails: substrate is below measurement-grade.
+      STOP. Debug whatever failed. Do NOT proceed to step 11.
+    - If all pass: substrate measures proof search. Proceed.
+11. **Walk-Z measurement matrix**: run the full 4-pool × {unscored,
+    PRM_v0} = 8-cell matrix on the same 50 theorems. The interesting
+    comparisons are PRM_v0-on-pool-N vs unscored-pool-N for each N.
+12. Decide on Stands 4-5 based on what steps 10-11 surfaced.
 
-If step 8 fails (oracle step-local fails to close >50%), the bottleneck
-is some load-bearing assumption in the substrate — per-tactic timeout,
-proof-state-id reuse, the kernel-validator's coverage of the extraction
-edge-cases, or the candidate-pool composition itself. The next iteration
+If step 10 fails, the bottleneck is some load-bearing assumption in the
+substrate — per-tactic timeout, proof-state-id reuse, the kernel-
+validator's coverage of the extraction edge-cases, the env-rebase
+discipline, or the candidate-pool composition itself. The next iteration
 is debugging that, not generalizing the substrate, not training new
 scorers, not building Layer 3.
 
@@ -265,11 +386,11 @@ To make the suppression visible:
   review's specific recommendation (latency histogram from day one) is
   absorbed under Stand 2; the broader watchdog framing is not.
 
-## Frontier-review absorption record (2026-05-30)
+## Frontier-review absorption record
 
-Recording what was absorbed from the frontier review of the prompt packet
-in `pivot/lean_substrate_frontier_review_2026-05-30.md`, to make the
-delta auditable:
+### Round 1 — initial frontier-review board pass (2026-05-30)
+
+From the prompt packet in `pivot/lean_substrate_frontier_review_2026-05-30.md`:
 
 - Stand 1 falsifier replaced with kernel validator (`example := by exact @name`).
 - Stand 1.5 added (forbidden-self-reference guard).
@@ -284,5 +405,51 @@ delta auditable:
 - "State overloading" Moros critique acknowledged as substrate-genuine
   but down-prioritized (typed fields in code already disambiguate; doc
   cleanup is opportunity-cost, not behavior delta).
+
+### Round 2 — second-pass review after round 1 was published
+
+Refinement, not new framing. Three substrate-specific catches plus three
+framing improvements:
+
+- **Self-reference guard scope** explicitly enumerated at four levels
+  (literal / `@`-prefixed / common tactic wrappers / namespace-stripped
+  suffix). Substring matching was a placebo against namespace-shortened
+  forms. Levels 5-6 (env-alias lookup, post-normalization) deferred
+  until smoke tests detect leakage.
+- **Extraction success contract** named as **kernel-equivalent
+  reconstruction**, not faithful pretty-print recovery. Prevents
+  future-Ergon from chasing pretty-printer drift across Mathlib bumps.
+- **State-contamination invariant** added to Stand 2 with explicit
+  env-rebase-per-theorem discipline, and a new step-7 smoke test
+  (toxic-alias theorem A vs clean theorem B in the same warm session).
+- **Stand 3 hygiene-gate sub-criteria** tightened beyond closure rate:
+  ≥90% classified failures, ≤10% infra-failures, ≥5 manually root-caused
+  oracle failures. A 51% closure with opaque failures does NOT pass.
+- **Interpretation boundary** added to Stand 3: positive PRM v0 on
+  pools 1-3 validates trace-neighborhood ranking, not open-ended
+  theorem proving. Only pool 4 (generic stock-Lean tactics) gives a
+  weak open-ended signal.
+- **Stand 4 falsifier** now has both an external signal (someone else
+  ships an adapter) and an internal signal (we have to rewrite Layer 2
+  to make Layer 1 work). Both kept — they test different things.
+- **Stand 5 framing** changed from "we don't trust LeanInteract's
+  empirical claim" (reactive) to "we escalate on specific observed
+  failure modes, not pre-emptively" (principled). Falsifier criteria
+  tightened from "3+ batches die" to four specific empirical triggers
+  any one of which is sufficient.
+- **Two inserted smoke tests** in the execution order
+  (adversarial-self-reference at step 4, state-contamination at step 7).
+- **Execution order extended from 10 to 12 steps** to accommodate the
+  two new smoke tests.
+
+### Round 3 — explicitly not happening unless a specific concern is named
+
+Round 1 had ~5 substrate-genuine catches I would not have made. Round 2
+had ~3 substrate-specific catches plus framing improvements. The trend
+is what `feedback_llm_convergence_is_gravity_amplifier` predicts: each
+successive round trends from substrate-specific to corpus-shape. A
+hypothetical round 3 review would mostly produce framing nits and
+training-corpus echoes. Not running it unless a named blocker emerges
+during implementation that the doctrine doesn't already cover.
 
 — Ergon, 2026-05-30
