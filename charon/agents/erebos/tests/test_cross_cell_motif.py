@@ -262,6 +262,62 @@ def test_conditional_empty_when_no_high_lift_motifs():
 # Result helpers
 # ---------------------------------------------------------------------
 
+# ---------------------------------------------------------------------
+# Triplet motifs (ITER-60)
+# ---------------------------------------------------------------------
+
+def test_triplet_empty_input():
+    from charon.agents.erebos._cross_cell_motif import extract_triplet_motifs
+    r = extract_triplet_motifs([])
+    assert r.motifs == ()
+    assert r.n_signatures_scanned == 0
+
+
+def test_triplet_requires_three_cells_per_signature():
+    """A signature with only 2 cells contributes nothing to triplet motifs."""
+    from charon.agents.erebos._cross_cell_motif import extract_triplet_motifs
+    rows = [
+        {"plugin_id": "g10", "kill_pattern": "kp_a", "input_signature": "sig1"},
+        {"plugin_id": "g11", "kill_pattern": "kp_b", "input_signature": "sig1"},
+    ]
+    r = extract_triplet_motifs(rows, min_cooccurrence=1, min_lift=0.0)
+    assert r.motifs == ()
+    assert r.n_signatures_with_triple_emissions == 0
+
+
+def test_triplet_basic_three_cell_detection():
+    from charon.agents.erebos._cross_cell_motif import extract_triplet_motifs
+    # 2 sigs, each with same 3 cells
+    rows = []
+    for i in range(2):
+        rows.append({"plugin_id": "g10", "kill_pattern": "kp_a", "input_signature": f"sig{i}"})
+        rows.append({"plugin_id": "g11", "kill_pattern": "kp_b", "input_signature": f"sig{i}"})
+        rows.append({"plugin_id": "g12", "kill_pattern": "kp_c", "input_signature": f"sig{i}"})
+    r = extract_triplet_motifs(rows, min_cooccurrence=2, min_lift=0.5)
+    assert len(r.motifs) == 1
+    assert r.motifs[0].cells == (
+        ("g10", "kp_a"), ("g11", "kp_b"), ("g12", "kp_c"),
+    )
+    assert r.motifs[0].cooccurrence_count == 2
+
+
+def test_triplet_lift_filters_out_low_signal():
+    """Triplet with lift < threshold is filtered."""
+    from charon.agents.erebos._cross_cell_motif import extract_triplet_motifs
+    # 5 sigs all with same 3 cells; pair_marginals all 5
+    # expected = (5*5/5 + 5*5/5 + 5*5/5)/3 = 5; observed = 5; lift = 1.0
+    rows = []
+    for i in range(5):
+        for cell in [("g10", "kp_a"), ("g11", "kp_b"), ("g12", "kp_c")]:
+            rows.append({
+                "plugin_id": cell[0],
+                "kill_pattern": cell[1],
+                "input_signature": f"sig{i}",
+            })
+    r = extract_triplet_motifs(rows, min_cooccurrence=1, min_lift=2.0)
+    assert r.motifs == ()
+
+
 def test_result_top_k_helper():
     rows = []
     for i in range(8):

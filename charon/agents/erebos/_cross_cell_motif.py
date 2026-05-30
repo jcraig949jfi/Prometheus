@@ -266,3 +266,154 @@ def per_plugin_majority(rows: list[dict]) -> dict[str, str]:
         kp = r.get("kill_pattern") or "PROMOTED"
         by_plugin[pid][kp] += 1
     return {p: c.most_common(1)[0][0] for p, c in by_plugin.items()}
+
+
+# ---------------------------------------------------------------------
+# Triplet co-occurrence (Phase 3.F / ITER-60)
+# ---------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class TripletMotif:
+    """Three cells co-occurring across the same input_signature
+    significantly above what pairwise independence predicts.
+
+    The lift metric here is THREE-WAY: observed / expected under
+    pairwise independence (i.e., the expected count if any TWO
+    cells co-occurring did so independently of the third). A
+    triplet motif with high lift represents structure neither
+    pair-aware nor per-plugin counters can express.
+
+    Attributes:
+        cells: 3-tuple of cells sorted lexicographically.
+        cooccurrence_count: count of signatures with all 3 cells.
+        pair_marginals: (A&B, A&C, B&C) co-occurrence counts.
+        expected_under_pair_independence: estimate based on
+            assumption that (A∩B)∩C ~ count(A∩B) * count(C) / N.
+        lift_over_pair_independence: observed / expected.
+        sample_signatures: representative inputs.
+    """
+    cells: tuple[Cell, Cell, Cell]
+    cooccurrence_count: int
+    pair_marginals: tuple[int, int, int]
+    expected_under_pair_independence: float
+    lift_over_pair_independence: float
+    sample_signatures: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class TripletResult:
+    n_signatures_scanned: int
+    n_signatures_with_triple_emissions: int
+    motifs: tuple[TripletMotif, ...]
+    min_cooccurrence: int
+    min_lift: float
+
+    def top(self, k: int) -> tuple[TripletMotif, ...]:
+        return self.motifs[:k]
+
+
+def extract_triplet_motifs(
+    rows: Iterable[dict],
+    *,
+    min_cooccurrence: int = 2,
+    min_lift: float = 1.5,
+    sample_limit: int = 5,
+) -> TripletResult:
+    """Find 3-cell co-occurrences with high lift over pair
+    independence.
+
+    Args:
+        rows: ledger rows. Same field requirements as
+            extract_cooccurrence_motifs.
+        min_cooccurrence: minimum signatures with all 3 cells.
+        min_lift: minimum observed / expected_pair_independence
+            ratio.
+        sample_limit: cap per motif.
+
+    By construction, a pair-aware counter cannot match this:
+    its statistics top out at 2-cell joint distributions.
+    """
+    cells_by_sig: dict[str, set[Cell]] = defaultdict(set)
+    triple_sigs: dict[tuple[Cell, Cell, Cell], list[str]] = defaultdict(list)
+    pair_count: Counter = Counter()
+    cell_count: Counter = Counter()
+
+    for row in rows:
+        sig = row.get("input_signature")
+        if not sig:
+            continue
+        cell = _cell_of(row)
+        if cell is None:
+            continue
+        cells_by_sig[sig].add(cell)
+
+    n_total_sigs = len(cells_by_sig)
+    n_triple_emission = sum(1 for cs in cells_by_sig.values() if len(cs) >= 3)
+
+    # Build marginals
+    for cells in cells_by_sig.values():
+        cell_list = sorted(cells)
+        for c in cell_list:
+            cell_count[c] += 1
+        for i in range(len(cell_list)):
+            for j in range(i + 1, len(cell_list)):
+                pair_count[(cell_list[i], cell_list[j])] += 1
+
+    # Build triple counts
+    triple_count: Counter = Counter()
+    for sig, cells in cells_by_sig.items():
+        if len(cells) < 3:
+            continue
+        cell_list = sorted(cells)
+        for i in range(len(cell_list)):
+            for j in range(i + 1, len(cell_list)):
+                for k in range(j + 1, len(cell_list)):
+                    key = (cell_list[i], cell_list[j], cell_list[k])
+                    triple_count[key] += 1
+                    triple_sigs[key].append(sig)
+
+    motifs: list[TripletMotif] = []
+    for (a, b, c), cooc in triple_count.items():
+        if cooc < min_cooccurrence:
+            continue
+        ab = pair_count.get((a, b), 0)
+        ac = pair_count.get((a, c), 0)
+        bc = pair_count.get((b, c), 0)
+        # Pair-independence estimate: each PAIR is treated as a
+        # cell; expected triple count = count(A&B) * count(C) / N
+        # (taking the average over the three possible pair-singleton
+        # factorizations for symmetry)
+        c_count = cell_count.get(c, 0)
+        a_count = cell_count.get(a, 0)
+        b_count = cell_count.get(b, 0)
+        if n_total_sigs == 0 or c_count == 0 or a_count == 0 or b_count == 0:
+            continue
+        exp_ab_c = (ab * c_count) / n_total_sigs
+        exp_ac_b = (ac * b_count) / n_total_sigs
+        exp_bc_a = (bc * a_count) / n_total_sigs
+        expected = (exp_ab_c + exp_ac_b + exp_bc_a) / 3.0
+        if expected <= 0:
+            continue
+        lift = cooc / expected
+        if lift < min_lift:
+            continue
+        samples = tuple(triple_sigs[(a, b, c)][:sample_limit])
+        motifs.append(TripletMotif(
+            cells=(a, b, c),
+            cooccurrence_count=cooc,
+            pair_marginals=(ab, ac, bc),
+            expected_under_pair_independence=expected,
+            lift_over_pair_independence=lift,
+            sample_signatures=samples,
+        ))
+
+    motifs.sort(key=lambda m: (-m.lift_over_pair_independence,
+                                -m.cooccurrence_count, m.cells))
+
+    return TripletResult(
+        n_signatures_scanned=n_total_sigs,
+        n_signatures_with_triple_emissions=n_triple_emission,
+        motifs=tuple(motifs),
+        min_cooccurrence=min_cooccurrence,
+        min_lift=min_lift,
+    )
