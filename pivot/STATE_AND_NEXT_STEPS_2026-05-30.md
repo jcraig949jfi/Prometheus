@@ -186,3 +186,19 @@ The expected output of this review round is NOT consensus or validation. The exp
 ---
 
 **End of document. Sprint-1 closes; the next round begins.**
+
+---
+
+## §5 — Same-day amendment: Phase 3.0 smoke verdict
+
+The user (acting as / channeling a frontier review board) returned the verdict on this document the same day it shipped. Central finding: Sprint-1 should be reframed as instrument-calibration, not architectural pass; insert a single brutal real-residue smoke test BEFORE the ~10-iteration BSD-loader path.
+
+The smoke test ran as ITER-56. **Verdict: FAIL.**
+
+Substrate motif concentration on 570 real ledger rows is 9.80σ above shuffled-label noise — real structure exists. But across all 13 plugins in the real ledger, Layer 2's motif-based recommendations EXACTLY match per-plugin majority counters. Zero actionable routing deltas. The counter-baseline discriminator (Q2's challenge from §3 above) caught what synthetic Sprint-1 missed.
+
+The Tier-1 priority sequence in §2 is **paused at S1**. Layer-1 verdict enrichment (running the four Phase 1A retrofitted detectors against real Mossinghoff catalog to populate the kill_ledger with rich kps) becomes the next iteration. If enriched-ledger smoke passes, S1-S6 resume. If it fails, seam-sufficiency audit (`feedback_seam_sufficiency_audit`) becomes the next priority.
+
+The doctrinal posture (§4 above) held. The substrate did NOT capitulate to the headline 10/10 Sprint-1 result; it ran the cheap real-data check the review demanded, accepted the failure, and pivoted. The instrument-calibration framing was the load-bearing insight that saved ~9 iterations of misdirected work.
+
+See `pivot/sprint1/phase3/PHASE3_0_SMOKE_VERDICT_2026-05-30.md`.

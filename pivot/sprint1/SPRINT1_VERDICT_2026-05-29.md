@@ -1,8 +1,12 @@
 # Sprint-1 Verdict — Phase 2 ITER-55
 
-**Date:** 2026-05-29
-**Verdict:** **PROCEED** (architecture not paused per v3 §6 kill rule)
-**Confidence:** Moderate; substantial caveats documented
+**Date:** 2026-05-29 (original verdict) — **REFRAMED 2026-05-30** per frontier review + Phase 3.0 smoke result
+
+**Original headline:** PROCEED (10/10 PASS against pre-committed kill rule)
+
+**REFRAMED headline:** **INSTRUMENT-CALIBRATION PASS, NOT ARCHITECTURAL PASS.** The substrate's primitives WORK when handed structure to find (synthetic data). They do NOT yet produce decision-relevant signal beyond a counter baseline on real ledger data (per Phase 3.0 smoke, ITER-56). The pre-committed kill rule was not triggered; the architectural claim remains untested on real residue.
+
+**Reframe authority:** 2026-05-30 frontier review verdict + `feedback_instrument_vs_architectural_pass` + `feedback_counter_baseline_discriminator` + Phase 3.0 smoke test result (`pivot/sprint1/phase3/PHASE3_0_SMOKE_VERDICT_2026-05-30.md`).
 
 ---
 
@@ -12,11 +16,29 @@ Per Doctrine v1.0 §"the kill condition" and `pivot/erebos_v3_roadmap_v2_layer_s
 
 > If Sprint-1 fails ≥ 4 of the 10 experiments, the architecture is paused per v3 §6.
 
-## Result
+## Result (per the literal pre-committed rule)
 
-**10 of 10 experiments PASS. 0 fails.** The architecture clears the kill rule by a margin of 4.
+**10 of 10 experiments PASS. 0 fails.** The pre-committed kill rule is not triggered.
 
-## Per-experiment ledger
+## REFRAMED ledger (per 2026-05-30 review + Phase 3.0)
+
+The literal 10/10 count obscures three categories of qualification that the review surfaced:
+
+- **A8 was a SYNTHETIC SUBSTITUTE** for a pre-committed real-data protocol that required the BSD MVP loader (never shipped). The substitute saturated at the metric's structural maximum. **Reclassified: SKIP / PROTOCOL DEVIATION**, not PASS.
+- **A4 and A7 were MARGINAL** (1.5 and 3.4 percentage points above/below threshold respectively). Reclassified: "needs fragility audit." Pending the audit, marginal passes do not count as full passes.
+- **A2 and A9 were STRUCTURAL-ONLY** — they verified primitive correctness against the live registry, not runtime daemon behavior. Real-data runtime tests are deferred.
+- **A1, A3, A5, A6, A10 were SYNTHETIC-ONLY CAPABILITY DEMONSTRATIONS** — they tested whether the substrate can detect structure baked into synthetic data. Phase 3.0 (ITER-56) ran the real-data version and the substrate FAILED the counter-baseline check.
+
+**Reframed scoreboard:**
+- 9 EVALUATED (A8 = SKIP/PROTOCOL DEVIATION)
+- 7 PASS (A1, A2, A3, A5, A6, A9, A10) — but 5 of these are SYNTHETIC-ONLY capability demonstrations now contradicted by Phase 3.0 real-data result
+- 2 MARGINAL PASS pending fragility audit (A4, A7)
+- 0 FAILS against the pre-committed kill rule
+- 1 SKIP (A8)
+
+The architecture is **not paused** by the kill rule. The architectural CLAIM (Layer 2 adds decision-relevant signal beyond a counter baseline) is **falsified by Phase 3.0** on the current real ledger; the path forward is Layer-1 verdict enrichment (see Phase 3.0 doc §"What needs to happen next").
+
+## Per-experiment ledger (original numbers, no edits)
 
 ```
 A1  PASS  duplicate_exhaust_differential = 0.6125     (threshold > 0.30)   CLEAN
@@ -106,3 +128,19 @@ Per the doctrine's single phrase: **optimization consumes failure; Prometheus me
 ---
 
 **End ITER-55. Sprint-1 closes. The architecture proceeds to Phase 3+ with the caveats above as the recommended audit trail.**
+
+---
+
+## 2026-05-30 amendment — Phase 3.0 outcome
+
+The 2026-05-30 frontier review reframed this verdict as instrument-calibration, not architectural. The recommended Phase 3.0 real-residue smoke test (ITER-56) ran the next day and verdict: **FAIL** against the counter baseline.
+
+Substrate motif concentration beat shuffled-label baseline by 9.80σ on real ledger data (real structure exists). But across all 13 plugins in the real ledger, Layer 2's recommendations EXACTLY matched per-plugin majority counters. Zero actionable routing deltas.
+
+The architectural claim — that Layer 2 produces decision-relevant signal beyond a counter baseline — is **falsified on the current real ledger**. The substrate cleared its synthetic test and failed its first real test.
+
+**The pre-committed kill rule (4+ Sprint-1 fails) was not triggered**, so the architecture is not formally paused. But the path forward changes: instead of S1 (BSD MVP loader), the next iteration is Layer-1 verdict enrichment (Phase 3.0 doc §"What needs to happen next" → Path B). The substrate must produce richer Layer-1 verdicts before Layer 2 has anything to navigate that counters cannot.
+
+See `pivot/sprint1/phase3/PHASE3_0_SMOKE_VERDICT_2026-05-30.md` for the full Phase 3.0 protocol, result, and three honest readings.
+
+**The doctrine's bet — that explicit failure metabolization (Layer 2) outperforms implicit failure pressure (counters) — remains untested on real data with rich Layer-1 verdicts.** The instrument is calibrated. The verdict is pending.
