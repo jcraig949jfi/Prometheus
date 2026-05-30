@@ -1,8 +1,8 @@
-# The Hephaestus Forge: From Automated Tool Generation to Verified Reasoning Mechanisms
+# The Hephaestus Forge: History and Architectural Pivot Memo
 
-**Filed:** 2026-05-30
+**Filed:** 2026-05-30 (revised per frontier review)
 **Authors:** James Craig, M3 Agent (Hephaestus operator)
-**Status:** Comprehensive history and technical narrative for external review
+**Status:** Pivot memo — justifies transition from automated tool generation to failure-mined mechanism engineering
 
 ---
 
@@ -87,7 +87,7 @@ To test whether different models or prompts would produce different reasoning me
 
 **Prompt sweep (5 strategies × 20 candidates):** Algorithm-first, gap-fill, adversarial, exemplar, and concept-first (control). Modest tier-profile shifts but no accuracy breakthrough. The exemplar strategy ("here is a bad NCD tool, build something different") and gap-fill ("the library lacks R4 search tools") marginally outperformed concept-first.
 
-The sweeps eliminated model choice as the primary lever and identified the prompt as the real constraint — but also revealed that even changing the prompt doesn't escape the regex convergence. The fundamental limitation: LLMs produce pattern-matching code regardless of how specifically you ask for algorithms.
+The sweeps eliminated model choice as the primary lever and identified the prompt as the real constraint. Under Hephaestus's concept-combination prompt regime, LLMs overwhelmingly collapsed into pattern-matching code. The failure may belong to the artifact specification — "write a reasoning tool inspired by these concepts" — not necessarily to the models themselves. The falsified primitive is not "LLMs cannot generate algorithms." It is: free-form concept-combination prompting is a poor primitive for generating reliable reasoning mechanisms.
 
 ### Phase 6: The Diversity Forge and Composition Breakthrough (May 22-26, 2026)
 
@@ -100,7 +100,7 @@ Recognizing that the main forge's mechanism vocabulary was exhausted (~5 genuine
 
 The diversity forge's first 7 tools included a **genuine forward-chaining inference engine** (builds rule graphs, propagates beliefs via BFS) and a **backtracking searcher** with cycle detection — mechanisms the main forge never produced across 1,960 tools.
 
-This led to the **composition breakthrough** (Day 1 of the 5-day sprint): wiring a text parser from the main forge to the diversity forge's inference engine produced a composed tool that solved problems neither component could solve alone. Modus tollens: 100% vs 0%. Transitivity: 100% vs 0%. The composition thesis was validated.
+This led to the **composition result** (Day 1 of the 5-day sprint): wiring a text parser from the main forge to the diversity forge's inference engine produced a composed tool that solved problems neither component could solve alone. Modus tollens: 100% vs 0%. Transitivity: 100% vs 0%. The composition thesis received its first nontrivial positive evidence on a small class of structured puzzles — not yet validation, but a genuine signal.
 
 ### Phase 7: The v3 Sprint — Hand-Crafted Engines Climb the Ladder (May 26-30, 2026)
 
@@ -151,17 +151,23 @@ For the forge, the implication is prescriptive: **one engine family per tier-ope
 
 ### The 9-Engine Composed Tool
 
-| Engine | Tier | Mechanism | Verified? | Evidence |
-|--------|------|-----------|-----------|----------|
-| ForwardChainEngine | **R2** | Fixpoint inference closure over if/then rules | **Yes** | 100% on modus tollens, multi-step chains |
-| OrderingEngine | **R2** | Transitive closure via BFS over comparison relations | **Yes** | 100% on transitivity problems |
-| ComputationEngine | **R2** | Arithmetic, modular math, bat-and-ball parsing | **Yes** | Solves computed answers |
-| NegationEngine | **R2** | Modus tollens, affirming-consequent detection | **Yes** | Distinguishes valid/invalid inference |
-| ProbabilisticFallacyEngine | **R3** | Quantifier inversion, conjunction fallacy, base rate, expected value | **Yes** | +11pp on R3 tier (28%→39%) |
-| SequenceEngine | **R3** | Detects arithmetic/geometric/fibonacci/quadratic/power sequences | **Yes** | 100% on sequence prediction |
-| TemporalComputationEngine | **R4** | Inverse proportion, time math, LCM, age algebra, scheduling | **Yes** | +32pp on R4 tier (29%→61%) |
-| StateEngine | **R3-R4** | Parses and simulates state machines, registers, stacks | **Yes** | 100% on state machine puzzles |
-| CausalEngine | **R1** | Keyword-matches "correlate" | **No — downgraded** | Fails confounder detection, actively harmful |
+Evidence status split into four levels:
+- **Mechanism-present:** Code actually implements the claimed algorithm
+- **Probe-effective:** Improves score on current probes
+- **Generalizes:** Works on procedurally generated held-out variants
+- **Composition-safe:** Improves composed organisms without damaging other tiers
+
+| Engine | Tier | Mechanism | Mech | Probe | General | Comp-safe |
+|--------|------|-----------|------|-------|---------|-----------|
+| ForwardChainEngine | R2 | Fixpoint inference closure | Yes | +R2 | Untested | Yes |
+| OrderingEngine | R2 | Transitive closure via BFS | Yes | 100% transitivity | Yes (generated) | Yes |
+| ComputationEngine | R2 | Arithmetic, modular math | Yes | Solves bat-and-ball | Partial | Yes |
+| NegationEngine | R2 | Modus tollens detection | Yes | Distinguishes valid/invalid | Untested | Partial (R5 harm) |
+| ProbabilisticFallacyEngine | R3 | Quantifier/conjunction/base rate | Yes | +11pp R3 | Untested | Untested |
+| SequenceEngine | R3 | Pattern detection (5 types) | Yes | 100% sequences | Yes (generated) | Yes |
+| TemporalComputationEngine | R4 | Time math, LCM, scheduling | Yes | +32pp R4 | Untested | Untested |
+| StateEngine | R3-R4 | State machine simulation | Yes | 100% state machines | Yes (generated) | Yes |
+| CausalEngine | R1 | Keyword-matches "correlate" | **No** | **Harmful** (-6pp R5) | N/A | **Harmful** |
 
 ### The Honest Ladder Position
 
@@ -220,12 +226,13 @@ This is the genuine R6 frontier. No forge tool has ever produced anything like i
 
 ### The Path Forward: What to Hand-Craft
 
-**For R5 (estimated result: 12-14/16 = 75-87%):**
-Build a CausalFallacyEngine that combines:
-1. Keyword patterns for correlation/post-hoc/confounding (R1 — 8 probes)
-2. Forward chaining for counterfactual rule application (R2 — 2 probes)
-3. Fraction arithmetic for Simpson's paradox (R3-R4 — 2 probes)
-4. Simple causal chain DAG for intervention queries (genuine R5 — 2 probes)
+**For R5 — two separate artifacts, not one:**
+
+**(a) CausalFallacyDetector (battery diagnostic, NOT R5 progress):**
+Detects and subtracts lower-tier solvability from the R5 score. Handles correlation keywords (R1), counterfactual rule application (R2), Simpson's arithmetic (R3-R4). Its purpose is to expose how much of the "R5 battery" is really R1-R3 in causal clothing. Expected: 12-14/16 probes — but this measures battery quality, not R5 capability.
+
+**(b) CausalInterventionEngine (genuine R5 candidate):**
+Builds a directed causal graph from text. Implements do-operator semantics (cut incoming edges to intervened variable). Detects confounders (common cause of X and Y). Handles collider structure. Answers counterfactual queries by comparing baseline vs modified graph. This is the real R5 artifact — it should be evaluated only on the 2 genuine intervention probes (and on a separate procedurally generated causal battery).
 
 **For R6 easy half (estimated result: 14/42 = 33%):**
 Route existing engines (presupposition detection, syllogism logic) to the right R6 categories. Most of this capability already exists in the NegationEngine and ForwardChainEngine — it just fires on the wrong problems or doesn't fire at all.
@@ -256,3 +263,76 @@ The refined architecture:
 The forge's role going forward is not to maximize tool count. It is to **surface, verify, and adapt the minimum set of mechanistically distinct primitives** that unlock structured reasoning tier by tier. Each engine is a specific, testable claim: "this computation solves this class of problems." Mechanism knockout verifies the claim. The battery measures the coverage. Apollo composes the verified primitives into organisms. The kill ledger records what fails and why.
 
 The 6,657 failures are not waste. They are the map that told us exactly where to look.
+
+---
+
+## 8. What Would Falsify the New Thesis?
+
+The document falsifies the old primitive (LLM-generated reasoning tools at scale) but must pre-register falsifiers for the new one (verified typed mechanisms, failure-mined, composed). If these fire, the pivot is wrong:
+
+**F1. Typed kernels do not compose.** Individual engines score well on their tier, but Apollo compositions fail to exceed the best single engine on held-out procedural probes. If composition adds no value over selection, the typed-transformer architecture is overhead.
+
+**F2. Composition creates cross-tier harm.** Adding engines improves target tiers but damages other tiers enough that net capability does not improve. The TemporalComputationEngine's R4 gain (+32pp) was accompanied by an R5 regression (-6pp via CausalEngine interference). If this pattern persists — every new engine cannibalizes another tier — the ensemble architecture is wrong.
+
+**F3. Behavioral NCD fails to predict complementarity.** Tools with high behavioral distance (different answer patterns) do not solve different held-out failures. If behavioral novelty does not predict compositional value, the diversity metric is decoration.
+
+**F4. Hand-crafted kernels saturate quickly.** After R1-R4, every higher-tier engine becomes an expanding pile of special cases with diminishing returns per pattern. If R5 requires 50 special cases and R6 requires 200, the architecture doesn't scale — a different approach (learned representations, end-to-end training) is needed.
+
+**F5. Failure mining is retrospective storytelling.** Mined near-miss clusters do not predict which next engine will improve held-out performance. This is the most important falsifier: if the "map" only works in hindsight, it is narrative, not navigation.
+
+### The Pre-Registered Experiment
+
+Freeze the current 6,657-entry ledger. Mine it to nominate three next engines (the CausalFallacyDetector, the CausalInterventionEngine, and one R6 candidate). Pre-register expected tier deltas for each. Build the engines. Evaluate on fresh procedurally generated probes (new seed, never used in the mining loop).
+
+If the predicted deltas land within ±10pp: the failure geometry thesis strengthens.
+If the predicted deltas miss by >20pp or the engines harm other tiers: the thesis weakens.
+If a mined engine helps on training probes but not on held-out probes: it is overfitting the battery, not learning the capability.
+
+---
+
+## 9. Operational Doctrine (from Frontier Review)
+
+The forge's new contract, per frontier review consensus:
+
+> A Hephaestus artifact is no longer a ReasoningTool. It is a typed mechanism package.
+
+Each artifact includes:
+1. Input schema and output schema
+2. Claimed operation family (not "tier" — one kernel per irreducible operation)
+3. Minimal deterministic kernel
+4. Mechanism knockout control (stripped version that removes the claimed mechanism)
+5. Behavioral fingerprint vector (output pattern on standard battery)
+6. Tier-local probe score
+7. Cross-tier harm score (does it damage other tiers?)
+8. Composition compatibility metadata (declared reads/writes for Apollo)
+9. Failure signature (what it gets wrong and why)
+
+The unit is not "one engine per tier." It is **one verified kernel per irreducible operation family:**
+
+| Operation Family | Examples |
+|-----------------|----------|
+| Rule closure | Forward chaining, contradiction detection, transitive closure |
+| Arithmetic binding | Bat-and-ball, modular math, rate computation |
+| Sequence induction | Arithmetic/geometric/fibonacci/power detection |
+| State simulation | State machines, register operations, stack tracking |
+| Temporal algebra | Duration, scheduling, relative day, LCM |
+| Probabilistic fallacy detection | Base rate, conjunction, quantifier inversion |
+| Confounder detection | Common cause, correlation-not-causation |
+| Intervention DAG | do-operator, edge cutting, path persistence |
+| Counterfactual propagation | Modified-graph comparison |
+| Belief-state tracking | Who knows what, after what events |
+| Second-order belief | "A thinks B believes X" |
+| Self-reference | Word counting, consistency checking |
+| Calibration | Verbal probability → numeric mapping |
+
+Each family is a separate engineering problem. Each requires its own verification, knockout control, and composition test. The forge produces them one at a time, verified before the next.
+
+---
+
+## 10. The Core Thesis, Tightened
+
+> Reasoning primitives must be verified typed mechanisms, not generated tool-shaped code. LLMs are useful upstream of the mechanism boundary — as transduction proposers, parser generators, adapter scaffolds, and mutation operators — but not inside the selector and not trusted as the mechanism itself.
+
+The 6,657 failures told us exactly which mechanisms are missing. The composition result showed that verified mechanisms, properly typed, produce capabilities that no individual tool achieves. The path forward is not more generation — it is the patient, failure-guided engineering of the irreducible operation families that cover the reasoning space.
+
+That is the substrate becoming legible.
