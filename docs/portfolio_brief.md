@@ -1,5 +1,5 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-05-30 05:17:10 AM UTC*
+*Generated: 2026-05-30 09:18:02 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
@@ -16,9 +16,7 @@ Restore Redis on M1 to re-enable Agora pub/sub.
 
 ## For the record
 
-**5 agents ALIVE** (Hephaestus, Pronoia, Pythia, Charon_Loop, Moros).
-
-**Deep Research: 1 reports received, 1 dispatched** in last 24h (budget 10/compute-based (AI_Pro, 5h window)).
+**5 agents ALIVE** (Hephaestus, Pronoia, Pythia, Charon_Loop, Nephele).
 
 **Anomalies tracked:** 24 (Apollo, Clio, Hypatia, Atalanta, Polyhymnia).
 
