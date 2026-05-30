@@ -13666,6 +13666,118 @@ pivot/triage_judge_prompt.md.
 structured kill_pattern shape into the corpus.
 
 
+### Fire #235 result — completed 2026-05-30 ~05:39Z
+
+**731,785 records / 728,960 kills / 1,886 confirms / 0 promoted.
+91 CONSECUTIVE 0-PROMOTED.**
+
+#### Per-gen attribution
+
+    gid  records  emitted_at  notes
+    h1   721,839  most        OEIS sequence claims; saturated at 99%
+    n1       917  stalled@30s small probe set, exhausted fast
+    o1        22  stalled     small probe set
+    m2         5  stalled     universal-lemma probes; tiny set
+    y1         2  stalled     analogy-break probes; tiny set
+
+#### Key observation
+
+**h2 was NOT picked this fire** (bandit cooldown — 15 gens downweighted
+0.3x from recent fires). The new structured kill_pattern shape is not
+yet validated in the real corpus. Need to fire again to get h2 into
+the bandit selection.
+
+#### Substrate-design issue surfaced
+
+4 of 5 picks were new gens that stalled within ~1 min. The new gens
+have very small claim-probe sets (e.g. y1 = 2 probes, m2 = 5, o1 = 22).
+Once they exhaust their cursors, they contribute zero for the rest of
+the fire. The bandit then leans on the one remaining live gen (h1),
+which dominated and saturated.
+
+This is a substrate-design issue analogous to the h2 opacity issue:
+new gens have shallow probe sets. Logging for follow-up; next-cycle
+work item: expand probe sets for shallow new gens to extend their
+contribution window per fire.
+
+Lifetime: 271 batches journaled / 655.7M records / 364.7M kills /
+2351 promoted / 2717 templates / 0 verified findings.
+
+
+## Fire #236 — 2026-05-30 — completed
+
+Bandit picked: `y1, d2, z1, f4, m1`. h2 STILL cooldown-blocked.
+
+- 3,215,106 records / 2,114,265 kills / 1,100,841 confirms / 0 promoted
+- **92 CONSECUTIVE 0-PROMOTED**
+- d2/f4 dominated (1.4M each); z1/m1/y1 stalled in <1min as expected
+- d2 saturated at 86% (claim space exhausted)
+
+Lifetime: 272 batches / 658.9M records / 366.8M kills /
+2351 promoted / 2716 templates / 0 verified findings.
+
+
+## PIVOT — 2026-05-30 ~06:10Z — GPT-5 review processed; loop paused
+
+**Source:** `aporia/docs/theseus_review_responses/gpt5_2026-05-30.md`
+
+GPT-5's strongest critique: Theseus may be producing well-instrumented
+null data. The substrate is over-invested in kill-residue engineering
+and under-invested in **signal existence tests**. Before running N1
+(LLM-judge triage), build a control corpus and run calibration.
+
+### Decisive substrate question (replacing prior priorities)
+
+> Can Theseus recover planted or known mathematical structure at
+> better-than-null rates while rejecting matched artifacts?
+
+### Revised plan (overrides §3 of `theseus_substrate_frontier_review_2026-05-30.md`)
+
+- **N0a (NEW, blocks all)** — build control corpus: positive controls,
+  negative controls, decoy artifacts, stratified-permutation null.
+- **N0b** — matched-null permutation assay.
+- **N0c** — rediscovery benchmark on 3-5 consensus known relations
+  (BSD rank-zero signatures, modularity-shadowed congruences,
+  Atkin-Lehner involutions, hyperbolic-volume/determinant interplay).
+- **N0d** — kill-pattern utility probe: old h2 vs new h2 bandit
+  ablation, held-out predictive lift measurement.
+- **N1 (re-scoped)** — runs on BLINDED MIXED corpus (controls + 2351
+  promoted + decoys), not just 2351.
+- **N2** — human review only after N0a-d + N1 reveal calibration.
+- **A1 (Lean)** — DEMOTED from Tier 3 to "blocked until N0c shows
+  substrate sensitivity to known structure."
+- **Doctrine amendment** — `feedback_residue_must_be_navigable_not_logged`:
+  add 5th criterion "demonstrates measured counterfactual utility on
+  at least one downstream policy decision." Per GPT-5's doctrine
+  surgery: a label is not residue.
+
+### Loop status
+
+**Bandit loop PAUSED at Fire #236.** No more open-ended fires until
+N0a-d ship. Per GPT-5: "stop rewarding volume, stop rewarding label
+diversity, and stop expanding the search space until the substrate
+passes a basic calibration suite."
+
+### Doctrinal guardrails on the pivot
+
+Two GPT-5 framings are high training-corpus gravity per
+`feedback_llm_convergence_is_gravity_amplifier`:
+- "positive-control / negative-control / decoy calibration suite" —
+  standard empirical-science framing. Warning fires but critique is
+  load-bearing; the substrate IS at the calibration cliff.
+- "same-domain EC × EC + modular forms × EC" — LMFDB/Langlands-
+  priors-shaped. Probably correct but should be cross-checked: if
+  Theseus rediscovers modularity-adjacent patterns, is that
+  signal-existence or LMFDB-tabular-shadow echoing through the
+  training-corpus?
+
+Two GPT-5 framings are substantively novel and not high-gravity:
+- **MDL reframe** of kill patterns (compress failures into predictive
+  rules, not just rename).
+- **Doctrine refinement** ("residue with measured counterfactual
+  utility" instead of "navigable residue"). A label is not residue.
+
+
 
 
 
