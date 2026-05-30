@@ -419,6 +419,27 @@ def run_batch(
     # Orchestration layer: log work, emit discoveries, update lifetime stats.
     if emit_telemetry:
         n_discoveries = maybe_emit_discoveries(telemetry_record_sample)
+        # F2 observation-mode tally — counts what content-aware filter would
+        # promote, without changing actual promotion behavior. Added after
+        # 2026-05-30 GPT-5 review + calibration v0/v1 confirmed F2 calibrates
+        # on planted relations. Per
+        # `feedback_residue_must_be_navigable_not_logged` amendment criterion
+        # 5: every refactor needs measured counterfactual utility before
+        # being treated as residue. F1 vs F2 promote-count delta IS that
+        # measurement.
+        n_f2_would_promote = 0
+        try:
+            from theseus.scoring.content_aware_promote import maybe_promote_by_f2
+            import random as _random
+            f2_rng = _random.Random(seed + 7919)  # deterministic, distinct from gen seeds
+            f2_promoted = maybe_promote_by_f2(
+                telemetry_record_sample,
+                rng=f2_rng,
+                n_null_samples=500,  # cheap; sample is bounded
+            )
+            n_f2_would_promote = len(f2_promoted)
+        except Exception as e:
+            print(f"[theseus] F2 observation failed (non-fatal): {e}")
         log_batch_work(
             batch_metrics=bm,
             requested_generators=list(generator_ids),
@@ -444,7 +465,9 @@ def run_batch(
             print(
                 f"[theseus] Honest accounting: "
                 f"{n_discoveries} promoted records this batch "
-                f"(passed info-density filter; awaiting review); "
+                f"(F1 = training_weight >= 0.6); "
+                f"F2 (content-aware) would promote {n_f2_would_promote} "
+                f"records from the sample; "
                 f"{ls.get('lifetime_discoveries_emitted', 0)} lifetime promoted; "
                 f"verified mathematical findings = 0 "
                 f"(volume metrics are substrate-internal, not discoveries)"
