@@ -498,6 +498,316 @@ class StateEngine:
             return 0.5, "steps:non_numeric_candidate"
 
 
+class ProbabilisticFallacyEngine:
+    """R3: Detect probabilistic and logical fallacies.
+
+    Handles: quantifier inversion, conditional probability asymmetry,
+    conjunction fallacy, base rate neglect, expected value comparison.
+    """
+
+    _ALL_X_ARE_Y = re.compile(r"[Aa]ll\s+(\w+)\s+are\s+(\w+)")
+    _PERCENT = re.compile(r"(\d+(?:\.\d+)?)\s*%")
+    _FRACTION = re.compile(r"(\d+)\s+in\s+(\d+)")
+    _DOLLAR = re.compile(r"\$\s*(\d+(?:,\d+)*(?:\.\d+)?)")
+    _CHANCE = re.compile(r"(\d+(?:\.\d+)?)\s*%\s*chance\s+of\s+(?:winning\s+)?\$?\s*(\d+(?:,\d+)*(?:\.\d+)?)", re.I)
+
+    def score(self, parsed: dict, candidate: str) -> tuple[float, str]:
+        prompt = parsed.get("raw", "")
+        prompt_l = prompt.lower()
+        cand_lower = candidate.lower()
+
+        # 1. Quantifier inversion: "All X are Y. Are all Y also X?" -> No
+        universals = self._ALL_X_ARE_Y.findall(prompt)
+        if universals:
+            subj, pred = universals[0]
+            # Check if question asks the inverse
+            inverse_q = (f"all {pred.lower()}" in prompt_l and
+                         ("also" in prompt_l or "are all" in prompt_l))
+            if inverse_q:
+                if "no" in cand_lower or "not necessarily" in cand_lower:
+                    return 0.95, f"quantifier_inversion:all_{subj}_are_{pred}_not_reverse"
+                if "yes" in cand_lower:
+                    return 0.05, "quantifier_inversion:inverse_fallacy"
+
+        # 2. Conditional probability asymmetry: P(B|A) != P(A|B)
+        pcts = self._PERCENT.findall(prompt)
+        if pcts and ("probability" in prompt_l or "likely" in prompt_l):
+            # "X% of A are B. Is a B also an A?"
+            if "is the probability" in prompt_l or "is a" in prompt_l:
+                if any(w in prompt_l for w in ["same", "equal", "identical"]):
+                    if "no" in cand_lower or "not" in cand_lower:
+                        return 0.9, "cond_prob_asymmetry:not_same"
+                    if "yes" in cand_lower:
+                        return 0.1, "cond_prob_asymmetry:fallacy"
+
+        # 3. Conjunction fallacy: P(A and B) <= P(A)
+        if "which is more" in prompt_l or "which is less" in prompt_l:
+            # Check if candidates differ by conjunction
+            and_candidates = [c for c in [candidate] if " and " in c.lower()]
+            simple_candidates = [c for c in [candidate] if " and " not in c.lower()]
+            if and_candidates and ("more likely" in prompt_l or "more probable" in prompt_l):
+                # Conjunction is LESS likely
+                return 0.15, "conjunction_fallacy:conjunction_less_likely"
+            if simple_candidates and ("more likely" in prompt_l or "more probable" in prompt_l):
+                return 0.85, "conjunction_fallacy:simple_more_likely"
+
+        # 4. Base rate neglect: compute Bayesian posterior
+        fractions = self._FRACTION.findall(prompt)
+        if fractions and pcts:
+            try:
+                base_num, base_denom = int(fractions[0][0]), int(fractions[0][1])
+                base_rate = base_num / base_denom
+                test_accuracy = float(pcts[0]) / 100.0
+                false_positive = 1.0 - test_accuracy if len(pcts) < 2 else float(pcts[1]) / 100.0
+
+                # P(disease|positive) = P(pos|disease)*P(disease) / P(pos)
+                p_pos = test_accuracy * base_rate + false_positive * (1 - base_rate)
+                posterior = (test_accuracy * base_rate) / p_pos if p_pos > 0 else 0
+
+                # The correct answer is usually "low" (< 50%) for rare diseases
+                try:
+                    cand_num = cand_lower.replace("%", "").replace("about", "").replace("roughly", "").replace("approximately", "").strip()
+                    cand_pct = float(cand_num)
+                    if abs(cand_pct / 100 - posterior) < 0.15:
+                        return 0.9, f"base_rate:posterior={posterior:.1%}"
+                    else:
+                        return 0.1, f"base_rate:expected={posterior:.1%},got={cand_pct}%"
+                except ValueError:
+                    if posterior < 0.5 and ("low" in cand_lower or "unlikely" in cand_lower):
+                        return 0.8, f"base_rate:posterior_low={posterior:.1%}"
+            except (ValueError, ZeroDivisionError):
+                pass
+
+        # 5. Expected value comparison
+        chances = self._CHANCE.findall(prompt)
+        if len(chances) >= 2:
+            try:
+                evs = []
+                for pct_str, val_str in chances:
+                    prob = float(pct_str) / 100
+                    val = float(val_str.replace(",", ""))
+                    evs.append((prob * val, f"{pct_str}%*${val_str}"))
+
+                # Find which game has higher EV
+                best_ev = max(evs, key=lambda x: x[0])
+                # Check if candidate mentions the right game
+                for i, (ev, desc) in enumerate(evs):
+                    game_label = chr(65 + i)  # A, B, C
+                    if game_label.lower() in cand_lower or f"game {game_label.lower()}" in cand_lower:
+                        if ev == best_ev[0]:
+                            return 0.9, f"expected_value:game_{game_label}=EV{ev:.0f}"
+                        else:
+                            return 0.1, f"expected_value:wrong_game"
+            except (ValueError, IndexError):
+                pass
+
+        return 0.5, "no_probabilistic_signal"
+
+
+class TemporalComputationEngine:
+    """R4: Temporal and rate-based computation.
+
+    Handles: inverse proportion, time duration across midnight,
+    relative day arithmetic, frequency LCM, age reasoning,
+    scheduling conflict detection.
+    """
+
+    _WORKERS_DAYS = re.compile(
+        r"(\d+)\s+(\w+)\s+can\s+\w+.*?in\s+(\d+)\s+days", re.I)
+    _HOW_MANY_DAYS = re.compile(
+        r"[Hh]ow\s+many\s+days.*?(\d+)\s+(\w+)", re.I)
+    _TIME_RANGE = re.compile(
+        r"(\d{1,2}):(\d{2})\s*(AM|PM|am|pm)?\s*(?:to|-)\s*(\d{1,2}):(\d{2})\s*(AM|PM|am|pm)?",
+        re.I)
+    _TIME_SIMPLE = re.compile(
+        r"(\d{1,2}):(\d{2})\s*(AM|PM|am|pm)?", re.I)
+    _EVERY_N_DAYS = re.compile(r"every\s+(\d+)\s+days", re.I)
+    _TODAY_IS = re.compile(r"[Tt]oday\s+is\s+(\w+day)", re.I)
+    _AGE_IS = re.compile(r"(\w+)\s+is\s+(\d+)\s+years?\s+old", re.I)
+    _AGE_TIMES = re.compile(r"(\w+)\s+is\s+(\d+)\s+times?\s+(?:as\s+old\s+as\s+)?(\w+)", re.I)
+    _AGE_PLUS = re.compile(r"(\w+)\s+is\s+(\d+)\s+years?\s+older\s+than\s+(\w+)", re.I)
+
+    DAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+
+    def score(self, parsed: dict, candidate: str) -> tuple[float, str]:
+        prompt = parsed.get("raw", "")
+        prompt_l = prompt.lower()
+        cand_lower = candidate.lower().strip()
+
+        try:
+            cand_val = float(cand_lower.split()[0].replace(",", ""))
+        except (ValueError, IndexError):
+            cand_val = None
+
+        # 1. Rate / inverse proportion
+        workers_match = self._WORKERS_DAYS.search(prompt)
+        how_many = self._HOW_MANY_DAYS.search(prompt)
+        if workers_match and how_many:
+            try:
+                w1 = int(workers_match.group(1))
+                d1 = int(workers_match.group(3))
+                w2 = int(how_many.group(1))
+                # workers * days = constant
+                total_work = w1 * d1
+                d2 = total_work / w2
+                if cand_val is not None and abs(cand_val - d2) < 0.5:
+                    return 1.0, f"inverse_proportion:{w1}*{d1}={total_work}/{w2}={d2}"
+                elif cand_val is not None:
+                    return 0.0, f"inverse_proportion:expected={d2}"
+            except (ValueError, ZeroDivisionError):
+                pass
+
+        # 2. Time duration (including across midnight)
+        times = self._TIME_SIMPLE.findall(prompt)
+        if len(times) >= 2 and ("duration" in prompt_l or "how long" in prompt_l):
+            try:
+                def to_minutes(h, m, ampm):
+                    h, m = int(h), int(m)
+                    if ampm:
+                        ampm = ampm.upper()
+                        if ampm == "PM" and h != 12:
+                            h += 12
+                        elif ampm == "AM" and h == 12:
+                            h = 0
+                    return h * 60 + m
+
+                start = to_minutes(*times[0])
+                end = to_minutes(*times[1])
+                if end < start:
+                    duration = (24 * 60 - start) + end  # across midnight
+                else:
+                    duration = end - start
+
+                hours = duration // 60
+                mins = duration % 60
+                duration_strs = [
+                    f"{hours} hours and {mins} minutes",
+                    f"{hours} hours {mins} minutes",
+                    f"{hours}h {mins}m",
+                    f"{hours}:{mins:02d}",
+                ]
+
+                for ds in duration_strs:
+                    if ds.lower() in cand_lower or cand_lower in ds.lower():
+                        return 1.0, f"duration:{duration}min={hours}h{mins}m"
+
+                # Try numeric match (total minutes or hours)
+                if cand_val is not None:
+                    if abs(cand_val - duration) < 1:
+                        return 1.0, f"duration_minutes:{duration}"
+                    if abs(cand_val - hours) < 0.1 and mins == 0:
+                        return 1.0, f"duration_hours:{hours}"
+            except (ValueError, IndexError):
+                pass
+
+        # 3. Relative day arithmetic
+        today_match = self._TODAY_IS.search(prompt)
+        if today_match:
+            today = today_match.group(1).lower()
+            if today in self.DAYS:
+                today_idx = self.DAYS.index(today)
+                # Parse "day after tomorrow" = +2, "yesterday" = -1, etc.
+                offset = 0
+                parts = prompt_l.split("?")[0] if "?" in prompt_l else prompt_l
+                if "day after tomorrow" in parts:
+                    offset += 2
+                elif "tomorrow" in parts:
+                    offset += 1
+                if "yesterday" in parts:
+                    offset -= 1
+                if "day before" in parts:
+                    offset -= 1
+                if "two days after" in parts:
+                    offset += 2
+                if "three days after" in parts:
+                    offset += 3
+
+                result_day = self.DAYS[(today_idx + offset) % 7]
+                if cand_lower == result_day or result_day in cand_lower:
+                    return 1.0, f"relative_day:{today}+{offset}={result_day}"
+                elif cand_lower in self.DAYS:
+                    return 0.0, f"relative_day:expected={result_day}"
+
+        # 4. Frequency coincidence (LCM)
+        every_matches = self._EVERY_N_DAYS.findall(prompt)
+        if len(every_matches) >= 2:
+            try:
+                import math
+                a, b = int(every_matches[0]), int(every_matches[1])
+                lcm = (a * b) // math.gcd(a, b)
+                if cand_val is not None and abs(cand_val - lcm) < 0.5:
+                    return 1.0, f"lcm:{a},{b}={lcm}"
+                elif cand_val is not None:
+                    return 0.0, f"lcm:expected={lcm}"
+            except ValueError:
+                pass
+
+        # 5. Age reasoning (solve linear equations)
+        ages = {}
+        for name, age_str in self._AGE_IS.findall(prompt):
+            ages[name.lower()] = int(age_str)
+
+        for name, mult_str, ref in self._AGE_TIMES.findall(prompt):
+            ref_age = ages.get(ref.lower())
+            if ref_age is not None:
+                ages[name.lower()] = ref_age * int(mult_str)
+
+        for name, diff_str, ref in self._AGE_PLUS.findall(prompt):
+            ref_age = ages.get(ref.lower())
+            if ref_age is not None:
+                ages[name.lower()] = ref_age + int(diff_str)
+
+        if ages and cand_val is not None:
+            for name, age in ages.items():
+                if abs(cand_val - age) < 0.5:
+                    return 1.0, f"age:{name}={age}"
+            # Check if any computed age matches
+            all_ages = list(ages.values())
+            if cand_val in all_ages or any(abs(cand_val - a) < 0.5 for a in all_ages):
+                return 0.9, f"age_match:{cand_val}"
+
+        # 6. Scheduling conflict
+        ranges = self._TIME_RANGE.findall(prompt)
+        if len(ranges) >= 2 and ("can you attend" in prompt_l or "conflict" in prompt_l
+                                  or "overlap" in prompt_l):
+            try:
+                def parse_range(m):
+                    h1, m1, ap1, h2, m2, ap2 = m
+                    def to_min(h, m, ap):
+                        h, m = int(h), int(m)
+                        if ap:
+                            ap = ap.upper()
+                            if ap == "PM" and h != 12: h += 12
+                            elif ap == "AM" and h == 12: h = 0
+                        return h * 60 + m
+                    return to_min(h1, m1, ap1), to_min(h2, m2, ap2)
+
+                intervals = [parse_range(r) for r in ranges]
+                # Check overlap
+                has_conflict = False
+                for i in range(len(intervals)):
+                    for j in range(i + 1, len(intervals)):
+                        s1, e1 = intervals[i]
+                        s2, e2 = intervals[j]
+                        if s1 < e2 and s2 < e1:
+                            has_conflict = True
+
+                if not has_conflict:
+                    if "yes" in cand_lower:
+                        return 0.9, "no_conflict:can_attend"
+                    if "no" in cand_lower:
+                        return 0.1, "no_conflict:wrong"
+                else:
+                    if "no" in cand_lower:
+                        return 0.9, "has_conflict:cannot_attend"
+                    if "yes" in cand_lower:
+                        return 0.1, "has_conflict:wrong"
+            except (ValueError, IndexError):
+                pass
+
+        return 0.5, "no_temporal_signal"
+
+
 class CausalEngine:
     """R5: Causal reasoning — distinguish correlation from causation."""
 
@@ -569,13 +879,15 @@ class ComposedReasoningTool:
     def __init__(self):
         self.parser = TextParser()
         self.engines = [
-            (0.15, "chain", ForwardChainEngine()),
-            (0.15, "order", OrderingEngine()),
-            (0.20, "compute", ComputationEngine()),
-            (0.10, "negate", NegationEngine()),
-            (0.15, "sequence", SequenceEngine()),
-            (0.15, "state", StateEngine()),
-            (0.10, "causal", CausalEngine()),
+            (0.12, "chain", ForwardChainEngine()),
+            (0.12, "order", OrderingEngine()),
+            (0.15, "compute", ComputationEngine()),
+            (0.08, "negate", NegationEngine()),
+            (0.12, "sequence", SequenceEngine()),
+            (0.10, "state", StateEngine()),
+            (0.05, "causal", CausalEngine()),
+            (0.14, "prob_fallacy", ProbabilisticFallacyEngine()),
+            (0.12, "temporal", TemporalComputationEngine()),
         ]
 
     def evaluate(self, prompt: str, candidates: list[str]) -> list[dict]:
