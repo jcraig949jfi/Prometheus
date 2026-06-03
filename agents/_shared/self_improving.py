@@ -842,6 +842,10 @@ class SelfImprovingDaemon:
             log.warning(f"{self.AGENT_NAME_FOR_TICKETS}: menu exhausted but "
                         f"no SELF_SUMMON_INBOX_PATH configured")
             return
+        if self._has_open_ticket("self-improvement-menu-exhausted"):
+            log.info(f"{self.AGENT_NAME_FOR_TICKETS}: self-summon already OPEN; "
+                     f"skipping re-emit")
+            return
         ticket = {
             "id": f"T-{datetime.now(timezone.utc).strftime('%Y-%m-%d')}-{self.AGENT_NAME_FOR_TICKETS}-self-summon",
             "source": self.AGENT_NAME_FOR_TICKETS,
@@ -874,11 +878,44 @@ class SelfImprovingDaemon:
         except Exception as e:
             log.error(f"self-summon ticket emission failed: {e}")
 
+    def _has_open_ticket(self, ticket_type: str,
+                         adaptation_name: Optional[str] = None) -> bool:
+        """Dedup guard: True if an OPEN ticket of this type (and adaptation,
+        if given) from this agent already sits in the inbox. Prevents the
+        daemon from re-spamming the operator every tick while a request is
+        pending adjudication. Fails open (returns False) on any read error."""
+        path = self.SELF_SUMMON_INBOX_PATH
+        if not path or not path.exists():
+            return False
+        try:
+            for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    t = json.loads(line)
+                except Exception:
+                    continue
+                if (t.get("status") == "OPEN"
+                        and t.get("source") == self.AGENT_NAME_FOR_TICKETS
+                        and t.get("type") == ticket_type
+                        and (adaptation_name is None
+                             or t.get("payload", {}).get("adaptation") == adaptation_name)):
+                    return True
+        except Exception as e:
+            log.warning(f"_has_open_ticket read failed (fail-open): {e}")
+        return False
+
     def _emit_approval_request_ticket(self, adaptation: Adaptation,
                                       si_state: dict) -> None:
         """For adaptations marked requires_human_approval. Same shape as
-        self-summon but a different type."""
+        self-summon but a different type. Deduped: skips emission if an OPEN
+        approval request for this adaptation is already pending."""
         if not self.SELF_SUMMON_INBOX_PATH:
+            return
+        if self._has_open_ticket("self-improvement-approval-request", adaptation.name):
+            log.info(f"{self.AGENT_NAME_FOR_TICKETS}: approval request for "
+                     f"{adaptation.name} already OPEN; skipping re-emit")
             return
         ticket = {
             "id": f"T-{datetime.now(timezone.utc).strftime('%Y-%m-%d')}-{self.AGENT_NAME_FOR_TICKETS}-approval-{adaptation.name}",
