@@ -12,8 +12,10 @@ import pytest
 from theseus.emit.record_schema import TheseusRecord, ClaimKind, Verdict, StepRecord
 from theseus.scoring.content_aware_promote import (
     CONTENT_AWARE_PROMOTE_THRESHOLD,
+    META_RELATIONAL_GENERATORS,
     content_aware_promote_score,
     content_aware_promote_score_group,
+    is_direct_relation_record,
     is_self_tautology_pair,
     maybe_promote_by_f2,
 )
@@ -183,3 +185,75 @@ def test_maybe_promote_by_f2_filters_inconclusive():
     ]
     promoted = maybe_promote_by_f2(records, rng=random.Random(1))
     assert promoted == []
+
+
+# --- predicate_kind / meta-relational guard (calibration v3c, 2026-06-03) ---
+
+def _mk_gen_record(generator_id, relation, value_a, value_b,
+                   verdict=Verdict.SHADOW_CATALOG.value, predicate_kind=None):
+    payload = {
+        "catalog_a": "knot", "object_a": "K1", "invariant_a": "three_genus",
+        "value_a": value_a,
+        "catalog_b": "ec", "object_b": "E1", "invariant_b": "rank",
+        "value_b": value_b,
+        "relation": relation,
+    }
+    if predicate_kind is not None:
+        payload["predicate_kind"] = predicate_kind
+    canonical = f"three_genus(K1)={value_a} {relation} rank(E1)={value_b}/{generator_id}"
+    return TheseusRecord(
+        record_id=TheseusRecord.compute_record_id(canonical, generator_id),
+        generator_id=generator_id, batch_id="b", emitted_at="2026-06-03T00:00:00Z",
+        claim_kind=ClaimKind.BRIDGE_EXTENSION.value, claim_payload=payload,
+        canonical_claim_text=canonical, verdict=verdict,
+    )
+
+
+def test_meta_relational_generators_are_not_direct():
+    for g in ("g4", "g5", "a3"):
+        assert g in META_RELATIONAL_GENERATORS
+        r = _mk_gen_record(g, "equal", 1, 1)
+        assert is_direct_relation_record(r) is False
+
+
+def test_direct_generators_are_direct():
+    for g in ("a1", "f2", "f3", "f4", "test"):
+        r = _mk_gen_record(g, "equal", 1, 1)
+        assert is_direct_relation_record(r) is True
+
+
+def test_predicate_kind_overrides_generator_id():
+    # Explicit predicate_kind wins over the generator_id fallback, both ways.
+    direct_g4 = _mk_gen_record("g4", "equal", 1, 1, predicate_kind="direct")
+    assert is_direct_relation_record(direct_g4) is True
+    invariance_a1 = _mk_gen_record("a1", "equal", 1, 1, predicate_kind="invariance")
+    assert is_direct_relation_record(invariance_a1) is False
+
+
+def test_maybe_promote_excludes_meta_relational_records():
+    # g4 records whose verdict says "reflection-symmetric" must NOT be promoted
+    # by the raw-value F2 filter even when they would otherwise pin contrast.
+    # Construct a group: SHADOW verdicts on values where equal NEVER holds raw
+    # (value_a always 7, value_b always 0 -> rel "equal" raw-holds 0% -> if it
+    # were scored as direct, contrast would be |0 - 0| but verdict=SHADOW means
+    # the filter would treat it as held; the guard drops it before scoring).
+    g4_records = [
+        _mk_gen_record("g4", "equal", 7, 0, verdict=Verdict.SHADOW_CATALOG.value)
+        for _ in range(60)
+    ]
+    promoted = maybe_promote_by_f2(g4_records, n_null_samples=200,
+                                   rng=random.Random(1))
+    assert promoted == []  # all excluded as meta-relational
+
+
+def test_maybe_promote_still_scores_direct_records():
+    # Sanity: a genuinely direct group still flows through the filter.
+    # value_a == value_b always -> "equal" holds 100%; random re-pairing of a
+    # mixed pool holds far less -> contrast high -> promotes.
+    recs = []
+    for i in range(60):
+        v = i % 5
+        recs.append(_mk_gen_record("a1", "equal", v, v,
+                                   verdict=Verdict.SHADOW_CATALOG.value))
+    promoted = maybe_promote_by_f2(recs, n_null_samples=500, rng=random.Random(2))
+    assert len(promoted) > 0  # direct records are not excluded

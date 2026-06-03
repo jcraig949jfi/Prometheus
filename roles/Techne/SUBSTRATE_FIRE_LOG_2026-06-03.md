@@ -47,3 +47,40 @@ whether their SHADOW verdicts belong in the content-aware corpus at all.
 **Doctrine:** calibration-discipline (independent null before claim) ✓;
 counter-baseline discriminator (a1 uniform null) ✓; permutation/independent-null
 mandatory ✓; assume-wrong / kills-are-the-output ✓; HARD-5 no-bridge-story ✓.
+
+---
+
+## Calibration v3c — per-generator audit: the signal was a claim-shape category error
+
+Ran the owed next probe. `calibration_v3c_generator_audit.py` computes per-
+generator group-level contrast with a WITHIN-generator re-pairing null (each
+generator's own counter-baseline). 30M window, non-mutated only.
+
+**Result — bias injectors named:**
+- g4 reflection-duality: 91/96 groups promote, mean contrast 0.619, max 1.000, n=2.89M
+- g5 scale-invariance: 78/80, mean 0.639, max 1.000, n=21K
+- a3 functional-identity: 34/96, mean 0.091, max 0.332, n=3.20M
+- f4 / f2 / f3 / a1 (direct-relation): 0/96, mean contrast <= 0.009
+
+**Mechanism (confirmed in code, `g4_reflection_duality.py:72-78`):** g4/g5/a3
+emit payloads in the SAME (value_a, value_b, relation) shape as a1's direct
+claims, but their SHADOW/REJECTED verdict answers a DIFFERENT predicate —
+g4: "rel is sign-reflection-invariant"; g5: "rel is scale-invariant"; a3:
+"rel(f(a), g(b)) holds on transformed values". F2's group key conflates them
+with direct records, then scores all against the raw-value null. Reflection-
+symmetry is common exactly where the raw relation is False on both sides ->
+sub_hold~100%, null~0% -> contrast pins at 1.000. **Category error, not coupling.**
+
+**Production fix shipped this change set.** `content_aware_promote.py` gains
+`is_direct_relation_record()` + `META_RELATIONAL_GENERATORS = {g4,g5,a3}`.
+`maybe_promote_by_f2` and `build_value_pools_from_records` now skip meta-
+relational records, so the daemon's observation-mode F1-vs-F2 delta (doctrine
+criterion #5) is honest. Resolution order is backwards-compatible: honor an
+explicit `claim_payload.predicate_kind` if present, else fall back to
+generator_id. 5 new guard tests; full suite 15/15 green.
+
+**Forward path (filed):** generators stamp `predicate_kind` on emission
+(g4/g5='invariance', a3='transformed', a1/f-family='direct') + a record_schema
+field, so the filter never depends on a generator_id denylist.
+
+Full verdict: `pivot/calibration_v3c_VERDICT_generator_category_error_2026-06-03.md`.

@@ -45,6 +45,34 @@ CONTENT_AWARE_PROMOTE_THRESHOLD = 0.10
 DEFAULT_NULL_SAMPLES = 1000
 TAUTOLOGY_DETECTION_FRACTION = 0.95
 
+# Generators whose SHADOW/REJECTED verdict answers a META-RELATIONAL predicate
+# (not "does rel(a,b) hold on the stored values"), so the raw-value F2 null is
+# the WRONG basis for them. Established by calibration v3c (2026-06-03):
+#   g4 reflection-duality  -> verdict = "rel is sign-reflection-invariant"
+#   g5 scale-invariance    -> verdict = "rel is scale-invariant"
+#   a3 functional-identity -> verdict = "rel(f(a), g(b)) holds" (transformed)
+# Scoring these against a raw-value null manufactured ~all of v2's apparent
+# corpus contrast (a category error, not coupling). See
+# pivot/calibration_v3c_VERDICT_generator_category_error_2026-06-03.md.
+META_RELATIONAL_GENERATORS = frozenset({"g4", "g5", "a3"})
+
+
+def is_direct_relation_record(record: TheseusRecord) -> bool:
+    """True iff this record's verdict answers the DIRECT predicate
+    "does relation(value_a, value_b) hold" — the only predicate for which
+    F2's raw-value null is valid.
+
+    Resolution order (backwards-compatible):
+      1. If claim_payload declares `predicate_kind`, honor it
+         ('direct' -> True; anything else -> False).
+      2. Else fall back to generator_id: META_RELATIONAL_GENERATORS -> False.
+    """
+    payload = record.claim_payload or {}
+    pk = payload.get("predicate_kind")
+    if pk is not None:
+        return pk == "direct"
+    return getattr(record, "generator_id", None) not in META_RELATIONAL_GENERATORS
+
 
 def _payload_key(payload: Dict) -> Optional[Tuple[str, str, str, str, str]]:
     """Extract (catalog_a, invariant_a, catalog_b, invariant_b, relation) from
@@ -235,6 +263,8 @@ def build_value_pools_from_records(
     """
     pools: Dict[Tuple, Tuple[List[int], List[int]]] = {}
     for r in records:
+        if not is_direct_relation_record(r):
+            continue  # meta-relational verdicts must not pollute the raw-value null
         key = _payload_key(r.claim_payload)
         if key is None:
             continue
@@ -273,6 +303,8 @@ def maybe_promote_by_f2(
     for r in records:
         if r.verdict not in (Verdict.SHADOW_CATALOG.value, Verdict.REJECTED.value):
             continue
+        if not is_direct_relation_record(r):
+            continue  # g4/g5/a3 verdicts answer a different predicate (v3c)
         if is_self_tautology_pair(r.claim_payload):
             continue
         key = _payload_key(r.claim_payload)
