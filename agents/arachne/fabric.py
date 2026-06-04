@@ -87,5 +87,23 @@ class Fabric:
     def node_degree_seen(self, node: str) -> bool:
         return node in self._nodes
 
+    def nodes(self) -> list[str]:
+        return list(self._nodes)
+
+    def iter_edges(self):
+        """Yield (src, dst, op) for every persisted edge — read from disk so
+        the traversal layer sees the full fabric, not just this session."""
+        if not self.edges_path.exists():
+            return
+        for line in self.edges_path.read_text(encoding="utf-8", errors="replace").splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                e = json.loads(line)
+            except Exception:
+                continue
+            yield e["src"], e["dst"], e["op"]
+
     def stats(self) -> dict:
         return {"edges": self._edge_count, "nodes": len(self._nodes)}

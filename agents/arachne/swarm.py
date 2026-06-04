@@ -32,6 +32,7 @@ for p in (REPO, REPO / "scripts"):
 from agents.arachne.fabric import Fabric
 from agents.arachne.crawler import Crawler, Ruleset
 from agents.arachne.landscapes import build_landscapes
+from agents.arachne.join import JoinWeaver
 
 AGENT_DIR = _THIS.parent
 STATE_DIR = AGENT_DIR / "state"
@@ -43,9 +44,11 @@ LINEAGE_LOG = STATE_DIR / "lineage.jsonl"
 OVERRIDES = STATE_DIR / "overrides.json"
 
 POP_CAP = 12
+POP_HARD_CAP = 16          # floor revivals may exceed POP_CAP up to here
 BRANCH_FITNESS = 0.6
 BRANCH_PATIENCE = 4
 BRANCH_COOLDOWN = 10
+JOIN_EVERY = 3             # run the rosetta cross-landscape weaver every N ticks
 
 # The five founding rulesets (James's 5 crawlers).
 def founding_rulesets() -> list[Ruleset]:
@@ -64,6 +67,7 @@ class Swarm:
     def __init__(self):
         self.landscapes = build_landscapes()
         self.fabric = Fabric(FABRIC_DIR)
+        self.weaver = JoinWeaver(oeis_adapter=self.landscapes.get("oeis"))
         self.crawlers: list[Crawler] = []
         self.graveyard: list[dict] = []
         self.tick = 0
@@ -159,15 +163,37 @@ class Swarm:
                               total_edges=c.total_edges, generation=c.generation)
                 self.crawlers.remove(c)
 
+        # per-landscape population floor: no landscape may go extinct. This is
+        # the fix for the monoculture collapse — connectivity-fitness alone drives
+        # the population onto the highest-fanout landscape (oeis) and the rest die.
+        for ls in self.landscapes:
+            if self._alive_count() >= POP_HARD_CAP:
+                break
+            if not any(c.alive and c.ruleset.landscape == ls for c in self.crawlers):
+                rs = next((r for r in founding_rulesets() if r.landscape == ls), None)
+                rs = Ruleset(**rs.__dict__) if rs else Ruleset(landscape=ls)
+                cid = self._new_id(ls, 0)
+                self.crawlers.append(Crawler(cid, rs))
+                self._lineage("floor_revive", id=cid, landscape=ls)
+
         # extinction resilience
         if self._alive_count() == 0:
             self._lineage("extinction_respawn")
             self.seed_population()
 
+        # rosetta cross-landscape join — weave the separate webs into one tapestry
+        join_delta = None
+        if self.tick % JOIN_EVERY == 0:
+            import random as _r
+            join_delta = self.weaver.weave(self.fabric, _r.Random(self.tick), max_edges=40)
+            if join_delta["new_edges"]:
+                self._lineage("rosetta_weave", new_edges=join_delta["new_edges"])
+
         self._write_state()
         self.save_population()
         return {"tick": self.tick, "alive": self._alive_count(),
-                "fabric": self.fabric.stats(), "per": per}
+                "fabric": self.fabric.stats(), "per": per,
+                "join": join_delta}
 
     def _alive_count(self) -> int:
         return sum(1 for c in self.crawlers if c.alive)
@@ -218,6 +244,7 @@ class Swarm:
             "alive": self._alive_count(),
             "fabric": self.fabric.stats(),
             "crawlers": [c.snapshot() for c in self.crawlers],
+            "rosetta": self.weaver.snapshot(),
             "graveyard_size": len(self.graveyard),
             "recent_dead": self.graveyard[-6:],
         }

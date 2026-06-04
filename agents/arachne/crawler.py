@@ -172,7 +172,10 @@ class Crawler:
                 "looping": looping, "fitness": round(self.fitness(), 3)}
 
     def _after(self, new_e: int, new_n: int, mean_null: float) -> None:
-        self._progress.append(new_e + new_n)
+        # value, not volume: weight NEW NODES (reaching fresh territory) above raw
+        # edge count, so a crawler can't win by bulk-linking a dense region it has
+        # already saturated (the oeis monoculture failure mode).
+        self._progress.append(2 * new_n + new_e)
         self._nullsum.append(mean_null)
         if new_e == 0 and new_n == 0:
             self.stall_streak += 1
