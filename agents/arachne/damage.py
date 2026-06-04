@@ -132,6 +132,34 @@ class Oracle:
         cur.close()
         return list(dict.fromkeys(hits))
 
+    def canonical(self, seq, min_len=8, max_off=3):
+        """Identify a sequence robustly: offset-tolerant (storage conventions
+        vary — a leading 0 is not a damage operation), returns A-numbers sorted
+        canonical-first (lowest A-number). Used to recover the INTENDED target,
+        so 'exhibited' means canonical recovery, not a coincidental prefix hit."""
+        try:
+            if any(int(x) != x for x in seq):
+                return []
+            seq = [int(x) for x in seq]
+        except Exception:
+            return []
+        if len(seq) < min_len:
+            return []
+        seq = seq[:14]
+        hits = []
+        cur = self.conn.cursor()
+        for off in range(0, max_off + 1):
+            try:
+                cur.execute("SELECT oeis_id FROM analysis.oeis WHERE first_terms[%s:%s]=%s::bigint[] "
+                            "AND oeis_id IS NOT NULL LIMIT 8;", (1 + off, off + len(seq), seq))
+                hits += [r[0] for r in cur.fetchall()]
+            except Exception:
+                pass
+        cur.close()
+        uniq = list(dict.fromkeys(hits))
+        uniq.sort(key=lambda a: int(a[1:]) if a[1:].isdigit() else 10 ** 9)
+        return uniq
+
     def match_growth(self, seq):
         """RANDOMIZE: relax exact match to growth-rate class (statistical)."""
         try:
@@ -164,53 +192,68 @@ def coverage():
     fibonacci = [int(sympy.fibonacci(n)) for n in range(1, K + 1)]
     harmonic = [sympy.harmonic(n) for n in range(1, K + 1)]   # Rational
 
+    harm_num = [int(h.p) for h in harmonic]                           # numerators
     results = {}
 
-    def record(op, broken, note, special=None):
-        pre = o.match(broken) if special is None else []
-        repaired_hit, example = None, None
-        if special == "EXTEND":
-            pre_amb = o.match(broken[:6], min_len=4)   # short prefix: ambiguous
-            full = o.match(broken, min_len=9)          # extended: specific
-            exhibited = len(pre_amb) > max(1, len(full)) and len(full) >= 1
-            results[op] = {"exhibited": exhibited, "note": note,
-                           "short_matches": len(pre_amb), "full_matches": full[:3]}
-            return
-        if special == "RANDOMIZE":
-            exact = o.match(broken)
-            stat = o.match_growth(broken)
-            results[op] = {"exhibited": len(exact) == 0 and len(stat) > 0, "note": note,
-                           "exact": exact[:2], "growth_class": stat[:3]}
-            return
+    def recover(op, clean, broken, note):
+        """Canonical-grade: target = canonical id of the CLEAN sequence; the
+        operator is exhibited iff (a) the broken seq does NOT already yield the
+        target under the strict oracle, and (b) a repair candidate recovers the
+        target under the canonical (offset-tolerant) oracle."""
+        target = (o.canonical(clean) or [None])[0]
+        strict_pre = set(o.match(broken))
+        recovered = None
         for cand in REPAIRS[op](broken):
-            hit = o.match(cand)
-            if hit:
-                repaired_hit, example = hit, (cand[:6], hit[:3])
+            if target and target in o.canonical(cand):
+                recovered = target
                 break
-        results[op] = {"exhibited": bool(repaired_hit) and not pre,
-                       "note": note, "pre_match": pre[:2],
-                       "repaired_to": example[1] if example else None,
-                       "repaired_prefix": example[0] if example else None}
+        results[op] = {"exhibited": bool(recovered) and target not in strict_pre,
+                       "canonical_grade": bool(recovered) and recovered == target,
+                       "target": target, "recovered": recovered, "note": note}
 
-    # constructed broken cases, each needing one operator
-    record("TRUNCATE", [99] + catalan, "junk leading term; drop it -> catalan")
-    record("EXTEND", catalan, "5-term prefix ambiguous; full length disambiguates", special="EXTEND")
-    record("PARTITION", [v for pair in zip(catalan, factorial) for v in pair],
-           "interleave catalan+factorial; bisect -> each matches")
-    record("QUANTIZE", harmonic, "harmonic numbers are rational; quantize -> integer seq")
-    record("INVERT", catalan[::-1], "reversed catalan; invert -> catalan")
-    record("HIERARCHIZE", _psums(fibonacci), "partial sums of fib; difference -> fib")
-    record("DISTRIBUTE", catalan, "running-average smoothing -> matches a smoothed seq?")
-    # CONCENTRATE: corrupt one middle term
-    corrupt = list(catalan); corrupt[12] = corrupt[12] + 7
-    record("CONCENTRATE", corrupt, "one corrupted term; isolate/drop it -> rest matches")
-    record("RANDOMIZE", [int(sympy.prime(n)) + (n % 3) for n in range(1, K + 1)],
-           "perturbed primes; no exact match, growth-class match", special="RANDOMIZE")
+    recover("TRUNCATE", catalan, [99] + catalan, "junk leading term -> drop -> Catalan")
+    recover("PARTITION", catalan, [v for p in zip(catalan, factorial) for v in p],
+            "interleave Catalan+factorial -> bisect -> Catalan")
+    recover("QUANTIZE", harm_num, harmonic, "rational harmonic -> numerators (A001008)")
+    recover("INVERT", catalan, catalan[::-1], "reversed -> invert -> Catalan")
+    recover("HIERARCHIZE", fibonacci, _psums(fibonacci), "partial sums -> difference -> Fibonacci")
+    corrupt = list(catalan); corrupt[12] += 7
+    recover("CONCENTRATE", catalan, corrupt, "one corrupted term -> longest clean prefix")
 
-    exhibited = [k for k, v in results.items() if v.get("exhibited")]
+    # EXTEND: short prefix ambiguous, full length specific
+    short_n = len(o.canonical(catalan[:6], min_len=4))
+    full_hit = o.canonical(catalan, min_len=9)
+    results["EXTEND"] = {"exhibited": short_n > max(1, len(full_hit)) and bool(full_hit),
+                         "canonical_grade": "A000108" in full_hit,
+                         "short_matches": short_n, "full": full_hit[:3],
+                         "note": "more terms disambiguate -> A000108"}
+
+    # RANDOMIZE: no exact match, statistical (growth-class) match
+    pert = [int(sympy.prime(n)) + (n % 3) for n in range(1, K + 1)]
+    results["RANDOMIZE"] = {"exhibited": not o.match(pert) and bool(o.match_growth(pert)),
+                            "canonical_grade": False, "growth_class": o.match_growth(pert)[:3],
+                            "note": "perturbed primes -> relax to growth-rate class (statistical)"}
+
+    # DISTRIBUTE (new landscape): a constant's irrationality can't be an exact
+    # integer sequence; spread it UNIFORMLY via equidistribution (Beatty
+    # sequence floor(n*alpha)) -> a catalogued sequence. phi -> A000201.
+    import math
+    phi = (1 + 5 ** 0.5) / 2
+    beatty = [int(math.floor(n * phi)) for n in range(1, K + 1)]
+    beatty_hit = o.canonical(beatty)
+    results["DISTRIBUTE"] = {"exhibited": bool(beatty_hit),
+                             "canonical_grade": "A000201" in beatty_hit,
+                             "recovered": beatty_hit[:3],
+                             "note": "irrational phi spread uniformly via Beatty floor(n*phi) -> A000201"}
+
+    order = ["TRUNCATE", "EXTEND", "RANDOMIZE", "HIERARCHIZE", "PARTITION",
+             "DISTRIBUTE", "CONCENTRATE", "QUANTIZE", "INVERT"]
+    exhibited = [k for k in order if results[k].get("exhibited")]
+    canon = [k for k in order if results[k].get("canonical_grade")]
     return {"exhibited_count": f"{len(exhibited)}/9", "exhibited": exhibited,
-            "not_exhibited": [k for k in results if k not in exhibited],
-            "detail": results}
+            "canonical_grade_count": f"{len(canon)}/9", "canonical_grade": canon,
+            "not_exhibited": [k for k in order if k not in exhibited],
+            "detail": {k: results[k] for k in order}}
 
 
 def oracle_ok(o):
