@@ -33,6 +33,7 @@ from agents.arachne.fabric import Fabric
 from agents.arachne.crawler import Crawler, Ruleset
 from agents.arachne.landscapes import build_landscapes
 from agents.arachne.join import JoinWeaver
+from agents.arachne.operational import OperationalJoiner
 
 AGENT_DIR = _THIS.parent
 STATE_DIR = AGENT_DIR / "state"
@@ -68,6 +69,7 @@ class Swarm:
         self.landscapes = build_landscapes()
         self.fabric = Fabric(FABRIC_DIR)
         self.weaver = JoinWeaver(oeis_adapter=self.landscapes.get("oeis"))
+        self.opjoiner = OperationalJoiner(oeis_adapter=self.landscapes.get("oeis"))
         self.crawlers: list[Crawler] = []
         self.graveyard: list[dict] = []
         self.tick = 0
@@ -188,6 +190,13 @@ class Swarm:
             join_delta = self.weaver.weave(self.fabric, _r.Random(self.tick), max_edges=40)
             if join_delta["new_edges"]:
                 self._lineage("rosetta_weave", new_edges=join_delta["new_edges"])
+        # operational join — computation-grounded edges (finite, runs until exhausted)
+        if self.tick % 5 == 0 and not self.opjoiner.exhausted():
+            import random as _r
+            od = self.opjoiner.weave(self.fabric, _r.Random(self.tick + 7), batch=4)
+            if od.get("new_edges"):
+                self._lineage("operational_weave", new_edges=od["new_edges"],
+                              matched=self.opjoiner.matched)
 
         self._write_state()
         self.save_population()
@@ -245,6 +254,7 @@ class Swarm:
             "fabric": self.fabric.stats(),
             "crawlers": [c.snapshot() for c in self.crawlers],
             "rosetta": self.weaver.snapshot(),
+            "operational": self.opjoiner.snapshot(),
             "graveyard_size": len(self.graveyard),
             "recent_dead": self.graveyard[-6:],
         }
