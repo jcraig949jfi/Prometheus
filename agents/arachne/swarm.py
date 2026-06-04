@@ -104,10 +104,18 @@ class Swarm:
         import random
         rng = random.Random(parent.rng.randint(1, 10_000_000))
         child_rs = parent.ruleset.mutate(rng)
-        # 30% chance to switch to a (different) live landscape — escape saturation
-        if self.landscapes and rng.random() < 0.30:
-            choices = [n for n in self.landscapes if n != child_rs.landscape] or list(self.landscapes)
-            child_rs.landscape = rng.choice(choices)
+        # Near-death branching should EXPLORE NEW LINKAGES (James's factor 3), not
+        # re-enter the cliff. 70% of the time the child escapes to the
+        # least-populated live landscape — this load-balances away from a
+        # struggling landscape that would otherwise monopolize reproduction
+        # (its low fitness is exactly what triggers branching).
+        if self.landscapes and rng.random() < 0.70:
+            counts = {n: 0 for n in self.landscapes}
+            for c in self.crawlers:
+                if c.alive and c.ruleset.landscape in counts:
+                    counts[c.ruleset.landscape] += 1
+            target = min(counts, key=lambda n: (counts[n], rng.random()))
+            child_rs.landscape = target
             child_rs.hop = False
         cid = self._new_id(child_rs.landscape, parent.generation + 1)
         child = Crawler(cid, child_rs, parent=parent.id, generation=parent.generation + 1)
