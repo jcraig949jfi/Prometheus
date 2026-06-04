@@ -2,9 +2,14 @@
 
 **Filed:** 2026-06-04
 **Author:** Aporia (in-session, with James)
-**Status:** Founding framework. Doctrine-candidate, NOT yet doctrine. Promote to
-`aporia/doctrine/` only after the catalog + at least one falsifiable hypothesis
-has produced data with a null.
+**Status:** Founding framework (conceptual). Doctrine-candidate, NOT yet doctrine.
+Operational sibling: `aporia/docs/failure_signal_protocol_v0.1.md` (schema, tests,
+nulls, metrics, preregistered H5 — the spec speaks in thresholds where this doc
+speaks in wells). Promote to `aporia/doctrine/` only per the gate in the protocol.
+**Review absorbed:** frontier review 2026-06-04 (operationalize void-candidate;
+mechanize motif emission; negative controls; holdout leakage; sharpened gate).
+Aporia refinements added: candidate-definition vs validation separation, and
+operator-closure leakage in the holdout.
 **Doctrine anchors:** `feedback_failure_signal_vector_field`,
 `feedback_kill_space_vector_field`, `feedback_gradient_synthesis`,
 `feedback_tensor_first` (HARD-3), HARD-1 (no papers), HARD-2 (anti-gravitational-well),
@@ -22,6 +27,15 @@ Mathematics is a narrow habitable band of the computable; known math sits as
 **failure field** whose vectors point back toward the wells; and the voids — the
 undiscovered mathematics — are the **field-predicted wells with no occupant**.
 The science is the construction and reading of that two-sided map.
+
+**Central law (subordinates everything below).** *A science of failure exists iff
+structured failure signals predict withheld or constructible mathematical
+occupants — ones NOT trivially operator-reachable from visible wells — better than
+a null. Until that is shown (H5), even "the field" is only an instrumentation
+hypothesis: we have records, repair edges, graph structure, maybe persistence, but
+we do not yet know whether the field points to undiscovered structure or merely
+compresses the biases of our generators.* The conceptual claims in this document
+are subordinate to that experimental one.
 
 ---
 
