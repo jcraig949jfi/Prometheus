@@ -1,0 +1,191 @@
+{
+  "protocol_version": "failure_signal_protocol_v0.1",
+  "frozen_before_run": true,
+  "experiment": "H5a_oeis_mvp",
+  "run_at": "2026-06-04T14:02:03.460992+00:00",
+  "params": {
+    "working_set": 12000,
+    "sig_len": 12,
+    "min_terms": 16,
+    "n_broken": 40000,
+    "k_values": [
+      10,
+      25,
+      50,
+      100
+    ],
+    "k_min": 3,
+    "m_min": 2,
+    "seed": 20260604
+  },
+  "visible_wells": 9981,
+  "hidden_wells": 1093,
+  "operator_closure_removed": 352,
+  "negative_controls": {
+    "operator_label_shuffle": "PASS",
+    "synthetic_no_voids": "PASS",
+    "synthetic_planted_voids": "STUB",
+    "randomized_labels": "STUB",
+    "degree_preserving_rewire": "STUB"
+  },
+  "recovery_real": {
+    "n_candidates": 2180,
+    "pool_size": 125046,
+    "pool_baseline_precision": 0.0002,
+    "hidden_reachable_in_pool": 25,
+    "by_k": {
+      "10": {
+        "precision": 0.3,
+        "recall": 0.12,
+        "hits": 3,
+        "lift_over_baseline": 1500.552,
+        "precision_ci95": [
+          0.016,
+          0.584
+        ]
+      },
+      "25": {
+        "precision": 0.12,
+        "recall": 0.12,
+        "hits": 3,
+        "lift_over_baseline": 600.221,
+        "precision_ci95": [
+          0,
+          0.2474
+        ]
+      },
+      "50": {
+        "precision": 0.08,
+        "recall": 0.16,
+        "hits": 4,
+        "lift_over_baseline": 400.147,
+        "precision_ci95": [
+          0.0048,
+          0.1552
+        ]
+      },
+      "100": {
+        "precision": 0.04,
+        "recall": 0.16,
+        "hits": 4,
+        "lift_over_baseline": 200.074,
+        "precision_ci95": [
+          0.0016,
+          0.0784
+        ]
+      }
+    },
+    "label": "real",
+    "n_visible": 9981,
+    "n_hidden_sigs": 1093
+  },
+  "null_operator_shuffle": {
+    "n_candidates": 2214,
+    "pool_size": 123984,
+    "pool_baseline_precision": 0.000177,
+    "hidden_reachable_in_pool": 22,
+    "by_k": {
+      "10": {
+        "precision": 0.3,
+        "recall": 0.1364,
+        "hits": 3,
+        "lift_over_baseline": 1690.691,
+        "precision_ci95": [
+          0.016,
+          0.584
+        ]
+      },
+      "25": {
+        "precision": 0.12,
+        "recall": 0.1364,
+        "hits": 3,
+        "lift_over_baseline": 676.276,
+        "precision_ci95": [
+          0,
+          0.2474
+        ]
+      },
+      "50": {
+        "precision": 0.06,
+        "recall": 0.1364,
+        "hits": 3,
+        "lift_over_baseline": 338.138,
+        "precision_ci95": [
+          0,
+          0.1258
+        ]
+      },
+      "100": {
+        "precision": 0.03,
+        "recall": 0.1364,
+        "hits": 3,
+        "lift_over_baseline": 169.069,
+        "precision_ci95": [
+          0,
+          0.0634
+        ]
+      }
+    },
+    "label": "operator_shuffle_null",
+    "n_visible": 9981,
+    "n_hidden_sigs": 1093
+  },
+  "control_synthetic_no_void": {
+    "n_candidates": 1798,
+    "pool_size": 127577,
+    "pool_baseline_precision": 0.0,
+    "hidden_reachable_in_pool": 0,
+    "by_k": {
+      "10": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "hits": 0,
+        "lift_over_baseline": null,
+        "precision_ci95": [
+          0,
+          0.0
+        ]
+      },
+      "25": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "hits": 0,
+        "lift_over_baseline": null,
+        "precision_ci95": [
+          0,
+          0.0
+        ]
+      },
+      "50": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "hits": 0,
+        "lift_over_baseline": null,
+        "precision_ci95": [
+          0,
+          0.0
+        ]
+      },
+      "100": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "hits": 0,
+        "lift_over_baseline": null,
+        "precision_ci95": [
+          0,
+          0.0
+        ]
+      }
+    },
+    "label": "synthetic_no_void",
+    "n_visible": 10800,
+    "n_hidden_sigs": 1200
+  },
+  "summary": {
+    "real_lift@100": 200.074,
+    "shuffle_null_lift@100": 169.069,
+    "synth_novoid_lift@100": 0.0
+  },
+  "verdict": "NULL",
+  "notes": "Family metadata absent in analysis.oeis: holdout is random + operator-closure-sealed (a documented simplification of the family-level holdout). 3 of 5 negative controls STUB (H5b/graph controls deferred). Mechanical C = exact 12-term prefix (no embeddings)."
+}
