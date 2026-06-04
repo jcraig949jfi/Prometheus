@@ -58,6 +58,8 @@ def founding_rulesets() -> list[Ruleset]:
         Ruleset(landscape="lmfdb",   max_neighbors=6, novelty_floor=0.85, seed=202),
         Ruleset(landscape="algolib", max_neighbors=8, novelty_floor=0.90, seed=303),
         Ruleset(landscape="oeis",    max_neighbors=6, novelty_floor=0.80, seed=404),
+        Ruleset(landscape="knots",   max_neighbors=6, novelty_floor=0.80, seed=606),
+        Ruleset(landscape="groups",  max_neighbors=6, novelty_floor=0.80, seed=707),
         # feral: minimal-rule generalist, hops landscapes — the "fewer rules" test
         Ruleset(landscape="feral",   max_neighbors=12, novelty_floor=0.97, hop=True,
                 frontier_mode="random", seed=505),

@@ -17,9 +17,11 @@ def build_landscapes() -> dict:
     from agents.arachne.landscapes.lmfdb import LmfdbLandscape
     from agents.arachne.landscapes.algolib import AlgolibLandscape
     from agents.arachne.landscapes.oeis import OeisLandscape
+    from agents.arachne.landscapes.pgtable import KnotsLandscape, GroupsLandscape
 
     out = {}
-    for cls in (MathlibLandscape, LmfdbLandscape, AlgolibLandscape, OeisLandscape):
+    for cls in (MathlibLandscape, LmfdbLandscape, AlgolibLandscape, OeisLandscape,
+                KnotsLandscape, GroupsLandscape):
         try:
             inst = cls()
             if inst.available():
