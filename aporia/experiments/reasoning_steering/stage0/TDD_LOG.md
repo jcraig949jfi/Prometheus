@@ -9,3 +9,6 @@ Format: `date | operation | A:authority P:property E:edge C:composition | commit
 2026-06-06 | nulls.endpoint_permutation + emitter_family_holdout | A:2 P:2 E:1 C:2 | d452c1d1
 2026-06-06 | localization.localized_rank (H-R2 freeze) | A:3 P:1 E:1 C:2 | ad4745aa
 2026-06-06 | runner.run_controls_0a (0a gate) | A:1 P:1 E:1 C:1 | e532d37a
+
+# Stage 0b
+2026-06-06 | stage0b.damage.Axis2DamageScorer | A:2 P:2 E:1 C:1 | (this commit)

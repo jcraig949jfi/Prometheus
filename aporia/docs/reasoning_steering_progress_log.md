@@ -359,3 +359,18 @@ is the load-bearing decision), THEN build the emitter via TDD, generate data, ru
   code). Then corpus loader → operator application → emitter → graph builder → 0b
   runner (reuses Stage 0a's validated decomposer + nulls) → stage0b report. Global
   H-R1 only; publish even if NULL/INVALID_SPARSE_SIGNAL.
+
+## 2026-06-06 — Stage 0b emitter build (TDD loop)
+
+### Iteration 1 — Axis-2 damage scorer ✓ (but PERFORMANCE FLAG)
+- Feasibility smoke confirmed the chain: Lehmer's poly → damage −9 (n_passed 9/12:
+  out_of_band, reciprocity, irreducibility, LMFDB, arXiv, F1/F6/F9/F11 pass; the 3
+  catalog-presence checks fail); out-of-band → damage 0.
+- `stage0b/damage.py`: `Axis2DamageScorer` (builds DiscoveryPipeline once, reuses) +
+  `Axis2Damage` result. `test_damage.py` **6/6 GREEN** (A:2 P:2 E:1 C:1).
+- **⚠ PERFORMANCE FLAG:** test run took **570s (9.5 min)** for ~16 scores. At this
+  cost a full corpus×operators sweep (iter 4) is intractable. `catalog:LMFDB` /
+  `catalog:arXiv` in the falsifier set suggests possible network calls → also a
+  REPRODUCIBILITY risk (network-dependent damage). MUST diagnose construction-cost vs
+  per-score-cost and the catalog-network question BEFORE the emitter sweep (the freeze
+  "if scoring can't be made to work cleanly, stop and report" clause). Diagnosing next.
