@@ -16,7 +16,13 @@ from dataclasses import dataclass, field
 import numpy as np
 import networkx as nx
 
-__all__ = ["ControlGraph", "circulation_flow", "no_cycle_graph", "planted_cycle_graph"]
+__all__ = [
+    "ControlGraph",
+    "circulation_flow",
+    "no_cycle_graph",
+    "planted_cycle_graph",
+    "planted_hole_graph",
+]
 
 
 @dataclass(frozen=True)
@@ -127,4 +133,53 @@ def planted_cycle_graph(
         seed=seed,
         n_planted=n_triangles,
         meta={"with_backbone": with_backbone},
+    )
+
+
+def planted_hole_graph(
+    n_holes: int = 2, hole_len: int = 4, seed: int = 0, with_backbone: bool = True
+) -> ControlGraph:
+    """Control #7 — k disjoint CHORDLESS cycles (holes), each carrying a circulation.
+
+    A chordless cycle of length >= 4 has no triangle to fill, so a circulation
+    around it is PURE HARMONIC: harmonic_rank == k, curl_rank == 0. An optional tree
+    backbone of bridges joins the holes (a bridge is in no cycle, so it adds neither
+    a hole nor a triangle) and carries a gradient background.
+    """
+    if n_holes < 1:
+        raise ValueError("planted_hole_graph needs n_holes >= 1")
+    if hole_len < 4:
+        raise ValueError("hole_len must be >= 4 (length 3 is a triangle = curl)")
+    rng = np.random.default_rng(seed)
+    G = nx.Graph()
+    flow: dict = {}
+    hole_anchors = []
+    for h in range(n_holes):
+        verts = [h * hole_len + i for i in range(hole_len)]
+        cyc_edges = [_canon(verts[i], verts[(i + 1) % hole_len]) for i in range(hole_len)]
+        G.add_edges_from(cyc_edges)
+        mag = float(rng.uniform(0.5, 2.0))
+        for e, val in circulation_flow(verts).items():
+            flow[e] = flow.get(e, 0.0) + mag * val
+        hole_anchors.append(verts[0])
+
+    if with_backbone and n_holes > 1:
+        for h in range(n_holes - 1):
+            u, v = hole_anchors[h], hole_anchors[h + 1]
+            e = _canon(u, v)
+            G.add_edge(*e)
+            flow[e] = float(rng.standard_normal())
+
+    return ControlGraph(
+        G=G,
+        flow=flow,
+        kind="planted_hole",
+        expected={
+            "curl_rank": 0,
+            "harmonic_rank": n_holes,
+            "non_gradient_mass": "positive",
+        },
+        seed=seed,
+        n_planted=n_holes,
+        meta={"hole_len": hole_len, "with_backbone": with_backbone},
     )

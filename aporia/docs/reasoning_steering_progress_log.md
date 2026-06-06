@@ -146,3 +146,22 @@ scipy 1.13.1, networkx 3.6.1, hypothesis 6.151.9, pytest 8.4.2. (The default
 - **Next (iter 3):** #7 planted-hole (chordless cycles ⇒ harmonic_rank==#holes) +
   #8 operator-menu-artifact (random topology w/ operator labels ⇒ false-positive
   floor). Then iter 4 = §4 null battery.
+
+### Iteration 3 — control #7 planted-hole ✓ (re-planned: #8 deferred to iter 4)
+- On-the-fly adjustment: did #7 alone this cycle (clean harmonic-side parallel to
+  #6); moved #8 operator-menu-artifact to iter 4, since it's the same
+  operator-permutation family as the null battery and belongs with it.
+- `planted_hole_graph(n_holes, hole_len, seed, with_backbone)` in `controls.py` +
+  `test_controls_hole.py`. RED → GREEN, **4/4** (A:1 P:1 E:1 C:1). Full suite
+  **20/20**.
+- #7: k disjoint chordless cycles (len≥4, no fill) each carrying a scaled
+  circulation (PURE HARMONIC), bridged by a gradient backbone (bridges are in no
+  cycle ⇒ add no hole/triangle). curl_rank==0, harmonic_rank==k, harmonic_mass>0.
+  Independent anchors: zero 3-cliques + first Betti number == k +
+  harmonic_rank==len(nx.cycle_basis) (triangle-free).
+- **The curl/harmonic instrument is now calibrated both ways:** triangle→curl
+  (iter 2), chordless cycle→harmonic (iter 3), each recovered exactly across random
+  configs. This is the §2 distinction the whole protocol rests on, now tested.
+- **Next (iter 4):** §4 null battery (operator-label shuffle, endpoint permutation,
+  degree-preserving rewire, emitter-family holdout) + control #8
+  operator-menu-artifact (the operator-induced false-positive floor).
