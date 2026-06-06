@@ -1,0 +1,102 @@
+# Reasoning-Steering / Arachne — Progress Log
+
+**Discipline:** append a datestamped entry for *every* step as it happens — design
+decisions, files written, commits, kills, open forks. We lost the entire Arachne
+build once to a network drop because it lived only in conversation; nothing that
+matters stays in chat. Newest entries at the bottom.
+
+---
+
+## 2026-06-05/06 — Session: reasoning-steering v0.1 → v0.2, Arachne design
+
+### Context recovered after network drop
+- Session restarted; lost connectivity mid-work. Believed we were on
+  `reasoning_steering_protocol_v0.1.md`; actual live thread was **Arachne** (math
+  crawler swarm) + the reasoning-ladder unification.
+- **Disk reality check:** NOTHING of Arachne persisted to this machine. No
+  `arachne/` dir, no foundational doc, nothing in git. The "Doc filed. Now building
+  the framework…" messages never flushed here (or happened on the other machine).
+  Design fully recoverable from conversation; treated as design-stage, not code.
+
+### Arachne — design state (NOT yet built)
+- Epiphany (James): an army of math crawlers over formal libraries / databases /
+  sequences / algorithms, emitting typed+provenanced edges into a shared fabric;
+  fewest rules possible so novel organization can emerge.
+- Aporia stand: **three rules, not zero** — every edge carries (1) provenance
+  [enables crawler ablation], (2) operator-type not object-type [verbs over nouns],
+  (3) a null [else it rediscovers the prime atmosphere]. Win condition: emergent
+  partitions that (a) don't match human discipline boundaries, (b) survive single-
+  crawler ablation, (c) survive degree-preserving graph null.
+- **n=2 first, not an army.** Emergence must show at n=2 or it isn't emergence.
+- ChatGPT verdict folded in: four products (Fabric / Void-map / Operator-ecology /
+  Routing-substrate); "crawl the crawlers" meta-graph; first two crawlers =
+  Proof-Dependency-Motif vs Statement/Type-Signature on mathlib4; minimal edge
+  record schema; kill-ledger for edges.
+- **Aporia adversarial correction (unexamined by the convergence):**
+  - Convergence between ChatGPT and Aporia is a WARNING (gravity amplifier), not
+    validation.
+  - "super-additive at n=2 = emergence" is nearly automatic by set union; the real
+    null must hold each crawler's MARGINALS fixed (degree+operator-matched random
+    crawler A′,B′; compare A∪B surplus vs A′∪B′ surplus).
+  - mathlib-first is right for the INSTRUMENT (machine-checkable) but likely wrong
+    for the FINDING (mathlib is human-curated → table-of-contents gravity strongest
+    there). Resolution: mathlib calibrates instrument; LMFDB tests finding
+    (detrend primes first). Don't conflate "first landscape" with "where finding lives."
+- **Local data confirmed crawlable:** mathlib4 cloned at
+  `external_deps/mathlib4/Mathlib`; lmfdb lfunc_lfunctions 344GB, nf_fields 9.8GB,
+  ec_curvedata 2GB, artin_reps 468MB; sympy/numpy/networkx installed; prometheus_math
+  ~301 .py.
+- **STATUS: Arachne not built. Foundational doc not (re-)filed on this machine.**
+  Open item.
+
+### Reasoning-ladder unification → reasoning-steering protocol
+- James's move: each reasoning rung needs ≥1 gradient field to traverse, where
+  directional failure-pointers point toward the well.
+- Aporia formalization: the sharp (non-tautological) reading is that the failure
+  field is **non-conservative**. Rigorous object = combinatorial Hodge / HodgeRank
+  decomposition of the failure edge-flow on the state graph:
+  `f = ∇φ (scalar diff) + δψ (curl/cyclic) + h (harmonic/H¹ holes)`.
+  "Number of fields per rung" = local non-gradient rank.
+
+### v0.2 written + committed (commit a90cb4d6)
+- Filed `aporia/docs/reasoning_steering_protocol_v0.2.md`; v0.1 left immutable with a
+  supersession pointer.
+- Hypotheses (James's nested structure):
+  - **H-R1** scalar-collapse falsifier (Stage 0, pure data): `non_gradient_mass =
+    (‖δψ‖²+‖h‖²)/‖f‖²` beats the null battery.
+  - **H-R1b** predictive lift — demoted to a *consequence*, not the primary test.
+  - **H-R2** rung-rank, with the **LOCALIZATION FREEZE**: fixed graph-distance balls
+    r∈{1,2,3}, two-of-three-radii criterion, curl-rank & harmonic-rank reported
+    separately then summed, single-radius = `UNSTABLE_LOCALIZATION` (not evidence).
+    Spectral localization rejected for v0.2 (too many knobs).
+  - **H-R3** cross-protocol keystone: Stage-0 rung-rank predicts WHERE single-vector
+    v_proj steering fails (rank-1 steerable by one contrast vector; rank-k needs k
+    vectors / ordered sequences). Must beat baseline features.
+  - **H-R4** training transfer, HARD-3-gated.
+- **Guardrail (James):** non-conservativity is the NECESSARY condition / first
+  structural falsifier, NOT "the whole game." Dies only if the basis collapses to
+  scalar GLOBALLY, not when easy rungs are gradient-like.
+- **The load-bearing distinction:** operator-induced vs state-induced curl. If curl
+  dies under operator-label shuffle, the menu manufactured the basis (the H5-OEIS
+  artifact); if it survives, the state landscape carries the structure.
+- Null battery #1–8: operator-label shuffle, endpoint permutation, degree-preserving
+  rewire, emitter-family holdout, synthetic no-cycle/no-void, planted-cycle,
+  planted-hole, operator-menu artifact floor.
+- **Stage 0 ordered controls-first:** 0a controls → `stage0_hodge_controls_report.json`
+  BEFORE 0b H-R1 global → 0c H-R2 local (only after freeze + 0a pass) →
+  `stage0_real_failure_results.json`. Prove the instrument sees nothing in
+  no-structure data and recovers planted structure before touching the real ledger.
+- **Bridge:** Arachne crawls → emits edge-flow; Hodge decomposes → rank/mass;
+  steering tests → rank predicts steering failure. ONE pipeline. Per-edge `emitter`
+  provenance is what makes the emitter-family-holdout null possible.
+
+### Open forks / next moves (not yet decided or done)
+- [ ] **Stage 0 decomposer** — build it, run synthetic controls #5–#8 FIRST, emit
+  `stage0_hodge_controls_report.json`. Pure-data, HARD-3-clean, no ratification
+  needed. Awaiting James's go.
+- [ ] **Arachne** — not built; foundational doc not re-filed on this machine. Decide
+  whether to rebuild here or recover from the other machine.
+- [ ] Localization rule frozen in doc ✓ — but neighborhood/connected-component
+  handling for harmonic at small radii still to validate empirically in 0a.
+- [ ] Memory: localization-freeze / controls-first discipline not yet promoted to a
+  `feedback_` memory (MEMORY.md over size limit; deferred pending trim).
