@@ -151,6 +151,17 @@ operator set programmatically and records the full set used.
 **DEGENERACY GUARD constant:** `N = 20` minimum nonzero-flow edges after aggregation
 (else `INVALID_SPARSE_SIGNAL`).
 
+**PERFORMANCE ADDENDUM (James-ratified 2026-06-06, after the ~55s/score diagnosis):**
+- **Corpus cap:** the frozen corpus = the whole declared slice **capped at the first
+  50 in-band states** (deterministic order, recorded with source + count in
+  `provenance.corpus`). The cap is fixed before the run; not tuned to results.
+- **Determinism:** a **fixed battery RNG seed** is set before each score so `damage`
+  is bit-reproducible (the F1 permutation-null uses RNG). Seed recorded in the report.
+- **Parallelism:** scoring is parallelized across processes (multiprocessing). This is
+  an engineering fix ONLY — it does not change the metric or any `damage` value. The
+  emitter's per-score result must be identical serial vs parallel.
+- The metric itself (Axis 2, full battery) is UNCHANGED. No falsifier dropped.
+
 ## 4. What the emitter must NOT do (anti-artifact)
 
 - Must NOT tune the corpus, operator set, or damage metric after seeing any Δdamage
