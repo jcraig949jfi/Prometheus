@@ -227,3 +227,32 @@ scipy 1.13.1, networkx 3.6.1, hypothesis 6.151.9, pytest 8.4.2. (The default
   no-structure data, recovers planted structure, surfaces the operator floor) and
   emits `stage0_hodge_controls_report.json`. This is the protocol's
   "instrument-proven-before-real-data" gate.
+
+### Iteration 7 (FINAL) — 0a runner + gate artifact ✓ STAGE 0 COMPLETE
+- `runner.py`: `run_controls_0a(seed, n_null_samples)` + `write_report`.
+  `test_runner.py` RED→GREEN, **4/4** (A:1 P:1 E:1 C:1). Full suite **47/47**.
+- **Gate artifact generated — `stage0_hodge_controls_report.json`, all_passed=True**
+  (n_null_samples=500, seed=0). All 6 checks PASS:
+  - #5 no-cycle: non_gradient_mass = 2.4e-31 (~0) — instrument sees nothing.
+  - #6 planted-cycle: curl_rank 4, harmonic 0, curl_mass 0.83 — recovers curl.
+  - #7 planted-hole: harmonic_rank 3, curl 0, harmonic_mass 0.98 — recovers harmonic.
+  - #8 operator-artifact floor: label-shuffle p=0.35, endpoint-perm p=0.39 (both
+    >0.1) — does NOT beat its null; the operator floor holds.
+  - planted-cycle beats rewire null: observed 0.83 vs null-mean 0.25, p=0.004 (<0.1)
+    — real structure clears the null.
+  - localization STABLE, curl_rank 1 on a planted well.
+- **The protocol's "instrument proven before real data" gate (§5 step 0a) is met.**
+  Stage 0b (H-R1 global on real failure data) and 0c (H-R2 local rank) are now
+  unblocked — but per §5 they touch the real kill ledger, which is the next decision
+  point for James, not an autonomous step.
+
+### STAGE 0 SUMMARY (7 iterations, all TDD, 47 tests green)
+- `hodge.py` — combinatorial Hodge decomposer (f = grad+curl+harmonic, masses, ranks).
+- `controls.py` — 4 synthetic controls (#5 no-cycle, #6 planted-cycle, #7 planted-hole,
+  #8 operator-artifact).
+- `nulls.py` — §4 null battery (degree-preserving rewire, operator-label shuffle,
+  endpoint-permutation, emitter-family-holdout) + p-value machinery.
+- `localization.py` — H-R2 localization with the preregistered freeze.
+- `runner.py` — 0a validation harness + `stage0_hodge_controls_report.json`.
+- Commits: a5619bac, 774ab6f5, a1e7d500, 73e5ad49, d452c1d1, ad4745aa, + iter 7.
+- **Loop stopped after iteration 7 (planned end).**

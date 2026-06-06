@@ -1,0 +1,70 @@
+{
+  "all_passed": true,
+  "checks": [
+    {
+      "criterion": "non_gradient_mass ~ 0 on a tree",
+      "name": "control_5_no_cycle",
+      "observed": {
+        "non_gradient_mass": 2.4118293741793647e-31
+      },
+      "passed": true
+    },
+    {
+      "criterion": "curl_rank == #triangles, harmonic_rank == 0, curl_mass > 0",
+      "name": "control_6_planted_cycle",
+      "observed": {
+        "curl_mass": 0.8332239429666448,
+        "curl_rank": 4,
+        "harmonic_rank": 0,
+        "n_planted": 4
+      },
+      "passed": true
+    },
+    {
+      "criterion": "harmonic_rank == #holes, curl_rank == 0, harmonic_mass > 0",
+      "name": "control_7_planted_hole",
+      "observed": {
+        "curl_rank": 0,
+        "harmonic_mass": 0.9776080544011001,
+        "harmonic_rank": 3,
+        "n_planted": 3
+      },
+      "passed": true
+    },
+    {
+      "criterion": "operator-artifact does NOT beat its label-shuffle/endpoint-permutation null (p > floor)",
+      "name": "control_8_operator_artifact_floor",
+      "observed": {
+        "endpoint_permutation_p": 0.3852295409181637,
+        "floor_p": 0.1,
+        "label_shuffle_p": 0.34930139720558884
+      },
+      "passed": true
+    },
+    {
+      "criterion": "planted-cycle non_gradient_mass beats degree-preserving-rewire null (p < floor)",
+      "name": "planted_cycle_beats_rewire_null",
+      "observed": {
+        "floor_p": 0.1,
+        "null_mean": 0.25321529720088665,
+        "observed": 0.8332239429666448,
+        "pvalue": 0.003992015968063872
+      },
+      "passed": true
+    },
+    {
+      "criterion": "localized_rank STABLE with curl_rank 1 on a planted triangle well",
+      "name": "localization_stable_on_planted_well",
+      "observed": {
+        "curl_rank": 1,
+        "harmonic_rank": 0,
+        "status": "STABLE"
+      },
+      "passed": true
+    }
+  ],
+  "n_null_samples": 500,
+  "protocol": "reasoning_steering_v0.2",
+  "seed": 0,
+  "stage": "0a"
+}
