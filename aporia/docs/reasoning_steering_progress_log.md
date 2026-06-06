@@ -206,3 +206,24 @@ scipy 1.13.1, networkx 3.6.1, hypothesis 6.151.9, pytest 8.4.2. (The default
   separate curl-rank & harmonic-rank per ball, two-of-three-radii criterion,
   UNSTABLE_LOCALIZATION label. Then iter 7 = 0a runner →
   stage0_hodge_controls_report.json.
+
+### Iteration 6 — H-R2 localization (the freeze) ✓
+- `localization.py`: `ball_nodes`, `local_decompose` (induced subgraph B_r(w) →
+  local Hodge ranks), `localized_rank` (the freeze) returning `LocalRank`
+  (per-radius curl/harmonic/mass + declared values + status). `test_localization.py`
+  RED→GREEN, **7/7** (A:3 P:1 E:1 C:2). Full suite **43/43**.
+- The freeze, exactly as preregistered: fixed graph-distance balls r∈{1,2,3}, all
+  three reported, curl-rank & harmonic-rank separate, a nonzero rank declarable only
+  if the same value appears at two adjacent radii with mass>floor at both; else
+  `UNSTABLE_LOCALIZATION`. Spectral localization rejected.
+- **The freeze does real work (the load-bearing demonstration):** a chordless
+  4-cycle's hole closes inside the r=2 ball and persists at r=3 → STABLE harmonic 1;
+  a 6-cycle's hole only closes at r=3 (single radius) → **UNSTABLE_LOCALIZATION**,
+  even though the GLOBAL decomposition sees harmonic_rank 1. Localization is stricter
+  than global, on purpose — this is the artifact trap (neighborhood-radius DoF)
+  being closed, tested directly.
+- **Next (iter 7, final):** the 0a runner — assemble decomposer + 4 controls + 4
+  nulls + localization into a report that proves the instrument (sees nothing in
+  no-structure data, recovers planted structure, surfaces the operator floor) and
+  emits `stage0_hodge_controls_report.json`. This is the protocol's
+  "instrument-proven-before-real-data" gate.
