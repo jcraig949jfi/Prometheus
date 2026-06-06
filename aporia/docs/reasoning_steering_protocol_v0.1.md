@@ -2,9 +2,11 @@
 
 **Filed:** 2026-06-05
 **Author:** Aporia (in-session, with James)
-**Status:** Preregistration (NOT yet run). Sibling of
-`aporia/docs/failure_signal_protocol_v0.1.md`. Speaks in hypotheses, nulls,
-falsifiers, metrics, gates — not metaphors.
+**Status:** Preregistration (NOT yet run). **Hypotheses superseded by
+`aporia/docs/reasoning_steering_protocol_v0.2.md`** (2026-06-06), which replaces
+§2 with a Hodge-decomposition structural falsifier; this file remains immutable as
+the filed record. Sibling of `aporia/docs/failure_signal_protocol_v0.1.md`. Speaks
+in hypotheses, nulls, falsifiers, metrics, gates — not metaphors.
 **Parents:** `aporia/docs/science_of_failure_v0.1.md` (the gradient-enriched
 failure landscape), the ejection finding (`project_ejection_finding`), the
 convergence theory (`project_convergence_theory`), `project_rhea` (v_proj is the
