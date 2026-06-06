@@ -100,3 +100,33 @@ matters stays in chat. Newest entries at the bottom.
   handling for harmonic at small radii still to validate empirically in 0a.
 - [ ] Memory: localization-freeze / controls-first discipline not yet promoted to a
   `feedback_` memory (MEMORY.md over size limit; deferred pending trim).
+
+---
+
+## 2026-06-06 — Stage 0 build (TDD, self-paced loop)
+
+**Env:** Python 3.11 (`...Programs\Python\Python311`) has the stack — numpy 2.2.6,
+scipy 1.13.1, networkx 3.6.1, hypothesis 6.151.9, pytest 8.4.2. (The default
+`python` / py3.12 do NOT have numpy — always use `py -3.11`.) Module lives at
+`aporia/experiments/reasoning_steering/stage0/`.
+
+### Iteration 1 — Hodge decomposer core ✓ (commit pending)
+- Wrote 4-category tests first (`tests/test_hodge.py`), confirmed RED (ImportError),
+  then implemented `hodge.py` to GREEN. **9/9 pass** (A:3 P:2 E:2 C:2).
+- API: `hodge_decompose(G, flow) -> HodgeDecomposition` with
+  gradient/curl/harmonic vectors + masses + non_gradient_mass + curl_rank +
+  harmonic_rank. Canonical edge orientation = sorted pair; triangles = filled
+  3-cliques; projections via least squares onto im(d0) and im(B2); harmonic =
+  orthogonal residual.
+- Authority fixtures (hand-computed, cited to HodgeRank / Jiang et al. 2011):
+  filled triangle circulation = PURE CURL (curl_mass 1, curl_rank 1, harmonic_rank
+  0); chordless 4-cycle circulation = PURE HARMONIC (harmonic_mass 1, harmonic_rank
+  1); tree flow = PURE GRADIENT. This is exactly the curl-vs-harmonic distinction
+  controls #6 (planted-cycle) and #7 (planted-hole) rely on.
+- Property: Pythagorean mass partition + 3-way orthogonality (60 ex), gradient-of-
+  potential ⇒ non_gradient_mass≈0 (40 ex). Composition: curl_rank+harmonic_rank ==
+  |E|-|V|+components vs networkx (40 ex); triangle-free harmonic_rank ==
+  len(cycle_basis) on a 4×4 grid.
+- **Next (iter 2):** synthetic control generators — start with no-cycle/no-void
+  (must read non_gradient_mass≈0) and planted-cycle (must read curl_mass>0 at the
+  planted triangles).
