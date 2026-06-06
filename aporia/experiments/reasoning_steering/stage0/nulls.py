@@ -30,6 +30,9 @@ __all__ = [
     "null_pvalue",
     "degree_preserving_rewire",
     "operator_label_shuffle",
+    "endpoint_permutation",
+    "emitter_family_holdout",
+    "run_emitter_holdout",
     "run_null",
 ]
 
@@ -92,6 +95,60 @@ def operator_label_shuffle(cg, seed: int) -> dict:
     return {e: signature[ops[i]] for i, e in enumerate(edges)}
 
 
+def endpoint_permutation(cg, seed: int):
+    """Keep the operator-label multiset; place each labelled edge on a random,
+    distinct vertex pair (destroys topology). Returns (G', flow')."""
+    if not cg.edge_operators:
+        raise ValueError("control has no edge_operators for endpoint permutation")
+    signature = cg.meta["signature"]
+    rng = np.random.default_rng(seed)
+    labels = [cg.edge_operators[e] for e in sorted(cg.edge_operators.keys())]
+    rng.shuffle(labels)
+    nodes = sorted(cg.G.nodes())
+    all_pairs = [_canon(nodes[a], nodes[b]) for a in range(len(nodes)) for b in range(a + 1, len(nodes))]
+    chosen = rng.choice(len(all_pairs), size=len(labels), replace=False)
+    edges = [all_pairs[k] for k in chosen]
+    G2 = nx.Graph()
+    G2.add_nodes_from(nodes)
+    G2.add_edges_from(edges)
+    flow = {e: signature[labels[i]] for i, e in enumerate(edges)}
+    return G2, flow
+
+
+def emitter_family_holdout(cg, family: str):
+    """Drop every edge whose operator is ``family``; returns (G', flow') on the
+    surviving edges. Raises if the family is absent or removing it leaves no edge."""
+    if not cg.edge_operators:
+        raise ValueError("control has no edge_operators for emitter holdout")
+    present = set(cg.edge_operators.values())
+    if family not in present:
+        raise ValueError(f"family {family!r} not present (have {sorted(present)})")
+    kept = [e for e, op in cg.edge_operators.items() if op != family]
+    if not kept:
+        raise ValueError(f"holding out {family!r} removes every edge")
+    G2 = nx.Graph()
+    G2.add_edges_from(kept)
+    flow = {_canon(*e): cg.flow[_canon(*e)] for e in kept}
+    return G2, flow
+
+
+def run_emitter_holdout(cg) -> dict:
+    """Leave-one-family-out non_gradient_mass. Returns {"_full": mass, family: mass
+    without that family or None if it leaves nothing}. A family whose removal
+    collapses the mass manufactured the signal."""
+    if not cg.edge_operators:
+        raise ValueError("control has no edge_operators for emitter holdout")
+    result = {"_full": hodge_decompose(cg.G, cg.flow).non_gradient_mass}
+    for fam in sorted(set(cg.edge_operators.values())):
+        try:
+            G2, f2 = emitter_family_holdout(cg, fam)
+        except ValueError:
+            result[fam] = None
+            continue
+        result[fam] = hodge_decompose(G2, f2).non_gradient_mass
+    return result
+
+
 def run_null(cg, n_samples: int, seed: int, kind: str = "degree_preserving_rewire") -> NullResult:
     """Build a null distribution of non_gradient_mass and compare the observed value."""
     if n_samples < 1:
@@ -109,6 +166,9 @@ def run_null(cg, n_samples: int, seed: int, kind: str = "degree_preserving_rewir
         elif kind == "operator_label_shuffle":
             f = operator_label_shuffle(cg, seed=ss)
             masses.append(hodge_decompose(cg.G, f).non_gradient_mass)
+        elif kind == "endpoint_permutation":
+            H, f = endpoint_permutation(cg, seed=ss)
+            masses.append(hodge_decompose(H, f).non_gradient_mass)
         else:
             raise ValueError(f"unknown null kind {kind!r}")
     return NullResult(

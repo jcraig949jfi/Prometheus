@@ -187,3 +187,22 @@ scipy 1.13.1, networkx 3.6.1, hypothesis 6.151.9, pytest 8.4.2. (The default
   keeping operator multiset) + emitter-family-holdout (drop one operator family,
   does mass survive its absence — the beyond-generators clause). Then iter 6 = H-R2
   localization, iter 7 = the 0a runner.
+
+### Iteration 5 — remaining 2 §4 nulls ✓ (null battery complete)
+- `nulls.py`: `endpoint_permutation` (keep operator multiset, randomise vertex
+  pairs), `emitter_family_holdout` (drop one family's edges), `run_emitter_holdout`
+  (leave-one-family-out non_gradient_mass map), + `endpoint_permutation` branch in
+  `run_null`. `test_nulls_extra.py` RED→GREEN, **7/7** (A:2 P:2 E:1 C:2). Full
+  suite **36/36**.
+- emitter-holdout composition is the beyond-generators clause working on a hand
+  example: a triangle whose 3 curl edges are family "C" + a bridge family "B" —
+  `run_emitter_holdout` reports C-removal collapses non_gradient_mass to 0 (C was
+  load-bearing) while B-removal leaves pure curl (1.0). If a single emitter family's
+  removal collapses the signal, that family manufactured it.
+- **All 4 §4 nulls done:** degree-preserving rewire, operator-label shuffle,
+  endpoint-permutation, emitter-family-holdout. Plus all 4 controls (#5–#8) and the
+  decomposer. The anti-artifact battery is complete.
+- **Next (iter 6):** H-R2 localization — graph-distance balls B_r(w) for r∈{1,2,3},
+  separate curl-rank & harmonic-rank per ball, two-of-three-radii criterion,
+  UNSTABLE_LOCALIZATION label. Then iter 7 = 0a runner →
+  stage0_hodge_controls_report.json.
