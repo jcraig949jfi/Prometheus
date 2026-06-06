@@ -342,3 +342,20 @@ on the fork.
 ### NEXT: emit-schema freeze (primary path)
 Author `stage0b_emit_schema_freeze.md`, present for ratification (the Δdamage metric
 is the load-bearing decision), THEN build the emitter via TDD, generate data, run 0b.
+
+### emit-schema freeze RATIFIED (James 2026-06-06) + feasibility confirmed
+- **Damage metric:** EvidenceField Axis 2 (battery-survival depth), single axis,
+  `damage = −(falsifiers passed before kill)`, `flow = Δdamage`. Axis 1 (margin) =
+  preregistered SECONDARY robustness emitter. Degeneracy guard: `INVALID_SPARSE_SIGNAL`
+  if >80% edges Δdamage=0 or <20 nonzero-flow edges; no post-hoc metric substitution.
+- **Feasibility CONFIRMED:** scorer chain exists — `DiscoveryPipeline.process_candidate`
+  → `kill_vector_from_pipeline_output` → `build_evidence_field(...).battery_survival_depth.n_passed`
+  → `damage = −n_passed`. Polynomial-domain.
+- **Stands (no-DoF):** corpus = Mossinghoff/Mahler polynomials (whole declared slice);
+  operator set = ALL registered polynomial operators (no cherry-pick — nulls test
+  against the menu).
+- **NEXT:** emitter TDD build loop. Iteration 1 = the Axis-2 damage scorer with an
+  authority test on a known polynomial (the critical-path feasibility resolver in
+  code). Then corpus loader → operator application → emitter → graph builder → 0b
+  runner (reuses Stage 0a's validated decomposer + nulls) → stage0b report. Global
+  H-R1 only; publish even if NULL/INVALID_SPARSE_SIGNAL.

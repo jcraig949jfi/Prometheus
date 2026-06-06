@@ -1,11 +1,22 @@
-# Stage 0b — Emit-Schema Freeze (DRAFT — awaiting James's ratification)
+# Stage 0b — Emit-Schema Freeze (RATIFIED 2026-06-06)
 
 **Filed:** 2026-06-06
-**Status:** DRAFT. **Must be ratified before the emitter is built or any promotable
-0b data is generated.** This is the load-bearing preregistration: it fixes the one
-remaining researcher degree of freedom (how failure becomes a graph/flow) *at emit
-time*, so H-R1 is well-posed BY CONSTRUCTION rather than reverse-engineered from
-ledger residue.
+**Status:** **RATIFIED (James, 2026-06-06).** Frozen before the emitter is built. This
+is the load-bearing preregistration: it fixes the one remaining researcher degree of
+freedom (how failure becomes a graph/flow) *at emit time*, so H-R1 is well-posed BY
+CONSTRUCTION rather than reverse-engineered from ledger residue.
+
+## RATIFIED DECISIONS (James, 2026-06-06)
+- **PRIMARY DAMAGE METRIC:** EvidenceField **Axis 2 — battery-survival depth**, SINGLE
+  axis. `damage = −(number of falsifiers passed before kill)`.
+- **PRIMARY FLOW:** `edge_flow = Δdamage = damage(state_after) − damage(state_before)`.
+- **DEGENERACY GUARD:** if `>80%` of edges have `Δdamage == 0`, OR fewer than `N`
+  nonzero-flow edges survive aggregation, return verdict **`INVALID_SPARSE_SIGNAL`**
+  and do NOT substitute another metric post hoc. (`N` frozen below = 20.)
+- **SECONDARY (robustness) EMITTER:** EvidenceField **Axis 1 — margin from target**,
+  preregistered as a secondary robustness check in 0b. NOT the primary. Run only after
+  the primary Axis-2 result is recorded; reported separately, never substituted for
+  the primary.
 **Decision context:** James chose "substrate emit-change first" (2026-06-06). The
 sidecar pooled-ledger probe was found INFEASIBLE (lineage records carry zero numeric
 Δdamage), which is why this emitter is required, not optional.
@@ -92,7 +103,7 @@ provenance / null-machinery / outcome typing.
 
 ---
 
-## 3. The Δdamage metric — RATIFICATION REQUIRED (the one squishy choice, made explicit)
+## 3. The Δdamage metric — RATIFIED: Axis 2, single axis (see top). Rationale retained below.
 
 `damage(·)` must be ONE frozen scalar. Candidates, all from the existing frozen
 `prometheus_math/evidence_field.py` (so it is principled substrate, not invented):
@@ -117,6 +128,28 @@ are new DoF)? *My stand: single axis* for v0.2 — minimize knobs, exactly as th
 localization freeze rejected spectral methods for having too many.
 
 ---
+
+## 3b. Feasibility CONFIRMED + corpus/operator stands (2026-06-06)
+
+**Damage-scorer chain verified to exist (no invention):**
+`DiscoveryPipeline.process_candidate(coeffs)` (runs F1/F6/F9/F11 + reciprocity +
+irreducibility + catalog falsifiers) → `kill_vector.kill_vector_from_pipeline_output`
+→ `evidence_field.build_evidence_field(kill_vector=...).battery_survival_depth.n_passed`
+→ `damage = −n_passed`. Polynomial-domain, matching the corpus below.
+
+**CORPUS (stand, no-DoF default):** the Mossinghoff / Mahler-measure polynomials —
+the domain the falsifier battery natively scores. Recorded in `provenance.corpus`
+with the exact slice + count. (Anti-cherry-pick: take the whole declared slice, not a
+hand-picked subset; `feedback_sampling_strategy_is_analysis`.)
+
+**OPERATOR/MOVE SET (stand, no-DoF default):** ALL registered operators that apply to
+polynomials — NO selection. The operator-label-shuffle and emitter-family-holdout
+nulls test *against the operator menu*, so the menu must not be hand-curated; cherry-
+picking operators would be choosing the result. The emitter enumerates the registered
+operator set programmatically and records the full set used.
+
+**DEGENERACY GUARD constant:** `N = 20` minimum nonzero-flow edges after aggregation
+(else `INVALID_SPARSE_SIGNAL`).
 
 ## 4. What the emitter must NOT do (anti-artifact)
 
