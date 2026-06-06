@@ -374,3 +374,21 @@ is the load-bearing decision), THEN build the emitter via TDD, generate data, ru
   REPRODUCIBILITY risk (network-dependent damage). MUST diagnose construction-cost vs
   per-score-cost and the catalog-network question BEFORE the emitter sweep (the freeze
   "if scoring can't be made to work cleanly, stop and report" clause). Diagnosing next.
+
+### PERFORMANCE DIAGNOSIS → LOOP STOPPED (stop-and-report per freeze)
+- Timing: import 75s (one-time), construct scorer **0s**, per in-band score **~55s**
+  (out-of-band scores are ~free, phase-0 kill). Cost is PER-SCORE, in the falsifier
+  battery (PARI irreducibility/Mahler + F1 permutation-null + F6/F9/F11 + local
+  catalog lookups).
+- **Reproducibility OK:** `catalog_consistency.py` has NO network calls — arXiv/LMFDB
+  catalogs are LOCAL. Only caveat: F1 permutation-null uses RNG → need a FIXED battery
+  seed for deterministic `damage` (freeze addendum).
+- **Not intractable, but a resource decision.** A sweep of N in-band states × M
+  operators ≈ N(1+M) scores; many operator-images fall out-of-band (cheap). Estimate
+  N=50, M=8, ~half images in-band → ~250 expensive scores × 55s ≈ **3.8 hr serial**,
+  or **~30 min with 8× multiprocessing** (parallelism is a legit engineering fix — it
+  does NOT change the metric).
+- **STOPPED the loop** (no ScheduleWakeup) per the freeze's explicit stop-and-report
+  clause: the path forward (parallelize + corpus size + battery seed, vs optimize, vs
+  re-ratify a cheaper metric) is James's decision. The damage scorer itself is correct
+  and committed (629737af).
