@@ -392,3 +392,24 @@ is the load-bearing decision), THEN build the emitter via TDD, generate data, ru
   clause: the path forward (parallelize + corpus size + battery seed, vs optimize, vs
   re-ratify a cheaper metric) is James's decision. The damage scorer itself is correct
   and committed (629737af).
+
+### Iteration 2 (corpus) → DESIGN CHECKPOINT, loop STOPPED again
+Reconned the corpus before building. Three compounding findings make the experiment
+as-specified ill-posed; stopped to bring James a design decision rather than burn the
+sweep on a foregone NULL:
+1. **Corpus tiny:** tier-0 palindromic generator yields 0 in-band in 3000 candidates.
+   The canonical `prometheus_math.databases.mahler.MAHLER_TABLE` (8625 entries, has
+   coeffs+M) has only **21 in-band** (1.001<M<1.18). So the corpus = 21 states, not 50
+   (cap doesn't bind). In-band window is genuinely sparse (Lehmer 1.176 is near top).
+2. **One-step moves are cycle-free (the killer):** "apply every operator to every
+   corpus state" once = corpus→images = a FOREST. Hodge non_gradient_mass ≡ 0 on a
+   forest BY CONSTRUCTION → H-R1 trivially NULL for a graph-topology reason, not a
+   scientific one. Non-conservativity cannot exist without cycles. The move-graph MUST
+   have cycles (paths that reconverge) for H-R1 to be a real test.
+3. **Operator set ill-defined:** no clean registry of coeffs→coeffs move-functions;
+   `operator_class` is claim metadata. The nulls test against the operator menu, so
+   the menu must be a real, enumerable set — currently absent for this domain.
+**This vindicates the disciplined approach:** building the real emitter surfaced that
+the substrate's natural failure-flow over the polynomial domain is structurally
+cycle-free at one step — a concrete "where the next substrate must change" finding,
+caught before any expensive run. Design fork taken to James (loop STOPPED, no wakeup).
