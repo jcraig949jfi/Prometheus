@@ -165,3 +165,25 @@ scipy 1.13.1, networkx 3.6.1, hypothesis 6.151.9, pytest 8.4.2. (The default
 - **Next (iter 4):** §4 null battery (operator-label shuffle, endpoint permutation,
   degree-preserving rewire, emitter-family holdout) + control #8
   operator-menu-artifact (the operator-induced false-positive floor).
+
+### Iteration 4 — null battery core + #8 operator-artifact ✓
+- `controls.py`: `operator_artifact_graph(operator_counts, n_nodes, seed)` (#8) +
+  new `edge_operators` field on `ControlGraph`. Random topology, edges labelled to
+  match the operator multiset, flow = per-operator signature ⇒ operator structure
+  with NO planted topology. The non_gradient_mass it reads = the operator-induced
+  false-positive floor.
+- `nulls.py`: `NullResult`, smoothed permutation `null_pvalue` =
+  (#{null≥obs}+1)/(n+1), `degree_preserving_rewire` (double-edge-swap + flow-multiset
+  reassign), `operator_label_shuffle` (permute labels, rebuild flow from signature),
+  `run_null` orchestrator. `test_nulls.py` RED→GREEN, **9/9** (A:2 P:3 E:1 C:3).
+  Full suite **29/29**.
+- **THE central anti-artifact test passes:** planted-cycle (real curl) BEATS the
+  rewire null (p<0.1); no-cycle does NOT (p>0.1); operator-artifact does NOT beat
+  the label-shuffle null (p>0.1, the floor). This is the operator-vs-state-curl
+  discriminator working — the protocol's load-bearing guard.
+- **Done this cycle:** 2 of the 4 named §4 nulls (degree-preserving rewire,
+  operator-label shuffle) + #8.
+- **Next (iter 5):** remaining 2 nulls — endpoint-permutation (permute endpoints
+  keeping operator multiset) + emitter-family-holdout (drop one operator family,
+  does mass survive its absence — the beyond-generators clause). Then iter 6 = H-R2
+  localization, iter 7 = the 0a runner.

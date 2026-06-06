@@ -22,6 +22,7 @@ __all__ = [
     "no_cycle_graph",
     "planted_cycle_graph",
     "planted_hole_graph",
+    "operator_artifact_graph",
 ]
 
 
@@ -33,6 +34,7 @@ class ControlGraph:
     expected: dict
     seed: int
     n_planted: int = 0
+    edge_operators: dict | None = None   # edge -> operator/emitter label (#8, nulls)
     meta: dict = field(default_factory=dict)
 
 
@@ -182,4 +184,51 @@ def planted_hole_graph(
         seed=seed,
         n_planted=n_holes,
         meta={"hole_len": hole_len, "with_backbone": with_backbone},
+    )
+
+
+def operator_artifact_graph(operator_counts: dict, n_nodes: int = 8, seed: int = 0) -> ControlGraph:
+    """Control #8 — operator-labelled flow on RANDOMIZED topology (the floor).
+
+    Edges carry operator labels matching ``operator_counts`` exactly, and the flow
+    on each edge is its operator's signature value, so the flow carries operator
+    structure but NO planted topological structure. Whatever non_gradient_mass the
+    decomposer reads here is the operator-induced false-positive floor that a real
+    claim must clear (protocol v0.2 §4 #8; the operator-vs-state-curl distinction).
+    """
+    if not operator_counts or any(c <= 0 for c in operator_counts.values()):
+        raise ValueError("operator_counts must be a non-empty map of positive counts")
+    if n_nodes < 2:
+        raise ValueError("operator_artifact_graph needs n_nodes >= 2")
+    n_edges = int(sum(operator_counts.values()))
+    max_edges = n_nodes * (n_nodes - 1) // 2
+    if n_edges > max_edges:
+        raise ValueError(f"{n_edges} edges exceed the {max_edges} possible on {n_nodes} nodes")
+
+    rng = np.random.default_rng(seed)
+    all_possible = [(i, j) for i in range(n_nodes) for j in range(i + 1, n_nodes)]
+    chosen = rng.choice(len(all_possible), size=n_edges, replace=False)
+    edges = [all_possible[k] for k in chosen]
+
+    labels = []
+    for op, c in operator_counts.items():
+        labels.extend([op] * int(c))
+    rng.shuffle(labels)
+    signature = {op: float(rng.standard_normal()) for op in operator_counts}
+
+    G = nx.Graph()
+    G.add_nodes_from(range(n_nodes))
+    G.add_edges_from(edges)
+    edge_operators = {e: labels[i] for i, e in enumerate(edges)}
+    flow = {e: signature[edge_operators[e]] for e in edges}
+
+    return ControlGraph(
+        G=G,
+        flow=flow,
+        kind="operator_artifact",
+        expected={"floor": True},
+        seed=seed,
+        n_planted=0,
+        edge_operators=edge_operators,
+        meta={"signature": signature, "operator_counts": dict(operator_counts)},
     )
