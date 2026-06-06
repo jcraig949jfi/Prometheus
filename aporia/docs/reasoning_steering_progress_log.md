@@ -256,3 +256,69 @@ scipy 1.13.1, networkx 3.6.1, hypothesis 6.151.9, pytest 8.4.2. (The default
 - `runner.py` — 0a validation harness + `stage0_hodge_controls_report.json`.
 - Commits: a5619bac, 774ab6f5, a1e7d500, 73e5ad49, d452c1d1, ad4745aa, + iter 7.
 - **Loop stopped after iteration 7 (planned end).**
+
+---
+
+## 2026-06-06 — Stage 0a STATUS marker (James)
+
+```
+STATUS:            PASSED
+SCOPE:             synthetic controls only
+CLAIM ALLOWED:     the decomposer is instrument-valid under preregistered controls
+CLAIM NOT ALLOWED: the real failure catalog is non-conservative
+NEXT GATE:         Stage 0b real-catalog H-R1 (global only)
+```
+
+Two load-bearing outcomes (not just "it passes"):
+1. Operator-vs-state curl discriminator PASSED — the existential guard against
+   "operator-menu archaeology." Proves the instrument can tell planted state-structure
+   from operator-artifact structure *under the synthetic regime* (NOT that the real
+   ledger has state-structure).
+2. Localization freeze REJECTED a seductive false positive — global Hodge accepts the
+   6-cycle, H-R2 rejects it UNSTABLE_LOCALIZATION. The local-rank gate is not
+   decorative; it actively blocks overclaiming.
+
+### Frozen next sequence (James)
+- 0a   synthetic controls .................. PASSED
+- 0b-pre  freeze real-ledger graph mapping .. NEXT (author + commit, ratify before run)
+- 0b   global H-R1 on real catalog .......... RUN after ratification
+- 0b-audit  null battery + sensitivity ...... RUN
+- 0c   H-R2 local rank around wells ......... ONLY IF 0b beats null
+- 1    H-R3 steering prediction ............. ONLY IF 0c yields stable ranks
+The "only if" is binding: if H-R1 fails globally, H-R2 is exploratory-labeled only,
+never fishing for local exceptions. Publish 0b even if NULL.
+
+### 0b discipline (austere, global)
+- NO well-localization, NO rung-rank, NO steering yet. One question: does the real
+  failure-flow contain non-gradient mass beyond the null battery?
+- Artifact: `stage0b_real_hodge_global_report.json` (verdict
+  BEATS_NULL|NULL|INVALID|INSUFFICIENT_DATA).
+- Graph construction is the main remaining researcher DoF → frozen in
+  `stage0b_graph_construction_freeze.md` BEFORE the ledger is touched. Schema
+  inspection is allowed to author the freeze; outcome inspection is not.
+
+### 0b-pre catalog recon (schema only — NO decomposition run on real data)
+Surveyed real catalogs to author the freeze. **Finding: no existing catalog emits a
+well-posed `(state, move, damage-change edge-flow)`.** The crux:
+- **Charon kill ledgers** (erebos/pollux/stygian/hephaestus, ~200–370 records each)
+  are the only substantial source. Structural mismatch with H-R1's needs:
+  - lineage (the graph EDGES) lives in raw per-agent ledgers — erebos 216/233 have
+    `parent_record_id` (93%) — BUT those are uniformly `verdict=UNVERIFIED`, single
+    `generator_id`.
+  - verdicts/outcomes (PROMOTED/REJECTED) live in the *enriched* files — BUT those
+    have ZERO lineage (no parents).
+  - emitter-family variation (needed for the emitter-holdout null) requires POOLING
+    across the 4 agents.
+  - No canonical damage scalar → the antisymmetric edge-flow must be invented, and
+    that choice could manufacture/kill the H-R1 signal (the squishy-H-R1 risk).
+- **mutation_registry.py** is the purest directional-pointer design (`delta_per_axis`
+  is a flow vector) but NO data file exists, and it's a vector field in health-space,
+  not a graph.
+- **failure-signal §1 schema** (purpose-built: inputs/move/motif/outcome) — no
+  dataset persisted (H5a OEIS MVP verdict was NULL).
+- No repair-graph / RESOLUTION-edge dataset exists.
+**Consequence:** this is exactly James's anticipated outcome ("the current
+catalog/operators are not yet producing structural failure flow") — surfaced cheaply
+at the MAPPING stage, before any misleading run. Fork taken to James (catalog/flow
+choice is a non-recoverable research commitment). No freeze authored yet; it depends
+on the fork.
