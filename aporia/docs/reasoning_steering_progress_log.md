@@ -322,3 +322,23 @@ catalog/operators are not yet producing structural failure flow") — surfaced c
 at the MAPPING stage, before any misleading run. Fork taken to James (catalog/flow
 choice is a non-recoverable research commitment). No freeze authored yet; it depends
 on the fork.
+
+### DECISION (James 2026-06-06): Substrate emit-change first (primary) + non-promotable sidecar
+- **Primary:** the substrate must emit `(state_before, operator/move, state_after,
+  Δdamage)` per applied move → 0b well-posed BY CONSTRUCTION, not reverse-engineered.
+- **Sidecar:** exploratory pooled-ledger probe, clearly non-promotable, parallel.
+- **Avoid:** pooled-ledger graph as the REAL preregistered H-R1 (bakes a frozen
+  damage scalar chosen after-the-fact into the gate → epistemically soft).
+
+### SIDECAR FEASIBILITY: INFEASIBLE — dropped
+- The erebos raw lineage records (216/233 with parents) have ZERO numeric top-level
+  fields and an empty/numeric-free `kill_vector`. There is no damage magnitude on any
+  edge. Enriched records (which carry verdicts) use a 32-hex id vs the raw 64-hex id →
+  cannot be joined onto the lineage to supply a node scalar.
+- A sidecar would decompose an INVENTED CONSTANT, not data — uninformative even as
+  scouting. **Not built.** This is the strongest confirmation that the emit-change is
+  REQUIRED, not optional: nothing in the substrate ever recorded a Δdamage.
+
+### NEXT: emit-schema freeze (primary path)
+Author `stage0b_emit_schema_freeze.md`, present for ratification (the Δdamage metric
+is the load-bearing decision), THEN build the emitter via TDD, generate data, run 0b.
