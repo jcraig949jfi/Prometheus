@@ -130,3 +130,19 @@ scipy 1.13.1, networkx 3.6.1, hypothesis 6.151.9, pytest 8.4.2. (The default
 - **Next (iter 2):** synthetic control generators — start with no-cycle/no-void
   (must read non_gradient_mass≈0) and planted-cycle (must read curl_mass>0 at the
   planted triangles).
+
+### Iteration 2 — control generators #5 (no-cycle) + #6 (planted-cycle) ✓
+- `controls.py`: `ControlGraph` dataclass (G, flow, kind, expected, seed,
+  n_planted), `circulation_flow`, `no_cycle_graph(n,seed)`,
+  `planted_cycle_graph(k,seed,with_backbone)`. Tests first → RED → GREEN, **7/7**
+  (A:2 P:2 E:1 C:2). Full suite **16/16**.
+- #5 no-cycle: random tree + gradient-of-potentials flow ⇒ non_gradient_mass≈0.
+  Independent anchor: `nx.is_tree`/`is_forest`.
+- #6 planted-cycle: k disjoint filled triangles each carrying a scaled circulation
+  (PURE CURL), joined by a bridge backbone carrying gradient background (bridges are
+  in no cycle ⇒ add no curl/harmonic). curl_rank==k, harmonic_rank==0, curl_mass>0.
+  Independent anchor: networkx 3-clique count. **Composition test = protocol 0a**:
+  decomposer recovers exactly the declared `expected`.
+- **Next (iter 3):** #7 planted-hole (chordless cycles ⇒ harmonic_rank==#holes) +
+  #8 operator-menu-artifact (random topology w/ operator labels ⇒ false-positive
+  floor). Then iter 4 = §4 null battery.
