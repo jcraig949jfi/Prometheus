@@ -59,9 +59,20 @@ def _incidence_b1(nodes, edges):
 
 
 def _incidence_b2(G, edges):
-    """Edge x triangle incidence for all filled 3-cliques."""
+    """Edge x triangle incidence for all filled 3-cliques.
+
+    Triangles are enumerated DIRECTLY via edge common-neighbours (O(E * degree)),
+    NOT via nx.enumerate_all_cliques -- the latter generates cliques of every size
+    (exponential on dense graphs: K30 -> ~2^30 cliques -> MemoryError). This is
+    behaviour-preserving (identical triangle set) and scales to dense comparison graphs.
+    """
     edge_ix = {e: i for i, e in enumerate(edges)}
-    triangles = [tuple(sorted(c)) for c in nx.enumerate_all_cliques(G) if len(c) == 3]
+    adj = {n: set(G.neighbors(n)) for n in G.nodes()}
+    tri = set()
+    for u, v in edges:                       # canonical u < v
+        for w in adj[u] & adj[v]:
+            tri.add(tuple(sorted((u, v, w))))
+    triangles = sorted(tri)
     B2 = np.zeros((len(edges), len(triangles)))
     for k, (a, b, c) in enumerate(triangles):
         B2[edge_ix[(a, b)], k] += 1.0
