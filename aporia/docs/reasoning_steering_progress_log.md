@@ -413,3 +413,29 @@ sweep on a foregone NULL:
 the substrate's natural failure-flow over the polynomial domain is structurally
 cycle-free at one step — a concrete "where the next substrate must change" finding,
 caught before any expensive run. Design fork taken to James (loop STOPPED, no wakeup).
+
+### ⛔ FUNDAMENTAL FINDING: the 0b flow is conservative BY CONSTRUCTION
+While specifying the lattice redesign + continuous metric (James chose both), a deeper
+flaw surfaced that SUPERSEDES corpus/operator/metric:
+- The freeze defines `flow(before→after) = damage(after) − damage(before)`.
+- If `damage` is a deterministic node function D (which fixed-seed determinism, ratified
+  for reproducibility, GUARANTEES), then `f(i,j) = D(j) − D(i)` = the discrete gradient
+  (coboundary) of D.
+- In combinatorial Hodge theory a flow equal to a node-potential coboundary IS the pure
+  gradient component: **curl ≡ 0, harmonic ≡ 0, non_gradient_mass ≡ 0 IDENTICALLY** —
+  for ANY graph/operators/metric/corpus.
+- ∴ H-R1 (non-conservativity) is **unfalsifiable-toward-positive**: it can only ever
+  return NULL/conservative. The lattice, the 21 states, Axis 1 vs Axis 2 — all moot.
+- The determinism we required for reproducibility is precisely what forces conservativity.
+**Honest miss:** this is elementary and should have been caught at the emit-schema
+freeze; it wasn't. Caught by the disciplined build BEFORE any expensive sweep.
+**The fix (reconceptualization):** the edge flow must be a MOVE-INTRINSIC measurement
+that is NOT reducible to a node-potential difference — i.e., a direct pairwise
+comparison `compare(a,b)` elicited per-edge that CAN be inconsistent around a cycle.
+This is literally HodgeRank's original setting (pairwise comparison data whose curl
+measures inconsistency with any global ranking). Candidates: move-cost/resistance
+(effort to apply the operator, not endpoint difference); operator-induced directional
+derivative (feedback_kill_space_vector_field: "operators induce directional
+derivatives") measured locally without integrating to a global potential; or direct
+head-to-head battery comparison per edge. Reported to James; 0b build HALTED pending
+reconceptualization of the flow.
