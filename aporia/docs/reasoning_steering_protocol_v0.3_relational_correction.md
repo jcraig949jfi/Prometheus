@@ -100,7 +100,10 @@ The operator-vs-state distinction becomes **falsifier-vs-state**:
 - **Falsifier-family holdout** (emitter-family-holdout analog): drop one falsifier
   (or one family, e.g. all catalog:*), recompute — does the non-transitivity survive
   its absence (generalizes beyond any single falsifier)?
-- **Degree-preserving rewire** of the comparison graph.
+- ~~Degree-preserving rewire~~ — **INAPPLICABLE** to a complete comparison graph (no
+  non-edges to swap into; networkx exhausts swap attempts). Found in build 2026-06-07.
+  Reserved for a future k-NN graph variant. The valid sampling nulls are
+  falsifier-column-shuffle + sign-permutation.
 Pass requires `non_gradient_mass` above all of these (v0.2 §4 brutality retained).
 Degeneracy guard: `INVALID_SPARSE_SIGNAL` if too few states (e.g. < ~8 → too few
 independent triangles) or near-zero flow variance.

@@ -480,8 +480,21 @@ Filed `reasoning_steering_protocol_v0.3_relational_correction.md` (supersedes v0
     verdict must be **BEATS NULL**, never non_gradient_mass>0 (the null carries the
     same saturation floor). Folded into v0.3 §5. The TDD test caught a wrong premise
     and sharpened the protocol.
-- **NEXT:** iter 3 score-and-cache the ~21 in-band states' margin vectors (one-time
-  ~19min background batch via __main__); iter 5 adapted nulls module
-  (falsifier-column-shuffle, sign-permutation, falsifier-family-holdout, +reuse
-  stage0 rewire); iter 6 runner → stage0b_relational_hodge_report.json (verdict
-  vs the full null battery).
+- **iter 3 score-and-cache ✓** `cache.score_states/write_cache/load_cache` (mock-scorer
+  tested, 4/4); real ~21-state batch via `__main__` running in background.
+- **iter 5 relational nulls ✓** `relational_nulls`: falsifier-column-shuffle,
+  sign-permutation, falsifier-family-holdout (+run_relational_null/holdout). 5/5.
+  - **Authority:** column-shuffle null SEPARATES Condorcet (observed 1.0, far above
+    null mean) from transitive (saturation floor) — the null isolates genuine
+    non-transitivity. (3-state toy underpowered for hard p<0.05 → assert separation;
+    hard threshold is for the real ≥21-state run, matching the ≥8 guard.)
+- **iter 6 runner ✓** `runner.run_h_r1` → verdict BEATS_NULL|NULL|INVALID over the
+  relational nulls + family-holdout, degeneracy guard, emits
+  stage0b_relational_hodge_report.json. 4/4.
+- **Two build corrections (TDD caught both):**
+  1. Degeneracy guard must be ALL-ZERO flow, not low-variance — a CONSTANT flow has
+     curl (not degenerate). Fixed to max|flow|<eps.
+  2. Degree-preserving rewire is INAPPLICABLE to a complete graph (no non-edges to
+     swap) → dropped from the relational null set (column-shuffle + sign-permutation
+     remain); v0.3 §5 corrected.
+- **NEXT:** real cache batch completes → run `runner` on it → the actual H-R1 verdict.

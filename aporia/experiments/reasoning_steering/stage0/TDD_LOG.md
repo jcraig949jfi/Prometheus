@@ -15,3 +15,6 @@ Format: `date | operation | A:authority P:property E:edge C:composition | commit
 2026-06-07 | stage0b.margins_from_kill_vector + margin_vector | A:2 P:1 E:1 C:1 | d6c625ce
 2026-06-07 | stage0b.corpus.load_in_band_states | A:1 P:1 E:1 C:1 | d6c625ce
 2026-06-07 | stage0b.flow.relational_flow (Condorcet keystone) | A:2 P:1 E:1 C:1 | d6c625ce
+2026-06-07 | stage0b.cache.score_states | A:1 P:1 E:1 C:1 | (this commit)
+2026-06-07 | stage0b.relational_nulls.* | A:1 P:2 E:1 C:1 | (this commit)
+2026-06-07 | stage0b.runner.run_h_r1 | A:1 P:1 E:1 C:1 | (this commit)
