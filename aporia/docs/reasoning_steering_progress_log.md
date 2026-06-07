@@ -525,3 +525,22 @@ domains/measurements remain open. The column-shuffle null is tightly estimated
 by construction) BEFORE any expensive run, reformulated to a relational (HodgeRank)
 flow, and produced a real verdict — all without ever overclaiming. Stage-0a instrument
 reused unchanged throughout. **Loop STOPPED (verdict committed).**
+
+### EXPANSION (James: "both in order — diagnostic then new domain")
+**Diagnostic ran FREE on the cache (no re-score) and reclassifies the NULL.** Of the 8
+falsifiers across the 21 in-band states: **5 are CONSTANT** (F9, catalog:Mossinghoff,
+catalog:lehmer_literature, out_of_band, catalog:OEIS), only **3 vary** (F6_base_rate
+5 values; irreducibility, reciprocity binary). Full-presence pairwise corr mean 0.26.
+⇒ The corpus is too HOMOGENEOUS: the 21 in-band Mahler polynomials are so similar the
+failure criteria barely move, so there is almost nothing to be non-transitive about.
+**Reclassification:** the Mahler H-R1 NULL is **CORPUS-LIMITED (impoverished criteria),
+NOT** "scalar difficulty wins." Swapping heterogeneous criteria over the SAME 21 states
+would not help — the corpus is the limiter. So the diagnostic says: **skip ahead to the
+new domain.** (Saved a ~20-min re-score by checking the cache first.)
+**Pre-registered for the new domain (avoid post-hoc tuning):** add a CRITERIA-ADEQUACY
+guard BEFORE running — require ≥ K criteria each with ≥2 distinct values across states
+(K frozen ahead). The Mahler run would have tripped it (only 3 vary, 2 binary).
+**NEXT:** elliptic curves (local LMFDB ec_curvedata) — heterogeneous objects with many
+trading-off arithmetic invariants (rank, conductor, regulator, torsion, Tamagawa,
+analytic-sha), and a large non-sparse corpus. Recon the EC data format/accessibility
+first, then build the EC scorer + corpus, reuse the relational pipeline + nulls + runner.
