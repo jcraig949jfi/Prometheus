@@ -9,11 +9,12 @@ from aporia.experiments.reasoning_steering.stage0b.runner import (
 
 
 def _ordered_cache(n):
-    """n states under a single falsifier with distinct, non-monotonic-in-index values
-    (a total-order tournament: transitive, non-degenerate flow). The column-shuffle
-    null preserves the total-order structure, so it should NOT robustly beat the null."""
+    """n states with 3 varying criteria (distinct permutations) -- non-degenerate,
+    passes the criteria-adequacy guard. Largely consistent orderings => NULL-leaning."""
     return [{"coeffs": [i], "mahler_measure": 1.05, "name": f"s{i}",
-             "margins": {"f1": float((i * 7 + 3) % n)}}      # permutation (gcd(7,n)=1)
+             "margins": {"f1": float((i * 7 + 3) % n),
+                         "f2": float((i * 5 + 1) % n),
+                         "f3": float((i * 3 + 2) % n)}}
             for i in range(n)]
 
 
@@ -41,10 +42,10 @@ def test_edge_cases():
     rep_few = run_h_r1(_ordered_cache(MIN_STATES - 1), n_null=50, seed=0)
     assert rep_few["verdict"] == "INVALID" and "too_few_states" in rep_few["reason"]
 
-    flat = [{"coeffs": [i], "mahler_measure": 1.05, "name": f"s{i}",
-             "margins": {"f1": 1.0, "f2": 1.0}} for i in range(10)]   # identical -> zero flow
-    rep_flat = run_h_r1(flat, n_null=50, seed=0)
-    assert rep_flat["verdict"] == "INVALID" and rep_flat["reason"] == "degenerate_zero_flow"
+    identical = [{"coeffs": [i], "mahler_measure": 1.05, "name": f"s{i}",
+                  "margins": {"f1": 1.0, "f2": 1.0}} for i in range(10)]  # 0 varying criteria
+    rep_id = run_h_r1(identical, n_null=50, seed=0)
+    assert rep_id["verdict"] == "INVALID" and "too_few_varying_criteria" in rep_id["reason"]
 
 
 # 4. COMPOSITION — report round-trips to JSON.

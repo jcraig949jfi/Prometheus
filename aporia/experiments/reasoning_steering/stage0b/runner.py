@@ -29,7 +29,19 @@ __all__ = ["run_h_r1", "write_report", "REPORT_PATH", "MIN_STATES", "ALPHA"]
 
 REPORT_PATH = Path(__file__).with_name("stage0b_relational_hodge_report.json")
 MIN_STATES = 8
+MIN_VARYING_CRITERIA = 3   # < 3 criteria that vary => no room for non-transitivity
 ALPHA = 0.05
+
+
+def _n_varying_criteria(records) -> int:
+    """Count criteria (margin keys) with >= 2 distinct values across the states."""
+    names = set().union(*[set(r["margins"]) for r in records]) if records else set()
+    n = 0
+    for k in names:
+        vals = {round(r["margins"][k], 9) for r in records if k in r["margins"]}
+        if len(vals) >= 2:
+            n += 1
+    return n
 # NOTE: degree_preserving_rewire is INAPPLICABLE to the complete comparison graph
 # (no non-edges to swap into), so it is excluded here; it would only apply to a k-NN
 # graph variant. The valid relational sampling nulls:
@@ -45,6 +57,12 @@ def run_h_r1(records, n_null: int = 500, seed: int = 0) -> dict:
     if n < MIN_STATES:
         return {**base, "verdict": "INVALID", "reason": f"too_few_states (<{MIN_STATES})"}
 
+    n_varying = _n_varying_criteria(records)
+    if n_varying < MIN_VARYING_CRITERIA:
+        return {**base, "verdict": "INVALID",
+                "reason": f"too_few_varying_criteria ({n_varying}<{MIN_VARYING_CRITERIA})",
+                "n_varying_criteria": n_varying}
+
     vectors = vectors_from_records(records)
     G, flow = relational_flow(vectors)
     vals = np.array(list(flow.values()), dtype=float)
@@ -58,6 +76,7 @@ def run_h_r1(records, n_null: int = 500, seed: int = 0) -> dict:
 
     return {
         **base,
+        "n_varying_criteria": n_varying,
         "observed": {
             "non_gradient_mass": d.non_gradient_mass,
             "gradient_mass": d.gradient_mass,
