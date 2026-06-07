@@ -18,4 +18,4 @@ Format: `date | operation | A:authority P:property E:edge C:composition | commit
 2026-06-07 | stage0b.cache.score_states | A:1 P:1 E:1 C:1 | 3d17220b
 2026-06-07 | stage0b.relational_nulls.* | A:1 P:2 E:1 C:1 | 3d17220b
 2026-06-07 | stage0b.runner.run_h_r1 | A:1 P:1 E:1 C:1 | 3d17220b
-2026-06-07 | stage0b.g2c_corpus.load_g2c_states + criteria-adequacy guard | A:1 P:1 E:1 C:1 | (this commit)
+2026-06-07 | stage0b.g2c_corpus.load_g2c_states + criteria-adequacy guard | A:1 P:1 E:1 C:1 | 34446a19
