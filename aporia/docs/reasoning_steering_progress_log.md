@@ -592,3 +592,20 @@ decision is the EVALUATOR SET — it must be genuinely independent / able to dis
 Note: substrate's own lead (feedback_no_naive_score_combination: Walk-Z combined <
 random; PRM-alone best) says multiple reasoning heads DO disagree — the strongest prior
 for where curl might finally appear.
+
+### Panel ("cycle through all evaluator-sources and score them" — James)
+Feasibility recon of the 4 arms:
+- **A multi-agent verdicts: UNDERPOWERED, dropped.** Only erebos (16 problems) + stygian
+  (42) carry problem_ids; pollux has none. Shared by both = 15, but that's only **2**
+  evaluators — Condorcet non-transitivity needs **≥3**. 2 evaluators can't cycle.
+  Verdicts thin (mostly UNVERIFIED).
+- **B orthogonal heuristic scorers: buildable, no inference,** but needs a real
+  reasoning-state corpus + genuinely-orthogonal evaluators to be constructed (risk:
+  correlation → NULL, the g2c failure mode).
+- **C independent LLM judges + D PRM/Walk-Z heads: the decisive arms** (≥3 genuinely
+  independent evaluators, known to disagree) — both need MODEL INFERENCE (VRAM ≤3-4B
+  local / Apollo-Rhea owned / frontier), best as Rhea-scripted batches
+  (feedback_rhea_scripts).
+**Gate:** the real test reduces to C/D, which need model access. Fork to James on
+resourcing. Panel harness (run_h_r1 across arms, tabulate verdicts) to be built once
+≥1 decisive arm's data exists.
