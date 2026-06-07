@@ -439,3 +439,26 @@ derivative (feedback_kill_space_vector_field: "operators induce directional
 derivatives") measured locally without integrating to a global potential; or direct
 head-to-head battery comparison per edge. Reported to James; 0b build HALTED pending
 reconceptualization of the flow.
+
+### v0.3 RELATIONAL CORRECTION (James chose: relational flow + revise protocol + rebuild)
+Filed `reasoning_steering_protocol_v0.3_relational_correction.md` (supersedes v0.2
+§1–§2; v0.2 pointer added). The fix + a clarification that supersedes the lattice:
+- **Relational flow:** `flow(a,b) = Σ_k sign(margin_k(b) − margin_k(a))` over the
+  battery's per-falsifier margins (Condorcet; the `sign` non-linearity is what allows
+  curl — linear aggregation collapses to a gradient). Non-transitivity = non-scalar
+  structure = H-R1's real content.
+- **Comparison-graph supersedes the lattice/operators:** a pairwise-comparison flow
+  lives on the COMPLETE graph of states, intrinsically cyclic → no operators, no
+  lattice, no sweep. Nodes = 21 in-band MAHLER_TABLE states, scored ONCE for their
+  per-falsifier margin vector (~21×55s ≈ 19 min, cached). Dissolves the
+  forest/operator-registry/corpus-sparsity blockers at once.
+- **H-R1 sharpened:** do pairwise comparisons of reasoning states admit a consistent
+  global difficulty ranking (gradient) or are they non-transitive (curl/harmonic) —
+  i.e. "ladder is a basis not a scalar," correctly operationalized.
+- **Nulls adapted:** falsifier-column-shuffle (operator-label-shuffle analog),
+  sign-permutation, falsifier-family-holdout, degree-preserving rewire. Stage-0a
+  instrument UNCHANGED (it was correct; only the flow fed to it was mis-defined).
+- **NEXT (rebuild loop):** (1) extend the scorer to return the per-falsifier margin
+  VECTOR (not just n_passed); (2) score the 21 in-band states once, cache; (3)
+  comparison-flow builder (complete graph, sign-margin); (4) run Stage-0a decomposer +
+  adapted nulls → `stage0b_relational_hodge_report.json` (BEATS_NULL|NULL|INVALID).

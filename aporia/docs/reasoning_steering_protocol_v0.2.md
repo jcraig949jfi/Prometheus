@@ -2,7 +2,11 @@
 
 **Filed:** 2026-06-06
 **Author:** Aporia (in-session, with James)
-**Status:** Preregistration (NOT yet run). **Supersedes the hypotheses of**
+**Status:** Preregistration. **§1–§2 SUPERSEDED by
+`reasoning_steering_protocol_v0.3_relational_correction.md` (2026-06-07)** — v0.2's
+scalar `Δdamage` flow is conservative by construction (H-R1 vacuous); v0.3 replaces
+the representation + flow with a relational (non-transitive pairwise) measurement.
+v0.2 §0 and §3+ stand. **Supersedes the hypotheses of**
 `aporia/docs/reasoning_steering_protocol_v0.1.md` (v0.1 remains immutable; this
 file replaces its §2 hypotheses with a structural falsifier and renumbers).
 Sibling of `aporia/docs/failure_signal_protocol_v0.1.md`. Speaks in hypotheses,
