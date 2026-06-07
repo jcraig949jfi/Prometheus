@@ -544,3 +544,38 @@ guard BEFORE running — require ≥ K criteria each with ≥2 distinct values a
 trading-off arithmetic invariants (rank, conductor, regulator, torsion, Tamagawa,
 analytic-sha), and a large non-sparse corpus. Recon the EC data format/accessibility
 first, then build the EC scorer + corpus, reuse the relational pipeline + nulls + runner.
+
+### EXPANSION recon + build
+- ec_curvedata NOT on this machine (only `_counts.json`). Used `g2c_curves.json`
+  (66158 genus-2 curves, 13 numeric invariants) instead — RICHER (arithmetic-hardness:
+  analytic_rank/mw_rank/analytic_sha/two_selmer_rank + structural: cond/abs_disc/
+  torsion/tamagawa/num_rat_pts). Criteria = all numeric fields except row id (no
+  cherry-pick); Condorcet sign-flow is scale-invariant (no normalization).
+- `g2c_corpus.load_g2c_states` (stratified deterministic sample) + criteria-adequacy
+  guard (MIN_VARYING_CRITERIA=3, frozen before the run). 8/8 tests.
+- **Hodge OOM fix:** `_incidence_b2` used nx.enumerate_all_cliques (exponential on
+  dense graphs; K30 → ~2^30 → MemoryError). Replaced with direct edge-common-neighbour
+  triangle enumeration, behaviour-preserving (61/61 green), scalable. Latent Stage-0a
+  bug surfaced by the K30 run.
+
+### ⭐⭐ GENUS-2 H-R1 VERDICT: NULL — and this one is a FAIR, well-powered test
+`stage0b_g2c_relational_report.json`: 30 curves, **n_varying_criteria = 13** (all
+criteria vary — passed the adequacy guard that Mahler would have failed):
+- gradient_mass **0.829**, curl_mass **0.171**, harmonic_mass **0.000**, non_grad 0.171.
+- falsifier_column_shuffle: null_mean **0.164** (≈ observed 0.171), **p=0.355** — the
+  observed curl is AT the saturation baseline, not above it.
+- sign_permutation: null_mean 0.933, p=1.0.
+**Interpretation (calibrated):** over genus-2 curves compared across 13 heterogeneous,
+genuinely-trading-off invariants, the comparison flow is GRADIENT-DOMINATED and its
+curl equals what random column-shuffling produces ⇒ NO non-transitivity beyond
+saturation. The "difficulty/complexity" ordering of these curves IS consistent with a
+single global scalar ranking. **H-R1 NULL on a fair test.** Unlike the Mahler NULL
+(corpus-limited), this is well-powered: 13 varying criteria, 30 states, guard passed.
+**Two substrates now point the same way:** where the test is fair (g2c), the
+failure/difficulty landscape is CONSERVATIVE (scalar difficulty wins). H-R1
+(non-conservativity / "ladder is a basis") is NOT supported on the tested substrates.
+**Scope/caveat:** invariants-as-criteria (not a failure-battery), n=30, two
+object-domains. A plausible deeper reading: arithmetic invariants are coupled BY
+THEOREMS (BSD ties rank/sha/regulator), so mathematics itself may suppress
+non-transitivity → consistent scalar ordering. Does NOT prove H-R1 false universally,
+but it's a real, well-powered negative on fair ground.
