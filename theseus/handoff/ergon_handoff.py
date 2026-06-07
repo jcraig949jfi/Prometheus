@@ -39,9 +39,19 @@ DEFAULT_WEIGHT_THRESHOLD = 0.5
 DEFAULT_MAX_RECORDS = 500
 
 
-def _iter_corpus_records(corpus_dir: Path) -> Iterable[Dict[str, Any]]:
+def _iter_corpus_records(corpus_dir: Path,
+                         max_recent_files: Optional[int] = None) -> Iterable[Dict[str, Any]]:
+    # Ergon un-stall fix 2026-06-07: the scoring walk previously scanned the
+    # ENTIRE corpus (346 GB / 265 batches) to pick 500 records, while the
+    # episode index was already bounded to max_recent_files. That asymmetry is
+    # why the daemon stalled on 2026-05-19 — a full walk per 30-min cycle is
+    # infeasible. Bound the scoring walk to the same N most-recent batches as
+    # the episode index (paths are timestamp-sorted, so [-N:] = newest N).
     from theseus.emit.corpus_files import iter_batch_paths, open_batch
-    for jf in iter_batch_paths(corpus_dir):
+    paths = iter_batch_paths(corpus_dir)
+    if max_recent_files is not None and max_recent_files > 0:
+        paths = paths[-max_recent_files:]
+    for jf in paths:
         try:
             with open_batch(jf) as f:
                 for line in f:
@@ -158,7 +168,18 @@ def _theseus_record_to_training_anchor(
     }
 
 
-DEFAULT_FALSIFY_SHARE = 0.20
+# Ergon retune 2026-06-07 (CORPUS_VALUE_AUDIT_2026-06-03 rec #1 + #5): the
+# main Learner corpus was a confirmation-monoculture (79% promoted / 1.4%
+# rejected) because this share was below the corpus's own ~40% kill rate, so
+# kills were under-represented even with the Fire #33 gate open. The goal is
+# FAILURE data ("kills are the most valuable output", feedback_assume_wrong),
+# so the falsify floor is raised to match the corpus's natural kill rate —
+# proportional representation, not a penalty. Scoped note: the 2026-06-07
+# greedy ablation showed failure-reasoning data adds nothing to the narrow
+# *gold-judgement* metric, but that is NOT the Learner's routing objective
+# (which has no eval yet); failure-first representation remains correct for
+# the Learner's actual purpose.
+DEFAULT_FALSIFY_SHARE = 0.40
 
 
 def export_for_ergon(
@@ -229,8 +250,20 @@ def export_for_ergon(
     counter = itertools.count()  # stable tie-breaker for equal weights
     n_candidates_scanned = 0  # backward-compat with prior list-len return
 
-    for r_dict in _iter_corpus_records(corpus_dir):
+    for r_dict in _iter_corpus_records(corpus_dir, max_recent_files=max_recent_files):
         if r_dict.get("verdict") not in verdict_filter:
+            continue
+        # Ergon mappability gate 2026-06-07: _theseus_record_to_training_anchor
+        # only renders invariant_equality records (it needs relation + catalog).
+        # Other claim_kinds (kill_neighborhood/mutation/...) become placeholder
+        # anchors ("Does relation `?` hold...") — garbage. With the 0.40 falsify
+        # floor now pulling kills, the top pool filled with unmappable d2
+        # kill_neighborhood records. Skip what the mapper can't render so we ship
+        # well-formed invariant_equality kills+confirmations; the broader fix is
+        # to port the greedy rig's per-claim_kind serializers into the mapper
+        # (tracked in GREEDY_FOLLOWUP_PROGRESS_2026-06-07.md, Theseus lane).
+        _p = r_dict.get("claim_payload") or {}
+        if r_dict.get("claim_kind") != "invariant_equality" or not _p.get("relation"):
             continue
         try:
             r = TheseusRecord(**r_dict)
@@ -377,8 +410,14 @@ def main() -> None:
     parser.add_argument("--max-records", type=int, default=DEFAULT_MAX_RECORDS)
     parser.add_argument(
         "--falsify-share", type=float, default=DEFAULT_FALSIFY_SHARE,
-        help="Fraction of bundle reserved for REJECTED-verdict (falsify) "
-             "records. Default 0.20. Set 0 to disable the quota.",
+        help=f"Fraction of bundle reserved for REJECTED-verdict (falsify) "
+             f"records. Default {DEFAULT_FALSIFY_SHARE}. Set 0 to disable the quota.",
+    )
+    parser.add_argument(
+        "--max-recent-files", type=int, default=5,
+        help="Scan only the N most-recent corpus batches (timestamp-sorted). "
+             "Default 5. The full corpus is 346 GB / 265 batches; an unbounded "
+             "walk is why the daemon stalled. Pass 0 to scan everything (slow).",
     )
     args = parser.parse_args()
 
@@ -388,6 +427,7 @@ def main() -> None:
         weight_threshold=args.threshold,
         max_records=args.max_records,
         falsify_share=args.falsify_share,
+        max_recent_files=(args.max_recent_files or None),
     )
     print(json.dumps(stats, indent=2))
 
