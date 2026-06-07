@@ -579,3 +579,16 @@ object-domains. A plausible deeper reading: arithmetic invariants are coupled BY
 THEOREMS (BSD ties rank/sha/regulator), so mathematics itself may suppress
 non-transitivity → consistent scalar ordering. Does NOT prove H-R1 false universally,
 but it's a real, well-powered negative on fair ground.
+
+### OPTION 3 (James): pivot to the TRUE test — relational FAILURE data
+The real H-R1 is a reasoning claim: do per-move pairwise comparisons of reasoning
+states, from MULTIPLE INDEPENDENT failure-detectors that can DISAGREE, exhibit
+non-transitivity? Recon for a ready-made source: **none exists.** Kill ledgers thin/
+single-agent-per-file; learner corpus is categorical (verdict/outcome_class/
+kill_signature, NO numeric scores); no PRM/Walk-Z score files (heads are checkpoints,
+not score dumps). ⇒ Option 3 = GENERATE relational failure data. The load-bearing
+decision is the EVALUATOR SET — it must be genuinely independent / able to disagree
+(the g2c NULL came from theorem-COUPLED invariants that can't). Fork to James.
+Note: substrate's own lead (feedback_no_naive_score_combination: Walk-Z combined <
+random; PRM-alone best) says multiple reasoning heads DO disagree — the strongest prior
+for where curl might finally appear.
