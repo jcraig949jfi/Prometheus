@@ -1,0 +1,37 @@
+{
+  "alpha": 0.05,
+  "claim": "H-R1 global non-conservativity",
+  "falsifier_family_holdout": {
+    "F6_base_rate": 0.2446948928825261,
+    "F9_simpler_explanation": 0.16863815589930242,
+    "_full": 0.20091779728651238,
+    "catalog:": 0.1646436352318705,
+    "irreducibility": 0.2189606436181779,
+    "out_of_band": 0.20091779728651238,
+    "reciprocity": 0.20233072131806307
+  },
+  "n_null": 500,
+  "n_states": 21,
+  "nulls": {
+    "falsifier_column_shuffle": {
+      "null_mean": 0.2510556014461669,
+      "null_std": 0.05427995683946148,
+      "pvalue": 0.8183632734530938
+    },
+    "sign_permutation": {
+      "null_mean": 0.9049616919393456,
+      "null_std": 0.029694886354487412,
+      "pvalue": 1.0
+    }
+  },
+  "observed": {
+    "curl_mass": 0.20091779728651238,
+    "gradient_mass": 0.7990822027134876,
+    "harmonic_mass": 1.0596284376035422e-30,
+    "non_gradient_mass": 0.20091779728651238
+  },
+  "protocol": "reasoning_steering_v0.3_relational",
+  "seed": 0,
+  "stage": "0b",
+  "verdict": "NULL"
+}

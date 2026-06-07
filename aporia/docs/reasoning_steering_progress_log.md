@@ -498,3 +498,30 @@ Filed `reasoning_steering_protocol_v0.3_relational_correction.md` (supersedes v0
      swap) → dropped from the relational null set (column-shuffle + sign-permutation
      remain); v0.3 §5 corrected.
 - **NEXT:** real cache batch completes → run `runner` on it → the actual H-R1 verdict.
+
+### ⭐ STAGE 0b H-R1 VERDICT: NULL (the first hard H-R1 result)
+Cache: 21 in-band states scored in 1242s (~20.7 min). Runner on the real cache →
+`stage0b_relational_hodge_report.json`:
+- **verdict = NULL.** Observed: gradient_mass **0.799**, curl_mass **0.201**,
+  harmonic_mass ~0 (1e-30), non_gradient_mass **0.201**.
+- **It does not beat either null** — in fact it sits BELOW them:
+  - falsifier_column_shuffle: null_mean **0.251** > observed 0.201, **p=0.818**.
+  - sign_permutation: null_mean **0.905** ≫ observed, **p=1.0**.
+- falsifier-family-holdout: removing any single family leaves ~0.16–0.24 (≈ full
+  0.201) — no single falsifier is load-bearing.
+**Interpretation (scoped):** over the 21 in-band Mahler/Lehmer polynomials, compared
+pairwise across the falsifier battery, the failure-comparison flow is GRADIENT-
+DOMINATED and its modest curl is LESS than random falsifier-shuffling produces ⇒ NO
+genuine non-transitivity. The pairwise comparisons of these reasoning states ARE
+consistent with a single global scalar difficulty ranking. **H-R1 fails on this
+substrate/corpus/metric: the failure landscape here is conservative (scalar difficulty
+wins).** This is the clean killable negative the protocol was built to produce.
+**Scope / caveats:** one narrow domain (in-band Mahler polynomials), one comparison
+metric (battery falsifiers), n=21 (the in-band window is sparse). NULL here does NOT
+refute H-R1 universally — it says THIS instantiation is conservative; other
+domains/measurements remain open. The column-shuffle null is tightly estimated
+(std 0.054), so the verdict is well-powered for its scope.
+**Arc value:** the disciplined build caught a fatal flaw (scalar Δdamage conservative
+by construction) BEFORE any expensive run, reformulated to a relational (HodgeRank)
+flow, and produced a real verdict — all without ever overclaiming. Stage-0a instrument
+reused unchanged throughout. **Loop STOPPED (verdict committed).**
