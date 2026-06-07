@@ -462,3 +462,26 @@ Filed `reasoning_steering_protocol_v0.3_relational_correction.md` (supersedes v0
   VECTOR (not just n_passed); (2) score the 21 in-band states once, cache; (3)
   comparison-flow builder (complete graph, sign-margin); (4) run Stage-0a decomposer +
   adapted nulls → `stage0b_relational_hodge_report.json` (BEATS_NULL|NULL|INVALID).
+
+## 2026-06-07 — Stage 0b relational build (TDD loop)
+- **iter 1 margin vector ✓** `margins_from_kill_vector` + `Axis2DamageScorer.margin_vector`
+  → {falsifier: margin} from KillVector components (None/NaN dropped). 5/5 (incl. real
+  Lehmer pipeline test, 120s). A:2 P:1 E:1 C:1.
+- **iter 2 in-band corpus loader ✓** `corpus.load_in_band_states` → in-band (1.001,1.18)
+  slice of MAHLER_TABLE, deterministic (sorted by M,coeffs), Lehmer included. 4/4.
+  A:1 P:1 E:1 C:1.
+- **iter 4 relational flow builder ✓** `flow.relational_flow` → complete graph +
+  `flow(i,j)=Σ_k sign(margin_k(j)−margin_k(i))`. 5/5. A:2 P:1 E:1 C:1.
+  - **KEYSTONE authority test passes:** a Condorcet 3-cycle decomposes to PURE CURL
+    (non_gradient_mass 1.0) — the relational flow CAN be non-conservative, the whole
+    point of v0.3.
+  - **Build finding — saturation-curl baseline:** `sign` isn't path-additive, so even a
+    transitive ordering leaves ~0.11 non_gradient_mass (gradient-dominated). ⇒ H-R1
+    verdict must be **BEATS NULL**, never non_gradient_mass>0 (the null carries the
+    same saturation floor). Folded into v0.3 §5. The TDD test caught a wrong premise
+    and sharpened the protocol.
+- **NEXT:** iter 3 score-and-cache the ~21 in-band states' margin vectors (one-time
+  ~19min background batch via __main__); iter 5 adapted nulls module
+  (falsifier-column-shuffle, sign-permutation, falsifier-family-holdout, +reuse
+  stage0 rewire); iter 6 runner → stage0b_relational_hodge_report.json (verdict
+  vs the full null battery).

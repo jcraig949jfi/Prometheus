@@ -20,7 +20,28 @@ from prometheus_math.evidence_field import build_evidence_field
 from sigma_kernel.bind_eval import BindEvalExtension
 from sigma_kernel.sigma_kernel import SigmaKernel
 
-__all__ = ["Axis2Damage", "Axis2DamageScorer"]
+__all__ = ["Axis2Damage", "Axis2DamageScorer", "margins_from_kill_vector"]
+
+
+def margins_from_kill_vector(kv) -> dict:
+    """Per-falsifier margin vector {falsifier_name: float margin} from a KillVector.
+
+    Drops components whose margin is None or non-finite. This is the per-state vector
+    v(s) the relational flow (v0.3) compares pairwise.
+    """
+    components = getattr(kv, "components", None)
+    if components is None:
+        raise ValueError("kill_vector has no .components")
+    out = {}
+    for c in components:
+        m = getattr(c, "margin", None)
+        if m is None:
+            continue
+        mf = float(m)
+        if not math.isfinite(mf):
+            continue
+        out[getattr(c, "falsifier_name", "?")] = mf
+    return out
 
 
 @dataclass(frozen=True)
@@ -53,3 +74,12 @@ class Axis2DamageScorer:
             passed=tuple(bsd.falsifiers_passed),
             failed=tuple(bsd.falsifiers_failed),
         )
+
+    def margin_vector(self, coeffs, mahler: float) -> dict:
+        """Per-falsifier margin vector for a state (the v0.3 relational measurement)."""
+        if not coeffs:
+            raise ValueError("coeffs must be non-empty")
+        if not math.isfinite(mahler):
+            raise ValueError(f"mahler measure must be finite, got {mahler}")
+        record = self._pipeline.process_candidate(list(coeffs), float(mahler))
+        return margins_from_kill_vector(record.kill_vector)

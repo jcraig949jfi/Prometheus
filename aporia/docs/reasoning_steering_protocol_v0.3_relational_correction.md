@@ -105,6 +105,15 @@ Pass requires `non_gradient_mass` above all of these (v0.2 §4 brutality retaine
 Degeneracy guard: `INVALID_SPARSE_SIGNAL` if too few states (e.g. < ~8 → too few
 independent triangles) or near-zero flow variance.
 
+**Saturation-curl baseline (found in build, 2026-06-07).** `sign`-aggregation is not
+path-additive, so even a perfectly consistent (transitive) ordering leaves a nonzero
+curl baseline (~0.11 non_gradient_mass on a 3-state example, gradient-dominated). The
+genuine non-transitivity signal sits ABOVE this baseline. Therefore the H-R1 verdict
+is strictly **`non_gradient_mass` BEATS THE NULL**, never `non_gradient_mass > 0`: the
+null battery carries the same saturation baseline and subtracts it. A Condorcet cycle
+gives non_gradient_mass = 1.0 (pure curl) vs ~0.11 for the transitive case — the null
+is what tells real inconsistency from the encoding's saturation floor.
+
 ---
 
 ## 6. Honest note
