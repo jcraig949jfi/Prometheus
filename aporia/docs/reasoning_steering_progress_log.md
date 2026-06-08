@@ -625,3 +625,26 @@ different solvers disagree on which problems are hard → potential non-transiti
 the method-utility gradient of feedback_gradient_synthesis). Needs a problem set +
 ≥3 diverse solvers. Fork to James: build method-utility arm B, or accept the inference
 gate and resource C/D.
+
+### Signal pre-screen (James: "what increases probability of signal?") — + a KEY correction
+Built `prescreen.signal_screen` to gate expensive H-R1 runs. First built it on PAIRWISE
+correlation (the "decorrelation is the lever" strategy). **Validating it disproved that
+strategy:** the g2c criteria have min pairwise Spearman **-0.80 and 34 anti-correlated
+pairs**, yet H-R1 was NULL. So **pairwise anti-correlation does NOT predict
+non-transitivity** — two evaluators trading off is still WEIGHTABLE (a scalar combination
+orders the states). Curl needs CYCLIC, non-weightable inconsistency (a>b>c>a) among ≥3
+evaluators, which pairwise stats cannot see.
+**Corrected screen** = a FAST curl measure (observed non_gradient_mass + a small
+column-shuffle null, ~10x cheaper than the full run); pairwise correlation kept as a
+REPORTED diagnostic, explicitly NOT the gate. 5/5 tests incl. the centerpiece
+(anti-correlated-but-weightable → FAIL_NO_CURL despite min_corr<-0.5).
+**Validated retroactively:** the corrected screen predicts BOTH known NULLs —
+MAHLER FAIL_NO_CURL (obs 0.201 < null 0.249, p=0.79); G2C FAIL_NO_CURL (obs 0.171 vs
+null 0.155, p=0.247) despite its 34 anti-correlated pairs.
+**Corrected answer to "what increases P(signal)":** NOT pairwise decorrelation. The
+lever is NON-WEIGHTABLE CYCLIC disagreement — evaluators whose conflicts no scalar
+weighting can reconcile. Contested-state sampling, more evaluators/states (more triples
+→ more cycle chances), and trade-off-rich REASONING domains still help, but the gate is
+the fast curl screen, not correlation. Substrate-emit implication unchanged but sharper:
+emit multi-evaluator data and gate it with the fast curl screen, hunting cyclic (not
+merely anti-correlated) disagreement.
