@@ -21,3 +21,4 @@ Format: `date | operation | A:authority P:property E:edge C:composition | commit
 2026-06-07 | stage0b.g2c_corpus.load_g2c_states + criteria-adequacy guard | A:1 P:1 E:1 C:1 | 34446a19
 2026-06-08 | stage0b.prescreen.signal_screen (fast curl gate) | A:2 P:1 E:1 C:1 | f37ef5d4
 2026-06-08 | stage0b.calibration (relational positive control) | A:2 P:0 E:1 C:1 | cf9f8685
+2026-06-08 | stage0b.reward_curl_demo (path B: curl->combination failure) | A:1 P:1 E:1 C:1 | (this commit)

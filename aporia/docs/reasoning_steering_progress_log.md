@@ -668,3 +668,31 @@ validated end-to-end (synthetic Condorcet → planted n=30 cycle → famous Efro
 and every NULL behind us is trustworthy. Calibration complete; the exploration paths
 (B reward-implication, C harmonic, D scalarity-map, A inference arms) now rest on a
 validated instrument.
+
+### ⭐ PATH B (James) — curl EXPLAINS 'combined reward < random while single heads work'
+Recon: the Walk-Z/PRM head-score data was NEVER persisted ("Walk-Z" appears nowhere in
+the repo; only a rhea target_heads.json config). 5th confirmation of the
+findings-in-memory / data-sparse-on-disk pattern → strongest case yet for the
+substrate-emit change. So instead of testing the specific failure, established the LAW
+with the validated instrument (`reward_curl_demo.py`, 4/4 tests):
+**Sweep (n=40, 1 informative head + 4 cyclic heads, scaled by cyclic_weight):**
+```
+ cyc_wt  curl  best_single combined  damage
+   0.0  0.317     0.992     0.992    0.000   (no cyclic heads: combining fine)
+   0.1  0.765     1.000     0.002    0.998   (combined collapses to RANDOM)
+   0.25 0.765     1.000    -0.154    1.154   (combined WORSE than random)
+```
+The moment non-weightable (cyclic) heads enter, the LINEAR COMBINATION crashes from
+0.99 → ~0 (random) → negative, while the best single head stays 1.0 — EXACTLY the
+substrate's 'combined < random while PRM-alone works' finding — and curl jumps from the
+0.32 saturation floor to 0.765. **Curl is the mechanism AND the diagnostic.**
+**Behavior delta (the payoff):** when the substrate combines reward heads and the
+combination underperforms the best single head, that is a curl signature ⇒ the heads
+measure NON-WEIGHTABLE dimensions ⇒ scalar (linear) combination is PROVABLY lossy ⇒ use
+vector-valued reward / pick the best-aligned head / multi-objective selection — do NOT
+average. This mechanistically explains feedback_no_naive_score_combination and gives a
+concrete diagnostic (measure curl when combination fails). Artifact:
+stage0b_reward_curl_report.json.
+**Caveat:** this proves the MECHANISM is real + gives the diagnostic; confirming the
+substrate's SPECIFIC failure was curl needs the (unpersisted) head-score data = the
+inference/emit follow-on.
