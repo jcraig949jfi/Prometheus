@@ -609,3 +609,19 @@ Feasibility recon of the 4 arms:
 **Gate:** the real test reduces to C/D, which need model access. Fork to James on
 resourcing. Panel harness (run_h_r1 across arms, tabulate verdicts) to be built once
 ≥1 decisive arm's data exists.
+
+### Arm B (James picked) — intended data is UNPOPULATED; no-inference path blocked
+Checked the kill-ledger quality dimensions (the orthogonal lenses): novelty_estimate /
+diversity_score / info_density / training_weight are **absent across all ledgers**;
+precision_dps constant. The substrate has rich SCHEMAS but sparse/categorical DATA.
+**Deepest finding of the arc:** the relational reasoning-failure H-R1 cannot currently
+be tested without model inference — the only genuinely-independent evaluators available
+are models (deferred), and existing data lacks ≥3 varying, uncoupled reasoning-quality
+dimensions. To test whether reasoning-difficulty is non-scalar, the substrate must EMIT
+multi-evaluator reasoning-quality data — a concrete "where the substrate must change."
+**One viable no-inference arm B remains, but it's a BUILD, not existing data:**
+method-utility — states = problems, criteria = per-ALGORITHM performance (genuinely
+different solvers disagree on which problems are hard → potential non-transitivity;
+the method-utility gradient of feedback_gradient_synthesis). Needs a problem set +
+≥3 diverse solvers. Fork to James: build method-utility arm B, or accept the inference
+gate and resource C/D.
