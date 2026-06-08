@@ -648,3 +648,23 @@ weighting can reconcile. Contested-state sampling, more evaluators/states (more 
 the fast curl screen, not correlation. Substrate-emit implication unchanged but sharper:
 emit multi-evaluator data and gate it with the fast curl screen, hunting cyclic (not
 merely anti-correlated) disagreement.
+
+### ⭐ CALIBRATION (James: "calibration first") — POSITIVE CONTROL PASSES
+The relational pipeline was missing its positive control (Stage-0a had control #6 for
+the DECOMPOSER; nothing validated the full relational flow + null battery at H-R1 scale).
+Built `calibration.py`: (1) Efron's intransitive dice (famous, independent; flow =
+computed win-probabilities), (2) `cyclic_profile(n,m)` — the canonical maximal Condorcet
+cycle (m rotational evaluators over n ring states). `test_calibration.py` 4/4.
+**Results (`stage0b_calibration_report.json`):**
+- Efron's dice: **curl_mass 0.986** — the instrument recovers a famous real
+  non-transitive system as ~99% curl.
+- Cyclic profile **n=30** (g2c's scale): screen **PASS**, H-R1 **BEATS_NULL**,
+  non_gradient_mass **1.0**; falsifier_column_shuffle p=**0.005** (null 0.318),
+  sign_permutation p=**0.005** (null 0.935).
+**Conclusion:** at the exact scale where g2c/Mahler were NULL, genuine curl is detected
+decisively. **The instrument + null battery FIRE on real curl — so the prior NULLs are
+TRUE NEGATIVES, not power/instrument failures.** The relational pipeline is now
+validated end-to-end (synthetic Condorcet → planted n=30 cycle → famous Efron dice),
+and every NULL behind us is trustworthy. Calibration complete; the exploration paths
+(B reward-implication, C harmonic, D scalarity-map, A inference arms) now rest on a
+validated instrument.
