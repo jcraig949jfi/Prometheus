@@ -1,0 +1,550 @@
+[
+  {
+    "id": "harmonia_d_attr_001",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved the consistency of the Generalized Continuum Hypothesis with ZFC, and where was it first announced?",
+    "expected_answer": "Kurt Gödel announced the relative consistency of GCH (and AC) with ZF in PNAS Vol. 24 No. 12 (December 1938), pp. 556-557, via the inner model L of constructible sets. The full proof appeared as the 1940 Princeton monograph 'The Consistency of the Continuum Hypothesis'.",
+    "attribution_tuples": [
+      {"theorem": "Consistency of GCH with ZF (constructible universe L)", "prover": "Gödel", "year": 1938, "venue": "PNAS Vol. 24 No. 12, pp. 556-557"},
+      {"theorem": "Consistency of GCH with ZF (full monograph)", "prover": "Gödel", "year": 1940, "venue": "Annals of Mathematics Studies 3, Princeton University Press"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing the consistency direction to Cohen (Cohen proved the consistency of NEGATION of CH in 1963 — the OPPOSITE direction of the independence)",
+      "wrong year 1939 or 1940 for the PNAS announcement (the announcement was 1938; only the monograph is 1940)",
+      "venue confusion citing Annals of Mathematics or JSL instead of PNAS / Annals of Math Studies",
+      "attributing to von Neumann or Bernays who developed adjacent set-theoretic frameworks but did not prove this"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "harmonia_d_attr_002",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved the consistency of the negation of the Continuum Hypothesis with ZFC?",
+    "expected_answer": "Paul J. Cohen, by introducing the method of forcing. The two-part announcement appeared as 'The Independence of the Continuum Hypothesis' in PNAS Vol. 50 (1963) pp. 1143-1148 and 'The Independence of the Continuum Hypothesis, II' in PNAS Vol. 51 (1964) pp. 105-110.",
+    "attribution_tuples": [
+      {"theorem": "Consistency of ¬CH with ZFC (forcing)", "prover": "Cohen", "year": 1963, "venue": "PNAS Vol. 50, pp. 1143-1148"},
+      {"theorem": "Consistency of ¬CH with ZFC, Part II", "prover": "Cohen", "year": 1964, "venue": "PNAS Vol. 51, pp. 105-110"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Gödel (who proved the OPPOSITE direction — consistency of CH itself)",
+      "wrong year 1962 or 1965 (the two-part PNAS publication was 1963 and 1964 specifically)",
+      "venue confusion citing Annals of Mathematics or Journal of Symbolic Logic instead of PNAS",
+      "attributing to Solovay or Tennenbaum (who developed iterated forcing later, on Souslin's problem, not CH)"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "harmonia_d_attr_003",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved Borel determinacy in ZFC?",
+    "expected_answer": "Donald A. Martin, in 'Borel determinacy', Annals of Mathematics Series 2, Vol. 102 No. 2 (1975), pp. 363-371. The proof requires the axiom of replacement essentially (per a result of H. Friedman).",
+    "attribution_tuples": [
+      {"theorem": "Borel sets are determined (in ZFC)", "prover": "Martin", "year": 1975, "venue": "Annals of Mathematics Vol. 102 No. 2"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Martin and Steel (who proved PROJECTIVE determinacy from Woodin cardinals — a different theorem, in 1989)",
+      "wrong year 1973 or 1985 (Borel determinacy was 1975; the simplified proof is 1985 in JSL but original is 1975)",
+      "venue confusion citing Journal of Symbolic Logic instead of Annals of Math",
+      "attributing to Friedman (Friedman proved that replacement is needed — meta-result, not the determinacy theorem)"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "harmonia_d_attr_004",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved Morley's categoricity theorem (a countable first-order theory categorical in some uncountable cardinality is categorical in all uncountable cardinalities)?",
+    "expected_answer": "Michael Morley, 'Categoricity in power', Transactions of the American Mathematical Society Vol. 114 (1965), pp. 514-538, with announcement in PNAS Vol. 49 (1963), pp. 213-216.",
+    "attribution_tuples": [
+      {"theorem": "Morley's categoricity theorem", "prover": "Morley", "year": 1965, "venue": "Transactions AMS Vol. 114, pp. 514-538"},
+      {"theorem": "Morley's categoricity theorem (announcement)", "prover": "Morley", "year": 1963, "venue": "PNAS Vol. 49, pp. 213-216"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Łoś (who CONJECTURED the result; Morley proved it)",
+      "attributing to Shelah (who later extended/refined to uncountable languages and stability theory)",
+      "wrong year 1962 or 1967 (the Transactions paper is 1965)",
+      "venue confusion citing Journal of Symbolic Logic or Annals of Mathematics"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "harmonia_d_attr_005",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who solved Post's problem by exhibiting two computably enumerable sets of incomparable Turing degree?",
+    "expected_answer": "Independently, Richard M. Friedberg and Albert A. Muchnik, using the finite-injury priority method. Muchnik published in Doklady Akademii Nauk SSSR vol. 108 (1956), pp. 194-197; Friedberg in PNAS vol. 43 (1957), pp. 236-238.",
+    "attribution_tuples": [
+      {"theorem": "Existence of incomparable c.e. Turing degrees (Post's problem)", "prover": "Muchnik", "year": 1956, "venue": "Doklady Akademii Nauk SSSR Vol. 108"},
+      {"theorem": "Existence of incomparable c.e. Turing degrees (Post's problem)", "prover": "Friedberg", "year": 1957, "venue": "PNAS Vol. 43"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing solely to Friedberg or solely to Muchnik (the two solutions are independent and contemporaneous)",
+      "attributing to Post (who POSED the problem in 1944 but did not solve it)",
+      "wrong years 1954 or 1958 (Muchnik 1956, Friedberg 1957)",
+      "venue confusion citing JSL instead of Doklady / PNAS"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "harmonia_d_attr_006",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved the consistency of Martin's Axiom together with the negation of the Continuum Hypothesis, by introducing iterated forcing?",
+    "expected_answer": "Robert M. Solovay and Stanley Tennenbaum, in 'Iterated Cohen extensions and Souslin's problem', Annals of Mathematics Series 2, Vol. 94 No. 2 (1971), pp. 201-245. The same paper establishes consistency of Souslin's hypothesis.",
+    "attribution_tuples": [
+      {"theorem": "Consistency of MA + ¬CH; consistency of Souslin's hypothesis", "prover": "Solovay, Tennenbaum", "year": 1971, "venue": "Annals of Mathematics Vol. 94 No. 2, pp. 201-245"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Martin alone (Martin formulated MA but Solovay-Tennenbaum proved its consistency with ¬CH)",
+      "wrong year 1965 (work circulated earlier but the published paper is 1971)",
+      "venue confusion citing Israel Journal of Mathematics or JSL instead of Annals of Math",
+      "attributing the Souslin half to Jensen (Jensen proved the OTHER consistency direction — ¬SH from V=L via diamond)"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "harmonia_d_attr_007",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved that the Whitehead problem for abelian groups of size aleph_1 is independent of ZFC?",
+    "expected_answer": "Saharon Shelah, who proved both directions: 'Infinite abelian groups, Whitehead problem and some constructions', Israel Journal of Mathematics Vol. 18 (1974), pp. 243-256, with the non-free direction in the companion 'Whitehead groups may not be free, even assuming CH, I', Israel Journal of Mathematics Vol. 28 (1977).",
+    "attribution_tuples": [
+      {"theorem": "Whitehead problem independent of ZFC (V=L gives Whitehead implies free; MA+¬CH gives counterexample)", "prover": "Shelah", "year": 1974, "venue": "Israel Journal of Mathematics Vol. 18, pp. 243-256"},
+      {"theorem": "Whitehead groups may not be free even assuming CH", "prover": "Shelah", "year": 1977, "venue": "Israel Journal of Mathematics Vol. 28"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Whitehead himself (who posed the problem; he did not show independence)",
+      "attributing to Eklof (who wrote a popular exposition for the AMS Notices/Monthly but did not prove it)",
+      "wrong year 1972 or 1978 (the original ZFC-independence paper is 1974)",
+      "venue confusion citing Annals of Mathematics or JSL instead of Israel Journal of Mathematics"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "harmonia_d_attr_008",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved that, assuming an inaccessible cardinal, there is a model of ZF+DC in which every set of reals is Lebesgue measurable, has the Baire property, and the perfect set property?",
+    "expected_answer": "Robert M. Solovay, 'A model of set-theory in which every set of reals is Lebesgue measurable', Annals of Mathematics Series 2, Vol. 92 (1970), pp. 1-56.",
+    "attribution_tuples": [
+      {"theorem": "Solovay's model: every set of reals Lebesgue measurable (from inaccessible)", "prover": "Solovay", "year": 1970, "venue": "Annals of Mathematics Vol. 92, pp. 1-56"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Shelah (Shelah later showed the inaccessible is NEEDED for the Lebesgue conclusion — different theorem, 1984)",
+      "wrong year 1965 or 1972 (the published paper is 1970, although work was done in the 1960s)",
+      "venue confusion citing Israel Journal of Mathematics or JSL instead of Annals of Math",
+      "incorrectly stating no inaccessible is needed (an inaccessible IS used; Shelah later showed it is necessary for Lebesgue measurability of all sets)"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "harmonia_d_attr_009",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved Kunen's inconsistency theorem (that there is no nontrivial elementary embedding j : V -> V in ZFC)?",
+    "expected_answer": "Kenneth Kunen, 'Elementary embeddings and infinitary combinatorics', Journal of Symbolic Logic Vol. 36 No. 3 (1971), pp. 407-413. This result rules out Reinhardt cardinals in ZFC.",
+    "attribution_tuples": [
+      {"theorem": "No nontrivial elementary j : V -> V in ZFC (Kunen inconsistency)", "prover": "Kunen", "year": 1971, "venue": "Journal of Symbolic Logic Vol. 36 No. 3, pp. 407-413"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Reinhardt (Reinhardt PROPOSED the embedding axiom; Kunen REFUTED it in ZFC)",
+      "wrong year 1970 or 1973 (the JSL paper is 1971)",
+      "venue confusion citing Annals of Math or Annals of Mathematical Logic instead of JSL",
+      "incorrectly stating it works without choice (the proof essentially uses AC; consistency in ZF without AC is open)"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "harmonia_d_attr_010",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved that IP = PSPACE (interactive proofs equal polynomial space)?",
+    "expected_answer": "Adi Shamir, 'IP = PSPACE', Journal of the ACM Vol. 39 No. 4 (October 1992), pp. 869-877; originally announced at FOCS 1990. The matching lower bound IP ⊇ PSPACE used the Lund-Fortnow-Karloff-Nisan arithmetization of QBF.",
+    "attribution_tuples": [
+      {"theorem": "IP = PSPACE", "prover": "Shamir", "year": 1992, "venue": "Journal of the ACM Vol. 39 No. 4, pp. 869-877"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing solely to Lund-Fortnow-Karloff-Nisan (who proved coNP ⊆ IP and #P ⊆ IP, the precursor; Shamir extended to PSPACE)",
+      "wrong year 1990 for the J. ACM publication (1990 was FOCS; J. ACM is 1992)",
+      "venue confusion citing SIAM J. Computing or STOC instead of J. ACM",
+      "attributing to Goldwasser-Micali-Rackoff (who DEFINED interactive proofs, did not prove IP=PSPACE)"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "harmonia_d_attr_011",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved Projective Determinacy from infinitely many Woodin cardinals?",
+    "expected_answer": "Donald A. Martin and John R. Steel, 'A proof of projective determinacy', Journal of the American Mathematical Society Vol. 2 No. 1 (1989), pp. 71-125.",
+    "attribution_tuples": [
+      {"theorem": "Projective Determinacy follows from infinitely many Woodin cardinals", "prover": "Martin, Steel", "year": 1989, "venue": "Journal of the AMS Vol. 2 No. 1, pp. 71-125"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing solely to Martin (who proved Borel determinacy in 1975; Projective Determinacy is the joint Martin-Steel 1989)",
+      "attributing to Woodin (Woodin developed Pmax and the optimal-determinacy proof from AD+; the PD-from-Woodins result is Martin-Steel)",
+      "wrong year 1985 or 1992 (the J. AMS publication is 1989)",
+      "venue confusion citing Annals of Math or Annals of Pure and Applied Logic instead of J. AMS"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "harmonia_d_attr_012",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved the consistency of Martin's Maximum (MM)?",
+    "expected_answer": "Matthew Foreman, Menachem Magidor, and Saharon Shelah, 'Martin's Maximum, saturated ideals, and nonregular ultrafilters. Part I', Annals of Mathematics Series 2, Vol. 127 No. 1 (1988), pp. 1-47.",
+    "attribution_tuples": [
+      {"theorem": "Consistency of Martin's Maximum (MM) from a supercompact", "prover": "Foreman, Magidor, Shelah", "year": 1988, "venue": "Annals of Mathematics Vol. 127 No. 1, pp. 1-47"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing the consistency to Asperó-Schindler (who proved MM++ implies (*) in 2021 — a different result downstream of MM)",
+      "wrong year 1987 or 1989 (the Annals paper is 1988; Part II is 1988 vol 127 no 3)",
+      "venue confusion citing Israel Journal of Mathematics or JSL instead of Annals of Math",
+      "attributing solely to Foreman or solely to Shelah (the consistency proof is the joint Foreman-Magidor-Shelah)"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "harmonia_d_attr_013",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved the consistency of the failure of the Singular Cardinals Hypothesis at aleph_omega from a supercompact cardinal?",
+    "expected_answer": "Menachem Magidor, in two papers from 1977: 'On the singular cardinals problem I', Israel Journal of Mathematics Vol. 28 (1977), pp. 1-31 (constructing a model where 2^{aleph_omega} > aleph_{omega+1} with aleph_omega strong limit), and 'On the singular cardinals problem II', Annals of Mathematics Series 2, Vol. 106 (1977), pp. 517-547.",
+    "attribution_tuples": [
+      {"theorem": "Failure of GCH at aleph_omega from supercompact (SCH failure at aleph_omega)", "prover": "Magidor", "year": 1977, "venue": "Israel Journal of Mathematics Vol. 28, pp. 1-31"},
+      {"theorem": "On the singular cardinals problem II", "prover": "Magidor", "year": 1977, "venue": "Annals of Mathematics Vol. 106, pp. 517-547"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Silver (who proved that GCH cannot first fail at a singular of UNCOUNTABLE cofinality — the OPPOSITE-direction ZFC-theorem, 1974)",
+      "attributing to Prikry (who developed Prikry forcing in 1970, used as a tool, but the SCH-failure-at-aleph-omega is Magidor 1977)",
+      "wrong year 1976 or 1980",
+      "venue confusion (one paper is Israel J. Math, the other is Annals; conflating the two)"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "harmonia_d_attr_014",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved that every supercompact cardinal can be made indestructible by kappa-directed-closed forcing (Laver's theorem)?",
+    "expected_answer": "Richard Laver, 'Making the supercompactness of kappa indestructible under kappa-directed-closed forcing', Israel Journal of Mathematics Vol. 29 (1978), pp. 385-388.",
+    "attribution_tuples": [
+      {"theorem": "Laver indestructibility of supercompacts", "prover": "Laver", "year": 1978, "venue": "Israel Journal of Mathematics Vol. 29, pp. 385-388"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Hamkins (who developed the lottery preparation generalization in 2000 — a later technique; Laver did the original)",
+      "wrong year 1976 or 1980 (the IJM paper is 1978)",
+      "venue confusion citing JSL or Annals of Math instead of Israel Journal of Mathematics",
+      "incorrectly stating works for any large cardinal (the original Laver preparation is specifically for supercompacts)"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "harmonia_d_attr_015",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved the geometric Mordell-Lang conjecture for function fields, using model theory of differentially closed fields and the dichotomy theorem for Zariski geometries?",
+    "expected_answer": "Ehud Hrushovski, 'The Mordell-Lang conjecture for function fields', Journal of the American Mathematical Society Vol. 9 No. 3 (1996), pp. 667-690.",
+    "attribution_tuples": [
+      {"theorem": "Mordell-Lang for function fields (any characteristic)", "prover": "Hrushovski", "year": 1996, "venue": "Journal of the AMS Vol. 9 No. 3, pp. 667-690"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Faltings (who proved the NUMBER FIELD Mordell conjecture in 1983 — a different theorem)",
+      "attributing to Buium (who developed earlier differential-algebraic approach but did not solve function-field Mordell-Lang in all characteristics)",
+      "wrong year 1994 or 1998 (the J. AMS paper is 1996)",
+      "venue confusion citing Annals of Math or Inventiones instead of J. AMS"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "harmonia_d_attr_016",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved that the strengthened finite Ramsey theorem is true but unprovable in Peano arithmetic?",
+    "expected_answer": "Jeff Paris and Leo Harrington, 'A mathematical incompleteness in Peano arithmetic', appearing as a chapter in the Handbook of Mathematical Logic (J. Barwise, ed.), North-Holland, 1977, pp. 1133-1142.",
+    "attribution_tuples": [
+      {"theorem": "Strengthened finite Ramsey theorem unprovable in PA (Paris-Harrington)", "prover": "Paris, Harrington", "year": 1977, "venue": "Handbook of Mathematical Logic (Barwise ed.), North-Holland, pp. 1133-1142"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Kirby-Paris (who proved Goodstein's theorem unprovable in PA in 1982 — a similar but distinct result)",
+      "wrong year 1978 or 1982 (the Handbook chapter is 1977)",
+      "venue confusion citing JSL or Annals of Math instead of the North-Holland Handbook",
+      "attributing solely to Harrington (the result is jointly Paris and Harrington)"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "harmonia_d_attr_017",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved Goodstein's theorem unprovable in Peano arithmetic?",
+    "expected_answer": "Laurence Kirby and Jeff Paris, 'Accessible independence results for Peano arithmetic', Bulletin of the London Mathematical Society Vol. 14 No. 4 (1982), pp. 285-293. (Goodstein's theorem itself was proved by Reuben Goodstein in 1944 in JSL; the unprovability-in-PA is Kirby-Paris.)",
+    "attribution_tuples": [
+      {"theorem": "Goodstein's theorem unprovable in PA", "prover": "Kirby, Paris", "year": 1982, "venue": "Bulletin of the London Mathematical Society Vol. 14 No. 4, pp. 285-293"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Goodstein (who proved the THEOREM in 1944; the unprovability-in-PA is Kirby-Paris 1982)",
+      "attributing to Paris-Harrington (who proved a different unprovability — strengthened finite Ramsey, in 1977)",
+      "wrong year 1980 or 1984",
+      "venue confusion citing Annals of Math or JSL instead of Bull. LMS"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "harmonia_d_attr_018",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved primitive recursive bounds for the Hales-Jewett theorem (and consequently for van der Waerden's theorem)?",
+    "expected_answer": "Saharon Shelah, 'Primitive recursive bounds for van der Waerden numbers', Journal of the American Mathematical Society Vol. 1 No. 3 (1988), pp. 683-697.",
+    "attribution_tuples": [
+      {"theorem": "Primitive recursive bounds for Hales-Jewett and van der Waerden", "prover": "Shelah", "year": 1988, "venue": "Journal of the AMS Vol. 1 No. 3, pp. 683-697"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Hales-Jewett (who proved the original theorem in 1963 with Ackermannian bounds; primitive-recursive bound is Shelah)",
+      "attributing to Gowers (who later proved much-better tower bounds for Szemerédi-type results — different theorem)",
+      "wrong year 1986 or 1990 (the J. AMS paper is 1988)",
+      "venue confusion citing Annals of Math or Israel Journal of Math instead of J. AMS"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "harmonia_d_attr_019",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who introduced the partitioning rho-functions for partitioning pairs of countable ordinals (laying foundations for the theory of minimal walks on omega_1)?",
+    "expected_answer": "Stevo Todorcevic, 'Partitioning pairs of countable ordinals', Acta Mathematica Vol. 159 (1987), pp. 261-294.",
+    "attribution_tuples": [
+      {"theorem": "Partition relation [omega_1]^2 -> [omega_1]^2_{omega_1} via rho-function (minimal walks)", "prover": "Todorcevic", "year": 1987, "venue": "Acta Mathematica Vol. 159, pp. 261-294"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Erdős-Hajnal (foundational on partition relations more generally; rho-function is Todorcevic specifically)",
+      "wrong year 1985 or 1989 (Acta Math paper is 1987)",
+      "venue confusion citing Israel Journal or Fundamenta Mathematicae instead of Acta Mathematica",
+      "attributing to Veličković (who has many results in same area but rho-function and minimal walks are Todorcevic)"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "harmonia_d_attr_020",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved that PFA (the Proper Forcing Axiom) implies the existence of a five-element basis for the uncountable linear orders, settling Shelah's basis conjecture?",
+    "expected_answer": "Justin Tatch Moore, 'A five element basis for the uncountable linear orders', Annals of Mathematics Series 2, Vol. 163 No. 2 (2006), pp. 669-688.",
+    "attribution_tuples": [
+      {"theorem": "PFA implies five-element basis for uncountable linear orders", "prover": "Moore", "year": 2006, "venue": "Annals of Mathematics Vol. 163 No. 2, pp. 669-688"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Shelah (who CONJECTURED the basis structure; Moore proved it under PFA)",
+      "attributing to Todorcevic (who developed many tools used; the five-element basis result is Moore)",
+      "wrong year 2004 or 2008 (the Annals paper is 2006; arXiv preprint is math/0501525 from January 2005)",
+      "venue confusion citing JAMS or Israel Journal of Math instead of Annals of Math"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "harmonia_d_attr_021",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved that Martin's Maximum^{++} implies Woodin's axiom (*) (the P-max axiom)?",
+    "expected_answer": "David Asperó and Ralf Schindler, 'Martin's Maximum^{++} implies Woodin's axiom (*)', Annals of Mathematics Series 2, Vol. 193 No. 3 (2021), pp. 793-835. ArXiv preprint 1906.10213.",
+    "attribution_tuples": [
+      {"theorem": "MM^{++} implies (*)", "prover": "Asperó, Schindler", "year": 2021, "venue": "Annals of Mathematics Vol. 193 No. 3, pp. 793-835"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Foreman-Magidor-Shelah (who proved MM consistency in 1988 — different result)",
+      "attributing to Woodin (who FORMULATED (*) and proved many of its consequences, but the MM^{++} -> (*) implication is Asperó-Schindler)",
+      "wrong year 2019 (arXiv is 2019; published 2021) or 2020",
+      "venue confusion citing JSL or Notices AMS instead of Annals of Mathematics"
+    ],
+    "difficulty": "hard"
+  },
+  {
+    "id": "harmonia_d_attr_022",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved the Tarski problem on the elementary equivalence of finitely generated nonabelian free groups (in the Sela approach)?",
+    "expected_answer": "Zlil Sela, 'Diophantine geometry over groups VI: the elementary theory of a free group', Geometric and Functional Analysis (GAFA) Vol. 16 No. 3 (2006), pp. 707-730. Independently solved by Olga Kharlampovich and Alexei Myasnikov in their 'Elementary theory of free non-abelian groups', J. Algebra 302 (2006), pp. 451-552.",
+    "attribution_tuples": [
+      {"theorem": "Nonabelian free groups have the same first-order theory (Tarski problem) — Sela approach", "prover": "Sela", "year": 2006, "venue": "GAFA Vol. 16 No. 3, pp. 707-730"},
+      {"theorem": "Nonabelian free groups have the same first-order theory (Tarski problem) — Kharlampovich-Myasnikov approach", "prover": "Kharlampovich, Myasnikov", "year": 2006, "venue": "Journal of Algebra Vol. 302, pp. 451-552"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing solely to Sela without crediting Kharlampovich-Myasnikov (independent contemporaneous solution)",
+      "wrong year 2001 or 2010 (both GAFA paper VI and the Kharlampovich-Myasnikov paper are 2006)",
+      "venue confusion citing Annals of Math instead of GAFA / J. Algebra (the result is in TWO different journals)",
+      "attributing to Tarski (who POSED the problem c. 1945; he did not solve it)"
+    ],
+    "difficulty": "hard"
+  },
+  {
+    "id": "harmonia_d_attr_023",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who introduced the C^{(n)}-cardinal hierarchy, giving a characterization of Vopěnka's principle in terms of C^{(n)}-extendible cardinals?",
+    "expected_answer": "Joan Bagaria, 'C^{(n)}-cardinals', Archive for Mathematical Logic Vol. 51 No. 3-4 (2012), pp. 213-240.",
+    "attribution_tuples": [
+      {"theorem": "Characterization of Vopěnka's principle via C^{(n)}-extendible cardinals", "prover": "Bagaria", "year": 2012, "venue": "Archive for Mathematical Logic Vol. 51 No. 3-4, pp. 213-240"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Vopěnka (who proposed the principle c. 1970s; the C^{(n)}-characterization is Bagaria)",
+      "wrong year 2010 or 2014 (the Archive paper is 2012)",
+      "venue confusion citing JSL or Annals of Pure and Applied Logic instead of Archive for Mathematical Logic",
+      "attributing to Bagaria-Magidor (later joint extensions exist; the original C^{(n)}-cardinals paper is Bagaria solo)"
+    ],
+    "difficulty": "hard"
+  },
+  {
+    "id": "harmonia_d_attr_024",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved the lower-bound result that the failure of the Singular Cardinals Hypothesis (SCH) requires at least a measurable cardinal of high Mitchell order, via the analysis of indiscernible sequences for extenders?",
+    "expected_answer": "Moti Gitik and William J. Mitchell, 'Indiscernible sequences for extenders, and the singular cardinal hypothesis', Annals of Pure and Applied Logic Vol. 82 No. 3 (1996), pp. 273-316.",
+    "attribution_tuples": [
+      {"theorem": "Lower-bound consistency strength for failure of SCH (via indiscernible sequences for extenders)", "prover": "Gitik, Mitchell", "year": 1996, "venue": "Annals of Pure and Applied Logic Vol. 82 No. 3, pp. 273-316"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Mitchell alone (Mitchell proved earlier core-model lower bounds c. 1984-1992; this specific 1996 result is Gitik-Mitchell joint)",
+      "attributing to Gitik alone (Gitik has many later strengthenings; the 1996 paper is joint with Mitchell)",
+      "wrong year 1994 or 1998 (the APAL paper is 1996)",
+      "venue confusion citing JSL or Annals of Math instead of Annals of Pure and Applied Logic"
+    ],
+    "difficulty": "hard"
+  },
+  {
+    "id": "harmonia_d_attr_025",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved the Glimm-Effros dichotomy for arbitrary Borel equivalence relations (so that either E_0 reduces to it or it is smooth)?",
+    "expected_answer": "Leo Harrington, Alexander S. Kechris, and Alain Louveau, 'A Glimm-Effros dichotomy for Borel equivalence relations', Journal of the American Mathematical Society Vol. 3 No. 4 (1990), pp. 903-928.",
+    "attribution_tuples": [
+      {"theorem": "Glimm-Effros dichotomy for Borel equivalence relations", "prover": "Harrington, Kechris, Louveau", "year": 1990, "venue": "Journal of the AMS Vol. 3 No. 4, pp. 903-928"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Glimm or Effros (who proved the original C*-algebra/topological-group versions in 1961/1965; Borel-equivalence-relations form is Harrington-Kechris-Louveau)",
+      "wrong year 1988 or 1992 (the J. AMS paper is 1990)",
+      "venue confusion citing Annals of Math or Fundamenta Mathematicae instead of J. AMS",
+      "attributing solely to Kechris (the result is the joint Harrington-Kechris-Louveau paper)"
+    ],
+    "difficulty": "hard"
+  },
+  {
+    "id": "harmonia_d_attr_026",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved that the real exponential field is o-minimal (equivalently, model-complete with decidability conditional on Schanuel)?",
+    "expected_answer": "Alex J. Wilkie, 'Model completeness results for expansions of the ordered field of real numbers by restricted Pfaffian functions and the exponential function', Journal of the American Mathematical Society Vol. 9 No. 4 (1996), pp. 1051-1094.",
+    "attribution_tuples": [
+      {"theorem": "Model completeness of the real exponential field; o-minimality of (R, exp)", "prover": "Wilkie", "year": 1996, "venue": "Journal of the AMS Vol. 9 No. 4, pp. 1051-1094"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Tarski (who CONJECTURED decidability of (R, exp); Wilkie proved model completeness, decidability still requires Schanuel)",
+      "attributing to Pillay-Steinhorn (who introduced o-minimality in 1986 — earlier framework; (R, exp) o-minimality is Wilkie 1996)",
+      "wrong year 1994 or 1998 (the J. AMS paper is 1996)",
+      "venue confusion citing Annals of Math or Israel Journal of Math instead of J. AMS"
+    ],
+    "difficulty": "hard"
+  },
+  {
+    "id": "harmonia_d_attr_027",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved that PFA implies AD holds in L(R)?",
+    "expected_answer": "John R. Steel, 'PFA implies AD^{L(R)}', Journal of Symbolic Logic Vol. 70 No. 4 (2005), pp. 1255-1296. (Earlier results in this direction by Todorčević and Schimmerling-Schindler.)",
+    "attribution_tuples": [
+      {"theorem": "PFA implies AD^{L(R)}", "prover": "Steel", "year": 2005, "venue": "Journal of Symbolic Logic Vol. 70 No. 4, pp. 1255-1296"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Woodin (whose Pmax/AD+ machinery is foundational; the PFA -> AD^L(R) implication is Steel 2005)",
+      "attributing to Schindler alone or Trang (who have related core-model-induction results; this specific theorem is Steel)",
+      "wrong year 2003 or 2007 (the JSL paper is 2005)",
+      "venue confusion citing Annals of Math or J. Math. Logic instead of JSL"
+    ],
+    "difficulty": "hard"
+  },
+  {
+    "id": "harmonia_d_attr_028",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved that the bounded proper forcing axiom (BPFA) is equiconsistent with a Sigma_1-reflecting cardinal?",
+    "expected_answer": "Martin Goldstern and Saharon Shelah, 'The bounded proper forcing axiom', Journal of Symbolic Logic Vol. 60 No. 1 (March 1995), pp. 58-73. (Shelah publication number 507.)",
+    "attribution_tuples": [
+      {"theorem": "BPFA equiconsistent with a Sigma_1-reflecting cardinal", "prover": "Goldstern, Shelah", "year": 1995, "venue": "Journal of Symbolic Logic Vol. 60 No. 1, pp. 58-73"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing solely to Shelah (the result is joint Goldstern-Shelah)",
+      "attributing to Bagaria (who developed bounded forcing axioms as principles of generic absoluteness — companion result; the equiconsistency is Goldstern-Shelah)",
+      "wrong year 1993 or 1997 (the JSL paper is March 1995)",
+      "venue confusion citing Israel Journal of Math or Archive for Mathematical Logic instead of JSL"
+    ],
+    "difficulty": "hard"
+  },
+  {
+    "id": "harmonia_d_attr_029",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved the classification of aleph_0-categorical, aleph_0-stable structures via a coordinatization theorem (also known as the Cherlin-Harrington-Lachlan theorem)?",
+    "expected_answer": "Gregory Cherlin, Leo Harrington, and Alistair H. Lachlan, 'aleph_0-categorical, aleph_0-stable structures', Annals of Pure and Applied Logic Vol. 28 No. 2 (1985), pp. 103-135.",
+    "attribution_tuples": [
+      {"theorem": "Cherlin-Harrington-Lachlan classification of aleph_0-categorical aleph_0-stable structures", "prover": "Cherlin, Harrington, Lachlan", "year": 1985, "venue": "Annals of Pure and Applied Logic Vol. 28 No. 2, pp. 103-135"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing the third author as Macintyre instead of Lachlan (common conflation — both are model theorists; the actual paper is Cherlin-Harrington-Lachlan)",
+      "wrong year 1983 or 1987 (APAL paper is 1985)",
+      "venue confusion citing JSL or Israel Journal of Math instead of Annals of Pure and Applied Logic",
+      "attributing to Zilber (who proved related structure theorems for totally categorical theories — adjacent result; CHL is the joint paper)"
+    ],
+    "difficulty": "hard"
+  },
+  {
+    "id": "harmonia_d_attr_030",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "attribution",
+    "probe": "Who proved the Borel reducibility dichotomy for orbit equivalence relations of Polish group actions via the technique of turbulence?",
+    "expected_answer": "Greg Hjorth, 'Classification and orbit equivalence relations', Mathematical Surveys and Monographs Vol. 75, American Mathematical Society, Providence, 2000, xviii + 195 pp. The dichotomy theorem refinement appeared in 'A dichotomy theorem for turbulence', Journal of Symbolic Logic Vol. 67 No. 4 (2002), pp. 1520-1540.",
+    "attribution_tuples": [
+      {"theorem": "Turbulence dichotomy for Polish group actions (monograph)", "prover": "Hjorth", "year": 2000, "venue": "AMS Mathematical Surveys and Monographs Vol. 75"},
+      {"theorem": "A dichotomy theorem for turbulence", "prover": "Hjorth", "year": 2002, "venue": "Journal of Symbolic Logic Vol. 67 No. 4, pp. 1520-1540"}
+    ],
+    "common_fabrication_patterns": [
+      "attributing to Hjorth-Kechris (Kechris collaborates extensively on related Borel-equivalence-relations work, but the turbulence framework is Hjorth's solo monograph)",
+      "wrong year 1998 or 2003 (the AMS Surveys monograph is 2000; JSL dichotomy paper is 2002)",
+      "venue confusion citing Annals of Math or JAMS instead of AMS Surveys / JSL",
+      "attributing the original turbulence concept to Becker-Kechris (whose 1996 'Descriptive set theory of Polish group actions' is foundational background, but turbulence is Hjorth)"
+    ],
+    "difficulty": "hard"
+  }
+]

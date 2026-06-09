@@ -1,0 +1,690 @@
+[
+  {
+    "id": "harmonia_d_cap_001",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "capability-gap",
+    "object_class": "Forcing notion (Cohen forcing for adding a real)",
+    "object_specification": {
+      "type": "Cohen forcing P = (2^{<omega}, supseteq)",
+      "instance": {
+        "underlying_set": "{s : s is a function from a finite ordinal n in omega into 2}; presented by the recursion S_0 = {<>}, S_{n+1} = {s ^ <0> : s in S_n} cup {s ^ <1> : s in S_n}, underlying_set = union_{n<omega} S_n",
+        "order": "p <= q iff dom(q) subseteq dom(p) and p restricted to dom(q) equals q",
+        "maximum_element": "<> (empty sequence)",
+        "cardinality_of_conditions": "aleph_0",
+        "antichain_specification": "an antichain is a set A of pairwise-incompatible conditions; max antichain size is aleph_0 (countable)"
+      },
+      "structural_metadata": {
+        "is_proper": true,
+        "is_ccc": true,
+        "preserves_cardinals": true,
+        "adds_real": true,
+        "preserves_cof_omega": true,
+        "completeness": "not sigma-closed (the descending sequence p_n = 0^n is not bounded below by a condition)",
+        "regularity": "homogeneous (for any p, q in P there is an automorphism phi with phi(p) = q via bit-flip composed with rebasing)",
+        "verification_methods": {
+          "is_ccc": "any antichain is at most countable since |P| = aleph_0",
+          "is_proper": "ccc implies proper",
+          "preserves_cardinals": "follows from ccc by Solovay's theorem",
+          "adds_real": "the union of the generic filter G is a function omega -> 2 not in V",
+          "homogeneous": "explicit bit-flip automorphism phi_t(p)(n) = p(n) XOR t(n) for t in 2^{dom(p)}"
+        },
+        "gap_with_substrate": "no current CoordinateChart primitive for forcing posets; closest is generic-poset which lacks forcing-specific operators (extension testing, density verification, generic-filter construction, antichain enumeration, name evaluation)"
+      }
+    },
+    "encoding_question": "Does the substrate's CoordinateChart system have a primitive for forcing posets? If not, the minimal new primitive: ForcingPoset dataclass with fields (underlying_set: Set, order: Callable[[E,E], bool], maximum: E, antichain_bound: Cardinal, structural_metadata: Dict). Required operators: (a) extends(p, q) -> bool, (b) is_dense(D) -> bool relative to a model M, (c) generic_filter(M, D_seq) -> Filter, (d) name_evaluation(tau, G) -> object, (e) boolean_completion() -> CompleteBooleanAlgebra. Does the existing canonicalization-protocol cover forcing-equivalence (boolean-completion equivalence, dense-embedding equivalence)?",
+    "expected_substrate_action": "Substrate attempts encoding via existing CoordinateChart primitives. PROMOTE if encoding succeeds with all structural-metadata fields preserved through round-trip (ccc, properness, cardinal-preservation, homogeneity). CAPABILITY-GAP-TICKET if any forcing-specific operator is missing or if canonicalization cannot distinguish Cohen from random forcing on equivalence classes. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\forcing_poset_GAP.md with proposed ForcingPoset dataclass spec and operator surface."
+  },
+  {
+    "id": "harmonia_d_cap_002",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "capability-gap",
+    "object_class": "Forcing notion (Sacks forcing, perfect-tree poset)",
+    "object_specification": {
+      "type": "Sacks forcing P_S = (PerfectTrees(2^{<omega}), supseteq)",
+      "instance": {
+        "underlying_set": "{T subseteq 2^{<omega} : T is a tree (closed under initial segments) AND for every s in T there exist t_0, t_1 in T with s subseteq t_0, s subseteq t_1, t_0 incomparable with t_1}",
+        "order": "T <= S iff T subseteq S",
+        "maximum_element": "the full tree 2^{<omega}",
+        "splitting_predicate": "s is a splitting node of T iff s ^ <0> in T AND s ^ <1> in T",
+        "cardinality_of_conditions": "2^{aleph_0}",
+        "fusion_sequence_definition": "a fusion sequence is (T_n, F_n) with T_{n+1} <= T_n and F_n subseteq splitnodes(T_n) finite, F_n subseteq F_{n+1}, every node in F_n is a splitting node in T_{n+1}"
+      },
+      "structural_metadata": {
+        "is_proper": true,
+        "is_ccc": false,
+        "is_omega_omega_bounding": true,
+        "preserves_cardinals": true,
+        "adds_real": true,
+        "minimal_real_property": "the generic real has minimal V-degree (no real strictly between V and V[s])",
+        "completeness": "not sigma-closed but has fusion (Axiom A)",
+        "regularity": "homogeneous via tree-automorphism rebasing",
+        "verification_methods": {
+          "is_proper": "Axiom A with fusion implies proper (Baumgartner-Laver)",
+          "is_omega_omega_bounding": "any name for f: omega -> omega is fusion-decided to lie below a ground-model g",
+          "minimal_real": "if x in V[s] non-trivial then s in V[x] (Sacks 1971)",
+          "homogeneous": "for T, S perfect trees, the canonical isomorphism via splitting-node bijection lifts to a poset automorphism"
+        },
+        "gap_with_substrate": "ForcingPoset (gap_001) does not yet support tree-valued conditions, splitting-node predicates, or fusion-sequence verification. Need PerfectTreePoset subclass with splitnode(s, T) operator and fusion-witness validator."
+      }
+    },
+    "encoding_question": "Beyond a generic ForcingPoset, can the substrate represent tree-valued conditions? Proposed primitive: PerfectTreePoset(ForcingPoset) with extra fields tree_universe: Set[Tree], splitnode_predicate: Callable. Required operators: splitnodes(T) -> Set[Sequence], fuse(seq: List[Tree], witnesses: List[Set]) -> Tree, is_axiom_A() -> bool, omega_omega_bounding_check(name) -> bool. How does canonicalization recognize Sacks-equivalent posets (e.g. perfect-set forcing on 2^omega vs on omega^omega via Cantor scheme)?",
+    "expected_substrate_action": "PROMOTE if encoding round-trips Axiom A, omega^omega-bounding, minimal-real, properness; in particular if the substrate can mechanically verify a fusion sequence converges to a condition. CAPABILITY-GAP-TICKET otherwise. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\perfect_tree_forcing_GAP.md."
+  },
+  {
+    "id": "harmonia_d_cap_003",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "capability-gap",
+    "object_class": "Forcing notion (Mathias forcing)",
+    "object_specification": {
+      "type": "Mathias forcing P_M = ({(a, A) : a in [omega]^{<omega}, A in [omega]^omega, max(a) < min(A)}, <=_M)",
+      "instance": {
+        "underlying_set": "pairs (a, A) where a is a finite subset of omega (presented as the strictly increasing tuple of its elements), A is an infinite subset of omega, and every element of a is strictly less than every element of A",
+        "order": "(b, B) <=_M (a, A) iff a is an initial segment of b (i.e. a = b cap [0, max(a)+1]), B subseteq A, and b setminus a subseteq A",
+        "maximum_element": "(emptyset, omega)",
+        "pure_extension": "(a, B) is a pure extension of (a, A) iff B subseteq A (the stem is unchanged)",
+        "cardinality_of_conditions": "2^{aleph_0}"
+      },
+      "structural_metadata": {
+        "is_proper": true,
+        "is_ccc": false,
+        "preserves_p_points": true,
+        "adds_dominating_real": true,
+        "happy_family_relativization": "for a Ramsey ultrafilter U, M_U = {(a, A) : A in U} is a sigma-closed-times-ccc factorization",
+        "regularity": "satisfies Mathias property: for any colouring c: [omega]^omega -> 2 there is an infinite homogeneous A in V[G]",
+        "verification_methods": {
+          "is_proper": "factor as sigma-closed (pure-extension part) followed by ccc (stem-extension part); both proper, hence proper (Mathias 1977)",
+          "preserves_p_points": "every ground-model P-point ultrafilter generates a P-point in V[G]",
+          "adds_dominating_real": "the union of stems along generic G dominates every f in V cap omega^omega",
+          "ramsey_property": "(a, A) forces 'union of generic stems is c-homogeneous' for any c in V"
+        },
+        "gap_with_substrate": "ForcingPoset (gap_001) lacks support for two-component conditions (stem, side-set), pure-extension factorization, or ultrafilter-relativized variants. Need MixedSupportForcing primitive with stem/side decomposition operator."
+      }
+    },
+    "encoding_question": "Can the substrate encode a forcing whose conditions are pairs and whose order has a non-trivial factorization (sigma-closed times ccc)? Proposed primitive: TwoPartCondition with fields stem: FiniteSet, side: InfiniteSet, separation_predicate: Callable. Operators: pure_extend(p, B) -> Condition, stem_extend(p, k) -> Condition, factor() -> (SigmaClosedPoset, CCCPoset). How does canonicalization handle Mathias-vs-MathiasU equivalence?",
+    "expected_substrate_action": "PROMOTE if encoding round-trips properness, preservation-of-P-points, Ramsey property, and exhibits the sigma-closed/ccc factorization explicitly. CAPABILITY-GAP-TICKET if factorization is opaque. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\mathias_forcing_GAP.md."
+  },
+  {
+    "id": "harmonia_d_cap_004",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "capability-gap",
+    "object_class": "Forcing notion (Prikry forcing for a measurable cardinal)",
+    "object_specification": {
+      "type": "Prikry forcing P_kappa = ({(s, A) : s in [kappa]^{<omega}, s strictly increasing, A in U, min(A) > max(s)}, <=_P) where U is a normal ultrafilter on measurable kappa",
+      "instance": {
+        "parameter": "kappa is measurable with normal ultrafilter U on kappa (assumed given)",
+        "underlying_set": "pairs (s, A) where s = (alpha_0 < alpha_1 < ... < alpha_{n-1}) is a finite increasing sequence from kappa and A in U with min(A) > alpha_{n-1} (or A = kappa if s = empty)",
+        "order": "(t, B) <=_P (s, A) iff s is an initial segment of t, B subseteq A, and {t(i) : i >= |s|} subseteq A",
+        "maximum_element": "(empty, kappa)",
+        "prikry_property_statement": "for any sentence phi in the forcing language and any (s, A), there is B subseteq A with B in U such that (s, B) decides phi",
+        "cardinality_of_conditions": "2^kappa"
+      },
+      "structural_metadata": {
+        "is_proper": false,
+        "is_kappa_cc": false,
+        "preserves_cardinals": true,
+        "preserves_cofinalities_above_kappa": true,
+        "changes_cof_kappa_to_omega": true,
+        "satisfies_prikry_property": true,
+        "consistency_strength": "measurable cardinal",
+        "verification_methods": {
+          "preserves_cardinals": "Prikry property + U-normality imply no new bounded subsets of kappa, hence cardinals preserved (Prikry 1970)",
+          "changes_cofinality": "the union of generic stems is an omega-sequence cofinal in kappa",
+          "prikry_property_check": "for each (s, A) and phi, define A_0 = {alpha in A : exists B subseteq A setminus (alpha+1), B in U, (s ^ <alpha>, B) decides phi}; show A_0 in U by normality"
+        },
+        "gap_with_substrate": "ForcingPoset (gap_001) cannot express normal-ultrafilter-parametrized conditions or the Prikry property. Need LargeCardinalForcing primitive with measure-parameter slot and prikry_property_verifier operator."
+      }
+    },
+    "encoding_question": "Can the substrate represent a forcing parametrized by a normal ultrafilter on a measurable cardinal? Proposed primitive: UltrafilterParametrizedForcing with fields cardinal: LargeCardinal, ultrafilter: NormalUltrafilter, condition_constructor: Callable. Operators: prikry_property(phi, p) -> Condition, decide_modulo_measure(phi, p) -> Condition, generic_omega_sequence() -> Sequence. How does canonicalization recognize Prikry-equivalent forcings (e.g. tree-Prikry vs. classical Prikry)?",
+    "expected_substrate_action": "PROMOTE if substrate encodes the ultrafilter parameter explicitly and verifies the Prikry property mechanically. CAPABILITY-GAP-TICKET if the ultrafilter is opaque or Prikry-property is asserted rather than verified. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\prikry_forcing_GAP.md with explicit dependency on LargeCardinal primitive."
+  },
+  {
+    "id": "harmonia_d_cap_005",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "capability-gap",
+    "object_class": "Forcing notion (Magidor forcing for changing cof(kappa) to uncountable)",
+    "object_specification": {
+      "type": "Magidor forcing P_M(kappa, lambda) for changing cof(kappa) to lambda < kappa, using a coherent sequence of measures",
+      "instance": {
+        "parameters": "kappa with a coherent sequence of normal measures U = <U_alpha : alpha < lambda> where U_alpha concentrates on {beta < kappa : o(beta) = alpha} (Mitchell order)",
+        "underlying_set": "conditions are pairs (f, F) where f is a partial function from lambda to kappa with |dom(f)| < lambda, increasing on its domain, and F is a function on lambda \\ dom(f) such that F(alpha) in U_alpha for every alpha in dom(F), and the F-image is bounded compatibly with f",
+        "order": "(g, G) <= (f, F) iff dom(f) subseteq dom(g), g restricted to dom(f) = f, for alpha in dom(g) \\ dom(f) we have g(alpha) in F(alpha), and G(alpha) subseteq F(alpha) for alpha in dom(G) cap dom(F)",
+        "maximum_element": "(empty, F_max) where F_max(alpha) = {beta < kappa : o(beta) = alpha}",
+        "coherence_requirement": "the ultrafilter sequence must be coherent: if j_alpha : V -> M_alpha is the embedding from U_alpha then j_alpha(U) restricted to alpha equals U restricted to alpha"
+      },
+      "structural_metadata": {
+        "is_proper": false,
+        "preserves_cardinals_above_kappa": true,
+        "preserves_lambda_and_below": true,
+        "changes_cof_kappa_to_lambda": true,
+        "satisfies_prikry_like_property": true,
+        "consistency_strength": "o(kappa) >= lambda + 1 (Mitchell order at least lambda+1)",
+        "verification_methods": {
+          "cardinal_preservation": "Magidor 1978: coherent-sequence Prikry-like property + measure-normality",
+          "cofinality_change": "the union of dom-extensions yields a cofinal lambda-sequence in kappa",
+          "prikry_like": "for any sentence phi and (f, F), there exists F' <= F (pointwise in U) such that (f, F') decides phi"
+        },
+        "gap_with_substrate": "Beyond the gap in cap_004, this requires a coherent-sequence-of-measures parameter and Mitchell-order representation. UltrafilterParametrizedForcing must extend to MeasureSequenceForcing with coherence verifier."
+      }
+    },
+    "encoding_question": "Can the substrate represent a coherent sequence of normal measures and the Mitchell order? Proposed primitive: CoherentMeasureSequence with fields cardinal: kappa, length: lambda, sequence: List[NormalMeasure], coherence_witness: ElementaryEmbedding. Required: mitchell_order(U, V) -> Ordinal, generic_cofinal_sequence() -> Sequence. How does canonicalization handle Magidor-equivalence with Radin forcing (which generalizes by allowing club rather than sequence)?",
+    "expected_substrate_action": "PROMOTE only if Mitchell-order, coherence, and Prikry-like property are all encoded as verifiable operators. CAPABILITY-GAP-TICKET on any opacity. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\magidor_forcing_GAP.md citing dependence on CoherentMeasureSequence and the open question of Radin-vs-Magidor canonicalization."
+  },
+  {
+    "id": "harmonia_d_cap_006",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "capability-gap",
+    "object_class": "Forcing notion (Levy collapse Coll(omega, <kappa))",
+    "object_specification": {
+      "type": "Levy collapse to make kappa = aleph_1: Coll(omega, <kappa) = product_{alpha < kappa} Coll(omega, alpha) with finite support",
+      "instance": {
+        "parameter": "kappa is inaccessible (or any uncountable regular cardinal)",
+        "underlying_set": "functions p with dom(p) a finite subset of kappa x omega and for each (alpha, n) in dom(p), p(alpha, n) in alpha (so p(alpha, n) is an ordinal < alpha)",
+        "order": "p <= q iff dom(q) subseteq dom(p) and p restricted to dom(q) = q",
+        "maximum_element": "the empty function",
+        "factor_structure": "Coll(omega, alpha) = {f : finite partial function omega -> alpha}; full collapse is finite-support product",
+        "cardinality_of_conditions": "kappa (when kappa inaccessible)"
+      },
+      "structural_metadata": {
+        "is_proper": true,
+        "is_kappa_cc": true,
+        "is_sigma_closed": false,
+        "preserves_cardinals_above_kappa": true,
+        "collapses_all_below_kappa_to_omega": true,
+        "kappa_becomes_aleph_1": true,
+        "regularity": "homogeneous (any two conditions with disjoint supports have a common extension obtained by union; full automorphism group acts transitively on conditions of fixed dom-shape)",
+        "verification_methods": {
+          "kappa_cc": "Delta-system lemma applied to finite-support conditions, using kappa-inaccessibility",
+          "collapsing_below": "for each alpha < kappa, the union of generic restricted to {alpha} x omega is a surjection omega -> alpha",
+          "kappa_preserved": "kappa-cc preserves cofinalities >= kappa; combined with inaccessibility, kappa survives as aleph_1",
+          "homogeneity": "for finite supports F, G of the same shape, the bijection induced by support-realignment is a poset automorphism"
+        },
+        "gap_with_substrate": "ForcingPoset must support finite-support products of varying-codomain factors. Need ProductForcing primitive with support_type in {finite, countable, kappa}, factor_indexer: Index -> Forcing. Existing generic-product primitive (if any) likely lacks the per-factor codomain dependence."
+      }
+    },
+    "encoding_question": "Does the substrate's product-forcing primitive support varying codomains (Coll(omega, alpha) varies with alpha)? Proposed: IndexedProductForcing with fields index_set, factor: Callable[Index, Forcing], support_predicate: Callable[Set, bool]. Operators: project_to_factor(p, alpha) -> Condition, finite_support_extend(p, q), homogeneity_witness(p, q) -> Automorphism.",
+    "expected_substrate_action": "PROMOTE if Levy collapse round-trips kappa-cc, homogeneity, and the explicit collapsing maps onto each alpha < kappa. CAPABILITY-GAP-TICKET if the indexed-product structure is collapsed. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\levy_collapse_GAP.md."
+  },
+  {
+    "id": "harmonia_d_cap_007",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "capability-gap",
+    "object_class": "Large cardinal axiom (Inaccessible cardinal with consistency-strength tuple)",
+    "object_specification": {
+      "type": "Inaccessible cardinal axiom: there exists a cardinal kappa that is uncountable, regular, and strong-limit",
+      "instance": {
+        "axiom_statement": "exists kappa (kappa > omega AND cf(kappa) = kappa AND for all lambda < kappa, 2^lambda < kappa)",
+        "definitional_witnesses": {
+          "uncountable": "kappa > aleph_0",
+          "regular": "no cofinal subset of kappa has order-type < kappa, i.e. cf(kappa) = kappa",
+          "strong_limit": "for all lambda < kappa, the powerset cardinal 2^lambda < kappa"
+        },
+        "model_theoretic_characterization": "V_kappa is a model of ZFC (so kappa is a Grothendieck universe top)",
+        "consistency_strength_tuple": {
+          "level": "Mahlo",
+          "below": ["worldly cardinal (V_kappa models ZFC but kappa not regular-strong-limit a priori)", "n-th-order reflection cardinal"],
+          "above": ["Mahlo cardinal", "weakly compact cardinal"],
+          "ordinal_height_in_consistency_hierarchy": "level approximately 2 (above ZFC, below Mahlo)"
+        },
+        "ordinal_arithmetic": "kappa is fixed point of beth: beth_kappa = kappa"
+      },
+      "structural_metadata": {
+        "consistent_relative_to_ZFC": "strict consistency strength above ZFC (Godel: ZFC does not prove existence)",
+        "implies": ["existence of a transitive model of ZFC", "Sigma_2 reflection at kappa"],
+        "implied_by": ["Mahlo cardinal", "any larger large cardinal"],
+        "verification_methods": {
+          "regularity": "show no cofinal sequence of length less than kappa exists",
+          "strong_limit": "show beth function does not reach kappa from below",
+          "V_kappa_models_ZFC": "verify replacement schema, powerset, etc. in V_kappa using regularity+strong-limit"
+        },
+        "gap_with_substrate": "Substrate likely lacks a LargeCardinal primitive that bundles axiom statement + consistency-strength position + verification methods. Closest is generic-cardinal which has no axiom-strength or model-theoretic-characterization slot."
+      }
+    },
+    "encoding_question": "Does the substrate have a LargeCardinal primitive? Proposed: LargeCardinal dataclass with fields name: str, axiom: Formula, defining_properties: List[Property], consistency_strength: ConsistencyTuple, model_characterization: ModelStatement. Required: implies(other: LargeCardinal) -> bool, equiconsistent(other) -> bool, partial_order_in_strength_hierarchy() -> Position. How does canonicalization handle equiconsistent-but-not-equivalent axioms (e.g., 'measurable' vs '0# exists')?",
+    "expected_substrate_action": "PROMOTE if LargeCardinal primitive exists and the inaccessible axiom embeds with all consistency-strength edges populated. CAPABILITY-GAP-TICKET if the consistency hierarchy is not first-class. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\large_cardinal_axiom_GAP.md."
+  },
+  {
+    "id": "harmonia_d_cap_008",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "capability-gap",
+    "object_class": "Large cardinal (Measurable cardinal with normal ultrafilter and Mitchell order)",
+    "object_specification": {
+      "type": "Measurable cardinal kappa with a specified normal kappa-complete non-principal ultrafilter U; Mitchell order o(kappa) = 0 specified",
+      "instance": {
+        "axiom_statement": "exists kappa exists U (kappa uncountable AND U is a kappa-complete non-principal ultrafilter on kappa AND U is normal: for any regressive f: kappa -> kappa with {alpha : f(alpha) < alpha} in U, there exists beta and X in U with X subseteq f^{-1}({beta}))",
+        "explicit_ultrafilter_specification": {
+          "domain": "P(kappa)",
+          "filter_axioms": "(i) kappa in U, (ii) X, Y in U => X cap Y in U, (iii) X in U, X subseteq Y => Y in U, (iv) emptyset not in U",
+          "kappa_completeness": "intersection of fewer than kappa many U-sets is in U",
+          "non_principality": "no singleton {alpha} is in U",
+          "normality": "diagonal-intersection closure: if X_alpha in U for alpha < kappa, then Delta_{alpha < kappa} X_alpha = {beta : for all alpha < beta, beta in X_alpha} is in U"
+        },
+        "mitchell_order": "o(kappa) = 0 means there is no normal measure on kappa concentrating on {alpha < kappa : alpha measurable}",
+        "elementary_embedding": "j: V -> M = Ult(V, U) with crit(j) = kappa, j(kappa) > kappa, M^kappa subseteq M (kappa-closure)"
+      },
+      "structural_metadata": {
+        "consistent_relative_to_ZFC": "strict consistency strength above ZFC; equiconsistent with 'kappa measurable + 0# exists'",
+        "implies": ["inaccessible", "Mahlo", "weakly compact", "Ramsey"],
+        "implied_by": ["strong cardinal", "Woodin cardinal"],
+        "verification_methods": {
+          "ultrafilter_axioms": "check the four filter axioms, kappa-completeness, non-principality, normality on the explicit U",
+          "embedding_construction": "build Ult(V, U) and verify crit(j) = kappa via Los's theorem",
+          "M_closure": "verify [f]_U for f: kappa -> V, kappa-sequences are absorbed",
+          "mitchell_order_zero": "show {alpha < kappa : alpha measurable in V_kappa} not in U"
+        },
+        "gap_with_substrate": "LargeCardinal primitive (cap_007) must extend to carry an embedding witness and an ultrafilter witness. Need MeasurableCardinal subclass with fields ultrafilter: NormalUltrafilter, embedding: ElementaryEmbedding, mitchell_rank: Ordinal."
+      }
+    },
+    "encoding_question": "Can the substrate represent normal ultrafilters with normality verified mechanically (diagonal-intersection closure)? Proposed: NormalUltrafilter dataclass with fields cardinal, sets: Set[Set], operators check_normality(f: regressive function) -> Witness, diagonal_intersection(seq) -> Set. Plus ElementaryEmbedding(V, M, j) with verification of M-closure. How does canonicalization recognize Rudin-Keisler-equivalent ultrafilters?",
+    "expected_substrate_action": "PROMOTE if substrate verifies the four filter axioms, kappa-completeness, normality (via diagonal intersection), and constructs Ult(V, U) with the required closure. CAPABILITY-GAP-TICKET if normality is asserted rather than checked. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\measurable_cardinal_GAP.md."
+  },
+  {
+    "id": "harmonia_d_cap_009",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "capability-gap",
+    "object_class": "Large cardinal (Supercompact cardinal via Magidor's elementary-embedding characterization)",
+    "object_specification": {
+      "type": "kappa is supercompact iff for every lambda >= kappa there is an elementary embedding j: V -> M with crit(j) = kappa, j(kappa) > lambda, and M^lambda subseteq M",
+      "instance": {
+        "axiom_statement": "for all lambda exists j, M (j: V -> M elementary, crit(j) = kappa, j(kappa) > lambda, M is closed under lambda-sequences (i.e., every f: lambda -> M with f in V is in M))",
+        "ultrafilter_characterization": "equivalent: for every lambda >= kappa there is a normal fine kappa-complete ultrafilter U on P_kappa(lambda) where P_kappa(lambda) = {x subseteq lambda : |x| < kappa}",
+        "fineness_definition": "U is fine iff for every alpha < lambda, {x in P_kappa(lambda) : alpha in x} in U",
+        "magidor_characterization": "kappa supercompact iff for every alpha there is a beta < kappa and an elementary embedding i: V_beta -> V_alpha with i(crit(i)) = kappa (Magidor 1971)",
+        "explicit_lambda_lambda_supercompact_witness": "for lambda = kappa^+, the ultrafilter U_lambda on P_kappa(kappa^+) is normal, fine, kappa-complete; for the embedding j_U: V -> Ult(V, U), crit(j_U) = kappa and Ult is closed under kappa^+-sequences"
+      },
+      "structural_metadata": {
+        "consistent_relative_to_ZFC": "very strong: implies measurable, strong, Woodin, and many more",
+        "implies": ["measurable", "strong", "Woodin", "huge below in some senses"],
+        "implied_by": ["extendible", "huge", "almost-huge"],
+        "preserves_under_small_forcing": "Laver-prepared supercompactness is indestructible under <kappa-directed-closed forcing",
+        "verification_methods": {
+          "embedding_existence": "for each lambda, exhibit U_lambda normal+fine+kappa-complete on P_kappa(lambda) and construct Ult(V, U_lambda)",
+          "fineness_check": "for each alpha < lambda, verify {x : alpha in x} is in U_lambda",
+          "lambda_closure": "verify M = Ult is closed under lambda-sequences via factoring through a kappa-internal lambda-sequence",
+          "magidor_equivalence": "show Magidor characterization equivalent via reflection of supercompactness witnesses"
+        },
+        "gap_with_substrate": "Beyond MeasurableCardinal (cap_008), supercompactness requires lambda-parametrized families of embeddings/ultrafilters with closure conditions. Need SupercompactWitness primitive with lambda-indexed family and uniform closure verifier."
+      }
+    },
+    "encoding_question": "Can the substrate represent a class-sized family of elementary embeddings indexed by a proper class of cardinals, with uniform lambda-closure? Proposed: SupercompactWitness with fields cardinal: kappa, embedding_family: Callable[Cardinal, ElementaryEmbedding], ultrafilter_family: Callable[Cardinal, NormalFineUltrafilter]. Operators: closure_check(j, lambda) -> bool, magidor_reflection() -> List[(beta, embedding)]. How does canonicalization compare supercompactness via Laver functions?",
+    "expected_substrate_action": "PROMOTE only if the substrate handles class-sized embedding families with uniform closure and validates fineness mechanically. CAPABILITY-GAP-TICKET if class-sized parametrization is not supported. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\supercompact_cardinal_GAP.md citing the broader gap of class-sized large-cardinal witnesses."
+  },
+  {
+    "id": "harmonia_d_cap_010",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "capability-gap",
+    "object_class": "Large cardinal (Reinhardt cardinal: ZF-consistent, ZFC-inconsistent by Kunen)",
+    "object_specification": {
+      "type": "Reinhardt cardinal kappa: critical point of a non-trivial elementary embedding j: V -> V (in ZF without choice)",
+      "instance": {
+        "axiom_statement_ZF": "exists j (j: V -> V elementary, j is not the identity, crit(j) = kappa, kappa is least with j(kappa) > kappa)",
+        "kunen_inconsistency": "ZFC + Reinhardt is inconsistent: Kunen's theorem (1971) shows there is no non-trivial j: V -> V in ZFC, via the Erdos-Hajnal partition theorem applied to a kappa-omega-sequence above the embedding's critical point, using AC at omega-th iterate",
+        "kunen_proof_sketch": "let lambda = sup_n j^n(kappa); by Erdos-Hajnal in ZFC there is f: [lambda]^omega -> lambda with no homogeneous set of size lambda; but j(f) restricted to a generic omega-sequence in j^omega(kappa) yields one, contradiction",
+        "weaker_consistent_versions": "I0, I1, I2, I3 axioms are ZFC-consistent and hover just below Reinhardt",
+        "ZF_consistent_status": "open whether ZF + Reinhardt is consistent; conjectured by some to be inconsistent; no known ZF-proof of inconsistency"
+      },
+      "structural_metadata": {
+        "consistent_with_ZFC": false,
+        "consistent_with_ZF": "open (no proof of inconsistency in ZF; existence is hypothetical)",
+        "inconsistency_proof_uses": "Axiom of Choice at one specific point (extracting a homogeneous set from Erdos-Hajnal)",
+        "weaker_alternatives": ["I0: there is j: L(V_{lambda+1}) -> L(V_{lambda+1}) with crit(j) < lambda", "I1: j: V_{lambda+1} -> V_{lambda+1}", "I2: j: V -> M with V_lambda subseteq M", "I3: j: V_lambda -> V_lambda"],
+        "verification_methods": {
+          "kunen_inconsistency_check": "given a candidate j: V -> V in ZFC, derive contradiction via Erdos-Hajnal at sup_n j^n(kappa)",
+          "I0_through_I3_consistency": "relative to a huge cardinal; ZFC + I0 is believed consistent"
+        },
+        "gap_with_substrate": "Substrate must handle inconsistent objects (with witness of inconsistency) and their nearby consistent approximations. Need InconsistentAxiom primitive with fields inconsistency_proof, theory_of_failure, weaker_consistent_neighbors. Most existing primitives assume consistency."
+      }
+    },
+    "encoding_question": "Can the substrate encode an axiom that is provably inconsistent in ZFC, with the inconsistency proof attached? Proposed: InconsistentAxiom(LargeCardinal) with fields inconsistency_witness: Proof, base_theory: Theory, consistent_neighbors: List[LargeCardinal]. Operators: kunen_witness() -> Proof, weaken_to_consistent() -> List[LargeCardinal]. How does canonicalization distinguish 'ZFC-inconsistent' from 'ZF-inconsistent' from 'open'?",
+    "expected_substrate_action": "PROMOTE if substrate accepts inconsistent objects with explicit inconsistency-witness and lists I0-I3 as consistent neighbors. CAPABILITY-GAP-TICKET if encoding fails because objects are required to be consistent. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\reinhardt_cardinal_GAP.md highlighting the meta-issue: the substrate may currently hard-bake consistency assumptions."
+  },
+  {
+    "id": "harmonia_d_cap_011",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "capability-gap",
+    "object_class": "Inner model (Godel's L, the constructible universe)",
+    "object_specification": {
+      "type": "L = union_{alpha in Ord} L_alpha, the constructible hierarchy",
+      "instance": {
+        "definition_recursion": "L_0 = emptyset; L_{alpha+1} = Def(L_alpha) where Def(X) = {Y subseteq X : Y is first-order definable over (X, in) with parameters from X}; L_lambda = union_{alpha < lambda} L_alpha for limit lambda",
+        "definability_predicate": "Y in Def(X) iff there exists a formula phi(x, y_1, ..., y_n) and parameters a_1, ..., a_n in X such that Y = {z in X : (X, in) models phi(z, a_1, ..., a_n)}",
+        "ordinal_levels": "Ord cap L = Ord (every ordinal is constructible)",
+        "GCH_in_L": "L models V = L, GCH (every cardinal kappa satisfies 2^kappa = kappa^+)",
+        "diamond_in_L": "L models <>_kappa for every regular uncountable kappa",
+        "global_well_order": "L has a Sigma_1-definable well-order <_L of all sets"
+      },
+      "structural_metadata": {
+        "is_inner_model": true,
+        "models_ZFC": true,
+        "is_minimal_inner_model_containing_ordinals": true,
+        "satisfies_V_equals_L_internally": true,
+        "satisfies_GCH": true,
+        "satisfies_diamond_at_all_regular_uncountables": true,
+        "is_definable_in_V": "L is Pi_2-definable in V (Sigma_2 with one universal quantifier over ordinals)",
+        "verification_methods": {
+          "ZFC_in_L": "verify each axiom; pairing/union/infinity inherited; replacement uses absoluteness of definability; choice from <_L",
+          "GCH": "show |L_kappa^+| = kappa^+ and every constructible subset of kappa appears at some L_alpha with alpha < kappa^+",
+          "diamond": "construct diamond sequence by enumeration along <_L using condensation",
+          "absoluteness": "Sigma_1 absoluteness between L and V"
+        },
+        "gap_with_substrate": "Substrate likely lacks an InnerModel primitive that carries a transfinite recursive construction with parameter Def. Existing model-theoretic primitives may handle countable models but not class-sized recursion. Need ConstructibleHierarchy with stage_indexer: Ord -> Set and definability operator."
+      }
+    },
+    "encoding_question": "Can the substrate represent a class-sized transfinite recursion whose successor step is 'definable subsets'? Proposed: InnerModel dataclass with fields stage: Callable[Ordinal, Set], successor_op: Callable[Set, Set], limit_op: Callable[List[Set], Set], well_order: Definition. Operators: condensation_lemma() -> Theorem, absoluteness_class(formula) -> AbsolutenessLevel. How does canonicalization handle L-vs-L[A] for A absolute parameter?",
+    "expected_substrate_action": "PROMOTE if substrate encodes the Def operator first-class, verifies condensation, and proves V=L => GCH internally. CAPABILITY-GAP-TICKET if Def is not first-class. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\constructible_universe_GAP.md."
+  },
+  {
+    "id": "harmonia_d_cap_012",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "capability-gap",
+    "object_class": "Inner model (L[U] relative to a normal measure U on a measurable kappa)",
+    "object_specification": {
+      "type": "L[U] = union_{alpha} L_alpha[U], the smallest inner model containing the ordinals and U as a predicate",
+      "instance": {
+        "definition_recursion": "L_0[U] = emptyset; L_{alpha+1}[U] = Def_{(L_alpha[U], in, U cap L_alpha[U])}(L_alpha[U]) (definability over the structure that includes U as a unary predicate); L_lambda[U] = union_{alpha < lambda} L_alpha[U]",
+        "kunen_coherence_theorem": "L[U] models 'there is a unique normal measure on kappa', and the measure is U cap L[U]",
+        "GCH_in_LU": "L[U] models GCH",
+        "iterated_ultrapowers": "the iterated ultrapowers L[U]_alpha = Ult^alpha(L[U], U) for alpha in Ord trace an Ord-length linear iteration; the alpha-th critical point is the alpha-th measurable in the iteration",
+        "comparison": "any two iterates compare via further iteration to a common iterate (Kunen)"
+      },
+      "structural_metadata": {
+        "is_inner_model": true,
+        "models_ZFC_plus_GCH": true,
+        "models_existence_of_unique_normal_measure_on_kappa": true,
+        "minimal_inner_model_with_a_measurable": true,
+        "linearly_iterable": true,
+        "is_definable_from_U": "Sigma_1 in the predicate U",
+        "verification_methods": {
+          "uniqueness_of_measure": "Kunen 1970: any normal measure in L[U] equals U cap L[U] by coherence and absoluteness",
+          "GCH": "fine structure analogous to L; condensation extended to U-coherence",
+          "linear_iterability": "iterated ultrapower at every stage well-founded by kappa-completeness propagation"
+        },
+        "gap_with_substrate": "Beyond InnerModel (cap_011), L[U] requires definability-over-structure-with-extra-predicate. Need ParametrizedConstructibleHierarchy with predicate parameter and predicate-coherence verifier. Plus an IteratedUltrapower primitive for class-length linear iteration."
+      }
+    },
+    "encoding_question": "Can the substrate represent constructibility relative to a class-predicate, plus class-length linear iteration of an ultrafilter? Proposed: RelativizedInnerModel(InnerModel) with predicate: Predicate, coherence_law: Theorem. Plus IteratedUltrapower with fields base, ultrafilter, length: Ord, comparison_op: Callable. How does canonicalization handle L[U]-vs-L[U'] for different normal measures (they coincide by Kunen)?",
+    "expected_substrate_action": "PROMOTE if substrate verifies uniqueness-of-measure and class-length iteration. CAPABILITY-GAP-TICKET if predicate-relativization or class-length iteration is unsupported. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\LU_inner_model_GAP.md."
+  },
+  {
+    "id": "harmonia_d_cap_013",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "capability-gap",
+    "object_class": "Inner model (K, the Mitchell-Steel core model below a Woodin cardinal)",
+    "object_specification": {
+      "type": "K = the core model, an L-like inner model approximating the universe up to the largest large-cardinal it can house",
+      "instance": {
+        "construction_outline": "K is built as a union of mice (iterable premice) along the Mitchell-Steel construction; at each stage a new extender E is added if it coheres and a fine-structural soundness condition holds",
+        "premouse_definition": "a premouse is a structure (J_alpha^{vec E}, in, vec E) where J is the Jensen hierarchy and vec E is a coherent sequence of extenders, with each extender coding a partial elementary embedding",
+        "iterability_condition": "K is iterable: every countable elementary submodel of K embeds back into K (this is what makes K 'right')",
+        "covering_property": "if there is no inner model with a Woodin cardinal, then K satisfies weak covering: for every singular cardinal kappa, kappa^+ as computed in K equals (kappa^+)^V",
+        "weakening_dependence": "the construction of K assumes anti-large-cardinal hypothesis: 'no inner model with a Woodin cardinal'; under stronger LC hypotheses K is replaced by a hod-mouse-like model"
+      },
+      "structural_metadata": {
+        "is_inner_model": true,
+        "is_L_like": true,
+        "models_GCH": true,
+        "satisfies_V_equals_K_internally": true,
+        "fine_structural": true,
+        "consistency_strength_dependent": "the K we get depends on background hypotheses; Steel's K below a Woodin requires anti-Woodin",
+        "verification_methods": {
+          "iterability": "Q-structure analysis; Steel's iterability proof for K^c",
+          "covering": "weak covering via comparison + condensation arguments at singular cardinals",
+          "fine_structure": "soundness, projecta, standard parameters at every premouse stage"
+        },
+        "gap_with_substrate": "Beyond cap_012, K requires extender sequences, fine-structural premice, comparison arguments, and conditional definitions (depends on anti-LC hypothesis). Need ExtenderSequence primitive, Premouse primitive with fine-structural-witness, and ConditionalInnerModel primitive parametrized by anti-LC hypothesis."
+      }
+    },
+    "encoding_question": "Can the substrate represent extender sequences and fine-structural premice, plus inner models conditioned on anti-large-cardinal hypotheses? Proposed: Extender(j, kappa, lambda) with fields critical_point, length, coherence_witness; Premouse with extender_sequence, projectum, standard_parameter; CoreModel(InnerModel) with anti_LC_hypothesis, iterability_proof, covering_witness. How does canonicalization handle K-vs-K^c (the L-like vs the absolute version)?",
+    "expected_substrate_action": "PROMOTE if substrate supports extender sequences, premice with fine structure, and conditional inner models. CAPABILITY-GAP-TICKET (very likely) since this is at the frontier of contemporary inner model theory. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\core_model_K_GAP.md flagging the chain of dependencies (cap_007, 008, 011, 012, plus new extender/premouse primitives)."
+  },
+  {
+    "id": "harmonia_d_cap_014",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "capability-gap",
+    "object_class": "Recursive ordinal (omega, the first infinite ordinal)",
+    "object_specification": {
+      "type": "omega: the least non-zero limit ordinal; the order-type of the natural numbers",
+      "instance": {
+        "definition": "omega = {0, 1, 2, 3, ...} = {n : n is a finite von Neumann ordinal}; explicitly 0 = emptyset, n+1 = n cup {n}, omega = union_n n",
+        "first_order_axioms": "omega is the smallest set X such that emptyset in X and (y in X => y cup {y} in X)",
+        "von_neumann_presentation": "0 = {}, 1 = {0}, 2 = {0, 1}, 3 = {0, 1, 2}, ..., omega = {0, 1, 2, ...}",
+        "ordinal_arithmetic": "omega + 1 = omega cup {omega}; omega * 2 = omega + omega; omega^2 = sup_n (omega * n); omega^omega = sup_n omega^n",
+        "cofinality": "cf(omega) = omega",
+        "cardinality": "|omega| = aleph_0"
+      },
+      "structural_metadata": {
+        "is_ordinal": true,
+        "is_limit": true,
+        "is_initial_ordinal_of_aleph_0": true,
+        "is_recursive": true,
+        "ordinal_notation_index_in_Kleene_O": "the constant notation 1 (smallest limit ordinal index)",
+        "recursive_well_ordering_on_omega": "the natural order < on N",
+        "verification_methods": {
+          "limit_ordinal": "no immediate predecessor: forall alpha < omega, alpha+1 < omega",
+          "cofinality": "the natural enumeration f(n) = n is cofinal of order-type omega",
+          "recursivity": "the well-order < on N is computably decidable"
+        },
+        "gap_with_substrate": "Substrate may handle finite ordinals but not the limit construction. Need OrdinalHierarchy primitive with successor_op, limit_sup_op, and recognition of omega as the first non-recursive-bounded limit. Closest existing is generic-natural-numbers which lacks the von Neumann transitive structure."
+      }
+    },
+    "encoding_question": "Does the substrate have a primitive for ordinals built via von Neumann transitive sets, with recognition of limit ordinals? Proposed: Ordinal dataclass with fields rank, predecessor_or_none, limit_witness_or_none. Operators: successor() -> Ordinal, sup(seq) -> Ordinal, is_limit() -> bool, ordinal_notation_index() -> KleeneOIndex. Canonicalization should recognize that omega encoded multiple ways (von Neumann, Zermelo, set-of-finite-ordinals) all denote the same ordinal.",
+    "expected_substrate_action": "PROMOTE if encoding round-trips von-Neumann-ness, limit-ness, and the canonical cofinality witness. CAPABILITY-GAP-TICKET if limit ordinals are not first-class. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\ordinal_omega_GAP.md."
+  },
+  {
+    "id": "harmonia_d_cap_015",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "capability-gap",
+    "object_class": "Recursive ordinal (epsilon_0, the smallest fixed point of alpha |-> omega^alpha)",
+    "object_specification": {
+      "type": "epsilon_0 = sup{omega, omega^omega, omega^omega^omega, ...} = least alpha with omega^alpha = alpha",
+      "instance": {
+        "definition_as_supremum": "epsilon_0 = sup_n epsilon_0^{(n)} where epsilon_0^{(0)} = omega, epsilon_0^{(n+1)} = omega^{epsilon_0^{(n)}}",
+        "fixed_point_equation": "omega^{epsilon_0} = epsilon_0",
+        "cantor_normal_form_below_epsilon_0": "every alpha < epsilon_0 has unique CNF: alpha = omega^{beta_1} * c_1 + omega^{beta_2} * c_2 + ... + omega^{beta_k} * c_k with beta_1 > beta_2 > ... > beta_k, c_i in N positive, and each beta_i < alpha (which makes CNF computable recursively)",
+        "ordinal_notation": "explicit tree-based notation: each ordinal < epsilon_0 is a finite tree with internal nodes labeled by 'omega-power' and leaves by natural numbers; example: omega^{omega+1}*3 + omega*2 + 5",
+        "proof_theoretic_role": "epsilon_0 is the proof-theoretic ordinal of Peano arithmetic (Gentzen 1936)"
+      },
+      "structural_metadata": {
+        "is_ordinal": true,
+        "is_limit": true,
+        "is_recursive": true,
+        "is_countable": true,
+        "is_proof_theoretic_ordinal_of_PA": true,
+        "ordinal_notation_index_in_Kleene_O": "an explicit recursive notation; well-known computable recursion",
+        "well_foundedness_provable": "well-foundedness of the recursive notation system below epsilon_0 is provable in PA + induction up to any alpha < epsilon_0, but not in PA alone (Gentzen)",
+        "verification_methods": {
+          "fixed_point": "verify omega^{epsilon_0} = epsilon_0 by passing to the supremum",
+          "CNF_uniqueness": "induction on ordinal rank below epsilon_0",
+          "PA_proof_theoretic": "Gentzen's consistency proof of PA uses transfinite induction up to epsilon_0"
+        },
+        "gap_with_substrate": "Beyond cap_014, we need an ordinal notation system as a first-class object. Need OrdinalNotation primitive with fields tree_representation, recursive_well_order, proof_theoretic_role. Closest existing is generic-recursive-structure which lacks the ordinal-specific axioms."
+      }
+    },
+    "encoding_question": "Can the substrate represent ordinal notation systems (CNF trees) and recognize their well-foundedness? Proposed: OrdinalNotation dataclass with fields signature, recursive_compare: Callable, well_foundedness_proof_strength: Theory. Operators: cnf_decompose(alpha) -> List, fixed_point_of(F: Callable) -> Notation, proof_theoretic_strength() -> Theory. Canonicalization: epsilon_0 represented as the omega-tower vs as a fixed-point equation should canonicalize to the same notation.",
+    "expected_substrate_action": "PROMOTE if CNF trees, recursive comparison, and proof-theoretic-ordinal classification are first-class. CAPABILITY-GAP-TICKET if proof-theoretic ordinal annotation is missing. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\epsilon_0_notation_GAP.md."
+  },
+  {
+    "id": "harmonia_d_cap_016",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "capability-gap",
+    "object_class": "Recursive ordinal (Gamma_0, the Feferman-Schutte ordinal)",
+    "object_specification": {
+      "type": "Gamma_0 = least alpha such that phi_alpha(0) = alpha; the proof-theoretic ordinal of predicative analysis (ATR_0)",
+      "instance": {
+        "veblen_function_definition": "phi_0(alpha) = omega^alpha; for beta > 0, phi_beta(alpha) is the alpha-th common fixed point of {phi_gamma : gamma < beta} (i.e., the alpha-th point fixed by all lower phi's)",
+        "diagonal_iteration": "Gamma_0 = sup_n Gamma_0^{(n)} where Gamma_0^{(0)} = 0 and Gamma_0^{(n+1)} = phi_{Gamma_0^{(n)}}(0)",
+        "fixed_point_equation": "phi_{Gamma_0}(0) = Gamma_0",
+        "ordinal_notation": "Veblen normal form: every alpha < Gamma_0 is uniquely alpha = phi_{beta_1}(alpha_1) + ... + phi_{beta_k}(alpha_k) with the standard descending-additive constraints; recursive comparison defined by case analysis on Veblen forms",
+        "proof_theoretic_role": "Gamma_0 is the proof-theoretic ordinal of ATR_0 (arithmetic transfinite recursion) and of predicative analysis (Feferman 1964, Schutte 1965)"
+      },
+      "structural_metadata": {
+        "is_ordinal": true,
+        "is_limit": true,
+        "is_recursive": true,
+        "is_countable": true,
+        "is_proof_theoretic_ordinal_of_ATR0": true,
+        "is_marker_for_predicativity": "Gamma_0 marks the boundary of Schutte's predicative analysis",
+        "well_foundedness_provable_in": "stronger systems than ATR_0; not provable in ATR_0 itself",
+        "verification_methods": {
+          "veblen_fixed_point_construction": "induct on Veblen-rank to verify phi_alpha is well-defined and increasing",
+          "diagonal_fixed_point": "the diagonal sequence phi_{Gamma_0^{(n)}}(0) converges to Gamma_0",
+          "proof_theoretic_ordinal_of_ATR0": "Schutte 1965 ordinal-analysis"
+        },
+        "gap_with_substrate": "Beyond cap_015, need Veblen hierarchy as first-class operator. Specifically: VeblenFunction primitive parametrized by ordinal index, with fixed-point and diagonal-fixed-point operations. Existing substrate (if it has any ordinal-notation primitive) likely stops at epsilon_0."
+      }
+    },
+    "encoding_question": "Can the substrate represent the Veblen hierarchy phi_alpha as an ordinal-indexed family with diagonal fixed-points? Proposed: VeblenHierarchy dataclass with veblen_function: Callable[Ordinal, Callable[Ordinal, Ordinal]], operators veblen_normal_form(alpha) -> List, diagonal_fixed_point(F: family) -> Ordinal. Canonicalization: Gamma_0 written as phi_{Gamma_0}(0) vs as the diagonal-sup-n should canonicalize to the same notation.",
+    "expected_substrate_action": "PROMOTE if Veblen hierarchy is encodable with diagonal fixed-points and proof-theoretic-ordinal label. CAPABILITY-GAP-TICKET if Veblen functions are not first-class. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\gamma_0_veblen_GAP.md."
+  },
+  {
+    "id": "harmonia_d_cap_017",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "capability-gap",
+    "object_class": "Tree (Suslin tree on omega_1, diamond-based construction)",
+    "object_specification": {
+      "type": "Suslin tree T on omega_1: a tree of height omega_1, all levels countable, with no uncountable chain and no uncountable antichain",
+      "instance": {
+        "construction_under_diamond": "assume <>_{omega_1}; let <S_alpha : alpha < omega_1> be a diamond sequence (each S_alpha subseteq alpha and for every X subseteq omega_1, {alpha : X cap alpha = S_alpha} is stationary)",
+        "level_construction": "Level T_0 = {<>}; level T_{alpha+1} = {x ^ <0>, x ^ <1> : x in T_alpha}; for limit alpha define T_alpha by selecting cofinal branches in T cap alpha by case-analysis on whether S_alpha codes an antichain through T cap alpha",
+        "limit_step_specification": "if S_alpha codes a maximal antichain A in T cap alpha, then for each x in T cap alpha extending some element of A pick a branch through T cap alpha containing x and put its limit in T_alpha; if S_alpha does not code an antichain, fill T_alpha with all cofinal branches",
+        "underlying_set": "T = union_{alpha < omega_1} T_alpha; each T_alpha countable",
+        "tree_order": "x <_T y iff x is a proper initial segment of y (T is a subtree of 2^{<omega_1})"
+      },
+      "structural_metadata": {
+        "is_tree": true,
+        "height": "omega_1",
+        "all_levels_countable": true,
+        "no_uncountable_chain": true,
+        "no_uncountable_antichain": true,
+        "is_Suslin": true,
+        "construction_assumption": "diamond on omega_1 (provable in V=L)",
+        "verification_methods": {
+          "no_uncountable_antichain": "diamond ensures any potential uncountable antichain A is anticipated as S_alpha for stationary alpha; the limit step seals A at level alpha so no extension above alpha avoids A",
+          "no_uncountable_chain": "any chain through T projects to a function omega_1 -> 2 of unbounded length, but levels are countable so cofinal chain forces uncountable antichain (contradiction by previous)",
+          "all_levels_countable": "by construction (countable splitting at each level)"
+        },
+        "gap_with_substrate": "Substrate needs trees of uncountable height with diamond-based limit-step constructions. Need TransfiniteTree primitive with height: Ordinal, level_indexer: Ordinal -> Set, limit_step_strategy: Callable. Plus a DiamondSequence primitive parametrized by stationarity verifier."
+      }
+    },
+    "encoding_question": "Can the substrate represent trees of height omega_1 with explicit limit-step strategies, plus diamond sequences as parameters? Proposed: TransfiniteTree dataclass with height: Ordinal, level: Callable[Ordinal, Set], limit_strategy: Callable. DiamondSequence with sequence: Callable[Ordinal, Set], stationarity_witness: Stationary. Canonicalization should recognize Suslin-line-vs-Suslin-tree equivalence.",
+    "expected_substrate_action": "PROMOTE if substrate verifies the no-uncountable-antichain property mechanically given the diamond construction. CAPABILITY-GAP-TICKET if uncountable-height trees or diamond sequences are not first-class. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\suslin_tree_GAP.md."
+  },
+  {
+    "id": "harmonia_d_cap_018",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "capability-gap",
+    "object_class": "Tree (Aronszajn tree on omega_1)",
+    "object_specification": {
+      "type": "Aronszajn tree T on omega_1: tree of height omega_1, all levels countable, no uncountable branch (note: Aronszajn trees provably exist in ZFC; Suslin requires more)",
+      "instance": {
+        "explicit_construction_via_finite_partial_injections": "Level T_alpha = {f : f is a finite partial injective function alpha -> Q with cofinal range in Q cap (-infty, q) for some q in Q}; specifically T_alpha consists of strictly-increasing finite-to-rationals partial injections with bounded sup",
+        "tree_order": "f <_T g iff f subseteq g (g extends f)",
+        "construction_recursion": "successor: T_{alpha+1} = {f cup {(alpha, q)} : f in T_alpha, q in Q, q > sup(range(f)), q < bound(f)+1}; limit alpha: T_alpha = {union_n f_n : (f_n) is a cofinal sequence of compatible elements with bounded suprema}",
+        "specialization": "T is special: T = union_n T_n where each T_n is an antichain (Q-rationals provide the specialization function)",
+        "underlying_set": "T = union_{alpha < omega_1} T_alpha"
+      },
+      "structural_metadata": {
+        "is_tree": true,
+        "height": "omega_1",
+        "all_levels_countable": true,
+        "no_uncountable_branch": true,
+        "is_Aronszajn": true,
+        "is_special": true,
+        "exists_in_ZFC": true,
+        "verification_methods": {
+          "no_uncountable_branch": "any branch B of height omega_1 would project to a strictly-increasing function omega_1 -> Q with bounded sup at every countable stage, but Q is countable so B would force injection omega_1 -> Q (contradiction)",
+          "all_levels_countable": "by construction; each level a subset of finite partial functions with bounded range so countable",
+          "specialization": "the bound-of-range function f |-> bound(f) (after rounding to finite Q-precision) gives a countable partition into antichains"
+        },
+        "gap_with_substrate": "Same as cap_017 plus specific support for special-tree witness (countable partition into antichains). Need Specialization primitive: an antichain partition Callable[Tree, List[Antichain]]."
+      }
+    },
+    "encoding_question": "Can the substrate represent Aronszajn trees with explicit specialization witnesses? Proposed: TransfiniteTree (from cap_017) extended with optional specialization: Callable[Element, Index] field. Operators: is_special() -> bool, specialization_function() -> Callable. How does canonicalization handle special-vs-non-special Aronszajn trees (both exist consistently)?",
+    "expected_substrate_action": "PROMOTE if encoding handles specialization witnesses and ZFC-provability annotation. CAPABILITY-GAP-TICKET if specialization is not first-class. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\aronszajn_tree_GAP.md."
+  },
+  {
+    "id": "harmonia_d_cap_019",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "capability-gap",
+    "object_class": "Tree (Kurepa tree on omega_1 with aleph_2 cofinal branches)",
+    "object_specification": {
+      "type": "Kurepa tree T on omega_1: tree of height omega_1, all levels countable, with at least aleph_2 many cofinal branches",
+      "instance": {
+        "construction_in_L": "in V=L use diamond+ (or directly the L-structure) to construct T; at limit stages use the L-canonical well-order to select aleph_2-many distinct cofinal branches arising from L-definable bookkeeping",
+        "level_specification": "T_alpha subseteq 2^alpha countable, with the property that for each x in T cap alpha, x extends to at least one cofinal branch; the construction ensures the branch-set has cardinality aleph_2",
+        "branch_set_specification": "Branch(T) = {b : b is a cofinal chain through T}; |Branch(T)| >= aleph_2",
+        "consistency_status": "Kurepa Hypothesis (KH) = 'there is a Kurepa tree' is independent of ZFC: holds in L, fails after Levy-collapsing an inaccessible to omega_2",
+        "explicit_branch_indexing_in_L": "in L, branches correspond to L-definable subsets of omega_1 of a specific Sigma_1-definability rank; the indexing is by ordinals < omega_2"
+      },
+      "structural_metadata": {
+        "is_tree": true,
+        "height": "omega_1",
+        "all_levels_countable": true,
+        "branch_count": ">= aleph_2",
+        "is_Kurepa": true,
+        "consistent_with_ZFC": true,
+        "consistent_with_not_KH": true,
+        "consistency_strength_of_negation": "inaccessible cardinal (Silver: Not-KH equiconsistent with inaccessible)",
+        "verification_methods": {
+          "level_countability": "by construction at each stage",
+          "branch_count": "explicit aleph_2-indexed family of L-definable cofinal branches",
+          "kurepa_definition": "verify height + level-countable + branch >= aleph_2 jointly"
+        },
+        "gap_with_substrate": "Beyond cap_017/018, Kurepa trees require enumerating aleph_2-many cofinal branches and recognizing the equiconsistency-with-inaccessible status. Need BranchEnumerator primitive of cardinality aleph_2 and ConsistencyStrengthAnnotation slot."
+      }
+    },
+    "encoding_question": "Can the substrate represent trees with aleph_2-indexed branch families plus equiconsistency annotations? Proposed: TransfiniteTree extended with branch_enumerator: Callable[Cardinal, Branch] for cardinalities aleph_2 and above. Plus ConsistencyAnnotation field on the tree. How does canonicalization handle Kurepa-tree-vs-Kurepa-tree-with-different-aleph_2-witnesses?",
+    "expected_substrate_action": "PROMOTE if substrate verifies the branch-cardinality bound and annotates the consistency-strength relationship. CAPABILITY-GAP-TICKET if branch families above the continuum are unsupported. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\kurepa_tree_GAP.md."
+  },
+  {
+    "id": "harmonia_d_cap_020",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "capability-gap",
+    "object_class": "Computable structure (Kleene's O, the system of recursive ordinal notations)",
+    "object_specification": {
+      "type": "Kleene's O: the set of natural-number indices for recursive ordinals, with a partial order |O| extending well-foundedness",
+      "instance": {
+        "definition_recursive": "O is the smallest set such that (a) 1 in O with |1| = 0; (b) if a in O with |a| = alpha, then 2^a in O with |2^a| = alpha + 1; (c) if e is an index for a total computable function such that for all n, phi_e(n) in O and phi_e(n) <_O phi_e(n+1), then 3 * 5^e in O with |3 * 5^e| = sup_n |phi_e(n)|",
+        "partial_order": "a <_O b is the transitive closure of: (i) a <_O 2^a; (ii) for each n, phi_e(n) <_O 3 * 5^e",
+        "ordinal_height": "the supremum of {|a| : a in O} is omega_1^{CK}, the Church-Kleene ordinal (least non-recursive ordinal)",
+        "explicit_index_examples": "1 codes 0; 2^1 codes 1; 2^{2^1} codes 2; 3 * 5^e codes omega when phi_e(n) = 2^{2^{...^1}} (n-fold tower); etc.",
+        "non_uniqueness": "|.| is well-defined but the index encoding is not unique: many distinct indices a, b in O have |a| = |b|"
+      },
+      "structural_metadata": {
+        "is_set_of_natural_numbers": true,
+        "is_Pi_1_1_complete": true,
+        "ordinal_height": "omega_1^{CK}",
+        "partial_order_is_well_founded": true,
+        "computability_status": "the set O is Pi_1_1-complete; not arithmetical",
+        "uniformity": "the function n |-> |n| (when defined) is hyperarithmetical but not arithmetical",
+        "verification_methods": {
+          "well_foundedness": "well-foundedness of <_O follows from the inductive definition (each clause produces a successor or limit witness)",
+          "Pi_1_1_completeness": "encode any Pi_1_1 set into O via tree-of-attempts construction (Kleene 1955)",
+          "Church_Kleene_height": "every recursive ordinal has an index in O; conversely every index codes a recursive ordinal"
+        },
+        "gap_with_substrate": "Substrate likely lacks a primitive for hyperarithmetical objects with well-foundedness witnesses on partial orders. Need HyperarithmeticalSet primitive with definability-class slot and well-foundedness verifier. Also need PartialOrdinalNotation primitive (distinct from cap_015's total notation)."
+      }
+    },
+    "encoding_question": "Can the substrate represent Pi_1_1-complete sets with explicit recursive generators and partial well-orderings? Proposed: HyperarithmeticalSet dataclass with definability_class: Sigma_n_or_Pi_n, generators: List[Clause], well_foundedness_witness: Witness. Plus PartialOrdinalNotation with index_set, partial_order: Callable, height: Ordinal. Canonicalization should recognize that distinct Kleene-O presentations yielding the same ordinal-height profile are equivalent up to recursive isomorphism, but distinct Kleene-O elements with same ordinal value are NOT equal in O.",
+    "expected_substrate_action": "PROMOTE if substrate handles Pi_1_1-completeness annotation, partial-order notation distinct from total, and the well-foundedness witness. CAPABILITY-GAP-TICKET if hyperarithmetical complexity classes are not first-class. File P1 ticket at D:\\Prometheus\\prometheus_math\\encodings\\kleene_O_GAP.md."
+  }
+]

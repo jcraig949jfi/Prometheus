@@ -1,0 +1,35 @@
+{
+  "addendum": "F013 individual-curve slope-diff tests (Class-2, non-invariant under within-rank shuffle)",
+  "generated_at": "2026-04-21T08:35:16.732318+00:00",
+  "n_samples": 2009089,
+  "tests": {
+    "rank_bin_slope_diff": {
+      "null_mean": -0.0032375895636784073,
+      "null_std": 0.0010896895748578538,
+      "null_p99": -0.0007028284667914013,
+      "observed": -0.015799492831064837,
+      "z_score": -11.53,
+      "verdict": "DURABLE",
+      "n_strata_used": 2,
+      "stratifier": "rank_bin",
+      "n_bins": 4,
+      "n_perms": 300,
+      "seed": 20260417,
+      "degeneracy_warning": "Dominant stratum holds 88.7% of data \u2014 Pattern 26 flags stratifiers where >20% concentrates; consider a different confound."
+    },
+    "rank_parity_slope_diff": {
+      "null_mean": -0.00010910697053361687,
+      "null_std": 0.0011024390133067032,
+      "null_p99": 0.002231565275568689,
+      "observed": -0.0008172230034345553,
+      "z_score": -0.64,
+      "verdict": "COLLAPSES",
+      "n_strata_used": 1,
+      "stratifier": "rank_parity",
+      "n_bins": 2,
+      "n_perms": 300,
+      "seed": 20260418,
+      "degeneracy_warning": "Dominant stratum holds 100.0% of data \u2014 Pattern 26 flags stratifiers where >20% concentrates; consider a different confound."
+    }
+  }
+}

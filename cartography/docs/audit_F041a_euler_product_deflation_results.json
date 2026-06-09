@@ -1,0 +1,254 @@
+{
+  "task_id": "audit_F041a_euler_product_deflation",
+  "instance": "Harmonia_M2_auditor",
+  "run_at": "2026-04-22T23:07:53Z",
+  "spec": "Test whether F041a's rank-2 monotone-in-nbp slope ladder survives Euler-product deflation at bad primes. Deflator = prod_{p|N} poly_p(1/p) from lmfdb.lfunc_lfunctions.bad_lfactors evaluated at s=1.",
+  "data": {
+    "rank": 2,
+    "primary_per_iso": true,
+    "n_total": 19414,
+    "per_nbp_n": {
+      "1": 868,
+      "2": 4076,
+      "3": 4142,
+      "4": 3960,
+      "5": 3537,
+      "6": 2831
+    },
+    "data_source_commit": "lmfdb prometheus_sci snapshot at run time"
+  },
+  "deflator_stats_per_nbp": {
+    "1": {
+      "mean_log_deflator": -4.1190149763428e-05,
+      "std_log_deflator": 0.00018061362108946592,
+      "min": -0.0025740039951728773,
+      "max": 0.0,
+      "n": 868
+    },
+    "2": {
+      "mean_log_deflator": -0.05112248640597677,
+      "std_log_deflator": 0.26921336963663206,
+      "min": -0.6931471805599453,
+      "max": 0.4054651081081644,
+      "n": 4076
+    },
+    "3": {
+      "mean_log_deflator": -0.08599265143687268,
+      "std_log_deflator": 0.3553943534889667,
+      "min": -1.0988942568075781,
+      "max": 0.6931471805599452,
+      "n": 4142
+    },
+    "4": {
+      "mean_log_deflator": -0.10842012319714923,
+      "std_log_deflator": 0.44384746670373826,
+      "min": -1.3216647611535302,
+      "max": 0.875388599516777,
+      "n": 3960
+    },
+    "5": {
+      "mean_log_deflator": -0.1396596424142312,
+      "std_log_deflator": 0.5133942279609177,
+      "min": -1.4774925629652123,
+      "max": 1.0081671436745305,
+      "n": 3537
+    },
+    "6": {
+      "mean_log_deflator": -0.07794333761315632,
+      "std_log_deflator": 0.6045368446991375,
+      "min": -1.5268692307142755,
+      "max": 1.09000548290784,
+      "n": 2831
+    }
+  },
+  "raw": {
+    "per_nbp_slopes": {
+      "1": {
+        "slope": 0.2578411729297332,
+        "n": 868
+      },
+      "2": {
+        "slope": 0.26040040227759526,
+        "n": 4076
+      },
+      "3": {
+        "slope": 0.257021818124583,
+        "n": 4142
+      },
+      "4": {
+        "slope": 0.2525076717657588,
+        "n": 3960
+      },
+      "5": {
+        "slope": 0.2623613115544835,
+        "n": 3537
+      },
+      "6": {
+        "slope": 0.325448352995395,
+        "n": 2831
+      }
+    },
+    "ladder_amplitude": 0.0729406812296362,
+    "corr_nbp_slope": 0.6542983377146031,
+    "block_null_z_scores": {
+      "1": {
+        "slope_observed": 0.2578411729297332,
+        "null_mean": 0.22114506587040922,
+        "null_std": 0.004700245858311716,
+        "z": 7.807273952368285,
+        "n_perms": 500,
+        "n": 868
+      },
+      "2": {
+        "slope_observed": 0.26040040227759526,
+        "null_mean": 0.21661334841420965,
+        "null_std": 0.0028317833937848195,
+        "z": 15.462712988390694,
+        "n_perms": 500,
+        "n": 4076
+      },
+      "3": {
+        "slope_observed": 0.257021818124583,
+        "null_mean": 0.19409825349201146,
+        "null_std": 0.0035637211556913645,
+        "z": 17.656702610438764,
+        "n_perms": 500,
+        "n": 4142
+      },
+      "4": {
+        "slope_observed": 0.2525076717657588,
+        "null_mean": 0.17344380702127055,
+        "null_std": 0.004586642632711919,
+        "z": 17.237851534498247,
+        "n_perms": 500,
+        "n": 3960
+      },
+      "5": {
+        "slope_observed": 0.2623613115544835,
+        "null_mean": 0.14131726874278244,
+        "null_std": 0.007619895453766781,
+        "z": 15.88526293387198,
+        "n_perms": 500,
+        "n": 3537
+      },
+      "6": {
+        "slope_observed": 0.325448352995395,
+        "null_mean": 0.14210498969963778,
+        "null_std": 0.014247662592840025,
+        "z": 12.868311703836529,
+        "n_perms": 500,
+        "n": 2831
+      }
+    }
+  },
+  "deflated": {
+    "per_nbp_slopes": {
+      "1": {
+        "slope": 0.2579276659651334,
+        "n": 868
+      },
+      "2": {
+        "slope": 0.26460263167028464,
+        "n": 4076
+      },
+      "3": {
+        "slope": 0.2441091396947084,
+        "n": 4142
+      },
+      "4": {
+        "slope": 0.24985172631616645,
+        "n": 3960
+      },
+      "5": {
+        "slope": 0.21256928360452598,
+        "n": 3537
+      },
+      "6": {
+        "slope": 0.12211296327903,
+        "n": 2831
+      }
+    },
+    "ladder_amplitude": 0.14248966839125465,
+    "corr_nbp_slope": -0.8268395048682459,
+    "block_null_z_scores": {
+      "1": {
+        "slope_observed": 0.2579276659651334,
+        "null_mean": 0.2212241087347128,
+        "null_std": 0.004700396839885727,
+        "z": 7.808608183668363,
+        "n_perms": 500,
+        "n": 868
+      },
+      "2": {
+        "slope_observed": 0.26460263167028464,
+        "null_mean": 0.22037140165672903,
+        "null_std": 0.0027665874095640615,
+        "z": 15.98764957168848,
+        "n_perms": 500,
+        "n": 4076
+      },
+      "3": {
+        "slope_observed": 0.2441091396947084,
+        "null_mean": 0.18102165491866412,
+        "null_std": 0.0035695090562686675,
+        "z": 17.673994877601412,
+        "n_perms": 500,
+        "n": 4142
+      },
+      "4": {
+        "slope_observed": 0.24985172631616645,
+        "null_mean": 0.17285954393380445,
+        "null_std": 0.004816635199359623,
+        "z": 15.984640562481914,
+        "n_perms": 500,
+        "n": 3960
+      },
+      "5": {
+        "slope_observed": 0.21256928360452598,
+        "null_mean": 0.11150367824363937,
+        "null_std": 0.007144291577770064,
+        "z": 14.146343869189064,
+        "n_perms": 500,
+        "n": 3537
+      },
+      "6": {
+        "slope_observed": 0.12211296327903,
+        "null_mean": 0.020723503123014544,
+        "null_std": 0.011795802299415051,
+        "z": 8.595384831182132,
+        "n_perms": 500,
+        "n": 2831
+      }
+    }
+  },
+  "comparison": {
+    "amp_ratio_def_over_raw": 1.953500652710662,
+    "amp_change_absolute": 0.06954898716161845,
+    "corr_sign_flipped": true,
+    "corr_raw": 0.6542983377146031,
+    "corr_deflated": -0.8268395048682459
+  },
+  "verdict": "SIGN_INVERSION_AND_RESHAPE  (auditor amended 2026-04-22 after reading numeric output): the deflator did not absorb the ladder's amplitude, but it FLIPPED the sign of the (nbp, slope) correlation from +0.65 (raw, mildly increasing) to -0.83 (deflated, strongly decreasing). The original F041a framing (monotone-increasing-in-nbp slope as evidence of arithmetic sensitivity) is substantially the bad-prime Euler-factor contribution at higher nbp. A NEW signal emerges in the Euler-deflated leading term: monotone-DECREASING-in-nbp slope, also strongly significant per stratum (z = 8-18). Pattern 30 disposition: PARTIAL leaning toward SHARED_VARIABLE on the original framing; the residual structure post-deflation is itself a candidate live-specimen.",
+  "null_protocol": {
+    "type": "block_shuffle",
+    "stratifier": "(num_bad_primes, conductor_decade)",
+    "shuffle_col": "log_leading_term",
+    "n_perms": 500,
+    "seed": 20260417,
+    "note": "Joint stratifier per null_protocol_v1.md Class 2 stricter variant."
+  },
+  "method_notes": [
+    "Deflator computed from bad_lfactors poly evaluated at T = 1/p.",
+    "Curve cohort: rank=2 EC, one per isogeny class (Cnumber='1').",
+    "Local Euler factor at multiplicative p: poly = [1, +/-1] -> L_p(1) = p/(p +/- 1).",
+    "Local Euler factor at additive p: poly = [1] -> L_p(1) = 1 (no contribution).",
+    "Deflated leading_term replaces bad-prime contribution with 1; retains good-prime structure + RMT factor."
+  ],
+  "verdict_initial_amplitude_test": "PERSIST  (amplitude-ratio < 0.20: deflator did not collapse ladder amplitude)",
+  "verdict_caveats": [
+    "PATTERN-19 FLAG: raw per-stratum slopes (~0.25 across nbp 1-5, 0.32 at nbp=6) are roughly 5x smaller than F041a's recorded values (1.21..2.52). Possible causes: (a) stratified random sample (5K/nbp via md5(label) ranking) differs from F041a's ~222K joined cohort; (b) F041a's slope normalization may differ (e.g., per-decade-then-pool vs single OLS over full conductor range); (c) F041a's recorded numbers may need re-audit. This audit should be re-run on F041a's exact reproduced cohort before any tensor mutation.",
+    "SAMPLE: 19,414 rank-2 primary EC (Cnumber=1), stratified cap 5000/nbp, joined with lfunc_lfunctions on origin = EllipticCurve/Q/<conductor>/<iso_letter>.",
+    "Null is correct per null_protocol_v1.md Class 2 stricter variant (joint (nbp, conductor_decade)); per-stratum z>=8 in BOTH raw and deflated, so the slope structure is real in both directions.",
+    "Sign-inversion is the methodological finding: a coarse 'amplitude absorbed?' test misses sign flips. Pattern 30 PARTIAL audits should include a sign-preservation check, not just a magnitude check."
+  ]
+}

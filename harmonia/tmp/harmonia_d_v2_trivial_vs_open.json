@@ -1,0 +1,577 @@
+[
+  {
+    "id": "harmonia_d_tvo_001",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "easy",
+    "conjecture_family": "Singular Cardinals Hypothesis variants and PCF bounds",
+    "trivial_case": {
+      "description": "If kappa is singular of uncountable cofinality and 2^lambda = lambda^+ for all sufficiently large lambda < kappa, then 2^kappa = kappa^+ (GCH cannot first fail at a singular of uncountable cofinality)",
+      "result": "Stationary-set reflection forces GCH to lift through uncountable-cofinality singulars; Silver's theorem",
+      "proven_by": "Jack Silver",
+      "year": 1974,
+      "venue": "Proc. ICM Vancouver 1974, 'On the singular cardinals problem'",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "Whether 2^aleph_omega can be precisely characterized in ZFC under the strong-limit hypothesis (Shelah's PCF gives 2^aleph_omega < aleph_{omega_4}; Shelah Strong Hypothesis pp(aleph_omega) < aleph_{omega_1} remains open)",
+      "result": "Shelah Strong Hypothesis conjectures pp(aleph_omega) < aleph_{omega_1}; current ZFC bound 2^aleph_omega < aleph_{omega_4}",
+      "status": "OPEN as of 2026; no improvement to Shelah's PCF bound has been confirmed"
+    },
+    "common_failure_pattern": "FM-08: model conflates Silver's uncountable-cofinality theorem with the (open) countable-cofinality case at aleph_omega; or claims SH/SCH is a theorem rather than a conjecture",
+    "doctrine_relevance": "HARD-5: substrate must distinguish proven uncountable-cofinality case (Silver 1974, technique=Fodor/regression) from open countable-cofinality case (PCF, technique=Shelah)"
+  },
+  {
+    "id": "harmonia_d_tvo_002",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "easy",
+    "conjecture_family": "Cardinal Continuum Function and CH",
+    "trivial_case": {
+      "description": "The Continuum Hypothesis 2^aleph_0 = aleph_1 is independent of ZFC: Goedel showed Con(ZFC) implies Con(ZFC + CH); Cohen showed Con(ZFC) implies Con(ZFC + ¬CH)",
+      "result": "Independence of CH from ZFC, established via L (Goedel 1940) and forcing (Cohen 1963)",
+      "proven_by": "Kurt Goedel (1940) and Paul Cohen (1963)",
+      "year": 1963,
+      "venue": "Cohen, PNAS 50 (1963) and 51 (1964), 'The independence of the continuum hypothesis'",
+      "status": "PROVEN (settled-as-independent)"
+    },
+    "open_case": {
+      "description": "What is the 'correct' value of 2^aleph_0 under a privileged extension of ZFC? Woodin's program suggests aleph_2 via Pmax/(*); Goedel's program seeks intrinsically motivated axioms. No consensus on the value",
+      "result": "Multiple programmatic candidates (Woodin's (*), forcing-axiom approach via MM++ implies (*), inner-model approaches) but no community-accepted determination",
+      "status": "OPEN as a foundational/philosophical question; (*) follows from MM++ (Aspero-Schindler 2021), but the meta-question of which axiomatic extension is correct remains contested"
+    },
+    "common_failure_pattern": "FM-08: model claims CH is open within ZFC (it is not — it is independent), or claims continuum value is settled at aleph_2 (it is not — only conditional on chosen axiom)",
+    "doctrine_relevance": "HARD-5: substrate must distinguish settled independence (Cohen 1963) from open programmatic determination of c"
+  },
+  {
+    "id": "harmonia_d_tvo_003",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "easy",
+    "conjecture_family": "Determinacy hierarchy",
+    "trivial_case": {
+      "description": "Every Borel game on omega^omega with Borel payoff set is determined (one of the players has a winning strategy)",
+      "result": "Borel determinacy in ZFC; the proof uses iterated power set up through the Borel hierarchy and is provably non-eliminable from ZFC (Friedman 1971 lower bound)",
+      "proven_by": "Donald A. Martin",
+      "year": 1975,
+      "venue": "Annals of Mathematics 102 (1975), 'Borel determinacy'",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "The exact consistency strength of long projective determinacy at length omega^2 (precise Woodin-cardinal placement) remains open; equivalence of PD with all its analytical consequences for projective sets (Woodin's last Delfino problem) is open",
+      "result": "Pi^1_{n+1}-determinacy at length omega^2 implies model with omega+n Woodin cardinals (Aguilera-Mueller 2020 partial); upper-equivalence direction conjectural",
+      "status": "OPEN; partial progress on long-game consistency strength; analytical-equivalence Delfino problem unresolved"
+    },
+    "common_failure_pattern": "FM-08: model claims 'projective determinacy is a ZFC theorem' (false — needs Woodin cardinals), or claims length-omega^2 consistency strength is exactly characterized (only one direction known)",
+    "doctrine_relevance": "HARD-5: substrate must distinguish ZFC-provable Borel determinacy (Martin 1975) from large-cardinal-requiring PD and its open precise calibration"
+  },
+  {
+    "id": "harmonia_d_tvo_004",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "easy",
+    "conjecture_family": "Halting problem and Turing reducibility",
+    "trivial_case": {
+      "description": "The halting problem H = {(M,x) : Turing machine M halts on input x} is undecidable; equivalently, 0' (the Turing jump of 0) is strictly above 0 in the Turing degrees",
+      "result": "Diagonal argument: assuming a decider D for H, construct M_D that halts iff D says it does not, contradiction",
+      "proven_by": "Alan Turing",
+      "year": 1936,
+      "venue": "Proc. London Math Soc. (2) 42 (1936-37), 'On computable numbers, with an application to the Entscheidungsproblem'",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "Whether the Turing degrees of c.e. sets D_T have any non-trivial automorphism (beyond the identity); the bi-interpretability conjecture for the c.e. degrees remains open",
+      "result": "Non-trivial automorphism existence for the c.e. degrees is open; partial results show definability of large classes (Nies-Shore-Slaman 1998, Slaman-Woodin program)",
+      "status": "OPEN as of 2026"
+    },
+    "common_failure_pattern": "FM-08: model conflates settled undecidability of halting with the open structural question of automorphisms in the c.e. degree structure",
+    "doctrine_relevance": "HARD-5: substrate must distinguish settled undecidability (Turing 1936) from open automorphism/rigidity questions in the same degree-theoretic family"
+  },
+  {
+    "id": "harmonia_d_tvo_005",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "easy",
+    "conjecture_family": "Forcing-axiom strength at omega_1 versus higher cardinals",
+    "trivial_case": {
+      "description": "MA_{aleph_1} (Martin's Axiom at aleph_1) is consistent with ZFC and implies 2^aleph_0 > aleph_1; the standard ccc iteration of length aleph_2 over a model of GCH yields a model of MA_{aleph_1} + 2^aleph_0 = aleph_2",
+      "result": "Solovay-Tennenbaum forcing iteration produces MA + ¬CH",
+      "proven_by": "Robert Solovay and Stanley Tennenbaum",
+      "year": 1971,
+      "venue": "Annals of Mathematics 94 (1971), 'Iterated Cohen extensions and Souslin's problem'",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "A satisfactory two-cardinal forcing axiom at omega_2 with the strength of MA at omega_1 — i.e., a generalization MA(aleph_2) preserving aleph_2 with full ccc-analogue — remains open; Shelah's MA(aleph_2) variants and Neeman's two-cardinal proper forcing only partially resolve this",
+      "result": "Shelah's MA^+ at aleph_2, Neeman's two-cardinal side-condition method give partial substitutes; full natural analogue open",
+      "status": "OPEN as of 2026; active program (Neeman, Veličković, Aspero)"
+    },
+    "common_failure_pattern": "FM-08: model claims MA(aleph_2) is a known theorem analogous to MA at aleph_1; conflates the omega_1 and omega_2 cases",
+    "doctrine_relevance": "HARD-5: substrate must distinguish settled MA_{aleph_1} (Solovay-Tennenbaum 1971) from open higher-cardinal analogues"
+  },
+  {
+    "id": "harmonia_d_tvo_006",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "easy",
+    "conjecture_family": "Whitehead problem and homological independence",
+    "trivial_case": {
+      "description": "The Whitehead problem 'every Whitehead group is free' is independent of ZFC: Shelah showed it follows from V=L and is refuted by MA + ¬CH",
+      "result": "Independence of Whitehead's conjecture from ZFC",
+      "proven_by": "Saharon Shelah",
+      "year": 1974,
+      "venue": "Israel J. Math. 18 (1974), 'Infinite abelian groups, Whitehead problem and some constructions'",
+      "status": "PROVEN (settled-as-independent)"
+    },
+    "open_case": {
+      "description": "Whether the Whitehead problem for groups of cardinality aleph_omega+1 (or other specific singular-successor cardinalities) has the same independence pattern as at aleph_1, or whether ZFC settles it at higher cardinalities under additional cardinal-arithmetic hypotheses",
+      "result": "Eklof-Shelah and Magidor-Shelah extended independence to many cardinalities; the precise behavior at successors of singulars under SCH-failure scenarios is partially open",
+      "status": "OPEN at specific singular-successor cardinalities under cardinal-arithmetic constraints"
+    },
+    "common_failure_pattern": "FM-08: model claims Whitehead at aleph_1 is unsolved (it is solved — independent), or treats higher-cardinality cases as automatic from aleph_1 result",
+    "doctrine_relevance": "HARD-5: substrate must distinguish settled independence at aleph_1 (Shelah 1974) from open higher-cardinality refinements within the same family"
+  },
+  {
+    "id": "harmonia_d_tvo_007",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "easy",
+    "conjecture_family": "Reverse mathematics Big Five and Ramsey-type principles",
+    "trivial_case": {
+      "description": "Konig's lemma for finitely-branching trees (KL) is equivalent to ACA_0 over RCA_0; weak Konig's lemma WKL_0 is strictly weaker than ACA_0 over RCA_0",
+      "result": "Big-Five hierarchy RCA_0 < WKL_0 < ACA_0 strictly increases; established via standard reverse-math techniques",
+      "proven_by": "Stephen G. Simpson and collaborators",
+      "year": 1984,
+      "venue": "Simpson, 'Subsystems of Second-Order Arithmetic', Springer (1999); core results from 1970s-80s reverse-math program",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "The exact strength of Ramsey's theorem for pairs RT^2_2 over RCA_0: it is known to lie between RCA_0 and ACA_0, but its precise placement and whether it implies WKL_0 remain open",
+      "result": "RT^2_2 does not imply ACA_0 (Seetapun-Slaman 1995); does not imply WKL_0 (Liu 2012); no natural principle is known strictly between ACA_0 and RT^2_2",
+      "status": "OPEN: precise reverse-math placement of RT^2_2 still investigated; many sub-questions open"
+    },
+    "common_failure_pattern": "FM-08: model claims RT^2_2 is equivalent to ACA_0 (false — Seetapun-Slaman 1995), or places it at RCA_0/WKL_0 levels incorrectly",
+    "doctrine_relevance": "HARD-5: substrate must distinguish settled Big-Five strict hierarchy from open precise placement of RT^2_2"
+  },
+  {
+    "id": "harmonia_d_tvo_008",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "easy",
+    "conjecture_family": "Inner model existence",
+    "trivial_case": {
+      "description": "The constructible universe L exists in ZFC and is an inner model (transitive proper class containing all ordinals, satisfying ZFC). L satisfies V=L, GCH, and the diamond principle",
+      "result": "L is defined by transfinite recursion using definable power set; ZFC proves L is a model of ZFC + GCH + diamond",
+      "proven_by": "Kurt Goedel",
+      "year": 1938,
+      "venue": "PNAS 24 (1938), 'The consistency of the axiom of choice and of the generalized continuum-hypothesis'",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "Construction of a fine-structural canonical inner model for one supercompact cardinal (the 'supercompact L'); the Sargsyan-Steel program and Woodin's Ultimate-L are active",
+      "result": "Substantial partial progress: Sargsyan's hod mice through Lambda-mice levels (2025), Steel's K-construction at smaller large cardinals; supercompact level not yet achieved",
+      "status": "OPEN as of 2026; recent Sargsyan-Steel 'Nairian models' (arXiv 2501.18958) is partial progress"
+    },
+    "common_failure_pattern": "FM-08: model claims canonical inner model for supercompact is constructed (false — only partial); conflates L (settled) with inner-model program (open)",
+    "doctrine_relevance": "HARD-5: substrate must distinguish settled L (Goedel 1938) from open supercompact inner-model existence (Sargsyan-Steel program)"
+  },
+  {
+    "id": "harmonia_d_tvo_009",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "medium",
+    "conjecture_family": "Easton-style continuum function on regular cardinals versus singulars",
+    "trivial_case": {
+      "description": "Easton's theorem: for any class function F : Regulars -> Cardinals satisfying F(kappa) > kappa, F monotonic, and cf(F(kappa)) > kappa, there is a forcing extension where 2^kappa = F(kappa) for all regular kappa (assuming GCH in the ground model)",
+      "result": "Class forcing with Easton products produces extensions realizing any allowed continuum function on regulars",
+      "proven_by": "William Easton",
+      "year": 1970,
+      "venue": "Annals of Math. Logic 1 (1970), 'Powers of regular cardinals'",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "Characterization of all possible continuum functions on singular cardinals consistent with ZFC; PCF theory imposes nontrivial constraints (Shelah's bound 2^aleph_omega < aleph_{omega_4} under strong-limit) but the full characterization is open",
+      "result": "Shelah's PCF gives upper bounds; consistency-strength results constrain failure of SCH; full characterization open",
+      "status": "OPEN as of 2026; central singular-cardinals problem"
+    },
+    "common_failure_pattern": "FM-08: model claims Easton-style theorem covers singulars (false — singulars are PCF-constrained); conflates regular-cardinal Easton with open singular case",
+    "doctrine_relevance": "HARD-5: substrate must distinguish Easton on regulars (1970) from open singular-cardinals continuum-function problem"
+  },
+  {
+    "id": "harmonia_d_tvo_010",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "medium",
+    "conjecture_family": "Suslin Hypothesis and tree properties",
+    "trivial_case": {
+      "description": "The Suslin Hypothesis (no Suslin lines on R) is independent of ZFC: it follows from MA + ¬CH (Solovay-Tennenbaum 1971) and fails under V=L (diamond gives a Suslin tree, Jensen 1968)",
+      "result": "Independence of SH from ZFC",
+      "proven_by": "Jensen (failure under V=L, 1968) and Solovay-Tennenbaum (consistency of SH, 1971)",
+      "year": 1971,
+      "venue": "Solovay-Tennenbaum, Annals of Math 94 (1971); Jensen, Trans AMS (1972)",
+      "status": "PROVEN (settled-as-independent at omega_1)"
+    },
+    "open_case": {
+      "description": "Generalized Suslin Hypothesis at omega_2 (no aleph_2-Suslin trees) and its precise consistency strength under stronger forcing axioms; whether SH(aleph_2) is consistent assuming only weakly compact below remains open in some formulations",
+      "result": "Laver-Shelah established SH(aleph_2) from a weakly compact; consistency-strength refinements and behavior under PFA/MM remain open at higher cardinals",
+      "status": "OPEN at specific higher-cardinal generalizations; active research (Hayut, Magidor, Veličković)"
+    },
+    "common_failure_pattern": "FM-08: model claims SH(aleph_2) follows automatically from SH(aleph_1) settled-as-independent; conflates omega_1 (settled) with omega_2 (open in ZFC + intermediate large cardinals)",
+    "doctrine_relevance": "HARD-5: substrate must distinguish settled SH-independence at omega_1 from open higher-cardinal generalizations"
+  },
+  {
+    "id": "harmonia_d_tvo_011",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "medium",
+    "conjecture_family": "Vaught's conjecture and counting countable models",
+    "trivial_case": {
+      "description": "Vaught's conjecture for omega-stable theories: every countable complete omega-stable theory has either at most countably many or exactly 2^aleph_0 countable models",
+      "result": "Shelah's stability-theoretic analysis using prime models over independent sets",
+      "proven_by": "Saharon Shelah",
+      "year": 1984,
+      "venue": "Shelah-Harrington-Makkai, Israel J. Math. 49 (1984), 'A proof of Vaught's conjecture for omega-stable theories'",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "Vaught's conjecture in full generality (for all countable first-order theories): the number of countable models is finite, aleph_0, or 2^aleph_0",
+      "result": "Knight (2002, 2007) announced a counterexample, but it has not been verified by the community as of 2026; conjecture proven for many sub-classes (o-minimal, weakly minimal, superstable of finite U-rank), but unverified in general",
+      "status": "OPEN as of 2026; status of Knight's claimed counterexample remains unresolved"
+    },
+    "common_failure_pattern": "FM-08: model claims Vaught's conjecture is settled in general (false — Knight's claim unverified, conjecture open); conflates omega-stable case (settled) with general case (open)",
+    "doctrine_relevance": "HARD-5: substrate must distinguish settled omega-stable Vaught (Shelah 1984) from open general Vaught's conjecture"
+  },
+  {
+    "id": "harmonia_d_tvo_012",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "medium",
+    "conjecture_family": "PCF bounds at singular cardinals",
+    "trivial_case": {
+      "description": "ZFC proves cf(2^aleph_omega) > aleph_omega: the cofinality of the continuum function at a singular is bounded below by the cofinality of the cardinal itself (Konig's theorem applied to singular case)",
+      "result": "Konig's inequality kappa^{cf(kappa)} > kappa applied to 2^aleph_omega",
+      "proven_by": "Julius Konig",
+      "year": 1905,
+      "venue": "Math. Ann. 60 (1905); standard exposition in Jech 'Set Theory'",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "Whether 2^aleph_omega can equal aleph_{omega_1+omega} or aleph_{omega_1} or some specific value beyond aleph_{omega_1}; whether the Shelah Strong Hypothesis pp(aleph_omega) < aleph_{omega_1} holds",
+      "result": "Shelah's PCF gives upper bound aleph_{omega_4}; Magidor-Shelah forcing constructions give consistency of various values < aleph_{omega_4}; precise ZFC value unknown",
+      "status": "OPEN as of 2026"
+    },
+    "common_failure_pattern": "FM-08: model claims 2^aleph_omega has a known ZFC value (false), or conflates Konig's lemma (settled) with PCF bound problem (open)",
+    "doctrine_relevance": "HARD-5: substrate must distinguish ZFC-trivial Konig bound from open PCF strong-hypothesis question"
+  },
+  {
+    "id": "harmonia_d_tvo_013",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "medium",
+    "conjecture_family": "Forcing-axiom continuum determination",
+    "trivial_case": {
+      "description": "PFA implies 2^aleph_0 = aleph_2",
+      "result": "Veličković and (independently) Todorčević used PFA-consequences (e.g., the P-ideal dichotomy / mapping reflection principle) to pin down c at aleph_2; classical Todorčević-Bekkali argument using OCA",
+      "proven_by": "Boban Veličković and Stevo Todorčević (independently)",
+      "year": 1992,
+      "venue": "Veličković, J. Symb. Logic 57 (1992); Todorčević, 'Partition Problems in Topology' AMS (1989)",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "Whether MM (Martin's Maximum) at omega_2 — i.e., a natural higher-cardinal analogue MM(aleph_2) preserving aleph_2-stationarity — is consistent and what continuum-function values it forces",
+      "result": "MM++ implies (*) (Aspero-Schindler, Annals 2021), pinning c=aleph_2 from MM++. The MM(aleph_2) higher-cardinal analogue and its consistency strength remain under active investigation",
+      "status": "OPEN; MM(aleph_2)-style axioms not yet shown consistent at full strength"
+    },
+    "common_failure_pattern": "FM-08: model claims MM(aleph_2) is known consistent or settled, or conflates PFA-implies-c=aleph_2 (settled) with higher-cardinal MM analogue (open)",
+    "doctrine_relevance": "HARD-5: substrate must distinguish PFA pinning c (Veličković-Todorčević 1992) from open higher-cardinal forcing-axiom analogues"
+  },
+  {
+    "id": "harmonia_d_tvo_014",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "medium",
+    "conjecture_family": "Cardinal characteristics of the continuum",
+    "trivial_case": {
+      "description": "ZFC proves aleph_1 <= b <= d <= 2^aleph_0 and aleph_1 <= cov(M) <= non(N) <= cof(N), giving the Cichon diagram inclusions",
+      "result": "Cichon diagram of cardinal characteristics is fully established in ZFC; all 10 entries with their inequalities provably hold",
+      "proven_by": "Cichon, Bartoszyński, Judah, and others",
+      "year": 1995,
+      "venue": "Bartoszyński-Judah, 'Set Theory: On the Structure of the Real Line' (1995)",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "Whether all 'reasonable' cardinal characteristics in Cichon's maximum (Goldstern-Kellner-Shelah 2019 showed all 10 distinct) extend to higher analogues at uncountable cardinals; whether a fully analogous diagram for kappa-Cichon at uncountable kappa is consistent",
+      "result": "Goldstern-Kellner-Shelah (Annals 2022) established Cichon's maximum (10 distinct values); higher-cardinal generalizations are under active investigation, with several specific open consistencies",
+      "status": "OPEN at uncountable cardinals; specific higher-Cichon configurations unresolved"
+    },
+    "common_failure_pattern": "FM-08: model claims higher-Cichon at uncountable cardinals is settled by analogy with omega; conflates Cichon's maximum (settled at omega) with open uncountable analogues",
+    "doctrine_relevance": "HARD-5: substrate must distinguish settled Cichon diagram and Cichon's maximum from open higher-cardinal generalizations"
+  },
+  {
+    "id": "harmonia_d_tvo_015",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "medium",
+    "conjecture_family": "Inaccessibility and large-cardinal existence",
+    "trivial_case": {
+      "description": "The existence of an inaccessible cardinal is not provable in ZFC (assuming Con(ZFC)): if kappa is inaccessible then V_kappa models ZFC, so ZFC + 'exists inaccessible' proves Con(ZFC), violating Goedel's second incompleteness theorem",
+      "result": "Standard application of Goedel-second-incompleteness via V_kappa modeling ZFC",
+      "proven_by": "Folklore from Goedel/Shepherdson; rigorous treatment in Kanamori 'The Higher Infinite'",
+      "year": 1939,
+      "venue": "Kanamori, 'The Higher Infinite' (Springer 2003); originally observed in the 1930s after Goedel",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "The HOD Conjecture (Woodin): assuming an extendible cardinal kappa, V is 'close to' HOD (specifically, every regular cardinal above kappa is omega-strongly measurable in HOD or HOD computes successors correctly). Recent work (exacting cardinals, Bagaria-Goldberg-Lucke 2024) suggests possible refutation",
+      "result": "HOD Dichotomy theorem (Woodin 2017) establishes the dichotomy; HOD Conjecture (the 'close' alternative) remains open and recent work threatens it via exacting/ultraexacting cardinals",
+      "status": "OPEN as of 2026; recent arXiv 2411.11568 (Bagaria-Goldberg-Lucke) argues exacting cardinals would refute HOD Conjecture"
+    },
+    "common_failure_pattern": "FM-08: model claims HOD Conjecture is settled (it is not) or claims inaccessibles are provable in ZFC (false)",
+    "doctrine_relevance": "HARD-5: substrate must distinguish settled non-provability of inaccessibles from open HOD-Conjecture status"
+  },
+  {
+    "id": "harmonia_d_tvo_016",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "medium",
+    "conjecture_family": "Measurable and supercompact consistency strength",
+    "trivial_case": {
+      "description": "Consistency strength of a measurable cardinal is strictly above ZFC: if kappa is measurable, then 0# exists, hence V != L, and one can prove Con(ZFC + 'there is a measurable cardinal') is strictly above Con(ZFC)",
+      "result": "Scott's theorem: if there is a measurable, then V != L; combined with standard equiconsistency arguments",
+      "proven_by": "Dana Scott (V != L) and Gaifman-Solovay (consistency-strength refinements)",
+      "year": 1961,
+      "venue": "Scott, Bull. Acad. Polon. Sci. 9 (1961), 'Measurable cardinals and constructible sets'",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "Precise consistency-strength placement of Vopěnka's principle relative to other large cardinals: known to lie between extendible and almost-huge, but precise calibration with intermediate notions (e.g., C^{(n)}-extendibles, supercompact-of-Laver) remains under refinement",
+      "result": "Bagaria's C^{(n)}-cardinal hierarchy (Archive Math Logic 2012) gives partial calibration; precise Vopěnka strength relative to specific large-cardinal axioms still being refined",
+      "status": "OPEN refinements as of 2026; Vopěnka equivalent to 'C^{(n)}-extendibles for all n' but finer placements active"
+    },
+    "common_failure_pattern": "FM-08: model claims Vopěnka strength is exactly characterized (it is up to a level); conflates measurable existence (settled-strict-above-ZFC) with Vopěnka calibration (open refinements)",
+    "doctrine_relevance": "HARD-5: substrate must distinguish settled measurable-vs-ZFC strength jump from open precise Vopěnka calibration"
+  },
+  {
+    "id": "harmonia_d_tvo_017",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "medium",
+    "conjecture_family": "Borel and analytic set separation",
+    "trivial_case": {
+      "description": "Lusin's separation theorem: any two disjoint analytic sets in a Polish space can be separated by a Borel set",
+      "result": "Classical descriptive-set-theoretic theorem, proved by Souslin's operation analysis",
+      "proven_by": "Nikolai Lusin (and Souslin)",
+      "year": 1927,
+      "venue": "Lusin, 'Leçons sur les ensembles analytiques' (1930); separation theorem in 1927 papers",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "Whether the projective separation property at level Pi^1_n for n >= 3 holds in ZFC alone (without determinacy/large cardinal hypotheses); equivalently, whether ZFC proves the Pi^1_3 separation property",
+      "result": "Under PD, projective separation holds with periodicity (Moschovakis); in ZFC alone, Pi^1_2 separation holds (Kondo's uniformization theorem 1939) but Pi^1_n for n >= 3 requires hypotheses beyond ZFC",
+      "status": "OPEN: precise level at which separation requires large cardinals/determinacy is studied but not fully classified in ZFC alone"
+    },
+    "common_failure_pattern": "FM-08: model claims projective separation at Pi^1_3 follows from ZFC; conflates settled analytic separation (Lusin 1927) with open higher-projective levels",
+    "doctrine_relevance": "HARD-5: substrate must distinguish ZFC-provable analytic separation from open higher-projective levels"
+  },
+  {
+    "id": "harmonia_d_tvo_018",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "hard",
+    "conjecture_family": "AD/AD+ and Solovay hierarchy",
+    "trivial_case": {
+      "description": "Under AD, every set of reals has the Baire property and is Lebesgue measurable; the Solovay model ZF+DC+'every set of reals is Lebesgue measurable' is consistent relative to an inaccessible cardinal",
+      "result": "Solovay's construction via Levy collapse of an inaccessible; Mycielski-Steinhaus AD-implies-LM/BP",
+      "proven_by": "Robert Solovay (consistency from inaccessible), Mycielski-Steinhaus (AD-implications)",
+      "year": 1970,
+      "venue": "Solovay, Annals of Math 92 (1970), 'A model in which every set of reals is Lebesgue measurable'",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "Whether AD_R (determinacy of all real-payoff games) + DC has the same consistency strength as 'AD_R + Theta is regular', and the precise calibration of long-game determinacy at length omega^2 with Woodin-cardinal hierarchies",
+      "result": "Woodin established AD_R + Theta-regular has measurable-Woodin-cardinal-equivalence-strength; partial-progress on length-omega^2 (Aguilera, Mueller, Schlutzenberg, Trang 2020-2024); full classification open",
+      "status": "OPEN as of 2026; arXiv 1906.11949 represents the 'long projective determinacy' partial progress"
+    },
+    "common_failure_pattern": "FM-08: model claims AD_R + Theta-regular has the same calibration as ordinary AD (it does not); conflates Solovay model (settled) with AD_R-strength refinements (open)",
+    "doctrine_relevance": "HARD-5: substrate must distinguish settled Solovay model and AD-implications from open AD_R-Theta-regular calibration"
+  },
+  {
+    "id": "harmonia_d_tvo_019",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "hard",
+    "conjecture_family": "Inner-model hod-mouse construction",
+    "trivial_case": {
+      "description": "K^c (the core model below a measurable) is constructible in ZFC + 'no inner model with a measurable cardinal'; covering lemma holds for K below 0†",
+      "result": "Mitchell-Steel core-model construction K^c; Dodd-Jensen covering",
+      "proven_by": "William Mitchell, John Steel, Anthony Dodd, Ronald Jensen",
+      "year": 1994,
+      "venue": "Mitchell-Steel, 'Fine Structure and Iteration Trees', Lect. Notes Logic 3 (1994)",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "Existence of a fine-structural canonical inner model with a Woodin cardinal that is also a limit of Woodin cardinals + measurable, with full iterability proof; the 'core model induction' beyond AD_R + Theta-regular is open",
+      "result": "Sargsyan's hod-mouse construction below a Woodin-limit-of-Woodins (2014, Memoirs AMS); above this level open; Nairian models (Sargsyan-Blue-Larson, arXiv 2501.18958, 2025) make further partial progress",
+      "status": "OPEN as of 2026; active hod-mouse / inner-model-induction program"
+    },
+    "common_failure_pattern": "FM-08: model claims hod-mouse construction is complete through supercompact (false — only partial); conflates K^c (settled below measurable) with hod-mouse program (open above current frontier)",
+    "doctrine_relevance": "HARD-5: substrate must distinguish settled core-model below measurable from open hod-mouse frontier"
+  },
+  {
+    "id": "harmonia_d_tvo_020",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "hard",
+    "conjecture_family": "Computable enumerable degree structure",
+    "trivial_case": {
+      "description": "Friedberg-Muchnik theorem: there exist incomparable c.e. (recursively enumerable) Turing degrees strictly between 0 and 0', solving Post's problem",
+      "result": "Priority method: simultaneous finite-injury construction of A and B with A not <=_T B and B not <=_T A",
+      "proven_by": "Richard Friedberg and Albert Muchnik (independently)",
+      "year": 1957,
+      "venue": "Friedberg, PNAS 43 (1957); Muchnik, Doklady 108 (1956)",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "Whether the c.e. Turing degrees R have any non-trivial automorphism (the c.e. degrees automorphism problem); equivalently, the bi-interpretability conjecture for R",
+      "result": "Slaman-Woodin program established many definability results; Nies-Shore-Slaman (1998) showed every relation invariant under automorphisms is definable; existence of a single non-trivial automorphism remains open",
+      "status": "OPEN as of 2026"
+    },
+    "common_failure_pattern": "FM-08: model claims c.e. degrees are rigid (proved-no-automorphisms) when only partial automorphism-invariance results are known; conflates Post's problem (settled) with automorphism question (open)",
+    "doctrine_relevance": "HARD-5: substrate must distinguish settled Post's-problem solution from open c.e.-degree-automorphism question"
+  },
+  {
+    "id": "harmonia_d_tvo_021",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "hard",
+    "conjecture_family": "Square principles and approachability at successors of singulars",
+    "trivial_case": {
+      "description": "If V=L, then square_kappa holds for every uncountable cardinal kappa (Jensen's square principle); hence square_aleph_omega holds in L, and similarly approachability AP(aleph_{omega+1}) holds",
+      "result": "Jensen's fine-structural analysis of L; square_kappa is a global combinatorial principle in L",
+      "proven_by": "Ronald Jensen",
+      "year": 1972,
+      "venue": "Jensen, 'The fine structure of the constructible hierarchy', Annals of Math. Logic 4 (1972)",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "Whether the failure of square_aleph_omega together with SCH-failure at aleph_omega is consistent at strictly weaker large-cardinal strength than currently known (current: subcompact / strong compactness); precise consistency strength still being refined",
+      "result": "Magidor-Shelah, Cummings-Foreman-Magidor, Sinapova-Unger (2018): consistency from supercompact; precise lower bound below subcompact open",
+      "status": "OPEN as of 2026; precise consistency-strength calibration of square-failure + SCH-failure at aleph_omega is active"
+    },
+    "common_failure_pattern": "FM-08: model claims precise consistency strength of square-failure + SCH-failure at aleph_omega is known (only upper-bounded); conflates square in L (settled) with open consistency-calibration",
+    "doctrine_relevance": "HARD-5: substrate must distinguish settled square-in-L from open precise-strength of combined square+SCH failures"
+  },
+  {
+    "id": "harmonia_d_tvo_022",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "hard",
+    "conjecture_family": "Reverse-mathematics strength of Ramsey-type principles",
+    "trivial_case": {
+      "description": "Hindman's theorem (HT): for every finite coloring of N, there is an infinite set X subset N such that all finite sums of distinct elements of X are monochromatic. HT implies ACA_0 over RCA_0 (Blass-Hirst-Simpson 1987)",
+      "result": "Blass-Hirst-Simpson via syntactic-arithmetic reduction; HT is known to lie between ACA_0 and ACA_0^+",
+      "proven_by": "Andreas Blass, Jeffry Hirst, Stephen Simpson",
+      "year": 1987,
+      "venue": "Blass-Hirst-Simpson, 'Logical analysis of some theorems of combinatorics and topological dynamics', Contemp. Math. 65 (1987)",
+      "status": "PROVEN (HT lower bound at ACA_0 and upper bound at ACA_0^+)"
+    },
+    "open_case": {
+      "description": "The exact reverse-mathematics strength of Hindman's theorem: whether HT is equivalent to ACA_0 or to ACA_0^+ over RCA_0; Towsner and others have made partial progress, but the precise calibration is open",
+      "result": "Towsner (2012), Dzhafarov-Hirschfeldt-Lerman, and recent refinements narrow but do not close the ACA_0 vs ACA_0^+ gap",
+      "status": "OPEN as of 2026; major problem in reverse mathematics"
+    },
+    "common_failure_pattern": "FM-08: model claims HT is equivalent to ACA_0 over RCA_0 (only one direction known precisely); conflates Hindman-implies-ACA_0 (settled) with precise-strength-determination (open)",
+    "doctrine_relevance": "HARD-5: substrate must distinguish settled Hindman-implies-ACA_0 from open precise upper-bound calibration"
+  },
+  {
+    "id": "harmonia_d_tvo_023",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "hard",
+    "conjecture_family": "Forcing-axiom-implication chains and Pmax (*)-axiom",
+    "trivial_case": {
+      "description": "MM++ implies Woodin's Pmax axiom (*); equivalently, MM++ decides H(omega_2)-theory in a Pmax-canonical way",
+      "result": "Aspero-Schindler proof using a tower-forcing-+-iteration argument; settles a question open since the 1990s",
+      "proven_by": "David Aspero and Ralf Schindler",
+      "year": 2021,
+      "venue": "Annals of Mathematics 193 (2021), 'Martin's Maximum^++ implies Woodin's axiom (*)'",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "Whether PFA alone (without MM++) implies (*) — equivalently, whether PFA is sufficient to decide H(omega_2)-theory in the Pmax-canonical way; the question of whether PFA is consistent with ¬(*) is also open",
+      "result": "Aspero-Schindler proof crucially uses MM++ stationary-set-preservation, which PFA lacks; whether the result extends to PFA is conjecturally negative but not proven",
+      "status": "OPEN as of 2026"
+    },
+    "common_failure_pattern": "FM-08: model claims PFA implies (*) (false — only MM++ is known to); conflates settled MM++-implies-(*) with open PFA-vs-(*) question",
+    "doctrine_relevance": "HARD-5: substrate must distinguish settled MM++-implies-(*) (Aspero-Schindler 2021) from open PFA-vs-(*) question"
+  },
+  {
+    "id": "harmonia_d_tvo_024",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "hard",
+    "conjecture_family": "Embedding axioms and choiceless extensions",
+    "trivial_case": {
+      "description": "Kunen's inconsistency theorem: in ZFC, there is no nontrivial elementary embedding j : V -> V; equivalently, no Reinhardt cardinal exists in ZFC",
+      "result": "Kunen used the Erdos-Hajnal partition theorem to derive contradiction from j : V -> V in ZFC",
+      "proven_by": "Kenneth Kunen",
+      "year": 1971,
+      "venue": "Kunen, J. Symb. Logic 36 (1971), 'Elementary embeddings and infinitary combinatorics'",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "Whether ZF + 'there is a Reinhardt cardinal' is consistent (without Choice); whether ZF + Berkeley cardinals is consistent; whether choiceless large cardinals beyond ZFC have a coherent inner-model theory",
+      "result": "Bagaria-Koellner-Woodin (2019) established consistency strength of various choiceless large cardinals relative to each other; absolute consistency relative to ZF (or ZF + small fragments) remains open. Goldberg's recent work (2021-2024) on choiceless cardinals continues",
+      "status": "OPEN as of 2026"
+    },
+    "common_failure_pattern": "FM-08: model claims Reinhardt cardinals are inconsistent in ZF (only proven in ZFC); conflates Kunen ZFC-inconsistency (settled) with ZF-consistency (open)",
+    "doctrine_relevance": "HARD-5: substrate must distinguish settled Kunen-inconsistency-in-ZFC from open ZF-without-Choice version"
+  },
+  {
+    "id": "harmonia_d_tvo_025",
+    "harmonia": "D",
+    "domain": "logic",
+    "use_case": "trivial-vs-open",
+    "difficulty": "hard",
+    "conjecture_family": "Universally Baire sets and generic absoluteness",
+    "trivial_case": {
+      "description": "Under proper-class-many Woodin cardinals, the theory of L(R) is generically absolute: for every set forcing P, L(R)^V == L(R)^{V[G]} elementarily (for projective formulas, and more)",
+      "result": "Woodin's generic-absoluteness theorem, using stationary-tower forcing and Sigma^2_1-absoluteness",
+      "proven_by": "W. Hugh Woodin",
+      "year": 1988,
+      "venue": "Steel, Notes on Woodin's lectures; published Woodin, 'Supercompact cardinals, sets of reals, and weakly homogeneous trees', PNAS 85 (1988)",
+      "status": "PROVEN"
+    },
+    "open_case": {
+      "description": "Whether 'every set of reals is universally Baire' has the same consistency strength as 'AD_R + Theta is regular' or as 'AD^+ + V=L(P(R))'; the precise calibration of universal-Baireness with the Solovay-Theta hierarchy is open",
+      "result": "Larson-Sargsyan-Trang (2024) established partial reductions; Schlutzenberg-Trang on derived models. Precise equiconsistency of all-sets-uB with specific AD+ axioms not fully resolved",
+      "status": "OPEN as of 2026; arXiv 2106.04244 'consistency strength of determinacy when all sets are universally Baire' is partial progress"
+    },
+    "common_failure_pattern": "FM-08: model claims all-sets-uB equiconsistency with specific AD-variants is settled (only partial reductions known); conflates settled L(R)-generic-absoluteness with open uB-equiconsistency",
+    "doctrine_relevance": "HARD-5: substrate must distinguish settled L(R)-generic-absoluteness (Woodin 1988) from open all-sets-uB equiconsistency"
+  }
+]

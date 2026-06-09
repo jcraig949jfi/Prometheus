@@ -1,0 +1,358 @@
+{
+  "task": "report18p_amplitude_normalized",
+  "parent": "report18o_regime_transition",
+  "drafted_by": "Harmonia_M2_sessionD",
+  "date": "2026-04-18",
+  "model_c": "rel_dev = d1 \u00b7 X^(-1/6) + d2 \u00b7 X^(-1/3)",
+  "hypothesis": "If rel_dev is already normalized by CL(p) (which it IS \u2014 rel_dev is defined as (emp - CL)/CL), then the coefficients d1, d2 from a 2-term fit may be prime-independent. Test: is either d1 or d2 cluster-constant across primes within a family?",
+  "families": {
+    "imaginary_quadratic": {
+      "per_prime": {
+        "3": {
+          "d1": -0.5684654490495619,
+          "d2": -0.24121375835531725,
+          "chi2": 8.485803488485098e-05,
+          "r2": 0.9925953914419541,
+          "residuals": [
+            -0.0015109224393871634,
+            0.0030700414618006766,
+            0.003925812282458405,
+            -0.007598551941832787
+          ],
+          "n_buckets": 4
+        },
+        "5": {
+          "d1": -0.0855182186208159,
+          "d2": -1.1142537147808267,
+          "chi2": 8.434837237890076e-06,
+          "r2": 0.9989785379206628,
+          "residuals": [
+            -0.0005249639725356525,
+            0.001999764608117016,
+            -0.002015865921674957,
+            0.00031060612257622147
+          ],
+          "n_buckets": 4
+        },
+        "7": {
+          "d1": -0.11101569428493645,
+          "d2": -1.1374319870086973,
+          "chi2": 0.0001159290859501719,
+          "r2": 0.9878117549030654,
+          "residuals": [
+            0.001476589157759639,
+            -0.006290473335462107,
+            0.00808124656770473,
+            -0.0029786187297402324
+          ],
+          "n_buckets": 4
+        },
+        "11": {
+          "d1": -0.23843222783384427,
+          "d2": -1.2189438204973353,
+          "chi2": 0.00037798331094875966,
+          "r2": 0.9762288826653475,
+          "residuals": [
+            0.003863546359096859,
+            -0.01414400633851888,
+            0.012758541775145016,
+            -0.0004722467021444285
+          ],
+          "n_buckets": 4
+        },
+        "13": {
+          "d1": 0.27527439065450005,
+          "d2": -4.355843656468935,
+          "chi2": 0.00089342701952303,
+          "r2": 0.9863034485263681,
+          "residuals": [
+            -0.007752033301281214,
+            0.022582644629433893,
+            -0.004602539829260295,
+            -0.017383146662202163
+          ],
+          "n_buckets": 4
+        },
+        "17": {
+          "d1": 0.27570995346664234,
+          "d2": -5.206624489129253,
+          "chi2": 0.0005040158273823061,
+          "r2": 0.9949003058919125,
+          "residuals": [
+            -0.0035769862772265792,
+            0.007101503084831845,
+            0.009897401054726876,
+            -0.01851569882161767
+          ],
+          "n_buckets": 4
+        },
+        "19": {
+          "d1": 0.3100932083420024,
+          "d2": -5.966473919964589,
+          "chi2": 0.0001337636027706417,
+          "r2": 0.9989841069499433,
+          "residuals": [
+            -0.00038638382374439617,
+            -0.0011774601689105157,
+            0.008112762697011638,
+            -0.008149293176956885
+          ],
+          "n_buckets": 4
+        },
+        "23": {
+          "d1": 0.03361578068125757,
+          "d2": -5.571414899173784,
+          "chi2": 0.0011703528996219554,
+          "r2": 0.9920320353035182,
+          "residuals": [
+            0.0053787816364399,
+            -0.02167930557640274,
+            0.024963989299570888,
+            -0.006944678229069759
+          ],
+          "n_buckets": 4
+        }
+      },
+      "d1_values_by_prime": {
+        "3": -0.5684654490495619,
+        "5": -0.0855182186208159,
+        "7": -0.11101569428493645,
+        "11": -0.23843222783384427,
+        "13": 0.27527439065450005,
+        "17": 0.27570995346664234,
+        "19": 0.3100932083420024,
+        "23": 0.03361578068125757
+      },
+      "d2_values_by_prime": {
+        "3": -0.24121375835531725,
+        "5": -1.1142537147808267,
+        "7": -1.1374319870086973,
+        "11": -1.2189438204973353,
+        "13": -4.355843656468935,
+        "17": -5.206624489129253,
+        "19": -5.966473919964589,
+        "23": -5.571414899173784
+      },
+      "d1_universality": {
+        "mean": -0.0135922820805945,
+        "std": 0.30407765226071964,
+        "n": 8,
+        "max_abs_deviation": 0.5548731669689674,
+        "cv_percent": 2237.1346508092765
+      },
+      "d2_universality": {
+        "mean": -3.1015250306723425,
+        "std": 2.3858346368388488,
+        "n": 8,
+        "max_abs_deviation": 2.864948889292246,
+        "cv_percent": 76.92456495576475
+      },
+      "d1_sign_stability": {
+        "3": "neg",
+        "5": "neg",
+        "7": "neg",
+        "11": "neg",
+        "13": "pos",
+        "17": "pos",
+        "19": "pos",
+        "23": "pos"
+      },
+      "d2_sign_stability": {
+        "3": "neg",
+        "5": "neg",
+        "7": "neg",
+        "11": "neg",
+        "13": "neg",
+        "17": "neg",
+        "19": "neg",
+        "23": "neg"
+      }
+    },
+    "real_quadratic": {
+      "per_prime": {
+        "3": {
+          "d1": -1.3966713875664647,
+          "d2": -0.22080434136007854,
+          "chi2": 0.00042426947536193613,
+          "r2": 0.9924580828257057,
+          "residuals": [
+            -0.004340379537350836,
+            0.010536856676569839,
+            0.005055846624193533,
+            -0.016396452272480738
+          ],
+          "n_buckets": 4
+        },
+        "5": {
+          "d1": -0.5964918381335522,
+          "d2": -3.069124082665706,
+          "chi2": 0.00027902437284000936,
+          "r2": 0.9970195579477714,
+          "residuals": [
+            -0.004128318500963624,
+            0.011285397799955854,
+            0.00023268787866936869,
+            -0.011600302239273025
+          ],
+          "n_buckets": 4
+        },
+        "7": {
+          "d1": -1.0083523937944712,
+          "d2": -2.6294969332308367,
+          "chi2": 0.00227135836906344,
+          "r2": 0.9821791790988895,
+          "residuals": [
+            0.012139395704528932,
+            -0.03847601214164159,
+            0.018481359119372348,
+            0.01737899006758868
+          ],
+          "n_buckets": 4
+        },
+        "11": {
+          "d1": -1.4121451707917039,
+          "d2": -4.415753963416847,
+          "chi2": 0.001999472678810734,
+          "r2": 0.9931400397976755,
+          "residuals": [
+            0.008620196268618874,
+            -0.03196967626108793,
+            0.02995913626162694,
+            -0.0023568727839499426
+          ],
+          "n_buckets": 4
+        },
+        "13": {
+          "d1": -1.5816229007254174,
+          "d2": -3.948063636032766,
+          "chi2": 0.0036209044415647968,
+          "r2": 0.9873456470670632,
+          "residuals": [
+            0.008838651262439656,
+            -0.03661606545525342,
+            0.04461400435763374,
+            -0.014547750725779074
+          ],
+          "n_buckets": 4
+        },
+        "17": {
+          "d1": -2.451466187133045,
+          "d2": -2.431283543571872,
+          "chi2": 0.0057036659478241535,
+          "r2": 0.9832896875515587,
+          "residuals": [
+            0.01835003018008563,
+            -0.060592733657720665,
+            0.036745930176724506,
+            0.01857954745266721
+          ],
+          "n_buckets": 4
+        },
+        "19": {
+          "d1": -2.9930217391239147,
+          "d2": -0.6023658901216763,
+          "chi2": 0.0018275916603297053,
+          "r2": 0.9935523499161023,
+          "residuals": [
+            0.006713167215154359,
+            -0.027071068984842017,
+            0.03120600432108145,
+            -0.008710198884161746
+          ],
+          "n_buckets": 4
+        },
+        "23": {
+          "d1": -4.314522473620571,
+          "d2": 3.428741589905617,
+          "chi2": 0.006835117070428939,
+          "r2": 0.9729603914100234,
+          "residuals": [
+            0.021497644271913252,
+            -0.06309654736946702,
+            0.014470440090214587,
+            0.046716168880113984
+          ],
+          "n_buckets": 4
+        }
+      },
+      "d1_values_by_prime": {
+        "3": -1.3966713875664647,
+        "5": -0.5964918381335522,
+        "7": -1.0083523937944712,
+        "11": -1.4121451707917039,
+        "13": -1.5816229007254174,
+        "17": -2.451466187133045,
+        "19": -2.9930217391239147,
+        "23": -4.314522473620571
+      },
+      "d2_values_by_prime": {
+        "3": -0.22080434136007854,
+        "5": -3.069124082665706,
+        "7": -2.6294969332308367,
+        "11": -4.415753963416847,
+        "13": -3.948063636032766,
+        "17": -2.431283543571872,
+        "19": -0.6023658901216763,
+        "23": 3.428741589905617
+      },
+      "d1_universality": {
+        "mean": -1.9692867613611427,
+        "std": 1.2175619665363542,
+        "n": 8,
+        "max_abs_deviation": 2.345235712259429,
+        "cv_percent": 61.82756063899972
+      },
+      "d2_universality": {
+        "mean": -1.7360188500617708,
+        "std": 2.546391915084219,
+        "n": 8,
+        "max_abs_deviation": 5.164760439967388,
+        "cv_percent": 146.6799692292289
+      },
+      "d1_sign_stability": {
+        "3": "neg",
+        "5": "neg",
+        "7": "neg",
+        "11": "neg",
+        "13": "neg",
+        "17": "neg",
+        "19": "neg",
+        "23": "neg"
+      },
+      "d2_sign_stability": {
+        "3": "neg",
+        "5": "neg",
+        "7": "neg",
+        "11": "neg",
+        "13": "neg",
+        "17": "neg",
+        "19": "neg",
+        "23": "pos"
+      }
+    }
+  },
+  "verdicts": {
+    "imaginary": {
+      "d1_cv_percent": 2237.1346508092765,
+      "d2_cv_percent": 76.92456495576475,
+      "more_universal": "d2"
+    },
+    "real": {
+      "d1_cv_percent": 61.82756063899972,
+      "d2_cv_percent": 146.6799692292289,
+      "more_universal": "d1"
+    }
+  },
+  "final_verdict": "MIXED_NO_CLEAN_UNIVERSALITY",
+  "headline": "Amplitude-normalized 2-term model FAILS TO SUPPORT the regime-transition hypothesis. Neither d1 (secondary coefficient) nor d2 (error coefficient) is prime-independent within either family. d1 imag flips sign at p=13 (same numerical issue as R18o). d1 real monotone grows in magnitude with p (-0.6 \u2192 -4.3) but is not constant. Per-prime fits have R\u00b2>0.97, so the model fits each prime well \u2014 but the coefficients themselves vary with p in a way not captured by \"regime transition\" alone.",
+  "final_interpretation": {
+    "regime_transition_hypothesis": "PARTIALLY SUPPORTED / NOT CLEANLY CONFIRMED",
+    "what_we_learned": [
+      "The 2-term structure (X^(-1/6) + X^(-1/3)) can fit each prime's bucket data with R\u00b2>0.97 \u2014 the exponents are plausible.",
+      "The COEFFICIENTS (d1, d2) vary with prime in ways that go beyond the simple \"secondary dominates at p=3, error dominates at large p\" picture.",
+      "With only 4 buckets per prime, the 2-parameter fit is underdetermined \u2014 we cannot distinguish \"hypothesis false\" from \"hypothesis true but data insufficient.\""
+    ],
+    "cascade_closing_remark": "The BST-literature-confirmed 1/6 rate at p=3 (Pattern-5 reproduction) is the strongest result of the cascade. Extending it to a universal regime-transition theory at larger primes requires either (a) more LMFDB buckets (not available; we are at cutoff), (b) theoretical BST coefficient values to constrain the fit, or (c) a completely different model. We stop here.",
+    "no_further_actionable_tracks": "Model C (amplitude-normalized) was the last cheap empirical test. Its mixed result indicates data-limited territory. Further progress needs literature-level access or different data sources."
+  }
+}

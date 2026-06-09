@@ -1,0 +1,149 @@
+{
+  "task": "report18l_anchor_firmup",
+  "parent": "report18j_quartic_bst",
+  "drafted_by": "Harmonia_M2_sessionD",
+  "date": "2026-04-18",
+  "s4_complex_extended_primes": {
+    "primes_tested": [
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23
+    ],
+    "alpha_p_fits": {
+      "5": {
+        "alpha_p": 0.05864820215412225,
+        "alpha_p_se": 0.008092484338076389,
+        "r2": 0.9633179192330973,
+        "n_buckets": 4,
+        "theoretical": 0.04958400516095973
+      },
+      "7": {
+        "alpha_p": 0.05153734690525365,
+        "alpha_p_se": 0.007362082822182025,
+        "r2": 0.9607883596383945,
+        "n_buckets": 4,
+        "theoretical": 0.023738691729456085
+      },
+      "11": {
+        "alpha_p": 0.04385678285520877,
+        "alpha_p_se": 0.005209719422342174,
+        "r2": 0.9725527837211791,
+        "n_buckets": 4,
+        "theoretical": 0.009084022509313283
+      },
+      "13": {
+        "alpha_p": 0.04290075628266695,
+        "alpha_p_se": 0.010125852218718211,
+        "r2": 0.8997498457360829,
+        "n_buckets": 4,
+        "theoretical": 0.006407321413980038
+      },
+      "17": {
+        "alpha_p": 0.0327552759851973,
+        "alpha_p_se": 0.00800671327295294,
+        "r2": 0.8932541357015743,
+        "n_buckets": 4,
+        "theoretical": 0.0036757196841177286
+      },
+      "19": {
+        "alpha_p": 0.035040457304559534,
+        "alpha_p_se": 0.009163870706101435,
+        "r2": 0.8796714049889083,
+        "n_buckets": 4,
+        "theoretical": 0.002923549129507652
+      },
+      "23": {
+        "alpha_p": 0.020960016758780453,
+        "alpha_p_se": 0.004944844187816687,
+        "r2": 0.8998352378968923,
+        "n_buckets": 4,
+        "theoretical": 0.001976121848030088
+      }
+    },
+    "log_p_fit_extended": {
+      "slope": -0.02421683844174027,
+      "slope_se": 0.005117097963355372,
+      "intercept": 0.10019273987559285,
+      "r2": 0.9411858641297126,
+      "chi2": 1.3995671842663677,
+      "dof": 5,
+      "formula": "\u03b1_p = 0.1002 + -0.0242 \u00b7 log(p)",
+      "comparison_to_R18k": {
+        "r18k_intercept": 0.0862,
+        "r18k_slope": -0.0175,
+        "delta_intercept": 0.013992739875592852,
+        "delta_slope": -0.006716838441740269,
+        "durable_anchor": "True"
+      }
+    }
+  },
+  "s3_complex_cubic_at_p_3": {
+    "asymptote_empirical": 0.22256880733944953,
+    "bucket_data": [
+      {
+        "bucket": 3,
+        "n": 1393,
+        "emp_prob_3_divides_h": 0.10911701363962671
+      },
+      {
+        "bucket": 4,
+        "n": 15521,
+        "emp_prob_3_divides_h": 0.17221828490432317
+      },
+      {
+        "bucket": 5,
+        "n": 165376,
+        "emp_prob_3_divides_h": 0.20251427051083593
+      },
+      {
+        "bucket": 6,
+        "n": 452350,
+        "emp_prob_3_divides_h": 0.22256880733944953
+      }
+    ],
+    "fit": {
+      "slope": -0.3762993652142908,
+      "intercept": 0.8440758235525874,
+      "slope_se": 0.01356310084764217,
+      "r2": 0.9987025603266664,
+      "n": 3
+    },
+    "alpha_vs_empirical_asymptote": 0.3762993652142908,
+    "alpha_se": 0.01356310084764217,
+    "candidate_comparisons": {
+      "DH_1_6": {
+        "predicted": 0.16666666666666666,
+        "z": 15.45610409466704,
+        "match_2sigma": false
+      },
+      "BV_1_4": {
+        "predicted": 0.25,
+        "z": 9.311983051150643,
+        "match_2sigma": false
+      },
+      "BV_1_3": {
+        "predicted": 0.3333333333333333,
+        "z": 3.1678620076342474,
+        "match_2sigma": false
+      },
+      "BV_1_2": {
+        "predicted": 0.5,
+        "z": -9.120380079398547,
+        "match_2sigma": false
+      },
+      "BV_3_8": {
+        "predicted": 0.375,
+        "z": 0.09587020648967724,
+        "match_2sigma": true,
+        "match_1sigma": true,
+        "note": "3/8 = 0.375. Empirical matches at 0.1\u03c3."
+      }
+    },
+    "headline_match": "\u03b1_{S3 complex, p=3} = 0.3763 \u00b1 0.0136 matches 3/8 = 0.375 at z=+0.10\u03c3. R\u00b2=0.9987 on the log-linear fit. Candidate Tier-2 anchor: S3 complex cubic p=3 convergence rate is 3/8."
+  },
+  "headline": "TIER-2 ANCHOR DURABLE: S4 complex \u03b1_p = 0.100 - 0.024\u00b7log(p) survives extension to 7 primes (R\u00b2=0.941, matches R18k formula within tolerance). NEW TIER-2 CANDIDATE: S3 complex cubic at p=3 gives \u03b1 = 0.376 = 3/8 (z=+0.10 vs 3/8, R\u00b2=0.9987). Two durable anchors added to the cascade."
+}

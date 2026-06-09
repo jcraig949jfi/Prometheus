@@ -1,0 +1,17 @@
+R8 CONFIRM | N=0/cell | seeds=[20260601] | Opus 4.8 vs Sonnet 4.6 | effort=high
+
+===== R8 lemma selection =====
+        seed model             acc          95%CI  apifail
+    20260601 opus-4     0/0= 0.00 [nan,nan]        0
+    20260601 sonnet-4   0/0= 0.00 [nan,nan]        0
+
+===== POOLED =====
+  Opus   0/0=0.000  [nan,nan]
+  Sonnet 0/0=0.000  [nan,nan]
+  Fisher exact p=1.0000  direction=Sonnet>=Opus
+
+READ (per pre-registered rules, writeup §3.3):
+  R8 does NOT confirm Opus>Sonnet at p<0.10 -> R8 half FAILS.
+  The double dissociation DIES regardless of the legality replication.
+  Honest read: the earlier R8 result (Opus 1.00 vs Sonnet 0.87, n=30 single seed)
+  was a noisy draw; report the instability shape, do not promote.

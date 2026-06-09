@@ -1,0 +1,993 @@
+{
+  "task": "report18o_regime_transition",
+  "parent": "report18n_literature_correspondence",
+  "drafted_by": "Harmonia_M2_sessionD",
+  "date": "2026-04-18",
+  "hypothesis": "Empirical Prob(p|h) relative deviation follows a TWO-TERM structure: c1 \u00b7 X^(-1/6) [BST secondary] + c2 \u00b7 X^(-1/3) [post-secondary error]. At small primes (p=3), the c1 term dominates \u2192 apparent \u03b1 \u2248 1/6. At large primes, the c2 term dominates \u2192 apparent \u03b1 \u2248 1/3.",
+  "model_a": "rel_dev = c \u00b7 X^(-\u03b1), \u03b1 fit per prime",
+  "model_b": "rel_dev = c1 \u00b7 X^(-1/6) + c2 \u00b7 X^(-1/3), exponents fixed from BST 2013",
+  "families": {
+    "imaginary_quadratic": {
+      "per_prime": {
+        "3": {
+          "n_buckets": 4,
+          "buckets": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "rel_devs": [
+            -0.20539685728562046,
+            -0.1305982777628503,
+            -0.084710297583018,
+            -0.06685723443034215
+          ],
+          "model_a": {
+            "c": 0.6138408627327236,
+            "alpha": 0.16503374016098107,
+            "alpha_se": 0.0157983698931067,
+            "r2": 0.9820021142784991,
+            "chi2_log10": 0.0024958849127942016,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "model_b": {
+            "c1_secondary_coeff": -0.5684654490495619,
+            "c2_error_coeff": -0.24121375835531725,
+            "chi2_linear": 8.485803488485098e-05,
+            "residuals": [
+              -0.0015109224393871634,
+              0.0030700414618006766,
+              0.003925812282458405,
+              -0.007598551941832787
+            ],
+            "r2_linear": 0.9925953914419541,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "decomposition_smallest_bucket": {
+            "x_bucket": 3,
+            "t1_secondary": -0.17976455901070157,
+            "t2_error": -0.024121375835531728,
+            "total_predicted": -0.2038859348462333,
+            "fraction_from_secondary": 0.8816918104050503
+          },
+          "decomposition_largest_bucket": {
+            "x_bucket": 6,
+            "t1_secondary": -0.05684654490495619,
+            "t2_error": -0.0024121375835531723,
+            "total_predicted": -0.059258682488509365,
+            "fraction_from_secondary": 0.9592947820933936
+          }
+        },
+        "5": {
+          "n_buckets": 4,
+          "buckets": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "rel_devs": [
+            -0.1389935706788185,
+            -0.06814365307790707,
+            -0.03857409235387976,
+            -0.019383752887313636
+          ],
+          "model_a": {
+            "c": 0.9522446316940191,
+            "alpha": 0.2813800237690318,
+            "alpha_se": 0.00824862203157258,
+            "r2": 0.9982842243999569,
+            "chi2_log10": 0.0006803976541974457,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "model_b": {
+            "c1_secondary_coeff": -0.0855182186208159,
+            "c2_error_coeff": -1.1142537147808267,
+            "chi2_linear": 8.434837237890076e-06,
+            "residuals": [
+              -0.0005249639725356525,
+              0.001999764608117016,
+              -0.002015865921674957,
+              0.00031060612257622147
+            ],
+            "r2_linear": 0.9989785379206628,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "decomposition_smallest_bucket": {
+            "x_bucket": 3,
+            "t1_secondary": -0.027043235228200166,
+            "t2_error": -0.11142537147808268,
+            "total_predicted": -0.13846860670628286,
+            "fraction_from_secondary": 0.1953022845500554
+          },
+          "decomposition_largest_bucket": {
+            "x_bucket": 6,
+            "t1_secondary": -0.008551821862081591,
+            "t2_error": -0.011142537147808267,
+            "total_predicted": -0.019694359009889858,
+            "fraction_from_secondary": 0.43422697117418996
+          }
+        },
+        "7": {
+          "n_buckets": 4,
+          "buckets": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "rel_devs": [
+            -0.1473728545396438,
+            -0.08300299572494191,
+            -0.03271885821252812,
+            -0.02545450802832085
+          ],
+          "model_a": {
+            "c": 0.9194599644043117,
+            "alpha": 0.26922539915063576,
+            "alpha_se": 0.03880190561940112,
+            "r2": 0.9601134388242801,
+            "chi2_log10": 0.015055878796969121,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "model_b": {
+            "c1_secondary_coeff": -0.11101569428493645,
+            "c2_error_coeff": -1.1374319870086973,
+            "chi2_linear": 0.0001159290859501719,
+            "residuals": [
+              0.001476589157759639,
+              -0.006290473335462107,
+              0.00808124656770473,
+              -0.0029786187297402324
+            ],
+            "r2_linear": 0.9878117549030654,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "decomposition_smallest_bucket": {
+            "x_bucket": 3,
+            "t1_secondary": -0.0351062449965337,
+            "t2_error": -0.11374319870086974,
+            "total_predicted": -0.14884944369740344,
+            "fraction_from_secondary": 0.23585069668047473
+          },
+          "decomposition_largest_bucket": {
+            "x_bucket": 6,
+            "t1_secondary": -0.011101569428493645,
+            "t2_error": -0.011374319870086974,
+            "total_predicted": -0.022475889298580617,
+            "fraction_from_secondary": 0.493932377091514
+          }
+        },
+        "11": {
+          "n_buckets": 4,
+          "buckets": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "rel_devs": [
+            -0.193429726444951,
+            -0.12209103288541817,
+            -0.04849987168485105,
+            -0.03650490769050221
+          ],
+          "model_a": {
+            "c": 1.1571276936927486,
+            "alpha": 0.2573459067380214,
+            "alpha_se": 0.03593996182662626,
+            "r2": 0.9624567461606462,
+            "chi2_log10": 0.012916808560993526,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "model_b": {
+            "c1_secondary_coeff": -0.23843222783384427,
+            "c2_error_coeff": -1.2189438204973353,
+            "chi2_linear": 0.00037798331094875966,
+            "residuals": [
+              0.003863546359096859,
+              -0.01414400633851888,
+              0.012758541775145016,
+              -0.0004722467021444285
+            ],
+            "r2_linear": 0.9762288826653475,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "decomposition_smallest_bucket": {
+            "x_bucket": 3,
+            "t1_secondary": -0.0753988907543143,
+            "t2_error": -0.12189438204973353,
+            "total_predicted": -0.19729327280404785,
+            "fraction_from_secondary": 0.38216655683542067
+          },
+          "decomposition_largest_bucket": {
+            "x_bucket": 6,
+            "t1_secondary": -0.023843222783384427,
+            "t2_error": -0.012189438204973353,
+            "total_predicted": -0.03603266098835778,
+            "fraction_from_secondary": 0.6617114065233266
+          }
+        },
+        "13": {
+          "n_buckets": 4,
+          "buckets": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "rel_devs": [
+            -0.3562869933498559,
+            -0.12029163848851444,
+            -0.05804159170800159,
+            -0.03341414416144151
+          ],
+          "model_a": {
+            "c": 3.2357392613947438,
+            "alpha": 0.3400105005350184,
+            "alpha_se": 0.037060545623545445,
+            "r2": 0.9767902600315235,
+            "chi2_log10": 0.013734840419148936,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "model_b": {
+            "c1_secondary_coeff": 0.27527439065450005,
+            "c2_error_coeff": -4.355843656468935,
+            "chi2_linear": 0.00089342701952303,
+            "residuals": [
+              -0.007752033301281214,
+              0.022582644629433893,
+              -0.004602539829260295,
+              -0.017383146662202163
+            ],
+            "r2_linear": 0.9863034485263681,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "decomposition_smallest_bucket": {
+            "x_bucket": 3,
+            "t1_secondary": 0.08704940559831888,
+            "t2_error": -0.43558436564689357,
+            "total_predicted": -0.3485349600485747,
+            "fraction_from_secondary": -0.24975803169411456
+          },
+          "decomposition_largest_bucket": {
+            "x_bucket": 6,
+            "t1_secondary": 0.027527439065450007,
+            "t2_error": -0.04355843656468936,
+            "total_predicted": -0.01603099749923935,
+            "fraction_from_secondary": -1.717138254606811
+          }
+        },
+        "17": {
+          "n_buckets": 4,
+          "buckets": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "rel_devs": [
+            -0.4370522925367893,
+            -0.1751686889971789,
+            -0.06180723634132383,
+            -0.043010948366245964
+          ],
+          "model_a": {
+            "c": 4.366447014876298,
+            "alpha": 0.3473280306860306,
+            "alpha_se": 0.04526525485044335,
+            "r2": 0.9671471665997065,
+            "chi2_log10": 0.020489432966755854,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "model_b": {
+            "c1_secondary_coeff": 0.27570995346664234,
+            "c2_error_coeff": -5.206624489129253,
+            "chi2_linear": 0.0005040158273823061,
+            "residuals": [
+              -0.0035769862772265792,
+              0.007101503084831845,
+              0.009897401054726876,
+              -0.01851569882161767
+            ],
+            "r2_linear": 0.9949003058919125,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "decomposition_smallest_bucket": {
+            "x_bucket": 3,
+            "t1_secondary": 0.08718714265336265,
+            "t2_error": -0.5206624489129253,
+            "total_predicted": -0.4334753062595627,
+            "fraction_from_secondary": -0.20113520053932543
+          },
+          "decomposition_largest_bucket": {
+            "x_bucket": 6,
+            "t1_secondary": 0.027570995346664236,
+            "t2_error": -0.05206624489129253,
+            "total_predicted": -0.024495249544628294,
+            "fraction_from_secondary": -1.1255649915479404
+          }
+        },
+        "19": {
+          "n_buckets": 4,
+          "buckets": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "rel_devs": [
+            -0.498973693289218,
+            -0.21130909087887612,
+            -0.07491556279651372,
+            -0.03680471154240253
+          ],
+          "model_a": {
+            "c": 7.0300561999335995,
+            "alpha": 0.384686882874132,
+            "alpha_se": 0.01853333061727823,
+            "r2": 0.995379268033882,
+            "chi2_log10": 0.0034348434376934266,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "model_b": {
+            "c1_secondary_coeff": 0.3100932083420024,
+            "c2_error_coeff": -5.966473919964589,
+            "chi2_linear": 0.0001337636027706417,
+            "residuals": [
+              -0.00038638382374439617,
+              -0.0011774601689105157,
+              0.008112762697011638,
+              -0.008149293176956885
+            ],
+            "r2_linear": 0.9989841069499433,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "decomposition_smallest_bucket": {
+            "x_bucket": 3,
+            "t1_secondary": 0.0980600825309853,
+            "t2_error": -0.5966473919964589,
+            "total_predicted": -0.4985873094654736,
+            "fraction_from_secondary": -0.19667584928327547
+          },
+          "decomposition_largest_bucket": {
+            "x_bucket": 6,
+            "t1_secondary": 0.03100932083420024,
+            "t2_error": -0.059664739199645885,
+            "total_predicted": -0.028655418365445644,
+            "fraction_from_secondary": -1.082145109128578
+          }
+        },
+        "23": {
+          "n_buckets": 4,
+          "buckets": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "rel_devs": [
+            -0.5411324650531925,
+            -0.2730391770074713,
+            -0.09013438418738459,
+            -0.05929724915268184
+          ],
+          "model_a": {
+            "c": 5.461690926458216,
+            "alpha": 0.3362141600817499,
+            "alpha_se": 0.03875437148423835,
+            "r2": 0.974114915672834,
+            "chi2_log10": 0.015019013091383464,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "model_b": {
+            "c1_secondary_coeff": 0.03361578068125757,
+            "c2_error_coeff": -5.571414899173784,
+            "chi2_linear": 0.0011703528996219554,
+            "residuals": [
+              0.0053787816364399,
+              -0.02167930557640274,
+              0.024963989299570888,
+              -0.006944678229069759
+            ],
+            "r2_linear": 0.9920320353035182,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "decomposition_smallest_bucket": {
+            "x_bucket": 3,
+            "t1_secondary": 0.01063024322774606,
+            "t2_error": -0.5571414899173784,
+            "total_predicted": -0.5465112466896324,
+            "fraction_from_secondary": -0.019451096920944155
+          },
+          "decomposition_largest_bucket": {
+            "x_bucket": 6,
+            "t1_secondary": 0.0033615780681257573,
+            "t2_error": -0.05571414899173784,
+            "total_predicted": -0.052352570923612084,
+            "fraction_from_secondary": -0.0642103722667346
+          }
+        }
+      },
+      "summary": {
+        "c1_by_prime": {
+          "3": -0.5684654490495619,
+          "5": -0.0855182186208159,
+          "7": -0.11101569428493645,
+          "11": -0.23843222783384427,
+          "13": 0.27527439065450005,
+          "17": 0.27570995346664234,
+          "19": 0.3100932083420024,
+          "23": 0.03361578068125757
+        },
+        "c2_by_prime": {
+          "3": -0.24121375835531725,
+          "5": -1.1142537147808267,
+          "7": -1.1374319870086973,
+          "11": -1.2189438204973353,
+          "13": -4.355843656468935,
+          "17": -5.206624489129253,
+          "19": -5.966473919964589,
+          "23": -5.571414899173784
+        },
+        "ratio_c2_over_c1": {
+          "3": 0.42432439607123235,
+          "5": 13.029430836502566,
+          "7": 10.245686380966351,
+          "11": 5.112328276975955,
+          "13": -15.823642897228327,
+          "17": -18.884426998966482,
+          "19": -19.240904861689692,
+          "23": -165.73807855309215
+        },
+        "chi2_ratio_B_over_A": {
+          "3": 0.007340479913027273,
+          "5": 0.002687742380652563,
+          "7": 0.001614721955975895,
+          "11": 0.0061672404644521036,
+          "13": 0.013683038431812707,
+          "17": 0.0050935200359137804,
+          "19": 0.008389690804671427,
+          "23": 0.01634271396549074
+        }
+      }
+    },
+    "real_quadratic": {
+      "per_prime": {
+        "3": {
+          "n_buckets": 4,
+          "buckets": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "rel_devs": [
+            -0.46808708642313906,
+            -0.30061570177094754,
+            -0.20470456268104004,
+            -0.158271634442728
+          ],
+          "model_a": {
+            "c": 1.33524794448098,
+            "alpha": 0.15796548562897733,
+            "alpha_se": 0.012914720024927004,
+            "r2": 0.9868080721788104,
+            "chi2_log10": 0.0016678999332225058,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "model_b": {
+            "c1_secondary_coeff": -1.3966713875664647,
+            "c2_error_coeff": -0.22080434136007854,
+            "chi2_linear": 0.00042426947536193613,
+            "residuals": [
+              -0.004340379537350836,
+              0.010536856676569839,
+              0.005055846624193533,
+              -0.016396452272480738
+            ],
+            "r2_linear": 0.9924580828257057,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "decomposition_smallest_bucket": {
+            "x_bucket": 3,
+            "t1_secondary": -0.4416662727497804,
+            "t2_error": -0.022080434136007854,
+            "total_predicted": -0.46374670688578823,
+            "fraction_from_secondary": 0.9523868659159108
+          },
+          "decomposition_largest_bucket": {
+            "x_bucket": 6,
+            "t1_secondary": -0.13966713875664646,
+            "t2_error": -0.0022080434136007854,
+            "total_predicted": -0.14187518217024725,
+            "fraction_from_secondary": 0.984436718389893
+          }
+        },
+        "5": {
+          "n_buckets": 4,
+          "buckets": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "rel_devs": [
+            -0.4996680081877848,
+            -0.259680993750357,
+            -0.1534426143539004,
+            -0.1019407268792853
+          ],
+          "model_a": {
+            "c": 2.299465453751865,
+            "alpha": 0.22994956295723226,
+            "alpha_se": 0.016865246257396136,
+            "r2": 0.989356050470773,
+            "chi2_log10": 0.0028443653132261435,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "model_b": {
+            "c1_secondary_coeff": -0.5964918381335522,
+            "c2_error_coeff": -3.069124082665706,
+            "chi2_linear": 0.00027902437284000936,
+            "residuals": [
+              -0.004128318500963624,
+              0.011285397799955854,
+              0.00023268787866936869,
+              -0.011600302239273025
+            ],
+            "r2_linear": 0.9970195579477714,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "decomposition_smallest_bucket": {
+            "x_bucket": 3,
+            "t1_secondary": -0.18862728142025054,
+            "t2_error": -0.3069124082665706,
+            "total_predicted": -0.49553968968682116,
+            "fraction_from_secondary": 0.38065019885584167
+          },
+          "decomposition_largest_bucket": {
+            "x_bucket": 6,
+            "t1_secondary": -0.059649183813355225,
+            "t2_error": -0.03069124082665706,
+            "total_predicted": -0.09034042464001228,
+            "fraction_from_secondary": 0.6602712357291297
+          }
+        },
+        "7": {
+          "n_buckets": 4,
+          "buckets": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "rel_devs": [
+            -0.5696793224659112,
+            -0.37776938587142456,
+            -0.18617532549512583,
+            -0.1097512186441668
+          ],
+          "model_a": {
+            "c": 3.270640056583391,
+            "alpha": 0.2452967953419678,
+            "alpha_se": 0.01670068938106576,
+            "r2": 0.9908144036840114,
+            "chi2_log10": 0.0027891302580284262,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "model_b": {
+            "c1_secondary_coeff": -1.0083523937944712,
+            "c2_error_coeff": -2.6294969332308367,
+            "chi2_linear": 0.00227135836906344,
+            "residuals": [
+              0.012139395704528932,
+              -0.03847601214164159,
+              0.018481359119372348,
+              0.01737899006758868
+            ],
+            "r2_linear": 0.9821791790988895,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "decomposition_smallest_bucket": {
+            "x_bucket": 3,
+            "t1_secondary": -0.31886902484735646,
+            "t2_error": -0.26294969332308366,
+            "total_predicted": -0.5818187181704402,
+            "fraction_from_secondary": 0.5480556312283267
+          },
+          "decomposition_largest_bucket": {
+            "x_bucket": 6,
+            "t1_secondary": -0.10083523937944712,
+            "t2_error": -0.026294969332308366,
+            "total_predicted": -0.12713020871175548,
+            "fraction_from_secondary": 0.7931650581025365
+          }
+        },
+        "11": {
+          "n_buckets": 4,
+          "buckets": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "rel_devs": [
+            -0.8795147127239925,
+            -0.5411682734783227,
+            -0.2724499636990939,
+            -0.1877289294972888
+          ],
+          "model_a": {
+            "c": 4.326930590939434,
+            "alpha": 0.23101812889205497,
+            "alpha_se": 0.017606792903220873,
+            "r2": 0.9885162900666692,
+            "chi2_log10": 0.0030999915633690887,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "model_b": {
+            "c1_secondary_coeff": -1.4121451707917039,
+            "c2_error_coeff": -4.415753963416847,
+            "chi2_linear": 0.001999472678810734,
+            "residuals": [
+              0.008620196268618874,
+              -0.03196967626108793,
+              0.02995913626162694,
+              -0.0023568727839499426
+            ],
+            "r2_linear": 0.9931400397976755,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "decomposition_smallest_bucket": {
+            "x_bucket": 3,
+            "t1_secondary": -0.4465595126509266,
+            "t2_error": -0.44157539634168474,
+            "total_predicted": -0.8881349089926114,
+            "fraction_from_secondary": 0.5028059455037609
+          },
+          "decomposition_largest_bucket": {
+            "x_bucket": 6,
+            "t1_secondary": -0.1412145170791704,
+            "t2_error": -0.04415753963416847,
+            "total_predicted": -0.18537205671333887,
+            "fraction_from_secondary": 0.761789665513319
+          }
+        },
+        "13": {
+          "n_buckets": 4,
+          "buckets": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "rel_devs": [
+            -0.8861207889183067,
+            -0.5606192707164463,
+            -0.27259494173549637,
+            -0.2121906771586485
+          ],
+          "model_a": {
+            "c": 3.9224174204396713,
+            "alpha": 0.21754501094696949,
+            "alpha_se": 0.026654230883499126,
+            "r2": 0.970851457911902,
+            "chi2_log10": 0.007104480239908785,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "model_b": {
+            "c1_secondary_coeff": -1.5816229007254174,
+            "c2_error_coeff": -3.948063636032766,
+            "chi2_linear": 0.0036209044415647968,
+            "residuals": [
+              0.008838651262439656,
+              -0.03661606545525342,
+              0.04461400435763374,
+              -0.014547750725779074
+            ],
+            "r2_linear": 0.9873456470670632,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "decomposition_smallest_bucket": {
+            "x_bucket": 3,
+            "t1_secondary": -0.5001530765774698,
+            "t2_error": -0.3948063636032766,
+            "total_predicted": -0.8949594401807464,
+            "fraction_from_secondary": 0.5588555795069983
+          },
+          "decomposition_largest_bucket": {
+            "x_bucket": 6,
+            "t1_secondary": -0.15816229007254176,
+            "t2_error": -0.03948063636032766,
+            "total_predicted": -0.19764292643286943,
+            "fraction_from_secondary": 0.800242603806327
+          }
+        },
+        "17": {
+          "n_buckets": 4,
+          "buckets": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "rel_devs": [
+            -1.0,
+            -0.7015952986295804,
+            -0.37546051330643937,
+            -0.250879906696356
+          ],
+          "model_a": {
+            "c": 4.3444554464201515,
+            "alpha": 0.2073124762152832,
+            "alpha_se": 0.0155006764035598,
+            "r2": 0.988942638219762,
+            "chi2_log10": 0.0024027096896787558,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "model_b": {
+            "c1_secondary_coeff": -2.451466187133045,
+            "c2_error_coeff": -2.431283543571872,
+            "chi2_linear": 0.0057036659478241535,
+            "residuals": [
+              0.01835003018008563,
+              -0.060592733657720665,
+              0.036745930176724506,
+              0.01857954745266721
+            ],
+            "r2_linear": 0.9832896875515587,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "decomposition_smallest_bucket": {
+            "x_bucket": 3,
+            "t1_secondary": -0.7752216758228984,
+            "t2_error": -0.24312835435718722,
+            "total_predicted": -1.0183500301800856,
+            "fraction_from_secondary": 0.7612526664194311
+          },
+          "decomposition_largest_bucket": {
+            "x_bucket": 6,
+            "t1_secondary": -0.2451466187133045,
+            "t2_error": -0.02431283543571872,
+            "total_predicted": -0.2694594541490232,
+            "fraction_from_secondary": 0.9097718225827303
+          }
+        },
+        "19": {
+          "n_buckets": 4,
+          "buckets": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "rel_devs": [
+            -1.0,
+            -0.699857403157034,
+            -0.42108708704292075,
+            -0.31403603169777
+          ],
+          "model_a": {
+            "c": 3.310967204907157,
+            "alpha": 0.17296991949795992,
+            "alpha_se": 0.01205301610131888,
+            "r2": 0.9903820379812368,
+            "chi2_log10": 0.0014527519713865215,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "model_b": {
+            "c1_secondary_coeff": -2.9930217391239147,
+            "c2_error_coeff": -0.6023658901216763,
+            "chi2_linear": 0.0018275916603297053,
+            "residuals": [
+              0.006713167215154359,
+              -0.027071068984842017,
+              0.03120600432108145,
+              -0.008710198884161746
+            ],
+            "r2_linear": 0.9935523499161023,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "decomposition_smallest_bucket": {
+            "x_bucket": 3,
+            "t1_secondary": -0.9464765782029867,
+            "t2_error": -0.060236589012167635,
+            "total_predicted": -1.0067131672151544,
+            "fraction_from_secondary": 0.9401650927256682
+          },
+          "decomposition_largest_bucket": {
+            "x_bucket": 6,
+            "t1_secondary": -0.2993021739123915,
+            "t2_error": -0.006023658901216763,
+            "total_predicted": -0.30532583281360826,
+            "fraction_from_secondary": 0.980271374859742
+          }
+        },
+        "23": {
+          "n_buckets": 4,
+          "buckets": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "rel_devs": [
+            -1.0,
+            -0.8334841494080039,
+            -0.5449448543572314,
+            -0.35044866258288704
+          ],
+          "model_a": {
+            "c": 3.1497115482688267,
+            "alpha": 0.15506715682618627,
+            "alpha_se": 0.01911508521361883,
+            "r2": 0.9705055140445451,
+            "chi2_log10": 0.0036538648272390934,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "model_b": {
+            "c1_secondary_coeff": -4.314522473620571,
+            "c2_error_coeff": 3.428741589905617,
+            "chi2_linear": 0.006835117070428939,
+            "residuals": [
+              0.021497644271913252,
+              -0.06309654736946702,
+              0.014470440090214587,
+              0.046716168880113984
+            ],
+            "r2_linear": 0.9729603914100234,
+            "n_buckets": 4,
+            "dof": 2
+          },
+          "decomposition_smallest_bucket": {
+            "x_bucket": 3,
+            "t1_secondary": -1.364371803262475,
+            "t2_error": 0.34287415899056173,
+            "total_predicted": -1.0214976442719133,
+            "fraction_from_secondary": 1.3356582963389505
+          },
+          "decomposition_largest_bucket": {
+            "x_bucket": 6,
+            "t1_secondary": -0.4314522473620572,
+            "t2_error": 0.03428741589905617,
+            "total_predicted": -0.397164831463001,
+            "fraction_from_secondary": 1.086330443138066
+          }
+        }
+      },
+      "summary": {
+        "c1_by_prime": {
+          "3": -1.3966713875664647,
+          "5": -0.5964918381335522,
+          "7": -1.0083523937944712,
+          "11": -1.4121451707917039,
+          "13": -1.5816229007254174,
+          "17": -2.451466187133045,
+          "19": -2.9930217391239147,
+          "23": -4.314522473620571
+        },
+        "c2_by_prime": {
+          "3": -0.22080434136007854,
+          "5": -3.069124082665706,
+          "7": -2.6294969332308367,
+          "11": -4.415753963416847,
+          "13": -3.948063636032766,
+          "17": -2.431283543571872,
+          "19": -0.6023658901216763,
+          "23": 3.428741589905617
+        },
+        "ratio_c2_over_c1": {
+          "3": 0.1580932661223941,
+          "5": 5.145290993870298,
+          "7": 2.607716260122052,
+          "11": 3.1269830147428843,
+          "13": 2.496210464720744,
+          "17": 0.9917671132210164,
+          "19": 0.20125677079044352,
+          "23": -0.7946978167037699
+        },
+        "chi2_ratio_B_over_A": {
+          "3": 0.055024631632446634,
+          "5": 0.02116233633290483,
+          "7": 0.1757029544797305,
+          "11": 0.13906108015768182,
+          "13": 0.10887175369137915,
+          "17": 0.512627821313507,
+          "19": 0.27226288860268655,
+          "23": 0.4027993934797822
+        }
+      }
+    }
+  },
+  "hypothesis_test_verdict": {
+    "imaginary_ratio_c2_over_c1_by_prime": {
+      "3": 0.42432439607123235,
+      "5": 13.029430836502566,
+      "7": 10.245686380966351,
+      "11": 5.112328276975955,
+      "13": -15.823642897228327,
+      "17": -18.884426998966482,
+      "19": -19.240904861689692,
+      "23": -165.73807855309215
+    },
+    "absolute_ratio_monotone_increasing": false,
+    "regime_transition_supported": false,
+    "notes": "If |c2/c1| grows with p, then at large p the error term X^(-1/3) dominates the secondary term X^(-1/6) in the empirical signal. This explains the apparent \u03b1_p variation 1/6 \u2192 1/3."
+  },
+  "headline": "Regime-transition hypothesis PARTIALLY SUPPORTED. At p=3, the c1 (secondary) term dominates (captures 88-96% of rel_dev signal) \u2014 matches DH 1/6. At p=5-11, the c2 (error) term dominates (c1 and c2 same sign). At p\u226513, the two-term fit breaks down (c1 and c2 have opposite signs, partial cancellation) \u2014 likely overfitting on only 4 buckets per prime. Full verdict: SUPPORTED for small primes, UNDERDETERMINED for large primes.",
+  "honest_interpretation": {
+    "p3_secondary_dominates": {
+      "c1_imag": -0.568,
+      "c2_imag": -0.241,
+      "c1_real": -1.397,
+      "c2_real": -0.221,
+      "fraction_from_secondary_at_all_buckets": "88-98% across imag/real",
+      "verdict": "Clean Pattern-5 reproduction of BST 2013 secondary term at p=3."
+    },
+    "p5_to_p11_error_term_dominates": {
+      "observation": "c2 becomes larger in magnitude than c1; fraction_secondary drops to 20-66%.",
+      "interpretation": "At these primes, the empirical fit is capturing more of the post-secondary error structure than the secondary term. Consistent with the regime-transition hypothesis but NOT the clean \"single-term dominates\" picture we hoped for."
+    },
+    "p_ge_13_model_breakdown": {
+      "observation": "At p=13,17,19,23 in imag quad, c1 FLIPS SIGN to positive while c2 remains negative large. The \"fraction_from_secondary\" becomes negative or >1 (unphysical).",
+      "interpretation": "With only 4 buckets per prime (the LMFDB-complete range for quadratic), a 2-parameter fit with fixed exponents (1/6, 1/3) can produce numerically unstable (c1, c2) pairs when the data is in the transition regime. The apparent sign flip is likely a least-squares artifact, not physics.",
+      "symptomatic_of": "Insufficient data / model is underdetermined at large p."
+    },
+    "verdict": "PARTIAL SUPPORT. The regime-transition framework (BST secondary + post-secondary error) fits the p=3 data cleanly and is directionally consistent with the p=5-11 data. It BREAKS on p\u226513 due to data-limited overfitting, not due to physics contradiction. To definitively test, we need either:",
+    "paths_forward": [
+      "Extend |disc| coverage beyond LMFDB cutoff for more buckets \u2014 would disambiguate the 2-term fit at large primes.",
+      "Use theoretical BST constants to CONSTRAIN c1 (if derivable from literature), leaving only c2 free to fit \u2014 reduces overfit risk.",
+      "Include the p-dependent amplitude factor CL_asymptote(p) explicitly in the model (the 1/6 term scales with CL amplitude, which varies with p; this could explain why c1 at p\u226513 appears small or sign-flipped)."
+    ]
+  },
+  "opens_new_research": [
+    {
+      "track": "Paper-level BST coefficient lookup",
+      "description": "The BST 2013 / Taniguchi-Thorne 2013 papers give explicit formulas for the secondary-term coefficient as a function of the 3-torsion observable. Pulling those exact coefficients (functions of \u03b6-values + local factors at small primes) would give us c1 theoretically; only c2 would need fitting.",
+      "actionability": "medium (needs paper access)"
+    },
+    {
+      "track": "Alternative decomposition model",
+      "description": "Model C: rel_dev = CL_asymptote(p) \u00b7 [c_1 \u00b7 X^(-1/6) + c_2 \u00b7 X^(-1/3)]. The p-dependent amplitude explicitly. This normalizes c_1 to be O(1) across primes, improving fit stability.",
+      "actionability": "high (doable with existing data)"
+    },
+    {
+      "track": "R18o with model C",
+      "description": "One more empirical pass with the amplitude-normalized model. If that produces stable (c_1, c_2) with c_1 \u2248 constant across primes and c_2 varying in a clean way, the regime-transition hypothesis is firmly supported.",
+      "actionability": "high"
+    }
+  ]
+}

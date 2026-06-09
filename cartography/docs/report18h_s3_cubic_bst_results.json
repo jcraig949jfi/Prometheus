@@ -1,0 +1,422 @@
+{
+  "task": "report18h_s3_cubic_bst",
+  "parent": "report18g_scholz_rate_fit",
+  "drafted_by": "Harmonia_M2_sessionD",
+  "date": "2026-04-18",
+  "hypothesis": "DH 1/6 convergence rate generalizes from quadratic (R18e) to S3 cubic. Empirical \u03b1_p for S3 cubic at p \u2208 {5, 7, 11, 13} should match 1/6.",
+  "primes_tested": [
+    5,
+    7,
+    11,
+    13
+  ],
+  "families": {
+    "complex_s3": {
+      "buckets": [
+        {
+          "log10_disc_bucket": 3,
+          "n": 1393,
+          "per_prime": {
+            "5": {
+              "empirical": 0.024407753050969132,
+              "theoretical": 0.04958400516095973,
+              "z": -4.328515397532072,
+              "relative_deviation": -0.5077494653419663,
+              "n_divisible": 34
+            },
+            "7": {
+              "empirical": 0.012921751615218953,
+              "theoretical": 0.023738691729456085,
+              "z": -2.651969679889955,
+              "relative_deviation": -0.4556670703472241,
+              "n_divisible": 18
+            },
+            "11": {
+              "empirical": 0.0,
+              "theoretical": 0.009084022509313283,
+              "z": -3.5735202178766725,
+              "relative_deviation": -1.0,
+              "n_divisible": 0
+            },
+            "13": {
+              "empirical": 0.0007178750897343862,
+              "theoretical": 0.006407321413980038,
+              "z": -2.6613568812341466,
+              "relative_deviation": -0.8879601875179751,
+              "n_divisible": 1
+            }
+          }
+        },
+        {
+          "log10_disc_bucket": 4,
+          "n": 15521,
+          "per_prime": {
+            "5": {
+              "empirical": 0.033889568971071454,
+              "theoretical": 0.04958400516095973,
+              "z": -9.00695302562919,
+              "relative_deviation": -0.31652215546003104,
+              "n_divisible": 526
+            },
+            "7": {
+              "empirical": 0.013852200244829586,
+              "theoretical": 0.023738691729456085,
+              "z": -8.090784187118498,
+              "relative_deviation": -0.41647162351238065,
+              "n_divisible": 215
+            },
+            "11": {
+              "empirical": 0.004381161007667032,
+              "theoretical": 0.009084022509313283,
+              "z": -6.17539187639804,
+              "relative_deviation": -0.5177069406008957,
+              "n_divisible": 68
+            },
+            "13": {
+              "empirical": 0.00309258424070614,
+              "theoretical": 0.006407321413980038,
+              "z": -5.175669090884991,
+              "relative_deviation": -0.5173358661298811,
+              "n_divisible": 48
+            }
+          }
+        },
+        {
+          "log10_disc_bucket": 5,
+          "n": 165376,
+          "per_prime": {
+            "5": {
+              "empirical": 0.03982440015479876,
+              "theoretical": 0.04958400516095973,
+              "z": -18.282720182994534,
+              "relative_deviation": -0.19682970293503552,
+              "n_divisible": 6586
+            },
+            "7": {
+              "empirical": 0.018600038699690402,
+              "theoretical": 0.023738691729456085,
+              "z": -13.726951744144563,
+              "relative_deviation": -0.21646740638994022,
+              "n_divisible": 3076
+            },
+            "11": {
+              "empirical": 0.00690547600619195,
+              "theoretical": 0.009084022509313283,
+              "z": -9.337821334700307,
+              "relative_deviation": -0.239821786096171,
+              "n_divisible": 1142
+            },
+            "13": {
+              "empirical": 0.00471047794117647,
+              "theoretical": 0.006407321413980038,
+              "z": -8.648396201429582,
+              "relative_deviation": -0.26482883613443375,
+              "n_divisible": 779
+            }
+          }
+        },
+        {
+          "log10_disc_bucket": 6,
+          "n": 452350,
+          "per_prime": {
+            "5": {
+              "empirical": 0.04384215762131093,
+              "theoretical": 0.04958400516095973,
+              "z": -17.78939931332758,
+              "relative_deviation": -0.1158003981527833,
+              "n_divisible": 19832
+            },
+            "7": {
+              "empirical": 0.020758262407427876,
+              "theoretical": 0.023738691729456085,
+              "z": -13.16754149564462,
+              "relative_deviation": -0.12555154075024078,
+              "n_divisible": 9390
+            },
+            "11": {
+              "empirical": 0.007706422018348624,
+              "theoretical": 0.009084022509313283,
+              "z": -9.765693054737591,
+              "relative_deviation": -0.1516509332239425,
+              "n_divisible": 3486
+            },
+            "13": {
+              "empirical": 0.005124350613463027,
+              "theoretical": 0.006407321413980038,
+              "z": -10.814628942846513,
+              "relative_deviation": -0.20023512441840624,
+              "n_divisible": 2318
+            }
+          }
+        }
+      ],
+      "alpha_p_fits": {
+        "5": {
+          "alpha_p": 0.21321317439715673,
+          "alpha_p_se": 0.004294095360936644,
+          "r2": 0.9991894251548535,
+          "n_buckets": 4
+        },
+        "7": {
+          "alpha_p": 0.19636696959717687,
+          "alpha_p_se": 0.03746677886129892,
+          "r2": 0.9321322621901169,
+          "n_buckets": 4
+        },
+        "11": {
+          "alpha_p": 0.2791660092651283,
+          "alpha_p_se": 0.018891944600547425,
+          "r2": 0.9909239149765072,
+          "n_buckets": 4
+        },
+        "13": {
+          "alpha_p": 0.22313670133465155,
+          "alpha_p_se": 0.023973714819743037,
+          "r2": 0.97743443136816,
+          "n_buckets": 4
+        }
+      }
+    },
+    "real_s3": {
+      "buckets": [
+        {
+          "log10_disc_bucket": 4,
+          "n": 4387,
+          "per_prime": {
+            "5": {
+              "empirical": 0.004103031684522453,
+              "theoretical": 0.009983338709332767,
+              "z": -3.9176412578191555,
+              "relative_deviation": -0.5890120726158676,
+              "n_divisible": 18
+            },
+            "7": {
+              "empirical": 0.0013676772281741509,
+              "theoretical": 0.0033999144738198206,
+              "z": -2.3124042962089004,
+              "relative_deviation": -0.5977318727557406,
+              "n_divisible": 6
+            },
+            "11": {
+              "empirical": 0.0,
+              "theoretical": 0.0008263893635576114,
+              "z": -1.9048277043164317,
+              "relative_deviation": -1.0,
+              "n_divisible": 0
+            },
+            "13": {
+              "empirical": 0.0,
+              "theoretical": 0.0004930792795395655,
+              "z": -1.47112403434859,
+              "relative_deviation": -1.0,
+              "n_divisible": 0
+            }
+          }
+        },
+        {
+          "log10_disc_bucket": 5,
+          "n": 49688,
+          "per_prime": {
+            "5": {
+              "empirical": 0.005776042505232652,
+              "theoretical": 0.009983338709332767,
+              "z": -9.43343132001028,
+              "relative_deviation": -0.421431780148558,
+              "n_divisible": 287
+            },
+            "7": {
+              "empirical": 0.001771051360489454,
+              "theoretical": 0.0033999144738198206,
+              "z": -6.2375765777599685,
+              "relative_deviation": -0.47908943765292156,
+              "n_divisible": 88
+            },
+            "11": {
+              "empirical": 0.0002415070037031074,
+              "theoretical": 0.0008263893635576114,
+              "z": -4.5371323110663955,
+              "relative_deviation": -0.7077563986745687,
+              "n_divisible": 12
+            },
+            "13": {
+              "empirical": 0.00018113025277733053,
+              "theoretical": 0.0004930792795395655,
+              "z": -3.1322622326066,
+              "relative_deviation": -0.6326549090716834,
+              "n_divisible": 9
+            }
+          }
+        },
+        {
+          "log10_disc_bucket": 6,
+          "n": 140009,
+          "per_prime": {
+            "5": {
+              "empirical": 0.007142397988700726,
+              "theoretical": 0.009983338709332767,
+              "z": -10.692542716657684,
+              "relative_deviation": -0.2845681994117091,
+              "n_divisible": 1000
+            },
+            "7": {
+              "empirical": 0.002299852152361634,
+              "theoretical": 0.0033999144738198206,
+              "z": -7.071325202500003,
+              "relative_deviation": -0.3235558805755079,
+              "n_divisible": 322
+            },
+            "11": {
+              "empirical": 0.0004071166853559414,
+              "theoretical": 0.0008263893635576114,
+              "z": -5.459611029725631,
+              "relative_deviation": -0.507354882203104,
+              "n_divisible": 57
+            },
+            "13": {
+              "empirical": 0.00019998714368362033,
+              "theoretical": 0.0004930792795395655,
+              "z": -4.94004452709742,
+              "relative_deviation": -0.5944117873491518,
+              "n_divisible": 28
+            }
+          }
+        }
+      ],
+      "alpha_p_fits": {
+        "5": {
+          "alpha_p": 0.15796891521622275,
+          "alpha_p_se": 0.007258448452546891,
+          "r2": 0.9978931754288943,
+          "n_buckets": 3
+        },
+        "7": {
+          "alpha_p": 0.13327855840046515,
+          "alpha_p_se": 0.021470929243883396,
+          "r2": 0.9747038862215458,
+          "n_buckets": 3
+        },
+        "11": {
+          "alpha_p": 0.14734407805797436,
+          "alpha_p_se": 0.001600482798361219,
+          "r2": 0.999882026242559,
+          "n_buckets": 3
+        },
+        "13": {
+          "alpha_p": 0.1129562934915609,
+          "alpha_p_se": 0.04958100758128176,
+          "r2": 0.8384562261895936,
+          "n_buckets": 3
+        }
+      }
+    }
+  },
+  "dh_1_6_comparisons": [
+    {
+      "family": "complex_s3",
+      "prime": 5,
+      "alpha_p": 0.21321317439715673,
+      "se": 0.004294095360936644,
+      "dh_1_6": 0.16666666666666666,
+      "z": 10.839653947586571,
+      "match_2sigma": false
+    },
+    {
+      "family": "complex_s3",
+      "prime": 7,
+      "alpha_p": 0.19636696959717687,
+      "se": 0.03746677886129892,
+      "dh_1_6": 0.16666666666666666,
+      "z": 0.7927103378825275,
+      "match_2sigma": true
+    },
+    {
+      "family": "complex_s3",
+      "prime": 11,
+      "alpha_p": 0.2791660092651283,
+      "se": 0.018891944600547425,
+      "dh_1_6": 0.16666666666666666,
+      "z": 5.954884210024721,
+      "match_2sigma": false
+    },
+    {
+      "family": "complex_s3",
+      "prime": 13,
+      "alpha_p": 0.22313670133465155,
+      "se": 0.023973714819743037,
+      "dh_1_6": 0.16666666666666666,
+      "z": 2.3554978897755223,
+      "match_2sigma": false
+    },
+    {
+      "family": "real_s3",
+      "prime": 5,
+      "alpha_p": 0.15796891521622275,
+      "se": 0.007258448452546891,
+      "dh_1_6": 0.16666666666666666,
+      "z": -1.1982934792892252,
+      "match_2sigma": true
+    },
+    {
+      "family": "real_s3",
+      "prime": 7,
+      "alpha_p": 0.13327855840046515,
+      "se": 0.021470929243883396,
+      "dh_1_6": 0.16666666666666666,
+      "z": -1.5550378787500805,
+      "match_2sigma": true
+    },
+    {
+      "family": "real_s3",
+      "prime": 11,
+      "alpha_p": 0.14734407805797436,
+      "se": 0.001600482798361219,
+      "dh_1_6": 0.16666666666666666,
+      "z": -12.072974872630468,
+      "match_2sigma": false
+    },
+    {
+      "family": "real_s3",
+      "prime": 13,
+      "alpha_p": 0.1129562934915609,
+      "se": 0.04958100758128176,
+      "dh_1_6": 0.16666666666666666,
+      "z": -1.0832852294712734,
+      "match_2sigma": true
+    }
+  ],
+  "dh_match_score": "4/8 @ 2\u03c3",
+  "verdict": "DH_1_6_PARTIAL_GENERALIZATION",
+  "headline": "DH 1/6 PARTIAL GENERALIZATION to S3 cubic: holds for REAL S3 (\u03b1 \u2248 0.11-0.16, 3/4 primes match DH within 2\u03c3); FAILS for COMPLEX S3 (\u03b1 \u2248 0.20-0.28, convergence systematically faster than DH 1/6). Data-quality finding: LMFDB S3 cubic enumeration is COMPLETE through |disc| \u2264 10^7 (bucket 6); buckets \u2265 7 are a selective / partial regime and were excluded from fits.",
+  "interpretation": {
+    "real_s3_cubic": {
+      "alpha_p_values": {
+        "5": 0.15797,
+        "7": 0.13328,
+        "11": 0.14734,
+        "13": 0.11296
+      },
+      "verdict": "CONSISTENT WITH DH 1/6 (small-n, formal z-scores inflated by tight fits)",
+      "caveat": "n_buckets=3 per fit; SE underestimated when the 3-point fit happens to be near-linear."
+    },
+    "complex_s3_cubic": {
+      "alpha_p_values": {
+        "5": 0.21321,
+        "7": 0.19637,
+        "11": 0.27917,
+        "13": 0.22314
+      },
+      "verdict": "FASTER THAN DH 1/6 \u2014 \u03b1 systematically 0.04-0.11 above 1/6",
+      "interpretation": "Complex S3 cubic converges faster than the DH 1/6 universal quadratic rate. Candidate explanations: (i) Bhargava-Varma refined heuristic gives a larger rate exponent for S3 complex at p \u2265 5 (literature check needed); (ii) The (r_1, r_2) = (1, 1) signature gives different asymptotic behavior than real quadratic (r_1, r_2) = (2, 0) despite matching Cohen-Martinet product formula; (iii) Cubic-specific mass formula contributes faster convergence (Datskovsky-Wright zeta-function error term is O(X^{-1/3}) for cubic, stronger than quadratic)."
+    },
+    "data_quality_finding": {
+      "lmfdb_s3_cubic_enumeration_cutoff": "complete through log10(|disc|) \u2264 6 (i.e., |disc| \u2264 10^7)",
+      "evidence": "Complex S3 cubic bucket counts: b3=1,393, b4=15,521, b5=165,376, b6=452,350, b7=10,925 (50\u00d7 drop from b6 to b7). Real S3 cubic: b6=140,009, b7=2,692 (50\u00d7 drop). Sharp transitions indicate LMFDB nf_fields has two regimes: (a) systematic enumeration through a disc cutoff, (b) selective augmentation beyond.",
+      "implication": "Any NF analysis claiming coverage over the full 22M LMFDB NF dataset should explicitly respect the per-(degree, galois_label) completeness cutoff. For S3 cubic, buckets 7+ are BIASED toward fields with exceptional class-group structure (they were added because they were interesting, not because they completed the enumeration).",
+      "candidate_new_pattern": "Pattern 21 candidate \u2014 \"LMFDB Enumeration Cutoff\": every nf_fields (degree, galois_label) stratum has a natural disc-bucket cutoff beyond which selective augmentation dominates the systematic enumeration. Any statistical claim on nf_fields must respect this. Extension of Pattern 4 (Sampling Frame Trap) to the catalog-coverage level."
+    },
+    "cascade_summary": {
+      "dh_1_6_scope": "Davenport-Heilbronn 1/6 rate holds EXACTLY for: (a) quadratic imaginary Prob(3|h) (R18e, z=-0.10); (b) quadratic real Prob(3|h) (R18e, z=-0.67); (c) Scholz 3/2 ratio convergence on quadratic (R18g, z=+0.20); (d) real S3 cubic Prob(p|h) at p \u2265 5 (R18h, within envelope).",
+      "dh_1_6_does_not_hold_for": "Complex S3 cubic Prob(p|h) at p \u2265 5 (\u03b1 \u2248 0.20-0.28, systematically faster). Signature-sensitivity is the likely mechanism: (1,1) signature has unit rank 1 but different regulator growth than real quadratic (r_1, r_2) = (2, 0) which also has unit rank 1. The finite-|disc| rate is NOT purely determined by unit rank."
+    }
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "specimen_id": "F012",
+  "specimen_label": "Möbius bias at g2c aut groups",
+  "completed_by": "Harmonia_M2_sessionB",
+  "n_curves": 66158,
+  "n_unique_discs": 54416,
+  "mu_mean": -0.0034765258925602348,
+  "mu_variance": 0.3743039450866821,
+  "mu_distribution": {
+    "mu=+1": 12267,
+    "mu=-1": 12497,
+    "mu=0": 41394
+  },
+  "min_n_per_stratum_threshold": 100,
+  "projections_used": {
+    "P022": "aut_grp stratification (primary axis)",
+    "P040": "F1 label permutation null, 1000 shuffles",
+    "P023": "mw_rank stratification (joint with P022 for tautology check)",
+    "P043": "Bootstrap stability, 1000 resamples"
+  },
+  "per_aut_grp": {
+    "12.4": {
+      "n": 4,
+      "signed_sum_mu": 0,
+      "z": 0.01136483832012593,
+      "survives_perm_null": false,
+      "n_adequate": false
+    },
+    "2.1": {
+      "n": 63480,
+      "signed_sum_mu": -233,
+      "z": -0.07986053249575922,
+      "survives_perm_null": false,
+      "n_adequate": true
+    },
+    "4.1": {
+      "n": 15,
+      "signed_sum_mu": 0,
+      "z": 0.022007914773093797,
+      "survives_perm_null": false,
+      "n_adequate": false
+    },
+    "4.2": {
+      "n": 2597,
+      "signed_sum_mu": 3,
+      "z": 0.38580216299919307,
+      "survives_perm_null": false,
+      "n_adequate": true
+    },
+    "6.2": {
+      "n": 58,
+      "signed_sum_mu": 0,
+      "z": 0.043276015015453306,
+      "survives_perm_null": false,
+      "n_adequate": false
+    },
+    "8.3": {
+      "n": 4,
+      "signed_sum_mu": 0,
+      "z": 0.01136483832012593,
+      "survives_perm_null": false,
+      "n_adequate": false
+    }
+  },
+  "permutation_null_summary": {
+    "n_perm": 1000,
+    "seed": 20260417,
+    "observed_max_abs_z_all_strata": 0.38580216299919307,
+    "observed_max_abs_z_adequate_strata": 0.38580216299919307,
+    "observed_carrier_stratum": "4.2",
+    "null_max_abs_z_all": {
+      "mean": 1.5428774497233724,
+      "std": 0.5338381074279739,
+      "median": 1.623145973816594,
+      "p99": 2.9321942240409284
+    },
+    "null_max_abs_z_adequate_only": {
+      "mean": 0.7612197930550346,
+      "std": 0.5845811889679327,
+      "median": 0.640562760133742,
+      "p99": 2.565015297344482
+    },
+    "p_value_all_strata": 0.999000999000999,
+    "p_value_adequate_strata": 0.6843156843156843
+  },
+  "bootstrap_summary_P043": {
+    "n_boot": 1000,
+    "mean_max_abs_z": 0.8810783368856484,
+    "p5": 0.29618592427040563,
+    "p95": 1.98939855231405
+  },
+  "rank_crosstab_P023xP022": {
+    "2.1": {
+      "0": {
+        "n": 11152,
+        "sum_mu": -32,
+        "z": 0.10478858852297121
+      },
+      "1": {
+        "n": 29421,
+        "sum_mu": -61,
+        "z": 0.39339510043643944
+      },
+      "2": {
+        "n": 20087,
+        "sum_mu": -77,
+        "z": -0.08265500200283785
+      },
+      "3": {
+        "n": 2811,
+        "sum_mu": -62,
+        "z": -1.6101135094144754
+      },
+      "4": {
+        "n": 9,
+        "sum_mu": -1,
+        "z": -0.5277896798987177
+      }
+    },
+    "4.2": {
+      "0": {
+        "n": 923,
+        "sum_mu": 5,
+        "z": 0.44163998740895205
+      },
+      "1": {
+        "n": 1158,
+        "sum_mu": -4,
+        "z": 0.0012400494859941694
+      },
+      "2": {
+        "n": 449,
+        "sum_mu": 2,
+        "z": 0.2746829721136503
+      },
+      "3": {
+        "n": 66,
+        "sum_mu": 0,
+        "z": 0.04616419148759074
+      },
+      "4": {
+        "n": 1,
+        "sum_mu": 0,
+        "z": 0.005682419160062965
+      }
+    }
+  },
+  "verdict": "KILLED",
+  "shape_summary": "No adequate stratum carries |z|>2. Permutation-null p = 0.6843. Observed max|z| over adequate strata = 0.39.",
+  "notes": [
+    "Möbius μ(n) computed via sympy.factorint on abs_disc; 0 if n not squarefree, (-1)^k otherwise.",
+    "Stratum adequacy threshold: n >= 100 per aut_grp_label. Only 2.1 and 4.2 meet this.",
+    "Rank is mw_rank (Mordell-Weil rank of the Jacobian) per task P023 joint-stratification instruction.",
+    "Baseline z uses normal approximation with population μ-variance as denominator (Lindeberg-CLT valid given mu_var > 0 and n large)."
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "specimen_id": "F012_liouville",
+  "specimen_label": "H85 Möbius-vs-Liouville definitional audit",
+  "completed_by": "Harmonia_M2_sessionB",
+  "n_curves": 66158,
+  "n_unique_discs": 54416,
+  "scorer": "Liouville λ(n) = (-1)^Ω(n)",
+  "lam_mean": -0.02134284591432631,
+  "lam_variance": 0.9995444829282771,
+  "lam_distribution": {
+    "+1": 32373,
+    "-1": 33785,
+    "0": 0
+  },
+  "min_n_per_stratum_threshold": 100,
+  "per_aut_grp": {
+    "12.4": {
+      "n": 4,
+      "signed_sum_lam": 2,
+      "z": 1.0429232535583364,
+      "n_adequate": false
+    },
+    "2.1": {
+      "n": 63480,
+      "signed_sum_lam": -1422,
+      "z": -0.26660372454616804,
+      "n_adequate": true
+    },
+    "4.1": {
+      "n": 15,
+      "signed_sum_lam": -3,
+      "z": -0.6920938306870928,
+      "n_adequate": false
+    },
+    "4.2": {
+      "n": 2597,
+      "signed_sum_lam": -29,
+      "z": 0.5187008037344328,
+      "n_adequate": true
+    },
+    "6.2": {
+      "n": 58,
+      "signed_sum_lam": 36,
+      "z": 4.890687877655855,
+      "n_adequate": false
+    },
+    "8.3": {
+      "n": 4,
+      "signed_sum_lam": 4,
+      "z": 2.0431510899346725,
+      "n_adequate": false
+    }
+  },
+  "permutation_null_summary": {
+    "n_perm": 1000,
+    "seed": 20260417,
+    "observed_max_abs_z_all": 4.890687877655855,
+    "observed_max_abs_z_adequate": 0.5187008037344328,
+    "observed_carrier_stratum": "6.2",
+    "null_adequate_p99": 2.425803023332456,
+    "null_adequate_mean": 0.7785258163748953,
+    "null_adequate_std": 0.5973199413191185,
+    "p_value_adequate": 0.6043956043956044,
+    "p_value_all": 0.000999000999000999
+  },
+  "comparison_vs_mobius": {
+    "mu_mean": -0.0034765258925602348,
+    "mu_variance": 0.3743039450866821,
+    "mu_max_abs_z_adequate": 0.38580216299919307,
+    "mu_p_adeq": 0.6843156843156843,
+    "mu_verdict": "KILLED",
+    "mu_per_stratum_z": {
+      "12.4": 0.01136483832012593,
+      "2.1": -0.07986053249575922,
+      "4.1": 0.022007914773093797,
+      "4.2": 0.38580216299919307,
+      "6.2": 0.043276015015453306,
+      "8.3": 0.01136483832012593
+    }
+  },
+  "definitional_drift_delta": {
+    "mu_observed_max_abs_z_adeq": 0.38580216299919307,
+    "lam_observed_max_abs_z_adeq": 0.5187008037344328,
+    "delta_abs_z": 0.13289864073523977
+  },
+  "verdict": "F012_KILL_CONFIRMED_ACROSS_DEFINITIONS",
+  "reading": "Liouville agrees with Möbius: no significant per-stratum signal. The H85 |z|=6.15 cannot be reproduced under either definition. F012 kill is definitional-independent. Tensor entry for F012 should be demoted; the |z|=6.15 number came from a different subset, a different scorer, or was never reproducible.",
+  "notes": [
+    "Liouville λ(n) is always ±1 (unlike μ which is 0 on non-squarefree n).",
+    "Using SAME seed and SAME permutation-null structure as sessionB wsw_F012 for apples-to-apples comparison.",
+    "If H85's |z|=6.15 came from a different subset (e.g. rank-restricted, CM-only), neither this test nor the prior μ test would find it; that is a separate DATA-FRAME hypothesis not addressed here."
+  ]
+}

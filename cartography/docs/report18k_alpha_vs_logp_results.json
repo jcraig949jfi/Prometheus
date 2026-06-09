@@ -1,0 +1,321 @@
+{
+  "task": "report18k_alpha_vs_logp",
+  "parent_reports": [
+    "report18d_extended_primes",
+    "report18h_s3_cubic_bst",
+    "report18j_quartic_bst"
+  ],
+  "drafted_by": "Harmonia_M2_sessionD",
+  "date": "2026-04-18",
+  "model": "\u03b1_p = \u03b2_0 + \u03b2_1 \u00b7 log(p)",
+  "strata": {
+    "imaginary_quadratic_R18d": {
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23
+      ],
+      "alphas": [
+        0.16503,
+        0.28138,
+        0.26923,
+        0.25735,
+        0.34001,
+        0.34733,
+        0.38469,
+        0.33621
+      ],
+      "ses": [
+        0.0158,
+        0.00825,
+        0.0388,
+        0.03594,
+        0.03706,
+        0.04527,
+        0.01853,
+        0.03875
+      ],
+      "log_p": [
+        1.0986122886681098,
+        1.6094379124341003,
+        1.9459101490553132,
+        2.3978952727983707,
+        2.5649493574615367,
+        2.833213344056216,
+        2.9444389791664403,
+        3.1354942159291497
+      ],
+      "fit": {
+        "slope_alpha_per_log_p": 0.08857838915056579,
+        "slope_se": 0.010695297894280727,
+        "intercept": 0.11787941857850481,
+        "r2_weighted": 0.7437503705947577,
+        "chi2": 23.63229157251813,
+        "dof": 6,
+        "n_primes": 8
+      },
+      "chi2_reduced": 3.938715262086355,
+      "clean_log_p_scaling": false
+    },
+    "real_quadratic_R18d": {
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23
+      ],
+      "alphas": [
+        0.15797,
+        0.22995,
+        0.2453,
+        0.23102,
+        0.21755,
+        0.20731,
+        0.17297,
+        0.15507
+      ],
+      "ses": [
+        0.01291,
+        0.01687,
+        0.0167,
+        0.01761,
+        0.02665,
+        0.0155,
+        0.01205,
+        0.01912
+      ],
+      "log_p": [
+        1.0986122886681098,
+        1.6094379124341003,
+        1.9459101490553132,
+        2.3978952727983707,
+        2.5649493574615367,
+        2.833213344056216,
+        2.9444389791664403,
+        3.1354942159291497
+      ],
+      "fit": {
+        "slope_alpha_per_log_p": -0.0013616387613818294,
+        "slope_se": 0.007711381502317244,
+        "intercept": 0.1986853860255184,
+        "r2_weighted": 0.0008955857701047343,
+        "chi2": 34.782686809102785,
+        "dof": 6,
+        "n_primes": 8
+      },
+      "chi2_reduced": 5.797114468183797,
+      "clean_log_p_scaling": false
+    },
+    "complex_s3_R18h": {
+      "primes": [
+        5,
+        7,
+        11,
+        13
+      ],
+      "alphas": [
+        0.21321,
+        0.19637,
+        0.27917,
+        0.22314
+      ],
+      "ses": [
+        0.00429,
+        0.03747,
+        0.01889,
+        0.02397
+      ],
+      "log_p": [
+        1.6094379124341003,
+        1.9459101490553132,
+        2.3978952727983707,
+        2.5649493574615367
+      ],
+      "fit": {
+        "slope_alpha_per_log_p": 0.04638714566215168,
+        "slope_se": 0.017879750857166657,
+        "intercept": 0.13854236755012228,
+        "r2_weighted": 0.5628040972788575,
+        "chi2": 5.22866968655907,
+        "dof": 2,
+        "n_primes": 4
+      },
+      "chi2_reduced": 2.614334843279535,
+      "clean_log_p_scaling": false
+    },
+    "real_s3_R18h": {
+      "primes": [
+        5,
+        7,
+        11,
+        13
+      ],
+      "alphas": [
+        0.15797,
+        0.13328,
+        0.14734,
+        0.11296
+      ],
+      "ses": [
+        0.00726,
+        0.02147,
+        0.0016,
+        0.04958
+      ],
+      "log_p": [
+        1.6094379124341003,
+        1.9459101490553132,
+        2.3978952727983707,
+        2.5649493574615367
+      ],
+      "fit": {
+        "slope_alpha_per_log_p": -0.012159537423301125,
+        "slope_se": 0.009269610997560343,
+        "intercept": 0.17641043894993985,
+        "r2_weighted": 0.574803551474042,
+        "chi2": 1.2728618631637227,
+        "dof": 2,
+        "n_primes": 4
+      },
+      "chi2_reduced": 0.6364309315818614,
+      "clean_log_p_scaling": false
+    },
+    "d4_complex_R18j": {
+      "primes": [
+        5,
+        7,
+        11,
+        13
+      ],
+      "alphas": [
+        -0.13801,
+        -0.11459,
+        -0.10496,
+        -0.13439
+      ],
+      "ses": [
+        0.04055,
+        0.03013,
+        0.036,
+        0.03514
+      ],
+      "log_p": [
+        1.6094379124341003,
+        1.9459101490553132,
+        2.3978952727983707,
+        2.5649493574615367
+      ],
+      "fit": {
+        "slope_alpha_per_log_p": 0.006594937866785048,
+        "slope_se": 0.049372124646219026,
+        "intercept": -0.1356585788613897,
+        "r2_weighted": 0.031635190476673625,
+        "chi2": 0.5461680966321747,
+        "dof": 2,
+        "n_primes": 4
+      },
+      "chi2_reduced": 0.27308404831608735,
+      "clean_log_p_scaling": false
+    },
+    "d4_real_R18j": {
+      "primes": [
+        5,
+        7,
+        11,
+        13
+      ],
+      "alphas": [
+        -0.08568,
+        -0.12262,
+        -0.13188,
+        -0.02434
+      ],
+      "ses": [
+        0.02958,
+        0.0617,
+        0.03239,
+        0.06698
+      ],
+      "log_p": [
+        1.6094379124341003,
+        1.9459101490553132,
+        2.3978952727983707,
+        2.5649493574615367
+      ],
+      "fit": {
+        "slope_alpha_per_log_p": -0.02164692612904767,
+        "slope_se": 0.05022756248317402,
+        "intercept": -0.05753230262259821,
+        "r2_weighted": 0.07117117865093747,
+        "chi2": 2.424040043891539,
+        "dof": 2,
+        "n_primes": 4
+      },
+      "chi2_reduced": 1.2120200219457695,
+      "clean_log_p_scaling": false
+    },
+    "s4_complex_R18j": {
+      "primes": [
+        5,
+        7,
+        11,
+        13
+      ],
+      "alphas": [
+        0.05865,
+        0.05154,
+        0.04386,
+        0.0429
+      ],
+      "ses": [
+        0.00809,
+        0.00736,
+        0.00521,
+        0.01013
+      ],
+      "log_p": [
+        1.6094379124341003,
+        1.9459101490553132,
+        2.3978952727983707,
+        2.5649493574615367
+      ],
+      "fit": {
+        "slope_alpha_per_log_p": -0.0174801412638711,
+        "slope_se": 0.010449002868273456,
+        "intercept": 0.0861542863654815,
+        "r2_weighted": 0.9850988982691037,
+        "chi2": 0.04233296870985607,
+        "dof": 2,
+        "n_primes": 4
+      },
+      "chi2_reduced": 0.021166484354928034,
+      "clean_log_p_scaling": true
+    }
+  },
+  "clean_log_p_scaling_strata": [
+    "s4_complex_R18j"
+  ],
+  "headline": "S4 complex quartic is the UNIQUE stratum with a clean \u03b1_p = 0.086 - 0.018\u00b7log(p) scaling (R\u00b2=0.985, \u03c7\u00b2/dof=0.02). All other strata \u2014 including DH-universal quadratic \u2014 show irregular \u03b1_p variation with log(p), rejecting the clean log(p) functional form. The DH 1/6 rate for quadratic is APPROXIMATELY log(p)-independent (real quad slope\u22480, \u03c7\u00b2/dof=5.8) but not exactly \u2014 residual noise suggests finer structure that a log(p) model does not capture.",
+  "tier_2_f_anchor_candidate": {
+    "stratum": "S4 complex quartic",
+    "functional_form": "\u03b1_p = 0.086 - 0.018 \u00b7 log(p)",
+    "fit_quality": "R\u00b2 = 0.985, \u03c7\u00b2 / dof = 0.021 (clean)",
+    "per_prime_agreement_table": {
+      "p=5": "predicted 0.0580, observed 0.0587",
+      "p=7": "predicted 0.0522, observed 0.0515",
+      "p=11": "predicted 0.0443, observed 0.0439",
+      "p=13": "predicted 0.0413, observed 0.0429"
+    },
+    "next_step_for_f_anchor": "Extend to p \u2208 {17, 19, 23} on S4 complex. If the log(p) scaling continues to fit R\u00b2 > 0.95 with the same (\u03b2_0, \u03b2_1) coefficients, this is a durable empirical calibration for the S4 complex convergence rate \u2014 candidate for sessionA to connect to specific Bhargava-Shankar / BST quantitative bounds."
+  },
+  "cascade_summary": "R18 \u2192 R18k \u2014 11 reports on Cohen-Lenstra / BST convergence:\n  TIER-0 F-ANCHOR: Davenport-Heilbronn 1/6 rate confirmed on 3-torsion of quadratic class groups (3 independent observables, all within 1\u03c3).\n  TIER-1 F-ANCHOR: Scholz 3/2 asymptote + CL distribution match at 1% level.\n  TIER-2 F-ANCHOR CANDIDATE: S4 complex quartic \u03b1_p = 0.086 - 0.018\u00b7log(p).\n  KNOWN PATTERNS: BST finite-|disc| convergence confirmed in every non-D4 stratum; partial generalization to real S3 cubic.\n  NEGATIVE RESULTS: D4 quartic does not converge to naive CM (refined Bartel-Lenstra formula needed); complex S3 cubic has faster-than-DH rate; cluster-constant \u03b1_p across primes holds only at S4 complex (log(p)-scaled).\n  DATA-QUALITY: Pattern 21 candidate (LMFDB enumeration cutoff) with reference table across 30 strata. Cubic/quartic strata cut off at |disc| \u2264 10^7; D4 and S5 are smooth (no cutoff)."
+}

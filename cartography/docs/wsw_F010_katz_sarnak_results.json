@@ -1,0 +1,122 @@
+{
+  "specimen_id": "F010",
+  "projections_used": [
+    "P028"
+  ],
+  "verdict": "P028_RESOLVES",
+  "reading": "P028 resolves F010 through at least one symmetry-axis: Is_Even=True vs Is_Even=False differ at z=5.38. F010 is NOT axis-class-uniform under Katz-Sarnak. Pattern 18 generalization: the deficit-uniformity pattern observed in F011 object-property axes does NOT transfer to F010 \u2014 or conversely, F010 has more axis-sensitivity than F011.",
+  "baseline_all_reps": {
+    "rho": 0.4036078878980493,
+    "n": 71,
+    "p": 0.00048260890883318095,
+    "fisher_z": 0.427951453252042,
+    "fisher_se": 0.12126781251816648
+  },
+  "by_is_even": {
+    "Is_Even=True": {
+      "rho": 0.7715594206049191,
+      "n": 56,
+      "p": 3.4175825275740886e-12,
+      "fisher_z": 1.0241696680875183,
+      "fisher_se": 0.13736056394868904
+    },
+    "Is_Even=False": {
+      "rho": -0.04790396887372479,
+      "n": 51,
+      "p": 0.7385203963500895,
+      "fisher_z": -0.04794066259627299,
+      "fisher_se": 0.14433756729740646
+    },
+    "comparison": {
+      "label_a": "Is_Even=True",
+      "label_b": "Is_Even=False",
+      "rho_a": 0.7715594206049191,
+      "rho_b": -0.04790396887372479,
+      "fisher_z_diff": 1.0721103306837914,
+      "fisher_se_diff": 0.19925174494000103,
+      "z_stat": 5.3806822670819106,
+      "p_value": 7.420406467062435e-08,
+      "verdict": "DIFFER"
+    }
+  },
+  "by_dim": {
+    "Dim=1": null,
+    "Dim=2": {
+      "rho": 0.6248428518848816,
+      "n": 26,
+      "p": 0.0006436567581546951,
+      "fisher_z": 0.7329106918630793,
+      "fisher_se": 0.20851441405707477
+    },
+    "Dim=4": {
+      "rho": 0.622343733709415,
+      "n": 14,
+      "p": 0.017464683198348863,
+      "fisher_z": 0.7288213492112846,
+      "fisher_se": 0.30151134457776363
+    },
+    "comparison_1_vs_2": {
+      "diff_z": null,
+      "diff_p": null,
+      "verdict": "INCONCLUSIVE"
+    },
+    "comparison_2_vs_4": {
+      "label_a": "Dim=2",
+      "label_b": "Dim=4",
+      "rho_a": 0.6248428518848816,
+      "rho_b": 0.622343733709415,
+      "fisher_z_diff": 0.004089342651794725,
+      "fisher_se_diff": 0.3665888047644883,
+      "z_stat": 0.011155121483924984,
+      "p_value": 0.9910996853821612,
+      "verdict": "SIMILAR"
+    }
+  },
+  "pairwise_comparisons": [
+    {
+      "label_a": "Is_Even=True",
+      "label_b": "Is_Even=False",
+      "rho_a": 0.7715594206049191,
+      "rho_b": -0.04790396887372479,
+      "fisher_z_diff": 1.0721103306837914,
+      "fisher_se_diff": 0.19925174494000103,
+      "z_stat": 5.3806822670819106,
+      "p_value": 7.420406467062435e-08,
+      "verdict": "DIFFER"
+    },
+    {
+      "diff_z": null,
+      "diff_p": null,
+      "verdict": "INCONCLUSIVE"
+    },
+    {
+      "label_a": "Dim=2",
+      "label_b": "Dim=4",
+      "rho_a": 0.6248428518848816,
+      "rho_b": 0.622343733709415,
+      "fisher_z_diff": 0.004089342651794725,
+      "fisher_se_diff": 0.3665888047644883,
+      "z_stat": 0.011155121483924984,
+      "p_value": 0.9910996853821612,
+      "verdict": "SIMILAR"
+    }
+  ],
+  "shape_summary": "P028 resolves F010 through at least one symmetry-axis: Is_Even=True vs Is_Even=False differ at z=5.38. F010 is NOT axis-class-uniform under Katz-Sarnak. Pattern 18 generalization: the deficit-uniformity pattern observed in F011 object-property axes does NOT transfer to F010 \u2014 or conversely, F010 has more axis-sensitivity than F011.",
+  "_meta": {
+    "task_id": "wsw_F010_katz_sarnak",
+    "instance": "Harmonia_M2_sessionB",
+    "started": "2026-04-17T11:30:56.166615+00:00",
+    "finished": "2026-04-17T11:31:47.612237+00:00",
+    "per_degree": 2000,
+    "per_combo": 300,
+    "n_shared_labels": 71,
+    "threshold_sigma": 3.0,
+    "prior_reference": "sessionC wsw_F010 rho=0.404, n~114; sessionB wsw_F011_katz_sarnak P028_RESOLVES",
+    "notes": [
+      "Katz-Sarnak on Artin reps: Is_Even is the parity of complex conjugation, Dim is rep dimension.",
+      "Fisher z two-sample test with se=1/sqrt(n-3) per group; threshold |z_diff|>=3 for DIFFER verdict.",
+      "Dim strata limited to 1, 2, 4 (~70% of artin_reps); higher dims sampled poorly per label.",
+      "F010 baseline here may differ from sessionC's 0.404 because this script uses mean_log_cond across ALL artin reps for the label, while sessionC used the same aggregate. Cross-check via baseline rho."
+    ]
+  }
+}

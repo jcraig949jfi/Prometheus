@@ -1,0 +1,57 @@
+# Icarus Kill-Path Clusters
+
+Generated: 2026-05-29T08:33:25.773000+00:00
+Clusters: 3
+
+The unit of failure memory: groups of cycles that failed under the same signature. Consult before proposing a change adjacent to a listed cluster.
+
+## KILL_CLUSTER: tdd_failed/missed_root
+
+- **Count**: 4
+- **Observed cycles**: [3, 4, 5, 8]
+- **Detected by**: tdd
+- **Proposal types**: new_method, reasoner_logic_change
+- **Future tier risk**: R2, R3
+- **Nearby survivors** (what would have worked):
+    - A minimal version that hard-codes the canonical sqrt-isolation step for a single normal form (sqrt(x+a) = x-b → x+a = (x-b)^2) and validates on even one train case before generalizing would have surfaced the logic error early; adding a single assertion trace on a known R2 example (e.g., sqrt(x+5)=x-1) would have caught whether the quadratic is being formed correctly.
+    - Revert to cycle 002 baseline; apply only the minimal, isolated delta needed for R2 sqrt logic, with each sub-step validated against at least one passing test before committing
+    - A version that (a) adds a minimal debug probe confirming the handler IS dispatched on sqrt probes, (b) tests the squaring step on a single hardcoded example before wiring into the full pipeline, and (c) includes a print/assert guard that fires if the polynomial solver returns an empty root list — would have caught the dispatch or solving gap before TDD.
+    - Forensic recovery of the cycle 002 sqrt handler diff and literal transplant of that logic — rather than reimplementation from description — is the move most likely to survive. If cycle 002 artifact is unavailable, a minimal smoke test (solve sqrt(x+1)=x-1 symbolically in an isolated script) before committing would catch the silent-empty-solution failure mode.
+- **Recommended regression tests**:
+    - test_solve_sqrt_canonical: assert reasoner.apply({'expr': 'sqrt(x+5) - (x-1)', 'tier': 'R2'}) returns x=4 (valid) and rejects x=-1 (extraneous, since rhs=-2<0); this single case would have caught any missed_root failure in _solve_sqrt.
+    - A smoke test that runs the solver on the simplest R2 sqrt input (e.g. sqrt(4)=2) and asserts a non-null, correct root is returned — this would have caught the total solver failure before panel evaluation
+    - Write a unit test directly calling `_solve_sqrt_equation` (or the dispatch path for probe.kind='sqrt') on a known case, e.g. sqrt(x+4) - (x-2) = 0 with known root x=5, asserting the returned solution list contains 5 and does NOT contain the extraneous root. This isolates whether the handler is reachable and correct independently of the full pipeline.
+    - assert solver.apply('sqrt(x+1)=x-1') contains root x=3 and does NOT contain x=0, verifying both missed_root and extraneous_root_not_rejected are handled by the live code path — not just described in comments.
+- **Representation change hints**:
+    - Representing the equation internally as a structured tuple (lhs_radicand, rhs_linear_coeffs) rather than parsing a raw string inside _solve_sqrt would make the squaring step unambiguous and testable in isolation without the full expression parser.
+    - The solver logic and the contract surface should be separated into distinct, independently testable units; a test fixture that probes internal solver correctness (not just API shape) would make regressions cheap to detect
+    - If the expr representation stored the sqrt argument and the linear RHS as separate structured fields (rather than a flat symbolic string to be re-parsed), the 'split on sqrt-containing args' step would be trivial and the dispatch would be unambiguous — eliminating the most likely failure point (string-level parsing of the stored expr).
+    - If sympy's solve() silently returns [] for sqrt equations due to domain assumptions, switching to solve(..., domain='CC') or using solveset with a RealDomain constraint, then filtering, would make the correct move cheap and would surface the failure in unit tests rather than silently.
+
+## KILL_CLUSTER: tdd_failed/dispatch_binding_mismatch
+
+- **Count**: 1
+- **Observed cycles**: [6]
+- **Detected by**: tdd
+- **Proposal types**: new_method
+- **Future tier risk**: R2, R3
+- **Nearby survivors** (what would have worked):
+    - A version that adds a single-case smoke test (toy probe: sqrt(x+1)=x-1, expected root x=3) inside the generator's own reasoning chain, verifying the dispatch path returns a non-empty answer before submitting the full diff. If that toy case fails locally, the diff should not be generated.
+- **Recommended regression tests**:
+    - Construct a minimal probe with kind='sqrt' and data={'eq': sp.Eq(sp.sqrt(x+1), x-1)}, call reasoner.apply(probe), and assert the returned answer contains x=3 (not empty, not extraneous). This exposes whether the dispatch path and data accessor are wired correctly before the full suite runs.
+- **Representation change hints**:
+    - The harness should surface probe.kind and probe.data keys in a schema-validated way so the contract lens can catch kind='sqrt' dispatch mismatches, not just method-surface violations. A representation that makes dispatch paths first-class contract probes would have caught this three cycles ago.
+
+## KILL_CLUSTER: tdd_failed/extraneous_root_not_filtered
+
+- **Count**: 1
+- **Observed cycles**: [7]
+- **Detected by**: tdd
+- **Proposal types**: new_method
+- **Future tier risk**: R2, R3
+- **Nearby survivors** (what would have worked):
+    - Recover and inspect cycle 2 diff; identify what structural property allowed it to correctly filter extraneous roots — likely the substitution check was applied against a numerically evaluated original expression rather than a symbolic residual, or the sqrt term was isolated differently
+- **Recommended regression tests**:
+    - Write a test that calls apply() on a known sqrt probe (e.g., sqrt(x+3) = x-1, which has one valid root x=6 and one extraneous x=1) and asserts exactly one root is returned matching x=6; this would have caught every cycle 4–6 failure immediately
+- **Representation change hints**:
+    - Represent the sqrt equation as a structured (inner_expr, rhs, original_expr) triple before any transformation, so that the verification step always has unambiguous access to the original unsquared form; current implementations lose the original form during algebraic manipulation

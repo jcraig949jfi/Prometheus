@@ -1,0 +1,484 @@
+{
+  "task_id": "compute_dhkms_prediction_F011_rank0",
+  "instance": "Harmonia_M2_sessionB",
+  "started_at": "2026-04-21T08:48:21+00:00",
+  "method": "Monte Carlo SO(2N) first-gap variance for N in {2..10}, extrapolated to N_eff = log(cond)/pi for each F011 rank-0 bin.",
+  "seed": 20260421,
+  "n_trials_per_N": 200000,
+  "simulations_by_N_mat": [
+    {
+      "n_mat": 2,
+      "n_trials_effective": 100354,
+      "mean_gap_normalized": 1.1742482566893235,
+      "var_gap_normalized": 0.1498630333508939,
+      "sem_var": 0.0004730719248783305,
+      "deficit_vs_gaudin_pct": 15.807284634329266,
+      "mean_gap_raw": 1.8445048483528927,
+      "theoretical_mean_gap_raw": 1.5707963267948966,
+      "elapsed_sec": 4.1972596645355225
+    },
+    {
+      "n_mat": 3,
+      "n_trials_effective": 99663,
+      "mean_gap_normalized": 1.1210692496409937,
+      "var_gap_normalized": 0.18109797738303385,
+      "sem_var": 0.0005736495033282536,
+      "deficit_vs_gaudin_pct": -1.7404367320414948,
+      "mean_gap_raw": 1.1739809729458366,
+      "theoretical_mean_gap_raw": 1.0471975511965976,
+      "elapsed_sec": 4.67045259475708
+    },
+    {
+      "n_mat": 4,
+      "n_trials_effective": 99954,
+      "mean_gap_normalized": 1.0758940311875886,
+      "var_gap_normalized": 0.17655489474841582,
+      "sem_var": 0.000558444056363502,
+      "deficit_vs_gaudin_pct": 0.811856882912454,
+      "mean_gap_raw": 0.8450051961050009,
+      "theoretical_mean_gap_raw": 0.7853981633974483,
+      "elapsed_sec": 5.198846817016602
+    },
+    {
+      "n_mat": 5,
+      "n_trials_effective": 99978,
+      "mean_gap_normalized": 1.0474750930530405,
+      "var_gap_normalized": 0.17155054260505048,
+      "sem_var": 0.0005425501322670537,
+      "deficit_vs_gaudin_pct": 3.6232906713199453,
+      "mean_gap_raw": 0.658148011430745,
+      "theoretical_mean_gap_raw": 0.6283185307179586,
+      "elapsed_sec": 5.694638729095459
+    },
+    {
+      "n_mat": 6,
+      "n_trials_effective": 99584,
+      "mean_gap_normalized": 1.0344538012940012,
+      "var_gap_normalized": 0.16971043025229876,
+      "sem_var": 0.0005377912739103033,
+      "deficit_vs_gaudin_pct": 4.65706165601193,
+      "mean_gap_raw": 0.5416387437705441,
+      "theoretical_mean_gap_raw": 0.5235987755982988,
+      "elapsed_sec": 6.371134042739868
+    },
+    {
+      "n_mat": 8,
+      "n_trials_effective": 100169,
+      "mean_gap_normalized": 1.010963121771497,
+      "var_gap_normalized": 0.1633814080583284,
+      "sem_var": 0.0005162213538875799,
+      "deficit_vs_gaudin_pct": 8.212692102062691,
+      "mean_gap_raw": 0.3970042895509399,
+      "theoretical_mean_gap_raw": 0.39269908169872414,
+      "elapsed_sec": 7.957012891769409
+    },
+    {
+      "n_mat": 10,
+      "n_trials_effective": 99628,
+      "mean_gap_normalized": 0.9949426452291852,
+      "var_gap_normalized": 0.15835774341881426,
+      "sem_var": 0.0005017051954591569,
+      "deficit_vs_gaudin_pct": 11.034975607407716,
+      "mean_gap_raw": 0.31257045049951926,
+      "theoretical_mean_gap_raw": 0.3141592653589793,
+      "elapsed_sec": 9.74416971206665
+    },
+    {
+      "n_mat": 15,
+      "n_trials_effective": 100053,
+      "mean_gap_normalized": 0.9797533478429035,
+      "var_gap_normalized": 0.15488876843926894,
+      "sem_var": 0.0004896715464757146,
+      "deficit_vs_gaudin_pct": 12.983837955466882,
+      "mean_gap_raw": 0.20519906132755297,
+      "theoretical_mean_gap_raw": 0.20943951023931953,
+      "elapsed_sec": 16.825332641601562
+    },
+    {
+      "n_mat": 20,
+      "n_trials_effective": 99967,
+      "mean_gap_normalized": 0.9726328770488103,
+      "var_gap_normalized": 0.15265797015234153,
+      "sem_var": 0.0004828265616156287,
+      "deficit_vs_gaudin_pct": 14.23709542003284,
+      "mean_gap_raw": 0.15278081505882113,
+      "theoretical_mean_gap_raw": 0.15707963267948966,
+      "elapsed_sec": 26.761027336120605
+    },
+    {
+      "n_mat": 30,
+      "n_trials_effective": 100258,
+      "mean_gap_normalized": 0.9650054089577502,
+      "var_gap_normalized": 0.1498810668116279,
+      "sem_var": 0.0004733553142532622,
+      "deficit_vs_gaudin_pct": 15.797153476613534,
+      "mean_gap_raw": 0.10105513011520137,
+      "theoretical_mean_gap_raw": 0.10471975511965977,
+      "elapsed_sec": 57.99121880531311
+    },
+    {
+      "n_mat": 50,
+      "n_trials_effective": 100092,
+      "mean_gap_normalized": 0.9586703061236683,
+      "var_gap_normalized": 0.14754160737194477,
+      "sem_var": 0.00046635305584941437,
+      "deficit_vs_gaudin_pct": 17.11145653261529,
+      "mean_gap_raw": 0.06023503181865607,
+      "theoretical_mean_gap_raw": 0.06283185307179587,
+      "elapsed_sec": 331.4834167957306
+    }
+  ],
+  "fit_power_law": {
+    "A": 0.0006433066891522713,
+    "alpha": -3.3333113653684663,
+    "model": "deficit_pct = A * N^(-alpha)",
+    "fit_on_N_mat_range": [
+      3,
+      50
+    ]
+  },
+  "per_bin_prediction": [
+    {
+      "bin": 0,
+      "mean_log_cond": 3.7780745336471875,
+      "n_eff": 1.2025984747991143,
+      "observed_var": 0.0808619955192228,
+      "observed_deficit_pct": 54.571912629650114,
+      "dhkms_predicted_deficit_pct": 0.0011898306063424238,
+      "dhkms_predicted_var": 0.1779978821015207,
+      "residual_deficit_pct": 54.57072279904377
+    },
+    {
+      "bin": 1,
+      "mean_log_cond": 4.409926810054049,
+      "n_eff": 1.4037233009871515,
+      "observed_var": 0.08959944782582385,
+      "observed_deficit_pct": 49.66323155852592,
+      "dhkms_predicted_deficit_pct": 0.001992292936146287,
+      "dhkms_predicted_var": 0.17799645371857364,
+      "residual_deficit_pct": 49.66123926558978
+    },
+    {
+      "bin": 2,
+      "mean_log_cond": 4.6403519834369495,
+      "n_eff": 1.4770699117005428,
+      "observed_var": 0.09054264091498439,
+      "observed_deficit_pct": 49.13334780057056,
+      "dhkms_predicted_deficit_pct": 0.002360937648388265,
+      "dhkms_predicted_var": 0.17799579753098585,
+      "residual_deficit_pct": 49.13098686292217
+    },
+    {
+      "bin": 3,
+      "mean_log_cond": 4.792999355059729,
+      "n_eff": 1.5256590791880444,
+      "observed_var": 0.09266986028062123,
+      "observed_deficit_pct": 47.93828074122403,
+      "dhkms_predicted_deficit_pct": 0.0026298987577045908,
+      "dhkms_predicted_var": 0.1779953187802113,
+      "residual_deficit_pct": 47.93565084246632
+    },
+    {
+      "bin": 4,
+      "mean_log_cond": 4.906229597396959,
+      "n_eff": 1.5617013847389714,
+      "observed_var": 0.09333406203129851,
+      "observed_deficit_pct": 47.56513369028173,
+      "dhkms_predicted_deficit_pct": 0.0028427617649776763,
+      "dhkms_predicted_var": 0.17799493988405835,
+      "residual_deficit_pct": 47.56229092851675
+    },
+    {
+      "bin": 5,
+      "mean_log_cond": 4.9966545748336735,
+      "n_eff": 1.5904845490150237,
+      "observed_var": 0.09458596502174015,
+      "observed_deficit_pct": 46.86181740351677,
+      "dhkms_predicted_deficit_pct": 0.0030211931282963862,
+      "dhkms_predicted_var": 0.17799462227623164,
+      "residual_deficit_pct": 46.85879621038847
+    },
+    {
+      "bin": 6,
+      "mean_log_cond": 5.073711190138448,
+      "n_eff": 1.6150124314623946,
+      "observed_var": 0.09322664740365587,
+      "observed_deficit_pct": 47.62547898671018,
+      "dhkms_predicted_deficit_pct": 0.0031793113429933496,
+      "dhkms_predicted_var": 0.17799434082580945,
+      "residual_deficit_pct": 47.62229967536719
+    },
+    {
+      "bin": 7,
+      "mean_log_cond": 5.140249293282231,
+      "n_eff": 1.6361921675009776,
+      "observed_var": 0.09621641094090061,
+      "observed_deficit_pct": 45.94583655005584,
+      "dhkms_predicted_deficit_pct": 0.003320430549469055,
+      "dhkms_predicted_var": 0.17799408963362193,
+      "residual_deficit_pct": 45.942516119506365
+    },
+    {
+      "bin": 8,
+      "mean_log_cond": 5.198626888865256,
+      "n_eff": 1.6547743333066935,
+      "observed_var": 0.09701049208199487,
+      "observed_deficit_pct": 45.49972354944108,
+      "dhkms_predicted_deficit_pct": 0.0034478035743856716,
+      "dhkms_predicted_var": 0.1779938629096376,
+      "residual_deficit_pct": 45.49627574586669
+    },
+    {
+      "bin": 9,
+      "mean_log_cond": 5.25123156524894,
+      "n_eff": 1.671518921859119,
+      "observed_var": 0.09668515237385333,
+      "observed_deficit_pct": 45.68249866637453,
+      "dhkms_predicted_deficit_pct": 0.00356547577518982,
+      "dhkms_predicted_var": 0.17799365345312015,
+      "residual_deficit_pct": 45.67893319059934
+    },
+    {
+      "bin": 10,
+      "mean_log_cond": 5.298074782601804,
+      "n_eff": 1.686429581043192,
+      "observed_var": 0.09743342933390704,
+      "observed_deficit_pct": 45.26211835173762,
+      "dhkms_predicted_deficit_pct": 0.0036726013192437327,
+      "dhkms_predicted_var": 0.17799346276965172,
+      "residual_deficit_pct": 45.258445750418375
+    },
+    {
+      "bin": 11,
+      "mean_log_cond": 5.340689358879881,
+      "n_eff": 1.6999942219680368,
+      "observed_var": 0.09672621841831526,
+      "observed_deficit_pct": 45.65942785487906,
+      "dhkms_predicted_deficit_pct": 0.0037719954110872803,
+      "dhkms_predicted_var": 0.17799328584816826,
+      "residual_deficit_pct": 45.65565585946798
+    },
+    {
+      "bin": 12,
+      "mean_log_cond": 5.380129771073829,
+      "n_eff": 1.7125484950845342,
+      "observed_var": 0.09621905221161813,
+      "observed_deficit_pct": 45.94435269010217,
+      "dhkms_predicted_deficit_pct": 0.0038656499955465303,
+      "dhkms_predicted_var": 0.17799311914300792,
+      "residual_deficit_pct": 45.940487040106625
+    },
+    {
+      "bin": 13,
+      "mean_log_cond": 5.416302457746171,
+      "n_eff": 1.7240626188621693,
+      "observed_var": 0.0980106812673039,
+      "observed_deficit_pct": 44.937819512750615,
+      "dhkms_predicted_deficit_pct": 0.003952965183797863,
+      "dhkms_predicted_var": 0.17799296372197285,
+      "residual_deficit_pct": 44.933866547566815
+    },
+    {
+      "bin": 14,
+      "mean_log_cond": 5.450003464552161,
+      "n_eff": 1.7347899825028632,
+      "observed_var": 0.09856520418998156,
+      "observed_deficit_pct": 44.62628978090923,
+      "dhkms_predicted_deficit_pct": 0.004035547811575945,
+      "dhkms_predicted_var": 0.1779928167248954,
+      "residual_deficit_pct": 44.62225423309766
+    },
+    {
+      "bin": 15,
+      "mean_log_cond": 5.481456003734056,
+      "n_eff": 1.7448016366700436,
+      "observed_var": 0.09858634000354341,
+      "observed_deficit_pct": 44.614415728346394,
+      "dhkms_predicted_deficit_pct": 0.004113703217865069,
+      "dhkms_predicted_var": 0.1779926776082722,
+      "residual_deficit_pct": 44.610302025128526
+    },
+    {
+      "bin": 16,
+      "mean_log_cond": 5.511105340107594,
+      "n_eff": 1.7542393135565293,
+      "observed_var": 0.09862489687760927,
+      "observed_deficit_pct": 44.59275456314086,
+      "dhkms_predicted_deficit_pct": 0.004188342323273439,
+      "dhkms_predicted_var": 0.17799254475066456,
+      "residual_deficit_pct": 44.58856622081758
+    },
+    {
+      "bin": 17,
+      "mean_log_cond": 5.538938389452028,
+      "n_eff": 1.763098848325504,
+      "observed_var": 0.09936558302054438,
+      "observed_deficit_pct": 44.17663875250315,
+      "dhkms_predicted_deficit_pct": 0.004259266974554571,
+      "dhkms_predicted_var": 0.17799241850478528,
+      "residual_deficit_pct": 44.172379485528595
+    },
+    {
+      "bin": 18,
+      "mean_log_cond": 5.565214164582396,
+      "n_eff": 1.7714626873166421,
+      "observed_var": 0.09879456016800954,
+      "observed_deficit_pct": 44.49743810785981,
+      "dhkms_predicted_deficit_pct": 0.004326990838519714,
+      "dhkms_predicted_var": 0.17799229795630742,
+      "residual_deficit_pct": 44.493111117021286
+    },
+    {
+      "bin": 19,
+      "mean_log_cond": 5.589992918155472,
+      "n_eff": 1.7793500095462642,
+      "observed_var": 0.09955813573914002,
+      "observed_deficit_pct": 44.06846306789886,
+      "dhkms_predicted_deficit_pct": 0.004391543471629013,
+      "dhkms_predicted_var": 0.1779921830526205,
+      "residual_deficit_pct": 44.064071524427234
+    }
+  ],
+  "summary": {
+    "mean_observed_deficit_pct": 46.44334899932393,
+    "mean_dhkms_predicted_deficit_pct": 0.003406427131549334,
+    "mean_residual_after_dhkms_pct": 46.43994257219238,
+    "dhkms_explains_frac_at_largest_cond": 9.965274860760868e-05,
+    "eps011_v2_1_over_logN_ansatz_pct": 22.9
+  },
+  "verdict_framework": {
+    "DHKMS_EXPLAINS_ALL": "mean_residual < 3 and extrapolated fit -> 0 at large N: the 22.9% asymptote is a 1/log(N)-ansatz fitting artifact; F011 tier shifts to calibration_confirmed.",
+    "DHKMS_EXPLAINS_PARTIAL": "mean_residual 5-20: DHKMS captures leading-order decay but residual remains; F011 LAYER 2 survives as candidate.",
+    "DHKMS_EXPLAINS_NONE": "mean_residual >= 30 or direction wrong: DHKMS irrelevant; F011 LAYER 2 genuinely frontier."
+  },
+  "limitations_and_caveats": [
+    "Monte Carlo SE ~ sqrt(VAR/NTRIALS) per cell; ~0.08% deficit-SE at NTRIALS=50K.",
+    "SO(2N) at integer N only; fractional N_eff is extrapolated via the log-log power-law fit. Effective matrix size for EC rank-0 at finite N is controversial \u2014 some DHKMS conventions use N_eff = log(N)/(2*pi) (giving half the value used here), others use log(N/(2*pi*e))/2. Report retries both conventions below.",
+    "This is a MC simulation of plain SO(2N) first-gap variance, NOT the excised Jacobi ensemble DHKMS 2011 computed for quadratic Dirichlet family. Excision conditions on L(1/2) \u2260 0 which for SO(even) means removing the measure-zero set at det = +1 with double eigenvalues; for generic random orthogonal matrices this is automatic. The simulation therefore approximates the plain SO(even) CUE, not the excised measure. Deviation between plain-SO and excised-SO at finite N is expected to be small (< 1%) at our N range per DHKMS.",
+    "The DHKMS proper closed-form requires Painlev\u00e9 VI / Fredholm determinant evaluation which is not attempted here. This simulation is the best available approximation within task scope; a Sage/Mathematica Painlev\u00e9 VI evaluation would be the next precision step."
+  ],
+  "per_bin_prediction_alt_convention_log_over_2pi": [
+    {
+      "bin": 0,
+      "n_eff_alt": 0.6012992373995572,
+      "dhkms_predicted_deficit_pct_alt": 0.00011804794476699983,
+      "observed_deficit_pct": 54.571912629650114
+    },
+    {
+      "bin": 1,
+      "n_eff_alt": 0.7018616504935757,
+      "dhkms_predicted_deficit_pct_alt": 0.00019766350372247535,
+      "observed_deficit_pct": 49.66323155852592
+    },
+    {
+      "bin": 2,
+      "n_eff_alt": 0.7385349558502714,
+      "dhkms_predicted_deficit_pct_alt": 0.00023423824839404042,
+      "observed_deficit_pct": 49.13334780057056
+    },
+    {
+      "bin": 3,
+      "n_eff_alt": 0.7628295395940222,
+      "dhkms_predicted_deficit_pct_alt": 0.00026092297646188365,
+      "observed_deficit_pct": 47.93828074122403
+    },
+    {
+      "bin": 4,
+      "n_eff_alt": 0.7808506923694857,
+      "dhkms_predicted_deficit_pct_alt": 0.0002820419831436458,
+      "observed_deficit_pct": 47.56513369028173
+    },
+    {
+      "bin": 5,
+      "n_eff_alt": 0.7952422745075118,
+      "dhkms_predicted_deficit_pct_alt": 0.0002997448860690439,
+      "observed_deficit_pct": 46.86181740351677
+    },
+    {
+      "bin": 6,
+      "n_eff_alt": 0.8075062157311973,
+      "dhkms_predicted_deficit_pct_alt": 0.00031543243871368646,
+      "observed_deficit_pct": 47.62547898671018
+    },
+    {
+      "bin": 7,
+      "n_eff_alt": 0.8180960837504888,
+      "dhkms_predicted_deficit_pct_alt": 0.00032943345045670814,
+      "observed_deficit_pct": 45.94583655005584
+    },
+    {
+      "bin": 8,
+      "n_eff_alt": 0.8273871666533468,
+      "dhkms_predicted_deficit_pct_alt": 0.00034207064749132134,
+      "observed_deficit_pct": 45.49972354944108
+    },
+    {
+      "bin": 9,
+      "n_eff_alt": 0.8357594609295596,
+      "dhkms_predicted_deficit_pct_alt": 0.0003537453862205937,
+      "observed_deficit_pct": 45.68249866637453
+    },
+    {
+      "bin": 10,
+      "n_eff_alt": 0.843214790521596,
+      "dhkms_predicted_deficit_pct_alt": 0.00036437374814051864,
+      "observed_deficit_pct": 45.26211835173762
+    },
+    {
+      "bin": 11,
+      "n_eff_alt": 0.8499971109840184,
+      "dhkms_predicted_deficit_pct_alt": 0.0003742350411696008,
+      "observed_deficit_pct": 45.65942785487906
+    },
+    {
+      "bin": 12,
+      "n_eff_alt": 0.8562742475422671,
+      "dhkms_predicted_deficit_pct_alt": 0.0003835268942741428,
+      "observed_deficit_pct": 45.94435269010217
+    },
+    {
+      "bin": 13,
+      "n_eff_alt": 0.8620313094310846,
+      "dhkms_predicted_deficit_pct_alt": 0.0003921897900385228,
+      "observed_deficit_pct": 44.937819512750615
+    },
+    {
+      "bin": 14,
+      "n_eff_alt": 0.8673949912514316,
+      "dhkms_predicted_deficit_pct_alt": 0.00040038314918619885,
+      "observed_deficit_pct": 44.62628978090923
+    },
+    {
+      "bin": 15,
+      "n_eff_alt": 0.8724008183350218,
+      "dhkms_predicted_deficit_pct_alt": 0.0004081372656425088,
+      "observed_deficit_pct": 44.614415728346394
+    },
+    {
+      "bin": 16,
+      "n_eff_alt": 0.8771196567782646,
+      "dhkms_predicted_deficit_pct_alt": 0.00041554251555433514,
+      "observed_deficit_pct": 44.59275456314086
+    },
+    {
+      "bin": 17,
+      "n_eff_alt": 0.881549424162752,
+      "dhkms_predicted_deficit_pct_alt": 0.0004225792393303281,
+      "observed_deficit_pct": 44.17663875250315
+    },
+    {
+      "bin": 18,
+      "n_eff_alt": 0.8857313436583211,
+      "dhkms_predicted_deficit_pct_alt": 0.0004292983999487802,
+      "observed_deficit_pct": 44.49743810785981
+    },
+    {
+      "bin": 19,
+      "n_eff_alt": 0.8896750047731321,
+      "dhkms_predicted_deficit_pct_alt": 0.00043570292982658866,
+      "observed_deficit_pct": 44.06846306789886
+    }
+  ],
+  "finished_at": "2026-04-21T08:48:21+00:00",
+  "total_elapsed_sec": 476.89494466781616
+}

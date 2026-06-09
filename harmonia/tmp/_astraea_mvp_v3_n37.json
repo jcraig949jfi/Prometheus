@@ -1,0 +1,100 @@
+{
+  "n": 37,
+  "n_train": 3000,
+  "n_evals_loop": 5000,
+  "eps": 0.2,
+  "trusted_thresh": 0.02,
+  "confidence_thresh": 0.5,
+  "seeds": [
+    100,
+    200,
+    300
+  ],
+  "info_gain": {
+    "F_peak": 0.0725759468744992,
+    "F_lag_k": -0.005174635917892023,
+    "F_low_lag": 0.08937227756875854,
+    "F_high_lag": -0.006081965425867697
+  },
+  "trusted": [
+    "F_peak",
+    "F_low_lag"
+  ],
+  "untrusted": [
+    "F_lag_k",
+    "F_high_lag"
+  ],
+  "seed_results": [
+    {
+      "seed": 20260630,
+      "lift_F": 0.2230368198110133,
+      "lift_cov": -0.009999999999999898,
+      "random_best_F": 3.457070707070707,
+      "astraea_best_F": 3.6801075268817205,
+      "random_cov": 0.6275,
+      "astraea_cov": 0.6175,
+      "telemetry": {
+        "explore": 669,
+        "low_conf_fallback": 1663,
+        "routed": 1194,
+        "no_improvement_fallback": 1,
+        "target_counts": {
+          "F_low_lag": 729,
+          "F_peak": 466
+        }
+      },
+      "wall_random": 0.6661231517791748,
+      "wall_astraea": 32.340593338012695
+    },
+    {
+      "seed": 20260730,
+      "lift_F": -0.4981200727713766,
+      "lift_cov": -0.012499999999999956,
+      "random_best_F": 4.026470588235294,
+      "astraea_best_F": 3.5283505154639174,
+      "random_cov": 0.5475,
+      "astraea_cov": 0.535,
+      "telemetry": {
+        "explore": 688,
+        "low_conf_fallback": 1693,
+        "routed": 1102,
+        "no_improvement_fallback": 8,
+        "target_counts": {
+          "F_low_lag": 690,
+          "F_peak": 420
+        }
+      },
+      "wall_random": 0.6410994529724121,
+      "wall_astraea": 29.83857488632202
+    },
+    {
+      "seed": 20260830,
+      "lift_F": 0.9164546793412773,
+      "lift_cov": -0.01749999999999996,
+      "random_best_F": 3.5283505154639174,
+      "astraea_best_F": 4.444805194805195,
+      "random_cov": 0.5375,
+      "astraea_cov": 0.52,
+      "telemetry": {
+        "explore": 693,
+        "low_conf_fallback": 1563,
+        "routed": 1246,
+        "no_improvement_fallback": 9,
+        "target_counts": {
+          "F_peak": 508,
+          "F_low_lag": 747
+        }
+      },
+      "wall_random": 0.6559329032897949,
+      "wall_astraea": 33.28825497627258
+    }
+  ],
+  "headline": {
+    "verdict": "FRAGILE_LIFT",
+    "lift_F_mean": 0.2137904754603047,
+    "lift_F_std": 0.5775347340155009,
+    "lift_cov_mean": -0.013333333333333272,
+    "lift_cov_std": 0.0031180478223116403,
+    "robust_lift": -0.3637442585551962
+  }
+}

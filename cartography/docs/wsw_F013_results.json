@@ -1,0 +1,206 @@
+{
+  "specimen_id": "F013",
+  "specimen_label": "Zero spacing rigidity vs rank",
+  "drafted_by": "Harmonia_M2_sessionD",
+  "task_id": "wsw_F013",
+  "baseline": {
+    "slope": -0.0019,
+    "r2": 0.399,
+    "source": "pattern_library.md Pattern?/F013"
+  },
+  "sample": {
+    "n_total": 4000,
+    "n_per_rank": {
+      "0": {
+        "n": 1000,
+        "n_valid": 1000,
+        "spacing_var_mean": 0.053885830897665105,
+        "spacing_var_std": 0.02579869679003645
+      },
+      "1": {
+        "n": 1000,
+        "n_valid": 1000,
+        "spacing_var_mean": 0.050880223131667617,
+        "spacing_var_std": 0.02393426059073802
+      },
+      "2": {
+        "n": 1000,
+        "n_valid": 1000,
+        "spacing_var_mean": 0.044169302306467824,
+        "spacing_var_std": 0.02193497839134915
+      },
+      "3": {
+        "n": 1000,
+        "n_valid": 1000,
+        "spacing_var_mean": 0.04057368746455691,
+        "spacing_var_std": 0.019282086118760124
+      }
+    },
+    "balanced_by_rank": true,
+    "max_rank": 3,
+    "sampling_note": "ORDER BY random() per rank to avoid Pattern 4 (rank 0 dominance)"
+  },
+  "pooled_raw": {
+    "slope": -0.004664735112453398,
+    "intercept": 0.054374363618770474,
+    "r2": 0.049396157399332896,
+    "n": 4000,
+    "label": "pooled_raw_zeros (calibration vs baseline slope=-0.0019 R2=0.399)"
+  },
+  "projections": {
+    "P020_conductor_conditioning": {
+      "axis": "P020_conductor",
+      "per_bin": {
+        "4<=log10N<5": {
+          "n": 753,
+          "slope": -0.00522785166764925,
+          "intercept": 0.06412601980600509,
+          "r2": 0.03625659261405645
+        },
+        "log10N>=5": {
+          "n": 3247,
+          "slope": -0.0038251550350407067,
+          "intercept": 0.05093125636408803,
+          "r2": 0.03931450752838217
+        }
+      }
+    },
+    "P021_bad_prime_count": {
+      "axis": "P021_num_bad_primes",
+      "per_bin": {
+        "4": {
+          "n": 1710,
+          "slope": -0.00568592968255708,
+          "intercept": 0.05426479787415684,
+          "r2": 0.07463816078720031
+        },
+        "5": {
+          "n": 765,
+          "slope": -0.003015029571491704,
+          "intercept": 0.049003777412669515,
+          "r2": 0.01597565408104995
+        },
+        "3": {
+          "n": 1120,
+          "slope": -0.007523021614546711,
+          "intercept": 0.0633763774042166,
+          "r2": 0.11220446504490744
+        },
+        "2": {
+          "n": 287,
+          "slope": -0.0056248428943463935,
+          "intercept": 0.06275110003013215,
+          "r2": 0.05161277562919575
+        },
+        "6": {
+          "n": 85,
+          "slope": -0.0032704840702806916,
+          "intercept": 0.04072591452411485,
+          "r2": 0.01934596208992201
+        },
+        "1": {
+          "n": 33,
+          "slope": -0.009671646143907286,
+          "intercept": 0.07839974626423393,
+          "r2": 0.058292296824830614
+        }
+      }
+    },
+    "P024_torsion": {
+      "axis": "P024_torsion",
+      "per_bin": {
+        "1": {
+          "n": 2599,
+          "slope": -0.00469308379050716,
+          "intercept": 0.054808938437174486,
+          "r2": 0.052966810112055396
+        },
+        "2": {
+          "n": 1222,
+          "slope": -0.004823657991904152,
+          "intercept": 0.05371608883383172,
+          "r2": 0.03601476176612528
+        },
+        "4": {
+          "n": 127,
+          "slope": -0.007999618137665969,
+          "intercept": 0.057066134843303674,
+          "r2": 0.0903074948464827
+        },
+        "6": {
+          "n": 10,
+          "skipped": "n<30"
+        },
+        "3": {
+          "n": 39,
+          "slope": -0.012299092908513158,
+          "intercept": 0.05937662708752308,
+          "r2": 0.16490573284517762
+        },
+        "5": {
+          "n": 2,
+          "skipped": "n<30"
+        },
+        "8": {
+          "n": 1,
+          "skipped": "n<30"
+        }
+      }
+    },
+    "P025_cm_vs_noncm": {
+      "axis": "P025_cm_vs_noncm",
+      "per_bin": {
+        "non_cm": {
+          "n": 3996,
+          "slope": -0.004661979292871155,
+          "intercept": 0.05436949172893339,
+          "r2": 0.04933429299589842
+        },
+        "cm": {
+          "n": 4,
+          "skipped": "n<30"
+        }
+      }
+    },
+    "P042_feature_permutation_null": {
+      "real_slope": -0.004664735112453398,
+      "null_mean": 1.0204293317837927e-05,
+      "null_std": 0.00033002304585356707,
+      "z": -14.165493787502133,
+      "p_two_sided": 0.0,
+      "n_shuffles": 1000,
+      "label": "P042_feature_permutation (shuffle spacings across curves, keep ranks)"
+    },
+    "P051_unfolded_pooled": {
+      "slope": -0.0012095058644973173,
+      "intercept": 0.07519161606424449,
+      "r2": 0.001482240505642607,
+      "n": 4000,
+      "label": "P051_unfolded_pooled (unfolded zeros, pooled slope)"
+    }
+  },
+  "per_rank_mean_regression": {
+    "slope": -0.004665,
+    "r2": 0.9783,
+    "n_points": 4,
+    "note": "Per-rank-mean fit gives R2=0.978 with 4 points; per-curve fit gives R2=0.049 with 4000 points. Baseline R2=0.399 reconciles with neither \u2014 likely different sample / preprocessing. Slope magnitude and sign match."
+  },
+  "shape_summary": {
+    "verdict": "REAL BUT DENSITY-MEDIATED",
+    "invariance_profile": {
+      "P042_feature_permutation_null": "+2 (z=-14.165 \u2014 strongly survives; object-level coupling real)",
+      "P020_conductor_conditioning": "+1 (slope survives both bins at similar magnitude)",
+      "P021_num_bad_primes": "+1 (slope survives all 6 bins; not bad-prime-mediated)",
+      "P024_torsion": "+1 (slope survives torsion=1 and =2; small-n bins skipped)",
+      "P025_cm_vs_noncm": "0 (only 4 CM curves in 4000-curve balanced sample; inconclusive)",
+      "P051_unfolded": "-1 (slope drops from -0.00467 raw to -0.00121 unfolded; effect mostly collapses under N(T) density normalization)"
+    },
+    "interpretation": "Rank-spacing coupling is object-level real (P042 z=-14) and is NOT mediated by conductor, bad-prime count, or torsion (slope survives all three stratifications). It IS mediated by spectral density: N(T) unfolding collapses ~75% of the slope. This suggests the rank->spacing_variance coupling is a density-regime feature \u2014 higher-rank L-functions have (analytically) more spread-out zeros, so raw zero gaps scale inversely with rank via the analytic-conductor density factor. Under the charter: P051 is the coordinate system that resolves what this feature really is. Consistent with Pattern 8 hypothesis that F011 GUE deficit is also density-regime.",
+    "connection_to_F011": "F013 and F011 are both density-regime features under this analysis. If sessionC measured F011 GUE deficit at 38% unstratified and 14% post-first-gap (P050), proper N(T) unfolding (P051) should shrink it further. F013 offers a parallel data point: raw rank-spacing slope -0.00467 -> unfolded -0.00121 (~74% reduction). Same order of collapse as F011 pooled->first-gap.",
+    "recommended_next_probes": [
+      "Resample with rank-4 inclusion once Mnemosyne/Koios unblocks rank>=4 lfunc coverage (F030/F033). Current null at rank=4+ is conditional on coverage, not absolute.",
+      "Run P042 feature-permutation null on the UNFOLDED spacings. If z collapses there too, the residual slope is noise; if z survives, there is a finer density-independent coupling.",
+      "Test P028 Katz-Sarnak symmetry type (sessionB entry, 2026-04-17) as joint stratification: SO_even/SO_odd split will alias rank parity \u2014 expect P028 x P023 to be nearly degenerate."
+    ]
+  }
+}

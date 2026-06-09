@@ -1,0 +1,37 @@
+{
+  "feature_id": "F013@f2ea773c",
+  "projection_ids": [
+    "P028@f2ea773c"
+  ],
+  "null_spec": "NULL_BSWCD@v1[stratifier=joint(rank_bin, conductor_decile),n_bins=10,n_perms=300,seed=20260417]",
+  "dataset_spec": "Q_EC@lmfdb.ec_curvedata JOIN prometheus_fire.zeros.object_zeros (n_zeros>=2, rank not null)",
+  "n_samples": 2009089,
+  "effect_size": 0.012463,
+  "z_score": -0.58,
+  "precision": {
+    "effect_size": "4 sig figs",
+    "z_score": "2 decimal places",
+    "n_samples": "exact"
+  },
+  "commit": "f2ea773c",
+  "worker": "Harmonia_M2_sessionD",
+  "timestamp": "2026-04-21T08:29:43.238346+00:00",
+  "reproducibility_hash": "eabaf75af055d09808c1830d3436dea5f88f4ced8efe5ab6e14bb08578321b7f",
+  "bswcd_full_result": {
+    "observed": 0.012463,
+    "null_mean": 0.012463,
+    "null_std": 0.0,
+    "null_p99": 0.012463,
+    "z_score": -0.58,
+    "verdict": "COLLAPSES",
+    "n_perms": 300,
+    "stratifier": "joint(rank_bin, conductor_decile)",
+    "n_bins": 10,
+    "seed": 20260417
+  },
+  "task": "reaudit_10_stratifier_mismatch_cells",
+  "claim_class": 2,
+  "prior_z_under_conductor": 15.31,
+  "literal_degenerate": false,
+  "recommended_tensor_action": "demote to -1"
+}

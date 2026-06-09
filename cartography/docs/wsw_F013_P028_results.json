@@ -1,0 +1,84 @@
+{
+  "specimen_id": "F013",
+  "projections_used": [
+    "P028"
+  ],
+  "verdict": "P028_RESOLVES",
+  "reading": "Rank-vs-variance slope differs between SO_even and SO_odd at z=13.68 (|z|>=3.0). F013 is NOT axis-uniform under Katz-Sarnak. The slope-signs may even flip (SO_even vs SO_odd can move in opposite directions with rank).",
+  "per_cell": [
+    {
+      "rank": 0,
+      "ks_class": "SO_even",
+      "n": 773232,
+      "var": 0.09542708220968436,
+      "se_var": 0.00015347301119250612,
+      "deficit_pct": 46.38927965748069
+    },
+    {
+      "rank": 2,
+      "ks_class": "SO_even",
+      "n": 222305,
+      "var": 0.12110671624822941,
+      "se_var": 0.0003632533162825132,
+      "deficit_pct": 31.962518961668867
+    },
+    {
+      "rank": 1,
+      "ks_class": "SO_odd",
+      "n": 1008146,
+      "var": 0.11613914703460682,
+      "se_var": 0.0001635807253723884,
+      "deficit_pct": 34.75328818280516
+    },
+    {
+      "rank": 3,
+      "ks_class": "SO_odd",
+      "n": 5405,
+      "var": 0.11181783342896089,
+      "se_var": 0.0021511386371523703,
+      "deficit_pct": 37.180992455639945
+    }
+  ],
+  "fit_SO_even": {
+    "slope": 0.012839817019272524,
+    "se_slope": 0.0001971718393652721,
+    "intercept": 0.09542708220968436,
+    "n_cells": 2,
+    "method": "pair_difference_with_propagation"
+  },
+  "fit_SO_odd": {
+    "slope": -0.0021606568028229647,
+    "se_slope": 0.0010786746601690329,
+    "intercept": 0.11829980383742977,
+    "n_cells": 2,
+    "method": "pair_difference_with_propagation"
+  },
+  "slope_difference": {
+    "diff": 0.01500047382209549,
+    "se_diff": 0.0010965471976752588,
+    "z_diff": 13.679733853588182,
+    "p_value": 0.0,
+    "threshold": 3.0
+  },
+  "cross_specimen_ledger": {
+    "F011_P028_result": "RESOLVES at z=5.4 (deficit spread 7.6%)",
+    "F010_P028_result": "PARTIALLY RESOLVES at Is_Even axis (sessionC bigsample)",
+    "F013_P028_result_this_run": "P028_RESOLVES"
+  },
+  "shape_summary": "Rank-vs-variance slope differs between SO_even and SO_odd at z=13.68 (|z|>=3.0). F013 is NOT axis-uniform under Katz-Sarnak. The slope-signs may even flip (SO_even vs SO_odd can move in opposite directions with rank).",
+  "_meta": {
+    "task_id": "wsw_F013_P028",
+    "instance": "Harmonia_M2_sessionB",
+    "started": "2026-04-17T12:34:56.764998+00:00",
+    "finished": "2026-04-17T12:35:03.672683+00:00",
+    "gue_var_baseline": 0.178,
+    "min_stratum_n": 100,
+    "data_source": "zeros.object_zeros \u00d7 ec_curvedata on lmfdb_label",
+    "notes": [
+      "Katz-Sarnak class via rank parity: SO_even iff rank even; SO_odd iff rank odd.",
+      "Variance per (rank, ks_class) cell; slope fit via weighted LS with var SE = var*sqrt(2/(n-1)).",
+      "Rank 4+ has sparse coverage; only cells with n>=100 enter the fit.",
+      "Expect SO_even cells at ranks {0, 2} (rank 4 usually <100); SO_odd at {1, 3}."
+    ]
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "generated_at": "2026-05-28T11:10:23.896417+00:00",
+  "versions_tested": [
+    "bootstrap_000",
+    "cycle_001",
+    "cycle_002",
+    "cycle_005",
+    "cycle_006"
+  ],
+  "matrix": {
+    "tier_R0": {
+      "bootstrap_000": "PASS",
+      "cycle_001": "PASS",
+      "cycle_002": "PASS",
+      "cycle_005": "PASS",
+      "cycle_006": "PASS"
+    },
+    "tier_R1": {
+      "bootstrap_000": "PASS",
+      "cycle_001": "PASS",
+      "cycle_002": "PASS",
+      "cycle_005": "PASS",
+      "cycle_006": "PASS"
+    },
+    "tier_R2": {
+      "bootstrap_000": "vacuous",
+      "cycle_001": "vacuous",
+      "cycle_002": "vacuous",
+      "cycle_005": "vacuous",
+      "cycle_006": "vacuous"
+    },
+    "holdout_R1": {
+      "bootstrap_000": "FAIL",
+      "cycle_001": "FAIL",
+      "cycle_002": "FAIL",
+      "cycle_005": "FAIL",
+      "cycle_006": "FAIL"
+    },
+    "holdout_R2": {
+      "bootstrap_000": "PASS",
+      "cycle_001": "FAIL",
+      "cycle_002": "FAIL",
+      "cycle_005": "FAIL",
+      "cycle_006": "FAIL"
+    }
+  },
+  "diagnosis": {
+    "tier_R0": {
+      "status": "too_weak_all_pass",
+      "passes": 5,
+      "fails": 0
+    },
+    "tier_R1": {
+      "status": "too_weak_all_pass",
+      "passes": 5,
+      "fails": 0
+    },
+    "tier_R2": {
+      "status": "inconclusive",
+      "passes": 0,
+      "fails": 0
+    },
+    "holdout_R1": {
+      "status": "unreached_all_fail",
+      "passes": 0,
+      "fails": 5
+    },
+    "holdout_R2": {
+      "status": "discriminating",
+      "passes": 1,
+      "fails": 4
+    }
+  },
+  "bootstrap_overreach": [
+    "holdout_R2"
+  ],
+  "anomaly_detected": true
+}

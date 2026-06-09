@@ -1,0 +1,29 @@
+{
+  "target_tier": "R5",
+  "probe_schema": {
+    "tier": "R5",
+    "kind": "invariant",
+    "versions": [
+      "clean",
+      "iso",
+      "adversarial",
+      "transfer"
+    ],
+    "data_fields": {
+      "n": {
+        "type": "int",
+        "sample": "4"
+      },
+      "removed": {
+        "type": "set",
+        "sample": "{(3, 3), (0, 0)}"
+      },
+      "invariant": {
+        "type": "str",
+        "sample": "'color_parity'"
+      }
+    }
+  },
+  "candidate_exception": null,
+  "exception_on_version": null
+}

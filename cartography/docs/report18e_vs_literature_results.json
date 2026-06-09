@@ -1,0 +1,843 @@
+{
+  "task": "report18e_vs_literature",
+  "parent": "report18d_extended_primes",
+  "drafted_by": "Harmonia_M2_sessionD",
+  "date": "2026-04-18",
+  "caveat": "Literature \u03b1-exponents are order-of-magnitude envelopes or bounds, not closed-form predictions for Prob(p|h). DH_1/6 is the only strong-confidence pinpoint; others are weak comparisons.",
+  "predictions_tested": [
+    {
+      "name": "DH_1/6",
+      "label": "Davenport-Heilbronn 1971 \u2014 \u03b1 = 1/6 for p=3 imag quad",
+      "predicted_alpha": 0.16666666666666666,
+      "confidence": "strong",
+      "note": "Error-term exponent in cubic field counting; translates to \u03b1_{p=3}."
+    },
+    {
+      "name": "BST_1_over_p",
+      "label": "BST 2013 asymptotic \u2014 \u03b1 = 1/p",
+      "confidence": "weak",
+      "note": "True as asymptotic p \u2192 \u221e; at LMFDB |disc| scale, likely FAR too small for larger primes."
+    },
+    {
+      "name": "EPW_1_over_4",
+      "label": "EPW / BST effective \u2014 \u03b1 \u2248 1/4",
+      "predicted_alpha": 0.25,
+      "confidence": "weak",
+      "note": "Common effective bound in Ellenberg-Pierce-Wood-type arguments."
+    },
+    {
+      "name": "Klueners_1_over_8",
+      "label": "Kl\u00fcners 2006 \u2014 \u03b1 = 1/8",
+      "predicted_alpha": 0.125,
+      "confidence": "weak",
+      "note": "Unconditional lower bound for p-torsion statistics."
+    }
+  ],
+  "by_prediction": {
+    "DH_1/6": {
+      "label": "Davenport-Heilbronn 1971 \u2014 \u03b1 = 1/6 for p=3 imag quad",
+      "confidence": "strong",
+      "n_checks": 1,
+      "n_match_2sigma": 1,
+      "n_match_3sigma": 1,
+      "details": [
+        {
+          "family": "imaginary_quadratic",
+          "prime": 3,
+          "empirical": 0.16503374016098107,
+          "predicted": 0.16666666666666666,
+          "z": -0.10336044267441023
+        }
+      ]
+    },
+    "BST_1_over_p": {
+      "label": "BST 2013 asymptotic \u2014 \u03b1 = 1/p",
+      "confidence": "weak",
+      "n_checks": 16,
+      "n_match_2sigma": 1,
+      "n_match_3sigma": 1,
+      "details": [
+        {
+          "family": "imaginary_quadratic",
+          "prime": 3,
+          "empirical": 0.16503374016098107,
+          "predicted": 0.3333333333333333,
+          "z": -10.65297206680712
+        },
+        {
+          "family": "imaginary_quadratic",
+          "prime": 5,
+          "empirical": 0.2813800237690318,
+          "predicted": 0.2,
+          "z": 9.865893170706586
+        },
+        {
+          "family": "imaginary_quadratic",
+          "prime": 7,
+          "empirical": 0.26922539915063576,
+          "predicted": 0.14285714285714285,
+          "z": 3.25675387010653
+        },
+        {
+          "family": "imaginary_quadratic",
+          "prime": 11,
+          "empirical": 0.2573459067380214,
+          "predicted": 0.09090909090909091,
+          "z": 4.630968074808168
+        },
+        {
+          "family": "imaginary_quadratic",
+          "prime": 13,
+          "empirical": 0.3400105005350184,
+          "predicted": 0.07692307692307693,
+          "z": 7.0988545685305775
+        },
+        {
+          "family": "imaginary_quadratic",
+          "prime": 17,
+          "empirical": 0.3473280306860306,
+          "predicted": 0.058823529411764705,
+          "z": 6.373641377420414
+        },
+        {
+          "family": "imaginary_quadratic",
+          "prime": 19,
+          "empirical": 0.384686882874132,
+          "predicted": 0.05263157894736842,
+          "z": 17.916655715254738
+        },
+        {
+          "family": "imaginary_quadratic",
+          "prime": 23,
+          "empirical": 0.3362141600817499,
+          "predicted": 0.043478260869565216,
+          "z": 7.553622675347535
+        },
+        {
+          "family": "real_quadratic",
+          "prime": 3,
+          "empirical": 0.15796548562897733,
+          "predicted": 0.3333333333333333,
+          "z": -13.578912075977984
+        },
+        {
+          "family": "real_quadratic",
+          "prime": 5,
+          "empirical": 0.22994956295723226,
+          "predicted": 0.2,
+          "z": 1.775815336470292
+        },
+        {
+          "family": "real_quadratic",
+          "prime": 7,
+          "empirical": 0.2452967953419678,
+          "predicted": 0.14285714285714285,
+          "z": 6.133857719727719
+        },
+        {
+          "family": "real_quadratic",
+          "prime": 11,
+          "empirical": 0.23101812889205497,
+          "predicted": 0.09090909090909091,
+          "z": 7.957669449121164
+        },
+        {
+          "family": "real_quadratic",
+          "prime": 13,
+          "empirical": 0.21754501094696949,
+          "predicted": 0.07692307692307693,
+          "z": 5.275782844326886
+        },
+        {
+          "family": "real_quadratic",
+          "prime": 17,
+          "empirical": 0.2073124762152832,
+          "predicted": 0.058823529411764705,
+          "z": 9.579514012009007
+        },
+        {
+          "family": "real_quadratic",
+          "prime": 19,
+          "empirical": 0.17296991949795992,
+          "predicted": 0.05263157894736842,
+          "z": 9.98408527284915
+        },
+        {
+          "family": "real_quadratic",
+          "prime": 23,
+          "empirical": 0.15506715682618627,
+          "predicted": 0.043478260869565216,
+          "z": 5.837739916383834
+        }
+      ]
+    },
+    "Klueners_1_over_8": {
+      "label": "Kl\u00fcners 2006 \u2014 \u03b1 = 1/8",
+      "confidence": "weak",
+      "n_checks": 6,
+      "n_match_2sigma": 0,
+      "n_match_3sigma": 2,
+      "details": [
+        {
+          "family": "imaginary_quadratic",
+          "prime": 3,
+          "empirical": 0.16503374016098107,
+          "predicted": 0.125,
+          "z": 2.5340424633587664
+        },
+        {
+          "family": "imaginary_quadratic",
+          "prime": 5,
+          "empirical": 0.2813800237690318,
+          "predicted": 0.125,
+          "z": 18.95832093778436
+        },
+        {
+          "family": "imaginary_quadratic",
+          "prime": 7,
+          "empirical": 0.26922539915063576,
+          "predicted": 0.125,
+          "z": 3.7169669078964627
+        },
+        {
+          "family": "real_quadratic",
+          "prime": 3,
+          "empirical": 0.15796548562897733,
+          "predicted": 0.125,
+          "z": 2.552551318600006
+        },
+        {
+          "family": "real_quadratic",
+          "prime": 5,
+          "empirical": 0.22994956295723226,
+          "predicted": 0.125,
+          "z": 6.222830153529918
+        },
+        {
+          "family": "real_quadratic",
+          "prime": 7,
+          "empirical": 0.2452967953419678,
+          "predicted": 0.125,
+          "z": 7.2031035723802574
+        }
+      ]
+    },
+    "EPW_1_over_4": {
+      "label": "EPW / BST effective \u2014 \u03b1 \u2248 1/4",
+      "confidence": "weak",
+      "n_checks": 14,
+      "n_match_2sigma": 6,
+      "n_match_3sigma": 10,
+      "details": [
+        {
+          "family": "imaginary_quadratic",
+          "prime": 5,
+          "empirical": 0.2813800237690318,
+          "predicted": 0.25,
+          "z": 3.8042746593214054
+        },
+        {
+          "family": "imaginary_quadratic",
+          "prime": 7,
+          "empirical": 0.26922539915063576,
+          "predicted": 0.25,
+          "z": 0.4954756433669324
+        },
+        {
+          "family": "imaginary_quadratic",
+          "prime": 11,
+          "empirical": 0.2573459067380214,
+          "predicted": 0.25,
+          "z": 0.20439383807522957
+        },
+        {
+          "family": "imaginary_quadratic",
+          "prime": 13,
+          "empirical": 0.3400105005350184,
+          "predicted": 0.25,
+          "z": 2.428741914631516
+        },
+        {
+          "family": "imaginary_quadratic",
+          "prime": 17,
+          "empirical": 0.3473280306860306,
+          "predicted": 0.25,
+          "z": 2.1501708320786643
+        },
+        {
+          "family": "imaginary_quadratic",
+          "prime": 19,
+          "empirical": 0.384686882874132,
+          "predicted": 0.25,
+          "z": 7.267278917938597
+        },
+        {
+          "family": "imaginary_quadratic",
+          "prime": 23,
+          "empirical": 0.3362141600817499,
+          "predicted": 0.25,
+          "z": 2.224630584366819
+        },
+        {
+          "family": "real_quadratic",
+          "prime": 5,
+          "empirical": 0.22994956295723226,
+          "predicted": 0.25,
+          "z": -1.188861208236124
+        },
+        {
+          "family": "real_quadratic",
+          "prime": 7,
+          "empirical": 0.2452967953419678,
+          "predicted": 0.25,
+          "z": -0.2816173961875138
+        },
+        {
+          "family": "real_quadratic",
+          "prime": 11,
+          "empirical": 0.23101812889205497,
+          "predicted": 0.25,
+          "z": -1.0780993002122836
+        },
+        {
+          "family": "real_quadratic",
+          "prime": 13,
+          "empirical": 0.21754501094696949,
+          "predicted": 0.25,
+          "z": -1.21762992130163
+        },
+        {
+          "family": "real_quadratic",
+          "prime": 17,
+          "empirical": 0.2073124762152832,
+          "predicted": 0.25,
+          "z": -2.7539136146931895
+        },
+        {
+          "family": "real_quadratic",
+          "prime": 19,
+          "empirical": 0.17296991949795992,
+          "predicted": 0.25,
+          "z": -6.390938156434653
+        },
+        {
+          "family": "real_quadratic",
+          "prime": 23,
+          "empirical": 0.15506715682618627,
+          "predicted": 0.25,
+          "z": -4.966383466926812
+        }
+      ]
+    }
+  },
+  "all_comparisons": [
+    {
+      "prediction_name": "DH_1/6",
+      "prediction_label": "Davenport-Heilbronn 1971 \u2014 \u03b1 = 1/6 for p=3 imag quad",
+      "confidence": "strong",
+      "family": "imaginary_quadratic",
+      "prime": 3,
+      "empirical_alpha": 0.16503374016098107,
+      "empirical_se": 0.0157983698931067,
+      "predicted_alpha": 0.16666666666666666,
+      "z": -0.10336044267441023,
+      "matches_at_2sigma": true,
+      "matches_at_3sigma": true
+    },
+    {
+      "prediction_name": "BST_1_over_p",
+      "prediction_label": "BST 2013 asymptotic \u2014 \u03b1 = 1/p",
+      "confidence": "weak",
+      "family": "imaginary_quadratic",
+      "prime": 3,
+      "empirical_alpha": 0.16503374016098107,
+      "empirical_se": 0.0157983698931067,
+      "predicted_alpha": 0.3333333333333333,
+      "z": -10.65297206680712,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "Klueners_1_over_8",
+      "prediction_label": "Kl\u00fcners 2006 \u2014 \u03b1 = 1/8",
+      "confidence": "weak",
+      "family": "imaginary_quadratic",
+      "prime": 3,
+      "empirical_alpha": 0.16503374016098107,
+      "empirical_se": 0.0157983698931067,
+      "predicted_alpha": 0.125,
+      "z": 2.5340424633587664,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": true
+    },
+    {
+      "prediction_name": "BST_1_over_p",
+      "prediction_label": "BST 2013 asymptotic \u2014 \u03b1 = 1/p",
+      "confidence": "weak",
+      "family": "imaginary_quadratic",
+      "prime": 5,
+      "empirical_alpha": 0.2813800237690318,
+      "empirical_se": 0.00824862203157258,
+      "predicted_alpha": 0.2,
+      "z": 9.865893170706586,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "EPW_1_over_4",
+      "prediction_label": "EPW / BST effective \u2014 \u03b1 \u2248 1/4",
+      "confidence": "weak",
+      "family": "imaginary_quadratic",
+      "prime": 5,
+      "empirical_alpha": 0.2813800237690318,
+      "empirical_se": 0.00824862203157258,
+      "predicted_alpha": 0.25,
+      "z": 3.8042746593214054,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "Klueners_1_over_8",
+      "prediction_label": "Kl\u00fcners 2006 \u2014 \u03b1 = 1/8",
+      "confidence": "weak",
+      "family": "imaginary_quadratic",
+      "prime": 5,
+      "empirical_alpha": 0.2813800237690318,
+      "empirical_se": 0.00824862203157258,
+      "predicted_alpha": 0.125,
+      "z": 18.95832093778436,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "BST_1_over_p",
+      "prediction_label": "BST 2013 asymptotic \u2014 \u03b1 = 1/p",
+      "confidence": "weak",
+      "family": "imaginary_quadratic",
+      "prime": 7,
+      "empirical_alpha": 0.26922539915063576,
+      "empirical_se": 0.03880190561940112,
+      "predicted_alpha": 0.14285714285714285,
+      "z": 3.25675387010653,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "EPW_1_over_4",
+      "prediction_label": "EPW / BST effective \u2014 \u03b1 \u2248 1/4",
+      "confidence": "weak",
+      "family": "imaginary_quadratic",
+      "prime": 7,
+      "empirical_alpha": 0.26922539915063576,
+      "empirical_se": 0.03880190561940112,
+      "predicted_alpha": 0.25,
+      "z": 0.4954756433669324,
+      "matches_at_2sigma": true,
+      "matches_at_3sigma": true
+    },
+    {
+      "prediction_name": "Klueners_1_over_8",
+      "prediction_label": "Kl\u00fcners 2006 \u2014 \u03b1 = 1/8",
+      "confidence": "weak",
+      "family": "imaginary_quadratic",
+      "prime": 7,
+      "empirical_alpha": 0.26922539915063576,
+      "empirical_se": 0.03880190561940112,
+      "predicted_alpha": 0.125,
+      "z": 3.7169669078964627,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "BST_1_over_p",
+      "prediction_label": "BST 2013 asymptotic \u2014 \u03b1 = 1/p",
+      "confidence": "weak",
+      "family": "imaginary_quadratic",
+      "prime": 11,
+      "empirical_alpha": 0.2573459067380214,
+      "empirical_se": 0.03593996182662626,
+      "predicted_alpha": 0.09090909090909091,
+      "z": 4.630968074808168,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "EPW_1_over_4",
+      "prediction_label": "EPW / BST effective \u2014 \u03b1 \u2248 1/4",
+      "confidence": "weak",
+      "family": "imaginary_quadratic",
+      "prime": 11,
+      "empirical_alpha": 0.2573459067380214,
+      "empirical_se": 0.03593996182662626,
+      "predicted_alpha": 0.25,
+      "z": 0.20439383807522957,
+      "matches_at_2sigma": true,
+      "matches_at_3sigma": true
+    },
+    {
+      "prediction_name": "BST_1_over_p",
+      "prediction_label": "BST 2013 asymptotic \u2014 \u03b1 = 1/p",
+      "confidence": "weak",
+      "family": "imaginary_quadratic",
+      "prime": 13,
+      "empirical_alpha": 0.3400105005350184,
+      "empirical_se": 0.037060545623545445,
+      "predicted_alpha": 0.07692307692307693,
+      "z": 7.0988545685305775,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "EPW_1_over_4",
+      "prediction_label": "EPW / BST effective \u2014 \u03b1 \u2248 1/4",
+      "confidence": "weak",
+      "family": "imaginary_quadratic",
+      "prime": 13,
+      "empirical_alpha": 0.3400105005350184,
+      "empirical_se": 0.037060545623545445,
+      "predicted_alpha": 0.25,
+      "z": 2.428741914631516,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": true
+    },
+    {
+      "prediction_name": "BST_1_over_p",
+      "prediction_label": "BST 2013 asymptotic \u2014 \u03b1 = 1/p",
+      "confidence": "weak",
+      "family": "imaginary_quadratic",
+      "prime": 17,
+      "empirical_alpha": 0.3473280306860306,
+      "empirical_se": 0.04526525485044335,
+      "predicted_alpha": 0.058823529411764705,
+      "z": 6.373641377420414,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "EPW_1_over_4",
+      "prediction_label": "EPW / BST effective \u2014 \u03b1 \u2248 1/4",
+      "confidence": "weak",
+      "family": "imaginary_quadratic",
+      "prime": 17,
+      "empirical_alpha": 0.3473280306860306,
+      "empirical_se": 0.04526525485044335,
+      "predicted_alpha": 0.25,
+      "z": 2.1501708320786643,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": true
+    },
+    {
+      "prediction_name": "BST_1_over_p",
+      "prediction_label": "BST 2013 asymptotic \u2014 \u03b1 = 1/p",
+      "confidence": "weak",
+      "family": "imaginary_quadratic",
+      "prime": 19,
+      "empirical_alpha": 0.384686882874132,
+      "empirical_se": 0.01853333061727823,
+      "predicted_alpha": 0.05263157894736842,
+      "z": 17.916655715254738,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "EPW_1_over_4",
+      "prediction_label": "EPW / BST effective \u2014 \u03b1 \u2248 1/4",
+      "confidence": "weak",
+      "family": "imaginary_quadratic",
+      "prime": 19,
+      "empirical_alpha": 0.384686882874132,
+      "empirical_se": 0.01853333061727823,
+      "predicted_alpha": 0.25,
+      "z": 7.267278917938597,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "BST_1_over_p",
+      "prediction_label": "BST 2013 asymptotic \u2014 \u03b1 = 1/p",
+      "confidence": "weak",
+      "family": "imaginary_quadratic",
+      "prime": 23,
+      "empirical_alpha": 0.3362141600817499,
+      "empirical_se": 0.03875437148423835,
+      "predicted_alpha": 0.043478260869565216,
+      "z": 7.553622675347535,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "EPW_1_over_4",
+      "prediction_label": "EPW / BST effective \u2014 \u03b1 \u2248 1/4",
+      "confidence": "weak",
+      "family": "imaginary_quadratic",
+      "prime": 23,
+      "empirical_alpha": 0.3362141600817499,
+      "empirical_se": 0.03875437148423835,
+      "predicted_alpha": 0.25,
+      "z": 2.224630584366819,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": true
+    },
+    {
+      "prediction_name": "BST_1_over_p",
+      "prediction_label": "BST 2013 asymptotic \u2014 \u03b1 = 1/p",
+      "confidence": "weak",
+      "family": "real_quadratic",
+      "prime": 3,
+      "empirical_alpha": 0.15796548562897733,
+      "empirical_se": 0.012914720024927004,
+      "predicted_alpha": 0.3333333333333333,
+      "z": -13.578912075977984,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "Klueners_1_over_8",
+      "prediction_label": "Kl\u00fcners 2006 \u2014 \u03b1 = 1/8",
+      "confidence": "weak",
+      "family": "real_quadratic",
+      "prime": 3,
+      "empirical_alpha": 0.15796548562897733,
+      "empirical_se": 0.012914720024927004,
+      "predicted_alpha": 0.125,
+      "z": 2.552551318600006,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": true
+    },
+    {
+      "prediction_name": "BST_1_over_p",
+      "prediction_label": "BST 2013 asymptotic \u2014 \u03b1 = 1/p",
+      "confidence": "weak",
+      "family": "real_quadratic",
+      "prime": 5,
+      "empirical_alpha": 0.22994956295723226,
+      "empirical_se": 0.016865246257396136,
+      "predicted_alpha": 0.2,
+      "z": 1.775815336470292,
+      "matches_at_2sigma": true,
+      "matches_at_3sigma": true
+    },
+    {
+      "prediction_name": "EPW_1_over_4",
+      "prediction_label": "EPW / BST effective \u2014 \u03b1 \u2248 1/4",
+      "confidence": "weak",
+      "family": "real_quadratic",
+      "prime": 5,
+      "empirical_alpha": 0.22994956295723226,
+      "empirical_se": 0.016865246257396136,
+      "predicted_alpha": 0.25,
+      "z": -1.188861208236124,
+      "matches_at_2sigma": true,
+      "matches_at_3sigma": true
+    },
+    {
+      "prediction_name": "Klueners_1_over_8",
+      "prediction_label": "Kl\u00fcners 2006 \u2014 \u03b1 = 1/8",
+      "confidence": "weak",
+      "family": "real_quadratic",
+      "prime": 5,
+      "empirical_alpha": 0.22994956295723226,
+      "empirical_se": 0.016865246257396136,
+      "predicted_alpha": 0.125,
+      "z": 6.222830153529918,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "BST_1_over_p",
+      "prediction_label": "BST 2013 asymptotic \u2014 \u03b1 = 1/p",
+      "confidence": "weak",
+      "family": "real_quadratic",
+      "prime": 7,
+      "empirical_alpha": 0.2452967953419678,
+      "empirical_se": 0.01670068938106576,
+      "predicted_alpha": 0.14285714285714285,
+      "z": 6.133857719727719,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "EPW_1_over_4",
+      "prediction_label": "EPW / BST effective \u2014 \u03b1 \u2248 1/4",
+      "confidence": "weak",
+      "family": "real_quadratic",
+      "prime": 7,
+      "empirical_alpha": 0.2452967953419678,
+      "empirical_se": 0.01670068938106576,
+      "predicted_alpha": 0.25,
+      "z": -0.2816173961875138,
+      "matches_at_2sigma": true,
+      "matches_at_3sigma": true
+    },
+    {
+      "prediction_name": "Klueners_1_over_8",
+      "prediction_label": "Kl\u00fcners 2006 \u2014 \u03b1 = 1/8",
+      "confidence": "weak",
+      "family": "real_quadratic",
+      "prime": 7,
+      "empirical_alpha": 0.2452967953419678,
+      "empirical_se": 0.01670068938106576,
+      "predicted_alpha": 0.125,
+      "z": 7.2031035723802574,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "BST_1_over_p",
+      "prediction_label": "BST 2013 asymptotic \u2014 \u03b1 = 1/p",
+      "confidence": "weak",
+      "family": "real_quadratic",
+      "prime": 11,
+      "empirical_alpha": 0.23101812889205497,
+      "empirical_se": 0.017606792903220873,
+      "predicted_alpha": 0.09090909090909091,
+      "z": 7.957669449121164,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "EPW_1_over_4",
+      "prediction_label": "EPW / BST effective \u2014 \u03b1 \u2248 1/4",
+      "confidence": "weak",
+      "family": "real_quadratic",
+      "prime": 11,
+      "empirical_alpha": 0.23101812889205497,
+      "empirical_se": 0.017606792903220873,
+      "predicted_alpha": 0.25,
+      "z": -1.0780993002122836,
+      "matches_at_2sigma": true,
+      "matches_at_3sigma": true
+    },
+    {
+      "prediction_name": "BST_1_over_p",
+      "prediction_label": "BST 2013 asymptotic \u2014 \u03b1 = 1/p",
+      "confidence": "weak",
+      "family": "real_quadratic",
+      "prime": 13,
+      "empirical_alpha": 0.21754501094696949,
+      "empirical_se": 0.026654230883499126,
+      "predicted_alpha": 0.07692307692307693,
+      "z": 5.275782844326886,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "EPW_1_over_4",
+      "prediction_label": "EPW / BST effective \u2014 \u03b1 \u2248 1/4",
+      "confidence": "weak",
+      "family": "real_quadratic",
+      "prime": 13,
+      "empirical_alpha": 0.21754501094696949,
+      "empirical_se": 0.026654230883499126,
+      "predicted_alpha": 0.25,
+      "z": -1.21762992130163,
+      "matches_at_2sigma": true,
+      "matches_at_3sigma": true
+    },
+    {
+      "prediction_name": "BST_1_over_p",
+      "prediction_label": "BST 2013 asymptotic \u2014 \u03b1 = 1/p",
+      "confidence": "weak",
+      "family": "real_quadratic",
+      "prime": 17,
+      "empirical_alpha": 0.2073124762152832,
+      "empirical_se": 0.0155006764035598,
+      "predicted_alpha": 0.058823529411764705,
+      "z": 9.579514012009007,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "EPW_1_over_4",
+      "prediction_label": "EPW / BST effective \u2014 \u03b1 \u2248 1/4",
+      "confidence": "weak",
+      "family": "real_quadratic",
+      "prime": 17,
+      "empirical_alpha": 0.2073124762152832,
+      "empirical_se": 0.0155006764035598,
+      "predicted_alpha": 0.25,
+      "z": -2.7539136146931895,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": true
+    },
+    {
+      "prediction_name": "BST_1_over_p",
+      "prediction_label": "BST 2013 asymptotic \u2014 \u03b1 = 1/p",
+      "confidence": "weak",
+      "family": "real_quadratic",
+      "prime": 19,
+      "empirical_alpha": 0.17296991949795992,
+      "empirical_se": 0.01205301610131888,
+      "predicted_alpha": 0.05263157894736842,
+      "z": 9.98408527284915,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "EPW_1_over_4",
+      "prediction_label": "EPW / BST effective \u2014 \u03b1 \u2248 1/4",
+      "confidence": "weak",
+      "family": "real_quadratic",
+      "prime": 19,
+      "empirical_alpha": 0.17296991949795992,
+      "empirical_se": 0.01205301610131888,
+      "predicted_alpha": 0.25,
+      "z": -6.390938156434653,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "BST_1_over_p",
+      "prediction_label": "BST 2013 asymptotic \u2014 \u03b1 = 1/p",
+      "confidence": "weak",
+      "family": "real_quadratic",
+      "prime": 23,
+      "empirical_alpha": 0.15506715682618627,
+      "empirical_se": 0.01911508521361883,
+      "predicted_alpha": 0.043478260869565216,
+      "z": 5.837739916383834,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    },
+    {
+      "prediction_name": "EPW_1_over_4",
+      "prediction_label": "EPW / BST effective \u2014 \u03b1 \u2248 1/4",
+      "confidence": "weak",
+      "family": "real_quadratic",
+      "prime": 23,
+      "empirical_alpha": 0.15506715682618627,
+      "empirical_se": 0.01911508521361883,
+      "predicted_alpha": 0.25,
+      "z": -4.966383466926812,
+      "matches_at_2sigma": false,
+      "matches_at_3sigma": false
+    }
+  ],
+  "best_match_summary": {
+    "best_prediction": "EPW_1_over_4",
+    "best_match_2sigma": "6/14",
+    "best_match_3sigma": "10/14"
+  },
+  "davenport_heilbronn_1_6_both_families": {
+    "imaginary_quadratic_p3": {
+      "empirical": 0.16503,
+      "se": 0.0158,
+      "predicted": 0.16666666666666666,
+      "z": -0.103,
+      "matches_at_2sigma": true
+    },
+    "real_quadratic_p3": {
+      "family": "real_quadratic",
+      "prime": 3,
+      "empirical_alpha": 0.15796548562897733,
+      "empirical_se": 0.012914720024927004,
+      "predicted_alpha": 0.16666666666666666,
+      "z": -0.6737413603155913,
+      "matches_at_2sigma": true,
+      "note": "Davenport-Heilbronn 1/6 applies to real quadratic p=3 too (same cubic-count error term)."
+    },
+    "summary": "DH 1/6 matches BOTH imaginary (z=-0.103) and real (z=-0.674) quadratic \u03b1_{p=3} within 1\u03c3. Pinned-down theorem-level prediction hitting empirical data cleanly at LMFDB-scale.",
+    "status": "TIER_0_F_ANCHOR_CANDIDATE_CONFIRMED"
+  },
+  "headline": "TIER-0 F-ANCHOR CONFIRMED: Davenport-Heilbronn 1971 predicted \u03b1_{p=3} = 1/6 for the 3-torsion convergence rate. Empirical fits on 22M LMFDB NF give \u03b1_{p=3, imag} = 0.165 (z=-0.10 vs 1/6) and \u03b1_{p=3, real} = 0.158 (z=-0.674 vs 1/6). Both within 1\u03c3 of the theorem."
+}

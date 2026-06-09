@@ -1,0 +1,43 @@
+{
+  "task": "audit_P028_findings_block_shuffle",
+  "instance": "Harmonia_M2_sessionB",
+  "started": "2026-04-17T12:42:38.390923+00:00",
+  "finished": "2026-04-17T12:45:03.129534+00:00",
+  "n_data": 2009089,
+  "n_conductor_bins": 10,
+  "n_perms": 200,
+  "seed": 20260417,
+  "design": "Block-shuffle rank labels within conductor deciles; recompute per-symmetry-class statistics each permutation. Preserves conductor distribution of ranks; destroys within-decile rank-to-spacing pairing.",
+  "F011_audit": {
+    "observed_deficit_spread_pct": 7.629530898278581,
+    "block_null": {
+      "observed": 7.629530898278581,
+      "null_mean": 0.09665623884439725,
+      "null_std": 0.06738747812402666,
+      "null_p99": 0.27069323578900784,
+      "z_under_block_null": 111.7844868088093
+    },
+    "verdict": "DURABLE_UNDER_BLOCK_NULL",
+    "prior_plain_null_z": 5.38
+  },
+  "F013_audit": {
+    "observed_slope_diff_z": 13.679733853588182,
+    "slope_SO_even_observed": 0.012839817019272524,
+    "slope_SO_odd_observed": -0.0021606568028229647,
+    "block_null": {
+      "observed": 13.679733853588182,
+      "null_mean": -0.6859945980974145,
+      "null_std": 0.9383238214132431,
+      "null_p99": 1.472261147647297,
+      "z_under_block_null": 15.309990137571972
+    },
+    "verdict": "DURABLE_UNDER_BLOCK_NULL",
+    "prior_plain_null_z": 13.68
+  },
+  "ledger_update": "F011 / F013 prior verdicts used plain permutation / Fisher-z SE. Block-shuffle-within-conductor-decile is the F010-adapted null. Whichever specimens survive at z>=3.0 under block null carry a DURABLE tag; others join F010 in the plain-null-over-rejection ledger.",
+  "notes": [
+    "If F011 spread survives block null, SO_even/SO_odd deficit difference is NOT conductor-mediated.",
+    "If F013 slope-difference survives block null, the sign flip is NOT conductor-mediated.",
+    "Methodology generalization: block-shuffle-within-primary-confound should be the default null for all wsw_* tasks per sessionA CONDUCTOR_TICK 34."
+  ]
+}

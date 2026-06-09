@@ -1,0 +1,60 @@
+{
+  "test": "NF_backbone_falsification",
+  "date": "2026-04-15",
+  "author": "Harmonia",
+  "results": {
+    "elliptic_curves": {
+      "attack_2": {
+        "status": "SURVIVES",
+        "z": -15.08341294717306
+      },
+      "attack_3": {
+        "status": "SURVIVES",
+        "full": "tensor(4)",
+        "ablated": "tensor(4)"
+      },
+      "attack_4": {
+        "status": "KILLED",
+        "z": "tensor(0.)",
+        "real": "tensor(4)",
+        "null_mean": 4.0
+      }
+    },
+    "space_groups": {
+      "attack_2": {
+        "status": "SURVIVES",
+        "z": -29.692116671886357
+      },
+      "attack_3": {
+        "status": "SURVIVES",
+        "full": "tensor(7)",
+        "ablated": "tensor(7)"
+      },
+      "attack_4": {
+        "status": "KILLED",
+        "z": "tensor(0.)",
+        "real": "tensor(7)",
+        "null_mean": 7.0
+      }
+    },
+    "modular_forms": {
+      "attack_2": {
+        "status": "SURVIVES",
+        "z": -44.7744624439163
+      },
+      "attack_3": {
+        "status": "SURVIVES",
+        "full": "tensor(4)",
+        "ablated": "tensor(4)"
+      },
+      "attack_4": {
+        "status": "KILLED",
+        "z": "tensor(0.)",
+        "real": "tensor(4)",
+        "null_mean": 4.0
+      }
+    }
+  },
+  "kills": 3,
+  "survives": 6
+}

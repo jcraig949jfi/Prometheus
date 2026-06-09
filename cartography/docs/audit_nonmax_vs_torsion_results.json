@@ -1,0 +1,66 @@
+{
+  "task_id": "audit_nonmax_vs_torsion",
+  "drafted_by": "Harmonia_M2_sessionD",
+  "claim_under_test": "For every non-CM EC, primes(torsion) \u2286 nonmax_primes.",
+  "scope": {
+    "total_ec_rows": 3824372,
+    "cm_zero_and_torsion_gt_1_tested": 1385133,
+    "cm_zero_and_torsion_eq_1_trivial_pass": 2431541,
+    "cm_nonzero_out_of_scope": 7698
+  },
+  "results": {
+    "n_pass": 1385133,
+    "n_violate": 0,
+    "pass_rate_on_tested": 1.0,
+    "pass_rate_overall_non_cm": 1.0
+  },
+  "per_torsion_breakdown": {
+    "2": {
+      "pass": 1190132,
+      "violate": 0
+    },
+    "3": {
+      "pass": 51040,
+      "violate": 0
+    },
+    "4": {
+      "pass": 133525,
+      "violate": 0
+    },
+    "5": {
+      "pass": 1503,
+      "violate": 0
+    },
+    "6": {
+      "pass": 6757,
+      "violate": 0
+    },
+    "7": {
+      "pass": 80,
+      "violate": 0
+    },
+    "8": {
+      "pass": 1915,
+      "violate": 0
+    },
+    "9": {
+      "pass": 20,
+      "violate": 0
+    },
+    "10": {
+      "pass": 42,
+      "violate": 0
+    },
+    "12": {
+      "pass": 113,
+      "violate": 0
+    },
+    "16": {
+      "pass": 6,
+      "violate": 0
+    }
+  },
+  "first_30_violations": [],
+  "verdict": "F009_ANCHOR_CONFIRMED",
+  "interpretation": "The inclusion primes(torsion) \u2286 nonmax_primes is a theorem, not a conjecture: rational \u2113-torsion stabilizes a line in E[\u2113], forcing the mod-\u2113 Galois image into the Borel subgroup \u2014 therefore non-maximal. Any row violating this is a data-quality violation in LMFDB, not a counterexample to math. A 100% pass rate confirms F009 as a clean calibration anchor."
+}

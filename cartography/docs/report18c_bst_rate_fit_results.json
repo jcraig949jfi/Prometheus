@@ -1,0 +1,408 @@
+{
+  "task": "report18c_bst_rate_fit",
+  "parent": "report18b_cl_disc_convergence",
+  "drafted_by": "Harmonia_M2_sessionD",
+  "date": "2026-04-18",
+  "model": "|rel_dev(bucket)| = c_p \u00b7 10^(-alpha_p \u00b7 bucket)",
+  "primes_tested": [
+    3,
+    5,
+    7,
+    11
+  ],
+  "families": {
+    "imaginary_quadratic": {
+      "per_prime": {
+        "3": {
+          "buckets_used": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "ns": [
+            2738,
+            27349,
+            273576,
+            381131
+          ],
+          "log10_abs_rel_dev": [
+            -0.6874062056947039,
+            -0.8840625501897534,
+            -1.072063792601453,
+            -1.1748515920940743
+          ],
+          "fit": {
+            "slope": -0.16503374016098107,
+            "intercept": -0.21194420442058137,
+            "slope_se": 0.0157983698931067,
+            "intercept_se": 0.07325402761969839,
+            "r2": 0.9820021142784991,
+            "n": 4,
+            "alpha_p": 0.16503374016098107,
+            "alpha_p_se": 0.0157983698931067,
+            "c_p": 0.6138408627327236
+          }
+        },
+        "5": {
+          "buckets_used": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "ns": [
+            2738,
+            27349,
+            273576,
+            381131
+          ],
+          "log10_abs_rel_dev": [
+            -0.8570052881148926,
+            -1.1665745882754646,
+            -1.4137042840681604,
+            -1.7125621354141
+          ],
+          "fit": {
+            "slope": -0.2813800237690318,
+            "intercept": -0.021251467007511238,
+            "slope_se": 0.00824862203157258,
+            "intercept_se": 0.03824728691717241,
+            "r2": 0.9982842243999569,
+            "n": 4,
+            "alpha_p": 0.2813800237690318,
+            "alpha_p_se": 0.00824862203157258,
+            "c_p": 0.9522446316940191
+          }
+        },
+        "7": {
+          "buckets_used": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "ns": [
+            2738,
+            27349,
+            273576,
+            381131
+          ],
+          "log10_abs_rel_dev": [
+            -0.8315825043285838,
+            -1.080906232884973,
+            -1.4852018602773236,
+            -1.5942352923665861
+          ],
+          "fit": {
+            "slope": -0.26922539915063576,
+            "intercept": -0.036467176286505865,
+            "slope_se": 0.03880190561940112,
+            "intercept_se": 0.17991703480627844,
+            "r2": 0.9601134388242801,
+            "n": 4,
+            "alpha_p": 0.26922539915063576,
+            "alpha_p_se": 0.03880190561940112,
+            "c_p": 0.9194599644043117
+          }
+        },
+        "11": {
+          "buckets_used": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "ns": [
+            2738,
+            27349,
+            273576,
+            381131
+          ],
+          "log10_abs_rel_dev": [
+            -0.713476782378427,
+            -0.913316232135307,
+            -1.3142594104005167,
+            -1.4376487454167617
+          ],
+          "fit": {
+            "slope": -0.2573459067380214,
+            "intercept": 0.06338128773834328,
+            "slope_se": 0.03593996182662626,
+            "intercept_se": 0.16664674736140542,
+            "r2": 0.9624567461606462,
+            "n": 4,
+            "alpha_p": 0.2573459067380214,
+            "alpha_p_se": 0.03593996182662626,
+            "c_p": 1.1571276936927486
+          }
+        }
+      },
+      "prime_independence_test": {
+        "alpha_common_weighted": 0.25691244662834983,
+        "alpha_common_se": 0.007046052926465985,
+        "chi2": 42.7220150773333,
+        "dof": 3,
+        "z_per_prime_vs_common": {
+          "3": -5.815708018550584,
+          "5": 2.9662623704940567,
+          "7": 0.31732855192888765,
+          "11": 0.012060672511633433
+        },
+        "max_abs_z": 5.815708018550584,
+        "prime_independent_at_2sigma": false
+      }
+    },
+    "real_quadratic": {
+      "per_prime": {
+        "3": {
+          "buckets_used": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "ns": [
+            2741,
+            27351,
+            273563,
+            380962
+          ],
+          "log10_abs_rel_dev": [
+            -0.3296733400144771,
+            -0.5219883390705167,
+            -0.688872477195263,
+            -0.8005969127361527
+          ],
+          "fit": {
+            "slope": -0.15796548562897733,
+            "intercept": 0.1255619180762957,
+            "slope_se": 0.012914720024927004,
+            "intercept_se": 0.059883093243655906,
+            "r2": 0.9868080721788104,
+            "n": 4,
+            "alpha_p": 0.15796548562897733,
+            "alpha_p_se": 0.012914720024927004,
+            "c_p": 1.33524794448098
+          }
+        },
+        "5": {
+          "buckets_used": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "ns": [
+            2741,
+            27351,
+            273563,
+            380962
+          ],
+          "log10_abs_rel_dev": [
+            -0.3013184558651718,
+            -0.5855598355513051,
+            -0.8140540106048496,
+            -0.991652274038098
+          ],
+          "fit": {
+            "slope": -0.22994956295723226,
+            "intercept": 0.36162688929268905,
+            "slope_se": 0.016865246257396136,
+            "intercept_se": 0.07820092981183925,
+            "r2": 0.989356050470773,
+            "n": 4,
+            "alpha_p": 0.22994956295723226,
+            "alpha_p_se": 0.016865246257396136,
+            "c_p": 2.299465453751865
+          }
+        },
+        "7": {
+          "buckets_used": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "ns": [
+            2741,
+            27351,
+            273563,
+            380962
+          ],
+          "log10_abs_rel_dev": [
+            -0.24436954375540934,
+            -0.4227732398652818,
+            -0.7300778781956796,
+            -0.9595906487851693
+          ],
+          "fit": {
+            "slope": -0.2452967953419678,
+            "intercept": 0.5146327513884702,
+            "slope_se": 0.01670068938106576,
+            "intercept_se": 0.07743791096589006,
+            "r2": 0.9908144036840114,
+            "n": 4,
+            "alpha_p": 0.2452967953419678,
+            "alpha_p_se": 0.01670068938106576,
+            "c_p": 3.270640056583391
+          }
+        },
+        "11": {
+          "buckets_used": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "ns": [
+            2741,
+            27351,
+            273563,
+            380962
+          ],
+          "log10_abs_rel_dev": [
+            -0.055756891167975754,
+            -0.26666767226876065,
+            -0.5647132456247439,
+            -0.7264687963561646
+          ],
+          "fit": {
+            "slope": -0.23101812889205497,
+            "intercept": 0.6361799286598362,
+            "slope_se": 0.017606792903220873,
+            "intercept_se": 0.08163934015683579,
+            "r2": 0.9885162900666692,
+            "n": 4,
+            "alpha_p": 0.23101812889205497,
+            "alpha_p_se": 0.017606792903220873,
+            "c_p": 4.326930590939434
+          }
+        }
+      },
+      "prime_independence_test": {
+        "alpha_common_weighted": 0.2070906791100112,
+        "alpha_common_se": 0.007827216468203165,
+        "chi2": 23.386477233017388,
+        "dof": 3,
+        "z_per_prime_vs_common": {
+          "3": -3.8038140498761237,
+          "5": 1.3553839356004935,
+          "7": 2.2876969543109045,
+          "11": 1.3589896759486872
+        },
+        "max_abs_z": 3.8038140498761237,
+        "prime_independent_at_2sigma": false
+      }
+    }
+  },
+  "family_comparison_imag_vs_real": {
+    "3": {
+      "imag_alpha": 0.16503374016098107,
+      "imag_se": 0.0157983698931067,
+      "real_alpha": 0.15796548562897733,
+      "real_se": 0.012914720024927004,
+      "diff": 0.007068254532003743,
+      "diff_se": 0.020405354312083648,
+      "z_imag_vs_real": 0.34639214903600385,
+      "same_at_2sigma": true
+    },
+    "5": {
+      "imag_alpha": 0.2813800237690318,
+      "imag_se": 0.00824862203157258,
+      "real_alpha": 0.22994956295723226,
+      "real_se": 0.016865246257396136,
+      "diff": 0.051430460811799555,
+      "diff_se": 0.018774352099136707,
+      "z_imag_vs_real": 2.7394000357628565,
+      "same_at_2sigma": false
+    },
+    "7": {
+      "imag_alpha": 0.26922539915063576,
+      "imag_se": 0.03880190561940112,
+      "real_alpha": 0.2452967953419678,
+      "real_se": 0.01670068938106576,
+      "diff": 0.02392860380866796,
+      "diff_se": 0.042243353388429696,
+      "z_imag_vs_real": 0.5664465978503951,
+      "same_at_2sigma": true
+    },
+    "11": {
+      "imag_alpha": 0.2573459067380214,
+      "imag_se": 0.03593996182662626,
+      "real_alpha": 0.23101812889205497,
+      "real_se": 0.017606792903220873,
+      "diff": 0.026327777845966405,
+      "diff_se": 0.040020994645763884,
+      "z_imag_vs_real": 0.6578491633953713,
+      "same_at_2sigma": true
+    }
+  },
+  "grand_pooled_fit": {
+    "alpha_grand_weighted_mean": 0.23461106890525163,
+    "alpha_grand_se": 0.005236771520053881,
+    "chi2": 88.48843768902042,
+    "dof": 7,
+    "z_per_series_vs_grand": {
+      "imag_p3": -4.4040827765799575,
+      "imag_p5": 5.6699112512085605,
+      "imag_p7": 0.8920781001043623,
+      "imag_p11": 0.6325782409687079,
+      "real_p3": -5.93474602069103,
+      "real_p5": -0.27639714694204937,
+      "real_p7": 0.6398374458021479,
+      "real_p11": -0.20406555770525284
+    },
+    "max_abs_z": 5.93474602069103,
+    "universal_at_2sigma": false,
+    "universal_at_3sigma": false
+  },
+  "verdict": "BST_RATE_STRUCTURED_NON_UNIVERSAL",
+  "literature_alignment": {
+    "observed_structure": {
+      "p_equals_3_is_slower": {
+        "imag_alpha": 0.16503,
+        "real_alpha": 0.15797,
+        "mean": 0.1615,
+        "interpretation": "\u03b1 at p=3 is ~0.6x of \u03b1 at p\u22655 in both families."
+      },
+      "p_geq_5_cluster": {
+        "imag_alphas": {
+          "5": 0.28138,
+          "7": 0.26923,
+          "11": 0.25735
+        },
+        "real_alphas": {
+          "5": 0.22995,
+          "7": 0.2453,
+          "11": 0.23102
+        },
+        "imag_mean": 0.26932,
+        "real_mean": 0.23542,
+        "cluster_spread_imag_sigma": 0.01225,
+        "cluster_spread_real_sigma": 0.00827
+      },
+      "p3_cross_family_agreement": {
+        "imag_alpha_p3": 0.16503,
+        "real_alpha_p3": 0.15797,
+        "z_diff": 0.346,
+        "same_at_2sigma": true,
+        "note": "Candidate pair-universal F-anchor: \u03b1_{p=3} is the same for imaginary and real quadratic."
+      }
+    },
+    "literature_match": "The p=3-is-slower pattern matches Davenport-Heilbronn (1971) + Bhargava-Shankar-Tsimerman: 3-torsion of quadratic class groups has a distinct convergence regime because 3 | |Gal(F/Q)| for F the cubic resolvent field appearing in Scholz reflection (Scholz 1932). p \u2265 5 does not share this obstruction \u2192 faster/cleaner convergence.",
+    "pattern_5_status": "KNOWN-MATH REPRODUCTION confirmed. The p=3 special behavior was predicted by the analytic-number-theory literature 50+ years ago; this audit reproduces it numerically at 22M-NF scale. Not novelty.",
+    "refined_f_anchor_candidates": {
+      "tier_1_strong": "\u03b1_{p=3} imag = \u03b1_{p=3} real within 0.35\u03c3 (0.165 vs 0.158). Candidate F010 (new numbering): \"3-torsion convergence rate is family-universal for degree-2 fields.\" Requires re-check on n>=10^6 buckets (currently n \u2264 380K).",
+      "tier_2_moderate": "\u03b1_{p\u22655} clusters ~0.27 (imag) and ~0.24 (real), with small within-cluster spread (~0.01). Candidate refined anchor: \"p\u22655 Cohen-Lenstra rate is prime-cluster-constant per family.\" Needs wider prime range (p=13, 17, 19, 23) to firm up.",
+      "tier_3_frontier": "The imag-real gap at p\u22655 (\u0394\u03b1 \u2248 0.03) is marginally significant (p=5 at 2.7\u03c3, others <1\u03c3). If stable at larger n, this is the regulator-growth signature separating imaginary from real convergence. Literature-predicted but worth a dedicated walk."
+    },
+    "next_track_candidates": [
+      "extend_to_p_13_17_19_23: test prime-cluster behavior at more primes.",
+      "extend_|disc|_range: pull buckets 7-8 at higher n (requires larger NF table or a targeted imaginary-quad generation).",
+      "compare_alpha_against_specific_BST_predictions: pull Bhargava-Shankar-Tsimerman quantitative exponents from the 2013 paper, check if \u03b1_{p=3} = 1/6 and \u03b1_{p\u22655} = 1/4 match (rough literature-recall, needs verification).",
+      "three_torsion_specific_wsw: restrict to h divisible by 3 vs not, study finer Scholz reflection structure."
+    ]
+  },
+  "verdict_refined": "BST_RATE_STRUCTURED_LITERATURE_ALIGNED \u2014 \u03b1_p is NOT universal across primes (rejects naive universality at 3\u03c3), BUT the structure matches the known p=3 special case (Davenport-Heilbronn + Scholz reflection). Pattern-5 reproduction. Candidate refined F-anchors: (tier-1) \u03b1_{p=3} family-universal within 0.35\u03c3; (tier-2) \u03b1_{p\u22655} cluster-constant within family; (tier-3) imag-real gap at p\u22655 is a regulator-growth signature worth its own walk."
+}

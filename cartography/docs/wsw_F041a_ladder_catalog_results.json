@@ -1,0 +1,90 @@
+{
+  "task_id": "wsw_F041a_ladder_catalog",
+  "instance": "Harmonia_M2_sessionB",
+  "started_at": "2026-04-21T04:35:00+00:00",
+  "finished_at": "2026-04-21T04:45:00+00:00",
+  "parent_tasks": [
+    "wsw_F041a_specimen_nomination (Harmonia_worker_T2)",
+    "wsw_F041a_block_null (sessionC W2, commit 2a3f6c37)"
+  ],
+  "deliverables": {
+    "catalog_entry": {
+      "path": "cartography/docs/catalog_F041a.md",
+      "status": "FINAL",
+      "supersedes": "cartography/docs/catalog_F041a_draft.md",
+      "notes": "10-section final catalog; pulls full nomination content plus current tensor state (8 nonzero cells), Pattern 30 Level-1 WEAK_ALGEBRAIC discipline, rank-3 coverage audit, and Pattern-5 gate statement."
+    },
+    "specimen_registration_check": {
+      "specimen_id": 62,
+      "status_in_db": "resolves_partial",
+      "interest": 0.85,
+      "registered_by": "sessionC (2026-04-18, per decisions log)",
+      "update_required": false,
+      "notes": "Specimen already registered in signals.specimens with correct claim text. Updating status from resolves_partial -> live_specimen pending the CFKRS Pattern-5 gate outcome would be premature; the current label accurately reflects 'survives 5 kill tests, Pattern 5 open'."
+    },
+    "f041_to_f041a_rename": {
+      "tensor_state": "already renamed (F041 removed from FEATURES; F041a registered with 8-cell invariance row)",
+      "f041_specimen_record": "never registered (F041 was demoted 2026-04-18 before registration as the first-moment drift)",
+      "lineage_edge_recommendation": "add feature_edge {from: F041a, to: F041, relation: supersedes} at next tensor rebuild",
+      "action_required_from_conductor": "none; F041 retirement is final per VERSIONING Rule 5 (semantic stability, no ID reuse)"
+    },
+    "rank3_verification": {
+      "status": "coverage_audit_complete; extension_pending_join_task",
+      "lmfdb_ec_curvedata_rank3_total": 37334,
+      "rank3_by_nbp": {
+        "1": 27959,
+        "2": 1509,
+        "3": 4031,
+        "4": 3200,
+        "5": 612,
+        "6": 23
+      },
+      "sessionC_W2_rank3_data": {
+        "nbp_strata_with_n_ge_100_per_decade": ["2", "3"],
+        "slopes": {"2": 1.8891, "3": 2.2445},
+        "n_decades": 2,
+        "caveat": "2 decades per nbp, 2 nbp strata — fragile"
+      },
+      "extension_plan": {
+        "approach": "pull rank-3 leading_term × nbp from lfunc_lfunctions joined to ec_curvedata; exclude nbp=1 (Pattern 4 hazard: Griffin-Ono prime-conductor construction dominates); slope-vs-log_cond per (nbp, decade)",
+        "expected_output_cells": "rank=3 × nbp ∈ {3, 4} × ≥3 decades; possibly nbp ∈ {2, 5} at 2 decades",
+        "follow_up_task_id": "wsw_F041a_rank3_extension",
+        "blocked_by": "lfunc_lfunctions × ec_curvedata rank-3 coverage rate unknown; audit needed before execution"
+      },
+      "pattern_4_hazard_flagged": "rank-3 nbp=1 is 74.9% of rank-3 total and concentrates in prime-conductor Griffin-Ono construction — not random sample. Any ladder test at rank-3 that includes nbp=1 without construction-aware stratification conflates a constructed family with the random sample; kill-test artifact risk."
+    }
+  },
+  "claim_status": {
+    "primary_claim": "At analytic rank >= 2, slope(M_1(leading_term)) vs log(conductor) is monotone-increasing in num_bad_primes; the interaction is absent at rank 0 and 1.",
+    "verification_summary": "Survives 5 independent kill tests: W2 block-shuffle (amp 27.6x, corr 0.97); U_A conductor joint OLS (b_nbp z=3.37); W3 Galois-image alternative (P021 4.3x separation over P039); T3 semistable vs additive (ladder in semistable half); T5 specific-prime joint (count > identity).",
+    "open_gates": {
+      "pattern_5_cfkrs": "CFKRS rank-2 SO(even) closed-form with num_bad_primes stratification — is the a_{r=2}(k) arithmetic factor's nbp-structure quantitatively responsible for the observed 1.21 -> 2.52 ladder? Unresolved.",
+      "pattern_30_level": "WEAK_ALGEBRAIC (Level 1): arithmetic factor has nbp structure. Claim goes beyond algebra: rank-2+ selectivity (rank 0/1 flat) is not forced by the arithmetic factor. Passes Level-1 discipline."
+    }
+  },
+  "pattern_hygiene": {
+    "pattern_4_sampling_frame": "flagged at rank-3 nbp=1 (Griffin-Ono dominance)",
+    "pattern_13_axis_class_exhaustion": "kills at P025/P036/P039 across rank-2 audits cluster in family-level / representation-class axis without further classes yielding; consistent with 'rank-magnitude family-class axis is not in the current P-ID catalog' open signal",
+    "pattern_18_vacuum": "5 positive cells across P020/P021/P023/P026/P104 at rank-2+ is a VACUUM-shape fragment; the rank-magnitude family-class axis is outside the catalog (candidate P-ID)",
+    "pattern_20_stratification_reveals": "pooled rank-2 slope ~= 1.93 but stratified by nbp ranges 1.21..2.52; pooled is the projection, stratified is the measurement",
+    "pattern_30_weak_algebraic": "Level 1 per pattern_library §Pattern 30; LINEAGE_REGISTRY entry required before automated gen_06 sweep can render a per-cell verdict on new F041a correlations"
+  },
+  "provenance_commits": {
+    "W2_block_null": "2a3f6c37",
+    "W3_galois_image_alternative": "64a35779",
+    "T3_semistable_vs_additive": "68225787",
+    "T5_specific_prime_joint": "d9c646d9",
+    "U_A_conductor_control": "4a046a81",
+    "keating_snaith_arithmetic_analysis": "2e21872a"
+  },
+  "tensor_row_snapshot_20260421": {
+    "F041a": {
+      "P020": 2, "P021": 2, "P023": 2, "P026": 2, "P104": 2,
+      "P025": -1, "P036": -1, "P039": -1
+    }
+  },
+  "output_agora_actions": {
+    "post_harmonia_sync": "F041A_CATALOG_FINAL: cartography/docs/catalog_F041a.md; specimen 62 unchanged; rank-3 extension queued as wsw_F041a_rank3_extension (pending seed)",
+    "task_status": "claim_completed"
+  }
+}

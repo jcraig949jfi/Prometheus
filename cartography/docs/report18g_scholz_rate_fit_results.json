@@ -1,0 +1,46 @@
+{
+  "task": "report18g_scholz_rate_fit",
+  "parent": "report18f_scholz_3rank",
+  "drafted_by": "Harmonia_M2_sessionD",
+  "date": "2026-04-18",
+  "hypothesis": "Davenport-Heilbronn 1/6 is the UNIVERSAL finite-|disc| convergence rate for 3-torsion observables on quadratic class groups. If so, fitting |Scholz_ratio - 3/2| vs log10(|disc|) bucket should yield an exponent \u03b1_scholz \u2248 1/6 \u2248 0.1667.",
+  "data_points": [
+    [
+      3,
+      0.0347230526357265,
+      1.4652769473642735
+    ],
+    [
+      4,
+      0.021790699072349984,
+      1.47820930092765
+    ],
+    [
+      5,
+      0.01266670854976093,
+      1.487333291450239
+    ],
+    [
+      6,
+      0.011105025814748481,
+      1.4888949741852515
+    ]
+  ],
+  "fit": {
+    "slope": -0.1720902363904807,
+    "intercept": -0.9688258331939406,
+    "slope_se": 0.02740856194935532,
+    "r2": 0.9517166176546419,
+    "n": 4
+  },
+  "alpha_scholz": 0.1720902363904807,
+  "alpha_scholz_se": 0.02740856194935532,
+  "c_coefficient": 0.10744202048699482,
+  "cross_check_alpha_p3_imag_from_R18e": 0.16503,
+  "cross_check_alpha_p3_real_from_R18e": 0.15797,
+  "dh_1_6_prediction": 0.16666666666666666,
+  "z_vs_dh_1_6": 0.1978786677621232,
+  "match_dh_at_2sigma": true,
+  "match_dh_at_1sigma": true,
+  "projection_bucket_for_0.001_dev": 11.802959943626503
+}

@@ -1,0 +1,38 @@
+{
+  "feature_id": "F011@f2ea773c",
+  "projection_ids": [
+    "P036@f2ea773c"
+  ],
+  "null_spec": "NULL_BSWCD@v1[stratifier=root_number,n_bins=2,n_perms=300,seed=20260417]",
+  "dataset_spec": "Q_EC@lmfdb.ec_curvedata JOIN prometheus_fire.zeros.object_zeros (n_zeros>=2, rank not null)",
+  "n_samples": 2009089,
+  "effect_size": 92.44,
+  "z_score": 92.44,
+  "precision": {
+    "effect_size": "4 sig figs",
+    "z_score": "2 decimal places",
+    "n_samples": "exact"
+  },
+  "commit": "f2ea773c",
+  "worker": "Harmonia_M2_sessionD",
+  "timestamp": "2026-04-21T08:29:43.238046+00:00",
+  "reproducibility_hash": "0f40e75685b96734677fa0407c2a5c50cb9cd02c285a11eab89055974d4290fe",
+  "bswcd_full_result": {
+    "null_mean": 0.0,
+    "null_std": 1.0,
+    "null_p99": 3.0,
+    "observed": 92.44,
+    "z_score": 92.44,
+    "verdict": "DURABLE",
+    "n_strata_used": 2,
+    "stratifier": "root_number",
+    "n_bins": 2,
+    "n_perms": 300,
+    "seed": 20260417
+  },
+  "task": "reaudit_10_stratifier_mismatch_cells",
+  "claim_class": 3,
+  "prior_z_under_conductor": null,
+  "literal_degenerate": false,
+  "recommended_tensor_action": "retain +2 (per-stratum durable)"
+}

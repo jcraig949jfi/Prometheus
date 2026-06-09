@@ -1,0 +1,64 @@
+[
+  {
+    "debt_id": "debt_ffcab55a05",
+    "cycle_created": 1,
+    "last_seen_cycle": 1,
+    "concern": "_solve_real_clean_linear returns [] (empty list, not None) when sympy finds no real solutions or when the symbol set is ambiguous. If the tier oracle distinguishes 'no answer' (None) from 'empty solution set' ([]), probes with linear equations that have no real solution (e.g., 0*x + 5 = 0, or a complex-only solution) will return [] and may be graded as wrong rather than abstained. This is a latent grading contract violation that the current test suite does not probe.",
+    "regression_test_to_write": "Write a probe with a degenerate linear equation (e.g., `0*x + 5 = 0`, no real solution) and assert that `reasoner.apply(probe)` returns `None`, not `[]` \u2014 confirming the abstain contract is honored for unsolvable inputs.",
+    "source": "skeptic",
+    "future_tier_risk": [
+      "R1",
+      "R2"
+    ],
+    "status": "closed",
+    "recurrences": 1,
+    "created_at": "2026-05-29T11:46:29.612784+00:00",
+    "closed_cycle": 1,
+    "closed_how": "regression_test_written",
+    "closed_at": "2026-05-29T11:46:29.613040+00:00"
+  },
+  {
+    "debt_id": "debt_36104f69c0",
+    "cycle_created": 2,
+    "last_seen_cycle": 2,
+    "concern": "sp.Poly(expr, var) will raise PolynomialError for float-coefficient expressions like `1.0*x**2 + 2.0*x + 5.0`, crashing rather than returning []. The test suite likely uses exact integer/rational coefficients, so this crash is invisible now but will surface the moment a future tier introduces perturbed or float-coefficient quadratics.",
+    "regression_test_to_write": "Test that `apply(Probe(kind='quadratic', expr='1.0*x**2 + 2.0*x + 5.0', var='x'))` returns `[]` without raising PolynomialError \u2014 this is the exact crash the skeptic identified and no current test covers it",
+    "source": "skeptic",
+    "future_tier_risk": [
+      "R2",
+      "R3"
+    ],
+    "status": "open",
+    "recurrences": 1,
+    "created_at": "2026-05-29T11:48:18.559151+00:00"
+  },
+  {
+    "debt_id": "debt_54fb00399c",
+    "cycle_created": 4,
+    "last_seen_cycle": 4,
+    "concern": "The domain-check guard `if radicand_val.is_real and radicand_val < 0` silently NO-OPs when SymPy cannot determine the sign (is_real=None or is_real=True but comparison fails symbolically). This means parametric or symbolic coefficient cases will pass extraneous roots through, and the only backstop is the numerical `evalf` tolerance check \u2014 which itself has a 1e-10 threshold that may fail for roots that are nearly-but-not-quite solutions due to floating-point expansion of `sp.expand`. This is a l",
+    "regression_test_to_write": "Test suite additions FORCED for next cycle: (1) apply(Probe(kind='sqrt', expr='sqrt(x+3) = x-1', var='x')) returns only the valid root and not the extraneous one \u2014 already covered, but verify holdout case with parametric offset; (2) apply(Probe(kind='sqrt', expr='2*sqrt(x+1) = x-0', var='x')) does not silently return wrong roots via args[0] misread; (3) apply(Probe(kind='quadratic', expr='1.0*x**2 + 2.0*x + 5.0', var='x')) returns [] without PolynomialError (cycle 2 debt regression test, still unwritten); (4) a probe where the valid root is irrational and abs(residual) after evalf expansion is between 1e-12 and 1e-8 to stress-test the 1e-10 threshold.",
+    "source": "skeptic",
+    "future_tier_risk": [
+      "R3"
+    ],
+    "status": "open",
+    "recurrences": 1,
+    "created_at": "2026-05-29T11:51:52.794644+00:00"
+  },
+  {
+    "debt_id": "debt_1e55440ae5",
+    "cycle_created": 12,
+    "last_seen_cycle": 12,
+    "concern": "The reasoner never independently computes or verifies the excluded singularity value \u2014 it simply echoes back `probe.data['excluded']`. A probe where `excluded` is wrong (e.g., excluded=5 when the true singularity is r=3) will still return `'all_x_except_excluded'` as long as the cancellation check passes, meaning the kill pattern 'excluded_value_missed' is NOT actually defended against for adversarial inputs where the probe data itself contains an incorrect excluded_value.",
+    "regression_test_to_write": "Test that apply(Probe(kind='rational', num='x**2-9', den='x-3', rhs='x+3', var='x', excluded=5)) does NOT return 'all_x_except_excluded' \u2014 or raises/returns an error \u2014 because excluded=5 is not a zero of den=(x-3); this exposes that the current reasoner cannot independently verify the excluded singularity",
+    "source": "skeptic",
+    "future_tier_risk": [
+      "R3",
+      "R4"
+    ],
+    "status": "open",
+    "recurrences": 1,
+    "created_at": "2026-05-29T12:07:50.341333+00:00"
+  }
+]

@@ -1,0 +1,369 @@
+{
+  "task": "reaudit_10_stratifier_mismatch_cells",
+  "operator": "NULL_BSWCD@v2 (reformulated per claim class)",
+  "worker": "Harmonia_M2_sessionD",
+  "started": "2026-04-21T08:11:41.939696+00:00",
+  "finished": "2026-04-21T08:29:43.239052+00:00",
+  "commit": "f2ea773c",
+  "n_samples": 2009089,
+  "cells": {
+    "F011:P021": {
+      "class": 3,
+      "prescribed_stratifier": "num_bad_primes",
+      "prior_z_under_conductor": 38.58,
+      "literal": {
+        "observed": 0.13218614054495048,
+        "null_mean": 0.08145930702128763,
+        "null_std": 0.0029702759698794013,
+        "z_score": 17.08,
+        "verdict": "DURABLE",
+        "n_strata_used": 4,
+        "stratifier": "num_bad_primes"
+      },
+      "literal_degenerate": false,
+      "reformulated": {
+        "per_stratum": {
+          "1": {
+            "n": 3915,
+            "mean": 1.0272078731446408,
+            "deficit": -0.027207873144640793,
+            "bootstrap_se": 0.007006741800281936,
+            "z": -3.88,
+            "durable": true
+          },
+          "2": {
+            "n": 74596,
+            "mean": 0.9973222706615517,
+            "deficit": 0.0026777293384483425,
+            "bootstrap_se": 0.0013952817501127182,
+            "z": 1.92,
+            "durable": false
+          },
+          "3": {
+            "n": 464308,
+            "mean": 0.9696987008136151,
+            "deficit": 0.03030129918638491,
+            "bootstrap_se": 0.0005167108332953343,
+            "z": 58.64,
+            "durable": true
+          },
+          "4": {
+            "n": 922339,
+            "mean": 0.9440437020906137,
+            "deficit": 0.05595629790938628,
+            "bootstrap_se": 0.0003601046824120449,
+            "z": 155.39,
+            "durable": true
+          },
+          "5": {
+            "n": 492493,
+            "mean": 0.9173042980734228,
+            "deficit": 0.08269570192657716,
+            "bootstrap_se": 0.0004350998031526244,
+            "z": 190.06,
+            "durable": true
+          },
+          "6": {
+            "n": 51438,
+            "mean": 0.8950217325996903,
+            "deficit": 0.10497826740030969,
+            "bootstrap_se": 0.0012433211904095314,
+            "z": 84.43,
+            "durable": true
+          }
+        },
+        "n_strata": 6,
+        "min_abs_z": 1.92,
+        "max_abs_z": 190.06,
+        "verdict": "MIXED"
+      },
+      "verdict": "MIXED",
+      "recommended_tensor_action": "downgrade to +1 (mixed durability)",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F011_P021_v2.json"
+    },
+    "F011:P023": {
+      "class": 3,
+      "prescribed_stratifier": "rank",
+      "prior_z_under_conductor": 31.26,
+      "literal": {
+        "observed": 0.08906442966008354,
+        "null_mean": 0.048753387805296526,
+        "null_std": 0.00014643110339729272,
+        "z_score": 275.29,
+        "verdict": "DURABLE",
+        "n_strata_used": 3,
+        "stratifier": "rank"
+      },
+      "literal_degenerate": false,
+      "reformulated": {
+        "per_stratum": {
+          "0": {
+            "n": 773232,
+            "mean": 0.8982963441528976,
+            "deficit": 0.10170365584710239,
+            "bootstrap_se": 0.0003410591445516227,
+            "z": 298.2,
+            "durable": true
+          },
+          "1": {
+            "n": 1008146,
+            "mean": 0.969866732028586,
+            "deficit": 0.030133267971414024,
+            "bootstrap_se": 0.0003276097772015511,
+            "z": 91.98,
+            "durable": true
+          },
+          "2": {
+            "n": 222305,
+            "mean": 0.9873607738129812,
+            "deficit": 0.012639226187018848,
+            "bootstrap_se": 0.000768664693288425,
+            "z": 16.44,
+            "durable": true
+          },
+          "3": {
+            "n": 5405,
+            "mean": 0.9868794768062273,
+            "deficit": 0.01312052319377266,
+            "bootstrap_se": 0.004663616883645802,
+            "z": 2.81,
+            "durable": false
+          }
+        },
+        "n_strata": 4,
+        "min_abs_z": 2.81,
+        "max_abs_z": 298.2,
+        "verdict": "MIXED"
+      },
+      "verdict": "MIXED",
+      "recommended_tensor_action": "downgrade to +1 (mixed durability)",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F011_P023_v2.json"
+    },
+    "F011:P026": {
+      "class": 3,
+      "prescribed_stratifier": "semistable",
+      "prior_z_under_conductor": 5.53,
+      "literal": {
+        "observed": 0.0023867420370266013,
+        "null_mean": 0.00042070469791377445,
+        "null_std": 0.000304920324016401,
+        "z_score": 6.45,
+        "verdict": "DURABLE",
+        "n_strata_used": 1,
+        "stratifier": "semistable"
+      },
+      "literal_degenerate": false,
+      "reformulated": {
+        "per_stratum": {
+          "0": {
+            "n": 1489960,
+            "mean": 0.9436864200596143,
+            "deficit": 0.05631357994038566,
+            "bootstrap_se": 0.00027556117541084553,
+            "z": 204.36,
+            "durable": true
+          },
+          "1": {
+            "n": 519129,
+            "mean": 0.9460731620966409,
+            "deficit": 0.05392683790335906,
+            "bootstrap_se": 0.00048085480413102323,
+            "z": 112.15,
+            "durable": true
+          }
+        },
+        "n_strata": 2,
+        "min_abs_z": 112.15,
+        "max_abs_z": 204.36,
+        "verdict": "DURABLE"
+      },
+      "verdict": "DURABLE",
+      "recommended_tensor_action": "retain +2 (per-stratum durable)",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F011_P026_v2.json"
+    },
+    "F011:P036": {
+      "class": 3,
+      "prescribed_stratifier": "root_number",
+      "prior_z_under_conductor": null,
+      "literal": {
+        "observed": 0.05177283372157737,
+        "null_mean": 0.000350440460015042,
+        "null_std": 0.00026978295078398544,
+        "z_score": 190.61,
+        "verdict": "DURABLE",
+        "n_strata_used": 1,
+        "stratifier": "root_number"
+      },
+      "literal_degenerate": false,
+      "reformulated": {
+        "per_stratum": {
+          "0": {
+            "n": 995538,
+            "mean": 0.9181846227851288,
+            "deficit": 0.0818153772148712,
+            "bootstrap_se": 0.0003190558709264815,
+            "z": 256.43,
+            "durable": true
+          },
+          "1": {
+            "n": 1013551,
+            "mean": 0.9699574565067062,
+            "deficit": 0.030042543493293827,
+            "bootstrap_se": 0.0003250082592895901,
+            "z": 92.44,
+            "durable": true
+          }
+        },
+        "n_strata": 2,
+        "min_abs_z": 92.44,
+        "max_abs_z": 256.43,
+        "verdict": "DURABLE"
+      },
+      "verdict": "DURABLE",
+      "recommended_tensor_action": "retain +2 (per-stratum durable)",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F011_P036_v2.json"
+    },
+    "F013:P023": {
+      "class": 2,
+      "prescribed_stratifier": "rank",
+      "prior_z_under_conductor": 22.39,
+      "literal": {
+        "observed": 0.015000473822095482,
+        "null_mean": 0.0046544539403811066,
+        "null_std": 0.00011170227799328468,
+        "z_score": 92.62,
+        "verdict": "DURABLE",
+        "n_strata_used": 3,
+        "stratifier": "rank"
+      },
+      "literal_degenerate": false,
+      "reformulated": {
+        "observed": 0.012463,
+        "null_mean": 0.012463,
+        "null_std": 0.0,
+        "null_p99": 0.012463,
+        "z_score": -0.58,
+        "verdict": "COLLAPSES",
+        "n_perms": 300,
+        "stratifier": "joint(rank_bin, conductor_decile)"
+      },
+      "verdict": "COLLAPSES",
+      "recommended_tensor_action": "demote to -1",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F013_P023_v2.json"
+    },
+    "F013:P028": {
+      "class": 2,
+      "prescribed_stratifier": "rank",
+      "prior_z_under_conductor": 15.31,
+      "literal": {
+        "observed": 0.015000473822095482,
+        "null_mean": 0.0046544539403811066,
+        "null_std": 0.00011170227799328468,
+        "z_score": 92.62,
+        "verdict": "DURABLE",
+        "n_strata_used": 3,
+        "stratifier": "rank"
+      },
+      "literal_degenerate": false,
+      "reformulated": {
+        "observed": 0.012463,
+        "null_mean": 0.012463,
+        "null_std": 0.0,
+        "null_p99": 0.012463,
+        "z_score": -0.58,
+        "verdict": "COLLAPSES",
+        "n_perms": 300,
+        "stratifier": "joint(rank_bin, conductor_decile)"
+      },
+      "verdict": "COLLAPSES",
+      "recommended_tensor_action": "demote to -1",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F013_P028_v2.json"
+    },
+    "F013:P041": {
+      "class": 2,
+      "prescribed_stratifier": "rank",
+      "prior_z_under_conductor": 8211.96,
+      "literal": {
+        "observed": 0.015000473822095482,
+        "null_mean": 0.0046544539403811066,
+        "null_std": 0.00011170227799328468,
+        "z_score": 92.62,
+        "verdict": "DURABLE",
+        "n_strata_used": 3,
+        "stratifier": "rank"
+      },
+      "literal_degenerate": false,
+      "reformulated": {
+        "observed": 0.012463,
+        "null_mean": 0.012463,
+        "null_std": 0.0,
+        "null_p99": 0.012463,
+        "z_score": -0.58,
+        "verdict": "COLLAPSES",
+        "n_perms": 300,
+        "stratifier": "joint(rank_bin, conductor_decile)"
+      },
+      "verdict": "COLLAPSES",
+      "recommended_tensor_action": "demote to -1",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F013_P041_v2.json"
+    },
+    "F013:P051": {
+      "class": 2,
+      "prescribed_stratifier": "rank",
+      "prior_z_under_conductor": 8.05,
+      "literal": {
+        "observed": 0.015000473822095482,
+        "null_mean": 0.0046544539403811066,
+        "null_std": 0.00011170227799328468,
+        "z_score": 92.62,
+        "verdict": "DURABLE",
+        "n_strata_used": 3,
+        "stratifier": "rank"
+      },
+      "literal_degenerate": false,
+      "reformulated": {
+        "observed": 0.012463,
+        "null_mean": 0.012463,
+        "null_std": 0.0,
+        "null_p99": 0.012463,
+        "z_score": -0.58,
+        "verdict": "COLLAPSES",
+        "n_perms": 300,
+        "stratifier": "joint(rank_bin, conductor_decile)"
+      },
+      "verdict": "COLLAPSES",
+      "recommended_tensor_action": "demote to -1",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F013_P051_v2.json"
+    },
+    "F013:P104": {
+      "class": 2,
+      "prescribed_stratifier": "rank",
+      "prior_z_under_conductor": 15.31,
+      "literal": {
+        "observed": 0.015000473822095482,
+        "null_mean": 0.0046544539403811066,
+        "null_std": 0.00011170227799328468,
+        "z_score": 92.62,
+        "verdict": "DURABLE",
+        "n_strata_used": 3,
+        "stratifier": "rank"
+      },
+      "literal_degenerate": false,
+      "reformulated": {
+        "observed": 0.012463,
+        "null_mean": 0.012463,
+        "null_std": 0.0,
+        "null_p99": 0.012463,
+        "z_score": -0.58,
+        "verdict": "COLLAPSES",
+        "n_perms": 300,
+        "stratifier": "joint(rank_bin, conductor_decile)"
+      },
+      "verdict": "COLLAPSES",
+      "recommended_tensor_action": "demote to -1",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F013_P104_v2.json"
+    }
+  },
+  "scope_note": "9 NULL_BSWCD-appropriate cells audited (4 F011 Class-3, 5 F013 Class-2). 3 F044 Class-4 cells (P020, P023, P026) are out of scope \u2014 see separate audit_F044_framebased_resample task.",
+  "methodology_finding": "The literal Class-2/3 prescription (NULL_BSWCD@v2 with the semantic stratifier of the cell, and the original cross-group-spread or slope-diff statistic) is structurally degenerate for these specific cells. Within-stratifier shuffle preserves per-stratum means/variances; the original statistics depend only on those per-stratum aggregates; therefore the null distribution is concentrated at the observed value (null_std \u2248 0) and z is uninformative. The REFORMULATED tests (per-stratum deficit bootstrap for Class 3; per-rank conductor-slope interaction under joint (rank, cond_decile) shuffle for Class 2) are claim-appropriate and non-degenerate. This suggests the classification JSON's Class-2/3 labeling for F011 cells in particular may be reinterpretable as Class-2 interactions (axis reveals structure) rather than Class-3 uniformity claims, with the original conductor-stratified null being the correct match."
+}
