@@ -155,6 +155,22 @@ class TheseusRecord:
     # (additive enhancement over terminal-verdict scoring).
     step_trace: Optional[List[Dict[str, Any]]] = None
 
+    # --- Predicate kind (calibration v3c, 2026-06-03) ---
+    # Which PREDICATE this record's verdict answers — load-bearing for
+    # content-aware F2 promotion, whose raw-value null is only valid for
+    # the DIRECT predicate "does relation(value_a, value_b) hold".
+    #   "direct"      — verdict = does rel(a, b) hold on the stored values
+    #   "invariance"  — verdict = is rel invariant under a transform
+    #                   (g4 sign-reflection, g5 scale) — answers a DIFFERENT
+    #                   predicate, so the raw-value null is the wrong basis
+    #   "transformed" — verdict = does rel(f(a), g(b)) hold (a3)
+    # None = un-stamped legacy record; consumers fall back to a generator_id
+    # denylist. New records stamp this from the generator's class attribute,
+    # so the filter no longer depends on the denylist for stamped records.
+    # Does NOT enter record_id (id = hash(text|generator_id)), so adding it
+    # is content-address-stable: no churn on existing corpora.
+    predicate_kind: Optional[str] = None
+
     # --- Free-form extras ---
     extras: Dict[str, Any] = field(default_factory=dict)
 

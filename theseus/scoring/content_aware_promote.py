@@ -54,6 +54,12 @@ TAUTOLOGY_DETECTION_FRACTION = 0.95
 # Scoring these against a raw-value null manufactured ~all of v2's apparent
 # corpus contrast (a category error, not coupling). See
 # pivot/calibration_v3c_VERDICT_generator_category_error_2026-06-03.md.
+#
+# As of the forward-path change, g4/g5/a3 STAMP TheseusRecord.predicate_kind
+# at emission, so the resolver classifies new records by that self-describing
+# field. This denylist is now only the LEGACY FALLBACK for un-stamped pre-v3c
+# records. New meta-relational generators must set the `predicate_kind` class
+# attribute (base.py) — they do NOT need to be added here.
 META_RELATIONAL_GENERATORS = frozenset({"g4", "g5", "a3"})
 
 
@@ -62,13 +68,18 @@ def is_direct_relation_record(record: TheseusRecord) -> bool:
     "does relation(value_a, value_b) hold" — the only predicate for which
     F2's raw-value null is valid.
 
-    Resolution order (backwards-compatible):
-      1. If claim_payload declares `predicate_kind`, honor it
-         ('direct' -> True; anything else -> False).
-      2. Else fall back to generator_id: META_RELATIONAL_GENERATORS -> False.
+    Resolution order (backwards-compatible; first self-describing source wins):
+      1. claim_payload['predicate_kind'] if present (explicit per-claim override).
+      2. record.predicate_kind schema field if present (stamped at emission
+         from the generator's class attribute; calibration v3c forward path).
+      3. Legacy fallback: generator_id denylist (META_RELATIONAL_GENERATORS).
+         Only reached for un-stamped pre-v3c records — new records never
+         depend on the denylist.
     """
     payload = record.claim_payload or {}
     pk = payload.get("predicate_kind")
+    if pk is None:
+        pk = getattr(record, "predicate_kind", None)
     if pk is not None:
         return pk == "direct"
     return getattr(record, "generator_id", None) not in META_RELATIONAL_GENERATORS

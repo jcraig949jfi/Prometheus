@@ -1,0 +1,125 @@
+{
+  "tag": "e_hidden",
+  "caps": {
+    "theseus": 24000,
+    "pollux": 4000,
+    "erebos": 4000,
+    "hephaestus": 5000,
+    "charon_md": 2500,
+    "harmonia": 500
+  },
+  "entity_split": true,
+  "values_shown": false,
+  "split_stats": {
+    "n_entities": 1735,
+    "held_out_entities": 520,
+    "dropped_mixed_or_unused": 8311
+  },
+  "n_eval_requested": 800,
+  "source_stats": {
+    "theseus": {
+      "yielded": 21551,
+      "skipped": 1397298,
+      "by_outcome": {
+        "rejected": 9611,
+        "promoted": 11940
+      }
+    },
+    "pollux": {
+      "yielded": 286,
+      "skipped": 0,
+      "by_outcome": {
+        "rejected": 286
+      }
+    },
+    "erebos": {
+      "yielded": 233,
+      "skipped": 0,
+      "by_outcome": {
+        "rejected": 233
+      }
+    },
+    "hephaestus": {
+      "yielded": 4546,
+      "skipped": 359,
+      "by_outcome": {
+        "scrap": 4546
+      }
+    },
+    "charon_md": {
+      "yielded": 583,
+      "skipped": 1796,
+      "by_outcome": {
+        "prose_finding": 583
+      }
+    },
+    "harmonia": {
+      "yielded": 16,
+      "skipped": 1,
+      "by_outcome": {
+        "retraction": 16
+      }
+    }
+  },
+  "train_summary": {
+    "n": 16118,
+    "by_source": {
+      "theseus": 10454,
+      "pollux": 286,
+      "erebos": 233,
+      "hephaestus": 4546,
+      "charon_md:stygian": 583,
+      "harmonia_retraction": 16
+    },
+    "by_tier": {
+      "1": 15519,
+      "2": 599
+    },
+    "by_outcome": {
+      "rejected": 4876,
+      "promoted": 6097,
+      "scrap": 4546,
+      "prose_finding": 583,
+      "retraction": 16
+    },
+    "by_domain_top": {
+      "knot_x_ec": 5864,
+      "concept_forge": 4546,
+      "mutation": 1225,
+      "symmetry_transform": 1084,
+      "literature_mined": 1060,
+      "triangle_inequality": 967,
+      "charon_stygian": 583,
+      "mahler_measure_correlation": 286,
+      "multi_hop_deduction": 252,
+      "composed_falsification": 233,
+      "retraction": 16,
+      "analogical_transfer": 2
+    },
+    "failure_fraction": 0.6217,
+    "gold_labeled": 15286,
+    "gold_true": 5989,
+    "gold_false": 9297
+  },
+  "gold_eval_summary": {
+    "n": 800,
+    "by_source": {
+      "theseus": 800
+    },
+    "by_tier": {
+      "1": 800
+    },
+    "by_outcome": {
+      "promoted": 403,
+      "rejected": 397
+    },
+    "by_domain_top": {
+      "knot_x_ec": 647,
+      "mutation": 153
+    },
+    "failure_fraction": 0.4963,
+    "gold_labeled": 800,
+    "gold_true": 400,
+    "gold_false": 400
+  }
+}

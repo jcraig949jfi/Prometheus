@@ -2,10 +2,12 @@
 
 **Filed:** 2026-06-04
 **Author:** Aporia (in-session), absorbing the 2026-06-04 frontier review
-**Status:** Preregistration. Operational sibling of
-`aporia/docs/science_of_failure_v0.1.md`. This doc speaks in schemas, thresholds,
-randomizations, held-out catalogs and effect sizes — NOT in wells/horizons. Nothing
-here is run before the criteria here are frozen.
+**Status:** **FROZEN for the first run (2026-06-04).** Preregistration. Operational
+sibling of `aporia/docs/science_of_failure_v0.1.md`. Speaks in schemas, thresholds,
+randomizations, held-out catalogs and effect sizes — NOT wells/horizons. Per the
+2026-06-04 review: do NOT refine further; implement the §9 MVP exactly once under
+this frozen spec, let it fail or surprise, then write v0.2 only after kill data
+exists. Pre-freeze refinements in §12.
 **Why it exists:** the conceptual frame is subordinate to one experimental claim
 (the Central Law). This is how that claim is made killable.
 
@@ -207,4 +209,31 @@ contact with the null."
   substrate and a calibrated negative result. Both outcomes are wins; only an
   unreported result is a loss.
 
-— Aporia, 2026-06-04 (protocol v0.1)
+---
+
+## 12. Pre-freeze refinements (2026-06-04 review — frozen into this version)
+
+1. **Mechanical "C" for the MVP — no learned embeddings.** A void-candidate center
+   C is an **equivalence class of inferred repair-endpoint signatures under exact
+   prefix / operator-normalized matching** (the normalized first-terms prefix).
+   Embeddings/latent clusters are deferred to a later version; H5a must not depend
+   on a fuzzy vector space.
+2. **Three null levels (report all three).** Null-0: random same-length/magnitude
+   integer sequences (a floor — beating it is unimpressive). Null-1: grammar-generated
+   low-complexity fake sequences. Null-2: operator-/family-shuffled near-math
+   sequences (beating THIS is what means something).
+3. **Frozen k-curve.** Report recovery at `k ∈ {10, 25, 50, 100}` — precision@k,
+   recall@k, enrichment/lift over baseline, and confidence intervals. Report the full
+   enrichment curve, never a single best number.
+4. **Staging — withheld before constructible.** H5a = withheld catalog recovery
+   only. H5b = synthetic planted-object recovery. H5c = constructible-but-not-
+   catalogued. Do NOT touch H5c until H5a and H5b are clean. "Constructible occupant"
+   invites subjective victory conditions and is barred from the first run.
+
+**First-run deliverable:** `aporia/results/h5_oeis_mvp_<YYYY_MM_DD>.json`, with
+`protocol_version`, `frozen_before_run: true`, counts, the five negative-control
+verdicts, the recovery k-curve vs baseline, and a verdict in
+`{BEATS_NULL, NULL, INVALID_CONTROL_FAILURE}`. That artifact matters more than any
+further document.
+
+— Aporia, 2026-06-04 (protocol v0.1, FROZEN)

@@ -42,6 +42,9 @@ class G4ReflectionDualityGenerator(Generator):
     generator_id = "g4"
     claim_kind = ClaimKind.SYMMETRY_TRANSFORM.value
     status = GeneratorStatus.ACTIVE
+    # Verdict answers "is rel sign-reflection-invariant", NOT "does rel(a,b)
+    # hold" — F2's raw-value null is the wrong basis (calibration v3c).
+    predicate_kind = "invariance"
 
     def __init__(self, batch_id: str, seed: int = 210) -> None:
         super().__init__(batch_id)
@@ -120,6 +123,7 @@ class G4ReflectionDualityGenerator(Generator):
                 kill_pattern=kill_pattern,
                 method="exact",
                 convergence_status="exact",
+                predicate_kind=self.predicate_kind,
                 extras={"frontier_technique": "irm_invariance_via_reflection"},
             )
             self.attempts += 1

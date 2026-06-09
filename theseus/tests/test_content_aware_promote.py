@@ -257,3 +257,82 @@ def test_maybe_promote_still_scores_direct_records():
                                    verdict=Verdict.SHADOW_CATALOG.value))
     promoted = maybe_promote_by_f2(recs, n_null_samples=500, rng=random.Random(2))
     assert len(promoted) > 0  # direct records are not excluded
+
+
+# --- schema-field predicate_kind (forward path: denylist independence) ---
+
+def _mk_record_with_field(generator_id, predicate_kind):
+    """Record carrying predicate_kind on the SCHEMA FIELD (not payload),
+    as the production generators now stamp it."""
+    payload = {
+        "catalog_a": "knot", "object_a": "K1", "invariant_a": "three_genus",
+        "value_a": 1,
+        "catalog_b": "ec", "object_b": "E1", "invariant_b": "rank",
+        "value_b": 1, "relation": "equal",
+    }
+    canonical = f"schema_field/{generator_id}/{predicate_kind}"
+    return TheseusRecord(
+        record_id=TheseusRecord.compute_record_id(canonical, generator_id),
+        generator_id=generator_id, batch_id="b", emitted_at="2026-06-03T00:00:00Z",
+        claim_kind=ClaimKind.SYMMETRY_TRANSFORM.value, claim_payload=payload,
+        canonical_claim_text=canonical, verdict=Verdict.SHADOW_CATALOG.value,
+        predicate_kind=predicate_kind,
+    )
+
+
+def test_schema_field_predicate_kind_honored():
+    # Schema field is read when payload carries no predicate_kind.
+    assert is_direct_relation_record(_mk_record_with_field("g4", "invariance")) is False
+    assert is_direct_relation_record(_mk_record_with_field("a3", "transformed")) is False
+    assert is_direct_relation_record(_mk_record_with_field("a1", "direct")) is True
+
+
+def test_schema_field_independent_of_denylist():
+    # THE forward-path guarantee: a meta-relational generator that is NOT in
+    # META_RELATIONAL_GENERATORS is still correctly excluded purely via its
+    # stamped schema field. The filter no longer depends on the denylist.
+    new_gen = "g9_future_invariance"
+    assert new_gen not in META_RELATIONAL_GENERATORS
+    r = _mk_record_with_field(new_gen, "invariance")
+    assert is_direct_relation_record(r) is False
+
+
+def test_payload_predicate_kind_beats_schema_field():
+    # Resolution order: explicit payload override wins over the schema field.
+    r = _mk_record_with_field("a1", "invariance")  # schema says invariance
+    r.claim_payload["predicate_kind"] = "direct"    # payload overrides -> direct
+    assert is_direct_relation_record(r) is True
+
+
+def test_unstamped_legacy_record_uses_denylist_fallback():
+    # Pre-v3c records carry neither payload nor schema predicate_kind; the
+    # generator_id denylist remains the safety net.
+    r = _mk_gen_record("g4", "equal", 1, 1)  # no predicate_kind anywhere
+    assert r.predicate_kind is None
+    assert is_direct_relation_record(r) is False
+    r2 = _mk_gen_record("a1", "equal", 1, 1)
+    assert is_direct_relation_record(r2) is True
+
+
+def test_production_generators_stamp_predicate_kind():
+    # Integration: the live g4/g5/a3 generators stamp the schema field, so
+    # records flowing from a real fire are self-describing.
+    from theseus.generators.g4_reflection_duality import G4ReflectionDualityGenerator
+    from theseus.generators.g5_scale_invariance import G5ScaleInvarianceGenerator
+    from theseus.generators.a3_functional_identity import A3FunctionalIdentityGenerator
+
+    for cls, expected in (
+        (G4ReflectionDualityGenerator, "invariance"),
+        (G5ScaleInvarianceGenerator, "invariance"),
+        (A3FunctionalIdentityGenerator, "transformed"),
+    ):
+        gen = cls(batch_id="test_predicate_stamp")
+        assert gen.predicate_kind == expected
+        rec = None
+        for _ in range(200):  # emit until one record appears
+            rec = gen.next()
+            if rec is not None:
+                break
+        assert rec is not None, f"{cls.__name__} emitted nothing in 200 tries"
+        assert rec.predicate_kind == expected
+        assert is_direct_relation_record(rec) is False

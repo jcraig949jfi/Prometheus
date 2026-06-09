@@ -101,6 +101,14 @@ class Generator(abc.ABC):
     # NULL_BASELINE / TAUTOLOGY_CONTROL / etc. Per advisory board
     # Fire #53.
     role: GeneratorRole = GeneratorRole.DISCOVERY
+    # Predicate the generator's verdicts answer (calibration v3c,
+    # 2026-06-03). Default "direct" (verdict = does rel(a,b) hold on the
+    # stored values — the only predicate F2's raw-value null is valid for).
+    # Override to "invariance" (g4/g5) or "transformed" (a3) for meta-
+    # relational generators whose verdict answers a DIFFERENT predicate.
+    # Generators stamp this onto each TheseusRecord.predicate_kind so the
+    # content-aware F2 filter is self-describing rather than denylist-driven.
+    predicate_kind: str = "direct"
 
     def __init__(self, batch_id: str) -> None:
         self.batch_id = batch_id

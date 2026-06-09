@@ -67,6 +67,9 @@ class A3FunctionalIdentityGenerator(Generator):
     generator_id = "a3"
     claim_kind = ClaimKind.FUNCTIONAL_IDENTITY.value
     status = GeneratorStatus.ACTIVE
+    # Verdict answers "does rel(f(a), g(b)) hold on TRANSFORMED values", NOT
+    # "does rel(a,b) hold" — F2's raw-value null is the wrong basis (v3c).
+    predicate_kind = "transformed"
 
     def __init__(self, batch_id: str, seed: int = 31) -> None:
         super().__init__(batch_id)
@@ -156,6 +159,7 @@ class A3FunctionalIdentityGenerator(Generator):
                 kill_pattern=kill_pattern,
                 method="exact",
                 convergence_status="exact",
+                predicate_kind=self.predicate_kind,
             )
             self.emitted.append(record_id)
             return r

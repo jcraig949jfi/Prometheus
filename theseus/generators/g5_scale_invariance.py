@@ -45,6 +45,9 @@ class G5ScaleInvarianceGenerator(Generator):
     generator_id = "g5"
     claim_kind = ClaimKind.SYMMETRY_TRANSFORM.value
     status = GeneratorStatus.ACTIVE
+    # Verdict answers "is rel scale-invariant", NOT "does rel(a,b) hold" —
+    # F2's raw-value null is the wrong basis (calibration v3c).
+    predicate_kind = "invariance"
 
     def __init__(self, batch_id: str, seed: int = 240) -> None:
         super().__init__(batch_id)
@@ -129,6 +132,7 @@ class G5ScaleInvarianceGenerator(Generator):
                 kill_pattern=kill_pattern,
                 method="exact",
                 convergence_status="exact",
+                predicate_kind=self.predicate_kind,
                 extras={"frontier_technique": "scale_invariance_mapping"},
             )
             self.attempts += 1

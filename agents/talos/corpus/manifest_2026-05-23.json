@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "charter_version": "v1",
-  "computed_at": "2026-05-23T15:49:26.453462+00:00",
+  "computed_at": "2026-05-23T16:50:26.438532+00:00",
   "corpus_size": {
-    "hephaestus_forge": 18564,
+    "hephaestus_forge": 18573,
     "apollo_organism": 0,
     "prometheus_substrate": 6104,
     "external_reasoning_oss": 0,
     "synthetic": 0
   },
-  "total_examples": 24668,
+  "total_examples": 24677,
   "stream_weights": {
     "hephaestus_forge": 0.3,
     "apollo_organism": 0.25,
@@ -19,17 +19,17 @@
   },
   "stream_weights_alarm": null,
   "last_tick_summary": {
-    "tick_started_at": "2026-05-23T15:49:09.944925+00:00",
+    "tick_started_at": "2026-05-23T16:50:23.809781+00:00",
     "action": "corpus_grew",
-    "examples_added": 24668,
+    "examples_added": 9,
     "null_tick": false,
     "errors": 0,
     "by_stream": {
       "hephaestus_forge": {
-        "files_scanned": 5791,
-        "files_skipped_unchanged": 0,
-        "new_records": 18564,
-        "shard_size_existing": 0
+        "files_scanned": 5792,
+        "files_skipped_unchanged": 5791,
+        "new_records": 9,
+        "shard_size_existing": 18564
       },
       "apollo_organism": {
         "upstream_not_found": true,
@@ -41,9 +41,9 @@
       },
       "prometheus_substrate": {
         "files_scanned": 417,
-        "files_skipped_unchanged": 0,
-        "new_records": 6104,
-        "shard_size_existing": 0
+        "files_skipped_unchanged": 417,
+        "new_records": 0,
+        "shard_size_existing": 6104
       },
       "external_reasoning_oss": {
         "upstream_not_found": true,
@@ -58,7 +58,7 @@
   "shards": {
     "hephaestus_forge": {
       "path": "agents/talos/corpus/shards/hephaestus_forge.jsonl",
-      "examples": 18564,
+      "examples": 18573,
       "weight": 0.3
     },
     "apollo_organism": {

@@ -565,7 +565,9 @@ Delta: +21
 
 ### Commit
 
-To be recorded after commit.
+`43566adc` — "Fire #8: T007 lehmer_brute_force_general.py + deg-12 ±5 enumeration"
+
+Cross-agent staging mitigation: 7 files staged matching add list; no parallel agent contamination this fire.
 
 ### Schedule wakeup
 

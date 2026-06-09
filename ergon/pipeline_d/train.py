@@ -94,6 +94,18 @@ class TrainingArgs:
     completion_only_loss: bool = False
     completion_response_template: str = " | Class: "
 
+    # GPU reservation params (Aporia gpu_reservation_system_2026-05-23).
+    # When require_gpu_reservation=True, train_model wraps trainer.train()
+    # in a gpu_reserved context manager — acquire, auto-renew, release on
+    # exit. Default False keeps prior behaviour for unit tests / CPU smoke.
+    require_gpu_reservation: bool = False
+    gpu_machine: Optional[str] = None     # auto-resolved if None
+    gpu_id: str = "GPU0"
+    gpu_holder: str = "Ergon"             # override to "Talos" / etc. per run
+    gpu_purpose: str = ""                 # auto-filled from run_name if empty
+    gpu_ttl_seconds: int = 14400          # 4h failsafe TTL
+    gpu_renew_every: int = 1800           # renew every 30 min (ttl/8)
+
     @property
     def output_dir(self) -> Path:
         return self.runs_dir / self.run_name
@@ -202,7 +214,36 @@ def train_model(
 
     trainer = SFTTrainer(**trainer_kwargs)
 
-    trainer.train()
+    # GPU reservation: long-training workloads MUST reserve via Aporia's
+    # gpu_reservation system (pivot/gpu_reservation_system_2026-05-23.md).
+    # When require_gpu_reservation=True, wrap trainer.train() in the
+    # acquire→renew→release context manager. Refuses to start training if
+    # the slot is held by another holder.
+    if args.require_gpu_reservation:
+        # Resolve project-root to import scripts.* without relying on the
+        # caller having added it to sys.path.
+        _repo_root = Path(__file__).resolve().parents[2]
+        if str(_repo_root) not in sys.path:
+            sys.path.insert(0, str(_repo_root))
+        from scripts.gpu_reservation_helpers import (
+            GpuReservationUnavailable, gpu_reserved, resolve_machine_id,
+        )
+        machine = args.gpu_machine or resolve_machine_id()
+        purpose = args.gpu_purpose or f"pipeline_d train run {args.run_name}"
+        try:
+            with gpu_reserved(
+                machine=machine,
+                gpu_id=args.gpu_id,
+                holder=args.gpu_holder,
+                purpose=purpose,
+                ttl_seconds=args.gpu_ttl_seconds,
+                renew_every=args.gpu_renew_every,
+            ):
+                trainer.train()
+        except GpuReservationUnavailable as ex:
+            raise SystemExit(f"[pipeline_d.train] {ex}") from ex
+    else:
+        trainer.train()
 
     # Save LoRA adapter weights. peft.PeftModel.save_pretrained writes
     # adapter_config.json + adapter_model.safetensors only.

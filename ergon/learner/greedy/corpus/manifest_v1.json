@@ -1,0 +1,127 @@
+{
+  "tag": "v1",
+  "caps": {
+    "theseus": 14000,
+    "pollux": 4000,
+    "erebos": 4000,
+    "hephaestus": 5000,
+    "charon_md": 2500,
+    "harmonia": 500
+  },
+  "n_eval_requested": 1200,
+  "source_stats": {
+    "theseus": {
+      "yielded": 14000,
+      "skipped": 368824,
+      "by_outcome": {
+        "rejected": 5934,
+        "promoted": 8066
+      }
+    },
+    "pollux": {
+      "yielded": 286,
+      "skipped": 0,
+      "by_outcome": {
+        "rejected": 286
+      }
+    },
+    "erebos": {
+      "yielded": 233,
+      "skipped": 0,
+      "by_outcome": {
+        "rejected": 233
+      }
+    },
+    "hephaestus": {
+      "yielded": 4546,
+      "skipped": 359,
+      "by_outcome": {
+        "scrap": 4546
+      }
+    },
+    "charon_md": {
+      "yielded": 583,
+      "skipped": 1796,
+      "by_outcome": {
+        "prose_finding": 583
+      }
+    },
+    "harmonia": {
+      "yielded": 16,
+      "skipped": 1,
+      "by_outcome": {
+        "retraction": 16
+      }
+    }
+  },
+  "train_summary": {
+    "n": 18464,
+    "by_source": {
+      "theseus": 13200,
+      "pollux": 86,
+      "erebos": 233,
+      "hephaestus": 4346,
+      "charon_md:stygian": 583,
+      "harmonia_retraction": 16
+    },
+    "by_tier": {
+      "1": 17865,
+      "2": 599
+    },
+    "by_outcome": {
+      "rejected": 6053,
+      "promoted": 7466,
+      "scrap": 4346,
+      "prose_finding": 583,
+      "retraction": 16
+    },
+    "by_domain_top": {
+      "knot_x_ec": 8748,
+      "concept_forge": 4346,
+      "mutation": 1705,
+      "literature_mined": 990,
+      "symmetry_transform": 822,
+      "triangle_inequality": 691,
+      "charon_stygian": 583,
+      "multi_hop_deduction": 242,
+      "composed_falsification": 233,
+      "mahler_measure_correlation": 86,
+      "retraction": 16,
+      "analogical_transfer": 2
+    },
+    "failure_fraction": 0.5956,
+    "gold_labeled": 17632,
+    "gold_true": 7425,
+    "gold_false": 10207
+  },
+  "gold_eval_summary": {
+    "n": 1200,
+    "by_source": {
+      "theseus": 800,
+      "pollux": 200,
+      "hephaestus": 200
+    },
+    "by_tier": {
+      "1": 1200
+    },
+    "by_outcome": {
+      "promoted": 600,
+      "rejected": 400,
+      "scrap": 200
+    },
+    "by_domain_top": {
+      "knot_x_ec": 488,
+      "mahler_measure_correlation": 200,
+      "concept_forge": 200,
+      "mutation": 95,
+      "symmetry_transform": 78,
+      "literature_mined": 70,
+      "triangle_inequality": 59,
+      "multi_hop_deduction": 10
+    },
+    "failure_fraction": 0.5,
+    "gold_labeled": 1200,
+    "gold_true": 600,
+    "gold_false": 600
+  }
+}
