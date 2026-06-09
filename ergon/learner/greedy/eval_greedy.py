@@ -46,6 +46,8 @@ def use_local_model():
     return _M.MODEL_ID
 
 VERDICT_RE = re.compile(r"\b(true|false)\b", re.IGNORECASE)
+ANSWER_RE = re.compile(r"answer\s*:?\s*(true|false)", re.IGNORECASE)
+ALL_VERDICT_RE = re.compile(r"\b(true|false)\b", re.IGNORECASE)
 
 
 def read_jsonl(path: str) -> List[dict]:
@@ -63,6 +65,18 @@ def parse_verdict(text: str) -> Optional[bool]:
     if not m:
         return None
     return m.group(1).lower() == "true"
+
+
+def parse_verdict_cot(text: str) -> Optional[bool]:
+    """Reason-first / CoT: take the verdict after the LAST 'Answer:' if present,
+    else the LAST bare true/false token (the conclusion, not an intermediate)."""
+    ms = list(ANSWER_RE.finditer(text))
+    if ms:
+        return ms[-1].group(1).lower() == "true"
+    ms = list(ALL_VERDICT_RE.finditer(text))
+    if ms:
+        return ms[-1].group(1).lower() == "true"
+    return None
 
 
 @torch.no_grad()
@@ -83,7 +97,8 @@ def batched_judge(model, tok, prompts: List[str], batch_size: int = 16, max_new:
     return outs
 
 
-def score(rows: List[dict], preds: List[str]) -> dict:
+def score(rows: List[dict], preds: List[str], cot: bool = False) -> dict:
+    parser = parse_verdict_cot if cot else parse_verdict
     n = len(rows)
     correct = 0
     parse_fail = 0
@@ -91,7 +106,7 @@ def score(rows: List[dict], preds: List[str]) -> dict:
     by_source = defaultdict(lambda: [0, 0])
     for r, p in zip(rows, preds):
         gold = r["gold_bool"]
-        pred = parse_verdict(p)
+        pred = parser(p)
         by_label[gold][1] += 1
         by_source[r["source"]][1] += 1
         if pred is None:
@@ -137,12 +152,15 @@ def main():
     ap.add_argument("--countermath", action="store_true")
     ap.add_argument("--skip-base", action="store_true",
                     help="skip the base-model pass (for ablation sweeps where base is constant)")
+    ap.add_argument("--cot", action="store_true",
+                    help="reason-first eval: generate more tokens, parse the final 'Answer: True/False'")
     args = ap.parse_args()
 
     use_local_model()
     rows = read_jsonl(args.gold)
     prompts = [r["prompt"] for r in rows]
-    print(f"[eval] gold set: {len(rows)} items")
+    print(f"[eval] gold set: {len(rows)} items  cot={args.cot}")
+    mx = 220 if args.cot else 8
 
     results = {}
 
@@ -152,8 +170,8 @@ def main():
         if tok.pad_token_id is None:
             tok.pad_token = tok.eos_token
         tok.padding_side = "left"
-        base_preds = batched_judge(base, tok, prompts)
-        results["base"] = score(rows, base_preds)
+        base_preds = batched_judge(base, tok, prompts, max_new=mx)
+        results["base"] = score(rows, base_preds, cot=args.cot)
         if args.countermath:
             results["base"]["countermath"] = countermath_probe(base, tok)
         del base
@@ -165,8 +183,8 @@ def main():
         tok2.pad_token = tok2.eos_token
     tok2.padding_side = "left"
     trained = PeftModel.from_pretrained(trained, args.lora)
-    trained_preds = batched_judge(trained, tok2, prompts)
-    results["trained"] = score(rows, trained_preds)
+    trained_preds = batched_judge(trained, tok2, prompts, max_new=mx)
+    results["trained"] = score(rows, trained_preds, cot=args.cot)
     if args.countermath:
         results["trained"]["countermath"] = countermath_probe(trained, tok2)
     del trained
@@ -179,8 +197,8 @@ def main():
             tok3.pad_token = tok3.eos_token
         tok3.padding_side = "left"
         smodel = PeftModel.from_pretrained(sbase, args.shuffled_lora)
-        spreds = batched_judge(smodel, tok3, prompts)
-        results["shuffled_control"] = score(rows, spreds)
+        spreds = batched_judge(smodel, tok3, prompts, max_new=mx)
+        results["shuffled_control"] = score(rows, spreds, cot=args.cot)
         del smodel
         torch.cuda.empty_cache()
 

@@ -33,7 +33,7 @@ sys.path.insert(0, str(Path("F:/Prometheus/ergon")))
 import pipeline_d.model as _M  # noqa: E402
 from pipeline_d.model import load_qwen_math_15b  # noqa: E402
 
-MAX_LEN = 320
+MAX_LEN = 320  # default; overridable via --max-len (compute traces need more)
 
 
 def use_local_model():
@@ -133,6 +133,7 @@ def build_mix(rows: List[dict], seed: int = 1) -> List[dict]:
 
 
 def main():
+    global MAX_LEN
     ap = argparse.ArgumentParser()
     ap.add_argument("--train", required=True)
     ap.add_argument("--out", required=True)
@@ -143,7 +144,10 @@ def main():
     ap.add_argument("--lr", type=float, default=2e-4)
     ap.add_argument("--shuffle-labels", action="store_true")
     ap.add_argument("--max-examples", type=int, default=0)
+    ap.add_argument("--max-len", type=int, default=MAX_LEN)
     args = ap.parse_args()
+
+    MAX_LEN = args.max_len
 
     rows = read_jsonl(args.train)
     rows = build_mix(rows)
