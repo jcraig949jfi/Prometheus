@@ -1,0 +1,500 @@
+{
+  "prereg": "h2_info_recovery_prereg.md",
+  "seed": 20260610,
+  "R_ground_truth": 2000,
+  "a4_mix": {
+    "attempts": 3041,
+    "n_inconclusive": 2000,
+    "inconclusive_rate": 0.6576783952647156,
+    "prior_nonzero_pairs": 20,
+    "prior": {
+      "crossing_number|rank": 0.0645,
+      "crossing_number|conductor": 0.0495,
+      "crossing_number|tamagawa_product": 0.044,
+      "crossing_number|torsion": 0.055,
+      "signature|rank": 0.0645,
+      "signature|conductor": 0.0525,
+      "signature|tamagawa_product": 0.0505,
+      "signature|torsion": 0.06,
+      "determinant|rank": 0.0525,
+      "determinant|conductor": 0.0525,
+      "determinant|tamagawa_product": 0.045,
+      "determinant|torsion": 0.0645,
+      "three_genus|rank": 0.0465,
+      "three_genus|conductor": 0.054,
+      "three_genus|tamagawa_product": 0.055,
+      "three_genus|torsion": 0.052,
+      "trace_field_class|rank": 0.0415,
+      "trace_field_class|conductor": 0.0425,
+      "trace_field_class|tamagawa_product": 0.0205,
+      "trace_field_class|torsion": 0.033,
+      "nf_class_number|rank": 0.0,
+      "nf_class_number|conductor": 0.0,
+      "nf_class_number|tamagawa_product": 0.0,
+      "nf_class_number|torsion": 0.0
+    }
+  },
+  "analytic_uniform_prior": {
+    "I_pair_Y_bits": 0.013496717392829037,
+    "I_tag_Y_bits": 0.00014075228866981256,
+    "I_tag_Y_given_pair_bits": 5.310562817888962e-19,
+    "dpi_ok": true
+  },
+  "analytic_a4_prior": {
+    "I_pair_Y_bits": 0.0084902761321421,
+    "I_tag_Y_bits": 7.284863501621945e-05,
+    "I_tag_Y_given_pair_bits": -1.3213595508694067e-17,
+    "dpi_ok": true
+  },
+  "q3_per_pair": {
+    "crossing_number|rank": {
+      "kill_p": 1.0,
+      "H_tag_given_pair_bits": 0.08079313589591118,
+      "P_tag_match": 0.9802,
+      "tag_dist": {
+        "c_l_q": 0.99,
+        "c_q": 0.01,
+        "c_l": 0.0,
+        "l_q": 0.0
+      },
+      "skip_rate_per_method": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "crossing_number|conductor": {
+      "kill_p": 0.9999955,
+      "H_tag_given_pair_bits": 0.08020638440272594,
+      "P_tag_match": 0.9811891597433184,
+      "tag_dist": {
+        "c_l_q": 0.9905,
+        "c_q": 0.009,
+        "c_l": 0.0005,
+        "l_q": 0.0
+      },
+      "skip_rate_per_method": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "crossing_number|tamagawa_product": {
+      "kill_p": 0.9993412240000001,
+      "H_tag_given_pair_bits": 0.33571361034037167,
+      "P_tag_match": 0.9105986440705149,
+      "tag_dist": {
+        "c_l_q": 0.9538,
+        "c_q": 0.026,
+        "c_l": 0.0116,
+        "l_q": 0.0087
+      },
+      "skip_rate_per_method": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "crossing_number|torsion": {
+      "kill_p": 0.999936582,
+      "H_tag_given_pair_bits": 0.17542639934150547,
+      "P_tag_match": 0.9542197345846698,
+      "tag_dist": {
+        "c_l_q": 0.9766,
+        "c_q": 0.0204,
+        "l_q": 0.002,
+        "c_l": 0.001
+      },
+      "skip_rate_per_method": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "signature|rank": {
+      "kill_p": 1.0,
+      "H_tag_given_pair_bits": 0.09377790984777166,
+      "P_tag_match": 0.976288,
+      "tag_dist": {
+        "c_l_q": 0.988,
+        "c_q": 0.012,
+        "c_l": 0.0,
+        "l_q": 0.0
+      },
+      "skip_rate_per_method": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "signature|conductor": {
+      "kill_p": 1.0,
+      "H_tag_given_pair_bits": 0.10319142840908951,
+      "P_tag_match": 0.9733645000000002,
+      "tag_dist": {
+        "c_l_q": 0.9865,
+        "c_q": 0.0135,
+        "c_l": 0.0,
+        "l_q": 0.0
+      },
+      "skip_rate_per_method": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "signature|tamagawa_product": {
+      "kill_p": 0.999927403,
+      "H_tag_given_pair_bits": 0.13864654306356014,
+      "P_tag_match": 0.9686483051092398,
+      "tag_dist": {
+        "c_l_q": 0.9841,
+        "c_q": 0.0084,
+        "l_q": 0.0059,
+        "c_l": 0.0015
+      },
+      "skip_rate_per_method": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "signature|torsion": {
+      "kill_p": 0.9999717725000001,
+      "H_tag_given_pair_bits": 0.10501496551024785,
+      "P_tag_match": 0.9763418102612382,
+      "tag_dist": {
+        "c_l_q": 0.9881,
+        "c_q": 0.009,
+        "c_l": 0.0025,
+        "l_q": 0.0005
+      },
+      "skip_rate_per_method": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "determinant|rank": {
+      "kill_p": 0.999994,
+      "H_tag_given_pair_bits": 0.09986983258191055,
+      "P_tag_match": 0.9753239039597358,
+      "tag_dist": {
+        "c_l_q": 0.9875,
+        "c_q": 0.012,
+        "c_l": 0.0005,
+        "l_q": 0.0
+      },
+      "skip_rate_per_method": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "determinant|conductor": {
+      "kill_p": 0.9999950000000001,
+      "H_tag_given_pair_bits": 0.08690236804404022,
+      "P_tag_match": 0.9792300823513428,
+      "tag_dist": {
+        "c_l_q": 0.9895,
+        "c_q": 0.01,
+        "c_l": 0.0005,
+        "l_q": 0.0
+      },
+      "skip_rate_per_method": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "determinant|tamagawa_product": {
+      "kill_p": 0.9998186355000002,
+      "H_tag_given_pair_bits": 0.19719100339981155,
+      "P_tag_match": 0.9534822197029265,
+      "tag_dist": {
+        "c_l_q": 0.9764,
+        "c_q": 0.0114,
+        "c_l": 0.0069,
+        "l_q": 0.0054
+      },
+      "skip_rate_per_method": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "determinant|torsion": {
+      "kill_p": 0.9999852595000001,
+      "H_tag_given_pair_bits": 0.09479903513512397,
+      "P_tag_match": 0.9782702109282949,
+      "tag_dist": {
+        "c_l_q": 0.989,
+        "c_q": 0.0095,
+        "l_q": 0.001,
+        "c_l": 0.0005
+      },
+      "skip_rate_per_method": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "three_genus|rank": {
+      "kill_p": 0.9999835,
+      "H_tag_given_pair_bits": 0.10330133313130031,
+      "P_tag_match": 0.9753438618986553,
+      "tag_dist": {
+        "c_l_q": 0.9875,
+        "c_q": 0.011,
+        "c_l": 0.0015,
+        "l_q": 0.0
+      },
+      "skip_rate_per_method": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "three_genus|conductor": {
+      "kill_p": 1.0,
+      "H_tag_given_pair_bits": 0.12130992991173806,
+      "P_tag_match": 0.9675445,
+      "tag_dist": {
+        "c_l_q": 0.9835,
+        "c_q": 0.0165,
+        "c_l": 0.0,
+        "l_q": 0.0
+      },
+      "skip_rate_per_method": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "three_genus|tamagawa_product": {
+      "kill_p": 0.9999552862500002,
+      "H_tag_given_pair_bits": 0.14000484723697598,
+      "P_tag_match": 0.965695804468017,
+      "tag_dist": {
+        "c_l_q": 0.9826,
+        "c_q": 0.0145,
+        "c_l": 0.0025,
+        "l_q": 0.0005
+      },
+      "skip_rate_per_method": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "three_genus|torsion": {
+      "kill_p": 0.99998,
+      "H_tag_given_pair_bits": 0.1525103040635974,
+      "P_tag_match": 0.9589186775635352,
+      "tag_dist": {
+        "c_l_q": 0.979,
+        "c_q": 0.02,
+        "c_l": 0.001,
+        "l_q": 0.0
+      },
+      "skip_rate_per_method": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "trace_field_class|rank": {
+      "kill_p": 0.99999625,
+      "H_tag_given_pair_bits": 0.06985255645918811,
+      "P_tag_match": 0.9841352610428059,
+      "tag_dist": {
+        "c_l_q": 0.992,
+        "c_q": 0.0075,
+        "c_l": 0.0005,
+        "l_q": 0.0
+      },
+      "skip_rate_per_method": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "trace_field_class|conductor": {
+      "kill_p": 1.0,
+      "H_tag_given_pair_bits": 0.025211865892934702,
+      "P_tag_match": 0.9950125000000001,
+      "tag_dist": {
+        "c_l_q": 0.9975,
+        "c_q": 0.0025,
+        "c_l": 0.0,
+        "l_q": 0.0
+      },
+      "skip_rate_per_method": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "trace_field_class|tamagawa_product": {
+      "kill_p": 0.9988272437500001,
+      "H_tag_given_pair_bits": 0.4217845552478034,
+      "P_tag_match": 0.8811110191197125,
+      "tag_dist": {
+        "c_l_q": 0.9378,
+        "c_q": 0.0365,
+        "c_l": 0.0157,
+        "l_q": 0.01
+      },
+      "skip_rate_per_method": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "trace_field_class|torsion": {
+      "kill_p": 0.999914572,
+      "H_tag_given_pair_bits": 0.197692019047295,
+      "P_tag_match": 0.9466649993787138,
+      "tag_dist": {
+        "c_l_q": 0.9727,
+        "c_q": 0.0239,
+        "c_l": 0.0029,
+        "l_q": 0.0005
+      },
+      "skip_rate_per_method": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "nf_class_number|rank": {
+      "kill_p": 1.0,
+      "H_tag_given_pair_bits": 0.02535311125165492,
+      "P_tag_match": 0.99497995146611,
+      "tag_dist": {
+        "c_l_q": 0.9975,
+        "c_q": 0.0025,
+        "c_l": 0.0,
+        "l_q": 0.0
+      },
+      "skip_rate_per_method": [
+        0.0065,
+        0.0,
+        0.0
+      ]
+    },
+    "nf_class_number|conductor": {
+      "kill_p": 1.0,
+      "H_tag_given_pair_bits": -0.0,
+      "P_tag_match": 1.0,
+      "tag_dist": {
+        "c_l_q": 1.0,
+        "c_q": 0.0,
+        "c_l": 0.0,
+        "l_q": 0.0
+      },
+      "skip_rate_per_method": [
+        0.005,
+        0.0,
+        0.0
+      ]
+    },
+    "nf_class_number|tamagawa_product": {
+      "kill_p": 1.0,
+      "H_tag_given_pair_bits": -0.0,
+      "P_tag_match": 1.0,
+      "tag_dist": {
+        "c_l_q": 1.0,
+        "c_q": 0.0,
+        "c_l": 0.0,
+        "l_q": 0.0
+      },
+      "skip_rate_per_method": [
+        0.0035,
+        0.0,
+        0.0
+      ]
+    },
+    "nf_class_number|torsion": {
+      "kill_p": 1.0,
+      "H_tag_given_pair_bits": -0.0,
+      "P_tag_match": 1.0,
+      "tag_dist": {
+        "c_l_q": 1.0,
+        "c_q": 0.0,
+        "c_l": 0.0,
+        "l_q": 0.0
+      },
+      "skip_rate_per_method": [
+        0.003,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "kill_p_range": [
+    0.9988272437500001,
+    1.0
+  ],
+  "empirical_mi": {
+    "n": 3000,
+    "I_pair_Y_bits": 0.03168413854757628,
+    "I_pair_Y_null95": 0.024934535246556564,
+    "I_tag_Y_bits": 0.0003373842092152658,
+    "I_tag_Y_null95": 0.002498468399651797,
+    "I_tag_Y_given_pair_bits": 0.00042137407806441357,
+    "I_tag_Y_given_pair_null95": 0.004367612750998781
+  },
+  "redesign": {
+    "S1_current(agr,pair,tag)": {
+      "I_label_Y_bits": 0.032105512625640716,
+      "I_label_Y_given_pair_bits": 0.00042137407806441357,
+      "I_label_Y_given_pair_null95": 0.004672030675951111,
+      "beyond_coordinate_signal": false,
+      "L2_heldout_acc": 0.9826666666666667,
+      "L2_flat_baseline_acc": 0.9826666666666667,
+      "L2_lift": 0.0
+    },
+    "S2_pair_only": {
+      "I_label_Y_bits": 0.03168413854757628,
+      "I_label_Y_given_pair_bits": 0.0,
+      "I_label_Y_given_pair_null95": 0.0,
+      "beyond_coordinate_signal": false,
+      "L2_heldout_acc": 0.9826666666666667,
+      "L2_flat_baseline_acc": 0.9826666666666667,
+      "L2_lift": 0.0
+    },
+    "S3_pair+meanR2band": {
+      "I_label_Y_bits": 0.033432882486551796,
+      "I_label_Y_given_pair_bits": 0.001748743938975499,
+      "I_label_Y_given_pair_null95": 0.008542410369082402,
+      "beyond_coordinate_signal": false,
+      "L2_heldout_acc": 0.9826666666666667,
+      "L2_flat_baseline_acc": 0.9826666666666667,
+      "L2_lift": 0.0
+    },
+    "S4_pair+maxR2band": {
+      "I_label_Y_bits": 0.039116973954316105,
+      "I_label_Y_given_pair_bits": 0.007432835406739796,
+      "I_label_Y_given_pair_null95": 0.014072842239139325,
+      "beyond_coordinate_signal": false,
+      "L2_heldout_acc": 0.9826666666666667,
+      "L2_flat_baseline_acc": 0.9826666666666667,
+      "L2_lift": 0.0
+    },
+    "S5_tag_only(d3_style)": {
+      "I_label_Y_bits": 0.0003373842092152658,
+      "I_label_Y_given_pair_bits": 0.00042137407806441357,
+      "I_label_Y_given_pair_null95": 0.004556923149995604,
+      "beyond_coordinate_signal": false,
+      "L2_heldout_acc": 0.9826666666666667,
+      "L2_flat_baseline_acc": 0.9826666666666667,
+      "L2_lift": 0.0
+    }
+  },
+  "production_bug": {
+    "kills_with_skipped_method": 1,
+    "fraction": 0.0003333333333333333,
+    "note": "all such kills carry a misattributed method_tag (index-shift defect, REJECTED branch)"
+  }
+}

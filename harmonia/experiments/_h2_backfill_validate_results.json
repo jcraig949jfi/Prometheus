@@ -1,0 +1,261 @@
+{
+  "registered_at": "2026-06-10",
+  "prereg": "h2_info_recovery_prereg.md",
+  "corpus_scan": {
+    "host_corpus_present": false,
+    "note": "theseus/corpus/ empty on this host; daemon paused since 2026-05-29 (BATCH_LOG Fire #234 LOOP PAUSED). production_emission_rate over the live corpus: N/A here; emission verified by driving the production class."
+  },
+  "schema_archaeology": {
+    "legacy_payload_identical": true,
+    "evidence": "git show 487b611f~1 \u2014 payload fields byte-identical to current; flat label withheld what payload retained",
+    "backfill_recoverable_fraction_by_schema": 1.0
+  },
+  "seeds": [
+    20260610,
+    20260611,
+    20260612
+  ],
+  "per_seed": {
+    "20260610": {
+      "emitted": 4000,
+      "kills": 4000,
+      "non_kills": 0,
+      "kill_rate": 1.0,
+      "structured_fraction": 1.0,
+      "concentration": {
+        "n_kills": 4000,
+        "full_label": {
+          "distinct": 51,
+          "top1": [
+            "h2_triangulated_unanimous_determinant_torsion_methods_c_l_q_rejected",
+            0.04625
+          ],
+          "H_bits": 4.693368234865902
+        },
+        "agreement": {
+          "distinct": 2,
+          "top1": [
+            "unanimous",
+            0.9855
+          ],
+          "H_bits": 0.10932982407438196
+        },
+        "pair": {
+          "distinct": 24,
+          "top1": [
+            "determinant_torsion",
+            0.04675
+          ],
+          "H_bits": 4.58233650635915
+        },
+        "tag": {
+          "distinct": 4,
+          "top1": [
+            "c_l_q",
+            0.985
+          ],
+          "H_bits": 0.12527100232949243,
+          "distribution": {
+            "c_l_q": 3940,
+            "c_q": 49,
+            "c_l": 7,
+            "l_q": 4
+          }
+        }
+      }
+    },
+    "20260611": {
+      "emitted": 4000,
+      "kills": 4000,
+      "non_kills": 0,
+      "kill_rate": 1.0,
+      "structured_fraction": 1.0,
+      "concentration": {
+        "n_kills": 4000,
+        "full_label": {
+          "distinct": 54,
+          "top1": [
+            "h2_triangulated_unanimous_trace_field_class_conductor_methods_c_l_q_rejected",
+            0.04675
+          ],
+          "H_bits": 4.703483674113532
+        },
+        "agreement": {
+          "distinct": 2,
+          "top1": [
+            "unanimous",
+            0.98375
+          ],
+          "H_bits": 0.11983279101194219
+        },
+        "pair": {
+          "distinct": 24,
+          "top1": [
+            "determinant_tamagawa_product",
+            0.04725
+          ],
+          "H_bits": 4.581988201175609
+        },
+        "tag": {
+          "distinct": 4,
+          "top1": [
+            "c_l_q",
+            0.98325
+          ],
+          "H_bits": 0.14062261238446688,
+          "distribution": {
+            "c_l_q": 3933,
+            "c_q": 50,
+            "c_l": 10,
+            "l_q": 7
+          }
+        }
+      }
+    },
+    "20260612": {
+      "emitted": 4000,
+      "kills": 4000,
+      "non_kills": 0,
+      "kill_rate": 1.0,
+      "structured_fraction": 1.0,
+      "concentration": {
+        "n_kills": 4000,
+        "full_label": {
+          "distinct": 55,
+          "top1": [
+            "h2_triangulated_unanimous_trace_field_class_conductor_methods_c_l_q_rejected",
+            0.045
+          ],
+          "H_bits": 4.701122309251236
+        },
+        "agreement": {
+          "distinct": 2,
+          "top1": [
+            "unanimous",
+            0.98525
+          ],
+          "H_bits": 0.1108483695496993
+        },
+        "pair": {
+          "distinct": 24,
+          "top1": [
+            "crossing_number_torsion",
+            0.04575
+          ],
+          "H_bits": 4.583031774897705
+        },
+        "tag": {
+          "distinct": 4,
+          "top1": [
+            "c_l_q",
+            0.9845
+          ],
+          "H_bits": 0.13485509659426337,
+          "distribution": {
+            "c_l_q": 3938,
+            "c_q": 41,
+            "l_q": 12,
+            "c_l": 9
+          }
+        }
+      }
+    }
+  },
+  "q5_backfill_parity": {
+    "n": 12000,
+    "match": 11993,
+    "match_rate": 0.9994166666666666,
+    "mismatches_sample": [
+      {
+        "prod": "h2_triangulated_unanimous_nf_class_number_tamagawa_product_methods_l_q_rejected",
+        "backfill": "h2_triangulated_unanimous_nf_class_number_tamagawa_product_methods_c_q_rejected"
+      },
+      {
+        "prod": "h2_triangulated_unanimous_nf_class_number_tamagawa_product_methods_l_q_rejected",
+        "backfill": "h2_triangulated_unanimous_nf_class_number_tamagawa_product_methods_c_q_rejected"
+      },
+      {
+        "prod": "h2_triangulated_unanimous_nf_class_number_tamagawa_product_methods_l_q_rejected",
+        "backfill": "h2_triangulated_unanimous_nf_class_number_tamagawa_product_methods_c_q_rejected"
+      },
+      {
+        "prod": "h2_triangulated_unanimous_nf_class_number_rank_methods_l_q_rejected",
+        "backfill": "h2_triangulated_unanimous_nf_class_number_rank_methods_c_q_rejected"
+      },
+      {
+        "prod": "h2_triangulated_unanimous_nf_class_number_rank_methods_l_q_rejected",
+        "backfill": "h2_triangulated_unanimous_nf_class_number_rank_methods_c_q_rejected"
+      },
+      {
+        "prod": "h2_triangulated_unanimous_nf_class_number_torsion_methods_l_q_rejected",
+        "backfill": "h2_triangulated_unanimous_nf_class_number_torsion_methods_c_q_rejected"
+      },
+      {
+        "prod": "h2_triangulated_unanimous_nf_class_number_conductor_methods_l_q_rejected",
+        "backfill": "h2_triangulated_unanimous_nf_class_number_conductor_methods_c_q_rejected"
+      }
+    ],
+    "PASS": false
+  },
+  "pooled_concentration": {
+    "n_kills": 12000,
+    "full_label": {
+      "distinct": 66,
+      "top1": [
+        "h2_triangulated_unanimous_determinant_tamagawa_product_methods_c_l_q_rejected",
+        0.044083333333333335
+      ],
+      "H_bits": 4.706714943479952
+    },
+    "agreement": {
+      "distinct": 2,
+      "top1": [
+        "unanimous",
+        0.9848333333333333
+      ],
+      "H_bits": 0.11336554040025014
+    },
+    "pair": {
+      "distinct": 24,
+      "top1": [
+        "determinant_tamagawa_product",
+        0.04491666666666667
+      ],
+      "H_bits": 4.583935572438691
+    },
+    "tag": {
+      "distinct": 4,
+      "top1": [
+        "c_l_q",
+        0.98425
+      ],
+      "H_bits": 0.13393740759188624,
+      "distribution": {
+        "c_l_q": 11811,
+        "c_q": 140,
+        "c_l": 26,
+        "l_q": 23
+      }
+    }
+  },
+  "q4_costume_check": {
+    "verdict": "COSTUME_OF:marginal_majority",
+    "headline": "COSTUME: claim is indistinguishable from 'marginal_majority' (100.0% agreement). This structure is a baseline wearing a hat.",
+    "z_vs_null": 0.0,
+    "per_baseline": {
+      "marginal_majority": {
+        "agreement": 1.0,
+        "ties": true
+      },
+      "volume_weighted": {
+        "agreement": 1.0,
+        "ties": true
+      },
+      "pair_aware": {
+        "agreement": 1.0,
+        "ties": true
+      }
+    },
+    "n_claim_keys": 24
+  }
+}
