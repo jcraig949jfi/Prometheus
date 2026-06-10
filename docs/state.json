@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "generated_at": "2026-06-02T12:19:47.799068+00:00",
+  "generated_at": "2026-06-10T12:15:09.831684+00:00",
   "redis_host": "192.168.1.176:6379",
   "heartbeat_timeout_sec": 300,
   "ideas_in_flight": [
@@ -19,7 +19,7 @@
     "redis_error": "Timeout connecting to server",
     "postgres": "up",
     "postgres_error": null,
-    "postgres_agent_count": 33,
+    "postgres_agent_count": 0,
     "fallback_mode": "postgres_dual_write",
     "note": "Redis is unreachable; agent data sourced from Postgres dual-write mirror (agora.agent_heartbeats). Streams (discoveries, main, challenges) are Redis-only and currently empty. Check docs/manual_status.json for out-of-band context."
   },
@@ -33,12 +33,12 @@
       "operator": null,
       "lifecycle": "shelved",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 789512,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-24T05:01:15.568994-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Hephaestus",
@@ -49,20 +49,12 @@
       "operator": null,
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 244495,
-      "current_op": "forging Gene Regulatory Networks + Causal Inference + Nash Equilibrium",
-      "last_status_update": "2026-05-28T01:38:15.244017-04:00",
-      "key_metrics": {
-        "ledger_size": 6657,
-        "forge_rate_pct": 0.6,
-        "session_forges": 3,
-        "session_scraps": 467,
-        "nous_queue_depth": 4,
-        "current_forge_version": "forge",
-        "api_timeouts_last_hour": 0
-      },
-      "data_source": "postgres_fallback"
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
+      "key_metrics": null,
+      "data_source": "no_data"
     },
     {
       "name": "Nemesis",
@@ -105,16 +97,12 @@
       "operator": null,
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "ALIVE",
-      "heartbeat_age_sec": 42,
-      "current_op": "idle (last cycle bcbb2c63 ok)",
-      "last_status_update": "2026-06-02T08:19:05.393930-04:00",
-      "key_metrics": {
-        "cycles_today": 18,
-        "last_cycle_ok": true,
-        "last_cycle_duration_sec": 266.81
-      },
-      "data_source": "postgres_fallback"
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
+      "key_metrics": null,
+      "data_source": "no_data"
     },
     {
       "name": "Aporia",
@@ -125,12 +113,12 @@
       "operator": null,
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 1289045,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-18T10:15:42.578880-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Techne",
@@ -157,12 +145,12 @@
       "operator": null,
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 587546,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-26T13:07:21.655030-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Harmonia",
@@ -205,12 +193,12 @@
       "operator": "Aporia",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 245917,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-30T12:01:10.112939-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Pythia",
@@ -221,60 +209,60 @@
       "operator": "Aporia",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 244505,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-30T12:24:42.200937-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Hypatia",
       "expected": true,
-      "machine": "SKULLPORT",
+      "machine": "M1",
       "kind": "tool",
       "role": "D-track curator (proof decomposition with R1-R5 ladder)",
       "operator": "Aporia",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 247154,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-30T11:40:33.613935-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Atalanta",
       "expected": true,
-      "machine": "SKULLPORT",
+      "machine": "M1",
       "kind": "tool",
       "role": "E-track primitive hunter (reads Apollo organisms)",
       "operator": "Aporia",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 245338,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-30T12:10:49.063103-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Polyhymnia",
       "expected": true,
-      "machine": "SKULLPORT",
+      "machine": "M1",
       "kind": "tool",
       "role": "Aporia-supervised tool (recent addition)",
       "operator": "Aporia",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 245812,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-30T12:02:55.446284-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Theseus",
@@ -285,12 +273,12 @@
       "operator": "Techne",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 267732,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-30T05:57:35.294940-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Penelope",
@@ -301,44 +289,44 @@
       "operator": "Ergon",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 561508,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-26T20:21:19.122826-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Pheme",
       "expected": true,
-      "machine": "SKULLPORT",
+      "machine": "M1",
       "kind": "tool",
       "role": "demand voicer \u2014 publishes per-pattern Learner-deficit profile",
       "operator": "Ergon",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 245339,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-30T12:10:48.713186-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Talos",
       "expected": true,
-      "machine": "SKULLPORT",
+      "machine": "M1",
       "kind": "tool",
       "role": "Ergon-supervised tool (recent addition)",
       "operator": "Ergon",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 246306,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-30T11:54:40.974677-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Harmonia_Loop",
@@ -349,12 +337,12 @@
       "operator": "Harmonia",
       "lifecycle": "shelved",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 789535,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-24T05:00:52.067590-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Argos",
@@ -365,12 +353,12 @@
       "operator": "Harmonia",
       "lifecycle": "shelved",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 790004,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-24T04:53:03.105014-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Iris",
@@ -381,12 +369,12 @@
       "operator": "Harmonia",
       "lifecycle": "shelved",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 790094,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-24T04:51:32.912336-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Phylax",
@@ -397,12 +385,12 @@
       "operator": "Harmonia",
       "lifecycle": "shelved",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 789627,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-24T04:59:19.856520-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Sophia",
@@ -413,12 +401,12 @@
       "operator": "Harmonia",
       "lifecycle": "shelved",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 789535,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-24T05:00:52.043882-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Telos",
@@ -429,12 +417,12 @@
       "operator": "Harmonia",
       "lifecycle": "shelved",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 789771,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-24T04:56:55.967806-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Charon_Loop",
@@ -445,12 +433,12 @@
       "operator": "Charon",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 244493,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-30T12:24:54.737152-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Stygian",
@@ -461,12 +449,12 @@
       "operator": "Charon",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 245783,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-30T12:03:24.259462-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Lethe",
@@ -477,12 +465,12 @@
       "operator": "Charon",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 245509,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-30T12:07:58.184229-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Acheron",
@@ -493,12 +481,12 @@
       "operator": "Charon",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 245269,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-30T12:11:58.427343-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Moros",
@@ -509,12 +497,12 @@
       "operator": "Charon",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 244974,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-30T12:16:53.429474-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Hecate",
@@ -525,12 +513,12 @@
       "operator": "Charon",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 244733,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-30T12:20:54.437905-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Nephele",
@@ -541,12 +529,12 @@
       "operator": "Charon",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 244493,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-30T12:24:54.613885-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Erebos",
@@ -557,12 +545,12 @@
       "operator": "Charon",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 246023,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-30T11:59:24.161566-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Pollux",
@@ -573,12 +561,12 @@
       "operator": "Charon",
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 246263,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-30T11:55:23.901164-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "Calliope",
@@ -589,12 +577,12 @@
       "operator": null,
       "lifecycle": "active",
       "invoke_on_demand": true,
-      "status": "DEAD",
-      "heartbeat_age_sec": 1238328,
-      "current_op": "(from postgres mirror)",
-      "last_status_update": "2026-05-19T00:20:59.542580-04:00",
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
       "key_metrics": null,
-      "data_source": "postgres_fallback"
+      "data_source": "no_data"
     },
     {
       "name": "HealthCheck-M1",
@@ -653,19 +641,12 @@
       "operator": null,
       "lifecycle": "active",
       "invoke_on_demand": false,
-      "status": "DEAD",
-      "heartbeat_age_sec": 246176,
-      "current_op": "machine=M4 cpu=4.2% mem=63.6% (20.25/31.86GB) disk=[C:\\ 17.5% (786.4GB free); E:\\ 11.5% (843.4GB free)] uptime=420h",
-      "last_status_update": "2026-05-30T11:56:50.911529-04:00",
-      "key_metrics": {
-        "cpu_pct": 4.2,
-        "mem_pct": 63.6,
-        "mem_free_gb": 11.61,
-        "uptime_hours": 420,
-        "disk_root_pct": 17.5,
-        "disk_root_free_gb": 786.4
-      },
-      "data_source": "postgres_fallback"
+      "status": "UNKNOWN",
+      "heartbeat_age_sec": null,
+      "current_op": "(no postgres heartbeat \u2014 see manual_status)",
+      "last_status_update": null,
+      "key_metrics": null,
+      "data_source": "no_data"
     },
     {
       "name": "Coeus",
@@ -730,215 +711,18 @@
       "last_status_update": null,
       "key_metrics": null,
       "data_source": "no_data"
-    },
-    {
-      "name": "HealthCheck-harry1",
-      "expected": false,
-      "machine": "harry1",
-      "kind": "healthcheck",
-      "role": "per-machine resource snapshot (harry1)",
-      "operator": null,
-      "status": "DEAD",
-      "heartbeat_age_sec": 797090,
-      "current_op": "",
-      "last_status_update": "2026-05-24T02:54:57.298952-04:00",
-      "key_metrics": null,
-      "data_source": "postgres_fallback"
-    },
-    {
-      "name": "Clio-test",
-      "expected": false,
-      "machine": "M1",
-      "kind": "tool",
-      "role": null,
-      "operator": "Aporia",
-      "status": "DEAD",
-      "heartbeat_age_sec": 1288820,
-      "current_op": "",
-      "last_status_update": "2026-05-18T10:19:27.458602-04:00",
-      "key_metrics": null,
-      "data_source": "postgres_fallback"
     }
   ],
   "discoveries": [],
   "main_events": [],
   "challenges": [],
   "work_queue": {},
-  "anomalies": [
-    {
-      "agent": "Apollo",
-      "kind": "dead",
-      "detail": "no heartbeat for 789512s (from postgres)"
-    },
-    {
-      "agent": "Hephaestus",
-      "kind": "dead",
-      "detail": "no heartbeat for 244495s (from postgres)"
-    },
-    {
-      "agent": "Aporia",
-      "kind": "dead",
-      "detail": "no heartbeat for 1289045s (from postgres)"
-    },
-    {
-      "agent": "Ergon",
-      "kind": "dead",
-      "detail": "no heartbeat for 587546s (from postgres)"
-    },
-    {
-      "agent": "Clio",
-      "kind": "dead",
-      "detail": "no heartbeat for 245917s (from postgres)"
-    },
-    {
-      "agent": "Pythia",
-      "kind": "dead",
-      "detail": "no heartbeat for 244505s (from postgres)"
-    },
-    {
-      "agent": "Hypatia",
-      "kind": "dead",
-      "detail": "no heartbeat for 247154s (from postgres)"
-    },
-    {
-      "agent": "Atalanta",
-      "kind": "dead",
-      "detail": "no heartbeat for 245338s (from postgres)"
-    },
-    {
-      "agent": "Polyhymnia",
-      "kind": "dead",
-      "detail": "no heartbeat for 245812s (from postgres)"
-    },
-    {
-      "agent": "Theseus",
-      "kind": "dead",
-      "detail": "no heartbeat for 267732s (from postgres)"
-    },
-    {
-      "agent": "Penelope",
-      "kind": "dead",
-      "detail": "no heartbeat for 561508s (from postgres)"
-    },
-    {
-      "agent": "Pheme",
-      "kind": "dead",
-      "detail": "no heartbeat for 245339s (from postgres)"
-    },
-    {
-      "agent": "Talos",
-      "kind": "dead",
-      "detail": "no heartbeat for 246306s (from postgres)"
-    },
-    {
-      "agent": "Harmonia_Loop",
-      "kind": "dead",
-      "detail": "no heartbeat for 789535s (from postgres)"
-    },
-    {
-      "agent": "Argos",
-      "kind": "dead",
-      "detail": "no heartbeat for 790004s (from postgres)"
-    },
-    {
-      "agent": "Iris",
-      "kind": "dead",
-      "detail": "no heartbeat for 790094s (from postgres)"
-    },
-    {
-      "agent": "Phylax",
-      "kind": "dead",
-      "detail": "no heartbeat for 789627s (from postgres)"
-    },
-    {
-      "agent": "Sophia",
-      "kind": "dead",
-      "detail": "no heartbeat for 789535s (from postgres)"
-    },
-    {
-      "agent": "Telos",
-      "kind": "dead",
-      "detail": "no heartbeat for 789771s (from postgres)"
-    },
-    {
-      "agent": "Charon_Loop",
-      "kind": "dead",
-      "detail": "no heartbeat for 244493s (from postgres)"
-    },
-    {
-      "agent": "Stygian",
-      "kind": "dead",
-      "detail": "no heartbeat for 245783s (from postgres)"
-    },
-    {
-      "agent": "Lethe",
-      "kind": "dead",
-      "detail": "no heartbeat for 245509s (from postgres)"
-    },
-    {
-      "agent": "Acheron",
-      "kind": "dead",
-      "detail": "no heartbeat for 245269s (from postgres)"
-    },
-    {
-      "agent": "Moros",
-      "kind": "dead",
-      "detail": "no heartbeat for 244974s (from postgres)"
-    },
-    {
-      "agent": "Hecate",
-      "kind": "dead",
-      "detail": "no heartbeat for 244733s (from postgres)"
-    },
-    {
-      "agent": "Nephele",
-      "kind": "dead",
-      "detail": "no heartbeat for 244493s (from postgres)"
-    },
-    {
-      "agent": "Erebos",
-      "kind": "dead",
-      "detail": "no heartbeat for 246023s (from postgres)"
-    },
-    {
-      "agent": "Pollux",
-      "kind": "dead",
-      "detail": "no heartbeat for 246263s (from postgres)"
-    },
-    {
-      "agent": "Calliope",
-      "kind": "dead",
-      "detail": "no heartbeat for 1238328s (from postgres)"
-    },
-    {
-      "agent": "HealthCheck-M4",
-      "kind": "dead",
-      "detail": "no heartbeat for 246176s (from postgres)"
-    }
-  ],
-  "intelligence_outputs": [
-    {
-      "cycle_id": "6f249eb1-4dd8-474b-aa3a-d717402cce22",
-      "stage": "pronoia_cycle_started",
-      "success": true,
-      "output_path": null,
-      "output_summary": "Pronoia hourly cycle (interval=240min)",
-      "error": null,
-      "started_at": "2026-05-27T09:13:06.426701-04:00",
-      "finished_at": "2026-06-02T08:19:16.398069-04:00",
-      "duration_sec": 515169.97
-    }
-  ],
+  "anomalies": [],
+  "intelligence_outputs": [],
   "deep_research": {
     "reports": [],
     "report_count_24h": 0,
     "dispatch_count_24h": 0,
-    "budget": {
-      "agent": "Pythia",
-      "used": 0,
-      "budget": "compute-based (AI_Pro, 5h window)",
-      "remaining": "unknown (compute-based; no quota event observed)",
-      "as_of": "2026-05-30T16:24:42.200937+00:00"
-    }
+    "budget": null
   }
 }

@@ -1,20 +1,20 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-06-02 12:19:55 PM UTC*
+*Generated: 2026-06-10 12:15:32 PM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
 
 ## Act on this
-* **Hephaestus Forge Down**: Hephaestus at M3 has been dead for 244495s, with no heartbeat received, and its forge rate is at 0.6%. To resolve this, restart the Hephaestus daemon on M3 and verify its Redis and Postgres dual-write instrumentation.
-* **Clio Paper Scanner Dead**: Clio at M1, supervised by Aporia, has been dead for 245917s, with no heartbeat received. To resolve this, restart the Clio tool on M1 and verify its connection to Aporia.
-* **Redis Unreachable**: Redis is currently unreachable, and the system is relying on the Postgres dual-write mirror for agent data. To resolve this, investigate and restore Redis connectivity to ensure full system functionality.
+* **Redis Unreachable**: Redis is currently unreachable, and the system is relying on the Postgres dual-write mirror for agent data, with no recent updates on its status. To resolve this, investigate and restore Redis connectivity to ensure full system functionality.
+* **Hephaestus Unknown Status**: Hephaestus at M3, an unsupervised forge generator, has an unknown status due to no Postgres heartbeat, with its last known operational status being "running" as of 2026-05-16. To resolve this, verify Hephaestus's status and ensure it is running correctly.
+* **Multiple Agents with Unknown Status**: Several agents, including Pronoia at M4, Clio at M1, Pythia at M1, and others, have unknown statuses due to no Postgres heartbeat, with no recent updates on their activity. To resolve this, investigate and verify the status of these agents to ensure they are running correctly.
 
 ## Watch this
-* **Pronoia Idle**: Pronoia at M4 is currently idle, with its last cycle completed 42s ago. Monitor its activity to ensure it remains operational and continues to contribute to the intelligence loop.
-* **Hephaestus Forge Rate**: Although Hephaestus is currently down, its forge rate context indicates that a low forge rate is expected due to the expanded battery of validation tests. Continue to monitor the forge rate to ensure it remains within the expected range.
-* **System Throughput**: With multiple agents currently dead or idle, system throughput may be impacted. Monitor the system's overall performance and adjust as necessary to maintain optimal functionality.
+* **System Throughput**: With Redis unreachable and multiple agents having unknown statuses, system throughput may be impacted. Monitor the system's overall performance and adjust as necessary to maintain optimal functionality.
+* **Pronoia Activity**: Pronoia at M4, a reporting orchestrator, has an unknown status, and its activity should be monitored to ensure it remains operational and continues to contribute to the intelligence loop.
+* **Forge Rate Context**: Although Hephaestus's forge rate context indicates a low forge rate is expected, it is essential to continue monitoring the forge rate to ensure it remains within the expected range, with a current forge rate of ~4% as of the last update.
 
 ## For the record
-* **No Recent Discoveries**: There have been no recent discoveries in the last 10 cycles.
-* **No Recent Main Stream**: There have been no recent main stream updates in the last 15 cycles.
+* **No Recent Discoveries**: There have been no recent discoveries in the last 10 cycles, with the last update on discoveries being empty.
 * **20 Agents Still Pending Deployment**: 20 agents are still pending deployment on M2, M3, and M4, which is a known part of the multi-machine bring-up phase.
+* **Hephaestus Forge Rate Context**: The current ~4% forge rate of Hephaestus is considered healthy substrate selection pressure, as indicated in its forge rate context, with no need for immediate action.
