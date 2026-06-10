@@ -1,0 +1,1858 @@
+{
+ "meta": {
+  "date": "2026-06-10",
+  "author": "Harmonia_M2_D",
+  "version": 2,
+  "selection_gaps": {
+   "conductor_window": [
+    39,
+    9990
+   ],
+   "has_5077": false,
+   "rank_support": [
+    0,
+    1,
+    2
+   ],
+   "note": "5077a1 (minimal rank-3) inside window but absent: catalog rank support is selection, not theorem"
+  },
+  "preregistered_prediction": [
+   "mod_3|log2_floor|crossing_number|torsion|abs_diff_le_3",
+   "mod_3|log2_floor|determinant|torsion|abs_diff_le_3",
+   "mod_3|log2_floor|nf_class_number|torsion|abs_diff_le_3",
+   "mod_3|log2_floor|signature|torsion|abs_diff_le_3",
+   "mod_3|log2_floor|three_genus|torsion|abs_diff_le_3",
+   "mod_3|log2_floor|trace_field_class|torsion|abs_diff_le_3"
+  ],
+  "note": "closure-based; v1 finite-table was too weak (missed rank-4/signature-16 breaks)"
+ },
+ "census": {
+  "SELECTION_ARTIFACT": 209,
+  "THEOREM_BACKED": 25,
+  "UNKNOWN_SEMANTICS": 16
+ },
+ "by_class": {
+  "T3_MARGINAL_FACT": {
+   "SELECTION_ARTIFACT": 37,
+   "THEOREM_BACKED": 4,
+   "UNKNOWN_SEMANTICS": 12
+  },
+  "T1_PIGEONHOLE": {
+   "THEOREM_BACKED": 20,
+   "UNKNOWN_SEMANTICS": 4
+  },
+  "T2_CONSTANT_SIDE": {
+   "SELECTION_ARTIFACT": 172,
+   "THEOREM_BACKED": 1
+  }
+ },
+ "prediction_check": {
+  "predicted_and_found": [
+   "mod_3|log2_floor|crossing_number|torsion|abs_diff_le_3",
+   "mod_3|log2_floor|determinant|torsion|abs_diff_le_3",
+   "mod_3|log2_floor|nf_class_number|torsion|abs_diff_le_3",
+   "mod_3|log2_floor|signature|torsion|abs_diff_le_3",
+   "mod_3|log2_floor|three_genus|torsion|abs_diff_le_3"
+  ],
+  "predicted_but_missing": [
+   "mod_3|log2_floor|trace_field_class|torsion|abs_diff_le_3"
+  ],
+  "found_but_unpredicted": []
+ },
+ "rows": [
+  {
+   "cell_id": "log2_floor|identity|crossing_number|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|abs|crossing_number|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|sq_mod_100|crossing_number|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|log2_floor|crossing_number|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|mod_3|crossing_number|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|mod_3|crossing_number|conductor|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|mod_3|crossing_number|tamagawa_product|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|log2_floor|crossing_number|torsion|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|mod_3|crossing_number|torsion|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|identity|crossing_number|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|abs|crossing_number|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|log2_floor|crossing_number|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|mod_3|crossing_number|rank|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=2, K=3",
+   "citations": [
+    "rank>=28 curves known (Elkies)"
+   ]
+  },
+  {
+   "cell_id": "mod_3|mod_3|crossing_number|conductor|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=2, K=3",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|mod_3|crossing_number|tamagawa_product|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=2, K=3",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|log2_floor|crossing_number|torsion|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=3, K=3",
+   "citations": [
+    "MAZUR: torsion order in {1..10,12}"
+   ]
+  },
+  {
+   "cell_id": "mod_3|mod_3|crossing_number|torsion|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=2, K=3",
+   "citations": [
+    "MAZUR: torsion order in {1..10,12}"
+   ]
+  },
+  {
+   "cell_id": "log2_floor|identity|signature|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|abs|signature|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|log2_floor|signature|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|mod_3|signature|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|mod_3|signature|conductor|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|mod_3|signature|tamagawa_product|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|log2_floor|signature|torsion|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|mod_3|signature|torsion|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|identity|signature|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|abs|signature|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|log2_floor|signature|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|mod_3|signature|rank|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=2, K=3",
+   "citations": [
+    "knot signature is even",
+    "rank>=28 curves known (Elkies)"
+   ]
+  },
+  {
+   "cell_id": "mod_3|mod_3|signature|conductor|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=2, K=3",
+   "citations": [
+    "knot signature is even"
+   ]
+  },
+  {
+   "cell_id": "mod_3|mod_3|signature|tamagawa_product|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=2, K=3",
+   "citations": [
+    "knot signature is even"
+   ]
+  },
+  {
+   "cell_id": "mod_3|log2_floor|signature|torsion|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=3, K=3",
+   "citations": [
+    "MAZUR: torsion order in {1..10,12}",
+    "knot signature is even"
+   ]
+  },
+  {
+   "cell_id": "mod_3|mod_3|signature|torsion|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=2, K=3",
+   "citations": [
+    "MAZUR: torsion order in {1..10,12}",
+    "knot signature is even"
+   ]
+  },
+  {
+   "cell_id": "mod_3|identity|determinant|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|abs|determinant|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|log2_floor|determinant|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|mod_3|determinant|rank|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=2, K=3",
+   "citations": [
+    "det(K)=|Delta_K(-1)| is odd",
+    "rank>=28 curves known (Elkies)"
+   ]
+  },
+  {
+   "cell_id": "mod_3|mod_3|determinant|conductor|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=2, K=3",
+   "citations": [
+    "det(K)=|Delta_K(-1)| is odd"
+   ]
+  },
+  {
+   "cell_id": "mod_3|mod_3|determinant|tamagawa_product|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=2, K=3",
+   "citations": [
+    "det(K)=|Delta_K(-1)| is odd"
+   ]
+  },
+  {
+   "cell_id": "mod_3|log2_floor|determinant|torsion|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=3, K=3",
+   "citations": [
+    "MAZUR: torsion order in {1..10,12}",
+    "det(K)=|Delta_K(-1)| is odd"
+   ]
+  },
+  {
+   "cell_id": "mod_3|mod_3|determinant|torsion|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=2, K=3",
+   "citations": [
+    "MAZUR: torsion order in {1..10,12}",
+    "det(K)=|Delta_K(-1)| is odd"
+   ]
+  },
+  {
+   "cell_id": "log2_floor|identity|three_genus|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|abs|three_genus|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|log2_floor|three_genus|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|mod_3|three_genus|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|mod_3|three_genus|conductor|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|mod_3|three_genus|tamagawa_product|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|log2_floor|three_genus|torsion|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|mod_3|three_genus|torsion|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|identity|three_genus|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|abs|three_genus|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|log2_floor|three_genus|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|mod_3|three_genus|rank|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=2, K=3",
+   "citations": [
+    "rank>=28 curves known (Elkies)"
+   ]
+  },
+  {
+   "cell_id": "mod_3|mod_3|three_genus|conductor|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=2, K=3",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|mod_3|three_genus|tamagawa_product|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=2, K=3",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|log2_floor|three_genus|torsion|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=3, K=3",
+   "citations": [
+    "MAZUR: torsion order in {1..10,12}"
+   ]
+  },
+  {
+   "cell_id": "mod_3|mod_3|three_genus|torsion|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=2, K=3",
+   "citations": [
+    "MAZUR: torsion order in {1..10,12}"
+   ]
+  },
+  {
+   "cell_id": "log2_floor|identity|trace_field_class|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "UNKNOWN_SEMANTICS",
+   "reason": "closure unknown (trace_field_class semantics)",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|abs|trace_field_class|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "UNKNOWN_SEMANTICS",
+   "reason": "closure unknown (trace_field_class semantics)",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|log2_floor|trace_field_class|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "UNKNOWN_SEMANTICS",
+   "reason": "closure unknown (trace_field_class semantics)",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|mod_3|trace_field_class|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "UNKNOWN_SEMANTICS",
+   "reason": "closure unknown (trace_field_class semantics)",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|mod_3|trace_field_class|conductor|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "UNKNOWN_SEMANTICS",
+   "reason": "closure unknown (trace_field_class semantics)",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|mod_3|trace_field_class|tamagawa_product|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "UNKNOWN_SEMANTICS",
+   "reason": "closure unknown (trace_field_class semantics)",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|log2_floor|trace_field_class|torsion|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "UNKNOWN_SEMANTICS",
+   "reason": "closure unknown (trace_field_class semantics)",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|mod_3|trace_field_class|torsion|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "UNKNOWN_SEMANTICS",
+   "reason": "closure unknown (trace_field_class semantics)",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|identity|trace_field_class|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "UNKNOWN_SEMANTICS",
+   "reason": "closure unknown (trace_field_class semantics)",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|abs|trace_field_class|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "UNKNOWN_SEMANTICS",
+   "reason": "closure unknown (trace_field_class semantics)",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|log2_floor|trace_field_class|rank|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "UNKNOWN_SEMANTICS",
+   "reason": "closure unknown (trace_field_class semantics)",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|mod_3|trace_field_class|rank|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "UNKNOWN_SEMANTICS",
+   "reason": "closure unknown (trace_field_class semantics)",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|mod_3|trace_field_class|conductor|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "UNKNOWN_SEMANTICS",
+   "reason": "closure unknown (trace_field_class semantics)",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|mod_3|trace_field_class|tamagawa_product|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "UNKNOWN_SEMANTICS",
+   "reason": "closure unknown (trace_field_class semantics)",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|log2_floor|trace_field_class|torsion|abs_diff_le_3",
+   "triviality_class": "T3_MARGINAL_FACT",
+   "closure_verdict": "UNKNOWN_SEMANTICS",
+   "reason": "closure unknown (trace_field_class semantics)",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|mod_3|trace_field_class|torsion|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "UNKNOWN_SEMANTICS",
+   "reason": "closure unknown (trace_field_class semantics)",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|identity|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|identity|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|abs|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|abs|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|neg|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|neg|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|sq_mod_100|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|sq_mod_100|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|log2_floor|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|log2_floor|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|mod_3|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|mod_3|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|identity|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|abs|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|neg|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|sq_mod_100|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|log2_floor|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|mod_3|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|mod_3|nf_class_number|conductor|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|identity|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|abs|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|neg|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|sq_mod_100|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|log2_floor|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|mod_3|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|mod_3|nf_class_number|tamagawa_product|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|identity|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|abs|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|neg|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|sq_mod_100|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|log2_floor|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|log2_floor|nf_class_number|torsion|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|mod_3|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "identity|mod_3|nf_class_number|torsion|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|identity|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|identity|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|abs|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|abs|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|neg|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|neg|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|sq_mod_100|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|sq_mod_100|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|log2_floor|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|log2_floor|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|mod_3|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|mod_3|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|identity|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|abs|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|neg|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|sq_mod_100|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|log2_floor|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|mod_3|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|mod_3|nf_class_number|conductor|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|identity|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|abs|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|neg|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|sq_mod_100|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|log2_floor|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|mod_3|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|mod_3|nf_class_number|tamagawa_product|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|identity|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|abs|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|neg|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|sq_mod_100|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|log2_floor|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|log2_floor|nf_class_number|torsion|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|mod_3|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "abs|mod_3|nf_class_number|torsion|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|identity|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|identity|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|abs|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|abs|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|neg|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|neg|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|sq_mod_100|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|log2_floor|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|log2_floor|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|mod_3|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|mod_3|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|identity|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|abs|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|neg|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|sq_mod_100|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|log2_floor|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|mod_3|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|mod_3|nf_class_number|conductor|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|identity|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|abs|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|neg|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|sq_mod_100|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|log2_floor|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|mod_3|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|mod_3|nf_class_number|tamagawa_product|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|identity|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|abs|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|neg|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|sq_mod_100|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|log2_floor|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|mod_3|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "A unbounded cannot uniformly divide finite B",
+   "citations": []
+  },
+  {
+   "cell_id": "neg|mod_3|nf_class_number|torsion|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|identity|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|identity|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|abs|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|abs|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|neg|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|neg|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|sq_mod_100|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|sq_mod_100|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "interval check: max(A)-min(B)=96, max(B)-min(A)=96, K=3",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|log2_floor|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|log2_floor|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|mod_3|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|mod_3|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "interval check: max(A)-min(B)=96, max(B)-min(A)=2, K=3",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|identity|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|abs|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|neg|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|sq_mod_100|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|log2_floor|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|mod_3|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|mod_3|nf_class_number|conductor|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "interval check: max(A)-min(B)=96, max(B)-min(A)=2, K=3",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|identity|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|abs|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|neg|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|sq_mod_100|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|log2_floor|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|mod_3|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|mod_3|nf_class_number|tamagawa_product|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "interval check: max(A)-min(B)=96, max(B)-min(A)=2, K=3",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|identity|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|abs|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|neg|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|sq_mod_100|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|log2_floor|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|log2_floor|nf_class_number|torsion|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "interval check: max(A)-min(B)=96, max(B)-min(A)=3, K=3",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|mod_3|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "sq_mod_100|mod_3|nf_class_number|torsion|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "interval check: max(A)-min(B)=96, max(B)-min(A)=2, K=3",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|identity|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|abs|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|neg|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|log2_floor|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|mod_3|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|mod_3|nf_class_number|conductor|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|mod_3|nf_class_number|tamagawa_product|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|log2_floor|nf_class_number|torsion|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "log2_floor|mod_3|nf_class_number|torsion|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|identity|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|identity|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|abs|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|abs|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|neg|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|neg|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|sq_mod_100|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|sq_mod_100|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=96, K=3",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|log2_floor|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|log2_floor|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "an unbounded side breaks any interval relation",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|mod_3|nf_class_number|rank|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|mod_3|nf_class_number|rank|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=2, K=3",
+   "citations": [
+    "rank>=28 curves known (Elkies)"
+   ]
+  },
+  {
+   "cell_id": "mod_3|identity|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|abs|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|neg|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|sq_mod_100|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|log2_floor|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|mod_3|nf_class_number|conductor|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|mod_3|nf_class_number|conductor|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=2, K=3",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|identity|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|abs|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|neg|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|sq_mod_100|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|log2_floor|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "B unbounded and A not subset of {\u00b11}",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|mod_3|nf_class_number|tamagawa_product|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|mod_3|nf_class_number|tamagawa_product|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=2, K=3",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|identity|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|abs|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|neg|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|sq_mod_100|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|log2_floor|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|log2_floor|nf_class_number|torsion|abs_diff_le_3",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=3, K=3",
+   "citations": [
+    "MAZUR: torsion order in {1..10,12}"
+   ]
+  },
+  {
+   "cell_id": "mod_3|mod_3|nf_class_number|torsion|divides",
+   "triviality_class": "T2_CONSTANT_SIDE",
+   "closure_verdict": "SELECTION_ARTIFACT",
+   "reason": "finite x finite direct check",
+   "citations": []
+  },
+  {
+   "cell_id": "mod_3|mod_3|nf_class_number|torsion|abs_diff_le_3",
+   "triviality_class": "T1_PIGEONHOLE",
+   "closure_verdict": "THEOREM_BACKED",
+   "reason": "interval check: max(A)-min(B)=2, max(B)-min(A)=2, K=3",
+   "citations": [
+    "MAZUR: torsion order in {1..10,12}"
+   ]
+  }
+ ]
+}
