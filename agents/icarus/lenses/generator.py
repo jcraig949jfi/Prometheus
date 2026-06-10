@@ -300,15 +300,31 @@ def _failure_direction_block(ctx) -> str:
     schema = getattr(ctx, "tier_probe_schema", None)
     if schema and not schema.get("error"):
         fields = schema.get("data_fields", {})
+
+        def _vals(v):
+            # Show all DISTINCT values seen across versions (enum fields differ
+            # by version); fall back to the legacy single 'sample' key.
+            samples = v.get("samples") or ([v["sample"]] if "sample" in v else [])
+            return ", ".join(samples) if samples else "?"
+
         field_lines = "\n".join(
-            f"    probe.data['{k}']  -> {v['type']}  e.g. {v['sample']}"
+            f"    probe.data['{k}']  -> {v['type']}  values seen: {_vals(v)}"
             for k, v in fields.items()
+        )
+        trace_keys = schema.get("grader_trace_keys", [])
+        trace_line = (
+            f"The grader reads these trace keys for this tier -- you MUST set "
+            f"each in the trace dict you return (e.g. trace['{trace_keys[0]}'] "
+            f"= ...): {trace_keys}\n" if trace_keys else ""
         )
         parts.append(
             f"## Probe schema for {schema.get('tier')} (kind='{schema.get('kind')}') "
             f"-- READ THESE EXACT INPUT FIELDS\n"
             f"probe.version in {schema.get('versions')}\n"
             f"{field_lines}\n"
+            f"NOTE: a field's 'values seen' lists every value across versions -- "
+            f"handle ALL of them (do not assume only the first applies).\n"
+            f"{trace_line}"
             f"(For the required OUTPUT/answer format, follow the Tier challenge "
             f"description above -- do NOT read probe.ground_truth.)\n"
         )

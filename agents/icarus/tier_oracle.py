@@ -74,23 +74,50 @@ def generate_probes(tier: str, seed: int, n_per: Optional[int] = None) -> list:
     return _GENERATORS[tier](rng)
 
 
+# Trace-dict keys the grader (reasoning_phase0.grade) reads per tier. The
+# reasoner must SET these in its returned trace, not just produce the right
+# answer -- a correct boolean with an unset trace key still loses the feature.
+# Surfacing them prevents the silent "right answer, missing trace" failure.
+TIER_TRACE_KEYS = {
+    "R2": ["domain_constraints_detected", "invalid_operations_attempted",
+           "rejected_extraneous"],
+    "R3": ["domain_constraints_detected", "invalid_operations_attempted"],
+    "R5": ["invariant_named"],
+    "R6": ["searched_counterexample", "found_counterexample", "overgeneralized"],
+}
+
+
 def probe_schema(tier: str, seed: int = 20260529) -> dict:
     """Return the probe.data schema for a tier so the Generator knows which
     fields to read. Different tiers carry different keys (R0/R1 use 'expr';
     R2 uses 'a','b','eq'; R3 uses 'num','den','rhs','excluded'; etc.). Failing
     to read the right key is a silent KeyError -- surfacing the schema makes
-    the failure emit direction (and prevents the schema-guess entirely)."""
+    the failure emit direction (and prevents the schema-guess entirely).
+
+    Aggregates DISTINCT sample values across all four versions (clean / iso /
+    adversarial / transfer), not just the clean probe -- enum-valued fields
+    differ by version (e.g. R5 'invariant' is color_parity on clean but
+    area_parity / none on others). Showing only the clean sample is what let
+    cycle 16 return None for the 'none' case. Also surfaces the grader's
+    trace-key contract for the tier."""
     try:
         probes = generate_probes(tier, seed, n_per=1)
     except Exception as e:
         return {"tier": tier, "error": str(e)}
     if not probes:
         return {"tier": tier, "error": "no_probes"}
-    p = probes[0]
-    fields = {}
-    for k, v in p.data.items():
-        rep = repr(v)
-        fields[k] = {"type": type(v).__name__, "sample": rep[:80]}
+    # Aggregate distinct values per field across every version-probe.
+    fields: dict = {}
+    versions: list = []
+    for p in probes:
+        if p.version not in versions:
+            versions.append(p.version)
+        for k, v in p.data.items():
+            rep = repr(v)[:80]
+            entry = fields.setdefault(
+                k, {"type": type(v).__name__, "samples": []})
+            if rep not in entry["samples"]:
+                entry["samples"].append(rep)
     # We surface the INPUT structure only. We deliberately do NOT expose
     # probe.ground_truth: (1) it is a cheat-vector (the Generator must derive
     # the answer, not mimic it), and (2) for some tiers the ground_truth field
@@ -101,9 +128,10 @@ def probe_schema(tier: str, seed: int = 20260529) -> dict:
     # which is the legitimate place for it.
     return {
         "tier": tier,
-        "kind": p.kind,
-        "versions": ["clean", "iso", "adversarial", "transfer"],
+        "kind": probes[0].kind,
+        "versions": versions,
         "data_fields": fields,
+        "grader_trace_keys": TIER_TRACE_KEYS.get(tier, []),
     }
 
 

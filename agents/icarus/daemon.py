@@ -504,8 +504,14 @@ _HARMONIA_TIERS = {
     "R3": "Multi-step composition. probe.kind=rational, (x^2-r^2)/(x-r)=x+r: cancel "
           "but EXCLUDE the singular value x=r. Return 'all_x_except_excluded'. Kill: "
           "excluded_value_missed.",
-    "R5": "Invariant detection. probe.kind=invariant, board tiling: decide tileable "
-          "via color/area parity. [open frontier -- no reference reasoner passes]",
+    "R5": "Invariant detection. probe.kind=invariant, board tiling. RETURN A BOOLEAN: "
+          "True if the board CAN be domino-tiled, False if it cannot. A domino covers "
+          "one black + one white cell on the checkerboard, so derive tileability from "
+          "the invariant: invariant='color_parity' -> tileable iff blacks==whites; "
+          "'area_parity' -> tileable iff the remaining cell count is even; 'none' -> "
+          "apply the general necessary condition (even count AND blacks==whites). Do NOT "
+          "return the invariant name as the answer -- put the invariant you used in "
+          "trace['invariant_named']. Kill: wrong_or_missing_invariant.",
     "R6": "Counterexample search. probe.kind=conjecture: search a structured range "
           "for counterexamples; do not overgeneralize from small examples (n^2+n+41 "
           "trap). Kill: overgeneralized_from_examples.",
