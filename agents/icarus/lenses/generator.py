@@ -147,9 +147,9 @@ class GeneratorLens(Lens):
         # returns one.
         full_files = {}
         if parsed.get("reasoner_py"):
-            full_files["reasoner.py"] = parsed["reasoner_py"]
+            full_files["reasoner.py"] = _maybe_unescape_fullfile(parsed["reasoner_py"])
         if parsed.get("strategy_py"):
-            full_files["strategy.py"] = parsed["strategy_py"]
+            full_files["strategy.py"] = _maybe_unescape_fullfile(parsed["strategy_py"])
         diff = parsed.get("diff", "")
         rationale = parsed.get("rationale", "")
         axes = {a: clamp_axis(parsed.get("axes", {}).get(a, 0.5))
@@ -174,6 +174,30 @@ class GeneratorLens(Lens):
             tokens_used=result.get("tokens_used", 0),
             cost_estimate_usd=result.get("cost_estimate_usd", 0.0),
         )
+
+
+def _maybe_unescape_fullfile(content: str) -> str:
+    """Recover a full-file payload the model emitted with escaped newlines.
+
+    When asked to return a complete file "as one string" in JSON, models
+    sometimes escape the newlines (``\\n``) but leave quotes real, so after
+    ``json.loads`` the value is a single physical line full of literal ``\\n``
+    (observed cycle 14: 286 literal ``\\n``, 0 real newlines, sonnet). A real
+    multi-line source file always has real newlines, so *zero real newlines
+    plus a literal* ``\\n`` is an unambiguous escape-encoded signal. Decode it,
+    but only accept the result if it parses as valid Python -- otherwise leave
+    the content untouched so the existing downstream syntax-error park still
+    fires rather than masking a genuinely broken proposal.
+    """
+    if not content or "\n" in content or "\\n" not in content:
+        return content
+    try:
+        decoded = content.encode("utf-8", "backslashreplace").decode("unicode_escape")
+        import ast
+        ast.parse(decoded)
+    except (UnicodeDecodeError, SyntaxError, ValueError):
+        return content
+    return decoded
 
 
 def _read_source(source_dir, max_chars: int = 30000) -> str:

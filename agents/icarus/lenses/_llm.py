@@ -9,14 +9,41 @@ FIXED infrastructure -- Icarus does NOT modify this module.
 from __future__ import annotations
 
 import json
+import os
 import re
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 from typing import Optional
 
 _REPO_ROOT = Path(r"D:\Prometheus")
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
+
+
+# --- Inference backend selection -------------------------------------------
+# "api"  -> metered Anthropic API (anthropic SDK, burns credits to a hard cap)
+# "loop" -> Claude Code subscription via the `claude -p` headless CLI
+#           (rolling 5h / 7d limits, far more forgiving; James 2026-06-09).
+# Default stays "api" so nothing changes unless the env var opts in.
+#
+# IMPORTANT: loop inference is *agentic* (a nested headless Claude Code
+# session). That is correct for Icarus lenses (Generator/Diagnostician/
+# Integrator are agentic by design). Do NOT route raw-model-behavior
+# measurement (legality over-refusal, zoo anchors) through this path -- a
+# nested session can use tools to solve the probe, changing the construct.
+def _use_loop() -> bool:
+    return os.environ.get("ICARUS_LLM_BACKEND", "api").strip().lower() == "loop"
+
+
+# Tools disabled for the nested session so a lens call is a pure generation
+# (no file reads / code execution leaking into the "model" response).
+_CLI_DISALLOWED_TOOLS = (
+    "Bash,Edit,Write,Read,Glob,Grep,Agent,WebFetch,WebSearch,"
+    "NotebookEdit,TodoWrite,Task"
+)
+_CLI_TIMEOUT_S = int(os.environ.get("ICARUS_LLM_CLI_TIMEOUT", "180"))
 
 
 def call_llm(
@@ -68,11 +95,88 @@ def _fallback_chain(preference: str) -> list[str]:
 
 
 def _call_claude_sonnet(system: str, user: str, max_tokens: int) -> dict:
-    return _call_claude(system, user, max_tokens, model="claude-sonnet-4-6")
+    return _dispatch_claude(system, user, max_tokens, model="claude-sonnet-4-6")
 
 
 def _call_claude_haiku(system: str, user: str, max_tokens: int) -> dict:
-    return _call_claude(system, user, max_tokens, model="claude-haiku-4-5-20251001")
+    return _dispatch_claude(system, user, max_tokens, model="claude-haiku-4-5-20251001")
+
+
+def _dispatch_claude(system: str, user: str, max_tokens: int, model: str) -> dict:
+    """Route a Claude call to the loop (subscription CLI) or API backend."""
+    if _use_loop():
+        return _call_claude_cli(system, user, max_tokens, model)
+    return _call_claude(system, user, max_tokens, model)
+
+
+def _call_claude_cli(system: str, user: str, max_tokens: int, model: str) -> dict:
+    """Subscription-backed inference via the `claude -p` headless CLI.
+
+    Returns the same dict shape as `_call_claude`. Cost is reported as the
+    subscription-equivalent USD (not API credits). System prompt goes via a
+    temp file and the user prompt via stdin so long source bodies don't hit
+    Windows command-length limits.
+    """
+    sys_path = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            "w", suffix=".txt", delete=False, encoding="utf-8"
+        ) as f:
+            f.write(system or "")
+            sys_path = f.name
+        cmd = [
+            "claude", "-p",
+            "--model", model,
+            "--output-format", "json",
+            "--system-prompt-file", sys_path,
+            "--exclude-dynamic-system-prompt-sections",
+            "--disallowed-tools", _CLI_DISALLOWED_TOOLS,
+        ]
+        proc = subprocess.run(
+            cmd, input=user, capture_output=True, text=True,
+            encoding="utf-8", timeout=_CLI_TIMEOUT_S, shell=False,
+        )
+        if proc.returncode != 0:
+            return {
+                "text": "", "model_used": f"{model}:loop",
+                "tokens_used": 0, "cost_estimate_usd": 0.0,
+                "error": f"cli_exit_{proc.returncode}: {proc.stderr[:300]}",
+            }
+        env = json.loads(proc.stdout)
+        if env.get("is_error"):
+            return {
+                "text": "", "model_used": f"{model}:loop",
+                "tokens_used": 0, "cost_estimate_usd": 0.0,
+                "error": f"cli_is_error: {str(env.get('result'))[:300]}",
+            }
+        text = env.get("result", "") or ""
+        usage = env.get("usage", {}) or {}
+        in_tok = usage.get("input_tokens", 0) or 0
+        out_tok = usage.get("output_tokens", 0) or 0
+        return {
+            "text": text, "model_used": f"{model}:loop",
+            "tokens_used": in_tok + out_tok,
+            "cost_estimate_usd": float(env.get("total_cost_usd", 0.0) or 0.0),
+            "error": None,
+        }
+    except subprocess.TimeoutExpired:
+        return {
+            "text": "", "model_used": f"{model}:loop",
+            "tokens_used": 0, "cost_estimate_usd": 0.0,
+            "error": f"cli_timeout_{_CLI_TIMEOUT_S}s",
+        }
+    except Exception as e:
+        return {
+            "text": "", "model_used": f"{model}:loop",
+            "tokens_used": 0, "cost_estimate_usd": 0.0,
+            "error": f"cli_{type(e).__name__}: {e}",
+        }
+    finally:
+        if sys_path:
+            try:
+                os.unlink(sys_path)
+            except OSError:
+                pass
 
 
 def _call_claude(system: str, user: str, max_tokens: int, model: str) -> dict:

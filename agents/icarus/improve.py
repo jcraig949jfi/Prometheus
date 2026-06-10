@@ -210,12 +210,32 @@ def _call_claude(
     wisdom: str,
     model: Optional[str] = None,
 ) -> Optional[dict]:
-    client = _get_anthropic_client()
-    if client is None:
-        return None
     model = model or DEFAULT_CLAUDE_MODEL
     system, user = _build_claude_prompt(source_dir, tier_challenge,
                                          failure_context, wisdom)
+
+    # Loop backend: route through the Claude Code subscription CLI instead of
+    # the metered API (James 2026-06-09). Reuses _llm.py's CLI caller.
+    from agents.icarus.lenses._llm import _use_loop, _call_claude_cli
+    if _use_loop():
+        r = _call_claude_cli(system, user, 4000, model)
+        if r.get("error"):
+            print(f"[improve] loop CLI call failed: {r['error']}", file=sys.stderr)
+            return None
+        tokens_used = r.get("tokens_used", 0)
+        _claude_token_record(tokens_used)
+        diff, rationale = _parse_claude_response(r.get("text", ""))
+        return {
+            "diff": diff,
+            "rationale": rationale,
+            "tokens_used": tokens_used,
+            "cost_estimate_usd": r.get("cost_estimate_usd", 0.0),
+            "model_used": f"{model}:loop",
+        }
+
+    client = _get_anthropic_client()
+    if client is None:
+        return None
     try:
         # Use prompt caching for the system + wisdom (which doesn't change
         # per cycle). The newer Anthropic SDK supports cache_control.
