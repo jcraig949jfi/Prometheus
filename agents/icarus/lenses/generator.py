@@ -9,6 +9,7 @@ Model preference: Claude Sonnet (best at code-diff generation in our toolbox).
 from __future__ import annotations
 
 import json
+import re
 from datetime import datetime, timezone
 
 from lenses._base import Lens, LensReport, CycleContext, SCORING_AXES
@@ -58,10 +59,12 @@ GENERATOR_SYSTEM = (
     "You will be given upstream lens reports (Diagnostician, Historian) + the "
     "kill_patterns from the last attempt + the FULL current reasoner source. "
     "Target the gap; avoid recurring failure modes.\n\n"
-    "OUTPUT (strict JSON, no prose around it):\n"
+    "OUTPUT FORMAT -- follow EXACTLY. Do NOT put file contents inside JSON "
+    "(embedding a large file as a JSON string corrupts under escaping). Emit a "
+    "small metadata block, then the COMPLETE file(s) as RAW text between "
+    "sentinels -- real newlines, real quotes, NO code fences, NO escaping.\n\n"
+    "===METADATA===\n"
     "{\n"
-    '  "reasoner_py": "<COMPLETE new contents of reasoner.py as one string>",\n'
-    '  "strategy_py": "<optional: complete new strategy.py, or omit/null>",\n'
     '  "rationale": "<2-4 sentences explaining the change>",\n'
     '  "axes": {\n'
     '    "tier_proximity": <0.0-1.0>,\n'
@@ -73,6 +76,15 @@ GENERATOR_SYSTEM = (
     '  "confidence": <0.0-1.0>,\n'
     '  "key_observations": [<2-4 short strings>]\n'
     "}\n"
+    "===END METADATA===\n\n"
+    "===FILE reasoner.py===\n"
+    "<complete raw contents of the new reasoner.py exactly as it should appear "
+    "on disk>\n"
+    "===END FILE===\n\n"
+    "Optionally, only if you change it:\n"
+    "===FILE strategy.py===\n"
+    "<complete raw contents>\n"
+    "===END FILE===\n"
 )
 
 
@@ -135,27 +147,26 @@ class GeneratorLens(Lens):
             max_tokens=6000,  # full-file output needs more room than a diff
         )
         text = result.get("text", "")
-        parsed = extract_json_block(text)
-        if not parsed:
+        full_files, meta = _parse_generator_output(text)
+        if not full_files and meta is None:
+            # Preserve the raw response so the failure is diagnosable instead
+            # of silently discarded (cycle 15 lost its raw output this way).
             return LensReport.empty_with_error(
                 lens_name=self.name, cycle_n=ctx.cycle_n,
-                error="generator_response_not_json",
+                error="generator_response_unparseable",
                 model_used=result.get("model_used", "unknown"),
+                raw_excerpt=(text or "")[:1200],
             )
 
-        # Full-file edit mode (primary). Fall back to diff if a model still
-        # returns one.
-        full_files = {}
-        if parsed.get("reasoner_py"):
-            full_files["reasoner.py"] = _maybe_unescape_fullfile(parsed["reasoner_py"])
-        if parsed.get("strategy_py"):
-            full_files["strategy.py"] = _maybe_unescape_fullfile(parsed["strategy_py"])
-        diff = parsed.get("diff", "")
-        rationale = parsed.get("rationale", "")
-        axes = {a: clamp_axis(parsed.get("axes", {}).get(a, 0.5))
+        # A proposal with files but malformed metadata is still applyable and
+        # TDD-gradable -- proceed with neutral axes rather than parking.
+        meta = meta or {}
+        diff = meta.get("diff", "")
+        rationale = meta.get("rationale", "")
+        axes = {a: clamp_axis(meta.get("axes", {}).get(a, 0.5))
                 for a in SCORING_AXES}
-        confidence = clamp_axis(parsed.get("confidence", 0.5))
-        observations = parsed.get("key_observations", []) or []
+        confidence = clamp_axis(meta.get("confidence", 0.5))
+        observations = meta.get("key_observations", []) or []
         if not isinstance(observations, list):
             observations = [str(observations)]
 
@@ -198,6 +209,64 @@ def _maybe_unescape_fullfile(content: str) -> str:
     except (UnicodeDecodeError, SyntaxError, ValueError):
         return content
     return decoded
+
+
+_FILE_BLOCK_RE = re.compile(
+    r"===FILE\s+(?P<name>\S+?)\s*===\r?\n(?P<body>.*?)\r?\n===END FILE===",
+    re.DOTALL,
+)
+_META_BLOCK_RE = re.compile(
+    r"===METADATA===\s*(?P<meta>.*?)\s*===END METADATA===", re.DOTALL
+)
+_ALLOWED_FILES = {"reasoner.py", "strategy.py"}
+
+
+def _strip_code_fence(body: str) -> str:
+    """Remove a ```lang ... ``` wrapper if the model added one despite the
+    'no fences' instruction."""
+    s = body.strip()
+    if s.startswith("```"):
+        s = s.split("\n", 1)[1] if "\n" in s else ""
+        if s.rstrip().endswith("```"):
+            s = s.rstrip()[:-3]
+    return s.strip("\n") if s != body else body
+
+
+def _parse_generator_output(text: str):
+    """Parse the Generator's response into (full_files, meta).
+
+    Primary format: sentinel-delimited raw file blocks + a ===METADATA=== JSON
+    block (robust -- file bodies need no escaping). Falls back to the legacy
+    ``reasoner_py``-as-JSON-string format (with escape recovery) so older model
+    behaviour still works. Returns ({}, None) only when nothing is parseable.
+    """
+    text = text or ""
+    full_files: dict[str, str] = {}
+    for m in _FILE_BLOCK_RE.finditer(text):
+        name = m.group("name").strip().strip("`\"'")
+        if name not in _ALLOWED_FILES:
+            continue
+        body = _maybe_unescape_fullfile(_strip_code_fence(m.group("body")))
+        if body.strip():
+            full_files[name] = body
+
+    meta = None
+    mm = _META_BLOCK_RE.search(text)
+    if mm:
+        meta = extract_json_block(mm.group("meta"))
+
+    # Legacy fallback: whole response is a JSON object with code-in-string.
+    if not full_files:
+        parsed = extract_json_block(text)
+        if parsed:
+            if parsed.get("reasoner_py"):
+                full_files["reasoner.py"] = _maybe_unescape_fullfile(parsed["reasoner_py"])
+            if parsed.get("strategy_py"):
+                full_files["strategy.py"] = _maybe_unescape_fullfile(parsed["strategy_py"])
+            if meta is None:
+                meta = parsed
+
+    return full_files, meta
 
 
 def _read_source(source_dir, max_chars: int = 30000) -> str:

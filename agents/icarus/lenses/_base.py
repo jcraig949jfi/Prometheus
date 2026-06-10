@@ -67,9 +67,12 @@ class LensReport:
 
     @classmethod
     def empty_with_error(cls, lens_name: str, cycle_n: int, error: str,
-                          model_used: str = "unknown") -> "LensReport":
+                          model_used: str = "unknown",
+                          raw_excerpt: Optional[str] = None) -> "LensReport":
         """Construct an error report. Returned when a lens fails -- the
-        Integrator still gets a typed object to integrate."""
+        Integrator still gets a typed object to integrate. `raw_excerpt`
+        preserves the unparseable model output so the failure is diagnosable
+        (a parse-fail that discards the raw response is a dead end)."""
         return cls(
             lens_name=lens_name,
             model_used=model_used,
@@ -79,6 +82,7 @@ class LensReport:
             axes={a: 0.5 for a in SCORING_AXES},  # neutral
             confidence=0.0,
             error=error,
+            raw_response_excerpt=raw_excerpt,
         )
 
 
