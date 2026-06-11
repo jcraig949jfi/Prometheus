@@ -1,13 +1,13 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-06-11 04:15:25 PM UTC*
+*Generated: 2026-06-11 08:15:33 PM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
 
 ## Act on this
-* **Redis Unreachable**: Redis has been unreachable since at least 2026-06-11 08:15:34 AM EDT, and the system is relying on the Postgres dual-write mirror for agent data. To resolve this, investigate and restore Redis connectivity to ensure full system functionality.
-* **Hephaestus and Pronoia Unknown Status**: Hephaestus at M3 and Pronoia at M4 have unknown statuses due to no Postgres heartbeat, with no recent updates on their operational status. To resolve this, investigate and verify the status of these agents to ensure they are running correctly.
-* **Multiple Tools with Unknown Status**: At least 15 tools, including Clio at M1, Pythia at M1, and Charon_Loop at M2, have unknown statuses due to no Postgres heartbeat, affecting overall system performance. To resolve this, investigate and verify the status of these tools to ensure they are running correctly.
+* **Redis Unreachable**: Redis has been unreachable since at least 2026-06-11 08:15:34 AM EDT, and the system is relying on the Postgres dual-write mirror for agent data, with 0 queued tasks and 0 claimed tasks in the work queue. To resolve this, investigate and restore Redis connectivity to ensure full system functionality.
+* **Hephaestus and Pronoia Unknown Status**: Hephaestus at M3 and Pronoia at M4 have unknown statuses due to no Postgres heartbeat, with no recent updates on their operational status, and their last known forge rate was ~4%. To resolve this, investigate and verify the status of these agents to ensure they are running correctly.
+* **Multiple Tools with Unknown Status**: At least 15 tools, including Clio at M1, Pythia at M1, and Charon_Loop at M2, have unknown statuses due to no Postgres heartbeat, affecting overall system performance, with 0 recent discoveries in the last 10 cycles. To resolve this, investigate and verify the status of these tools to ensure they are running correctly.
 
 ## Watch this
 * **System Throughput and Performance**: With Redis unreachable and multiple agents having unknown statuses, system throughput may be impacted, potentially affecting the overall performance of the system, with no recent discoveries in the last 10 cycles. Monitor the system's overall performance and adjust as necessary to maintain optimal functionality.
