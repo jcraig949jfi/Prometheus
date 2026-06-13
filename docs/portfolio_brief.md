@@ -1,13 +1,13 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-06-13 08:15:34 AM UTC*
+*Generated: 2026-06-13 12:15:29 PM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
 
 ## Act on this
-* **Redis Unreachable**: Redis has been unreachable, and the system is relying on the Postgres dual-write mirror for agent data, affecting 20 agents. To resolve this, investigate and restore Redis connectivity to ensure full system functionality.
+* **Redis Unreachable**: Redis has been unreachable, and the system is relying on the Postgres dual-write mirror for agent data, affecting multiple agents. To resolve this, investigate and restore Redis connectivity to ensure full system functionality.
 * **Hephaestus and Pronoia Unknown Status**: Hephaestus at M3 and Pronoia at M4 have unknown statuses due to no Postgres heartbeat, potentially affecting the system's performance. To resolve this, investigate and verify the status of these agents to ensure they are running correctly.
-* **No Recent Deep Research Reports**: The system has not reported any recent Deep Research reports, with 20 DR tokens available per day, potentially indicating an issue with the research process, supervised by Aporia. To resolve this, investigate the research process to ensure it is functioning correctly.
+* **No Recent Deep Research Reports**: The system has not reported any recent Deep Research reports, with 20 DR tokens available per day, potentially indicating an issue with the research process, supervised by Aporia at M1. To resolve this, investigate the research process to ensure it is functioning correctly.
 
 ## Watch this
 * **System Throughput and Performance**: With Redis unreachable and multiple agents having unknown statuses, system throughput may be impacted, potentially affecting the overall performance of the system, with 0 queued and 0 claimed tasks in the work queue. Monitor the system's overall performance and adjust as necessary to maintain optimal functionality.
