@@ -113,7 +113,7 @@ class DiagnosticianLens(Lens):
         )
 
 
-def _read_source(source_dir, max_chars: int = 5000) -> str:
+def _read_source(source_dir, max_chars: int = 30000) -> str:
     if not source_dir.exists():
         return ""
     chunks = []
@@ -126,11 +126,20 @@ def _read_source(source_dir, max_chars: int = 5000) -> str:
         except Exception:
             continue
         rel = p.relative_to(source_dir)
-        snippet = f"\n--- {rel} ---\n{text}\n"
-        if total + len(snippet) > max_chars:
+        header = f"\n--- {rel} ---\n"
+        remaining = max_chars - total - len(header)
+        if remaining <= 0:
+            chunks.append(f"{header}[omitted: char budget exhausted]\n")
             break
-        chunks.append(snippet)
-        total += len(snippet)
+        # Truncate an oversized file's BODY into the remaining budget instead
+        # of dropping it whole -- a single file larger than max_chars used to
+        # blank the entire source, leaving lenses to (correctly) report the
+        # reasoner as "empty/missing" when it was merely too big to fit.
+        if len(text) > remaining:
+            chunks.append(f"{header}{text[:remaining]}\n[... truncated]\n")
+            break
+        chunks.append(f"{header}{text}\n")
+        total += len(header) + len(text) + 1
     return "".join(chunks)
 
 
