@@ -39,6 +39,83 @@ DEFAULT_WEIGHT_THRESHOLD = 0.5
 DEFAULT_MAX_RECORDS = 500
 
 
+# ---------------------------------------------------------------------------
+# Verdict → gold + leak-safe claim rendering (seam-fidelity fix 2026-06-15)
+# ---------------------------------------------------------------------------
+# Root cause (program_audit_2026-06-10 §3.2): the mapper emitted no
+# `predicate_holds`, so the ingester defaulted EVERY record — including
+# REJECTED kills — to outcome_class "promoted" (the 79%/1.4% inversion). And
+# non-invariant_equality records were hard-dropped, stranding ~89% of the
+# corpus. Both are fixed producer-side; the consumer already supports
+# predicate_holds and is verdict-agnostic about claim_kind.
+
+# A claim survives falsification iff its verdict is a survivor verdict. This
+# is the uniform gold across ALL claim_kinds (the relation-`holds` payload
+# field is absent for most kinds; the verdict is always present).
+_SURVIVOR_VERDICTS = {Verdict.SHADOW_CATALOG.value, Verdict.PROMOTED.value}
+_KILL_VERDICTS = {Verdict.REJECTED.value}
+
+# Answer/verdict markers that must never appear in a prompt. The canonical
+# claim text embeds the evaluation after a delimiter; we cut there and then
+# assert none of these survive in the head (leak-safe-or-skip).
+_ANSWER_DELIMS = (" | ", " ⟶ ", " → ", " ⇒ ", " -> ", " => ")
+_LEAK_TOKENS = (
+    "holds=", "self_inverse", "is_fixed_point", "strong_holds", "survives_",
+    "survived", "extensions_hold", "rejected", "shadow_catalog", "promoted",
+    "unverified", "inconclusive", "verdict", "->", "=>", "=true", "=false",
+)
+_MIN_CLAIM_LEN = 20
+
+
+def _verdict_to_predicate_holds(verdict: Optional[str]) -> Optional[bool]:
+    """True if the claim survived falsification, False if killed, None if the
+    verdict carries no gold (UNVERIFIED/INCONCLUSIVE → not trainable)."""
+    if verdict in _SURVIVOR_VERDICTS:
+        return True
+    if verdict in _KILL_VERDICTS:
+        return False
+    return None
+
+
+def _leak_safe_claim(canonical: str) -> Optional[str]:
+    """Render a leak-free claim head from a canonical_claim_text.
+
+    The canonical text is `<claim> <delim> <evidence/answer> ... <verdict>`.
+    Cut at the earliest answer delimiter, then refuse (return None) if any
+    answer/verdict token still survives or the head is too short. Conservative
+    by design: a record we cannot make leak-free is SKIPPED, never shipped
+    with the answer leaking into the prompt.
+    """
+    if not canonical:
+        return None
+    text = canonical.strip()
+    cut = len(text)
+    for d in _ANSWER_DELIMS:
+        i = text.find(d)
+        if i != -1:
+            cut = min(cut, i)
+    head = text[:cut].strip()
+    low = head.lower()
+    if any(tok in low for tok in _LEAK_TOKENS):
+        return None
+    if len(head) < _MIN_CLAIM_LEN:
+        return None
+    return head
+
+
+def _renderable(r_dict: Dict[str, Any]) -> bool:
+    """Cheap pre-filter for the selection loop: a record is renderable iff its
+    verdict carries gold AND we can build a leak-free prompt for it. Mirrors
+    the skip logic in `_theseus_record_to_training_anchor`."""
+    if _verdict_to_predicate_holds(r_dict.get("verdict")) is None:
+        return False
+    p = r_dict.get("claim_payload") or {}
+    rel = p.get("relation")
+    if r_dict.get("claim_kind") == "invariant_equality" and rel and rel != "?":
+        return True
+    return _leak_safe_claim(r_dict.get("canonical_claim_text") or "") is not None
+
+
 def _iter_corpus_records(corpus_dir: Path,
                          max_recent_files: Optional[int] = None) -> Iterable[Dict[str, Any]]:
     # Ergon un-stall fix 2026-06-07: the scoring walk previously scanned the
@@ -70,40 +147,71 @@ def _theseus_record_to_training_anchor(
     record: TheseusRecord,
     anchor_index: int,
     computed_weight: Optional[float] = None,
-) -> Dict[str, Any]:
-    """Map a Theseus record into a training_anchor block payload."""
+) -> Optional[Dict[str, Any]]:
+    """Map a Theseus record into a training_anchor block payload.
+
+    Returns None when the record cannot be rendered into a trainable,
+    leak-free anchor (no gold verdict, or no leak-safe claim text). Handles
+    ALL claim_kinds — invariant_equality via the relation template, every
+    other kind via the leak-safe canonical-claim head.
+    """
     p = record.claim_payload
+
+    # Gold: did the claim survive falsification? Carried to the consumer as
+    # predicate_holds so REJECTED kills land as outcome_class "rejected"
+    # (not the old all-"promoted" inversion). None => no gold => skip.
+    predicate_holds = _verdict_to_predicate_holds(record.verdict)
+    if predicate_holds is None:
+        return None
+
     catalog_a = p.get("catalog_a") or p.get("catalog") or "knot"
     catalog_b = p.get("catalog_b") or "ec"
 
-    # Domain: cross-catalog pair (e.g. "knots_x_elliptic_curves")
+    # Domain: cross-catalog pair (e.g. "knots_x_elliptic_curves"); fall back
+    # to the claim_kind for records that carry no catalog hints.
     domain_map = {
         "knot": "knots",
         "ec": "elliptic_curves",
         "genus2": "genus2_curves",
         "modular_forms": "modular_forms",
     }
-    dom_a = domain_map.get(catalog_a, catalog_a)
-    dom_b = domain_map.get(catalog_b, catalog_b)
-    domain = f"{dom_a}_x_{dom_b}"[:60]
+    if p.get("catalog_a") or p.get("catalog_b") or p.get("catalog"):
+        dom_a = domain_map.get(catalog_a, catalog_a)
+        dom_b = domain_map.get(catalog_b, catalog_b)
+        domain = f"{dom_a}_x_{dom_b}"[:60]
+    else:
+        dom_a = domain_map.get(catalog_a, catalog_a)
+        dom_b = domain_map.get(catalog_b, catalog_b)
+        domain = (record.claim_kind or "substrate_claim")[:60]
 
     # ID per schema pattern ^anchor-<domain>-NNN$
-    safe_dom = "".join(c for c in domain if c.isalnum() or c == "_").lower()
+    safe_dom = "".join(c for c in domain if c.isalnum() or c == "_").lower() or "claim"
     anchor_id = f"anchor-{safe_dom}-{anchor_index:05d}"
 
     # anchor_type: predicate (our claims are relational predicates)
     anchor_type = "predicate"
 
-    # Construct prompt_template — placeholder-friendly
-    rel = p.get("relation", "?")
-    inv_a = p.get("invariant_a", "knot_invariant")
-    inv_b = p.get("invariant_b", "ec_invariant")
-    obj_a = p.get("object_a", "{knot}")
-    obj_b = p.get("object_b", "{ec_object}")
-    prompt_template = (
-        f"Does the relation `{rel}` hold between `{inv_a}` of {dom_a} `{obj_a}` "
-        f"and `{inv_b}` of {dom_b} `{obj_b}`? Return boolean."
-    )
+    # Construct prompt_template. invariant_equality has a clean, leak-free
+    # relation template; every other claim_kind renders from the leak-safe
+    # canonical-claim head (return None if it can't be made leak-free).
+    rel = p.get("relation") or record.claim_kind or "?"
+    if record.claim_kind == "invariant_equality" and p.get("relation") and p.get("relation") != "?":
+        inv_a = p.get("invariant_a", "knot_invariant")
+        inv_b = p.get("invariant_b", "ec_invariant")
+        obj_a = p.get("object_a", "{knot}")
+        obj_b = p.get("object_b", "{ec_object}")
+        prompt_template = (
+            f"Does the relation `{p['relation']}` hold between `{inv_a}` of {dom_a} `{obj_a}` "
+            f"and `{inv_b}` of {dom_b} `{obj_b}`? Return boolean."
+        )
+    else:
+        claim_head = _leak_safe_claim(record.canonical_claim_text or "")
+        if claim_head is None:
+            return None
+        prompt_template = (
+            f"Claim: {claim_head}. Does this claim hold under the substrate's "
+            f"falsification battery? Return boolean."
+        )
 
     # Trust tier: Theseus verdicts → schema enum
     # SHADOW_CATALOG = substrate-verified survivor → numerically_certified
@@ -154,7 +262,10 @@ def _theseus_record_to_training_anchor(
             ),
         },
         "prompt_template": prompt_template[:4000],
-        "expected_answer_shape": "bool — True iff the relation holds for the given object pair",
+        "expected_answer_shape": "bool — True iff the claim holds for the given object pair",
+        # Gold label for the consumer: True=survived falsification, False=killed.
+        # Without this the ingester defaults every record to "promoted".
+        "predicate_holds": predicate_holds,
         "verification_method": "computational_certified",
         "trust_tier": trust_tier,
         "source": (
@@ -253,17 +364,13 @@ def export_for_ergon(
     for r_dict in _iter_corpus_records(corpus_dir, max_recent_files=max_recent_files):
         if r_dict.get("verdict") not in verdict_filter:
             continue
-        # Ergon mappability gate 2026-06-07: _theseus_record_to_training_anchor
-        # only renders invariant_equality records (it needs relation + catalog).
-        # Other claim_kinds (kill_neighborhood/mutation/...) become placeholder
-        # anchors ("Does relation `?` hold...") — garbage. With the 0.40 falsify
-        # floor now pulling kills, the top pool filled with unmappable d2
-        # kill_neighborhood records. Skip what the mapper can't render so we ship
-        # well-formed invariant_equality kills+confirmations; the broader fix is
-        # to port the greedy rig's per-claim_kind serializers into the mapper
-        # (tracked in GREEDY_FOLLOWUP_PROGRESS_2026-06-07.md, Theseus lane).
-        _p = r_dict.get("claim_payload") or {}
-        if r_dict.get("claim_kind") != "invariant_equality" or not _p.get("relation"):
+        # Seam-fidelity fix 2026-06-15 (replaces the 2026-06-07 invariant_equality-
+        # only gate that stranded ~89% of the corpus). Admit every claim_kind the
+        # mapper can render into a leak-free, gold-bearing anchor. _renderable
+        # mirrors _theseus_record_to_training_anchor's skip logic: it requires a
+        # gold verdict (survivor/kill) and a leak-safe claim. Records that can't
+        # be made leak-free are still skipped — leak-safe-or-skip, never leak.
+        if not _renderable(r_dict):
             continue
         try:
             r = TheseusRecord(**r_dict)
@@ -344,6 +451,8 @@ def export_for_ergon(
         except (TypeError, ValueError):
             continue
         payload = _theseus_record_to_training_anchor(r, idx, computed_weight=w)
+        if payload is None:
+            continue
         # Append the fenced markdown block
         md_lines.append("```yaml")
         md_lines.append("# substrate_block: training_anchor")
