@@ -407,10 +407,21 @@ register(FailurePrimitive(
                    "DETECTOR-FIRED (this atlas's first cross-agent firing): Branch C "
                    "r1 49/49 and r2 480/480 gens with zero best_acc improvement "
                    "under fixed op menu, search alive (mutation_viability=1.0, "
-                   "llm_used>0). Cause subclass: cause_unattributed — could be "
-                   "expressiveness ceiling (FP-003) or gate pathology (Goodhart). "
-                   "ESCROW until Apollo-side cause audit.",
-                   escrow=True),
+                   "llm_used>0). ESCROW RESOLVED 2026-06-15 (Harmonia E) -> cause "
+                   "subclass = expressiveness_ceiling, NOT Goodhart. Apollo's own "
+                   "2026-06-10 artifacts (apollo/pivot/r2_run1_findings_2026-06-10.md "
+                   "+ apollo/pivot/cross_tier_falsification_result_2026-06-10.json) "
+                   "attribute the plateau to a type-bridge gap: the op menu cannot "
+                   "EXPRESS a cross-tier organism (no op reads derived_facts -> writes "
+                   "relations/ordered), so the better organism is outside the search "
+                   "space, not unfound. NOT Goodhart: best_acc stayed honestly flat at "
+                   "0.42 (no proxy inflated while quality stalled). Confirmed by the "
+                   "FP-003 mitigation itself: deepening the menu in-place made it WORSE "
+                   "(dup-op clones 0.42->0.27) but growing the menu by ONE bridge op "
+                   "(relations_from_facts) made the cross-tier organism expressible -> "
+                   "0.42->1.0, unique_solver=true, all single-tier controls <=0.3. "
+                   "This is FP-003's predicted escape ('menu growth breaks it; "
+                   "deepening in-place does not'). 3rd proven-independent lineage."),
     ),
     mitigation=("Menu-growth / lineage mechanism (Arachne population layer): the "
                 "substrate is the lineage, not the single agent "
@@ -435,17 +446,43 @@ register(FailurePrimitive(
         "Polyhymnia runs; both post-mortems were written by authors who knew the "
         "predicted shape. The diagnosis LANGUAGE is therefore contaminated; the "
         "ruling rests on the mechanical event series (promotion counters, null-tick "
-        "counters), which fired independently of narrative. 2 proven-independent "
-        "lineages = surviving_candidate; the escrowed Apollo anchor does NOT count "
-        "until its cause audit lands."),
+        "counters), which fired independently of narrative. "
+        "STAGE-3 RULING (2026-06-15, Harmonia E): the escrowed Apollo anchor is "
+        "DE-ESCROWED as a 3rd proven-independent lineage -> FP-003 promotes "
+        "surviving_candidate -> COORDINATE_INVARIANT. Audit path (LOCAL, not the "
+        "4-probe Workflow the first two anchors got — the Apollo independence is "
+        "structural and unambiguous, so a Workflow would be confirmatory not "
+        "load-bearing): (1) code-disjointness verified by import analysis — "
+        "apollo/src/blackboard_evolve.py imports only blackboard/dataflow_fitness/"
+        "blackboard_ops{,_v2,_r2}; it does NOT import the agents/_shared/"
+        "self_improving.py mixin that contaminated Polyhymnia, nor theseus/, nor any "
+        "Aporia shell. Separate MAP-Elites substrate, distinct founding (Branch C "
+        "blackboard prototype). (2) Distinct mechanism: expressiveness_ceiling, a "
+        "third subclass alongside region_empty/source_saturated. (3) Narrative-"
+        "independence: Apollo's diagnosis is in its OWN type-bridge vocabulary (no "
+        "reference to 'FP-003'/'bounded_menu_wall'); the load-bearing evidence is the "
+        "event series (best_acc flat 0.42 over 481 gens; the bridge-op experiment "
+        "0.42->1.0), narrative-independent on the same standard applied to anchors "
+        "1-2. SHARPEST OPEN CRITIQUE (logged, not fatal): Theseus's region_empty is a "
+        "TRUTHFUL wall (region genuinely empty -> correct STOP) while Apollo's "
+        "expressiveness_ceiling is an ARTIFACT wall (a better organism exists outside "
+        "the menu -> correct GROW) — opposite remedies under one observable. Per the "
+        "heterogeneous-causes doctrine this strengthens shape-invariance and makes "
+        "the detector a triage instrument ('menu wall: now diagnose STOP-vs-GROW'); a "
+        "subclass-discriminator probe is owed when spend resets to confirm the "
+        "detector cannot be made to over-lump."),
     notes=("Cause-subclass taxonomy (preserves the gradient per "
            "feedback_failure_signature_doctrine): region_empty (menu fully "
            "expresses a genuinely empty region — Theseus; Techne's own log calls "
            "this 'correct refusal', the lumping caveat is acknowledged), "
            "source_saturated (menu exhausted its source — Polyhymnia), "
-           "expressiveness_ceiling (menu cannot express anything better than seed "
-           "— Apollo candidate), cause_unattributed. The detector detects the "
-           "SHAPE; the subclass is post-detection diagnosis."),
+           "expressiveness_ceiling (menu cannot express anything better than seed; "
+           "the better organism is outside the search space — Apollo, CONFIRMED "
+           "2026-06-15 via the bridge-op falsification), cause_unattributed. The "
+           "detector detects the SHAPE; the subclass is post-detection diagnosis, "
+           "and it routes the remedy: region_empty/source_saturated -> STOP (the "
+           "wall is truthful); expressiveness_ceiling -> GROW the menu (the wall is "
+           "an artifact of an incomplete vocabulary)."),
 ))
 
 register(FailurePrimitive(
@@ -616,7 +653,11 @@ def _selftest() -> None:
 
     # Tier logic: ruthlessness about lineage.
     fp3 = get("FP-003")
-    assert not fp3.coordinate_invariant, "FP-003 must not qualify pre-Stage-2"
+    # STAGE-3 (2026-06-15): Apollo anchor de-escrowed as 3rd independent lineage.
+    assert fp3.coordinate_invariant, "FP-003 must qualify after Stage-3 de-escrow"
+    assert fp3.independent_anchor_count == 3, fp3.independent_anchor_count
+    # The escrowed-anchor guard still works: re-escrowing Apollo drops it to 2.
+    assert sum(1 for a in fp3.anchor_cases if a.escrow) == 0, "no escrowed anchors remain"
     assert get("FP-001").tier == "surviving_candidate"
 
     inv = validate_atlas()

@@ -2,7 +2,7 @@
 
 **Owner:** Harmonia_M2_E (Proposal D, per `D:\Prometheus\harmonia\proposals\2026-06-09\00_SEQUENCING_AND_HANDOFF.md` §6)
 **Machine layer:** `D:\Prometheus\harmonia\primitives\failure_primitives.py` (registry + live detectors + `validate_atlas()`)
-**Status:** v0 thin registry, seeded 2026-06-10. Grown by A/E/B outputs and the Stage-3 generative hunt — never by a standalone taxonomy sprint.
+**Status:** v0 thin registry, seeded 2026-06-10; FP-003 reached `coordinate_invariant` 2026-06-15 (first top-tier primitive; Apollo escrow resolved). Grown by A/E/B outputs and the Stage-3 generative hunt — never by a standalone taxonomy sprint.
 **Created:** 2026-06-10
 
 ---
@@ -76,7 +76,7 @@ next (`void_report()`).
 - **Voids:** Apollo kill logs; Icarus kill_clusters; Charon plugin ledger;
   Ergon shadow archive.
 
-### FP-003 `bounded_menu_wall` — tier: surviving_candidate (2 proven-independent anchors + 1 escrow)
+### FP-003 `bounded_menu_wall` — tier: **coordinate_invariant** (3 proven-independent anchors; Apollo de-escrowed 2026-06-15)
 
 - **Signature:** a fixed candidate-generation menu produces a ≥30-batch tail of
   consecutive zero promotions under honest scoring — a structural ceiling of
@@ -103,13 +103,15 @@ next (`void_report()`).
     `D:\Prometheus\aporia\meta\queue\aporia_inbox.jsonl` ticket
     `T-2026-06-03-aporia-polyhymnia-verdict`; commit `824a668b`; report:
     `D:\Prometheus\aporia\meta\triage_report_2026-06-03.md`.
-  - **apollo (ESCROW)**, lineage `apollo-blackboard-evolve`: this atlas's
-    first cross-agent detector firing — Branch C r1 49/49 and r2 480/480 gens
-    with zero `best_acc` improvement under a fixed op menu while the search
-    stayed alive (`mutation_viability=1.0`, `llm_used>0`). Cause subclass
-    `cause_unattributed` (expressiveness ceiling vs gate pathology) — escrowed
-    anchors never count toward invariance. Evidence:
-    `D:\Prometheus\harmonia\experiments\fp_void_audits_20260610.json`.
+  - **apollo (DE-ESCROWED 2026-06-15)**, lineage `apollo-blackboard-evolve`:
+    this atlas's first cross-agent detector firing — Branch C r1 49/49 and r2
+    480/480 gens with zero `best_acc` improvement under a fixed op menu while
+    the search stayed alive (`mutation_viability=1.0`, `llm_used>0`). Cause
+    subclass **`expressiveness_ceiling`** (resolved — see Stage-3 ruling below);
+    **NOT Goodhart**. Evidence:
+    `D:\Prometheus\harmonia\experiments\fp_void_audits_20260610.json`; cause
+    resolution: `D:\Prometheus\apollo\pivot\r2_run1_findings_2026-06-10.md` +
+    `D:\Prometheus\apollo\pivot\cross_tier_falsification_result_2026-06-10.json`.
 - **Stage-2 independence ruling (2026-06-10, Harmonia E): PROVEN for anchors
   1–2.** Code-disjoint at the failure-relevant path: Polyhymnia's daemon shell
   descends from the Aporia agents-swarm template (Hypatia/Atalanta/Pheme/
@@ -128,19 +130,50 @@ next (`void_report()`).
   `feedback_gen_30_wall.md` file is MISSING from disk everywhere; its content
   survives only as quotation in
   `D:\Prometheus\charon\agents\erebos\_rank_expansion.py`.
-- **Cause-subclass taxonomy** (preserves the gradient): `region_empty` |
-  `source_saturated` | `expressiveness_ceiling` | `cause_unattributed`. The
-  detector detects the shape; the subclass is post-detection diagnosis.
-  Techne's own fire log resists the wall label for the Theseus case ("correct
-  refusal to promote artifacts") — the lumping is acknowledged and carried as
-  a subclass, not flattened.
+- **Stage-3 independence ruling (2026-06-15, Harmonia E): Apollo DE-ESCROWED →
+  FP-003 promotes surviving_candidate → `coordinate_invariant` (3rd independent
+  lineage).** The escrow held only for *cause attribution*; Apollo's own
+  2026-06-10 artifacts resolve it. **Cause = `expressiveness_ceiling`, not
+  Goodhart:** Apollo's op menu *cannot express* a cross-tier organism (no op
+  reads `derived_facts` → writes `relations`/`ordered`), so the better organism
+  is outside the search space — not unfound. `best_acc` stayed *honestly* flat
+  at 0.42 (no proxy inflated while quality stalled → not Goodhart). **Falsified
+  by FP-003's own predicted escape:** deepening the menu in-place made it worse
+  (dup-op clones 0.42→0.27); growing the menu by one bridge op
+  (`relations_from_facts`) made the cross-tier organism expressible → 0.42→**1.0**,
+  `unique_solver=true`, all single-tier controls ≤0.3. **Independence (local
+  audit, not the 4-probe Workflow — the structural disjointness is unambiguous
+  enough that a Workflow would be confirmatory, not load-bearing):**
+  `apollo/src/blackboard_evolve.py` imports only `blackboard`/`dataflow_fitness`/
+  `blackboard_ops{,_v2,_r2}` — it does **not** import the
+  `agents/_shared/self_improving.py` mixin that contaminated Polyhymnia, nor
+  `theseus/`, nor any Aporia shell; separate MAP-Elites substrate, distinct
+  founding (Branch C blackboard prototype); distinct mechanism. Diagnosis is in
+  Apollo's own type-bridge vocabulary (no reference to FP-003); load-bearing
+  evidence is the narrative-independent event series.
+  **Sharpest open critique (logged, not fatal):** Theseus `region_empty` is a
+  *truthful* wall (region genuinely empty → STOP is correct) while Apollo
+  `expressiveness_ceiling` is an *artifact* wall (better organism exists outside
+  the menu → GROW is correct) — opposite remedies under one observable. Per the
+  heterogeneous-causes doctrine this *strengthens* shape-invariance and makes
+  the detector a triage instrument; a subclass-discriminator probe is owed when
+  spend resets, to confirm the detector cannot be made to over-lump.
+- **Cause-subclass taxonomy** (preserves the gradient, and now *routes the
+  remedy*): `region_empty` / `source_saturated` → **STOP** (the wall is
+  truthful) | `expressiveness_ceiling` → **GROW the menu** (the wall is an
+  artifact of an incomplete vocabulary) | `cause_unattributed`. The detector
+  detects the shape; the subclass is post-detection diagnosis. Techne's own
+  fire log resists the wall label for the Theseus case ("correct refusal to
+  promote artifacts") — the lumping is acknowledged and carried as a subclass,
+  not flattened.
 - **Mitigation:** menu-growth / lineage mechanism (Arachne population layer).
   Prior art: Erebos ITER-43 `consecutive_zero_growth_run`
   (`D:\Prometheus\charon\agents\erebos\_rank_expansion.py`) — a second organ
   independently built a detector for this exact pattern.
 - **Voids:** Ergon operator menu; Aporia attempt menu; Icarus proposal menu.
   (Theseus removed from voids — Stage 2 found that "void" was already the
-  anchor; Apollo moved from void to escrow anchor.)
+  anchor; Apollo moved void → escrow → de-escrowed proven anchor over Stages
+  2–3.)
 
 ### FP-004 `degenerate_field_flatline` — tier: surviving_candidate (graduated from the hunt)
 
