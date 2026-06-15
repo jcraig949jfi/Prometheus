@@ -1,5 +1,48 @@
 # Phase 3.E + 3.F + 3.G — Combined verdict (ITER-59, 60, 61, 62)
 
+> ## ⚠ ERRATA — CORRECTED 2026-06-15 (Charon)
+> **The "ROBUST PASS" and "4 architectural passes / robust against the strongest
+> counter baseline" claims in this document are SUPERSEDED. They did not survive a
+> permutation null.** The original text is preserved below for provenance; do not
+> cite it as current state.
+>
+> **What changed.** This verdict reported beating the discriminating (pair-aware)
+> counter by **2 raw deltas** and called it `ROBUST PASS` — without ever testing
+> whether 2 beats chance against *that same baseline*. The triplet "PASS" (§2) was
+> likewise a raw lift on a low-expected-count cell with no null. Phase 3.K built the
+> missing nulls (`pair_aware_permutation_null.py`, ITER-83/84):
+> - **Pair-aware null:** observed 2, null mean 0.48, p95=2 → **p = 0.105**
+>   (7-seed mean 0.102, all ≥ 0.05) → **STATISTICALLY UNDERDETERMINED**, not robust.
+> - **Triplet null:** observed lift sits **below** null mean (~90% of shuffles beat
+>   it; p(n≥obs)=1.00) → **FALSIFIED** (textbook lift inflation from low counts).
+> - **Per-plugin null** decayed p=0.055 → **0.075** on the grown ledger — same
+>   scale-stress pattern a third way.
+>
+> **Corrected scoreboard:** of the four claimed "architectural passes," **zero signal
+> passes survive a permutation null** (pair-aware underdetermined; triplet falsified;
+> cross-cell per-plugin borderline-and-decaying). **One infrastructure pass stands:**
+> the BSD MVP loader (§3, ITER-61) is a real Layer-1 detector on real curves and is
+> not in dispute. The structural distinctions (lift-over-independence vs raw joint
+> frequency) remain true as *descriptions*; what collapses is the *statistical* claim
+> of above-chance decision deltas.
+>
+> **Generalized lesson (candidate discipline primitive):** a "PASS vs baseline X" is
+> not substrate-grade until it carries a permutation-null p-value vs that **same** X.
+> Three harnesses here null-tested the convenient comparison, not the load-bearing one.
+> Now adopted program-wide (STATUS_2026-06-15 §7 EXTRACT: *any "beats baseline X"
+> claim emits its own permutation-null p-value or refuses PASS*).
+>
+> **Provenance:** `pivot/sprint1/phase3/PHASE3_K_PAIR_AWARE_NULL_VERDICT_2026-06-03.md`
+> · `charon/CHARON_SESSION_2026-06-03.md` · `aporia/docs/STATUS_2026-06-15_reset.md` §7
+> (Erebos composition paused; "reframe Phase-3 docs honestly — 0 signal passes survive
+> nulls, 1 infra pass stands").
+>
+> — Charon, 2026-06-15
+
+---
+
+*Original verdict text follows, unaltered:*
+
 **Date:** 2026-05-30 (same day as Phase 3.D ITER-58 PASS)
 **Verdict:** Three PASSES + one architectural finding. Cross-cell primitive is robust against the strongest counter baseline, surfaces higher-order structure, and the BSD MVP loader works — but cross-DOMAIN motif structure has a genuine architectural gap.
 
@@ -10,6 +53,8 @@
 **Question:** Does the substrate's cross-cell primitive beat a sophisticated PAIR-AWARE counter (not just per-plugin), or does its lift-over-independence filter add no value?
 
 **Verdict:** **ROBUST PASS.** 2 actionable deltas vs pair-aware counter; 3 deltas vs per-plugin counter; the substrate retains advantage at the highest counter sophistication tested.
+> **[SUPERSEDED 2026-06-15 — see ERRATA at top.]** The 2 deltas were never null-tested
+> against the pair-aware baseline. Phase 3.K: p = 0.105 → UNDERDETERMINED, not robust.
 
 ```
 deltas substrate vs PAIR-AWARE counter      = 2
@@ -174,6 +219,12 @@ That's 6 substantive verdicts in one day, each precommitted, each measured again
 Per `feedback_counter_baseline_discriminator`: ITER-58 demonstrated "by construction beats counters" was achievable. ITER-59 demonstrated it's robust against the strongest counter baseline. ITER-60 demonstrated higher-order structure exists. ITER-61/62 demonstrated the cross-domain gap is REAL (not measurement noise) and has clear next-iteration responses.
 
 Per `feedback_instrument_vs_architectural_pass`: the substrate now has 4 architectural passes on real data (cross-cell, pair-robustness, triplets, BSD infrastructure). Sprint-1's instrument-calibration claim has been complemented by genuine architectural validation.
+
+> **[SUPERSEDED 2026-06-15 — see ERRATA at top.]** Of these "4 architectural passes,"
+> 0 signal passes survive a permutation null (pair-aware UNDERDETERMINED p=0.105;
+> triplet FALSIFIED below null; cross-cell per-plugin borderline-and-decaying p=0.075).
+> Only the BSD infrastructure pass stands. "Genuine architectural validation" is
+> withdrawn pending a signal claim that carries its own null.
 
 ---
 
