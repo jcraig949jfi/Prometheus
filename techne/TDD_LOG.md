@@ -3173,3 +3173,4 @@ work. Benchmark is necessary, not sufficient.
   machine; cost models drift; recalibration cadence recommended
   monthly or on perceived BudgetExceeded inflation.
 
+2026-06-15 | techne.lib.operator_portability.operator_portability_test | A:3 P:3 E:3 C:2 | REQ-028 (commit pending)

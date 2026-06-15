@@ -276,4 +276,73 @@ def tt_splice_compatibility(
     }
 
 
-__all__ = ["tt_splice_compatibility", "PATTERN_WARNING"]
+# ---------------------------------------------------------------------------
+# Public array-level kernels (additive, 2026-06-15, for REQ-028 composition).
+#
+# tt_splice_compatibility() is the NPZ-backed public entry point and is frozen.
+# These two functions expose the SAME tested kernel at the array level so
+# orchestrators (operator_portability) can build null distributions in-memory
+# without round-tripping through NPZ files. They are extracted from, and
+# behavior-identical to, the observed-score path inside tt_splice_compatibility.
+# ---------------------------------------------------------------------------
+
+
+def prime_detrend_arrays(
+    a: np.ndarray, b: np.ndarray
+) -> tuple[np.ndarray, np.ndarray, dict]:
+    """Shape-pair two array tensors and remove leading-axis log-prime-density
+    structure from both (the PATTERN_PRIME_GRAVITATIONAL_OVERFIT control).
+
+    Returns ``(a_detrended, b_detrended, audit)`` where ``audit`` carries the
+    pre/post leading-axis prime correlation + Frobenius norm for each tensor.
+    Mirrors the ``prime_detrend=True`` branch of ``tt_splice_compatibility``.
+    """
+    a = np.asarray(a, dtype=float)
+    b = np.asarray(b, dtype=float)
+    a, b = _shape_pair(a, b)
+    residual = _prime_density_residual(a.shape[0])
+    audit = {
+        "pre_detrend_magnitudes": {
+            "region_a": _prime_magnitude(a, residual),
+            "region_b": _prime_magnitude(b, residual),
+        }
+    }
+    a_det = _detrend_prime(a, residual)
+    b_det = _detrend_prime(b, residual)
+    audit["post_detrend_magnitudes"] = {
+        "region_a": _prime_magnitude(a_det, residual),
+        "region_b": _prime_magnitude(b_det, residual),
+    }
+    return a_det, b_det, audit
+
+
+def splice_score_arrays(a: np.ndarray, b: np.ndarray) -> tuple[float, list[int], dict]:
+    """Compute the splice score, joint bond ranks, and detail for two array
+    tensors WITHOUT prime-detrend or any null calibration (a pure kernel).
+
+    Returns ``(score, joint_bond_ranks, detail)``. Identical structure to the
+    ``_splice_score`` output, plus an ``identity_splice`` flag: when the two
+    inputs are numerically equal the score is pinned to 1.0 (matching
+    ``tt_splice_compatibility``'s identity branch). Callers that want the
+    prime-detrend control must call ``prime_detrend_arrays`` first.
+    """
+    a = np.asarray(a, dtype=float)
+    b = np.asarray(b, dtype=float)
+    a, b = _shape_pair(a, b)
+    if np.allclose(a, b, rtol=1e-10, atol=1e-10):
+        _, bond_ranks, detail = _splice_score(a, b)
+        detail = dict(detail)
+        detail["identity_splice"] = True
+        return 1.0, bond_ranks, detail
+    score, bond_ranks, detail = _splice_score(a, b)
+    detail = dict(detail)
+    detail["identity_splice"] = False
+    return score, bond_ranks, detail
+
+
+__all__ = [
+    "tt_splice_compatibility",
+    "splice_score_arrays",
+    "prime_detrend_arrays",
+    "PATTERN_WARNING",
+]

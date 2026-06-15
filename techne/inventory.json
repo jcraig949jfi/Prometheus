@@ -354,15 +354,31 @@
       "fulfilled_date": "2026-04-26",
       "forged_date": "2026-04-26",
       "known_issues": ["This operator does not run the F011 audit; it only provides the joint-marginal-preserving null needed by Track A.", "Pairwise population comparison currently reports L1 distances over rank and parity distributions; downstream audits must choose claim-specific statistics.", "Conductor deciles degrade gracefully for small or low-unique-conductor populations and set conductor_decile_audit.underdetermined=true."]
+    },
+    {
+      "name": "TOOL_OPERATOR_PORTABILITY",
+      "version": "1.0.0",
+      "file": "techne/lib/operator_portability.py",
+      "tier": 1,
+      "interface": "operator_portability_test(source_a, source_b, operator_spec=None, null_model='matched_GUE', detrend_primes=True, feature_strata=None, n_perms=300, seed=20260417, survive_z=3.0, survive_p=0.01, stratify_conductor=True, conductor=None) -> dict",
+      "dependencies": ["numpy", "scipy"],
+      "composes": ["TOOL_TT_SPLICE"],
+      "output_contract": ["effect_size", "p_perm", "bond_rank_delta", "replication_status", "pattern_flags", "audit"],
+      "tested": true,
+      "test_source": "11 tests A:3 P:3 E:3 C:2, all green. Constructed shared rank-2 column factor -> 0.707 vs matched_GUE null ~0.30 -> survived (z>=3); independent Gaussian pair -> 0.232 ~ null -> killed; row-permutation invariance proven (the design guard); operator X=pinv(M_a)@M_b makes incompatible regions portable (killed->survived); observed score == REQ-027 splice_score_arrays kernel; degenerate null -> inconclusive not survived. Targeted regression surface (tt_splice 5p/1s + this 11p) green; broader Techne suite ~78 passed 0 failed before pre-existing slow-pari-test wall.",
+      "fulfilled_request": "REQ-028",
+      "fulfilled_date": "2026-06-15",
+      "forged_date": "2026-06-15",
+      "known_issues": ["Operates on the COLUMN/feature axis: the REQ-027 bond-rank statistic is row-permutation invariant, so row-level conductor stratification (the F011/F010 block-shuffle discipline) is INAPPLICABLE and row-axis null requests are rejected. The 1-D gap-variance F011 row-pairing statistic is a separate, out-of-scope tool (Charon/Harmonia DB scripts). See OPERATOR_PORTABILITY_RESULTS.md.", "matched_GUE null is second-moment (per-column mean/std) matched, NOT a full eigenvalue-matched GUE ensemble.", "operator_spec='symbol@version' raises NotImplementedError (registry resolution out of scope for standalone); pass a callable ndarray->ndarray."]
     }
   ],
   "stats": {
-    "total": 25,
-    "tier1_python": 25,
+    "total": 26,
+    "tier1_python": 26,
     "tier2_optimized": 0,
     "tier3_cpp": 0,
-    "requests_open": 3,
-    "requests_fulfilled": 26,
-    "notes": "Cycle 33: OPERATOR_RANK_PARITY_NULL_CONTROL shipped (REQ-030). Extends NULL_BSWCD@v2 to preserve (conductor decile, rank parity) joint marginals and reports multi-population rank-parity asymmetry."
+    "requests_open": 2,
+    "requests_fulfilled": 27,
+    "notes": "Cycle 34 (2026-06-15): TOOL_OPERATOR_PORTABILITY shipped (REQ-028) — cross-region operator-portability falsification orchestrator composing REQ-027 tt_splice. Key finding: the bond-rank statistic is row-permutation invariant, so the F011/F010 conductor-block-shuffle (row-pairing) discipline is inapplicable; nulls act on the feature axis. Remaining open: REQ-008 (Khovanov Betti, blocked on native deps), REQ-024/025 (if tracked)."
   }
 }
