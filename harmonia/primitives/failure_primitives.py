@@ -421,7 +421,12 @@ register(FailurePrimitive(
                    "(relations_from_facts) made the cross-tier organism expressible -> "
                    "0.42->1.0, unique_solver=true, all single-tier controls <=0.3. "
                    "This is FP-003's predicted escape ('menu growth breaks it; "
-                   "deepening in-place does not'). 3rd proven-independent lineage."),
+                   "deepening in-place does not'). 3rd proven-independent lineage. "
+                   "EXECUTING-LENS CONFIRMED 2026-06-15: detector re-run live on the "
+                   "real 481-gen ledger (not the stored verdict) FIRES under the "
+                   "honest-promotion contract (streak 481/481, menu constant, search "
+                   "alive: mutation_viability=1.0, llm_used>0 in 462/481 gens). "
+                   "Repro: harmonia/experiments/fp003_apollo_executing_confirm_20260615.py."),
     ),
     mitigation=("Menu-growth / lineage mechanism (Arachne population layer): the "
                 "substrate is the lineage, not the single agent "

@@ -1,0 +1,32 @@
+{
+  "anchor": "FP-003 / apollo-blackboard-evolve",
+  "source_log": "D:\\Prometheus\\apollo\\run_branch_c_r2\\evolve_log.jsonl",
+  "n_gens": 481,
+  "gen_range": [
+    1,
+    481
+  ],
+  "search_alive": {
+    "mutation_viability_min": 1.0,
+    "mutation_viability_max": 1.0,
+    "gens_with_llm_used_gt0": 462
+  },
+  "honest_input": {
+    "total_best_acc_improvements": 0,
+    "fired": true,
+    "headline": "tail zero-promotion streak=481/481 batches (min_streak=30); menu constant",
+    "evidence": {
+      "streak": 481,
+      "n_batches": 481,
+      "min_streak": 30,
+      "menu_constant": true,
+      "menu_known": true
+    }
+  },
+  "control_cellfill_wrong_input": {
+    "total_fills": 10,
+    "fired": true,
+    "note": "also fires, but for the benign saturation-at-capacity reason the input contract documents; caller owns the honest-promotion distinction"
+  },
+  "verdict": "FP-003 detector FIRES on the real Apollo R2 ledger under the honest-promotion contract while search is alive -> anchor confirmed by execution, not by a stored verdict."
+}
