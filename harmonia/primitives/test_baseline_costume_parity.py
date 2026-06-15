@@ -113,8 +113,26 @@ def test_adversarial_recency_costume_slips_through() -> None:
           "real claim of this shape appears (Proposal A catalog-growth rule).")
 
 
+def test_unique_key_degeneracy_guard() -> None:
+    """Harmonia D's filed hole (a3 generic_catalog_control): on a unique-key,
+    imbalanced binary claim, the OLD costume_check returned
+    COSTUME_OF:marginal_majority — a label-copier tie that certifies nothing.
+    The guard must (a) flag marginal_majority vacuous on unique keys, and
+    (b) return INCONCLUSIVE_DEGENERATE rather than a spurious COSTUME."""
+    rows = [{"cid": f"cell_{i}", "v": ("VOID" if i < 3 else "NONVOID")}
+            for i in range(300)]                    # 1% VOID, every key unique
+    claim = {r["cid"]: r["v"] for r in rows}
+    v = costume_check(claim, rows, key_fn=lambda r: r["cid"],
+                      label_fn=lambda r: r["v"])
+    assert v.verdict == "INCONCLUSIVE_DEGENERATE", v.headline
+    mm = next(b for b in v.per_baseline if b.name == "marginal_majority")
+    assert mm.vacuous, "marginal_majority must be vacuous on unique keys"
+    print("DEGENERACY-GUARD PASS:", v.headline)
+
+
 if __name__ == "__main__":
     test_parity_with_erebos_counters()
     test_reproduces_erebos_failure()
     test_adversarial_recency_costume_slips_through()
-    print("\nAll baseline_costume parity + self-attack checks complete.")
+    test_unique_key_degeneracy_guard()
+    print("\nAll baseline_costume parity + self-attack + guard checks complete.")

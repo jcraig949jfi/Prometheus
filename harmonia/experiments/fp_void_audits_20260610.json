@@ -1,0 +1,158 @@
+[
+ {
+  "fp": "FP-003",
+  "target": "apollo-branch-c-r1-cellfills",
+  "fired": false,
+  "headline": "tail zero-promotion streak=10/49 batches (min_streak=30); menu constant (assumed fixed; no fingerprints)",
+  "evidence": {
+   "streak": 10,
+   "n_batches": 49,
+   "min_streak": 30,
+   "menu_constant": true,
+   "menu_known": false
+  },
+  "context": {
+   "path": "D:\\Prometheus\\apollo\\run_branch_c\\evolve_log.jsonl",
+   "n_gens": 50,
+   "first_cells": 7,
+   "last_cells": 20,
+   "caveat": "CAPACITY CONFOUND: archive bounded at 20 cells by design (load-bearing-core keying); cell-fill series saturates benignly. Use the -improvements cell for the verdict."
+  }
+ },
+ {
+  "fp": "FP-003",
+  "target": "apollo-branch-c-r1-improvements",
+  "fired": true,
+  "headline": "tail zero-promotion streak=49/49 batches (min_streak=30); menu constant (assumed fixed; no fingerprints)",
+  "evidence": {
+   "streak": 49,
+   "n_batches": 49,
+   "min_streak": 30,
+   "menu_constant": true,
+   "menu_known": false
+  },
+  "context": {
+   "path": "D:\\Prometheus\\apollo\\run_branch_c\\evolve_log.jsonl",
+   "n_gens": 50,
+   "acc_start": 0.525,
+   "acc_end": 0.525,
+   "note": "promotion := strict best_acc improvement (honest series for capacity-bound MAP-Elites). Search alive during tail (mutation_viability=1.0, llm_used>0): zero-improvement tail under fixed op menu. CAUSE ATTRIBUTION (structural ceiling vs broken gate/Goodhart) not established here \u2014 candidate FP-003 anchor pending Apollo-side cause audit."
+  }
+ },
+ {
+  "fp": "FP-003",
+  "target": "apollo-branch-c-r2-cellfills",
+  "fired": true,
+  "headline": "tail zero-promotion streak=429/480 batches (min_streak=30); menu constant (assumed fixed; no fingerprints)",
+  "evidence": {
+   "streak": 429,
+   "n_batches": 480,
+   "min_streak": 30,
+   "menu_constant": true,
+   "menu_known": false
+  },
+  "context": {
+   "path": "D:\\Prometheus\\apollo\\run_branch_c_r2\\evolve_log.jsonl",
+   "n_gens": 481,
+   "first_cells": 9,
+   "last_cells": 20,
+   "caveat": "CAPACITY CONFOUND: archive bounded at 20 cells by design (load-bearing-core keying); cell-fill series saturates benignly. Use the -improvements cell for the verdict."
+  }
+ },
+ {
+  "fp": "FP-003",
+  "target": "apollo-branch-c-r2-improvements",
+  "fired": true,
+  "headline": "tail zero-promotion streak=480/480 batches (min_streak=30); menu constant (assumed fixed; no fingerprints)",
+  "evidence": {
+   "streak": 480,
+   "n_batches": 480,
+   "min_streak": 30,
+   "menu_constant": true,
+   "menu_known": false
+  },
+  "context": {
+   "path": "D:\\Prometheus\\apollo\\run_branch_c_r2\\evolve_log.jsonl",
+   "n_gens": 481,
+   "acc_start": 0.42,
+   "acc_end": 0.42,
+   "note": "promotion := strict best_acc improvement (honest series for capacity-bound MAP-Elites). Search alive during tail (mutation_viability=1.0, llm_used>0): zero-improvement tail under fixed op menu. CAUSE ATTRIBUTION (structural ceiling vs broken gate/Goodhart) not established here \u2014 candidate FP-003 anchor pending Apollo-side cause audit."
+  }
+ },
+ {
+  "fp": "FP-002",
+  "target": "icarus-training-stream",
+  "fired": false,
+  "headline": "top-1 label 'diff_apply_failed' absorbs 50.0% of 6 kills (entropy_norm=0.92)",
+  "evidence": {
+   "n": 6,
+   "n_labels": 3,
+   "top1": "diff_apply_failed",
+   "top1_share": 0.5,
+   "entropy_norm": 0.9206,
+   "threshold": 0.3,
+   "payload_downgrade": false
+  },
+  "context": {
+   "path": "D:\\Prometheus\\agents\\icarus\\state\\training_stream.jsonl",
+   "n": 6,
+   "note": "n far below min_records=1000 \u2014 cell honestly filled as RUN_INSUFFICIENT_VOLUME, not RUN_CLEAN; concentration evidence below threshold volume carries no verdict either way"
+  }
+ },
+ {
+  "fp": "FP-003",
+  "target": "ergon-20260418-deep",
+  "fired": false,
+  "headline": "tail zero-promotion streak=0/5000 batches (min_streak=30); menu constant (assumed fixed; no fingerprints)",
+  "evidence": {
+   "streak": 0,
+   "n_batches": 5000,
+   "min_streak": 30,
+   "menu_constant": true,
+   "menu_known": false
+  },
+  "context": {
+   "path": "D:\\Prometheus\\ergon\\logs\\ergon_20260418_090119.jsonl",
+   "n_gens": 5000,
+   "total": 18958,
+   "note": "promotion := deep per generation; 2026-04-18 run, fixed operator menu within run (no fingerprint column). Historical run \u2014 agent not currently active."
+  }
+ },
+ {
+  "fp": "FP-003",
+  "target": "ergon-20260418-survived",
+  "fired": false,
+  "headline": "tail zero-promotion streak=0/5000 batches (min_streak=30); menu constant (assumed fixed; no fingerprints)",
+  "evidence": {
+   "streak": 0,
+   "n_batches": 5000,
+   "min_streak": 30,
+   "menu_constant": true,
+   "menu_known": false
+  },
+  "context": {
+   "path": "D:\\Prometheus\\ergon\\logs\\ergon_20260418_090119.jsonl",
+   "n_gens": 5000,
+   "total": 40466,
+   "note": "promotion := survived per generation; 2026-04-18 run, fixed operator menu within run (no fingerprint column). Historical run \u2014 agent not currently active."
+  }
+ },
+ {
+  "fp": "FP-003",
+  "target": "icarus-cycle-stream",
+  "fired": false,
+  "headline": "tail zero-promotion streak=0/6 batches (min_streak=30); menu constant (assumed fixed; no fingerprints)",
+  "evidence": {
+   "streak": 0,
+   "n_batches": 6,
+   "min_streak": 30,
+   "menu_constant": true,
+   "menu_known": false
+  },
+  "context": {
+   "path": "D:\\Prometheus\\agents\\icarus\\state\\training_stream.jsonl",
+   "n_cycles": 6,
+   "note": "promotion := cycle not blocked_promotion. n << 30: cell filled as RUN_INSUFFICIENT volume, no verdict either way."
+  }
+ }
+]

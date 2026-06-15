@@ -56,7 +56,7 @@ What I will **not** touch: a3 itself stays as-is (it is a sampler by design and 
 
 ### 3.1 Exhaustive evaluation (replace sampling with enumeration)
 
-`harmonia/experiments/a3_lattice_void_sweep.py`: for each of the 20,736 parameter cells, compute the **hold-rate** over the *full* knot-catalog × EC-catalog object cross-product (not a random sample). Output a dense 5-D tensor of `hold_rate[f, g, ki, ei, rel]` and `n_evaluated[...]` (defined object pairs). A cell is a **void candidate** iff `hold_rate ≈ 1.0` over a non-trivial `n_evaluated` — i.e., the relation holds across the whole catalog, which is exactly what "the relation never gets killed here" means structurally.
+`harmonia/experiments/a3_lattice_void_sweep.py`: for each of the 3,456 parameter cells (see line-45 errata; was mis-stated 20,736), compute the **hold-rate** over the *full* knot-catalog × EC-catalog object cross-product (not a random sample). Output a dense 5-D tensor of `hold_rate[f, g, ki, ei, rel]` and `n_evaluated[...]` (defined object pairs). A cell is a **void candidate** iff `hold_rate ≈ 1.0` over a non-trivial `n_evaluated` — i.e., the relation holds across the whole catalog, which is exactly what "the relation never gets killed here" means structurally.
 
 ### 3.2 The triviality null (the part the topography report omitted)
 

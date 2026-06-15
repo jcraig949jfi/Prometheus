@@ -25,8 +25,19 @@ expected to pass its own comparator; Proposal E uses the default map comparator
                   n_null_trials=20, seed=0) -> CostumeVerdict
 
 Returns CostumeVerdict with, per baseline: agreement_rate, actionable_deltas,
-ties_claim; plus the z-score of the claim vs a shuffle null, and a headline
-verdict in {DISTINCT, COSTUME_OF:<baseline>, INCONCLUSIVE}.
+ties_claim, vacuous; plus the z-score of the claim vs a shuffle null, and a
+headline verdict in {DISTINCT, COSTUME_OF:<baseline>, INCONCLUSIVE,
+INCONCLUSIVE_DEGENERATE}.
+
+DEGENERACY GUARD (added 2026-06-15, filed by Harmonia D): a within-key
+aggregating baseline (marginal_majority, pair_aware) collapses to an identity
+label-copier when every key has one row, so it ties ANY unique-key claim and
+certifies nothing -> such ties are marked `vacuous` and excluded; if no
+non-vacuous baseline remains, or the claim is imbalanced under the default
+comparator (majority-class tie), the verdict is INCONCLUSIVE_DEGENERATE with a
+message to supply cross-key/set-level baselines or an imbalance-aware comparator.
+The guard does NOT detect caller-side circular construction (a claim DEFINED as
+its own marginal — e.g. Proposal E's Q4); that remains usage discipline.
 
 Catalog shipped in v0 (per the sequencing decision — three only; add more only
 when a real claim shape needs them): marginal_majority, volume_weighted,
@@ -60,6 +71,7 @@ class BaselineResult:
     actionable_deltas: int         # shared keys where they differ substantively
     ties_claim: bool               # agreement_rate >= TIE_THRESHOLD
     n_shared_keys: int
+    vacuous: bool = False          # tie is structurally meaningless (see degeneracy guard)
 
 
 @dataclass(frozen=True)
@@ -193,6 +205,18 @@ def costume_check(
     """Run the claim against the baseline catalog. See module docstring for the
     frozen contract."""
     cmp = comparator or _default_comparator
+
+    # Degeneracy guard (filed by Harmonia D 2026-06-10, a3 generic_catalog_control).
+    # Within-key aggregating baselines (marginal_majority, pair_aware) collapse to
+    # IDENTITY label-copiers when every key has exactly one row: they then tie ANY
+    # unique-key claim at 100%, certifying nothing. Detect "no aggregation happened"
+    # via key multiplicity and mark such ties vacuous so they cannot drive a COSTUME
+    # verdict. (Does NOT detect caller-side circular construction — a claim DEFINED
+    # as its own marginal; that is usage discipline, see Proposal E review S1.)
+    _key_mult = Counter(key_fn(r) for r in rows)
+    _n_multi_keys = sum(1 for v in _key_mult.values() if v > 1)
+    _AGGREGATING = {"marginal_majority", "pair_aware"}
+
     results: list = []
     for name in baselines:
         fn = CATALOG[name]
@@ -205,33 +229,69 @@ def costume_check(
         except InapplicableBaseline:
             continue
         agr, deltas, n_shared = cmp(claim, bmap)
+        vacuous = (name in _AGGREGATING and _n_multi_keys == 0)
         results.append(BaselineResult(
             name=name, agreement_rate=agr, actionable_deltas=deltas,
             ties_claim=(agr >= TIE_THRESHOLD and n_shared >= MIN_KEYS_FOR_VERDICT),
-            n_shared_keys=n_shared,
+            n_shared_keys=n_shared, vacuous=vacuous,
         ))
 
     z = _shuffle_null_z(rows, claim, key_fn, label_fn, n_null_trials, seed)
 
-    ties = [r for r in results if r.ties_claim]
+    real_ties = [r for r in results if r.ties_claim and not r.vacuous]
+    non_vacuous = [r for r in results if not r.vacuous]
+    n_vacuous_ties = sum(1 for r in results if r.ties_claim and r.vacuous)
+
+    # Imbalance warning: with the DEFAULT comparator, a near-constant claim is tied
+    # by any majority-class baseline (this is what bit the a3 binary VOID/NONVOID
+    # control). Recommend an imbalance-aware comparator rather than silently COSTUMING.
+    _label_share = Counter(claim.values())
+    _imbalanced = bool(_label_share) and (
+        _label_share.most_common(1)[0][1] / len(claim) >= TIE_THRESHOLD)
+    _imbalance_note = (
+        " [imbalanced claim + default comparator: supply an imbalance-aware "
+        "comparator (e.g. minority-class Jaccard) before trusting a tie]"
+        if _imbalanced and comparator is None else "")
+
     if len(claim) < MIN_KEYS_FOR_VERDICT or not results:
         verdict = "INCONCLUSIVE"
         strongest = None
         headline = (f"INCONCLUSIVE: claim has {len(claim)} keys "
                     f"(need >= {MIN_KEYS_FOR_VERDICT}) or no applicable baseline.")
-    elif ties:
-        strongest = max(ties, key=lambda r: r.agreement_rate).name
+    elif not non_vacuous:
+        verdict = "INCONCLUSIVE_DEGENERATE"
+        strongest = None
+        headline = (
+            "INCONCLUSIVE_DEGENERATE: claim has unique keys (no within-key "
+            "aggregation), so every catalog baseline is an identity label-copier "
+            "and ties vacuously. Supply a baseline that uses cross-key structure, "
+            "or a custom comparator + set-level baselines (cf. Proposal B).")
+    elif real_ties and _imbalanced and comparator is None:
+        # Tie may be a pure majority-class artifact: the default comparator cannot
+        # tell "real majority-class structure" from "imbalance" without a
+        # minority-aware comparator. This is what bit D's binary VOID/NONVOID control.
+        verdict = "INCONCLUSIVE_DEGENERATE"
+        strongest = None
+        headline = (
+            f"INCONCLUSIVE_DEGENERATE: claim is imbalanced "
+            f"({_label_share.most_common(1)[0][1] / len(claim):.1%} one label) and "
+            f"the default comparator ties any majority-class baseline. Supply an "
+            f"imbalance-aware comparator (e.g. minority-class Jaccard) to discriminate.")
+    elif real_ties:
+        strongest = max(real_ties, key=lambda r: r.agreement_rate).name
         verdict = f"COSTUME_OF:{strongest}"
         headline = (f"COSTUME: claim is indistinguishable from '{strongest}' "
-                    f"({max(r.agreement_rate for r in ties):.1%} agreement). "
+                    f"({max(r.agreement_rate for r in real_ties):.1%} agreement). "
                     f"This structure is a baseline wearing a hat.")
     else:
         strongest = None
         verdict = "DISTINCT"
-        best = max(results, key=lambda r: r.agreement_rate)
-        headline = (f"DISTINCT: no catalog baseline reproduces the claim "
-                    f"(strongest tie {best.name} at {best.agreement_rate:.1%} "
-                    f"< {TIE_THRESHOLD:.0%}); z_vs_shuffle={z:.2f}.")
+        best = max(non_vacuous, key=lambda r: r.agreement_rate)
+        _vac = (f" ({n_vacuous_ties} vacuous tie(s) excluded by the unique-key guard)"
+                if n_vacuous_ties else "")
+        headline = (f"DISTINCT: no non-vacuous catalog baseline reproduces the claim "
+                    f"(strongest {best.name} at {best.agreement_rate:.1%} "
+                    f"< {TIE_THRESHOLD:.0%}); z_vs_shuffle={z:.2f}.{_vac}")
 
     return CostumeVerdict(
         verdict=verdict,

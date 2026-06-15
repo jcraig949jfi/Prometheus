@@ -1,0 +1,2410 @@
+{
+  "summary": "Loop-until-dry hunt for undiscovered failure primitives across the whole Prometheus agent fleet",
+  "agentCount": 27,
+  "logs": [
+    "Round 1: 16 miners, 7 known shapes, dry=0",
+    "Round 1: 160 raw candidates from 16 miners",
+    "Round 1: 90 genuinely-new shapes after dedup (102 folded/rejected)",
+    "Round 2: 7 miners, 97 known shapes, dry=0",
+    "[mine:stoa-sigma] failed: You've hit your monthly spend limit · raise it at claude.ai/settings/usage",
+    "[mine:small-agents-batch2] failed: You've hit your monthly spend limit · raise it at claude.ai/settings/usage",
+    "[mine:small-agents-batch1] failed: You've hit your monthly spend limit · raise it at claude.ai/settings/usage",
+    "[mine:misc-infra] failed: You've hit your monthly spend limit · raise it at claude.ai/settings/usage",
+    "[mine:ignis] failed: You've hit your monthly spend limit · raise it at claude.ai/settings/usage",
+    "[mine:cartography] failed: You've hit your monthly spend limit · raise it at claude.ai/settings/usage",
+    "[mine:falsification-audit] failed: You've hit your monthly spend limit · raise it at claude.ai/settings/usage",
+    "Round 2: 0 raw candidates from 0 miners",
+    "Round 3: 2 miners, 97 known shapes, dry=1",
+    "[mine:lens-instrumentation-artifacts] failed: You've hit your monthly spend limit · raise it at claude.ai/settings/usage",
+    "[mine:lens-process-discipline] failed: You've hit your monthly spend limit · raise it at claude.ai/settings/usage",
+    "Round 3: 0 raw candidates from 0 miners",
+    "[completeness-critic] failed: You've hit your monthly spend limit · raise it at claude.ai/settings/usage"
+  ],
+  "result": {
+    "rounds_run": 3,
+    "terminated_dry": true,
+    "discovered": [
+      {
+        "name": "degenerate_field_flatline",
+        "signature": "A field/channel/coordinate/annotation the design declares as varying (append-typed lineage, weighted health channel, diagnostic vector component, operator label) is degenerate across the entire ledger (single value, never populated, pinned at a bound, uniformly stamped) despite live upstream writers; every downstream metric or structure verdict computed on it is algebraically forced and gets read as a domain finding. Tell: metric bit-identical under an intervention with confirmed large upstream effect.",
+        "member_refs": [
+          "apollo/append_field_overwrite_flatline",
+          "harmonia-self/forced_rank_artifact",
+          "polyhymnia/dead_channel_composite",
+          "noesis/degenerate_signature_substrate"
+        ],
+        "anchor_agents": [
+          "apollo",
+          "harmonia",
+          "polyhymnia",
+          "noesis"
+        ],
+        "why_new": "No optimizer (not goodhart), no kill label (not opaque_kill): the verdict is fabricated by instrumentation/annotation topology, detectable by per-field entropy audit before any analysis.",
+        "best_anchors": [
+          {
+            "agent": "apollo",
+            "artifact": "D:\\Prometheus\\pivot\\apollo_investigation_2026-05-22.md",
+            "quote": "The mutation log confirmed 9,089 LLM-tagged mutation events over the run. But `llm_alive` in the population was 0.",
+            "date": "2026-05-22"
+          },
+          {
+            "agent": "harmonia",
+            "artifact": "D:\\Prometheus\\harmonia\\memory\\architecture\\reaudit_killvector_rank1_2026-05-27.md",
+            "quote": "A correlation matrix over single-component vectors is algebraically forced to rank-1. No other answer is possible.",
+            "date": "2026-05-27"
+          },
+          {
+            "agent": "noesis",
+            "artifact": "D:\\Prometheus\\journal\\2026-03-31-aletheia-overnight.md",
+            "quote": "182 of 236 hubs (77%) share identical depth-2 confidence signatures",
+            "date": "2026-03-31"
+          }
+        ],
+        "detector_sketch": "Per declared-varying field: cardinality/variance/population rate vs writer-event counts; fire on degeneracy. Second: downstream delta exactly 0 under an intervention with large mid-pipeline effect.",
+        "discovered_round": 1
+      },
+      {
+        "name": "declared_check_never_executed",
+        "signature": "A decisive, cheap verification named in the agent's own docs (pre-registered falsifier, named risk with a verify-imperative, keystone test, objective-level eval) has zero execution events in the ledger while budget is consumed and dependent claims multiply; when finally run (often externally prompted) it settles the question in minutes.",
+        "member_refs": [
+          "apollo/terminal_horizon_falsifier",
+          "apollo/named_risk_never_wired",
+          "noesis/deferred_keystone_validation",
+          "ergon/objective_without_eval"
+        ],
+        "anchor_agents": [
+          "apollo",
+          "noesis",
+          "ergon"
+        ],
+        "why_new": "Not baseline_costume (the baseline existed in protocol, never ran) and not reward_signal_capture (no celebration event); it is a doc-to-execution traceability gap on the kill-capable check.",
+        "best_anchors": [
+          {
+            "agent": "apollo",
+            "artifact": "D:\\Prometheus\\pivot\\apollo_status_and_ideas_2026-05-24.md",
+            "quote": "The single-primitive lift test we ran manually is cheap (~2 min). Run it inline every 50 gens.",
+            "date": "2026-05-24"
+          },
+          {
+            "agent": "noesis",
+            "artifact": "D:\\Prometheus\\noesis\\v3\\NOESIS_V3_FINDINGS.md",
+            "quote": "Human annotation comparison on a 30-hub sample would answer this definitively.",
+            "date": "2026-04-04"
+          },
+          {
+            "agent": "ergon",
+            "artifact": "D:\\Prometheus\\roles\\Ergon\\GREEDY_FOLLOWUP_FINDINGS_2026-06-07.md",
+            "quote": "The Learner's actual objective — predicting productive search moves / routing by failure — has *no eval yet*.",
+            "date": "2026-06-07"
+          }
+        ],
+        "detector_sketch": "Extract declared falsifiers/risks/keystones/objective evals; estimate cost; fire when execution-event count is 0 before X% of budget or while dependent-claim count grows past k.",
+        "discovered_round": 1
+      },
+      {
+        "name": "asserted_state_referent_gap",
+        "signature": "State/handoff/resume docs assert artifacts, inventory, counts, IDs or APIs that mechanical referent checks (stat the path, count vs enumeration, resolve the ID, import the module) show absent or mismatched; downstream planning builds on phantom state and immutability discipline freezes the error.",
+        "member_refs": [
+          "apollo/phantom_artifact_inventory",
+          "cross-cutting-pivot/phantom_deliverable_loop",
+          "harmonia-self/immutable_ledger_reference_rot"
+        ],
+        "anchor_agents": [
+          "apollo",
+          "harmonia"
+        ],
+        "why_new": "Not opaque_kill_black_hole (no kill label; whole channels/paths have zero objects while docs claim otherwise); pure doc-vs-filesystem predicate a 100-LOC validator catches.",
+        "best_anchors": [
+          {
+            "agent": "apollo",
+            "artifact": "D:\\Prometheus\\pivot\\autopsy_apollo_2026-05-13.md",
+            "quote": "Lineage / journal / graveyard / checkpoints dirs | **Do not exist on disk.**",
+            "date": "2026-05-13"
+          },
+          {
+            "agent": "harmonia",
+            "artifact": "D:\\Prometheus\\harmonia\\memory\\retraction_registry.md",
+            "quote": "validator at `harmonia/memory/diagnostics/validate_retraction_registry.py` caught two stale paths",
+            "date": "2026-04-29"
+          }
+        ],
+        "detector_sketch": "Reference validator over structured doc claims: path exists, counts match enumerations, IDs resolve, described APIs import; for declared output channels, write-event count over the run window > 0.",
+        "discovered_round": 1
+      },
+      {
+        "name": "uncalibrated_instrument_floor",
+        "signature": "An eval battery/corpus is never audited against a panel of degenerate or cue-only baselines; when run, a content-free policy (longest candidate, constant modal label, parity/surface cue, sub-tier solver, linear probe on raw features) scores at or above the instrument's operating range or claimed capability tier, making historical scores and tier labels uninterpretable and corpora scored on it contaminated.",
+        "member_refs": [
+          "apollo/unaudited_instrument_floor",
+          "ergon/trivial_ceiling_eval",
+          "nemesis/answer_key_monoculture",
+          "hephaestus/tier_label_inflation",
+          "ergon/perturbation_negative_cue_leak"
+        ],
+        "anchor_agents": [
+          "apollo",
+          "ergon",
+          "nemesis",
+          "hephaestus"
+        ],
+        "why_new": "goodhart needs an optimizer gaming a gate; here the instrument itself has an unaudited discrimination floor injected at construction (item/label/answer-key confounds) that distorts honest measurements and even hides capability.",
+        "best_anchors": [
+          {
+            "agent": "apollo",
+            "artifact": "D:\\Prometheus\\pivot\\apollo_status_and_ideas_2026-05-24.md",
+            "quote": "\"Pick the longest candidate\" scores 51.9% — better than every other approach including the blackboard.",
+            "date": "2026-05-24"
+          },
+          {
+            "agent": "ergon",
+            "artifact": "D:\\Prometheus\\ergon\\learner\\trials\\TIRE_KICK_v0.5_RESULT_2026-05-06.md",
+            "quote": "Logistic regression on the 15 raw features ... achieves 17/17 = 1.000 post-fold.",
+            "date": "2026-05-06"
+          },
+          {
+            "agent": "nemesis",
+            "artifact": "D:\\Prometheus\\agents\\nemesis\\src\\metamorphic.py",
+            "quote": "new_correct = \"Not enough information\"",
+            "date": "2026-03-25"
+          }
+        ],
+        "detector_sketch": "Run a fixed degenerate-policy panel (constant, longest/shortest, positional, cue-only classifiers, sub-tier solvers) on every battery at construction time; report max degenerate score as floor; flag all scores at/below floor and label distributions whose modal share a constant policy exploits.",
+        "discovered_round": 1
+      },
+      {
+        "name": "incumbent_survives_gate_fix",
+        "signature": "After a mid-run gate/metric repair, the artifact population or promoted-claim set selected by the broken gate remains dominant: pre-fix lineage share stays >= pre-fix level for hundreds of iterations and diversity/coverage metrics do not move; the fix changed scores but not state.",
+        "member_refs": [
+          "apollo/incumbent_survives_gate_fix"
+        ],
+        "anchor_agents": [
+          "apollo"
+        ],
+        "why_new": "goodhart covers the original broken gate; this is the aftermath — the false belief that repairing the metric repairs the state distribution it produced (same logic as claims promoted under an old null needing active re-audit).",
+        "best_anchors": [
+          {
+            "agent": "apollo",
+            "artifact": "D:\\Prometheus\\pivot\\apollo_status_and_ideas_2026-05-24.md",
+            "quote": "500+ generations of harder selection pressure produced cleaner Goodhart, not real composition.",
+            "date": "2026-05-24"
+          }
+        ],
+        "detector_sketch": "Tag gate-change events; track pre-fix artifact/claim lineage share post-fix; fire when share decays slower than turnover baseline.",
+        "discovered_round": 1
+      },
+      {
+        "name": "surface_space_novelty_inflation",
+        "signature": "Novelty/diversity/coverage/productivity accounting is keyed in a space the generator varies for free (source-text distance, embedded numeric parameter, padding ops that shift a descriptor, record instances of one template, embedding distance from a single baseline); canonicalizing to behavioral/causal/template equivalence collapses the count by >>1, or the metric's extreme tail is owned by a nameable nuisance-transform family — monoculture accumulates while dashboards report exploration.",
+        "member_refs": [
+          "apollo/descriptor_padding_inflation",
+          "techne/parameter_minted_diversity",
+          "techne/record_count_proxy_masks_template_duplication",
+          "hephaestus/surface_novelty_monoculture",
+          "cross-cutting-pivot/surface_novelty_proxy",
+          "forge/incumbent_style_novelty_inflation",
+          "forge/blueprint_pinned_diversity",
+          "arcanum/nuisance_transform_summit"
+        ],
+        "anchor_agents": [
+          "apollo",
+          "techne",
+          "hephaestus",
+          "forge",
+          "arcanum"
+        ],
+        "why_new": "Not goodhart (inflates with no selection-pressure feedback) and not catalog_volume_mimicry (no external catalog): the diversity instrument itself measures the wrong equivalence space, which also masks bounded_menu_wall by never showing a zero tail.",
+        "best_anchors": [
+          {
+            "agent": "hephaestus",
+            "artifact": "D:\\Prometheus\\pivot\\hephaestus_state_and_next_steps_2026-05-30.md",
+            "quote": "tools with source NCD 0.3 (look similar) have behavioral NCD 0.07-0.22 (produce nearly identical answers). Source novelty inflates diversity claims.",
+            "date": "2026-05-30"
+          },
+          {
+            "agent": "techne",
+            "artifact": "D:\\Prometheus\\roles\\Techne\\SUBSTRATE_FIRE_LOG_2026-05-21.md",
+            "quote": "c4 produced 2,211 \"unique\" shapes — all `abs_diff_le_K` variants with K from 34-49+",
+            "date": "2026-05-22"
+          },
+          {
+            "agent": "apollo",
+            "artifact": "D:\\Prometheus\\apollo\\pivot\\r2_run1_findings_2026-06-10.md",
+            "quote": "This is exactly the fake-diversity the north star warns about — distinct cells, zero new coverage.",
+            "date": "2026-06-10"
+          }
+        ],
+        "detector_sketch": "Compute collapse ratio: |distinct under operative metric| / |distinct after canonicalization (strip zero-ablation ops, placeholder numerals, behavioral fingerprints, template classes)|; fire >1.5. For score metrics, classify top decile by nuisance features (language flip, markup fraction, style) vs base rate.",
+        "discovered_round": 1
+      },
+      {
+        "name": "statically_infeasible_objective",
+        "signature": "The declared target/success criterion is provably unattainable from the system's own specifications before any compute is spent: the typed operator graph cannot express the target class (and no reward crosses the gap), or the gate threshold exceeds the theoretical maximum of the declared artifact class; the run burns budget on an impossibility computable at design time.",
+        "member_refs": [
+          "apollo/statically_unreachable_target",
+          "forge/unsatisfiable_gate_for_declared_class"
+        ],
+        "anchor_agents": [
+          "apollo",
+          "forge"
+        ],
+        "why_new": "bounded_menu_wall is diagnosed behaviorally from a zero-promotion tail; this fires statically at launch from registry/eval specs — reachability and score-bound analysis, not promotion history.",
+        "best_anchors": [
+          {
+            "agent": "apollo",
+            "artifact": "D:\\Prometheus\\apollo\\pivot\\r2_run1_findings_2026-06-10.md",
+            "quote": "Evolution didn't fail to find the multi-tier organism — the organism does not exist in the search space.",
+            "date": "2026-06-10"
+          },
+          {
+            "agent": "forge",
+            "artifact": "D:\\Prometheus\\forge\\STATUS_T1_T2_20260403.md",
+            "quote": "A single-domain specialist's theoretical maximum is ~37.5% ... This creates a structural ceiling that punishes specialization.",
+            "date": "2026-04-03"
+          }
+        ],
+        "detector_sketch": "At launch: transitive closure over typed op/slot graph for target expressibility; reward-path dependence check; compute gate-metric upper bound for the declared artifact class vs threshold.",
+        "discovered_round": 1
+      },
+      {
+        "name": "verdict_line_compression",
+        "signature": "A diagnostic computes k>=2 mechanistically distinct per-item signatures but the report preserves only an aggregate count or single verdict token; each lost label implied a different corrective action, now unrecoverable from the artifact.",
+        "member_refs": [
+          "apollo/verdict_line_compression"
+        ],
+        "anchor_agents": [
+          "apollo"
+        ],
+        "why_new": "opaque_kill_black_hole's payload never existed; here the payload existed in raw output and the reporting layer discarded it — detector compares raw vs report label cardinality. Canonical origin of the failure-signature doctrine, absent from the known list.",
+        "best_anchors": [
+          {
+            "agent": "apollo",
+            "artifact": "D:\\Prometheus\\pivot\\apollo_phase1_framing_2026-05-27.md",
+            "quote": "The four signatures — recompute-bypass, side-output, redundant-encoding, atomic-with-output — each pointed to a separate design correction. The summary statistic destroyed all of them.",
+            "date": "2026-05-27"
+          }
+        ],
+        "detector_sketch": "For every report with machine-readable raw counterpart: fire when distinct raw labels >=2 and report preserves <=1.",
+        "discovered_round": 1
+      },
+      {
+        "name": "collapsed_ecology_corpus_export",
+        "signature": "A corpus exported to a downstream learner was generated by a collapsed/contaminated process: row count large but canonical-content cardinality ~1 recipe, failure mass concentrated in one region traceable to a single artifact, ecology/instrument provenance labels absent at export.",
+        "member_refs": [
+          "apollo/collapsed_ecology_corpus_export"
+        ],
+        "anchor_agents": [
+          "apollo"
+        ],
+        "why_new": "catalog_volume_mimicry is signal tracking external catalog volume; this is exported-corpus representativeness — volume masking near-zero effective sample size of the generating process.",
+        "best_anchors": [
+          {
+            "agent": "apollo",
+            "artifact": "D:\\Prometheus\\pivot\\apollo_investigation_2026-05-22.md",
+            "quote": "That's not 5000 *distinct* training data points — it's 5000 instances of one recipe.",
+            "date": "2026-05-22"
+          }
+        ],
+        "detector_sketch": "Canonicalize rows, compute distinct/total and max-cluster share; require ecology-status/instrument-version provenance fields at export.",
+        "discovered_round": 1
+      },
+      {
+        "name": "midfunnel_bakeoff_proxy",
+        "signature": "A component bake-off ranks candidates on an intermediate funnel-stage metric (output validates) and installs the winner; the terminal objective metric does not move at all despite a large celebrated mid-funnel delta — the selection metric was k stages upstream of the declared objective.",
+        "member_refs": [
+          "apollo/midfunnel_bakeoff_proxy"
+        ],
+        "anchor_agents": [
+          "apollo"
+        ],
+        "why_new": "Not goodhart (no optimizer; a deliberate selection decision) and not reward_signal_capture (measurement was careful, aimed at the wrong funnel stage).",
+        "best_anchors": [
+          {
+            "agent": "apollo",
+            "artifact": "D:\\Prometheus\\pivot\\apollo_investigation_2026-05-22.md",
+            "quote": "Granite gave us better mutation viability, not better fitness.",
+            "date": "2026-05-22"
+          }
+        ],
+        "detector_sketch": "Tag selection metrics with funnel stage; fire when commitment is made on a non-terminal stage and post-swap terminal delta ~0 while mid-funnel delta is large.",
+        "discovered_round": 1
+      },
+      {
+        "name": "harness_contract_wall",
+        "signature": "A deterministic full-kill wall caused by mismatch between generator-side and evaluator-side interface contracts: uniform 0% with a single kill label while proposals are semantically sound and vary only in serialization, or the dominant rejection reason bans exactly what the generation prompt mandates; surfacing/joining the two contracts clears the wall in one cycle with zero capability change.",
+        "member_refs": [
+          "icarus/interface_contract_starvation",
+          "forge/spec_gate_contradiction"
+        ],
+        "anchor_agents": [
+          "icarus",
+          "forge"
+        ],
+        "why_new": "Not bounded_menu_wall: the menu already contained the correct artifact; the ceiling is an unobservable or self-contradictory harness contract, misread as capability or model-quality failure.",
+        "best_anchors": [
+          {
+            "agent": "icarus",
+            "artifact": "D:\\Prometheus\\agents\\icarus\\cycles\\cycle_011\\outcome.json",
+            "quote": "contains logically sound algebraic reasoning — but fails every single R3 probe at runtime.",
+            "date": "2026-05-29"
+          },
+          {
+            "agent": "forge",
+            "artifact": "D:\\Prometheus\\roles\\PipelineOrchestrator\\journal_20260403.md",
+            "quote": "Frame H prompt tells LLM to `import forge_primitives` but validator.py rejects it as forbidden import (40% of failures).",
+            "date": "2026-04-03"
+          }
+        ],
+        "detector_sketch": "On acc==0 runs with kill-label entropy 0: cross-match prompt-mandated tokens vs gate ban-list; measure semantic similarity of consecutive proposals vs serialization-only edit distance; prescribe contract introspection.",
+        "discovered_round": 1
+      },
+      {
+        "name": "graderside_leak_into_generator",
+        "signature": "The generation/feedback channel is not blind to grader-side material: label payloads (ground_truth samples) surface in the proposer's context, or a privileged manual channel run by an agent with read access to quarantined eval material feeds the same promotion ledger; outputs become isomorphic to leaked material, with channel-conditional pass rates extreme-bimodal and later cluster-eval failure confirming overfit.",
+        "member_refs": [
+          "icarus/oracle_sample_leak_imitation",
+          "forge/privileged_channel_bypass"
+        ],
+        "anchor_agents": [
+          "icarus",
+          "forge"
+        ],
+        "why_new": "Not goodhart: the leak corrupts search direction or contaminates provenance rather than satisfying a gate's letter; isolation enforced on processes, not on provenance.",
+        "best_anchors": [
+          {
+            "agent": "icarus",
+            "artifact": "D:\\Prometheus\\whitepapers\\icarus_synthetic_reasoning_v01_2026-05-27.md",
+            "quote": "we had been surfacing `probe.ground_truth` in the schema, which was *both* a cheat-vector *and* misleading",
+            "date": "2026-05-29"
+          },
+          {
+            "agent": "forge",
+            "artifact": "D:\\Prometheus\\roles\\PipelineOrchestrator\\journal_20260402.md",
+            "quote": "Claude Code forges gems from near-misses (100% yield) — quality play",
+            "date": "2026-04-02"
+          }
+        ],
+        "detector_sketch": "Intersect label-side field names with delivered proposer context; access-manifest audit of every channel feeding the ledger; channel-stratified pass-rate and score-outlier tests.",
+        "discovered_round": 1
+      },
+      {
+        "name": "truncated_self_view_rebuild",
+        "signature": "A read-modify-write loop whose read path silently replaces the object-under-edit with a sentinel/truncated payload past a context budget; the proposer stops referencing existing identifiers, emits create-new-file patches over non-empty files, and rewrites drop previously-validated capabilities — misread as proposal-quality failure.",
+        "member_refs": [
+          "icarus/truncated_self_view_rebuild"
+        ],
+        "anchor_agents": [
+          "icarus"
+        ],
+        "why_new": "Input-side information destruction to the proposer, absent from the known list; distinct from bounded_menu_wall (menu fine, view severed).",
+        "best_anchors": [
+          {
+            "agent": "icarus",
+            "artifact": "D:\\Prometheus\\.git (commit 38df7944)",
+            "quote": "_read_source truncated the ENTIRE reasoner to \"[truncated]\" (33 chars) once it exceeded the 6000-char budget",
+            "date": "2026-05-29"
+          }
+        ],
+        "detector_sketch": "payload/artifact byte ratio + sentinel detection; identifier-overlap between proposal and current artifact; create-file framing over existing files; dropped-capability diff.",
+        "discovered_round": 1
+      },
+      {
+        "name": "shallow_layer_evidence_deep_verdict",
+        "signature": "A capability/representation-layer conclusion is asserted while >=50% of the stall-window evidence consists of failure classes firing at shallower layers (transport, file-write, patch-apply, interface) and no experiment discriminates the layers; transport-class evidence is laundered into capability-class verdicts that steer strategy.",
+        "member_refs": [
+          "icarus/layer_skipping_attribution",
+          "hephaestus/infra_failure_laundered_as_capability_verdict"
+        ],
+        "anchor_agents": [
+          "icarus",
+          "hephaestus"
+        ],
+        "why_new": "Not reward_signal_capture (stall pressure, not excitement) and not opaque_kill (labels exist and are differentiated — the verdict ignores the differentiation across a layer lattice).",
+        "best_anchors": [
+          {
+            "agent": "icarus",
+            "artifact": "D:\\Prometheus\\pivot\\icarus_frontier_verdict_synthesis_2026-05-29.md",
+            "quote": "Our only evidence is `diff_apply_failed` at R5 — which proves **patch-generation brittleness under too-large architectural jumps**",
+            "date": "2026-05-29"
+          },
+          {
+            "agent": "hephaestus",
+            "artifact": "D:\\Prometheus\\agents\\hephaestus\\MODEL_COMPARISON_REPORT.md",
+            "quote": "0/25 success rate is not a tuning problem—it's a fundamental capability gap.",
+            "date": "2026-04-02"
+          }
+        ],
+        "detector_sketch": "Map failure classes onto a fixed layer lattice; fire when claim layer > frequency-weighted evidence layer with no discriminating experiment logged; output unfalsified cheaper layers.",
+        "discovered_round": 1
+      },
+      {
+        "name": "dead_letter_failure_memory",
+        "signature": "Failure-memory artifacts are produced and upgraded but never re-enter the decision loop: producer writes path A, consumer reads path B; the loop runs indefinitely with a constant-empty memory slot while files on disk instruct 'consult before proposing'.",
+        "member_refs": [
+          "icarus/dead_letter_failure_memory"
+        ],
+        "anchor_agents": [
+          "icarus"
+        ],
+        "why_new": "Not opaque_kill_black_hole: witness payloads are rich and typed; the failure is memory plumbing — an empty producer/consumer path-join, statically checkable.",
+        "best_anchors": [
+          {
+            "agent": "icarus",
+            "artifact": "D:\\Prometheus\\agents\\icarus\\daemon.py",
+            "quote": "wisdom_path = ICARUS_DIR / \"wisdom\" / \"wisdom.md\"",
+            "date": "2026-06-10"
+          }
+        ],
+        "detector_sketch": "Static: intersect memory-producer write paths with loop reader paths. Dynamic: flag context fields constant-empty across N cycles while matching disk files are nonempty and newer.",
+        "discovered_round": 1
+      },
+      {
+        "name": "proxy_closed_perpetual_debt",
+        "signature": "An obligation ledger whose closure predicate is a coarse proxy (any test-count growth closes the oldest debt as 'regression_test_written') and whose open entries never gate promotion: debts closed milliseconds after creation unverified, the same debt open across 16+ cycles with its prescribed test recited verbatim as ritual, promotions proceeding with open_debts_after > 0.",
+        "member_refs": [
+          "icarus/proxy_closed_perpetual_debt"
+        ],
+        "anchor_agents": [
+          "icarus"
+        ],
+        "why_new": "Not goodhart: the ledger machinery self-certifies discharge via proxy with no enforcement hook — record-keeping substitutes for the action, no optimizer involved.",
+        "best_anchors": [
+          {
+            "agent": "icarus",
+            "artifact": "D:\\Prometheus\\agents\\icarus\\debt_ledger.py",
+            "quote": "close the OLDEST open debt as 'regression_test_written'. Conservative: one debt per cycle.",
+            "date": "2026-05-28"
+          }
+        ],
+        "detector_sketch": "AST-match closed debts' prescribed tests against the suite (no match = false closure); open-debt age in cycles spanning promotions; dedup of identical prescription text across training objects.",
+        "discovered_round": 1
+      },
+      {
+        "name": "dead_interface_instrument_bipolar",
+        "signature": "After the measured substrate migrates its interface, probe harnesses keep importing the dead symbol; outcomes become candidate-invariant, and the same root fault produces false alarms in one instrument (errors counted against candidates, fabricated doubt) and false cleanliness in another (errors swallowed, constant clean verdict at confidence 1.0), depending solely on each instrument's exception-branch polarity.",
+        "member_refs": [
+          "icarus/dead_interface_instrument_bipolar"
+        ],
+        "anchor_agents": [
+          "icarus"
+        ],
+        "why_new": "Instrument-side decay with a bipolarity teaching absent from the known list; no gate gamed, no excitement — detectable by candidate-invariance and symbol-existence checks.",
+        "best_anchors": [
+          {
+            "agent": "icarus",
+            "artifact": "D:\\Prometheus\\agents\\icarus\\cycles\\cycle_017\\lenses\\skeptic.json",
+            "quote": "raised: cannot import name 'Reasoner' from 'reasoner'",
+            "date": "2026-06-10"
+          }
+        ],
+        "detector_sketch": "Identical error strings across cycles/candidates; do imported symbols exist in the candidate interface; trace each instrument's exception branch polarity to predict corruption direction.",
+        "discovered_round": 1
+      },
+      {
+        "name": "measurement_referent_unbinding",
+        "signature": "The binding between recorded measurements/claims and the artifact they describe is corrupted after measurement time: archive rows mutated in place post-scoring, a replication re-run overwriting the original run's namespace so aggregates cite IDs whose on-disk content belongs to a different run, or hand transcription assigning the same ID conflicting scores/prompts across documents.",
+        "member_refs": [
+          "icarus/replication_overwrites_original",
+          "nemesis/post_measurement_occupant_mutation",
+          "arcanum/ledger_provenance_scramble"
+        ],
+        "anchor_agents": [
+          "icarus",
+          "nemesis",
+          "arcanum"
+        ],
+        "why_new": "No known shape addresses measurement-object binding: every number was honestly computed against an object that no longer exists; detector is a referential-integrity join plus re-evaluation of stored payloads.",
+        "best_anchors": [
+          {
+            "agent": "icarus",
+            "artifact": "D:\\Prometheus\\agents\\icarus\\state\\kill_clusters.json",
+            "quote": "\"cluster_id\": \"tdd_failed/missed_root\" ... \"observed_cycles\": [3, 4, 5, 8]",
+            "date": "2026-05-29"
+          },
+          {
+            "agent": "nemesis",
+            "artifact": "D:\\Prometheus\\agents\\nemesis\\src\\nemesis.py",
+            "quote": "if simplifications: n_shrunk += 1 task.prompt = min_prompt",
+            "date": "2026-03-25"
+          },
+          {
+            "agent": "arcanum",
+            "artifact": "D:\\Prometheus\\docs\\Xenolexicon_Master_Catalog_v3.md (via arcanum/docs)",
+            "quote": "Specimen `3fcf9331-58b` (0.5453) ... curvature of a manifold",
+            "date": "2026-03-20"
+          }
+        ],
+        "detector_sketch": "Join every cited (ID, property) against the on-disk record; re-evaluate stored payloads with stored evaluators; recompute descriptors from payloads; fire on mismatch, counter resets, or aggregates older than the records they summarize.",
+        "discovered_round": 1
+      },
+      {
+        "name": "inherited_capability_credit",
+        "signature": "A per-step credit label is computed from the candidate's absolute score rather than delta vs parent, so null steps inherit the lineage's standing capability as 'improvement'; a deterministic override stamps inconsistent labels on behaviorally identical null cycles depending on an unrelated path condition.",
+        "member_refs": [
+          "icarus/inherited_capability_credit"
+        ],
+        "anchor_agents": [
+          "icarus"
+        ],
+        "why_new": "Not goodhart (bookkeeping-policy bug, no optimizer benefits) and not baseline_costume: parent-lineage capability leaking into per-step credit labels of the exported training stream.",
+        "best_anchors": [
+          {
+            "agent": "icarus",
+            "artifact": "D:\\Prometheus\\agents\\icarus\\state\\training_stream.jsonl",
+            "quote": "\"improvement_kind\": \"metric_shaped\", \"improvement_rationale\": \"... candidate=4 (frontier R3) vs parent=4 (frontier R3), delta=0\"",
+            "date": "2026-06-10"
+          }
+        ],
+        "detector_sketch": "Contradiction predicate: improvement_kind != none AND delta<=0; flag label formulas using absolute scores without parent differencing; label entropy across identical deterministic outcomes.",
+        "discovered_round": 1
+      },
+      {
+        "name": "internal_catalog_citation_laundering",
+        "signature": "A claim promoted to high trust tier whose provenance chain terminates inside the project's own artifacts with no primary-source pin; each internal hop launders the citation so it looks more verified the further it travels from its unverified origin.",
+        "member_refs": [
+          "ergon/internal_catalog_citation_laundering"
+        ],
+        "anchor_agents": [
+          "ergon"
+        ],
+        "why_new": "Provenance-tier inversion (trust by artifact locality rather than verification depth) — no statistical baseline or excitement involved; absent from the known list.",
+        "best_anchors": [
+          {
+            "agent": "ergon",
+            "artifact": "D:\\Prometheus\\ergon\\learner\\v1_0_plans\\tensor_probe_shape_audit.md",
+            "quote": "a citation in an internal Aporia catalog is NOT a verified attribution",
+            "date": "2026-05-10"
+          }
+        ],
+        "detector_sketch": "Walk citation chains of trust>=T claims; fire when all sources resolve repo-internal and no external identifier has a verification record.",
+        "discovered_round": 1
+      },
+      {
+        "name": "production_into_vacuum",
+        "signature": "A producer keeps emitting artifacts at nominal or rising rate while every declared consumer is dead, unbuilt, drifted away, or mechanically appending without substantive reads: consumption receipts ~0 over windows of N>=30 artifacts, consumer dirs README-only, the counterpart of a co-evolution loop frozen, or 'loop closed' declared from producer-local evidence (schema passes, smoke handoffs, green counters) while the sink stalled days ago.",
+        "member_refs": [
+          "ergon/stranded_production_pipeline",
+          "techne/producer_without_reader",
+          "polyhymnia/consumerless_production_loop",
+          "cross-cutting-pivot/consumer_vacuum_production",
+          "aporia/receiptless_dispatch_scaling",
+          "forge/one_sided_coevolution_ratchet",
+          "theseus/producer_local_loop_closure"
+        ],
+        "anchor_agents": [
+          "techne",
+          "aletheia",
+          "ergon",
+          "aporia",
+          "theseus",
+          "forge"
+        ],
+        "why_new": "Not bounded_menu_wall (supply side fine) and not opaque_kill (payloads rich): demand-side absence with green mechanical plumbing masquerading as a consumer; the plateau is misread as producer decay.",
+        "best_anchors": [
+          {
+            "agent": "techne",
+            "artifact": "D:\\Prometheus\\pivot\\techne_substrate_audit_2026-05-24.md",
+            "quote": "**No human or model has read any of the 1469 promoted records.**",
+            "date": "2026-05-24"
+          },
+          {
+            "agent": "aletheia",
+            "artifact": "D:\\Prometheus\\pivot\\autopsy_forges_consolidated_2026-05-13.md",
+            "quote": "it's actually fine, just producing into a vacuum.",
+            "date": "2026-05-13"
+          },
+          {
+            "agent": "ergon",
+            "artifact": "D:\\Prometheus\\roles\\Ergon\\CORPUS_VALUE_AUDIT_2026-06-03.md",
+            "quote": "The fan-out **solved the generation problem and left the ingestion problem wide open.**",
+            "date": "2026-06-03"
+          }
+        ],
+        "detector_sketch": "Producer->consumer edge graph; join emissions against substantive consumption events (verdict-bearing citations, ingest deltas, counterpart population-hash changes); fire on N emissions with 0 receipts, classifying loop-closed claims as producer-local vs sink-side evidence.",
+        "discovered_round": 1
+      },
+      {
+        "name": "flow_counter_as_stock",
+        "signature": "A lifetime/processing counter (a flow) is cited as inventory (a stock) in status and planning docs while the deduplicated on-disk stock is smaller by an order of magnitude; re-scans/duplicates increment the counter without growing the stock, anchoring planning on a 31x belief error.",
+        "member_refs": [
+          "ergon/cumulative_counter_masquerade"
+        ],
+        "anchor_agents": [
+          "ergon"
+        ],
+        "why_new": "Measurement-semantics conflation in the agent's self-model — no gate gamed, no volume-tracking signal claim; the headline number itself is false.",
+        "best_anchors": [
+          {
+            "agent": "ergon",
+            "artifact": "D:\\Prometheus\\roles\\Ergon\\CORPUS_VALUE_AUDIT_2026-06-03.md",
+            "quote": "The deduplicated, usable corpus is **1,486 records** — ~31× smaller than the headline number.",
+            "date": "2026-06-03"
+          }
+        ],
+        "detector_sketch": "For every lifetime_* counter cited in a stock-shaped sentence, compute distinct-id stock; fire when counter/stock > k.",
+        "discovered_round": 1
+      },
+      {
+        "name": "composed_gate_class_starvation",
+        "signature": "Individually-defensible pipeline gates compose multiplicatively to exclude the doctrine-declared most-valuable class (or everything): the class holds majority share at source and ~0% at the sink, or the gates' accept-set intersection is empty so throughput is zero or template-identical garbage at a threshold boundary — while each gate's own metrics look healthy.",
+        "member_refs": [
+          "ergon/goal_inverted_ingest_filter",
+          "theseus/stacked_gate_class_starvation",
+          "ergon/disjoint_gate_composition_deadlock"
+        ],
+        "anchor_agents": [
+          "ergon",
+          "theseus"
+        ],
+        "why_new": "Not goodhart: no adversary — passive composition of mild biases (reliability weights reused as relevance filters, no quota floors) inverts the objective's sign at a level no single-gate audit sees.",
+        "best_anchors": [
+          {
+            "agent": "theseus",
+            "artifact": "D:\\Prometheus\\theseus\\journals\\BATCH_LOG.md",
+            "quote": "Without a floor, falsify share collapses to 0 deterministically.",
+            "date": "2026-05-19"
+          },
+          {
+            "agent": "ergon",
+            "artifact": "D:\\Prometheus\\roles\\Ergon\\CORPUS_VALUE_AUDIT_2026-06-03.md",
+            "quote": "**Outcome monoculture** — **79% `promoted` (confirmations), 1.4% `rejected` (failures).**",
+            "date": "2026-06-03"
+          }
+        ],
+        "detector_sketch": "Per-stage class-share vectors from generated to ingested; compute composed accept-set on an upstream sample; fire when a doctrine-flagged class drops >10x source-to-sink or composed intersection ~empty while each gate accepts >0.",
+        "discovered_round": 1
+      },
+      {
+        "name": "mismatched_null_reference",
+        "signature": "A verdict is computed against a chance/null reference whose construction does not match the statistic's constraint structure: a fixed theoretical constant with no measured control arm, a majority-class floor quoted as 'random', a uniform null that ignores marginal clustering, or a null that preserves the statistic's determinants so its variance collapses (|z|=110); recomputing under a constraint-matched permutation/control flips or annihilates the verdict.",
+        "member_refs": [
+          "ergon/control_free_chance_gate",
+          "noesis/wrong_chance_floor",
+          "charon-umbrella/nonmarginal_null_z_inflation",
+          "noesis/collapsed_null_z_inflation"
+        ],
+        "anchor_agents": [
+          "ergon",
+          "noesis",
+          "charon-umbrella"
+        ],
+        "why_new": "Not reward_signal_capture — nulls/gates were run in cold blood; the defect lives inside the reference's construction, including the unread alarm of implausible z magnitude. baseline_costume concerns the claim, not the reference procedure.",
+        "best_anchors": [
+          {
+            "agent": "charon-umbrella",
+            "artifact": "D:\\Prometheus\\roles\\Charon\\journal_20260415.md",
+            "quote": "this used a UNIFORM null — drawing random values uniformly from [min, max] of log(M).",
+            "date": "2026-04-15"
+          },
+          {
+            "agent": "ergon",
+            "artifact": "D:\\Prometheus\\ergon\\learner\\trials\\TIRE_KICK_v0.5_RESULT_2026-05-06.md",
+            "quote": "the gate's `H0 = 0.5` is mis-specified for **class-imbalanced held-out + strong-prior base models under masked decode**.",
+            "date": "2026-05-06"
+          },
+          {
+            "agent": "noesis",
+            "artifact": "D:\\Prometheus\\noesis\\v3\\exploration_journal_2026-04-05.md",
+            "quote": "Permutation test z=+3.38. Operators predict domain slightly better than random shuffle (12.7% vs 4.7%).",
+            "date": "2026-04-05"
+          }
+        ],
+        "detector_sketch": "Classify every null/chance reference (constant, analytic, majority, uniform, permutation); recompute under marginal/constraint-preserving permutation of the actual pipeline; fire when verdict flips or |z| drops >5x; mandatory audit when |z|>20 or null_std ~ 0.",
+        "discovered_round": 1
+      },
+      {
+        "name": "format_compliance_gain_as_capability",
+        "signature": "A large measured improvement delta whose dominant component is the treatment fixing output-protocol compliance (parse-fail 65%->0%) rather than the measured capability; decomposition against shuffled-label and base-rate controls leaves genuine capability as the smallest stacked component.",
+        "member_refs": [
+          "ergon/format_compliance_gain_as_capability"
+        ],
+        "anchor_agents": [
+          "ergon"
+        ],
+        "why_new": "Instrument-compliance masquerading as capability — the treatment changes how often the instrument can read an answer at all, which no marginals-baseline (baseline_costume) captures and no optimizer gamed.",
+        "best_anchors": [
+          {
+            "agent": "ergon",
+            "artifact": "D:\\Prometheus\\roles\\Ergon\\GREEDY_LORA_RESULT_2026-06-03.md",
+            "quote": "The base model *can't emit a parseable verdict 65% of the time*",
+            "date": "2026-06-03"
+          }
+        ],
+        "detector_sketch": "Compute parse-fail delta; recompute accuracy on parsed-only items vs shuffled-label/format-only control; fire when (raw-conditional)/raw > 0.5.",
+        "discovered_round": 1
+      },
+      {
+        "name": "paired_slice_eval_collapse",
+        "signature": "An aggregate score over a multi-source gold set whose slices share provenance 1:1 with training sources; leave-one-source-out produces a near-diagonal effect matrix — the aggregate is a sum of per-source template classifiers with ~zero transfer.",
+        "member_refs": [
+          "ergon/paired_slice_eval_collapse"
+        ],
+        "anchor_agents": [
+          "ergon"
+        ],
+        "why_new": "Not baseline_costume (requires the trained model; confound is train/eval provenance overlap) — the diagonal knockout matrix is a distinct, computable predicate.",
+        "best_anchors": [
+          {
+            "agent": "ergon",
+            "artifact": "D:\\Prometheus\\roles\\Ergon\\GREEDY_FOLLOWUP_FINDINGS_2026-06-07.md",
+            "quote": "The gold task is **three independent per-source slices with ~zero transfer**.",
+            "date": "2026-06-07"
+          }
+        ],
+        "detector_sketch": "Leave-one-source-out delta matrix; fire on high diagonality or static provenance equality between eval slices and training sources.",
+        "discovered_round": 1
+      },
+      {
+        "name": "planted_overlap_lift",
+        "signature": "In a testbed with planted signals, a discovery predicate shows extreme lift whose entire (tiny) match-group overlaps records that are positives by construction; excluding planted-signature overlap collapses lift to baseline.",
+        "member_refs": [
+          "ergon/planted_overlap_lift"
+        ],
+        "anchor_agents": [
+          "ergon"
+        ],
+        "why_new": "Lift derives from overlap with the experimenter's own construction registry — an extra provenance channel not computable from marginals (baseline_costume) and independent of excitement.",
+        "best_anchors": [
+          {
+            "agent": "ergon",
+            "artifact": "D:\\Prometheus\\ergon\\learner\\trials\\TRIAL_3_INVESTIGATION_REPORT.md",
+            "quote": "The high lift comes from the planted matches being kills by construction, NOT from independent signal.",
+            "date": "2026-05-04"
+          }
+        ],
+        "detector_sketch": "Compute match-group size, planted-overlap fraction, and non-overlap lift; fire on overlap>0 with non_overlap_lift ~ baseline or match group < k.",
+        "discovered_round": 1
+      },
+      {
+        "name": "unpersisted_evidence_record",
+        "signature": "Information generated at run/measurement time — outcomes, the measurement-context tuple (scorer, n, preprocessing, subset), cost telemetry, or the primary payload itself — is never written to the durable record (console-only, gitignored, working memory); later re-audit returns TBD/INCONCLUSIVE/irreproducible values while claims and plans built on the lost information keep circulating.",
+        "member_refs": [
+          "harmonia-self/provenance_free_ledger_rot",
+          "charon-umbrella/unpersisted_telemetry_blackout",
+          "arcanum/ephemeral_primary_payload",
+          "ergon/forensic_state_reconstruction"
+        ],
+        "anchor_agents": [
+          "harmonia",
+          "charon-umbrella",
+          "arcanum",
+          "ergon"
+        ],
+        "why_new": "Not opaque_kill (records absent or context-stripped, not label-pooled): write-time information destruction discovered only at re-use time, fixable by emitter contracts and provenance schemas, none of which the known list covers.",
+        "best_anchors": [
+          {
+            "agent": "harmonia",
+            "artifact": "D:\\Prometheus\\harmonia\\memory\\pattern_library.md",
+            "quote": "Claimed |z|=6.15 ... Clean n=66158 measurement: max|z|=0.39",
+            "date": "2026-04-17"
+          },
+          {
+            "agent": "charon-umbrella",
+            "artifact": "D:\\Prometheus\\charon\\diagnostics\\COST_TO_KILL_REPORT.md",
+            "quote": "8 of 9 surveyed pilots have ZERO `elapsed_seconds` telemetry.",
+            "date": "2026-05-05"
+          },
+          {
+            "agent": "arcanum",
+            "artifact": "D:\\Prometheus\\arcanum\\docs\\Report_Latest.md",
+            "quote": "**Model Feedback/Leak**: No description captured.",
+            "date": "2026-03-20"
+          }
+        ],
+        "detector_sketch": "Contract check at launch: declared downstream fields vs persisted coverage (<20% fires); ledger entries missing provenance tuple marked unverified; top-k claims whose sole evidence path is unversioned/wipeable storage.",
+        "discovered_round": 1
+      },
+      {
+        "name": "predicate_schema_homonym",
+        "signature": "Multiple generators emit records in one payload schema whose verdict fields answer different predicates (direct relation vs invariance vs transformed relation); a pooled scorer grouping by payload shape evaluates all against one null and manufactures contrast that concentrates bimodally in the predicate-mismatched emitters (pinned at 1.000 vs floor).",
+        "member_refs": [
+          "techne/predicate_payload_homonym",
+          "theseus/predicate_schema_collision",
+          "cross-cutting-pivot/predicate_aliasing_pooled_scoring"
+        ],
+        "anchor_agents": [
+          "techne",
+          "theseus"
+        ],
+        "why_new": "Type-system failure, not a marginals baseline: restricted to direct records the contrast is at floor; remediation is a predicate_kind discriminator, which no known shape implies.",
+        "best_anchors": [
+          {
+            "agent": "techne",
+            "artifact": "D:\\Prometheus\\pivot\\calibration_v3c_VERDICT_generator_category_error_2026-06-03.md",
+            "quote": "their SHADOW/REJECTED verdict answers a DIFFERENT predicate than the one F2's raw-value null evaluates.",
+            "date": "2026-06-03"
+          },
+          {
+            "agent": "theseus",
+            "artifact": "D:\\Prometheus\\pivot\\calibration_v3c_VERDICT_generator_category_error_2026-06-03.md",
+            "quote": "**g5 — scale-invariance**: ... Same shape, different predicate, same 1.000 contrast.",
+            "date": "2026-06-03"
+          }
+        ],
+        "detector_sketch": "Stratify pooled signal by emitter; fire when promoted mass concentrates in emitters whose predicate differs from the null's, or when a multi-writer schema lacks a predicate_kind field the scorer consumes.",
+        "discovered_round": 1
+      },
+      {
+        "name": "lineage_pseudoreplication",
+        "signature": "Derived records carrying parent/mutation lineage inherit the parent's selection but are counted as independent evidence in frequency-vs-null contrasts; promoted groups are majority lineage-derived, share a near-identical lineage-fraction fingerprint, and collapse when recomputed on lineage-root rows only.",
+        "member_refs": [
+          "techne/lineage_pseudoreplication",
+          "theseus/mutation_lineage_selection_amplifier"
+        ],
+        "anchor_agents": [
+          "techne",
+          "theseus"
+        ],
+        "why_new": "Not catalog_volume_mimicry or baseline_costume: even the marginals are corrupted by non-independent generation — only lineage stratification, not any within-corpus baseline, kills it.",
+        "best_anchors": [
+          {
+            "agent": "techne",
+            "artifact": "D:\\Prometheus\\pivot\\calibration_v3_VERDICT_2026-06-03.md",
+            "quote": "is **100% mutation-derived** — 0 non-mutated records. It collapses entirely.",
+            "date": "2026-06-03"
+          },
+          {
+            "agent": "theseus",
+            "artifact": "D:\\Prometheus\\theseus\\journals\\BATCH_LOG.md",
+            "quote": "C2: 98% kill rate — threshold mutations on `abs_diff_le_K` almost always violate the new threshold",
+            "date": "2026-05-18"
+          }
+        ],
+        "detector_sketch": "Per promoted group: lineage fraction and its cross-group variance; mandatory recompute on lineage-free rows; promotion must survive.",
+        "discovered_round": 1
+      },
+      {
+        "name": "promotion_cap_clock",
+        "signature": "A promotion pipeline with a fixed per-batch cap sits on a score with no separation (all winners tie at one value); the lifetime promoted counter grows by exactly cap x batches — a clock, not a measurement — while milestone language accumulates and externally verified findings stay at zero.",
+        "member_refs": [
+          "techne/promotion_cap_clock"
+        ],
+        "anchor_agents": [
+          "techne"
+        ],
+        "why_new": "Not goodhart (the gate is structurally a quota clock regardless of content) and not catalog_volume_mimicry (counter tracks batch count, not catalog volume).",
+        "best_anchors": [
+          {
+            "agent": "techne",
+            "artifact": "D:\\Prometheus\\pivot\\techne_promoted_record_triage_2026-05-25.md",
+            "quote": "All 20 cluster at **w=0.650 exactly** (no separation)",
+            "date": "2026-05-25"
+          }
+        ],
+        "detector_sketch": "Score variance among promoted items per batch ~0; regress lifetime count on batch count (R2~1, slope=cap); flag milestone language keyed to such counters.",
+        "discovered_round": 1
+      },
+      {
+        "name": "verdict_label_plumbing",
+        "signature": "A verification instrument's dispatch path reads metadata that encodes the expected answer (provenance strings carrying truth-form markers override the verdict), and its accuracy is computed on the same authored batch used to tune it, climbing monotonically to 100%; the reported match measures label plumbing, not verification.",
+        "member_refs": [
+          "techne/verdict_label_plumbing"
+        ],
+        "anchor_agents": [
+          "techne"
+        ],
+        "why_new": "Eval-set leakage in instrument construction — grader tuned to its own answer key; goodhart's gate-vs-quality framing cannot see it because gate and quality metric are the same artifact.",
+        "best_anchors": [
+          {
+            "agent": "techne",
+            "artifact": "D:\\Prometheus\\techne\\CHANGELOG.md",
+            "quote": "`claim.source_report` contains `false_form` -> override verdict to decisive_contradicted.",
+            "date": "2026-05-13"
+          }
+        ],
+        "detector_sketch": "Scramble claim content holding metadata fixed — persistent agreement means the verifier reads labels; static scan for override rules referencing outcome-correlated fields; monotone accuracy trajectory on a zero-holdout batch.",
+        "discovered_round": 1
+      },
+      {
+        "name": "novelty_gate_on_partial_mirror",
+        "signature": "Novelty/'not in catalog' verdicts issued against a local snapshot covering a small fraction of the published universe with unmeasured recall; miss-verdicts are asymmetrically wrong (known objects labeled novel) until a probe of known-published objects exposes ~2% coverage.",
+        "member_refs": [
+          "techne/novelty_gate_on_partial_mirror"
+        ],
+        "anchor_agents": [
+          "techne"
+        ],
+        "why_new": "One-sided false-novelty channel from reference-instrument recall, not a volume-tracking statistic; fires on any agent asserting novelty against local mirrors.",
+        "best_anchors": [
+          {
+            "agent": "techne",
+            "artifact": "D:\\Prometheus\\techne\\TECHNE_SESSION_2026-05-04.md",
+            "quote": "we'd been calling \"catalog miss\" against a snapshot covering ~2% of the published Mossinghoff universe.",
+            "date": "2026-05-04"
+          }
+        ],
+        "detector_sketch": "Probe recall of the local mirror with objects known to be published; fire when recall <0.9 while miss/novel verdicts are issued; compare local vs advertised upstream cardinality.",
+        "discovered_round": 1
+      },
+      {
+        "name": "allocator_steered_by_unstable_arm_scores",
+        "signature": "A scheduler/bandit's arm-selection statistic is computed on arms with tiny or zero sample support (UCB optimism on never-fired stubs; saturation from n=2/22), and injected synthetic priors persist in arm histories, steering budget to inert or exhausted arms across multiple cycles.",
+        "member_refs": [
+          "techne/allocator_steered_by_unstable_arm_scores"
+        ],
+        "anchor_agents": [
+          "techne"
+        ],
+        "why_new": "Not bounded_menu_wall: the menu can be fine while the allocator's state diverges from arm reality — wasted picks on statistics below any stability bound plus prior contamination.",
+        "best_anchors": [
+          {
+            "agent": "techne",
+            "artifact": "D:\\Prometheus\\roles\\Techne\\SUBSTRATE_FIRE_LOG_2026-05-21.md",
+            "quote": "**THE c5 EXPLORATION PREMIUM WAS A MIRAGE.**",
+            "date": "2026-05-23"
+          }
+        ],
+        "detector_sketch": "Fraction of picks with sample_count < N_min and post-pick yield ~0; residual weight of synthetic prior entries; consecutive re-picks after k zero-yield outcomes.",
+        "discovered_round": 1
+      },
+      {
+        "name": "unexercised_inventory_capability",
+        "signature": "Capability claims cite inventory counts (plugins registered, schema fields, shipped/hardened primitives) where a large fraction has zero production traffic: no production callsite, terminal states never minted, guard thresholds 100-1000x above observed maxima so '0 violations' is vacuous; audits define escape buckets that absorb all would-be debt.",
+        "member_refs": [
+          "techne/validated_but_unexercised_machinery",
+          "erebos/inventory_as_capability"
+        ],
+        "anchor_agents": [
+          "techne",
+          "erebos"
+        ],
+        "why_new": "Not goodhart or catalog_volume_mimicry: declared-artifact surface area masquerading as capability — the validation surface diverged from the production call graph, so green status is uninformative rather than gamed.",
+        "best_anchors": [
+          {
+            "agent": "erebos",
+            "artifact": "D:\\Prometheus\\pivot\\erebos_quarantine.md",
+            "quote": "\"25/25 plugin REGISTRY\" framing is technically still true ... but is no longer the right number to cite for substrate capability.",
+            "date": "2026-05-27"
+          },
+          {
+            "agent": "techne",
+            "artifact": "D:\\Prometheus\\techne\\diagnostics\\dims_2_3_10_audit_prep_2026-05-11.md",
+            "quote": "**Generators just don't route through it.**",
+            "date": "2026-05-11"
+          }
+        ],
+        "detector_sketch": "Per inventory item: production invocation count, terminal-state mint counts, guard headroom ratio; fire when a claim cites N entries with >30% zero-execution/zero-consumer; flag audit buckets exempting 100% of violations from the headline.",
+        "discovered_round": 1
+      },
+      {
+        "name": "canonical_failure_mode_misattribution",
+        "signature": "A discrepancy resembling a named mode from the agent's own failure taxonomy is filed under that mode without the discriminating computation (observed delta never matched the mode's predicted delta); the taxonomy acts as an attractor pre-empting root cause (here: cross-authority label aliasing), leaving a confident wrong diagnosis against correct code.",
+        "member_refs": [
+          "techne/canonical_failure_mode_misattribution"
+        ],
+        "anchor_agents": [
+          "techne"
+        ],
+        "why_new": "The agent's own diagnostic vocabulary supplies a too-available explanation — neither excitement (reward_signal_capture) nor any gate; detector is delta-match verification on taxonomy-cited bug entries.",
+        "best_anchors": [
+          {
+            "agent": "techne",
+            "artifact": "D:\\Prometheus\\techne\\TDD_LOG.md",
+            "quote": "#42a was misdiagnosed in BUGS.md / B-COMP-001 as a real-period convention bug ... The actual culprit was a Cremona-vs-LMFDB labeling convention mismatch",
+            "date": "2026-04-25"
+          }
+        ],
+        "detector_sketch": "For ledger entries citing a named mode: does observed delta match the mode's predicted signature within tolerance; flag authority anchors keyed by label string without defining-data echo.",
+        "discovered_round": 1
+      },
+      {
+        "name": "content_blind_promotion_gate",
+        "signature": "The promotion/value function reads only categorical metadata (relation/kind strings, verdict enums, kill-pattern substrings) and never any content-bearing field; the promoted set is invariant under shuffling record contents, top-N rankings degenerate into exact-tie ceilings, and thousands of 'discoveries' are minted by a gate that cannot in principle distinguish a true claim from a shape-identical artifact.",
+        "member_refs": [
+          "theseus/content_blind_value_gate",
+          "cross-cutting-pivot/metadata_shape_promotion"
+        ],
+        "anchor_agents": [
+          "theseus",
+          "techne"
+        ],
+        "why_new": "goodhart needs an optimizer gaming the gate's letter; here the gate is statically blind by construction — detectable by field-access tracing and content-permutation before any optimizer or verdict exists.",
+        "best_anchors": [
+          {
+            "agent": "techne",
+            "artifact": "D:\\Prometheus\\pivot\\promote_filter_audit_2026-05-30.md",
+            "quote": "The existing filter cannot, even in principle, distinguish a Murasugi-true claim from a shape-identical artifact claim.",
+            "date": "2026-05-30"
+          },
+          {
+            "agent": "theseus",
+            "artifact": "D:\\Prometheus\\theseus\\journals\\BATCH_LOG.md",
+            "quote": "All `0.6500` — exactly `parity × 1.0 SHADOW = 0.65`",
+            "date": "2026-05-18"
+          }
+        ],
+        "detector_sketch": "Trace fields accessed by the gate (disjoint from content fields fires); shuffle payloads holding metadata fixed — bit-identical promotion set fires; top-N single-score tie fraction > 0.8.",
+        "discovered_round": 1
+      },
+      {
+        "name": "null_free_validation_stack",
+        "signature": "A claim is escalated/promoted on validation events that are all replication-type (re-seed, larger sample, new stratum, new comparator-free pass) while zero events are null/permutation-type for the load-bearing (statistic, baseline) pair — including the case where nulls exist but all point at weaker comparators; the first genuine null kills or undercuts the claim.",
+        "member_refs": [
+          "theseus/null_free_replication_ladder",
+          "erebos/unnulled_load_bearing_claim",
+          "charon-umbrella/strong_baseline_pass_without_null"
+        ],
+        "anchor_agents": [
+          "theseus",
+          "erebos",
+          "charon-umbrella",
+          "techne"
+        ],
+        "why_new": "Not reward_signal_capture: calibration ran earnestly and repeatedly — the failure is type-homogeneity/misallocation of the checks, detectable from the evidence-event type ledger at promotion time.",
+        "best_anchors": [
+          {
+            "agent": "erebos",
+            "artifact": "D:\\Prometheus\\pivot\\sprint1\\phase3\\PHASE3_K_PAIR_AWARE_NULL_VERDICT_2026-06-03.md",
+            "quote": "**That number — the load-bearing one — was never null-tested.**",
+            "date": "2026-06-03"
+          },
+          {
+            "agent": "theseus",
+            "artifact": "D:\\Prometheus\\theseus\\journals\\BATCH_LOG.md",
+            "quote": "This is the substrate's first **falsifiable, seed-independent** cross-catalog structural observation.",
+            "date": "2026-05-18"
+          },
+          {
+            "agent": "techne",
+            "artifact": "D:\\Prometheus\\pivot\\calibration_v3_VERDICT_2026-06-03.md",
+            "quote": "the cross-catalog F2 contrast is ZERO (0 of 96 groups promote ...)",
+            "date": "2026-06-03"
+          }
+        ],
+        "detector_sketch": "Per claim: evidence-event type matrix (reseed/rescale/restratify vs permutation/planted); fire at promotion when replication-types >=2 and null-types ==0 for the exact (statistic, baseline) pair, prioritizing claims marked strongest.",
+        "discovered_round": 1
+      },
+      {
+        "name": "pooled_mixture_scalar",
+        "signature": "A single scalar (rate, slope, rho, calibration constant) is promoted while the same ledger's stratified panel contradicts it: within-stratum range several times the claimed precision, sign discordance across strata, or pooled halving under sample-doubling while the decontaminated variant stays constant; recalibrations of the constant oscillate direction as mixture composition drifts.",
+        "member_refs": [
+          "theseus/heterogeneous_mixture_scalarized",
+          "harmonia-self/pooled_projection_artifact"
+        ],
+        "anchor_agents": [
+          "theseus",
+          "harmonia"
+        ],
+        "why_new": "Simpson-flavored amalgamation detected by intra-run pooled-vs-stratified disagreement — not a marginals baseline match (baseline_costume) and no dominant background class (prime_atmosphere).",
+        "best_anchors": [
+          {
+            "agent": "harmonia",
+            "artifact": "D:\\Prometheus\\harmonia\\memory\\pattern_library.md",
+            "quote": "The pooled number is the artifact; the stratified panel is the measurement.",
+            "date": "2026-04-17"
+          },
+          {
+            "agent": "theseus",
+            "artifact": "D:\\Prometheus\\theseus\\h4_stratified_audit_report.md",
+            "quote": "mean rate: 65.4% - min: 32.8% | max: 90.6% - range: 57.9 percentage points",
+            "date": "2026-05-18"
+          }
+        ],
+        "detector_sketch": "Compute the statistic per stratum, under preprocessing variants, at two sample sizes; fire when pooled differs >20% from all strata, flips sign, or moves >2x under doubling while detrended holds; flag direction-reversing recalibrations within short windows.",
+        "discovered_round": 1
+      },
+      {
+        "name": "uncovered_support_claim",
+        "signature": "A verdict (null/'no signal', cross-family generalization, or voids-as-structure) is asserted over scope strata whose corpus coverage at claim time is below a support floor; empty cells track the sampler's path, not the domain, and the claim collapses when coverage arrives.",
+        "member_refs": [
+          "harmonia-self/uncovered_scope_claim",
+          "theseus/void_inference_without_coverage"
+        ],
+        "anchor_agents": [
+          "harmonia",
+          "theseus"
+        ],
+        "why_new": "All known shapes concern positive signals; this is absence-evidence without coverage accounting, firing symmetrically on null verdicts and void-promotions — a coverage-table predicate.",
+        "best_anchors": [
+          {
+            "agent": "harmonia",
+            "artifact": "D:\\Prometheus\\harmonia\\memory\\pattern_library.md",
+            "quote": "Absence of signal can be absence of measurement, not absence of structure.",
+            "date": "2026-04-17"
+          },
+          {
+            "agent": "theseus",
+            "artifact": "D:\\Prometheus\\pivot\\a3_lattice_voids_2026-05-30.md",
+            "quote": "Cells with hold_rate >= 0.95 NOT explained by parity / small-range modular triviality. **Count:** 0",
+            "date": "2026-05-30"
+          }
+        ],
+        "detector_sketch": "Per in-scope stratum/cell: n_tested vs floor; chi-square of observed occupancy vs sampler-implied occupancy; bounded-codomain triviality screen on surviving voids.",
+        "discovered_round": 1
+      },
+      {
+        "name": "reflexive_yield_scoring",
+        "signature": "A channel/generator value metric is an affine function of the scorer's own verdict->score table and emission volume with no cross-record novelty term: exhausted channels re-emitting 99.9%-duplicate streams (or byte-identical batches) keep earning above-floor yield, and the 'empirical yield curve' regressed on table constants gives R2~1.",
+        "member_refs": [
+          "theseus/novelty_blind_yield_credit",
+          "theseus/score_table_echo"
+        ],
+        "anchor_agents": [
+          "theseus"
+        ],
+        "why_new": "Not bounded_menu_wall (the wall never manifests — duplicates keep being credited) and not goodhart: the measurement instrument's output contains no information beyond its own configuration, including a doc-promised repetition penalty never implemented.",
+        "best_anchors": [
+          {
+            "agent": "theseus",
+            "artifact": "D:\\Prometheus\\theseus\\journals\\BATCH_LOG.md",
+            "quote": "- **b5** — records=1052 ... yield_score=0.0052, dup_rate=0.999",
+            "date": "2026-05-22"
+          }
+        ],
+        "detector_sketch": "dup_rate>0.95 for k cycles with continued selection; zero-variance per-cycle output cardinality; regress channel score on verdict-mix . table constants (R2>0.95 fires); static check for any cross-record state in the value function.",
+        "discovered_round": 1
+      },
+      {
+        "name": "synthetic_pass_scope_inflation",
+        "signature": "A verdict ledger aggregates N experiment passes into an architecture/real-world claim while >=half the passing experiments' data provenance is synthetic or designed-correlation; per-experiment verdicts are honest, the failure is at aggregation, and first contact with production data contradicts the aggregate.",
+        "member_refs": [
+          "erebos/synthetic_pass_scope_inflation"
+        ],
+        "anchor_agents": [
+          "erebos"
+        ],
+        "why_new": "Not goodhart or reward capture: every gate measured what it said — provenance-mismatched passes were summed into a scope they never tested.",
+        "best_anchors": [
+          {
+            "agent": "erebos",
+            "artifact": "D:\\Prometheus\\pivot\\sprint1\\SPRINT1_VERDICT_2026-05-29.md",
+            "quote": "**No experiment ran on real production ledger data.**",
+            "date": "2026-05-29"
+          }
+        ],
+        "detector_sketch": "Per verdict row carry (verdict, data_provenance, claim_scope); fire when PASS fraction with synthetic/designed provenance >=0.5 under a production-scope headline.",
+        "discovered_round": 1
+      },
+      {
+        "name": "precommitted_killrule_scope_erosion",
+        "signature": "A pre-committed kill rule binds to experiment identifiers; between commitment and execution, experiments are silently replaced by substitutes whose metric saturates at a structural maximum or degrades to synthetic provenance; the rule is evaluated literally over the substituted set and 'not triggered' licenses proceeding past a contemporaneous out-of-rule falsification.",
+        "member_refs": [
+          "erebos/precommitted_killrule_scope_erosion"
+        ],
+        "anchor_agents": [
+          "erebos"
+        ],
+        "why_new": "Governance erosion specific to falsification-first agents: the pre-commitment keeps its authority while its referents are swapped — no optimizer, no excitement, no known-shape analogue.",
+        "best_anchors": [
+          {
+            "agent": "erebos",
+            "artifact": "D:\\Prometheus\\pivot\\sprint1\\a8_cross_domain_residue_findings_2026-05-29.md",
+            "quote": "A8 cannot be run on the pre-committed real-data protocol because the BSD MVP loader ... was not shipped ... This is a synthetic substitute.",
+            "date": "2026-05-29"
+          }
+        ],
+        "detector_sketch": "Diff executed (data source, metric, dependencies) vs pre-committed spec per experiment ID; flag rule evaluations counting deviated experiments, especially metrics at structural max; flag decisions citing only the rule while same-window falsifiers exist outside it.",
+        "discovered_round": 1
+      },
+      {
+        "name": "bookkeeping_provenance_signal",
+        "signature": "Pipeline provenance/bookkeeping content inside analyzed fields manufactures dependence signal: emitter-namespaced labels (generator-id prefixes), control-flow tags (_pending/_no_loader), and anti-silence sentinel rows sharing the measurement schema; MI/motif/coupling statistics fire at absurd effect sizes (z=952) and collapse when provenance is stripped or control-flow rows filtered.",
+        "member_refs": [
+          "charon-umbrella/generator_prefixed_label_tautological_mi",
+          "erebos/bookkeeping_label_circularity",
+          "charon-umbrella/forced_emission_bookkeeping_contamination",
+          "cross-cutting-pivot/provenance_leak_mirage"
+        ],
+        "anchor_agents": [
+          "charon-umbrella",
+          "erebos"
+        ],
+        "why_new": "Not baseline_costume: the signal is not in the data's marginals at all — it is injected by the measurement pipeline's own bookkeeping; a correct permutation null fires maximally and is useless as a guard.",
+        "best_anchors": [
+          {
+            "agent": "erebos",
+            "artifact": "D:\\Prometheus\\pivot\\erebos_substrate_finding_iter13_g15_ledger_mi_2026-05-26.md",
+            "quote": "Each plugin emits claims tagged with its own `erebos_<plugin_id>_pending` kill_pattern",
+            "date": "2026-05-26"
+          },
+          {
+            "agent": "charon-umbrella",
+            "artifact": "D:\\Prometheus\\charon\\agents\\hecate\\daemon.py",
+            "quote": "If a kill_pattern is only ever emitted by one generator ... it contributes tautological MI signal",
+            "date": "2026-05-23"
+          }
+        ],
+        "detector_sketch": "Cross-class label overlap (<5% fires), y-id substring containment in x-labels (>50% fires), control-flow-lexicon row contribution to the statistic (>50% fires); recompute with provenance stripped/filtered and require survival.",
+        "discovered_round": 1
+      },
+      {
+        "name": "null_satisfiable_gate",
+        "signature": "A test's pass/fire condition is satisfiable by noise or entailed by the data-selection construction itself: existence thresholds that shuffled inputs meet with probability ~1 (null produces MORE qualifying objects than real data), 99% one-class catalogs guaranteeing the chi-square, 'any non-empty subset passes' — the gate is vacuous at birth, computable before rendering any verdict.",
+        "member_refs": [
+          "erebos/noise_satisfiable_existence_gate",
+          "charon-umbrella/vacuous_pass_by_construction"
+        ],
+        "anchor_agents": [
+          "erebos",
+          "charon-umbrella"
+        ],
+        "why_new": "Not goodhart (nothing optimizes against it) and broader than prime_atmosphere (non-emptiness and closure-by-construction cases involve no dominant class); detector is P(PASS|null input) computed pre-verdict.",
+        "best_anchors": [
+          {
+            "agent": "erebos",
+            "artifact": "D:\\Prometheus\\pivot\\sprint1\\phase3\\PHASE3_K_PAIR_AWARE_NULL_VERDICT_2026-06-03.md",
+            "quote": "The PASS criterion (>=1 motif) is therefore non-discriminating: noise satisfies it ~14x over.",
+            "date": "2026-06-03"
+          },
+          {
+            "agent": "charon-umbrella",
+            "artifact": "D:\\Prometheus\\charon\\agents\\stygian\\loaders\\_degeneracy_precondition.py",
+            "quote": "99% of catalog was one class so the chi² test was structurally guaranteed to fire",
+            "date": "2026-05-27"
+          }
+        ],
+        "detector_sketch": "Run the gate on M marginal-preserving shuffles/arbitrary subsets; fire when satisfaction rate >0.5; degeneracy pre-flight (Kish n_eff, entropy, max-class fraction); inversion flag when observed < null mean.",
+        "discovered_round": 1
+      },
+      {
+        "name": "static_signal_dilution",
+        "signature": "A claim's observed statistic stays near-constant (fixed early-found deltas) while the null distribution scales with ledger size, so the empirical p-value monotonically worsens as data accumulates — each snapshot reads 'borderline, continue' while the trajectory is the falsification.",
+        "member_refs": [
+          "erebos/static_signal_dilution"
+        ],
+        "anchor_agents": [
+          "erebos"
+        ],
+        "why_new": "No known shape addresses the scaling trajectory of a claim across ledger checkpoints; converts 'needs more data' into a testable prediction with a defined failure direction.",
+        "best_anchors": [
+          {
+            "agent": "erebos",
+            "artifact": "D:\\Prometheus\\pivot\\sprint1\\phase3\\PHASE3_STRESS_AUDIT_VERDICT_2026-05-30.md",
+            "quote": "**The signal grew slower than the noise.**",
+            "date": "2026-05-30"
+          }
+        ],
+        "detector_sketch": "Run the null harness at >=3 ledger sizes; fire when d(observed)/dN << d(null_mean)/dN and p non-decreasing.",
+        "discovered_round": 1
+      },
+      {
+        "name": "monotone_claim_narrowing",
+        "signature": "Across successive adversarial passes or prior-art contacts, the same claim survives only by re-scoping strictly narrower (>=3 consecutive narrowings, zero confirmations or widenings, confidence markers never decreasing), each downgrade framed as honest calibration; the narrowing trajectory itself is the distributed falsification no single verdict carries.",
+        "member_refs": [
+          "erebos/monotone_claim_narrowing",
+          "noesis/receding_novelty_perimeter"
+        ],
+        "anchor_agents": [
+          "erebos",
+          "noesis"
+        ],
+        "why_new": "A trajectory over claim versions — the slow-motion dual of reward_signal_capture, where every step is locally calibrated yet the aggregate path equals falsification-by-attrition without a pause trigger.",
+        "best_anchors": [
+          {
+            "agent": "erebos",
+            "artifact": "D:\\Prometheus\\pivot\\sprint1\\phase3\\PHASE3_K_PAIR_AWARE_NULL_VERDICT_2026-06-03.md",
+            "quote": "The claim keeps narrowing under each successive adversarial pass — itself a signal worth heeding.",
+            "date": "2026-06-03"
+          },
+          {
+            "agent": "noesis",
+            "artifact": "D:\\Prometheus\\noesis\\v3\\exploration_journal_2026-04-05.md",
+            "quote": "**The algebra is KNOWN in topology but NEVER applied across domains**",
+            "date": "2026-04-05"
+          }
+        ],
+        "detector_sketch": "Order verdict/claim revisions; fire on >=3 strict scope-narrowings (subset relation or monotone hedge increase) with no confirmation and no status/confidence downgrade; escalate to mandatory pause-review.",
+        "discovered_round": 1
+      },
+      {
+        "name": "phantom_actuator_menu",
+        "signature": "An agent's adaptation/action menu contains items whose apply() is a log-only no-op, with placeholder status encoded only in comments — invisible to the selection policy, budget counter, and approval protocol; automation selects, scores, and escalates phantom capabilities, and humans adjudicate approval tickets for actions that cannot fire.",
+        "member_refs": [
+          "polyhymnia/placebo_menu_automation",
+          "aporia/noop_actuator_approval_loop"
+        ],
+        "anchor_agents": [
+          "polyhymnia",
+          "aporia"
+        ],
+        "why_new": "Not bounded_menu_wall (the wall is masked by fake menu cardinality, exhaustion misdiagnosed) and not goodhart (gates correctly reverted the stubs); the damage is burned budget/attention and capability metadata diverging from implementation.",
+        "best_anchors": [
+          {
+            "agent": "aporia",
+            "artifact": "D:\\Prometheus\\aporia\\meta\\queue\\aporia_inbox.jsonl",
+            "quote": "SPAWN_SIBLING_SCOUR.apply is a no-op stub (daemon.py _adapt_stub_log_only); approval would do nothing.",
+            "date": "2026-06-03"
+          },
+          {
+            "agent": "polyhymnia",
+            "artifact": "D:\\Prometheus\\agents\\polyhymnia\\daemon.py",
+            "quote": "apply=_stub4_apply, revert=_stub4_revert, requires_human_approval=True,",
+            "date": "2026-05-25"
+          }
+        ],
+        "detector_sketch": "Static: apply paths resolving to shared stub/log-only bodies. Dynamic: hash agent state pre/post apply; fire when zero-diff items consume budget, record outcomes, or generate approval tickets.",
+        "discovered_round": 1
+      },
+      {
+        "name": "pending_blind_escalation_flood",
+        "signature": "An escalating loop has no PENDING state — it cannot distinguish 'asked and waiting' from 'never asked' — so it re-emits the identical escalation every tick: >=K OPEN tickets sharing (source, type, payload key) at tick cadence with zero status transitions, burying real signal and DoS-ing operator attention.",
+        "member_refs": [
+          "polyhymnia/pending_blind_escalation_flood"
+        ],
+        "anchor_agents": [
+          "polyhymnia",
+          "aporia"
+        ],
+        "why_new": "Not opaque_kill_black_hole: the ask is identical but payloads vary — the defect is a missing acknowledged-state in the escalation protocol; the mixin-wide fix proves cross-daemon generality.",
+        "best_anchors": [
+          {
+            "agent": "aporia",
+            "artifact": "D:\\Prometheus\\aporia\\meta\\queue\\aporia_inbox.jsonl",
+            "quote": "emitted an identical approval request every tick (163 OPEN dups, all 2026-05-30), then parked.",
+            "date": "2026-06-03"
+          }
+        ],
+        "detector_sketch": "Group OPEN tickets by (source, type, normalized payload); fire on group size >=3 or inter-emission interval == tick interval with no transitions; ticket-ID collision rate.",
+        "discovered_round": 1
+      },
+      {
+        "name": "proxy_coordinate_substitution",
+        "signature": "Declared semantic coordinate axes are silently filled with cheap operational proxies from storage/ingestion metadata (concept-year := file mtime year; status/modality := scour constants); axis registries look populated but values are deterministic functions of (path, ingest time), so every downstream lens emits storage-metadata structure dressed as domain structure — and volatile proxies inside identity hashes re-mint records as 'new'.",
+        "member_refs": [
+          "polyhymnia/proxy_coordinate_substitution"
+        ],
+        "anchor_agents": [
+          "polyhymnia"
+        ],
+        "why_new": "Upstream of baseline_costume and catalog_volume_mimicry: the coordinates themselves are counterfeit before any claim exists — a coordinate-system integrity failure.",
+        "best_anchors": [
+          {
+            "agent": "polyhymnia",
+            "artifact": "D:\\Prometheus\\agents\\polyhymnia\\scours\\prometheus_self.py",
+            "quote": "year = datetime.fromtimestamp(mtime, tz=timezone.utc).year",
+            "date": "2026-05-25"
+          }
+        ],
+        "detector_sketch": "Per axis: populated cardinality/entropy vs registry; MI(axis; storage metadata)/H(axis) ~1 fires; identity-stability re-mint test excluding volatile coords.",
+        "discovered_round": 1
+      },
+      {
+        "name": "liveness_as_health",
+        "signature": "Fleet/health monitoring marks an agent healthy from heartbeat age and event volume while the agent's own internal ledger reads floor (composite 0.2, zero placements for days); the two instruments are never joined, and event volume is anti-correlated with health because null-sentinels and escalation spam count as activity.",
+        "member_refs": [
+          "polyhymnia/liveness_health_conflation",
+          "nemesis/liveness_health_proxy"
+        ],
+        "anchor_agents": [
+          "aporia",
+          "nemesis"
+        ],
+        "why_new": "Not opaque_kill: a missing join between existing instruments plus a sign-flipping activity metric — the agent emitted maximal distress while dashboards stayed green through total collapse.",
+        "best_anchors": [
+          {
+            "agent": "aporia",
+            "artifact": "D:\\Prometheus\\pivot\\agent_roster_2026-05-28.md",
+            "quote": "| Polyhymnia | M1 | tool | active | 19m | 83 ev |",
+            "date": "2026-05-28"
+          },
+          {
+            "agent": "nemesis",
+            "artifact": "D:\\Prometheus\\roles\\PipelineOrchestrator\\HEALTH_MONITORING_SCRIPTS.md",
+            "quote": "| NEMESIS | [OK] HEALTHY | 27 lines |",
+            "date": "2026-04-01"
+          }
+        ],
+        "detector_sketch": "Join roster verdicts with internal health/product ledgers; fire on HEALTHY streaks overlapping zero-product or sub-threshold composite windows; classify counted events by type (null/escalation noise > 50% fires); lint monitors for absent product-rate terms.",
+        "discovered_round": 1
+      },
+      {
+        "name": "queue_to_journal_decay",
+        "signature": "A coordination queue whose weekly transitions/appends ratio is <0.1 for >=3 weeks, median open age grows linearly, and bulk triage closes the backlog mostly as NOOP/STALE — the artifact is consumed as a journal while every agent treats it as a live work queue.",
+        "member_refs": [
+          "aporia/queue_to_journal_decay"
+        ],
+        "anchor_agents": [
+          "aporia"
+        ],
+        "why_new": "Cross-agent work-queue state-transition starvation in all labels — different diagnostic quantity (transition rate, NOOP-dominance) than any kill-label or promotion shape.",
+        "best_anchors": [
+          {
+            "agent": "aporia",
+            "artifact": "D:\\Prometheus\\pivot\\aporia_ecosystem_status_and_next_steps_2026-05-30.md",
+            "quote": "the queue is functioning as an append-only journal more than as an actionable work queue.",
+            "date": "2026-05-30"
+          }
+        ],
+        "detector_sketch": "Per week compute appends vs transitions; fire on T/A<0.1 for 3 weeks or median open age >14d growing ~1 day/day; post-triage NOOP-class closure fraction >=60%.",
+        "discovered_round": 1
+      },
+      {
+        "name": "subfrontier_retest_mirage",
+        "signature": "A measurement campaign against open problems where the instrument's range/precision is at or below already-published verification bounds for a large fraction of 'testable' targets: a perfect run adds zero information, and the testable-set estimate collapses >2x the moment a published-bound field is enforced per spec.",
+        "member_refs": [
+          "aporia/subfrontier_retest_mirage"
+        ],
+        "anchor_agents": [
+          "aporia"
+        ],
+        "why_new": "Information gain relative to the external literature frontier — a dimension no known shape covers; the measurement can be perfectly real and still worthless.",
+        "best_anchors": [
+          {
+            "agent": "aporia",
+            "artifact": "D:\\Prometheus\\aporia\\docs\\journal_20260415.md",
+            "quote": "many problems that SEEM testable are actually already verified to bounds far exceeding our data.",
+            "date": "2026-04-15"
+          }
+        ],
+        "detector_sketch": "Mandate published_verification_bound per spec; fire per spec when local_range <= bound (unless calibration-tagged); campaign alarm when below-bound fraction >=30%.",
+        "discovered_round": 1
+      },
+      {
+        "name": "weights_opinion_as_instrument",
+        "signature": "A pipeline labeled battery/evaluation/measurement whose outputs have zero provenance to external data: every bit derivable from the operating LLM's weights (prompt -> opinion -> JSON with confidence scores); structured output makes recitation look like measurement.",
+        "member_refs": [
+          "aporia/weights_opinion_as_instrument"
+        ],
+        "anchor_agents": [
+          "aporia"
+        ],
+        "why_new": "Upstream instrument-construction failure (data source = the model itself), soberly built and retired — not excitement, not a marginals baseline; fires on any LLM-judges-LLM falsification arm.",
+        "best_anchors": [
+          {
+            "agent": "aporia",
+            "artifact": "D:\\Prometheus\\aporia\\docs\\journal_20260415.md",
+            "quote": "It's an opinion survey, not a telescope.",
+            "date": "2026-04-15"
+          }
+        ],
+        "detector_sketch": "Enumerate pipeline data dependencies; fire when external-data-dependency count is 0 and LLM-call count >0 for measurement-labeled outputs.",
+        "discovered_round": 1
+      },
+      {
+        "name": "self_corpus_centrality_echo",
+        "signature": "A knowledge graph parsed from the agent's own documents is used to rank strategic targets by centrality while isolated-node fraction exceeds 50% and the top god-nodes are the agent's own finding IDs — connectivity measures past attention, and centrality-based prioritization feeds attention back to itself.",
+        "member_refs": [
+          "aporia/self_corpus_centrality_echo"
+        ],
+        "anchor_agents": [
+          "aporia"
+        ],
+        "why_new": "Self-authored-corpus loop: past attention manufactures the centrality justifying future attention — catalog_volume_mimicry concerns found external data, not a closed attention loop with internal artifact IDs as hubs.",
+        "best_anchors": [
+          {
+            "agent": "aporia",
+            "artifact": "D:\\Prometheus\\aporia\\docs\\session_summary_20260421.md",
+            "quote": "**God nodes** ... 1. **P020** (conductor stratification) — 42 connections",
+            "date": "2026-04-21"
+          }
+        ],
+        "detector_sketch": "Isolated-node fraction; corr(degree, agent-authored doc mentions); fraction of top-central nodes that are internal artifact IDs; fire when centrality cited in prioritization.",
+        "discovered_round": 1
+      },
+      {
+        "name": "declared_constraint_unenforced",
+        "signature": "A numeric or methodological self-commitment in the agent's own docs (production cap, metric-incomparability declaration) is violated >2x or directly contradicted by subsequent artifacts, with no recorded amendment — later docs silently re-rationalize the violating equilibrium while the original doc still reads as governing.",
+        "member_refs": [
+          "aporia/unenforced_declared_cap",
+          "arcanum/declared_incomparability_violation"
+        ],
+        "anchor_agents": [
+          "aporia",
+          "arcanum"
+        ],
+        "why_new": "Governance-layer prose with no actuator: nothing is gamed (no gate exists) — detector is declaration-then-violation matching over the doc corpus and ledgers.",
+        "best_anchors": [
+          {
+            "agent": "aporia",
+            "artifact": "D:\\Prometheus\\pivot\\aporia.md",
+            "quote": "Scale the recurring agent (`aporia-batch-deep-research-daily`) back to 5/day.",
+            "date": "2026-05-01"
+          },
+          {
+            "agent": "arcanum",
+            "artifact": "D:\\Prometheus\\arcanum\\docs\\Screening_Strategy.md",
+            "quote": "The scores in screening mode are **not directly comparable** to the full orchestrator.",
+            "date": "2026-03-19"
+          }
+        ],
+        "detector_sketch": "Extract numeric/methodological commitments with dates; measure post-declaration actuals or scan for cross-config comparisons; fire on >2x violation or declared-incomparable comparison with no amending doc.",
+        "discovered_round": 1
+      },
+      {
+        "name": "imported_prestige_reward_frame",
+        "signature": "Work-prioritization sections rank candidate tasks by an external community's reward function (publishable, paper-grade, most defensible) rather than the project's declared objective, with scheduling explicitly justified by the imported frame; fires on the planning text before any result exists.",
+        "member_refs": [
+          "aporia/imported_prestige_reward_frame"
+        ],
+        "anchor_agents": [
+          "aporia"
+        ],
+        "why_new": "Planning-layer value-function substitution, not per-finding excitement (reward_signal_capture); the HARD-2 manifestation list is a ready-made detector lexicon.",
+        "best_anchors": [
+          {
+            "agent": "aporia",
+            "artifact": "D:\\Prometheus\\aporia\\meta\\studies\\2026-05-05\\SYNTHESIS.md",
+            "quote": "**Action:** any one of these is a paper. The first ... is the cheapest and most defensible.",
+            "date": "2026-05-05"
+          }
+        ],
+        "detector_sketch": "Prestige-lexicon density in ranking/scheduling contexts plus absence of project-native sort keys (substrate delta, calibration anchors, kill data) in the ranked list.",
+        "discovered_round": 1
+      },
+      {
+        "name": "truncated_window_artifact_on_noniid_stream",
+        "signature": "A corpus/process conclusion drawn from a budget- or window-truncated prefix that is not IID with the whole: an alphabetical-first shard exhausts the sampling cap before other shards are touched, or a diagnosis is assigned from a single cycle of a rotating process; the sampler window is confounded with stream structure.",
+        "member_refs": [
+          "charon-umbrella/truncated_window_artifact_on_noniid_stream"
+        ],
+        "anchor_agents": [
+          "charon-umbrella"
+        ],
+        "why_new": "Signal tracks sampler ORDER under a hard cap, not catalog volume; mandatory sampling-context metadata is the fix, absent from known shapes.",
+        "best_anchors": [
+          {
+            "agent": "charon-umbrella",
+            "artifact": "D:\\Prometheus\\charon\\agents\\hecate\\TECHNE_PROMPT_2026-05-19.md",
+            "quote": "5000 records was exhausted before iteration ever reached any other batch.",
+            "date": "2026-05-19"
+          }
+        ],
+        "detector_sketch": "Fire when budget exhausted with >=90% of records from first file(s) in iteration order, or evidence span <2 cycles of a known rotation; weak flag on missing sampling-context metadata.",
+        "discovered_round": 1
+      },
+      {
+        "name": "pseudo_independent_consensus",
+        "signature": "Validation-by-agreement where the agreeing sources are not independent: one engine standing in for an ensemble (judge == subject model), K agents sharing author/base-class/priors, all annotators receiving identical prompt text (paraphrase flips a label 4/4 -> 1/4), or 97.6% of evidence edges authored by the scheme's own author who also validates it — effective source count ~1 while artifacts retain independence vocabulary (convergence scores, confidence tiers).",
+        "member_refs": [
+          "charon-umbrella/ensemble_of_one_verification",
+          "cross-cutting-pivot/distributed_personality_pseudo_replication",
+          "noesis/framing_steered_consensus",
+          "noesis/provenance_monoculture_validation"
+        ],
+        "anchor_agents": [
+          "charon-umbrella",
+          "noesis"
+        ],
+        "why_new": "Replication evidence with effective sample size ~1 due to shared provenance/framing — agreement is real but worthless as confirmation; no known shape covers consensus-channel independence.",
+        "best_anchors": [
+          {
+            "agent": "charon-umbrella",
+            "artifact": "D:\\Prometheus\\pivot\\feedback_charon_swarm_advice_chatgpt_2026-05-25.md",
+            "quote": "is not a swarm; it is a distributed personality.",
+            "date": "2026-05-25"
+          },
+          {
+            "agent": "noesis",
+            "artifact": "D:\\Prometheus\\noesis\\v3\\STATUS_REPORT_2026_04_03.md",
+            "quote": "EXTEND aligns but RANDOMIZE diverges dramatically (4/4 vs 1/4) depending on prompt framing.",
+            "date": "2026-04-03"
+          }
+        ],
+        "detector_sketch": "Effective-source count = distinct (author, base class, model family, prompt-template hash) tuples among agreeing sources; paraphrase-probe flip rate vs between-model disagreement; judge==subject engine check; scheme-author==validator check.",
+        "discovered_round": 1
+      },
+      {
+        "name": "posthoc_gate_thaw",
+        "signature": "A success/capture threshold — sometimes carrying an explicit FROZEN/pre-committed marker — is moved after a yield drought or first eval, in the direction that admits the existing population, with rationale citing the observed (unlabeled) score distribution rather than any positive-control calibration; the change is immediately harvested and often codified into doctrine/papers in the same window.",
+        "member_refs": [
+          "forge/frozen_gate_thaw",
+          "arcanum/threshold_ratchet_codified",
+          "charon-umbrella/ungrounded_gate_recalibration"
+        ],
+        "anchor_agents": [
+          "forge",
+          "arcanum",
+          "charon-umbrella"
+        ],
+        "why_new": "Not goodhart: the gate-owner moves the gate onto the population while pre-commitment labels/doctrine make the softening invisible to later audits — operator-side, not optimizer-side.",
+        "best_anchors": [
+          {
+            "agent": "forge",
+            "artifact": "D:\\Prometheus\\forge\\thresholds.py",
+            "quote": "FROZEN THRESHOLDS — Pre-committed before any tool evaluation. DO NOT MODIFY after first evaluation run.",
+            "date": "2026-04-02"
+          },
+          {
+            "agent": "arcanum",
+            "artifact": "D:\\Prometheus\\arcanum\\docs\\JamesClaudeDiscussionSecondRun.md",
+            "quote": "proving you aren't lowering your standards, you are just recalibrating the instrumentation for a denser substrate.",
+            "date": "2026-03-20"
+          },
+          {
+            "agent": "charon-umbrella",
+            "artifact": "D:\\Prometheus\\charon\\agents\\moros\\daemon.py",
+            "quote": "Lowered 2026-05-25 from 0.40 to 0.25 after empirical observation",
+            "date": "2026-05-25"
+          }
+        ],
+        "detector_sketch": "Diff threshold constants after first-verdict timestamps or sub-threshold streaks; fire when change admits previously-failing items, rationale cites population stats, and no labeled-control calibration artifact exists; flag same-window doctrine-doc edits embedding the new value.",
+        "discovered_round": 1
+      },
+      {
+        "name": "saturated_probe_catalog",
+        "signature": "A probe/anti-anchor catalog yields ~0 hits across many ticks because its curation criterion or calibration vintage guarantees absence: famous/well-documented exemplars are exactly those the probed models answer correctly, and/or the target population upgraded past the calibrated difficulty; replaying against a frozen older target restores the historical hit-rate, distinguishing this from a structural menu ceiling.",
+        "member_refs": [
+          "charon-umbrella/canonical_exemplar_probe_decay",
+          "cross-cutting-pivot/stale_probe_saturation"
+        ],
+        "anchor_agents": [
+          "charon-umbrella"
+        ],
+        "why_new": "Surface-resembles bounded_menu_wall but the zero tail comes from curation-criterion anti-correlation/target drift, and the prescribed fix (re-curate by inverse canonicality / recalibrate to current frontier) is the opposite of menu replacement.",
+        "best_anchors": [
+          {
+            "agent": "charon-umbrella",
+            "artifact": "D:\\Prometheus\\charon\\agents\\lethe\\daemon.py",
+            "quote": "Cerebras/Groq/GPT-4o-mini all correctly identify the recently-settled conjectures above.",
+            "date": "2026-05-23"
+          }
+        ],
+        "detector_sketch": "corr(canonicality proxy, hit rate) strongly negative; on a zero tail, replay identical menu against a frozen older target — recovery fires this shape, non-recovery defers to bounded_menu_wall.",
+        "discovered_round": 1
+      },
+      {
+        "name": "subject_name_lexicon_false_positive",
+        "signature": "A lexical detector's discriminating keyword is a constitutive token of the probed subject's own canonical name (the word 'conjecture' in 'ternary Goldbach conjecture'), guaranteeing FP rate ~1 on a definable probe subset regardless of asserted content.",
+        "member_refs": [
+          "charon-umbrella/subject_name_lexicon_false_positive"
+        ],
+        "anchor_agents": [
+          "charon-umbrella"
+        ],
+        "why_new": "Detector-design flaw with a 30-LOC static check (pattern vs bare subject name and both polarity templates) — absent from the known list.",
+        "best_anchors": [
+          {
+            "agent": "charon-umbrella",
+            "artifact": "D:\\Prometheus\\charon\\agents\\lethe\\daemon.py",
+            "quote": "the original pure-regex scorer false-positived on `ternary_goldbach` because the word `conjecture` appears in the name regardless of status.",
+            "date": "2026-05-21"
+          }
+        ],
+        "detector_sketch": "Run each detector pattern against each subject's bare name and neutral polarity templates; fire on name-alone or both-polarity matches.",
+        "discovered_round": 1
+      },
+      {
+        "name": "undeclared_selection_metric",
+        "signature": "When a pipeline must select one element from a multi-candidate set, the choice is made by incidental order (first, modal, random, undeclared scalar) and downstream conclusions treat the selection as representative; provenance records no metric and no rejected-candidate scores — recurring as a default authoring behavior across six independently-written loaders.",
+        "member_refs": [
+          "charon-umbrella/undeclared_selection_metric"
+        ],
+        "anchor_agents": [
+          "charon-umbrella"
+        ],
+        "why_new": "The destroyed information is the counterfactual (what other candidates would show); verdict sensitivity to incidental ordering is a shape no known entry covers.",
+        "best_anchors": [
+          {
+            "agent": "charon-umbrella",
+            "artifact": "D:\\Prometheus\\charon\\agents\\stygian\\loaders\\_selection_discipline.py",
+            "quote": "Arbitrary-scalar selection across G06, G09, G10, G11, G16, G18",
+            "date": "2026-05-27"
+          }
+        ],
+        "detector_sketch": "Static flags on candidates[0]/random.choice/undeclared max; shuffle-order re-run (verdict change fires); provenance missing {metric, chosen_score, rejected_scores}.",
+        "discovered_round": 1
+      },
+      {
+        "name": "subsample_extremum_claim",
+        "signature": "An extremum/record claim (min, max, smallest) computed from a distributionally-valid subsample and reported as a corpus-level fact; representative sampling is near-guaranteed to miss extremes (0.35% hit rate missed Lehmer's own polynomial).",
+        "member_refs": [
+          "charon-umbrella/subsample_extremum_claim"
+        ],
+        "anchor_agents": [
+          "charon-umbrella"
+        ],
+        "why_new": "Category error between distribution-valid and extremum-valid sampling — not biased ordering (truncated-window) and not on the known list.",
+        "best_anchors": [
+          {
+            "agent": "charon-umbrella",
+            "artifact": "D:\\Prometheus\\charon\\CHARON_SESSION_2026-04-22.md",
+            "quote": "that was a 10K/degree subsample artifact; true LMFDB min is Lehmer's 1.17628",
+            "date": "2026-04-22"
+          }
+        ],
+        "detector_sketch": "Parse claim type (min/max/record/smallest); fire when provenance shows LIMIT/cap < corpus size without extremum-preserving guarantee.",
+        "discovered_round": 1
+      },
+      {
+        "name": "sorted_pairing_pseudocorrelation",
+        "signature": "Two unpaired samples are made 'paired' by independently sorting each and truncating to common length before a rank correlation; Spearman of co-sorted vectors is identically +1.0, so the raw-correlation channel is a constant and every verdict conditioning on it is tautological — live and uncaught, feeding a promotion queue.",
+        "member_refs": [
+          "charon-umbrella/sorted_pairing_pseudocorrelation"
+        ],
+        "anchor_agents": [
+          "charon-umbrella"
+        ],
+        "why_new": "Constructional pairing artifact (a known statistical trap mechanized in a daemon) — not derivable from row marginals and not covered by any known shape.",
+        "best_anchors": [
+          {
+            "agent": "charon-umbrella",
+            "artifact": "D:\\Prometheus\\charon\\agents\\pollux\\daemon.py",
+            "quote": "a_paired = sorted(a_vals)[:n] b_paired = sorted(b_vals)[:n] corr_raw = _spearman(a_paired, b_paired)",
+            "date": "2026-05-25"
+          }
+        ],
+        "detector_sketch": "is_sorted(x) AND is_sorted(y) at correlation time fires; feed independent random samples through the pipeline (|corr|>0.95 fires); ledger-wide corr_raw variance ~0 at 1.0.",
+        "discovered_round": 1
+      },
+      {
+        "name": "declared_window_no_recheck",
+        "signature": "An agent declares an objection/review window before an irreversible action, then acts at timer expiry without re-reading the channel; dissent landing after the actor's last read but inside the window is missed — the window was implemented as a timer, not a read-barrier, and immutability then freezes the broken artifact.",
+        "member_refs": [
+          "harmonia-self/declared_window_no_recheck"
+        ],
+        "anchor_agents": [
+          "harmonia"
+        ],
+        "why_new": "Pure multi-agent coordination-protocol race; nothing on the known list addresses message-race failures around declared windows.",
+        "best_anchors": [
+          {
+            "agent": "harmonia",
+            "artifact": "D:\\Prometheus\\roles\\Harmonia\\worker_journal_sessionA_20260423.md",
+            "quote": "my dissent landed 2.5 min before their push — they missed it because they didn't re-tail.",
+            "date": "2026-04-23"
+          }
+        ],
+        "detector_sketch": "Over the sync stream: for each action with declared window, fire if any channel message has window_open < ts(m) < ts(action) while the actor's last read precedes ts(m).",
+        "discovered_round": 1
+      },
+      {
+        "name": "post_hoc_axis_annotation",
+        "signature": "An explanatory axis/gradient/label set first appears in the same artifact as (or later than) the result it explains, with no pre-registration, yet is subsequently cited with the status of discovered mechanism; unfalsifiable as stated because it was fitted, not predicted.",
+        "member_refs": [
+          "harmonia-self/post_hoc_axis_annotation"
+        ],
+        "anchor_agents": [
+          "harmonia"
+        ],
+        "why_new": "A timestamp-ordering predicate over the artifact ledger — narrative variables backdated into mechanism status, distinct from excitement-driven reward capture.",
+        "best_anchors": [
+          {
+            "agent": "harmonia",
+            "artifact": "D:\\Prometheus\\harmonia\\memory\\retraction_registry.md",
+            "quote": "the \"domain-constraint load\" gradient was assigned **post-hoc** from the result, not predicted",
+            "date": "2026-05-30"
+          }
+        ],
+        "detector_sketch": "Earliest artifact defining explanatory variable X vs the result artifact's timestamp; demote X to descriptive annotation until a pre-registered prediction in X lands.",
+        "discovered_round": 1
+      },
+      {
+        "name": "non_spanning_falsifier_retraction",
+        "signature": "A 'scales with X' claim is retracted on falsifier arms that do not span X: tested arms cluster where the suspected mechanism itself predicts near-zero effect, so the non-confirming arm was consistent-with, not against, the hypothesis — the kill is the error, later un-retracted by a spanning replication.",
+        "member_refs": [
+          "harmonia-self/non_spanning_falsifier_retraction"
+        ],
+        "anchor_agents": [
+          "harmonia"
+        ],
+        "why_new": "The known list contains only promotion-side failures; this is the kill machinery over-firing — the dual shape falsification-first agents are most exposed to.",
+        "best_anchors": [
+          {
+            "agent": "harmonia",
+            "artifact": "D:\\Prometheus\\harmonia\\memory\\retraction_registry.md",
+            "quote": "a single non-confirming arm out of two is *ambiguous*, not falsifying.",
+            "date": "2026-05-30"
+          }
+        ],
+        "detector_sketch": "On retraction of a scaling claim: arm count <3 or arms clustered in one quantile of X fires; strong form computes predicted effect at each arm vs detectability floor.",
+        "discovered_round": 1
+      },
+      {
+        "name": "popularity_scored_type_mismatch",
+        "signature": "A candidate-generation scorer ranks (object, lens) pairs by the lens's global success count with no type/domain-applicability term, flooding the queue with high-scoring pairs whose tests are null by construction (category mismatch).",
+        "member_refs": [
+          "harmonia-self/popularity_scored_type_mismatch"
+        ],
+        "anchor_agents": [
+          "harmonia"
+        ],
+        "why_new": "Not bounded_menu_wall (fixed by typing, not menu growth) and not goodhart (honestly mis-specified scorer); the waste is typed-invalid work.",
+        "best_anchors": [
+          {
+            "agent": "harmonia",
+            "artifact": "D:\\Prometheus\\harmonia\\memory\\kill_replay_log.md",
+            "quote": "the function does NOT check F-ID-domain <-> P-ID-applicability compatibility.",
+            "date": "2026-04-22"
+          }
+        ],
+        "detector_sketch": "Static: scoring function lacks applicability term AND >20% of seeded pairs fail type-compatibility; ex-post: fraction adjudicated category-mismatch nulls.",
+        "discovered_round": 1
+      },
+      {
+        "name": "assumption_unchecked_estimator_import",
+        "signature": "A prestige-loaded standard estimator (SVT/SVD, nuclear norm, regression) is run on data that checkably violates its generative assumptions (ordinal-vs-continuous, MNAR, missingness sentinel in-band), and the numerals are recorded as structural measurements; the narrative layer upgrades diagnostics into claims later retracted.",
+        "member_refs": [
+          "harmonia-self/assumption_unchecked_estimator_import"
+        ],
+        "anchor_agents": [
+          "harmonia"
+        ],
+        "why_new": "The upstream act of running an assumption-violating method fires even when no marginal baseline exists (the MNAR-density component would be baseline_costume; this is the import step itself).",
+        "best_anchors": [
+          {
+            "agent": "harmonia",
+            "artifact": "D:\\Prometheus\\harmonia\\memory\\retraction_registry.md",
+            "quote": "SVT/SVD on sparse ordinal MNAR matrices produces diagnostic numbers, not structural rank estimates.",
+            "date": "2026-04-19"
+          }
+        ],
+        "detector_sketch": "Assumption manifest per estimator checked mechanically against the dataset (value type, sentinel-in-domain, missingness mechanism, marginal-null reproduction); fire when violations lack a diagnostic-only caveat.",
+        "discovered_round": 1
+      },
+      {
+        "name": "local_symptom_patch",
+        "signature": "After a resource/namespace collision, the fix changes only a constant — bumping past the observed collision — without enumerating the full allocation space; a second collision in the same namespace follows within the session.",
+        "member_refs": [
+          "harmonia-self/local_symptom_patch"
+        ],
+        "anchor_agents": [
+          "harmonia"
+        ],
+        "why_new": "Process/effort-waste shape with no metric, baseline, menu, or excitement involved; fires on any shared-namespace allocator.",
+        "best_anchors": [
+          {
+            "agent": "harmonia",
+            "artifact": "D:\\Prometheus\\harmonia\\memory\\abandon_log.md",
+            "quote": "Conductor v1 fix was lazy — only audited Section 5, not Section 7. \"Patch the local symptom\" failure.",
+            "date": "2026-04-17"
+          }
+        ],
+        "detector_sketch": "Fire when a fix diff touches only a literal value and a second same-namespace collision occurs within N events, or no full-space scan/range map was added.",
+        "discovered_round": 1
+      },
+      {
+        "name": "harness_fallback_substitution",
+        "signature": "The agent's own auto-repair scaffolding (import injection, confidence wrappers, default stubs, fallback branches) supplies the measured behavior of admitted artifacts: 27% of the admitted library executes only harness-provided fallback paths (fallback_only_ratio=1.0), and targeted new artifacts all score exactly at the auto-fix-wrapper baseline.",
+        "member_refs": [
+          "hephaestus/harness_fallback_substitution"
+        ],
+        "anchor_agents": [
+          "hephaestus"
+        ],
+        "why_new": "Contamination from the evaluator side, not the optimizer side (not goodhart) and not data marginals (not baseline_costume): the cheap behavior is injected by the agent's own helpers.",
+        "best_anchors": [
+          {
+            "agent": "hephaestus",
+            "artifact": "D:\\Prometheus\\pivot\\hephaestus_state_and_next_steps_2026-05-30.md",
+            "quote": "All score at the auto-fix wrapper baseline.",
+            "date": "2026-05-30"
+          }
+        ],
+        "detector_sketch": "Null-artifact control through the full gate stack (flag admits within noise of the stub); runtime path tracing for fallback_only_ratio=1.0 / zero state-writes.",
+        "discovered_round": 1
+      },
+      {
+        "name": "transient_failure_poisons_dedup_ledger",
+        "signature": "The 'already attempted' dedup set is built from ledger keys without distinguishing substantive outcomes from transient infrastructure failures; an API outage wrote terminal-looking scrap entries for 58% of the unique candidate space, permanently and silently consuming it (payloads saved as None, unrecoverable by repair passes).",
+        "member_refs": [
+          "hephaestus/transient_failure_poisons_dedup_ledger"
+        ],
+        "anchor_agents": [
+          "hephaestus"
+        ],
+        "why_new": "Surface-resembles opaque_kill_black_hole but the defect is dedup semantics — transient environmental failure recorded as terminal attempt converts an outage into permanent queue destruction; detector inspects skip-set construction, not label entropy.",
+        "best_anchors": [
+          {
+            "agent": "hephaestus",
+            "artifact": "D:\\Prometheus\\agents\\hephaestus\\src\\hephaestus.py",
+            "quote": "already_done = set(ledger.keys()) | processed",
+            "date": "2026-05-26"
+          }
+        ],
+        "detector_sketch": "Classify terminal reasons transport-class vs content-class within the skip set; fire when poisoned fraction >~10% or loader lacks transport-class exemption.",
+        "discovered_round": 1
+      },
+      {
+        "name": "narrative_ledger_divergence",
+        "signature": "Status docs, READMEs, journals and memory carry result/status claims (PASS counts, headline rates, early-cycle findings, killed-claim affirmations) that the machine ledger in the same repo contradicts — written at celebration time or cycle 1, propagated by citation, never re-joined or retracted; downstream reasoning (autopsies, revival decisions, design docs) inherits the stale claims.",
+        "member_refs": [
+          "hephaestus/headline_metric_echo",
+          "forge/celebration_ledger_divergence",
+          "nemesis/first_light_fossilization",
+          "noesis/zombie_finding_body"
+        ],
+        "anchor_agents": [
+          "hephaestus",
+          "forge",
+          "nemesis",
+          "noesis",
+          "aporia",
+          "aletheia"
+        ],
+        "why_new": "Not reward_signal_capture: calibration ran and produced ledger truth that never propagated back into prose — an unreconciled join between narrative layer and machine ledger, including kill non-propagation within a single document.",
+        "best_anchors": [
+          {
+            "agent": "forge",
+            "artifact": "D:\\Prometheus\\forge\\verdicts\\t2_simpson_paradox_018_gem_verdict.json",
+            "quote": "\"verdict\": \"FAIL_DIVERSITY\"",
+            "date": "2026-04-04"
+          },
+          {
+            "agent": "nemesis",
+            "artifact": "D:\\Prometheus\\agents\\nemesis\\reports\\nemesis_report_20260402_124232.md",
+            "quote": "| 23 | information_theory_x_criticality_x_pragmatics | 48% | 48/92 |",
+            "date": "2026-04-02"
+          },
+          {
+            "agent": "noesis",
+            "artifact": "D:\\Prometheus\\noesis\\v3\\NOESIS_V3_FINDINGS.md",
+            "quote": "**Modularity: 0.569** — the partition is structurally meaningful (not random).",
+            "date": "2026-04-04"
+          }
+        ],
+        "detector_sketch": "Extract numeric/status claims from prose; recompute from the referenced primary ledger; fire on >2x divergence, sign/order reversals, (claimed PASS, ledger FAIL) pairs, or kill-marked claims with unmarked affirmative copies; escalate with citation-chain depth.",
+        "discovered_round": 1
+      },
+      {
+        "name": "regime_straddling_ab_comparison",
+        "signature": "A categorical lever (frame, config epoch, model era) is mined from a longitudinal ledger as causally dominant while category assignment is perfectly time-blocked (zero interleaving) and the time axis carries known regime changes (outage, battery/baseline change, queue depletion); the comparison loads regime effects onto the category variable.",
+        "member_refs": [
+          "hephaestus/regime_straddling_ab_comparison"
+        ],
+        "anchor_agents": [
+          "hephaestus"
+        ],
+        "why_new": "Confounded-by-time causal mining, detectable independent of the conclusion's truth via interleaving and covariate checks — not marginals (baseline_costume), not a gate.",
+        "best_anchors": [
+          {
+            "agent": "hephaestus",
+            "artifact": "D:\\Prometheus\\pivot\\hephaestus_comprehensive_history_2026-05-30.md",
+            "quote": "1. **Frame system kills the forge.** Frameless generation (18% rate) outperforms framed (0.3-1.5%) by 12-36x.",
+            "date": "2026-05-30"
+          }
+        ],
+        "detector_sketch": "Temporal overlap coefficient of compared categories ~0 fires; per-category transport-failure rates and instrument-version entropy differing >3x fires.",
+        "discovered_round": 1
+      },
+      {
+        "name": "uncalibrated_roi_forecast",
+        "signature": "Planning docs carry quantified success-rate forecasts and ROI tables at 2-3 significant figures built from guessed rates (some columns mixing measured and 'est.' values); action is taken; the forecast is never scored against actuals even when actuals land 8x lower in a later doc — the forecasting instrument receives no calibration signal.",
+        "member_refs": [
+          "hephaestus/uncalibrated_roi_forecast"
+        ],
+        "anchor_agents": [
+          "hephaestus"
+        ],
+        "why_new": "Forecast-side unfalsified planning, distinct from reward capture (no discovery) and from constraint enforcement: precision substitutes for evidence at decision time with no closure step.",
+        "best_anchors": [
+          {
+            "agent": "hephaestus",
+            "artifact": "D:\\Prometheus\\agents\\hephaestus\\REPAIR_SCORECARD.md",
+            "quote": "expect ~**287 tools forged from 630 candidates** (45% recovery rate)",
+            "date": "2026-04-03"
+          }
+        ],
+        "detector_sketch": "Extract numeric forecasts from plan docs; search later artifacts for realized values; fire when realized/forecast <1/3 with no reconciliation, or tables mixing measured with estimated values unpartitioned.",
+        "discovered_round": 1
+      },
+      {
+        "name": "unwitnessed_flatline",
+        "signature": "A continuous agent dies mid-operation with no terminal record; declared heartbeat/telemetry exists but nothing consumes it; dormancy is discovered weeks later and downstream docs accrete N untested stop-hypotheses (each admittedly testable in minutes) that propagate citation-without-verification through further documents.",
+        "member_refs": [
+          "hephaestus/unwitnessed_flatline"
+        ],
+        "anchor_agents": [
+          "hephaestus",
+          "aporia",
+          "aletheia"
+        ],
+        "why_new": "Process-ledger shape: terminal-state illegibility plus hypothesis-debt — failure information destroyed at the moment of generation, then replaced by narrative no one closes; nothing on the known list covers it.",
+        "best_anchors": [
+          {
+            "agent": "hephaestus",
+            "artifact": "D:\\Prometheus\\agents\\hephaestus\\hephaestus.log",
+            "quote": "2026-04-02 12:43:50,824 [INFO] Calling Augment API (auggie-sdk)...",
+            "date": "2026-04-02"
+          },
+          {
+            "agent": "aletheia",
+            "artifact": "D:\\Prometheus\\pivot\\autopsy_hephaestus_2026-05-13.md",
+            "quote": "Three hypotheses from Aporia's chip 1: API key issue, Nous backlog, April 25 pivot. None verified.",
+            "date": "2026-05-13"
+          }
+        ],
+        "detector_sketch": "Silence > k x declared cadence with no terminal record fires live; post-hoc: 'cause unknown' hypothesis lists older than X days with citations and no resolving artifact.",
+        "discovered_round": 1
+      },
+      {
+        "name": "subresolution_gate_binning",
+        "signature": "Admission decisions, repair-priority bins, and interpretive labels are assigned at granularity finer than the eval instrument's quantum or noise floor (5pp bins on a 15-item battery; strictly-beat gates scrapping exact ties); one-item differences become categorical fates and downstream mining inherits phantom granularity.",
+        "member_refs": [
+          "hephaestus/subresolution_gate_binning"
+        ],
+        "anchor_agents": [
+          "hephaestus"
+        ],
+        "why_new": "Resolution mismatch between instrument and decision — categories narrower than one measurement quantum manufacture graded structure from noise; no gaming, full witness payloads.",
+        "best_anchors": [
+          {
+            "agent": "hephaestus",
+            "artifact": "D:\\Prometheus\\agents\\hephaestus\\REPAIR_SCORECARD.md",
+            "quote": "| 45-49% | 63 | Near-pass; minor logic/calibration issues |",
+            "date": "2026-04-03"
+          }
+        ],
+        "detector_sketch": "Decision margin in items = |score-threshold| x N/100; fire when median margin <2 items or any bin width <100/N pp.",
+        "discovered_round": 1
+      },
+      {
+        "name": "abstention_pass_validation_gate",
+        "signature": "A validation gate's semantics are 'pass unless the oracle can parse AND objects' rather than 'pass only if the oracle affirms': artifacts the oracle cannot parse sail through, and selection pressure (disagreement fitness) tunnels the population into the oracle's abstention region — 48 of 92 elites syntactically garbled, reported as deep adversarial lineages.",
+        "member_refs": [
+          "nemesis/abstention_pass_validation_gate"
+        ],
+        "anchor_agents": [
+          "nemesis"
+        ],
+        "why_new": "Not goodhart: no optimizer satisfies a score's letter — the gate's abstention-equals-approval semantics plus undirected drift create the hole; detector is oracle-affirmation share over admitted rows.",
+        "best_anchors": [
+          {
+            "agent": "nemesis",
+            "artifact": "D:\\Prometheus\\agents\\nemesis\\src\\validators.py",
+            "quote": "and \"execution:\" in exec_reasoning and \"fallback:\" not in exec_reasoning):",
+            "date": "2026-03-25"
+          }
+        ],
+        "detector_sketch": "P(oracle affirmed | admitted) trend; independent well-formedness of admitted vs rejected artifacts (admitted falling below rejected fires).",
+        "discovered_round": 1
+      },
+      {
+        "name": "normalized_gate_population_drift",
+        "signature": "An admission gate compares a population-normalized statistic (x/N) against a fixed absolute threshold while N grows; gate semantics silently tighten (~1/N) and hit exact zero once the statistic's max possible value crosses the threshold — promotions collapse in lockstep with population growth, independent of candidate quality, compounded by a doc-vs-code metric mismatch.",
+        "member_refs": [
+          "nemesis/normalized_gate_population_drift"
+        ],
+        "anchor_agents": [
+          "nemesis"
+        ],
+        "why_new": "Not bounded_menu_wall: identical candidates would have been admitted at the earlier N; replaying the gate at a frozen reference N recovers admission, separating gate-drift from menu exhaustion.",
+        "best_anchors": [
+          {
+            "agent": "nemesis",
+            "artifact": "D:\\Prometheus\\agents\\nemesis\\src\\evaluator.py",
+            "quote": "disagreement = len(unique_answers) / max(n_tools, 1)",
+            "date": "2026-03-25"
+          }
+        ],
+        "detector_sketch": "Regress admission rate on 1/N; compute k_max/N threshold-crossing date; replay gate with frozen N — recovery fires.",
+        "discovered_round": 1
+      },
+      {
+        "name": "dead_unanimity_channel",
+        "signature": "A load-bearing feedback channel is gated on a k-of-N unanimity predicate over a growing population and has fired zero times in the agent's entire history; the output artifact is never created while the constant zero is printed every cycle as if informative and docs advertise the channel as a core function.",
+        "member_refs": [
+          "nemesis/dead_unanimity_channel"
+        ],
+        "anchor_agents": [
+          "nemesis"
+        ],
+        "why_new": "The dual of opaque_kill_black_hole: a zero-volume alarm that structurally cannot ring (trigger probability decays with N), with no discrimination between 'starved by construction' and 'nothing to report'.",
+        "best_anchors": [
+          {
+            "agent": "nemesis",
+            "artifact": "D:\\Prometheus\\agents\\nemesis\\src\\reporter.py",
+            "quote": "blind_spots = grid.blind_spots() if not blind_spots: return",
+            "date": "2026-03-25"
+          }
+        ],
+        "detector_sketch": "Per advertised channel: lifetime emission count; for never-fired channels estimate expected fire rate under an independence null given the predicate's form; fire when expected events < 1/history.",
+        "discovered_round": 1
+      },
+      {
+        "name": "blind_mutation_oracle_drift",
+        "signature": "A metamorphic/adversarial generator applies surface-text mutations with no semantic model; with chain depth inputs become ungrammatical or structurally corrupted while oracle labels are carried over unre-derived — blind-spot rates climb monotonically and all defenders' survival converges to the same near-chance value, so the metric measures input-corruption tolerance, not reasoning.",
+        "member_refs": [
+          "forge/blind_mutation_oracle_drift"
+        ],
+        "anchor_agents": [
+          "forge"
+        ],
+        "why_new": "Not goodhart (the adversary's objective is genuinely satisfied, by destroying well-formedness) and not opaque_kill (witnesses varied but corrupted); the label-validity decay under mutation is its own predicate.",
+        "best_anchors": [
+          {
+            "agent": "forge",
+            "artifact": "D:\\Prometheus\\forge\\v2\\reports\\LATEST.md",
+            "quote": "**Data corruption evident**: Multiple test cases contain garbled/nonsense text",
+            "date": "2026-04-06"
+          }
+        ],
+        "detector_sketch": "Well-formedness checks (parse score, premise-index monotonicity, question/answer type agreement) vs chain depth; fire when all defenders' survival rates converge within ~2pp.",
+        "discovered_round": 1
+      },
+      {
+        "name": "instrument_echo_promoted_to_finding",
+        "signature": "Verbatim n-gram overlap exists between the probe instrument's own prompt template and the celebrated specimen fragments, the definitions of 'discovered' failure modes, and the classifier regexes built to detect them — with no contamination pass; the echo is promoted as substrate-internal structure including cross-scale convergence claims trivially explained by both scales receiving the same template.",
+        "member_refs": [
+          "arcanum/instrument_echo_promoted_to_finding"
+        ],
+        "anchor_agents": [
+          "arcanum"
+        ],
+        "why_new": "Contamination flows instrument->output->interpretation: the 'signal' is the instrument's own text reflected back — neither a gamed gate, skipped calibration, nor a corpus background class.",
+        "best_anchors": [
+          {
+            "agent": "arcanum",
+            "artifact": "D:\\Prometheus\\arcanum\\src\\arcanum_infinity\\naming_engine.py",
+            "quote": "- Written like a field biologist's notebook entry for a new species",
+            "date": "2026-03-22"
+          },
+          {
+            "agent": "arcanum",
+            "artifact": "D:\\Prometheus\\whitepapers\\xenolexicon.md",
+            "quote": "suggesting it reflects a deeply embedded architectural prior for handling unfamiliar entities.",
+            "date": "2026-04-23"
+          }
+        ],
+        "detector_sketch": "n-gram (n>=3) and LCS overlap of celebrated fragments/failure-mode definitions/detector regexes against the template corpus; fire on substring or >0.5 normalized LCS; flag convergence claims whose shared feature matches template text.",
+        "discovered_round": 1
+      },
+      {
+        "name": "self_seeded_taxonomy",
+        "signature": "A classification system whose category count grows ~one-per-anomaly, with categories supported by single specimens and detector code hard-coding the verbatim strings of the discovery instances — reclassification of the generating corpus is tautological and every category unfalsifiable, while the taxonomy gates downstream admission.",
+        "member_refs": [
+          "arcanum/self_seeded_taxonomy"
+        ],
+        "anchor_agents": [
+          "arcanum"
+        ],
+        "why_new": "The dual of opaque_kill_black_hole: labels proliferate one-per-instance so classification emits no compression; the code-vs-ledger predicate (patterns that are substrings of cataloged specimens) is absent from the known list.",
+        "best_anchors": [
+          {
+            "agent": "arcanum",
+            "artifact": "D:\\Prometheus\\arcanum\\src\\arcanum_infinity\\3B_release\\naming_autopsy.py",
+            "quote": "r\"POGLOON|MEPHISTHEE|Bubblejovia|NOMESCHUL|Geminidum\",",
+            "date": "2026-03-22"
+          }
+        ],
+        "detector_sketch": "Fraction of detection patterns verbatim-matching cataloged specimens (>10% fires); median category support ==1 while taxonomy is wired into an admit/discard gate; d(categories)/d(specimens) slope.",
+        "discovered_round": 1
+      },
+      {
+        "name": "unaudited_self_annotation",
+        "signature": "Capability/tier/event-class labels on a system's outputs are assigned by the producing system itself with no provenance field and no audited sample, and downstream synthesis cites them as measurements (R-tier tags as self-claims; 'autonomous self-correction' events that were human-detected).",
+        "member_refs": [
+          "cross-cutting-pivot/unaudited_self_annotation"
+        ],
+        "anchor_agents": [
+          "erebos"
+        ],
+        "why_new": "A schema gap, not gaming or excitement: self-claims become indistinguishable from validated measurements absent an assignment-provenance column.",
+        "best_anchors": [
+          {
+            "agent": "erebos",
+            "artifact": "D:\\Prometheus\\pivot\\erebos_v3_synthesis_2026-05-27.md",
+            "quote": "The self-correction events were human-detected. The R-tier annotations are unaudited self-claims.",
+            "date": "2026-05-27"
+          }
+        ],
+        "detector_sketch": "Fraction of label fields with assignment_provenance in {self, missing}; fire when such labels are load-bearing in cited claims.",
+        "discovered_round": 1
+      },
+      {
+        "name": "curator_annotation_echo",
+        "signature": "A finding's load-bearing variable is a curator-assigned catalog annotation or its claimed boundary coincides with a documented catalog construction choice (enumeration band edge in the catalog's own docstring); the instrument correctly detects the curator's design, booked as discovered mathematics, and is not expected to survive an independently constructed catalog.",
+        "member_refs": [
+          "cross-cutting-pivot/curator_annotation_echo"
+        ],
+        "anchor_agents": [
+          "erebos"
+        ],
+        "why_new": "Distinct from catalog_volume_mimicry: tracks curator annotation/design choices that survive volume correction; detector is attribute-provenance classification plus docstring/boundary alignment.",
+        "best_anchors": [
+          {
+            "agent": "erebos",
+            "artifact": "D:\\Prometheus\\pivot\\erebos_finding_reclassification_2026-05-27.md",
+            "quote": "The moderation effect tracks the cataloguer's enumeration choices.",
+            "date": "2026-05-27"
+          }
+        ],
+        "detector_sketch": "Classify load-bearing features curator-annotated vs object-computed; cross-match claimed thresholds against documented construction boundaries; require independent-catalog replication.",
+        "discovered_round": 1
+      },
+      {
+        "name": "unearned_mechanism_attribution",
+        "signature": "An artifact's score on capability slice S is credited to its named/novel component M, but knockout of M changes S by less than CI noise while substantially changing other slices (including negatively); the published attribution is misaligned with the knockout-delta vector and downstream failures get misdiagnosed off the wrong label.",
+        "member_refs": [
+          "cross-cutting-pivot/unearned_mechanism_attribution"
+        ],
+        "anchor_agents": [
+          "hephaestus"
+        ],
+        "why_new": "Quality genuinely moved under honest measurement (not goodhart); the failure is causal credit assignment to the wrong internal component, detected by per-component per-slice knockout.",
+        "best_anchors": [
+          {
+            "agent": "hephaestus",
+            "artifact": "D:\\Prometheus\\pivot\\whitepaper_decorative_mechanisms_2026-05-17.md",
+            "quote": "96% of the R6 performance comes from regex keyword matching ... not from the tool's novel computational architecture",
+            "date": "2026-05-17"
+          }
+        ],
+        "detector_sketch": "Stripped-control knockout per component per slice with CIs; fire on claims naming components with sub-CI deltas or negative deltas on composed slices; emit attribution cards.",
+        "discovered_round": 1
+      },
+      {
+        "name": "hollow_artifact_discharge",
+        "signature": "A committed deliverable (audit ledger, verdict scaffold, mandated reasoning-trace file, staged corpus) exists at its declared path with schema-complete structure, but the load-bearing judgment fields are systematically empty (fill rate <20%, placeholder verdicts, metadata-only stubs, zero valid records); creating the scaffold discharged the commitment and existence checks pass while the work it was built to hold never runs.",
+        "member_refs": [
+          "aporia/hollow_ledger_scaffold",
+          "cross-cutting-pivot/unfilled_reflection_scaffold",
+          "forge/safeguard_stub_decay"
+        ],
+        "anchor_agents": [
+          "aporia",
+          "forge",
+          "techne",
+          "aletheia"
+        ],
+        "why_new": "Not goodhart (no gate; humans and downstream docs mistake existence for content): an effort-shape failure where the cheap generative half completes and the expensive judgment half never starts.",
+        "best_anchors": [
+          {
+            "agent": "aporia",
+            "artifact": "D:\\Prometheus\\aporia\\meta\\pythia_yield_audit_2026-05-30.jsonl",
+            "quote": "\"actual_delta\": null, \"delta_evidence_pointer\": null, ... \"audited_by\": null",
+            "date": "2026-05-30"
+          },
+          {
+            "agent": "forge",
+            "artifact": "D:\\Prometheus\\forge\\candidates\\t2_simpson_paradox_018_REASONING_TRACE.md",
+            "quote": "# Reasoning Trace: t2_simpson_paradox_018 ... Model: deepseek-chat",
+            "date": "2026-04-03"
+          }
+        ],
+        "detector_sketch": "Classify fields load-bearing vs descriptive; fire when load-bearing fill <20% across >=10 rows (or mandated free-text below minimum substance corpus-wide) while the artifact is cited as shipped; placeholder-token census with file age.",
+        "discovered_round": 1
+      },
+      {
+        "name": "contradictory_comeasurement_shelved",
+        "signature": "Two instruments measuring the same construct on the same object disagree in sign in the same report; the agent records both tables, headlines the one matching the prior narrative, and downstream claims cite only it — the contradiction acknowledged but never adjudicated across weeks.",
+        "member_refs": [
+          "noesis/contradictory_comeasurement_shelved"
+        ],
+        "anchor_agents": [
+          "noesis"
+        ],
+        "why_new": "Two-instrument coherence failure: the kill evidence sits in the agent's own report and is narrated past — not suppressed, not absent, not a single-instrument baseline issue.",
+        "best_anchors": [
+          {
+            "agent": "noesis",
+            "artifact": "D:\\Prometheus\\noesis\\v3\\CLAUDE.md",
+            "quote": "When your two curvature measures give opposite signs, that's a red flag ... The documents acknowledge this tension but don't resolve it.",
+            "date": "2026-04-01"
+          }
+        ],
+        "detector_sketch": "Group (construct, instrument, value); fire when cross-instrument agreement below chance AND downstream claims cite only one of the disagreeing pair.",
+        "discovered_round": 1
+      },
+      {
+        "name": "failed_prediction_relabeled",
+        "signature": "A registered prediction fails and, instead of decrementing model confidence, the failure is converted into a new affirmative domain claim that is never itself registered or tested; headlines keep the pass count, and pending tests get their desired outcomes asserted in advance.",
+        "member_refs": [
+          "noesis/failed_prediction_relabeled"
+        ],
+        "anchor_agents": [
+          "noesis"
+        ],
+        "why_new": "Distinct from the legitimate failure-emits-direction doctrine: the spawned hypothesis enters as untracked affirmative claim with zero confidence decrement on the parent model — registry-level asymmetric updating.",
+        "best_anchors": [
+          {
+            "agent": "noesis",
+            "artifact": "D:\\Prometheus\\journal\\2026-03-31-aletheia-overnight.md",
+            "quote": "P4 (social choice positive curvature) still fails. ... This may indicate that social choice is a bridge domain, not a cluster domain",
+            "date": "2026-03-31"
+          }
+        ],
+        "detector_sketch": "Per FAIL event: check for parent-model confidence decrement; extract explanation claims; fire when the explanation never appears as a registered prediction.",
+        "discovered_round": 1
+      }
+    ],
+    "final_known_names": [
+      "baseline_costume",
+      "opaque_kill_black_hole",
+      "bounded_menu_wall",
+      "goodhart_metric_gaming",
+      "reward_signal_capture",
+      "prime_atmosphere",
+      "catalog_volume_mimicry",
+      "degenerate_field_flatline",
+      "declared_check_never_executed",
+      "asserted_state_referent_gap",
+      "uncalibrated_instrument_floor",
+      "incumbent_survives_gate_fix",
+      "surface_space_novelty_inflation",
+      "statically_infeasible_objective",
+      "verdict_line_compression",
+      "collapsed_ecology_corpus_export",
+      "midfunnel_bakeoff_proxy",
+      "harness_contract_wall",
+      "graderside_leak_into_generator",
+      "truncated_self_view_rebuild",
+      "shallow_layer_evidence_deep_verdict",
+      "dead_letter_failure_memory",
+      "proxy_closed_perpetual_debt",
+      "dead_interface_instrument_bipolar",
+      "measurement_referent_unbinding",
+      "inherited_capability_credit",
+      "internal_catalog_citation_laundering",
+      "production_into_vacuum",
+      "flow_counter_as_stock",
+      "composed_gate_class_starvation",
+      "mismatched_null_reference",
+      "format_compliance_gain_as_capability",
+      "paired_slice_eval_collapse",
+      "planted_overlap_lift",
+      "unpersisted_evidence_record",
+      "predicate_schema_homonym",
+      "lineage_pseudoreplication",
+      "promotion_cap_clock",
+      "verdict_label_plumbing",
+      "novelty_gate_on_partial_mirror",
+      "allocator_steered_by_unstable_arm_scores",
+      "unexercised_inventory_capability",
+      "canonical_failure_mode_misattribution",
+      "content_blind_promotion_gate",
+      "null_free_validation_stack",
+      "pooled_mixture_scalar",
+      "uncovered_support_claim",
+      "reflexive_yield_scoring",
+      "synthetic_pass_scope_inflation",
+      "precommitted_killrule_scope_erosion",
+      "bookkeeping_provenance_signal",
+      "null_satisfiable_gate",
+      "static_signal_dilution",
+      "monotone_claim_narrowing",
+      "phantom_actuator_menu",
+      "pending_blind_escalation_flood",
+      "proxy_coordinate_substitution",
+      "liveness_as_health",
+      "queue_to_journal_decay",
+      "subfrontier_retest_mirage",
+      "weights_opinion_as_instrument",
+      "self_corpus_centrality_echo",
+      "declared_constraint_unenforced",
+      "imported_prestige_reward_frame",
+      "truncated_window_artifact_on_noniid_stream",
+      "pseudo_independent_consensus",
+      "posthoc_gate_thaw",
+      "saturated_probe_catalog",
+      "subject_name_lexicon_false_positive",
+      "undeclared_selection_metric",
+      "subsample_extremum_claim",
+      "sorted_pairing_pseudocorrelation",
+      "declared_window_no_recheck",
+      "post_hoc_axis_annotation",
+      "non_spanning_falsifier_retraction",
+      "popularity_scored_type_mismatch",
+      "assumption_unchecked_estimator_import",
+      "local_symptom_patch",
+      "harness_fallback_substitution",
+      "transient_failure_poisons_dedup_ledger",
+      "narrative_ledger_divergence",
+      "regime_straddling_ab_comparison",
+      "uncalibrated_roi_forecast",
+      "unwitnessed_flatline",
+      "subresolution_gate_binning",
+      "abstention_pass_validation_gate",
+      "normalized_gate_population_drift",
+      "dead_unanimity_channel",
+      "blind_mutation_oracle_drift",
+      "instrument_echo_promoted_to_finding",
+      "self_seeded_taxonomy",
+      "unaudited_self_annotation",
+      "curator_annotation_echo",
+      "unearned_mechanism_attribution",
+      "hollow_artifact_discharge",
+      "contradictory_comeasurement_shelved",
+      "failed_prediction_relabeled"
+    ],
+    "critic": null
+  }
+}

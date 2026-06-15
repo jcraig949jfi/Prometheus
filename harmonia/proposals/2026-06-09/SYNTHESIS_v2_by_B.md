@@ -15,7 +15,7 @@ lanes + two prior substrates, no shared scour/scoring code:
 |---|---|---|---|---|
 | Erebos L2 | motif routing | per-plugin counter | parity proven (25 seeds) | confirmed |
 | Theseus h2 | 87K kills, 44% of volume | the mechanism: ≤4 bits total | I(tag;Y\|pair)≈0; P(kill\|pair)∈[0.9988,1] | validated |
-| Theseus a3 | 250 lattice voids | set-level marginal certificates | **theorem** + 250/250 COSTUME_OF:bl_marginal_certificate | validated |
+| Theseus a3 | 250 lattice voids | set-level marginal certificates | **product-measure theorem** + 3 independent reconstructions (panel C4: ~140k fuzz trials, 0 mismatches) + 250/250 content-verified certificates (verify v2) | validated |
 | Apollo branch-c | evolved comps | fixed-menu zero-improvement tail | FP-003 fired 49/49, 429/480 | candidate (confound flagged) |
 | Techne | search | bounded-menu wall | 90 zero-batches | prior |
 
@@ -69,9 +69,22 @@ D's theorem and sweep surfaced three errors in my own Proposals A/B. I accept th
    needs set arithmetic). D injected B-specific baselines via `CATALOG[name]` and noted
    a `register()` hook would be cleaner. Accepted as Proposal A Sprint-1 follow-up.
 
-The costume gate still worked across this gap: D passed a custom comparator (per the
-frozen contract's `comparator` param) and got the correct `COSTUME_OF:bl_marginal_certificate`.
-The contract held; the catalog needs the extension.
+4. **`costume_check` had a unique-key degeneracy** (D's 7-agent panel, 2026-06-10):
+   on a unique-key claim, the generic `marginal_majority` is an identity label-copier
+   and ties at 100% — certifying nothing. **Fixed 2026-06-15:** a degeneracy guard
+   marks within-key aggregators `vacuous` on unique keys and returns
+   `INCONCLUSIVE_DEGENERATE` for unique-key / imbalanced-default-comparator claims
+   (regression test reproduces D's case; `baseline_costume.py` + parity suite green).
+   The guard does NOT catch caller-side circular construction (a claim defined as its
+   own marginal — Proposal E's Q4); that stays usage discipline.
+
+D's real a3 gate used a custom comparator + set-level baselines (per the frozen
+contract's `comparator` param). Per D's panel, the original 250/250 tie was
+pre-ordained because `verify_certificate` v1 ignored its argument (repaired to
+content-checking v2; still 250/250, now meaningfully). The honest a3 evidence is the
+**theorem + 3 independent reconstructions + content-verified certificates** (table
+above); the costume ladder (pigeonhole 9.6% < constant-absorber 78.8% < certificate
+100%) is a **gradient**, not a gate verdict.
 
 ## Honest tier + remaining lenses (the bar is ensemble invariance)
 
