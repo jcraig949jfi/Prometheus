@@ -43,6 +43,25 @@ Catalog shipped in v0 (per the sequencing decision — three only; add more only
 when a real claim shape needs them): marginal_majority, volume_weighted,
 pair_aware. If only one baseline ever fires across real use, collapse the catalog
 rather than ornament it (Proposal A §4 falsifier).
+
+CUSTOM BASELINES (`register()`, added 2026-06-15, filed by Harmonia D): set-level
+and custom-key-space baselines cannot be expressed as the built-in
+`rows, *, key_fn, label_fn[, signature_fn]` shape — they own their own key space
+(e.g. Erebos's pair-aware counter keys on (plugin, partner_cell) tuples; Proposal
+B's per-cell hold-rate baselines key on cells). `register(name, fn, catalog=...)`
+returns a NEW catalog dict with `fn` added as a `rows -> RecMap` callable, called
+WITHOUT key/label/signature injection. Pass that catalog to `costume_check(...,
+catalog=cat)`. This is the clean injection path D requested; it replaces
+`CATALOG[name]=fn` monkey-patching (which mutated module-global state and leaked
+across callers). Worked example: see
+`test_baseline_costume_parity.py::test_subsumes_pair_aware_gate_via_register`.
+
+WHY register() is load-bearing, not cosmetic (self-attack finding 2026-06-15):
+v0's built-in `pair_aware` collapses the key space to single `key_fn` keys and so
+CANNOT reproduce Erebos's pair-aware counter (which keys on (plugin, partner_cell)).
+The only faithful subsumption of that bespoke gate is via a registered custom-key
+baseline. The built-in `pair_aware` remains valid only for claims that are
+themselves single-key maps derived from co-occurrence context.
 """
 from __future__ import annotations
 
@@ -146,6 +165,41 @@ DEFAULT_BASELINES = ("marginal_majority", "volume_weighted", "pair_aware")
 
 
 # ----------------------------------------------------------------------------
+# Custom-baseline registration (the clean injection path; filed by Harmonia D)
+# ----------------------------------------------------------------------------
+@dataclass(frozen=True)
+class _Registered:
+    """A caller-supplied custom baseline. Distinguished from the built-in catalog
+    so `costume_check` calls it as `fn(rows) -> RecMap` (set-level / custom-key
+    convention): the baseline OWNS its key space, so key_fn/label_fn/signature_fn
+    are NOT injected. This is what lets a (plugin, partner_cell)-keyed counter or
+    a per-cell hold-rate baseline compete against a same-keyed claim."""
+    fn: Baseline
+
+
+def register(name: str, fn: Baseline, *, catalog: Optional[dict] = None) -> dict:
+    """Return a NEW catalog dict = (catalog or CATALOG) + {name: <custom fn>}.
+
+    Does NOT mutate the module-global CATALOG (that was the monkey-patch D flagged:
+    it leaked custom baselines across unrelated callers and was order-dependent).
+    `fn` must be a `rows -> {key: label}` callable that owns its own key space;
+    `costume_check` will call it as `fn(rows)` with no key/label/signature_fn.
+
+    Chain calls to register more than one: `cat = register('b', fb,
+    catalog=register('a', fa))`. Pass the result as `costume_check(..., catalog=cat)`
+    and name the customs in `baselines=(...)`.
+
+    Raises ValueError on a name collision (refuse to silently shadow a baseline)."""
+    base = dict(CATALOG if catalog is None else catalog)
+    if name in base:
+        raise ValueError(
+            f"baseline {name!r} already in catalog; pick a fresh name "
+            f"(register() refuses to shadow — that was the monkey-patch hazard).")
+    base[name] = _Registered(fn)
+    return base
+
+
+# ----------------------------------------------------------------------------
 # Comparison + null
 # ----------------------------------------------------------------------------
 def _default_comparator(claim: RecMap, baseline_map: RecMap) -> tuple:
@@ -198,13 +252,16 @@ def costume_check(
     label_fn,
     signature_fn=None,
     comparator=None,
+    catalog=None,         # custom catalog from register(); defaults to CATALOG
     null=None,            # reserved; v0 uses the built-in shuffle null
     n_null_trials=20,
     seed=0,
 ) -> CostumeVerdict:
     """Run the claim against the baseline catalog. See module docstring for the
-    frozen contract."""
+    frozen contract. `catalog` (from `register()`) injects custom baselines without
+    mutating module state; names in `baselines` resolve against it."""
     cmp = comparator or _default_comparator
+    cat = CATALOG if catalog is None else catalog
 
     # Degeneracy guard (filed by Harmonia D 2026-06-10, a3 generic_catalog_control).
     # Within-key aggregating baselines (marginal_majority, pair_aware) collapse to
@@ -219,9 +276,12 @@ def costume_check(
 
     results: list = []
     for name in baselines:
-        fn = CATALOG[name]
+        fn = cat[name]
         try:
-            if name == "pair_aware":
+            if isinstance(fn, _Registered):
+                # Custom baseline: owns its key space, called rows-only.
+                bmap = fn.fn(rows)
+            elif name == "pair_aware":
                 bmap = fn(rows, key_fn=key_fn, label_fn=label_fn,
                           signature_fn=signature_fn)
             else:

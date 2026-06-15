@@ -27,12 +27,23 @@ import random
 from harmonia.primitives.baseline_costume import (
     costume_check,
     marginal_majority,
+    register,
 )
 
 # The actual Erebos counter implementations (imported, not reimplemented).
-from charon.agents.erebos._cross_cell_motif import per_plugin_majority
+from charon.agents.erebos._cross_cell_motif import (
+    per_plugin_majority,
+    extract_cooccurrence_motifs,
+    conditional_kp_recommendations,
+)
 from charon.agents.erebos.sprint1.phase3.real_residue_smoke import (
     _counter_baseline_recommendations,
+    _substrate_routing_recommendations,
+)
+from charon.agents.erebos.sprint1.phase3.pair_aware_counter import (
+    pair_aware_counter_recommendations,
+    MIN_COOCCURRENCE,
+    MIN_LIFT,
 )
 
 
@@ -130,9 +141,143 @@ def test_unique_key_degeneracy_guard() -> None:
     print("DEGENERACY-GUARD PASS:", v.headline)
 
 
+def _cooccur_fixture(seed: int, n_sig: int = 120) -> list:
+    """Ledger-shaped rows with planted cross-cell co-occurrence structure: each
+    input_signature emits 2-3 (plugin, kp) cells; when p0 co-occurs with p1 its kp
+    skews to a shared 'kpX'. This is the shape the pair-aware / cross-cell gate was
+    built to navigate (multi-cell structure a per-plugin counter cannot express)."""
+    rng = random.Random(seed)
+    rows = []
+    for s in range(n_sig):
+        sig = f"sig_{s}"
+        plugs = rng.sample(range(5), rng.choice([2, 2, 3]))
+        for p in plugs:
+            if p == 0 and 1 in plugs:
+                kp = "kpX" if rng.random() < 0.8 else f"kp{p}"
+            else:
+                kp = f"kp{p}" if rng.random() < 0.7 else f"kp_noise{rng.randint(0, 2)}"
+            rows.append({"plugin_id": f"p{p}", "kill_pattern": kp,
+                         "input_signature": sig})
+    return rows
+
+
+def test_subsumes_real_residue_counter_gate() -> None:
+    """VERDICT-level subsumption of the real_residue_smoke per-plugin gate (ITER-56).
+
+    The bespoke gate compares `_substrate_routing_recommendations` (motif-derived,
+    keyed on plugin) against `_counter_baseline_recommendations` (keyed on plugin)
+    and FAILs when the substrate ties the counter. Both maps are single-key, so
+    costume_check's built-in `marginal_majority` reproduces the comparison directly.
+
+    We import the REAL Erebos functions (not reimplementations) and assert:
+      (1) costume_check's actionable_deltas vs marginal_majority == the bespoke
+          gate's per-plugin delta count (the comparison is identical), and
+      (2) on synthetic ledger rows the substrate ties the counter (0 deltas), so
+          costume_check returns COSTUME_OF:marginal_majority — the ITER-56 'FAIL:
+          substrate is the counter wearing a hat' verdict, now via the shared gate.
+    """
+    rng = random.Random(2026)
+    rows = []
+    for _ in range(400):
+        p = f"g{rng.randint(0, 7):02d}_plugin"
+        kp = (None if rng.random() < 0.15
+              else (f"{p}_dom" if rng.random() < 0.6 else f"{p}_kp{rng.randint(0, 3)}"))
+        rows.append({"plugin_id": p, "kill_pattern": kp,
+                     "input_signature": f"sig_{rng.randint(0, 50)}", "domain": "unknown"})
+
+    counter = _counter_baseline_recommendations(rows)            # real Erebos
+    substrate = _substrate_routing_recommendations(rows)          # real Erebos
+    bespoke_deltas = sum(1 for p in (set(counter) | set(substrate))
+                         if counter.get(p) != substrate.get(p))
+
+    kf = lambda r: r["plugin_id"]
+    lf = lambda r: r.get("kill_pattern") or "PROMOTED"
+    v = costume_check(substrate, rows, baselines=("marginal_majority",),
+                      key_fn=kf, label_fn=lf)
+    mm = next(b for b in v.per_baseline if b.name == "marginal_majority")
+
+    # (1) the comparison is byte-identical: costume_check counts the same deltas.
+    assert mm.actionable_deltas == bespoke_deltas, (
+        f"costume_check deltas {mm.actionable_deltas} != bespoke {bespoke_deltas}")
+    # (2) substrate ties the counter -> the ITER-56 FAIL, reproduced as COSTUME.
+    assert bespoke_deltas == 0, f"fixture lost its tie (deltas={bespoke_deltas})"
+    assert v.verdict == "COSTUME_OF:marginal_majority", v.headline
+    print("SUBSUMES-PER-PLUGIN-GATE PASS:", v.headline,
+          f"(costume_check deltas == bespoke deltas == {bespoke_deltas})")
+
+
+def test_subsumes_pair_aware_gate_via_register() -> None:
+    """VERDICT-level subsumption of the pair_aware_counter gate (ITER-59), AND the
+    self-attack proving register() is load-bearing here (built-in pair_aware is NOT).
+
+    The bespoke gate compares the cross-cell substrate (`conditional_kp_recommendations`,
+    keyed on (plugin, partner_cell)) against the raw pair-aware counter
+    (`pair_aware_counter_recommendations`, same key space). costume_check's BUILT-IN
+    `pair_aware` keys on single key_fn keys and so CANNOT see this comparison — the
+    only faithful subsumption is to inject the real counter as a custom-key baseline
+    via register(). We prove three things on REAL imported Erebos functions:
+
+      A. register() path catches a costume: a 'substrate' that IS the pair counter
+         -> COSTUME_OF:erebos_pair_counter (mirrors the bespoke WEAK_PASS: no lift).
+      B. register() path matches the bespoke delta computation exactly on the real
+         substrate, and returns DISTINCT when the lift filter adds deltas (mirrors
+         ROBUST_PASS).
+      C. SELF-ATTACK: the built-in `pair_aware` baseline, run on the SAME pair-keyed
+         costume from (A), returns DISTINCT — it MISSES the costume (0 shared keys),
+         because it collapsed the key space. This is why register() is required, not
+         optional; it fails loudly if a future built-in change closes the gap.
+    """
+    rows = _cooccur_fixture(seed=0)
+    motifs = extract_cooccurrence_motifs(
+        rows, min_cooccurrence=MIN_COOCCURRENCE, min_lift=MIN_LIFT).motifs
+    substrate = conditional_kp_recommendations(rows, motifs)     # real Erebos, pair-keyed
+    paircnt = pair_aware_counter_recommendations(rows)           # real Erebos, pair-keyed
+    assert substrate and paircnt, "fixture produced no motifs/pairs"
+
+    # key/label fns are only used by the null + guard legs (over rows); the registered
+    # baseline owns its key space and is called rows-only.
+    kf = lambda r: r["plugin_id"]
+    lf = lambda r: r.get("kill_pattern") or "PROMOTED"
+    cat = register("erebos_pair_counter", pair_aware_counter_recommendations)
+
+    # --- A. the costume IS caught via register() -----------------------------
+    costume_claim = paircnt  # a 'substrate' that is literally the pair counter
+    vA = costume_check(costume_claim, rows, baselines=("erebos_pair_counter",),
+                       key_fn=kf, label_fn=lf, catalog=cat)
+    assert vA.verdict == "COSTUME_OF:erebos_pair_counter", vA.headline
+
+    # --- B. delta-count parity + DISTINCT on the real substrate --------------
+    bespoke_deltas = sum(1 for k, val in substrate.items() if paircnt.get(k) != val)
+    vB = costume_check(substrate, rows, baselines=("erebos_pair_counter",),
+                       key_fn=kf, label_fn=lf, catalog=cat)
+    epc = next(b for b in vB.per_baseline if b.name == "erebos_pair_counter")
+    assert epc.actionable_deltas == bespoke_deltas, (
+        f"costume_check deltas {epc.actionable_deltas} != bespoke {bespoke_deltas}")
+    assert bespoke_deltas >= 1 and vB.verdict == "DISTINCT", (
+        f"expected lift-filter deltas -> DISTINCT; got {vB.verdict}, "
+        f"deltas={bespoke_deltas}")
+
+    # --- C. SELF-ATTACK: built-in pair_aware MISSES the same costume ---------
+    # Run the built-in pair_aware against the KNOWN costume from (A). Because it
+    # collapses (plugin, partner_cell) -> plugin, it shares 0 keys with the pair-
+    # keyed claim and reports DISTINCT: it fails to catch a costume register() catches.
+    vC = costume_check(costume_claim, rows, baselines=("pair_aware",),
+                       key_fn=kf, label_fn=lf,
+                       signature_fn=lambda r: r["input_signature"])
+    assert vC.verdict == "DISTINCT", (
+        "built-in pair_aware now catches the pair-keyed costume -- key spaces may "
+        "have been unified; if so, retire register() for this case. " + vC.headline)
+    print("SUBSUMES-PAIR-AWARE-GATE PASS (via register):",
+          f"\n  A. costume caught: {vA.verdict}",
+          f"\n  B. real substrate DISTINCT, deltas {epc.actionable_deltas}=={bespoke_deltas} (bespoke)",
+          f"\n  C. self-attack: built-in pair_aware MISSES it ({vC.verdict}) -> register() is load-bearing")
+
+
 if __name__ == "__main__":
     test_parity_with_erebos_counters()
     test_reproduces_erebos_failure()
     test_adversarial_recency_costume_slips_through()
     test_unique_key_degeneracy_guard()
+    test_subsumes_real_residue_counter_gate()
+    test_subsumes_pair_aware_gate_via_register()
     print("\nAll baseline_costume parity + self-attack + guard checks complete.")
