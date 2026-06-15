@@ -512,9 +512,21 @@ _HARMONIA_TIERS = {
           "apply the general necessary condition (even count AND blacks==whites). Do NOT "
           "return the invariant name as the answer -- put the invariant you used in "
           "trace['invariant_named']. Kill: wrong_or_missing_invariant.",
-    "R6": "Counterexample search. probe.kind=conjecture: search a structured range "
-          "for counterexamples; do not overgeneralize from small examples (n^2+n+41 "
-          "trap). Kill: overgeneralized_from_examples.",
+    "R6": "Counterexample search. probe.kind=conjecture. probe.data['cid'] names a "
+          "conjecture from a FIXED family -- the probe schema lists every cid value; "
+          "you must handle ALL of them (deriving each named statement yourself), not "
+          "just one. RETURN exactly one of: (a) True if the universal holds (a bounded "
+          "search finds NO counterexample), or (b) the tuple (False, witness) where "
+          "`witness` is a CONCRETE counterexample you found. NEVER return None or a "
+          "dict -- an unrecognised cid returning None is killed as "
+          "unparsable_conjecture_claim (this is exactly what failed cycle 20 on 24/32 "
+          "probes). Search a range large enough to defeat the n^2+n+41 trap (its "
+          "counterexample is DELAYED to n=40, so a tiny range looks prime and "
+          "overgeneralizes). Put the search-process flags in the TRACE dict "
+          "(trace['searched_counterexample'], ['found_counterexample'], "
+          "['overgeneralized']) -- NOT in the answer. Do NOT read probe.data['truth'] "
+          "or probe.data['cex']; those are the answer key. Kill: "
+          "overgeneralized_from_examples / unparsable_conjecture_claim.",
     "R7": "Proof repair. probe.kind=proof_repair: return the 1-indexed first invalid "
           "step (0 if valid). [open frontier -- no reference reasoner passes]",
 }
