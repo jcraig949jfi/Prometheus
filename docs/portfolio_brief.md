@@ -1,18 +1,18 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-06-19 04:15:34 PM UTC*
+*Generated: 2026-06-19 08:15:33 PM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
 
 ## Act on this
-* **Redis Unreachable**: Redis has been unreachable since the last update on 2026-05-17 evening, causing agent data to be sourced from the Postgres dual-write mirror, and this issue needs to be resolved to restore normal system functionality. To resolve this, investigate and restore Redis connectivity at M1.
-* **Hephaestus and Pronoia Unknown Status**: Hephaestus at M3 and Pronoia at M4 have unknown statuses due to no Postgres heartbeat, which may impact the forge pipeline and reporting orchestrator, with Hephaestus having a noted operational status of "running" as of 2026-05-16. To resolve this, investigate and verify the status of these agents.
-* **Multiple Tools with Unknown Status**: Several tools, including Clio at M1 and Pythia at M1, have unknown statuses due to no Postgres heartbeat, which may affect their functionality, such as Clio's role as a paper scanner and Pythia's role as a deep research report producer. To resolve this, investigate and verify the status of these tools.
+* **Redis Unreachable**: Redis has been unreachable since the last update, causing agent data to be sourced from the Postgres dual-write mirror, and this issue needs to be resolved to restore normal system functionality. To resolve this, investigate and restore Redis connectivity at M1.
+* **Hephaestus and Pronoia Unknown Status**: Hephaestus at M3 and Pronoia at M4 have unknown statuses due to no Postgres heartbeat, which may impact the forge pipeline and reporting orchestrator. To resolve this, investigate and verify the status of these agents.
+* **Multiple Tools with Unknown Status**: Several tools, including Clio at M1 and Pythia at M1, have unknown statuses due to no Postgres heartbeat, which may affect their functionality. To resolve this, investigate and verify the status of these tools.
 
 ## Watch this
-* **System Throughput**: With Redis unreachable and multiple agents having unknown statuses, system throughput may be impacted, potentially affecting the overall performance of the system, and the work queue has 0 queued, 0 claimed, and 0 completed tasks. 
-* **Forge Rate and Budget**: Hephaestus's forge rate is at ~4%, which is considered healthy, but there is no information on the remaining daily budget, and monitoring the forge rate and budget is necessary to ensure the system's overall health.
-* **Potential Impact on Intelligence Pipeline**: The current system issues may impact the intelligence pipeline, potentially affecting the system's ability to produce high-value intelligence outputs, with 0 completed tasks in the work queue indicating a potential issue.
+* **System Throughput**: With Redis unreachable and multiple agents having unknown statuses, system throughput may be impacted, potentially affecting the overall performance of the system, with the work queue having 0 queued, 0 claimed, and 0 completed tasks. 
+* **Forge Rate and Budget**: Hephaestus's forge rate is at ~4%, which is considered healthy, but there is no information on the remaining daily budget. 
+* **Potential Impact on Intelligence Pipeline**: The current system issues may impact the intelligence pipeline, potentially affecting the system's ability to produce high-value intelligence outputs.
 
 ## For the record
 * **Hephaestus Operational Status**: Hephaestus at M3 has an operational status of "running" as of 2026-05-16, with a current forge rate context indicating healthy substrate selection pressure, and a noted ~4% forge rate.
