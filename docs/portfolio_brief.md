@@ -1,11 +1,11 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-06-19 08:15:33 PM UTC*
+*Generated: 2026-06-20 12:15:29 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
 
 ## Act on this
-* **Redis Unreachable**: Redis has been unreachable since the last update, causing agent data to be sourced from the Postgres dual-write mirror, and this issue needs to be resolved to restore normal system functionality. To resolve this, investigate and restore Redis connectivity at M1.
+* **Redis Unreachable**: Redis has been unreachable, causing agent data to be sourced from the Postgres dual-write mirror, and this issue needs to be resolved to restore normal system functionality. To resolve this, investigate and restore Redis connectivity at M1.
 * **Hephaestus and Pronoia Unknown Status**: Hephaestus at M3 and Pronoia at M4 have unknown statuses due to no Postgres heartbeat, which may impact the forge pipeline and reporting orchestrator. To resolve this, investigate and verify the status of these agents.
 * **Multiple Tools with Unknown Status**: Several tools, including Clio at M1 and Pythia at M1, have unknown statuses due to no Postgres heartbeat, which may affect their functionality. To resolve this, investigate and verify the status of these tools.
 
@@ -16,5 +16,5 @@
 
 ## For the record
 * **Hephaestus Operational Status**: Hephaestus at M3 has an operational status of "running" as of 2026-05-16, with a current forge rate context indicating healthy substrate selection pressure, and a noted ~4% forge rate.
-* **20 Agents Still Pending Deployment**: 20 agents are still pending deployment on M2, M3, and M4, which is a known part of the multi-machine bring-up phase.
 * **No New Discoveries or Reports**: There are no new discoveries or reports from the deep research pipeline to note, with 0 completed tasks in the work queue and no recent discoveries or main stream updates.
+* **20 Agents Still Pending Deployment**: 20 agents are still pending deployment on M2, M3, and M4, which is a known part of the multi-machine bring-up phase.
