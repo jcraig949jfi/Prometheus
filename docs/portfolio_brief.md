@@ -1,11 +1,11 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-06-21 08:15:29 AM UTC*
+*Generated: 2026-06-21 12:15:32 PM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
 
 ## Act on this
-* **Redis Unreachable**: Redis has been unreachable since at least 2026-06-21 04:15:33 AM EDT, causing agent data to be sourced from the Postgres dual-write mirror, and this issue needs to be resolved to restore normal system functionality, with 0 queued tasks and 0 claimed tasks in the work queue. To resolve this, investigate and restore Redis connectivity at M1.
+* **Redis Unreachable**: Redis has been unreachable, causing agent data to be sourced from the Postgres dual-write mirror, with 0 queued tasks and 0 claimed tasks in the work queue, and this issue needs to be resolved to restore normal system functionality. To resolve this, investigate and restore Redis connectivity at M1.
 * **Hephaestus and Pronoia Unknown Status**: Hephaestus at M3 and Pronoia at M4 have unknown statuses due to no Postgres heartbeat, which may impact the forge pipeline and reporting orchestrator, with Hephaestus having a current forge rate of ~4%. To resolve this, investigate and verify the status of these agents.
 * **Multiple Tools with Unknown Status**: Several tools, including Clio at M1 and Pythia at M1, supervised by Aporia, have unknown statuses due to no Postgres heartbeat, which may affect their functionality, such as Clio's paper scanning and Pythia's deep research report production. To resolve this, investigate and verify the status of these tools.
 
