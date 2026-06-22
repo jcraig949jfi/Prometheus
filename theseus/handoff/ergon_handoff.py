@@ -40,14 +40,32 @@ DEFAULT_MAX_RECORDS = 500
 
 
 # ---------------------------------------------------------------------------
-# Verdict → gold + leak-safe claim rendering (seam-fidelity fix 2026-06-15)
+# Verdict → gold + ALLOWLIST structural claim rendering
+# (seam-fidelity fix 2026-06-15; allowlist rebuild 2026-06-22 after Charon's
+#  adversarial verdict SEAM_FIDELITY_ADVERSARIAL_VERDICT_2026-06-17)
 # ---------------------------------------------------------------------------
 # Root cause (program_audit_2026-06-10 §3.2): the mapper emitted no
 # `predicate_holds`, so the ingester defaulted EVERY record — including
 # REJECTED kills — to outcome_class "promoted" (the 79%/1.4% inversion). And
 # non-invariant_equality records were hard-dropped, stranding ~89% of the
-# corpus. Both are fixed producer-side; the consumer already supports
+# corpus. Both fixed producer-side; the consumer already supports
 # predicate_holds and is verdict-agnostic about claim_kind.
+#
+# Charon 2026-06-17 then falsified the 06-15 "leak audit: 0" claim: the old
+# `_leak_safe_claim` was a DENYLIST (cut the canonical at a delimiter, reject
+# only if a hardcoded token survived). A denylist passes what it does not
+# enumerate — `CONFIRMED`/`REFUTED`/`FALSIFIED`, bare `TRUE`/`FALSE`, and the
+# decision statistics (`r_raw=`, `p=`) all leaked into prompts. The next spine
+# step (transfer eval) would Goodhart on answer-reading exactly there.
+#
+# This rebuild flips the gate to an ALLOWLIST: a per-claim_kind structural
+# renderer builds the interrogative from IDENTIFIER fields only (object
+# labels, invariant names, relation, operator, set descriptions) and NEVER
+# reads value/verdict/statistic fields. The canonical text — the carrier of
+# the answer — is no longer touched. A kind with no registered renderer, or a
+# record missing its structural fields, is SKIPPED (no fallback). Leak-free by
+# construction, not by enumeration. The `_FORBIDDEN_IN_PROMPT` check below is
+# now a defense-in-depth ASSERTION on an allowlist-built string, not the gate.
 
 # A claim survives falsification iff its verdict is a survivor verdict. This
 # is the uniform gold across ALL claim_kinds (the relation-`holds` payload
@@ -55,16 +73,33 @@ DEFAULT_MAX_RECORDS = 500
 _SURVIVOR_VERDICTS = {Verdict.SHADOW_CATALOG.value, Verdict.PROMOTED.value}
 _KILL_VERDICTS = {Verdict.REJECTED.value}
 
-# Answer/verdict markers that must never appear in a prompt. The canonical
-# claim text embeds the evaluation after a delimiter; we cut there and then
-# assert none of these survive in the head (leak-safe-or-skip).
-_ANSWER_DELIMS = (" | ", " ⟶ ", " → ", " ⇒ ", " -> ", " => ")
-_LEAK_TOKENS = (
-    "holds=", "self_inverse", "is_fixed_point", "strong_holds", "survives_",
-    "survived", "extensions_hold", "rejected", "shadow_catalog", "promoted",
-    "unverified", "inconclusive", "verdict", "->", "=>", "=true", "=false",
+# Operators whose fixed-point / self-inverse / commutation claims are
+# degenerate (Charon finding 4: `B3_INV[identity] v=12` carries no computable
+# content and teaches the kill/True-prior by template). Skip them.
+_TRIVIAL_OPERATORS = {"identity"}
+
+# Defense-in-depth only. These tokens can originate ONLY from an answer /
+# verdict / statistic span. The structural renderers never read those fields,
+# so this should never fire; if it does (an identifier field that happens to
+# carry an answer word), skip rather than leak.
+_FORBIDDEN_IN_PROMPT = (
+    "confirmed", "refuted", "falsified", "rejected", "shadow_catalog",
+    "promoted", "unverified", "inconclusive", "holds=", "r_raw", "p_raw",
+    "p_value", "r_detrended", "survives_", "=true", "=false",
+    "self_inverse=", "is_fixed_point=", "stays_in_set", "actually_preserved",
+    "actually_changed",
 )
-_MIN_CLAIM_LEN = 20
+
+_DOMAIN_MAP = {
+    "knot": "knots",
+    "ec": "elliptic_curves",
+    "genus2": "genus2_curves",
+    "modular_forms": "modular_forms",
+}
+
+
+def _dom(cat: Optional[str]) -> str:
+    return _DOMAIN_MAP.get(cat, cat) if cat else (cat or "")
 
 
 def _verdict_to_predicate_holds(verdict: Optional[str]) -> Optional[bool]:
@@ -77,43 +112,306 @@ def _verdict_to_predicate_holds(verdict: Optional[str]) -> Optional[bool]:
     return None
 
 
-def _leak_safe_claim(canonical: str) -> Optional[str]:
-    """Render a leak-free claim head from a canonical_claim_text.
+# --- Per-kind structural renderers (allowlist). Each takes the claim_payload
+# and returns a leak-free interrogative, or None to skip. NONE of them read a
+# value/verdict/statistic field. ----------------------------------------------
 
-    The canonical text is `<claim> <delim> <evidence/answer> ... <verdict>`.
-    Cut at the earliest answer delimiter, then refuse (return None) if any
-    answer/verdict token still survives or the head is too short. Conservative
-    by design: a record we cannot make leak-free is SKIPPED, never shipped
-    with the answer leaking into the prompt.
-    """
-    if not canonical:
+def _r_invariant_equality(p: Dict[str, Any]) -> Optional[str]:
+    rel = p.get("relation")
+    if not rel or rel == "?":
         return None
-    text = canonical.strip()
-    cut = len(text)
-    for d in _ANSWER_DELIMS:
-        i = text.find(d)
-        if i != -1:
-            cut = min(cut, i)
-    head = text[:cut].strip()
-    low = head.lower()
-    if any(tok in low for tok in _LEAK_TOKENS):
+    ia, ib = p.get("invariant_a", "invariant"), p.get("invariant_b", "invariant")
+    oa, ob = p.get("object_a", "the object"), p.get("object_b", "the object")
+    da, db = _dom(p.get("catalog_a", "knot")), _dom(p.get("catalog_b", "ec"))
+    return (f"Does the relation `{rel}` hold between `{ia}` of {da} `{oa}` "
+            f"and `{ib}` of {db} `{ob}`? Return boolean.")
+
+
+def _r_mutation(p: Dict[str, Any]) -> Optional[str]:
+    rel = p.get("relation")
+    if not rel or rel == "?":
         return None
-    if len(head) < _MIN_CLAIM_LEN:
+    ia, ib = p.get("invariant_a", "invariant"), p.get("invariant_b", "invariant")
+    oa, ob = p.get("object_a", "the object"), p.get("object_b", "the object")
+    da, db = _dom(p.get("catalog_a", "knot")), _dom(p.get("catalog_b", "ec"))
+    side = p.get("mutation_side") or p.get("slide_side") or "?"
+    return (f"After mutating side {side}, does the relation `{rel}` hold between "
+            f"`{ia}` of {da} `{oa}` and `{ib}` of {db} `{ob}`? Return boolean.")
+
+
+def _r_functional_identity(p: Dict[str, Any]) -> Optional[str]:
+    rel = p.get("relation")
+    ia, ib = p.get("invariant_a"), p.get("invariant_b")
+    if not rel or not ia or not ib:
         return None
-    return head
+    f, g = p.get("operator_f", "f"), p.get("operator_g", "g")
+    oa, ob = p.get("object_a", "the object"), p.get("object_b", "the object")
+    da, db = _dom(p.get("catalog_a", "knot")), _dom(p.get("catalog_b", "ec"))
+    return (f"Does the relation `{rel}` hold between {f}(`{ia}` of {da} `{oa}`) "
+            f"and {g}(`{ib}` of {db} `{ob}`)? Return boolean.")
+
+
+def _r_kill_neighborhood(p: Dict[str, Any]) -> Optional[str]:
+    # Boundary variant: relation + invariant_a/b + a boundary object.
+    rel = p.get("relation")
+    if rel and p.get("invariant_a") and p.get("invariant_b"):
+        eps = p.get("epsilon")
+        obj = p.get("pass_object_a") or p.get("kill_object_a")
+        tol = f" (tolerance ε={eps})" if eps is not None else ""
+        on = f" for object `{obj}`" if obj else ""
+        return (f"At the kill-neighborhood boundary{tol}, does the relation `{rel}` "
+                f"hold between `{p['invariant_a']}` and `{p['invariant_b']}`{on}? "
+                f"Return boolean.")
+    # Triangulated method-test variant: knot_invariant + ec_invariant.
+    ki, ei = p.get("knot_invariant"), p.get("ec_invariant")
+    if ki and ei:
+        return (f"Under the triangulated method battery, does a polynomial "
+                f"relationship hold between `{ei}` of ec and `{ki}` of knot? "
+                f"Return boolean.")
+    return None
+
+
+def _r_symmetry_transform(p: Dict[str, Any]) -> Optional[str]:
+    # Hasse-bound variant: prime + ec_label (+ a_p as a computable input).
+    if p.get("prime") is not None and p.get("ec_label"):
+        ap = p.get("a_p")
+        ap_s = f" where a_p = {ap}" if ap is not None else ""
+        return (f"For elliptic curve `{p['ec_label']}` at prime p={p['prime']}, "
+                f"does the Hasse bound |a_p| ≤ 2·√p hold{ap_s}? Return boolean.")
+    # Scale / reflection invariance variant.
+    rel = p.get("relation")
+    ia, ib = p.get("invariant_a"), p.get("invariant_b")
+    if rel and ia and ib:
+        oa, ob = p.get("object_a", "the object"), p.get("object_b", "the object")
+        if p.get("scale_factor") is not None:
+            return (f"Is the relation `{rel}` between `{ia}` of `{oa}` and `{ib}` of "
+                    f"`{ob}` invariant under scaling by {p['scale_factor']}? "
+                    f"Return boolean.")
+        return (f"Is the relation `{rel}` between `{ia}` of `{oa}` and `{ib}` of "
+                f"`{ob}` invariant under sign reflection? Return boolean.")
+    return None
+
+
+def _r_operator_rotation(p: Dict[str, Any]) -> Optional[str]:
+    op = p.get("operator")
+    if not op or op in _TRIVIAL_OPERATORS:
+        return None
+    if "input_value" in p:
+        if p.get("non_trivial") is False:
+            return None
+        return (f"Is v={p['input_value']} a fixed point of operator `{op}` "
+                f"(does {op}(v) = v)? Return boolean.")
+    inv, obj = p.get("invariant"), p.get("object")
+    if inv and obj:
+        n = p.get("n_applications", 1)
+        cat = _dom(p.get("catalog", "ec"))
+        return (f"After applying operator `{op}` {n}× to `{inv}` of {cat} `{obj}`, "
+                f"does the value flip sign as predicted? Return boolean.")
+    return None
+
+
+def _r_composition_test(p: Dict[str, Any]) -> Optional[str]:
+    if p.get("operator_f") and p.get("operator_g"):
+        f, g = p["operator_f"], p["operator_g"]
+        if f in _TRIVIAL_OPERATORS or g in _TRIVIAL_OPERATORS:
+            return None
+        v = p.get("input_value", "v")
+        return (f"Do operators `{f}` and `{g}` commute at v={v} "
+                f"(does {f}({g}(v)) = {g}({f}(v)))? Return boolean.")
+    op = p.get("operator")
+    if not op or op in _TRIVIAL_OPERATORS:
+        return None
+    v = p.get("input_value", "v")
+    return (f"Is operator `{op}` self-inverse at v={v} "
+            f"(does {op}({op}(v)) = v)? Return boolean.")
+
+
+def _r_conservation_law(p: Dict[str, Any]) -> Optional[str]:
+    op, obj = p.get("operator"), p.get("object")
+    if not op or not obj:
+        return None
+    cat = _dom(p.get("catalog", "ec"))
+    return (f"Does operator `{op}` applied to {cat} `{obj}` preserve the "
+            f"invariants it is expected to preserve? Return boolean.")
+
+
+def _r_closure_under_operation(p: Dict[str, Any]) -> Optional[str]:
+    obj, opn, sd = p.get("object"), p.get("operation"), p.get("set_description")
+    if not obj or not opn or not sd:
+        return None
+    return (f"Under operation `{opn}`, does `{obj}` stay within the set {sd}? "
+            f"Return boolean.")
+
+
+def _r_triangle_inequality(p: Dict[str, Any]) -> Optional[str]:
+    inv, objs = p.get("invariant"), p.get("objects")
+    if not inv or not objs:
+        return None
+    objs_s = ", ".join(str(o) for o in objs) if isinstance(objs, list) else str(objs)
+    mv = p.get("metric_variant", "")
+    return (f"For the `{inv}` metric ({mv}) on objects ({objs_s}), does the "
+            f"triangle inequality d_AC ≤ d_AB + d_BC hold? Return boolean.")
+
+
+def _r_multi_hop_deduction(p: Dict[str, Any]) -> Optional[str]:
+    cid, obj = p.get("chain_id"), p.get("object")
+    if not cid or not obj:
+        return None
+    sl = p.get("step_label", "")
+    at = f" at step '{sl}'" if sl else ""
+    return (f"For object `{obj}`, does the deduction chain '{cid}' hold{at}? "
+            f"Return boolean.")
+
+
+def _r_statistical_correlation(p: Dict[str, Any]) -> Optional[str]:
+    ki, ei = p.get("knot_invariant"), p.get("ec_invariant")
+    if not ki or not ei:
+        return None
+    n = p.get("sample_size", "?")
+    dc = p.get("detrend_control", "prime")
+    return (f"Is there a statistically significant correlation between `{ki}` "
+            f"(knot) and `{ei}` (ec) that survives {dc} detrending (n={n})? "
+            f"Return boolean.")
+
+
+def _r_distribution_match(p: Dict[str, Any]) -> Optional[str]:
+    ki, ei = p.get("knot_invariant"), p.get("ec_invariant")
+    if not ki or not ei:
+        return None
+    return (f"Do the distributions of `{ki}` (knot) and `{ei}` (ec) match under a "
+            f"Kolmogorov–Smirnov test (n1={p.get('n_knot', '?')}, "
+            f"n2={p.get('n_ec', '?')})? Return boolean.")
+
+
+def _r_ratio_invariance(p: Dict[str, Any]) -> Optional[str]:
+    ki, ei = p.get("knot_invariant"), p.get("ec_invariant")
+    if not ki or not ei:
+        return None
+    return (f"Does a polynomial relationship hold between `{ei}` (ec) and `{ki}` "
+            f"(knot)? Return boolean.")
+
+
+def _r_modular_varying_p(p: Dict[str, Any]) -> Optional[str]:
+    inv, pp = p.get("invariant"), p.get("p")
+    if not inv or pp is None:
+        return None
+    dom = _dom(p.get("domain", "ec"))
+    return (f"Is `{inv}` of {dom} uniformly distributed modulo p={pp}? "
+            f"Return boolean.")
+
+
+def _r_confidence_calibration(p: Dict[str, Any]) -> Optional[str]:
+    cl, sc = p.get("claim_label"), p.get("stated_confidence")
+    if not cl or sc is None:
+        return None
+    return (f"Is the stated confidence {sc} for the claim '{cl}' calibrated "
+            f"against its empirical frequency? Return boolean.")
+
+
+def _r_analogical_transfer(p: Dict[str, Any]) -> Optional[str]:
+    claim = p.get("claim")
+    if not claim:
+        return None
+    return f"Does the cross-domain analogy hold: {claim}? Return boolean."
+
+
+def _r_bridge_extension(p: Dict[str, Any]) -> Optional[str]:
+    # H4_BRIDGE: a parent relation that held for one EC invariant, tested for
+    # extension to the other EC invariants. The answer lives in n_holding /
+    # n_tested / extensions_hold — never read those; render the extension
+    # question from the structural fields only.
+    rel = p.get("relation")
+    ki = p.get("knot_invariant")
+    pei = p.get("parent_ec_invariant")
+    if not rel or not ki or not pei:
+        return None
+    ko = p.get("knot_object", "the knot")
+    eo = p.get("ec_object", "the curve")
+    return (f"The relation `{rel}` holds between `{ki}` of knot `{ko}` and "
+            f"`{pei}` of ec `{eo}`; does it also extend to the other "
+            f"elliptic-curve invariants tested? Return boolean.")
+
+
+_RENDERERS = {
+    "invariant_equality": _r_invariant_equality,
+    "mutation": _r_mutation,
+    "functional_identity": _r_functional_identity,
+    "kill_neighborhood": _r_kill_neighborhood,
+    "symmetry_transform": _r_symmetry_transform,
+    "operator_rotation": _r_operator_rotation,
+    "composition_test": _r_composition_test,
+    "conservation_law": _r_conservation_law,
+    "closure_under_operation": _r_closure_under_operation,
+    "triangle_inequality": _r_triangle_inequality,
+    "multi_hop_deduction": _r_multi_hop_deduction,
+    "statistical_correlation": _r_statistical_correlation,
+    "distribution_match": _r_distribution_match,
+    "ratio_invariance": _r_ratio_invariance,
+    "modular_varying_p": _r_modular_varying_p,
+    "confidence_calibration": _r_confidence_calibration,
+    "analogical_transfer": _r_analogical_transfer,
+    "bridge_extension": _r_bridge_extension,
+}
+
+# Kinds deliberately NOT rendered into the survive/kill training diet, with
+# the reason (Charon finding 2: "decide on purpose, don't silently drop").
+# Two groups:
+#
+# (A) No survive/kill gold by nature — excluded structurally, not a coverage
+#     gap:
+#   verifier_disagreement  — its signal is the DISAGREEMENT, not survive/kill;
+#       all UNVERIFIED. It is STATUS §4F's contested-sampling lever and belongs
+#       to that objective (reasoning_quality_emit), a separate consumer — NOT
+#       this binary-predicate diet.
+#   typed_bridge / formalization_skeleton — emitted UNVERIFIED (no
+#       falsification verdict), so no survive/kill gold exists to train on.
+#   literature_mined — external claims (mostly UNVERIFIED); the conclusion
+#       lives in free text and is leak-prone, so excluded from this diet.
+#   obstruction — its only content is the outcome/verdict word (Charon's leak
+#       example); no clean structural question field → skip, don't leak.
+#
+# (B) Gold-bearing but NOT YET covered — a renderer can be added per kind once
+#     its payload shape is verified (coverage is an explicit, loggable knob;
+#     _verify_allowlist.py prints the per-kind skip%). Low volume each:
+#   modus_ponens_chain, order_dependence, counterfactual_invariance,
+#   minimal_counterexample, corpus_compression, partial_information,
+#   subset_relation, false_dichotomy, quantifier_swap, conjecture_neighborhood.
+_DELIBERATELY_UNRENDERED = {
+    "verifier_disagreement", "formalization_skeleton", "conjecture_neighborhood",
+    "modus_ponens_chain", "typed_bridge", "order_dependence", "literature_mined",
+    "minimal_counterexample", "operator_rotation_meta", "corpus_compression",
+    "partial_information", "subset_relation", "counterfactual_invariance",
+    "false_dichotomy", "quantifier_swap", "obstruction",
+}
+
+
+def _render_prompt(claim_kind: Optional[str], payload: Dict[str, Any]) -> Optional[str]:
+    """Allowlist dispatch: build a leak-free interrogative from structural
+    fields, or return None to skip. No registered renderer → skip."""
+    fn = _RENDERERS.get(claim_kind or "")
+    if fn is None:
+        return None
+    try:
+        prompt = fn(payload or {})
+    except Exception:
+        return None
+    if not prompt:
+        return None
+    low = prompt.lower()
+    if any(tok in low for tok in _FORBIDDEN_IN_PROMPT):  # defense-in-depth
+        return None
+    return prompt
 
 
 def _renderable(r_dict: Dict[str, Any]) -> bool:
     """Cheap pre-filter for the selection loop: a record is renderable iff its
-    verdict carries gold AND we can build a leak-free prompt for it. Mirrors
-    the skip logic in `_theseus_record_to_training_anchor`."""
+    verdict carries gold AND a registered structural renderer produces a
+    leak-free prompt for it. Mirrors `_theseus_record_to_training_anchor`."""
     if _verdict_to_predicate_holds(r_dict.get("verdict")) is None:
         return False
-    p = r_dict.get("claim_payload") or {}
-    rel = p.get("relation")
-    if r_dict.get("claim_kind") == "invariant_equality" and rel and rel != "?":
-        return True
-    return _leak_safe_claim(r_dict.get("canonical_claim_text") or "") is not None
+    return _render_prompt(
+        r_dict.get("claim_kind"), r_dict.get("claim_payload") or {}
+    ) is not None
 
 
 def _iter_corpus_records(corpus_dir: Path,
@@ -191,27 +489,14 @@ def _theseus_record_to_training_anchor(
     # anchor_type: predicate (our claims are relational predicates)
     anchor_type = "predicate"
 
-    # Construct prompt_template. invariant_equality has a clean, leak-free
-    # relation template; every other claim_kind renders from the leak-safe
-    # canonical-claim head (return None if it can't be made leak-free).
+    # Construct prompt_template via the ALLOWLIST structural renderer: a
+    # per-claim_kind interrogative built from identifier fields only. The
+    # canonical_claim_text (the carrier of the answer/verdict) is never read.
+    # None => no registered renderer or missing structural fields => skip.
     rel = p.get("relation") or record.claim_kind or "?"
-    if record.claim_kind == "invariant_equality" and p.get("relation") and p.get("relation") != "?":
-        inv_a = p.get("invariant_a", "knot_invariant")
-        inv_b = p.get("invariant_b", "ec_invariant")
-        obj_a = p.get("object_a", "{knot}")
-        obj_b = p.get("object_b", "{ec_object}")
-        prompt_template = (
-            f"Does the relation `{p['relation']}` hold between `{inv_a}` of {dom_a} `{obj_a}` "
-            f"and `{inv_b}` of {dom_b} `{obj_b}`? Return boolean."
-        )
-    else:
-        claim_head = _leak_safe_claim(record.canonical_claim_text or "")
-        if claim_head is None:
-            return None
-        prompt_template = (
-            f"Claim: {claim_head}. Does this claim hold under the substrate's "
-            f"falsification battery? Return boolean."
-        )
+    prompt_template = _render_prompt(record.claim_kind, p)
+    if prompt_template is None:
+        return None
 
     # Trust tier: Theseus verdicts → schema enum
     # SHADOW_CATALOG = substrate-verified survivor → numerically_certified
@@ -361,17 +646,29 @@ def export_for_ergon(
     counter = itertools.count()  # stable tie-breaker for equal weights
     n_candidates_scanned = 0  # backward-compat with prior list-len return
 
+    # Charon 2026-06-17 finding 3: renderability is verdict-correlated, so the
+    # emitted outcome split is partly a SELECTION artifact of the gate. Track
+    # gold-bearing seen vs renderable, split by verdict class, so the
+    # distribution claim carries its own selection-bias check (STATUS §7
+    # extract-list rule applied to a distribution claim). Counts are over the
+    # scanned window — the figure is honestly gate-conditioned.
+    gold_seen = {"kill": 0, "survivor": 0}
+    gold_renderable = {"kill": 0, "survivor": 0}
+
     for r_dict in _iter_corpus_records(corpus_dir, max_recent_files=max_recent_files):
         if r_dict.get("verdict") not in verdict_filter:
             continue
-        # Seam-fidelity fix 2026-06-15 (replaces the 2026-06-07 invariant_equality-
-        # only gate that stranded ~89% of the corpus). Admit every claim_kind the
-        # mapper can render into a leak-free, gold-bearing anchor. _renderable
-        # mirrors _theseus_record_to_training_anchor's skip logic: it requires a
-        # gold verdict (survivor/kill) and a leak-safe claim. Records that can't
-        # be made leak-free are still skipped — leak-safe-or-skip, never leak.
+        # Allowlist gate (2026-06-22 rebuild; replaces the 2026-06-15 denylist
+        # Charon falsified). _renderable requires a gold verdict AND a
+        # registered per-kind structural renderer that builds a leak-free
+        # interrogative. Records with no renderer / missing structural fields
+        # are skipped — leak-free by construction, never by enumeration.
+        _ph = _verdict_to_predicate_holds(r_dict.get("verdict"))
+        _cls = "survivor" if _ph else "kill"  # _ph is True/False here (in filter)
+        gold_seen[_cls] += 1
         if not _renderable(r_dict):
             continue
+        gold_renderable[_cls] += 1
         try:
             r = TheseusRecord(**r_dict)
         except (TypeError, ValueError):
@@ -420,6 +717,20 @@ def export_for_ergon(
     # Re-sort merged set by weight for stable downstream ordering
     selected.sort(key=lambda x: -x[0])
 
+    # Renderable-rate by verdict class (selection-bias check). A material gap
+    # means the emitted kill/survivor split is gate-conditioned, not a pure
+    # property of the source corpus — report it so the distribution claim is
+    # never read as unconditioned.
+    def _rate(cls: str) -> Optional[float]:
+        s = gold_seen[cls]
+        return round(gold_renderable[cls] / s, 4) if s else None
+    renderable_rate_by_verdict = {
+        "kill": {"gold_seen": gold_seen["kill"],
+                 "renderable": gold_renderable["kill"], "rate": _rate("kill")},
+        "survivor": {"gold_seen": gold_seen["survivor"],
+                     "renderable": gold_renderable["survivor"], "rate": _rate("survivor")},
+    }
+
     # Synthesize training_anchor blocks
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     md_path = inbox_dir / f"theseus_training_anchors_{timestamp}.md"
@@ -428,6 +739,7 @@ def export_for_ergon(
     md_tmp = inbox_dir / f"theseus_training_anchors_{timestamp}.md.tmp"
     jsonl_tmp = inbox_dir / f"theseus_training_anchors_{timestamp}.jsonl.tmp"
 
+    _rk, _rs = _rate("kill"), _rate("survivor")
     md_lines = [
         "# Theseus → Ergon Training Anchor Handoff",
         "",
@@ -438,6 +750,17 @@ def export_for_ergon(
         "Substrate-engine source: Theseus v0.3 (per-record training_weight",
         "calibrated against H4 cross-catalog audit Fire #24; parity rates",
         "stable ~62% ± 5pp across 3 catalog pairs).",
+        "",
+        "Selection-bias check (Charon 2026-06-17 finding 3): the prompt is",
+        "rendered by an allowlist of per-kind structural renderers, so",
+        "renderability can correlate with verdict. Gate-conditioned",
+        "renderable-rate over the scanned window — "
+        f"kills: {_rk if _rk is not None else 'n/a'} "
+        f"({gold_renderable['kill']}/{gold_seen['kill']}); "
+        f"survivors: {_rs if _rs is not None else 'n/a'} "
+        f"({gold_renderable['survivor']}/{gold_seen['survivor']}). If these"
+        " differ materially, the emitted kill/survivor split is a property of"
+        " the gate, not purely of the source corpus.",
         "",
         "## Anchors",
         "",
@@ -508,6 +831,7 @@ def export_for_ergon(
         "complete_marker": str(complete_path),
         "weight_threshold": weight_threshold,
         "max_records": max_records,
+        "renderable_rate_by_verdict": renderable_rate_by_verdict,
     }
 
 
