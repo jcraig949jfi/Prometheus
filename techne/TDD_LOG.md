@@ -3174,3 +3174,31 @@ work. Benchmark is necessary, not sufficient.
   monthly or on perceived BudgetExceeded inflation.
 
 2026-06-15 | techne.lib.operator_portability.operator_portability_test | A:3 P:3 E:3 C:2 | REQ-028 (commit pending)
+
+2026-06-22 | prometheus_math.reasoning_quality_emit (make_record / mark_contested / to_relational_records) | A:3 P:5 E:5 C:3 | forged 2026-06-09 commit d32304d2; REGISTERED 2026-06-22 (backfill)
+  Backfill entry. The primitive was forged + TDD'd on 2026-06-09 (commit
+  d32304d2) during the network-down session, but the register/announce steps
+  of the forge cycle were skipped (no inventory row, no TDD_LOG row, no Agora
+  announce). This entry + the inventory.json row close that gap.
+
+  Authority is NOT a math table but two contracts (per the test docstring):
+    (A) the emit spec v0.1 §2 record schema, and
+    (B) the validated relational H-R1 runner's margins contract — the whole
+        point is that the per-evaluator VECTOR survives to disk so the
+        validated instrument can read record["margins"].
+
+  16 tests (prometheus_math/tests/test_reasoning_quality_emit.py), all green,
+  RE-VERIFIED 2026-06-22 via a direct-module load that bypasses the eager
+  prometheus_math/__init__ (heavy native backends — cypari/snappy/
+  knot_floer_homology — are absent in this minimal numpy/scipy env; the emit
+  module itself is pure stdlib). Decisive composition test
+  (test_pipeline_feeds_validated_runner) feeds emitted vectors through the
+  UNCHANGED runner end-to-end and asserts a structured verdict
+  (BEATS_NULL|NULL, not INVALID) — the contract holds, the vector survived.
+
+  Scope note: this is the EMIT primitive, fully forged + registered. The
+  remaining owed work — the one-line integration AT a live >=2-evaluator
+  scoring site — is BLOCKED: no in-tree multi-head reasoning-scorer (the
+  May-era Walk-Z/PRM heads) currently emits >=2 scores per candidate. Flagged
+  to Aporia/Ergon. The one-line call is specified (spec §3) and the round-trip
+  is test-proven, so integration is mechanical the moment a live site exists.

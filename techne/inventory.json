@@ -370,15 +370,34 @@
       "fulfilled_date": "2026-06-15",
       "forged_date": "2026-06-15",
       "known_issues": ["Operates on the COLUMN/feature axis: the REQ-027 bond-rank statistic is row-permutation invariant, so row-level conductor stratification (the F011/F010 block-shuffle discipline) is INAPPLICABLE and row-axis null requests are rejected. The 1-D gap-variance F011 row-pairing statistic is a separate, out-of-scope tool (Charon/Harmonia DB scripts). See OPERATOR_PORTABILITY_RESULTS.md.", "matched_GUE null is second-moment (per-column mean/std) matched, NOT a full eigenvalue-matched GUE ensemble.", "operator_spec='symbol@version' raises NotImplementedError (registry resolution out of scope for standalone); pass a callable ndarray->ndarray."]
+    },
+    {
+      "name": "TOOL_REASONING_QUALITY_EMIT",
+      "version": "0.1.0",
+      "file": "prometheus_math/reasoning_quality_emit.py",
+      "tier": 1,
+      "interface": "make_record(candidate_id, task_id, evaluator_scores, *, combined=None, outcome=None, contested=None, scorer_versions=None, born_at=None) -> EvalRecord",
+      "also": ["mark_contested(records) -> list[EvalRecord]", "append_records(path, records) -> Path", "load_records(path) -> list[EvalRecord]", "to_relational_records(records, *, contested_only=False) -> list[dict]", "is_task_contested(candidates) -> bool", "top_candidate_per_evaluator(candidates) -> dict", "candidate_id_for(text) -> str"],
+      "dependencies": [],
+      "composes": [],
+      "consumed_by": ["aporia.experiments.reasoning_steering.stage0b.runner.run_h_r1 (via to_relational_records -> record['margins'])"],
+      "output_contract": ["candidate_id", "task_id", "evaluator_scores", "combined", "outcome", "contested", "provenance", "emitter_version"],
+      "tested": true,
+      "test_source": "16 tests A:3 P:5 E:5 C:3 (prometheus_math/tests/test_reasoning_quality_emit.py), all green (re-verified 2026-06-22). Authority = (A) emit spec v0.1 S2 record schema + (B) the validated relational H-R1 runner's margins contract. Composition test feeds emitted vectors through the UNCHANGED runner end-to-end -> structured verdict (BEATS_NULL|NULL, not INVALID). Pure stdlib (hashlib/json/dataclasses/pathlib); verified via direct-module load bypassing the eager package __init__ (heavy native backends absent in the minimal numpy/scipy env).",
+      "spec": "aporia/docs/reasoning_quality_emit_spec_v0.1.md",
+      "forged_date": "2026-06-09",
+      "registered_date": "2026-06-22",
+      "forged_by": "Techne",
+      "known_issues": ["Logging/substrate primitive, NOT a modelling change: it persists the per-evaluator score vector BEFORE combination so the validated relational instrument can read it (root cause it fixes: the vector was discarded at write time -- feedback_no_naive_score_combination).", "make_record requires >= 2 evaluators (a lone score is not a vector) and STRING evaluator ids (the family-holdout null + per-evaluator screen need stable names); both raise ValueError otherwise.", "Evaluators must be GENUINELY independent in provenance (different bases/objectives/prompts); re-prompts of one model correlate and reproduce the g2c NULL (spec S7).", "NOT YET INTEGRATED at a live scoring site: no in-tree multi-head reasoning-scorer (the May-era Walk-Z/PRM heads) currently emits >= 2 scores per candidate. The one-line emit call is specified (spec S3) and the round-trip to the runner is test-proven; integration awaits a live >=2-evaluator site. Flagged to Aporia/Ergon 2026-06-22."]
     }
   ],
   "stats": {
-    "total": 26,
-    "tier1_python": 26,
+    "total": 27,
+    "tier1_python": 27,
     "tier2_optimized": 0,
     "tier3_cpp": 0,
     "requests_open": 2,
     "requests_fulfilled": 27,
-    "notes": "Cycle 34 (2026-06-15): TOOL_OPERATOR_PORTABILITY shipped (REQ-028) — cross-region operator-portability falsification orchestrator composing REQ-027 tt_splice. Key finding: the bond-rank statistic is row-permutation invariant, so the F011/F010 conductor-block-shuffle (row-pairing) discipline is inapplicable; nulls act on the feature axis. Remaining open: REQ-008 (Khovanov Betti, blocked on native deps), REQ-024/025 (if tracked)."
+    "notes": "Cycle 35 (2026-06-22): registered TOOL_REASONING_QUALITY_EMIT (forged 2026-06-09 commit d32304d2 during the network-down session; the register/announce steps were skipped then). Reasoning-Quality Emit Spec v0.1: persist the per-evaluator score vector BEFORE combination so the validated relational H-R1 instrument can read it. 16/16 tests re-verified green; round-trip to the runner is test-proven. NOT yet integrated at a live >=2-evaluator scoring site (none exists in-tree). Prior: Cycle 34 (2026-06-15) shipped TOOL_OPERATOR_PORTABILITY (REQ-028). Open: REQ-008 (Khovanov Betti, blocked on native deps)."
   }
 }
