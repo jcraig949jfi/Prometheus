@@ -42,6 +42,18 @@ OUT_JSON = Path(__file__).parent / "a3_lattice_sweep_results.json"
 OUT_JSONL = Path(__file__).parent / "a3_candidate_identities.jsonl"
 PRIOR_REPORT = REPO / "pivot" / "a3_lattice_voids_2026-05-30.md"
 
+# Named-theorem true domains for the T1b theorem-pigeonhole tier (2026-06-15
+# taxonomy upgrade owed by B_RESULTS §4). Mazur (1977): the order of E(Q)_tors
+# lies in {1..10, 12} for EVERY elliptic curve over Q — so log2_floor(torsion)
+# <= 3 population-wide, not by catalog selection. This pulls the 5 Mazur shadow
+# cells out of T3 (which previously over-read them as genuine marginal facts,
+# because plain pigeonhole feeds 2**20 into the torsion slot — a value no curve
+# over Q realises). No other invariant carries a non-trivial named bound here.
+DOMAIN_THEOREMS = {
+    "torsion": (tuple(range(1, 11)) + (12,),
+                "Mazur (1977): |E(Q)_tors| in {1..10,12} => log2_floor <= 3"),
+}
+
 
 def build_spec() -> LatticeSpec:
     knots = _load_catalog(KNOTS_DB_PATH)
@@ -55,6 +67,7 @@ def build_spec() -> LatticeSpec:
         side_a=side_a, side_b=side_b,
         operators=dict(OPERATORS), relations=tuple(RELATIONS),
         eval_relation=_evaluate_relation,
+        domain_theorems=DOMAIN_THEOREMS,
     )
 
 
@@ -219,7 +232,8 @@ def main():
         print(f"    {r.name}: agreement={r.agreement_rate:.4f} "
               f"deltas={r.actionable_deltas} n_union={r.n_shared_keys}")
     print(f"  degeneracy control (A generic catalog, same wiring): "
-          f"{generic_control.verdict} — identity-copier hole, filed to Proposal A")
+          f"{generic_control.verdict} — B's guard now suppresses the spurious "
+          f"marginal_majority tie as vacuous (loop closed, commit cbcf8abb)")
 
     # --- emit ---------------------------------------------------------------
     with OUT_JSONL.open("w", encoding="utf-8") as fh:
@@ -267,8 +281,10 @@ def main():
                               "pigeonhole < constant-absorber < certificate",
             "generic_catalog_control": {
                 "verdict": generic_control.verdict,
-                "note": "A's marginal_majority ties any unique-key claim — "
-                        "interface hole filed to Proposal A (Harmonia B)",
+                "note": "B's degeneracy guard (commit cbcf8abb, 2026-06-15) "
+                        "marks marginal_majority's unique-key tie vacuous, so "
+                        "the spurious COSTUME_OF:marginal_majority is gone — "
+                        "the interface hole D filed to Proposal A is CLOSED",
             },
         },
         "voids": [{k: v[k] for k in ("cell_id", "triviality_class",

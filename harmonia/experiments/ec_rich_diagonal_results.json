@@ -1,0 +1,2685 @@
+{
+ "meta": {
+  "date": "2026-06-15",
+  "author": "Harmonia_M2_D",
+  "design": "EC same-object diagonal, 9 integer invariants, Mazur injected; D_JOINT = candidate within-object law",
+  "n_curves": 1000,
+  "invariants": [
+   "rank",
+   "conductor",
+   "tamagawa_product",
+   "torsion",
+   "sha_an",
+   "num_bad_primes",
+   "cm",
+   "signD",
+   "conductor_radical"
+  ],
+  "n_defined": {
+   "rank": 1000,
+   "conductor": 1000,
+   "tamagawa_product": 1000,
+   "torsion": 1000,
+   "sha_an": 1000,
+   "num_bad_primes": 1000,
+   "cm": 1000,
+   "signD": 1000,
+   "conductor_radical": 1000
+  },
+  "caveats": [
+   "EC catalog quota-stratified (rank 500/400/100)",
+   "cm/signD/sha_an are low-cardinality (degeneracy-prone); see degeneracy flags + known_math tags",
+   "conductor floor 39 (excludes torsion|tamagawa counterexample 11a3)"
+  ]
+ },
+ "n_cells": 10368,
+ "n_voids": 777,
+ "by_joint_class": {
+  "D_MARGINAL": 503,
+  "D_THEOREM": 98,
+  "D_JOINT": 176
+ },
+ "joint_candidates": [
+  {
+   "f": "identity",
+   "g": "identity",
+   "inv_a": "conductor",
+   "inv_b": "conductor_radical",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 804,
+    "uniq_b": 521,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "abs",
+   "inv_a": "conductor",
+   "inv_b": "conductor_radical",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 804,
+    "uniq_b": 521,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "neg",
+   "inv_a": "conductor",
+   "inv_b": "conductor_radical",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 804,
+    "uniq_b": 521,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "sq_mod_100",
+   "inv_a": "conductor",
+   "inv_b": "conductor_radical",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 804,
+    "uniq_b": 22,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "identity",
+   "inv_a": "conductor",
+   "inv_b": "conductor_radical",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 804,
+    "uniq_b": 521,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "abs",
+   "inv_a": "conductor",
+   "inv_b": "conductor_radical",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 804,
+    "uniq_b": 521,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "neg",
+   "inv_a": "conductor",
+   "inv_b": "conductor_radical",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 804,
+    "uniq_b": 521,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "sq_mod_100",
+   "inv_a": "conductor",
+   "inv_b": "conductor_radical",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 804,
+    "uniq_b": 22,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "identity",
+   "inv_a": "conductor",
+   "inv_b": "conductor_radical",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 804,
+    "uniq_b": 521,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "abs",
+   "inv_a": "conductor",
+   "inv_b": "conductor_radical",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 804,
+    "uniq_b": 521,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "neg",
+   "inv_a": "conductor",
+   "inv_b": "conductor_radical",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 804,
+    "uniq_b": 521,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "sq_mod_100",
+   "inv_a": "conductor",
+   "inv_b": "conductor_radical",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 804,
+    "uniq_b": 22,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "sq_mod_100",
+   "g": "identity",
+   "inv_a": "conductor",
+   "inv_b": "conductor_radical",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 22,
+    "uniq_b": 521,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "sq_mod_100",
+   "g": "abs",
+   "inv_a": "conductor",
+   "inv_b": "conductor_radical",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 22,
+    "uniq_b": 521,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "sq_mod_100",
+   "g": "neg",
+   "inv_a": "conductor",
+   "inv_b": "conductor_radical",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 22,
+    "uniq_b": 521,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "sq_mod_100",
+   "g": "sq_mod_100",
+   "inv_a": "conductor",
+   "inv_b": "conductor_radical",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 22,
+    "uniq_b": 22,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "identity",
+   "inv_a": "torsion",
+   "inv_b": "tamagawa_product",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "LITERATURE (Lorenzini 2011): |E(Q)_tors| | prod(c_p), with known exceptions below the catalog conductor floor (e.g. 11a3). Same law found in the 2026-06-10 4-invariant pass; sign-variant here.",
+   "degeneracy": {
+    "uniq_a": 8,
+    "uniq_b": 71,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "abs",
+   "inv_a": "torsion",
+   "inv_b": "tamagawa_product",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "LITERATURE (Lorenzini 2011): |E(Q)_tors| | prod(c_p), with known exceptions below the catalog conductor floor (e.g. 11a3). Same law found in the 2026-06-10 4-invariant pass; sign-variant here.",
+   "degeneracy": {
+    "uniq_a": 8,
+    "uniq_b": 71,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "neg",
+   "inv_a": "torsion",
+   "inv_b": "tamagawa_product",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "LITERATURE (Lorenzini 2011): |E(Q)_tors| | prod(c_p), with known exceptions below the catalog conductor floor (e.g. 11a3). Same law found in the 2026-06-10 4-invariant pass; sign-variant here.",
+   "degeneracy": {
+    "uniq_a": 8,
+    "uniq_b": 71,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "identity",
+   "inv_a": "torsion",
+   "inv_b": "tamagawa_product",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "LITERATURE (Lorenzini 2011): |E(Q)_tors| | prod(c_p), with known exceptions below the catalog conductor floor (e.g. 11a3). Same law found in the 2026-06-10 4-invariant pass; sign-variant here.",
+   "degeneracy": {
+    "uniq_a": 8,
+    "uniq_b": 71,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "abs",
+   "inv_a": "torsion",
+   "inv_b": "tamagawa_product",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "LITERATURE (Lorenzini 2011): |E(Q)_tors| | prod(c_p), with known exceptions below the catalog conductor floor (e.g. 11a3). Same law found in the 2026-06-10 4-invariant pass; sign-variant here.",
+   "degeneracy": {
+    "uniq_a": 8,
+    "uniq_b": 71,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "neg",
+   "inv_a": "torsion",
+   "inv_b": "tamagawa_product",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "LITERATURE (Lorenzini 2011): |E(Q)_tors| | prod(c_p), with known exceptions below the catalog conductor floor (e.g. 11a3). Same law found in the 2026-06-10 4-invariant pass; sign-variant here.",
+   "degeneracy": {
+    "uniq_a": 8,
+    "uniq_b": 71,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "identity",
+   "inv_a": "torsion",
+   "inv_b": "tamagawa_product",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "LITERATURE (Lorenzini 2011): |E(Q)_tors| | prod(c_p), with known exceptions below the catalog conductor floor (e.g. 11a3). Same law found in the 2026-06-10 4-invariant pass; sign-variant here.",
+   "degeneracy": {
+    "uniq_a": 8,
+    "uniq_b": 71,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "abs",
+   "inv_a": "torsion",
+   "inv_b": "tamagawa_product",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "LITERATURE (Lorenzini 2011): |E(Q)_tors| | prod(c_p), with known exceptions below the catalog conductor floor (e.g. 11a3). Same law found in the 2026-06-10 4-invariant pass; sign-variant here.",
+   "degeneracy": {
+    "uniq_a": 8,
+    "uniq_b": 71,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "neg",
+   "inv_a": "torsion",
+   "inv_b": "tamagawa_product",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "LITERATURE (Lorenzini 2011): |E(Q)_tors| | prod(c_p), with known exceptions below the catalog conductor floor (e.g. 11a3). Same law found in the 2026-06-10 4-invariant pass; sign-variant here.",
+   "degeneracy": {
+    "uniq_a": 8,
+    "uniq_b": 71,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "identity",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "identity",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: rad(conductor) | conductor by construction (sign-invariant, so every neg/abs variant is the same law).",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "abs",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "abs",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: rad(conductor) | conductor by construction (sign-invariant, so every neg/abs variant is the same law).",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "neg",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "neg",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: rad(conductor) | conductor by construction (sign-invariant, so every neg/abs variant is the same law).",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "sq_mod_100",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 22,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "identity",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "identity",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: rad(conductor) | conductor by construction (sign-invariant, so every neg/abs variant is the same law).",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "abs",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "abs",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: rad(conductor) | conductor by construction (sign-invariant, so every neg/abs variant is the same law).",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "neg",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "neg",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: rad(conductor) | conductor by construction (sign-invariant, so every neg/abs variant is the same law).",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "sq_mod_100",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 22,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "identity",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "identity",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: rad(conductor) | conductor by construction (sign-invariant, so every neg/abs variant is the same law).",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "abs",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "abs",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: rad(conductor) | conductor by construction (sign-invariant, so every neg/abs variant is the same law).",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "neg",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "neg",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: rad(conductor) | conductor by construction (sign-invariant, so every neg/abs variant is the same law).",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "sq_mod_100",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 521,
+    "uniq_b": 22,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "sq_mod_100",
+   "g": "identity",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 22,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "sq_mod_100",
+   "g": "abs",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 22,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "sq_mod_100",
+   "g": "neg",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 22,
+    "uniq_b": 804,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "sq_mod_100",
+   "g": "sq_mod_100",
+   "inv_a": "conductor_radical",
+   "inv_b": "conductor",
+   "rel": "equal_mod_2",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.0,
+   "known_math": "DEFINITIONAL: conductor == rad(conductor) (mod 2). N and rad(N) share their prime support, so 2|N iff 2|rad(N); all parity-preserving operators inherit it.",
+   "degeneracy": {
+    "uniq_a": 22,
+    "uniq_b": 22,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "neg",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.005,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "log2_floor",
+   "inv_a": "sha_an",
+   "inv_b": "rank",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.01,
+   "known_math": "LOW-INFO: sha_an = 1 for 962/1000 (BSD square, near-constant).",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "neg",
+   "g": "mod_3",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.01,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "identity",
+   "g": "log2_floor",
+   "inv_a": "sha_an",
+   "inv_b": "rank",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.015,
+   "known_math": "LOW-INFO: sha_an = 1 for 962/1000 (BSD square, near-constant).",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "neg",
+   "g": "log2_floor",
+   "inv_a": "sha_an",
+   "inv_b": "rank",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.015,
+   "known_math": "LOW-INFO: sha_an = 1 for 962/1000 (BSD square, near-constant).",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "abs",
+   "g": "mod_3",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.015,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "neg",
+   "g": "identity",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.015,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "sq_mod_100",
+   "g": "log2_floor",
+   "inv_a": "sha_an",
+   "inv_b": "rank",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.02,
+   "known_math": "LOW-INFO: sha_an = 1 for 962/1000 (BSD square, near-constant).",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "identity",
+   "g": "identity",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.02,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "sq_mod_100",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.02,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "sq_mod_100",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.02,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "mod_3",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.025,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "abs",
+   "g": "identity",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.025,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "abs",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.025,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "neg",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.025,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "neg",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.025,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "abs",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.03,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "sq_mod_100",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.03,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "abs",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.03,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "sq_mod_100",
+   "g": "sq_mod_100",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.04,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "log2_floor",
+   "g": "identity",
+   "inv_a": "torsion",
+   "inv_b": "signD",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.075,
+   "known_math": "LOW-INFO: signD in {-1,1}; 2-valued column.",
+   "degeneracy": {
+    "uniq_a": 4,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "identity",
+   "g": "log2_floor",
+   "inv_a": "signD",
+   "inv_b": "torsion",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.105,
+   "known_math": "LOW-INFO: signD in {-1,1}; 2-valued column.",
+   "degeneracy": {
+    "uniq_a": 2,
+    "uniq_b": 4,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "log2_floor",
+   "g": "mod_3",
+   "inv_a": "tamagawa_product",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.16,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 11,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "abs",
+   "g": "mod_3",
+   "inv_a": "cm",
+   "inv_b": "num_bad_primes",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.19,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "sq_mod_100",
+   "g": "mod_3",
+   "inv_a": "rank",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.2,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "neg",
+   "inv_a": "rank",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.205,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "log2_floor",
+   "g": "log2_floor",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.205,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "abs",
+   "inv_a": "cm",
+   "inv_b": "rank",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.205,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "identity",
+   "inv_a": "rank",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.215,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "neg",
+   "inv_a": "cm",
+   "inv_b": "rank",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.215,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "mod_3",
+   "inv_a": "rank",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.22,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "abs",
+   "g": "mod_3",
+   "inv_a": "cm",
+   "inv_b": "rank",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.235,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "mod_3",
+   "inv_a": "sha_an",
+   "inv_b": "num_bad_primes",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.24,
+   "known_math": "LOW-INFO: sha_an = 1 for 962/1000 (BSD square, near-constant).",
+   "degeneracy": {
+    "uniq_a": 2,
+    "uniq_b": 3,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "identity",
+   "g": "abs",
+   "inv_a": "rank",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.25,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "neg",
+   "inv_a": "rank",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.25,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "mod_3",
+   "inv_a": "rank",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.25,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "abs",
+   "g": "neg",
+   "inv_a": "rank",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.25,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "abs",
+   "inv_a": "rank",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.25,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "mod_3",
+   "inv_a": "rank",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.25,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "identity",
+   "inv_a": "sha_an",
+   "inv_b": "rank",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.25,
+   "known_math": "LOW-INFO: sha_an = 1 for 962/1000 (BSD square, near-constant).",
+   "degeneracy": {
+    "uniq_a": 2,
+    "uniq_b": 3,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "neg",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.25,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "mod_3",
+   "inv_a": "sha_an",
+   "inv_b": "rank",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.255,
+   "known_math": "LOW-INFO: sha_an = 1 for 962/1000 (BSD square, near-constant).",
+   "degeneracy": {
+    "uniq_a": 2,
+    "uniq_b": 3,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "neg",
+   "g": "identity",
+   "inv_a": "cm",
+   "inv_b": "rank",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.255,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "mod_3",
+   "inv_a": "cm",
+   "inv_b": "rank",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.255,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "abs",
+   "inv_a": "rank",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.26,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "neg",
+   "inv_a": "sha_an",
+   "inv_b": "rank",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.265,
+   "known_math": "LOW-INFO: sha_an = 1 for 962/1000 (BSD square, near-constant).",
+   "degeneracy": {
+    "uniq_a": 2,
+    "uniq_b": 3,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "log2_floor",
+   "g": "identity",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.265,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "mod_3",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.265,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "neg",
+   "g": "mod_3",
+   "inv_a": "cm",
+   "inv_b": "num_bad_primes",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.265,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "mod_3",
+   "inv_a": "rank",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.27,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "sq_mod_100",
+   "inv_a": "sha_an",
+   "inv_b": "rank",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.27,
+   "known_math": "LOW-INFO: sha_an = 1 for 962/1000 (BSD square, near-constant).",
+   "degeneracy": {
+    "uniq_a": 2,
+    "uniq_b": 3,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "log2_floor",
+   "g": "neg",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.27,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "log2_floor",
+   "g": "sq_mod_100",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.27,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "abs",
+   "inv_a": "sha_an",
+   "inv_b": "rank",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.275,
+   "known_math": "LOW-INFO: sha_an = 1 for 962/1000 (BSD square, near-constant).",
+   "degeneracy": {
+    "uniq_a": 2,
+    "uniq_b": 3,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "abs",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.275,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "log2_floor",
+   "g": "abs",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.29,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "abs",
+   "inv_a": "cm",
+   "inv_b": "rank",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.29,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "identity",
+   "inv_a": "cm",
+   "inv_b": "rank",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.295,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "log2_floor",
+   "inv_a": "cm",
+   "inv_b": "torsion",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.31,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 4,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "log2_floor",
+   "g": "neg",
+   "inv_a": "torsion",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.33,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 4,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "log2_floor",
+   "inv_a": "cm",
+   "inv_b": "torsion",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.335,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 4,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "log2_floor",
+   "g": "abs",
+   "inv_a": "torsion",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.355,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 4,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "log2_floor",
+   "g": "mod_3",
+   "inv_a": "torsion",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.38,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 4,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "log2_floor",
+   "g": "log2_floor",
+   "inv_a": "num_bad_primes",
+   "inv_b": "sha_an",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.39,
+   "known_math": "LOW-INFO: sha_an = 1 for 962/1000 (BSD square, near-constant).",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 5,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "log2_floor",
+   "g": "log2_floor",
+   "inv_a": "sha_an",
+   "inv_b": "num_bad_primes",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.4,
+   "known_math": "LOW-INFO: sha_an = 1 for 962/1000 (BSD square, near-constant).",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "log2_floor",
+   "g": "mod_3",
+   "inv_a": "sha_an",
+   "inv_b": "signD",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.52,
+   "known_math": "LOW-INFO: signD in {-1,1}; 2-valued column.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "log2_floor",
+   "inv_a": "signD",
+   "inv_b": "sha_an",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.52,
+   "known_math": "LOW-INFO: signD in {-1,1}; 2-valued column.",
+   "degeneracy": {
+    "uniq_a": 2,
+    "uniq_b": 5,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "mod_3",
+   "inv_a": "tamagawa_product",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.535,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "neg",
+   "inv_a": "tamagawa_product",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.54,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "mod_3",
+   "inv_a": "cm",
+   "inv_b": "tamagawa_product",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.54,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "abs",
+   "inv_a": "tamagawa_product",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.55,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "mod_3",
+   "inv_a": "cm",
+   "inv_b": "tamagawa_product",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.585,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "mod_3",
+   "inv_a": "torsion",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.705,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 8,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "abs",
+   "g": "mod_3",
+   "inv_a": "torsion",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.71,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 8,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "sq_mod_100",
+   "inv_a": "sha_an",
+   "inv_b": "rank",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.76,
+   "known_math": "LOW-INFO: sha_an = 1 for 962/1000 (BSD square, near-constant).",
+   "degeneracy": {
+    "uniq_a": 2,
+    "uniq_b": 3,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "neg",
+   "g": "log2_floor",
+   "inv_a": "rank",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.77,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "mod_3",
+   "inv_a": "torsion",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.775,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 8,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "log2_floor",
+   "inv_a": "sha_an",
+   "inv_b": "rank",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.775,
+   "known_math": "LOW-INFO: sha_an = 1 for 962/1000 (BSD square, near-constant).",
+   "degeneracy": {
+    "uniq_a": 2,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "neg",
+   "g": "log2_floor",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.8,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "log2_floor",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.805,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "log2_floor",
+   "g": "neg",
+   "inv_a": "cm",
+   "inv_b": "rank",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.805,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "neg",
+   "inv_a": "cm",
+   "inv_b": "rank",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.805,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 2,
+    "uniq_b": 3,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "sq_mod_100",
+   "g": "log2_floor",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.82,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "mod_3",
+   "inv_a": "rank",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.825,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "sq_mod_100",
+   "g": "identity",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.83,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "log2_floor",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.835,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "sq_mod_100",
+   "g": "mod_3",
+   "inv_a": "rank",
+   "inv_b": "sha_an",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.84,
+   "known_math": "LOW-INFO: sha_an = 1 for 962/1000 (BSD square, near-constant).",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "abs",
+   "g": "sq_mod_100",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.84,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "identity",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.85,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "abs",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.85,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "sq_mod_100",
+   "g": "abs",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.85,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "sq_mod_100",
+   "g": "neg",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.86,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "neg",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.87,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "abs",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.88,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "neg",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.88,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "abs",
+   "inv_a": "torsion",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.885,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "identity",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.885,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "sq_mod_100",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.885,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "sq_mod_100",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.89,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "identity",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.89,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "identity",
+   "g": "neg",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.895,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "abs",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.895,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "mod_3",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.905,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "sq_mod_100",
+   "g": "sq_mod_100",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.905,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "neg",
+   "g": "mod_3",
+   "inv_a": "cm",
+   "inv_b": "torsion",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.905,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "mod_3",
+   "inv_a": "cm",
+   "inv_b": "torsion",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.91,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "neg",
+   "inv_a": "torsion",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.915,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "mod_3",
+   "inv_a": "torsion",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.92,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "identity",
+   "g": "mod_3",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.935,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "sq_mod_100",
+   "g": "mod_3",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.935,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 5,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "log2_floor",
+   "g": "mod_3",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.96,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "abs",
+   "g": "mod_3",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.97,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 6,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "abs",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.98,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 2,
+    "uniq_b": 3,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "log2_floor",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.98,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 2,
+    "uniq_b": 3,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "log2_floor",
+   "g": "abs",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.98,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "log2_floor",
+   "g": "neg",
+   "inv_a": "num_bad_primes",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.985,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "abs",
+   "g": "log2_floor",
+   "inv_a": "cm",
+   "inv_b": "num_bad_primes",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.985,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "identity",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.99,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 2,
+    "uniq_b": 3,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "neg",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.995,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 2,
+    "uniq_b": 3,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "neg",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.995,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 2,
+    "uniq_b": 3,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "sq_mod_100",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.995,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 2,
+    "uniq_b": 3,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "mod_3",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "divides",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.995,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 2,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "abs",
+   "g": "mod_3",
+   "inv_a": "cm",
+   "inv_b": "sha_an",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 0.995,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "mod_3",
+   "g": "abs",
+   "inv_a": "sha_an",
+   "inv_b": "cm",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 1.0,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 2,
+    "uniq_b": 3,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "neg",
+   "g": "mod_3",
+   "inv_a": "cm",
+   "inv_b": "sha_an",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 1.0,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 2,
+    "thin_column": true
+   }
+  },
+  {
+   "f": "neg",
+   "g": "log2_floor",
+   "inv_a": "cm",
+   "inv_b": "num_bad_primes",
+   "rel": "abs_diff_le_3",
+   "n_eval": 1000,
+   "perm_null_void_rate": 1.0,
+   "known_math": "DEGENERATE: cm = 0 for 995/1000 curves -- relations over it are absorbing-element facts, not joint structure.",
+   "degeneracy": {
+    "uniq_a": 3,
+    "uniq_b": 3,
+    "thin_column": false
+   }
+  }
+ ],
+ "survivors": []
+}

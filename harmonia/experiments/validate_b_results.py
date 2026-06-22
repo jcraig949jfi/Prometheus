@@ -53,12 +53,30 @@ def main():
     check("doc 3,456 cells == artifact", s["n_cells"] == 3456 and "3,456" in text)
     check("doc 250 voids == artifact", s["n_exact_voids"] == 250 and " 250 " in text.replace("250/", " 250 /").replace("250\n", " 250 \n") or s["n_exact_voids"] == 250)
     vc = s["voids_by_class"]
-    check("class split 24/173/53 == artifact",
-          vc.get("T1_PIGEONHOLE") == 24 and vc.get("T2_CONSTANT_SIDE") == 173
-          and vc.get("T3_MARGINAL_FACT") == 53
+    # 2026-06-15 T1b upgrade: Mazur domain theorem injected into the a3 driver
+    # pulls the 6 mod_3|log2_floor|*|torsion|abs_diff_le_3 cells into T1b
+    # (5 were T3, 1 was T2-nf_class_number). Pre-upgrade split was 24/173/53.
+    check("class split 24/6/172/48 (T1/T1b/T2/T3) == artifact",
+          vc.get("T1_PIGEONHOLE") == 24
+          and vc.get("T1b_THEOREM_PIGEONHOLE") == 6
+          and vc.get("T2_CONSTANT_SIDE") == 172
+          and vc.get("T3_MARGINAL_FACT") == 48
+          and vc.get("T1_PIGEONHOLE", 0) + vc.get("T1b_THEOREM_PIGEONHOLE", 0)
+              + vc.get("T2_CONSTANT_SIDE", 0) + vc.get("T3_MARGINAL_FACT", 0) == 250
           and re.search(r"T1_PIGEONHOLE\s+24", text)
-          and re.search(r"T2_CONSTANT_SIDE\s+173", text)
-          and re.search(r"T3_MARGINAL_FACT\s+53", text), str(vc))
+          and re.search(r"T1b_THEOREM_PIGEONHOLE\s+6", text)
+          and re.search(r"T2_CONSTANT_SIDE\s+172", text)
+          and re.search(r"T3_MARGINAL_FACT\s+48", text), str(vc))
+    # All 6 T1b cells are the Mazur shadow: mod_3∘knot vs log2_floor∘torsion.
+    t1b_rows = [json.loads(l) for l in
+                (EXP / "a3_candidate_identities.jsonl").read_text(encoding="utf-8").splitlines()
+                if json.loads(l)["triviality_class"] == "T1b_THEOREM_PIGEONHOLE"]
+    check("all 6 T1b cells are mod_3|log2_floor|*|torsion|abs_diff_le_3 (Mazur)",
+          len(t1b_rows) == 6
+          and all(r["f"] == "mod_3" and r["g"] == "log2_floor"
+                  and r["inv_b"] == "torsion" and r["rel"] == "abs_diff_le_3"
+                  for r in t1b_rows),
+          str([r["cell_id"] for r in t1b_rows]))
     nn = s["n_near"]
     check("near-void bands 0/7/51 == artifact",
           nn.get("0.999") == 0 and nn.get("0.99") == 7 and nn.get("0.95") == 51,
@@ -70,9 +88,16 @@ def main():
           abs(res["costume_verdict"]["per_baseline"]["bl_pigeonhole"]["agreement"] - 0.096) < 1e-9
           and abs(res["costume_verdict"]["per_baseline"]["bl_constant_absorber"]["agreement"] - 0.788) < 1e-9
           and res["costume_verdict"]["per_baseline"]["bl_marginal_certificate"]["agreement"] == 1.0)
-    check("generic-catalog degeneracy control recorded",
-          res["costume_verdict"]["generic_catalog_control"]["verdict"]
-          == "COSTUME_OF:marginal_majority")
+    # 2026-06-15: Harmonia B shipped the degeneracy guard D filed (commit
+    # cbcf8abb). marginal_majority's unique-key tie is now marked vacuous, so the
+    # generic control no longer reports the spurious COSTUME_OF:marginal_majority
+    # — it reads DISTINCT (or INCONCLUSIVE_DEGENERATE). The loop is closed.
+    gc_verdict = res["costume_verdict"]["generic_catalog_control"]["verdict"]
+    check("generic-catalog degeneracy guard closed the loop (no spurious "
+          "COSTUME_OF:marginal_majority)",
+          gc_verdict != "COSTUME_OF:marginal_majority"
+          and (gc_verdict == "DISTINCT" or gc_verdict.startswith("INCONCLUSIVE")),
+          f"got {gc_verdict!r}")
 
     # --- candidate jsonl ----------------------------------------------------
     rows = [json.loads(l) for l in
