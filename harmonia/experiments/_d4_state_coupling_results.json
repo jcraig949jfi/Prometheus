@@ -1,0 +1,585 @@
+{
+  "experiment": "d4_state_coupling_anchor",
+  "prereg": "harmonia/experiments/d4_state_coupling_prereg.md",
+  "seeds": [
+    20260615,
+    20260616,
+    20260617
+  ],
+  "per_seed": [
+    {
+      "seed": 20260615,
+      "C0": {
+        "n_rows": 12233,
+        "concentration": "DIFFERENTIATED",
+        "label_top1": 0.0051,
+        "I_coords_Y": 0.00037,
+        "eps_band_verdict": "PATH_DECORATION",
+        "eps_band_H_given_coords": 2.04477,
+        "eps_band_cmi": 0.00079,
+        "eps_band_null95": 0.00166,
+        "saturation_bits": 1.7788,
+        "headline": "DIFFERENTIATED label distribution (top-1 0.5%); coords carry 0.0004 bits about fresh evaluation; saturation bound 1.78 bits; PATH DECORATION: ['eps_band']"
+      },
+      "kill_frac_c0": 0.8495138888888889,
+      "rwalk": {
+        "kill_frac": 0.9409027777777778,
+        "audit": {
+          "n_rows": 13549,
+          "concentration": "DIFFERENTIATED",
+          "label_top1": 0.0038,
+          "I_coords_Y": 0.00013,
+          "eps_band_verdict": "BEYOND_COORDINATE_SIGNAL",
+          "eps_band_H_given_coords": 2.5965,
+          "eps_band_cmi": 0.01488,
+          "eps_band_null95": 0.00191,
+          "saturation_bits": 0.9135,
+          "headline": "DIFFERENTIATED label distribution (top-1 0.4%); coords carry 0.0001 bits about fresh evaluation; saturation bound 0.91 bits; INVESTIGATE (beyond-coordinate signal): ['eps_band']"
+        },
+        "delta_sweep": [
+          {
+            "delta": 0,
+            "n": 13549,
+            "cmi": 0.017551870318897357,
+            "null95": 0.0018967747589234266,
+            "above_null": true
+          },
+          {
+            "delta": 1,
+            "n": 13549,
+            "cmi": 0.01368681720592816,
+            "null95": 0.0019070060627191976,
+            "above_null": true
+          },
+          {
+            "delta": 2,
+            "n": 13549,
+            "cmi": 0.009706692275134245,
+            "null95": 0.0019944187500045563,
+            "above_null": true
+          },
+          {
+            "delta": 4,
+            "n": 13549,
+            "cmi": 0.006109288783289144,
+            "null95": 0.0018003685318718243,
+            "above_null": true
+          },
+          {
+            "delta": 8,
+            "n": 13549,
+            "cmi": 0.0013548323790051177,
+            "null95": 0.0019794824496902116,
+            "above_null": false
+          },
+          {
+            "delta": 16,
+            "n": 13549,
+            "cmi": 0.0026575921849236656,
+            "null95": 0.0018588745471494797,
+            "above_null": true
+          },
+          {
+            "delta": 32,
+            "n": 13549,
+            "cmi": 0.0020740249785628152,
+            "null95": 0.001961997093758599,
+            "above_null": true
+          }
+        ],
+        "spearman_delta_cmi": -0.8928571428571428,
+        "near_fires": true,
+        "far_null": false,
+        "cmi_peak": 0.017551870318897357,
+        "cmi_tail_mean": 0.0023658085817432404,
+        "decay_ratio_tail_over_peak": 0.1347895431517674,
+        "augmented": {
+          "n_rows": 13549,
+          "concentration": "DIFFERENTIATED",
+          "label_top1": 0.0038,
+          "I_coords_Y": 0.3033,
+          "eps_band_verdict": "COORDINATE_BEARING",
+          "eps_band_H_given_coords": 0.0,
+          "eps_band_cmi": 0.0,
+          "eps_band_null95": 0.00118,
+          "saturation_bits": 8.0,
+          "headline": "DIFFERENTIATED label distribution (top-1 0.4%); coords carry 0.3033 bits about fresh evaluation; saturation bound 8.00 bits"
+        }
+      },
+      "ar1": {
+        "kill_frac": 0.8849305555555556,
+        "audit": {
+          "n_rows": 12743,
+          "concentration": "DIFFERENTIATED",
+          "label_top1": 0.0038,
+          "I_coords_Y": 0.00012,
+          "eps_band_verdict": "BEYOND_COORDINATE_SIGNAL",
+          "eps_band_H_given_coords": 2.48193,
+          "eps_band_cmi": 0.0164,
+          "eps_band_null95": 0.0021,
+          "saturation_bits": 1.4845,
+          "headline": "DIFFERENTIATED label distribution (top-1 0.4%); coords carry 0.0001 bits about fresh evaluation; saturation bound 1.48 bits; INVESTIGATE (beyond-coordinate signal): ['eps_band']"
+        },
+        "delta_sweep": [
+          {
+            "delta": 0,
+            "n": 12743,
+            "cmi": 0.02255557234211826,
+            "null95": 0.0021249718803430235,
+            "above_null": true
+          },
+          {
+            "delta": 1,
+            "n": 12743,
+            "cmi": 0.016279588417744725,
+            "null95": 0.002018731533931997,
+            "above_null": true
+          },
+          {
+            "delta": 2,
+            "n": 12743,
+            "cmi": 0.010883232075046849,
+            "null95": 0.0020142350621836346,
+            "above_null": true
+          },
+          {
+            "delta": 4,
+            "n": 12743,
+            "cmi": 0.004765193726411775,
+            "null95": 0.0019854892861695273,
+            "above_null": true
+          },
+          {
+            "delta": 8,
+            "n": 12743,
+            "cmi": 0.0022827067102253957,
+            "null95": 0.001986689474446816,
+            "above_null": true
+          },
+          {
+            "delta": 16,
+            "n": 12743,
+            "cmi": 0.0033245069737414244,
+            "null95": 0.0021632977953105815,
+            "above_null": true
+          },
+          {
+            "delta": 32,
+            "n": 12743,
+            "cmi": 0.0018613384431762589,
+            "null95": 0.002071027529321287,
+            "above_null": false
+          }
+        ],
+        "spearman_delta_cmi": -0.9642857142857142,
+        "near_fires": true,
+        "far_null": true,
+        "cmi_peak": 0.02255557234211826,
+        "cmi_tail_mean": 0.0025929227084588416,
+        "decay_ratio_tail_over_peak": 0.11495707885971261,
+        "augmented": {
+          "n_rows": 12743,
+          "concentration": "DIFFERENTIATED",
+          "label_top1": 0.0038,
+          "I_coords_Y": 0.49302,
+          "eps_band_verdict": "COORDINATE_BEARING",
+          "eps_band_H_given_coords": 0.0,
+          "eps_band_cmi": 0.0,
+          "eps_band_null95": 0.00173,
+          "saturation_bits": 11.0,
+          "headline": "DIFFERENTIATED label distribution (top-1 0.4%); coords carry 0.4930 bits about fresh evaluation; saturation bound 11.00 bits"
+        }
+      }
+    },
+    {
+      "seed": 20260616,
+      "C0": {
+        "n_rows": 12162,
+        "concentration": "DIFFERENTIATED",
+        "label_top1": 0.0048,
+        "I_coords_Y": 0.0001,
+        "eps_band_verdict": "PATH_DECORATION",
+        "eps_band_H_given_coords": 2.04365,
+        "eps_band_cmi": 0.00072,
+        "eps_band_null95": 0.00173,
+        "saturation_bits": 1.8906,
+        "headline": "DIFFERENTIATED label distribution (top-1 0.5%); coords carry 0.0001 bits about fresh evaluation; saturation bound 1.89 bits; PATH DECORATION: ['eps_band']"
+      },
+      "kill_frac_c0": 0.8445833333333334,
+      "rwalk": {
+        "kill_frac": 0.900625,
+        "audit": {
+          "n_rows": 12969,
+          "concentration": "DIFFERENTIATED",
+          "label_top1": 0.0033,
+          "I_coords_Y": 0.00013,
+          "eps_band_verdict": "BEYOND_COORDINATE_SIGNAL",
+          "eps_band_H_given_coords": 2.67796,
+          "eps_band_cmi": 0.03945,
+          "eps_band_null95": 0.00207,
+          "saturation_bits": 1.1941,
+          "headline": "DIFFERENTIATED label distribution (top-1 0.3%); coords carry 0.0001 bits about fresh evaluation; saturation bound 1.19 bits; INVESTIGATE (beyond-coordinate signal): ['eps_band']"
+        },
+        "delta_sweep": [
+          {
+            "delta": 0,
+            "n": 12969,
+            "cmi": 0.04366344973103459,
+            "null95": 0.002094670853745299,
+            "above_null": true
+          },
+          {
+            "delta": 1,
+            "n": 12969,
+            "cmi": 0.03593856331553581,
+            "null95": 0.0020313242619517586,
+            "above_null": true
+          },
+          {
+            "delta": 2,
+            "n": 12969,
+            "cmi": 0.04308003429983885,
+            "null95": 0.00198441887936723,
+            "above_null": true
+          },
+          {
+            "delta": 4,
+            "n": 12969,
+            "cmi": 0.03038878498232187,
+            "null95": 0.002177296734544709,
+            "above_null": true
+          },
+          {
+            "delta": 8,
+            "n": 12969,
+            "cmi": 0.02798019510729026,
+            "null95": 0.0019861164495648606,
+            "above_null": true
+          },
+          {
+            "delta": 16,
+            "n": 12969,
+            "cmi": 0.019574912884250104,
+            "null95": 0.0020626192458864396,
+            "above_null": true
+          },
+          {
+            "delta": 32,
+            "n": 12969,
+            "cmi": 0.004902499845864763,
+            "null95": 0.002077304406248562,
+            "above_null": true
+          }
+        ],
+        "spearman_delta_cmi": -0.9642857142857142,
+        "near_fires": true,
+        "far_null": false,
+        "cmi_peak": 0.04366344973103459,
+        "cmi_tail_mean": 0.012238706365057434,
+        "decay_ratio_tail_over_peak": 0.2802963677961192,
+        "augmented": {
+          "n_rows": 12969,
+          "concentration": "DIFFERENTIATED",
+          "label_top1": 0.0033,
+          "I_coords_Y": 0.39668,
+          "eps_band_verdict": "COORDINATE_BEARING",
+          "eps_band_H_given_coords": 0.0,
+          "eps_band_cmi": 0.0,
+          "eps_band_null95": 0.00154,
+          "saturation_bits": 10.0,
+          "headline": "DIFFERENTIATED label distribution (top-1 0.3%); coords carry 0.3967 bits about fresh evaluation; saturation bound 10.00 bits"
+        }
+      },
+      "ar1": {
+        "kill_frac": 0.8660416666666667,
+        "audit": {
+          "n_rows": 12471,
+          "concentration": "DIFFERENTIATED",
+          "label_top1": 0.0039,
+          "I_coords_Y": 8e-05,
+          "eps_band_verdict": "BEYOND_COORDINATE_SIGNAL",
+          "eps_band_H_given_coords": 2.39964,
+          "eps_band_cmi": 0.01301,
+          "eps_band_null95": 0.00197,
+          "saturation_bits": 1.5984,
+          "headline": "DIFFERENTIATED label distribution (top-1 0.4%); coords carry 0.0001 bits about fresh evaluation; saturation bound 1.60 bits; INVESTIGATE (beyond-coordinate signal): ['eps_band']"
+        },
+        "delta_sweep": [
+          {
+            "delta": 0,
+            "n": 12471,
+            "cmi": 0.023719645168239024,
+            "null95": 0.0018936905100019798,
+            "above_null": true
+          },
+          {
+            "delta": 1,
+            "n": 12471,
+            "cmi": 0.013909512383404439,
+            "null95": 0.0019217028753615612,
+            "above_null": true
+          },
+          {
+            "delta": 2,
+            "n": 12471,
+            "cmi": 0.010405491419783128,
+            "null95": 0.001933724935927544,
+            "above_null": true
+          },
+          {
+            "delta": 4,
+            "n": 12471,
+            "cmi": 0.005285558257002455,
+            "null95": 0.002100329729967105,
+            "above_null": true
+          },
+          {
+            "delta": 8,
+            "n": 12471,
+            "cmi": 0.0018865170402139317,
+            "null95": 0.0020914479081186495,
+            "above_null": false
+          },
+          {
+            "delta": 16,
+            "n": 12471,
+            "cmi": 0.001024573121699485,
+            "null95": 0.002026469229840797,
+            "above_null": false
+          },
+          {
+            "delta": 32,
+            "n": 12471,
+            "cmi": 0.0014825431136581081,
+            "null95": 0.002064987171250853,
+            "above_null": false
+          }
+        ],
+        "spearman_delta_cmi": -0.9642857142857142,
+        "near_fires": true,
+        "far_null": true,
+        "cmi_peak": 0.023719645168239024,
+        "cmi_tail_mean": 0.0012535581176787965,
+        "decay_ratio_tail_over_peak": 0.05284894056329858,
+        "augmented": {
+          "n_rows": 12471,
+          "concentration": "DIFFERENTIATED",
+          "label_top1": 0.0039,
+          "I_coords_Y": 0.53099,
+          "eps_band_verdict": "COORDINATE_BEARING",
+          "eps_band_H_given_coords": 0.0,
+          "eps_band_cmi": 0.0,
+          "eps_band_null95": 0.00192,
+          "saturation_bits": 12.0,
+          "headline": "DIFFERENTIATED label distribution (top-1 0.4%); coords carry 0.5310 bits about fresh evaluation; saturation bound 12.00 bits"
+        }
+      }
+    },
+    {
+      "seed": 20260617,
+      "C0": {
+        "n_rows": 12166,
+        "concentration": "DIFFERENTIATED",
+        "label_top1": 0.0052,
+        "I_coords_Y": 1e-05,
+        "eps_band_verdict": "PATH_DECORATION",
+        "eps_band_H_given_coords": 2.02961,
+        "eps_band_cmi": 0.00126,
+        "eps_band_null95": 0.00174,
+        "saturation_bits": 1.874,
+        "headline": "DIFFERENTIATED label distribution (top-1 0.5%); coords carry 0.0000 bits about fresh evaluation; saturation bound 1.87 bits; PATH DECORATION: ['eps_band']"
+      },
+      "kill_frac_c0": 0.8448611111111111,
+      "rwalk": {
+        "kill_frac": 0.7854166666666667,
+        "audit": {
+          "n_rows": 11310,
+          "concentration": "DIFFERENTIATED",
+          "label_top1": 0.0044,
+          "I_coords_Y": 1e-05,
+          "eps_band_verdict": "BEYOND_COORDINATE_SIGNAL",
+          "eps_band_H_given_coords": 2.3601,
+          "eps_band_cmi": 0.03239,
+          "eps_band_null95": 0.00233,
+          "saturation_bits": 2.0015,
+          "headline": "DIFFERENTIATED label distribution (top-1 0.4%); coords carry 0.0000 bits about fresh evaluation; saturation bound 2.00 bits; INVESTIGATE (beyond-coordinate signal): ['eps_band']"
+        },
+        "delta_sweep": [
+          {
+            "delta": 0,
+            "n": 11310,
+            "cmi": 0.040806824077537926,
+            "null95": 0.00226894879483745,
+            "above_null": true
+          },
+          {
+            "delta": 1,
+            "n": 11310,
+            "cmi": 0.036590500200110704,
+            "null95": 0.002425421265605716,
+            "above_null": true
+          },
+          {
+            "delta": 2,
+            "n": 11310,
+            "cmi": 0.028136550687173842,
+            "null95": 0.0022250904856200688,
+            "above_null": true
+          },
+          {
+            "delta": 4,
+            "n": 11310,
+            "cmi": 0.026788131687428583,
+            "null95": 0.0021773073280428644,
+            "above_null": true
+          },
+          {
+            "delta": 8,
+            "n": 11310,
+            "cmi": 0.015073549464568235,
+            "null95": 0.002423352160286789,
+            "above_null": true
+          },
+          {
+            "delta": 16,
+            "n": 11310,
+            "cmi": 0.0024525367306564762,
+            "null95": 0.0022526179229478242,
+            "above_null": true
+          },
+          {
+            "delta": 32,
+            "n": 11310,
+            "cmi": 0.004992126814282906,
+            "null95": 0.0023154582907425605,
+            "above_null": true
+          }
+        ],
+        "spearman_delta_cmi": -0.9642857142857142,
+        "near_fires": true,
+        "far_null": false,
+        "cmi_peak": 0.040806824077537926,
+        "cmi_tail_mean": 0.0037223317724696912,
+        "decay_ratio_tail_over_peak": 0.09121836498221005,
+        "augmented": {
+          "n_rows": 11310,
+          "concentration": "DIFFERENTIATED",
+          "label_top1": 0.0044,
+          "I_coords_Y": 0.66418,
+          "eps_band_verdict": "COORDINATE_BEARING",
+          "eps_band_H_given_coords": 0.0,
+          "eps_band_cmi": 0.0,
+          "eps_band_null95": 0.00283,
+          "saturation_bits": 17.0,
+          "headline": "DIFFERENTIATED label distribution (top-1 0.4%); coords carry 0.6642 bits about fresh evaluation; saturation bound 17.00 bits"
+        }
+      },
+      "ar1": {
+        "kill_frac": 0.8522916666666667,
+        "audit": {
+          "n_rows": 12273,
+          "concentration": "DIFFERENTIATED",
+          "label_top1": 0.0034,
+          "I_coords_Y": 0.00018,
+          "eps_band_verdict": "BEYOND_COORDINATE_SIGNAL",
+          "eps_band_H_given_coords": 2.54176,
+          "eps_band_cmi": 0.03782,
+          "eps_band_null95": 0.00203,
+          "saturation_bits": 1.5475,
+          "headline": "DIFFERENTIATED label distribution (top-1 0.3%); coords carry 0.0002 bits about fresh evaluation; saturation bound 1.55 bits; INVESTIGATE (beyond-coordinate signal): ['eps_band']"
+        },
+        "delta_sweep": [
+          {
+            "delta": 0,
+            "n": 12273,
+            "cmi": 0.04121223468840517,
+            "null95": 0.0023071732157075447,
+            "above_null": true
+          },
+          {
+            "delta": 1,
+            "n": 12273,
+            "cmi": 0.03983556454165424,
+            "null95": 0.002282551422446322,
+            "above_null": true
+          },
+          {
+            "delta": 2,
+            "n": 12273,
+            "cmi": 0.03299791656017399,
+            "null95": 0.002250004779717667,
+            "above_null": true
+          },
+          {
+            "delta": 4,
+            "n": 12273,
+            "cmi": 0.025601707692697748,
+            "null95": 0.0023424053825680143,
+            "above_null": true
+          },
+          {
+            "delta": 8,
+            "n": 12273,
+            "cmi": 0.010226610819139781,
+            "null95": 0.002132053493667792,
+            "above_null": true
+          },
+          {
+            "delta": 16,
+            "n": 12273,
+            "cmi": 0.004515397586747245,
+            "null95": 0.0020660731447521372,
+            "above_null": true
+          },
+          {
+            "delta": 32,
+            "n": 12273,
+            "cmi": 0.006401050694857395,
+            "null95": 0.0022338683200257684,
+            "above_null": true
+          }
+        ],
+        "spearman_delta_cmi": -0.9642857142857142,
+        "near_fires": true,
+        "far_null": false,
+        "cmi_peak": 0.04121223468840517,
+        "cmi_tail_mean": 0.0054582241408023206,
+        "decay_ratio_tail_over_peak": 0.13244183874207535,
+        "augmented": {
+          "n_rows": 12273,
+          "concentration": "DIFFERENTIATED",
+          "label_top1": 0.0034,
+          "I_coords_Y": 0.51356,
+          "eps_band_verdict": "COORDINATE_BEARING",
+          "eps_band_H_given_coords": 0.0,
+          "eps_band_cmi": 0.0,
+          "eps_band_null95": 0.00196,
+          "saturation_bits": 13.0,
+          "headline": "DIFFERENTIATED label distribution (top-1 0.3%); coords carry 0.5136 bits about fresh evaluation; saturation bound 13.00 bits"
+        }
+      }
+    }
+  ],
+  "aggregate": {
+    "R2_C0_path_decoration_all": true,
+    "rwalk": {
+      "R1_beyond_all": true,
+      "R3_near_fires_all": true,
+      "R3_far_null_all": false,
+      "R3_decay_ratio_le_0.5_all": true,
+      "R3_tail_to_control_2x_all": false,
+      "R3_spearman_le_-0.5_all": true,
+      "R4_trap_coordinate_bearing_all": true
+    },
+    "ar1": {
+      "R1_beyond_all": true,
+      "R3_near_fires_all": true,
+      "R3_far_null_all": false,
+      "R3_decay_ratio_le_0.5_all": true,
+      "R3_tail_to_control_2x_all": false,
+      "R3_spearman_le_-0.5_all": true,
+      "R4_trap_coordinate_bearing_all": true
+    },
+    "STATE_COUPLING_CONFIRMED": true
+  }
+}

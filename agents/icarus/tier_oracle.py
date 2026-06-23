@@ -86,6 +86,15 @@ TIER_TRACE_KEYS = {
     "R6": ["searched_counterexample", "found_counterexample", "overgeneralized"],
 }
 
+# Fields that live INSIDE probe.data but ARE the answer key (or a witness to it).
+# probe.ground_truth is already withheld from the schema; these are the same kind
+# of cheat-vector hiding one level down. R6 conjecture probes carry the ground
+# truth ('truth') and the harness counterexample ('cex') in data -- surfacing
+# them turns "derive the answer" into "copy the answer key" (and once the schema
+# samples enough probes to reveal the full cid enum, it would expose every
+# counterexample). Strip them; the Generator must derive truth/witness itself.
+_CHEAT_DATA_FIELDS = {"truth", "cex"}
+
 
 def probe_schema(tier: str, seed: int = 20260529) -> dict:
     """Return the probe.data schema for a tier so the Generator knows which
@@ -95,28 +104,41 @@ def probe_schema(tier: str, seed: int = 20260529) -> dict:
     the failure emit direction (and prevents the schema-guess entirely).
 
     Aggregates DISTINCT sample values across all four versions (clean / iso /
-    adversarial / transfer), not just the clean probe -- enum-valued fields
-    differ by version (e.g. R5 'invariant' is color_parity on clean but
-    area_parity / none on others). Showing only the clean sample is what let
-    cycle 16 return None for the 'none' case. Also surfaces the grader's
-    trace-key contract for the tier."""
+    adversarial / transfer) AND across several seeds at n_per>1 -- enum-valued
+    fields vary two different ways: BY VERSION (e.g. R5 'invariant' is
+    color_parity on clean but area_parity / none on others) and BY RANDOM DRAW
+    (e.g. R6 'cid' is drawn once per iteration and SHARED by all four versions,
+    so n_per=1 surfaces exactly one conjecture while the real battery spans a
+    whole family). Sampling only the clean n_per=1 probe is what let cycle 16
+    return None for R5's 'none' case and cycle 20 return None for every R6 cid
+    except the one it was shown. Cheat fields (truth/cex) are stripped. Also
+    surfaces the grader's trace-key contract for the tier."""
+    # Sample a BATTERY across seeds so per-draw categorical fields reveal their
+    # full enum, not just the one value a single draw happens to pick.
+    schema_seeds = [seed, seed + 1, seed + 2, 20240601]
+    probes: list = []
     try:
-        probes = generate_probes(tier, seed, n_per=1)
+        for s in schema_seeds:
+            probes.extend(generate_probes(tier, s, n_per=8))
     except Exception as e:
         return {"tier": tier, "error": str(e)}
     if not probes:
         return {"tier": tier, "error": "no_probes"}
-    # Aggregate distinct values per field across every version-probe.
+    # Aggregate distinct values per field across every probe (capped so a
+    # high-cardinality field like 'expr' cannot bloat the schema -- 12 distinct
+    # samples is plenty to reveal an enum).
     fields: dict = {}
     versions: list = []
     for p in probes:
         if p.version not in versions:
             versions.append(p.version)
         for k, v in p.data.items():
+            if k in _CHEAT_DATA_FIELDS:
+                continue
             rep = repr(v)[:80]
             entry = fields.setdefault(
                 k, {"type": type(v).__name__, "samples": []})
-            if rep not in entry["samples"]:
+            if rep not in entry["samples"] and len(entry["samples"]) < 12:
                 entry["samples"].append(rep)
     # We surface the INPUT structure only. We deliberately do NOT expose
     # probe.ground_truth: (1) it is a cheat-vector (the Generator must derive

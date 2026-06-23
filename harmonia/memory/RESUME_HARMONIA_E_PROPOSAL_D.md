@@ -1,7 +1,23 @@
 # RESUME — Harmonia E, Proposal D (Failure-Primitive Atlas)
 
-**Last session:** 2026-06-10. **Status:** Proposal D shipped (all 5 stages);
-2 follow-ups blocked on the Anthropic monthly **spend limit**.
+**Last session:** 2026-06-15 (resume; journal `SESSION_JOURNAL_E_20260615.md`).
+**Status:** Atlas shipped 2026-06-10. 2026-06-15: **FP-003 → coordinate_invariant**
+(first top-tier primitive; Apollo escrow resolved as `expressiveness_ceiling`,
+executing-lens confirmed; commits `5531d4f1`, `4efd38f7`). **Spend limit has
+RESET** — cloud fan-out unblocked.
+
+## Next up (priority)
+1. **FP-004 graduation (pending→proven):** EXECUTE `detect_degenerate_field_flatline`
+   on real data for the 3 disjoint lineages (harmonia rank-1 killvectors;
+   apollo `llm_alive=0` — the OLD May run, not the R2 log; noesis depth-2
+   confidence sigs in duckdb). Discount Polyhymnia (imports the
+   `agents/_shared/self_improving.py` mixin → contaminated). 3 fires =
+   legitimate coordinate_invariant.
+2. Re-run the truncated Stage-3 hunt (~22 agents + critic) — spend available.
+3. FP-003 subclass-discriminator probe (region_empty STOP vs
+   expressiveness_ceiling GROW — can the detector be made to over-lump?).
+
+## Original handoff (2026-06-10) below — partially superseded by the above.
 
 ## One-paragraph state
 The cross-agent Failure-Primitive Atlas is live: 4 FPs with working detectors

@@ -43,14 +43,30 @@ independently, as a3's next() does), the joint distribution of
       Any "cross-domain identity" reading is a Pattern-30 red flag by
       construction.
 
-Triviality classes assigned to each exact void:
+Triviality classes assigned to each exact void (most-trivial first; the class
+is the WEAKEST knowledge that fully explains the void, with population-true
+explanations preferred over catalog-selection ones):
+  T0 TAUTOLOGY       the two sides are the same generator computation compared
+                     to itself (reflexive relation on an identical column, or
+                     an injected spec.tautology_check) -- holds with no data at
+                     all. Guards self-test generators like b1 (predicted==actual
+                     from one flip table) from being mined as discoveries.
   T1 PIGEONHOLE      holds for arbitrary integers; property of (f,g,REL)
                      alone, independent of all catalog data.
+  T1b THEOREM_PIGEONHOLE  fails for arbitrary integers, but holds for every
+                     value inside a NAMED theorem's true domain (e.g. Mazur:
+                     E(Q)_tors order in {1..10,12}). Population-true, not a
+                     catalog artifact -- the cited theorem IS the (re)discovery.
+                     Ranked above T2 because it survives catalog extension
+                     whereas a constant side may be thin selection.
   T2 CONSTANT_SIDE   one transformed side is a single value; the void is an
-                     absorbing-element fact (e.g. 1 divides everything).
-  T3 MARGINAL_FACT   both sides non-constant; the certificate cites genuine
-                     value-set structure of each catalog column. The cited
-                     facts are the candidate (re)discoveries.
+                     absorbing-element fact (e.g. 1 divides everything). Often
+                     a thin catalog fact, hence below T1b.
+  T3 MARGINAL_FACT   both sides non-constant, no named theorem bounds them; the
+                     certificate cites genuine value-set structure of each
+                     catalog column. The cited facts are the candidate
+                     (re)discoveries -- and the ones most likely to be
+                     selection artifacts (closure-stress separates them).
 
 Near-voids (hold_rate < 1 but above a band threshold) are NOT certified --
 they get the statistical treatment: relation-laxity gradient + per-band
@@ -85,6 +101,20 @@ class LatticeSpec:
     relations: Tuple[str, ...]
     eval_relation: Callable[[int, int, str], bool]   # injected, e.g. a1._evaluate_relation
     transform_errors: Tuple[type, ...] = (ValueError, OverflowError)  # a3's skip set
+    # Optional: invariant_name -> (true-domain probe values, theorem_name). The
+    # probe is a finite stand-in for the invariant's THEOREM-true range (NOT the
+    # catalog sample). Only invariants with a non-trivial named bound need an
+    # entry; unlisted invariants default to the unbounded _GENERIC_PROBE. Drives
+    # the T1b theorem-pigeonhole tier. Empty (default) => T1b never fires =>
+    # behaviour identical to the pre-T1b engine.
+    domain_theorems: Dict[str, Tuple[Tuple[int, ...], str]] = field(default_factory=dict)
+    # Optional: cell-dict -> reason string if this cell is a structural
+    # tautology of the GENERATOR (the two sides are one computation compared to
+    # itself), else None. Lets a self-test generator (b1) declare its sides
+    # share a source. None (default) => only the built-in structural detector
+    # (identical (op,invariant) on both sides + reflexive relation) can fire T0,
+    # which is impossible for distinct-column cross-product specs like a3.
+    tautology_check: Optional[Callable[[dict], Optional[str]]] = None
 
 
 def _transformed_counters(side: Dict[str, List[int]],
@@ -292,6 +322,87 @@ def null_pigeonhole(spec: LatticeSpec, c: dict) -> dict:
                       if ok else "fails on generic integers -> catalog-dependent"}
 
 
+def null_tautology(spec: LatticeSpec, c: dict) -> dict:
+    """T0: is the cell a self-comparison of one generator computation? Two
+    routes: (a) the spec's injected tautology_check declares the two sides share
+    a source (the b1 'predicted==actual from one flip table' case); (b) a
+    built-in structural detector — identical (operator, invariant) on both sides
+    under a reflexive relation, i.e. a column compared to an identical copy of
+    itself. Either way the void carries zero discovery content: it would hold
+    for ANY data, including data the generator never looked at.
+
+    Checked BEFORE the certificate gate in mine(): a declared tautology is
+    classified T0 even if the set-level certificate machinery does not recognise
+    its shape (self-test generators need not emit one of the four a1 relations).
+    For distinct-column cross-product specs with no tautology_check (a3), this
+    null can never fire — backward-compatible by construction."""
+    reason = None
+    if spec.tautology_check is not None:
+        try:
+            reason = spec.tautology_check(c)
+        except Exception:
+            reason = None
+    if reason is None and c["inv_a"] == c["inv_b"] and c["f"] == c["g"]:
+        rel = c["rel"]
+        try:
+            reflexive = all(spec.eval_relation(v, v, rel) for v in _GENERIC_PROBE)
+        except spec.transform_errors:
+            reflexive = False
+        if reflexive:
+            reason = (f"structural: both sides {c['f']}∘{c['inv_a']} compared "
+                      f"under reflexive relation {rel} (column vs identical copy)")
+    return {"null": "tautology", "killed": reason is not None,
+            "detail": reason or "sides are not a self-comparison of one computation"}
+
+
+def null_theorem_pigeonhole(spec: LatticeSpec, c: dict) -> dict:
+    """T1b: does the cell hold for every value inside a NAMED theorem's true
+    domain (even though it fails for arbitrary integers, so plain pigeonhole
+    missed it)? Sides without an injected domain theorem fall back to the
+    unbounded _GENERIC_PROBE, so a kill here means the named theorem(s) are
+    load-bearing and the void is population-true (survives catalog extension),
+    not a thin selection fact. The cited theorem is the (re)discovery.
+
+    Example (a3): mod_3(knot_inv) abs_diff_le_3 log2_floor(torsion). mod_3 caps
+    side A to {0,1,2} for ANY integer; Mazur caps EC torsion order to {1..10,12}
+    so log2_floor(torsion) <= 3; the interval holds for the whole population.
+    Plain pigeonhole feeds 2**20 into the torsion slot (no curve over Q realises
+    it) and wrongly concludes 'catalog-dependent'. This null injects the Mazur
+    domain instead. Empty spec.domain_theorems => never fires (backward-compat)."""
+    out = {"null": "theorem_pigeonhole", "killed": False, "theorems": [],
+           "detail": "no domain theorems supplied"}
+    if not spec.domain_theorems:
+        return out
+    dom_a = spec.domain_theorems.get(c["inv_a"])
+    dom_b = spec.domain_theorems.get(c["inv_b"])
+    if dom_a is None and dom_b is None:
+        out["detail"] = "no named theorem bounds either side"
+        return out
+    probe_a = dom_a[0] if dom_a else _GENERIC_PROBE
+    probe_b = dom_b[0] if dom_b else _GENERIC_PROBE
+    f, g = spec.operators[c["f"]], spec.operators[c["g"]]
+    cited = [t[1] for t in (dom_a, dom_b) if t]
+    ok = True
+    for x in probe_a:
+        for y in probe_b:
+            try:
+                if not spec.eval_relation(f(x), g(y), c["rel"]):
+                    ok = False
+                    break
+            except spec.transform_errors:
+                continue
+        if not ok:
+            break
+    out["killed"] = ok
+    out["theorems"] = cited if ok else []
+    out["detail"] = (f"holds for every value in theorem domain(s) {cited} -> "
+                     "population-true restricted-domain pigeonhole"
+                     if ok else
+                     f"fails even within theorem domain(s) {cited} -> not "
+                     "theorem-explained (genuine marginal structure)")
+    return out
+
+
 def null_constant_side(spec: LatticeSpec, c: dict) -> dict:
     """T2: is one transformed side a single value? If so, name the constant
     and whether the collapse came from the raw column or from the operator."""
@@ -391,16 +502,27 @@ def mine(spec: LatticeSpec) -> dict:
         cert = certificate(spec, c)
         cert_ok = verify_certificate(spec, c, cert) if cert else False
         nulls = {
+            "tautology": null_tautology(spec, c),
             "pigeonhole": null_pigeonhole(spec, c),
+            "theorem_pigeonhole": null_theorem_pigeonhole(spec, c),
             "constant_side": null_constant_side(spec, c),
             "relation_laxity": null_relation_laxity(spec, c),
             "marginal_pairing": null_marginal_pairing(spec, c),
             "object_domination": null_object_domination(spec, c),
         }
-        if cert is None or not cert_ok:
+        # Classify by the WEAKEST/most-population-true knowledge that explains
+        # the void. T0 is checked before the certificate gate (a declared
+        # self-comparison need not match a set-level certificate form). T1b
+        # (named-theorem pigeonhole, population-true) outranks T2 (constant
+        # side, often thin selection).
+        if nulls["tautology"]["killed"]:
+            tclass = "T0_TAUTOLOGY"
+        elif cert is None or not cert_ok:
             tclass = "T4_NO_CERTIFICATE_BUG"      # impossible by theorem -> investigate
         elif nulls["pigeonhole"]["killed"]:
             tclass = "T1_PIGEONHOLE"
+        elif nulls["theorem_pigeonhole"]["killed"]:
+            tclass = "T1b_THEOREM_PIGEONHOLE"
         elif nulls["constant_side"]["killed"]:
             tclass = "T2_CONSTANT_SIDE"
         else:
@@ -442,12 +564,19 @@ def _next_band(b: float) -> float:
 # the product-measure theorem deliberately FAILS here: a void can carry real
 # within-object joint structure, and the re-pairing (column-shuffle) null is
 # INFORMATIVE rather than degenerate. Classification per void:
-#   D_MARGINAL  a set-product certificate exists on the two column ranges --
-#               the diagonal hold is implied by marginals alone (a3-style
-#               triviality; same T1/T2/T3 taxonomy applies).
+#   D_MARGINAL  a set-product certificate exists on the two column ranges, but
+#               only over the CATALOG-observed value sets -- the diagonal hold
+#               is implied by marginals alone and may be thin selection
+#               (a3-style triviality; same T1/T2/T3 taxonomy applies).
+#   D_THEOREM   set-product certificate holds over the two NAMED-theorem true
+#               domains (superset of the observed values) -- a population-true
+#               marginal fact, not selection (the diagonal analogue of T1b). The
+#               cited theorem explains it; not a within-object joint law.
 #   D_JOINT     no set-product certificate, yet the diagonal holds on every
 #               object -- candidate within-catalog inter-invariant LAW. The
 #               permutation null quantifies how surprising the joint hold is.
+#               (Theorem domains cannot rescue a D_JOINT: it already fails the
+#               observed set-product, a subset of any theorem domain.)
 
 def evaluate_diagonal_lattice(side: Dict[str, List[Optional[int]]],
                               operators: Dict[str, Callable[[int], int]],
@@ -455,9 +584,17 @@ def evaluate_diagonal_lattice(side: Dict[str, List[Optional[int]]],
                               eval_relation: Callable[[int, int, str], bool],
                               errors: Tuple[type, ...] = (ValueError, OverflowError),
                               n_perms: int = 200, seed: int = 20260610,
+                              domain_theorems: Optional[Dict[str, Tuple[Tuple[int, ...], str]]] = None,
                               ) -> List[dict]:
     """side: invariant -> per-object aligned value lists (None = undefined;
-    SAME index = same object — alignment is what carries the joint signal)."""
+    SAME index = same object — alignment is what carries the joint signal).
+
+    domain_theorems (optional): invariant -> (true-domain probe, theorem_name),
+    same contract as LatticeSpec.domain_theorems. When supplied, marginal voids
+    that also hold over the named-theorem domain product are tagged D_THEOREM
+    (population-true) and cite the theorem; absent or non-applicable, marginal
+    voids stay D_MARGINAL exactly as before (backward-compatible)."""
+    domain_theorems = domain_theorems or {}
     rng = random.Random(seed)
     invs = list(side)
     cells = []
@@ -501,8 +638,26 @@ def evaluate_diagonal_lattice(side: Dict[str, List[Optional[int]]],
                                 if all(eval_relation(x, y, rel)
                                        for x, y in zip(fa, shuf)):
                                     perm_void += 1
-                            cell["joint_class"] = ("D_MARGINAL" if marginal
-                                                   else "D_JOINT")
+                            if not marginal:
+                                cell["joint_class"] = "D_JOINT"
+                            else:
+                                # population-true marginal? test over the named-
+                                # theorem domains (observed set is a subset).
+                                dom_i = domain_theorems.get(inv_i)
+                                dom_j = domain_theorems.get(inv_j)
+                                cited = [t[1] for t in (dom_i, dom_j) if t]
+                                if cited:
+                                    pa = [f(v) for v in dom_i[0]] if dom_i else sorted(sA)
+                                    pb = [g(v) for v in dom_j[0]] if dom_j else sorted(sB)
+                                    pop_true = all(eval_relation(a, b, rel)
+                                                   for a in set(pa) for b in set(pb))
+                                else:
+                                    pop_true = False
+                                if pop_true:
+                                    cell["joint_class"] = "D_THEOREM"
+                                    cell["theorems_cited"] = cited
+                                else:
+                                    cell["joint_class"] = "D_MARGINAL"
                             cell["perm_null_void_rate"] = perm_void / n_perms
                         cells.append(cell)
     return cells
@@ -535,11 +690,14 @@ def build_costume_baselines(spec: LatticeSpec, cells: List[dict]):
                               this must reproduce the claim EXACTLY; verdict
                               COSTUME_OF:bl_marginal_certificate is the
                               expected -- and correct -- outcome)
-    Returned as a dict for registration into baseline_costume.CATALOG.
-    NOTE for Proposal A: CATALOG[name] lookup is the only injection point in
-    the frozen contract; a register() hook would be cleaner. A's v0 generic
-    catalog (marginal_majority / volume_weighted / pair_aware) cannot express
-    these baselines -- they need set-level arithmetic, not label counting.
+    Returned as a dict {name: rows->RecMap}; costume_gate injects them via
+    baseline_costume.register() (see below).
+    NOTE for Proposal A: the register() hook D requested is now SHIPPED by
+    Harmonia B (commit cbcf8abb, 2026-06-15) — costume_gate uses it instead of
+    the old CATALOG[name] monkey-patch. A's v0 generic catalog (marginal_majority
+    / volume_weighted / pair_aware) still cannot express these baselines -- they
+    need set-level arithmetic, not label counting (the custom-baseline path is
+    load-bearing, as A's contract anticipated).
     """
     def _label_map(predicate) -> dict:
         return {cell_id(c): ("VOID" if predicate(c) else "NONVOID") for c in cells}
@@ -571,17 +729,21 @@ def build_costume_baselines(spec: LatticeSpec, cells: List[dict]):
 def costume_gate(spec: LatticeSpec, mined: dict):
     """Gate the void claim through Proposal A's shared primitive.
 
-    DEGENERACY CAVEAT (2026-06-10 adversarial panel, C7 REFUTED):
-    on a unique-key claim whose label_fn is derived from the claim itself,
-    ANY baseline that echoes observed labels per key (A's marginal_majority
-    included) is an identity copier and 'ties' at 1.0 — so a COSTUME_OF
-    verdict here is NOT evidence by itself. The informative content is the
-    baseline LADDER computed from progressively weaker trivial knowledge
-    (pigeonhole < constant-absorber < full certificate), with the generic-
-    catalog control run alongside to demonstrate the degeneracy explicitly.
-    Returns (verdict, generic_control) — interpret the ladder, not the tie.
-    Filed to Proposal A as an interface finding: costume_check needs a
-    unique-key/label-copier guard before it can gate claims of this shape."""
+    DEGENERACY CAVEAT (2026-06-10 adversarial panel, C7 REFUTED; B's fix
+    landed 2026-06-15): on a unique-key claim whose label_fn is derived from
+    the claim itself, ANY within-key aggregating baseline (A's marginal_majority
+    /pair_aware) is an identity copier and 'ties' at 1.0 — so a COSTUME_OF
+    verdict from one would be NOT evidence by itself. The informative content is
+    the baseline LADDER from progressively weaker trivial knowledge (pigeonhole
+    < constant-absorber < full certificate). B's degeneracy guard now marks the
+    aggregating-baseline tie `vacuous` when every key has one row, so the
+    generic control no longer reports the spurious COSTUME_OF:marginal_majority
+    (it now reads DISTINCT / INCONCLUSIVE_DEGENERATE). Returns (verdict,
+    generic_control) — still interpret the ladder, not the tie.
+
+    Injection uses baseline_costume.register() (B, commit cbcf8abb) — returns a
+    fresh catalog without mutating the module-global CATALOG, so no cross-caller
+    leak (the monkey-patch hazard this gate used to risk)."""
     from harmonia.primitives import baseline_costume as bc
 
     cells = mined["cells"]
@@ -589,22 +751,20 @@ def costume_gate(spec: LatticeSpec, mined: dict):
              for c in cells}
     label_fn = lambda c: "VOID" if c["is_exact_void"] else "NONVOID"
     baselines = build_costume_baselines(spec, cells)
+    cat = bc.CATALOG
     for name, fn in baselines.items():
-        bc.CATALOG[name] = fn          # v0 contract: name-keyed injection
-    try:
-        verdict = bc.costume_check(
-            claim, cells, tuple(baselines),
-            key_fn=cell_id, label_fn=label_fn,
-            comparator=void_jaccard_comparator,
-        )
-        # Degeneracy control: A's generic catalog on the same wiring. Expected
-        # COSTUME_OF:marginal_majority at 1.0 — the identity-copier hole.
-        generic_control = bc.costume_check(
-            claim, cells, ("marginal_majority", "volume_weighted"),
-            key_fn=cell_id, label_fn=label_fn,
-            comparator=void_jaccard_comparator,
-        )
-    finally:
-        for name in baselines:
-            bc.CATALOG.pop(name, None)
+        cat = bc.register(name, fn, catalog=cat)   # non-mutating injection
+    verdict = bc.costume_check(
+        claim, cells, tuple(baselines),
+        key_fn=cell_id, label_fn=label_fn,
+        comparator=void_jaccard_comparator, catalog=cat,
+    )
+    # Degeneracy control: A's generic catalog on the same wiring. Post-guard the
+    # marginal_majority tie is suppressed as vacuous => DISTINCT, not the old
+    # spurious COSTUME_OF:marginal_majority (B closed this loop).
+    generic_control = bc.costume_check(
+        claim, cells, ("marginal_majority", "volume_weighted"),
+        key_fn=cell_id, label_fn=label_fn,
+        comparator=void_jaccard_comparator,
+    )
     return verdict, generic_control

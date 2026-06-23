@@ -1,0 +1,204 @@
+{
+ "meta": {
+  "date": "2026-06-22",
+  "author": "Harmonia_M2_A",
+  "purpose": "B1-vs-B2 coverage diagnostic on the EC void-miner hypothesis class; program-reassessment audit",
+  "not_a_refutation_of": "sessionD EC-rich 0-novel result is internally sound; this measures the class it lives in"
+ },
+ "instrument": {
+  "operators": [
+   "identity",
+   "abs",
+   "neg",
+   "sq_mod_100",
+   "log2_floor",
+   "mod_3"
+  ],
+  "relations": [
+   "equal",
+   "equal_mod_2",
+   "divides",
+   "abs_diff_le_3"
+  ],
+  "invariants": [
+   "rank",
+   "conductor",
+   "tamagawa_product",
+   "torsion",
+   "sha_an",
+   "num_bad_primes",
+   "cm",
+   "signD",
+   "conductor_radical"
+  ],
+  "class_size_diagonal": 10368,
+  "all_integer": true,
+  "scalar_relations": true,
+  "pairwise": true,
+  "same_object": true
+ },
+ "coverage": {
+  "n_laws_surveyed": 16,
+  "n_expressible": 4,
+  "n_expressible_in_catalog": 2,
+  "n_found": 2,
+  "n_out_of_class": 12,
+  "expressible_fraction": 0.25,
+  "out_of_class_fraction": 0.75,
+  "ceiling_structure": {
+   "UNARY": 2,
+   "CROSS_OBJECT": 3,
+   "DISTRIBUTIONAL": 2,
+   "ARITY_GE_3": 1,
+   "RELATION_OOV": 3,
+   "REAL_VALUED": 1
+  }
+ },
+ "laws": [
+  {
+   "law": "Lorenzini 2011: |E(Q)_tors| divides prod(c_p)",
+   "status": "IN_CLASS",
+   "blocking_axis": null,
+   "in_class": true,
+   "found": true,
+   "in_catalog": true,
+   "note": "torsion divides tamagawa_product; integer/integer; FOUND by the sweep"
+  },
+  {
+   "law": "Shared prime support: rad(N) | N  and  N == rad(N) (mod 2)",
+   "status": "IN_CLASS",
+   "blocking_axis": null,
+   "in_class": true,
+   "found": true,
+   "in_catalog": true,
+   "note": "conductor_radical vs conductor; definitional; FOUND by the sweep"
+  },
+  {
+   "law": "BSD rank equality: ord_{s=1} L(E,s) == rank",
+   "status": "IN_CLASS",
+   "blocking_axis": null,
+   "in_class": true,
+   "found": false,
+   "in_catalog": false,
+   "note": "analytic_rank == rank: integer==integer, IN class \u2014 but analytic_rank is NOT among the 9 mined invariants. Expressible, never offered to the miner."
+  },
+  {
+   "law": "Parity conjecture: rank == (1 - root_number)/2  (mod 2)",
+   "status": "IN_CLASS",
+   "blocking_axis": null,
+   "in_class": true,
+   "found": false,
+   "in_catalog": false,
+   "note": "rank equal_mod_2 root_number-as-{0,1}: integer/integer, IN class \u2014 but root_number is not a mined invariant. Expressible, never offered."
+  },
+  {
+   "law": "Mazur 1977: |E(Q)_tors| in {1..10, 12}",
+   "status": "UNARY",
+   "blocking_axis": "UNARY",
+   "in_class": false,
+   "found": false,
+   "in_catalog": false,
+   "note": "a bound on ONE invariant; only injectable as a domain theorem (T1b), never a D_JOINT. The miner cannot DISCOVER it, only be TOLD it."
+  },
+  {
+   "law": "|Sha| is a perfect square (Cassels-Tate alternating pairing)",
+   "status": "UNARY",
+   "blocking_axis": "UNARY",
+   "in_class": false,
+   "found": false,
+   "in_catalog": false,
+   "note": "perfect-square is a property of sha_an alone; sessionD flagged this exact gap. Needs a unary-property miner."
+  },
+  {
+   "law": "Modularity: every E/Q arises from a weight-2 newform",
+   "status": "CROSS_OBJECT",
+   "blocking_axis": "CROSS_OBJECT",
+   "in_class": false,
+   "found": false,
+   "in_catalog": false,
+   "note": "a correspondence E <-> f to an object of a different category, not a relation between two integer invariants of E."
+  },
+  {
+   "law": "Sato-Tate: a_p/(2 sqrt p) equidistributes w.r.t. semicircle",
+   "status": "DISTRIBUTIONAL",
+   "blocking_axis": "DISTRIBUTIONAL",
+   "in_class": false,
+   "found": false,
+   "in_catalog": false,
+   "note": "a law about the SEQUENCE (a_p)_p and a real-valued limiting measure."
+  },
+  {
+   "law": "Ogg's formula: f_p = ord_p(Delta) + 1 - m_p  (additive reduction)",
+   "status": "ARITY_GE_3",
+   "blocking_axis": "ARITY_GE_3",
+   "in_class": false,
+   "found": false,
+   "in_catalog": false,
+   "note": "three per-prime quantities (conductor exp, discriminant val, #components); arity 3 and per-prime, doubly out of class."
+  },
+  {
+   "law": "Szpiro / abc: log|Delta| <= (6+eps) log N  asymptotically",
+   "status": "REAL_VALUED",
+   "blocking_axis": "RELATION_OOV",
+   "in_class": false,
+   "found": false,
+   "in_catalog": false,
+   "note": "a ratio/asymptotic inequality on real logs; abs_diff_le_3 is a fixed small additive bound, not a multiplicative one."
+  },
+  {
+   "law": "BSD formula: L^(r)(1)/r! = Omega*Reg*prod(c_p)*|Sha| / |tors|^2",
+   "status": "REAL_VALUED",
+   "blocking_axis": "REAL_VALUED",
+   "in_class": false,
+   "found": false,
+   "in_catalog": false,
+   "note": "regulator, real period, and L-value derivative are real-valued; the lattice is all-integer."
+  },
+  {
+   "law": "Conductor is isogeny-invariant",
+   "status": "CROSS_OBJECT",
+   "blocking_axis": "CROSS_OBJECT",
+   "in_class": false,
+   "found": false,
+   "in_catalog": false,
+   "note": "equality of one invariant across an isogeny ORBIT of distinct curves; the diagonal pairs each curve only with itself."
+  },
+  {
+   "law": "Root number = product of local root numbers over bad primes & infinity",
+   "status": "DISTRIBUTIONAL",
+   "blocking_axis": "DISTRIBUTIONAL",
+   "in_class": false,
+   "found": false,
+   "in_catalog": false,
+   "note": "a product over a per-prime family; not a two-scalar relation."
+  },
+  {
+   "law": "Torsion injects into E(F_p) for primes p of good reduction",
+   "status": "CROSS_OBJECT",
+   "blocking_axis": "CROSS_OBJECT",
+   "in_class": false,
+   "found": false,
+   "in_catalog": false,
+   "note": "relates E(Q)_tors to the reduction E(F_p) \u2014 a different object per p."
+  },
+  {
+   "law": "Kodaira/Tate reduction types per bad prime",
+   "status": "ARITY_GE_3",
+   "blocking_axis": "RELATION_OOV",
+   "in_class": false,
+   "found": false,
+   "in_catalog": false,
+   "note": "categorical per-prime classification; not any scalar relation in RELATIONS."
+  },
+  {
+   "law": "Conductor-discriminant prime-support equality: rad(N) == rad(Delta)",
+   "status": "RELATION_OOV",
+   "blocking_axis": "RELATION_OOV",
+   "in_class": false,
+   "found": false,
+   "in_catalog": false,
+   "note": "set-equality of prime supports; 'equal' on radicals is partially the rad(N)|N shadow, but Delta is not a mined integer invariant and the true law is set-equality, not a scalar relation."
+  }
+ ],
+ "verdict": "B2-DOMINATED: '0 novel' is conditioned on a hypothesis class that excludes 75% of surveyed known EC structure by construction. The instrument found every in-catalog law it COULD express and zero it could not \u2014 so the result measures the shadow, not the terrain. Widening integer invariants cannot raise coverage; only a richer hypothesis class (real-valued invariants, arity>=3, unary-property miner, cross-object pairing, relations beyond the four) can."
+}

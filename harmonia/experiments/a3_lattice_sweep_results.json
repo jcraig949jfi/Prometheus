@@ -13,9 +13,10 @@
   "n_cells": 3456,
   "n_exact_voids": 250,
   "voids_by_class": {
-   "T3_MARGINAL_FACT": 53,
+   "T3_MARGINAL_FACT": 48,
    "T1_PIGEONHOLE": 24,
-   "T2_CONSTANT_SIDE": 173
+   "T1b_THEOREM_PIGEONHOLE": 6,
+   "T2_CONSTANT_SIDE": 172
   },
   "n_near": {
    "0.999": 0,
@@ -236,8 +237,8 @@
   "z_vs_null": 63.415521372883745,
   "interpretation": "tie at 1.0 is PRE-ORDAINED for unique-key claims (identity-copier degeneracy; panel C7 REFUTED) \u2014 the evidence is the ladder pigeonhole < constant-absorber < certificate",
   "generic_catalog_control": {
-   "verdict": "COSTUME_OF:marginal_majority",
-   "note": "A's marginal_majority ties any unique-key claim \u2014 interface hole filed to Proposal A (Harmonia B)"
+   "verdict": "DISTINCT",
+   "note": "B's degeneracy guard (commit cbcf8abb, 2026-06-15) marks marginal_majority's unique-key tie vacuous, so the spurious COSTUME_OF:marginal_majority is gone \u2014 the interface hole D filed to Proposal A is CLOSED"
   }
  },
  "voids": [
@@ -428,7 +429,7 @@
   },
   {
    "cell_id": "mod_3|log2_floor|crossing_number|torsion|abs_diff_le_3",
-   "triviality_class": "T3_MARGINAL_FACT",
+   "triviality_class": "T1b_THEOREM_PIGEONHOLE",
    "certificate": {
     "form": "INTERVAL_WIDTH",
     "K": 3,
@@ -624,7 +625,7 @@
   },
   {
    "cell_id": "mod_3|log2_floor|signature|torsion|abs_diff_le_3",
-   "triviality_class": "T3_MARGINAL_FACT",
+   "triviality_class": "T1b_THEOREM_PIGEONHOLE",
    "certificate": {
     "form": "INTERVAL_WIDTH",
     "K": 3,
@@ -722,7 +723,7 @@
   },
   {
    "cell_id": "mod_3|log2_floor|determinant|torsion|abs_diff_le_3",
-   "triviality_class": "T3_MARGINAL_FACT",
+   "triviality_class": "T1b_THEOREM_PIGEONHOLE",
    "certificate": {
     "form": "INTERVAL_WIDTH",
     "K": 3,
@@ -937,7 +938,7 @@
   },
   {
    "cell_id": "mod_3|log2_floor|three_genus|torsion|abs_diff_le_3",
-   "triviality_class": "T3_MARGINAL_FACT",
+   "triviality_class": "T1b_THEOREM_PIGEONHOLE",
    "certificate": {
     "form": "INTERVAL_WIDTH",
     "K": 3,
@@ -1136,7 +1137,7 @@
   },
   {
    "cell_id": "mod_3|log2_floor|trace_field_class|torsion|abs_diff_le_3",
-   "triviality_class": "T3_MARGINAL_FACT",
+   "triviality_class": "T1b_THEOREM_PIGEONHOLE",
    "certificate": {
     "form": "INTERVAL_WIDTH",
     "K": 3,
@@ -3340,7 +3341,7 @@
   },
   {
    "cell_id": "mod_3|log2_floor|nf_class_number|torsion|abs_diff_le_3",
-   "triviality_class": "T2_CONSTANT_SIDE",
+   "triviality_class": "T1b_THEOREM_PIGEONHOLE",
    "certificate": {
     "form": "INTERVAL_WIDTH",
     "K": 3,
