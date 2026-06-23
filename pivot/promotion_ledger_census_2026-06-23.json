@@ -49,8 +49,8 @@
       "gate": "training_weight >= 0.6, top-20/batch, role-excluded (the 'lifetime discovery' rule)",
       "volume": "the cited ~2,351 lifetime",
       "verdict_split": "n/a (emit carries record_id/batch_id/training_weight only)",
-      "replay_class": "ON_DEAD_HOST + PROVENANCE_GAP",
-      "note": "Emitted as transient Redis events carrying pointers, not payload. Replayable only by recomputing training_weight over the full 362GB corpus. The one existing attempt (Techne M0.5 stride-13, 21/265 batches) returned total_promoted=0 -- a COVERAGE artifact (stored tw is 100% None), NOT exoneration. Possible bug: M0.5 may read stored tw rather than recompute; flagged for Techne."
+      "replay_class": "PROVENANCE_GAP + FORMULA_FOSSIL (updated 2026-06-23)",
+      "note": "Emitted as transient agora:discoveries events carrying pointers, not payload. Techne M0.5 (E3): recomputing training_weight under the CURRENT formula yields max 0.33 across all populations examined (incl. 123K bridge_extension), ZERO clear the 0.6 gate. The '2,351' was minted under a pre-Fire-#141 formula and is NOT replay-stable -- a fossil of a superseded gate, formula-version-dependent. Stamp promote decision + formula_version on the durable record so future M0.5 is a lookup, not a re-derivation."
     },
     {
       "id": "ergon.obstruction_promotion_ledger",
@@ -80,8 +80,8 @@
       "gate": "RL episode store; cited 0 PROMOTE across ~350K episodes",
       "volume": "~350K episodes",
       "verdict_split": "unknown (unreachable)",
-      "replay_class": "ON_DEAD_HOST",
-      "note": "Blocked on the same dark .176 host the audit flags. Not auditable until CC-3 shim or host revival."
+      "replay_class": "STALE_ADDRESS (corrected 2026-06-23)",
+      "note": "CORRECTION (Ergon DB diagnosis + Techne confirm, E3): .176 is a STALE ADDRESS, not a dead host. Local PostgreSQL 17 is healthy (lmfdb 363GB, prometheus_fire, prometheus_sci). Fix is a one-line repoint, NOT a DuckDB shim (retires CC-3 as written). But prometheus_fire has NO sigma schema, so there is no large Postgres promotion store either; the kernel PROMOTE path is near-empty in both backends."
     },
     {
       "id": "cartography.discovery_candidates",
