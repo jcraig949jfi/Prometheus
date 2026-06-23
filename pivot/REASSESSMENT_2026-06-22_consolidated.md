@@ -85,7 +85,9 @@ reward-pathology). Few of the diagnoses require new terrain.
 **Major course corrections (Part IV expands):**
 - **CC-1.** Make the falsification gate *enforce* (re-run the battery) — close the
   trust-the-caller hole. *Restores the thesis at its center.*
-- **CC-2.** Un-dark the data spine with a local-DuckDB fallback shim. *~50 LOC.*
+- **CC-2.** Un-dark the data spine by **fixing the Postgres host** (root cause; a
+  program-lead agent is diagnosing). *Not* a DuckDB fallback — that reintroduces the
+  dual-store drift the program already deprecated. See CC-3 (corrected 2026-06-23).
 - **CC-3.** Break the objective monoculture: fund the dormant orthogonal niches;
   measure niche diversity and manage it.
 - **CC-4.** Diversify hypothesis classes and turn on richer search operators in
@@ -574,12 +576,22 @@ Hephaestus engines shipped; the wiring + the consumption-metric are the build.
 **Acceptance test:** one loop where removing the substrate input measurably drops the
 consumer's capability (ablation-positive). **Cost:** medium; the program's central bet.
 
-### CC-3 — Un-dark the data spine (cheapest win in the audit)
+### CC-3 — Un-dark the data spine by FIXING THE POSTGRES HOST (not a fallback)
 **Turns green:** un-freezes ~half the components (enables everything else).
-**What:** ~50-LOC fallback shim in `prometheus_data\config.py`: when `.176` times out,
-read the on-disk `charon\data\charon.duckdb` (1.2 GB) + `noesis\v2\noesis_v2.duckdb`.
-Reverses the 2026-04-16 single-point-of-failure migration. **Build-state:** new, tiny.
-**Acceptance test:** Ergon/Koios/Arachne/Mnemosyne sweeps run offline. **Cost:** ~1hr.
+**[CORRECTION 2026-06-23, per program lead]** The original recommendation here was a
+local-DuckDB fallback shim. **Retracted as the primary fix.** Reintroducing a parallel
+local store recreates exactly the **dual-store / parallel-implementation drift the
+program already deprecated** (the Hermes-deprecation lesson: "parallel-implementation
+drift was the problem the first time"). The 2026-04-16 consolidation onto Postgres was
+the *correct* single-source-of-truth call; the wound is the **host being down**, not
+the consolidation.
+**What:** Diagnose and **restore the Postgres host** (`192.168.1.176:5432`) — a
+program-lead agent is already investigating the root cause. Keep single-source-of-truth.
+**DuckDB fallback is a last resort ONLY** if the host is proven unrecoverable, and even
+then it must be time-boxed and flagged as drift-debt to be removed on host return.
+**Build-state:** root-cause diagnosis in progress (not Harmonia's component).
+**Acceptance test:** `.176:5432` reachable; Ergon/Koios/Arachne/Mnemosyne sweeps run
+against the canonical store. **Cost:** unknown until the root cause is found.
 
 ### CC-4 — Close the open loops; retire machinery (enforcement discipline)
 **Turns green:** the org's own unclosed corrections (§7).
@@ -626,7 +638,8 @@ bridge survives an operator-shuffle null AND predicts a transfer (T2.1 p<.05).
 **Cost:** medium.
 
 ### Sequencing
-CC-3 (un-dark, ~1hr) and CC-4 (curation) are free and unblock the rest — **do first.**
+CC-3 (restore the Postgres host — root cause, agent in progress) and CC-4 (curation,
+free) unblock the rest — **do first.**
 CC-1 (enforce gate) + CC-0 (run the manifold experiment) are the **diagnostic core** —
 they tell you whether the thesis is alive. CC-2 (one organism) is the **central bet**.
 CC-5 is a cheap capability win. CC-6/CC-7 are the **high-ceiling builds** once the
@@ -706,7 +719,9 @@ All local, all credit-free, each with a stated prediction.
 1. **Re-execute-battery audit** (tests CC-1 / lens 3 core). Re-run the kill-
    battery for every PROMOTED symbol from recorded features, ignoring stored
    verdicts. Predict `promotion_count >> re-verifiable_count`. Local SQLite.
-2. **DuckDB fallback shim** (CC-2 / lens 5). ~50 LOC; un-darks 4 components.
+2. **Restore the Postgres host** (CC-3 / lens 5; root cause, agent diagnosing). Fix the
+   canonical store — *not* a DuckDB fallback (corrected 2026-06-23: that reintroduces
+   deprecated dual-store drift). Un-darks 4 components when `.176:5432` returns.
 3. **Apollo `crossover_frac` 0.0→0.3** (lens 2, 5b). One flag; predict plateau
    lifts.
 4. **Widen EC along a new axis** (5a). One real-valued or cross-object invariant;

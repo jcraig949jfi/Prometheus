@@ -177,7 +177,8 @@ last_successful_run, last_meaningful_output, minimum_viable_dataset
 ```
 **`silent_failure_risk` is the critical field** — a component that loudly crashes is
 safer than one that quietly returns no seeds and looks "idle" (Arachne-LMFDB
-`available()→False`, E1/E2). Order the DuckDB-shim (CC-3) by this column.
+`available()→False`, E1/E2). The host-restore (CC-3) is prioritized by this column —
+silent-failure components are the ones quietly returning no data while looking "idle."
 
 ### 3c. Null-battery coverage audit (are the nulls themselves diverse?)
 Per component:
@@ -270,7 +271,9 @@ become "one worldview."
 ## 7. Execution sequence (reordered per ChatGPT — stop bleeding, then decide, then build)
 
 **Phase 0 — Stop the bleeding (cheap, unblocks everything).**
-1. DuckDB/offline fallback shim (CC-3). 2. Quarantine unverifiable promotion paths.
+1. **Restore the Postgres host** (CC-3, corrected 2026-06-23 — root-cause fix, agent
+diagnosing; NOT a DuckDB fallback, which reintroduces deprecated dual-store drift).
+2. Quarantine unverifiable promotion paths.
 3. Run **M0.5** promotion replay audit. 4. Fill the Q2 retrospective; run the
 retirement court; archive/merge per the audit list.
 
@@ -310,7 +313,7 @@ consumer, every component earns its keep by changing behavior downstream.*
 | C2 | Battery may be unable to certify out-of-manifold truth | E0 (thesis_v2 self-flag) | untested | M0 anti-calibration test |
 | C3 | Theseus 2,351 promotions on shape-only gate | E0 | untested | M0.5 |
 | C4 | EC miner hypothesis class covers ~25% of known EC laws | E3 mechanics / E1 judgment | reproduced (illustrative) | generalize coverage diagnostic |
-| C5 | `.176` host unreachable; data spine dark | E3 (host) / E0-E1 (DuckDB) | reproduced (host) | CC-3 shim |
+| C5 | `.176` host unreachable; data spine dark | E3 (host) | reproduced (host) | CC-3: restore Postgres host (root cause, agent diagnosing); NOT DuckDB fallback |
 | C6 | Apollo crossover coded but off by default | E0/E1 (subagent) | untested by me | open `blackboard_evolve.py`; flip + measure |
 | C7 | Vision forked A/B/C; README re-inflated B | E0 (quotes captured) | reproduced | M0 → arbitrate |
 | C8 | Six lenses are single-family (correlated priors) | E1 (self-evident) | reproduced | require 2nd family on M0 |
