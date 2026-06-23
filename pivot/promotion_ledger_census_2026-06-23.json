@@ -1,0 +1,118 @@
+{
+  "artifact": "polycentric_promotion_ledger_census",
+  "author": "Charon (Claude Opus 4.8, Anthropic)",
+  "date": "2026-06-23",
+  "evidence_level": "E3 (queried live stores this session) / E4 where a replay tool ran",
+  "purpose": "Scoped M0.5 done correctly: enumerate EVERY live promotion sink and report replay-coverage, not replay the near-empty kernel and misread 'clean'. Composes with pivot/REASSESSMENT_2026-06-22_v2_enforcement.md (M0.5) and theseus/scripts/promotion_replay_audit.py (Techne, built concurrently).",
+  "headline": "The promotion volume the reassessment cites is NOT in one central gate. It is scattered across >=6 sinks. Replay-eligible-from-stored-features TODAY: ~813 rows (Ergon obstruction ledger) out of every promotion artifact in the program. The flagship 'Theseus 2,351 discoveries' is on the dead .176 Redis stream as pointer-only events; sigma_kernel.PROMOTE (the gate CC-1 targets) holds 0-5 symbols. The taint question is currently a COVERAGE question, not a CLEANLINESS question.",
+  "replay_eligibility_classes": {
+    "REPLAYABLE": "stored features sufficient to re-run a content/battery check today",
+    "PROVENANCE_GAP": "exists on disk but stores pointers/hashes/free-text, not the inputs a battery needs",
+    "ON_DEAD_HOST": "lives (only) on 192.168.1.176 Redis/Postgres, unreachable 4+ sessions",
+    "EMPTY": "the mechanism exists but has ~0 production volume",
+    "NOT_A_PROMOTION_SINK": "is a rejection/shadow/log lake, contains no promotions"
+  },
+  "sinks": [
+    {
+      "id": "sigma_kernel.PROMOTE",
+      "store": "data/clio/sigma_claims.db (0 symbols), sigma_kernel/demo_substrate.db (5 toy symbols)",
+      "gate": "cap-unconsumed + verdict!=BLOCK + name-unique; NEVER re-runs battery (sigma_kernel.py:822)",
+      "volume": "0-5 symbols",
+      "verdict_split": "n/a (empty)",
+      "replay_class": "EMPTY",
+      "note": "This is the gate the chain names as the central monoculture core and CC-1 targets. In production it has promoted ~nothing. Fixing it hardens an empty gate."
+    },
+    {
+      "id": "theseus.raw_corpus",
+      "store": "theseus/corpus/ (265 batches, ~362 GB gz)",
+      "gate": "generator verdict (REJECTED/SHADOW_CATALOG/INCONCLUSIVE)",
+      "volume": "~384M records est. (sampled 5,810,257 over 4 batches)",
+      "verdict_split": {"REJECTED": "68.1%", "SHADOW_CATALOG": "31.9%", "INCONCLUSIVE": 3, "PROMOTED": 0},
+      "sigma_link_rate": "0 of 5.81M records carry sigma_symbol_ref or sigma_claim_id",
+      "training_weight_stored": "None for 100.0% of records (computed downstream at emit, never stored)",
+      "replay_class": "NOT_A_PROMOTION_SINK",
+      "note": "The '658M /dev/null corpus' contains ZERO promotions and ZERO kernel links. claim_payload is stored (content-checkable) but there is nothing promoted to check."
+    },
+    {
+      "id": "theseus.signature_index",
+      "store": "theseus/orchestration/signature_index.sqlite (1.3 MB)",
+      "gate": "dedup-level verdict_class aggregate",
+      "volume": "3311 signatures",
+      "verdict_split": {"KILL": 1268, "CONFIRM": 1263, "UNVERIFIED": 527, "INCONCLUSIVE": 253},
+      "claim_kind_top": {"invariant_equality": 1087, "mutation": 803, "literature_mined": 506},
+      "replay_class": "PROVENANCE_GAP",
+      "note": "Stores signature hash + batch pointers + counts; NO features. Not replayable from this table. 24% (780/3311) already classed UNVERIFIED/INCONCLUSIVE -> taint is GRADED, not uniform. invariant_equality=33% corroborates the instrument-monoculture ceiling at field level."
+    },
+    {
+      "id": "theseus.F1_discoveries",
+      "store": "agora:discoveries (Redis stream on 192.168.1.176) via telemetry.py:maybe_emit_discoveries",
+      "gate": "training_weight >= 0.6, top-20/batch, role-excluded (the 'lifetime discovery' rule)",
+      "volume": "the cited ~2,351 lifetime",
+      "verdict_split": "n/a (emit carries record_id/batch_id/training_weight only)",
+      "replay_class": "ON_DEAD_HOST + PROVENANCE_GAP",
+      "note": "Emitted as transient Redis events carrying pointers, not payload. Replayable only by recomputing training_weight over the full 362GB corpus. The one existing attempt (Techne M0.5 stride-13, 21/265 batches) returned total_promoted=0 -- a COVERAGE artifact (stored tw is 100% None), NOT exoneration. Possible bug: M0.5 may read stored tw rather than recompute; flagged for Techne."
+    },
+    {
+      "id": "ergon.obstruction_promotion_ledger",
+      "store": "ergon/learner/trials/ledgers/trial_3_iter15_promotion_ledger.jsonl",
+      "gate": "obstruction match (is_obstruction_exact / discriminator) -> kernel_binding_name",
+      "volume": "813 rows (all promotions)",
+      "verdict_split": "n/a (promotion ledger; every row is a promotion)",
+      "replay_class": "REPLAYABLE",
+      "replay_result_E4": {
+        "executed": "2026-06-23 this session",
+        "is_obstruction_exact": "0 of 813 (0.0%)",
+        "is_obstruction_discriminator": "20 (2.5%)",
+        "is_secondary_exact": 5,
+        "is_secondary_discriminator": 5,
+        "none_of_four_flags": "788 (96.9%)",
+        "lift": "median 4.083, range 1.5-28.4 (n=813)",
+        "operator_class": {"structural": 668, "symbolic": 91, "uniform": 25, "anti_prior": 17, "structured_null": 12},
+        "distinct_genomes": 450,
+        "flags_are_populated": "yes (20+5+5 True) -> 0-exact is a real measurement, not a coverage gap",
+        "finding": "The ONLY replay-eligible promotion sink promoted 813 rows of which ZERO are exact obstructions and 96.9% carry no obstruction/discriminator flag. They were gated on lift+match_size (statistical enrichment, median 4x), NOT on predicate-exactness. Shape-vs-content made concrete: enrichment-gated, not obstruction-verified. Next: does lift survive an operator-shuffle null?"
+      },
+      "note": "Stores operator_class, predicate, match_size, is_obstruction_exact/secondary, lift, genome_content_hash. THE ONLY genuinely replay-eligible promotion sink found."
+    },
+    {
+      "id": "ergon.episodes",
+      "store": "Postgres on 192.168.1.176 (psycopg2)",
+      "gate": "RL episode store; cited 0 PROMOTE across ~350K episodes",
+      "volume": "~350K episodes",
+      "verdict_split": "unknown (unreachable)",
+      "replay_class": "ON_DEAD_HOST",
+      "note": "Blocked on the same dark .176 host the audit flags. Not auditable until CC-3 shim or host revival."
+    },
+    {
+      "id": "cartography.discovery_candidates",
+      "store": "cartography/convergence/data/discovery_candidates.jsonl",
+      "gate": "free-text LLM classification (ARTIFACT/OPEN/PROMISING/...)",
+      "volume": "25435 rows",
+      "verdict_split": "free-text, no structured field",
+      "replay_class": "PROVENANCE_GAP",
+      "note": "A narrated discovery LOG (classification/hypothesis/test_result/timestamp). No stored values; test_result is prose. Not replayable. This is exploration exhaust, not a structured promotion sink."
+    },
+    {
+      "id": "ignis.discovery_log",
+      "store": "ignis/src/results/**/discovery_log.jsonl",
+      "gate": "steering-vector discovery log",
+      "volume": "~97 rows/run",
+      "verdict_split": "n/a",
+      "replay_class": "PROVENANCE_GAP",
+      "note": "Small; reasoning-side, separate landscape."
+    }
+  ],
+  "coverage_summary": {
+    "central_gate_CC1_targets": "sigma_kernel.PROMOTE = EMPTY (0-5 symbols)",
+    "replay_eligible_today_from_stored_features": "ergon.obstruction_promotion_ledger (813 rows) ONLY",
+    "flagship_2351": "ON_DEAD_HOST Redis, pointer-only; existing replay returned 0 by coverage gap",
+    "dead_host_blocked": ["theseus.F1_discoveries", "ergon.episodes"],
+    "verdict": "M0.5 is a PROVENANCE-COVERAGE problem, not a content-cleanliness problem. Almost no promotion artifact in the program is replay-eligible from stored inputs today; the bulk is pointer-only, on the dead host, or in a near-empty kernel. CC-1 (enforce sigma_kernel.PROMOTE) fixes a gate ~nothing flows through."
+  },
+  "corrections_to_chain": [
+    "v1/stall-map: 'central gate sigma_kernel.PROMOTE that multiple subsystems route through' -> the kernel is empty (0-5 symbols); promotion is polycentric across >=6 sinks.",
+    "v1: 'M0.5 / deferred replay never built' -> Techne BUILT theseus/scripts/promotion_replay_audit.py this session (E4). Chain is stale on this point.",
+    "v1 lens-3: 'Theseus promotes everything shape-only' -> GRADED: signature_index already classes 24% non-confirmed; the raw corpus is 100% REJECTED/SHADOW with 0 promoted.",
+    "CC-1 leverage 'closes the monoculture at the root' -> overstated; root requires per-ledger enforcement, and the dead-host sinks need CC-3 first to even be auditable."
+  ]
+}
