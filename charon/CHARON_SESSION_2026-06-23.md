@@ -57,8 +57,26 @@ So `sigma_kernel.PROMOTE` — the gate the audit names as the structural monocul
 that "multiple subsystems route through" — has in production promoted **~0–5 symbols
 total.** The large counts the chain leans on (Theseus 2,351 promotions; ~350K episodes
 0-PROMOTE; 658M records) do **not** flow through `sigma_kernel.PROMOTE`. They live in
-agent-specific ledgers (Theseus `training_weight ≥ 0.6`, Ergon episode stores) — each a
-*separate* promotion mechanism with its *own* weak gate.
+agent-specific ledgers — each a *separate* promotion mechanism with its *own* weak gate.
+
+**Direct E3 confirmation — the Theseus ledger is found and it is NOT the kernel.**
+`theseus/orchestration/signature_index.sqlite` (1.3 MB, **3,311 rows**) carries its own
+verdict vocabulary, entirely outside sigma_kernel:
+- `verdict_class`: KILL 1268 · CONFIRM 1263 · UNVERIFIED 527 · INCONCLUSIVE 253
+- `claim_kind`: invariant_equality 1087 · mutation 803 · literature_mined 506 · …
+
+Two sub-findings fall out:
+1. **The taint surface is the per-agent ledger, quantified.** ~1,263 CONFIRM + 527
+   UNVERIFIED is where the "2,351" lives — none of it touched the kernel PROMOTE path.
+2. **Theseus's own ledger already records uncertainty** (780/3,311 = 24% are
+   UNVERIFIED/INCONCLUSIVE, not blindly CONFIRM). So "promotes everything shape-only"
+   needs the field-level qualifier: it records a CONFIRM class for ~38% on a weak gate,
+   while honestly classing 24% as non-confirmed. The taint is real but it is *graded*,
+   not uniform — audit it at the verdict_class field, not as one number.
+3. **The instrument-monoculture thesis is corroborated HERE, at the field level**:
+   `invariant_equality` is 33% of all claim_kinds — matching the prior
+   `invariant_equality-only monoculture` root-cause note. The ceiling finding is right;
+   it just lives in Theseus's ledger, not the kernel gate the chain points CC-1 at.
 
 Consequence: fixing `sigma_kernel.PROMOTE` (CC-1) hardens a gate almost nothing flows
 through. The monoculture *principle* ("promote what passes a weak gate") is real and
