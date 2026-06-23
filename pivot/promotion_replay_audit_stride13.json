@@ -1,0 +1,40 @@
+{
+  "audit": "M0.5_promotion_replay",
+  "scope": "theseus_emit_corpus",
+  "promote_rule": {
+    "filter": "training_weight >= 0.60, top-20 per batch, role-included",
+    "source": "theseus/orchestration/telemetry.py:maybe_emit_discoveries"
+  },
+  "replay_check": {
+    "primitive": "content_aware_promote (F2) + _evaluate_relation raw-value",
+    "f2_threshold": 0.1,
+    "n_null_samples": 200,
+    "direct_predicate_only": true,
+    "v3c_note": "meta-relational g4/g5/a3 verdicts classified not_direct (raw-value null is a category error for them)"
+  },
+  "corpus_dir": "F:\\Prometheus\\theseus\\corpus",
+  "batches_total": 265,
+  "stride": 13,
+  "batches_audited": 21,
+  "tally": {
+    "total_promoted": 0,
+    "replayable_promoted": 0,
+    "replay_failed": 0,
+    "missing_features": 0,
+    "not_direct": 0,
+    "self_tautology": 0,
+    "content_mismatch": 0,
+    "content_weak": 0,
+    "still_valid": 0,
+    "content_checkable": 0,
+    "fraction_still_valid_of_checkable": null,
+    "fraction_invalidated_or_weak_of_checkable": null
+  },
+  "by_claim_kind": {},
+  "examples": {
+    "content_mismatch": [],
+    "content_weak": []
+  },
+  "generated_by": "theseus/scripts/promotion_replay_audit.py",
+  "wall_seconds": 414.3
+}
