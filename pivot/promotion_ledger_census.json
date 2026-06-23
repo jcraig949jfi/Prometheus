@@ -1,0 +1,126 @@
+{
+  "audit": "M0.5_ledger_census",
+  "scope": "theseus_signature_index",
+  "signature_index": "F:\\Prometheus\\theseus\\orchestration\\signature_index.sqlite",
+  "ledger_columns": [
+    "signature",
+    "generator_id",
+    "verdict_class",
+    "claim_kind",
+    "first_seen_at",
+    "last_seen_at",
+    "seen_count",
+    "first_batch_id",
+    "last_batch_id"
+  ],
+  "content_replayable_from_ledger": false,
+  "content_replayable_reason": "shape-keyed: signature encodes generator:relation:invariant-pair:verdict; no raw value/relation columns; verdict baked into the dedup key. Content-replay requires a join to the corpus by signature.",
+  "total_shape_classes": 3311,
+  "total_raw_records_indexed": 413110932,
+  "by_verdict_class": {
+    "KILL": {
+      "shape_classes": 1268,
+      "raw_records": 241013311
+    },
+    "CONFIRM": {
+      "shape_classes": 1263,
+      "raw_records": 136064118
+    },
+    "INCONCLUSIVE": {
+      "shape_classes": 253,
+      "raw_records": 35911392
+    },
+    "UNVERIFIED": {
+      "shape_classes": 527,
+      "raw_records": 122111
+    }
+  },
+  "by_claim_kind": {
+    "invariant_equality": 1087,
+    "mutation": 803,
+    "literature_mined": 506,
+    "symmetry_transform": 283,
+    "kill_neighborhood": 204,
+    "functional_identity": 192,
+    "ratio_invariance": 65,
+    "statistical_correlation": 46,
+    "distribution_match": 41,
+    "operator_rotation": 17,
+    "composition_test": 12,
+    "analogical_transfer": 3,
+    "bridge_extension": 3,
+    "closure_under_operation": 3,
+    "confidence_calibration": 3,
+    "conservation_law": 3,
+    "corpus_compression": 3,
+    "counterfactual_invariance": 3,
+    "minimal_counterexample": 3,
+    "modular_varying_p": 3,
+    "modus_ponens_chain": 3,
+    "obstruction": 3,
+    "order_dependence": 3,
+    "partial_information": 3,
+    "subset_relation": 3,
+    "triangle_inequality": 3,
+    "false_dichotomy": 2,
+    "multi_hop_deduction": 2,
+    "quantifier_swap": 2,
+    "conjecture_neighborhood": 1,
+    "formalization_skeleton": 1,
+    "typed_bridge": 1,
+    "verifier_disagreement": 1
+  },
+  "top_confirm_classes_by_volume": [
+    {
+      "signature": "h4:bridge_extension:CONFIRM",
+      "generator_id": "h4",
+      "seen_count": 9193627
+    },
+    {
+      "signature": "c3:mutation:CONFIRM",
+      "generator_id": "c3",
+      "seen_count": 6059253
+    },
+    {
+      "signature": "d2:kill_neighborhood:CONFIRM",
+      "generator_id": "d2",
+      "seen_count": 3681548
+    },
+    {
+      "signature": "d4:kill_neighborhood:CONFIRM",
+      "generator_id": "d4",
+      "seen_count": 2112860
+    },
+    {
+      "signature": "h1:kill_neighborhood:CONFIRM",
+      "generator_id": "h1",
+      "seen_count": 1371635
+    },
+    {
+      "signature": "c4:mutation:CONFIRM",
+      "generator_id": "c4",
+      "seen_count": 926560
+    },
+    {
+      "signature": "c1:mutation:CONFIRM",
+      "generator_id": "c1",
+      "seen_count": 652393
+    },
+    {
+      "signature": "c4:abs_diff_le_wide:ec.torsion|knot.three_genus:CONFIRM",
+      "generator_id": "c4",
+      "seen_count": 543032
+    },
+    {
+      "signature": "c4:abs_diff_le_wide:ec.rank|knot.three_genus:CONFIRM",
+      "generator_id": "c4",
+      "seen_count": 413029
+    },
+    {
+      "signature": "a3:abs_diff_le_tight:ec.rank|knot.three_genus:CONFIRM",
+      "generator_id": "a3",
+      "seen_count": 409056
+    }
+  ],
+  "generated_by": "theseus/scripts/promotion_replay_audit.py --ledger"
+}

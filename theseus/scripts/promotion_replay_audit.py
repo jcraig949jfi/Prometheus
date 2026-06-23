@@ -411,8 +411,69 @@ def run_audit(
     }
 
 
+DEFAULT_SIGNATURE_INDEX = _REPO / "theseus" / "orchestration" / "signature_index.sqlite"
+
+
+def run_ledger_census(signature_index: Path) -> dict:
+    """Charon's scoped M0.5: census the Theseus signature_index ledger — the
+    actual per-agent promotion/verdict surface — rather than the near-empty
+    sigma_kernel DB (Charon C-2026-06-23-A/B, charon/CHARON_SESSION_2026-06-23.md).
+
+    Finding this surfaces (verified E3): the ledger is SHAPE-KEYED with the
+    verdict baked into the dedup key (e.g. `c1:equal_mod_2:ec.rank|knot.three_genus:CONFIRM`).
+    Each of the ~3,311 rows is a shape×verdict class collapsing up to millions of
+    raw records (seen_count). It carries NO raw values/relation columns, so it is
+    NOT content-replayable on its own — replay requires a join back to the corpus
+    by signature. That is Charon's predicted provenance gap, quantified."""
+    import sqlite3
+    conn = sqlite3.connect(str(signature_index))
+    cols = [r[1] for r in conn.execute("PRAGMA table_info(signatures)")]
+    by_verdict = {}
+    for vc, classes, seen in conn.execute(
+        "SELECT verdict_class, COUNT(*), SUM(seen_count) FROM signatures "
+        "GROUP BY verdict_class ORDER BY SUM(seen_count) DESC"
+    ):
+        by_verdict[vc] = {"shape_classes": classes, "raw_records": int(seen)}
+    by_kind = dict(conn.execute(
+        "SELECT claim_kind, COUNT(*) FROM signatures GROUP BY claim_kind "
+        "ORDER BY 2 DESC"
+    ).fetchall())
+    top_confirm = [
+        {"signature": s, "generator_id": g, "seen_count": int(sc)}
+        for s, g, sc in conn.execute(
+            "SELECT signature, generator_id, seen_count FROM signatures "
+            "WHERE verdict_class='CONFIRM' ORDER BY seen_count DESC LIMIT 10"
+        )
+    ]
+    total_classes = conn.execute("SELECT COUNT(*) FROM signatures").fetchone()[0]
+    total_raw = conn.execute("SELECT SUM(seen_count) FROM signatures").fetchone()[0]
+    conn.close()
+    return {
+        "audit": "M0.5_ledger_census",
+        "scope": "theseus_signature_index",
+        "signature_index": str(signature_index),
+        "ledger_columns": cols,
+        "content_replayable_from_ledger": False,
+        "content_replayable_reason": (
+            "shape-keyed: signature encodes generator:relation:invariant-pair:verdict; "
+            "no raw value/relation columns; verdict baked into the dedup key. "
+            "Content-replay requires a join to the corpus by signature."
+        ),
+        "total_shape_classes": total_classes,
+        "total_raw_records_indexed": int(total_raw),
+        "by_verdict_class": by_verdict,
+        "by_claim_kind": by_kind,
+        "top_confirm_classes_by_volume": top_confirm,
+        "generated_by": "theseus/scripts/promotion_replay_audit.py --ledger",
+    }
+
+
 def main(argv: Optional[List[str]] = None) -> int:
-    ap = argparse.ArgumentParser(description="M0.5 promotion replay audit (Theseus corpus)")
+    ap = argparse.ArgumentParser(description="M0.5 promotion replay audit (Theseus corpus + ledger)")
+    ap.add_argument("--ledger", action="store_true",
+                    help="census the signature_index ledger (Charon scoped M0.5) "
+                         "instead of the corpus replay")
+    ap.add_argument("--signature-index", type=Path, default=DEFAULT_SIGNATURE_INDEX)
     ap.add_argument("--corpus-dir", type=Path, default=DEFAULT_CORPUS_DIR)
     ap.add_argument("--limit-batches", type=int, default=None,
                     help="audit only the first N batches (smoke mode)")
@@ -422,6 +483,19 @@ def main(argv: Optional[List[str]] = None) -> int:
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--out", type=Path, required=True)
     args = ap.parse_args(argv)
+
+    if args.ledger:
+        result = run_ledger_census(args.signature_index)
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        args.out.write_text(json.dumps(result, indent=2, default=str), encoding="utf-8")
+        print("\n=== M0.5 ledger census (Theseus signature_index) ===")
+        print(f"shape classes       : {result['total_shape_classes']:,}")
+        print(f"raw records indexed : {result['total_raw_records_indexed']:,}")
+        print(f"content-replayable from ledger alone: {result['content_replayable_from_ledger']}")
+        for vc, d in result["by_verdict_class"].items():
+            print(f"  {vc:<12}: {d['shape_classes']:>5} classes  {d['raw_records']:>14,} raw records")
+        print(f"wrote {args.out}")
+        return 0
 
     t0 = time.time()
     result = run_audit(

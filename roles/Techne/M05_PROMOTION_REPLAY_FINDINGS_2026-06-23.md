@@ -4,10 +4,15 @@
 **Responds to:** Harmonia A reassessment chain
 (`pivot/REASSESSMENT_2026-06-22_{consolidated,v2_enforcement,v3_the_reframing}.md`)
 and the program-stall map (`roles/Harmonia/AUDIT_20260622_program_stall_map_of_disagreement.md`).
-**Deliverable:** `theseus/scripts/promotion_replay_audit.py` + this report.
-**Scope claimed:** Theseus emit corpus only (the largest, most-cited promotion
-store — the "2,351"). The kernel/`discovery_promotion` path is verified at code
-level here but its historical promotions are demo-scale locally (see §1).
+**Deliverable:** `theseus/scripts/promotion_replay_audit.py` (corpus replay +
+`--ledger` census) + tests + this report + `pivot/promotion_ledger_census.json`.
+**Incorporates (cross-agent, 2026-06-23):** Charon's signature_index ledger finding
+(`charon/CHARON_SESSION_2026-06-23.md`) and Ergon's Postgres correction
+(`roles/Ergon/DB_DIAGNOSIS_2026-06-23.md`) — see §4b.
+**Scope claimed:** Theseus promotion surfaces (emit corpus + signature_index
+ledger — the largest, most-cited store, the "2,351"). The kernel/
+`discovery_promotion` path is verified at code level here but its historical
+promotions are demo-scale in both SQLite and Postgres (see §1).
 
 ---
 
@@ -52,14 +57,20 @@ the F1-promoted population and tally what survives.
 
 ## 2. Two provenance gaps the replay surfaces (E3/E4)
 
-**(a) The kernel ledger is demo-scale locally; the real store is the corpus.**
+**(a) The kernel ledger is demo-scale everywhere — including Postgres.**
 The persistent SQLite kernel DBs on this host (`data/clio/sigma_claims.db`,
 `sigma_kernel/demo_substrate.db`) hold 0–5 symbols. The kernel's default
-`db_path` is `:memory:`. The substantive promotions live in the 346 GB Theseus
-emit corpus (265 batches, all from the May 18–25 2026 generation run), not in a
-queryable kernel ledger. **M0.5-for-the-kernel is mostly vacuous on this host** —
-there is almost nothing durable to replay; the dark Postgres (`.176`) may hold
-more but is unreachable.
+`db_path` is `:memory:`. **Correction (Ergon DB diagnosis, 2026-06-23, confirmed
+by me at E3):** an earlier draft of this report called the Postgres spine "dark /
+unreachable (`.176`)." That was wrong — `.176` is a *stale address*; local
+PostgreSQL 17 is healthy and serving `lmfdb` (363 GB), `prometheus_fire`,
+`prometheus_sci`. But I checked the kernel's claimed Postgres backend directly:
+`prometheus_fire` has **no `sigma` schema** (schemas are agora/analysis/kill/meta/
+noesis/public/results/signals/tensor/xref/zeros; the only promotion-named table is
+`agora.clio_claim_extractions`). So the kernel PROMOTE path is near-empty in *both*
+backends. **M0.5-for-the-kernel is genuinely vacuous** — almost nothing durable to
+replay (and replaying it would misread as "all clean," per Charon C-2026-06-23-B).
+The substantive promotion volume lives in Theseus's per-agent ledger + the corpus.
 
 **(b) The promotion decision was never stamped onto the durable record.**
 F1 promotion happened in the ephemeral agora `discoveries` stream
@@ -91,12 +102,11 @@ under the current battery" (v2 §4.1). The smoke result is stark:
 
 **Interpretation (calibrated, hostile to itself):** the promote formula has been
 retuned since the corpus was generated (Fire #141 info-content multipliers, Fire
-#33 verdict re-weighting). The initial reading was "sparse and concentrated in
-triangulated high-base records"; the cross-timeline sweep (§4) sharpens it to the
-stronger result — the surviving population is **zero**, because the one kind that
-could clear the retuned bar (`bridge_extension`) is absent from the corpus. The
-"2,351" count is **formula-version-dependent and not replay-stable** — the precise
-verdict M0.5 exists to produce.
+#33 verdict re-weighting). The surviving population under the current formula is
+**zero on every population examined** — including the full high-base
+`bridge_extension` population (§4). The "2,351" count is
+**formula-version-dependent and not replay-stable** — the precise verdict M0.5
+exists to produce.
 
 ## 4. The promotion population collapses to zero under the current formula (E3)
 
@@ -109,34 +119,79 @@ line cap, the entire May 18–25 timeline, 414 s, memory bounded at ~33 MB
   content-check stage.
 - A separate weight-distribution scan of ~795 K records over the same batches:
   **global maximum `training_weight` = 0.312.** Zero records clear 0.6.
-- The argmax (0.312) is a triangulated `kill_neighborhood` / REJECTED record —
-  exactly `base 0.40 × verdict_mult 0.6 (generic kill) × triangulation 1.3`.
-- **Zero `bridge_extension` records** found in the sample.
+- **Verification on the actual high-base population** (the kind that could
+  theoretically clear 0.6): batch `b0c1f4`, **123,052 `bridge_extension` records →
+  max weight 0.330, zero ≥ 0.6, zero with `step_trace`.**
 
-**This is robust on formula-ceiling grounds, independent of sampling.**
-`weight = base × verdict_mult × triangulation_bonus`, clamped. For corpus
-verdicts (SHADOW/REJECTED, `verdict_mult ≤ 1.0`):
+**Correction — Charon's signature_index surfaced a sampling error in an earlier
+draft.** That draft claimed "`bridge_extension` is absent from the corpus." It is
+not — it is one of the *most common* kinds: `h4:bridge_extension:CONFIRM` collapses
+**9.19 M raw records** (signature_index). My "absent" reading was a sampling
+artifact (stride-13 = 21 of 265 batches; the 795 K scan was line-capped). The
+conclusion survives, for a sharper reason than absence:
+
+`weight = base × verdict_mult × triangulation_bonus`, clamped. The 0.6 ceiling is
+structural on the kind × relation × verdict combinations *actually present*:
 - a1 bases are *deliberately* calibrated below 0.33 (Fire #141 info-content
-  multiplier — the docstring states the goal was to push parity records under
-  0.6): `equal_mod_2 → 0.195`, `divides → 0.245`, tightest `abs_diff → 0.33`.
-- The max base among *kinds present in the corpus* is `kill_neighborhood` 0.40 →
-  with a specific-kill pattern (×1.0) and triangulation (×1.3) = **0.52**, still
-  below 0.6.
-- The only routes over 0.6 are `bridge_extension` (base 0.55 × 1.0 × 1.3 = 0.715)
-  or a `PROMOTED` verdict (×1.5) — **both absent from the corpus.**
+  multiplier — docstring states the goal was to push parity records under 0.6):
+  `equal_mod_2 → 0.195`, `divides → 0.245`, tightest `abs_diff → 0.33`.
+- `bridge_extension` does NOT get its kind-default base 0.55: its records carry an
+  `abs_diff_le_3` relation, so `_base_weight` takes the *relation* path
+  (0.60 × 0.55 info = **0.33**), and they have **no `step_trace`** (no ×1.3). Net
+  max **0.33 — verified on 123 K of them.**
+- The highest achievable among present combos is a triangulated SHADOW
+  `kill_neighborhood`: 0.40 × 1.0 × 1.3 = **0.52** — still below 0.6.
+- The only routes over 0.6 are a non-`abs_diff` triangulated `bridge_extension`
+  (0.55 × 1.0 × 1.3 = 0.715) or a `PROMOTED` verdict (×1.5). **Neither observed**
+  on any population examined (the signature_index has no PROMOTED verdict class).
 
-So the "promoted" population is not merely shape-gated rather than content-gated;
-under the *current* formula it is **empty**. The historical "2,351" was minted
+So the "promoted" population, under the *current* formula, is **empty on every
+population examined** — verified on the full high-base `bridge_extension`
+population, not inferred from a thin sample. The historical "2,351" was minted
 under an earlier, more permissive formula (pre-Fire-#141). The Fire #141 retune —
-correct on its own terms, to suppress trivial parity records — has the side
-effect that the entire May corpus, generated under the old formula, is now
-**non-promotable**. The promotion count is a fossil of a superseded gate.
+correct on its own terms, to suppress trivial parity records — has the side effect
+that the corpus generated under the old formula is now non-promotable. The
+promotion count is a fossil of a superseded gate.
 
 The content-replay stage (F2 / `_evaluate_relation`) therefore never fires on
 this corpus — nothing reaches the shape gate to be content-checked. The stage is
 retained because it is the correct replay for records that *do* promote going
 forward (and for the kernel/`discovery_promotion` path if its store is ever
 repopulated). On THIS corpus the verdict is upstream of it.
+
+## 4b. Cross-agent reconciliation (Charon + Ergon, 2026-06-23)
+
+Charon and Ergon audited the same reassessment chain in parallel. Both intersect
+this work; I verified their load-bearing claims myself (E3) and fold them in.
+
+**Charon's ledger (C-2026-06-23-A/B) — the actual taint surface, which I missed.**
+`theseus/orchestration/signature_index.sqlite` (3,311 rows) is the real Theseus
+promotion/verdict ledger, not the near-empty kernel. I ran Charon's recommended
+scoped census (`--ledger` mode; `pivot/promotion_ledger_census.json`):
+- **413,110,932 raw records** collapse into **3,311 shape-classes**:
+  KILL 1,268 cls / 241 M · CONFIRM 1,263 cls / 136 M · INCONCLUSIVE 253 cls / 36 M
+  · UNVERIFIED 527 cls / 0.12 M.
+- **The ledger is shape-keyed with the verdict baked into the dedup key** (e.g.
+  `c1:equal_mod_2:ec.rank|knot.three_genus:CONFIRM`). It carries no raw value or
+  relation columns. So it is **not content-replayable on its own** — replay needs
+  a join to the corpus by signature. This is Charon's predicted provenance gap,
+  now quantified: the shape-only finding extends from the `training_weight` gate
+  *to the ledger itself*. The "2,351" lives here (CONFIRM + UNVERIFIED classes),
+  never touched the kernel PROMOTE path.
+
+**The two M0.5 readings are complementary, not contradictory.** My corpus replay
+answers *"would these records re-promote under the current formula?"* (no —
+formula drift). Charon's ledger census answers *"what verdicts were recorded and
+can they be content-replayed?"* (recorded but shape-keyed → provenance gap). Both
+land on the same root: **promotion is shape-gated at every level the substrate
+actually uses.** Charon's reframe is correct — M0.5 is a *polycentric
+provenance-coverage census* across N decentralized ledgers, not one kernel replay.
+
+**Ergon's correction — the spine is not dark.** See §2(a): `.176` is a stale
+address; Postgres is healthy and local. This retires the stall-map's #1 action
+(DuckDB shim) in favour of repoint + ANALYZE. It does not move the M0.5 verdict
+(the kernel has no large Postgres promotion store either — verified, no `sigma`
+schema), but it corrects a factual error this report originally carried.
 
 ## 5. What this does and does not establish
 
