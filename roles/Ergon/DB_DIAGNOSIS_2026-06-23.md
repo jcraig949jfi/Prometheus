@@ -71,6 +71,32 @@ fault. James was right to reject the fallback — there is nothing to fall back
 - After verifying `zeros.object_zeros` is the intended live table, `DROP` the two
   `*_corrupt_20260416` tables to reclaim ~1.3 GB.
 
+## UPDATE — the corrupt tables are an `object_id` integrity bug (and it's live)
+
+Deeper inspection (this session) corrected the first read. The `*_corrupt_20260416`
+tables are not garbage values — the arrays/labels are clean. The corruption is a
+**NULL surrogate key**: `zeros.object_zeros` has 2,009,089 distinct curves by
+`lmfdb_label` (intact), but `object_id` is **NULL on 1,984,167 rows (98.8%)**.
+Only the 24,922 curves already in `xref.object_registry` got an id at the 04-16
+load. **Root cause:** the registry's id sequence was desynced (`last_value=1`
+vs `max(object_id)=134475`), so sequence-default inserts would collide on the PK;
+the loader left the rest NULL. The live table has the identical defect — the
+"rebuild" only renamed the corrupt copy aside. Any join `object_zeros → registry`
+on `object_id` silently lost 98.8% of rows (the audit's "silent failure" class).
+
+Three corrupt quarantine tables exist (not two): `zeros.object_zeros_corrupt_20260416`
+(2.0M rows, 1.27 GB), `zeros.object_zeros_ext_corrupt_20260416` (17K rows — orphaned,
+no live `_ext`), `zeros.dirichlet_zeros_corrupt_20260416` (40 kB). ~1.28 GB total.
+
+## Repair (in progress as of 2026-06-23)
+
+Slow-roll re-key, authorized by James. Sequence setval'd to 134475; per-tick mint
+of registry ids for unregistered labels + backfill of `object_zeros.object_id`;
+driven by Windows Scheduled Task `PrometheusRekeyObjectZeros` (batch 4000/min,
+~8 h, self-terminating with final VACUUM). New ids are `> 134475` → fully
+reversible. Disk is ample (C: 120 GB free). Full spec + reverse instructions:
+`ergon/repair/README_rekey_2026-06-23.md`.
+
 ## So-what for the reassessment
 
 The stall-map's #1 leverage action (DuckDB shim) and its "Ergon dark" claim are
