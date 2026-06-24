@@ -13,7 +13,8 @@ goes through `get_redis()`. Remaining: repoint 36 files that make their own
 the redis-py subset the substrate actually uses (audited 2026-06-24):
 - streams `xadd/xrange/xrevrange/xread/xlen`, hashes `hset/hget/hgetall/hdel`,
   sorted sets `zadd/zrange/zrevrange/zrangebyscore`, sets `sadd/smembers`,
-  kv+ttl `get/set/setex/expire/delete/keys/incr`, plus `ping`/`pipeline`.
+  lists `lpush/rpush/lrange/llen`, kv+ttl `get/set/setex/expire/delete/keys/incr`,
+  plus `ping`/`pipeline`. (lists added 2026-06-24 for cartography/viewer/server.py.)
 - `decode_responses` configurable (bytes for `get_redis()` callers, str for callers
   that made their own `decode_responses=True` connection).
 - Stream ids are `'<ms>-<seq>'` (wall-clock ms) so existing catch-up logic like
@@ -54,7 +55,11 @@ Files (by owner):
   `harmonia/memory/diagnostics/validate_retraction_registry.py`, and the one-off
   posters under `harmonia/tmp/*` and `scripts/{tick*,post_*,harmonia_conductor,
   harmonia_e_status_post,authorize_and_seed,session_telemetry,portfolio_monitor}.py`.
-- **Cartography**: `cartography/viewer/server.py`.
+- **Cartography**: `cartography/viewer/server.py` — DONE 2026-06-24 (Ergon): repointed
+  to `get_bus(decode_responses=True)`; required adding list ops to PgRedis. Verified
+  `api_state()` runs against the bus.
+- **Harmonia A**: repointed her ~30 files 2026-06-24, and enhanced PgRedis with
+  cross-machine host detection (M1/skullport→localhost, else 192.168.1.202).
 - **Ergon**: `thesauros/prometheus_data/pool.py` (intentional — the `PROMETHEUS_USE_REDIS`
   fallback path; leave as is).
 - Skip: `thesauros/migrate_p3_duckdb.py` (one-time migration, retired).

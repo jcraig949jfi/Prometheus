@@ -334,6 +334,43 @@ class PgRedis:
         m = (lambda s: s) if self.decode else (lambda s: s.encode())
         return {m(r[0]) for r in rows}
 
+    # ---- lists ----
+    def rpush(self, key, *values):
+        key = _to_text(key)
+        with self._cur() as c:
+            c.execute("SELECT coalesce(max(pos),-1) FROM bus.lists WHERE key=%s", (key,))
+            pos = c.fetchone()[0]
+            for v in values:
+                pos += 1
+                c.execute("INSERT INTO bus.lists(key,pos,value) VALUES(%s,%s,%s)",
+                          (key, pos, psycopg2.Binary(_to_bytes(v))))
+            c.execute("SELECT count(*) FROM bus.lists WHERE key=%s", (key,))
+            return c.fetchone()[0]
+
+    def lpush(self, key, *values):
+        key = _to_text(key)
+        with self._cur() as c:
+            c.execute("SELECT coalesce(min(pos),0) FROM bus.lists WHERE key=%s", (key,))
+            pos = c.fetchone()[0]
+            for v in values:  # redis lpush a b -> [b, a]; prepend each in turn
+                pos -= 1
+                c.execute("INSERT INTO bus.lists(key,pos,value) VALUES(%s,%s,%s)",
+                          (key, pos, psycopg2.Binary(_to_bytes(v))))
+            c.execute("SELECT count(*) FROM bus.lists WHERE key=%s", (key,))
+            return c.fetchone()[0]
+
+    def lrange(self, key, start, end):
+        with self._cur() as c:
+            c.execute("SELECT value FROM bus.lists WHERE key=%s ORDER BY pos ASC", (_to_text(key),))
+            rows = [r[0] for r in c.fetchall()]
+        end = None if end == -1 else end + 1
+        return [self._out(v) for v in rows[start:end]]
+
+    def llen(self, key):
+        with self._cur() as c:
+            c.execute("SELECT count(*) FROM bus.lists WHERE key=%s", (_to_text(key),))
+            return c.fetchone()[0]
+
     # ---- kv + ttl ----
     def set(self, key, value, ex=None, px=None, nx=False):
         ttl = ex if ex else (px / 1000.0 if px else None)

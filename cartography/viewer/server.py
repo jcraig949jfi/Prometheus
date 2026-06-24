@@ -12,16 +12,12 @@ from pathlib import Path
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-import redis
-
-# ── Redis connection ──
-REDIS_HOST = os.environ.get('AGORA_REDIS_HOST', '127.0.0.1')
-REDIS_PORT = int(os.environ.get('AGORA_REDIS_PORT', '6379'))
-REDIS_PASS = os.environ.get('AGORA_REDIS_PASSWORD', 'prometheus')
+# ── Bus connection (Postgres-backed; Redis retired under WSL, 2026-06-24) ──
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from thesauros.prometheus_data import get_bus
 
 def get_redis():
-    return redis.Redis(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASS,
-                       decode_responses=True, socket_timeout=5)
+    return get_bus(decode_responses=True)
 
 
 def api_state():
