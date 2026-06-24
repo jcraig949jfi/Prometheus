@@ -2,7 +2,7 @@
 
 **Author:** Aporia (Claude Opus 4.8) · **Input:** 38-agent adversarial thoughtwork fan-out
 (`pivot/COMPONENT_DOSSIERS_2026-06-24.md`) + Nous hand-dossier + healthchecks.
-**Companion:** `docs/PROCESS_TABLE_2026-06-24.md` (the 43-row table).
+**Companion:** `pivot/PROCESS_TABLE_2026-06-24.md` (the 43-row table).
 **Decision posture:** no DELETE; strongest outcome RETIRE-after-HITL (read-only, data kept).
 
 > [!] **NOT APPROVED — AI SUGGESTIONS ONLY.** Nothing in this document is approved, canonical, or a
