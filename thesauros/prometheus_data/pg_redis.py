@@ -98,9 +98,29 @@ class PgRedis:
         self._conn.autocommit = True
 
     @staticmethod
+    def _default_fire_host() -> str:
+        """Host of the bus Postgres. Explicit PROMETHEUS_FIRE_HOST wins.
+
+        The bus lives on M1 (skullport = 192.168.1.202). On M1 itself loopback
+        is fastest; from any other machine (M2/M3/M4) we must address M1
+        directly, so the bus works with no env var set. Hostname idiom mirrors
+        scripts/machine_healthcheck.py.
+        """
+        env = os.environ.get("PROMETHEUS_FIRE_HOST")
+        if env:
+            return env
+        try:
+            import socket
+            host = socket.gethostname().lower()
+        except Exception:
+            host = ""
+        # M1 (skullport) hosts the bus -> loopback; everyone else -> M1's LAN IP.
+        return "localhost" if "skullport" in host else "192.168.1.202"
+
+    @staticmethod
     def _default_dsn() -> str:
         return (
-            f"host={os.environ.get('PROMETHEUS_FIRE_HOST', 'localhost')} "
+            f"host={PgRedis._default_fire_host()} "
             f"port={os.environ.get('PROMETHEUS_FIRE_PORT', '5432')} "
             f"dbname={os.environ.get('PROMETHEUS_FIRE_DB', 'prometheus_fire')} "
             f"user={os.environ.get('PROMETHEUS_FIRE_USER', 'lmfdb')} "
