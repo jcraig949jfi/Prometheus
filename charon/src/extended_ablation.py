@@ -6,7 +6,7 @@ Key question: Does the spectral tail signal get SHARPER or BLURRIER
 when we use more zeros?
 """
 
-import duckdb
+from charon.src import db as duckdb  # DuckDB retired -> Postgres prometheus_fire.charon_duckdb
 import numpy as np
 from collections import defaultdict
 from sklearn.cluster import KMeans

@@ -12,7 +12,7 @@ import json
 import numpy as np
 from collections import defaultdict
 from sympy import factorint, isprime, primerange
-import duckdb
+from charon.src import db as duckdb  # DuckDB retired -> Postgres prometheus_fire.charon_duckdb
 import os
 
 # ── paths ──────────────────────────────────────────────────────────────

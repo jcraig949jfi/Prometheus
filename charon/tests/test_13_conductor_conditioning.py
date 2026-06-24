@@ -21,7 +21,7 @@ Failure condition: mean ARI < 0.6 for ALL known invariants across strata.
 (If no invariant achieves ARI > 0.6, clusters are noise after conditioning.)
 """
 
-import duckdb
+from charon.src import db as duckdb  # DuckDB retired -> Postgres prometheus_fire.charon_duckdb
 import numpy as np
 from sklearn.cluster import KMeans
 from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score

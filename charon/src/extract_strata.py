@@ -1,5 +1,6 @@
 """Extract empirical SO(even) strata for the RMT simulation."""
-import duckdb, json, numpy as np
+from charon.src import db as duckdb  # DuckDB retired -> Postgres prometheus_fire.charon_duckdb
+import json, numpy as np
 from collections import defaultdict
 from pathlib import Path
 

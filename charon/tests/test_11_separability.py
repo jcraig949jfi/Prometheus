@@ -13,7 +13,7 @@ Method:
 If the distributions overlap, proximity means conductor, not correspondence.
 """
 
-import duckdb
+from charon.src import db as duckdb  # DuckDB retired -> Postgres prometheus_fire.charon_duckdb
 import numpy as np
 from scipy import stats
 from collections import defaultdict

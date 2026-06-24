@@ -3,7 +3,20 @@ Fast Dirichlet zero ingestion - uses pickle cache and batch DuckDB insert.
 Assumes the PG query already ran and we saved the results.
 """
 import psycopg2
-import duckdb
+# DuckDB RETIRED 2026-06-24: data migrated verbatim to prometheus_fire.charon_duckdb.
+# This file WRITES to DuckDB and was deliberately NOT auto-repointed (frozen ingestion /
+# builder). charon/data/charon.duckdb is kept frozen as fallback (no-delete doctrine).
+# Reads should use `from charon.src import db`. Re-enabling writes requires rewriting them
+# against the canonical Postgres tables with owner sign-off. The guard below blocks any
+# accidental connect to the retired store.
+class _RetiredDuckDB:
+    def connect(self, *a, **k):
+        raise RuntimeError(
+            "charon.duckdb is RETIRED (migrated to prometheus_fire.charon_duckdb, 2026-06-24). "
+            "This module writes to DuckDB and was not repointed; use charon.src.db for reads, "
+            "or rewrite writes against canonical Postgres tables with owner sign-off."
+        )
+duckdb = _RetiredDuckDB()
 import numpy as np
 import pickle
 import logging

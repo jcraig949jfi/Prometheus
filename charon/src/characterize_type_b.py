@@ -5,7 +5,7 @@ Analyze the 27,279 objects that form tight zero-space clusters
 but have NO graph edges. What are they? What are they clustered with?
 """
 
-import duckdb
+from charon.src import db as duckdb  # DuckDB retired -> Postgres prometheus_fire.charon_duckdb
 import numpy as np
 import json
 import logging

@@ -17,7 +17,7 @@ Threshold: embedding recovery >= raw recovery + 8%
 Set before data: 2026-04-01
 """
 
-import duckdb
+from charon.src import db as duckdb  # DuckDB retired -> Postgres prometheus_fire.charon_duckdb
 import numpy as np
 from sklearn.neighbors import NearestNeighbors
 from sklearn.decomposition import PCA

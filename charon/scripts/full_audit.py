@@ -21,7 +21,7 @@ Storage: DuckDB (charon/data/charon.duckdb)
 import sys
 import os
 import traceback
-import duckdb
+from charon.src import db as duckdb  # DuckDB retired -> Postgres prometheus_fire.charon_duckdb
 import psycopg2
 import numpy as np
 import math

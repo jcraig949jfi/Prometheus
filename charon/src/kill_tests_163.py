@@ -7,7 +7,7 @@ Kill Test 2: Is non-trivial character doing the work?
              Compare trivial vs non-trivial vs ECs.
 """
 
-import duckdb
+from charon.src import db as duckdb  # DuckDB retired -> Postgres prometheus_fire.charon_duckdb
 import numpy as np
 import logging
 from collections import Counter

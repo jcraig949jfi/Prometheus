@@ -8,7 +8,7 @@ All on existing data. No new ingestion.
 3. Murmuration detection in EC a_p data
 """
 
-import duckdb
+from charon.src import db as duckdb  # DuckDB retired -> Postgres prometheus_fire.charon_duckdb
 import numpy as np
 import json
 import logging

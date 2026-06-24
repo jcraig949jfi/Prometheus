@@ -9,7 +9,7 @@ If Type B is enriched for CM/RM/self-twist, the EC-proximity is
 algebraically explained by inner twist structure.
 """
 
-import duckdb
+from charon.src import db as duckdb  # DuckDB retired -> Postgres prometheus_fire.charon_duckdb
 from collections import Counter
 from pathlib import Path
 

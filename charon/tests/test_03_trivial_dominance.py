@@ -19,7 +19,7 @@ performance (AUC or F1).
 Binary outcome. No "promising." No "worth investigating."
 """
 
-import duckdb
+from charon.src import db as duckdb  # DuckDB retired -> Postgres prometheus_fire.charon_duckdb
 import numpy as np
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression

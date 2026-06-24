@@ -13,7 +13,7 @@ Experiments:
   F. BSD partial correlations on zeros 5-19 -- controlling for conductor + rank
 """
 
-import duckdb
+from charon.src import db as duckdb  # DuckDB retired -> Postgres prometheus_fire.charon_duckdb
 import numpy as np
 import json
 import math

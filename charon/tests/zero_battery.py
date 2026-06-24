@@ -20,7 +20,7 @@ What "better" means, precisely:
   4. Coefficient model must outperform trivial model by >= 20%
 """
 
-import duckdb
+from charon.src import db as duckdb  # DuckDB retired -> Postgres prometheus_fire.charon_duckdb
 import numpy as np
 from scipy import stats
 from sklearn.ensemble import GradientBoostingClassifier

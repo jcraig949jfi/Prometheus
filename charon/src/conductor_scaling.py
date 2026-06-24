@@ -14,7 +14,7 @@ with conductor? If it shrinks at higher conductor, the residual is a
 finite-conductor artifact. If it persists, it's structural.
 """
 
-import duckdb
+from charon.src import db as duckdb  # DuckDB retired -> Postgres prometheus_fire.charon_duckdb
 import numpy as np
 from collections import defaultdict
 from sklearn.cluster import KMeans

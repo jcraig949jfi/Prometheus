@@ -11,7 +11,7 @@ Test: Do forms with inner twists cluster differently in zero space?
       Does inner twist structure predict EC-proximity?
 """
 
-import duckdb
+from charon.src import db as duckdb  # DuckDB retired -> Postgres prometheus_fire.charon_duckdb
 import numpy as np
 import requests
 import json
