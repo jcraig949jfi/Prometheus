@@ -109,18 +109,31 @@ not a revive-as-is.
 
 ## CONCEDE-WITH-SALVAGE
 
-### Atalanta (E-track primitive hunter) — CONCEDE-WITH-SALVAGE
+### Atalanta (E-track primitive hunter) — HOLD-IN-LIMBO (tied to Apollo's trajectory) — *James override 2026-06-24*
 **Prosecution:** RETIRE — dead-gated; 354/354 ticks `UPSTREAM_NOT_FOUND` (hardcoded Apollo paths that never
 existed); gated on Apollo, which is itself deferred.
-**Honest concession.** I will not special-plead this one. Atalanta's entire purpose is mining Apollo's
-evolved organisms for substrate-E primitives — and Apollo is deferred (R8 organism collapsed). There is
-*nothing to hunt* until Apollo produces a validated organism stream. An independent month-of-life case would
-be theater. **Archive read-only, revive only when Apollo does** — and even then, fix the upstream paths and
-automate the (currently manual) Techne ingestion arm first.
-**Salvage IP:** the `aggregate_primitive_signals` composite-mining algorithm; the evidence-anchored Type-E
-DR template (anti-gravity guard: every candidate must cite real organism IDs); the schema-tolerant Apollo-log
-parser. Lift these into whatever eventually consumes Apollo organisms.
-**Verdict:** concede — couple its fate to Apollo's; don't keep it breathing in a vacuum.
+**Strategic reframe (James, 2026-06-24).** Apollo is struggling but is a **kept bet** — Apollo + the Forge
+evolutionary engines may be the program's eventual *shining stars* if the **base inputs** can be improved.
+Atalanta is not a dead-end consumer of Apollo; it is a **loop-closer for that bet**: it harvests reusable
+substrate-E primitives from Apollo's organisms → enriches the primitive pool → makes the next Apollo run
+richer. That *is* improving the base inputs. So Atalanta is not conceded — it **holds in limbo, paired to
+Apollo's trajectory.**
+**Honest current state.** Its upstream is genuinely empty *today* (Apollo deferred, R8 collapse), and its
+own wiring is broken (dead hardcoded paths). So it cannot run a month-of-life demo *yet* — but the right
+posture is armed-and-waiting, not archived.
+**Cheap readiness action now (so it's ready, not broken, when Apollo turns).** (1) Replace the three dead
+`APOLLO_RUN_ROOTS` with Apollo's real output paths (`run_v2d2b/`, `run_branch_c/`, `lineage/`, `journal/`)
+via config; (2) validate `scan_new_apollo_runs` against *real* Apollo organism files (the run schema was
+assumed, never confirmed); (3) automate the (currently manual) Techne `primitive_candidates` ingestion arm.
+Low cost, and it converts "354 UPSTREAM_NOT_FOUND" into a primed loop.
+**Activation trigger (not a date):** the moment Apollo emits a validated organism stream, Atalanta runs its
+end-to-end demo — dispatch ≥1 Type-E candidate with non-empty `evidence_organisms` that Techne promotes to a
+registered primitive available in Apollo's *next* run (the loop closes once, end-to-end).
+**Salvage IP (only if Apollo itself is ever abandoned):** the `aggregate_primitive_signals` composite-mining
+algorithm; the evidence-anchored Type-E DR template (anti-gravity guard: candidates must cite real organism
+IDs); the schema-tolerant Apollo-log parser.
+**Verdict:** hold in limbo on Apollo's trajectory — do the cheap readiness wiring now so it's primed; activate
+when Apollo produces. It is part of the Apollo/Forge upside bet, not a casualty.
 
 ### Polyhymnia (named-operator scour) — CONCEDE-WITH-SALVAGE (redirect)
 **Prosecution:** RETIRE — bounded-menu wall: 1 of 17 scours ever shipped, 84% null, self-improver is 5/6
@@ -146,7 +159,7 @@ SelfImprovingDaemon adoption pattern (minus the 5 stub adaptations) into Arachne
 | Pythia | REFACTOR | **STRONG-KEEP** | wire the consumer; 30-day actual_delta ≥10% demo |
 | Clio | REFACTOR | **STRONG-KEEP** (narrow) | falsification-signal + Pheme-gated refactor |
 | Hypatia | RETIRE | **KEEP-IF-REFACTORED** | re-aim at kill-geometry; retire the loop-as-built |
-| Atalanta | RETIRE | **CONCEDE** | couple to Apollo; lift IP |
+| Atalanta | RETIRE | **HOLD-IN-LIMBO (on Apollo)** | arm & wait: fix paths, validate parser; activate when Apollo emits validated organisms |
 | Polyhymnia | RETIRE | **CONCEDE (redirect)** | lift chassis into Arachne |
 
 **Where these enrich Prometheus, in one breath:** Pythia turns free, expiring external compute into
@@ -156,9 +169,10 @@ capability-eval rung; Atalanta and Polyhymnia are IP donors to Apollo-consumptio
 
 **My honest bottom line:** two of the five (Pythia, Clio) deserve a real month with a falsifiable target,
 and the demos are cheap (wiring, not invention). Hypatia deserves a month *only* if re-aimed at the spine —
-the loop-as-built should retire. The last two I concede; their value is salvage, not a heartbeat. If you
-greenlight, I'll wire the Pythia consumer first (highest value, lowest cost, and it stops wasting the daily
-token budget today).
+the loop-as-built should retire. **Atalanta holds in limbo on Apollo's trajectory** (James, 2026-06-24) —
+it's a loop-closer for the kept Apollo/Forge bet, so do the cheap readiness wiring now and activate it when
+Apollo produces. Polyhymnia I concede (its value is salvage → Arachne chassis). If you greenlight, I'll wire
+the Pythia consumer first (highest value, lowest cost, and it stops wasting the daily token budget today).
 
 ---
 *Aporia, 2026-06-24. Defense to the fan-out's prosecution. Nothing approved; each keeper carries a
