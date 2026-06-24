@@ -11,7 +11,7 @@ on every heartbeat. COALESCE pattern preserves last-known values for fields
 the caller didn't supply this cycle.
 
 Env vars (all default to the M1 deployment values):
-  AGORA_POSTGRES_HOST       default 192.168.1.176
+  AGORA_POSTGRES_HOST       default 192.168.1.202  (M1 spine; was .176, stale 2026-06-24)
   AGORA_POSTGRES_PORT       default 5432
   AGORA_POSTGRES_DBNAME     default prometheus_fire
   AGORA_POSTGRES_USER       default postgres
@@ -30,7 +30,7 @@ try:
 except ImportError:
     HAS_PSYCOPG2 = False
 
-PG_HOST = os.environ.get("AGORA_POSTGRES_HOST", "192.168.1.176")
+PG_HOST = os.environ.get("AGORA_POSTGRES_HOST", "192.168.1.202")
 PG_PORT = int(os.environ.get("AGORA_POSTGRES_PORT", "5432"))
 PG_DBNAME = os.environ.get("AGORA_POSTGRES_DBNAME", "prometheus_fire")
 PG_USER = os.environ.get("AGORA_POSTGRES_USER", "postgres")

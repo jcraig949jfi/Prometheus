@@ -232,7 +232,7 @@ def _bridge_postgres_env_vars() -> None:
             if v is not None:
                 os.environ[fire_key] = v
     # Defaults (match agora_persist defaults if neither set)
-    os.environ.setdefault("PROMETHEUS_FIRE_HOST", "192.168.1.176")
+    os.environ.setdefault("PROMETHEUS_FIRE_HOST", "192.168.1.202")  # was .176 (stale 2026-06-24)
     os.environ.setdefault("PROMETHEUS_FIRE_PORT", "5432")
     os.environ.setdefault("PROMETHEUS_FIRE_USER", "postgres")
     os.environ.setdefault("PROMETHEUS_FIRE_PASSWORD", "prometheus")
