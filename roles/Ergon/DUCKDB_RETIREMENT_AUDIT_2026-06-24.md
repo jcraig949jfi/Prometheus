@@ -4,12 +4,28 @@
 **Trigger:** James — "the plan was to retire DuckDB, moving all its data to Postgres.
 Did this fully happen? Is any active code still relying on duckdb? It's supposed to
 be retired."
-**Verdict:** **Retirement is PARTIAL, not complete.** Core cross-ref tables migrated;
-~717K rows across 4 tables exist ONLY in the frozen `charon.duckdb`; a large body of
-active code (esp. Charon's source tree) still connects directly to it.
-**DO NOT delete `charon.duckdb`** — see gaps below. (Per
-[[feedback_retirement_needs_thoughtwork_dossier_hitl]]: read-only RETIRE needs a
-dossier + HITL sign-off; deletion is off the table.)
+**Verdict (updated 2026-06-24):** Data migration is now **COMPLETE** — all DuckDB data
+is in Postgres (see "Migration executed" below). What remains for full retirement is a
+**code** task: ~40+ direct `duckdb.connect()` calls in Charon's source tree must be
+repointed to Postgres. **Still DO NOT delete `charon.duckdb`** until that code is
+repointed and validated. (Per [[feedback_retirement_needs_thoughtwork_dossier_hitl]]:
+read-only RETIRE needs a dossier + HITL sign-off; deletion is off the table.)
+
+## Migration executed (2026-06-24, Ergon)
+
+All 14 `charon.duckdb` tables mirrored **verbatim** (lossless, same column names) into
+`prometheus_fire.charon_duckdb.*` via DuckDB's `postgres` extension (in-memory hub,
+source attached READ_ONLY so `charon.duckdb` stays pristine — mtime still 2026-04-03).
+**Row counts match exactly on every table; 1,242,918 rows total.** Array fidelity
+spot-checked (dirichlet_zeros conductor=1 = the Riemann ζ zeros, arrays intact). The
+former gap tables (`dirichlet_zeros` 184,830 / `graph_edges` 396,150 / `object_zeros_ext`
+17,313 / `landscape` 119,464) are now present and verified. `noesis_v2.duckdb` (19
+tables) was already fully present in `prometheus_fire.noesis.*` — re-verified, all match.
+`ANALYZE` run on `prometheus_fire`. **Postgres now holds all DuckDB data.**
+
+The pre-existing normalized empty tables (e.g. `zeros.dirichlet_zeros`) are left as-is;
+`charon_duckdb.*` is the faithful archive and the drop-in target for the Charon repoint
+(identical schema to what `charon/src` already queries).
 
 ## State of the DuckDB files
 
