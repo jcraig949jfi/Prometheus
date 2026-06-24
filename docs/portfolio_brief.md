@@ -1,5 +1,5 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-06-23 08:15:32 PM UTC*
+*Generated: 2026-06-24 12:15:29 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
@@ -16,5 +16,5 @@
 
 ## For the record
 * **No New Discoveries or Reports**: There are still no new discoveries or reports from the deep research pipeline to note.
-* **Agents Pending Deployment**: 20 agents are still pending deployment on M2, M3, and M4, which is a known part of the multi-machine bring-up phase.
+* **Agents Pending Deployment**: (N) agents are still pending deployment on M2, M3, and M4, which is a known part of the multi-machine bring-up phase.
 * **Hephaestus Operational Status**: Hephaestus at M3 still has an operational status of "running" as of 2026-05-16, with a current forge rate context indicating healthy substrate selection pressure.
