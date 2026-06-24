@@ -1,5 +1,5 @@
-import redis
-r = redis.Redis(host='192.168.1.176', port=6379, password='prometheus', decode_responses=True)
+from thesauros.prometheus_data import get_bus
+r = get_bus(decode_responses=True)
 note = (
     "API_PROBE_RESULT 3rd seed: Opus 4.7 internal probe with sessionA's neutral prompt verbatim. "
     "Returns 6 distinct objections. Convergence with prior 2 sonnet probes: STRONG. "

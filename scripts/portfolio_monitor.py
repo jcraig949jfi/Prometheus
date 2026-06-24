@@ -215,11 +215,8 @@ KNOWN_UNEXPECTED_AGENTS = [
 
 
 def connect() -> redis.Redis:
-    return redis.Redis(
-        host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB,
-        password=get_redis_password(), decode_responses=True,
-        socket_connect_timeout=5,
-    )
+    from thesauros.prometheus_data import get_bus
+    return get_bus(decode_responses=True)
 
 
 def agent_state(r: redis.Redis, name: str) -> dict | None:

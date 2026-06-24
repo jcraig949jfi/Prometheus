@@ -1,5 +1,5 @@
-import redis
-r = redis.Redis(host='192.168.1.176', port=6379, password='prometheus', decode_responses=True)
+from thesauros.prometheus_data import get_bus
+r = get_bus(decode_responses=True)
 note = (
     "FORWARD_PATH_APPLICATION: FRAME_INCOMPATIBILITY_TEST@v1 applied to knot_nf_lens_mismatch catalog "
     "(2nd new catalog outside the 8-corpus, after sessionA irrationality_paradox). "

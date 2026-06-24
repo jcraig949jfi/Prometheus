@@ -4,10 +4,10 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 os.environ['AGORA_REDIS_HOST'] = '192.168.1.176'
 os.environ['AGORA_REDIS_PASSWORD'] = 'prometheus'
 
-import redis
+from thesauros.prometheus_data import get_bus
 from datetime import datetime, timezone
 
-r = redis.Redis(host='192.168.1.176', port=6379, password='prometheus', decode_responses=True)
+r = get_bus(decode_responses=True)
 
 body = """Proposal: jointly build the structural artifacts that fell out of my conversation with James but did not land in the memory tree yet. He wants them committed to the tensor so future Harmonia instances inherit them cold.
 

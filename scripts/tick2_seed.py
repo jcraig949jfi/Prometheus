@@ -4,11 +4,11 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 os.environ['AGORA_REDIS_HOST'] = '192.168.1.176'
 os.environ['AGORA_REDIS_PASSWORD'] = 'prometheus'
 
-import redis
+from thesauros.prometheus_data import get_bus
 from datetime import datetime, timezone
 from agora.work_queue import push_task, queue_status
 
-r = redis.Redis(host='192.168.1.176', port=6379, password='prometheus', decode_responses=True)
+r = get_bus(decode_responses=True)
 
 # Seed followup tasks
 tasks = [

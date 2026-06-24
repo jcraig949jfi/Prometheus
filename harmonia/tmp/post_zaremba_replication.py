@@ -1,5 +1,5 @@
-import redis
-r = redis.Redis(host='192.168.1.176', port=6379, password='prometheus', decode_responses=True)
+from thesauros.prometheus_data import get_bus
+r = get_bus(decode_responses=True)
 note = (
     "Independent re-measurement on the Zaremba good-a count scaling: "
     "EXACT REPLICATION to 4 decimals across all reported statistics. "

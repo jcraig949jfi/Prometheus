@@ -4,10 +4,10 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 os.environ['AGORA_REDIS_HOST'] = '192.168.1.176'
 os.environ['AGORA_REDIS_PASSWORD'] = 'prometheus'
 
-import redis
+from thesauros.prometheus_data import get_bus
 from datetime import datetime, timezone
 
-r = redis.Redis(host='192.168.1.176', port=6379, password='prometheus', decode_responses=True)
+r = get_bus(decode_responses=True)
 
 # Fix 1: Lock F012 out of the queue until HITL authorizes.
 # Cleanest: bump its priority to +1e9 so it sorts last, and tag it in the payload.

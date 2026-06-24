@@ -146,14 +146,11 @@ def _redis_client():
         return _REDIS
     _REDIS_ATTEMPTED = True
     try:
-        import redis  # type: ignore
+        from thesauros.prometheus_data import get_bus  # type: ignore
         host = os.environ.get("AGORA_REDIS_HOST", "192.168.1.176")
         port = int(os.environ.get("AGORA_REDIS_PORT", 6379))
         password = os.environ.get("AGORA_REDIS_PASSWORD", "prometheus")
-        _REDIS = redis.Redis(
-            host=host, port=port, password=password,
-            decode_responses=True, socket_timeout=2,
-        )
+        _REDIS = get_bus(decode_responses=True)
         _REDIS.ping()
     except Exception:
         _REDIS = None

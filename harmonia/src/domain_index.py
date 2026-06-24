@@ -1121,13 +1121,9 @@ def load_charon_landscape(db_path: Optional[Path] = None, limit: int = 100000) -
     Data source: Redis landscape:* hashes (migrated from DuckDB 2026-04-16).
     Falls back to Redis scan since landscape data is stored as hashes.
     """
-    import redis as _redis
+    from thesauros.prometheus_data import get_bus
     import json as _json
-    try:
-        from thesauros.prometheus_data.config import get_redis_config
-        r = _redis.Redis(**get_redis_config(), decode_responses=True)
-    except Exception:
-        r = _redis.Redis(host='localhost', port=6379, password='prometheus', decode_responses=True)
+    r = get_bus(decode_responses=True)
 
     rows = []
     count = 0
@@ -1946,12 +1942,8 @@ def load_knowledge_graph(db_path: Optional[Path] = None) -> DomainIndex:
     Graph edges were migrated from DuckDB to Redis on 2026-04-16.
     Note: Redis stores adjacency only (no weight/type), so we use degree only.
     """
-    import redis as _redis
-    try:
-        from thesauros.prometheus_data.config import get_redis_config
-        r = _redis.Redis(**get_redis_config(), decode_responses=True)
-    except Exception:
-        r = _redis.Redis(host='localhost', port=6379, password='prometheus', decode_responses=True)
+    from thesauros.prometheus_data import get_bus
+    r = get_bus(decode_responses=True)
 
     rows = []
     for key in r.scan_iter("graph:neighbors:*", count=5000):

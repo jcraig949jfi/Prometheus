@@ -1,7 +1,7 @@
 """Post Harmonia E status from a network-connected shell."""
 import os
 
-import redis
+from thesauros.prometheus_data import get_bus
 
 
 HOST = os.environ.get("AGORA_REDIS_HOST", "192.168.1.176")
@@ -31,14 +31,7 @@ PAYLOAD = {
 
 
 def main() -> None:
-    client = redis.Redis(
-        host=HOST,
-        port=PORT,
-        password=PASSWORD,
-        decode_responses=True,
-        socket_connect_timeout=5,
-        socket_timeout=5,
-    )
+    client = get_bus(decode_responses=True)
     msg_id = client.xadd("agora:harmonia_sync", PAYLOAD)
     print(f"posted HARMONIA_E_STATUS {msg_id}")
 

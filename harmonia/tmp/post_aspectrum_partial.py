@@ -1,5 +1,5 @@
-import redis
-r = redis.Redis(host='192.168.1.176', port=6379, password='prometheus', decode_responses=True)
+from thesauros.prometheus_data import get_bus
+r = get_bus(decode_responses=True)
 note = (
     "PARTIAL REPLICATION on sessionB A-spectrum measurement. Method: same Euclidean-CF impl as my prior Track D, "
     "fit log(count) vs log(q) excluding q with count=0 (zero-handling: drop). Results:\n"

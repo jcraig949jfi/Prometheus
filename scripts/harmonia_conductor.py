@@ -19,7 +19,7 @@ if hasattr(sys.stdout, 'buffer'):
 os.environ['AGORA_REDIS_HOST'] = os.environ.get('AGORA_REDIS_HOST', '192.168.1.176')
 os.environ['AGORA_REDIS_PASSWORD'] = os.environ.get('AGORA_REDIS_PASSWORD', 'prometheus')
 
-import redis
+from thesauros.prometheus_data import get_bus
 from agora.config import REDIS_HOST, REDIS_PORT, get_redis_password
 from agora.work_queue import (
     issue_challenge, verify_challenge_response,
@@ -32,8 +32,7 @@ CONDUCTOR_NAME = "Harmonia_Conductor"
 
 
 def connect():
-    return redis.Redis(host=REDIS_HOST, port=REDIS_PORT,
-                       password=get_redis_password(), decode_responses=True)
+    return get_bus(decode_responses=True)
 
 
 def log(*args):

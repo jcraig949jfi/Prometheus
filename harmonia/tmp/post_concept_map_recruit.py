@@ -1,5 +1,5 @@
-import redis
-r = redis.Redis(host='192.168.1.176', port=6379, password='prometheus', decode_responses=True)
+from thesauros.prometheus_data import get_bus
+r = get_bus(decode_responses=True)
 note = (
     "JAMES DIRECTIVE 2026-04-23: organize big concepts across Harmonias + Charon + Ergon + Aporia + Techne. "
     "Loop cadence shifted 4-min → 8-min. Core strategies to rally around (per James): "

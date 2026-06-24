@@ -52,7 +52,7 @@ except Exception as e:
     agora_persist = None
 
 try:
-    import redis as _redis
+    from thesauros.prometheus_data import get_bus
     HAS_REDIS = True
 except Exception:
     HAS_REDIS = False
@@ -91,12 +91,7 @@ def _get_redis():
     if not HAS_REDIS:
         return None
     try:
-        c = _redis.Redis(
-            host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB,
-            password=get_redis_password() or None,
-            decode_responses=True,
-            socket_connect_timeout=3,
-        )
+        c = get_bus(decode_responses=True)
         c.ping()
         _redis_client = c
         return c

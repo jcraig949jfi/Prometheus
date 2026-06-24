@@ -22,7 +22,7 @@ from typing import Optional
 os.environ.setdefault("AGORA_REDIS_HOST", "192.168.1.176")
 os.environ.setdefault("AGORA_REDIS_PASSWORD", "prometheus")
 
-import redis
+from thesauros.prometheus_data import get_bus
 
 from agora.symbols import all_symbols, get_latest_version
 from agora.symbols.resolve import resolve
@@ -36,7 +36,7 @@ from harmonia.composers.scorer import score_composition
 def _get_redis():
     host = os.environ.get("AGORA_REDIS_HOST", "192.168.1.176")
     password = os.environ.get("AGORA_REDIS_PASSWORD", "prometheus")
-    return redis.Redis(host=host, password=password, decode_responses=True)
+    return get_bus(decode_responses=True)
 
 
 def _load_symbol_meta(name: str, version: int) -> dict:

@@ -71,7 +71,7 @@ except Exception:
     HAS_KEYS = False
 
 try:
-    import redis as _redis  # type: ignore
+    from thesauros.prometheus_data import get_bus  # type: ignore
     HAS_REDIS = True
 except Exception:
     _redis = None  # type: ignore
@@ -110,14 +110,7 @@ def _redis_client():
     if not HAS_REDIS:
         return None
     try:
-        _REDIS = _redis.Redis(
-            host=os.environ.get("AGORA_REDIS_HOST", "192.168.1.176"),
-            port=int(os.environ.get("AGORA_REDIS_PORT", 6379)),
-            db=int(os.environ.get("AGORA_REDIS_DB", 0)),
-            password=os.environ.get("AGORA_REDIS_PASSWORD", "prometheus"),
-            decode_responses=True,
-            socket_timeout=5,
-        )
+        _REDIS = get_bus(decode_responses=True)
         _REDIS.ping()
         return _REDIS
     except Exception:

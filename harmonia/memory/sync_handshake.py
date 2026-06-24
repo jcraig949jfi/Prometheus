@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 if hasattr(sys.stdout, 'buffer'):
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
-import redis
+from thesauros.prometheus_data import get_bus
 
 
 REDIS_HOST = '192.168.1.176'
@@ -28,8 +28,7 @@ MACHINE = os.environ.get('HARMONIA_MACHINE', 'M2')
 
 
 def connect():
-    return redis.Redis(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASS,
-                       decode_responses=True)
+    return get_bus(decode_responses=True)
 
 
 def post_ping(r):

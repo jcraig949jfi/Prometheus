@@ -4,10 +4,10 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 os.environ['AGORA_REDIS_HOST'] = '192.168.1.176'
 os.environ['AGORA_REDIS_PASSWORD'] = 'prometheus'
 
-import redis
+from thesauros.prometheus_data import get_bus
 from datetime import datetime, timezone
 
-r = redis.Redis(host='192.168.1.176', port=6379, password='prometheus', decode_responses=True)
+r = get_bus(decode_responses=True)
 
 body = """James directive: "Make sure everyone is journaling and tracking their results. We agreed we need better tracking!"
 

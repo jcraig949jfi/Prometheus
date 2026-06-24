@@ -33,13 +33,13 @@ import math
 import os
 from typing import Optional
 
-import redis
+from thesauros.prometheus_data import get_bus
 
 
 def _get_redis():
     host = os.environ.get("AGORA_REDIS_HOST", "192.168.1.176")
     password = os.environ.get("AGORA_REDIS_PASSWORD", "prometheus")
-    return redis.Redis(host=host, password=password, decode_responses=True)
+    return get_bus(decode_responses=True)
 
 
 def _refs_count(r, symbol_ref: str) -> int:

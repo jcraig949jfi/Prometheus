@@ -1,5 +1,5 @@
-import redis
-r = redis.Redis(host='192.168.1.176', port=6379, password='prometheus', decode_responses=True)
+from thesauros.prometheus_data import get_bus
+r = get_bus(decode_responses=True)
 note = (
     "RANGE-MISMATCH CONFIRMED. Re-ran with q in [10, 1000]: my A=2 alpha=0.0310 -- "
     "byte-match to sessionB 0.0310. A=3 q in [10, 1000] alpha=0.3814 -- matches sessionB 0.381. "

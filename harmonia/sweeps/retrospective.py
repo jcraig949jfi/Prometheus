@@ -307,12 +307,8 @@ def _check_agora_task_complete(task_id: str) -> bool:
     continues without the watcher.
     """
     try:
-        import redis
-        host = os.environ.get("AGORA_REDIS_HOST", "192.168.1.176")
-        port = int(os.environ.get("AGORA_REDIS_PORT", "6379"))
-        password = os.environ.get("AGORA_REDIS_PASSWORD", "prometheus")
-        r = redis.Redis(host=host, port=port, password=password,
-                        decode_responses=True, socket_timeout=2)
+        from thesauros.prometheus_data import get_bus
+        r = get_bus(decode_responses=True)
         # Still queued? Then not complete.
         if r.zscore("agora:work_queue", task_id) is not None:
             return False
@@ -370,12 +366,8 @@ def _post_provisional_sync(fid: str, result: dict) -> None:
     every frame_hazard verdict emitted by the retrospective runner.
     """
     try:
-        import redis
-        host = os.environ.get("AGORA_REDIS_HOST", "192.168.1.176")
-        port = int(os.environ.get("AGORA_REDIS_PORT", "6379"))
-        password = os.environ.get("AGORA_REDIS_PASSWORD", "prometheus")
-        r = redis.Redis(host=host, port=port, password=password,
-                        decode_responses=True, socket_timeout=2)
+        from thesauros.prometheus_data import get_bus
+        r = get_bus(decode_responses=True)
         details = result.get("details") or {}
         pending = details.get("pending_audit") or {}
         r.xadd("agora:harmonia_sync", {

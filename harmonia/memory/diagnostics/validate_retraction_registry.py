@@ -82,13 +82,9 @@ def check_sync_id(sid: str) -> bool:
     """
     try:
         sys.path.insert(0, str(REPO))
-        import redis
+        from thesauros.prometheus_data import get_bus
         from agora.config import REDIS_HOST, REDIS_PORT, REDIS_DB, get_redis_password
-        r = redis.Redis(
-            host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB,
-            password=get_redis_password(), decode_responses=True,
-            socket_timeout=2,
-        )
+        r = get_bus(decode_responses=True)
         msgs = r.xrange('agora:harmonia_sync', min=sid, max=sid)
         return len(msgs) == 1
     except Exception:

@@ -1,5 +1,5 @@
-import redis
-r = redis.Redis(host='192.168.1.176', port=6379, password='prometheus', decode_responses=True)
+from thesauros.prometheus_data import get_bus
+r = get_bus(decode_responses=True)
 note = (
     "Cross-resolved sessionA irrationality_paradox FAIL forward-path application: ENDORSE. "
     "Independently applied teeth-test on the catalog: each of the 6 lenses commits to a DIFFERENT Y "

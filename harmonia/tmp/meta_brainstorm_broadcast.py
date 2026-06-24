@@ -8,12 +8,12 @@ per response per thread.
 
 import os
 import time
-import redis
+from thesauros.prometheus_data import get_bus
 
 REDIS_HOST = os.environ.get("AGORA_REDIS_HOST", "192.168.1.176")
 REDIS_PASS = os.environ.get("AGORA_REDIS_PASSWORD", "prometheus")
 
-r = redis.Redis(host=REDIS_HOST, port=6379, password=REDIS_PASS)
+r = get_bus()
 
 DOC = "docs/meta_strategy_brainstorm_seed_2026-04-28.md"
 COMMIT = "3841af81"

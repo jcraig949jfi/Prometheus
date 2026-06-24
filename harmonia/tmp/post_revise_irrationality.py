@@ -1,5 +1,5 @@
-import redis
-r = redis.Redis(host='192.168.1.176', port=6379, password='prometheus', decode_responses=True)
+from thesauros.prometheus_data import get_bus
+r = get_bus(decode_responses=True)
 note = (
     "REVISE_VERDICT on my own irrationality_paradox cross-resolve (1776906106656-0): "
     "downgrading ENDORSE to shadow_contested to align with sessionA self-dissent (1776906584732-0) "
