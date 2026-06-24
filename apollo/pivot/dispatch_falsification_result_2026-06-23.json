@@ -1,0 +1,241 @@
+{
+  "experiment": "dispatch_falsification",
+  "date": "2026-06-23",
+  "G1": {
+    "inf_specialist": {
+      "overall": 0.7,
+      "per_type": {
+        "inf": 1.0,
+        "xt": 0.4
+      },
+      "solves_both": false
+    },
+    "xt_specialist": {
+      "overall": 0.625,
+      "per_type": {
+        "inf": 0.25,
+        "xt": 1.0
+      },
+      "solves_both": false
+    },
+    "dispatcher": {
+      "overall": 1.0,
+      "per_type": {
+        "inf": 1.0,
+        "xt": 1.0
+      },
+      "solves_both": true
+    },
+    "PASS": true
+  },
+  "G2": {
+    "n_samples": 6000,
+    "theta_single": 0.7,
+    "best_single_pipeline": [
+      "parse_ordinal",
+      "parse_rules",
+      "forward_chain",
+      "forward_chain",
+      "evidence_updater",
+      "score_by_derivability"
+    ],
+    "single_terminal_solving_both": 0,
+    "PASS": true
+  },
+  "G3": {
+    "control": [
+      {
+        "seed": 20260623,
+        "discovered": false,
+        "first_both_gen": null
+      },
+      {
+        "seed": 1,
+        "discovered": false,
+        "first_both_gen": null
+      },
+      {
+        "seed": 7,
+        "discovered": false,
+        "first_both_gen": null
+      },
+      {
+        "seed": 42,
+        "discovered": false,
+        "first_both_gen": null
+      },
+      {
+        "seed": 101,
+        "discovered": false,
+        "first_both_gen": null
+      }
+    ],
+    "treatment_merge": [
+      {
+        "seed": 20260623,
+        "discovered": true,
+        "first_both_gen": 1,
+        "best_dispatcher": [
+          "parse_rules",
+          "parse_ordinal",
+          "forward_chain",
+          "relations_from_facts",
+          "op_build_ordering",
+          "select_nth__g",
+          "score_by_derivability__g"
+        ]
+      },
+      {
+        "seed": 1,
+        "discovered": true,
+        "first_both_gen": 1,
+        "best_dispatcher": [
+          "entity_counter",
+          "parse_rules",
+          "parse_ordinal",
+          "forward_chain",
+          "relations_from_facts",
+          "op_build_ordering",
+          "score_by_derivability__g",
+          "select_nth__g"
+        ]
+      },
+      {
+        "seed": 7,
+        "discovered": true,
+        "first_both_gen": 1,
+        "best_dispatcher": [
+          "parse_rules",
+          "parse_ordinal",
+          "forward_chain",
+          "relations_from_facts",
+          "op_build_ordering",
+          "select_nth__g",
+          "score_by_derivability__g"
+        ]
+      },
+      {
+        "seed": 42,
+        "discovered": true,
+        "first_both_gen": 1,
+        "best_dispatcher": [
+          "parse_rules",
+          "parse_ordinal",
+          "forward_chain",
+          "relations_from_facts",
+          "op_build_ordering",
+          "parse_names_and_relations",
+          "select_nth__g",
+          "score_by_derivability__g"
+        ]
+      },
+      {
+        "seed": 101,
+        "discovered": true,
+        "first_both_gen": 1,
+        "best_dispatcher": [
+          "parse_rules",
+          "parse_ordinal",
+          "forward_chain",
+          "relations_from_facts",
+          "op_build_ordering",
+          "score_by_derivability__g",
+          "select_nth__g"
+        ]
+      }
+    ],
+    "treatment_mutate_only": [
+      {
+        "seed": 20260623,
+        "discovered": true,
+        "first_both_gen": 1
+      },
+      {
+        "seed": 1,
+        "discovered": true,
+        "first_both_gen": 3
+      },
+      {
+        "seed": 7,
+        "discovered": true,
+        "first_both_gen": 2
+      },
+      {
+        "seed": 42,
+        "discovered": true,
+        "first_both_gen": 1
+      },
+      {
+        "seed": 101,
+        "discovered": true,
+        "first_both_gen": 6
+      }
+    ],
+    "discovered_counts": {
+      "control": 0,
+      "treatment_merge": 5,
+      "treatment_mutate_only": 5
+    },
+    "PASS": true,
+    "audit_target": [
+      "parse_rules",
+      "parse_ordinal",
+      "forward_chain",
+      "relations_from_facts",
+      "op_build_ordering",
+      "select_nth__g",
+      "score_by_derivability__g"
+    ]
+  },
+  "G4": {
+    "baseline": {
+      "overall": 1.0,
+      "per_type": {
+        "inf": 1.0,
+        "xt": 1.0
+      }
+    },
+    "per_branch_ablation": {
+      "detail": {
+        "select_nth__g": {
+          "drops": {
+            "inf": 0.0,
+            "xt": 1.0
+          },
+          "load_bearing_for": [
+            "xt"
+          ],
+          "ok": true
+        },
+        "score_by_derivability__g": {
+          "drops": {
+            "inf": 1.0,
+            "xt": 0.0
+          },
+          "load_bearing_for": [
+            "inf"
+          ],
+          "ok": true
+        }
+      },
+      "PASS": true
+    },
+    "surface_perturbation": {
+      "overall": 1.0,
+      "per_type": {
+        "inf": 1.0,
+        "xt": 1.0
+      },
+      "PASS": true
+    },
+    "tier_predicted_failure": {
+      "n_no_branch_tasks": 15,
+      "branch_fire_rate": 0.0,
+      "accidental_correct": 0,
+      "PASS": true,
+      "note": "no-branch type -> dispatcher should abstain (empty answer), not misroute"
+    },
+    "PASS": true
+  },
+  "overall_pass": true
+}
