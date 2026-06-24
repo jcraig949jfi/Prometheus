@@ -5,6 +5,7 @@ Provides context-managed connections from thread-safe pools.
 Pools are module-level singletons, created on first use, closed at exit.
 """
 import atexit
+import os
 from contextlib import contextmanager
 from .config import get_pg_dsn, get_redis_config
 
@@ -112,9 +113,13 @@ _redis_client = None
 
 
 def get_redis():
-    """Get a Redis client connection.
+    """Get a bus client (drop-in for the redis-py subset the substrate uses).
 
-    Returns None if Redis is not available (graceful degradation).
+    Postgres-backed by default since 2026-06-24: real Redis under WSL kept needing
+    manual restarts, so the bus now lives in prometheus_fire (schema `bus`) via
+    PgRedis. Set env PROMETHEUS_USE_REDIS=1 to use a real Redis if one is running.
+    Returns None only if even the Postgres bus is unreachable (graceful degradation;
+    callers already guard `if r:`).
 
     Usage:
         r = get_redis()
@@ -123,20 +128,40 @@ def get_redis():
     """
     global _redis_client
     if _redis_client is None:
+        if os.environ.get("PROMETHEUS_USE_REDIS") == "1":
+            try:
+                import redis
+                config = get_redis_config()
+                _redis_client = redis.Redis(
+                    **config,
+                    decode_responses=False,  # we store raw bytes for tensors
+                    socket_timeout=5,
+                    socket_connect_timeout=5,
+                )
+                _redis_client.ping()
+                return _redis_client
+            except Exception:
+                _redis_client = None
+        # Default: Postgres-backed bus.
         try:
-            import redis
-            config = get_redis_config()
-            _redis_client = redis.Redis(
-                **config,
-                decode_responses=False,  # we store raw bytes for tensors
-                socket_timeout=5,
-                socket_connect_timeout=5,
-            )
-            _redis_client.ping()
+            from .pg_redis import PgRedis
+            client = PgRedis(decode_responses=False)
+            client.ping()
+            _redis_client = client
         except Exception:
-            # Redis not available — return None, don't crash
             _redis_client = None
     return _redis_client
+
+
+def get_bus(decode_responses=False):
+    """Postgres-backed bus client (PgRedis), with the decode mode you ask for.
+
+    Use this in code that previously made its OWN `redis.Redis(decode_responses=...)`
+    connection instead of calling get_redis(). It is the migration target for those
+    direct-connect callers (e.g. modules that treat stream fields as str).
+    """
+    from .pg_redis import PgRedis
+    return PgRedis(decode_responses=decode_responses)
 
 
 # ============================================================

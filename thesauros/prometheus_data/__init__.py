@@ -30,6 +30,6 @@ Usage:
     r.zrevrange("landscape:by_curvature", 0, 50)
 """
 
-from .pool import get_lmfdb, get_sci, get_fire, get_redis, get_duckdb
+from .pool import get_lmfdb, get_sci, get_fire, get_redis, get_bus, get_duckdb
 
-__all__ = ["get_lmfdb", "get_sci", "get_fire", "get_redis", "get_duckdb"]
+__all__ = ["get_lmfdb", "get_sci", "get_fire", "get_redis", "get_bus", "get_duckdb"]
