@@ -39,6 +39,8 @@ from blackboard_ops import (parse_names_and_relations, parse_question_target, pa
 from blackboard_ops_v2 import (parse_ordinal, op_build_ordering, select_nth, parse_box_items,
                                op_aggregate_quantities, score_by_aggregate, entity_counter,
                                evidence_updater, distribution_reducer)
+from blackboard_ops_r2 import (parse_rules, forward_chain, relations_from_facts,
+                               score_by_derivability)
 
 RNG = random.Random(20260529)
 URL = "http://localhost:8800"
@@ -49,13 +51,16 @@ CATALOG = {
         parse_numbers, parse_names_and_relations, parse_question_target, parse_ordinal,
         parse_box_items, op_build_ordering, op_transitive_closure, op_numeric_argmax,
         op_aggregate_quantities, entity_counter, evidence_updater, distribution_reducer,
+        parse_rules, forward_chain, relations_from_facts,
         select_nth, score_by_max_entity, score_by_max_value, score_by_aggregate,
+        score_by_derivability,
     ]
 }
 
 ALL_SLOTS = ["problem_text", "candidates", "numbers", "names", "relations", "quantities",
              "question_target", "transitive_closure", "ordered", "counts", "evidence",
              "hypotheses", "probabilities", "confidence", "max_entity", "max_value",
+             "rules", "facts", "derived_facts",
              "candidate_scores", "selected_answer"]
 
 
@@ -76,9 +81,19 @@ SEED_PIPELINES = [
 ]
 
 
+def _cat(name):
+    """Resolve a pipeline op to its catalog entry. Guarded scorer variants ('*__g',
+    added for dispatch 2026-06-24) share their base op's reads/writes signature, so
+    fall back to the base name; unknown ops resolve to None (rendered as '?')."""
+    return CATALOG.get(name) or CATALOG.get(name.replace("__g", ""))
+
+
 def build_prompt(current_pipeline: list[str]) -> str:
+    def _sig(name):
+        op = _cat(name)
+        return (op.reads, op.writes) if op is not None else ("?", "?")
     pipe_table = "\n".join(
-        f"  step {i}: {name}  (reads={CATALOG[name].reads}, writes={CATALOG[name].writes})"
+        f"  step {i}: {name}  (reads={_sig(name)[0]}, writes={_sig(name)[1]})"
         for i, name in enumerate(current_pipeline)
     ) or "  (empty pipeline)"
     return f"""You are proposing ONE mutation to a reasoning pipeline. A pipeline is an
@@ -180,7 +195,7 @@ def audit_and_eval(obj, current_pipeline):
     op = CATALOG[step["op"]]
     pos = obj["position"]
     new_pipeline_names = current_pipeline[:pos] + [step["op"]] + current_pipeline[pos:]
-    new_pipeline = [CATALOG[n] for n in new_pipeline_names]
+    new_pipeline = [_cat(n) for n in new_pipeline_names]  # _cat: guarded-scorer tolerant
     # audit: no NEW recompute-bypass introduced by the inserted op
     sigs = audit_pipeline(new_pipeline)
     inserted_recompute = any(w["op"] == op.name for w in sigs["recompute_bypass"])
