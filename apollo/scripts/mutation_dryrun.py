@@ -41,6 +41,8 @@ from blackboard_ops_v2 import (parse_ordinal, op_build_ordering, select_nth, par
                                evidence_updater, distribution_reducer)
 from blackboard_ops_r2 import (parse_rules, forward_chain, relations_from_facts,
                                score_by_derivability)
+from blackboard_ops_compare import (parse_comparison, parse_which_extreme,
+                                    score_by_comparison, score_by_extreme_number)
 
 RNG = random.Random(20260529)
 URL = "http://localhost:8800"
@@ -54,6 +56,7 @@ CATALOG = {
         parse_rules, forward_chain, relations_from_facts,
         select_nth, score_by_max_entity, score_by_max_value, score_by_aggregate,
         score_by_derivability,
+        parse_comparison, parse_which_extreme, score_by_comparison, score_by_extreme_number,
     ]
 }
 
@@ -61,6 +64,7 @@ ALL_SLOTS = ["problem_text", "candidates", "numbers", "names", "relations", "qua
              "question_target", "transitive_closure", "ordered", "counts", "evidence",
              "hypotheses", "probabilities", "confidence", "max_entity", "max_value",
              "rules", "facts", "derived_facts",
+             "comparison", "extreme_number",
              "candidate_scores", "selected_answer"]
 
 

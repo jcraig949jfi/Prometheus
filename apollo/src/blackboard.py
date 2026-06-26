@@ -45,6 +45,15 @@ class BlackboardState:
     max_entity: str = ""
     max_value: Optional[float] = None
 
+    # ── R2 inference (2026-06-09; decomposed from hephaestus r2_chain_tracker) ──
+    rules: dict[str, list[str]] = field(default_factory=dict)    # premise -> conclusions
+    facts: set[str] = field(default_factory=set)                 # asserted facts (incl. "not X")
+    derived_facts: set[str] = field(default_factory=set)         # forward-chain closure
+
+    # ── Comparison / boolean (lever 2, 2026-06-26) ──
+    comparison: Optional[bool] = None    # result of "Is X larger than Y?" (yes/no tasks)
+    extreme_number: str = ""             # larger/smaller number's text ("which is larger?")
+
     # ── Output ────────────────────────────────────────────────────
     candidate_scores: list[float] = field(default_factory=list)
     selected_answer: str = ""
@@ -74,6 +83,11 @@ SLOT_TYPES: dict[str, str] = {
     "confidence": "probability",
     "max_entity": "str",
     "max_value": "float",
+    "rules": "dict_str_list_str",
+    "facts": "set_str",
+    "derived_facts": "set_str",
+    "comparison": "bool",
+    "extreme_number": "str",
     "candidate_scores": "list_num",
     "selected_answer": "str",
 }

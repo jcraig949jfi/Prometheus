@@ -26,6 +26,8 @@ SLOT_RESET = {
     "question_target": "", "transitive_closure": {}, "ordered": [],
     "counts": {}, "evidence": [], "hypotheses": [], "probabilities": {},
     "confidence": None, "max_entity": "", "max_value": None,
+    "rules": {}, "facts": set(), "derived_facts": set(),
+    "comparison": None, "extreme_number": "",
     "candidate_scores": [], "selected_answer": "",
 }
 

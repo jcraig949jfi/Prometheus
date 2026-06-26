@@ -33,6 +33,7 @@ from dataflow_fitness import compute_dataflow_fitness
 import blackboard_ops as v1
 import blackboard_ops_v2 as v2
 import blackboard_ops_r2 as r2  # R2 inference transformers (2026-06-09 falsification PASSED)
+import blackboard_ops_compare as cmp  # boolean/comparison primitives (lever 2, 2026-06-26)
 
 
 # ── Role-tiered registry ──────────────────────────────────────────────
@@ -62,6 +63,10 @@ REGISTRY = {
     # R2->R1 type bridge (2026-06-10): lets forward_chain feed op_build_ordering;
     # cross-tier falsification PASSED — see pivot/cross_tier_falsification_result_*.json
     "relations_from_facts": (r2.relations_from_facts, ROLE_TRANSFORMER),
+    # comparison/boolean transformers (lever 2, 2026-06-26): parse "Is X larger than
+    # Y?" / "which is larger?" into typed slots so a guarded scorer can route them.
+    "parse_comparison": (cmp.parse_comparison, ROLE_TRANSFORMER),
+    "parse_which_extreme": (cmp.parse_which_extreme, ROLE_TRANSFORMER),
     # scorers (terminal-only)
     "select_nth": (v2.select_nth, ROLE_SCORER),
     "score_by_aggregate": (v2.score_by_aggregate, ROLE_SCORER),
@@ -96,9 +101,16 @@ REGISTRY.update({
     "score_by_aggregate__g": (_guarded("score_by_aggregate",
         lambda s: len(s.quantities) > 0 and len(s.ordered) == 0
                   and len(s.derived_facts) == 0 and len(s.facts) == 0), ROLE_SCORER),
+    # comparison/boolean guarded scorers (lever 2, 2026-06-26): preconditions are
+    # built into the ops (comparison is not None / extreme_number != ""); they key on
+    # the typed slots their parser transformers write, mutually exclusive with the
+    # ordering/inference/aggregate guards (compare tasks populate neither).
+    "score_by_comparison__g": (cmp.score_by_comparison, ROLE_SCORER),
+    "score_by_extreme_number__g": (cmp.score_by_extreme_number, ROLE_SCORER),
 })
 
-GUARDED_SCORERS = ["select_nth__g", "score_by_derivability__g", "score_by_aggregate__g"]
+GUARDED_SCORERS = ["select_nth__g", "score_by_derivability__g", "score_by_aggregate__g",
+                   "score_by_comparison__g", "score_by_extreme_number__g"]
 
 TRANSFORMERS = [n for n, (_, r) in REGISTRY.items() if r == ROLE_TRANSFORMER]
 SCORERS = [n for n, (_, r) in REGISTRY.items() if r == ROLE_SCORER]
@@ -294,6 +306,31 @@ def recombine(pa: BlackboardOrganism, pb: BlackboardOrganism) -> BlackboardOrgan
     child = pa.clone()
     child.pipeline = a[:i] + b[j:]
     child.lineage = list(pa.lineage) + [f"xover:{pb.genome_id}@({i},{j})"]
+    return child
+
+
+def dispatch_merge(pa: BlackboardOrganism, pb: BlackboardOrganism) -> BlackboardOrganism:
+    """Dispatch-aware crossover: UNION of transformer bodies + UNION of guarded
+    scorers. Unlike recombine() (single-suffix splice), this brings BOTH parents'
+    branches together — crucially each branch's PARSER transformer AND its guarded
+    scorer in one move. That co-location is the valley single-step add_guard+insert
+    can't cross: a guarded scorer without its parser is decorative (the slot it keys
+    on is never written). Validated in dispatch_falsification.py (treatment_merge 5/5).
+
+    Body order: pa's body, then pb's transformers not already present. Guards: the
+    unique guarded scorers across both (plain scorers dropped — clean routing)."""
+    body_a = [n for n in pa.pipeline if role_of(n) != ROLE_SCORER]
+    body_b = [n for n in pb.pipeline if role_of(n) != ROLE_SCORER]
+    body = body_a + [n for n in body_b if n not in body_a]
+    guards = []
+    for n in pa.pipeline + pb.pipeline:
+        if n in GUARDED_SCORERS and n not in guards:
+            guards.append(n)
+    if not guards:
+        guards = [random.choice(GUARDED_SCORERS)]
+    child = pa.clone()
+    child.pipeline = body + guards
+    child.lineage = list(pa.lineage) + [f"dmerge:{pb.genome_id}"]
     return child
 
 
@@ -644,7 +681,10 @@ def evolve(gens=200, pop_size=20, mode="deterministic", seed=20260529,
             if (crossover_frac > 0.0 and len(occ_snapshot) >= 2
                     and random.random() < crossover_frac):
                 pa, pb = random.sample(occ_snapshot, 2)
-                child = recombine(pa["org"], pb["org"])
+                # dispatch mode uses the body+guard UNION merge (co-locates each
+                # branch's parser+scorer); else the single-suffix recombine.
+                child = (dispatch_merge(pa["org"], pb["org"]) if dispatch
+                         else recombine(pa["org"], pb["org"]))
                 xover_used += 1
             elif mode == "llm":
                 child, used = mutate_llm(random.choice(occ_snapshot)["org"])
