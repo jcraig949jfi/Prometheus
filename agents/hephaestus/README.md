@@ -8,7 +8,33 @@ directives), and hammers them into testable Python reasoning tools. It validates
 through five gates, scores for novelty against the existing library, and runs it against
 a 15-trap battery.
 
-## Current State (2026-05-17)
+## On Restart — Read First
+
+1. **`agents/hephaestus/STATUS.md`** — the living status doc. The canonical "where am
+   I, what changed while I was down, what's next." Always read this before acting; it is
+   kept current and supersedes any dated snapshot below.
+2. **`agents/hephaestus/journal/`** — dated journal entries; read the latest 1–2 for
+   recent narrative.
+3. Then skim the three reassessment docs in `pivot/REASSESSMENT_2026-06-22_*.md` if you
+   haven't — they reframe what the forge is *for* (you are the program's first candidate
+   organism; success = a consumer improves under ablation, not "passed a gate").
+
+## Journaling Discipline
+
+Keep the substrate self-aware so the next restart doesn't run on a stale model:
+- **At session start:** append a short `journal/<date>_<topic>.md` — what you're picking
+  up and why.
+- **At each meaningful milestone or decision:** a few lines — what you found, what you
+  decided, what failed (report failure *shapes*, not pass/fail verdicts).
+- **At session end:** update **`STATUS.md`** (the §5 "what's next" especially) and add a
+  closing journal line. If a number in `STATUS.md` is stale on re-measurement, fix it.
+
+A restart that reads `STATUS.md` + the latest journal should reach operational awareness
+in minutes, not hours. That is the point.
+
+---
+
+## Current State — SNAPSHOT 2026-05-17 (HISTORICAL; live state is in `STATUS.md`)
 
 - **Status:** RUNNING on M3 (GANDALF)
 - **Mode:** Continuous, polls local Nous data every 5min
@@ -316,14 +342,13 @@ NVIDIA_API_ENDPOINT=https://integrate.api.nvidia.com/v1
 NVIDIA_MODEL=nvidia/nemotron-3-super-120b-a12b
 ```
 
-Plus env vars (set at User level on M3):
-```
-AGORA_REDIS_HOST=192.168.1.176
-AGORA_REDIS_PASSWORD=prometheus
-AGORA_POSTGRES_HOST=192.168.1.176
-AGORA_POSTGRES_PASSWORD=prometheus
-PROMETHEUS_MACHINE=M3
-```
+**Bus/telemetry env (UPDATED 2026-06-24 — the `.176` Redis is retired):** the message
+bus is now Postgres-backed (`get_redis()` / `get_bus()` → PgRedis, `prometheus_fire`
+schema `bus` on **M1 = 192.168.1.202**). The host default is machine-aware, so **M3
+needs no `PROMETHEUS_FIRE_HOST`** — it auto-routes to M1. The old
+`AGORA_REDIS_HOST=192.168.1.176` / `AGORA_POSTGRES_HOST=192.168.1.176` vars are
+**obsolete; do not set them.** Keep `PROMETHEUS_MACHINE=M3` if anything reads it.
+See `roles/Ergon/REDIS_TO_POSTGRES_2026-06-24.md`.
 
 ## Dependencies
 
