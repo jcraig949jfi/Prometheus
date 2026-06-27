@@ -1,0 +1,413 @@
+{
+ "EC_void_miner_catalog": {
+  "instrument": "EC void-miner (catalog class: 9 mined invariants)",
+  "class_size": 10368,
+  "claim_shape": "rel(f(inv_i(O)), g(inv_j(O))) \u2014 pairwise, integer-valued, scalar relation in 4, same-object diagonal  [invariant must be one of the 9 actually mined]",
+  "breadth": "narrow",
+  "n_targets": 16,
+  "n_in_class": 2,
+  "n_in_class_found": 2,
+  "n_out_of_class": 14,
+  "in_class_recall": 1.0,
+  "expressible_fraction": 0.125,
+  "out_of_class_fraction": 0.875,
+  "ceiling_axes": {
+   "RELATION_OOV": 5,
+   "CROSS_OBJECT": 3,
+   "UNARY": 2,
+   "DISTRIBUTIONAL": 2,
+   "ARITY_GE_3": 1,
+   "REAL_VALUED": 1
+  },
+  "verdict": "B2_CEILING",
+  "verdict_reason": "perfect in-class recall (2/2) and zero of the 14 out-of-class targets reachable, on a NARROW class expressing only 12% of surveyed structure. Signature of a ceiling, not flat terrain. Dominant blocking axes: [RELATION_OOV:5, CROSS_OBJECT:3, UNARY:2, DISTRIBUTIONAL:2, ARITY_GE_3:1, REAL_VALUED:1] \u2014 widening along these (not adding more in-class vocabulary) is the fix.",
+  "proof_dead": false,
+  "per_target": [
+   {
+    "name": "Lorenzini 2011: |E(Q)_tors| divides prod(c_p)",
+    "axis": "IN_CLASS",
+    "found": true,
+    "note": "torsion divides tamagawa_product; FOUND",
+    "in_class": true
+   },
+   {
+    "name": "Shared prime support: rad(N)|N and N==rad(N) mod 2",
+    "axis": "IN_CLASS",
+    "found": true,
+    "note": "conductor_radical vs conductor; FOUND",
+    "in_class": true
+   },
+   {
+    "name": "BSD rank equality: ord_{s=1} L == rank",
+    "axis": "RELATION_OOV",
+    "found": false,
+    "note": "in-class in shape, but the needed invariant (analytic_rank/root_number) was never mined",
+    "in_class": false
+   },
+   {
+    "name": "Parity conjecture: rank == (1-root_number)/2 mod 2",
+    "axis": "RELATION_OOV",
+    "found": false,
+    "note": "in-class in shape, but the needed invariant (analytic_rank/root_number) was never mined",
+    "in_class": false
+   },
+   {
+    "name": "Mazur 1977: |E(Q)_tors| in {1..10,12}",
+    "axis": "UNARY",
+    "found": false,
+    "note": "bound on ONE invariant; injectable (T1b), not discoverable",
+    "in_class": false
+   },
+   {
+    "name": "|Sha| is a perfect square",
+    "axis": "UNARY",
+    "found": false,
+    "note": "property of sha_an alone; needs a unary-property miner",
+    "in_class": false
+   },
+   {
+    "name": "Modularity: E/Q from a weight-2 newform",
+    "axis": "CROSS_OBJECT",
+    "found": false,
+    "note": "correspondence to an object of another category",
+    "in_class": false
+   },
+   {
+    "name": "Sato-Tate equidistribution of a_p",
+    "axis": "DISTRIBUTIONAL",
+    "found": false,
+    "note": "law about the sequence (a_p) and a real limiting measure",
+    "in_class": false
+   },
+   {
+    "name": "Ogg's formula: f_p = ord_p(Delta)+1-m_p",
+    "axis": "ARITY_GE_3",
+    "found": false,
+    "note": "three per-prime quantities; arity 3, per-prime",
+    "in_class": false
+   },
+   {
+    "name": "Szpiro/abc: log|Delta| <= (6+eps) log N",
+    "axis": "RELATION_OOV",
+    "found": false,
+    "note": "multiplicative/asymptotic bound; not abs_diff_le_3",
+    "in_class": false
+   },
+   {
+    "name": "BSD formula (full)",
+    "axis": "REAL_VALUED",
+    "found": false,
+    "note": "regulator, period, L-value derivative are real-valued",
+    "in_class": false
+   },
+   {
+    "name": "Conductor is isogeny-invariant",
+    "axis": "CROSS_OBJECT",
+    "found": false,
+    "note": "equality across an isogeny ORBIT of distinct curves",
+    "in_class": false
+   },
+   {
+    "name": "Root number = product of local root numbers",
+    "axis": "DISTRIBUTIONAL",
+    "found": false,
+    "note": "product over a per-prime family",
+    "in_class": false
+   },
+   {
+    "name": "Torsion injects into E(F_p) (good reduction)",
+    "axis": "CROSS_OBJECT",
+    "found": false,
+    "note": "relates E(Q)_tors to reduction E(F_p) \u2014 different object",
+    "in_class": false
+   },
+   {
+    "name": "Kodaira/Tate reduction types per bad prime",
+    "axis": "RELATION_OOV",
+    "found": false,
+    "note": "categorical per-prime classification; no scalar relation",
+    "in_class": false
+   },
+   {
+    "name": "Conductor-discriminant prime-support equality",
+    "axis": "RELATION_OOV",
+    "found": false,
+    "note": "set-equality of prime supports; Delta not mined",
+    "in_class": false
+   }
+  ]
+ },
+ "a3_cross_product": {
+  "instrument": "a3 cross-product (knot x EC functional identity)",
+  "class_size": 3456,
+  "claim_shape": "rel(f(inv_i(knot)), g(inv_j(EC))) over the FULL knot x EC cross-product (independent objects)",
+  "breadth": "narrow",
+  "n_targets": 5,
+  "n_in_class": 0,
+  "n_in_class_found": 0,
+  "n_out_of_class": 5,
+  "in_class_recall": null,
+  "expressible_fraction": 0.0,
+  "out_of_class_fraction": 1.0,
+  "ceiling_axes": {
+   "PROOF_DEAD": 1,
+   "UNARY": 1,
+   "CROSS_OBJECT": 1,
+   "DISTRIBUTIONAL": 1,
+   "REAL_VALUED": 1
+  },
+  "verdict": "B1_EXHAUSTED_BY_PROOF",
+  "verdict_reason": "the hypothesis class is provably degenerate (product-measure theorem: cross-product pairing makes the joint = product of marginals; every exact void is a single-catalog set-fact, NEVER a knot<->EC correspondence (lattice_void_miner.py decision procedure, validated 34/34)); '0 novel' here is a structural certainty, not an instrument shadow \u2014 widening THIS class cannot help, the class itself must be abandoned for a non-degenerate pairing.",
+  "proof_dead": true,
+  "per_target": [
+   {
+    "name": "Any genuine knot<->EC numerical correspondence",
+    "axis": "PROOF_DEAD",
+    "found": false,
+    "note": "product-measure theorem: joint = product of marginals; no cross-object content possible from independent pairing",
+    "in_class": false
+   },
+   {
+    "name": "In-catalog marginal set-fact (e.g. 'all knot determinants odd')",
+    "axis": "UNARY",
+    "found": false,
+    "note": "a single-catalog property; the only 'content' a void can cite \u2014 and it is a fact about ONE catalog, not a relation",
+    "in_class": false
+   },
+   {
+    "name": "Cross-object pairing (isogeny/twist orbits)",
+    "axis": "CROSS_OBJECT",
+    "found": false,
+    "note": "would need a NON-product pairing (the diagonal), which is a DIFFERENT instrument; the cross-product cannot express it",
+    "in_class": false
+   },
+   {
+    "name": "Distributional knot-vs-EC law (spectra, sequences)",
+    "axis": "DISTRIBUTIONAL",
+    "found": false,
+    "note": "sequence/distribution, not two scalars",
+    "in_class": false
+   },
+   {
+    "name": "Real-valued knot/EC invariant relation (hyperbolic volume vs regulator)",
+    "axis": "REAL_VALUED",
+    "found": false,
+    "note": "non-integer; outside the lattice",
+    "in_class": false
+   }
+  ]
+ },
+ "apollo_primitives": {
+  "instrument": "Apollo Frame-H primitive set (typed composition)",
+  "class_size": 25,
+  "claim_shape": "a typed DAG composed from a fixed alphabet of 25 primitives, wired under a coarse numeric/bool/str type lattice",
+  "breadth": "narrow",
+  "n_targets": 12,
+  "n_in_class": 6,
+  "n_in_class_found": 5,
+  "n_out_of_class": 6,
+  "in_class_recall": 0.8333333333333334,
+  "expressible_fraction": 0.5,
+  "out_of_class_fraction": 0.5,
+  "ceiling_axes": {
+   "REAL_VALUED": 2,
+   "COMPOSITIONAL": 2,
+   "ARITY_GE_3": 1,
+   "RELATION_OOV": 1
+  },
+  "verdict": "MIXED_INCONCLUSIVE",
+  "verdict_reason": "in-class recall 83% (5/6) < 1: the instrument misses laws it COULD express, so '0 novel' is confounded by search insufficiency \u2014 neither a clean ceiling (B2) nor clean exhaustion (B1). Fix search before reading coverage.",
+  "proof_dead": false,
+  "per_target": [
+   {
+    "name": "Logical entailment (modus ponens chain)",
+    "axis": "IN_CLASS",
+    "found": true,
+    "note": "modus_ponens + negate + check_transitivity present & typed",
+    "in_class": true
+   },
+   {
+    "name": "Bayesian belief update",
+    "axis": "IN_CLASS",
+    "found": true,
+    "note": "bayesian_update primitive present, probability-typed",
+    "in_class": true
+   },
+   {
+    "name": "Fencepost / off-by-one counting",
+    "axis": "IN_CLASS",
+    "found": true,
+    "note": "fencepost_count + all_but_n present",
+    "in_class": true
+   },
+   {
+    "name": "Constraint satisfaction over a finite domain",
+    "axis": "IN_CLASS",
+    "found": true,
+    "note": "solve_constraints + pigeonhole_check present",
+    "in_class": true
+   },
+   {
+    "name": "Forward-chaining multi-step deduction (R2 transformer)",
+    "axis": "IN_CLASS",
+    "found": true,
+    "note": "dag_traverse/topological_sort chainable under types (Apollo R2 keystone, 2026-06-09)",
+    "in_class": true
+   },
+   {
+    "name": "Theory-of-mind nested belief (Sally-Anne, 2nd order)",
+    "axis": "IN_CLASS",
+    "found": false,
+    "note": "sally_anne_test + track_beliefs present but untyped ('any'); higher-order nesting unproven",
+    "in_class": true
+   },
+   {
+    "name": "Probabilistic graphical-model inference (junction tree)",
+    "axis": "ARITY_GE_3",
+    "found": false,
+    "note": "needs joint over many nodes; no primitive composes graph + probability jointly",
+    "in_class": false
+   },
+   {
+    "name": "Real-valued optimization / gradient reasoning",
+    "axis": "REAL_VALUED",
+    "found": false,
+    "note": "no continuous-optimization primitive; type lattice has float but no optimizer op",
+    "in_class": false
+   },
+   {
+    "name": "Natural-language semantic parsing",
+    "axis": "RELATION_OOV",
+    "found": false,
+    "note": "no parsing primitive; str-typed ops are prompt fragments",
+    "in_class": false
+   },
+   {
+    "name": "Recursive / self-referential reasoning (fixpoint)",
+    "axis": "COMPOSITIONAL",
+    "found": false,
+    "note": "DAG substrate is acyclic; no recursion/fixpoint wiring shape in the composition op",
+    "in_class": false
+   },
+   {
+    "name": "Analogical mapping across domains",
+    "axis": "COMPOSITIONAL",
+    "found": false,
+    "note": "no structure-mapping primitive; would need a new op + a cross-representation type",
+    "in_class": false
+   },
+   {
+    "name": "Continuous temporal/dynamical simulation",
+    "axis": "REAL_VALUED",
+    "found": false,
+    "note": "temporal_order is discrete-categorical; no ODE/sim op",
+    "in_class": false
+   }
+  ]
+ },
+ "icarus_ladder": {
+  "instrument": "Icarus R0-R12 reasoning ladder",
+  "class_size": 13,
+  "claim_shape": "a single ordinal capability tier R0..R12, each with a frozen falsification test (perturbation that lower tiers fail)",
+  "breadth": "broad",
+  "n_targets": 12,
+  "n_in_class": 10,
+  "n_in_class_found": 6,
+  "n_out_of_class": 2,
+  "in_class_recall": 0.6,
+  "expressible_fraction": 0.833,
+  "out_of_class_fraction": 0.167,
+  "ceiling_axes": {
+   "OTHER": 2
+  },
+  "verdict": "MIXED_INCONCLUSIVE",
+  "verdict_reason": "in-class recall 60% (6/10) < 1: the instrument misses laws it COULD express, so '0 novel' is confounded by search insufficiency \u2014 neither a clean ceiling (B2) nor clean exhaustion (B1). Fix search before reading coverage.",
+  "proof_dead": false,
+  "per_target": [
+   {
+    "name": "Paraphrase-robust single operation",
+    "axis": "IN_CLASS",
+    "found": true,
+    "note": "R1 local operation; R0/R1 falsification tests",
+    "in_class": true
+   },
+   {
+    "name": "Multi-step chaining with distractor",
+    "axis": "IN_CLASS",
+    "found": true,
+    "note": "R2 multi-step execution",
+    "in_class": true
+   },
+   {
+    "name": "Constraint tracking + inconsistency rejection",
+    "axis": "IN_CLASS",
+    "found": true,
+    "note": "R3 (Icarus validated R0-R3 climb, 2026-05-29)",
+    "in_class": true
+   },
+   {
+    "name": "Strategy selection by structure",
+    "axis": "IN_CLASS",
+    "found": true,
+    "note": "R4",
+    "in_class": true
+   },
+   {
+    "name": "Counterfactual branch maintenance",
+    "axis": "IN_CLASS",
+    "found": true,
+    "note": "R5 (cleared 2026-06-10)",
+    "in_class": true
+   },
+   {
+    "name": "Error localization + local repair",
+    "axis": "IN_CLASS",
+    "found": true,
+    "note": "R6 (interface walls fixed 2026-06-15)",
+    "in_class": true
+   },
+   {
+    "name": "Representation re-encoding",
+    "axis": "IN_CLASS",
+    "found": false,
+    "note": "R8 rung exists; not yet reached/validated",
+    "in_class": true
+   },
+   {
+    "name": "Load-bearing compositional synthesis",
+    "axis": "IN_CLASS",
+    "found": false,
+    "note": "R9 rung exists; falsification test defined; not reached",
+    "in_class": true
+   },
+   {
+    "name": "Epistemic self-modeling (knows what it lacks)",
+    "axis": "IN_CLASS",
+    "found": false,
+    "note": "R10 rung exists; not reached",
+    "in_class": true
+   },
+   {
+    "name": "Open-ended research under falsification",
+    "axis": "IN_CLASS",
+    "found": false,
+    "note": "R12 rung exists; not reached",
+    "in_class": true
+   },
+   {
+    "name": "Parallel/ensemble reasoning (many lenses at once)",
+    "axis": "OTHER",
+    "found": false,
+    "note": "orthogonal to the ordinal ladder; a panel/breadth axis, not a single tier \u2014 the 1-D rung vocabulary can't place it",
+    "in_class": false
+   },
+   {
+    "name": "Calibration / confidence quality as a graded measure",
+    "axis": "OTHER",
+    "found": false,
+    "note": "a continuous quality axis, not an ordinal rung; lives in the orthogonal M-dimension, absent from THIS module",
+    "in_class": false
+   }
+  ]
+ }
+}

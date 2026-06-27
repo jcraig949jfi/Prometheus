@@ -46,19 +46,77 @@ report = grade_reasoner("agents.hephaestus.src.engines:composed_reasoner")
 grade the composed engine each cycle → the staircase is "are we there yet," the kill
 shapes are "what next," both from a non-gameable oracle.
 
-## Track 2a — Coverage diagnostic sweep  ⏳ IN PROGRESS
-Generalize `hypothesis_class_coverage_audit.py` (EC → 25%, B2 ceiling) into a reusable
-`harmonia/diagnostics/coverage_diagnostic.py` and run across instruments (a3/knot
-miner, Apollo's 27 primitives, Icarus rungs) → typed **B1 (truly exhausted)** vs **B2
-(ceiling, fixable by widening the named axis)** verdicts. Operationalizes the doctrine
-"no terrain-exhaustion claim without a coverage measure." *(results → `harmonia/diagnostics/COVERAGE_SWEEP_RESULTS.md`)*
+## Track 2a — Coverage diagnostic sweep  ✅ DONE (2026-06-27)
+`harmonia/diagnostics/coverage_diagnostic.py` (reusable; EC regression reproduces).
+Sweep verdicts — and the diagnostic **refuses to force a verdict** where in-class
+recall < 1 (no overclaiming):
 
-## Track 2b — M0, the keystone experiment  ⏳ IN PROGRESS
-"Can the selector recognize novelty *outside* its calibration manifold?" Build the
-three anti-calibration sets (A: unfamiliar surface form; B: adjacent under-represented
-domains; C: synthetic externally-checkable truths) and run the type-II test. This is
-*the* experiment that decides whether the 20-year discovery bet is alive or should
-fall back to the audit-substrate framing. *(→ `harmonia/experiments/M0_RESULTS.md`)*
+| instrument | coverage | verdict |
+|---|---|---|
+| EC void-miner | 12% | **B2_CEILING** — widen the *axis*, not the integer invariants |
+| a3 cross-product | 0% | **B1_EXHAUSTED_BY_PROOF** — product-measure theorem; provably dead (the non-list-dependent anchor) |
+| Apollo Frame-H | 50% | **MIXED/INCONCLUSIVE** — climb/wiring-limited, not class-limited |
+| Icarus R0–R12 | 83% | **MIXED/INCONCLUSIVE** — limited by *climb* (R8–R12 unreached), not expressiveness |
+
+**Partially falsifies the universal-ceiling hypothesis:** the EC ceiling is *not*
+universal — three distinct stall mechanisms (narrow-class ceiling / dead-by-proof /
+climb-search insufficiency). The one shared math-side widening lever: **admit
+real-valued / tolerance relations** (opens EC's BSD/Szpiro axis AND Apollo's
+optimization axis at once). `COVERAGE_SWEEP_RESULTS.md`.
+
+## Track 2b — M0, the keystone  ✅ DONE (2026-06-27, re-executed + confirmed)
+18 hand-curated TRUE claims (all independently oracle-confirmed true), run through the
+real battery. Numbers (E3, reproduced by Harmonia A):
+
+| Set | accept | reject | unknown |
+|---|---|---|---|
+| A (re-encodings of core facts) | 80% | 0% | 20% |
+| B (adjacent domains — the real novelty arm) | **17%** | 0% | 83% |
+| C (synthetic checkable) | 71% | 0% | 29% |
+| overall (18) | 56% | **0%** | 44% |
+
+**Can the selector see novelty? — Honest verdict: NO (Reading B / demoted).** Two
+facts adjudicate it:
+1. **0% reject — the battery never certifies a true claim FALSE.** It fails
+   *closed/silent* (unknown), not *loud/wrong*. Strict type-II = 0/18. This is its
+   trustworthy, defensible property and why the audit fallback (success-state A/C) is
+   solid: it will not falsely kill a true discovery — it just can't recognize one yet.
+2. **The packaged battery certifies ZERO genuinely-novel-shaped truths on its own.**
+   The 4 real out-of-manifold accepts were all *hand-routed* to raw z3
+   (`certify_universal`/`entails`), bypassing the `verify()` gate. On the true novelty
+   arm (Set B) it is **17% — blind, not discerning.** The thesis's own self-flag — "a
+   recognizer of things-that-look-like-existing-truths" — is **empirically confirmed.**
+
+**The crucial nuance (and the way back to alive):** the blocker is
+**representational/interface, not epistemic** (Lens 7). B4/B6 are z3-decidable *today*
+and fail only because `certify_universal` is wired to one integer variable; A4 fails
+only because the conjecture registry is keyed by a literal `cid` string, not meaning.
+So discovery (B) is **gated on representational engineering** — widen the primitive
+signature, add an identity kind, let `verify()` synthesize predicates — **not** more
+crawlers/agents/terrain. Until then, the honest job is audit, and **B should stop being
+advertised.** `M0_RESULTS.md`. *(Follow-up: the harness's mechanical 50%-knife-edge
+verdict over-credits hand-routed-z3 accepts and mis-prints "Reading A"; phylax slice to
+harden the verdict rule to packaged-battery-only reach.)*
+
+---
+
+## The integrated finding (all three tracks)
+
+The grading oracle, the coverage sweep, and M0 converge on **one diagnosis**:
+**Prometheus's stall is dominantly REPRESENTATIONAL / INTERFACE, not epistemic, not
+terrain, not scale.** The same lever appears at every level —
+- *Instrument level (2a):* EC's "0 novel" is a B2 ceiling → widen the relation class
+  (real-valued/tolerance).
+- *Candidate level (2a):* Apollo/Icarus are climb/wiring-limited, not class-limited.
+- *Keystone discovery bet (2b):* the selector can't see novelty because novel shapes
+  are *unrepresentable*, though the underlying z3 can often decide them.
+
+**So the program's highest-leverage work is widening the representable-shape inventory**
+(real-valued relations, identity kinds, multi-variable predicates, posable primitives,
+meaning-keyed registries) — exactly Lens 7 ("suspect the interface before the
+reasoning"). This is measurable progress the fleet can now track per cycle: each new
+representable shape that lets the battery certify a previously-unknown Set-B truth is a
+tick toward "the selector can see novelty," i.e. toward discovery (B) being alive again.
 
 ---
 

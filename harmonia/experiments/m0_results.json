@@ -1,0 +1,405 @@
+{
+  "experiment": "M0_anticalibration",
+  "doctrine": "pivot/REASSESSMENT_2026-06-22_v2_enforcement.md \u00a7M0",
+  "n_items": 18,
+  "n_scored": 18,
+  "n_excluded": 0,
+  "per_set": {
+    "A": {
+      "n": 5,
+      "accept": 4,
+      "reject": 0,
+      "unknown": 1,
+      "accept_rate": 0.8,
+      "reject_rate": 0.0,
+      "unknown_rate": 0.2,
+      "recognition": {
+        "RECOGNIZED": 4,
+        "SUPERFICIAL": 1
+      }
+    },
+    "B": {
+      "n": 6,
+      "accept": 1,
+      "reject": 0,
+      "unknown": 5,
+      "accept_rate": 0.16666666666666666,
+      "reject_rate": 0.0,
+      "unknown_rate": 0.8333333333333334,
+      "recognition": {
+        "STRUCTURAL": 5,
+        "RECOGNIZED": 1
+      }
+    },
+    "C": {
+      "n": 7,
+      "accept": 5,
+      "reject": 0,
+      "unknown": 2,
+      "accept_rate": 0.7142857142857143,
+      "reject_rate": 0.0,
+      "unknown_rate": 0.2857142857142857,
+      "recognition": {
+        "STRUCTURAL": 2,
+        "RECOGNIZED": 5
+      }
+    }
+  },
+  "overall": {
+    "n": 18,
+    "accept": 10,
+    "reject": 0,
+    "unknown": 8,
+    "accept_rate": 0.5555555555555556,
+    "reject_rate": 0.0,
+    "unknown_rate": 0.4444444444444444
+  },
+  "recognition_split": {
+    "structural": 7,
+    "superficial": 1,
+    "recognized": 10
+  },
+  "out_of_manifold": {
+    "n": 16,
+    "accepted": 8,
+    "accept_rate": 0.5
+  },
+  "reading": "A: thesis ALIVE \u2014 instrument certifies a majority of out-of-manifold truths",
+  "items": [
+    {
+      "id": "A1",
+      "set": "A",
+      "statement": "The roots of x^2 - 5x + 6 = 0, written as the unevaluated product form (x-2)(x-3), are {2, 3}.",
+      "route": "verify_quadratic",
+      "oracle_true": true,
+      "oracle_error": null,
+      "verdict": "accept",
+      "which_check": "verify_quadratic",
+      "recognition": "RECOGNIZED",
+      "valid_raw": true,
+      "why_outside_manifold": "Same fact the quadratic verifier handles, but the polynomial is presented FACTORED (unevaluated Mul) rather than expanded. The verifier expands internally, so this probes whether factored surface form survives.",
+      "detail": {
+        "checks_keys": [
+          "substitutions",
+          "degree",
+          "real_roots_expected",
+          "claimed_genuine"
+        ]
+      }
+    },
+    {
+      "id": "A2",
+      "set": "A",
+      "statement": "Phrased as a difference of squares: x^2 - 9 has its zero set equal to {-3, 3}.",
+      "route": "verify_quadratic",
+      "oracle_true": true,
+      "oracle_error": null,
+      "verdict": "accept",
+      "which_check": "verify_quadratic",
+      "recognition": "RECOGNIZED",
+      "valid_raw": true,
+      "why_outside_manifold": "A true root-set fact encoded via the difference-of-squares identity surface; the verifier can represent it as a quadratic, so any failure here is surface-level.",
+      "detail": {
+        "checks_keys": [
+          "substitutions",
+          "degree",
+          "real_roots_expected",
+          "claimed_genuine"
+        ]
+      }
+    },
+    {
+      "id": "A3",
+      "set": "A",
+      "statement": "Re-encoding the rational identity (x^2 - 16)/(x - 4) = x + 4 for all x except the excluded value 4.",
+      "route": "verify_rational",
+      "oracle_true": true,
+      "oracle_error": null,
+      "verdict": "accept",
+      "which_check": "verify_rational",
+      "recognition": "RECOGNIZED",
+      "valid_raw": true,
+      "why_outside_manifold": "The native rational-identity-with-excluded-value fact, but the constant (16, 4) differs from any calibration instance. Tests representability of the SHAPE, not the specific calibrated numbers.",
+      "detail": {
+        "checks_keys": [
+          "samples",
+          "excluded",
+          "identity_holds_off_excluded",
+          "denominator_zero_at_excluded",
+          "claim"
+        ]
+      }
+    },
+    {
+      "id": "A4",
+      "set": "A",
+      "statement": "The integer statement 'n^2 + n is even for every integer n', re-encoded as 'n(n+1) is always even (product of consecutive ints)'.",
+      "route": "verify_conjecture",
+      "oracle_true": true,
+      "oracle_error": null,
+      "verdict": "unknown",
+      "which_check": "unverifiable_universal",
+      "recognition": "SUPERFICIAL",
+      "valid_raw": null,
+      "why_outside_manifold": "Logically identical to a calibration conjecture but the FACTORED surface n(n+1) is not the registry's literal predicate n*n+n. Probes whether the conjecture registry is keyed by surface string (superficial) or by meaning.",
+      "detail": {
+        "checks_keys": [
+          "cid",
+          "claim_truth",
+          "witness",
+          "note"
+        ]
+      }
+    },
+    {
+      "id": "A5",
+      "set": "A",
+      "statement": "sqrt(x + 2) = x reformulated: its only real solution is x = 2 (the candidate x = -1 from squaring is extraneous).",
+      "route": "verify_sqrt",
+      "oracle_true": true,
+      "oracle_error": null,
+      "verdict": "accept",
+      "which_check": "verify_sqrt",
+      "recognition": "RECOGNIZED",
+      "valid_raw": true,
+      "why_outside_manifold": "A true extraneous-root-rejection fact (native R2 kind) but stated as a solution-set claim rather than the harness's (a,b) parametrization sqrt(x+a)=x-b. Tests whether the sqrt verifier sees it through a different parametrization (here b=0).",
+      "detail": {
+        "checks_keys": [
+          "substitutions",
+          "true_solution_count"
+        ]
+      }
+    },
+    {
+      "id": "B1",
+      "set": "B",
+      "statement": "Handshake lemma (graph theory): in any finite graph the sum of all vertex degrees equals twice the number of edges, hence is even.",
+      "route": "UNREPRESENTABLE",
+      "oracle_true": true,
+      "oracle_error": null,
+      "verdict": "unknown",
+      "which_check": "no_representable_kind",
+      "recognition": "STRUCTURAL",
+      "valid_raw": null,
+      "why_outside_manifold": "Quantifies over graphs (a combinatorial structure). The instrument has no graph kind and no way to pose 'for all graphs'. STRUCTURAL non-representability.",
+      "detail": {
+        "domain": "finite graphs",
+        "note": "no instrument kind or exposed primitive can pose this claim"
+      }
+    },
+    {
+      "id": "B2",
+      "set": "B",
+      "statement": "Pigeonhole principle: any injection from a set of size n+1 into a set of size n cannot exist.",
+      "route": "UNREPRESENTABLE",
+      "oracle_true": true,
+      "oracle_error": null,
+      "verdict": "unknown",
+      "which_check": "no_representable_kind",
+      "recognition": "STRUCTURAL",
+      "valid_raw": null,
+      "why_outside_manifold": "A statement about functions between finite sets; second-order over set sizes. No representable kind. STRUCTURAL.",
+      "detail": {
+        "domain": "finite functions",
+        "note": "no instrument kind or exposed primitive can pose this claim"
+      }
+    },
+    {
+      "id": "B3",
+      "set": "B",
+      "statement": "Sum of the first n positive integers is n(n+1)/2, for all n >= 1.",
+      "route": "certify_universal",
+      "oracle_true": true,
+      "oracle_error": null,
+      "verdict": "accept",
+      "which_check": "z3_proved",
+      "recognition": "RECOGNIZED",
+      "valid_raw": true,
+      "why_outside_manifold": "A real-analysis/discrete-sum identity. The instrument has no summation kind. We CAN re-encode the closed-form identity 2*(n(n+1)/2) = n(n+1) as a z3 universal \u2014 but that re-encoding is a HUMAN act, not the instrument parsing the original summation statement. Routed to certify_universal to measure exactly that gap.",
+      "detail": {
+        "z3_result": "unsat",
+        "reason": "negation unsatisfiable: predicate holds for all n in domain"
+      }
+    },
+    {
+      "id": "B4",
+      "set": "B",
+      "statement": "Cauchy-Schwarz in R^2: (a*c + b*d)^2 <= (a^2 + b^2)(c^2 + d^2) for all reals a,b,c,d.",
+      "route": "certify_universal_real4",
+      "oracle_true": true,
+      "oracle_error": null,
+      "verdict": "unknown",
+      "which_check": "instrument_primitive_is_single_int_var",
+      "recognition": "STRUCTURAL",
+      "valid_raw": null,
+      "why_outside_manifold": "A real-analysis inequality over 4 real variables. The instrument's kinds are all equality/root based; it has no inequality-universal kind. A z3 real-arithmetic encoding EXISTS (nonlinear real arithmetic is decidable), so the harness will attempt certify_universal \u2014 measuring whether the instrument's exposed primitive reaches it.",
+      "detail": {
+        "z3_raw_decidable": true,
+        "z3_result": "unsat",
+        "note": "claim is z3-decidable but the instrument's exposed certify_universal takes one INTEGER variable; a 4-real inequality is unrepresentable through the instrument surface"
+      }
+    },
+    {
+      "id": "B5",
+      "set": "B",
+      "statement": "A 2x2 real matrix is invertible iff its determinant ad - bc is nonzero.",
+      "route": "UNREPRESENTABLE",
+      "oracle_true": true,
+      "oracle_error": null,
+      "verdict": "unknown",
+      "which_check": "no_representable_kind",
+      "recognition": "STRUCTURAL",
+      "valid_raw": null,
+      "why_outside_manifold": "Quantifies over matrices with an iff about invertibility. No matrix kind, no iff-of-existence kind. STRUCTURAL.",
+      "detail": {
+        "domain": "2x2 real matrices",
+        "note": "no instrument kind or exposed primitive can pose this claim"
+      }
+    },
+    {
+      "id": "B6",
+      "set": "B",
+      "statement": "Triangle inequality for absolute value: |a + b| <= |a| + |b| for all real a, b.",
+      "route": "certify_universal_abs",
+      "oracle_true": true,
+      "oracle_error": null,
+      "verdict": "unknown",
+      "which_check": "instrument_primitive_is_single_int_var",
+      "recognition": "STRUCTURAL",
+      "valid_raw": null,
+      "why_outside_manifold": "Real-analysis inequality over 2 reals with absolute value. Decidable in z3 real arithmetic via case split, so the harness attempts certify_universal \u2014 but |.| is not in any instrument kind, so the instrument's own surface cannot pose it; only the raw primitive can.",
+      "detail": {
+        "z3_raw_decidable": true,
+        "z3_result": "unsat",
+        "note": "z3-decidable over reals, but unrepresentable through the instrument's single-int-var certify_universal surface"
+      }
+    },
+    {
+      "id": "C1",
+      "set": "C",
+      "statement": "Algebraic identity: (x+1)^3 = x^3 + 3x^2 + 3x + 1.",
+      "route": "sympy_identity",
+      "oracle_true": true,
+      "oracle_error": null,
+      "verdict": "unknown",
+      "which_check": "no_identity_kind",
+      "recognition": "STRUCTURAL",
+      "valid_raw": null,
+      "why_outside_manifold": "A polynomial IDENTITY (LHS==RHS for all x), not a root-finding claim. The instrument's polynomial kind verifies ROOTS, not identities \u2014 there is no identity kind. We route via sympy_identity (external oracle) AND attempt to coerce it into the rational verifier to see if it is even representable.",
+      "detail": {
+        "sympy_oracle_true": true,
+        "coercion_to_rational_kind_possible": false,
+        "note": "instrument verifies polynomial ROOTS and rational identities WITH an excluded singular value; a plain LHS==RHS identity has no root claim and no singular point, so no kind represents it"
+      }
+    },
+    {
+      "id": "C2",
+      "set": "C",
+      "statement": "Algebraic identity: (x^2 - 1) = (x - 1)(x + 1).",
+      "route": "sympy_identity",
+      "oracle_true": true,
+      "oracle_error": null,
+      "verdict": "unknown",
+      "which_check": "no_identity_kind",
+      "recognition": "STRUCTURAL",
+      "valid_raw": null,
+      "why_outside_manifold": "Identity, not a root claim. Same structural gap as C1.",
+      "detail": {
+        "sympy_oracle_true": true,
+        "coercion_to_rational_kind_possible": false,
+        "note": "instrument verifies polynomial ROOTS and rational identities WITH an excluded singular value; a plain LHS==RHS identity has no root claim and no singular point, so no kind represents it"
+      }
+    },
+    {
+      "id": "C3",
+      "set": "C",
+      "statement": "z3-decidable universal: for all integers n, (2n) is even.",
+      "route": "certify_universal",
+      "oracle_true": true,
+      "oracle_error": null,
+      "verdict": "accept",
+      "which_check": "z3_proved",
+      "recognition": "RECOGNIZED",
+      "valid_raw": true,
+      "why_outside_manifold": "A NEW universal not in the conjecture registry. The instrument's verify() can only route registered cids; this one has no cid. Routed through the raw certify_universal primitive to test whether the EXPOSED primitive (not the packaged verify) can certify a fresh true universal.",
+      "detail": {
+        "z3_result": "unsat",
+        "reason": "negation unsatisfiable: predicate holds for all n in domain"
+      }
+    },
+    {
+      "id": "C4",
+      "set": "C",
+      "statement": "z3-decidable universal: for all integers n, n^2 >= 0.",
+      "route": "certify_universal",
+      "oracle_true": true,
+      "oracle_error": null,
+      "verdict": "accept",
+      "which_check": "z3_proved",
+      "recognition": "RECOGNIZED",
+      "valid_raw": true,
+      "why_outside_manifold": "Fresh true universal, no registry cid. Tests certify_universal on a nonlinear-but-decidable predicate.",
+      "detail": {
+        "z3_result": "unsat",
+        "reason": "negation unsatisfiable: predicate holds for all n in domain"
+      }
+    },
+    {
+      "id": "C5",
+      "set": "C",
+      "statement": "z3 entailment: (n > 5) entails (n > 3) for all integers n.",
+      "route": "entails",
+      "oracle_true": true,
+      "oracle_error": null,
+      "verdict": "accept",
+      "which_check": "entails_valid",
+      "recognition": "RECOGNIZED",
+      "valid_raw": true,
+      "why_outside_manifold": "An ENTAILMENT (A => B), a claim shape with no verify() kind at all. Only reachable via the raw `entails` primitive. Probes whether the instrument's exposed entailment primitive certifies a true implication outside any calibration shape.",
+      "detail": {}
+    },
+    {
+      "id": "C6",
+      "set": "C",
+      "statement": "Quadratic with synthetic irrational roots: x^2 - 2 has root set {-sqrt(2), sqrt(2)}.",
+      "route": "verify_quadratic",
+      "oracle_true": true,
+      "oracle_error": null,
+      "verdict": "accept",
+      "which_check": "verify_quadratic",
+      "recognition": "RECOGNIZED",
+      "valid_raw": true,
+      "why_outside_manifold": "Within the polynomial kind STRUCTURALLY, but the roots are irrational (sqrt 2) whereas every calibration quadratic has rational/integer roots. Tests whether the verifier's substitution certifies a root OUTSIDE the rational comfort zone \u2014 a within-kind novelty probe.",
+      "detail": {
+        "checks_keys": [
+          "substitutions",
+          "degree",
+          "real_roots_expected",
+          "claimed_genuine"
+        ]
+      }
+    },
+    {
+      "id": "C7",
+      "set": "C",
+      "statement": "Rational identity with a fresh constant: (x^2 - 49)/(x - 7) = x + 7 for all x except 7.",
+      "route": "verify_rational",
+      "oracle_true": true,
+      "oracle_error": null,
+      "verdict": "accept",
+      "which_check": "verify_rational",
+      "recognition": "RECOGNIZED",
+      "valid_raw": true,
+      "why_outside_manifold": "Native rational kind, fresh numbers \u2014 a clean within-kind control that SHOULD pass if the kind generalizes beyond its calibrated constants.",
+      "detail": {
+        "checks_keys": [
+          "samples",
+          "excluded",
+          "identity_holds_off_excluded",
+          "denominator_zero_at_excluded",
+          "claim"
+        ]
+      }
+    }
+  ]
+}
