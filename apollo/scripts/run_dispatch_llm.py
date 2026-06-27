@@ -16,7 +16,7 @@ ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 from blackboard_evolve import evolve
 
-RUN_DIR = ROOT / "run_branch_c_dispatch_llm"
+RUN_DIR = ROOT / "run_branch_c_dispatch_llm2"
 RUN_DIR.mkdir(parents=True, exist_ok=True)
 
 
@@ -27,12 +27,16 @@ def _stamp(msg):
 
 
 if __name__ == "__main__":
-    _stamp("dispatch llm run START — gens=3000 pop=24 mode=llm crossover=0.3 dispatch=True")
+    # 800 gens (not 3000): deterministic converged to 0.833 by ~gen 400, and the prior
+    # llm run barely used Granite (0.14 mut/gen, flat at deterministic from gen 9). 800
+    # is a fair comparison — if Granite beats deterministic's 0.833 it shows here; if not,
+    # we've spent ~25h not ~4 days. Watch max_acc>0.833 / max_routable_acc / genuine_routing.
+    _stamp("dispatch llm run START — gens=800 pop=24 mode=llm crossover=0.3 dispatch=True")
     try:
-        evolve(gens=3000, pop_size=24, mode="llm", seed=20260624,
+        evolve(gens=800, pop_size=24, mode="llm", seed=20260627,
                run_dir=str(RUN_DIR), log_every=10, checkpoint_every=50,
                crossover_frac=0.3, seed_variant="default", dispatch=True)
-        _stamp("dispatch llm run COMPLETE (reached gen 3000)")
+        _stamp("dispatch llm run COMPLETE (reached gen 800)")
     except BaseException as e:
         with open(RUN_DIR / "crash.log", "a", encoding="utf-8") as f:
             f.write(f"\n=== CRASH {time.strftime('%Y-%m-%d %H:%M:%S')} : {type(e).__name__}: {e} ===\n")
