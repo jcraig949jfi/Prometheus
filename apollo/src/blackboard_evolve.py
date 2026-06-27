@@ -98,8 +98,13 @@ REGISTRY.update({
         lambda s: len(s.ordered) > 0), ROLE_SCORER),
     "score_by_derivability__g": (_guarded("score_by_derivability",
         lambda s: (len(s.derived_facts) > 0 or len(s.facts) > 0) and len(s.ordered) == 0), ROLE_SCORER),
+    # NOTE (2026-06-27): guard keys on `counts` (what parse_box_items writes), NOT
+    # `quantities` (which nothing writes — a latent bug that made this branch ALWAYS
+    # decorative and produced a spurious "aggregate solves 0 synth" falsification).
+    # With the fix, parse_box_items→op_aggregate_quantities→this scorer routes the
+    # two_stage_count synth tasks (synth 15→30). counts is empty on non-box tasks.
     "score_by_aggregate__g": (_guarded("score_by_aggregate",
-        lambda s: len(s.quantities) > 0 and len(s.ordered) == 0
+        lambda s: len(s.counts) > 0 and len(s.ordered) == 0
                   and len(s.derived_facts) == 0 and len(s.facts) == 0), ROLE_SCORER),
     # comparison/boolean guarded scorers (lever 2, 2026-06-26): preconditions are
     # built into the ops (comparison is not None / extreme_number != ""); they key on
