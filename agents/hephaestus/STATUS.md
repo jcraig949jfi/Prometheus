@@ -89,21 +89,37 @@ The deliverable that proves you're an organism: **a replayable ablation card** �
 where *removing your output measurably degrades a downstream consumer*. The +11/+32pp
 failure-mining result is the seed of exactly this. (Reassessment CC-2 / M1.)
 
-## 5. What's open / next (priority, reconciled with the reassessment)
+## 5. What's open / next (priority — James's directive 2026-06-27)
 
+**Governing call:** *the priority is to exploit what we already have* (the engines,
+the composed tool, the failure-mining result, the Apollo adapter). Build on existing
+assets before generating new ones.
+
+**On forging itself (James, 2026-06-27):** *tool forging is NEVER declared complete* —
+a genuinely new approach or build could add real value any time, so the capability
+stays open and warm. But it is **not the priority thrust right now.** Fire it
+**opportunistically**, specifically when a *new approach or problem-FORMAT* appears
+(the diversity/seed forges found new mechanisms precisely by changing the format —
+that path is alive). **Do not** grind the exhausted Nous-monolithic queue for
+throughput: that just mints more regex costumes (source-novelty Goodhart = the North
+Star's reward-signal-capture failure mode).
+
+Priority order (exploit-first):
 1. **Make the +11/+32pp result an ablation card** (the organism proof). Highest leverage.
-   Point the forge at the Learner's failure clusters; show ablation-positive lift.
+   Point the forge at the Learner's failure clusters (bypass dead Nous); show
+   ablation-positive lift on a held-out metric vs a null.
 2. **Strengthen the NL parsing layer** — the proven bottleneck (85% structured → 34%
-   NL). Engines already climb the ladder; parsing is what's starving them.
+   NL). Engines already climb the ladder; parsing is what's starving them. This is the
+   North-Star move: a coordinate system of legibility (NL → structured), not a new "law."
 3. **Apollo integration test** — Apollo has your 9 blackboard ops + validated crossover
    (2026-06-16). Wire `forward_chain` into its gauntlet; does one R2 transformer carry a
    load-bearing composition?
-4. **Wire Harmonia B's testable ladder as the grading oracle** (procedural probes +
-   z3/sympy deterministic verifier) instead of the hand-crafted puzzle battery — so
-   "are we there yet" uses a non-gameable oracle.
-5. **DEPRIORITIZED:** "get fresh Nous data." The +11/+32pp came from *failure-mining*,
-   not Nous throughput. More Nous candidates = more regex costumes (monoculture). Mine
-   failures, don't grind the queue.
+4. **Re-found the gate on metabolization** — make your own mechanism-knockout +
+   behavioral-NCD the *admission gate* (load-bearing, not decorative), not just a report.
+5. **Wire Harmonia B's testable ladder as the grading oracle** (procedural probes +
+   z3/sympy deterministic verifier) so "are we there yet" uses a non-gameable oracle.
+6. **Forging (standing, opportunistic):** kept available; fire on a new approach/format,
+   not for queue throughput. Never retired.
 
 ## 6. Infra quick-reference (M3, post-migration)
 
