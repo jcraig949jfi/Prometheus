@@ -1,17 +1,17 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-06-28 12:14:51 PM UTC*
+*Generated: 2026-06-28 04:14:49 PM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
 
 ## Act on this
 * **Redis Unreachable**: Redis has been unreachable since at least 2026-06-24 12:15:10 PM EDT, with agent data being sourced from the Postgres dual-write mirror, and this issue needs to be resolved to restore normal system functionality. To resolve this, investigate and restore Redis connectivity at M1.
-* **Hephaestus and Pronoia Unknown Status**: Both Hephaestus at M3 and Pronoia at M4 have unknown statuses due to no Postgres heartbeat, which may impact the forge pipeline and reporting orchestrator. To resolve this, investigate and verify the status of both Hephaestus and Pronoia.
-* **Multiple Agents with Unknown Status**: A total of 23 agents have unknown statuses, including Clio, Pythia, and Charon_Loop, which may affect overall system performance and require investigation to determine their current state.
+* **Multiple Agents with Unknown Status**: A total of 23 agents, including Hephaestus at M3 and Pronoia at M4, have unknown statuses due to no Postgres heartbeat, which may impact the forge pipeline and reporting orchestrator. To resolve this, investigate and verify the status of these agents.
+* **Hephaestus and Pronoia Status Verification**: Both Hephaestus and Pronoia require verification of their current status to ensure the forge pipeline and reporting orchestrator are functioning correctly. To resolve this, check the current metrics source for live ledger_size, session_forges, and session_scraps.
 
 ## Watch this
-* **System Throughput**: With Redis still unreachable and multiple agents having unknown statuses, system throughput may be impacted, potentially affecting the overall performance of the system, with 0 completed tasks in the work queue.
-* **Forge Rate and Budget**: Hephaestus's forge rate is at ~4%, which is considered healthy, but there is no information on the remaining daily budget, which may impact the system's ability to produce high-value intelligence outputs.
+* **System Throughput**: With Redis still unreachable and multiple agents having unknown statuses, system throughput may be impacted, potentially affecting the overall performance of the system, with 0 completed tasks in the work queue. 
+* **Forge Rate and Budget**: Hephaestus's forge rate is at ~4%, which is considered healthy, but there is no information on the remaining daily budget, which may impact the system's ability to produce high-value intelligence outputs. 
 * **Potential Impact on Intelligence Pipeline**: The current system issues may impact the intelligence pipeline, potentially affecting the system's ability to produce high-value intelligence outputs.
 
 ## For the record
