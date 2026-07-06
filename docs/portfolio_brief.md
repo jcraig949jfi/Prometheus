@@ -1,5 +1,5 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-07-06 08:14:50 AM UTC*
+*Generated: 2026-07-06 12:14:49 PM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
@@ -7,7 +7,7 @@
 ## Act on this
 * **Redis Unreachable**: Redis has been unreachable since at least 2026-06-24 12:15:10 PM EDT, and this issue needs to be resolved to restore normal system functionality, with 0 completed tasks in the work queue and a work queue depth of 0. To resolve this, investigate and restore Redis connectivity at M1.
 * **Hephaestus and Pronoia Unknown Status**: Hephaestus at M3 and Pronoia at M4 have unknown statuses due to no Postgres heartbeat, which may significantly impact system performance, and requires immediate investigation to verify the status of these agents, with Hephaestus having a current forge rate of ~4%. Check manual_status.json for out-of-band context.
-* **Multiple Agents with Unknown Status**: Several agents, including Clio at M1 (supervised by Aporia, paper scanner), Pythia at M1 (supervised by Aporia, deep research report producer), and Charon_Loop at M2 (supervised by Charon, rotation orchestrator), have unknown statuses due to no Postgres heartbeat, which may affect their supervised roles, with 0 recent discoveries or main stream updates. Check manual_status.json for out-of-band context.
+* **Multiple Agents with Unknown Status**: Several agents, including Clio at M1 (supervised by Aporia, paper scanner), have unknown statuses due to no Postgres heartbeat, which may affect their supervised roles, with 0 recent discoveries or main stream updates. Check manual_status.json for out-of-band context.
 
 ## Watch this
 * **System Throughput and Performance**: With Redis still unreachable, system throughput may be impacted, potentially affecting the overall performance of the system, with 0 completed tasks in the work queue and a work queue depth of 0. Monitoring system performance and adjusting as necessary is crucial.
