@@ -1,5 +1,5 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-07-08 08:14:51 AM UTC*
+*Generated: 2026-07-08 12:14:49 PM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
@@ -15,6 +15,6 @@
 * **Potential Impact on Intelligence Pipeline**: The unresolved Redis issue and unknown statuses of critical agents may impact the intelligence pipeline, potentially affecting the system's ability to produce high-value intelligence outputs, with 0 recent discoveries or main stream updates.
 
 ## For the record
-* **Hephaestus Operational Status**: Hephaestus at M3 still has an operational status of "running" as of 2026-05-16, with a current forge rate context indicating healthy substrate selection pressure, and a model of "qwen/qwen3.5-397b-a17b", which is a positive signal despite the current system challenges.
+* **Hephaestus Operational Status**: Hephaestus at M3 still has an operational status of "running" as of 2026-05-16, with a current forge rate context indicating healthy substrate selection pressure, and a model of "qwen/qwen/qwen3.5-397b-a17b", which is a positive signal despite the current system challenges.
 * **No New Discoveries or Main Stream Updates**: There are no new discoveries or main stream updates to report, with the last updates occurring prior to the current system issues, and 0 completed tasks in the work queue.
 * **Agents Pending Deployment**: (N) agents are still pending deployment on M2, M3, and M4, as part of the multi-machine bring-up phase, which is a known revival sequence in progress.
