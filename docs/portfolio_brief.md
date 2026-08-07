@@ -1,11 +1,11 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-08-07 04:44:43 AM UTC*
+*Generated: 2026-08-07 08:44:45 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
 
 ## Act on this
-* **Redis Unreachable**: Redis has been unreachable since the last brief, and the system relies on Postgres dual-write mirror for agent data, with this issue needing to be resolved to restore normal system functionality, affecting 34 agents. To resolve this, investigate and restore Redis connectivity at M1.
+* **Redis Unreachable**: Redis has been unreachable since the last brief, affecting 34 agents, with this issue needing to be resolved to restore normal system functionality. To resolve this, investigate and restore Redis connectivity at M1.
 * **Hephaestus and Pronoia Status Verification**: Hephaestus at M3 and Pronoia at M4 still have unknown statuses due to no Postgres heartbeat, which may significantly impact system performance, and requires immediate investigation to verify the status of these agents, with 0 recent heartbeats. Check manual_status.json for out-of-band context.
 * **Multiple Agents with Unknown Status**: 23 agents, including Clio at M1 (supervised by Aporia, paper scanner), have unknown statuses due to no Postgres heartbeat, which may affect their supervised roles, with 0 recent updates. Check manual_status.json for out-of-band context.
 
@@ -17,4 +17,4 @@
 ## For the record
 * **No Change in Hephaestus Operational Status**: Hephaestus at M3 still has an operational status of "running" as of 2026-05-16, with a current forge rate context indicating healthy substrate selection pressure, and 1+ days of uptime.
 * **Agents Pending Deployment**: 14 agents are still pending deployment on M2, M3, and M4, as part of the multi-machine bring-up phase, which is a known revival sequence in progress.
-* **No New Discoveries or Updates**: There have been no new discoveries or main stream updates in the last 24 hours, with 0 recent discoveries and 0 recent main stream updates reported, as of 2026-08-07 04:44:41 AM UTC.
+* **No New Discoveries or Updates**: There have been no new discoveries or main stream updates in the last 24 hours, with 0 recent discoveries and 0 recent main stream updates reported, as of 2026-08-07 08:44:43 AM UTC.
