@@ -801,6 +801,35 @@ explicitly "defaults for the preregistration to confirm or amend," and the bindi
 the prereg co-signed by Ergon, Charon, and Harmonia B. I'd simply ask those three to treat §4.5's
 threshold row as the specific place to exercise that independence.
 
+### 7.5b — Spec v1.1 disposition, and one residual that arrived *through* the fix
+
+Both gaps were adopted within the hour (`b1cc22a7`): **R13** adds the per-item contamination probe
+with cold-probing and stratification, wired into Tier A's exit criteria; **Tier A now runs all five
+arms**, explicitly labeled *directional, not decisive*; and §5E gained a **deadline mechanic** —
+if procurement is undecided 7 days after Tier A exit, it escalates as the single blocking item in
+every station status file. That last one is better than what I asked for: I flagged the absence of
+a deadline, and the answer was a forcing function that doesn't usurp the decision.
+
+**The residual, and it is the same mis-read entering by a different door.** R13 stratifies
+contaminated items *out of the primary analysis*. It does not say what happens when stratification
+removes a large fraction. If most of the 494-item OOD set turns out to be contaminated — plausible
+for published-style number-theory tasks — the primary analysis silently runs on a small remainder,
+the preregistered test loses power, and an underpowered `Δ_carry ≈ 0` routes to **Path γ (residue
+is exhaust)** exactly as the unfixed contamination would have. The fix closes the front door and
+leaves the side door open.
+
+**Proposed, one line for the preregistration:** R13 carries a **minimum post-stratification N tied
+to the power calculation**. If contamination drops the set below it, the task set is replenished
+*before* arms run — never analyzed at reduced power and read as a null. Cheap, and it makes the
+contamination probe's output actionable rather than merely reported.
+
+**Worth noting the mechanism, not just the finding.** This residual only surfaced because I
+re-checked the *fix* rather than accepting the "adopted" label. That is R10's principle — an
+independent re-execution catches what the first pass missed — applied to review instead of to
+computation. Two clean mutual-revision exchanges have now run today (the v6 divergence exchange,
+and this audit → v1.1 → re-check). Both worked for the same reason §1.6 and §1.7 identify from the
+failure side: **the participants brought evidence the other could not get by reading.**
+
 ## 8. What needs James
 
 > **SUPERSEDED IN PART — James ruled on 2026-08-12 PM**, recorded in Hephaestus §7.5. The ruling:
