@@ -1,0 +1,135 @@
+{
+  "_schema_note": "v0, provisional. Aletheia_M4 owns the fleet status schema; this is M2 offering a machine-readable surface so a scraper has something to read on day one. When Aletheia_M4 publishes a schema, M2 conforms to it and this file is rewritten, not defended. Human-readable companion: stations/M2_STATUS.md",
+  "schema_version": "0.1",
+  "station": "M2",
+  "point_agent": "Harmonia_M2_A",
+  "updated_utc": "2026-08-12",
+  "mode": "level-setting",
+  "decisions_frozen_until": "~2026-08-14",
+
+  "agents": [
+    {
+      "id": "Harmonia_M2_A", "role": "cartographer / architecture lens",
+      "state": "active", "is_point_agent": true,
+      "landed_20260812": ["REVIEW_20260812_syntactic_router.md (+ §9 corrections)",
+        "bprime_generate.py + holdout/oracle + negative control",
+        "SYNTHESIS_20260812_harmonia_panel.md", "stations/M2_STATUS.{md,json}"],
+      "owed": ["unknown_kind -> valid=None fix", "claim->z3/sympy translator",
+        "grade B' exactly once"]
+    },
+    {
+      "id": "Harmonia_M2_B", "role": "instrument integrity", "state": "active",
+      "landed_20260812": ["R6 answer-key leak finding", "ladder_leakage_audit.py",
+        "typed-object corpus (14, schema-valid)", "REVIEW_20260812_program_and_instrument_audit.md",
+        "POSITION_20260812_north_star_reset.md"],
+      "owed": []
+    },
+    {
+      "id": "Harmonia_M2_C", "role": "counterfactual / north-star", "state": "active",
+      "landed_20260812": ["component_reachability_census.py", "dependency_door_audit.py",
+        "lane_exhaustion_audit.py", "REVIEW_20260812_harmonia_C.md"],
+      "owed": []
+    },
+    {
+      "id": "Harmonia_M2_D", "role": "permanence", "state": "active",
+      "landed_20260812": ["ladder_liveness_audit.py", "REVIEW_20260812_harmonia_D.md",
+        "permanence ladder P0-P4", "closure-novelty kill"],
+      "owed": []
+    },
+    {
+      "id": "Apollo_M2", "role": "evolutionary search", "state": "dormant",
+      "dormant_since": "2026-06-28",
+      "landed_20260812": [],
+      "gap": "only M2 component never reviewed from inside; appears solely as an object in other agents' audits"
+    }
+  ],
+
+  "substrate": {
+    "primary_channel": "git",
+    "note": "git is the de facto channel by default, not by choice",
+    "bus": {
+      "status": "REACHABLE_BUT_UNUSED",
+      "evidence_level": "E3",
+      "measured_utc": "2026-08-12",
+      "keys": 0,
+      "impl": "PgRedis (psycopg2-backed, real connect in __init__ - not a stubbed ping)",
+      "module": "D:\\Prometheus\\thesauros\\prometheus_data\\pg_redis.py",
+      "accessor": "D:\\Prometheus\\thesauros\\prometheus_data\\pool.py :: get_bus()",
+      "host_default": "192.168.1.202 (M1); loopback only when hostname contains 'skullport'",
+      "db": "prometheus_fire", "port": 5432,
+      "env_overrides": ["PROMETHEUS_FIRE_HOST", "PROMETHEUS_FIRE_PORT",
+        "PROMETHEUS_FIRE_DB", "PROMETHEUS_FIRE_USER", "PROMETHEUS_FIRE_PASSWORD"],
+      "for_aletheia_m4": "This is the obvious substrate for cross-machine status scraping and messaging. It is live from M2 today and carrying zero traffic. No env var needed from M2/M3/M4."
+    },
+    "fire_db_accessor": {
+      "status": "BROKEN_ON_M2",
+      "error": "ConnectionError: Cannot connect to fire. Check ~/.prometheus/db.toml and credentials.toml",
+      "diagnosis": "config gap, NOT network - PgRedis reaches the same server with default credentials",
+      "fix": "write ~/.prometheus/db.toml on M2 (parked for James)"
+    },
+    "stale_docs_corrected": [
+      "memory project_harmonia_D_20260615 'Postgres unreachable (parked)' - STALE; 2026-06-24 Redis->Postgres migration fixed transport",
+      "stall map action #1 cites prometheus_data\\config.py - does not exist on M2; live module is thesauros/prometheus_data/pool.py"
+    ]
+  },
+
+  "contested_cells": [
+    {"id": "disposition", "question": "Is 'built-and-not-wired' a program disposition?",
+     "positions": {"D": "A's §1 unbroken", "C": "base rate breaks it; detectors orphaned LESS than average, unwired ambient at 55-58%"},
+     "settled_by": "count shape-gates vs content-gates over gates on critical paths - reference class nobody used",
+     "status": "open"},
+    {"id": "b1_b2", "question": "EC exhaustion: B1 or B2?",
+     "positions": {"A": "B2 ceiling, diversify hypothesis classes", "D": "malformed - B1 has no finite certificate, so A's fix does not terminate"},
+     "settled_by": "adopt class-relative exhaustion as the deliverable; formalize H as a grammar",
+     "status": "open"},
+    {"id": "apollo_exhaustion", "question": "Is Apollo exhausted?",
+     "positions": {"C": "turns entirely on whether crossover is classed as search_operator (fires) or as part of evolutionary search (goes silent)"},
+     "settled_by": "Apollo's owner, one afternoon",
+     "status": "open"}
+  ],
+
+  "decisions_pending_james": [
+    {"id": "pip_snappy", "action": "pip install snappy on global interpreter",
+     "effect": "prometheus_math 29 -> 220 of 222 modules importable",
+     "why": "ruling R1 makes math the calibration standard; every instrument that 'passed on math' this year passed against 29 modules",
+     "raised_by": "Harmonia_M2_C"},
+    {"id": "db_toml", "action": "write ~/.prometheus/db.toml on M2",
+     "effect": "unbreaks get_fire()", "raised_by": "Harmonia_M2_A"},
+    {"id": "local_model_tier", "action": "podman needs a WSL2 distro first (neither installed); cheaper path is a 4-bit MoE into existing ollama",
+     "effect": "always-on local inference volume", "raised_by": "Harmonia_M2_A"}
+  ],
+
+  "known_defects": [
+    {"id": "unknown_kind", "severity": "high",
+     "detail": "verify() returns valid=False for unregistered kinds - certifies TRUE claims WRONG instead of abstaining",
+     "scale": "firing 160/160 at R5/R7/R8 on the live ladder",
+     "consequence": "M0's '0% type-II' is a fossil", "fix": "return valid=None", "status": "open"},
+    {"id": "r6_payload_leak", "severity": "high",
+     "detail": "grading oracle R6 ships truth inside probe.data; a 3-line payload reader ties the top baseline",
+     "found_by": "Harmonia_M2_B", "status": "open"},
+    {"id": "missing_tiers", "severity": "medium",
+     "detail": "TIER_GENS holds exactly R0,R1,R2,R3,R5,R6,R7,R8 - R4 and R9-R12 do not exist; R0-R12 ladder is a design doc, not an instrument",
+     "found_by": "Harmonia_M2_D", "verified_independently_by": "Harmonia_M2_A", "status": "open"}
+  ],
+
+  "tool_shelf": {
+    "apis": {"anthropic": "dead - no credits", "openai": "dead - no credits",
+      "deepseek": "dead - no credits",
+      "gemini": "LIVE free tier: gemini-3.6-flash generates; pro tiers 429 on quota; bursty, retry on 503"},
+    "independent_model_family_available": "gemini-3.6-flash",
+    "compute": {"gpu": "RTX 5060 Ti 16GB", "ram_gb": 32, "logical_cores": 28,
+      "ollama": "0.32.9, one stale model (qwen2.5-coder:14b)",
+      "podman": false, "docker": false, "wsl_distro": false},
+    "python": {"working": ["z3", "sympy", "psycopg2"],
+      "missing": ["psycopg (v3)", "cypari", "snappy", "knot_floer_homology"]}
+  },
+
+  "naming_hazard": {
+    "issue": "two distinct referents named Aletheia",
+    "role_agent": "Aletheia_M4 - fleet orchestrator/coordinator; had committed nothing to origin as of a6ccb3dc",
+    "component": "agents/aletheia/ - knowledge-graph harvester, in-tree since ~April, rarely referenced",
+    "ruling_james_20260812": "qualification is sufficient; no rename needed",
+    "convention": "Aletheia_M4 for the role agent; name the path agents/aletheia/ for the component; qualify in prose every time",
+    "watch": "if Aletheia_M4 writes into agents/aletheia/ the referents merge irreversibly; roles/Aletheia/ is the consistent destination"
+  }
+}
