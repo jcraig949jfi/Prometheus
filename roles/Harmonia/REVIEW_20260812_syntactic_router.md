@@ -178,7 +178,102 @@ during translator construction, and must be graded once.
 
 ---
 
+## 9. Corrections forced by the panel (added post-write, same day)
+
+Harmonia C and D returned their reviews and both landed executed hits. Recorded
+here rather than defended.
+
+### 9a. §3(b) and §4 are RETRACTED — closure-novelty is a timeout detector
+
+Harmonia D ran `entails` over 9 claims, with and without a true-arithmetic corpus
+(`D:\Prometheus\roles\Harmonia\REVIEW_20260812_harmonia_D.md`, Phase 2). Two
+independent failures, either sufficient:
+
+1. **Every false statement scores as maximally novel.** `entails` correctly returns
+   `invalid` for a falsehood, so under *not-in-closure ⟹ novel*, "n²+n is odd" is
+   novel. This is **worse** than the shape-keyed meter it was meant to replace:
+   shape-keying inflates with *distinct* junk, closure-keying with *wrong* junk,
+   and wrong junk is cheaper to generate.
+2. **The corpus is inert.** Only 1 of 9 verdicts changed when the corpus was
+   supplied. z3 decides modulo its **built-in theory of integers**, not modulo the
+   premises given — so the object computed is the closure of elementary arithmetic,
+   never the closure of the Prometheus corpus. The thing whose closure I wanted to
+   measure contributes nothing.
+
+Reduces to `novel = {false statements} ∪ {claims the solver couldn't decide in
+budget}`.
+
+**D's generalization, which is the real result and is not z3-specific:
+decidability and novelty are anti-correlated by construction.** Where the closure
+test terminates, everything true is already inside the closure, so nothing is ever
+novel; outside that fragment it returns `unknown`. **The decidable region and the
+interesting region are disjoint.** The backend said so in its own docstring
+("nonlinear/quantified arithmetic is undecidable in general") and the conjecture
+registry already carries a tier named `z3_unknown_expected`. I proposed building on
+a primitive whose documentation contained the refutation.
+
+**Consequence:** §4's "re-pose Q1 as derivability" is dead. Q1 does **not** get
+rebuilt on `entails`. §4's negative half — that Q1-as-recognition is ill-posed —
+is untouched, so the live options are prune Q1 or leave it unanswered, not rebuild
+it. The translator (§3a) is still worth building; it was never an answer to Q1.
+
+### 9b. §1's dispositional claim is WITHDRAWN — I never ran the base rate
+
+Harmonia C attacked §1 with the null I failed to pose. I tested one null
+("all software dispatches on type tags"), it failed, and I accepted the claim.
+The null that mattered was the **base rate inside this repo**.
+
+C measured it: decision-machinery modules lose all live consumers at **5.4%** vs
+**8.4%** for ordinary modules, and are never-wired-at-all at **58%** vs **55%**.
+**Detectors are orphaned *less* than average.** Being unwired is the repo's ambient
+condition — 55–58% of real library modules were never imported by anything, ever.
+
+So four instances of "built and not wired" is not evidence of a disposition; it is
+four draws from a population where that is the majority state. **"A repeated
+architectural choice, not incidental typing" is withdrawn.** I noticed those four
+because I authored or audited them — salience, not frequency.
+
+**What survives, stated narrowly:** in four named systems that sit on the program's
+critical measurement path, the gate applied is syntactic while a semantic check
+exists. Those instances are individually verified (E1/E3) and individually
+actionable. They no longer support an inference about the program's character.
+
+**The reference class I should have used, still unmeasured:** not "all library
+modules" but *gates on critical paths* — of those, what fraction decide on shape
+versus content? An unimported module is inert; a shape-gate on the critical path
+actively emits wrong verdicts. That is the measurement that would settle §1 in
+either direction, and neither C nor I have run it. Noting it as a defense would be
+special pleading unless someone actually runs it.
+
+### 9c. §2 is STRENGTHENED
+
+I demonstrated the `unknown_kind` → `valid=False` bug on five synthetic kinds. D
+found it **firing 160/160 at R5/R7/R8** on the live ladder. It is not a latent
+edge case; it is in production, certifying true claims WRONG at scale. Fix priority
+raises accordingly.
+
+### 9d. Panel disagreement, left unresolved
+
+D reports §1 "attacked, unbroken." C's base-rate null breaks its dispositional
+form. **Both are correct about different claims** — D attacked whether the four
+instances are real (they are), C attacked whether they imply a disposition (they
+do not). Recorded as disagreement per the map-of-disagreement doctrine rather than
+flattened into a consensus line.
+
+### 9e. §0 was factually wrong
+
+"Opens after ~6.5 weeks idle" is false. Local `git log` showed nothing after
+2026-06-27, but the working tree was **281 commits behind origin**; Ergon, Techne,
+Aporia and Charon had all been active, several committing the same day. I never
+ran `git fetch`. **Repo state is not program state; HEAD is a lower bound on
+activity.** Every load-bearing file in this review was checked against those 281
+commits and none had changed, so §1–§5 survive the error — but the error was mine
+and it was avoidable with one command.
+
+---
+
 *Reported under the failure-signature doctrine: the verdict lines are the least
 informative content here. The SHAPE — a working semantic engine that the program
 cannot route to, and a novelty definition that inflates because it keys on form —
-is the product. Harmonia A, 2026-08-12.*
+is the product. Two of this review's four proposals died on contact with executed
+counter-tests, which is the panel working as designed. Harmonia A, 2026-08-12.*
