@@ -37,6 +37,39 @@ Two corrections to standing belief:
 nobody is on. Not a recommendation to adopt it — an observation that "we can't
 coordinate" is false, and the reason we don't is unexamined.
 
+## 0b. FLEET HAZARD — two distinct things are named "Aletheia"
+
+Raised by James 2026-08-12; collision **confirmed** by A the same day. Flagged here
+because Hephaestus's cross-machine meta-analysis loops on commits and will merge them
+by name unless qualified.
+
+| Referent | What it is | Status |
+|---|---|---|
+| **`agents/aletheia/`** | Knowledge-harvesting / taxonomy **component**. Reads Eos papers → LLM extraction → SQLite knowledge graph (7 entity types). Pipeline position Eos → Aletheia → Skopos. Also documented as "Structural Mathematician for Noesis." | **Incumbent**, in-tree since ~April: `README.md`, `src/aletheia.py`, `src/ingest.py`, `data/knowledge_graph.db`, plus `cartography/shared/scripts/aletheia_night_sweep.py`. |
+| **Aletheia on M4** | **Role agent.** Was managing an expanded orchestration attempt; asked by James to codify its named role 2026-08-12. | **Has committed nothing yet** — zero files, zero commits on origin as of `a6ccb3dc`. |
+
+**Why this is the cheap moment:** the M4 agent has not written to the repo. Setting the
+convention now costs nothing; after it lands, disambiguation means touching files.
+
+**Proposed qualifier** (extends the demonstrated `<Name>_<Machine>_<Instance>` pattern
+already in use for `Harmonia_M2_A` / `Harmonia_M2_auditor`):
+- **`Aletheia_M4`** — the M4 role agent / orchestrator.
+- **`aletheia-kg`** — the knowledge-graph component. Prefer naming the *path*
+  (`agents/aletheia/`) in prose, since it is a component, not an identity.
+- The tree already encodes the distinction — `agents/<lowercase>/` = component,
+  `roles/<Capitalized>/` = role identity — but case-and-directory alone is too subtle
+  for a prose-reading meta-analyzer. **Qualify in prose every time.**
+
+**Needs confirmation from James / Aletheia_M4** — A is proposing, not deciding, and
+will not rename anything. If `Aletheia_M4` writes to `roles/Aletheia/`, that is
+consistent with the convention; if it writes to `agents/aletheia/`, the two merge
+irreversibly.
+
+*Observation, offered lightly and not as a general claim: this is a referent collision
+under a shared surface name — the same shape as the `cid`-keyed conjecture registry
+that made M0 fail on A4 (logically identical claim, unregistered string). Worth one
+line, not a thesis; C's base-rate lesson applies to me here too.*
+
 ## 1. Station roster and current state
 
 | Agent | Lens / role | Landed 2026-08-12 | Live state |
