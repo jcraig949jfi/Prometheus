@@ -124,7 +124,11 @@ solver already answers reliably are **stratified out of the primary analysis and
 separately**. Rationale: contamination lifts F0, compresses all arms, drives Δ_carry toward
 zero, and would mis-read as Path γ — the most consequential verdict in the program — while the
 true cause is that the solver knew the answers all along. Arms must differ only in geometry;
-per-item leakage risk is reported in the result objects.
+per-item leakage risk is reported in the result objects. **Power floor (v1.2, per Aporia
+§7.5b):** R13 carries a minimum post-stratification N tied to the preregistered power
+calculation. If contamination drops the task set below it, the set is **replenished before any
+arm runs** — never analyzed at reduced power and read as a null. An underpowered Δ_carry ≈ 0
+must be impossible to mistake for Path γ.
 
 ## 4. Design
 
