@@ -117,6 +117,15 @@ token spend logged per arm; the run halts, not degrades, if budget exhausts mid-
 bounded deliverables, not shared ownership. If Ergon's session cannot continue, James names a
 successor explicitly; ownership never becomes ambient.
 
+**R13 — Per-item contamination probe** *(added per Aporia's audit, META_SYNTHESIS §7.5a —
+closing the gap where Techne's pretraining guard never became a requirement).* Before arms
+run, each task is posed to each solver cold (no residue, minimal budget, N small). Items the
+solver already answers reliably are **stratified out of the primary analysis and reported
+separately**. Rationale: contamination lifts F0, compresses all arms, drives Δ_carry toward
+zero, and would mis-read as Path γ — the most consequential verdict in the program — while the
+true cause is that the solver knew the answers all along. Arms must differ only in geometry;
+per-item leakage risk is reported in the result objects.
+
 ## 4. Design
 
 ### 4.1 Roles & contracts
@@ -147,9 +156,17 @@ acceptable in Tier A — its job is validating the *instrument* (arm separation,
 packet pipeline), not measuring the capacity ceiling. R3's positive control defines success:
 if F-oracle ≫ F0 separation is visible even on a small solver, the harness works.
 
-**Tier A exit criteria:** both R3 controls pass; R7 indistinguishability passes; result
-objects flow end-to-end typed; F-oracle > F0 at p < 0.05 on the wall corpus. Then Tier B is a
-solver-swap plus task-set swap, not a rebuild.
+**Tier A runs ALL FIVE ARMS** *(amended per Aporia §7.5b — resolving the ambiguity
+explicitly)*: F-prom and F-null run in Tier A too, using whatever the substrate actually
+recorded for the ablation-wall runs. Tier-A `Δ_carry` is **directional, not decisive** (small
+solver, constructed failures) and is labeled as such in every report — but it means that if
+Tier B's procurement never lands, the program holds a number rather than only a harness. This
+is the direct counter to the archaeology's failure mode: a specified decisive experiment
+waiting indefinitely on an unscheduled input.
+
+**Tier A exit criteria:** both R3 controls pass; R7 indistinguishability passes; R13
+contamination stratification executed; result objects flow end-to-end typed; F-oracle > F0 at
+p < 0.05 on the wall corpus. Then Tier B is a solver-swap plus task-set swap, not a rebuild.
 
 ### 4.3 Tier B — the decisive run (gated on API procurement)
 
@@ -181,6 +198,11 @@ substrate's own records, any text that names the expected answer (cheat-control 
 ### 4.5 Metrics & decision rules (preregistered thresholds; numbers below are defaults for
 the preregistration to confirm or amend with rationale)
 
+*Authorship note (per Aporia §7.5): this spec's author is the declared-conflicted supplier,
+and arm definitions plus thresholds shape what counts as success. The co-signers — Ergon,
+Charon, Harmonia B — are specifically asked to treat THIS section's threshold row as the place
+to exercise independent judgment: amend freely, with rationale, in the preregistration.*
+
 Primary: solve rate per arm on held-out computed gold. Secondary: attempts-to-solve;
 per-failure-class breakdowns (which residue classes carry signal — the actionable detail).
 
@@ -207,7 +229,11 @@ B. `pip install snappy` path executed; `import prometheus_math` green (R5).
 C. kill_vector computed on the Tier B task slice OR whole-index-in-context variant selected
    explicitly as primary (Charon's gate, resolved either way in preregistration).
 D. Grader headroom demonstrated (R4).
-E. API procurement decision (Tier B only): providers + monthly ceiling (James).
+E. API procurement decision (Tier B only): providers + monthly ceiling (James). **Deadline
+   mechanic** *(per Aporia §7.5b)*: the preregistration records a requested-by date; if
+   procurement is undecided 7 days after Tier A's exit criteria pass, it is escalated as the
+   single blocking item in every station status file until decided — a forcing function, not a
+   usurpation of the decision.
 F. Backups of fire+sci and the F: corpus initiated (not probe-blocking, but no Tier B run
    before the data it prices has a second copy — one disk failure would otherwise moot the
    whole question).
