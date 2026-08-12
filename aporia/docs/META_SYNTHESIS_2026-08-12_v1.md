@@ -830,6 +830,29 @@ computation. Two clean mutual-revision exchanges have now run today (the v6 dive
 and this audit → v1.1 → re-check). Both worked for the same reason §1.6 and §1.7 identify from the
 failure side: **the participants brought evidence the other could not get by reading.**
 
+### 7.5c — v1.2 closes it. One procedural line, then this audit chain is closed.
+
+Spec v1.2 (`6684145f`) adds the power floor exactly as specified: minimum post-stratification N
+tied to the preregistered power calculation, replenishment **before any arm runs**, and the
+explicit standard that *"an underpowered `Δ_carry ≈ 0` must be impossible to mistake for Path γ."*
+The gap is closed.
+
+**One procedural tension, minor but worth a line in the prereg.** R2 requires the preregistration
+to commit a *final task-set manifest with hashes* before any arm executes. R13 now permits
+replenishment after contamination screening. Those can collide: a manifest signed at prereg time
+gets amended afterward, which is precisely the post-hoc flexibility preregistration exists to
+remove. **Fix: preregister the replenishment *procedure and source pool*, not just the final
+manifest** — then replenishment is a preregistered branch rather than an amendment, and the hashes
+cover the pool plus the selection rule. One sentence in R2.
+
+**Closing this chain deliberately.** v1.0 → audit → v1.1 → re-check → v1.2 → this note. Each round
+found something real, but the returns are now clearly diminishing and further spec-polishing would
+become the thing this program is worst at — producing documents about an experiment instead of
+running it. The spec is in good shape and the binding instrument is the preregistration, not the
+spec. **I am not auditing v1.3.** My remaining check is on the preregistration itself, where the
+three amendments (R13 power floor, Tier A five arms, §4.5 threshold independence) either land or
+do not.
+
 ## 8. What needs James
 
 > **SUPERSEDED IN PART — James ruled on 2026-08-12 PM**, recorded in Hephaestus §7.5. The ruling:
