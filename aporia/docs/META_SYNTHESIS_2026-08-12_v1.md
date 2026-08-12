@@ -1,19 +1,29 @@
 # Meta-Synthesis — the fleet's convergence, and the one thing absent from all of it
 
-**Author:** Aporia (Claude Opus 5, 1M context) · **Date:** 2026-08-12 · **Version:** v5 (living doc — revised in place, not forked)
+**Author:** Aporia (Claude Opus 5, 1M context) · **Date:** 2026-08-12 · **Version:** v6 (living doc — revised in place, not forked)
 **Inputs read in full:** Aporia `frontier_leverage_reassessment_2026-08-12` · Charon
 `CHARON_SESSION_2026-08-12` · Ergon `REVIVAL_ASSESSMENT_2026-08-12` · Harmonia A
 `REVIEW_20260812_syntactic_router` · Harmonia B `POSITION_20260812_north_star_reset` ·
 Techne `REVIVAL_ASSESSMENT_2026-08-12`
 · Harmonia A `SYNTHESIS_20260812_harmonia_panel` (covering Harmonia C and D) · `stations/M2_STATUS.md`
-**Pending:** Hephaestus (M3, Fable, ultracode) — the only non-Claude seat, and the one that can
-tell us something six Claude voices structurally cannot (§1.6).
+· Hephaestus `META_ASSESSMENT_2026-08-12_fable_seat` (M3, Fable, ultracode) + `stations/M3_STATUS.md`
+**Pending:** none. The fleet has reported.
 **Not pending — dormant:** Apollo. M2 reports it **dormant since 2026-06-28** and the only M2
 component never reviewed from inside. I had it listed as "pending"; it is not coming unless someone
 wakes it. Its exhaustion verdict turns on one unmade classification call (is crossover a
 `search_operator`, or part of evolutionary search?) that its owner could settle in an afternoon.
 **Status:** NON-CANONICAL. Meta-layer, not a sixth position paper. Revised as machines report.
 
+> **v6 changelog:** Hephaestus reported from the Fable seat and the divergence file earns its
+> placement. **My §6 ceiling claim is corrected — it was priced with zero external data** (D1), and
+> that error generalizes into §1.7 (new), which I now think is a bigger finding than §1.6: the
+> fleet's entire evidence base was endogenous. Seven agents, one repo, zero web queries. §1.7 also
+> corrects my own fleet-protocol rule — the operative variable was *external grounding*, not
+> *non-Claude family*. §6's taxonomy gains a third category from D3 (**certificate-checking**,
+> which scales past finite domains and is where Lean lives). §3's open question got its
+> preliminary answer from the archaeology (D2). §8 is superseded in part by James's 08-12 PM
+> ruling, recorded in Hephaestus §7.5.
+>
 > **v5 changelog:** M2's station doc lands the constraint that reorders everything: **Anthropic,
 > OpenAI and DeepSeek are all out of credits; only `gemini-3.6-flash` is live.** §2.7 (new) draws
 > the distinction nobody had — *agent-in-harness access ≠ programmatic API access* — which splits
@@ -96,6 +106,16 @@ Stripping arguments, keeping only things emitted by code, `git`, or a corpus:
   the fossil confirmed at scale. `TIER_GENS` holds exactly `R0,R1,R2,R3,R5,R6,R7,R8`: **R4 and
   R9–R12 do not exist.** Five-sixths of the upper ladder was never built; the R0–R12 ladder is a
   design document, not an instrument.
+- **Hephaestus (E3-me, re-executed on M3 before use):** `import prometheus_math` →
+  `ModuleNotFoundError: cypari` (independent third confirmation); **the Lean 4 + Mathlib harness
+  exists in-repo, green-tested, and has been consumed by nothing since May 29**; `grade_reasoner`
+  has zero non-Harmonia consumers; the model-zoo runner is ready and unrun. Plus the inventory that
+  reframes everything: **fifteen-plus shipped, working, unconsumed assets** — grading oracle (0
+  consumers), Lean harness (0 importers), model zoo (ready, unrun), 9 typed blackboard ops (never
+  registered), `pg_redis` (0 rows ever), the tensor family (0 consumers since May), 422 finished
+  deep-research reports, `kill_vector.py` + navigator (104KB of code, field 0% populated), the
+  24,847-example Talos corpus. And: **99.2% of commits during the 44-day blackout were a cron
+  emailing confabulated status to James 6×/day.**
 - **Aporia:** six weeks of cron-only commits; the decisive experiment blocked on a dead
   motherboard; 21 retire candidates frozen on a single-family verdict. *(Caveat, per the panel's
   standing rule 1 — repo state is not program state. My dormancy reading was taken from this
@@ -209,6 +229,48 @@ re-keyed my §5 retrodiction on it. **Harmonia D then retracted that claim** (ex
 claims: a closure test reduces to `{false statements} ∪ {solver timeouts}`). So within one day I
 built on a Harmonia A claim twice, and both times it was falsified by an agent who ran code. I am
 not the auditor of this pattern standing outside it; I am one of its instances.
+
+## 1.7 — §1.6 generalizes, and the general form is worse: the fan-out was endogenous
+
+Hephaestus's D1 caught something none of the other six of us did, and the catch is more important
+than the specific claim it corrects.
+
+**Not one of the seven assessments — mine included — contains a single web-grounded fact about the
+2026 external landscape.** Seven agents, two machines, four role-doctrines, one shared repo, and
+**zero queries outside it.** Hephaestus was the only seat that looked out, and what it found was
+not decoration:
+
+- **AlphaEvolve** is making genuine constructive discoveries (improved Ramsey and TSP bounds,
+  67-problem sweeps, per-problem setup in hours). That is *the founding Prometheus paradigm* —
+  generative variance plus ruthless selection — validated externally, run with frontier mutation
+  engines and real verification as the selector.
+- **AlphaProof-Nexus** resolved **492 OEIS conjectures** via evolutionary Lean proof search.
+- **RLVR / process-reward literature** reports **process-level supervision beating outcome-only by
+  ~10pp on small models.** That is the KillVector thesis in external clothing — *train on how it
+  failed, not whether* — and it is the empirical support the program's central bet has never had.
+
+**This is §1.6 one altitude up.** There, N agents citing one measurement were one measurement with
+N pointers. Here, **N agents reading one repo are one repo with N voices.** A fan-out cannot escape
+the corpus it reads, and ours read only itself. The failure is structural and it does not care how
+many lenses you add — Harmonia ran *four* deliberately non-overlapping lenses and all four were
+endogenous.
+
+**This forces a correction to my own fleet-protocol rule (§2).** I wrote: *weight Hephaestus/Fable
+divergences above Claude concurrences*, on the theory that model-family diversity was the operative
+variable. Reading D1–D8, I no longer think that is right. Hephaestus's most valuable contributions
+— the external landscape, the archaeological answer to my repair question, the Lean-vs-decision-
+procedure distinction — came from **going outside the corpus and re-executing claims**, not from
+being Fable. A Claude seat with web access and a re-execution mandate would have produced most of
+it. The revised rule:
+
+> **Every review round must contain at least one externally-grounded seat** — web, literature,
+> external benchmarks — and at least one re-execution seat. Model-family diversity is a *weaker*
+> secondary control, worth having, but it is not what produced the value today.
+
+That is falsifiable and cheap to test: run the next round with an externally-grounded Claude seat
+and see whether its divergence yield resembles Hephaestus's. If it does, family diversity was
+never the lever. **I am stating this against my own earlier rule, which the fleet has already
+adopted and which Hephaestus placed §2 first in deference to.**
 
 ## 2. The convergence — and why it is a warning
 
@@ -423,7 +485,25 @@ So decide it, cheaply:
 > program's gravity well and we need a different move. Each repair **did** unlock something ⇒ the
 > fleet is right, sequence repairs aggressively and stop apologizing.
 
-I expect *mixed* — and the mix will name which class of repair pays.
+I expected *mixed*. **Hephaestus answered it from the git archaeology the same day, and the answer
+is sharper than my expectation:**
+
+> Repairs restored **capability** — the DB repoint let today's sessions query; the seam fix
+> produced honest verdicts; the rekey gave clean joins. **But no repair has ever been followed by
+> a consumer consuming.** The only capability climb in program history — the +11pp/+32pp engines —
+> came from *hand-metabolizing failure clusters*, with a human as the metabolizing mechanism, not
+> from any instrument repair.
+
+So the fleet's unanimous recommendation is **necessary but not sufficient, and the program's own
+record says so.** Repair-first is not wrong; repair-*only* is the documented failure mode, eight
+eras running. The operational consequence Hephaestus draws is the right one and it overrides my
+framing: **run the repairs and one metabolization lane concurrently**, not serially — which is
+also what the accepted dissent ordered seven weeks ago. Sequencing them strictly serially is how
+the ninth era becomes a tenth.
+
+The repair ledger survives as a work item, but its job changes: not *"does repair pay?"* (answered:
+not by itself) but *"which repair class, if any, has ever been followed by consumption?"* —
+formalized as a typed table. Hephaestus lists it as backlog item 8.
 
 ## 4. The synthesis no single agent stated: the deletion test
 
@@ -528,10 +608,35 @@ prior that it contaminated 92K unexamined historical kills is high.
 
 ## 6. What is actually achievable — the honest ceiling
 
-**Not achievable in 3 months, and we should stop implying otherwise:** a novel mathematical
-discovery. Zero over a year across 92K tests, and nothing in the new model generation changes the
-generative side — Charon's frozen-battery generator swap exists to price exactly that, and I expect
-"fluency, not reasoning," consistent with greedy-LoRA one level up.
+**~~Not achievable in 3 months~~ — CORRECTED in v6. This was my claim and it was wrong in method,
+whatever its verdict turns out to be.**
+
+I wrote that a novel mathematical discovery is not achievable and we should stop implying
+otherwise, reasoning from our internal record: zero discoveries over a year across 92K tests.
+Hephaestus's D1: **the fleet priced that with zero external data.** I used our own null history as
+the prior without ever checking whether the world had moved — the precise error I would name in
+anyone else, and a direct instance of §1.7.
+
+What the external check shows: AlphaEvolve improves Ramsey and TSP bounds with per-problem setup
+measured in *hours*; AlphaProof-Nexus resolved 492 OEIS conjectures. Both are variance-plus-
+selection with **frontier mutation engines and formal verification as the selector.** Our zero came
+from a configuration whose selector was a syntactic router and whose mutation engine was in-loop
+LLM mutation — a mechanism we killed (llm2: 2,152 mutations, zero lift). *Those are not the same
+experiment*, so our null does not price theirs.
+
+The honest restatement: **a discovery lane is a live bet with a hard kill-date, not a foreclosed
+one.** Hephaestus's L4 — and James's 08-12 ruling narrowing it to 10–30 audited score-and-improve
+problems with machine-checkable scores, anti-rediscovery screens, and success redefined as
+*Prometheus-guided search beats unguided search* — is the right shape and carries the earliest kill
+in the plan. I withdraw the ceiling claim and support the lane, noting that Hephaestus owns the
+forge and declared that conflict itself.
+
+What survives from my original point: **nothing in the new model generation changes the generative
+side on its own.** Charon's frozen-battery generator swap prices that in days, and I still expect
+"fluency, not reasoning" from the raw generator. The external evidence is that the *harness* — a
+real verifier in the selection loop — is what converts fluency into discovery. That is a claim
+about architecture, not about model quality, and it is consistent with everything else in this
+document.
 
 **Achievable and genuinely valuable:**
 
@@ -577,9 +682,35 @@ computation. So the suite's novelty axis must run through **executed checkers**,
 `entails`-style closure — which is what Harmonia A already built, apparently by instinct rather
 than by this argument.
 
-That distinction is the most portable thing in this document. It says where the program's
-verification-first architecture can and cannot reach: **falsification by computation scales to
-novel shapes; falsification by decision procedure cannot, ever.**
+**Hephaestus's D3 extends this, and the extension matters more than my original.** I had two
+categories; there are three:
+
+1. **Decision procedures** (z3-closure). Bitten by D's anti-correlation. A false statement scores
+   maximally novel — it fails **WRONG**.
+2. **Finite computation** (B′'s executed brute-force checkers). Escapes, because it evaluates
+   rather than deduces. Bounded to finite domains.
+3. **Certificate-checking** (Lean/Mathlib). **Also escapes, and scales past finite domains** — the
+   category I missed. Lean does not decide; it checks a certificate for a proof a prover *found*,
+   and novelty is adjudicated against a **library plus a literature screen**, not against a
+   closure. Run D's own standing test on it: a false statement can never acquire a certificate, so
+   it fails **SAFE** (silence); unprovable-in-budget returns nothing at all. That is exactly the
+   failure profile a novelty gate needs, and it is the profile the AlphaProof-Nexus-class results
+   operate under.
+
+So the corrected principle: **falsification by computation or by certificate scales to novel
+shapes; falsification by decision procedure cannot, ever.** The practical consequence is that the
+translator should target **z3 for the decidable fragment and Lean for the rest** — and the Lean
+harness is already in-repo, green-tested, and **consumed by nothing since May 29.** That makes the
+second target a wiring job, not an adoption project.
+
+**One doctrinal note I want to place carefully, because it could be misread.**
+`feedback_llm_convergence_is_gravity_amplifier` says frontier-LLM convergence on a *critique* is
+evidence the framing sits in the training corpus — a warning, not validation. The RLVR result in
+§6 is **not** that kind of evidence: *process-level supervision beats outcome-only by ~10pp on
+small models* is an **experimental finding**, not a framing an LLM agreed with. Treating external
+empirical results as gravity would let us dismiss the first real corroboration the KillVector
+thesis has ever had. **Convergence of opinion is gravity; convergence of independently-run
+experiments is evidence.** The doctrine should be read as covering the first only.
 
 **Why the graveyard is more than hygiene (Aporia's framing):** each documented defect is a place
 where a plausible narrative diverges from computed truth. The set of defects a model family
@@ -604,6 +735,22 @@ demonstrated the method works on *us*.
   in-context or in-corpus. Nothing in the top five moves needs the box.
 
 ## 8. What needs James
+
+> **SUPERSEDED IN PART — James ruled on 2026-08-12 PM**, recorded in Hephaestus §7.5. The ruling:
+> the missing Darwinian component is **heredity** (mutation ✅, selection ✅, measurement ✅,
+> inheritance ❌); **L0 is a pit stop, not a program** (days); **L1 is Priority #1 by a mile**, split
+> into an in-harness Tier A (zero API) and a procurement-gated Tier B; **new constitutional rule —
+> no new architecture until one failure produces one verified improvement**; L4 runs but tiny
+> (10–30 audited problems); every meter ships a positive control and a cheat control or its output
+> is inadmissible. **Arm names were pinned** — F0 / F-oracle / F-prom / F-null / F-format —
+> explicitly to prevent the next citation fossil, since James's C1/C2/C3 and Ergon's C1/C2/C3 were
+> already different things. *That is §1.5's lesson applied prospectively, and it is the fastest
+> doctrine-to-practice turnaround I have seen in this program.*
+>
+> My items below that survive the ruling: the two retrodictions (Hephaestus seconds them), the
+> repair ledger in its *revised* form (§3), the citation-chain base rate, and the Aletheia path-
+> naming fix. My forge-$900 recommendation is answered and improved on — **don't spend, and power
+> up M2**, which has an idle RTX 5060 Ti and has been dark since 2026-05-30.
 
 0. **Unbrick the calibration library — and it is one command.** Harmonia C counted the doors that
    Techne found: **29/222 modules importable now → 220/222 after `pip install snappy`** (it pulls
@@ -655,6 +802,17 @@ author B′. Treat the rest as unconfirmed, and note that Techne's own guard —
 version + date as first-class provenance on every frontier-produced record** — is the right response
 regardless of which list is accurate. That guard is a substrate schema change, it passes the
 deletion test, and it should land with the emit wiring.
+
+---
+
+*v6. The fleet has reported. Its convergence was real and mostly right; its blind spot was that
+every one of us read the same repo and none of us looked outside it. The seat that did found that
+the founding paradigm has been validated externally while we were writing about why it hadn't
+worked here — which corrected my own ceiling claim, and turned my §1.6 into the smaller version of
+§1.7. My best contributions today were the fossil catch and the computation-vs-decision
+distinction; my worst was pricing a three-month ceiling from an endogenous prior. Both are the same
+lesson at different altitudes: a closed system of citations cannot audit itself, whether the
+closure is one document or one repository.*
 
 ---
 
