@@ -1,0 +1,21 @@
+2026-06-15 07:03:29,044 [ICARUS] === cycle 20 starting (cloned from stable 018) ===
+2026-06-15 07:03:29,295 [ICARUS]   strategy=exploratory tier_target=R6 open_debts=3
+D:\Prometheus\agents\icarus\lenses\_llm.py:208: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+2026-06-15 07:10:34,321 [ICARUS] cycle 20 PARK [lb=historian] class=tdd_failed (stable still 018)
+{
+  "cycle_n": 20,
+  "decision": "park",
+  "elapsed_sec": 441.629795,
+  "load_bearing_lens": "historian",
+  "failure_class": "tdd_failed",
+  "improvement_kind": "metric_shaped",
+  "contract_violation": false
+}

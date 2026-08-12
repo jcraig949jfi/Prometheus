@@ -1,0 +1,105 @@
+{
+  "experiment": "cross_tier_falsification",
+  "date": "2026-06-10",
+  "n_tasks": 30,
+  "chance": 0.25,
+  "cross_tier": {
+    "pipeline": [
+      "parse_rules",
+      "parse_ordinal",
+      "forward_chain",
+      "relations_from_facts",
+      "op_build_ordering",
+      "select_nth"
+    ],
+    "accuracy": 1.0,
+    "single": 0.0,
+    "terminal": 0.3,
+    "comp_lift": 0.7,
+    "load_bearing_slots": [
+      "rules",
+      "facts",
+      "question_target",
+      "derived_facts",
+      "relations",
+      "ordered",
+      "selected_answer"
+    ],
+    "derived_facts_load_bearing": true,
+    "relations_load_bearing": true,
+    "dataflow_signatures": [
+      {
+        "signature": "load-bearing",
+        "delta": 1.0,
+        "lesson": "slot is causally necessary; keep",
+        "slot": "rules"
+      },
+      {
+        "signature": "load-bearing",
+        "delta": 0.7,
+        "lesson": "slot is causally necessary; keep",
+        "slot": "facts"
+      },
+      {
+        "signature": "load-bearing",
+        "delta": 0.7,
+        "lesson": "slot is causally necessary; keep",
+        "slot": "question_target"
+      },
+      {
+        "signature": "load-bearing",
+        "delta": 0.7,
+        "lesson": "slot is causally necessary; keep",
+        "slot": "derived_facts"
+      },
+      {
+        "signature": "load-bearing",
+        "delta": 0.7,
+        "lesson": "slot is causally necessary; keep",
+        "slot": "relations"
+      },
+      {
+        "signature": "load-bearing",
+        "delta": 0.7,
+        "lesson": "slot is causally necessary; keep",
+        "slot": "ordered"
+      },
+      {
+        "signature": "load-bearing",
+        "delta": 1.0,
+        "lesson": "slot is causally necessary; keep",
+        "slot": "selected_answer"
+      },
+      {
+        "signature": "side-output",
+        "delta": 0.0,
+        "co_writes_on_same_op": [
+          "selected_answer"
+        ],
+        "lesson": "slot is a side-output of an op that writes ['selected_answer']; only one is load-bearing",
+        "slot": "candidate_scores"
+      }
+    ],
+    "shuffled_ordered_acc": 0.3333333333333333,
+    "shuffled_drop": 0.6666666666666667,
+    "no_inference_null_acc": 0.0,
+    "no_inference_drop": 1.0,
+    "type_audit": {
+      "recompute_bypass": 0,
+      "side_output": 1,
+      "redundant_encoding": 0,
+      "compile_check_errors": 0
+    },
+    "passes_gauntlet": true
+  },
+  "single_tier_controls": {
+    "results": {
+      "R0-R1 only (parse_rel->ordinal->ordering->select_nth)": 0.3,
+      "R0-R1 transitive->max": 0.3,
+      "R2 only (parse_rules->forward_chain->derivability)": 0.3
+    },
+    "best": 0.3,
+    "all_fail": true
+  },
+  "unique_solver": true
+}

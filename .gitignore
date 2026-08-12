@@ -357,3 +357,12 @@ external_deps/repl/
 external_deps/mathlib4/
 external_deps/mathlib_repl/.lake/
 external_deps/mathlib_repl/lake-manifest.json
+
+# 2026-08-12: Branch C / dispatch / recombination run artifacts — 61 MB across 188
+# files (evolve logs, checkpoints, console logs, pids, granite server logs). Same
+# rule as apollo/run_v2d2b_* above: runtime data, reproducible from a fresh run.
+# The novel_discovery.jsonl events ARE the findings (9 KB total), so keep those.
+apollo/run_branch_c_*/*
+!apollo/run_branch_c_*/novel_discovery.jsonl
+apollo/run_recomb/*
+!apollo/run_recomb/novel_discovery.jsonl

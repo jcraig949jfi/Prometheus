@@ -1,0 +1,86 @@
+{
+  "experiment": "recombination_ab",
+  "date": "2026-06-16",
+  "gens": 400,
+  "pop": 24,
+  "seeds": [
+    20260616,
+    1,
+    7,
+    42,
+    101
+  ],
+  "mode": "deterministic",
+  "seed_variant": "ingredients",
+  "control_crossover_frac": 0.0,
+  "treatment_crossover_frac": 0.3,
+  "results": {
+    "control": [
+      {
+        "seed": 20260616,
+        "first_novel_gen": null,
+        "discovered": false,
+        "final_novel_count": 0
+      },
+      {
+        "seed": 1,
+        "first_novel_gen": null,
+        "discovered": false,
+        "final_novel_count": 0
+      },
+      {
+        "seed": 7,
+        "first_novel_gen": null,
+        "discovered": false,
+        "final_novel_count": 0
+      },
+      {
+        "seed": 42,
+        "first_novel_gen": null,
+        "discovered": false,
+        "final_novel_count": 0
+      },
+      {
+        "seed": 101,
+        "first_novel_gen": null,
+        "discovered": false,
+        "final_novel_count": 0
+      }
+    ],
+    "treatment": [
+      {
+        "seed": 20260616,
+        "first_novel_gen": 55,
+        "discovered": true,
+        "final_novel_count": 56
+      },
+      {
+        "seed": 1,
+        "first_novel_gen": 18,
+        "discovered": true,
+        "final_novel_count": 57
+      },
+      {
+        "seed": 7,
+        "first_novel_gen": null,
+        "discovered": false,
+        "final_novel_count": 0
+      },
+      {
+        "seed": 42,
+        "first_novel_gen": 23,
+        "discovered": true,
+        "final_novel_count": 58
+      },
+      {
+        "seed": 101,
+        "first_novel_gen": 23,
+        "discovered": true,
+        "final_novel_count": 56
+      }
+    ]
+  },
+  "control_discovered": 0,
+  "treatment_discovered": 4,
+  "crossover_advantage": true
+}

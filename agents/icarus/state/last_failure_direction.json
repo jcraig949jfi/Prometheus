@@ -1,8 +1,8 @@
 {
-  "target_tier": "R5",
+  "target_tier": "R6",
   "probe_schema": {
-    "tier": "R5",
-    "kind": "invariant",
+    "tier": "R6",
+    "kind": "conjecture",
     "versions": [
       "clean",
       "iso",
@@ -10,19 +10,29 @@
       "transfer"
     ],
     "data_fields": {
-      "n": {
-        "type": "int",
-        "sample": "4"
-      },
-      "removed": {
-        "type": "set",
-        "sample": "{(3, 3), (0, 0)}"
-      },
-      "invariant": {
+      "cid": {
         "type": "str",
-        "sample": "'color_parity'"
+        "samples": [
+          "'n2_plus_n_even'",
+          "'sum_two_squares'",
+          "'all_primes_odd'",
+          "'n2_n_41_prime'",
+          "'ab_even_then_both_even'"
+        ]
+      },
+      "delayed": {
+        "type": "bool",
+        "samples": [
+          "False",
+          "True"
+        ]
       }
-    }
+    },
+    "grader_trace_keys": [
+      "searched_counterexample",
+      "found_counterexample",
+      "overgeneralized"
+    ]
   },
   "candidate_exception": null,
   "exception_on_version": null

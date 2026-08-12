@@ -1,0 +1,65 @@
+{
+  "purpose": "negative control on the B' admission path",
+  "n": 8,
+  "wrongly_admitted": 0,
+  "unusable_checkers": 0,
+  "verdict": "PASS \u2014 oracle rejects false claims",
+  "items": [
+    {
+      "domain": "Number Theory",
+      "statement": "For every positive integer n, the polynomial n^2 + n + 41 evaluates to a prime number.",
+      "oracle_verdict": false,
+      "oracle_note": "ok",
+      "would_admit": false
+    },
+    {
+      "domain": "Graph Theory",
+      "statement": "In any simple graph with n >= 4 vertices, if every vertex has degree at least floor((n - 1) / 2), then the graph is connected.",
+      "oracle_verdict": false,
+      "oracle_note": "ok",
+      "would_admit": false
+    },
+    {
+      "domain": "Linear Algebra",
+      "statement": "For all 2x2 real matrices A and B, if AB = 0, then BA = 0.",
+      "oracle_verdict": false,
+      "oracle_note": "ok",
+      "would_admit": false
+    },
+    {
+      "domain": "Combinatorics",
+      "statement": "For any finite set S and any non-empty collection F of subsets of S, if F is closed under intersection, then F is also closed under union.",
+      "oracle_verdict": false,
+      "oracle_note": "ok",
+      "would_admit": false
+    },
+    {
+      "domain": "Real Inequalities",
+      "statement": "For all positive real numbers a, b, and c, the inequality (a + b)(b + c)(c + a) >= 9abc holds.",
+      "oracle_verdict": false,
+      "oracle_note": "ok",
+      "would_admit": false
+    },
+    {
+      "domain": "Number Theory",
+      "statement": "For all positive integers a, b, and c, if a divides b * c, then a divides b or a divides c.",
+      "oracle_verdict": false,
+      "oracle_note": "ok",
+      "would_admit": false
+    },
+    {
+      "domain": "Set Theory & Functions",
+      "statement": "For any finite sets A, B and functions f: B -> A and g: A -> B, if the composition f o g is injective, then g o f is injective.",
+      "oracle_verdict": false,
+      "oracle_note": "ok",
+      "would_admit": false
+    },
+    {
+      "domain": "Linear Algebra",
+      "statement": "For all 2x2 matrices A and B with real entries, if A^2 = B^2, then A = B or A = -B.",
+      "oracle_verdict": false,
+      "oracle_note": "ok",
+      "would_admit": false
+    }
+  ]
+}

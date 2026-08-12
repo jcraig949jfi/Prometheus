@@ -1,0 +1,105 @@
+{
+  "experiment": "recombination_falsification",
+  "date": "2026-06-16",
+  "seed": 20260616,
+  "n_tasks": 30,
+  "chance": 0.25,
+  "single_primitive_baseline": 0.0,
+  "solve_thresh": 0.6,
+  "parents": {
+    "P1": [
+      "parse_rules",
+      "parse_ordinal",
+      "forward_chain",
+      "relations_from_facts",
+      "score_by_derivability"
+    ],
+    "P2": [
+      "parse_names_and_relations",
+      "parse_ordinal",
+      "op_build_ordering",
+      "select_nth"
+    ]
+  },
+  "solver": [
+    "parse_rules",
+    "parse_ordinal",
+    "forward_chain",
+    "relations_from_facts",
+    "op_build_ordering",
+    "select_nth"
+  ],
+  "gate1_construct_validity": {
+    "acc_p1": 0.3,
+    "acc_p2": 0.3,
+    "acc_splice": 1.0,
+    "comp_lift_splice": 1.0,
+    "splice_load_bearing_slots": [
+      "derived_facts",
+      "facts",
+      "ordered",
+      "question_target",
+      "relations",
+      "rules",
+      "selected_answer"
+    ],
+    "derived_facts_load_bearing": true,
+    "relations_load_bearing": true,
+    "parents_fail": true,
+    "splice_solves": true,
+    "passed": true
+  },
+  "gate2_valley": {
+    "n_neighbors_p1": 117,
+    "n_neighbors_p2": 92,
+    "best_neighbor_acc_p1": 0.3,
+    "best_neighbor_acc_p2": 0.3,
+    "solver_in_p1_one_edit": false,
+    "solver_in_p2_one_edit": false,
+    "first_step_flat": true,
+    "solver_gt_one_edit": true,
+    "random_walk_p1": {
+      "reach_rate": 0.0,
+      "best_acc": 0.3,
+      "solver_shape_hits": 0,
+      "n_walks": 4000,
+      "max_depth": 4
+    },
+    "random_walk_p2": {
+      "reach_rate": 0.0,
+      "best_acc": 0.3,
+      "solver_shape_hits": 0,
+      "n_walks": 4000,
+      "max_depth": 4
+    },
+    "passed": true
+  },
+  "gate3_crossover": {
+    "solve_rate": 0.061,
+    "best_acc": 1.0,
+    "solver_shape_hits": 53,
+    "n_trials": 2000,
+    "distinct_solving_shapes": [
+      [
+        "parse_rules",
+        "parse_ordinal",
+        "forward_chain",
+        "relations_from_facts",
+        "parse_ordinal",
+        "op_build_ordering",
+        "select_nth"
+      ],
+      [
+        "parse_rules",
+        "parse_ordinal",
+        "forward_chain",
+        "relations_from_facts",
+        "op_build_ordering",
+        "select_nth"
+      ]
+    ],
+    "passed": true
+  },
+  "crossover_dominates_single_step": true,
+  "verdict_recombination_justified": true
+}

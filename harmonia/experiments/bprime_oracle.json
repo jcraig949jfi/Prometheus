@@ -1,0 +1,200 @@
+{
+  "set": "B_prime_oracle",
+  "warning": "QUARANTINED. Never expose to a translator/solver at build or grade time.",
+  "author_model": "gemini-3.6-flash",
+  "items": [
+    {
+      "domain": "graph_theory",
+      "statement": "For every finite simple graph G with n vertices (2 <= n <= 5), the sum of the degrees of all vertices is equal to twice the number of edges.",
+      "checker": "import itertools\n\ndef check() -> bool:\n    for n in range(2, 6):\n        vertices = list(range(n))\n        possible_edges = list(itertools.combinations(vertices, 2))\n        num_possible = len(possible_edges)\n        for mask in range(1 << num_possible):\n            edges = [possible_edges[i] for i in range(num_possible) if (mask & (1 << i))]\n            degrees = [0] * n\n            for u, v in edges:\n                degrees[u] += 1\n                degrees[v] += 1\n            if sum(degrees) != 2 * len(edges):\n                return False\n    return True\n",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-001"
+    },
+    {
+      "domain": "graph_theory",
+      "statement": "For every connected simple graph G with n vertices (1 <= n <= 5), G contains no cycles if and only if G has exactly n - 1 edges.",
+      "checker": "import itertools\n\ndef check() -> bool:\n    for n in range(1, 6):\n        vertices = list(range(n))\n        possible_edges = list(itertools.combinations(vertices, 2))\n        num_possible = len(possible_edges)\n        for mask in range(1 << num_possible):\n            edges = [possible_edges[i] for i in range(num_possible) if (mask & (1 << i))]\n            adj = {v: [] for v in vertices}\n            for u, v in edges:\n                adj[u].append(v)\n                adj[v].append(u)\n            \n            visited = set()\n            stack = [0]\n            while stack:\n                curr = stack.pop()\n                if curr not in visited:\n                    visited.add(curr)\n                    stack.extend(adj[curr])\n            if len(visited) != n:\n                continue\n            \n            vis = [False] * n\n            def has_cycle(v, p):\n                vis[v] = True\n                for neighbor in adj[v]:\n                    if neighbor == p:\n                        continue\n                    if vis[neighbor] or has_cycle(neighbor, v):\n                        return True\n                return False\n            \n            contains_cycle = has_cycle(0, -1)\n            if (not contains_cycle) != (len(edges) == n - 1):\n                return False\n    return True\n",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-002"
+    },
+    {
+      "domain": "graph_theory",
+      "statement": "For every simple graph G on n vertices (1 <= n <= 5), the chromatic number of G is less than or equal to its maximum vertex degree plus 1.",
+      "checker": "import itertools\n\ndef check() -> bool:\n    for n in range(1, 6):\n        vertices = list(range(n))\n        possible_edges = list(itertools.combinations(vertices, 2))\n        num_possible = len(possible_edges)\n        for mask in range(1 << num_possible):\n            edges = [possible_edges[i] for i in range(num_possible) if (mask & (1 << i))]\n            degrees = [0] * n\n            for u, v in edges:\n                degrees[u] += 1\n                degrees[v] += 1\n            max_deg = max(degrees) if degrees else 0\n            k = max_deg + 1\n            \n            valid_coloring_exists = False\n            for coloring in itertools.product(range(k), repeat=n):\n                valid = True\n                for u, v in edges:\n                    if coloring[u] == coloring[v]:\n                        valid = False\n                        break\n                if valid:\n                    valid_coloring_exists = True\n                    break\n            if not valid_coloring_exists:\n                return False\n    return True\n",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-003"
+    },
+    {
+      "domain": "graph_theory",
+      "statement": "For every finite simple graph G on n vertices (1 <= n <= 6), the number of vertices with odd degree is even.",
+      "checker": "import itertools\n\ndef check() -> bool:\n    for n in range(1, 7):\n        vertices = list(range(n))\n        possible_edges = list(itertools.combinations(vertices, 2))\n        num_possible = len(possible_edges)\n        for mask in range(1 << num_possible):\n            degrees = [0] * n\n            for i in range(num_possible):\n                if mask & (1 << i):\n                    u, v = possible_edges[i]\n                    degrees[u] += 1\n                    degrees[v] += 1\n            odd_count = sum(1 for d in degrees if d % 2 != 0)\n            if odd_count % 2 != 0:\n                return False\n    return True\n",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-004"
+    },
+    {
+      "domain": "combinatorics",
+      "statement": "For all non-negative integers n, the sum over k from 0 to n of k * binom(n, k) is equal to n * 2^(max(0, n-1)).",
+      "checker": "def check() -> bool:\n    import math\n    for n in range(0, 16):\n        lhs = sum(k * math.comb(n, k) for k in range(n + 1))\n        rhs = 0 if n == 0 else n * (2 ** (n - 1))\n        if lhs != rhs:\n            return False\n    return True",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-005"
+    },
+    {
+      "domain": "combinatorics",
+      "statement": "For every simple undirected graph with n vertices where n >= 2, there exist at least two vertices that have the same degree.",
+      "checker": "def check() -> bool:\n    import itertools\n    for n in range(2, 7):\n        edges = list(itertools.combinations(range(n), 2))\n        for r in range(len(edges) + 1):\n            for subset in itertools.combinations(edges, r):\n                degrees = [0] * n\n                for u, v in subset:\n                    degrees[u] += 1\n                    degrees[v] += 1\n                if len(degrees) == len(set(degrees)):\n                    return False\n    return True",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-006"
+    },
+    {
+      "domain": "combinatorics",
+      "statement": "For every positive integer n, the number of integer partitions of n into distinct parts equals the number of integer partitions of n into odd parts.",
+      "checker": "def check() -> bool:\n    def count_distinct(n, max_val):\n        if n == 0: return 1\n        if n < 0 or max_val <= 0: return 0\n        return count_distinct(n - max_val, max_val - 1) + count_distinct(n, max_val - 1)\n\n    def count_odd(n, max_val):\n        if n == 0: return 1\n        if n < 0 or max_val <= 0: return 0\n        if max_val % 2 == 0:\n            return count_odd(n, max_val - 1)\n        return count_odd(n - max_val, max_val) + count_odd(n, max_val - 2)\n\n    for n in range(1, 25):\n        if count_distinct(n, n) != count_odd(n, n if n % 2 != 0 else n - 1):\n            return False\n    return True",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-007"
+    },
+    {
+      "domain": "combinatorics",
+      "statement": "For every positive integer n, the number of derangements of an n-element set differs from n! / e by less than 1/2.",
+      "checker": "def check() -> bool:\n    import math\n    import itertools\n    for n in range(1, 10):\n        derangements = sum(1 for p in itertools.permutations(range(n)) if all(p[i] != i for i in range(n)))\n        expected = math.factorial(n) / math.e\n        if abs(derangements - expected) >= 0.5:\n            return False\n    return True",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-008"
+    },
+    {
+      "domain": "linear_algebra",
+      "statement": "For all 2x2 matrices A with integer entries from {-2, -1, 0, 1, 2}, the trace of A^2 is equal to (trace(A))^2 - 2 * det(A).",
+      "checker": "import itertools\n\ndef check() -> bool:\n    vals = [-2, -1, 0, 1, 2]\n    for a, b, c, d in itertools.product(vals, repeat=4):\n        tr_A2 = (a*a + b*c) + (c*b + d*d)\n        tr_A = a + d\n        det_A = a*d - b*c\n        if tr_A2 != tr_A**2 - 2 * det_A:\n            return False\n    return True\n",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-009"
+    },
+    {
+      "domain": "linear_algebra",
+      "statement": "For all 2x2 symmetric matrices A with integer entries between -3 and 3 inclusive, the discriminant trace(A)^2 - 4 * det(A) of its characteristic polynomial is non-negative.",
+      "checker": "import itertools\n\ndef check() -> bool:\n    vals = range(-3, 4)\n    for a, b, c in itertools.product(vals, repeat=3):\n        tr_A = a + c\n        det_A = a*c - b*b\n        disc = tr_A**2 - 4 * det_A\n        if disc < 0:\n            return False\n    return True\n",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-010"
+    },
+    {
+      "domain": "linear_algebra",
+      "statement": "For all pairs of 2x2 matrices A and B with integer entries from {-1, 0, 1}, the determinant of their matrix product A * B equals det(A) * det(B).",
+      "checker": "import itertools\n\ndef check() -> bool:\n    vals = [-1, 0, 1]\n    for a1, b1, c1, d1 in itertools.product(vals, repeat=4):\n        det_A = a1*d1 - b1*c1\n        for a2, b2, c2, d2 in itertools.product(vals, repeat=4):\n            det_B = a2*d2 - b2*c2\n            m00 = a1*a2 + b1*c2\n            m01 = a1*b2 + b1*d2\n            m10 = c1*a2 + d1*c2\n            m11 = c1*b2 + d1*d2\n            det_AB = m00*m11 - m01*m10\n            if det_AB != det_A * det_B:\n                return False\n    return True\n",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-011"
+    },
+    {
+      "domain": "linear_algebra",
+      "statement": "For all 3x3 matrices with entries in {0, 1}, the determinant is an integer in the set {-2, -1, 0, 1, 2}.",
+      "checker": "import itertools\n\ndef check() -> bool:\n    vals = [0, 1]\n    allowed = {-2, -1, 0, 1, 2}\n    for grid in itertools.product(vals, repeat=9):\n        a, b, c, d, e, f, g, h, i = grid\n        det = a*(e*i - f*h) - b*(d*i - f*g) + c*(d*h - e*g)\n        if det not in allowed:\n            return False\n    return True\n",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-012"
+    },
+    {
+      "domain": "real_analysis",
+      "statement": "For all real numbers x and y, |x + y| <= |x| + |y|.",
+      "checker": "def check() -> bool:\n    import fractions, itertools\n    grid = [fractions.Fraction(num, den) for num in range(-10, 11) for den in range(1, 6)]\n    for x, y in itertools.product(grid, repeat=2):\n        if abs(x + y) > abs(x) + abs(y):\n            return False\n    return True",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-013"
+    },
+    {
+      "domain": "real_analysis",
+      "statement": "For all real numbers a, b, x, and y, (a*x + b*y)^2 <= (a^2 + b^2)*(x^2 + y^2).",
+      "checker": "def check() -> bool:\n    import itertools\n    vals = range(-5, 6)\n    for a, b, x, y in itertools.product(vals, repeat=4):\n        lhs = (a * x + b * y) ** 2\n        rhs = (a ** 2 + b ** 2) * (x ** 2 + y ** 2)\n        if lhs > rhs:\n            return False\n    return True",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-014"
+    },
+    {
+      "domain": "real_analysis",
+      "statement": "For all positive real numbers a, b, and c, (a + b + c) / 3 >= (a * b * c)**(1/3).",
+      "checker": "def check() -> bool:\n    import itertools\n    vals = [i / 4.0 for i in range(1, 21)]\n    for a, b, c in itertools.product(vals, repeat=3):\n        am = (a + b + c) / 3.0\n        gm = (a * b * c) ** (1.0 / 3.0)\n        if am < gm - 1e-12:\n            return False\n    return True",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-015"
+    },
+    {
+      "domain": "real_analysis",
+      "statement": "For all real numbers x and y, and for all t in [0, 1], (t*x + (1-t)*y)^2 <= t*x^2 + (1-t)*y^2.",
+      "checker": "def check() -> bool:\n    import fractions, itertools\n    grid_x = [fractions.Fraction(n, 4) for n in range(-8, 9)]\n    grid_t = [fractions.Fraction(n, 10) for n in range(0, 11)]\n    for x, y, t in itertools.product(grid_x, grid_x, grid_t):\n        lhs = (t * x + (1 - t) * y) ** 2\n        rhs = t * (x ** 2) + (1 - t) * (y ** 2)\n        if lhs > rhs:\n            return False\n    return True",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-016"
+    },
+    {
+      "domain": "elementary_number_theory",
+      "statement": "For every positive integer $n$, the sum of Euler's totient function $\\phi(d)$ over all positive divisors $d$ of $n$ is equal to $n$.",
+      "checker": "import math\n\ndef check() -> bool:\n    def phi(m):\n        count = 0\n        for i in range(1, m + 1):\n            if math.gcd(i, m) == 1:\n                count += 1\n        return count\n\n    for n in range(1, 101):\n        div_sum = sum(phi(d) for d in range(1, n + 1) if n % d == 0)\n        if div_sum != n:\n            return False\n    return True\n",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-017"
+    },
+    {
+      "domain": "elementary_number_theory",
+      "statement": "For every integer $n \\ge 2$ and every integer $a$ coprime to $n$ with $1 \\le a < n$, there exists a positive integer $k \\le n$ such that $a^k \\equiv 1 \\pmod n$.",
+      "checker": "import math\n\ndef check() -> bool:\n    for n in range(2, 60):\n        for a in range(1, n):\n            if math.gcd(a, n) == 1:\n                found = False\n                for k in range(1, n + 1):\n                    if pow(a, k, n) == 1:\n                        found = True\n                        break\n                if not found:\n                    return False\n    return True\n",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-018"
+    },
+    {
+      "domain": "elementary_number_theory",
+      "statement": "For all positive integers $a$, $b$, and $c$, the identity $\\gcd(a, \\text{lcm}(b, c)) = \\text{lcm}(\\gcd(a, b), \\gcd(a, c))$ holds.",
+      "checker": "import math\n\ndef check() -> bool:\n    def lcm(x, y):\n        return (x * y) // math.gcd(x, y)\n\n    for a in range(1, 31):\n        for b in range(1, 31):\n            for c in range(1, 31):\n                lhs = math.gcd(a, lcm(b, c))\n                rhs = lcm(math.gcd(a, b), math.gcd(a, c))\n                if lhs != rhs:\n                    return False\n    return True\n",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-019"
+    },
+    {
+      "domain": "elementary_number_theory",
+      "statement": "For every integer $n > 4$, if $n$ is composite, then $(n-1)!$ is divisible by $n$.",
+      "checker": "import math\n\ndef check() -> bool:\n    def is_prime(m):\n        if m < 2:\n            return False\n        for i in range(2, int(math.isqrt(m)) + 1):\n            if m % i == 0:\n                return False\n        return True\n\n    for n in range(5, 101):\n        if not is_prime(n):\n            if math.factorial(n - 1) % n != 0:\n                return False\n    return True\n",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-020"
+    },
+    {
+      "domain": "order_and_sets",
+      "statement": "For all subsets A, B, and C of any universal set, the symmetric difference operation is associative: (A \u25b3 B) \u25b3 C = A \u25b3 (B \u25b3 C).",
+      "checker": "def check() -> bool:\n    import itertools\n    U = {1, 2, 3, 4}\n    subsets = [set(s) for r in range(len(U) + 1) for s in itertools.combinations(U, r)]\n    for A in subsets:\n        for B in subsets:\n            for C in subsets:\n                if (A ^ B) ^ C != A ^ (B ^ C):\n                    return False\n    return True",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-021"
+    },
+    {
+      "domain": "order_and_sets",
+      "statement": "For all binary relations R on a finite set, if R is reflexive and transitive (a preorder), then R is an equivalence relation if and only if R is symmetric.",
+      "checker": "def check() -> bool:\n    import itertools\n    elements = (0, 1, 2, 3)\n    pairs = list(itertools.product(elements, elements))\n    for r_len in range(len(pairs) + 1):\n        for R_tuples in itertools.combinations(pairs, r_len):\n            R = set(R_tuples)\n            reflexive = all((x, x) in R for x in elements)\n            if not reflexive:\n                continue\n            transitive = all((x, z) in R for (x, y1) in R for (y2, z) in R if y1 == y2)\n            if not transitive:\n                continue\n            symmetric = all((y, x) in R for (x, y) in R)\n            is_equiv = reflexive and transitive and symmetric\n            if is_equiv != symmetric:\n                return False\n    return True",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-022"
+    },
+    {
+      "domain": "order_and_sets",
+      "statement": "For all functions f from a finite set A to itself, f is injective if and only if f is surjective.",
+      "checker": "def check() -> bool:\n    import itertools\n    A = (0, 1, 2, 3, 4)\n    for f_tuple in itertools.product(A, repeat=len(A)):\n        is_injective = len(set(f_tuple)) == len(A)\n        is_surjective = set(f_tuple) == set(A)\n        if is_injective != is_surjective:\n            return False\n    return True",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-023"
+    },
+    {
+      "domain": "order_and_sets",
+      "statement": "For all functions f: A -> B and g: B -> C between finite sets, if the composite function g \u2218 f is injective, then f is injective.",
+      "checker": "def check() -> bool:\n    import itertools\n    A = (0, 1, 2)\n    B = (0, 1, 2, 3)\n    C = (0, 1, 2, 3)\n    for f_tuple in itertools.product(B, repeat=len(A)):\n        for g_tuple in itertools.product(C, repeat=len(B)):\n            gf = [g_tuple[f_tuple[x]] for x in range(len(A))]\n            gf_injective = len(set(gf)) == len(A)\n            f_injective = len(set(f_tuple)) == len(A)\n            if gf_injective and not f_injective:\n                return False\n    return True",
+      "oracle_verdict": true,
+      "oracle_note": "ok",
+      "bid": "BP-024"
+    }
+  ],
+  "rejected": []
+}
