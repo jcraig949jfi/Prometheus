@@ -741,6 +741,66 @@ demonstrated the method works on *us*.
 - **On the forge $900 — unchanged and stronger.** Four of five agents now place the decisive work
   in-context or in-corpus. Nothing in the top five moves needs the box.
 
+## 7.5 — Precondition audit of the Metabolization Probe spec (`pivot/SPEC_METABOLIZATION_PROBE_2026-08-12.md`)
+
+The spec landed at 17:04. Auditing it against the five preconditions the fan-out found (§2.5, §2.7)
+is the one job this document is owed. **All five are cleared**, and three are handled better than
+the fleet specified them:
+
+- **kill_vector 0% (Charon)** → §5C resolves it *either way in preregistration*, and §4.3 adds the
+  move that sidesteps it entirely: run **whole-index-in-context** as well as per-problem retrieval.
+- **Retriever/residue confound** → not only is the `F-oracle` arm canonical, §4.3's two-variant
+  design makes the confound *directly measurable*: "if (ii) underperforms (i), the retriever is the
+  bottleneck, not the residue." That is stronger than Charon's original C1-oracle proposal.
+- **Grader headroom (Techne)** → R4 quantifies it at **≥25pp**, which Techne left unquantified.
+- **`prometheus_math` bricked** → R5 + §5B.
+- **API access (§2.7)** → the Tier A / Tier B split is exactly the harness-vs-API partition, with
+  Tier A at zero API spend.
+
+R9 (executor-tagged results) and R10 (a second agent re-executes the headline computation, citing
+§1.6 by name) implement today's protocol findings directly. R7's classifier-based
+indistinguishability check on `F-null` is stronger than anything the fleet proposed.
+
+**Two gaps I do want on the record.**
+
+**(a) Pretraining contamination is a listed guard that did not make it into the requirements.**
+Techne's assessment names it — *"frontier models may already know the mathematics; arms must differ
+only in geometry; report per-item leakage risk"* — and no requirement covers it. R1 governs *our*
+gold labels, and §4.4 excludes packets that name the answer, but neither touches a solver that
+already knows the answer from pretraining. This matters because of how it would *mis-read*: if
+contamination lifts `F0`, all arms compress, `Δ_carry` shrinks toward zero, and §4.5's table sends
+that to **Path γ (residue is exhaust)** — the most consequential verdict in the program — unless it
+first trips the headroom row, which would then diagnose it as "re-level the tasks" rather than
+"these items are contaminated." Different fix, same symptom. **Proposed requirement: a per-item
+contamination probe** (solver asked the task cold, no residue, minimal budget; items it can already
+answer are stratified out or reported separately). Cheap, and it protects the one reading nobody
+wants to get wrong. The 494-item OOD set and `prometheus_math` op instances are exactly the kind of
+material that could sit in a training corpus.
+
+**(b) Tier A cannot price the residue, and Tier B has no deadline.** §4.2's exit criterion is
+`F-oracle > F0` on constructed walls — that validates the *instrument*, not the records. `Δ_carry`
+and `Q_residue`, the two numbers the whole program is waiting on, are Tier B quantities, and §5E
+gates Tier B on a procurement decision with no date attached (§6 item 4: "can happen anytime in
+parallel"). **That is the archaeology's failure mode with a new label**: a fully specified decisive
+experiment waiting on an unscheduled input. Hephaestus's own §10 names it as the most likely way
+this fails.
+
+**Proposed fix, cheap and in the spirit of the Tier A/B split:** run **`F-prom` and `F-null` in
+Tier A too**, on the ablation walls, using whatever the substrate actually recorded for those runs.
+It will not be the decisive measurement — small solver, constructed failures — but it yields a
+*directional* `Δ_carry` at zero API spend, and it means that if procurement never lands we still
+hold a number rather than only a harness. `gemini-3.6-flash` on the free tier is sufficient for a
+direction. The spec is ambiguous on whether Tier A runs all five arms or only `F0`/`F-oracle`;
+**making that explicit either way is a one-line preregistration decision.**
+
+**One note on authorship, offered lightly.** Hephaestus is correctly declared SUPPLIER-ONLY with a
+conflict on record — the residue being priced is substantially forge-sourced — and it touches no
+grading and no verdict. It also *authored the spec*, and arm definitions plus decision thresholds
+shape what counts as success. The mitigation already exists and is adequate: §4.5's thresholds are
+explicitly "defaults for the preregistration to confirm or amend," and the binding instrument is
+the prereg co-signed by Ergon, Charon, and Harmonia B. I'd simply ask those three to treat §4.5's
+threshold row as the specific place to exercise that independence.
+
 ## 8. What needs James
 
 > **SUPERSEDED IN PART — James ruled on 2026-08-12 PM**, recorded in Hephaestus §7.5. The ruling:
