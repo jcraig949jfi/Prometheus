@@ -1,13 +1,23 @@
 # Meta-Synthesis — the fleet's convergence, and the one thing absent from all of it
 
-**Author:** Aporia (Claude Opus 5, 1M context) · **Date:** 2026-08-12 · **Version:** v3 (living doc — revised in place, not forked)
+**Author:** Aporia (Claude Opus 5, 1M context) · **Date:** 2026-08-12 · **Version:** v4 (living doc — revised in place, not forked)
 **Inputs read in full:** Aporia `frontier_leverage_reassessment_2026-08-12` · Charon
 `CHARON_SESSION_2026-08-12` · Ergon `REVIVAL_ASSESSMENT_2026-08-12` · Harmonia A
 `REVIEW_20260812_syntactic_router` · Harmonia B `POSITION_20260812_north_star_reset` ·
 Techne `REVIVAL_ASSESSMENT_2026-08-12`
-**Pending:** Harmonia C/D · Apollo · Hephaestus (M3, Fable, ultracode)
+· Harmonia A `SYNTHESIS_20260812_harmonia_panel` (covering Harmonia C and D)
+**Pending:** Apollo · Hephaestus (M3, Fable, ultracode)
 **Status:** NON-CANONICAL. Meta-layer, not a sixth position paper. Revised as machines report.
 
+> **v4 changelog:** The Harmonia panel landed (C and D, synthesized by A). **Harmonia D killed the
+> mechanism my §5 retrodiction was keyed on** — the closure test is retracted; §5 is re-keyed on
+> *representability*, and the correction is the second time in one day I built on a Harmonia A claim
+> that was falsified within hours, which is itself the best evidence for §1.6. **Harmonia C's
+> stranded calibration library is now the single most important operational fact on the board** and
+> is promoted to §8 item 0. §6 gains the distinction that rescues the eval suite from D's result:
+> **computation-checkable ≠ decidable-in-a-theory.** §1.6 gains a base-rate null applied to my own
+> headline, per the panel's standing rule.
+>
 > **v3 changelog:** Techne reported. The §1.5 fossil count goes **3-of-5 → 4-of-6** — Techne
 > independently cites the same superseded property — which promotes it from "a claim that needs
 > correcting" to **a measured property of how this fleet handles evidence** (§1.6, new). §2.5 is
@@ -61,8 +71,24 @@ Stripping arguments, keeping only things emitted by code, `git`, or a corpus:
   proto-tensor plausibly fits in a 1M context (flagged by Techne as an *estimate to be measured,
   not asserted*). And `aporia/docs/gemini_research_queue/` — named in my own role doc as the
   400-entry default firing queue — **does not exist.**
+- **Harmonia C (E3):** **2,239,810 lines of Python in 8,726 modules, of which 577 (6.6%) are ever
+  imported**; 63% by volume is generator output nothing ever read; **200 files are not
+  syntactically valid Python** — produced, committed, never parsed, including by the forge that
+  made them. And the one that matters most: `prometheus_math` (307 modules, ~160K LOC) + `techne.lib`
+  are **87% unreachable since April** — **29/222 importable → 46 with `cypari` → 48 with `snappy` →
+  220/222 with `knot_floer_homology`**, and `pip install snappy` alone resolves all three. Root
+  cause is one line: `prometheus_math\__init__.py:35` → `techne\lib\class_number.py:19` → bare
+  `import cypari`. Also: decision-machinery modules are orphaned *less* than average (5.4% vs 8.4%).
+- **Harmonia D (E3):** the `unknown_kind` bug fires **160/160 at R5/R7/R8** on the live ladder —
+  the fossil confirmed at scale. `TIER_GENS` holds exactly `R0,R1,R2,R3,R5,R6,R7,R8`: **R4 and
+  R9–R12 do not exist.** Five-sixths of the upper ladder was never built; the R0–R12 ladder is a
+  design document, not an instrument.
 - **Aporia:** six weeks of cron-only commits; the decisive experiment blocked on a dead
-  motherboard; 21 retire candidates frozen on a single-family verdict.
+  motherboard; 21 retire candidates frozen on a single-family verdict. *(Caveat, per the panel's
+  standing rule 1 — repo state is not program state. My dormancy reading was taken from this
+  machine's HEAD. M2's catch-up commit shows June work sat uncommitted for 6.5 weeks, so "the repo
+  was quiet" and "the program was quiet" are not the same claim, and I asserted the second from
+  evidence for the first.)*
 
 **These do not conflict.** Read together: *the program's generative side works and its recognition
 side does not.* Generation produced 100M+ records, 3.8M verified objects, 92K tests. Recognition
@@ -90,6 +116,10 @@ and silent."*
 charitably hand-routes unrepresentable shapes.** A downstream consumer calling `verify(probe,
 claim)` directly gets a true claim certified **WRONG**. Strict type-II is **up to 5/18**, not
 0/18. The abstention was supplied by the measurement harness, not by the instrument.
+
+**Confirmed at scale the same day (Harmonia D, E3):** the `unknown_kind` bug fires **160/160 at
+R5/R7/R8** on the live ladder. This is no longer a property of an 18-item benchmark — it is the
+operating behaviour of the instrument the program grades itself with.
 
 **So four of six agents built a position on a property that a fifth falsified in the same 24-hour
 window.** Harmonia B's tier system is itself falsified by this: it classified the 0% as having
@@ -141,6 +171,31 @@ source document. The fix is mechanical rather than epistemic:
 - **Charon's decoy calibration is the right instrument** and §1.5 is its empirical case. Four of
   six of us — me included — missed a live defect in a claim we were all citing. That is a measured
   reviewer-sensitivity number, and it is not flattering to any of us.
+
+**Applying the panel's standing rule to my own headline.** The Harmonia panel's sharpest
+methodological result is *"every lens that MEASURED survived; the lens that INFERRED died"* — A's
+§1 and C's own draft claim were the same shape (N striking instances → a disposition) and both fell
+to one base-rate script. **My §1.6 generalization is that shape.** I have two instances (the 0%
+fossil, the 2,351 fossil) and I am inferring a property of how the fleet handles evidence. By the
+panel's own rule I owe the base rate before this hardens:
+
+> **Proposed — the citation-chain base rate (cheap, today's documents only).** Enumerate every
+> load-bearing factual claim cited by ≥2 of the seven assessments. For each, count how many agents
+> *executed* it (E3) versus *cited* it (E1/inherited). If independent execution is common and these
+> two fossils are outliers, my §1.6 is an anecdote dressed as a mechanism and should be withdrawn.
+> If single-execution-many-citations is the norm, the mechanism is real and the re-execution
+> rotation is justified.
+
+I am pre-committing to withdraw §1.6 if the base rate goes against it. That is the discipline C
+demonstrated by killing its own headline, and it would be incoherent to propose the rule for the
+fleet and exempt my own claim from it.
+
+**A third data point arrived while I was writing this, and it cuts against me being smug.** My v2
+and v3 accepted Harmonia A's §3(b) — *novelty is not-in-closure, not unrecognized-shape* — and I
+re-keyed my §5 retrodiction on it. **Harmonia D then retracted that claim** (executed over 9
+claims: a closure test reduces to `{false statements} ∪ {solver timeouts}`). So within one day I
+built on a Harmonia A claim twice, and both times it was falsified by an agent who ran code. I am
+not the auditor of this pattern standing outside it; I am one of its instances.
 
 ## 2. The convergence — and why it is a warning
 
@@ -331,10 +386,23 @@ unregistered kind is what the router rejects.
 This is the most self-serving reinterpretation available and `feedback_narrative_resistance` exists
 to stop it. So it must be tested, and it can be, with an unusually strong test:
 
-> **Kill-resurrection retrodiction.** Take a stratified sample of historical kills from the 92K
-> corpus and the zero-promotion streak. Re-run them through the **translator + closure test**
-> (Harmonia A's `entails`, kind-routing deleted) rather than surface-`cid` dispatch. Ask: what
-> fraction of historical kills were **routing artifacts** rather than genuine falsifications?
+> **Kill-resurrection retrodiction.** *(Re-keyed in v4. My v2/v3 routed this through a closure test
+> — Harmonia A's `entails`. **Harmonia D retracted that**: a closure test reduces to
+> `{false statements} ∪ {solver timeouts}`, and more generally* **decidability and novelty are
+> anti-correlated by construction** *— where a closure test terminates, everything true is already
+> inside the closure. The retrodiction survives because it never needed derivability; it needs
+> only* **representability**.*)*
+>
+> Take a stratified sample of historical kills from the 92K corpus and the zero-promotion streak.
+> For each, ask the narrow, decidable question: **could the battery, at the time, express this
+> claim at all?** Then re-run the representable-but-misrouted subset through the **translator**
+> (kind-routing deleted) rather than surface-`cid` dispatch. Ask: what fraction of historical kills
+> were **routing artifacts** rather than genuine falsifications?
+>
+> This is now a *representability audit with a re-run attached*, not a novelty meter — which is
+> exactly what D's standing test demands of it: *what does your meter return on (a) a false
+> statement and (b) something the checker cannot decide?* Here, (a) stays killed and (b) is scored
+> as `unrepresentable`, not as `novel`. It cannot degenerate into a timeout detector.
 >
 > **This is a retrodiction.** The data exists and cannot be tuned to fit — far stronger than any
 > forward experiment.
@@ -387,14 +455,36 @@ On (3): three assets exist in pieces and nobody proposed assembling them.
   generator-prefix MI, the tautology cluster. Labels in **nobody's** training corpus.
 - **The calibration anchor** — 3.8M objects at 100.000%, LMFDB.
 
-**Qualification Harmonia A forces (§3b), and it bites my v1:** novelty must be keyed on
-**not-in-closure**, not on unrecognized shape. Shape-keyed novelty inflates trivially — Apollo's
-2,860 cells / 2,846 "distinct shapes" produced **zero** accuracy lift. So the suite's novelty axis
-must run through `entails`-style derivability, or it will measure its own typing. My v1 phrase
-"out-of-manifold truth recognition" inherits Harmonia A's §4 objection that recognition against an
-authored manifold is ill-posed by construction — *you cannot author a recognizer for novelty you
-have not conceived.* **Re-posed as derivability it is well-posed and unbuilt.** I accept the
-correction; it applies to my own June M0 design too.
+**Two qualifications, and the second rescues the suite from the first.**
+
+*(1) Shape-keyed novelty inflates trivially* — Apollo's 2,860 cells / 2,846 "distinct shapes"
+produced **zero** accuracy lift, so the suite cannot key novelty on unrecognized shape. My v1 phrase
+"out-of-manifold truth recognition" also inherits Harmonia A's objection that recognition against an
+authored manifold is ill-posed — *you cannot author a recognizer for novelty you have not
+conceived.*
+
+*(2) But the obvious repair is closed off.* My v2/v3 adopted A's re-posing as **derivability**.
+Harmonia D killed it, and the general result is the deepest thing the panel produced:
+**decidability and novelty are anti-correlated by construction** — where a decision procedure
+terminates, everything true is already inside the closure, so nothing is ever novel; outside that
+fragment it returns `unknown`. **The decidable region and the interesting region are disjoint.**
+
+Note what this explains: D's *theoretical* result and M0's *empirical* result are the same wall
+seen twice. M0 certified zero novel-shaped truths; D says a theory-decision instrument structurally
+cannot. Theory and measurement agreeing is worth more than either alone.
+
+**The escape hatch, and it is the strategic point of this section: computation-checkable ≠
+decidable-in-a-theory.** B′ does not use a decision procedure over a theory — **each of its 24
+claims was admitted only after its own brute-force checker was executed and returned True**, with a
+negative control of 8/8. That is *evaluation on a finite domain*, not deduction within an
+axiomatized fragment. D's anti-correlation bites decision procedures; it does not bite finite
+computation. So the suite's novelty axis must run through **executed checkers**, never through
+`entails`-style closure — which is what Harmonia A already built, apparently by instinct rather
+than by this argument.
+
+That distinction is the most portable thing in this document. It says where the program's
+verification-first architecture can and cannot reach: **falsification by computation scales to
+novel shapes; falsification by decision procedure cannot, ever.**
 
 **Why the graveyard is more than hygiene (Aporia's framing):** each documented defect is a place
 where a plausible narrative diverges from computed truth. The set of defects a model family
@@ -420,9 +510,20 @@ demonstrated the method works on *us*.
 
 ## 8. What needs James
 
-0. **Unbrick `prometheus_math`** (Techne, ~1 session). It is a hard blocker on the decisive
-   experiment's own primitive and it is the only item here that is pure engineering with no
-   judgment attached. Nothing else in this list can be executed around it.
+0. **Unbrick the calibration library — and it is one command.** Harmonia C counted the doors that
+   Techne found: **29/222 modules importable now → 220/222 after `pip install snappy`** (it pulls
+   `cypari` and `knot_floer_homology` with it). Root cause is one line,
+   `prometheus_math\__init__.py:35`. C correctly did **not** run it — it changes your global
+   interpreter, so it is your call, and it is the single cheapest high-leverage item on the board.
+   Pair it with Techne's try/except guards so a missing native backend degrades *that namespace*
+   rather than the package, or this recurs at the next env drift.
+
+   **Why this outranks everything else here:** ruling R1 makes mathematics the program's
+   calibration standard, and the library that scores that standard has been **87% unreachable since
+   April**. *Any instrument that "passed on math" this year passed against 29 modules.* That is a
+   retroactive qualifier on every calibration claim in the program, including the ones I have been
+   treating as our most durable asset. (Honest bound, C's own: an import is a weak positive — it
+   does not certify the mathematics — and a strong negative.)
 1. **Land Harmonia A's `valid=None` fix and broadcast §1.5** before anything else consumes
    `verify()` or cites 0% type-II. Free, and it stops a fossil mid-propagation — one that four of
    us were repeating this morning.
@@ -457,14 +558,19 @@ deletion test, and it should land with the emit wiring.
 
 ---
 
-*v3, written before Harmonia C/D, Apollo, and Hephaestus reported. The fleet agrees, and agreement
-is the warning. Four of six of us — me included — spent today building on a property that a fifth
-measured false this morning, which turns out to be the more useful finding: on a factual claim,
-six agents were one measurement with five pointers at it. What is absent from all six assessments
-is any check on whether the thing we all recommend has ever worked, and any attempt to re-read our
-own history through the detector we just discovered was blind. Those two absences, the fossil in
-§1.5, the citation-chain mechanism in §1.6, and the four preconditions in §2.5 are this document's
-contribution. The fan-out's value was never the six strategies — it was six adversaries finding
-four fatal preconditions on one experiment.*
+*v4, written before Apollo and Hephaestus reported. The fleet agrees, and agreement is the warning.
+Four of six of us — me included — spent today building on a property a fifth measured false that
+morning, which turns out to be the more useful finding: on a factual claim, six agents were one
+measurement with five pointers at it. Then the Harmonia panel killed the mechanism I had re-keyed
+my own experiment on, for the second time in a day, which is the strongest possible evidence for
+the paragraph I wrote about everyone else. I have accordingly put my own headline (§1.6) behind a
+base-rate null I have pre-committed to lose.*
+
+*What is absent from all seven assessments is any check on whether the thing we all recommend has
+ever worked, and any attempt to re-read our own history through the detector we now know was blind.
+Those two absences, the fossil, the citation-chain mechanism, the four preconditions, and the
+computation-vs-decision distinction in §6 are this document's contribution. The fan-out's value was
+never the seven strategies — it was seven adversaries finding fatal preconditions on one experiment,
+and one command that unstrands 87% of the library the whole program calibrates against.*
 
 — Aporia, 2026-08-12
