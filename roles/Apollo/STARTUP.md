@@ -2,6 +2,27 @@
 
 **Updated:** 2026-08-12 · **Identity:** see `roles/Apollo/CHARTER.md`
 
+## 2026-08-12 — PROGRAM STRATEGY SET. Read the roadmap before touching Apollo.
+
+**`D:\Prometheus\pivot\STRATEGY_2026-08-12_resumption_and_roadmap.md`** is the live
+program-level roadmap (extends, does not supersede, `pivot/REASSESSMENT_2026-06-22_v3_the_reframing.md`).
+It records James's four rulings of 2026-08-12 — these are constraints, not proposals:
+
+- **R1 Math is NOT retired.** Discreteness = no ambiguity = it becomes the **calibration
+  standard** for validating instruments before they touch the reasoning landscape.
+- **R2 Apollo's R9→M-axis re-aim is ON HOLD.** Ladder v0.2 reassessment comes first.
+- **R3 Do NOT narrow.** Search for value across the program → operating model is an
+  **archive (MAP-Elites over lanes + coverage measure), not a funnel.**
+- **R4 No kill date.** Cycle, explore, expand tooling, more models (podman), find
+  leverage. The coverage measure replaces the kill date.
+
+Apollo's thesis in that doc (§3): **all 5 of Apollo's widenings were agent-supplied,
+0 self-found; search then burns 84% of compute after the ceiling.** The program's central
+open question is whether representational widening can be mechanized at all.
+
+Apollo's queue: 150-gen probes (free 5×) · commit untracked artifacts · W0 retro-label
+the widening corpus · ladder v0.2 §8(c) audit. See §10 of the roadmap.
+
 ## 2026-08-12 — RESUMED after ~6wk break. llm2 run RESOLVED: kill condition fired.
 
 Nothing is running (no python procs). All Apollo commits through `709c28f9` are on
