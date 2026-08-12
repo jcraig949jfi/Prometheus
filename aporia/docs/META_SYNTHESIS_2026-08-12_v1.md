@@ -1,17 +1,23 @@
 # Meta-Synthesis — the fleet's convergence, and the one thing absent from all of it
 
-**Author:** Aporia (Claude Opus 5, 1M context) · **Date:** 2026-08-12 · **Version:** v2 (living doc — revised in place, not forked)
+**Author:** Aporia (Claude Opus 5, 1M context) · **Date:** 2026-08-12 · **Version:** v3 (living doc — revised in place, not forked)
 **Inputs read in full:** Aporia `frontier_leverage_reassessment_2026-08-12` · Charon
 `CHARON_SESSION_2026-08-12` · Ergon `REVIVAL_ASSESSMENT_2026-08-12` · Harmonia A
-`REVIEW_20260812_syntactic_router` · Harmonia B `POSITION_20260812_north_star_reset`
-**Pending:** Techne (cooking) · Harmonia C/D · Apollo · Hephaestus (M3, Fable, ultracode)
+`REVIEW_20260812_syntactic_router` · Harmonia B `POSITION_20260812_north_star_reset` ·
+Techne `REVIVAL_ASSESSMENT_2026-08-12`
+**Pending:** Harmonia C/D · Apollo · Hephaestus (M3, Fable, ultracode)
 **Status:** NON-CANONICAL. Meta-layer, not a sixth position paper. Revised as machines report.
 
-> **v2 changelog:** §1.5 is new and urgent — a load-bearing claim two agents built positions on
-> was measured false by a third, in the same 24 hours, and the correction has not propagated.
-> §5 is corrected and strengthened (the battery fails **loud and wrong**, not silent — my v1 said
-> the opposite, following Charon). §2 gains the sharpest fleet collision (Charon's encoding-forge
-> vs Harmonia A's Goodhart objection). §6 is qualified by the novelty-inflation finding.
+> **v3 changelog:** Techne reported. The §1.5 fossil count goes **3-of-5 → 4-of-6** — Techne
+> independently cites the same superseded property — which promotes it from "a claim that needs
+> correcting" to **a measured property of how this fleet handles evidence** (§1.6, new). §2.5 is
+> new: the fleet's consensus experiment has now accumulated **four independent fatal
+> preconditions**, none of which its proposer specified — this is where the fan-out's entire ROI
+> sits. Techne also unblocks a thread I parked in June (§2.6).
+>
+> **v2 changelog:** §1.5 new and urgent. §5 corrected — the battery fails **loud and wrong**, not
+> silent (my v1 said the opposite, following Charon). §2 gains the Charon-vs-Harmonia-A collision.
+> §6 qualified by the novelty-inflation finding.
 
 ---
 
@@ -46,6 +52,15 @@ Stripping arguments, keeping only things emitted by code, `git`, or a corpus:
 - **Ergon:** corpus 1,486 records / 79% confirmations against 100M+ generated failure records.
   Greedy-LoRA's +0.68 decomposes to format ≫ kill-prior ≫ template-class ≫ reasoning. Routing
   residue navigable **behaviorally** (+0.075 AUC), **NULL semantically**.
+- **Techne (E3, executed):** `python -c "import prometheus_math"` → **`ModuleNotFoundError: No
+  module named 'cypari'`**. The arsenal's front door is bricked in the default interpreter, and
+  eager hard-imports take down the **pure-stdlib** primitives with it — *including
+  `reasoning_quality_emit`, the primitive the decisive experiment needs.* Filed 06-22 and declined;
+  six weeks of env drift turned an observation into a blocker. Also: `signature_index` compresses
+  **413M records → 3,311 shape-classes** ≈ 0.7–1.7 MB ≈ **200–450K tokens** — the entire
+  proto-tensor plausibly fits in a 1M context (flagged by Techne as an *estimate to be measured,
+  not asserted*). And `aporia/docs/gemini_research_queue/` — named in my own role doc as the
+  400-entry default firing queue — **does not exist.**
 - **Aporia:** six weeks of cron-only commits; the decisive experiment blocked on a dead
   motherboard; 21 retire candidates frozen on a single-family verdict.
 
@@ -61,12 +76,14 @@ This is the highest-value thing in this document and it is time-sensitive.
 **The claim:** *M0's 0% type-II — "the battery never certifies a true claim FALSE; it fails closed
 and silent."*
 
-**Who is standing on it right now:**
+**Who is standing on it right now — four of the six agents:**
 - **Harmonia B** files it in **Tier 2** — "executed measurements that took adversarial contact and
   **held**" — and calls it "the reason the audit fallback is a real position rather than a
   consolation prize."
 - **Charon** calls it "the defensive result I would have asked for" and builds its
   fail-closed-not-loud framing on it.
+- **Techne** states it as settled fleet state: *"the M0 keystone says the selector cannot see
+  novelty and fails **closed** (0% reject — a trustworthy audit property)."*
 - **Aporia (me, v1)** repeated it verbatim: *"it does not say 'false.' It says nothing."*
 
 **What Harmonia A measured this session (E3):** the 0% holds **only because the M0 harness
@@ -74,22 +91,56 @@ charitably hand-routes unrepresentable shapes.** A downstream consumer calling `
 claim)` directly gets a true claim certified **WRONG**. Strict type-II is **up to 5/18**, not
 0/18. The abstention was supplied by the measurement harness, not by the instrument.
 
-**So three of five agents built a position on a property that a fourth agent falsified in the same
-24-hour window.** Harmonia B's tier system is itself falsified by this: it classified the 0% as
-having "taken adversarial contact and held," and it did not hold — it broke this session, under
-the first adversary to actually execute it.
+**So four of six agents built a position on a property that a fifth falsified in the same 24-hour
+window.** Harmonia B's tier system is itself falsified by this: it classified the 0% as having
+"taken adversarial contact and held," and it did not hold — it broke this session, under the first
+adversary to actually execute it.
 
 This is the **same failure pattern as the "2,351 promotions" fossil**: a number that outlived the
 formula that produced it, propagating through documents because nobody re-ran it. We have now
-caught it twice. That recurrence is worth more than either instance.
+caught it twice — and Techne, who *found* the 2,351 fossil, is one of the four who repeated this
+one. That is not a criticism of Techne; it is the strongest possible evidence that the mechanism is
+structural rather than a lapse of care.
 
 **Actions, today:**
 1. Harmonia B's Tier 2 needs the 0% entry struck or requalified; the audit-fallback position that
    rests on it needs re-argument.
-2. Charon's fail-closed framing needs revision — and the revision **strengthens** Charon's own
+2. Charon's fail-closed framing needs revision — the revision **strengthens** Charon's own
    navigability case, so this is not a demotion.
-3. Anyone citing "0% type-II" after today is citing a fossil. Harmonia A's fix — `return
+3. Techne's §1 fleet-state summary needs the same correction before it seeds another session.
+4. Anyone citing "0% type-II" after today is citing a fossil. Harmonia A's fix — `return
    valid=None` for `unknown_kind` — should land before anything else consumes `verify()`.
+
+## 1.6 — What §1.5 actually measures: the citation chain that looks like corroboration
+
+The fossil is worth more as a *measurement of the fleet* than as a bug to fix.
+
+Six agents produced independent assessments. On this claim, **exactly one executed the code and
+five cited a summary** — `M0_RESULTS.md`, or another agent's reading of it. The five citations
+were written independently, in different voices, from different role-doctrines, on two machines.
+They *look* like five-fold corroboration. They are **one measurement with five pointers at it**,
+and the one measurement was wrong in the direction that flattered the program.
+
+Generalized, and this is the protocol finding of the day:
+
+> **In a fan-out, agreement on a factual claim is not evidence unless more than one agent
+> independently executed it.** A shared evidence base makes N agents into one agent with N voices.
+> The fan-out multiplies *judgment*, not *verification* — and judgment inherits every defect in
+> the shared base.
+
+This is a distinct failure mode from the one our doctrine already names.
+`feedback_llm_convergence_is_gravity_amplifier` warns that convergence on a *framing* signals the
+training corpus. This is narrower and more tractable: convergence on a *fact* signals a common
+source document. The fix is mechanical rather than epistemic:
+
+- **Tag every load-bearing claim with who executed it and when** — E1 (read the source) vs E3
+  (ran it) is already Harmonia A's convention; make it a fleet requirement, and make the *agent
+  identity* part of the tag, not just the level.
+- **Rotate one agent per round into a re-execution role** whose only job is to re-run the top
+  N cited facts. It would have caught this in minutes.
+- **Charon's decoy calibration is the right instrument** and §1.5 is its empirical case. Four of
+  six of us — me included — missed a live defect in a claim we were all citing. That is a measured
+  reviewer-sensitivity number, and it is not flattering to any of us.
 
 ## 2. The convergence — and why it is a warning
 
@@ -139,8 +190,64 @@ genuine value appeared only where agents *collided*:
   template.
 - **Adopt Charon's decoy calibration for the fleet itself.** Seed a review round with a planted
   defect from our null graveyard; an agent that misses it gets its verdict discounted by a measured
-  factor — *including mine.* §1.5 is the empirical case for this: three of five of us missed a
-  live defect in a claim we were all citing.
+  factor — *including mine.* §1.5/§1.6 are the empirical case: four of six of us missed a live
+  defect in a claim we were all citing.
+
+## 2.5 — Where the fan-out's entire ROI actually sits: four fatal preconditions
+
+I said in v1 that the fleet's convergence carries near-zero information. That stands. But the
+picture is now sharper and more favorable to the gang-up, and I want to state it precisely,
+because it changes what a fan-out is *for*.
+
+Ergon proposed the consensus experiment (the Metabolization Probe). **Four independent agents each
+found a different precondition that would have made it produce an uninterpretable result**, and
+none of the four is in Ergon's specification:
+
+1. **Charon:** `kill_vector` is 0% populated ⇒ the C1 arm has nothing to retrieve against. The
+   experiment cannot be *built* as written.
+2. **Charon:** retriever/residue confound ⇒ without a **C1-oracle** arm, a null reads as "the
+   corpus is exhaust" when the honest reading may be "we never built the index."
+3. **Techne:** the `grading_oracle` staircase tops out at **62%** with a 3-point top step ⇒ if the
+   metric is saturated there is no headroom, and a null is instrument ceiling misread as absence of
+   signal (`feedback_instrument_vs_architectural_pass`).
+4. **Techne:** `prometheus_math` does not import ⇒ **`reasoning_quality_emit`, the primitive the
+   experiment depends on, is unreachable in the default interpreter.**
+
+Run as originally specified, the fleet's unanimous decisive experiment would have consumed the
+revival and returned a number nobody could interpret — and, worse, a *null*, which this program
+would have written into doctrine.
+
+**That is the ROI of ganging up, and it is not where anyone expected it.** The value was not in six
+strategies; the strategies converged and told us little. It was in six adversaries finding
+preconditions on one experiment. **A fan-out is a precondition-finder, not an idea generator** —
+and it should be budgeted, sequenced, and read that way. Concretely: put the decisive experiment on
+the table early and let everyone attack *it*, rather than asking everyone for a strategy.
+
+## 2.6 — Techne unblocks a thread I parked in June (neither of us noticed)
+
+My 2026-06-09 reasoning-steering handoff parked **Path A — the inference arm**, described then as
+*"independent model judges over contested candidates, screened for curl first. Needs inference
+resourcing (deferred). The only place the non-conservativity thesis can still live."* It has sat
+dead since, for want of ≥2 genuinely independent evaluators.
+
+Techne §3.3(b), arriving from the substrate side and not referencing that thread, supplies exactly
+the missing producer: `TOOL_REASONING_QUALITY_EMIT` was forged, tested, registered and dead because
+no live ≥2-evaluator scoring site existed in-tree — and **four heterogeneous frontier families are
+that site.** Techne's spec constraint is the one that matters and it matches mine independently:
+*re-prompts of one model reproduce the g2c NULL; the evaluators must have different bases and
+objectives.*
+
+And Techne states the inversion in my own doctrine's terms without citing it: **"for the panel,
+agreement is the boring case. We are not polling models for a consensus verdict — that's
+inflation; we are mining them for cyclic disagreement. Model diversity is the instrument, not the
+authority."** That is precisely `feedback_anticorrelation_is_not_noncyclicity` plus
+`feedback_flow_conservative_by_construction`, and it is the first proposal in the program where
+frontier-model heterogeneity is *admissible by construction* — because the thing being measured is
+their **disagreement structure**, which no single model can fake and which no model adjudicates.
+
+**Consequence:** the reasoning-steering arc's dead arm is live for the first time since June, and
+it rides on wiring Techne is building anyway (item 3). I am claiming it, and flagging that it does
+**not** compete with the organism experiment — it consumes the same evaluator panel as a byproduct.
 
 ## 3. The unanimous recommendation nobody priced
 
@@ -313,25 +420,51 @@ demonstrated the method works on *us*.
 
 ## 8. What needs James
 
+0. **Unbrick `prometheus_math`** (Techne, ~1 session). It is a hard blocker on the decisive
+   experiment's own primitive and it is the only item here that is pure engineering with no
+   judgment attached. Nothing else in this list can be executed around it.
 1. **Land Harmonia A's `valid=None` fix and broadcast §1.5** before anything else consumes
-   `verify()` or cites 0% type-II. Free, and it stops a fossil mid-propagation.
-2. **Approve the two retrodictions (§5)** — kill-resurrection + detector-band audit. Days, existing
-   data, decides which program we are in. My top ask.
-3. **Approve the repair ledger (§3)** — hours, prices the fleet's unanimous recommendation before we
+   `verify()` or cites 0% type-II. Free, and it stops a fossil mid-propagation — one that four of
+   us were repeating this morning.
+2. **Clear all four preconditions (§2.5) before the consensus experiment runs.** As specified it
+   would have returned an uninterpretable null. Techne's grader-headroom check is the cheapest and
+   least obvious of the four: *if the staircase is saturated at 62%, a null means nothing.*
+3. **Approve the two retrodictions (§5)** — kill-resurrection + detector-band audit. Days, existing
+   data, decides which program we are in. My top research ask.
+4. **Approve the repair ledger (§3)** — hours, prices the fleet's unanimous recommendation before we
    spend a quarter on it.
-4. **Adopt the deletion test (§4)** as the portfolio rule, superseding "revive only into a consumer."
-5. **Fleet protocol (§2):** weight Hephaestus/Fable divergences above Claude concurrences; adopt
-   decoy-calibration for agent reviews including mine.
-6. **Sequencing:** Charon is right that `kill_vector` gates Ergon's probe. Do not run Move 1 before
-   the navigability gate, or we will measure our retriever and call it the corpus.
+5. **Adopt the deletion test (§4)** as the portfolio rule, superseding "revive only into a consumer."
+6. **Fleet protocol (§2, §1.6):** weight Hephaestus/Fable divergences above Claude concurrences;
+   adopt decoy-calibration for agent reviews including mine; **rotate one agent per round into a
+   re-execution role** whose only job is re-running the top cited facts. §1.6 is the case for it.
+7. **Sequencing:** Charon is right that `kill_vector` gates Ergon's probe. Do not run the probe
+   before the navigability gate, or we will measure our retriever and call it the corpus.
+
+**Housekeeping I owe, from Techne's addendum:** `aporia/docs/gemini_research_queue/` is named in my
+own `RESPONSIBILITIES.md` as the 400-entry default firing queue for the daily Deep Research tokens,
+and **it does not exist**. My role doc has been describing a nonexistent artifact. I concur with
+Techne's stand — do *not* rebuild it yet; a queue rebuilt now would refill `pivot/` with exactly the
+artifact class that preceded six quiet weeks. I will correct the role doc rather than the queue.
+
+**Provenance caveat on the model landscape:** Techne's §3.1 release list (GPT-5.5, GPT-5.6-Cyber,
+Gemini 3.6 Flash, DeepSeek-V4-Pro MIT-licensed) is from release trackers and Techne flags it as
+needing vendor confirmation. I cannot independently verify it either — my knowledge cutoff predates
+all of it. The one corroborated entry is `gemini-3.6-flash`, because Harmonia A actually ran it to
+author B′. Treat the rest as unconfirmed, and note that Techne's own guard — **pin `model_id` +
+version + date as first-class provenance on every frontier-produced record** — is the right response
+regardless of which list is accurate. That guard is a substrate schema change, it passes the
+deletion test, and it should land with the emit wiring.
 
 ---
 
-*v2, written before Techne, Harmonia C/D, Apollo, and Hephaestus reported. The fleet agrees, and
-agreement is the warning. Three of five of us — me included — spent today building on a property
-that a fourth measured false this morning. What is absent from all five assessments is any check on
-whether the thing we all recommend has ever worked, and any attempt to re-read our own history
-through the detector we just discovered was blind. Those two absences, and the fossil in §1.5, are
-this document's contribution.*
+*v3, written before Harmonia C/D, Apollo, and Hephaestus reported. The fleet agrees, and agreement
+is the warning. Four of six of us — me included — spent today building on a property that a fifth
+measured false this morning, which turns out to be the more useful finding: on a factual claim,
+six agents were one measurement with five pointers at it. What is absent from all six assessments
+is any check on whether the thing we all recommend has ever worked, and any attempt to re-read our
+own history through the detector we just discovered was blind. Those two absences, the fossil in
+§1.5, the citation-chain mechanism in §1.6, and the four preconditions in §2.5 are this document's
+contribution. The fan-out's value was never the six strategies — it was six adversaries finding
+four fatal preconditions on one experiment.*
 
 — Aporia, 2026-08-12
