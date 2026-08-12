@@ -4,6 +4,8 @@
 **Trigger:** James — "assess all 4 at a deeper level and reassess how they fit the larger
 Prometheus project. A general review from your unique role perspective."
 **Repo state at review:** HEAD `2350a1de` (2026-06-27), tree clean. **No commits in 46 days.**
+**Superseded during the session** — James landed a catch-up commit (`bb203749`) and Techne,
+Ergon, Apollo and Harmonia D all pushed today. See §7 for the two corrections that forced.
 
 ---
 
@@ -369,8 +371,15 @@ Two independent reasons, and I checked one of them:
 
 ### Not on the list, but should be
 
+> **CORRECTION (added post-write, same session).** The claim below is **wrong** — see §7.
+> Techne executed the M0.5 replay tool and ledger census on 2026-06-23 and found **0
+> promoted under the current formula**, i.e. the "2,351 promotions" is a *formula fossil*.
+> That is a stronger result than the coverage-vs-cleanliness split I predicted, and it
+> settles the question in Charon's favour by a route neither of us named. Read
+> Techne's resume (commit `5b8a80c2`) before acting on this section.
+
 **Charon's scoped M0.5 ledger census** (`D:\prometheus\charon\CHARON_SESSION_2026-06-23.md`
-§4) is still unexecuted and is, in my judgement, the highest-value *unclaimed* item in the
+§4) ~~is still unexecuted and~~ is, in my judgement, the highest-value *unclaimed* item in the
 program: enumerate every live promotion sink, and report what fraction of "promoted"
 artifacts is even replay-*eligible*. It converts the promotion question from a cleanliness
 test into a provenance-coverage test. It is not mine to claim — it is Charon's finding and
@@ -423,8 +432,58 @@ verdict, I was polishing.
 
 ---
 
-*Two adversarial passes against this program's instruments, two breaks. The honest number
-of novel discoveries is still zero. The instrument is the product — which is exactly why
-an instrument that ships its own answer key is the most expensive defect available to us.*
+---
+
+## 7. Corrections forced during the session (the program was not idle)
+
+I opened this review with "no commits in 46 days." That was true of HEAD at the moment I
+read it and **false about the program**. While I worked, James landed a catch-up commit
+(`bb203749`, which swept in this very document) and four other sessions pushed today —
+Techne, Ergon, Apollo, and Harmonia D. Two of my claims died on contact with their work:
+
+**(1) The M0.5 census is executed, and the answer is better than my prediction.**
+Techne (commit `5b8a80c2`) built the replay tool and ledger census on 2026-06-23 and
+found **0 promoted under the current formula — the "2,351" is a formula fossil.** I
+predicted the split would be *coverage* (can't replay) rather than *cleanliness* (fails on
+replay). Techne found a third answer neither Charon nor I named: the promotions don't
+survive the promotion formula's own current definition. My §4 "highest-value unclaimed
+item" was six weeks stale when I wrote it. Struck.
+
+**(2) Harmonia D built the dual control while I was building mine — and it is the half I
+was missing.** `D:\prometheus\harmonia\diagnostics\ladder_liveness_audit.py` is the
+**positive** control to my negative one:
+
+| control | asks | want |
+|---|---|---|
+| `ladder_leakage_audit` (mine) | can a candidate reading ONLY the payload pass? | **NO** |
+| `ladder_liveness_audit` (D's) | can a candidate HANDED the ground truth pass? | **YES** |
+
+I ran it — E3, not cited: **all 8 tiers LIVE, every tier accepts its own ground truth.**
+That closes a hole I left open. My audit could tell you R7/R8 don't leak; it could *not*
+tell you whether their 0.0% across all four baselines meant "honestly hard" or "grader
+broken." D's control settles it: **R7/R8 are genuinely unclimbed.** D also surfaced that
+`verify:unknown_kind` fires on 160/160 probes at R5/R7/R8 — worth chasing.
+
+D's own docstring records that the control's *first* version reported "R0 BROKEN 0.0%",
+which was a bug in the control (bare scalar where `linear` expects a singleton list), not
+a defect in R0 — and files it against the retraction registry's specification-mismatch
+mode. **A positive control needs its own positive control.** That is the better lesson of
+the pair, and it is theirs, not mine.
+
+**What this changes about §3.** My "the program builds instruments faster than it audits
+them" stands as a description of the *June* state, but it is being actively falsified
+*today*: two independent sessions built complementary controls on the same instrument
+within hours, without coordination, and each caught what the other missed. That is the
+polycentric-adversary structure working — the thing April's coordination machinery was
+built to manufacture and never did. It is weak evidence (one day, n=2), but it points the
+opposite way from my §1 pathology and I am recording it as such.
+
+---
+
+*Two adversarial passes against this program's instruments, two breaks — and by day's end
+a third and fourth session had landed, one correcting me and one completing me. The honest
+number of novel discoveries is still zero. The instrument is the product — which is exactly
+why an instrument that ships its own answer key is the most expensive defect available to
+us, and why a negative control without its positive twin is only half an instrument.*
 
 — Harmonia B, 2026-08-12
