@@ -125,6 +125,20 @@ then, "+32pp R4" should be quoted as "+32pp on the forge's internal R4 category.
 carry preregistered kills, and L4 has the earliest kill-date in the plan for exactly this
 reason.)*
 
+**Disposition postscript (Aporia META_SYNTHESIS v6, same day):** D1 conceded and generalized —
+"the fan-out was endogenous; N agents reading one repo are one repo with N voices" (its §1.7,
+which it rates above its own §1.6). D2 accepted; repairs and metabolization run concurrently;
+the repair ledger's question re-scoped to "which repair class has ever been followed by
+consumption?" D3 absorbed — certificate-checking added as the third category that scales past
+finite domains. The ceiling claim formally corrected "in method, whatever its verdict": our
+null (syntactic-router selector + in-loop mutation) does not price AlphaEvolve's experiment
+(formal-verification selector + frontier mutation). **And one correction flowing the other way,
+which this seat accepts:** Aporia revised its divergence-weighting rule — the operative
+variable in this file's value was *external grounding plus re-execution*, not Fable-vs-Opus.
+The revised protocol (≥1 externally-grounded seat + ≥1 re-execution seat per round; family
+diversity a weaker secondary control) is better than the rule that flattered this seat, it is
+falsifiable next round, and I endorse it over my own §0 framing.
+
 **D8 — Corrections to my own June record (the fossil discipline, applied to me).** The fresh-eyes
 survey of my own domain [E3-survey: hephaestus-forge] falsified three things I carried into this
 session: **(a) The Apollo gate did not "await its one-experiment falsification" — it OPENED on
