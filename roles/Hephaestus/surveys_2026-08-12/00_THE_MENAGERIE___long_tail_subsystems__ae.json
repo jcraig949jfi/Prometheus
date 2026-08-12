@@ -1,0 +1,196 @@
+{
+ "arc": [
+  {
+   "date": "2026-03-22",
+   "event": "Repo init (ffb3639d) already carries aethon/ (MAP-Elites reasoning archaeology, docs-only) and rhea/ (evolutionary forge) \u2014 the 'reasoning-circuits era' begins"
+  },
+  {
+   "date": "2026-03-24/25",
+   "event": "Ignis 1.5B experiment suite + Rhea evolution batches 1-4 merged; ejection-mechanism results locked into ignis/RESULTS.md (SR 0->92% at 135M, v_proj-is-the-circuit, 19/30 traps pretraining-origin); rhea/runs/ holds 24 run dirs incl. dedicated coherence_* experiments \u2014 the coherence trade-off is admitted the same week (rhea/README.md:82-84)"
+  },
+  {
+   "date": "2026-03-28/29",
+   "event": "Noesis daemon tournament (organisms/): 30h, 69,498 cycles, 3.47M chains, 5,471 'cracks'; random_baseline beats every evolved strategy at cracks/cycle (0.279 vs mutation 0.105, tensor_topk 0.023) \u2014 early honest kill of 'guided search beats random'; MAP-Elites fills 4/64 cells"
+  },
+  {
+   "date": "2026-03-30",
+   "event": "Noesis source gitignored ('PROTECT UNPUBLISHED RESEARCH', 8144f4f0); organisms/ .py sources later deleted leaving only __pycache__ of ~20 concept-domain modules"
+  },
+  {
+   "date": "2026-04-03/04",
+   "event": "Last Ignis batches (phi2 P1-P5 on disk) and last PipelineOrchestrator/ScienceAdvisor (Athena) journals \u2014 the M1 forge-and-intelligence-pipeline era ends"
+  },
+  {
+   "date": "2026-04-12",
+   "event": "MPA Database Architect role created then rewritten same day ('translation layer, not data collection') \u2014 the math-invariant/MPA era begins (Koios, Kairos, Mnemosyne, Agora personas)"
+  },
+  {
+   "date": "2026-04-18",
+   "event": "KILL: 'SVD of invariance tensor \u2014 Geometry 1 FALSIFIED' (commit 5f229878, koios/scripts/rank_analysis.py) \u2014 the MPA universal-geometry thesis dies by its own instrument"
+  },
+  {
+   "date": "2026-04-23-26",
+   "event": "Reorg creates exploratory/; tensor_decomp_qd pilot ladder runs and kills char-2 hypothesis (pilot_F3_2x2) and LLM-mutation hypothesis (0/139); zoo/conjecture_gp Tink 2 VALIDATED (Pareto vs aggregate disagreement produced as predicted); Kairos authors 5 immutable falsification-pattern cards from the 2026-04-26 frontier review"
+  },
+  {
+   "date": "2026-05-05",
+   "event": "Team backfill commit 3250f751/2b63fc95 \u2014 last-ever commits touching agora/, kairos/, stoa/, zoo/, mnemosyne/, exploratory/; the whole persona-era menagerie freezes"
+  },
+  {
+   "date": "2026-05-17-19",
+   "event": "pipelines/ v0 manifests (explicitly 'descriptive, not load-bearing'); Clio v0.4/0.5 + Pythia v0.1 with tests/ \u2014 last tests activity 2026-05-19"
+  },
+  {
+   "date": "2026-05-29/30",
+   "event": "Lean interaction substrate ships (d576dc98): agents/_shared lean_runtime + proof_search BFS engine + external_deps/mathlib_repl bridge, 36 tests green \u2014 then nothing ever consumes it; logs/machine_probe.log goes silent 2026-05-30"
+  },
+  {
+   "date": "2026-06-22-24",
+   "event": "Reassessment Appendix A marks Rhea/Ignis/Aethon/Arcanum/Koios/Kairos/Mnemosyne DORMANT and Zoo CLOSED; names Rhea+Ignis+Kairos the 'reward/ejection-pathology cluster' for revival (\u00a719) and diagnoses Rhea's stall as search-operator insufficiency (sep-CMA-ES, sigma 0.01, ~800K-dim); Redis retired 2026-06-24 (983fd077), stranding agora/ package (config.py still Redis-hardwired) \u2014 successor bus is scripts/agora_persist.py on Postgres .202"
+  },
+  {
+   "date": "2026-08-12",
+   "event": "Survey date: zero activity anywhere in this domain since 2026-06-24 (and that was infra repointing, not research); today's resumed sessions (Techne, Ergon) touch nothing here"
+  }
+ ],
+ "assets": {
+  "alive": [
+   "scripts/ (partially): agora_persist.py Postgres bus repointed to .202 on 2026-06-24; clio_daemon/hypatia marked REVIVE in pivot/COMPONENT_DISPOSITION_PLAN_2026-06-23.md \u2014 intent live, nothing observed running today",
+   "Data descended from this domain that lives elsewhere: noesis.* Postgres tables (51,992 rows) and prometheus_sci/fire loads documented in mnemosyne/STATE.md"
+  ],
+  "dead": [
+   "aethon/ (docs-only since 2026-03-22; code never in repo)",
+   "arcanum/ (code present, no results, dead since 2026-03-24)",
+   "rhea/ (dead 2026-03-25; 24 run dirs preserved)",
+   "ignis/ (last real work 2026-04-04)",
+   "organisms/ (dead 2026-03-29; sources deleted, only pycache + data remain)",
+   "noesis/ (gitignored 2026-03-30; only an 82KB json on this machine)",
+   "koios/ (dead 2026-04-23; DBs on dead .176 host)",
+   "kairos/ (frozen 2026-05-05)",
+   "mnemosyne/ (frozen 2026-05-05; all host refs stale post-.202 repoint)",
+   "stoa/ (frozen 2026-05-05)",
+   "zoo/conjecture_gp (frozen 2026-05-05; 'CLOSED, locked v3.4' per reassessment)",
+   "exploratory/* (frozen 2026-04-25/05-05; grammata never built)",
+   "agora/ package (stranded by Redis retirement 2026-06-24)",
+   "pipelines/ (v0 manifests, consumers never wired, frozen 2026-05-17)",
+   "tests/ (Redis-era, frozen 2026-05-19)",
+   "logs/ (one file, silent since 2026-05-30)",
+   "roles/{Agora,Kairos,Koios,Mnemosyne,ScienceAdvisor,StructuralMathematician,PipelineOrchestrator,MPADatabaseArchitect,CrossDomainCartographer,EvolutionaryArchitect...} (persona-era charters, all frozen Apr-May)"
+  ],
+  "buried_gems": [
+   "Lean proof harness: agents/_shared/external_tools/lean_runtime/ + agents/_shared/proof_search/ + external_deps/mathlib_repl/ \u2014 Lean4 v4.30.0 + Mathlib REPL with typed sessions, crash handling, BFS proof-search engine, 36 tests green (d576dc98, 2026-05-29). The reassessment's own \u00a718 says the only Goodhart-proof fitness is external truth; this IS an external-truth gate, built, tested, and consumed by nothing. Rhea's 'verify with Lean 4' loop diagram (rhea/README.md:33-41) describes exactly this component \u2014 built two months after Rhea died, never connected.",
+   "exploratory/tensor_decomp_qd/ \u2014 the cleanest falsification-ladder methodology in the program: 10 pilots, each with pre-registered outcome taxonomy (A/B1/B2), a hard-gated canonicalizer (gauge-invariant, unit-tested before any run), two explicit hypothesis kills (char-2, LLM-mutation), one formal A-outcome (pilot_Q_3x3: 3 rank-23 invariant tuples), and reusable primitives (laderman_solve pattern, bit-packed canonicalize, flip-graph moves). As a template for 'how to run a search campaign that can honestly fail', it is better than most of what the live spine uses.",
+   "kairos/patterns/ \u2014 5 immutable, machine-readable methodological kill-pattern cards (RANK_PARITY_LEAK, CONDUCTOR_CONFOUND, PRIME_GRAVITATIONAL_OVERFIT, BASE_RATE_NEGLECT, VRAM_TRUNCATION_ARTIFACT) with YAML frontmatter, trigger conditions, veto authority, and paired null-control operators. This is the embryo of the 'SW-1 shared typed-failure substrate' the June reassessment lists as a high-ceiling build \u2014 it already exists in miniature and nothing enforces or consumes it. (Note: reassessment Appendix A mislabels kairos as 'ejection-failure pattern library'; the cards are math-methodology failure patterns.)",
+   "agora/symbols/ lifecycle \u2014 immutable versioned symbols (@vN references), promotion validation, deprecation/successor pointers, cross-version resolution, plus a challenge/qualification work-queue protocol; covered by tests/test_symbol_lifecycle.py and test_cross_version_resolution.py. Dead only because Redis died; the design is transport-independent and unported.",
+   "mnemosyne/STATE.md \u2014 the single best census of the program's data layer (every table, row count, loader, and provenance across prometheus_sci 1.14M rows / prometheus_fire ~600K rows / LMFDB 30M+); needs only a .176->.202 update to be authoritative again.",
+   "zoo/conjecture_gp scorer \u2014 a validated demonstration (results_2026-04-25.md: 'VALIDATED') that Pareto-front multi-axis scoring rejects exactly the tautological conjecture-shapes that scalar aggregates reward; directly reusable against the 'promote what passes the gate' monoculture the reassessment diagnoses."
+  ]
+ },
+ "connections": [
+  "rhea <-> ignis: two halves of the ejection thesis (Ignis measures the 'crime scene', Rhea perturbs the 'criminal', rhea/README.md:59); link was live Mar 2026, both dead since; reassessment \u00a719 wants them revived as a cluster with kairos",
+  "rhea -> Lean 4 verification loop: ASPIRATIONAL \u2014 claimed in rhea/README.md:33-41, but the actual Lean substrate (agents/_shared, d576dc98) was built 2026-05-29, two months after Rhea died; never wired",
+  "organisms/ -> noesis/ -> prometheus_fire noesis.* tables: the March daemon's data was migrated to Postgres 2026-04-16 (mnemosyne/STATE.md:60); data live, all consumers dormant; noesis_v2.duckdb not on this machine",
+  "agora/ package -> Redis .176: DEAD (Redis retired 2026-06-24, commit 983fd077); successor scripts/agora_persist.py -> Postgres .202 is the live bus; agora's symbol/queue semantics were never ported",
+  "tests/ -> agora/ + scripts/clio_*: idle; Redis-era assumptions likely broken against Postgres-only world",
+  "kairos/patterns -> canonical-finding veto (F011 retro-audit, Harmonia findings): ASPIRATIONAL \u2014 veto authority declared, no enforcement code found anywhere",
+  "koios/scripts + mnemosyne/* -> 192.168.1.176 DBs: dead infra (host died; repoint went to .202 but these files were never updated)",
+  "pipelines/*.yaml -> portfolio_monitor/send_brief_email/pronoia: ASPIRATIONAL by its own README ('descriptive, not load-bearing', pipelines/README.md:55)",
+  "exploratory/tensor_decomp_qd -> harmonia methodology toolkit (TENSOR_DECOMP_LENS@v1 bridge): ASPIRATIONAL (README:114-121)",
+  "zoo/conjecture_gp -> harmonia conjecture_generator v0.3.1: validation link was live 2026-04-25, now frozen",
+  "exploratory/zoo (TT_APPROX_MAP@v0) -> harmonia methodology_toolkit: CANDIDATE pointer only, Phase 3 graduation never happened",
+  "aethon/arcanum -> Ignis/AURA toolchain: arcanum README declares itself a fork of Ignis infra; both dormant; aethon's actual code (claimed 23 modules/256 tests) is not in this repo at all"
+ ],
+ "current_state": "Effectively a fossil bed. Nothing in this domain has executed or been committed since 2026-06-24, and that final touch was infra repointing (Redis retirement, .176->.202) in scripts/, not research. Working-tree mtimes clustered at 2026-05-14 are a re-clone artifact; git history is the honest clock. Last genuine research activity per subsystem: rhea 2026-03-25, organisms 2026-03-29, noesis 2026-03-30 (then gitignored), ignis 2026-04-04, koios 2026-04-18 (its own falsification), tensor_decomp_qd/zoo/kairos-patterns 2026-04-25/26, agora/kairos/stoa/zoo/mnemosyne frozen at the 2026-05-05 backfill, pipelines 2026-05-17, tests 2026-05-19, Lean substrate 2026-05-29, logs silent 2026-05-30. The June reassessment formally marked all of it DORMANT/CLOSED. Data descendants (noesis.* Postgres tables, prometheus_sci/fire loads) live on the .202 host. The 2026-08-12 session resumptions (Techne, Ergon) touch none of this.",
+ "domain": "THE MENAGERIE \u2014 long-tail subsystems (aethon, arcanum, kairos, koios, mnemosyne, noesis, rhea, stoa, ignis, zoo, organisms, exploratory, agora, pipelines, external_deps, tests, scripts, logs, persona-era roles/)",
+ "files_of_record": [
+  "C:\\prometheus\\pivot\\REASSESSMENT_2026-06-22_consolidated.md (Appendix A roster lines ~755-780; lens diagnoses of rhea/agora/koios; \u00a719 revival list)",
+  "C:\\prometheus\\ignis\\RESULTS.md (the ejection-mechanism claims of record, 2026-03-25)",
+  "C:\\prometheus\\rhea\\README.md (thesis + the coherence-collapse admission at lines 82-84)",
+  "C:\\prometheus\\exploratory\\tensor_decomp_qd\\README.md (+ META_REPORT_PARALLEL_PILOTS.md, META_REPORT_DIRECTION_2.md)",
+  "C:\\prometheus\\zoo\\conjecture_gp\\README.md + results_2026-04-25.md (Tink 2 VALIDATED)",
+  "C:\\prometheus\\kairos\\patterns\\PATTERN_RANK_PARITY_LEAK.md (exemplar of the 5-card kill-pattern library)",
+  "C:\\prometheus\\mnemosyne\\STATE.md (data-layer census)",
+  "C:\\prometheus\\agora\\README.md (substrate client API; note stale Redis .176 references)",
+  "C:\\prometheus\\organisms\\noesis_tournament_summary.md (random-beats-guided tournament result)",
+  "C:\\prometheus\\agents\\_shared\\proof_search\\engine.py + C:\\prometheus\\external_deps\\mathlib_repl\\lakefile.toml (the unconsumed Lean gate, commit d576dc98)",
+  "C:\\prometheus\\pipelines\\README.md (manifests self-declared not load-bearing)",
+  "C:\\prometheus\\aethon\\README.md and C:\\prometheus\\arcanum\\README.md (the two never-tested March visions)",
+  "C:\\prometheus\\exploratory\\zoo\\README.md (calibration-anchor discipline statement)",
+  "C:\\prometheus\\scripts\\agora_persist.py (the live successor bus, .202)"
+ ],
+ "one_line": "The program's fossil record: four successive identities (ejection-circuits, MPA-invariants, agora-substrate, ops-pipelines) all dead by June, but holding the repo's cleanest kill discipline and three genuinely unconsumed assets \u2014 a green-tested Lean/Mathlib proof gate, the tensor_decomp_qd falsification-ladder template, and the kairos typed-failure pattern library.",
+ "open_questions": [
+  "Where is Aethon's actual code? README claims 23 modules/~7,700 lines/256 tests and 7 archives, but aethon/ contains three markdown files; if the standalone repo is recoverable, its MAP-Elites-over-reasoning-configs harness is the closest existing thing to the v3 candidate-organism harness.",
+  "Do the Rhea 92%-SR checkpoints in rhea/runs/ still evaluate? The coherence-collapse caveat was never resolved (perplexity-penalty evolution 'under development' as of 2026-03-25 and never shipped) \u2014 a cheap re-run would settle whether the ejection result is a real capability or pure fitness gaming.",
+  "Was the ejection-suppression result ever replicated outside the 2026-03-24/25 sessions? No re-validation exists anywhere in the repo, yet it remains the program's most-cited 'reasoning' result.",
+  "Who is supposed to consume the Lean proof harness? 36 green tests on 2026-05-29, zero importers since; both Rhea's loop and any future Arena-style external-truth fitness need exactly this.",
+  "Is the noesis data spine reachable post-repoint? mnemosyne/STATE.md and koios/scripts still point at .176; the .202 repoint (983fd077) only touched scripts/ and apollo/.",
+  "Does the v3 'candidate-organism harness' (M1) have any code anywhere? organisms/ is the March fossil, not that harness \u2014 as of this survey the central bet of the reframing appears to be entirely unbuilt.",
+  "Should agora's symbol-lifecycle semantics (immutable @vN versioning, challenge-qualified queue) be ported to the Postgres bus, or is that coordination model deliberately retired with Redis?",
+  "Why does the reassessment mislabel kairos/ as an 'ejection-failure pattern library'? If revival of the Rhea+Ignis+Kairos cluster proceeds on that description, it will revive the wrong artifact."
+ ],
+ "purpose_and_thesis": "Not one subsystem but the sediment of four program eras, each with its own thesis: (1) Mar 2026 reasoning-circuits era \u2014 aethon ('evolve reasoning architectures under novelty pressure and catch emergent surprises'), arcanum ('the inference waste-stream contains stable non-human concepts worth cataloging'), ignis/rhea ('LMs compute correct answers then suppress them via a locatable ejection circuit; break it and honesty/metacognition emerge'), organisms/noesis ('a daemon composing cross-domain concept chains will find cracks \u2014 numerical structure violations \u2014 faster with tensor guidance'); (2) Apr 2026 MPA era \u2014 koios/kairos/mnemosyne/roles ('a Mathematical Phonetic Alphabet of normalized invariants makes universal cross-domain structure detectable'); (3) Apr-May 2026 substrate era \u2014 agora/stoa/zoo/exploratory ('a versioned-symbol, challenge-gated, multi-agent substrate with calibration-first playground tiers can coordinate honest discovery'); (4) May 2026 ops era \u2014 pipelines/scripts/tests ('self-describing manifests and daemonized scanners make the fleet legible'). The common load-bearing bet: falsification-first discipline plus diverse search substrates yields discoveries; the menagerie is where most variants of that bet were tried once and abandoned.",
+ "strategic_read": "Three things stand out. First, the menagerie died honestly: the best artifacts here are kills (Geometry 1 falsified by its own SVD, char-2 and LLM-mutation hypotheses killed by pre-registered pilots, random-beats-guided admitted in the tournament summary, coherence collapse admitted in Rhea's own README the week of its triumph). The program's claimed crown jewel \u2014 'the discipline that killed our own strongest claims' \u2014 was largely forged HERE, in tensor_decomp_qd, kairos/patterns, and exploratory/zoo, not in the live spine; if the June reframing (Prometheus as TDD-layer/progress-meter) is the way forward, this domain contains its best working examples and they should be promoted to templates, not left as fossils. Second, the single highest-leverage unconsumed asset in the entire long tail is the Lean/Mathlib proof harness: the reassessment itself says the only Goodhart-proof fitness is external truth, and a green-tested external-truth gate has been sitting unwired since 2026-05-29 \u2014 connecting it to whatever organism/harness gets built is cheap and directly serves both the v3 reframing and Harmonia's 'stall is representational/interface' diagnosis. Third, beware revival-by-mislabel: the reassessment's \u00a719 revival cluster (Rhea+Ignis+Kairos) rests on a wrong description of kairos and on Rhea results whose headline number (92% SR) is confounded by coherence collapse and was never replicated; any revival should start with a cheap re-evaluation of the March checkpoints under a coherence-honest metric, not with new evolution runs. The March-era vision projects (aethon, arcanum) are untested rather than falsified \u2014 they are the program's only genuinely novelty-seeking (vs gate-passing) objectives, which is exactly the objective-monoculture gap lens 6 identifies \u2014 but their code is respectively absent and unexercised, so they are options, not assets. Everything MPA-era can stay archived: its thesis was properly killed.",
+ "verdicts": [
+  {
+   "claim": "LMs compute correct answers internally then suppress them via a locatable v_proj ejection circuit; CMA-ES/LoRA evolution breaks it (SR 0->92% at 135M, 0->89% at 360M) and metacognition emerges unbidden (6%->75-100%)",
+   "verdict": "ambiguous",
+   "evidence": "ignis/RESULTS.md:15-97 makes the claims; rhea/README.md:82-84 admits evolved models 'break coherent text generation... repetition loops... game the fitness function'; pivot/REASSESSMENT_2026-06-22_consolidated.md:762 downgrades to 'CMA-ES suppression PoC; evolution breaks coherence'; never replicated after 2026-03-25"
+  },
+  {
+   "claim": "The suppressor is pretraining-built, not RLHF-built (19/30 traps present in base models, 1/30 RLHF-induced)",
+   "verdict": "untested",
+   "evidence": "ignis/RESULTS.md:48, rhea/README.md:13 \u2014 single measurement on Qwen2.5-1.5B, never re-run on another family or challenged"
+  },
+  {
+   "claim": "MPA 'Geometry 1': universal cross-domain structure is detectable via a normalized invariance tensor",
+   "verdict": "falsified",
+   "evidence": "commit 5f229878 (2026-04-18) 'Koios rank-analyst: SVD of invariance tensor \u2014 Geometry 1 FALSIFIED'; koios/scripts/rank_analysis.py; reassessment calls the MPA tensor an 'empty scaffold'"
+  },
+  {
+   "claim": "Char-2 (F_2) degeneracy is the primary cause of QD stall in tensor-decomposition search",
+   "verdict": "falsified",
+   "evidence": "exploratory/tensor_decomp_qd/README.md:23,41-44 \u2014 pilot_F3_2x2: F_3 has 100x higher fitness rate, same outcome; 'mutation geometry is the proven bottleneck'"
+  },
+  {
+   "claim": "LLM-proposed mutations escape the Hamming-isolation wall in decomposition space",
+   "verdict": "falsified",
+   "evidence": "exploratory/tensor_decomp_qd/README.md:29 \u2014 pilot_LLM_mutation: 0/139 Haiku-proposed mutations valid, 'entry-edit LLM hits same Hamming wall as bit-flip'"
+  },
+  {
+   "claim": "A single scalar aggregate suffices to rank conjecture candidates (vs the 7-axis Pareto discipline)",
+   "verdict": "falsified",
+   "evidence": "zoo/conjecture_gp/results_2026-04-25.md 'Verdict: VALIDATED' \u2014 aggregate rewards F043-shape tautologies that the Pareto front rejects, exactly as the Tink-2 thesis pre-registered (README.md:48-58)"
+  },
+  {
+   "claim": "Tensor-guided / evolved chain composition finds numerical cracks faster than random search",
+   "verdict": "falsified",
+   "evidence": "organisms/noesis_tournament_summary.md \u2014 random_baseline 0.2794 cracks/cycle vs mutation 0.1054, frontier_seeking 0.0319, tensor_topk 0.0230 over 69,498 cycles / 30h (as of the 2026-03-29 tournament)"
+  },
+  {
+   "claim": "The Redis-backed Agora substrate (work queue, challenge qualification, versioned symbols) is the program's coordination layer",
+   "verdict": "superseded",
+   "evidence": "commit 983fd077 (2026-06-24) 'Postgres-only, Redis retired'; agora/config.py:2-23 still Redis-hardwired; live successor is scripts/agora_persist.py (header: 'was .176, stale 2026-06-24', default .202)"
+  },
+  {
+   "claim": "Self-describing pipeline manifests will drive discovery/reporting/orchestration",
+   "verdict": "untested",
+   "evidence": "pipelines/README.md:55 \u2014 'the manifests are descriptive, not yet load-bearing'; consumers (portfolio_monitor, send_brief_email, pronoia) never wired; frozen 2026-05-17"
+  },
+  {
+   "claim": "Aethon: convergent reasoning motifs replicate across independent evolutionary runs and model substrates",
+   "verdict": "untested",
+   "evidence": "aethon/README.md:44 claims a 4-seed replication mid-flight (Mar 2026), but the directory contains only 3 markdown files, no code, no results; nothing committed since 2026-03-22"
+  },
+  {
+   "claim": "Arcanum: stable, recurring non-human tensor concepts exist in the inference waste-stream and reinjection can bootstrap capability",
+   "verdict": "untested",
+   "evidence": "arcanum/src/arcanum_infinity/ code exists (xeno_orchestrator.py, xenolexicon_db.py etc.) but no results committed; dead since 2026-03-24"
+  },
+  {
+   "claim": "Rhea's stall was thesis-failure",
+   "verdict": "superseded",
+   "evidence": "pivot/REASSESSMENT_2026-06-22_consolidated.md:167-170 rediagnoses it as search-operator insufficiency: sep-CMA-ES (CMA_diagonal=True), SIGMA_INIT=0.01 over ~800K-dim LoRA genome, no restart-on-plateau \u2014 the thesis was never given a competent search"
+  }
+ ]
+}

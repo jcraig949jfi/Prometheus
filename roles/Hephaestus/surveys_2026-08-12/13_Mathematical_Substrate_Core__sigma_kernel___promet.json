@@ -1,0 +1,191 @@
+{
+ "domain": "Mathematical Substrate Core (sigma_kernel/, prometheus_math/, falsification/, whitepapers/)",
+ "one_line": "A mechanically-sound, honestly-self-documenting falsification instrument that killed its own founding theory, its own promotion count, and its own gradient-field hope \u2014 then froze on 2026-06-09 with its three best bridges (F2 content gate, margin-space kill vectors, reasoning-quality emit) built but never wired into anything.",
+ "purpose_and_thesis": "Founding thesis (README.md May 2026): \"hallucinations as mutation, falsification as selection\" \u2014 build a substrate that mechanically enforces epistemic discipline (sigma_kernel: append-only storage, linear capability tokens, three-valued GATE, falsification-first PROMOTE, content-addressed provenance) and accumulate a kill ledger whose geometry becomes a trainable gradient field for discovery (the 5-day kill-space pivot of 2026-05-04: archaeology \u2192 KillVector \u2192 learner \u2192 navigator). falsification/ is the older ALETHEIA battery (March 2026) that stress-tested the pre-Prometheus 15-paper theory; whitepapers/ is the outbound working-paper shelf.",
+ "arc": [
+  {
+   "date": "2026-03-30",
+   "event": "ALETHEIA falsification battery (falsification/) runs 15 tests against the founding 15-paper theory: 6 FAIL (incl. test_15 \u2014 the '11 structural primitives, no more no fewer' claim), 3 PASS, 1 conditional, 5 INCONCLUSIVE. The founding taxonomy is partially killed at birth and the program keeps the corpse on display."
+  },
+  {
+   "date": "2026-04-25",
+   "event": "prometheus_math ARSENAL generated: unified math API over 31/38 backends (sympy/cypari/flint/snappy/gudhi/...)."
+  },
+  {
+   "date": "2026-04-29",
+   "event": "sigma_kernel first commits; withheld-rediscovery benchmark run (36 held-out Mossinghoff targets)."
+  },
+  {
+   "date": "2026-05-04",
+   "event": "The 5-day kill-space pivot, all in one burst: gradient archaeology (314,971 kills aggregated from 22 pilot JSONs, MI(arm;falsifier)=0.725 bits, per-region verdict B); KillVector v1 spec (12 components, F1/F6/F9/F11 + catalogs); Day-4 learner verdict NEGATIVE (no learnable gradient beyond cell-mean lookup); Day-5 navigator (verdict B, margin mode valid in 1 region); native pilot (24K episodes, margin space 126,983x more operator-distinguishability than categorical); Lehmer deg-14 \u00b15 brute force: 97,435,855 polys, 26 rediscoveries, 0 novel, verdict INCONCLUSIVE (substrate refused to overclaim)."
+  },
+  {
+   "date": "2026-05-05",
+   "event": "Charon per-domain pi0 calibration (Lehmer 0.9989 ... genus2 0.669); later wired into ergon/learner/reward.py compute_reward_with_pi0."
+  },
+  {
+   "date": "2026-05-06/09",
+   "event": "Substrate v2.3 hardening: REWRITE/EQUIV opcodes land (kernel now 9 opcodes; README still says 7); KillVector v2 (20 components); ExclusionCertificate schema + lehmer_deg14 certificate (strength 'complete' via 4-path triangulation, but placeholder hashes); frozen-dataclass manifest locked at 25 classes; Substrate-Tester fires through #66."
+  },
+  {
+   "date": "2026-05-18/30",
+   "event": "Theseus mass-generation era against this substrate: 658M lifetime records, 367M kills, 2,351 'discoveries emitted' (lifetime_stats.json frozen 05-30). F2 content_aware_promote built 05-30 and wired OBSERVATION-ONLY into daemon."
+  },
+  {
+   "date": "2026-05-27/29",
+   "event": "Icarus whitepaper v0.1: dual-falsified R0-R3 ladder climb; last whitepapers/ activity."
+  },
+  {
+   "date": "2026-06-03",
+   "event": "Calibration v3c fixes F2 claim-shape category error (meta-relational verdicts misclassified)."
+  },
+  {
+   "date": "2026-06-09",
+   "event": "LAST substantive substrate commit (d32304d2): reasoning_quality_emit primitive, 16 tests green \u2014 the per-evaluator vector emitter Aporia's H-R1 instrument needs. The one-line production integration was never done."
+  },
+  {
+   "date": "2026-06-22/23",
+   "event": "Reassessment + Techne M0.5 replay audit: PROMOTE confirm-by-assertion triangulated across 3 code paths; total_promoted=0 on replay under current training_weight formula (global max 0.312-0.33); the 2,351 is a formula fossil; Charon ledger census: 413,110,932 raw records collapse to 3,311 shape-classes, not content-replayable; kernel Postgres has no sigma schema."
+  },
+  {
+   "date": "2026-06-24",
+   "event": "Last commit touching prometheus_math tests/docs (sync). After this: only 'arsenal: capability matrix updated' cron commits (GitHub Actions on ubuntu-latest, not a project machine)."
+  },
+  {
+   "date": "2026-08-12",
+   "event": "Techne revival assessment confirms: 6.5 weeks dormant, arsenal front door broken on default interpreter (eager cypari import in prometheus_math/__init__.py takes down even pure-stdlib primitives incl. reasoning_quality_emit); nothing ever metabolized the kill geometry."
+  }
+ ],
+ "verdicts": [
+  {
+   "claim": "Founding 15-paper theory (11-primitive decomposition of mathematics, closed damage-operator algebra, etc.)",
+   "verdict": "falsified",
+   "evidence": "falsification/test_*_result.json: 03,04,06,08,09,13,15 = FAIL (test_15 kills the '11 primitives exactly' title claim); 07,10,12 PASS. Battery frozen since 2026-03/04."
+  },
+  {
+   "claim": "PROMOTE enforces falsification-first discipline at the program's center",
+   "verdict": "falsified",
+   "evidence": "roles/Techne/M05_PROMOTION_REPLAY_FINDINGS_2026-06-23.md \u00a71: sigma_kernel.py PROMOTE (line ~819) checks capability+verdict+uniqueness, never re-runs the battery; discovery_promotion.py mints synthetic CLEAR from caller survival_evidence; theseus training_weight reads metadata shape only. Triangulated E1 across 3 code paths."
+  },
+  {
+   "claim": "The historical 2,351 promotions represent replay-stable discoveries",
+   "verdict": "falsified",
+   "evidence": "pivot/promotion_replay_audit_stride13.json: total_promoted=0 (21/265 batches, 414s sweep); global max training_weight 0.312; 123,052 bridge_extension records max 0.330. theseus/orchestration/lifetime_stats.json still carries lifetime_discoveries_emitted=2351 (frozen 2026-05-30). Formula fossil of the pre-Fire-#141 gate."
+  },
+  {
+   "claim": "The kill ledger contains a learnable gradient field (kill geometry \u2192 trainable)",
+   "verdict": "falsified",
+   "evidence": "prometheus_math/KILL_VECTOR_LEARNER_RESULTS.md ('Honest framing'): learner does not beat the (region,operator) cell-mean lookup; 'falsifies the optimistic reading of Day 1-3'. Root cause: ledger is aggregate counts, not per-record vectors. The margin-space rescue (native pilot: 126,983x distinguishability) was validated in exactly 1 region / 24K episodes and never scaled \u2014 that narrower claim is untested, not dead."
+  },
+  {
+   "claim": "MI(operator;falsifier) = 0.725 bits of navigable structure in the kill ledger",
+   "verdict": "ambiguous",
+   "evidence": "prometheus_math/GRADIENT_ARCHAEOLOGY_RESULTS.md:102 confirms the number as computed, but the same doc's per-region section deflates it honestly: MI(region;kill_pattern)=0.950 bits dominates; MI(operator;kp|region)=0.264 bits. Most of the 'gradient' is region identity, not operator behavior."
+  },
+  {
+   "claim": "deg-14 \u00b15 palindromic subspace contains a novel Lehmer-band polynomial",
+   "verdict": "falsified",
+   "evidence": "prometheus_math/LEHMER_BRUTE_FORCE_FULL_RUN_RESULTS.md: 97,435,855 enumerated, 43 verified band hits, 26 Mossinghoff rediscoveries, 0 novel; encoded as sigma_kernel/exclusion_certificates/lehmer_deg14.py (strength 'complete' via Path A/B/C/D \u2014 but code/data/environment hashes are declared placeholders in the module docstring)."
+  },
+  {
+   "claim": "Sigma-kernel contract discipline holds (frozen primitives, opcode contracts)",
+   "verdict": "survived",
+   "evidence": "Ran this session: sigma_kernel/tests \u2192 110 passed, 94 skipped, 10 failed \u2014 ALL 10 failures are ModuleNotFoundError cypari via prometheus_math.__init__\u2192techne.lib.class_number (env gap on this machine, not regression); core suites (test_bind_eval, test_method_spec, test_rewrite_equiv) 74 passed, 2 failed (same cypari root). demo.py runs all 6 discipline scenarios end-to-end (verified from scratchpad copy). 9 opcodes confirmed in sigma_kernel.py:11-13,506-1291 (README.md:16 stale at 7). 25-class frozen manifest enforced (tests/test_frozen_baseline_manifest.py:48-83,126)."
+  },
+  {
+   "claim": "Tier A++/B meta-primitives (TensorNetwork, MomentPolytope, DistributionObject, RepresentationTheoreticInvariant, ConstructiveExistenceWitness) would be built",
+   "verdict": "falsified",
+   "evidence": "All 5 stub test suites still module-level skipif-guarded (94 skips); none of the 5 target modules exist in sigma_kernel/ (verified ls). Promised 2026-05-09 (fires #56-60), never built."
+  },
+  {
+   "claim": "F2 content verification gates promotion",
+   "verdict": "falsified",
+   "evidence": "theseus/daemon.py:422-442: F2 runs in explicit observation-mode ('without changing actual promotion behavior'); promotion still F1-only (telemetry.py:201 training_weight>=0.6). No commit has touched daemon.py since 2026-06-09; Techne's rec #2 (wire F2 as conjunction) unimplemented."
+  },
+  {
+   "claim": "Kernel Postgres backend gives cross-session symbol visibility",
+   "verdict": "untested",
+   "evidence": "sigma_kernel/migrations/001_create_sigma_schema.sql exists; Techne M0.5 \u00a72a verified prometheus_fire has NO sigma schema (2026-06-23); Redis forward-path (README.md:204) superseded by commit 983fd077 'Redis retired'. Backend code exists, store never provisioned."
+  },
+  {
+   "claim": "The substrate fails closed / refuses to overclaim",
+   "verdict": "survived",
+   "evidence": "Lehmer full run self-verdict INCONCLUSIVE when 17 entries failed dps=30 verification (LEHMER_BRUTE_FORCE_FULL_RUN_RESULTS.md); demo scenario 3 (BLOCK\u2192PROMOTE refuses even if GATE skipped) passes; killvector v2 fuzz: 101 tests, 0 failures (tests/killvector_fuzz_failures.json)."
+  },
+  {
+   "claim": "reasoning_quality_emit unblocks H-R1 on real reasoning data",
+   "verdict": "untested",
+   "evidence": "prometheus_math/REASONING_QUALITY_EMIT_RESULTS.md (2026-06-09): 16/16 tests, composition test feeds validated runner. Only importer is its own test file (grep verified). The 'one-line integration' at a live \u22652-head scoring site never happened; now import-blocked by the cypari eager-import defect (roles/Techne/REVIVAL_ASSESSMENT_2026-08-12.md \u00a71)."
+  }
+ ],
+ "current_state": "Frozen since 2026-06-09 (last substantive commit d32304d2, reasoning_quality_emit); the only activity since 2026-06-24 is the 'arsenal: capability matrix updated' cron (GitHub Actions ubuntu-latest, .github/workflows/arsenal.yml, daily+6h \u2014 it also runs prometheus_math/tests + techne/tests on CI, pass/fail not verifiable from this machine). All four directories' files carry a 2026-05-14 checkout timestamp; falsification/ untouched since 2026-04-16, whitepapers/ since 2026-05-29. On THIS machine (C:\\prometheus, Windows): pytest was not even installed until this survey; `import prometheus_math` is broken (eager `import cypari` chain via prometheus_math/__init__.py:35 \u2192 number_theory.py:8 \u2192 techne/lib/class_number.py:19); `import sigma_kernel` works and demo.py runs all 6 discipline scenarios cleanly. Test ground-truth measured this session: sigma_kernel/tests 110 pass / 94 skip (5 never-built Tier-stub suites) / 10 fail (all cypari-import, zero substantive regressions); core kernel suites 74 pass / 2 fail (same root). The 314,971-kill 'ledger' physically = aggregate by_kill_pattern counts inside ~22 committed pilot JSONs in prometheus_math/ (largest: _catalog_seeded_pilot.json 706KB, _gradient_archaeology_results.json:209 n_total_kills=314971) \u2014 NOT per-record, NOT growing since 2026-05-04. The real mass ledger (theseus signature_index.sqlite, 413.1M records / 3,311 shape classes) lives at F:\\Prometheus\\theseus\\orchestration\\ \u2014 gitignored (.gitignore:338), and F: does not exist on this machine; theseus/corpus/ here is empty (.gitkeep only). Kernel stores are demo-scale everywhere (no *.db in repo, no sigma schema in Postgres).",
+ "assets": {
+  "alive": [
+   "sigma_kernel/sigma_kernel.py \u2014 9-opcode kernel, zero-dependency, demo passes end-to-end today (verified this session)",
+   "sigma_kernel core contract tests (110 passing) + 25-class frozen-dataclass manifest enforcement",
+   "prometheus_math arsenal API (29/40 backends on CI; broken front-door import on this machine but modules individually importable)",
+   "kill_vector.py v2 (20 components, substrate v2.3 \u00a77) \u2014 fuzz-clean, 101/101",
+   "CI cron (arsenal.yml) \u2014 the domain's only heartbeat: capability snapshot + prometheus_math/techne test runs every 6h/daily"
+  ],
+  "dead": [
+   "falsification/ ALETHEIA battery \u2014 one-shot March 2026 execution against the founding theory; frozen artifact, no consumer, DuckDB-era scripts",
+   "Day-4 kill_vector_learner \u2014 verdict negative on legacy data; never re-run after native margin data existed",
+   "Lehmer brute-force family (7 results docs) \u2014 subspace exhausted, certified excluded; program moved on",
+   "5 Tier-stub test suites in sigma_kernel/tests \u2014 skipif-guarded promises whose target primitives were never built",
+   "Redis migration path (README.md:204) \u2014 superseded by Postgres-only decision (commit 983fd077)",
+   "whitepapers/ shelf \u2014 16 working papers, last touched 2026-05-29, purely archival"
+  ],
+  "buried_gems": [
+   "theseus/scoring/content_aware_promote.py \u2014 the F2 content verifier: built, tested, calibrated on planted relations (v0/v1), category-error-fixed (v3c), running in observation-mode in daemon.py:422-442 since 2026-05-30. Flipping it into the gate conjunction is the single most consequential unmade change (stall-map action #2, Techne rec #2).",
+   "prometheus_math/reasoning_quality_emit.py \u2014 the per-evaluator vector emitter with the validated to_relational_records adapter; 16/16 green; needs literally one call-site integration; currently import-blocked by the cypari defect.",
+   "Native margin-space kill vectors \u2014 NATIVE_KILL_VECTOR_PILOT_RESULTS.md measured 126,983x more operator-distinguishability in margin space than categorical; only 24K episodes, 1 region, never scaled, no consumer of kill_vector_navigator.recommend() outside tests (grep verified).",
+   "sigma_kernel certificate machinery (exclusion_certificate.py + coordinate_charts + operator_portability + triangulation_protocol) \u2014 a complete negative-knowledge schema with one real instance (lehmer_deg14, placeholder hashes); no subsystem outside sigma_kernel imports it.",
+   "techne/handoff/mathlib_primitive_candidates_top200.jsonl (2026-05-22) \u2014 15,448 mathlib4 signatures scored and cut to top-200 primitive candidates; zero consumers (only reference is the script that wrote it).",
+   "charon/diagnostics/per_domain_pi0.json \u2014 per-domain PROMOTE-confidence priors, actually wired into ergon/learner/reward.py:compute_reward_with_pi0 (code-live) but the reward path never ran in production.",
+   "The 413M-record signature_index kill/confirm geometry on F:\\Prometheus \u2014 per Techne 2026-08-12: 'nothing metabolizes it'. The program's largest single empirical asset is off-repo, unreachable from this clone, and unconsumed."
+  ]
+ },
+ "open_questions": [
+  "Does the F:\\Prometheus clone (Skullport?) with the 431M-record corpus + signature_index.sqlite still physically exist, and on which machine? Every metabolization plan depends on it; this repo has only the 3,311-shape census JSON.",
+  "Is the CI smoke actually green? Commits prove the capability job runs; nothing local proves prometheus_math/techne tests pass on ubuntu (and CI never runs sigma_kernel/tests at all \u2014 the kernel's contract suite has NO CI coverage).",
+  "Why was F2 never flipped from observation to gate after 2026-06-23, when Techne, Harmonia, and the stall map all named it the highest-leverage single change and the daemon already computes it per batch?",
+  "Is the margin-space gradient signal real at scale? The 126,983x figure comes from one region where 99.93% of episodes died at out_of_band \u2014 the margin distribution is essentially one falsifier's near-miss geometry.",
+  "Who repairs the arsenal front door (guard the cypari/backends eager-import in prometheus_math/__init__.py)? It currently blocks even pure-stdlib primitives and was explicitly declined as a fix on 2026-06-22 (Techne fire log \u00a73.2).",
+  "Should the sigma Postgres schema ever be provisioned, or is the kernel accepted as a single-process demo-scale discipline reference? (Migration SQL exists; store empty in both backends for 3 months.)",
+  "Does anything intend to consume the top-200 mathlib4 primitive candidates, or should that lane be formally closed?",
+  "The 21 M-values within 0.004 of Lehmer's constant in the archaeology data \u2014 all catalog-seeded rediscoveries (HD=0 bin), worth confirming none was an unexamined near-novel."
+ ],
+ "connections": [
+  "harmonia/memory/architecture/sigma_kernel.md \u2192 sigma_kernel/ (design spec; exists, live as documentation)",
+  "prometheus_math/discovery_promotion.py \u2192 sigma_kernel PROMOTE (live code path, but store is demo-scale; the synthetic-CLEAR adapter is the confirm-by-assertion hole)",
+  "theseus/daemon.py \u2192 theseus/scoring/content_aware_promote.py (LIVE observation-only wiring; the gate itself remains F1 shape-only via orchestration/telemetry.py)",
+  "theseus generators (d1_kill_neighborhood, d2_margin_bracket) \u2192 kill_vector_navigator: docstring-level lineage only, no import (aspirational)",
+  "charon/diagnostics/per_domain_pi0.json \u2192 ergon/learner/reward.py compute_reward_with_pi0 (code-live wiring; production use unverified \u2014 Ergon domain)",
+  "prometheus_math/reasoning_quality_emit.py \u2192 aporia stage0b H-R1 runner via record['margins'] adapter (built and composition-tested; production integration never made \u2014 aspirational)",
+  "prometheus_math/learner_corpus.py \u2192 Ergon Pipeline-D contract (stub only: emit_from_substrate still raises NotImplementedError; 'Day 13' never arrived \u2014 aspirational)",
+  "techne/lib.class_number \u2190 prometheus_math/number_theory.py (live and load-bearing in the worst way: this import chain is what breaks the whole package on cypari-less machines)",
+  "theseus signature_index + corpus on F:\\Prometheus \u2190 this substrate's falsifier taxonomy (the data exists off-repo; consumption link: nonexistent)",
+  "falsification/ \u2190 the pre-Prometheus 15-paper theory (The_birth_of_mathematics m4a era) \u2014 closed historical loop, no live edges",
+  "GitHub Actions arsenal.yml \u2192 prometheus_math/.capability_snapshot.json (live, but measures the CI container, not any research machine)"
+ ],
+ "strategic_read": "This domain is the program's conscience and its best-built artifact, and both facts are now liabilities because nothing consumes it. Three honest deaths are on the record \u2014 the founding 15-paper taxonomy (ALETHEIA, March), the learnable-gradient-field reading of the kill ledger (Day-4 learner, May), and the 2,351-promotion count (M0.5 replay, June) \u2014 and in each case the substrate's own instruments did the killing, which validates the falsification-first design as engineering. But the load-bearing/ceremonial split is stark: what actually bears load today is the kernel's discipline mechanics (verified passing), the frozen-contract manifests, and the honest results docs; what is ceremonial is the promotion pipeline (gates on metadata shape, count is a fossil), the exclusion certificate (placeholder hashes), the 'ledger' (aggregate counts of first-failing falsifiers, not kill vectors), and the README's own opcode count. The domain's forward value is concentrated in three built-but-unwired bridges, all cheap: (1) guard the eager cypari import so the arsenal opens on any machine \u2014 hours; (2) flip F2 content verification from observation into the promote gate and stamp promote_score/formula_version on durable records \u2014 days, and it converts the falsification thesis from asserted to enforced for the first time; (3) make the one-call-site reasoning_quality_emit integration so the H-R1 reasoning question can run on real data. The gradient-field north star is not dead but is starved: the margin-space signal (126,983x) is the only surviving route, and it requires per-record vector persistence from a *running* generation loop plus access to the F:-drive corpus \u2014 i.e., it requires exactly the organism/metabolization decision the June dissent demanded. Recommendation: treat this domain as a finished instrument; spend zero further effort on new substrate primitives (five stub suites already document that pattern's failure) and route all effort to the three wirings and to locating/mounting the off-repo ledger. If after that the margin-space signal fails at scale, the substrate thesis is fully falsified and the domain can be archived with its kill record as the deliverable.",
+ "files_of_record": [
+  "C:\\prometheus\\sigma_kernel\\sigma_kernel.py",
+  "C:\\prometheus\\sigma_kernel\\README.md",
+  "C:\\prometheus\\sigma_kernel\\tests\\test_frozen_baseline_manifest.py",
+  "C:\\prometheus\\prometheus_math\\GRADIENT_ARCHAEOLOGY_RESULTS.md",
+  "C:\\prometheus\\prometheus_math\\KILL_VECTOR_SPEC.md",
+  "C:\\prometheus\\prometheus_math\\KILL_VECTOR_LEARNER_RESULTS.md",
+  "C:\\prometheus\\prometheus_math\\NATIVE_KILL_VECTOR_PILOT_RESULTS.md",
+  "C:\\prometheus\\prometheus_math\\LEHMER_BRUTE_FORCE_FULL_RUN_RESULTS.md",
+  "C:\\prometheus\\prometheus_math\\REASONING_QUALITY_EMIT_RESULTS.md",
+  "C:\\prometheus\\sigma_kernel\\exclusion_certificates\\lehmer_deg14.py",
+  "C:\\prometheus\\roles\\Techne\\M05_PROMOTION_REPLAY_FINDINGS_2026-06-23.md",
+  "C:\\prometheus\\pivot\\promotion_replay_audit_stride13.json",
+  "C:\\prometheus\\theseus\\scoring\\content_aware_promote.py",
+  "C:\\prometheus\\theseus\\daemon.py",
+  "C:\\prometheus\\falsification\\prompt_falsification_battery.md",
+  "C:\\prometheus\\charon\\diagnostics\\PI0_REPORT.md",
+  "C:\\prometheus\\roles\\Techne\\REVIVAL_ASSESSMENT_2026-08-12.md"
+ ]
+}

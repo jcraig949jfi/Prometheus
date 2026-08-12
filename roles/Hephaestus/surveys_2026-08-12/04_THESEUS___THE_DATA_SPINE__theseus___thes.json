@@ -1,0 +1,187 @@
+{
+ "domain": "THESEUS + THE DATA SPINE (theseus/, thesauros/, prometheus_data/, data/, Postgres estate on SKULLPORT .202, tensor artifacts, training corpora)",
+ "one_line": "A live, verified 363GB/52M-row Postgres data spine and a 658M-record substrate engine whose training-value thesis was honestly killed in June 2026 \u2014 the healthiest infrastructure in the program feeding consumers that are all dead, gated, or falsified.",
+ "purpose_and_thesis": "Theseus (founded 2026-05-18, theseus/CHARTER.md): \"the engine that keeps sigma fed\" \u2014 a structurally generative, bandit-rotated 40-generator engine that \"cannot run out of work,\" producing typed claim records at volume for the future Ergon Learner; kills are first-class output. Thesauros: the master data treasury \u2014 \"Postgres = truth, Redis = speed, Files = archive\" \u2014 with thesauros/prometheus_data as the single connection-pool library (get_lmfdb/get_sci/get_fire/get_redis/get_bus) for every agent on every machine. Together they were to be the substrate volume + data plumbing over which the Learner trains on falsification geometry.",
+ "arc": [
+  {
+   "date": "2026-04-14/16",
+   "event": "DuckDB\u2192Postgres migration begins (commit 2ccf6d2f); zeros corruption audits P-009..P-012; the 2026-04-16 zeros load leaves 1,984,167/2,009,089 EC rows with NULL object_id due to a desynced registry sequence (ergon/repair/README_rekey_2026-06-23.md)"
+  },
+  {
+   "date": "2026-05-02/03",
+   "event": "Ergon tensor v2 built: tensor.npz 4,755,770\u00d7208 (23 domains), tensor_all.npz 5.08M\u00d7263, tensor_extended.npz 4.63M\u00d7181; Ergon math-research branch freezes at this milestone"
+  },
+  {
+   "date": "2026-05-18",
+   "event": "Theseus born: charter, 40-generator inventory, daemon, bandit, 7-axis scoring; smoke 85,787 records/30s; Theseus\u2192Ergon handoff CONTRACT.md; Penelope ingest orchestrator ships same day"
+  },
+  {
+   "date": "2026-05-19",
+   "event": "Last Theseus handoff bundle actually consumed by Ergon \u2014 the seam silently stalls (found 2026-06-07)"
+  },
+  {
+   "date": "2026-05-29/30",
+   "event": "Fire #234: 90 consecutive 0-promoted batches, loop PAUSED (commit 0751491d); final BATCH_LOG entry 2026-05-30 09:53; lifetime 273 batches / 658,454,531 records per agora heartbeat"
+  },
+  {
+   "date": "2026-06-03",
+   "event": "Greedy LoRA v1 headline: base 0.228 \u2192 trained 0.907 on 1,200-item gold (18,464-row corpus, theseus 13,200 dominant); same day Techne calibration v3 kills the v2 corpus signal via independent-null (commit c59d782d)"
+  },
+  {
+   "date": "2026-06-07",
+   "event": "THE CALIBRATING KILL: source ablation shows 3 independent per-source template slices with ~zero transfer; computable-gold OOD = 0.55 vs 0.50 chance (a False prior, not reasoning); NT-domain transfer test kills within-meta-domain transfer too; handoff found doubly blocked (mapper renders only invariant_equality knot\u00d7EC \u2014 root cause of corpus monoculture); TRAINING_DATA_SURVEY concludes derivations are discarded at emission (step_trace null) and worked traces are the highest-leverage change"
+  },
+  {
+   "date": "2026-06-15",
+   "event": "Seam-fidelity fix (commit db4b2cac): handoff had inverted doctrine \u2014 predicate_holds never emitted, EVERY record incl. REJECTED kills defaulted to outcome_class=promoted; stopgap gate stranded 89% of corpus; fixed to 56.6% rejected / 43.4% promoted, 24 claim_kinds"
+  },
+  {
+   "date": "2026-06-22/23",
+   "event": "Allowlist rebuild (6439311a); DB_DIAGNOSIS: 'spine dark' premise falsified \u2014 Postgres healthy on .202, .176 is a dead address; M0.5 promotion replay audit (b092b86a): total_promoted=0 under current formula, the cited '2,351 discoveries' is a formula fossil; object_zeros rekey slow-roll starts (scheduled task, batch=4000/min)"
+  },
+  {
+   "date": "2026-06-24",
+   "event": "DuckDB data migration COMPLETE (1,242,918 rows verbatim into fire.charon_duckdb.*, counts verified); Redis retired fleet-wide \u2192 PgRedis Postgres-backed bus ships (c0419972, 65f0dd45, 3e276531); M3 recovered, db.toml written pointing all DBs at 192.168.1.202"
+  },
+  {
+   "date": "2026-06-25 \u2192 2026-08-11",
+   "event": "Domain idle except auto portfolio commits; only M4's machine-probe daemon keeps writing to fire.agora"
+  },
+  {
+   "date": "2026-08-12",
+   "event": "THIS SURVEY, live from M3: estate reachable via thesauros pool; lmfdb 363GB/52.36M rows confirmed; rekey COMPLETE (0 NULL remaining, 1,984,167 minted); PgRedis bus tables all 0 rows (never used); M4 probe wrote at 08:40 EDT today; Ergon/Techne sessions resumed (resume_ergon.md points at Leanstral\u2192M0 probe, not at this data)"
+  }
+ ],
+ "verdicts": [
+  {
+   "claim": "Theseus 'cannot run out of work' (structural generativity)",
+   "verdict": "survived",
+   "evidence": "agora.agent_heartbeats (live query): lifetime_batches=273, lifetime_records=658,454,531; theseus/journals/BATCH_LOG.md batches of 2-3M records in 24 min. Volume was never the problem."
+  },
+  {
+   "claim": "Substrate volume feeds the Learner (volume-first pivot thesis, 2026-05-11)",
+   "verdict": "falsified",
+   "evidence": "Fire #234 pause after 90 consecutive 0-promoted batches (commit 0751491d, 2026-05-29); promotion replay audit: total_promoted=0 across full timeline, '2,351' is a formula fossil (commit b092b86a; theseus/scripts/promotion_replay_audit.py). Volume \u2260 training value."
+  },
+  {
+   "claim": "The greedy corpus (theseus 13,200/18,464 rows) trains mathematical judgement/reasoning",
+   "verdict": "falsified",
+   "evidence": "roles/Ergon/GREEDY_FOLLOWUP_FINDINGS_2026-06-07.md: gain decomposes format \u226b False-prior \u226b per-template classes \u226b ~0.10 reasoning; minus_theseus acc 0.908\u21920.500; OOD 0.5506 vs 0.50 chance (T 0.198/F 0.903); NT transfer +0.027 n.s. 'Adding more failure data of the same shape will not grow the reasoning share.'"
+  },
+  {
+   "claim": "The Theseus\u2192Ergon handoff preserves verdict semantics",
+   "verdict": "falsified",
+   "evidence": "Commit db4b2cac (2026-06-15): mapper never emitted predicate_holds \u2192 ALL records incl. REJECTED kills ingested as 'promoted'; stopgap gate stranded 89% of corpus; mapper rendered only invariant_equality knot\u00d7EC (roles/Ergon/GREEDY_FOLLOWUP_PROGRESS \u00a7Task 4) \u2014 root cause of the Learner-corpus knot\u00d7EC confirmation monoculture."
+  },
+  {
+   "claim": "lmfdb mirror = 363GB, ~52M rows on SKULLPORT 192.168.1.202",
+   "verdict": "survived",
+   "evidence": "Live query this survey via thesauros pool from M3: 363 GB; 6 tables, ~52,360,124 rows (lfunc_lfunctions 344GB/24.35M, nf_fields 22.18M, ec_curvedata 3.82M, mf_newforms 1.14M, artin_reps 798K, g2c_curves 66K). Matches roles/Ergon/DB_DIAGNOSIS_2026-06-23.md exactly."
+  },
+  {
+   "claim": "'The data spine is dark / Postgres is broken' (Harmonia stall-map action #1 premise)",
+   "verdict": "falsified",
+   "evidence": "roles/Ergon/DB_DIAGNOSIS_2026-06-23.md: DB healthy; failure was a stale 192.168.1.176 address in ~40 files. Re-confirmed live today from M3: all 3 DBs reachable read-only through thesauros/prometheus_data/pool.py."
+  },
+  {
+   "claim": "object_zeros rekey repair (1.98M NULL object_id rows) completed",
+   "verdict": "survived",
+   "evidence": "Live query: remaining_null=0, minted(object_id>134475)=1,984,167, total=2,009,089 \u2014 exactly the count in ergon/repair/README_rekey_2026-06-23.md; quarantine *_corrupt_20260416 tables also gone from zeros schema."
+  },
+  {
+   "claim": "PgRedis bus replaces Redis as the working cross-agent comms channel",
+   "verdict": "untested",
+   "evidence": "Code shipped 2026-06-24 (thesauros/prometheus_data/pg_redis.py, commits c0419972/65f0dd45) and unit-sound, but live query shows ALL bus tables (stream_entries, kv, lists, hashes, sets, zsets) = 0 rows: zero traffic ever. Meanwhile MEMORY.md says an M4 agent is developing a Redis comms channel \u2014 unresolved fork."
+  },
+  {
+   "claim": "DuckDB is retired",
+   "verdict": "ambiguous",
+   "evidence": "Data: complete \u2014 1,242,918 rows verified verbatim in fire.charon_duckdb.* (roles/Ergon/DUCKDB_RETIREMENT_AUDIT_2026-06-24.md; confirmed live: 14 tables present). Code: incomplete \u2014 ~40 duckdb.connect() calls in charon/src still unrepointed; charon.duckdb must not be deleted yet."
+  },
+  {
+   "claim": "fire's kill.* schema holds the program's kill records",
+   "verdict": "falsified",
+   "evidence": "Live query: kill.shadow_cells ~0 rows, kill.taxonomy 0 rows \u2014 empty scaffolding. The famous 314,971-kill/0.725-bit ledger is prometheus_math gradient-archaeology pilot data (prometheus_math/GRADIENT_ARCHAEOLOGY_RESULTS.md:51-53), and Theseus's kill mass lives in the gitignored 346GB corpus on M1 only."
+  },
+  {
+   "claim": "Thesauros catalog docs describe the current estate",
+   "verdict": "superseded",
+   "evidence": "thesauros/README.md quick-reference table still says host 192.168.1.176, fire=152K rows, sci=855K (all wrong vs live .202 / 2.7GB / 320MB); data_dictionary.md and database_architecture.md are April-era. The pool code is current; the catalog prose is not."
+  },
+  {
+   "claim": "Reasoning must be trained from worked traces, not verdicts (step_trace retrofit)",
+   "verdict": "untested",
+   "evidence": "roles/Ergon/TRAINING_DATA_SURVEY_2026-06-07.md TIER 1/2: step_trace field exists in schema (theseus/emit/record_schema.py:156) but is null in the entire corpus; prometheus_math tests / OEIS programs / battery_runs identified as trace-bearing gold. No build has happened since."
+  }
+ ],
+ "current_state": "Postgres estate on SKULLPORT (192.168.1.202 = M1) is UP and reachable from M3 today via thesauros pool (verified live this survey): lmfdb 363GB/52.36M rows (6 tables), prometheus_fire 2.76GB (zeros.object_zeros 2.01M \u2014 rekey complete; xref.object_registry 2.12M; charon_duckdb.* archive 1.24M; analysis/noesis/agora/sigma schemas populated; bus/kill/tensor/results schemas EMPTY), prometheus_sci 320MB (oeis 394K, groups 545K, qm9 134K, knots 13K, +10 more). Only active writer: M4's machine-probe daemon (last row 2026-08-12 08:40 EDT today); M1/M2/M3 probes stopped 2026-05-30. Theseus: daemon last ran 2026-05-30 (BATCH_LOG.md); loop deliberately paused at 90-consecutive-0-promoted; June commits are audit/repair tooling only; its 346GB/265-batch corpus is gitignored and exists only on M1 (theseus/corpus/ on M3 is empty); handoff in 'nothing-or-clean' gated state since 2026-06-07, no shipments. Greedy training rig (ergon/learner/greedy/) is complete runnable code with committed manifests; train JSONLs and LoRA runs gitignored (M1-side). Tensor artifacts (4.76M\u00d7208 etc.) are committed in-repo and load correctly on M3 \u2014 no consumer since 2026-05-03. thesauros/prometheus_data pool: imported by 42 files, updated 2026-06-24, the one piece of this domain that is both alive and load-bearing. prometheus_data/ (root): static raw archives (cremona 17.5MB, OEIS gz 39MB). data/clio: 181-paper dedup index, last updated 2026-05-30. Domain has had zero substantive commits since 2026-06-24; today's resumed Ergon session points at Leanstral/Lean-4, not at this data.",
+ "assets": {
+  "alive": [
+   "thesauros/prometheus_data pool lib (pool.py, config.py, pg_redis.py) \u2014 42 importers, works cross-machine, verified today",
+   "Postgres estate on .202: lmfdb (363GB read-only mirror), prometheus_fire (operational), prometheus_sci (normalized science) \u2014 all healthy, ANALYZEd 2026-06-23",
+   "~/.prometheus/db.toml machine-local config pattern (M3 copy written 2026-06-24, correct)",
+   "M4 machine-probe daemon writing agora.machine_probes (only live telemetry writer)",
+   "ergon/repair rekey machinery \u2014 completed its job, pattern reusable for slow-roll DB repairs"
+  ],
+  "dead": [
+   "Theseus daemon/bandit loop (paused 2026-05-30 at 0-promoted milestone; nothing restarts it)",
+   "Theseus\u2192Ergon handoff shipments (gated ship-nothing-until-fixed since 2026-06-07; mapper still monoculture-limited)",
+   "Penelope ingest orchestrator (last ingest ~2026-05-19-25)",
+   "Redis proper (retired fleet-wide 2026-06-24)",
+   "charon.duckdb + noesis_v2.duckdb as live stores (data migrated; files frozen pending code repoint)",
+   "thesauros catalog prose (README/data_dictionary/architecture \u2014 April-era, stale host+counts)",
+   "zeros.dirichlet_zeros normalized table (0 rows; real data sits in charon_duckdb.dirichlet_zeros 184K)",
+   "fire schemas kill.*, tensor.*, results.* \u2014 empty scaffolding that docs still cite as if populated"
+  ],
+  "buried_gems": [
+   "The 363GB lmfdb mirror itself: 24.35M L-functions + 22.18M number fields reachable read-only from any machine through a clean pool API, and essentially nothing queries it since June",
+   "ergon/tensor.npz family: 4.76M\u00d7208 / 5.08M\u00d7263 / 4.63M\u00d7181 z-scored cross-domain feature tensors, committed in-repo, load-verified today, zero consumers \u2014 exactly the 'representational/interface' asset Harmonia's diagnosis calls for",
+   "Talos reasoning-code corpus: 24,847 examples (hephaestus_forge 18,671 + prometheus_substrate 6,176) per agora heartbeat, gitignored on M1, never trained on",
+   "ergon/learner/greedy rig + ood_judgement.py 494-row computable-gold balanced OOD eval \u2014 a real, non-circular transfer eval that killed its own headline; reusable for any future training claim",
+   "PgRedis (pg_redis.py): working redis-py drop-in over Postgres, unit-sound, zero adoption \u2014 could carry the bus today if anyone published to it",
+   "erebos kill_ledger_enriched.jsonl + kill_ledger_scale_stress.jsonl \u2014 structured kill data never ingested (GREEDY_FOLLOWUP_PROGRESS Task-3 prep)",
+   "TRAINING_DATA_SURVEY_2026-06-07 TIER-1 build list (prometheus_math test suites as worked-trace gold, OEIS executable programs, battery_runs cascades) \u2014 the diagnosed correct next dataset, never built",
+   "346GB/265-batch Theseus corpus on M1: ~40% kills with full claim provenance; unusable in current mapper/weight regime but the only at-scale falsification record the program owns"
+  ]
+ },
+ "open_questions": [
+  "Is the 346GB Theseus corpus on M1 intact, and is distillation (step_trace retrofit + serializers port per the 2026-06-07 plan) worth it versus writing it off as monoculture exhaust?",
+  "Single point of failure: the entire data spine (363GB lmfdb + fire + sci) lives on one Windows box; no dump/backup/replication evidence found anywhere in the repo \u2014 what is the recovery story if SKULLPORT's disk dies?",
+  "Bus fork: PgRedis was the fleet-wide decision (2026-06-24, 'done fighting WSL') but MEMORY.md says an M4 agent is developing a Redis comms channel \u2014 which one is the program's channel, and why has neither carried a single message (bus tables all 0 rows)?",
+  "The M0.5 reset wiring (stamp promote decisions durable, gate F1\u2227F2, pin formula version into counts) was recommended 2026-06-23 \u2014 was it ever implemented, or does the promotion gate remain shape-only?",
+  "Who owns restarting Theseus, and under what thesis? Restarting the old loop reproduces 0-promoted volume; the charter's Tier-4 (Learner-curiosity H3) still has no Learner.",
+  "Does anything in the resumed 2026-08-12 sessions (Leanstral/Lean-4 direction) plan to consume the Postgres estate, or is the spine now infrastructure without a customer?",
+  "charon/src ~40 duckdb.connect() calls: when do they get repointed to fire.charon_duckdb.* so charon.duckdb can actually be retired?",
+  "The devmirror.lmfdb.xyz defaults in thesauros config remain the fallback on machines without db.toml \u2014 audit which machines have a correct db.toml (only M3's was confirmed)."
+ ],
+ "connections": [
+  "Theseus \u2192 Ergon Learner via handoff/ergon_outbox (CONTRACT.md): LIVE in code, GATED in practice \u2014 quarantined 2026-06-07, no bundle shipped since; last consumed 2026-05-19",
+  "Theseus \u2190 sigma_kernel + prometheus_math/databases/*.json.gz (knots, bsd_rich, genus2): live imports when daemon runs (config.py:24-27)",
+  "thesauros/prometheus_data pool \u2190 42 importer files (harmonia agents/composers/services, sigma_kernel, forge/v3, cartography/viewer, mnemosyne, ~20 scripts): LIVE wiring, the de-facto standard lib",
+  "Postgres fire.agora \u2190 M4 probe daemon: LIVE today (2026-08-12 08:40); \u2190 Theseus/Penelope/Talos/Stygian/Telos telemetry: dead since 2026-05-30/06-05",
+  "greedy corpus \u2190 sources.py adapters (theseus, pollux, erebos, hephaestus scrap, charon_md prose, harmonia retractions): runnable, last built ~2026-06-07",
+  "ergon/tensor.npz \u2190 harmonia.src.domain_index loaders \u2190 Postgres (ec_curvedata, nf_fields, artin_reps) + sci tables: build path intact but frozen since 2026-05-03; no downstream consumer",
+  "PgRedis bus \u2194 all agents: ASPIRATIONAL \u2014 zero rows in all 6 bus tables; cartography/viewer/server.py repointed to it 2026-06-24 but never exercised",
+  "lmfdb \u2190 public LMFDB devmirror: one-time clone, static since ~April 2026",
+  "fire.charon_duckdb.* \u2190 charon.duckdb (verbatim archive, 2026-06-24): LIVE data, but charon/src still reads the old duckdb file \u2014 link half-made",
+  "data/clio/paper_index.json \u2190 Clio paper-mining (agora.clio_papers 596 rows in fire): idle since 2026-05-30"
+ ],
+ "strategic_read": "This domain contains the program's best infrastructure and its most important funeral. The spine is genuinely excellent: a 363GB/52M-row mathematical corpus, correctly repaired (rekey verified complete today), reachable from every machine through one clean pooled API, with the DuckDB consolidation actually finished at the data layer. Nothing else in Prometheus is this solid. But every consumer built on top of it died honestly: Theseus proved it can emit 658M records and simultaneously that zero of them replay as promotable; the greedy LoRA \u2014 the program's only completed training run \u2014 was dismantled by its own ablation into format-following plus a False prior plus template memorization, with a measured reasoning share of ~0.10 that transfers nowhere. The June diagnostics all converge on one sentence from TRAINING_DATA_SURVEY: the substrate stores verdicts and throws away derivations (step_trace is null everywhere). That is Harmonia's 'the stall is representational/interface, not epistemic' made concrete in the data layer. Implications: (1) do not restart the Theseus loop as-is \u2014 its volume thesis is dead and rerunning it manufactures more unmappable exhaust; (2) the next data investment should be the already-diagnosed TIER-1 build (worked computation traces from prometheus_math tests, OEIS executable programs, battery cascades) plus the step_trace retrofit, because that is the one direction the June kills did NOT rule out; (3) the estate is a single-box, zero-backup liability holding the program's only irreplaceable asset \u2014 a backup/dump of fire+sci (lmfdb is re-cloneable) is cheap insurance that nobody has bought; (4) resolve the bus fork (empty PgRedis vs M4's Redis project) before any multi-agent revival, or comms will fracture again; (5) the buried gems (4.76M-object tensor, Talos corpus, OOD eval harness) are exactly the representational assets a Learner-eval-first restart would want \u2014 inventory them into whatever plan the 08-12 resumed sessions produce, or they stay buried.",
+ "files_of_record": [
+  "C:\\prometheus\\theseus\\CHARTER.md",
+  "C:\\prometheus\\theseus\\journals\\BATCH_LOG.md",
+  "C:\\prometheus\\theseus\\handoff\\ergon_handoff.py",
+  "C:\\prometheus\\theseus\\handoff\\CONTRACT.md",
+  "C:\\prometheus\\theseus\\scripts\\promotion_replay_audit.py",
+  "C:\\prometheus\\thesauros\\prometheus_data\\pool.py",
+  "C:\\prometheus\\thesauros\\prometheus_data\\config.py",
+  "C:\\prometheus\\thesauros\\prometheus_data\\pg_redis.py",
+  "C:\\prometheus\\roles\\Ergon\\GREEDY_FOLLOWUP_FINDINGS_2026-06-07.md",
+  "C:\\prometheus\\roles\\Ergon\\TRAINING_DATA_SURVEY_2026-06-07.md",
+  "C:\\prometheus\\roles\\Ergon\\DB_DIAGNOSIS_2026-06-23.md",
+  "C:\\prometheus\\roles\\Ergon\\DUCKDB_RETIREMENT_AUDIT_2026-06-24.md",
+  "C:\\prometheus\\ergon\\learner\\greedy\\corpus\\manifest_v1.json",
+  "C:\\prometheus\\ergon\\tensor_manifest.md",
+  "C:\\prometheus\\ergon\\repair\\README_rekey_2026-06-23.md"
+ ]
+}

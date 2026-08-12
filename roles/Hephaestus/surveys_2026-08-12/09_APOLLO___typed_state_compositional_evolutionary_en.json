@@ -1,0 +1,183 @@
+{
+ "domain": "APOLLO \u2014 typed-state compositional evolutionary engine (Branch C, M2)",
+ "one_line": "The program's most instrumented subsystem: a typed-blackboard MAP-Elites engine whose five-wall arc (max_acc 0.392\u21920.833) proved search can exploit hand-supplied representational widenings in ~130 gens but has never found one itself \u2014 making Apollo the cleanest testbed for the program's new central question (can widening be mechanized) rather than a discovery engine.",
+ "purpose_and_thesis": "Founding thesis: \"the forge builds atoms; I build molecules\" \u2014 evolve multi-tier reasoning organisms (pipelines of forge R-atom primitives) where evolution finds the routing and an ablation gate ensures every atom is load-bearing or the molecule dies (roles/Apollo/CHARTER.md). Branch C (post-2026-05-24) reframed the genome as typed state\u2192state transformers on a shared BlackboardState (explicit slot vocabulary, declared reads/writes, preconditions), replacing the gen-3551 output-wiring DAG that the 2026-05-22 baseline-matrix experiment falsified. Goal: evolve cross-tier organisms (R1 parse + R2 inference + R1 order) de novo, falsification-first at every step.",
+ "arc": [
+  {
+   "date": "2026-05-22",
+   "event": "FALSIFICATION (old genome): baseline matrix at gen 2960/3551 \u2014 0/5 elites show composition lift over best single primitive (range -0.03..+0.00); ablation gate was gameable (measured output-change not accuracy); zero route-mutation-LLM survivors all run; MAP-Elites stuck 2/35 cells. Spontaneous composition dead under that ecology (pivot/apollo_status_and_ideas_2026-05-24.md:15,83)"
+  },
+  {
+   "date": "2026-05-24",
+   "event": "Branch C born: blackboard genome design + prototype (commits 7587c8cb, 5b1b983a); reasoning ladder v0.1"
+  },
+  {
+   "date": "2026-05-27/29",
+   "event": "Phase 0 + composition-viability gauntlet PASSES (substrate admits real composition, hand-written pipelines only); LLM JSON-DSL mutation dry-run 100/100 type-valid; Phase 1 MAP-Elites loop with load-bearing-core keying (a5998a13, ad574ef7)"
+  },
+  {
+   "date": "2026-05-29",
+   "event": "Forge handoff filed: tier-monoculture diagnosis (no R2+ atom in registry), typed-transformer contract proposed to Hephaestus, one-experiment falsification pre-registered (apollo/pivot/apollo_forge_handoff_2026-05-29.md \u00a78)"
+  },
+  {
+   "date": "2026-05-30",
+   "event": "blackboard_adapter.py generates apollo/src/hephaestus_ops.py (9 ops R1-R5); generation clobbers the 2026-05-29 honest causal_trace R5\u2192R1 downgrade (commit 5cfe0357); file never imported by anything and crashes on import \u2014 sat uncommitted-modified ever since"
+  },
+  {
+   "date": "2026-06-09",
+   "event": "The pre-registered one-experiment falsification RAN and PASSED: hand-decomposed r2_chain_tracker \u2192 parse_rules/forward_chain/score_by_derivability; composition lift +0.600, inference-null collapse +0.833, entire R0-R1 set at/below chance (apollo_forge_reply_2026-06-09.md)"
+  },
+  {
+   "date": "2026-06-10",
+   "event": "Run 1 stopped gen 481: zero novel cross-tier organisms; diagnosis = type-bridge gap (nothing consumes derived_facts) + no cross-tier pressure; relations_from_facts bridge + cross-tier canary built, cross-tier falsification PASSED (r2_run1_findings_2026-06-10.md)"
+  },
+  {
+   "date": "2026-06-15",
+   "event": "Run 2 killed at gen 2668 (~122h): best_acc flat 0.392 from gen 1 \u2014 expressibility + gradient proven necessary but NOT sufficient; bottleneck moved to search operator (RESUME_apollo_2026-06-15.md)"
+  },
+  {
+   "date": "2026-06-16",
+   "event": "CROSSOVER VALIDATED: single-step mutation 0/8000 random walks to the solver vs crossover 6.1%/pair; A/B de-novo discovery 4/5 seeds vs 0/5; recombine() wired; production llm+xover run launched (died gen 443, but broke 0.392\u21920.558 at gen 15 with 61 de-novo cross-tier discoveries)"
+  },
+  {
+   "date": "2026-06-22",
+   "event": "0.558 wall diagnosed as TWO stacked ceilings \u2014 measurement/organism-model (one terminal vs \u22653-terminal battery; oracle portfolio already 0.758) + canary boolean floor (29/50 tasks inexpressible); H-operator REJECTED, crossover vindicated (diagnose_0558_findings_2026-06-22.md)"
+  },
+  {
+   "date": "2026-06-23/24",
+   "event": "Dispatch falsification G1-G4 all PASS (routing genuine per per-branch ablation; ordinary mutation assembles router 5/5 in gens 1-6); wired behind --dispatch (commit 41409a20); clean-routing pressure de-Goodharts: honest 0.542 full / 0.786 routable, archive deflates 1825\u2192188 cells"
+  },
+  {
+   "date": "2026-06-26",
+   "event": "Lever 2 (boolean primitives parse_comparison/parse_which_extreme + guarded scorers) + dispatch_merge body+guard-union crossover \u2192 max_acc 0.708 (commit 64d68a50); lever 1 'aggregate solves 0 synth' recorded as falsified"
+  },
+  {
+   "date": "2026-06-27",
+   "event": "Lever-1 'falsification' exposed as instrumentation artifact \u2014 score_by_aggregate__g guarded on slot `quantities` which NOTHING writes; re-keyed to `counts` \u2192 max_acc 0.833, max_routable_acc 1.000 (commit 48eb0102); full arc writeup; fresh llm run scoped to 800 gens (709c28f9)"
+  },
+  {
+   "date": "2026-06-28",
+   "event": "llm2 run completes gen 800 (10:28) \u2014 PRE-REGISTERED KILL CONDITION FIRES: exactly the deterministic numbers (0.833/1.000), 2152 Granite mutations bought zero lift, genuine_routing=false at gen 800. Last Apollo activity before the 6.5-week program freeze"
+  },
+  {
+   "date": "2026-08-12",
+   "event": "Resumed: catch-up commit bb203749 lands the June findings + roles/Apollo boot docs; Apollo authors the program-level STRATEGY_2026-08-12 doc; James's R2 puts the R9\u2192M-axis re-aim ON HOLD; W0-W3 mechanized-widening lane assigned; nothing yet run"
+  }
+ ],
+ "verdicts": [
+  {
+   "claim": "Spontaneous composition emerges from evolution over forge primitives (old gen-3551 output-wiring genome)",
+   "verdict": "falsified",
+   "evidence": "pivot/apollo_status_and_ideas_2026-05-24.md:15,83 \u2014 0/5 gen-2960 elites show lift over best single primitive (-0.03..+0.00); reversed op order beat the evolved order by +0.12; zero route-mutation survivors"
+  },
+  {
+   "claim": "The blackboard substrate can host a load-bearing R2 composition the R0-R1 set provably cannot reach (the forge-handoff \u00a78 one-experiment falsification \u2014 it WAS run)",
+   "verdict": "survived",
+   "evidence": "apollo/pivot/apollo_forge_reply_2026-06-09.md:38-56 \u2014 composition lift +0.600, inference-null drop +0.833, best R0-R1 pipeline 0.167 \u2264 chance 0.250; wired as blackboard_ops_r2 in REGISTRY (blackboard_evolve.py:61-65)"
+  },
+  {
+   "claim": "Expressibility + reward gradient suffice for de-novo multi-tier assembly",
+   "verdict": "falsified",
+   "evidence": "apollo/pivot/RESUME_apollo_2026-06-15.md:51-64 \u2014 Run 2 flat at 0.392 for 2668 gens with bridge op and cross-tier canary both in place; only the seeded solver survived"
+  },
+  {
+   "claim": "The Run 1/2 plateau was a search-operator failure; one-point crossover crosses the valley single-step cannot",
+   "verdict": "survived",
+   "evidence": "apollo/pivot/recombination_findings_2026-06-16.md \u2014 0/8000 single-step walks vs 6.1% crossover solve rate; A/B de novo 4/5 vs 0/5; confirmed in production (0.392\u21920.558 at gen 15, 61 de-novo discoveries)"
+  },
+  {
+   "claim": "The 0.558 plateau meant search was exhausted",
+   "verdict": "falsified",
+   "evidence": "apollo/pivot/diagnose_0558_findings_2026-06-22.md \u2014 measurement artifact: best_acc scores one fixed-terminal pipeline vs a \u22653-terminal battery; archive-as-portfolio already covered 0.758; missing capability was dispatch (R3), not search"
+  },
+  {
+   "claim": "Guarded multi-scorer dispatch is genuine routing, assembleable by ordinary mutation",
+   "verdict": "survived",
+   "evidence": "apollo/pivot/dispatch_falsification_findings_2026-06-24.md G1-G4 all PASS (per-branch ablation clean, mutate_only 5/5 gens 1-6) \u2014 but production caveat: gen-800 dispatch_audit.genuine_routing=false (roles/Apollo/STARTUP.md:42-46); the 0.833 is real, the routing is not clean"
+  },
+  {
+   "claim": "Lever-1 falsification: 'the aggregate branch cannot solve synth'",
+   "verdict": "superseded",
+   "evidence": "apollo/pivot/dispatch_arc_writeup_2026-06-27.md:53-57 \u2014 the falsification was an instrumentation artifact (guard keyed on `quantities`, a slot nothing writes); re-keyed to `counts` \u2192 synth 15\u219230. Doctrine lesson: when a capability fails, audit the harness first"
+  },
+  {
+   "claim": "LLM (Granite) mutation earns its GPU in this regime",
+   "verdict": "falsified",
+   "evidence": "roles/Apollo/STARTUP.md:32-41 \u2014 llm2 gen 800: 2152 LLM mutations (19\u00d7 prior rate), max_acc exactly matched deterministic 0.833; pre-registered kill condition fired 2026-06-28"
+  },
+  {
+   "claim": "The evolutionary loop supplies its own representational widening",
+   "verdict": "falsified",
+   "evidence": "pivot/STRATEGY_2026-08-12_resumption_and_roadmap.md \u00a73 \u2014 5/5 widenings agent-hand-supplied, 0 self-found; ceiling reached ~gen 130, 84% of compute spent post-ceiling; 'a hand-engineering loop wearing an evolution costume'"
+  },
+  {
+   "claim": "DISPATCH demonstrated real composition lift (vs routing gain)",
+   "verdict": "ambiguous",
+   "evidence": "dispatch_arc_writeup_2026-06-27.md + STRATEGY \u00a73 \u2014 the 0.392\u21920.833 arc decomposes into routing over pre-existing specialists (+0.125 'exactly the inference-routing payoff'), hand-written boolean primitives, and a hand-fixed guard bug; evolution's genuine contribution is assembly-given-ingredients (crossover 4/5 de novo from seeded parents; router in gens 1-6 from seeded specialists). De-novo composition of new capability was never shown"
+  },
+  {
+   "claim": "Archive cell counts measure discovery",
+   "verdict": "falsified",
+   "evidence": "llm2: 2860 cells / 2846 'shapes' with zero accuracy lift (STARTUP.md:39); duplicate-op padding Goodhart flagged in every findings doc since r2_run1; load-bearing-core key still doesn't collapse it \u2014 open instrumentation debt cited by Harmonia's REVIEW_20260812_syntactic_router.md:96-98"
+  }
+ ],
+ "current_state": "Nothing running: run_branch_c/run.pid holds PID 18616 (2026-06-24), process dead; llm2 finished 2026-06-28 10:28 and its kill condition resolved it. Idle 2026-06-28\u21922026-08-12. Resumed TODAY: catch-up commit bb203749 (08:11) landed 6.5 weeks of uncommitted June artifacts (pivot findings, falsification harnesses, blackboard_ops_r2, roles/Apollo boot docs); apollo/src/__pycache__/hephaestus_ops.cpython-311.pyc compiled 07:50 today (someone imported it; it raises TypeError). Real run data (evolve_log.jsonl, checkpoints \u2014 61MB/188 files) lives on M2 at D:\\Prometheus and is gitignored here (.gitignore:365-368); this clone keeps only per-run novel_discovery.jsonl. Working tree still carries an uncommitted honesty REGRESSION in apollo/src/hephaestus_ops.py (reverts commit 5cfe0357's R5\u2192R1 causal_trace downgrade \u2014 a 2026-05-30 regeneration artifact, unnoticed for 10 weeks; git status shows it modified). Note: commit hashes cited in the dispatch writeup (093f7d9d, 1b9597f0, d6cba3e7) do not exist in this repo \u2014 equivalents are 41409a20/8e9f45cd/64d68a50; M2-local history diverged from what was pushed. Old-genome assets (apollo/src/apollo.py, run_v2d2b/ with empty checkpoints dir, top-level RESUME.md/ROADMAP.md from 2026-05-14) are dead; STARTUP.md explicitly marks RESUME.md stale.",
+ "assets": {
+  "alive": [
+   "apollo/src/blackboard.py \u2014 typed-state substrate, 23 typed slots incl. R2 (rules/facts/derived_facts) and boolean (comparison/extreme_number) vocabularies",
+   "apollo/src/blackboard_evolve.py \u2014 full engine: 20-op REGISTRY + 5 guarded scorers, recombine()/dispatch_merge crossover, --dispatch mode, clean-routing pressure, per-gen dispatch_audit + max_acc/max_routable_acc/portfolio_coverage instrumentation",
+   "apollo/src/blackboard_ops_r2.py + blackboard_ops_compare.py \u2014 the validated R2 and boolean primitive modules actually in the registry",
+   "Falsification harness battery: scripts/r2_falsification.py, cross_tier_falsification.py, recombination_falsification.py, recombination_ab.py, dispatch_falsification.py, diagnose_0558_wall.py \u2014 each with a JSON result artifact in pivot/",
+   "roles/Apollo/CHARTER.md + STARTUP.md \u2014 live boot docs, updated today with llm2 resolution and the W0-W3 queue",
+   "The pivot/ findings corpus (8 findings docs, 6 result JSONs) \u2014 a complete, honest, dated wall-by-wall record"
+  ],
+  "dead": [
+   "apollo/src/apollo.py + mutation*.py + genome.py \u2014 the old v2 output-wiring engine (falsified 2026-05-22, untouched since May)",
+   "run_v2d2b/ (empty checkpoints), run_branch_c_xt/, run_branch_c_r2/ processes \u2014 all dead; Granite llm_server on :8800 down and its mode falsified",
+   "apollo/RESUME.md, ROADMAP.md, ARCHITECTURE.md \u2014 pre-Branch-C, explicitly stale per STARTUP.md:316",
+   "apollo/src/hephaestus_ops.py \u2014 imported by NOTHING, crashes on import (OP_TIERS = {{...}} template artifact \u2192 TypeError: unhashable dict at line 401), and its working-tree diff silently reverts the honest causal_trace tier downgrade"
+  ],
+  "buried_gems": [
+   "The falsification-harness battery is exactly the 'wall-type detector' corpus W1 needs (search-operator / expressiveness / measurement-artifact / interface-bug each has a worked, ground-truth example) \u2014 built, validated, unpackaged",
+   "The five-wall widening corpus: W0 asks for typed records {wall signature, diagnosis, widening, cost, lift, gens-to-exploit}; every field already exists in the pivot docs, nobody has extracted it (est. one day per STRATEGY \u00a710)",
+   "dispatch_audit / genuine_routing per-branch ablation instrument \u2014 the only in-loop anti-Goodhart detector in the program; runs every 10 gens, consumed by no one downstream",
+   "hephaestus_ops.py's R3/R4/R5 ops (sequence_detect, state_simulate, causal_trace) \u2014 typed transformers for three tiers Apollo's registry lacks; would need the {{}} bug fixed and construct validation, but the decomposition work is done",
+   "61 de-novo cross-tier discovery events in run_branch_c_xover (M2 evolve logs) \u2014 the strongest raw evidence of genuine evolutionary assembly; only 1 event survives in the repo's novel_discovery.jsonl"
+  ]
+ },
+ "open_questions": [
+  "W1 kill condition (the next decisive experiment): can a deterministic instrument classify a plateau's wall-type from telemetry alone at >25% out-of-sample on ~20 ablation-induced walls \u2014 or is automated widening dead in this form? (STRATEGY \u00a710)",
+  "Clean-routing debt: genuine_routing=false at gen 800 \u2014 can fitness pressure make guards partition instead of overlap, or is 0.833 permanently override-based? (STARTUP open move 1)",
+  "Is Branch C worth running as evolution at all, vs re-roling as the W-lane testbed? Apollo itself asks whether it is 'a hand-engineering loop wearing an evolution costume' (STARTUP.md:56-57)",
+  "canary data quality: clean_canary_v01.json has padded/truncated non-derivable answer strings and NO subtype field \u2014 the 5/5/10 tail split is from analysis, not data; must re-derive before building the remaining parsers (STARTUP.md:53-54)",
+  "Ladder v0.2 and the R9\u2192M-axis re-aim \u2014 on hold per James R2; who owns ladder v0.2 (proposed: Apollo)",
+  "The archive Goodhart hole (duplicate-op cell inflation) remains unfixed after being flagged in four consecutive findings docs \u2014 cell/shape counts are still untrustworthy",
+  "Repo/M2 divergence: writeup-cited commit hashes absent from main; do M2's local branch and D:\\Prometheus artifacts fully match what was pushed?",
+  "Does the forge ever emit typed transformers natively (handoff \u00a77 division-of-labor question) \u2014 still unanswered; the only R2 atoms in the registry were hand-decomposed by Apollo"
+ ],
+ "connections": [
+  "Hephaestus (upstream, LIVE in one narrow channel): r2_chain_tracker was hand-decomposed into blackboard_ops_r2.py and is load-bearing in the REGISTRY (blackboard_evolve.py:61-65). The broader typed-transformer forge contract (handoff 2026-05-29 / reply 2026-06-09) is ASPIRATIONAL \u2014 the forge never re-forged natively, and the generated adapter hephaestus_ops.py is dead (unimported, crashes). sys.path insert to agents/hephaestus/src at blackboard_evolve.py:29 is vestigial",
+  "Harmonia (LIVE, bidirectional): the reasoning-ladder 3-model data motivated the tier-monoculture diagnosis (handoff Thread B); today's REVIEW_20260812_syntactic_router.md uses Apollo's llm2 (2860 cells, zero lift) as prime evidence that shape-keyed novelty inflates program-wide",
+  "pivot/STRATEGY_2026-08-12 (LIVE): authored BY Apollo; makes Apollo's five-wall arc the program's central evidence (\u00a73) and assigns Apollo the W0-W3 mechanized-widening lane (\u00a710) \u2014 W0/W1/W2/W3 all ASPIRATIONAL (none started)",
+  "Icarus (doc-level only): shared 'interface-wall' lesson (check the harness before believing a falsification) and the 'every cycle emits a training object' doctrine that W0 borrows",
+  "Downstream consumers of Apollo organisms: NONE live. The 2026-05-24 doc listed four planned consumers (self-improvement loop, AST reasoner, etc.); none materialized. Apollo's current outputs are findings docs and the strategy frame, not organisms"
+ ],
+ "strategic_read": "Apollo is the program's best instrument and its most honest falsifier \u2014 and that is precisely why its headline number must not be oversold. The 0.392\u21920.833 arc is routing gain plus hand-supplied primitives, validated (not discovered) by search: every one of the five widenings was agent-authored, search exploited each in ~130 gens, and the LLM-in-the-loop contributed exactly nothing across 2152 mutations. The composition thesis survives only in its weak form ('given the right operator and ingredients, search assembles the composition' \u2014 crossover 4/5 de novo, router in \u22646 gens); the strong form ('evolution discovers the widening') is 5-for-5 falsified and has now been correctly promoted, by Apollo itself, into the program's central question. The right move is the one already queued: stop buying gens (150-gen probes, deterministic only), extract W0 from the existing pivot corpus, and run W1 \u2014 a cheap, pre-registered, kill-conditioned test of whether wall-type is readable from telemetry. That experiment recycles Apollo's genuine comparative advantage (the only subsystem with ground-truth-labeled walls) and answers a question that matters beyond Apollo. Secondary hygiene: fix or delete hephaestus_ops.py (it is broken AND its uncommitted diff quietly un-does an honesty fix \u2014 a small integrity leak in a program that trades on kill-record honesty), and close the clean-routing debt before citing 0.833 anywhere as 'genuine routing'.",
+ "files_of_record": [
+  "C:\\prometheus\\roles\\Apollo\\STARTUP.md",
+  "C:\\prometheus\\roles\\Apollo\\CHARTER.md",
+  "C:\\prometheus\\apollo\\pivot\\dispatch_arc_writeup_2026-06-27.md",
+  "C:\\prometheus\\apollo\\pivot\\dispatch_falsification_findings_2026-06-24.md",
+  "C:\\prometheus\\apollo\\pivot\\diagnose_0558_findings_2026-06-22.md",
+  "C:\\prometheus\\apollo\\pivot\\recombination_findings_2026-06-16.md",
+  "C:\\prometheus\\apollo\\pivot\\RESUME_apollo_2026-06-15.md",
+  "C:\\prometheus\\apollo\\pivot\\r2_run1_findings_2026-06-10.md",
+  "C:\\prometheus\\apollo\\pivot\\apollo_forge_reply_2026-06-09.md",
+  "C:\\prometheus\\apollo\\pivot\\apollo_forge_handoff_2026-05-29.md",
+  "C:\\prometheus\\apollo\\src\\blackboard_evolve.py",
+  "C:\\prometheus\\apollo\\src\\blackboard.py",
+  "C:\\prometheus\\apollo\\src\\hephaestus_ops.py",
+  "C:\\prometheus\\pivot\\STRATEGY_2026-08-12_resumption_and_roadmap.md",
+  "C:\\prometheus\\pivot\\apollo_status_and_ideas_2026-05-24.md"
+ ]
+}

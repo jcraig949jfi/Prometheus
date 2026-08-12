@@ -1,0 +1,168 @@
+{
+ "domain": "TECHNE \u2014 toolsmith, substrate owner, promotion machinery, and the dissent",
+ "one_line": "The program's toolsmith and substrate-owner who audited its own promotion machinery into the ground (M0.5: zero records promotable under the current formula; \"2,351\" is a formula fossil), then filed the dissent that became doctrine \u2014 M1-metabolization decides, not M0-recognition \u2014 and whose decisive experiment nobody has run in the 7 weeks since.",
+ "purpose_and_thesis": "Charter (roles/Techne/CHARTER.md, 2026-04-21): \"I do not discover. I do not measure. I do not kill. I forge.\" Every mathematical operation needed more than once becomes an idempotent, tested, registered, composable tool. Role expanded (roles/Techne/RESPONSIBILITIES.md:3) to \"Mathematical Toolsmith + Substrate Owner + Calibration Discipline\" \u2014 owning sigma_kernel/, prometheus_math/discovery_pipeline.py, kill_vector.py, kill_vector_navigator.py, and the promotion machinery, plus falsification probes designed to catch the substrate's own failure modes. Techne's late-phase thesis (the dissent): the organism and the instrument are one loop \u2014 a substrate that metabolizes its own kill-geometry both reasons and emits the progress signal as a byproduct; \"merely validation\" is a gravity well, not a conclusion.",
+ "arc": [
+  {
+   "date": "2026-04-21",
+   "event": "Charter filed: toolsmith identity, 3-tier forge discipline (roles/Techne/CHARTER.md)."
+  },
+  {
+   "date": "2026-04-22 to 2026-05-14",
+   "event": "Forge era: ~30 tools in techne/lib/, inventory.json master catalog (schema v4), TDD_LOG.md discipline (A/P/E/C four-quadrant test gates), PROJECT_BACKLOG_1000.md, cost-model calibration of top-50 arsenal ops (05-04, 757x worst declared/p95 ratio collapsed to ~31x)."
+  },
+  {
+   "date": "2026-05-10..17",
+   "event": "Registry hardened: 16 anti_anchors (false-claim sentinels verified against primary sources, e.g. AA-001 GCT/BIP-2019 scope, AA-002 Zauner-conditional) + 7 compositions. Last touched 2026-05-17 \u2014 stale since."
+  },
+  {
+   "date": "2026-06-09",
+   "event": "reasoning_quality_emit forged + TDD'd during network-down session (commit d32304d2) \u2014 but register/announce skipped; invisible in every catalog for 13 days."
+  },
+  {
+   "date": "2026-06-15",
+   "event": "TOOL_OPERATOR_PORTABILITY forged (REQ-028, b1ed710e); design corrected mid-forge by measurement (bond-rank statistic exactly row-permutation invariant \u2014 techne/OPERATOR_PORTABILITY_RESULTS.md)."
+  },
+  {
+   "date": "2026-06-22",
+   "event": "Registration gap closed (6d97e341); integration of reasoning_quality_emit found BLOCKED \u2014 no in-tree >=2-evaluator scoring site exists (SUBSTRATE_FIRE_LOG_2026-06-22.md)."
+  },
+  {
+   "date": "2026-06-23",
+   "event": "M0.5 promotion-replay audit built and run (b092b86a): promotion confirms-by-assertion at every level; corpus non-promotable under current formula (total_promoted=0); 2,351 = fossil of pre-Fire-#141 gate. Cross-agent falsification round: Ergon corrected Techne's 'dark Postgres' error, Charon corrected the 'bridge_extension absent' sampling artifact and found the real ledger (signature_index, 413M records / 3,311 shape-classes); Techne folded both in (1f86b259)."
+  },
+  {
+   "date": "2026-06-23",
+   "event": "Dissent filed non-canonical (207acac4, 'walk and chew gum') \u2014 and accepted as doctrine the same day: Aporia's M0 design doc adds superseding frame 'James agrees... where this doc conflicts with it, the dissent wins' (aporia/docs/M0_anti_calibration_design_aporia_2026-06-23.md:5-9, 253-261). Charon's third perspective agrees with the core but files the one caveat: don't collapse the bet to one swing; kill_vector is 0.0% populated over 5.4M sampled records."
+  },
+  {
+   "date": "2026-06-27/28",
+   "event": "Fleet pivots to M0/grading-oracle work anyway (Harmonia 63fdadaf grading oracle, 2350a1de 'stall is representational'; Aporia fda01127 M0 design + session pause) \u2014 arguably the axis the dissent demoted."
+  },
+  {
+   "date": "2026-06-28 to 2026-08-11",
+   "event": "Techne fully idle. None of M0.5's three recommended wirings (promote-decision stamping, F1\u2227F2 gate, formula-version pinning) built. No organism_ablation_card produced by anyone."
+  },
+  {
+   "date": "2026-08-12",
+   "event": "resume.md committed (5b8a80c2): pickup = M1-as-metabolization framed as kill-geometry navigability over the signature_index proto-tensor; Ergon's same-day resume says 'align there'. No code commits yet."
+  }
+ ],
+ "verdicts": [
+  {
+   "claim": "Promotion confirms-by-assertion at every level the substrate uses (E1)",
+   "verdict": "survived",
+   "evidence": "Verified by direct read this survey: sigma_kernel/sigma_kernel.py:822 PROMOTE checks only cap-unconsumed + non-BLOCK bound verdict + name/version uniqueness, never re-runs the battery; prometheus_math/discovery_promotion.py:33-49 constructs 'a synthetic CLEAR verdict... the adapter trusts the assertion'; theseus/orchestration/telemetry.py:38 DEFAULT_DISCOVERY_WEIGHT_THRESHOLD=0.6 with training_weight() shape-only scoring at :201."
+  },
+  {
+   "claim": "The content verifier (F2, content_aware_promote/_evaluate_relation) exists but is wired into no gate",
+   "verdict": "survived",
+   "evidence": "theseus/daemon.py:422-469 \u2014 F2 is an 'observation-mode tally' that prints what it 'would promote'; grep for promote_filter_version across all .py returns zero hits; training_weight.py has no formula-version constant. All three \u00a76 wiring recommendations from M05_PROMOTION_REPLAY_FINDINGS_2026-06-23.md remain unbuilt as of 2026-08-12."
+  },
+  {
+   "claim": "Under the current training_weight formula the corpus is non-promotable; the historical '2,351 promotions' is a formula fossil of the pre-Fire-#141 gate",
+   "verdict": "survived",
+   "evidence": "pivot/promotion_replay_audit_stride13.json: total_promoted=0 over 21/265 batches, full timeline, 414s; findings doc \u00a74: 123,052 bridge_extension records max weight 0.330 (abs_diff relation path 0.60\u00d70.55, no step_trace), ceiling among present combos 0.52 < 0.6. Caveat: the corpus lives on F:\\Prometheus (not mounted on this host), so the result is a committed artifact replayable only on the corpus machine."
+  },
+  {
+   "claim": "signature_index is not content-replayable: 413,110,932 raw records collapse to 3,311 shape-classes with the verdict baked into the dedup key, no raw-value columns",
+   "verdict": "survived",
+   "evidence": "pivot/promotion_ledger_census.json: content_replayable_from_ledger=false, 'shape-keyed: signature encodes generator:relation:invariant-pair:verdict'; KILL 1,268 cls/241M, CONFIRM 1,263 cls/136M. The sqlite itself is on the F:\\ host, absent here."
+  },
+  {
+   "claim": "Dissent thesis: organism/instrument split is false; M1-metabolization (model consumes kill-geometry, behavior changes, survives ablation) is the single decisive experiment",
+   "verdict": "untested",
+   "evidence": "Accepted as doctrine (aporia/docs/M0_anti_calibration_design_aporia_2026-06-23.md:253-261, 'James concurs... the dissent wins') \u2014 but by the dissent's OWN \u00a76 standard it must beat a counter-baseline (typed-row + counters + rules on a held-out metric, surviving a null) before it is a verdict, and no organism_ablation_card exists anywhere (grep: only doc mentions in v2 and resume.md). Doctrinally won, empirically unrun 7 weeks later."
+  },
+  {
+   "claim": "Dissent 3.4: Charon's signature_index IS the proto-tensor / Priority-#1 raw material",
+   "verdict": "ambiguous",
+   "evidence": "Contested in-repo by Charon's third perspective (pivot/REASSESSMENT_2026-06-23_charon_third_perspective.md \u00a73): kill_vector populated for 0.0% of 5,412,015 sampled records; kill-geometry exists only as string labels (33.6% None, a1-monoculture-concentrated); the signature_index is 'shape-keyed dedup classes... not a vector geometry; not navigable on its own'. The navigable object was never built \u2014 prometheus_math/kill_vector.py (74KB) and kill_vector_navigator.py (30KB) exist but the field they navigate is empty."
+  },
+  {
+   "claim": "Dissent 2: the ChatGPT cross-family convergence on v3's reframing is a gravity-warning (maximally in-distribution answer), not corroboration",
+   "verdict": "untested",
+   "evidence": "pivot/REASSESSMENT_2026-06-23_techne_dissent.md:40-64 \u2014 an epistemological claim about LLM priors, cited to off-repo memory doctrine (feedback_llm_convergence_is_gravity_amplifier); not falsifiable from disk. Note the dissent applies the same suspicion to itself (\u00a76)."
+  },
+  {
+   "claim": "Dissent 3.3: the real gap is consumption, not enforcement \u2014 promotion was never load-bearing (kernel demo-scale in both SQLite and Postgres; no sigma schema in prometheus_fire)",
+   "verdict": "survived",
+   "evidence": "M05 findings \u00a72(a) (Ergon-corroborated, Techne-verified at E3); triangulated by the stride13 zero-promotion replay and the census showing 413M records 'that nothing metabolizes'. The enforcement fix (CC-1 re-run battery in PROMOTE) was indeed never built and nothing broke \u2014 consistent with 'hardening an empty gate'."
+  },
+  {
+   "claim": "Resume claim: 'the reset arc is live and moving along the axis this dissent argued for'",
+   "verdict": "ambiguous",
+   "evidence": "The fleet's post-dissent commits (63fdadaf grading oracle, 2350a1de M0 keystone, 2026-06-27) are M0/instrument-track work \u2014 exactly what dissent \u00a75.2 demoted to 'cheap background hygiene' \u2014 followed by 6 weeks of total idleness. Aporia's \u00a710 reconciliation does subordinate M0 to M1, so the doctrine moved; the work did not."
+  },
+  {
+   "claim": "Charter principle: every operation needed more than once becomes a registered, tested tool",
+   "verdict": "survived",
+   "evidence": "techne/lib/ (30 tools) is imported by aporia/scripts, charon/agents+scripts, ergon/scripts, harmonia/experiments, prometheus_math (20+ consumer files found); anti_anchors.jsonl consumed by lethe daemon, phylax daemon, ergon learner, tier_1_claim_runner. The library is the most genuinely load-bearing cross-agent artifact surveyed."
+  },
+  {
+   "claim": "Techne's calibration discipline catches its own errors (hostile-to-self actually practiced)",
+   "verdict": "survived",
+   "evidence": "Two self-corrections logged with named external falsifiers in 1f86b259 ('dark Postgres' \u2192 Ergon; 'bridge_extension absent' \u2192 Charon sampling-artifact catch); calibration v3c category-error finding baked into content_aware_promote.py:50-76 and the audit tool; OPERATOR_PORTABILITY_RESULTS.md documents a design reversed by pre-build measurement. This is the program's kill-record ethic working at the meta level."
+  }
+ ],
+ "current_state": "IDLE with a fresh resume marker. Last substantive work 2026-06-23 (commits b092b86a, 1f86b259, 207acac4); techne/ tree last real commit 2026-06-22 (6d97e341); registry frozen since 2026-05-17; queue (techne/queue/requests.jsonl) still carries unserviced REQ-029/030/031 dated 2026-04-26. Only 2026-08-12 activity is roles/Techne/resume.md (5b8a80c2) \u2014 a pickup pointer, no code. The M0.5 audit tool imports cleanly on this host's Python 3.11 (verified) and has 9 test functions, but pytest is not installed here and the data it audits (F:\\Prometheus corpus + signature_index.sqlite) is on a different machine \u2014 F: is not mounted on this host. None of the three M0.5 \u00a76 wiring recommendations exist in code. The decisive M1-metabolization experiment the accepted dissent specifies has not been started by anyone. Note: most file mtimes show 2026-06-24 20:32 (checkout timestamp); git dates are authoritative and were used throughout.",
+ "assets": {
+  "alive": [
+   "techne/lib/ \u2014 30 Tier-1 math tools, imported across aporia/charon/ergon/harmonia/prometheus_math (verified 20+ consumer files); the program's real shared arsenal",
+   "techne/inventory.json \u2014 master tool catalog, schema v4, per-primitive versioning",
+   "theseus/scripts/promotion_replay_audit.py \u2014 streaming, gz-aware, memory-bounded (~33MB) M0.5 instrument; imports OK here; used by Charon for the polycentric census (6499cc19)",
+   "pivot/promotion_replay_audit_stride13.json + promotion_ledger_census.json \u2014 the committed E3/E4 evidence artifacts",
+   "roles/Techne/resume.md (2026-08-12) \u2014 precise, honest restart state with priority-ordered open threads",
+   "techne/registry/anti_anchors.jsonl \u2014 16 primary-source-verified false-claim sentinels, consumed by 4+ agent daemons (daemons themselves idle)"
+  ],
+  "dead": [
+   "sigma_kernel PROMOTE path as a load-bearing gate \u2014 demo-scale in both SQLite (0-5 symbols) and Postgres (no sigma schema in prometheus_fire); the promotion thesis it embodied is a formula fossil",
+   "The historical '2,351 promotions' as a meaningful count \u2014 E0 permanently, per M0.5 (unstamped decision + formula drift)",
+   "techne/queue request servicing \u2014 REQ-029..031 untouched since 2026-04-26",
+   "TOOL_OPERATOR_PORTABILITY / REQ-028 \u2014 forged 06-15 with 11 tests, no consumer found since"
+  ],
+  "buried_gems": [
+   "prometheus_math/reasoning_quality_emit.py \u2014 forged 06-09, 16 tests green, re-verified 06-22, spec-faithful vector-emit primitive; BLOCKED only because no in-tree >=2-evaluator scoring site exists; integration is 'one line' the moment a site does",
+   "prometheus_math/kill_vector.py (74KB, 12-component KillVector) + kill_vector_navigator.py (30KB operator-policy primitive) \u2014 the exact navigable-geometry machinery the accepted M1-metabolization doctrine needs, sitting unused because the kill_vector field is 0.0% populated (Charon, 5.4M-record sample); consumed only by d1/d2 generators and region_densification_pilot",
+   "theseus/scoring/content_aware_promote.py (F2) \u2014 a calibrated (v0/v1/v3c) content verifier that would make promotion mean something, running in observation-mode-only since 2026-05-30",
+   "promotion_replay_audit.py --ledger census mode \u2014 a reusable polycentric provenance-coverage instrument (Charon's reframe), used twice then shelved; open thread #3 (full N-ledger coverage map) never built"
+  ]
+ },
+ "open_questions": [
+  "Will anyone run the dissent's own gate? The counter-baseline ablation (forge-at-failure-clusters vs typed-row+counters+rules on a held-out metric, surviving a null) is resume.md thread #1; until it's positive, the program's accepted doctrine is \u2014 by its own author's standard \u2014 a hypothesis, not a verdict.",
+  "Who executes M1-metabolization? The dissent assigns it 'Hephaestus\u2192Learner'; memory says Hephaestus (M3, revived 06-24) is now 'the program's metabolization decider', and roles/Hephaestus/ is an untracked dir in today's git status \u2014 is the forge actually pointed at anything?",
+  "Can kill-geometry be navigable at all when kill_vector is 0.0% populated and kill_pattern is 33.6% None / a1-concentrated strings (Charon \u00a73)? Charon's cheaper pre-test (navigability gate before the M1 bet) is the unresolved sequencing question between the two allied dissents.",
+  "Where is the doctrine store? Every load-bearing memory citation (feedback_tensor_first, feedback_m1_metabolization_decides_not_m0_recognition, etc.) points to a memory/ path that does not exist in this repo \u2014 the program's constitutional layer is off-repo and unverifiable from disk (the dissent's acceptance is only in-repo via Aporia's M0 doc \u00a710).",
+  "Is the F:\\Prometheus corpus host alive? All M0.5 replayability depends on it; this checkout has only the result JSONs.",
+  "The v3 pointer question James never answered: the dissent is still not discoverable from the canonical reassessment chain (verified: zero 'techne' mentions in REASSESSMENT_2026-06-22_v3_the_reframing.md).",
+  "Does the June-27 M0/grading-oracle pivot stand, or did Aporia's \u00a710 subordination of M0-to-M1 retire it? Harmonia's 'stall is representational' keystone and the dissent's 'gap is consumption' are compatible diagnoses with incompatible next actions."
+ ],
+ "connections": [
+  "Techne \u2192 theseus/ promotion machinery (audit + tests live in theseus/scripts, theseus/tests): LIVE artifact, idle since 06-23",
+  "techne/lib \u2192 aporia, charon, ergon, harmonia, prometheus_math imports: LIVE code paths (consumer daemons idle since late June)",
+  "Dissent \u2192 Aporia M0 design \u00a710 (James concurs; 'the dissent wins'): LIVE doctrinally \u2014 the strongest in-repo record of the dissent's acceptance, since the memory/ file is off-repo",
+  "Dissent \u2192 Charon third perspective: LIVE mutual-falsification pair \u2014 Charon endorses the core, supplies the kill_vector-0% caveat, and used Techne's tool for the first real M0.5 replay (6499cc19)",
+  "Dissent/resume \u2192 Hephaestus forge (M3): ASPIRATIONAL \u2014 M1-metabolization requires pointing the forge at Learner failure clusters; nothing wires them yet",
+  "Techne \u2194 Ergon (today): ASPIRATIONAL coordination \u2014 Ergon's 2026-08-12 resume names Techne's M1-metabolization pickup as the alignment point (roles/Ergon/resume_ergon.md:154-156)",
+  "M0.5 artifacts \u2192 F:\\Prometheus corpus host: BROKEN on this machine (F: absent); replay evidence is committed JSON only",
+  "anti_anchors.jsonl \u2192 lethe/phylax daemons + ergon learner index: LIVE wiring, dormant processes, registry unverified since 2026-05-14"
+ ],
+ "strategic_read": "Techne is the program's epistemic conscience and its best-functioning craftsman, and the two facts compound: the M0.5 audit is the single most consequential finding in the pivot corpus (the substrate's founding promotion count was a fossil; the gate was empty; the 413M-record exhaust is metabolized by nothing), and it was produced with exactly the discipline the program preaches \u2014 cross-agent falsification, self-correction on the record, hostile-to-own-framing sections. The dissent then won the argument: James concurred, Aporia subordinated M0 to it, Charon endorsed the core. But winning doctrinally while nobody runs the decisive experiment is the program's characteristic failure mode repeating at the meta level \u2014 the dissent itself warned that until the counter-baseline ablation card is positive it is 'a hypothesis with a sharper experiment attached', and seven weeks later that experiment is untouched, the three cheap M0.5 wirings are unbuilt (so every future promotion count is still E0), and the kill_vector field the whole metabolization bet needs is 0.0% populated. The strategic implication: the program should not restart Techne as a toolsmith servicing a queue; it should restart Techne (with Ergon, per today's mutual resumes) on exactly resume.md's thread #1+#2 \u2014 Charon's cheap navigability pre-test first, then the M1 ablation card, with the F1\u2227F2 gate flip and promote-decision stamping as the one-day hygiene items done in passing. If the navigability pre-test nulls on the empty kill_vector geometry, that is itself the honest kill of the metabolization thesis, and the fallback v3 instrument-frame inherits by default \u2014 which is precisely the falsification the dissent agreed to accept.",
+ "files_of_record": [
+  "C:\\prometheus\\roles\\Techne\\resume.md",
+  "C:\\prometheus\\pivot\\REASSESSMENT_2026-06-23_techne_dissent.md",
+  "C:\\prometheus\\roles\\Techne\\M05_PROMOTION_REPLAY_FINDINGS_2026-06-23.md",
+  "C:\\prometheus\\theseus\\scripts\\promotion_replay_audit.py",
+  "C:\\prometheus\\theseus\\tests\\test_promotion_replay_audit.py",
+  "C:\\prometheus\\pivot\\promotion_replay_audit_stride13.json",
+  "C:\\prometheus\\pivot\\promotion_ledger_census.json",
+  "C:\\prometheus\\aporia\\docs\\M0_anti_calibration_design_aporia_2026-06-23.md",
+  "C:\\prometheus\\pivot\\REASSESSMENT_2026-06-23_charon_third_perspective.md",
+  "C:\\prometheus\\roles\\Techne\\CHARTER.md",
+  "C:\\prometheus\\roles\\Techne\\RESPONSIBILITIES.md",
+  "C:\\prometheus\\roles\\Techne\\SUBSTRATE_FIRE_LOG_2026-06-22.md",
+  "C:\\prometheus\\techne\\inventory.json",
+  "C:\\prometheus\\techne\\registry\\anti_anchors.jsonl",
+  "C:\\prometheus\\theseus\\scoring\\content_aware_promote.py"
+ ]
+}

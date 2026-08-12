@@ -398,14 +398,14 @@ ALL_OPS = [
     score_by_sequence,
 ]
 
-OP_TIERS = {{
+OP_TIERS = {
     "parse_rules": "R1",
     "forward_chain": "R2",
     "ordering_resolve": "R2",
     "sequence_detect": "R3",
     "state_simulate": "R4",
-    "causal_trace": "R1"  # HONEST: keyword-matches "correlate", not real causal reasoning,
+    "causal_trace": "R1",  # HONEST: keyword-matches "correlate", not real causal reasoning
     "score_by_derivability": "terminal",
     "score_by_ordering": "terminal",
     "score_by_sequence": "terminal",
-}}
+}

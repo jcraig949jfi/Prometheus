@@ -1,0 +1,162 @@
+{
+ "domain": "Operations, infrastructure, and the agent fleet (agents/, scripts/ reporting pipeline, machine fleet M1-M4, PG bus, CI)",
+ "one_line": "A 43-agent paper fleet with exactly two live daemons (both on M4), a live-but-silent Postgres backbone on M1, two cold GPU boxes, and a zombie reporting loop that has been emailing a frozen 2026-06-24 snapshot 5-6x/day for seven weeks because PgRedis lacks a 10-line `exists()` method.",
+ "purpose_and_thesis": "Provide the operational fabric for a multi-machine autonomous research fleet: Agora heartbeats/message bus for cross-agent coordination, a Pronoia-orchestrated reporting pipeline (portfolio_monitor -> Metis LLM brief -> git auto-commit -> daily email) so James has continuous operational awareness, machine probes for hardware telemetry, and CI-side capability tracking of the math arsenal. Founding design: pivot/agent_portfolio_and_monitoring_2026-05-12.md (cited at scripts/portfolio_monitor.py:14); bus originally Redis on M1, migrated to Postgres 2026-06-24 after James: \"Redis is too difficult to keep running under WSL\" (roles/Ergon/REDIS_TO_POSTGRES_2026-06-24.md).",
+ "arc": [
+  {
+   "date": "2026-03-28..04-01",
+   "event": "First-generation agent scaffolds born: nous, nemesis, metis, coeus, auditor, hermes, aletheia, clymene, eos, skopos (agents/*, README mtimes). Most never grew beyond README+src."
+  },
+  {
+   "date": "2026-04-15..04-29",
+   "event": "agora.messages PG bus peak and death: 196 messages total, decisions table last used 04-15, last message ever 2026-04-29 (harmonia_sync). Cross-agent PG messaging never resumed."
+  },
+  {
+   "date": "2026-05-12..05-17",
+   "event": "Reporting pipeline built (portfolio_monitor.py, metis_portfolio.py, intelligence_loop.py). intelligence_loop launched on M4 2026-05-17 15:43 EDT as PID 13308, --hourly-min 240 --email-every-cycle (docs/manual_status.json). Still the live cadence today."
+  },
+  {
+   "date": "2026-05-21..05-26",
+   "event": "Daemon wave: Atalanta, Hypatia, Pheme, Talos, Polyhymnia daemons + EXPECTED_AGENTS 43-agent roster with lifecycle fields (commit 27b06ae0). Peak fleet census: pivot/agent_roster_2026-05-21.md."
+  },
+  {
+   "date": "2026-05-30 ~11:40-12:24 ET",
+   "event": "FLEET MASS-DEATH: every M1/M2/M3 heartbeat stops within 45 minutes (agora.agent_heartbeats: Hephaestus 12:24:52, Charon_Loop 12:24:54, Pythia 12:24:42, all M2 swarm 11:55-12:24). research_queue last dispatch same morning 06:16. Only M4 survived. Cause not established in surveyed docs."
+  },
+  {
+   "date": "2026-06-05",
+   "event": "Theseus (M1), last non-M4 heartbeat ever recorded."
+  },
+  {
+   "date": "2026-06-23",
+   "event": "Outage finally noticed \u2014 24 days later \u2014 via M4 monitor email ('fleet 0/43 down'). Aporia writes INFRA_RECOVERY_PLAN. M3/GANDALF found hardware-dead (mobo+CPU). Verified M1 IP had silently moved .176 -> .202; all configs were dialing a dead host."
+  },
+  {
+   "date": "2026-06-24",
+   "event": "Redis formally retired ('eliminated, not restored'); PgRedis drop-in built + unit-verified (Ergon); Harmonia repoints 33 direct-connect files (commit e7b41f14); core config repointed to .202 (commit 983fd077); M3 recovers from power outage. SAME DAY: portfolio_monitor begins crashing every cycle ('PgRedis' object has no attribute 'exists') \u2014 docs/state.json freezes forever at 2026-06-24T12:15:10Z."
+  },
+  {
+   "date": "2026-06-24..08-12",
+   "event": "Zombie era: intelligence_loop keeps running on M4, regenerating the LLM brief from the frozen snapshot every 4h \u2014 442 'auto: portfolio update' commits total, each touching only docs/portfolio_brief.md; 59 stale-alert emails dispatched in August alone. All other daemons silent."
+  },
+  {
+   "date": "2026-06-27",
+   "event": "Hephaestus revival session on M3 writes roles/Hephaestus/ROLE.md + FORGE_NEXT_LEVEL_STRATEGY \u2014 still UNTRACKED in git today (exists only on M3 disk)."
+  },
+  {
+   "date": "2026-08-12",
+   "event": "Today: Techne + Ergon human sessions resume (commits 5b8a80c2, ba14f6f6, 07:04-07:06 ET). Live daemon census at survey time: Pronoia heartbeat 08:46 ET, HealthCheck-M4 07:56 ET, M4 machine probe 08:46 ET \u2014 and nothing else, anywhere."
+  }
+ ],
+ "verdicts": [
+  {
+   "claim": "The multi-agent fleet is operational across M1-M4 (the standing impression given by the auto-updating portfolio brief and dashboard)",
+   "verdict": "falsified",
+   "evidence": "Live agora.agent_heartbeats query 2026-08-12: only Pronoia (M4, 08:46 ET today) and HealthCheck-M4 (07:56 ET) current; all 31 other registered agents last heartbeat 2026-05-30 (Theseus 06-05). tasklist/schtasks on M3: zero Prometheus processes or tasks."
+  },
+  {
+   "claim": "'Redis Unreachable ... requires immediate investigation to restore connectivity at M1' (docs/portfolio_brief.md:8, regenerated 2026-08-11)",
+   "verdict": "falsified",
+   "evidence": "Redis was deliberately retired 2026-06-24 (roles/Ergon/REDIS_TO_POSTGRES_2026-06-24.md; commit 983fd077 'Redis retired'). The alert is an artifact of docs/state.json frozen at 2026-06-24T12:15:10Z (pre-retirement, still pointing at dead 192.168.1.176) because portfolio_monitor crashes every cycle since the migration."
+  },
+  {
+   "claim": "'14 agents are still pending deployment on M2, M3, and M4' (docs/portfolio_brief.md:20)",
+   "verdict": "falsified",
+   "evidence": "state.json contains 43 agents ALL status=UNKNOWN, zero MISSING (verified by direct parse). metis_portfolio.py:118-127 instructs the LLM to emit '(N) agents still pending deployment' only for MISSING agents; with none present, the '14' is LLM confabulation regenerated verbatim each cycle for 7 weeks."
+  },
+  {
+   "claim": "'agora.messages ... is the live bus (recent traffic)' \u2014 INFRA_RECOVERY_PLAN_2026-06-23.md:19 verification note",
+   "verdict": "falsified",
+   "evidence": "Live query: agora.messages max(created_at) = 2026-04-29 (harmonia_sync); main stream last 04-23. It was already ~8 weeks dead when the recovery plan called it live. bus.* schema (PgRedis backing): 0 rows in stream_entries, hashes, kv \u2014 no production message has ever crossed the post-Redis bus."
+  },
+  {
+   "claim": "Redis->Postgres migration is complete for the coordination path (REDIS_TO_POSTGRES_2026-06-24.md: 'Foundation DONE and tested')",
+   "verdict": "ambiguous",
+   "evidence": "PgRedis unit roundtrips passed and 33 files were repointed (commit e7b41f14), but PgRedis implements no exists/zcard/hlen (grep thesauros/prometheus_data/pg_redis.py) and its first production consumer crashes on it: agora.intelligence_outputs shows portfolio_monitor_run success=False, error \"'PgRedis' object has no attribute 'exists'\", 66/66 cycles in August (crash site scripts/portfolio_monitor.py:225,358-360). Migration tested in the lab, dead on first contact with production."
+  },
+  {
+   "claim": "Postgres dual-write heartbeats + PG-fallback dashboard survive Redis loss (the dual-write design bet)",
+   "verdict": "survived",
+   "evidence": "agora.agent_heartbeats and agora.machine_probes still receiving M4 writes today (Pronoia 2026-08-12 08:46 ET; 14,965 probes since Aug 1); agora_persist.py schema is the one piece of ops infra that never broke."
+  },
+  {
+   "claim": "'M3 being dead means the one experiment that decides the 20-year bet is hardware-blocked' (INFRA_RECOVERY_PLAN_2026-06-23.md:130-135)",
+   "verdict": "superseded",
+   "evidence": "M3/GANDALF recovered 2026-06-24 (db.toml header, this survey run ON M3), yet zero forge processes for 7 weeks since (tasklist/schtasks empty). The blocker is operator attention, not hardware."
+  },
+  {
+   "claim": "The monitoring pipeline gives James operational awareness (its founding purpose)",
+   "verdict": "falsified",
+   "evidence": "The fleet died 2026-05-30; the outage was noticed 2026-06-23 \u2014 a 24-day detection latency (INFRA_RECOVERY_PLAN_2026-06-23.md:3). Since 06-24 the pipeline actively misinforms: ~5-6 emails/day (59 email_dispatched in Aug) carrying stale Redis alerts, a 'Hephaestus running as of 2026-05-16' line sourced from manual_status.json frozen 2026-05-18, and the confabulated 14-agents claim."
+  },
+  {
+   "claim": "prometheus-bot arsenal commits indicate ongoing arsenal development",
+   "verdict": "falsified",
+   "evidence": "Commits come from GitHub Actions capability-tracking (.github/workflows/arsenal.yml:179-267, daily 07:17 UTC cron, cloud runner). Latest diff (4d43a60b, 2026-08-12): 'julia: installed; numpy 2.4.6 -> 2.5.2' \u2014 runner-image drift, not program work. Last human arsenal commit: 2026-04-25 (952d5178)."
+  }
+ ],
+ "current_state": "LIVE TODAY (2026-08-12), the complete process map: (1) M4 'harry1' \u2014 intelligence_loop.py (Pronoia): 4h cycles, last cycle 08-11 23:44 ET, heartbeat 08:46 ET today; each cycle: portfolio_monitor CRASHES (PgRedis.exists AttributeError, 66/66 failures in Aug), Metis LLM brief regenerates from frozen state.json, git auto-commit/push as 'James Craig' (442 commits lifetime), email dispatch (~5-6/day). Also on M4: machine_probe (~65s cadence, 73,445 rows lifetime) and HealthCheck-M4 (hourly). (2) M1 SKULLPORT (.202) \u2014 PostgreSQL 17 answering queries today (this survey queried it live from M3): prometheus_fire (13 schemas incl. migrated charon_duckdb/kill/sigma/noesis), prometheus_sci, lmfdb (363 GB / ~52M rows). No agent processes since 05-30 (Theseus 06-05). Techne+Ergon human sessions resumed there today. (3) GitHub cloud \u2014 arsenal.yml: smoke every 6h, capability-tracking daily 07:17 UTC (last bot commit today 08:43 UTC). NOTHING ELSE RUNS. M2 SPECTREX5: no probe or heartbeat since 05-30 12:24, presumed powered off. M3 GANDALF (this box): zero Prometheus processes, zero scheduled tasks (verified schtasks/tasklist), forge cold since 05-30 12:22 (hephaestus.log mtime); uncommitted local drift: agents/hephaestus/ledger.jsonl modified, roles/Hephaestus/ untracked. Hardware: M1 RTX 5060 Ti/32GB/16t; M2 RTX 5060 Ti/32GB/28t; M3 GTX 1070/24GB/8t; M4 Quadro P500/32GB/8t \u2014 i.e., the only live compute is the weakest GPU in the fleet.",
+ "assets": {
+  "alive": [
+   "M1 Postgres backbone at 192.168.1.202 (prometheus_fire 13 schemas, lmfdb 363GB, prometheus_sci) \u2014 reachable fleet-wide, verified live from M3 today",
+   "M4 intelligence_loop.py (Pronoia) \u2014 running continuously since 2026-05-17, needs one fix to be truthful again",
+   "M4 machine_probe + HealthCheck-M4 \u2014 clean hardware telemetry into agora.machine_probes every ~65s",
+   "GitHub Actions arsenal.yml \u2014 CI smoke + daily capability snapshot, functioning",
+   "agora_persist.py PG heartbeat/telemetry schema \u2014 the one ops component that never broke",
+   "~/.prometheus/db.toml on M1 and M3 \u2014 canonical .202 config in place"
+  ],
+  "dead": [
+   "All 31 non-M4 registered agents (heartbeats 2026-05-30, Theseus 06-05): Apollo, Charon swarm (Stygian/Lethe/Acheron/Moros/Hecate), Harmonia loop+workers (Argos/Iris/Phylax/Sophia/Telos), Pythia, Clio, Hypatia, Atalanta, Polyhymnia, Pheme, Talos, Penelope, Nephele, Erebos, Pollux, Hephaestus-daemon",
+   "agora.messages bus \u2014 last message 2026-04-29; decisions/open_questions tables ~unused (3+1 rows, last 04-15)",
+   "M2 SPECTREX5 entirely (no telemetry since 05-30)",
+   "docs/state.json refresh path (frozen 2026-06-24T12:15:10Z) and docs/manual_status.json (frozen 2026-05-18)",
+   "First-gen scaffold agents: nous, nemesis, metis(original), coeus, auditor, aletheia, clymene, eos, skopos, hermes (deprecated 05-17) \u2014 no substantive activity since March-May",
+   "docs/index.html dashboard (05-19) \u2014 renders a frozen state.json"
+  ],
+  "buried_gems": [
+   "thesauros/prometheus_data/pg_redis.py \u2014 full Redis-API-on-Postgres drop-in (streams/hashes/zsets/sets/lists/kv/pipeline), built+tested 06-24, ZERO production traffic ever (bus.* all 0 rows); adding ~3 methods (exists, zcard, hlen) un-crashes the entire reporting pipeline \u2014 highest leverage-per-line fix in the program",
+   "roles/Hephaestus/ROLE.md + FORGE_NEXT_LEVEL_STRATEGY_2026-06-27.md \u2014 the forge/metabolization-decider charter, UNTRACKED, exists only on M3 disk; one disk failure from loss",
+   "agora.machine_probes \u2014 100K+ rows of per-minute hardware telemetry (GPU/VRAM/disk) with no consumer",
+   "scripts/portfolio_monitor.py EXPECTED_AGENTS (lines ~72-210) \u2014 the only complete 43-agent census with machine assignments, lifecycle states, and shelved_reason forensics",
+   "scripts/agent_roster.py + pivot/agent_roster_2026-05-21.md \u2014 auto-roster generator, unused since 05-26",
+   "agora.research_queue \u2014 422 completed deep-research reports sitting in PG (last dispatch 05-30)"
+  ]
+ },
+ "open_questions": [
+  "What killed the entire M1+M2+M3 fleet within 45 minutes on 2026-05-30 ~12:00-12:24 ET? No surveyed doc names the cause; heartbeat forensics show near-simultaneous death (power event? Redis death cascading through hard-fail startup deps?). Worth one autopsy since any revival re-runs the same failure surface.",
+  "Is M2 SPECTREX5 physically powered on? Zero telemetry since 05-30; unverifiable remotely \u2014 it holds an RTX 5060 Ti the program isn't using.",
+  "Fix or kill the zombie reporter? Options: (a) add exists/zcard/hlen to PgRedis (~10 lines, restores truthful state.json), (b) stop intelligence_loop until the fleet is real again \u2014 currently it actively misinforms James daily and pollutes git history at 442 commits and counting.",
+  "Should arsenal-smoke keep burning 2x90min CI every 6h when the arsenal hasn't changed since 2026-04-25?",
+  "Who commits/rescues M3's local drift: modified agents/hephaestus/ledger.jsonl(+bak, novelty_scores.json, apollo/src/hephaestus_ops.py) and untracked roles/Hephaestus/?",
+  "Which agents in the 43-roster are ever intended to run again vs. formally retire? EXPECTED_AGENTS already carries lifecycle/shelved_reason fields \u2014 the retirement decision is data-entry away.",
+  "theseus/scoring/__pycache__ rebuilt 08-12 08:39 on M3 \u2014 which of today's sessions imported theseus scoring modules (unattributed local activity)?"
+ ],
+ "connections": [
+  "Reporting pipeline -> James's inbox: LIVE but toxic \u2014 daily emails carry falsified alerts (stale Redis, confabulated 14-agents) sourced from frozen state.json",
+  "portfolio_monitor -> PgRedis (thesauros get_bus): LIVE wiring, BROKEN interface \u2014 the crash that froze everything (scripts/portfolio_monitor.py:225 vs pg_redis.py missing exists)",
+  "All agents -> M1 Postgres .202: LIVE and proven (M4 writes today; M3 queried it for this survey); the one healthy spine",
+  "Agent fleet -> agora.messages bus: DEAD since April; PgRedis bus.* replacement: built, never used \u2014 cross-agent comms today are effectively git commits + role .md files",
+  "Hephaestus forge revival (Hephaestus domain) -> M3 ops: M3 healthy and cold; forge revival is purely an operator decision now",
+  "Techne/Ergon resumed sessions (today) -> M1: human-session-driven, not daemon-driven; they coordinate via roles/*/resume.md files, not the bus",
+  "GitHub Actions arsenal -> prometheus_math: LIVE but autonomous of everything else; its commits are the only 'activity' most weeks, which flatters the repo's pulse",
+  "docs/ (GitHub Pages dashboard) <- state.json: aspirational since 06-24 \u2014 renders a snapshot of a world that no longer exists"
+ ],
+ "strategic_read": "The operational truth is stark: this is not a degraded fleet, it is a dead fleet with a live database and a live liar. Since 2026-06-24 the program's only continuous activity has been (a) M4 re-narrating a frozen snapshot via LLM 6x/day \u2014 burning tokens to produce provably false operational claims that get emailed to the human decision-maker \u2014 and (b) a cloud cron noting numpy version bumps. Meanwhile the genuinely valuable substrate (M1 Postgres: 363GB LMFDB, migrated kill/sigma/charon schemas, 422 finished research reports) is up, reachable, and consumed by nothing. Three implications. First, ops debt is trivially small relative to its distortion: one ~10-line PgRedis patch (exists/zcard/hlen) makes telemetry truthful again, and one decision (stop or fix intelligence_loop) stops the misinformation channel; do these before any strategy discussion, because current dashboards will corrupt any assessment that trusts them. Second, the 43-agent daemon architecture is empirically falsified as an operating model for a one-human program: it died in 45 minutes, went unnoticed for 24 days, and its revival never happened even after every blocker (hardware, Redis, config) was cleared \u2014 the live pattern that actually works is what happened today: human-driven Claude sessions (Techne, Ergon) coordinating through committed role files and a shared Postgres. The program should formally retire the daemon monoculture (the lifecycle fields already exist in EXPECTED_AGENTS) and design around session-driven work + a handful of cheap, self-healing cron jobs with watchdogs. Third, compute allocation is inverted: the only live box has the weakest GPU (Quadro P500) while two RTX 5060 Ti machines and the forge box sit dark \u2014 if the M1-metabolization experiment is still the decider, the ops prerequisite is not a fleet revival, it is powering one GPU box and pointing one session at it. Commit roles/Hephaestus/ to git today; it is the decider's charter and it exists on exactly one disk.",
+ "files_of_record": [
+  "C:\\prometheus\\scripts\\intelligence_loop.py",
+  "C:\\prometheus\\scripts\\portfolio_monitor.py",
+  "C:\\prometheus\\scripts\\metis_portfolio.py",
+  "C:\\prometheus\\thesauros\\prometheus_data\\pg_redis.py",
+  "C:\\prometheus\\thesauros\\prometheus_data\\pool.py",
+  "C:\\prometheus\\docs\\state.json",
+  "C:\\prometheus\\docs\\portfolio_brief.md",
+  "C:\\prometheus\\docs\\manual_status.json",
+  "C:\\prometheus\\roles\\Ergon\\REDIS_TO_POSTGRES_2026-06-24.md",
+  "C:\\prometheus\\pivot\\INFRA_RECOVERY_PLAN_2026-06-23.md",
+  "C:\\prometheus\\pivot\\agent_roster_2026-05-21.md",
+  "C:\\prometheus\\.github\\workflows\\arsenal.yml",
+  "C:\\prometheus\\scripts\\agora_persist.py",
+  "C:\\prometheus\\roles\\Ergon\\resume_ergon.md",
+  "C:\\Users\\Gandalf\\.prometheus\\db.toml"
+ ]
+}

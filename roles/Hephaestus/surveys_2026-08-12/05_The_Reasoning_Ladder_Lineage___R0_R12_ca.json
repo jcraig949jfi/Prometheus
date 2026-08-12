@@ -1,0 +1,209 @@
+{
+ "domain": "The Reasoning Ladder Lineage \u2014 R0-R12 capability tiers, Icarus, Erebos, and reasoning-evaluation doctrine",
+ "one_line": "Three generations of \"make reasoning measurable\" culminated in the program's one calibrated non-gameable instrument (Harmonia's testable ladder + verifier lens + grading oracle) \u2014 but three incompatible tier vocabularies still coexist, the decisive experiments (model zoo, R12 live, dissociation replication) were built and never run, and every consumer of the instrument is dead or aspirational.",
+ "purpose_and_thesis": "Replace \"did the model get the answer?\" with tiered, falsification-first capability measurement. Doctrine #1 (pivot/reasoning_ladder_v01_2026-05-24.md): a system occupies tier R_k only if the mechanism survives perturbation, beats lower-tier baselines, and fails in tier-predicted ways. Doctrine #2: capability is read from the SHAPE of failure, not the pass/fail binary \u2014 the failure signature is the deliverable. Operationalization (harmonia/memory/architecture/reasoning_ladder_testable.md, James's design 2026-05-27): capability = operation + perturbation + failure_mode + evidence_artifact, 4 probe versions (clean/isomorphic/adversarial/transfer), deterministic non-LLM grading. Icarus is the experimental subject (can a self-improving loop climb an externally-authored ladder without Goodharting its evaluator?); Erebos is the generator-side application (no claim emitted without a declared tier + falsification route); the ladder itself became the program's progress meter under the June \"Prometheus = TDD layer\" reframing.",
+ "arc": [
+  {
+   "date": "2026-05-15",
+   "event": "Charon files ladder v1: 10 tiers R0-R9 (R3=abstraction, R4=search, R5=causal, R6=self-monitoring, R7=transfer, R8=conjecture, R9=research-grade), 10-axis profile vector, anti-Goodhart discipline, 6 operational artifacts promised with a self-imposed 2026-08-15 sunset (pivot/reasoning_ladder_design_2026-05-15.md)"
+  },
+  {
+   "date": "2026-05-17",
+   "event": "Hephaestus trap battery adopts the 05-15 semantics: CATEGORY_TIER maps ~90 trap categories to R1-R6 (agents/hephaestus/src/test_harness.py:460 cites the 05-15 doc)"
+  },
+  {
+   "date": "2026-05-24",
+   "event": "Ladder v0.1 REWRITES the tiers as R0-R12 with new semantics (R3=constraint maintenance, R4=strategy selection, R5=counterfactual control, R8=representation shift, R9=compositional synthesis) plus co-equal F-axis and M/H modifiers \u2014 triggered by Apollo gen-3551's falsified R9 (0/5 elites beat best single primitive; Apollo re-read as R2 with a decorative trick)"
+  },
+  {
+   "date": "2026-05-26",
+   "event": "Erebos maps all 25 generator archetypes to ladder tiers \u2014 but against the 05-15 R0-R9 semantics, two days after v0.1 replaced them (pivot/erebos_reasoning_ladder_integration_2026-05-26.md:10)"
+  },
+  {
+   "date": "2026-05-27",
+   "event": "THIRD vocabulary born: James designs the testable ladder (R4=representation shift, R5=invariant detection, R6=counterexample, R7=proof repair, R8=strategy selection, R12=generative conjecture); Harmonia B operationalizes it as harmonia/experiments/reasoning_phase0.py + verifier_lens.py. Same day: Erebos whitepaper v1 + finding reclassification (7 'triangulated phenomena' \u2192 0 mathematical findings, 6 catalog artifacts, 2 substrate); 11/25 Erebos plugins quarantined; Icarus whitepaper filed"
+  },
+  {
+   "date": "2026-05-29",
+   "event": "Icarus dual-falsified R0-R3 climb (two independent runs, 15 fresh seeds, mean 1.00) hits the R5 wall; frontier review forces self-falsification of the 'substrate is the bottleneck' thesis. Separately: 4-frontier-model review of the ladder demotes 'basis, not ladder' to hypothesis, mandates 4 confound kills (C-THINK/C-FORMAT/C-MEMO/C-POWER), converges on R12 as the most defensible upper-tier grader. Opus clean run SATURATES the R0-R6 suite; R2/R5 Opus<Sonnet inversion found and refined to 'recognition intact, execution control differs'"
+  },
+  {
+   "date": "2026-05-30",
+   "event": "Model-zoo scaffolding complete (18/24 models reachable, 38 offline tests) \u2014 the decisive basis-vs-ladder experiment, never launched. R12 grader (r12_grader.py/r12_universe.py) built and unit-tested, never run live. Legality 4-arm result at pinned effort (rules out C-THINK for that leg)"
+  },
+  {
+   "date": "2026-06-03",
+   "event": "Erebos's strongest claim DOWNGRADED by pair-aware permutation nulls (commit d7120eb5) \u2014 last Erebos activity ever"
+  },
+  {
+   "date": "2026-06-05",
+   "event": "Three-thread snapshot: zoo READY-never-run; legality replication credit-blocked (r8_confirm_result.txt shows the N=0 dead attempt); Icarus stopped at cycle 013 on a connector crash (roles/Harmonia/SESSION_STATE_20260605_three_threads.md)"
+  },
+  {
+   "date": "2026-06-09",
+   "event": "Proposal F files the confound-kill program as Harmonia auditing its own over-claim (harmonia/proposals/2026-06-09/F_reasoning_ladder_confound_kills.md) \u2014 never executed"
+  },
+  {
+   "date": "2026-06-10",
+   "event": "Icarus CLEARS R5 (commit 96814789) \u2014 by surfacing probe schema + answer contract, NOT by the v3 representation rebuild: the walls were direction gaps, vindicating the frontier reviewer"
+  },
+  {
+   "date": "2026-06-15",
+   "event": "Icarus hits the R6 wall (conjecture cid-family + answer contract, commit 596edeb0) \u2014 last Icarus activity; daemon dead since"
+  },
+  {
+   "date": "2026-06-22",
+   "event": "Coverage sweep: Icarus R0-R12 ladder = 83% coverage, MIXED/INCONCLUSIVE \u2014 climb-limited (R8-R12 defined but unreached), not expressiveness-limited (harmonia/diagnostics/COVERAGE_SWEEP_RESULTS.md)"
+  },
+  {
+   "date": "2026-06-27",
+   "event": "Harmonia A measurement fleet: grading_oracle.py built + calibrated (clean 4-reasoner staircase, 157/157 verifier agreement); M0 keystone verdict \u2014 the selector is BLIND to novelty (17% on adjacent-domain truths, 0% false rejection), stall is representational/interface not epistemic; ladder formally becomes the program's progress meter. Last substantive activity in the domain"
+  },
+  {
+   "date": "2026-08-12",
+   "event": "Today: m0_anticalibration*, M0_RESULTS.md, and coverage diagnostics re-touched at 08:10 (no content change vs git) \u2014 resumed sessions are re-reading/re-running the instruments; 3 days before the 05-15 doc's self-imposed 2026-08-15 falsification deadline, which it fails"
+  }
+ ],
+ "verdicts": [
+  {
+   "claim": "Apollo gen-3551 reached R9 compositional synthesis",
+   "verdict": "falsified",
+   "evidence": "pivot/reasoning_ladder_v01_2026-05-24.md:205-209 \u2014 single-primitive baseline test: 0/5 elites lift over best constituent primitive; Apollo re-read as R2 with one decorative trick. The falsification that motivated the entire v0.1 rewrite."
+  },
+  {
+   "claim": "One shared tier vocabulary governs the program",
+   "verdict": "falsified",
+   "evidence": "R5 = causal/counterfactual (agents/hephaestus/src/test_harness.py:502-508, per 05-15 design cited at line 460) vs counterfactual control (agents/icarus/ladder.py:83-92, v0.1) vs invariant detection/board parity (harmonia/memory/architecture/reasoning_ladder_testable.md:32, what Icarus ACTUALLY climbed). R4 = search vs strategy-selection vs representation-shift across the three. Icarus carries both conflicting definitions internally (frozen ladder.py vs tier_oracle.py:46). Even icarus_v3_design_pressure_2026-05-28.md Q1 says 'R5 (counterfactual control)' while the next day's frontier review means R5=parity invariant."
+  },
+  {
+   "claim": "Icarus's R0-R3 climb demonstrates synthetic reasoning",
+   "verdict": "superseded",
+   "evidence": "pivot/icarus_frontier_verdict_synthesis_2026-05-29.md:9-23 \u2014 accepted narrowed claim: 'stabilized algebraic symbolic-reasoning routines once failure signals became navigable'; major part was schema/affordance repair over a narrow symbolic API, not concept invention."
+  },
+  {
+   "claim": "The Python+sympy substrate is the R5 bottleneck; a typed-operator-DAG rebuild (v3) is required",
+   "verdict": "falsified",
+   "evidence": "Self-falsified in icarus_frontier_verdict_synthesis_2026-05-29.md ('we have not earned that claim'), then empirically killed: commit 96814789 (2026-06-10) 'R5 CLEARED \u2014 surfaced probe schema + answer contract' \u2014 no representation rebuild needed. diff_apply_failed proved patch brittleness, not inexpressibility."
+  },
+  {
+   "claim": "'Basis, not ladder' \u2014 the tiers are orthogonal capability axes, not ordered rungs",
+   "verdict": "untested",
+   "evidence": "Demoted to hypothesis by 4-model adversarial review (harmonia/memory/architecture/reasoning_ladder_frontier_synthesis_2026-05-29.md:10-13). The decisive test \u2014 15-18 model zoo, multi-axis vs rank-1 prediction of held-out families \u2014 is fully built (run_zoo_matrix.py, 38 offline tests pass) and has NEVER run live (roles/Harmonia/SESSION_STATE_20260605_three_threads.md:20-35)."
+  },
+  {
+   "claim": "Opus<Sonnet R2/R5 inversion = a real 'execution discipline' axis (double dissociation with R8)",
+   "verdict": "ambiguous",
+   "evidence": "n=40 widened confirmation + morphology (reasoning_ladder_testable.md:147-174), C-THINK partially controlled (effort pinned, legality_overrefusal_4arm_writeup_2026-05-30.md:117); but the pre-registered replication died on credit exhaustion (harmonia/experiments/r8_confirm_result.txt is an N=0/cell dead run) and Proposal F's confound kills were never executed."
+  },
+  {
+   "claim": "The R0-R6 procedural suite discriminates frontier models",
+   "verdict": "falsified",
+   "evidence": "reasoning_ladder_testable.md:115-128 \u2014 Opus 4.8 with structured outputs: suite SATURATED, 'discriminating power is relative to the model's frontier'; signal moved to R7-R12, which need the formal-verifier backend that was never installed."
+  },
+  {
+   "claim": "Tier claims require perturbation-surviving falsification tests with deterministic non-LLM grading (Doctrine #1)",
+   "verdict": "survived",
+   "evidence": "Operational end-to-end: reasoning_phase0.py 4-version probes; verifier_lens.py fails-closed, 0 disagreements across 3 models (39/39, 55/55) and 157/157 in the grading oracle (roles/Harmonia/MEASUREMENT_FLEET_2026-06-27.md:22-23). The lineage's one fully-cashed doctrinal check."
+  },
+  {
+   "claim": "Erebos's 7 triangulated Mahler findings evidence mathematical novelty",
+   "verdict": "falsified",
+   "evidence": "pivot/erebos_whitepaper_v1_2026-05-27.md:181-205 (v3 reclassification): 0 mathematical, 0 literature-grade; 2 substrate (instrument-noticed-structure) + 6 catalog (enumerator-bias artifacts). Honest reclassification forced by convergent 4-frontier-model critique."
+  },
+  {
+   "claim": "Icarus ladder coverage is 83% \u2014 climb-limited, not class-limited",
+   "verdict": "survived",
+   "evidence": "harmonia/diagnostics/COVERAGE_SWEEP_RESULTS.md:29,73-82 \u2014 executed diagnostic; in-class recall 60% because R8-R12 rungs exist but are unreached; the only out-of-class targets are the orthogonal F/M/H dimensions absent from ladder.py. Caveat: the sweep measured the frozen ladder.py rung LIST, while only 7 tiers exist as probe generators."
+  },
+  {
+   "claim": "The grading oracle 'directly powers the Hephaestus organism loop'",
+   "verdict": "untested",
+   "evidence": "MEASUREMENT_FLEET_2026-06-27.md:45-47 asserts it; grep shows grade_reasoner referenced in zero files outside harmonia/services/grading_oracle.py itself; Hephaestus forge idle since 2026-05-28. The link is written, never wired."
+  },
+  {
+   "claim": "The selector can recognize novelty (discovery success-state B)",
+   "verdict": "falsified",
+   "evidence": "harmonia/experiments/M0_RESULTS.md:165-210 \u2014 Set B (adjacent domains) 17%; all 4 genuine out-of-manifold accepts were hand-routed raw z3 bypassing verify(); packaged battery certifies ZERO novel-shaped truths; 0% false-rejection is the redeeming property. Source of the program's diagnosis-of-record: stall is representational, not epistemic."
+  },
+  {
+   "claim": "05-15 ladder doc's own sunset: 'if by 2026-08-15 the \u00a79 operational artifacts are not in flight, the doc was wrong'",
+   "verdict": "falsified",
+   "evidence": "pivot/reasoning_ladder_design_2026-05-15.md:540-544. Three days out (today 2026-08-12): no techne/registry/reasoning_tier_annotations.jsonl, no aporia/doctrine/reasoning_ladder.md, no reasoning_tier_calibrator.py, no charon tier_evidence_ledger, no reasoning_tier field in ergon code. Only survivor: required_reasoning_tier ticket-linting in scripts/aporia_triage_report.py:94. By its own standard, the founding doc failed."
+  },
+  {
+   "claim": "Failure-mined engines produce the biggest ladder climbs (+11pp R3, +32pp R4)",
+   "verdict": "survived",
+   "evidence": "roles/Hephaestus/ROLE.md:61-63 \u2014 but on the trap battery's OWN tier semantics (R4=temporal/search per test_harness.py:488), incommensurable with the Harmonia ladder's R4; cross-battery tier claims silently equivocate."
+  },
+  {
+   "claim": "Walls are direction gaps, not capability gaps (failure must emit direction)",
+   "verdict": "survived",
+   "evidence": "Three independent confirmations: R2 6-cycle plateau broken by surfacing schema+exception (pivot/icarus_frontier_review_R5_frontier_2026-05-29.md:91-102); R5 cleared the same way (commit 96814789); M0's representational-wall finding is the same shape at instrument level (M0_RESULTS.md:176-189). Arguably the lineage's central empirical discovery."
+  }
+ ],
+ "current_state": "Everything idle; the measurement stack alone is warm. Harmonia measurement stack (reasoning_phase0.py, verifier_lens.py, z3_backend.py, grading_oracle.py, coverage_diagnostic.py, m0 harness): last substantive commits 2026-06-27; m0/coverage files re-touched today 2026-08-12 08:10 with no content change (resumed Techne/Ergon sessions re-reading or re-running deterministic instruments). Icarus: dead since 2026-06-15, state frozen at passing=R5, target=R6 (agents/icarus/state/tier_currently_passing.json, tier_target.json set 2026-06-10); R6-wall (counterexample tier) surfaced but never re-attempted; tier_oracle.py:37 hardcodes D:\\Prometheus, so the C:\\prometheus/M3 checkout can't run it unedited; only cycle_000 is tracked. Erebos: dormant since 2026-06-03 (last commit d7120eb5 downgraded its own strongest claim); kill_ledger.jsonl absent from the repo (untracked state, presumably on the Charon machine); 11/25 plugins still quarantined per pivot/erebos_quarantine.md. Hephaestus trap battery: idle since M3 died 2026-05-28; M3 recovered 2026-06-24, forge not restarted. Never-run-but-ready: model zoo matrix (~1.2k calls), R12 live grader, legality replication (~780 calls), Proposal F confound kills. R4 and R8-R12 probe generators still do not exist in reasoning_phase0.py \u2014 the ladder's upper half is defined but unmeasurable.",
+ "assets": {
+  "alive": [
+   "harmonia/experiments/reasoning_phase0.py \u2014 procedural R0-R3,R5,R6,R7 probe generators, deterministic trace-vector grading; offline-capable",
+   "harmonia/experiments/verifier_lens.py + z3_backend.py \u2014 fails-closed non-LLM verifier, 0 disagreements everywhere it was cross-checked",
+   "harmonia/services/grading_oracle.py \u2014 calibrated 4-reasoner staircase, 157/157 verifier agreement, serve()/request_grade cross-machine protocol",
+   "harmonia/diagnostics/coverage_diagnostic.py + run_coverage_sweep.py \u2014 reusable B1/B2/MIXED separator, re-runnable anytime",
+   "harmonia/experiments/m0_anticalibration.py + m0_anticalibration_sets.py \u2014 the novelty-blindness keystone harness (re-touched today)"
+  ],
+  "dead": [
+   "agents/icarus/ daemon + climb (last commit 2026-06-15; R6 wall unresolved; hardcoded D:\\Prometheus paths block M3 revival)",
+   "charon/agents/erebos/ 25-plugin cluster (dormant since 2026-06-03; kill_ledger not in repo; no downstream consumer ever read it)",
+   "agents/hephaestus trap battery T1 loop (idle since 2026-05-28 despite M3 recovery 06-24)",
+   "agents/icarus/ladder.py as source of truth (frozen v0.1 semantics contradicting the probes Icarus actually climbs; superseded in practice by tier_oracle.py)",
+   "v0.1's F/M/H axes and the 05-15 doc's 10-axis profile vector \u2014 never implemented in any grader",
+   "pivot/reasoning_ladder_design_2026-05-15.md \u00a79 artifact suite \u2014 five of six never built; sunset clause fails 2026-08-15"
+  ],
+  "buried_gems": [
+   "harmonia/experiments/run_zoo_matrix.py + zoo_reasoner.py + zoo_inventory_result.json \u2014 the decisive basis-vs-ladder experiment: 18/24 models reachable, 38 offline tests pass, resumable checkpointing, Anthropic-independent, ~1.2k calls; READY since 2026-05-30, never launched",
+   "harmonia/experiments/r12_grader.py + r12_universe.py + run_r12.py \u2014 the R12 conjecture-generation grader all four frontier reviewers said to prioritize ('most defensible, most Prometheus-native'); built, unit-tested (test_r12.py), never run live",
+   "harmonia/services/grading_oracle.py as a SERVICE \u2014 non-gameable candidate-reasoner grading with a cross-machine bus protocol and zero consumers; the exact 'are we closer?' instrument the TDD reframing demands",
+   "agents/icarus/state/training_stream.jsonl + kill_clusters.json + debt_ledger.json \u2014 typed failure residue designed as Ergon Learner feedstock; no consumer ever read a byte",
+   "harmonia/experiments/run_confound_battery.py + run_legality_replication.py \u2014 pre-registered confound-kill harnesses, code-complete, blocked only by ~780 API calls of credit",
+   "the tier_oracle.py TIER_TRACE_KEYS + probe_schema pattern (agents/icarus/tier_oracle.py:81-157) \u2014 the generalizable 'make failure emit direction' mechanism that broke three walls; nothing else in the program reuses it"
+  ]
+ },
+ "open_questions": [
+  "Ladder or basis? The decisive experiment (multi-axis vs rank-1 prediction of held-out families across a 15-18 model zoo) has been ready since 2026-05-30 and costs ~1.2k API calls. Nothing blocks it architecturally.",
+  "Is Icarus's R6 wall (counterexample search) another direction gap or the first genuine capability gap? Fixes were surfaced 2026-06-15 and never re-attempted \u2014 the climb stopped mid-experiment, not at a conclusion.",
+  "Who owns tier-vocabulary unification? Three batteries emit R-numbers meaning different things; no doc anywhere acknowledges all three simultaneously, and cross-subsystem claims ('+32pp R4', 'R5 cleared', 'R9 falsified') equivocate silently.",
+  "Can the grading oracle acquire a real consumer \u2014 Hephaestus's composed engine or Apollo Branch C \u2014 making the 'progress meter' identity real rather than written?",
+  "R4 and R8-R12 generators don't exist; the frontier synthesis specified concrete grader designs for R9-R12 (generator-backed lemma planting, plan-DAG repair, cost-graded strategy selection, finite-universe conjecture). Unbuilt except R12. The suite is saturated below R7, so the program currently has NO discriminating instrument for frontier-model reasoning.",
+  "Was the Opus/Sonnet execution-discipline dissociation real? ~780 calls of credit from an answer since 2026-06-05.",
+  "Does Icarus revive on M3 (repo at C:\\prometheus) given tier_oracle.py:37 and ladder.py:12 hardcode D:\\Prometheus?",
+  "The 05-15 doc's sunset clause fires in 3 days (2026-08-15). Will anyone formally retire it, or does it join the pile of self-falsified-but-unretired doctrine?"
+ ],
+ "connections": [
+  "reasoning_phase0 + verifier_lens \u2192 Icarus via agents/icarus/tier_oracle.py \u2014 LIVE wiring, dead consumer (daemon stopped 2026-06-15); the only cross-agent ladder consumption that ever actually ran",
+  "grading_oracle \u2192 Hephaestus organism loop \u2014 ASPIRATIONAL (claimed in MEASUREMENT_FLEET_2026-06-27.md:45, zero call sites, forge idle)",
+  "Ladder tier tags \u2192 Ergon LearnerRecord / training labels \u2014 ASPIRATIONAL (promised in both 05-15 \u00a78.3 and v0.1 practical-uses #2; no reasoning_tier field exists in ergon code)",
+  "Hephaestus trap battery (CATEGORY_TIER R1-R6) \u2192 forge validation gates + Apollo gen-3551 fitness \u2014 WAS LIVE until 2026-05-28, idle since; known Goodhart hole (longest-candidate hack scores 52%)",
+  "Erebos plugin reasoning_tier declarations \u2192 REGISTRY validation \u2014 LANDED but internal-only, semantics drifted (annotated against 05-15 tiers, described as v0.1), dormant since 06-03",
+  "Coverage sweep + M0 \u2192 June reassessment doctrine \u2014 LIVE doctrinally: source of 'stall is representational, not epistemic' (the diagnosis-of-record) and the 'Icarus 83% / R8-R12 unreached' number quoted program-wide",
+  "Aporia ticket linting requires required_reasoning_tier (scripts/aporia_triage_report.py:94) \u2014 LIVE-ish tooling, the sole surviving behavior delta of the 05-15 doc",
+  "Icarus typed failure residue \u2192 Ergon \u2014 ASPIRATIONAL, never consumed",
+  "Apollo v0.1 worked example (gen-3551 = R2, R9 falsified) \u2192 motivated Branch C blackboard genome \u2014 historical influence, Branch C never ran at scale"
+ ],
+ "strategic_read": "This domain quietly produced the program's two most valuable things and then failed to use either. First: the measurement instrument. Harmonia's testable ladder + verifier lens + grading oracle is the only calibrated, non-gameable, deterministic capability meter Prometheus owns, and under the June 'Prometheus = TDD layer' identity it IS the product \u2014 yet it grades nothing (zero consumers), covers only 7 of 13 rungs, and is saturated below R7 for exactly the models that matter. Second: the finding. Three independent walls (Icarus R2, R3, R5) fell not to capability improvements but to making failure emit direction \u2014 and M0 found the same shape at instrument level (novel truths unrepresentable, not undecidable). 'The stall is representational/interface, not epistemic' is this lineage's discovery; the program's diagnosis-of-record traces here. What the domain needs is not new theory but execution of its own backlog, in cost order: (1) run the model zoo (~1.2k calls) \u2014 it settles ladder-vs-basis, the open question every tier claim rests on; (2) run R12 live \u2014 the one upper-tier grader all four frontier reviewers endorsed, and the most Prometheus-native probe of the north-star behavior; (3) wire grading_oracle to one real consumer (Hephaestus composed engine is a one-import job per its own docs) so 'progress meter' stops being aspirational; (4) declare ONE canonical tier vocabulary \u2014 the testable ladder, since it's the only one with an implementation \u2014 and force-remap Hephaestus's CATEGORY_TIER and retire ladder.py's frozen text, because right now cross-subsystem R-numbers are semantically void and the program's headline capability claims (+32pp R4, 83% coverage, R9 falsified) are measured on three different rulers. The Icarus bet, honestly scored: the architecture climbed further than its own designers predicted post-review (R5 fell without the rebuild), stopped mid-experiment for infrastructure reasons, and its kill criterion (200 R5 cycles / 0 capability promotions \u2192 retire) was never reached \u2014 it is unfinished, not falsified, and its typed-residue instrumentation is the best failure-representation machinery in the program.",
+ "files_of_record": [
+  "C:\\prometheus\\pivot\\reasoning_ladder_design_2026-05-15.md",
+  "C:\\prometheus\\pivot\\reasoning_ladder_v01_2026-05-24.md",
+  "C:\\prometheus\\harmonia\\memory\\architecture\\reasoning_ladder_testable.md",
+  "C:\\prometheus\\harmonia\\memory\\architecture\\reasoning_ladder_frontier_synthesis_2026-05-29.md",
+  "C:\\prometheus\\harmonia\\experiments\\reasoning_phase0.py",
+  "C:\\prometheus\\harmonia\\experiments\\verifier_lens.py",
+  "C:\\prometheus\\harmonia\\services\\grading_oracle.py",
+  "C:\\prometheus\\agents\\icarus\\tier_oracle.py",
+  "C:\\prometheus\\agents\\icarus\\ladder.py",
+  "C:\\prometheus\\pivot\\icarus_frontier_review_R5_frontier_2026-05-29.md",
+  "C:\\prometheus\\pivot\\icarus_frontier_verdict_synthesis_2026-05-29.md",
+  "C:\\prometheus\\pivot\\erebos_whitepaper_v1_2026-05-27.md",
+  "C:\\prometheus\\harmonia\\diagnostics\\COVERAGE_SWEEP_RESULTS.md",
+  "C:\\prometheus\\roles\\Harmonia\\MEASUREMENT_FLEET_2026-06-27.md",
+  "C:\\prometheus\\agents\\hephaestus\\src\\test_harness.py"
+ ]
+}

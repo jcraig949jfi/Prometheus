@@ -1,0 +1,202 @@
+{
+ "domain": "ERGON \u2014 the Learner march and the data-spine engineering",
+ "one_line": "The program's engine role: marched the Learner thesis through four honest kills and one positive (residue is navigable behaviorally, not semantically), then single-handedly rescued the data spine (Postgres/DuckDB/Redis consolidation), and returned 2026-08-12 with the program's sharpest next experiment \u2014 the capacity-unconfounded Metabolization Probe.",
+ "purpose_and_thesis": "Ergon owns the \"Learner\" \u2014 the bet that substrate failure data (\"what doesn't work\"), once ingested by a model, produces measurable movement toward mathematical reasoning (feedback_ergon_learner_north_star: falsification-routing \u2014 given a problem, predict which move/tool works based on mined failure). Secondary charter that grew over time: the data-spine engineering (Postgres, ingestion pipelines, the Theseus\u2192Ergon seam, bus infrastructure).",
+ "arc": [
+  {
+   "date": "2026-04-13/18",
+   "event": "Pre-Learner era: autonomous explorer + ~40 number-theory scan scripts (gap_k_scan, murmuration, zeros) \u2014 ergon/logs/ last 2026-04-18; all dormant since"
+  },
+  {
+   "date": "2026-05-03",
+   "event": "Tensor milestone: tensor.npz rebuilt \u2014 4,755,770 objects x 208 features, 23 domains (verified via numpy.load per tensor_manifest.md); companions tensor_all.npz 5.08M x 263 / tensor_extended.npz"
+  },
+  {
+   "date": "2026-05-04",
+   "event": "MVP build begins per MVP_PLAN.md (15-day target, design frozen at pivot/ergon_learner_proposal_v8.md)"
+  },
+  {
+   "date": "2026-05-06/09",
+   "event": "v0.5/v0.5b tire-kick + Learner-Tester fire loop (producer fires 1-16, tester fires 001-018, 290KB fire log). Key finding: 50-step rank-8 LoRA \u2261 base bit-identical; W4.0 null-gate H0 mis-specified. Loop closes at full-arc session-close 2026-05-09; fires 14-15 were quiet-ticks (tester paused)"
+  },
+  {
+   "date": "2026-05-10",
+   "event": "Fire 16 (single-shot): tensor_probe_shape_audit \u2014 104 problems classified, 29 probe templates; blind-spots BS-001 Cohen / BS-003 Helfgott / BS-004 Faltings / BS-005 McKay / BS-006 Margulis anchor the calibration corpus (probe-coverage test test_blind_spot_probe_coverage.py exists)"
+  },
+  {
+   "date": "2026-05-11",
+   "event": "INDEFINITE PAUSE: James pivots to substrate-volume-first (PROMPT_2026-05-11_substrate_first.md). Pilot LoRA design (v1_0_plans/pilot_lora_design_tier_1_corpus.md, 4-condition matrix) frozen-not-retracted; threshold \u22651000 high-trust blocks; first train pushed to Phase 3 (Nov 2026)"
+  },
+  {
+   "date": "2026-05-18/19",
+   "event": "Penelope ingest orchestrator ships; Theseus\u2192Ergon handoff flows briefly, then STALLS 2026-05-19; Penelope last activity 2026-05-27 (lifetime_stats.json), 100% knots_x_elliptic_curves"
+  },
+  {
+   "date": "2026-06-03",
+   "event": "Corpus value audit: generation solved (~100M+ failure records) but corpus = 1,486 records, 79% confirmations, 71% one domain \u2014 double monoculture; 46,500 telemetry claim falsified (31x inflation). Same day, greedy LoRA run (James overrides stand-down): base 0.228 \u2192 0.907, +0.68 headline"
+  },
+  {
+   "date": "2026-06-04",
+   "event": "Entity-disjoint retest: decomposition = format >> base-rate priors (0.669 floor) >> value memorization (+0.12) >> genuine reasoning (+0.10, E-shown 0.841)"
+  },
+  {
+   "date": "2026-06-07",
+   "event": "THE KILL: source ablation (leave-one-out) + computable-gold OOD (0.55 vs 0.50 chance, False-prior) + transfer test (+0.027 n.s.) \u2014 greedy LoRA is per-source surface classifiers, zero cross-domain transfer; 'more failure data of the same shape cannot grow the reasoning share'. Handoff un-stalled but doubly blocked (mapper renders only invariant_equality; mappable kills score below 0.5 threshold)"
+  },
+  {
+   "date": "2026-06-08",
+   "event": "Compute-traces v2 (hard negatives after v1 parity-leak self-catch): worked traces teach in-op computation (+0.16) but cross-op transfer \u2248 verdict-only \u2014 coverage not transfer; 1.5B capacity ceiling on modexp"
+  },
+  {
+   "date": "2026-06-09",
+   "event": "Routing eval (preregistered, instrument-validated): H_B SUPPORTED \u2014 warm-start co-solve clustering \u0394AUC +0.075, survives adversarial tail check; H_A NULL \u2014 concept/field labels route no better than shuffled. Residue navigable BEHAVIORALLY not SEMANTICALLY. True objective (new problem \u2192 tool) untestable: artifact top-10-truncated, no probe features, mining producer not in-repo"
+  },
+  {
+   "date": "2026-06-15/22",
+   "event": "Seam fidelity fix + allowlist rebuild after Charon's adversarial verdict proved the denylist leak gate passed verdict words/statistics into prompts (answer-reading Goodhart risk on the future transfer eval)"
+  },
+  {
+   "date": "2026-06-23",
+   "event": "DB diagnosis: 'data spine dark' premise of the reassessment FALSIFIED on M1 \u2014 Postgres 17 healthy local at .202; .176 is a stale address. object_zeros rekey: object_id NULL on 1,984,167/2,009,089 rows (98.8%, desynced sequence from 04-16 migration) repaired via 8h15m scheduled-task slow-roll to 0 NULL, reversible (ergon/repair/)"
+  },
+  {
+   "date": "2026-06-24",
+   "event": "DuckDB\u2192PG migration (14 tables, 1,242,918 rows verified) + Redis\u2192PG bus (PgRedis drop-in, thesauros/prometheus_data/pg_redis.py); three data stores consolidated on local Postgres. Last research-session day before dormancy"
+  },
+  {
+   "date": "2026-08-12",
+   "event": "REVIVAL (today): resume_ergon.md (08:10) recommends Leanstral\u2192M0 Set-C probe; REVIVAL_ASSESSMENT_2026-08-12.md (08:51, commit 518212e4) reprioritizes \u2014 Move 1 = Metabolization Probe (C0-C3), naming the capacity confound that taints every prior negative"
+  }
+ ],
+ "verdicts": [
+  {
+   "claim": "Ingesting substrate failure data moves a model toward mathematical reasoning (+0.68 headline)",
+   "verdict": "falsified",
+   "evidence": "GREEDY_FOLLOWUP_FINDINGS_2026-06-07.md:10-17 \u2014 decomposes to format >> False-prior >> per-template classes >> reasoning; zero transfer across sources or even sub-domains of number theory; 'adding more failure data of the same shape will not grow the reasoning share'. Genuine residual: ~+0.10 relational reasoning on entity-disjoint E-shown (GREEDY_LORA_RESULT_2026-06-03.md:138)"
+  },
+  {
+   "claim": "Trained judgement transfers out-of-distribution",
+   "verdict": "falsified",
+   "evidence": "GREEDY_FOLLOWUP_FINDINGS_2026-06-07.md:31-43 \u2014 computable-gold 494-item OOD set: 0.55 vs 0.50 chance, T/F split 0.20/0.90 = False prior, not discrimination"
+  },
+  {
+   "claim": "Worked computation traces teach transferable computation",
+   "verdict": "falsified",
+   "evidence": "COMPUTE_TRACE_RESULT_2026-06-08.md:48-59 \u2014 in-op +0.16 real (7/8 ops), cross-op trace \u2248 verdict (0.617 vs 0.627), summation stays unsolved; partially falsified its own preregistered prediction \u2014 necessary-not-sufficient"
+  },
+  {
+   "claim": "Concept/field labels can route tools to problems (semantic routing)",
+   "verdict": "falsified",
+   "evidence": "ROUTING_EVAL_2026-06-09.md:99-104 \u2014 H_A NULL: real fields AUC 0.744 \u2248 shuffled fields 0.743, \u0394AUC \u22120.009 vs POP, P(\u0394\u22640)=0.93, instrument validation passed"
+  },
+  {
+   "claim": "Mined-failure residue is navigable (routing-by-failure possible in principle)",
+   "verdict": "survived",
+   "evidence": "ROUTING_EVAL_2026-06-09.md:106-110 \u2014 H_B: warm-start co-solve COLLAB AUC 0.829 vs POP 0.754, \u0394AUC +0.075, P<0.0001, survives adversarial tail check (+0.082) \u2014 behavioral handle only"
+  },
+  {
+   "claim": "The data spine is dark; DuckDB fallback needed (reassessment CC-3 / stall-map action #1)",
+   "verdict": "falsified",
+   "evidence": "DB_DIAGNOSIS_2026-06-23.md:12-17 \u2014 Postgres 17 healthy local on .202, lmfdb 363GB/~52M rows, g2c count 66,158 in 95ms; .176 is a stale address (E0/E1 inference from stale docs, not an E3 truth). Verified today from M3: TCP 5432 on 192.168.1.202 reachable"
+  },
+  {
+   "claim": "Penelope ingested 46,500 records",
+   "verdict": "falsified",
+   "evidence": "CORPUS_VALUE_AUDIT_2026-06-03.md:49-53 \u2014 cumulative counter inflated by re-scan (514 dup files); dedup corpus = 1,486 records, 31x smaller; confirmed by penelope/orchestration/lifetime_stats.json (100% theseus, 100% knots_x_elliptic_curves)"
+  },
+  {
+   "claim": "The Learner corpus is failure-rich (the founding requirement)",
+   "verdict": "falsified",
+   "evidence": "CORPUS_VALUE_AUDIT_2026-06-03.md:23-34 \u2014 79% confirmations, 1.4% rejected; the one wired pipeline filtered kills out (weight threshold \u22650.5 downweights REJECTED); root cause traced to mapper rendering only invariant_equality claims (GREEDY_FOLLOWUP_FINDINGS_2026-06-07.md:70-79)"
+  },
+  {
+   "claim": "The Learner's true objective \u2014 route a NEW problem to a tool \u2014 is measurable on existing artifacts",
+   "verdict": "untested",
+   "evidence": "ROUTING_EVAL_2026-06-09.md:120-127 \u2014 artifact top-10-truncated, lacks probe features; mining producer not in-repo (verified today: 'wrong_probes_solved' appears only in agents/hephaestus/failure_mining_results.json, no producer script)"
+  },
+  {
+   "claim": "The residue is not metabolizable (implied by the negative results)",
+   "verdict": "ambiguous",
+   "evidence": "REVIVAL_ASSESSMENT_2026-08-12.md:44-49 \u2014 every negative is confounded with capacity (Qwen2.5-Math-1.5B, rank-16, 1 epoch, ~3-4B VRAM ceiling): 'the residue is not metabolizable' and 'a 1.5B model cannot metabolize anything' are indistinguishable in Ergon's data. Move 1 (Metabolization Probe C0-C3, preregistered kill C1\u2248C2) is designed to resolve exactly this"
+  },
+  {
+   "claim": "tensor.npz is 4,755,770 x 208 across 23 domains",
+   "verdict": "survived",
+   "evidence": "tensor_manifest.md:6-7 (verified via numpy.load 2026-05-10); file on disk 28,352,304 B at ergon/tensor.npz \u2014 but nothing has consumed it since May"
+  },
+  {
+   "claim": "MVP residual-gradient hypothesis (v8, LoRA on pipeline_d corpus learns beyond base prior)",
+   "verdict": "superseded",
+   "evidence": "learner_tester_fire_log.md Fire 1 \u2014 lora_post_train \u2261 base_zero_shot bit-identical at 50 steps/rank 8; W4.0 gate H0 mis-specified; whole arc mooted by the 2026-05-11 substrate-first pause (PROMPT_2026-05-11_substrate_first.md:9-13)"
+  },
+  {
+   "claim": "Leanstral 1.5 (Apache-2.0, 119B/6.5B-active, PutnamBench 587/672) exists and fits the arbiter role",
+   "verdict": "untested",
+   "evidence": "resume_ergon.md:117-139 \u2014 external-world claim not verifiable from disk; the wiring targets it names DO exist (agents/_shared/proof_search/lean_adapter.py, agents/_shared/external_tools/lean_runtime, rhea/src/lean_verifier.py, harmonia/experiments/m0_anticalibration*.py \u2014 all verified present today)"
+  }
+ ],
+ "current_state": "Two-speed domain. ALIVE (today, 2026-08-12): roles/Ergon/resume_ergon.md (commit ba14f6f6, 08:10) and REVIVAL_ASSESSMENT_2026-08-12.md (518212e4, 08:51) \u2014 Ergon is one of the two resumed sessions. Ergon-built infra is in production: PgRedis bus (thesauros/prometheus_data/pg_redis.py + pool.py) carries all bus traffic; Postgres on M1 (.202) confirmed TCP-reachable from M3 today; the object_zeros rekey completed (0 NULL). IDLE since 2026-06-09: the whole Learner experimental rig (ergon/learner/greedy/, pipeline_d/, eval/ \u2014 last commit a8a276a4 06-09); heavy artifacts (LoRA adapters, corpus JSONLs, the 494-item OOD set, ablation runs/) are gitignored and live only on M1's F:/Prometheus \u2014 absent on this box (M3/GANDALF); regenerable (build_corpus.py; ood_judgement.py is deterministic, seed 20260607). DEAD: pre-Learner math-scan scripts (~40 files, logs end 2026-04-18); MVP/fire-loop arc (log closed 05-09); Penelope daemon (last tick 2026-05-27, ingested one domain from one source); Theseus\u2192Ergon seam (fixed 06-15/22 but never re-run \u2014 theseus/handoff/ergon_outbox/ contains only consumed/ and quarantine_20260607/, nothing fresh). Hardware reality: RTX 5060 Ti + E:/hf_cache + torch-2.11+cu128 Python 3.11 + F:/Prometheus checkout = M1 (skullport, 192.168.1.202); VRAM ceiling ~3-4B params (119B Leanstral cannot run locally). This survey box is M3 (GANDALF, GTX 1070 8GB, no E: drive).",
+ "assets": {
+  "alive": [
+   "thesauros/prometheus_data/pg_redis.py \u2014 PgRedis Postgres bus, all active callers migrated (Harmonia's 33 files, cartography viewer)",
+   "Postgres consolidation on M1: lmfdb 363GB + prometheus_fire (incl. charon_duckdb archive, 1,242,918 rows verified) + bus schema",
+   "ergon/repair/ \u2014 rekey tooling + reverse SQL (completed repair, reusable slow-roll pattern)",
+   "roles/Ergon/resume_ergon.md + REVIVAL_ASSESSMENT_2026-08-12.md \u2014 the live plan (committed today)"
+  ],
+  "dead": [
+   "ergon/*.py pre-Learner scan scripts (~40 files, Apr 2026) + autonomous_explorer.py",
+   "ergon/learner/ MVP arc: genome/archive/reward/trials + pipeline_d v0.5 rig (superseded by 05-11 pause, then by greedy thread)",
+   "ergon/penelope/ ingest daemon (last 2026-05-27; ingested a monoculture)",
+   "Theseus\u2192Ergon handoff seam (mechanically fixed, doubly blocked: mapper renders only invariant_equality; mappable kills score below 0.5 threshold; unverified since quarantine_20260607)",
+   "pilot LoRA 4-condition design (frozen 05-11, threshold \u22651000 high-trust blocks never reached \u2014 corpus stuck at 1,486)"
+  ],
+  "buried_gems": [
+   "ergon/learner/greedy/ood_judgement.py \u2014 deterministic computable-gold OOD generator (494 balanced number-theory claims, seed 20260607, no LLM-judge anywhere): exactly the task set Move 1 needs, regenerable on any box in seconds, nothing uses it since 06-07",
+   "ergon/learner/eval/routing_eval.py \u2014 instrument-validated eval harness (positive/negative/floor controls before trusting verdicts): the program's cleanest eval-methodology template, used once",
+   "ergon/learner/greedy/serializers.py \u2014 renders kills correctly for all claim kinds; named since 06-07 as the port that fixes the Theseus mapper monoculture; never ported",
+   "ergon/tensor.npz \u2014 4.76M x 208 verified feature tensor + manifest + builder; no consumer since May",
+   "ergon/learner/greedy/compute_traces.py \u2014 hard-negative trace builder with the preregistered coverage\u2192transfer experiment (fork option B) designed and never run",
+   "agents/hephaestus/failure_mining_results.json \u2014 80-scrap solve matrix, seed of the one positive result; its producer is lost (not in-repo), blocking the router-grade artifact",
+   "ergon/learner/corpus/anti_anchor_index/ \u2014 16 AA entries incl. Saxl-solved-2025 pretraining-cutoff traps; built for a calibration eval that never fired",
+   "ergon/learner/tests/test_blind_spot_probe_coverage.py \u2014 the BS-001..006 (Cohen/Helfgott/Faltings/McKay/Margulis) coverage CI gate, delivered per Track 3 of the 05-11 prompt"
+  ]
+ },
+ "open_questions": [
+  "The capacity confound \u2014 is the residue unmetabolizable, or was 1.5B/rank-16 just too small? Every Ergon negative is confounded; the Metabolization Probe (C1 real kill-geometry vs C2 mismatched residue vs C3 generic-caution, preregistered kill C1\u2248C2) is the designed resolver and is UNRUN",
+  "Which frontier API access + monthly budget is live? Named as the only James-decision blocking Move 2 (REVIVAL_ASSESSMENT \u00a76); Move 1 explicitly does not wait on it",
+  "Does the rebuilt seam allowlist actually run clean? Watch item C in resume_ergon.md \u2014 freshest anchors still quarantined (06-07, pre-fix); no bundle has flowed since",
+  "Can the failure-mining producer be reconstructed to emit full solve sets + probe features (the router-grade artifact spec from ROUTING_EVAL)? Producer confirmed absent from repo",
+  "What does C1 retrieval actually look like \u2014 'nearest kill signatures / void structure around a problem' presumes a kill-geometry retrieval interface over Postgres that no doc shows exists yet",
+  "Does Leanstral 1.5 exist as described (119B/A6B, Apache-2.0, free API)? External claim, unverified from disk; also whether the Leanstral probe (resume \u00a75.A) or the Metabolization Probe (revival Move 1) is the agreed first move \u2014 the two docs written 41 minutes apart today rank them differently",
+  "Do the M1-only artifacts (LoRA adapters in greedy/runs/, corpus JSONLs on F:/Prometheus) still exist, or must everything regenerate from the deterministic builders?"
+ ],
+ "connections": [
+  "Theseus \u2192 Penelope \u2192 Learner corpus (ASPIRATIONAL/BROKEN: stalled 05-19, seam fixed 06-15/22 but never re-run; only consumed/ + quarantine_20260607 in theseus/handoff/ergon_outbox/)",
+  "agents/hephaestus/ledger.jsonl \u2192 greedy sources.py hephaestus_examples (LIVE data feed: 4,546 scraps in corpus v1; ledger is being written TODAY by the Hephaestus revival on M3 per git status)",
+  "agents/hephaestus/failure_mining_results.json \u2192 routing_eval.py (LIVE one-shot: the eval ran; producer lost so the link cannot be refreshed)",
+  "Ergon \u2192 thesauros/prometheus_data (LIVE: pg_redis.py/pool.py consumed by Harmonia 33 files, cartography/viewer/server.py \u2014 Ergon built the bus everyone posts to)",
+  "Ergon \u2192 Charon (LIVE handoff completed: DuckDB repoint prompt executed by Charon, fa8f625a)",
+  "harmonia domain loaders \u2192 tensor_builder.py \u2192 tensor.npz (IDLE: build path works, no consumer)",
+  "Proposed Leanstral probe \u2192 agents/_shared/proof_search/ + external_tools/lean_runtime + rhea/src/lean_verifier.py + harmonia/experiments/m0_anticalibration*.py (ASPIRATIONAL: all four targets verified present on disk; nothing wired yet)",
+  "Techne convergence (ASPIRATIONAL: both independently landed on M1-metabolization as the decisive experiment \u2014 commit 5b8a80c2 cited in both of today's docs)",
+  "Ergon \u2194 reassessment doctrine (LIVE: Ergon's DB diagnosis falsified CC-3's premise and was folded back into doctrine; corrected repoint landed as 983fd077)"
+ ],
+ "strategic_read": "Ergon is the program's most epistemically hygienic domain \u2014 every headline it produced, it then decomposed and mostly killed itself (the +0.68 \u2192 format/prior/template autopsy is a model of honest ablation), and its kill record converges on one precise sentence: the substrate stores verdicts, not derivations, so training on it yields surface classifiers; the residue's only proven handle is behavioral co-solve structure, not concepts. That means the program's founding gradient-field thesis is neither proven nor dead \u2014 it is UNTESTED AT CAPACITY, and Ergon's Metabolization Probe (REVIVAL_ASSESSMENT Move 1) is the cheapest experiment in the whole program that can settle it: C1\u2248C2 kills the central thesis honestly; C1>C2\u2248C3 gives the residue a measured price for the first time. The orchestrator should treat Move 1 as the program's critical path \u2014 it needs no new producers, no training, converges with Techne's independent pickup, and both the task set (deterministic OOD generator) and instrument-validation methodology already exist in this domain. Two cautions: (1) execution requires M1 (RTX 5060 Ti, F:/Prometheus artifacts) or pure-API runs \u2014 this box (M3) cannot train; (2) resist the resume doc's Leanstral-first ordering \u2014 the revival assessment written 41 minutes later correctly subordinates Leanstral to Move 2 (verified-trace factory) behind the probe, because building another producer before a consumer is proven is the exact consumer-drift disease Ergon's own corpus audit diagnosed (healthy producers, no consumer, 21 retired components). Also worth harvesting program-wide: Ergon's admissibility rule for frontier models (only roles where a non-model artifact falsifies the output) is the most operational piece of doctrine written since the reassessment.",
+ "files_of_record": [
+  "C:\\prometheus\\roles\\Ergon\\REVIVAL_ASSESSMENT_2026-08-12.md",
+  "C:\\prometheus\\roles\\Ergon\\resume_ergon.md",
+  "C:\\prometheus\\roles\\Ergon\\GREEDY_LORA_RESULT_2026-06-03.md",
+  "C:\\prometheus\\roles\\Ergon\\GREEDY_FOLLOWUP_FINDINGS_2026-06-07.md",
+  "C:\\prometheus\\roles\\Ergon\\TRAINING_DATA_SURVEY_2026-06-07.md",
+  "C:\\prometheus\\roles\\Ergon\\COMPUTE_TRACE_RESULT_2026-06-08.md",
+  "C:\\prometheus\\roles\\Ergon\\ROUTING_EVAL_2026-06-09.md",
+  "C:\\prometheus\\roles\\Ergon\\CORPUS_VALUE_AUDIT_2026-06-03.md",
+  "C:\\prometheus\\roles\\Ergon\\DB_DIAGNOSIS_2026-06-23.md",
+  "C:\\prometheus\\roles\\Ergon\\REDIS_TO_POSTGRES_2026-06-24.md",
+  "C:\\prometheus\\roles\\Ergon\\DUCKDB_RETIREMENT_AUDIT_2026-06-24.md",
+  "C:\\prometheus\\ergon\\PROMPT_2026-05-11_substrate_first.md",
+  "C:\\prometheus\\ergon\\learner\\greedy\\ood_judgement.py",
+  "C:\\prometheus\\ergon\\learner\\eval\\routing_eval.py",
+  "C:\\prometheus\\ergon\\tensor_manifest.md"
+ ]
+}
