@@ -1,290 +1,310 @@
 # Metabolization Probe — Requirements & Design
 
 **Doc type:** Requirements + design spec (executable — build against this, don't re-derive).
-**Date:** 2026-08-12 · **Authored:** Hephaestus (Fable seat), from James's phase ruling, Ergon's
-Move-1 design, Techne's Organism-Zero convergence, Charon's navigability gate, Aporia's four
-preconditions (META_SYNTHESIS §2.5), Harmonia's control doctrine, and Apollo's ablation-wall
-corpus. **Status:** v1.2-FINAL, FROZEN. The audit chain (v1.0 → Aporia audit → v1.1 → re-check → v1.2
-→ R2 closure) is closed by mutual agreement; further changes belong in the preregistration,
-which is the binding instrument. Sign-offs per §4.1. Supersedes arm nomenclature in all prior
-probe descriptions.
-**Authority:** James, 2026-08-12 PM — "Priority #1 by a mile." Constitutional context: the
-heredity rule (*no new architecture until one failure produces one verified improvement*) and
-the two-control rule (*every meter ships a positive control and a cheat control or its output
-is inadmissible*).
+**Version:** v2.0 (2026-08-13) — incorporates James's full peer review verbatim-in-substance:
+four mandatory changes (causal cutoff R14; F-answer/F-oracle split; transfer-distance
+stratification; bounded-null verdict language) plus the recommended additions (F-generic
+control replacing F-format; whole-vs-retrieved as first-class arms with the four-quantity
+decomposition; Tier A demoted to harness qualification only; R7 marginal-balance upgrade;
+negative-transfer and behavioral metrics; single-primary-endpoint statistics; the diagnostic
+matrix replacing the three-path table; narrowed purpose claim). v1.x audit history preserved
+in git (v1.0 → Aporia audit → v1.1 → v1.2 → freeze → James review → v2.0).
+**Status:** v2.0-FINAL, RE-FROZEN. Further changes belong in the preregistration, which is
+the binding instrument. Sign-offs per §4.1.
+**Authority:** James, 2026-08-12/13 — "Priority #1." Constitutional context: the heredity rule
+(*no new architecture until one failure produces one verified improvement*) and the
+two-control rule (*every meter ships a positive control and a cheat control or its output is
+inadmissible*).
 
 ---
 
-## 1. Purpose
+## 1. Purpose (narrowed per review §15)
 
-One question, made experimentally legible:
+> **Does Prometheus's actual accumulated failure residue improve the next attempt, compared
+> with equally plausible but irrelevant residue — and over what transfer distance?**
 
-> **If a capable system is given Prometheus's actual failure records for a problem, does it
-> perform measurably better on the next attempt?**
+This tests a **necessary subclaim** of the founding thesis: *prior falsification residue
+contains information capable of improving subsequent problem solving.* It does NOT test that a
+geometrically meaningful kill field exists, that any gradient is navigable at scale, or that
+learning from it compounds. Those are the successor experiments:
 
-This is the founding thesis ("kill geometry as navigable gradient") reduced to a controlled
-comparison. It is the program's third consecutive "single decisive experiment" (after M0 and
-M1) and the first cheap enough to actually run. Both outcomes are wins: a positive gives the
-residue its first measured price; a null converts "our records might be exhaust" from fear to
-specification (we already know what richer records look like — margin-space vectors, break-step
-locations).
+- **M1 (this probe):** does residue carry transferable information, and over what radius?
+- **M2:** can the system retrieve the right residue? (partially internal to this probe via the
+  whole-vs-retrieved decomposition)
+- **M3:** does residue redirect search toward productive regions? (behavioral metrics here are
+  the pilot)
+- **M4:** does repeated consumption compound? Only after M4 does the word "metabolism" get
+  used literally.
 
-**Non-goals (§8):** this probe trains nothing, builds no new architecture, and does not decide
-the discovery lane. It prices the residue. That is all.
+The center of gravity is **F-prom versus F-null** — not F-prom versus F0.
 
-## 2. Canonical nomenclature (binding — supersedes all prior labels)
+## 2. Canonical nomenclature (binding — supersedes v1.x and all prior labels)
 
-Two colliding C1/C2/C3 schemes exist in prior docs (Ergon's REVIVAL_ASSESSMENT vs James's
-ruling). **Neither is used again.** The arms are:
+**Arms** (all token-budget-matched):
 
-| Arm | Contents given to the solver alongside the problem | Maps from |
+| Arm | Contents given to the solver alongside the problem | Role |
 |---|---|---|
-| **F0** | Nothing — problem only | Ergon C0 / James C0 |
-| **F-oracle** | Ground-truth diagnosis of the relevant failure(s) — the ceiling | James C1; Charon's "C1-oracle" |
-| **F-prom** | Prometheus's actual residue for that problem (packet spec §4.4) | Ergon C1 / James C2 |
-| **F-null** | Adversarially matched but *mismatched* residue — same volume, format, and vocabulary distribution; wrong problems | Ergon C2 |
-| **F-format** | Generic "be careful / check your work" text, length-matched | Ergon C3 / James C3 |
+| **F0** | Nothing — problem only | Baseline |
+| **F-null** | Adversarially matched but *mismatched* residue — wrong problems, same surface statistics | Identity control: does correct residue identity matter? |
+| **F-generic** | High-quality generic failure-reasoning advice (verify assumptions; test boundary cases; isolate first failing transformation; distinguish representational from solver failure; search counterexamples; inspect invariants; …) — authored without access to target, residue, or answer; token-matched | Specificity control: is Prometheus better than a sophisticated "think harder" prompt? **Replaces v1.x F-format**, which was too weak |
+| **F-prom-retrieved** | Prometheus's actual residue for the task, per-problem retrieved packets (§4.4) | The deployable condition |
+| **F-prom-whole** | Maximum available Prometheus residue — the full 3,311-class signature_index in context plus task extracts | The existence condition (does useful information exist at all, retrieval aside?) |
+| **F-oracle** | Ground-truth **failure diagnosis** — what went wrong and why — WITHOUT solution information | Ceiling: value of perfect failure knowledge |
+| **F-answer** | Packet literally containing sufficient solution information | **Instrumentation positive control ONLY.** Tests that the solver reads and uses packet payload. Never participates in substantive comparisons |
+| **F-shuffle** *(optional; preregistration decides feasibility)* | Correct task's residue with within-record correspondence scrambled (diagnosis ↔ approach ↔ falsifier ↔ margin ↔ break location) | Structure control: F-prom > F-shuffle ⇒ relational structure carries signal; F-shuffle ≈ F-prom > F-null ⇒ the signal is bag-of-clues/topic conditioning |
 
-All arms are token-budget-matched. A **residue packet** is the unit handed to a solver in
-F-oracle / F-prom / F-null (§4.4).
+**The reading ladder** (each rung a different engineering question):
+F-answer (can it consume explicit info?) → F-oracle (value of perfect failure knowledge) →
+F-prom-whole (does Prometheus possess useful information?) → F-prom-retrieved (can Prometheus
+navigate to it?) → F-generic (is it better than generic advice?) → F-null (does identity
+matter?) → F0.
 
-**Primary readings:** `Δ_carry = F-prom − F-null` (does our residue carry anything at all) and
-`Q_residue = (F-prom − F-null) / (F-oracle − F-null)` (residue quality as a fraction of the
-achievable ceiling). Secondary: `F-prom − F-format` (style control), attempts-to-solve deltas
-(search-efficiency, v3's Q2 axis).
+**Primary quantities:**
+- `Δ_carry = F-prom-retrieved − F-null` *(primary endpoint, §4.6)*
+- **Decomposition (per review §7):** residue existence `= F-prom-whole − F-null`; retrieval
+  efficiency `= F-prom-retrieved − F-null`; retrieval loss `= F-prom-whole −
+  F-prom-retrieved`; oracle gap `= F-oracle − F-prom-whole`; specificity margin
+  `= F-prom-retrieved − F-generic`.
+- `Q_residue = (F-prom-retrieved − F-null) / (F-oracle − F-null)` — **reported only when the
+  preregistered lower confidence bound of (F-oracle − F-null) exceeds the minimum
+  meaningful-effect threshold; otherwise reported as `Q_residue = UNIDENTIFIABLE`** (review
+  §5: never force a ratio out of noise).
+
+**Transfer-distance ladder (mandatory stratification, per review §1).** Every task is tagged
+with its distance from the residue's originating failures:
+
+| D | Test | A win means |
+|---|---|---|
+| **D0** | Same problem, retry | Residue supports correction |
+| **D1** | Same family, changed parameters | Residue generalizes locally |
+| **D2** | Different instance, same failure mechanism | Failure abstraction transfers |
+| **D3** | Different surface form, same latent obstruction | Genuine reusable failure knowledge |
+
+D4 (cross-domain) is explicitly out of scope for this probe. **All headline quantities are
+reported per-distance (D0–D3), not only pooled.** A profile like "D0 strong → D3 zero" is a
+first-class result — the first empirical measurement of the residue's transfer radius — not a
+partial failure.
 
 ## 3. Requirements
 
 **R1 — Non-model ground truth.** Every task's gold label is computed, enumerated, or
-kernel-checked. No LLM-judged labels anywhere in task sets, grading, or controls. (Fleet
-admissibility rule.)
+kernel-checked. No LLM-judged labels anywhere.
 
-**R2 — Preregistration before first arm.** A single file
-(`pivot/PREREG_METABOLIZATION_PROBE_v1.md`) commits BEFORE any arm executes, containing: final
-task-set manifest (hashes) **plus the R13 replenishment procedure and hashed source pool — so
-post-contamination replenishment is a preregistered branch, never a manifest amendment** (v1.2
-final, per Aporia §7.5c), solver identities (model_id + version + date, pinned — Techne's
-provenance guard), arm-packet construction procedures, metrics, decision thresholds, kill
-conditions, and the named executor of each component. Post-hoc relabeling of outcomes is
-thereby impossible. Signatories: Ergon (driver), Charon (kill authority), Harmonia B (meter
-integrity).
+**R2 — Preregistration before first arm.** `pivot/PREREG_METABOLIZATION_PROBE_v1.md` commits
+BEFORE any arm executes: final task-set manifest (hashes) plus the R13 replenishment procedure
+and hashed source pool (replenishment is a preregistered branch, never an amendment); solver
+identities (model_id + version + date, pinned); arm-packet construction procedures; the
+transfer-distance tagging procedure; metrics; the full statistical plan (R15); decision
+thresholds; kill conditions; named executor per component. Signatories: Ergon (driver), Charon
+(kill authority), Harmonia B (meter integrity).
 
-**R3 — Two controls per meter, demonstrated before arms run.**
-- *Positive control:* packets that trivially contain the answer must yield F-oracle ≫ F0 for
-  the chosen solver. If even F-oracle does not move the solver, the solver/task pairing lacks
-  headroom — re-level tasks or swap solver; running arms in that state is inadmissible.
-- *Cheat control (payload-reading null):* a solver given packets with content REDACTED but
-  format/structure intact must NOT beat F0. If it does, the packet format leaks answers and
-  the packet spec is rebuilt. (Harmonia B's signature control; the R6 leak precedent.)
+**R3 — Two instrumentation controls, demonstrated before arms run** *(amended: F-answer split
+from F-oracle per review §4)*:
+- *Payload-consumption control:* **F-answer** must yield F-answer ≫ F0. If the solver cannot
+  exploit a packet that literally contains the solution, the packet pipeline or solver is
+  broken; running arms is inadmissible. F-answer appears in no substantive comparison.
+- *Cheat control (payload-reading null):* packets with content REDACTED but format/structure
+  intact must NOT beat F0. If they do, the packet format leaks; rebuild the spec.
 
-**R4 — Grader headroom verified.** The grading instrument must demonstrate ≥25pp headroom
-between the strongest solver's F0 baseline and the instrument's ceiling on the chosen task
-set, else add harder probes before reading any result. (Aporia precondition #3; the oracle
-staircase currently tops out at 62% with a 3-point step.)
+**R4 — Grader headroom.** ≥25pp demonstrated between the strongest solver's F0 baseline and
+the instrument ceiling on the chosen task set, else add harder probes before reading anything.
 
-**R5 — Instrument fixes land first.** The probe consumes no instrument in a known-degraded
-state: the `valid=None` unknown-kind patch must be merged; z3 present on the executing host
-(the oracle's verifier leg must not silently run 0/0); `prometheus_math` importable
-(cypari/snappy fix) wherever `reasoning_quality_emit` or math primitives are used. (Aporia
-precondition #4; pit-stop items.)
+**R5 — Instrument fixes land first.** `valid=None` patch merged; z3 present on executing
+hosts; `prometheus_math` importable where its primitives are used.
 
-**R6 — F-prom packets are honestly assembled.** Packets contain what the substrate ACTUALLY
-recorded (§4.4) — no hand-enrichment, no post-hoc curation beyond the documented assembly
-procedure. Where the substrate recorded nothing useful for a problem, the packet says so
-(that sparsity IS the measurement). Assembly code is committed and deterministic.
+**R6 — F-prom packets honestly assembled.** Packets contain what the substrate ACTUALLY
+recorded — incomplete, correlated, verbose, null-heavy, partially wrong, often missing break
+location — with no hand-enrichment. Where the substrate recorded nothing useful, the packet
+says so; that sparsity is the measurement. Assembly code committed and deterministic.
 
-**R7 — F-null is adversarially constructed.** Mismatched packets must be statistically
-indistinguishable from F-prom packets on surface features (length, field structure, vocabulary
-distribution, kill-label frequencies) — verified by a classifier test: a simple model trained
-to distinguish F-prom from F-null packets on surface features must perform ≤55% (near-chance).
-Charon owns construction and the indistinguishability check. (Prevents the solver from
-detecting "this residue smells wrong" by format alone.)
+**R7 — F-null adversarially constructed, with two-layer verification** *(amended per review
+§9)*: (a) **predefined marginal-balance tests** on: token count, records per packet,
+field-null rates, signature count, kill-label distribution, numerical-token density,
+object-family frequency, timestamp distribution, payload length, vocabulary diversity,
+source-type distribution — each within preregistered tolerance; AND (b) the **blinded
+classifier test** (≤55% on surface features) as catch-all. Charon owns both.
 
-**R8 — Raw-model solvers.** Solvers are raw API calls or local models — never tool-enabled
-harness sessions (a tool-enabled nested session can cheat the probe; June doctrine
-`feedback_loop_inference_over_api`). Temperature, system prompt, and token budgets pinned in
-preregistration; N attempts per task with fixed seeds where the API permits.
+**R8 — Raw-model solvers.** Raw API or local models only — never tool-enabled harness
+sessions. Temperature, system prompt, token budgets pinned; fixed seeds where the API permits.
 
-**R9 — Executor-tagged results.** Every reported number carries who/what executed it, when,
-on which host, with which model version. Result objects are typed JSONL (one row per
-task × arm × attempt), committed. No number is quoted from prose.
+**R9 — Executor-tagged results.** Every number carries executor, time, host, model version.
+Typed JSONL result objects (one row per task × arm × attempt × distance-tag), committed.
 
-**R10 — Reproducibility.** A second, different agent re-executes the headline computation from
-the committed result objects before any verdict enters doctrine. (The §1.6 rule: agreement
-without independent execution is one measurement with N pointers.)
+**R10 — Independent re-computation.** A second, different agent re-executes the headline
+computation from committed result objects before any verdict enters doctrine.
 
-**R11 — Budget accounting.** Tier A: zero API spend (local + free-tier only). Tier B: total
-token spend logged per arm; the run halts, not degrades, if budget exhausts mid-arm
-(a half-run arm is discarded, never averaged).
+**R11 — Budget accounting.** Tier A zero API spend. Tier B logged per arm; halt (not degrade)
+on exhaustion; half-run arms discarded, never averaged.
 
-**R12 — Single owner.** Ergon's name is on the experiment. Supporting contracts (§4.1) are
-bounded deliverables, not shared ownership. If Ergon's session cannot continue, James names a
-successor explicitly; ownership never becomes ambient.
+**R12 — Single owner.** Ergon. Supporting contracts are bounded deliverables. Succession is
+explicit, never ambient.
 
-**R13 — Per-item contamination probe** *(added per Aporia's audit, META_SYNTHESIS §7.5a —
-closing the gap where Techne's pretraining guard never became a requirement).* Before arms
-run, each task is posed to each solver cold (no residue, minimal budget, N small). Items the
-solver already answers reliably are **stratified out of the primary analysis and reported
-separately**. Rationale: contamination lifts F0, compresses all arms, drives Δ_carry toward
-zero, and would mis-read as Path γ — the most consequential verdict in the program — while the
-true cause is that the solver knew the answers all along. Arms must differ only in geometry;
-per-item leakage risk is reported in the result objects. **Power floor (v1.2, per Aporia
-§7.5b):** R13 carries a minimum post-stratification N tied to the preregistered power
-calculation. If contamination drops the task set below it, the set is **replenished before any
-arm runs** — never analyzed at reduced power and read as a null. An underpowered Δ_carry ≈ 0
-must be impossible to mistake for Path γ.
+**R13 — Per-item contamination probe with power floor.** Each task posed cold to each solver
+(no residue, minimal budget); items answered reliably are stratified out of primary analysis
+and reported separately (contamination lifts F0, compresses arms, fakes a null). Minimum
+post-stratification N tied to the preregistered power calculation; below it, replenish from
+the preregistered pool BEFORE arms run. An underpowered Δ_carry ≈ 0 must be impossible to
+mistake for a no-carry verdict.
+
+**R14 — Causal/provenance cutoff (NEW — mandatory, per review §2; the firewall).** For every
+evaluated task T, define provenance cutoff τ(T). **F-prom packets may contain only residue
+generated strictly before T's held-out attempt and before any record derived from T's gold
+outcome.** Enforcement is mechanical, from provenance IDs and ledger append-order — NOT from
+wall-clock timestamps alone (M3's CMOS reset makes clock-derived times unreliable for
+affected windows; ledger ordering and record IDs are the honest clock). The assembler carries
+the executable assertion `packet_max_provenance < target_attempt_provenance` and fails loud on
+violation. Without this, "residue for that problem" can smuggle later knowledge about the
+problem into the packet, and the entire experiment measures leakage.
+
+**R15 — Statistical plan (NEW — mandatory, per review §13).** ONE primary endpoint: **paired
+task-level F-prom-retrieved vs F-null success on the pooled preregistered Tier-B manifest.**
+Everything else — per-distance strata, decomposition quantities, per-class breakdowns,
+behavioral metrics, model-specific results — is secondary/exploratory and labeled so. The
+preregistration fixes: exact test; treatment of multiple attempts; model pooling policy;
+confidence intervals; multiple-comparison handling; missing-API-response handling; ties; task
+exclusions; and a **minimum practical effect size** — statistical significance alone does not
+define usefulness (a +0.7pp lift over 494 tasks may be significant and strategically
+meaningless).
 
 ## 4. Design
 
-### 4.1 Roles & contracts
+### 4.1 Roles & contracts *(unchanged from v1.2 except as noted)*
 
-| Seat | Contract | Deliverable |
-|---|---|---|
-| **Ergon** (DRIVER) | Owns the experiment end-to-end: task sets, harness, solver runs, result objects, verdict draft | The preregistration; the harness (extending `routing_eval.py`); committed results; verdict draft |
-| **Techne** | F-prom packet assembly from signature_index + kill records + forge ledger; deterministic assembly script | `packet_assembler.py` + packet manifest + honesty note per R6 |
-| **Harmonia B** | Meter integrity: R3 controls implemented + executed; grader headroom check (R4); preregistration co-sign | Control-run results (committed before arms) |
-| **Harmonia A** | Grading-oracle wiring as scorer; `valid=None` patch landing | Oracle scoring endpoint + patch merged |
-| **Charon** | F-null construction + indistinguishability check (R7); kill authority: co-signs preregistration, adjudicates verdict against it; runs NOTHING else | F-null generator + classifier-test result + final adjudication |
-| **Apollo** | Tier A corpus: ablation-induced walls with constructed ground-truth diagnoses (the W1 corpus, dual-use) | Wall corpus + per-wall F-oracle packets |
-| **Hephaestus** | SUPPLIER ONLY (declared conflict: the residue being priced is substantially forge-sourced). Provides forge-ledger residue for forge-sourced tasks; provides this spec; touches no grading, no verdict | Ledger extracts per Techne's request |
-| **James** | Tier B procurement decision; reads the adjudicated verdict; nothing else requires him | One decision + one read |
+| Seat | Contract |
+|---|---|
+| **Ergon** (DRIVER) | Experiment end-to-end: preregistration, harness (extending `routing_eval.py`), transfer-distance tagging, solver runs, result objects, verdict draft |
+| **Techne** | F-prom packet assembly (retrieved + whole variants) with the R14 firewall built into the assembler; honesty note per R6 |
+| **Harmonia B** | Meter integrity: R3 both controls, R4 headroom, preregistration co-sign |
+| **Harmonia A** | Grading-oracle wiring; `valid=None` patch |
+| **Charon** | F-null construction + R7 both layers; F-generic authoring (it is failure-advice authorship — the falsifier's craft — with no target access); kill authority: adjudicates verdict against preregistration; runs nothing else |
+| **Apollo** | Tier A wall corpus + per-wall F-oracle diagnoses; behavioral-metric schema (its dispatch_audit is the in-loop precedent) |
+| **Hephaestus** | SUPPLIER ONLY (conflict on record): forge-ledger residue extracts; this spec. No grading, no verdict |
+| **James** | Tier B procurement; reads the adjudicated verdict |
 
-### 4.2 Tier A — harness validation on constructed ground truth (runnable NOW, zero API)
+### 4.2 Tier A — HARNESS QUALIFICATION ONLY *(demoted per review §8; supersedes v1.1's
+"directional Δ_carry" rationale)*
 
-**Substrate:** Apollo's ablation-induced walls — failures created deliberately (remove an op
-family, corrupt a guard slot, restrict a mutation operator, narrow a metric), run to plateau.
-Because we caused the failure, **F-oracle is exact by construction** ("the wall is: no operator
-writes slot `counts`; the fix class is: supply one"). Target ≥20 walls across ≥4 failure
-classes. Optionally add the M0 unrepresentable set (B4/B6-style: true, decidable, unposable)
-where the oracle diagnosis is likewise known.
+Substrate: Apollo's ablation-induced walls (≥20, ≥4 failure classes) — chosen because
+F-oracle is exact by construction. **But constructed failures are idealized** ("no operator
+writes slot `counts`" is cleaner diagnostic information than real residue ever is), so:
 
-**Solvers:** local Qwen2.5-Math-1.5B on M1 (raw, no tools) and/or `gemini-3.6-flash` (free
-tier; retry-on-503 with whole-batch discard per M2's observed failure mode). Low capacity is
-acceptable in Tier A — its job is validating the *instrument* (arm separation, controls,
-packet pipeline), not measuring the capacity ceiling. R3's positive control defines success:
-if F-oracle ≫ F0 separation is visible even on a small solver, the harness works.
+> **Tier A's only permitted verdict is `HARNESS_ADMISSIBLE` / `HARNESS_NOT_ADMISSIBLE`.**
+> Tier A's Δ_carry and Q_residue MUST NOT be interpreted or quoted as evidence for or against
+> the Prometheus thesis. Synthetic success is not a victory lap.
 
-**Tier A runs ALL FIVE ARMS** *(amended per Aporia §7.5b — resolving the ambiguity
-explicitly)*: F-prom and F-null run in Tier A too, using whatever the substrate actually
-recorded for the ablation-wall runs. Tier-A `Δ_carry` is **directional, not decisive** (small
-solver, constructed failures) and is labeled as such in every report — but it means that if
-Tier B's procurement never lands, the program holds a number rather than only a harness. This
-is the direct counter to the archaeology's failure mode: a specified decisive experiment
-waiting indefinitely on an unscheduled input.
-
-**Tier A exit criteria:** both R3 controls pass; R7 indistinguishability passes; R13
-contamination stratification executed; result objects flow end-to-end typed; F-oracle > F0 at
-p < 0.05 on the wall corpus. Then Tier B is a solver-swap plus task-set swap, not a rebuild.
+Tier A runs all arms mechanically (pipeline exercise), on local Qwen2.5-Math-1.5B (M1, raw)
+and/or `gemini-3.6-flash` (free tier). **Exit criteria:** R3 both controls pass; R7 both
+layers pass; R13 stratification executed; R14 assertion demonstrably fails-loud on a planted
+violation; typed results flow end-to-end; F-answer ≫ F0 and F-oracle > F0 at preregistered
+significance on the wall corpus. Then Tier B is a solver-swap plus task-set swap.
 
 ### 4.3 Tier B — the decisive run (gated on API procurement)
 
-**Substrate:** real failures. Task sets (final manifest in preregistration): (a) the 494-item
-computed-gold OOD set (`ood_judgement.py`, regenerable, seed-pinned); (b) `prometheus_math`
-op instances (post-unbrick); (c) optional Lean-checkable claims via the in-repo harness.
-**F-prom source:** the Organism-Zero insight — the full 3,311-class `signature_index`
-(~200–450K tokens, measured not estimated, per Techne's caveat) fits in a 1M context alongside
-per-problem kill extracts; run BOTH variants: (i) whole-index-in-context, (ii) per-problem
-retrieved packets. If (ii) underperforms (i), the retriever is the bottleneck, not the residue
-— which is exactly the confound Charon's C1-oracle arm logic exists to separate.
-**Solvers:** ≥2 frontier models from different families (procurement-dependent), raw API,
-pinned versions. **Charon's navigability pre-test** (kill_vector on a slice + right-axis null
-on the 0.725-bit MI) runs alongside Tier B as its geometry-side companion — same week, same
-preregistration file.
+Task sets (final manifest in preregistration): the 494-item computed-gold OOD set;
+`prometheus_math` op instances (post-unbrick); optional Lean-checkable claims. Every task
+transfer-distance-tagged D0–D3 against its residue provenance. **F-prom-whole and
+F-prom-retrieved are both first-class arms** (no longer "variants"): the decomposition
+quantities in §2 are computed and reported as the experiment's structural output. Solvers:
+≥2 frontier models from different families, raw API, pinned. Charon's navigability pre-test
+(kill_vector slice + right-axis null on the 0.725-bit MI) runs alongside as the geometry-side
+companion, same preregistration.
 
-### 4.4 Residue packet spec (F-prom)
+### 4.4 Residue packet spec *(v1.2 content + R14 firewall)*
 
-Per task, deterministically assembled, provenance-stamped:
-- Nearest kill signatures (signature_index classes touching the task's objects/relations);
-- Prior failed approaches recorded for adjacent problems (kill labels + any stored payloads);
-- The void structure around the task (what nearby claim-space is killed vs open vs unknown);
-- Where available: margin/statistic values, falsifier IDs, `kill_pattern` strings — as stored,
-  33.6%-null warts and all (R6);
-- Packet header: assembly procedure version, source record IDs, token count.
-Explicitly EXCLUDED: anything hand-written for this experiment, anything from outside the
-substrate's own records, any text that names the expected answer (cheat-control enforcement).
+Per task, deterministically assembled, provenance-stamped, R14-filtered: nearest kill
+signatures; prior failed approaches for adjacent problems **whose provenance precedes τ(T)**;
+void structure around the task; stored margins/falsifier IDs/kill_pattern strings as-is
+(33.6%-null warts included, per R6); packet header with assembly version, source record IDs,
+provenance bounds, token count. EXCLUDED: hand-written content, out-of-substrate content,
+answer-naming text, any record at-or-after τ(T).
 
-### 4.5 Metrics & decision rules (preregistered thresholds; numbers below are defaults for
-the preregistration to confirm or amend with rationale)
+### 4.5 Verdict: the diagnostic matrix *(replaces the three-path table per review §14; the
+dossier's three futures map onto rows as noted)*
 
-*Authorship note (per Aporia §7.5): this spec's author is the declared-conflicted supplier,
-and arm definitions plus thresholds shape what counts as success. The co-signers — Ergon,
-Charon, Harmonia B — are specifically asked to treat THIS section's threshold row as the place
-to exercise independent judgment: amend freely, with rationale, in the preregistration.*
+*Authorship note: this spec's author is the declared-conflicted supplier. The v2.0 verdict
+structure and thresholds originate from James's review; co-signers still independently
+confirm thresholds in the preregistration.*
 
-Primary: solve rate per arm on held-out computed gold. Secondary: attempts-to-solve;
-per-failure-class breakdowns (which residue classes carry signal — the actionable detail).
+| F-oracle | F-prom-whole | F-prom-retrieved | Diagnosis | Next move |
+|---|---|---|---|---|
+| ✗ (≈F0) | — | — | Solver/task/headroom failure (or contamination — check R13 strata) | Re-level tasks or swap solver; NOT a residue verdict |
+| ✓ | ✗ | ✗ | **Recorded residue lacks usable information** — bounded: *no detectable carry under tested models, tasks, packetization, context budgets* — never "exhaust at any capacity" | Provenance engineering (margin-space vectors, break-step records, verified-trace factory); re-probe (dossier Path β/γ boundary) |
+| ✓ | ✓ | ✗ | **Retrieval/navigation failure** — information exists, Prometheus can't find it | Build the retriever/index (M2); the residue is vindicated (Path β, retrieval flavor) |
+| ✓ | ✓ | ✓ weak | Residue useful, low quality; report per-distance radius | Enrich records; distill what carries (Path β) |
+| ✓ | ✓ | ✓ strong | **Carry demonstrated** — with transfer radius D0–D3 profile as the headline | Path α: distillation, process-reward training, forge pointed at failure clusters |
+| ✓ | harmful | harmful | **Negative transfer** — residue misleads | Audit misleading-record classes; this is a first-class finding, not noise |
 
-| Reading | Interpretation | Triggers |
-|---|---|---|
-| `Q_residue ≥ 0.5` and `Δ_carry` significant | Residue is RICH | Path α: distillation + process-reward training on our records; forge pointed at worst failure clusters; oracle staircase becomes the standing meter |
-| `0 < Q_residue < 0.5`, `Δ_carry` significant | Residue carries WEAK signal | Path β: provenance engineering (margin-space vectors, break-step records, verified-trace factory) → re-probe with richer records |
-| `Δ_carry ≈ 0` (F-prom ≈ F-null) | Residue is EXHAUST at any capacity | Path γ: honest pivot to instrument-as-product; records rebuilt to router-grade spec from day one; heredity question re-asked later with new records |
-| F-oracle ≈ F0 (positive control fails in Tier B despite Tier A pass) | Task/solver headroom failure | Not a residue verdict — re-level and re-run; do NOT read as Path γ |
+Additional bounded-null sublabels where applicable (review §6): *representation null* (oracle
+works, Prometheus's encoding doesn't), *consumption null* (tested models can't exploit what's
+there), *retrieval null*, *residue null* — only the last approaches "functionally exhausted
+**under the tested regime**."
 
-Significance: preregistered test (paired by task), α = 0.05, with the R10 independent
-re-computation before any verdict lands.
+### 4.6 Metrics *(amended)*
 
-### 4.6 Reporting
+**Primary (R15):** paired task-level F-prom-retrieved vs F-null, pooled Tier-B manifest.
+**Secondary, mandatory:** per-distance (D0–D3) profiles of all ladder quantities; the §2
+decomposition; per-failure-class breakdowns; **negative transfer** (review §11): per arm,
+solved→unsolved vs baseline, unsolved→solved, answer-changed, failure-class-changed,
+attempts±; `harm_rate = P(arm breaks an F0 success)` — a substrate that fixes 8 and breaks 7
+is not navigation. **Behavioral (review §12, where machine-checkable):** chosen operator;
+first invalid transformation; falsifier invoked; attempts count; **repeated-dead-approach
+rate** (did the solver retry an approach its packet said was killed?); tokens-to-valid.
+"Accuracy +3pp with repeated-dead-approaches −31%" is a more Prometheus-native result than
+the accuracy number alone — this is the KillVector ambition at experiment scale, no grand
+architecture required.
 
-One typed result file per tier (JSONL, R9 fields), one verdict doc co-signed per §4.1, one
-line added to each station's status file. The verdict doc leads with the two numbers
-(`Δ_carry`, `Q_residue`) and the per-class breakdown. No narrative before numbers.
+### 4.7 Reporting
 
-## 5. Preconditions gate (all must be green before Tier B; A/B/D before Tier A)
+One typed result file per tier; one verdict doc co-signed per §4.1 leading with: the primary
+endpoint, the D0–D3 profile, the decomposition ladder, harm rate, and the diagnostic-matrix
+row — numbers before narrative. Example of the report shape the program wants (review): "D0
++18 / D1 +11 / D2 +5 / D3 +0; oracle ceiling +23; whole +10; retrieved +6; generic +2; null
++0.4; harm 1.8%; repeated-dead −31%." A result of that shape names what Prometheus IS — e.g.
+*a failure-memory system with a measurable transfer radius* — which is worth more than any
+single Δ.
 
-A. `valid=None` patch merged + z3 on executing hosts (R5).
-B. `pip install snappy` path executed; `import prometheus_math` green (R5).
-C. kill_vector computed on the Tier B task slice OR whole-index-in-context variant selected
-   explicitly as primary (Charon's gate, resolved either way in preregistration).
-D. Grader headroom demonstrated (R4).
-E. API procurement decision (Tier B only): providers + monthly ceiling (James). **Deadline
-   mechanic** *(per Aporia §7.5b)*: the preregistration records a requested-by date; if
-   procurement is undecided 7 days after Tier A's exit criteria pass, it is escalated as the
-   single blocking item in every station status file until decided — a forcing function, not a
-   usurpation of the decision.
-F. Backups of fire+sci and the F: corpus initiated (not probe-blocking, but no Tier B run
-   before the data it prices has a second copy — one disk failure would otherwise moot the
-   whole question).
+## 5. Preconditions gate *(unchanged from v1.2)* — A. `valid=None` + z3; B. snappy/cypari
+unbrick; C. kill_vector slice OR whole-index primary, resolved in preregistration; D. headroom
+demonstrated; E. API procurement (Tier B) with the 7-day escalation mechanic after Tier A
+exit; F. backups of fire+sci and the F: corpus before Tier B prices data that has no second
+copy.
 
-## 6. Schedule (owner-sessions, not calendar promises)
+## 6. Schedule *(owner-sessions)* — 1. Preregistration (Ergon) + co-signs; 2. Pit-stop items
++ packet assembler (with R14) + F-null/F-generic construction + controls, parallel; 3. Tier A
++ HARNESS_ADMISSIBLE check; 4. Procurement (anytime; escalates per 5E); 5. Tier B +
+navigability companion + R10 re-computation + adjudication.
 
-1. Preregistration drafted (Ergon) + co-signed (Charon, Harmonia B) — one session.
-2. Pit-stop items A/B/D + packet assembler + F-null generator + controls — parallel, 1–2
-   sessions each seat.
-3. Tier A run + exit-criteria check — one session.
-4. James's procurement decision (can happen anytime in parallel).
-5. Tier B + navigability companion + independent re-computation + adjudication — 2–3 sessions.
-
-## 7. Kill conditions for the probe itself
-
-- Tier A fails R3's positive control after one re-leveling attempt → the task/grading design
-  is wrong; STOP and redesign rather than iterate silently.
-- Cheat control fails twice after packet-spec rebuild → packets cannot be made leak-free at
-  this format; escalate to James with the failure analysis.
-- The R7 classifier beats 55% after two F-null rebuilds → we cannot construct a fair null;
-  the experiment as designed is not runnable and says so out loud.
+## 7. Kill conditions for the probe itself *(v1.2 +1)* — Tier A fails R3 after one
+re-leveling → STOP, redesign. Cheat control fails twice after rebuild → escalate with failure
+analysis. R7 classifier beats 55% after two F-null rebuilds → experiment as designed not
+runnable; say so. **NEW:** R14 assertion cannot be enforced mechanically for a task class
+(provenance too coarse) → that class is EXCLUDED, listed, and its exclusion reported — never
+waved through.
 
 ## 8. Out of scope
 
 No training runs. No new architecture (heredity rule). No LLM-judged gold. No semantic-router
-gates in the harness (grade on content via computed checks — the syntactic-router lesson).
-No hand-enriched packets. No reading a headroom failure as a residue verdict. No verdicts
-quoted without executor identity and independent re-computation.
+gates in grading. No hand-enriched packets. No headroom failure read as residue verdict. No
+Tier A number quoted as thesis evidence. No "at any capacity" claims — all nulls are bounded
+to the tested regime. No verdicts without executor identity and independent re-computation.
+D4 cross-domain transfer excluded from this probe.
 
 ## 9. Open items for the preregistration to fix
 
-Task-set sizes per tier; solver list (procurement-dependent for Tier B); whether M0
-unrepresentables join Tier A; packet token ceiling; exact statistical test; the
-whole-index vs retrieved primary variant (5C).
+Task-set sizes and per-distance quotas; solver list (procurement-dependent); F-shuffle
+feasibility; M0 unrepresentables in Tier A; packet token ceiling; exact test + minimum
+practical effect size (R15); whole-vs-retrieved reporting order; F-generic text finalization
+(Charon) and its token-matching tolerance.
 
 ## 10. How this spec is falsified
 
-If Tier A passes cleanly, Tier B runs, and the fleet still cannot agree on the verdict's
-interpretation against §4.5's table, this spec failed at its one job — making the outcome
-unarguable in advance — and the failure analysis goes in the postmortem, not in a v2 of the
-experiment.
+If Tier A passes, Tier B runs, and the fleet cannot agree which diagnostic-matrix row the
+result lands in against the preregistered thresholds, this spec failed at its one job —
+making the outcome unarguable in advance. The failure analysis goes in the postmortem, not a
+v3 of the experiment.
 
 ---
-*Spec drafted from the car-ride ruling. The preregistration file, not this spec, is the
-binding instrument; this document exists so that writing it takes one session, not one era.
-— Hephaestus, 2026-08-12.*
+*v2.0: the review's core gift is the transfer-distance ladder — it converts a pass/fail bet
+into a measurement of the residue's radius, which is a property Prometheus can own regardless
+of verdict. Spec re-frozen; the preregistration is the binding instrument. — Hephaestus
+(drafting), James (review of record), 2026-08-13.*
