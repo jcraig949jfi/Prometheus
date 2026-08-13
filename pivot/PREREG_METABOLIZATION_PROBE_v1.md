@@ -60,6 +60,22 @@ Four checks on M1 this session (`E3`), each of which moved a design decision:
 
 **Tier B — the decisive run, gated on procurement (spec §5E).**
 - ≥2 frontier models from **different families**, raw API, pinned as `model_id + version + date`.
+  Two Anthropic models do **not** satisfy this — one vendor is one family.
+- **Determinism is NOT pinned by sampling parameters on current frontier models** (correction,
+  2026-08-13, `E1`): `temperature` / `top_p` / `top_k` are *removed* on Claude Opus 5, Sonnet 5,
+  and Opus 4.7+ and return a **400**; the Gemini side differs again. Tier-B determinism is
+  therefore pinned by (a) a fixed `effort` level, (b) an explicit, fixed thinking configuration,
+  and (c) the 50-task determinism re-run in §6.4 — never by sampling params. The Tier-A local
+  Qwen run keeps `temp=0.0` because it goes through HF `generate`, not an API.
+- **Thinking is ON by default on Claude Opus 5 and Sonnet 5, and `max_tokens` caps thinking +
+  visible output together** (`E1`). A `max_tokens` sized for the answer alone truncates
+  mid-response and would register as a wrong answer — a silent, arm-correlated bias. Every
+  Tier-B call pins `thinking` explicitly and sets `max_tokens` with headroom above the expected
+  verdict length; truncation (`stop_reason: max_tokens`) is logged and counted per arm as a
+  mandatory diagnostic alongside parse-failure.
+- **Execution channel: the Batch API** (50% discount on both vendors, ≤24h turnaround). This
+  probe has no latency requirement, so a synchronous run is a 2× overpay. Results key by
+  `custom_id`, never by position.
 - One of the two must have ≥400K usable context, or the `F-prom-whole` arm degrades to the
   preregistered subsample rule (§5.3).
 - **Requested-by date: 2026-08-14** (James's stated decision gate, M1_STATUS §5-6). Per spec §5E
@@ -308,9 +324,30 @@ gravity is F-prom vs F-null and never F-prom vs F0.
   averaged (R11). A task missing any arm is dropped from the paired analysis and counted in a
   reported attrition line.
 - **Ties / unparseable:** counted incorrect, reported separately (§1 guard).
-- **Budget shape for procurement** (`E3` arithmetic): core arms at N=400 × 6 packeted arms ×
-  2 solvers ≈ 5,600 calls ≈ 45M input / ~3M output tokens; `F-prom-whole` 60 tasks × 1 solver
-  with a cached index prefix. This is the bounded ask that makes procurement a priced decision.
+- **Budget shape for procurement** (`E3` arithmetic, list prices `E1` as of 2026-08-13): core
+  arms at N=400 × 6 packeted arms × 2 solvers ≈ 5,600 calls ≈ 45M input / ~3M output, i.e.
+  ~22.5M in / ~1.5M out **per solver**. Batched (50% off both vendors):
+
+```
+per solver, core arms, Batch API
+  Claude Sonnet 5   ($2/$10 intro thru 08-31)  ->  $30    ($45 at standard $3/$15)
+  Claude Opus 5     ($5/$25)                   ->  $75
+  Gemini 3.6 Flash  ($1.50/$7.50)              ->  $22.50
+  Gemini 3.1 Pro    ($2/$12 <=200K)            ->  $31.50
+
+two-family decisive run   Sonnet 5 + Gemini 3.6 Flash  ~= $53
+                          Opus 5   + Gemini 3.1 Pro    ~= $107
+F-prom-whole (60 tasks x ~300K prefix, 1 solver)
+                          uncached ~$18 batched; with a cached prefix ~$3-5
+```
+
+  **Recommended procurement envelope: $300–$500 one-time** — roughly 3× the headline, covering
+  leveling passes, two cold-probe repetitions, determinism re-runs, retries, and one complete
+  re-run after a failed arm. The decisive experiment is a ~$100 purchase; the envelope buys the
+  right to get it wrong once.
+  *Caching caveat:* the whole-index prefix cache has a 5-minute TTL by default, so the
+  `F-prom-whole` batch must run back-to-back or declare a 1-hour TTL (2× write, still trivial
+  at this volume).
 
 ### 6.5 Mandatory secondary metrics (spec §4.6)
 
