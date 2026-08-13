@@ -4,7 +4,9 @@
 **Date:** 2026-08-12 · **Authored:** Hephaestus (Fable seat), from James's phase ruling, Ergon's
 Move-1 design, Techne's Organism-Zero convergence, Charon's navigability gate, Aporia's four
 preconditions (META_SYNTHESIS §2.5), Harmonia's control doctrine, and Apollo's ablation-wall
-corpus. **Status:** DRAFT pending sign-offs (§4.1). Supersedes arm nomenclature in all prior
+corpus. **Status:** v1.2-FINAL, FROZEN. The audit chain (v1.0 → Aporia audit → v1.1 → re-check → v1.2
+→ R2 closure) is closed by mutual agreement; further changes belong in the preregistration,
+which is the binding instrument. Sign-offs per §4.1. Supersedes arm nomenclature in all prior
 probe descriptions.
 **Authority:** James, 2026-08-12 PM — "Priority #1 by a mile." Constitutional context: the
 heredity rule (*no new architecture until one failure produces one verified improvement*) and
@@ -59,7 +61,9 @@ admissibility rule.)
 
 **R2 — Preregistration before first arm.** A single file
 (`pivot/PREREG_METABOLIZATION_PROBE_v1.md`) commits BEFORE any arm executes, containing: final
-task-set manifest (hashes), solver identities (model_id + version + date, pinned — Techne's
+task-set manifest (hashes) **plus the R13 replenishment procedure and hashed source pool — so
+post-contamination replenishment is a preregistered branch, never a manifest amendment** (v1.2
+final, per Aporia §7.5c), solver identities (model_id + version + date, pinned — Techne's
 provenance guard), arm-packet construction procedures, metrics, decision thresholds, kill
 conditions, and the named executor of each component. Post-hoc relabeling of outcomes is
 thereby impossible. Signatories: Ergon (driver), Charon (kill authority), Harmonia B (meter
