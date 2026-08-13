@@ -77,12 +77,56 @@ Four checks on M1 this session (`E3`), each of which moved a design decision:
   **same family** and may not be counted as two. Hosted endpoints also do not always disclose
   quantization or serving config, so results are pinned to `host + model_id` and are **never
   compared across hosts** as if they were the same solver.
-- **Credentials do not exist on M1** (`E3`, 2026-08-13): no `.env`, and
-  `DEEPSEEK_API_KEY` / `NVIDIA_API_KEY` / `GEMINI_API_KEY` / `OPENAI_API_KEY` /
-  `ANTHROPIC_API_KEY` are all unset. This — not money — is now the binding gate. The loader is
-  `keys.py` (`get_key("DEEPSEEK")` → `DEEPSEEK_API_KEY`, env first, then `F:/Prometheus/.env`,
-  which is gitignored at `.gitignore:3`). `NVIDIA` was missing from its `_KEY_NAMES` map even
-  though `solve_battery.py` already calls `get_key("NVIDIA")`; added this session.
+- **CORRECTION — credentials DO exist on M1.** My earlier claim that they were missing was
+  wrong: I had checked only `os.environ` and not the `.env` fallback that `keys.py` reads.
+  Verified (`E3`, 2026-08-13): `F:/Prometheus/.env` resolves `DEEPSEEK` / `GEMINI` / `OPENAI` /
+  `CLAUDE`, and `agents/eos/.env` holds `NVIDIA_API_KEY`. Both files are gitignored
+  (`.gitignore:3`). `NVIDIA` was missing from `keys.py`'s `_KEY_NAMES` even though
+  `solve_battery.py` already calls `get_key("NVIDIA")` — fixed on M1, but `keys.py` is itself
+  gitignored (`.gitignore:9`), so the fix does not propagate to other stations.
+
+- **VERIFIED SOLVER SET (R8) — measured live, not assumed** (`E3`, 2026-08-13; full method and
+  per-model numbers in `roles/Ergon/API_PREFLIGHT_2026-08-13.md`). James flagged that NVIDIA has
+  timed out badly before; that is **reproducible today and it is per-model, not endpoint-wide**.
+  Of 12 catalog models tested, 4 serve reliably, 3 time out, 4 return 404/410, 1 rate-limits.
+
+  Admissible for Tier B — each passed 2× small + one **16K-token** payload (2× the §4.5 packet
+  ceiling, so the pass is conservative):
+
+```
+  deepseek-ai/deepseek-v4-flash-0731        small 2.3-5.2s   16K payload  1.7s    family: DeepSeek
+  nvidia/llama-3.3-nemotron-super-49b-v1    small 2.5-4.3s   16K payload  8.5s    family: NVIDIA/Nemotron
+  nvidia/llama-3.3-nemotron-super-49b-v1.5  small 1.8-6.2s   16K payload  7.7s    family: NVIDIA/Nemotron
+  openai/gpt-oss-120b                       small 1.4-8.7s   16K payload 23.1s    family: OpenAI (open-weights)
+```
+
+  **Two different families at $0 are therefore already in hand** — DeepSeek V4 Flash plus a
+  Nemotron — with `gpt-oss-120b` available as a third. R2's cross-family requirement is
+  satisfied without any procurement. Note DeepSeek V4 Flash *hosted on NVIDIA* and DeepSeek
+  *direct* remain the same family (§1 host/family rule); only one may be counted.
+
+  **Excluded, with cause:** `meta/llama-3.3-70b-instruct` (3/3 timeout at 90s — this is the
+  failure mode James remembered, still live); `z-ai/glm-5.2` and `google/gemma-4-31b-it` (2/2
+  timeout at 60s); `moonshotai/kimi-k2.6`, `mistralai/mistral-large-2-instruct`,
+  `nvidia/llama-3.1-nemotron-ultra-253b-v1`, `deepseek-ai/deepseek-r1` (HTTP 404 — listed in
+  `/v1/models` but not servable); `qwen/qwen2.5-coder-32b-instruct` (HTTP 410 Gone);
+  `minimaxai/minimax-m3` (HTTP 429).
+
+- **R8a — MANDATORY PREFLIGHT (new requirement).** The catalog is stale and drifts: a listed
+  model may 404, may 410 out of existence, or may hang. Therefore **every solver is preflighted
+  immediately before each run** — 2 small calls plus one at the packet ceiling — and a solver
+  that fails preflight is swapped before any arm executes, never mid-run. Preflight records are
+  committed with the results (R9). A solver that starts timing out **mid-run** invalidates that
+  arm for that solver; the arm is re-run whole, never partially averaged (R11).
+  Rationale: `roles/PipelineOrchestrator/in_api_emergency_break_glass.md` records the 2026-03-28
+  episode where this endpoint hit a **91% timeout rate** and the forge's yield fell to 0.5%.
+  A degraded solver does not fail loudly — it silently thins N and biases whichever arm was
+  running when the degradation started, which is exactly how an underpowered `Δ_carry ≈ 0`
+  gets mistaken for a null.
+
+- **DeepSeek direct is NOT currently usable:** the key authenticates but returns
+  **HTTP 402 Insufficient Balance** (`E3`). The $11 DeepSeek line in §6.4 is a *purchase*, not
+  an existing lane — and it is now unnecessary, since V4 Flash is free via NVIDIA.
 - **Determinism is NOT pinned by sampling parameters on current frontier models** (correction,
   2026-08-13, `E1`): `temperature` / `top_p` / `top_k` are *removed* on Claude Opus 5, Sonnet 5,
   and Opus 4.7+ and return a **400**; the Gemini side differs again. Tier-B determinism is
