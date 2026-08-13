@@ -61,6 +61,28 @@ Four checks on M1 this session (`E3`), each of which moved a design decision:
 **Tier B — the decisive run, gated on procurement (spec §5E).**
 - ≥2 frontier models from **different families**, raw API, pinned as `model_id + version + date`.
   Two Anthropic models do **not** satisfy this — one vendor is one family.
+- **Solver ladder, cheapest-admissible first** (revised 2026-08-13 under a $100 hard cap; list
+  prices `E1`, arithmetic `E3`, §6.4):
+  1. **NVIDIA Build / NIM** — `https://integrate.api.nvidia.com/v1`, OpenAI-compatible, already
+     wired in `aporia/scripts/solve_battery.py`. Free tier, ~40 RPM, no card. Hosts Llama, Qwen,
+     Nemotron, Mistral, DeepSeek — so it can supply **two different families at $0**. At 40 RPM
+     a 2,800-call solver pass takes ~70 min; no batch discount needed because there is no bill.
+  2. **DeepSeek direct** — V4 Pro $0.435/$0.87 per MTok, V4 Flash $0.14/$0.28, 1M context. A
+     full per-solver core pass is **$11 (Pro) / $3.60 (Flash)**. Its 1M window can also carry
+     `F-prom-whole` without the subsample rule.
+  3. **Gemini / Anthropic** — only as a *third*, frontier-tier anchor if the cheap tier returns
+     a null and we need to discharge the **consumption-null** sublabel (spec §4.5) rather than
+     accept it.
+- **Host/family pinning rule.** NVIDIA-hosted DeepSeek and DeepSeek-hosted DeepSeek are the
+  **same family** and may not be counted as two. Hosted endpoints also do not always disclose
+  quantization or serving config, so results are pinned to `host + model_id` and are **never
+  compared across hosts** as if they were the same solver.
+- **Credentials do not exist on M1** (`E3`, 2026-08-13): no `.env`, and
+  `DEEPSEEK_API_KEY` / `NVIDIA_API_KEY` / `GEMINI_API_KEY` / `OPENAI_API_KEY` /
+  `ANTHROPIC_API_KEY` are all unset. This — not money — is now the binding gate. The loader is
+  `keys.py` (`get_key("DEEPSEEK")` → `DEEPSEEK_API_KEY`, env first, then `F:/Prometheus/.env`,
+  which is gitignored at `.gitignore:3`). `NVIDIA` was missing from its `_KEY_NAMES` map even
+  though `solve_battery.py` already calls `get_key("NVIDIA")`; added this session.
 - **Determinism is NOT pinned by sampling parameters on current frontier models** (correction,
   2026-08-13, `E1`): `temperature` / `top_p` / `top_k` are *removed* on Claude Opus 5, Sonnet 5,
   and Opus 4.7+ and return a **400**; the Gemini side differs again. Tier-B determinism is
@@ -341,10 +363,34 @@ F-prom-whole (60 tasks x ~300K prefix, 1 solver)
                           uncached ~$18 batched; with a cached prefix ~$3-5
 ```
 
-  **Recommended procurement envelope: $300–$500 one-time** — roughly 3× the headline, covering
-  leveling passes, two cold-probe repetitions, determinism re-runs, retries, and one complete
-  re-run after a failed arm. The decisive experiment is a ~$100 purchase; the envelope buys the
-  right to get it wrong once.
+  **REVISED 2026-08-13 — hard cap $100 (James).** My $300–500 envelope was padding for
+  re-runs, and it priced only the expensive vendors. With the cheap tier in the ladder (§1) the
+  whole decisive run fits with room to spare:
+
+```
+full two-family core run (N=400, 6 packeted arms, per solver ~22.5M in / ~1.5M out)
+  NVIDIA free (family A) + NVIDIA free (family B)   ->  $0        40 RPM, ~70 min/solver
+  DeepSeek V4 Pro + NVIDIA free (2nd family)        ->  ~$11
+  DeepSeek V4 Pro + Gemini 3.6 Flash (batched)      ->  ~$34
+  + F-prom-whole on DeepSeek (1M ctx, no subsample) ->  ~$2.50 uncached, less on cache hits
+optional frontier anchor, added only if the cheap tier nulls
+  Claude Sonnet 5, batched, intro pricing           ->  ~$30
+```
+
+  **Preregistered envelope: $100 total**, allocated ~$15 decisive run · ~$30 optional frontier
+  anchor · remainder reserved for one re-run. Nothing is spent before the pilot (below) passes.
+
+- **PILOT — "kick the tires" (new, preregistered as a gate, not as evidence).** Before the
+  decisive run: **N = 120 tasks × 5 arms** (`F0`, `F-null`, `F-prom-retrieved`, `F-oracle`,
+  `F-answer`) × **1 solver**, on the cheap tier. Cost: **~$2.50 on DeepSeek V4 Pro, $0 on
+  NVIDIA free.** Its job is to exercise the whole pipeline end to end — R3 both controls, R7
+  both layers, the R14 planted-violation test, leveling and the contamination screen, typed
+  result objects — and to return a **directional** estimate with a CI.
+  **The pilot's permitted verdicts are `PIPELINE_ADMISSIBLE` / `PIPELINE_NOT_ADMISSIBLE` plus a
+  point estimate with interval. It CANNOT produce a null** — at N=120 the MDE is ~12–13pp
+  (`E3`, §6.2), so a flat pilot result is `INCONCLUSIVE-UNDERPOWERED` by construction and never
+  routes to a diagnostic-matrix row. Any report quoting a pilot Δ as evidence for or against the
+  thesis is a protocol violation, on the same footing as quoting a Tier-A number.
   *Caching caveat:* the whole-index prefix cache has a 5-minute TTL by default, so the
   `F-prom-whole` batch must run back-to-back or declare a 1-hour TTL (2× write, still trivial
   at this volume).
