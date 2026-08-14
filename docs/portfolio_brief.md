@@ -1,12 +1,12 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-08-14 03:44:45 PM UTC*
+*Generated: 2026-08-14 07:44:45 PM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
 
 ## Act on this
-* **Redis Unreachable**: Redis has been unreachable since the last brief, with 0 recent discoveries or main stream updates, and requires immediate investigation to restore connectivity at M1. To resolve this, check the Redis service status and logs on M1 to identify the cause of the issue.
-* **Hephaestus and Pronoia Status Verification**: Hephaestus at M3 and Pronoia at M4 have unknown statuses due to no Postgres heartbeat, requiring verification of their current operational status, with Hephaestus having a critical role in substrate generation and Pronoia in reporting.
+* **Redis Unreachable**: Redis has been unreachable, with the current state.json sourced from Postgres dual-write mirror, and requires immediate investigation to restore connectivity at M1, as it has been unreachable since the last brief. To resolve this, check the Redis service status and logs on M1 to identify the cause of the issue.
+* **Hephaestus and Pronoia Status Verification**: Hephaestus at M3 and Pronoia at M4 have unknown statuses due to no Postgres heartbeat, requiring verification of their current operational status, with Hephaestus having a critical role in substrate generation and Pronoia in reporting. 
 * **Multiple Agents with Unknown Status**: 17 agents, including Clio at M1, Pythia at M1, and others, have unknown statuses due to no Postgres heartbeat, necessitating a check on their current activity and potential impact on the knowledge base.
 
 ## Watch this
@@ -16,5 +16,5 @@
 
 ## For the record
 * **No Change in Hephaestus Operational Status**: Hephaestus at M3 still has an operational status of "running" as of 2026-05-16, with a current forge rate context indicating healthy substrate selection pressure, and over 1 day of continuous uptime.
-* **Recent Git Activity**: There have been recent git updates within the last 24 hours, with the most recent update at 2026-08-14 11:44:48 AM UTC, indicating ongoing development and maintenance activities.
+* **Recent Git Activity**: There have been recent git updates within the last 24 hours, with the most recent update at 2026-08-14 03:44:46 PM UTC, indicating ongoing development and maintenance activities.
 * **Agents Pending Deployment**: 14 agents are still pending deployment on M2, M3, and M4, as part of the multi-machine bring-up.
