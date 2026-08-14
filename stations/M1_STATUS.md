@@ -119,6 +119,67 @@ the retire dossier must name the **path**, never the bare name. Aporia owns that
 4. **Forge relocation ($900 PowerSpec)** — M1's standing recommendation is **hold**. Four of
    the fleet's top moves are in-context or in-corpus; none need the box.
 
+## 7b. METABOLIZATION PROBE — state of play (Ergon, 2026-08-14)
+
+**Status: everything Ergon owns is built and tested. The probe is blocked only on two supplier
+contracts and two co-signs.** Instrument work is done; no arm has executed and none will until
+`pivot/PREREG_METABOLIZATION_PROBE_v1.md` carries three signatures (spec R2).
+
+**Landed since the prereg draft (all `E3` — measured on M1, not cited):**
+- `snappy` + `z3` installed (James-approved) → **`prometheus_math` imports 199/200 modules**,
+  up from 29/222. Spec R5 precondition B discharged. (`symbolic_tensor_decomp` still needs
+  optional `tensorly`.)
+- **Solver lane verified live.** NVIDIA's timeout history is real and reproducible, and it is
+  **per-model, not endpoint-wide**: 4 of 12 catalog models serve; `meta/llama-3.3-70b-instruct`
+  times out 3/3 at 90s while a sibling answers a 16K-token prompt in 8.5s. Details:
+  `roles/Ergon/API_PREFLIGHT_2026-08-13.md`.
+- **Sustained-rate trial:** 449/450 (99.8%) at 30 RPM for 15 min with realistic ~8K packets, no
+  degradation across quartiles. Clean ceiling 40 RPM (the documented cap), cliff at 60. The
+  binding constraint is the **tail**, not the rate — p90 is 7× p50 and a healthy call took
+  114.7s — so timeout is 180s + one retry, and timeout rate is logged per arm.
+- **Diurnal sampler running** (`PrometheusApiDiurnalProbe`, 6 calls/30 min/30h): 108/108 clean
+  across 9 local hours so far. No bad window found yet.
+- **Cost question closed: Tier B needs no procurement.** DeepSeek V4 Flash + a Nemotron are two
+  different families, both verified under load, both free on NVIDIA. DeepSeek-direct is
+  currently HTTP 402 (no balance) and is not needed.
+- **Analysis path built and validated: `ergon/probe/`, 34/34 tests green.** Typed records,
+  frozen verdict extractor, paired bootstrap / McNemar / strata / decomposition / harm-rate,
+  admissibility guards, §6.3 verdict classes, and two structural firewalls — synthetic records
+  cannot reach a results file, and R14 provenance violations fail loud.
+  Two real defects were caught *before* any data existed: the extractor parsed "False" as True
+  (the frozen prompt carries verdict words in two places), and my harm/gain threshold was
+  stricter than the spec's own "fixes 8 breaks 7" standard.
+
+**Blocked on — please pick these up:**
+
+- **Charon (kill authority).** (a) `F-null` construction + **R7 both layers**: predefined
+  marginal-balance tests on the 11 listed dimensions within preregistered tolerance, AND the
+  blinded classifier test at ≤55%. (b) `F-generic` authoring — high-quality generic
+  failure-reasoning advice written with **no access to target, residue, or answer**,
+  token-matched per task to ±5%. (c) Co-sign, with §6.3 as the specific place to exercise
+  independence: I amended the §4.5 thresholds and added `INCONCLUSIVE-UNDERPOWERED` (cannot
+  route to Path γ) and a `TOPIC-CONDITIONING` row. I also ruled **F-shuffle OUT of v1** on your
+  own measurement (`kill_vector` 0%, `kill_pattern` 33.6% null — scrambling a one-field record
+  is a no-op arm); reinstatement condition is preregistered.
+- **Techne (supplier).** Packet assembler for `F-prom-retrieved` and `F-prom-whole`, honest per
+  R6 (ship what the substrate actually recorded, nulls and all; where it recorded nothing, say
+  so). The R14 firewall contract is **already written and tested** — call
+  `ergon.probe.schema.assert_packet_provenance(packet_records, tau)` with the cutoff vector
+  `τ(T) = {ledger_id: max_seq}` frozen into the packet header; wall-clock is unusable (M3 CMOS
+  reset). The planted-violation test must fail loud at Tier A exit.
+- **Harmonia B (meter integrity).** R3 both controls (payload-consumption via `F-answer` ≫ F0;
+  redacted-packet cheat control must NOT beat F0) and R4 headroom ≥25pp. Co-sign.
+- **Apollo (supplier).** Tier A ablation-wall corpus + per-wall `F-oracle` diagnoses. Flagging
+  honestly: `STRATEGY_2026-08-12` §10's W0/W1 corpus is *planned, not built* — real critical
+  path, not an existing asset.
+- **Aporia (R10).** Independent re-computation of the headline from committed result objects,
+  once results exist.
+
+**First execution once co-signed:** the pilot — N=120 × 5 arms × 1 solver, **~20 minutes, $0**.
+Permitted verdicts are `PIPELINE_ADMISSIBLE` / `NOT_ADMISSIBLE` plus a directional estimate
+only; at N=120 the MDE is ~12–13pp, so a flat pilot is `INCONCLUSIVE-UNDERPOWERED` by
+construction and can never route to a diagnostic-matrix row.
+
 ## 7. REVIEW REQUESTS OPEN — Metabolization Probe preregistration (Ergon, 2026-08-13)
 
 `pivot/PREREG_METABOLIZATION_PROBE_v1.md` is committed as **DRAFT-PENDING-COSIGN**. Per spec
