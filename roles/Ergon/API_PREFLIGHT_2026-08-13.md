@@ -90,6 +90,61 @@ transport. The 410 proves the catalog drifts under us.
    DeepSeek / Gemini / OpenAI / Claude are in `F:/Prometheus/.env`, and NVIDIA's is in
    `agents/eos/.env`. Both gitignored.
 
+## 4b. Sustained-rate trial (added 2026-08-13, `E3` — `ergon/probe_api_soak.py`)
+
+Reachability is not sustainability, and the 2026-03-28 failure was *degradation over time*.
+Two measurements, both on `nvidia/llama-3.3-nemotron-super-49b-v1.5` with a realistic ~8K-token
+packet (the §4.5 ceiling), not a toy prompt.
+
+**Rate ladder — where the cliff is** (60s per rung):
+
+```
+10 RPM   10/10 ok   p50  5.9s   p90 17.6s   max 17.6s
+20 RPM   20/20 ok   p50  4.3s   p90 14.0s   max 51.0s
+40 RPM   40/40 ok   p50  4.4s   p90 20.4s   max 32.5s
+60 RPM   57/60 ok   p50  3.2s   p90 21.6s   max 57.4s   3x TIMEOUT
+```
+
+Highest fully-clean rate is **40 RPM — exactly the documented free-tier cap**, so the published
+limit is enforced, not advisory. 60 RPM is the cliff.
+
+**Soak — 30 RPM for 15 minutes, 450 calls, quartile-split to expose drift:**
+
+```
+block 1   112/112 ok (100.0%)   p50 3.3s   p90 23.2s   max  38.9s
+block 2   112/112 ok (100.0%)   p50 4.2s   p90 23.5s   max  61.8s
+block 3   112/112 ok (100.0%)   p50 3.4s   p90 23.7s   max 114.7s
+block 4   111/112 ok ( 99.1%)   p50 3.3s   p90 23.7s   max  68.5s   1x TIMEOUT
+OVERALL   449/450 ok ( 99.8%)   p50 3.4s   p90 23.7s   max 114.7s
+```
+
+**No degradation over time** — p50 and p90 are flat across all four blocks. The lane is
+sustainable at 30 RPM. That is the answer to the question asked: yes, transactions go through
+reliably, and no, we do not need to throttle heavily. 30 RPM with margin under the 40 cap.
+
+**The tail is the real design constraint.** Full latency distribution over the 450 calls:
+
+```
+p50 3.4s   p75 8.9s   p90 23.7s   p95 32.6s   p99 61.8s   max 114.7s   mean 8.9s
+exceeding  30s:  31 calls (6.89%)
+exceeding  60s:   5 calls (1.11%)
+exceeding  90s:   1 call  (0.22%)
+exceeding 120s:   0 calls (0.00%)
+```
+
+p90 is **7× p50**. A healthy call can take 114.7 seconds. Consequences, now binding:
+
+1. **Timeout = 180s with one retry.** At 60s we would have discarded 1.11% of *healthy*
+   responses; at 120s, 0.22%. Those discards are not random — long-latency calls correlate with
+   longer packets, so the loss would concentrate in `F-prom-retrieved` and `F-prom-whole` and
+   show up as **arm-correlated missing data**. That is a mechanism for manufacturing a Δ out of
+   nothing, and it is exactly the class of artifact this probe exists to avoid.
+2. **Throughput is dispatch-bound, not latency-bound** (mean 8.9s vs a 2s dispatch interval), so
+   concurrency covers the tail: at 30 RPM the pilot (600 calls) is ~20 min and the full two-solver
+   Tier-B run (4,800 calls) is ~2.7 hours.
+3. **Timeout rate must be logged per arm** and reported beside parse-failure. If it differs
+   across arms by >2pp, that comparison is flagged the same way a parse-failure spread is.
+
 ## 5. Residual risks (stated, not resolved)
 
 - **Serving config is undisclosed.** NVIDIA does not publish quantization or serving parameters
