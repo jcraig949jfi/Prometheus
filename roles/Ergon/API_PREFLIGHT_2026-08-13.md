@@ -145,6 +145,50 @@ p90 is **7× p50**. A healthy call can take 114.7 seconds. Consequences, now bin
 3. **Timeout rate must be logged per arm** and reported beside parse-failure. If it differs
    across arms by >2pp, that comparison is flagged the same way a parse-failure spread is.
 
+## 4c. Diurnal availability — complete 30-hour sweep (2026-08-13 → 08-15, `E3`)
+
+James's concern was that we might have to throttle hard and run off-hours, and that we'd first
+have to *find* those hours. `PrometheusApiDiurnalProbe` sampled 6 calls every 30 minutes for 30
+hours, covering **all 24 local hours** with ~8K-token packets.
+
+**Result: 354/354 successful. Zero errors of any kind. There is no bad window.**
+
+```
+local hr   n    ok      p50     p90     max        local hr   n    ok      p50     p90     max
+  00:00   24  24/24    5.6s   37.2s   59.4s         12:00   12  12/12    5.3s   13.4s   17.1s
+  01:00   18  18/18    4.7s   11.6s   13.4s         13:00   12  12/12    5.2s    9.8s   35.3s
+  02:00   12  12/12    4.9s    7.1s    9.8s         14:00   12  12/12    5.8s    8.6s   15.0s
+  03:00   12  12/12   11.2s   94.6s  100.5s         15:00   12  12/12    5.0s    6.4s   56.0s
+  04:00   12  12/12    5.2s    6.2s    7.6s         16:00   12  12/12    6.6s   60.3s   72.2s
+  05:00   12  12/12    5.3s   18.6s   19.5s         17:00   12  12/12    8.8s   17.7s   20.2s
+  06:00   12  12/12    5.3s   30.7s   34.1s         18:00   12  12/12    5.0s    6.9s   21.4s
+  07:00   12  12/12    7.7s   20.6s   38.2s         19:00   12  12/12    4.9s    6.2s   22.0s
+  08:00   12  12/12    5.1s   10.1s   18.3s         20:00   24  24/24    5.9s   16.1s   21.1s
+  09:00   12  12/12    5.4s    7.8s    9.3s         21:00   24  24/24    5.6s    9.3s   12.2s
+  10:00   12  12/12    6.9s   17.5s   17.6s         22:00   24  24/24    5.1s    6.7s   60.1s
+  11:00   12  12/12    7.9s   15.8s   51.4s         23:00   24  24/24    4.9s   12.8s   31.8s
+```
+
+**Reading it.** `p50` is flat — 4.7s to 11.2s across every hour of the day, with no diurnal
+trend. What *does* wander is the tail: p90 ranges from 6.2s (04:00, 19:00) to 94.6s (03:00),
+and the worst single observation in 354 calls was 100.5s. But no hour dropped a single call.
+
+**Three consequences:**
+
+1. **No off-hours scheduling is required.** The run can be executed whenever it is ready. This
+   closes the question rather than deferring it.
+2. **The 180s timeout is validated empirically, not guessed.** The worst observation across 354
+   diurnal calls plus 450 soak calls is 114.7s; 180s leaves ~57% headroom above the observed
+   maximum. A 120s timeout would have clipped the 03:00 tail.
+3. **Tail variance, not availability, is the thing to schedule around.** If a run must finish
+   inside a fixed window, prefer the low-p90 hours (04:00, 19:00, 15:00, 18:00) and avoid
+   03:00/16:00/00:00 — but this is throughput planning, not a reliability constraint.
+
+Caveat, stated plainly: this is **one 30-hour window on one endpoint from one host.** The
+2026-03-28 episode proves this endpoint has bad days, and a clean sweep is not a guarantee
+about next week. That is exactly why R8a requires a preflight before every run rather than
+trusting this table.
+
 ## 5. Residual risks (stated, not resolved)
 
 - **Serving config is undisclosed.** NVIDIA does not publish quantization or serving parameters
