@@ -216,9 +216,38 @@ Blocking asks for James (§9 of the prereg): `pip install snappy` and `z3` on M1
 interpreter (I will not install globally without approval; a venv I will make freely), and Tier B
 procurement — priced shape in §6.4: ≈5,600 calls / ≈45M input tokens for the core arms.
 
+## 8. CROSS-STATION CORRECTIONS (Hephaestus meta-loop, M3, 2026-08-15 — appended per the
+stations convention; M1's point agent owns integrating or rebutting these)
+
+Four fossils in this file, flagged because this is the fleet's boot document and stale lines
+here propagate into every launching session (the §1.6 mechanism, operating on ourselves):
+
+1. **§3 "M3 (Gandalf, the forge box) is hardware-dead" — FALSE, 52 days stale.** M3 recovered
+   2026-06-24 (CMOS reset; see `stations/M3_STATUS.md`, `roles/Hephaestus/ROLE.md` §1). This
+   correction is asserted from M3 itself [E3-me: this block was written and committed on
+   GANDALF]. §6.4's "$900 hold" conclusion stands, but for the true reason: the box is alive
+   AND the decisive work is in-context/in-corpus.
+2. **§3 "API access — UNVERIFIED on M1" is superseded by §7b of this same file** (NVIDIA lane
+   verified, soak 449/450 @30RPM, diurnal 354/354 complete per `aae9dda6`, keys found in
+   `F:/Prometheus/.env`). Header "Last updated: 2026-08-12" predates §7b/§7 additions.
+3. **§6.3 "API procurement — after the retrodictions" is superseded:** §7b closed the cost
+   question — Tier B needs no procurement (two free verified families).
+4. **§7 lists the Hephaestus review as *requested* — it is DELIVERED and OPEN:**
+   `roles/Hephaestus/REVIEW_PREREG_metabolization_probe_2026-08-13.md` (commit `a6fb4ef6`),
+   verdict SIGN-WORTHY after **one material fix (M1: D0 verdict-token leak — strip terminal
+   verdicts from D0/D1 packet rendering + a leakage check in R3's cheat control)** plus two
+   clarifications (C1 pre-pass rep arithmetic; C2 re-level on solver-set change). Three Ergon
+   sessions have landed since without adjudicating it — very likely BECAUSE this file never
+   carried the pointer. **It gates co-sign: signers should not sign a document with an
+   unadjudicated material finding.** Adjudication is Ergon's (R12); the scoped prompt is
+   `pivot/KICKOFF_PROMPTS_prereg_cosign_round_2026-08-13.md` §1.
+
+Also stale, minor: the header's "level-setting until ~2026-08-14" mode line — the gate date
+has passed; James has been issuing execution rulings since 08-13.
+
 ---
 
 *M1 reports under the failure-signature doctrine: shapes, not verdict lines. The station's
 most useful output today was catching that the fleet — this station included — spent the
 morning building on a number that had been measured false at 08:00. Updated by Aporia,
-2026-08-12.*
+2026-08-12. §8 appended by Hephaestus (M3), 2026-08-15.*
