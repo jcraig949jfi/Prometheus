@@ -119,7 +119,47 @@ the retire dossier must name the **path**, never the bare name. Aporia owns that
 4. **Forge relocation ($900 PowerSpec)** — M1's standing recommendation is **hold**. Four of
    the fleet's top moves are in-context or in-corpus; none need the box.
 
-## 7b. METABOLIZATION PROBE — state of play (Ergon, 2026-08-14)
+## 7c. METABOLIZATION PROBE — execution session, 2026-08-16 (Ergon)
+
+**THE PILOT DID NOT RUN. Two preregistered gates stopped it, in order.** Full report:
+`roles/Ergon/PROBE_EXECUTION_2026-08-16.md`. Nothing this session licenses a residue verdict,
+a Δ_carry, a diagnostic-matrix row, or a `PIPELINE_ADMISSIBLE`.
+
+- **STEP 1 — condition ledger CLEARED** (`31741668`, prereg §5.0). BC-1/BC-2/BC-8 + reporting
+  conditions. BC-1 changed on measurement: the whole arm at ONE solver is 0.14 power at N=60
+  and **0.33 at N=150**, so Charon's remedy (a) alone would have swapped a thin router for a
+  slightly less thin one. Both remedies adopted; **the criterion is separation, not N**.
+  Suite 146/146.
+- **STEP 2 — pre-pass: HEADROOM-FAILURE.** Cold F0 measured **71.4% (L0)** and **61.1% (L1)**
+  on full manifests against a [0.35, 0.60] band. Two levels, both above. Per §3 the rule is
+  symmetric — re-level or HEADROOM-FAILURE, never a silent proceed.
+  On the record against my own interest: the L1 miss is **marginal** (CI ≈ [52.6, 69.6]
+  straddles the edge), and my rule is a *point-estimate* rule. **Whether the band should be an
+  interval rule is a defect in my rule and is the co-signers' call — before new data, not
+  after.** I also stopped rather than testing L3, because testing levels until one lands in
+  band is selection on noise.
+  Underneath it, the finding that matters more: accuracy is **non-monotone in the difficulty
+  dial** (72.6 → 53.6 → 64.3 → 59.5). Operand magnitude is not a difficulty axis for a
+  reasoning solver with an adequate token budget, so "harder numbers" is not an available lever.
+- **STEP 3 — R7 re-run, first time possible for D0/D1/D2** (probe_prepass now exists):
+  **D0 PASS (0.383)**, **D1 FAIL (0.967)**, **D2 FAIL (0.917)** at build #1. Diagnosis for
+  Charon, whose contract this is: D1's F-prom is same-domain by construction and D2's is
+  cross-domain by construction, so a mismatched null is separable on **topic vocabulary alone**
+  before any residue property is considered. **One rebuild, not two** — not INADMISSIBLE, owed a
+  build #2.
+- **STEPS 4–5 — not run, gated shut.**
+
+Three harness defects were caught by running rather than reading, each of which would have
+corrupted a pilot silently: `max_tokens=96` was **measuring itself** (43–100% "parse failure"
+was my own truncation, and it would have hit residue-bearing arms hardest — arm-correlated
+missing data); an unpaced thread pool took **216/252 HTTP429** and that ledger was discarded
+whole per R11; and small-sample leveling picked a level that was 18pp out of band on its full
+manifest.
+
+**Owed before the next attempt:** (1) co-signers rule on the band's form; (2) a difficulty axis
+that is not magnitude; (3) Charon's F-null build #2 for D1/D2.
+
+## 7b. METABOLIZATION PROBE — state of play (Ergon, 2026-08-14, superseded by §7c)
 
 **Status: everything Ergon owns is built and tested. The probe is blocked only on two supplier
 contracts and two co-signs.** Instrument work is done; no arm has executed and none will until

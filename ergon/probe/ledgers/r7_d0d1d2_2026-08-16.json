@@ -1,0 +1,32 @@
+{
+  "seed": 20260816,
+  "n_pairs": 30,
+  "ledger": "probe_prepass.jsonl",
+  "manifest": "manifest_L1_n126.jsonl",
+  "strata": {
+    "D0": {
+      "verdict": "R7-PASS",
+      "n_pairs": 30,
+      "classifier": 0.3833,
+      "ceiling": 0.55,
+      "strategy": "matched",
+      "redaction_inherited": true
+    },
+    "D1": {
+      "verdict": "R7-FAIL",
+      "n_pairs": 30,
+      "classifier": 0.9667,
+      "ceiling": 0.55,
+      "strategy": "matched",
+      "redaction_inherited": true
+    },
+    "D2": {
+      "verdict": "R7-FAIL",
+      "n_pairs": 30,
+      "classifier": 0.9167,
+      "ceiling": 0.55,
+      "strategy": "matched",
+      "redaction_inherited": true
+    }
+  }
+}
