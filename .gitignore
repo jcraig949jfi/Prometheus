@@ -367,5 +367,11 @@ apollo/run_branch_c_*/*
 apollo/run_recomb/*
 !apollo/run_recomb/novel_discovery.jsonl
 
+# 2026-08-15: Tier A wall-corpus RAW run output — 23 MB of evolve logs/checkpoints/
+# console captures across 28 runs. Deterministic (seed 20260815) and reproducible with
+# `python apollo/scripts/wall_corpus.py --all --gens 150`. The corpus ITSELF — the typed
+# records, the collated JSONL, the manifest — is ~1 MB and IS committed.
+apollo/wall_corpus/runs/
+
 # Ergon API probe logs (regenerable; results summarized in roles/Ergon/API_PREFLIGHT_*.md)
 ergon/probe_logs/*.log

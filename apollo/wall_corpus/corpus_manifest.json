@@ -1,0 +1,63 @@
+{
+  "n_records": 28,
+  "n_walls": 26,
+  "n_controls": 2,
+  "classes": {
+    "control_none": [
+      "CTRL-01",
+      "CTRL-02"
+    ],
+    "expressiveness_restricted": [
+      "EX-01",
+      "EX-02",
+      "EX-03",
+      "EX-04",
+      "EX-05",
+      "EX-06",
+      "EX-07",
+      "EX-08"
+    ],
+    "interface_bug": [
+      "IB-01",
+      "IB-02",
+      "IB-03",
+      "IB-04",
+      "IB-05",
+      "IB-06"
+    ],
+    "measurement_artifact": [
+      "MA-01",
+      "MA-02",
+      "MA-03",
+      "MA-04",
+      "MA-05",
+      "MA-06"
+    ],
+    "search_operator_removed": [
+      "SO-01",
+      "SO-02",
+      "SO-03",
+      "SO-04",
+      "SO-05",
+      "SO-06"
+    ]
+  },
+  "field_disposition": {
+    "f_oracle_shippable": [
+      "wall_id",
+      "wall_signature",
+      "oracle_diagnosis"
+    ],
+    "quarantined_answer_side": [
+      "answer_content",
+      "ablation_applied",
+      "failure_class"
+    ],
+    "never_shipped": [
+      "provenance",
+      "separability"
+    ]
+  },
+  "tight_separability": [],
+  "substrate_commit": "478fd644"
+}

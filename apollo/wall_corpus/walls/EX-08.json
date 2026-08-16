@@ -1,0 +1,141 @@
+{
+  "wall_id": "EX-08",
+  "failure_class": "expressiveness_restricted",
+  "ablation_applied": {
+    "kind": "remove_registry_ops",
+    "ops": [
+      "parse_rules"
+    ]
+  },
+  "wall_signature": {
+    "gens_run": 150,
+    "final_max_acc": 0.5,
+    "final_max_routable_acc": 0.429,
+    "final_portfolio_coverage": 0.5,
+    "final_per_subset": {
+      "canary": 0.6,
+      "synth": 1.0,
+      "inference": 0.0,
+      "cross_tier": 0.0
+    },
+    "subsets_unsolved": [
+      "cross_tier",
+      "inference"
+    ],
+    "subsets_solved": [
+      "synth"
+    ],
+    "gens_to_plateau": 24,
+    "plateau_fraction": 0.84,
+    "n_improvement_events": 5,
+    "improvement_curve": [
+      {
+        "gen": 1,
+        "max_acc": 0.208
+      },
+      {
+        "gen": 2,
+        "max_acc": 0.333
+      },
+      {
+        "gen": 6,
+        "max_acc": 0.417
+      },
+      {
+        "gen": 21,
+        "max_acc": 0.425
+      },
+      {
+        "gen": 24,
+        "max_acc": 0.5
+      }
+    ],
+    "final_archive_cells": 543,
+    "final_distinct_real_shapes": 509,
+    "cells_growth_after_plateau": 377,
+    "cells_per_gen_tail": 3.0,
+    "shape_inflation_ratio": 1.067,
+    "final_primitive_families": 19,
+    "final_n_dispatchers": 533,
+    "final_novel_multitier": 0,
+    "mutation_viability_mean": 1.0,
+    "mutation_viability_min": 1.0,
+    "best_pipeline_len_first": 4,
+    "best_pipeline_len_final": 11,
+    "best_pipeline_len_max": 14,
+    "final_best_n_load_bearing": 8,
+    "final_best_ccs": 0.4,
+    "dispatch_audit_final": {
+      "n_guards": 4,
+      "genuine_routing": false,
+      "branches": {
+        "score_by_aggregate__g": {
+          "load_bearing_for": [
+            "synth"
+          ],
+          "drops": {
+            "canary": 0.0,
+            "synth": 0.5,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        },
+        "select_nth__g": {
+          "load_bearing_for": [
+            "synth"
+          ],
+          "drops": {
+            "canary": 0.2,
+            "synth": 0.5,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        },
+        "score_by_extreme_number__g": {
+          "load_bearing_for": [],
+          "drops": {
+            "canary": 0.2,
+            "synth": 0.0,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        },
+        "score_by_comparison__g": {
+          "load_bearing_for": [],
+          "drops": {
+            "canary": 0.2,
+            "synth": 0.0,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        }
+      }
+    },
+    "genuine_routing_final": false,
+    "branches_load_bearing_for_nothing": [
+      "score_by_comparison__g",
+      "score_by_extreme_number__g"
+    ]
+  },
+  "oracle_diagnosis": "The inference operator is present and correct but runs on an empty rule set on every task, so it derives nothing and its consumer abstains. The failure is at the ingest step, not the inference step: nothing converts problem text into rules and asserted facts. The missing capability class is a rule/fact ingester.",
+  "answer_content": "Restore parse_rules (reads problem_text, writes rules+facts).",
+  "gens_to_plateau": 24,
+  "separability": "clean",
+  "provenance": {
+    "substrate": "apollo/src/blackboard_evolve.py",
+    "substrate_commit": "478fd644",
+    "harness": "apollo/scripts/wall_corpus.py",
+    "run_config": {
+      "mode": "deterministic",
+      "dispatch": true,
+      "crossover_frac": 0.3,
+      "pop_size": 24,
+      "seed": 20260815,
+      "log_every": 10
+    },
+    "gens": 150,
+    "wall_clock_s": 43.9,
+    "generated": "2026-08-15",
+    "generator": "Apollo (M2)"
+  }
+}

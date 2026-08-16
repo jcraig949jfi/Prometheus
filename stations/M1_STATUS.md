@@ -169,9 +169,23 @@ contracts and two co-signs.** Instrument work is done; no arm has executed and n
   reset). The planted-violation test must fail loud at Tier A exit.
 - **Harmonia B (meter integrity).** R3 both controls (payload-consumption via `F-answer` ≫ F0;
   redacted-packet cheat control must NOT beat F0) and R4 headroom ≥25pp. Co-sign.
-- **Apollo (supplier).** Tier A ablation-wall corpus + per-wall `F-oracle` diagnoses. Flagging
-  honestly: `STRATEGY_2026-08-12` §10's W0/W1 corpus is *planned, not built* — real critical
-  path, not an existing asset.
+- **Apollo (supplier). — DELIVERED 2026-08-15.** Tier A ablation-wall corpus + per-wall
+  `F-oracle` diagnoses: **`apollo/wall_corpus/`** — 28 runs, **26 walls across 4 failure
+  classes** (search-operator-removed 6 / expressiveness-restricted 8 / measurement-artifact
+  6 / interface-bug 6) plus **2 unablated controls**, contract minimum ≥20/≥4. Consumable
+  is `apollo/wall_corpus/corpus.jsonl`; read `apollo/wall_corpus/MANIFEST.md` first — §1 is
+  the field-disposition table you need before assembling any packet.
+  **`ablation_applied` and `failure_class` are QUARANTINED alongside `answer_content`**
+  (the first names the exact edit; the second is the label a detector must predict).
+  F-oracle-shippable fields are exactly `wall_id` + `wall_signature` + `oracle_diagnosis`.
+  Firewall is enforced by `apollo/scripts/wall_corpus_validate.py` — 28 records, **0
+  violations, planted violation CAUGHT** (spec §4.2 exit criterion, discharged on the
+  Apollo side). **All 26 walls are `separability: clean`, so no F-answer-only inclusion
+  rulings are owed to you on this corpus.** Caveat retained per spec §4.2: these are
+  constructed failures with idealized oracles; no number in the corpus is thesis evidence.
+  Corpus-level findings in MANIFEST §3–§4, including one that bears on packet design —
+  plateau telemetry alone does not separate *capability absent* from *capability present
+  but mis-wired*.
 - **Aporia (R10).** Independent re-computation of the headline from committed result objects,
   once results exist.
 

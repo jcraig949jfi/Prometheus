@@ -1,0 +1,80 @@
+{
+  "wall_id": "SO-02",
+  "failure_class": "search_operator_removed",
+  "ablation_applied": {
+    "kind": "withhold_mutation_move",
+    "move": "add_guard",
+    "compound": true,
+    "co_ablated": "crossover disabled (see corpus finding F1)"
+  },
+  "wall_signature": {
+    "gens_run": 150,
+    "final_max_acc": 0.375,
+    "final_max_routable_acc": 0.5,
+    "final_portfolio_coverage": 0.833,
+    "final_per_subset": {
+      "canary": 0.6,
+      "synth": 1.0,
+      "inference": 1.0,
+      "cross_tier": 1.0
+    },
+    "subsets_unsolved": [],
+    "subsets_solved": [
+      "cross_tier",
+      "inference",
+      "synth"
+    ],
+    "gens_to_plateau": 25,
+    "plateau_fraction": 0.833,
+    "n_improvement_events": 2,
+    "improvement_curve": [
+      {
+        "gen": 1,
+        "max_acc": 0.233
+      },
+      {
+        "gen": 25,
+        "max_acc": 0.375
+      }
+    ],
+    "final_archive_cells": 46,
+    "final_distinct_real_shapes": 44,
+    "cells_growth_after_plateau": 17,
+    "cells_per_gen_tail": 0.054,
+    "shape_inflation_ratio": 1.045,
+    "final_primitive_families": 13,
+    "final_n_dispatchers": 0,
+    "final_novel_multitier": 7,
+    "mutation_viability_mean": 1.0,
+    "mutation_viability_min": 1.0,
+    "best_pipeline_len_first": 3,
+    "best_pipeline_len_final": 7,
+    "best_pipeline_len_max": 7,
+    "final_best_n_load_bearing": 7,
+    "final_best_ccs": 0.292,
+    "dispatch_audit_final": null,
+    "genuine_routing_final": null,
+    "branches_load_bearing_for_nothing": []
+  },
+  "oracle_diagnosis": "Recombination is unavailable, so every organism must be built by single edits from its parent \u2014 and the one edit that appends a routing branch is also unavailable. Branch count is therefore frozen at whatever seeding supplied: bodies diversify normally while the distribution of branches-per-organism never moves. The missing capability class is a move that adds a routing branch to an existing organism.",
+  "answer_content": "Restore the add_guard mutation move.",
+  "gens_to_plateau": 25,
+  "separability": "clean",
+  "provenance": {
+    "substrate": "apollo/src/blackboard_evolve.py",
+    "substrate_commit": "478fd644",
+    "harness": "apollo/scripts/wall_corpus.py",
+    "run_config": {
+      "mode": "deterministic",
+      "dispatch": true,
+      "crossover_frac": 0.0,
+      "pop_size": 24,
+      "seed": 20260815,
+      "log_every": 10
+    },
+    "gens": 150,
+    "wall_clock_s": 29.1,
+    "generated": "2026-08-15",
+    "generator": "Apollo (M2)"
+  }
+}

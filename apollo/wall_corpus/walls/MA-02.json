@@ -1,0 +1,165 @@
+{
+  "wall_id": "MA-02",
+  "failure_class": "measurement_artifact",
+  "ablation_applied": {
+    "kind": "bend_descriptor",
+    "detail": "archive keyed on full op-set, not load-bearing core"
+  },
+  "wall_signature": {
+    "gens_run": 150,
+    "final_max_acc": 0.75,
+    "final_max_routable_acc": 1.0,
+    "final_portfolio_coverage": 0.833,
+    "final_per_subset": {
+      "canary": 0.6,
+      "synth": 1.0,
+      "inference": 1.0,
+      "cross_tier": 1.0
+    },
+    "subsets_unsolved": [],
+    "subsets_solved": [
+      "cross_tier",
+      "inference",
+      "synth"
+    ],
+    "gens_to_plateau": 137,
+    "plateau_fraction": 0.087,
+    "n_improvement_events": 9,
+    "improvement_curve": [
+      {
+        "gen": 1,
+        "max_acc": 0.233
+      },
+      {
+        "gen": 3,
+        "max_acc": 0.275
+      },
+      {
+        "gen": 4,
+        "max_acc": 0.442
+      },
+      {
+        "gen": 6,
+        "max_acc": 0.483
+      },
+      {
+        "gen": 7,
+        "max_acc": 0.533
+      },
+      {
+        "gen": 24,
+        "max_acc": 0.575
+      },
+      {
+        "gen": 38,
+        "max_acc": 0.658
+      },
+      {
+        "gen": 59,
+        "max_acc": 0.733
+      },
+      {
+        "gen": 137,
+        "max_acc": 0.75
+      }
+    ],
+    "final_archive_cells": 2712,
+    "final_distinct_real_shapes": 1553,
+    "cells_growth_after_plateau": 228,
+    "cells_per_gen_tail": 16.541,
+    "shape_inflation_ratio": 1.746,
+    "final_primitive_families": 20,
+    "final_n_dispatchers": 2398,
+    "final_novel_multitier": 15,
+    "mutation_viability_mean": 1.0,
+    "mutation_viability_min": 1.0,
+    "best_pipeline_len_first": 3,
+    "best_pipeline_len_final": 17,
+    "best_pipeline_len_max": 17,
+    "final_best_n_load_bearing": 10,
+    "final_best_ccs": 0.439,
+    "dispatch_audit_final": {
+      "n_guards": 5,
+      "genuine_routing": false,
+      "branches": {
+        "select_nth__g": {
+          "load_bearing_for": [
+            "synth"
+          ],
+          "drops": {
+            "canary": 0.2,
+            "synth": 0.5,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        },
+        "score_by_comparison__g": {
+          "load_bearing_for": [],
+          "drops": {
+            "canary": 0.2,
+            "synth": 0.0,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        },
+        "score_by_extreme_number__g": {
+          "load_bearing_for": [],
+          "drops": {
+            "canary": 0.2,
+            "synth": 0.0,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        },
+        "score_by_derivability__g": {
+          "load_bearing_for": [
+            "inference",
+            "cross_tier"
+          ],
+          "drops": {
+            "canary": 0.0,
+            "synth": 0.0,
+            "inference": 1.0,
+            "cross_tier": 0.4
+          }
+        },
+        "score_by_aggregate__g": {
+          "load_bearing_for": [],
+          "drops": {
+            "canary": 0.0,
+            "synth": 0.2,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        }
+      }
+    },
+    "genuine_routing_final": false,
+    "branches_load_bearing_for_nothing": [
+      "score_by_aggregate__g",
+      "score_by_comparison__g",
+      "score_by_extreme_number__g"
+    ]
+  },
+  "oracle_diagnosis": "Archive cell count grows without bound while the number of behaviourally distinct organisms does not, and the best score is flat throughout. Cells are being distinguished by a property that includes causally inert operators, so one behaviour occupies many cells, and selection pressure is diluted across duplicates of the same organism. The defect is in the archive's identity function.",
+  "answer_content": "Key the descriptor on the load-bearing core (lb_ops), not the full pipeline.",
+  "gens_to_plateau": 137,
+  "separability": "clean",
+  "provenance": {
+    "substrate": "apollo/src/blackboard_evolve.py",
+    "substrate_commit": "478fd644",
+    "harness": "apollo/scripts/wall_corpus.py",
+    "run_config": {
+      "mode": "deterministic",
+      "dispatch": true,
+      "crossover_frac": 0.3,
+      "pop_size": 24,
+      "seed": 20260815,
+      "log_every": 10
+    },
+    "gens": 150,
+    "wall_clock_s": 58.3,
+    "generated": "2026-08-15",
+    "generator": "Apollo (M2)"
+  }
+}

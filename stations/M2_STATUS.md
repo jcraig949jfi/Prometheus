@@ -157,6 +157,55 @@ run; none should be settled by argument.
 
 ---
 
+## 7. Apollo — Tier A wall corpus DELIVERED (2026-08-15)
+
+The metabolization probe's longest lead item (`stations/M1_STATUS.md` §7b, flagged there
+as *"planned, not built — real critical path"*) is **built, validated and committed.**
+
+**`apollo/wall_corpus/`** — 28 runs: **26 ablation walls across 4 failure classes** plus
+2 unablated controls. Contract minimum was ≥20 / ≥4. Docs: `apollo/wall_corpus/MANIFEST.md`.
+Harness `apollo/scripts/wall_corpus.py`; validator `apollo/scripts/wall_corpus_validate.py`
+(**28 records, 0 firewall violations, planted violation CAUGHT**).
+
+- **F-answer / F-oracle split is enforced, not asserted.** Oracles are cause-only; the
+  validator rejects any oracle naming a registered operator or using a repair verb, and
+  fails loud on a planted violation (spec §4.2 exit criterion). `ablation_applied` is
+  quarantined alongside `answer_content` — it names the exact edit, so it is answer
+  content in provenance clothing. All 26 walls are `separability: clean`, so **Ergon has
+  no F-answer-only inclusion rulings owed on this corpus.**
+- **Heredity rule honoured.** The harness never edits the substrate: ablations rebind
+  module globals on a freshly imported `blackboard_evolve` in a throwaway subprocess.
+  `blackboard_evolve.py`, `blackboard.py`, `blackboard_ops_*` are unmodified on disk.
+  Move-withholding rejection-samples the substrate's own mutator rather than reimplementing it.
+- **Type-bridge experiment remains PARKED** — corpus supply only, per contract.
+
+**Three findings that are results, not bookkeeping:**
+
+- **Withholding any single mutation move produces NO wall while crossover is on.** Four
+  ablations hit *exact* control parity (0.833/1.000/0.833) and were re-specified as
+  compound. An independent replication, from the ablation side, of the 2026-06-16
+  recombination result: recombination is what makes this substrate searchable.
+- **The routing-purity guard is inert under dispatch mode** — removing it produced
+  telemetry byte-identical to control, because the guarded-only scorer pool already
+  prevents the hybrids purity was written to punish. Belt-and-braces, not load-bearing.
+- **Plateau telemetry cannot separate *capability absent* from *capability present but
+  mis-wired*.** The per-branch ablation audit — the feature I expected to do it — reads
+  identically for a deleted producer and a mis-keyed guard. Separation needed an indirect
+  proxy for registry state. This is the program's representational-vs-interface problem
+  reappearing as a measurement problem inside Apollo.
+
+**Apollo's queue behind this (unchanged):** crossover classification call (addendum-A §3),
+`genuine_routing` debt, ladder v0.2 clause-(c) audit.
+
+**Tier A caveat, restated because it is easy to lose:** no number in this corpus is
+thesis evidence. Constructed failures are idealized and their oracles are cleaner than
+real residue will ever be — which is exactly why Tier A was demoted to harness
+qualification. Permitted vocabulary remains `HARNESS_ADMISSIBLE` / `HARNESS_NOT_ADMISSIBLE`.
+
+---
+
 *M2 reports under the failure-signature doctrine: shapes, not verdict lines. The
-station's most useful output today was four executed kills, two of them against its
-own point agent's proposals. Updated by Harmonia A, 2026-08-12.*
+station's most useful output on 2026-08-12 was four executed kills, two of them against
+its own point agent's proposals; on 2026-08-15, Apollo's corpus shipped with three of its
+own wall specifications killed by their own telemetry before release. Updated by
+Harmonia A 2026-08-12, Apollo 2026-08-15.*

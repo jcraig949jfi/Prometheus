@@ -1,0 +1,158 @@
+{
+  "wall_id": "EX-07",
+  "failure_class": "expressiveness_restricted",
+  "ablation_applied": {
+    "kind": "remove_registry_ops",
+    "ops": [
+      "op_aggregate_quantities"
+    ]
+  },
+  "wall_signature": {
+    "gens_run": 150,
+    "final_max_acc": 0.758,
+    "final_max_routable_acc": 0.871,
+    "final_portfolio_coverage": 0.758,
+    "final_per_subset": {
+      "canary": 0.6,
+      "synth": 0.7,
+      "inference": 1.0,
+      "cross_tier": 1.0
+    },
+    "subsets_unsolved": [],
+    "subsets_solved": [
+      "cross_tier",
+      "inference"
+    ],
+    "gens_to_plateau": 58,
+    "plateau_fraction": 0.613,
+    "n_improvement_events": 7,
+    "improvement_curve": [
+      {
+        "gen": 1,
+        "max_acc": 0.233
+      },
+      {
+        "gen": 2,
+        "max_acc": 0.333
+      },
+      {
+        "gen": 6,
+        "max_acc": 0.542
+      },
+      {
+        "gen": 9,
+        "max_acc": 0.575
+      },
+      {
+        "gen": 14,
+        "max_acc": 0.658
+      },
+      {
+        "gen": 31,
+        "max_acc": 0.675
+      },
+      {
+        "gen": 58,
+        "max_acc": 0.758
+      }
+    ],
+    "final_archive_cells": 687,
+    "final_distinct_real_shapes": 655,
+    "cells_growth_after_plateau": 303,
+    "cells_per_gen_tail": 3.189,
+    "shape_inflation_ratio": 1.049,
+    "final_primitive_families": 19,
+    "final_n_dispatchers": 675,
+    "final_novel_multitier": 156,
+    "mutation_viability_mean": 1.0,
+    "mutation_viability_min": 1.0,
+    "best_pipeline_len_first": 8,
+    "best_pipeline_len_final": 14,
+    "best_pipeline_len_max": 14,
+    "final_best_n_load_bearing": 9,
+    "final_best_ccs": 0.6,
+    "dispatch_audit_final": {
+      "n_guards": 5,
+      "genuine_routing": false,
+      "branches": {
+        "score_by_extreme_number__g": {
+          "load_bearing_for": [],
+          "drops": {
+            "canary": 0.2,
+            "synth": 0.0,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        },
+        "score_by_derivability__g": {
+          "load_bearing_for": [
+            "inference"
+          ],
+          "drops": {
+            "canary": 0.0,
+            "synth": 0.0,
+            "inference": 1.0,
+            "cross_tier": 0.0
+          }
+        },
+        "score_by_comparison__g": {
+          "load_bearing_for": [],
+          "drops": {
+            "canary": 0.2,
+            "synth": 0.0,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        },
+        "select_nth__g": {
+          "load_bearing_for": [
+            "synth",
+            "cross_tier"
+          ],
+          "drops": {
+            "canary": 0.2,
+            "synth": 0.5,
+            "inference": 0.0,
+            "cross_tier": 1.0
+          }
+        },
+        "score_by_aggregate__g": {
+          "load_bearing_for": [],
+          "drops": {
+            "canary": 0.0,
+            "synth": 0.2,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        }
+      }
+    },
+    "genuine_routing_final": false,
+    "branches_load_bearing_for_nothing": [
+      "score_by_aggregate__g",
+      "score_by_comparison__g",
+      "score_by_extreme_number__g"
+    ]
+  },
+  "oracle_diagnosis": "Per-item counts are parsed into state but never reduced: the terminal that keys on an aggregate finds only the raw per-item mapping and abstains. Tasks requiring a total over parsed items are unsolved while single-item lookups succeed. The missing capability class is a reducer over a counts mapping.",
+  "answer_content": "Restore op_aggregate_quantities.",
+  "gens_to_plateau": 58,
+  "separability": "clean",
+  "provenance": {
+    "substrate": "apollo/src/blackboard_evolve.py",
+    "substrate_commit": "478fd644",
+    "harness": "apollo/scripts/wall_corpus.py",
+    "run_config": {
+      "mode": "deterministic",
+      "dispatch": true,
+      "crossover_frac": 0.3,
+      "pop_size": 24,
+      "seed": 20260815,
+      "log_every": 10
+    },
+    "gens": 150,
+    "wall_clock_s": 70.7,
+    "generated": "2026-08-15",
+    "generator": "Apollo (M2)"
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "wall_id": "EX-06",
+  "failure_class": "expressiveness_restricted",
+  "ablation_applied": {
+    "kind": "remove_registry_ops",
+    "ops": [
+      "select_nth__g"
+    ]
+  },
+  "wall_signature": {
+    "gens_run": 150,
+    "final_max_acc": 0.525,
+    "final_max_routable_acc": 0.657,
+    "final_portfolio_coverage": 0.567,
+    "final_per_subset": {
+      "canary": 0.44,
+      "synth": 0.6,
+      "inference": 1.0,
+      "cross_tier": 0.4
+    },
+    "subsets_unsolved": [],
+    "subsets_solved": [
+      "inference"
+    ],
+    "gens_to_plateau": 13,
+    "plateau_fraction": 0.913,
+    "n_improvement_events": 5,
+    "improvement_curve": [
+      {
+        "gen": 1,
+        "max_acc": 0.233
+      },
+      {
+        "gen": 2,
+        "max_acc": 0.358
+      },
+      {
+        "gen": 7,
+        "max_acc": 0.367
+      },
+      {
+        "gen": 10,
+        "max_acc": 0.442
+      },
+      {
+        "gen": 13,
+        "max_acc": 0.525
+      }
+    ],
+    "final_archive_cells": 282,
+    "final_distinct_real_shapes": 272,
+    "cells_growth_after_plateau": 202,
+    "cells_per_gen_tail": 0.568,
+    "shape_inflation_ratio": 1.037,
+    "final_primitive_families": 17,
+    "final_n_dispatchers": 273,
+    "final_novel_multitier": 0,
+    "mutation_viability_mean": 1.0,
+    "mutation_viability_min": 1.0,
+    "best_pipeline_len_first": 3,
+    "best_pipeline_len_final": 10,
+    "best_pipeline_len_max": 12,
+    "final_best_n_load_bearing": 8,
+    "final_best_ccs": 0.467,
+    "dispatch_audit_final": {
+      "n_guards": 4,
+      "genuine_routing": false,
+      "branches": {
+        "score_by_aggregate__g": {
+          "load_bearing_for": [
+            "synth"
+          ],
+          "drops": {
+            "canary": 0.0,
+            "synth": 0.5,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        },
+        "score_by_derivability__g": {
+          "load_bearing_for": [
+            "inference",
+            "cross_tier"
+          ],
+          "drops": {
+            "canary": 0.0,
+            "synth": 0.0,
+            "inference": 1.0,
+            "cross_tier": 0.4
+          }
+        },
+        "score_by_comparison__g": {
+          "load_bearing_for": [],
+          "drops": {
+            "canary": 0.2,
+            "synth": 0.0,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        },
+        "score_by_extreme_number__g": {
+          "load_bearing_for": [],
+          "drops": {
+            "canary": 0.2,
+            "synth": 0.0,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        }
+      }
+    },
+    "genuine_routing_final": false,
+    "branches_load_bearing_for_nothing": [
+      "score_by_comparison__g",
+      "score_by_extreme_number__g"
+    ]
+  },
+  "oracle_diagnosis": "The ordered slot is populated correctly on ranking tasks and can be inspected, but no terminal converts a position in that sequence into a selected answer. Ranking tasks fail at the final step rather than the reasoning step. The missing capability class is a positional selector over an ordered sequence.",
+  "answer_content": "Restore select_nth__g.",
+  "gens_to_plateau": 13,
+  "separability": "clean",
+  "provenance": {
+    "substrate": "apollo/src/blackboard_evolve.py",
+    "substrate_commit": "478fd644",
+    "harness": "apollo/scripts/wall_corpus.py",
+    "run_config": {
+      "mode": "deterministic",
+      "dispatch": true,
+      "crossover_frac": 0.3,
+      "pop_size": 24,
+      "seed": 20260815,
+      "log_every": 10
+    },
+    "gens": 150,
+    "wall_clock_s": 64.9,
+    "generated": "2026-08-15",
+    "generator": "Apollo (M2)"
+  }
+}

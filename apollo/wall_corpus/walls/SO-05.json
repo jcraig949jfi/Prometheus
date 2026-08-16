@@ -1,0 +1,151 @@
+{
+  "wall_id": "SO-05",
+  "failure_class": "search_operator_removed",
+  "ablation_applied": {
+    "kind": "withhold_mutation_move",
+    "move": "swap_scorer",
+    "compound": true,
+    "co_ablated": "crossover disabled (see corpus finding F1)"
+  },
+  "wall_signature": {
+    "gens_run": 150,
+    "final_max_acc": 0.542,
+    "final_max_routable_acc": 0.786,
+    "final_portfolio_coverage": 0.833,
+    "final_per_subset": {
+      "canary": 0.6,
+      "synth": 1.0,
+      "inference": 1.0,
+      "cross_tier": 1.0
+    },
+    "subsets_unsolved": [],
+    "subsets_solved": [
+      "cross_tier",
+      "inference",
+      "synth"
+    ],
+    "gens_to_plateau": 47,
+    "plateau_fraction": 0.687,
+    "n_improvement_events": 5,
+    "improvement_curve": [
+      {
+        "gen": 1,
+        "max_acc": 0.233
+      },
+      {
+        "gen": 2,
+        "max_acc": 0.333
+      },
+      {
+        "gen": 17,
+        "max_acc": 0.342
+      },
+      {
+        "gen": 35,
+        "max_acc": 0.375
+      },
+      {
+        "gen": 47,
+        "max_acc": 0.542
+      }
+    ],
+    "final_archive_cells": 511,
+    "final_distinct_real_shapes": 478,
+    "cells_growth_after_plateau": 277,
+    "cells_per_gen_tail": 1.973,
+    "shape_inflation_ratio": 1.069,
+    "final_primitive_families": 18,
+    "final_n_dispatchers": 490,
+    "final_novel_multitier": 60,
+    "mutation_viability_mean": 1.0,
+    "mutation_viability_min": 1.0,
+    "best_pipeline_len_first": 3,
+    "best_pipeline_len_final": 11,
+    "best_pipeline_len_max": 11,
+    "final_best_n_load_bearing": 7,
+    "final_best_ccs": 0.421,
+    "dispatch_audit_final": {
+      "n_guards": 5,
+      "genuine_routing": false,
+      "branches": {
+        "select_nth__g": {
+          "load_bearing_for": [
+            "synth",
+            "cross_tier"
+          ],
+          "drops": {
+            "canary": 0.2,
+            "synth": 0.5,
+            "inference": 0.0,
+            "cross_tier": 1.0
+          }
+        },
+        "score_by_extreme_number__g": {
+          "load_bearing_for": [],
+          "drops": {
+            "canary": 0.0,
+            "synth": 0.0,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        },
+        "score_by_aggregate__g": {
+          "load_bearing_for": [],
+          "drops": {
+            "canary": 0.0,
+            "synth": 0.0,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        },
+        "score_by_comparison__g": {
+          "load_bearing_for": [],
+          "drops": {
+            "canary": 0.0,
+            "synth": 0.0,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        },
+        "score_by_derivability__g": {
+          "load_bearing_for": [
+            "inference"
+          ],
+          "drops": {
+            "canary": 0.0,
+            "synth": 0.0,
+            "inference": 1.0,
+            "cross_tier": 0.0
+          }
+        }
+      }
+    },
+    "genuine_routing_final": false,
+    "branches_load_bearing_for_nothing": [
+      "score_by_aggregate__g",
+      "score_by_comparison__g",
+      "score_by_extreme_number__g"
+    ]
+  },
+  "oracle_diagnosis": "Recombination is unavailable and no edit exchanges a terminal, so each lineage is locked to the terminal it was seeded with. Bodies diversify normally while the distribution of terminals is frozen, so a body that would score well under a different terminal never meets one. The missing capability class is a move that exchanges an organism's terminal.",
+  "answer_content": "Restore the swap_scorer mutation move.",
+  "gens_to_plateau": 47,
+  "separability": "clean",
+  "provenance": {
+    "substrate": "apollo/src/blackboard_evolve.py",
+    "substrate_commit": "478fd644",
+    "harness": "apollo/scripts/wall_corpus.py",
+    "run_config": {
+      "mode": "deterministic",
+      "dispatch": true,
+      "crossover_frac": 0.0,
+      "pop_size": 24,
+      "seed": 20260815,
+      "log_every": 10
+    },
+    "gens": 150,
+    "wall_clock_s": 26.6,
+    "generated": "2026-08-15",
+    "generator": "Apollo (M2)"
+  }
+}

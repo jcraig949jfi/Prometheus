@@ -1,0 +1,151 @@
+{
+  "wall_id": "IB-06",
+  "failure_class": "interface_bug",
+  "ablation_applied": {
+    "kind": "shadow_op",
+    "op": "parse_comparison",
+    "detail": "writes its result into `evidence` instead of the slot its consumer reads"
+  },
+  "wall_signature": {
+    "gens_run": 150,
+    "final_max_acc": 0.75,
+    "final_max_routable_acc": 1.0,
+    "final_portfolio_coverage": 0.75,
+    "final_per_subset": {
+      "canary": 0.4,
+      "synth": 1.0,
+      "inference": 1.0,
+      "cross_tier": 1.0
+    },
+    "subsets_unsolved": [],
+    "subsets_solved": [
+      "cross_tier",
+      "inference",
+      "synth"
+    ],
+    "gens_to_plateau": 10,
+    "plateau_fraction": 0.933,
+    "n_improvement_events": 5,
+    "improvement_curve": [
+      {
+        "gen": 1,
+        "max_acc": 0.233
+      },
+      {
+        "gen": 2,
+        "max_acc": 0.442
+      },
+      {
+        "gen": 4,
+        "max_acc": 0.567
+      },
+      {
+        "gen": 6,
+        "max_acc": 0.65
+      },
+      {
+        "gen": 10,
+        "max_acc": 0.75
+      }
+    ],
+    "final_archive_cells": 853,
+    "final_distinct_real_shapes": 811,
+    "cells_growth_after_plateau": 729,
+    "cells_per_gen_tail": 4.027,
+    "shape_inflation_ratio": 1.052,
+    "final_primitive_families": 20,
+    "final_n_dispatchers": 834,
+    "final_novel_multitier": 183,
+    "mutation_viability_mean": 1.0,
+    "mutation_viability_min": 1.0,
+    "best_pipeline_len_first": 3,
+    "best_pipeline_len_final": 13,
+    "best_pipeline_len_max": 16,
+    "final_best_n_load_bearing": 10,
+    "final_best_ccs": 0.542,
+    "dispatch_audit_final": {
+      "n_guards": 5,
+      "genuine_routing": false,
+      "branches": {
+        "score_by_derivability__g": {
+          "load_bearing_for": [
+            "inference",
+            "cross_tier"
+          ],
+          "drops": {
+            "canary": 0.0,
+            "synth": 0.0,
+            "inference": 1.0,
+            "cross_tier": 0.4
+          }
+        },
+        "select_nth__g": {
+          "load_bearing_for": [
+            "synth"
+          ],
+          "drops": {
+            "canary": 0.2,
+            "synth": 0.5,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        },
+        "score_by_extreme_number__g": {
+          "load_bearing_for": [],
+          "drops": {
+            "canary": 0.2,
+            "synth": 0.0,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        },
+        "score_by_aggregate__g": {
+          "load_bearing_for": [
+            "synth"
+          ],
+          "drops": {
+            "canary": 0.0,
+            "synth": 0.5,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        },
+        "score_by_comparison__g": {
+          "load_bearing_for": [],
+          "drops": {
+            "canary": 0.0,
+            "synth": 0.0,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        }
+      }
+    },
+    "genuine_routing_final": false,
+    "branches_load_bearing_for_nothing": [
+      "score_by_comparison__g",
+      "score_by_extreme_number__g"
+    ]
+  },
+  "oracle_diagnosis": "A parser executes on the right tasks and extracts the right value, but its consumer abstains on every one of them. The value is deposited in a different slot than the one the consumer keys on; both slots exist and neither operator errors. The two halves of the branch disagree about where the intermediate value lives.",
+  "answer_content": "Write to `comparison`, the slot score_by_comparison__g reads.",
+  "gens_to_plateau": 10,
+  "separability": "clean",
+  "provenance": {
+    "substrate": "apollo/src/blackboard_evolve.py",
+    "substrate_commit": "478fd644",
+    "harness": "apollo/scripts/wall_corpus.py",
+    "run_config": {
+      "mode": "deterministic",
+      "dispatch": true,
+      "crossover_frac": 0.3,
+      "pop_size": 24,
+      "seed": 20260815,
+      "log_every": 10
+    },
+    "gens": 150,
+    "wall_clock_s": 83.8,
+    "generated": "2026-08-15",
+    "generator": "Apollo (M2)"
+  }
+}

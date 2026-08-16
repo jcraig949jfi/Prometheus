@@ -1,0 +1,142 @@
+{
+  "wall_id": "EX-05",
+  "failure_class": "expressiveness_restricted",
+  "ablation_applied": {
+    "kind": "remove_registry_ops",
+    "ops": [
+      "parse_box_items"
+    ]
+  },
+  "wall_signature": {
+    "gens_run": 150,
+    "final_max_acc": 0.708,
+    "final_max_routable_acc": 0.786,
+    "final_portfolio_coverage": 0.708,
+    "final_per_subset": {
+      "canary": 0.6,
+      "synth": 0.5,
+      "inference": 1.0,
+      "cross_tier": 1.0
+    },
+    "subsets_unsolved": [],
+    "subsets_solved": [
+      "cross_tier",
+      "inference"
+    ],
+    "gens_to_plateau": 66,
+    "plateau_fraction": 0.56,
+    "n_improvement_events": 3,
+    "improvement_curve": [
+      {
+        "gen": 1,
+        "max_acc": 0.542
+      },
+      {
+        "gen": 22,
+        "max_acc": 0.625
+      },
+      {
+        "gen": 66,
+        "max_acc": 0.708
+      }
+    ],
+    "final_archive_cells": 591,
+    "final_distinct_real_shapes": 565,
+    "cells_growth_after_plateau": 280,
+    "cells_per_gen_tail": 3.108,
+    "shape_inflation_ratio": 1.046,
+    "final_primitive_families": 19,
+    "final_n_dispatchers": 581,
+    "final_novel_multitier": 59,
+    "mutation_viability_mean": 1.0,
+    "mutation_viability_min": 1.0,
+    "best_pipeline_len_first": 8,
+    "best_pipeline_len_final": 12,
+    "best_pipeline_len_max": 16,
+    "final_best_n_load_bearing": 8,
+    "final_best_ccs": 0.5,
+    "dispatch_audit_final": {
+      "n_guards": 5,
+      "genuine_routing": false,
+      "branches": {
+        "score_by_derivability__g": {
+          "load_bearing_for": [
+            "inference"
+          ],
+          "drops": {
+            "canary": 0.0,
+            "synth": 0.0,
+            "inference": 1.0,
+            "cross_tier": 0.0
+          }
+        },
+        "select_nth__g": {
+          "load_bearing_for": [
+            "synth",
+            "cross_tier"
+          ],
+          "drops": {
+            "canary": 0.2,
+            "synth": 0.5,
+            "inference": 0.0,
+            "cross_tier": 1.0
+          }
+        },
+        "score_by_extreme_number__g": {
+          "load_bearing_for": [],
+          "drops": {
+            "canary": 0.0,
+            "synth": 0.0,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        },
+        "score_by_aggregate__g": {
+          "load_bearing_for": [],
+          "drops": {
+            "canary": 0.0,
+            "synth": 0.0,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        },
+        "score_by_comparison__g": {
+          "load_bearing_for": [],
+          "drops": {
+            "canary": 0.2,
+            "synth": 0.0,
+            "inference": 0.0,
+            "cross_tier": 0.0
+          }
+        }
+      }
+    },
+    "genuine_routing_final": false,
+    "branches_load_bearing_for_nothing": [
+      "score_by_aggregate__g",
+      "score_by_comparison__g",
+      "score_by_extreme_number__g"
+    ]
+  },
+  "oracle_diagnosis": "A registered terminal keys its guard on the counts slot, and a registered transformer aggregates that slot, but nothing populates it from the problem text. The whole downstream chain is therefore inert on every task and the branch is decorative wherever it appears. The missing capability class is a counts-writer.",
+  "answer_content": "Restore parse_box_items (reads problem_text, writes counts).",
+  "gens_to_plateau": 66,
+  "separability": "clean",
+  "provenance": {
+    "substrate": "apollo/src/blackboard_evolve.py",
+    "substrate_commit": "478fd644",
+    "harness": "apollo/scripts/wall_corpus.py",
+    "run_config": {
+      "mode": "deterministic",
+      "dispatch": true,
+      "crossover_frac": 0.3,
+      "pop_size": 24,
+      "seed": 20260815,
+      "log_every": 10
+    },
+    "gens": 150,
+    "wall_clock_s": 55.1,
+    "generated": "2026-08-15",
+    "generator": "Apollo (M2)"
+  }
+}

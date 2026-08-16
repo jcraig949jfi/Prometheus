@@ -2,6 +2,61 @@
 
 **Updated:** 2026-08-12 · **Identity:** see `roles/Apollo/CHARTER.md`
 
+## 2026-08-15 — TIER A WALL CORPUS DELIVERED (the probe's critical path)
+
+`apollo/wall_corpus/` — **28 runs: 26 walls across 4 failure classes + 2 controls**
+(contract ≥20/≥4). Harness `apollo/scripts/wall_corpus.py`, validator
+`apollo/scripts/wall_corpus_validate.py` (**0 firewall violations, planted violation
+CAUGHT**). Read `apollo/wall_corpus/MANIFEST.md` §1 before assembling any packet —
+`ablation_applied` and `failure_class` are QUARANTINED with `answer_content`.
+
+Heredity rule honoured: ablations rebind module globals on an imported
+`blackboard_evolve` in a subprocess. **The substrate is unmodified on disk.**
+Type-bridge experiment stays PARKED.
+
+**Three walls were killed by their own telemetry before release** — always check an
+ablation actually walls before writing its diagnosis:
+- Withholding any single mutation move → **no wall** while crossover is on (4/4 at exact
+  control parity). Re-specified as compound. Replicates the 2026-06-16 recombination
+  finding from the ablation side.
+- Removing `routing_purity` → telemetry **byte-identical to control**; the guarded-only
+  scorer pool already prevents the hybrids it punishes. Inert guard.
+- Plateau telemetry **cannot** separate *capability absent* from *capability present but
+  mis-wired* — the per-branch audit reads identically for both. MANIFEST §4.
+
+**Queue (unchanged):** crossover classification call (addendum-A §3) · `genuine_routing`
+debt · ladder v0.2 clause-(c) audit.
+
+## 2026-08-13 — FREEZE (LIFTED 2026-08-15 for the probe contract). Roadmap CORRECTIONS below.
+
+**Freeze in place** (James 2026-08-13; cf. `stations/M2_STATUS.md` "no hard decisions
+until ~2026-08-14"). Documentation only — no code changes, no runs, no structural moves.
+
+**`D:\Prometheus\pivot\STRATEGY_2026-08-12_ADDENDUM_A_panel_reconciliation.md`** —
+reconciles the roadmap against the Harmonia four-lens panel. **Four roadmap claims are
+falsified; read it before acting on the roadmap.** Headlines:
+
+- **Ladder R4 and R9–R12 DO NOT EXIST** (`grading_oracle.py:60` `TIER_GENS` =
+  R0,R1,R2,R3,R5,R6,R7,R8). **Apollo's charter target "R9" aims at a tier with no grader.**
+- **M0's "0% type-II" is a fossil** — `verify()` DOES certify true claims wrong
+  (160/160 at R5/R7/R8). Roadmap §1's "fails silent" inference is withdrawn.
+- **"Program stopped 2026-06-27" was a stale-clone artifact** (~281 commits behind
+  origin). Real split: 271 commits, 270 automated, 1 substantive. Rule: repo state ≠
+  program state — run the concurrency check first.
+- **Do not rebuild the coverage measure.** `harmonia/diagnostics/lane_exhaustion_audit.py`
+  exists and **already fires on Apollo** (5 kills, `evolutionary_search`, crossed 05-24).
+
+**Two things owed by Apollo, both parked until the freeze lifts:**
+1. **The crossover classification call** — `search_operator` (exhaustion fires) vs part of
+   `evolutionary_search` (Apollo goes silent). Apollo's owner decides; current lean =
+   fires. Addendum §3.
+2. **Apollo reviewed from inside** — the panel notes every Apollo claim on record was made
+   from outside it. Addendum §4.
+
+**W1 amendment:** the wall-type detector must ship with a **positive control** (walls
+known to be present), not just the negative direction — else "no wall detected" cannot be
+distinguished from a broken detector.
+
 ## 2026-08-12 — PROGRAM STRATEGY SET. Read the roadmap before touching Apollo.
 
 **`D:\Prometheus\pivot\STRATEGY_2026-08-12_resumption_and_roadmap.md`** is the live

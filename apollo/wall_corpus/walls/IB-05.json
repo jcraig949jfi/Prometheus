@@ -1,0 +1,78 @@
+{
+  "wall_id": "IB-05",
+  "failure_class": "interface_bug",
+  "ablation_applied": {
+    "kind": "rebind_on_fail",
+    "detail": "guarded scorers use on_fail='error' instead of 'skip'"
+  },
+  "wall_signature": {
+    "gens_run": 150,
+    "final_max_acc": 0.375,
+    "final_max_routable_acc": 0.5,
+    "final_portfolio_coverage": 0.75,
+    "final_per_subset": {
+      "canary": 0.4,
+      "synth": 1.0,
+      "inference": 1.0,
+      "cross_tier": 1.0
+    },
+    "subsets_unsolved": [],
+    "subsets_solved": [
+      "cross_tier",
+      "inference",
+      "synth"
+    ],
+    "gens_to_plateau": 23,
+    "plateau_fraction": 0.847,
+    "n_improvement_events": 2,
+    "improvement_curve": [
+      {
+        "gen": 1,
+        "max_acc": 0.233
+      },
+      {
+        "gen": 23,
+        "max_acc": 0.375
+      }
+    ],
+    "final_archive_cells": 69,
+    "final_distinct_real_shapes": 42,
+    "cells_growth_after_plateau": 24,
+    "cells_per_gen_tail": 0.108,
+    "shape_inflation_ratio": 1.643,
+    "final_primitive_families": 11,
+    "final_n_dispatchers": 26,
+    "final_novel_multitier": 15,
+    "mutation_viability_mean": 1.0,
+    "mutation_viability_min": 1.0,
+    "best_pipeline_len_first": 3,
+    "best_pipeline_len_final": 7,
+    "best_pipeline_len_max": 8,
+    "final_best_n_load_bearing": 7,
+    "final_best_ccs": 0.292,
+    "dispatch_audit_final": null,
+    "genuine_routing_final": null,
+    "branches_load_bearing_for_nothing": []
+  },
+  "oracle_diagnosis": "Multi-branch organisms score far below their own single-branch parents. A branch whose guard does not apply to the current task terminates the whole pipeline instead of standing aside, so adding any branch strictly harms the organism and routing is impossible to assemble. The defect is the declared behaviour of a branch on inapplicable input.",
+  "answer_content": "Set on_fail='skip' for guarded scorers.",
+  "gens_to_plateau": 23,
+  "separability": "clean",
+  "provenance": {
+    "substrate": "apollo/src/blackboard_evolve.py",
+    "substrate_commit": "478fd644",
+    "harness": "apollo/scripts/wall_corpus.py",
+    "run_config": {
+      "mode": "deterministic",
+      "dispatch": true,
+      "crossover_frac": 0.3,
+      "pop_size": 24,
+      "seed": 20260815,
+      "log_every": 10
+    },
+    "gens": 150,
+    "wall_clock_s": 21.9,
+    "generated": "2026-08-15",
+    "generator": "Apollo (M2)"
+  }
+}
