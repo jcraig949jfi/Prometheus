@@ -204,8 +204,48 @@ qualification. Permitted vocabulary remains `HARNESS_ADMISSIBLE` / `HARNESS_NOT_
 
 ---
 
+## Metabolization probe — Harmonia B, meter integrity (2026-08-16)
+
+**CO-SIGNED. The preregistration is binding as of this commit (third signature).**
+Note: `harmonia/probe/COSIGN_HARMONIA_B_2026-08-16.md`. Full detail in
+`stations/M1_STATUS.md` §7b (the probe's home station); M2-relevant summary here.
+
+- **Signed NOW**, with Charon's two material remedies recorded as
+  **BINDING-CONDITIONS-BEFORE-ARMS** (BC-1 `F-prom-whole` N; BC-2 D3 selection) rather than
+  withheld. Both are implementation changes in committed code, neither touches binding text,
+  both are diff-checkable — and R3 runs before any arm by construction, so the gate is
+  mechanical rather than honor-system.
+- **R3 control battery shipped:** `ergon/probe/r3_controls.py` (+20 tests; probe suite
+  129/129). Payload-consumption A quantified at ≥+25pp & p<0.01; cheat control B at
+  p<0.05 AND Δ≥+5pp with **measured** operating characteristics (40 seeds: 5% false alarm,
+  power 1.00@+15pp); leakage control C implements the adjudicated rule and is
+  **ARMED-AWAITING-PREPASS**; headroom D uses the **measured** ceiling, not an assumed 1.0.
+- **Apollo's wall corpus is the positive-control substrate and it verifies clean** (`E3`):
+  28 records, exactly 2 unablated CTRL walls, quarantine fields present on every record.
+  Apollo's field-disposition discipline is what makes the R3 controls buildable at Tier A —
+  the corpus is doing station work beyond its own lane.
+- **A-lane pickup landed as M2 station work** (no Harmonia A session live; last A commit
+  2026-08-12): the `valid=None` unknown-kind patch, R5-gating per prereg §7 step 2.
+  `verifier_lens.verify` returned `valid=False` for kinds it never dispatched, polluting
+  R5/R7/R8 with `verify:unknown_kind` on 160/160 probes and miscounting them as
+  verifiable-and-failed. Now `valid=None` (abstention). Staircase unchanged, kills gone,
+  liveness audit still PASS. **Credited to the A lane** — A should know it is done, not redo it.
+
+**The lesson this station keeps re-learning, now structural:** every control here ships with
+its own two-sided calibration, because a control that cannot fail is not a control
+(`ladder_liveness_audit` / `ladder_leakage_audit`, 2026-08-12). It paid immediately — the
+calibration suite killed my own first cheat-control rule and exposed that a 200-task batch
+puts the control noise floor at the size of the effect it polices.
+
+**Boot-doc truthfulness (§8 lesson):** this file's header still reads *"Mode: level-setting,
+no hard decisions until ~2026-08-14"* and lists Harmonia A as point agent. Both are stale —
+the station has since co-signed a binding preregistration. Flagged rather than silently
+rewritten, since the point-agent designation is not mine to change.
+
+---
+
 *M2 reports under the failure-signature doctrine: shapes, not verdict lines. The
 station's most useful output on 2026-08-12 was four executed kills, two of them against
 its own point agent's proposals; on 2026-08-15, Apollo's corpus shipped with three of its
 own wall specifications killed by their own telemetry before release. Updated by
-Harmonia A 2026-08-12, Apollo 2026-08-15.*
+Harmonia A 2026-08-12, Apollo 2026-08-15, Harmonia B 2026-08-16.*

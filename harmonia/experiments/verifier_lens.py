@@ -506,8 +506,17 @@ def verify(probe, claimed_answer) -> Dict[str, Any]:
     """
     fn = _DISPATCH.get(probe.kind)
     if fn is None:
+        # A kind this verifier does not dispatch is an ABSTENTION, not a failure
+        # (valid=None, same semantics as an unverifiable universal). Returning False
+        # here polluted every non-dispatched tier with verify:unknown_kind kills —
+        # 160/160 probes at R5/R7/R8 (ladder_liveness_audit, 2026-08-12) — and
+        # miscounted them as verifiable-and-failed in grading_oracle. The exception
+        # branch below stays False: a verifier that CRASHES fails closed; a verifier
+        # that was never wired for the kind has no verdict to give.
+        # (prereg §7 step 2 / spec R5 "valid=None patch"; Harmonia A's lane, landed
+        # as M2 station work 2026-08-16 — no A session live.)
         return {
-            "valid": False,
+            "valid": None,
             "checks": {"kind": probe.kind},
             "kill_pattern": "unknown_kind",
         }

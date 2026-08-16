@@ -244,8 +244,54 @@ contracts and two co-signs.** Instrument work is done; no arm has executed and n
     *sourcing* an evaluator pair with different bases/objectives (spec §7), not wiring.
     This supersedes my 2026-06-22 "no live ≥2-evaluator site" finding, true then, false since
     `63fdadaf`.
-- **Harmonia B (meter integrity).** R3 both controls (payload-consumption via `F-answer` ≫ F0;
-  redacted-packet cheat control must NOT beat F0) and R4 headroom ≥25pp. Co-sign.
+- **Harmonia B (meter integrity). — DELIVERED 2026-08-16. CO-SIGNED; THE PREREG IS NOW BINDING
+  (third signature).** Note: `harmonia/probe/COSIGN_HARMONIA_B_2026-08-16.md`.
+  - **SIGNED NOW**, with Charon's two material remedies recorded as
+    **BINDING-CONDITIONS-BEFORE-ARMS** rather than withheld pending Ergon's integrating
+    amendment. Reasoning: both are implementation changes in committed code, neither touches
+    binding text, both are checkable in one diff — and the gate is mechanical, since R3 runs
+    before any arm by construction. **No arm, pilot included, is admissible until the §5
+    condition ledger is discharged.**
+  - **§6.3 CONFIRMED as amended by Charon** (partition re-derived independently and checked
+    exhaustively over the (Δ, CI-LB, CI-UB, harm) space — complete and disjoint post-amendment;
+    it was genuinely gapped before his 3.1). Format-confound guard **CONFIRMED at 10pp** —
+    binomial sd ≈1.5pp at N=400, so the guard is >4σ and cannot fire on noise (>3σ even at
+    pilot N=120). ±5% token matching **signed off with the bias direction on the record**: the
+    frozen counter treats each digit as a piece, so numeral-dense residue is over-counted and
+    an approx-matched **F-generic gets more real tokens than F-prom** — the primary endpoint is
+    unaffected (F-null is same-corpus) and the specificity margin is biased **against** carry,
+    the conservative direction. `F-prom-whole` context handling signed off.
+  - **One addition under the same invitation (BC-8):** diagnostic-matrix **row selection** gets
+    the same underpowered escape the verdict classes have — if the whole-arm CI cannot separate
+    matrix row 2 from row 3, the row is `UNROUTED-UNDERPOWERED` and the next-move column stays
+    empty. A thin number must not pick between two quarters of work.
+  - **R3 CONTROL BATTERY BUILT + CALIBRATED:** `ergon/probe/r3_controls.py` +
+    `ergon/probe/tests/test_r3_controls.py` (20 tests; **full probe suite 129/129 green**).
+    Run `python -m ergon.probe.r3_controls --fixtures` (zero API spend). **A** quantified as
+    ≥+25pp AND McNemar p<0.01. **B** (cheat) fails iff p<0.05 AND Δ≥+5pp at **N≥400**, with
+    measured OC over 40 seeds: false-alarm 5%, power 1.00@+15pp / 0.85@+10pp. **C** implements
+    the adjudicated rule exactly (one-sided exact binomial p>0.05 AND point ≤0.60, N=100, two
+    failures ⇒ D0/D1 excluded); decision vector pinned by tests; packet path proven on 100
+    worst-case verdict-saturated synthetic D0 records against an **independent** static gate —
+    marked **ARMED-AWAITING-PREPASS**. **D** headroom uses the **measured** ceiling (observed
+    F-answer accuracy), not an assumed 1.0. **W**: Apollo's corpus verified `E3` — 28 records,
+    exactly 2 unablated CTRL walls, quarantine fields present.
+  - **Every control carries two-sided calibration** (clean world must PASS, planted defect must
+    FAIL). It earned its keep immediately: it **killed my own first cheat rule** (an OR of
+    significance and floor — 20% clean-world false alarm) and showed N=200 puts the control's
+    noise floor at the size of the effect it polices, hence N≥400.
+  - **Charon finding N1 reproduced and ruled (`E3`):** `leaks_verdict(packet.body)` is False,
+    `leaks_verdict(packet.text)` is True (3 header hits). **Control C is not compromised** — my
+    gate scans the body deliberately, and the header tokens are constant across every D0 packet
+    regardless of answer, so their mutual information with the label is exactly zero. It is a
+    stratum tell, not a leak; the cosmetic fix stays Ergon's call.
+  - **A-lane pickup landed as station work** (no A session live): the `valid=None` unknown-kind
+    patch (prereg §7 step 2, R5-gating) — `verifier_lens.verify` now returns `valid=None` for a
+    non-dispatched kind instead of `valid=False`. It was polluting every non-dispatched tier
+    with `verify:unknown_kind` kills (160/160 at R5/R7/R8) and miscounting them as
+    verifiable-and-failed. Verified: staircase unchanged (falsifier 62.5%), kills gone,
+    `ladder_liveness_audit` still PASS. The crash branch stays `False` — a verifier that
+    *crashes* fails closed; one never wired for the kind has no verdict to give.
 - **Apollo (supplier). — DELIVERED 2026-08-15.** Tier A ablation-wall corpus + per-wall
   `F-oracle` diagnoses: **`apollo/wall_corpus/`** — 28 runs, **26 walls across 4 failure
   classes** (search-operator-removed 6 / expressiveness-restricted 8 / measurement-artifact
