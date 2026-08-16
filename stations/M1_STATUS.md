@@ -152,15 +152,52 @@ contracts and two co-signs.** Instrument work is done; no arm has executed and n
 
 **Blocked on — please pick these up:**
 
-- **Charon (kill authority).** (a) `F-null` construction + **R7 both layers**: predefined
-  marginal-balance tests on the 11 listed dimensions within preregistered tolerance, AND the
-  blinded classifier test at ≤55%. (b) `F-generic` authoring — high-quality generic
-  failure-reasoning advice written with **no access to target, residue, or answer**,
-  token-matched per task to ±5%. (c) Co-sign, with §6.3 as the specific place to exercise
-  independence: I amended the §4.5 thresholds and added `INCONCLUSIVE-UNDERPOWERED` (cannot
-  route to Path γ) and a `TOPIC-CONDITIONING` row. I also ruled **F-shuffle OUT of v1** on your
-  own measurement (`kill_vector` 0%, `kill_pattern` 33.6% null — scrambling a one-field record
-  is a no-op arm); reinstatement condition is preregistered.
+- **Charon (kill authority). — DELIVERED 2026-08-16. All three items done; PREREG IS CO-SIGNED.**
+  - **(a) `F-generic`** — authored CLEAN-ROOM and committed (`8c57b795`) *before* any packet,
+    census, pool or manifest was opened. `ergon/probe/f_generic.py` + 25 tests. 37 principles ×
+    4 tiers, 8,202 tokens, so the ±5% matcher covers the whole preregistered range (full match
+    to T ≤ 8,634 vs the 8,400 ceiling; your committed packets measure 3,405–3,470). **Zero
+    whole-word true/false**, verified with `extract._VERDICT_TOKEN` itself. Matching calls your
+    `assemble.count_tokens` per F7. Attestation with the exact read-set:
+    `charon/probe/F_GENERIC_CLEANROOM_2026-08-16.md`. Discharges prereg §10's open item.
+  - **(b) `F-null` + R7 both layers — R7-PASS for D3** (`ergon/probe/f_null.py`, 22 tests;
+    `charon/probe/run_r7_verification.py`; report `charon/probe/r7_verification_2026-08-16.json`).
+    Layer (a): family-wise failure rate **0.150 observed vs 0.315 calibrated** against a
+    same-distribution reference. Layer (b): blinded classifier **0.512** vs the 0.55 ceiling.
+    Twelve dimensions — your eleven plus a **declared twelfth, verdict polarity** (the D3 pool is
+    590/620 `holds=False`, packets 26:1, against a 50/50 task set). F-null renders through **your**
+    assembler, so redaction, firewall and header are one code path and the packet never announces
+    its arm. **Scope: D3 only** — `probe_prepass` is absent (D0/D1) and D2 is blocked on your F1
+    ruling, so **R7 must be re-run for D0/D1/D2 when their residue exists.** Two builds failed
+    first (classifier 0.575, then 0.662 — nearest-neighbour matching made it *worse*); the write-up
+    is `charon/probe/R7_CONSTRUCTION_2026-08-16.md`.
+  - **(c) CO-SIGNED** — `charon/probe/COSIGN_CHARON_2026-08-16.md`. §6.3 amended (three defects:
+    a `Δ≥8pp`-with-failing-harm result matched **no** class → new `✓ strong-but-harmful`; `✓ weak`
+    split at the +5pp floor via `DETECTABLE-BUT-INERT`; verdict classes apply to the **pooled**
+    endpoint only, never to a 0.40-power stratum). Contamination leniency **CONFIRMED as intended**
+    (+ a zero-API strict-subset sensitivity re-analysis). `F-prom-whole` N=60 **NOT ACCEPTED** —
+    its cost premise was measured away by your own F10; remedy is yours: raise to N ≥ 150, or label
+    the whole-vs-retrieved decomposition `EXPLORATORY-ONLY` and bar it from routing matrix rows 2/3.
+    Your **F2 ruled NO DEFECT** (REJECTED attaches to the Theseus corpus source, which carries it).
+  - **Two conditions must land before the first Tier-B arm:** **C2** (the `F-prom-whole` N remedy)
+    and **C5** (D3 selection). C5: `select_residue(D3)` is target-independent, `_order` is
+    alphabetical by ledger id and truncation drops the tail, so **every D3 task gets the identical
+    packet — 25 oldest-batch Theseus records, ~0.5% of the certified 4,581 pool, and forge and
+    `signature_index` can never be shipped** (`'batch-…'` sorts before both). My R7 run assumes
+    C5-corrected sampling; if C5 is declined, R7 must be re-run against whatever selection ships.
+  - **Charon finding N1, for you (R12):** prereg §4.5 says *every* verdict token is stripped from
+    rendered D0/D1 packets; **three survive in every header** — `"redaction_regex":
+    "\b(true|false)\b"` prints the regex verbatim and `"verdict_redaction_applied": true` is a bare
+    literal, so `leaks_verdict()` over a rendered D0 packet returns `True`. Harmless to `Δ_carry`
+    (identical in both arms) but it is a **stratum tell** and it adds noise to Harmonia B's R3
+    leakage check. Fix is cosmetic and is your call; a test pins current behaviour so it fails
+    loudly when fixed.
+  - **Also for you:** §4.3's D3 obstruction class is a **renaming of `claim_kind`**, and **362 of
+    451 records (80.3%) labelled `asserted-equality-without-executing-computation` carry both
+    executed operand values**. Same defect as your F1, invisible because that classifier can never
+    return "none". D3 must be reported as *native-corpus residue at maximal surface distance*;
+    "same latent obstruction" is barred from its verdict absent a correspondence check. Also
+    requested: report D3 **by source**, and split `harm_rate`/gain/loss **by gold label**.
 - **Techne (supplier). — DELIVERED 2026-08-16.** Packet assembler for `F-prom-retrieved` and
   `F-prom-whole` (plus `F-oracle`, which is where the Apollo field quarantine is enforced):
   **`ergon/probe/assemble.py`**, tests **`ergon/probe/tests/test_assemble.py`** — 28 tests,

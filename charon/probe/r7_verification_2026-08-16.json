@@ -1,0 +1,394 @@
+{
+  "seed": 20260816,
+  "stratum": "D3",
+  "scope": "D3 only \u2014 probe_prepass absent (D0/D1), D2 blocked pending F1 ruling",
+  "n_pairs": 40,
+  "records_per_packet": 25,
+  "strategy": "exchangeable",
+  "tolerances_absolute": {
+    "token_count": {
+      "kind": "rel",
+      "value": 0.05
+    },
+    "records_per_packet": {
+      "kind": "rel",
+      "value": 0.0
+    },
+    "field_null_rates": {
+      "kind": "pp",
+      "value": 5.0
+    },
+    "signature_count": {
+      "kind": "rel",
+      "value": 0.1
+    },
+    "kill_label_distribution": {
+      "kind": "tvd",
+      "value": 0.1
+    },
+    "numerical_token_density": {
+      "kind": "rel",
+      "value": 0.1
+    },
+    "object_family_frequency": {
+      "kind": "tvd",
+      "value": 0.15
+    },
+    "provenance_window_shape": {
+      "kind": "rel",
+      "value": 0.1
+    },
+    "payload_length": {
+      "kind": "rel",
+      "value": 0.1
+    },
+    "vocabulary_diversity": {
+      "kind": "rel",
+      "value": 0.1
+    },
+    "source_type_distribution": {
+      "kind": "tvd",
+      "value": 0.05
+    },
+    "verdict_polarity": {
+      "kind": "pp",
+      "value": 5.0
+    }
+  },
+  "tolerances_calibrated_p95": {
+    "token_count": 0.022224456958970233,
+    "records_per_packet": 0.0,
+    "field_null_rates": 4.0,
+    "signature_count": 0.2631578947368421,
+    "kill_label_distribution": 0.44,
+    "numerical_token_density": 0.01163668518390417,
+    "object_family_frequency": 0.051305970149253755,
+    "provenance_window_shape": 0.16000000000000003,
+    "payload_length": 0.0869641912153819,
+    "vocabulary_diversity": 0.09001127891942451,
+    "source_type_distribution": 0.0,
+    "verdict_polarity": 0.4285714285714337
+  },
+  "calibration": {
+    "reps": 200,
+    "percentile": 95.0,
+    "family_failure_rate": 0.315
+  },
+  "build_index": 2,
+  "layer_a": {
+    "packets_passing_all_dimensions": 34,
+    "observed_family_failure_rate": 0.15,
+    "calibrated_family_failure_rate": 0.315,
+    "dimension_failures": {
+      "vocabulary_diversity": 4,
+      "payload_length": 2,
+      "field_null_rates": 1,
+      "provenance_window_shape": 1
+    },
+    "per_pair": [
+      {
+        "pair": 0,
+        "passed": false,
+        "failures": [
+          "vocabulary_diversity"
+        ],
+        "prom_tokens": 3836,
+        "null_tokens": 3905
+      },
+      {
+        "pair": 1,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3641,
+        "null_tokens": 3747
+      },
+      {
+        "pair": 2,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3650,
+        "null_tokens": 3742
+      },
+      {
+        "pair": 3,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3804,
+        "null_tokens": 3823
+      },
+      {
+        "pair": 4,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3693,
+        "null_tokens": 3842
+      },
+      {
+        "pair": 5,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3821,
+        "null_tokens": 3916
+      },
+      {
+        "pair": 6,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3737,
+        "null_tokens": 3690
+      },
+      {
+        "pair": 7,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3763,
+        "null_tokens": 3774
+      },
+      {
+        "pair": 8,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3933,
+        "null_tokens": 3778
+      },
+      {
+        "pair": 9,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3781,
+        "null_tokens": 3730
+      },
+      {
+        "pair": 10,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3662,
+        "null_tokens": 3854
+      },
+      {
+        "pair": 11,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3706,
+        "null_tokens": 3615
+      },
+      {
+        "pair": 12,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3724,
+        "null_tokens": 3756
+      },
+      {
+        "pair": 13,
+        "passed": false,
+        "failures": [
+          "payload_length",
+          "vocabulary_diversity"
+        ],
+        "prom_tokens": 3666,
+        "null_tokens": 3958
+      },
+      {
+        "pair": 14,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3729,
+        "null_tokens": 3747
+      },
+      {
+        "pair": 15,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3821,
+        "null_tokens": 3799
+      },
+      {
+        "pair": 16,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3614,
+        "null_tokens": 3800
+      },
+      {
+        "pair": 17,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3703,
+        "null_tokens": 3884
+      },
+      {
+        "pair": 18,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3763,
+        "null_tokens": 3825
+      },
+      {
+        "pair": 19,
+        "passed": false,
+        "failures": [
+          "field_null_rates",
+          "vocabulary_diversity"
+        ],
+        "prom_tokens": 3805,
+        "null_tokens": 3781
+      },
+      {
+        "pair": 20,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3846,
+        "null_tokens": 3841
+      },
+      {
+        "pair": 21,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3738,
+        "null_tokens": 3796
+      },
+      {
+        "pair": 22,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3933,
+        "null_tokens": 3869
+      },
+      {
+        "pair": 23,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3722,
+        "null_tokens": 3849
+      },
+      {
+        "pair": 24,
+        "passed": false,
+        "failures": [
+          "vocabulary_diversity"
+        ],
+        "prom_tokens": 3794,
+        "null_tokens": 3709
+      },
+      {
+        "pair": 25,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3739,
+        "null_tokens": 3754
+      },
+      {
+        "pair": 26,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3822,
+        "null_tokens": 3882
+      },
+      {
+        "pair": 27,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3788,
+        "null_tokens": 3776
+      },
+      {
+        "pair": 28,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3800,
+        "null_tokens": 3790
+      },
+      {
+        "pair": 29,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3728,
+        "null_tokens": 3854
+      },
+      {
+        "pair": 30,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3630,
+        "null_tokens": 3742
+      },
+      {
+        "pair": 31,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3746,
+        "null_tokens": 3805
+      },
+      {
+        "pair": 32,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3594,
+        "null_tokens": 3755
+      },
+      {
+        "pair": 33,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3788,
+        "null_tokens": 3757
+      },
+      {
+        "pair": 34,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3843,
+        "null_tokens": 3774
+      },
+      {
+        "pair": 35,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3660,
+        "null_tokens": 3746
+      },
+      {
+        "pair": 36,
+        "passed": false,
+        "failures": [
+          "payload_length"
+        ],
+        "prom_tokens": 3703,
+        "null_tokens": 3931
+      },
+      {
+        "pair": 37,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3792,
+        "null_tokens": 3922
+      },
+      {
+        "pair": 38,
+        "passed": true,
+        "failures": [],
+        "prom_tokens": 3918,
+        "null_tokens": 3800
+      },
+      {
+        "pair": 39,
+        "passed": false,
+        "failures": [
+          "provenance_window_shape"
+        ],
+        "prom_tokens": 3727,
+        "null_tokens": 3673
+      }
+    ]
+  },
+  "layer_b": {
+    "balanced_accuracy": 0.5125,
+    "ceiling": 0.55,
+    "folds": 5,
+    "n_prom": 40,
+    "n_null": 40,
+    "passed": true
+  },
+  "verdict": "R7-PASS"
+}
