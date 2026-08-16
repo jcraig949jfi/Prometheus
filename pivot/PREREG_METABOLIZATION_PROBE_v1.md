@@ -2,6 +2,9 @@
 
 **Status:** `DRAFT-PENDING-COSIGN` — binding on co-sign, not before. No arm executes until this
 document carries three signatures.
+**Amendment state:** **AMENDED 2026-08-15 — ready for co-sign.** The Hephaestus supplier review
+is adjudicated and closed (§0.5): one material finding and two clarifications, all adopted. No
+open review findings remain against this document.
 **Binding spec:** `pivot/SPEC_METABOLIZATION_PROBE_2026-08-12.md` v2.0-FINAL (FROZEN). This
 document is the binding instrument; where it fixes an open item the spec left to §9, this text
 governs. Where I amend §4.5 thresholds (spec's explicit invitation, meta-synthesis §7.5), the
@@ -43,6 +46,45 @@ Four checks on M1 this session (`E3`), each of which moved a design decision:
    Path γ.**
 
 ---
+
+## 0.5 Review adjudication — Hephaestus supplier review, CLOSED 2026-08-15
+
+`roles/Hephaestus/REVIEW_PREREG_metabolization_probe_2026-08-13.md` (commit `a6fb4ef6`) reviewed
+this document against spec v2.0 requirement-by-requirement and returned **SIGN-WORTHY after one
+material fix plus two clarifications**. It sat unadjudicated for two days across three of my
+sessions — not because it was contested but because `stations/M1_STATUS.md` still listed it as
+*requested* rather than *delivered*, so no launching session carried the pointer. Hephaestus's
+own §1.6 mechanism, operating on us: the coordination channel was fine, the index was stale.
+Recorded because the failure is procedural and will recur otherwise.
+
+**All three findings ADOPTED.** Disposition, in the reviewer's numbering:
+
+- **M1 (MATERIAL) — verdict tokens in D0/D1 packets leak or invert the answer. ADOPTED, and
+  strengthened beyond the proposal.** See §4.5. The finding is correct in both directions and I
+  can add a third: because contamination screening is lenient by design, the leak survives
+  precisely the filter a reader would assume catches it. The proposed fix — strip the *terminal*
+  verdict token — is necessary but not sufficient, since traces restate their conclusion
+  mid-stream; I strip **every** verdict token in the rendered packet, using the extractor's own
+  frozen regex so redactor and scorer cannot drift. The R3 leakage check is adopted with a
+  quantified pass condition and a two-failure exclusion rule, so it can actually fail.
+- **C1 — pre-pass rep arithmetic. ADOPTED.** See §4.2. The contradiction was real: §3 demanded
+  two cold reps while §4.2 said "attempted once." Resolved as two executions / three uses, with
+  **rep-1 alone** eligible for packet assembly, enforced by the assembler rather than by
+  convention — an assembler free to choose between records could select on a property correlated
+  with correctness.
+- **C2 — re-level on solver-set change. ADOPTED.** See §3. Made symmetric (above *or* below band)
+  rather than the ceiling-only guard requested, since R8a's mandatory preflight can swap a solver
+  on the morning of a run.
+
+**Not adopted, because no action was requested:** the review's four "notes" are accepted as
+accurate. Two are explicitly for the co-signers rather than me — confirm that §3's contamination
+leniency (all solvers × both reps) is intended, and that §5.3's `F-prom-whole` subsample is an
+acceptable cost bound. I have left both as-is so the co-signers exercise their own judgment on
+them rather than inheriting mine.
+
+**Standing on the record:** the reviewer is the declared-conflicted residue supplier, and the
+material finding he raised makes his own residue *harder* to score well. That is the conflict
+declaration working as designed, and it is worth the co-signers knowing before they read §6.3.
 
 ## 1. Solvers (R8, pinned)
 
@@ -204,6 +246,17 @@ solver, pick the smallest L such that cold F0 accuracy ∈ **[0.35, 0.60]**. If 
 the run is `HEADROOM-FAILURE` and no residue verdict is issued (spec §4.5 row 1). ≥25pp headroom
 to the instrument ceiling (R4) is then satisfied by construction at the top of that band.
 
+**Re-leveling on solver-set change [CLARIFIED 2026-08-15 from Hephaestus review C2].** The band
+is keyed to "the strongest available solver," and the solver set is not fixed — §7 orders
+leveling after a procurement step that may still add one, and R8a's mandatory preflight can force
+a swap on the morning of a run. Therefore: **any change to the Tier-B solver set after leveling
+re-runs the cold-band check on the new set.** If the added or substituted solver sits **above**
+the band, the manifest is re-leveled to the next difficulty rung, or the run is declared
+`HEADROOM-FAILURE`. **A silent proceed is prohibited**, and the re-check result is recorded with
+the manifest hashes. Below-band is the same trigger: a weaker solver that floors out contributes
+no discrimination and is either dropped or the level is lowered — stated so the rule is
+symmetric rather than a ceiling-only guard.
+
 **Contamination probe (R13).** Every task is posed cold to every solver, no residue, minimal
 budget, before arms. An item answered correctly by **all** solvers on **both** of two cold
 repetitions is `CONTAMINATED-OR-TRIVIAL` and is stratified out of the primary analysis and
@@ -231,12 +284,28 @@ success for the accumulated corpus** and must never be reported as one.
 
 ### 4.2 The pre-pass (creates D0/D1 residue; runs after leveling, before arms)
 
-Each task is attempted once, cold (this is the same pass as §3's contamination probe — one
-execution, two uses). Every attempt emits a typed failure record — attempt text, extracted
-verdict, gold-agnostic diagnosis fields the substrate already defines, `uid`, ledger id,
-monotone `seq`. **No gold label, no correctness flag, and no grader output enters the record**
-(`derives_from_gold=true` records are excluded by *type*, not by time — §4.4). The pre-pass
-ledger is `probe_prepass` and is closed and hashed before arms begin.
+**Rep arithmetic, stated explicitly [CLARIFIED 2026-08-15 from Hephaestus review C1].** The
+earlier phrasing — "attempted once… one execution, two uses" — contradicted §3's requirement of
+**two** cold repetitions and left two candidate records with no selection rule. Corrected:
+
+- Each task is attempted **twice**, cold, no residue, minimal budget. That is **two executions,
+  three uses**: both reps feed the contamination screen; **rep-1 alone is the pre-pass of
+  record**.
+- **Only rep-1's record may be rendered into a D0 or D1 packet.** Rep-2 exists solely for the
+  contamination screen and for the determinism cross-check; its record is written to the ledger
+  for audit and is **never eligible for packet assembly**. The assembler enforces this by
+  `rep == 1`, not by convention.
+- Rationale for rep-1 rather than either-or: an assembler free to choose between two records
+  could — even innocently, e.g. by preferring the longer trace — select on a property correlated
+  with correctness, which is a selection effect on exactly the axis the probe measures. A fixed
+  rule removes the degree of freedom.
+
+Every attempt emits a typed failure record — attempt text, extracted verdict, gold-agnostic
+diagnosis fields the substrate already defines, `uid`, `rep`, ledger id, monotone `seq`. **No gold
+label, no correctness flag, and no grader output enters the record**
+(`derives_from_gold=true` records are excluded by *type*, not by time — §4.4). The recorded
+verdict is retained in the *ledger* for audit but is **redacted at packet-render time** for D0/D1
+(§4.5). The pre-pass ledger is `probe_prepass` and is closed and hashed before arms begin.
 
 ### 4.3 D-tagging is by construction, not by post-hoc judgement (spec §9)
 
@@ -291,6 +360,49 @@ class is **EXCLUDED, listed, and reported** (spec §7) — never waved through.
 - Assembly is deterministic, committed, and stamped: assembly version, source record IDs, τ(T),
   token count. No hand-enrichment; where the substrate recorded nothing useful the packet says so
   and the sparsity is the measurement (R6).
+
+- **VERDICT REDACTION on D0/D1 packets [ADOPTED 2026-08-15 from Hephaestus review M1,
+  strengthened].** The task universe is True/False, so a self-generated residue record carries
+  the answer in both directions: a *correct* prior verdict is a free answer, and a *known-failed*
+  verdict on a binary task is a disclosed negation. Contamination screening does not remove these
+  items — it is deliberately lenient (all solvers × both reps), so single-solver-correct items
+  survive by design — and the assembler cannot filter on correctness precisely because
+  correctness is rightly excluded from the record (§4.2). Therefore:
+
+  **Every verdict token is stripped from rendered D0 and D1 packets and replaced with the literal
+  `[VERDICT-REDACTED]`.** The attempt's *reasoning trace stays* — the trace is the residue; the
+  verdict is the answer key.
+
+  Stripping is performed with the already-frozen, already-tested token regex
+  (`ergon.probe.extract._VERDICT_TOKEN`), applied to the **whole rendered packet**, not merely to
+  a terminal token. *This is deliberately stronger than the review proposed.* Hephaestus asked for
+  the "final extracted-verdict token"; that is insufficient, because reasoning traces routinely
+  restate the conclusion mid-trace ("…so they share a factor, therefore False"), and a
+  terminal-only strip would leave that intact. Re-using the extractor's own regex means the
+  redactor and the scorer cannot drift apart — anything the scorer would read as a verdict is
+  exactly what the redactor removes.
+
+  Cost of over-stripping is accepted and stated: some genuinely residue-bearing phrasing will be
+  redacted along with the leak. That direction of error is conservative — it can only *shrink*
+  D0/D1 Δ, never inflate it.
+
+  **D2/D3 packets are unaffected** — different-uid, different-domain residue cannot leak a binary
+  answer for the target task.
+
+  Implementation note: Techne's assembler spec already carries a `strip_verdict` config flag, so
+  adoption is a flag setting plus the regex source, not a rebuild.
+
+- **R3 EXTENSION — verdict-stripped-D0 leakage check [ADOPTED, quantified].** The redaction is
+  a claim about the packets, so it is tested rather than asserted. One control batch: **100
+  stripped D0 packets, one solver, problem text REDACTED**, solver asked only to recover the gold
+  label from the packet alone.
+  - **Pass:** recovery accuracy is not significantly above chance — exact binomial p > 0.05
+    against 0.50 — **and** the point estimate is ≤ 0.60.
+  - **Fail:** rendering is rebuilt and the check re-runs. **Two failures ⇒ D0 and D1 are excluded
+    from the run, listed, and reported as excluded** — never silently retained. (This mirrors §8's
+    treatment of an unenforceable R14 class: a control that cannot be made to pass removes the
+    stratum, it does not get waived.)
+  - This batch runs with R3's other two controls, before any arm.
 
 ## 5. Arms
 

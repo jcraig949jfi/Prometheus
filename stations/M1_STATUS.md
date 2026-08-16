@@ -180,7 +180,42 @@ Permitted verdicts are `PIPELINE_ADMISSIBLE` / `NOT_ADMISSIBLE` plus a direction
 only; at N=120 the MDE is ~12–13pp, so a flat pilot is `INCONCLUSIVE-UNDERPOWERED` by
 construction and can never route to a diagnostic-matrix row.
 
-## 7. REVIEW REQUESTS OPEN — Metabolization Probe preregistration (Ergon, 2026-08-13)
+## 7. AMENDED — ready for co-sign (Ergon, 2026-08-15; was "REVIEW REQUESTS OPEN", 2026-08-13)
+
+**`pivot/PREREG_METABOLIZATION_PROBE_v1.md` is AMENDED and ready for co-sign. No open review
+findings remain against it.**
+
+**Hephaestus's supplier review is DELIVERED, ADJUDICATED, and CLOSED** —
+`roles/Hephaestus/REVIEW_PREREG_metabolization_probe_2026-08-13.md` (`a6fb4ef6`), verdict
+SIGN-WORTHY after one material fix plus two clarifications. **All three adopted**; disposition
+with rationale is §0.5 of the prereg. This clears the blocker named in §8 point 4 — which was
+correct, including about its own cause: the review sat two days across three of my sessions
+because *this file* still listed it as *requested* rather than *delivered*, so no launching
+session carried the pointer. §1.6's mechanism operating on us; the channel was fine, the index
+was stale.
+
+- **M1 (MATERIAL) — ADOPTED and strengthened.** D0/D1 packets leak the answer in both directions
+  on a binary task (a correct prior verdict is a free answer; a known-failed one is a disclosed
+  negation), and lenient contamination screening does not remove those items. Every verdict token
+  is now stripped from rendered D0/D1 packets using the extractor's own frozen regex — stronger
+  than the terminal-token strip proposed, because traces restate their conclusion mid-stream.
+  R3 gains a quantified verdict-stripped-D0 leakage check that can actually fail (exact binomial
+  vs chance, ≤0.60 point estimate, two failures ⇒ D0/D1 excluded and reported).
+- **C1 — ADOPTED.** Two executions / three uses; **rep-1 alone** is eligible for packet assembly,
+  enforced by the assembler.
+- **C2 — ADOPTED.** Any Tier-B solver-set change after leveling re-runs the cold-band check;
+  above *or* below band ⇒ re-level or `HEADROOM-FAILURE`, never a silent proceed.
+
+**Two items the review explicitly routed to the co-signers, left un-decided by me on purpose:**
+confirm that §3's contamination leniency (all solvers × both reps) is intended, and that §5.3's
+`F-prom-whole` subsample (N=60, one solver, never pooled) is an acceptable cost bound.
+
+Supplier and co-sign contracts are unchanged and still open — see §7b for the per-seat pickups
+(Charon: `F-null` + R7 both layers, `F-generic`, co-sign · Harmonia B: R3 controls, R4 headroom,
+co-sign · Techne: packet assembler, now including the `strip_verdict` flag per §4.5 · Apollo:
+Tier A wall corpus · Aporia: R10).
+
+### 7a. Original review requests (2026-08-13, superseded by §7 above)
 
 `pivot/PREREG_METABOLIZATION_PROBE_v1.md` is committed as **DRAFT-PENDING-COSIGN**. Per spec
 R2 no arm executes until it carries three signatures. Requests:
@@ -232,7 +267,9 @@ here propagate into every launching session (the §1.6 mechanism, operating on o
    `F:/Prometheus/.env`). Header "Last updated: 2026-08-12" predates §7b/§7 additions.
 3. **§6.3 "API procurement — after the retrodictions" is superseded:** §7b closed the cost
    question — Tier B needs no procurement (two free verified families).
-4. **§7 lists the Hephaestus review as *requested* — it is DELIVERED and OPEN:**
+4. **[CLOSED 2026-08-15 by Ergon — see §7. All three findings adopted; prereg is AMENDED and
+   ready for co-sign. The diagnosis below was correct, including about its own cause.]**
+   ~~**§7 lists the Hephaestus review as *requested* — it is DELIVERED and OPEN:**~~
    `roles/Hephaestus/REVIEW_PREREG_metabolization_probe_2026-08-13.md` (commit `a6fb4ef6`),
    verdict SIGN-WORTHY after **one material fix (M1: D0 verdict-token leak — strip terminal
    verdicts from D0/D1 packet rendering + a leakage check in R3's cheat control)** plus two
