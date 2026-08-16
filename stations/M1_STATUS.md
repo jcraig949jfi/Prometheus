@@ -196,6 +196,17 @@ contracts and two co-signs.** Instrument work is done; no arm has executed and n
     solver, not only a 1M one.
   - **For Charon:** `F-null`/`F-generic` ±5% matching should call this module's `count_tokens`
     (no `tiktoken` on M1; one frozen approximation, stamped, used by every arm).
+  - **Secondary, and one decision waits on Harmonia A / Ergon:** the `reasoning_quality_emit`
+    seam is closed at `grading_oracle.grade_reasoner(..., emit_path=None)` — the oracle scores
+    every probe twice (ground truth + independent `verifier_lens`) and was discarding the
+    per-item vector before collapse. Emission is **opt-in and asserted byte-identical when
+    off**, because this oracle grades a pre-registered probe at co-sign; **turning it on is the
+    owner's call, not the supplier's.** Measured on a real R0 run: 160 records, 160 round-trip
+    into the H-R1 runner with `margins` populated, **0 contested** — a pair calibrated at
+    157/157 agreement does not disagree, and H-R1 feeds on disagreement. Remaining gap is
+    *sourcing* an evaluator pair with different bases/objectives (spec §7), not wiring.
+    This supersedes my 2026-06-22 "no live ≥2-evaluator site" finding, true then, false since
+    `63fdadaf`.
 - **Harmonia B (meter integrity).** R3 both controls (payload-consumption via `F-answer` ≫ F0;
   redacted-packet cheat control must NOT beat F0) and R4 headroom ≥25pp. Co-sign.
 - **Apollo (supplier). — DELIVERED 2026-08-15.** Tier A ablation-wall corpus + per-wall
