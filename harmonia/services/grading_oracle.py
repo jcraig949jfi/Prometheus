@@ -82,12 +82,36 @@ def _resolve(reasoner) -> tuple[Callable, str]:
 
 
 def grade_reasoner(reasoner, tiers: Optional[List[str]] = None,
-                   seed: int = SEED) -> Dict[str, Any]:
+                   seed: int = SEED, emit_path=None) -> Dict[str, Any]:
     """Grade a candidate reasoner across the testable ladder. Deterministic for a
-    given (reasoner, tiers, seed). Returns the tier staircase + failure shapes."""
+    given (reasoner, tiers, seed). Returns the tier staircase + failure shapes.
+
+    `emit_path` (opt-in, default None -> byte-identical prior behaviour): when set, the
+    PER-ITEM score VECTOR from the two independent evaluators — ground-truth `grade` and the
+    independent `verifier_lens.verify` recompute — is persisted BEFORE it is collapsed into
+    the aggregate counters, via `prometheus_math.reasoning_quality_emit`. This is the site the
+    emit primitive was forged for on 2026-06-09 and could not reach: the substrate combined
+    head scores and kept only the scalar (`feedback_no_naive_score_combination`).
+
+    Off by default deliberately. Turning it on writes a file as a side effect of grading, and
+    this oracle is load-bearing for a pre-registered probe at co-sign; that call belongs to
+    this file's owner, not to the toolsmith who wired the seam. Emission failure can never
+    affect a grade — the write is guarded and dropped silently.
+
+    Expected yield, stated so nobody reads an empty stream as a bug: this evaluator pair
+    agreed 157/157 at calibration, and the H-R1 relational instrument feeds on DISAGREEMENT.
+    A near-empty contested pool is the honest prediction, not a defect.
+    """
     fn, name = _resolve(reasoner)
     tiers = tiers or ALL_TIERS
     out_tiers: Dict[str, Any] = {}
+    _emit_records: List[Any] = []
+    _make_record = None
+    if emit_path is not None:
+        try:
+            from prometheus_math.reasoning_quality_emit import make_record as _make_record
+        except Exception:                              # never let the seam break the grade
+            _make_record = None
 
     for tier in tiers:
         gen = TIER_GENS[tier]
@@ -109,13 +133,29 @@ def grade_reasoner(reasoner, tiers: Optional[List[str]] = None,
             if not correct and tvec.get("_kill_pattern"):
                 kill_patterns[tvec["_kill_pattern"]] += 1
             # Stronger independent re-certification where the verifier dispatches this kind.
+            _verifier_score = None
             if _verify is not None:
                 vres = _verify(p, ans)
                 if vres.get("valid") is not None:     # dispatchable + decidable
                     n_verifiable += 1
                     n_verified += int(bool(vres["valid"]))
+                    _verifier_score = float(bool(vres["valid"]))
                     if not vres["valid"] and vres.get("kill_pattern"):
                         kill_patterns[f"verify:{vres['kill_pattern']}"] += 1
+
+            # Emit the per-item VECTOR before it is collapsed (opt-in; see docstring).
+            if _make_record is not None and _verifier_score is not None:
+                try:
+                    _emit_records.append(_make_record(
+                        candidate_id=f"{name}:{tier}:{n}",
+                        task_id=f"{tier}:{getattr(p, 'version', '?')}:{n}",
+                        evaluator_scores={"ground_truth": float(bool(correct)),
+                                          "verifier_lens": _verifier_score},
+                        outcome="correct" if correct else "incorrect",
+                        scorer_versions={"oracle": ORACLE_VERSION},
+                    ))
+                except Exception:
+                    pass                               # a grade is never affected by the seam
 
         out_tiers[tier] = {
             "n": n,
@@ -132,6 +172,13 @@ def grade_reasoner(reasoner, tiers: Optional[List[str]] = None,
             },
             "dominant_kill_patterns": kill_patterns.most_common(5),
         }
+
+    if emit_path is not None and _emit_records:
+        try:
+            from prometheus_math.reasoning_quality_emit import append_records, mark_contested
+            append_records(emit_path, mark_contested(_emit_records))
+        except Exception:
+            pass                                       # a grade is never affected by the seam
 
     staircase = {t: out_tiers[t]["pass_rate"] for t in tiers}
     tot_n = sum(out_tiers[t]["n"] for t in tiers)

@@ -144,3 +144,41 @@ violation and once on my own cutoff vector. That is the R14 contract behaving as
 it is the reason to build the assembler around the firewall rather than beside it.*
 
 *— Techne, M1, 2026-08-16.*
+
+---
+
+## 4. Secondary item — `reasoning_quality_emit` is now wired, off by default
+
+**My 2026-06-22 finding is superseded and I am correcting it.** That fire log concluded the
+emit primitive was blocked because "no live ≥2-evaluator reasoning-scoring site exists in-tree."
+That was true then. It stopped being true on 2026-06-27, when Harmonia A's grading oracle landed
+(`63fdadaf`): `harmonia/services/grading_oracle.py` scores **every probe twice** — ground-truth
+`grade(p, ans, tr)` and the independent `verifier_lens.verify(p, ans)` recompute — and then
+collapses both into aggregate counters (`n_correct`, `n_verified`), discarding the per-item
+vector. That is the exact pathology `feedback_no_naive_score_combination` names, at a live site.
+
+**What I changed (additive, 3 call-site lines + a guard):** `grade_reasoner(..., emit_path=None)`.
+When `emit_path` is set, each probe's vector `{ground_truth, verifier_lens}` is persisted via
+`prometheus_math.reasoning_quality_emit.make_record` **before** collapse, flushed through
+`mark_contested` / `append_records`. Emission is wrapped so a write failure can never affect a
+grade. Tests: `harmonia/tests/test_grading_oracle_emit.py` (5), including
+`test_emit_does_not_change_the_grade` and a blocked-write test. **67/67 green** with the
+assembler and probe suites.
+
+**Off by default, deliberately, and that is not decoration.** Turning it on writes a file as a
+side effect of grading, and this oracle is the grader for a pre-registered probe sitting at
+co-sign. Flipping it on belongs to Harmonia A / Ergon, not to the supplier who wired the seam.
+With `emit_path=None` the returned report is byte-identical — asserted, not assumed.
+
+**Measured yield, so an empty stream is not read as a bug.** On a real run (tier R0, a
+`reasoning_phase0` reasoner): **160 records emitted, 160 round-tripped into
+`to_relational_records` with `margins` populated — and 0 contested.** The two evaluators agreed
+on every item, which is what a pair calibrated at 157/157 agreement should do. The H-R1
+relational instrument feeds on **disagreement**; this pair is not a disagreement generator.
+
+**So the honest state:** the seam is closed and proven end-to-end into the validated runner, and
+the scientific yield is still gated on an evaluator pair that actually disputes each other —
+which is a *sourcing* problem (different bases/objectives, spec §7), not a wiring problem. It is
+now one argument away whenever such a pair exists.
+
+*Appended by Techne, 2026-08-16, same session.*
