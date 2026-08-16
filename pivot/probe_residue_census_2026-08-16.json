@@ -1,0 +1,97 @@
+{
+ "seed": 20260813,
+ "assembly_version": "techne-assemble/v1.0.0",
+ "sources": {
+  "signature_index": {
+   "scan": "full",
+   "rows_total": 3311,
+   "eligible_KILL": 1268,
+   "with_obstruction_class": 646,
+   "verdict_class_vocabulary": [
+    "CONFIRM",
+    "INCONCLUSIVE",
+    "KILL",
+    "UNVERIFIED"
+   ],
+   "NOTE": "no REJECTED class exists in this table; prereg \u00a74.3 names 'Theseus invariant_equality REJECTED records' \u2014 those live in the corpus batches, not this index. Filed for the owner."
+  },
+  "hephaestus_forge": {
+   "scan": "full",
+   "scraps_total": 6276,
+   "eligible_excluding_transport": 3415,
+   "excluded_transport_failures": 2861,
+   "with_obstruction_class": 3315,
+   "obstruction_breakdown": {
+    "null": 100,
+    "near-miss-margin-below-threshold": 2496,
+    "asserted-equality-without-executing-computation": 819
+   }
+  },
+  "theseus_corpus": {
+   "scan": "stratified sample across ALL batches (not head-of-file)",
+   "batches": 265,
+   "records_sampled": 3133,
+   "sampling_methods": {
+    "gz-head-window": 100,
+    "seeded-byte-offset": 165
+   },
+   "verdict_distribution": {
+    "REJECTED": 1416,
+    "SHADOW_CATALOG": 1077,
+    "INCONCLUSIVE": 177,
+    "UNVERIFIED": 463
+   },
+   "rejected_sampled": 1416,
+   "rejected_claim_kinds": {
+    "kill_neighborhood": 487,
+    "invariant_equality": 362,
+    "mutation": 135,
+    "statistical_correlation": 94,
+    "functional_identity": 84,
+    "composition_test": 46,
+    "symmetry_transform": 35,
+    "operator_rotation": 29,
+    "ratio_invariance": 22,
+    "bridge_extension": 21,
+    "literature_mined": 13,
+    "modus_ponens_chain": 12,
+    "false_dichotomy": 12,
+    "partial_information": 11,
+    "conservation_law": 10,
+    "confidence_calibration": 9,
+    "order_dependence": 6,
+    "obstruction": 5,
+    "minimal_counterexample": 5,
+    "closure_under_operation": 5
+   },
+   "invariant_equality_rejected": 362,
+   "null_rates_over_rejected": {
+    "kill_vector": 100.0,
+    "step_trace": 81.5,
+    "precision_dps": 100.0,
+    "method": 5.3
+   },
+   "obstruction_classifiable": {
+    "asserted-equality-without-executing-computation": 451,
+    "near-miss-margin-below-threshold": 100,
+    "surface-plausible-arithmetically-false": 69,
+    "None": 796
+   }
+  }
+ },
+ "sampling_doctrine": "feedback_sampling_strategy_is_analysis \u2014 stratified across ALL batches; per-batch method stamped; biases stated, not hidden",
+ "d3_verdict": {
+  "eligible_records": 4581,
+  "prereg_floor": 40,
+  "status": "SUPPLIED"
+ },
+ "d2_verdict": {
+  "status": "BLOCKED-PENDING-OWNER-RULING",
+  "why": "prereg \u00a74.1 assigns D2 to NATIVE residue; \u00a74.3 defines D2 by mechanism tags that describe the probe's arithmetic task domains. Native Theseus/forge records carry no such tags. Assembler supports either source pool; the ruling is Ergon's (R12). See the committed discrepancy note.",
+  "native_records_carrying_mechanism_tags": 0
+ },
+ "d0_d1_verdict": {
+  "status": "AWAITING-PRE-PASS",
+  "why": "probe_prepass ledger does not exist yet; loader returns empty and the packet reports NOT-RUN-FOR-LACK-OF-RESIDUE rather than inventing residue."
+ }
+}

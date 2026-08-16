@@ -1,0 +1,376 @@
+=== PROMETHEUS RESIDUE PACKET ===
+{
+ "arm": "F-prom-retrieved",
+ "assembly_version": "techne-assemble/v1.0.0",
+ "d_stratum": "D3",
+ "prereg": "PREREG_METABOLIZATION_PROBE_v1 §4.3/§4.4/§4.5",
+ "records_truncated_to_fit": 0,
+ "redaction_regex": "\\b(true|false)\\b",
+ "sampling": "theseus: stratified across 265 batches (byte-offset + gz-head, stamped per record); forge/signature_index: full scan",
+ "source_counts": {
+  "theseus_corpus": 25
+ },
+ "source_record_ids": [
+  "batch-20260520T071308Z-2cd475#3",
+  "batch-20260520T071308Z-2cd475#4",
+  "batch-20260520T071308Z-2cd475#5",
+  "batch-20260520T071308Z-2cd475#6",
+  "batch-20260520T071308Z-2cd475#7",
+  "batch-20260520T071308Z-2cd475#8",
+  "batch-20260520T071308Z-2cd475#9",
+  "batch-20260520T071308Z-2cd475#10",
+  "batch-20260520T071308Z-2cd475#11",
+  "batch-20260520T071308Z-2cd475#12",
+  "batch-20260521T082131Z-7b4757#1",
+  "batch-20260521T082131Z-7b4757#5",
+  "batch-20260521T082703Z-9e0f53#2",
+  "batch-20260521T082703Z-9e0f53#7",
+  "batch-20260521T082703Z-9e0f53#10",
+  "batch-20260521T082703Z-9e0f53#12",
+  "batch-20260521T083241Z-a50ae0#1",
+  "batch-20260521T092439Z-ee3b08#1",
+  "batch-20260521T092439Z-ee3b08#5",
+  "batch-20260521T101600Z-2700aa#1",
+  "batch-20260521T101600Z-2700aa#5",
+  "batch-20260521T111836Z-799153#2",
+  "batch-20260521T111836Z-799153#7",
+  "batch-20260521T121246Z-d0a1bd#4",
+  "batch-20260521T121246Z-d0a1bd#6"
+ ],
+ "task_uid": "SAMPLE-D3-3",
+ "tau_provenance": {
+  "batch-20260518T173548Z-b9034c": 12,
+  "batch-20260518T195105Z-43a075": 4,
+  "batch-20260519T065455Z-a9bcdd": 6,
+  "batch-20260519T083129Z-550e36": 11,
+  "batch-20260519T135527Z-a03302": 6,
+  "batch-20260519T153153Z-9e5633": 11,
+  "batch-20260519T170818Z-b14a8c": 12,
+  "batch-20260519T184545Z-4b1d46": 9,
+  "batch-20260520T040616Z-da2d3c": 11,
+  "batch-20260520T071308Z-2cd475": 12,
+  "batch-20260521T082131Z-7b4757": 5,
+  "batch-20260521T082703Z-9e0f53": 12,
+  "batch-20260521T083241Z-a50ae0": 1,
+  "batch-20260521T092439Z-ee3b08": 5,
+  "batch-20260521T101600Z-2700aa": 5,
+  "batch-20260521T111836Z-799153": 7,
+  "batch-20260521T121246Z-d0a1bd": 12,
+  "batch-20260521T145723Z-848bed": 12,
+  "batch-20260521T163718Z-3b8e83": 8,
+  "batch-20260521T175611Z-33c8a3": 3,
+  "batch-20260521T223206Z-5d2886": 12,
+  "batch-20260522T020427Z-58489e": 7,
+  "batch-20260522T030817Z-21ff03": 10,
+  "batch-20260522T040710Z-42aee0": 10,
+  "batch-20260522T050716Z-09bb4c": 12,
+  "batch-20260522T064219Z-624a7e": 11,
+  "batch-20260522T072530Z-44dc49": 2,
+  "batch-20260522T090509Z-a51624": 12,
+  "batch-20260522T104609Z-34bfd3": 8,
+  "batch-20260522T113314Z-e6132f": 9,
+  "batch-20260522T121514Z-555ac5": 11,
+  "batch-20260522T135709Z-86321d": 6,
+  "batch-20260522T144606Z-c97bdf": 12,
+  "batch-20260522T163006Z-c73dc5": 12,
+  "batch-20260522T203906Z-412a65": 12,
+  "batch-20260522T214707Z-4c21ce": 11,
+  "batch-20260523T010105Z-b0c1f4": 11,
+  "batch-20260523T020906Z-99b6c9": 5,
+  "batch-20260523T030707Z-261ff6": 3,
+  "batch-20260523T044406Z-b7a7a5": 11,
+  "batch-20260523T055939Z-638f16": 10,
+  "batch-20260523T071706Z-87c0ac": 1,
+  "batch-20260523T083011Z-199fa3": 8,
+  "batch-20260523T095607Z-7888c3": 9,
+  "batch-20260523T112406Z-fd7654": 9,
+  "batch-20260523T140806Z-24769e": 11,
+  "batch-20260523T151908Z-241de2": 12,
+  "batch-20260523T165306Z-bf46ee": 7,
+  "batch-20260523T210906Z-486ba1": 8,
+  "batch-20260524T002108Z-cefd0e": 9,
+  "batch-20260524T012115Z-722906": 8,
+  "batch-20260524T021909Z-8c7cd5": 8,
+  "batch-20260524T034510Z-84a552": 12,
+  "batch-20260524T045308Z-8aff33": 8,
+  "batch-20260524T054907Z-ca63eb": 9,
+  "batch-20260524T070415Z-5f0111": 4,
+  "batch-20260524T081631Z-ea7dcb": 8,
+  "batch-20260524T112318Z-5b165c": 1940697599,
+  "batch-20260524T124925Z-329d9f": 5,
+  "batch-20260524T142008Z-f90774": 3,
+  "batch-20260524T155107Z-fe54ef": 11,
+  "batch-20260524T162229Z-e5ff27": 3,
+  "batch-20260524T165308Z-e88303": 8,
+  "batch-20260524T182423Z-97ff53": 8,
+  "batch-20260524T195509Z-44684c": 10,
+  "batch-20260524T225708Z-2f8767": 4,
+  "batch-20260525T003106Z-1ad6b4": 12,
+  "batch-20260525T032308Z-767a21": 10,
+  "batch-20260525T083213Z-c09377": 10,
+  "batch-20260525T113410Z-1eed67": 12,
+  "batch-20260525T130510Z-f317ec": 10,
+  "batch-20260525T133811Z-327c47": 12,
+  "batch-20260525T144122Z-ebeebf": 11,
+  "batch-20260525T151207Z-f5defc": 11,
+  "batch-20260525T154406Z-a8ea7d": 2070345229,
+  "batch-20260525T164631Z-5e3bf6": 3017833594,
+  "batch-20260525T171705Z-43b869": 2824825279,
+  "batch-20260525T174904Z-1f1327": 1331072823,
+  "batch-20260525T185205Z-0b3b1f": 3210852907,
+  "batch-20260525T195106Z-f96f63": 3405979601,
+  "batch-20260525T202208Z-2fb909": 3173387973,
+  "batch-20260525T205314Z-606375": 2928566797,
+  "batch-20260525T215605Z-0a6c10": 1535317768,
+  "batch-20260525T222705Z-3e244a": 3836278575,
+  "batch-20260525T225805Z-685b4f": 2922584078,
+  "batch-20260525T232906Z-2bd2e6": 3775990377,
+  "batch-20260525T235923Z-c521d7": 3189900442,
+  "batch-20260526T002934Z-ee9808": 3618334312,
+  "batch-20260526T005954Z-9a54f4": 3210457726,
+  "batch-20260526T013001Z-78287e": 2224665653,
+  "batch-20260526T020105Z-753002": 2578636587,
+  "batch-20260526T023205Z-cee713": 2966977528,
+  "batch-20260526T030305Z-af8585": 3290904313,
+  "batch-20260526T033405Z-a1f3af": 1531353167,
+  "batch-20260526T040504Z-2d3850": 3001336125,
+  "batch-20260526T043605Z-82daaa": 2104867843,
+  "batch-20260526T050705Z-8db8a0": 13779716,
+  "batch-20260528T071330Z-202ce7": 1361425457,
+  "batch-20260528T074011Z-7b6998": 2749311063,
+  "batch-20260528T075526Z-e1d7f2": 197086,
+  "batch-20260528T092150Z-7d39f2": 1828681370,
+  "batch-20260528T101109Z-c230ce": 3399444277,
+  "batch-20260528T110017Z-56fdfa": 3453240549,
+  "batch-20260528T112449Z-95aa0c": 2643021888,
+  "batch-20260528T114922Z-2c86dc": 2250854922,
+  "batch-20260528T123834Z-91afe8": 3352817998,
+  "batch-20260528T132747Z-b07e99": 1983871431,
+  "batch-20260528T135225Z-6b67cc": 1685708550,
+  "batch-20260528T141709Z-216a60": 2409418253,
+  "batch-20260528T150632Z-33d7ad": 2176490441,
+  "batch-20260528T153112Z-b50f6a": 2391913697,
+  "batch-20260528T155550Z-8407c4": 2592144857,
+  "batch-20260528T164508Z-a7cf71": 2264241100,
+  "batch-20260528T170951Z-2d09e1": 3279740388,
+  "batch-20260528T182407Z-386a93": 2520857442,
+  "batch-20260528T193817Z-be8cfa": 4181175326,
+  "batch-20260528T202729Z-78503a": 3137541707,
+  "batch-20260528T225451Z-1405bc": 2071929344,
+  "batch-20260528T231923Z-ce00ee": 2257212746,
+  "batch-20260528T234351Z-999d2b": 3517623146,
+  "batch-20260529T000823Z-bd9637": 2585895996,
+  "batch-20260529T003254Z-5774cd": 2381162895,
+  "batch-20260529T012158Z-0a758d": 3143373076,
+  "batch-20260529T021104Z-35542d": 3278072381,
+  "batch-20260529T030015Z-954211": 3092356170,
+  "batch-20260529T041351Z-0c021d": 3161109017,
+  "batch-20260529T043827Z-48279a": 3510271675,
+  "batch-20260529T050259Z-73b071": 2909543036,
+  "batch-20260529T055219Z-703e4a": 1915752054,
+  "batch-20260529T061655Z-00a000": 2273644432,
+  "batch-20260529T064130Z-fb0ec1": 1227598598,
+  "batch-20260529T073035Z-c13b23": 2614917191,
+  "batch-20260529T081954Z-14210c": 3259484117,
+  "batch-20260529T111216Z-5fc846": 3096303489,
+  "batch-20260529T113648Z-6f53b9": 1730159905,
+  "batch-20260529T120115Z-090c69": 2448763911,
+  "batch-20260529T122550Z-61f798": 1529030184,
+  "batch-20260529T131457Z-535c43": 1930149205,
+  "batch-20260529T145420Z-a29923": 1197469296,
+  "batch-20260529T154336Z-4757a5": 489437,
+  "batch-20260529T160808Z-5249e7": 2738248282,
+  "batch-20260529T163241Z-7d7442": 2445844756,
+  "batch-20260529T181103Z-d8fa14": 3478088963,
+  "batch-20260529T183538Z-1d2400": 2649687117,
+  "batch-20260529T190014Z-a7f347": 2703753100,
+  "batch-20260530T060336Z-4396ba": 3533813081,
+  "batch-20260530T095321Z-c2cd2c": 476448665,
+  "hephaestus_forge": 6661,
+  "signature_index": 3249
+ },
+ "token_ceiling": 8000,
+ "token_count": 3405,
+ "token_count_method": "frozen-regex-approx/v1 (word|number|punct pieces, chars/4 floor)",
+ "verdict_redaction_applied": false
+}
+=== RESIDUE ===
+[theseus_corpus:a9338e127dedadc0 batch-20260520T071308Z-2cd475#3]
+  claim: F4_FRONT[cov=3, min=0] determinant(knot:8_18) abs_diff_le_3 conductor(ec:3330.m2) | 45 vs 3330 | holds=False
+  kind: invariant_equality
+  kill_pattern: f4_frontier_abs_diff_le_3_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:fd5a6bba57873e1b batch-20260520T071308Z-2cd475#4]
+  claim: F4_FRONT[cov=4, min=0] determinant(knot:5_2) abs_diff_le_3 conductor(ec:9422.c2) | 7 vs 9422 | holds=False
+  kind: invariant_equality
+  kill_pattern: f4_frontier_abs_diff_le_3_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:7a688d7814279de3 batch-20260520T071308Z-2cd475#5]
+  claim: F4_FRONT[cov=1, min=0] crossing_number(knot:9_10) abs_diff_le_3 tamagawa_product(ec:3840.t1) | 9 vs 4 | holds=False
+  kind: invariant_equality
+  kill_pattern: f4_frontier_abs_diff_le_3_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:9bb5e28d5ae09989 batch-20260520T071308Z-2cd475#6]
+  claim: F4_FRONT[cov=2, min=0] crossing_number(knot:7_5) abs_diff_le_3 tamagawa_product(ec:8883.f1) | 7 vs 2 | holds=False
+  kind: invariant_equality
+  kill_pattern: f4_frontier_abs_diff_le_3_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:465da9510ae4141a batch-20260520T071308Z-2cd475#7]
+  claim: F4_FRONT[cov=3, min=0] crossing_number(knot:8_4) abs_diff_le_3 tamagawa_product(ec:6867.a4) | 8 vs 16 | holds=False
+  kind: invariant_equality
+  kill_pattern: f4_frontier_abs_diff_le_3_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:19d17f095700194d batch-20260520T071308Z-2cd475#8]
+  claim: F4_FRONT[cov=4, min=0] crossing_number(knot:8_15) abs_diff_le_3 tamagawa_product(ec:2752.a1) | 8 vs 1 | holds=False
+  kind: invariant_equality
+  kill_pattern: f4_frontier_abs_diff_le_3_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:d30e9d84f58f6c7b batch-20260520T071308Z-2cd475#9]
+  claim: F4_FRONT[cov=1, min=0] determinant(knot:9_7) equal_mod_2 tamagawa_product(ec:4410.b2) | 29 vs 8 | holds=False
+  kind: invariant_equality
+  kill_pattern: f4_frontier_equal_mod_2_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:9c196a1313f4ff8f batch-20260520T071308Z-2cd475#10]
+  claim: F4_FRONT[cov=2, min=0] determinant(knot:8_21) equal_mod_2 tamagawa_product(ec:8850.m1) | 15 vs 4 | holds=False
+  kind: invariant_equality
+  kill_pattern: f4_frontier_equal_mod_2_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:3816123fbb3142f1 batch-20260520T071308Z-2cd475#11]
+  claim: F4_FRONT[cov=3, min=0] determinant(knot:9_6) equal_mod_2 tamagawa_product(ec:5040.bl1) | 27 vs 40 | holds=False
+  kind: invariant_equality
+  kill_pattern: f4_frontier_equal_mod_2_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:a40778db6158cbe2 batch-20260520T071308Z-2cd475#12]
+  claim: F4_FRONT[cov=4, min=0] determinant(knot:8_8) equal_mod_2 tamagawa_product(ec:6402.o2) | 25 vs 192 | holds=False
+  kind: invariant_equality
+  kill_pattern: f4_frontier_equal_mod_2_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:5e4d42c8d459b119 batch-20260521T082131Z-7b4757#1]
+  claim: crossing_number(knot:9_8) equal_mod_2 tamagawa_product(ec:3879.a1) | 9 vs 2 | holds=False
+  kind: invariant_equality
+  kill_pattern: a1_relation_equal_mod_2_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:8d52dc039edae2cc batch-20260521T082131Z-7b4757#5]
+  claim: crossing_number(knot:9_5) equal rank(ec:9114.x4) | 9 vs 1 | holds=False
+  kind: invariant_equality
+  kill_pattern: a1_relation_equal_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:957e590a801f3bd3 batch-20260521T082703Z-9e0f53#2]
+  claim: corr(three_genus_knot, rank_ec, n=20): r_raw=-0.110 (p=0.64) → r_detrended_logcond=-0.270 (p=0.235) | survives_prime_detrend=False
+  kind: statistical_correlation
+  kill_pattern: a2_detrended_correlation_not_significant
+  method: pearson_correlation_with_logcond_detrend
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:d181bd9166d99538 batch-20260521T082703Z-9e0f53#7]
+  claim: corr(nf_class_number_knot, tamagawa_product_ec, n=14): r_raw=+0.000 (p=1) → r_detrended_logcond=+0.000 (p=1) | survives_prime_detrend=False
+  kind: statistical_correlation
+  kill_pattern: a2_detrended_correlation_below_threshold
+  method: pearson_correlation_with_logcond_detrend
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:a914563b87d1622f batch-20260521T082703Z-9e0f53#10]
+  claim: F4_FRONT[cov=2, min=0] determinant(knot:9_4) equal_mod_2 torsion(ec:39.a1) | 21 vs 2 | holds=False
+  kind: invariant_equality
+  kill_pattern: f4_frontier_equal_mod_2_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:62afbc373da77c0f batch-20260521T082703Z-9e0f53#12]
+  claim: corr(three_genus_knot, torsion_ec, n=20): r_raw=+0.215 (p=0.349) → r_detrended_logcond=+0.272 (p=0.23) | survives_prime_detrend=False
+  kind: statistical_correlation
+  kill_pattern: a2_detrended_correlation_not_significant
+  method: pearson_correlation_with_logcond_detrend
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:b8fa2ee12ed905c0 batch-20260521T083241Z-a50ae0#1]
+  claim: F2_AFS[cov=1] three_genus(knot:9_1) equal conductor(ec:3850.u1) | 4 vs 3850 | holds=False
+  kind: invariant_equality
+  kill_pattern: f2_anti_freq_equal_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:5e4d42c8d459b119 batch-20260521T092439Z-ee3b08#1]
+  claim: crossing_number(knot:9_8) equal_mod_2 tamagawa_product(ec:3879.a1) | 9 vs 2 | holds=False
+  kind: invariant_equality
+  kill_pattern: a1_relation_equal_mod_2_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:8d52dc039edae2cc batch-20260521T092439Z-ee3b08#5]
+  claim: crossing_number(knot:9_5) equal rank(ec:9114.x4) | 9 vs 1 | holds=False
+  kind: invariant_equality
+  kill_pattern: a1_relation_equal_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:5e4d42c8d459b119 batch-20260521T101600Z-2700aa#1]
+  claim: crossing_number(knot:9_8) equal_mod_2 tamagawa_product(ec:3879.a1) | 9 vs 2 | holds=False
+  kind: invariant_equality
+  kill_pattern: a1_relation_equal_mod_2_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:8d52dc039edae2cc batch-20260521T101600Z-2700aa#5]
+  claim: crossing_number(knot:9_5) equal rank(ec:9114.x4) | 9 vs 1 | holds=False
+  kind: invariant_equality
+  kill_pattern: a1_relation_equal_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:5676ade2c32c8ca7 batch-20260521T111836Z-799153#2]
+  claim: nf_class_number(knot:5_2) abs_diff_le_3 conductor(ec:4230.bh1) | 1 vs 4230 | holds=False
+  kind: invariant_equality
+  kill_pattern: a1_relation_abs_diff_le_3_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:b282eeda558938f3 batch-20260521T111836Z-799153#7]
+  claim: trace_field_class(knot:9_6) abs_diff_le_3 rank(ec:102.c3) | 6 vs 0 | holds=False
+  kind: invariant_equality
+  kill_pattern: a1_relation_abs_diff_le_3_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:06fab2f0e49b45bf batch-20260521T121246Z-d0a1bd#4]
+  claim: F4_FRONT[cov=1, min=0] trace_field_class(knot:7_3) abs_diff_le_3 conductor(ec:6832.k1) | 5 vs 6832 | holds=False
+  kind: invariant_equality
+  kill_pattern: f4_frontier_abs_diff_le_3_violated
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+[theseus_corpus:548831219f09ba56 batch-20260521T121246Z-d0a1bd#6]
+  claim: D2_BRACKET[K=3, w=2] trace_field_class(knot:7_3) vs conductor(ec:6832.k1) | margin=-6824 | band=comfortable_failure | in_bracket=False
+  kind: kill_neighborhood
+  kill_pattern: d2_margin_outside_bracket_6824>2
+  method: exact
+  (not recorded: kill_vector, step_trace)
+
+SPARSITY (what the substrate did not record — shipped as measured):
+  kill_vector: absent in 25/25 records (100.0%)
+  step_trace: absent in 25/25 records (100.0%)
+  excluded by type: 2861 transport-failure scraps (infrastructure outcome, no mathematical obstruction recorded)

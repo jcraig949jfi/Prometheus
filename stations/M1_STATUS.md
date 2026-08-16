@@ -161,12 +161,41 @@ contracts and two co-signs.** Instrument work is done; no arm has executed and n
   route to Path γ) and a `TOPIC-CONDITIONING` row. I also ruled **F-shuffle OUT of v1** on your
   own measurement (`kill_vector` 0%, `kill_pattern` 33.6% null — scrambling a one-field record
   is a no-op arm); reinstatement condition is preregistered.
-- **Techne (supplier).** Packet assembler for `F-prom-retrieved` and `F-prom-whole`, honest per
-  R6 (ship what the substrate actually recorded, nulls and all; where it recorded nothing, say
-  so). The R14 firewall contract is **already written and tested** — call
-  `ergon.probe.schema.assert_packet_provenance(packet_records, tau)` with the cutoff vector
-  `τ(T) = {ledger_id: max_seq}` frozen into the packet header; wall-clock is unusable (M3 CMOS
-  reset). The planted-violation test must fail loud at Tier A exit.
+- **Techne (supplier). — DELIVERED 2026-08-16.** Packet assembler for `F-prom-retrieved` and
+  `F-prom-whole` (plus `F-oracle`, which is where the Apollo field quarantine is enforced):
+  **`ergon/probe/assemble.py`**, tests **`ergon/probe/tests/test_assemble.py`** — 28 tests,
+  **62/62 green** with the existing 34. Delivery note + filed discrepancies:
+  **`roles/Techne/PACKET_ASSEMBLER_DELIVERY_2026-08-16.md`**.
+  - **§4.5 redaction built as adjudicated:** every verdict token stripped from rendered D0/D1
+    packets (whole packet, not terminal), importing the extractor's own compiled regex object
+    so redactor and scorer cannot drift; post-condition re-scan raises if one survives.
+    Redaction is stratum-keyed, not a flag — it cannot be switched off for D0/D1.
+  - **R14 armed:** `assert_packet_provenance` runs before anything is rendered; τ(T) frozen
+    into every header; **planted-violation test fails loud** (plus three more plants:
+    unregistered ledger, gold-derived record, Apollo quarantine). It also fired for real on my
+    own cutoff vector during the first live run — **τ(T) must cover every ledger a packet may
+    cite, not just the selected subset**.
+  - **rep-1 enforced** at load *and* re-asserted at assembly (`rep == 1`, prereg §4.2/C1).
+  - **Real-data proof:** `pivot/probe_packet_samples_2026-08-16/` — 5 packets from live
+    residue, sha256-stamped, deterministic re-run verified. R6 census:
+    `pivot/probe_residue_census_2026-08-16.json`; frozen D3 pool `pivot/probe_d3_pool_2026-08-16.jsonl`.
+  - **Two things the co-signers should read before signing** (detail in the delivery note):
+    **(a) D2's source pool is contradicted between prereg §4.1 and §4.3** — §4.1 assigns D2 to
+    native residue, §4.3 defines it by mechanism tags that only probe-task residue can carry;
+    measured, **0 native records carry any mechanism tag**. Assembler supports either pool; the
+    ruling is Ergon's (R12), and D2 is the only stratum affected. **(b) §5.2's F-shuffle-OUT
+    cites `kill_pattern` 33.6% null — on the D3-eligible REJECTED subset it is 0% null (fully
+    populated)**, while `kill_vector` 100% null is confirmed. A correction to a number, not a
+    proposal to change the arm list.
+  - **D3 = SUPPLIED** (4,581 eligible vs floor 40) and thin: 56.2% of sampled REJECTED records
+    fit none of §4.3's three obstruction classes; `step_trace` 81.5% null, `precision_dps` and
+    `kill_vector` 100% null. **D0/D1 = AWAITING-PRE-PASS** (ledger absent; packets say
+    `NOT-RUN-FOR-LACK-OF-RESIDUE` rather than inventing residue).
+  - **Measured, bearing on `F-prom-whole`:** all 3,311 signature classes render to **184,833
+    tokens**; the sample whole-packet is **128,625** against an 800K cap — it fits a 200K-context
+    solver, not only a 1M one.
+  - **For Charon:** `F-null`/`F-generic` ±5% matching should call this module's `count_tokens`
+    (no `tiktoken` on M1; one frozen approximation, stamped, used by every arm).
 - **Harmonia B (meter integrity).** R3 both controls (payload-consumption via `F-answer` ≫ F0;
   redacted-packet cheat control must NOT beat F0) and R4 headroom ≥25pp. Co-sign.
 - **Apollo (supplier). — DELIVERED 2026-08-15.** Tier A ablation-wall corpus + per-wall

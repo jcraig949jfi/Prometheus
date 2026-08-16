@@ -1,0 +1,53 @@
+{
+ "assembly_version": "techne-assemble/v1.0.0",
+ "token_count_method": "frozen-regex-approx/v1 (word|number|punct pieces, chars/4 floor)",
+ "pool_records": {
+  "theseus": 620,
+  "forge": 3415,
+  "signature_index": 1268
+ },
+ "tau_ledgers": 149,
+ "deterministic_rerun_matches": true,
+ "packets": [
+  {
+   "file": "D3_sample_1.txt",
+   "arm": "F-prom-retrieved",
+   "tokens": 3434,
+   "sha256": "8855b546834f26b4ae7d3fd514462f33e6ed64c7a0fc59abee202726e63bf8f2",
+   "records": 25,
+   "truncated": 0
+  },
+  {
+   "file": "D3_sample_2.txt",
+   "arm": "F-prom-retrieved",
+   "tokens": 3470,
+   "sha256": "cec5e036305defa9384ba357ab7a59e391a3bfcc4091dc5453692f810fb6eb83",
+   "records": 25,
+   "truncated": 0
+  },
+  {
+   "file": "D3_sample_3.txt",
+   "arm": "F-prom-retrieved",
+   "tokens": 3405,
+   "sha256": "260254542d53a708cb545f9a6ca87f1376d64fc68d18335199972335235011ce",
+   "records": 25,
+   "truncated": 0
+  },
+  {
+   "file": "WHOLE_sample_1.txt",
+   "arm": "F-prom-whole",
+   "tokens": 128625,
+   "prefix_records": 1268,
+   "cap": 800000,
+   "sha256": "0cb9d57ca9179d9d143de3747a9f8f7e541c7a928e36591c63324cac8d576075"
+  },
+  {
+   "file": "ORACLE_sample_1.txt",
+   "arm": "F-oracle",
+   "tokens": 5724,
+   "sha256": "29c9b449f352246f5c2887e02570515fd3f7ad4fe61d112d86f6fbe3d1ae793f",
+   "walls": 6,
+   "quarantine": "armed \u2014 assert_wall_quarantine passed"
+  }
+ ]
+}
