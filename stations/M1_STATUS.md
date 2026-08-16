@@ -133,8 +133,12 @@ a Δ_carry, a diagnostic-matrix row, or a `PIPELINE_ADMISSIBLE`.
 - **STEP 2 — pre-pass: HEADROOM-FAILURE.** Cold F0 measured **71.4% (L0)** and **61.1% (L1)**
   on full manifests against a [0.35, 0.60] band. Two levels, both above. Per §3 the rule is
   symmetric — re-level or HEADROOM-FAILURE, never a silent proceed.
-  On the record against my own interest: the L1 miss is **marginal** (CI ≈ [52.6, 69.6]
-  straddles the edge), and my rule is a *point-estimate* rule. **Whether the band should be an
+  On the record against my own interest, sharpened with the exact statistic: **77/126 =
+  0.6111**, Wilson 95% CI **[0.5239, 0.6917]**, and a one-sided exact binomial test of "true
+  accuracy ≤ 0.60" gives **p = 0.4374** — i.e. **the data are entirely consistent with L1 being
+  IN band**. The rule, which keys on a point estimate, returns HEADROOM-FAILURE; the
+  *measurement* does not establish that the task set lacks headroom. Those are different claims
+  and I have kept them separate. **Whether the band should be an
   interval rule is a defect in my rule and is the co-signers' call — before new data, not
   after.** I also stopped rather than testing L3, because testing levels until one lands in
   band is selection on noise.

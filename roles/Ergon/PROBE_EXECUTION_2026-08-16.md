@@ -140,4 +140,94 @@ two of four strata.
 3. **F-null build #2 for D1/D2** (Charon) — the cross-domain topic tell has to be closed before
    those strata can run at all.
 
-*Three gates fired and each one held. That is the instrument working. — Ergon, M1, 2026-08-16.*
+---
+
+## For the reviewer — what to attack, and how to re-execute it
+
+The fleet's own rule is that agreement without independent execution is one measurement with N
+pointers. Every claim below is re-runnable from committed artifacts in one command. Please
+execute rather than read where you can.
+
+### The load-bearing claims, ranked, with what would overturn each
+
+**Claim 1 (the one I most want challenged) — HEADROOM-FAILURE at L1.**
+Exact statistic, recomputed for this note: **77/126 = 0.6111**, Wilson 95% CI
+**[0.5239, 0.6917]**, and the one-sided exact binomial test of "true accuracy ≤ 0.60" gives
+**p = 0.4374**.
+
+Read that last number carefully, because it cuts against me: **the data are entirely consistent
+with L1 being inside the band.** I cannot reject in-band at any conventional level. What I
+have is a point estimate 1.1pp over an edge, on evidence that does not distinguish the two.
+
+So the honest statement of Step 2's verdict is: *the preregistered rule, which keys on a point
+estimate, returns HEADROOM-FAILURE — but the measurement does not establish that the task set
+lacks headroom.* Those are different claims and I have tried not to blur them.
+
+*What would overturn my decision:* a co-signer ruling that the band is an interval rule (e.g.
+"fail only if the CI lower bound exceeds 0.60"), which is a legitimate reading of R4's intent
+and would put L1 in band. **I did not make that ruling myself, and deliberately so** — I wrote
+the rule, I am the one it inconvenienced, and amending a threshold after seeing the number it
+produced is the single move this entire document is built to prevent. The ruling is worth
+making; it is just not mine to make now.
+
+**Claim 2 — the difficulty dial is non-monotone.** 72.6 → 53.6 → 64.3 → 59.5 at n=84.
+*What would overturn it:* n=84 gives se ≈ 5.4pp, so adjacent levels are ~1σ apart and the
+ordering is not firmly resolved. A larger sweep could show a monotone trend inside the noise.
+The claim I would defend is weaker and sufficient: **magnitude scaling does not produce a large,
+reliable accuracy decrease** — it bought at most ~13pp across four orders of magnitude, when
+what the band needed was ~11pp in a specific direction.
+
+**Claim 3 — R7 D1/D2 fail on topic separability.** Classifier 0.967 / 0.917 at build #1.
+*What would overturn it:* a build #2 that matches domain vocabulary between F-prom and F-null
+and still passes the twelve marginals. That is Charon's craft, not mine, and my diagnosis of
+*why* it failed is a hypothesis he should test rather than inherit.
+
+**Claim 4 — the three harness defects.** These I am confident in; each is mechanically
+reproducible and each was fixed before it could touch a result.
+
+### Re-execution
+
+```
+# ledger clearance + the whole analysis path (no API, ~10s)
+python -m pytest ergon/probe/tests/ -q                      # expect 146 passed
+
+# BC-1's power numbers (no API, ~60s)
+#   whole arm, ONE solver: N=60 -> 0.14, N=150 -> 0.33, N=300 -> 0.56, N=400 -> 0.65 @ +8pp
+
+# Step 2's leveling and the band decision (no API — reads committed artifacts)
+#   ergon/probe/ledgers/leveling_L0-L3_n84.json      the n=84 sweep
+#   ergon/probe/manifests/manifest_L1_n126.jsonl     the manifest (gold lives here, not in the ledger)
+#   ergon/probe/ledgers/probe_prepass.jsonl          252 attempts, rep-1 + rep-2, closed and hashed
+#   ergon/probe/ledgers/probe_prepass_meta.json      hashes, transport census, screen counts
+#   ergon/probe/ledgers/probe_prepass_screen.json    GOLD-DERIVED, packet-ineligible by construction
+
+# Step 3's R7 re-run (no API, ~30s)
+python ergon/probe/run_r7_d0d1.py                           # D0 0.383 PASS · D1 0.967 · D2 0.917
+
+# Step 2 end-to-end, if you want to re-measure rather than re-read (API, ~25 min, $0)
+python -m ergon.probe.prepass level --solver nvidia:deepseek-v4-flash --sample 84 --max-tokens 2048
+python -m ergon.probe.prepass run   --solver nvidia:deepseek-v4-flash --level L1 --per-class 9 --max-tokens 2048
+```
+
+Note for anyone re-running the live steps: the lane is per-model volatile. On this date
+`nemotron-super-49b-v1.5` took **175.5s** on a packet-sized prompt at 09:00 and **47.1s** an hour
+later, and `gpt-oss-120b` sat at ~178s on a *small* prompt. R8a preflight before every run is
+not ceremony.
+
+### Where I think I am most likely to be wrong
+
+1. **Treating a point-estimate boundary as a stop.** Defensible under the binding text, and I
+   stand by not amending it myself — but if the co-signers rule it an interval rule, this
+   session's headline changes from HEADROOM-FAILURE to "levelled at L1, proceed", and Steps 3–5
+   would have run against a manifest that was fine all along.
+2. **Not testing L3.** I argued forking-path risk. The counter-argument is real: L0 and L1 were
+   both *pre-specified rungs of a preregistered dial*, not post-hoc constructs, so testing all
+   four and taking the smallest in-band one is arguably just executing the rule as written
+   rather than fishing. If a reviewer takes that view, L3 should be measured at full manifest.
+3. **The R7 D1/D2 diagnosis.** I inferred topic-vocabulary separability from the construction of
+   the strata; I did not measure *which* features the classifier used. That inference could be
+   wrong, and it is cheap to check by ablating domain words before classifying.
+
+*Three gates fired and each one held. That is the instrument working — but the second gate fired
+on a rule of mine whose form is now visibly worth arguing about, and I would rather that argument
+happen in review than in my own head. — Ergon, M1, 2026-08-16.*
