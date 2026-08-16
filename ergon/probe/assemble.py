@@ -42,6 +42,7 @@ from __future__ import annotations
 import dataclasses
 import gzip
 import hashlib
+import random
 import json
 import pathlib
 import re
@@ -485,6 +486,64 @@ def _order(records: Sequence[ResidueRecord]) -> list[ResidueRecord]:
     return sorted(records, key=lambda r: (r.ledger_id, r.seq, r.record_id))
 
 
+#: BC-2 — number of timeline buckets each source is split into before interleaving.
+TIMELINE_BUCKETS = 5
+
+
+def _order_per_task_stratified(
+    records: Sequence[ResidueRecord],
+    *,
+    target_uid: str,
+    n_buckets: int = TIMELINE_BUCKETS,
+) -> list[ResidueRecord]:
+    """[BC-2 / Charon C5] Per-task, seeded, source-and-timeline-stratified ordering.
+
+    `_order` is chronological-within-ledger and `assemble_retrieved` truncates from the tail,
+    so plain ordering ships the alphabetically-first ledger's oldest records — identical for
+    every task. Charon measured the consequence: every D3 packet was the same ~25-record
+    late-May Theseus window, ~0.5% of the certified 4,581-record pool, with forge and
+    signature_index records structurally unable to ship (their ledger ids sort after
+    `batch-…`). A constant packet measures topic priming, not retrieval, and it also makes the
+    paired statistic partially degenerate — per-task variation is what the pairing consumes.
+
+    This orders by round-robin across sources, drawing within each source from interleaved
+    timeline buckets, under an RNG seeded by (PROBE_SEED, target_uid). Consequences:
+      * source mixing survives truncation (round-robin puts one of each at the head),
+      * the timeline is spanned rather than head-sampled (bucket interleave),
+      * each task gets a different draw (uid in the seed), so pairing does real work,
+      * it is fully reproducible from the manifest (seeded, no wall-clock, no global state).
+    """
+    base = _order(records)  # deterministic input order, so the seeded draw is reproducible
+    by_source: dict[str, list[ResidueRecord]] = {}
+    for r in base:
+        by_source.setdefault(r.source, []).append(r)
+
+    rng = random.Random(f"{PREREG_SEED}:{target_uid}")
+    streams: dict[str, list[ResidueRecord]] = {}
+    for src, rs in by_source.items():
+        n = len(rs)
+        buckets = [rs[(i * n) // n_buckets:((i + 1) * n) // n_buckets] for i in range(n_buckets)]
+        buckets = [b for b in buckets if b]
+        for b in buckets:
+            rng.shuffle(b)
+        stream: list[ResidueRecord] = []
+        for i in range(max((len(b) for b in buckets), default=0)):
+            for b in buckets:
+                if i < len(b):
+                    stream.append(b[i])
+        streams[src] = stream
+
+    out: list[ResidueRecord] = []
+    srcs = sorted(streams)
+    idx = {s: 0 for s in srcs}
+    while any(idx[s] < len(streams[s]) for s in srcs):
+        for s in srcs:
+            if idx[s] < len(streams[s]):
+                out.append(streams[s][idx[s]])
+                idx[s] += 1
+    return out
+
+
 def select_residue(
     records: Sequence[ResidueRecord],
     *,
@@ -541,7 +600,11 @@ def assemble_retrieved(
     if stratum not in ("D0", "D1", "D2", "D3"):
         raise ValueError(f"unknown stratum {stratum!r}")
 
-    chosen = _order(records)
+    # BC-2: D3 draws a per-task seeded, source+timeline-stratified order; every other
+    # stratum keeps the plain deterministic order (D0/D1 are already target-scoped, and D2
+    # is mechanism-tag scoped, so neither has the constant-packet defect).
+    chosen = (_order_per_task_stratified(records, target_uid=task_uid)
+              if stratum == "D3" else _order(records))
 
     # rep-1 re-assertion (prereg §4.2) — the loader enforces it, and so does assembly.
     for r in chosen:

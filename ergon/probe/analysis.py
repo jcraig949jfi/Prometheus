@@ -41,6 +41,32 @@ MIN_STRATUM_RECORDS = 40     # below this a stratum is NOT-RUN-FOR-LACK-OF-RESID
 # the acceptance suite, which is the entire reason it exists.)
 HARM_GAIN_RATIO_LIMIT = 0.75
 
+# --- §6.3 as amended by the co-sign round (Charon §3, Harmonia B §1.1), 2026-08-16 ----------
+# These are the binding classes. Code that disagrees with the binding document is a defect in
+# the code, so they are implemented here rather than described.
+#
+#   CARRY-STRONG           Δ ≥ +8pp, CI LB > 0, harm/gain within limit
+#   CARRY-STRONG-BUT-HARMFUL  Δ ≥ +8pp, CI LB > 0, harm condition FAILS   [Charon 3.1]
+#                          -> routes to the negative-transfer row; never quotable as carry
+#                             without harm_rate in the same sentence; does not license Path α
+#   CARRY-WEAK             CI LB > 0 and +5pp ≤ Δ < +8pp                  [Charon 3.2]
+#   DETECTABLE-BUT-INERT   CI LB > 0 and Δ < +5pp                         [Charon 3.2]
+#                          -> NOT a matrix row; routes to no program direction
+#   BOUNDED-NULL           CI LB ≤ 0 and CI UB < +5pp
+#   INCONCLUSIVE-UNDERPOWERED  CI LB ≤ 0 and CI UB ≥ +5pp -> not a matrix row
+#
+# Charon 3.3: verdict classes apply to the POOLED PRIMARY ENDPOINT ONLY. Strata, decomposition
+# quantities, and per-source breakdowns carry point estimates with intervals and never a class
+# label — reading a 0.40-power stratum as "bounded null" is the inference his own doctrine
+# forbids. Enforced by `classify_pooled_only`, not by convention.
+NON_ROUTING_CLASSES = ("DETECTABLE-BUT-INERT", "INCONCLUSIVE-UNDERPOWERED", "NOT-RUN")
+
+# Harmonia B §1.1 (BC-8): matrix ROW SELECTION gets the same underpowered escape the verdict
+# classes have. Rows 2 and 3 ("recorded residue lacks usable information" -> provenance
+# engineering) vs ("retrieval failure, residue vindicated" -> build the retriever) are
+# different quarters of work; a CI that spans both readings chooses neither.
+UNROUTED = "UNROUTED-UNDERPOWERED"
+
 
 @dataclass
 class ArmDiagnostics:
@@ -200,23 +226,36 @@ def classify(delta: float, ci_lo: float, ci_hi: float,
     if math.isnan(delta):
         return "NOT-RUN", "no data"
     if ci_lo > 0:
-        churn_ok = (math.isnan(harm_rate) or math.isnan(gain_rate)
-                    or harm_rate <= HARM_GAIN_RATIO_LIMIT * gain_rate)
-        if delta >= TARGET_EFFECT and churn_ok:
-            return "CARRY-STRONG", (
-                f"delta {delta:+.1%} >= {TARGET_EFFECT:.0%}, CI lower bound {ci_lo:+.1%} > 0, "
-                f"harm {harm_rate:.1%} vs gain {gain_rate:.1%} "
-                f"(ratio {harm_rate / gain_rate:.2f} <= {HARM_GAIN_RATIO_LIMIT})")
-        # Say which condition actually failed — a misattributed reason is how a threshold
-        # decision gets silently relitigated after the fact.
-        if delta < TARGET_EFFECT:
-            why = (f"delta {delta:+.1%} is below the {TARGET_EFFECT:.0%} strong threshold")
-        else:
-            why = (f"delta {delta:+.1%} clears {TARGET_EFFECT:.0%}, but churn is too high: "
-                   f"harm {harm_rate:.1%} vs gain {gain_rate:.1%} "
-                   f"(ratio {harm_rate / gain_rate:.2f} > {HARM_GAIN_RATIO_LIMIT}) — "
-                   "fixing and breaking in similar measure is not navigation")
-        return "CARRY-WEAK", f"CI lower bound {ci_lo:+.1%} > 0, but {why}"
+        # Charon 3.4: the ratio is degenerate at gain_rate == 0. Report raw counts and treat
+        # it as undefined rather than as satisfied or failed. (Cannot co-occur with STRONG:
+        # Δ ≥ +8pp forces gain > 0.)
+        ratio_defined = not (math.isnan(harm_rate) or math.isnan(gain_rate) or gain_rate == 0)
+        churn_ok = (not ratio_defined) or harm_rate <= HARM_GAIN_RATIO_LIMIT * gain_rate
+        ratio_txt = (f"harm {harm_rate:.1%} vs gain {gain_rate:.1%} "
+                     f"(ratio {harm_rate / gain_rate:.2f})" if ratio_defined
+                     else f"harm {harm_rate:.1%}, gain {gain_rate:.1%} — ratio UNDEFINED")
+
+        if delta >= TARGET_EFFECT:
+            if churn_ok:
+                return "CARRY-STRONG", (
+                    f"delta {delta:+.1%} >= {TARGET_EFFECT:.0%}, CI lower bound {ci_lo:+.1%} > 0, "
+                    f"{ratio_txt} within the {HARM_GAIN_RATIO_LIMIT} limit")
+            # [Charon 3.1] the gap: strong Δ with failing harm previously matched no class.
+            return "CARRY-STRONG-BUT-HARMFUL", (
+                f"delta {delta:+.1%} clears {TARGET_EFFECT:.0%} with CI lower bound "
+                f"{ci_lo:+.1%} > 0, BUT churn fails: {ratio_txt} > {HARM_GAIN_RATIO_LIMIT}. "
+                "Routes to the negative-transfer row. Never quotable as carry without "
+                "harm_rate in the same sentence; does not license Path alpha.")
+        if delta >= MIN_PRACTICAL_EFFECT:
+            return "CARRY-WEAK", (
+                f"CI lower bound {ci_lo:+.1%} > 0 and delta {delta:+.1%} sits in "
+                f"[{MIN_PRACTICAL_EFFECT:.0%}, {TARGET_EFFECT:.0%}) — real but below the "
+                f"strong threshold; {ratio_txt}")
+        # [Charon 3.2] statistically present, practically absent. Routes nowhere.
+        return "DETECTABLE-BUT-INERT", (
+            f"CI lower bound {ci_lo:+.1%} > 0 but delta {delta:+.1%} is below the "
+            f"{MIN_PRACTICAL_EFFECT:.0%} practical floor. NOT a diagnostic-matrix row and "
+            "routes to no program direction — statistically present, strategically inert.")
     if ci_hi < MIN_PRACTICAL_EFFECT:
         return "BOUNDED-NULL", (
             f"CI [{ci_lo:+.1%}, {ci_hi:+.1%}] excludes a practically meaningful effect. "
@@ -226,6 +265,105 @@ def classify(delta: float, ci_lo: float, ci_hi: float,
         f"CI [{ci_lo:+.1%}, {ci_hi:+.1%}] spans zero AND reaches the "
         f"{MIN_PRACTICAL_EFFECT:.0%} practical floor. Not a diagnostic-matrix row; "
         "routes to replenish-and-rerun.")
+
+
+def classify_pooled_only(comparison: "Comparison", harm_rate: float,
+                         gain_rate: float) -> tuple[str, str]:
+    """[Charon 3.3] Verdict classes attach to the POOLED PRIMARY ENDPOINT and nothing else.
+
+    Raises on any attempt to label a stratum, a decomposition quantity, or a per-source
+    breakdown. Enforced mechanically because "D3: bounded null" from a 0.40-power stratum is
+    exactly the evidence-of-absence inference the kill authority's own doctrine forbids.
+    """
+    if comparison.exploratory:
+        raise ValueError(
+            f"refusing to attach a verdict class to an exploratory comparison "
+            f"({comparison.label!r}); §6.3 classes are pooled-primary-endpoint only")
+    return classify(comparison.delta, comparison.ci_lo, comparison.ci_hi, harm_rate, gain_rate)
+
+
+def route_matrix_row(whole_minus_null: Optional["Comparison"],
+                     retrieved_minus_null: Optional["Comparison"],
+                     *, exploratory_only: bool) -> tuple[str, str]:
+    """[BC-8 / Harmonia B §1.1] Row 2 vs row 3 selection, with an underpowered escape.
+
+    Row 2 = recorded residue lacks usable information -> provenance engineering.
+    Row 3 = information exists, retrieval failed -> build the retriever (M2).
+    The discriminator is `F-prom-whole - F-null`. If its CI spans both readings — or if the
+    decomposition is flagged EXPLORATORY-ONLY — no row is chosen and the next-move column of
+    the verdict document stays empty.
+    """
+    if exploratory_only:
+        return UNROUTED, ("whole-vs-retrieved decomposition is EXPLORATORY-ONLY (BC-1); "
+                          "it may not route matrix rows 2/3 regardless of its point estimate")
+    if whole_minus_null is None or math.isnan(whole_minus_null.delta):
+        return UNROUTED, "F-prom-whole did not run; rows 2/3 are not separable"
+    w = whole_minus_null
+    if w.ci_lo > 0 and (retrieved_minus_null is not None and retrieved_minus_null.ci_lo <= 0):
+        return "ROW-3-RETRIEVAL-FAILURE", (
+            f"whole beats null ({w.delta:+.1%}, CI [{w.ci_lo:+.1%}, {w.ci_hi:+.1%}]) while "
+            "retrieved does not: the information exists and Prometheus cannot find it")
+    if w.ci_hi < MIN_PRACTICAL_EFFECT:
+        return "ROW-2-RESIDUE-LACKS-INFORMATION", (
+            f"whole-arm CI [{w.ci_lo:+.1%}, {w.ci_hi:+.1%}] excludes a practically meaningful "
+            "effect even with maximum available residue in context — bounded to the tested "
+            "regime, never 'at any capacity'")
+    return UNROUTED, (
+        f"whole-arm CI [{w.ci_lo:+.1%}, {w.ci_hi:+.1%}] spans both readings — it cannot "
+        "separate 'residue lacks information' from 'retrieval failed'. Two different quarters "
+        "of work; a thin number chooses neither.")
+
+
+def harm_gain_by_gold(records: list[ProbeRecord], arm: str,
+                      baseline: str = "F0") -> dict[str, dict[str, float]]:
+    """[BC-6 / Charon C6] harm and gain split by gold label, not only pooled.
+
+    This is the detector for the polarity confound Charon measured: D3 packets run ~26:1
+    negative against a 50/50 task set, so a negative prime trades errors rather than shifting
+    mean accuracy — it surfaces in harm, and only when harm is split by label.
+    """
+    cube = _by_task_arm_solver(records)
+    gold_of = {r.task_uid: r.gold_bool for r in records if r.gold_bool is not None}
+    solvers = sorted({r.solver for r in records})
+    out: dict[str, dict[str, float]] = {}
+    for label, want in (("gold_true", True), ("gold_false", False), ("pooled", None)):
+        tasks = [t for t, g in gold_of.items() if want is None or g is want]
+        a = _task_level_series(cube, arm, tasks, solvers)
+        b = _task_level_series(cube, baseline, tasks, solvers)
+        both = ~np.isnan(a) & ~np.isnan(b)
+        if not both.any():
+            out[label] = {"n": 0, "harm_rate": float("nan"), "gain_rate": float("nan")}
+            continue
+        av, bv = a[both], b[both]
+        out[label] = {
+            "n": int(both.sum()),
+            "harm_rate": float(np.mean(bv > av)),   # baseline right, arm wrong
+            "gain_rate": float(np.mean(av > bv)),
+            "solved_to_unsolved": float(np.sum(bv > av)),
+            "unsolved_to_solved": float(np.sum(av > bv)),
+        }
+    return out
+
+
+def strict_screen_reanalysis(records: list[ProbeRecord],
+                             strict_excluded_uids: set[str]) -> Optional["Comparison"]:
+    """[BC-3 / Charon C1] The primary endpoint, recomputed on the strict-screened subset.
+
+    Zero API cost — a second pass over a results file already collected. It converts the
+    contamination-leniency design choice from an assumption into a measurement: if lenient and
+    strict agree, the leniency is demonstrated harmless rather than argued harmless.
+    """
+    kept = [r for r in records if r.task_uid not in strict_excluded_uids]
+    if not kept:
+        return None
+    cube = _by_task_arm_solver(kept)
+    tasks = sorted({r.task_uid for r in kept})
+    solvers = sorted({r.solver for r in kept})
+    d = (_task_level_series(cube, "F-prom-retrieved", tasks, solvers)
+         - _task_level_series(cube, "F-null", tasks, solvers))
+    delta, lo, hi, p = paired_bootstrap(d)
+    return Comparison("PRIMARY (strict-screened subset) [BC-3]",
+                      int((~np.isnan(d)).sum()), delta, lo, hi, p)
 
 
 def detect_topic_conditioning(acc: dict[str, float]) -> Optional[str]:

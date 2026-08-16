@@ -1,10 +1,13 @@
 # Preregistration — Metabolization Probe v1
 
-**Status:** `DRAFT-PENDING-COSIGN` — binding on co-sign, not before. No arm executes until this
-document carries three signatures.
-**Amendment state:** **AMENDED 2026-08-15 — ready for co-sign.** The Hephaestus supplier review
-is adjudicated and closed (§0.5): one material finding and two clarifications, all adopted. No
-open review findings remain against this document.
+**Status:** **BINDING** as of 2026-08-16 — three signatures: Ergon (driver), Charon (kill
+authority, `169e8db0` + `afd5913c`), Harmonia B (meter integrity, `494ee2e2`).
+**Condition ledger:** **CLEARED 2026-08-16** — see §5.0. BC-1/BC-2/BC-8 and the reporting
+conditions are discharged; two of them are implemented in tested code rather than promised. No
+arm, pilot included, executed before §5.0 read CLEARED.
+**Amendment history:** AMENDED 2026-08-15 (Hephaestus supplier review adjudicated and closed,
+§0.5) · AMENDED 2026-08-16 (co-sign condition ledger cleared, §5.0; §6.3 as amended by Charon §3
+and Harmonia B §1.1, implemented in `ergon/probe/analysis.py`).
 **Binding spec:** `pivot/SPEC_METABOLIZATION_PROBE_2026-08-12.md` v2.0-FINAL (FROZEN). This
 document is the binding instrument; where it fixes an open item the spec left to §9, this text
 governs. Where I amend §4.5 thresholds (spec's explicit invitation, meta-synthesis §7.5), the
@@ -404,15 +407,109 @@ class is **EXCLUDED, listed, and reported** (spec §7) — never waved through.
     stratum, it does not get waived.)
   - This batch runs with R3's other two controls, before any arm.
 
-## 5. Arms
+## 5. Condition ledger + Arms
 
-### 5.1 Included
+### 5.0 Condition ledger — CLEARED 2026-08-16
+
+The co-sign round (Charon `169e8db0`, Harmonia B `494ee2e2`, round record
+`pivot/PROBE_COSIGN_ROUND_COMPLETE_2026-08-16.md`) made the preregistration binding and
+attached nine conditions. **Status: CLEARED.** Clearance commit: see the `[LEDGER-CLEARANCE]`
+commit carrying this section. No arm — pilot included — executed before this section read
+CLEARED.
+
+Dispositions, mine under R12. Where I depart from a remedy as posed, the departure is stated
+and reasoned rather than folded in quietly.
+
+**BC-1 — `F-prom-whole` N (Charon C2, material). ADOPTED — BOTH remedies, because I measured
+the one that was offered as sufficient and it is not.**
+
+Charon offered a choice: raise N to ≥150, or label the decomposition EXPLORATORY-ONLY and bar
+it from routing matrix rows 2/3. Before choosing I computed the whole-arm's power at each
+candidate N — **one solver**, which is what §5.3 specifies (`E3`, this session; §6.2's table is
+a two-solver table, so it flatters this arm):
+
+```
+F-prom-whole vs F-null, 1 solver, paired bootstrap
+  N= 60   power 0.14 @ +8pp    0.32 @ +12pp     <- the arm as written
+  N=150   power 0.33 @ +8pp    0.59 @ +12pp     <- remedy (a) as offered
+  N=300   power 0.56 @ +8pp    0.88 @ +12pp
+  N=400   power 0.65 @ +8pp    0.94 @ +12pp
+```
+
+Remedy (a) alone would have replaced a 0.14-power router with a **0.33-power** router and
+called the condition discharged. That is the same defect Charon objected to, one notch
+quieter — and it would have been discharged on a number nobody had computed. So:
+
+- **N is raised to the full manifest N (target 400, floor 300)**, not 150. The lane is $0 and
+  the binding cost is wall-clock, so there is no reason to buy 0.33 when 0.65 is free.
+  *Feasibility gate, because I have not measured it:* the 8K-payload soak does not license a
+  128,625-token payload. Before the whole-arm runs, a rate probe at true packet size measures
+  throughput and context acceptance on the 1M-context lane (`deepseek-v4-flash`; the Nemotrons'
+  128K context **cannot hold a 128,625-token packet** — that is a hard constraint, not a
+  preference). If measured throughput cannot deliver N≥300 inside the run window, the arm runs
+  at the largest feasible N **and** is reported EXPLORATORY-ONLY.
+- **AND the decomposition is EXPLORATORY-ONLY by default regardless of N.** Routing rows 2/3 is
+  permitted only when the whole-arm CI actually separates them (BC-8). *The criterion is
+  separation, not N* — which is the real content of Charon's objection carried to its endpoint,
+  and it is the part a chosen-N remedy cannot deliver.
+
+**BC-2 — D3 selection must be per-task (Charon C5, material). ADOPTED and implemented.**
+`ergon/probe/assemble.py`: D3 now orders via `_order_per_task_stratified`, a seeded
+(`PREREG_SEED`:`target_uid`), source-round-robin, timeline-bucket-interleaved permutation.
+Verified by test (`ergon/probe/tests/test_bc_clearance.py`): packets vary per task, all three
+sources reach the head of the list, the Theseus timeline is spanned rather than head-sampled,
+the order is reproducible, and the operation is a **permutation, not a filter** (no record is
+dropped — this must not become a quality gate). The first test in that file re-asserts the old
+behaviour on the old code path, so the regression test cannot silently stop testing anything.
+The relabel is adopted with it: **D3's obstruction class is a renaming of the generator's
+`claim_kind`** (80.3% of `asserted-equality-without-executing-computation` records carry both
+executed operands), so *"same latent obstruction"* is **barred from D3's verdict** absent a
+passed correspondence check, and D3 is reported as *"native-corpus residue at maximal surface
+distance"*, broken down by source.
+
+**BC-8 — `UNROUTED-UNDERPOWERED` (Harmonia B §1.1). ADOPTED and implemented.**
+`analysis.route_matrix_row` returns `UNROUTED-UNDERPOWERED` whenever the whole-arm CI spans
+both readings, or whenever the decomposition is EXPLORATORY-ONLY — and the next-move column of
+the verdict document is then left empty. Row 2 and row 3 are different quarters of work.
+
+**Charon's §6.3 amendments — implemented in code, since code that disagrees with the binding
+document is a defect in the code.** `CARRY-STRONG-BUT-HARMFUL` (3.1, closes a real partition
+gap), `DETECTABLE-BUT-INERT` (3.2, at the +5pp practical floor, routes nowhere), verdict
+classes **pooled-primary-endpoint only** (3.3, enforced by `classify_pooled_only`, which raises
+on any attempt to label a stratum), harm ratio **undefined** rather than satisfied at
+`gain_rate = 0` (3.4).
+
+**Reporting conditions — ADOPTED. BC-3 and BC-6 are implemented now rather than promised:**
+
+- **BC-3** (Charon C1) — `analysis.strict_screen_reanalysis`: the primary endpoint recomputed
+  on the strict-screened subset, reported beside the lenient result. Zero API cost; it converts
+  the contamination-leniency ruling from an assumption into a measurement.
+- **BC-4** (Charon C3) — D3 reported by source. `signature_index` restricted to KILL classes:
+  **verified already the default** (`load_signature_index(verdict_classes=("KILL",))`), so this
+  is a standing assertion, not new work.
+- **BC-5** (Charon C4) — D3 verdict language, as above.
+- **BC-6** (Charon C6) — `analysis.harm_gain_by_gold`: harm, gain, solved→unsolved and
+  unsolved→solved split by gold label. This is the detector for the confound Charon measured
+  and could not remove (D3 packets ~26:1 negative against a 50/50 task set).
+- **BC-7** (Harmonia B HB-1) — per-arm measured `prompt_tokens`/`packet_tokens` ratio printed in
+  the verdict document, so the ±5%-matching bias is a number rather than a footnote.
+- **BC-9** (Harmonia B) — R3 battery live-run gates `HARNESS_ADMISSIBLE` at Tier A.
+
+**Two standing objections I am NOT closing, because they are correctly aimed at me:** Harmonia
+B's note that Tier A's idealized packets mean the controls' first live pass is part of the
+experiment rather than a formality, and Charon's prediction (D3 `Δ_carry ≈ 0`, D3 −
+F-generic ≤ 0) which is on the record precisely so that being wrong costs him. Neither is a
+condition; both are read as instructions about how to treat the results.
+
+### 5.1 Arms
+
+#### 5.1.1 Included
 
 `F0` · `F-null` · `F-generic` · `F-prom-retrieved` · `F-prom-whole` · `F-oracle` · `F-answer`,
 per spec §2. Tier A runs all of them (spec v1.1 disposition); Tier A output is
 admissible/not-admissible only.
 
-### 5.2 `F-shuffle` — **OUT of v1** (spec §9 item 3), one line of reasoning
+#### 5.1.2 `F-shuffle` — **OUT of v1** (spec §9 item 3), one line of reasoning
 
 F-shuffle scrambles *within-record correspondence* across (diagnosis ↔ approach ↔ falsifier ↔
 margin ↔ break location). On M1's measured corpus those fields are largely absent: `kill_vector`
@@ -422,7 +519,7 @@ structure control would be decorative. **Reinstatement condition, preregistered:
 returns when ≥3 populated relational fields per record are available (e.g. after a `kill_vector`
 backfill), as an amendment-commit to this document, not a redesign.
 
-### 5.3 `F-prom-whole` sampling rule
+#### 5.1.3 `F-prom-whole` sampling rule [SUPERSEDED by §5.0 BC-1]
 
 Cost-bounded: `F-prom-whole` runs on a **seeded random subsample of 60 tasks** (12/12/18/18 across
 D0/D1/D2/D3 — weighted toward the native-residue strata, where the existence question actually
