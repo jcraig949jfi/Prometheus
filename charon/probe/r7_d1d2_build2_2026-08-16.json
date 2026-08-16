@@ -1,0 +1,75 @@
+{
+  "seed": 20260816,
+  "n_pairs_requested": 30,
+  "records_per_packet": 8,
+  "ledger": "probe_prepass.jsonl",
+  "manifest": "manifest_L1_n126.jsonl",
+  "r7_c_max_overlap": 0.0,
+  "results": [
+    {
+      "stratum": "D0",
+      "mode": "D0-identity",
+      "note": "positive control \u2014 F-prom is selected by task identity",
+      "n_pairs": 30,
+      "classifier": 0.3833,
+      "ceiling": 0.55,
+      "layer_b_pass": true,
+      "relation_overlap": 0.0,
+      "layer_c_pass": true,
+      "starved_targets": 0,
+      "verdict": "R7-PASS"
+    },
+    {
+      "stratum": "D1",
+      "mode": "D1-topic",
+      "note": "break the relation: cross-domain (build #1)",
+      "n_pairs": 30,
+      "classifier": 1.0,
+      "ceiling": 0.55,
+      "layer_b_pass": false,
+      "relation_overlap": 0.0,
+      "layer_c_pass": true,
+      "starved_targets": 0,
+      "verdict": "R7-FAIL-SEPARABLE"
+    },
+    {
+      "stratum": "D1",
+      "mode": "D1-same-relation",
+      "note": "preserve topic: same domain, different task",
+      "n_pairs": 30,
+      "classifier": 0.6667,
+      "ceiling": 0.55,
+      "layer_b_pass": false,
+      "relation_overlap": 1.0,
+      "layer_c_pass": false,
+      "starved_targets": 0,
+      "verdict": "R7-FAIL-SEPARABLE"
+    },
+    {
+      "stratum": "D2",
+      "mode": "D2-mechanism",
+      "note": "break the relation: cross-domain AND mechanism-disjoint",
+      "n_pairs": 23,
+      "classifier": 1.0,
+      "ceiling": 0.55,
+      "layer_b_pass": false,
+      "relation_overlap": 0.0,
+      "layer_c_pass": true,
+      "starved_targets": 7,
+      "verdict": "R7-FAIL-SEPARABLE"
+    },
+    {
+      "stratum": "D2",
+      "mode": "D2-same-relation",
+      "note": "preserve the relation: cross-domain WITH a shared tag",
+      "n_pairs": 30,
+      "classifier": 0.9667,
+      "ceiling": 0.55,
+      "layer_b_pass": false,
+      "relation_overlap": 1.0,
+      "layer_c_pass": false,
+      "starved_targets": 0,
+      "verdict": "R7-FAIL-SEPARABLE"
+    }
+  ]
+}

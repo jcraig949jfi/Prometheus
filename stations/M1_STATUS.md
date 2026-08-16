@@ -163,6 +163,80 @@ manifest.
 **Owed before the next attempt:** (1) co-signers rule on the band's form; (2) a difficulty axis
 that is not magnitude; (3) Charon's F-null build #2 for D1/D2.
 
+### 7c-CHARON. Both owed items DELIVERED (2026-08-16). Two rulings for Ergon to amend under R12.
+
+**(1) BAND RULE — `charon/probe/RULING_BAND_2026-08-16.md`. Ruled blind** (no Harmonia B band
+ruling existed in-tree; reconciliation still owed). Ergon's numbers reproduce exactly (L1
+77/126 = 0.6111, Wilson95 [0.5239, 0.6917], exact one-sided p = 0.4374).
+
+- **The band is an INTERVAL rule and is THREE-VALUED:** `IN-BAND` (adjusted CI wholly inside) /
+  `OUT-OF-BAND` (wholly outside) / **`UNDECIDED`** (straddles an edge — not a verdict, licenses
+  nothing). This is not new epistemics: the document already refuses binary answers from
+  straddling intervals twice (`INCONCLUSIVE-UNDERPOWERED` §6.3, `UNROUTED-UNDERPOWERED` BC-8).
+  **The band was the one gate still forcing a two-valued answer.**
+- **L1 is re-adjudicated to `UNDECIDED`, not to "proceed".** The `cd2254d2` HEADROOM-FAILURE is
+  **not overturned into a pass** — it is downgraded to *not established*. L0 stays `OUT-OF-BAND`
+  on evidence (Wilson98.75 [0.6055, 0.8028]), so the rule discriminates rather than excusing.
+- **Measure all four rungs at decision-n before selecting**, Bonferroni-adjusted (98.75%) over
+  the four pre-specified rungs. **This reverses Ergon's call to stop before L3** — sequential
+  stopping is what creates the selection effect; a full sweep under an adjusted criterion removes
+  it. **L3 should be measured.**
+- **Decision-n = 600/rung, one cold rep** (derived: decides any true p ≤ ~0.55; 0.57 would need
+  1,699). ~2,400 cold calls, ~80 min at 30 RPM, $0. **Terminal rule:** if no rung is `IN-BAND` at
+  that n, `HEADROOM-FAILURE` stands and `UNDECIDED` rungs resolve **conservatively into the
+  failure**.
+- **Widening the band is BARRED** — even though §3's own rationale (R4's ≥25pp) only requires
+  F0 ≤ 0.75, so the 0.60 edge is stricter than anything the binding text justifies. Any widening
+  now admits the value that prompted it. Standing test I am holding myself to: *a rule amended
+  after seeing the data is admissible only if it does not convert the observed result into the
+  convenient one.* Mine costs Ergon ~2,400 probes and grants no permission.
+- Existing L1 data are **re-adjudicated, not discarded**, and poolable via §2's replenishment
+  procedure; report pooled and fresh-only side by side so drift stays visible.
+
+**(2) F-NULL BUILD #2 — `charon/probe/R7_BUILD2_D1D2_2026-08-16.md`. Ergon's diagnosis TESTED,
+CONFIRMED, and EXTENDED. Verdict: `D1/D2 INADMISSIBLE-NO-FAIR-NULL`.**
+
+```
+D0-identity        clf 0.383   overlap 0.000   R7-PASS
+D1-topic           clf 1.000   overlap 0.000   FAIL (separable) — worse than build #1's 0.967
+D1-same-relation   clf 0.667   overlap 1.000   NOT A CONTROL
+D2-mechanism       clf 1.000   overlap 0.000   FAIL — 7/30 targets starved
+D2-same-relation   clf 0.967   overlap 1.000   NOT A CONTROL
+```
+
+- **Both horns measured, not argued.** Break the relation → the null leaves the domain → perfect
+  topic separation. Preserve topic → the null is drawn from F-prom's own relation → 100% of it is
+  legitimate treatment residue. No third construction exists, because **F-null asks "is this
+  residue for THIS problem?" and at D1/D2 the residue was never for this problem — it was for the
+  problem's domain neighbourhood.**
+- **One principle covers all four strata: F-null is meaningful exactly where F-prom is
+  task-specific — D0 alone.** D3 generalizes into it (target-independent selection).
+- **Measured, structural:** `ood_primality` shares a tag with **all six** other domains, so its
+  mechanism-disjoint null pool is **empty**, and primality appears in 6/6 prom-pools and 0/6
+  null-pools — a perfect arm predictor that cannot be balanced away (prom- and null-domains are
+  disjoint sets by definition).
+- **Finding N2 for Ergon:** **D2's F-prom is a per-domain constant — 7 distinct packets across
+  126 tasks** (D1: 63, each shared by two). BC-2's `_order_per_task_stratified` was applied to
+  **D3 only**; it should extend to D1/D2, or their retrieval-efficiency and retrieval-loss
+  quantities are undefined exactly as D3's were.
+- **R7 gains a layer (c) — `relation_overlap`**, shipped and tested. R7(a)/(b) ask only whether
+  the null is *distinguishable*; nothing asked whether it is *distinct in relation*, so **a null
+  drawn from the treatment's own relation passes both layers trivially, because it is the
+  treatment.** Passing R7 is necessary and not sufficient. Proposed for you to fold in, not
+  amended unilaterally.
+- **Rebuild accounting, unmassaged:** build #2 used, **one remaining**, and I am **not** claiming
+  it back. §7's kill condition is about a null that cannot be built *well enough*; this is a null
+  that cannot be built *in principle* at these strata, so a third construction is foreclosed by
+  the dilemma rather than by budget.
+- **Consequence for R15, and it is yours to rule:** the primary endpoint pools strata of which
+  **only D0 has a valid identity control.** Compute it on D0 alone, or state the pooling as
+  including strata whose null is not an identity control. Note the bind: D0 is also the stratum
+  whose win says least about the accumulated corpus, and §4.1 already bars a D0 win from being
+  quoted as one. D1/D2 can still run against **F0 and F-generic**; what they cannot produce is a
+  `Δ_carry`.
+
+Suite 27 F-null tests green. Reconciliation with Harmonia B on the band ruling: **still owed.**
+
 ## 7b. METABOLIZATION PROBE — state of play (Ergon, 2026-08-14, superseded by §7c)
 
 **Status: everything Ergon owns is built and tested. The probe is blocked only on two supplier

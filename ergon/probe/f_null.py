@@ -637,3 +637,95 @@ __all__ = [
     "divergences", "calibrate_tolerances", "BalanceCalibration",
     "surface_features", "ClassifierReport", "classifier_auc", "r7_verdict",
 ]
+
+
+# --------------------------------------------------------------------------- R7(c), build #2
+
+
+#: Charon, build #2 (2026-08-16). R7's two layers ask whether F-null is *distinguishable* from
+#: F-prom on the surface. Neither asks whether it is DISTINCT IN RELATION — and a null drawn
+#: from the treatment's own selection relation passes both layers trivially, because it is the
+#: treatment. That is the failure mode D1 and D2 walk into: their F-prom is selected by a
+#: DOMAIN-LEVEL relation, so any null that matches topic is drawn from the same relation, and
+#: any null that breaks the relation changes domain and is separable on vocabulary.
+#:
+#: `relation_overlap` is the missing check. It reports the fraction of the null's records that
+#: would have been ELIGIBLE AS F-PROM for the same target. A genuine identity control has
+#: overlap 0.0; a same-relation "null" has overlap 1.0 and is not a control at any classifier
+#: score. Proposed as R7 layer (c) — a ruling for the owner to amend, not a unilateral change.
+R7_C_MAX_OVERLAP = 0.0
+
+
+def prom_eligible(
+    r: ResidueRecord,
+    *,
+    stratum: str,
+    target_uid: Optional[str],
+    target_domain: Optional[str],
+    domain_tags: Optional[dict[str, tuple[str, ...]]] = None,
+) -> bool:
+    """Would this record have been eligible as F-prom for this target? Mirrors
+    `assemble.select_residue`'s relation for each stratum."""
+    tags = domain_tags or {}
+    if stratum == "D0":
+        return r.source == "probe_prepass" and r.uid == target_uid
+    if stratum == "D1":
+        return (r.source == "probe_prepass" and r.uid != target_uid
+                and r.domain == target_domain)
+    if stratum == "D2":
+        shared = set(tags.get(str(target_domain), ())) & set(tags.get(str(r.domain), ()))
+        return r.domain != target_domain and bool(shared)
+    if stratum == "D3":
+        return r.source in ("theseus_corpus", "hephaestus_forge", "signature_index")
+    raise ValueError(f"unknown stratum {stratum!r}")
+
+
+def relation_overlap(
+    null_records: Sequence[ResidueRecord],
+    *,
+    stratum: str,
+    target_uid: Optional[str],
+    target_domain: Optional[str],
+    domain_tags: Optional[dict[str, tuple[str, ...]]] = None,
+) -> float:
+    """R7(c): fraction of the null that is, in fact, legitimate treatment residue."""
+    if not null_records:
+        return 0.0
+    hits = sum(
+        prom_eligible(r, stratum=stratum, target_uid=target_uid,
+                      target_domain=target_domain, domain_tags=domain_tags)
+        for r in null_records
+    )
+    return hits / len(null_records)
+
+
+#: Candidate-pool constructions for build #2. The relation break is a POOL RESTRICTION applied
+#: before the surface matcher runs, which is the right factorization: what makes a null a null
+#: is which relation it breaks; how it is matched is a separate question.
+def relation_break_pool(
+    pool: Sequence[ResidueRecord],
+    mode: str,
+    *,
+    target_uid: Optional[str],
+    target_domain: Optional[str],
+    domain_tags: Optional[dict[str, tuple[str, ...]]] = None,
+) -> list[ResidueRecord]:
+    tags = domain_tags or {}
+    tgt = set(tags.get(str(target_domain), ()))
+
+    def shares(r: ResidueRecord) -> bool:
+        return bool(tgt & set(tags.get(str(r.domain), ())))
+
+    if mode == "D0-identity":            # different problem entirely — a true identity break
+        keep = lambda r: r.uid != target_uid
+    elif mode == "D1-topic":             # build #1's implicit construction: cross-domain
+        keep = lambda r: r.domain != target_domain
+    elif mode == "D1-same-relation":     # same domain — preserves D1's own relation
+        keep = lambda r: r.domain == target_domain and r.uid != target_uid
+    elif mode == "D2-mechanism":         # cross-domain AND mechanism-disjoint — the real break
+        keep = lambda r: r.domain != target_domain and not shares(r)
+    elif mode == "D2-same-relation":     # cross-domain WITH a shared tag — preserves D2's relation
+        keep = lambda r: r.domain != target_domain and shares(r)
+    else:
+        raise ValueError(f"unknown relation-break mode {mode!r}")
+    return [r for r in pool if keep(r)]

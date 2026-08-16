@@ -261,3 +261,75 @@ def test_layer_a_is_judged_on_rate_not_a_clean_sweep():
     assert r7_verdict(reports, _clf(0.50), rebuilds=0, calibration=lenient) == "R7-PASS"
     assert r7_verdict(reports, _clf(0.50), rebuilds=0, calibration=strict) == \
         "R7-FAIL-BALANCE-REBUILD-REQUIRED"
+
+
+# --------------------------------------------------------------------------- R7(c), build #2
+
+
+from ergon.probe.f_null import (  # noqa: E402
+    R7_C_MAX_OVERLAP,
+    prom_eligible,
+    relation_break_pool,
+    relation_overlap,
+)
+
+TAGS = {"a": ("t1", "t2"), "b": ("t2",), "c": ("t3",)}
+
+
+def drec(i, domain, uid=None):
+    return ResidueRecord(ledger_id="probe_prepass", seq=i, source="probe_prepass",
+                         record_id=f"p{i}", body=f"  attempt: {i}", rep=1,
+                         uid=uid or f"{domain}-{i}", domain=domain)
+
+
+DPOOL = [drec(i, d) for d in ("a", "b", "c") for i in range(1, 7)]
+
+
+def test_prom_eligible_mirrors_each_stratum_relation():
+    t = drec(99, "a", uid="a-99")
+    assert prom_eligible(t, stratum="D0", target_uid="a-99", target_domain="a")
+    assert not prom_eligible(t, stratum="D0", target_uid="a-1", target_domain="a")
+    assert prom_eligible(t, stratum="D1", target_uid="a-1", target_domain="a")
+    assert not prom_eligible(t, stratum="D1", target_uid="a-1", target_domain="b")
+    # D2: different domain AND a shared mechanism tag
+    b = drec(1, "b", uid="b-1")
+    assert prom_eligible(b, stratum="D2", target_uid="a-1", target_domain="a", domain_tags=TAGS)
+    c = drec(1, "c", uid="c-1")
+    assert not prom_eligible(c, stratum="D2", target_uid="a-1", target_domain="a", domain_tags=TAGS)
+
+
+def test_relation_overlap_is_zero_for_a_real_break_and_one_for_same_relation():
+    same = relation_break_pool(DPOOL, "D1-same-relation", target_uid="a-1", target_domain="a")
+    brk = relation_break_pool(DPOOL, "D1-topic", target_uid="a-1", target_domain="a")
+    assert relation_overlap(same, stratum="D1", target_uid="a-1", target_domain="a") == 1.0
+    assert relation_overlap(brk, stratum="D1", target_uid="a-1", target_domain="a") == 0.0
+
+
+def test_r7_c_rejects_a_same_relation_null_however_well_it_matches():
+    """The point of layer (c): a null drawn from the treatment's own relation is not a control
+    at ANY classifier score, because it IS the treatment."""
+    same = relation_break_pool(DPOOL, "D2-same-relation", target_uid="a-1", target_domain="a",
+                               domain_tags=TAGS)
+    ov = relation_overlap(same, stratum="D2", target_uid="a-1", target_domain="a",
+                          domain_tags=TAGS)
+    assert ov == 1.0 and ov > R7_C_MAX_OVERLAP
+
+
+def test_d2_mechanism_disjoint_pool_is_empty_for_a_universally_tagged_domain():
+    """Measured on the real map: `ood_primality` shares a tag with all six other domains, so
+    its mechanism-disjoint null pool is empty and those targets are starved by construction."""
+    from ergon.probe.assemble import DOMAIN_MECHANISM_TAGS as REAL
+
+    real_pool = [drec(i, d) for d in REAL for i in range(1, 4)]
+    starved = relation_break_pool(real_pool, "D2-mechanism", target_uid="x",
+                                  target_domain="ood_primality", domain_tags=REAL)
+    assert starved == []
+    ok = relation_break_pool(real_pool, "D2-mechanism", target_uid="x",
+                             target_domain="ood_coprime", domain_tags=REAL)
+    assert {r.domain for r in ok} == {"ood_perfect_square", "ood_summation", "ood_modular",
+                                      "ood_inequality"}
+
+
+def test_unknown_relation_break_mode_raises():
+    with pytest.raises(ValueError):
+        relation_break_pool(DPOOL, "nope", target_uid="a-1", target_domain="a")
