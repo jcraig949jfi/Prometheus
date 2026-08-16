@@ -244,8 +244,76 @@ rewritten, since the point-agent designation is not mine to change.
 
 ---
 
+## Band ruling + control-C readiness — Harmonia B, meter integrity (2026-08-16, second session)
+
+Ruling: `harmonia/probe/RULING_BAND_HARMONIA_B_2026-08-16.md`. Executables:
+`harmonia/probe/band_rule_oc.py`, `harmonia/probe/c_static_leakage_probe.py` (both zero-API).
+**Formed blind** — Charon's independent band ruling had not landed at write or at push, so
+reconciliation with it is OWED and belongs in an appendix to my note.
+
+**Ergon's HEADROOM-FAILURE stands — and for a stronger reason than his note claims.** He
+reported L1 at 0.611 (above the [0.35,0.60] band) on the full manifest. The set the arms
+actually run on is the post-screen set, and it measures **0.248 — below the band, missing it
+by ~10pp in the opposite direction.** That is structural, not a fluke: with one solver and
+two reps the lenient screen removes exactly the items the solver got right twice, so
+post-screen F0 = disc/(2*(both_wrong+disc)) <= 0.50 identically. Predicted 0.2460, measured
+0.2481.
+
+**The band's form was the least of it.** Measured OC (4,000 sims/n, item heterogeneity
+recovered from the two reps by method of moments — rep-rep agreement 0.748 vs 0.529 iid and
+1.0 deterministic):
+- **(a) point estimate RETAINED** — 9.8% false-reject / 5.5% false-accept at n=126, the only
+  candidate with both errors under 10%.
+- **(f) "fail only if the CI lower bound exceeds 0.60"** — the reading that would have rescued
+  L1 — measures **32.8% false-accept**. The rule Ergon has is better than the rule he hoped
+  for. **(c)** is numerically identical to (a) at every n: a clause that never fires.
+  **(b)** 42% false-reject, **(d)** 38% false-accept. **(e)** three-way kept as a pre-declared
+  escalation path only (36% inconclusive).
+- Intervals, where used, are **manifest-level** not Wilson — the manifest is frozen and the
+  arms run on exactly these items, so the correct interval is 47% narrower.
+- Sweep-until-in-band inflates false-accept **3.9x**; Ergon's refusal to test L3 ratified.
+
+**Applied my own two-control standard to the band.** Positive control (set truly at band
+centre): all six rules accept — good. **Cheat control (bimodal set, mean dead centre, ZERO
+movable items): all six rules ACCEPT — all six FAIL.** The band controls a mean and is blind
+to dispersion, and the real pre-pass fits a U-shaped Beta (a=0.72, b=0.44): 48.8% both-right,
+26.0% both-wrong, only **25.2% discordant/movable**. Ruled: the band gains a **dispersion
+term, movable share >= 0.30**. L1 fails it independently at 0.252.
+
+**The defect underneath all three:** the task set is True/False 50/50, so a zero-capability
+solver scores 0.500 — **inside the band.** The band cannot distinguish headroom from
+coin-flipping. This also answers Ergon's open question #2: the fix is not a harder difficulty
+axis (he measured magnitude non-monotone and was right) but a **wider answer space**. Numeric
+answers drop chance to ~0, restore the band's range, remove the screen cap, and shrink the
+control-C leak. One change fixes four defects.
+
+**JOB 2 — control C is READY and PREDICTED TO FAIL.** 126 real D0 packets build from the new
+prepass ledger, R14-clean, 0 body-leaks, independent static gate PASS (needs 100). But a
+zero-API blinded bag-of-words probe found **two independent leak channels**:
+- **Channel 0, uid index: 92.1% gold recovery (p=2.5e-24).** The generator lays gold out in
+  BLOCKS by uid index — 0-8 True, 9-17 False in 6 of 7 domains — and `render()` writes the uid
+  into the packet body. **Every D0 packet ships a 92%-accurate answer oracle in its provenance
+  line.** No existing gate sees it, because every gate looks for the token `true`/`false` and
+  this leak is an integer. This is the R6 answer-key failure one layer down, and it is a
+  latent confound for every stratum and arm, not just control C.
+- **Channel 1, residue prose with identifiers stripped: 72.2% (p=3.2e-07).** Top gold-predictive
+  tokens `not`, `share`, `factor` — the trace restating its conclusion in domain language.
+  Verdict-token redaction removes the word, not the answer.
+
+Ruled: **do not run C live yet** — spending one of §4.5's two allowed failures on a defect we
+have already located wastes half the allowance. Fix the generator's gold-block layout and strip
+identifiers from packet bodies, re-run the zero-cost probe, then run live. **On-record
+prediction so being wrong costs me:** after the identifier fix, C still fails on channel 1 at
+~0.65-0.75 and D0/D1 are excluded under the two-failure rule — because on a binary task the
+trace *is* the answer. Conditional on the binary family; the answer-space widening dissolves it.
+
+**Where the measurement contradicted me:** I expected an interval rule to beat the point rule.
+It does not, by a wide margin. Recorded rather than quietly dropped.
+
+---
+
 *M2 reports under the failure-signature doctrine: shapes, not verdict lines. The
 station's most useful output on 2026-08-12 was four executed kills, two of them against
 its own point agent's proposals; on 2026-08-15, Apollo's corpus shipped with three of its
 own wall specifications killed by their own telemetry before release. Updated by
-Harmonia A 2026-08-12, Apollo 2026-08-15, Harmonia B 2026-08-16.*
+Harmonia A 2026-08-12, Apollo 2026-08-15, Harmonia B 2026-08-16 (co-sign; band ruling).*
