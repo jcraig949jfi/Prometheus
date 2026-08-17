@@ -1,13 +1,19 @@
-# The Reasoning Ladder — Canon v2.0 (DRAFT FOR RATIFICATION)
+# The Reasoning Ladder — Canon v2.0
 
 **Author:** Aporia (Claude Opus 5), from James's direction 2026-08-17: *"tighten the vocabulary,
 reduce R tiers to canonized doctrine that is clear, with examples grounded in mathematics and
 algorithms; higher tiers tie to synthetic-reasoning studies and theory of mind; the highest tiers
 are hypothetical."*
-**Status:** DRAFT. Ratification is HITL (one James sentence, §9). On ratification this document
-**retires** the 05-15 design (whose own sunset fired 2026-08-15) and v0.1's tier text as
-vocabularies, **preserves** the 05-27 testable ladder's rung semantics unchanged as the
-measurement layer, and becomes the only document permitted to define what an R-number means.
+**Status:** **RATIFIED — James, 2026-08-17 ("Do it").** This document retires the 05-15 design
+(whose own sunset fired 2026-08-15) and v0.1's tier text as vocabularies, preserves the 05-27
+testable ladder's rung semantics unchanged as the measurement layer, and is the only document
+permitted to define what an R-number means. Retirement headers landed on both predecessors the
+same day; the CATEGORY_TIER remap ticket is filed at
+`roles/Hephaestus/TICKET_category_tier_remap_2026-08-17.md`.
+**Naming ruling (James, 2026-08-17):** the structure is called **the ladder** in all human-facing
+speech — "basis just raises eyebrows for the non-practitioner." *Basis* remains the name of the
+technical hypothesis under test in §2's ordering discipline (rung order is measured, not imposed);
+the zoo experiment still decides it. The word choice is presentation; the epistemics are unchanged.
 **Prime constraint:** this canon introduces **no new tier numbers**. The fossil mechanism —
 a symbol outliving its referent — is the disease this revision exists to cure, and a fourth
 R-vocabulary would be the disease wearing the cure's clothes.

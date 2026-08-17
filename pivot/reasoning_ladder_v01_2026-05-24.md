@@ -1,7 +1,18 @@
 # Prometheus Reasoning Ladder v0.1 — Falsification-First Taxonomy
 
+> ## ⚠️ TIER TABLE SUPERSEDED — 2026-08-17 (James ratification)
+> The R0–R12 tier semantics in this document are **superseded** by
+> `aporia/doctrine/reasoning_ladder.md` (Canon v2.0), which preserves the 2026-05-27
+> testable ladder's rung semantics as the sole canonical vocabulary. This doc's R-numbers
+> are no longer citable without the ruler tag `@v0.1` (note: `agents/icarus/ladder.py`
+> still carries this vocabulary frozen — flagged, not yet remapped).
+> **What survives at full strength:** the two core doctrines (falsification-first tier
+> claims; failure-signature reading) are carried verbatim into Canon §1 and remain the
+> constitution — they were most of what this document was. The F-axis co-equality insight
+> and the null-slot worked example survive as doctrine grounding.
+
 **Date:** 2026-05-24
-**Status:** v0.1, internal review draft. Builds on the existing R1-R6 / R7+ / R-final cadence we've been using since 2026-05-17, and absorbs the genuinely-new tier dimensions surfaced in the 2026-05-24 external review.
+**Status:** SUPERSEDED (tier table) / ABSORBED (doctrines) — 2026-08-17. Was: v0.1, internal review draft. Builds on the existing R1-R6 / R7+ / R-final cadence we've been using since 2026-05-17, and absorbs the genuinely-new tier dimensions surfaced in the 2026-05-24 external review.
 **Audience:** Anyone working on Hephaestus / Apollo / Ergon / Aporia / future Learner. The ladder is meant to be a shared reference for what we mean when we say a system "reasons" — and specifically, what we mean by "tier N reasoning."
 **Why now:** Apollo's gen-3551 falsification produced something useful: a worked example of an evolutionary search apparently reaching a high reasoning tier (compositional!) that turned out, under perturbation tests, to be a lower tier (heuristic + scaffold). That experience makes clear that a ladder is not a labeling scheme — it's a test discipline.
 

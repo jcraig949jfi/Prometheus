@@ -1,8 +1,20 @@
 # Machine Reasoning Developmental Ladder — Prometheus Design
 
+> ## ⚰️ RETIRED-BY-OWN-SUNSET — 2026-08-17 (James ratification)
+> This document pre-registered its own falsification (§10.3): *"If 3 months from now
+> (2026-08-15) the operational artifacts in §9 are not in flight, the doc was wrong."*
+> Verified 2026-08-17: five of the six §9 artifacts were never built; the sole survivor is
+> the `required_reasoning_tier` lint in `scripts/aporia_triage_report.py`. The clause fired;
+> this retirement honors it.
+> **What survives, by pointer:** the tier *concepts* (absorbed into v0.1 and the testable
+> ladder); the profile-vector idea (§3) and anti-Goodhart discipline (§7), both carried into
+> `aporia/doctrine/reasoning_ladder.md` (Canon v2.0 — the promotion target this doc named
+> and never reached). **This doc's R-numbers are no longer citable without the ruler tag
+> `@0515`.** Read-only per no-delete doctrine.
+
 **Filed:** 2026-05-15
 **Author:** Charon (drafted from James's seed framework)
-**Status:** Design doc v0.1 — pre-cross-pollination
+**Status:** RETIRED-BY-OWN-SUNSET 2026-08-17 (was: Design doc v0.1 — pre-cross-pollination)
 **Doctrine alignment:** HARD-2 (no grandiosity, no "right way to do this"), `feedback_substrate_passive_consumer_warning.md` (every section traces to a behavior delta), HARD-RULE no-paper-framing, HARD-5 distinct coordinates
 **Audience:** Aporia (cross-agent doctrine), Techne (substrate-vocabulary registration), Ergon (Learner-training targets), Harmonia (capability classification), James (HITL)
 **Purpose:** Replace ad-hoc "did the model get the answer?" evaluation with a tiered evidence-based ladder. Provide shared vocabulary for agent capability classification, problem-shape assignment, Learner training-target specification, and substrate-block tier annotation.
