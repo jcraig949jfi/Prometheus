@@ -134,6 +134,17 @@ def _pick_k(rng: random.Random, op: str) -> int:
     return 0 if hi == 0 else rng.randint(lo, hi)
 
 
+def _var_names(depth: int) -> list[str]:
+    """b, c, ... z, then b1, c1, ... — unbounded, and never collides with the seed name `a`."""
+    base = [chr(c) for c in range(ord("b"), ord("z") + 1)]
+    out = list(base)
+    cycle = 1
+    while len(out) < depth:
+        out.extend(f"{ch}{cycle}" for ch in base)
+        cycle += 1
+    return out[:depth]
+
+
 def build_chain(rng: random.Random, depth: int, seed_value: int) -> tuple[str, int, list[dict]]:
     """Returns (rendered problem, gold answer, per-step trace). The trace is what makes
     break-location recordable — it is emitted into the manifest for the grader and for the
@@ -141,7 +152,10 @@ def build_chain(rng: random.Random, depth: int, seed_value: int) -> tuple[str, i
     lines = [f"Let a = {seed_value}."]
     v = seed_value
     trace: list[dict] = []
-    names = "bcdefghij"
+    # Variable names for ARBITRARY depth. A fixed "bcdefghij" caps the dial at 9 steps and
+    # IndexErrors past it — found when the extension sweep hit depth 12. A difficulty dial whose
+    # generator cannot express its own upper rungs is not a dial.
+    names = _var_names(depth)
     for i in range(depth):
         op = rng.choice(OP_KEYS)
         k = _pick_k(rng, op)

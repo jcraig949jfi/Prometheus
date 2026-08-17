@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "<string>", line 4, in <module>
+  File "F:\Prometheus\ergon\probe\chain_run.py", line 134, in axis
+    rows = generate(d, per_depth, seed)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus\ergon\probe\task_gen_v2.py", line 175, in generate
+    prompt, gold, trace = build_chain(rng, depth, seed_value)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus\ergon\probe\task_gen_v2.py", line 161, in build_chain
+    lines.append(f"Step {i+1}: let {names[i]} = " +
+                                    ~~~~~^^^
+IndexError: string index out of range
+[axis] 4 rungs x 40, Bonferroni conf=0.9875
+  depth 8: acc  97.5%  manifest [0.913,1.000]  wilson [0.825,0.997]  pf 0.0%  -> OUT-OF-BAND
