@@ -38,3 +38,9 @@ watch-paced — every pass does one real item.
 LAW 1 at every emission (consumer named); trace-vector shape for failures; decoy discipline
 once assembled; no germline ignition (gates: constitution + probe verdict + co-signer seat);
 irreversibles → DECISIONS, never blocked on.
+
+**Model-tier rule (James, 2026-08-17):** this loop runs on **Opus-tier** (or lower when a pass
+is purely mechanical). Fable's limited pool is reserved for the divergence seats — the
+Hephaestus meta-analysis role on M3 — and for occasional high-stakes passes (spec audits,
+verdict adjudications, constitution review). The gateway's cheapest-sufficient principle
+applies to our own sessions, not just to children. Model provenance stays stamped per commit.
