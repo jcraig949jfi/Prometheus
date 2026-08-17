@@ -23,14 +23,14 @@ a registry row + a checkout + creds, not an architecture event.
   for trace-vector enrichment (the behavioral-navigation computation), local solver arms
   (Qwen2.5-Math-1.5B under torch/CUDA Python311), Tier-A probe work. VRAM ceiling 3–4B local —
   respected, not fought.
-- **M2 (SpectreX5, RTX 5060 Ti 16GB, 28 cores).** The **podman multi-model host** (Hephaestus
-  D5's answer to the $900 question: power up the owned idle GPU instead of buying). Blocked on
-  one DECISION: WSL2 distro install → podman. Until then: ollama (0.32.9, present) serves the
-  free local-model tier. GPU role: sandboxed model-emitted code execution, zoo local slice,
-  child experiment sandboxes.
+- **M2 (SpectreX5, RTX 5060 Ti 16GB, 28 cores).** The **multi-model host** (Hephaestus D5's
+  answer to the $900 question: power up the owned idle GPU instead of buying). Podman/WSL2
+  **tabled** (DECISION 1): **native ollama** serves the local-model tier; model-emitted code
+  runs in the **firewall-jailed venv** sandbox. GPU role: sandboxed code execution, zoo local
+  slice, child experiment sandboxes.
 - **M3 (Gandalf, 8GB).** The forge seat (Hephaestus/Fable) + kickoff-prompt orchestration as
   currently practiced. Small-model work only; the 8GB ceiling is fine for forge duty.
-- **M4.** Monitoring and reporting — **Aletheia_M4** (§6). No research duties; its entire
+- **M4.** Monitoring and reporting — **Alethelia** (§6). No research duties; its entire
   charter is telling the truth about the other machines.
 - **Station registry:** `germline.stations` (machine, gpu, vram_gb, capabilities, last_seen) —
   one row per machine; loops discover capacity by query, not by hardcoded hostnames
@@ -169,15 +169,17 @@ Podman specifically (vs bare venvs) buys: clean GPU allocation per experiment, r
 images per child (a child's environment is part of its genome), and a kill that actually kills.
 M2 is the host; the WSL2 install is the one blocking DECISION.
 
-## 6. Aletheia_M4 — the sensory cortex that is not allowed to imagine
+## 6. Alethelia — the sensory cortex that is not allowed to imagine
 
-**Naming, per the 08-12 collision protocol:** the role agent is **`Aletheia_M4`** (writes to
-`roles/Aletheia/`, `stations/M4_STATUS.md`); the knowledge-graph component stays path-named
-`agents/aletheia/`; my pending retire dossier names paths, not the bare name. The name is apt —
-*truth* — precisely because the M4 reporter's documented failure mode was **confabulation**
+**Naming — RATIFIED (James, 2026-08-17): `Alethelia`.** The deliberately distinct spelling
+**kills the three-way Aletheia collision outright** rather than managing it with suffix
+conventions: `agents/aletheia/` remains the path-named knowledge-graph component, the retire
+dossier names paths, and the monitoring agent is unambiguously Alethelia (writes to
+`roles/Alethelia/`, `stations/M4_STATUS.md`). The near-name keeps the meaning — *truth* — which
+is apt precisely because the old M4 reporter's documented failure mode was **confabulation**
 ("14 agents pending" fabricated from 43 UNKNOWNs, mailed to James 6×/day for seven weeks).
 
-**Charter (draft, one paragraph):** Aletheia_M4 monitors and reports; it performs no research,
+**Charter — RATIFIED as drafted (James, 2026-08-17):** Alethelia monitors and reports; it performs no research,
 files no bottlenecks, spawns nothing. Its constitutional constraint inverts the old reporter:
 **every field in every report must be traceable to a query** — Postgres, git, or CI output —
 and any field it cannot compute is rendered `UNKNOWN(n)`, never narrated. Its products: the
@@ -187,7 +189,7 @@ constitutional events only**; station health from heartbeats. It is subject to t
 like everyone else: planted anomalies in the tables must appear in its reports — a monitor that
 misses its decoys is itself reported. Two-control rule applied to reporting: can a real anomaly
 get through (positive)? does a fabricated calm pass (cheat)? The old M4 reporter failed the
-second; Aletheia_M4 is designed around not being able to.
+second; Alethelia is designed around not being able to.
 
 ## 7. Build list (short, priced) and DECISIONS
 
@@ -197,18 +199,33 @@ harness · DR dispatcher · trace-vector schema · ollama on M2 · gh CLI.
 **Build (small):** model gateway + meter (~2 sessions) · queue client with leases (~1) ·
 `germline` schema migration + weekly dump job (~1, Techne) · CI schema-enforcement workflows
 (~1) · decoy-injector assembly from the graveyard (~2, doubles as Charon's Move C) ·
-Aletheia_M4 truth-constrained reporter (~2, includes the PgRedis `exists/zcard/hlen` patch).
+Alethelia truth-constrained reporter (~2, includes the PgRedis `exists/zcard/hlen` patch).
 Total: roughly **nine focused sessions of plumbing**, every piece consumed by the germline on
 day one — no organelle without a consumer.
 
 **DECISIONS for James:**
-1. **WSL2 + podman on M2** — the sandbox host unblock (one install).
-2. **Backup target for fire + sci + F: corpus** — now doubly load-bearing (germline state).
-3. **Budget envelope** — the metabolic currency: monthly paid-API ceiling + GPU-hour pool the
-   market allocates (free tiers and local compute sit outside it).
-4. **Aletheia_M4 charter ratification** (§6) — and confirmation of the naming convention.
-5. **Standing daily DR allocation** — INTAKE fires 20/day against the void queue; children
-   draw from the day's yield.
+1. **WSL2 + podman on M2** — ~~the sandbox host unblock~~ **TABLED (James, 2026-08-17: "WSL is
+   too hard to work with").** Replacement, costing nothing: multi-model serving via **native
+   ollama** (already installed on M2, no container required); sandboxed execution of
+   model-emitted code via a **firewall-jailed dedicated venv** — restricted working dir, hard
+   timeouts, `ast`-parse screen (not regex, per Harmonia A's own false-reject lesson), and a
+   Windows Firewall outbound-block rule pinned to that venv's `python.exe`. Adequate for the
+   threat model (our own generated code — risks are accidental network, runaway compute, file
+   damage, not adversarial escape). Containers reconsidered only if truly untrusted code ever
+   runs. All §5 GPU policy stands unchanged; only the isolation mechanism changed.
+2. **Backup target** — **DECIDED (2026-08-17): Z:\ now + cloud later.** Weekly pg_dump of
+   fire+sci + robocopy of the F: corpus to Z:\ starts with the plumbing sessions; offsite
+   (B2/Drive) added once the germline schema is live. lmfdb excluded (re-downloadable).
+3. **Budget envelope** — **DECIDED (2026-08-17): $0 until ignition.** Strictly Tier 0-2 (free)
+   + local GPU until the constitution is ratified and PROMETHEUS-0 wakes. Consequence accepted:
+   cross-family refutation seats run on free tiers only (gemini free, NVIDIA free endpoints)
+   pre-ignition. The probe's separate $100 cap is unaffected.
+4. **Alethelia charter + name** — **RATIFIED (2026-08-17)** as drafted; distinct spelling ends
+   the collision (§6).
+5. **Daily DR allocation** — **DECIDED (2026-08-17): full 20/day immediately.** Use-or-lose
+   wins. LAW 1 still applies at firing — every dispatch names its consumer — and the 442-report
+   back-corpus mining stays queued as GRIND work; James accepts some unconsumed yield as the
+   price of the full tap.
 
 ---
 
