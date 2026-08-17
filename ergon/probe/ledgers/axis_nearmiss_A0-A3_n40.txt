@@ -1,0 +1,96 @@
+[axis] family=nearmiss 4 rungs x 40, Bonferroni conf=0.9875
+  rung A0: acc  50.0%  manifest [0.303,0.697]  wilson [0.316,0.684]  pf 0.0%  -> UNDECIDED
+  rung A1: acc  25.0%  manifest [0.079,0.421]  wilson [0.121,0.446]  pf 12.5%  -> UNDECIDED
+  rung A2: acc  17.5%  manifest [0.025,0.325]  wilson [0.073,0.365]  pf 10.0%  -> OUT-OF-BAND
+  rung A3: acc  20.0%  manifest [0.042,0.358]  wilson [0.088,0.393]  pf 10.0%  -> UNDECIDED
+{
+  "solver": "nvidia:deepseek-v4-flash",
+  "family": "nearmiss",
+  "band": [
+    0.35,
+    0.6
+  ],
+  "per_depth": 40,
+  "depths": {
+    "A0": {
+      "n": 40,
+      "accuracy": 0.5,
+      "manifest_interval": [
+        0.3025,
+        0.6975
+      ],
+      "wilson_interval": [
+        0.3163,
+        0.6837
+      ],
+      "parse_fail_rate": 0.0,
+      "truncation_rate": 0.4,
+      "band_verdict": "UNDECIDED"
+    },
+    "A1": {
+      "n": 40,
+      "accuracy": 0.25,
+      "manifest_interval": [
+        0.079,
+        0.421
+      ],
+      "wilson_interval": [
+        0.1211,
+        0.4463
+      ],
+      "parse_fail_rate": 0.125,
+      "truncation_rate": 0.0,
+      "band_verdict": "UNDECIDED"
+    },
+    "A2": {
+      "n": 40,
+      "accuracy": 0.175,
+      "manifest_interval": [
+        0.0249,
+        0.3251
+      ],
+      "wilson_interval": [
+        0.0726,
+        0.3651
+      ],
+      "parse_fail_rate": 0.1,
+      "truncation_rate": 0.425,
+      "band_verdict": "OUT-OF-BAND"
+    },
+    "A3": {
+      "n": 40,
+      "accuracy": 0.2,
+      "manifest_interval": [
+        0.042,
+        0.358
+      ],
+      "wilson_interval": [
+        0.0881,
+        0.3929
+      ],
+      "parse_fail_rate": 0.1,
+      "truncation_rate": 0.1,
+      "band_verdict": "UNDECIDED"
+    }
+  },
+  "bonferroni_conf": 0.9875,
+  "ts_utc": "2026-08-17T08:32:35+00:00",
+  "host": "SKULLPORT",
+  "executor": "ergon",
+  "in_band": [],
+  "undecided": [
+    "A0",
+    "A1",
+    "A3"
+  ],
+  "chosen_depth": null,
+  "verdict": "UNDECIDED-NEEDS-DECISION-N",
+  "accuracy_by_rung": {
+    "A0": 0.5,
+    "A1": 0.25,
+    "A2": 0.175,
+    "A3": 0.2
+  },
+  "monotone_decreasing": false,
+  "axis_span_pp": 32.5
+}

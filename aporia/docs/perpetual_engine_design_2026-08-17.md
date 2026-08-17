@@ -1,6 +1,20 @@
 # The Perpetual Engine — a backlog to outlast attention
 
-**Author:** Aporia (Claude Opus 5) · **Date:** 2026-08-17 · **Status:** DESIGN / BRAINSTORM.
+**Author:** Aporia (Claude Opus 5) · **Date:** 2026-08-17 · **Status:** DESIGN v2 (revised same
+day on James's critique — see §6 and the changelog below).
+
+> **v2 changelog (James's critique, adopted with two sharpenings):** v1 solved *"how does
+> Prometheus keep working when James walks away"* better than *"how does Prometheus decide what
+> to do next, learn from the result, and change itself."* Those are different engineering
+> problems — operational autonomy vs closed-loop epistemic control — and v1's five loops were
+> organs without an executive. Changes: §2.5 (new) the **decision market over interventions** —
+> typed BOTTLENECK/MOVE objects, never an LLM strategist; §0 LAW 1 upgraded with **consumption
+> proof** and weekly consumed/emitted telemetry; §1 reframed — **abstention is a success state**
+> and infinite backlog is a threat, not an asset; §3c fitness rewritten as the **residue-ablation
+> heredity test**; §2 gains the **objective-diversity** guard (perspective diversity ≠ objective
+> diversity); §6 (new) the **A0–A6 autonomy scale** with honest scoring. The north star is the
+> sentence v1 buried in its closing: *the engine's real horizon is the first time a failure
+> demonstrably improves a descendant.*
 Nothing here executes before the probe verdict except where marked RUNNABLE-NOW. The heredity rule
 stands: *no new architecture until one failure produces one verified improvement* — so this
 document designs the engine and sequences its ignition behind that first cycle.
@@ -26,8 +40,14 @@ queues are data; the harness that runs them is somebody else's product that keep
 with zero consumers; 442 Deep Research reports unread; 15+ shipped assets orphaned. The engine's
 prime law, stated once and enforced structurally:
 
-> **LAW 1 (consumer-at-birth).** No queue item exists without a named consumer field. The queue
-> schema rejects items whose `consumer` is empty. Producing into /dev/null becomes a type error.
+> **LAW 1 (consumer-at-birth + consumption proof).** No queue item exists without a named
+> consumer field — producing into /dev/null becomes a type error. **And a named consumer can
+> still be fictional** (the program's assets all nominally had purposes; none were consumed —
+> `"consumer": "LADDER"` must not become the new TODO comment). So every object must eventually
+> acquire proof: `consumed_by / consumer_run / effect {changed_priority, changed_model,
+> spawned_test, retired_hypothesis}`. **The first-class weekly telemetry metric is
+> consumed/emitted** — not emitted/iterations. Industrialized non-consumption must surface in
+> seven days, not two months.
 
 Two more laws, from the fleet's measured failure modes:
 
@@ -39,11 +59,21 @@ Two more laws, from the fleet's measured failure modes:
 > at a known rate. A loop that misses its decoys gets its verdicts discounted by a measured
 > factor. No silent degradation — the M4-reporter lesson.
 
-## 1. The heat-death arithmetic (why the backlog is effectively infinite)
+## 1. The fuel inventory — and why infinite backlog is a threat, not an objective
 
-James asked whether the backlog can last until the heat death of the universe. Honest answer: the
-program already owns **combinatorial and procedural generators** whose product exhausts any
-realistic compute budget. Enumerated, with sizes:
+*(Reframed in v2.)* The generators below demonstrate the backlog can be effectively infinite.
+**That demonstration is now demoted from design objective to capacity fact**, because Prometheus
+is astonishingly good at staying busy, and staying busy was never the problem. The design
+objective is inverted:
+
+> **Prometheus should be capable of running out of worthwhile work.** A healthy engine sometimes
+> concludes: *"no available experiment has expected information gain sufficient to justify its
+> cost."* Abstention is a success state — the alternative is GRIND as the old cron daemon with
+> better epistemology. Guard against lazy abstention symmetrically: an abstention is itself a
+> claim on the decision market (§2.5), and REFUTE can attack it by exhibiting a move that beats
+> the threshold. Abstention stands only if it survives refutation.
+
+The generators, enumerated as **fuel inventory** (what CAN be burned, not what should):
 
 1. **The kill-resurrection audit.** 92K historical kills × representability check × re-run of the
    representable-but-misrouted subset. ~10⁵ items, each cheap, each emitting a typed verdict.
@@ -105,6 +135,61 @@ generator parameter — or it is dropped.
 **Loop E — LADDER (Aporia's standing enrichment lane).** §4 below. The ladder work James asked
 for, as a permanent loop rather than a project.
 
+## 2.5 The decision market — the executive function, without a strategist (v2, the core addition)
+
+v1's loops were workers; the research director was still human-authored, smuggled in through
+phrases like "highest-value," "ranked by," "when X do Y." The fix is **not** a Loop F told to
+"figure out what to do next" — an LLM strategist recreates the exact epistemic problem five
+months of doctrine eliminated. The fix is a **decision market over interventions**, in typed
+objects the existing loops already know how to treat:
+
+**Two new queue types.** `BOTTLENECKS.jsonl` — diagnosis objects: `{id, claim, evidence[],
+confidence, competing_with[]}`. `MOVES.jsonl` — intervention objects: `{id, targets,
+action, expected_if_true, expected_if_false, cost, discriminates_against[], consumer, status,
+result, predicted_gain, realized_gain}`. The pipeline is:
+
+> STATE → BOTTLENECKS → CANDIDATE MOVES → EXPECTED OBSERVATIONS → COST → DISCRIMINATION VALUE
+> → RESULT → rescored BOTTLENECKS.
+
+**Division of labor over the market — no new organ needed:**
+- Any loop (or human, or fleet assessment) may *file* a bottleneck or a move. Filing is cheap;
+  prose recommendations are not accepted — the schema is the gate.
+- **REFUTE attacks diagnoses**, not just findings: a bottleneck's evidence list is a claim set,
+  and its confidence moves under attack like any other claim.
+- **GRIND executes** the highest-discrimination affordable move, not the "highest-value" one —
+  discrimination value is computable from `discriminates_against` (how many live bottleneck
+  hypotheses does the observation split?), value is vibes.
+- **Results rescore bottlenecks mechanically**: each move pre-registers `expected_if_true` /
+  `expected_if_false` per targeted bottleneck; the observation lands; confidences update. That
+  update is A4 — outcomes altering future selection — as arithmetic, not judgment.
+
+**The calibration sharpening (mine, and it closes the loophole James's own proposal leaves):**
+expected-information-gain estimates are themselves where an LLM's smuggled judgment would hide.
+So every move carries `predicted_gain` at filing and `realized_gain` at completion, and **each
+filer accumulates a public calibration score** (Brier-style, per the R11 rung's own discipline).
+A filer whose predictions are noise gets its future estimates discounted — the market maker is
+measured by the same instrument as everything else. Triage stops being an oracle and becomes a
+track record.
+
+**Objective diversity (James's second guard, adopted as market structure).** Cross-family
+refutation prevents correlated *reasoning* errors, not a shared *wrong objective* — Claude,
+Gemini, local models, and deterministic code can all diligently verify something that doesn't
+matter. So the market maintains, at all times, **competing interpretations of program state that
+predict different observables**: "representation is the bottleneck" vs "generator quality" vs
+"verification ceiling" vs "problem selection" vs "there is no learnable residue." Each must name
+an observable that would move its score *and one that would not* — the null-must-perturb-the-axis
+doctrine applied to program state. A move that discriminates between two live interpretations
+outranks a move that merely advances one. Four lenses examining the same premise is coverage;
+two hypotheses forced to disagree about tomorrow's number is science.
+
+**Seeded retroactively, today** (`engine/queues/BOTTLENECKS.jsonl`, `MOVES.jsonl`): the schema is
+validated against reality by back-filing the current program state — the five competing
+bottleneck interpretations above are B-001..B-005, and the Metabolization Probe, Charon's
+navigability pre-test, the generator swap, the kill-resurrection retrodiction, the zoo, and the
+R4 generator are M-001..M-006. The probe turns out to be exactly what a healthy market would have
+chosen: the affordable move with the highest discrimination count across live bottlenecks. The
+humans got it right by hand once; the market's job is to make that reproducible.
+
 **Monoculture guards, structural not aspirational:** every loop's round includes one
 externally-grounded seat and one re-execution seat (adopted fleet protocol); REFUTE is staffed
 cross-family wherever credits allow and cross-session always; lens rotation per the Harmonia-panel
@@ -143,12 +228,25 @@ cost for the local/deterministic agents, and it produces something genuinely nov
 signatures at which rungs. That is H2's flywheel applied to our own population, and it directly
 feeds…
 
-**3c. Agent-as-genome (the foundry, gated).** Treat agent configurations — prompts, role
-doctrines, tool loadouts, lens assignments — as genomes. Recombine across agents (cross-agent
-borrow is the gen-30 wall's named answer; Apollo's crossover result is the mechanism's existence
-proof at operator level). Admission is verifier-gated: a variant agent is admitted only on
-measured profile improvement (3b is the fitness function) plus typed-object yield (LAW 2). This is
-new architecture — **gated behind the first heredity cycle** — but its fitness instrument (3b) and
+**3c. Agent-as-genome (the foundry, gated; fitness rewritten in v2).** Treat agent
+configurations — prompts, role doctrines, tool loadouts, lens assignments — as genomes.
+Recombine across agents (cross-agent borrow is the gen-30 wall's named answer; Apollo's
+crossover result is the mechanism's existence proof at operator level).
+
+**Admission is the recursive heredity test, and residue-ablation is mandatory.** v1's fitness
+(ladder-profile improvement + typed-object yield) is Goodhartable — "descendant scored 71
+instead of 68" is evolutionary random search wearing a lab coat. The admissible evidence is:
+
+> Parent failed on obstruction X → residue R was extracted → descendant changed mechanism M
+> *because of* R → descendant survives X → **and the improvement disappears under residue
+> ablation** (a control descendant bred identically but with R withheld or shuffled does not
+> survive X).
+
+That five-step chain distinguishes recursive learning from lucky search, and it is the same
+gate as the Metabolization Probe's, applied to agents instead of solvers — which is exactly
+right, because FOUNDRY *is* metabolization at the agent level. Profile improvement and
+typed-object yield remain as secondary telemetry, never as admission criteria. This is new
+architecture — **gated behind the first heredity cycle** — but its fitness instrument (3b) and
 its population (the fleet) can be ready the day the gate opens.
 
 **3d. Agent-autopsy-as-residue (subtle, free).** The 21 RETIRE candidates' failure modes — the
@@ -205,17 +303,46 @@ probe is mid-flight. So:
 - **On the first heredity cycle closing** (one failure → one verified improvement): FOUNDRY (3c)
   opens; Band-H grader design unlocks; the self-improving-agents dream gets its first legal move.
 
-The engine's own kill condition, pre-registered because everything here must carry one: **if two
-consecutive months of grinding produce typed objects but zero consumed objects** — queues full,
-consumers starving — the engine has recreated the disease at industrial scale and gets parked for
-a consumption-first redesign. Production without metabolization is the one failure mode this
-program has proven it can achieve at any throughput.
+The engine's own kill condition, tightened in v2 from a two-month tripwire to standing telemetry:
+**consumed/emitted is computed weekly per loop**; a loop below threshold for two consecutive
+weeks is parked pending a consumption-first redesign. Production without metabolization is the
+one failure mode this program has proven it can achieve at any throughput.
+
+## 6. The autonomy scale — what is actually claimed (v2, James's frame, adopted whole)
+
+The engine is now *evaluated*, not described, against six levels:
+
+- **A0 — Persistence:** work survives session death. *Solved* (queues on disk; the May inversion:
+  autonomy lives in persistent state, not persistent processes).
+- **A1 — Execution autonomy:** queues execute without James. *Design credible; unproven in
+  operation.*
+- **A2 — Triage autonomy:** Prometheus chooses among already-defined jobs. *Partially designed* —
+  the market's discrimination-ranking is the mechanism; its calibration scoring is what would
+  make it trustworthy.
+- **A3 — Experimental autonomy:** it proposes discriminating experiments from measured failures.
+  *Mostly still human-supplied.* The market schema is the substrate; the first machine-filed MOVE
+  that a human co-signs unedited is the milestone.
+- **A4 — Learning autonomy:** outcomes alter future experiment selection. *Not demonstrated.*
+  The mechanical rescoring rule + filer calibration is the design; it has never run.
+- **A5 — Hereditary autonomy:** failure residue modifies descendants and the modification causes
+  verified improvement. *The Metabolization Probe is testing the first real instance right now.*
+- **A6 — Agenda autonomy:** it can discover its representation/objective is wrong and propose a
+  bounded replacement. *Nowhere close — appropriately.* (The syntactic-router finding is the
+  fleet doing A6's job for the instruments, by hand.)
+
+The central claim of v1 — "Prometheus can continue functioning while James is absent" — is
+hereby demoted to A0/A1. The engine's real horizon, and the doctrine the rest of this document
+now serves: **the first time a failure demonstrably improves a descendant** — failure → residue
+→ selected intervention → descendant → improvement → ablation confirms causality. Until that
+cycle closes, Prometheus autonomously generates, tests, rejects, catalogs, routes, queues,
+audits, researches, measures, and resumes — and does not yet learn.
 
 ---
 
 *The backlog was never the bottleneck; we were. The design answer to "how do we loop forever" is
-not more agents — it is queues that outlive sessions, laws that make orphaned work a type error,
-adversaries with measured sensitivity, and a human interface thin enough that stepping away costs
-the program nothing but decisions. The universe's heat death is adequately far off; the engine's
-real horizon is the first time a failure demonstrably improves a descendant. Everything else is
-fuel. — Aporia, 2026-08-17.*
+not more agents — it is queues that outlive sessions, laws that make orphaned work a type error
+and unconsumed work a weekly alarm, a decision market whose diagnoses can be attacked and whose
+triage accumulates a track record, adversaries with measured sensitivity, and a human interface
+thin enough that stepping away costs the program nothing but decisions. The universe's heat death
+is adequately far off, and reaching it busy would be failure. The horizon that matters is A5.
+Everything else is fuel. — Aporia, 2026-08-17, v2.*
