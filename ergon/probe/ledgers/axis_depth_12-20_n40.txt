@@ -1,0 +1,69 @@
+[axis] 3 rungs x 40, Bonferroni conf=0.9833
+  depth 12: acc  97.5%  manifest [0.916,1.000]  wilson [0.834,0.997]  pf 0.0%  -> OUT-OF-BAND
+  depth 16: acc  92.5%  manifest [0.825,1.000]  wilson [0.764,0.979]  pf 2.5%  -> OUT-OF-BAND
+  depth 20: acc 100.0%  manifest [1.000,1.000]  wilson [0.875,1.000]  pf 0.0%  -> OUT-OF-BAND
+{
+  "solver": "nvidia:deepseek-v4-flash",
+  "band": [
+    0.35,
+    0.6
+  ],
+  "per_depth": 40,
+  "depths": {
+    "12": {
+      "n": 40,
+      "accuracy": 0.975,
+      "manifest_interval": [
+        0.9159,
+        1.0
+      ],
+      "wilson_interval": [
+        0.8342,
+        0.9967
+      ],
+      "parse_fail_rate": 0.0,
+      "truncation_rate": 0.0,
+      "band_verdict": "OUT-OF-BAND"
+    },
+    "16": {
+      "n": 40,
+      "accuracy": 0.925,
+      "manifest_interval": [
+        0.8253,
+        1.0
+      ],
+      "wilson_interval": [
+        0.7644,
+        0.9791
+      ],
+      "parse_fail_rate": 0.025,
+      "truncation_rate": 0.05,
+      "band_verdict": "OUT-OF-BAND"
+    },
+    "20": {
+      "n": 40,
+      "accuracy": 1.0,
+      "manifest_interval": [
+        1.0,
+        1.0
+      ],
+      "wilson_interval": [
+        0.8747,
+        1.0
+      ],
+      "parse_fail_rate": 0.0,
+      "truncation_rate": 0.0,
+      "band_verdict": "OUT-OF-BAND"
+    }
+  },
+  "bonferroni_conf": 0.98333,
+  "ts_utc": "2026-08-17T01:12:41+00:00",
+  "host": "SKULLPORT",
+  "executor": "ergon",
+  "in_band": [],
+  "undecided": [],
+  "chosen_depth": null,
+  "verdict": "HEADROOM-FAILURE",
+  "monotone_decreasing": false,
+  "axis_span_pp": 7.5
+}

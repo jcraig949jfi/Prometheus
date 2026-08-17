@@ -150,9 +150,15 @@ it.** Full report: `roles/Ergon/TASK_FAMILY_V2_2026-08-17.md`. Commits `53293ea6
   survey named as missing.
 - **The axis was MEASURED, and it killed my hypothesis.** Depths 1–5, n=40, Bonferroni,
   manifest-level: **95.0 / 97.5 / 92.5 / 85.0 / 92.5%** — every rung far *above* the band, span
-  12.5pp, non-monotone again. Compositional depth is not a difficulty axis for this solver
-  either. Extension (depths 8/12/16/20) in flight; every rung so far is 25–37pp above the band,
-  so a wider adjustment cannot change a verdict.
+  12.5pp, non-monotone again. **Extension COMPLETE — the axis is dead across a 20× range:**
+  depths 1/2/3/4/5/8/12/16/20 give 95.0/97.5/92.5/85.0/92.5/97.5/97.5/92.5/**100.0%**,
+  mean 94.4%, **r(depth, accuracy) = +0.394** (mildly *positive*), worst rung = depth 4, and a
+  20-step chain solved **40/40**. Closest rung is 25pp above the band ceiling. There is no trend
+  for more depth to strengthen.
+  **The negative is informative:** this solver executes long deterministic chains essentially
+  perfectly, so difficulty for it does not live in execution length at all — it has to come from
+  where *recognition* fails. That ranks the remaining candidates rather than just eliminating
+  one.
 - **Weaker solver: RULED OUT for the decisive run**, explicitly rather than by omission. A solver
   that fails for capacity reasons fails in a way residue cannot repair; a null on it is the
   consumption-null by construction. Accepted only for Tier A qualification, or as an additional

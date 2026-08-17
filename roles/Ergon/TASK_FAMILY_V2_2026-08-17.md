@@ -97,10 +97,33 @@ aimed at — chance is now ~0 rather than 0.500, the post-screen cap is gone, an
 argument in §3 stands independently of difficulty. Those are structural gains that survive this
 result. What failed is only the difficulty lever.
 
-**Extension in flight:** depths 8/12/16/20, to separate *"depth does not work"* from *"depth does
-not work in the range I tested."* Every rung so far is 25–37pp above the band, so a wider
-Bonferroni over the extended rung set cannot change a verdict — the conclusion is robust to the
-adjustment.
+### 4.1 The extension — the axis is dead across a 20× range, not just a shallow one
+
+The obvious objection to §4 is that depth 5 is simply not deep enough. Tested, over a factor of
+twenty (n=40 per rung; the sweep first crashed at depth 12 on a nine-character variable-name
+table — a dial whose generator cannot render its own upper rungs is not a dial — fixed and
+re-run):
+
+```
+depth    1     2     3     4     5     8    12    16    20
+acc %  95.0  97.5  92.5  85.0  92.5  97.5  97.5  92.5  100.0     all OUT-OF-BAND (above)
+
+mean 94.4% · range 85.0–100.0 · span 15.0pp · Pearson r(depth, accuracy) = +0.394
+worst rung = depth 4 · best rung = depth 20 · closest rung is 25pp above the band ceiling
+```
+
+**A 20-step chain was solved 40/40.** The correlation between depth and accuracy is mildly
+*positive*, and the worst rung in the whole sweep is depth 4. This is not a weak downward trend
+that more depth would strengthen — there is no trend. The objection is closed: depth fails as an
+axis across the entire range in which the family is expressible, not merely in the range I first
+chose.
+
+**And the negative is informative, which is the part worth keeping.** This solver executes long
+deterministic chains essentially perfectly; its failure mode is *not* losing track over many
+steps. So difficulty for this class of solver does not live in **execution length** at all. That
+directly ranks what comes next: it has to come from where **recognition** fails — instances that
+look like one thing and are another — rather than from any amount of correct-but-tedious work.
+The measurement did not just kill the hypothesis, it narrowed the search.
 
 ## 5. Ruling on the weaker-solver option — explicitly, not by omission
 
@@ -134,10 +157,13 @@ That is the actual open problem, and it is more specific than it was two session
 
 1. Not operand magnitude (measured, non-monotone, v1).
 2. Not answer-space width alone (fixed three defects, changed no difficulty).
-3. Not compositional depth to 5 (measured, non-monotone, this session; 8–20 in flight).
+3. Not compositional depth **at any depth from 1 to 20** (measured this session, nine rungs,
+   r = +0.394, a 20-step chain solved 40/40). Execution length is not where this solver fails.
 4. Not a weaker solver (ruled out above for the decisive run, with reasons).
 
-What remains untested, in the order I would try it: **adversarial near-misses on the property**
+§4.1's negative sharpens the ordering: since failure does not live in execution length, the
+candidates that remain are the ones where **recognition** fails. In the order I would try them:
+**adversarial near-misses on the property**
 (Carmichael numbers, near-squares with a squarefree unit — structure where *recognition* fails
 rather than arithmetic); **multi-constraint satisfaction**, where partial reasoning yields a
 confidently wrong answer with a locatable error; and the **forge's trap battery**
