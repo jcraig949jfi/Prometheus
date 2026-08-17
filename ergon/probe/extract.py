@@ -108,3 +108,79 @@ def parse_failure_rate(extractions: list[Extraction]) -> float:
     if not extractions:
         return float("nan")
     return sum(1 for e in extractions if not e.parsed) / len(extractions)
+
+
+# ---------------------------------------------------------------------------------------
+# Numeric answers (task family v2). Frozen at first use, same contract as the verdict ladder:
+# deterministic, and never "improved" mid-experiment.
+#
+# The binary extractor above has a companion defect the v2 family removes: on a True/False task
+# the reasoning trace IS the answer, so no redaction can keep the residue and drop the label
+# (measured: prose alone recovers gold at 72.2%). A numeric answer is a different object from
+# its derivation, which is what makes break-location residue possible at all.
+
+_ANSWER_LINE = re.compile(r"ANSWER\s*[:=]\s*(-?\d[\d,_ ]*)", re.IGNORECASE)
+_TRAILING_INT = re.compile(r"(-?\d[\d,_]*)\s*\.?\s*$")
+_ANY_INT = re.compile(r"-?\d[\d,_]*")
+
+
+@dataclass
+class NumericExtraction:
+    value: int | None
+    flags: list[str] = field(default_factory=list)
+
+    @property
+    def parsed(self) -> bool:
+        return self.value is not None
+
+
+def _to_int(s: str) -> int | None:
+    try:
+        return int(s.replace(",", "").replace("_", "").replace(" ", ""))
+    except ValueError:
+        return None
+
+
+def extract_numeric(raw: str | None) -> NumericExtraction:
+    """Frozen ladder: explicit ANSWER: tag -> trailing integer -> last integer anywhere."""
+    flags: list[str] = []
+    if raw is None:
+        return NumericExtraction(None, ["null_response"])
+    if not raw.strip():
+        return NumericExtraction(None, ["empty"])
+
+    text = raw
+    if _THINKING_BLOCK.search(text):
+        flags.append("thinking_leak")
+        text = _THINKING_BLOCK.sub(" ", text)
+    if _TOOL_CALL_TEXT.search(text):
+        flags.append("tool_call_as_text")
+        return NumericExtraction(None, flags)
+    if _REFUSAL.search(text[:200]):
+        flags.append("refusal")
+
+    m = _ANSWER_LINE.search(text)
+    if m:
+        v = _to_int(m.group(1))
+        if v is not None:
+            return NumericExtraction(v, flags)
+        flags.append("answer_tag_unparseable")
+
+    stripped = _EMPHASIS.sub(" ", text).rstrip()
+    m = _TRAILING_INT.search(stripped)
+    if m:
+        v = _to_int(m.group(1))
+        if v is not None:
+            flags.append("no_answer_tag")
+            return NumericExtraction(v, flags)
+
+    ints = _ANY_INT.findall(stripped)
+    if ints:
+        v = _to_int(ints[-1])
+        if v is not None:
+            flags.append("no_answer_tag")
+            flags.append("last_int_fallback")
+            return NumericExtraction(v, flags)
+
+    flags.append("no_number")
+    return NumericExtraction(None, flags)

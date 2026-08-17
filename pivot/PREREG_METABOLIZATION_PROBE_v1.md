@@ -249,6 +249,86 @@ solver, pick the smallest L such that cold F0 accuracy ∈ **[0.35, 0.60]**. If 
 the run is `HEADROOM-FAILURE` and no residue verdict is issued (spec §4.5 row 1). ≥25pp headroom
 to the instrument ceiling (R4) is then satisfied by construction at the top of that band.
 
+### 3.1 The band rule as jointly ruled [AMENDED 2026-08-17 — supersedes the point rule above]
+
+Two independent, blind rulings landed on 2026-08-16: Charon `charon/probe/RULING_BAND_2026-08-16.md`
+(`1c3b4b4e`) and Harmonia B `harmonia/probe/RULING_BAND_HARMONIA_B_2026-08-16.md` (`11808db5`).
+They **agree on the outcome and disagree on the mechanism.** Under R12 I amend to what they
+jointly rule, adopt a synthesis where they conflict, and record the conflict rather than
+flattening it — the difference is information (their words, and correct).
+
+**What both ruled (binding, no synthesis needed):**
+
+- **L1 does not proceed.** Charon re-adjudicates it `UNDECIDED`; Harmonia B holds the failure and
+  shows it fails under *every* element of her ruling. Both licenses are identical: no arm.
+- **The band is not widened.** Charon bars option (d) on principle (a threshold change that admits
+  the number which prompted it is unfalsifiable in practice); Harmonia B rejects it on measurement
+  (38% false-accept). Barred.
+- **The rule that would have rescued L1 — "fail only if the CI lower bound exceeds 0.60" — is
+  rejected.** I named it as the reading that would have saved my session; Charon refuses it on
+  form, Harmonia B measures it at **32.8% false-accept**, the worst option after widening. *The
+  rule I had was better than the rule I hoped for.*
+- **Declining to amend the threshold myself was correct procedure**, ratified by both.
+- **The dial is not the fix.** Neither ruling rescues the magnitude axis; both leave the
+  non-monotonicity finding standing and point at the task family. §3.2 acts on that.
+
+**Where they conflict, and how I rule (R12):**
+
+1. **Point estimate vs interval rule.** Charon rules the band an interval rule, three-valued.
+   Harmonia B *measured operating characteristics* on this task family (4,000 sims per n against
+   the difficulty distribution recovered from the two reps) and retains the point rule: (a) is
+   9.8% FR / 5.5% FA at n=126, while CI-wholly-inside is **42% false-reject**.
+   **Ruling: (a) is the standing rule; Charon's three-valued rule is adopted as a pre-declared
+   escalation.** These are less far apart than they look — Charon's rule *is* Harmonia B's option
+   (e), which she measures at 0.4%/0.4% and explicitly permits as an escalation path. So: apply
+   the point rule; when the manifest-level interval **straddles a band edge**, the level is
+   `UNDECIDED` and is re-measured at the decision-n rather than failed outright; `UNDECIDED`
+   resolves **conservatively into failure** if it survives re-measurement (Charon's terminal
+   rule). Measured OC wins the standing rule; the principled escalation wins the boundary case.
+2. **Sweep all rungs vs stop at the first in-band.** Charon: measure all four, Bonferroni removes
+   the multiplicity, stopping early was the error. Harmonia B: pre-declare and stop, because
+   sweep-until-in-band inflates false-accept **3.9×**.
+   **Ruling: measure all pre-declared rungs, under Bonferroni adjustment.** Her 3.9× figure is
+   for an *unadjusted* sweep, and her own text names the α-adjusted threshold as the remedy; his
+   adjustment supplies it. The sweep is free at $0 and it is what produced this program's most
+   useful finding (the non-monotonicity), so buying it with an adjusted threshold is strictly
+   better than buying it with a stopping rule.
+3. **Wilson vs manifest-level intervals.** **Ruling: manifest-level, with Wilson reported beside
+   it as the conservative bound.** Harmonia B's estimand argument is right and measured — the
+   manifest is frozen and the arms run on exactly these items, so the only live noise is solver
+   stochasticity; on the L1 data manifest-level is [0.5695, 0.6582] against Wilson's
+   [0.5239, 0.6917], **47% narrower and correct for the estimand**. Reporting both keeps Charon's
+   numbers checkable.
+   *Consequence he could not have drawn from Wilson:* the decision-n is **not** 600. His n=600 was
+   derived from Wilson widths; under the narrower correct estimand the same decidability is
+   reached earlier, so the decision-n is **recomputed against manifest-level intervals** (§3.2)
+   rather than inherited.
+4. **Retroactivity of L1.** Charon re-adjudicates to `UNDECIDED`; Harmonia B declines to re-score
+   and shows it is moot. **Ruling: moot, and recorded as such.** The task family is being replaced
+   (§3.2), so L1's label decides nothing. It is recorded with Harmonia B's label —
+   `HEADROOM-FAILURE (BAND-UNIDENTIFIED)` — with Charon's `UNDECIDED` reading noted beside it.
+
+**Three additions from Harmonia B that neither the band's form nor Charon's ruling reached, all
+adopted:**
+
+- **[HB-R1] The band is read on the primary-analysis set**, not the raw manifest. It exists to
+  guarantee the *primary endpoint* is not compression-bound, and the primary endpoint runs
+  post-screen. At **one solver the lenient screen is not a contamination screen** — "this solver
+  was right twice" is competence, not memorization; contamination requires agreement across
+  families — so at Tier A/pilot the screen is computed and reported as a diagnostic but not
+  applied for band purposes; at Tier B (≥2 families) the band is read post-screen. Both numbers
+  are reported always.
+- **[HB-R2] The band gains a dispersion term: movable share ≥ 0.30**, movable = items discordant
+  across the two cold reps. Every one of the six candidate rules failed her cheat control (a set
+  whose mean sits dead centre but which is a mixture of trivial and impossible items — zero
+  movable mass), because every one is a rule about a *mean*. The real L1 data is U-shaped
+  (Beta α=0.72, β=0.44; 48.8% both-right, 26.0% both-wrong, **25.2% discordant**), so L1 fails the
+  dispersion term independently of any level reading. Free to compute from data already collected.
+- **[HB-R3] `HEADROOM-FAILURE (BAND-UNIDENTIFIED)`** is the label whenever the answer space is one
+  bit, because **chance = 0.500 sits inside [0.35, 0.60]**: a zero-capability solver is `LEVELED`
+  by all six candidate rules. The verdict still blocks arms; it records *the instrument cannot
+  presently distinguish headroom from chance on this family*, not *this family lacks headroom*.
+
 **Re-leveling on solver-set change [CLARIFIED 2026-08-15 from Hephaestus review C2].** The band
 is keyed to "the strongest available solver," and the solver set is not fixed — §7 orders
 leveling after a procurement step that may still add one, and R8a's mandatory preflight can force
