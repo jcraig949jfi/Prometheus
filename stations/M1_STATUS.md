@@ -119,6 +119,59 @@ the retire dossier must name the **path**, never the bare name. Aporia owns that
 4. **Forge relocation ($900 PowerSpec)** — M1's standing recommendation is **hold**. Four of
    the fleet's top moves are in-context or in-corpus; none need the box.
 
+## 7e. AXIS SEARCH, TERMINAL ROUND — Candidate A built and measuring (Ergon, 2026-08-17)
+
+**§4's stopping rule was read before §1 and is in hand: if Candidate A and Candidate B both
+fail to level, the finding is a statement about the DOMAIN, not a fourth axis.** §4 has **not**
+fired — Candidate A is measuring as of this update.
+
+**Which candidate was measured:** A — adversarial near-misses on the *property*. The ordering is
+forced by my own 4.1 negative (execution length is not where this solver fails), so difficulty is
+sought where *recognition* fails.
+
+**Rungs, pre-declared and ordered** (`ergon/probe/task_gen_v3.py`, family `nearmiss`):
+`A0` composites with small factors · `A1` semiprimes both factors >10^4 · `A2` Fermat
+pseudoprimes base 2 · `A3` Carmichael numbers (Fermat-liars for every coprime base). A2/A3 are
+the point: a solver that applies a Fermat test and stops is *confidently wrong*, for a reason a
+prior attempt could have recorded. Sweep at n=40/rung, Bonferroni, manifest-level intervals per
+the jointly-ruled band; results land at `ergon/probe/ledgers/axis_nearmiss_A0-A3_n40.txt`.
+
+**Answer space stays wide** — the task is a COUNT over five integers, so chance is 1/4 = 0.25,
+*below* the 0.35 floor. A coin cannot be `LEVELED`, unlike the binary family where 0.500 sat
+inside the band.
+
+**Two unintended channels found and closed before any data existed:**
+- **Magnitude.** The first A3 sample had 13-digit Carmichaels against 10-digit primes — *"the
+  long ones are composite"* would have answered the task without touching primality. Same class
+  as the uid-index leak. Composites are now drawn first and primes matched to their **digit
+  lengths**, with a best-single-threshold digit-length rule asserted to score at chance.
+- **My own guard was mis-calibrated.** The index-answer check fired at rho=-0.277 against a fixed
+  0.20 tolerance — but the shuffle null has sd ≈0.16 at n=40, so it false-alarms on clean
+  manifests ~20% of the time. A guard mis-calibrated against its own null is the same defect as
+  per-pair tolerances hiding a bias. Decorrelation is now **enforced** (deterministic re-shuffle
+  inside 3σ) and then asserted, with the tolerance scaled to n.
+
+**RESIDUE PLAUSIBILITY AT D0 — the requirement that outranks headroom.** A prior failed attempt
+records, per element, **the test it applied** and the conclusion it drew (*"8911: 2^(n-1)=1 mod n,
+so prime"*). Under §4.2 the record carries no gold and no correctness flag, so the packet hands
+the next attempt the **method**, not the answer — a next attempt reading *"the prior run decided
+this on a single Fermat base"* can choose a stronger test without being told which element was
+misjudged. That is residue about the **verb**, not the noun, which is `feedback_verbs_over_nouns`
+exactly. On v1 residue could only restate the answer; on v2 it localized a step; here it names the
+fallible procedure.
+
+**What the ladder measures now that F-null is INADMISSIBLE at D1/D2** (Charon's through-line: a
+selection relation that is not task-specific, so Δ_carry is interpretable at **D0 alone**): I take
+the **honest scope reduction** — D0 carry is the probe's measurement, and D1–D3 are reported as a
+*separately-named distance description* with no Δ_carry and no verdict class attached. A redesign
+making selection task-specific at every distance is the better long-run answer and is not this
+round's work; naming it as a different measurement is what keeps the D0 number interpretable.
+
+**Observation, explicitly not accuracy data:** the A3 rung is far more expensive per item than
+any rung of v1 or v2 — the sweep has run ~50 minutes where the depth sweep took ~25. More
+compute per item is consistent with the family being harder, but it is *not* evidence of
+headroom, and I am not treating it as such until the accuracy lands.
+
 ## 7d. METABOLIZATION PROBE — band amended, task family v2, axis measured (Ergon, 2026-08-17)
 
 **The pilot did not run. A third gate fired — on a task family I designed specifically to clear
