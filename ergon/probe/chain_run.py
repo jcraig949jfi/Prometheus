@@ -36,6 +36,14 @@ from datetime import datetime, timezone
 from .extract import extract_numeric
 from .solver import EXECUTOR, VERIFIED_SOLVERS, call, preflight
 from .task_gen_v2 import DEPTHS, generate, generate_manifest, generator_sha256, manifest_sha256
+from . import task_gen_v3
+
+#: Family registry. `axis` is family-agnostic: three axes have died, so the rung sweep is the
+#: reusable instrument and the generator is the swappable part.
+FAMILIES = {
+    "chain": (generate, DEPTHS),                       # v2 — compositional depth (measured dead)
+    "nearmiss": (task_gen_v3.generate, task_gen_v3.LEVELS),   # v3 — adversarial near-misses
+}
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 LEDGER_DIR = ROOT / "ergon" / "probe" / "ledgers"
@@ -56,8 +64,9 @@ def _attempt(solver: str, row: dict, rep: int) -> dict:
     r = call(solver, row["prompt"], max_tokens=MAX_TOKENS)
     ex = extract_numeric(r.text if r.status == "ok" else None)
     return {
-        "uid": row["uid"], "domain": row["domain"], "depth": row["depth"],
+        "uid": row["uid"], "domain": row["domain"], "depth": row.get("depth"),
         "rep": rep, "solver": solver, "status": r.status, "latency_s": r.latency_s,
+        "rung": row.get("depth", row.get("level")),
         "prompt_tokens": r.prompt_tokens, "completion_tokens": r.completion_tokens,
         "attempt_text": (r.text or "").strip(),
         "extracted_int": ex.value, "extract_flags": ex.flags,
@@ -123,17 +132,25 @@ def classify(lo: float, hi: float) -> str:
     return "UNDECIDED"
 
 
-def axis(solver: str, per_depth: int, depths=DEPTHS, seed: int = 20260817) -> dict:
-    """Measure depth's effect on accuracy across ALL pre-declared rungs, Bonferroni-adjusted."""
+def axis(solver: str, per_depth: int, depths=DEPTHS, seed: int = 20260817,
+         family: str = "chain") -> dict:
+    """Measure a rung set's effect on accuracy across ALL pre-declared rungs, Bonferroni-adjusted.
+
+    Family-agnostic by design: three difficulty axes have now died, so the sweep is the durable
+    instrument and the generator is the part that gets replaced.
+    """
+    gen, default_rungs = FAMILIES[family]
+    depths = depths if depths is not None else default_rungs
     conf = 1 - 0.05 / len(depths)          # Bonferroni over the pre-declared rungs
-    out = {"solver": solver, "band": BAND, "per_depth": per_depth, "depths": {},
-           "bonferroni_conf": round(conf, 5), "ts_utc": _now(),
+    out = {"solver": solver, "family": family, "band": BAND, "per_depth": per_depth,
+           "depths": {}, "bonferroni_conf": round(conf, 5), "ts_utc": _now(),
            "host": socket.gethostname(), "executor": EXECUTOR}
-    print(f"[axis] {len(depths)} rungs x {per_depth}, Bonferroni conf={conf:.4f}")
+    print(f"[axis] family={family} {len(depths)} rungs x {per_depth}, "
+          f"Bonferroni conf={conf:.4f}")
     for d in depths:
-        rows = generate(d, per_depth, seed)
+        rows = gen(d, per_depth, seed)
         for i, r in enumerate(rows):
-            r["uid"] = f"axis-d{d}-{i:04d}"
+            r["uid"] = f"axis-{family}-{d}-{i:04d}"
         recs = _run_batch(solver, rows, rep=0)
         gold = {r["uid"]: r["gold_int"] for r in rows}
         succ = [rec["extracted_int"] == gold[rec["uid"]] for rec in recs]
@@ -150,17 +167,18 @@ def axis(solver: str, per_depth: int, depths=DEPTHS, seed: int = 20260817) -> di
             "parse_fail_rate": round(pf, 4), "truncation_rate": round(tr, 4),
             "band_verdict": verdict,
         }
-        print(f"  depth {d}: acc {acc:6.1%}  manifest [{mlo:.3f},{mhi:.3f}]  "
+        print(f"  rung {d}: acc {acc:6.1%}  manifest [{mlo:.3f},{mhi:.3f}]  "
               f"wilson [{wlo:.3f},{whi:.3f}]  pf {pf:.1%}  -> {verdict}")
 
     in_band = [d for d in depths if out["depths"][str(d)]["band_verdict"] == "IN-BAND"]
     undecided = [d for d in depths if out["depths"][str(d)]["band_verdict"] == "UNDECIDED"]
     out["in_band"] = in_band
     out["undecided"] = undecided
-    out["chosen_depth"] = min(in_band) if in_band else None
+    out["chosen_depth"] = (min(in_band) if in_band else None) if in_band else None
     out["verdict"] = "LEVELED" if in_band else ("UNDECIDED-NEEDS-DECISION-N" if undecided
                                                 else "HEADROOM-FAILURE")
     accs = [out["depths"][str(d)]["accuracy"] for d in depths]
+    out["accuracy_by_rung"] = dict(zip([str(d) for d in depths], accs))
     out["monotone_decreasing"] = all(a >= b for a, b in zip(accs, accs[1:]))
     out["axis_span_pp"] = round((max(accs) - min(accs)) * 100, 1)
     return out
@@ -261,6 +279,7 @@ def main():
     ap.add_argument("--per-depth", type=int, default=40)
     ap.add_argument("--depth", type=int, default=3)
     ap.add_argument("--n", type=int, default=200)
+    ap.add_argument("--family", default="chain", choices=sorted(FAMILIES))
     ap.add_argument("--skip-preflight", action="store_true")
     args = ap.parse_args()
 
@@ -272,7 +291,8 @@ def main():
             raise SystemExit(f"R8a: {args.solver} failed preflight {pf['failures']}")
 
     if args.mode == "axis":
-        print(json.dumps(axis(args.solver, args.per_depth), indent=2))
+        print(json.dumps(axis(args.solver, args.per_depth, depths=None,
+                              family=args.family), indent=2))
     else:
         print(json.dumps(prepass(args.solver, args.depth, args.n), indent=2))
 
