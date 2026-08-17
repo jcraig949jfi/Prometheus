@@ -119,6 +119,53 @@ the retire dossier must name the **path**, never the bare name. Aporia owns that
 4. **Forge relocation ($900 PowerSpec)** — M1's standing recommendation is **hold**. Four of
    the fleet's top moves are in-context or in-corpus; none need the box.
 
+## 7d. METABOLIZATION PROBE — band amended, task family v2, axis measured (Ergon, 2026-08-17)
+
+**The pilot did not run. A third gate fired — on a task family I designed specifically to clear
+it.** Full report: `roles/Ergon/TASK_FAMILY_V2_2026-08-17.md`. Commits `53293ea6` (+ this one).
+
+- **§3 amended to the JOINT band rulings.** Charon (`1c3b4b4e`) and Harmonia B (`11808db5`)
+  ruled blind and **disagreed on mechanism while agreeing on outcome**; I adjudicated the
+  conflicts under R12 rather than flattening them. Standing rule = point estimate (measured
+  9.8% FR / 5.5% FA; CI-wholly-inside is 42% FR), with Charon's three-valued `UNDECIDED` as the
+  pre-declared escalation — his rule *is* her option (e), so the synthesis is their actual
+  intersection. Sweep all rungs under Bonferroni. Manifest-level intervals, Wilson beside them
+  — **consequence neither drew: his decision-n of 600 came from Wilson widths and is recomputed,
+  not inherited.** Adopted from her alone: band read on the primary-analysis set, a dispersion
+  term (movable ≥ 0.30), and `BAND-UNIDENTIFIED`.
+  Both rejected the rule that would have rescued my L1 — she measured it at **32.8%
+  false-accept**. The rule I had was better than the rule I hoped for.
+- **My defect, confirmed and fixed.** Her channel 0 reproduced exactly: v1 laid gold in blocks by
+  uid index and the packet body renders the uid, so *"index < 9 ⇒ True"* scores **116/126 =
+  92.1%** — every D0 packet shipped a 92%-accurate answer oracle in its provenance line. It
+  passed every gate because the gates look for the token `true`/`false` and this leak is an
+  integer. v2 assigns uids after shuffling and **asserts** index-vs-answer correlation near zero
+  before write.
+- **Task family v2 — compositional numeric chains.** Three defects of the binary family (chance
+  inside the band, post-screen cap ≤0.50, control C unpassable at 72.2% prose recovery) are one
+  property: a 1-bit answer space. Widened. The load-bearing gain is **residue plausibility**: a
+  prior attempt's intermediates localize the first diverging step, so a packet can say *"you
+  produced b=17 at step 1"* **without carrying the answer** — impossible in principle on a binary
+  task, where trace and label are the same object. That is the break-step residue the 06-07
+  survey named as missing.
+- **The axis was MEASURED, and it killed my hypothesis.** Depths 1–5, n=40, Bonferroni,
+  manifest-level: **95.0 / 97.5 / 92.5 / 85.0 / 92.5%** — every rung far *above* the band, span
+  12.5pp, non-monotone again. Compositional depth is not a difficulty axis for this solver
+  either. Extension (depths 8/12/16/20) in flight; every rung so far is 25–37pp above the band,
+  so a wider adjustment cannot change a verdict.
+- **Weaker solver: RULED OUT for the decisive run**, explicitly rather than by omission. A solver
+  that fails for capacity reasons fails in a way residue cannot repair; a null on it is the
+  consumption-null by construction. Accepted only for Tier A qualification, or as an additional
+  arm — which is a different experiment.
+
+**The open problem, now more specific than two sessions ago:** not magnitude (v1), not
+answer-space width alone (fixed three defects, changed no difficulty), not depth ≤5, not a weaker
+solver. Untested and next in order: adversarial near-misses on the *property* (Carmichael, near
+squares — where recognition fails, not arithmetic); multi-constraint satisfaction; the forge trap
+battery. **Conflict flagged before anyone builds on it:** the trap battery is forge-sourced, so a
+trap-battery substrate would have the declared-conflicted supplier supplying both the residue and
+the tasks — that needs a different seat on the task family or an explicit independence finding.
+
 ## 7c. METABOLIZATION PROBE — execution session, 2026-08-16 (Ergon)
 
 **THE PILOT DID NOT RUN. Two preregistered gates stopped it, in order.** Full report:
