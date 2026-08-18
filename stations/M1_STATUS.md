@@ -350,9 +350,11 @@ measurements: `charon/probe/VERDICT_M004_2026-08-18.md`; refusal logged in the p
 
 **Fatal:** the protocol reads `_DISPATCH` / `unknown_kind`, which are emitted only by
 `verifier_lens.verify()` — an instrument that **never ran over either kill archive**. Measured
-`unknown_kind` occurrences: **0 in 6,240** shadow-preload records, **0 in 4,000** sampled Theseus
-records; those records carry **no `kind` field at all**. Stage A has nothing to read and Stage B's
-input set is **empty by construction**, so the run cannot return nonzero — and a structural zero
+`unknown_kind` occurrences: **0 in 6,240** shadow-preload records and **0 in 35,395,316** Theseus
+corpus records (full 12-batch scan). `shadow_preload` carries **no `kind` field at all**; Theseus
+carries `claim_kind`, but **none of its 8 kinds appears in `_DISPATCH`**, so Stage A saturates at
+~100% `unrepresentable` — a constant, not a measurement. Either way Stage B's input set is
+**empty by construction**, so the run cannot return nonzero — and a structural zero
 lands on the prereg's pre-committed "the nulls were real" headline with every gate passing.
 
 **Also:** "~92K kills" is *test executions* (80,277); **hypothesis-level kills are 3,988**. The

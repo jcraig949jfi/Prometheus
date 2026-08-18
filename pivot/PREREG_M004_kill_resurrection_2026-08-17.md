@@ -146,11 +146,17 @@ Every figure below is `E3`, executed against the committed archives.
 
 **Fatal (§3, §4).** The instrument this protocol reads was never applied to this archive.
 `unknown_kind` is emitted only by `verifier_lens.verify()`; measured occurrences —
-**0 in 6,240 records** of `cartography/convergence/data/shadow_preload.jsonl`, and **0 in 4,000**
-sampled from `theseus/corpus/`. Those records carry **no `kind` field at all** (`"kind"` 0,
-`claim_kind` 0); their kill vocabulary is the F-test battery (`F3_effect_size` 3024,
-`F11_cross_validation` 2653, `F12_partial_correlation` 2563, …). Therefore **Stage A has no field
-to read** and **Stage B's input set is empty by construction** — so the run cannot return a
+**0 in 6,240 records** of `cartography/convergence/data/shadow_preload.jsonl`, and **0 in
+35,395,316 records** across 12 `theseus/corpus/` batches (full scan). The two archives fail
+Stage A differently: `shadow_preload` carries **no `kind` field at all** and a pure F-test kill
+vocabulary (`F3_effect_size` 3024, `F11_cross_validation` 2653, …); Theseus **does** carry
+`claim_kind`, but **none of its eight kinds** (`invariant_equality`, `mutation`,
+`kill_neighborhood`, `statistical_correlation`, `functional_identity`, `symmetry_transform`,
+`ratio_invariance`, `bridge_extension`) **appears in `_DISPATCH`**, so Stage A saturates at ~100%
+`unrepresentable` — a constant, not a measurement. *(Corrected 2026-08-18 from an earlier draft of
+this entry that generalised "no kind field" to both archives on a 4,000-record sample; the
+conclusion is unchanged and the evidence is four orders of magnitude stronger.)* Either way
+**Stage B's input set is empty by construction** — so the run cannot return a
 nonzero resurrection rate, and a structural zero would land on §1's first pre-committed reading
 ("the nulls were real") and be reported as the headline. **Every gate in this document passes on
 the way to that outcome.**
