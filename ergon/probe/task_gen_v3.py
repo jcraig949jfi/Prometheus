@@ -60,6 +60,20 @@ SEED_SEQUENCE = (20260817, 20260818, 20260819)
 #: Pre-declared, ordered rungs. Effect on accuracy is MEASURED, not assumed.
 LEVELS = ("A0", "A1", "A2", "A3")
 
+#: INTERMEDIATE RUNGS, added 2026-08-18 after the clean sweep measured the axis as far steeper
+#: than the truncated run suggested: A0 82.5% -> A1 25.0%, a 57.5pp cliff with NOTHING in the
+#: band between them. A1/A2/A3 all sit at exactly 25.0%, which IS chance on this task, so they
+#: are at the floor rather than merely hard. This is rung re-spacing inside a WORKING axis, not
+#: a new axis — the mixing fraction interpolates between two MEASURED endpoints, so an
+#: intermediate rung is guaranteed to land between them rather than hoped to.
+#:
+#: The knob is the fraction of a task's composites drawn as hard (semiprime, A1-style) rather
+#: than easy (small-factor, A0-style). Deception is thereby made PARTIAL: some elements of the
+#: count are deceptive and some are not, which is exactly the "mixed count" shape.
+LEVELS_MIX = ("M20", "M40", "M60", "M80")
+_MIX_FRACTION = {"M20": 0.20, "M40": 0.40, "M60": 0.60, "M80": 0.80}
+ALL_LEVELS = LEVELS + LEVELS_MIX
+
 #: Elements per task. The answer is how many of them are prime.
 K = 5
 #: Balanced answer range — 0 and 5 are excluded so a degenerate "none/all" guess cannot score.
@@ -163,6 +177,20 @@ def _prime_with_digits(rng: random.Random, digits: int) -> int:
     return _rand_prime(rng, max(2, lo), hi)
 
 
+def _mixed_composites(rng: random.Random, level: str, n_comps: int, cache: dict) -> list[int]:
+    """Split a task's composites between hard (semiprime) and easy (small-factor).
+
+    Deterministic count with a stochastic remainder, so the realised fraction is unbiased at the
+    manifest level even though a single task holds only 1-4 composites.
+    """
+    frac = _MIX_FRACTION[level]
+    exact = frac * n_comps
+    n_hard = int(exact) + (1 if rng.random() < (exact - int(exact)) else 0)
+    n_hard = max(0, min(n_comps, n_hard))
+    return ([_composite_semiprime(rng) for _ in range(n_hard)]
+            + [_composite_small_factor(rng) for _ in range(n_comps - n_hard)])
+
+
 def _task(rng: random.Random, level: str, n_primes: int, cache: dict) -> dict:
     """Composites FIRST, then primes matched to their DIGIT LENGTHS.
 
@@ -173,8 +201,12 @@ def _task(rng: random.Random, level: str, n_primes: int, cache: dict) -> dict:
     ignores it. Magnitude was already measured dead as a difficulty axis (v1), so nothing is
     lost by matching it exactly.
     """
-    comps = [_COMPOSITE_FOR[level](rng, cache) for _ in range(K - n_primes)]
-    comp_digits = [len(str(c)) for c in comps] or [len(str(_COMPOSITE_FOR[level](rng, cache)))]
+    n_comps = K - n_primes
+    if level in _MIX_FRACTION:
+        comps = _mixed_composites(rng, level, n_comps, cache)
+    else:
+        comps = [_COMPOSITE_FOR[level](rng, cache) for _ in range(n_comps)]
+    comp_digits = [len(str(c)) for c in comps]
     primes = [_prime_with_digits(rng, rng.choice(comp_digits)) for _ in range(n_primes)]
     items = primes + comps
     rng.shuffle(items)
@@ -196,8 +228,8 @@ def _task(rng: random.Random, level: str, n_primes: int, cache: dict) -> dict:
 
 def generate(level: str, n: int, seed: int = SEED_SEQUENCE[0]) -> list[dict]:
     """Balanced by construction over the answer range, ASSERTED before return."""
-    if level not in LEVELS:
-        raise ValueError(f"unknown level {level!r}; expected one of {LEVELS}")
+    if level not in ALL_LEVELS:
+        raise ValueError(f"unknown level {level!r}; expected one of {ALL_LEVELS}")
     rng = random.Random(f"{seed}:{level}")
     cache = {"p2": [], "cm": []}
     rows = []

@@ -43,6 +43,7 @@ from . import task_gen_v3
 FAMILIES = {
     "chain": (generate, DEPTHS),                       # v2 — compositional depth (measured dead)
     "nearmiss": (task_gen_v3.generate, task_gen_v3.LEVELS),   # v3 — adversarial near-misses
+    "nearmiss_mix": (task_gen_v3.generate, task_gen_v3.LEVELS_MIX),  # v3 intermediate rungs
 }
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
