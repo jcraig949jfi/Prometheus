@@ -53,7 +53,20 @@ BAND = (0.35, 0.60)
 MOVABLE_FLOOR = 0.30          # Harmonia B ruling 2
 WORKERS = 6
 RATE_RPM = 30.0
-MAX_TOKENS = 2048
+#: MEASURED, not assumed (2026-08-18, ergon/probe/ledgers/lenprobe_nearmiss.txt). At 16384 no
+#: response on this family hit the cap; pooled p99 = 3873 and the per-rung maxima are
+#: A0 3873 · A1 1531 · A2 2698 · A3 3346. That distribution explains the rung-correlated
+#: truncation exactly: A1's longest response fits under 2048, A0's and A2's do not, which is why
+#: truncation ran 0.000 at A1 against 0.400/0.425 at A0/A2 — silent, rung-correlated missing data
+#: on the very comparison the axis rests on. 8192 is >2x the observed maximum. A high cap costs
+#: nothing when unused: latency scales with tokens GENERATED, not with the ceiling.
+MAX_TOKENS = 8192
+
+#: Truncation is a STANDING HAZARD of this family, not an incident. It corrupted the leveling run
+#: on 2026-08-16 and reappeared in the first sweep that produced a working axis. So it is a
+#: pre-flight gate on every rung from here on: a sweep with any rung above this refuses to name a
+#: chosen rung, whatever the accuracies look like.
+TRUNCATION_GATE = 0.02
 
 
 def _now() -> str:
@@ -157,6 +170,7 @@ def axis(solver: str, per_depth: int, depths=DEPTHS, seed: int = 20260817,
         acc = sum(succ) / len(succ)
         pf = sum(1 for r in recs if r["extracted_int"] is None) / len(recs)
         tr = sum(1 for r in recs if r["truncated"]) / len(recs)
+        to = sum(1 for r in recs if r["status"] == "timeout") / len(recs)
         mlo, mhi = _manifest_interval(succ, conf)
         wlo, whi = _wilson(succ, conf)
         verdict = classify(mlo, mhi)
@@ -165,18 +179,29 @@ def axis(solver: str, per_depth: int, depths=DEPTHS, seed: int = 20260817,
             "manifest_interval": [round(mlo, 4), round(mhi, 4)],
             "wilson_interval": [round(wlo, 4), round(whi, 4)],
             "parse_fail_rate": round(pf, 4), "truncation_rate": round(tr, 4),
+            "timeout_rate": round(to, 4), "max_tokens": MAX_TOKENS,
             "band_verdict": verdict,
         }
         print(f"  rung {d}: acc {acc:6.1%}  manifest [{mlo:.3f},{mhi:.3f}]  "
-              f"wilson [{wlo:.3f},{whi:.3f}]  pf {pf:.1%}  -> {verdict}")
+              f"pf {pf:.1%}  trunc {tr:.1%}  to {to:.1%}  -> {verdict}")
 
     in_band = [d for d in depths if out["depths"][str(d)]["band_verdict"] == "IN-BAND"]
     undecided = [d for d in depths if out["depths"][str(d)]["band_verdict"] == "UNDECIDED"]
     out["in_band"] = in_band
     out["undecided"] = undecided
-    out["chosen_depth"] = (min(in_band) if in_band else None) if in_band else None
-    out["verdict"] = "LEVELED" if in_band else ("UNDECIDED-NEEDS-DECISION-N" if undecided
-                                                else "HEADROOM-FAILURE")
+    # PRE-FLIGHT GATE, applied before any rung is chosen.
+    worst_trunc = max((out["depths"][str(d)]["truncation_rate"] for d in depths), default=0.0)
+    out["max_truncation_rate"] = worst_trunc
+    out["truncation_gate_passed"] = worst_trunc <= TRUNCATION_GATE
+    out["chosen_depth"] = (min(in_band) if in_band else None) if out["truncation_gate_passed"] else None
+    if not out["truncation_gate_passed"]:
+        out["verdict"] = "TRUNCATION-CONFOUNDED"
+        out["verdict_note"] = (
+            f"max truncation {worst_trunc:.1%} exceeds the {TRUNCATION_GATE:.0%} gate — "
+            "accuracies are not comparable across rungs and no rung may be chosen")
+    else:
+        out["verdict"] = "LEVELED" if in_band else ("UNDECIDED-NEEDS-DECISION-N" if undecided
+                                                    else "HEADROOM-FAILURE")
     accs = [out["depths"][str(d)]["accuracy"] for d in depths]
     out["accuracy_by_rung"] = dict(zip([str(d) for d in depths], accs))
     out["monotone_decreasing"] = all(a >= b for a, b in zip(accs, accs[1:]))
