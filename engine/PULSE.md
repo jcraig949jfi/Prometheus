@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-18T14:27:42+00:00
+# PULSE — generated 2026-08-18T15:31:16+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,14 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        164
-consumed (state changes):   14  {'queue_state': 10, 'findings': 2, 'registry': 1, 'doctrine': 1}
-consumed/emitted:           0.09
+emitted (new files):        165
+consumed (state changes):   17  {'queue_state': 13, 'findings': 2, 'registry': 1, 'doctrine': 1}
+consumed/emitted:           0.10
 verdict: ALIVE
 WARNING: production outpacing consumption -- the 442-report shape. Stop producing until this recovers.
 ```
 
-## Commits, 72h (non-cron): 60
+## Commits, 72h (non-cron): 61
+- d47fa49c 08-18 10:28 Loop pass: DR 11-15 consumed â€” two of my own hypotheses cut, one prior inverted
 - e3f354ec 08-18 09:29 Ergon JOB 2 + branch: A0 decided OUT so escalation is moot; intermediate rungs launched
 - 419f80fc 08-18 09:29 Refinement (James): the M4 emails' verdict was RIGHT â€” stalled meant stalled
 - 312a0625 08-18 09:28 Ergon JOB 1 COMPLETE: axis SURVIVES and is STEEPER; A0 was truncation-suppressed 50.0 -> 82.5
@@ -38,8 +39,7 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - 02a49a90 08-17 20:40 Aporia loop: DR deck 2026-08-17 â€” 20 prompts, first firing since May
 - 9adbbef7 08-17 19:35 Aporia loop: model-tier rule â€” loop runs Opus-tier; Fable reserved for divergence seats
 - d5504773 08-17 19:30 Aporia: standing loop charter â€” the loop is state, not a process; resumable by any session
-- 730e9923 08-17 19:28 Aporia: all five infrastructure DECISIONS resolved with James â€” ignition path is now concrete
-- … +35 more
+- … +36 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

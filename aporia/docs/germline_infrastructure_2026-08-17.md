@@ -36,7 +36,12 @@ a registry row + a checkout + creds, not an architecture event.
   one row per machine; loops discover capacity by query, not by hardcoded hostnames
   (`feedback_paths`: the `.176` corpse and `tier_oracle.py`'s hardcoded `D:\` are the scars).
 
-**Work claiming across n machines:** queue rows carry `lease (station, session_id, expires)` —
+**Work claiming across n machines (hardened per DR-19, 2026-08-18):** claim via
+`FOR UPDATE SKIP LOCKED`; leases carry **fencing tokens** (monotonic per-item counter — a
+stalled worker resuming after expiry writes with a stale token and is rejected, closing the
+split-brain race); poison items route to a **DLQ table** after N failures instead of
+blocking; high-churn tables get FILLFACTOR + autovacuum tuning. Queue rows carry
+`lease (station, session_id, expires, fence)` —
 pull-before-pick per the multi-instance loop doctrine. A crashed session's lease expires; the
 item returns to the pool. No coordinator process exists to die.
 
@@ -213,6 +218,12 @@ day one — no organelle without a consumer.
    threat model (our own generated code — risks are accidental network, runaway compute, file
    damage, not adversarial escape). Containers reconsidered only if truly untrusted code ever
    runs. All §5 GPU policy stands unchanged; only the isolation mechanism changed.
+   **Hardened per DR-18 (2026-08-18):** AST screen + firewall are necessary-not-sufficient
+   (dynamic object-graph traversal bypasses AST; per-exe firewall rules do not inherit to
+   child processes). Added, all OS primitives, no containers: **Windows Job Objects**
+   (process-tree termination + CPU/memory limits), **Restricted Tokens** (privilege drop),
+   **PEP 578 audit hooks** (interpreter-level interception). Firewall rule extended to
+   spawned children and local-subnet traffic.
 2. **Backup target** — **DECIDED (2026-08-17): Z:\ now + cloud later.** Weekly pg_dump of
    fire+sci + robocopy of the F: corpus to Z:\ starts with the plumbing sessions; offsite
    (B2/Drive) added once the germline schema is live. lmfdb excluded (re-downloadable).

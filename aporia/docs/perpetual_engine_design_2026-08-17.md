@@ -182,6 +182,13 @@ doctrine applied to program state. A move that discriminates between two live in
 outranks a move that merely advances one. Four lenses examining the same premise is coverage;
 two hypotheses forced to disagree about tomorrow's number is science.
 
+**External grounding (DR-16/17, consumed 2026-08-18):** both core choices supported — in
+5-10-hypothesis regimes a plain discrimination count can beat fragile EIG computation, and
+filer calibration is the documented anti-oracle friction. Pathologies now guarded: myopia,
+cost-blindness, capability gating, interpretability trade-off. Filer scores require
+**sharpness + base-rate-beating**, not Brier alone — at our sample sizes (tens), absolute
+calibration metrics are unstable, so scores RANK filers rather than grade them absolutely.
+
 **Seeded retroactively, today** (`engine/queues/BOTTLENECKS.jsonl`, `MOVES.jsonl`): the schema is
 validated against reality by back-filing the current program state — the five competing
 bottleneck interpretations above are B-001..B-005, and the Metabolization Probe, Charon's
