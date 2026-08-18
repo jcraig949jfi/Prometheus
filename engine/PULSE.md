@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-18T20:54:09+00:00
+# PULSE — generated 2026-08-18T21:57:24+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -7,12 +7,13 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ```
 window: 3d
 emitted (new files):        170
-consumed (state changes):   32  {'findings': 3, 'queue_state': 26, 'registry': 2, 'doctrine': 1}
-consumed/emitted:           0.19
+consumed (state changes):   36  {'queue_state': 29, 'registry': 3, 'findings': 3, 'doctrine': 1}
+consumed/emitted:           0.21
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 66
+## Commits, 72h (non-cron): 67
+- 94f9bc5e 08-18 16:54 AA-MINE-AG + AA-MINE-TOPO DONE: 7 anchors, one report-correction, one reverse anchor
 - 16371b2e 08-18 15:51 AA-MINE-NT DONE: 4 anchors filed â€” incl. the dual-verifier Collatz bug, a doctrine-grade find
 - 2d131947 08-18 14:47 DRBC-00 DONE: back-corpus batch 1/23 mined â€” three anti-anchor goldmines surfaced
 - a1d35dc7 08-18 13:44 The backlog at scale: 722 verified threads, park-dont-ask protocol, parked items in the email
@@ -37,8 +38,7 @@ verdict: ALIVE
 - 35ea7380 08-18 02:19 Charon: M-004 refusal â€” correct the record, full 35.4M-record scan replaces a 4,000 sample
 - 2ea9b10c 08-18 02:16 Charon: M-004 CO-SIGN REFUSED â€” the instrument never touched the archive it audits
 - 3e6931c5 08-18 01:35 Kickoff prompt: Charon â€” M-004 co-sign, independent injection, blind-holding
-- ade9da30 08-17 22:28 M-004 APPROVED â€” prereg locked before data touched; my own justification retracted
-- … +41 more
+- … +42 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
