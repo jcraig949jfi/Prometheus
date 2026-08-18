@@ -1,0 +1,42 @@
+{
+  "_template_version": "1.0.0",
+  "_template_notes": "Receiver surface for Ergon's ingest_training_anchors.py run against the 4 manually-staged blocks at this directory. Populate fields during ingest; emit as ingest_summary_<run_id>.json on completion. Schema scaffold only — no data claims pre-staged. Per ChatGPT analysis 2026-05-13: pre-staging the receiver lets Ergon ingest + report without a coordination round-trip, while NOT pre-staging placeholder records preserves Aporia's authorship of the prose-to-structured-enum translation.",
+  "run_id": "",
+  "source_file": "aporia/docs/staged_substrate_blocks/2026-05-13/training_anchor.jsonl",
+  "source_ticket": "T-2026-05-13-aporia-to-ergon-staged-blocks-ready-fire-track1",
+  "schema_versions_seen": [],
+  "records_attempted": 0,
+  "records_validated": 0,
+  "records_rejected": 0,
+  "rejection_classes": [],
+  "records_written": 0,
+  "learner_records_sampled": [],
+  "routing_checks": {
+    "ml_predicted_to_outcome_survived": null,
+    "ml_predicted_to_verification_conditional": null,
+    "trust_tier_preserved": null,
+    "anchor_type_enum_valid": null,
+    "verification_method_enum_valid": null,
+    "source_date_iso_valid": null,
+    "bs_coverage_field_recognized_when_present": null
+  },
+  "high_value_items_present": {
+    "aa_013_anti_anchor": false,
+    "aa_013_routing_correction_in_true_form_or_caveats": false,
+    "lmfdb_gl3_training_anchor_ml_predicted": false,
+    "lmfdb_gl3_training_anchor_numerically_certified": false,
+    "second_coefficient_positivity_obstruction": false,
+    "aa_013_smoke_test_readiness": false
+  },
+  "behavior_delta_observed": null,
+  "behavior_delta_status": {
+    "_enum": ["none", "fixture_created", "eval_run", "eval_passed"],
+    "_note": "Per ChatGPT 2026-05-13 adjustment. 'none' = ingest produced no downstream consumer artifact (passive-substrate failure mode). 'fixture_created' = at least one LearnerRecord landed AND the AA-013 routing smoke-test fixture at ergon/learner/fixtures/smoke_tests/aa_013_tensor_rank_routing.json is populated (even if not yet executed). 'eval_run' = the smoke-test was executed against a Learner head and emitted a structured result. 'eval_passed' = the Learner correctly routed AA-013 to TensorRankWitness (not BorderRankWitness). Track this field deliberately; do NOT advance the status without the corresponding artifact existing on disk.",
+    "value": null
+  },
+  "notes": [],
+  "deferred_concerns": [
+    "Buchanan primitive scope: the staged SecondCoefficientPositivityObstruction primitive (in primitive_proposal.jsonl) must be scope-narrowed at Techne v4.0+ registration time. Per ChatGPT 2026-05-13 analysis: Buchanan 2025 arXiv:2509.15537 ('A condition on the Jones polynomial for a family of positive links') and Buchanan 2023 arXiv:2303.13481 ('A pair of Jones polynomial positivity obstructions') cover second Jones coefficient +/-1 (2025) and +/-1 or +/-2 (2023). The obstruction applies to POSITIVE LINKS / Jones polynomial, NOT generic knots. Without an explicit scope-narrowing field (e.g. applies_to: positive_links_only; condition_family: second_jones_coefficient_pm1_pm2), a downstream Learner could overreach to 'Jones second coefficient decides positivity', which would be exactly the overreach pattern Prometheus exists to catch. Add scope_warning as a required_field at registration time. This concern does NOT block today's ingest — Ergon ingests the block as-is; the scope-narrowing lands at Techne registration.",
+    "AA-013 routing-correction: the HARD-5 catch (Rupniewski 2024 routes to TensorRankWitness not BorderRankWitness) is embedded in AA-013's true_form per Aporia's authoring; Techne's converged version may have dropped this prose. Ergon should verify aa_013_routing_correction_in_true_form_or_caveats is true after ingest; if false, file follow-up ticket to surface the correction in aporia/doctrine/substrate_vocabulary/primitives.md (vocabulary-level, not anti-anchor-level) per the Aporia-to-Techne convergence ticket T-2026-05-13-aporia-to-techne-convergence-confirmed-4-blocks-staged."
+  ]
+}

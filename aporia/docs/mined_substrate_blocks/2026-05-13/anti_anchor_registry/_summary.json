@@ -1,0 +1,21 @@
+{
+  "extractor_version": "extract_anti_anchor_claims_v0_1",
+  "registry_path": "techne/registry/anti_anchors.jsonl",
+  "registry_entries": 12,
+  "claims_emitted": 24,
+  "claims_truncated_by_batch_limit": 0,
+  "batch_size_limit": 500,
+  "per_category_counts": {
+    "frontier_survey": 24,
+    "calibration": 0,
+    "boundary": 0,
+    "substrate_self": 0,
+    "other": 0
+  },
+  "per_form_counts": {
+    "false_form": 12,
+    "true_form": 12
+  },
+  "extraction_runtime_s": 0.0,
+  "expected_runner_match_rate": "100% \u2014 every mined claim has source_report containing 'false_form' or 'true_form' marker + parent_block matching a registered AA-NNN; anti_anchor_couplet_override fires at runner time and overrides citation_audit's verdict."
+}

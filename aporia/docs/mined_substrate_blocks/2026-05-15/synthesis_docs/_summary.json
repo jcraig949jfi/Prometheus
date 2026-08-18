@@ -1,0 +1,31 @@
+{
+  "extractor_version": "extract_synthesis_docs_claims_v0_1",
+  "source_paths": [
+    "aporia/docs/gemini_research_synthesis_2026-05-11.md",
+    "aporia/docs/frontier_review_synthesis.md",
+    "aporia/docs/tensor_priority_synthesis_2026-05-09.md"
+  ],
+  "files_scanned": 3,
+  "files_missing": 0,
+  "files_with_claims": 2,
+  "claims_emitted": 132,
+  "claims_truncated_by_batch_limit": 0,
+  "batch_size_limit": 500,
+  "claims_emitted_by_category": {
+    "frontier_survey": 29,
+    "boundary": 103
+  },
+  "claims_emitted_by_expected_verifier": {
+    "citation_audit": 29,
+    "catalog_lookup": 103
+  },
+  "rule_d_candidate_count": 57,
+  "extraction_runtime_s": 0.03,
+  "per_category_files_written": {
+    "frontier_survey": 29,
+    "calibration": 0,
+    "boundary": 103,
+    "substrate_self": 0,
+    "other": 0
+  }
+}
