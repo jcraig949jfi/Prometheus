@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-18T16:35:08+00:00
+# PULSE — generated 2026-08-18T17:39:18+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,14 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        165
-consumed (state changes):   19  {'queue_state': 15, 'findings': 2, 'registry': 1, 'doctrine': 1}
-consumed/emitted:           0.12
+emitted (new files):        166
+consumed (state changes):   21  {'queue_state': 17, 'findings': 2, 'registry': 1, 'doctrine': 1}
+consumed/emitted:           0.13
 verdict: ALIVE
 WARNING: production outpacing consumption -- the 442-report shape. Stop producing until this recovers.
 ```
 
-## Commits, 72h (non-cron): 63
+## Commits, 72h (non-cron): 64
+- 539ef0f1 08-18 12:35 W-001 DESIGNED: the retry queue â€” the archive's self-nominated kills, prereg-shaped
 - 71d809b4 08-18 11:49 W-005 CLOSED: M4 healed on first post-fix cycle â€” dashboard unfrozen after 8 weeks
 - b46c3db5 08-18 11:31 Loop pass: DR 16-19 consumed â€” sandbox and queue specs hardened from literature
 - d47fa49c 08-18 10:28 Loop pass: DR 11-15 consumed â€” two of my own hypotheses cut, one prior inverted
@@ -38,8 +39,7 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - 71f3cfa9 08-17 21:08 Aporia loop pass 2: external check falsifies a fleet claim carried by 5 documents
 - d8e8bee7 08-17 21:02 DR batch 2026-08-17: reports 02-09 landed (Wave 1 complete, Wave 2 in flight)
 - 0c8e83fd 08-17 20:48 Aporia loop pass 1: DR live again â€” 20 firing, extractor built, AA-003/AA-004 corrected
-- 02a49a90 08-17 20:40 Aporia loop: DR deck 2026-08-17 â€” 20 prompts, first firing since May
-- … +38 more
+- … +39 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
@@ -68,8 +68,9 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 
 ## Work queue
 - DESIGNED-AWAITING-COSIGN: 1
+- DONE: 1
 - DONE-HEALED: 1
-- QUEUED: 4 — next: Build R4 representation-shift probe generator per phase0 pattern
+- QUEUED: 3 — next: Consume remaining 17 DR reports; emit one typed consumption record eac
 
 ## Findings, 7d: 2
 - aporia/docs/FINDING_2026-08-17_decidability_novelty_correction.md
