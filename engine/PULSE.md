@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-18T11:28:33+00:00
+# PULSE — generated 2026-08-18T11:34:10+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,14 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        156
+emitted (new files):        159
 consumed (state changes):   12  {'findings': 2, 'queue_state': 8, 'registry': 1, 'doctrine': 1}
 consumed/emitted:           0.08
 verdict: ALIVE
 WARNING: production outpacing consumption -- the 442-report shape. Stop producing until this recovers.
 ```
 
-## Commits, 72h (non-cron): 51
+## Commits, 72h (non-cron): 52
+- fefe7cf6 08-18 07:28 PULSE + STEERING: skim-and-steer without ever being a gate (Alethelia organ 1)
 - 610c0803 08-18 07:21 Correction (James): the fleet death was not unnoticed â€” he gave up out of frustration
 - d9ce1440 08-18 07:13 Liveness = state change, not process aliveness (and it indicts my last 2 days)
 - e7b678e7 08-18 07:01 Default-continue rule + non-agentic driver + the probe that replaced M-004
@@ -38,8 +39,7 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - b3e9c11c 08-17 05:17 Aporia: reasoning-ladder Canon v2.0 DRAFT â€” bands over rungs, Band H formalized, anti-fossil law
 - 78bd2436 08-17 04:39 Aporia: reasoning-ladder review â€” three rulers, a fired sunset, and the basis question
 - f97fcd5a 08-17 04:33 Ergon: CANDIDATE A built â€” adversarial near-misses on the property; two channels closed
-- fdfba138 08-17 02:36 Kickoff prompt: terminal axis-search round with a pre-declared stopping rule
-- … +26 more
+- … +27 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.6 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
@@ -67,7 +67,7 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - 2026-08-18 **chose:** Drain before firing again — 17 unconsumed DR reports vs firing a new deck
 
 ## Work queue
-- QUEUED: 4 — next: Power-stratified re-test design over the 725 resolution_limit kills (t
+- QUEUED: 5 — next: Power-stratified re-test design over the 725 resolution_limit kills (t
 
 ## Findings, 7d: 2
 - aporia/docs/FINDING_2026-08-17_decidability_novelty_correction.md

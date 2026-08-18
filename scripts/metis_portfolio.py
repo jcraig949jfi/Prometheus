@@ -574,10 +574,15 @@ def _deterministic_brief(state: dict, manual_status: str) -> str:
     lines.append("")
     acts = 0
     if redis_status == "unreachable":
-        lines.append(f"**Redis unreachable from M4 — telemetry degraded**")
-        lines.append(f"Portfolio_monitor fell back to Postgres dual-write. Streams (discoveries, main, challenges) "
-                     f"are empty until Redis returns. {infra.get('postgres_agent_count', 0)} agents sourced from PG.")
-        lines.append(f"Restore Redis on M1 to re-enable Agora pub/sub.")
+        # Redis was RETIRED 2026-06-24 (bus is Postgres-backed via PgRedis). "unreachable"
+        # here means the PG bus call failed on this host — a config/connectivity issue,
+        # never a reason to restore Redis. Do not tell the operator to rebuild
+        # decommissioned infrastructure.
+        lines.append(f"**PG bus unreachable from this host — telemetry degraded (Redis is retired; do NOT restore it)**")
+        lines.append(f"The message bus is Postgres-backed (bus schema, prometheus_fire@192.168.1.202). "
+                     f"A failure here is host config (db.toml/creds/network) or a missing PgRedis method — "
+                     f"see thesauros/prometheus_data/pg_redis.py. {infra.get('postgres_agent_count', 0)} agents sourced from PG.")
+        lines.append(f"Fix the reporting host's bus config; check engine/PULSE.md for ground truth meanwhile.")
         lines.append("")
         acts += 1
     for d in dead_daemons[:3 - acts]:
@@ -625,6 +630,23 @@ def _deterministic_brief(state: dict, manual_status: str) -> str:
         lines.append("")
 
     lines.append("## For the record")
+    lines.append("")
+    # Daemon heartbeats measure the RETIRED operating model (fleet moved to
+    # human-triggered sessions coordinating via commits, 2026-08). Report git
+    # activity alongside so "0 agents ALIVE" cannot read as "program dead"
+    # while the repo is moving.
+    try:
+        import subprocess as _sp
+        _log = _sp.run(["git", "log", "--since=72.hours.ago", "--pretty=%s"],
+                       capture_output=True, text=True, timeout=60).stdout
+        _real = [x for x in _log.splitlines() if "auto: portfolio" not in x]
+        lines.append(f"Session-model activity (the live operating model): "
+                     f"{len(_real)} non-cron commits in 72h. "
+                     f"Ground truth: engine/PULSE.md.")
+        lines.append("")
+    except Exception:
+        lines.append("Session-model activity: UNKNOWN(git query failed)")
+        lines.append("")
     lines.append("")
     alive_tools = [a for a in state.get("agents", []) if a.get("status") == "ALIVE" and a.get("kind") in ("daemon", "tool")]
     lines.append(f"**{len(alive_tools)} agents ALIVE** "

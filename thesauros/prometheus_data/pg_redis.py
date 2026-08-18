@@ -144,6 +144,29 @@ class PgRedis:
             c.execute("SELECT 1")
             return True
 
+
+    def exists(self, *keys):
+        n = 0
+        with self._cur() as c:
+            for key in keys:
+                k = _to_text(key)
+                for q in (
+                    "SELECT 1 FROM bus.kv WHERE key=%s LIMIT 1",
+                    "SELECT 1 FROM bus.hashes WHERE key=%s LIMIT 1",
+                    "SELECT 1 FROM bus.streams WHERE stream=%s LIMIT 1",
+                    "SELECT 1 FROM bus.zsets WHERE key=%s LIMIT 1",
+                    "SELECT 1 FROM bus.sets WHERE key=%s LIMIT 1",
+                    "SELECT 1 FROM bus.lists WHERE key=%s LIMIT 1",
+                ):
+                    try:
+                        c.execute(q, (k,))
+                        if c.fetchone():
+                            n += 1
+                            break
+                    except Exception:
+                        self._conn.rollback()
+        return n
+
     def pipeline(self, transaction=True):
         return _Pipeline(self)
 
@@ -271,6 +294,11 @@ class PgRedis:
         k = (lambda s: s) if self.decode else (lambda s: s.encode())
         return {k(f): self._out(v) for f, v in rows}
 
+    def hlen(self, key):
+        with self._cur() as c:
+            c.execute("SELECT count(*) FROM bus.hashes WHERE key=%s", (_to_text(key),))
+            return c.fetchone()[0]
+
     def hdel(self, key, *fields):
         with self._cur() as c:
             c.execute("DELETE FROM bus.hashes WHERE key=%s AND field = ANY(%s)",
@@ -288,6 +316,13 @@ class PgRedis:
                     (key, _to_text(member), float(score)),
                 )
         return len(mapping)
+
+
+    def zcard(self, key):
+        with self._cur() as c:
+            c.execute("SELECT count(*) FROM bus.zsets WHERE key=%s", (_to_text(key),))
+            return c.fetchone()[0]
+
 
     def _zout(self, rows, withscores):
         m = (lambda s: s) if self.decode else (lambda s: s.encode())
