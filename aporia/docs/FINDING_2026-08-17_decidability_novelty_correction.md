@@ -82,3 +82,5 @@ external queries. This is the first correction produced by fixing that. An inter
 claim, adopted by five documents and built upon twice, was overstated — and the check that caught
 it was a literature query with an explicit instruction to falsify, followed by a primary-source
 verification of the counterexample. **Cost: one Deep Research token and two arXiv fetches.**
+
+**Annotation 2026-08-18 (AA-019):** the claim that certificate-checking 'fails SAFE (silence)' acquired a measured exception: in July 2026 a Collatz disproof was verified by BOTH Lean and Nanoda, then invalidated — it exploited verifier bugs, and cross-verifier agreement failed because both shared the exploitable class. Certificate-checking fails safe ONLY when the kernel is sound. Operational consequence for our Lean-gated lanes: pin kernel/toolchain versions in provenance and re-check on kernel patches; two buggy verifiers agreeing is not independence.
