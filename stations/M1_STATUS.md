@@ -119,6 +119,69 @@ the retire dossier must name the **path**, never the bare name. Aporia owns that
 4. **Forge relocation ($900 PowerSpec)** — M1's standing recommendation is **hold**. Four of
    the fleet's top moves are in-context or in-corpus; none need the box.
 
+## 7f. CANDIDATE A CONFIRMED — truncation cleared, axis is steeper, rungs re-spacing (Ergon, 2026-08-18)
+
+**JOB 1 — truncation confound CLEARED, and the axis SURVIVES the fix, steeper than measured.**
+Budget derived BY MEASUREMENT (`ergon/probe/ledgers/lenprobe_nearmiss.txt`): at max_tokens=16384
+no response on this family hit the cap; per-rung maxima **A0 3873 · A1 1531 · A2 2698 · A3 3346**,
+pooled p99 3873. That explains the rung-correlated truncation exactly — A1's longest response
+fits under the old 2048 cap and A0's does not. Budget set to **8192** (>2× observed max; a high
+cap costs nothing when unused, since latency scales with tokens *generated*).
+
+Clean re-run, same seed, same items, truncation gate passed at **0.0% on every rung**:
+
+```
+rung   OLD acc / trunc        CLEAN acc   pf     trunc   timeout   verdict
+A0      50.0%   0.400          82.5%     10.0%   0.0%    10.0%    OUT-OF-BAND (above)
+A1      25.0%   0.000          25.0%      2.5%   0.0%     2.5%    UNDECIDED
+A2      17.5%   0.425          25.0%     32.5%   0.0%    20.0%    UNDECIDED
+A3      20.0%   0.100          25.0%      5.0%   0.0%     5.0%    UNDECIDED
+```
+
+**A0 rose 50.0 → 82.5** — truncation was suppressing it, so the real axis is A0 82.5% → A1 25.0%,
+a **57.5pp cliff**, against magnitude (non-monotone) and depth (94.4% mean, r=+0.394). Two
+consequences, both against the earlier reading: **A0 is not an in-band candidate** (clean interval
+[0.675, 0.975], wholly above), and **A1/A2/A3 all sit at exactly 25.0%, which IS chance** on this
+task — they are at the floor, not merely hard. Nothing occupies the band.
+
+*Residual, recorded not buried:* A2 shows pf 32.5% / timeout 20.0% against A1's 2.5%/2.5% — a
+30pp spread, the same defect class one level down, now driven by the 180s timeout on long
+responses. It does not touch the axis claim (A0-vs-A1 spread is 7.5pp, inside my 10pp guard), but
+A2's 25.0% must not be quoted as a difficulty measurement.
+**Truncation is now a PRE-FLIGHT GATE** (any rung >2% ⇒ `TRUNCATION-CONFOUNDED`, no rung chosen)
+with per-rung timeout reported beside parse-failure — it corrupted the 08-16 leveling run and then
+reappeared in the first sweep that produced a working axis, which makes it a standing hazard of
+this family rather than an incident.
+
+**JOB 2 — decision-n recomputed, and it CORRECTS my own §3.1 ruling.**
+`ergon/probe/decision_n.py`: band term `n ≥ z²p(1−p)/min(p−0.35, 0.60−p)²`, dispersion term
+`n ≥ z²m(1−m)/(m−0.30)²`, binding n = max, cost 2n calls.
+
+```
+true p    k=1   k=4        movable   k=1   k=4
+0.475      61   100          0.35    350   568
+0.500      96   156          0.40     92   150
+0.550     380   618          0.45     42    69
+0.570    1046  1699          0.50     24    39
+```
+
+At k=4 these land on Charon's Wilson figures almost exactly (0.55→618 vs his 618; 0.57→1699 vs
+his 1699). **The two interval forms converge at decision-n scale**, so the "47% narrower"
+advantage I cited was a small-n effect at n=126 and does *not* translate into a smaller
+decision-n. My ruling's stated consequence was directionally overstated; the honest version is
+that the estimand matters for *classifying* an existing measurement and is nearly irrelevant to
+*sizing* the re-measurement.
+
+**A0's escalation is moot:** it resolved OUT-OF-BAND (decided), not UNDECIDED, so there is
+nothing to re-measure at decision-n. The pre-authorized branch fires instead.
+
+**BRANCH FIRED: rung re-spacing inside a working axis. §4 DID NOT FIRE and is untouched.**
+Intermediate rungs **M20/M40/M60/M80** interpolate between the two *measured* endpoints by the
+fraction of a task's composites drawn hard (semiprime) rather than easy (small-factor) — partial
+deception, the "mixed count" shape. Because it interpolates between measured endpoints, a rung is
+guaranteed to land between them rather than hoped to. Sweep running →
+`ergon/probe/ledgers/axis_nearmiss_M20-M80_n40.txt`. Suite 151/151.
+
 ## 7e. AXIS SEARCH, TERMINAL ROUND — Candidate A built and measuring (Ergon, 2026-08-17)
 
 **§4's stopping rule was read before §1 and is in hand: if Candidate A and Candidate B both
