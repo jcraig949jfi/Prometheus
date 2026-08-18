@@ -71,6 +71,21 @@ Operating rules, mechanical:
   AUTO-TAKEN rows, drop a STEERING line. None of it blocks the loop; all of it redirects the next
   pass.
 
+
+## The backlog mandate (James, 2026-08-18)
+
+- **Target: ~1000+ prioritized threads, continuously regenerated.** `engine/driver/backlog_gen.py`
+  materializes threads ONLY from verified on-disk sources (722 at first run; catalog threads
+  expand x30 paradigms on execution — ceiling ~16K). Rerun the generator each pass; it is
+  idempotent. Reprioritization is deterministic (score in the generator) plus market linkage.
+- **PARK, DON'T ASK — the stuck protocol:** when a thread blocks (gate unmet, error, needs a
+  seat), set status=PARKED with parked_reason, and MOVE ON to the next thread by priority. Never
+  stop the loop; never ask James in chat. Parked threads surface automatically in his 6x/day M4
+  email ("Parked threads — yours to unstick", grouped by gate) and in PULSE.md. James unsticking
+  a gate = editing the thread or STEERING.md; the next pass picks it up.
+- **Sub-agent fan-outs pull from the top of BACKLOG.jsonl** for their seat (kickoff prompts name
+  the thread ids). A fan-out that finishes its thread files results and pulls the next.
+
 ## Standing rules
 LAW 1 at every emission (consumer named); trace-vector shape for failures; decoy discipline
 once assembled; no germline ignition (gates: constitution + probe verdict + co-signer seat);

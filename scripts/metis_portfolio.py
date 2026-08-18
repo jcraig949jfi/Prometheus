@@ -640,6 +640,51 @@ def _deterministic_brief(state: dict, manual_status: str) -> str:
         lines.append("*(nothing trending toward intervention)*")
         lines.append("")
 
+    # PARKED THREADS + PENDING DECISIONS — James's line items (park-don't-ask protocol,
+    # 2026-08-18): anything the engine got stuck on is parked with a reason and listed
+    # here for him to unstick; the engine has already moved on to the next thread.
+    try:
+        import json as _json
+        _eq = REPO_ROOT / "engine" / "queues"
+        _parked = []
+        for _qf in ("WORK.jsonl", "BACKLOG.jsonl"):
+            _fp = _eq / _qf
+            if _fp.exists():
+                for _ln in _fp.read_text(encoding="utf-8", errors="replace").splitlines():
+                    _ln = _ln.strip()
+                    if not _ln:
+                        continue
+                    try:
+                        _it = _json.loads(_ln)
+                    except Exception:
+                        continue
+                    if _it.get("status") == "PARKED":
+                        _parked.append(_it)
+        _pend = []
+        _dq = _eq / "DECISIONS.jsonl"
+        if _dq.exists():
+            for _ln in _dq.read_text(encoding="utf-8", errors="replace").splitlines():
+                _ln = _ln.strip()
+                if _ln:
+                    try:
+                        _d = _json.loads(_ln)
+                        if _d.get("status") == "PENDING-HITL":
+                            _pend.append(_d)
+                    except Exception:
+                        pass
+        lines.append(f"## Parked threads — yours to unstick ({len(_parked)} parked, {len(_pend)} decisions pending)")
+        lines.append("")
+        _gates = {}
+        for _it in _parked:
+            _gates.setdefault(str(_it.get("gate") or _it.get("parked_reason") or "?"), []).append(_it)
+        for _g, _its in sorted(_gates.items(), key=lambda kv: -len(kv[1]))[:8]:
+            lines.append(f"- **{len(_its)} thread(s) gated on:** {_g[:90]} — e.g. {_its[0].get('id','?')}")
+        for _d in _pend[:5]:
+            lines.append(f"- **DECISION pending:** {str(_d.get('action', _d.get('question','?')))[:100]}")
+        lines.append("")
+    except Exception as _e:
+        lines.append(f"Parked threads: UNKNOWN(read failed: {type(_e).__name__})")
+        lines.append("")
     lines.append("## For the record")
     lines.append("")
     # Daemon heartbeats measure the RETIRED operating model (fleet moved to

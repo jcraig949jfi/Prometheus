@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-18T17:39:18+00:00
+# PULSE — generated 2026-08-18T17:44:09+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,14 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        166
-consumed (state changes):   21  {'queue_state': 17, 'findings': 2, 'registry': 1, 'doctrine': 1}
-consumed/emitted:           0.13
+emitted (new files):        167
+consumed (state changes):   23  {'queue_state': 19, 'findings': 2, 'registry': 1, 'doctrine': 1}
+consumed/emitted:           0.14
 verdict: ALIVE
 WARNING: production outpacing consumption -- the 442-report shape. Stop producing until this recovers.
 ```
 
-## Commits, 72h (non-cron): 64
+## Commits, 72h (non-cron): 65
+- 1206d504 08-18 13:39 W-002 DONE: R4 representation-shift generator â€” the ladder's missing rung, built
 - 539ef0f1 08-18 12:35 W-001 DESIGNED: the retry queue â€” the archive's self-nominated kills, prereg-shaped
 - 71d809b4 08-18 11:49 W-005 CLOSED: M4 healed on first post-fix cycle â€” dashboard unfrozen after 8 weeks
 - b46c3db5 08-18 11:31 Loop pass: DR 16-19 consumed â€” sandbox and queue specs hardened from literature
@@ -38,8 +39,7 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - ef567d9f 08-17 22:23 DR batch 2026-08-17 COMPLETE: 20/20 reports landed and extracted
 - 71f3cfa9 08-17 21:08 Aporia loop pass 2: external check falsifies a fleet claim carried by 5 documents
 - d8e8bee7 08-17 21:02 DR batch 2026-08-17: reports 02-09 landed (Wave 1 complete, Wave 2 in flight)
-- 0c8e83fd 08-17 20:48 Aporia loop pass 1: DR live again â€” 20 firing, extractor built, AA-003/AA-004 corrected
-- … +39 more
+- … +40 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
