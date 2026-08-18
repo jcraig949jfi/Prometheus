@@ -36,6 +36,29 @@ watch-paced — every pass does one real item.
 6. **Plumbing sessions** (gateway, queue client, germline schema, CI, decoys, Alethelia) —
    as capacity allows; schema + backup job first (DECISION 2 makes backup non-deferrable).
 
+
+## HARD RULE — default-continue (James, 2026-08-18)
+
+**A pass that ends by asking James a question is a FAILED pass.** Seven months and ~20
+attempts produced the same failure: an agentic loop pauses because the model owns control
+flow and a check-in disposition takes "report" over "continue" every turn. The mechanism to
+prevent this (DECISIONS.jsonl) was designed, written into three documents, and then never
+used once — I asked in chat instead, every time.
+
+Operating rules, mechanical:
+
+1. **Ambiguity resolves to option A. Log it, continue.** James: *"when I want A, then B.
+   Almost always."* A logged wrong choice is reversible; a stall is not.
+2. **Reversible ⇒ just do it.** No permission for anything undoable by a later commit.
+3. **Irreversible items block THEMSELVES, never the queue.** File to DECISIONS.jsonl with
+   status PENDING-HITL and keep working on everything else.
+4. **Reports say what was done and decided — never what is needed.** "What's next?" is not
+   a question for James; it is the next queue item.
+5. **The driver owns continuation** (`engine/driver/run.py`). Inference answers bounded
+   questions and returns; it is never asked whether to keep going.
+6. **Violation is checkable:** grep a pass's output for a question directed at James. If
+   present, the pass failed regardless of what else it produced.
+
 ## Standing rules
 LAW 1 at every emission (consumer named); trace-vector shape for failures; decoy discipline
 once assembled; no germline ignition (gates: constitution + probe verdict + co-signer seat);
