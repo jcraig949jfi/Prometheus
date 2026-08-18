@@ -59,6 +59,18 @@ Operating rules, mechanical:
 6. **Violation is checkable:** grep a pass's output for a question directed at James. If
    present, the pass failed regardless of what else it produced.
 
+
+## Steering protocol (James, 2026-08-18)
+
+- **Every pass STARTS by reading `engine/STEERING.md`** and obeying it before pulling work.
+  Processed entries move to `STEERING_LOG.md` with what was done. Empty file = full speed.
+- **Every pass ENDS by regenerating `engine/PULSE.md`** (`python engine/driver/pulse.py`) and
+  committing it — the skimmable, query-traceable state page James reads at 5-hour or 3-day
+  granularity. Nothing in it is narrated; north-star judgment is his to make from computed state.
+- Steering is BY STATE, never by conversation: edit bottleneck confidences, kill/add moves, veto
+  AUTO-TAKEN rows, drop a STEERING line. None of it blocks the loop; all of it redirects the next
+  pass.
+
 ## Standing rules
 LAW 1 at every emission (consumer named); trace-vector shape for failures; decoy discipline
 once assembled; no germline ignition (gates: constitution + probe verdict + co-signer seat);
