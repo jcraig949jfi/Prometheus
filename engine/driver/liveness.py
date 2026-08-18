@@ -1,7 +1,11 @@
 """Liveness = state change, not process aliveness.
 
-The 43-daemon fleet died in 45 minutes and went unnoticed for 24 days while its cron
-mailed confabulated status 6x/day. It had PIDs. It had heartbeats. Both lied.
+The 43-daemon fleet died in 45 minutes while its cron mailed confabulated status
+6x/day. CORRECTION (James, 2026-08-18): it did NOT go unnoticed -- James saw the
+state, gave up out of frustration, and deliberately stepped away to rethink. The
+program did not die of silence; it died of exhausting its operator's willingness
+to keep pushing it. The heartbeats still lied -- but the deeper kill condition is
+operator disengagement, which no PID can measure.
 
 What cannot lie: did anything downstream CHANGE because this worker ran? A worker whose
 output nothing consumes is observationally identical to a dead one -- which is exactly why
