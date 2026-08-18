@@ -137,7 +137,66 @@ second agent from the committed result objects before any verdict enters doctrin
 
 ## 9. Amendment log
 
-*(empty at filing — any pre-unblinding change is logged here with rationale and co-signer)*
+*(any pre-unblinding change is logged here with rationale and co-signer)*
+
+### 2026-08-18 — Charon (kill authority): **CO-SIGN REFUSED.** Do not run.
+
+Full reasoning and all measurements: **`charon/probe/VERDICT_M004_2026-08-18.md`**.
+Every figure below is `E3`, executed against the committed archives.
+
+**Fatal (§3, §4).** The instrument this protocol reads was never applied to this archive.
+`unknown_kind` is emitted only by `verifier_lens.verify()`; measured occurrences —
+**0 in 6,240 records** of `cartography/convergence/data/shadow_preload.jsonl`, and **0 in 4,000**
+sampled from `theseus/corpus/`. Those records carry **no `kind` field at all** (`"kind"` 0,
+`claim_kind` 0); their kill vocabulary is the F-test battery (`F3_effect_size` 3024,
+`F11_cross_validation` 2653, `F12_partial_correlation` 2563, …). Therefore **Stage A has no field
+to read** and **Stage B's input set is empty by construction** — so the run cannot return a
+nonzero resurrection rate, and a structural zero would land on §1's first pre-committed reading
+("the nulls were real") and be reported as the headline. **Every gate in this document passes on
+the way to that outcome.**
+
+**Material.** (a) "~92K kills" is the count of *test executions* (80,277 = 6,240 hypotheses ×
+12.9 tests); **hypothesis-level kills are 3,988**, so the 5% slice is ~199 records, not ~4,600.
+(b) The `valid=None` patch already landed 2026-08-16, so the bug's forward effect is fixed and
+this is a purely retrospective audit. (c) **No counter-baseline**: the archive already carries
+`kill_diagnosis` on 3,970 kills — `confound_artifact` 2,563, **`resolution_limit` 725**,
+`growth_rate_mimic` 377, `mixed` 181 — and `resolution_limit` is the archive's own name for the
+target class. Any instrument must beat that field.
+
+**The 80% floor (§5A) is unconstrained, not rigorous.** Measured: Stage B's translator decides the
+arithmetic fragment and is **not posable** on structural claims, which §3 scores as `unknown`, i.e.
+not recovered. So a *representative* injection set has a recovery ceiling near **0%** (floor never
+clears), while a set that *clears* 80% must be drawn from z3's decidable fragment — the class
+`_DISPATCH` already handles, i.e. representable, i.e. not the target class. The floor's
+achievability is set entirely by an injection composition this document never specifies.
+
+**Other holes.** The negative control is a **denylist** (the shape that leaked through the
+2026-06-22 seam probe; it must allowlist), and "no resurrections" is **passed by a dead
+instrument** — redaction and recovery must be read jointly. §5A has **no de-injection procedure
+and no injection ledger**, so a voided run (§6) leaves synthetic records in the archive for the
+next draw.
+
+**Injection (§5A): CONSTRUCTED, SEALED, NOT INJECTED.** The sharp edge does **not** fire — the
+target class exists. Four true-but-unrepresentable records verified by enumeration/computation, no
+model in the loop (`A5 is simple`; `no 3-regular graph on 5 vertices`; `every group of order 15 is
+cyclic`; `no rational 11-torsion on E/Q`). Injection is **deferred until a repaired protocol is
+co-signed**, because injecting under a refused protocol with no de-injection step is irreversible.
+N was **drawn, not chosen** (`secrets.randbelow` over [28,72]). N, the composition, and the §5B
+blinding offset are sealed at `private_strategy/charon_m004/` — gitignored, uncommitted, **Aporia
+is asked not to open it**. Commitment hash, published so the sealed values cannot change:
+`9f47715e0b45b3521c2db106130b346ec0e4e1b067261d61dc29e7088392a449`. **The §5B offset is generated
+and held**, releasing only when the analysis is declared technically complete.
+
+**Seven repairs would earn a co-sign** — verdict §7. The load-bearing one is a pre-committed
+fourth reading, **`VACUOUS — TARGET SUBSET EMPTY`**, distinct from "the nulls were real", so a
+structural zero can never be reported as a corpus finding.
+
+**On the record beside the refusal:** §0 and §2 are the best-executed part of this document.
+Retracting the original justification at filing, and disclosing the motivated direction in writing,
+are what made the protocol adjudicable — none of the findings above is about bias; they are about
+an instrument pointed at the wrong archive. **Rebuild 1 of 2** before escalation to James.
+
+— Charon, M1, 2026-08-18.
 
 ---
 

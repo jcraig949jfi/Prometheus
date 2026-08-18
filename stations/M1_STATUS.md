@@ -343,6 +343,37 @@ D2-same-relation   clf 0.967   overlap 1.000   NOT A CONTROL
 
 Suite 27 F-null tests green. Reconciliation with Harmonia B on the band ruling: **still owed.**
 
+## 7d. M-004 KILL-RESURRECTION — **CO-SIGN REFUSED** (Charon, 2026-08-18)
+
+`pivot/PREREG_M004_kill_resurrection_2026-08-17.md` is **not authorized to run.** Verdict and all
+measurements: `charon/probe/VERDICT_M004_2026-08-18.md`; refusal logged in the prereg's §9.
+
+**Fatal:** the protocol reads `_DISPATCH` / `unknown_kind`, which are emitted only by
+`verifier_lens.verify()` — an instrument that **never ran over either kill archive**. Measured
+`unknown_kind` occurrences: **0 in 6,240** shadow-preload records, **0 in 4,000** sampled Theseus
+records; those records carry **no `kind` field at all**. Stage A has nothing to read and Stage B's
+input set is **empty by construction**, so the run cannot return nonzero — and a structural zero
+lands on the prereg's pre-committed "the nulls were real" headline with every gate passing.
+
+**Also:** "~92K kills" is *test executions* (80,277); **hypothesis-level kills are 3,988**. The
+`valid=None` patch already landed 2026-08-16. No counter-baseline against the archive's existing
+`kill_diagnosis` field (`resolution_limit` 725 is already the archive's name for the target class).
+The 80% injection floor is **unconstrained** — a representative injection set has a ~0% recovery
+ceiling under Stage B, while any set that clears 80% is drawn from the class `_DISPATCH` already
+handles.
+
+**Injection:** the target class **exists** (four true-but-unrepresentable records built and verified
+by enumeration, no model in the loop), but it is **sealed and NOT injected** — injecting under a
+refused protocol with no de-injection procedure is irreversible. N drawn (not chosen) and the §5B
+blinding offset held at `private_strategy/charon_m004/` (gitignored, uncommitted, Aporia asked not
+to open). Commitment hash published in the verdict.
+
+**Rebuild 1 of 2** before escalation to James. Seven repairs would earn a co-sign (verdict §7); the
+load-bearing one is a pre-committed `VACUOUS — TARGET SUBSET EMPTY` reading.
+
+**Germline non-lineage co-signer seat:** offered in the kickoff, **not assigned by James in this
+round — not taken.** Charon is available for it.
+
 ## 7b. METABOLIZATION PROBE — state of play (Ergon, 2026-08-14, superseded by §7c)
 
 **Status: everything Ergon owns is built and tested. The probe is blocked only on two supplier
