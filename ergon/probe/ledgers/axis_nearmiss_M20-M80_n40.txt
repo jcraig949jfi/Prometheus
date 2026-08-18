@@ -1,0 +1,106 @@
+[axis] family=nearmiss_mix 4 rungs x 40, Bonferroni conf=0.9875
+  rung M20: acc  50.0%  manifest [0.303,0.697]  pf 10.0%  trunc 0.0%  to 10.0%  -> UNDECIDED
+  rung M40: acc  27.5%  manifest [0.099,0.451]  pf 20.0%  trunc 0.0%  to 17.5%  -> UNDECIDED
+  rung M60: acc  20.0%  manifest [0.042,0.358]  pf 7.5%  trunc 0.0%  to 7.5%  -> UNDECIDED
+  rung M80: acc  15.0%  manifest [0.009,0.291]  pf 2.5%  trunc 0.0%  to 2.5%  -> OUT-OF-BAND
+{
+  "solver": "nvidia:deepseek-v4-flash",
+  "family": "nearmiss_mix",
+  "band": [
+    0.35,
+    0.6
+  ],
+  "per_depth": 40,
+  "depths": {
+    "M20": {
+      "n": 40,
+      "accuracy": 0.5,
+      "manifest_interval": [
+        0.3025,
+        0.6975
+      ],
+      "wilson_interval": [
+        0.3163,
+        0.6837
+      ],
+      "parse_fail_rate": 0.1,
+      "truncation_rate": 0.0,
+      "timeout_rate": 0.1,
+      "max_tokens": 8192,
+      "band_verdict": "UNDECIDED"
+    },
+    "M40": {
+      "n": 40,
+      "accuracy": 0.275,
+      "manifest_interval": [
+        0.0987,
+        0.4513
+      ],
+      "wilson_interval": [
+        0.1386,
+        0.4722
+      ],
+      "parse_fail_rate": 0.2,
+      "truncation_rate": 0.0,
+      "timeout_rate": 0.175,
+      "max_tokens": 8192,
+      "band_verdict": "UNDECIDED"
+    },
+    "M60": {
+      "n": 40,
+      "accuracy": 0.2,
+      "manifest_interval": [
+        0.042,
+        0.358
+      ],
+      "wilson_interval": [
+        0.0881,
+        0.3929
+      ],
+      "parse_fail_rate": 0.075,
+      "truncation_rate": 0.0,
+      "timeout_rate": 0.075,
+      "max_tokens": 8192,
+      "band_verdict": "UNDECIDED"
+    },
+    "M80": {
+      "n": 40,
+      "accuracy": 0.15,
+      "manifest_interval": [
+        0.009,
+        0.291
+      ],
+      "wilson_interval": [
+        0.0578,
+        0.3366
+      ],
+      "parse_fail_rate": 0.025,
+      "truncation_rate": 0.0,
+      "timeout_rate": 0.025,
+      "max_tokens": 8192,
+      "band_verdict": "OUT-OF-BAND"
+    }
+  },
+  "bonferroni_conf": 0.9875,
+  "ts_utc": "2026-08-18T13:28:48+00:00",
+  "host": "SKULLPORT",
+  "executor": "ergon",
+  "in_band": [],
+  "undecided": [
+    "M20",
+    "M40",
+    "M60"
+  ],
+  "max_truncation_rate": 0.0,
+  "truncation_gate_passed": true,
+  "chosen_depth": null,
+  "verdict": "UNDECIDED-NEEDS-DECISION-N",
+  "accuracy_by_rung": {
+    "M20": 0.5,
+    "M40": 0.275,
+    "M60": 0.2,
+    "M80": 0.15
+  },
+  "monotone_decreasing": true,
+  "axis_span_pp": 35.0
+}

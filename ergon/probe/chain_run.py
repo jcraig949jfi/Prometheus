@@ -27,6 +27,7 @@ import hashlib
 import json
 import math
 import pathlib
+import os
 import socket
 import time
 from collections import Counter, defaultdict
@@ -49,6 +50,14 @@ FAMILIES = {
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 LEDGER_DIR = ROOT / "ergon" / "probe" / "ledgers"
 MANIFEST_DIR = ROOT / "ergon" / "probe" / "manifests"
+
+#: Transport timeout for the NEAR-MISS family, re-derived by measurement (same discipline as
+#: the token budget). The standing 180s was derived on families with <=96-token outputs; this
+#: family generates up to 3,873 tokens (lenprobe), so generation time dominates and 180s clips
+#: the long-response rungs hardest — M40 hit 17.5% timeouts vs M80's 2.5%, the truncation
+#: defect's class one level down. The length probe ran 24/24 with ZERO timeouts at 300s;
+#: 420s carries ~40% margin over that.
+TIMEOUT_LONG_S = 420.0
 
 BAND = (0.35, 0.60)
 MOVABLE_FLOOR = 0.30          # Harmonia B ruling 2
@@ -75,7 +84,7 @@ def _now() -> str:
 
 
 def _attempt(solver: str, row: dict, rep: int) -> dict:
-    r = call(solver, row["prompt"], max_tokens=MAX_TOKENS)
+    r = call(solver, row["prompt"], max_tokens=MAX_TOKENS, timeout=TIMEOUT_LONG_S)
     ex = extract_numeric(r.text if r.status == "ok" else None)
     return {
         "uid": row["uid"], "domain": row["domain"], "depth": row.get("depth"),
@@ -210,20 +219,28 @@ def axis(solver: str, per_depth: int, depths=DEPTHS, seed: int = 20260817,
     return out
 
 
-def prepass(solver: str, depth: int, n: int, seed: int = 20260817,
-            ledger_name: str = "chain_prepass") -> dict:
+def prepass(solver: str, depth: int, n: int, seed: int = 20260819,
+            ledger_name: str = None, family: str = "chain", rung: str = None) -> dict:
+    """Two cold executions, three uses (§4.2): contamination screen + dispersion term + D0/D1
+    residue. For a rung escalated to decision-n this run IS the decision measurement — the
+    band is read on rep-1 of the full manifest (HB-R1: at one solver the lenient screen is a
+    diagnostic, not a filter), and the dispersion term comes from the two reps."""
     LEDGER_DIR.mkdir(parents=True, exist_ok=True)
     MANIFEST_DIR.mkdir(parents=True, exist_ok=True)
-    rows = generate(depth, n, seed)
+    gen, _rungs = FAMILIES[family]
+    rung_id = rung if rung is not None else depth
+    rows = gen(rung_id, n, seed)
+    tag = f"{family}-{rung_id}"
     for i, r in enumerate(rows):
-        r["uid"] = f"chain-d{depth}-{i:05d}"
+        r["uid"] = f"{tag}-{i:05d}"
+    ledger_name = ledger_name or f"{tag}_prepass"
 
-    man_path = MANIFEST_DIR / f"chain_manifest_d{depth}_n{n}.jsonl"
+    man_path = MANIFEST_DIR / f"{tag}_manifest_n{n}.jsonl"
     with man_path.open("w", encoding="utf-8") as fh:
         for r in rows:
             fh.write(json.dumps(r, ensure_ascii=False) + "\n")
 
-    print(f"[prepass] manifest n={len(rows)} depth={depth} -> {man_path.name}")
+    print(f"[prepass] family={family} rung={rung_id} n={len(rows)} seed={seed} -> {man_path.name}")
     rep1 = _run_batch(solver, rows, rep=1)
     print("[prepass] rep 2 …")
     rep2 = _run_batch(solver, rows, rep=2)
@@ -267,7 +284,7 @@ def prepass(solver: str, depth: int, n: int, seed: int = 20260817,
     screen = {
         "derives_from_gold": True,
         "note": "GOLD-DERIVED. Never packet-eligible. Analysis artifact only (R13, BC-3).",
-        "solver": solver, "depth": depth, "n_tasks": len(rows),
+        "solver": solver, "family": family, "rung": str(rung_id), "n_tasks": len(rows),
         "cold_accuracy_rep1": round(acc_r1, 4),
         "both_right": both_right, "both_wrong": both_wrong, "discordant": discordant,
         "movable_share": round(movable, 4), "movable_floor": MOVABLE_FLOOR,
@@ -280,7 +297,27 @@ def prepass(solver: str, depth: int, n: int, seed: int = 20260817,
     }
     (LEDGER_DIR / f"{ledger_name}_screen.json").write_text(json.dumps(screen, indent=2),
                                                            encoding="utf-8")
+    # DECISION-N BAND READ (prereg §3.1, full rule): point estimate on rep-1 of the FULL
+    # manifest (HB-R1), manifest-level interval at k=1 (only this rung is being re-measured,
+    # per "Bonferroni across whatever rungs you re-measure"), AND the dispersion term.
+    succ_r1 = [r["extracted_int"] == gold[r["uid"]] for r in rep1]
+    blo, bhi = _manifest_interval(succ_r1, 0.95)
+    point_in = BAND[0] <= acc_r1 <= BAND[1]
+    interval_in = blo >= BAND[0] and bhi <= BAND[1]
+    band_read = {
+        "point_estimate": round(acc_r1, 4),
+        "manifest_interval_95": [round(blo, 4), round(bhi, 4)],
+        "point_in_band": point_in,
+        "interval_wholly_in_band": interval_in,
+        "movable_share": round(movable, 4),
+        "dispersion_term_passes": movable >= MOVABLE_FLOOR,
+        "full_band_passes": point_in and movable >= MOVABLE_FLOOR,
+        "leveling_verdict": ("LEVELED" if (point_in and movable >= MOVABLE_FLOOR)
+                             else "NOT-LEVELED"),
+    }
+
     meta = {
+        "band_read": band_read,
         "ledger": str(ledger_path.relative_to(ROOT)), "ledger_sha256": ledger_sha,
         "ledger_closed": True, "records": len(rep1) + len(rep2), "rep1_records": len(rep1),
         "manifest": str(man_path.relative_to(ROOT)), "manifest_sha256": manifest_sha256(rows),
@@ -298,6 +335,16 @@ def prepass(solver: str, depth: int, n: int, seed: int = 20260817,
     return meta
 
 
+def write_atomic(path: pathlib.Path, text: str) -> None:
+    """Write-to-temp-then-rename. A ledger that can exist while empty is a hazard in its own
+    right — the M-sweep's output file sat zero-bytes on origin for a day because shell
+    redirection creates the file at launch and Python block-buffers until exit, so a mid-run
+    commit captured an empty shell. Results now land atomically or not at all."""
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    tmp.write_text(text, encoding="utf-8")
+    os.replace(tmp, path)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("mode", choices=["axis", "prepass"])
@@ -306,6 +353,8 @@ def main():
     ap.add_argument("--depth", type=int, default=3)
     ap.add_argument("--n", type=int, default=200)
     ap.add_argument("--family", default="chain", choices=sorted(FAMILIES))
+    ap.add_argument("--out", default=None, help="atomic JSON output path (temp+rename)")
+    ap.add_argument("--rung", default=None, help="prepass: rung id for non-chain families")
     ap.add_argument("--skip-preflight", action="store_true")
     args = ap.parse_args()
 
