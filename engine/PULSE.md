@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-18T11:34:10+00:00
+# PULSE — generated 2026-08-18T12:01:31+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,14 +6,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        159
-consumed (state changes):   12  {'findings': 2, 'queue_state': 8, 'registry': 1, 'doctrine': 1}
+emitted (new files):        160
+consumed (state changes):   13  {'queue_state': 9, 'findings': 2, 'registry': 1, 'doctrine': 1}
 consumed/emitted:           0.08
 verdict: ALIVE
 WARNING: production outpacing consumption -- the 442-report shape. Stop producing until this recovers.
 ```
 
-## Commits, 72h (non-cron): 52
+## Commits, 72h (non-cron): 54
+- bb04eb49 08-18 07:51 Kickoff prompt: Candidate A â€” clear truncation confound, then A0 at decision-n
+- 471fee0f 08-18 07:34 Fix the depressing email: PgRedis exists/hlen/zcard + stop demanding retired Redis
 - fefe7cf6 08-18 07:28 PULSE + STEERING: skim-and-steer without ever being a gate (Alethelia organ 1)
 - 610c0803 08-18 07:21 Correction (James): the fleet death was not unnoticed â€” he gave up out of frustration
 - d9ce1440 08-18 07:13 Liveness = state change, not process aliveness (and it indicts my last 2 days)
@@ -37,9 +39,7 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - 9f6dd178 08-17 05:46 Aporia: Canon v2.0 RATIFIED + perpetual-engine design â€” queues that outlive sessions
 - a6434d23 08-17 05:23 Ergon: Candidate A measuring; Â§4 not fired; D0-only scope reduction recorded
 - b3e9c11c 08-17 05:17 Aporia: reasoning-ladder Canon v2.0 DRAFT â€” bands over rungs, Band H formalized, anti-fossil law
-- 78bd2436 08-17 04:39 Aporia: reasoning-ladder review â€” three rulers, a fired sunset, and the basis question
-- f97fcd5a 08-17 04:33 Ergon: CANDIDATE A built â€” adversarial near-misses on the property; two channels closed
-- … +27 more
+- … +29 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.6 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
@@ -67,7 +67,8 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - 2026-08-18 **chose:** Drain before firing again — 17 unconsumed DR reports vs firing a new deck
 
 ## Work queue
-- QUEUED: 5 — next: Power-stratified re-test design over the 725 resolution_limit kills (t
+- QUEUED: 4 — next: Power-stratified re-test design over the 725 resolution_limit kills (t
+- WAITING-ON-M4-CYCLE: 1
 
 ## Findings, 7d: 2
 - aporia/docs/FINDING_2026-08-17_decidability_novelty_correction.md

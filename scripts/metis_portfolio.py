@@ -19,6 +19,7 @@ this script is the agent-state-reporting cousin, mandate clarified in
 pivot/prometheus_synthesis_2026-05-14.md).
 """
 import argparse
+import os
 import json
 import subprocess
 import sys
@@ -445,6 +446,16 @@ def format_state_for_prompt(state: dict) -> str:
 
 def generate_brief() -> str:
     state = load_state()
+    manual_status_early = manual_status_excerpt()
+    # DEFAULT: deterministic brief, computed from state — no LLM in the loop.
+    # James's 2026-08-12 ruling: the reporter tells the truth or is silenced. The
+    # LLM cascade repeatedly leaked scratchpad (2026-08-17/18 emails) and its
+    # narrative layer is the confabulation-prone organ. Opt back in with
+    # METIS_LLM=1; there is no operator access to M4, so the code default rules.
+    if os.environ.get("METIS_LLM", "0") != "1":
+        print("[metis] deterministic-first mode (METIS_LLM!=1) — no LLM narrative",
+              file=sys.stderr)
+        return _deterministic_brief(state, manual_status_early)
     state_block = format_state_for_prompt(state)
     git_log = recent_git_log(hours=24)
     prev_brief = previous_brief_excerpt()
@@ -775,6 +786,13 @@ def main():
             print(f"[{datetime.now().isoformat()}] generating portfolio brief...")
             _olog.info("generating portfolio brief")
             brief = generate_brief()
+            # A stub must never ship: if the sanitizer declared the LLM output
+            # unrecoverable, replace the whole brief with the deterministic
+            # template rather than emailing a placeholder.
+            if isinstance(brief, str) and "Metis output was unparseable" in brief:
+                print("[metis] unparseable LLM brief — substituting deterministic brief",
+                      file=sys.stderr)
+                brief = _deterministic_brief(load_state(), manual_status_excerpt())
             path = write_brief(brief)
             touched = touch_manual_status_timestamp()
             dur = time.monotonic() - start
