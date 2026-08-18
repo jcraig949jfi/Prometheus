@@ -86,6 +86,20 @@ Operating rules, mechanical:
 - **Sub-agent fan-outs pull from the top of BACKLOG.jsonl** for their seat (kickoff prompts name
   the thread ids). A fan-out that finishes its thread files results and pulls the next.
 
+
+## Stash discipline (hardened 2026-08-18 after an incident)
+
+A blind `git stash` + `git stash pop` pair popped an ANCIENT stash (May-era Hecate WIP)
+when the tree happened to be clean, conflicting other agents' journals. Rule: only stash
+when dirty, with a tagged message, and pop only your own tag:
+
+    [ -n "$(git status --porcelain -uno)" ] && git stash push -q -m aporia-loop -uno
+    ... pull/push ...
+    git stash list | grep -q aporia-loop && git stash pop -q
+
+Never `stash pop` unconditionally. Old stashes in the list belong to other agents/eras —
+never drop them; they may hold uncommitted work (one held two never-committed DR batches).
+
 ## Standing rules
 LAW 1 at every emission (consumer named); trace-vector shape for failures; decoy discipline
 once assembled; no germline ignition (gates: constitution + probe verdict + co-signer seat);
