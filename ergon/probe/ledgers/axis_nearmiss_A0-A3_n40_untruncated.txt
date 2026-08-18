@@ -1,0 +1,106 @@
+[axis] family=nearmiss 4 rungs x 40, Bonferroni conf=0.9875
+  rung A0: acc  82.5%  manifest [0.675,0.975]  pf 10.0%  trunc 0.0%  to 10.0%  -> OUT-OF-BAND
+  rung A1: acc  25.0%  manifest [0.079,0.421]  pf 2.5%  trunc 0.0%  to 2.5%  -> UNDECIDED
+  rung A2: acc  25.0%  manifest [0.079,0.421]  pf 32.5%  trunc 0.0%  to 20.0%  -> UNDECIDED
+  rung A3: acc  25.0%  manifest [0.079,0.421]  pf 5.0%  trunc 0.0%  to 5.0%  -> UNDECIDED
+{
+  "solver": "nvidia:deepseek-v4-flash",
+  "family": "nearmiss",
+  "band": [
+    0.35,
+    0.6
+  ],
+  "per_depth": 40,
+  "depths": {
+    "A0": {
+      "n": 40,
+      "accuracy": 0.825,
+      "manifest_interval": [
+        0.6749,
+        0.9751
+      ],
+      "wilson_interval": [
+        0.6349,
+        0.9274
+      ],
+      "parse_fail_rate": 0.1,
+      "truncation_rate": 0.0,
+      "timeout_rate": 0.1,
+      "max_tokens": 8192,
+      "band_verdict": "OUT-OF-BAND"
+    },
+    "A1": {
+      "n": 40,
+      "accuracy": 0.25,
+      "manifest_interval": [
+        0.079,
+        0.421
+      ],
+      "wilson_interval": [
+        0.1211,
+        0.4463
+      ],
+      "parse_fail_rate": 0.025,
+      "truncation_rate": 0.0,
+      "timeout_rate": 0.025,
+      "max_tokens": 8192,
+      "band_verdict": "UNDECIDED"
+    },
+    "A2": {
+      "n": 40,
+      "accuracy": 0.25,
+      "manifest_interval": [
+        0.079,
+        0.421
+      ],
+      "wilson_interval": [
+        0.1211,
+        0.4463
+      ],
+      "parse_fail_rate": 0.325,
+      "truncation_rate": 0.0,
+      "timeout_rate": 0.2,
+      "max_tokens": 8192,
+      "band_verdict": "UNDECIDED"
+    },
+    "A3": {
+      "n": 40,
+      "accuracy": 0.25,
+      "manifest_interval": [
+        0.079,
+        0.421
+      ],
+      "wilson_interval": [
+        0.1211,
+        0.4463
+      ],
+      "parse_fail_rate": 0.05,
+      "truncation_rate": 0.0,
+      "timeout_rate": 0.05,
+      "max_tokens": 8192,
+      "band_verdict": "UNDECIDED"
+    }
+  },
+  "bonferroni_conf": 0.9875,
+  "ts_utc": "2026-08-18T12:15:44+00:00",
+  "host": "SKULLPORT",
+  "executor": "ergon",
+  "in_band": [],
+  "undecided": [
+    "A1",
+    "A2",
+    "A3"
+  ],
+  "max_truncation_rate": 0.0,
+  "truncation_gate_passed": true,
+  "chosen_depth": null,
+  "verdict": "UNDECIDED-NEEDS-DECISION-N",
+  "accuracy_by_rung": {
+    "A0": 0.825,
+    "A1": 0.25,
+    "A2": 0.25,
+    "A3": 0.25
+  },
+  "monotone_decreasing": true,
+  "axis_span_pp": 57.5
+}
