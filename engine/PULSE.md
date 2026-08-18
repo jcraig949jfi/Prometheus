@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-18T12:01:31+00:00
+# PULSE — generated 2026-08-18T14:27:42+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,14 +6,20 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        160
-consumed (state changes):   13  {'queue_state': 9, 'findings': 2, 'registry': 1, 'doctrine': 1}
-consumed/emitted:           0.08
+emitted (new files):        164
+consumed (state changes):   14  {'queue_state': 10, 'findings': 2, 'registry': 1, 'doctrine': 1}
+consumed/emitted:           0.09
 verdict: ALIVE
 WARNING: production outpacing consumption -- the 442-report shape. Stop producing until this recovers.
 ```
 
-## Commits, 72h (non-cron): 54
+## Commits, 72h (non-cron): 60
+- e3f354ec 08-18 09:29 Ergon JOB 2 + branch: A0 decided OUT so escalation is moot; intermediate rungs launched
+- 419f80fc 08-18 09:29 Refinement (James): the M4 emails' verdict was RIGHT â€” stalled meant stalled
+- 312a0625 08-18 09:28 Ergon JOB 1 COMPLETE: axis SURVIVES and is STEEPER; A0 was truncation-suppressed 50.0 -> 82.5
+- ee05d557 08-18 08:16 Ergon JOB 2a: decision-n derived on the manifest-level estimand â€” and it CORRECTS my own ruling
+- 7b1cef21 08-18 08:15 Ergon JOB 1a: truncation budget derived BY MEASUREMENT; gate installed
+- af9b4d9c 08-18 08:01 Metis deterministic-first + no-stub guarantee; the 8-week frozen-state chain documented
 - bb04eb49 08-18 07:51 Kickoff prompt: Candidate A â€” clear truncation confound, then A0 at decision-n
 - 471fee0f 08-18 07:34 Fix the depressing email: PgRedis exists/hlen/zcard + stop demanding retired Redis
 - fefe7cf6 08-18 07:28 PULSE + STEERING: skim-and-steer without ever being a gate (Alethelia organ 1)
@@ -33,20 +39,14 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - 9adbbef7 08-17 19:35 Aporia loop: model-tier rule â€” loop runs Opus-tier; Fable reserved for divergence seats
 - d5504773 08-17 19:30 Aporia: standing loop charter â€” the loop is state, not a process; resumable by any session
 - 730e9923 08-17 19:28 Aporia: all five infrastructure DECISIONS resolved with James â€” ignition path is now concrete
-- 7fbfa869 08-17 08:23 Aporia: germline infrastructure â€” n stations, shared organelles, free-first gateway, Aletheia_M4
-- 12a70a90 08-17 06:53 Aporia: PROMETHEUS-0 germline design â€” one organism that discovers its organs
-- 44ba44f8 08-17 06:10 Aporia: perpetual engine v2 â€” decision market, consumption proof, A0-A6; market seeded
-- 9f6dd178 08-17 05:46 Aporia: Canon v2.0 RATIFIED + perpetual-engine design â€” queues that outlive sessions
-- a6434d23 08-17 05:23 Ergon: Candidate A measuring; Â§4 not fired; D0-only scope reduction recorded
-- b3e9c11c 08-17 05:17 Aporia: reasoning-ladder Canon v2.0 DRAFT â€” bands over rungs, Band H formalized, anti-fossil law
-- … +29 more
+- … +35 more
 
 ## Bottleneck hypotheses (confidence)
-- **B-001** 0.6 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
-- **B-002** 0.7 — Representation/interface is the binding constraint (syntactic router; verify() certifies t  *[updated: probe_2026_08_18 · note_2026_08_18]*
-- **B-003** 0.35 — Generator quality is the ceiling (frontier fluency does not convert to post-battery surviv
+- **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
+- **B-002** 0.72 — Representation/interface is the binding constraint (syntactic router; verify() certifies t  *[updated: probe_2026_08_18 · note_2026_08_18]*
+- **B-003** 0.45 — Generator quality is the ceiling (frontier fluency does not convert to post-battery surviv
 - **B-004** 0.3 — Problem selection is misallocated (catalog x paradigm matrix never systematically mined; p
-- **B-005** 0.25 — There is no learnable residue at any capacity (the corpus is exhaust; the founding gradien  *[updated: caution_2026_08_18]*
+- **B-005** 0.3 — There is no learnable residue at any capacity (the corpus is exhaust; the founding gradien  *[updated: caution_2026_08_18]*
 - **B-006** 0.65 — Consumption pathway absent: producers healthy, nothing metabolizes downstream (the histori
 
 ## Moves
