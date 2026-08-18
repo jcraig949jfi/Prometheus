@@ -29,8 +29,10 @@ watch-paced — every pass does one real item.
    probe templates, catalog updates. (The Pythia consumer test, finally.)
 3. **R4 probe generator** — Canon build-debt #1, phase0 pattern, deterministic grading.
 4. **Repair ledger + citation-chain base rate** — my own pre-committed self-audits.
-5. **M-004 kill-resurrection + detector-band audit** — GATED on James's approval (asked
-   08-12 and 08-17; one word unblocks).
+5. **M-004 kill-resurrection + detector-band audit** — **APPROVED 2026-08-17.** Prereg LOCKED
+   (`pivot/PREREG_M004_kill_resurrection_2026-08-17.md`) before any data touched. Next steps in
+   order: co-sign (Charon + Harmonia B/Techne) -> independent synthetic injection (Aporia must
+   NOT be the injector) -> 5% calibration set -> 80% recovery gate -> blinded hold-out run.
 6. **Plumbing sessions** (gateway, queue client, germline schema, CI, decoys, Alethelia) —
    as capacity allows; schema + backup job first (DECISION 2 makes backup non-deferrable).
 
