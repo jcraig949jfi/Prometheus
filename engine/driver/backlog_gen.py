@@ -173,10 +173,23 @@ def main() -> int:
     add("VERIFY-SCANDAL", "Pin Scandal-of-Deduction primary cites (Hintikka) into the decidability FINDING",
         "dr_followups", "FINDING_2026-08-17_decidability", 30)
 
+    # merge manual threads (never clobbered by regeneration)
+    for m in jsonl(ROOT / "engine" / "queues" / "BACKLOG_MANUAL.jsonl"):
+        threads.append(m)
+        counts["manual"] = counts.get("manual", 0) + 1
+
     # de-dup by id, stable sort by priority desc then id
     uniq = {}
     for t in threads:
         uniq[t["id"]] = t
+
+    # persistence: a regenerated thread must not erase completed/in-flight state
+    for old_item in jsonl(OUT):
+        oid, ost = old_item.get("id"), str(old_item.get("status", ""))
+        if oid in uniq and (ost.startswith("DONE") or ost in ("RUNNING", "PARKED-MANUAL")):
+            uniq[oid]["status"] = ost
+            if old_item.get("result"):
+                uniq[oid]["result"] = old_item["result"]
     final = sorted(uniq.values(), key=lambda t: (-t["priority"], t["id"]))
     OUT.write_text("\n".join(json.dumps(t, ensure_ascii=False) for t in final) + "\n", encoding="utf-8")
 
