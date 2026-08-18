@@ -689,6 +689,19 @@ computation. So the suite's novelty axis must run through **executed checkers**,
 `entails`-style closure — which is what Harmonia A already built, apparently by instinct rather
 than by this argument.
 
+> **CORRECTED 2026-08-17 (external check, primary-source verified).** The claim below that
+> decidability and novelty are "anti-correlated by construction" is TOO STRONG. It is the
+> Scandal of Deduction (Hintikka) and holds only in the SEMANTIC-information sense, for a
+> logically omniscient agent. Counterexample, verified against arXiv:1605.00723 (Heule,
+> Kullmann, Marek 2016): a SAT solver — a decision procedure — resolved the Boolean
+> Pythagorean Triples problem, a decades-old Ramsey question, via a ~200 TB DRAT proof. For
+> computationally bounded agents the boundary of a decidable fragment can be profoundly
+> surprising. What is anti-correlated with novelty is **cheap** decidability, not
+> decidability. The certificate-checking extension below is STRENGTHENED (it matches LCF
+> architecture); Harmonia D's standing test survives (a meter scoring false and timeout as
+> novel is a timeout detector); no program decision reverses — only the reason changes.
+> Full finding: `aporia/docs/FINDING_2026-08-17_decidability_novelty_correction.md`.
+
 **Hephaestus's D3 extends this, and the extension matters more than my original.** I had two
 categories; there are three:
 
