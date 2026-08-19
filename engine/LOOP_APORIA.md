@@ -93,7 +93,7 @@ A blind `git stash` + `git stash pop` pair popped an ANCIENT stash (May-era Heca
 when the tree happened to be clean, conflicting other agents' journals. Rule: only stash
 when dirty, with a tagged message, and pop only your own tag:
 
-    [ -n "$(git status --porcelain -uno)" ] && git stash push -q -m aporia-loop -uno
+    [ -n "$(git status --porcelain -uno)" ] && git stash push -q -m aporia-loop
     ... pull/push ...
     git stash list | grep -q aporia-loop && git stash pop -q
 
