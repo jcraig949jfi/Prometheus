@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T00:19:47+00:00
+# PULSE — generated 2026-08-19T01:12:35+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,14 +6,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        646
-consumed (state changes):   57  {'queue_state': 40, 'registry': 13, 'findings': 3, 'doctrine': 1}
+emitted (new files):        648
+consumed (state changes):   59  {'queue_state': 42, 'registry': 13, 'findings': 3, 'doctrine': 1}
 consumed/emitted:           0.09
 verdict: ALIVE
 WARNING: production outpacing consumption -- the 442-report shape. Stop producing until this recovers.
 ```
 
-## Commits, 72h (non-cron): 77
+## Commits, 72h (non-cron): 79
+- 1d61a6fa 08-18 20:50 Ergon: decision-n mislaunch diagnosed and discarded (R11); relaunched correctly at 12 RPM
+- bb63dcf8 08-18 20:19 ELI5 in the email: every parked gate and pending decision gets two plain sentences
 - 2292f4b8 08-18 20:09 Ergon: M1_STATUS 7g â€” monotone axis, M20 escalation, decision-n in flight
 - 08831b17 08-18 20:05 AA-RUBRIC DONE: the registry gets an attestation ladder â€” evidence strength, typed
 - cf2438a5 08-18 19:01 Recovery sweep, final tranche: the original May DR batch archive + Charon/cartography docs
@@ -37,9 +39,7 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - 419f80fc 08-18 09:29 Refinement (James): the M4 emails' verdict was RIGHT â€” stalled meant stalled
 - 312a0625 08-18 09:28 Ergon JOB 1 COMPLETE: axis SURVIVES and is STEEPER; A0 was truncation-suppressed 50.0 -> 82.5
 - ee05d557 08-18 08:16 Ergon JOB 2a: decision-n derived on the manifest-level estimand â€” and it CORRECTS my own ruling
-- 7b1cef21 08-18 08:15 Ergon JOB 1a: truncation budget derived BY MEASUREMENT; gate installed
-- af9b4d9c 08-18 08:01 Metis deterministic-first + no-stub guarantee; the 8-week frozen-state chain documented
-- … +52 more
+- … +54 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
