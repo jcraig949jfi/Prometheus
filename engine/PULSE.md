@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T02:16:20+00:00
+# PULSE — generated 2026-08-19T03:23:31+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -7,13 +7,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ```
 window: 3d
 emitted (new files):        649
-consumed (state changes):   63  {'queue_state': 46, 'registry': 13, 'findings': 3, 'doctrine': 1}
+consumed (state changes):   66  {'queue_state': 49, 'registry': 13, 'findings': 3, 'doctrine': 1}
 consumed/emitted:           0.10
 verdict: ALIVE
 WARNING: production outpacing consumption -- the 442-report shape. Stop producing until this recovers.
 ```
 
-## Commits, 72h (non-cron): 79
+## Commits, 72h (non-cron): 80
+- 538cc070 08-18 22:16 DRBC-02 DONE: batch 3 mined â€” paradigm threads get their pre-researched groundings
 - 836bed37 08-18 21:12 INFRA-BACKUP: the databases get their first-ever second copy â€” weekly, unattended
 - 1d61a6fa 08-18 20:50 Ergon: decision-n mislaunch diagnosed and discarded (R11); relaunched correctly at 12 RPM
 - bb63dcf8 08-18 20:19 ELI5 in the email: every parked gate and pending decision gets two plain sentences
@@ -38,8 +39,7 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - d47fa49c 08-18 10:28 Loop pass: DR 11-15 consumed â€” two of my own hypotheses cut, one prior inverted
 - e3f354ec 08-18 09:29 Ergon JOB 2 + branch: A0 decided OUT so escalation is moot; intermediate rungs launched
 - 419f80fc 08-18 09:29 Refinement (James): the M4 emails' verdict was RIGHT â€” stalled meant stalled
-- 312a0625 08-18 09:28 Ergon JOB 1 COMPLETE: axis SURVIVES and is STEEPER; A0 was truncation-suppressed 50.0 -> 82.5
-- … +54 more
+- … +55 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

@@ -15,7 +15,9 @@
 $ErrorActionPreference = "Stop"
 $PgDump  = "C:\Program Files\PostgreSQL\17\bin\pg_dump.exe"
 $BackupRoot = "E:\prometheus_backup\pg"
-$PgHost  = "192.168.1.202"
+$PgHost  = "localhost"   # server is local on M1; localhost matches pgpass.conf. The .202
+                         # form found no pgpass entry -> silent password prompt -> eternal
+                         # 0-byte hang (diagnosed 2026-08-18).
 $PgUser  = "postgres"   # password from %APPDATA%\postgresql\pgpass.conf
 $Stamp   = Get-Date -Format "yyyyMMdd_HHmmss"
 $Dest    = Join-Path $BackupRoot $Stamp
