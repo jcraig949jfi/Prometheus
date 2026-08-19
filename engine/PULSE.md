@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T03:51:56+00:00
+# PULSE — generated 2026-08-19T04:19:54+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,14 +6,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        649
-consumed (state changes):   70  {'queue_state': 52, 'registry': 14, 'findings': 3, 'doctrine': 1}
+emitted (new files):        654
+consumed (state changes):   74  {'doctrine': 2, 'queue_state': 55, 'registry': 14, 'findings': 3}
 consumed/emitted:           0.11
 verdict: ALIVE
 WARNING: production outpacing consumption -- the 442-report shape. Stop producing until this recovers.
 ```
 
-## Commits, 72h (non-cron): 82
+## Commits, 72h (non-cron): 84
+- 03cc7f91 08-19 00:13 Ergon: M20 rerun hit a PER-MODEL quota wall â€” artifacts quarantined, auto-relaunch watcher armed
+- 2085a5e8 08-18 23:51 Aporia: LAD-EMPIRICS done â€” Canon 4.1: the ladder question gets human-math evidence
 - be0e4c13 08-18 23:24 Aporia charter fix: stash push -uno is not a valid flag (belongs to git status)
 - 46749d12 08-18 23:23 Aporia: NEGCAT-MINE done â€” 3 primary-verified REVERSE anchors; backup VERIFIED (1GB)
 - 538cc070 08-18 22:16 DRBC-02 DONE: batch 3 mined â€” paradigm threads get their pre-researched groundings
@@ -37,9 +39,7 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - 1206d504 08-18 13:39 W-002 DONE: R4 representation-shift generator â€” the ladder's missing rung, built
 - 539ef0f1 08-18 12:35 W-001 DESIGNED: the retry queue â€” the archive's self-nominated kills, prereg-shaped
 - 71d809b4 08-18 11:49 W-005 CLOSED: M4 healed on first post-fix cycle â€” dashboard unfrozen after 8 weeks
-- b46c3db5 08-18 11:31 Loop pass: DR 16-19 consumed â€” sandbox and queue specs hardened from literature
-- d47fa49c 08-18 10:28 Loop pass: DR 11-15 consumed â€” two of my own hypotheses cut, one prior inverted
-- … +57 more
+- … +59 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
