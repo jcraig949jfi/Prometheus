@@ -1,0 +1,59 @@
+{
+  "run_id": "PILOT-D0-2026-08-19",
+  "solver": "deepseek:deepseek-v4-flash",
+  "n_tasks": 146,
+  "scope": "D0 ONLY (Delta_carry interpretable at D0 alone; D1-D3 not run)",
+  "accuracy_by_arm": {
+    "F0": 0.4315,
+    "F-null": 0.363,
+    "F-prom-retrieved": 0.4589,
+    "F-oracle": 0.4863,
+    "F-answer": 0.9384
+  },
+  "parse_fail_by_arm": {
+    "F0": 0.0,
+    "F-null": 0.0,
+    "F-prom-retrieved": 0.0,
+    "F-oracle": 0.0,
+    "F-answer": 0.0
+  },
+  "transport_fail_by_arm": {
+    "F0": 0,
+    "F-null": 0,
+    "F-prom-retrieved": 0,
+    "F-oracle": 0,
+    "F-answer": 0
+  },
+  "mean_packet_tokens_by_arm": {
+    "F0": 83.7,
+    "F-null": 494.0,
+    "F-prom-retrieved": 211.6,
+    "F-oracle": 134.4,
+    "F-answer": 92.7
+  },
+  "pf_spread_comparable_arms": 0.0,
+  "directional_estimate": {
+    "label": "F-prom-retrieved(D0) - F-null, paired bootstrap 10k seed 0",
+    "delta": 0.0959,
+    "ci95": [
+      -0.0068,
+      0.1918
+    ],
+    "p": 0.0682,
+    "mcnemar_p": 0.0814,
+    "discordant": {
+      "prom_only": 35,
+      "null_only": 21
+    }
+  },
+  "verdict": "PIPELINE_ADMISSIBLE",
+  "verdict_constraints": [
+    "directional estimate ONLY - MDE at this N is ~11-13pp",
+    "a flat result is INCONCLUSIVE-UNDERPOWERED BY CONSTRUCTION",
+    "this run can NEVER route a diagnostic-matrix row",
+    "F-answer participates in no substantive comparison"
+  ],
+  "ts_utc": "2026-08-19T10:47:40+00:00",
+  "host": "SKULLPORT",
+  "executor": "ergon"
+}

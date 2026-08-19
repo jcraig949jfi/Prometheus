@@ -119,6 +119,54 @@ the retire dossier must name the **path**, never the bare name. Aporia owns that
 4. **Forge relocation ($900 PowerSpec)** — M1's standing recommendation is **hold**. Four of
    the fleet's top moves are in-context or in-corpus; none need the box.
 
+## 7i. THE PILOT RAN: PIPELINE_ADMISSIBLE (Ergon, 2026-08-19)
+
+**Every gate passed and the pilot executed.** 146 post-screen tasks × 5 arms = 730 calls on
+`deepseek:deepseek-v4-flash`, **zero parse failures, zero transport failures**, D0 scope only.
+
+```
+arm                accuracy    mean pkt tokens
+F-answer            93.8%          93          (instrumentation ceiling — no comparisons)
+F-oracle            48.6%         134
+F-prom-retrieved    45.9%         212
+F0                  43.2%          84
+F-null              36.3%         494
+```
+
+**The reading ladder came out in the spec's predicted order** — answer ≫ oracle > prom > F0 >
+null — the first time the program has seen it on real residue.
+
+**Directional estimate (the only thing the pilot may emit):**
+`F-prom-retrieved − F-null = +9.6pp`, CI95 [−0.7, +19.2], bootstrap p=0.068, McNemar p=0.081,
+discordants 35 vs 21 in favour of prom. **The CI touches zero at MDE ~11–13pp — this routes
+NOTHING, classifies NOTHING, and is exactly the underpowered-directional shape the pilot was
+designed to be allowed to say.** Direction: positive. Also noteworthy: F-null sits *below* F0
+(−6.8pp) — mismatched residue mildly harms, which is the identity control behaving as an
+identity control.
+
+**Gates cleared en route this session, in order:**
+1. **Numeric-redaction gap closed in three measured steps** — explicit forms; per-element
+   conclusions; then the real channel, *diffuse prose style* (45% recovery with zero explicit
+   leaks — "only/exactly/quickly" texture). Resolution: **method projection** (deterministic
+   census of tests mentioned; fixed vocabulary, no prose). Static check: 0.170 recovery, below
+   chance. Harmonia B's structural prediction confirmed and then engineered around.
+2. **R7-D0 re-run on the new family:** classifier 0.317 vs 0.55 — PASS.
+3. **R3 live, all four:** A +58.5pp p=3.6e-34 · B +2.0pp p=0.75 (format conveys nothing) ·
+   **C live recovery 0.0%** (answer-free against a frontier solver, not just a classifier) ·
+   D headroom 58.5pp vs measured ceiling. (C's thresholds adapted 0.50/0.60 → 0.25/0.35,
+   margin preserved — forced by the family's chance floor; recorded.)
+
+**Recorded deviations:** ±5% token matching unmeetable on ~15–60-token projected packets
+(filler padding is itself the topic-priming hazard) — per-arm token means logged instead
+(BC-7). Note the asymmetry runs conservative: F-null averaged 494 tokens vs prom's 212 and
+still scored lowest.
+
+**Spend:** ~1,130 paid calls this session, well under $2 of the $10.
+
+**What this does NOT license:** no Δ_carry claim, no diagnostic-matrix row, no carry verdict.
+**Tier A exit review and Tier B at full N are the next session's business** — Tier B is where
+the CI either clears zero or doesn't, at the preregistered N with the second family.
+
 ## 7h. FIRST LEVELED MANIFEST — M30 on the paid host (Ergon, 2026-08-19)
 
 **The probe has its first leveled manifest.** M30 (30% deception fraction, nearmiss family) at
