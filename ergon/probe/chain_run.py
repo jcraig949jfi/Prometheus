@@ -45,6 +45,7 @@ FAMILIES = {
     "chain": (generate, DEPTHS),                       # v2 — compositional depth (measured dead)
     "nearmiss": (task_gen_v3.generate, task_gen_v3.LEVELS),   # v3 — adversarial near-misses
     "nearmiss_mix": (task_gen_v3.generate, task_gen_v3.LEVELS_MIX),  # v3 intermediate rungs
+    "nearmiss_mix_paid": (task_gen_v3.generate, task_gen_v3.LEVELS_MIX_PAID),  # paid-host bisection
 }
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]

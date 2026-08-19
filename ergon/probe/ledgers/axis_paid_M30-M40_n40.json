@@ -1,0 +1,65 @@
+{
+  "solver": "deepseek:deepseek-v4-flash",
+  "family": "nearmiss_mix_paid",
+  "band": [
+    0.35,
+    0.6
+  ],
+  "per_depth": 40,
+  "depths": {
+    "M30": {
+      "n": 40,
+      "accuracy": 0.5,
+      "manifest_interval": [
+        0.3228,
+        0.6772
+      ],
+      "wilson_interval": [
+        0.333,
+        0.667
+      ],
+      "parse_fail_rate": 0.0,
+      "truncation_rate": 0.0,
+      "timeout_rate": 0.0,
+      "max_tokens": 8192,
+      "band_verdict": "UNDECIDED"
+    },
+    "M40": {
+      "n": 40,
+      "accuracy": 0.35,
+      "manifest_interval": [
+        0.181,
+        0.519
+      ],
+      "wilson_interval": [
+        0.2065,
+        0.5269
+      ],
+      "parse_fail_rate": 0.0,
+      "truncation_rate": 0.025,
+      "timeout_rate": 0.0,
+      "max_tokens": 8192,
+      "band_verdict": "UNDECIDED"
+    }
+  },
+  "bonferroni_conf": 0.975,
+  "ts_utc": "2026-08-19T09:05:43+00:00",
+  "host": "SKULLPORT",
+  "executor": "ergon",
+  "in_band": [],
+  "undecided": [
+    "M30",
+    "M40"
+  ],
+  "max_truncation_rate": 0.025,
+  "truncation_gate_passed": false,
+  "chosen_depth": null,
+  "verdict": "TRUNCATION-CONFOUNDED",
+  "verdict_note": "max truncation 2.5% exceeds the 2% gate \u2014 accuracies are not comparable across rungs and no rung may be chosen",
+  "accuracy_by_rung": {
+    "M30": 0.5,
+    "M40": 0.35
+  },
+  "monotone_decreasing": true,
+  "axis_span_pp": 15.0
+}

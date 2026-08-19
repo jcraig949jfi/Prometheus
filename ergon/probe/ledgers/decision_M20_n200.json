@@ -1,0 +1,35 @@
+{
+  "band_read": {
+    "point_estimate": 0.64,
+    "manifest_interval_95": [
+      0.5735,
+      0.7065
+    ],
+    "point_in_band": false,
+    "interval_wholly_in_band": false,
+    "movable_share": 0.385,
+    "dispersion_term_passes": true,
+    "full_band_passes": false,
+    "leveling_verdict": "NOT-LEVELED"
+  },
+  "ledger": "ergon\\probe\\ledgers\\nearmiss_mix-M20_prepass.jsonl",
+  "ledger_sha256": "214e161fd4b4e9d5489308f3ac6c4ddd9bb3d69c3933cdca4017e843b6961752",
+  "ledger_closed": true,
+  "records": 400,
+  "rep1_records": 200,
+  "manifest": "ergon\\probe\\manifests\\nearmiss_mix-M20_manifest_n200.jsonl",
+  "manifest_sha256": "6933b01a188ade146b056ad56a91f6ea3cdbbe500d2830063934f00d75e6400f",
+  "generator_sha256": "ed7cea844625d990aa49f2a0781e46d5f03afcc33a90484519d99705481ebfd3",
+  "cold_accuracy_rep1": 0.64,
+  "movable_share": 0.385,
+  "dispersion_term_passes": true,
+  "n_after_lenient_screen": 112,
+  "transport": {
+    "ok": 400
+  },
+  "solver": "deepseek:deepseek-v4-flash",
+  "model_id": "deepseek-chat",
+  "ts_utc": "2026-08-19T08:45:38+00:00",
+  "host": "SKULLPORT",
+  "executor": "ergon"
+}

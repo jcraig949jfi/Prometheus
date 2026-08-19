@@ -71,8 +71,14 @@ LEVELS = ("A0", "A1", "A2", "A3")
 #: than easy (small-factor, A0-style). Deception is thereby made PARTIAL: some elements of the
 #: count are deceptive and some are not, which is exactly the "mixed count" shape.
 LEVELS_MIX = ("M20", "M40", "M60", "M80")
-_MIX_FRACTION = {"M20": 0.20, "M40": 0.40, "M60": 0.60, "M80": 0.80}
-ALL_LEVELS = LEVELS + LEVELS_MIX
+#: Bisection rung, PRE-DECLARED 2026-08-19 before measurement. The paid-host decision run put
+#: M20 at 0.640 (above band, movable 0.385 PASSES); the free-host curve is monotone in mix
+#: fraction; so the in-band region lies between M20 and M40 on the operative host. M30 bisects.
+#: Swept together with M40 under Bonferroni k=2 — no sequential stopping.
+LEVELS_MIX_PAID = ("M30", "M40")
+LEVEL_M30 = ("M30",)
+_MIX_FRACTION = {"M20": 0.20, "M30": 0.30, "M40": 0.40, "M60": 0.60, "M80": 0.80}
+ALL_LEVELS = LEVELS + LEVELS_MIX + LEVELS_MIX_PAID
 
 #: Elements per task. The answer is how many of them are prime.
 K = 5
