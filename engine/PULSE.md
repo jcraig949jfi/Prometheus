@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T16:41:50+00:00
+# PULSE — generated 2026-08-19T17:09:25+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -7,12 +7,13 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ```
 window: 3d
 emitted (new files):        603
-consumed (state changes):   192  {'queue_state': 146, 'registry': 40, 'findings': 4, 'doctrine': 2}
-consumed/emitted:           0.32
+consumed (state changes):   196  {'queue_state': 150, 'registry': 40, 'findings': 4, 'doctrine': 2}
+consumed/emitted:           0.33
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 107
+## Commits, 72h (non-cron): 108
+- c535d236 08-19 12:41 DRBC-R07 DONE â€” and the pass's real event: the pilot failed Tier-A exit TWICE, independently
 - 737d41dc 08-19 12:23 Harmonia B: TIER-A-EXIT-FAIL â€” two criteria unmet; the token deviation is not conservative
 - b3c57ffc 08-19 12:21 Charon: TIER-A-EXIT-FAIL â€” the pilot's F-null is not the F-null R7 validated
 - bc517283 08-19 12:14 DRBC-R06 DONE: a generic theorem plus proven exceptions is not a universal theorem
@@ -37,8 +38,7 @@ verdict: ALIVE
 - 3d2226fb 08-19 05:25 Ergon: FIRST LEVELED MANIFEST â€” M30 decision-n LEVELED on the paid host
 - 20183e7e 08-19 05:23 COLLISION-PROBE-FAMILY DONE: 9 probes that test whether a system binds names to referents
 - aaf5d377 08-19 05:10 Ergon: paid-host M20=0.640 (host delta +14pp REAL); M30 bisection dead-centre at 0.500; decision-n on M30 in flight
-- 7b4b3be3 08-19 04:56 MAY-REGISTRY-RECON DONE: zero contradictions across 3 months of independent re-derivation
-- … +82 more
+- … +83 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
