@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T08:00:02+00:00
+# PULSE — generated 2026-08-19T08:28:05+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -7,12 +7,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ```
 window: 3d
 emitted (new files):        606
-consumed (state changes):   106  {'queue_state': 79, 'registry': 22, 'doctrine': 2, 'findings': 3}
-consumed/emitted:           0.17
+consumed (state changes):   113  {'queue_state': 85, 'registry': 23, 'doctrine': 2, 'findings': 3}
+consumed/emitted:           0.19
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 88
+## Commits, 72h (non-cron): 90
+- 8e19200b 08-19 04:03 Aporia: May claim-couplet registry LOCATED â€” third independent Saxl confirmation
+- 83908f8b 08-19 04:00 DRBC-11 DONE: batch 12 â€” the May fleet hunted the same traps, and the findings agree
 - de339a0f 08-19 03:30 DRBC-10 DONE: batch 11 mined â€” when a fact became KNOWN vs when it became CERTIFIED
 - 6a2fd317 08-19 03:03 DRBC-09 DONE: batch 10 mined â€” the under-claim direction opens
 - 15f816f4 08-19 02:36 DRBC-08 DONE: batch 9 mined â€” journal publication is not community acceptance
@@ -36,9 +38,7 @@ verdict: ALIVE
 - 368d998b 08-18 19:00 Recovered (continued): DR batches 6-9 + seed decks â€” the stash held an entire archive
 - 26f50cac 08-18 19:00 Recovered: two never-committed May DR batches (found in an ancient stash) + stash discipline
 - aa7749e5 08-18 18:59 ERGON-FALS-MINE DONE: the fals cluster converts from corroboration into design
-- 28ff8d39 08-18 18:59 Ergon: M-sweep landed (monotone!); run-status diagnosed; M20 escalated to decision-n
-- 8b4b2f95 08-18 18:00 Kickoff prompt: M20-M80 intermediate rungs â€” status check first, then sweep
-- … +63 more
+- … +65 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
