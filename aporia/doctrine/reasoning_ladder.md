@@ -157,6 +157,62 @@ gravity.)*
   abandonment of objectives), open-endedness (AI-generating-algorithms program), curiosity as
   compression progress.
 
+### 4.1 Empirical grounding brief (mined 2026-08-18 from lad_01-05, DR reports 00058-00062)
+
+*(Tier-2 anchors per `feedback_verify_upstream_attributions`: report-sourced, primary pinning
+required before any corpus promotion. Each line names the canon clause it grounds.)*
+
+**The ladder-vs-basis question now has human-mathematics evidence (00058).** Published proofs,
+measured at step-transition level, are not linear rung-climbs: the PARC/PERL line (2025)
+restructures reasoning chains into premise-linked DAGs because linear representation provably
+hides accumulation errors; Viteri & DeDeo's Coq-corpus study (Cognition 2022) shows belief in
+real proofs propagates over an interconnected claim network mixing deductive (forward) and
+abductive (backward) transitions, with an **epistemic phase transition** to confidence that
+depends on multi-path redundancy, not chain length. This is direct external support for canon
+S0's stance: "ladder" is the human-facing word; the measured object is a lattice of typed
+transitions. The phase-transition mechanism is also the closest published homolog of Band-H2
+navigation: confidence as a percolation property of the failure/support network.
+
+**Step-transition annotation is the unit of measure externally too (00058).** PRM800K (800K
+step labels), CHAMP (expert first-wrong-step), and process-over-outcome supervision results
+independently converge on the trace-vector doctrine (section 5): outcome grading is invalid
+because models reach correct answers through flawed transitions (CHAMP), and deeper traces get
+MORE miscalibrated (IUQ 2026: ECE rises with reasoning depth) — so `confidence_calibration` and
+`proof_gap_locations` are load-bearing fields, not decoration.
+
+**Named external kill patterns for R3-R4 (00058).** Theorem-SFT's failure taxonomy — "premise
+oversight" (applying a rule without checking its conditions) and "conclusion misassignment"
+(failing to bind abstract entities to concrete objects) — plus its Cond->Map->Exec operator
+decomposition, give the R3/R4 graders externally-attested kill patterns; `stayed_in_surface`
+(harmonia R4 module) is our local instance of the same class.
+
+**Instrument-sensitivity warning for graders (00058, 00059).** The formalization gap (95%
+informal accuracy vs 2.8% compiling Lean proofs on the same problems) and ARC-AGI saturation
+(static versions saturated by test-time compute while interactive ARC-AGI-3 sits under 1%) both
+say: a band score is a property of the instrument as much as the system. This is the external
+face of the canon plateau rule — a tier plateau is an interface bug until an interface audit
+clears it — and of RHAE-style efficiency scoring as the anti-brute-force axis.
+
+**Memorization confound doctrine is externally standard (00060).** The 2024-2026 causal-eval
+line (CausalProbe-2024, CounterBench) found models pass causal benchmarks from parametric
+memory and fail on fresh or nonsense variables; the field's fix — novel-variable probes — is
+the anti-anchor/decoy logic of this program, independently reinvented. Pearl's
+association/intervention/counterfactual split is the nearest external homolog of the R5-R7
+region and should be cited as comparandum, not adopted as structure (domains are docstrings).
+
+**Self-correction grounding for R6/H1 (00061).** The accuracy-correction paradox (intrinsic
+revision turns correct answers wrong; baseline capability bounds self-repair) and the
+verifier-loop > prompt-reflection result mean R6 graders must score self-monitoring against
+external verifier ground truth, never self-report; SCoRe/MGRPO-class RL-on-own-errors is the
+external comparandum for metabolization-style training.
+
+**R12 gap is externally confirmed as valuation, not generation (00062).** The
+AlphaGeometry/AlphaEvolve/OpenEvolve/IRIS comparison finds systems superhuman inside
+machine-verifiable search spaces yet unable to judge which conjectures are *interesting*;
+IRIS-style conjecture ranking is the only published attempt at the valuation half. An R12
+grader is therefore a valuation instrument first — the generation half already has existence
+proofs (Band G).
+
 ## 5. The Reasoning Trace Vector (the artifact layer, promoted)
 
 Every attempt at any rung emits the structured record — never a scalar: `problem_id, tier_probe,
