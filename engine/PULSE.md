@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T15:47:39+00:00
+# PULSE — generated 2026-08-19T16:14:20+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        599
-consumed (state changes):   182  {'queue_state': 138, 'registry': 38, 'findings': 4, 'doctrine': 2}
-consumed/emitted:           0.30
+emitted (new files):        600
+consumed (state changes):   187  {'queue_state': 142, 'registry': 39, 'findings': 4, 'doctrine': 2}
+consumed/emitted:           0.31
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 102
+## Commits, 72h (non-cron): 104
+- 196c9a9a 08-19 12:04 Kickoff prompts: Tier A exit review (Charon || Harmonia B) then Tier B (Ergon)
+- 7cb068e5 08-19 11:47 DRBC-R05 DONE: the Ignis-era reports wrote today's doctrine three months early
 - fa89446d 08-19 11:19 DRBC-R04 DONE: the barrier trio enters the registry; the recovered corpus stitches the program together
 - cd80e250 08-19 10:51 DRBC-R03 DONE: the substrate type-system gets its literature base â€” and May killed its own entry
 - cbe713f6 08-19 10:23 DRBC-R02 DONE: May re-verified its anchors against 2026 follow-ups â€” two-layer provenance inherited
@@ -36,9 +38,7 @@ verdict: ALIVE
 - a88d5896 08-19 04:30 Ergon: paid DeepSeek lane wired, preflighted, decision run relaunched on it
 - 7adbc183 08-19 04:28 LETHE-HARVEST DONE: 7 live-verified, 5 anchors â€” and withdrawal status has a time derivative
 - 8e19200b 08-19 04:03 Aporia: May claim-couplet registry LOCATED â€” third independent Saxl confirmation
-- 83908f8b 08-19 04:00 DRBC-11 DONE: batch 12 â€” the May fleet hunted the same traps, and the findings agree
-- de339a0f 08-19 03:30 DRBC-10 DONE: batch 11 mined â€” when a fact became KNOWN vs when it became CERTIFIED
-- … +77 more
+- … +79 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
