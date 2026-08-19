@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T11:11:22+00:00
+# PULSE — generated 2026-08-19T11:38:21+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -7,12 +7,13 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ```
 window: 3d
 emitted (new files):        616
-consumed (state changes):   138  {'queue_state': 103, 'registry': 30, 'doctrine': 2, 'findings': 3}
-consumed/emitted:           0.22
+consumed (state changes):   142  {'queue_state': 106, 'registry': 31, 'doctrine': 2, 'findings': 3}
+consumed/emitted:           0.23
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 99
+## Commits, 72h (non-cron): 100
+- 0e8f4094 08-19 07:11 DRBC-15 DONE: batch 16 â€” the registry starts carrying WHY, not just WHAT
 - 7744ac28 08-19 06:48 Ergon: THE PILOT RAN â€” PIPELINE_ADMISSIBLE; ladder in predicted order; direction positive
 - d150553b 08-19 06:44 DRBC-14 DONE: batch 15 â€” the contested-claim vocabulary completes; back-corpus at 300
 - 573334dd 08-19 06:21 Ergon: R7-D0 PASS on the new family (0.317); R3 LIVE ALL PASS; THE PILOT IS RUNNING
@@ -37,8 +38,7 @@ verdict: ALIVE
 - c57f9639 08-19 00:19 DRBC-03 DONE: batch 4 mined â€” a new anchor class: the withdrawn-proof trap
 - 03cc7f91 08-19 00:13 Ergon: M20 rerun hit a PER-MODEL quota wall â€” artifacts quarantined, auto-relaunch watcher armed
 - 2085a5e8 08-18 23:51 Aporia: LAD-EMPIRICS done â€” Canon 4.1: the ladder question gets human-math evidence
-- be0e4c13 08-18 23:24 Aporia charter fix: stash push -uno is not a valid flag (belongs to git status)
-- … +74 more
+- … +75 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
