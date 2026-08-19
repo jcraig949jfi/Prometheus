@@ -119,7 +119,57 @@ the retire dossier must name the **path**, never the bare name. Aporia owns that
 4. **Forge relocation ($900 PowerSpec)** — M1's standing recommendation is **hold**. Four of
    the fleet's top moves are in-context or in-corpus; none need the box.
 
-## 7i. THE PILOT RAN: PIPELINE_ADMISSIBLE (Ergon, 2026-08-19)
+## 7j. TIER-A-EXIT-FAIL ×2 ADOPTED — **the +9.6pp is WITHDRAWN**; cures running (Ergon, 2026-08-19)
+
+**Both exit reviews failed the pilot, and they are right.** Charon (`b3c57ffc`): the deployed
+F-null carried the JSON packet header while F-prom did not (`.text` vs `.body`, one word at a
+call site) — the arms were separable by a blinded classifier at **1.0000**, and the 282-token
+arm asymmetry closes exactly to the header size. Harmonia B (`737d41dc`): F-oracle was two
+fixed templates whose content-free half performed as well as its prescription half (generic
+priming wearing the ceiling arm's label), and control C's 0/100 was uninterpretable
+(P(0|chance)=3.2e-13 — a pass and a non-execution produce the same number).
+
+> **THE +9.6pp DIRECTIONAL ESTIMATE IN §7i IS WITHDRAWN.** It is confounded by the arm
+> asymmetry and must not be quoted. §7i's ladder ordering claim is likewise not to be quoted
+> until re-measured. The artifacts remain committed as the record of the defect.
+
+**A finding worth generalizing** (Charon §2): the header tokens had been assessed harmless
+because they were "constant across every packet" — true within an arm, invalidated the moment
+one arm got the header and the other didn't. *Harmless-because-constant arguments are scoped
+to the comparison they were made in.*
+
+**Adopted, both reviews in full. Where they disagree (recorded, then adjudicated under R12):**
+1. **Tier-B manifest N:** Charon 620 (Wilson-lower-bound sizing; preserves 195 strict-subset
+   records for BC-3) vs Harmonia B 560 (point estimate + auto-firing replenishment).
+   **Ruling: 620** — it dominates (satisfies her figure, clears 400 post-screen even at the
+   yield CI's lower bound, keeps BC-3 powered); her auto-replenishment branch is adopted as
+   the backstop.
+2. **Host drift:** HB adds a start-AND-end cold-band re-read with a 7pp drift threshold
+   (HOST-DRIFTED ⇒ re-level, not analyse). Charon has no equivalent. **Adopted** — pure
+   addition; the +14pp host delta is 56% of the band's width.
+3. **F-oracle remediation:** Charon pre-commits "if it still fails → matrix row 1, no residue
+   verdict"; HB rules the v1 failure *arm-construction-limited, not family-limited* and
+   requires a genuine per-task rebuild before that inference. **Both adopted in sequence:**
+   rebuild per-task (done — names the specific hardest composite and why it deceives, count
+   withheld), re-test in the corrected pilot; if a REAL oracle still fails, row 1 fires and
+   no residue verdict issues. Pre-committed now.
+
+**Cures executed this session so far:**
+- **C1/C2 (Charon):** `.body`/`.body` everywhere, asserted at both call sites; R7 re-run
+  through the exact shipping path — **0.333 PASS** (suite 152/152, including HB's C-7
+  calibration test).
+- **F-oracle v2 (HB C-1):** per-task diagnosis from gold (ceiling arm only), naming the
+  hardest composite and its deceiving property, never the count.
+- **In flight, concurrent on separate hosts:** R3 supplement (control B at N=400 as specified;
+  control C re-run with parse/extracted-distribution/refusal diagnostics and a
+  guess-when-uninformed instruction so a pass is distinguishable from a broken scorer) on the
+  paid lane; **second-family cold-band check** (nemotron-super-49b-v1.5, pre-declared candidate
+  order + selection rule, full band on its own host pin) on the free lane.
+- **Next in sequence:** corrected pilot re-run (Charon C3) → then, only if green, Tier B at
+  manifest 620 under both reviews' §7/§5 parameter rulings. Wall-corpus substitution statement
+  (both C4/C-6) to be recorded under R12 with the corrected-pilot results.
+
+## 7i. THE PILOT RAN: PIPELINE_ADMISSIBLE (Ergon, 2026-08-19) — **§7j WITHDRAWS ITS HEADLINE**
 
 **Every gate passed and the pilot executed.** 146 post-screen tasks × 5 arms = 730 calls on
 `deepseek:deepseek-v4-flash`, **zero parse failures, zero transport failures**, D0 scope only.

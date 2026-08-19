@@ -67,8 +67,14 @@ def main() -> int:
             except Exception as e:  # noqa: BLE001
                 print(f"  [{stratum}] F-null build failed on {row['uid']}: {type(e).__name__}: {e}")
                 continue
-            prom_texts.append(prom.text)
-            null_texts.append(null.packet.text if hasattr(null, "packet") else null.text)
+            # CHARON C2: R7 pairs render EXACTLY as the runner ships them — .body/.body.
+            # The 08-19 exit review found R7 certifying .text/.text while the pilot shipped
+            # .body/.text: a validated pass transferred to a configuration it never tested.
+            prom_body = prom.body
+            null_body = null.packet.body if hasattr(null, "packet") else null.body
+            assert not null_body.lstrip().startswith("{"), "R7 null rendered with header"
+            prom_texts.append(prom_body)
+            null_texts.append(null_body)
             prom_recs_all.append(recs)
             null_recs_all.append(getattr(null, "records", recs))
 
