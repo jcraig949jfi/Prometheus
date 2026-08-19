@@ -119,6 +119,56 @@ the retire dossier must name the **path**, never the bare name. Aporia owns that
 4. **Forge relocation ($900 PowerSpec)** — M1's standing recommendation is **hold**. Four of
    the fleet's top moves are in-context or in-corpus; none need the box.
 
+## 7g. M-RUNGS LANDED — first MONOTONE axis; M20 centred; decision-n running (Ergon, 2026-08-18)
+
+**Run-status finding, established first as asked: the M-sweep did NOT die.** It completed
+(`ts_utc 13:28`, full JSON, clean verdict) *after* the launching session ended. The zero-byte
+file on origin was **create-then-buffer**: shell redirection creates the file at launch, Python
+block-buffers until exit, and a mid-run commit captured the empty shell. The exists-while-empty
+hazard is real and is now **fixed structurally** — `chain_run` writes results atomically
+(temp + `os.replace`, `--out` flag); a ledger lands complete or not at all.
+
+**The rung table — first monotone axis in the program's history:**
+
+```
+rung   acc     manifest CI       pf     trunc   timeout   verdict
+M20   50.0%   [0.303, 0.697]   10.0%    0.0%    10.0%    UNDECIDED (point dead-centre)
+M40   27.5%   [0.099, 0.451]   20.0%    0.0%    17.5%    UNDECIDED
+M60   20.0%   [0.042, 0.358]    7.5%    0.0%     7.5%    UNDECIDED
+M80   15.0%   [0.009, 0.291]    2.5%    0.0%     2.5%    OUT-OF-BAND
+monotone decreasing TRUE · span 35.0pp · with endpoints: 82.5 → 50.0 → 27.5 → 20.0 → 15.0
+```
+
+Deception *fraction* is a real, monotone difficulty lever — the first, after magnitude, depth,
+and pure deception-type all failed.
+
+**Standing-hazard check, done before reading accuracy:** pf/timeout spread across M rungs is
+**17.5pp** (M40 20.0%/17.5% vs M80 2.5%/2.5%) — above the 10pp guard, so **M40-vs-M80
+comparisons are confounded and are not quoted**. The load-bearing read — M20 vs the band — is
+**robust by exhaustive bounds**: timeouts-all-wrong 50.0%, timeouts-all-right 60.0%,
+completed-only 55.6% — every reading inside [0.35, 0.60]. Root cause: the 180s transport
+timeout was derived on ≤96-token-output families and clips a family generating up to 3,873
+tokens — truncation's defect class at the transport layer. Re-derived by measurement (length
+probe: 24/24 at 300s, zero timeouts) → runner now uses **420s**.
+
+**Which branch fired: the §3.1 escalation, which is neither kickoff branch exactly.** No rung
+landed IN-BAND on the interval classifier, but M20's *point* is 0.500 — dead centre — and under
+the adjudicated standing rule (point estimate) with a straddling interval, the **pre-declared
+escalation** applies: re-measure at decision-n. More faithful to the binding text than adding
+rungs around a rung that is already centred. **§4 did not fire; Candidate B untouched.**
+
+**Decision-n run IN FLIGHT:** M20, **n=200 × 2 cold reps = 400 calls**, seed 20260819 (next
+unconsumed), timeout 420s, budget 8192. Sizing from my own derivation (`ee05d557`): at p=0.50,
+k=1, band term needs 96; n=200 is 2× margin and makes the dispersion term decidable to
+m≈0.375. The two-rep shape means **this run IS the §4.2 pre-pass** (two executions, three
+uses): contamination screen, movable share, and D0/D1 residue land with it. Band read on rep-1
+of the full manifest per HB-R1. Full rule in code: point ∈ [0.35,0.60] AND movable ≥ 0.30 ⇒
+`LEVELED`. Atomic output → `ergon/probe/ledgers/decision_M20_n200.json`.
+
+**If it returns LEVELED, the probe has its first leveled manifest and the pre-pass is already
+complete** — next session proceeds: R7 at D0 (0.383 stands), R3 controls live, pilot at D0
+scope, D1–D3 as the separately-named distance description. Post-screen N lands with the run.
+
 ## 7f. CANDIDATE A CONFIRMED — truncation cleared, axis is steeper, rungs re-spacing (Ergon, 2026-08-18)
 
 **JOB 1 — truncation confound CLEARED, and the axis SURVIVES the fix, steeper than measured.**
