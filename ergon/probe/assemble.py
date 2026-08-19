@@ -135,6 +135,19 @@ def count_tokens(text: str) -> int:
 # --------------------------------------------------------------------------- redaction
 
 
+def redact_all_answer_forms(text: str) -> str:
+    """D0/D1 packet redaction, BOTH answer spaces (prereg §4.5 + the 2026-08-19 numeric gap).
+
+    The verdict redactor was specified for a True/False family; the current family's answer is
+    a COUNT, so the analogous leak is the numeric answer in the attempt text ("ANSWER: 3",
+    "so three are prime"). Scorer/redactor parity holds for both: each redactor removes exactly
+    what its scorer would read. Applied together so a family change can never silently reopen
+    the closed channel of the other family.
+    """
+    from .extract import redact_numeric_answers
+    return redact_numeric_answers(_VERDICT_TOKEN.sub(REDACTION_PLACEHOLDER, text))
+
+
 def redact_verdict_tokens(text: str) -> str:
     """Strip EVERY verdict token, replacing each with the prereg's literal placeholder.
 
@@ -147,8 +160,9 @@ def redact_verdict_tokens(text: str) -> str:
 
 
 def leaks_verdict(text: str) -> bool:
-    """True if any token the scorer would read as a verdict survives. Redactor/scorer parity."""
-    return bool(_VERDICT_TOKEN.search(text))
+    """True if any token EITHER scorer would read as an answer survives (both families)."""
+    from .extract import leaks_numeric_answer
+    return bool(_VERDICT_TOKEN.search(text)) or leaks_numeric_answer(text)
 
 
 # --------------------------------------------------------------------------- residue records
@@ -224,7 +238,14 @@ def load_prepass(path: pathlib.Path, *, ledger_id: str = "probe_prepass") -> lis
                 )
         trace = str(d.get("attempt_text") or d.get("trace") or "").strip()
         null_fields = tuple(f for f in ("attempt_text", "diagnosis") if not d.get(f))
-        body = trace if trace else "(no attempt text recorded)"
+        # Count-family pre-pass residue renders as a METHOD PROJECTION (see extract.py):
+        # the prose channel is a measured answer oracle (45% vs 25% chance) and cannot be
+        # cleaned by redaction, so the packet ships the method census only.
+        if str(d.get("ledger_id", ledger_id)).startswith("nearmiss"):
+            from .extract import method_projection
+            body = method_projection(trace)
+        else:
+            body = trace if trace else "(no attempt text recorded)"
         if d.get("diagnosis"):
             body += f"\n  diagnosis: {d['diagnosis']}"
         out.append(
@@ -636,7 +657,7 @@ def assemble_retrieved(
         parts = [r.render() for r in recs] or ["(no residue recorded at this distance)"]
         body = "\n\n".join(parts) + "\n\n" + sparsity.render()
         if redact:
-            body = redact_verdict_tokens(body)
+            body = redact_all_answer_forms(body)
         return body, sparsity.render(), count_tokens(body)
 
     body, _sparsity_text, tokens = build(chosen)
@@ -717,7 +738,7 @@ def assemble_whole(
         tail = "\n\n".join(r.render() for r in recs) or "(no residue recorded at this distance)"
         text = prefix_text + "\n\n=== RESIDUE ===\n" + tail + "\n\n" + sparsity.render()
         if redact:
-            text = redact_verdict_tokens(text)
+            text = redact_all_answer_forms(text)
         return text, count_tokens(text)
 
     body, tokens = build(body_records)

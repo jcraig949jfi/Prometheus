@@ -82,8 +82,12 @@ def test_every_verdict_token_is_stripped_not_just_the_terminal_one():
     )
     assert "False" not in p.body and "True" not in p.body
     assert "true" not in p.body.lower().replace("[verdict-redacted]", "")
-    # "therefore False" (mid-stream) + "The claim is True" (restated) + "Final answer: True"
-    assert p.body.count(A.REDACTION_PLACEHOLDER) == 3
+    # "therefore False" (mid-stream) + "The claim is True" (restated) stay VERDICT-REDACTED;
+    # the third site ("Final answer: True") is consumed by the numeric redactor's ANSWER-tag
+    # pass (2026-08-19), which runs after the verdict pass and swallows tag + token together.
+    assert p.body.count(A.REDACTION_PLACEHOLDER) == 2
+    from ergon.probe.extract import NUMERIC_REDACTION_PLACEHOLDER
+    assert NUMERIC_REDACTION_PLACEHOLDER in p.body
 
 
 def test_redacted_packet_yields_no_verdict_to_the_scorer():
@@ -98,14 +102,23 @@ def test_redacted_packet_yields_no_verdict_to_the_scorer():
 
 
 def test_reasoning_trace_survives_redaction():
-    """The trace is the residue; only the answer key goes."""
+    """The trace's METHOD content is the residue; every answer form goes.
+
+    CONTRACT CHANGE 2026-08-19 (numeric gap): the count family made standalone small integers
+    an answer channel, so they are now redacted too — "gcd is 1" loses its "1". That is
+    accepted over-stripping (it can only shrink D0/D1 delta). What must survive is the method
+    level: which test was applied, to which multi-digit operands.
+    """
     p = A.assemble_retrieved(
         task_uid="t1", stratum="D0",
         records=[_rec(seq=1, uid="t1", body=MIDSTREAM)],
         tau={"probe_prepass": 10},
     )
-    assert "gcd is 1" in p.body
-    assert "907 is prime" in p.body
+    assert "gcd" in p.body                      # the operation applied — the verb survives
+    assert "907 is prime" in p.body             # multi-digit operands survive
+    assert "checked" in p.body                  # the method narrative survives
+    from ergon.probe.extract import leaks_numeric_answer
+    assert not leaks_numeric_answer(p.body)     # no count channel survives
 
 
 def test_d1_is_redacted_and_d2_d3_are_not():

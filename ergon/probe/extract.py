@@ -184,3 +184,97 @@ def extract_numeric(raw: str | None) -> NumericExtraction:
 
     flags.append("no_number")
     return NumericExtraction(None, flags)
+
+
+# ---------------------------------------------------------------------------------------
+# Numeric-answer redaction (task family v3, count answers). Same contract as the verdict
+# redactor: scorer/redactor parity — anything extract_numeric() would read as an answer is
+# exactly what gets removed from a rendered D0/D1 packet.
+#
+# The leak channels on a count task, in order of directness:
+#   1. ANSWER: <n> lines            — the scorer's primary channel
+#   2. standalone small integers    — the count restated in prose ("so 3 are prime")
+#   3. spelled-out count words      — "three of them are prime", "all five", "none"
+# Element values themselves are 4-17 digit integers and are NOT redacted — they are the
+# residue. Single-digit tokens are almost surely counts or step indices; losing step indices
+# is accepted over-stripping (that error direction can only shrink D0/D1 delta).
+
+# Tag-scoped, not line-scoped: nuking the whole line eats co-located reasoning ("...gcd is 1.
+# Final answer: True."), and the scorer only ever reads the token AFTER the tag — parity says
+# remove exactly that.
+_ANSWER_LINE_ANY = re.compile(r"(?:final\s+)?ANSWER\s*[:=]\s*\S*", re.IGNORECASE)
+# Guard decimals (3.14) without protecting sentence-final counts ("count is 4."): a digit is
+# redacted unless it adjoins another digit, or sits inside a decimal on either side.
+_SMALL_INT = re.compile(r"(?<!\d)(?<!\d\.)[0-9](?!\d)(?!\.\d)")
+_COUNT_WORDS = re.compile(
+    r"\b(zero|one|two|three|four|five|none|all\s+(?:of\s+)?(?:them|five))\b", re.IGNORECASE)
+
+NUMERIC_REDACTION_PLACEHOLDER = "[COUNT-REDACTED]"
+
+# Per-element CONCLUSIONS are the answer, distributed: on a count task, "X is prime ... Y is
+# composite" lets a reader recover the count by counting phrases, with no digit anywhere.
+# Measured on real M30 packets 2026-08-19: 45% gold recovery vs 25% chance (p~0) with every
+# explicit answer form already stripped. The METHOD is the residue; the per-element verdict is
+# the answer. Both polarities are stripped symmetrically so the marker count stays constant
+# (five elements, five conclusions) and carries no information.
+_ELEMENT_CONCLUSION = re.compile(
+    r"(?:is|are|was|were|appears?(?:\s+to\s+be)?|seems?(?:\s+to\s+be)?|must\s+be|"
+    r"cannot\s+be|can't\s+be|therefore|thus|hence|so\s+it'?s?)\s+"
+    r"(?:(?:a|an|not\s+a?n?|definitely|likely|clearly|indeed)\s+)*"
+    r"(?:prime|composite|pseudoprime)(?:\s+numbers?)?",
+    re.IGNORECASE)
+_CONCLUSION_SHORT = re.compile(
+    r"(?:prime|composite)\s*[.!:]|->\s*(?:prime|composite)|"
+    r"\((?:prime|composite)\)|:\s*(?:prime|composite)",
+    re.IGNORECASE)
+CONCLUSION_PLACEHOLDER = "[CONCLUSION-REDACTED]"
+
+
+def redact_numeric_answers(text: str) -> str:
+    """Strip every form the numeric scorer (or a solver) could read the count from."""
+    text = _ANSWER_LINE_ANY.sub(NUMERIC_REDACTION_PLACEHOLDER, text)
+    text = _COUNT_WORDS.sub(NUMERIC_REDACTION_PLACEHOLDER, text)
+    text = _SMALL_INT.sub(NUMERIC_REDACTION_PLACEHOLDER, text)
+    text = _ELEMENT_CONCLUSION.sub(CONCLUSION_PLACEHOLDER, text)
+    text = _CONCLUSION_SHORT.sub(CONCLUSION_PLACEHOLDER, text)
+    return text
+
+
+def leaks_numeric_answer(text: str) -> bool:
+    """True if any channel the redactor targets survives."""
+    return bool(_ANSWER_LINE_ANY.search(text) or _COUNT_WORDS.search(text)
+                or _SMALL_INT.search(text))
+
+
+# ---------------------------------------------------------------------------------------
+# METHOD PROJECTION (2026-08-19). Measured on real M30 D0 packets: even with every explicit
+# answer form and every per-element conclusion stripped, a blinded classifier recovers the
+# count at 45% vs 25% chance — the leak is DIFFUSE PROSE STYLE ("only", "exactly", "quickly"),
+# because the work a trace performs depends on the answer. No finite phrase list removes that.
+# So the D0/D1 rendering for count-family residue is a deterministic PROJECTION onto the one
+# thing the residue-plausibility argument ever claimed carries: WHICH METHODS the prior
+# attempt applied. Fixed vocabulary, unordered, no counts, no per-element structure — the
+# style channel is removed by construction, not by pattern-matching. This is a rendering
+# reduction (R6-legal), not enrichment; its thinness is the measurement.
+
+METHOD_VOCAB = {
+    "trial-division": ("trial division", "divide by", "dividing by", "small prime", "small factor"),
+    "fermat-test": ("fermat", "2^(n-1)", "pow(2,"),
+    "miller-rabin": ("miller",),
+    "sqrt-bound": ("sqrt", "square root", "up to the root"),
+    "parity-or-last-digit": ("even", "ends in", "last digit", "parity"),
+    "digit-sum-rule": ("digit sum", "sum of digits", "divisible by 3", "divisible by 9"),
+    "modular-arithmetic": ("mod ", "modulo", "modular"),
+    "factorization-attempt": ("factor", "factoriz", "factoris"),
+}
+
+
+def method_projection(attempt_text: str) -> str:
+    """Deterministic, answer-free rendering of a count-family attempt: methods only."""
+    low = (attempt_text or "").lower()
+    seen = sorted(k for k, needles in METHOD_VOCAB.items()
+                  if any(n in low for n in needles))
+    if not seen:
+        return "(prior attempt recorded no recognizable method vocabulary)"
+    return ("prior attempt applied (method projection; prose withheld — measured diffuse "
+            "answer leakage): " + ", ".join(seen))
