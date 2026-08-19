@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T19:00:16+00:00
+# PULSE — generated 2026-08-19T19:30:26+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        604
-consumed (state changes):   215  {'queue_state': 164, 'registry': 44, 'findings': 5, 'doctrine': 2}
+emitted (new files):        605
+consumed (state changes):   218  {'queue_state': 167, 'registry': 44, 'findings': 5, 'doctrine': 2}
 consumed/emitted:           0.36
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 111
+## Commits, 72h (non-cron): 113
+- d5472165 08-19 15:08 Ergon: paid lane exhausted at -$0.70 mid-cure; vacuous control quarantined; transport gate added
+- 6e1b6ff9 08-19 15:00 Generator fix pays twice: 14 phantom batches killed, 22 hidden reports found â€” corpus verifiably empty
 - e3fcc040 08-19 14:44 Ergon: BOTH EXIT-FAILS ADOPTED â€” +9.6pp WITHDRAWN; C1/C2 cured; oracle v2; cures in flight
 - 11b966c9 08-19 14:32 WPROBE-FAMILY built: 8 withdrawal-semantics probes â€” the negative controls are the sharp edge
 - 7f2401a8 08-19 14:04 LETHE-HARVEST-2 DONE: the withdrawal taxonomy completes â€” three reasons, opposite truths
@@ -36,9 +38,7 @@ verdict: ALIVE
 - 0e8f4094 08-19 07:11 DRBC-15 DONE: batch 16 â€” the registry starts carrying WHY, not just WHAT
 - 7744ac28 08-19 06:48 Ergon: THE PILOT RAN â€” PIPELINE_ADMISSIBLE; ladder in predicted order; direction positive
 - d150553b 08-19 06:44 DRBC-14 DONE: batch 15 â€” the contested-claim vocabulary completes; back-corpus at 300
-- 573334dd 08-19 06:21 Ergon: R7-D0 PASS on the new family (0.317); R3 LIVE ALL PASS; THE PILOT IS RUNNING
-- 89003425 08-19 06:17 DRBC-13 DONE: batch 14 â€” process archaeology: the May fleet was building this engine
-- … +86 more
+- … +88 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
