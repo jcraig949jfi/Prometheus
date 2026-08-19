@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T10:17:23+00:00
+# PULSE — generated 2026-08-19T10:44:15+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        610
-consumed (state changes):   130  {'queue_state': 97, 'registry': 28, 'doctrine': 2, 'findings': 3}
-consumed/emitted:           0.21
+emitted (new files):        614
+consumed (state changes):   134  {'queue_state': 100, 'registry': 29, 'doctrine': 2, 'findings': 3}
+consumed/emitted:           0.22
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 95
+## Commits, 72h (non-cron): 97
+- 573334dd 08-19 06:21 Ergon: R7-D0 PASS on the new family (0.317); R3 LIVE ALL PASS; THE PILOT IS RUNNING
+- 89003425 08-19 06:17 DRBC-13 DONE: batch 14 â€” process archaeology: the May fleet was building this engine
 - e4e62080 08-19 05:50 DRBC-12 DONE: batch 13 â€” halfway through the back-corpus; a solved neighbor is not the solved problem
 - 3625ea6d 08-19 05:50 Ergon: D0 leakage closed by METHOD PROJECTION â€” static check PASS at 0.170 vs 0.25 chance
 - 3d2226fb 08-19 05:25 Ergon: FIRST LEVELED MANIFEST â€” M30 decision-n LEVELED on the paid host
@@ -36,9 +38,7 @@ verdict: ALIVE
 - be0e4c13 08-18 23:24 Aporia charter fix: stash push -uno is not a valid flag (belongs to git status)
 - 46749d12 08-18 23:23 Aporia: NEGCAT-MINE done â€” 3 primary-verified REVERSE anchors; backup VERIFIED (1GB)
 - 538cc070 08-18 22:16 DRBC-02 DONE: batch 3 mined â€” paradigm threads get their pre-researched groundings
-- 836bed37 08-18 21:12 INFRA-BACKUP: the databases get their first-ever second copy â€” weekly, unattended
-- 1d61a6fa 08-18 20:50 Ergon: decision-n mislaunch diagnosed and discarded (R11); relaunched correctly at 12 RPM
-- … +70 more
+- … +72 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
