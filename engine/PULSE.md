@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T07:03:22+00:00
+# PULSE — generated 2026-08-19T07:30:25+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        620
-consumed (state changes):   98  {'queue_state': 73, 'registry': 20, 'doctrine': 2, 'findings': 3}
-consumed/emitted:           0.16
+emitted (new files):        606
+consumed (state changes):   102  {'queue_state': 76, 'registry': 21, 'doctrine': 2, 'findings': 3}
+consumed/emitted:           0.17
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 89
+## Commits, 72h (non-cron): 87
+- 6a2fd317 08-19 03:03 DRBC-09 DONE: batch 10 mined â€” the under-claim direction opens
 - 15f816f4 08-19 02:36 DRBC-08 DONE: batch 9 mined â€” journal publication is not community acceptance
 - eccb2331 08-19 02:09 DRBC-07 DONE: batch 8 mined â€” the registry gains the CLAIMED-UNRESOLVED status verb
 - e6e01840 08-19 01:42 DRBC-06 DONE: batch 7 mined â€” two Chowla conjectures, one name
@@ -37,8 +38,7 @@ verdict: ALIVE
 - 28ff8d39 08-18 18:59 Ergon: M-sweep landed (monotone!); run-status diagnosed; M20 escalated to decision-n
 - 8b4b2f95 08-18 18:00 Kickoff prompt: M20-M80 intermediate rungs â€” status check first, then sweep
 - 9b401c8c 08-18 17:57 DRBC-01 DONE: batch 2 mined â€” the founding thesis gets its external numbers
-- 94f9bc5e 08-18 16:54 AA-MINE-AG + AA-MINE-TOPO DONE: 7 anchors, one report-correction, one reverse anchor
-- … +64 more
+- … +62 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
