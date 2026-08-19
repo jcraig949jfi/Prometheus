@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T12:05:24+00:00
+# PULSE — generated 2026-08-19T12:32:20+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -7,12 +7,13 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ```
 window: 3d
 emitted (new files):        613
-consumed (state changes):   146  {'queue_state': 109, 'registry': 32, 'doctrine': 2, 'findings': 3}
-consumed/emitted:           0.24
+consumed (state changes):   151  {'queue_state': 113, 'registry': 33, 'doctrine': 2, 'findings': 3}
+consumed/emitted:           0.25
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 100
+## Commits, 72h (non-cron): 101
+- 516773d3 08-19 08:05 DRBC-17 DONE: batch 18 â€” Maier killed the model, not the bound
 - d0113df9 08-19 07:38 DRBC-16 DONE: batch 17 â€” the instrument photographed its own reflection
 - 0e8f4094 08-19 07:11 DRBC-15 DONE: batch 16 â€” the registry starts carrying WHY, not just WHAT
 - 7744ac28 08-19 06:48 Ergon: THE PILOT RAN â€” PIPELINE_ADMISSIBLE; ladder in predicted order; direction positive
@@ -37,8 +38,7 @@ verdict: ALIVE
 - 9e73033d 08-19 01:14 DRBC-05 DONE: batch 6 closes the T-series â€” two claim-boundary trap classes named
 - e95b811f 08-19 00:47 DRBC-04 DONE: batch 5 mined â€” the registry reaches tensor territory
 - c57f9639 08-19 00:19 DRBC-03 DONE: batch 4 mined â€” a new anchor class: the withdrawn-proof trap
-- 03cc7f91 08-19 00:13 Ergon: M20 rerun hit a PER-MODEL quota wall â€” artifacts quarantined, auto-relaunch watcher armed
-- … +75 more
+- … +76 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
