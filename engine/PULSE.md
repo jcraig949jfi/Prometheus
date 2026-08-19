@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T07:30:25+00:00
+# PULSE — generated 2026-08-19T08:00:02+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -7,12 +7,13 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ```
 window: 3d
 emitted (new files):        606
-consumed (state changes):   102  {'queue_state': 76, 'registry': 21, 'doctrine': 2, 'findings': 3}
+consumed (state changes):   106  {'queue_state': 79, 'registry': 22, 'doctrine': 2, 'findings': 3}
 consumed/emitted:           0.17
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 87
+## Commits, 72h (non-cron): 88
+- de339a0f 08-19 03:30 DRBC-10 DONE: batch 11 mined â€” when a fact became KNOWN vs when it became CERTIFIED
 - 6a2fd317 08-19 03:03 DRBC-09 DONE: batch 10 mined â€” the under-claim direction opens
 - 15f816f4 08-19 02:36 DRBC-08 DONE: batch 9 mined â€” journal publication is not community acceptance
 - eccb2331 08-19 02:09 DRBC-07 DONE: batch 8 mined â€” the registry gains the CLAIMED-UNRESOLVED status verb
@@ -37,8 +38,7 @@ verdict: ALIVE
 - aa7749e5 08-18 18:59 ERGON-FALS-MINE DONE: the fals cluster converts from corroboration into design
 - 28ff8d39 08-18 18:59 Ergon: M-sweep landed (monotone!); run-status diagnosed; M20 escalated to decision-n
 - 8b4b2f95 08-18 18:00 Kickoff prompt: M20-M80 intermediate rungs â€” status check first, then sweep
-- 9b401c8c 08-18 17:57 DRBC-01 DONE: batch 2 mined â€” the founding thesis gets its external numbers
-- … +62 more
+- … +63 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
