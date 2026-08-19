@@ -31,13 +31,23 @@ from typing import Optional
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
 NVIDIA_BASE = "https://integrate.api.nvidia.com/v1"
+DEEPSEEK_BASE = "https://api.deepseek.com"
 
-#: prereg §1 — verified live 2026-08-13, per-model, under a 16K payload (2x the packet ceiling).
+#: prereg §1 — verified live, per-model. Entries: (model_id, context, base_url, key_env).
+#: HOST/FAMILY PINNING RULE: nvidia:deepseek-v4-flash and deepseek:deepseek-v4-flash are the
+#: same FAMILY (never counted as two) on different HOSTS (never compared as the same solver —
+#: hosted endpoints do not disclose serving config). A host change is a solver-set change
+#: under C2 and re-runs the cold-band check.
+#:
+#: The deepseek: lane is PAID (James funded $10 on 2026-08-19 after the free lane's per-model
+#: quota wall — 397x instant HTTP429 with the same model answering fine via its own vendor).
+#: At V4-flash list prices the full decision run costs well under $1.
 VERIFIED_SOLVERS = {
-    "nvidia:nemotron-super-49b-v1.5": ("nvidia/llama-3.3-nemotron-super-49b-v1.5", 128_000),
-    "nvidia:nemotron-super-49b-v1": ("nvidia/llama-3.3-nemotron-super-49b-v1", 128_000),
-    "nvidia:deepseek-v4-flash": ("deepseek-ai/deepseek-v4-flash-0731", 1_000_000),
-    "nvidia:gpt-oss-120b": ("openai/gpt-oss-120b", 128_000),
+    "nvidia:nemotron-super-49b-v1.5": ("nvidia/llama-3.3-nemotron-super-49b-v1.5", 128_000, NVIDIA_BASE, "NVIDIA_API_KEY"),
+    "nvidia:nemotron-super-49b-v1": ("nvidia/llama-3.3-nemotron-super-49b-v1", 128_000, NVIDIA_BASE, "NVIDIA_API_KEY"),
+    "nvidia:deepseek-v4-flash": ("deepseek-ai/deepseek-v4-flash-0731", 1_000_000, NVIDIA_BASE, "NVIDIA_API_KEY"),
+    "nvidia:gpt-oss-120b": ("openai/gpt-oss-120b", 128_000, NVIDIA_BASE, "NVIDIA_API_KEY"),
+    "deepseek:deepseek-v4-flash": ("deepseek-chat", 1_000_000, DEEPSEEK_BASE, "DEEPSEEK_API_KEY"),
 }
 
 TIMEOUT_S = 180.0
@@ -71,12 +81,12 @@ def _load_env(p: pathlib.Path) -> dict:
     return env
 
 
-def api_key() -> str:
+def api_key(key_env: str = "NVIDIA_API_KEY") -> str:
     for src in (os.environ, _load_env(ROOT / "agents" / "eos" / ".env"), _load_env(ROOT / ".env")):
-        v = src.get("NVIDIA_API_KEY")
+        v = src.get(key_env)
         if v:
             return v
-    raise RuntimeError("NVIDIA_API_KEY not found (env, agents/eos/.env, .env)")
+    raise RuntimeError(f"{key_env} not found (env, agents/eos/.env, .env)")
 
 
 @dataclass
@@ -98,7 +108,7 @@ def call(solver: str, prompt: str, *, timeout: float = TIMEOUT_S,
          max_tokens: int = MAX_TOKENS, retries: int = RETRIES) -> SolverResult:
     if solver not in VERIFIED_SOLVERS:
         raise ValueError(f"{solver!r} is not in the verified solver set {sorted(VERIFIED_SOLVERS)}")
-    model_id, _ctx = VERIFIED_SOLVERS[solver]
+    model_id, _ctx, base_url, key_env = VERIFIED_SOLVERS[solver]
     body = json.dumps({"model": model_id,
                        "messages": [{"role": "user", "content": prompt}],
                        "max_tokens": max_tokens}).encode()
@@ -108,8 +118,9 @@ def call(solver: str, prompt: str, *, timeout: float = TIMEOUT_S,
     while attempt <= retries:
         attempt += 1
         req = urllib.request.Request(
-            f"{NVIDIA_BASE}/chat/completions", data=body,
-            headers={"Authorization": f"Bearer {api_key()}", "Content-Type": "application/json"})
+            f"{base_url}/chat/completions", data=body,
+            headers={"Authorization": f"Bearer {api_key(key_env)}",
+                     "Content-Type": "application/json"})
         t0 = time.monotonic()
         try:
             with urllib.request.urlopen(req, timeout=timeout) as r:
@@ -144,6 +155,13 @@ def context_window(solver: str) -> int:
     return VERIFIED_SOLVERS[solver][1]
 
 
+def spend_usd(prompt_tokens: int, completion_tokens: int, solver: str) -> float:
+    """List-price accounting for the paid deepseek lane (R11). V4-flash cache-miss rates."""
+    if not solver.startswith("deepseek:"):
+        return 0.0
+    return prompt_tokens / 1e6 * 0.14 + completion_tokens / 1e6 * 0.28
+
+
 def preflight(solver: str, *, ceiling_tokens: int = 8_000, small_trials: int = 2) -> dict:
     """R8a — MANDATORY before every run. Swap a failing solver BEFORE any arm, never mid-run.
 
@@ -162,6 +180,7 @@ def preflight(solver: str, *, ceiling_tokens: int = 8_000, small_trials: int = 2
     return {
         "solver": solver,
         "model_id": VERIFIED_SOLVERS[solver][0],
+        "host": VERIFIED_SOLVERS[solver][2],
         "passed": ok,
         "small_latency_s": [t.latency_s for t in trials[:small_trials]],
         "ceiling_latency_s": trials[-1].latency_s,
