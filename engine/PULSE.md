@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T08:28:05+00:00
+# PULSE — generated 2026-08-19T08:56:08+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -7,12 +7,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ```
 window: 3d
 emitted (new files):        606
-consumed (state changes):   113  {'queue_state': 85, 'registry': 23, 'doctrine': 2, 'findings': 3}
+consumed (state changes):   117  {'queue_state': 88, 'registry': 24, 'doctrine': 2, 'findings': 3}
 consumed/emitted:           0.19
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 90
+## Commits, 72h (non-cron): 92
+- a88d5896 08-19 04:30 Ergon: paid DeepSeek lane wired, preflighted, decision run relaunched on it
+- 7adbc183 08-19 04:28 LETHE-HARVEST DONE: 7 live-verified, 5 anchors â€” and withdrawal status has a time derivative
 - 8e19200b 08-19 04:03 Aporia: May claim-couplet registry LOCATED â€” third independent Saxl confirmation
 - 83908f8b 08-19 04:00 DRBC-11 DONE: batch 12 â€” the May fleet hunted the same traps, and the findings agree
 - de339a0f 08-19 03:30 DRBC-10 DONE: batch 11 mined â€” when a fact became KNOWN vs when it became CERTIFIED
@@ -36,9 +38,7 @@ verdict: ALIVE
 - cf2438a5 08-18 19:01 Recovery sweep, final tranche: the original May DR batch archive + Charon/cartography docs
 - 2f666d46 08-18 19:01 Recovery sweep complete: Theseus outbox + Ergon corpus + challenge docs from the May stash
 - 368d998b 08-18 19:00 Recovered (continued): DR batches 6-9 + seed decks â€” the stash held an entire archive
-- 26f50cac 08-18 19:00 Recovered: two never-committed May DR batches (found in an ancient stash) + stash discipline
-- aa7749e5 08-18 18:59 ERGON-FALS-MINE DONE: the fals cluster converts from corroboration into design
-- … +65 more
+- … +67 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
