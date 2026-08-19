@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T10:44:15+00:00
+# PULSE — generated 2026-08-19T11:11:22+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        614
-consumed (state changes):   134  {'queue_state': 100, 'registry': 29, 'doctrine': 2, 'findings': 3}
+emitted (new files):        616
+consumed (state changes):   138  {'queue_state': 103, 'registry': 30, 'doctrine': 2, 'findings': 3}
 consumed/emitted:           0.22
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 97
+## Commits, 72h (non-cron): 99
+- 7744ac28 08-19 06:48 Ergon: THE PILOT RAN â€” PIPELINE_ADMISSIBLE; ladder in predicted order; direction positive
+- d150553b 08-19 06:44 DRBC-14 DONE: batch 15 â€” the contested-claim vocabulary completes; back-corpus at 300
 - 573334dd 08-19 06:21 Ergon: R7-D0 PASS on the new family (0.317); R3 LIVE ALL PASS; THE PILOT IS RUNNING
 - 89003425 08-19 06:17 DRBC-13 DONE: batch 14 â€” process archaeology: the May fleet was building this engine
 - e4e62080 08-19 05:50 DRBC-12 DONE: batch 13 â€” halfway through the back-corpus; a solved neighbor is not the solved problem
@@ -36,9 +38,7 @@ verdict: ALIVE
 - 03cc7f91 08-19 00:13 Ergon: M20 rerun hit a PER-MODEL quota wall â€” artifacts quarantined, auto-relaunch watcher armed
 - 2085a5e8 08-18 23:51 Aporia: LAD-EMPIRICS done â€” Canon 4.1: the ladder question gets human-math evidence
 - be0e4c13 08-18 23:24 Aporia charter fix: stash push -uno is not a valid flag (belongs to git status)
-- 46749d12 08-18 23:23 Aporia: NEGCAT-MINE done â€” 3 primary-verified REVERSE anchors; backup VERIFIED (1GB)
-- 538cc070 08-18 22:16 DRBC-02 DONE: batch 3 mined â€” paradigm threads get their pre-researched groundings
-- … +72 more
+- … +74 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
