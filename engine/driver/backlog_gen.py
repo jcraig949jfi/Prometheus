@@ -85,6 +85,11 @@ def main() -> int:
 
     # ---- 3. DR back-corpus mining (442 verified on disk, batches of 20) ----
     reports = sorted((ROOT / "aporia/docs/deep_research_reports").rglob("*.md"))
+    # recovered May batch archives (stash recovery 2026-08-18): scan them into the same lane
+    for bdir in sorted((ROOT / "aporia/docs").glob("deep_research_batch*")):
+        if bdir.is_dir():
+            reports += sorted(bdir.rglob("*.md"))
+    reports = [r for r in reports if not r.name.endswith("_answer.md")]
     nb = (len(reports) + 19) // 20
     for b in range(nb):
         add(f"DRBC-{b:02d}", f"Mine back-corpus batch {b+1}/{nb} (20 reports -> anti-anchors/probe templates/catalog updates)",

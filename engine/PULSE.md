@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-18T22:59:46+00:00
+# PULSE — generated 2026-08-19T00:05:01+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,19 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        172
-consumed (state changes):   40  {'queue_state': 33, 'registry': 3, 'findings': 3, 'doctrine': 1}
-consumed/emitted:           0.23
+emitted (new files):        645
+consumed (state changes):   52  {'registry': 11, 'queue_state': 37, 'findings': 3, 'doctrine': 1}
+consumed/emitted:           0.08
 verdict: ALIVE
+WARNING: production outpacing consumption -- the 442-report shape. Stop producing until this recovers.
 ```
 
-## Commits, 72h (non-cron): 70
+## Commits, 72h (non-cron): 75
+- cf2438a5 08-18 19:01 Recovery sweep, final tranche: the original May DR batch archive + Charon/cartography docs
+- 2f666d46 08-18 19:01 Recovery sweep complete: Theseus outbox + Ergon corpus + challenge docs from the May stash
+- 368d998b 08-18 19:00 Recovered (continued): DR batches 6-9 + seed decks â€” the stash held an entire archive
+- 26f50cac 08-18 19:00 Recovered: two never-committed May DR batches (found in an ancient stash) + stash discipline
+- aa7749e5 08-18 18:59 ERGON-FALS-MINE DONE: the fals cluster converts from corroboration into design
 - 28ff8d39 08-18 18:59 Ergon: M-sweep landed (monotone!); run-status diagnosed; M20 escalated to decision-n
 - 8b4b2f95 08-18 18:00 Kickoff prompt: M20-M80 intermediate rungs â€” status check first, then sweep
 - 9b401c8c 08-18 17:57 DRBC-01 DONE: batch 2 mined â€” the founding thesis gets its external numbers
@@ -33,12 +39,7 @@ verdict: ALIVE
 - af9b4d9c 08-18 08:01 Metis deterministic-first + no-stub guarantee; the 8-week frozen-state chain documented
 - bb04eb49 08-18 07:51 Kickoff prompt: Candidate A â€” clear truncation confound, then A0 at decision-n
 - 471fee0f 08-18 07:34 Fix the depressing email: PgRedis exists/hlen/zcard + stop demanding retired Redis
-- fefe7cf6 08-18 07:28 PULSE + STEERING: skim-and-steer without ever being a gate (Alethelia organ 1)
-- 610c0803 08-18 07:21 Correction (James): the fleet death was not unnoticed â€” he gave up out of frustration
-- d9ce1440 08-18 07:13 Liveness = state change, not process aliveness (and it indicts my last 2 days)
-- e7b678e7 08-18 07:01 Default-continue rule + non-agentic driver + the probe that replaced M-004
-- 75a52dd1 08-18 03:01 M-004 REFUSED by Charon â€” the instrument was never applied to the archive it audits
-- … +45 more
+- … +50 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
