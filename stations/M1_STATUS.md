@@ -540,6 +540,72 @@ D2-same-relation   clf 0.967   overlap 1.000   NOT A CONTROL
 
 Suite 27 F-null tests green. Reconciliation with Harmonia B on the band ruling: **still owed.**
 
+## 7e. TIER A EXIT REVIEW — **TIER-A-EXIT-FAIL** (Charon, 2026-08-19)
+
+Full review: `charon/probe/TIER_A_EXIT_REVIEW_CHARON_2026-08-19.md`. Ruled **independently** —
+no Harmonia B note existed in-tree at review time; reconciliation still owed. Every criterion
+re-executed against committed artifacts, not read from commit messages.
+
+**FATAL — the pilot's F-null is not the F-null R7 validated.** `pilot_d0.py` renders
+`F-prom` with `.body` and `F-null` with `.packet.text`, so **F-null shipped the full JSON header
+and F-prom did not.** Measured on 60 real M30 pairs:
+
+```
+AS VALIDATED  prom.text vs null.text   classifier 0.4417   tokens ~equal        verdict tok symmetric
+AS DEPLOYED   prom.BODY vs null.TEXT   classifier 1.0000   122.8/404.6 = 3.30x  0 / 180
+THE FIX       prom.body vs null.body   classifier 0.4250   122.8/122.7 = 1.00x  0 / 0
+```
+
+Arithmetic closes exactly: header = 281.9 tokens; pilot logged F-null − F-prom = 282.4. So the
+two primary-endpoint arms were **perfectly separable**, `Δ_carry` at D0 is uninterpretable, and
+the **+9.6pp directional estimate must be withdrawn**. Note finding N1's header verdict tokens
+(0 vs 180) were assessed harmless *because constant across D0 packets* — that mitigation died the
+moment one arm got the header and the other did not.
+
+**ALSO UNMET — spec §4.2's own significance criterion.** Recomputed: F-answer ≫ F0 p<0.0001 PASS,
+but **F-oracle > F0 p = 0.3123 — NOT SIGNIFICANT** (+5.5pp, 28/20). That is diagnostic-matrix
+**row 1** ("solver/task/headroom failure — NOT a residue verdict") and makes `Q_residue`
+UNIDENTIFIABLE by spec §2's own rule. Separately, **Tier A on its specified substrate (Apollo wall
+corpus) never ran** — `PIPELINE_ADMISSIBLE` (§6.4 pilot) is not `HARNESS_ADMISSIBLE` (§4.2).
+
+**Ergon's "asymmetry runs conservative" is backwards, measured.** Within-arm, longer is worse
+everywhere (F-null −19.2pp short→long). Using the packet-free F0 arm as discriminator: F0 drops
+6.9pp on those tasks (real difficulty) but F-null drops 19.2pp — a **12.3pp excess**. And
+`Δ_carry` is **+6.25pp on short-F-null tasks vs +13.64pp on long ones**: the unmatched length
+**inflates** the headline rather than suppressing it.
+
+**GREEN, verified:** R3 A/B/C/D (cheat control +2.0pp, p=0.75 — format conveys nothing); R13
+(200→146 lenient / 63 strict, movable 0.415); R14 planted-violation test present; typed results
+730 rows, 0 parse-fail, 0 transport-fail; suite 151/151.
+
+**My contract — R7 on M30, all three layers, executed for the first time** (the committed artifact
+recorded only the classifier): **(a) 60/60 marginals pass**, family-wise 0.000 vs 0.170 calibrated;
+**(b) 0.4250**; **(c) relation_overlap 0.0000**. The F-null *construction* is validated on a
+manifest it was not built for. The construction is sound; the deployment was not.
+
+**D0-only scope: applied, not merely stated** (`select_residue(stratum="D0")` only, D1–D3 never
+built) — but the prereg §4.1 caveat that *a D0 win is not a corpus win* does not ride with the
+artifacts. Condition C6.
+
+**TIER B PARAMETERS, ruled before data exists:**
+- **N = 620 manifest.** Post-screen yield 146/200 = 0.730, Wilson95 [0.665, 0.787], and yield is
+  **unstable across rungs** (M20 gave 0.560). 620 delivers ≥400 post-screen at the lower bound and
+  **195 in the strict subset** for BC-3 (a 400-manifest gives only ~126). Re-measure yield if the
+  rung changes.
+- **Host delta binds hard.** +14pp between hosts on identical tasks **exceeds Δ\* = +8pp**. Pin
+  `host + model_id + endpoint` per row; **no arm may ever be split across hosts**; a mid-run host
+  change voids that arm whole. Ergon's reading that a host change triggers C2 re-leveling is
+  **ratified**.
+- **Second family REQUIRED, not optional.** Prereg §1 already mandates ≥2 families for Tier B;
+  R15's per-task statistic degenerates with one solver; and the 14pp host delta means a
+  single-solver result cannot separate "residue carries" from "this config responds to this text."
+  Free Nemotron lane already verified. **Its cold-band check runs BEFORE any arm**, per C2.
+
+**Conditions:** C1 fix the renderer (`.body` both sides) · C2 make R7 build through the runner's
+own call path · C3 re-run the pilot (~$0.40) and withdraw +9.6pp · C4 run Tier A on the wall corpus
+or state the substitution · C5 pre-commit the row-1 reading if F-oracle still misses · C6 attach the
+§4.1 caveat · C7 Tier B params above. **C1–C3 are the gate.**
+
 ## 7d. M-004 KILL-RESURRECTION — **CO-SIGN REFUSED** (Charon, 2026-08-18)
 
 `pivot/PREREG_M004_kill_resurrection_2026-08-17.md` is **not authorized to run.** Verdict and all
