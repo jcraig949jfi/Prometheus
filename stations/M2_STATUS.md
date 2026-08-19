@@ -312,8 +312,68 @@ It does not, by a wide margin. Recorded rather than quietly dropped.
 
 ---
 
+## TIER A EXIT REVIEW — Harmonia B, meter integrity (2026-08-19)
+
+**VERDICT: TIER-A-EXIT-FAIL.** Review `harmonia/probe/TIER_A_EXIT_HARMONIA_B_2026-08-19.md`;
+re-executes mechanically via `harmonia/probe/tier_a_exit_verify.py` (no API, returns the
+verdict itself). Formed **blind** — no Charon Tier-A note existed at write time;
+reconciliation with his Tier-A note AND with his `RULING_BAND_2026-08-16.md` (which I have
+still not read) is OWED.
+
+Every criterion recomputed from the 730-row raw ledger, not from the summary file or the
+commit message. Ergon's reported numbers reproduce exactly.
+
+**Two §4.2 criteria unmet:**
+- **R7 layer (a) NEVER EXECUTED.** `run_r7_d0d1.py` imports `calibrate_tolerances` and never
+  calls it; only the blinded classifier ran. The result file has a score and no marginals.
+- **F-oracle > F0 FAILS** — +5.5pp, McNemar p=0.31, CI [-4.1, +15.1]. Only **one rung** of the
+  celebrated reading ladder clears significance, and it is F-answer, the instrumentation
+  control that enters no substantive comparison.
+
+**The token deviation: ruled NOT conservative.** F-null 494 tokens vs F-prom 212 (2.33x; the
+±5% rule missed by ~47x). corr(F-null tokens, F-prom tokens)=+0.980, so length is a per-task
+covariate, not an offset. Difference-in-differences by F-null-length tercile:
+
+    tercile 3 (n=50): F0 0.340 | F-null 0.160 (-0.180) | F-prom 0.340 (+0.000) | delta +0.180
+
+**F-prom gives exactly zero benefit over F0 there; the entire +18pp is F-null collapsing.**
+Run-wide, ~72% of the headline +9.6pp is the control arm being damaged, not the treatment arm
+helping. Misleading-residue vs excess-text cannot be separated by the arms as run — which is
+precisely what the ±5% rule existed to prevent. Ruled: **re-specify, do not re-file a second
+deviation note** — ±5% above 200 tokens / ±25 absolute below, per-arm mean ratio in
+[0.80,1.25], **plus an `F-null-short` length-control arm**.
+
+**The deviation and the skipped layer are ONE defect:** R7's first preregistered marginal is
+token count. Had layer (a) run, the gate built for this asymmetry would have caught it.
+
+**F-oracle is a two-string template**, and the rescue hypothesis is falsified: the
+content-free branch ("the same care suffices", +6.5pp) performs as well as the specific
+method prescription (+5.0pp). So the ceiling arm measures generic priming, not knowledge —
+the failure is **arm-construction-limited, not demonstrated family-limited**. That distinction
+is the difference between killing a fifth axis and rebuilding one arm.
+
+**Control C not demonstrated:** returned 0/100 where chance is exactly 0.25
+(P = 3.2e-13). Its PASS and its non-execution produce the same number, and no parse-failure
+rate, extracted-value distribution, or refusal count is logged for the C batch. **Control B
+ran at n=200 against its own spec of 400** — power 0.60 vs 0.85 against a +10pp leak.
+
+**Tier B ruled before the data exists:** manifest **N=560** (delivers ~409 at the observed 73%
+post-screen yield; replenishment branch pre-declared). The **+14pp host delta consumes 56% of
+the band's width**, so the leveled band is a property of (manifest x host): all arms on the
+pinned host, plus a cold-band re-read at campaign start AND end, >7pp divergence => HOST-DRIFTED.
+**A single solver does not satisfy Tier B** — prereg §1 requires two families and R15's per-task
+statistic assumes them; cost was never the constraint (~$0.40 for the pilot's 730 calls).
+
+**Credit where due:** 730/730 transport, zero parse failures, every firewall green, and the
+**dispersion term I demanded at co-sign passed for the first time** (movable 0.415). The
+numeric-leakage sequence (three measured steps to method projection, recovery 0.170 *below*
+the 0.25 chance rate) is the best falsification work this probe has produced and it confirmed
+my own 08-16 structural prediction on a family I had not seen.
+
+---
+
 *M2 reports under the failure-signature doctrine: shapes, not verdict lines. The
 station's most useful output on 2026-08-12 was four executed kills, two of them against
 its own point agent's proposals; on 2026-08-15, Apollo's corpus shipped with three of its
 own wall specifications killed by their own telemetry before release. Updated by
-Harmonia A 2026-08-12, Apollo 2026-08-15, Harmonia B 2026-08-16 (co-sign; band ruling).*
+Harmonia A 2026-08-12, Apollo 2026-08-15, Harmonia B 2026-08-16 (co-sign; band ruling), Harmonia B 2026-08-19 (Tier A exit).*

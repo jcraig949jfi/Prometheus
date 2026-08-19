@@ -149,3 +149,19 @@ def test_wall_substrate_check_real_corpus():
     r = wall_substrate_check()
     assert r.verdict == "PASS"
     assert r.numbers["n_ctrl"] == 2
+
+
+# ------------------------------------------------------------ calibration in CI
+
+def test_calibration_suite_is_green():
+    """The battery's own calibration must run in CI.
+
+    It is the entry point that proves each control can PASS a clean world and FAIL a
+    planted defect. It lived only behind `--fixtures` and therefore went red silently
+    when `leaks_verdict` was extended to the count family on 2026-08-19 while the
+    round-trip check still called the binary-only redactor. A calibration suite outside
+    CI is a control with no control.
+    """
+    from ergon.probe.r3_controls import run_calibration
+    bad = [r.name for r in run_calibration() if r.verdict == "FAIL"]
+    assert not bad, f"calibration FAILED for: {bad}"

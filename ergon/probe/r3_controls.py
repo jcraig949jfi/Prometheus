@@ -67,7 +67,7 @@ from .assemble import (
     ResidueRecord,
     assemble_retrieved,
     leaks_verdict,
-    redact_verdict_tokens,
+    redact_all_answer_forms,
 )
 from .schema import ProbeRecord
 
@@ -375,14 +375,17 @@ def run_calibration() -> List[ControlResult]:
             for r in recs]
     static = packet_static_gate(pkts)
     raw_leaks = all(leaks_verdict(r.render()) for r in recs)
-    redact_roundtrip = not leaks_verdict(redact_verdict_tokens(recs[0].render()))
+    redact_roundtrip = not leaks_verdict(redact_all_answer_forms(recs[0].render()))
     c_packet_ok = static.verdict == "PASS" and raw_leaks and redact_roundtrip
     out.append(ControlResult(
         "CALIBRATION C (decision rule + packet path, both directions)",
         "PASS" if (c_ok and c_packet_ok) else "FAIL",
         f"decision-vector ok={c_ok}; static gate on {len(pkts)} assembled packets="
         f"{static.verdict}; unredacted-render caught leaking={raw_leaks}; "
-        f"redactor round-trip clean={redact_roundtrip}",
+        f"redactor round-trip clean={redact_roundtrip} "
+        f"(round-trip uses redact_all_answer_forms — the SAME function assemble_retrieved "
+        f"applies; pairing the binary-only redactor against the both-family detector was a "
+        f"contract mismatch that went red silently 2026-08-19)",
         {"n_packets": len(pkts)},
     ))
 
