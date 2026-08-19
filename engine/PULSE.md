@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T19:30:26+00:00
+# PULSE — generated 2026-08-19T19:59:14+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        605
-consumed (state changes):   218  {'queue_state': 167, 'registry': 44, 'findings': 5, 'doctrine': 2}
+emitted (new files):        606
+consumed (state changes):   220  {'queue_state': 169, 'registry': 44, 'findings': 5, 'doctrine': 2}
 consumed/emitted:           0.36
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 113
+## Commits, 72h (non-cron): 114
+- dbe3ad69 08-19 15:30 CAT-MATH-0026 EXECUTED: first live-data catalog attack â€” and the mirror bit back usefully
 - d5472165 08-19 15:08 Ergon: paid lane exhausted at -$0.70 mid-cure; vacuous control quarantined; transport gate added
 - 6e1b6ff9 08-19 15:00 Generator fix pays twice: 14 phantom batches killed, 22 hidden reports found â€” corpus verifiably empty
 - e3fcc040 08-19 14:44 Ergon: BOTH EXIT-FAILS ADOPTED â€” +9.6pp WITHDRAWN; C1/C2 cured; oracle v2; cures in flight
@@ -37,8 +38,7 @@ verdict: ALIVE
 - d0113df9 08-19 07:38 DRBC-16 DONE: batch 17 â€” the instrument photographed its own reflection
 - 0e8f4094 08-19 07:11 DRBC-15 DONE: batch 16 â€” the registry starts carrying WHY, not just WHAT
 - 7744ac28 08-19 06:48 Ergon: THE PILOT RAN â€” PIPELINE_ADMISSIBLE; ladder in predicted order; direction positive
-- d150553b 08-19 06:44 DRBC-14 DONE: batch 15 â€” the contested-claim vocabulary completes; back-corpus at 300
-- … +88 more
+- … +89 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
