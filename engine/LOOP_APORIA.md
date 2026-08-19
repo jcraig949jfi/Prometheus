@@ -101,6 +101,11 @@ Never `stash pop` unconditionally. Old stashes in the list belong to other agent
 never drop them; they may hold uncommitted work (one held two never-committed DR batches).
 
 ## Standing rules
+- **Every gate ships an ELI5 (James, 2026-08-18):** any thread parked on a NEW gate string gets
+  a two-sentence plain-English entry in `engine/queues/GATE_ELI5.jsonl` the same pass, and every
+  PENDING-HITL decision carries an `eli5` field at filing. The email renderer displays these
+  verbatim (still zero LLM in the email path — the loop authors them at creation time, committed
+  as data). A gate rendering "(no ELI5 yet)" in the email is a failed pass item.
 LAW 1 at every emission (consumer named); trace-vector shape for failures; decoy discipline
 once assembled; no germline ignition (gates: constitution + probe verdict + co-signer seat);
 irreversibles → DECISIONS, never blocked on.

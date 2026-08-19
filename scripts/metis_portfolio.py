@@ -677,10 +677,25 @@ def _deterministic_brief(state: dict, manual_status: str) -> str:
         _gates = {}
         for _it in _parked:
             _gates.setdefault(str(_it.get("gate") or _it.get("parked_reason") or "?"), []).append(_it)
+        _eli5 = {}
+        _gf = _eq / "GATE_ELI5.jsonl"
+        if _gf.exists():
+            for _ln in _gf.read_text(encoding="utf-8", errors="replace").splitlines():
+                _ln = _ln.strip()
+                if _ln:
+                    try:
+                        _e = _json.loads(_ln)
+                        _eli5[str(_e.get("gate"))] = str(_e.get("eli5", ""))
+                    except Exception:
+                        pass
         for _g, _its in sorted(_gates.items(), key=lambda kv: -len(kv[1]))[:8]:
             lines.append(f"- **{len(_its)} thread(s) gated on:** {_g[:90]} — e.g. {_its[0].get('id','?')}")
+            _tip = _eli5.get(_g)
+            lines.append(f"  {_tip}" if _tip else "  (no ELI5 for this gate yet — the loop owes one next pass)")
         for _d in _pend[:5]:
             lines.append(f"- **DECISION pending:** {str(_d.get('action', _d.get('question','?')))[:100]}")
+            if _d.get("eli5"):
+                lines.append(f"  {_d['eli5']}")
         lines.append("")
     except Exception as _e:
         lines.append(f"Parked threads: UNKNOWN(read failed: {type(_e).__name__})")

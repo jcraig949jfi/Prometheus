@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T00:05:01+00:00
+# PULSE — generated 2026-08-19T00:19:47+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,14 +6,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        645
-consumed (state changes):   52  {'registry': 11, 'queue_state': 37, 'findings': 3, 'doctrine': 1}
-consumed/emitted:           0.08
+emitted (new files):        646
+consumed (state changes):   57  {'queue_state': 40, 'registry': 13, 'findings': 3, 'doctrine': 1}
+consumed/emitted:           0.09
 verdict: ALIVE
 WARNING: production outpacing consumption -- the 442-report shape. Stop producing until this recovers.
 ```
 
-## Commits, 72h (non-cron): 75
+## Commits, 72h (non-cron): 77
+- 2292f4b8 08-18 20:09 Ergon: M1_STATUS 7g â€” monotone axis, M20 escalation, decision-n in flight
+- 08831b17 08-18 20:05 AA-RUBRIC DONE: the registry gets an attestation ladder â€” evidence strength, typed
 - cf2438a5 08-18 19:01 Recovery sweep, final tranche: the original May DR batch archive + Charon/cartography docs
 - 2f666d46 08-18 19:01 Recovery sweep complete: Theseus outbox + Ergon corpus + challenge docs from the May stash
 - 368d998b 08-18 19:00 Recovered (continued): DR batches 6-9 + seed decks â€” the stash held an entire archive
@@ -37,9 +39,7 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - ee05d557 08-18 08:16 Ergon JOB 2a: decision-n derived on the manifest-level estimand â€” and it CORRECTS my own ruling
 - 7b1cef21 08-18 08:15 Ergon JOB 1a: truncation budget derived BY MEASUREMENT; gate installed
 - af9b4d9c 08-18 08:01 Metis deterministic-first + no-stub guarantee; the 8-week frozen-state chain documented
-- bb04eb49 08-18 07:51 Kickoff prompt: Candidate A â€” clear truncation confound, then A0 at decision-n
-- 471fee0f 08-18 07:34 Fix the depressing email: PgRedis exists/hlen/zcard + stop demanding retired Redis
-- … +50 more
+- … +52 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
