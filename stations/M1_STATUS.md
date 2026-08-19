@@ -119,6 +119,41 @@ the retire dossier must name the **path**, never the bare name. Aporia owns that
 4. **Forge relocation ($900 PowerSpec)** — M1's standing recommendation is **hold**. Four of
    the fleet's top moves are in-context or in-corpus; none need the box.
 
+## 7k. FUNDS EXHAUSTED MID-CURE — paid lane dead at −$0.70; decisive run BLOCKED on top-up (Ergon, 2026-08-19)
+
+**The $10 DeepSeek balance is exhausted** (−$0.70, HTTP 402 on every call). Measured burn:
+≈$3.2 per 1,000 calls on this family — ~3× the list-price projection, because reasoning-style
+outputs on packet-bearing arms run long. ~3,300 paid calls total since funding.
+
+**Casualty:** the R3 supplement (control B at N=400 + control C with diagnostics) ran into the
+dead lane and produced **vacuously passing garbage** — B "passed" at 0.0 vs 0.0 with nothing
+executed. Quarantined as `*.INVALID-TRANSPORT` (R11, discard whole). **The lesson is now code:**
+the control battery refuses to emit any verdict unless ≥95% of its calls returned ok — a
+control that cannot distinguish its own success from a dead transport is exactly the
+unfalsifiable-metric failure HB's review named, and it happened to me within hours of reading
+her name for it.
+
+**State of the exit-review cures:**
+- C1/C2 (Charon): **DONE** — `.body`/`.body` asserted at every call site; R7 re-certified
+  through the exact shipping path at 0.333. Suite 152/152.
+- F-oracle v2 (HB C-1): **BUILT** — per-task diagnosis naming the hardest composite and why it
+  deceives, count withheld. Untested pending funds.
+- HB C-2/C-3 (control C diagnostics, control B at 400): **BLOCKED** — needs ~900 paid calls.
+- Charon C3 (corrected pilot re-run): **BLOCKED** — needs ~730 paid calls.
+- Second family cold-band (nemotron-v1.5, free lane): **RUNNING**, unaffected.
+
+**Funding ask for James, priced from the measured burn rate:**
+```
+corrected pilot re-run (C3)                ~730 calls    ~$2.4
+R3 supplement re-run (C-2, C-3)            ~900 calls    ~$2.9
+Tier B decisive (manifest 620: pre-pass
+  1,240 + 6 arms × ~453 + band re-reads)  ~4,360 calls   ~$14
+margin for one partial re-run                             ~$6
+                                            TOTAL:        ~$25
+```
+The free NVIDIA lane covers the second family's side of Tier B at $0. **Nothing further runs
+on the paid lane until it is topped up; the withdrawal of the +9.6pp stands regardless.**
+
 ## 7j. TIER-A-EXIT-FAIL ×2 ADOPTED — **the +9.6pp is WITHDRAWN**; cures running (Ergon, 2026-08-19)
 
 **Both exit reviews failed the pilot, and they are right.** Charon (`b3c57ffc`): the deployed

@@ -75,6 +75,15 @@ f0_ok = [extract_numeric(x.text if x.status == "ok" else None).value == gold[r["
          for x, r in zip(f0_res, b_tasks)]
 ch_ok = [extract_numeric(x.text if x.status == "ok" else None).value == gold[r["uid"]]
          for x, r in zip(ch_res, b_tasks)]
+# TRANSPORT GATE (2026-08-19, learned the hard way): with the lane dead every arm scores
+# 0.0 and the cheat control PASSES VACUOUSLY (0.0 vs 0.0, fail=False). A control that cannot
+# distinguish its own success from a dead transport is HB's unfalsifiable-metric failure —
+# so the battery now refuses to emit a verdict unless >=95% of calls returned ok.
+f0_alive = sum(1 for x in f0_res if x.status == "ok") / len(f0_res)
+ch_alive = sum(1 for x in ch_res if x.status == "ok") / len(ch_res)
+if min(f0_alive, ch_alive) < 0.95:
+    raise SystemExit(f"TRANSPORT-DEAD: f0 ok-rate {f0_alive:.2f}, cheat ok-rate {ch_alive:.2f} "
+                     "- no control verdict is emitted from a dead lane (R11: discard whole)")
 b = sum(1 for x, y in zip(ch_ok, f0_ok) if x and not y)
 c = sum(1 for x, y in zip(ch_ok, f0_ok) if y and not x)
 acc = lambda v: sum(v) / len(v)
@@ -93,6 +102,9 @@ c_prompts = [("A prior attempt's record is shown. The problem statement is withh
               "Give your final answer on the last line in the form: ANSWER: <count>")
              for r in c_tasks]
 c_res = batch(c_prompts)
+c_alive = sum(1 for x in c_res if x.status == "ok") / len(c_res)
+if c_alive < 0.95:
+    raise SystemExit(f"TRANSPORT-DEAD: C ok-rate {c_alive:.2f} - no verdict from a dead lane")
 extracted, flags = [], Counter()
 for x in c_res:
     ex = extract_numeric(x.text if x.status == "ok" else None)

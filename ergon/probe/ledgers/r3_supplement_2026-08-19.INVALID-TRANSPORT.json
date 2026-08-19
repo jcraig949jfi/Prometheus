@@ -1,0 +1,34 @@
+{
+  "run_id": "R3-SUPPLEMENT-2026-08-19",
+  "solver": "deepseek:deepseek-v4-flash",
+  "B_cheat_n400": {
+    "n": 400,
+    "f0": 0.0,
+    "cheat": 0.0,
+    "delta": 0.0,
+    "mcnemar_p": 1.0,
+    "fail": false,
+    "pass": true
+  },
+  "C_leakage_diagnosed": {
+    "n": 100,
+    "recovery": 0.0,
+    "parse_fail_rate": 1.0,
+    "in_answer_range_rate": 0.0,
+    "extracted_distribution": {
+      "None": 100
+    },
+    "extract_flags": {
+      "null_response": 100
+    },
+    "refusals": 0,
+    "binom_p_vs_025_upper": 1.0,
+    "binom_p_vs_025_lower": 3.207202185381504e-13,
+    "interpretable": false,
+    "pass": false,
+    "note": "v2: solver instructed to guess when uninformed, so answers land in the gold space and a pass is distinguishable from a broken scorer (HB C-2). Two-sided honesty: below-chance recovery is reported, not credited."
+  },
+  "ts_utc": "2026-08-19T19:06:28+00:00",
+  "host": "SKULLPORT",
+  "executor": "ergon"
+}
