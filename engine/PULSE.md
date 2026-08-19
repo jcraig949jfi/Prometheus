@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T09:23:23+00:00
+# PULSE — generated 2026-08-19T09:50:35+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        613
-consumed (state changes):   122  {'registry': 26, 'queue_state': 91, 'doctrine': 2, 'findings': 3}
-consumed/emitted:           0.20
+emitted (new files):        610
+consumed (state changes):   126  {'queue_state': 94, 'registry': 27, 'doctrine': 2, 'findings': 3}
+consumed/emitted:           0.21
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 94
+- 3625ea6d 08-19 05:50 Ergon: D0 leakage closed by METHOD PROJECTION â€” static check PASS at 0.170 vs 0.25 chance
+- 3d2226fb 08-19 05:25 Ergon: FIRST LEVELED MANIFEST â€” M30 decision-n LEVELED on the paid host
+- 20183e7e 08-19 05:23 COLLISION-PROBE-FAMILY DONE: 9 probes that test whether a system binds names to referents
 - aaf5d377 08-19 05:10 Ergon: paid-host M20=0.640 (host delta +14pp REAL); M30 bisection dead-centre at 0.500; decision-n on M30 in flight
 - 7b4b3be3 08-19 04:56 MAY-REGISTRY-RECON DONE: zero contradictions across 3 months of independent re-derivation
 - a88d5896 08-19 04:30 Ergon: paid DeepSeek lane wired, preflighted, decision run relaunched on it
@@ -35,9 +38,6 @@ verdict: ALIVE
 - 836bed37 08-18 21:12 INFRA-BACKUP: the databases get their first-ever second copy â€” weekly, unattended
 - 1d61a6fa 08-18 20:50 Ergon: decision-n mislaunch diagnosed and discarded (R11); relaunched correctly at 12 RPM
 - bb63dcf8 08-18 20:19 ELI5 in the email: every parked gate and pending decision gets two plain sentences
-- 2292f4b8 08-18 20:09 Ergon: M1_STATUS 7g â€” monotone axis, M20 escalation, decision-n in flight
-- 08831b17 08-18 20:05 AA-RUBRIC DONE: the registry gets an attestation ladder â€” evidence strength, typed
-- cf2438a5 08-18 19:01 Recovery sweep, final tranche: the original May DR batch archive + Charon/cartography docs
 - … +69 more
 
 ## Bottleneck hypotheses (confidence)
