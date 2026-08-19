@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T14:23:48+00:00
+# PULSE — generated 2026-08-19T14:51:46+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        607
-consumed (state changes):   167  {'queue_state': 126, 'registry': 35, 'findings': 4, 'doctrine': 2}
-consumed/emitted:           0.28
+emitted (new files):        599
+consumed (state changes):   172  {'queue_state': 130, 'registry': 36, 'findings': 4, 'doctrine': 2}
+consumed/emitted:           0.29
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 101
+## Commits, 72h (non-cron): 100
+- cbe713f6 08-19 10:23 DRBC-R02 DONE: May re-verified its anchors against 2026 follow-ups â€” two-layer provenance inherited
 - 44f89262 08-19 09:55 DRBC-R01 DONE: May verified its own anchors before dying â€” the upgrades cross the gap
 - f3a49359 08-19 09:27 MILESTONE: the 420-report back-corpus is FULLY METABOLIZED â€” and 194 more recovered reports queued
 - 57d048fd 08-19 08:59 DRBC-19+20 DONE: double batch â€” May ran its hunts in duplicate; free replication banked
@@ -37,8 +38,7 @@ verdict: ALIVE
 - de339a0f 08-19 03:30 DRBC-10 DONE: batch 11 mined â€” when a fact became KNOWN vs when it became CERTIFIED
 - 6a2fd317 08-19 03:03 DRBC-09 DONE: batch 10 mined â€” the under-claim direction opens
 - 15f816f4 08-19 02:36 DRBC-08 DONE: batch 9 mined â€” journal publication is not community acceptance
-- eccb2331 08-19 02:09 DRBC-07 DONE: batch 8 mined â€” the registry gains the CLAIMED-UNRESOLVED status verb
-- … +76 more
+- … +75 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
