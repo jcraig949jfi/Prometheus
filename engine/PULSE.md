@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T06:36:13+00:00
+# PULSE — generated 2026-08-19T07:03:22+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -7,12 +7,13 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ```
 window: 3d
 emitted (new files):        620
-consumed (state changes):   94  {'queue_state': 70, 'registry': 19, 'doctrine': 2, 'findings': 3}
-consumed/emitted:           0.15
+consumed (state changes):   98  {'queue_state': 73, 'registry': 20, 'doctrine': 2, 'findings': 3}
+consumed/emitted:           0.16
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 88
+## Commits, 72h (non-cron): 89
+- 15f816f4 08-19 02:36 DRBC-08 DONE: batch 9 mined â€” journal publication is not community acceptance
 - eccb2331 08-19 02:09 DRBC-07 DONE: batch 8 mined â€” the registry gains the CLAIMED-UNRESOLVED status verb
 - e6e01840 08-19 01:42 DRBC-06 DONE: batch 7 mined â€” two Chowla conjectures, one name
 - 9e73033d 08-19 01:14 DRBC-05 DONE: batch 6 closes the T-series â€” two claim-boundary trap classes named
@@ -37,8 +38,7 @@ verdict: ALIVE
 - 8b4b2f95 08-18 18:00 Kickoff prompt: M20-M80 intermediate rungs â€” status check first, then sweep
 - 9b401c8c 08-18 17:57 DRBC-01 DONE: batch 2 mined â€” the founding thesis gets its external numbers
 - 94f9bc5e 08-18 16:54 AA-MINE-AG + AA-MINE-TOPO DONE: 7 anchors, one report-correction, one reverse anchor
-- 16371b2e 08-18 15:51 AA-MINE-NT DONE: 4 anchors filed â€” incl. the dual-verifier Collatz bug, a doctrine-grade find
-- … +63 more
+- … +64 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
