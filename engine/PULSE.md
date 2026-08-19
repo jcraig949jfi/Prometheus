@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T04:47:20+00:00
+# PULSE — generated 2026-08-19T05:14:14+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -7,13 +7,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ```
 window: 3d
 emitted (new files):        654
-consumed (state changes):   78  {'queue_state': 58, 'registry': 15, 'doctrine': 2, 'findings': 3}
-consumed/emitted:           0.12
+consumed (state changes):   82  {'queue_state': 61, 'registry': 16, 'doctrine': 2, 'findings': 3}
+consumed/emitted:           0.13
 verdict: ALIVE
 WARNING: production outpacing consumption -- the 442-report shape. Stop producing until this recovers.
 ```
 
-## Commits, 72h (non-cron): 85
+## Commits, 72h (non-cron): 86
+- e95b811f 08-19 00:47 DRBC-04 DONE: batch 5 mined â€” the registry reaches tensor territory
 - c57f9639 08-19 00:19 DRBC-03 DONE: batch 4 mined â€” a new anchor class: the withdrawn-proof trap
 - 03cc7f91 08-19 00:13 Ergon: M20 rerun hit a PER-MODEL quota wall â€” artifacts quarantined, auto-relaunch watcher armed
 - 2085a5e8 08-18 23:51 Aporia: LAD-EMPIRICS done â€” Canon 4.1: the ladder question gets human-math evidence
@@ -38,8 +39,7 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - 2d131947 08-18 14:47 DRBC-00 DONE: back-corpus batch 1/23 mined â€” three anti-anchor goldmines surfaced
 - a1d35dc7 08-18 13:44 The backlog at scale: 722 verified threads, park-dont-ask protocol, parked items in the email
 - 1206d504 08-18 13:39 W-002 DONE: R4 representation-shift generator â€” the ladder's missing rung, built
-- 539ef0f1 08-18 12:35 W-001 DESIGNED: the retry queue â€” the archive's self-nominated kills, prereg-shaped
-- … +60 more
+- … +61 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
