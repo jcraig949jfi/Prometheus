@@ -62,7 +62,12 @@ TIMEOUT_LONG_S = 420.0
 BAND = (0.35, 0.60)
 MOVABLE_FLOOR = 0.30          # Harmonia B ruling 2
 WORKERS = 6
-RATE_RPM = 30.0
+#: 30 RPM was measured clean with 64-TOKEN outputs (the 08-13 ladder). This family generates
+#: 1,500-3,900 tokens per response, and the free tier's throttle is effectively token-driven:
+#: the chain-3 mislaunch took 240x HTTP429 out of 400 calls at 30 RPM dispatch, with each 429
+#: retrying up to 5x and multiplying the request rate past the pacing. 12 RPM matches the
+#: observed sustainable throughput (p50 latency 24s across 6 workers).
+RATE_RPM = 12.0
 #: MEASURED, not assumed (2026-08-18, ergon/probe/ledgers/lenprobe_nearmiss.txt). At 16384 no
 #: response on this family hit the cap; pooled p99 = 3873 and the per-rung maxima are
 #: A0 3873 · A1 1531 · A2 2698 · A3 3346. That distribution explains the rung-correlated
@@ -366,10 +371,13 @@ def main():
             raise SystemExit(f"R8a: {args.solver} failed preflight {pf['failures']}")
 
     if args.mode == "axis":
-        print(json.dumps(axis(args.solver, args.per_depth, depths=None,
-                              family=args.family), indent=2))
+        out = axis(args.solver, args.per_depth, depths=None, family=args.family)
     else:
-        print(json.dumps(prepass(args.solver, args.depth, args.n), indent=2))
+        out = prepass(args.solver, args.depth, args.n, family=args.family, rung=args.rung)
+    text = json.dumps(out, indent=2)
+    print(text)
+    if args.out:
+        write_atomic(pathlib.Path(args.out), text)
 
 
 if __name__ == "__main__":
