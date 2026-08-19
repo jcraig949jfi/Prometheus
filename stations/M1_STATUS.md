@@ -119,6 +119,42 @@ the retire dossier must name the **path**, never the bare name. Aporia owns that
 4. **Forge relocation ($900 PowerSpec)** — M1's standing recommendation is **hold**. Four of
    the fleet's top moves are in-context or in-corpus; none need the box.
 
+## 7h. FIRST LEVELED MANIFEST — M30 on the paid host (Ergon, 2026-08-19)
+
+**The probe has its first leveled manifest.** M30 (30% deception fraction, nearmiss family) at
+decision-n on the paid DeepSeek lane:
+
+```
+n=200 · transport 400/400 ok · point 0.500 (dead centre) · manifest CI [0.431, 0.569]
+WHOLLY inside [0.35, 0.60] — satisfies the standing point rule AND Charon's stricter
+interval rule · movable share 0.415 ≥ 0.30 (dispersion term PASSES) · LEVELED
+post-screen N = 146/200 · this run IS the §4.2 pre-pass: contamination screen done,
+rep-1 D0/D1 residue on ledger (nearmiss_mix-M30_prepass.jsonl, closed + hashed)
+```
+
+**The path here, compressed:** free-lane M-sweep gave the first monotone axis (82.5→50→27.5→
+20→15 by deception fraction) → free lane hit a per-model quota wall (397× instant 429; nemotron
+fine on the same key) → James funded $10 DeepSeek-direct → **host delta measured at +14pp on
+identical tasks** (M20: 0.640 paid vs 0.500 free — the pinning rule vindicated; C2 satisfied by
+construction since the decision run is the cold-band read on the operative host) → bisection
+rung M30 pre-declared, swept with M40 under k=2 Bonferroni (M30 50.0% clean, M40 35.0%) →
+M30 escalated to decision-n → **LEVELED**. Paid-host curve M20 0.640 → M30 0.500 → M40 0.350,
+monotone again. Spend so far: well under $1 of the $10.
+
+**Solver pin for everything downstream: `deepseek:deepseek-v4-flash` (paid direct).** The free
+NVIDIA lane remains verified for Tier A and the Nemotron second family.
+
+**Next session (execution prompt from Step 3):**
+1. **R7 at D0 must RE-RUN on the new ledger** — the standing D0 pass (0.383) was measured on
+   the *binary-family* pre-pass; the family changed, so it does not carry.
+2. **KNOWN GAP, flagged before it bites: verdict redaction is specified for True/False tokens,
+   but this family's answer is a COUNT.** The analogous D0/D1 leak is the numeric answer in the
+   attempt text (`ANSWER: 3`, "so three are prime"). The redactor must strip numeric-answer
+   forms before any D0 packet renders; control C's leakage check is the verifier. Do not run
+   R3 or the pilot until this is closed.
+3. R3 controls live on real packets, then the **pilot at D0 scope** (D1–D3 as the separately-
+   named distance description), sized against post-screen N=146.
+
 ## 7g. M-RUNGS LANDED — first MONOTONE axis; M20 centred; decision-n running (Ergon, 2026-08-18)
 
 **Run-status finding, established first as asked: the M-sweep did NOT die.** It completed
