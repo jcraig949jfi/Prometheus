@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T21:43:40+00:00
+# PULSE — generated 2026-08-19T22:14:11+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        609
-consumed (state changes):   226  {'queue_state': 175, 'registry': 44, 'findings': 5, 'doctrine': 2}
-consumed/emitted:           0.37
+emitted (new files):        603
+consumed (state changes):   228  {'queue_state': 177, 'registry': 44, 'findings': 5, 'doctrine': 2}
+consumed/emitted:           0.38
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 117
+## Commits, 72h (non-cron): 116
+- 37225a45 08-19 17:43 CAT-MATH-0063 EXECUTED at full-table scale: two laws, 3.82 million curves, zero exceptions
 - 6c629106 08-19 17:15 CAT-MATH-0062 EXECUTED: GUE repulsion confirmed across two L-function families â€” and a stale gate fell
 - b079b862 08-19 16:28 CAT-MATH-0042 EXECUTED: the instrument surfaced Smyth's constant as its own floor
 - fac51f02 08-19 15:59 CAT-MATH-0036 EXECUTED: multiplicity one holds in-coverage â€” and the one anomaly is a gem, not a bug
@@ -37,8 +38,7 @@ verdict: ALIVE
 - f3a49359 08-19 09:27 MILESTONE: the 420-report back-corpus is FULLY METABOLIZED â€” and 194 more recovered reports queued
 - 57d048fd 08-19 08:59 DRBC-19+20 DONE: double batch â€” May ran its hunts in duplicate; free replication banked
 - 1ed827b4 08-19 08:32 DRBC-18 DONE: batch 19 â€” the diminishing-returns report describes its own reader
-- 516773d3 08-19 08:05 DRBC-17 DONE: batch 18 â€” Maier killed the model, not the bound
-- … +92 more
+- … +91 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
