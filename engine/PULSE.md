@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T12:59:20+00:00
+# PULSE — generated 2026-08-19T13:27:27+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        611
-consumed (state changes):   154  {'queue_state': 116, 'registry': 33, 'doctrine': 2, 'findings': 3}
-consumed/emitted:           0.25
+emitted (new files):        610
+consumed (state changes):   157  {'queue_state': 119, 'registry': 33, 'doctrine': 2, 'findings': 3}
+consumed/emitted:           0.26
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 100
+- 57d048fd 08-19 08:59 DRBC-19+20 DONE: double batch â€” May ran its hunts in duplicate; free replication banked
 - 1ed827b4 08-19 08:32 DRBC-18 DONE: batch 19 â€” the diminishing-returns report describes its own reader
 - 516773d3 08-19 08:05 DRBC-17 DONE: batch 18 â€” Maier killed the model, not the bound
 - d0113df9 08-19 07:38 DRBC-16 DONE: batch 17 â€” the instrument photographed its own reflection
@@ -37,7 +38,6 @@ verdict: ALIVE
 - eccb2331 08-19 02:09 DRBC-07 DONE: batch 8 mined â€” the registry gains the CLAIMED-UNRESOLVED status verb
 - e6e01840 08-19 01:42 DRBC-06 DONE: batch 7 mined â€” two Chowla conjectures, one name
 - 9e73033d 08-19 01:14 DRBC-05 DONE: batch 6 closes the T-series â€” two claim-boundary trap classes named
-- e95b811f 08-19 00:47 DRBC-04 DONE: batch 5 mined â€” the registry reaches tensor territory
 - … +75 more
 
 ## Bottleneck hypotheses (confidence)
