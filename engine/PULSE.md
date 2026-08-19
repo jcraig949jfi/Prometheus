@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T05:42:02+00:00
+# PULSE — generated 2026-08-19T06:09:25+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -7,13 +7,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ```
 window: 3d
 emitted (new files):        620
-consumed (state changes):   86  {'queue_state': 64, 'registry': 17, 'doctrine': 2, 'findings': 3}
-consumed/emitted:           0.14
+consumed (state changes):   90  {'queue_state': 67, 'registry': 18, 'doctrine': 2, 'findings': 3}
+consumed/emitted:           0.15
 verdict: ALIVE
 WARNING: production outpacing consumption -- the 442-report shape. Stop producing until this recovers.
 ```
 
-## Commits, 72h (non-cron): 86
+## Commits, 72h (non-cron): 87
+- e6e01840 08-19 01:42 DRBC-06 DONE: batch 7 mined â€” two Chowla conjectures, one name
 - 9e73033d 08-19 01:14 DRBC-05 DONE: batch 6 closes the T-series â€” two claim-boundary trap classes named
 - e95b811f 08-19 00:47 DRBC-04 DONE: batch 5 mined â€” the registry reaches tensor territory
 - c57f9639 08-19 00:19 DRBC-03 DONE: batch 4 mined â€” a new anchor class: the withdrawn-proof trap
@@ -38,8 +39,7 @@ WARNING: production outpacing consumption -- the 442-report shape. Stop producin
 - 94f9bc5e 08-18 16:54 AA-MINE-AG + AA-MINE-TOPO DONE: 7 anchors, one report-correction, one reverse anchor
 - 16371b2e 08-18 15:51 AA-MINE-NT DONE: 4 anchors filed â€” incl. the dual-verifier Collatz bug, a doctrine-grade find
 - 2d131947 08-18 14:47 DRBC-00 DONE: back-corpus batch 1/23 mined â€” three anti-anchor goldmines surfaced
-- a1d35dc7 08-18 13:44 The backlog at scale: 722 verified threads, park-dont-ask protocol, parked items in the email
-- … +61 more
+- … +62 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
