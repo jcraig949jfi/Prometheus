@@ -35,3 +35,14 @@ This is failure metabolization performed on the program itself: a dead fleet's u
 research, recovered from a nearly-dropped stash, is now load-bearing doctrine, anchors,
 and probes. The archive was food. The consumption ratio question (B-001) has its answer
 in practice: consumption happens when a loop is CHARTERED to consume, not when data exists.
+
+## ADDENDUM 2026-08-19: the recovered corpus is ALSO complete (194/194)
+The stash-recovered corpus (deep_research_batch5..10, batch_2026-05-1x) is fully
+metabolized in ten batches (DRBC-R01..R10). Total corpus consumed: 420 + 194 = 614 reports.
+Recovered-corpus yield: 7 new anchors (AA-063..AA-069), 8 grade upgrades to A3 via May's
+own two-layer verification passes, the witness-primitive literature base for the substrate
+type system, the Learner base-model menu (3B-4B SOTA), the sleeping-beauties sweep design
+(report_177 — read before any SB sweep), and the collision/effectivity/generic-exception
+trap families completed. The reports that nearly died in a dropped stash closed the loop:
+May verified its anchors twice before dying, and those verifications now grade the
+successor registry. Registry: 27 -> 69 anchors across the full arc.
