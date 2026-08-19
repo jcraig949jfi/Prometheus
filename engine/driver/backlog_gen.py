@@ -90,9 +90,29 @@ def main() -> int:
         if bdir.is_dir():
             reports += sorted(bdir.rglob("*.md"))
     reports = [r for r in reports if not r.name.endswith("_answer.md")]
-    nb = (len(reports) + 19) // 20
+    # Consumption-aware (2026-08-19): only generate batches for reports NOT yet in the
+    # mining ledger. The whole 614-report corpus was consumed DRBC-00..R10; without this
+    # check the generator kept emitting phantom batches for an empty remainder.
+    consumed = set()
+    ledger = ROOT / "engine/queues/BACKCORPUS_MINING.jsonl"
+    if ledger.exists():
+        for line in ledger.read_text(encoding="utf-8", errors="replace").splitlines():
+            if line.strip():
+                try:
+                    consumed.add(json.loads(line)["report"])
+                except Exception:
+                    pass
+    def _report_key(p):
+        m = re.match(r"(\d{5})_", p.name)
+        return m.group(1) if m else None
+    remaining = [r for r in reports if _report_key(r) is None or _report_key(r) not in consumed]
+    # recovered-dir files have non-numeric names; they were ledgered under R-batch keys,
+    # so count a recovered dir as consumed if ANY of its batch keys appear in the ledger
+    rbatch_done = {rec.split("-")[0] for rec in consumed if rec.startswith("R")}
+    remaining = [r for r in remaining if not (r.parent.name.startswith("deep_research_batch") and rbatch_done)]
+    nb = (len(remaining) + 19) // 20
     for b in range(nb):
-        add(f"DRBC-{b:02d}", f"Mine back-corpus batch {b+1}/{nb} (20 reports -> anti-anchors/probe templates/catalog updates)",
+        add(f"DRBC-N{b:02d}", f"Mine back-corpus batch {b+1}/{nb} of NEW reports (20 -> anti-anchors/probe templates/catalog updates)",
             "dr_backcorpus_442", "anti_anchors.jsonl + market evidence", 60, bottleneck="B-006")
 
     # ---- 4. Fleet profiling: agents through the ladder (roster from state.json) ----
