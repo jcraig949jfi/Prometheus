@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T09:50:35+00:00
+# PULSE — generated 2026-08-19T10:17:23+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -7,12 +7,13 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ```
 window: 3d
 emitted (new files):        610
-consumed (state changes):   126  {'queue_state': 94, 'registry': 27, 'doctrine': 2, 'findings': 3}
+consumed (state changes):   130  {'queue_state': 97, 'registry': 28, 'doctrine': 2, 'findings': 3}
 consumed/emitted:           0.21
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 94
+## Commits, 72h (non-cron): 95
+- e4e62080 08-19 05:50 DRBC-12 DONE: batch 13 â€” halfway through the back-corpus; a solved neighbor is not the solved problem
 - 3625ea6d 08-19 05:50 Ergon: D0 leakage closed by METHOD PROJECTION â€” static check PASS at 0.170 vs 0.25 chance
 - 3d2226fb 08-19 05:25 Ergon: FIRST LEVELED MANIFEST â€” M30 decision-n LEVELED on the paid host
 - 20183e7e 08-19 05:23 COLLISION-PROBE-FAMILY DONE: 9 probes that test whether a system binds names to referents
@@ -37,8 +38,7 @@ verdict: ALIVE
 - 538cc070 08-18 22:16 DRBC-02 DONE: batch 3 mined â€” paradigm threads get their pre-researched groundings
 - 836bed37 08-18 21:12 INFRA-BACKUP: the databases get their first-ever second copy â€” weekly, unattended
 - 1d61a6fa 08-18 20:50 Ergon: decision-n mislaunch diagnosed and discarded (R11); relaunched correctly at 12 RPM
-- bb63dcf8 08-18 20:19 ELI5 in the email: every parked gate and pending decision gets two plain sentences
-- … +69 more
+- … +70 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
