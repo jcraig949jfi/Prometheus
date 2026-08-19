@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T16:14:20+00:00
+# PULSE — generated 2026-08-19T16:41:50+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        600
-consumed (state changes):   187  {'queue_state': 142, 'registry': 39, 'findings': 4, 'doctrine': 2}
-consumed/emitted:           0.31
+emitted (new files):        603
+consumed (state changes):   192  {'queue_state': 146, 'registry': 40, 'findings': 4, 'doctrine': 2}
+consumed/emitted:           0.32
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 104
+## Commits, 72h (non-cron): 107
+- 737d41dc 08-19 12:23 Harmonia B: TIER-A-EXIT-FAIL â€” two criteria unmet; the token deviation is not conservative
+- b3c57ffc 08-19 12:21 Charon: TIER-A-EXIT-FAIL â€” the pilot's F-null is not the F-null R7 validated
+- bc517283 08-19 12:14 DRBC-R06 DONE: a generic theorem plus proven exceptions is not a universal theorem
 - 196c9a9a 08-19 12:04 Kickoff prompts: Tier A exit review (Charon || Harmonia B) then Tier B (Ergon)
 - 7cb068e5 08-19 11:47 DRBC-R05 DONE: the Ignis-era reports wrote today's doctrine three months early
 - fa89446d 08-19 11:19 DRBC-R04 DONE: the barrier trio enters the registry; the recovered corpus stitches the program together
@@ -35,10 +38,7 @@ verdict: ALIVE
 - 20183e7e 08-19 05:23 COLLISION-PROBE-FAMILY DONE: 9 probes that test whether a system binds names to referents
 - aaf5d377 08-19 05:10 Ergon: paid-host M20=0.640 (host delta +14pp REAL); M30 bisection dead-centre at 0.500; decision-n on M30 in flight
 - 7b4b3be3 08-19 04:56 MAY-REGISTRY-RECON DONE: zero contradictions across 3 months of independent re-derivation
-- a88d5896 08-19 04:30 Ergon: paid DeepSeek lane wired, preflighted, decision run relaunched on it
-- 7adbc183 08-19 04:28 LETHE-HARVEST DONE: 7 live-verified, 5 anchors â€” and withdrawal status has a time derivative
-- 8e19200b 08-19 04:03 Aporia: May claim-couplet registry LOCATED â€” third independent Saxl confirmation
-- … +79 more
+- … +82 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
