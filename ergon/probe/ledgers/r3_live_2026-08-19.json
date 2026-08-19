@@ -1,0 +1,35 @@
+{
+  "run_id": "R3-LIVE-2026-08-19",
+  "solver": "deepseek:deepseek-v4-flash",
+  "n_paired": 200,
+  "A_payload_consumption": {
+    "f0": 0.405,
+    "f_answer": 0.99,
+    "delta": 0.585,
+    "mcnemar_p": 3.6111186457260672e-34,
+    "pass": true
+  },
+  "B_cheat": {
+    "f0": 0.405,
+    "cheat": 0.425,
+    "delta": 0.019999999999999962,
+    "mcnemar_p": 0.7520332015985947,
+    "fail": false,
+    "pass": true
+  },
+  "C_leakage_live": {
+    "recovery": 0.0,
+    "n": 100,
+    "binom_p_vs_025": 1.0,
+    "pass": true,
+    "rule_note": "adapted from binary 0.50/0.60 -> count-family 0.25/0.35 (margin preserved)"
+  },
+  "D_headroom": {
+    "ceiling_measured": 0.99,
+    "f0": 0.405,
+    "headroom": 0.585,
+    "pass": true
+  },
+  "all_pass": true,
+  "ts_utc": "2026-08-19T10:17:02+00:00"
+}

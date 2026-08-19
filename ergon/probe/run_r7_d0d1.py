@@ -29,9 +29,9 @@ from ergon.probe.f_null import (  # noqa: E402
     STRATEGY_BY_STRATUM, build_f_null, calibrate_tolerances, classifier_auc, r7_verdict,
 )
 
-LEDGER = ROOT / "ergon" / "probe" / "ledgers" / "probe_prepass.jsonl"
+LEDGER = ROOT / "ergon" / "probe" / "ledgers" / "nearmiss_mix-M30_prepass.jsonl"
 MANIFEST_DIR = ROOT / "ergon" / "probe" / "manifests"
-OUT = ROOT / "ergon" / "probe" / "ledgers" / "r7_d0d1d2_2026-08-16.json"
+OUT = ROOT / "ergon" / "probe" / "ledgers" / "r7_d0_m30_2026-08-19.json"
 
 SEED = 20260816
 N_PAIRS = 30
@@ -42,14 +42,14 @@ CLASSIFIER_CEILING = 0.55
 def main() -> int:
     pool = load_prepass(LEDGER)
     print(f"[R7] pre-pass pool: {len(pool)} rep-1 records (rep-2 excluded at load)")
-    manifest_path = sorted(MANIFEST_DIR.glob("manifest_L1_*.jsonl"))[-1]
+    manifest_path = MANIFEST_DIR / "nearmiss_mix-M30_manifest_n200.jsonl"
     rows = [json.loads(l) for l in manifest_path.read_text(encoding="utf-8").splitlines()]
-    tau = {"probe_prepass": 10_000}
+    tau = {"nearmiss_mix-M30_prepass": 10_000}
 
     report: dict = {"seed": SEED, "n_pairs": N_PAIRS, "ledger": str(LEDGER.name),
                     "manifest": manifest_path.name, "strata": {}}
 
-    for stratum in ("D0", "D1", "D2"):
+    for stratum in ("D0",):
         gen_of = {r["uid"]: r["domain"] for r in rows}
         prom_texts, null_texts, prom_recs_all, null_recs_all = [], [], [], []
 
