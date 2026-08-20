@@ -105,6 +105,22 @@ def q_queues(root=None):
                       key=lambda t: -t.get("priority", 0))
         out["top_unblocked"] = field([t["id"] for t in live[:3]],
                                      f"parse {bl.name}, QUEUED+ungated, top-3 by priority")
+        # zombie detection (DEC-002 gap, closed P30): RUNNING threads whose
+        # generated timestamp is >7 days old have no plausible live worker.
+        from datetime import datetime, timezone as _tz
+        zombies = []
+        for t in threads:
+            if t.get("status") != "RUNNING":
+                continue
+            try:
+                gen = datetime.fromisoformat(str(t.get("generated")).replace("Z", "+00:00"))
+                age_d = (datetime.now(_tz.utc) - gen).total_seconds() / 86400
+                if age_d > 7:
+                    zombies.append({"id": t["id"], "age_days": round(age_d, 1)})
+            except (ValueError, TypeError):
+                zombies.append({"id": t.get("id"), "age_days": None, "note": "unparseable generated ts"})
+        out["zombie_running"] = field(zombies,
+                                      f"parse {bl.name}, RUNNING with generated age > 7d (or unparseable)")
     except BaseException as e:  # noqa: BLE001
         out["backlog_status_counts"] = field(query=str(bl), unknown=f"{type(e).__name__}: {e}"[:120])
         out["top_unblocked"] = field(query=str(bl), unknown="source unreadable")

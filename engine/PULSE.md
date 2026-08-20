@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T13:52:24+00:00
+# PULSE — generated 2026-08-20T14:23:26+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        653
-consumed (state changes):   276  {'queue_state': 225, 'registry': 45, 'findings': 5, 'doctrine': 1}
+emitted (new files):        659
+consumed (state changes):   279  {'queue_state': 228, 'registry': 45, 'findings': 5, 'doctrine': 1}
 consumed/emitted:           0.42
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 149
+## Commits, 72h (non-cron): 151
+- 5fefb672 08-20 09:59 Harmonia-A soak P4: mirror trap 1 is LIVE (14/26 cols) â€” and my own zero was vacuous
+- 756b7cf1 08-20 09:53 Aporia P29: Alethelia v0 â€” the reporter that cannot fabricate calm
 - 478b8454 08-20 09:29 Harmonia-A soak P3: P28 repairs verified adversarially â€” both complete, no regression
 - 097f05c4 08-20 09:22 Aporia P28: soak findings metabolized; v1 cohort claims retracted under exchangeable rerun
 - f44d0aa7 08-20 08:56 Harmonia-A soak P2: R12 harness green 17/17; sandbox pow bound does NOT generalize
@@ -36,9 +38,7 @@ verdict: ALIVE
 - 4aaac0df 08-20 05:14 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
 - 3bd9bfee 08-20 05:14 Round 2 charter: external review adjudicated; three corrections accepted against my own work
 - 2124df9e 08-20 05:09 Shadow channel: external design review + cycle-1 operator notes
-- e6b9ae0d 08-20 05:07 Session assessment + external review packet (2026-08-20)
-- be38627c 08-20 05:02 Elenchus: reviewed SEED/P16/P16b/P17 â€” INSUFFICIENT-LOG, CITATION-FAIL, MIXED, MIXED
-- … +124 more
+- … +126 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
