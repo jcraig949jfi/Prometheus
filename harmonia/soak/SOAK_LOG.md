@@ -14,9 +14,9 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 8 |
+| Passes completed | 9 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all eight passes (now 27 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all nine passes (now 30 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | 2, both closed and independently verified |
@@ -26,13 +26,15 @@ Rough edges are the product. Nothing here is worked around silently.
 | Onboarding defects for a cold agent | 3 (SOAK-01, -02, -03) |
 | Harness calibrations | 3 (R12 ×2 at 17/17; z3 verifier 15/15) |
 | Boundary cases designed + run | 24 (1 gap probe + 6 escape variants + 12 false-cert + 5 hard-region) |
-| Mirror-trap drills run | **3 confirmed** (1, 5, 6) + **1 diagnosed-absent** (3) |
+| Mirror-trap drills run | **4 confirmed** (1, 2, 5, 6) + **1 diagnosed-absent** (3) |
 | Vacuous results caught before publication | 1 (see SOAK-10) |
 | Doctrine items handed off via GATE_ELI5 | 4 (sandbox gap; trap-8 → adopted; z3 contract gap; type-erasure root) |
-| Own hypotheses killed by own tests | 4 (+ 'trap 1 is stale', killed by my own triage) |
+| Own hypotheses killed by own tests | 4 |
+| **Instrument self-audits that changed a finding** | **3** (P4 vacuous zero · P7 misattributed raise · P9 non-deterministic sampling) |
+| Self-corrections against a published pass | 1 (P9 corrects P4's maxima) |
 | New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
 | Own prior-pass weaknesses closed | 1 (P5's "trap-8 prevalence unmeasured" → P6 measured it) |
-| Heartbeat successes | 0 of 8 (env-override, SOAK-05 — never blocked a pass) |
+| Heartbeat successes | 0 of 9 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -340,6 +342,60 @@ of how it was built — it was built from live failures, which is correct — bu
 worker reads eight independent hazards where there are fewer roots plus manifestations,
 and cannot tell which will apply to a database they have not yet touched.
 
+### Trap 2 — testing P8's prediction, and catching my own probe
+
+P8 claimed type erasure is the root of the type-shaped traps, which **predicts** trap 2
+must fire here. That is falsifiable, so pass 9 tried to collect on it rather than drilling
+a fourth trap for another tally mark. The refutation branch was pre-stated with its cost
+named: it would have meant over-generalising from three drills.
+
+**Prediction CONFIRMED.** On `ec_curvedata.degree` (values past int32):
+
+| cast | result |
+|---|---|
+| `::int` (documented failure) | **RAISES** `value "5705441280" is out of range for type integer` |
+| `::bigint` | succeeds |
+| `::numeric` (documented safe) | succeeds |
+
+Type erasure now accounts for traps **1, 2, 5** and the value-side of **6**. Surface is
+narrower here though — only 1 of 4 triaged columns exceeds int32, against 14/26 for
+trap 1 and 29/29 for trap 5.
+
+### SELF-CORRECTION against P4 — my sampling probe is non-deterministic
+
+The three casts returned mutually inconsistent maxima. The available story was *"the casts
+disagree"* — striking, and completely false. Instrument-bug-first, third time this soak:
+
+| run | max |
+|---|---|
+| 1 | 194,592,960,000 |
+| 2 | 541,776,936,960 |
+| 3 | 180,104,601,600 |
+| 4 | 301,082,850,432 |
+
+**`LIMIT` without `ORDER BY` draws a different arbitrary subset per execution.** Every
+"sample max" figure in this soak, P4's included, is run-dependent.
+
+**What the defect kills:** every printed maximum.
+**What it spares:** the *divergence verdicts* — P4's 14-of-26 and the trap-6 result — because
+those compare two aggregates computed over **one identical subquery within a single query**.
+Re-verified: lex `'9999360'` vs numeric `'723333273600'`, still divergent.
+
+**The fix is determinism, not a bigger sample.** The instinct is "sample more rows"; sample
+size was never the defect, and a larger `LIMIT` would have produced equally
+unreproducible numbers with more false confidence.
+
+**SOAK-20 (correction) — the schema does not require reproducibility.** This defect rode
+along for five passes. `pre_stated_readings`, `evidence`, `falsifier` and
+`self_identified_weaknesses` are *all satisfiable by a one-shot non-deterministic query*. A
+**determinism or reproduction-command field** would have surfaced it at P4 instead of P9.
+
+**SOAK-21 (observation) — instrument self-audit is a substantial fraction of the work, not
+overhead around it.** Three of this soak's most useful results came from auditing the probe
+rather than the target: P4's vacuous zero, P7's misattributed raise, P9's sampling defect.
+In each case the *available* finding was about the system under test and the *true* finding
+was about the instrument. For a role whose product is measurement, that ratio is the job.
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -383,7 +439,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — eight passes in; the shape has been stable for six, and the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — nine passes in; the shape has been stable for seven, and the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
