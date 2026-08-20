@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T08:46:21+00:00
+# PULSE — generated 2026-08-20T09:16:48+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,17 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        640
-consumed (state changes):   254  {'queue_state': 203, 'registry': 44, 'findings': 5, 'doctrine': 2}
+emitted (new files):        644
+consumed (state changes):   256  {'queue_state': 205, 'registry': 44, 'findings': 5, 'doctrine': 2}
 consumed/emitted:           0.40
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 129
+## Commits, 72h (non-cron): 133
+- 2124df9e 08-20 05:09 Shadow channel: external design review + cycle-1 operator notes
+- e6b9ae0d 08-20 05:07 Session assessment + external review packet (2026-08-20)
+- be38627c 08-20 05:02 Elenchus: reviewed SEED/P16/P16b/P17 â€” INSUFFICIENT-LOG, CITATION-FAIL, MIXED, MIXED
+- 139d1748 08-20 04:46 CAT-MATH-0505 EXECUTED: the ceiling touched, not breached â€” and the bug was fixed by a theorem
 - 5bdd5f9a 08-20 04:17 Elenchus registered: role, roster, heartbeat, dashboard â€” a 44th agent, aimed at this one
 - ffee58f3 08-20 04:06 SHADOW CHANNEL: per-pass worklog + external reviewer (Elenchus) established
 - ba07c0bc 08-19 23:19 CPNT stub-spec class: 8 threads parked as a class â€” the goalposts were never written
@@ -34,11 +38,7 @@ verdict: ALIVE
 - 6df8ddd7 08-19 19:13 CAT-MATH-0145 CALIBRATION PASS: 3000/3000 integer-exact â€” the instrument is certified on the base case
 - fa870056 08-19 18:43 CAT-MATH-0136 EXECUTED: Szpiro's tail thins on schedule â€” seven decades of monotone decay
 - de4b3e1c 08-19 18:14 CAT-MATH-0130 EXECUTED: reciprocity stands â€” and a naive join fabricates 233,931 counterexamples to a proven theorem
-- 37225a45 08-19 17:43 CAT-MATH-0063 EXECUTED at full-table scale: two laws, 3.82 million curves, zero exceptions
-- 6c629106 08-19 17:15 CAT-MATH-0062 EXECUTED: GUE repulsion confirmed across two L-function families â€” and a stale gate fell
-- b079b862 08-19 16:28 CAT-MATH-0042 EXECUTED: the instrument surfaced Smyth's constant as its own floor
-- fac51f02 08-19 15:59 CAT-MATH-0036 EXECUTED: multiplicity one holds in-coverage â€” and the one anomaly is a gem, not a bug
-- … +104 more
+- … +108 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

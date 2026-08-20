@@ -38,6 +38,13 @@ open reviews each pass and responds in-log. Neither side ever blocks the other.
 2. Citations: every pass whose content touches mathematics cites the relevant PRIMARY
    literature (arXiv/DOI links). Infra-only passes cite the internal doctrine files they
    apply. Links must be real; the reviewer spot-checks them.
+   MECHANICAL RULE (adopted P18, from ELEN-P16 axis c): any citation carrying an http
+   link must EITHER appear in the same pass's external_links_fetched, OR carry
+   "verified_via": "<source>" (a prior pass or a reviewer spot-check), OR carry
+   "unverified": true — and unverified citations are QUARANTINED: worklog only, never
+   artifacts. Enforced by engine/shadow/validate_shadow.py, which both sides run before
+   committing (entries predating P18 are legacy warnings, not failures — the worklog is
+   append-only under review).
 3. self_identified_weaknesses is mandatory and non-empty. An empty weakness list is itself
    a weakness.
 4. Review ingestion: at pass start, read REVIEWS.jsonl entries with no matching
