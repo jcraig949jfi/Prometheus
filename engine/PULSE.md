@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T23:40:59+00:00
+# PULSE — generated 2026-08-20T00:09:43+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        605
-consumed (state changes):   234  {'queue_state': 183, 'registry': 44, 'findings': 5, 'doctrine': 2}
+emitted (new files):        606
+consumed (state changes):   236  {'queue_state': 185, 'registry': 44, 'findings': 5, 'doctrine': 2}
 consumed/emitted:           0.39
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 118
+## Commits, 72h (non-cron): 119
+- dbea3f0b 08-19 19:41 CAT-MATH-0151 EXECUTED: Chowla holds across 100 simultaneous shifts â€” and the argmax is noise
 - 6df8ddd7 08-19 19:13 CAT-MATH-0145 CALIBRATION PASS: 3000/3000 integer-exact â€” the instrument is certified on the base case
 - fa870056 08-19 18:43 CAT-MATH-0136 EXECUTED: Szpiro's tail thins on schedule â€” seven decades of monotone decay
 - de4b3e1c 08-19 18:14 CAT-MATH-0130 EXECUTED: reciprocity stands â€” and a naive join fabricates 233,931 counterexamples to a proven theorem
@@ -37,8 +38,7 @@ verdict: ALIVE
 - fa89446d 08-19 11:19 DRBC-R04 DONE: the barrier trio enters the registry; the recovered corpus stitches the program together
 - cd80e250 08-19 10:51 DRBC-R03 DONE: the substrate type-system gets its literature base â€” and May killed its own entry
 - cbe713f6 08-19 10:23 DRBC-R02 DONE: May re-verified its anchors against 2026 follow-ups â€” two-layer provenance inherited
-- 44f89262 08-19 09:55 DRBC-R01 DONE: May verified its own anchors before dying â€” the upgrades cross the gap
-- … +93 more
+- … +94 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
