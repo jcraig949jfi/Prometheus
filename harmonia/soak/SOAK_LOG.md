@@ -14,9 +14,9 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 18 |
+| Passes completed | 19 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all eighteen passes (now 48 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all nineteen passes (now 50 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | **3**, all closed and independently verified; fastest ≈30 min |
@@ -24,17 +24,17 @@ Rough edges are the product. Nothing here is worked around silently.
 | Replication mismatches | 0 |
 | Provenance findings raised | 2 (AA-018 tier + tightness) |
 | Onboarding defects for a cold agent | 3 (SOAK-01, -02, -03) |
-| Harness calibrations | 6 (R12 ×2; z3 15/15; verifier_lens; void miner 34/34; zoo_matrix 48/48) |
+| Harness calibrations | **7 — all 6 suites now covered**; every one green, 5 of 6 yielded a boundary defect |
 | Boundary cases designed + run | 31 (+5 unregistered-kind probes, +2 regression simulations) |
 | Mirror-trap drills run | **5 confirmed** (1, 2, 5, 6, 7) + **1 diagnosed-absent** (3) |
 | Vacuous results caught before publication | 1 (see SOAK-10) |
-| Doctrine items handed off via GATE_ELI5 | 12 |
+| Doctrine items handed off via GATE_ELI5 | 13 |
 | Own hypotheses killed by own tests | 4 |
-| **Instrument self-audits that changed a finding** | **4** (P4 vacuous zero · P7 misattributed raise · P9 sampling · P14 inverted polarity) |
+| **Instrument self-audits that changed a finding** | **5** (P4 · P7 · P9 · P14 · P19 wrong field name) |
 | Self-corrections against a published pass | **10 correction-typed claims** across 17 passes (see P17 audit) |
 | New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
 | Own prior-pass weaknesses closed | 1 (P5's "trap-8 prevalence unmeasured" → P6 measured it) |
-| Heartbeat successes | 0 of 18 (env-override, SOAK-05 — never blocked a pass) |
+| Heartbeat successes | 0 of 19 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -778,6 +778,50 @@ flagged impact as a missing obligation two passes ago; acting on it here produce
 that **argues against its own urgency**. That is the evidence the obligation is real rather
 than procedural.
 
+### P19 — SOAK-38 tested WITH a control, and deliberately not promoted
+
+`test_legality_generators.py` 2494/2494 green — the last unexercised suite.
+
+**Part 1, adjacent to the guard.** `gen_abs_extra_clean` forces `a<=b` so a root always
+exists, making any "no solution" answer unambiguously over-refusal. But
+`b = a + rng.randint(0, 8)` makes **`a==b` reachable — 20 of 160 probes (12.5%)**. There
+the equation collapses:
+
+| | |
+|---|---|
+| recorded `ground_truth` | `[3]` (a single point) |
+| true solution set (sympy) | **`Interval(-oo, 3)`** — a half-line |
+| gt complete? | **False** |
+
+The guard handles the anticipated failure (*no solution exists*) and is silent about the
+adjacent one (*infinitely many solutions exist*) — **SOAK-38's exact predicted position.**
+
+**Part 2, the control.** Determinism under fixed seed — an axis no test guards, structurally
+unrelated to `a<=b`. Both generators: **identical output, clean.**
+
+### Extended, and still not promoted
+
+This is **the first spanning claim of mine to survive a deliberate test** — and I'm
+declining to bank it. One control on one axis cannot distinguish *"defects live next to
+guards"* from *"I only look next to guards."* The clean control is equally consistent with
+both. **The confound stands.**
+
+Impact is stated as **conditional and unmeasured**: the mathematics is unambiguous, but
+contamination of the H1 over-refusal arm requires reasoners to actually give the interval
+answer, which I did not test.
+
+**SOAK-40 (observation) — all six suites are now calibrated. Every one green; five of six
+yielded a boundary defect the suite didn't pin.** Suite greenness and instrument soundness
+have been **independent in every case examined**. A worker inheriting "all tests pass"
+inherits nothing about the second property.
+
+**SOAK-41 (design) — the confound is not fixable by this role as configured.** Proving
+defects cluster near guards requires probing where guards are *not* — but my judgement
+about where guards are is the same judgement under suspicion, so my control is drawn from
+the contaminated distribution. **An independent party choosing the probe positions is the
+only clean design.** That is a structural argument for the reviewer seat, not a complaint
+about its inactivity.
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -821,7 +865,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — eighteen passes in; the shape has been stable for sixteen, and the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — nineteen passes in; all six suites now calibrated; the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
