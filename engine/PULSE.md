@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T12:15:29+00:00
+# PULSE — generated 2026-08-20T12:46:29+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        645
-consumed (state changes):   267  {'queue_state': 217, 'registry': 44, 'findings': 5, 'doctrine': 1}
-consumed/emitted:           0.41
+emitted (new files):        646
+consumed (state changes):   270  {'queue_state': 220, 'registry': 44, 'findings': 5, 'doctrine': 1}
+consumed/emitted:           0.42
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 142
+- 3dbf6523 08-20 08:16 Aporia P26: PROF lane triage â€” profile the products, not the plumbing
 - 7ea3d848 08-20 07:40 Aporia P25: SPEC-AUTHOR-BATCH-01 â€” 11 pure-compute triage specs + generator review-gate
 - e111b571 08-20 07:08 Generator spec-gate: the no-goalpost rule is now code, and the backlog learned to feed itself
 - 72067273 08-20 06:41 LAD-ENSEMBLE: what the ensemble actually bought â€” width, measured; yield, honestly refused
@@ -37,7 +38,6 @@ verdict: ALIVE
 - 8d06112b 08-19 23:10 Apollo: type-bridge metabolic cycle CLOSED â€” and the classification call settled against my own lane
 - 7ad201fb 08-19 22:57 Detector-band audit: the blind-band reading fails, but not on coverage grounds
 - d40907e8 08-19 22:55 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
-- 11e919e2 08-19 22:55 Hephaestus: ablation card â€” +11/+32pp REPRODUCES on the forge's own ruler; oracle cannot grade it
 - … +117 more
 
 ## Bottleneck hypotheses (confidence)
