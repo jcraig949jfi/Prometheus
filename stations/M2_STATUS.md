@@ -377,3 +377,73 @@ station's most useful output on 2026-08-12 was four executed kills, two of them 
 its own point agent's proposals; on 2026-08-15, Apollo's corpus shipped with three of its
 own wall specifications killed by their own telemetry before release. Updated by
 Harmonia A 2026-08-12, Apollo 2026-08-15, Harmonia B 2026-08-16 (co-sign; band ruling), Harmonia B 2026-08-19 (Tier A exit).*
+
+---
+
+## TWO RETRODICTIONS — Harmonia C (2026-08-19)
+
+**Full report:** `D:\Prometheus\roles\Harmonia\RETRODICTIONS_20260819_harmonia_C.md`
+**Prereg (binding, pre-measurement):** `D:\Prometheus\harmonia\experiments\kill_resurrection_prereg_20260819.md`
+**Assigned by James, reassigned from Aporia** — base-rate-over-an-archive is this seat's
+method, and A is conflicted (the router thesis is A's own).
+
+### Retrodiction 1 — kill-resurrection: RESURRECTS NOTHING
+
+- **0 of 92 historical kills resurrect** (95% upper bound 3.3%; S3_random unbiased stratum
+  0/30, bound 10.0%). **176/176 records representable** — the "blind band" is empty here.
+- **0 disagreements** between my independent re-derivation and the substrate's own flag,
+  across 5 claim kinds and 5 relation families. The substrate evaluates its content correctly.
+- Structural cause (E1): `theseus/generators/a1_catalog_cross_product.py:183` —
+  `SHADOW_CATALOG if holds else REJECTED`. The verdict is content-determined at emit;
+  **43 of 48 generators** share the construction. A kill here is a predicate result, not a
+  dispatch outcome.
+- **The survivors are the real finding.** 84/84 non-promoted SHADOW_CATALOG records
+  re-evaluate TRUE — at **45.9% observed vs a 46.1% random-pairing null.** Dead on the
+  chance floor. Corroborated by the substrate's own census: `equal`, the only relation hard
+  to satisfy by chance, holds 2.4% of the time.
+- **Consequence for the Metabolization Probe:** it is **not** pricing a mislabeled asset.
+  It is pricing a correctly-labeled, chance-level one. Price **failure structure**, not
+  survivor claims.
+- **Pre-committed reading fires:** the router thesis does not explain the Theseus nulls.
+  A's §2 (`verify()` `unknown_kind`) and §6 (regex import screen) are untouched and stand;
+  what dies is the generalization to "the 92K nulls are partly instrument-blindness."
+
+### Retrodiction 2 — repair ledger: capability restored, consumption zero
+
+Typed table of 8 completed repairs in the full report. **3 carried a preregistered
+prediction; all 3 were right about capability; 0 have been followed by a consumer
+consuming.** 3 of 8 rows are **NOT CHECKABLE from M2** (no PostgreSQL here) and say so
+rather than scoring a convenient zero.
+
+- **Correction owed to A (E3):** `theseus/daemon.py:432` **does** call
+  `maybe_promote_by_f2` — in **observation mode**, with a documented graduation criterion
+  ("counts what content-aware filter would promote, without changing actual promotion
+  behavior"). That is a staged rollout, not an excluded semantic check. And the
+  counterfactual it was installed to measure is exactly Retrodiction 1's chance floor:
+  **the check never graduated because the measurement came back null.** The gate was right.
+- **New mechanism the archaeology did not name: repairs are station-local.**
+
+### ⚠ M2 ACTION — one command, still open after 7 days
+
+`snappy` + `z3` were James-approved and landed **on M1** 08-13 (`prometheus_math` 199/200
+there). **M2 measured today: 29/222 modules**, same three doors (`cypari`, `snappy`,
+`knot_floer_homology`). Under ruling **R1 (math = calibration standard), M2 cannot currently
+run the calibration standard at all.**
+
+**Fix:** `pip install snappy` on M2's global interpreter (pulls `cypari` +
+`knot_floer_homology`; dry-run resolves on py3.14/Windows; 29 → 220 modules).
+**Not run — host change, James's call.** Approved on M1, never issued here.
+
+### Shipped
+
+| artifact | purpose |
+|---|---|
+| `harmonia/diagnostics/kill_resurrection_audit.py` (+ `_kill_resurrection.json`) | independent re-evaluation of every killed record |
+| `harmonia/diagnostics/shadow_catalog_chance_floor.py` | random-pairing null over the survivor population |
+| `harmonia/experiments/kill_resurrection_prereg_20260819.md` | binding pre-commitment |
+
+**Self-correction on the record:** revision 1 of the audit reported 13 substrate
+false-passes. All 13 were my own operand-selection error (`symmetry_transform` asserts
+reflection *invariance*; `kill_neighborhood` asserts `epsilon <= 2.0`). Corrected,
+disagreements went 13 → 0. Publishing revision 1 would have manufactured a 15.5% false-pass
+rate that does not exist.
