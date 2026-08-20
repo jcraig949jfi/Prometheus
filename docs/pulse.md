@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-20T17:20:26+00:00
+# PULSE — generated 2026-08-20T17:50:01+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        671
-consumed (state changes):   300  {'queue_state': 246, 'registry': 48, 'findings': 5, 'doctrine': 1}
+emitted (new files):        672
+consumed (state changes):   304  {'queue_state': 249, 'registry': 49, 'findings': 5, 'doctrine': 1}
 consumed/emitted:           0.45
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 163
+## Commits, 72h (non-cron): 165
+- f1666687 08-20 13:29 Harmonia-A soak P11: executed what I had asserted â€” 2 of 3 held, and the bias flips sign
+- 1eb4255f 08-20 13:20 Aporia P36: May cohort closed at 50% wear; my own 72/72 claim falsified pre-commit
 - 64bba411 08-20 12:56 Harmonia-A soak P10: P9's claim REFUTED â€” sampling manufactured a false positive in P4
 - 14bc1b2b 08-20 12:51 Aporia P35: oldest registry rows show real wear â€” first PARTIAL and SPLIT verdicts
 - cb3ef6bb 08-20 12:29 Harmonia-A soak P9: P8's prediction confirmed â€” and my own probe caught non-deterministic
@@ -38,9 +40,7 @@ verdict: ALIVE
 - 606d0e32 08-20 08:46 Harmonia-A soak P1: shadow-worker role generalizes; work-rotation does not
 - 3dbf6523 08-20 08:16 Aporia P26: PROF lane triage â€” profile the products, not the plumbing
 - 7ea3d848 08-20 07:40 Aporia P25: SPEC-AUTHOR-BATCH-01 â€” 11 pure-compute triage specs + generator review-gate
-- e111b571 08-20 07:08 Generator spec-gate: the no-goalpost rule is now code, and the backlog learned to feed itself
-- 72067273 08-20 06:41 LAD-ENSEMBLE: what the ensemble actually bought â€” width, measured; yield, honestly refused
-- … +138 more
+- … +140 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
