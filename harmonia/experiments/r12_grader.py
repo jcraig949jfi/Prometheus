@@ -163,6 +163,15 @@ def _check_node(node: ast.AST, param: str, keys: set) -> None:
             if abs(lhs.value) > 10_000:
                 raise UnsafeConjecture("pow base out of safe range")
 
+    # Mult with a sequence-typed operand is repetition, the Mult-shaped twin of
+    # the Pow exhaustion vector (HARMA-P2, 2026-08-20). Parse-time layer; the
+    # dynamic case (obj-features that are strings) is guarded in _interp.
+    if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Mult):
+        for side in (node.left, node.right):
+            if isinstance(side, (ast.List, ast.Tuple)) or (
+                    isinstance(side, ast.Constant) and isinstance(side.value, str)):
+                raise UnsafeConjecture("sequence repetition is forbidden")
+
     for child in ast.iter_child_nodes(node):
         _check_node(child, param, keys)
 
@@ -267,6 +276,12 @@ def _interp(node: ast.AST, env: Dict[str, Any]) -> Any:
         if isinstance(op, ast.Sub):
             return a - b
         if isinstance(op, ast.Mult):
+            # Sequence repetition is the Mult-shaped twin of the Pow bound
+            # (HARMA-P2 soak finding, 2026-08-20): 'a' * (10**8) projected to
+            # ~100 MB per call while pow was rejected. Repetition has no
+            # legitimate use in a boolean conjecture over obj features.
+            if isinstance(a, (str, list, tuple)) or isinstance(b, (str, list, tuple)):
+                raise UnsafeConjecture("sequence repetition is forbidden")
             return a * b
         if isinstance(op, ast.Mod):
             return a % b

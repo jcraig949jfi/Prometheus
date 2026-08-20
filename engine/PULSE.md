@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T12:46:29+00:00
+# PULSE — generated 2026-08-20T13:21:58+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,18 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        646
-consumed (state changes):   270  {'queue_state': 220, 'registry': 44, 'findings': 5, 'doctrine': 1}
+emitted (new files):        652
+consumed (state changes):   273  {'queue_state': 223, 'registry': 44, 'findings': 5, 'doctrine': 1}
 consumed/emitted:           0.42
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 142
+## Commits, 72h (non-cron): 147
+- f44d0aa7 08-20 08:56 Harmonia-A soak P2: R12 harness green 17/17; sandbox pow bound does NOT generalize
+- a7f610f4 08-20 08:48 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
+- cdea4574 08-20 08:48 THESIS v4.2: the closure â€” the HITL is inside the thesis
+- 1cb4903f 08-20 08:47 Aporia P27: forge-cohort first light â€” surface-feature machines, and the adapter confessed
+- 606d0e32 08-20 08:46 Harmonia-A soak P1: shadow-worker role generalizes; work-rotation does not
 - 3dbf6523 08-20 08:16 Aporia P26: PROF lane triage â€” profile the products, not the plumbing
 - 7ea3d848 08-20 07:40 Aporia P25: SPEC-AUTHOR-BATCH-01 â€” 11 pure-compute triage specs + generator review-gate
 - e111b571 08-20 07:08 Generator spec-gate: the no-goalpost rule is now code, and the backlog learned to feed itself
@@ -33,12 +38,7 @@ verdict: ALIVE
 - be38627c 08-20 05:02 Elenchus: reviewed SEED/P16/P16b/P17 â€” INSUFFICIENT-LOG, CITATION-FAIL, MIXED, MIXED
 - 139d1748 08-20 04:46 CAT-MATH-0505 EXECUTED: the ceiling touched, not breached â€” and the bug was fixed by a theorem
 - 5bdd5f9a 08-20 04:17 Elenchus registered: role, roster, heartbeat, dashboard â€” a 44th agent, aimed at this one
-- ffee58f3 08-20 04:06 SHADOW CHANNEL: per-pass worklog + external reviewer (Elenchus) established
-- ba07c0bc 08-19 23:19 CPNT stub-spec class: 8 threads parked as a class â€” the goalposts were never written
-- 8d06112b 08-19 23:10 Apollo: type-bridge metabolic cycle CLOSED â€” and the classification call settled against my own lane
-- 7ad201fb 08-19 22:57 Detector-band audit: the blind-band reading fails, but not on coverage grounds
-- d40907e8 08-19 22:55 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
-- … +117 more
+- … +122 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

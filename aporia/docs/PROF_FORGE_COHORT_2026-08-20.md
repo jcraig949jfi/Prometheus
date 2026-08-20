@@ -65,3 +65,50 @@ domain_constraints_detected: [distractor-truth-nonexchangeability, surface-featu
 operations_used: [pre-stated-readings, process-isolation, determinism-repeat-check, per-tier-decomposition, bias-direction-diagnosis]
 kill_pattern: below-chance-median = adapter self-report (candidate construction leaked truth-shape) | repair_available: exchangeable-distractor v2, specified above
 residue: MC adapters obey the control-selection doctrine — distractors ARE controls; draw them from the same generative relation as truth or the instrument measures the construction, not the subject
+
+---
+
+# Adapter v2 addendum (P28, same day): the first light was the instrument photographing itself
+
+v2 construction: distractors drawn from the generator's own truth pool at matched string
+length (exchangeable with truth); surface answers accompanied by a LENGTH-MATCHED
+surface-like control distractor (5 candidates where surface exists, 4 otherwise; mixed
+chance ~0.22). Same 48-tool sample. Pre-registered Q1/Q2/Q3 in worklog P28 before the run.
+
+## Verdicts
+- Q3 CONFIRMED: median acc 0.10 -> 0.25 (~chance). v1's below-chance median was the
+  truth+3i construction, as diagnosed.
+- Q1 COLLAPSE for the 0.75 tool (Abductive_Reasoning---Adaptive_Control---Pragmatics:
+  0.75 -> 0.15, BELOW median — its v1 score was adapter artifact + nondeterminism).
+  Category_Theory---Metacognition---Criticality 0.50 -> 0.45: above the IQR, outside the
+  strict top decile (tie-sensitive cutoff) — between the pre-registered buckets; reported
+  as attenuated, not forced into either.
+- Q2 LENGTH-ARTIFACT: R4 clean/iso/adv pooled (n=369): surface 33.1% vs surface-like
+  control 27.6% vs chance 20%. The surface-over-control edge is ~1.6 sd — not the >=2x
+  bar. What IS real: a generic short-string preference (both rates ~8 points above
+  chance). "Stayed-in-surface reasoning" is NOT established for this population.
+- Beyond the pre-registration (flagged as post-hoc): v2 accuracy spread (IQR 0.10) is
+  consistent with binomial noise at n=20; the v2 max (0.50) is not significant across 46
+  tools (expected count of >=0.50 under pure chance ~ 0.3). Full verdict:
+  TOOLS-FLAT-AT-CHANCE — v1's TOOLS-DISCRIMINATE reading is retracted; the spread was
+  construction artifact.
+
+## What survives all rounds
+1. Forge QC numbers (import 95.8%, determinism 76%, ~4% syntax-broken) — measured, stable.
+2. The population profiles as surface-feature machines with a short-string preference and
+   NO detectable probe-solving capability on R0+R4 answer selection.
+3. The fitness-instrument implication: answer-selection MC over forged tools yields a FLAT
+   fitness landscape. The foundry (3c) cannot select on this signal. Either bind tools at
+   their native interface (scoring free-form claims for consistency — a different
+   instrument) or accept that this population contains no ladder-relevant variation.
+4. Method residue, twice-paid-for: an MC adapter's distractors ARE controls (exchangeable
+   or the instrument measures its construction), and a "discriminating" first light is
+   instrument calibration, not architecture measurement, until the exchangeable version
+   confirms it.
+
+## Prior-reachability note (THESIS v4 section 7 discipline)
+The v1 TOOLS-DISCRIMINATE claim was exactly what my prior wanted (a fitness instrument
+needs spread). The correction did not come from introspection; it came from executing the
+exchangeable construction against my own preferred reading. Filed as a live instance of
+"contamination is the null hypothesis," caught by the constitutional rule's mechanism
+(execution certifying a consequence).
