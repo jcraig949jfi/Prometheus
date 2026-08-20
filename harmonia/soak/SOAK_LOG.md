@@ -14,9 +14,9 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 21 |
+| Passes completed | 22 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all twenty-one passes (now 54 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all twenty-two passes (now 56 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | **3**, all closed and independently verified; fastest ≈30 min |
@@ -28,13 +28,13 @@ Rough edges are the product. Nothing here is worked around silently.
 | Boundary cases designed + run | 31 (+5 unregistered-kind probes, +2 regression simulations) |
 | Mirror-trap drills run | **5 confirmed** (1, 2, 5, 6, 7) + **1 diagnosed-absent** (3) |
 | Vacuous results caught before publication | 1 (see SOAK-10) |
-| Doctrine items handed off via GATE_ELI5 | 14 (13 defects/doctrine + **1 proof**) |
+| Doctrine items handed off via GATE_ELI5 | 15 (incl. **3 corrections against my own entries**) |
 | Own hypotheses killed by own tests | 4 |
 | **Instrument self-audits that changed a finding** | **5** (P4 · P7 · P9 · P14 · P19 wrong field name) |
 | Self-corrections against a published pass | **10 correction-typed claims** across 17 passes (see P17 audit) |
 | New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
-| Own prior-pass weaknesses closed | 4 (P5→P6; P19→P20 ×2; **P20→P21 bound-dependence**) |
-| Heartbeat successes | 0 of 21 (env-override, SOAK-05 — never blocked a pass) |
+| Own prior-pass weaknesses closed | 5 (P5→P6; P19→P20 ×2; P20→P21; **P21→P22 precondition**) |
+| Heartbeat successes | 0 of 22 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -914,6 +914,46 @@ advance*, so the useful artifact is not a runtime counter but the **precondition
 which the guard is redundant** (`0<a<b<p`). A counter says it hasn't fired yet; a
 precondition says when it could start.
 
+### P22 — the proof was right; the precondition I shipped with it was wrong
+
+P21 handed the maintainer a theorem plus a precondition: *holds under `0<a<b<p`; allowing
+`a<=0` or `b<=a` voids it.* SOAK-45 argued the precondition is the artifact people act on.
+So I tested it — and **both named clauses are wrong.**
+
+| relaxation | violations |
+|---|---|
+| baseline `0<a<b<p` | 0 |
+| **`a==0`** (P21: "voids it") | **0** |
+| **`a<0`** (P21: "voids it") | **0** |
+| **`b<=a`** (P21: "voids it") | **0** |
+| `p<=b` | **2,024** |
+
+And no simple ordering is sufficient either — `p>b ∧ p>0 ∧ p>a` still leaves **423**
+violations, e.g. `(a,b,p)=(-8,-15,1)` where `p−a+b = −6 < 0` makes the squaring step
+invalid. The counterexample explains itself in terms of the proof, which is what makes the
+frontier believable rather than fitted.
+
+**The true frontier is the proof's own pair — `p−a+b > 0` AND `p(p−a) > 0`** — 0 violations
+across 41,760 triples. `0<a<b<p` is **sufficient, not necessary**.
+
+Practically: **widening `a` is free**; letting `p` fall to or below `b` is the edit that
+matters. P21 warned about two safe edits and left the risky one unmarked.
+
+A separate domain caveat survives: if `a>b` were allowed the algebra still holds, but
+`p>b` no longer places `p` inside the log domain `x>max(a,b)` — a *different* failure from
+the one the loop guards.
+
+**SOAK-46 (correction) — a proof and its precondition fail independently, and the
+precondition is the part that gets acted on.** P21's theorem is correct; its precondition
+was wrong in both clauses. **A proof shipped with an unverified precondition is not safer
+than no proof — it is confidently misdirecting.**
+
+**SOAK-47 (observation) — I conflated sufficient with necessary in my own write-up and
+didn't notice.** `0<a<b<p` is all the generator needs and all P21 demonstrated, but it was
+published as though it were the boundary. The scan cost one pass; the distinction is the
+difference between *"the generator is safe"* and *"here is what you may change"* — and only
+the second is useful to anyone.
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -957,7 +997,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — twenty-one passes in; all six suites calibrated; the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — twenty-two passes in; all six suites calibrated; the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
