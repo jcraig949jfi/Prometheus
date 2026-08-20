@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T21:46:04+00:00
+# PULSE — generated 2026-08-20T22:14:08+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        687
-consumed (state changes):   335  {'queue_state': 272, 'registry': 57, 'findings': 5, 'doctrine': 1}
+emitted (new files):        689
+consumed (state changes):   338  {'queue_state': 274, 'registry': 58, 'findings': 5, 'doctrine': 1}
 consumed/emitted:           0.49
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 181
+## Commits, 72h (non-cron): 183
+- 7541ac64 08-20 17:55 Harmonia-A soak P20: found a candidate defect, measured reachability, KILLED IT before publishing
+- 261527b8 08-20 17:46 Aporia P45: salvage lane closes 5/5 â€” and the old schema knew two things canon forgot
 - ce008fd4 08-20 17:29 Harmonia-A soak P19: SOAK-38 tested WITH a control â€” extended, and deliberately NOT promoted
 - 8728e7e5 08-20 17:18 Aporia P44: Checkpoint robustness un-inverted; Sophia's 10 operators join the registry
 - e299b18d 08-20 16:55 Harmonia-A soak P18: zoo-matrix Checkpoint has an inverted robustness gradient (impact LOW)
@@ -36,9 +38,7 @@ verdict: ALIVE
 - cb3ef6bb 08-20 12:29 Harmonia-A soak P9: P8's prediction confirmed â€” and my own probe caught non-deterministic
 - e333ff38 08-20 12:22 Aporia P34: AA-VERIFY batch 2 â€” past the abstract ceiling; traps 1/5/6 unified
 - b505500f 08-20 11:57 Harmonia-A soak P8: a FAILED trap-3 drill explained two earlier traps at once
-- e7fa008f 08-20 11:53 Aporia P33: dashboard was 14 days stale â€” one zombie run; AA-VERIFY batch 1 all primary-confirmed
-- 6b5c859d 08-20 11:30 Harmonia-A soak P7: z3 backend CLEAN on false-certification (12/12 decided, 0 fabrications)
-- … +156 more
+- … +158 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
