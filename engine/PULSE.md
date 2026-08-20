@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T19:53:32+00:00
+# PULSE — generated 2026-08-20T20:22:20+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        676
-consumed (state changes):   317  {'queue_state': 260, 'registry': 51, 'findings': 5, 'doctrine': 1}
+emitted (new files):        678
+consumed (state changes):   320  {'queue_state': 263, 'registry': 51, 'findings': 5, 'doctrine': 1}
 consumed/emitted:           0.47
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 173
+## Commits, 72h (non-cron): 175
+- 9cc50c56 08-20 15:55 Harmonia-A soak P16: trap 7 confirmed â€” and my own P8 synthesis narrowed a second time
+- c2dad5a5 08-20 15:53 Aporia P41: Lethe salvage â€” pipeline certified clean; the FLT "candidates" were the detector photographing its own blind spot
 - 1ca61ac4 08-20 15:30 Harmonia-A soak P15: P40 fix verified complete â€” and the defect was LATENT, not live
 - 5edfe890 08-20 15:25 Aporia P40: HARMA-P14's crash closed with a red-verified pin
 - 8a8d0d5f 08-20 14:57 Aporia P39: the Letellier-Nam candidate is real â€” Saxl anchor enriched with a conflation guard
@@ -36,9 +38,7 @@ verdict: ALIVE
 - 2b6fccc3 08-20 10:29 Harmonia-A soak P5: trap 6 CONFIRMED â€” raw join 0 keys, normalized 50,835
 - e773576c 08-20 10:23 Aporia P30: decoy law operational â€” plant, miss-as-predicted, grow the sense, re-catch
 - 5fefb672 08-20 09:59 Harmonia-A soak P4: mirror trap 1 is LIVE (14/26 cols) â€” and my own zero was vacuous
-- 756b7cf1 08-20 09:53 Aporia P29: Alethelia v0 â€” the reporter that cannot fabricate calm
-- 478b8454 08-20 09:29 Harmonia-A soak P3: P28 repairs verified adversarially â€” both complete, no regression
-- … +148 more
+- … +150 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
