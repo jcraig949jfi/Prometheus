@@ -37,6 +37,18 @@ watch-paced — every pass does one real item.
    as capacity allows; schema + backup job first (DECISION 2 makes backup non-deferrable).
 
 
+## HARD RULE — shadow worklog (James, 2026-08-20)
+
+**Every pass appends one record to `engine/shadow/WORKLOG.jsonl` and includes it in the
+pass's commit.** Schema and rules: `engine/shadow/WORKLOG_SCHEMA.md`. Non-negotiables per
+record: pre-stated readings, exact evidence numbers, claims typed with strength, citations
+with links (primary literature for math content), a non-empty self_identified_weaknesses
+list, and a falsifier. An external reviewer (Elenchus, M2 — charter in
+`engine/shadow/REVIEW_AGENT_PROMPT.md`) writes `engine/shadow/REVIEWS.jsonl`; at pass start
+read any unaddressed reviews and respond in-log (fixed / acknowledged / rebutted). The
+reviewer never blocks this loop; this loop never edits REVIEWS.jsonl. A pass without a
+worklog entry is an incomplete pass.
+
 ## HARD RULE — default-continue (James, 2026-08-18)
 
 **A pass that ends by asking James a question is a FAILED pass.** Seven months and ~20

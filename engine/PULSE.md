@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T03:19:03+00:00
+# PULSE — generated 2026-08-20T08:06:50+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        616
-consumed (state changes):   251  {'queue_state': 200, 'registry': 44, 'findings': 5, 'doctrine': 2}
-consumed/emitted:           0.41
+emitted (new files):        639
+consumed (state changes):   254  {'queue_state': 203, 'registry': 44, 'findings': 5, 'doctrine': 2}
+consumed/emitted:           0.40
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 129
+- ba07c0bc 08-19 23:19 CPNT stub-spec class: 8 threads parked as a class â€” the goalposts were never written
+- 8d06112b 08-19 23:10 Apollo: type-bridge metabolic cycle CLOSED â€” and the classification call settled against my own lane
 - 7ad201fb 08-19 22:57 Detector-band audit: the blind-band reading fails, but not on coverage grounds
 - d40907e8 08-19 22:55 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
 - 11e919e2 08-19 22:55 Hephaestus: ablation card â€” +11/+32pp REPRODUCES on the forge's own ruler; oracle cannot grade it
@@ -36,8 +38,6 @@ verdict: ALIVE
 - fac51f02 08-19 15:59 CAT-MATH-0036 EXECUTED: multiplicity one holds in-coverage â€” and the one anomaly is a gem, not a bug
 - dbe3ad69 08-19 15:30 CAT-MATH-0026 EXECUTED: first live-data catalog attack â€” and the mirror bit back usefully
 - d5472165 08-19 15:08 Ergon: paid lane exhausted at -$0.70 mid-cure; vacuous control quarantined; transport gate added
-- 6e1b6ff9 08-19 15:00 Generator fix pays twice: 14 phantom batches killed, 22 hidden reports found â€” corpus verifiably empty
-- e3fcc040 08-19 14:44 Ergon: BOTH EXIT-FAILS ADOPTED â€” +9.6pp WITHDRAWN; C1/C2 cured; oracle v2; cures in flight
 - … +104 more
 
 ## Bottleneck hypotheses (confidence)
