@@ -14,9 +14,9 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 12 |
+| Passes completed | 13 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all twelve passes (now 36 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all thirteen passes (now 38 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | 2, both closed and independently verified |
@@ -24,17 +24,17 @@ Rough edges are the product. Nothing here is worked around silently.
 | Replication mismatches | 0 |
 | Provenance findings raised | 2 (AA-018 tier + tightness) |
 | Onboarding defects for a cold agent | 3 (SOAK-01, -02, -03) |
-| Harness calibrations | 4 (R12 ×2; z3 verifier 15/15; verifier_lens green) |
+| Harness calibrations | 5 (R12 ×2; z3 15/15; verifier_lens; void miner 34/34) |
 | Boundary cases designed + run | 31 (+5 unregistered-kind probes, +2 regression simulations) |
 | Mirror-trap drills run | **4 confirmed** (1, 2, 5, 6) + **1 diagnosed-absent** (3) |
 | Vacuous results caught before publication | 1 (see SOAK-10) |
-| Doctrine items handed off via GATE_ELI5 | 7 (incl. a correction against my own P10 entry) |
+| Doctrine items handed off via GATE_ELI5 | 8 (incl. a correction against my own P10 entry, and one **constructive** fix pattern) |
 | Own hypotheses killed by own tests | 4 |
 | **Instrument self-audits that changed a finding** | **3** (P4 vacuous zero · P7 misattributed raise · P9 non-deterministic sampling) |
-| Self-corrections against a published pass | 3 — a **4-deep chain**: P4 → P9 (method) → P10 (verdict) → P11 (scope + my own gate entry) |
+| Self-corrections against a published pass | 4 — 4-deep sampling chain, **+ SOAK-27 demoted by P13** |
 | New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
 | Own prior-pass weaknesses closed | 1 (P5's "trap-8 prevalence unmeasured" → P6 measured it) |
-| Heartbeat successes | 0 of 12 (env-override, SOAK-05 — never blocked a pass) |
+| Heartbeat successes | 0 of 13 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -526,6 +526,48 @@ to sequence repetition (P2), and `verifier_lens`'s fails-closed assertion can't 
 abstention from mis-certification (here). **In both cases the gap was found by a boundary
 case, not by the suite.**
 
+### P13 — testing my own pattern claim, which failed to extend
+
+SOAK-27 generalised from **two** instances that green suites are blind to what matters.
+That is the exact shape I have been burned by. So this pass probed a **third** suite —
+`test_lattice_void_miner.py`, 34 passed / 0 failed — with the property **committed in
+writing before any probe was built**, so a null would count as evidence rather than as a
+failed hunt: *does the instrument distinguish "we looked and found nothing" from "we could
+not look?"* For a void miner, whose entire output is absences, that is the sharpest form.
+
+| case | result |
+|---|---|
+| empty sides | `hold_rate = 0.0` **but** `is_exact_void = False` — vacuity not promoted to a void |
+| values present, no evaluable pair | `evaluate_lattice` **raises** — fails loudly, no vacuous void |
+
+**SOAK-27 does not extend. It is demoted from a pattern to two instances.**
+
+And the guard is *deliberate*, not incidental: a vacuous `hold_rate` of 0.0 is computed and
+then explicitly not promoted. The structural reason is reusable —
+
+> the cell schema carries `n_eval`, `n_dropped_a`, `n_dropped_b` alongside `hold_count`.
+> **The denominator travels with the number.**
+
+That is precisely the triage discipline the soak spent P4 → P11 re-deriving by hand.
+
+Error asymmetry, also correct as designed: transform errors are swallowed as domain skips;
+relation errors propagate as bugs.
+
+**SOAK-28 (correction) — SOAK-27 demoted.** Third time the soak has caught this error
+shape in a new guise (P4's zero, P10's sampled verdicts, now my own cross-suite
+generalisation), and every time the fix was to *test* the claim rather than reason about it.
+
+**SOAK-29 (observation) — the doctrine teaches the failures, not the instrument that
+already solves them.** A repo primitive had the denominator-travels-with-the-numerator rule
+encoded from the start, while the soak learned it the expensive way over eight passes. **A
+cold worker's onboarding would be materially cheaper if the doctrine pointed at an
+instrument that embodies the rule, instead of only cataloguing the failures that motivate
+it.**
+
+This is also the first pass where a boundary probe **validated** an instrument rather than
+breaking one — the same tool returning the opposite verdict, which is worth more than
+another confirmation would have been.
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -569,7 +611,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — twelve passes in; the shape has been stable for ten, and the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — thirteen passes in; the shape has been stable for eleven, and the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
