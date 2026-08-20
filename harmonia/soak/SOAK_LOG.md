@@ -14,9 +14,9 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 4 |
+| Passes completed | 5 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all four passes (now 19 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all five passes (now 22 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | 2, both closed and independently verified |
@@ -26,11 +26,12 @@ Rough edges are the product. Nothing here is worked around silently.
 | Onboarding defects for a cold agent | 3 (SOAK-01, -02, -03) |
 | Harness calibrations | 2 (R12 suite, 17/17 green both times) |
 | Boundary cases designed + run | 7 (1 gap probe + 6 escape variants) |
-| Mirror-trap drills run | 1 of 7+ documented traps (trap 1, live data) |
+| Mirror-trap drills run | 2 of 7+ documented traps (1 and 6, both live data, both CONFIRMED) |
 | Vacuous results caught before publication | 1 (see SOAK-10) |
-| Safety gaps handed off via GATE_ELI5 | 1 |
+| Doctrine items handed off via GATE_ELI5 | 2 (sandbox gap; trap-8 candidate) |
 | Own hypotheses killed by own tests | 4 (+ 'trap 1 is stale', killed by my own triage) |
-| Heartbeat successes | 0 of 4 (env-override, SOAK-05 — never blocked a pass) |
+| New trap candidates found | 1 (identifier-case mismatch, not in the documented 7) |
+| Heartbeat successes | 0 of 5 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -162,6 +163,49 @@ showed **ACTUALLY PROBED = 0**: the scan had tested nothing. **The doctrine's ow
 caught my own probe.** The triage step should have been in the first scan rather than
 added after a suspicious result — that is a weakness in my method, not a win for it.
 
+**SOAK-12 (observation) — the format carries method forward.** P4's vacuous zero taught
+that a raw zero needs a discriminator. P5 designed the discriminator *into the pre-stated
+readings before any query ran*, rather than reaching for it after a suspicious result. **No
+reviewer prompted this — the worker's own prior failure did.** That is weak evidence the
+worklog format itself propagates method between passes, which is exactly the property you
+want in a role meant to be occupied by cold agents who inherit nothing but the log.
+
+**SOAK-13 (design) — GATE_ELI5 is the binding constraint, not worker throughput.** Two of
+the last three passes produced doctrine additions the worker is structurally forbidden to
+apply (P2's sandbox gap, P5's trap-8 candidate); both left via `GATE_ELI5.jsonl`. The
+channel generates doctrine faster than a write-scoped worker can land it. Not a defect —
+SOAK-07 argued the boundary improves outcomes — but it means **GATE_ELI5 drain rate**, not
+worker productivity, governs how fast a second worker improves doctrine.
+
+### Trap 6 — cross-table key spelling (attack 0130)
+
+| measure | value |
+|---|---|
+| distinct keys | artin `"Conductor"` 332,779 · newforms `level` 123,365 |
+| **RAW string join** | **0 keys intersect** |
+| **NORMALIZED `::numeric`** | **50,835 keys** (41.2% of newform levels) |
+| discriminator: numeric ranges | artin [1, 9.99e15] · newforms [1, 999983] — **overlap** |
+| verdict | **spelling artifact, not disjoint domains** |
+
+Raw spellings observed directly before measuring: `'12435.0'`, `'78656.0'` against
+`'1008'`, `'1023'` — exactly as attack 0130 describes.
+
+**The discriminator is the point.** A raw-join zero has two possible causes — a spelling
+artifact or key domains that genuinely never meet — and they demand opposite responses.
+Trap 6 as documented does not say how to tell them apart; comparing the numeric ranges
+does, and it was written into this pass's readings *before* any query ran.
+
+**Not claimed:** that any of the 50,835 numerically-equal keys is a mathematically
+meaningful correspondence. That is a join repair, not a discovery, and it is logged
+`withheld`.
+
+**Trap-8 candidate (new, handed off).** `artin_reps` exposes quoted CamelCase columns
+(`"Conductor"`, `"Dim"`) while `mf_newforms` uses lowercase. A case-sensitive column filter
+over `artin_reps` returns an **empty column list rather than an error** — my own first
+query hit exactly this and looked like "the table has no conductor field." Found
+incidentally by my own failure, not by systematic scan, so it goes to the doctrine's owner
+as a candidate rather than a measured trap.
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -205,7 +249,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — four passes is not a soak, but the shape is now stable. The mechanisms have generalized to a second worker
+Withheld — five passes in, and the shape has been stable for three. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
