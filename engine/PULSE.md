@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T08:46:21+00:00
+# PULSE — generated 2026-08-20T09:44:53+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,21 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        640
-consumed (state changes):   254  {'queue_state': 203, 'registry': 44, 'findings': 5, 'doctrine': 2}
+emitted (new files):        646
+consumed (state changes):   256  {'queue_state': 205, 'registry': 44, 'findings': 5, 'doctrine': 2}
 consumed/emitted:           0.40
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 129
+## Commits, 72h (non-cron): 135
+- 25c21a86 08-20 05:28 Design critique answered; P18 self-corrected; 21 dead-host references swept fleet-wide
+- dfcc48f3 08-20 05:16 Shadow cycle 1 CLOSED: all 14 Elenchus findings answered â€” the channel works
+- 4aaac0df 08-20 05:14 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
+- 3bd9bfee 08-20 05:14 Round 2 charter: external review adjudicated; three corrections accepted against my own work
+- 2124df9e 08-20 05:09 Shadow channel: external design review + cycle-1 operator notes
+- e6b9ae0d 08-20 05:07 Session assessment + external review packet (2026-08-20)
+- be38627c 08-20 05:02 Elenchus: reviewed SEED/P16/P16b/P17 â€” INSUFFICIENT-LOG, CITATION-FAIL, MIXED, MIXED
+- 139d1748 08-20 04:46 CAT-MATH-0505 EXECUTED: the ceiling touched, not breached â€” and the bug was fixed by a theorem
 - 5bdd5f9a 08-20 04:17 Elenchus registered: role, roster, heartbeat, dashboard â€” a 44th agent, aimed at this one
 - ffee58f3 08-20 04:06 SHADOW CHANNEL: per-pass worklog + external reviewer (Elenchus) established
 - ba07c0bc 08-19 23:19 CPNT stub-spec class: 8 threads parked as a class â€” the goalposts were never written
@@ -30,15 +38,7 @@ verdict: ALIVE
 - 95bbdd3d 08-19 21:05 CAT-MATH-0175 EXECUTED: the Montgomery profile itself, at the few-percent level
 - 5a226cf6 08-19 20:37 ATTACK_PATTERNS.md: the ten attacks metabolized into a reusable method
 - 7facfbef 08-19 20:09 CAT-MATH-0165 EXECUTED: the k^2 law where the instrument sees cleanly â€” and a deviation pre-attributed by direction
-- dbea3f0b 08-19 19:41 CAT-MATH-0151 EXECUTED: Chowla holds across 100 simultaneous shifts â€” and the argmax is noise
-- 6df8ddd7 08-19 19:13 CAT-MATH-0145 CALIBRATION PASS: 3000/3000 integer-exact â€” the instrument is certified on the base case
-- fa870056 08-19 18:43 CAT-MATH-0136 EXECUTED: Szpiro's tail thins on schedule â€” seven decades of monotone decay
-- de4b3e1c 08-19 18:14 CAT-MATH-0130 EXECUTED: reciprocity stands â€” and a naive join fabricates 233,931 counterexamples to a proven theorem
-- 37225a45 08-19 17:43 CAT-MATH-0063 EXECUTED at full-table scale: two laws, 3.82 million curves, zero exceptions
-- 6c629106 08-19 17:15 CAT-MATH-0062 EXECUTED: GUE repulsion confirmed across two L-function families â€” and a stale gate fell
-- b079b862 08-19 16:28 CAT-MATH-0042 EXECUTED: the instrument surfaced Smyth's constant as its own floor
-- fac51f02 08-19 15:59 CAT-MATH-0036 EXECUTED: multiplicity one holds in-coverage â€” and the one anomaly is a gem, not a bug
-- … +104 more
+- … +110 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

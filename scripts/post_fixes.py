@@ -1,7 +1,7 @@
 """Three fixes: lock F012 out of auto-claim, validate sessionC 38%, renumber sessionD P028→P029."""
 import sys, os
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
-os.environ['AGORA_REDIS_HOST'] = '192.168.1.176'
+os.environ['AGORA_REDIS_HOST'] = '192.168.1.202'
 os.environ['AGORA_REDIS_PASSWORD'] = 'prometheus'
 
 from thesauros.prometheus_data import get_bus

@@ -1,7 +1,7 @@
 """Post landscape charter to Agora main stream."""
 import sys, os
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
-os.environ['AGORA_REDIS_HOST'] = '192.168.1.176'
+os.environ['AGORA_REDIS_HOST'] = '192.168.1.202'
 os.environ['AGORA_REDIS_PASSWORD'] = 'prometheus'
 from agora.client import AgoraClient
 

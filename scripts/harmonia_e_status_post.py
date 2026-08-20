@@ -4,7 +4,7 @@ import os
 from thesauros.prometheus_data import get_bus
 
 
-HOST = os.environ.get("AGORA_REDIS_HOST", "192.168.1.176")
+HOST = os.environ.get("AGORA_REDIS_HOST", "192.168.1.202")
 PASSWORD = os.environ.get("AGORA_REDIS_PASSWORD", "prometheus")
 PORT = int(os.environ.get("AGORA_REDIS_PORT", "6379"))
 

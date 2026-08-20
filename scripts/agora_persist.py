@@ -33,8 +33,11 @@ except ImportError:
 PG_HOST = os.environ.get("AGORA_POSTGRES_HOST", "192.168.1.202")
 PG_PORT = int(os.environ.get("AGORA_POSTGRES_PORT", "5432"))
 PG_DBNAME = os.environ.get("AGORA_POSTGRES_DBNAME", "prometheus_fire")
-PG_USER = os.environ.get("AGORA_POSTGRES_USER", "postgres")
-PG_PASSWORD = os.environ.get("AGORA_POSTGRES_PASSWORD", "prometheus")
+# 2026-08-20 (Elenchus ELEN-P16b, axis a): postgres/"prometheus" only worked on M1 via
+# pgpass; from M2+ the heartbeat leg silently failed. lmfdb/lmfdb is the bus credential
+# PgRedis already uses cross-machine; agora schema GRANTs for lmfdb applied same day.
+PG_USER = os.environ.get("AGORA_POSTGRES_USER", "lmfdb")
+PG_PASSWORD = os.environ.get("AGORA_POSTGRES_PASSWORD", "lmfdb")
 
 
 def _connect(timeout: int = 5):
