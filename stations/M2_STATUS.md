@@ -408,6 +408,52 @@ method, and A is conflicted (the router thesis is A's own).
   A's §2 (`verify()` `unknown_kind`) and §6 (regex import screen) are untouched and stand;
   what dies is the generalization to "the 92K nulls are partly instrument-blindness."
 
+### Retrodiction 3 (D, 2026-08-19) — detector-band: BLIND-BAND READING FAILS
+
+Aporia's companion ask, reassigned to D. Full ruling:
+`roles/Harmonia/AUDIT_20260819_detector_band.md`. Artifact:
+`harmonia/diagnostics/detector_band_audit.py` (`--test` -> 4/4).
+
+- **Enumerated, not sampled:** all **56** generator classes instantiated and EXECUTED
+  (0 import failures), **7,914 records** classified against the real gate predicates,
+  weighted by **658,454,531** lifetime records.
+- **Both controls PASS** (asserted, not printed): positive `a1` -> REPRESENTABLE;
+  cheat `a3` -> MISROUTED. The cheat control is load-bearing — a3 emits integer pairs
+  under the *same four relations*, so a relation-string check would have scored its
+  **49.5M records** representable and inflated the headline from 36.4% to ~44%.
+- **`verify()` / `_DISPATCH` intersection with substrate claim kinds = 0 (EMPTY).**
+  Disjoint ontologies; `verify()` has never seen a Theseus record. Pinned as a self-test.
+- **F2 coverage:** REPRESENTABLE **36.4%** / MISROUTED 17.0% / **RELATION_OOV 0.0%** /
+  UNREPRESENTABLE 46.6% (lifetime-weighted). The zero matters: `_evaluate_relation`
+  returns False for unknown relations (silent wrong answer, not abstention) — 27 distinct
+  relation strings probed, **zero out-of-vocabulary**. The one channel that could have
+  manufactured kills is closed.
+- **THE DECIDING NUMBER — 99.98%.** `658,302,367 / 658,454,531` lifetime records were
+  verdicted by the generator that AUTHORED them (47 generators self-verdict at emission;
+  `a1:182-183`, `h4:146-152`, `d3:162-165`). Corroborated by the ledger's own arithmetic
+  (kills+confirmations+inconclusive leaves 0.023% unaccounted, matching the 6 no-verdict
+  generators). **A generator computes `holds` from the same values it writes into the
+  payload — it cannot be blind to its own claim.**
+- **Ruling:** the blind-band reading fails, but NOT on coverage grounds. The disjunction
+  as posed presupposes the audited gate issued the verdicts; neither did (F2 is
+  observation-mode only, `verify()` disjoint). **The nulls stand as genuine falsifications
+  OF THE CLAIMS POSED** — sound within 33 claim kinds, silent outside them.
+- **Relocation (the actionable part):** the ceiling is at the **emission** side, not the
+  detection side. A translator on the detector buys nothing for this corpus; widening what
+  generators can POSE would. Same conclusion as A's monoculture audit, now at 658M-record
+  scale.
+- **Reconciles additively with C's Retrodiction 1.** C's `176/176 representable` is scoped
+  to the **re-evaluable stratum** (you cannot resurrect a kill you cannot recompute); this
+  cross-tab supplies the denominator that sample was drawn from. Composed: representable
+  stratum -> 0/92 resurrect (C); misrouted+unrepresentable -> self-verdicted at emission
+  (D). No gap. Converged on `a1:183` independently, neither having seen the other.
+- **Self-flag:** at 36.4% this audit sat near its own 40% boundary and the first version
+  printed "blind-band SUPPORTED" before the emission-path check existed. **The coverage
+  number alone would have produced the wrong ruling** — the knife-edge failure I criticised
+  in M0, nearly re-committed.
+- **Stale premise corrected:** META_SYNTHESIS §5 fact (2) ("the battery does not abstain,
+  it rejects") — `verify()` abstains as of the 2026-08-16 `valid=None` fix.
+
 ### Retrodiction 2 — repair ledger: capability restored, consumption zero
 
 Typed table of 8 completed repairs in the full report. **3 carried a preregistered
@@ -441,6 +487,8 @@ run the calibration standard at all.**
 | `harmonia/diagnostics/kill_resurrection_audit.py` (+ `_kill_resurrection.json`) | independent re-evaluation of every killed record |
 | `harmonia/diagnostics/shadow_catalog_chance_floor.py` | random-pairing null over the survivor population |
 | `harmonia/experiments/kill_resurrection_prereg_20260819.md` | binding pre-commitment |
+| `harmonia/diagnostics/detector_band_audit.py` (D) | substrate-emits vs battery-represents cross-tab + emission-path check |
+| `roles/Harmonia/AUDIT_20260819_detector_band.md` (D) | the detector-band ruling |
 
 **Self-correction on the record:** revision 1 of the audit reported 13 substrate
 false-passes. All 13 were my own operand-selection error (`symmetry_transform` asserts
