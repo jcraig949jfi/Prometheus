@@ -70,9 +70,16 @@ def main() -> int:
         t = triage.get(qid, {})
         bucket = str(t.get("bucket", t.get("triage", ""))).upper()
         boost = 15 if "A" in bucket else (7 if "B" in bucket else 0)
+        # 2026-08-20 (P20/P24): an entry without a real test_spec is not attackable —
+        # attacking it means inventing goalposts mid-shot (CPNT precedent). Gate it at
+        # birth on spec authoring; the SPEC-AUTHOR-BATCH lane converts these deliberately.
+        spec = str(t.get("test_spec", ""))
+        spec_missing = (len(spec) < 30 or "See specific test" in spec
+                        or "Requires data extension" in str(t.get("data_source", "")))
+        gate = "needs authored test_spec (SPEC-AUTHOR-BATCH lane)" if spec_missing else None
         add(f"CAT-{qid}", f"Catalog attack: {str(q.get('question') or q.get('title') or qid)[:120]}",
             "catalog_537", "trace-vector corpus + kill ledger", 40 + boost,
-            bottleneck="B-004", meta={"bucket": bucket or "?"})
+            gate=gate, bottleneck="B-004", meta={"bucket": bucket or "?"})
 
     # ---- 2. Retry queue batches (725 resolution_limit, 15 batches) — gated on co-sign ----
     for b in range(15):

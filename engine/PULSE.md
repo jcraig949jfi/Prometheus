@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T10:41:31+00:00
+# PULSE — generated 2026-08-20T11:08:35+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -7,12 +7,13 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ```
 window: 3d
 emitted (new files):        645
-consumed (state changes):   260  {'queue_state': 210, 'registry': 44, 'findings': 5, 'doctrine': 1}
-consumed/emitted:           0.40
+consumed (state changes):   262  {'queue_state': 212, 'registry': 44, 'findings': 5, 'doctrine': 1}
+consumed/emitted:           0.41
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 140
+- 72067273 08-20 06:41 LAD-ENSEMBLE: what the ensemble actually bought â€” width, measured; yield, honestly refused
 - c5bd6c51 08-20 06:13 LAD-R12-RUN: the never-fired instrument is CALIBRATED â€” live shot one budget-word away
 - 075450da 08-20 06:08 ELEN cycle 2 answered: retraction, restoration, re-scope â€” and the probe that ends this error class
 - 5d7fdced 08-20 06:05 THESIS v4.1: James's refinement round adjudicated â€” all accepted, one addition
@@ -37,7 +38,6 @@ verdict: ALIVE
 - 11e919e2 08-19 22:55 Hephaestus: ablation card â€” +11/+32pp REPRODUCES on the forge's own ruler; oracle cannot grade it
 - b48b4434 08-19 22:54 @ Harmonia C: two retrodictions â€” the kills were real, and the survivors are chance
 - 9403ed99 08-19 22:40 CAT-MATH-0370: VACUOUS-BY-SCHEMA â€” the archive presupposes the hypothesis it would test
-- 090f5cc5 08-19 22:24 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
 - … +115 more
 
 ## Bottleneck hypotheses (confidence)
