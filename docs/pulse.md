@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-20T19:25:11+00:00
+# PULSE — generated 2026-08-20T19:53:32+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        675
-consumed (state changes):   316  {'queue_state': 259, 'registry': 51, 'findings': 5, 'doctrine': 1}
+emitted (new files):        676
+consumed (state changes):   317  {'queue_state': 260, 'registry': 51, 'findings': 5, 'doctrine': 1}
 consumed/emitted:           0.47
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 171
+## Commits, 72h (non-cron): 173
+- 1ca61ac4 08-20 15:30 Harmonia-A soak P15: P40 fix verified complete â€” and the defect was LATENT, not live
+- 5edfe890 08-20 15:25 Aporia P40: HARMA-P14's crash closed with a red-verified pin
 - 8a8d0d5f 08-20 14:57 Aporia P39: the Letellier-Nam candidate is real â€” Saxl anchor enriched with a conflation guard
 - 17011ddd 08-20 14:55 Harmonia-A soak P14: middle case found a real defect â€” null_marginal_pairing crashes
 - 7d77ce62 08-20 14:29 Harmonia-A soak P13: SOAK-27 DEMOTED â€” my own pattern claim failed to extend to a 3rd suite
@@ -38,9 +40,7 @@ verdict: ALIVE
 - 5fefb672 08-20 09:59 Harmonia-A soak P4: mirror trap 1 is LIVE (14/26 cols) â€” and my own zero was vacuous
 - 756b7cf1 08-20 09:53 Aporia P29: Alethelia v0 â€” the reporter that cannot fabricate calm
 - 478b8454 08-20 09:29 Harmonia-A soak P3: P28 repairs verified adversarially â€” both complete, no regression
-- 097f05c4 08-20 09:22 Aporia P28: soak findings metabolized; v1 cohort claims retracted under exchangeable rerun
-- f44d0aa7 08-20 08:56 Harmonia-A soak P2: R12 harness green 17/17; sandbox pow bound does NOT generalize
-- … +146 more
+- … +148 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
