@@ -14,9 +14,9 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 11 |
+| Passes completed | 12 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all eleven passes (now 34 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all twelve passes (now 36 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | 2, both closed and independently verified |
@@ -24,17 +24,17 @@ Rough edges are the product. Nothing here is worked around silently.
 | Replication mismatches | 0 |
 | Provenance findings raised | 2 (AA-018 tier + tightness) |
 | Onboarding defects for a cold agent | 3 (SOAK-01, -02, -03) |
-| Harness calibrations | 3 (R12 ×2 at 17/17; z3 verifier 15/15) |
-| Boundary cases designed + run | 24 (1 gap probe + 6 escape variants + 12 false-cert + 5 hard-region) |
+| Harness calibrations | 4 (R12 ×2; z3 verifier 15/15; verifier_lens green) |
+| Boundary cases designed + run | 31 (+5 unregistered-kind probes, +2 regression simulations) |
 | Mirror-trap drills run | **4 confirmed** (1, 2, 5, 6) + **1 diagnosed-absent** (3) |
 | Vacuous results caught before publication | 1 (see SOAK-10) |
-| Doctrine items handed off via GATE_ELI5 | 6 (incl. a **correction against my own P10 entry**) |
+| Doctrine items handed off via GATE_ELI5 | 7 (incl. a correction against my own P10 entry) |
 | Own hypotheses killed by own tests | 4 |
 | **Instrument self-audits that changed a finding** | **3** (P4 vacuous zero · P7 misattributed raise · P9 non-deterministic sampling) |
 | Self-corrections against a published pass | 3 — a **4-deep chain**: P4 → P9 (method) → P10 (verdict) → P11 (scope + my own gate entry) |
 | New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
 | Own prior-pass weaknesses closed | 1 (P5's "trap-8 prevalence unmeasured" → P6 measured it) |
-| Heartbeat successes | 0 of 11 (env-override, SOAK-05 — never blocked a pass) |
+| Heartbeat successes | 0 of 12 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -484,6 +484,48 @@ stopped at either earlier point would have published a scope that was wrong and
 defensible — and nothing in the loop distinguishes "scope established" from "scope not yet
 re-tested."**
 
+### P12 — the first pass where the behaviour was already right
+
+Rotation (c), `test_verifier_lens.py` — green, exit 0, no failures.
+
+**The fix landed.** `verify()` now **abstains** (`valid=None`, `kill_pattern='unknown_kind'`)
+on all five unregistered kinds probed, rather than returning `valid=False` — which would
+declare a *true* claim WRONG, the worst failure available to a selection-side verifier.
+
+**But it is unpinned.** The suite's guard reads:
+
+```python
+assert r["valid"] in (False, None)
+```
+
+That accepts the correct abstention **and** the exact mis-certification it exists to
+prevent. Simulated against the literal expression rather than argued:
+
+| outcome | assertion passes |
+|---|---|
+| current behaviour — `valid=None` (abstain) | ✅ |
+| regression — `valid=False` (mis-certify) | ✅ |
+
+**A regression would leave the suite green.** Tightening one assertion to `is None` pins
+it; handed off via GATE_ELI5, since the file isn't mine.
+
+I checked whether the fix *exists* before whether it's *tested* — deliberately. Had the
+behaviour been broken, the test gap would be a footnote; finding it correct is what makes
+the unpinned guarantee the finding. And no causal claim is made connecting this to any
+earlier recommendation: not verified, not measurable from here, wouldn't change the result.
+
+**SOAK-26 (observation) — a correct behaviour still produced a finding**, because *"is it
+pinned?"* is separable from *"is it right?"*. Four earlier passes found defects in
+behaviour; this one found a defect in the **guarantee**. A calibration lane that only
+reports when behaviour is wrong would have logged this pass as a clean no-op.
+
+**SOAK-27 (design) — green suites have twice meant "the pinned properties hold", never
+"the instrument is sound".** Both suites probed with self-designed boundary cases were
+green while blind to a property that mattered: R12's pinned `pow` bound didn't generalise
+to sequence repetition (P2), and `verifier_lens`'s fails-closed assertion can't distinguish
+abstention from mis-certification (here). **In both cases the gap was found by a boundary
+case, not by the suite.**
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -527,7 +569,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — eleven passes in; the shape has been stable for nine, and the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — twelve passes in; the shape has been stable for ten, and the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
