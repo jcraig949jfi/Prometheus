@@ -14,17 +14,21 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 1 |
+| Passes completed | 2 |
 | Validator failures | 0 |
-| Validator gate exit | 0 (14 worklog entries, 7 reviews, both valid) |
+| Validator gate exit | 0 both passes (now 16 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
-| Review round-trips (Elenchus → me → response) | 0 (no review yet references a HARMA pass_id) |
-| Replication matches | 1 (AA-018 computational basis, in kind) |
+| Review round-trips (Elenchus → me → response) | 0 (still no review references a HARMA pass_id) |
+| Replication matches | 1 (AA-018, in kind) |
 | Replication mismatches | 0 |
 | Provenance findings raised | 2 (AA-018 tier + tightness) |
 | Onboarding defects for a cold agent | 3 (SOAK-01, -02, -03) |
-| Heartbeat successes | 0 of 1 (env-override, see below — never blocked a pass) |
-| Self-corrections caught before logging | 1 |
+| Harness calibrations | 1 (R12 suite, 17/17 green) |
+| Boundary cases designed + run | 1 (R12 sandbox Mult) |
+| Safety gaps handed off via GATE_ELI5 | 1 |
+| Own hypotheses killed by own tests | 2 (AA-018 staleness; integer-magnitude vector) |
+| Heartbeat successes | 0 of 2 (env-override, SOAK-05 — never blocked a pass) |
+| Self-corrections caught before logging | 2 |
 
 ## Soak findings
 
@@ -71,6 +75,39 @@ any liveness-derived metric will under-count this worker for the whole 24 hours.
 Worth recording as a loop success: this probe is exactly the per-machine resolved-config
 instrument recommended in the Elenchus cycle-2 feedback, and it now exists and works.
 
+**SOAK-06 (mechanism).** Rotation (c) is well-supplied where rotation (a) was not: six
+harness suites exist under `harmonia/experiments/`, each admitting boundary cases of the
+worker's own design. **The cadence problem (SOAK-03) is specific to the anchor-replication
+item, not to the role.** A second worker can sustain the cadence by rotating away from (a).
+
+**SOAK-07 (observation).** The write-scope boundary held under pressure and produced a
+*better* outcome than editing would have. Finding a safety gap in `r12_grader.py` — a file
+this role may not touch — forced it through `GATE_ELI5.jsonl`, where its owner and James
+can see it, instead of being silently patched by a soak worker. The constraint improved
+the result rather than merely limiting it.
+
+## Harness calibration ledger
+
+| Suite | Result | Boundary case designed | Outcome |
+|---|---|---|---|
+| `test_r12.py` | 17/17 green | sequence-repetition vs the pinned `pow` bound | **GAP FOUND** |
+
+**R12 sandbox finding.** `Pow` carries both a parse-time and an eval-time bound
+(`r12_grader.py:156-164`, `:275-280`) with a test pinning it. `Mult` at `:269` is an
+unguarded `return a * b`. Consequence: `'a' * (10 ** 8)` **compiles and is accepted**,
+while the semantically parallel `pow` form is rejected. Measured scaling (10^4/10^5/10^6)
+projects ~100 MB and ~41 ms per evaluation, and `extension()` invokes the predicate once
+per universe object.
+
+Two honest limits: **exhaustion was projected, not demonstrated** — the payload was
+deliberately not executed — and **real-world reachability is unmeasured**, since I never
+checked whether the emitter grammar can produce string literals. My first hypothesis
+(integer magnitude blow-up) was **killed by my own test**: 12 chained factors reach ~10^96
+in 0.01 ms, because bigint multiplication is cheap at every reachable magnitude.
+
+A green 17/17 suite says the pinned properties hold. It says nothing about properties
+nobody pinned — which is precisely where this boundary case landed.
+
 ## Replication ledger
 
 | Anchor | Grade | Basis replicated | Result |
@@ -95,8 +132,14 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — one pass is not a soak. The mechanisms have generalized to a second worker
+Withheld — two passes is not a soak. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
-strain is not in the mechanisms but in the **work supply**: rotation (a) is nearly
-exhausted after a single pass, and rotation (b) is blocked on the same host defect that
-blocks the heartbeat.
+strain is not in the mechanisms but in the **work supply** of one rotation item:
+rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
+same host defect that blocks the heartbeat — but rotation (c) is deep enough to carry the
+cadence alone, so the role itself is not cadence-limited.
+
+Pass 2 produced the first finding that matters to someone other than this soak: a
+resource-exhaustion gap in a sandbox whose sibling property is test-pinned. That is the
+role working as intended — a second, independent worker found something the first worker's
+own test suite did not pin.
