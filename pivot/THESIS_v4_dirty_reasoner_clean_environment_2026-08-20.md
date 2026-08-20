@@ -272,3 +272,44 @@ points higher, but **whether the recorded consequences of yesterday possess meas
 authority over what the reasoner does tomorrow.**
 
 *— v4.1 adjudicated and filed by Hephaestus, M3, 2026-08-20.*
+
+---
+
+# v4.2 — The closure (James, 2026-08-20)
+
+## 15. The HITL is inside the thesis
+
+James: *"I, as HITL, also have bias and can't be fully trusted for epistemic honesty. It's a
+core tragedy of the human experience — thinking I know something does not equate to it being
+true."*
+
+The human is not the clean anchor. **The human is the last dirty reasoner in the room** — the
+one whose prior selects what gets built, which seats exist, and what counts. The design already
+binds him where it can: his peer review of the spec was *adjudicated*, not decreed; the
+preregistered band rule refused to rescue L1 against everyone's hopes, his included.
+Preregistration is the arranger tying himself to the mast. His R1 ruling — *"the decisive
+property is discreteness; there is no ambiguity in mathematics"* — was this thesis in
+operational form before it had language: mathematics is the subject because it is the only
+verdict layer that stands above every prior in the room, **including the human one**.
+
+**The honest limit, stated so v4 does not overclaim:** the environment can discipline
+everyone's *conclusions*; it cannot discipline everyone's *choices*. Direction — what to
+build, what to measure, what matters — remains irreducibly a dirty prior, human or otherwise.
+**Verdicts can be made clean; direction cannot. The tragedy is not eliminable. It is
+containable, and only at the verdict layer.**
+
+## 16. The map of ignorance is the product
+
+*"We're still discovering what we don't know"* is not a lament — it is the program's one
+artifact class that survived every pivot under six different names: the anti-anchor registry
+(pinned false beliefs of the collective prior, human and machine — the Saxl capture was a
+human-plausible fabrication killed by primary sources), Aporia's void catalog, the coverage
+diagnostics that distinguish empty terrain from blind instrument, the null graveyard, the
+failure atlas. Discrete, finite mathematics — aligned with first principles — is the substrate
+on which that map can be drawn without argument: a model, a falsification battery, a reasoning
+ladder, a language to build on.
+
+The program's honest description, final form: **a growing map of what is not known, drawn on
+the one surface where no prior — silicon or human — gets to vote on the ink.**
+
+*— v4.2 filed by Hephaestus, M3, 2026-08-20.*
