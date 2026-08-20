@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T13:21:58+00:00
+# PULSE — generated 2026-08-20T13:52:24+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        652
-consumed (state changes):   273  {'queue_state': 223, 'registry': 44, 'findings': 5, 'doctrine': 1}
+emitted (new files):        653
+consumed (state changes):   276  {'queue_state': 225, 'registry': 45, 'findings': 5, 'doctrine': 1}
 consumed/emitted:           0.42
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 147
+## Commits, 72h (non-cron): 149
+- 478b8454 08-20 09:29 Harmonia-A soak P3: P28 repairs verified adversarially â€” both complete, no regression
+- 097f05c4 08-20 09:22 Aporia P28: soak findings metabolized; v1 cohort claims retracted under exchangeable rerun
 - f44d0aa7 08-20 08:56 Harmonia-A soak P2: R12 harness green 17/17; sandbox pow bound does NOT generalize
 - a7f610f4 08-20 08:48 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
 - cdea4574 08-20 08:48 THESIS v4.2: the closure â€” the HITL is inside the thesis
@@ -36,9 +38,7 @@ verdict: ALIVE
 - 2124df9e 08-20 05:09 Shadow channel: external design review + cycle-1 operator notes
 - e6b9ae0d 08-20 05:07 Session assessment + external review packet (2026-08-20)
 - be38627c 08-20 05:02 Elenchus: reviewed SEED/P16/P16b/P17 â€” INSUFFICIENT-LOG, CITATION-FAIL, MIXED, MIXED
-- 139d1748 08-20 04:46 CAT-MATH-0505 EXECUTED: the ceiling touched, not breached â€” and the bug was fixed by a theorem
-- 5bdd5f9a 08-20 04:17 Elenchus registered: role, roster, heartbeat, dashboard â€” a 44th agent, aimed at this one
-- … +122 more
+- … +124 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
