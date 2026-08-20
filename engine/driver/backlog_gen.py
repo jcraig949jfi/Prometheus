@@ -155,10 +155,17 @@ def main() -> int:
         "profiles = the germline fitness instrument's actual population",
         "fleet_profiling", "germline fitness instrument (3b) + foundry 3c population", 70)
 
-    # ---- 5. Anti-anchor re-verification (16 registered, rolling) ----
+    # ---- 5. Anti-anchor re-verification (rolling, freshness-gated) ----
+    # P38: re-verifying an anchor verified days ago is spend without information.
+    # Rolling means age-based: gate threads whose anchor was verified within 30
+    # days; the gate lifts by itself as last_verified ages out on later regens.
+    import datetime as _dt
+    _fresh_cut = (_dt.datetime.now(_dt.timezone.utc) - _dt.timedelta(days=30)).strftime("%Y-%m-%d")
     for a in jsonl(ROOT / "techne/registry/anti_anchors.jsonl"):
+        lv = str(a.get("last_verified") or "")
         add(f"AA-VERIFY-{a.get('id','?')}", f"Re-verify {a.get('id')} ({str(a.get('name',''))[:40]}) against primary sources",
-            "anti_anchor_registry", "anti_anchors.jsonl last_verified", 45)
+            "anti_anchor_registry", "anti_anchors.jsonl last_verified", 45,
+            gate=(f"verified {lv} (<30d) — rolling re-verification resumes on age-out" if lv >= _fresh_cut else None))
 
     # ---- 6. Attack-paradigm grounding (30 paradigms from taxonomy) ----
     tax = (ROOT / "aporia/docs/attack_angle_taxonomy.md").read_text(encoding="utf-8", errors="replace")

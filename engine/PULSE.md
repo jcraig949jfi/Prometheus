@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T17:50:01+00:00
+# PULSE — generated 2026-08-20T18:23:29+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        672
-consumed (state changes):   304  {'queue_state': 249, 'registry': 49, 'findings': 5, 'doctrine': 1}
-consumed/emitted:           0.45
+emitted (new files):        673
+consumed (state changes):   308  {'queue_state': 252, 'registry': 50, 'findings': 5, 'doctrine': 1}
+consumed/emitted:           0.46
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 165
+## Commits, 72h (non-cron): 167
+- 0ab4b24a 08-20 13:55 Harmonia-A soak P12: verifier_lens fix has LANDED but is UNPINNED â€” a regression stays green
+- f23b1391 08-20 13:50 Aporia P37: a wild phantom reference caught â€” registry closes at 72/72 graded
 - f1666687 08-20 13:29 Harmonia-A soak P11: executed what I had asserted â€” 2 of 3 held, and the bias flips sign
 - 1eb4255f 08-20 13:20 Aporia P36: May cohort closed at 50% wear; my own 72/72 claim falsified pre-commit
 - 64bba411 08-20 12:56 Harmonia-A soak P10: P9's claim REFUTED â€” sampling manufactured a false positive in P4
@@ -36,9 +38,7 @@ verdict: ALIVE
 - cdea4574 08-20 08:48 THESIS v4.2: the closure â€” the HITL is inside the thesis
 - 1cb4903f 08-20 08:47 Aporia P27: forge-cohort first light â€” surface-feature machines, and the adapter confessed
 - 606d0e32 08-20 08:46 Harmonia-A soak P1: shadow-worker role generalizes; work-rotation does not
-- 3dbf6523 08-20 08:16 Aporia P26: PROF lane triage â€” profile the products, not the plumbing
-- 7ea3d848 08-20 07:40 Aporia P25: SPEC-AUTHOR-BATCH-01 â€” 11 pure-compute triage specs + generator review-gate
-- … +140 more
+- … +142 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

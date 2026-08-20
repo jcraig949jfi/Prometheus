@@ -198,16 +198,46 @@ def test_reject_bogus_delayed_counterexample():
 # --------------------------------------------------------------------------- #
 # HONEST LIMITS: refuse to certify true universals
 # --------------------------------------------------------------------------- #
-def test_true_universal_is_unverifiable_not_rubber_stamped():
+def test_true_universal_decided_by_z3_when_posable():
+    # P38 update of the stale "not rubber-stamped" expectation: since Harmonia
+    # B's z3 backend (494ee2e2, battery-verified by soak HARMA-P7), the
+    # n2_plus_n_even universal is DECIDED (negation unsat over Z) — valid=True
+    # here is an execution-certified proof, not a rubber stamp, and the z3
+    # verdict must be recorded in checks.
     r = verify(conjecture_true_probe(), True)
+    assert r["valid"] is True, r
+    assert r["checks"].get("z3", {}).get("decision_kind") == "z3_universal", r
+
+
+def test_true_universal_not_rubber_stamped_when_z3_cannot_pose():
+    # The not-rubber-stamped property lives where z3 CANNOT decide: a
+    # non-posable universal must abstain (valid None), never certify.
+    import copy
+    p = copy.deepcopy(conjecture_true_probe())
+    p.data["cid"] = "sum_two_squares"
+    r = verify(p, True)
     assert r["valid"] is None, r
     assert r["kill_pattern"] == "unverifiable_universal", r
 
 
 def test_verifier_fails_closed_on_garbage():
-    # a structurally broken claim must not pass
+    # a structurally broken claim on a KNOWN kind is a REJECTION, not an
+    # abstention — pinned exactly (HARMA-P12: the old `in (False, None)` guard
+    # would stay green through a rejection->abstention regression too).
     r = verify(conjecture_false_probe(), "definitely")
-    assert r["valid"] in (False, None), r
+    assert r["valid"] is False, r
+    assert r["kill_pattern"] == "unparsable_conjecture_claim", r
+
+
+def test_unknown_kind_abstains_exactly():
+    # an UNREGISTERED kind must abstain (valid None + unknown_kind), never
+    # certify in either direction. Pinned per HARMA-P12: a regression from
+    # abstention back to mis-certification must turn the suite red.
+    from collections import namedtuple
+    P = namedtuple("P", "tier version kind data ground_truth")
+    r = verify(P("X", "clean", "totally_unknown_kind", {"stmt": "a true claim"}, None), True)
+    assert r["valid"] is None, r
+    assert r["kill_pattern"] == "unknown_kind", r
 
 
 # --------------------------------------------------------------------------- #
