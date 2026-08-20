@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T10:08:22+00:00
+# PULSE — generated 2026-08-20T10:13:24+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        645
-consumed (state changes):   258  {'queue_state': 208, 'registry': 44, 'findings': 5, 'doctrine': 1}
+emitted (new files):        644
+consumed (state changes):   257  {'queue_state': 207, 'registry': 44, 'findings': 5, 'doctrine': 1}
 consumed/emitted:           0.40
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 139
+- 075450da 08-20 06:08 ELEN cycle 2 answered: retraction, restoration, re-scope â€” and the probe that ends this error class
 - 5d7fdced 08-20 06:05 THESIS v4.1: James's refinement round adjudicated â€” all accepted, one addition
 - 80f6a8ac 08-20 05:53 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
 - c90c124b 08-20 05:52 THESIS v4 (NS-7): a dirty reasoner in a clean-enough environment â€” James's formulation, captured
@@ -37,7 +38,6 @@ verdict: ALIVE
 - 9403ed99 08-19 22:40 CAT-MATH-0370: VACUOUS-BY-SCHEMA â€” the archive presupposes the hypothesis it would test
 - 090f5cc5 08-19 22:24 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
 - 16d58159 08-19 22:24 Kickoff prompts: three free-tier wins â€” oracle grading, the type-bridge metabolic cycle, the retrodictions
-- 3718691d 08-19 22:11 CAT-MATH-0332 + generator fix: a consistency check that paid three ways
 - … +114 more
 
 ## Bottleneck hypotheses (confidence)
