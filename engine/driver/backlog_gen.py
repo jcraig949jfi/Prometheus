@@ -127,6 +127,16 @@ def main() -> int:
             "dr_backcorpus_442", "anti_anchors.jsonl + market evidence", 60, bottleneck="B-006")
 
     # ---- 4. Fleet profiling: agents through the ladder (roster from state.json) ----
+    # P26 signature-existence triage (engine/queues/PROF_TRIAGE.jsonl): 0 of 43 agents
+    # expose a direct probe-bindable solve interface. PROF-<agent> threads are gated per
+    # binding class; the runnable population is ARTIFACT-LEVEL (Hephaestus forged tools),
+    # which gets its own ungated cohort thread below.
+    prof_triage = {r.get("agent"): r for r in jsonl(ROOT / "engine/queues/PROF_TRIAGE.jsonl")}
+    _PROF_GATES = {
+        "AT-COST": "LLM-driven agent: probe profiling = API spend (budget gate, kin to R12 live shot)",
+        "VACUOUS-NO-SOLVER": "typed structural zero: agent has no reasoning interface at any level (poller/orchestrator/reporter)",
+        "ARTIFACT-LEVEL": "profile binds to the agent's PRODUCTS, not the agent — covered by PROF-FORGE-COHORT lane",
+    }
     state = json.loads((ROOT / "docs/state.json").read_text(encoding="utf-8", errors="replace"))
     seen = set()
     for a in state.get("agents", []):
@@ -134,9 +144,16 @@ def main() -> int:
         if not name or name in seen:
             continue
         seen.add(name)
+        binding = str(prof_triage.get(name, {}).get("binding", ""))
         add(f"PROF-{re.sub(r'[^A-Za-z0-9]', '', name)[:20]}",
             f"Ladder profile: run {name} artifacts/config through phase0+R4 probes",
-            "fleet_profiling", "germline fitness instrument (3b) + agent-design failure landscape", 50)
+            "fleet_profiling", "germline fitness instrument (3b) + agent-design failure landscape", 50,
+            gate=_PROF_GATES.get(binding))
+    add("PROF-FORGE-COHORT",
+        "Ladder-profile a stratified cohort of Hephaestus forged ReasoningTool classes through "
+        "phase0+R4 (adapter: probe -> question text + candidate set); per-tool failure-shape "
+        "profiles = the germline fitness instrument's actual population",
+        "fleet_profiling", "germline fitness instrument (3b) + foundry 3c population", 70)
 
     # ---- 5. Anti-anchor re-verification (16 registered, rolling) ----
     for a in jsonl(ROOT / "techne/registry/anti_anchors.jsonl"):

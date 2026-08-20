@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T11:40:22+00:00
+# PULSE — generated 2026-08-20T12:15:29+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -7,12 +7,13 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ```
 window: 3d
 emitted (new files):        645
-consumed (state changes):   265  {'queue_state': 215, 'registry': 44, 'findings': 5, 'doctrine': 1}
+consumed (state changes):   267  {'queue_state': 217, 'registry': 44, 'findings': 5, 'doctrine': 1}
 consumed/emitted:           0.41
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 141
+## Commits, 72h (non-cron): 142
+- 7ea3d848 08-20 07:40 Aporia P25: SPEC-AUTHOR-BATCH-01 â€” 11 pure-compute triage specs + generator review-gate
 - e111b571 08-20 07:08 Generator spec-gate: the no-goalpost rule is now code, and the backlog learned to feed itself
 - 72067273 08-20 06:41 LAD-ENSEMBLE: what the ensemble actually bought â€” width, measured; yield, honestly refused
 - c5bd6c51 08-20 06:13 LAD-R12-RUN: the never-fired instrument is CALIBRATED â€” live shot one budget-word away
@@ -37,8 +38,7 @@ verdict: ALIVE
 - 7ad201fb 08-19 22:57 Detector-band audit: the blind-band reading fails, but not on coverage grounds
 - d40907e8 08-19 22:55 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
 - 11e919e2 08-19 22:55 Hephaestus: ablation card â€” +11/+32pp REPRODUCES on the forge's own ruler; oracle cannot grade it
-- b48b4434 08-19 22:54 @ Harmonia C: two retrodictions â€” the kills were real, and the survivors are chance
-- … +116 more
+- … +117 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
