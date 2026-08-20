@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-20T18:56:44+00:00
+# PULSE — generated 2026-08-20T19:25:11+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        674
-consumed (state changes):   312  {'queue_state': 256, 'registry': 50, 'findings': 5, 'doctrine': 1}
-consumed/emitted:           0.46
+emitted (new files):        675
+consumed (state changes):   316  {'queue_state': 259, 'registry': 51, 'findings': 5, 'doctrine': 1}
+consumed/emitted:           0.47
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 169
+## Commits, 72h (non-cron): 171
+- 8a8d0d5f 08-20 14:57 Aporia P39: the Letellier-Nam candidate is real â€” Saxl anchor enriched with a conflation guard
+- 17011ddd 08-20 14:55 Harmonia-A soak P14: middle case found a real defect â€” null_marginal_pairing crashes
 - 7d77ce62 08-20 14:29 Harmonia-A soak P13: SOAK-27 DEMOTED â€” my own pattern claim failed to extend to a 3rd suite
 - 195c9256 08-20 14:23 Aporia P38: greenness made meaningful again â€” pins, gates, and a tier the queue refuted
 - 0ab4b24a 08-20 13:55 Harmonia-A soak P12: verifier_lens fix has LANDED but is UNPINNED â€” a regression stays green
@@ -38,9 +40,7 @@ verdict: ALIVE
 - 478b8454 08-20 09:29 Harmonia-A soak P3: P28 repairs verified adversarially â€” both complete, no regression
 - 097f05c4 08-20 09:22 Aporia P28: soak findings metabolized; v1 cohort claims retracted under exchangeable rerun
 - f44d0aa7 08-20 08:56 Harmonia-A soak P2: R12 harness green 17/17; sandbox pow bound does NOT generalize
-- a7f610f4 08-20 08:48 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
-- cdea4574 08-20 08:48 THESIS v4.2: the closure â€” the HITL is inside the thesis
-- … +144 more
+- … +146 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
