@@ -14,9 +14,9 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 20 |
+| Passes completed | 21 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all twenty passes (now 52 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all twenty-one passes (now 54 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | **3**, all closed and independently verified; fastest ≈30 min |
@@ -28,13 +28,13 @@ Rough edges are the product. Nothing here is worked around silently.
 | Boundary cases designed + run | 31 (+5 unregistered-kind probes, +2 regression simulations) |
 | Mirror-trap drills run | **5 confirmed** (1, 2, 5, 6, 7) + **1 diagnosed-absent** (3) |
 | Vacuous results caught before publication | 1 (see SOAK-10) |
-| Doctrine items handed off via GATE_ELI5 | 13 |
+| Doctrine items handed off via GATE_ELI5 | 14 (13 defects/doctrine + **1 proof**) |
 | Own hypotheses killed by own tests | 4 |
 | **Instrument self-audits that changed a finding** | **5** (P4 · P7 · P9 · P14 · P19 wrong field name) |
 | Self-corrections against a published pass | **10 correction-typed claims** across 17 passes (see P17 audit) |
 | New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
-| Own prior-pass weaknesses closed | 3 (P5→P6 prevalence; P19→P20 log-generator boundary + seed stability) |
-| Heartbeat successes | 0 of 20 (env-override, SOAK-05 — never blocked a pass) |
+| Own prior-pass weaknesses closed | 4 (P5→P6; P19→P20 ×2; **P20→P21 bound-dependence**) |
+| Heartbeat successes | 0 of 21 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -869,6 +869,51 @@ docstring describes rejection sampling that has never rejected — harmless toda
 load-bearing if the ranges are ever widened. **"Never triggered" and "protecting you" look
 identical in a green test run.**
 
+### P21 — the margin question became a theorem
+
+P20 flagged its own weakness: *"unreachable" was a claim about today's literal `randint`
+bounds, not about the code.* This pass set out to measure the margin.
+
+| sweep | first failure |
+|---|---|
+| `a_max` 4 → 63 | none (margin > +59) |
+| `db_max` 4 → 63 | none |
+| `dp_max` 5 → 64 | none |
+| all three jointly, +20 (14,400 triples) | **none** |
+
+**A margin that large is not a margin.** It's a hint of structure — so I stopped counting
+and derived it.
+
+> Uniqueness in `x>b` needs the quadratic's larger root `≤ b`. Since `2b+A = p−a+b > 0`,
+> square it: `disc ≤ (2b+A)²`, which reduces to **`B + bA + b² ≥ 0`**. And
+> `B + bA + b² = (p−a)(p−b) + b(p−a−b) + b² = (p−a)·p`, strictly positive for `p > a > 0`.
+
+So the larger root is **always** `≤ b`; the smaller is smaller still. The `disc<0` branch has
+no real roots at all. Two branches, both covered.
+
+**Verified two independent ways**, because the squaring step is mine and P11 measured my
+inspection-reasoning at a 2-of-3 predictor: sympy confirms `factor()` gives `p*(-a+p)` and
+the identity difference simplifies to 0; **283,554 exact-integer triples** (no floats
+anywhere) give **0 failures**.
+
+**The rejection sampler is provably dead for every `0<a<b<p`** — not merely over current
+bounds. P20's margin question is closed *and superseded*: no margin is needed.
+
+**This is not a defect, and the direction is unusual.** Twenty passes have mostly found
+instruments *weaker* than they appear. Here the uniqueness the docstring attributes to
+sampling is **unconditional** — a stronger guarantee than the code claims. The loop is
+redundant, not wrong; it can become a one-line assertion.
+
+**SOAK-44 (observation) — a measurement that refuses to produce a number can be the
+signal.** Earlier passes treated an unexpected zero as something to diagnose (P4, P8, P13).
+This is the first where diagnosing the zero produced a **proof** rather than a defect.
+
+**SOAK-45 (design) — SOAK-43, sharpened.** It asked instruments to record whether a guard
+has ever fired. The stronger version: for this guard, "never fires" is provable *in
+advance*, so the useful artifact is not a runtime counter but the **precondition under
+which the guard is redundant** (`0<a<b<p`). A counter says it hasn't fired yet; a
+precondition says when it could start.
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -912,7 +957,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — twenty passes in; all six suites calibrated; the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — twenty-one passes in; all six suites calibrated; the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
