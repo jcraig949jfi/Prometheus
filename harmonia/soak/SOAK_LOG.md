@@ -14,9 +14,9 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 7 |
+| Passes completed | 8 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all seven passes (now 26 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all eight passes (now 27 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | 2, both closed and independently verified |
@@ -26,13 +26,13 @@ Rough edges are the product. Nothing here is worked around silently.
 | Onboarding defects for a cold agent | 3 (SOAK-01, -02, -03) |
 | Harness calibrations | 3 (R12 ×2 at 17/17; z3 verifier 15/15) |
 | Boundary cases designed + run | 24 (1 gap probe + 6 escape variants + 12 false-cert + 5 hard-region) |
-| Mirror-trap drills run | **3 of 7+** documented traps (1, 5, 6 — all live data, all CONFIRMED) |
+| Mirror-trap drills run | **3 confirmed** (1, 5, 6) + **1 diagnosed-absent** (3) |
 | Vacuous results caught before publication | 1 (see SOAK-10) |
-| Doctrine items handed off via GATE_ELI5 | 3 (sandbox gap; trap-8 candidate; z3 contract gap) |
+| Doctrine items handed off via GATE_ELI5 | 4 (sandbox gap; trap-8 → adopted; z3 contract gap; type-erasure root) |
 | Own hypotheses killed by own tests | 4 (+ 'trap 1 is stale', killed by my own triage) |
 | New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
 | Own prior-pass weaknesses closed | 1 (P5's "trap-8 prevalence unmeasured" → P6 measured it) |
-| Heartbeat successes | 0 of 7 (env-override, SOAK-05 — never blocked a pass) |
+| Heartbeat successes | 0 of 8 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -301,6 +301,45 @@ because P6's own SOAK-15 said (a) was dead weight and (c) had five unexercised s
 Across P4→P5, P5→P6 and P6→P7 the agenda came from the previous pass's findings. **The
 brief bootstrapped the loop; the log has been steering it since roughly pass 4.**
 
+### Type erasure — a failed drill that explained two earlier ones
+
+Trap 3 (array literals vs `ast.literal_eval`) was **not drilled: its precondition is
+absent.** No array-literal columns in 206 columns across 800 sampled rows. Recorded as
+*not drilled* — neither confirmed nor refuted.
+
+**The diagnosis reversed the reading.** "No array literals" naturally suggests *trap 3 is
+handled here*. The discriminator says the opposite: psycopg2 returned **zero lists**, and
+the mirror declares **all 320 columns as `text`**. Arrays aren't safe — nothing is typed.
+
+Cross-database control, pre-stated so the attribution would be earned:
+
+| database | columns | text | other types |
+|---|---|---|---|
+| **lmfdb** | 320 | **320 (100%)** | *none* |
+| prometheus_fire | 618 | 301 (49%) | integer 91, double 48, timestamp 46, varchar 40 |
+| prometheus_sci | 110 | 26 (24%) | integer 40, double 20, smallint 10, **boolean 6** |
+
+**Synthesis: traps 1 and 5 are not independent traps.** Both are manifestations of one
+measurable property. Trap 1 (P4 — numeric maxima compared lexicographically, 14/26
+columns) and trap 5 (P6 — 29 of 29 boolean-semantic columns text-typed) are what total
+type erasure *looks like* from two different angles. One measurement explains both, and
+predicts a type-shaped trap for whatever type a reader touches next.
+
+**Withheld:** whether the erasure is deliberate mirror fidelity or an import accident.
+That distinction decides bug-versus-documented-property, and I did not establish it.
+
+**SOAK-18 (observation) — a failed drill produced the pass's best result.** Under a
+productivity framing, an absent precondition is a wasted pass. Under the diagnosis
+discipline it forced *"why is it absent?"*, and the answer explained two earlier drills.
+**The soak's metric should count diagnosed absences as output** — otherwise a worker is
+incentivised to pick drillable traps over informative ones.
+
+**SOAK-19 (design) — the trap list is a symptom catalogue, not a cause catalogue.** Three
+of eight documented traps reduce to one property of one database. That is not a criticism
+of how it was built — it was built from live failures, which is correct — but a cold
+worker reads eight independent hazards where there are fewer roots plus manifestations,
+and cannot tell which will apply to a database they have not yet touched.
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -344,7 +383,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — seven passes in; the shape has been stable for five, and the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — eight passes in; the shape has been stable for six, and the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
