@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T00:09:43+00:00
+# PULSE — generated 2026-08-20T00:37:38+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        606
-consumed (state changes):   236  {'queue_state': 185, 'registry': 44, 'findings': 5, 'doctrine': 2}
+emitted (new files):        605
+consumed (state changes):   238  {'queue_state': 187, 'registry': 44, 'findings': 5, 'doctrine': 2}
 consumed/emitted:           0.39
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 119
+- 7facfbef 08-19 20:09 CAT-MATH-0165 EXECUTED: the k^2 law where the instrument sees cleanly â€” and a deviation pre-attributed by direction
 - dbea3f0b 08-19 19:41 CAT-MATH-0151 EXECUTED: Chowla holds across 100 simultaneous shifts â€” and the argmax is noise
 - 6df8ddd7 08-19 19:13 CAT-MATH-0145 CALIBRATION PASS: 3000/3000 integer-exact â€” the instrument is certified on the base case
 - fa870056 08-19 18:43 CAT-MATH-0136 EXECUTED: Szpiro's tail thins on schedule â€” seven decades of monotone decay
@@ -37,7 +38,6 @@ verdict: ALIVE
 - 7cb068e5 08-19 11:47 DRBC-R05 DONE: the Ignis-era reports wrote today's doctrine three months early
 - fa89446d 08-19 11:19 DRBC-R04 DONE: the barrier trio enters the registry; the recovered corpus stitches the program together
 - cd80e250 08-19 10:51 DRBC-R03 DONE: the substrate type-system gets its literature base â€” and May killed its own entry
-- cbe713f6 08-19 10:23 DRBC-R02 DONE: May re-verified its anchors against 2026 follow-ups â€” two-layer provenance inherited
 - … +94 more
 
 ## Bottleneck hypotheses (confidence)
