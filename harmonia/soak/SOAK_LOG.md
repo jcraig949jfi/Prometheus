@@ -14,9 +14,9 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 5 |
+| Passes completed | 6 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all five passes (now 22 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all six passes (now 23 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | 2, both closed and independently verified |
@@ -26,12 +26,13 @@ Rough edges are the product. Nothing here is worked around silently.
 | Onboarding defects for a cold agent | 3 (SOAK-01, -02, -03) |
 | Harness calibrations | 2 (R12 suite, 17/17 green both times) |
 | Boundary cases designed + run | 7 (1 gap probe + 6 escape variants) |
-| Mirror-trap drills run | 2 of 7+ documented traps (1 and 6, both live data, both CONFIRMED) |
+| Mirror-trap drills run | **3 of 7+** documented traps (1, 5, 6 — all live data, all CONFIRMED) |
 | Vacuous results caught before publication | 1 (see SOAK-10) |
 | Doctrine items handed off via GATE_ELI5 | 2 (sandbox gap; trap-8 candidate) |
 | Own hypotheses killed by own tests | 4 (+ 'trap 1 is stale', killed by my own triage) |
-| New trap candidates found | 1 (identifier-case mismatch, not in the documented 7) |
-| Heartbeat successes | 0 of 5 (env-override, SOAK-05 — never blocked a pass) |
+| New trap candidates found | 1 (identifier-case mismatch), now quantified mirror-wide |
+| Own prior-pass weaknesses closed | 1 (P5's "trap-8 prevalence unmeasured" → P6 measured it) |
+| Heartbeat successes | 0 of 6 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -206,6 +207,56 @@ query hit exactly this and looked like "the table has no conductor field." Found
 incidentally by my own failure, not by systematic scan, so it goes to the doctrine's owner
 as a candidate rather than a measured trap.
 
+### Trap 5 — booleans as Python-literal text (attack 0062)
+
+`artin_reps."Is_Even"`, 798,140 rows:
+
+| predicate form | rows matched |
+|---|---|
+| `= 't'` (natural Postgres) | **0** |
+| `= 'true'` (lowercase) | **0** |
+| `= 'True'` (Python literal) | **319,289** (40.0%) |
+| `::boolean = true` (safe form) | **319,289** |
+
+**The surface is total, not partial: 29 boolean-semantic columns in the mirror, and
+0 are actually typed `boolean`.** No boolean-semantic column anywhere here is safe to
+query naturally.
+
+The discriminator ran *first* this pass — enumerating stored values before counting
+matches — so the zeros arrived already attributable to wrong-literal rather than to an
+empty predicate. Every sampled column stores exactly `['False','True']`.
+
+### Trap-8 candidate, now quantified (closing P5's own weakness)
+
+| table | mixed-case identifiers |
+|---|---|
+| `artin_reps` | **21 / 22** |
+| `lfunc_lfunctions` | 10 / 71 |
+| `ec_curvedata` | 5 / 52 |
+| `mf_newforms` | 1 / 81 |
+| `g2c_curves` | 1 / 51 |
+| `nf_fields` | **0 / 43** |
+| **mirror-wide** | **38 / 320 (11.9%)** |
+
+**The rate is the boring number; the bimodality is the finding.** A worker who learns
+"columns are lowercase" from `nf_fields` or `mf_newforms` is silently wrong in
+`artin_reps` — and the failure mode is an *empty column list rather than an error*.
+Measured, not adjudicated: whether this belongs in the trap list is the doctrine owner's
+call, and no second GATE entry was filed because SOAK-13 identified gate drain rate as
+the binding constraint.
+
+**SOAK-14 (observation) — the weakness list is a work queue, not a disclaimer.** P5 listed
+"trap-8 prevalence unmeasured"; P6 measured it, unprompted. With SOAK-12 (P4's vacuous zero
+→ P5's designed-in discriminator), the mandatory `self_identified_weaknesses` field has now
+set the agenda for two consecutive passes. **For a role meant for cold agents who inherit
+only the log, that is the schema field carrying the most weight — and the brief describes
+it in one line.**
+
+**SOAK-15 (design) — rotation (a) is ~1/3 dead weight.** Six passes in, every unit of real
+work came from (b) or (c); (a) supplied exactly one pass. The two live items differ sharply
+in depth: (b) has 4+ undrilled traps, (c) has 5 unexercised harness suites. A revised brief
+should demote (a) to opportunistic rather than an equal third of the rotation.
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -249,7 +300,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — five passes in, and the shape has been stable for three. The mechanisms have generalized to a second worker
+Withheld — six passes in; the shape has been stable for four, and the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
