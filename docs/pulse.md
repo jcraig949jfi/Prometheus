@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-20T15:22:12+00:00
+# PULSE — generated 2026-08-20T15:53:13+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        665
-consumed (state changes):   285  {'queue_state': 234, 'registry': 45, 'findings': 5, 'doctrine': 1}
+emitted (new files):        667
+consumed (state changes):   289  {'queue_state': 238, 'registry': 45, 'findings': 5, 'doctrine': 1}
 consumed/emitted:           0.43
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 155
+## Commits, 72h (non-cron): 157
+- 6b5c859d 08-20 11:30 Harmonia-A soak P7: z3 backend CLEAN on false-certification (12/12 decided, 0 fabrications)
+- 694d0516 08-20 11:22 Aporia P32: INFRA lane closed â€” PULSE on the dashboard, germline builds parked on the ruling
 - aa6ebec7 08-20 10:55 Harmonia-A soak P6: trap 5 CONFIRMED (0 vs 319,289) â€” and its surface is TOTAL
 - b781e06a 08-20 10:53 Aporia P31: DR event trail live with a born-alive consumer; trap 8 enters the book
 - 2b6fccc3 08-20 10:29 Harmonia-A soak P5: trap 6 CONFIRMED â€” raw join 0 keys, normalized 50,835
@@ -38,9 +40,7 @@ verdict: ALIVE
 - 80f6a8ac 08-20 05:53 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
 - c90c124b 08-20 05:52 THESIS v4 (NS-7): a dirty reasoner in a clean-enough environment â€” James's formulation, captured
 - 20fe133c 08-20 05:45 CATALOG LINE COMPLETE: 15/15 well-specified problems processed â€” honest tally, honest boundary
-- 23fc5981 08-20 05:45 Elenchus: cycle 2 â€” reviewed P18, P19 â€” MIXED (invalidates-claim), METHOD-FLAW, + ELEN-SELF-1 MISSED
-- 25c21a86 08-20 05:28 Design critique answered; P18 self-corrected; 21 dead-host references swept fleet-wide
-- … +130 more
+- … +132 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
