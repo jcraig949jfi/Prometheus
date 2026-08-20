@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T02:11:57+00:00
+# PULSE — generated 2026-08-20T02:40:12+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,16 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        604
-consumed (state changes):   247  {'queue_state': 196, 'registry': 44, 'findings': 5, 'doctrine': 2}
+emitted (new files):        606
+consumed (state changes):   249  {'queue_state': 198, 'registry': 44, 'findings': 5, 'doctrine': 2}
 consumed/emitted:           0.41
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 121
+## Commits, 72h (non-cron): 124
+- 090f5cc5 08-19 22:24 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
+- 16d58159 08-19 22:24 Kickoff prompts: three free-tier wins â€” oracle grading, the type-bridge metabolic cycle, the retrodictions
+- 3718691d 08-19 22:11 CAT-MATH-0332 + generator fix: a consistency check that paid three ways
 - af9efe4f 08-19 21:42 CAT-MATH-0260: VACUOUS reading, honestly â€” the signature-existence doctrine gets its first live exercise
 - 11358d34 08-19 21:34 CAT-MATH-0193 closed as dedup of MATH-0026 (joint report satisfied by existing artifact)
 - 95bbdd3d 08-19 21:05 CAT-MATH-0175 EXECUTED: the Montgomery profile itself, at the few-percent level
@@ -35,10 +38,7 @@ verdict: ALIVE
 - b90afa5a 08-19 13:36 MILESTONE: the ENTIRE May archive is metabolized â€” 614 reports, zero left
 - bbbb34b3 08-19 13:09 DRBC-R08 DONE: proven, ineffective in constants, effective in counts â€” three claims, not one
 - c535d236 08-19 12:41 DRBC-R07 DONE â€” and the pass's real event: the pilot failed Tier-A exit TWICE, independently
-- 737d41dc 08-19 12:23 Harmonia B: TIER-A-EXIT-FAIL â€” two criteria unmet; the token deviation is not conservative
-- b3c57ffc 08-19 12:21 Charon: TIER-A-EXIT-FAIL â€” the pilot's F-null is not the F-null R7 validated
-- bc517283 08-19 12:14 DRBC-R06 DONE: a generic theorem plus proven exceptions is not a universal theorem
-- … +96 more
+- … +99 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
