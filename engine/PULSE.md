@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T23:11:57+00:00
+# PULSE — generated 2026-08-20T23:47:29+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        696
-consumed (state changes):   344  {'queue_state': 280, 'registry': 58, 'findings': 5, 'doctrine': 1}
-consumed/emitted:           0.49
+emitted (new files):        698
+consumed (state changes):   346  {'queue_state': 282, 'registry': 58, 'findings': 5, 'doctrine': 1}
+consumed/emitted:           0.50
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 189
+## Commits, 72h (non-cron): 188
+- b4314092 08-20 19:30 Harmonia-A soak P23: re-tested the soak's OLDEST claim; calibrated the A5 tier
+- a23beaca 08-20 19:12 Aporia P48: the value question answered with an instrument â€” 61% consumed, and the split matters more than the rate
 - aa6fe6b7 08-20 18:55 Harmonia-A soak P22: the proof was right; the precondition I shipped with it was WRONG
 - 5ddd0f83 08-20 18:42 Aporia P47: autopsy batch 2 â€” dead-gating at 100% purity, yield-blind rotation, and an honest null verdict
 - 9e748805 08-20 18:41 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
@@ -36,9 +38,7 @@ verdict: ALIVE
 - 7d77ce62 08-20 14:29 Harmonia-A soak P13: SOAK-27 DEMOTED â€” my own pattern claim failed to extend to a 3rd suite
 - 195c9256 08-20 14:23 Aporia P38: greenness made meaningful again â€” pins, gates, and a tier the queue refuted
 - 0ab4b24a 08-20 13:55 Harmonia-A soak P12: verifier_lens fix has LANDED but is UNPINNED â€” a regression stays green
-- f23b1391 08-20 13:50 Aporia P37: a wild phantom reference caught â€” registry closes at 72/72 graded
-- f1666687 08-20 13:29 Harmonia-A soak P11: executed what I had asserted â€” 2 of 3 held, and the bias flips sign
-- … +164 more
+- … +163 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
