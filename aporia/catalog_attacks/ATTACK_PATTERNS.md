@@ -64,6 +64,11 @@ and casts fix only the erasure family, not the source-serialization family.
   The argmax of a noise field is not a feature (0151; feedback_false_profundity kin).
 - ORDER-STATISTIC SCALING: a per-bin max rising with bin size is expected extreme-value
   behavior of a FIXED distribution, not growth (0026: known-points max 6->26 as n 11->26K).
+- STANCE-BLIND PATTERN FIRE: a keyword detector over text about a RESOLVED question fires
+  on the question's own history ("conjectured in 1637" != "is a conjecture") — Lethe's FLT
+  calibration emitted at ~50% FP on CORRECT answers (SALVAGE_LETHE, P41). Status-word
+  miners need stance parsing or a narration-exclusion window, and calibration batteries
+  need a settled-theorem-with-conjecture-history topic to measure exactly this.
 - SAMPLED-EXTREMUM FALSE POSITIVES: comparing extrema computed on a SAMPLE biases toward
   spurious divergences in a predictable direction — a divergence is resolved by rare extreme
   values, and sampling is precisely the operation that deletes rare values from one side

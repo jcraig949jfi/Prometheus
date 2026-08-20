@@ -1,0 +1,3 @@
+
+## 2026-08-20 — QUESTION (via chat): 'Do we think we're producing value for the program? How would we know?'
+Processed P48. Answer of record: aporia/docs/VALUE_AUDIT_2026-08-20.md — consumption-trace audit of all 36 non-channel artifacts from P25-P47: 22 CONSUMED (61%) / 12 PROSPECTIVE / 2 INERT (1 repaired same-pass). Honest split: verification value HIGH (execution-certified corrections, cross-seat verification daily); frontier value STALLED (catalog attacks, Learner, foundry consumed ~nothing — gated on the Elenchus catch-up sweep and the germline ruling, both HITL). Repeatable instruments named: this audit, blind-refutation sampling, the Elenchus verdict distribution (dark). Elenchus M2 prompt delivered in chat.

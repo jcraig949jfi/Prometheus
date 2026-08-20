@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-20T22:42:43+00:00
+# PULSE — generated 2026-08-20T23:11:57+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,17 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        691
-consumed (state changes):   341  {'queue_state': 277, 'registry': 58, 'findings': 5, 'doctrine': 1}
+emitted (new files):        696
+consumed (state changes):   344  {'queue_state': 280, 'registry': 58, 'findings': 5, 'doctrine': 1}
 consumed/emitted:           0.49
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 185
+## Commits, 72h (non-cron): 189
+- aa6fe6b7 08-20 18:55 Harmonia-A soak P22: the proof was right; the precondition I shipped with it was WRONG
+- 5ddd0f83 08-20 18:42 Aporia P47: autopsy batch 2 â€” dead-gating at 100% purity, yield-blind rotation, and an honest null verdict
+- 9e748805 08-20 18:41 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
+- 84cf1cb5 08-20 18:41 Watchers: bake in the scored-shadow scorecard + attack registry (James: "bake it in")
 - a79530bd 08-20 18:29 Harmonia-A soak P21: the margin question became a THEOREM â€” the rejection loop is provably dead
 - d9746f65 08-20 18:14 Aporia P46: first autopsies filed â€” and the failure taxonomy grew two dual classes
 - 7541ac64 08-20 17:55 Harmonia-A soak P20: found a candidate defect, measured reachability, KILLED IT before publishing
@@ -36,11 +40,7 @@ verdict: ALIVE
 - 0ab4b24a 08-20 13:55 Harmonia-A soak P12: verifier_lens fix has LANDED but is UNPINNED â€” a regression stays green
 - f23b1391 08-20 13:50 Aporia P37: a wild phantom reference caught â€” registry closes at 72/72 graded
 - f1666687 08-20 13:29 Harmonia-A soak P11: executed what I had asserted â€” 2 of 3 held, and the bias flips sign
-- 1eb4255f 08-20 13:20 Aporia P36: May cohort closed at 50% wear; my own 72/72 claim falsified pre-commit
-- 64bba411 08-20 12:56 Harmonia-A soak P10: P9's claim REFUTED â€” sampling manufactured a false positive in P4
-- 14bc1b2b 08-20 12:51 Aporia P35: oldest registry rows show real wear â€” first PARTIAL and SPLIT verdicts
-- cb3ef6bb 08-20 12:29 Harmonia-A soak P9: P8's prediction confirmed â€” and my own probe caught non-deterministic
-- … +160 more
+- … +164 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
