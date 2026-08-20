@@ -14,9 +14,9 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 9 |
+| Passes completed | 10 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all nine passes (now 30 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all ten passes (now 32 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | 2, both closed and independently verified |
@@ -28,13 +28,13 @@ Rough edges are the product. Nothing here is worked around silently.
 | Boundary cases designed + run | 24 (1 gap probe + 6 escape variants + 12 false-cert + 5 hard-region) |
 | Mirror-trap drills run | **4 confirmed** (1, 2, 5, 6) + **1 diagnosed-absent** (3) |
 | Vacuous results caught before publication | 1 (see SOAK-10) |
-| Doctrine items handed off via GATE_ELI5 | 4 (sandbox gap; trap-8 → adopted; z3 contract gap; type-erasure root) |
+| Doctrine items handed off via GATE_ELI5 | 5 (sandbox gap; trap-8 → adopted; z3 contract gap; type-erasure root → adopted; sampling bias) |
 | Own hypotheses killed by own tests | 4 |
 | **Instrument self-audits that changed a finding** | **3** (P4 vacuous zero · P7 misattributed raise · P9 non-deterministic sampling) |
-| Self-corrections against a published pass | 1 (P9 corrects P4's maxima) |
+| Self-corrections against a published pass | 2 — a **3-deep chain**: P4 → P9 (method) → P10 (verdict) |
 | New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
 | Own prior-pass weaknesses closed | 1 (P5's "trap-8 prevalence unmeasured" → P6 measured it) |
-| Heartbeat successes | 0 of 9 (env-override, SOAK-05 — never blocked a pass) |
+| Heartbeat successes | 0 of 10 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -148,7 +148,7 @@ defect is *entirely* the env-var pair, not database availability.
 
 | Trap | Drilled | Failure mode reproduces | Safe form works |
 |---|---|---|---|
-| 1 — numeric columns stored as TEXT | live `lmfdb.public.ec_curvedata` | **YES, 14 of 26 probed columns** | **YES** (`::numeric`) |
+| 1 — numeric columns stored as TEXT | live `lmfdb.public.ec_curvedata` | **YES — 13 of 26** (corrected in P10; P4's 14 included a sampling false positive) | **YES** (`::numeric`) |
 | 2–7 | not drilled | — | — |
 
 **Trap 1 is live, not stale.** The documented case reproduces exactly:
@@ -396,6 +396,48 @@ rather than the target: P4's vacuous zero, P7's misattributed raise, P9's sampli
 In each case the *available* finding was about the system under test and the *true* finding
 was about the instrument. For a role whose product is measurement, that ratio is the job.
 
+### P10 — testing P9's claim, and correcting a published number
+
+P9 *argued* the divergence verdicts survive the sampling defect. Argument, not
+measurement. This pass measured it by re-running P4's sweep with **no LIMIT**.
+
+**The argument was wrong.** Deterministic full-table gives **13** columns, not 14.
+
+| | |
+|---|---|
+| P4 (sampled) | 14 columns |
+| P10 (full-table, deterministic) | **13 columns** |
+| introduced by sampling | `adelic_genus` — **false positive** |
+| missed by sampling | none |
+
+`adelic_genus` full-table: lexicographic max `'97'` **equals** numeric max `'97'`.
+No divergence exists. The value `'97'` occurs in **96 of 3,816,674 rows (0.0025%)**, and
+P4's 200k sample drew none of them.
+
+**The generalisable result — and it is a direction, not noise.** A divergence is resolved
+by whichever rare extreme value sorts highest both ways, and sampling is *exactly* the
+operation that drops rare rows. So **sampled extremum comparisons over-report trap hits,
+systematically.** Noise says "sample more"; bias says "stop sampling." Reporting drift
+without direction would have licensed the wrong fix.
+
+**And the sampling bought nothing:** a full-table aggregate costs **1.1s per column** over
+3.8M rows. This was a straightforward error, not a trade-off that aged badly.
+
+**Corrected: trap 1 fires on 13 of 26 probed `ec_curvedata` columns.** The trap remains
+confirmed and the type-erasure synthesis is untouched — only the prevalence was inflated.
+
+**SOAK-22 (correction) — the self-correction chain is voluntary, not mechanical.** A
+published number was wrong for six passes and was fixed only because I chose to re-test my
+own claim. No reviewer had touched a HARMA pass, and the schema requires a falsifier for
+the *current* pass but never requires re-testing a *prior* one. **A mechanism that only
+works with a well-disposed worker is not yet a mechanism.**
+
+**SOAK-23 (observation) — self-correction works, but slowly.** The chain is now three deep
+(P4 measurement → P9 method → P10 verdict), every link found by the worker rather than a
+reviewer. A lone second worker *can* self-correct given a persistent structured log — but
+every correction arrived one to six passes late, **which is precisely the latency an active
+reviewer exists to remove.**
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -439,7 +481,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — nine passes in; the shape has been stable for seven, and the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — ten passes in; the shape has been stable for eight, and the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
