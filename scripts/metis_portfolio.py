@@ -700,6 +700,37 @@ def _deterministic_brief(state: dict, manual_status: str) -> str:
     except Exception as _e:
         lines.append(f"Parked threads: UNKNOWN(read failed: {type(_e).__name__})")
         lines.append("")
+    # ── Shadow review (Elenchus, M2) — established 2026-08-20 per James ──
+    # Surfaces the external reviewer's latest verdicts on Aporia's per-pass worklog so the
+    # dashboard shows not just what the loop did but what its auditor thinks of it.
+    try:
+        _wl_path = REPO_ROOT / "engine/shadow/WORKLOG.jsonl"
+        _rv_path = REPO_ROOT / "engine/shadow/REVIEWS.jsonl"
+        _wl = [json.loads(l) for l in _wl_path.read_text(encoding="utf-8").splitlines() if l.strip()] if _wl_path.exists() else []
+        _rv = [json.loads(l) for l in _rv_path.read_text(encoding="utf-8").splitlines() if l.strip()] if _rv_path.exists() else []
+        lines.append("## Shadow review (Elenchus)")
+        lines.append("")
+        if not _wl:
+            lines.append("Worklog empty — shadow channel not yet emitting.")
+        else:
+            _reviewed_ids = {r.get("pass_id") for r in _rv}
+            _unrev = [w for w in _wl if w.get("pass_id") not in _reviewed_ids]
+            lines.append(f"Worklog passes: {len(_wl)} | reviewed: {len(_rv)} | awaiting review: {len(_unrev)}")
+            for r in _rv[-3:]:
+                _v = r.get("verdict", "?"); _sev = r.get("severity", "")
+                _f = r.get("findings", [])
+                _head = (_f[0].get("finding", "")[:90] if _f else "")
+                lines.append(f"- {r.get('review_id','?')}: **{_v}** ({_sev}) {_head}")
+            _open = [r for r in _rv if r.get("severity") in ("correction-needed", "invalidates-claim")
+                     and not any(any(resp.get("review_id") == r.get("review_id") for resp in w.get("review_responses", [])) for w in _wl)]
+            if _open:
+                lines.append(f"- **{len(_open)} finding(s) awaiting Aporia response** — should resolve within a pass or two")
+            lines.append("Logs: engine/shadow/WORKLOG.jsonl | Reviews: engine/shadow/REVIEWS.jsonl")
+            lines.append("https://github.com/jcraig949jfi/Prometheus/blob/main/engine/shadow/REVIEWS.jsonl")
+        lines.append("")
+    except Exception as _e:
+        lines.append(f"Shadow review: UNKNOWN(read failed: {type(_e).__name__})")
+        lines.append("")
     lines.append("## For the record")
     lines.append("")
     # Daemon heartbeats measure the RETIRED operating model (fleet moved to

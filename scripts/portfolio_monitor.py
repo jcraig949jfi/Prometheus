@@ -98,6 +98,8 @@ EXPECTED_AGENTS = {
     # ── Operators / Personas (Claude Code sessions; PG registration optional) ──
     "Aporia":     {"machine": "M1", "kind": "operator", "role": "void detection + Deep Research dispatch + tool supervision",
                    "lifecycle": "active"},
+    "Elenchus":   {"machine": "M2", "kind": "operator", "role": "shadow reviewer: adversarial audit of Aporia worklog (engine/shadow/)",
+                   "lifecycle": "active"},
     "Techne":     {"machine": "M1", "kind": "operator", "role": "substrate / Σ-kernel toolsmith",
                    "lifecycle": "active"},
     "Ergon":      {"machine": "M1", "kind": "operator", "role": "Learner-corpus consumer + ingest pipeline supervisor",
