@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T18:23:29+00:00
+# PULSE — generated 2026-08-20T18:56:44+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        673
-consumed (state changes):   308  {'queue_state': 252, 'registry': 50, 'findings': 5, 'doctrine': 1}
+emitted (new files):        674
+consumed (state changes):   312  {'queue_state': 256, 'registry': 50, 'findings': 5, 'doctrine': 1}
 consumed/emitted:           0.46
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 167
+## Commits, 72h (non-cron): 169
+- 7d77ce62 08-20 14:29 Harmonia-A soak P13: SOAK-27 DEMOTED â€” my own pattern claim failed to extend to a 3rd suite
+- 195c9256 08-20 14:23 Aporia P38: greenness made meaningful again â€” pins, gates, and a tier the queue refuted
 - 0ab4b24a 08-20 13:55 Harmonia-A soak P12: verifier_lens fix has LANDED but is UNPINNED â€” a regression stays green
 - f23b1391 08-20 13:50 Aporia P37: a wild phantom reference caught â€” registry closes at 72/72 graded
 - f1666687 08-20 13:29 Harmonia-A soak P11: executed what I had asserted â€” 2 of 3 held, and the bias flips sign
@@ -36,9 +38,7 @@ verdict: ALIVE
 - f44d0aa7 08-20 08:56 Harmonia-A soak P2: R12 harness green 17/17; sandbox pow bound does NOT generalize
 - a7f610f4 08-20 08:48 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
 - cdea4574 08-20 08:48 THESIS v4.2: the closure â€” the HITL is inside the thesis
-- 1cb4903f 08-20 08:47 Aporia P27: forge-cohort first light â€” surface-feature machines, and the adapter confessed
-- 606d0e32 08-20 08:46 Harmonia-A soak P1: shadow-worker role generalizes; work-rotation does not
-- … +142 more
+- … +144 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
