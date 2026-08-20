@@ -14,9 +14,9 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 6 |
+| Passes completed | 7 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all six passes (now 23 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all seven passes (now 26 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | 2, both closed and independently verified |
@@ -24,15 +24,15 @@ Rough edges are the product. Nothing here is worked around silently.
 | Replication mismatches | 0 |
 | Provenance findings raised | 2 (AA-018 tier + tightness) |
 | Onboarding defects for a cold agent | 3 (SOAK-01, -02, -03) |
-| Harness calibrations | 2 (R12 suite, 17/17 green both times) |
-| Boundary cases designed + run | 7 (1 gap probe + 6 escape variants) |
+| Harness calibrations | 3 (R12 ×2 at 17/17; z3 verifier 15/15) |
+| Boundary cases designed + run | 24 (1 gap probe + 6 escape variants + 12 false-cert + 5 hard-region) |
 | Mirror-trap drills run | **3 of 7+** documented traps (1, 5, 6 — all live data, all CONFIRMED) |
 | Vacuous results caught before publication | 1 (see SOAK-10) |
-| Doctrine items handed off via GATE_ELI5 | 2 (sandbox gap; trap-8 candidate) |
+| Doctrine items handed off via GATE_ELI5 | 3 (sandbox gap; trap-8 candidate; z3 contract gap) |
 | Own hypotheses killed by own tests | 4 (+ 'trap 1 is stale', killed by my own triage) |
-| New trap candidates found | 1 (identifier-case mismatch), now quantified mirror-wide |
+| New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
 | Own prior-pass weaknesses closed | 1 (P5's "trap-8 prevalence unmeasured" → P6 measured it) |
-| Heartbeat successes | 0 of 6 (env-override, SOAK-05 — never blocked a pass) |
+| Heartbeat successes | 0 of 7 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -257,6 +257,50 @@ work came from (b) or (c); (a) supplied exactly one pass. The two live items dif
 in depth: (b) has 4+ undrilled traps, (c) has 5 unexercised harness suites. A revised brief
 should demote (a) to opportunistic rather than an equal third of the rotation.
 
+### z3 backend — false-certification calibration (rotation c)
+
+`test_verifier_z3.py` 15/15 green. Then the property that actually matters for a
+selection-side instrument: **it may abstain freely, but must never certify a falsehood
+or fabricate a witness.**
+
+| | |
+|---|---|
+| battery | 12 universals with independent ground truth |
+| **triage** | **12 decided, 0 abstained** |
+| false certifications | **0** |
+| fabricated witnesses | **0** |
+| counterexamples independently validated | **6 / 6** (n = −1, 7, −2, 1, 2, 1) |
+| hard region | 5 predicates → 2 abstained honestly, 2 decided *and both correct* |
+
+**The clean result is reported conditioned on its denominator.** "Zero false
+certifications" is exactly as uninterpretable as P4's "zero trap hits" if the instrument
+simply declined to answer — so 12-of-12-decided sits beside it. And the main battery's
+**0% abstention rate was treated as a coverage hole, not a clean sweep**: it never touched
+the boundary where fabrication would be tempting, which is why the hard-region run exists.
+
+**Two backend-side findings, handed off (GATE_ELI5), not patched:**
+1. `certify_universal` has an **undocumented fourth outcome — it RAISES** on a malformed
+   predicate instead of returning `unknown`, so a caller looping over candidate
+   conjectures crashes rather than recording one as undecided.
+2. z3 is inconsistent between exponentiation and repeated multiplication:
+   `(n**5 - n) % 30` **raises** while the mathematically identical
+   `(n*n*n*n*n - n) % 30` builds fine.
+
+Finding 2 only surfaced because instrument-bug-first fired: the tempting write-up was
+"the backend crashes on nonlinear predicates," and isolating the expression forms showed
+the fault was mine. **The genuine backend finding underneath became visible only after
+the wrong attribution was cleared.**
+
+**SOAK-16 (observation) — the triage discipline generalised from failures to successes.**
+It was learned on an empty result (P4) and applied here to a *clean* one. A method
+transferring to the mirror image of the failure that taught it is a stronger signal about
+the worklog format than any single finding it has produced.
+
+**SOAK-17 (design) — the log is steering the loop, not the brief.** P7 rotated to (c)
+because P6's own SOAK-15 said (a) was dead weight and (c) had five unexercised suites.
+Across P4→P5, P5→P6 and P6→P7 the agenda came from the previous pass's findings. **The
+brief bootstrapped the loop; the log has been steering it since roughly pass 4.**
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -300,7 +344,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — six passes in; the shape has been stable for four, and the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — seven passes in; the shape has been stable for five, and the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
