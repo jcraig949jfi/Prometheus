@@ -14,9 +14,9 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 3 |
+| Passes completed | 4 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all three passes (now 18 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all four passes (now 19 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | 2, both closed and independently verified |
@@ -26,9 +26,11 @@ Rough edges are the product. Nothing here is worked around silently.
 | Onboarding defects for a cold agent | 3 (SOAK-01, -02, -03) |
 | Harness calibrations | 2 (R12 suite, 17/17 green both times) |
 | Boundary cases designed + run | 7 (1 gap probe + 6 escape variants) |
+| Mirror-trap drills run | 1 of 7+ documented traps (trap 1, live data) |
+| Vacuous results caught before publication | 1 (see SOAK-10) |
 | Safety gaps handed off via GATE_ELI5 | 1 |
-| Own hypotheses killed by own tests | 3 (AA-018 staleness; integer-magnitude vector; expected-incomplete-fix) |
-| Heartbeat successes | 0 of 3 (env-override, SOAK-05 — never blocked a pass) |
+| Own hypotheses killed by own tests | 4 (+ 'trap 1 is stale', killed by my own triage) |
+| Heartbeat successes | 0 of 4 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -123,6 +125,43 @@ pair `verified_against_primary=True` with a tertiary citation). A single-instanc
 from a second worker propagated into a class-level repair. That is the strongest argument
 yet for a second worker existing at all.
 
+**SOAK-10 (onboarding).** Rotation (b) says to drill traps "against the live local
+Postgres". The database the code points at by default (`prometheus_fire`) contains **none
+of the trap preconditions** — 255 of 257 text columns have zero numeric-string rows. The
+traps are documented against the **lmfdb mirror**, which the brief never names. A cold
+worker following the brief literally probes the wrong database and gets a vacuous zero
+that looks exactly like *"the trap is stale."* Same defect class as SOAK-01: the brief
+names a resource without naming where it lives.
+
+**SOAK-11 (correction, against myself).** Postgres was reachable from M2 the whole time
+with `lmfdb/lmfdb`; only the env-supplied credential pair is broken. **I deferred rotation
+(b) twice on "Postgres unreachable" without ever testing explicit credentials** — I
+inherited that belief from the heartbeat failure instead of probing it. The blocker was
+credential-shaped, not availability-shaped. This also narrows SOAK-05: the heartbeat
+defect is *entirely* the env-var pair, not database availability.
+
+## Mirror-trap drill ledger
+
+| Trap | Drilled | Failure mode reproduces | Safe form works |
+|---|---|---|---|
+| 1 — numeric columns stored as TEXT | live `lmfdb.public.ec_curvedata` | **YES, 14 of 26 probed columns** | **YES** (`::numeric`) |
+| 2–7 | not drilled | — | — |
+
+**Trap 1 is live, not stale.** The documented case reproduces exactly:
+`ec_curvedata.conductor` gives lexicographic max `'5568821'` against numeric max
+`55688177`. The widest divergence is `ec_curvedata.degree` — `'999950'` versus
+`290094317568`, about six orders of magnitude. Twelve more columns fire
+(`adelic_level`, `adelic_index`, `nonmax_rad`, `iso_nlabel`, `sha`, `torsion`, …), and
+the documented safe form returned the correct maximum in every case.
+
+**The near-miss is the more useful half.** My first scan covered 257 columns of
+`prometheus_fire` and returned **0 hits** — and the write-up I was one paragraph from
+publishing said "trap 1 is stale on this mirror." ATTACK_PATTERNS trap 4 says an
+all-empty result is a VACUOUS reading demanding diagnosis, never a shrug. Diagnosing it
+showed **ACTUALLY PROBED = 0**: the scan had tested nothing. **The doctrine's own trap
+caught my own probe.** The triage step should have been in the first scan rather than
+added after a suspicious result — that is a weakness in my method, not a win for it.
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -166,7 +205,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — three passes is not a soak. The mechanisms have generalized to a second worker
+Withheld — four passes is not a soak, but the shape is now stable. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
@@ -178,8 +217,9 @@ resource-exhaustion gap in a sandbox whose sibling property is test-pinned. That
 role working as intended — a second, independent worker found something the first worker's
 own test suite did not pin.
 
-Pass 3 closed both loops and verified them adversarially rather than on trust. The
-mechanisms are now well-evidenced. **The open risk is no longer whether the worker role
+Pass 3 closed both loops and verified them adversarially rather than on trust. Pass 4
+drilled the first live mirror trap and, more usefully, caught its own vacuous result
+before publishing it. The mechanisms are now well-evidenced. **The open risk is no longer whether the worker role
 generalizes — it is that the REVIEWER half has never engaged** (SOAK-08). A soak that ends
 with 0 reviewer round-trips will have answered "can a second worker use this channel?" and
 left "can the channel review a second worker?" untouched.
