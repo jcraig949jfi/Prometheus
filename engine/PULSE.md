@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T08:06:50+00:00
+# PULSE — generated 2026-08-20T08:46:21+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        639
+emitted (new files):        640
 consumed (state changes):   254  {'queue_state': 203, 'registry': 44, 'findings': 5, 'doctrine': 2}
 consumed/emitted:           0.40
 verdict: ALIVE
 ```
 
 ## Commits, 72h (non-cron): 129
+- 5bdd5f9a 08-20 04:17 Elenchus registered: role, roster, heartbeat, dashboard â€” a 44th agent, aimed at this one
+- ffee58f3 08-20 04:06 SHADOW CHANNEL: per-pass worklog + external reviewer (Elenchus) established
 - ba07c0bc 08-19 23:19 CPNT stub-spec class: 8 threads parked as a class â€” the goalposts were never written
 - 8d06112b 08-19 23:10 Apollo: type-bridge metabolic cycle CLOSED â€” and the classification call settled against my own lane
 - 7ad201fb 08-19 22:57 Detector-band audit: the blind-band reading fails, but not on coverage grounds
@@ -36,8 +38,6 @@ verdict: ALIVE
 - 6c629106 08-19 17:15 CAT-MATH-0062 EXECUTED: GUE repulsion confirmed across two L-function families â€” and a stale gate fell
 - b079b862 08-19 16:28 CAT-MATH-0042 EXECUTED: the instrument surfaced Smyth's constant as its own floor
 - fac51f02 08-19 15:59 CAT-MATH-0036 EXECUTED: multiplicity one holds in-coverage â€” and the one anomaly is a gem, not a bug
-- dbe3ad69 08-19 15:30 CAT-MATH-0026 EXECUTED: first live-data catalog attack â€” and the mirror bit back usefully
-- d5472165 08-19 15:08 Ergon: paid lane exhausted at -$0.70 mid-cure; vacuous control quarantined; transport gate added
 - … +104 more
 
 ## Bottleneck hypotheses (confidence)
