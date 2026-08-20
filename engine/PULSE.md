@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-19T21:43:40+00:00
+# PULSE — generated 2026-08-20T02:11:57+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,23 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        609
-consumed (state changes):   226  {'queue_state': 175, 'registry': 44, 'findings': 5, 'doctrine': 2}
-consumed/emitted:           0.37
+emitted (new files):        604
+consumed (state changes):   247  {'queue_state': 196, 'registry': 44, 'findings': 5, 'doctrine': 2}
+consumed/emitted:           0.41
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 117
+## Commits, 72h (non-cron): 121
+- af9efe4f 08-19 21:42 CAT-MATH-0260: VACUOUS reading, honestly â€” the signature-existence doctrine gets its first live exercise
+- 11358d34 08-19 21:34 CAT-MATH-0193 closed as dedup of MATH-0026 (joint report satisfied by existing artifact)
+- 95bbdd3d 08-19 21:05 CAT-MATH-0175 EXECUTED: the Montgomery profile itself, at the few-percent level
+- 5a226cf6 08-19 20:37 ATTACK_PATTERNS.md: the ten attacks metabolized into a reusable method
+- 7facfbef 08-19 20:09 CAT-MATH-0165 EXECUTED: the k^2 law where the instrument sees cleanly â€” and a deviation pre-attributed by direction
+- dbea3f0b 08-19 19:41 CAT-MATH-0151 EXECUTED: Chowla holds across 100 simultaneous shifts â€” and the argmax is noise
+- 6df8ddd7 08-19 19:13 CAT-MATH-0145 CALIBRATION PASS: 3000/3000 integer-exact â€” the instrument is certified on the base case
+- fa870056 08-19 18:43 CAT-MATH-0136 EXECUTED: Szpiro's tail thins on schedule â€” seven decades of monotone decay
+- de4b3e1c 08-19 18:14 CAT-MATH-0130 EXECUTED: reciprocity stands â€” and a naive join fabricates 233,931 counterexamples to a proven theorem
+- 37225a45 08-19 17:43 CAT-MATH-0063 EXECUTED at full-table scale: two laws, 3.82 million curves, zero exceptions
 - 6c629106 08-19 17:15 CAT-MATH-0062 EXECUTED: GUE repulsion confirmed across two L-function families â€” and a stale gate fell
 - b079b862 08-19 16:28 CAT-MATH-0042 EXECUTED: the instrument surfaced Smyth's constant as its own floor
 - fac51f02 08-19 15:59 CAT-MATH-0036 EXECUTED: multiplicity one holds in-coverage â€” and the one anomaly is a gem, not a bug
@@ -28,17 +38,7 @@ verdict: ALIVE
 - 737d41dc 08-19 12:23 Harmonia B: TIER-A-EXIT-FAIL â€” two criteria unmet; the token deviation is not conservative
 - b3c57ffc 08-19 12:21 Charon: TIER-A-EXIT-FAIL â€” the pilot's F-null is not the F-null R7 validated
 - bc517283 08-19 12:14 DRBC-R06 DONE: a generic theorem plus proven exceptions is not a universal theorem
-- 196c9a9a 08-19 12:04 Kickoff prompts: Tier A exit review (Charon || Harmonia B) then Tier B (Ergon)
-- 7cb068e5 08-19 11:47 DRBC-R05 DONE: the Ignis-era reports wrote today's doctrine three months early
-- fa89446d 08-19 11:19 DRBC-R04 DONE: the barrier trio enters the registry; the recovered corpus stitches the program together
-- cd80e250 08-19 10:51 DRBC-R03 DONE: the substrate type-system gets its literature base â€” and May killed its own entry
-- cbe713f6 08-19 10:23 DRBC-R02 DONE: May re-verified its anchors against 2026 follow-ups â€” two-layer provenance inherited
-- 44f89262 08-19 09:55 DRBC-R01 DONE: May verified its own anchors before dying â€” the upgrades cross the gap
-- f3a49359 08-19 09:27 MILESTONE: the 420-report back-corpus is FULLY METABOLIZED â€” and 194 more recovered reports queued
-- 57d048fd 08-19 08:59 DRBC-19+20 DONE: double batch â€” May ran its hunts in duplicate; free replication banked
-- 1ed827b4 08-19 08:32 DRBC-18 DONE: batch 19 â€” the diminishing-returns report describes its own reader
-- 516773d3 08-19 08:05 DRBC-17 DONE: batch 18 â€” Maier killed the model, not the bound
-- … +92 more
+- … +96 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
