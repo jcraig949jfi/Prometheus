@@ -14,9 +14,9 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 13 |
+| Passes completed | 14 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all thirteen passes (now 38 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all fourteen passes (now 39 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | 2, both closed and independently verified |
@@ -28,13 +28,13 @@ Rough edges are the product. Nothing here is worked around silently.
 | Boundary cases designed + run | 31 (+5 unregistered-kind probes, +2 regression simulations) |
 | Mirror-trap drills run | **4 confirmed** (1, 2, 5, 6) + **1 diagnosed-absent** (3) |
 | Vacuous results caught before publication | 1 (see SOAK-10) |
-| Doctrine items handed off via GATE_ELI5 | 8 (incl. a correction against my own P10 entry, and one **constructive** fix pattern) |
+| Doctrine items handed off via GATE_ELI5 | 9 (incl. a correction against my own entry, one constructive fix pattern, one live defect) |
 | Own hypotheses killed by own tests | 4 |
-| **Instrument self-audits that changed a finding** | **3** (P4 vacuous zero · P7 misattributed raise · P9 non-deterministic sampling) |
+| **Instrument self-audits that changed a finding** | **4** (P4 vacuous zero · P7 misattributed raise · P9 sampling · P14 inverted polarity) |
 | Self-corrections against a published pass | 4 — 4-deep sampling chain, **+ SOAK-27 demoted by P13** |
 | New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
 | Own prior-pass weaknesses closed | 1 (P5's "trap-8 prevalence unmeasured" → P6 measured it) |
-| Heartbeat successes | 0 of 13 (env-override, SOAK-05 — never blocked a pass) |
+| Heartbeat successes | 0 of 14 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -568,6 +568,47 @@ This is also the first pass where a boundary probe **validated** an instrument r
 breaking one — the same tool returning the opposite verdict, which is worth more than
 another confirmation would have been.
 
+### P14 — the middle case, where P13's instrument failed
+
+P13 logged its own weakness: both its probes were **artificial extremes**. This pass tested
+the realistic middle — a spec whose operator raises `ValueError` for most values, the
+*documented* domain-skip path, leaving k×k evaluable pairs of 10,000.
+
+**Instrument-bug-first caught me before it caught the miner.** The first run showed
+`is_exact_void=False` at every k *including n_eval=10,000*, and the available story was
+"the miner won't promote even thick evidence" — striking and completely wrong. The
+near-void bands (0.999/0.99/0.95) are **high**, so a void is `hold_rate = 1.0`; my relation
+had inverted polarity. Those numbers are discarded. Fourth self-audit of this soak.
+
+**Then the corrected probe found a real defect.**
+
+| path | behaviour on a domain-restricted spec |
+|---|---|
+| `evaluate_lattice` | **OK** — n_eval=25, hold_rate=1.0, is_exact_void=True |
+| 6 of 7 nulls | OK (pigeonhole `killed=True`, relation_laxity `killed=True`) |
+| **`null_marginal_pairing`** | **RAISES ValueError** |
+
+`null_marginal_pairing` is the only null with zero transform guards *and* a transform call.
+So a spec using domain-restricted operators **evaluates cleanly and then crashes inside
+`mine()`**. Verified by executing each null, not by grep.
+
+**The vacuity guard is binary** — a 25-pair void carries the same flag as a millions-pair
+one. **But I did not report that in isolation**, because the null battery *is* the graded
+check and it fired here. Reporting the binary guard alone would have been true and
+misleading.
+
+**The interlock is the finding:** the graded defence crashes on exactly the class of spec
+that needs domain restriction — so the specs most likely to produce thin voids are the ones
+whose triviality battery cannot run.
+
+**SOAK-30 (observation) — a boundary case is only as good as its distance from the
+degenerate corner.** Same instrument, same lane, one pass apart: P13's extremes passed,
+P14's middle failed. *"Handles the empty case"* generalises to nothing.
+
+**SOAK-31 (design) — a wrong probe doesn't produce a null, it produces a confident wrong
+finding.** Four self-audits now (P4, P7, P9, P14), and **in all four the false finding was
+more dramatic than the truth** — which is exactly the direction that gets published.
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -611,7 +652,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — thirteen passes in; the shape has been stable for eleven, and the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — fourteen passes in; the shape has been stable for twelve, and the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
