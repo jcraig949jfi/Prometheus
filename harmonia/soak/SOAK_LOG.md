@@ -14,9 +14,9 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 19 |
+| Passes completed | 20 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all nineteen passes (now 50 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all twenty passes (now 52 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | **3**, all closed and independently verified; fastest ≈30 min |
@@ -33,8 +33,8 @@ Rough edges are the product. Nothing here is worked around silently.
 | **Instrument self-audits that changed a finding** | **5** (P4 · P7 · P9 · P14 · P19 wrong field name) |
 | Self-corrections against a published pass | **10 correction-typed claims** across 17 passes (see P17 audit) |
 | New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
-| Own prior-pass weaknesses closed | 1 (P5's "trap-8 prevalence unmeasured" → P6 measured it) |
-| Heartbeat successes | 0 of 19 (env-override, SOAK-05 — never blocked a pass) |
+| Own prior-pass weaknesses closed | 3 (P5→P6 prevalence; P19→P20 log-generator boundary + seed stability) |
+| Heartbeat successes | 0 of 20 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -822,6 +822,53 @@ the contaminated distribution. **An independent party choosing the probe positio
 only clean design.** That is a structural argument for the reviewer seat, not a complaint
 about its inactivity.
 
+### P20 — a candidate defect found, measured, and killed before publishing
+
+Closing both weaknesses P19 stated against itself.
+
+**The candidate.** `gen_log_extra_3arg`'s rejection sampler runs `for _try in range(30)`
+and breaks on success — but if all 30 fail, the loop exits normally and the **last failing
+sample ships**, since `c = p*(p-a)*(p-b)` is computed *outside* the loop. That is a
+publishable-looking finding.
+
+**Reachability, measured before claiming:**
+
+| | |
+|---|---|
+| draw space | 80 triples (a 1–4, b a+1–4, p b+1–5) |
+| per-try failures | **0** |
+| P(all 30 fail) | **0** |
+| sympy cross-check, 40 probes | **0 uniqueness violations** |
+
+The branch is unreachable dead code. **No defect claimed.** I cross-checked with sympy
+rather than trusting my own replication of their `disc`/`r1`/`r2` arithmetic — a replicated
+bug would have produced a *false clean*.
+
+**SOAK-38 refined, not padded.** I could have logged "5 of 6 instruments" as further
+support. The informative part is the mechanism the clean case exposes:
+
+> **An adjacent gap exists only where a guard's boundary is REACHABLE.** `a<=b` reaches its
+> boundary at ~1 in 9 draws and had a gap; uniqueness never reaches its boundary and has
+> none.
+
+Flagged withheld — that refinement spans cases at n=2, which SOAK-34 measured as my 3.5×
+error class.
+
+**P19's seed caveat closed, and it mildly corrects P19:** the a==b rate is **9.4%–14.4%
+across five seeds** against an analytic 11.1%, so 12.5% was the high end of a range rather
+than a stable figure. The phenomenon is robust; the number wasn't.
+
+**SOAK-42 (observation) — first pass to kill its own finding before publication.** Every
+prior pass measured impact *after* claiming a defect (P14 deferred, P15 answered, P18
+attached). Doing it *before* is the version that **prevents** the claim rather than
+qualifying it.
+
+**SOAK-43 (design) — a guard that never fires is indistinguishable from a guard that
+works.** This sampler has never rejected anything across its whole draw space, so its
+docstring describes rejection sampling that has never rejected — harmless today, silently
+load-bearing if the ranges are ever widened. **"Never triggered" and "protecting you" look
+identical in a green test run.**
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -865,7 +912,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — nineteen passes in; all six suites now calibrated; the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — twenty passes in; all six suites calibrated; the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
