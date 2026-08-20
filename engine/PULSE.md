@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T01:34:39+00:00
+# PULSE — generated 2026-08-20T01:41:57+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -7,12 +7,13 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ```
 window: 3d
 emitted (new files):        603
-consumed (state changes):   242  {'queue_state': 191, 'registry': 44, 'findings': 5, 'doctrine': 2}
+consumed (state changes):   244  {'queue_state': 193, 'registry': 44, 'findings': 5, 'doctrine': 2}
 consumed/emitted:           0.40
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 119
+## Commits, 72h (non-cron): 120
+- 11358d34 08-19 21:34 CAT-MATH-0193 closed as dedup of MATH-0026 (joint report satisfied by existing artifact)
 - 95bbdd3d 08-19 21:05 CAT-MATH-0175 EXECUTED: the Montgomery profile itself, at the few-percent level
 - 5a226cf6 08-19 20:37 ATTACK_PATTERNS.md: the ten attacks metabolized into a reusable method
 - 7facfbef 08-19 20:09 CAT-MATH-0165 EXECUTED: the k^2 law where the instrument sees cleanly â€” and a deviation pre-attributed by direction
@@ -37,8 +38,7 @@ verdict: ALIVE
 - b3c57ffc 08-19 12:21 Charon: TIER-A-EXIT-FAIL â€” the pilot's F-null is not the F-null R7 validated
 - bc517283 08-19 12:14 DRBC-R06 DONE: a generic theorem plus proven exceptions is not a universal theorem
 - 196c9a9a 08-19 12:04 Kickoff prompts: Tier A exit review (Charon || Harmonia B) then Tier B (Ergon)
-- 7cb068e5 08-19 11:47 DRBC-R05 DONE: the Ignis-era reports wrote today's doctrine three months early
-- … +94 more
+- … +95 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
