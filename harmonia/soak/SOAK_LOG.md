@@ -14,9 +14,9 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 23 |
+| Passes completed | 24 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all twenty-three passes (now 58 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all twenty-four passes (now 60 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | **3**, all closed and independently verified; fastest ≈30 min |
@@ -28,13 +28,13 @@ Rough edges are the product. Nothing here is worked around silently.
 | Boundary cases designed + run | 31 (+5 unregistered-kind probes, +2 regression simulations) |
 | Mirror-trap drills run | **5 confirmed** (1, 2, 5, 6, 7) + **1 diagnosed-absent** (3) |
 | Vacuous results caught before publication | 1 (see SOAK-10) |
-| Doctrine items handed off via GATE_ELI5 | 16 (incl. 3 corrections against my own entries) |
+| Doctrine items handed off via GATE_ELI5 | 17 (incl. **4 corrections against my own entries**) |
 | Own hypotheses killed by own tests | 4 |
 | **Instrument self-audits that changed a finding** | **5** (P4 · P7 · P9 · P14 · P19 wrong field name) |
 | Self-corrections against a published pass | **10 correction-typed claims** across 17 passes (see P17 audit) |
 | New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
-| Own prior-pass weaknesses closed | 5 (P5→P6; P19→P20 ×2; P20→P21; **P21→P22 precondition**) |
-| Heartbeat successes | 0 of 23 (env-override, SOAK-05 — never blocked a pass) |
+| Own prior-pass weaknesses closed | 6 (P5→P6; P19→P20 ×2; P20→P21; P21→P22; **P23→P24 fidelity**) |
+| Heartbeat successes | 0 of 24 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -1000,6 +1000,43 @@ requires re-fetching the source — a different and more expensive act than reas
 the quoted content. That asymmetry belongs in the tier's definition, or an independent
 check reads as stronger corroboration than it is.
 
+### P24 — I said it couldn't be done, then did it
+
+P23 ended with a named gap: fidelity unchecked, *"requires re-fetching arXiv:2411.10633 and
+diffing."* SOAK-49 turned that into a categorical claim — a second party **cannot** confirm
+A5 transcription accuracy. This pass tested it by attempting the act.
+
+**Fetched Theorem 1.2 (arXiv HTML full text):**
+`d^{1/2−1/p} ≲_{r,p} 𝒞_{r,p}(d) ≲_{r,p} d^{1/2−1/max{p,2r}} log d`, for `r≥2` integer,
+`2≤p<∞`.
+
+| element | AA-007 quote | source | match |
+|---|---|---|---|
+| `r ≥ 2` integer | ✓ | ✓ | **yes** |
+| `2 ≤ p < ∞` | ✓ | ✓ | **yes** |
+| lower exponent `1/2−1/p` | ✓ | ✓ | **yes** |
+| upper exponent `1/2−1/max{p,2r}` | ✓ | ✓ | **yes** |
+| trailing `log d` | ✓ | ✓ | **yes** |
+
+**A5 fidelity CONFIRMED for AA-007.** Paper identity corroborated first — Bandeira, Gopi,
+Jiang, Lucca, Rothvoss = **BGJLR**, matching the registry citation. And P23's negative
+judgement was right too: the abstract states **no** exponents, so the abs page alone could
+never have settled it.
+
+**SOAK-49 is refuted in its categorical half.** I confirmed transcription accuracy, as a
+second party, in one pass — two fetches. What survives is its *mechanism*: reasoning about
+a formula genuinely cannot detect a mis-transcription, which is exactly why P23's clean
+internal-coherence result proved nothing about fidelity.
+
+**SOAK-50 (correction) — stated impossibilities should carry the cost of the attempt that
+wasn't made.** I converted *"requires a different act"* into *"cannot be done"* without
+attempting the act. It took one pass.
+
+**SOAK-51 (observation) — an A5 anchor is worth exactly as much as the last time somebody
+opened the paper.** AA-007 verifies clean against arXiv v1, but the citation names a STOC
+2025 publication I did not check — so even a confirmed-verbatim anchor carries a version
+gap no field currently expresses.
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -1043,7 +1080,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — twenty-three passes in; all six suites calibrated; the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — twenty-four passes in; all six suites calibrated; the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
