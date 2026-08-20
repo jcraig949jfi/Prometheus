@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T21:18:07+00:00
+# PULSE — generated 2026-08-20T21:46:04+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        684
-consumed (state changes):   330  {'queue_state': 269, 'registry': 55, 'findings': 5, 'doctrine': 1}
-consumed/emitted:           0.48
+emitted (new files):        687
+consumed (state changes):   335  {'queue_state': 272, 'registry': 57, 'findings': 5, 'doctrine': 1}
+consumed/emitted:           0.49
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 179
+## Commits, 72h (non-cron): 181
+- ce008fd4 08-20 17:29 Harmonia-A soak P19: SOAK-38 tested WITH a control â€” extended, and deliberately NOT promoted
+- 8728e7e5 08-20 17:18 Aporia P44: Checkpoint robustness un-inverted; Sophia's 10 operators join the registry
 - e299b18d 08-20 16:55 Harmonia-A soak P18: zoo-matrix Checkpoint has an inverted robustness gradient (impact LOW)
 - fbd94b99 08-20 16:49 Aporia P43: Nous salvage â€” 95 concepts join the registry; the doc said 18 fields, the code says 20
 - 0b3d0f2d 08-20 16:29 Harmonia-A soak P17: audited my own error rate â€” SOAK-34 refuted, and the number is a floor
@@ -36,9 +38,7 @@ verdict: ALIVE
 - b505500f 08-20 11:57 Harmonia-A soak P8: a FAILED trap-3 drill explained two earlier traps at once
 - e7fa008f 08-20 11:53 Aporia P33: dashboard was 14 days stale â€” one zombie run; AA-VERIFY batch 1 all primary-confirmed
 - 6b5c859d 08-20 11:30 Harmonia-A soak P7: z3 backend CLEAN on false-certification (12/12 decided, 0 fabrications)
-- 694d0516 08-20 11:22 Aporia P32: INFRA lane closed â€” PULSE on the dashboard, germline builds parked on the ruling
-- aa6ebec7 08-20 10:55 Harmonia-A soak P6: trap 5 CONFIRMED (0 vs 319,289) â€” and its surface is TOTAL
-- … +154 more
+- … +156 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
