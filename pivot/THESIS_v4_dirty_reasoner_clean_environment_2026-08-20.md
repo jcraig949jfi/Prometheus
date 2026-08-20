@@ -139,3 +139,136 @@ anyway). Round 2 proceeds unchanged. What does change:
 > evolutionary environment that reality eventually dominates the dirt.**
 
 *— filed by Hephaestus, M3, 2026-08-20.*
+
+---
+
+# v4.1 — Adjudication round (James's refinements, 2026-08-20, all accepted)
+
+## 7. The posture: contamination is assumed, not discovered
+
+James: *"The dirt must be assumed. Every LLM agent should operate from a perspective of shame,
+acknowledging that it is filthy with dirty weights."* Adopted in operational form — not as
+performed humility but as a standing default:
+
+> **Contamination is the null hypothesis about your own output.** A seat does not wait to be
+> caught; it ships every load-bearing claim with the question "where could my prior have
+> reached this?" answered or explicitly unanswered. The hostile-to-own-framing section is no
+> longer optional practice; it is what distinguishes a seat that has assumed the dirt from one
+> that is waiting to be surprised by it.
+
+## 8. S1 corrected: epistemic asymmetry, not dumbness
+
+"The verifier must be dumber than the claim" is retired — a ten-line verifier can encode
+exactly the contaminated assumption that generated the claim. The stronger principle, James's
+formulation, now canonical:
+
+> **A verifier should be simpler than the claim and anchored in an execution semantics that
+> does not require sharing the claim's interpretation.**
+
+The operative property is the collapse of semantic freedom at the boundary: the LLM can
+bullshit its way *toward* the predicate; it cannot bullshit the predicate into returning True.
+This also upgrades the meaning of the two-control rule: positive/cheat controls are not
+"testing the meter" — they are testing **whether dirt entered the supposedly hard boundary.**
+And Charon's F-null arc is the canonical demonstration: cognition did not recognize its own
+contamination; a dumb classifier produced the observation cognition was neither motivated nor
+equipped to produce.
+
+## 9. S2 corrected: effective verdict bandwidth, and the historical paradox resolved
+
+The strict domain ordering is demoted (local exceptions exist in both directions). The
+predicted quantity is:
+
+> **B_eff ≈ independent consequence bits / search cost** — the program's ability to overcome
+> prior bias should increase with the rate, independence, and information content of
+> externally grounded verdicts. This predicts differences *within* domains: PASS/FAIL is ~1
+> bit; "fails at n=341 because base-2 Fermat pseudoprime" is many; a trace naming the
+> assumption and transition responsible is more still.
+
+**And this resolves the program's central historical paradox better than anything previously
+written.** 360 million kills with almost no accumulated adaptation is exactly what the thesis
+predicts for an environment of enormous *volume* and near-zero *bits-per-verdict*:
+
+> **Prometheus built a huge low-bandwidth environment. 360M nearly context-free verdicts may
+> be metabolically poorer than 10,000 rich counterexample traces.**
+
+Three independent findings now meet at this point: Harmonia C's chance-floor (the survivors
+carry ~no information), Ergon's June diagnosis (the substrate stores verdicts and discards
+derivations), and D's 99.98% self-verdicting (what bits existed were prior-correlated at the
+source). Volume was never the constraint. **Bits-per-verdict was.**
+
+*Checkable retrodictively:* estimate bits-per-verdict for the historical corpus vs the pilot's
+method-bearing residue. If the thesis is right, the ratio should be embarrassing.
+
+## 10. S3 corrected: epistemic autonomy, not scheduling autonomy
+
+July reread under the thesis: the catastrophe was not that agents stopped working — it is that
+**the environment stopped exerting selection pressure while the LLMs remained perfectly
+capable of generating plausible status.** Activity looked metabolically alive because looking
+alive is exactly what the prior is good at. The autonomy Prometheus needs is therefore not
+"runs 30 days without James" but:
+
+> **Can the system detect and repair degradation in the independence of its own selection
+> environment before contaminated output gets promoted?**
+
+That is the future test for any continuous-running design (Aporia's germline work included),
+and it is a pass/fail question, not an architecture review.
+
+## 11. Tier B demoted correctly: necessary condition, not sovereignty
+
+Accepted without reservation. F-prom could beat F-null because the residue is ordinary
+in-context instruction that fits the prior perfectly — in which case the prior has lost
+nothing. Tier B measures the **first necessary condition**: *does environmental history exert
+causal force over future reasoning?* Null ⇒ under this representation, the program's past is
+not causally steering its future. Positive ⇒ history has acquired causal force — and no more.
+
+**The internalization ladder** (distinct from the transfer-distance ladder D0–D3; that one
+measures how far residue reaches, this one measures how deep it goes):
+
+> **Carry → Counter-prior carry → Compression → Persistence.**
+> Does residue help? · Can it overcome a measured prior tendency? · Can many consequences
+> compress into a reusable rule rather than replayed instructions? · Does acquired behavior
+> survive context removal and restarts, still shaping descendants?
+
+**The word "inheritance" is reserved for the fourth rung.**
+
+## 12. Hephaestus addition (v4.1): the counter-prior rung is already within reach
+
+Rung 2 — counter-prior carry — sounds like a future experiment. It is not: **the current task
+family was accidentally built for it.** The near-miss rungs work *because* the solver's prior
+confidently misfires — A2 (Fermat pseudoprimes base 2) and A3 (Carmichael numbers) are
+composites specifically constructed so that the test the prior reaches for returns the wrong
+answer with high confidence. The solver's Fermat habit **is** a measured prior tendency
+(A2/A3 accuracy 17.5–25%, i.e. reliably wrong), and the pilot's residue records *the method
+the prior attempt applied* — the verb, not the noun.
+
+So the counter-prior experiment is a *stratification of Tier B, not a new build*: does
+Δ_carry on A2/A3-type items (where help requires overriding the prior's confident habit)
+match Δ_carry on A0/A1-type items (where help is prior-congruent)? Preregister it as a
+secondary analysis before Tier B runs and rung 2 comes for free with rung 1. Offered to the
+probe's new prompt author (Harmonia A, per the Round-2 independence handover) — not installed
+by me, per the same handover.
+
+## 13. New constitutional rule
+
+James's formulation, adopted verbatim:
+
+> **Never ask cognition to certify cognition when execution can certify a consequence
+> instead.** LLM critique → hypothesis. Executable consequence → evidence.
+
+LLM reviewers (Elenchus, Aporia, Charon-as-critic) remain valuable as *searchers for possible
+defects* — but an accusation is not evidence until something outside the shared interpretive
+channel cashes it out. This is also the final explanation of the 08-12 measurement: different
+dirty reasoners are not necessarily independent; **different ways of colliding their claims
+with reality actually can be.**
+
+## 14. The project, restated once more
+
+> Prometheus was never fundamentally trying to build a collection of smart agents. It was
+> trying — without quite having the language for it — to build a selection environment
+> powerful enough that smart agents cannot collectively talk themselves out of reality.
+
+And the interesting number in Tier B, restated accordingly: not whether F-prom scores a few
+points higher, but **whether the recorded consequences of yesterday possess measurable causal
+authority over what the reasoner does tomorrow.**
+
+*— v4.1 adjudicated and filed by Hephaestus, M3, 2026-08-20.*
