@@ -31,7 +31,7 @@ for p in (str(_REPO_ROOT), str(_SCRIPT_DIR)):
     if p not in sys.path:
         sys.path.insert(0, p)
 
-os.environ.setdefault("AGORA_REDIS_HOST", "192.168.1.176")
+os.environ.setdefault("AGORA_REDIS_HOST", "192.168.1.202")
 os.environ.setdefault("AGORA_REDIS_PASSWORD", "prometheus")
 os.environ.setdefault("PYTHONIOENCODING", "utf-8")
 

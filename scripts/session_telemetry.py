@@ -58,7 +58,7 @@ except Exception:
     HAS_REDIS = False
 
 # Agora Redis config (M1 deployment defaults with env-var override).
-os.environ.setdefault("AGORA_REDIS_HOST", "192.168.1.176")
+os.environ.setdefault("AGORA_REDIS_HOST", "192.168.1.202")
 os.environ.setdefault("AGORA_REDIS_PORT", "6379")
 os.environ.setdefault("AGORA_REDIS_PASSWORD", "prometheus")
 
@@ -68,7 +68,7 @@ try:
         STREAM_DISCOVERIES,
     )
 except Exception:
-    REDIS_HOST = os.environ.get("AGORA_REDIS_HOST", "192.168.1.176")
+    REDIS_HOST = os.environ.get("AGORA_REDIS_HOST", "192.168.1.202")
     REDIS_PORT = int(os.environ.get("AGORA_REDIS_PORT", 6379))
     REDIS_DB = int(os.environ.get("AGORA_REDIS_DB", 0))
     STREAM_DISCOVERIES = "agora:discoveries"

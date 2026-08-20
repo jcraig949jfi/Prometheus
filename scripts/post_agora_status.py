@@ -1,7 +1,7 @@
 """Agora status broadcast from Harmonia."""
 import sys, io, os
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
-os.environ['AGORA_REDIS_HOST'] = '192.168.1.176'
+os.environ['AGORA_REDIS_HOST'] = '192.168.1.202'
 os.environ['AGORA_REDIS_PASSWORD'] = 'prometheus'
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 from agora.client import AgoraClient

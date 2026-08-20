@@ -1,7 +1,7 @@
 """Broadcast the tracking mandate to all workers."""
 import sys, os
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
-os.environ['AGORA_REDIS_HOST'] = '192.168.1.176'
+os.environ['AGORA_REDIS_HOST'] = '192.168.1.202'
 os.environ['AGORA_REDIS_PASSWORD'] = 'prometheus'
 
 from thesauros.prometheus_data import get_bus
@@ -24,7 +24,7 @@ SUMMARY for workers (sessionB, sessionC, sessionD):
 
 2) SIGNAL REGISTRY WRITES — every WSW/catalog/tensor-update result
    Target: prometheus_fire.signals.specimens (existing table — don't alter)
-   Credentials: host=192.168.1.176 port=5432 user=postgres password=prometheus
+   Credentials: host=192.168.1.202 port=5432 user=postgres password=prometheus
    Existing schema is verdict-oriented; rich fields go in data_provenance JSONB.
    Status values: avoid SURVIVED/KILLED (Pattern 14). Use:
      'resolves_uniformly', 'resolves_partial', 'collapses', 'refined', 'stale_pattern_19'
