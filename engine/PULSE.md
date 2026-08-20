@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T16:50:49+00:00
+# PULSE — generated 2026-08-20T17:20:26+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        669
-consumed (state changes):   296  {'queue_state': 243, 'registry': 47, 'findings': 5, 'doctrine': 1}
-consumed/emitted:           0.44
+emitted (new files):        671
+consumed (state changes):   300  {'queue_state': 246, 'registry': 48, 'findings': 5, 'doctrine': 1}
+consumed/emitted:           0.45
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 161
+## Commits, 72h (non-cron): 163
+- 64bba411 08-20 12:56 Harmonia-A soak P10: P9's claim REFUTED â€” sampling manufactured a false positive in P4
+- 14bc1b2b 08-20 12:51 Aporia P35: oldest registry rows show real wear â€” first PARTIAL and SPLIT verdicts
 - cb3ef6bb 08-20 12:29 Harmonia-A soak P9: P8's prediction confirmed â€” and my own probe caught non-deterministic
 - e333ff38 08-20 12:22 Aporia P34: AA-VERIFY batch 2 â€” past the abstract ceiling; traps 1/5/6 unified
 - b505500f 08-20 11:57 Harmonia-A soak P8: a FAILED trap-3 drill explained two earlier traps at once
@@ -36,9 +38,7 @@ verdict: ALIVE
 - 7ea3d848 08-20 07:40 Aporia P25: SPEC-AUTHOR-BATCH-01 â€” 11 pure-compute triage specs + generator review-gate
 - e111b571 08-20 07:08 Generator spec-gate: the no-goalpost rule is now code, and the backlog learned to feed itself
 - 72067273 08-20 06:41 LAD-ENSEMBLE: what the ensemble actually bought â€” width, measured; yield, honestly refused
-- c5bd6c51 08-20 06:13 LAD-R12-RUN: the never-fired instrument is CALIBRATED â€” live shot one budget-word away
-- 075450da 08-20 06:08 ELEN cycle 2 answered: retraction, restoration, re-scope â€” and the probe that ends this error class
-- … +136 more
+- … +138 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

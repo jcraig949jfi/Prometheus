@@ -61,6 +61,12 @@ booleans). Corollary: on the mirror, EVERY typed operation needs an explicit cas
   The argmax of a noise field is not a feature (0151; feedback_false_profundity kin).
 - ORDER-STATISTIC SCALING: a per-bin max rising with bin size is expected extreme-value
   behavior of a FIXED distribution, not growth (0026: known-points max 6->26 as n 11->26K).
+- SAMPLED-EXTREMUM FALSE POSITIVES: comparing extrema computed on a SAMPLE biases toward
+  spurious divergences in a predictable direction — a divergence is resolved by rare extreme
+  values, and sampling is precisely the operation that deletes rare values from one side
+  (HARMA-P10, 2026-08-20: a LIMIT-sampled trap-1 sweep manufactured 1 false-positive column
+  of 14; full-table aggregate cost 1.1s/column, so the sample bought bias for no saving).
+  Rule: extremum comparisons run full-population or state the directional bias.
 - SMALL-DENOMINATOR REGIME: record Szpiro ratios live at tiny conductors because log N is
   small — limsup statements are about N -> infinity, not small-N records (0136).
 - INTEGRALITY/DEFINITION TRIPWIRE: a non-integer szpiro_ratio at prime conductor exposed an
