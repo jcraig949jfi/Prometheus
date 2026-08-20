@@ -76,3 +76,14 @@ certifications, (b) the trap/artifact catalog above (each entry is a Learner tra
 example of a reasoning failure mode), and (c) the residue objects (the 3381 weight-1
 trace-twin pair; the Smyth floor; the phantom-counterexample join). A future CHALLENGE
 reading will be credible precisely because this discipline demonstrably kills false ones.
+
+## 6. Machine-specific defects (added 2026-08-20, from ELEN cycle 2 — the P18/P19 detour)
+When a defect is machine-specific, the refuting datapoint must come from the FAILING
+machine. A success elsewhere is not a refutation (Pronoia succeeding on M4 could not
+refute an M2 environment defect). Corollaries: (a) runtime configuration is part of the
+system under test — persistent environment variables override correct code, so "the repo
+is clean" never closes a machine-specific case; (b) the falsifier must be scoped to what
+RESOLVES at runtime, not what is written in the tree (scripts/resolved_config_probe.py
+exists for exactly this — run it ON the machine in dispute); (c) a conceded error class
+recurring one pass after the concession means the concession was recorded, not
+internalized — mechanize the rule (probe, validator, checklist) instead of re-promising.

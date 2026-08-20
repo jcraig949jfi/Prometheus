@@ -23,7 +23,10 @@ WL_REQUIRED = ["pass_id", "prev_commit", "threads", "intent", "pre_stated_readin
                "review_responses"]
 RV_REQUIRED = ["review_id", "pass_id", "verdict", "severity", "findings"]
 VERDICTS = {"SOUND", "OVERCLAIMED", "UNDERCLAIMED", "METHOD-FLAW", "CITATION-FAIL",
-            "INSUFFICIENT-LOG", "MIXED", "MISSED"}
+            "INSUFFICIENT-LOG", "MIXED", "MISSED",
+            # split taxonomy (DESIGN_RESPONSE rec 1, enforced from cycle 3 — ELEN cycle-2
+            # flagged doctrine/enforcement divergence; doctrine wins, enum follows):
+            "LOG-SOUND", "REPLAY-SOUND", "GROUND-SOUND"}
 SEVERITIES = {"note", "correction-needed", "invalidates-claim"}
 STRENGTHS = {"certain", "supported", "ambiguous", "withheld"}
 

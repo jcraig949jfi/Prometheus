@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T09:44:53+00:00
+# PULSE — generated 2026-08-20T10:08:22+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,18 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        646
-consumed (state changes):   256  {'queue_state': 205, 'registry': 44, 'findings': 5, 'doctrine': 2}
+emitted (new files):        645
+consumed (state changes):   258  {'queue_state': 208, 'registry': 44, 'findings': 5, 'doctrine': 1}
 consumed/emitted:           0.40
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 135
+## Commits, 72h (non-cron): 139
+- 5d7fdced 08-20 06:05 THESIS v4.1: James's refinement round adjudicated â€” all accepted, one addition
+- 80f6a8ac 08-20 05:53 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
+- c90c124b 08-20 05:52 THESIS v4 (NS-7): a dirty reasoner in a clean-enough environment â€” James's formulation, captured
+- 20fe133c 08-20 05:45 CATALOG LINE COMPLETE: 15/15 well-specified problems processed â€” honest tally, honest boundary
+- 23fc5981 08-20 05:45 Elenchus: cycle 2 â€” reviewed P18, P19 â€” MIXED (invalidates-claim), METHOD-FLAW, + ELEN-SELF-1 MISSED
 - 25c21a86 08-20 05:28 Design critique answered; P18 self-corrected; 21 dead-host references swept fleet-wide
 - dfcc48f3 08-20 05:16 Shadow cycle 1 CLOSED: all 14 Elenchus findings answered â€” the channel works
 - 4aaac0df 08-20 05:14 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
@@ -33,12 +38,7 @@ verdict: ALIVE
 - 090f5cc5 08-19 22:24 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
 - 16d58159 08-19 22:24 Kickoff prompts: three free-tier wins â€” oracle grading, the type-bridge metabolic cycle, the retrodictions
 - 3718691d 08-19 22:11 CAT-MATH-0332 + generator fix: a consistency check that paid three ways
-- af9efe4f 08-19 21:42 CAT-MATH-0260: VACUOUS reading, honestly â€” the signature-existence doctrine gets its first live exercise
-- 11358d34 08-19 21:34 CAT-MATH-0193 closed as dedup of MATH-0026 (joint report satisfied by existing artifact)
-- 95bbdd3d 08-19 21:05 CAT-MATH-0175 EXECUTED: the Montgomery profile itself, at the few-percent level
-- 5a226cf6 08-19 20:37 ATTACK_PATTERNS.md: the ten attacks metabolized into a reusable method
-- 7facfbef 08-19 20:09 CAT-MATH-0165 EXECUTED: the k^2 law where the instrument sees cleanly â€” and a deviation pre-attributed by direction
-- … +110 more
+- … +114 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
