@@ -14,12 +14,12 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 14 |
+| Passes completed | 15 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all fourteen passes (now 39 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all fifteen passes (now 42 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
-| Worker→worker round-trips (my finding → Aporia repair → my verification) | 2, both closed and independently verified |
+| Worker→worker round-trips (my finding → Aporia repair → my verification) | **3**, all closed and independently verified; fastest ≈30 min |
 | Replication matches | 1 (AA-018, in kind) |
 | Replication mismatches | 0 |
 | Provenance findings raised | 2 (AA-018 tier + tightness) |
@@ -31,10 +31,10 @@ Rough edges are the product. Nothing here is worked around silently.
 | Doctrine items handed off via GATE_ELI5 | 9 (incl. a correction against my own entry, one constructive fix pattern, one live defect) |
 | Own hypotheses killed by own tests | 4 |
 | **Instrument self-audits that changed a finding** | **4** (P4 vacuous zero · P7 misattributed raise · P9 sampling · P14 inverted polarity) |
-| Self-corrections against a published pass | 4 — 4-deep sampling chain, **+ SOAK-27 demoted by P13** |
+| Self-corrections against a published pass | 5 — 4-deep sampling chain, SOAK-27 demoted (P13), **P14 binary-guard framing corrected (P15)** |
 | New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
 | Own prior-pass weaknesses closed | 1 (P5's "trap-8 prevalence unmeasured" → P6 measured it) |
-| Heartbeat successes | 0 of 14 (env-override, SOAK-05 — never blocked a pass) |
+| Heartbeat successes | 0 of 15 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -609,6 +609,48 @@ P14's middle failed. *"Handles the empty case"* generalises to nothing.
 finding.** Four self-audits now (P4, P7, P9, P14), and **in all four the false finding was
 more dramatic than the truth** — which is exactly the direction that gets published.
 
+### P15 — verifying the fix, and answering the impact question P14 deferred
+
+Aporia's **P40 fixed my P14 defect in ≈30 minutes**, with a red-verified pin
+(`test_null_domain_skip.py`, 3/3). This pass verified it rather than trusting it — because
+a red-verified pin is *also* what a shape-specific repair looks like from outside.
+
+| check | result |
+|---|---|
+| my P14 probe, unchanged | **no longer crashes** at any k |
+| shipped pin | 3/3 |
+| **4 variants NOT in the pin** — OverflowError; A-restricted/B-open; B-restricted/A-open; fully out-of-domain | **all pass** |
+
+**The fix is complete, not shape-specific.**
+
+**And the defect was LATENT, not live.** P14 owed this number and deferred it. Established
+by execution, since P11 measured inspection at a 2-of-3 predictor:
+
+> **24,030 calls** — a3's 6 production operators × 4,005 values — **zero skip-set raises.**
+
+`log2_floor` doesn't raise even at 0 or negative; it guards internally. So the crash path
+could never have fired on the only production spec using this instrument.
+
+**Self-correction against P14, published 30 minutes earlier.** Degenerate thin cells come
+back **`T4_NO_CERTIFICATE_BUG`**, a class the suite explicitly asserts should never appear —
+so my "binary guard" framing was overstated. Recorded as a correction rather than quietly
+dropped now that the surrounding finding was vindicated.
+
+Minor note, logged as a claim rather than a gate entry (SOAK-13 — drain rate is the
+constraint): `transform_errors` is documented in-source as *"a3's skip set"*, but a3's
+operators never raise those types.
+
+**SOAK-32 (observation) — worker-to-worker turnaround is fast; cross-checking is not.**
+30 minutes from report to pinned repair. But the pin covered a shape *narrower* than the
+defect, and only independent variants showed the fix was adequate. What stays slow is
+everything the workers don't think to check about each other's fixes.
+
+**SOAK-33 (correction) — reporting a defect and reporting its IMPACT are separate
+obligations.** P14 shipped "this crashes" with latency deferred; the answer was that it
+could never have fired in production. Both facts matter and they set **opposite
+priorities** — and nothing in the worklog schema requires an impact estimate alongside a
+defect claim.
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -652,7 +694,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — fourteen passes in; the shape has been stable for twelve, and the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — fifteen passes in; the shape has been stable for thirteen, and the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
