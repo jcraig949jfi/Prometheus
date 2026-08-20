@@ -196,6 +196,28 @@ def github_url_for(repo_relative_path: str) -> str:
     return f"{GITHUB_URL_PREFIX}/{norm}"
 
 
+DR_EVENTS_LEDGER = REPO_ROOT / "engine" / "ledger" / "DR_EVENTS.jsonl"
+
+
+def emit_dr_event(kind: str, **payload) -> None:
+    """W-006 (P31): append one event record to the ledger M4/Alethelia watches.
+
+    Kinds: DISPATCHED | DISPATCH_FAILED | COMPLETED | FAILED | REPORT_SAVED.
+    Best-effort by design — event emission must NEVER break the daemon; a
+    failed write is silently dropped (the daemon's own logging still records
+    the underlying action, so the ledger is a secondary trail, not the
+    system of record).
+    """
+    try:
+        DR_EVENTS_LEDGER.parent.mkdir(parents=True, exist_ok=True)
+        rec = {"ts": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+               "kind": kind, **payload}
+        with DR_EVENTS_LEDGER.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    except Exception:
+        pass
+
+
 def report_path_for(row: dict) -> Path:
     """Where Pythia saves a completed DR report on disk (repo-relative)."""
     date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
@@ -245,11 +267,17 @@ def dispatch_one(row: dict) -> dict:
         )
         iid = getattr(interaction, "id", None) or getattr(interaction, "interaction_id", None)
         if not iid:
+            emit_dr_event("DISPATCH_FAILED", queue_id=row.get("id"),
+                          title=row.get("title"), error="no interaction id returned", quota=False)
             return {"ok": False, "interaction_id": None,
                     "error": "no interaction id returned", "quota": False}
+        emit_dr_event("DISPATCHED", queue_id=row.get("id"), title=row.get("title"),
+                      interaction_id=iid)
         return {"ok": True, "interaction_id": iid, "error": None, "quota": False}
     except Exception as e:
         err = f"{type(e).__name__}: {e}"
+        emit_dr_event("DISPATCH_FAILED", queue_id=row.get("id"), title=row.get("title"),
+                      error=err[:200], quota=is_quota_error(err))
         return {"ok": False, "interaction_id": None,
                 "error": err, "quota": is_quota_error(err)}
 
@@ -265,10 +293,13 @@ def poll_one(interaction_id: str) -> dict:
         raw_status = getattr(interaction, "status", None)
         if raw_status in ("completed", "succeeded", "success"):
             text = extract_text_from_interaction(interaction) if HAS_DISPATCH_HELPER else str(interaction)
+            emit_dr_event("COMPLETED", interaction_id=interaction_id,
+                          text_chars=len(text) if text else 0)
             return {"status": "complete", "text": text,
                     "error": None, "raw": raw_status}
         if raw_status in ("failed", "cancelled", "error"):
             err = getattr(interaction, "error", None)
+            emit_dr_event("FAILED", interaction_id=interaction_id, error=str(err or raw_status)[:200])
             return {"status": "failed", "text": None,
                     "error": str(err or raw_status), "raw": raw_status}
         return {"status": "running", "text": None, "error": None, "raw": raw_status}

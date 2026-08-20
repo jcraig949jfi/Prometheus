@@ -130,6 +130,18 @@ def q_queues(root=None):
         out["open_gates"] = field(len(gates), f"count lines in {ge.name}")
     except BaseException as e:  # noqa: BLE001
         out["open_gates"] = field(query=str(ge), unknown=f"{type(e).__name__}"[:60])
+    # W-006 consumer leg (P31): the DR event ledger the dispatcher emits into.
+    dr = root / "engine/ledger/DR_EVENTS.jsonl"
+    try:
+        evs = [json.loads(l) for l in dr.read_text(encoding="utf-8").splitlines() if l.strip()]
+        out["dr_events"] = field(
+            {"count": len(evs), "last": evs[-1] if evs else None},
+            f"parse {dr.name}: count + last record")
+    except FileNotFoundError:
+        out["dr_events"] = field({"count": 0, "last": None},
+                                 f"{dr.name} absent (no events emitted yet)")
+    except BaseException as e:  # noqa: BLE001
+        out["dr_events"] = field(query=str(dr), unknown=f"{type(e).__name__}: {e}"[:120])
     return out
 
 

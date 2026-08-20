@@ -36,6 +36,10 @@ Every pattern below has a concrete instance in an ATTACK_*.md artifact in this d
 7. Some fields are pseudo-JSON with UNQUOTED keys — token-count, don't json.loads (0130:
    GaloisConjugates).
 Plus: complex literals 'a+b*I' parse via replace('*I','j') (0165).
+8. Cross-table IDENTIFIER-case mismatch — quoted CamelCase column names vs lowercase fail
+   SILENTLY as an empty column list, not an error (HARMA-P5 soak, 2026-08-20: live-demonstrated
+   on the mirror; an empty information_schema result for a table you can SELECT from is this
+   trap, not a missing table). Same diagnosis discipline as #4: empty ≠ absent, audit the quoting.
 
 ## 3. Narrative-resistance catalog (each killed a wrong claim before it formed)
 - SELECTION ARTIFACT: LMFDB's high-conductor sets are curated, not random. Raw bins showed

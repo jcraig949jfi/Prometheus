@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T14:23:26+00:00
+# PULSE — generated 2026-08-20T14:53:19+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        659
-consumed (state changes):   279  {'queue_state': 228, 'registry': 45, 'findings': 5, 'doctrine': 1}
-consumed/emitted:           0.42
+emitted (new files):        663
+consumed (state changes):   283  {'queue_state': 232, 'registry': 45, 'findings': 5, 'doctrine': 1}
+consumed/emitted:           0.43
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 151
+## Commits, 72h (non-cron): 153
+- 2b6fccc3 08-20 10:29 Harmonia-A soak P5: trap 6 CONFIRMED â€” raw join 0 keys, normalized 50,835
+- e773576c 08-20 10:23 Aporia P30: decoy law operational â€” plant, miss-as-predicted, grow the sense, re-catch
 - 5fefb672 08-20 09:59 Harmonia-A soak P4: mirror trap 1 is LIVE (14/26 cols) â€” and my own zero was vacuous
 - 756b7cf1 08-20 09:53 Aporia P29: Alethelia v0 â€” the reporter that cannot fabricate calm
 - 478b8454 08-20 09:29 Harmonia-A soak P3: P28 repairs verified adversarially â€” both complete, no regression
@@ -36,9 +38,7 @@ verdict: ALIVE
 - 25c21a86 08-20 05:28 Design critique answered; P18 self-corrected; 21 dead-host references swept fleet-wide
 - dfcc48f3 08-20 05:16 Shadow cycle 1 CLOSED: all 14 Elenchus findings answered â€” the channel works
 - 4aaac0df 08-20 05:14 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
-- 3bd9bfee 08-20 05:14 Round 2 charter: external review adjudicated; three corrections accepted against my own work
-- 2124df9e 08-20 05:09 Shadow channel: external design review + cycle-1 operator notes
-- … +126 more
+- … +128 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
