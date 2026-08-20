@@ -14,9 +14,9 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 17 |
+| Passes completed | 18 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all seventeen passes (now 46 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all eighteen passes (now 48 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | **3**, all closed and independently verified; fastest ≈30 min |
@@ -24,17 +24,17 @@ Rough edges are the product. Nothing here is worked around silently.
 | Replication mismatches | 0 |
 | Provenance findings raised | 2 (AA-018 tier + tightness) |
 | Onboarding defects for a cold agent | 3 (SOAK-01, -02, -03) |
-| Harness calibrations | 5 (R12 ×2; z3 15/15; verifier_lens; void miner 34/34) |
+| Harness calibrations | 6 (R12 ×2; z3 15/15; verifier_lens; void miner 34/34; zoo_matrix 48/48) |
 | Boundary cases designed + run | 31 (+5 unregistered-kind probes, +2 regression simulations) |
 | Mirror-trap drills run | **5 confirmed** (1, 2, 5, 6, 7) + **1 diagnosed-absent** (3) |
 | Vacuous results caught before publication | 1 (see SOAK-10) |
-| Doctrine items handed off via GATE_ELI5 | 11 |
+| Doctrine items handed off via GATE_ELI5 | 12 |
 | Own hypotheses killed by own tests | 4 |
 | **Instrument self-audits that changed a finding** | **4** (P4 vacuous zero · P7 misattributed raise · P9 sampling · P14 inverted polarity) |
 | Self-corrections against a published pass | **10 correction-typed claims** across 17 passes (see P17 audit) |
 | New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
 | Own prior-pass weaknesses closed | 1 (P5's "trap-8 prevalence unmeasured" → P6 measured it) |
-| Heartbeat successes | 0 of 17 (env-override, SOAK-05 — never blocked a pass) |
+| Heartbeat successes | 0 of 18 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -738,6 +738,46 @@ sides of this channel self-report identically, so neither Aporia's correction co
 mine can be read as an error rate. **Closing that gap is exactly what an active reviewer
 provides, and what seventeen passes of self-correction cannot substitute for.**
 
+### P18 — the zoo-matrix checkpoint, aimed at the middle
+
+`test_zoo_matrix.py` 48/48 green. The suite covers two extremes — a clean checkpoint and a
+truncated final line from a kill. Per SOAK-30 I aimed at the middle: lines that are
+**well-formed JSON but semantically wrong**.
+
+The loader's guard is asymmetric — `except json.JSONDecodeError: continue`, then
+`rec["examinee"]` / `rec["probe_id"]` **unguarded** on the very next statement:
+
+| checkpoint content | outcome |
+|---|---|
+| clean | loaded (1/1) |
+| **truncated** final line | **loaded (1/1)** — documented tolerance works |
+| valid JSON, no `probe_id` | **KeyError — constructor raises** |
+| valid JSON, no `examinee` | **KeyError** |
+| `{}` / unrelated keys / a JSON list | **KeyError / TypeError** |
+| duplicate identical lines | loads, but **records=2 vs done=1** |
+
+**Inverted robustness gradient:** the *more* corrupt input is handled, the *less* corrupt
+one is fatal — and the blast radius is **total** (the checkpoint cannot open, so a
+resumable run cannot resume) rather than one discarded row.
+
+**Impact is LOW, and I checked before claiming otherwise.** `record()` is the only writer
+and always emits both keys; a mid-line kill *truncates*, which is the tolerated case. The
+failing shapes need a hand-edit, schema change, or second writer. That downgrades my own
+finding from a resume-breaking bug to a narrow hardening item — fix is one guarded access.
+
+**SOAK-38 (observation) — four instruments, four authors, ONE shape.** Every harness defect
+this soak has found sits in the same structural position: *a guard that handles the
+anticipated failure and is silent about the adjacent unanticipated one.* R12 bounded `pow`
+but not sequence repetition; verifier_lens asserted `False`-or-`None` but couldn't separate
+them; the void miner guarded `evaluate_lattice` but not one null; Checkpoint tolerates
+truncation but not a missing key. **In each case the boundary case that found it was simply
+"what is next to the thing you already thought about."**
+
+**SOAK-39 (design) — reporting impact changed the outcome for the first time.** SOAK-33
+flagged impact as a missing obligation two passes ago; acting on it here produced a report
+that **argues against its own urgency**. That is the evidence the obligation is real rather
+than procedural.
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -781,7 +821,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — seventeen passes in; the shape has been stable for fifteen, and the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — eighteen passes in; the shape has been stable for sixteen, and the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
