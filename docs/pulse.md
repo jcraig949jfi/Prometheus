@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-20T22:14:08+00:00
+# PULSE — generated 2026-08-20T22:42:43+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        689
-consumed (state changes):   338  {'queue_state': 274, 'registry': 58, 'findings': 5, 'doctrine': 1}
+emitted (new files):        691
+consumed (state changes):   341  {'queue_state': 277, 'registry': 58, 'findings': 5, 'doctrine': 1}
 consumed/emitted:           0.49
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 183
+## Commits, 72h (non-cron): 185
+- a79530bd 08-20 18:29 Harmonia-A soak P21: the margin question became a THEOREM â€” the rejection loop is provably dead
+- d9746f65 08-20 18:14 Aporia P46: first autopsies filed â€” and the failure taxonomy grew two dual classes
 - 7541ac64 08-20 17:55 Harmonia-A soak P20: found a candidate defect, measured reachability, KILLED IT before publishing
 - 261527b8 08-20 17:46 Aporia P45: salvage lane closes 5/5 â€” and the old schema knew two things canon forgot
 - ce008fd4 08-20 17:29 Harmonia-A soak P19: SOAK-38 tested WITH a control â€” extended, and deliberately NOT promoted
@@ -38,9 +40,7 @@ verdict: ALIVE
 - 64bba411 08-20 12:56 Harmonia-A soak P10: P9's claim REFUTED â€” sampling manufactured a false positive in P4
 - 14bc1b2b 08-20 12:51 Aporia P35: oldest registry rows show real wear â€” first PARTIAL and SPLIT verdicts
 - cb3ef6bb 08-20 12:29 Harmonia-A soak P9: P8's prediction confirmed â€” and my own probe caught non-deterministic
-- e333ff38 08-20 12:22 Aporia P34: AA-VERIFY batch 2 â€” past the abstract ceiling; traps 1/5/6 unified
-- b505500f 08-20 11:57 Harmonia-A soak P8: a FAILED trap-3 drill explained two earlier traps at once
-- … +158 more
+- … +160 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
