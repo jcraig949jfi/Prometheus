@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T16:22:21+00:00
+# PULSE — generated 2026-08-20T16:50:49+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,15 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        668
-consumed (state changes):   293  {'queue_state': 241, 'registry': 46, 'findings': 5, 'doctrine': 1}
+emitted (new files):        669
+consumed (state changes):   296  {'queue_state': 243, 'registry': 47, 'findings': 5, 'doctrine': 1}
 consumed/emitted:           0.44
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 159
+## Commits, 72h (non-cron): 161
+- cb3ef6bb 08-20 12:29 Harmonia-A soak P9: P8's prediction confirmed â€” and my own probe caught non-deterministic
+- e333ff38 08-20 12:22 Aporia P34: AA-VERIFY batch 2 â€” past the abstract ceiling; traps 1/5/6 unified
 - b505500f 08-20 11:57 Harmonia-A soak P8: a FAILED trap-3 drill explained two earlier traps at once
 - e7fa008f 08-20 11:53 Aporia P33: dashboard was 14 days stale â€” one zombie run; AA-VERIFY batch 1 all primary-confirmed
 - 6b5c859d 08-20 11:30 Harmonia-A soak P7: z3 backend CLEAN on false-certification (12/12 decided, 0 fabrications)
@@ -36,9 +38,7 @@ verdict: ALIVE
 - 72067273 08-20 06:41 LAD-ENSEMBLE: what the ensemble actually bought â€” width, measured; yield, honestly refused
 - c5bd6c51 08-20 06:13 LAD-R12-RUN: the never-fired instrument is CALIBRATED â€” live shot one budget-word away
 - 075450da 08-20 06:08 ELEN cycle 2 answered: retraction, restoration, re-scope â€” and the probe that ends this error class
-- 5d7fdced 08-20 06:05 THESIS v4.1: James's refinement round adjudicated â€” all accepted, one addition
-- 80f6a8ac 08-20 05:53 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
-- … +134 more
+- … +136 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
