@@ -161,6 +161,12 @@ class Checkpoint:
                     rec = json.loads(line)
                 except json.JSONDecodeError:
                     continue   # tolerate a half-written final line from a kill
+                # HARMA-P18 (fixed P44): a well-formed line missing its keys was
+                # FATAL while a truncated line was tolerated — inverted robustness.
+                # Same contract both ways: skip and count, never die on load.
+                if not isinstance(rec, dict) or "examinee" not in rec or "probe_id" not in rec:
+                    self.n_skipped_malformed = getattr(self, "n_skipped_malformed", 0) + 1
+                    continue
                 self.records.append(rec)
                 self.done.add((rec["examinee"], rec["probe_id"]))
         self.path.parent.mkdir(parents=True, exist_ok=True)

@@ -1,6 +1,6 @@
 <!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
 
-# PULSE — generated 2026-08-20T18:56:44+00:00
+# PULSE — generated 2026-08-20T22:14:08+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -8,13 +8,27 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        674
-consumed (state changes):   312  {'queue_state': 256, 'registry': 50, 'findings': 5, 'doctrine': 1}
-consumed/emitted:           0.46
+emitted (new files):        689
+consumed (state changes):   338  {'queue_state': 274, 'registry': 58, 'findings': 5, 'doctrine': 1}
+consumed/emitted:           0.49
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 169
+## Commits, 72h (non-cron): 183
+- 7541ac64 08-20 17:55 Harmonia-A soak P20: found a candidate defect, measured reachability, KILLED IT before publishing
+- 261527b8 08-20 17:46 Aporia P45: salvage lane closes 5/5 â€” and the old schema knew two things canon forgot
+- ce008fd4 08-20 17:29 Harmonia-A soak P19: SOAK-38 tested WITH a control â€” extended, and deliberately NOT promoted
+- 8728e7e5 08-20 17:18 Aporia P44: Checkpoint robustness un-inverted; Sophia's 10 operators join the registry
+- e299b18d 08-20 16:55 Harmonia-A soak P18: zoo-matrix Checkpoint has an inverted robustness gradient (impact LOW)
+- fbd94b99 08-20 16:49 Aporia P43: Nous salvage â€” 95 concepts join the registry; the doc said 18 fields, the code says 20
+- 0b3d0f2d 08-20 16:29 Harmonia-A soak P17: audited my own error rate â€” SOAK-34 refuted, and the number is a floor
+- f03be2e9 08-20 16:22 Aporia P42: Iris salvage â€” the dead compressor's living vocabulary joins the registry
+- 9cc50c56 08-20 15:55 Harmonia-A soak P16: trap 7 confirmed â€” and my own P8 synthesis narrowed a second time
+- c2dad5a5 08-20 15:53 Aporia P41: Lethe salvage â€” pipeline certified clean; the FLT "candidates" were the detector photographing its own blind spot
+- 1ca61ac4 08-20 15:30 Harmonia-A soak P15: P40 fix verified complete â€” and the defect was LATENT, not live
+- 5edfe890 08-20 15:25 Aporia P40: HARMA-P14's crash closed with a red-verified pin
+- 8a8d0d5f 08-20 14:57 Aporia P39: the Letellier-Nam candidate is real â€” Saxl anchor enriched with a conflation guard
+- 17011ddd 08-20 14:55 Harmonia-A soak P14: middle case found a real defect â€” null_marginal_pairing crashes
 - 7d77ce62 08-20 14:29 Harmonia-A soak P13: SOAK-27 DEMOTED â€” my own pattern claim failed to extend to a 3rd suite
 - 195c9256 08-20 14:23 Aporia P38: greenness made meaningful again â€” pins, gates, and a tier the queue refuted
 - 0ab4b24a 08-20 13:55 Harmonia-A soak P12: verifier_lens fix has LANDED but is UNPINNED â€” a regression stays green
@@ -26,21 +40,7 @@ verdict: ALIVE
 - cb3ef6bb 08-20 12:29 Harmonia-A soak P9: P8's prediction confirmed â€” and my own probe caught non-deterministic
 - e333ff38 08-20 12:22 Aporia P34: AA-VERIFY batch 2 â€” past the abstract ceiling; traps 1/5/6 unified
 - b505500f 08-20 11:57 Harmonia-A soak P8: a FAILED trap-3 drill explained two earlier traps at once
-- e7fa008f 08-20 11:53 Aporia P33: dashboard was 14 days stale â€” one zombie run; AA-VERIFY batch 1 all primary-confirmed
-- 6b5c859d 08-20 11:30 Harmonia-A soak P7: z3 backend CLEAN on false-certification (12/12 decided, 0 fabrications)
-- 694d0516 08-20 11:22 Aporia P32: INFRA lane closed â€” PULSE on the dashboard, germline builds parked on the ruling
-- aa6ebec7 08-20 10:55 Harmonia-A soak P6: trap 5 CONFIRMED (0 vs 319,289) â€” and its surface is TOTAL
-- b781e06a 08-20 10:53 Aporia P31: DR event trail live with a born-alive consumer; trap 8 enters the book
-- 2b6fccc3 08-20 10:29 Harmonia-A soak P5: trap 6 CONFIRMED â€” raw join 0 keys, normalized 50,835
-- e773576c 08-20 10:23 Aporia P30: decoy law operational â€” plant, miss-as-predicted, grow the sense, re-catch
-- 5fefb672 08-20 09:59 Harmonia-A soak P4: mirror trap 1 is LIVE (14/26 cols) â€” and my own zero was vacuous
-- 756b7cf1 08-20 09:53 Aporia P29: Alethelia v0 â€” the reporter that cannot fabricate calm
-- 478b8454 08-20 09:29 Harmonia-A soak P3: P28 repairs verified adversarially â€” both complete, no regression
-- 097f05c4 08-20 09:22 Aporia P28: soak findings metabolized; v1 cohort claims retracted under exchangeable rerun
-- f44d0aa7 08-20 08:56 Harmonia-A soak P2: R12 harness green 17/17; sandbox pow bound does NOT generalize
-- a7f610f4 08-20 08:48 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
-- cdea4574 08-20 08:48 THESIS v4.2: the closure â€” the HITL is inside the thesis
-- … +144 more
+- … +158 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records

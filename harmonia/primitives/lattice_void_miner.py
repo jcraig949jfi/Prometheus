@@ -458,19 +458,38 @@ def null_marginal_pairing(spec: LatticeSpec, c: dict, n_perms: int = 5,
     the degeneracy empirically: random bijective re-pairings of equal-length
     samples reproduce the hold-rate up to binomial noise, always."""
     rng = random.Random(seed)
-    va = spec.side_a[c["inv_a"]]
-    vb = spec.side_b[c["inv_b"]]
     f, g = spec.operators[c["f"]], spec.operators[c["g"]]
-    n = min(len(va), len(vb), 1000)
+
+    # Domain-skip contract (HARMA-P14 defect): transform FIRST under the same
+    # error policy _transformed_counters uses, dropping out-of-domain values —
+    # a bare f(x) here crashed on every spec with domain-restricted operators,
+    # which is exactly the spec class whose thin voids need this battery.
+    def _dom(vals, op):
+        out, dropped = [], 0
+        for v in vals:
+            try:
+                out.append(op(v))
+            except spec.transform_errors:
+                dropped += 1
+        return out, dropped
+
+    ta, drop_a = _dom(spec.side_a[c["inv_a"]], f)
+    tb, drop_b = _dom(spec.side_b[c["inv_b"]], g)
+    if not ta or not tb:
+        return {"null": "marginal_pairing", "killed": False, "degenerate": True,
+                "perm_rates": [], "n_dropped": [drop_a, drop_b],
+                "detail": "no in-domain values on one side; nothing to permute"}
+    n = min(len(ta), len(tb), 1000)
     rates = []
     for _ in range(n_perms):
-        sa = rng.sample(va, n) if len(va) >= n else [rng.choice(va) for _ in range(n)]
-        sb = rng.sample(vb, n) if len(vb) >= n else [rng.choice(vb) for _ in range(n)]
+        sa = rng.sample(ta, n) if len(ta) >= n else [rng.choice(ta) for _ in range(n)]
+        sb = rng.sample(tb, n) if len(tb) >= n else [rng.choice(tb) for _ in range(n)]
         rng.shuffle(sb)
-        hold = sum(spec.eval_relation(f(x), g(y), c["rel"]) for x, y in zip(sa, sb))
+        hold = sum(spec.eval_relation(x, y, c["rel"]) for x, y in zip(sa, sb))
         rates.append(hold / n)
     return {"null": "marginal_pairing", "killed": False, "degenerate": True,
             "perm_rates": [round(r, 4) for r in rates],
+            "n_dropped": [drop_a, drop_b],
             "detail": ("DEGENERATE: pairing-permutation cannot move a "
                        "product-measure statistic; shown empirically, "
                        "never used as a gate")}

@@ -44,10 +44,13 @@ Plus: complex literals 'a+b*I' parse via replace('*I','j') (0165).
    CamelCase vs nf_fields 0/43 — so the risk is per-table near-totality, not a uniform base rate.
    Trap 5 likewise measured TOTAL on the mirror (29/29 boolean-semantic columns are text).
 
-ROOT CAUSE (HARMA-P8, 2026-08-20): the lmfdb mirror is 100% text-typed — 320/320 columns —
-total type erasure at ingest. Traps 1, 5, and 6 are FACETS of this one cause, not independent
-hazards; per-database, not house style (prometheus_fire 49% text, prometheus_sci 24% with real
-booleans). Corollary: on the mirror, EVERY typed operation needs an explicit cast, always.
+ROOT CAUSE (HARMA-P8, NARROWED by HARMA-P16, 2026-08-20): the lmfdb mirror is 100% text-typed
+— 320/320 columns — total type erasure at ingest. Traps 1, 2, 5 and the VALUE side of 6 are
+facets of this one cause; trap 7 (pseudo-JSON unquoted keys) is NOT — its cause is SOURCE
+serialization (the value was never valid JSON anywhere), and trap 8 is identifier-casing.
+Per-database, not house style (prometheus_fire 49% text, prometheus_sci 24% with real
+booleans). Corollary: on the mirror, EVERY typed operation needs an explicit cast, always —
+and casts fix only the erasure family, not the source-serialization family.
 
 ## 3. Narrative-resistance catalog (each killed a wrong claim before it formed)
 - SELECTION ARTIFACT: LMFDB's high-conductor sets are curated, not random. Raw bins showed

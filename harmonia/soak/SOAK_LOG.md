@@ -14,27 +14,27 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 14 |
+| Passes completed | 21 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all fourteen passes (now 39 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all twenty-one passes (now 54 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
-| Worker→worker round-trips (my finding → Aporia repair → my verification) | 2, both closed and independently verified |
+| Worker→worker round-trips (my finding → Aporia repair → my verification) | **3**, all closed and independently verified; fastest ≈30 min |
 | Replication matches | 1 (AA-018, in kind) |
 | Replication mismatches | 0 |
 | Provenance findings raised | 2 (AA-018 tier + tightness) |
 | Onboarding defects for a cold agent | 3 (SOAK-01, -02, -03) |
-| Harness calibrations | 5 (R12 ×2; z3 15/15; verifier_lens; void miner 34/34) |
+| Harness calibrations | **7 — all 6 suites now covered**; every one green, 5 of 6 yielded a boundary defect |
 | Boundary cases designed + run | 31 (+5 unregistered-kind probes, +2 regression simulations) |
-| Mirror-trap drills run | **4 confirmed** (1, 2, 5, 6) + **1 diagnosed-absent** (3) |
+| Mirror-trap drills run | **5 confirmed** (1, 2, 5, 6, 7) + **1 diagnosed-absent** (3) |
 | Vacuous results caught before publication | 1 (see SOAK-10) |
-| Doctrine items handed off via GATE_ELI5 | 9 (incl. a correction against my own entry, one constructive fix pattern, one live defect) |
+| Doctrine items handed off via GATE_ELI5 | 14 (13 defects/doctrine + **1 proof**) |
 | Own hypotheses killed by own tests | 4 |
-| **Instrument self-audits that changed a finding** | **4** (P4 vacuous zero · P7 misattributed raise · P9 sampling · P14 inverted polarity) |
-| Self-corrections against a published pass | 4 — 4-deep sampling chain, **+ SOAK-27 demoted by P13** |
+| **Instrument self-audits that changed a finding** | **5** (P4 · P7 · P9 · P14 · P19 wrong field name) |
+| Self-corrections against a published pass | **10 correction-typed claims** across 17 passes (see P17 audit) |
 | New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
-| Own prior-pass weaknesses closed | 1 (P5's "trap-8 prevalence unmeasured" → P6 measured it) |
-| Heartbeat successes | 0 of 14 (env-override, SOAK-05 — never blocked a pass) |
+| Own prior-pass weaknesses closed | 4 (P5→P6; P19→P20 ×2; **P20→P21 bound-dependence**) |
+| Heartbeat successes | 0 of 21 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -609,6 +609,311 @@ P14's middle failed. *"Handles the empty case"* generalises to nothing.
 finding.** Four self-audits now (P4, P7, P9, P14), and **in all four the false finding was
 more dramatic than the truth** — which is exactly the direction that gets published.
 
+### P15 — verifying the fix, and answering the impact question P14 deferred
+
+Aporia's **P40 fixed my P14 defect in ≈30 minutes**, with a red-verified pin
+(`test_null_domain_skip.py`, 3/3). This pass verified it rather than trusting it — because
+a red-verified pin is *also* what a shape-specific repair looks like from outside.
+
+| check | result |
+|---|---|
+| my P14 probe, unchanged | **no longer crashes** at any k |
+| shipped pin | 3/3 |
+| **4 variants NOT in the pin** — OverflowError; A-restricted/B-open; B-restricted/A-open; fully out-of-domain | **all pass** |
+
+**The fix is complete, not shape-specific.**
+
+**And the defect was LATENT, not live.** P14 owed this number and deferred it. Established
+by execution, since P11 measured inspection at a 2-of-3 predictor:
+
+> **24,030 calls** — a3's 6 production operators × 4,005 values — **zero skip-set raises.**
+
+`log2_floor` doesn't raise even at 0 or negative; it guards internally. So the crash path
+could never have fired on the only production spec using this instrument.
+
+**Self-correction against P14, published 30 minutes earlier.** Degenerate thin cells come
+back **`T4_NO_CERTIFICATE_BUG`**, a class the suite explicitly asserts should never appear —
+so my "binary guard" framing was overstated. Recorded as a correction rather than quietly
+dropped now that the surrounding finding was vindicated.
+
+Minor note, logged as a claim rather than a gate entry (SOAK-13 — drain rate is the
+constraint): `transform_errors` is documented in-source as *"a3's skip set"*, but a3's
+operators never raise those types.
+
+**SOAK-32 (observation) — worker-to-worker turnaround is fast; cross-checking is not.**
+30 minutes from report to pinned repair. But the pin covered a shape *narrower* than the
+defect, and only independent variants showed the fix was adequate. What stays slow is
+everything the workers don't think to check about each other's fixes.
+
+**SOAK-33 (correction) — reporting a defect and reporting its IMPACT are separate
+obligations.** P14 shipped "this crashes" with latency deferred; the answer was that it
+could never have fired in production. Both facts matter and they set **opposite
+priorities** — and nothing in the worklog schema requires an impact estimate alongside a
+defect claim.
+
+### P16 — trap 7 confirmed, and my own synthesis narrowed a second time
+
+`artin_reps."GaloisConjugates"`, 798,140 non-null rows, keys unquoted
+(`{Sign: 1, Character: ...}`):
+
+| parser | succeeded |
+|---|---|
+| `json.loads` | **0 / 200** |
+| `ast.literal_eval` | **0 / 200** |
+| **token-count** (documented safe form) | **200 / 200** |
+
+Trap 7 is live and the documented safe form works exactly as written. Note the trap-3
+warning against `ast.literal_eval` applies here too, on a field that isn't an array.
+
+**But it does not fit P8's type-erasure synthesis.** The discriminator was chosen to be
+*decidable rather than persuasive*, and stated before the drill:
+
+> **Could Postgres ever have stored this typed?** It has `jsonb` — but the value is not
+> valid JSON, so no import behaviour could have preserved a type.
+
+The cause is the **source serialisation**, upstream of the import. **P8's scope is cut** to
+traps 1, 2, 5 and the value side of 6.
+
+### The trap list resolves into ~3 families
+
+Neither SOAK-19's "eight independents" nor P8's "one root":
+
+| family | traps | what saves you |
+|---|---|---|
+| import-time **type erasure** | 1, 2, 5, 6(value) | a **cast** |
+| **source-format** serialisation | 7 (+ `a+b*I` complex literals) | a **parser/token-count** |
+| **naming convention** | 8 | a **quoting habit** |
+
+*(3's precondition was absent here; 4 is a discipline rule, not a data shape — so this
+covers six of eight.)*
+
+**SOAK-34 (observation) — my errors are concentrated in claims that SPAN cases.** Both
+cross-cutting generalisations have now been narrowed by testing them (SOAK-27 demoted in
+P13, P8 cut here), while **every narrow measurement has survived re-audit intact** — P5, P6,
+the trap drills, the z3 battery. That is a measurable statement about where this worker's
+judgement fails, and worth a reviewer knowing.
+
+**SOAK-35 (design) — family membership is a property of the SET, invisible to any single
+drill.** The structure only appeared after five. A worker drilling one trap per pass
+accumulates confirmations without ever learning which family a ninth trap would join —
+so the doctrine should record what KIND of thing each trap is, which is the part a cold
+worker needs before touching an undrilled database.
+
+### P17 — auditing my own error rate, and refuting SOAK-34
+
+SOAK-34 claimed my errors concentrate in claims that **span cases**. It is itself a
+spanning claim, so by its own logic it is the kind most likely to be wrong — and it is
+measurable from the worklog. **96 claims across 16 passes, 10 correction-typed.**
+
+| | claims made | corrected | rate |
+|---|---|---|---|
+| **spanning** | 29 | 6 | **20.7%** |
+| **narrow** | 67 | 4 | **6.0%** |
+
+**Direction holds (3.5×). Absolute clause REFUTED** — *"every narrow measurement survived
+intact"* is false; four narrow claims were corrected (P4's maxima, P4's `adelic_genus`
+verdict, P9's trap-2 triage, P14's probe polarity).
+
+**And the ratio is NOT established.** Proportional allocation predicts 3.0 spanning
+corrections against 6 observed — an excess of ~3 claims at n=10, which small counts cannot
+separate from chance. "3.5×" is the publishable headline and it does not survive its own
+denominator check. SOAK-34 reported a concentration with **no denominators at all** —
+exactly the failure I have criticised in other instruments since P4.
+
+Self-referentially: SOAK-34 was a spanning claim, and it was corrected — consistent with
+its own direction while refuting its absolute form.
+
+### The limit that undercuts the whole pass
+
+> **This counts corrections I chose to make.** A claim that was wrong and never revisited
+> contributes nothing and is structurally invisible. **10.4% is a floor on my error rate,
+> not an estimate** — it measures diligence, not accuracy.
+
+**SOAK-36 (correction) — SOAK-34 corrected.** Three of my spanning claims have now been
+narrowed by deliberate test and none has survived one. *That is itself a spanning claim,
+made at n=3, and should be read with the same suspicion.*
+
+**SOAK-37 (design) — a worker's self-reported error rate is unreadable as accuracy.** Both
+sides of this channel self-report identically, so neither Aporia's correction count nor
+mine can be read as an error rate. **Closing that gap is exactly what an active reviewer
+provides, and what seventeen passes of self-correction cannot substitute for.**
+
+### P18 — the zoo-matrix checkpoint, aimed at the middle
+
+`test_zoo_matrix.py` 48/48 green. The suite covers two extremes — a clean checkpoint and a
+truncated final line from a kill. Per SOAK-30 I aimed at the middle: lines that are
+**well-formed JSON but semantically wrong**.
+
+The loader's guard is asymmetric — `except json.JSONDecodeError: continue`, then
+`rec["examinee"]` / `rec["probe_id"]` **unguarded** on the very next statement:
+
+| checkpoint content | outcome |
+|---|---|
+| clean | loaded (1/1) |
+| **truncated** final line | **loaded (1/1)** — documented tolerance works |
+| valid JSON, no `probe_id` | **KeyError — constructor raises** |
+| valid JSON, no `examinee` | **KeyError** |
+| `{}` / unrelated keys / a JSON list | **KeyError / TypeError** |
+| duplicate identical lines | loads, but **records=2 vs done=1** |
+
+**Inverted robustness gradient:** the *more* corrupt input is handled, the *less* corrupt
+one is fatal — and the blast radius is **total** (the checkpoint cannot open, so a
+resumable run cannot resume) rather than one discarded row.
+
+**Impact is LOW, and I checked before claiming otherwise.** `record()` is the only writer
+and always emits both keys; a mid-line kill *truncates*, which is the tolerated case. The
+failing shapes need a hand-edit, schema change, or second writer. That downgrades my own
+finding from a resume-breaking bug to a narrow hardening item — fix is one guarded access.
+
+**SOAK-38 (observation) — four instruments, four authors, ONE shape.** Every harness defect
+this soak has found sits in the same structural position: *a guard that handles the
+anticipated failure and is silent about the adjacent unanticipated one.* R12 bounded `pow`
+but not sequence repetition; verifier_lens asserted `False`-or-`None` but couldn't separate
+them; the void miner guarded `evaluate_lattice` but not one null; Checkpoint tolerates
+truncation but not a missing key. **In each case the boundary case that found it was simply
+"what is next to the thing you already thought about."**
+
+**SOAK-39 (design) — reporting impact changed the outcome for the first time.** SOAK-33
+flagged impact as a missing obligation two passes ago; acting on it here produced a report
+that **argues against its own urgency**. That is the evidence the obligation is real rather
+than procedural.
+
+### P19 — SOAK-38 tested WITH a control, and deliberately not promoted
+
+`test_legality_generators.py` 2494/2494 green — the last unexercised suite.
+
+**Part 1, adjacent to the guard.** `gen_abs_extra_clean` forces `a<=b` so a root always
+exists, making any "no solution" answer unambiguously over-refusal. But
+`b = a + rng.randint(0, 8)` makes **`a==b` reachable — 20 of 160 probes (12.5%)**. There
+the equation collapses:
+
+| | |
+|---|---|
+| recorded `ground_truth` | `[3]` (a single point) |
+| true solution set (sympy) | **`Interval(-oo, 3)`** — a half-line |
+| gt complete? | **False** |
+
+The guard handles the anticipated failure (*no solution exists*) and is silent about the
+adjacent one (*infinitely many solutions exist*) — **SOAK-38's exact predicted position.**
+
+**Part 2, the control.** Determinism under fixed seed — an axis no test guards, structurally
+unrelated to `a<=b`. Both generators: **identical output, clean.**
+
+### Extended, and still not promoted
+
+This is **the first spanning claim of mine to survive a deliberate test** — and I'm
+declining to bank it. One control on one axis cannot distinguish *"defects live next to
+guards"* from *"I only look next to guards."* The clean control is equally consistent with
+both. **The confound stands.**
+
+Impact is stated as **conditional and unmeasured**: the mathematics is unambiguous, but
+contamination of the H1 over-refusal arm requires reasoners to actually give the interval
+answer, which I did not test.
+
+**SOAK-40 (observation) — all six suites are now calibrated. Every one green; five of six
+yielded a boundary defect the suite didn't pin.** Suite greenness and instrument soundness
+have been **independent in every case examined**. A worker inheriting "all tests pass"
+inherits nothing about the second property.
+
+**SOAK-41 (design) — the confound is not fixable by this role as configured.** Proving
+defects cluster near guards requires probing where guards are *not* — but my judgement
+about where guards are is the same judgement under suspicion, so my control is drawn from
+the contaminated distribution. **An independent party choosing the probe positions is the
+only clean design.** That is a structural argument for the reviewer seat, not a complaint
+about its inactivity.
+
+### P20 — a candidate defect found, measured, and killed before publishing
+
+Closing both weaknesses P19 stated against itself.
+
+**The candidate.** `gen_log_extra_3arg`'s rejection sampler runs `for _try in range(30)`
+and breaks on success — but if all 30 fail, the loop exits normally and the **last failing
+sample ships**, since `c = p*(p-a)*(p-b)` is computed *outside* the loop. That is a
+publishable-looking finding.
+
+**Reachability, measured before claiming:**
+
+| | |
+|---|---|
+| draw space | 80 triples (a 1–4, b a+1–4, p b+1–5) |
+| per-try failures | **0** |
+| P(all 30 fail) | **0** |
+| sympy cross-check, 40 probes | **0 uniqueness violations** |
+
+The branch is unreachable dead code. **No defect claimed.** I cross-checked with sympy
+rather than trusting my own replication of their `disc`/`r1`/`r2` arithmetic — a replicated
+bug would have produced a *false clean*.
+
+**SOAK-38 refined, not padded.** I could have logged "5 of 6 instruments" as further
+support. The informative part is the mechanism the clean case exposes:
+
+> **An adjacent gap exists only where a guard's boundary is REACHABLE.** `a<=b` reaches its
+> boundary at ~1 in 9 draws and had a gap; uniqueness never reaches its boundary and has
+> none.
+
+Flagged withheld — that refinement spans cases at n=2, which SOAK-34 measured as my 3.5×
+error class.
+
+**P19's seed caveat closed, and it mildly corrects P19:** the a==b rate is **9.4%–14.4%
+across five seeds** against an analytic 11.1%, so 12.5% was the high end of a range rather
+than a stable figure. The phenomenon is robust; the number wasn't.
+
+**SOAK-42 (observation) — first pass to kill its own finding before publication.** Every
+prior pass measured impact *after* claiming a defect (P14 deferred, P15 answered, P18
+attached). Doing it *before* is the version that **prevents** the claim rather than
+qualifying it.
+
+**SOAK-43 (design) — a guard that never fires is indistinguishable from a guard that
+works.** This sampler has never rejected anything across its whole draw space, so its
+docstring describes rejection sampling that has never rejected — harmless today, silently
+load-bearing if the ranges are ever widened. **"Never triggered" and "protecting you" look
+identical in a green test run.**
+
+### P21 — the margin question became a theorem
+
+P20 flagged its own weakness: *"unreachable" was a claim about today's literal `randint`
+bounds, not about the code.* This pass set out to measure the margin.
+
+| sweep | first failure |
+|---|---|
+| `a_max` 4 → 63 | none (margin > +59) |
+| `db_max` 4 → 63 | none |
+| `dp_max` 5 → 64 | none |
+| all three jointly, +20 (14,400 triples) | **none** |
+
+**A margin that large is not a margin.** It's a hint of structure — so I stopped counting
+and derived it.
+
+> Uniqueness in `x>b` needs the quadratic's larger root `≤ b`. Since `2b+A = p−a+b > 0`,
+> square it: `disc ≤ (2b+A)²`, which reduces to **`B + bA + b² ≥ 0`**. And
+> `B + bA + b² = (p−a)(p−b) + b(p−a−b) + b² = (p−a)·p`, strictly positive for `p > a > 0`.
+
+So the larger root is **always** `≤ b`; the smaller is smaller still. The `disc<0` branch has
+no real roots at all. Two branches, both covered.
+
+**Verified two independent ways**, because the squaring step is mine and P11 measured my
+inspection-reasoning at a 2-of-3 predictor: sympy confirms `factor()` gives `p*(-a+p)` and
+the identity difference simplifies to 0; **283,554 exact-integer triples** (no floats
+anywhere) give **0 failures**.
+
+**The rejection sampler is provably dead for every `0<a<b<p`** — not merely over current
+bounds. P20's margin question is closed *and superseded*: no margin is needed.
+
+**This is not a defect, and the direction is unusual.** Twenty passes have mostly found
+instruments *weaker* than they appear. Here the uniqueness the docstring attributes to
+sampling is **unconditional** — a stronger guarantee than the code claims. The loop is
+redundant, not wrong; it can become a one-line assertion.
+
+**SOAK-44 (observation) — a measurement that refuses to produce a number can be the
+signal.** Earlier passes treated an unexpected zero as something to diagnose (P4, P8, P13).
+This is the first where diagnosing the zero produced a **proof** rather than a defect.
+
+**SOAK-45 (design) — SOAK-43, sharpened.** It asked instruments to record whether a guard
+has ever fired. The stronger version: for this guard, "never fires" is provable *in
+advance*, so the useful artifact is not a runtime counter but the **precondition under
+which the guard is redundant** (`0<a<b<p`). A counter says it hasn't fired yet; a
+precondition says when it could start.
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -652,7 +957,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — fourteen passes in; the shape has been stable for twelve, and the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — twenty-one passes in; all six suites calibrated; the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
