@@ -77,6 +77,10 @@ def main() -> int:
         spec_missing = (len(spec) < 30 or "See specific test" in spec
                         or "Requires data extension" in str(t.get("data_source", "")))
         gate = "needs authored test_spec (SPEC-AUTHOR-BATCH lane)" if spec_missing else None
+        # Self-grading mitigation (P24/P25): a spec authored by the attacking agent is a
+        # CLAIM — it must clear shadow review before the first attack consumes it.
+        if str(t.get("provenance", {}).get("spec_status", "")) == "AUTHORED-AWAITING-ELENCHUS-REVIEW":
+            gate = "authored spec awaiting shadow review (Elenchus)"
         add(f"CAT-{qid}", f"Catalog attack: {str(q.get('question') or q.get('title') or qid)[:120]}",
             "catalog_537", "trace-vector corpus + kill ledger", 40 + boost,
             gate=gate, bottleneck="B-004", meta={"bucket": bucket or "?"})
@@ -222,6 +226,11 @@ def main() -> int:
             # PARKED added 2026-08-19: a manual park of a GENERATED thread (e.g. CAT-MATH-0260
             # vacuous-parked on missing mirror data) was being clobbered back to QUEUED on regen.
             # Parks carry their gate + reason forward too, else the ELI5 linkage breaks.
+            # REFINEMENT 2026-08-20 (P25): if THIS regeneration computed a gate for the thread,
+            # the fresh gate reflects current source data (e.g. a spec was authored since the
+            # old park) and WINS — old parks only stick to threads the generator left ungated.
+            if ost == "PARKED" and uniq[oid].get("gate"):
+                continue
             uniq[oid]["status"] = ost
             if old_item.get("result"):
                 uniq[oid]["result"] = old_item["result"]
