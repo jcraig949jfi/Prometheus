@@ -14,9 +14,9 @@ Rough edges are the product. Nothing here is worked around silently.
 
 | Metric | Value |
 |---|---|
-| Passes completed | 15 |
+| Passes completed | 16 |
 | Validator failures | 0 |
-| Validator gate exit | 0 all fifteen passes (now 42 worklog entries, 7 reviews) |
+| Validator gate exit | 0 all sixteen passes (now 43 worklog entries, 7 reviews) |
 | Schema fields ambiguous/forced | 2 (`agent`, `soak_findings` — see SOAK-04) |
 | Review round-trips (Elenchus → me → response) | **0** (see SOAK-08 — the untested half) |
 | Worker→worker round-trips (my finding → Aporia repair → my verification) | **3**, all closed and independently verified; fastest ≈30 min |
@@ -26,15 +26,15 @@ Rough edges are the product. Nothing here is worked around silently.
 | Onboarding defects for a cold agent | 3 (SOAK-01, -02, -03) |
 | Harness calibrations | 5 (R12 ×2; z3 15/15; verifier_lens; void miner 34/34) |
 | Boundary cases designed + run | 31 (+5 unregistered-kind probes, +2 regression simulations) |
-| Mirror-trap drills run | **4 confirmed** (1, 2, 5, 6) + **1 diagnosed-absent** (3) |
+| Mirror-trap drills run | **5 confirmed** (1, 2, 5, 6, 7) + **1 diagnosed-absent** (3) |
 | Vacuous results caught before publication | 1 (see SOAK-10) |
-| Doctrine items handed off via GATE_ELI5 | 9 (incl. a correction against my own entry, one constructive fix pattern, one live defect) |
+| Doctrine items handed off via GATE_ELI5 | 10 (incl. 2 corrections against my own entries, a fix pattern, a live defect, a taxonomy) |
 | Own hypotheses killed by own tests | 4 |
 | **Instrument self-audits that changed a finding** | **4** (P4 vacuous zero · P7 misattributed raise · P9 sampling · P14 inverted polarity) |
 | Self-corrections against a published pass | 5 — 4-deep sampling chain, SOAK-27 demoted (P13), **P14 binary-guard framing corrected (P15)** |
 | New trap candidates found | 1 (identifier-case mismatch) — **ADOPTED into ATTACK_PATTERNS as trap 8** |
 | Own prior-pass weaknesses closed | 1 (P5's "trap-8 prevalence unmeasured" → P6 measured it) |
-| Heartbeat successes | 0 of 15 (env-override, SOAK-05 — never blocked a pass) |
+| Heartbeat successes | 0 of 16 (env-override, SOAK-05 — never blocked a pass) |
 | Self-corrections caught before logging | 2 |
 
 ## Soak findings
@@ -651,6 +651,54 @@ could never have fired in production. Both facts matter and they set **opposite
 priorities** — and nothing in the worklog schema requires an impact estimate alongside a
 defect claim.
 
+### P16 — trap 7 confirmed, and my own synthesis narrowed a second time
+
+`artin_reps."GaloisConjugates"`, 798,140 non-null rows, keys unquoted
+(`{Sign: 1, Character: ...}`):
+
+| parser | succeeded |
+|---|---|
+| `json.loads` | **0 / 200** |
+| `ast.literal_eval` | **0 / 200** |
+| **token-count** (documented safe form) | **200 / 200** |
+
+Trap 7 is live and the documented safe form works exactly as written. Note the trap-3
+warning against `ast.literal_eval` applies here too, on a field that isn't an array.
+
+**But it does not fit P8's type-erasure synthesis.** The discriminator was chosen to be
+*decidable rather than persuasive*, and stated before the drill:
+
+> **Could Postgres ever have stored this typed?** It has `jsonb` — but the value is not
+> valid JSON, so no import behaviour could have preserved a type.
+
+The cause is the **source serialisation**, upstream of the import. **P8's scope is cut** to
+traps 1, 2, 5 and the value side of 6.
+
+### The trap list resolves into ~3 families
+
+Neither SOAK-19's "eight independents" nor P8's "one root":
+
+| family | traps | what saves you |
+|---|---|---|
+| import-time **type erasure** | 1, 2, 5, 6(value) | a **cast** |
+| **source-format** serialisation | 7 (+ `a+b*I` complex literals) | a **parser/token-count** |
+| **naming convention** | 8 | a **quoting habit** |
+
+*(3's precondition was absent here; 4 is a discipline rule, not a data shape — so this
+covers six of eight.)*
+
+**SOAK-34 (observation) — my errors are concentrated in claims that SPAN cases.** Both
+cross-cutting generalisations have now been narrowed by testing them (SOAK-27 demoted in
+P13, P8 cut here), while **every narrow measurement has survived re-audit intact** — P5, P6,
+the trap drills, the z3 battery. That is a measurable statement about where this worker's
+judgement fails, and worth a reviewer knowing.
+
+**SOAK-35 (design) — family membership is a property of the SET, invisible to any single
+drill.** The structure only appeared after five. A worker drilling one trap per pass
+accumulates confirmations without ever learning which family a ninth trap would join —
+so the doctrine should record what KIND of thing each trap is, which is the part a cold
+worker needs before touching an undrilled database.
+
 ## Repair-verification ledger
 
 | Repair claimed (P28) | Verification | Result |
@@ -694,7 +742,7 @@ so 2^71 sits just under it rather than a generation behind.
 
 ## Verdict so far
 
-Withheld — fifteen passes in; the shape has been stable for thirteen, and the method is still tightening. The mechanisms have generalized to a second worker
+Withheld — sixteen passes in; the shape has been stable for fourteen, and the method is still tightening. The mechanisms have generalized to a second worker
 without modification (validator green, schema accommodating, namespacing clean). The
 strain is not in the mechanisms but in the **work supply** of one rotation item:
 rotation (a) was exhausted after a single pass and rotation (b) remains blocked on the
