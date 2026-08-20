@@ -116,8 +116,15 @@ Priority order (exploit-first):
    load-bearing composition?
 4. **Re-found the gate on metabolization** — make your own mechanism-knockout +
    behavioral-NCD the *admission gate* (load-bearing, not decorative), not just a report.
-5. **Wire Harmonia B's testable ladder as the grading oracle** (procedural probes +
-   z3/sympy deterministic verifier) so "are we there yet" uses a non-gameable oracle.
+5. **Wire Harmonia B's testable ladder as the grading oracle** — **CORRECTED 2026-08-19,
+   NOT one import away.** `grade_reasoner` expects `reasoner(probe) -> (answer, trace)`
+   generating free answers over sympy probes; the composed engine is a multiple-choice
+   scorer (`evaluate(prompt, candidates)`). A `Probe` carries neither prompt nor candidates,
+   so an adapter must synthesize both — and the distractor policy IS the measurement. The
+   docstring's `agents.hephaestus.src.engines:composed_reasoner` does not exist. Blocked on
+   an oracle **scorer mode** with a distractor policy owned by the meter, not the candidate
+   (Harmonia's call). Meanwhile the claim was re-measured by knockout on the forge's own
+   ruler and reproduces: `roles/Hephaestus/ABLATION_CARD_2026-08-19.md`.
 6. **Forging (standing, opportunistic):** kept available; fire on a new approach/format,
    not for queue throughput. Never retired.
 

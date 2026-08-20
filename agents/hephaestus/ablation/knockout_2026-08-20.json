@@ -1,0 +1,179 @@
+{
+ "instrument": "knockout_ablation@v1",
+ "protocol": "mechanism-knockout (ROLE.md \u00a78 Gate 6): full minus one engine, per-tier delta",
+ "ruler": "trap-battery CATEGORY_TIER (2026-05-15 vocabulary) \u2014 NOT Harmonia's testable ladder",
+ "battery": {
+  "n": 186,
+  "n_per_category": 2,
+  "seed": 42
+ },
+ "executor": "hephaestus",
+ "host": "M3/GANDALF",
+ "ts_utc": "2026-08-20T02:53:29.911345+00:00",
+ "full": {
+  "accuracy": 0.3978494623655914,
+  "by_tier": {
+   "R1": {
+    "correct": 12,
+    "n": 24,
+    "acc": 0.5
+   },
+   "R2": {
+    "correct": 12,
+    "n": 40,
+    "acc": 0.3
+   },
+   "R3": {
+    "correct": 14,
+    "n": 36,
+    "acc": 0.3888888888888889
+   },
+   "R4": {
+    "correct": 17,
+    "n": 28,
+    "acc": 0.6071428571428571
+   },
+   "R5": {
+    "correct": 3,
+    "n": 16,
+    "acc": 0.1875
+   },
+   "R6": {
+    "correct": 16,
+    "n": 42,
+    "acc": 0.38095238095238093
+   }
+  }
+ },
+ "knockouts": {
+  "prob_fallacy": {
+   "overall_full": 0.3978494623655914,
+   "overall_ablated": 0.3763440860215054,
+   "overall_delta_pp": 2.2,
+   "by_tier": {
+    "R1": {
+     "n": 24,
+     "full_acc": 0.5,
+     "ablated_acc": 0.5,
+     "delta_pp": 0.0
+    },
+    "R2": {
+     "n": 40,
+     "full_acc": 0.3,
+     "ablated_acc": 0.3,
+     "delta_pp": 0.0
+    },
+    "R3": {
+     "n": 36,
+     "full_acc": 0.3888888888888889,
+     "ablated_acc": 0.2777777777777778,
+     "delta_pp": 11.1
+    },
+    "R4": {
+     "n": 28,
+     "full_acc": 0.6071428571428571,
+     "ablated_acc": 0.6071428571428571,
+     "delta_pp": 0.0
+    },
+    "R5": {
+     "n": 16,
+     "full_acc": 0.1875,
+     "ablated_acc": 0.1875,
+     "delta_pp": 0.0
+    },
+    "R6": {
+     "n": 42,
+     "full_acc": 0.38095238095238093,
+     "ablated_acc": 0.38095238095238093,
+     "delta_pp": 0.0
+    }
+   }
+  },
+  "temporal": {
+   "overall_full": 0.3978494623655914,
+   "overall_ablated": 0.34946236559139787,
+   "overall_delta_pp": 4.8,
+   "by_tier": {
+    "R1": {
+     "n": 24,
+     "full_acc": 0.5,
+     "ablated_acc": 0.5,
+     "delta_pp": 0.0
+    },
+    "R2": {
+     "n": 40,
+     "full_acc": 0.3,
+     "ablated_acc": 0.3,
+     "delta_pp": 0.0
+    },
+    "R3": {
+     "n": 36,
+     "full_acc": 0.3888888888888889,
+     "ablated_acc": 0.3888888888888889,
+     "delta_pp": 0.0
+    },
+    "R4": {
+     "n": 28,
+     "full_acc": 0.6071428571428571,
+     "ablated_acc": 0.2857142857142857,
+     "delta_pp": 32.1
+    },
+    "R5": {
+     "n": 16,
+     "full_acc": 0.1875,
+     "ablated_acc": 0.1875,
+     "delta_pp": 0.0
+    },
+    "R6": {
+     "n": 42,
+     "full_acc": 0.38095238095238093,
+     "ablated_acc": 0.38095238095238093,
+     "delta_pp": 0.0
+    }
+   }
+  },
+  "causal": {
+   "overall_full": 0.3978494623655914,
+   "overall_ablated": 0.4032258064516129,
+   "overall_delta_pp": -0.5,
+   "by_tier": {
+    "R1": {
+     "n": 24,
+     "full_acc": 0.5,
+     "ablated_acc": 0.5,
+     "delta_pp": 0.0
+    },
+    "R2": {
+     "n": 40,
+     "full_acc": 0.3,
+     "ablated_acc": 0.3,
+     "delta_pp": 0.0
+    },
+    "R3": {
+     "n": 36,
+     "full_acc": 0.3888888888888889,
+     "ablated_acc": 0.3888888888888889,
+     "delta_pp": 0.0
+    },
+    "R4": {
+     "n": 28,
+     "full_acc": 0.6071428571428571,
+     "ablated_acc": 0.6071428571428571,
+     "delta_pp": 0.0
+    },
+    "R5": {
+     "n": 16,
+     "full_acc": 0.1875,
+     "ablated_acc": 0.25,
+     "delta_pp": -6.2
+    },
+    "R6": {
+     "n": 42,
+     "full_acc": 0.38095238095238093,
+     "ablated_acc": 0.38095238095238093,
+     "delta_pp": 0.0
+    }
+   }
+  }
+ }
+}
