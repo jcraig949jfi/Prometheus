@@ -1,4 +1,4 @@
-# PULSE — generated 2026-08-20T09:27:53+00:00
+# PULSE — generated 2026-08-20T09:44:53+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —
 read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a line there.*
@@ -6,13 +6,14 @@ read at every pass start, never blocking. Veto any AUTO-TAKEN row by adding a li
 ## Liveness (3-day window)
 ```
 window: 3d
-emitted (new files):        645
+emitted (new files):        646
 consumed (state changes):   256  {'queue_state': 205, 'registry': 44, 'findings': 5, 'doctrine': 2}
 consumed/emitted:           0.40
 verdict: ALIVE
 ```
 
-## Commits, 72h (non-cron): 134
+## Commits, 72h (non-cron): 135
+- 25c21a86 08-20 05:28 Design critique answered; P18 self-corrected; 21 dead-host references swept fleet-wide
 - dfcc48f3 08-20 05:16 Shadow cycle 1 CLOSED: all 14 Elenchus findings answered â€” the channel works
 - 4aaac0df 08-20 05:14 Merge branch 'main' of https://github.com/jcraig949jfi/Prometheus
 - 3bd9bfee 08-20 05:14 Round 2 charter: external review adjudicated; three corrections accepted against my own work
@@ -37,8 +38,7 @@ verdict: ALIVE
 - 95bbdd3d 08-19 21:05 CAT-MATH-0175 EXECUTED: the Montgomery profile itself, at the few-percent level
 - 5a226cf6 08-19 20:37 ATTACK_PATTERNS.md: the ten attacks metabolized into a reusable method
 - 7facfbef 08-19 20:09 CAT-MATH-0165 EXECUTED: the k^2 law where the instrument sees cleanly â€” and a deviation pre-attributed by direction
-- dbea3f0b 08-19 19:41 CAT-MATH-0151 EXECUTED: Chowla holds across 100 simultaneous shifts â€” and the argmax is noise
-- … +109 more
+- … +110 more
 
 ## Bottleneck hypotheses (confidence)
 - **B-001** 0.5 — Metabolization stalls because residue lacks actionable coordinates (verdict-shaped records
