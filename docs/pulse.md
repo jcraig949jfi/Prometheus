@@ -1,3 +1,5 @@
+<!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->
+
 # PULSE — generated 2026-08-20T15:22:12+00:00
 
 *Every line computed from state; nothing narrated. Steer via engine/STEERING.md —

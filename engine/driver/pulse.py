@@ -107,7 +107,11 @@ def main() -> int:
     L.append("*North-star gauge is yours to make from the above; this page will not narrate it for you.*")
 
     (ROOT / "engine" / "PULSE.md").write_text("\n".join(L) + "\n", encoding="utf-8")
-    print(f"PULSE.md written: {len(L)} lines")
+    # INFRA-PULSE-M4 (P32): mirror to docs/ so GitHub Pages serves it — the
+    # dashboard links to it and James can read loop status without a checkout.
+    pages_copy = ["<!-- auto-synced from engine/PULSE.md by engine/driver/pulse.py; do not edit -->", ""] + L
+    (ROOT / "docs" / "pulse.md").write_text("\n".join(pages_copy) + "\n", encoding="utf-8")
+    print(f"PULSE.md written: {len(L)} lines (+ docs/pulse.md mirror)")
     return 0
 
 

@@ -40,6 +40,9 @@ Plus: complex literals 'a+b*I' parse via replace('*I','j') (0165).
    SILENTLY as an empty column list, not an error (HARMA-P5 soak, 2026-08-20: live-demonstrated
    on the mirror; an empty information_schema result for a table you can SELECT from is this
    trap, not a missing table). Same diagnosis discipline as #4: empty ≠ absent, audit the quoting.
+   Quantified (HARMA-P6): 11.9% of mirror columns overall but EXTREMELY uneven — artin_reps 21/22
+   CamelCase vs nf_fields 0/43 — so the risk is per-table near-totality, not a uniform base rate.
+   Trap 5 likewise measured TOTAL on the mirror (29/29 boolean-semantic columns are text).
 
 ## 3. Narrative-resistance catalog (each killed a wrong claim before it formed)
 - SELECTION ARTIFACT: LMFDB's high-conductor sets are curated, not random. Raw bins showed
